@@ -1,9 +1,28 @@
-2002-01-15/16  Peter Murray-Rust <pm286@cam.ac.uk>
-               Vincent Favre-Nicolin <vincefn@users.sourceforge.net>
-   * Changes to compile using the free Borland C++ compiler 5.5.1:
-   a few fixes ISO C++ fixes, some #if's and added makefiles (bc32.mak)
+2003-01-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
-2002-01-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+	* src/base.cpp: Add introduction to documentation.
+
+	* src/mol.cpp: Don't attempt to use Kekulize or Begin/EndModify to
+	detect aromaticity.
+
+	* src/phmodel.txt, src/phmodeldata.h: Add histidine transformation
+	and unused tryptophan transformation to help with problems
+	observed by Richard Gillian (PR#575964).
+
+	* src/resdata.txt src/resdata.h: Fix incorrect bond orders for ARG
+	residue. (PR#575964).
+
+	* test/matrixtest.cpp: Make matrix test a bit more verbose to make
+	debugging problems on non-Intel platforms easier. (Relates to
+	PR#647417).
+	
+2003-01-15/16  Peter Murray-Rust <pm286@cam.ac.uk>
+               Vincent Favre-Nicolin <vincefn@users.sourceforge.net>
+	
+	* Changes to compile using the free Borland C++ compiler 5.5.1:
+	a few fixes ISO C++ fixes, some #if's and added makefiles (bc32.mak)
+
+2003-01-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	Lots of changes from the last few weeks.
 

@@ -58,6 +58,11 @@ TRANSFORM [SD4]([!D1])(=O)(=O)[O:1][#1:2] >> [SD4]([!D1])(=O)(=O)[O-:1]
 #guanidine or amidine
 TRANSFORM [#6^2+0:1](~[N^2])(~[N^2])* >> [#6+:1](~N)(~N)*
 
+# histidine
+TRANSFORM [nD2:1]1c[nD2]cc1 >> [n+:1]1c[nD2]cc1
+# uncomment for tryptophan
+# TRANSFORM [nD2:1]1cccc1 >> [n+:1]1cccc1
+
 #phosphate ester
 TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1] >> [PD4](=O)([OD2])([OD2])[O-:1]
 TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1][#1:2] >> [PD4](=O)([OD2])([OD2])[O-:1]
