@@ -3,6 +3,7 @@ main.cpp - Main conversion program, command-line handling.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2004 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -18,30 +19,29 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "babelconfig.h"
-
-#include "mol.h"
-#include "molvector.h"
-#include "obutil.h"
-#include "parsmart.h"
-#include "typer.h"
-#include "rotor.h"
-#include "binary.h"
-#include "babelconfig.h"
-#include "data.h"
-
-#include <stdio.h>
-
 #if HAVE_IOSTREAM
-#include <iostream>
+	#include <iostream>
 #elif HAVE_IOSTREAM_H
-#include <iostream.h>
+	#include <iostream.h>
+#endif
+#if HAVE_FSTREAM
+	#include <fstream>
+#elif HAVE_FSTREAM_H
+	#include <fstream.h>
+#endif
+#if HAVE_SSTREAM
+	#include <sstream>
+#elif
+	#include <sstream.h>
 #endif
 
-#if HAVE_FSTREAM
-#include <fstream>
-#elif HAVE_FSTREAM_H
-#include <fstream.h>
+#include <string>
+#include <map>
+#if HAVE_CONIO_H
+	#include <conio.h>
 #endif
+
+#include "obconversion.h"
 
 using namespace std;
 using namespace OpenBabel;
@@ -54,22 +54,39 @@ static char *program_name;
 
 int main(int argc,char *argv[])
 {
-  io_type inFileType = UNDEFINED, outFileType = UNDEFINED;
-  bool gotInType = false, gotOutType = false, removeHydrogens = false;
-  bool addHydrogens = false, usePH = false, centerCoords = false;
 
-  int arg, inFileArg, outFileArg;
-  unsigned int firstMol = 1;
-  unsigned int lastMol = INT_MAX;
-  char *ext;
-  char *formatOptions=NULL;
-  OBFileFormat fileFormat;
+	OBConversion Conv(&cin, &cout); //default input and output are console 
+
+	string GenOptions;
+	OBFormat* pInFormat;
+	OBFormat* pOutFormat;
+	vector<string> FileList, OutputFileList;
+	string OutputFileName;
 
   // Parse commandline
-  program_name = argv[0];
-  inFileArg = 0;
-  outFileArg = 0;
-  for (arg = 1; arg <= argc; arg++)
+	bool gotInType = false, gotOutType = false;
+	bool UseSavedOptions = false;
+	bool SplitOrBatch=false;
+
+  char *oext;
+  char *iext;
+
+  //Save name of program without its path (and .exe)
+  string pn(argv[0]);
+  int pos;
+#ifdef _WIN32
+  pos = pn.find(".exe");
+  if(pos!=string::npos)
+    argv[0][pos]='\0';
+#endif
+  pos = pn.find_last_of("/\\");
+  if(pos==string::npos)
+    program_name=argv[0];
+  else
+    program_name=argv[0]+pos+1;
+  
+  int arg;
+  for (arg = 1; arg < argc; arg++)
     {
       if (argv[arg])
 	{
@@ -77,41 +94,28 @@ int main(int argc,char *argv[])
 	    {	      
 	      switch (argv[arg][1])
 		{
-		case 'v':
+				case 'V':
 		  {
 		    cout << "Open Babel " << BABEL_VERSION << " -- " 
 			 << __DATE__ << " -- " << __TIME__ << endl;
 		    exit(0);
 		  }
-		case 'd':
-		  removeHydrogens = true;
-		  break;
-
-		case 'f':
-		  firstMol = atoi(argv[++arg]);
-		  break;
-		  
-		case 'l':
-		  lastMol = atoi(argv[++arg]);
-		  break;
 
 		case 'h':
-		  addHydrogens = true;
-		    if (strncmp(argv[arg],"-hpH",4) == 0) { usePH = true; }
-		  break;
-
-		case 'c':
-		  centerCoords = true;
+					if (strncmp(argv[arg],"-hpH",4) == 0)
+						GenOptions+='p';
+					else
+						GenOptions+='h';
 		  break;
 
 		case 'i':
 		  gotInType = true;
-		  ext = argv[arg] + 2;
-		  if (strncasecmp(ext, "MIME", 4) == 0)
-		    outFileType = extab.MIMEToType(ext);
-		  else if (extab.CanReadExtension(ext))
-		    inFileType = extab.FilenameToType(ext);
-		  else
+					iext = argv[arg] + 2;
+
+					//The ID provided by the OBFormat class is used as the identifying file extension
+					//This is a slight reduction in flexibility (which is not currently used)
+					pInFormat = Conv.FindFormat(iext);
+					if(pInFormat==NULL)
 		    {
 		      cerr << program_name << ": cannot read input format!" << endl;
 		      usage();
@@ -120,12 +124,9 @@ int main(int argc,char *argv[])
 
 		case 'o':
 		  gotOutType = true;
-		  ext = argv[arg] + 2;
-		  if (strncasecmp(ext, "MIME", 4) == 0)
-		    outFileType = extab.MIMEToType(ext);
-		  else if (extab.CanWriteExtension(ext))
-		    outFileType = extab.FilenameToType(ext);
-		  else
+					oext = argv[arg] + 2;
+					pOutFormat = Conv.FindFormat(oext);
+					if(pOutFormat==NULL)
 		    {
 		      cerr << program_name << ": cannot write output format!" << endl;
 		      usage();
@@ -134,43 +135,111 @@ int main(int argc,char *argv[])
 		  break;
 		  
 		case 'x':
-		  formatOptions = argv[arg];
+					Conv.SetOptions(argv[arg]);
+					break;
+
+				case 'z':
+					UseSavedOptions=true;
 		  break;
 
 		case 'H':
+					if(isalnum(argv[arg][2]))
+					{
+						if(strncasecmp(argv[arg]+2,"all",3))
+						{
+							OBFormat* pFormat = Conv.FindFormat(argv[arg]+2);
+							if(pFormat)
+							{
+								cout << argv[arg]+2 << "  " << pFormat->Description() << endl;
+								if(strlen(pFormat->SpecificationURL()))
+									cout << "Specification at: " << pFormat->SpecificationURL() << endl;
+							}
+							else
+								cout << "Format type: " << argv[arg]+2 << " was not recognized" <<endl;
+						}
+						else
+						{
+							Formatpos pos;
+							OBFormat* pFormat;
+							const char* str=NULL;
+							while(OBConversion::GetNextFormat(pos,str,pFormat))
+							{
+								cout << str << endl;
+								char* p = strchr(pFormat->Description(),'\n');
+								cout << p+1; //second line of description
+								if(strlen(pFormat->SpecificationURL()))
+									cout << "Specification at: " << pFormat->SpecificationURL();
+								cout << endl << endl;
+							}
+						}
+					}
+					else
 		  help();
+					#ifdef _DEBUG
+				 //CM keep window open
+					cout << "Press any key to finish" <<endl;
+					getch();
+					#endif
 		  exit(0);
 
-		case '-':
-		  if (inFileArg == 0)
+				case '-': //Do nothing
+					/*if (inFileArg == 0)
 		    inFileArg = -1;
 		  else
 		    outFileArg = -1;
+					*/
+					break;
+
+				case 'm': //multiple output files
+					SplitOrBatch=true;
 		  break;
 		  
 		default:
-		  cerr << program_name << ": unrecognized option `-" 
-		       << argv[arg][1] << "'" << endl;
-		  usage();
+					char* p = argv[arg]+1;
+					GenOptions+=*p++;
+					//quotes seem to be stripped out;add them back if there are more chars
+					if(*p)
+					{
+						GenOptions+='\"';
+						while(*p)
+							GenOptions+=*p++;
+						GenOptions+='\"';
+					}
 		  break;
 		}
 	    }
-	  else if (inFileArg == 0)
-	    inFileArg = arg;
 	  else
-	    outFileArg = arg;
+			{
+				//filenames
+				if(!gotOutType)
+					FileList.push_back(argv[arg]);
+				else
+					OutputFileName = argv[arg];
+			}
 	}
     }
-  if (inFileArg == 0 || outFileArg == 0
-      || (inFileArg < 0 && !gotInType)
-      || (outFileArg < 0 && !gotOutType))
-    usage();
+
+	if(!gotOutType) //the last file is the output
+	{
+		OutputFileName = FileList.back();
+		FileList.pop_back();
+	}
+
+	#ifdef _WIN32
+		//Expand wildcards in input filenames and add to FileList
+		vector<string> tempFileList(FileList);
+		FileList.clear();
+		vector<string>::iterator itr;
+		for(itr=tempFileList.begin();itr!=tempFileList.end();itr++)
+			DLHandler::findFiles (FileList, *itr);
+	#endif
+
+	Conv.SetGeneralOptions(GenOptions.c_str());
 
   if (!gotInType)
     {
-      if (extab.CanReadExtension(argv[inFileArg]))
-	inFileType = extab.FilenameToType(argv[inFileArg]);
-      else
+		pInFormat = Conv.FormatFromExt(FileList[0].c_str());
+		if(pInFormat==NULL)
 	{
 	  cerr << program_name << ": cannot read input format!" << endl;
 	  usage();
@@ -178,89 +247,57 @@ int main(int argc,char *argv[])
     }
   if (!gotOutType)
     {
-      if (extab.CanWriteExtension(argv[outFileArg]))
-	outFileType = extab.FilenameToType(argv[outFileArg]);
-      else
+		pOutFormat = Conv.FormatFromExt(OutputFileName.c_str());
+		if(pOutFormat==NULL)
 	{
 	  cerr << program_name << ": cannot write output format!" << endl;
 	  usage();
 	}
     }
 
-  // Finally, we can do some work!
-  OBMolVector moleculeList;
-  ifstream inFileStream;
-  bool usingStdin = false;
-  bool canRead = true;
-  int currentMol = 1;
+	Conv.SetInAndOutFormats(pInFormat,pOutFormat);
 
-  // read
-  if (inFileArg > 0)
+	if(SplitOrBatch)
     {
-      inFileStream.open(argv[inFileArg]);
-      if (!inFileStream)
+		//Put * into output file name
+		if(OutputFileName.empty())
 	{
-	  cerr << program_name << ": cannot read input file!" << endl;
-	  exit (-1);
-	}
+			OutputFileName = "*.";
+			OutputFileName += oext;
     }
   else
-    usingStdin = true;
-
-  while (canRead)
     {
-      OBMol *mol = new OBMol(inFileType, outFileType);
-      if (!usingStdin)
-	fileFormat.ReadMolecule(inFileStream, *mol, argv[inFileArg]);
+			int pos = OutputFileName.find_last_of('.');
+			if(pos==string::npos)
+				OutputFileName += '*';
       else
-	fileFormat.ReadMolecule(cin, *mol, "STDIN");
-
-      if (mol->NumAtoms() != 0)
-	{
-	  // Perform any requested transformations
-	  if (removeHydrogens)
-	    mol->DeleteHydrogens();
-	  if (addHydrogens)
-	    mol->AddHydrogens(false, usePH);
-	  if (centerCoords)
-	    mol->Center();
-      
-	  if (currentMol >= firstMol && currentMol <= lastMol)
-	    moleculeList.PushMol(mol);
-
-	  if (!usingStdin && 
-	      (inFileStream.peek() == EOF || !inFileStream.good()) )
-	    canRead = false;
-	  else if (usingStdin && (cin.peek() == EOF || !cin.good()) )
-	    canRead = false;
-	  else if (currentMol > lastMol)
-	    canRead = false;
+				OutputFileName.insert(pos,"*");
 	}
-      else // 0 atoms in this molecule! 
-	{
-	  //	  cerr << " error: has zero atoms! " << endl;
-	  canRead = false;
 	}
 
-      currentMol++;
-    }
+	const char OptFile[]="options.txt";
+	if(UseSavedOptions)
+		Conv.RestoreOptionsFromFile(OptFile);
+	//Write current options to file
+	Conv.SaveOptionsToFile(OptFile);
  
-  // write
-  if (outFileArg > 0)
-    {
-      ofstream outFileStream(argv[outFileArg]);
-      if (!outFileStream)
-	{
-	  cerr << program_name << ": cannot write to output file!" << endl;
-	  exit (-1);
-	}
-      moleculeList.Write(outFileStream, formatOptions);
-    }
-  else
-    moleculeList.Write(cout, formatOptions);
+		
+	int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
+	cout << count << " molecule(s) converted" <<endl;
 
-  return(0);
-}
+	if(OutputFileList.size()>1)
+	{
+		cout << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;
+    }
+
+#ifdef _DEBUG
+ //CM keep window open
+  cout << "Press any key to finish" <<endl;
+	getch();
+#endif
+
+	return 0;
+};
 
 void usage()
 {
@@ -268,204 +305,51 @@ void usage()
        << __TIME__ << endl;
   cout << "Usage: " << program_name
        << " [-i<input-type>] <name> [-o<output-type>] <name>" << endl;
-  cout << "Try `babel -H' for more information." << endl;
+  cout << "Try  -H option for more information." << endl;
+
+	#ifdef _DEBUG
+	 //CM keep window open
+		cout << "Press any key to finish" <<endl;
+		getch();
+	#endif
 
   exit (0);
 }
 
-// Make sure to update the Doxygen-generated man documentation below! -GH
 void help()
 {
-unsigned int i;
+  cout << "Open Babel converts chemical structures from one file format to another"<< endl;
+  cout << "Usage: " << program_name << " <input spec> <output spec> [Options]" << endl;
+	cout << "Each spec can be a file whose extension decides the format." << endl;
+	cout << "Optionally the format can be specified by preceding the file by" << endl;
+	cout << "-i<format-type> e.g. -icml, for input and -o<format-type> for output" << endl;
+	cout << "See below for available format-types, which are the same as the " << endl;
+	cout << "file extensions and are case independent." << endl; 
+	cout << "If no input or output file is given stdin or stdout are used instead." << endl << endl; 
+	cout << "More than one input file can be specified and their names can contain" <<endl;
+	cout << "wildcard chars(*and?).The molecules are aggregated in the output file.\n" << endl;
+	cout << OBConversion::Description(); // Conversion options
+  cout << "  -H Outputs this help text" << endl;
+	cout << "  -Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl; 
+	cout << "  -Hall Outputs details of all formats" <<endl; 
+  cout << "  -V Outputs version number" <<endl; 
+	cout << "  -m Produces multiple output files, to allow:" <<endl;
+  cout << "     Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
+  cout << "       puts each molecule into new1.smi new2.smi etc" <<endl;
+  cout << "     Batch conversion: e.g. " << program_name << " *.mol -osmi -m" <<endl;
+  cout << "       converts each input file to a .smi file" << endl;
+#ifdef _WIN32
+	cout << "     In Windows these can also be done using the forms" <<endl;
+  cout << "       " << program_name << " infile.mol new*.smi and " << program_name << " *.mol *.smi respectively.\n" <<endl;
+#endif
 
-  cout << "Open Babel " << BABEL_VERSION << " -- " << __DATE__ << " -- "
-       << __TIME__ << endl;
-  cout << "Usage: " << program_name 
-       << " [-i<input-type>] <name> [-o<output-type>] <name>" << endl;
-  cout << endl << "Currently supported input types" << endl;
-  for (i = 0; i < extab.Count(); i++)
-    if (extab.IsReadable(i))
-      cout << "\t" << extab.GetExtension(i) << " -- " 
-		<< extab.GetDescription(i) << " file" << endl;
-  cout << endl << "Currently supported output types" << endl;
-  for (i = 0; i < extab.Count(); i++)
-    if (extab.IsWritable(i))
-      cout << "\t" << extab.GetExtension(i) << " -- " 
-		<< extab.GetDescription(i) << " file" << endl;
-  cout << "Additional options : " << endl;
-  cout << " -f <#> Start import at molecule # specified " << endl;
-  cout << " -l <#> End import at molecule # specified " << endl;
-  cout << " -d Delete Hydrogens " << endl;
-  cout << " -h Add Hydrogens " << endl;
-  cout << " -hpH Add Hydrogens appropriate for pH (use transforms in phmodel.txt) " << endl; 
-  cout << " -c Center Coordinates " << endl;
-  cout << " -x[flags] XML.CML options (e.g. -x1ac)  " << endl;
-  cout << "   1 output CML V1.0 (default)" << endl;
-  cout << "   2 output CML V2.0 (Schema)" << endl;
-  cout << "   a output array format for atoms and bonds (default <atom>)" << endl;
-  cout << "   p prettyprint output (not implemented)" << endl;
-  cout << "   n output namespace (default no namespace)" << endl;
-  cout << "   c use 'cml' as output namespace prefix (else default) (forces n)" << endl;
-  cout << "   d output DOCTYPE (default none)" << endl;
-  cout << "   g debug output" << endl;
-  cout << "   v add XML version (declaration)" << endl;
-  cout << endl << "Report Bugs to <openbabel-discuss@lists.sourceforge.net>." << endl;
+  //	cout << OBConversion::GetDefaultFormat()->TargetClassDescription();// some more options probably for OBMol
+	cout << "The following file formats are recognized:" << endl;
 
+	Formatpos pos;
+	OBFormat* pFormat;
+	const char* str=NULL;
+	while(OBConversion::GetNextFormat(pos,str,pFormat))
+		cout << str << endl;
+	cout << "\nSee further specific info and options using -H<format-type>, e.g. -Hcml" << endl;
 }
-
-/* OpenBabel man page*/
-/** \page openbabel a converter for molecular modeling data files
-*
-* \n
-* \par SYNOPSIS
-*
-* \b openbabel [-d] [-h] [-hpH] [-f<#> -l<#>] [-c] [-x<xmlflags>] [-i<input-type>] <infile> [-o<output-type>] <outfile>  
-*
-* \par DESCRIPTION
-*
-* Open Babel is a program designed to interconvert a number of 
-* file formats currently used in molecular modeling software. \n\n
-* Note that OpenBabel can also be used as a library to import
-* molecular formats in other software packages. See the OpenBabel
-* web pages (http://openbabel.sourceforge.net) for more information.
-*
-* \par OPTIONS
-*
-* If only input and ouput files are given, Open Babel will guess 
-* the file type from the filename extension. \n\n
-* \b -i :
-*     Specifies input format, see below for the available formats \n\n
-* \b -o :
-*     Specifies output format, see below for the available formats \n\n
-* \b -d : 
-*     Delete Hydrogens \n\n
-* \b -h : 
-*     Add Hydrogens \n\n
-* \b -hpH : 
-*     Add Hydrogens appropriate for pH (use transforms in phmodel.txt)  \n\n
-* \b -f<#> : 
-*     For multiple entries input, start import at molecule # \n\n
-* \b -l<#> : 
-*     For multiple entries input, stop import at molecule # \n\n
-* \b -c : 
-*     Center atomic coordinates at (0,0,0) \n\n
-* \b -x<flags>:
-*     XML.CML options (e.g. -x1ac) (see below) \n\n
-*
-*  \par INPUT FORMATS
-*
-*  Open Babel recognizes the following input formats:
-*   \n     alc -- Alchemy file
-*   \n     prep -- AMBER PREP file
-*   \n     bs -- Ball and Stick file
-*   \n     caccrt -- Cacao Cartesian file
-*   \n     ccc -- CCC file
-*   \n     box -- Dock 3.5 Box file
-*   \n     feat -- Feature file
-*   \n     gam -- GAMESS Output file
-*   \n     gamout -- GAMESS Output file
-*   \n     mm1gp -- Ghemical MM file
-*   \n     qm1gp -- Ghemical QM file
-*   \n     hin -- Hyperchem HIN file
-*   \n     jout -- Jaguar Output file
-*   \n     bin -- OpenEye Binary file
-*   \n     mmd -- MacroModel file
-*   \n     mmod -- MacroModel file
-*   \n     out -- MacroModel file
-*   \n     dat -- MacroModel file
-*   \n     car -- MSI Biosym/Insight II CAR file
-*   \n     sdf -- MDL Isis SDF file
-*   \n     sd -- MDL Isis SDF file
-*   \n     mdl -- MDL Molfile file
-*   \n     mol -- MDL Molfile file
-*   \n     mopcrt -- MOPAC Cartesian file
-*   \n     mopout -- MOPAC Output file
-*   \n     mpqc -- MPQC file
-*   \n     bgf -- MSI BGF file
-*   \n     nwo -- NWChem Output file
-*   \n     pdb -- PDB file
-*   \n     qcout -- QChem Output file
-*   \n     smi -- SMILES file
-*   \n     mol2 -- Sybyl Mol2 file
-*   \n     unixyz -- UniChem XYZ file
-*   \n     xyz -- XYZ file
-*
-* \par OUTPUT FORMATS
-*
-*  The following output formats may be written by Open Babel:
-*   \n     alc -- Alchemy file
-*   \n     bs -- Ball & Stick file
-*   \n     caccrt -- Cacao Cartesian file
-*   \n     cacint -- Cacao Internal file
-*   \n     cache -- CAChe MolStruct file
-*   \n     ct -- ChemDraw Connection Table file
-*   \n     cssr -- CSD CSSR file
-*   \n     box -- Dock 3.5 Box file
-*   \n     dmol -- DMol3 Coordinates file
-*   \n     feat -- Feature file
-*   \n     fh -- Fenske-Hall Z-Matrix file
-*   \n     gamin -- GAMESS Input file
-*   \n     inp -- GAMESS Input file
-*   \n     gcart -- Gaussian Cartesian file
-*   \n     gau -- Gaussian Input file
-*   \n     mm1gp -- Ghemical MM file
-*   \n     gr96A -- GROMOS96 (A) file
-*   \n     gr96N -- GROMOS96 (nm) file
-*   \n     hin -- HyperChem HIN file
-*   \n     jin -- Jaguar Input file
-*   \n     bin -- OpenEye Binary file
-*   \n     mmd -- MacroModel file
-*   \n     mmod -- MacroModel file
-*   \n     out -- MacroModel file
-*   \n     dat -- MacroModel file
-*   \n     sdf -- MDL Isis SDF file
-*   \n     sd -- MDL Isis SDF file
-*   \n     mdl -- MDL Molfile file
-*   \n     mol -- MDL Molfile file
-*   \n     mopcrt -- MOPAC Cartesian file
-*   \n     bgf -- MSI BGF file
-*   \n     csr -- MSI Quanta CSR file
-*   \n     nw -- NWChem Input file
-*   \n     pdb -- PDB file
-*   \n     report -- Report file
-*   \n     qcin -- QChem Input file
-*   \n     smi -- SMILES file
-*   \n     fix -- SMILES Fix file
-*   \n     mol2 -- Sybyl Mol2 file
-*   \n     txyz -- Tinker XYZ file
-*   \n     txt -- Titles file
-*   \n     unixyz -- UniChem XYZ file
-*   \n     xed -- XED file
-*   \n     xyz -- XYZ file
-*
-* \par XML.CML OPTIONS
-*    Chemical Markup Language (http://www.xml-cml.org/) options \n \n
-*     \n 1 output CML V1.0 (default)
-*     \n 2 output CML V2.0 (Schema)
-*     \n a output array format for atoms and bonds (default <atom>)
-*     \n p prettyprint output (default no indent)
-*     \n n output namespace (default no namespace)
-*     \n c use 'cml' as output namespace prefix (else default) (forces n)
-*     \n d output DOCTYPE (default none)
-*     \n g debug output
-*     
-* \par EXAMPLE
-*     openbabel -ixyz ethanol.xyz -opdb ethanol.pdb
-* \par AUTHOR
-*
-* Open Babel is derived from OElib, written by \b Matt \b Stahl, which is a rewrite of the classic babel program. Open Babel is currently maintained by \b Geoff \b Hutchison and \b Michael \b Banck.
-*
-* \par COPYRIGHT
-*  Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-*  Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison \n \n
-*  This program is free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation version 2 of the License.\n \n
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-* \par SEE ALSO
-*   The web pages for OpenBabel can be found at http://openbabel.sourceforge.net
-**/

@@ -35,6 +35,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+//NF declarations from fileformat.h
+bool ReadBinary(std::istream&,OBMol&);
+bool ReadBinary(unsigned char *,OBMol&, int);
+bool WriteBinary(std::ostream&,OBMol&);
+bool WriteBinary(std::string&,int&,OBMol&); 
+
 
 class OBRotamerList : public OBGenericData
 {
@@ -103,7 +109,7 @@ public:
     ~OBBinaryDBase();
 
     int  Size();
-    void GetMolecule(OBMol&, int);
+//NF    void GetMolecule(OBMol&, int);
 };
 
 int Swab(int);

@@ -1028,7 +1028,7 @@ bool OBMol::Clear()
 
   return(true);
 }
-
+/*NF
 void OBMol::BeginAccess(void)
 {
   if (_access == 0) UnCompress();
@@ -1040,7 +1040,7 @@ void OBMol::EndAccess(void)
   _access--;
   if (_access == 0) Compress();
 }
-
+*/
 void OBMol::BeginModify()
 {
   //suck coordinates from _c into _v for each atom
@@ -2397,6 +2397,7 @@ void OBMol::ToInertialFrame(int conf,double *rmat)
   }
 }
 
+/*NF
 istream& operator>> (istream &ifs, OBMol &mol)
 {
     bool retcode = OBFileFormat::ReadMolecule(ifs, mol);
@@ -2416,12 +2417,13 @@ ostream& operator<< (ostream &ofs, OBMol &mol)
     OBFileFormat::WriteMolecule(ofs, mol);
     return(ofs);
 }
+*/
 
 OBMol::OBMol(io_type itype,io_type otype)
 {
   _natoms = _nbonds = 0;
   _mod = 0;
-  _access = 0;
+//NF  _access = 0;
   _energy = 0.0;
   _totalCharge = 0;
   _itype = itype;
@@ -2435,14 +2437,14 @@ OBMol::OBMol(io_type itype,io_type otype)
   _vconf.clear();
   _autoPartialCharge = true;
   _autoFormalCharge = true;
-  _compressed = false;
+//NF  _compressed = false;
 }
 
 OBMol::OBMol(const OBMol &mol)
 {
   _natoms = _nbonds = 0;
   _mod = 0;
-  _access = 0;
+//NF  _access = 0;
   _totalCharge = 0;
   _vatom.clear();
   _vbond.clear();
@@ -2453,7 +2455,7 @@ OBMol::OBMol(const OBMol &mol)
   _vconf.clear();
   _autoPartialCharge = true;
   _autoFormalCharge = true;
-  _compressed = false;
+//NF  _compressed = false;
   *this = mol;
 }
 
@@ -3424,6 +3426,7 @@ void OBMol::DeleteConformer(int idx)
   _vconf.erase((_vconf.begin()+idx));
 }
 
+/* NF
 bool OBMol::Compress(void)
 {
   if (!_compressed && NumAtoms() < 256)
@@ -3483,6 +3486,7 @@ bool OBMol::UnCompress(void)
 
   return false;
 }
+*/
 
 OBAtom *OBMol::BeginAtom(vector<OBNodeBase*>::iterator &i) 
 {

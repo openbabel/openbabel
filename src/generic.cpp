@@ -102,6 +102,7 @@ void OBExternalBondData::SetData(OBAtom *atom,OBBond *bond,int idx)
   _vexbnd.push_back(xb);
 }
 
+/*NF
 //
 //member functions for OBCompressData class
 //
@@ -129,7 +130,7 @@ void OBCompressData::SetData(unsigned char *d,int size)
   memcpy(_data,(char*) d, size);
   _size = size;
 }
-
+*/
 //
 //member functions for OBPairData class
 //
