@@ -1,128 +1,84 @@
-#Open Babel Makefile
+#Open Babel top-level Makefile
 
-prefix        = @prefix@
-exec_prefix   = @exec_prefix@
-pkgdatadir    = @datadir@/openbabel
-
-CC            = @CC@
-CXX	      = @CXX@
-
-CFLAGS        = @CFLAGS@
-CXXFLAGS      = @CXXFLAGS@ 
-DEFS          = -DDATADIR=\"${pkgdatadir}\"
-INCS          = -I$(builddir)
-LIBS	      = @LIBS@
-LIBFLAGS      = -DLIBRARY
-
-LINKER	      = $(CXX)
-LDFLAGS       = @LDFLAGS@
-
-RM            = rm -f
-INSTALL	      = @INSTALL@
-MKDIRS        = $(top_srcdir)/mkinstalldirs
-AR	      = @AR@
-RANLIB	      = @RANLIB@
+version       = @openbabel_version@
 
 srcdir        = @srcdir@
 VPATH         = @srcdir@
 top_srcdir    = @top_srcdir@
-top_builddir  = @top_builddir@
-builddir      = @top_builddir@/src
+prefix        = @prefix@
+exec_prefix   = @exec_prefix@
+mandir        = @mandir@/man1
 
 DEST	      = @bindir@
 
-MAIN	      = main.o
+INSTALL	      = @INSTALL@
+MKDIRS        = $(top_srcdir)/mkinstalldirs
 
-DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt \
-		resdata.txt types.txt phmodel.txt 
+SUBDIRS	      = src test
+DISTDIR       = $(top_srcdir)/../openbabel-$(version)
 
-DATAINCS      = aromatic.h atomtyp.h element.h extable.h \
-	        phmodeldata.h resdata.h types.h
+all:
+		@for i in $(SUBDIRS); do \
+			(cd $$i; $(MAKE) $(MFLAGS) all) \
+			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+		done && test -z "$$fail"
 
-HDRS	      = math/vector3.h math/matrix3x3.h aromatic.h atomtyp.h base.h binary.h \
-		bitgrid.h bitvec.h chiral.h chains.h cwrap.h \
-		data.h element.h extable.h fileformat.h grid.h \
-		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
-		obutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
-		resdata.h ring.h rotor.h smi.h typer.h types.h version.h \
-		chains.h generic.h
-
-OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
-		bitgrid.o bond.o \
-		chains.o data.o molvector.o matrix.o\
-		chiral.o grid.o mdl.o mol.o mol2.o molchrg.o \
-		obutil.o parsmi.o parsmart.o patty.o \
-		ring.o rotor.o smi.o tokenst.o math/vector3.o math/matrix3x3.o pdb.o ccc.o \
-		mmod.o rand.o box.o balst.o bgf.o cacao.o cache.o chdrw.o \
-		csr.o cssr.o feat.o fh.o gromos96.o cwrap.o \
-		ghemical.o xyz.o fileformat.o gamess.o hin.o \
-		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
-		jaguar.o amber.o generic.o residue.o \
-		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o viewmol.o \
-		cml.o
-
-PROGRAM	      = babel
-
-LIBRARY       = libopenbabel.a
-
-EXTRA_DIST    = bin2hex.pl
-
-MAKEFILE      = Makefile
-
-$(PROGRAM):     $(MAIN) $(LIBRARY)
-		$(LINKER) $(LDFLAGS) -o  $(PROGRAM) $(MAIN) $(LIBRARY) $(LIBS)
-
-$(LIBRARY):	$(DATAINCS) $(OBJS)
-		$(AR) -r $(LIBRARY) $(OBJS)
-		$(RANLIB) $(LIBRARY)
-
-all:		$(DATAINCS) $(LIBRARY) $(PROGRAM)
+apidoc:		
+		doxygen
 
 test:		check
-check:		$(PROGRAM)
+check:
+		@for i in $(SUBDIRS); do \
+			(cd $$i; $(MAKE) $(MFLAGS) check) \
+			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+		done && test -z "$$fail"
 
-clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY) 
-distclean:	clean
-		$(RM) version.h Makefile
+clean:
+		rm -f *~
+		@for i in $(SUBDIRS); do \
+			(cd $$i; $(MAKE) $(MFLAGS) clean) \
+			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+		done && test -z "$$fail"
 
-install:	$(PROGRAM)
-		$(MKDIRS) $(DEST)
-		$(INSTALL) $(PROGRAM) $(DEST)
-		$(MKDIRS) $(pkgdatadir)
-		(cd $(srcdir); $(INSTALL) -m644 $(DATAFILES) $(pkgdatadir))
+distclean:
+		rm -f config.cache config.status config.log config.h *~ 
+		@for i in $(SUBDIRS); do \
+			(cd $$i; $(MAKE) $(MFLAGS) distclean) \
+			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+		done && test -z "$$fail"
+		rm -f Makefile stamp-h
 
-print:;		$(PRINT) $(HDRS) $(SRCS)
+install:	all
+		(cd src; $(MAKE) $(MFLAGS) install)
+		$(MKDIRS) $(mandir)
+		$(INSTALL) $(top_srcdir)/doc/babel.1 $(mandir)
 
-program:        $(PROGRAM)
 
 dist:		distclean
+	        rm -rf $(DISTDIR) openbabel.tar.gz
+		mkdir $(DISTDIR)
+		tar cf - $(top_srcdir) | (cd $(DISTDIR); tar xf -)
+		(cd $(DISTDIR); rm -fr RCS CVS *~ .#\*);
+		(cd $(DISTDIR); rm -fr */RCS */CVS */*~ */.#\*);
+		(cd $(DISTDIR)/..; tar cvzf openbabel-$(version).tar.gz openbabel-$(version))
+		rm -rf $(DISTDIR)
 
-# Generated include files (default data tables)
-aromatic.h:	bin2hex.pl aromatic.txt
-		(cd $(srcdir); ./bin2hex.pl aromatic.txt AromaticData >aromatic.h)
+# Update the Makefiles if things are updated
+#$(srcdir)/configure:  configure.in
+#		cd $(srcdir) && autoconf
 
-atomtyp.h:	bin2hex.pl atomtyp.txt
-		(cd $(srcdir); ./bin2hex.pl atomtyp.txt AtomTypeData >atomtyp.h)
+# autoheader might not change config.h.in, so touch a stamp file.
+${srcdir}/config.h.in:  stamp-h.in
+${srcdir}/stamp.h.in:  configure.in aclocal.m4
+		cd ${srcdir} && autoheader
+		echo timestamp > ${srcdir}/stamp-h.in
 
-element.h:	bin2hex.pl element.txt
-		(cd $(srcdir); ./bin2hex.pl element.txt ElementData >element.h)
+config.h: stamp-h
+stamp-h:  config.h.in config.status
+		./config.status
 
-extable.h:	bin2hex.pl extable.txt
-		(cd $(srcdir); ./bin2hex.pl extable.txt ExtensionTableData >extable.h)
+Makefile:  Makefile.in config.status
+		./config.status
 
-phmodeldata.h:	bin2hex.pl phmodel.txt
-		(cd $(srcdir); ./bin2hex.pl phmodel.txt PhModelData PHMODELDATA >phmodeldata.h)
-
-resdata.h:	bin2hex.pl resdata.txt
-		(cd $(srcdir); ./bin2hex.pl resdata.txt ResidueData >resdata.h)
-
-types.h:	bin2hex.pl types.txt
-		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
-
-# Update the Makefile if the Makefile.in or configure script changes
-Makefile:	Makefile.in
-		(cd ..; ./config.status)
-
-.SUFFIXES:	.cpp
-.cpp.o:
-		$(CXX) $(CXXFLAGS) $(DEFS) $(INCS) -c $< -o $@
+config.status:  configure
+		./config.status --recheck
