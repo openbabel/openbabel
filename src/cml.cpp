@@ -3946,7 +3946,7 @@ void debug(ostream &ofs) {
 	for (unsigned int j = 0; j < molPtr->NumBonds(); ++j) {
 		OBBond* boPtr = molPtr->GetBond(j);
 		ofs << "<tr>" << endl;
-		ofs << "<td>" << i+1 << "</td>" << endl;
+		ofs << "<td>" << j+1 << "</td>" << endl;
 		ofs << "<td>" << boPtr->GetBO() << "</td>" << endl;
 		ofs << "<td>" << boPtr->GetBondOrder() << "</td>" << endl;
 		ofs << "<td>" << boPtr->GetFlags() << "</td>" << endl;
