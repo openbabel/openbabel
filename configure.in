@@ -18,11 +18,19 @@ AC_PROG_INSTALL
 AC_PROG_RANLIB
 AC_PATH_PROG(AR, ar)
 
-dnl Check if the documentation tool doxygen is available. If it is not, 
-dnl the configure script will print a rather verbose warning message at
-dnl the end of the run (cf. the end of this file)
-dnl --Stefan Kebekus.
-AC_CHECK_PROG(DOCTOOL, doxygen, doxygen, not-found)
+AC_ARG_ENABLE(doxygen, 
+[  --enable-doxygen        Build library documentation using doxygen],
+dnl Check if the documentation tool doxygen is available. If it is not,
+dnl the configure script will print an error message with an url where
+dnl to find it
+	[AC_CHECK_PROG(DOCTOOL, doxygen, doxygen, no)]
+)
+
+dnl Complain about missing documentation tool doxygen.
+if test "$DOCTOOL" == "no"; then
+AC_MSG_ERROR(Cannot find doxygen. 
+	Have a look at http://www.stack.nl/~dimitri/doxygen/index.html)
+fi
 
 AC_LANG_CPLUSPLUS
 dnl Checks for libraries.
@@ -58,17 +66,3 @@ dnl Checks for library functions.
 
 AC_OUTPUT(Makefile src/Makefile test/Makefile src/version.h)
 echo timestamp > stamp.h
-
-dnl Complain about missing documentation tool doxygen.
-if test "$DOCTOO" == "not-found"; then
-    echo ""
-    echo "You're missing the doxygen documentation tool."
-    echo "OpenBabel will compile and run fine, but without"
-    echo "doxygen you cannot generate OpenBabel API"
-    echo "documentation with 'make apidoc'. Have a look at"
-    echo "http://www.stack.nl/~dimitri/doxygen/index.html,"
-    echo "or find a binary package for your platform."
-    echo ""
-fi   
-
-
