@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -12,6 +13,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
+#include "molvector.h"
 #include "obutil.h"
 #include "parsmart.h"
 #include "typer.h"
@@ -71,6 +73,8 @@ int main(int argc,char *argv[])
   bool addHydrogens = false, usePH = false, centerCoords = false;
 
   int arg, inFileArg, outFileArg;
+  unsigned int firstMol = 1;
+  unsigned int lastMol = INT_MAX;
   char *ext;
   char *formatOptions=NULL;
   OBFileFormat fileFormat;
@@ -95,6 +99,14 @@ int main(int argc,char *argv[])
 		  }
 		case 'd':
 		  removeHydrogens = true;
+		  break;
+
+		case 'f':
+		  firstMol = atoi(argv[++arg]);
+		  break;
+		  
+		case 'l':
+		  lastMol = atoi(argv[++arg]);
 		  break;
 
 		case 'h':
@@ -151,7 +163,8 @@ int main(int argc,char *argv[])
 		  break;
 		  
 		default:
-		  cerr << program_name << ": unrecognized option `-" << argv[arg][1] << "'" << endl;
+		  cerr << program_name << ": unrecognized option `-" 
+		       << argv[arg][1] << "'" << endl;
 		  usage();
 		  break;
 		}
@@ -189,40 +202,54 @@ int main(int argc,char *argv[])
     }
 
   // Finally, we can do some work!
-  OBMol mol(inFileType, outFileType);
+  OBMolVector moleculeList;
+  ifstream inFileStream;
+  bool usingStdin = false;
+  bool canRead = true;
+  int currentMol = 1;
 
   // read
   if (inFileArg > 0)
     {
-      ifstream inFileStream(argv[inFileArg]);
+      inFileStream.open(argv[inFileArg]);
       if (!inFileStream)
 	{
 	  cerr << program_name << ": cannot read input file!" << endl;
 	  exit (-1);
 	}
-      fileFormat.ReadMolecule(inFileStream, mol, argv[inFileArg]);
-  if (inFileStream.peek() != EOF && inFileStream.good())
-    cout << " can still read! " << endl;
-
     }
   else
-    fileFormat.ReadMolecule(cin, mol, "STDIN");
+    usingStdin = true;
 
-  // Perform any requested transformations
-  if (removeHydrogens)
-    mol.DeleteHydrogens();
-  if (addHydrogens)
-    mol.AddHydrogens(false, usePH);
-  if (centerCoords)
-    mol.Center();
+  while (canRead)
+    {
+      OBMol *mol = new OBMol(inFileType, outFileType);
+      if (!usingStdin)
+	fileFormat.ReadMolecule(inFileStream, *mol, argv[inFileArg]);
+      else
+	fileFormat.ReadMolecule(cin, *mol, "STDIN");
+
+      // Perform any requested transformations
+      if (removeHydrogens)
+	mol->DeleteHydrogens();
+      if (addHydrogens)
+	mol->AddHydrogens(false, usePH);
+      if (centerCoords)
+	mol->Center();
+      
+      if (currentMol >= firstMol && currentMol <= lastMol)
+	  moleculeList.PushMol(mol);
+
+      if (!usingStdin && (inFileStream.peek() == EOF || !inFileStream.good()) )
+	canRead = false;
+      else if (usingStdin && (cin.peek() == EOF || !cin.good()) )
+	canRead = false;
+      else if (currentMol > lastMol)
+	canRead = false;
+
+      currentMol++;
+    }
  
-  // Dimensionality of file for output
-  char *dimension;
-  if (mol.Has3D())
-    dimension = "3D";
-  else
-    dimension = "2D";
-
   // write
   if (outFileArg > 0)
     {
@@ -232,10 +259,10 @@ int main(int argc,char *argv[])
 	  cerr << program_name << ": cannot write to output file!" << endl;
 	  exit (-1);
 	}
-      fileFormat.WriteMolecule(outFileStream, mol, dimension, formatOptions);
+      moleculeList.Write(outFileStream, formatOptions);
     }
   else
-    fileFormat.WriteMolecule(cout, mol, dimension, formatOptions);
+    moleculeList.Write(cout, formatOptions);
 
   return(0);
 }
@@ -270,6 +297,8 @@ unsigned int i;
       cout << "\t" << extab.GetExtension(i) << " -- " 
 		<< extab.GetDescription(i) << " file" << endl;
   cout << "Additional options : " << endl;
+  cout << " -f <#> Start import at molecule # specified " << endl;
+  cout << " -l <#> End import at molecule # specified " << endl;
   cout << " -d Delete Hydrogens " << endl;
   cout << " -h Add Hydrogens " << endl;
   cout << " -hpH Add Hydrogens appropriate for pH (use transforms in phmodel.txt) " << endl; 

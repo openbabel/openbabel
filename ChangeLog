@@ -1,3 +1,17 @@
+2003-06-22  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/main.cpp: Updated to use OBMolVector for importing multiple
+	molecules in a file. Emulates behavior of babel, but improvements
+	are needed. (e.g. some formats like separators if it's a
+	multi-molecule file.) Also added -f (first) and -l (last)
+	flags to pick particular molecules. Fixes feature request
+	PR#575243.
+
+	* src/molvector.h, src/molvector.cpp: Add new PushMol method for
+	adding new molecules to the end of the vector. Improve Write
+	support and clean up overloaded methods--instead use default
+	values.
+
 2003-06-15  Michael Banck  <mbanck@gmx.net>
 
 	* src/pdb.cpp (WritePDB): Cast atom->GetValence() to int to avoid
