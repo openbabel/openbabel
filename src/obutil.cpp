@@ -403,7 +403,6 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
   float r,sum;
   OBAtom *atom,*nbr,*ref;
   vector<OBNodeBase*>::iterator i,j,m;
-
   //set reference atoms
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
@@ -415,16 +414,23 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
       }
     else if (atom->GetIdx() == 3) 
       {
-	vic[atom->GetIdx()]->_a = mol.GetAtom(2);
-	vic[atom->GetIdx()]->_b = mol.GetAtom(1);
-	continue;
+        if( (atom->GetVector()-mol.GetAtom(2)->GetVector()).length_2()
+           <(atom->GetVector()-mol.GetAtom(1)->GetVector()).length_2())
+          {
+	      vic[atom->GetIdx()]->_a = mol.GetAtom(2);
+	      vic[atom->GetIdx()]->_b = mol.GetAtom(1);
+          }
+        else
+          {
+	      vic[atom->GetIdx()]->_a = mol.GetAtom(1);
+	      vic[atom->GetIdx()]->_b = mol.GetAtom(2);
+          }
+	  continue;
       }
-
     sum=1.0E10;
     ref = mol.GetAtom(1);
-    for(nbr = mol.BeginAtom(j);nbr && i != j;nbr = mol.NextAtom(j))
-      {  
-	if (nbr->GetIdx() < 3) continue;
+    for(nbr = mol.BeginAtom(j);nbr && (i != j);nbr = mol.NextAtom(j))
+    {
 	r = (atom->GetVector()-nbr->GetVector()).length_2();
 	if((r < sum) && (vic[nbr->GetIdx()]->_a != nbr) && 
 	   (vic[nbr->GetIdx()]->_b != nbr))
@@ -432,11 +438,28 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 	    sum = r;
 	    ref = nbr;
 	  }
-      }
-
+    }
+    
     vic[atom->GetIdx()]->_a = ref;
-    vic[atom->GetIdx()]->_b = vic[ref->GetIdx()]->_a;
-    vic[atom->GetIdx()]->_c = vic[ref->GetIdx()]->_b;
+    if (ref->GetIdx() >= 3)
+      {
+        vic[atom->GetIdx()]->_b = vic[ref->GetIdx()]->_a;
+        vic[atom->GetIdx()]->_c = vic[ref->GetIdx()]->_b;
+      }
+    else
+      {
+        if(ref->GetIdx()== 1)
+        {
+          vic[atom->GetIdx()]->_b = mol.GetAtom(2);
+          vic[atom->GetIdx()]->_c = mol.GetAtom(3);
+        }
+      else
+        {//ref->GetIdx()== 2
+          vic[atom->GetIdx()]->_b = mol.GetAtom(1);
+          vic[atom->GetIdx()]->_c = mol.GetAtom(3);
+        }
+    }
+    //cout << vic[atom->GetIdx()]->_a->GetIdx()<<":"<<vic[atom->GetIdx()]->_b->GetIdx()<<":"<<vic[atom->GetIdx()]->_c->GetIdx()<<endl;
   }
 
   //fill in geometries

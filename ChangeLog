@@ -1,3 +1,11 @@
+2002-11-28  Vincent Favre-Nicolin <vincefn@users.sf.net>
+
+	* src/obutil.cpp(CartesianToInternal): Fix the conversion
+	from cartesian to Internal coordinates. The previous code
+	prevented atom 3 to be bonded with atom 1, and any
+	atom with idx>3 to be bonded with atom 1 or 2, which does
+	happen sometimes...
+
 2002-11-27  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/atom.cpp(MemberOfRingSize): New method -- if atom is in a
