@@ -67,9 +67,9 @@ extern OBAtomTyper      atomtyper;
  (or the C++ equivalent cin) and write a MOL2 format file out
  to standard out. Additionally, The input and output formats can
  be altered after declaring an OBMol by the member functions
- OBMol::SetInputType(enum io_type type) and
- OBMol::SetOutputType(enum io_type type),
- where the current values of enum io_type (defined in data.h) are
+ OBMol::SetInputType(enum #io_type type) and
+ OBMol::SetOutputType(enum #io_type type),
+ where the current values of enum #io_type (defined in data.h) are
  \code {      UNDEFINED,
               ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
               CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
@@ -298,7 +298,7 @@ void OBMol::ContigFragList(vector<vector<int> >&cfl)
 }
 
 /*!
-**\brief Fills the Generic OBTorsionData with torsions from the mol
+**\brief Fills the OBGeneric OBTorsionData with torsions from the mol
 */
 void OBMol::FindTorsions()
 {
@@ -456,8 +456,8 @@ void OBMol::FindChildren(vector<int> &children,int first,int second)
 }
 
 /*!
-**\brief calculates the graph theoretical distance of each atom
-** vector is indexed from zero
+**\brief Calculates the graph theoretical distance of each atom.
+** Vector is indexed from zero
 */
 bool OBMol::GetGTDVector(vector<int> &gtd)
      //calculates the graph theoretical distance for every atom 
@@ -503,11 +503,11 @@ bool OBMol::GetGTDVector(vector<int> &gtd)
 }
 
 /*!
-**\brief calculates a set of graph invariant index using
-** graph theoretical distance, number of connected heavy atoms,
+**\brief Calculates a set of graph invariant indexes using
+** the graph theoretical distance, number of connected heavy atoms,
 ** aromatic boolean, ring boolean, atomic number, and 
-** summation of bond orders connected to the atom
-** vector is indexed from zero
+** summation of bond orders connected to the atom.
+** Vector is indexed from zero
 */
 void OBMol::GetGIVector(vector<unsigned int> &vid)
 {
@@ -613,9 +613,9 @@ static void	CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,vector
 }
 
 /*!
-**\brief Calculates a set of symmetry identifiers for a mol.
-** Atoms with the same sym ident are symmetrically equivalent
-** vector is indexed from zero
+**\brief Calculates a set of symmetry identifiers for a molecule.
+** Atoms with the same symmetry ID are symmetrically equivalent.
+** Vector is indexed from zero
 */
 void OBMol::GetGIDVector(vector<unsigned int> &vgid)
 {
@@ -2027,7 +2027,7 @@ bool OBMol::PerceiveKekuleBonds()
 	      !ExpandKekule(*this,va,va.begin(),maxv,true)) 
 	    {
 	      result = false;
-	      cerr << " Died on atom " << atom->GetIdx() << endl;
+	      //	      cerr << " Died on atom " << atom->GetIdx() << endl;
 	    }
         }
 
@@ -2206,7 +2206,6 @@ bool OBMol::DeleteBond(OBBond *bond)
 }
 
 void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)
-  // aligns atom a on p1 and atom b along p1->p2 vector
 {
   vector<int> children;
   
@@ -2390,7 +2389,6 @@ OBMol::~OBMol()
 }
 
 bool OBMol::HasData(string &s)
-     //returns true if the generic attribute/value pair exists
 {
   if (_vdata.empty()) return(false);
 

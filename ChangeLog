@@ -1,3 +1,27 @@
+2004-02-06  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* Doxyfile, doc/Doxyfile-man: Updated for 1.100.2 release and for
+	newer doxygen versions.
+
+	* src/base.cpp: Doxygen doc updates. Should produce links to key
+	classes in intro page.
+
+	* src/base.h, src/generic.cpp, src/mol.cpp, src/mol.h,
+	src/math/matrix3x3.cpp, src/math/vector3.cpp: Documentation updates.
+
+	* src/data.cpp, src/data.h, src/extable.txt, src/extable.h,
+	src/fileformat.cpp, src/fileformat.h: Updates for PQS format,
+	contributed by Pawel Wolinski <pwolinsk@uark.edu>.
+
+	* src/pqs.cpp: New code, as above.
+
+	* src/typer.h: Turn on root-atom detection via SelectRootAtoms.
+	
+	* test/smartstest.txt, test/attype.00.smi: Add new tests for ring
+	and SMARTS testing.
+
+	* test/ringresults.txt, test/smartsresults.txt: Regenerated.
+	
 2004-02-06  Michael Banck  <mbanck@gmx.net>
 
         * src/cml.cpp (debug): Fix loop control variable j.

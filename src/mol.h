@@ -2,7 +2,7 @@
 mol.h - Handle molecules.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2001-2004 by Geoffrey R. Hutchison
 Some portions Copyright (c) 2003 by Michael Banck
 
 This file is part of the Open Babel project.
@@ -112,6 +112,7 @@ public:
   void                              DeleteData(OBGenericData*);
   void                              DeleteData(std::vector<OBGenericData*>&);
   void                              SetData(OBGenericData *d) {_vdata.push_back(d);     }
+  //! Return the number of OBGenericData items attached to this molecule.
   unsigned int                      DataSize()                {return(_vdata.size());   }
   OBGenericData                    *GetData(obDataType);
   OBGenericData                    *GetData(std::string&);
@@ -384,6 +385,7 @@ public:
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d) {_vdata.push_back(d);     }
+    //! Return the number of OBGenericData items attached to this molecule.
     unsigned int                      DataSize()                {return(_vdata.size());   }
     OBGenericData                    *GetData(obDataType);
     OBGenericData                    *GetData(std::string&);
@@ -501,6 +503,7 @@ public:
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d) {_vdata.push_back(d);     }
+    //! Return the number of OBGenericData items attached to this molecule.
     unsigned int                      DataSize()                {return(_vdata.size());   }
     OBGenericData                    *GetData(obDataType);
     OBGenericData                    *GetData(std::string&);
@@ -542,20 +545,21 @@ protected:
   bool                          _compressed; //!< Is the molecule currently compressed?
   io_type                       _itype;	//!< Input I/O Type
   io_type                       _otype;	//!< Output I/O Type
-  std::string                   _title;	//!< Title
+  std::string                   _title;	//!< Molecule title
   //vector<OBAtom*>             _atom;	//!< not needed (inherited)
   //vector<OBBond*>             _bond;	//!< not needed (inherited)
   std::vector<OBResidue*>       _residue;//!< Residue information (if applicable)
   std::vector<OBInternalCoord*> _internals;//!< Internal Coordinates (if applicable)
-  std::vector<OBGenericData*>   _vdata;	//!< Custom data
-  double                         _energy;//!< Molecular heat of formation (if applicable)
+  std::vector<OBGenericData*>   _vdata;	//!< Custom data -- see OBGenericData class for more
+  double                        _energy;//!< Molecular heat of formation (if applicable)
   int				_totalCharge; //!< Total charge on the molecule
+  unsigned int                  _totalSpin; //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
   double                        *_c;	//!< coordinate array
-  std::vector<double*>           _vconf;	//!< vector of conformers
+  std::vector<double*>           _vconf;//!< vector of conformers
   unsigned short int            _natoms;//!< Number of atoms
   unsigned short int            _nbonds;//!< Number of bonds
   unsigned short int            _mod;	//!< Number of nested calls to BeginModify()
-  unsigned short int            _access;//!< Number of nested calls to BeginAccess
+  unsigned short int            _access;//!< Number of nested calls to BeginAccess()
 
   bool  HasFlag(int flag)  {return((_flags & flag) ? true : false);}
   void  SetFlag(int flag)  {_flags |= flag;}
@@ -564,7 +568,7 @@ public:
 
     //! \name Initialization and data (re)size methods
     //@{
-    //! Constructor \param{input format} \param{output format}
+    //! Constructor (input format) (output format)
     OBMol(io_type=UNDEFINED,io_type=UNDEFINED);
     //! Copy constructor
     OBMol(const OBMol &);
@@ -593,10 +597,7 @@ public:
     int GetMod() {return(_mod);}
     void IncrementMod() {_mod++;}
     void DecrementMod() {_mod--;}
-    void SetAutomaticFormalCharge(bool val)     {_autoFormalCharge=val;}
-    void SetAutomaticPartialCharge(bool val)    {_autoPartialCharge=val;}
-    bool AutomaticFormalCharge()             {return(_autoFormalCharge);}
-    bool AutomaticPartialCharge()            {return(_autoPartialCharge);}
+
     //! Save memory by rolling into the OEBinary format as a buffer
     virtual bool Compress(void);
     //! Roll data out from the obCompressData buffer
@@ -604,13 +605,17 @@ public:
     
     //! \name Methods for handling generic data
     //@{
+     //! Returns true if the generic attribute/value pair exists
     bool                              HasData(std::string &);
+     //! Returns true if the generic attribute/value pair exists
     bool                              HasData(const char *);
+     //! Returns true if the generic attribute/value pair exists
     bool                              HasData(obDataType);
     void                              DeleteData(obDataType);
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d) {_vdata.push_back(d);     }
+    //! Return the number of OBGenericData items attached to this molecule.
     unsigned int                      DataSize()                {return(_vdata.size());   }
     OBGenericData                    *GetData(obDataType);
     OBGenericData                    *GetData(std::string&);
@@ -631,6 +636,7 @@ public:
     //! The number of non-hydrogen atoms
     unsigned int NumHvyAtoms();
     unsigned int NumResidues() const                  {return(_residue.size());}
+    //! The number of rotatble bonds
     unsigned int NumRotors();
     OBAtom      *GetAtom(int);
     OBAtom      *GetFirstAtom();
@@ -641,26 +647,42 @@ public:
     std::vector<OBInternalCoord*> GetInternalCoord();
     double       GetTorsion(int,int,int,int);
     double       GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
-    void         SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double);
+    //! Heat of formation for this molecule (in kcal/mol)
     double       GetEnergy() const                   {return(_energy);}
-    //! Standard molar mass given by IUPAC atomic masses
+    //! Standard molar mass given by IUPAC atomic masses (amu)
     double       GetMolWt();
-    //! Mass given by isotopes (or most abundant isotope as necessary)
+    //! Mass given by isotopes (or most abundant isotope, if not specified)
     double	 GetExactMass();
+    //! Total charge on this molecule (i.e., 0 = neutral, +1, -1...)
     int		 GetTotalCharge();
+    //! Total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
+    unsigned int GetTotalSpin();
     double      *GetCoordinates()                    {return(_c);}
     std::vector<OBRing*> &GetSSSR();
     bool         IsCompressed() const                {return _compressed;}
+    //! Get the current flag for whether formal charges are set with pH correction
+    bool AutomaticFormalCharge()             {return(_autoFormalCharge);}
+    //! Get the current flag for whether partial charges are auto-determined
+    bool AutomaticPartialCharge()            {return(_autoPartialCharge);}
     //@}
 
-    //***data modification methods***
+
+    //! \name Data modification methods
+    //@{
     void   SetTitle(const char *title)     {_title = title;}
     void   SetTitle(std::string &title)    {_title = title;}
+    //! Set the heat of formation for this molecule (in kcal/mol)
     void   SetEnergy(double energy)        {_energy = energy;}
     void   SetTotalCharge(int charge);
+    void   SetTotalSpin(unsigned int spin);
     void   SetInputType(io_type type)      {_itype = type;}
     void   SetOutputType(io_type type)     {_otype = type;}
     void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord) {_internals = int_coord;}
+    //! Set the flag for determining automatic formal charges with pH
+    void SetAutomaticFormalCharge(bool val)     {_autoFormalCharge=val;}
+    //! Set the flag for determining partial charges automatically
+    void SetAutomaticPartialCharge(bool val)    {_autoPartialCharge=val;}
+
     void   SetAromaticPerceived()          {SetFlag(OB_AROMATIC_MOL);}
     void   SetSSSRPerceived()              {SetFlag(OB_SSSR_MOL);}
     void   SetRingAtomsAndBondsPerceived() {SetFlag(OB_RINGFLAGS_MOL);}
@@ -710,6 +732,8 @@ public:
     bool StripSalts();
     bool CorrectForPH();
     vector3 Center(int nconf);
+    //! Set the torsion defined by these atoms, rotating bonded neighbors
+    void SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double);
     //@}
 
     //! \name Molecule utilities and perception methods
@@ -721,9 +745,10 @@ public:
     void FindChildren(std::vector<int> &,int,int);
     void FindChildren(std::vector<OBAtom*>&,OBAtom*,OBAtom*);
     void FindLargestFragment(OBBitVec &);
-    //!Sort a list of contig fragments by size from largest to smallest
-    //!Each vector<int> contains the atom numbers of a contig fragment
+    //! Sort a list of contig fragments by size from largest to smallest
+    //! Each vector<int> contains the atom numbers of a contig fragment
     void ContigFragList(std::vector<std::vector<int> >&);
+    //! Aligns atom a on p1 and atom b along p1->p2 vector
     void Align(OBAtom*,OBAtom*,vector3&,vector3&);
     //! Adds single bonds based on atom proximity
     void ConnectTheDots();
@@ -731,19 +756,28 @@ public:
     void PerceiveBondOrders();
     void FindTorsions();
 //  void ConnectTheDotsSort();
+    // documented in mol.cpp: graph-theoretical distance for each atom
     bool         GetGTDVector(std::vector<int> &);
+    // documented in mol.cpp: graph-invariant index for each atom
     void         GetGIVector(std::vector<unsigned int> &);
+    // documented in mol.cpp: calculate symmetry-unique identifiers
     void         GetGIDVector(std::vector<unsigned int> &);
     //@}
 
+    //! Call when accessing a compressed molecule to uncompress if needed.
     virtual void BeginAccess(void);
+    //! Call when finished accessing a compressed molecule to recompress.
     virtual void EndAccess(void);
+    //! Call when making many modifications -- clears conformer/rotomer data.
     virtual void BeginModify(void);
+    //! Call when done with modificaions -- re-perceive data as needed.
     virtual void EndModify(bool nukePerceivedData=true);
 
     //! \name Methods to check for existence of properties
     //@{
+    //! Are there non-zero coordinates in two dimensions (i.e. X and Y)?
     bool Has2D();
+    //! Are there non-zero coordinates in all three dimensions (i.e. X, Y, Z)?
     bool Has3D();
     bool HasNonZeroCoords();
     bool HasAromaticPerceived()          {return(HasFlag(OB_AROMATIC_MOL));       }
@@ -785,14 +819,14 @@ public:
     //@{
     int     NumConformers()         {return((_vconf.empty())?0:_vconf.size());}
     void    SetConformers(std::vector<double*> &v);
-    void    AddConformer(double *f)                  {_vconf.push_back(f);}
+    void    AddConformer(double *f)                 {_vconf.push_back(f);}
     void    SetConformer(int i)                     {_c = _vconf[i];}
     void    CopyConformer(double*,int);
     void    DeleteConformer(int);
-    double  *GetConformer(int i)                     {return(_vconf[i]);}
+    double  *GetConformer(int i)                    {return(_vconf[i]);}
     double  *BeginConformer(std::vector<double*>::iterator&);
     double  *NextConformer(std::vector<double*>::iterator&);
-    std::vector<double*> &GetConformers()                   {return(_vconf);}
+    std::vector<double*> &GetConformers()           {return(_vconf);}
     //@}
 
     //! \name Misc bond functions
@@ -801,7 +835,7 @@ public:
     //void SortBonds() {sort(_vbond.begin(),_vbond.end(),CompareBonds);}
     //@}
 
-    //! \name Convenience functions***
+    //! \name Convenience functions for I/O
     //@{
     friend std::ostream&       operator<< ( std::ostream&, OBMol& ) ;
     friend std::istream&       operator>> ( std::istream&, OBMol& ) ;

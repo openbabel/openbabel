@@ -33,7 +33,7 @@ class OBGraphBase;
 
 /** Base Class
 
- The various classes (Atom, Bond, Molecule) inherit from base classes
+ The various classes (Atom, Bond, Molecule) inherit from base classes--
  OBBase is just a placeholder class
 */
 class OBBase

@@ -415,7 +415,7 @@ void OBAngle::Clear()
 
 /*!
 **\brief Sets the 3 atoms in the angle
-**\param pointers to each OBAtom
+** Parameters are pointers to each OBAtom
 */
 void OBAngle::SetAtoms(OBAtom *vertex,OBAtom *a,OBAtom *b)
 {

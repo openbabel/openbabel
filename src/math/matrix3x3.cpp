@@ -34,23 +34,25 @@ using namespace std;
 
 namespace OpenBabel {
 
-  /*! \class matrix3x3
-     \brief Represents a real 3x3 matrix.
+/** \class matrix3x3
+    \brief Represents a real 3x3 matrix.
 
-Rotating points in space can be performed by a vector-matrix
-multiplication. The matrix3x3 class is designed as a helper to the
-vector3 class for rotating points in space. The rotation matrix may be
-initialised by passing in the array of doubleing point values, by
-passing euler angles, or a rotation vector and angle of rotation about
-that vector. Once set, the matrix3x3 class can be used to rotate
-vectors by the overloaded multiplication operator. The following
-demonstrates the usage of the matrix3x3 class:
-/code
+ Rotating points in space can be performed by a vector-matrix
+ multiplication. The matrix3x3 class is designed as a helper to the
+ vector3 class for rotating points in space. The rotation matrix may be
+ initialised by passing in the array of doubleing point values, by
+ passing euler angles, or a rotation vector and angle of rotation about
+ that vector. Once set, the matrix3x3 class can be used to rotate
+ vectors by the overloaded multiplication operator. The following
+ demonstrates the usage of the matrix3x3 class:
+
+\code
   matrix3x3 mat;
   mat.SetupRotMat(0.0,180.0,0.0); //rotate theta by 180 degrees
   vector3 v = VX;
   v *= mat; //apply the rotation
-/endcode
+\endcode
+
 */
 
   /*! the axis of the rotation will be uniformly distributed on
@@ -141,7 +143,7 @@ void matrix3x3::PlaneReflection(const vector3 &norm)
 	
   \todo Replace this method with a more fool-proof version.
 	
-  @param axis specifies the axis of the rotation
+  @param v specifies the axis of the rotation
   @param angle angle in degrees (0..360)
 */
 void matrix3x3::RotAboutAxisByAngle(const vector3 &v,const double angle)
