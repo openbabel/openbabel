@@ -1,3 +1,8 @@
+2002-10-11  Michael Banck <mbanck@gmx.net>
+
+	* Added src/math/Makefile.in, adjusted configure.in and 
+        src/Makefile.in
+
 2002-09-19  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/aromatic.h, src/aromatic.txt: Remove selenium aromatic
