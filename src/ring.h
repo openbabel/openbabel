@@ -93,7 +93,7 @@ class OBRing
   int    Size()     const     {return(_path.size());}
   int    PathSize() const     {return(_path.size());}
   bool   IsMember(OBAtom *a);
-	bool	 IsMember(OBBond *b);
+  bool	 IsMember(OBBond *b);
   bool   IsAromatic();
   bool   IsInRing(int i)      {return(_pathset.BitIsOn(i));}
   void   SetParent(OBMol *m)  {_parent = m;}

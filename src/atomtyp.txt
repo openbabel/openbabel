@@ -48,6 +48,8 @@ IMPVAL	[$([#8]=*)]			1
 IMPVAL	[#8-]				1
 IMPVAL  [$([#8D1]~[#7D3]~[#8D1])]	1
 IMPVAL	[$([#8D1]~[#6]~[#8D1])]		1
+# This is from JOELib
+#IMPVAL	[$([#8D1]-[#6]=[#8D1])]		2
 
 IMPVAL	[N^3]			3
 IMPVAL	[N^3+]			4

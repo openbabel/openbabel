@@ -2125,6 +2125,26 @@ void OBMol::ToInertialFrame(int conf,float *rmat)
   }
 }
 
+istream& operator>> (istream &ifs, OBMol &mol)
+{
+    bool retcode = OBFileFormat::ReadMolecule(ifs, mol);
+
+    if (!retcode)
+    {
+        if (mol.GetMod())
+            mol.EndModify();
+        mol.Clear();
+    }
+
+    return(ifs);
+}
+
+ostream& operator<< (ostream &ofs, OBMol &mol)
+{
+    OBFileFormat::WriteMolecule(ofs, mol);
+    return(ofs);
+}
+
 OBMol::OBMol(io_type itype,io_type otype)
 {
   _natoms = _nbonds = 0;
@@ -2758,7 +2778,8 @@ void OBMol::PerceiveBondOrders()
 	  // (and pick the one with highest electronegativity first)
 	  // *or* pick a neighbor that's a terminal atom
 
-	  if (atom->GetAtomicNum() == 7 && atom->BOSum() + 2 > 3)
+	  if (atom->HasNonSingleBond() || 
+	      (atom->GetAtomicNum() == 7 && atom->BOSum() + 2 > 3))
 	    continue;
 
 	  maxElNeg = 0.0f;
@@ -2773,7 +2794,8 @@ void OBMol::PerceiveBondOrders()
 		       (currentElNeg == maxElNeg
 			&& (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
-		  if (b->GetAtomicNum() == 7 && b->BOSum() + 2 > 3)
+		  if (b->HasNonSingleBond() || 
+		      (b->GetAtomicNum() == 7 && b->BOSum() + 2 > 3))
 		    continue;
 
 		  shortestBond = (atom->GetBond(b))->GetLength();
@@ -2788,7 +2810,8 @@ void OBMol::PerceiveBondOrders()
 		&& atom->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
 	{
 	  // as above
-	  if (atom->GetAtomicNum() == 7 && atom->BOSum() + 1 > 3)
+	  if (atom->HasNonSingleBond() ||
+	      (atom->GetAtomicNum() == 7 && atom->BOSum() + 1 > 3))
 	    continue;
 
 	  maxElNeg = 0.0f;
@@ -2803,7 +2826,8 @@ void OBMol::PerceiveBondOrders()
                       (currentElNeg == maxElNeg
                        && (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
-		  if (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3)
+		  if (b->HasNonSingleBond() ||
+		      (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
 		    continue;
 
 		  shortestBond = (atom->GetBond(b))->GetLength();

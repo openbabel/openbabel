@@ -59,7 +59,6 @@ void OBMolVector::Read(ifstream &ifs, const io_type in_type, const io_type out_t
 }
 
 // Write a OBMolVector to a file.  Output type defaults to SDF
-
 void OBMolVector::Write(ofstream &ofs)
 {
   vector<OBMol *>::iterator mol_i;

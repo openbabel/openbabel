@@ -408,6 +408,7 @@ public:
     unsigned int  ImplicitHydrogenCount() const;
     unsigned int  ExplicitHydrogenCount() const;
     unsigned int  MemberOfRingCount()     const;
+    unsigned int  MemberOfRingSize()	  const;
     unsigned int  BOSum()                 const; //sum of the bond orders of the bonds to the atom
     unsigned int  KBOSum()                const;
 
@@ -791,6 +792,7 @@ public:
     void   UnsetAromaticPerceived()        {_flags &= (~(OB_AROMATIC_MOL));}
     void   UnsetPartialChargesPerceived()  {_flags &= (~(OB_PCHARGE_MOL));}
     void   UnsetImplicitValencePerceived() {_flags &= (~(OB_IMPVAL_MOL));}
+    void   UnsetFlag(int flag)		   {_flags &= (~(flag));}
 
     //***molecule modification methods***
     bool Clear();
