@@ -5,3 +5,4 @@ babel
 config.log
 config.status
 stamp.h
+autom4te.cache
