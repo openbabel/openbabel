@@ -25,7 +25,7 @@ GNU General Public License for more details.
 #include <fstream>
 
 
-#ifdef __BORLAND__ 
+#ifdef __BORLANDC__ 
  /* Borland c++ compiler does not have strncasecmp() */
  #include <string.h>
  #include <ctype.h>
@@ -52,7 +52,7 @@ GNU General Public License for more details.
          return tolower(*(unsigned char *) s1) - tolower(*(unsigned char *) s2);
  }
  
-#endif /* __BORLAND__ */
+#endif /* __BORLANDC__ */
 
 
 using namespace std;
