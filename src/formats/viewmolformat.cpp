@@ -85,7 +85,6 @@ ViewMolFormat theViewMolFormat;
 /////////////////////////////////////////////////////////////////
 bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
-
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
         return false;
@@ -104,9 +103,11 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     bool foundTitle = false;
     bool foundBonds = false;
 
+    mol.Clear();
     mol.BeginModify();
 
-    while	(ifs.getline(buffer,BUFF_SIZE))
+    ifs.getline(buffer,BUFF_SIZE);
+    while (ifs.peek() != EOF && ifs.good())
     {
         if (strstr(buffer,"$title") != NULL)
         {
@@ -114,6 +115,7 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                 return (false);
             mol.SetTitle(buffer);
             foundTitle = true;
+	    ifs.getline(buffer,BUFF_SIZE);
         }
         else if (strstr(buffer,"$coord") != NULL)
         {
@@ -122,11 +124,12 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                 factor = atof((char*)vs[1].c_str()); // conversion to angstrom
             while (ifs.getline(buffer,BUFF_SIZE))
             {
+
                 if (buffer[0] == '$')
                     break;
                 tokenize(vs,buffer);
                 if (vs.size() != 4)
-                    return(false);
+		  break;
                 atom = mol.NewAtom();
                 x = atof((char*)vs[0].c_str()) * factor;
                 y = atof((char*)vs[1].c_str()) * factor;
@@ -151,18 +154,19 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             }
         }
         else if (strstr(buffer,"$end") != NULL)
-            break;
+	  break;
     } // while
 
-    mol.EndModify();
-
-    if (!foundTitle)
-        mol.SetTitle(title);
     if (!foundBonds)
     {
         mol.ConnectTheDots();
         mol.PerceiveBondOrders();
     }
+
+    mol.EndModify();
+
+    if (!foundTitle)
+        mol.SetTitle(title);
     return(true);
 }
 
