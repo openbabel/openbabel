@@ -1,3 +1,10 @@
+004-02-12 Fabien Fontaine <ffontaine@imim.es>
+
+	* tools/obgrep.cpp: -t NUM option added to control 
+	the number of match in each molecule
+	*tools/obprop.cpp: new tools added to compute and print 
+	simple molecular properties for non C++ programmers
+	
 2004-02-06  Michael Banck  <mbanck@gmx.net>
 
 	* src/cml.cpp (debug): Fix loop control variable j.
