@@ -1,15 +1,12 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(openbabel, 1.100.1)
+AC_INIT(openbabel, 1.100.1, openbabel-discuss@lists.sourceforge.net)
 AC_CONFIG_SRCDIR(src/obutil.cpp)
 AC_CONFIG_HEADER(src/babelconfig.h)
-AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of openbabel])
+AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of Open Babel])
 
-dnl AM_INIT_AUTOMAKE([openbabel], version)
 AC_CANONICAL_HOST
 top_builddir=`pwd`
 AC_SUBST(top_builddir)
-openbabel_version=1.100.1
-AC_SUBST(openbabel_version)
 
 AC_DEFINE_DIR([DATADIR], [datadir/AC_PACKAGE_NAME], [Where the data files are located])
 
@@ -41,26 +38,11 @@ dnl Checks for libraries.
 AC_CHECK_LIB(m, asin, , exit)
 
 dnl Checks for header files.
-AC_CHECK_HEADER(sys/time.h,, exit)
-AC_CHECK_HEADER(unistd.h,, exit)
-AC_CHECK_HEADER(stdlib.h,, exit)
-AC_CHECK_HEADER(stdio.h,, exit)
-dnl AC_CHECK_HEADER(conio.h,, exit)
-AC_CHECK_HEADER(string.h,, exit)
-AC_CHECK_HEADER(strstream.h,, exit)
-AC_CHECK_HEADER(iostream.h,, exit)
-AC_CHECK_HEADER(fstream.h,, exit)
-AC_CHECK_HEADER(math.h,, exit)
-AC_CHECK_HEADER(time.h,, exit)
-AC_CHECK_HEADER(ctype.h,, exit) 
-AC_CHECK_HEADER(algorithm,, exit)
-AC_CHECK_HEADER(vector,, exit)
-AC_CHECK_HEADER(map,, exit)
-AC_CHECK_HEADER(list,, exit)
-AC_CHECK_HEADER(strstream,, exit)
-AC_CHECK_HEADER(iostream,, exit)
-AC_CHECK_HEADER(fstream,, exit)
-AC_CHECK_HEADER(deque,, exit)
+AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
+AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
+AC_CHECK_HEADERS(ctype.h)
+AC_CHECK_HEADERS(algorithm vector map list strstream iostream fstream)
+AC_CHECK_HEADERS(deque sstream)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
