@@ -1,3 +1,7 @@
+2002-07-30  Michael Banck <mbanck@gmx.net>
+
+	* src/gaussian.cpp: Last atom was written twice
+
 2002-07-26  Stefan Kebekus <kebekus@users.sourceforge.net>
 
 	* added documentation
