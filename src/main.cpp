@@ -11,6 +11,162 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+/* OpenBabel man page*/
+/** \page openbabel a converter for molecular modeling data files
+*
+* \n
+* \par SYNOPSIS
+*
+* \b openbabel [-d] [-h] [-hpH] [-f<#> -l<#>] [-c] [-x<xmlflags>] [-i<input-type>] <infile> [-o<output-type>] <outfile>  
+*
+* \par DESCRIPTION
+*
+* Open Babel is a program designed to interconvert a number of 
+* file formats currently used in molecular modeling software. \n\n
+* Note that OpenBabel can also be used as a library to import
+* molecular formats in other software packages. See the OpenBabel
+* web pages (http://openbabel.sourceforge.net) for more information.
+*
+* \par OPTIONS
+*
+* If only input and ouput files are given, Open Babel will guess 
+* the file type from the filename extension. \n\n
+* \b -i :
+*     Specifies input format, see below for the available formats \n\n
+* \b -o :
+*     Specifies output format, see below for the available formats \n\n
+* \b -d : 
+*     Delete Hydrogens \n\n
+* \b -h : 
+*     Add Hydrogens \n\n
+* \b -hpH : 
+*     Add Hydrogens appropriate for pH (use transforms in phmodel.txt)  \n\n
+* \b -f<#> : 
+*     For multiple entries input, start import at molecule # \n\n
+* \b -l<#> : 
+*     For multiple entries input, stop import at molecule # \n\n
+* \b -c : 
+*     Center atomic coordinates at (0,0,0) \n\n
+* \b -x<flags>:
+*     XML.CML options (e.g. -x1ac) (see below) \n\n
+*
+*  \par INPUT FORMATS
+*
+*  Open Babel recognizes the following input formats:
+*   \n     alc -- Alchemy file
+*   \n     prep -- AMBER PREP file
+*   \n     bs -- Ball and Stick file
+*   \n     caccrt -- Cacao Cartesian file
+*   \n     ccc -- CCC file
+*   \n     box -- Dock 3.5 Box file
+*   \n     feat -- Feature file
+*   \n     gam -- GAMESS Output file
+*   \n     gamout -- GAMESS Output file
+*   \n     mm1gp -- Ghemical MM file
+*   \n     qm1gp -- Ghemical QM file
+*   \n     hin -- Hyperchem HIN file
+*   \n     jout -- Jaguar Output file
+*   \n     bin -- OpenEye Binary file
+*   \n     mmd -- MacroModel file
+*   \n     mmod -- MacroModel file
+*   \n     out -- MacroModel file
+*   \n     dat -- MacroModel file
+*   \n     car -- MSI Biosym/Insight II CAR file
+*   \n     sdf -- MDL Isis SDF file
+*   \n     sd -- MDL Isis SDF file
+*   \n     mdl -- MDL Molfile file
+*   \n     mol -- MDL Molfile file
+*   \n     mopcrt -- MOPAC Cartesian file
+*   \n     mopout -- MOPAC Output file
+*   \n     mpqc -- MPQC file
+*   \n     bgf -- MSI BGF file
+*   \n     nwo -- NWChem Output file
+*   \n     pdb -- PDB file
+*   \n     qcout -- QChem Output file
+*   \n     smi -- SMILES file
+*   \n     mol2 -- Sybyl Mol2 file
+*   \n     unixyz -- UniChem XYZ file
+*   \n     xyz -- XYZ file
+*
+* \par OUTPUT FORMATS
+*
+*  The following output formats may be written by Open Babel:
+*   \n     alc -- Alchemy file
+*   \n     bs -- Ball & Stick file
+*   \n     caccrt -- Cacao Cartesian file
+*   \n     cacint -- Cacao Internal file
+*   \n     cache -- CAChe MolStruct file
+*   \n     ct -- ChemDraw Connection Table file
+*   \n     cssr -- CSD CSSR file
+*   \n     box -- Dock 3.5 Box file
+*   \n     dmol -- DMol3 Coordinates file
+*   \n     feat -- Feature file
+*   \n     fh -- Fenske-Hall Z-Matrix file
+*   \n     gamin -- GAMESS Input file
+*   \n     inp -- GAMESS Input file
+*   \n     gcart -- Gaussian Cartesian file
+*   \n     gau -- Gaussian Input file
+*   \n     mm1gp -- Ghemical MM file
+*   \n     gr96A -- GROMOS96 (A) file
+*   \n     gr96N -- GROMOS96 (nm) file
+*   \n     hin -- HyperChem HIN file
+*   \n     jin -- Jaguar Input file
+*   \n     bin -- OpenEye Binary file
+*   \n     mmd -- MacroModel file
+*   \n     mmod -- MacroModel file
+*   \n     out -- MacroModel file
+*   \n     dat -- MacroModel file
+*   \n     sdf -- MDL Isis SDF file
+*   \n     sd -- MDL Isis SDF file
+*   \n     mdl -- MDL Molfile file
+*   \n     mol -- MDL Molfile file
+*   \n     mopcrt -- MOPAC Cartesian file
+*   \n     bgf -- MSI BGF file
+*   \n     csr -- MSI Quanta CSR file
+*   \n     nw -- NWChem Input file
+*   \n     pdb -- PDB file
+*   \n     report -- Report file
+*   \n     qcin -- QChem Input file
+*   \n     smi -- SMILES file
+*   \n     fix -- SMILES Fix file
+*   \n     mol2 -- Sybyl Mol2 file
+*   \n     txyz -- Tinker XYZ file
+*   \n     txt -- Titles file
+*   \n     unixyz -- UniChem XYZ file
+*   \n     xed -- XED file
+*   \n     xyz -- XYZ file
+*
+* \par XML.CML OPTIONS
+*    Chemical Markup Language (http://www.xml-cml.org/) options \n \n
+*     \n 1 output CML V1.0 (default)
+*     \n 2 output CML V2.0 (Schema)
+*     \n a output array format for atoms and bonds (default <atom>)
+*     \n p prettyprint output (default no indent)
+*     \n n output namespace (default no namespace)
+*     \n c use 'cml' as output namespace prefix (else default) (forces n)
+*     \n d output DOCTYPE (default none)
+*     \n g debug output
+*     
+* \par EXAMPLE
+*     openbabel -ixyz ethanol.xyz -opdb ethanol.pdb
+* \par AUTHOR
+*
+* Open Babel is derived from OElib, written by \b Matt \b Stahl, which is a rewrite of the classic babel program. Open Babel is currently maintained by \b Geoff \b Hutchison and \b Michael \b Banck.
+*
+* \par COPYRIGHT
+*  Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+*  Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison \n \n
+*  This program is free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation version 2 of the License.\n \n
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+* \par SEE ALSO
+*   The web pages for OpenBabel can be found at http://openbabel.sourceforge.net
+**/
 
 #include "mol.h"
 #include "molvector.h"

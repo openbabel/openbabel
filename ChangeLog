@@ -1,3 +1,9 @@
+2003-06-23  Vincent Favre-Nicolin  <vincefn@users.sourceforge.net>
+   * doc/Doxyfile-man, src/main.cpp, Doxyfile: Added the man page
+   in doxygen format in main.cpp, for automatic generation of the 
+   man page from the source code, using 'Doxygen Doxyfile-man' in the
+   doc/ directory. Normal Doxygen run now skips src/main.cpp
+
 2003-06-23  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* doc/babel.1: Update with current command-line options and file
