@@ -1,139 +1,611 @@
-#Open Babel Makefile
+# Makefile.in generated automatically by automake 1.4-p6 from Makefile.am
 
-prefix        = @prefix@
-exec_prefix   = @exec_prefix@
-pkgdatadir    = @datadir@/openbabel
-bindir        = @bindir@
+# Copyright (C) 1994, 1995-8, 1999, 2001 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
 
-DESTDIR       = 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
 
-CC            = @CC@
-CXX	      = @CXX@
 
-CFLAGS        = @CFLAGS@
-CXXFLAGS      = @CXXFLAGS@ 
-INCS          = -I$(srcdir) -I$(builddir)
-LIBS	      = @LIBS@
-LIBFLAGS      = -DLIBRARY
+SHELL = @SHELL@
 
-LINKER	      = $(CXX)
-LDFLAGS       = @LDFLAGS@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
 
-RM            = rm -f
-INSTALL	      = @INSTALL@
-MKDIRS        = $(top_srcdir)/mkinstalldirs
-AR	      = @AR@
-RANLIB	      = @RANLIB@
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
 
-srcdir        = @srcdir@
-VPATH         = @srcdir@
-top_srcdir    = @top_srcdir@
-top_builddir  = @top_builddir@
-builddir      = @top_builddir@src
+DESTDIR =
 
-MAIN	      = main.o
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
 
-DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt \
-		resdata.txt types.txt phmodel.txt \
-		isotope.txt isotope-small.txt bondtyp.txt
+top_builddir = ..
 
-DATAINCS      = aromatic.h atomtyp.h element.h extable.h \
-	        phmodeldata.h resdata.h types.h isotope.h \
-		bondtyp.h
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
 
-HDRS	      = aromatic.h atomtyp.h base.h binary.h \
-		bitvec.h chiral.h chains.h \
-		data.h element.h extable.h fileformat.h grid.h \
-		matrix.h mol.h molchrg.h molvector.h obifstream.h \
-		obutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
-		resdata.h ring.h rotor.h smi.h typer.h types.h \
-		chains.h generic.h oberror.h isotope.h bondtyp.h
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
 
-OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
-		bond.o \
-		chains.o data.o molvector.o matrix.o\
-		chiral.o grid.o mdl.o mol.o mol2.o molchrg.o \
-		obutil.o parsmi.o parsmart.o patty.o \
-		ring.o rotor.o smi.o tokenst.o pdb.o ccc.o \
-		mmod.o rand.o box.o balst.o bgf.o cacao.o cache.o chdrw.o \
-		csr.o cssr.o feat.o fh.o gromos96.o \
-		povray.o ghemical.o xyz.o fileformat.o gamess.o hin.o \
-		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
-		jaguar.o amber.o generic.o residue.o \
-		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o viewmol.o \
-		cml.o oberror.o zindo.o shelx.o
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+host_alias = @host_alias@
+host_triplet = @host@
+AS = @AS@
+CC = @CC@
+CXX = @CXX@
+CXXCPP = @CXXCPP@
+DLLTOOL = @DLLTOOL@
+DOCTOOL = @DOCTOOL@
+ECHO = @ECHO@
+EXEEXT = @EXEEXT@
+LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+RANLIB = @RANLIB@
+STRIP = @STRIP@
+VERSION = @VERSION@
 
-EXTRAOBJS     = math/vector3.o math/matrix3x3.o
+SUBDIRS = math windows
 
-PROGRAM	      = babel
+lib_LTLIBRARIES = libopenbabel.la
 
-LIBRARY       = libopenbabel.a
+libopenbabel_la_SOURCES =  		alchemy.cpp amber.cpp atom.cpp balst.cpp base.cpp bgf.cpp 		binary.cpp bitvec.cpp bond.cpp box.cpp c3d.cpp cacao.cpp 		cache.cpp car.cpp ccc.cpp chains.cpp chdrw.cpp chiral.cpp 		cml.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp 		fileformat.cpp gamess.cpp gaussian.cpp generic.cpp 		ghemical.cpp grid.cpp gromos96.cpp hin.cpp jaguar.cpp main.cpp 		matrix.cpp mdl.cpp mm3.cpp mmod.cpp mol.cpp mol2.cpp 		molchrg.cpp molvector.cpp mopac.cpp mpqc.cpp nwchem.cpp 		oberror.cpp obutil.cpp parsmart.cpp parsmi.cpp patty.cpp 		pdb.cpp phmodel.cpp povray.cpp qchem.cpp rand.cpp report.cpp 		residue.cpp ring.cpp rotor.cpp shelx.cpp smi.cpp tinker.cpp 		tokenst.cpp typer.cpp unichem.cpp viewmol.cpp xed.cpp xyz.cpp 		zindo.cpp
 
-EXTRA_DIST    = bin2hex.pl
 
-MAKEFILE      = Makefile
+libopenbabel_la_LIBADD = math/libmath.la
 
-$(PROGRAM):     $(MAIN) $(LIBRARY)
-		$(LINKER) $(LDFLAGS) -o  $(PROGRAM) $(MAIN) $(LIBRARY) $(LIBS)
+libopenbabelincludedir = $(includedir)/openbabel
+libopenbabelinclude_HEADERS =  		aromatic.h atomtyp.h base.h binary.h bitvec.h bondtyp.h 		bondtyper.h chains.h chiral.h data.h element.h extable.h 		fileformat.h generic.h grid.h isotope.h matrix.h mol.h 		molchrg.h molvector.h oberror.h obifstream.h obutil.h 		parsmart.h patty.h phmodel.h phmodeldata.h resdata.h ring.h 		rotor.h smi.h typer.h types.h
 
-$(LIBRARY):	$(DATAINCS) $(OBJS) $(EXTRAOBJS)
-		$(AR) -r $(LIBRARY) $(OBJS) $(EXTRAOBJS)
-		$(RANLIB) $(LIBRARY)
 
-all:		$(DATAINCS) $(LIBRARY) $(PROGRAM)
+bin_PROGRAMS = babel
+babel_SOURCES = main.cpp
+babel_LDADD = libopenbabel.la
 
-test:		check
-check:		$(PROGRAM)
+pkgdata_DATA =  		aromatic.txt bondtyp.txt extable.txt isotope.txt resdata.txt 		atomtyp.txt element.txt isotope-small.txt phmodel.txt types.txt
 
-clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
 
-distclean:	clean
-		$(RM) babelconfig.h Makefile
+EXTRA_DIST =  	bc32.mak borland.bat oblib.dsp oblib.dsw 	bin2hex.pl $(pkgdata_DATA) 	newmain.cpp bondtyper.cpp bondtyper.h
 
-install:	$(PROGRAM)
-		$(MKDIRS) $(DESTDIR)$(bindir)
-		$(INSTALL) $(PROGRAM) $(DESTDIR)$(bindir)
-		$(MKDIRS) $(DESTDIR)$(pkgdatadir)
-		(cd $(srcdir); $(INSTALL) -m644 $(DATAFILES) $(DESTDIR)$(pkgdatadir))
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = babelconfig.h
+CONFIG_CLEAN_FILES = 
+LTLIBRARIES =  $(lib_LTLIBRARIES)
 
-print:;		$(PRINT) $(HDRS) $(SRCS)
 
-program:        $(PROGRAM)
+DEFS = @DEFS@ -I. -I$(srcdir) -I.
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+libopenbabel_la_LDFLAGS = 
+libopenbabel_la_DEPENDENCIES =  math/libmath.la
+libopenbabel_la_OBJECTS =  alchemy.lo amber.lo atom.lo balst.lo base.lo \
+bgf.lo binary.lo bitvec.lo bond.lo box.lo c3d.lo cacao.lo cache.lo \
+car.lo ccc.lo chains.lo chdrw.lo chiral.lo cml.lo csr.lo cssr.lo \
+data.lo dmol.lo feat.lo fh.lo fileformat.lo gamess.lo gaussian.lo \
+generic.lo ghemical.lo grid.lo gromos96.lo hin.lo jaguar.lo main.lo \
+matrix.lo mdl.lo mm3.lo mmod.lo mol.lo mol2.lo molchrg.lo molvector.lo \
+mopac.lo mpqc.lo nwchem.lo oberror.lo obutil.lo parsmart.lo parsmi.lo \
+patty.lo pdb.lo phmodel.lo povray.lo qchem.lo rand.lo report.lo \
+residue.lo ring.lo rotor.lo shelx.lo smi.lo tinker.lo tokenst.lo \
+typer.lo unichem.lo viewmol.lo xed.lo xyz.lo zindo.lo
+bin_PROGRAMS =  babel$(EXEEXT)
+PROGRAMS =  $(bin_PROGRAMS)
 
-dist:		distclean
+babel_OBJECTS =  main.$(OBJEXT)
+babel_DEPENDENCIES =  libopenbabel.la
+babel_LDFLAGS = 
+CXXFLAGS = @CXXFLAGS@
+CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+CXXLD = $(CXX)
+CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
+DATA =  $(pkgdata_DATA)
 
-# Generated include files (default data tables)
-aromatic.h:	bin2hex.pl aromatic.txt
-		(cd $(srcdir); ./bin2hex.pl aromatic.txt AromaticData >aromatic.h)
+HEADERS =  $(libopenbabelinclude_HEADERS)
 
-atomtyp.h:	bin2hex.pl atomtyp.txt
-		(cd $(srcdir); ./bin2hex.pl atomtyp.txt AtomTypeData >atomtyp.h)
+DIST_COMMON =  ./stamp-h.in Makefile.am Makefile.in babelconfig.h.in
 
-element.h:	bin2hex.pl element.txt
-		(cd $(srcdir); ./bin2hex.pl element.txt ElementData >element.h)
 
-extable.h:	bin2hex.pl extable.txt
-		(cd $(srcdir); ./bin2hex.pl extable.txt ExtensionTableData >extable.h)
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
-phmodeldata.h:	bin2hex.pl phmodel.txt
-		(cd $(srcdir); ./bin2hex.pl phmodel.txt PhModelData PHMODELDATA >phmodeldata.h)
+TAR = tar
+GZIP_ENV = --best
+DEP_FILES =  .deps/alchemy.P .deps/amber.P .deps/atom.P .deps/balst.P \
+.deps/base.P .deps/bgf.P .deps/binary.P .deps/bitvec.P .deps/bond.P \
+.deps/box.P .deps/c3d.P .deps/cacao.P .deps/cache.P .deps/car.P \
+.deps/ccc.P .deps/chains.P .deps/chdrw.P .deps/chiral.P .deps/cml.P \
+.deps/csr.P .deps/cssr.P .deps/data.P .deps/dmol.P .deps/feat.P \
+.deps/fh.P .deps/fileformat.P .deps/gamess.P .deps/gaussian.P \
+.deps/generic.P .deps/ghemical.P .deps/grid.P .deps/gromos96.P \
+.deps/hin.P .deps/jaguar.P .deps/main.P .deps/matrix.P .deps/mdl.P \
+.deps/mm3.P .deps/mmod.P .deps/mol.P .deps/mol2.P .deps/molchrg.P \
+.deps/molvector.P .deps/mopac.P .deps/mpqc.P .deps/nwchem.P \
+.deps/oberror.P .deps/obutil.P .deps/parsmart.P .deps/parsmi.P \
+.deps/patty.P .deps/pdb.P .deps/phmodel.P .deps/povray.P .deps/qchem.P \
+.deps/rand.P .deps/report.P .deps/residue.P .deps/ring.P .deps/rotor.P \
+.deps/shelx.P .deps/smi.P .deps/tinker.P .deps/tokenst.P .deps/typer.P \
+.deps/unichem.P .deps/viewmol.P .deps/xed.P .deps/xyz.P .deps/zindo.P
+SOURCES = $(libopenbabel_la_SOURCES) $(babel_SOURCES)
+OBJECTS = $(libopenbabel_la_OBJECTS) $(babel_OBJECTS)
 
-resdata.h:	bin2hex.pl resdata.txt
-		(cd $(srcdir); ./bin2hex.pl resdata.txt ResidueData >resdata.h)
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .S .c .cpp .lo .o .obj .s
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu src/Makefile
 
-types.h:	bin2hex.pl types.txt
-		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
-isotope.h:	bin2hex.pl isotope-small.txt
-		(cd $(srcdir); ./bin2hex.pl isotope-small.txt IsotopeData ISOTOPE >isotope.h)
 
-bondtyp.h:	bin2hex.pl bondtyp.txt
-		(cd $(srcdir); ./bin2hex.pl bondtyp.txt BondTypeData >bondtyp.h)
+babelconfig.h: stamp-h
+	@if test ! -f $@; then \
+		rm -f stamp-h; \
+		$(MAKE) stamp-h; \
+	else :; fi
+stamp-h: $(srcdir)/babelconfig.h.in $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES= CONFIG_HEADERS=src/babelconfig.h \
+	     $(SHELL) ./config.status
+	@echo timestamp > stamp-h 2> /dev/null
+$(srcdir)/babelconfig.h.in: $(srcdir)/stamp-h.in
+	@if test ! -f $@; then \
+		rm -f $(srcdir)/stamp-h.in; \
+		$(MAKE) $(srcdir)/stamp-h.in; \
+	else :; fi
+$(srcdir)/stamp-h.in: $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOHEADER)
+	@echo timestamp > $(srcdir)/stamp-h.in 2> /dev/null
 
-# Update the Makefile if the Makefile.in or configure script changes
-Makefile:	Makefile.in
-		(cd ..; ./config.status)
+mostlyclean-hdr:
 
-.SUFFIXES:	.cpp
+clean-hdr:
+
+distclean-hdr:
+	-rm -f babelconfig.h
+
+maintainer-clean-hdr:
+
+mostlyclean-libLTLIBRARIES:
+
+clean-libLTLIBRARIES:
+	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+
+distclean-libLTLIBRARIES:
+
+maintainer-clean-libLTLIBRARIES:
+
+install-libLTLIBRARIES: $(lib_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(libdir)
+	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    echo "$(LIBTOOL)  --mode=install $(INSTALL) $$p $(DESTDIR)$(libdir)/$$p"; \
+	    $(LIBTOOL)  --mode=install $(INSTALL) $$p $(DESTDIR)$(libdir)/$$p; \
+	  else :; fi; \
+	done
+
+uninstall-libLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  $(LIBTOOL)  --mode=uninstall rm -f $(DESTDIR)$(libdir)/$$p; \
+	done
+
+# FIXME: We should only use cygpath when building on Windows,
+# and only if it is available.
+.c.obj:
+	$(COMPILE) -c `cygpath -w $<`
+
+.s.o:
+	$(COMPILE) -c $<
+
+.S.o:
+	$(COMPILE) -c $<
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+	-rm -f *.$(OBJEXT)
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+.s.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.S.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+
+distclean-libtool:
+
+maintainer-clean-libtool:
+
+libopenbabel.la: $(libopenbabel_la_OBJECTS) $(libopenbabel_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libopenbabel_la_LDFLAGS) $(libopenbabel_la_OBJECTS) $(libopenbabel_la_LIBADD) $(LIBS)
+
+mostlyclean-binPROGRAMS:
+
+clean-binPROGRAMS:
+	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+
+distclean-binPROGRAMS:
+
+maintainer-clean-binPROGRAMS:
+
+install-binPROGRAMS: $(bin_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(bindir)
+	@list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    echo " $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`"; \
+	    $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
+	  else :; fi; \
+	done
+
+uninstall-binPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
+	done
+
+babel$(EXEEXT): $(babel_OBJECTS) $(babel_DEPENDENCIES)
+	@rm -f babel$(EXEEXT)
+	$(CXXLINK) $(babel_LDFLAGS) $(babel_OBJECTS) $(babel_LDADD) $(LIBS)
 .cpp.o:
-		$(CXX) $(CXXFLAGS) $(DEFS) $(INCS) -c $< -o $@
+	$(CXXCOMPILE) -c $<
+.cpp.obj:
+	$(CXXCOMPILE) -c `cygpath -w $<`
+.cpp.lo:
+	$(LTCXXCOMPILE) -c $<
+
+install-pkgdataDATA: $(pkgdata_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)
+	@list='$(pkgdata_DATA)'; for p in $$list; do \
+	  if test -f $(srcdir)/$$p; then \
+	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(pkgdatadir)/$$p"; \
+	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(pkgdatadir)/$$p; \
+	  else if test -f $$p; then \
+	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(pkgdatadir)/$$p"; \
+	    $(INSTALL_DATA) $$p $(DESTDIR)$(pkgdatadir)/$$p; \
+	  fi; fi; \
+	done
+
+uninstall-pkgdataDATA:
+	@$(NORMAL_UNINSTALL)
+	list='$(pkgdata_DATA)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(pkgdatadir)/$$p; \
+	done
+
+install-libopenbabelincludeHEADERS: $(libopenbabelinclude_HEADERS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(libopenbabelincludedir)
+	@list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
+	  if test -f "$$p"; then d= ; else d="$(srcdir)/"; fi; \
+	  echo " $(INSTALL_DATA) $$d$$p $(DESTDIR)$(libopenbabelincludedir)/$$p"; \
+	  $(INSTALL_DATA) $$d$$p $(DESTDIR)$(libopenbabelincludedir)/$$p; \
+	done
+
+uninstall-libopenbabelincludeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(libopenbabelincludedir)/$$p; \
+	done
+
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+
+@SET_MAKE@
+
+all-recursive install-data-recursive install-exec-recursive \
+installdirs-recursive install-recursive uninstall-recursive  \
+check-recursive installcheck-recursive info-recursive dvi-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
+
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	rev=''; list='$(SUBDIRS)'; for subdir in $$list; do \
+	  rev="$$subdir $$rev"; \
+	  test "$$subdir" != "." || dot_seen=yes; \
+	done; \
+	test "$$dot_seen" = "no" && rev=". $$rev"; \
+	target=`echo $@ | sed s/-recursive//`; \
+	for subdir in $$rev; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
+	done
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
+
+TAGS: tags-recursive $(HEADERS) $(SOURCES) babelconfig.h.in $(TAGS_DEPENDENCIES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+   if test "$$subdir" = .; then :; else \
+	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+   fi; \
+	done; \
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)babelconfig.h.in$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags -o $$here/TAGS $(ETAGS_ARGS) $$tags babelconfig.h.in $$unique $(LISP))
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+subdir = src
+
+distdir: $(DISTFILES)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(top_distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
+	cd $(top_srcdir) \
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu src/Makefile
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
+	done
+	for subdir in $(SUBDIRS); do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d $(distdir)/$$subdir \
+	    || mkdir $(distdir)/$$subdir \
+	    || exit 1; \
+	    chmod 777 $(distdir)/$$subdir; \
+	    (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir=../$(top_distdir) distdir=../$(distdir)/$$subdir distdir) \
+	      || exit 1; \
+	  fi; \
+	done
+
+DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+
+-include $(DEP_FILES)
+
+mostlyclean-depend:
+
+clean-depend:
+
+distclean-depend:
+	-rm -rf .deps
+
+maintainer-clean-depend:
+
+%.o: %.c
+	@echo '$(COMPILE) -c $<'; \
+	$(COMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-cp .deps/$(*F).pp .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm .deps/$(*F).pp
+
+%.lo: %.c
+	@echo '$(LTCOMPILE) -c $<'; \
+	$(LTCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
+	  < .deps/$(*F).pp > .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm -f .deps/$(*F).pp
+
+%.o: %.cpp
+	@echo '$(CXXCOMPILE) -c $<'; \
+	$(CXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-cp .deps/$(*F).pp .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm .deps/$(*F).pp
+
+%.lo: %.cpp
+	@echo '$(LTCXXCOMPILE) -c $<'; \
+	$(LTCXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
+	  < .deps/$(*F).pp > .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm -f .deps/$(*F).pp
+info-am:
+info: info-recursive
+dvi-am:
+dvi: dvi-recursive
+check-am: all-am
+check: check-recursive
+installcheck-am:
+installcheck: installcheck-recursive
+all-recursive-am: babelconfig.h
+	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+
+install-exec-am: install-libLTLIBRARIES install-binPROGRAMS
+install-exec: install-exec-recursive
+
+install-data-am: install-pkgdataDATA install-libopenbabelincludeHEADERS
+install-data: install-data-recursive
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-recursive
+uninstall-am: uninstall-libLTLIBRARIES uninstall-binPROGRAMS \
+		uninstall-pkgdataDATA \
+		uninstall-libopenbabelincludeHEADERS
+uninstall: uninstall-recursive
+all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(DATA) $(HEADERS) \
+		babelconfig.h
+all-redirect: all-recursive-am
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
+installdirs: installdirs-recursive
+installdirs-am:
+	$(mkinstalldirs)  $(DESTDIR)$(libdir) $(DESTDIR)$(bindir) \
+		$(DESTDIR)$(pkgdatadir) \
+		$(DESTDIR)$(libopenbabelincludedir)
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+mostlyclean-am:  mostlyclean-hdr mostlyclean-libLTLIBRARIES \
+		mostlyclean-compile mostlyclean-libtool \
+		mostlyclean-binPROGRAMS mostlyclean-tags \
+		mostlyclean-depend mostlyclean-generic
+
+mostlyclean: mostlyclean-recursive
+
+clean-am:  clean-hdr clean-libLTLIBRARIES clean-compile clean-libtool \
+		clean-binPROGRAMS clean-tags clean-depend clean-generic \
+		mostlyclean-am
+
+clean: clean-recursive
+
+distclean-am:  distclean-hdr distclean-libLTLIBRARIES distclean-compile \
+		distclean-libtool distclean-binPROGRAMS distclean-tags \
+		distclean-depend distclean-generic clean-am
+	-rm -f libtool
+
+distclean: distclean-recursive
+
+maintainer-clean-am:  maintainer-clean-hdr \
+		maintainer-clean-libLTLIBRARIES \
+		maintainer-clean-compile maintainer-clean-libtool \
+		maintainer-clean-binPROGRAMS maintainer-clean-tags \
+		maintainer-clean-depend maintainer-clean-generic \
+		distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-recursive
+
+.PHONY: mostlyclean-hdr distclean-hdr clean-hdr maintainer-clean-hdr \
+mostlyclean-libLTLIBRARIES distclean-libLTLIBRARIES \
+clean-libLTLIBRARIES maintainer-clean-libLTLIBRARIES \
+uninstall-libLTLIBRARIES install-libLTLIBRARIES mostlyclean-compile \
+distclean-compile clean-compile maintainer-clean-compile \
+mostlyclean-libtool distclean-libtool clean-libtool \
+maintainer-clean-libtool mostlyclean-binPROGRAMS distclean-binPROGRAMS \
+clean-binPROGRAMS maintainer-clean-binPROGRAMS uninstall-binPROGRAMS \
+install-binPROGRAMS uninstall-pkgdataDATA install-pkgdataDATA \
+uninstall-libopenbabelincludeHEADERS install-libopenbabelincludeHEADERS \
+install-data-recursive uninstall-data-recursive install-exec-recursive \
+uninstall-exec-recursive installdirs-recursive uninstalldirs-recursive \
+all-recursive check-recursive installcheck-recursive info-recursive \
+dvi-recursive mostlyclean-recursive distclean-recursive clean-recursive \
+maintainer-clean-recursive tags tags-recursive mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir \
+mostlyclean-depend distclean-depend clean-depend \
+maintainer-clean-depend info-am info dvi-am dvi check check-am \
+installcheck-am installcheck all-recursive-am install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all installdirs-am \
+installdirs mostlyclean-generic distclean-generic clean-generic \
+maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:
