@@ -910,6 +910,12 @@ unsigned int OBAtom::ImplicitHydrogenCount() const
         atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
 
     int impval = _impval - GetHvyValence();
+		//Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
+		int mult = GetSpinMultiplicity();
+		if(mult==2) //radical
+			impval-=1;
+		else if(mult==1 || mult==3) //carbene
+			impval-=2;
     return((impval>0)?impval:0);
 }
 

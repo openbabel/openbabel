@@ -1653,6 +1653,14 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
             continue;
 
         hcount = atom->GetImplicitValence() - atom->GetValence();
+
+				//Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
+				int mult = atom->GetSpinMultiplicity();
+				if(mult==2) //radical
+					hcount-=1;
+				else if(mult==1 || mult==3) //carbene
+					hcount-=2;
+
         if (hcount < 0)
             hcount = 0;
         if (hcount)
@@ -1758,7 +1766,14 @@ bool OBMol::AddHydrogens(OBAtom *atom)
 
     hcount = atom->GetImplicitValence() - atom->GetValence();
 
-    if (hcount < 0)
+		//Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
+		int mult = atom->GetSpinMultiplicity();
+		if(mult==2) //radical
+			hcount-=1;
+		else if(mult==1 || mult==3) //carbene
+			hcount-=2;
+
+				if (hcount < 0)
         hcount = 0;
     if (hcount)
     {
@@ -1834,7 +1849,7 @@ bool OBMol::AssignSpinMultiplicity()
         return(true);
 
     SetSpinMultiplicityAssigned();
-
+		
     OBAtom *atom;
     int diff, mult;
     vector<OBNodeBase*>::iterator k;
@@ -1844,18 +1859,19 @@ bool OBMol::AssignSpinMultiplicity()
     //Also adjust the ImplicitValence for radical atoms
     for (atom = BeginAtom(k);atom;atom = NextAtom(k))
     {
-        if (!atom->IsHydrogen() && atom->ExplicitHydrogenCount()!=0)
+        
+				if (!atom->IsHydrogen() && atom->ExplicitHydrogenCount()!=0)
         {
             diff=atom->GetImplicitValence() - (atom->GetHvyValence() + atom->ExplicitHydrogenCount());
             if (diff)
                 atom->SetSpinMultiplicity(diff+1);//radicals =2; all carbenes =3
         }
 
-        mult=atom->GetSpinMultiplicity();
-        if(mult) //radical or carbene
-            atom->DecrementImplicitValence();
-        if(mult==1 || mult==3) //e.g.singlet or triplet carbene
-            atom->DecrementImplicitValence();
+//Jan05        mult=atom->GetSpinMultiplicity();
+//        if(mult) //radical or carbene
+//            atom->DecrementImplicitValence();
+//        if(mult==1 || mult==3) //e.g.singlet or triplet carbene
+//            atom->DecrementImplicitValence();
     }
     //end CM
 
