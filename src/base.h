@@ -17,8 +17,6 @@ GNU General Public License for more details.
 #include <vector>
 #include <iostream>
 
-using namespace std;
-
 namespace OpenBabel
 {
 

@@ -33,8 +33,6 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
-using namespace std;
-
 #include "base.h"
 #include "data.h"
 #include "chains.h"

@@ -20,8 +20,6 @@ GNU General Public License for more details.
 #include <vector>
 #include <map>
 
-using namespace std;
-
 class ArgumentInfo
 {
  public:

@@ -26,8 +26,6 @@ GNU General Public License for more details.
 
 #include "base.h"
 
-using namespace std;
-
 namespace OpenBabel
 {
 

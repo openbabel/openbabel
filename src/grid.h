@@ -23,7 +23,6 @@ GNU General Public License for more details.
 #include <algorithm>
 #include <vector>
 #include <string>
-using namespace std;
 
 #ifndef OBPolarGrid
 #define OBPolarGrid 0x01

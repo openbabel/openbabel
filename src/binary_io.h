@@ -14,8 +14,6 @@
 #include <iostream.h>
 #endif
 
-using namespace std;
-
 namespace OpenBabel {
 
 /* generic binary readers for basic data types */

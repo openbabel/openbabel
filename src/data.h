@@ -28,8 +28,6 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
-using namespace std;
-
 #ifndef BUFF_SIZE
 #define BUFF_SIZE 1024
 #endif

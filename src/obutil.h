@@ -28,9 +28,6 @@ GNU General Public License for more details.
 #include <sys/time.h>
 #endif
 
-using namespace std;
-//using namespace OpenBabel;  //I don't believe this is needed
-
 namespace OpenBabel {
 
 //*** Stopwatch class used for timing length of execution ***

@@ -3,10 +3,20 @@
 	* src/mol.cpp (PerceiveBonds): Improve accuracy by picking the
 	closer atom (shorter bond) when there are two atoms with equal
 	electronegativities.
+
+	* src/main.cpp: Add -v flag to give version information but not
+	the whole usage report.
 	
+	* src/base.h, src/binary_io.h, src/bitvec.h, src/commandline.h,
+	src/ctransform.h, src/data.h, src/fileformat.h, src/grid.h,
+	src/matrix.h, src/mol.h, src/obutil.h, src/smarts.h: Remove
+	"using" statements from header files which pollute namespace of
+	user code. Fixes PR#493388.
+
 2002-02-14  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
-	* src/data.h, src/data.cpp: Add MIME support to OBExtensionTable.
+	* src/data.h, src/data.cpp: Add MIME support to
+	OBExtensionTable. Progress towards feature request #511533.
 
 	* src/extable.txt, src/extable.h: As above (using as much from the
 	current Chemical MIME page as possible).
@@ -14,7 +24,7 @@
 	* src/mol.h, src/mol.cpp (PerceiveBonds): Add preliminary support
 	for assigning bond orders based on Roger Sayle's "Cruft to
 	Content" algorithm. Still needs functional group and aromatic ring
-	recognition passes.
+	recognition passes. Progress towards feature request #514589.
 	<http://www.daylight.com/meetings/mug01/Sayle/m4xbondage.html>
 
 	* src/mopac.cc: Fix bugs in read/write methods as pointed out by

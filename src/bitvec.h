@@ -28,8 +28,6 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
-using namespace std;
-
 #ifndef SETWORD
 #define SETWORD 32
 #endif

@@ -18,7 +18,6 @@ GNU General Public License for more details.
 
 #include "binary_io.h"
 #include "Vector.h"
-using namespace OpenBabel;
 
 namespace OpenBabel {
 
