@@ -1,3 +1,12 @@
+2005-03-02  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/mol.h, babelconfig.h Move some DLL-related #defines
+	to babelconfig.h
+
+	* src/oberror.h Declare global obErrorLog here to aid DLL builds.
+
+	Update Windows build files
+
 2005-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/atom.cpp (GetType): Call global OBTypeTable ttab rather than
