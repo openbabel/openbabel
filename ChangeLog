@@ -6,6 +6,9 @@
 
 	* src/element.h: Regenerate using bin2hex.pl.
 
+	* src/ghemical.cpp: Don't try to type atoms, it only causes
+	problems with the internal atom typing.
+
 2002-02-07  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 	
 	* src/Makefile.in: Add c3d.cpp to the compilation list.

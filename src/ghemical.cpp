@@ -30,8 +30,6 @@ bool ReadGhemical(istream &ifs,OBMol &mol,char *title)
   bool hasPartialCharges = false;
 
   mol.BeginModify();
-  ttab.SetFromType("ATN");
-  ttab.SetToType("INT");
 
   // Get !Header line with version number
   ifs.getline(buffer,BUFF_SIZE);
@@ -55,8 +53,6 @@ bool ReadGhemical(istream &ifs,OBMol &mol,char *title)
     if (vs.size() != 2) return(false);
     atom = mol.NewAtom();
     atom->SetAtomicNum(atoi(vs[1].c_str()));
-    ttab.Translate(str,vs[1]); 
-    atom->SetType(str);
   }
 
   // Get !Bonds line with number
