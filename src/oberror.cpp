@@ -35,15 +35,11 @@ namespace OpenBabel
 {
 
 OBError::OBError( const string &method, const string &errorMsg, const string &explanation,
-                  const string &possibleCause, const string &suggestedRemedy)
+                  const string &possibleCause, const string &suggestedRemedy) :
+  _method(method), _errorMsg(errorMsg), _explanation(explanation),
+  _possibleCause(possibleCause), _suggestedRemedy(suggestedRemedy)
 {
-    _method          = method;
-    _errorMsg        = errorMsg;
-    _explanation     = explanation;
-    _possibleCause   = possibleCause;
-    _suggestedRemedy = suggestedRemedy;
 
-    cerr << message();
 }
 
 string OBError::message() const
@@ -60,5 +56,48 @@ string OBError::message() const
     tmp += "==============================\n";
     return tmp;
 }
+
+
+OBMessageHandler::OBMessageHandler() :
+  _outputStream(&cerr), _outputLevel(obError)
+{ }
+
+OBMessageHandler::~OBMessageHandler()
+{ }
+    
+void OBMessageHandler::ThrowError(OBError err, obMessageLevel level)
+{
+  pair <OBError, obMessageLevel> p(err, level);
+  _messageList.push_back(p);
+
+  if (level <= _outputLevel)
+    *_outputStream << err;
+}
+
+void OBMessageHandler::ThrowError(const std::string &method, 
+				  const std::string &errorMsg,
+				  obMessageLevel level)
+{
+  OBError err(method, errorMsg);
+
+  ThrowError(err, level);
+}
+
+std::vector<std::string> OBMessageHandler::GetMessagesOfLevel(const obMessageLevel level)
+{
+  vector<string> results;
+  vector<pair<OBError, obMessageLevel> >::iterator i;
+  pair<OBError, obMessageLevel> message;
+
+  for (i = _messageList.begin(); i != _messageList.end(); i++)
+    {
+      message = (*i);
+      if (message.second == level)
+	results.push_back( (message.first).message() );
+    }
+
+  return results;
+}
+
 
 } // end namespace OpenBabel
