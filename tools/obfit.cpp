@@ -224,6 +224,29 @@ int main(int argc,char **argv)
 	//rotate all the atoms
 	molmv.Rotate(rmatrix);
 
+	double *mvcoor = new double[size*3];
+
+	for(c=0; c<size; c++)
+	  {
+	    atom = molmv.GetAtom(mvatoms[c]);
+	    mvcoor[c*3] = atom->x();
+	    mvcoor[c*3+1] = atom->y();
+	    mvcoor[c*3+2] = atom->z();
+	  }
+
+	double rmsd = calc_rms(refcoor,mvcoor,size);
+	char rmsd_string[80];
+	sprintf(rmsd_string,"%f", rmsd);
+
+	OBCommentData *cd = new OBCommentData;
+	molmv.SetData(cd);
+	
+	OBPairData *dp = new OBPairData;
+	
+	dp->SetAttribute("RMSD");
+	dp->SetValue(rmsd_string);
+	molmv.SetData(dp);
+
 	//translate the rotated molecule
 	molmv.Translate(tvref);
       }
