@@ -160,6 +160,7 @@ class OBUnitCell: public OBGenericData
 {
  protected:
       float _a, _b, _c, _alpha, _beta, _gamma;
+      std::string _spaceGroup;
  public:
       OBUnitCell();
       OBUnitCell(const OBUnitCell &);
@@ -171,6 +172,8 @@ class OBUnitCell: public OBGenericData
 		   const float alpha, const float beta, const float gamma)
 	{ _a = a; _b = b; _c = c; _alpha = alpha; _beta = beta; _gamma = gamma;}
       void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
+      void SetSpaceGroup(const std::string sg) 	{_spaceGroup = sg;}
+
       float GetA()				{return(_a);}
       float GetB()				{return(_b);}
       float GetC()				{return(_c);}
@@ -183,6 +186,7 @@ class OBUnitCell: public OBGenericData
       matrix3x3	GetCellMatrix();
       //! Fill in the elements of the orthogonalization matrix
       matrix3x3 GetOrthoMatrix();
+      const std::string GetSpaceGroup() 	{return(_spaceGroup);}
 };
 
 /*!
