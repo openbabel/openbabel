@@ -22,7 +22,12 @@ GNU General Public License for more details.
 
 #include <vector>
 #include <map>
+
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
+#endif
 
 #include "mol.h"
 #include "rotor.h"

@@ -23,7 +23,12 @@ GNU General Public License for more details.
 #define OB_UTIL_H
 
 #include <string>
+
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
 
 #if TIME_WITH_SYS_TIME
 #include <sys/time.h>

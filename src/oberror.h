@@ -21,7 +21,12 @@ General Public License for more details.
 #ifndef OB_ERROR_H
 #define OB_ERROR_H
 
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
+
 #include <string>
 
 namespace OpenBabel {

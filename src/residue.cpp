@@ -26,8 +26,17 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 // File Includes
 ///////////////////////////////////////////////////////////////////////////////
 
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
+
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
+#endif
 
 #include "mol.h"
 #include "bitvec.h"

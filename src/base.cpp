@@ -19,8 +19,17 @@ GNU General Public License for more details.
 
 #include "base.h"
 
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
+
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
+#endif
 
 using namespace std;
 

@@ -21,7 +21,12 @@ GNU General Public License for more details.
 #define OB_BASE_H
 
 #include <vector>
+
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
 
 namespace OpenBabel
 {

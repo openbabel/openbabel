@@ -13,6 +13,33 @@
 	src/residue.cpp, src/rotor.cpp, src/typer.cpp, src/typer.h:
 	Updated documentation for generation by doxygen.
 	
+2004-02-07  Michael Banck  <mbanck@gmx.net>
+
+	* src/math/matrix3x3.h [ __sgi]: Removed and...
+	[HAVE_IOSTRAM], [HAVE_FSTREAM]: Replaced with this.
+	* src/math/vector3.h: Likewise.
+	* src/base.cpp [#include <iostream>]: Removed and...
+	[HAVE_IOSTREAM, HAVE_IOSTREAM_H]: Replaced with this.
+	* src/base.h: Likewise.
+	* src/crk.h: Likewise.
+	* src/data.h: Likewise.
+	* src/fileformat.h: Likewise.
+	* src/main.cpp: Likewise.
+	* src/mol.h: Likewise.
+	* src/oberror.cpp: Likewise.
+	* src/oberror.h: Likewise.
+	* src/obutil.h: Likewise.
+	* src/residue.cpp: Likewise.
+	* src/base.cpp [#include <fstream>]: Removed and...
+	[HAVE_FSTREAM, HAVE_FSTREAM_H]: Replaced with this. 
+	* src/binary.h: Likewise.
+	* src/crk.h: Likewise.
+	* src/data.h: Likewise.
+	* src/fileformat.h: Likewise.
+	* src/main.cpp: Likewise.
+	* src/mol.h: Likewise.
+	* src/residue.cpp: Likewise.
+
 2004-02-06  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
 
 	* Doxyfile, doc/Doxyfile-man: Updated for 1.100.2 release and for
