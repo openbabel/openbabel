@@ -1,0 +1,11 @@
+Makefile
+ii_files
+libbabel.a
+babel
+config.log
+config.status
+stamp.h
+autom4te.cache
+aclocal.m4
+libtool
+openbabel.pc

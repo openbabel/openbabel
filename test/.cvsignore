@@ -1,0 +1,9 @@
+Makefile
+ii_files
+libbabel.a
+babel
+obtest
+roundtrip
+.deps
+.libs
+*.lo
