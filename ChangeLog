@@ -1,4 +1,15 @@
-2005-03-02  Geoffrey Hutchison  <ghutchis@Alumina.local>
+2005-03-07  Geoff Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/cml.cpp (endMolecule): Only call InternalToCartesian
+	if required (i.e., only internal coords available, all cartesian
+	coords are zero) and only call bonding methods (ConnectTheDots and
+	PerceiveBondOrders) if needed. Provides a huge performance
+	increase on most files.
+
+	* tools/obfit.cpp: Modified to output an RMSD of the fit as
+	contributed by Konrad Koehler. Addresses PR#1157440.
+
+2005-03-02  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/parsmart.cpp (OBSSMatch::Match): Added check to prevent
 	accessing atoms that do not exist -- appears in PR#1119970.
@@ -12,7 +23,7 @@
 
 	Update Windows build files
 
-2005-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-02-27  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/atom.cpp (GetType): Call global OBTypeTable ttab rather than
 	declaring a local version.
@@ -25,7 +36,7 @@
 	* src/obconversion.cpp: Removed ThrowError and #include mol.h
 	Added -c option for continuing with next molecule after an error
 	
-2005-02-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-02-17  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/ghemicalformat.cpp (ReadMolecule): Add some initial
 	support for ghemical 1.5x files. Reported by Avell Diroll.
@@ -49,7 +60,7 @@
 
 	* configure, */Makefile.in: Updated automatically from above.
 
-2005-02-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-02-15  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mdlformat.cpp (ReadMolecule): Fix bug where long
 	property lines would set ifs.fail() and consequently file appeared
@@ -65,13 +76,13 @@
 	covalent radii -- this is used internally in many places and
 	cannot easily be removed. Add more doxygen documentation.
 
-2005-02-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-02-10  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp (operator+): Fix PR#119352 to copy bond flag
 	information when adding bonds. Thanks to Daen de Leon for the bug
 	report and fix.
 
-2005-02-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-02-09  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* data/atomtyp.txt: Change implicit valence rules for acidic
 	oxygens -- ensure default AddHydrogen() response is to add acidic
@@ -141,7 +152,7 @@
 	Check for empty FileList;  
 	In Windows moved saved options file from current folder to TEMP
 
-2005-01-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-01-30  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/bondtyper.cpp (ParseLine): Make sure loop variable "i" is
 	initialized, pointed out by Chris Morley.
@@ -196,7 +207,7 @@
 	* src/formats/*.cpp: Ensure consistency of format description
 	naming, particularly to match Open Babel 1.100.x and Babel 1.6.
 	
-2005-01-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-01-20  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/main.cpp: For non-Win32 platforms, use $HOME/.openbabel to
 	store recent options -- keeping with standard UNIX practices.
@@ -226,7 +237,7 @@
 	conversion or user code must specify this! Among other PRs, fixed
 	PR# 110671.
 
-2005-01-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-01-19  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/bondtyper.h src/bondtyper.cpp: New method
 	AssignFunctionalGroupBonds() to replace code in
@@ -267,7 +278,7 @@
 	* windows/OBDLL/map2def2.exe added  
 	* windows/babelconfig.h updated  
 
-2005-01-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-01-07  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.h (GetMIMEType): New method for chemical MIME
 	support.
@@ -276,12 +287,12 @@
 	lower-case and previous Babel standards. Added MIME types where
 	appropriate.
 
-2005-01-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-01-06  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/main.cpp, src/obconversion.cpp, src/obconversion.h: Updated
 	files from Chris Morley.
 
-2005-01-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-01-01  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* tools/obfit.cpp, tools/obgrep.cpp, tools/obprop.cpp,
 	tools/obrotate.cpp, tools/obtanimoto.cpp: Update to use the
@@ -290,7 +301,7 @@
 	* src/formats/*.cpp: Clean out formats which don't currently have
 	format specification URLs.
 
-2004-12-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2004-12-23  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* *.cpp, *.h: Reformat using astyle --style=ansi.
 
@@ -308,7 +319,7 @@
 	* test/ringtest.cpp, test/smartstest.cpp, test/rountrip.cpp:
 	Convert to using OBConversion from OBFileFormat.
 
-2004-10-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2004-10-19  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* Initial merging of Chris Morley's new file translation framework.
 	Compiles and runs through "babel -H".
@@ -397,7 +408,7 @@
 	'__declspec(dllexport) extern'. Update global definitions
 	accordingly.
 	
-2004-08-17  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+2004-08-17  Geoff Hutchison  <ghutchis@wso.williams.edu>
 
 	* configure.in: Make the check for doxygen to be a typical
 	AC_PATH_PROG -- it's not a critical dependency.
@@ -409,7 +420,7 @@
 	* src/isotope-small.txt, src/isotope.txt: Update with latest data
 	from 2003 canonical data. 
 
-2004-07-20  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+2004-07-20  Geoff Hutchison  <ghutchis@wso.williams.edu>
 
 	* src/ghemical.cpp: Ignore multiple coordinate sets -- only read
 	the first one currently, but don't bail if more than one exists.
@@ -428,7 +439,7 @@
 	* test/unitcell.cpp (TestUnitCell): Use %lf instead of %f to read
 	in the values from unitcell.txt.
 
-2004-03-07  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+2004-03-07  Geoff Hutchison  <ghutchis@wso.williams.edu>
 
 	* src/chdrw.cpp (ReadChemDraw): Add support for reading ChemDraw
 	CT files.
@@ -484,7 +495,7 @@
 	* NEWS: Updated from 1.100.2 release.
 	* ChangeLog: Fixed some tabs.
 
-2004-02-10  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+2004-02-10  Geoff Hutchison  <ghutchis@wso.williams.edu>
 
 	* configure, configure.in: Update with notes on versioning for
 	shared library support.
@@ -508,7 +519,7 @@
 	AC_PACKAGE_NAME.
 	* configure: Regenerated.
 
-2004-02-10  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+2004-02-10  Geoff Hutchison  <ghutchis@wso.williams.edu>
 
 	* src/mol.cpp: Documentation updates.
 
@@ -545,7 +556,7 @@
 	*tools/obprop.cpp: new tools added to compute and print 
 	simple molecular properties for non C++ programmers
 	
-2004-02-10  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+2004-02-10  Geoff Hutchison  <ghutchis@wso.williams.edu>
 
 	* configure, configure.in: Change --enable-shared to the
 	default. Build shared libraries except where specified by the
@@ -579,7 +590,7 @@
 	* src/oberror.cpp: Likewise.
 	* src/residue.cpp: Likewise.
 
-2004-02-08  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+2004-02-08  Geoff Hutchison  <ghutchis@wso.williams.edu>
 
 	* src/mol.cpp, src/qchem.cpp, src/gaussian.cpp, src/report.cpp:
 	Improved support for spin multiplicity and total charge --
@@ -621,7 +632,7 @@
 	* src/mol.h: Likewise.
 	* src/residue.cpp: Likewise.
 
-2004-02-06  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+2004-02-06  Geoff Hutchison  <ghutchis@wso.williams.edu>
 
 	* Doxyfile, doc/Doxyfile-man: Updated for 1.100.2 release and for
 	newer doxygen versions.
@@ -655,7 +666,7 @@
 	* tools/obgrep.cpp: -n option added to print 
 	the name of the matched molecules only
 
-2004-02-02  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+2004-02-02  Geoff Hutchison  <ghutchis@wso.williams.edu>
 
 	* src/mdl.cpp (WriteSDFile): Add support for wedge/hatch, as
 	contributed by Eugen Leitl. 
@@ -1022,7 +1033,7 @@
 	WriteCHT function call for CHEMTOOL io_type.
 	* src/fileformat.h (OBFileFormat): Added WriteCHT() method.
 
-2003-07-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-07-02  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/data.cpp (GetAtomicNum): Fix mistake in calls to strcasecmp,
 	as pointed out by Chris Morley.
@@ -1037,7 +1048,7 @@
 
 	* NEWS: New file.
 
-2003-06-23  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-06-23  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/main.cpp: Move man documentation to end of file (right
 	after usage() code) for better "readability". Also make sure that
@@ -1051,7 +1062,7 @@
 	page from the source code, using 'Doxygen Doxyfile-man' in the
 	doc/ directory. Normal Doxygen run now skips src/main.cpp
 
-2003-06-23  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-06-23  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* doc/babel.1: Update with current command-line options and file
 	formats.
@@ -1066,7 +1077,7 @@
 	PR#736001. Does not change normal command-line path, but should
 	fix library useage when multiple files may be loaded.
 	
-2003-06-22  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-06-22  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/main.cpp: Updated to use OBMolVector for importing multiple
 	molecules in a file. Emulates behavior of babel, but improvements
@@ -1095,7 +1106,7 @@
 	* src/povray.cpp (OutputMoleculeBonds): Remove unused parameter
 	`OpenBabel::OBMol mol'.
 
-2003-06-15  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-06-15  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	Updated to latest autoconf, libtool, automake versions to fix a
 	few minor bugs and add libtool-1.5 Mac OS X support.
@@ -1147,7 +1158,7 @@
 
 	* src/babelconfig.h.in: Regenerated.
 
-2003-06-10  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-06-10  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/Makefile.in: Remove cwrap.h and cwrap.o as these have been
 	removed.
@@ -1187,7 +1198,7 @@
 	* src/main.cpp: Added a pointer to the Mailing-List for sending
 	bug-reports to the end of usage().
 
-2003-06-03  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-06-03  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/mol.h: Add OBBond::UnsetKekule for PerceiveBondOrders support.
 
@@ -1196,7 +1207,7 @@
 	implementation is rather naive--it types rings, then passes back
 	to Kekulize. Still works pretty well.
 
-2003-06-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-06-02  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	Lots of minor bugfixes from the past few weeks.
 	
@@ -1439,7 +1450,7 @@
 
 	* src/report.cpp: Add output of molecular weight and exact mass.
 	
-2003-03-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-03-02  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/mopac.cpp (ReadMOPAC): Fix problems with MOPAC partial
 	charges not translating to other formats. (PR#660364)

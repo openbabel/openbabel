@@ -4049,18 +4049,25 @@ void generateInternals()
 bool endMolecule()
 {
     //	debugMolecule(cout);
-    generateInternals();
-    InternalToCartesian(internalVector, *molPtr);
-
-    molPtr->EndModify();
-
-    molPtr->ConnectTheDots();
-
-    if (outputDebug)
+  if (! molPtr->HasNonZeroCoords() ) // i.e., all coords are zero
     {
-        //		debug(cout);
+      generateInternals();
+      InternalToCartesian(internalVector, *molPtr);
     }
-    return true; // [ejk] assumed
+
+  molPtr->EndModify();
+  
+  if (molPtr->NumBonds() == 0)
+    {
+      molPtr->ConnectTheDots();
+      molPtr->PerceiveBondOrders();
+    }
+
+  if (outputDebug)
+    {
+      //		debug(cout);
+    }
+  return true; // [ejk] assumed
 }
 
 bool WriteMolecule(ostream &ofs)
