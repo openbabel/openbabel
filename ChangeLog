@@ -1,3 +1,9 @@
+2003-11-17  Michael Banck  <mbanck@gmx.net>
+
+	* src/chemtool.cpp (WriteGX): Replaced round(x) with 
+	floor(x + 0.5) as round() does not seem to be available on all
+	systems.
+
 2003-11-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* test/attype.00.smi, test/smartstest.txt: Updated with tests from

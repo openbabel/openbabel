@@ -56,10 +56,10 @@ bool WriteCHT(ostream &ofs,OBMol &mol) {
 		if (bond->GetBO() == 3) bondtype = 3;
 		// FIXME: use flag-info, too
 		sprintf(buffer, "%d\t%d\t%d\t%d\t%1d",
-			(int)round(atom1->GetX() * conv_factor),
-			(int)round(atom1->GetY() * conv_factor),
-			(int)round(atom2->GetX() * conv_factor),
-			(int)round(atom2->GetY() * conv_factor),
+			(int)floor(atom1->GetX() * conv_factor + 0.5),
+			(int)floor(atom1->GetY() * conv_factor + 0.5),
+			(int)floor(atom2->GetX() * conv_factor + 0.5),
+			(int)floor(atom2->GetY() * conv_factor + 0.5),
 			bondtype);
 		ofs << buffer << endl;
 	}
@@ -70,8 +70,8 @@ bool WriteCHT(ostream &ofs,OBMol &mol) {
 		// Carbon does not need to be treated
 		if (atom->GetAtomicNum() != 6) { 
 			sprintf(buffer, "%d\t%d\t%s\t%d",
-				(int)round(atom->GetX() * conv_factor),
-				(int)round(atom->GetY() * conv_factor),
+				(int)floor(atom->GetX() * conv_factor + 0.5),
+				(int)floor(atom->GetY() * conv_factor + 0.5),
 				etab.GetSymbol(atom->GetAtomicNum()),
 				-1 // assume centered Text
 				);
