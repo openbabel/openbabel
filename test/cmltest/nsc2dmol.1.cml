@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<molecule title="NSC 25">
+<atomArray>
+<atom id="a1">
+<string builtin="elementType">Br</string>
+<float builtin="x2">-2.3505</float>
+<float builtin="y2">-2.1299</float>
+</atom>
+<atom id="a2">
+<string builtin="elementType">N</string>
+<float builtin="x2">0.8505</float>
+<float builtin="y2">0.7679</float>
+</atom>
+<atom id="a3">
+<string builtin="elementType">C</string>
+<float builtin="x2">-2.1605</float>
+<float builtin="y2">0.7699</float>
+</atom>
+<atom id="a4">
+<string builtin="elementType">C</string>
+<float builtin="x2">-1.5224</float>
+<float builtin="y2">0.4019</float>
+</atom>
+<atom id="a5">
+<string builtin="elementType">C</string>
+<float builtin="x2">-2.7985</float>
+<float builtin="y2">0.4019</float>
+</atom>
+<atom id="a6">
+<string builtin="elementType">C</string>
+<float builtin="x2">-1.5224</float>
+<float builtin="y2">-0.3349</float>
+</atom>
+<atom id="a7">
+<string builtin="elementType">C</string>
+<float builtin="x2">-2.7985</float>
+<float builtin="y2">-0.3349</float>
+</atom>
+<atom id="a8">
+<string builtin="elementType">C</string>
+<float builtin="x2">-2.1605</float>
+<float builtin="y2">-0.703</float>
+</atom>
+<atom id="a9">
+<string builtin="elementType">C</string>
+<float builtin="x2">-0.8895</float>
+<float builtin="y2">0.7679</float>
+</atom>
+<atom id="a10">
+<string builtin="elementType">O</string>
+<float builtin="x2">-1.2594</float>
+<float builtin="y2">1.4088</float>
+</atom>
+<atom id="a11">
+<string builtin="elementType">C</string>
+<float builtin="x2">0.8505</float>
+<float builtin="y2">-0.652</float>
+</atom>
+<atom id="a12">
+<string builtin="elementType">C</string>
+<float builtin="x2">0.8505</float>
+<float builtin="y2">2.088</float>
+</atom>
+<atom id="a13">
+<string builtin="elementType">C</string>
+<float builtin="x2">2.8805</float>
+<float builtin="y2">0.7679</float>
+</atom>
+</atomArray>
+<bondArray>
+<bond>
+<string builtin="atomRef">a2</string>
+<string builtin="atomRef">a9</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a2</string>
+<string builtin="atomRef">a11</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a2</string>
+<string builtin="atomRef">a12</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a2</string>
+<string builtin="atomRef">a13</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a3</string>
+<string builtin="atomRef">a5</string>
+<string builtin="order">2</string>
+</bond>
+<bond>
+<string builtin="atomRef">a3</string>
+<string builtin="atomRef">a4</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a4</string>
+<string builtin="atomRef">a6</string>
+<string builtin="order">2</string>
+</bond>
+<bond>
+<string builtin="atomRef">a4</string>
+<string builtin="atomRef">a9</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a5</string>
+<string builtin="atomRef">a7</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a6</string>
+<string builtin="atomRef">a8</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a7</string>
+<string builtin="atomRef">a8</string>
+<string builtin="order">2</string>
+</bond>
+<bond>
+<string builtin="atomRef">a9</string>
+<string builtin="atomRef">a10</string>
+<string builtin="order">2</string>
+</bond>
+</bondArray>
+</molecule>

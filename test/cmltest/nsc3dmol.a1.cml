@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<molecule title="NSC 1">
+<atomArray>
+<stringArray builtin="atomID">a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15</stringArray>
+<stringArray builtin="elementType">O O C C C C C C C H H H H H H</stringArray>
+<integerArray builtin="formalCharge">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</integerArray>
+<floatArray builtin="x3">0.002100 -0.069100 -0.014400 -1.303400 1.254600 -1.321500 1.236500 -0.052600 -2.598000 2.197100 -2.264100 2.164300 -2.384300 -3.160800 -3.185300</floatArray>
+<floatArray builtin="y3">-0.004100 5.241400 1.210200 1.931200 1.966100 3.271200 3.306100 4.027100 1.160000 1.438900 3.798400 3.858800 0.091200 1.410500 1.420600</floatArray>
+<floatArray builtin="z3">0.002000 0.032300 0.008700 0.031000 0.000600 0.038900 0.008500 0.025200 0.044500 -0.011200 0.051100 -0.001500 0.035500 0.943800 -0.836000</floatArray>
+</atomArray>
+<bondArray>
+<stringArray builtin="atomRef">a1 a2 a3 a3 a4 a4 a5 a5 a6 a6 a7 a7 a9 a9 a9</stringArray>
+<stringArray builtin="atomRef">a3 a8 a5 a4 a6 a9 a7 a10 a8 a11 a8 a12 a13 a14 a15</stringArray>
+<stringArray builtin="order">2 2 1 1 2 1 2 1 1 1 1 1 1 1 1</stringArray>
+</bondArray>
+<string title="NSC">1
+</string>
+</molecule>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<molecule title="NSC 1">
+<metadataList title="generated automatically from Openbabel">
+<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
+<metadata name="dc:identifier" content="Unknown"/>
+<metadata name="dc:content"/>
+<metadata name="dc:rights" content="unknown"/>
+<metadata name="dc:type" content="chemistry"/>
+<metadata name="dc:contributor" content="unknown"/>
+<metadata name="dc:creator" content="Openbabel V1-100.1"/>
+<metadata name="dc:date" content="Wed Aug 06 22:53:12 GMTDT 2003"/>
+<metadata name="cmlm:structure" content="yes"/>
+</metadataList>
+<atomArray>
+<atom id="a1" elementType="O" x3="0.0021" y3="-0.0041" z3="0.002"/>
+<atom id="a2" elementType="O" x3="-0.0691" y3="5.2414" z3="0.0323"/>
+<atom id="a3" elementType="C" x3="-0.0144" y3="1.2102" z3="0.0087"/>
+<atom id="a4" elementType="C" x3="-1.3034" y3="1.9312" z3="0.031"/>
+<atom id="a5" elementType="C" x3="1.2546" y3="1.9661" z3="0.0006"/>
+<atom id="a6" elementType="C" x3="-1.3215" y3="3.2712" z3="0.0389"/>
+<atom id="a7" elementType="C" x3="1.2365" y3="3.3061" z3="0.0085"/>
+<atom id="a8" elementType="C" x3="-0.0526" y3="4.0271" z3="0.0252"/>
+<atom id="a9" elementType="C" x3="-2.598" y3="1.16" z3="0.0445"/>
+<atom id="a10" elementType="H" x3="2.1971" y3="1.4389" z3="-0.0112"/>
+<atom id="a11" elementType="H" x3="-2.2641" y3="3.7984" z3="0.0511"/>
+<atom id="a12" elementType="H" x3="2.1643" y3="3.8588" z3="-0.0015"/>
+<atom id="a13" elementType="H" x3="-2.3843" y3="0.0912" z3="0.0355"/>
+<atom id="a14" elementType="H" x3="-3.1608" y3="1.4105" z3="0.9438"/>
+<atom id="a15" elementType="H" x3="-3.1853" y3="1.4206" z3="-0.836"/>
+</atomArray>
+<bondArray>
+<bond atomRefs2="a1 a3" order="2"/>
+<bond atomRefs2="a2 a8" order="2"/>
+<bond atomRefs2="a3 a5" order="1"/>
+<bond atomRefs2="a3 a4" order="1"/>
+<bond atomRefs2="a4 a6" order="2"/>
+<bond atomRefs2="a4 a9" order="1"/>
+<bond atomRefs2="a5 a7" order="2"/>
+<bond atomRefs2="a5 a10" order="1"/>
+<bond atomRefs2="a6 a8" order="1"/>
+<bond atomRefs2="a6 a11" order="1"/>
+<bond atomRefs2="a7 a8" order="1"/>
+<bond atomRefs2="a7 a12" order="1"/>
+<bond atomRefs2="a9 a13" order="1"/>
+<bond atomRefs2="a9 a14" order="1"/>
+<bond atomRefs2="a9 a15" order="1"/>
+</bondArray>
+<scalar dictRef="NSC">1
+</scalar>
+</molecule>

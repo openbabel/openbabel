@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<molecule title="NSC 25">
+<metadataList title="generated automatically from Openbabel">
+<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
+<metadata name="dc:identifier" content="Unknown"/>
+<metadata name="dc:content"/>
+<metadata name="dc:rights" content="unknown"/>
+<metadata name="dc:type" content="chemistry"/>
+<metadata name="dc:contributor" content="unknown"/>
+<metadata name="dc:creator" content="Openbabel V1-100.1"/>
+<metadata name="dc:date" content="Wed Aug 06 22:53:10 GMTDT 2003"/>
+<metadata name="cmlm:structure" content="yes"/>
+</metadataList>
+<atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13" elementType="Br N C C C C C C C O C C C" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0" x2="-2.350500 0.850500 -2.160500 -1.522400 -2.798500 -1.522400 -2.798500 -2.160500 -0.889500 -1.259400 0.850500 0.850500 2.880500" y2="-2.129900 0.767900 0.769900 0.401900 0.401900 -0.334900 -0.334900 -0.703000 0.767900 1.408800 -0.652000 2.088000 0.767900"/>
+<bondArray atomRefs1="a2 a2 a2 a2 a3 a3 a4 a4 a5 a6 a7 a9" atomRefs2="a9 a11 a12 a13 a5 a4 a6 a9 a7 a8 a8 a10" order="1 1 1 1 2 1 2 1 1 1 2 2"/>
+</molecule>

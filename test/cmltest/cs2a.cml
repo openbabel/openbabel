@@ -1,0 +1,18 @@
+ <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core">
+ <!--
+ <cml:metadataList title="generated automatically from Openbabel">
+  <cml:metadata name="dc:creator" content="OpenBabel version 1-100.1" /> 
+  <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML" /> 
+  <cml:metadata name="dc:identifier" content="Unknown" /> 
+  <cml:metadata name="dc:content" /> 
+  <cml:metadata name="dc:rights" content="unknown" /> 
+  <cml:metadata name="dc:type" content="chemistry" /> 
+  <cml:metadata name="dc:contributor" content="unknown" /> 
+  <cml:metadata name="dc:creator" content="Openbabel V1-100.1" /> 
+  <cml:metadata name="dc:date" content="Sun Aug 03 20:23:51 BST 2003" /> 
+  <cml:metadata name="cmlm:structure" content="yes" /> 
+  </cml:metadataList>
+-->  
+  <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38" elementType="Cr Fe C N C C N C C C C C C C C C C C C O C O C O C O H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="2.787500 -2.808500 1.471000 0.572300 -0.701900 1.325500 0.360200 -0.925700 -1.835800 -3.225200 -3.992300 -3.083400 -1.753600 -2.071600 -3.418000 -4.255300 -3.432900 -2.087000 3.408100 3.687100 4.147300 5.032900 2.133100 1.743500 3.669700 4.262400 -0.596100 -0.932000 -0.886200 -1.076000 -3.615300 -5.068900 -3.350900 -0.844500 -3.746100 -5.325300 -3.770200 -1.235600" y3="0.134500 -0.057200 -0.999700 -1.575100 -2.105700 1.295300 1.844300 2.352000 -1.800100 -1.798500 -1.782200 -1.755900 -1.763500 1.830700 1.643800 1.452900 1.507200 1.736400 1.723100 2.824300 -0.935800 -1.633400 -0.525300 -1.097200 -0.136800 -0.462600 -3.195200 -1.715300 3.447600 2.087800 -1.886500 -1.813000 -1.755400 -1.801100 1.726700 1.315800 1.407400 1.878200" z3="0.096600 0.115500 -0.661300 -1.173900 -1.589200 -0.504200 -0.901900 -1.318100 -0.620800 -0.978800 0.226800 1.328500 0.809600 -0.466600 -0.931500 0.211100 1.377700 0.964300 0.647200 0.963000 0.631900 0.980400 1.629400 2.588200 -1.447900 -2.414900 -1.682800 -2.588400 -1.253300 -2.372000 -1.981400 0.290500 2.373900 1.390600 -1.956400 0.193300 2.397800 1.612300" /> 
+  <cml:bondArray atomRefs1="a1 a1 a1 a1 a1 a1 a2 a2 a2 a2 a2 a2 a2 a2 a2 a2 a3 a4 a5 a5 a5 a6 a7 a8 a8 a8 a9 a9 a10 a10 a11 a11 a12 a12 a13 a14 a14 a15 a15 a16 a16 a17 a17 a18 a19 a21 a23 a25" atomRefs2="a3 a6 a19 a21 a23 a25 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a4 a5 a9 a27 a28 a7 a8 a14 a29 a30 a10 a13 a11 a31 a12 a32 a13 a33 a34 a15 a18 a16 a35 a17 a36 a18 a37 a38 a20 a22 a24 a26" order="1 1 2 2 2 2 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 3" /> 
+  </cml:molecule>

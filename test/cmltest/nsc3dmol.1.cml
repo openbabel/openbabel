@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<molecule title="NSC 1">
+<atomArray>
+<atom id="a1">
+<string builtin="elementType">O</string>
+<float builtin="x3">0.0021</float>
+<float builtin="y3">-0.0041</float>
+<float builtin="z3">0.002</float>
+</atom>
+<atom id="a2">
+<string builtin="elementType">O</string>
+<float builtin="x3">-0.0691</float>
+<float builtin="y3">5.2414</float>
+<float builtin="z3">0.0323</float>
+</atom>
+<atom id="a3">
+<string builtin="elementType">C</string>
+<float builtin="x3">-0.0144</float>
+<float builtin="y3">1.2102</float>
+<float builtin="z3">0.0087</float>
+</atom>
+<atom id="a4">
+<string builtin="elementType">C</string>
+<float builtin="x3">-1.3034</float>
+<float builtin="y3">1.9312</float>
+<float builtin="z3">0.031</float>
+</atom>
+<atom id="a5">
+<string builtin="elementType">C</string>
+<float builtin="x3">1.2546</float>
+<float builtin="y3">1.9661</float>
+<float builtin="z3">0.0006</float>
+</atom>
+<atom id="a6">
+<string builtin="elementType">C</string>
+<float builtin="x3">-1.3215</float>
+<float builtin="y3">3.2712</float>
+<float builtin="z3">0.0389</float>
+</atom>
+<atom id="a7">
+<string builtin="elementType">C</string>
+<float builtin="x3">1.2365</float>
+<float builtin="y3">3.3061</float>
+<float builtin="z3">0.0085</float>
+</atom>
+<atom id="a8">
+<string builtin="elementType">C</string>
+<float builtin="x3">-0.0526</float>
+<float builtin="y3">4.0271</float>
+<float builtin="z3">0.0252</float>
+</atom>
+<atom id="a9">
+<string builtin="elementType">C</string>
+<float builtin="x3">-2.598</float>
+<float builtin="y3">1.16</float>
+<float builtin="z3">0.0445</float>
+</atom>
+<atom id="a10">
+<string builtin="elementType">H</string>
+<float builtin="x3">2.1971</float>
+<float builtin="y3">1.4389</float>
+<float builtin="z3">-0.0112</float>
+</atom>
+<atom id="a11">
+<string builtin="elementType">H</string>
+<float builtin="x3">-2.2641</float>
+<float builtin="y3">3.7984</float>
+<float builtin="z3">0.0511</float>
+</atom>
+<atom id="a12">
+<string builtin="elementType">H</string>
+<float builtin="x3">2.1643</float>
+<float builtin="y3">3.8588</float>
+<float builtin="z3">-0.0015</float>
+</atom>
+<atom id="a13">
+<string builtin="elementType">H</string>
+<float builtin="x3">-2.3843</float>
+<float builtin="y3">0.0912</float>
+<float builtin="z3">0.0355</float>
+</atom>
+<atom id="a14">
+<string builtin="elementType">H</string>
+<float builtin="x3">-3.1608</float>
+<float builtin="y3">1.4105</float>
+<float builtin="z3">0.9438</float>
+</atom>
+<atom id="a15">
+<string builtin="elementType">H</string>
+<float builtin="x3">-3.1853</float>
+<float builtin="y3">1.4206</float>
+<float builtin="z3">-0.836</float>
+</atom>
+</atomArray>
+<bondArray>
+<bond>
+<string builtin="atomRef">a1</string>
+<string builtin="atomRef">a3</string>
+<string builtin="order">2</string>
+</bond>
+<bond>
+<string builtin="atomRef">a2</string>
+<string builtin="atomRef">a8</string>
+<string builtin="order">2</string>
+</bond>
+<bond>
+<string builtin="atomRef">a3</string>
+<string builtin="atomRef">a5</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a3</string>
+<string builtin="atomRef">a4</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a4</string>
+<string builtin="atomRef">a6</string>
+<string builtin="order">2</string>
+</bond>
+<bond>
+<string builtin="atomRef">a4</string>
+<string builtin="atomRef">a9</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a5</string>
+<string builtin="atomRef">a7</string>
+<string builtin="order">2</string>
+</bond>
+<bond>
+<string builtin="atomRef">a5</string>
+<string builtin="atomRef">a10</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a6</string>
+<string builtin="atomRef">a8</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a6</string>
+<string builtin="atomRef">a11</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a7</string>
+<string builtin="atomRef">a8</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a7</string>
+<string builtin="atomRef">a12</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a9</string>
+<string builtin="atomRef">a13</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a9</string>
+<string builtin="atomRef">a14</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a9</string>
+<string builtin="atomRef">a15</string>
+<string builtin="order">1</string>
+</bond>
+</bondArray>
+<string title="NSC">1
+</string>
+</molecule>
