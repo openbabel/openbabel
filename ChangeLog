@@ -1,5 +1,13 @@
 2003-03-10  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
+	* src/generic.h: Add new data type "slots" to obDataType enum.
+
+	* src/pdb.cc (class OBSerialNums): Use new obSerialNums enum,
+	rather than overriding user-defined obData# slots. These should
+	only be used by user-level code, not by Open Babel internal code.
+
+2003-03-10  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
 	* src/atom.cpp (GetType): Fix compilation error when copying in
 	"D" atom type for a deuterium atom.
 

@@ -33,7 +33,8 @@ class OBRing;
 
 enum obDataType {obUndefinedData,obPairData,obEnergyData,
 		 obCommentData,obCompressData,obExternalBondData,obRotamerList,
-		 obVirtualBondData,obRingData,obTorsionData,obAngleData,
+		 obVirtualBondData,obRingData,obTorsionData,obAngleData, 
+		 obSerialNums, obUnitCell, obSpinData, obChargeData,
 		 obData0,obData1,obData2,obData3,
 		 obData4,obData5,obData6,obData7,
 		 obData8,obData9};

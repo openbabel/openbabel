@@ -51,7 +51,7 @@ class OBSerialNums : public OBGenericData
 public:
 
         OBSerialNums()                                           
-        { _attr = "obSerialNums"; _type = obData0; }
+        { _attr = "obSerialNums"; _type = obSerialNums; }
         OBSerialNums(const OBSerialNums &cp) : OBGenericData(cp) 
         { serialMap = cp.serialMap;                }
 
