@@ -66,21 +66,15 @@ EXEEXT = @EXEEXT@
 OBJEXT = @OBJEXT@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 AMTAR = @AMTAR@
-AR = @AR@
 AS = @AS@
 AWK = @AWK@
 CC = @CC@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
-CYGPATH_W = @CYGPATH_W@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DOCTOOL = @DOCTOOL@
 ECHO = @ECHO@
-EGREP = @EGREP@
-F77 = @F77@
-GCJ = @GCJ@
-GCJFLAGS = @GCJFLAGS@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LIBTOOL = @LIBTOOL@
 LN_S = @LN_S@
@@ -88,11 +82,9 @@ MAINT = @MAINT@
 OBJDUMP = @OBJDUMP@
 PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
-RC = @RC@
 STRIP = @STRIP@
 VERSION = @VERSION@
 am__include = @am__include@
-am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
 install_sh = @install_sh@
 SUBDIRS = src test doc tools
@@ -104,7 +96,7 @@ pkgconfig_DATA = openbabel.pc
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
-CONFIG_HEADER = $(top_builddir)/src/babelconfig.h $@)]
+CONFIG_HEADER = $(top_builddir)/src/babelconfig.h
 CONFIG_CLEAN_FILES = openbabel.pc
 DIST_SOURCES =
 DATA = $(pkgconfig_DATA)
@@ -119,8 +111,7 @@ DIST_COMMON = README AUTHORS COPYING ChangeLog INSTALL Makefile.am \
 	config.sub configure configure.in depcomp install-sh ltmain.sh \
 	missing mkinstalldirs openbabel.pc.in
 DIST_SUBDIRS = $(SUBDIRS)
-all: $@)]
-	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+all: all-recursive
 
 .SUFFIXES:
 
@@ -139,23 +130,6 @@ $(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(ACLOCAL_M4)
 
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ configure.in acinclude.m4
 	cd $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
-
-$@)]: stamp-h2
-	@if test ! -f $@; then \
-	  rm -f stamp-h2; \
-	  $(MAKE) stamp-h2; \
-	else :; fi
-
-stamp-h2: $(srcdir)/$@)].in $(top_builddir)/config.status
-	@rm -f stamp-h2
-	cd $(top_builddir) && $(SHELL) ./config.status $@)]
-
-$(srcdir)/$@)].in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOHEADER)
-	touch $(srcdir)/$@)].in
-
-distclean-hdr:
-	-rm -f $@)] stamp-h2
 openbabel.pc: $(top_builddir)/config.status openbabel.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
@@ -256,7 +230,7 @@ ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	       END { for (i in files) print i; }'`; \
 	mkid -fID $$unique
 
-TAGS: tags-recursive $(HEADERS) $(SOURCES) $@)].in $(TAGS_DEPENDENCIES) \
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
@@ -265,7 +239,7 @@ TAGS: tags-recursive $(HEADERS) $(SOURCES) $@)].in $(TAGS_DEPENDENCIES) \
 	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
 	  fi; \
 	done; \
-	list='$(SOURCES) $(HEADERS) $@)].in $(LISP) $(TAGS_FILES)'; \
+	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
@@ -386,7 +360,7 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(DATA) $@)]
+all-am: Makefile $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
 	$(mkinstalldirs) $(DESTDIR)$(pkgconfigdir)
@@ -421,7 +395,7 @@ clean-am: clean-generic clean-libtool mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-distclean-am: clean-am distclean-generic distclean-hdr distclean-libtool \
+distclean-am: clean-am distclean-generic distclean-libtool \
 	distclean-tags
 
 dvi: dvi-recursive
@@ -457,7 +431,7 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
 	clean-generic clean-libtool clean-recursive dist dist-all \
-	dist-gzip distcheck distclean distclean-generic distclean-hdr \
+	dist-gzip distcheck distclean distclean-generic \
 	distclean-libtool distclean-recursive distclean-tags \
 	distcleancheck distdir dvi dvi-am dvi-recursive info info-am \
 	info-recursive install install-am install-data install-data-am \
