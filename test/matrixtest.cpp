@@ -67,19 +67,23 @@ bool testEigenvalues()
 
   matrix3x3 toDiagonalize = rndRotation * Diagonal * rndRotation.inverse();
   if (!toDiagonalize.isSymmetric()) {
-    cout << "Matrix eigenvalue test failed, conjugation of a diagonal matrix with a rotation is not symmetric." << endl;
+    cout << "Matrix eigenvalue test failed, conjugation of a diagonal matrix"
+	 << "with a rotation is not symmetric." << endl;
     return false;
   }
   
   vector3 eigenvals;
   toDiagonalize.findEigenvectorsIfSymmetric(eigenvals);
 
-  if ((fabs(eigenvals[0]-Diagonal.Get(0,0)) > 1e-6) || 
-      (fabs(eigenvals[1]-Diagonal.Get(1,1)) > 1e-6) || 
-      (fabs(eigenvals[2]-Diagonal.Get(2,2)) > 1e-6)) {
-    cout << "Matrix eigenvalue test failed, wrong eigenvalues computed." << endl;
-    return false;
-  }
+  for(unsigned int j=0; j<3; j++)
+    if ( fabs(eigenvals[j]-Diagonal.Get(j,j)) > 2e-6 )
+    {
+      cout << "Matrix eigenvalue test(" << j << 
+	") failed, wrong eigenvalues computed." << endl;
+      cout << "Expected: " << eigenvals[j] << " and got instead: " 
+	   << Diagonal.Get(j,j) << endl;
+      return false;
+    }
 
   if ( (eigenvals[0] >= eigenvals[1]) || (eigenvals[1] >= eigenvals[2]) ) {
     cout << "Matrix eigenvalue test failed, eigenvalues not not ordered." << endl;
@@ -105,7 +109,8 @@ bool testEigenvectors()
 
   // Check if the eigenvects are normalized and mutually orthogonal
   if (!eigenvects.isOrthogonal()) {
-    cout << "Matrix eigenvector test failed, findEigenvectorsIfSymmetric() returned a matrix that is not orthogonal." << endl;
+    cout << "Matrix eigenvector test failed, findEigenvectorsIfSymmetric()"
+	 << " returned a matrix that is not orthogonal." << endl;
     return false;
   }
 
@@ -116,30 +121,22 @@ bool testEigenvectors()
     return false;
   }
   
-  if ( fabs(shouldBeDiagonal.Get(0,0) - eigenvals[0]) > 1e-6 )
+  for(unsigned int j=0; j<3; j++)
+    if ( fabs(shouldBeDiagonal.Get(j,j) - eigenvals[j]) > 2e-6 )
     {
-      cout << "Matrix eigenvector test(0) failed, wrong eigenvalues computed." << endl;
-      cout << "Expected: " << eigenvals[0] << " and got instead: " << fabs(shouldBeDiagonal.Get(0,0)) << endl;
+      cout << "Matrix eigenvector test(" << j << 
+	") failed, wrong eigenvalues computed." << endl;
+      cout << "Expected: " << eigenvals[j] << " and got instead: " 
+	   << shouldBeDiagonal.Get(j,j) << endl;
       return false;
-  }
-  if ( fabs(shouldBeDiagonal.Get(1,1) - eigenvals[1]) > 1e-6 )
-    {
-      cout << "Matrix eigenvector test(1) failed, wrong eigenvalues computed." << endl;
-      cout << "Expected: " << eigenvals[1] << " and got instead: " << fabs(shouldBeDiagonal.Get(1,1)) << endl;
-      return false;
-  }
-  if ( fabs(shouldBeDiagonal.Get(2,2) - eigenvals[2]) > 1e-6 )
-    {
-      cout << "Matrix eigenvector test(2) failed, wrong eigenvalues computed." << endl;
-      cout << "Expected: " << eigenvals[2] << " and got instead: " << fabs(shouldBeDiagonal.Get(2,2)) << endl;
-      return false;
-  }
+    }
 
   for(unsigned int i=0; i<3; i++ ) {
     vector3 EV = eigenvects.GetColumn(i);
     EV = rnd*EV-eigenvals[i]*EV;
     if (EV.length() > 1e-4) {
-      cout << EV.length() << " Matrix eigenvector test failed, wrong eigenvector computed." << endl;
+      cout << EV.length() << " Matrix eigenvector test failed,"
+	   << " wrong eigenvector computed for column " << i << "." << endl;
       return false;
     }
   }

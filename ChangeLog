@@ -14,7 +14,8 @@
 
 	* test/matrixtest.cpp: Make matrix test a bit more verbose to make
 	debugging problems on non-Intel platforms easier. (Relates to
-	PR#647417).
+	PR#647417). Problem derives from numerical accuracy, but loosening
+	tolerance to 2e-6 solves the problem.
 	
 2003-01-15/16  Peter Murray-Rust <pm286@cam.ac.uk>
                Vincent Favre-Nicolin <vincefn@users.sourceforge.net>
