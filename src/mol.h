@@ -268,9 +268,12 @@ public:
     float      GetY()             {return(y());}
     float      GetZ()             {return(z());}
       
-    float      x()                {return((*_c)[_cidx]);}
-    float      y()                {return((*_c)[_cidx+1]);}
-    float      z()                {return((*_c)[_cidx+2]);}
+    float      x()
+      {if (_c) return((*_c)[_cidx]); else return _v.x();}
+    float      y()
+      {if (_c) return((*_c)[_cidx+1]); else return _v.y();}
+    float      z()
+      {if (_c) return((*_c)[_cidx+2]); else return _v.z();}
     float     *GetCoordinate()    {return(&(*_c)[_cidx]);}
     float      GetPartialCharge();
     Vector     &GetVector();
