@@ -88,7 +88,7 @@ Example: How to use obtatimoto with a database of SMILES
 babel database.smi database.fpt             # generate the fingerprints
 obtanimoto query.smi database.fpt > tmp.txt # compute the tanimoto coefficients
 paste database.smi tmp.txt > tmp2.txt       #paste the database and the tanimoto file
-gawk '$4 > 0.7 { print $0}' tmp3.txt        #keep only the compounds with a tanimoto coefficient above 0.7
+gawk '$4 > 0.7 {print $0}' tmp2.txt >tmp3.txt #keep only the compounds with a tanimoto coefficient above 0.7
 sort -n -k 4 -r tmp3.txt > tmp4.txt         #sort the compounds according to its tanimoto coefficient
 gawk '{print $1,$2 "_" $4}' tmp4.txt > final.smi #put the similarity coefficient in the compound's name
 
