@@ -20,47 +20,33 @@ namespace OpenBabel {
 bool WriteGaussianCart(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
+  unsigned int charge = 0;
+  unsigned int multiplicity = 0;
   char buffer[BUFF_SIZE];
   
   ofs << "%cmem=20000000" << endl << '\045';
   ofs << "#Put Keywords Here" << endl << endl;
+  ofs << "XX " << mol.GetTitle() << endl << endl;
 
   OBAtom *atom;
   string str,str1;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
     atom = mol.GetAtom(i);
-    sprintf(buffer,"%-3s0      x%-5d     y%-5d     z%-5d ",
+    charge += atom->GetFormalCharge();
+  }
+  multiplicity = charge + 1;
+  sprintf(buffer,"  %d  %d", charge, multiplicity);
+  ofs << buffer << endl;
+  for(i = 1;i <= mol.NumAtoms(); i++)
+  {
+    atom = mol.GetAtom(i);
+    sprintf(buffer,"%-3s      %10.5f      %10.5f      %10.5f ",
 	    etab.GetSymbol(atom->GetAtomicNum()),
-	    i, i, i);
+	    atom->GetX(), atom->GetY(), atom->GetZ());
     ofs << buffer << endl;
   }
-
-  for(i = 1;i <= mol.NumAtoms(); i++)
-  {
-    atom = mol.GetAtom(i);
-    sprintf(buffer,"x%-4d %10.5f",
-	    i,
-	    atom->GetX());
-    ofs << buffer << endl;
-  }
-  for(i = 1;i <= mol.NumAtoms(); i++)
-  {
-    atom = mol.GetAtom(i);
-    sprintf(buffer,"y%-4d %10.5f",
-	    i,
-	    atom->GetY());
-    ofs << buffer << endl;
-  }
-  for(i = 1;i <= mol.NumAtoms(); i++)
-  {
-    atom = mol.GetAtom(i);
-    sprintf(buffer,"z%-4d %10.5f",
-	    i,
-	    atom->GetZ());
-    ofs << buffer << endl;
-  }
-
+  ofs << buffer << endl << endl;
   return(true);
 }
 
