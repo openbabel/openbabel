@@ -125,6 +125,7 @@ void OBAtom::Clear()
   _hyb = 0;
   _ele = (char)0;
   _isotope = 0;
+  _spinmultiplicity=0; // CM 18 Sept 2003
   _impval = 0;
   _fcharge = 0;
   _type[0] = '\0';

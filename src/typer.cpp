@@ -166,8 +166,30 @@ void OBAtomTyper::AssignImplicitValence(OBMol &mol)
   if (!mol.HasAromaticCorrected()) CorrectAromaticNitrogens(mol);
 
   for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
-    if (atom->GetImplicitValence() < atom->GetValence())
+  {  if (atom->GetImplicitValence() < atom->GetValence())
       atom->SetImplicitValence(atom->GetValence());
+  }
+
+  //begin CM 18 Sept 2003
+  //if there are any explicit Hs on an atom, then they consitute all the Hs
+  //Any discrepancy with the expected atom valency is because it is a radical of some sort
+	//Also adjust the ImplicitValence for radical atoms
+  for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
+  {
+	  if (!atom->IsHydrogen() && atom->ExplicitHydrogenCount()!=0)
+	  {
+		  int diff=atom->GetImplicitValence() - (atom->GetHvyValence() + atom->ExplicitHydrogenCount());
+		  if (diff)
+			  atom->SetSpinMultiplicity(diff+1);//radicals =2; all carbenes =3
+	  }
+		
+		int mult=atom->GetSpinMultiplicity();
+		if(mult) //radical or carbene
+			atom->DecrementImplicitValence(); 
+		if(mult==1 || mult==3) //e.g.singlet or triplet carbene
+			atom->DecrementImplicitValence();
+	}
+	//end CM
 }
 
 

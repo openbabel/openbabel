@@ -17,6 +17,8 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
+extern OBAtomTyper atomtyper; //CM
+
 bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
   int i,natoms,nbonds;
   char buffer[BUFF_SIZE];
@@ -92,6 +94,35 @@ bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
     if (!mol.AddBond(start,end,order,flag)) return(false);
   }
 
+	//CM start 18 Sept 2003
+	//Read Properties block, currently only M RAD and M CHG 
+
+  while(ifs.getline(buffer,BUFF_SIZE))
+	{
+    if(!strchr(buffer,'M')) continue;
+    r1 = buffer;
+		int n = atoi((r1.substr(6,3)).c_str()); //entries on this line
+		if(n==0) break;
+		int pos = 10;
+		for(;n>0;n--,pos+=8)
+		{
+			int atomnumber = atoi((r1.substr(pos,3)).c_str());
+			if (atomnumber==0) break;
+			OBAtom* at;
+			at=mol.GetAtom(atomnumber); //atom numbers start at 1
+			int value = atoi((r1.substr(pos+4,3)).c_str());
+			if(r1.substr(3,3)=="RAD")
+				at->SetSpinMultiplicity(value);
+			else if(r1.substr(3,3)=="CHG")
+				at->SetFormalCharge(value);
+			//Although not done here,according to the specification, 
+			//previously set formal charges should be reset to zero
+			// Lines setting several other properties are not implemented
+		}
+	}
+	atomtyper.AssignImplicitValence(mol); //and set _spinmultiplicities for H-deficient atoms
+	//CM end
+
   mol.EndModify();
 
   if (comment)
@@ -143,7 +174,8 @@ bool WriteSDFile(ostream &ofs,OBMol &mol,const char *dimension) {
     }
 
   ofs << mol.GetTitle() <<  endl;
-  sprintf(buff,"  -ISIS-            %s",dimension);
+//sprintf(buff,"  -ISIS-            %s",dimension); replaced by CM
+  sprintf(buff," OpenBabel          %s",dimension); // CM 18 Sept 2003
   ofs << buff << endl;
 
   if (mol.HasData(obCommentData))
@@ -155,7 +187,7 @@ bool WriteSDFile(ostream &ofs,OBMol &mol,const char *dimension) {
       ofs << endl;
 
   sprintf(buff,"%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
-          mol.NumAtoms(),mol.NumBonds(),0,0,0,0,0,0,0,0,0);
+          mol.NumAtoms(),mol.NumBonds(),0,0,0,0,0,0,0,0,1);// CM 18 Sept 2003 1 was 0 (# extra lines)
   ofs << buff << endl;
 
   OBAtom *atom;
@@ -198,14 +230,33 @@ bool WriteSDFile(ostream &ofs,OBMol &mol,const char *dimension) {
         ofs << buff << endl;
       }
 
-  ofs << "M  END" << endl;
+  //CM start 18 Sept 2003
+  //For radicals
+  char txt[50];
+  *buff=0;
+  int val, radcount=0;
+  for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+    {
+      if(atom->GetSpinMultiplicity())
+	{
+	  sprintf(txt,"%3d %3d ",atom->GetIdx(),atom->GetSpinMultiplicity()); //radicals=>2 all carbenes=>3	
+	  strcat(buff,txt);
+	  radcount++;
+	}
+    }
+  if (radcount)
+    {
+      sprintf(txt,"M  RAD%3d ",radcount);
+      ofs << txt << buff << endl;
+    }
+  // CM end
 
+  ofs << "M  END" << endl;
 
   // RWT 4/7/2001
   // now output properties if they exist
   // MTS 4/17/2001
   // changed to use new OBGenericData class
-
   vector<OBGenericData*>::iterator k;
   vector<OBGenericData*> vdata = mol.GetData();
   for (k = vdata.begin();k != vdata.end();k++)

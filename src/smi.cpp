@@ -405,6 +405,18 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
 
   if (atom->GetFormalCharge() != 0) //bracket charged elements
     bracketElement = true;
+	
+	//CM begin 18 Sept 2003
+
+	//This outputs form [CH3][CH3] rather than CC if -h option has been specified
+	if (((OBMol*)atom->GetParent())->HasHydrogensAdded())
+    bracketElement = true;
+
+	//This outputs explicit H form anyway for radicals
+	if (atom->GetSpinMultiplicity())
+    bracketElement = true;
+
+	//CM end
 
   if (!bracketElement)
     {

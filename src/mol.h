@@ -37,6 +37,8 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "fileformat.h"
 
+#include "babelconfig.h"
+
 namespace OpenBabel {
 
 class OBAtom;
@@ -156,7 +158,11 @@ protected:
   char                          _impval;	//!< implicit valence
   char                          _type[6];	//!< atomic type
   short int                     _fcharge;	//!< formal charge
-  unsigned short int		_isotope;	//!< isotope (0 = most abundant)
+  int		_isotope;	//!< isotope (0 = most abundant)
+
+  //CM 18 Sept 2003
+  int														_spinmultiplicity;// 2 for radical  1 or 3 for carbene
+
   //unsigned short int          _idx;		//!< index in parent (inherited)
   unsigned short int            _cidx;		//!< index into coordinate array
   unsigned short int            _hyb;		//!< hybridization
@@ -193,6 +199,7 @@ public:
     void IncrementImplicitValence()          {_impval++;}
     void DecrementImplicitValence()          {_impval--;}
     void SetFormalCharge(int fcharge)        {_fcharge = fcharge;}
+    void SetSpinMultiplicity(int spin)			 {_spinmultiplicity = spin;} //CM 18 Sept 2003
     void SetType(char *type);
     void SetType(std::string &type);
     void SetPartialCharge(double pcharge)     {_pcharge = pcharge;}
@@ -223,6 +230,7 @@ public:
     int          GetFormalCharge()  const {return(_fcharge);}
     unsigned int GetAtomicNum()     const {return((unsigned int)_ele);}
     unsigned short int GetIsotope() const {return(_isotope);}
+		int GetSpinMultiplicity()				const {return(_spinmultiplicity);} //CM 18 Sept 2003   
     //! The atomic mass of this atom given by standard IUPAC average molar mass
     double	 GetAtomicMass()    const;
     //! The atomic mass of given by the isotope (default is most abundant isotope)
