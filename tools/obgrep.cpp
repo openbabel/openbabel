@@ -26,7 +26,6 @@ using namespace OpenBabel;
 int main(int argc,char **argv)
 {
     char *program_name=NULL;
-    io_type inFileType = UNDEFINED, outFileType = UNDEFINED;
     int c;
     int ntimes=0;
     bool pattern_matched=false, ntimes_matched=true;

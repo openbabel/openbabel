@@ -32,7 +32,6 @@ int nrings(OBMol &mol);
 int main(int argc,char **argv)
 {
     char *program_name= argv[0];
-    io_type inFileType = UNDEFINED;
     int c;
     char *FileIn = NULL;
 

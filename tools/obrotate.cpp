@@ -26,7 +26,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "parsmart.h"
-#include "binary.h"
+#include "rotamer.h"
 //#include <unistd.h>
 #include "obconversion.h"
 
@@ -39,7 +39,6 @@ int main(int argc,char **argv)
 {
 
     char *program_name=NULL;
-    io_type inFileType = UNDEFINED, outFileType = UNDEFINED;
     float res=255.0f/360.0f; // constant to convert degree to unsigned char
     unsigned char tor[4]= {0,0,0,0};// atoms of the tortional in the molecule
     unsigned int smartor[4]= {0,0,0,0};// atoms of the tortional in the SMART

@@ -5,7 +5,7 @@ pkgdata_DATA = \
 EXTRA_DIST = \
 	bin2hex.pl $(pkgdata_DATA)
 
-BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h extable.h \
+BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h types.h
 
 aromatic.h:	bin2hex.pl aromatic.txt
@@ -19,9 +19,6 @@ bondtyp.h:	bin2hex.pl bondtyp.txt
 
 element.h:	bin2hex.pl element.txt
 		(cd $(srcdir); ./bin2hex.pl element.txt ElementData >element.h)
-
-extable.h:	bin2hex.pl extable.txt
-		(cd $(srcdir); ./bin2hex.pl extable.txt ExtensionTableData >extable.h)
 
 isotope.h:	bin2hex.pl isotope-small.txt
 		(cd $(srcdir); ./bin2hex.pl isotope-small.txt IsotopeData ISOTOPE >isotope.h)

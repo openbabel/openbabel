@@ -12,15 +12,17 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-/** NOTE.
+/* NOTE.
 The intention of this software is to provide a definitive toolkit
 for reading and writing CML documents (or documents which contain
 CML fragments).
  
-CML itself is defined by the published specification(s) and must not be changed
-or extended - this is a key aspect of markup languages. If you do wish to create
-documents with functionality beyond CML you will need to develop your
-own namespace.
+CML itself is defined by the published specification(s) and must not
+be changed or extended outside the specification - this is a key
+aspect of markup languages. If you do wish to create documents with
+functionality beyond CML you will need to develop your own namespace
+or work with the CML standards group to enhance the CML specification
+itself. 
  
 It is my intention to support developments in CML and this code for
 enhancement of the functionality and precision of CML. This activity
@@ -40,25 +42,27 @@ inheritance, schema locations, default qualification, nillability,
 datatyping, etc. If you do not understand these you are likely to break
 conformance with CML.
  
-The following requests are addressed to anyone or organization making changes to this code
-who has not contacted me. The GPL prevents them being mandatory but they should be
-respected by anyone who believes in interoperability
+The following requests are addressed to anyone or organization making
+changes to this code who has not contacted me. The GPL prevents them
+being mandatory but they should be respected by anyone who believes in
+interoperability.
  
-The code itself is OpenSource. You may make any changes under
+The code itself is open source. You may make any changes under
 the terms of the GPL above.
  
 HOWEVER: ANY alteration to the code means that your system may deviate from
-a compliant CML system. CML has been trademarked precisely to protect its implementation.
-(The International Union of Crystallography has trademarked their CIF
-specification, so this policy is in keeping with accepted practice in
-Open Specifications).
+a compliant CML system. CML has been trademarked precisely to protect
+its implementation. (The International Union of Crystallography has
+trademarked their CIF specification, so this policy is in keeping with
+accepted practice in Open Specifications).
  
-YOU are therefore requested to announce that your code has been modified from that deposited
-by myself or supplied from the current OpenSource site. You should be very careful
-in any claims that it complies with any of the published
-CML specifications. You are requested to make it clear to users that your use of
-"CML" the <cml> tag and the CML namespaces posted on http://www.xml-cml.org has
-been made without the knowledge of the authors of CML.
+YOU are therefore requested to announce that your code has been
+modified from that deposited by myself or supplied from the current
+OpenSource site. You should be very careful in any claims that it
+complies with any of the published CML specifications. You are
+requested to make it clear to users that your use of "CML" the "<cml>"
+tag and the CML namespaces posted on http://www.xml-cml.org has been
+made without the knowledge of the authors of CML. 
  
 This notice must be included with any modified software.
  
@@ -4665,8 +4669,6 @@ void debug(ostream &ofs)
     ofs << "<table>" << endl;
     ofs << "<tr><td>Flags</td><td>" << molPtr->GetFlags() << "</td></tr>" << endl;
     ofs << "<tr><td>Title</td><td>" << molPtr->GetTitle() << "</td></tr>" << endl;
-    ofs << "<tr><td>InputType</td><td>" << molPtr->GetInputType() << "</td></tr>" << endl;
-    ofs << "<tr><td>OutputType</td><td>" << molPtr->GetOutputType() << "</td></tr>" << endl;
     ofs << "<tr><td>NumAtoms</td><td>" << molPtr->NumAtoms() << "</td></tr>" << endl;
     ofs << "<tr><td>NumBonds</td><td>" << molPtr->NumBonds() << "</td></tr>" << endl;
     ofs << "<tr><td>NumHvyAtoms</td><td>" << molPtr->NumHvyAtoms() << "</td></tr>" << endl;

@@ -30,7 +30,6 @@ int main (int argc, char **argv)
     }
     char *program_name = argv[0];
     char *FileIn = argv[1], *FptIn = argv[2];
-    io_type inFileType = UNDEFINED, outFileType = FINGERPRINT;
     ifstream ifs;
     unsigned int i;
     // Find Input filetype

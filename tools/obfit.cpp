@@ -45,7 +45,6 @@ int main(int argc,char **argv)
     char *FileRef=NULL, *FileMove=NULL, *Pattern=NULL;
     string err;
     char *program_name=argv[0];
-    io_type refFileType = UNDEFINED, mvFileType = UNDEFINED;
 
     // parse the command line
     if (argc!=4)

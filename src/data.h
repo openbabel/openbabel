@@ -46,25 +46,6 @@ class OBElement;
 class OBAtom;
 class OBElementTable;
 
-typedef enum { UNDEFINED,
-               ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
-               CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
-               CHEM3D2, CHEMDRAW, CHEMTOOL, CIF, CML, CSR, CSSR, DELPDB, DMOL,
-               DOCK, FDAT, FEATURE, FH, FIX, FRACT, GAMESSIN, GAMESSOUT,
-               GAUSSIAN92, GAUSSIAN94, GAUSSIANCART, GAUSSIANOUT,
-               GHEMICAL, GROMOS96A, GROMOS96N, GSTAT, HIN, ICON8,
-               IDATM, JAGUARIN, JAGUAROUT, M3D, MACCS, MACMOL,
-               MICROWORLD, MM2IN, MM2OUT, MM3, MMADS, MMCIF, MMD,
-               MOL2, MOLDEN, MOLIN, MOLINVENT, MOPACCART, MOPACINT,
-               MOPACOUT, MPQC, MSF, NWCHEMIN, NWCHEMOUT, OEBINARY,
-               PCMODEL, PDB, POV, PREP, QCHEMIN, QCHEMOUT, REPORT,
-               SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
-               SPARTANSEMI, TGF, TINKER, TITLE, TURBOMOLE, UNICHEM, VIEWMOL,
-               XED, XYZ, ZINDO, CRK2D, CRK3D, PQS, FINGERPRINT
-               // Insert new formats here (at the end)
-               // for backwards compatibility
-             } io_type;
-
 //! \brief Base data table class, handles reading data files
 //!
 //! Base data table class--reads ASCII data files in various formats
@@ -228,41 +209,6 @@ public:
     bool Translate(char*,char*); // to, from
     bool Translate(std::string &,std::string &); // to, from
 };
-
-// class introduction in data.cpp
-/*
-class OBExtensionTable : public OBGlobalDataBase
-{
-  int                     _linecount;
-  std::vector<std::vector<std::string> > _table;
- 
- public:
- 
-  OBExtensionTable(void);
-  ~OBExtensionTable() {}
- 
-  bool    CanReadExtension(char *);
-  bool    CanWriteExtension(char *);
-  bool	  IsReadable(unsigned int);
-  bool    IsReadable(io_type);
-  bool	  IsWritable(unsigned int);
-  bool	  IsWritable(io_type);
-  void    ParseLine(const char*);
-  void    TypeToExtension(io_type,char*);
-  void	  TypeToMIME(io_type,char*);
-  void    ExtensionToDescription(char*, char*);
- 
-  io_type       GetType(unsigned int);
-  io_type       FilenameToType(char *);
-  io_type       FilenameToType(std::string &);
-  io_type	MIMEToType(char *);
-  io_type	MIMEToType(std::string &);
-  const char   *GetExtension(unsigned int);
-  const char   *GetDescription(unsigned int);
-  unsigned int  Count(); 
-};
- 
-*/
 
 // Used by other code for reading files
 #ifdef WIN32
