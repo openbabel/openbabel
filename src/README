@@ -1,0 +1,100 @@
+#OBLIB SOURCE CODE ############################################################
+
+#CORE COMPONENTS ##############################################################
+atom		handle OBAtom class
+base		base classes to build a graph
+bond		handle OBBond class
+binary		handle rotamer list and binary base files
+bitgrid		3D grid box of bitvector for property assignment
+bitvec		vector of bits
+chains		parse chains for macromolecules or SMILES		
+chiral		deal with chiral atoms
+cwrap		wrapper for c code
+data		global data + resource file parsers
+generic		handle generic data class
+fileformat	read and write file formats
+grid		handle grid of values
+matrix		operation on matrix
+molchrg		assign Gasteiger partial charges
+mol		handle molecules
+molvector	vector to handle set of molecules like in multiple files
+oberror		handle error messages
+obifstream	stream of OB
+obutil		set of tools for timing,square-root,random number, 
+		RMS calculation, string conversion, triple and quad template
+parsmart	SMART parser
+patty		programmable atom typer
+phmodel		read ph rules and assign charges
+rand		pseudo random number generator
+residue		handle macromolecule residues
+report		report information about the molecule:charge, distance matrix
+		angle, chiral info
+ring		deal with rings, find smallest set of smallest rings (SSSR)
+rotor		rotate torsional according to rotor rules
+tokenst		tokenize a string
+typer		OB atom typer
+
+#MATH ########################################################################
+matrix3x3	rotation matrix
+vector3		handle coordinates x, y, z
+
+#OPENBABEL ####################################################################
+main		openbabel parser
+newmain		new openbabel parser
+
+#FILE FORMATS CODE ############################################################
+alchemy.cpp
+amber.cpp
+balst.cpp
+bgf.cpp
+box.cpp
+c3d.cpp
+cacao.cpp
+cache.cpp
+car.cpp
+ccc.cpp
+chdrw.cpp
+chemtool.cpp
+cml.cpp
+csr.cpp
+cssr.cpp
+dmol.cpp
+feat.cpp
+fh.cpp
+gamess.cpp
+gaussian.cpp
+ghemical.cpp
+gromos96.cpp
+hin.cpp
+jaguar.cpp
+mdl.cpp
+mm3.cpp
+mmod.cpp
+mol.cpp
+mol2.cpp
+mopac.cpp
+mpqc.cpp
+nwchem.cpp
+pdb.cpp
+povray.cpp
+qchem.cpp
+report.cpp
+shellx.cpp
+tinker.cpp
+unichem.cpp
+viewmol.cpp
+xed.cpp
+xyz.cpp
+zindo.cpp
+
+#RESOURCE FILES ###############################################################
+aromatic	SMART patterns for aromatic systems
+atomtyp		SMART patterns to assign internal hybridization, 
+		implicit valence atom type and external type
+bond		bond typing
+element		table of the elements
+extable		table of file extention
+phmodeldata	protonation rules
+resdata		residue data
+types		internal/external atom types equivalents
+version		current version of OB
