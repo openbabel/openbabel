@@ -7,6 +7,8 @@
 #                                                                            #
 #  Small isotope table with most frequently-used isotopes (as default data)  #
 #  (GRH currently trimmed up to atomic # 40 and #100+)                       #
+#   Note that this is only used when data files are not available            #
+#   and hence is not as likely to be updated frequently--it is hand-edited!  #
 #                                                                            #
 #  This file has a series of lines, one for each element                     #
 #   (i.e. line 0 = neutron, line 1 = hydrogen, line 2 = helium, etc.)        #
@@ -23,6 +25,8 @@
 #  as made available in the mass_rmd.mas95 file                              #
 #                                                                            #
 #  Currently: 110 lines (neutron, H to Mt)                                   #
+#  (note that since element 0 often represents a dummy atom, the default     #
+#   mass is 0 amu, *not* the mass of a neutron, accessible as isotope 1)     #
 #                                                                            #
 ##############################################################################
 0 0 0.000000 1 1.008664
