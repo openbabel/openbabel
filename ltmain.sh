@@ -43,8 +43,8 @@ EXIT_FAILURE=1
 
 PROGRAM=ltmain.sh
 PACKAGE=libtool
-VERSION=1.5.8
-TIMESTAMP=" (1.1220.2.117 2004/08/04 14:12:05)"
+VERSION=1.5.10
+TIMESTAMP=" (1.1220.2.130 2004/09/19 12:13:49)"
 
 # See if we are running on zsh, and set the options which allow our
 # commands through without removal of \ escapes.

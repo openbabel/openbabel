@@ -20,6 +20,14 @@ GNU General Public License for more details.
 #include <string>
 #include <vector>
 
+// These macros are used in DLL builds. If they have not
+// been set in babelconfig.h, define them as nothing.
+#ifndef OBCONV
+	#define OBCONV
+#endif
+#ifndef OBDLL
+	#define OBDLL
+#endif
 
 /**
 	* Interface for dynamic libraries. This class defines an interface for

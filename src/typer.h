@@ -45,7 +45,7 @@ public:
     void CorrectAromaticNitrogens(OBMol&);
 };
 
-// class introduction  in
+// class introduction in typer.cpp
 class OBAromaticTyper : public OBGlobalDataBase
 {
     std::vector<bool>             _vpa;   //!< potentially aromatic atoms

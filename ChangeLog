@@ -1,3 +1,17 @@
+2005-01-19  Geoffrey Hutchison  <geoff@geoffhutchison.net>
+
+	* src/bondtyper.h src/bondtyper.cpp: New method
+	AssignFunctionalGroupBonds() to replace code in
+	mol.cpp::PerceiveBondOrders() -- assigns generic SMARTS patterns
+	and then angle/distance constrained SMARTS patterns (like
+	carbonyl).
+
+	* src/mol.cpp: Use the new OBBondTyper method above.
+
+	* configure, aclocal.m4, config.guess, config.sub, ltmain.sh,
+	 */Makefile.in: Update with latest automake/libtool/autoconf
+	versions (automake-1.9.4, libtool-1.5.10 autoconf 2.59).
+
 2005-01-13  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/formats/obmoleculeformat.h: Added. Class to reduce code duplication.  
@@ -25,7 +39,7 @@
 	* windows/OBDLL/map2def2.exe added  
 	* windows/babelconfig.h updated  
 
-2005-01-07  Geoffrey Hutchison  <ghutchis@geoffhutchison.net>
+2005-01-07  Geoffrey Hutchison  <geoff@geoffhutchison.net>
 
 	* src/obconversion.h (GetMIMEType): New method for chemical MIME
 	support.
@@ -34,12 +48,12 @@
 	lower-case and previous Babel standards. Added MIME types where
 	appropriate.
 
-2005-01-06  Geoffrey Hutchison  <ghutchis@geoffhutchison.net>
+2005-01-06  Geoffrey Hutchison  <geoff@geoffhutchison.net>
 
 	* src/main.cpp, src/obconversion.cpp, src/obconversion.h: Updated
 	files from Chris Morley.
 
-2005-01-01  Geoffrey Hutchison  <ghutchis@geoffhutchison.net>
+2005-01-01  Geoffrey Hutchison  <geoff@geoffhutchison.net>
 
 	* tools/obfit.cpp, tools/obgrep.cpp, tools/obprop.cpp,
 	tools/obrotate.cpp, tools/obtanimoto.cpp: Update to use the
@@ -48,7 +62,7 @@
 	* src/formats/*.cpp: Clean out formats which don't currently have
 	format specification URLs.
 
-2004-12-23  Geoffrey Hutchison  <ghutchis@geoffhutchison.net>
+2004-12-23  Geoffrey Hutchison  <geoff@geoffhutchison.net>
 
 	* *.cpp, *.h: Reformat using astyle --style=ansi.
 

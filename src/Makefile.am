@@ -6,12 +6,12 @@ lib_LTLIBRARIES = libopenbabel.la
 
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp binary.cpp bitvec.cpp bond.cpp \
-		chains.cpp chiral.cpp data.cpp obconversion.cpp \
-		fingerprint.cpp generic.cpp grid.cpp kekulize.cpp \
-		matrix.cpp mol.cpp molchrg.cpp oberror.cpp obutil.cpp \
-		parsmart.cpp patty.cpp phmodel.cpp rand.cpp \
-		residue.cpp ring.cpp rotor.cpp tokenst.cpp typer.cpp \
-		transform.cpp
+		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
+		obconversion.cpp fingerprint.cpp generic.cpp grid.cpp \
+		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
+		oberror.cpp obutil.cpp parsmart.cpp patty.cpp \
+		phmodel.cpp rand.cpp residue.cpp ring.cpp \
+		rotor.cpp tokenst.cpp typer.cpp transform.cpp
 
 libopenbabel_la_LIBADD = math/libmath.la formats/libformats.la @LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 0:0:0
