@@ -1,13 +1,17 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(src/xyz.cpp)
+AC_INIT(openbabel, 1.100.1)
+AC_CONFIG_SRCDIR(src/obutil.cpp)
+AC_CONFIG_HEADER(src/babelconfig.h)
+AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of openbabel])
 
-dnl AM_CONFIG_HEADER(config.h)
 dnl AM_INIT_AUTOMAKE([openbabel], version)
 AC_CANONICAL_HOST
 top_builddir=`pwd`
 AC_SUBST(top_builddir)
 openbabel_version=1.100.1
 AC_SUBST(openbabel_version)
+
+AC_DEFINE_DIR([DATADIR], [datadir/AC_PACKAGE_NAME], [Where the data files are located])
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -64,5 +68,5 @@ AC_C_INLINE
 
 dnl Checks for library functions.
 
-AC_OUTPUT(Makefile src/Makefile src/math/Makefile test/Makefile src/version.h)
+AC_OUTPUT(Makefile src/Makefile src/math/Makefile test/Makefile)
 echo timestamp > stamp.h

@@ -12,7 +12,6 @@ CXX	      = @CXX@
 
 CFLAGS        = @CFLAGS@
 CXXFLAGS      = @CXXFLAGS@ 
-DEFS          = -DDATADIR=\"${pkgdatadir}\" 
 INCS          = -I$(srcdir)
 LIBS	      = @LIBS@
 LIBFLAGS      = -DLIBRARY
