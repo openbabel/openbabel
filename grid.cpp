@@ -16,12 +16,12 @@ GNU General Public License for more details.
 
 using namespace std;
 
-namespace OpenEye {
+namespace OpenBabel {
 
 void OEProxGrid::Setup(OEMol &mol,OEMol &box,float cutoff,float res)
 {
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)
@@ -76,7 +76,7 @@ void OEProxGrid::Setup(OEMol &mol,OEMol &box,float cutoff,vector<bool> &use,
 		       float res)
 {
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)
@@ -163,7 +163,7 @@ vector<int> *OEProxGrid::GetProxVector(float *c)
 void OEFloatGrid::Init(OEMol &box,float spacing, float pad)
 {
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)

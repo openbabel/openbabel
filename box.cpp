@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye 
+namespace OpenBabel 
 {
 
 bool ReadBox(istream &ifs, OEMol &mol,char *)
@@ -59,7 +59,7 @@ bool WriteBox(ostream &ofs,OEMol &mol,float margin)
   Vector vcenter,vmin,vmax,vmid,vdim;
   
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   vmax.Set(-10E10,-10E10,-10E10);
   vmin.Set( 10E10, 10E10, 10E10);
 

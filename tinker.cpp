@@ -13,14 +13,14 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 	
 bool WriteTinker(ostream &ofs,OEMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   
   sprintf(buffer,"%6d %-20s",mol.NumAtoms(),mol.GetTitle());
   ofs << buffer << endl;

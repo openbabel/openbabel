@@ -18,9 +18,9 @@ GNU General Public License for more details.
 
 #include "binary_io.h"
 #include "Vector.h"
-using namespace OpenEye;
+using namespace OpenBabel;
 
-namespace OpenEye {
+namespace OpenBabel {
 
 /*!
 **\brief An object for storing, manipulating and applying coordinate transformations.

@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 #define BOHR_TO_ANGSTROM 0.529177
 
@@ -129,7 +129,7 @@ bool WriteGAMESS(ostream &ofs,OEMol &mol)
     ofs << buffer << endl;
   }
 
-  ofs << "$END" << endl;
+  ofs << " $END" << endl << endl << endl;
   return(true);
 }
 

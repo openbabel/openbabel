@@ -16,7 +16,7 @@ GNU General Public License for more details.
 
 #include "oeutil.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 static int DetermineFRJ(OEMol &);
 static void BuildOERTreeVector(OEAtom*,OERTree*,vector<OERTree*>&,OEBitVec&);
@@ -38,8 +38,8 @@ void OEMol::FindSSSR()
       FindRingAtomsAndBonds();
 
       OEBond *bond;
-      vector<OEBond*> cbonds;
-      vector<OEBond*>::iterator k;
+      vector<OEEdgeBase*> cbonds;
+      vector<OEEdgeBase*>::iterator k;
 
       //restrict search for rings around closure bonds
       for (bond = BeginBond(k);bond;bond = NextBond(k))
@@ -50,10 +50,10 @@ void OEMol::FindSSSR()
 	{
 	  OERingSearch rs;
 	  //search for all rings about closures
-	  vector<OEBond*>::iterator i;
+	  vector<OEEdgeBase*>::iterator i;
 
 	  for (i = cbonds.begin();i != cbonds.end();i++)
-	    rs.AddRingFromClosure(*this,*i,0);
+	    rs.AddRingFromClosure(*this,(OEBond*)*i,0);
 	  
 	  rs.SortRings(); //sort ring sizes from smallest to largest
 	  rs.RemoveRedundant(frj);  //full ring set - reduce to SSSR set
@@ -86,7 +86,7 @@ static int DetermineFRJ(OEMol &mol)
 
   //count up the atoms and bonds belonging to each graph
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   int numatoms,numbonds,frj=0;
   OEBitVec frag;
   for (i = cfl.begin();i != cfl.end();i++)
@@ -157,8 +157,8 @@ void OERingSearch::AddRingFromClosure(OEMol &mol,OEBond *cbond,int level)
 
   bool pathok;
   deque<int> p1,p2;
-  vector<OEAtom*> path1,path2;
-  vector<OEAtom*>::iterator m,n;
+  vector<OENodeBase*> path1,path2;
+  vector<OENodeBase*>::iterator m,n;
   vector<OERTree*>::iterator i;
 
   for (i = t1.begin();i != t1.end();i++)
@@ -279,7 +279,7 @@ static void FindRings(OEMol &mol,vector<int> &path,OEBitVec &avisit,
 {
   OEAtom *atom;
   OEBond *bond;
-  vector<OEBond*>::iterator k;
+  vector<OEEdgeBase*>::iterator k;
 
   if (avisit[natom])
     {
@@ -379,7 +379,7 @@ void BuildOERTreeVector(OEAtom *atom,OERTree *prv,vector<OERTree*> &vt,OEBitVec 
   OEAtom *nbr;
   OEMol *mol = (OEMol*)atom->GetParent();
   OEBitVec curr,used,next;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   curr |= atom->GetIdx();
   used = bv|curr;
 
@@ -414,7 +414,7 @@ OERTree::OERTree(OEAtom *atom,OERTree *prv)
   _prv = prv;
 }
 
-void OERTree::PathToRoot(vector<OEAtom*> &path)
+void OERTree::PathToRoot(vector<OENodeBase*> &path)
 {
   path.push_back(_atom);
   if (_prv) _prv->PathToRoot(path);

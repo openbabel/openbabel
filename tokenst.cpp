@@ -25,7 +25,7 @@ bool tokenize(vector<string> &, char *,char *);
 char *trim_spaces(char *string);
 bool tokenize(vector<string> &vcr, string &s,char *delimstr,int limit=-1);
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool tokenize(vector<string> &vcr, char *buf,char *delimstr)
 {

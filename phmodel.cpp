@@ -19,7 +19,7 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 OEPhModel phmodel;
@@ -114,7 +114,7 @@ void OEPhModel::CorrectForPH(OEMol &mol)
   mol.SetCorrectedForPH();
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator j;
+  vector<OENodeBase*>::iterator j;
   for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
     atom->SetFormalCharge(0);
 
@@ -175,7 +175,7 @@ bool OEChemTsfm::Init(string &bgn,string &end)
   //find bonds to be modified
   OEEdge *edge1,*edge2;
   OENode *bgn1,*bgn2,*end1,*end2;
-  vector<OEEdge*>::iterator k,m;
+  vector<OEEdgeBase*>::iterator k,m;
   for (edge1 = _bgn.Begin(k);edge1;edge1 = _bgn.Next(k))
   {
 	  bgn1 = (OENode*)edge1->GetBgn();
@@ -259,7 +259,7 @@ bool OEChemTsfm::Apply(OEMol &mol)
 
       //make sure same atom isn't delete twice
       vector<bool> vda;
-      vector<OEAtom*> vdel;
+      vector<OENodeBase*> vdel;
       vda.resize(mol.NumAtoms()+1,false);
       for (i = mlist.begin();i != mlist.end();i++)
 		  for (j = _vadel.begin();j != _vadel.end();j++)
@@ -269,12 +269,12 @@ bool OEChemTsfm::Apply(OEMol &mol)
 				  vdel.push_back(mol.GetAtom((*i)[*j]));
 			  }
 
-	  vector<OEAtom*>::iterator k;
+	  vector<OENodeBase*>::iterator k;
       for (k = vdel.begin();k != vdel.end();k++)
-		  mol.DeleteAtom(*k); 
+		  mol.DeleteAtom((OEAtom*)*k); 
     }
   
   return(true);
 }
 
-} //namespace OpenEye
+} //namespace OpenBabel

@@ -18,7 +18,7 @@ GNU General Public License for more details.
 //Code for SMARTS parser
 //
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool OESmartsParser::Parse(OESmartsPattern &sp,string &s)
@@ -892,5 +892,5 @@ void OESmartsParser::AddClosure(OEEdgeBase *edge,int idx)
 	_vclose.push_back(pair<OEEdgeBase*,int> (edge,idx));
 }
 
-} //namespace OpenEye
+} //namespace OpenBabel
 

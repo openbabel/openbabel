@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #include "parsmart.h"
 #include "patty.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 // Define rint for win32 - this is not defined in Math.h for VC6.0
 class BitGrid 

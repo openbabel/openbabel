@@ -26,7 +26,7 @@ GNU General Public License for more details.
 #include <strstream>
 #endif
 
-namespace OpenEye {
+namespace OpenBabel {
 
 OEExtensionTable extab;
 OEElementTable   etab;

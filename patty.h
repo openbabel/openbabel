@@ -14,7 +14,7 @@ GNU General Public License for more details.
 #ifndef OE_PATTY
 #define OE_PATTY
 
-namespace OpenEye {
+namespace OpenBabel {
 #define PT_CATION      1
 #define PT_ANION       2
 #define PT_ACCEPTOR    3

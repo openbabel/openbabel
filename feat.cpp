@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool ReadFeat(istream &ifs,OEMol &mol, char *title)
@@ -60,7 +60,7 @@ bool WriteFeat(ostream &ofs,OEMol &mol)
   ofs << mol.GetTitle() << endl;
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     sprintf(buffer,"%-3s %8.5f  %8.5f  %8.5f ",

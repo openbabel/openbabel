@@ -38,7 +38,7 @@ GNU General Public License for more details.
 #define DEG_TO_RAD PI/180.0f
 #endif 
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class Matrix3x3;
 

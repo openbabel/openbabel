@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #include "parsmart.h"
 #include "typer.h" 
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class OERotor;
 class OERotorList;

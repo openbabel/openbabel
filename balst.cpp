@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool ReadBallAndStick(istream &ifs,OEMol &mol,char *title)
@@ -67,8 +67,8 @@ bool WriteBallAndStick(ostream &ofs,OEMol &mol)
   sprintf(buffer,"%d",mol.NumAtoms()); ofs << buffer << endl;
   
   OEAtom *atom,*nbr;
-  vector<OEAtom*>::iterator i;
-  vector<OEBond*>::iterator j;
+  vector<OENodeBase*>::iterator i;
+  vector<OEEdgeBase*>::iterator j;
 
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {

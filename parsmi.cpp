@@ -19,7 +19,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "typer.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 extern OEAromaticTyper  aromtyper;
 
@@ -137,14 +137,14 @@ void OESmilesParser::FindAromaticBonds(OEMol &mol)
   _path.resize(mol.NumAtoms()+1);
 
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
     if (!bond->GetBeginAtom()->IsAromatic() || 
 	!bond->GetEndAtom()->IsAromatic())
       _bvisit[bond->GetIdx()] = true;
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator j;
+  vector<OENodeBase*>::iterator j;
 
   for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
     if(!_avisit[atom->GetIdx()] && atom->IsAromatic())
@@ -154,7 +154,7 @@ void OESmilesParser::FindAromaticBonds(OEMol &mol)
 void OESmilesParser::FindAromaticBonds(OEMol &mol,OEAtom *atom,int depth )
 {
   OEBond *bond;
-  vector<OEBond*>::iterator k;
+  vector<OEEdgeBase*>::iterator k;
 
   if (_avisit[atom->GetIdx()])
     {

@@ -13,14 +13,14 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool WriteFenskeZmat(ostream &ofs,OEMol &mol)
 {
   OEAtom *atom,*a,*b,*c;
   char type[10],buffer[BUFF_SIZE];
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   
   vector<OEInternalCoord*> vic;
   vic.push_back((OEInternalCoord*)NULL);

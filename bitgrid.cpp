@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #define ATOMTYPE_PATH "hbtypes.txt"
 #endif
 
-using namespace OpenEye;
+using namespace OpenBabel;
 
 BitGrid::BitGrid(void)
 {
@@ -39,7 +39,7 @@ BitGrid::~BitGrid(void)
 void BitGrid::Init(OEMol &box, float spacing)
 {
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   for ( atom = box.BeginAtom(i) ; atom ; atom = box.NextAtom(i) )
     {
@@ -116,7 +116,7 @@ void BitGrid::Init(float xmi, float ymi, float zmi, float xma, float yma, float 
 void BitGrid::Build(OEMol &mol)
 {
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   p.assign_types(mol,types);
 
@@ -127,7 +127,7 @@ void BitGrid::Build(OEMol &mol)
 void BitGrid::Build(OEMol &mol, OEBitVec &bits)
 {
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   p.assign_types(mol,types);
 

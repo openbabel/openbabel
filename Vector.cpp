@@ -25,7 +25,7 @@ GNU General Public License for more details.
 #endif
 
 
-namespace OpenEye {
+namespace OpenBabel {
 
 // create a random unit vector
 // if seed is nonNegative then use this as the seed,

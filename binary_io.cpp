@@ -1,7 +1,7 @@
 //THIS
 #include "binary_io.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 //test byte ordering
 static int SSINT = 0x00000001;
@@ -655,5 +655,5 @@ istream& operator>>(istream& istr, OEBinaryIO& obj)
   }
 
 
-}// End namespace OpenEye
+}// End namespace OpenBabel
 

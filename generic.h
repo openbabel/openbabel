@@ -18,7 +18,7 @@ GNU General Public License for more details.
 //are meant for use in derivative programs.  Macro definitions can be used
 //to define what each data slot is used for.
  
-namespace OpenEye {
+namespace OpenBabel {
 
 class OEAtom;
 class OEBond; 
@@ -136,6 +136,6 @@ public:
 	vector<OERing*> &GetData()        {return(_vr);}
 };
 
-} //end namespace OpenEye
+} //end namespace OpenBabel
 
 #endif //GENERIC_H

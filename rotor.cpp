@@ -14,7 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "rotor.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 #define OE_DEFAULT_DELTA 10.0f
 static bool GetDFFVector(OEMol&,vector<int>&,OEBitVec&);
@@ -57,7 +57,7 @@ bool OERotorList::FindRotors(OEMol &mol)
   mol.GetGTDVector(gtd);
   
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   vector<pair<OEBond*,int> > vtmp;
 
   int score;
@@ -89,7 +89,7 @@ bool OERotorList::FindRotors(OEMol &mol)
 bool OERotorList::IsFixedBond(OEBond *bond)
 {
   OEAtom *a1,*a2,*a3;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
 
   a1 = bond->GetBeginAtom();
   a2 = bond->GetEndAtom();
@@ -119,8 +119,8 @@ bool GetDFFVector(OEMol &mol,vector<int> &dffv,OEBitVec &bv)
   OEBitVec used,curr,next;
   OEAtom *atom,*atom1;
   OEBond *bond;
-  vector<OEAtom*>::iterator i;
-  vector<OEBond*>::iterator j;
+  vector<OENodeBase*>::iterator i;
+  vector<OEEdgeBase*>::iterator j;
 
   next.Clear();
 
@@ -281,7 +281,7 @@ static float MinimumPairRMS(OEMol &mol,float *a,float *b,bool &one2one)
   float min,tmp,d_2 = 0.0;
   OEBitVec bset;
   one2one = true;
-  vector<OEAtom*> _atom;
+  vector<OENodeBase*> _atom;
   _atom.resize(mol.NumAtoms());
   for (i = 0;i < (signed)mol.NumAtoms();i++) _atom[i] = mol.GetAtom(i+1);
 
@@ -323,7 +323,7 @@ bool OERotorList::SetEvalAtoms(OEMol &mol)
   OERotor *rotor;
   vector<OERotor*>::iterator i;
   OEBitVec eval,curr,next;
-  vector<OEBond*>::iterator k;
+  vector<OEEdgeBase*>::iterator k;
 
   for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
     {
@@ -342,7 +342,7 @@ bool OERotorList::SetEvalAtoms(OEMol &mol)
 	      a1 = mol.GetAtom(j);
 	      for (a2 = a1->BeginNbrAtom(k);a2;a2 = a1->NextNbrAtom(k))
 		if (!eval[a2->GetIdx()])
-		  if (!(*k)->IsRotor()||(HasFixedAtoms()&&IsFixedBond(*k)))
+		  if (!((OEBond*)*k)->IsRotor()||(HasFixedAtoms()&&IsFixedBond((OEBond*)*k)))
 		    {
 		      next.SetBitOn(a2->GetIdx());
 		      eval.SetBitOn(a2->GetIdx());
@@ -882,7 +882,7 @@ void OERotorRules::GetRotorIncrements(OEMol &mol,OEBond *bond,
 			a2 = mol.GetAtom(ref[1]); a3 = mol.GetAtom(ref[2]);
 			if (a4->IsHydrogen()) {swap(a1,a4); swap(a2,a3); swapped = true;} 
 
-			vector<OEBond*>::iterator k;
+			vector<OEEdgeBase*>::iterator k;
 			for (r = a2->BeginNbrAtom(k);r;r = a2->NextNbrAtom(k))
 				if (!r->IsHydrogen() && r != a3)
 					break;
@@ -930,7 +930,7 @@ void OERotorRules::GetRotorIncrements(OEMol &mol,OEBond *bond,
   //***didn't match any rules - assign based on hybridization***
   OEAtom *a1,*a2,*a3,*a4;
   a2 = bond->GetBeginAtom(); a3 = bond->GetEndAtom();
-  vector<OEBond*>::iterator k;
+  vector<OEEdgeBase*>::iterator k;
 
   for (a1 = a2->BeginNbrAtom(k);a1;a1 = a2->NextNbrAtom(k))
 	  if (!a1->IsHydrogen() && a1 != a3)

@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #include "binary_io.h"
 #include "generic.h"
 
-namespace OpenEye 
+namespace OpenBabel 
 {
 
 class OERotamerList : public OEGenericData

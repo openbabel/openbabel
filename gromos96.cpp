@@ -50,7 +50,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "version.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool WriteGromos96(ostream &ofs,OEMol &mol,float fac)
@@ -70,7 +70,7 @@ bool WriteGromos96(ostream &ofs,OEMol &mol,float fac)
 
   OEAtom *atom;
   OEResidue *res;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {

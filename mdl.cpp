@@ -14,7 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 
 using namespace std;
-namespace OpenEye {
+namespace OpenBabel {
 
 bool ReadSDFile(istream &ifs,OEMol &mol,char *title) {
   int i,natoms,nbonds;
@@ -142,7 +142,7 @@ bool WriteSDFile(ostream &ofs,OEMol &mol,char *dimension) {
   ofs << buff << endl;
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   int charge;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
     switch (atom->GetFormalCharge()) {
@@ -168,11 +168,11 @@ bool WriteSDFile(ostream &ofs,OEMol &mol,char *dimension) {
   //so the bonds come out sorted
   OEAtom *nbr;
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
       if (atom->GetIdx() < nbr->GetIdx()) {
-        bond = *j;
+        bond = (OEBond*) *j;
         sprintf(buff,"%3d%3d%3d%3d%3d%3d",
                 bond->GetBeginAtomIdx(),
                 bond->GetEndAtomIdx(),

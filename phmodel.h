@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #include "parsmart.h"
 #include "data.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class OEChemTsfm
 {
@@ -51,6 +51,6 @@ class OEPhModel : public OEGlobalDataBase
 
 
 
-} //namespace OpenEye
+} //namespace OpenBabel
 
 #endif //_PHMODEL_H

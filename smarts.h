@@ -28,7 +28,7 @@ GNU General Public License for more details.
 
 using namespace std;
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 class OEEdge;
@@ -453,8 +453,8 @@ public:
 	unsigned int GetVectorBinding()          {return(_vb);}
 	unsigned int GetAtomicNum()       const  {return(_expr->GetAtomicNum());}
 	OENodeBase *GetMatch()                   {return(_match);}
-	OENode *BeginNbr(vector<OEEdge*>::iterator &);
-	OENode *NextNbr(vector<OEEdge*>::iterator &);
+	OENode *BeginNbr(vector<OEEdgeBase*>::iterator &);
+	OENode *NextNbr(vector<OEEdgeBase*>::iterator &);
 };
 
 class OESmartsPattern : public OEGraphBase
@@ -478,10 +478,10 @@ public:
 	OEEdge *NewEdge(OENode*,OENode*,OEExprBase*);
 	
 	//iterator methods
-	OENode* Begin(vector<OENode*>::iterator &); 
-	OENode* Next(vector<OENode*>::iterator &);
-	OEEdge* Begin(vector<OEEdge*>::iterator &);
-	OEEdge* Next(vector<OEEdge*>::iterator &);
+	OENode* Begin(vector<OENodeBase*>::iterator &); 
+	OENode* Next(vector<OENodeBase*>::iterator &);
+	OEEdge* Begin(vector<OEEdgeBase*>::iterator &);
+	OEEdge* Next(vector<OEEdgeBase*>::iterator &);
 
 	//routines that perform substructure search
 	bool        SingleMatch()                    const{return(_single);}
@@ -527,7 +527,7 @@ public:
 };
 
 
-} //namespace OpenEye
+} //namespace OpenBabel
 
 #endif //SMARTS_H
 

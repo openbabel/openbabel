@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool WriteCache(ostream &ofs,OEMol &mol)
@@ -41,7 +41,7 @@ bool WriteCache(ostream &ofs,OEMol &mol)
   ofs << "ID xyz_coordinates             anum sym	chrg rflag" << endl;
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     strcpy(type_name,etab.GetSymbol(atom->GetAtomicNum()));
@@ -66,7 +66,7 @@ bool WriteCache(ostream &ofs,OEMol &mol)
 
   char bstr[10];
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
       switch (bond->GetBO())

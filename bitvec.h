@@ -38,7 +38,7 @@ using namespace std;
 #define STARTWORDS 10
 #endif //STARTBITS
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class OEBitVec
 {

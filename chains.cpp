@@ -113,7 +113,7 @@
 // Begin OpenEye Namespace
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace OpenEye { 
+namespace OpenBabel { 
 
 OEChainsParser chainsparser;
 
@@ -819,7 +819,7 @@ bool OEChainsParser::PerceiveChains(OEMol &mol)
 bool OEChainsParser::DetermineHetAtoms(OEMol &mol)
 {
 	OEAtom *atom;
-	vector<OEAtom *>::iterator a;
+	vector<OENodeBase *>::iterator a;
 	for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
 		if (!atom->IsHydrogen() && atom->GetValence() == 0)
 		{
@@ -847,7 +847,7 @@ bool OEChainsParser::DetermineConnectedChains(OEMol &mol)
 	numAtoms = mol.NumAtoms();
 
 	OEAtom *atom;
-	vector<OEAtom *>::iterator a;
+	vector<OENodeBase *>::iterator a;
 	for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
 	{
 		idx = atom->GetIdx() - 1;
@@ -888,7 +888,7 @@ bool OEChainsParser::DetermineConnectedChains(OEMol &mol)
 int OEChainsParser::RecurseChain(OEMol &mol, int i, int c)
 {
 	OEAtom *atom, *nbr;
-	vector<OEBond *>::iterator b;
+	vector<OEEdgeBase *>::iterator b;
     int result;
 
 	atom      = mol.GetAtom(i+1);
@@ -941,7 +941,7 @@ bool OEChainsParser::DeterminePeptideBackbone(OEMol &mol)
     /* Carbonyl Double Bond */
 
 	OEBond *bond;
-	vector<OEBond*>::iterator b;
+	vector<OEEdgeBase*>::iterator b;
 	for (bond = mol.BeginBond(b) ; bond ; bond = mol.NextBond(b))
 	{
 		if ((atomids[bond->GetBeginAtomIdx()-1] == 2 && atomids[bond->GetEndAtomIdx()-1] == 3) ||
@@ -962,8 +962,8 @@ void OEChainsParser::ConstrainBackbone(OEMol &mol, Template *templ, int tmax)
     int  count;
     int  i,idx;
 
-	vector<OEAtom *>::iterator a;
-	vector<OEBond *>::iterator b;	
+	vector<OENodeBase *>::iterator a;
+	vector<OEEdgeBase *>::iterator b;	
 
     /* First Pass */
 
@@ -1081,7 +1081,7 @@ void OEChainsParser::TracePeptideChain(OEMol &mol, int i, int r)
     int count;
     int j,k,idx;
 
-	vector<OEBond *>::iterator b;
+	vector<OEEdgeBase *>::iterator b;
 
     /* Determine Neighbours */
 
@@ -1227,7 +1227,7 @@ int OEChainsParser::IdentifyResidue(void *tree, OEMol &mol, int seed, int resno)
     BondCount = 0;
 
     OEAtom *atom, *nbr;
-    vector<OEBond *>::iterator b;
+    vector<OEEdgeBase *>::iterator b;
 
     while( ptr )
         switch(ptr->type)
@@ -1350,7 +1350,7 @@ void OEChainsParser::TraceNucleicChain(OEMol &mol, int i, int r)
     int j,k;
 
 	OEAtom *atom, *nbr;
-	vector<OEBond *>::iterator b;
+	vector<OEEdgeBase *>::iterator b;
 
 	count = 0;
 	atom  = mol.GetAtom(i + 1);	
@@ -1499,8 +1499,8 @@ bool OEChainsParser::DetermineHydrogens(OEMol &mol)
 
     /* First Pass */
 
-	vector<OEAtom*>::iterator a;
-	vector<OEBond*>::iterator b;
+	vector<OENodeBase*>::iterator a;
+	vector<OEEdgeBase*>::iterator b;
 
     for(atom = mol.BeginAtom(a); atom ; atom = mol.NextAtom(a))
         if(atom->IsHydrogen())

@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool ReadCaccrt(istream &ifs,OEMol &mol,char *title)
@@ -80,7 +80,7 @@ bool WriteCaccrt(ostream &ofs,OEMol &mol)
 {
   OEAtom *atom;
   char type_name[10],buffer[BUFF_SIZE];
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   sprintf(buffer,"%s\n",mol.GetTitle());
   sprintf(buffer,"%3d   DIST  0  0  0\n",mol.NumAtoms());
@@ -152,7 +152,7 @@ void SetHilderbrandt(OEMol &mol,vector<OEInternalCoord*> &vit)
   dummy2.SetVector(1.0f,0.0f,0.0f);
 
   OEAtom *atom,*a1,*a2,*ref;
-  vector<OEAtom*>::iterator ai;
+  vector<OENodeBase*>::iterator ai;
   vit.push_back((OEInternalCoord*)NULL);
   for (atom = mol.BeginAtom(ai);atom;atom = mol.NextAtom(ai))
     vit.push_back(new OEInternalCoord (atom));

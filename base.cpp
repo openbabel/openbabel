@@ -16,7 +16,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <fstream>
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool OEGraphBase::Match(OEGraphBase &g,bool singleMatch)

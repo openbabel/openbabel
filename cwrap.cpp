@@ -22,7 +22,7 @@ extern "C"
 }
 
 using namespace std;
-using namespace OpenEye;
+using namespace OpenBabel;
 
 char AtomicNumToOESymbol(int atomno);
 
@@ -75,7 +75,7 @@ int oe_get_cmol_element(char *c,long int handle)
 {
   OEAtom *atom;
   OEMol *mol = (OEMol*)handle;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   for(atom = mol->BeginAtom(i);atom;atom = mol->NextAtom(i))
     c[atom->GetIdx()-1] = AtomicNumToOESymbol(atom->GetAtomicNum());

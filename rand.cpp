@@ -42,7 +42,7 @@ GNU General Public License for more details.
 /* 2*3*5*7*11*13*17*19*23*29 = 6469693230 > 2^32 = 4294967296    */
 #define MAXFACT    10
 
-namespace OpenEye {
+namespace OpenBabel {
 #define MAXPRIMES  256
 static int primes[MAXPRIMES] = {
        1,    2,    3,    5,    7,   11,   13,   17,   19,   23,

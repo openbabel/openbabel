@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool WriteXED(ostream &ofs,OEMol &mol)
 {

@@ -14,7 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include <ctype.h>
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool ReadJaguar(istream &ifs,OEMol &mol,char *title)
 {

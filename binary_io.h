@@ -16,7 +16,7 @@
 
 using namespace std;
 
-namespace OpenEye {
+namespace OpenBabel {
 
 /* generic binary readers for basic data types */
 unsigned int OE_io_read_binary(char *ccc, char *x, unsigned int size, unsigned int count);
@@ -78,5 +78,5 @@ ostream& operator<<(ostream& ostr, const OEBinaryIO& obj);
 */
 istream& operator>>(istream& istr, OEBinaryIO& obj);
 
-}//End namespace OpenEye
+}//End namespace OpenBabel
 #endif

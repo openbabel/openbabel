@@ -19,7 +19,7 @@ GNU General Public License for more details.
 
 using namespace std;
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 class OEBase;
@@ -144,8 +144,8 @@ public:
 	virtual void ClearMatches()                 {}
 	virtual void PushBack(vector<OENodeBase*>&) {}
 	virtual void PrepForMatch()                 {}
-	virtual vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator BgnMatch() {return(NULL);}
-	virtual vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator EndMatch() {return(NULL);}
+	virtual vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator BgnMatch() {return((vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator) NULL);}
+	virtual vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator EndMatch() {return((vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator) NULL);}
 	virtual OENodeBase *GetFirstSeed() {return((OENodeBase*)NULL);}
 	bool Match(OEGraphBase &,bool singleMatch=false);
 	bool Match(OEGraphBase &,
@@ -153,6 +153,6 @@ public:
 		       vector<OEEdgeBase*>::iterator);
 };
 
-} //namespace OpenEye
+} //namespace OpenBabel
 
 #endif //BASE_H

@@ -14,7 +14,7 @@ GNU General Public License for more details.
 //THIS
 #include "ctransform.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 /*!
 **\brief Constructor

@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool WriteCSSR(ostream &ofs,OEMol &mol)
@@ -31,8 +31,8 @@ bool WriteCSSR(ostream &ofs,OEMol &mol)
   ofs << buffer << endl;
 
   OEAtom *atom,*nbr;
-  vector<OEAtom*>::iterator i;
-  vector<OEBond*>::iterator j;
+  vector<OENodeBase*>::iterator i;
+  vector<OEEdgeBase*>::iterator j;
   vector<int> vtmp(106,0);
 
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))

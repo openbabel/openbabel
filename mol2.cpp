@@ -15,7 +15,7 @@ GNU General Public License for more details.
 #include "smi.h"
 
 using namespace std;
-namespace OpenEye {
+namespace OpenBabel {
 
 bool ReadMol2(istream &ifs,OEMol &mol,char *title)
 {
@@ -174,7 +174,7 @@ bool WriteMol2(ostream &ofs,OEMol &mol,char *dimension)
   ttab.SetFromType("INT");ttab.SetToType("SYB");
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   vector<int> labelcount;labelcount.resize(105); //Number of elements
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
@@ -200,7 +200,7 @@ bool WriteMol2(ostream &ofs,OEMol &mol,char *dimension)
 
   ofs << "@<TRIPOS>BOND" << endl;
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
       if (bond->GetBO() == 5) strcpy(label,"ar");
@@ -257,7 +257,7 @@ bool WriteSmiOrderedMol2(ostream &ofs,OEMol &mol,char *dimension)
 	int ct;
 
   OEAtom *atom;
-//  vector<OEAtom*>::iterator i;
+//  vector<OENodeBase*>::iterator i;
   vector<int> labelcount;labelcount.resize(105); //Number of elements
 //  for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
 	for(ct = 1,idx = smiorder.begin();idx != smiorder.end();idx++,ct++) //loop over smiles order
@@ -289,7 +289,7 @@ cerr << endl;
 
   ofs << "@<TRIPOS>BOND" << endl;
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
       if (bond->GetBO() == 5) strcpy(label,"ar");

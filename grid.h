@@ -33,7 +33,7 @@ using namespace std;
 #define OELipoGrid 0x02
 #endif //OELipoGrid
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class OEProxGrid
 {

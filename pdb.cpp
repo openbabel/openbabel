@@ -16,7 +16,7 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "resdata.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 extern OEAtomTyper atomtyper;
 
@@ -151,7 +151,7 @@ bool ReadPDB(vector<string> &vpdb,OEMol &mol,char *title)
 bool WriteDelphiPDB(ostream &ofs,OEMol &mol)
 {
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   char buffer[BUFF_SIZE];
   
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
@@ -169,7 +169,7 @@ bool WriteDelphiPDB(ostream &ofs,OEMol &mol)
   int k,bo,count;
   int bond[10];
   OEAtom *nbr;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
       count=0;
@@ -355,7 +355,7 @@ static bool ParseConectRecord(char *buffer,OEMol &mol)
 
   OEAtom *a1,*a2;
   OEResidue *r1,*r2;
-  vector<OEAtom*>::iterator i,j;
+  vector<OENodeBase*>::iterator i,j;
   for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
     {
       r1 = a1->GetResidue();
@@ -391,7 +391,7 @@ bool OEResidueData::AssignBonds(OEMol &mol,OEBitVec &bv)
 {
   OEAtom *a1,*a2;
   OEResidue *r1,*r2;
-  vector<OEAtom*>::iterator i,j;
+  vector<OENodeBase*>::iterator i,j;
   
   //assign alpha peptide bonds
   for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
@@ -473,7 +473,7 @@ bool OEResidueData::AssignBonds(OEMol &mol,OEBitVec &bv)
       if (a1->IsOxygen() && a1->GetValence() == 1)
 	{
 	  OEBond *bond;
-	  bond = *(a1->BeginBonds());
+	  bond = (OEBond*)*(a1->BeginBonds());
 	  if (bond->GetBO() == 2)
 	    {
 	      a1->SetType("O2"); a1->SetHyb(2);
@@ -687,7 +687,7 @@ bool WritePDB(ostream &ofs,OEMol &mol)
   }
 
   OEAtom *nbr;
-  vector<OEBond*>::iterator k;
+  vector<OEEdgeBase*>::iterator k;
   for (i = 1; i <= mol.NumAtoms(); i ++)
   {
     atom = mol.GetAtom(i);

@@ -20,7 +20,7 @@ GNU General Public License for more details.
 // WPW - 070199
 // Usage is in sample main below
 
-namespace OpenEye {
+namespace OpenBabel {
 
 void patty::read_rules(const string &infile)
 {

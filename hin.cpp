@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool ReadHIN(istream &ifs,OEMol &mol,char *title)
 { 
@@ -73,7 +73,7 @@ bool WriteHIN(ostream &ofs,OEMol &mol)
   char buffer[BUFF_SIZE];
   OEAtom *atom;
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   char bond_char;
 
   ttab.SetFromType("INT"); ttab.SetToType("XYZ");

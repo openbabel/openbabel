@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool ReadAlchemy(istream &ifs,OEMol &mol,char *title)
 {
@@ -99,7 +99,7 @@ bool WriteAlchemy(ostream &ofs,OEMol &mol)
   }
 
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
 
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
   {

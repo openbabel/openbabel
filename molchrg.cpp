@@ -14,14 +14,14 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "molchrg.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool OEGastChrg::AssignPartialCharges(OEMol &mol)
 {
   //InitialPartialCharges(mol);
   
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
 
   GSVResize(mol.NumAtoms()+1);
   float a,b,c;
@@ -36,7 +36,7 @@ bool OEGastChrg::AssignPartialCharges(OEMol &mol)
   int iter;
   OEBond *bond;
   OEAtom *src,*dst;
-  vector<OEBond*>::iterator k;
+  vector<OEEdgeBase*>::iterator k;
   alpha = 1.0;
   for(iter = 0;iter < MX_GASTEIGER_ITERS;iter++) 
     {
@@ -79,7 +79,7 @@ bool OEGastChrg::AssignPartialCharges(OEMol &mol)
 void OEGastChrg::InitialPartialCharges(OEMol &mol)
 {
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {

@@ -29,9 +29,9 @@ GNU General Public License for more details.
 #endif
 
 using namespace std;
-//using namespace OpenEye;  //I don't believe this is needed
+//using namespace OpenBabel;  //I don't believe this is needed
 
-namespace OpenEye {
+namespace OpenBabel {
 
 //*** Stopwatch class used for timing length of execution ***
 class OEStopwatch

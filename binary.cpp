@@ -18,7 +18,7 @@ GNU General Public License for more details.
 
 #define OE_TITLE_SIZE 254
 #define OE_BINARY_SETWORD 32
-namespace OpenEye 
+namespace OpenBabel 
 {
 //test byte ordering
 static int SINT = 0x00000001;
@@ -339,7 +339,7 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
   int m,tmp,idx;
   unsigned int k;
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   vector<float*>::iterator j;
   idx=0;
 
@@ -372,7 +372,7 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
     }
 
   OEBond *bond;
-  vector<OEBond*>::iterator bi;
+  vector<OEEdgeBase*>::iterator bi;
   unsigned char bc[3];
   for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
     {
@@ -993,5 +993,5 @@ void OEBinaryDBase::GetMolecule(OEMol &mol,int idx)
 }
 
 
-} //namespace OpenEye
+} //namespace OpenBabel
 

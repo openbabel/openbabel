@@ -23,7 +23,7 @@ GNU General Public License for more details.
 #include "parsmart.h"
 #include "bitvec.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 //
@@ -141,9 +141,9 @@ void OESmartsPattern::PrepForMatch()
 
 	OEEdge *edge;
 	OENode *node,*seed,*nbr;
-	vector<OENode*> curr,next;
-	vector<OENode*>::iterator i,j;
-	vector<OEEdge*>::iterator k;
+	vector<OENodeBase*> curr,next;
+	vector<OENodeBase*>::iterator i,j;
+	vector<OEEdgeBase*>::iterator k;
 	vector<OEEdgeBase*> vedge;
 
 	for (node = Begin(i);node;node = Next(i)) //make sure all atoms are covered
@@ -160,7 +160,7 @@ void OESmartsPattern::PrepForMatch()
 				next.clear();
 				for (j = curr.begin();j != curr.end();j++)
 				{
-					for (nbr = (*j)->BeginNbr(k);nbr;nbr = (*j)->NextNbr(k))
+					for (nbr = ((OENode*)*j)->BeginNbr(k);nbr;nbr = ((OENode*)*j)->NextNbr(k))
 						if (!nbr->Visit)
 						{
 							if ((*k)->GetBgn() != *j) (*k)->SwapEnds();
@@ -228,47 +228,47 @@ void OESmartsPattern::ClearMatches()
 	_vmatch.clear(); //clear out previous matches
 
 	OENode *node;
-	vector<OENode*>::iterator i;
+	vector<OENodeBase*>::iterator i;
 	for (node = Begin(i);node;node = Next(i))
 		node->ResetRecurs();
 }
 
-OENode *OESmartsPattern::Begin(vector<OENode*>::iterator &i)
+OENode *OESmartsPattern::Begin(vector<OENodeBase*>::iterator &i)
 {
-	i = (vector<OENode*>::iterator)_vatom.begin();
-	return((i != (vector<OENode*>::iterator) _vatom.end()) ? (OENode*)*i : (OENode*)NULL);
+	i = _vatom.begin();
+	return((i != _vatom.end()) ? (OENode*)*i : (OENode*)NULL);
 }
 
-OENode *OESmartsPattern::Next(vector<OENode*>::iterator &i)
+OENode *OESmartsPattern::Next(vector<OENodeBase*>::iterator &i)
 {
 	i++;
-	return((i != (vector<OENode*>::iterator)_vatom.end()) ? (OENode*)*i : (OENode*)NULL);
+	return((i != _vatom.end()) ? (OENode*)*i : (OENode*)NULL);
 }
 
-OEEdge *OESmartsPattern::Begin(vector<OEEdge*>::iterator &i) 
+OEEdge *OESmartsPattern::Begin(vector<OEEdgeBase*>::iterator &i) 
 {
-	i = (vector<OEEdge*>::iterator)_vbond.begin();
-	return((i != (vector<OEEdge*>::iterator)_vbond.end()) ? (OEEdge*)*i : (OEEdge*)NULL);
+	i = _vbond.begin();
+	return((i != _vbond.end()) ? (OEEdge*)*i : (OEEdge*)NULL);
 }
 
-OEEdge *OESmartsPattern::Next(vector<OEEdge*>::iterator &i)
-{
-	i++;
-	return((i != (vector<OEEdge*>::iterator)_vbond.end()) ? (OEEdge*)*i : (OEEdge*)NULL);
-}
-
-OENode *OENode::BeginNbr(vector<OEEdge*>::iterator &i)
-{
-	i = (vector<OEEdge*>::iterator)_vbond.begin();
-	if (i == (vector<OEEdge*>::iterator)_vbond.end()) return(NULL);
-	return((this == (*i)->GetBgn()) ? (OENode*)(*i)->GetEnd() : (OENode*)(*i)->GetBgn());
-}
-
-OENode *OENode::NextNbr(vector<OEEdge*>::iterator &i)
+OEEdge *OESmartsPattern::Next(vector<OEEdgeBase*>::iterator &i)
 {
 	i++;
-	if (i == (vector<OEEdge*>::iterator)_vbond.end()) return(NULL);
-	return((this == (*i)->GetBgn()) ? (OENode*)(*i)->GetEnd() : (OENode*)(*i)->GetBgn());
+	return((i != _vbond.end()) ? (OEEdge*)*i : (OEEdge*)NULL);
+}
+
+OENode *OENode::BeginNbr(vector<OEEdgeBase*>::iterator &i)
+{
+	i = _vbond.begin();
+	if (i == _vbond.end()) return((OENode*)NULL);
+	return((this == ((OEEdge*)*i)->GetBgn()) ? (OENode*)((OEEdge*)*i)->GetEnd() : (OENode*)((OEEdge*)*i)->GetBgn());
+}
+
+OENode *OENode::NextNbr(vector<OEEdgeBase*>::iterator &i)
+{
+	i++;
+	if (i == _vbond.end()) return((OENode*)NULL);
+	return((this == ((OEEdge*)*i)->GetBgn()) ? (OENode*)((OEEdge*)*i)->GetEnd() : (OENode*)((OEEdge*)*i)->GetBgn());
 }
 
 OESmartsPattern::OESmartsPattern()
@@ -452,4 +452,4 @@ OERecursExpr::~OERecursExpr()
 	if (_sp) delete _sp;
 }
 
-}//namespace OpenEye
+}//namespace OpenBabel

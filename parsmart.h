@@ -16,7 +16,7 @@ GNU General Public License for more details.
 
 #include "smarts.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 //
@@ -49,6 +49,6 @@ public:
 #define OE_CLOCK   1
 #define OE_ACLOCK  2
 
-} //namespace OpenEye
+} //namespace OpenBabel
 
 #endif //PARSMART_H

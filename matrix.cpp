@@ -15,7 +15,7 @@ GNU General Public License for more details.
 #include "Vector.h"
 #include <stdio.h>
 
-namespace OpenEye {
+namespace OpenBabel {
 
 void print_matrix(vector<vector<float> > &m)
 {

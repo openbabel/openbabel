@@ -15,7 +15,7 @@ GNU General Public License for more details.
 #include "oeutil.h"
 #include "typer.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool ReadMacroModel(istream &ifs, OEMol &mol, char *defaultTitle)
@@ -105,7 +105,7 @@ bool ReadMacroModel(istream &ifs, OEMol &mol, char *defaultTitle)
   mol.EndModify();
 
   OEBond *bond;
-  vector<OEBond*>::iterator bi;
+  vector<OEEdgeBase*>::iterator bi;
   for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
     if (bond->GetBO() == 5 && !bond->IsInRing())
       bond->SetBO(1);
@@ -125,8 +125,8 @@ bool WriteMacroModel(ostream &ofs,OEMol &mol)
   int type,k;
   OEAtom *atom,*nbr;
   string from,to;
-  vector<OEAtom*>::iterator i;
-  vector<OEBond*>::iterator j;
+  vector<OENodeBase*>::iterator i;
+  vector<OEEdgeBase*>::iterator j;
   ttab.SetFromType("INT");
   ttab.SetToType("MMD");
 

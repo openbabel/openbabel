@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 using namespace std;
 
-namespace OpenEye {
+namespace OpenBabel {
 
 static int bitsoff[SETWORD] =
 {

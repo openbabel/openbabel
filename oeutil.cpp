@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #include <conio.h>
 #endif
 
-namespace OpenEye {
+namespace OpenBabel {
 
 void ThrowError(char *str)
 {
@@ -334,7 +334,7 @@ void InternalToCartesian(vector<OEInternalCoord*> &vic,OEMol &mol)
 {
   Vector n,nn,v1,v2,v3;
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   int index;
 
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
@@ -383,7 +383,7 @@ void CartesianToInternal(vector<OEInternalCoord*> &vic,OEMol &mol)
 {
   float r,sum;
   OEAtom *atom,*nbr,*ref;
-  vector<OEAtom*>::iterator i,j,m;
+  vector<OENodeBase*>::iterator i,j,m;
 
   //set reference atoms
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))

@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool ReadGhemical(istream &ifs,OEMol &mol,char *title)
 {
@@ -138,7 +138,7 @@ bool WriteGhemical(ostream &ofs,OEMol &mol)
   ofs << buffer << endl;
 
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
 
   for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
     {

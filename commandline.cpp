@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "commandline.h"
 
-using namespace OpenEye;
+using namespace OpenBabel;
 using namespace std;
 
 enum type { t_bool = -1, t_int, t_float, t_char, t_string, t_vector_int, t_vector_float, 

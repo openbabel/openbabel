@@ -16,7 +16,7 @@ GNU General Public License for more details.
 #include "molchrg.h"
 #include "phmodel.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 extern OEAromaticTyper  aromtyper;
 extern OEAtomTyper      atomtyper;
@@ -88,7 +88,7 @@ OEAtom &OEAtom::operator=(OEAtom &src)
 
 bool OEAtom::IsConnected(OEAtom *a1)
 {
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   OEBond *bond;
 
   for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -102,7 +102,7 @@ bool OEAtom::IsOneThree(OEAtom *a1)
 {
   OEAtom *atom1,*atom2;
   OEBond *bond1,*bond2;
-  vector<OEBond*>::iterator i,j;
+  vector<OEEdgeBase*>::iterator i,j;
   atom1 = this;
   atom2 = a1;
 
@@ -118,7 +118,7 @@ bool OEAtom::IsOneFour(OEAtom *a1)
 {
   OEAtom *atom1,*atom2;
   OEBond *bond1,*bond2;
-  vector<OEBond*>::iterator i,j;
+  vector<OEEdgeBase*>::iterator i,j;
   atom1 = this;
   atom2 = a1;
 
@@ -134,7 +134,7 @@ bool OEAtom::IsAxial()
 {
   float tor;
   OEAtom *a,*b,*c;
-  vector<OEBond*>::iterator i,j,k;
+  vector<OEEdgeBase*>::iterator i,j,k;
   
   for (a = BeginNbrAtom(i);a;a = NextNbrAtom(i))
     if (a->GetHyb() == 3 && a->IsInRing() && !(*i)->IsInRing())
@@ -154,7 +154,7 @@ bool OEAtom::IsAxial()
 bool OEAtom::HasAlphaBetaUnsat(bool includePandS)
 {
   OEAtom *a1,*a2;
-  vector<OEBond*>::iterator i,j;
+  vector<OEEdgeBase*>::iterator i,j;
 
   for (a1 = BeginNbrAtom(i);a1;a1 = NextNbrAtom(i))
     if (includePandS || (!a1->IsPhosphorus() && !a1->IsSulfur()))
@@ -165,10 +165,10 @@ bool OEAtom::HasAlphaBetaUnsat(bool includePandS)
   return(false);
 }
 
-bool OEAtom::HasBondOfOrder(int order)
+bool OEAtom::HasBondOfOrder(unsigned int order)
 {
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
     if (bond->GetBO() == order)
       return(true);
@@ -176,11 +176,11 @@ bool OEAtom::HasBondOfOrder(int order)
   return(false);
 }
 
-int OEAtom::CountBondsOfOrder(int order)
+int OEAtom::CountBondsOfOrder(unsigned int order)
 {
 	int count = 0;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
     if (bond->GetBO() == order)
       count++;
@@ -194,7 +194,7 @@ bool OEAtom::IsPolarHydrogen()
   
   OEAtom *atom;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
     {
       atom = bond->GetNbrAtom(this);
@@ -213,7 +213,7 @@ bool OEAtom::IsNonPolarHydrogen()
   
   OEAtom *atom;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
     {
       atom = bond->GetNbrAtom(this);
@@ -313,7 +313,7 @@ unsigned int OEAtom::GetHvyValence() const
   unsigned int count=0;
 
   OEAtom *atom;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (atom = ((OEAtom*)this)->BeginNbrAtom(i);atom;atom = ((OEAtom*)this)->NextNbrAtom(i))
 	  if (!atom->IsHydrogen())
 		  count++;
@@ -326,7 +326,7 @@ unsigned int OEAtom::GetHeteroValence() const
 {
   unsigned int count=0;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (bond = ((OEAtom*)this)->BeginBond(i);bond;bond = ((OEAtom*)this)->NextBond(i))
     if (bond->GetNbrAtom((OEAtom*)this)->IsHeteroatom())
       count++;
@@ -358,7 +358,7 @@ bool OEAtom::IsAmideNitrogen()
   OEAtom *nbratom,*atom;
   OEBond *abbond,*bond;
 
-  vector<OEBond*>::iterator i,j;
+  vector<OEEdgeBase*>::iterator i,j;
   atom = this;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
     {
@@ -378,7 +378,7 @@ bool OEAtom::IsAromaticNOxide()
 	if (!IsNitrogen() || !IsAromatic()) return(false);
 
 	OEAtom *atom;
-	vector<OEBond*>::iterator i;
+	vector<OEEdgeBase*>::iterator i;
 
 	for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
 		if (atom->IsOxygen() && !(*i)->IsInRing() && (*i)->GetBO() == 2)		
@@ -394,7 +394,7 @@ bool OEAtom::IsCarboxylOxygen()
 
   OEAtom *atom;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
 
   atom = NULL;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -418,7 +418,7 @@ bool OEAtom::IsPhosphateOxygen()
 
   OEAtom *atom;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
 
   atom = NULL;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -442,7 +442,7 @@ bool OEAtom::IsSulfateOxygen()
 
   OEAtom *atom;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
 
   atom = NULL;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -466,7 +466,7 @@ bool OEAtom::IsNitroOxygen()
 
   OEAtom *atom;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
 
   atom = NULL;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -587,7 +587,7 @@ unsigned int OEAtom::CountFreeOxygens() const
 {
   unsigned int count = 0;
   OEAtom *atom;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
 
   for (atom = ((OEAtom*)this)->BeginNbrAtom(i);atom;atom = ((OEAtom*)this)->NextNbrAtom(i))
 	  if (atom->IsOxygen() && atom->GetHvyValence() == 1)
@@ -601,7 +601,7 @@ unsigned int OEAtom::BOSum() const
   unsigned int bo;
   unsigned int bosum=0;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   
   for (bond = ((OEAtom*)this)->BeginBond(i);bond;bond = ((OEAtom*)this)->NextBond(i))
     {
@@ -617,7 +617,7 @@ unsigned int OEAtom::KBOSum() const
 {
   OEBond *bond;
   unsigned int bosum = 0;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   
   bosum = GetImplicitValence();
 
@@ -645,7 +645,7 @@ unsigned int OEAtom::ExplicitHydrogenCount() const
 {
   int numH=0;
   OEAtom *atom;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (atom = ((OEAtom*)this)->BeginNbrAtom(i);atom;atom = ((OEAtom*)this)->NextNbrAtom(i))
     if (atom->IsHydrogen())
       numH++;
@@ -665,28 +665,28 @@ bool OEAtom::DeleteBond(OEBond *bond)
   return(false);
 }
 
-OEBond *OEAtom::BeginBond(vector<OEBond*>::iterator &i) 
+OEBond *OEAtom::BeginBond(vector<OEEdgeBase*>::iterator &i) 
 {
-	i = (vector<OEBond*>::iterator)_vbond.begin();
-	return((i == (vector<OEBond*>::iterator)_vbond.end()) ? (OEBond*)NULL : (OEBond*)*i);
+	i = _vbond.begin();
+	return((i == _vbond.end()) ? (OEBond*)NULL : (OEBond*)*i);
 }
 
-OEBond *OEAtom::NextBond(vector<OEBond*>::iterator &i) 
+OEBond *OEAtom::NextBond(vector<OEEdgeBase*>::iterator &i) 
 {
 	i++;
-	return((i == (vector<OEBond*>::iterator)_vbond.end()) ? (OEBond*)NULL : (OEBond*)*i);
+	return((i == _vbond.end()) ? (OEBond*)NULL : (OEBond*)*i);
 }
 
-OEAtom *OEAtom::BeginNbrAtom(vector<OEBond*>::iterator &i)
+OEAtom *OEAtom::BeginNbrAtom(vector<OEEdgeBase*>::iterator &i)
 {
-	i = (vector<OEBond*>::iterator)_vbond.begin();
-  return((i != (vector<OEBond*>::iterator)_vbond.end()) ? (*i)->GetNbrAtom(this):NULL);
+	i = _vbond.begin();
+  return((i != _vbond.end()) ? ((OEBond*) *i)->GetNbrAtom(this):NULL);
 }
 
-OEAtom *OEAtom::NextNbrAtom(vector<OEBond*>::iterator &i) 
+OEAtom *OEAtom::NextNbrAtom(vector<OEEdgeBase*>::iterator &i) 
 {
   i++; 
-  return((i != (vector<OEBond*>::iterator)_vbond.end()) ? (*i)->GetNbrAtom(this):NULL);
+  return((i != _vbond.end()) ?  ((OEBond*) *i)->GetNbrAtom(this):NULL);
 }
 
 
@@ -695,7 +695,7 @@ bool OEAtom::GetNewBondVector(Vector &v,float length)
   // ***experimental code***
 
   OEAtom *atom;
-  vector<OEBond*>::iterator i,j;
+  vector<OEEdgeBase*>::iterator i,j;
   v = VZero;
   if (GetValence() == 0)
     {
@@ -799,7 +799,7 @@ bool OEAtom::GetNewBondVector(Vector &v,float length)
     {
       Vector vtmp,vsum;
       OEAtom *atom;
-      vector<OEBond*>::iterator i;
+      vector<OEEdgeBase*>::iterator i;
       for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
 	{
 	  vtmp = GetVector() - atom->GetVector();
@@ -828,9 +828,9 @@ bool OEAtom::HtoMethyl()
 
   OEAtom *atom;
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   atom  = BeginNbrAtom(i);
-  bond = *i;
+  bond = (OEBond *)*i;
   if (!atom)
     {
       mol->EndModify();
@@ -892,7 +892,7 @@ bool OEAtom::SetHybAndGeom(int hyb)
 
   OEAtom *nbr;
   vector<OEAtom*> delatm;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
 
   for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
     if (nbr->IsHydrogen())
@@ -917,7 +917,7 @@ bool OEAtom::SetHybAndGeom(int hyb)
     if (!(*i)->IsInRing())
     {
       br2 = etab.CorrectedBondRad(nbr->GetAtomicNum(),nbr->GetHyb());
-      (*i)->SetLength(this,br1+br2);
+      ((OEBond*) *i)->SetLength(this,br1+br2);
     }
 
   if (GetValence() > 1)
@@ -1127,7 +1127,7 @@ bool OEAtom::SetHybAndGeom(int hyb)
 OEBond *OEAtom::GetBond(OEAtom *nbr)
 {
   OEBond *bond;
-  vector<OEBond *>::iterator i;
+  vector<OEEdgeBase *>::iterator i;
   for (bond = BeginBond(i) ; bond ; bond = NextBond(i))
     if (bond->GetNbrAtom(this) == nbr)
       return bond;

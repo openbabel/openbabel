@@ -40,7 +40,7 @@ using namespace std;
 #define FILE_SEP_CHAR "/"
 #endif
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class OEElement;
 class OEElementTable;

@@ -16,7 +16,7 @@ GNU General Public License for more details.
 
 #include "molvector.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 //Functions for dealing with groups of molecules.  MolVec will read either all
 //molecules from a file or a set of conformers.  
@@ -130,7 +130,7 @@ bool OEMolVector::ReadConfs(ifstream &ifs, const io_type in_type, const io_type 
 }
 
 
-} // namespace OpenEye
+} // namespace OpenBabel
 
 
 

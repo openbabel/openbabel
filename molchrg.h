@@ -14,7 +14,7 @@ GNU General Public License for more details.
 #ifndef __MOLCHRG_H
 #define __MOLCHRG_H
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class GasteigerState;
 

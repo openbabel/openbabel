@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "bitvec.h"
 
-namespace OpenEye{
+namespace OpenBabel{
 
 class OESmiNode
 {
@@ -44,7 +44,7 @@ class OEMol2Smi
   vector<int> _storder;
   vector<bool> _aromNH;
   OEBitVec _uatoms,_ubonds;
-  vector<OEBond*> _vclose;
+  vector<OEEdgeBase*> _vclose;
   vector<pair<OEAtom*,pair<int,int> > > _vopen;
 public:
   OEMol2Smi() {_vclose.clear();}
@@ -52,7 +52,7 @@ public:
   int          GetUnusedIndex();
   void         Init();
   void         CreateSmiString(OEMol&,char*);
-  void         GetClosureAtoms(OEAtom*,vector<OEAtom*>&);
+  void         GetClosureAtoms(OEAtom*,vector<OENodeBase*>&);
   void         FindClosureBonds(OEMol&);
   void         ToSmilesString(OESmiNode *node,char *buffer);
   void         RemoveUsedClosures();

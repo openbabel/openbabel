@@ -14,7 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "version.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 bool ReadBGF(istream &ifs,OEMol &mol,char *title)
@@ -103,7 +103,7 @@ bool ReadBGF(istream &ifs,OEMol &mol,char *title)
 
 bool WriteBGF(ostream &ofs,OEMol &mol)
 { 
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   int max_val;
   OEAtom *atom;
   char buffer[BUFF_SIZE];
@@ -148,7 +148,7 @@ bool WriteBGF(ostream &ofs,OEMol &mol)
   sprintf(buffer,"FORMAT CONECT (a6,12i6)\n"); ofs << buffer << endl;
 
   OEAtom *nbr;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     if (atom->GetValence())
       {

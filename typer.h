@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #include "parsmart.h"
 #include "data.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class OEAtomTyper : public OEGlobalDataBase
 {

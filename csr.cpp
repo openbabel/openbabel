@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 
 static bool FirstTime = true;
@@ -92,7 +92,7 @@ void WriteCSRCoords(ostream &ofs,OEMol &mol)
   WriteSize(mol.NumAtoms()*sizeof(float),ofs);
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     x = atom->x();

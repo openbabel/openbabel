@@ -14,7 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "typer.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 extern OEAromaticTyper  aromtyper;
 
@@ -109,7 +109,7 @@ bool OEBond::IsAmide()
   if (GetBO() != 1) return(false);
   
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
     if (bond->IsCarbonyl())
       return(true);
@@ -132,7 +132,7 @@ bool OEBond::IsPrimaryAmide()
   if (GetBO() != 1) return(false);
   
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
     if (bond->IsCarbonyl())
       if (a2->GetHvyValence() == 2)
@@ -164,7 +164,7 @@ bool OEBond::IsEster()
   if (GetBO() != 1) return(false);
   
   OEBond *bond;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
     if (bond->IsCarbonyl())
       return(true);
@@ -298,9 +298,9 @@ bool OEBond::IsClosure()
   OEBond *bond;
   OEAtom *atom,*nbr;
   OEBitVec uatoms,ubonds;
-  vector<OEAtom*> curr,next;
-  vector<OEAtom*>::iterator i;
-  vector<OEBond*>::iterator j;
+  vector<OENodeBase*> curr,next;
+  vector<OENodeBase*>::iterator i;
+  vector<OEEdgeBase*>::iterator j;
 
   uatoms.Resize(mol->NumAtoms()+1);
   ubonds.Resize(mol->NumAtoms()+1);
@@ -319,7 +319,7 @@ bool OEBond::IsClosure()
       for (;!curr.empty();)
 	{
 	  for (i = curr.begin();i != curr.end();i++)
-	    for (nbr = (*i)->BeginNbrAtom(j);nbr;nbr = (*i)->NextNbrAtom(j))
+	    for (nbr = ((OEAtom*)*i)->BeginNbrAtom(j);nbr;nbr = ((OEAtom*)*i)->NextNbrAtom(j))
 	      if (!uatoms[nbr->GetIdx()])
 		{
 		  uatoms |= nbr->GetIdx();

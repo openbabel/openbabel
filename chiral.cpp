@@ -15,7 +15,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "oeutil.h"
 
-using namespace OpenEye;
+using namespace OpenBabel;
 
 #include "matrix.h"
 #include "chiral.h"
@@ -28,7 +28,7 @@ void OEMol::FindChiralCenters()
   //do quick test to see if there are any possible chiral centers
   bool mayHaveChiralCenter=false;
   OEAtom *atom,*nbr;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3)
       {
@@ -39,7 +39,7 @@ void OEMol::FindChiralCenters()
   if (!mayHaveChiralCenter) return;
 
   OEBond *bond;
-  vector<OEBond*>::iterator j;
+  vector<OEEdgeBase*>::iterator j;
   for (bond = BeginBond(j);bond;bond = NextBond(j))
     if (bond->IsWedge() || bond->IsHash())
 	(bond->GetBeginAtom())->SetChiral();
@@ -93,7 +93,7 @@ void GetChirality(OEMol &mol, vector<int> &chirality)
   fill(chirality.begin(),chirality.end(),0);
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
+  vector<OENodeBase*>::iterator i;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     if (atom->IsChiral())
       {
@@ -121,7 +121,7 @@ float CalcSignedVolume(OEMol &mol,OEAtom *atm)
 
   // Create a vector with the coordinates of the neighbor atoms
   OEAtom *nbr;
-  vector<OEBond*>::iterator bint;
+  vector<OEEdgeBase*>::iterator bint;
   for (nbr = atm->BeginNbrAtom(bint);nbr;nbr = atm->NextNbrAtom(bint))
     {
       nbr_atms.push_back(nbr->GetIdx());		
@@ -187,7 +187,7 @@ void construct_g_matrix(OEMol &mol, vector<vector<float> > &m)
   unsigned int i,j;
 
   OEAtom *atm1,*atm2;
-  vector<OEAtom*>::iterator aint,bint;
+  vector<OENodeBase*>::iterator aint,bint;
 
   m.resize(mol.NumAtoms());
   for (i = 0; i < m.size(); i++)
@@ -218,7 +218,7 @@ void construct_c_matrix(OEMol &mol,vector<vector<float > > &m)
 {
   unsigned int i;
   OEAtom *atm1;
-  vector<OEAtom*>::iterator aint;
+  vector<OENodeBase*>::iterator aint;
   
   m.resize(mol.NumAtoms());
   for (i = 0; i < m.size(); i++)

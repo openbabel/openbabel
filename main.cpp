@@ -32,7 +32,7 @@ GNU General Public License for more details.
 #endif
 
 using namespace std;
-using namespace OpenEye;
+using namespace OpenBabel;
 
 void usage();
 

@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool ReadBiosymCAR(istream &ifs,OEMol &mol,char *title)
 {

@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 
-namespace OpenEye {
+namespace OpenBabel {
 
 OEAromaticTyper  aromtyper;
 OEAtomTyper      atomtyper;
@@ -107,7 +107,7 @@ void OEAtomTyper::AssignHyb(OEMol &mol)
   mol.SetHybridizationPerceived();
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator k;
+  vector<OENodeBase*>::iterator k;
   for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k)) atom->SetHyb(0);
 
   vector<vector<int> >::iterator j;
@@ -129,7 +129,7 @@ void OEAtomTyper::AssignImplicitValence(OEMol &mol)
   mol.SetImplicitValencePerceived();
 
   OEAtom *atom;
-  vector<OEAtom*>::iterator k;
+  vector<OENodeBase*>::iterator k;
   for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
     atom->SetImplicitValence(atom->GetValence());
 
@@ -163,10 +163,10 @@ void OEAtomTyper::CorrectAromaticNitrogens(OEMol &mol)
 
   int j;
   OEAtom *atom,*nbr,*a;
-  vector<OEAtom*>::iterator i,m;
-  vector<OEBond*>::iterator k;
+  vector<OENodeBase*>::iterator i,m;
+  vector<OEEdgeBase*>::iterator k;
   OEBitVec curr,used,next;
-  vector<OEAtom*> v_N,v_OS;
+  vector<OENodeBase*> v_N,v_OS;
 
   vector<bool> _aromNH;
   _aromNH.clear();
@@ -175,7 +175,7 @@ void OEAtomTyper::CorrectAromaticNitrogens(OEMol &mol)
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     if (atom->IsAromatic() && !atom->IsCarbon() && !used[atom->GetIdx()])
     {
-      vector<OEAtom*> rsys;
+      vector<OENodeBase*> rsys;
       rsys.push_back(atom);
       curr |= atom->GetIdx();
       used |= atom->GetIdx();
@@ -207,7 +207,7 @@ void OEAtomTyper::CorrectAromaticNitrogens(OEMol &mol)
       
       for (m = rsys.begin();m != rsys.end();m++)
 	{
-	  a = *m;
+	  a = (OEAtom *)*m;
 
 	  int hasExoDoubleBond = false;
 	  for (nbr = a->BeginNbrAtom(k);nbr;nbr = a->NextNbrAtom(k))
@@ -242,7 +242,7 @@ void OEAtomTyper::CorrectAromaticNitrogens(OEMol &mol)
 	    if ((*m)->GetValence() == 2 && (*m)->GetHvyValence() == 2)
 	      {
 		nelectrons--;
-		(*m)->SetFormalCharge(1);
+		((OEAtom*)*m)->SetFormalCharge(1);
 	      }
 	  }
 
@@ -252,24 +252,26 @@ void OEAtomTyper::CorrectAromaticNitrogens(OEMol &mol)
       for (m = v_N.begin();m != v_N.end();m++)
 	{
 	  if (naromatic == nelectrons) break;
-	  if ((*m)->GetValence() == 3 && (*m)->GetHvyValence() == 2)
-	    {nelectrons++;_aromNH[(*m)->GetIdx()] = true;}
-	  if ((*m)->GetFormalCharge() == -1)
-	    {nelectrons++;_aromNH[(*m)->GetIdx()] = false;}
+	  if (((OEAtom*)*m)->GetValence() == 3 && 
+	      ((OEAtom*)*m)->GetHvyValence() == 2)
+	    {nelectrons++;_aromNH[((OEAtom*)*m)->GetIdx()] = true;}
+	  if (((OEAtom*)*m)->GetFormalCharge() == -1)
+	    {nelectrons++;_aromNH[((OEAtom*)*m)->GetIdx()] = false;}
 	}
 
        //charge up tert nitrogens
       for (m = v_N.begin();m != v_N.end();m++)
-	if ((*m)->GetHvyValence() == 3 && (*m)->BOSum() < 5)
-	  (*m)->SetFormalCharge(1);
+	if (((OEAtom*)*m)->GetHvyValence() == 3 
+	    && ((OEAtom*)*m)->BOSum() < 5)
+	  ((OEAtom*)*m)->SetFormalCharge(1);
 
       //try to uncharge nitrogens first
       for (m = v_N.begin();m != v_N.end();m++)
 	{
-	  if ((*m)->BOSum() > 4) continue; //skip n=O
+	  if (((OEAtom*)*m)->BOSum() > 4) continue; //skip n=O
 	  if (naromatic == nelectrons) break;
-	  if ((*m)->GetHvyValence() == 3)
-	    {nelectrons++;(*m)->SetFormalCharge(0);}
+	  if (((OEAtom*)*m)->GetHvyValence() == 3)
+	    {nelectrons++;((OEAtom*)*m)->SetFormalCharge(0);}
 	}
 
       if (naromatic == nelectrons) continue;
@@ -278,9 +280,11 @@ void OEAtomTyper::CorrectAromaticNitrogens(OEMol &mol)
       for (m = v_N.begin();m != v_N.end();m++)
 	{
 	  if (naromatic == nelectrons) break;
-	  if ((*m)->IsAmideNitrogen() && (*m)->GetValence() == 2 && 
-	      (*m)->GetHvyValence() == 2 && !_aromNH[(*m)->GetIdx()])
-	    {nelectrons++;_aromNH[(*m)->GetIdx()] = true;}
+	  if (((OEAtom*)*m)->IsAmideNitrogen() && 
+	      ((OEAtom*)*m)->GetValence() == 2 && 
+	      ((OEAtom*)*m)->GetHvyValence() == 2 &&
+	      !_aromNH[((OEAtom*)*m)->GetIdx()])
+	    {nelectrons++;_aromNH[((OEAtom*)*m)->GetIdx()] = true;}
 	}
 	  
       if (naromatic == nelectrons) continue;
@@ -289,9 +293,11 @@ void OEAtomTyper::CorrectAromaticNitrogens(OEMol &mol)
       for (m = v_N.begin();m != v_N.end();m++)
 	{
 	  if (naromatic == nelectrons) break;
-	  if ((*m)->GetValence() == 2 && !_aromNH[(*m)->GetIdx()] &&
-	      (*m)->IsInRingSize(5) && (*m)->BOSum() == 2)
-	    {nelectrons++;_aromNH[(*m)->GetIdx()] = true;}
+	  if (((OEAtom*)*m)->GetValence() == 2 &&
+	      !_aromNH[((OEAtom*)*m)->GetIdx()] &&
+	      ((OEAtom*)*m)->IsInRingSize(5) &&
+	      ((OEAtom*)*m)->BOSum() == 2)
+	    {nelectrons++;_aromNH[((OEAtom*)*m)->GetIdx()] = true;}
 	}
 
       if (naromatic == nelectrons) continue;
@@ -311,8 +317,9 @@ void OEAtomTyper::CorrectAromaticNitrogens(OEMol &mol)
       for (m = v_N.begin();m != v_N.end();m++)
 	{
 	  if (naromatic == nelectrons) break;
-	  if ((*m)->GetHvyValence() == 2 && !_aromNH[(*m)->GetIdx()] && 
-	      !(*m)->HasDoubleBond())
+	  if (((OEAtom*)*m)->GetHvyValence() == 2 &&
+	      !_aromNH[((OEAtom*)*m)->GetIdx()] && 
+	      !((OEAtom*)*m)->HasDoubleBond())
 	    {nelectrons++; _aromNH[(*m)->GetIdx()] = true;}
 	}
       
@@ -382,8 +389,8 @@ void OEAromaticTyper::AssignAromaticFlags(OEMol &mol)
   
   OEBond *bond;
   OEAtom *atom;
-  vector<OEAtom*>::iterator i;
-  vector<OEBond*>::iterator j;
+  vector<OENodeBase*>::iterator i;
+  vector<OEEdgeBase*>::iterator j;
 
   //unset all aromatic flags
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) 
@@ -480,14 +487,14 @@ bool OEAromaticTyper::TraverseCycle(OEAtom *root,OEAtom *atom,OEBond *prev,pair<
 
   _visit[atom->GetIdx()] = true;
   OEAtom *nbr;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
     if (*i != prev && (*i)->IsInRing() && _vpa[nbr->GetIdx()])
       {
-	if (TraverseCycle(root,nbr,*i,er,depth))
+	if (TraverseCycle(root,nbr,(OEBond*)(*i),er,depth))
 	  {
 	    result = true;
-	    (*i)->SetAromatic();
+	    ((OEBond*) *i)->SetAromatic();
 	  }
       }
 
@@ -503,7 +510,7 @@ bool OEAromaticTyper::TraverseCycle(OEAtom *root,OEAtom *atom,OEBond *prev,pair<
 void OEAromaticTyper::CheckAromaticity(OEAtom *atom,int depth)
 {
   OEAtom *nbr;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
 
   pair<int,int> erange; 
   for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
@@ -511,10 +518,10 @@ void OEAromaticTyper::CheckAromaticity(OEAtom *atom,int depth)
       {
 	erange = _velec[atom->GetIdx()];
 	
-	if (TraverseCycle(atom,nbr,*i,erange,depth-1))
+	if (TraverseCycle(atom,nbr,(OEBond *)*i,erange,depth-1))
 	  {
 	    atom->SetAromatic();
-	    (*i)->SetAromatic();
+	    ((OEBond*) *i)->SetAromatic();
 	  }
       }
 }
@@ -523,7 +530,7 @@ void OEAromaticTyper::PropagatePotentialAromatic(OEAtom *atom)
 {
   int count = 0;
   OEAtom *nbr;
-  vector<OEBond*>::iterator i;
+  vector<OEEdgeBase*>::iterator i;
   
   for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
     if ((*i)->IsInRing() && _vpa[nbr->GetIdx()])
@@ -542,8 +549,8 @@ void OEAromaticTyper::PropagatePotentialAromatic(OEAtom *atom)
 void OEAromaticTyper::ExcludeSmallRing(OEMol &mol)
 {
   OEAtom *atom,*nbr1,*nbr2;
-  vector<OEAtom*>::iterator i;
-  vector<OEBond*>::iterator j,k;
+  vector<OENodeBase*>::iterator i;
+  vector<OEEdgeBase*>::iterator j,k;
 
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     if (_root[atom->GetIdx()])
@@ -555,6 +562,6 @@ void OEAromaticTyper::ExcludeSmallRing(OEMol &mol)
 		_root[atom->GetIdx()] = false;
 }
 
-} //namespace OpenEye;
+} //namespace OpenBabel;
 
 

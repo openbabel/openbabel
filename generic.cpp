@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 //
 //member functions for OEGenericData class
@@ -153,4 +153,4 @@ OERingData::OERingData()
 	_vr.clear();
 }
 
-} //end namespace OpenEye
+} //end namespace OpenBabel

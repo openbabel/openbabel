@@ -4,7 +4,7 @@
 #define MaxMonoAtom 20
 #define MaxMonoBond 20
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class OEAtom;
 class OEMol;

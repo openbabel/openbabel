@@ -16,7 +16,7 @@ GNU General Public License for more details.
 #define BOHR_TO_ANGSTROM 0.529177249
 #define ANGSTROM_TO_BOHR 1.889725989
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool ReadDMol(istream &ifs,OEMol &mol,char *title)
 {

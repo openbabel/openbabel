@@ -16,7 +16,7 @@ GNU General Public License for more details.
 
 #include <deque>
 
-namespace OpenEye {
+namespace OpenBabel {
 
 class OEMol;
 class OEAtom; 
@@ -30,7 +30,7 @@ class OERTree
   OERTree(OEAtom*,OERTree*);
   ~OERTree() {}
   int  GetAtomIdx();
-  void PathToRoot(vector<OEAtom*>&);
+  void PathToRoot(vector<OENodeBase*>&);
 };
 
 class OERing

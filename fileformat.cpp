@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #include "fileformat.h"
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 bool OEFileFormat::ReadMolecule(istream &ifs, OEMol &mol, char *title)
 {

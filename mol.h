@@ -47,7 +47,7 @@ using namespace std;
 #include "binary_io.h"
 #include "ctransform.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
 
 class OEBond;
@@ -283,18 +283,19 @@ public:
     OEAtom    *GetNextAtom();
 
     //***iterator methods***
-    vector<OEBond*>::iterator BeginBonds() {return((vector<OEBond*>::iterator)_vbond.begin());}
-    vector<OEBond*>::iterator EndBonds()   {return((vector<OEBond*>::iterator)_vbond.end());}
-    OEBond *BeginBond(vector<OEBond*>::iterator &i);
-    OEBond *NextBond(vector<OEBond*>::iterator &i); 
-    OEAtom *BeginNbrAtom(vector<OEBond*>::iterator &); 
-    OEAtom *NextNbrAtom(vector<OEBond*>::iterator &); 
+    vector<OEEdgeBase*>::iterator BeginBonds() {return(_vbond.begin());}
+    vector<OEEdgeBase*>::iterator EndBonds()   {return(_vbond.end());}
+    OEBond *BeginBond(vector<OEEdgeBase*>::iterator &i);
+    OEBond *NextBond(vector<OEEdgeBase*>::iterator &i); 
+    OEAtom *BeginNbrAtom(vector<OEEdgeBase*>::iterator &); 
+    OEAtom *NextNbrAtom(vector<OEEdgeBase*>::iterator &); 
 
     //***addition of residue/bond info. for an atom***
     void NewResidue()                                          {if (!_residue) _residue = new OEResidue;}
     void DeleteResidue()                                       {if (_residue) delete _residue;}
     void AddBond(OEBond *bond)                                 {_vbond.push_back((OEEdgeBase*)bond);}
-    void InsertBond(vector<OEBond*>::iterator &i,OEBond *bond) {_vbond.insert((vector<OEEdgeBase*>::iterator)i,(OEEdgeBase*)bond);}
+    void InsertBond(vector<OEEdgeBase*>::iterator &i, OEBond *bond)
+      {_vbond.insert(i, (OEEdgeBase*)bond);}
     bool DeleteBond(OEBond*);
 
     //***requests for atomic property information***
@@ -339,8 +340,8 @@ public:
     bool HasChiralitySpecified() 
                               {return(HasFlag(OE_CSTEREO_ATOM|OE_ACSTEREO_ATOM));}
     bool HasAlphaBetaUnsat(bool includePandS=true);
-    bool HasBondOfOrder(int);
-    int  CountBondsOfOrder(int);
+    bool HasBondOfOrder(unsigned int);
+    int  CountBondsOfOrder(unsigned int);
     bool HasSingleBond()      {return(HasBondOfOrder(1));}
     bool HasDoubleBond()      {return(HasBondOfOrder(2));}
     bool HasAromaticBond()    {return(HasBondOfOrder(4));}
@@ -583,7 +584,7 @@ public:
 
     //***molecule modification methods***
     bool Clear();
-    void RenumberAtoms(vector<OEAtom*>&);
+    void RenumberAtoms(vector<OENodeBase*>&);
     void ToInertialFrame(int,float*);
     void ToInertialFrame();
     void Translate(const Vector &v);
@@ -647,10 +648,10 @@ public:
     bool Empty() {return(_natoms == 0);}
 
     //***iterator methods***
-    OEAtom *BeginAtom(vector<OEAtom*>::iterator &i);
-    OEAtom *NextAtom(vector<OEAtom*>::iterator &i);
-    OEBond *BeginBond(vector<OEBond*>::iterator &i); 
-    OEBond *NextBond(vector<OEBond*>::iterator &i); 
+    OEAtom *BeginAtom(vector<OENodeBase*>::iterator &i);
+    OEAtom *NextAtom(vector<OENodeBase*>::iterator &i);
+    OEBond *BeginBond(vector<OEEdgeBase*>::iterator &i); 
+    OEBond *NextBond(vector<OEEdgeBase*>::iterator &i); 
     OEResidue *BeginResidue(vector<OEResidue*>::iterator &i)
       {i = _residue.begin();return((i == _residue.end()) ? NULL:*i);}
     OEResidue *NextResidue(vector<OEResidue*>::iterator &i)

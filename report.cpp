@@ -13,7 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenEye {
+namespace OpenBabel {
 
   void WriteCharges(ostream &ofs,OEMol &mol)
   {
@@ -159,7 +159,7 @@ namespace OpenEye {
     Vector v1, v2;
     OEAtom *a, *b, *c, *d;
     OEBond *bond1, *bond2, *bond3;
-    vector<OEBond*>::iterator i, j, k;
+    vector<OEEdgeBase*>::iterator i, j, k;
     char buffer[BUFF_SIZE];
 
     for (bond1 = mol.BeginBond(i); bond1; bond1 = mol.NextBond(i))

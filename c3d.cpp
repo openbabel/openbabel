@@ -14,7 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "oeutil.h"
 
-namespace OpenEye
+namespace OpenBabel
 {
 static bool WriteChem3d(ostream &ofs,OEMol &mol, char *mol_typ);
 
