@@ -566,7 +566,7 @@ bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
 	  if ((bo = LookupBO(r1->GetAtomID(a1),r2->GetAtomID(a2))))
 	    {
 	      v = a1->GetVector() - a2->GetVector();
-	      if (v.length_2() < 3.5) //float check by distance
+	      if (v.length_2() < 3.5) //check by distance
 		mol.AddBond(a1->GetIdx(),a2->GetIdx(),bo);
 	    }
 	}
@@ -772,10 +772,11 @@ bool WritePDB(ostream &ofs,OBMol &mol)
   char buffer[BUFF_SIZE];
   char type_name[10], padded_name[10];
   char the_res[10];
+  char *element_name;
   int res_num;
 
-  sprintf(buffer,"HEADER    PROTEIN");
-  ofs << buffer << endl;
+  //  sprintf(buffer,"HEADER    PROTEIN");
+  //  ofs << buffer << endl;
 
   if (strlen(mol.GetTitle()) > 0) 
     sprintf(buffer,"COMPND    %s ",mol.GetTitle());
@@ -815,6 +816,17 @@ bool WritePDB(ostream &ofs,OBMol &mol)
 	    strcpy(tmp, type_name);
 	    sprintf(padded_name," %-3s", tmp);
 	    strncpy(type_name,padded_name,4);
+	    type_name[4] = '\0';
+	  }
+	// type_name == 4 since we used strncpy
+	else if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
+	  {
+	    type_name[4] = type_name[3];
+	    type_name[3] = type_name[2];
+	    type_name[2] = type_name[1];
+	    type_name[1] = type_name[0];
+	    type_name[0] = type_name[4];
+	    type_name[4] = '\0';
 	  }
 	res_num = res->GetNum();
       }
@@ -823,8 +835,12 @@ bool WritePDB(ostream &ofs,OBMol &mol)
 	strcpy(the_res,"UNK");
 	sprintf(padded_name,"%s",type_name);
 	strncpy(type_name,padded_name,4);
+	type_name[4] = '\0';
 	res_num = 1;
       }
+    element_name = etab.GetSymbol(atom->GetAtomicNum());
+    if (strlen(element_name) == 2)
+      element_name[1] = toupper(element_name[1]);
     sprintf(buffer,"ATOM  %5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
 	    i,
 	    type_name,
@@ -833,7 +849,7 @@ bool WritePDB(ostream &ofs,OBMol &mol)
 	    atom->GetX(),
 	    atom->GetY(),
 	    atom->GetZ(),
-	    etab.GetSymbol(atom->GetAtomicNum()));
+	    element_name);
     ofs << buffer;
   }
 
