@@ -1,4 +1,6 @@
 /**********************************************************************
+binary.h - Handle rotamer list and binary base files.
+
 Copyright (C) 1998-2000 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
 
