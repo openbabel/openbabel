@@ -1,8 +1,28 @@
 2002-02-22  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/cml.cpp: New CML support, including built-in XML parser,
+	contributed by Peter Murray-Rust.
+
+	* src/Makefile.in: Add cml.cpp to list to support CML compilation.
+
+	* src/data.h, src/data.cpp: Add CML file type.
+
+	* src/extable.txt, src/extable.h: Update to add in .cml files.
+
+	* src.fileformat.cpp, src/fileformat.h: Add in support for CML
+	read/write as well as passing options to WriteMolecule methods.
+
+	* src/main.cpp: Add support for passing output options (currently
+	only XML/CML) to export methods.
 	
+	* src/aromatic.txt: Enable support for recognizing Se in aromatic
+	rings. (Uncommon, but I've been doing work with selenophene
+	recently.)
+
 	* src/pdb.cpp (ParseConectRecord): Fix bugs in CONECT records with
 	PDB files. Would only read first 4 columns and wouldn't handle
-	multiple bonds. Fixes PR #529744.
+	multiple bonds. Fixes PR #529744. Use PerceiveBondOrders() when
+	using ConnectTheDots() for missing bonds.
 	
 	* src/ghemical.cpp: Add error checking for reading bonds. Don't
 	assume the # of bonds given in the header is correct.

@@ -32,6 +32,7 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, char *title)
     case CCC:       ReadCCC(ifs,mol,title);        break;
     case CHEM3D1:   ReadChem3d1(ifs,mol,title);    break;
     case CHEM3D2:   ReadChem3d2(ifs,mol,title);    break;
+    case CML:       ReadCML(ifs,mol,title);        break;
     case DMOL:      ReadDMol(ifs,mol,title);       break;
     case FEATURE:   ReadFeat(ifs,mol,title);	   break;
     case GAMESSOUT: ReadGAMESS(ifs,mol,title);	   break;
@@ -61,7 +62,8 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, char *title)
   return((ifs) ? true : false);
 }
 
-bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol, char *dimension)
+bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol, 
+				 char *dimension, char *options)
 {
   switch(mol.GetOutputType())
     {
@@ -72,8 +74,9 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol, char *dimension)
     case CACAOINT:  WriteCacaoInternal(ofs,mol);	break;
     case CACHE:     WriteCache(ofs,mol);		break;
     case CHEMDRAW:  WriteChemDraw(ofs,mol);		break;
-    case CHEM3D1:  WriteChem3d1(ofs,mol);		break;
-    case CHEM3D2:  WriteChem3d2(ofs,mol);		break;
+    case CHEM3D1:   WriteChem3d1(ofs,mol);		break;
+    case CHEM3D2:   WriteChem3d2(ofs,mol);		break;
+    case CML:       WriteCML(ofs,mol,dimension, options);break;
     case CSR:       WriteCSR(ofs,mol);			break;
     case CSSR:      WriteCSSR(ofs,mol);			break;
     case DMOL:      WriteDMol(ofs,mol);			break;

@@ -46,6 +46,7 @@ int main(int argc,char *argv[])
   bool addHydrogens = false;
   int arg, inFileArg, outFileArg;
   char *ext;
+  char *formatOptions;
   OBFileFormat fileFormat;
 
   // Parse commandline
@@ -98,6 +99,10 @@ int main(int argc,char *argv[])
 
 		  break;
 		  
+		case 'x':
+		  formatOptions = argv[arg];
+		  break;
+
 		case '-':
 		  if (inFileArg == 0)
 		    inFileArg = -1;
@@ -174,10 +179,10 @@ int main(int argc,char *argv[])
 	  cerr << program_name << ": Cannot write to output file!" << endl;
 	  exit (-1);
 	}
-      fileFormat.WriteMolecule(outFileStream,mol);
+      fileFormat.WriteMolecule(outFileStream, mol, "3D", formatOptions);
     }
   else
-    fileFormat.WriteMolecule(cout, mol);
+    fileFormat.WriteMolecule(cout, mol, "3D", formatOptions);
 
   return(0);
 }
@@ -203,6 +208,15 @@ unsigned int i;
   cout << "Additional options : " << endl;
   cout << " -d Delete Hydrogens " << endl;
   cout << " -h Add Hydrogens " << endl;
+  cout << " -x[flags] XML.CML options (e.g. -x1ac)  " << endl;
+  cout << "   1 output CML V1.0 (default)" << endl;
+  cout << "   2 output CML V2.0 (Schema)" << endl;
+  cout << "   a output array format for atoms and bonds (default <atom>)" << endl;
+  cout << "   p prettyprint output (default no indent)" << endl;
+  cout << "   n output namespace (default no namespace)" << endl;
+  cout << "   c use 'cml' as output namespace prefix (else default) (forces n)" << endl;
+  cout << "   d output DOCTYPE (default none)" << endl;
+  cout << "   g debug output" << endl;
 
   exit(0);
 }

@@ -37,63 +37,65 @@ class OBFileFormat
   ~OBFileFormat(void) {}
 
   bool ReadMolecule(istream &,OBMol &, char *title="Untitled");
-  bool WriteMolecule(ostream &,OBMol &, char *dimension="3D");
+  bool WriteMolecule(ostream &,OBMol &, char *dimension="3D", char *options="");
 
  private:
 };
 
 // Read Method prototypes
-bool ReadAlchemy(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadAmberPrep(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadBallAndStick(istream &,OBMol &,char *defaultTitle="Untitled");
+bool ReadAlchemy(istream &, OBMol &, char *title="Untitled");
+bool ReadAmberPrep(istream &, OBMol &, char *title="Untitled");
+bool ReadBallAndStick(istream &,OBMol &,char *title="Untitled");
 bool ReadBinary(istream&,OBMol&);
 bool ReadBinary(unsigned char*,OBMol&,int);
 bool ReadBinary(istream&,unsigned char **);
-bool ReadBiosymCAR(istream &, OBMol &, char *defaultTitle="Untitled");
+bool ReadBiosymCAR(istream &, OBMol &, char *title="Untitled");
 bool ReadBox(istream &, OBMol &,char *title="Untitled");
 bool ReadBox(vector<string>&, OBMol &,char *title="Untitled");
-bool ReadCaccrt(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadCCC(istream &ifs,OBMol &mol,char *title="Untitled");
-bool ReadChem3d1(istream &ifs,OBMol &mol,char *title="Untitled");
-bool ReadChem3d2(istream &ifs,OBMol &mol,char *title="Untitled");
-bool ReadDMol(istream &ifs,OBMol &mol,char *title="Untitled");
-bool ReadFeat(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadGAMESS(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadGhemical(istream &,OBMol&,char *defaultTitle="Untitled");
-bool ReadHIN(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadJaguar(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadMacroModel(istream &,OBMol&,char *defaultTitle="Untitled");
-bool ReadMmads(istream &,OBMol&,char *defaultTitle="Untitled");
+bool ReadCaccrt(istream &, OBMol &, char *title="Untitled");
+bool ReadCCC(istream &,OBMol &,char *title="Untitled");
+bool ReadChem3d1(istream &,OBMol &,char *title="Untitled");
+bool ReadChem3d2(istream &,OBMol &,char *title="Untitled");
+bool ReadCML(istream &,OBMol &,char *title="Untitled");
+bool ReadDMol(istream &,OBMol &,char *title="Untitled");
+bool ReadFeat(istream &, OBMol &, char *title="Untitled");
+bool ReadGAMESS(istream &, OBMol &, char *title="Untitled");
+bool ReadGhemical(istream &,OBMol&,char *title="Untitled");
+bool ReadHIN(istream &, OBMol &, char *title="Untitled");
+bool ReadJaguar(istream &, OBMol &, char *title="Untitled");
+bool ReadMacroModel(istream &,OBMol&,char *title="Untitled");
+bool ReadMmads(istream &,OBMol&,char *title="Untitled");
 bool ReadMol2(istream &,OBMol &,char *title="Untitled");
-bool ReadMOPAC(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadMOPACCartesian(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadMPQC(istream &, OBMol &, char *defaultTitle="Untitled");
+bool ReadMOPAC(istream &, OBMol &, char *title="Untitled");
+bool ReadMOPACCartesian(istream &, OBMol &, char *title="Untitled");
+bool ReadMPQC(istream &, OBMol &, char *title="Untitled");
 bool ReadNWChem(istream &,OBMol &,char *title="Untitled");
 bool ReadPDB(istream &,OBMol &,char *title="Untitled");
 bool ReadPDB(vector<string> &,OBMol &,char *title="Untitled");
-bool ReadQChem(istream &, OBMol &, char *defaultTitle="Untitled");
+bool ReadQChem(istream &, OBMol &, char *title="Untitled");
 bool ReadSDFile(istream &,OBMol &,char *title="Untitled");
 bool ReadSmiles(istream &,OBMol &,char *title="Untitled");
 bool ReadTerTermPDB(istream &,OBMol &,char *title="Untitled");
-bool ReadUnichem(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadViewMol(istream &, OBMol &, char *defaultTitle="Untitled");
-bool ReadXYZ(istream &,OBMol &,char *defaultTitle="Untitled");
+bool ReadUnichem(istream &, OBMol &, char *title="Untitled");
+bool ReadViewMol(istream &, OBMol &, char *title="Untitled");
+bool ReadXYZ(istream &,OBMol &,char *title="Untitled");
 // Add yours here
 
 // Write Method prototypes
-bool SmiToMol(OBMol &mol,string &smi, char *title = "");
+bool SmiToMol(OBMol &,string &smi, char *title = "");
 bool WriteAlchemy(ostream &, OBMol &);
 bool WriteBallAndStick(ostream &,OBMol &);
 bool WriteBGF(ostream &, OBMol &);
 bool WriteBinary(ostream&,OBMol&);
 bool WriteBinary(unsigned char*,int&,OBMol&);
-bool WriteBox(ostream &ofs,OBMol &mol,float margin);
+bool WriteBox(ostream &,OBMol &,float margin);
 bool WriteCaccrt(ostream &,OBMol &);
 bool WriteCacaoInternal(ostream &,OBMol &);
 bool WriteCache(ostream &,OBMol &);
 bool WriteChem3d1(ostream &,OBMol &);
 bool WriteChem3d2(ostream &,OBMol &);
 bool WriteChemDraw(ostream &,OBMol &);
+bool WriteCML(ostream &,OBMol &, char *dimension="3D", char *options="");
 bool WriteCSR(ostream &,OBMol &);
 bool WriteCSSR(ostream &,OBMol &);
 bool WriteDelphiPDB(ostream&,OBMol&);

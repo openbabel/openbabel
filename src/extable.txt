@@ -9,6 +9,7 @@ ccc		ccc		CCC				none				1	0
 c3d1		chem3d1		Chem3D Cartesian 1		none				1	1
 c3d2		chem3d2		Chem3D Cartesian 2		none				1	1
 ct		chemdraw	ChemDraw Connection Table	none				0	1
+cml		cml		Chemical Markup Language	chemical/x-cml			1	1
 cssr		cssr		CSD CSSR			none				0	1
 box		box		Dock 3.5 Box			none				1	1
 dmol		dmol		DMol3 Coordinates		none				1	1
@@ -99,7 +100,6 @@ cer		cerius		MSI Cerius II			chemical/x-cerius		0	0
 msi		cerius		MSI Cerius II			chemical/x-cerius		0	0
 chm		chemdraw	ChemDraw			chemical/x-chemdraw		0	0
 c3d		chem3d		Chem3D				chemical/x-chem3d		0	0
-cml		cml		Chemical Markup Language	chemical/x-cml			0	0
 csml		csm		Chemical Style Markup		chemical/x-csml			0	0
 csm		csm		Chemical Style Markup		chemical/x-csml			0	0
 mcif		mmcif		MaroMolecular CIF		chemical/x-mmcif		0	0
