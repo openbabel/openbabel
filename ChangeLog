@@ -3,6 +3,10 @@
 	* src/atom.cpp (GetType): Fix compilation error when copying in
 	"D" atom type for a deuterium atom.
 
+	* src/mol2.cpp (ReadMol2): Read residue information if available,
+	along with atom IDs and residue number. Should address feature
+	request PR#697614 submitted by Claudio Cavasotto.
+
 2003-03-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/Makefile.in: Add support for the isotopes.txt -> .h

@@ -80,15 +80,15 @@ bool ReadMol2(istream &ifs,OBMol &mol,const char *title)
     OBAtom atom;
     bool hasPartialCharges=false;
     float x,y,z,pcharge;
-    char temp_type[BUFF_SIZE];
-    int elemno;
+    char temp_type[BUFF_SIZE], resname[BUFF_SIZE], atmid[BUFF_SIZE];
+    int elemno, resnum = -1;
 
     ttab.SetFromType("SYB");
     for (i = 0;i < natoms;i++)
       {
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
-	sscanf(buffer," %*s %*s %f %f %f %s %*s %*s %f",
-	       &x,&y,&z, temp_type, &pcharge);
+	sscanf(buffer," %*s %s %f %f %f %s %d %s %f",
+	       atmid, &x,&y,&z, temp_type, &resnum, resname, &pcharge);
 
 	atom.SetVector(x, y, z);
 
@@ -110,6 +110,32 @@ bool ReadMol2(istream &ifs,OBMol &mol,const char *title)
 	atom.SetPartialCharge(pcharge);
 	if (!mol.AddAtom(atom)) return(false);
 	if (pcharge != 0.0f) hasPartialCharges = true;
+
+	// Add residue information if it exists
+	if (resnum != -1 && resname != "")
+	  {
+	    OBResidue *res  = (mol.NumResidues() > 0) ? 
+	      mol.GetResidue(mol.NumResidues()-1) : NULL;
+	    if (res == NULL || res->GetName() != resname ||
+		static_cast<int>(res->GetNum()) != resnum)
+	      {
+		vector<OBResidue*>::iterator ri;
+		for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
+		  if (res->GetName() == resname &&
+		      static_cast<int>(res->GetNum()) == resnum)
+		    break;
+
+		if (res == NULL)
+		  {
+		    res = mol.NewResidue();
+		    res->SetName(resname);
+		    res->SetNum(resnum);
+		  }
+	      }
+	    OBAtom *atomPtr = mol.GetAtom(mol.NumAtoms());
+	    res->AddAtom(atomPtr);
+	    res->SetAtomID(atomPtr, atmid);
+	  } // end adding residue info
       }
 
     for (;;)
