@@ -27,7 +27,6 @@ bool ReadMPQC(istream &ifs,OBMol &mol,const char *title)
   OBAtom *atom;
   vector<string> vs;
   bool bohr = true;
-  int i = 0;
 
   mol.BeginModify();
   while	(ifs.getline(buffer,BUFF_SIZE))

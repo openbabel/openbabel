@@ -84,7 +84,7 @@ bool ReadCaccrt(istream &ifs,OBMol &mol,const char *title)
 bool WriteCaccrt(ostream &ofs,OBMol &mol)
 {
   OBAtom *atom;
-  char type_name[10],buffer[BUFF_SIZE];
+  char buffer[BUFF_SIZE];
   vector<OBNodeBase*>::iterator i;
 
   sprintf(buffer,"%s",mol.GetTitle());

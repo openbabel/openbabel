@@ -132,7 +132,6 @@ void OutputHeader(ostream &ofs, OBMol &mol, string prefix)
  time_t akttime;                              /* Systemtime                        */
  char timestr[TIME_STR_SIZE + 1] = "";        /* Timestring                        */
  size_t time_res;                             /* Result of strftime                */
- char domainname[MAXDOMAINNAMELEN + 1] = "";  /* Buffer for getdomainname          */
  char *log_name;                              /* Pointer to buffer with login name */
 
  /* ---- Get the system-time ---- */

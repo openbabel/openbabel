@@ -256,13 +256,12 @@ OBIsotopeTable::OBIsotopeTable()
 
 void OBIsotopeTable::ParseLine(const char *buffer)
 {
-  unsigned int atomicNum, isotope;
+  unsigned int atomicNum;
   unsigned int i;
-  double mass;
   vector<string> vs;
 
-  pair <int, double> entry;
-  vector <pair <int, double> > row;
+  pair <unsigned int, double> entry;
+  vector <pair <unsigned int, double> > row;
 
   if (buffer[0] != '#') // skip comment line (at the top)
     {
@@ -272,8 +271,8 @@ void OBIsotopeTable::ParseLine(const char *buffer)
 	  atomicNum = atoi(vs[0].c_str());
 	  for (i = 1; i < vs.size() - 1; i += 2) // make sure i+1 still exists
 	    {
-	      entry.first = atoi(vs[i].c_str());
-	      entry.second = atof(vs[i + 1].c_str());
+	      entry.first = atoi(vs[i].c_str()); // isotope
+	      entry.second = atof(vs[i + 1].c_str()); // exact mass
 	      row.push_back(entry);
 	    }
 	  _isotopes.push_back(row);
@@ -281,11 +280,12 @@ void OBIsotopeTable::ParseLine(const char *buffer)
     }
 }
 
-double	OBIsotopeTable::GetExactMass(const int ele, const int isotope)
+double	OBIsotopeTable::GetExactMass(const unsigned int ele, 
+				     const unsigned int isotope)
 {
   if (!_init) Init();
 
-  if (ele > _isotopes.size() || ele < 0)
+  if (ele > _isotopes.size())
     return 0.0;
 
   unsigned int iso;
