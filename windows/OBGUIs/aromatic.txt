@@ -1,0 +1,43 @@
+##############################################################################
+#                                                                            #
+#	                Open Babel file: aromatic.txt                        #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Some portions Copyright (c) 2001-2003 Geoffrey R. Hutchison               #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+#  SMARTS patterns with minimum and maximum pi-electrons contributed to an   #
+#   aromatic system (used by typer.cpp:OBAromaticTyper)                      #
+#                                                                            #
+##############################################################################
+
+#PATTERN		MIN	MAX
+
+#carbon patterns
+[#6D2r+,#6D3r+]		1	1
+[#6r]=@*		1	1
+[#6rD3]=!@*		1	1
+[#6rD3]=!@[!#6]		0	0
+[#6rD3-]		2	2
+
+#nitrogen patterns
+[#7r](-@*)-@*  		2	2
+[#7rD2]=@*		1	1
+[#7D3+]			1	1
+[#7rD3]=O		1	1
+[#7D2-]			2	2
+
+#oxygen patterns
+[#8r]			2	2
+[#8r+]			1	1
+
+#sulfur patterns
+[#16rD2]		2	2
+[#16rD2+]		1	1
+[#16rD3]=!@O		2	2
+
+#other misc patterns
+[#15rD3]		2	2
+#[#34rD2]		2	2
+#[#52rD2]		2	2
+

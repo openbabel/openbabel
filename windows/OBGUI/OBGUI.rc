@@ -1,0 +1,256 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 257, 353
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About OBGUI"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "OBGUI Version 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2003 Chris Morley",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "OK",IDOK,200,7,50,14,WS_GROUP
+    LTEXT           "",IDC_ABOUTCAPTION,7,42,243,48
+    LTEXT           "",IDC_EXAMPLETEXT,7,100,243,112,WS_BORDER
+    LTEXT           "",IDC_ABOUT_PLACEHOLDER,7,207,243,11,NOT WS_VISIBLE | 
+                    WS_BORDER
+END
+
+IDD_OBGUI_DIALOG DIALOGEX 0, 0, 664, 293
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "OpenBabel"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_INPUTFILE,7,26,202,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BUTTON1,212,27,20,12
+    CONTROL         "Enter input data manually below",IDC_MANUALINPUT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,12,42,132,8
+    COMBOBOX        IDC_INPUTFORMAT,7,66,179,244,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Format Info",IDC_IN_FORMAT_INFO,194,66,34,18,
+                    BS_MULTILINE
+    CONTROL         "Force this format (Normally decided by file extension)",
+                    IDC_INFIXFORMAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,
+                    80,176,8
+    EDITTEXT        IDC_INPUTEDIT,7,100,226,186,ES_MULTILINE | WS_VSCROLL | 
+                    WS_HSCROLL
+    DEFPUSHBUTTON   "CONVERT",IDC_CONVERT,293,7,79,24
+    LTEXT           "  File:",IDC_STATIC,430,16,27,8
+    EDITTEXT        IDC_OUPUTFILE,430,25,202,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BUTTON2,635,27,20,12
+    CONTROL         "Output below only -no file",IDC_MANUALOUTPUT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,435,41,108,8
+    COMBOBOX        IDC_OUTPUTFORMAT,431,66,179,244,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Format Info",IDC_OUT_FORMAT_INFO,617,66,34,18,
+                    BS_MULTILINE
+    CONTROL         "Force this format (Normally decided by file extension)",
+                    IDC_OUTFIXFORMAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    435,80,176,8
+    EDITTEXT        IDC_OUPUTEDIT,431,100,226,186,ES_MULTILINE | WS_VSCROLL | 
+                    WS_HSCROLL
+    LTEXT           "",IDC_PLACEHOLDER,235,25,192,12,NOT WS_VISIBLE
+    GROUPBOX        "INPUT",IDC_INPUTBOX,7,7,227,279
+    GROUPBOX        "OUTPUT",IDC_OUTPUTBOX,430,7,227,279
+    LTEXT           "  Format:",IDC_STATIC,8,56,29,8
+    LTEXT           "  File:",IDC_STATIC,8,17,27,8
+    LTEXT           "  Format:",IDC_STATIC,431,56,29,8
+    LTEXT           "Use CTL RETURN for new line;  RETURN converts.",
+                    IDC_CONSOLEINFO,37,90,168,8,NOT WS_VISIBLE
+    LTEXT           "",IDC_OUTCOUNT,379,11,43,20
+    LTEXT           "",IDC_NUM_FILES,170,40,41,8
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "OBGUI MFC Application\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "OBGUI\0"
+            VALUE "LegalCopyright", "Copyright Chris Morley (C) 2003\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "OBGUI.EXE\0"
+            VALUE "ProductName", "OBGUI Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 250
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 346
+    END
+
+    IDD_OBGUI_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 657
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 286
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About OBGUI..."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.K.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\OBGUI.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\babel.ico"
+#endif    // English (U.K.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\OBGUI.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,164 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "MOPAC"=".\MOPAC\MOPAC.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name OBDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OBConv
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OBConsole"=".\OBConsole\OBConsole.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name OBConv
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OBConv"=".\OBConv\OBConv.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OBDLL"=".\OBDLL\OBDLL.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OBFormats"=".\OBFormats\OBFormats.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name OBConv
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OBDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OBGUI"=".\OBGUI\OBGUI.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name OBConv
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OBGUIs"=".\OBGUIs\OBGUIs.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OBabel"=".\OBabel\OBabel.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ProgramTest"=".\ProgramTest\ProgramTest.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name OBConv
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OBDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OBFormats
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ProgramTest2"=".\ProgramTest2\ProgramTest2.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+
