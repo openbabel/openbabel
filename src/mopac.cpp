@@ -86,7 +86,7 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,const char *title)
   if (hasPartialCharges)
     {
       mol.SetPartialChargesPerceived();
-      for (int i = 1; i <= mol.NumAtoms(); i++)
+      for (unsigned int i = 1; i <= mol.NumAtoms(); i++)
 	{
 	  atom = mol.GetAtom(i);
 	  atom->SetPartialCharge(charges[i-1]);
