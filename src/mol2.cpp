@@ -175,6 +175,16 @@ bool ReadMol2(istream &ifs,OBMol &mol,const char *title)
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();
 
+    // continue untill EOF or untill next molecule record
+    streampos pos;
+    for(;;)
+      {
+	pos = ifs.tellg(); 
+	if (!ifs.getline(buffer,BUFF_SIZE)) break;
+	if (EQn(buffer,"@<TRIPOS>MOLECULE",17)) break;
+      }
+
+    ifs.seekg(pos); // go back to the end of the molecule
     return(true);
 }
 
