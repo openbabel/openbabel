@@ -1,4 +1,17 @@
-2002-09-19  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+2002-11-25  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/mol.cpp, src/mol.h: Add back << and >> convenience functions
+	derived from OBFileFormat methods.
+	(PerceiveBondOrders): Fix bug introduced with previous change--do
+	not add multiple bonds to an atom already with them. (Causes a
+	problem with allene, but this is a rarer situation than the
+	reverse.)
+
+	* src/pdb.cpp (WritePDB, WriteDelphiPDB): Fix ATOM records with
+	correct specification. Should fix problems with 5-digit atom
+	numbers, PR#633719, reported by Kristian Rother.
+	
+2002-11-20  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* configure: Update with new autoconf-2.56
 

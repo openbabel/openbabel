@@ -893,6 +893,9 @@ public:
     void AssignResidueBonds(OBBitVec &);
     //void SortBonds() {sort(_vbond.begin(),_vbond.end(),CompareBonds);}
 
+    // Convenience functions
+    friend std::ostream&       operator<< ( std::ostream&, OBMol& ) ;
+    friend std::istream&       operator>> ( std::istream&, OBMol& ) ;
 };
 
 /// Class to store internal coordinate values
