@@ -173,10 +173,18 @@ public:
 	//@}
 	/// @name Parameter get and set
 	//@{
-	std::istream*		GetInStream() const {return pInStream;};
-	std::ostream*		GetOutStream() const {return pOutStream;};
+	std::istream* GetInStream() const {return pInStream;};
+	std::ostream* GetOutStream() const {return pOutStream;};
+	void          SetInStream(std::istream* pIn){pInStream=pIn;};
+	void          SetOutStream(std::ostream* pOut){pOutStream=pOut;};
 	bool        SetInAndOutFormats(const char* inID, const char* outID);///< Sets the formats from their ids, e g CML
 	bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
+//<<<<<<< obconversion.h
+	bool				SetInFormat(const char* inID);
+	bool				SetInFormat(OBFormat* pIn);
+	bool				SetOutFormat(const char* outID);
+	bool				SetOutFormat(OBFormat* pOut);
+/*=======
 	bool        SetInFormat(const char* inID)
 	  { return SetInAndOutFormats(inID, NULL); };
 	bool        SetInFormat(OBFormat* pIn)
@@ -185,9 +193,12 @@ public:
 	  { return SetInAndOutFormats(NULL, outID); };
 	bool        SetOutFormat(OBFormat* pOut)
 	  { return SetInAndOutFormats(NULL, pOut); };
+>>>>>>> 1.1.4.4
+*/
 	OBFormat*		GetInFormat() const{return pInFormat;};
 	OBFormat*		GetOutFormat() const{return pOutFormat;};
-	
+	std::string GetInFilename() const{return InFilename;};
+
 	const char* GetOptions() const;///< @brief Options for output format
 	void        SetOptions(const char* options);///< @brief Options for output format
 
@@ -267,7 +278,7 @@ protected:
 	static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
 	static int       LoadFormatFiles();
 
-
+	std::string				InFilename;
 	std::istream*     pInStream;
 	std::ostream*     pOutStream;
 	static OBFormat*  pDefaultFormat;

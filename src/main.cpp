@@ -141,6 +141,7 @@ int main(int argc,char *argv[])
 					UseSavedOptions=true;
 					break;
 
+				case '?':
 				case 'H':
 					if(isalnum(argv[arg][2]))
 					{
@@ -242,6 +243,11 @@ int main(int argc,char *argv[])
 
 	if (!gotInType)
   {
+		if(FileList.empty())
+		{
+			cerr << "No input file or format spec!" <<endl;
+			usage();
+		}
 		pInFormat = Conv.FormatFromExt(FileList[0].c_str());
 		if(pInFormat==NULL)
 		{
@@ -281,7 +287,8 @@ int main(int argc,char *argv[])
 
 	// Need to make this configurable -- on UNIX should probably be $HOME/.openbabel or similar
 	#ifdef _WIN32
-	const string OptFile = "options.txt";
+	string OptFile = getenv("TEMP");
+	OptFile.append("\\oboptions.txt");
 	#else
 	string OptFile = getenv("HOME");
 	OptFile.append("/.openbabel");

@@ -196,6 +196,7 @@ OBConversion::OBConversion(const OBConversion& O)
 	EndNumber=O.EndNumber;
 	strcpy(Dimension,O.Dimension);
 	Index=0;
+	InFilename=O.InFilename;
 	FormatsMap();//rubbish
 }
 
@@ -335,23 +336,52 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
 /// Returns true if both formats have been successfully set at sometime
 bool OBConversion::SetInAndOutFormats(const char* inID, const char* outID)
 {
-	if(inID)
+/*	if(inID)
 		pInFormat = FindFormat(inID);
   if(outID)
 		pOutFormat= FindFormat(outID);
 	return pInFormat && pOutFormat
 		&& !(pInFormat->Flags() & NOTREADABLE) && !(pOutFormat->Flags() & NOTWRITABLE);
+*/
+	return SetInFormat(inID) && SetOutFormat(outID);
 }
 //////////////////////////////////////////////////////
 
 bool OBConversion::SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut)
 {
+//	pInFormat=pIn;
+//	pOutFormat=pOut;
+//	return !(pInFormat->Flags() & NOTREADABLE) && !(pOutFormat->Flags() & NOTWRITABLE);
+	return SetInFormat(pIn) && SetOutFormat(pOut);
+}
+//////////////////////////////////////////////////////
+bool OBConversion::SetInFormat(OBFormat* pIn)
+{
 	pInFormat=pIn;
+	return !(pInFormat->Flags() & NOTREADABLE);
+}
+//////////////////////////////////////////////////////
+bool OBConversion::SetOutFormat(OBFormat* pOut)
+{
 	pOutFormat=pOut;
-	return !(pInFormat->Flags() & NOTREADABLE) && !(pOutFormat->Flags() & NOTWRITABLE);
+	return !(pOutFormat->Flags() & NOTWRITABLE);
+}
+//////////////////////////////////////////////////////
+bool OBConversion::SetInFormat(const char* inID)
+{
+	if(inID)
+		pInFormat = FindFormat(inID);
+	return pInFormat && !(pInFormat->Flags() & NOTREADABLE);
 }
 //////////////////////////////////////////////////////
 
+bool OBConversion::SetOutFormat(const char* outID)
+{
+  if(outID)
+		pOutFormat= FindFormat(outID);
+	return pOutFormat && !(pOutFormat->Flags() & NOTWRITABLE);
+}
+//////////////////////////////////////////////////////
 int OBConversion::Convert(istream* is, ostream* os) 
 {
 	if(is) pInStream=is;
@@ -483,23 +513,25 @@ int OBConversion::AddChemObject(OBBase* pOb)
 		return Count;
 	}
 	Count++;
-	if(pOb && Count>=StartNumber)//keeps reading objects but does nothing with them
+	if(Count>=StartNumber)//keeps reading objects but does nothing with them
 	{	
 		if(Count==EndNumber)
 			ReadyToInput=false; //stops any more objects being read
-
-		if(pOb1 && pOutFormat) //see if there is an object ready to be output
+		if(pOb)
 		{
-			//Output object
-			if (!pOutFormat->WriteChemObject(this))  
+			if(pOb1 && pOutFormat) //see if there is an object ready to be output
 			{
-				//faultly write, so finish
-				--Index;
-				ReadyToInput=false;
-				return Count;
+				//Output object
+				if (!pOutFormat->WriteChemObject(this))  
+				{
+					//faultly write, so finish
+					--Index;
+					ReadyToInput=false;
+					return Count;
+				}
 			}
+			pOb1=pOb;
 		}
-		pOb1=pOb;
 	}
 	return Count;
 }
@@ -652,9 +684,9 @@ bool OBConversion::IsLast()
 }
 
 ////////////////////////////////////////////
-/// If ch is not in the option string outside quoted text, returns NULL
-/// If it is the return value is not NULL and points to the
-/// following quoted text if there is any (but it is not NULL terminated).
+/// If ch is not in the option string (excluding quoted text), returns NULL
+/// If it is, the return value is not NULL and points to the
+/// following quoted text if there is any, but it is terminated by " not NULL.
 const char* OBConversion::IsOption(const char ch, bool UseGeneralOptions) const
 {
 	const char* p;
@@ -662,7 +694,7 @@ const char* OBConversion::IsOption(const char ch, bool UseGeneralOptions) const
 		p = GeneralOptions.c_str();
 	else
 		p = Options.c_str();
-	
+/*	
 	while(*p)
 	{
 		const char* str=p;
@@ -678,6 +710,19 @@ const char* OBConversion::IsOption(const char ch, bool UseGeneralOptions) const
 			}
 		}
 		if(*pp==ch) return str;
+	}
+	return NULL;
+*/
+	//e.g. ab"text"c"text"
+	while(p && *p)
+	{
+		if(*p++==ch)
+		{
+			if(*p=='"')p++;
+			return p;
+		}
+		if(p && *p++=='"')
+			while(*p++!='"');
 	}
 	return NULL;
 }
@@ -725,8 +770,8 @@ does not contain a *.
 
 Aggregation
 Done if FileList has more than one file name and OutputFileName does
-not contain * . All the chemical objects are OutputFileName
-converted and sent to the single output file.
+not contain * . All the chemical objects are converted and sent
+to the single output file.
  
 Splitting
 Done if FileList contains a single file name and OutputFileName
@@ -742,12 +787,12 @@ Each input file is converted to an output file whose name is
 OutputFileName with the * replaced by the inputfile name without its
 path and extension.
 So if the input files were inpath/First.cml, inpath/Second.cml
-and OutputFileName was NEW.mol, the output files would be
+and OutputFileName was NEW*.mol, the output files would be
 NEWFirst.mol, NEWSecond.mol.
    
-If FileList is empty, the input stream already set (usually in the
-constructor) is used. If OutputFileName is empty, the output stream
-already set is used.
+If FileList is empty, the input stream that has already been set
+(usually in the constructor) is used. If OutputFileName is empty,
+the output stream already set is used.
 
 On exit, OutputFileList contains the names of the output files.
 
@@ -826,6 +871,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 				tempitr--;
 				for(itr=FileList.begin();itr!=FileList.end();itr++)
 				{
+					InFilename = *itr;
 					ifstream ifs((*itr).c_str());
 					if(!ifs)
 					{
@@ -860,6 +906,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 			else
 			{			
 				//Single input file
+				InFilename = FileList[0];
 				is.open(FileList[0].c_str());
 				if(!is) 
 				{
@@ -908,7 +955,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 	}
 	catch(...)
 	{
-		cerr << "Conversion failed with an exception" <<endl;
+		cerr << "Conversion failed with an exception. Count=" << Count <<endl;
 		return Count;
 	}
 }
