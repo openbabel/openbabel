@@ -57,7 +57,6 @@ are placed match the corresponding atom numbers. Since atoms are
 numbered beginning from one, the first element in the vector<string>
 is empty, and the values are placed in [1...mol.NumAtoms()].
    */
-
 void patty::read_rules(const string &infile)
 {
   ifstream ifs, ifs1, *ifsP;
@@ -65,9 +64,8 @@ void patty::read_rules(const string &infile)
   char buffer[BUFF_SIZE];
   char tmp_str[BUFF_SIZE];
   char patty_dir[BUFF_SIZE];
-
-  _sp.resize(1000);
-  
+  OBSmartsPattern *sp;
+ 
   ifs.open(infile.c_str());
   ifsP= &ifs;
   if (!ifs)
@@ -91,7 +89,6 @@ void patty::read_rules(const string &infile)
      // }
     }
 
-  int i = 0;
   if (!ifsP){
         cerr << "Could not open " << patty_dir << endl;
         exit(0);
@@ -99,50 +96,48 @@ void patty::read_rules(const string &infile)
   while (ifsP->getline(buffer,BUFF_SIZE))
     {
       if (buffer[0] != '#')
-    {
-      tokenize(vs,buffer," \t\n");
-      if (vs.size() >= 2)
-        {
-          strcpy(tmp_str,vs[0].c_str());
-          _sp[i]->Init(tmp_str);
-          smarts.push_back(vs[0]);
-          typ.push_back(vs[1]);
-          i++;
-        }
+	{
+	  tokenize(vs,buffer," \t\n");
+	  if (vs.size() >= 2)
+	    {
+	      strcpy(tmp_str,vs[0].c_str());
+	      sp = new OBSmartsPattern;
+	      sp->Init(tmp_str);
+	      _sp.push_back(sp);	      
+	      smarts.push_back(vs[0]);
+	      typ.push_back(vs[1]);	      
+	    }
+	}
     }
-    }
-  _sp.resize(i);
 }
 
 void patty::assign_rules(vector<string> &rules)
 {
-	vector<string> vs;
-	char buffer[BUFF_SIZE];
-	char tmp_str[BUFF_SIZE];
-	unsigned int i;
-
-	_sp.resize(1000);
-	for ( i = 0 ; i < rules.size() ; i++ )
+  vector<string> vs;
+  char buffer[BUFF_SIZE];
+  char tmp_str[BUFF_SIZE];
+  unsigned int i;
+  OBSmartsPattern *sp;
+	
+  for ( i = 0 ; i < rules.size() ; i++ )
+    {
+      strncpy(buffer, rules[i].c_str(), BUFF_SIZE);
+      if (buffer[0] != '#')
 	{
-		strncpy(buffer, rules[i].c_str(), BUFF_SIZE);
-		if (buffer[0] != '#')
-		{
-			tokenize(vs,buffer," \t\n");
-			if (vs.size() >= 2)
-			{
-				strcpy(tmp_str,vs[0].c_str());
-				_sp[i]->Init(tmp_str);
-				smarts.push_back(vs[0]);
-				typ.push_back(vs[1]);
-			}
-			else
-				i--;
-		}
-		else
-			i--;
+	  tokenize(vs,buffer," \t\n");
+	  if (vs.size() >= 2)
+	    {
+	      strcpy(tmp_str,vs[0].c_str());
+	      sp = new OBSmartsPattern;
+	      sp->Init(tmp_str);
+	      _sp.push_back(sp);
+	      smarts.push_back(vs[0]);
+	      typ.push_back(vs[1]);
+	    }
 	}
-	_sp.resize(i);  
+    }
 }
+
 
 void patty::assign_types(OBMol &mol,vector<string> &atm_typ)
 {
@@ -241,6 +236,20 @@ int patty::type_to_int(const string &type, bool failOnUndefined)
           }
       }
       return(result);
+}
+
+//! return null if the type does not exist, the type position otherwise
+//! the first position start at 1  
+int patty::Istype(const std::string &type)
+{
+  int pos;
+  for( pos=0; pos < typ.size(); pos++)
+    {
+      if(typ[pos] == type)
+	return (pos + 1);
+    }
+
+  return (0);
 }
 
 }

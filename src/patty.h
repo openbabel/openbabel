@@ -62,6 +62,7 @@ class patty
   void assign_types(OBMol &mol,std::vector<std::string> &atm_typ);
   void assign_types(OBMol &mol,std::vector<int> &atm_typ);
   int type_to_int(const std::string &type, bool failOnUndefined= false);
+  int Istype(const std::string &type);//!< return atom type index, 0 otherwise 
 };
 
 } // end namespace OpenBabel
