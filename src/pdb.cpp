@@ -93,10 +93,10 @@ bool ReadPDB(istream &ifs,OBMol &mol,const char *title)
   
   resdat.AssignBonds(mol,bs);
   /*assign hetatm bonds based on distance*/
-  mol.ConnectTheDots();
-
   mol.EndModify();
   
+  mol.ConnectTheDots();
+
   if (mol.NumAtoms() < 250) // Minimize time required on real proteins
     mol.PerceiveBondOrders();
   mol.SetAtomTypesPerceived();
@@ -235,6 +235,13 @@ static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
   /* atom name */
   string atmid = sbuf.substr(6,4);
 
+  /* element */
+  string element;
+  if (sbuf.size() > 71)
+    element = sbuf.substr(70,2);
+  else
+    element = "  ";
+
   //trim spaces on the right and left sides
   while (!atmid.empty() && atmid[0] == ' ') 
     atmid = atmid.substr(1,atmid.size()-1);
@@ -293,37 +300,46 @@ static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
   }
   else //must be hetatm record
   {
-    if (isalpha(atmid[0])) type = atmid.substr(0,2);
-    else if (atmid[0] == ' ') type = atmid.substr(1,1); // one char element
-    else                   type = atmid.substr(1,2);
-    if (atmid == resname)
+    if (isalpha(element[1]) && (isalpha(element[0]) || (element[0] == ' ')))
       {
-	type = atmid;
+        if (isalpha(element[0])) type = element.substr(0,2);
+        else type = element.substr(1,1);
 	if (type.size() == 2) type[1] = tolower(type[1]);
       }
     else
-    if (resname == "ADR" || resname == "COA" || resname == "FAD" ||
-	resname == "GPG" || resname == "NAD" || resname == "NAL" ||
-	resname == "NDP")
-      {
-	if (type.size() > 1)
-	  type = type.substr(0,1);
-	//type.erase(1,type.size()-1);
-      }
-    else
-      if (isdigit(type[0]))
-	{
-	  type = type.substr(1,1);
-	  //type.erase(0,1);
-	  //if (type.size() > 1) type.erase(1,type.size()-1);
-	}
-      else
-	if (type.size() > 1 && isdigit(type[1]))
-	  type = type.substr(0,1);
-    //type.erase(1,1);
+      {   
+	if (isalpha(atmid[0])) type = atmid.substr(0,2);
+	else if (atmid[0] == ' ') type = atmid.substr(1,1); // one char element
+	else                   type = atmid.substr(1,2);
+	if (atmid == resname)
+	  {
+	    type = atmid;
+	    if (type.size() == 2) type[1] = tolower(type[1]);
+	  }
 	else
-	  if (type.size() > 1 && isalpha(type[1]) && isupper(type[1]))
-	    type[1] = tolower(type[1]);
+	if (resname == "ADR" || resname == "COA" || resname == "FAD" ||
+	    resname == "GPG" || resname == "NAD" || resname == "NAL" ||
+	    resname == "NDP")
+	  {
+	    if (type.size() > 1)
+	      type = type.substr(0,1);
+	    //type.erase(1,type.size()-1);
+	  }
+	else
+	  if (isdigit(type[0]))
+	    {
+	      type = type.substr(1,1);
+	      //type.erase(0,1);
+	      //if (type.size() > 1) type.erase(1,type.size()-1);
+	    }
+	  else
+	    if (type.size() > 1 && isdigit(type[1]))
+	      type = type.substr(0,1);
+	//type.erase(1,1);
+	    else
+	      if (type.size() > 1 && isalpha(type[1]) && isupper(type[1]))
+		type[1] = tolower(type[1]);
+      }
 
   }
 
@@ -780,6 +796,7 @@ bool WritePDB(ostream &ofs,OBMol &mol)
   char the_res[10];
   char *element_name;
   int res_num;
+  bool het=true;
 
   //  sprintf(buffer,"HEADER    PROTEIN");
   //  ofs << buffer << endl;
@@ -812,8 +829,9 @@ bool WritePDB(ostream &ofs,OBMol &mol)
     if (atom->HasResidue())
       {
 	res = atom->GetResidue();
-	strncpy(the_res,(char*)res->GetName().c_str(),3);
-	strncpy(type_name,(char*)res->GetAtomID(atom).c_str(),4);
+        het = res->IsHetAtom(atom);
+        snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
+        snprintf(type_name,5,"%s",(char*)res->GetAtomID(atom).c_str());
 
 	//two char. elements are on position 13 and 14 one char. start at 14
 	if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
@@ -847,7 +865,8 @@ bool WritePDB(ostream &ofs,OBMol &mol)
     element_name = etab.GetSymbol(atom->GetAtomicNum());
     if (strlen(element_name) == 2)
       element_name[1] = toupper(element_name[1]);
-    sprintf(buffer,"ATOM  %5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
+    sprintf(buffer,"%s%5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
+            het?"HETATM":"ATOM  ",
 	    i,
 	    type_name,
 	    the_res,
