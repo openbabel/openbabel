@@ -8,7 +8,7 @@ exec_prefix   = @exec_prefix@
 
 DEST	      = @bindir@
 
-INSTALL	      = @INSTALL_PROGRAM@
+INSTALL	      = @INSTALL@
 
 SUBDIRS	      = src test
 DISTDIR       = $(top_srcdir)/../openbabel-dist
@@ -42,7 +42,7 @@ distclean:
 		rm -f Makefile stamp-h
 
 install:	all
-		$(INSTALL) $(PROGRAM) $(DEST)
+		(cd src; $(MAKE) $(MFLAGS) install)
 
 dist:
 	        rm -rf $(DISTDIR) openbabel.tar.gz

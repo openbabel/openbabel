@@ -16,7 +16,7 @@ LINKER	      = $(CXX)
 LDFLAGS       = @LDFLAGS@
 
 RM            = rm -f
-INSTALL	      = @INSTALL_PROGRAM@
+INSTALL	      = @INSTALL@
 AR	      = @AR@
 
 srcdir        = @srcdir@
@@ -53,8 +53,9 @@ PROGRAM	      = babel
 LIBRARY       = libopenbabel.a
 
 DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt\
-		resdata.txt types.txt phmodel.txt GNULICENSE.txt \
-		Primer.html bin2hex.pl
+		resdata.txt types.txt phmodel.txt 
+		
+EXTRA_DIST    = GNULICENSE.txt Primer.html bin2hex.pl
 
 MAKEFILE      = Makefile
 
@@ -71,7 +72,10 @@ clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
 distclean:	clean
 
 install:	$(PROGRAM)
+		$(INSTALL) -d $(DEST)
 		$(INSTALL) $(PROGRAM) $(DEST)
+		$(INSTALL) -d $(pkgdatadir)
+		$(INSTALL) -m644 $(DATAFILES) $(pkgdatadir)
 
 print:;		$(PRINT) $(HDRS) $(SRCS)
 
