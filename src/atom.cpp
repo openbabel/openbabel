@@ -401,7 +401,7 @@ char *OBAtom::GetType()
       tempTable.Translate(_type, num);
     }
   if (_ele == 1 && _isotope == 2)
-    _type = "D";
+    snprintf(_type, 6, "%s", "D");
 
   return(_type);
 }

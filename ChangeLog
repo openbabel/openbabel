@@ -1,3 +1,8 @@
+2003-03-10  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/atom.cpp (GetType): Fix compilation error when copying in
+	"D" atom type for a deuterium atom.
+
 2003-03-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/Makefile.in: Add support for the isotopes.txt -> .h
