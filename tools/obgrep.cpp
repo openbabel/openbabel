@@ -1,6 +1,7 @@
 /**********************************************************************
 obgrep = Open Babel molecule grep
-Copyright (C) 2003 Fabien Fontaine
+Copyright (C) 2003-2004 Fabien Fontaine
+Some portions Copyright (C) 2005 Geoffrey Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,17 +20,22 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
+void usage();
+
+// There isn't a great way to do this -- we need to save argv[0] for usage()
+static char *program_name;
+
 ///////////////////////////////////////////////////////////////////////////////
 //! \brief Find the molecule(s) with or without a given SMART pattern
 int main(int argc,char **argv)
 {
-  char *program_name=NULL;
   io_type inFileType = UNDEFINED, outFileType = UNDEFINED;
   int c;
   int ntimes=0;
   bool pattern_matched=false, ntimes_matched=true;
   bool count=false, invert=false, full=false, name_only=false;
-  char *FileIn = NULL, *Pattern = NULL;
+  char *Pattern = NULL;
+  vector<string> FileList;
   program_name = argv[0];
 
   // Parse options
@@ -70,27 +76,27 @@ int main(int argc,char **argv)
   int index = optind;
   
 
-  if (argc-index != 2)
+  if (argc - index < 2) // we can loop through multiple files
     {
-      string err = "Usage: ";
-      err += program_name;
-      err += " [options] \"PATTERN\" <filename>\n";
-      err += "Options:\n";
-      err += "   -v      Invert the matching, print non-matching molecules\n";
-      err += "   -c      Print the number of matched molecules\n";
-      err += "   -f      Full match, print matching-molecules when the number\n";
-      err += "           of heavy atoms is equal to the number of PATTERN atoms\n";
-      err += "   -n      Only print the name of the molecules\n";
-      err += "   -t NUM  Print a molecule only if the PATTERN occurs NUM times inside the molecule\n";
-      ThrowError(err);
-      exit(-1);
+      usage();
     }
   else {
     Pattern = argv[index++];
-    FileIn  = argv[index]; 
+
+    for (; index < argc; index++)
+      FileList.push_back(argv[index]);
   }
 
-      // Find Input filetype
+
+  // Now loop through the input files...
+  vector<string>::iterator i;
+  bool multiple = (FileList.size() > 1);
+  char *FileIn; // to keep the same variable names
+  for (i = FileList.begin(); i != FileList.end(); i++)
+    {
+      FileIn = (char *) (*i).c_str();
+
+      // Find input filetype
       if (extab.CanReadExtension(FileIn))
 	inFileType = extab.FilenameToType(FileIn);
       else
@@ -146,8 +152,11 @@ int main(int argc,char **argv)
 	  if (impossible_match) { // -> avoid useless SMART matching attempt 
 	    if (invert) {
 	      if (!count) {
+		if (multiple)
+		  cout << "File " << FileIn << ":" << endl;
+
 		if ( name_only )
-		  cout << mol.GetTitle() << endl;
+		    cout << mol.GetTitle() << endl;
 		else
 		  cout << mol;
 	      }
@@ -185,6 +194,9 @@ int main(int argc,char **argv)
 	  if ( pattern_matched == true && ntimes_matched == true) { 
 	    if (!invert) {      // do something only when invert flag is off
 	      if (!count) {
+		if ( multiple )
+		  cout << "File " << FileIn << ":" << endl;
+
 		if ( name_only )
 		  cout << mol.GetTitle() << endl;
 		else
@@ -198,6 +210,9 @@ int main(int argc,char **argv)
 	  else { // The SMART pattern do not occur as many times as requested
 	    if (invert) {       // do something only if invert flag is on
 	      if (!count) {
+		if (multiple)
+		  cout << "File " << FileIn << ":" << endl;
+
 		if ( name_only )
 		  cout << mol.GetTitle() << endl;
 		else
@@ -211,8 +226,29 @@ int main(int argc,char **argv)
       
       ////////////////////////////////////////////////////////////////
       // Only print the number of matched molecules as requested
-      if (count)
+      if (count){
+	if (multiple)
+	  cout << "File: " << FileIn << ":" << endl;
 	cout << c << endl;
-  
+      }
+    }  
+
   return(1);
 } 
+
+
+void usage()
+{
+      string err = "Usage: ";
+      err += program_name;
+      err += " [options] \"PATTERN\" <filename list>\n";
+      err += "Options:\n";
+      err += "   -v      Invert the matching, print non-matching molecules\n";
+      err += "   -c      Print the number of matched molecules\n";
+      err += "   -f      Full match, print matching-molecules when the number\n";
+      err += "           of heavy atoms is equal to the number of PATTERN atoms\n";
+      err += "   -n      Only print the name of the molecules\n";
+      err += "   -t NUM  Print a molecule only if the PATTERN occurs NUM times inside the molecule\n";
+      ThrowError(err);
+      exit(-1);
+}
