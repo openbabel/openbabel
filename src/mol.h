@@ -17,11 +17,14 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#ifndef OB_MOL_H
+#define OB_MOL_H
 
 #include "babelconfig.h"
 
-#ifndef OB_MOL_H
-#define OB_MOL_H
+#ifndef EXTERN
+#  define EXTERN extern
+#endif
 
 #include <math.h>
 
@@ -50,14 +53,6 @@ GNU General Public License for more details.
 #include "generic.h"
 #include "typer.h"
 #include "oberror.h"
-
-#if defined(OBDLL_EXPORTS) //OBDLL being built
-#  define EXTERN __declspec(dllexport) extern
-#elif defined(USING_OBDLL) //program using OBDLL.dll being built
-#  define EXTERN __declspec(dllimport) extern
-#else //Everything else (behaviour as original)
-#  define EXTERN extern
-#endif
 
 namespace OpenBabel
 {
