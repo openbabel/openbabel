@@ -1,16 +1,16 @@
 /**********************************************************************
 data.cpp - Global data and resource file parsers.
-
+ 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
-
+ 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
-
+ 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -41,9 +41,10 @@ GNU General Public License for more details.
 
 using namespace std;
 
-namespace OpenBabel {
+namespace OpenBabel
+{
 
-  // OBExtensionTable extab;
+// OBExtensionTable extab;
 OBElementTable   etab;
 OBTypeTable      ttab;
 OBIsotopeTable   isotab;
@@ -53,7 +54,7 @@ extern void ThrowError(string&);
 
 /** \class OBElementTable
     \brief Periodic Table of the Elements
-
+ 
     Translating element data is a common task given that many file
   formats give either element symbol or atomic number information, but
   not both. The OBElementTable class facilitates conversion between
@@ -67,7 +68,7 @@ extern void ThrowError(string&);
  cout << "The atomic number for Sulfur is " << etab.GetAtomicNum(16) << endl;
  cout << "The van der Waal radius for Nitrogen is " << etab.GetVdwRad(7);
 \endcode
-
+ 
   Stored information in the OBElementTable includes atomic:
    - symbols
    - van der Waal radii
@@ -76,233 +77,249 @@ extern void ThrowError(string&);
    - expected maximum bonding valence
    - molar mass (by IUPAC recommended atomic masses)
    - electronegativity
-
+ 
 */
 
 OBElementTable::OBElementTable()
 {
-  _init = false;
-  _dir = BABEL_DATADIR;
-  _envvar = "BABEL_DATADIR";
-  _filename = "element.txt";
-  _subdir = "data";
-  _dataptr = ElementData;
+    _init = false;
+    _dir = BABEL_DATADIR;
+    _envvar = "BABEL_DATADIR";
+    _filename = "element.txt";
+    _subdir = "data";
+    _dataptr = ElementData;
 }
 
 OBElementTable::~OBElementTable()
-  {
+{
     vector<OBElement*>::iterator i;
-    for (i = _element.begin();i != _element.end();i++) delete *i;
-  }
+    for (i = _element.begin();i != _element.end();i++)
+        delete *i;
+}
 
 void OBElementTable::ParseLine(const char *buffer)
 {
-  int num,maxbonds;
-  char symbol[3];
-  double Rbo,Rcov,Rvdw,mass, elNeg;
+    int num,maxbonds;
+    char symbol[3];
+    double Rbo,Rcov,Rvdw,mass, elNeg;
 
-  if (buffer[0] != '#') // skip comment line (at the top)
+    if (buffer[0] != '#') // skip comment line (at the top)
     {
-      // Ignore RGB columns
-      sscanf(buffer,"%d %s %lf %lf %lf %d %lf %lf %*lf %*lf %*lf",
-	     &num,
-	     symbol,
-	     &Rcov,
-	     &Rbo,
-	     &Rvdw,
-	     &maxbonds,
-	     &mass,
-	     &elNeg);
-  
-	  OBElement *ele = new OBElement(num,symbol,Rcov,Rbo,Rvdw,maxbonds,mass,elNeg);
-	  _element.push_back(ele);
-	}
+        // Ignore RGB columns
+        sscanf(buffer,"%d %s %lf %lf %lf %d %lf %lf %*lf %*lf %*lf",
+               &num,
+               symbol,
+               &Rcov,
+               &Rbo,
+               &Rvdw,
+               &maxbonds,
+               &mass,
+               &elNeg);
+
+        OBElement *ele = new OBElement(num,symbol,Rcov,Rbo,Rvdw,maxbonds,mass,elNeg);
+        _element.push_back(ele);
+    }
 }
 
 char *OBElementTable::GetSymbol(int atomicnum)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return("\0");
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return("\0");
 
-  return(_element[atomicnum]->GetSymbol());
+    return(_element[atomicnum]->GetSymbol());
 }
 
 int OBElementTable::GetMaxBonds(int atomicnum)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0);
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(0);
 
-  return(_element[atomicnum]->GetMaxBonds());
+    return(_element[atomicnum]->GetMaxBonds());
 }
 
 double OBElementTable::GetElectroNeg(int atomicnum)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0);
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(0.0);
 
-  return(_element[atomicnum]->GetElectroNeg());
+    return(_element[atomicnum]->GetElectroNeg());
 }
 
 double OBElementTable::GetVdwRad(int atomicnum)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0);
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(0.0);
 
-  return(_element[atomicnum]->GetVdwRad());
+    return(_element[atomicnum]->GetVdwRad());
 }
 
 double OBElementTable::GetBORad(int atomicnum)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0);
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(0.0);
 
-  return(_element[atomicnum]->GetBoRad());
+    return(_element[atomicnum]->GetBoRad());
 }
 
 double OBElementTable::CorrectedBondRad(int atomicnum, int hyb)
 {
-  double rad;
-  if (!_init) Init();
+    double rad;
+    if (!_init)
+        Init();
 
-  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(1.0);
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(1.0);
 
-  rad = _element[atomicnum]->GetBoRad();
+    rad = _element[atomicnum]->GetBoRad();
 
-  if (hyb == 2)      rad *= 0.95;
-  else if (hyb == 1) rad *= 0.90;
+    if (hyb == 2)
+        rad *= 0.95;
+    else if (hyb == 1)
+        rad *= 0.90;
 
-  return(rad);
+    return(rad);
 }
 
 double OBElementTable::CorrectedVdwRad(int atomicnum, int hyb)
 {
-  double rad;
-  if (!_init) Init();
+    double rad;
+    if (!_init)
+        Init();
 
-  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(1.95);
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(1.95);
 
-  rad = _element[atomicnum]->GetVdwRad();
+    rad = _element[atomicnum]->GetVdwRad();
 
-  if (hyb == 2)      rad *= 0.95;
-  else if (hyb == 1) rad *= 0.90;
+    if (hyb == 2)
+        rad *= 0.95;
+    else if (hyb == 1)
+        rad *= 0.90;
 
-  return(rad);
+    return(rad);
 }
 
 double OBElementTable::GetCovalentRad(int atomicnum)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0);
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(0.0);
 
-  return(_element[atomicnum]->GetCovalentRad());
+    return(_element[atomicnum]->GetCovalentRad());
 }
 
 double OBElementTable::GetMass(int atomicnum)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0);
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(0.0);
 
-  return(_element[atomicnum]->GetMass());
+    return(_element[atomicnum]->GetMass());
 }
 
 int OBElementTable::GetAtomicNum(const char *sym, unsigned short iso)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
     vector<OBElement*>::iterator i;
     for (i = _element.begin();i != _element.end();i++)
-      if (!strncasecmp(sym,(*i)->GetSymbol(),2))
-        return((*i)->GetAtomicNum());
+        if (!strncasecmp(sym,(*i)->GetSymbol(),2))
+            return((*i)->GetAtomicNum());
     if (strcasecmp(sym, "D") == 0)
-      {
-	iso = 2;
-	return(1);
-      }
+    {
+        iso = 2;
+        return(1);
+    }
     else if (strcasecmp(sym, "T") == 0)
-      {
-	iso = 3;
-	return(1);
-      }
+    {
+        iso = 3;
+        return(1);
+    }
 
     return(0);
 }
 
 /** \class OBIsotopeTable
     \brief Table of atomic isotope masses
-
+ 
 */
 
 OBIsotopeTable::OBIsotopeTable()
 {
-  _init = false;
-  _dir = BABEL_DATADIR;
-  _envvar = "BABEL_DATADIR";
-  _filename = "isotope.txt";
-  _subdir = "data";
-  _dataptr = IsotopeData;
+    _init = false;
+    _dir = BABEL_DATADIR;
+    _envvar = "BABEL_DATADIR";
+    _filename = "isotope.txt";
+    _subdir = "data";
+    _dataptr = IsotopeData;
 }
 
 void OBIsotopeTable::ParseLine(const char *buffer)
 {
-  unsigned int atomicNum;
-  unsigned int i;
-  vector<string> vs;
+    unsigned int atomicNum;
+    unsigned int i;
+    vector<string> vs;
 
-  pair <unsigned int, double> entry;
-  vector <pair <unsigned int, double> > row;
+    pair <unsigned int, double> entry;
+    vector <pair <unsigned int, double> > row;
 
-  if (buffer[0] != '#') // skip comment line (at the top)
+    if (buffer[0] != '#') // skip comment line (at the top)
     {
-      tokenize(vs,buffer);
-      if (vs.size() > 3) // atomic number, 0, most abundant mass (...)
-	{
-	  atomicNum = atoi(vs[0].c_str());
-	  for (i = 1; i < vs.size() - 1; i += 2) // make sure i+1 still exists
-	    {
-	      entry.first = atoi(vs[i].c_str()); // isotope
-	      entry.second = atof(vs[i + 1].c_str()); // exact mass
-	      row.push_back(entry);
-	    }
-	  _isotopes.push_back(row);
- 	}
+        tokenize(vs,buffer);
+        if (vs.size() > 3) // atomic number, 0, most abundant mass (...)
+        {
+            atomicNum = atoi(vs[0].c_str());
+            for (i = 1; i < vs.size() - 1; i += 2) // make sure i+1 still exists
+            {
+                entry.first = atoi(vs[i].c_str()); // isotope
+                entry.second = atof(vs[i + 1].c_str()); // exact mass
+                row.push_back(entry);
+            }
+            _isotopes.push_back(row);
+        }
     }
 }
 
-double	OBIsotopeTable::GetExactMass(const unsigned int ele, 
-				     const unsigned int isotope)
+double	OBIsotopeTable::GetExactMass(const unsigned int ele,
+                                    const unsigned int isotope)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  if (ele > _isotopes.size())
+    if (ele > _isotopes.size())
+        return 0.0;
+
+    unsigned int iso;
+    for (iso = 0; iso < _isotopes[ele].size(); iso++)
+        if (isotope == _isotopes[ele][iso].first)
+            return _isotopes[ele][iso].second;
+
     return 0.0;
-
-  unsigned int iso;
-  for (iso = 0; iso < _isotopes[ele].size(); iso++)
-    if (isotope == _isotopes[ele][iso].first)
-	return _isotopes[ele][iso].second;
-
-  return 0.0;
 }
 
 /** \class OBTypeTable
     \brief Atom Type Translation Table
-
+ 
 Molecular file formats frequently store information about atoms in an
 atom type field. Some formats store only the element for each atom,
 while others include hybridization and local environments, such as the
@@ -314,7 +331,7 @@ OBTypeTable (ttab) is declared external in data.cpp and is referenced as
 extern OBTypeTable ttab in mol.h.  The following code demonstrates how
 to use the OBTypeTable class to translate the internal representation
 of atom types in an OBMol Internal to Sybyl Mol2 atom types.
-
+ 
 \code
 ttab.SetFromType("INT");
 ttab.SetToType("SYB");
@@ -328,7 +345,7 @@ ttab.Translate(dst,src);
 cout << "atom number " << atom->GetIdx() << "has mol2 type " << dst << endl;
 }
 \endcode
-
+ 
 Current atom types include (defined in the top line of the data file types.txt):
 - INT (Open Babel internal codes)
 - ATN (atomic numbers)
@@ -351,116 +368,121 @@ Current atom types include (defined in the top line of the data file types.txt):
 
 OBTypeTable::OBTypeTable()
 {
-  _init = false;
-  _dir = BABEL_DATADIR;
-  _envvar = "BABEL_DATADIR";
-  _filename = "types.txt";
-  _subdir = "data";
-  _dataptr = TypesData;
-  _linecount = 0;
-  _from = _to = -1;
+    _init = false;
+    _dir = BABEL_DATADIR;
+    _envvar = "BABEL_DATADIR";
+    _filename = "types.txt";
+    _subdir = "data";
+    _dataptr = TypesData;
+    _linecount = 0;
+    _from = _to = -1;
 }
 
 void OBTypeTable::ParseLine(const char *buffer)
 {
-  if (buffer[0] == '#')
-    return; // just a comment line
+    if (buffer[0] == '#')
+        return; // just a comment line
 
-  if (_linecount == 0)
-    sscanf(buffer,"%d%d",&_ncols,&_nrows);
-  else if (_linecount == 1)
-    tokenize(_colnames,buffer);
-  else
+    if (_linecount == 0)
+        sscanf(buffer,"%d%d",&_ncols,&_nrows);
+    else if (_linecount == 1)
+        tokenize(_colnames,buffer);
+    else
     {
-      vector<string> vc;
-      tokenize(vc,buffer);
-      if (vc.size() == (unsigned)_nrows) _table.push_back(vc);
+        vector<string> vc;
+        tokenize(vc,buffer);
+        if (vc.size() == (unsigned)_nrows)
+            _table.push_back(vc);
     }
-  _linecount++;
+    _linecount++;
 }
 
 bool OBTypeTable::SetFromType(char* from)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
     string tmp = from;
 
     unsigned int i;
     for (i = 0;i < _colnames.size();i++)
-    if (tmp == _colnames[i])
-    {
-        _from = i;
-        return(true);
-    }
+        if (tmp == _colnames[i])
+        {
+            _from = i;
+            return(true);
+        }
 
     ThrowError("Requested type column not found");
-    
+
     return(false);
 }
 
 bool OBTypeTable::SetToType(char* to)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
     string tmp = to;
 
     unsigned int i;
     for (i = 0;i < _colnames.size();i++)
-    if (tmp == _colnames[i])
-    {
-        _to = i;
-        return(true);
-    }
+        if (tmp == _colnames[i])
+        {
+            _to = i;
+            return(true);
+        }
 
     ThrowError("Requested type column not found");
-    
+
     return(false);
 }
 
 bool OBTypeTable::Translate(char *to, char *from)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  bool rval;
-  string sto,sfrom;
-  sfrom = from;
-  rval = Translate(sto,sfrom);
-  strcpy(to,(char*)sto.c_str());
+    bool rval;
+    string sto,sfrom;
+    sfrom = from;
+    rval = Translate(sto,sfrom);
+    strcpy(to,(char*)sto.c_str());
 
-  return(rval);
+    return(rval);
 }
 
 bool OBTypeTable::Translate(string &to,string &from)
 {
-  if (!_init) Init();
+    if (!_init)
+        Init();
 
-  if (from == "")
+    if (from == "")
+        return(false);
+
+    vector<vector<string> >::iterator i;
+    for (i = _table.begin();i != _table.end();i++)
+        if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
+        {
+            to = (*i)[_to];
+            return(true);
+        }
+
+    to = from;
     return(false);
-
-  vector<vector<string> >::iterator i;
-  for (i = _table.begin();i != _table.end();i++)
-    if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
-      {
-	to = (*i)[_to];
-	return(true);
-      }
-  
-  to = from;
-  return(false);
 }
 
 void Toupper(string &s)
 {
-  unsigned int i;
-  for (i = 0;i < s.size();i++)
-    s[i] = toupper(s[i]);
+    unsigned int i;
+    for (i = 0;i < s.size();i++)
+        s[i] = toupper(s[i]);
 }
 
 void Tolower(string &s)
 {
-  unsigned int i;
-  for (i = 0;i < s.size();i++)
-    s[i] = tolower(s[i]);
+    unsigned int i;
+    for (i = 0;i < s.size();i++)
+        s[i] = tolower(s[i]);
 }
 
 
@@ -470,7 +492,7 @@ void Tolower(string &s)
 // The constructor for OBExtensionTable automatically reads the
 // text file extable.txt. Just as OBElementTable, an instance of
 // OBTypeTable (extab) is declared external in data.cpp and is referenced as
-// extern OBExtensionTable extab in mol.h. 
+// extern OBExtensionTable extab in mol.h.
 
 // */
 // OBExtensionTable::OBExtensionTable()
@@ -487,7 +509,7 @@ void Tolower(string &s)
 // void OBExtensionTable::ParseLine(const char *buffer)
 // {
 //   vector <string> vs;
-  
+
 //   if (buffer[0] != '#') // skip comments
 //     {
 //       tokenize(vs,buffer,"\t\n"); // spaces are a problem
@@ -812,7 +834,7 @@ void Tolower(string &s)
 //       return returnVal;
 //     }
 // }
- 
+
 // bool OBExtensionTable::IsReadable(unsigned int n)
 // {
 //   if (!_init) Init();
@@ -863,78 +885,84 @@ void Tolower(string &s)
 
 // unsigned int OBExtensionTable::Count()
 // {
-//   if (!_init) Init(); 
+//   if (!_init) Init();
 //   return(_table.size());
 // }
 
 void OBGlobalDataBase::Init()
 {
-  if (_init) return;
-  _init = true;
+    if (_init)
+        return;
+    _init = true;
 
-  char buffer[BUFF_SIZE],subbuffer[BUFF_SIZE];
-  ifstream ifs1, ifs2, ifs3, *ifsP;
-  // First, look for an environment variable
-  if (getenv(_envvar.c_str()) != NULL)
-  {
-    strcpy(buffer,getenv(_envvar.c_str()));
-    strcat(buffer,FILE_SEP_CHAR);
-
-    if (!_subdir.empty())
+    char buffer[BUFF_SIZE],subbuffer[BUFF_SIZE];
+    ifstream ifs1, ifs2, ifs3, *ifsP;
+    // First, look for an environment variable
+    if (getenv(_envvar.c_str()) != NULL)
     {
-      strcpy(subbuffer,buffer);
-      strcat(subbuffer,_subdir.c_str());
-      strcat(subbuffer,FILE_SEP_CHAR);
-    }
+        strcpy(buffer,getenv(_envvar.c_str()));
+        strcat(buffer,FILE_SEP_CHAR);
 
-    strcat(buffer,(char*)_filename.c_str());
-    strcat(subbuffer,(char*)_filename.c_str());
+        if (!_subdir.empty())
+        {
+            strcpy(subbuffer,buffer);
+            strcat(subbuffer,_subdir.c_str());
+            strcat(subbuffer,FILE_SEP_CHAR);
+        }
 
-    ifs1.open(subbuffer);
-    ifsP= &ifs1;
-    if (!(*ifsP))
-      {
-	ifs2.open(buffer);
-	ifsP = &ifs2;
-      }
-  }
-  // Then, check the configured data directory
-  else // if (!(*ifsP))
-  {
-    strcpy(buffer,_dir.c_str());
-    strcat(buffer,FILE_SEP_CHAR);
-    strcat(buffer,(char*)_filename.c_str());
-    ifs3.open(buffer); 
-    ifsP = &ifs3;      
-  }
-  if ((*ifsP))
-    {
-      while(ifsP->getline(buffer,BUFF_SIZE))
-	ParseLine(buffer);
-    }
-  else
-  // If all else fails, use the compiled in values
-    if (_dataptr)
-    {
-      const char *p1,*p2;
-      for (p1 = p2 = _dataptr;*p2 != '\0';p2++)
-	if (*p2 == '\n')
-	  {
-	    strncpy(buffer, p1, (p2 - p1));
-	    buffer[(p2 - p1)] = '\0';
-	    ParseLine(buffer);
-	    p1 = ++p2;
-	  }
-    }
-  else
-    {
-      string s = "Unable to open data file '"; s += _filename; s += "'";
-      ThrowError(s);
-    }
+        strcat(buffer,(char*)_filename.c_str());
+        strcat(subbuffer,(char*)_filename.c_str());
 
-  if (ifs1) ifs1.close();
-  if (ifs2) ifs2.close();
-  if (ifs3) ifs3.close();
+        ifs1.open(subbuffer);
+        ifsP= &ifs1;
+        if (!(*ifsP))
+        {
+            ifs2.open(buffer);
+            ifsP = &ifs2;
+        }
+    }
+    // Then, check the configured data directory
+    else // if (!(*ifsP))
+    {
+        strcpy(buffer,_dir.c_str());
+        strcat(buffer,FILE_SEP_CHAR);
+        strcat(buffer,(char*)_filename.c_str());
+        ifs3.open(buffer);
+        ifsP = &ifs3;
+    }
+    if ((*ifsP))
+    {
+        while(ifsP->getline(buffer,BUFF_SIZE))
+            ParseLine(buffer);
+    }
+    else
+        // If all else fails, use the compiled in values
+        if (_dataptr)
+        {
+            const char *p1,*p2;
+            for (p1 = p2 = _dataptr;*p2 != '\0';p2++)
+                if (*p2 == '\n')
+                {
+                    strncpy(buffer, p1, (p2 - p1));
+                    buffer[(p2 - p1)] = '\0';
+                    ParseLine(buffer);
+                    p1 = ++p2;
+                }
+        }
+        else
+        {
+            string s = "Unable to open data file '";
+            s += _filename;
+            s += "'";
+            ThrowError(s);
+        }
+
+    if (ifs1)
+        ifs1.close();
+    if (ifs2)
+        ifs2.close();
+    if (ifs3)
+        ifs3.close();
 }
 
 }

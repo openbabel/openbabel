@@ -50,7 +50,19 @@ CONFIG_HEADER = $(top_builddir)/src/babelconfig.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libformats_la_LIBADD =
-am_libformats_la_OBJECTS = CSRformat.lo PQSformat.lo alchemyformat.lo
+am_libformats_la_OBJECTS = CSRformat.lo PQSformat.lo alchemyformat.lo \
+	amberformat.lo balstformat.lo bgfformat.lo boxformat.lo \
+	cacaoformat.lo cacheformat.lo carformat.lo cccformat.lo \
+	chem3dformat.lo chemdrawformat.lo chemtoolformat.lo cml.lo \
+	cmlformat.lo crkformat.lo cssrformat.lo dmolformat.lo \
+	featformat.lo fhformat.lo gamessformat.lo gaussformat.lo \
+	ghemicalformat.lo grosmos96format.lo hinformat.lo \
+	jaguarformat.lo mdlformat.lo mm3format.lo mmodformat.lo \
+	mol2format.lo mopacformat.lo mpqcformat.lo nwchemformat.lo \
+	pdbformat.lo povrayformat.lo qchemformat.lo reportformat.lo \
+	rxnformat.lo shelxformat.lo smilesformat.lo tinkerformat.lo \
+	turbomoleformat.lo unichemformat.lo viewmolformat.lo \
+	xedformat.lo xyzformat.lo zindoformat.lo
 libformats_la_OBJECTS = $(am_libformats_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -168,9 +180,23 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-AM_CPPFLAGS = -I$(top_srcdir)/src
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 noinst_LTLIBRARIES = libformats.la
-libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp /
+libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
+	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
+	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
+	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
+	cml.cpp cmlformat.cpp crkformat.cpp cssrformat.cpp \
+	dmolformat.cpp featformat.cpp fhformat.cpp \
+	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
+	grosmos96format.cpp hinformat.cpp jaguarformat.cpp mdlformat.cpp \
+	mm3format.cpp mmodformat.cpp mol2format.cpp mopacformat.cpp \
+	mpqcformat.cpp nwchemformat.cpp pdbformat.cpp povrayformat.cpp \
+	qchemformat.cpp reportformat.cpp rxnformat.cpp shelxformat.cpp \
+	smilesformat.cpp tinkerformat.cpp turbomoleformat.cpp \
+	unichemformat.cpp viewmolformat.cpp xedformat.cpp xyzformat.cpp \
+	zindoformat.cpp
+
 EXTRA_DIST = exampleformat.cpp
 all: all-am
 
@@ -226,6 +252,51 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CSRformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PQSformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alchemyformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/amberformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/balstformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bgfformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/boxformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cacaoformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cacheformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/carformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cccformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chem3dformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemdrawformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemtoolformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cml.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmlformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crkformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cssrformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dmolformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/featformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fhformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gamessformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gaussformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ghemicalformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grosmos96format.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hinformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jaguarformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdlformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mm3format.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mmodformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol2format.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mopacformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mpqcformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nwchemformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pdbformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/povrayformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qchemformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reportformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rxnformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shelxformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smilesformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tinkerformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/turbomoleformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unichemformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/viewmolformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xedformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xyzformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zindoformat.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -424,19 +495,6 @@ uninstall-am: uninstall-info-am
 	pdf pdf-am ps ps-am tags uninstall uninstall-am \
 	uninstall-info-am
 
-	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp /
-	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp /
-	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp /
-	cmlformat.cpp crkformat.cpp cssrformat.cpp /
-	dmolformat.cpp featformat.cpp fhformat.cpp /
-	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp /
-	grosmos96format.cpp hinformat.cpp jaguarformat.cpp mdlformat.cpp /
-	mm3format.cpp mmodformat.cpp mol2format.cpp mopacformat.cpp /
-	mpqcformat.cpp nwchemformat.cpp pdbformat.cpp povrayformat.cpp /
-	qchemformat.cpp reportformat.cpp rxnformat.cpp shelxformat.cpp /
-	smilesformat.cpp tinkerformat.cpp turbomoleformat.cpp /
-	unichemformat.cpp viewmolformat.cpp xedformat.cpp xyzformat.cpp /
-	zindoformat.cpp
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -1,10 +1,10 @@
 /**********************************************************************
-Copyright (C) 2003 Geoffrey R. Hutchison
-
+Copyright (C) 2003-2004 Geoffrey R. Hutchison
+ 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -14,6 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "babelconfig.h"
 #include "data.h"
+#include "obconversion.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -27,122 +28,138 @@ using namespace OpenBabel;
 
 int main(int argc,char *argv[])
 {
-  io_type inFile1 = UNDEFINED, inFile2 = UNDEFINED;
-  OBFileFormat fileFormat;
+    OBConversion conv;
+    OBFormat* pFormat1;
+    OBFormat* pFormat2;
 
-  if (argc != 3) {
-    cout << "Usage: roundtest <file1> <file2>" << endl;
-    return(-1);
-  }
-
-  if (extab.CanReadExtension(argv[1]))
-    inFile1 = extab.FilenameToType(argv[1]);
-  else
+    if (argc != 3)
     {
-      cerr << argv[0] << ": Cannot read file #1 format!" << endl;
-      return(-1);
-    }
-  if (extab.CanReadExtension(argv[2]))
-    inFile2 = extab.FilenameToType(argv[2]);
-  else
-    {
-      cerr << argv[0] << ": Cannot read file #2 format!" << endl;
-      return(-1);
+        cout << "Usage: roundtest <file1> <file2>" << endl;
+        return(-1);
     }
 
-  // Finally, we can do some work!
-  OBMol mol(inFile1, UNDEFINED);
-  OBMol mol2(inFile2, UNDEFINED);
-  ifstream inFileStream1(argv[1]);
-  ifstream inFileStream2(argv[2]);
-  OBAtom *atom1, *atom2;
-
-  if (!inFileStream1)
+    pFormat1 = conv.FormatFromExt(argv[1]);
+    if ( pFormat1 == NULL )
     {
-      cerr << argv[0] << ": Cannot read input file #1!" << endl;
-      return(-1);
+        cerr << argv[0] << ": Cannot read file #1 format!" << endl;
+        return(-1);
     }
-  else if (!inFileStream2)
+    pFormat2 = conv.FormatFromExt(argv[2]);
+    if ( pFormat2 == NULL )
     {
-      cerr << argv[0] << ": Cannot read input file #2!" << endl;
-      return(-1);
+        cerr << argv[0] << ": Cannot read file #2 format!" << endl;
+        return(-1);
     }
 
-  fileFormat.ReadMolecule(inFileStream1, mol, argv[1]);
-  fileFormat.ReadMolecule(inFileStream2, mol2, argv[2]);
+    // Finally, we can do some work!
+    OBMol mol;
+    OBMol mol2;
+    ifstream inFileStream1(argv[1]);
+    ifstream inFileStream2(argv[2]);
 
-  if (mol.NumAtoms() == 0)
+    if (!inFileStream1)
     {
-      cout << " ** ERROR ** Molecule #1 has no atoms!" << endl;
-      return(-1);
+        cerr << argv[0] << ": Cannot read input file #1!" << endl;
+        return(-1);
     }
-  
-  if (mol2.NumAtoms() == 0)
+    else if (!inFileStream2)
     {
-      cout << " ** ERROR ** Molecule #2 has no atoms!" << endl;
-      return(-1);
-    }
-
-  if (inFile1 == BOX)
-    {
-      if (mol.NumAtoms() != 8)
-	{
-	  cout << " *** ERROR *** BOX file #1 without 8 atoms!" << endl;
-	  return(-1);
-	}
-      return(0);
+        cerr << argv[0] << ": Cannot read input file #2!" << endl;
+        return(-1);
     }
 
-  if (inFile2 == BOX)
+    OBAtom *atom1, *atom2;
+    OBConversion conv1(&inFileStream1, &cout), conv2(&inFileStream2, &cout);
+
+    if (! conv1.SetInAndOutFormats(pFormat1, pFormat2))
     {
-      if (mol2.NumAtoms() != 8)
-	{
-	  cout << " *** ERROR *** BOX file #2 without 8 atoms!" << endl;
-	  return(-1);
-	}
-      return(0);
+        ThrowError("File format #1 isn't loaded");
+        return (-1);
+    }
+    if (! conv2.SetInAndOutFormats(pFormat2, pFormat1))
+    {
+      ThrowError("File format #2 isn't loaded");
+      return (-1);
     }
 
-  if (inFile1 == SMI || inFile2 == SMI)
-    {
-      if (mol.NumHvyAtoms() != mol2.NumHvyAtoms())
-	{
-	  cout << " ** ERROR ** SMILES Number of heavy atoms differ: " 
-	       << mol.NumHvyAtoms() << " and " << mol2.NumHvyAtoms() << endl;
-	  return(-1);
-	}
-      return(0);
-    }
-  else
-  {  if (mol.NumAtoms() != mol2.NumAtoms())
+    conv1.Read(&mol);
+    conv2.Read(&mol2);
+
+    if (mol.NumAtoms() == 0)
       {
-	cout << " ** ERROR ** Number of atoms differ: " << mol.NumAtoms()
-	     << " and " << mol2.NumAtoms() << endl;
-	return(-1);
-      }
-  }
-
-  for(int i = 1;i <= mol.NumAtoms(); i++)
-  {
-    atom1 = mol.GetAtom(i);
-    atom2 = mol2.GetAtom(i);
-
-    if (atom1->GetAtomicNum() != atom2->GetAtomicNum())
-      {
-	cout << " ** ERROR ** Elements for atom " << i << " differ: " <<
-	     atom1->GetAtomicNum() << " and " << atom2->GetAtomicNum() << endl;
+	cout << " ** ERROR ** Molecule #1 has no atoms!" << endl;
 	return(-1);
       }
 
-    if (inFile1 != SMI && inFile2 != SMI)
-      if ((atom1->GetX()-atom2->GetX()>1e-1) || 
-	  (atom1->GetY()-atom2->GetY()>1e-1) ||
-	  (atom1->GetZ()-atom2->GetZ()>1e-1))
-	{
-	  cout << " ** ERROR ** Coordinates for atom " << i << " differ." << endl;
-	  return(-1);
-	}
-  }
-  
-  return(0);
+    if (mol2.NumAtoms() == 0)
+      {
+	cout << " ** ERROR ** Molecule #2 has no atoms!" << endl;
+	return(-1);
+      }
+
+    if (strncasecmp(argv[1], "BOX", 3) == 0)
+      {
+	if (mol.NumAtoms() != 8)
+	  {
+	    cout << " *** ERROR *** BOX file #1 without 8 atoms!" << endl;
+	    return(-1);
+	  }
+	return(0);
+      }
+
+    if (strncasecmp(argv[2],"BOX",3) == 0)
+      {
+	if (mol2.NumAtoms() != 8)
+	  {
+	    cout << " *** ERROR *** BOX file #2 without 8 atoms!" << endl;
+	    return(-1);
+	  }
+	return(0);
+      }
+
+    if (strncasecmp(argv[1],"SMI",3) == 0 
+	|| strncasecmp(argv[2],"SMI",3) == 0)
+      {
+	if (mol.NumHvyAtoms() != mol2.NumHvyAtoms())
+	  {
+	    cout << " ** ERROR ** SMILES Number of heavy atoms differ: "
+		 << mol.NumHvyAtoms() << " and " << mol2.NumHvyAtoms() << endl;
+	    return(-1);
+	  }
+	return(0);
+      }
+    else
+      {
+	if (mol.NumAtoms() != mol2.NumAtoms())
+	  {
+	    cout << " ** ERROR ** Number of atoms differ: " << mol.NumAtoms()
+		 << " and " << mol2.NumAtoms() << endl;
+	    return(-1);
+	  }
+      }
+    
+    for(int i = 1;i <= mol.NumAtoms(); i++)
+      {
+	atom1 = mol.GetAtom(i);
+	atom2 = mol2.GetAtom(i);
+	
+	if (atom1->GetAtomicNum() != atom2->GetAtomicNum())
+	  {
+	    cout << " ** ERROR ** Elements for atom " << i << " differ: " <<
+	      atom1->GetAtomicNum() << " and " << atom2->GetAtomicNum() << endl;
+	    return(-1);
+	  }
+	
+	if (strncasecmp(argv[1],"SMI",3) !=0
+	    && strncasecmp(argv[2],"SMI",3) != 0)
+	  if ((atom1->GetX()-atom2->GetX()>1e-1) ||
+	      (atom1->GetY()-atom2->GetY()>1e-1) ||
+	      (atom1->GetZ()-atom2->GetZ()>1e-1))
+	    {
+	      cout << " ** ERROR ** Coordinates for atom " << i << " differ." << endl;
+	      return(-1);
+	    }
+      }
+    
+    return(0);
 }

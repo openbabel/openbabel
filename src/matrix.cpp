@@ -1,16 +1,16 @@
 /**********************************************************************
 matrix.cpp - Operation on matrix.
-
+ 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
-
+ 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
-
+ 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,7 +23,8 @@ GNU General Public License for more details.
 
 using namespace std;
 
-namespace OpenBabel {
+namespace OpenBabel
+{
 
 void print_matrix(vector<vector<double> > &m)
 {
@@ -125,7 +126,7 @@ bool invert_matrix(vector<vector<double> > &mat, double &det)
 
     vector<int> pvt_ind;
     vector<vector<int> > index;
-    
+
     int cols = mat[0].size();
     int rows = mat.size();
 
@@ -144,7 +145,7 @@ bool invert_matrix(vector<vector<double> > &mat, double &det)
     }
 
     det = 1.0;
-    
+
     for (i = 0; i < cols; i++)
         pvt_ind[i] = rows+1;
 
@@ -183,7 +184,7 @@ bool invert_matrix(vector<vector<double> > &mat, double &det)
         det *= pvt;
 
         mat[col][col] = 1.0;
-        
+
         for (m = 0; m < cols; m++)
             mat[col][m] /= pvt;
 
@@ -193,7 +194,7 @@ bool invert_matrix(vector<vector<double> > &mat, double &det)
                 tempo = mat[n][col];
                 mat[n][col] = 0.0;
                 for (m = 0; m < cols; m++)
-                mat[n][m] -= mat[col][m] * tempo;
+                    mat[n][m] -= mat[col][m] * tempo;
             }
     }
 
@@ -239,7 +240,7 @@ bool invert_matrix_f(double *mat, double &det, int rows, int cols)
     }
 
     det = 1.0;
-    
+
     for (i = 0; i < cols; i++)
         pvt_ind[i] = rows+1;
 
@@ -286,7 +287,7 @@ bool invert_matrix_f(double *mat, double &det, int rows, int cols)
         det *= pvt;
 
         mat[idx1+col] = 1.0;
-        
+
         for (m = 0; m < cols; m++)
             mat[idx1+m] /= pvt;
 
@@ -349,7 +350,7 @@ bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
     }
 
     det = 1.0;
-    
+
     for (i = 0; i < cols; i++)
         pvt_ind[i] = rows+1;
 
@@ -388,7 +389,7 @@ bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
         det *= pvt;
 
         mat[col][col] = 1.0;
-        
+
         for (m = 0; m < cols; m++)
             mat[col][m] /= pvt;
 
@@ -398,7 +399,7 @@ bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
                 tempo = mat[n][col];
                 mat[n][col] = 0.0;
                 for (m = 0; m < cols; m++)
-                mat[n][m] -= mat[col][m] * tempo;
+                    mat[n][m] -= mat[col][m] * tempo;
             }
     }
 

@@ -1,16 +1,16 @@
 /**********************************************************************
 generic.h - Handle generic data class.
-
+ 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
-
+ 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
-
+ 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,81 +26,124 @@ GNU General Public License for more details.
 //obData0 through obData9 are data slots that are not used in OpenBabel, and
 //are meant for use in derivative programs.  Macro definitions can be used
 //to define what each data slot is used for.
- 
-namespace OpenBabel {
+
+namespace OpenBabel
+{
 
 class OBAtom;
-class OBBond; 
+class OBBond;
 class OBRing;
 
 enum obDataType {obUndefinedData,obPairData,obEnergyData,
-		 obCommentData,obCompressData,obExternalBondData,obRotamerList,
-		 obVirtualBondData,obRingData,obTorsionData,obAngleData, 
-		 obSerialNums, obUnitCell, obSpinData, obChargeData,
-		 obAuditList, obData0,obData1,obData2,obData3,
-		 obData4,obData5,obData6,obData7, obData8,obData9};
+                 obCommentData,obCompressData,obExternalBondData,obRotamerList,
+                 obVirtualBondData,obRingData,obTorsionData,obAngleData,
+                 obSerialNums, obUnitCell, obSpinData, obChargeData,
+                 obAuditList, obData0,obData1,obData2,obData3,
+                 obData4,obData5,obData6,obData7, obData8,obData9};
 
 //! Base class for generic data - use obData# slots for custom data types
 class OBGenericData
 {
 protected:
-	std::string     _attr; //!< attribute tag
-	obDataType 	_type;
+    std::string     _attr; //!< attribute tag
+    obDataType 	_type;
 public:
-	OBGenericData();
-	OBGenericData(const OBGenericData&);
-	virtual ~OBGenericData() {}
-	OBGenericData& operator=(const OBGenericData &src);
-	
-	void                      SetAttribute(std::string &v)  {_attr = v;}
-	virtual const std::string &GetAttribute()  const {return(_attr);}
-	obDataType                GetDataType()    const {return(_type);}
+    OBGenericData();
+    OBGenericData(const OBGenericData&);
+    virtual ~OBGenericData()
+    {}
+    OBGenericData& operator=(const OBGenericData &src);
+
+    void                      SetAttribute(std::string &v)
+    {
+        _attr = v;
+    }
+    virtual const std::string &GetAttribute()  const
+    {
+        return(_attr);
+    }
+    obDataType                GetDataType()    const
+    {
+        return(_type);
+    }
 };
 
 //! Used to store a comment string (can be multiple lines long)
 class OBCommentData : public OBGenericData
 {
 protected:
-	std::string _data;
+    std::string _data;
 public:
-	OBCommentData();
-	OBCommentData(const OBCommentData&);
-	OBCommentData& operator=(const OBCommentData &src);
+    OBCommentData();
+    OBCommentData(const OBCommentData&);
+    OBCommentData& operator=(const OBCommentData &src);
 
-	void          SetData(std::string &data)        {_data = data; }
-	void          SetData(const char *d)       {_data = d;    }
-	const std::string &GetData()              const {return(_data);}
+    void          SetData(std::string &data)
+    {
+        _data = data;
+    }
+    void          SetData(const char *d)
+    {
+        _data = d;
+    }
+    const std::string &GetData()              const
+    {
+        return(_data);
+    }
 };
 
 //! \brief Used to store information on an external bond
 class OBExternalBond
 {
-  int     _idx;
-  OBAtom *_atom;
-  OBBond *_bond;
+    int     _idx;
+    OBAtom *_atom;
+    OBBond *_bond;
 public:
-  OBExternalBond() {}
-  OBExternalBond(OBAtom *,OBBond *,int);
-  OBExternalBond(const OBExternalBond &);
-  ~OBExternalBond(){}
+    OBExternalBond()
+    {}
+    OBExternalBond(OBAtom *,OBBond *,int);
+    OBExternalBond(const OBExternalBond &);
+    ~OBExternalBond()
+    {}
 
-  int     GetIdx()  const {return(_idx);  }
-  OBAtom *GetAtom() const {return(_atom); }
-  OBBond *GetBond() const {return(_bond); }
-  void SetIdx(int idx) {_idx = idx;}
-  void SetAtom(OBAtom *atom) {_atom = atom;}
-  void SetBond(OBBond *bond) {_bond = bond;}
+    int     GetIdx()  const
+    {
+        return(_idx);
+    }
+    OBAtom *GetAtom() const
+    {
+        return(_atom);
+    }
+    OBBond *GetBond() const
+    {
+        return(_bond);
+    }
+    void SetIdx(int idx)
+    {
+        _idx = idx;
+    }
+    void SetAtom(OBAtom *atom)
+    {
+        _atom = atom;
+    }
+    void SetBond(OBBond *bond)
+    {
+        _bond = bond;
+    }
 };
 
 //! \brief Used to store information on external bonds (e.g. in SMILES fragments)
 class OBExternalBondData : public OBGenericData
 {
 protected:
-  std::vector<OBExternalBond> _vexbnd;
+    std::vector<OBExternalBond> _vexbnd;
 public:
-  OBExternalBondData();
-  void SetData(OBAtom*,OBBond*,int);
-	std::vector<OBExternalBond> *GetData() {return(&_vexbnd);}
+    OBExternalBondData();
+    void SetData(OBAtom*,OBBond*,int);
+    std::vector<OBExternalBond> *GetData()
+    {
+        return(&_vexbnd);
+    }
 };
 
 /*NF
@@ -125,87 +168,149 @@ public:
 //! Used to store attribute/value relationships
 class OBPairData : public OBGenericData
 {
- protected:
-  std::string _value;
- public:
-  OBPairData();
-  void    SetValue(const char *v) {_value = v;}
-  void    SetValue(std::string &v)     {_value = v;}
-  std::string &GetValue()              {return(_value);}
+protected:
+    std::string _value;
+public:
+    OBPairData();
+    void    SetValue(const char *v)
+    {
+        _value = v;
+    }
+    void    SetValue(std::string &v)
+    {
+        _value = v;
+    }
+    std::string &GetValue()
+    {
+        return(_value);
+    }
 };
 
 //! \brief Used to temporarily store bonds that reference
-//! an atom that has not yet been added to a molecule 
+//! an atom that has not yet been added to a molecule
 class OBVirtualBond : public OBGenericData
 {
 protected:
-	int _bgn;
-	int _end;
-	int _ord;
-	int _stereo;
+    int _bgn;
+    int _end;
+    int _ord;
+    int _stereo;
 public:
-	OBVirtualBond();           
-	OBVirtualBond(int,int,int,int stereo=0);
-	int GetBgn()                           {return(_bgn);}
-	int GetEnd()                           {return(_end);}
-	int GetOrder()                         {return(_ord);}
-	int GetStereo()                        {return(_stereo);}
+    OBVirtualBond();
+    OBVirtualBond(int,int,int,int stereo=0);
+    int GetBgn()
+    {
+        return(_bgn);
+    }
+    int GetEnd()
+    {
+        return(_end);
+    }
+    int GetOrder()
+    {
+        return(_ord);
+    }
+    int GetStereo()
+    {
+        return(_stereo);
+    }
 };
 
 //! Used to store the SSSR set (filled in by OBMol::GetSSSR())
 class OBRingData : public OBGenericData
 {
 protected:
-	std::vector<OBRing*> _vr;
+    std::vector<OBRing*> _vr;
 public:
-	OBRingData();
-	OBRingData(const OBRingData &);
-	~OBRingData();
+    OBRingData();
+    OBRingData(const OBRingData &);
+    ~OBRingData();
 
-	OBRingData &operator=(const OBRingData &);
+    OBRingData &operator=(const OBRingData &);
 
-	void SetData(std::vector<OBRing*> &vr) {_vr = vr;}
-	void PushBack(OBRing *r)          {_vr.push_back(r);}
-	std::vector<OBRing*> &GetData()        {return(_vr);}
+    void SetData(std::vector<OBRing*> &vr)
+    {
+        _vr = vr;
+    }
+    void PushBack(OBRing *r)
+    {
+        _vr.push_back(r);
+    }
+    std::vector<OBRing*> &GetData()
+    {
+        return(_vr);
+    }
 };
 
 //! \brief Used for storing information about periodic boundary conditions
-//!   with conversion to/from 3 translation vectors and 
+//!   with conversion to/from 3 translation vectors and
 //!  (a, b, c, alpha, beta, gamma)
 class OBUnitCell: public OBGenericData
 {
- protected:
-      double _a, _b, _c, _alpha, _beta, _gamma;
-      std::string _spaceGroup;
- public:
-      OBUnitCell();
-      OBUnitCell(const OBUnitCell &);
-      ~OBUnitCell() {}
+protected:
+    double _a, _b, _c, _alpha, _beta, _gamma;
+    std::string _spaceGroup;
+public:
+    OBUnitCell();
+    OBUnitCell(const OBUnitCell &);
+    ~OBUnitCell()
+    {}
 
-      OBUnitCell &operator=(const OBUnitCell &);
+    OBUnitCell &operator=(const OBUnitCell &);
 
-      void SetData(const double a, const double b, const double c, 
-		   const double alpha, const double beta, const double gamma)
-	{ _a = a; _b = b; _c = c; _alpha = alpha; _beta = beta; _gamma = gamma;}
-      void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
-      void SetSpaceGroup(const std::string sg) 	{_spaceGroup = sg;}
+    void SetData(const double a, const double b, const double c,
+                 const double alpha, const double beta, const double gamma)
+    {
+        _a = a;
+        _b = b;
+        _c = c;
+        _alpha = alpha;
+        _beta = beta;
+        _gamma = gamma;
+    }
+    void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
+    void SetSpaceGroup(const std::string sg)
+    {
+        _spaceGroup = sg;
+    }
 
-      double GetA()				{return(_a);}
-      double GetB()				{return(_b);}
-      double GetC()				{return(_c);}
-      double GetAlpha()				{return(_alpha);}
-      double GetBeta()				{return(_beta);}
-      double GetGamma()				{return(_gamma);}
-      //! Return v1, v2, v3 cell vectors
-      std::vector<vector3> GetCellVectors();
-      //! Return v1, v2, v3 cell vectors as a 3x3 matrix
-      matrix3x3	GetCellMatrix();
-      //! Fill in the elements of the orthogonalization matrix
-      matrix3x3 GetOrthoMatrix();
-      const std::string GetSpaceGroup() 	{return(_spaceGroup);}
+    double GetA()
+    {
+        return(_a);
+    }
+    double GetB()
+    {
+        return(_b);
+    }
+    double GetC()
+    {
+        return(_c);
+    }
+    double GetAlpha()
+    {
+        return(_alpha);
+    }
+    double GetBeta()
+    {
+        return(_beta);
+    }
+    double GetGamma()
+    {
+        return(_gamma);
+    }
+    //! Return v1, v2, v3 cell vectors
+    std::vector<vector3> GetCellVectors();
+    //! Return v1, v2, v3 cell vectors as a 3x3 matrix
+    matrix3x3	GetCellMatrix();
+    //! Fill in the elements of the orthogonalization matrix
+    matrix3x3 GetOrthoMatrix();
+    const std::string GetSpaceGroup()
+    {
+        return(_spaceGroup);
+    }
 };
 
-//! \brief Used to hold the torsion data for a single rotatable bond 
+//! \brief Used to hold the torsion data for a single rotatable bond
 //! and all four atoms around it
 class OBTorsion
 {
@@ -213,43 +318,61 @@ class OBTorsion
     friend class OBTorsionData;
 
 protected:
-	std::pair<OBAtom*,OBAtom*> _bc;
-	//! double is angle in rads
-	std::vector<triple<OBAtom*,OBAtom*,double> > _ads;
+    std::pair<OBAtom*,OBAtom*> _bc;
+    //! double is angle in rads
+    std::vector<triple<OBAtom*,OBAtom*,double> > _ads;
 
-	OBTorsion() { _bc.first=0; _bc.second=0; };  //protected for use only by friend classes
-	OBTorsion(OBAtom *, OBAtom *, OBAtom *, OBAtom *);
+    OBTorsion()
+    {
+        _bc.first=0;
+        _bc.second=0;
+    }
+    ;  //protected for use only by friend classes
+    OBTorsion(OBAtom *, OBAtom *, OBAtom *, OBAtom *);
 
-	std::vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > GetTorsions();
+    std::vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > GetTorsions();
 
 public:
-  OBTorsion(const OBTorsion &);
-  ~OBTorsion() {}
+    OBTorsion(const OBTorsion &);
+    ~OBTorsion()
+    {}
 
-  OBTorsion& operator=(const OBTorsion &);
+    OBTorsion& operator=(const OBTorsion &);
 
-  void Clear();
-  bool Empty() { return(_bc.first == 0 && _bc.second == 0); }
+    void Clear();
+    bool Empty()
+    {
+        return(_bc.first == 0 && _bc.second == 0);
+    }
 
-  bool AddTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d);
-  bool AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &atoms);
+    bool AddTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d);
+    bool AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &atoms);
 
-  bool SetAngle(double radians, unsigned int index = 0);
-  bool SetData(OBBond *bond);
+    bool SetAngle(double radians, unsigned int index = 0);
+    bool SetData(OBBond *bond);
 
-  bool GetAngle(double &radians, unsigned int index =0);
-  unsigned int GetBondIdx();
-  unsigned int GetSize() const {return (unsigned int)_ads.size();}
+    bool GetAngle(double &radians, unsigned int index =0);
+    unsigned int GetBondIdx();
+    unsigned int GetSize() const
+    {
+        return (unsigned int)_ads.size();
+    }
 
-  std::pair<OBAtom*,OBAtom*>                  GetBC()  { return(_bc); }
-  std::vector<triple<OBAtom*,OBAtom*,double> > GetADs() { return(_ads) ;}
+    std::pair<OBAtom*,OBAtom*>                  GetBC()
+    {
+        return(_bc);
+    }
+    std::vector<triple<OBAtom*,OBAtom*,double> > GetADs()
+    {
+        return(_ads) ;
+    }
 
-  bool IsProtonRotor();
+    bool IsProtonRotor();
 };
 
 //! \brief Used to hold torsions as generic data for OBMol.
 //! Filled by OBMol::FindTorsions()
-class OBTorsionData : public OBGenericData 
+class OBTorsionData : public OBGenericData
 {
     friend class OBMol;
 
@@ -264,8 +387,14 @@ public:
 
     void Clear();
 
-    std::vector<OBTorsion> GetData() const {return _torsions;                     }
-    unsigned int      GetSize() const {return (unsigned int)_torsions.size();}
+    std::vector<OBTorsion> GetData() const
+    {
+        return _torsions;
+    }
+    unsigned int      GetSize() const
+    {
+        return (unsigned int)_torsions.size();
+    }
 
     void SetData(OBTorsion &torsion);
 
@@ -273,42 +402,51 @@ public:
 };
 
 //! Used to hold the 3 atoms in an angle and the angle itself
-class OBAngle 
+class OBAngle
 {
     friend class OBMol;
     friend class OBAngleData;
 
 protected:
 
-	//member data
+    //member data
 
-	OBAtom                *_vertex;
-	std::pair<OBAtom*,OBAtom*>  _termini;
-	double                  _radians;
+    OBAtom                *_vertex;
+    std::pair<OBAtom*,OBAtom*>  _termini;
+    double                  _radians;
 
-	//protected member functions
+    //protected member functions
 
     OBAngle();	//protect constructor for use only by friend classes
-	OBAngle(OBAtom *vertex,OBAtom *a,OBAtom *b);
+    OBAngle(OBAtom *vertex,OBAtom *a,OBAtom *b);
 
-	triple<OBAtom*,OBAtom*,OBAtom*> GetAtoms();
-	void SortByIndex();
+    triple<OBAtom*,OBAtom*,OBAtom*> GetAtoms();
+    void SortByIndex();
 
 public:
 
-	OBAngle(const OBAngle &);
-	~OBAngle() { _vertex = NULL; }
+    OBAngle(const OBAngle &);
+    ~OBAngle()
+    {
+        _vertex = NULL;
+    }
 
-	OBAngle &operator = (const OBAngle &);
-	bool     operator ==(const OBAngle &);
+    OBAngle &operator = (const OBAngle &);
+    bool     operator ==(const OBAngle &);
 
-	void  Clear();
+    void  Clear();
 
-	double GetAngle() const { return(_radians); }
+    double GetAngle() const
+    {
+        return(_radians);
+    }
 
-	void  SetAngle(double radians) { _radians = radians; }
-	void  SetAtoms(OBAtom *vertex,OBAtom *a,OBAtom *b);
-	void  SetAtoms(triple<OBAtom*,OBAtom*,OBAtom*> &atoms);
+    void  SetAngle(double radians)
+    {
+        _radians = radians;
+    }
+    void  SetAtoms(OBAtom *vertex,OBAtom *a,OBAtom *b);
+    void  SetAtoms(triple<OBAtom*,OBAtom*,OBAtom*> &atoms);
 
 };
 
@@ -323,7 +461,10 @@ protected:
 
     OBAngleData();
     OBAngleData(const OBAngleData &);
-    std::vector<OBAngle> GetData() const { return(_angles); }
+    std::vector<OBAngle> GetData() const
+    {
+        return(_angles);
+    }
 
 public:
     OBAngleData &operator =(const OBAngleData &);
@@ -331,7 +472,10 @@ public:
     void Clear();
     unsigned int FillAngleArray(int **angles, unsigned int &size);
     void         SetData(OBAngle &);
-    unsigned int GetSize() const { return (unsigned int)_angles.size(); }
+    unsigned int GetSize() const
+    {
+        return (unsigned int)_angles.size();
+    }
 };
 
 
