@@ -16,6 +16,10 @@
 
 #pragma warning (disable : 4786)
 
+#ifndef __FUNCTION__
+#define __FUNCTION__ __FILE__
+#endif
+
 /* Export of functions and global variables from DLLs
 In the header files for the OB core, mol.h etc, exported classes and variables 
 have an OBAPI declaration specifiers.
@@ -52,6 +56,13 @@ In non-Windows systems OBAPI and OBCONV need to be defined as empty.
 	#define OBCONV //as nothing in non-Windows system
 #endif
 
+#if defined(OBDLL_EXPORTS) //OBDLL being built
+#  define EXTERN __declspec(dllexport) extern
+#elif defined(USING_OBDLL) //program using OBDLL.dll being built
+#  define EXTERN __declspec(dllimport) extern
+#else //Everything else (behaviour as original)
+#  define EXTERN extern
+#endif
 
 /*
 #ifdef _DEBUG
@@ -64,5 +75,14 @@ static char THIS_FILE[]=__FILE__;
 #endif
 */
 
+/*
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+*/
 
 #endif //OB_BCONFIG_H
