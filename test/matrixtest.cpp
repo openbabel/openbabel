@@ -116,11 +116,23 @@ bool testEigenvectors()
     return false;
   }
   
-  if (( fabs(shouldBeDiagonal.Get(0,0) - eigenvals[0]) > 1e-6 ) ||
-      ( fabs(shouldBeDiagonal.Get(1,1) - eigenvals[1]) > 1e-6 ) || 
-      ( fabs(shouldBeDiagonal.Get(2,2) - eigenvals[2]) > 1e-6 )) {
-    cout << "Matrix eigenvector test failed, wrong eigenvalues computed." << endl;
-    return false;
+  if ( fabs(shouldBeDiagonal.Get(0,0) - eigenvals[0]) > 1e-6 )
+    {
+      cout << "Matrix eigenvector test(0) failed, wrong eigenvalues computed." << endl;
+      cout << "Expected: " << eigenvals[0] << " and got instead: " << fabs(shouldBeDiagonal.Get(0,0)) << endl;
+      return false;
+  }
+  if ( fabs(shouldBeDiagonal.Get(1,1) - eigenvals[1]) > 1e-6 )
+    {
+      cout << "Matrix eigenvector test(1) failed, wrong eigenvalues computed." << endl;
+      cout << "Expected: " << eigenvals[1] << " and got instead: " << fabs(shouldBeDiagonal.Get(1,1)) << endl;
+      return false;
+  }
+  if ( fabs(shouldBeDiagonal.Get(2,2) - eigenvals[2]) > 1e-6 )
+    {
+      cout << "Matrix eigenvector test(2) failed, wrong eigenvalues computed." << endl;
+      cout << "Expected: " << eigenvals[2] << " and got instead: " << fabs(shouldBeDiagonal.Get(2,2)) << endl;
+      return false;
   }
 
   for(unsigned int i=0; i<3; i++ ) {
