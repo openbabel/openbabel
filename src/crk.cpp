@@ -187,9 +187,9 @@ static void WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges)
 		ofs << "   </Atom>" << endl;
 	}
 	
-	for(int n=0;n<mol.NumBonds();n++)
+	for(int m=0;m<mol.NumBonds();m++)
 	{
-		OBBond *bnd=mol.GetBond(n);
+		OBBond *bnd=mol.GetBond(m);
 		
 		int from=bnd->GetBeginAtom()->GetIdx(),to=bnd->GetEndAtom()->GetIdx();
 		double order=bnd->GetBO();
