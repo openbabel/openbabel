@@ -1,3 +1,23 @@
+2002-07-01  Richard Gillian <reg8@users.sourceforge.net>
+
+	* src/main.cpp: Add -hpH to use the "adjust pH" setting for adding
+	hydrogens.
+
+	* src/mol.cpp: When adding hydrogens, if the parent atom is part
+	of a residue, copy this information to the new atoms.
+
+	* src/mol2.cpp: Write residue types and original atom names for
+	the atoms if they exist.
+
+2002-07-01  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* Doxyfile: New file, configuration for Doxygen API documentation.
+
+	* configure: Updated with autoconf 2.52d.
+
+	* Makefile.in: Added automatic API documentation generation. Use
+	"make apidoc".
+
 2002-06-29  Vincent Favre-Nicolin <vincefn@users.sourceforge.net>
 
 	* src/mol.h: Give sample documentation from the primer for

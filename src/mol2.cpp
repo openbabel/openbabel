@@ -184,10 +184,17 @@ bool WriteMol2(ostream &ofs,OBMol &mol,const char *dimension)
   ttab.SetFromType("INT");ttab.SetToType("SYB");
 
   OBAtom *atom;
+  OBResidue *res;
+  
   vector<OBNodeBase*>::iterator i;
   vector<int> labelcount;labelcount.resize(109); //Number of elements
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
+
+      //
+      //  Use sequentially numbered atom names if no residues
+      //
+
       sprintf(label,"%s%d",
 	      etab.GetSymbol(atom->GetAtomicNum()),
 	      ++labelcount[atom->GetAtomicNum()]);
@@ -196,9 +203,28 @@ bool WriteMol2(ostream &ofs,OBMol &mol,const char *dimension)
 
       ttab.Translate(str1,str);
 
-      strcpy(rlabel,"<1>");
-      strcpy(rnum,"1");
+      //
+      //  Use original atom names if there are residues
+      //
+      
+      if (atom->HasResidue())
+      {
+	  res = atom->GetResidue();
 
+	  // Use original atom names
+
+	  sprintf(label,"%s",(char*)res->GetAtomID(atom).c_str());
+//	        sprintf(label,"%s",(char*)atom->GetType()); // internal type
+	  strcpy(rlabel,(char*)res->GetName().c_str());
+	  //      strcpy(rnum,(char*)res->GetAtomID(atom).c_str());
+	  sprintf(rnum,"%d",res->GetNum());
+      }
+      else
+      {
+	  strcpy(rlabel,"UNK");
+	  strcpy(rnum,"1");
+      }
+      
       sprintf(buffer,"%7d%1s%-6s%12.4f%10.4f%10.4f%1s%-5s%4s%1s %-8s%10.4f",
 	    atom->GetIdx(),"",label, 
 	      atom->GetX(),atom->GetY(),atom->GetZ(),

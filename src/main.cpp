@@ -37,6 +37,7 @@ int main(int argc,char *argv[])
   io_type inFileType = UNDEFINED, outFileType = UNDEFINED;
   bool gotInType = false, gotOutType = false, removeHydrogens = false;
   bool addHydrogens = false;
+  bool usePH = false;
   int arg, inFileArg, outFileArg;
   char *ext;
   char *formatOptions;
@@ -51,7 +52,7 @@ int main(int argc,char *argv[])
       if (argv[arg])
 	{
 	  if (argv[arg][0] == '-')
-	    {
+	    {	      
 	      switch (argv[arg][1])
 		{
 		case 'v':
@@ -63,8 +64,10 @@ int main(int argc,char *argv[])
 		case 'd':
 		  removeHydrogens = true;
 		  break;
+		    
 		case 'h':
 		  addHydrogens = true;
+		    if (strncmp(argv[arg],"hpH",3) == 0) { usePH = true; }
 		  break;
 
 		case 'i':
@@ -165,8 +168,8 @@ int main(int argc,char *argv[])
   if (removeHydrogens)
     mol.DeleteHydrogens();
   if (addHydrogens)
-    mol.AddHydrogens(false, false);
-
+    mol.AddHydrogens(false, usePH);
+ 
   // write
   if (outFileArg > 0)
     {
@@ -205,6 +208,7 @@ unsigned int i;
   cout << "Additional options : " << endl;
   cout << " -d Delete Hydrogens " << endl;
   cout << " -h Add Hydrogens " << endl;
+  cout << " -hpH Add Hydrogens appropriate for pH (use transforms in phmodel.txt) " << endl; 
   cout << " -x[flags] XML.CML options (e.g. -x1ac)  " << endl;
   cout << "   1 output CML V1.0 (default)" << endl;
   cout << "   2 output CML V2.0 (Schema)" << endl;

@@ -1371,7 +1371,26 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
               else memset((char*)&_c[NumAtoms()*3],'\0',sizeof(float)*3);
             }
           h = NewAtom(); h->SetType("H"); h->SetAtomicNum(1);
-          AddBond(atom->GetIdx(),h->GetIdx(),1);
+
+          // copy parent atom residue to added hydrogen     REG 6/30/02
+
+          if (atom->HasResidue()) {
+
+              string aname;
+
+              aname = "H";
+
+              // Add the new H atom to the appropriate residue list
+              atom->GetResidue()->AddAtom(h);
+
+              // Give the new atom a pointer back to the residue
+              h->SetResidue(atom->GetResidue());
+
+              atom->GetResidue()->SetAtomID(h,aname);
+
+          }
+
+	  AddBond(atom->GetIdx(),h->GetIdx(),1);
           h->SetCoordPtr(&_c);
         }
     }
