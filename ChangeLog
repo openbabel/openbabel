@@ -1,3 +1,23 @@
+2003-11-12  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* configure, */Makefile.in: Regenerated using automake-1.7.8,
+	autoconf-2.58, libtool-1.5. (Should solve problems with CVS
+	versions needing to call autoconf/automake due to timestamps.)
+
+	* src/parsmi.cpp: Back out Chris Morley's SMILES extensions for
+	radicial centers--current causes many SMILES/SMARTS errors.
+
+	* test/main.cpp, test/roundtrip.cpp: Add comments on additional
+	tests needed soon. (These are all in the project tracker for
+	Release-2.0 roadmap too.)
+
+	* test/smartstest.cpp: Improve debugging information on
+	errors--give the first atom matching if we have a match, even if
+	it's not the number of matches expected by the results.
+
+	* test/test-set.sh: Only mention running the test if the test
+	directory is there.
+
 2003-11-11  Michael Banck  <mbanck@gmx.net>
 
 	* configure.in (AC_CHECK_HEADERS): Removed checks for some C++ 
