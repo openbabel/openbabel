@@ -8,6 +8,9 @@ What's New from 1.100.1:
   supported (CML1/2 and array/nonArray). Also added *.bat
   file for roundtripping between these formats for both 2- and 3-D data.
   Fixed bugs in test/cmltest/cs2a.mol.cml (PM-R, 2003-08 and 2003-09)
+ -Building and running the test-suite in a build-directory other than the
+  source-directory is now fully supported.
+ -Miscellaneous fixes to make it easier to compile on non-POSIX machines.
 
 New File Formats:
 
