@@ -1,3 +1,10 @@
+2003-12-01  Michael Banck  <mbanck@gmx.net>
+
+	* src/data.cpp (GetExtension): Make sure that the returned long
+	description stays defined by copying it into a static string.
+	Contributed by David Mathog <mathog@mendel.bio.caltech.edu>.
+	* (GetDescription): Likewise.
+
 2003-12-01  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/crk.h, src/crk.cpp: New files for Chemical Resource Kit

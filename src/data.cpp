@@ -747,10 +747,14 @@ const char *OBExtensionTable::GetExtension(unsigned int n)
   else
     {
 #if defined(HAVE_SSTREAM)
-      ostringstream longDesc;
+      static ostringstream longDesc; //static, avoid N reallocates
+      static char mybuf[100]; //static C string to return
+      longDesc.str(std::string()); //clear string each time
       longDesc << _table[n][0] << ends;
-      return(longDesc.str().c_str());
+      (void) strcpy(mybuf,longDesc.str().c_str());
+      return(mybuf);
 #else
+      /* FIXME: the returned string might be undefined */
       ostrstream longDesc;
       longDesc << _table[n][0] << ends;
       return(longDesc.str());
@@ -768,10 +772,14 @@ const char *OBExtensionTable::GetDescription(unsigned int n)
     {
  // Need to null-terminate
 #if defined(HAVE_SSTREAM)
-      ostringstream longDesc;
+      static ostringstream longDesc; //static, avoid N reallocates
+      static char mybuf[100]; //static C string to return
+      longDesc.str(std::string()); //clear string each time
       longDesc << _table[n][2] << ends;
-      return(longDesc.str().c_str());
+      (void) strcpy(mybuf,longDesc.str().c_str());
+      return(mybuf);
 #else
+      /* FIXME: the returned string might be undefined */
       ostrstream longDesc;
       longDesc << _table[n][2] << ends;
       return(longDesc.str());
