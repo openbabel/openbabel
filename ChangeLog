@@ -1,7 +1,10 @@
-2003-03-15  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+2003-03-17  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 	
 	* src/cml.cpp: Fix unused declarations that cause problems with
 	the xlC compiler reported by Markku Laukkanen.
+
+	* src/pdb.cpp (WritePDB): Make sure strings are null-terminated
+	and convert element name to upper-case for the column 77-78 entry.
 
 2003-03-15  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
