@@ -1328,7 +1328,7 @@ bool OBMol::DeleteNonPolarHydrogens()
   if (delatoms.empty()) return(true);
 
 /*
-  IncrementMod();
+  
 
   int idx1,idx2;
   vector<double*>::iterator j;
@@ -1340,6 +1340,8 @@ bool OBMol::DeleteNonPolarHydrogens()
         idx2++;
       }
 */
+
+  IncrementMod();
 
   for (i = delatoms.begin();i != delatoms.end();i++)  DeleteAtom((OBAtom *)*i);
 
