@@ -15,15 +15,21 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include "babelconfig.h"
+
 #ifndef OB_IFSTREAM_H
 #define OB_IFSTREAM_H
 
-#ifdef __sgi
-#include <iostream.h>
-#include <fstream.h>
-#else
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
+
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
 #endif
 
 class obifstream : public std::ifstream

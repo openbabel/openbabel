@@ -12,6 +12,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include "babelconfig.h"
 
 #include "math/matrix3x3.h"
 #include "math/vector3.h"
@@ -19,7 +20,7 @@ GNU General Public License for more details.
 #include "obutil.h"
 #include "obifstream.h"
 
-#ifdef WIN32
+#if HAVE_CONIO_H
 #include <conio.h>
 #endif
 
@@ -53,11 +54,6 @@ void ThrowError(string &str)
 
 void PauseExit()
 {
-#ifdef WIN32
-//	char buf[1];
-//	_cputs("program complete, hit <enter> to continue");
-//	_cgets(buf);
-#endif
 	exit(0);
 }
 

@@ -15,16 +15,23 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include "babelconfig.h"
+
 #ifndef OB_UTIL_H
 #define OB_UTIL_H
 
 #include <string>
 #include <iostream>
 
-#if defined(WIN32)
+#if TIME_WITH_SYS_TIME
+#include <sys/time.h>
 #include <time.h>
 #else
+#if HAVE_SYS_TIME_H
 #include <sys/time.h>
+#else
+#include <time.h>
+#endif
 #endif
 
 namespace OpenBabel {
@@ -32,7 +39,7 @@ namespace OpenBabel {
   // class introduction in obutil.cpp
 class OBStopwatch
 {
-#ifdef WIN32
+#if HAVE_CLOCK_T
   clock_t start, stop;
 #else
   timeval start;
@@ -40,7 +47,7 @@ class OBStopwatch
 #endif
 
  public:
-#ifdef WIN32
+#if HAVE_CLOCK_T
   void  Start() { start= clock();}
   double Lap()   
   { 

@@ -15,6 +15,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include "babelconfig.h"
+
 #ifndef OB_BITVEC_H
 #define OB_BITVEC_H
 
@@ -22,10 +24,10 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 
-#ifdef __sgi 
-#include <iostream.h>
-#else
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
 #endif
 
 #include <algorithm>

@@ -26,37 +26,6 @@ GNU General Public License for more details.
 #include <iostream>
 #include <fstream>
 
-
-#ifdef __BORLANDC__ 
- /* Borland c++ compiler does not have strncasecmp() */
- #include <string.h>
- #include <ctype.h>
- 
- #ifdef DMALLOC
- #include "dmalloc.h"
- #endif
- 
- int 
- strncasecmp(char *s1, char *s2, size_t n)
- {
-         if (n == 0)
-                 return 0;
- 
-         while ((n-- != 0)
-             && (tolower(*(unsigned char *)s1) == tolower(*(unsigned char *)s2)))
-         {
-                 if (n == 0 || *s1 == '\0' || *s2 == '\0')
-                         return 0;
-                 s1++;
-                 s2++;
-         }
- 
-         return tolower(*(unsigned char *) s1) - tolower(*(unsigned char *) s2);
- }
- 
-#endif /* __BORLANDC__ */
-
-
 using namespace std;
 using namespace OpenBabel;
 

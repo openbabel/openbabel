@@ -16,10 +16,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include "babelconfig.h"
+
 #ifndef OB_MOL_H
 #define OB_MOL_H
-
-#include "babelconfig.h"
 
 #include <math.h>
 
@@ -867,7 +867,7 @@ extern  OBChainsParser   chainsparser;
 #endif
 
 
-#ifdef WIN32
+#if !HAVE_RINT
 inline double rint(double x) { return ( (x < 0.0) ? ceil(x-0.5) : floor(x+0.5));}
 #endif
 

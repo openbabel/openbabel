@@ -41,13 +41,16 @@ AC_CHECK_LIB(m, asin, , exit)
 dnl Checks for header files.
 AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
 AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
-AC_CHECK_HEADERS(ctype.h sstream strstream)
+AC_CHECK_HEADERS(ctype.h iostream fstream sstream strstream)
+AC_HEADER_TIME
 
 dnl Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_TYPES(clock_t)
 AC_C_CONST
 AC_C_INLINE
 
 dnl Checks for library functions.
+AC_CHECK_FUNCS([rint])
 AC_REPLACE_FUNCS([snprintf strncasecmp])
 
 AC_OUTPUT(Makefile src/Makefile src/math/Makefile src/windows/Makefile test/Makefile tools/Makefile doc/Makefile openbabel.pc)

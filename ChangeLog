@@ -1,5 +1,30 @@
 2003-11-22  Michael Banck  <mbanck@gmx.net>
 
+	* configure.in (AC_CHECK_HEADERS): Added iostream and fstream. 
+	They seem to be not always present on Irix.
+	(AC_HEADER_TIME): New macro.
+	(AC_CHECK_TYPES): New macro, checking for clock_t.
+	(AC_CHECK_FUNCS): New macro, checking for rint.
+	* configure: Regenerated.
+	* src/babelconfig.h.in: Regenerated.
+	* src/bitvec.h, src/grid.h, src/obifstream.h: Include 
+	babelconfig.h.
+	[__sgi]: Removed, and ...
+	[HAVE_IOSTREAM]: Replaced with this.
+	* src/main.cpp [__BORLANDC__]: Removed strncasecmp function.
+	* src/mol.h [WIN32]: Removed, and ...
+	[!HAVE_RINT]: Replaced with this.
+	* src/obutil.h: Include babelconfig.h.
+	[WIN32] (include time.h): Removed, and ...
+	[TIME_WITH_SYS_TIME, HAVE_SYS_TIME_H]: Replaced with this.
+	[WIN32] (clock_t): Removed, and ...
+	[HAVE_CLOCK_T]: Replaced with this.
+	* src/obutil.cpp: Include babelconfig.h.
+	[WIN32]: Removed, and ...
+	[HAVE_CONIO_H]: Replaced with this.
+	
+2003-11-22  Michael Banck  <mbanck@gmx.net>
+
 	* src/mol.h: Move #include for babelconfig.h to the top.
 
 2003-11-21  Fabien Fontaine  <ffontaine@imim.es>
