@@ -113,7 +113,7 @@ bool WriteGhemical(ostream &ofs,OBMol &mol)
   char bond_char;
   
   // Ghemical header -- here "version 1.0" format
-  ofs << "!Header mm1gp 100" << endl;
+  ofs << "!Header gpr 100" << endl;
 
   // Number of coordinate sets
   ofs << "!Info 1" << endl;
