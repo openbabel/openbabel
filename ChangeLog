@@ -1,4 +1,4 @@
-2003-03-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+2003-03-14  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* test/roundtrip.cpp: Detect cases where files have no atoms.
 
@@ -14,7 +14,10 @@
 
 	* src/parsmi.cpp (ParseComplex): Add isotope information where
 	available.
-
+	(ParseSmiles): Fix segfault in test file caused
+	by white-space character ending SMILES string. Ignore them and
+	continue.
+	
 	* src/generic.cpp (OBUnitCell::ctor): Make sure to set the generic
 	data type and string.
 

@@ -61,7 +61,6 @@ bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
 
   if (!ParseSmiles(mol))
     {
-      mol.EndModify();
       mol.Clear();
       return(false);
     }
@@ -75,7 +74,9 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
 
   for (_ptr=_buffer;*_ptr;_ptr++)
     {
-      if (isdigit(*_ptr) || *_ptr == '%') //ring open/close
+      if (isspace(*_ptr))
+	continue;
+      else if (isdigit(*_ptr) || *_ptr == '%') //ring open/close
 	  {
 		  ParseRingBond(mol);
 		  continue;
