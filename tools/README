@@ -13,12 +13,12 @@ the following lines are printed in the terminal when obgrep is executed without 
 > obgrep
 Usage: ./obgrep [options] "PATTERN" <filename>
 Options:
-   -v    Invert the matching, print non-matching molecules
-   -c    Print the number of matched molecules
-   -f    Full match, print matching-molecules when the number
-         of heavy atoms is equal to the number of PATTERN atoms
-   -n    Only print the name of the molecules
-
+   -v      Invert the matching, print non-matching molecules
+   -c      Print the number of matched molecules
+   -f      Full match, print matching-molecules when the number
+           of heavy atoms is equal to the number of PATTERN atoms
+   -n      Only print the name of the molecules
+   -t NUM  Print a molecule only if the PATTERN occurs NUM times inside the molecule.
 
 Since some examples are better than a long explaination, here are some command lines to perform some queries in a database of SMILES (database.smi)
 
@@ -31,6 +31,7 @@ Since some examples are better than a long explaination, here are some command l
 > obgrep -f "CN" database.smi     # Print methylamine
 > obgrep -f "C[N,O]" database.smi # Print methylamine and methanol
 
+> obgrep -n -t 1 "[O;D1]~C~[O;D1]" database.smi # Print the name of the compounds with a single carboxilic groups
 
 ###############################################################################
 OBFIT
