@@ -19,6 +19,16 @@ namespace OpenBabel {
 
 extern OBAtomTyper atomtyper; //CM
 
+int wedgeorhatch(int flag) {
+  // convert from wedge/hash bond flags to MDL stereochemistry
+  if (flag & OB_WEDGE_BOND)
+    return 1;
+  else if (flag & OB_HASH_BOND )
+    return 6;
+  else
+    return 0;
+}
+
 bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
   int i,natoms,nbonds;
   char buffer[BUFF_SIZE];
@@ -226,7 +236,7 @@ bool WriteSDFile(ostream &ofs,OBMol &mol,const char *dimension) {
                 bond->GetBeginAtomIdx(),
                 bond->GetEndAtomIdx(),
                 (bond->GetBO() == 5) ? 4 : bond->GetBO(),
-                0/*bond->GetFlag()*/,0,0);
+                wedgeorhatch(bond->GetFlags()),0,0);
         ofs << buff << endl;
       }
 
