@@ -1,3 +1,11 @@
+2005-01-31  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/obconversion.h, src/obconversion.h.cpp: rationalized
+	SetInFormat, etc; Added GetInFile; corrected bug in IsOption  
+	* src/main.cpp: added -? option as synonym of -H 
+	Check for empty FileList;  
+	In Windows moved saved options file from current folder to TEMP
+
 2005-01-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/bondtyper.cpp (ParseLine): Make sure loop variable "i" is
