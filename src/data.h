@@ -101,52 +101,24 @@ class OBElement
     double _Rcov,_Rbo,_Rvdw,_mass,_elNeg;
     int _maxbonds;
 public:
-    OBElement()
-    {}
+    OBElement()    {}
     OBElement(int num, const char *sym, double rcov, double rbo,
-              double rvdw, int maxbo, double mass, double elNeg)
+              double rvdw, int maxbo, double mass, double elNeg) :
+      _num(num), _Rcov(rcov), _Rbo(rbo), _Rvdw(rvdw), _maxbonds(maxbo),
+      _mass(mass), _elNeg(elNeg)
     {
-        _num = num;
-        strcpy(_symbol,sym);
-        _Rcov = rcov;
-        _Rbo = rbo;
-        _Rvdw = rvdw;
-        _maxbonds = maxbo;
-        _mass = mass;
-        _elNeg = elNeg;
+      strncpy(_symbol, sym, 3);
     }
-    int GetAtomicNum()
-    {
-        return(_num);
-    }
-    char *GetSymbol()
-    {
-        return(_symbol);
-    }
-    double GetCovalentRad()
-    {
-        return(_Rcov);
-    }
-    double GetBoRad()
-    {
-        return(_Rbo);
-    }
-    double GetVdwRad()
-    {
-        return(_Rvdw);
-    }
-    double GetMass()
-    {
-        return(_mass);
-    }
-    int GetMaxBonds()
-    {
-        return(_maxbonds);
-    }
-    double GetElectroNeg()
-    {
-        return(_elNeg);
-    }
+
+    int GetAtomicNum()         {       return(_num);    }
+    char *GetSymbol()          {       return(_symbol); }
+    double GetCovalentRad()    {       return(_Rcov);   }
+    //! \deprecated Use GetCovalentRad() instead
+    double GetBoRad()          {       return(_Rbo);    }
+    double GetVdwRad()         {       return(_Rvdw);   }
+    double GetMass()           {       return(_mass);   }
+    int GetMaxBonds()          {       return(_maxbonds);}
+    double GetElectroNeg()     {       return(_elNeg);  }
 };
 
 // class introduction in data.cpp
@@ -162,19 +134,29 @@ public:
     void  ParseLine(const char*);
 
     //! Returns the atomic number matching the element symbol passed
-    // or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
-    // a value in the second argument
+    //! or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
+    //! a value in the second argument
     int   GetAtomicNum(const char *, unsigned short int iso = 0);
+    //! Returns the element symbol matching the atomic number passed
     char *GetSymbol(int);
+    //! Returns the van der Waals radius for this atomic number
     double GetVdwRad(int);
+    //! Returns the covalent radius for this atomic number
     double GetCovalentRad(int);
     //! \deprecated -- Use OBElementTable::GetCovalentRad()
     double GetBORad(int);
+    //! Returns the average atomic mass for this element.
+    //! For exact isotope masses, use OpenBabel::OBIsotopeTable
     double GetMass(int);
-    //! \deprecated -- Use OBElementTable::GetCovalentRad()
+    //! Returns a "corrected" bonding radius based on the hybridization.
+    //! Scales the covalent radius by 0.95 for sp2 and 0.90 for sp hybrids
     double CorrectedBondRad(int,int = 3); // atomic #, hybridization
+    //! Returns a "corrected" vdW radius based on the hybridization.
+    //! Scales the van der Waals radius by 0.95 for sp2 and 0.90 for sp hybrids
     double CorrectedVdwRad(int,int = 3); // atomic #, hybridization
+    //! Returns the maximum expected number of bonds to this element
     int	GetMaxBonds(int);
+    //! Returns the Pauling electronegativity for this element
     double GetElectroNeg(int);
 };
 

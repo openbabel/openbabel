@@ -42,9 +42,6 @@ OBElementTable   etab;
 OBTypeTable      ttab;
 OBIsotopeTable   isotab;
 
-extern void ThrowError(char *);
-extern void ThrowError(string&);
-
 /** \class OBElementTable
     \brief Periodic Table of the Elements
  
@@ -66,7 +63,7 @@ extern void ThrowError(string&);
    - symbols
    - van der Waal radii
    - covalent radii
-   - bond order radii
+   - bond order radii (deprecated -- use covalent instead)
    - expected maximum bonding valence
    - molar mass (by IUPAC recommended atomic masses)
    - electronegativity
@@ -178,7 +175,7 @@ double OBElementTable::CorrectedBondRad(int atomicnum, int hyb)
     if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
         return(1.0);
 
-    rad = _element[atomicnum]->GetBoRad();
+    rad = _element[atomicnum]->GetCovalentRad();
 
     if (hyb == 2)
         rad *= 0.95;
