@@ -179,6 +179,10 @@ class OBUnitCell: public OBGenericData
       float GetGamma()				{return(_gamma);}
       //! Return v1, v2, v3 cell vectors
       std::vector<vector3> GetCellVectors();
+      //! Return v1, v2, v3 cell vectors as a 3x3 matrix
+      matrix3x3	GetCellMatrix();
+      //! Fill in the elements of the orthogonalization matrix
+      matrix3x3 GetOrthoMatrix();
 };
 
 /*!

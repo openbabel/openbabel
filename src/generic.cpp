@@ -12,6 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
+#include "math/matrix3x3.h"
 
 using namespace std;
 
@@ -218,6 +219,47 @@ vector<vector3> OBUnitCell::GetCellVectors()
   
   return v;
 }
+
+matrix3x3 OBUnitCell::GetCellMatrix()
+{
+  vector3 v1, v2, v3;
+
+  v1.Set(_a, 0.0f, 0.0f);
+  v2.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0f);
+  v3.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
+	      _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
+	      _c*sin(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha));
+
+  matrix3x3 m(v1,v2,v3);
+  return m;
+}
+
+matrix3x3 OBUnitCell::GetOrthoMatrix()
+{
+  matrix3x3 m;
+  float alphaRad, betaRad, gammaRad;
+  float v;
+
+  alphaRad = _alpha * DEG_TO_RAD;
+  betaRad = _beta * DEG_TO_RAD;
+  gammaRad = _gamma * DEG_TO_RAD;
+
+  v = 1 - SQUARE(cos(alphaRad)) - SQUARE(cos(betaRad)) - SQUARE(cos(gammaRad))
+    + 2 * cos(alphaRad) * cos(betaRad) * cos(gammaRad);
+
+  m.Set(0,0, _a);
+  m.Set(0,1, _b * cos(gammaRad));
+  m.Set(0,2, _c * cos(betaRad));
+  m.Set(1,0, 0.0f);
+  m.Set(1,1, _b * sin(gammaRad));
+  m.Set(1,2, _c * (cos(alphaRad)-cos(betaRad)*cos(gammaRad)) / sin(gammaRad));
+  m.Set(2,0, 0.0f);
+  m.Set(2,1, 0.0f);
+  m.Set(2,2, _c * v);
+
+  return m;
+}
+
 
 //
 //member functions for OBRingData class - stores SSSR set
