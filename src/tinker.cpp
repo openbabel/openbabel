@@ -24,7 +24,7 @@ bool WriteTinker(ostream &ofs,OBMol &mol)
   OBBond *bond;
   vector<OBEdgeBase*>::iterator j;
   
-  sprintf(buffer,"%6d %-20s",mol.NumAtoms(),mol.GetTitle());
+  sprintf(buffer,"%6d %-20s   MM2 parameters",mol.NumAtoms(),mol.GetTitle());
   ofs << buffer << endl;
 
   ttab.SetFromType("INT");
