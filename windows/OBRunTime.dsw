@@ -3,24 +3,6 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "MOPAC"=".\MOPAC\MOPAC.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name OBDLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name OBConv
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "OBConsole"=".\OBConsole\OBConsole.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -60,7 +42,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "OBFormats"=".\OBFormats\OBFormats.dsp" - Package Owner=<4>
+Project: "OBFormats2"=".\OBFormats2\OBFormats2.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -68,12 +50,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name OBConv
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name OBDLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -130,9 +106,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name OBDLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name OBFormats
     End Project Dependency
 }}}
 

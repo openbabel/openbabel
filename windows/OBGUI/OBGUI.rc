@@ -84,7 +84,6 @@ BEGIN
     LTEXT           "Use CTL RETURN for new line;  RETURN converts.",
                     IDC_CONSOLEINFO,37,90,168,8,NOT WS_VISIBLE
     LTEXT           "",IDC_OUTCOUNT,379,11,43,20
-    LTEXT           "",IDC_NUM_FILES,170,40,41,8
 END
 
 

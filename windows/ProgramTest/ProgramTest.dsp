@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x809 /d "NDEBUG"
 # ADD RSC /l 0x809 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -66,7 +66,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "USING_OBDLL" /FR /FD /GZ /c
 # SUBTRACT CPP /X /YX
 # ADD BASE RSC /l 0x809 /d "_DEBUG"
 # ADD RSC /l 0x809 /d "_DEBUG"
@@ -78,8 +78,8 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obdll.lib obconv.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\OBConv\debug" /libpath:"..\OBDLL\debug"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy obdll.dll, obconv.dll, obformats.obf
-PostBuild_Cmds=copy  ..\obdll\debug\obdll.dll  .\debug  /Y	copy  ..\obconv\debug\obconv.dll  .\debug  /Y	copy  ..\obformats\debug\obformats.obf  .  /Y
+PostBuild_Desc=Copy obdll.dll, obconv.dll, obformats2D.obf
+PostBuild_Cmds=copy  ..\obdll\debug\obdll.dll  .\debug  /Y	copy  ..\obconv\debug\obconv.dll  .\debug  /Y	copy  ..\obformats2\debug\obformats2D.obf  .\debug  /Y
 # End Special Build Tool
 
 !ENDIF 

@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\OBConversion" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "USING_DYNAMIC_LIBS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\OBConversion" /I ".." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "USING_DYNAMIC_LIBS" /YX /FD /c
 # SUBTRACT CPP /Fr
 # ADD BASE RSC /l 0x809 /d "NDEBUG"
 # ADD RSC /l 0x809 /d "NDEBUG"
@@ -101,12 +101,24 @@ PostBuild_Cmds=copy ..\OBConv\Debug\OBConv.dll  .\debug /Y	copy  ..\OBFormats2\d
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=..\..\src\dlhandler_win32.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\main.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=..\babelconfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\dlhandler.h
+# End Source File
 # Begin Source File
 
 SOURCE=..\..\src\obconversion.h

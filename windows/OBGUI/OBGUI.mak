@@ -25,6 +25,10 @@ NULL=
 NULL=nul
 !ENDIF 
 
+CPP=cl.exe
+MTL=midl.exe
+RSC=rc.exe
+
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
 OUTDIR=.\Release
@@ -56,42 +60,8 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
-CPP_PROJ=/nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-MTL=midl.exe
+CPP_PROJ=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
-RSC=rc.exe
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "NDEBUG" /d "_AFXDLL" 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUI.bsc" 
@@ -166,42 +136,8 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
-CPP_PROJ=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-MTL=midl.exe
+CPP_PROJ=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "USING_OBDLL" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
-RSC=rc.exe
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "_DEBUG" /d "_AFXDLL" 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUI.bsc" 
@@ -249,6 +185,36 @@ $(DS_POSTBUILD_DEP) : "OBConv - Win32 Debug" "$(OUTDIR)\OBGUI.exe" "$(OUTDIR)\OB
 
 !ENDIF 
 
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
 !IF EXISTS("OBGUI.dep")
@@ -264,7 +230,7 @@ SOURCE=.\DynamicOptions.cpp
 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
-CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\DynamicOptions.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -274,7 +240,7 @@ CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_
 
 !ELSEIF  "$(CFG)" == "OBGUI - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "USING_OBDLL" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\DynamicOptions.obj"	"$(INTDIR)\DynamicOptions.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -288,7 +254,7 @@ SOURCE=.\OBGUI.cpp
 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
-CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\OBGUI.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -298,7 +264,7 @@ CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_
 
 !ELSEIF  "$(CFG)" == "OBGUI - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "USING_OBDLL" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\OBGUI.obj"	"$(INTDIR)\OBGUI.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -318,7 +284,7 @@ SOURCE=.\OBGUIDlg.cpp
 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
-CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\OBGUIDlg.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -328,7 +294,7 @@ CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_
 
 !ELSEIF  "$(CFG)" == "OBGUI - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "USING_OBDLL" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\OBGUIDlg.obj"	"$(INTDIR)\OBGUIDlg.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -342,7 +308,7 @@ SOURCE=.\StdAfx.cpp
 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
-CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\StdAfx.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -352,7 +318,7 @@ CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_
 
 !ELSEIF  "$(CFG)" == "OBGUI - Win32 Debug"
 
-CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "USING_OBDLL" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\StdAfx.obj"	"$(INTDIR)\StdAfx.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -365,24 +331,24 @@ CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
 "OBConv - Win32 Release" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\windows\OBConv"
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Release" 
    cd "..\OBGUI"
 
 "OBConv - Win32 ReleaseCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\windows\OBConv"
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Release" RECURSE=1 CLEAN 
    cd "..\OBGUI"
 
 !ELSEIF  "$(CFG)" == "OBGUI - Win32 Debug"
 
 "OBConv - Win32 Debug" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\windows\OBConv"
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" 
    cd "..\OBGUI"
 
 "OBConv - Win32 DebugCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\windows\OBConv"
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" RECURSE=1 CLEAN 
    cd "..\OBGUI"
 

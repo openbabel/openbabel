@@ -62,10 +62,11 @@ CLEAN :
 	-@erase "$(INTDIR)\CSRformat.obj"
 	-@erase "$(INTDIR)\cssrformat.obj"
 	-@erase "$(INTDIR)\data.obj"
-	-@erase "$(INTDIR)\dlhandler_win32..obj"
+	-@erase "$(INTDIR)\dlhandler_win32.obj"
 	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\fhformat.obj"
+	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\generic.obj"
@@ -74,6 +75,7 @@ CLEAN :
 	-@erase "$(INTDIR)\grosmos96format.obj"
 	-@erase "$(INTDIR)\hinformat.obj"
 	-@erase "$(INTDIR)\jaguarformat.obj"
+	-@erase "$(INTDIR)\kekulize.obj"
 	-@erase "$(INTDIR)\main.obj"
 	-@erase "$(INTDIR)\matrix.obj"
 	-@erase "$(INTDIR)\matrix3x3.obj"
@@ -121,7 +123,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /ML /W3 /GR /GX /O2 /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\OBabel.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /ML /W3 /GR /GX /O2 /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\OBabel.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBabel.bsc" 
 BSC32_SBRS= \
@@ -154,10 +156,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
 	"$(INTDIR)\data.obj" \
-	"$(INTDIR)\dlhandler_win32..obj" \
+	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\generic.obj" \
@@ -166,6 +169,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\grosmos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
+	"$(INTDIR)\kekulize.obj" \
 	"$(INTDIR)\main.obj" \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
@@ -275,14 +279,16 @@ CLEAN :
 	-@erase "$(INTDIR)\cssrformat.sbr"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\data.sbr"
-	-@erase "$(INTDIR)\dlhandler_win32..obj"
-	-@erase "$(INTDIR)\dlhandler_win32..sbr"
+	-@erase "$(INTDIR)\dlhandler_win32.obj"
+	-@erase "$(INTDIR)\dlhandler_win32.sbr"
 	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\dmolformat.sbr"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\featformat.sbr"
 	-@erase "$(INTDIR)\fhformat.obj"
 	-@erase "$(INTDIR)\fhformat.sbr"
+	-@erase "$(INTDIR)\fingerprint.obj"
+	-@erase "$(INTDIR)\fingerprint.sbr"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gamessformat.sbr"
 	-@erase "$(INTDIR)\gaussformat.obj"
@@ -299,6 +305,8 @@ CLEAN :
 	-@erase "$(INTDIR)\hinformat.sbr"
 	-@erase "$(INTDIR)\jaguarformat.obj"
 	-@erase "$(INTDIR)\jaguarformat.sbr"
+	-@erase "$(INTDIR)\kekulize.obj"
+	-@erase "$(INTDIR)\kekulize.sbr"
 	-@erase "$(INTDIR)\main.obj"
 	-@erase "$(INTDIR)\main.sbr"
 	-@erase "$(INTDIR)\matrix.obj"
@@ -391,7 +399,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MLd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MLd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBabel.bsc" 
 BSC32_SBRS= \
@@ -420,10 +428,11 @@ BSC32_SBRS= \
 	"$(INTDIR)\CSRformat.sbr" \
 	"$(INTDIR)\cssrformat.sbr" \
 	"$(INTDIR)\data.sbr" \
-	"$(INTDIR)\dlhandler_win32..sbr" \
+	"$(INTDIR)\dlhandler_win32.sbr" \
 	"$(INTDIR)\dmolformat.sbr" \
 	"$(INTDIR)\featformat.sbr" \
 	"$(INTDIR)\fhformat.sbr" \
+	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\gamessformat.sbr" \
 	"$(INTDIR)\gaussformat.sbr" \
 	"$(INTDIR)\generic.sbr" \
@@ -432,6 +441,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\grosmos96format.sbr" \
 	"$(INTDIR)\hinformat.sbr" \
 	"$(INTDIR)\jaguarformat.sbr" \
+	"$(INTDIR)\kekulize.sbr" \
 	"$(INTDIR)\main.sbr" \
 	"$(INTDIR)\matrix.sbr" \
 	"$(INTDIR)\matrix3x3.sbr" \
@@ -507,10 +517,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
 	"$(INTDIR)\data.obj" \
-	"$(INTDIR)\dlhandler_win32..obj" \
+	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\generic.obj" \
@@ -519,6 +530,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\grosmos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
+	"$(INTDIR)\kekulize.obj" \
 	"$(INTDIR)\main.obj" \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
@@ -1059,19 +1071,19 @@ SOURCE=..\..\src\data.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\dlhandler_win32..cpp
+SOURCE=..\..\src\dlhandler_win32.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
 
 
-"$(INTDIR)\dlhandler_win32..obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\dlhandler_win32.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
 
 
-"$(INTDIR)\dlhandler_win32..obj"	"$(INTDIR)\dlhandler_win32..sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\dlhandler_win32.obj"	"$(INTDIR)\dlhandler_win32.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1126,6 +1138,24 @@ SOURCE=..\..\src\formats\fhformat.cpp
 
 
 "$(INTDIR)\fhformat.obj"	"$(INTDIR)\fhformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprint.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\fingerprint.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\fingerprint.obj"	"$(INTDIR)\fingerprint.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1270,6 +1300,24 @@ SOURCE=..\..\src\formats\jaguarformat.cpp
 
 
 "$(INTDIR)\jaguarformat.obj"	"$(INTDIR)\jaguarformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\kekulize.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\kekulize.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\kekulize.obj"	"$(INTDIR)\kekulize.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

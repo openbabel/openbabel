@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GR /GX /O2 /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /W3 /GR /GX /O2 /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # SUBTRACT CPP /Fr
 # ADD BASE RSC /l 0x809 /d "NDEBUG"
 # ADD RSC /l 0x809 /d "NDEBUG"
@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x809 /d "_DEBUG"
 # ADD RSC /l 0x809 /d "_DEBUG"
@@ -190,7 +190,7 @@ SOURCE=..\..\src\data.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\dlhandler_win32..cpp
+SOURCE=..\..\src\dlhandler_win32.cpp
 # End Source File
 # Begin Source File
 
@@ -203,6 +203,10 @@ SOURCE=..\..\src\formats\featformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\fhformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint.cpp
 # End Source File
 # Begin Source File
 
@@ -235,6 +239,10 @@ SOURCE=..\..\src\formats\hinformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\jaguarformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\kekulize.cpp
 # End Source File
 # Begin Source File
 
@@ -406,15 +414,7 @@ SOURCE=..\..\src\formats\zindoformat.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\..\src\aromatic.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\atomtyp.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\babelconfig.h
+SOURCE=..\babelconfig.h
 # End Source File
 # Begin Source File
 
@@ -462,11 +462,11 @@ SOURCE=..\..\src\dlhandler.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\element.h
+SOURCE=..\..\src\extable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\extable.h
+SOURCE=..\..\src\fingerprint.h
 # End Source File
 # Begin Source File
 
@@ -475,10 +475,6 @@ SOURCE=..\..\src\generic.h
 # Begin Source File
 
 SOURCE=..\..\src\grid.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\isotope.h
 # End Source File
 # Begin Source File
 
@@ -526,15 +522,7 @@ SOURCE=..\..\src\phmodel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\phmodeldata.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\reaction.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\resdata.h
 # End Source File
 # Begin Source File
 
