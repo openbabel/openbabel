@@ -1,3 +1,17 @@
+2004-01-13  Michael Banck  <mbanck@gmx.net>
+
+        First shot at making a test-suite run from a build-directory
+        possible.
+
+        * test/Makefile.am (AM_CPPFLAGS): Added -DTESTDATADIR, pointing
+        to $(srcdir)/test, where the test-suite data files are located.
+        * test/Makefile.in: Regenerated.
+        * test/ringtest.cpp: Use strings to handle the filenames. If
+        TESTDATADIR is defined, prepend it to the filename. Transform
+        the string to a char* when calling SafeOpen().
+        * test/smartstest.cpp: Likewise.
+        * test/unitcell.cpp: Likewise.
+
 2003-12-01  Michael Banck  <mbanck@gmx.net>
 
 	* src/data.cpp (GetExtension): Make sure that the returned long

@@ -8,5 +8,4 @@ LDADD = ../src/libopenbabel.la
 EXTRA_DIST = smartsresults.txt smartstest.txt unitcell.txt ringresults.txt attype.00.smi cml.sh test-set.sh
 TESTS = matrixtest smartstest ringtest obtest cml.sh test-set.sh
 
-AM_CPPFLAGS = -I$(top_srcdir)/src
-
+AM_CPPFLAGS = -I$(top_srcdir)/src -DTESTDATADIR="\"$(top_srcdir)/test/\""
