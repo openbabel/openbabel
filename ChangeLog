@@ -1,3 +1,9 @@
+2002-07-24  Michael Banck <mbanck@gmx.net>
+
+	* src/gaussian.cpp: Added some comments/warnings; changed multiplicity
+	calculation to use abs(charge) instead of charge
+	* src/Makefile.in: splitted CXXFLAGS into CXXFLAGS, DEFS and INCS
+
 2002-07-22  Michael Banck <mbanck@gmx.net>
 
 	* src/gaussian.cpp: Fixed WriteGaussianCart() hopefully:
