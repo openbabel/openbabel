@@ -41,7 +41,7 @@ bool ReadGhemical(istream &ifs,OBMol &mol, const char *title)
   // Get !Info line with number of coord sets
   ifs.getline(buffer,BUFF_SIZE);
   sscanf(buffer,"%*s %d", &i);
-  if (!i || i != 1) return false;
+  if (!i) return false;
 
   // Get !Atoms line with number
   ifs.getline(buffer,BUFF_SIZE);
