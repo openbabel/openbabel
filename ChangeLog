@@ -1,3 +1,14 @@
+2004-02-10  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* src/mol.cpp: Documentation updates.
+
+	* NEWS, THANKS: Updates for 1.100.2 release.
+
+	* aromatic.txt, aromatic.txt: Minor updates for aromaticity of
+	various heteroatoms.
+
+	* element.txt: * Minor documentation update.
+
 2004-02-14  Michael Banck  <mbanck@gmx.net>
 
 	* src/base.cpp [HAVE_CONFIG_H]: Removed the conditional around
