@@ -24,7 +24,7 @@ using namespace std;
 namespace OpenBabel {
 
 extern OBAromaticTyper  aromtyper;
-extern OBAtomTyper atomtyper; //CM
+extern OBAtomTyper      atomtyper;
 
 class OBSmilesParser
 {
@@ -49,7 +49,7 @@ public:
 	bool CapExternalBonds(OBMol &mol);
   void FindAromaticBonds(OBMol &mol,OBAtom*,int);
   void FindAromaticBonds(OBMol&);
-	void FindOrphanAromaticAtoms(OBMol &mol); //CM 18 Sept 2003
+  void FindOrphanAromaticAtoms(OBMol &mol); //CM 18 Sept 2003
 };
 
 bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
@@ -138,18 +138,18 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
 // CM 18 Sept 2003
 void OBSmilesParser::FindOrphanAromaticAtoms(OBMol &mol)
 {
-	//Facilitates the use shorthand for radical entry: CcC = isopropyl radical
-	//Atoms which are marked as aromatic but have no aromatic bonds
-	//are taken to be radical centres 
+  //Facilitates the use shorthand for radical entry: CcC = isopropyl radical
+  //Atoms which are marked as aromatic but have no aromatic bonds
+  //are taken to be radical centres 
   OBAtom *atom;
   vector<OBNodeBase*>::iterator j;
-
+ 
   for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
-		if(atom->IsAromatic() && !atom->HasBondOfOrder(5)) //bonds order 5 set in FindAromaticBonds()
-			atom->UnsetAromatic();
+    if(atom->IsAromatic() && !atom->HasBondOfOrder(5)) //bonds order 5 set in FindAromaticBonds()
+      atom->UnsetAromatic();
 }
 // CM end
-
+ 
 void OBSmilesParser::FindAromaticBonds(OBMol &mol)
 {
   _path.clear(); _avisit.clear(); _bvisit.clear();
@@ -161,8 +161,8 @@ void OBSmilesParser::FindAromaticBonds(OBMol &mol)
   vector<OBEdgeBase*>::iterator i;
   for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
     if (!bond->GetBeginAtom()->IsAromatic() || 
-				!bond->GetEndAtom()->IsAromatic()
-				|| bond->IsInRing()) //CM 18 Sept 2003
+	!bond->GetEndAtom()->IsAromatic())// ||
+	//      bond->IsInRing())   // SM 18 Sept 2003
       _bvisit[bond->GetIdx()] = true;
 
   OBAtom *atom;
@@ -253,38 +253,39 @@ bool OBSmilesParser::ParseSimple(OBMol &mol)
   OBAtom *atom = mol.NewAtom();
   atom->SetAtomicNum(element);
   atom->SetType(symbol);
-  if (arom) 
-	{
-		atom->SetAromatic();
-		atom->SetSpinMultiplicity(2); // CM 18 Sept 2003
-	}
+  if (arom)
+    {
+      atom->SetAromatic();
+      //      atom->SetSpinMultiplicity(2); // CM 18 Sept 2003
+    }
 
   if (_prev) //need to add bond 
+    {
+      /* CM 18 Sept 2003
+	 Extension so that lower case c can represent a radical centre
+	 and cccc... a carbon chain bonded by conjugated double bonds.
+	 Atoms c,n,o, etc initially added as radical centre
+	 unless _prev is a radical centre when both are made a normal atoms
+	 connected by a double bond. 
+	 Since they are still marked as aromatic, FindAromaticBonds() will
+	 replace the bonds by aromatic bonds if they are in a ring and remove the
+	 aromatic tag from the atoms if they are not.
+      */
+      if(arom)
 	{
-		/* CM 18 Sept 2003
-		Extension so that lower case c can represent a radical centre
-		and cccc... a carbon chain bonded by conjugated double bonds.
-		Atoms c,n,o, etc initially added as radical centre
-		unless _prev is a radical centre when both are made a normal atoms
-		 connected by a double bond. 
-		Since they are still marked as aromatic, FindAromaticBonds() will
-		replace the bonds by aromatic bonds if they are in a ring and remove the
-		aromatic tag from the atoms if they are not.
-		*/
-		if(arom)
-		{
-			OBAtom* prevatom = mol.GetAtom(_prev);
-			if (prevatom->GetSpinMultiplicity())
-			{
-				prevatom->SetSpinMultiplicity(0);
-				atom->SetSpinMultiplicity(0);
-				_order=2;
-			}
+	  OBAtom* prevatom = mol.GetAtom(_prev);
+	  if (prevatom->GetSpinMultiplicity())
+	    {
+	      prevatom->SetSpinMultiplicity(0);
+	      atom->SetSpinMultiplicity(0);
+	      _order=2;
+	    }
   
-		}
-	  // CM end
-		mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
-	}  
+	}
+      // CM end
+      mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
+    }  
+  
   //set values
   _prev = mol.NumAtoms();
   _order = 1;
