@@ -2,7 +2,7 @@
 bitvec.cpp - Vector of bits.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -18,11 +18,14 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "bitvec.h"
+#include "oberror.h"
 
 using namespace std;
 
 namespace OpenBabel
 {
+
+extern OBMessageHandler obErrorLog;
 
 /*! \class OBBitVec
     \brief Fast and efficient bitstring class
@@ -289,7 +292,7 @@ OBBitVec &OBBitVec::operator^= (OBBitVec &bv)
 OBBitVec &OBBitVec::operator-= (OBBitVec &bv)
 {
     if (GetSize() != bv._size)
-        ThrowError("Subtracting sets of != size");
+      obErrorLog.ThrowError(__FUNCTION__, "Subtracting sets of != size", obDebug);
     else
     {
         OBBitVec tmp;

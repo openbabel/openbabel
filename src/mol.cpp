@@ -743,9 +743,7 @@ OBAtom *OBMol::GetAtom(int idx)
     if ((unsigned)idx < 1 || (unsigned)idx > NumAtoms())
     {
         cerr << idx << ' ' << NumAtoms() << endl;
-
-        obAssert(false);
-        ThrowError("Requested Atom Out of Range");
+        obErrorLog.ThrowError(__FUNCTION__, "Requested Atom Out of Range", obDebug);
         return((OBAtom*)NULL);
     }
 
@@ -763,7 +761,7 @@ OBBond *OBMol::GetBond(int idx)
 {
     if (idx < 0 || (unsigned)idx >= NumBonds())
     {
-        ThrowError("Requested Bond Out of Range");
+      obErrorLog.ThrowError(__FUNCTION__, "Requested Bond Out of Range", obDebug);
         return((OBBond*)NULL);
     }
 
@@ -784,8 +782,6 @@ OBBond *OBMol::GetBond(OBAtom *bgn,OBAtom *end)
         if (nbr == end)
             return((OBBond *)*i);
 
-    //obAssert(false); //should never get here
-
     return(NULL); //just to keep the SGI compiler happy
 }
 
@@ -793,7 +789,7 @@ OBResidue *OBMol::GetResidue(int idx)
 {
     if (idx < 0 || (unsigned)idx >= NumResidues())
     {
-        ThrowError("Requested Residue Out of Range");
+      obErrorLog.ThrowError(__FUNCTION__, "Requested Residue Out of Range", obDebug);
         return((OBResidue*)NULL);
     }
 
@@ -1144,8 +1140,7 @@ void OBMol::EndModify(bool nukePerceivedData)
 {
     if (_mod == 0)
     {
-        obAssert(false);
-        ThrowError("_mod is negative - EndModify() called too many times");
+        obErrorLog.ThrowError(__FUNCTION__, "_mod is negative - EndModify() called too many times", obDebug);
         return;
     }
 
@@ -1641,12 +1636,12 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
 
         hcount = atom->GetImplicitValence() - atom->GetValence();
 
-				//Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
-				int mult = atom->GetSpinMultiplicity();
-				if(mult==2) //radical
-					hcount-=1;
-				else if(mult==1 || mult==3) //carbene
-					hcount-=2;
+	//Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
+	int mult = atom->GetSpinMultiplicity();
+	if(mult==2) //radical
+	  hcount-=1;
+	else if(mult==1 || mult==3) //carbene
+	  hcount-=2;
 
         if (hcount < 0)
             hcount = 0;
@@ -2392,7 +2387,7 @@ bool OBMol::AddBond(int first,int second,int order,int stereo,int insertpos)
         end = GetAtom(second);
         if (!bgn || !end)
         {
-            ThrowError("Unable to add bond - invalid atom index");
+            obErrorLog.ThrowError(__FUNCTION__, "Unable to add bond - invalid atom index", obDebug);
             return(false);
         }
         bond->Set(_nbonds,bgn,end,order,stereo);

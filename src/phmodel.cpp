@@ -180,7 +180,7 @@ bool OBChemTsfm::Init(string &bgn,string &end)
                 }
 
             if (!found)
-                _vadel.push_back(i);
+	      _vadel.push_back(i);
         }
 
     //find elements to be changed
@@ -276,7 +276,7 @@ bool OBChemTsfm::Apply(OBMol &mol)
                 bond = mol.GetBond((*i)[j->first.first],(*i)[j->first.second]);
                 if (!bond)
                 {
-                    ThrowError("unable to find bond");
+		  obErrorLog.ThrowError(__FUNCTION__, "unable to find bond", obDebug);
                     continue;
                 }
 
@@ -297,7 +297,7 @@ bool OBChemTsfm::Apply(OBMol &mol)
                     mol.GetAtom((*i)[k->first])->SetAtomicNum(k->second);
         }
 
-        //make sure same atom isn't delete twice
+        //make sure same atom isn't deleted twice
         vector<bool> vda;
         vector<OBNodeBase*> vdel;
         vda.resize(mol.NumAtoms()+1,false);

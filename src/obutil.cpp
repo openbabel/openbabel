@@ -48,14 +48,16 @@ cout << "Elapsed time = " << sw.Elapsed() << endl;
 \endcode
 */
 
+//! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
 void ThrowError(char *str)
 {
-    cout << str << endl;
+  obErrorLog.ThrowError("", str, obInfo);
 }
 
+//! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
 void ThrowError(std::string &str)
 {
-    cout << str << endl;
+  obErrorLog.ThrowError("", str, obInfo);
 }
 
 void PauseExit()
@@ -272,7 +274,7 @@ bool SafeOpen(ifstream &fs,char *filename)
         string error = "Unable to open file \'";
         error += filename;
         error += "\' in read mode";
-        ThrowError(error);
+        obErrorLog.ThrowError(__FUNCTION__, error, obError);
         return(false);
     }
 
@@ -295,7 +297,7 @@ bool SafeOpen(obifstream &fs,char *filename)
         string error = "Unable to open file \'";
         error += filename;
         error += "\' in write mode";
-        ThrowError(error);
+        obErrorLog.ThrowError(__FUNCTION__, error, obError);
         return(false);
     }
 
@@ -318,7 +320,7 @@ bool SafeOpen(ofstream &fs,char *filename)
         string error = "Unable to open file \'";
         error += filename;
         error += "\' in write mode";
-        ThrowError(error);
+        obErrorLog.ThrowError(__FUNCTION__, error, obError);
         return(false);
     }
 
@@ -385,40 +387,6 @@ void CleanAtomType(char *id)
     else
         id[2] = '\0';
 }
-
-/*
-bool SetInputType(OBMol &mol,string &fname)
-{
-  io_type format;
- 
-  if ((format = extab.FilenameToType((char*)fname.c_str())) == UNDEFINED)
-    {
-      string err = "Error - Unrecognized input format of file '"; 
-      err += fname; err += "'";
-      ThrowError(err); 
-      return(false);
-    }
-  mol.SetInputType(format);
- 
-  return(true);
-}
- 
-bool SetOutputType(OBMol &mol,string &fname)
-{
-  io_type format;
- 
-  if ((format = extab.FilenameToType((char*)fname.c_str())) == UNDEFINED)
-    {
-      string err = "Error - Unrecognized input format of file '"; 
-      err += fname; err += "'";
-      ThrowError(err); 
-      return(false);
-    }
-  mol.SetOutputType(format);
- 
-  return(true);
-}
-*/
 
 void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 {

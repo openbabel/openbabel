@@ -34,6 +34,8 @@ using namespace std;
 namespace OpenBabel
 {
 
+  OBMessageHandler obErrorLog;
+
 OBError::OBError( const string &method, const string &errorMsg, const string &explanation,
                   const string &possibleCause, const string &suggestedRemedy) :
   _method(method), _errorMsg(errorMsg), _explanation(explanation),
@@ -46,7 +48,7 @@ string OBError::message() const
 {
     string tmp = "==============================\n";
 
-    tmp += "OPENBABEL-ERROR in " + _method + string("\n  ") + _errorMsg + "\n";
+    tmp += "*** Open Babel Error in " + _method + string("\n  ") + _errorMsg + "\n";
     if (_explanation.size() != 0)
         tmp += "  " + _explanation + "\n";
     if (_possibleCause.size() != 0)
@@ -59,7 +61,7 @@ string OBError::message() const
 
 
 OBMessageHandler::OBMessageHandler() :
-  _outputStream(&cerr), _outputLevel(obError)
+  _outputStream(&cerr), _outputLevel(obWarning)
 { }
 
 OBMessageHandler::~OBMessageHandler()

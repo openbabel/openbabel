@@ -49,12 +49,12 @@ bool OBRotorList::Setup(OBMol &mol)
     for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
         if (!rotor->Size())
         {
-            ThrowError("WARNING - The following rotor has no associated torsion values");
             int ref[4];
             rotor->GetDihedralAtoms(ref);
             char buffer[BUFF_SIZE];
-            sprintf(buffer,"rotor -> %d %d %d %d",ref[0],ref[1],ref[2],ref[3]);
-            ThrowError(buffer);
+            sprintf(buffer,"The rotor has no associated torsion values -> %d %d %d %d",ref[0],ref[1],ref[2],ref[3]);
+
+            obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
         }
 
     return(true);
@@ -926,10 +926,9 @@ void OBRotorRules::ParseLine(const char *buffer)
 
         if (vals.empty())
         {
-            ThrowError("DANGER WILL ROBINSON!!!");
             string err = "The following rule has no associated torsions: ";
             err += vs[0];
-            ThrowError(err);
+            obErrorLog.ThrowError(__FUNCTION__, err, obDebug);
         }
         OBRotorRule *rr = new OBRotorRule (temp_buffer,ref,vals,delta);
         if (rr->IsValid())
