@@ -9,7 +9,8 @@ libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	cml.cpp cmlformat.cpp crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp featformat.cpp fhformat.cpp \
 	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
-	grosmos96format.cpp hinformat.cpp jaguarformat.cpp \
+	grosmos96format.cpp hinformat.cpp \
+	jaguarformat.cpp \
 	mdlformat.cpp mm3format.cpp mmodformat.cpp \
 	mol2format.cpp mopacformat.cpp mpqcformat.cpp nwchemformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \

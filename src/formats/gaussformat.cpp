@@ -20,13 +20,12 @@ using namespace std;
 namespace OpenBabel
 {
 
-class GaussianFormat : public OBFormat
+class GaussianOutputFormat : public OBFormat
 {
 public:
     //Register this format type ID
-    GaussianFormat()
+    GaussianOutputFormat()
     {
-        OBConversion::RegisterFormat("gau",this);
         OBConversion::RegisterFormat("g98",this);
         OBConversion::RegisterFormat("g03",this);
     }
@@ -34,13 +33,13 @@ public:
     virtual const char* Description() //required
     {
         return
-            "Gaussian98/03 Cartesian\n \
+            "Gaussian98/03 Output\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
-            "http://www.gaussian.com/g_ur/m_input.htm";};
+            "http://www.gaussian.com/";};
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-gaussian"; };
@@ -49,14 +48,13 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTREADABLE;
+        return READONEONLY | NOTWRITABLE;
     };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
     ////////////////////////////////////////////////////
     /// The "Convert" interface functions
@@ -71,7 +69,50 @@ public:
             pConv->AddChemObject(NULL);
         return ret;
     };
+};
+//***
 
+//Make an instance of the format class
+GaussianOutputFormat theGaussianOutputFormat;
+
+class GaussianInputFormat : public OBFormat
+{
+public:
+    //Register this format type ID
+    GaussianInputFormat()
+    {
+        OBConversion::RegisterFormat("gau",this);
+        OBConversion::RegisterFormat("com",this);
+    }
+
+    virtual const char* Description() //required
+    {
+        return
+            "Gaussian 98/03 Cartesian Input\n \
+            No comments yet\n \
+            ";
+    };
+
+    virtual const char* SpecificationURL(){return
+            "http://www.gaussian.com/g_ur/m_input.htm";};
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-gaussian"; };
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+        return NOTREADABLE | WRITEONEONLY;
+    };
+
+    //*** This section identical for most OBMol conversions ***
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+    ////////////////////////////////////////////////////
+    /// The "Convert" interface functions
     virtual bool WriteChemObject(OBConversion* pConv)
     {
         //Retrieve the target OBMol
@@ -87,12 +128,12 @@ public:
 //***
 
 //Make an instance of the format class
-GaussianFormat theGaussianFormat;
+GaussianInputFormat theGaussianInputFormat;
 
 
 ////////////////////////////////////////////////////////////////
 
-bool GaussianFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+bool GaussianInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
@@ -138,7 +179,7 @@ bool GaussianFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 // Reading Gaussian output has been tested for G98 and G03 to some degree
 // If you have problems (or examples of older output), please contact
 // the openbabel-discuss@lists.sourceforge.net mailing list and/or post a bug
-bool GaussianFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+bool GaussianOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)

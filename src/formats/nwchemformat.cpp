@@ -19,11 +19,11 @@ using namespace std;
 namespace OpenBabel
 {
 
-class NWChemFormat : public OBFormat
+class NWChemOutputFormat : public OBFormat
 {
 public:
     //Register this format type ID
-    NWChemFormat()
+    NWChemOutputFormat()
     {
         OBConversion::RegisterFormat("nwo",this);
     }
@@ -31,25 +31,24 @@ public:
     virtual const char* Description() //required
     {
         return
-            "NWChem format\n \
+            "NWChem Output format\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
-            "";}; //optional
+            "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | NOTWRITABLE;
     };
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
     ////////////////////////////////////////////////////
     /// The "Convert" interface functions
@@ -64,6 +63,44 @@ public:
         return ret;
     };
 
+};
+
+//Make an instance of the format class
+NWChemOutputFormat theNWChemOutputFormat;
+
+class NWChemInputFormat : public OBFormat
+{
+public:
+    //Register this format type ID
+    NWChemInputFormat()
+    {
+        OBConversion::RegisterFormat("nw",this);
+    }
+
+    virtual const char* Description() //required
+    {
+        return
+            "NWChem input\n \
+            No comments yet\n \
+            ";
+    };
+
+    virtual const char* SpecificationURL(){return
+            "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return NOTREADABLE | WRITEONEONLY;
+    };
+
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+    ////////////////////////////////////////////////////
+    /// The "Convert" interface functions
     virtual bool WriteChemObject(OBConversion* pConv)
     {
         //Retrieve the target OBMol
@@ -78,10 +115,11 @@ public:
 };
 
 //Make an instance of the format class
-NWChemFormat theNWChemFormat;
+NWChemInputFormat theNWChemInputFormat;
+
 
 /////////////////////////////////////////////////////////////////
-bool NWChemFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -129,9 +167,10 @@ bool NWChemFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             }
         } // if "output coordinates"
     } // while
-    mol.EndModify();
     mol.ConnectTheDots();
     mol.PerceiveBondOrders();
+
+    mol.EndModify();
 
     mol.SetTitle(title);
     return(true);
@@ -139,7 +178,7 @@ bool NWChemFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
 ////////////////////////////////////////////////////////////////
 
-bool NWChemFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+bool NWChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)

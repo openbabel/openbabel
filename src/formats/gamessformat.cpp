@@ -23,11 +23,11 @@ namespace OpenBabel
 #define BOHR_TO_ANGSTROM 0.529177249
 #define ANGSTROM_TO_BOHR 1.889725989
 
-class GAMESSFormat : public OBFormat
+class GAMESSOutputFormat : public OBFormat
 {
 public:
     //Register this format type ID
-    GAMESSFormat()
+    GAMESSOutputFormat()
     {
         OBConversion::RegisterFormat("gam",this);
         OBConversion::RegisterFormat("gamout",this);
@@ -45,20 +45,19 @@ public:
             "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";}; //optional
 
   virtual const char* GetMIMEType() 
-  { return "chemical/x-gamess-input"; };
+  { return "chemical/x-gamess-output"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | NOTWRITABLE;
     };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
     ////////////////////////////////////////////////////
     /// The "Convert" interface functions
@@ -73,6 +72,51 @@ public:
         return ret;
     };
 
+};
+//***
+
+//Make an instance of the format class
+GAMESSOutputFormat theGAMESSOutputFormat;
+
+
+class GAMESSInputFormat : public OBFormat
+{
+public:
+    //Register this format type ID
+    GAMESSInputFormat()
+    {
+        OBConversion::RegisterFormat("inp",this);
+        OBConversion::RegisterFormat("gamin",this);
+    }
+
+    virtual const char* Description() //required
+    {
+        return
+            "GAMESS Input\n \
+            No comments yet\n \
+            ";
+    };
+
+    virtual const char* SpecificationURL(){return
+            "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";}; //optional
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-gamess-input"; };
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+        return WRITEONEONLY | NOTREADABLE;
+    };
+
+    //*** This section identical for most OBMol conversions ***
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+    ////////////////////////////////////////////////////
+    /// The "Convert" interface functions
     virtual bool WriteChemObject(OBConversion* pConv)
     {
         //Retrieve the target OBMol
@@ -88,10 +132,10 @@ public:
 //***
 
 //Make an instance of the format class
-GAMESSFormat theGAMESSFormat;
+GAMESSInputFormat theGAMESSInputFormat;
 
 /////////////////////////////////////////////////////////////////
-bool GAMESSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+bool GAMESSOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -190,7 +234,7 @@ bool GAMESSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
 ////////////////////////////////////////////////////////////////
 
-bool GAMESSFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+bool GAMESSInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)

@@ -20,11 +20,11 @@ using namespace std;
 namespace OpenBabel
 {
 
-class QChemFormat : public OBFormat
+class QChemOutputFormat : public OBFormat
 {
 public:
     //Register this format type ID
-    QChemFormat()
+    QChemOutputFormat()
     {
         OBConversion::RegisterFormat("qcout",this);
     }
@@ -44,14 +44,13 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | NOTWRITABLE;
     };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
     ////////////////////////////////////////////////////
     /// The "Convert" interface functions
@@ -65,7 +64,47 @@ public:
             pConv->AddChemObject(NULL);
         return ret;
     };
+};
+//***
 
+//Make an instance of the format class
+QChemOutputFormat theQChemOutputFormat;
+
+
+class QChemInputFormat : public OBFormat
+{
+public:
+    //Register this format type ID
+    QChemInputFormat()
+    {
+        OBConversion::RegisterFormat("qcin",this);
+    }
+
+    virtual const char* Description() //required
+    {
+        return
+            "QChem input format\n \
+            No comments yet\n \
+            ";
+    };
+
+    virtual const char* SpecificationURL(){return
+            "http://www.q-chem.com/";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+        return WRITEONEONLY | NOTREADABLE;
+    };
+
+    //*** This section identical for most OBMol conversions ***
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+    ////////////////////////////////////////////////////
+    /// The "Convert" interface functions
     virtual bool WriteChemObject(OBConversion* pConv)
     {
         //Retrieve the target OBMol
@@ -81,10 +120,10 @@ public:
 //***
 
 //Make an instance of the format class
-QChemFormat theQChemFormat;
+QChemInputFormat theQChemInputFormat;
 
 /////////////////////////////////////////////////////////////////
-bool QChemFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -219,7 +258,7 @@ bool QChemFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
 ////////////////////////////////////////////////////////////////
 
-bool QChemFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+bool QChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
