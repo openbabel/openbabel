@@ -322,7 +322,7 @@ void OBExtensionTable::ParseLine(char *buffer)
       if (buffer[0] != '#') // skip comments
 	{
 	  tokenize(vs,buffer,"\t\n"); // spaces are a problem
-	  if (vs.size() == 5)
+	  if (vs.size() == 6)
 	    {
 	      Toupper(vs[1]);
 	      _table.push_back(vector <string> (vs));
@@ -443,26 +443,31 @@ io_type OBExtensionTable::FilenameToType(char *filename)
 
 io_type OBExtensionTable::FilenameToType(string &filename)
 {
+  return FilenameToType((char *)filename.c_str());
+}
+
+io_type OBExtensionTable::MIMEToType(char *type)
+{
   if (!_init) Init();
 
   vector<vector<string> >::iterator i;
 
-  vector<string> vs;
-  tokenize(vs,filename,".\n\t");
-  if (vs.empty()) return(UNDEFINED);
+  if (!type || strlen(type) == 0) return(UNDEFINED);
 
-  string ext = vs[vs.size()-1];
-  Tolower(ext);
-
-  io_type type = UNDEFINED;
+  io_type iotype = UNDEFINED;
   for (i = _table.begin();i != _table.end();i++)
-    if ((*i)[0] == ext)
+    if ((*i)[3] == type)
     {
-      type = TextToType((*i)[1]);
+      iotype = TextToType((*i)[1]);
       break;
     }
 
-  return(type);
+  return(iotype);
+}
+
+io_type	OBExtensionTable::MIMEToType(string &type)
+{
+  return MIMEToType((char *)type.c_str());
 }
 
 void OBExtensionTable::TypeToExtension(io_type type,char *ext)
@@ -470,14 +475,28 @@ void OBExtensionTable::TypeToExtension(io_type type,char *ext)
   if (!_init) Init();
 
   vector<vector<string> >::iterator i;
-  strcpy(ext,"extension"); // silly mol2 and company are too long... :-P
 
   for (i = _table.begin();i != _table.end();i++)
     if (type == TextToType((*i)[1]))
     {
-      strcpy(ext,(char*)(*i)[1].c_str());
+      strcpy(ext,(char*)(*i)[0].c_str());
       break;
     }
+}
+
+void OBExtensionTable::TypeToMIME(io_type type,char *ext)
+{
+  if (!_init) Init();
+
+  vector<vector<string> >::iterator i;
+
+  for (i = _table.begin();i != _table.end();i++)
+    if (type == TextToType((*i)[1]))
+      {
+	if ((*i)[3] != "none")
+	  strcpy(ext,(char*)(*i)[3].c_str());
+	break;
+      }
 }
 
 void OBExtensionTable::ExtensionToDescription(char *filename, char *desc)
@@ -517,7 +536,7 @@ bool OBExtensionTable::CanReadExtension(char *filename)
 
   bool read = false;
   for (i = _table.begin();i != _table.end();i++)
-    if ((*i)[0] == ext && (*i)[3] == "1")
+    if ((*i)[0] == ext && (*i)[4] == "1")
       {
 	read = true;
 	break;
@@ -540,7 +559,7 @@ bool OBExtensionTable::CanWriteExtension(char *filename)
 
   bool write = false;
   for (i = _table.begin();i != _table.end();i++)
-    if ((*i)[0] == ext && (*i)[4] == "1")
+    if ((*i)[0] == ext && (*i)[5] == "1")
       {
 	write = true;
 	break;
@@ -602,7 +621,7 @@ bool OBExtensionTable::IsReadable(unsigned int n)
   if (n >= _table.size())
     return false;
   else
-    return _table[n][3] == "1";
+    return _table[n][4] == "1";
 }
 
 bool OBExtensionTable::IsWritable(unsigned int n)
@@ -612,7 +631,7 @@ bool OBExtensionTable::IsWritable(unsigned int n)
   if (n >= _table.size())
     return false;
   else
-    return _table[n][4] == "1";
+    return _table[n][5] == "1";
 }
 
 unsigned int OBExtensionTable::Count()

@@ -1,3 +1,22 @@
+2002-02-14  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/data.h, src/data.cpp: Add MIME support to OBExtensionTable.
+
+	* src/extable.txt, src/extable.h: As above (using as much from the
+	current Chemical MIME page as possible).
+
+	* src/mol.h, src/mol.cpp (PerceiveBonds): Add preliminary support
+	for assigning bond orders based on Roger Sayle's "Cruft to
+	Content" algorithm. Still needs functional group and aromatic ring
+	recognition passes.
+	<http://www.daylight.com/meetings/mug01/Sayle/m4xbondage.html>
+
+	* src/mopac.cc: Fix bugs in read/write methods as pointed out by
+	Radek Liboska. Should solve PR #515884.
+
+	* src/atom.cpp (GetType): Fix bug with atom typing by assigning
+	the ATN type of an atom if the atom typer didn't pick one before.
+	
 2002-02-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/data.cpp, src/data.h, src/element.txt: Added support for

@@ -166,11 +166,14 @@ class OBExtensionTable : public OBGlobalDataBase
   bool	  IsWritable(unsigned int);
   void    ParseLine(char*);
   void    TypeToExtension(io_type,char*);
+  void	  TypeToMIME(io_type,char*);
   void    ExtensionToDescription(char*, char*);
 
   io_type       GetType(unsigned int);
   io_type       FilenameToType(char *);
   io_type       FilenameToType(string &);
+  io_type	MIMEToType(char *);
+  io_type	MIMEToType(string &);
   const char   *GetExtension(unsigned int);
   const char   *GetDescription(unsigned int);
   unsigned int  Count(); 
