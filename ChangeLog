@@ -1,3 +1,21 @@
+	
+2003-10-22  Fabien Fontaine <ffontaine@imim.es>
+
+	Added tools directory: contains utilities using libopenbabel
+
+	* tools/obgrep.cpp: SMART molecule grep
+	* tools/obfit.cpp: align molecules on SMART substructures
+	* tools/obrotate.cpp: rotate a tortional bond matching a SMART
+
+	* src/mol2.cpp (ReadMol2): Continue reading untill EOF or next
+	MOLECULE record to avoid 'error: has zero atoms!' message
+
+2003-10-20  Fabien Fontaine <ffontaine@imim.es>
+
+	* src/patty.h Istype function added  
+	* src/patty.cpp (read_rules) (assign_rules) : memory 
+	allocation changed
+	
 2003-10-03  Michael Banck  <mbanck@gmx.net>
 
 	* src/atom.cpp (GetDistance): New method.
