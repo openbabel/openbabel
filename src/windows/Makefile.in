@@ -59,12 +59,23 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_alias = @host_alias@
 host_triplet = @host@
+AS = @AS@
 CC = @CC@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
+DLLTOOL = @DLLTOOL@
 DOCTOOL = @DOCTOOL@
+ECHO = @ECHO@
+EXEEXT = @EXEEXT@
 LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
+STRIP = @STRIP@
+VERSION = @VERSION@
 
 EXTRA_DIST = winbabeldialog.clw  winbabeldialog.dsp  winbabeldialog.h              winbabeldialog.opt  winbabeldialogDlg.cpp winbabeldialog.aps              winbabeldialog.cpp  winbabeldialog.dsw  winbabeldialog.ncb              winbabeldialog.rc   winbabeldialogDlg.h
 
@@ -73,9 +84,6 @@ CONFIG_HEADER = ../../src/babelconfig.h
 CONFIG_CLEAN_FILES = 
 DIST_COMMON =  Makefile.am Makefile.in
 
-
-PACKAGE = @PACKAGE@
-VERSION = @VERSION@
 
 DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 

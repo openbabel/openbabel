@@ -9188,7 +9188,7 @@ esac
 
 
 
-                                                            ac_config_files="$ac_config_files Makefile src/Makefile src/math/Makefile src/windows/Makefile test/Makefile doc/Makefile"
+                                                                      ac_config_files="$ac_config_files Makefile src/Makefile src/math/Makefile src/windows/Makefile test/Makefile doc/Makefile openbabel.pc"
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -9729,6 +9729,7 @@ do
   "src/windows/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/windows/Makefile" ;;
   "test/Makefile" ) CONFIG_FILES="$CONFIG_FILES test/Makefile" ;;
   "doc/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
+  "openbabel.pc" ) CONFIG_FILES="$CONFIG_FILES openbabel.pc" ;;
   "default-1" ) CONFIG_COMMANDS="$CONFIG_COMMANDS default-1" ;;
   "src/babelconfig.h" ) CONFIG_HEADERS="$CONFIG_HEADERS src/babelconfig.h" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5

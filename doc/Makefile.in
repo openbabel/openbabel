@@ -59,12 +59,23 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_alias = @host_alias@
 host_triplet = @host@
+AS = @AS@
 CC = @CC@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
+DLLTOOL = @DLLTOOL@
 DOCTOOL = @DOCTOOL@
+ECHO = @ECHO@
+EXEEXT = @EXEEXT@
 LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
+STRIP = @STRIP@
+VERSION = @VERSION@
 
 EXTRA_DIST = $(man_MANS) Migration README.dioxin.pov FAQ Primer.html README.povray babel31.inc dioxin.mol2 dioxin.inc dioxin.png dioxin.pov
 man_MANS = babel.1
@@ -77,9 +88,6 @@ MANS = $(man_MANS)
 NROFF = nroff
 DIST_COMMON =  Makefile.am Makefile.in
 
-
-PACKAGE = @PACKAGE@
-VERSION = @VERSION@
 
 DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
