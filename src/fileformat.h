@@ -117,7 +117,7 @@ bool WriteSDFile(std::ostream &,OBMol &,const char *dimension="3D");
 bool WriteSmiles(std::ostream &,OBMol &,const char *title=NULL);
 bool WriteSmiOrderedMol2(std::ostream &,OBMol &,const char *dimension="3D");
 bool WriteTheSmiles(OBMol&,char*);
-bool WriteTheSmiles(OBMol&,string&);
+bool WriteTheSmiles(OBMol&,std::string&);
 bool WriteTinker(std::ostream &,OBMol &);
 bool WriteTitles(std::ostream &,OBMol &);
 bool WriteUnichem(std::ostream &,OBMol &);

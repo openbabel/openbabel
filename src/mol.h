@@ -192,8 +192,8 @@ public:
   unsigned int   GetIdx(void)			const;
   unsigned int	 GetResKey(void)		const;
 
-  vector<OBAtom*> GetAtoms(void)		const;
-  vector<OBBond*> GetBonds(bool = true)		const;
+  std::vector<OBAtom*> GetAtoms(void)		const;
+  std::vector<OBBond*> GetBonds(bool = true)	const;
 
   std::string    GetAtomID(OBAtom *atom)	const;
   unsigned       GetSerialNum(OBAtom *atom)	const;

@@ -86,7 +86,7 @@ public:
 
 class OBBinaryDBase
 {
-    ifstream        _ifs;
+    std::ifstream		 _ifs;
     std::vector<std::streampos>  _vpos;
 
 public:

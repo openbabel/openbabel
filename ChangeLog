@@ -1,3 +1,12 @@
+2002-07-09  Geoff Hutchison <hutchisn@chem.northwestern.edu>
+
+	* src/fileformat.h, src/mol.h, src/binary.h: Fix missing std:: in
+	headers, which causes problems with namespace-compliant
+	compilers. Should fix PR #578522.
+
+	* src/residue.cpp: Add missing "using namespace std," which also
+	caused problems with namespace-compliant compilers.
+
 2002-07-01  Richard Gillian <reg8@users.sourceforge.net>
 
 	* src/main.cpp: Add -hpH to use the "adjust pH" setting for adding
