@@ -8,7 +8,7 @@ CC            = @CC@
 CXX	      = @CXX@
 
 CFLAGS        = @CFLAGS@
-CXXFLAGS      = @CXXFLAGS@ -DDATADIR=\"${pkgdatadir}\"
+CXXFLAGS      = @CXXFLAGS@ -DDATADIR=\"${pkgdatadir}\" -I$(builddir)
 LIBS	      = @LIBS@
 LIBFLAGS      = -DLIBRARY
 
@@ -24,7 +24,7 @@ srcdir        = @srcdir@
 VPATH         = @srcdir@
 top_srcdir    = @top_srcdir@
 top_builddir  = @top_builddir@
-builddir      = @top_builddir@/test
+builddir      = @top_builddir@/src
 
 DEST	      = @bindir@
 
@@ -62,12 +62,14 @@ EXTRA_DIST    = bin2hex.pl
 
 MAKEFILE      = Makefile
 
-$(PROGRAM):     $(OBJS) $(MAIN) 
+$(PROGRAM):     $(OBJS) $(MAIN)
 		$(LINKER) $(LDFLAGS) $(OBJS) $(MAIN) -o  $(PROGRAM) $(LIBS)
+
+$(LIBRARY):	$(OBJS)
 		$(AR) -r $(LIBRARY) $(OBJS)
 		$(RANLIB) $(LIBRARY)
 
-all:		$(PROGRAM)
+all:		$(PROGRAM) $(LIBRARY)
 
 test:		check
 check:		$(PROGRAM)
