@@ -226,9 +226,24 @@ int main(int argc,char **argv)
             // quaternion fit
             qtrfit(refcoor, mvcoor, size, rmatrix);
 
-            delete[] mvcoor;
             //rotate all the atoms
             molmv.Rotate(rmatrix);
+
+	    double rmsd = calc_rms(refcoor,mvcoor,size);
+	    char rmsd_string[80];
+	    sprintf(rmsd_string,"%f", rmsd);
+
+	    OBCommentData *cd = new OBCommentData;
+	    molmv.SetData(cd);
+
+	    OBPairData *dp = new OBPairData;
+	    string field_name = "RMSD";
+
+	    dp->SetAttribute(field_name);
+	    dp->SetValue(rmsd_string);
+	    molmv.SetData(dp);
+
+            delete[] mvcoor;
 
             //translate the rotated molecule
             molmv.Translate(tvref);
