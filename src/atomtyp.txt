@@ -18,6 +18,7 @@ INTHYB	[$([#6]([#8D1])[#8D1])]		2	#sp2 carbon
 INTHYB	[$(C#*),$(C(=*)=*)]		1	#sp  carbon
 INTHYB	[N]				3	#sp3 nitrogen
 INTHYB	[n,$(N=*),$(N[#6,#7,#8]=,:,#*)]	2	#sp2 nitrogen
+INTHYB  [ND1,ND2,ND3]a			2	#sp2 nitrogen
 INTHYB	[$(N#*),$([ND2](=*)=*)]		1	#sp  nitrogen
 INTHYB	[O]				3	#sp3 oxygen
 INTHYB	[o,$(O=*),$(O[#6,#7,#8]=,:*)]	2	#sp2 oxygen
@@ -87,36 +88,36 @@ IMPVAL  [as]			3
 #
 #EXTERNAL TYPE RULES
 #
-EXTTYP	[#7^3]				N3
-EXTTYP	[#7X4+]				N3+
-EXTTYP	[#7^2]				Npl
-EXTTYP	[#7^1]				N1
-EXTTYP	[$(N=*)]			N2
-EXTTYP	[$([Nr0]C(=[Nr0])[Nr0])]	Ng+
-EXTTYP	[$([Nr0]=C([Nr0])[Nr0])]	Ng+
-EXTTYP	[$([ND1]=C[ND1])]		Ng+
-EXTTYP	[$([ND1]C=[ND1])]		Ng+
-EXTTYP	[$(N(O)*)]			Nox
-EXTTYP	[$(NC=[O,S])]			Nam
-EXTTYP	[$(N(~[OD1])~[OD1])]		Ntr
-EXTTYP	[n]				Nar
+EXTTYP	[#7^3]					N3
+EXTTYP	[#7X4+]					N3+
+EXTTYP	[#7^2]					Npl
+EXTTYP	[#7^1]					N1
+EXTTYP	[$(N=*)]				N2
+EXTTYP	[$([Nr0]C(=[Nr0])[Nr0])]		Ng+
+EXTTYP	[$([Nr0]=C([Nr0])[Nr0])]		Ng+
+EXTTYP	[$([ND1]=C[ND1])]			Ng+
+EXTTYP	[$([ND1]C=[ND1])]			Ng+
+EXTTYP	[$(N(O)*)]				Nox
+EXTTYP	[$(NC=[O,S])]				Nam
+EXTTYP	[$(N(~[OD1])~[OD1])]			Ntr
+EXTTYP	[n]					Nar
 
-EXTTYP	[#6^3]				C3
-EXTTYP	[#6^2]				C2
-EXTTYP	[$(C(=O)[OD1])]			Cac
-EXTTYP	[c]				Car
-EXTTYP	[#6^1]				C1
-EXTTYP	[#6+]				C+
-EXTTYP	[#6-]				C-
+EXTTYP	[#6^3]					C3
+EXTTYP	[#6^2]					C2
+EXTTYP	[$(C(=O)[OD1])]				Cac
+EXTTYP	[c]					Car
+EXTTYP	[#6^1]					C1
+EXTTYP	[#6+]					C+
+EXTTYP	[#6-]					C-
 
-EXTTYP	[#8^3]				O3
-EXTTYP	[#8^2]				O2
-EXTTYP  [$(Oa)]				O2
+EXTTYP	[#8^3]					O3
+EXTTYP	[#8^2]					O2
+EXTTYP  [$(Oa)]					O2
 #Uncomment the following 2 lines for correct sybyl atom typing
-#EXTTYP	[$([OD2]C=[O,S])]		O3	#ester oxygen
-#EXTTYP  [$(Oa)]                        O3      #aromatic ether
-EXTTYP	[#8-]				O-
-EXTTYP  [$([#8D1]~[#6]~[#8D1])]         O.co2  
+#EXTTYP	[$([OD2]C=[O,S])]			O3	#ester oxygen
+#EXTTYP  [$(Oa)]				O3      #aromatic ether
+EXTTYP	[#8-]					O-
+EXTTYP  [$([#8D1]~[#6]~[#8D1])]			O.co2  
 
 EXTTYP	[#15]					P
 EXTTYP	[#15X4+]				P3+
@@ -131,18 +132,11 @@ EXTTYP	[#16D3;$(S(=O))]			Sox
 EXTTYP	[#16;$([#16D4](~[OD1])(~[OD1])~[OD1])]	Sac
 EXTTYP	[#16;$([#16D3](~[OD1])~[OD1])]		Sac
 
-EXTTYP	[#5]				B2
-EXTTYP	[#5D4]				B3
+EXTTYP	[#5]					B2
+EXTTYP	[#5D4]					B3
 
-######################## Add Extra Definitions Here ##############################
-
-
-############################# End Extra Definitions ##############################
+######################## Add Extra Definitions Here ##########################
 
 
-
-
-
-
-
+############################# End Extra Definitions ##########################
 

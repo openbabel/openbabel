@@ -1,99 +1,105 @@
 #!/usr/bin/perl
+# bin2hex.pl
+# OpenEye Scientific Software
+# September 2001
 
-#
-# bin2hex.pl by Chami.com
-# http://www.chami.com/tips/
-#
+# Autoflush STDOUT
+#STDOUT->autoflush(1);
+$| = 1;
 
-# number of characters per line
-$chars_per_line = 15;
+$argc = @ARGV;
+if( $argc == 2 ) {
+    $filename = @ARGV[0];
+    $arrayname = @ARGV[1];
 
-# -------------------------------------
-
-# language id
-#
-# 0 = Perl (default)
-# 1 = C / C++
-# 2 = Pascal / Delphi
-#
-
-$rem_begin  = "begin binary data:";
-$rem_end    = "end binary data.";
-
-# C / C++
-$_var       = "\n\n/* $rem_begin */\n".
-  "static const char $ARGV[1]"."[] = ".
-  "/* %d */\n";
-$_begin     = "{";
-$_end       = "};\n";
-$_break     = "\n";
-$_format    = "0x%02X";
-$_separator = ",";
-$_comment   = "/* $rem_end ".
-  "size = %d bytes */\n";
-
-if(open(F, "awk 'substr(\$1,0,1) != \"#\" && NF > 0' ".$ARGV[0]." |"))
-  {
-    binmode(F);
-    
-#   $s = '';
-    $i = 0;
-    $count = 0;
-    $first = 1;
-    $s .= $_begin;
-    while(!eof(F))
-      {
-	if($i >= $chars_per_line)
-	  {
-	    $s .= $_break;
-	    $i = 0;
-	  }
-	if(!$first)
-	  {
-	    $s .= $_separator;
-	  }
-	$s .= sprintf($_format, ord(getc(F)));
-	++$i;
-	++$count;
-	$first = 0;
-      }
-
-    if($i >= $chars_per_line)
-    {
-	$s .= $_break;
-	$i = 0;
+    $pos = index($filename,".");
+    if( $pos > 0 ) {
+        $guard = uc(substr($filename,0,$pos));
+    } else {
+        $guard = uc($filename);
     }
-    if(!$first)
-    {
-	$s .= $_separator;
-    }
-    $s .= "0x00";
-    ++$count;
+} elsif( $argc == 3 ) {
+    $filename = @ARGV[0];
+    $arrayname = @ARGV[1];
+    $guard = @ARGV[2];
+} else {
+    print "usage:  bin2hex.pl <binaryfile> <arrayname>\n\n";
+    exit;
+}
 
-    $s .= "\n".$_end;
-    $s .= sprintf $_comment, $count;
-    $s .= "\n\n";
-    
-    $s = "\n".sprintf($_var, $count).$s;
-    
-    print $s;
-    
-    close( F );
-  }
-else
-  {
-    print
-      "bin2hex.pl by Chami.com\n".
-	"\n".
-	  "usage:\n".
-	    "  perl bin2hex.pl ".
-	      " \n".
-		"\n".
-		  "   : path to the ".
-		    "binary file\n".
-		      "   : 0 = Perl, ".
-			"1 = C/C++/Java, ".
-			  "2 = Pascal/Delphi\n".
-			    "\n";
-  }
+$debug = 0;
+
+open(F,$filename) || die "Error: Unable to open binary file!\n";
+
+if( !$debug ) {
+    print "#ifndef OB_" . $guard . "_H\n";
+    print "#define OB_" . $guard . "_H\n\n";
+    print "namespace OpenBabel\n{\n";
+    print "static const char " . $arrayname . "[] = {\n";
+}
+
+binmode(F);
+
+$col = 0;
+$init = 0;
+$ignore = 0;
+$newline = 1;
+
+while( !eof(F) ) {
+    $ch = ord(getc(F));
+    if( $ch == 13 ) {
+        $ch = 0;
+    }
+
+    if( $ignore ) {
+        if( $ch == 10 ) {
+            $ignore = 0;
+        }
+        $ch = 0;
+    } elsif( $newline ) {
+        if( $ch == 10 ) {
+            $ch = 0;
+        } elsif ( $ch == 35 ) {
+            $ignore = 1;
+            $ch = 0;
+        } elsif( $ch == 32 ) {
+            $ch = 0;
+        } elsif( $ch ) {
+            $newline = 0;
+        }
+    } elsif( $ch == 10 ) {
+        $newline = 1;
+    }
+
+    if( $ch ) {
+        if( $debug ) {
+            print chr($ch);
+        } else {
+            if( $init ) {
+                print ",";
+            } else {
+                $init = 1;
+            }
+            if( $col >= 15 ) {
+                print "\n";
+                $col = 0;
+            }
+            print sprintf("0x%02X",$ch);
+            $col++;
+        }
+    }
+}
+
+if( !$debug ) {
+    if( $col >= 15 ) {
+        print ",\n0x00};\n\n";
+    } else {
+        print ",0x00};\n\n";
+    }
+    print "} // namespace OpenBabel\n";
+    print "#endif // OB_" . $guard . "_H\n\n";
+}
+
+close(F);
+exit;
 

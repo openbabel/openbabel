@@ -1,3 +1,21 @@
+2002-06-07  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* Makefile.in: Make sure directories are properly created on "make
+	install" which fixes PR#565412.
+
+	* src/Makefile.in: Add support for rebuilding the binary data
+	headers when needed. Also generates library first, then just links
+	this into main.o for the program. Also as above.
+
+	* src/bin2hex.pl: Import a revised version contributed by Open
+	Eye.
+
+	* src/atomtyp.txt, src/extable.txt, src/types.txt: Ditto.
+
+	* src/aromatic.h, src/atomtyp.h, src/element.h, src/extable.h,
+	src/phmodel.h, src/resdata.h, src/types.h: Generate using new
+	bin2hex.pl.
+
 2002-06-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/main.cpp: Add support for -iMIME or -oMIME <mime_type>
