@@ -1,5 +1,9 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2002 by Geoffrey R. Hutchison
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -11,8 +15,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef MOLVECTOR_H
-#define MOLVECTOR_H
+#ifndef OB_MOLVECTOR_H
+#define OB_MOLVECTOR_H
 
 #include "mol.h"
 
@@ -49,7 +53,7 @@ class OBMolVector
   }
 };
 
-}
+} // end namespace OpenBabel
 
-#endif
+#endif // OB_MOLVECTOR_H
 

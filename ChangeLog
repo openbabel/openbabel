@@ -1,3 +1,29 @@
+2002-06-11  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/Makefile.in: Add proper commandline for new bin2hex for
+	PhModelData.
+
+	* src/Vector.cpp: Import changes contributed by Open
+	Eye--improvements in random vector and matrix methods.
+
+	* src/*.h: Improve top comment to refer to Open Babel and update
+	copyright dates. Add uniform #ifdef symbols to prevent clashing
+	with external header files.
+
+	* src/alchemy.cpp, src/atom.cpp, src/balst.cpp, src/chains.cpp:
+	Updates to cut down on buffer overflows, to begin addressing
+	PR#565413.
+
+	* src/data.cpp: Make OBExtensionTable types uniform. Make sure
+	\0 is inserted in the proper place in the buffer when reading from
+	the dataptr in OBGlobalDataBase::Init(). Fixes PR#567420.
+
+	* src/fileformat.cpp: Use updated io_type declarations.
+
+	* src/types.txt: Reformat to remove trailing whitespace and make
+	spacing uniform. (Attempt to minimize problems with reading using
+	OBTypeTable.)
+	
 2002-06-07  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* Makefile.in: Make sure directories are properly created on "make

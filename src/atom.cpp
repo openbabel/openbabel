@@ -303,7 +303,7 @@ char *OBAtom::GetType()
       OBTypeTable tempTable;
       tempTable.SetFromType("ATN");
       tempTable.SetToType("INT");
-      sprintf(num, "%d", GetAtomicNum());
+      snprintf(num, 6, "%d", GetAtomicNum());
       tempTable.Translate(_type, num);
     }
 

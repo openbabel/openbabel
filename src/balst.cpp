@@ -62,7 +62,7 @@ bool WriteBallAndStick(ostream &ofs,OBMol &mol)
   if (strlen(mol.GetTitle()) > 0)  ofs << mol.GetTitle() << endl; 
   else                             ofs << "Untitled" << endl;
   
-  sprintf(buffer,"%d",mol.NumAtoms()); ofs << buffer << endl;
+  snprintf(buffer,BUFF_SIZE,"%d",mol.NumAtoms()); ofs << buffer << endl;
   
   OBAtom *atom,*nbr;
   vector<OBNodeBase*>::iterator i;
@@ -72,7 +72,7 @@ bool WriteBallAndStick(ostream &ofs,OBMol &mol)
     {
       strcpy(tmptype,etab.GetSymbol(atom->GetAtomicNum()));
       if (strlen(tmptype) > 1) tmptype[1] = toupper(tmptype[1]);
-      sprintf(buffer,"%-3s %8.4f  %8.4f  %8.4f",
+      snprintf(buffer,BUFF_SIZE,"%-3s %8.4f  %8.4f  %8.4f",
 	      tmptype,
 	      atom->GetX(),
 	      atom->GetY(),

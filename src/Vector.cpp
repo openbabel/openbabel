@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <math.h>
-#include <time.h>
+
 #include "mol.h"
 #include "Vector.h"
 
@@ -29,33 +29,31 @@ using namespace std;
 namespace OpenBabel {
 
 // create a random unit vector
-// if seed is nonNegative then use this as the seed,
-// otherwise do not seed
-void Vector::randomUnitVector(OBRandom *oeRandP)
+// use the supplied RNG if it is non-NULL
+void Vector::randomUnitVector(OBRandom *obRandP)
 {
-   bool doFree= false;
-   if (oeRandP == NULL){
-      doFree= true;
-      oeRandP= new OBRandom(true);
-      oeRandP->TimeSeed();
-   }
+  OBRandom *ptr;
+  float f1, f2, f3;
+  
+  if (!obRandP)
+     {
+      ptr = new OBRandom(true);
+      ptr->TimeSeed();
+     }
+  else
+     ptr = obRandP;
 
    // make sure to sample in the unit sphere
-   float f1= 0.0f, f2= 0.0f, f3= 0.0f;
-   bool b= false;
-   while(!b){
-       f1= oeRandP->NextFloat();
-       f2= oeRandP->NextFloat();
-       f3= oeRandP->NextFloat();
-       if(b=f1*f1 + f2*f2 + f3*f3 <= 1.0){
-				 if (oeRandP->NextInt() % 2 == 0) f1 *= -1.0f;
-				 if (oeRandP->NextInt() % 2 == 0) f2 *= -1.0f;
-				 if (oeRandP->NextInt() % 2 == 0) f3 *= -1.0f;
-			 }
-   }
+   do {
+     f1= ptr->NextFloat() - 0.5f;
+     f2= ptr->NextFloat() - 0.5f;
+     f3= ptr->NextFloat() - 0.5f;
+   } while ( (f1*f1+f2*f2+f3*f3) > 0.5 );
+
    this->Set(f1,f2,f3);
    this->normalize();
-   if (doFree) { delete oeRandP; oeRandP= NULL; }
+
+   if (!obRandP) { delete ptr; }
 }
 
 Vector :: Vector ( const float x, const float y, const float z )
@@ -313,7 +311,8 @@ float VectorAngle ( const Vector& v1, const Vector& v2 )
   return((RAD_TO_DEG * acos(dp)));
 }
 
-float CalcTorsionAngle(Vector &a,Vector &b,Vector &c,Vector &d)
+float CalcTorsionAngle(const Vector &a, const Vector &b,
+		       const Vector &c, const Vector &d)
 {
   float torsion;
   Vector b1,b2,b3,c1,c2,c3;
@@ -343,11 +342,12 @@ float CalcTorsionAngle(Vector &a,Vector &b,Vector &c,Vector &d)
 
 void Matrix3x3::randomRotation(OBRandom &rnd)
 { 
-    Vector v1; 
-    v1.randomUnitVector(&rnd);
-    float rotAngle= float(rnd.NextInt() % 36000)/100.0;
-    if (rnd.NextInt() % 2 == 0) rotAngle *= -1.0f;
-    this->RotAboutAxisByAngle(v1,rotAngle);
+  float rotAngle;
+  Vector v1;
+ 
+  v1.randomUnitVector(&rnd);
+  rotAngle = 360.0f * rnd.NextFloat();
+  this->RotAboutAxisByAngle(v1,rotAngle);
 }
 
 void Matrix3x3::SetupRotMat(float phi,float theta,float psi)

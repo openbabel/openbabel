@@ -1,5 +1,9 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2002 by Geoffrey R. Hutchison
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -11,8 +15,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef GENERIC_H
-#define GENERIC_H
+#ifndef OB_GENERIC_H
+#define OB_GENERIC_H
 
 //obData0 through obData9 are data slots that are not used in OpenBabel, and
 //are meant for use in derivative programs.  Macro definitions can be used
@@ -138,4 +142,4 @@ public:
 
 } //end namespace OpenBabel
 
-#endif //GENERIC_H
+#endif // OB_GENERIC_H

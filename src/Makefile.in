@@ -37,7 +37,7 @@ DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt \
 DATAINCS      = aromatic.h atomtyp.h element.h extable.h \
 	        phmodeldata.h resdata.h types.h
 
-HDRS	      = StdAfx.h Vector.h aromatic.h atomtyp.h base.h binary.h \
+HDRS	      = Vector.h aromatic.h atomtyp.h base.h binary.h \
 		bitgrid.h bitvec.h chiral.h chains.h commandline.h cwrap.h \
 		data.h element.h extable.h fileformat.h grid.h \
 		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
@@ -109,7 +109,7 @@ extable.h:	bin2hex.pl extable.txt
 		(cd $(srcdir); ./bin2hex.pl extable.txt ExtensionTableData >extable.h)
 
 phmodeldata.h:	bin2hex.pl phmodel.txt
-		(cd $(srcdir); ./bin2hex.pl phmodel.txt PhModelData >phmodeldata.h)
+		(cd $(srcdir); ./bin2hex.pl phmodel.txt PhModelData PHMODELDATA >phmodeldata.h)
 
 resdata.h:	bin2hex.pl resdata.txt
 		(cd $(srcdir); ./bin2hex.pl resdata.txt ResidueData >resdata.h)

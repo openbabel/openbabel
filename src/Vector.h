@@ -1,5 +1,9 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2002 by Geoffrey R. Hutchison
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -11,8 +15,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef OB_VECTOR_H
+#define OB_VECTOR_H
 
 
 #ifdef __sgi
@@ -61,8 +65,8 @@ class	Vector {
 
 			//  Assignment
 
-      void Set(  const float x, const float y, const float z ) 
-			  {_vx = x ;_vy = y ;_vz = z ;}
+      void Set(const float x, const float y, const float z)
+	{_vx = x ;_vy = y ;_vz = z ;}
       void Set(const float *c) {_vx = c[0];_vy = c[1];_vz = c[2];}
       void SetX(const float x) {_vx = x;};
       void SetY(const float y) {_vy = y;};
@@ -88,7 +92,7 @@ class	Vector {
       friend Vector operator* ( const float&, const Vector& ) ;
       friend Vector operator* ( const Vector&, const float& ) ;
       friend Vector operator/ ( const Vector&, const float& ) ;
-      friend Vector operator*(const Vector &,const Vector &);
+      friend Vector operator* ( const Vector &,const Vector &);
 
       //vector and matrix ops
 
@@ -101,7 +105,7 @@ class	Vector {
       Vector& operator+= ( const Vector& ) ;
       Vector& operator-= ( const Vector& ) ;
       Vector& operator*= ( const float& ) ;
-      Vector& operator*= (const Matrix3x3 &);
+      Vector& operator*= ( const Matrix3x3 &);
       Vector& operator/= ( const float& ) ;
       Vector& operator+= ( const float* ) ;
       Vector& operator-= ( const float* ) ;
@@ -110,47 +114,43 @@ class	Vector {
       // create a random unit vector in R3
       void randomUnitVector(OBRandom *oeRand= NULL);
 
-			//  Member Functions
-			   //  Dot Product
-
-
+      //  Member Functions
+      
+      //  Dot Product
       friend float dot ( const Vector&, const Vector& ) ;
 
-			   //  Cross Product
-
+      //  Cross Product
       friend Vector cross ( const Vector&, const Vector& ) ;
 
-			   //  Normalization, Make it a unit Vector
-
+      // calculate angle between vectors
       friend float VectorAngle ( const Vector& v1, const Vector& v2 );
 			   
-			   // calculate angle between vectors
+      // calculat torsion angle between vectors
+      friend float CalcTorsionAngle(const Vector &a, const Vector &b,
+				    const Vector &c, const Vector &d);
 
-      friend float CalcTorsionAngle(Vector &a,Vector &b,Vector &c,Vector &d);
-
+      //  Normalization, Make it a unit Vector
       Vector& normalize () ;
 
-			   //  Vector Length
-
+      //  Vector Length
       float length () const ;
 
-			   //  Vector Length Squared
-
+      //  Vector Length Squared
       float length_2 () const ;
 
-			//  Access Functions to get 
-			//    x-coordinate, y-coordinate or
-			//    z-coordinate of the vector
-
+      //  Access Functions to get 
+      //    x-coordinate, y-coordinate or
+      //    z-coordinate of the vector
       float x () const { return _vx ; } ;
       float y () const { return _vy ; } ;
       float z () const { return _vz ; } ;
 
-      inline float distSq(const Vector &vv) const { return( (_vx - vv.x() )*(_vx - vv.x() ) + 
-                                                            (_vy - vv.y() )*(_vy - vv.y() ) + 
-                                                            (_vz - vv.z() )*(_vz - vv.z() ) ); 
-      }
-
+      inline float distSq(const Vector &vv) const 
+	{ return( (_vx - vv.x() )*(_vx - vv.x() ) + 
+		  (_vy - vv.y() )*(_vy - vv.y() ) + 
+		  (_vz - vv.z() )*(_vz - vv.z() ) ); 
+	}
+      
       // create a vector orthogonal to me
       void createOrthoVector(Vector &v) const;
 
@@ -158,10 +158,10 @@ class	Vector {
 
 			//  The global constant Vectors
 
-const Vector VZero ( 0.0, 0.0, 0.0 ) ;
-const Vector VX    ( 1.0, 0.0, 0.0 ) ;
-const Vector VY    ( 0.0, 1.0, 0.0 ) ;
-const Vector VZ    ( 0.0, 0.0, 1.0 ) ;
+const Vector VZero ( 0.0f, 0.0f, 0.0f ) ;
+const Vector VX    ( 1.0f, 0.0f, 0.0f ) ;
+const Vector VY    ( 0.0f, 1.0f, 0.0f ) ;
+const Vector VZ    ( 0.0f, 0.0f, 1.0f ) ;
 
 class Matrix3x3
 {
@@ -169,9 +169,9 @@ class Matrix3x3
   public:
   Matrix3x3(void) 
     {
-      ele[0][0] = 0.0;ele[0][1] = 0.0;ele[0][2] = 0.0;
-      ele[1][0] = 0.0;ele[1][1] = 0.0;ele[1][2] = 0.0;
-      ele[2][0] = 0.0;ele[2][1] = 0.0;ele[2][2] = 0.0;
+      ele[0][0] = 0.0f; ele[0][1] = 0.0f; ele[0][2] = 0.0f; 
+      ele[1][0] = 0.0f; ele[1][1] = 0.0f; ele[1][2] = 0.0f; 
+      ele[2][0] = 0.0f; ele[2][1] = 0.0f; ele[2][2] = 0.0f; 
     }
 
   Matrix3x3(Vector a,Vector b,Vector c)
@@ -212,4 +212,4 @@ class Matrix3x3
 Vector center_coords(float*,int);
 }
 
-#endif //VECTOR_H
+#endif // OB_VECTOR_H

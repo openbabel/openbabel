@@ -1,7 +1,23 @@
 #!/usr/bin/perl
 # bin2hex.pl
-# OpenEye Scientific Software
-# September 2001
+
+########################################################################
+# Copyright (C) 2001 by OpenEye Scientific Software, Inc.
+# Some portions Copyright (c) 2002 by Geoffrey R. Hutchison
+#
+# This file is part of the Open Babel project.
+# For more information, see <http://openbabel.sourceforge.net/>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation version 2 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+########################################################################
+
 
 # Autoflush STDOUT
 #STDOUT->autoflush(1);
@@ -32,10 +48,17 @@ $debug = 0;
 open(F,$filename) || die "Error: Unable to open binary file!\n";
 
 if( !$debug ) {
+    print "/***************************************************************\n";
+    print "This file is part of the Open Babel project.\n";
+    print "This is copyright under the GNU General Public License (GPL)\n";
+    print "For more information, see <http://openbabel.sourceforge.net/>\n";
+    print "***************************************************************/\n";
+    print "\n\n";
+
     print "#ifndef OB_" . $guard . "_H\n";
     print "#define OB_" . $guard . "_H\n\n";
     print "namespace OpenBabel\n{\n";
-    print "static const char " . $arrayname . "[] = {\n";
+    print "static const char " . $arrayname . "[] = {\n ";
 }
 
 binmode(F);
@@ -81,7 +104,7 @@ while( !eof(F) ) {
                 $init = 1;
             }
             if( $col >= 15 ) {
-                print "\n";
+                print "\n ";
                 $col = 0;
             }
             print sprintf("0x%02X",$ch);

@@ -1,5 +1,8 @@
 /**********************************************************************
-Copyright (C) 2000 by Geoffrey Hutchison
+Copyright (C) 2000-2002 by Geoffrey R. Hutchison
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -11,8 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef FILEFORMAT_H
-#define FILEFORMAT_H
+#ifndef OB_FILEFORMAT_H
+#define OB_FILEFORMAT_H
 
 #ifdef __sgi
 #include <iostream.h>

@@ -1,5 +1,9 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2002 by Geoffrey R. Hutchison
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,8 +20,8 @@ GNU General Public License for more details.
 #pragma warning (disable: 4305) // warning: truncation from 'const double' to 'const float'
 #endif
 
-#ifndef MOL_H
-#define MOL_H
+#ifndef OB_MOL_H
+#define OB_MOL_H
 
 #include <math.h>
 
@@ -761,4 +765,4 @@ inline float rint(float x) { return ( (x < 0.0f) ? ceil(x-0.5) : floor(x+0.5f));
 
 }
 
-#endif //MOL_H
+#endif // OB_MOL_H

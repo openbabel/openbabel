@@ -1,5 +1,9 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2002 by Geoffrey R. Hutchison
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -11,8 +15,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef DATA_H
-#define DATA_H
+#ifndef OB_DATA_H
+#define OB_DATA_H
 
 #include <stdio.h>
 
@@ -24,7 +28,6 @@ GNU General Public License for more details.
 #include <fstream>
 #endif
 
-#include <algorithm>
 #include <vector>
 #include <string>
 
@@ -41,20 +44,24 @@ GNU General Public License for more details.
 namespace OpenBabel {
 
 class OBElement;
+
 class OBElementTable;
-typedef enum {UNDEFINED,SDF,MOL2,PDB,DELPDB,SMI,BOX,FIX,
-	      OEBINARY,CCC,MMD,ALCHEMY,BALLSTICK,BGF,GHEMICAL,
-              XYZ,GAMESSIN,GAMESSOUT,HIN,CACAO,CACAOINT,CACHE, 
-	      CHEMDRAW,CML,CSR,CSSR,FEATURE,FENSKEHALL,GROMOS96A,
-	      GROMOS96N,QCHEMIN,MPQC,PREP,BIOSYM,CADPAC,CHEM3D1,
-	      CHEM3D2,FDAT,GSTAT,DOCK,FRACT,M3D,GAUSSIANZ,
-	      GAUSSIANCART,GAUSSIAN92,GAUSSIAN94,MACMOL,MICROWORLD,
-	      MM2IN,MM2OUT,MM3,MMADS,MOLIN,MOLINVENT,MOPACCART,
-	      MOPACINT,MOPACOUT,PCMODEL,JAGUARIN,JAGUAROUT,
-	      REPORT,MSF,SCHAKAL,SHELX,SPARTAN,
-	      SPARTANSEMI,SPARTANMM,UNICHEM,XED,BMIN,ICON8,IDATM,
-	      MACCS,TINKER,CHARMM,QCHEMOUT,TITLE,DMOL,
-	      NWCHEMIN,NWCHEMOUT,RDF,SMIRKS,VIEWMOL } io_type;
+typedef enum { UNDEFINED, // Rest are alphabetical, insert as needed
+               ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
+               CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
+               CHEM3D2, CHEMDRAW, CIF, CML, CSR, CSSR, DELPDB, DMOL, DOCK,
+               FDAT, FEATURE, FH, FIX, FRACT, GAMESSIN, GAMESSOUT,
+               GAUSSIAN92, GAUSSIAN94, GAUSSIANCART, GAUSSIANZMAT,
+               GHEMICAL, GROMOS96A, GROMOS96N, GSTAT, HIN, ICON8,
+               IDATM, JAGUARIN, JAGUAROUT, M3D, MACCS, MACMOL,
+               MICROWORLD, MM2IN, MM2OUT, MM3, MMADS, MMCIF, MMD,
+               MOL2, MOLDEN, MOLIN, MOLINVENT, MOPACCART, MOPACINT,
+               MOPACOUT, MPQC, MSF, NWCHEMIN, NWCHEMOUT, OEBINARY,
+               PCMODEL, PDB, PREP, QCHEMIN, QCHEMOUT, REPORT,
+               SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
+               SPARTANSEMI, TGF, TINKER, TITLE, UNICHEM, VIEWMOL,
+               XED, XYZ
+             } io_type;
 
 class OBGlobalDataBase
 {

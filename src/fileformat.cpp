@@ -85,7 +85,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol,
     case DMOL:      WriteDMol(ofs,mol);			break;
     case DELPDB:    WriteDelphiPDB(ofs,mol);  		break;
     case FEATURE:   WriteFeat(ofs,mol);			break;
-    case FENSKEHALL:WriteFenskeZmat(ofs,mol);		break;
+    case FH:	    WriteFenskeZmat(ofs,mol);		break;
     case FIX:       WriteFixFile(ofs,mol);    		break;
     case GAMESSIN:  WriteGAMESS(ofs,mol);		break;
     case GHEMICAL:  WriteGhemical(ofs,mol);   		break;

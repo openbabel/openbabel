@@ -359,7 +359,7 @@ io_type TextToType(string typestring)
   else if (typestring == "CSR")			return(CSR);
   else if (typestring == "CSSR")		return(CSSR);
   else if (typestring == "FEATURE")		return(FEATURE);
-  else if (typestring == "FH")			return(FENSKEHALL);
+  else if (typestring == "FH")			return(FH);
   else if (typestring == "GROMOS96A")		return(GROMOS96A);
   else if (typestring == "GROMOS96N")		return(GROMOS96N);
   else if (typestring == "QCHEMIN")		return(QCHEMIN);
@@ -377,7 +377,7 @@ io_type TextToType(string typestring)
   else if (typestring == "DOCK")		return(DOCK);
   else if (typestring == "FRACT")		return(FRACT);
   else if (typestring == "M3D")			return(M3D);
-  else if (typestring == "GAUSSIANZMAT")	return(GAUSSIANZ);
+  else if (typestring == "GAUSSIANZMAT")	return(GAUSSIANZMAT);
   else if (typestring == "GAUSSIANCART")	return(GAUSSIANCART);
   else if (typestring == "GAUSSIAN92")		return(GAUSSIAN92);
   else if (typestring == "GAUSSIAN94")		return(GAUSSIAN94);
@@ -684,21 +684,21 @@ void OBGlobalDataBase::Init()
 
     if (!_subdir.empty())
     {
-	  strcpy(subbuffer,buffer);
+      strcpy(subbuffer,buffer);
       strcat(subbuffer,_subdir.c_str());
       strcat(subbuffer,FILE_SEP_CHAR);
     }
 
     strcat(buffer,(char*)_filename.c_str());
-	strcat(subbuffer,(char*)_filename.c_str());
+    strcat(subbuffer,(char*)_filename.c_str());
 
-	ifs1.open(subbuffer);
-	ifsP= &ifs1;
-	if (!(*ifsP))
-	{
-		ifs2.open(buffer);
-		ifsP = &ifs2;
-	}
+    ifs1.open(subbuffer);
+    ifsP= &ifs1;
+    if (!(*ifsP))
+      {
+	ifs2.open(buffer);
+	ifsP = &ifs2;
+      }
   }
   // Then, check the configured data directory
   else // if (!(*ifsP))
@@ -711,8 +711,8 @@ void OBGlobalDataBase::Init()
   }
   if ((*ifsP))
     {
-      for (;ifsP->getline(buffer,BUFF_SIZE);)
-		  ParseLine(buffer);
+      while(ifsP->getline(buffer,BUFF_SIZE))
+	ParseLine(buffer);
     }
   else
   // If all else fails, use the compiled in values
@@ -723,7 +723,7 @@ void OBGlobalDataBase::Init()
 	if (*p2 == '\n')
 	  {
 	    strncpy(buffer, p1, (p2 - p1));
-	    buffer[(p2 - p1) + 1] = '\0';
+	    buffer[(p2 - p1)] = '\0';
 	    ParseLine(buffer);
 	    p1 = ++p2;
 	  }

@@ -1,5 +1,9 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2002 by Geoffrey R. Hutchison
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -11,8 +15,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef __MOLCHRG_H
-#define __MOLCHRG_H
+#ifndef OB_MOLCHRG_H
+#define OB_MOLCHRG_H
 
 namespace OpenBabel {
 
@@ -51,4 +55,4 @@ class GasteigerState
 #define MX_GASTEIGER_ITERS  6
 
 
-#endif //__MOLCHRG_H
+#endif // OB_MOLCHRG_H

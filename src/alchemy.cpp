@@ -79,7 +79,7 @@ bool WriteAlchemy(ostream &ofs,OBMol &mol)
   char buffer[BUFF_SIZE];
   char bond_string[10];
   
-  sprintf(buffer,"%5d ATOMS, %5d BONDS,     0 CHARGES",
+  snprintf(buffer, BUFF_SIZE, "%5d ATOMS, %5d BONDS,     0 CHARGES",
 	  mol.NumAtoms(),
 	  mol.NumBonds());
   ofs << buffer << endl;
@@ -92,7 +92,7 @@ bool WriteAlchemy(ostream &ofs,OBMol &mol)
     atom = mol.GetAtom(i);
     str = atom->GetType();
     ttab.Translate(str1,str);
-    sprintf(buffer,"%5d %-6s%8.4f %8.4f %8.4f     0.0000",
+    snprintf(buffer, BUFF_SIZE, "%5d %-6s%8.4f %8.4f %8.4f     0.0000",
 	    i,
 	    (char*)str1.c_str(),
 	    atom->GetX(),
@@ -114,7 +114,7 @@ bool WriteAlchemy(ostream &ofs,OBMol &mol)
     case 5 :  strcpy(bond_string,"AROMATIC"); break;
     default : strcpy(bond_string,"SINGLE");
     }
-    sprintf(buffer,"%5d  %4d  %4d  %s",
+    snprintf(buffer, BUFF_SIZE, "%5d  %4d  %4d  %s",
 	    bond->GetIdx()+1,
 	    bond->GetBeginAtomIdx(),
 	    bond->GetEndAtomIdx(),
