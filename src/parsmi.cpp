@@ -23,8 +23,8 @@ using namespace std;
 
 namespace OpenBabel {
 
-extern OBAromaticTyper  aromtyper;
-extern OBAtomTyper      atomtyper;
+  //FF extern OBAromaticTyper  aromtyper;
+  //FF extern OBAtomTyper      atomtyper;
 
 class OBSmilesParser
 {
@@ -127,8 +127,11 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
   mol.SetAromaticPerceived();
   FindAromaticBonds(mol);
   FindOrphanAromaticAtoms(mol);// CM 18 Sept 2003
-  atomtyper.AssignImplicitValence(mol); // CM and set _spinmultiplicities for H-deficient atoms
-
+  //FF spin multiplicity for H-deficient atoms no longer assigned
+  //in AssignImplicitValence
+  //atomtyper.AssignImplicitValence(mol); // CM and set _spinmultiplicities for H-deficient atoms
+  mol.AssignSpinMultiplicity();
+  //FF end
   mol.UnsetAromaticPerceived();
   mol.EndModify();
 

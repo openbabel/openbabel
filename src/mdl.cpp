@@ -16,8 +16,8 @@ GNU General Public License for more details.
 
 using namespace std;
 namespace OpenBabel {
-
-extern OBAtomTyper atomtyper; //CM
+  //FF
+  //extern OBAtomTyper atomtyper; //CM
 
 bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
   int i,natoms,nbonds;
@@ -120,7 +120,12 @@ bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
 			// Lines setting several other properties are not implemented
 		}
 	}
-	atomtyper.AssignImplicitValence(mol); //and set _spinmultiplicities for H-deficient atoms
+  //FF spin multiplicity for H-deficient atoms no longer assigned
+  //in AssignImplicitValence
+  //atomtyper.AssignImplicitValence(mol); //and set _spinmultiplicities for H-deficient atoms
+  mol.AssignSpinMultiplicity();
+  //FF end
+  //
 	//CM end
 
   mol.EndModify();

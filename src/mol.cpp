@@ -1657,6 +1657,41 @@ bool OBMol::CorrectForPH()
   return(true);
 }
 
+//! \ brief set spin multiplicity for H-deficient atoms
+bool OBMol::AssignSpinMultiplicity()
+{
+  if (HasSpinMultiplicityAssigned()) return(true);
+
+  SetSpinMultiplicityAssigned();
+
+  OBAtom *atom;
+  int diff, mult;
+  vector<OBNodeBase*>::iterator k;
+  //begin CM 18 Sept 2003
+  //if there are any explicit Hs on an atom, then they consitute all the Hs
+  //Any discrepancy with the expected atom valency is because it is a radical of some sort
+  //Also adjust the ImplicitValence for radical atoms
+  for (atom = BeginAtom(k);atom;atom = NextAtom(k))
+    {
+      if (!atom->IsHydrogen() && atom->ExplicitHydrogenCount()!=0)
+	{
+	  diff=atom->GetImplicitValence() - (atom->GetHvyValence() + atom->ExplicitHydrogenCount());
+	  if (diff)
+	    atom->SetSpinMultiplicity(diff+1);//radicals =2; all carbenes =3
+	}
+      
+      mult=atom->GetSpinMultiplicity();
+      if(mult) //radical or carbene
+	atom->DecrementImplicitValence(); 
+      if(mult==1 || mult==3) //e.g.singlet or triplet carbene
+	atom->DecrementImplicitValence();
+    }
+  //end CM
+  
+  return (true);
+}
+
+
 static void ResetVisit(OBMol &mol,vector<int> &visit,int depth)
 {
   OBBond *bond;
