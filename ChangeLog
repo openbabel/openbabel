@@ -1,8 +1,16 @@
+2003-06-23  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/main.cpp: Move man documentation to end of file (right
+	after usage() code) for better "readability". Also make sure that
+	we quit attempting to read molecules from a file when we find no
+	atoms. Fixes some problems seen when roundtripping.
+	
 2003-06-23  Vincent Favre-Nicolin  <vincefn@users.sourceforge.net>
-   * doc/Doxyfile-man, src/main.cpp, Doxyfile: Added the man page
-   in doxygen format in main.cpp, for automatic generation of the 
-   man page from the source code, using 'Doxygen Doxyfile-man' in the
-   doc/ directory. Normal Doxygen run now skips src/main.cpp
+
+	* doc/Doxyfile-man, src/main.cpp, Doxyfile: Added the man page in
+	doxygen format in main.cpp, for automatic generation of the man
+	page from the source code, using 'Doxygen Doxyfile-man' in the
+	doc/ directory. Normal Doxygen run now skips src/main.cpp
 
 2003-06-23  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
 
