@@ -51,9 +51,9 @@ bool ReadViewMol(istream &ifs,OBMol &mol,char *title)
 	      tokenize(vs,buffer);
 	      if (vs.size() != 4) return(false);
 	      atom = mol.NewAtom();
-	      x = atof((char*)vs[0].c_str());
-	      y = atof((char*)vs[1].c_str());
-	      z = atof((char*)vs[2].c_str());
+	      x = atof((char*)vs[0].c_str()) * BOHR_TO_ANGSTROM;
+	      y = atof((char*)vs[1].c_str()) * BOHR_TO_ANGSTROM;
+	      z = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
 	      atom->SetVector(x,y,z); //set coordinates
 	      atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
 	    }
