@@ -21,10 +21,10 @@ libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 
 libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
-		aromatic.h atomtyp.h base.h binary.h bitvec.h bondtyp.h \
-		bondtyper.h chains.h chiral.h data.h element.h extable.h \
-		fileformat.h generic.h grid.h isotope.h matrix.h mol.h \
-		molchrg.h molvector.h oberror.h obifstream.h obutil.h \
+		aromatic.h atomtyp.h babelconfig.h base.h binary.h bitvec.h \
+		bondtyp.h bondtyper.h chains.h chiral.h data.h element.h \
+		extable.h fileformat.h generic.h grid.h isotope.h matrix.h \
+		mol.h molchrg.h molvector.h oberror.h obifstream.h obutil.h \
 		parsmart.h patty.h phmodel.h phmodeldata.h resdata.h ring.h \
 		rotor.h smi.h typer.h types.h
 
