@@ -1,3 +1,11 @@
+2005-02-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/atom.cpp (GetType): Call global OBTypeTable ttab rather than
+	declaring a local version.
+
+	* src/mol.cpp (RenumberAtoms): Add documentation and return
+	without action if supplied vector is the wrong size.
+
 2005-02-27  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/obconversion.cpp: Removed ThrowError and #include mol.h

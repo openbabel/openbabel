@@ -419,11 +419,10 @@ char *OBAtom::GetType()
     if (strlen(_type) == 0) // Somehow we still don't have a type!
     {
         char num[6];
-        OBTypeTable tempTable;
-        tempTable.SetFromType("ATN");
-        tempTable.SetToType("INT");
+        ttab.SetFromType("ATN");
+        ttab.SetToType("INT");
         snprintf(num, 6, "%d", GetAtomicNum());
-        tempTable.Translate(_type, num);
+        ttab.Translate(_type, num);
     }
     if (_ele == 1 && _isotope == 2)
         snprintf(_type, 6, "%s", "D");
