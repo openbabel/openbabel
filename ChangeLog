@@ -1,5 +1,12 @@
 2005-01-13  Chris Morley  <c.morley@gaseq.co.uk>
 
+	* src/formats/obmoleculeformat.h: Added. Class to reduce code duplication.  
+	* src/formats/mdlformat.cpp: added V3000 support   
+	* src/formats/smilesformat.cpp: added option for radical output as lc  
+	* src/formats/fingerprintformat.cpp Added. 
+
+2005-01-13  Chris Morley  <c.morley@gaseq.co.uk>
+
 	Correct number of implicit hydrogens in radicals
 	Previously used decremented implicit valency which sometimes was reset;
 	now correct with _spinmultiplicity. 
