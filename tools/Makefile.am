@@ -8,3 +8,5 @@ obrotate_LDADD = ../src/libopenbabel.la
 
 obfit_SOURCES = obfit.cpp
 obfit_LDADD = ../src/libopenbabel.la
+
+AM_CPPFLAGS = -I$(top_srcdir)/src

@@ -1,3 +1,11 @@
+2003-11-10  Michael Banck  <mbanck@gmx.net>
+
+	* src/math/Makefile.am (AM_CPPFLAGS): New directive, adding
+	$(top_srcdir)/src to includes to make building in a seperate
+	build-directory possible.
+	* test/Makefile.am (AM_CPPFLAGS): Likewise.
+	* tools/Makefile.am (AM_CPPFLAGS): Likewise.
+	
 2003-11-08  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* configure, */Makefile.in: Updated with current autoconf, automake.

@@ -4,3 +4,5 @@ roundtrip_SOURCES = roundtrip.cpp
 LDADD = ../src/libopenbabel.la
 EXTRA_DIST = smartsresults.txt smartstest.txt unitcell.txt ringresults.txt attype.00.smi cml.sh
 TESTS = obtest cml.sh
+
+AM_CPPFLAGS = -I$(top_srcdir)/src
