@@ -1,3 +1,9 @@
+2003-03-18  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* test/roundtrip.cpp (main): Improve usability by making BOX and
+	SMI file types special cases. (Hard to compare atoms and coords
+	for them.)
+
 2003-03-17  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 	
 	* src/cml.cpp: Fix unused declarations that cause problems with

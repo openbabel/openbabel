@@ -68,13 +68,6 @@ int main(int argc,char *argv[])
   fileFormat.ReadMolecule(inFileStream1, mol, argv[1]);
   fileFormat.ReadMolecule(inFileStream2, mol2, argv[2]);
 
-  if (mol.NumAtoms() != mol2.NumAtoms())
-    {
-      cout << " ** ERROR ** Number of atoms differ: " << mol.NumAtoms()
-	   << " and " << mol2.NumAtoms() << endl;
-      return(-1);
-    }
-  
   if (mol.NumAtoms() == 0)
     {
       cout << " ** ERROR ** Molecule #1 has no atoms!" << endl;
@@ -87,6 +80,45 @@ int main(int argc,char *argv[])
       return(-1);
     }
 
+  if (inFile1 == BOX)
+    {
+      if (mol.NumAtoms() != 8)
+	{
+	  cout << " *** ERROR *** BOX file #1 without 8 atoms!" << endl;
+	  return(-1);
+	}
+      return(0);
+    }
+
+  if (inFile2 == BOX)
+    {
+      if (mol2.NumAtoms() != 8)
+	{
+	  cout << " *** ERROR *** BOX file #2 without 8 atoms!" << endl;
+	  return(-1);
+	}
+      return(0);
+    }
+
+  if (inFile1 == SMI || inFile2 == SMI)
+    {
+      if (mol.NumHvyAtoms() != mol2.NumHvyAtoms())
+	{
+	  cout << " ** ERROR ** SMILES Number of heavy atoms differ: " 
+	       << mol.NumHvyAtoms() << " and " << mol2.NumHvyAtoms() << endl;
+	  return(-1);
+	}
+      return(0);
+    }
+  else
+  {  if (mol.NumAtoms() != mol2.NumAtoms())
+      {
+	cout << " ** ERROR ** Number of atoms differ: " << mol.NumAtoms()
+	     << " and " << mol2.NumAtoms() << endl;
+	return(-1);
+      }
+  }
+
   for(int i = 1;i <= mol.NumAtoms(); i++)
   {
     atom1 = mol.GetAtom(i);
@@ -98,13 +130,15 @@ int main(int argc,char *argv[])
 	     atom1->GetAtomicNum() << " and " << atom2->GetAtomicNum() << endl;
 	return(-1);
       }
-    if ((atom1->GetX()-atom2->GetX()>1e-4) || 
-	(atom1->GetY()-atom2->GetY()>1e-4) ||
-	(atom1->GetZ()-atom2->GetZ()>1e-4))
-      {
-      	cout << " ** ERROR ** Coordinates for atom " << i << " differ." << endl;
-	return(-1);
-      }
+
+    if (inFile1 != SMI && inFile2 != SMI)
+      if ((atom1->GetX()-atom2->GetX()>1e-1) || 
+	  (atom1->GetY()-atom2->GetY()>1e-1) ||
+	  (atom1->GetZ()-atom2->GetZ()>1e-1))
+	{
+	  cout << " ** ERROR ** Coordinates for atom " << i << " differ." << endl;
+	  return(-1);
+	}
   }
   
   return(0);
