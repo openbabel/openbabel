@@ -20,10 +20,11 @@ AC_PATH_PROG(DOXYGEN, doxygen)
 dnl libtool
 dnl You can set the shared library version in src/Makefile.am
 dnl AC_DISABLE_SHARED
+AC_LIBTOOL_DLOPEN
 AM_PROG_LIBTOOL
 
 dnl Complain about missing documentation tool doxygen.
-AM_CONDITIONAL(BUILD_DOCS, test x$DOCTOOL = xyes)
+AM_CONDITIONAL(BUILD_DOCS, test "$DOCTOOL" == yes)
 if test "$DOCTOOL" == "no"; then
 AC_MSG_WARN(Cannot find doxygen to build documentation. 
 	Have a look at http://www.doxygen.org/)
