@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "version.h"
+#include "babelconfig.h"
 
 using namespace std;
 

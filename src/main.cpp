@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "rotor.h"
 #include "binary.h"
-#include "version.h"
+#include "babelconfig.h"
 #include "data.h"
 
 #include <stdio.h>

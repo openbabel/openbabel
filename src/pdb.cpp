@@ -13,7 +13,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "version.h"
+#include "babelconfig.h"
 #include "typer.h"
 #include "resdata.h"
 

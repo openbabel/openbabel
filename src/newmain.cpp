@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #ifndef __BORLANDC__ 
 #include "commandline.h"
 #endif
-#include "version.h"
+#include "babelconfig.h"
 
 #include "data.h"
 
