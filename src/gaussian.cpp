@@ -23,7 +23,7 @@ namespace OpenBabel {
 bool WriteGaussianCart(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
-  unsigned int charge = 0;
+  int charge = 0;
   unsigned int multiplicity = 0;
   char buffer[BUFF_SIZE];
   

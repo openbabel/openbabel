@@ -111,8 +111,8 @@ bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
   int natoms,i;
   char tmp[10],tmp1[10];
   char atomic_type[10];
-  float exponent = 0.0f;
-  float divisor = 1.0f;
+  double exponent = 0.0f;
+  double divisor = 1.0f;
   float Alpha,Beta,Gamma,A,B,C;
   bool has_fractional = false, has_divisor = false;
   matrix3x3 m;
