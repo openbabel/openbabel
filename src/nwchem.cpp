@@ -23,7 +23,6 @@ bool ReadNWChem(istream &ifs,OBMol &mol,char *title)
   OBAtom *atom;
   vector<string> vs;
 
-  ttab.SetFromType("XYZ");
   mol.BeginModify();
   while	(ifs.getline(buffer,BUFF_SIZE))
     {
@@ -47,9 +46,6 @@ bool ReadNWChem(istream &ifs,OBMol &mol,char *title)
 
 	      //set atomic number
 	      atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
-	      //set type
-	      ttab.SetToType("INT"); ttab.Translate(str,vs[1]); 
-	      atom->SetType(str);
 
 	      if (!ifs.getline(buffer,BUFF_SIZE)) break;
 	      tokenize(vs,buffer);
@@ -58,6 +54,7 @@ bool ReadNWChem(istream &ifs,OBMol &mol,char *title)
     } // while 
   mol.EndModify();
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
 
   mol.SetTitle(title);
   return(true);

@@ -93,6 +93,7 @@ bool ReadGAMESS(istream &ifs,OBMol &mol,char *title)
     }
   mol.EndModify();
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
 
   if (hasPartialCharges)
     mol.SetPartialChargesPerceived();

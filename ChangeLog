@@ -1,3 +1,25 @@
+2002-02-17  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* README, configure.in, configure: Update for next snapshot of
+	1.99.1.
+
+	* src/Makefile.in: Add -I(builddir) to ensure that
+	configure-generated version.h is included.
+
+	* src/alchemy.cpp, src/amber.cpp, src/balst.cpp, src/box.cpp,
+	src/cacao.cpp, src/car.cpp, src/ccc.cpp, src/dmol.cpp,
+	src/feat.cpp, src/gamess.cpp, src/gaussian.cpp, src/hin.cpp,
+	src/jaguar.cpp, src/mopac.cpp, src/mpqc.cpp, src/nwchem.cpp,
+	src/qchem.cpp, src/report.cpp, src/unichem.cpp, src/xyz.cpp:
+	Make sure that SetTitle() is called with the default title if the
+	format doesn't have a title, do not set atom types unless the
+	format supports them (the internal atom typer is better), and for
+	formats without bond information, call the new
+	mol.PerceiveBondOrders() method.
+
+	* src/mol.h, src/mol.cpp: Rename PerceiveBonds in favor of
+	more accurate PerceiveBondOrders().
+	
 2002-02-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/mol.cpp (PerceiveBonds): Improve accuracy by picking the

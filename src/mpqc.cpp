@@ -26,7 +26,6 @@ bool ReadMPQC(istream &ifs,OBMol &mol,char *title)
   vector<string> vs;
   bool bohr = true;
 
-  ttab.SetFromType("XYZ");
   mol.BeginModify();
   while	(ifs.getline(buffer,BUFF_SIZE))
     {
@@ -58,8 +57,6 @@ bool ReadMPQC(istream &ifs,OBMol &mol,char *title)
 		}
 	      atom = mol.NewAtom();
 	      atom->SetVector(x,y,z);
-	      ttab.SetToType("INT"); ttab.Translate(str,vs[0]); 
-	      atom->SetType(str);
 	      atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
 
 	      if (!ifs.getline(buffer,BUFF_SIZE)) break;
@@ -70,6 +67,9 @@ bool ReadMPQC(istream &ifs,OBMol &mol,char *title)
   mol.EndModify();
 
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
+
+  mol.SetTitle(title);
   
   return(true);
 }

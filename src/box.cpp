@@ -16,7 +16,7 @@ GNU General Public License for more details.
 namespace OpenBabel 
 {
 
-bool ReadBox(istream &ifs, OBMol &mol,char *)
+bool ReadBox(istream &ifs, OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   vector<string> vs;
@@ -49,7 +49,7 @@ bool ReadBox(istream &ifs, OBMol &mol,char *)
     }
 
   mol.EndModify();
-  
+  mol.SetTitle(title);
   return(true);
 }
 

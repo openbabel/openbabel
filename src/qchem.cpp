@@ -49,7 +49,6 @@ bool ReadQChem(istream &ifs,OBMol &mol,char *title)
   int index;
   bool hasPartialCharges = false;
 
-  ttab.SetFromType("XYZ");
   mol.BeginModify();
 
   while	(ifs.getline(buffer,BUFF_SIZE))
@@ -71,8 +70,6 @@ bool ReadQChem(istream &ifs,OBMol &mol,char *title)
 	      y = atof((char*)vs[3].c_str());
 	      z = atof((char*)vs[4].c_str());
 	      atom->SetVector(x,y,z);
-	      ttab.SetToType("INT"); ttab.Translate(str,vs[1]); 
-	      atom->SetType(str);
 
 	      if (!ifs.getline(buffer,BUFF_SIZE)) break;
 	      tokenize(vs,buffer);
@@ -114,8 +111,6 @@ bool ReadQChem(istream &ifs,OBMol &mol,char *title)
 //  	      tokenize(vs,buffer);
 //  	      atom = mol.NewAtom();
 //  	      atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
-//  	      ttab.SetToType("INT"); ttab.Translate(str,vs[1]); 
-//  	      atom->SetType(str);
 
 //  	      tokenize(vs,buffer);
 //  	      coord = new OBInternalCoord();
@@ -143,6 +138,7 @@ bool ReadQChem(istream &ifs,OBMol &mol,char *title)
     } // while
   mol.EndModify();
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
   if (hasPartialCharges)
     mol.SetPartialChargesPerceived();
 

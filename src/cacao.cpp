@@ -63,7 +63,6 @@ bool ReadCaccrt(istream &ifs,OBMol &mol,char *title)
 
       strcpy(type,vs[0].c_str());
       atom->SetAtomicNum(etab.GetAtomicNum(type));
-      atom->SetType(type);
       atom->SetVector(v);
     }
 
@@ -86,13 +85,10 @@ bool WriteCaccrt(ostream &ofs,OBMol &mol)
   sprintf(buffer,"%3d   DIST  0  0  0\n",mol.NumAtoms());
   sprintf(buffer,"CELL 1.,1.,1.,90.,90.,90.\n");
 
-  ttab.SetFromType("INT"); ttab.SetToType("XYZ");
-
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
-    ttab.Translate(type_name,atom->GetType());
     sprintf(buffer,"%2s %7.4f, %7.4f, %7.4f \n",
-            type_name,
+            etab.GetSymbol(atom->GetAtomicNum()),
             atom->x(),
             atom->y(),
             atom->z());

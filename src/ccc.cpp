@@ -46,7 +46,6 @@ bool ReadCCC(istream &ifs,OBMol &mol,char *title)
       element[0] = buffer[0];
       element[1] = (buffer[1] != ' ') ? buffer[1]:'\0';
       atom.SetAtomicNum(etab.GetAtomicNum(element));
-      atom.SetType(element);
       sscanf(&buffer[15],"%f%f%f",&x,&y,&z);
       v.Set(x,y,z);
       atom.SetVector(v);

@@ -67,6 +67,7 @@ bool ReadAlchemy(istream &ifs,OBMol &mol,char *title)
     mol.AddBond(bgn,end,order);
   }
 
+  mol.SetTitle(title);
   return(true);
 }
 

@@ -22,7 +22,6 @@ bool WriteGaussianCart(ostream &ofs,OBMol &mol)
   
   ofs << "%cmem=20000000" << endl << '\045';
   ofs << "#Put Keywords Here" << endl << endl;
-  ttab.SetFromType("INT"); ttab.SetToType("XYZ");
 
   OBAtom *atom;
   string str,str1;

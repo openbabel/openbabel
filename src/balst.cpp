@@ -43,16 +43,12 @@ bool ReadBallAndStick(istream &ifs,OBMol &mol,char *title)
       z = atof((char*)vs[3].c_str());
       atom->SetVector(x,y,z); //set coordinates
       atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
-      atom->SetType(vs[0]);
 
       for (j = vs.begin()+4;j != vs.end();j++)
 	mol.AddBond(atom->GetIdx(),atoi((char*)j->c_str()),1);
     }
 
-  //result = assign_radii(mol);
-  //result = assign_types(mol);
-  //result = build_connection_table(mol);
-  //assign_bond_order(mol);
+  mol.SetTitle(title);
   return(true);
 }
 

@@ -26,7 +26,6 @@ bool ReadHIN(istream &ifs,OBMol &mol,char *title)
   OBAtom *atom;
   vector<string> vs;
 
-  ttab.SetFromType("XYZ");
   while (strstr(buffer,"mol") == NULL)
     ifs.getline(buffer, BUFF_SIZE);
   ifs.getline(buffer, BUFF_SIZE);
@@ -42,8 +41,6 @@ bool ReadHIN(istream &ifs,OBMol &mol,char *title)
       y = atof((char*)vs[7].c_str());
       z = atof((char*)vs[8].c_str());
       atom->SetVector(x,y,z);
-      ttab.SetToType("INT"); ttab.Translate(str,vs[3]); 
-      atom->SetType(str);
       
       max = 11 + 2 * atoi((char *)vs[10].c_str());
       for (i = 11; i < max; i+=2)
@@ -75,8 +72,6 @@ bool WriteHIN(ostream &ofs,OBMol &mol)
   OBBond *bond;
   vector<OBEdgeBase*>::iterator j;
   char bond_char;
-
-  ttab.SetFromType("INT"); ttab.SetToType("XYZ");
 
   ofs << "mol " << file_num << " " << mol.GetTitle() << endl;;
   for(i = 1;i <= mol.NumAtoms(); i++)

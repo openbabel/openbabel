@@ -25,7 +25,6 @@ bool ReadAmberPrep(istream &ifs,OBMol &mol,char *title)
   vector<string> vs;
   vector<OBInternalCoord*> internals;
 
-  ttab.SetFromType("XYZ");
   mol.BeginModify();
 
   while	(ifs.getline(buffer,BUFF_SIZE))
@@ -47,8 +46,6 @@ bool ReadAmberPrep(istream &ifs,OBMol &mol,char *title)
 	  internals.push_back(coord);
 
 	  atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
-	  ttab.SetToType("INT"); ttab.Translate(str,vs[1]); 
-	  atom->SetType(str);
 
 	  if (!ifs.getline(buffer,BUFF_SIZE)) break;
 	  tokenize(vs,buffer);
@@ -58,6 +55,7 @@ bool ReadAmberPrep(istream &ifs,OBMol &mol,char *title)
   mol.EndModify();
 
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
   mol.SetTitle(title);
   return(true);
 }

@@ -48,6 +48,7 @@ bool ReadXYZ(istream &ifs,OBMol &mol,char *title)
     atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
   }
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
   mol.SetTitle(title);
   return(true);
 }

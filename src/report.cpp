@@ -215,6 +215,7 @@ bool WriteReport(ostream &ofs,OBMol &mol)
   WriteAngles(ofs, mol);
   ofs << endl << endl << "TORSION ANGLES" << endl;
   //  WriteTorsions(ofs, mol);
+  //  ofs << endl << endl << "CHIRAL ATOMS" << endl;
 
   return(true);
 }

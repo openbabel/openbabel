@@ -76,6 +76,7 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,char *title)
     }
   mol.EndModify();
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
 
   if (hasPartialCharges)
     mol.SetPartialChargesPerceived();
@@ -112,6 +113,7 @@ bool ReadMOPACCartesian(istream &ifs,OBMol &mol,char *title)
 
   mol.EndModify();
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
   mol.SetTitle(title);
   return(true);
 }

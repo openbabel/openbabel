@@ -25,7 +25,6 @@ bool ReadJaguar(istream &ifs,OBMol &mol,char *title)
   OBAtom *atom;
   vector<string> vs;
 
-  ttab.SetFromType("XYZ");
   mol.BeginModify();
   while (ifs.getline(buffer,BUFF_SIZE))
   {
@@ -54,8 +53,6 @@ bool ReadJaguar(istream &ifs,OBMol &mol,char *title)
         y = atof((char*)vs[2].c_str());
         z = atof((char*)vs[3].c_str());
         atom->SetVector(x,y,z);
-        ttab.SetToType("INT"); ttab.Translate(str,vs[0]); 
-        atom->SetType(str);
 
         if (!ifs.getline(buffer,BUFF_SIZE)) break;
         tokenize(vs,buffer);
@@ -83,6 +80,7 @@ bool ReadJaguar(istream &ifs,OBMol &mol,char *title)
   mol.EndModify();
 
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
   mol.SetTitle(title);
   return(true);
 }

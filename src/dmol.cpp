@@ -26,8 +26,6 @@ bool ReadDMol(istream &ifs,OBMol &mol,char *title)
   OBAtom *atom;
   vector<string> vs;
 
-  ttab.SetFromType("XYZ");
-
   ifs.getline(buffer,BUFF_SIZE);
   while (strstr(buffer,"$coordinates") == NULL)
     ifs.getline(buffer,BUFF_SIZE);
@@ -41,15 +39,13 @@ bool ReadDMol(istream &ifs,OBMol &mol,char *title)
       atom = mol.NewAtom();
       //set atomic number
       atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
-      //set type
-      ttab.SetToType("INT"); ttab.Translate(str,vs[0]); 
-      atom->SetType(str);
       x = atof((char*)vs[1].c_str()) * BOHR_TO_ANGSTROM;
       y = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
       z = atof((char*)vs[3].c_str()) * BOHR_TO_ANGSTROM;
       atom->SetVector(x,y,z); //set coordinates
     }
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
   mol.SetTitle(title);
   return(true);
 }

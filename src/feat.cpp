@@ -44,7 +44,6 @@ bool ReadFeat(istream &ifs,OBMol &mol, char *title)
     CleanAtomType(type);
     atom = mol.NewAtom();
     atom->SetVector(x,y,z);
-    atom->SetType(type);
     atom->SetAtomicNum(etab.GetAtomicNum(type));
   }
 

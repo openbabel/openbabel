@@ -48,6 +48,7 @@ bool ReadUnichem(istream &ifs,OBMol &mol,char *title)
     atom->SetAtomicNum(atoi((char*)vs[0].c_str()));
   }
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
   mol.SetTitle(title);
   return(true);
 }
@@ -65,8 +66,6 @@ bool WriteUnichem(ostream &ofs,OBMol &mol)
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
     atom = mol.GetAtom(i);
-    str = atom->GetType();
-    ttab.Translate(str1,str);
     sprintf(buffer,"%3d%15.5f%15.5f%15.5f",
 	    atom->GetAtomicNum(),
 	    atom->GetX(),

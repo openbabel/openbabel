@@ -23,7 +23,6 @@ bool ReadBiosymCAR(istream &ifs,OBMol &mol,char *title)
   OBAtom *atom;
   vector<string> vs;
 
-  ttab.SetFromType("XYZ");
   mol.BeginModify();
 
   while	(ifs.getline(buffer,BUFF_SIZE))
@@ -53,18 +52,16 @@ bool ReadBiosymCAR(istream &ifs,OBMol &mol,char *title)
       atom = mol.NewAtom();
 
       tokenize(vs,buffer);
-      ttab.SetToType("ATN"); ttab.Translate(str,vs[7]);
-      atom->SetAtomicNum(atoi(str.c_str()));
+      atom->SetAtomicNum(etab.GetAtomicNum(vs[7].c_str()));
       x = atof((char*)vs[1].c_str());
       y = atof((char*)vs[2].c_str());
       z = atof((char*)vs[3].c_str());
       atom->SetVector(x,y,z);
-      ttab.SetToType("INT"); ttab.Translate(str,vs[7]); 
-      atom->SetType(str);
     }
   mol.EndModify();
 
   mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
   mol.SetTitle(title);
   return(true);
 }
