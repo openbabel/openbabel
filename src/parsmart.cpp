@@ -1,9 +1,9 @@
 /**********************************************************************
-parsmart.cpp - SMART parser.
+parsmart.cpp - SMARTS parser.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
- 
+Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
  
@@ -29,7 +29,8 @@ GNU General Public License for more details.
 #endif
 
 /* Strict syntax checking! */
-//#define STRICT
+// Currently causes problems with aromatic flags in atomtyp.txt
+// #define STRICT
 #define VERBOSE
 
 #ifdef __sgi
@@ -3290,11 +3291,15 @@ void OBSSMatch::Match(std::vector<std::vector<int> > &mlist,int bidx)
         src = _pat->bond[bidx].src;
         dst = _pat->bond[bidx].dst;
 
+	if (_map[src] <= 0 || _map[src] > _mol->NumAtoms())
+	  return;
+
         AtomExpr *aexpr = _pat->atom[dst].expr;
         BondExpr *bexpr = _pat->bond[bidx].expr;
         OBAtom *atom,*nbr;
         std::vector<OBEdgeBase*>::iterator i;
-        atom = _mol->GetAtom(_map[src]);
+
+	atom = _mol->GetAtom(_map[src]);
         for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
             if (!_uatoms[nbr->GetIdx()] && EvalAtomExpr(aexpr,nbr) &&
                     EvalBondExpr(bexpr,((OBBond*) *i)))

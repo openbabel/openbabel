@@ -1,3 +1,8 @@
+2005-03-02  Geoffrey Hutchison  <ghutchis@Alumina.local>
+
+	* src/parsmart.cpp (OBSSMatch::Match): Added check to prevent
+	accessing atoms that do not exist -- appears in PR#1119970.
+
 2005-03-02  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/mol.h, babelconfig.h Move some DLL-related #defines
