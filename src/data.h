@@ -142,7 +142,7 @@ public:
 // class introduction in data.cpp
 class OBIsotopeTable : public OBGlobalDataBase
 {
-  std::vector<std::vector<std::pair <int, double> > > _isotopes;
+  std::vector<std::vector<std::pair <unsigned int, double> > > _isotopes;
 
  public:
   
@@ -151,8 +151,9 @@ class OBIsotopeTable : public OBGlobalDataBase
 
   void	ParseLine(const char*);
   //! Return the exact masss of the isotope
-  //   (or by default, the most abundant isotope)
-  double	GetExactMass(const int atomicNum, const int isotope = 0);
+  //   (or by default (i.e. "isotope 0") the most abundant isotope)
+  double	GetExactMass(const unsigned int atomicNum,
+			     const unsigned int isotope = 0);
 };
 
 // class introduction in data.cpp

@@ -186,7 +186,7 @@ bool OBGastChrg::GasteigerSigmaChi(OBAtom *atom,double &a,double &b,double &c )
 	break;
     }
 
-  if (val[2] != 0.0)
+  if (!IsNearZero(val[2]))
     {
       a = val[1];
       b = (val[2]-val[0])/2;

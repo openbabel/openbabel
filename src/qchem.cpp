@@ -97,49 +97,49 @@ bool ReadQChem(istream &ifs,OBMol &mol,const char *title)
       // This is still not working completely, so it is ignored for now
       // In principle, the final geometry in cartesians is exactly the same
       // as this geometry, so we shouldn't lose any information
-//      else if(strstr(buffer,"OPTIMIZATION CONVERGED") != NULL)
-//	{
-// 	  // mol.EndModify();
-// 	  mol.Clear();
-// 	  mol.BeginModify();
-// 	  // Unfortunately this will come in a Z-matrix
-// 	  ifs.getline(buffer,BUFF_SIZE); // *****
-// 	  ifs.getline(buffer,BUFF_SIZE); // blank
-// 	  ifs.getline(buffer,BUFF_SIZE); // Z-matrix Print:
-// 	  ifs.getline(buffer,BUFF_SIZE); // $molecule
-// 	  ifs.getline(buffer,BUFF_SIZE); // Charge,Spin
+      else if(strstr(buffer,"OPTIMIZATION CONVERGED") != NULL)
+	{
+ 	  // mol.EndModify();
+ 	  mol.Clear();
+ 	  mol.BeginModify();
+ 	  // Unfortunately this will come in a Z-matrix
+ 	  ifs.getline(buffer,BUFF_SIZE); // *****
+ 	  ifs.getline(buffer,BUFF_SIZE); // blank
+	  ifs.getline(buffer,BUFF_SIZE); // Z-matrix Print:
+	  ifs.getline(buffer,BUFF_SIZE); // $molecule
+	  ifs.getline(buffer,BUFF_SIZE); // Charge,Spin
 	  
-// 	  ifs.getline(buffer,BUFF_SIZE);
-// 	  index = 1;
-// 	  while (strstr(buffer, "$end") == NULL)
-// 	    {
-// 	      tokenize(vs,buffer);
-// 	      atom = mol.NewAtom();
-// 	      atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+	  ifs.getline(buffer,BUFF_SIZE);
+	  index = 1;
+	  while (strstr(buffer, "$end") == NULL)
+	    {
+	      tokenize(vs,buffer);
+	      atom = mol.NewAtom();
+	      atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
 
-// 	      tokenize(vs,buffer);
-// 	      coord = new OBInternalCoord();
-// 	      if (index > 1)
-// 		{
-// 		  coord->_a = mol.GetAtom(atoi(vs[2].c_str()));
-// 		  coord->_dst = atof(vs[3].c_str());
-// 		}
-// 	      if (index > 2)
-// 		{
-// 		  coord->_b = mol.GetAtom(atoi(vs[4].c_str()));
-// 		  coord->_ang = atof(vs[5].c_str()) * DEG_TO_RAD;
-// 		}
-// 	      if (index > 3)
-// 		{
-// 		  coord->_c = mol.GetAtom(atoi(vs[6].c_str()));
-// 		  coord->_tor = atof(vs[7].c_str()) * DEG_TO_RAD;
-// 		}
-// 	      index++;
-// 	      ifs.getline(buffer,BUFF_SIZE);
-// 	      internals.push_back(coord);
-// 	    }
-// 	  InternalToCartesian(internals, mol);
-//	}
+	      tokenize(vs,buffer);
+	      coord = new OBInternalCoord();
+	      if (index > 1)
+		{
+		  coord->_a = mol.GetAtom(atoi(vs[2].c_str()));
+		  coord->_dst = atof(vs[3].c_str());
+		}
+	      if (index > 2)
+		{
+		  coord->_b = mol.GetAtom(atoi(vs[4].c_str()));
+		  coord->_ang = atof(vs[5].c_str()) * DEG_TO_RAD;
+		}
+	      if (index > 3)
+		{
+		  coord->_c = mol.GetAtom(atoi(vs[6].c_str()));
+		  coord->_tor = atof(vs[7].c_str()) * DEG_TO_RAD;
+		}
+	      index++;
+	      ifs.getline(buffer,BUFF_SIZE);
+	      internals.push_back(coord);
+	    }
+	  InternalToCartesian(internals, mol);
+	}
     } // while
   mol.EndModify();
   mol.ConnectTheDots();

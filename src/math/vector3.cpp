@@ -154,7 +154,7 @@ v3.normalize();
   {
     double l = length ();
     
-    if (l == 0) 
+    if (IsNearZero(l)) 
       return(*this);
     
     _vx = _vx / l ;
@@ -274,8 +274,8 @@ v3.normalize();
   {
     vector3 cO;
     
-    if ((this->x() == 0.0)&&(this->y() == 0.0)) {
-      if (this->z() == 0.0){
+    if ( ( IsNearZero(this->x())) && (IsNearZero(this->y())) ) {
+      if ( IsNearZero(this->z()) ) {
 	cerr << "makeorthovec zero vector" << endl;
 	exit(0);
       }

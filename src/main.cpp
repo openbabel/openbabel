@@ -201,6 +201,9 @@ int main(int argc,char *argv[])
 	  exit (-1);
 	}
       fileFormat.ReadMolecule(inFileStream, mol, argv[inFileArg]);
+  if (inFileStream.peek() != EOF && inFileStream.good())
+    cout << " can still read! " << endl;
+
     }
   else
     fileFormat.ReadMolecule(cin, mol, "STDIN");

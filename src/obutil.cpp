@@ -70,6 +70,16 @@ bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
 	return(a<b);
 }
 
+bool IsNear(const double &a, const double &b, const double epsilon)
+{
+  return (fabs(a - b) < epsilon);
+}
+
+bool IsNearZero(const double &a, const double epsilon)
+{
+  return (fabs(a) < epsilon);
+}
+
 string NewExtension(string &src,char *ext)
 {
   unsigned int pos = (unsigned int)src.find_last_of(".");

@@ -109,7 +109,7 @@ bool ReadMol2(istream &ifs,OBMol &mol,const char *title)
 	atom.SetType(str1);
 	atom.SetPartialCharge(pcharge);
 	if (!mol.AddAtom(atom)) return(false);
-	if (pcharge != 0.0) hasPartialCharges = true;
+	if (!IsNearZero(pcharge)) hasPartialCharges = true;
 
 	// Add residue information if it exists
 	if (resnum != -1 && resname != "")

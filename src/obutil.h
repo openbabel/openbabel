@@ -133,8 +133,14 @@ void ToLower(std::string&);
 void ToLower(char *);
 void CleanAtomType(char*);
 
+//! Comparison -- returns true if first parameter less than second
 bool OBCompareInt(const int &,const int &);
+//! Comparison -- returns true if first parameter less than second
 bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
+//! Safe comparison for floats/doubles: true if a and b are closer than epsilon
+bool IsNear(const double &, const double &, const double epsilon=2e-6);
+//! Safe comparison for floats/doubles: true if a is less than epsilon
+bool IsNearZero(const double &, const double epsilon=2e-6);
 
 //******************triple template*************************
 //based on the STL design of the pair<> template
