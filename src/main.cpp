@@ -67,8 +67,8 @@ int main(int argc,char *argv[])
 {
   io_type inFileType = UNDEFINED, outFileType = UNDEFINED;
   bool gotInType = false, gotOutType = false, removeHydrogens = false;
-  bool addHydrogens = false;
-  bool usePH = false;
+  bool addHydrogens = false, usePH = false, centerCoords = false;
+
   int arg, inFileArg, outFileArg;
   char *ext;
   char *formatOptions=NULL;
@@ -95,10 +95,14 @@ int main(int argc,char *argv[])
 		case 'd':
 		  removeHydrogens = true;
 		  break;
-		    
+
 		case 'h':
 		  addHydrogens = true;
 		    if (strncmp(argv[arg],"-hpH",4) == 0) { usePH = true; }
+		  break;
+
+		case 'c':
+		  centerCoords = true;
 		  break;
 
 		case 'i':
@@ -200,7 +204,16 @@ int main(int argc,char *argv[])
     mol.DeleteHydrogens();
   if (addHydrogens)
     mol.AddHydrogens(false, usePH);
+  if (centerCoords)
+    mol.Center();
  
+  // Dimensionality of file for output
+  char *dimension;
+  if (mol.Has3D())
+    dimension = "3D";
+  else
+    dimension = "2D";
+
   // write
   if (outFileArg > 0)
     {
@@ -210,10 +223,10 @@ int main(int argc,char *argv[])
 	  cerr << program_name << ": Cannot write to output file!" << endl;
 	  exit (-1);
 	}
-      fileFormat.WriteMolecule(outFileStream, mol, "3D", formatOptions);
+      fileFormat.WriteMolecule(outFileStream, mol, dimension, formatOptions);
     }
   else
-    fileFormat.WriteMolecule(cout, mol, "3D", formatOptions);
+    fileFormat.WriteMolecule(cout, mol, dimension, formatOptions);
 
   return(0);
 }
