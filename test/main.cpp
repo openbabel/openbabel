@@ -17,6 +17,7 @@ void GenerateSmartsReference();
 bool TestSmarts(void);
 void GenerateRingReference();
 bool TestRings(void);
+bool TestMatrixAlgebra(void);
 
 using namespace std;
 using namespace OpenBabel;
@@ -34,6 +35,14 @@ int main(int argc,char *argv[])
   //GenerateRingReference();
 
   bool alltests = true;
+
+  cout << endl << "Testing Matrix Algebra..." << endl;
+  if (!TestMatrixAlgebra()) {
+    cout << "ERROR: ***MATRIX test failed***" << endl;
+    alltests = false;
+  }
+  else
+    cout << "MATRIX test passed" << endl;
 
   cout << endl << "Testing SMARTS..." << endl;
   if (!TestSmarts()) {

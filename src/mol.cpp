@@ -2050,127 +2050,6 @@ void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)
   a1->SetVector(p1); 
 }
 
-
-void jacobi3x3(float a[3][3], float v[3][3])
-{
-#define MAX_SWEEPS 50
-  float onorm, dnorm;
-  float b, dma, q, t, c, s,d[3];
-  float atemp, vtemp, dtemp;
-  int i, j, k, l;
-
-  memset((char*)d,'\0',sizeof(float)*3);
-  
-  for (j = 0; j < 3; j++) 
-    {
-      for (i = 0; i < 3; i++) v[i][j] = 0.0;
-
-      v[j][j] = 1.0;
-      d[j] = a[j][j];
-    }
-  
-  for (l = 1; l <= MAX_SWEEPS; l++) 
-    {
-      dnorm = 0.0;
-      onorm = 0.0;
-      for (j = 0; j < 3; j++) 
-        {
-          dnorm = dnorm + fabs(d[j]);
-          for (i = 0; i <= j - 1; i++) 
-            {
-              onorm = onorm + fabs(a[i][j]);
-            }
-        }
-      
-      if((onorm/dnorm) <= 1.0e-12) goto Exit_now;
-      for (j = 1; j < 3; j++) 
-        {
-          for (i = 0; i <= j - 1; i++) 
-            {
-              b = a[i][j];
-              if(fabs(b) > 0.0) 
-                {
-                  dma = d[j] - d[i];
-                  if((fabs(dma) + fabs(b)) <=  fabs(dma)) 
-                    {
-                      t = b / dma;
-                    }
-                  else 
-                    {
-                      q = 0.5 * dma / b;
-                      t = 1.0/(fabs(q) + sqrt(1.0+q*q));
-                      if(q < 0.0) 
-                        {
-                          t = -t;
-                        }
-                    }
-                  c = 1.0/sqrt(t * t + 1.0);
-                  s = t * c;
-                  a[i][j] = 0.0;
-                  for (k = 0; k <= i-1; k++) 
-                    {
-                      atemp = c * a[k][i] - s * a[k][j];
-                      a[k][j] = s * a[k][i] + c * a[k][j];
-                      a[k][i] = atemp;
-                    }
-                  for (k = i+1; k <= j-1; k++) 
-                    {
-                      atemp = c * a[i][k] - s * a[k][j];
-                      a[k][j] = s * a[i][k] + c * a[k][j];
-                      a[i][k] = atemp;
-                    }
-                  for (k = j+1; k < 3; k++) 
-                    {
-                      atemp = c * a[i][k] - s * a[j][k];
-                      a[j][k] = s * a[i][k] + c * a[j][k];
-                      a[i][k] = atemp;
-                    }
-                  for (k = 0; k < 3; k++) 
-                   {
-                      vtemp = c * v[k][i] - s * v[k][j];
-                      v[k][j] = s * v[k][i] + c * v[k][j];
-                      v[k][i] = vtemp;
-                   }
-                  dtemp = c*c*d[i] + s*s*d[j] - 2.0*c*s*b;
-                  d[j] = s*s*d[i] + c*c*d[j] +  2.0*c*s*b;
-                  d[i] = dtemp;
-                }  /* end if */
-            } /* end for i */
-        } /* end for j */
-    } /* end for l */
-  
-Exit_now:
-  
-  /* max_sweeps = l;*/
-  
-  for (j = 0; j < 3-1; j++) 
-    {
-      k = j;
-      dtemp = d[k];
-      for (i = j+1; i < 3; i++) 
-        {
-          if(d[i] < dtemp) 
-           {
-             k = i;
-             dtemp = d[k];
-           }
-        }
-      
-      if(k > j) 
-        {
-          d[k] = d[j];
-          d[j] = dtemp;
-          for (i = 0; i < 3 ; i++) 
-            {
-              dtemp = v[i][k];
-              v[i][k] = v[i][j];
-              v[i][j] = dtemp;
-            }
-      }
-    }
-#undef MAX_SWEEPS
-}
-
 void OBMol::ToInertialFrame()
 {
   float m[9];
@@ -2212,32 +2091,13 @@ void OBMol::ToInertialFrame(int conf,float *rmat)
   /* find rotation matrix for moment of inertia */
   ob_make_rmat(m,rmat);
 
-  /*
-  float v[3][3];
-  jacobi3x3(m,v);
-
-  vector3 v1,v2,v3,r1,r2;
-  r1.Set(v[0][0],v[1][0],v[2][0]);
-  r2.Set(v[0][1],v[1][1],v[2][1]);
-  
-  v3 = cross(r1,r2); v3 = v3.normalize();
-  v2 = cross(v3,r1); v2 = v2.normalize();
-  v1 = cross(v2,v3); v1 = v1.normalize();
-
-  float rmat[9]; 
-  rmat[0] = v1.x(); rmat[1] = v1.y(); rmat[2] = v1.z();
-  rmat[3] = v2.x(); rmat[4] = v2.y(); rmat[5] = v2.z();
-  rmat[6] = v3.x(); rmat[7] = v3.y(); rmat[8] = v3.z();
-  */
-
   /* rotate all coordinates */
   float *c = GetConformer(conf);
-  for(i=0; i < NumAtoms();i++)
-    {
-      x = c[i*3]-center[0]; y = c[i*3+1]-center[1]; z = c[i*3+2]-center[2];
-      c[i*3]   = x*rmat[0] + y*rmat[1] + z*rmat[2];
-      c[i*3+1] = x*rmat[3] + y*rmat[4] + z*rmat[5];
-      c[i*3+2] = x*rmat[6] + y*rmat[7] + z*rmat[8];
+  for(i=0; i < NumAtoms();i++) {
+    x = c[i*3]-center[0]; y = c[i*3+1]-center[1]; z = c[i*3+2]-center[2];
+    c[i*3]   = x*rmat[0] + y*rmat[1] + z*rmat[2];
+    c[i*3+1] = x*rmat[3] + y*rmat[4] + z*rmat[5];
+    c[i*3+2] = x*rmat[6] + y*rmat[7] + z*rmat[8];
   }
 }
 

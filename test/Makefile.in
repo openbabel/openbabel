@@ -19,7 +19,7 @@ builddir      = @top_builddir@/test
 
 HDRS	      = 
 
-OBJS	      =	ringtest.o smartstest.o main.o
+OBJS	      =	ringtest.o smartstest.o matrixtest.o main.o
 
 PROGRAM	      = obtest
 

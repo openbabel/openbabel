@@ -1,3 +1,14 @@
+2002-08-30  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* src/math/matrix3x3.cpp, src/math/matrix3x3.h added methods, in
+	particular for eigenvector calculations. Modified the API slightly. 
+	* src/mol.cpp, src/obutil.cpp removed a couple of undocumented
+	mathematical methods that were never used. Make mol use the 
+	eigenvector functions from the matrix class now.	
+	* test/matrixtest.cpp test suite for matrix algebra and eigenvector 
+	calculations
+	* src/oberror.cpp, src/oberror.h introduced a generic error class
+
 2002-08-27  Stefan Kebekus <kebekus@users.sourceforge.net>
 
 	* test/main.cpp, test/ringtest.cpp, test/smartstest.cpp resolved

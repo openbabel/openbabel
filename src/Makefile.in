@@ -45,7 +45,7 @@ HDRS	      = math/vector3.h math/matrix3x3.h aromatic.h atomtyp.h base.h binary.
 		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
 		obutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
 		resdata.h ring.h rotor.h smi.h typer.h types.h version.h \
-		chains.h generic.h
+		chains.h generic.h oberror.h
 
 OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		bitgrid.o bond.o \
@@ -59,7 +59,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
 		jaguar.o amber.o generic.o residue.o \
 		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o viewmol.o \
-		cml.o
+		cml.o oberror.o
 
 PROGRAM	      = babel
 

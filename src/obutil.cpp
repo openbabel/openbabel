@@ -11,8 +11,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "mol.h"
+
+#include "math/matrix3x3.h"
 #include "math/vector3.h"
+#include "mol.h"
 #include "obutil.h"
 #include "obifstream.h"
 
@@ -498,11 +500,6 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
     }
 }
 
-// Migrated from quat.c
-#define MAX_SWEEPS 30
-
-void jacobi(float a[4][4], float *d, float v[4][4]);
-
 void qtrfit (float *r,float *f,int size, float u[3][3])
 {
   register int i;
@@ -510,7 +507,7 @@ void qtrfit (float *r,float *f,int size, float u[3][3])
   float xyyx, xyyy, xyyz;
   float xzyx, xzyy, xzyz;
   float d[4],q[4];
-  float c[4][4],v[4][4];
+  float c[16],v[16];
   float rx,ry,rz,fx,fy,fz;
 
 /* generate the upper triangle of the quadratic form matrix */
@@ -529,30 +526,30 @@ void qtrfit (float *r,float *f,int size, float u[3][3])
    xzyx += fz * rx;xzyy += fz * ry;xzyz += fz * rz;
  }
 
- c[0][0] = xxyx + xyyy + xzyz;
+ c[4*0+0] = xxyx + xyyy + xzyz;
 
- c[0][1] = xzyy - xyyz;
- c[1][1] = xxyx - xyyy - xzyz;
+ c[4*0+1] = xzyy - xyyz;
+ c[4*1+1] = xxyx - xyyy - xzyz;
 
- c[0][2] = xxyz - xzyx;
- c[1][2] = xxyy + xyyx;
- c[2][2] = xyyy - xzyz - xxyx;
+ c[4*0+2] = xxyz - xzyx;
+ c[4*1+2] = xxyy + xyyx;
+ c[4*2+2] = xyyy - xzyz - xxyx;
 
- c[0][3] = xyyx - xxyy;
- c[1][3] = xzyx + xxyz;
- c[2][3] = xyyz + xzyy;
- c[3][3] = xzyz - xxyx - xyyy;
+ c[4*0+3] = xyyx - xxyy;
+ c[4*1+3] = xzyx + xxyz;
+ c[4*2+3] = xyyz + xzyy;
+ c[4*3+3] = xzyz - xxyx - xyyy;
 
 /* diagonalize c */
 
- jacobi(c, d, v);
+ matrix3x3::jacobi(4, c, d, v);
 
 /* extract the desired quaternion */
 
- q[0] = v[0][3];
- q[1] = v[1][3];
- q[2] = v[2][3];
- q[3] = v[3][3];
+ q[0] = v[4*0+3];
+ q[1] = v[4*1+3];
+ q[2] = v[4*2+3];
+ q[3] = v[4*3+3];
 
 /* generate the rotation matrix */
 
@@ -564,124 +561,11 @@ void qtrfit (float *r,float *f,int size, float u[3][3])
  u[1][1] = q[0]*q[0] - q[1]*q[1] + q[2]*q[2] - q[3]*q[3];
  u[2][1] = 2.0f * (q[2] * q[3] - q[0] * q[1]);
 
- u[0][2] = 2.0f *(q[3] * q[1] - q[0] * q[2]);
+ u[0][2] = 2.0f * (q[3] * q[1] - q[0] * q[2]);
  u[1][2] = 2.0f * (q[3] * q[2] + q[0] * q[1]);
  u[2][2] = q[0]*q[0] - q[1]*q[1] - q[2]*q[2] + q[3]*q[3];
 }
 
-void jacobi(float a[4][4], float *d, float v[4][4])
-{
-  float onorm, dnorm;
-  float b, dma, q, t, c, s;
-  float  atemp, vtemp, dtemp;
-  register int i, j, k, l;
-  int nrot;
-
-  for (j = 0; j <= 3; j++)
-  {
-    for (i = 0; i <= 3; i++) v[i][j] = 0.0;
-    v[j][j] = 1.0;
-    d[j] = a[j][j];
-  }
-
-  nrot = MAX_SWEEPS;
-  for (l = 1; l <= nrot; l++)
-  {
-    dnorm = 0.0;
-    onorm = 0.0;
-    for (j = 0; j <= 3; j++)
-    {
-      dnorm = dnorm + (float)fabs(d[j]);
-      for (i = 0; i <= j - 1; i++)
-	 onorm = onorm + (float)fabs(a[i][j]);
-    }
-
-    if((onorm/dnorm) <= 1.0e-12) goto Exit_now;
-    for (j = 1; j <= 3; j++)
-    {
-      for (i = 0; i <= j - 1; i++)
-      {
-	b = a[i][j];
-	if(fabs(b) > 0.0) {
-	  dma = d[j] - d[i];
-	  if((fabs(dma) + fabs(b)) <=  fabs(dma))
-	     t = b / dma;
-	  else
-	  {
-	    q = 0.5f * dma / b;
-	    t = 1.0f/((float)fabs(q) + (float)sqrt(1.0f+q*q));
-	    if(q < 0.0f) t = -t;
-
-	  }
-
-	  c = 1.0f/(float)sqrt(t * t + 1.0f);
-	  s = t * c;
-	  a[i][j] = 0.0f;
-	  for (k = 0; k <= i-1; k++)
-	  {
-	    atemp = c * a[k][i] - s * a[k][j];
-	    a[k][j] = s * a[k][i] + c * a[k][j];
-	    a[k][i] = atemp;
-	  }
-
-	  for (k = i+1; k <= j-1; k++) 
-	  {
-	    atemp = c * a[i][k] - s * a[k][j];
-	    a[k][j] = s * a[i][k] + c * a[k][j];
-	    a[i][k] = atemp;
-	  }
-
-	  for (k = j+1; k <= 3; k++)
-	  {
-	    atemp = c * a[i][k] - s * a[j][k];
-	    a[j][k] = s * a[i][k] + c * a[j][k];
-	    a[i][k] = atemp;
-	  }
-
-	  for (k = 0; k <= 3; k++)
-	  {
-	    vtemp = c * v[k][i] - s * v[k][j];
-	    v[k][j] = s * v[k][i] + c * v[k][j];
-	    v[k][i] = vtemp;
-	  }
-
-	  dtemp = c*c*d[i] + s*s*d[j] - 2.0f*c*s*b;
-	  d[j] = s*s*d[i] + c*c*d[j] +  2.0f*c*s*b;
-	  d[i] = dtemp;
-	}  /* end if */
-      } /* end for i */
-    } /* end for j */
-  } /* end for l */
- 
-  Exit_now:
-
-  nrot = l;
-
-  for (j = 0; j <= 2; j++)
-  {
-    k = j;
-    dtemp = d[k];
-    for (i = j+1; i <= 3; i++)
-       if(d[i] < dtemp)
-       {
-	 k = i;
-	 dtemp = d[k];
-       }
-
-
-    if(k > j)
-    {
-      d[k] = d[j];
-      d[j] = dtemp;
-      for (i = 0; i <= 3; i++)
-      {
-	dtemp = v[i][k];
-	v[i][k] = v[i][j];
-	v[i][j] = dtemp;
-      }
-    }
-  }
-}
 
 
 static double Roots[4];
@@ -807,6 +691,9 @@ static int SolveCubic(double A,double B,double C,double D)
     return( 1 );
 }
 #endif
+
+
+#define MAX_SWEEPS 50
 
 void ob_make_rmat(float a[3][3],float rmat[9])
 {
