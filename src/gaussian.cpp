@@ -51,7 +51,8 @@ bool WriteGaussianCart(ostream &ofs,OBMol &mol)
 	    atom->GetX(), atom->GetY(), atom->GetZ());
     ofs << buffer << endl;
   }
-  ofs << buffer << endl << endl;
+  // file should end with a blank line
+  ofs << endl;
   return(true);
 }
 
