@@ -267,12 +267,16 @@
 	<string></string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Open Babel</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>Open Babel 1.99.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.1</string>
+	<string>1.99.1</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>
 	<key>NSMainNibFile</key>
@@ -380,7 +384,7 @@
 		};
 		DA206CF3015C4E8B03C91932 = {
 			isa = PBXFileReference;
-			path = Application.applescript;
+			path = Babel.applescript;
 			refType = 4;
 		};
 		DA206CF4015C4E8B03C91932 = {
