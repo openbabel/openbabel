@@ -23,6 +23,9 @@ all:
 			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
 		done && test -z "$$fail"
 
+apidoc:		
+		doxygen
+
 test:		check
 check:
 		@for i in $(SUBDIRS); do \
@@ -49,6 +52,7 @@ install:	all
 		(cd src; $(MAKE) $(MFLAGS) install)
 		$(MKDIRS) $(mandir)
 		$(INSTALL) $(top_srcdir)/doc/babel.1 $(mandir)
+
 
 dist:		distclean
 	        rm -rf $(DISTDIR) openbabel.tar.gz
