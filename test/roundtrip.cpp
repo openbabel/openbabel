@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "version.h"
+#include "babelconfig.h"
 #include "data.h"
 
 #include <stdio.h>
