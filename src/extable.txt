@@ -73,6 +73,7 @@ nwo		nwchemout	NWChem Output			none				1	0
 pdb		pdb		PDB				chemical/x-pdb			1	1
 ent		pdb		PDB				chemical/x-pdb			1	1
 pov		pov		POV-Ray Output			none				0	1
+pqs		pqs		PQS				none				1	1
 report		report		Report				none				0	1
 qcin		qchemin		Q-Chem Input			none				0	1
 qcout		qchemout	Q-Chem Output			none				1	0
