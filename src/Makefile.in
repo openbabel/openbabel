@@ -76,6 +76,9 @@ LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+MAINT = @MAINT@
+MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
+MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
@@ -176,6 +179,10 @@ EXTRA_DIST = \
 	bin2hex.pl $(pkgdata_DATA) \
 	newmain.cpp bondtyper.cpp bondtyper.h \
 	strncasecmp.c snprintf.c snprintf.h
+
+
+BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h extable.h \
+		isotope.h phmodeldata.h resdata.h types.h
 
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -280,15 +287,15 @@ DIST_COMMON = README $(libopenbabelinclude_HEADERS) \
 DIST_SUBDIRS = $(SUBDIRS)
 SOURCES = $(libopenbabel_la_SOURCES) $(babel_SOURCES)
 
-all: babelconfig.h
+all: $(BUILT_SOURCES) babelconfig.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .c .cpp .lo .o .obj
-$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --gnu  src/Makefile
-Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
 babelconfig.h: stamp-h1
@@ -301,7 +308,7 @@ stamp-h1: $(srcdir)/babelconfig.h.in $(top_builddir)/config.status
 	@rm -f stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status src/babelconfig.h
 
-$(srcdir)/babelconfig.h.in:  $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+$(srcdir)/babelconfig.h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.in $(ACLOCAL_M4) 
 	cd $(top_srcdir) && $(AUTOHEADER)
 	touch $(srcdir)/babelconfig.h.in
 
@@ -733,7 +740,8 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-check: check-recursive
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-recursive
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(DATA) $(HEADERS) \
 		babelconfig.h
 install-binPROGRAMS: install-libLTLIBRARIES
@@ -742,7 +750,8 @@ installdirs: installdirs-recursive
 installdirs-am:
 	$(mkinstalldirs) $(DESTDIR)$(libdir) $(DESTDIR)$(bindir) $(DESTDIR)$(pkgdatadir) $(DESTDIR)$(libopenbabelincludedir)
 
-install: install-recursive
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -766,6 +775,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-recursive
 
 clean-am: clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
@@ -841,6 +851,33 @@ uninstall-info: uninstall-info-recursive
 	uninstall-libLTLIBRARIES uninstall-libopenbabelincludeHEADERS \
 	uninstall-pkgdataDATA uninstall-recursive
 
+
+aromatic.h:	bin2hex.pl aromatic.txt
+		(cd $(srcdir); ./bin2hex.pl aromatic.txt AromaticData >aromatic.h)
+
+atomtyp.h:	bin2hex.pl atomtyp.txt
+		(cd $(srcdir); ./bin2hex.pl atomtyp.txt AtomTypeData >atomtyp.h)
+
+bondtyp.h:	bin2hex.pl bondtyp.txt
+		(cd $(srcdir); ./bin2hex.pl bondtyp.txt BondTypeData >bondtyp.h)
+
+element.h:	bin2hex.pl element.txt
+		(cd $(srcdir); ./bin2hex.pl element.txt ElementData >element.h)
+
+extable.h:	bin2hex.pl extable.txt
+		(cd $(srcdir); ./bin2hex.pl extable.txt ExtensionTableData >extable.h)
+
+isotope.h:	bin2hex.pl isotope-small.txt
+		(cd $(srcdir); ./bin2hex.pl isotope-small.txt IsotopeData ISOTOPE >isotope.h)
+
+phmodeldata.h:	bin2hex.pl phmodel.txt
+		(cd $(srcdir); ./bin2hex.pl phmodel.txt PhModelData PHMODELDATA >phmodeldata.h)
+
+resdata.h:	bin2hex.pl resdata.txt
+		(cd $(srcdir); ./bin2hex.pl resdata.txt ResidueData >resdata.h)
+
+types.h:	bin2hex.pl types.txt
+		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

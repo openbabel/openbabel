@@ -3,7 +3,14 @@
 	* configure, */Makefile.in: Regenerated using automake-1.7.8,
 	autoconf-2.58, libtool-1.5. (Should solve problems with CVS
 	versions needing to call autoconf/automake due to timestamps.)
+	Added AM_MAINTAINER_MODE.
 
+	* aclocal.m4: Put this back in CVS so aclocal isn't needed to
+	generate from CVS.
+
+	* src/Makefile.am: Add back targets for generating binary .h files
+	from the appropriate .txt data files.
+	
 	* src/parsmi.cpp: Back out Chris Morley's SMILES extensions for
 	radicial centers--current causes many SMILES/SMARTS errors.
 
