@@ -1,6 +1,6 @@
 #Open Babel top-level Makefile
 
-version       = @openbabel_version@
+version       = @PACKAGE_VERSION@
 
 srcdir        = @srcdir@
 VPATH         = @srcdir@
