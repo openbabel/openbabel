@@ -678,7 +678,7 @@ void tag(string s) {
 			s = s.substr(2, l-4);
 			string::size_type idx = s.find(" ");
 			string target = (idx < s.size()) ? s.substr(0, idx) : s;
-			string data = (idx < s.size()) ? trim(s.substr(idx)) : string::string("");
+			string data = (idx < s.size()) ? trim(s.substr(idx)) : string("");
 			processingInstruction(target, data);
 		} else {
 		  //			cerr << "Bad PI: " << s << endl;
@@ -1120,7 +1120,7 @@ void processNamespace(string name, string value) {
 	pair <string, string> ns;
 
 	string::size_type idx = name.find(":");
-	ns.first = (idx < name.size()) ? name.substr(idx) : string::string("");
+	ns.first = (idx < name.size()) ? name.substr(idx) : string("");
 	ns.second = value;
 	bool nsExists = false;
 	for (namespaceVector_t::size_type i = 0; i < namespaceVector.size(); ++i) {
@@ -1232,7 +1232,7 @@ void endElement(string namespaceURI, string localName, string prefix) {
     int ns = elementStack.size();
     if (ns > 0) {
 	    currentElem = elementStack[ns-1];
-	    parent = (ns <= 1) ? string::string("") : elementStack[ns-2];
+	    parent = (ns <= 1) ? string("") : elementStack[ns-2];
 	    elementStack.pop_back();
 	} else {
 	}
