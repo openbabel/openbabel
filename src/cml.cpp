@@ -67,6 +67,8 @@ Peter Murray-Rust, 2002, 2003
 
 #include "mol.h"
 
+# include <string>
+
 # include <time.h>
 /* ---- Size of time-string ---- */
 #define TIME_STR_SIZE 64
@@ -238,6 +240,9 @@ const char* C_Y2               = "y2";
 const char* C_X3               = "x3";
 const char* C_Y3               = "y3";
 const char* C_Z3               = "z3";
+const char* C_XFRACT           = "xFract";
+const char* C_YFRACT           = "yFract";
+const char* C_ZFRACT           = "zFract";
 const char* C_XY2              = "xy2";
 const char* C_XYZ3             = "xyz3";
 const char* C_XYZFRACT         = "xyzFract";
@@ -307,6 +312,7 @@ const char* X_LT               = "lt";
 const char* X_GT               = "gt";
 const char* X_AMP              = "amp";
 const char* E_TAGO             = "</";
+const char* S_XMLDECL          = "<?xml";
 const char* E_PI               = "?>";
 const char* S_PI               = "<?";
 const char* X_DOCTYPE          = "<!DOCTYPE";
@@ -524,7 +530,8 @@ bool processBondArrayChild();
 void getAtomRefs(vector<string>::size_type size, vector <OBAtom*> &v, string atomRefString);
 
 // ----------------babel stuff---------------
-
+// clear Molecule workspace every time we need a new one
+bool clearMoleculeWorkspace();
 // numeric value (babel) from CML order; unknown returns -1
 int getBabelBondOrder(string o);
 // numeric value (babel) from CML stereo; unknown returns -1
@@ -556,6 +563,8 @@ typedef vector<pair<string,string> > namespaceVector_t;
 namespaceVector_t namespaceVector;
 // has rootElement been read?
 bool readRoot;
+// are we in a comment?
+bool inComment = false;
 
 // all atoms need to be unique IDs in CML; this links IDs to AtomPtrs
 vector <pair <string, OBAtom*> > atomIdVector;
@@ -674,6 +683,10 @@ vector <pair <vector<OBAtom*>, string> > stereoSVector;
 typedef vector <OBInternalCoord*> internalVector_t;
 internalVector_t internalVector;
 
+/** --------------------- sizes -----------------------*/
+// this should be replaced by a better routine for reading
+#define XMLBUFF_SIZE 100000
+
 /** --------------------- initialization-----------------------*/
 void makeAllowedElementLists() {
 	tokenize(CML_ELEMENT_VECTOR, CML_ELEMENT_NAMES, " \n");
@@ -718,21 +731,30 @@ void cmlError(string msg) {
 }
 
 bool ReadXML(istream &ifs) {
+//	char buffer[XMLBUFF_SIZE];
 	char buffer[BUFF_SIZE];
+    string token;
 	size_t lt;
 	size_t rt;
     int lineCount = 0;
 
-	currentElem = _EMPTY;
-	string token = _EMPTY;
 	bool lookForOpenTag = true;
 
 	makeAllowedElementLists();
 	makeAllowedAttributeLists();
+// reset all variables here (ReadXML is essentially a static routine);    
 	startDocument();
-	while (ifs.getline(buffer,BUFF_SIZE)) {
+//char *fgets(char *s, size_t n, FILE *stream); 
+/*--
+	while (ifs.getline(buffer,XMLBUFF_SIZE)) {
+        if (strlen(buffer) >= XMLBUFF_SIZE - 2) {
+            cmlError("******BUG. Probable buffer overflow - sorry - add some newlines to XML input file to reduce linesize. ******");
+        }
+--*/        
+    string buff;
+	while (getline(ifs, buff)) {
         lineCount++;
-		string buff(buffer);
+//		string buff(buffer);
 // omit whitespace lines
 		if (trim(buff) == _EMPTY) continue;
 		if (readRoot) {
@@ -742,6 +764,18 @@ bool ReadXML(istream &ifs) {
 // normalize Newlines to SPACE
 		if (token != _EMPTY) token += _SPACE;
 		for (;;) {
+            if (inComment) {
+                lt = buff.find(E_COMMENT);
+                if (lt > buff.size()) {
+					token += buff;
+					buff = _EMPTY;
+					break;
+                } else {
+                    inComment = false;
+                    buff = buff.substr(lt+1);
+                    continue;
+                }
+            }
 			if (lookForOpenTag) {
 				lt = buff.find("<");
 // not found, more input...
@@ -791,7 +825,7 @@ void tag(string s) {
 	string::size_type l = s.length();
 	string sl = toLowerCase(s);
 // XML declaration
-	if (sl.substr(0, 5) == "<?xml") {
+	if (sl.substr(0, 5) == S_XMLDECL) {
 		if (s.substr(l-2, 2) == E_PI) {
 			string ss = s.substr(5, l-7);
 			splitAttributes(ss, atts);
@@ -820,8 +854,10 @@ void tag(string s) {
 // comments are ignored
 	} else if (s.substr(0,4) == S_COMMENT) {
 		if (s.substr(l-3, 3) == E_COMMENT) {
+            inComment = false;
 //			cout << "Comment ignored: " << s << endl;
 		} else {
+            inComment = true;
 		  cmlError("Bad comment: " + s);
 		}
 // Processing instructions
@@ -1154,8 +1190,38 @@ string getNormalizedString(char* ch) {
 // SAX-like call back
 void startDocument() {
 //  cout << "starting CML document; crude XML parser. Assumes well-formed; ignores DTDs and entities" << endl;
-  readRoot = false;
+    readRoot = false;
+// clear all internals
+	currentElem = _EMPTY;
+	string token = _EMPTY;
+	inComment = false;
+    cmlDimension = "";
+
+    clearMoleculeWorkspace();
+
+    useBuiltin = false;
+    inputNamespace = "";
+    inputPrefix = "";
+    inputArray = false;
+    cmlType = "";
+    outputCML1 = false;
+    outputCML2= false;
+    outputDoctype = "";
+    outputDeclaration = false;
+    outputPretty= false;
+    outputNamespace= false;
+    outputPrefix = "";
+    outputArray= false;
+    outputDebug = false;
+    
+    angleUnits = "";
+    lengthUnits = "";
+    torsionUnits = "";
+    scalarDataType = "";
+    scalarUnits = "";
+  
 }
+
 
 // SAX-like call back
 void endDocument() {
@@ -1163,6 +1229,62 @@ void endDocument() {
 	for (namespaceVector_t::size_type i = 0; i < namespaceVector.size(); ++i) {
 	  //		cout << "namespace :" << namespaceVector[i].first << _COLON << namespaceVector[i].second << endl;
 	}
+}
+
+bool clearMoleculeWorkspace() {    
+    natoms = 0;
+    atomicNum = 0;
+    atomId = "";
+    formalCharge = 0;	// defaults to zero
+    currentX = 0.0; 
+    currentY = 0.0;
+    currentZ = 0.0;
+    elementArray = "";
+    chargeArray = "";
+    idArray = "";
+    x2Array = "";
+    y2Array = "";
+    x3Array = "";
+    y3Array = "";
+    z3Array = "";
+    atomRefs4 = "";
+    length = 0.0;
+    idVector.clear();
+    elementTypeVector.clear();
+    atomicNumVector.clear();
+    formalChargeVector.clear();
+    hydrogenCountVector.clear();
+    x2Vector.clear();
+    y2Vector.clear();
+    x3Vector.clear();
+    y3Vector.clear();
+    z3Vector.clear();
+    atomRefs2Vector.clear();
+    atomRefs3Vector.clear();
+    atomRefs4Vector.clear();
+    nbonds = 0;	
+    bondBeginAtom = "";
+    bondEndAtom = "";
+    orderString = "";
+    stereoString = "";
+    atomRef1Array = "";
+    atomRef2Array = "";
+    orderArray = "";
+    stereoArray = "";
+    atomRef1Vector.clear();
+    atomRef2Vector.clear();
+    orderVector.clear();
+    stereoVector.clear();
+    fractional = false;
+    spacegroup = "";
+    pointgroup = "";
+    rotTransVector.clear();
+    rotVector.clear();
+    angleVector.clear();
+    lengthVector.clear();
+    torsionVector.clear();
+    atomParityVector.clear();
+    stereoSVector.clear();
 }
 
 void startElement(string name, vector<pair<string,string> > &atts) {
@@ -1681,11 +1803,17 @@ bool startAtom(vector <pair<string,string> > &atts) {
 	atomicNum = etab.GetAtomicNum((char*)getAttribute(atts, C_ELEMENTTYPE).c_str());
 	atomId = getAttribute(atts, C_ID);
 	formalCharge = atoi(getAttribute(atts, C_FORMALCHARGE).c_str());
-	string x2 = getAttribute(atts, C_X2);
-	string y2 = getAttribute(atts, C_Y2);
-	string x3 = getAttribute(atts, C_X3);
-	string y3 = getAttribute(atts, C_Y3);
-	string z3 = getAttribute(atts, C_Z3);
+	string x2        = getAttribute(atts, C_X2);
+	string y2        = getAttribute(atts, C_Y2);
+	string x3        = getAttribute(atts, C_X3);
+	string y3        = getAttribute(atts, C_Y3);
+	string z3        = getAttribute(atts, C_Z3);
+	string xFract    = getAttribute(atts, C_XFRACT);
+	string yFract    = getAttribute(atts, C_YFRACT);
+	string zFract    = getAttribute(atts, C_ZFRACT);
+	string xy2       = getAttribute(atts, C_XY2);
+	string xyz3      = getAttribute(atts, C_XYZ3);
+	string xyzFract  = getAttribute(atts, C_XYZFRACT);
 	if (x3 != _EMPTY) {
 		currentX = atof(x3.c_str());
 		setCMLType(C_CML2);
@@ -1704,6 +1832,61 @@ bool startAtom(vector <pair<string,string> > &atts) {
 		currentZ = atof(z3.c_str());
 		setCMLType(C_CML2);
 	}
+	if (xFract != _EMPTY) {
+        cmlError("Openbabel does not support fractional coordinates");
+        fractional = false;     // to avoid propagation errors
+//		currentY = atof(yFract.c_str());
+//		setCMLType(C_CML2);
+	}
+	if (yFract != _EMPTY) {
+        cmlError("Openbabel does not support fractional coordinates");
+        fractional = false;     // to avoid propagation errors
+//		currentY = atof(yFract.c_str());
+//		setCMLType(C_CML2);
+	}
+	if (zFract != _EMPTY) {
+        cmlError("Openbabel does not support fractional coordinates");
+        fractional = false;     // to avoid propagation errors
+//		currentZ = atof(zFract.c_str());
+//		setCMLType(C_CML2);
+	}
+	if (xy2 != _EMPTY) {
+        vector <string> sv;
+        tokenize(sv, xy2, _SPACE_NEWLINE);
+        if (sv.size() != 2) {
+            cmlError("xy2 attribute must have 2 floats");
+        } else {
+            currentX = atof(sv[0].c_str());
+            currentY = atof(sv[1].c_str());
+            setCMLType(C_CML2);
+        }
+	}
+	if (xyz3 != _EMPTY) {
+        vector <string> sv;
+        tokenize(sv, xyz3, _SPACE_NEWLINE);
+        if (sv.size() != 3) {
+            cmlError("xyz3 attribute must have 3 floats");
+        } else {
+            currentX = atof(sv[0].c_str());
+            currentY = atof(sv[1].c_str());
+            currentZ = atof(sv[2].c_str());
+            setCMLType(C_CML2);
+        }
+	}
+	if (xyzFract != _EMPTY) {
+        vector <string> sv;
+        tokenize(sv, xyzFract, _SPACE_NEWLINE);
+        if (sv.size() != 3) {
+            cmlError("xyzFract attribute must have 3 floats");
+        } else {
+            cmlError("Openbabel does not support fractional coordinates");
+            fractional = false;     // to avoid propagation errors
+//            currentX = atof(sv[0].c_str());
+//            currentY = atof(sv[1].c_str());
+//            currentZ = atof(sv[2].c_str());
+            setCMLType(C_CML2);
+        }
+	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == C_ELEMENTTYPE) {
@@ -1714,6 +1897,11 @@ bool startAtom(vector <pair<string,string> > &atts) {
 	    } else if (atts[i].first == C_X3) {
 	    } else if (atts[i].first == C_Y3) {
 	    } else if (atts[i].first == C_Z3) {
+	    } else if (atts[i].first == C_XFRACT) {
+	    } else if (atts[i].first == C_YFRACT) {
+	    } else if (atts[i].first == C_ZFRACT) {
+	    } else if (atts[i].first == C_XY2) {
+	    } else if (atts[i].first == C_XYZ3) {
 	    } else {
 	      //			cout << "IGNORED atom attribute: " << atts[i].first << endl;
 		}
@@ -1756,6 +1944,18 @@ bool processAtomArrayChild() {
 			y3Vector.push_back(atof((char*)strings[i].c_str()));
 		} else if (builtin == C_Z3) {
 			z3Vector.push_back(atof((char*)strings[i].c_str()));
+		} else if (builtin == C_XFRACT) {
+            cmlError("Openbabel does not support fractional coordinates");
+            fractional = false;     // to avoid propagation errors
+//			x3Vector.push_back(atof((char*)strings[i].c_str()));
+		} else if (builtin == C_YFRACT) {
+            cmlError("Openbabel does not support fractional coordinates");
+            fractional = false;     // to avoid propagation errors
+//			y3Vector.push_back(atof((char*)strings[i].c_str()));
+		} else if (builtin == C_ZFRACT) {
+            cmlError("Openbabel does not support fractional coordinates");
+            fractional = false;     // to avoid propagation errors
+//			z3Vector.push_back(atof((char*)strings[i].c_str()));
 		}
 	}
 	return true; // [ejk] assumed
@@ -1818,6 +2018,18 @@ bool processAtomBuiltin() {
 	    } else if (builtin == C_Z3) {
 			cmlDimension = C_3D;
 			currentZ = value;
+	    } else if (builtin == C_XFRACT) {
+			cmlDimension = C_3D;
+			currentX = value;
+            fractional = true;
+	    } else if (builtin == C_YFRACT) {
+			cmlDimension = C_3D;
+			currentY = value;
+            fractional = true;
+	    } else if (builtin == C_ZFRACT) {
+			cmlDimension = C_3D;
+			currentZ = value;
+            fractional = true;
 	    } else {
 	      cmlError("IGNORED float builtin: " + builtin);
 			return false;
@@ -1844,12 +2056,19 @@ bool processAtomBuiltin() {
 }
 
 bool endAtom() {
+// seems to be all Openbabel in this routine    
 	OBAtom atom;
 	pair<string, OBAtom*> at;
 
 	atom.SetAtomicNum(atomicNum);
 	atom.SetFormalCharge(formalCharge);
-	atom.SetVector(currentX, currentY, currentZ);
+    if (fractional) {
+        cmlError("Openbabel does not support fractional coordinates");
+        fractional = false;     // to avoid propagation errors
+//        atom.SetVector(currentX, currentY, currentZ);
+    } else {
+        atom.SetVector(currentX, currentY, currentZ);
+    }
 
     molPtr->AddAtom(atom);
     int nat = molPtr->NumAtoms();
@@ -1880,6 +2099,7 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 	if (!outputArray) {
         writeStartTagStart(ofs, C_ATOM);
 		writeAttribute(ofs, C_ID, id);
+// CML2
 		if (outputCML2) {
 			writeAttribute(ofs, C_ELEMENTTYPE, elementType);
 			if (charge != 0) writeAttribute(ofs, C_FORMALCHARGE, charge);
@@ -1888,12 +2108,21 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 					writeAttribute(ofs, C_X2, x);
 					writeAttribute(ofs, C_Y2, y);
 				} else if (strcmp(dimension, C_3D) == 0) {
-					writeAttribute(ofs, C_X3, x);
-					writeAttribute(ofs, C_Y3, y);
-					writeAttribute(ofs, C_Z3, z);
+// should never get to this until OB is changed
+                    if (fractional) {
+                        cmlError("Openbabel does not support fractional coordinates");
+                        writeAttribute(ofs, C_XFRACT, x);
+                        writeAttribute(ofs, C_YFRACT, y);
+                        writeAttribute(ofs, C_ZFRACT, z);
+                    } else {
+                        writeAttribute(ofs, C_X3, x);
+                        writeAttribute(ofs, C_Y3, y);
+                        writeAttribute(ofs, C_Z3, z);
+                    }
 				}
 			}
             writeCombinedTagEnd(ofs);
+// CML1
 		} else {
             writeStartTagEnd(ofs);
             ofs << endl;
@@ -1904,9 +2133,15 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 					writeBuiltin(ofs, C_X2, x);
 					writeBuiltin(ofs, C_Y2, y);
 				} else if (strcmp(dimension, C_3D) == 0) {
-					writeBuiltin(ofs, C_X3, x);
-					writeBuiltin(ofs, C_Y3, y);
-					writeBuiltin(ofs, C_Z3, z);
+                    if (fractional) {
+                        writeBuiltin(ofs, C_XFRACT, x);
+                        writeBuiltin(ofs, C_YFRACT, y);
+                        writeBuiltin(ofs, C_ZFRACT, z);
+                    } else {
+                        writeBuiltin(ofs, C_X3, x);
+                        writeBuiltin(ofs, C_Y3, y);
+                        writeBuiltin(ofs, C_Z3, z);
+                    }                        
 				}
 			}
             writeEndTag(ofs, C_ATOM);
@@ -1920,9 +2155,17 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 				appendToArray(x2Array, x);
 				appendToArray(y2Array, y);
 			} else if (strcmp(dimension, C_3D) == 0) {
-				appendToArray(x3Array, x);
-				appendToArray(y3Array, y);
-				appendToArray(z3Array, z);
+                if (fractional) {
+// should never get here                    
+                    cmlError("Openbabel does not support fractional coordinates");
+//                    appendToArray(x3Array, x);
+//                    appendToArray(y3Array, y);
+//                    appendToArray(z3Array, z);
+                } else {
+                    appendToArray(x3Array, x);
+                    appendToArray(y3Array, y);
+                    appendToArray(z3Array, z);
+                }
 			}
 		}
 	}
@@ -1980,6 +2223,7 @@ void processFloatTokens(vector <double> &v, vector<double>::size_type n, string 
 bool startAtomArray(vector <pair<string,string> > &atts) {
 	vector <string> sv;
 	string atomID = getAttribute(atts, C_ATOMID);
+    
 // atomArray with attributes => CML2+array
 // everything else exits here
 	if (atomID == _EMPTY) {
@@ -2006,6 +2250,10 @@ bool startAtomArray(vector <pair<string,string> > &atts) {
 	processFloatTokens(x3Vector, mynatoms, getAttribute(atts, C_X3));
 	processFloatTokens(y3Vector, mynatoms, getAttribute(atts, C_Y3));
 	processFloatTokens(z3Vector, mynatoms, getAttribute(atts, C_Z3));
+	if ("" != getAttribute(atts, C_XYZ3) ||
+    "" != getAttribute(atts, C_XY2)) {
+        cmlError("attributes xyz3 and xy2 not supported in CML2 array mode");
+    }
 	return true; // [ejk] assumed
 }
 
@@ -2089,24 +2337,45 @@ bool WriteAtomArray(ostream &ofs) {
                     writeEndTag(ofs, C_FLOATARRAY);
 
 				} else if (strcmp(dimension, C_3D) == 0) {
-
-                    writeStartTagStart(ofs, C_FLOATARRAY);
-                    writeAttribute(ofs, C_BUILTIN, C_X3);
-                    writeStartTagEnd(ofs);
-                    ofs << x3Array;
-                    writeEndTag(ofs, C_FLOATARRAY);
-
-                    writeStartTagStart(ofs, C_FLOATARRAY);
-                    writeAttribute(ofs, C_BUILTIN, C_Y3);
-                    writeStartTagEnd(ofs);
-                    ofs << y3Array;
-                    writeEndTag(ofs, C_FLOATARRAY);
-
-                    writeStartTagStart(ofs, C_FLOATARRAY);
-                    writeAttribute(ofs, C_BUILTIN, C_Z3);
-                    writeStartTagEnd(ofs);
-                    ofs << z3Array;
-                    writeEndTag(ofs, C_FLOATARRAY);
+                    if (fractional) {
+// should never get here in Openbabel
+                        cmlError("Openbabel does not support fractional coordinates");
+                        writeStartTagStart(ofs, C_FLOATARRAY);
+                        writeAttribute(ofs, C_BUILTIN, C_XFRACT);
+                        writeStartTagEnd(ofs);
+                        ofs << x3Array;
+                        writeEndTag(ofs, C_FLOATARRAY);
+    
+                        writeStartTagStart(ofs, C_FLOATARRAY);
+                        writeAttribute(ofs, C_BUILTIN, C_YFRACT);
+                        writeStartTagEnd(ofs);
+                        ofs << y3Array;
+                        writeEndTag(ofs, C_FLOATARRAY);
+    
+                        writeStartTagStart(ofs, C_FLOATARRAY);
+                        writeAttribute(ofs, C_BUILTIN, C_ZFRACT);
+                        writeStartTagEnd(ofs);
+                        ofs << z3Array;
+                        writeEndTag(ofs, C_FLOATARRAY);
+                    } else {
+                        writeStartTagStart(ofs, C_FLOATARRAY);
+                        writeAttribute(ofs, C_BUILTIN, C_X3);
+                        writeStartTagEnd(ofs);
+                        ofs << x3Array;
+                        writeEndTag(ofs, C_FLOATARRAY);
+    
+                        writeStartTagStart(ofs, C_FLOATARRAY);
+                        writeAttribute(ofs, C_BUILTIN, C_Y3);
+                        writeStartTagEnd(ofs);
+                        ofs << y3Array;
+                        writeEndTag(ofs, C_FLOATARRAY);
+    
+                        writeStartTagStart(ofs, C_FLOATARRAY);
+                        writeAttribute(ofs, C_BUILTIN, C_Z3);
+                        writeStartTagEnd(ofs);
+                        ofs << z3Array;
+                        writeEndTag(ofs, C_FLOATARRAY);
+                    }
 				}
 			}
             writeEndTag(ofs, C_ATOMARRAY);
@@ -2120,9 +2389,17 @@ bool WriteAtomArray(ostream &ofs) {
                     writeAttribute(ofs, C_X2, x2Array);
                     writeAttribute(ofs, C_Y2, y2Array);
 				} else if (strcmp(dimension, C_3D) == 0) {
-                    writeAttribute(ofs, C_X3, x3Array);
-                    writeAttribute(ofs, C_Y3, y3Array);
-                    writeAttribute(ofs, C_Z3, z3Array);
+                    if (fractional) {
+// should never get here in Openbabel
+                        cmlError("Openbabel does not support fractional coordinates");
+                        writeAttribute(ofs, C_XFRACT, x3Array);
+                        writeAttribute(ofs, C_YFRACT, y3Array);
+                        writeAttribute(ofs, C_ZFRACT, z3Array);
+                    } else {
+                        writeAttribute(ofs, C_X3, x3Array);
+                        writeAttribute(ofs, C_Y3, y3Array);
+                        writeAttribute(ofs, C_Z3, z3Array);
+                    }
 				}
 			}
             writeCombinedTagEnd(ofs);
@@ -2969,7 +3246,8 @@ bool endMolecule() {
 }
 
 bool WriteMolecule(ostream &ofs) {
-
+    clearMoleculeWorkspace();
+    
 	if (outputDeclaration) {
 		ofs << _LANGLE << _QUERY << X_XML << _SPACE << X_VERSION << _EQUALS <<  _QUOTE << "1.0" << _QUOTE << _QUERY << _RANGLE << endl;
 	}
@@ -2995,7 +3273,9 @@ bool WriteMolecule(ostream &ofs) {
 	writeStartTagEnd(ofs);
     
     ofs << endl;
-    WriteMetadataList(ofs);
+    if (outputCML2) {
+        WriteMetadataList(ofs);
+    }
 
 	if (molPtr->HasData(obCommentData)) {
 		OBCommentData *cd = (OBCommentData*)molPtr->GetData(obCommentData);
