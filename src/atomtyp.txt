@@ -1,16 +1,20 @@
-################################################################################
-#	                Open Babel file: atomtyp.txt                           #
-#                                                                              #
-# INTHYB: used to assign the internal hybridization values for atoms           #
-# IMPVAL: used to assign the implicit valence of an atom                       #
-# EXTTYP: used to assign the external type of an atom for translation to       #
-#         package specific types (I.E. Sybyl Mol2)                             #
-#                                                                              #
-# The LAST PATTERN MATCHED is used to assign values with the corresponding     #
-# INTHYB, IMPVAL, and EXTTYP values.  Additions to this file should be placed  #
-# in the EXTRA DEFINITIONS section                                             #
-#                                                                              #
-################################################################################
+##############################################################################
+#                                                                            #
+#	                Open Babel file: atomtyp.txt                         #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# INTHYB: used to assign the internal hybridization values for atoms         #
+# IMPVAL: used to assign the implicit valence of an atom                     #
+# EXTTYP: used to assign the external type of an atom for translation to     #
+#         package specific types (I.E. Sybyl Mol2)                           #
+#                                                                            #
+# The LAST PATTERN MATCHED is used to assign values with the corresponding   #
+# INTHYB, IMPVAL, and EXTTYP values. Additions to this file should be placed #
+# in the EXTRA DEFINITIONS section                                           #
+#                                                                            #
+##############################################################################
 
 INTHYB	[C]				3	#sp3 carbon
 INTHYB	[c,$(C=*)]			2	#sp2 carbon

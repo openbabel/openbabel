@@ -203,6 +203,9 @@ OBTypeTable::OBTypeTable()
 
 void OBTypeTable::ParseLine(const char *buffer)
 {
+  if (buffer[0] == '#')
+    return; // just a comment line
+
   if (_linecount == 0)
     sscanf(buffer,"%d%d",&_ncols,&_nrows);
   else if (_linecount == 1)

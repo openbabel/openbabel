@@ -527,7 +527,7 @@ OBResidueData::OBResidueData()
   _init = false;
   _dir = DATADIR;
   _envvar = "BABEL_DATADIR";
-  _filename = "residue.txt";
+  _filename = "resdata.txt";
   _subdir = "data";
   _dataptr = ResidueData;
 }
@@ -649,6 +649,9 @@ void OBResidueData::ParseLine(const char *buffer)
    int bo;
     string s;
     vector<string> vs;
+
+    if (buffer[0] == '#')
+      return;
 
 	tokenize(vs,buffer);
 	if (!vs.empty())

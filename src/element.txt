@@ -1,3 +1,11 @@
+##############################################################################
+#                                                                            #
+#	                Open Babel file: element.txt                         #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+##############################################################################
 # Num	Symb	RCov	RBO	RVdW	Max Bnd	Mass	ElNeg.	Red	Green	Blue
 0	Xx	0.000	0.000	0.000	0	0.000	0.00	0.07	0.50	0.70
 1	H	0.230	0.330	1.200	1	1.008	2.10	1.00	1.00	1.00

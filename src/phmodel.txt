@@ -1,15 +1,18 @@
-################################################################################
-#	                Open Babel file: phmodel.txt                           #
-#                                                                              #
-# TRANSFORM: chemical transforms can be used to modify formal charges, bond    #
-#            orders, and to delete atoms (i.e hydrogens).  Changes are applied #
-#	     to vector bound atoms (use the [:#] SMARTS notation) and bonds    #
-#            between vector bound atoms.                                       #
-# SEEDCHARGE: used to seed partial charges.  Seed partial charges              #
-#             are used as initial values in Gasteiger charge calculation       #
-#                                                                              #
-################################################################################
-
+##############################################################################
+#                                                                            #
+#	                Open Babel file: phmodel.txt                         #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# TRANSFORM: chemical transforms can be used to modify formal charges, bond  #
+#            orders, and to delete atoms (i.e hydrogens). Changes are applied#
+#	     to vector bound atoms (use the [:#] SMARTS notation) and bonds  #
+#            between vector bound atoms.                                     #
+# SEEDCHARGE: used to seed partial charges.  Seed partial charges            #
+#             are used as initial values in Gasteiger charge calculation     #
+#                                                                            #
+##############################################################################
 
 #carboxylic acid
 TRANSFORM O=CO[#1:1] >> O=CO

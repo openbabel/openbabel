@@ -1,3 +1,12 @@
+##############################################################################
+#                                                                            #
+#	                Open Babel file: resdata.txt                         #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+##############################################################################
+
 RES ALA
 ATOM CA C3 3
 ATOM N Nam 2

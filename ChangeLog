@@ -1,3 +1,16 @@
+2002-12-1  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/bond.txt: Data file for functional group recognition in bond
+	order typing (currently unused).
+
+	* src/*.txt: Update with headers, including copyright notice.
+
+	* src/data.cpp: Ignore comment characters (including copyright
+	notice).
+
+	* src/pdb.cpp: Fix bug with reading in residue data--the source
+	file is called resdata.txt, not residue.txt.
+
 2002-11-28  Vincent Favre-Nicolin <vincefn@users.sf.net>
 
 	* src/obutil.cpp(CartesianToInternal): Fix the conversion

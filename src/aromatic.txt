@@ -1,7 +1,15 @@
-################################################################################
-#	                Open Babel file: aromatic.txt                          #
-#                                                                              #
-################################################################################
+##############################################################################
+#                                                                            #
+#	                Open Babel file: aromatic.txt                        #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+#  SMARTS patterns with minimum and maximum pi-electrons contributed to an   #
+#   aromatic system                                                          #
+#                                                                            #
+##############################################################################
+
 #PATTERN		MIN	MAX
 
 #carbon patterns

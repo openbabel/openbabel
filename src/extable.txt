@@ -1,3 +1,11 @@
+##############################################################################
+#                                                                            #
+#	                Open Babel file: extable.txt                         #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+##############################################################################
 # EXTENSION	TYPE		DESCRIPTION			MIME				READ	WRITE
 alc		alchemy		Alchemy				chemical/x-alchemy		1	1
 prep		prep		Amber PREP			none				1	0

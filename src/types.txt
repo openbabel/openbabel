@@ -1,3 +1,13 @@
+##############################################################################
+#                                                                            #
+#	                Open Babel file: types.txt                           #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+#  Conversion between different external atom types                          #
+#                                                                            #
+##############################################################################
 180	18
 INT	ATN	HYB	MMD	MM2	XYZ	ALC	HAD	MCML	C3D	SYB	MOL	MAP	DRE	XED	DOK	M3D	IDX
 X	0	0	62	0	X	Du	0	X	0	Du	26	X	X	21	25	un.0	0
