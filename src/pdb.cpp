@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (C) 2003 Geoffrey R. Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -73,6 +74,8 @@ bool ReadPDB(istream &ifs,OBMol &mol,const char *title)
   char buffer[BUFF_SIZE];
   OBBitVec bs;
 
+  mol.SetTitle(title);
+
   mol.BeginModify();
   while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"END",3))
   {
@@ -108,6 +111,7 @@ bool ReadTerTermPDB(istream &ifs,OBMol &mol,const char *title)
   char buffer[BUFF_SIZE];
   OBBitVec bs;
 
+  mol.SetTitle(title);
   mol.BeginModify();
   while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"END",3) && !EQn(buffer,"TER",3))
   {
@@ -536,31 +540,12 @@ bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
   OBAtom *a1,*a2;
   OBResidue *r1,*r2;
   vector<OBNodeBase*>::iterator i,j;
-  
-  //assign alpha peptide bonds
-  for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
-    if (bv.BitIsOn(a1->GetIdx()))
-      {
-	r1 = a1->GetResidue();
-	if (!(r1->GetAtomID(a1) == "C")) continue;
-	for (j=i,a2 = mol.NextAtom(j);a2;a2 = mol.NextAtom(j))
-	  {
-	    r2 = a2->GetResidue();
-	    if (!(r2->GetAtomID(a2) == "N")) continue;
-	    if (r1->GetNum() < r2->GetNum()-1) break;
-	    if (r1->GetChainNum() == r2->GetChainNum())
-	      {
-		mol.AddBond(a1->GetIdx(),a2->GetIdx(),1);
-		break;
-	      }
-	  }
-      }
-
   vector3 v;
+  
   int bo;
   unsigned int skipres=0;
   string rname = "";
-  //assign other residue bonds
+  //assign residue bonds
   for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
     {
       r1 = a1->GetResidue();
@@ -582,7 +567,7 @@ bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
 	    {
 	      v = a1->GetVector() - a2->GetVector();
 	      if (v.length_2() < 3.5) //float check by distance
-		  mol.AddBond(a1->GetIdx(),a2->GetIdx(),bo);
+		mol.AddBond(a1->GetIdx(),a2->GetIdx(),bo);
 	    }
 	}
     }

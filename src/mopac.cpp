@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2003 Geoffrey R. Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +25,7 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,const char *title)
   float x,y,z;
   OBAtom *atom;
   vector<string> vs;
+  vector<double> charges;
   bool hasPartialCharges = false;
   double energy;
 
@@ -98,11 +100,11 @@ bool ReadMOPACCartesian(istream &ifs,OBMol &mol,const char *title)
   ifs.getline(buffer,BUFF_SIZE); // filename
   ifs.getline(buffer,BUFF_SIZE); // title (currently ignored)
 
-  mol.BeginModify();
   while	(ifs.getline(buffer,BUFF_SIZE))
     {
       tokenize(vs,buffer);
-      if (vs.size() < 7) return(false);
+      if (vs.size() == 0) break;
+      else if (vs.size() < 7) return false;
       atom = mol.NewAtom();
       x = atof((char*)vs[1].c_str());
       y = atof((char*)vs[3].c_str());
@@ -113,10 +115,10 @@ bool ReadMOPACCartesian(istream &ifs,OBMol &mol,const char *title)
       atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
     }
 
-  mol.EndModify();
   mol.ConnectTheDots();
   mol.PerceiveBondOrders();
   mol.SetTitle(title);
+
   return(true);
 }
 

@@ -2636,7 +2636,7 @@ void OBMol::ConnectTheDots(void)
   vector<OBEdgeBase*>::iterator l;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
-      while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())))
+      while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) || atom->SmallestBondAngle() < 45.0f)
 	{
 	  maxbond = atom->BeginBond(l);
 	  maxlength = maxbond->GetLength();

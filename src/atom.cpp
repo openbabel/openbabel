@@ -694,6 +694,31 @@ unsigned int OBAtom::MemberOfRingSize() const
   return(0);
 }
 
+float	  OBAtom::SmallestBondAngle()
+{
+  OBAtom *b, *c;
+  vector3 v1, v2;
+  float degrees, minDegrees;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j,k;
+
+  minDegrees = 360.0f;
+
+  for (b = BeginNbrAtom(j); b; b = NextNbrAtom(j))
+    {
+      k = j;
+      for (c = NextNbrAtom(k); c; c = NextNbrAtom(k))
+	{
+	  v1 = b->GetVector() - GetVector();
+	  v2 = c->GetVector() - GetVector();	
+	  degrees = vectorAngle(v1, v2);
+	  if (degrees < minDegrees)
+	    minDegrees = degrees;
+	}
+    }
+  return minDegrees;
+}
+
 unsigned int OBAtom::CountFreeOxygens() const
 {
   unsigned int count = 0;
