@@ -22,6 +22,9 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
+// Needs to become multi-molecule aware
+// check all molecules and check that the number of mols is the same
+
 int main(int argc,char *argv[])
 {
   io_type inFile1 = UNDEFINED, inFile2 = UNDEFINED;
