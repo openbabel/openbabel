@@ -284,6 +284,16 @@ char *OBAtom::GetType()
   if (mol && !mol->HasAtomTypesPerceived())
     atomtyper.AssignTypes(*((OBMol*)GetParent()));
 
+  if (strlen(_type) == 0) // Somehow we still don't have a type!
+    {
+      char num[6];
+      OBTypeTable tempTable;
+      tempTable.SetFromType("ATN");
+      tempTable.SetToType("INT");
+      sprintf(num, "%d", GetAtomicNum());
+      tempTable.Translate(_type, num);
+    }
+
   return(_type);
 }
 
