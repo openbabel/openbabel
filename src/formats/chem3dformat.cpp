@@ -341,7 +341,7 @@ bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
         {
             sprintf(buffer,"Unable to assign %s type to atom %d type = %s\n",
                     mol_typ,atom->GetIdx(),atom->GetType());
-            ThrowError(buffer);
+            obErrorLog.ThrowError(__FUNCTION__, buffer, obInfo);
             atnum = atom->GetAtomicNum();
             type_num = atnum * 10 + atom->GetValence();
             sprintf(type_name,"%d",type_num);

@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2003 by Dr. Alex M. Clark and Geoffrey Hutchison
+Copyright (C) 20032-2005 by Dr. Alex M. Clark and Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@ public:
     //Register this format type ID
     CRK2DFormat()
     {
-        OBConversion::RegisterFormat("crk2d",this);
+        OBConversion::RegisterFormat("crk2d", this, "chemical/x-crk2d");
     }
 
     virtual const char* Description() //required
@@ -161,7 +161,7 @@ public:
     //Register this format type ID
     CRK3DFormat()
     {
-        OBConversion::RegisterFormat("crk3d",this);
+        OBConversion::RegisterFormat("crk3d", this, "chemical/x-crk3d");
     }
 
     virtual const char* Description() //required

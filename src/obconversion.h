@@ -172,39 +172,30 @@ public:
 	static OBFormat*        FormatFromMIME(const char* MIME);
 
 	///Repeatedly called to recover available Formats
-	static bool				GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
-	//@}		
+	static bool	        GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
+	//@}
+		
 	/// @name Information
 	//@{
-
 	static const char* Description(); //generic conversion options
 	//@}
+
 	/// @name Parameter get and set
 	//@{
 	std::istream* GetInStream() const {return pInStream;};
 	std::ostream* GetOutStream() const {return pOutStream;};
 	void          SetInStream(std::istream* pIn){pInStream=pIn;};
 	void          SetOutStream(std::ostream* pOut){pOutStream=pOut;};
-	bool        SetInAndOutFormats(const char* inID, const char* outID);///< Sets the formats from their ids, e g CML
-	bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
-//<<<<<<< obconversion.h
-	bool				SetInFormat(const char* inID);
-	bool				SetInFormat(OBFormat* pIn);
-	bool				SetOutFormat(const char* outID);
-	bool				SetOutFormat(OBFormat* pOut);
-/*=======
-	bool        SetInFormat(const char* inID)
-	  { return SetInAndOutFormats(inID, NULL); };
-	bool        SetInFormat(OBFormat* pIn)
-	  { return SetInAndOutFormats(pIn, NULL); };
-	bool        SetOutFormat(const char* outID)
-	  { return SetInAndOutFormats(NULL, outID); };
-	bool        SetOutFormat(OBFormat* pOut)
-	  { return SetInAndOutFormats(NULL, pOut); };
->>>>>>> 1.1.4.4
-*/
-	OBFormat*		GetInFormat() const{return pInFormat;};
-	OBFormat*		GetOutFormat() const{return pOutFormat;};
+	bool          SetInAndOutFormats(const char* inID, const char* outID);///< Sets the formats from their ids, e g CML
+	bool          SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
+	bool	      SetInFormat(const char* inID);
+	bool	      SetInFormat(OBFormat* pIn);
+	bool	      SetOutFormat(const char* outID);
+	bool	      SetOutFormat(OBFormat* pOut);
+
+
+	OBFormat*   GetInFormat() const{return pInFormat;};
+	OBFormat*   GetOutFormat() const{return pOutFormat;};
 	std::string GetInFilename() const{return InFilename;};
 
 	const char* GetOptions() const;///< @brief Options for output format
@@ -221,9 +212,10 @@ public:
 	virtual const char* GetDimension() const;
 	virtual void SetDimension(const char* dim);
 
-	bool				SaveOptionsToFile(const char* filename);
-	bool				RestoreOptionsFromFile(const char* filename);
+	bool	    SaveOptionsToFile(const char* filename);
+	bool	    RestoreOptionsFromFile(const char* filename);
 	//@}
+
 	/// @name Conversion
 	//@{
 	/// @brief Conversion for single input and output stream
@@ -237,6 +229,7 @@ public:
 	int					FullConvert(std::vector<std::string>& FileList,
 										std::string& OutputFileName, std::vector<std::string>& OutputFileList);
 	//@}
+
 	/// @name Conversion loop control
 	//@{
 	int					AddChemObject(OBBase* pOb);///< @brief Adds to internal array during input
@@ -284,28 +277,29 @@ public:
 protected:
 	bool             SetStartAndEnd();
 	static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
+	static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
 	static int       LoadFormatFiles();
 
-	std::string				InFilename;
+	std::string	  InFilename;
 	std::istream*     pInStream;
 	std::ostream*     pOutStream;
 	static OBFormat*  pDefaultFormat;
-	OBFormat* 		pInFormat;
-	OBFormat*			pOutFormat;
-	std::string		Options;
-	std::string		GeneralOptions;
-	std::string		Title;
-	char					Dimension[10];
-	int						Index;
-	unsigned int	StartNumber;
-	unsigned int	EndNumber;
-	int	Count;
-	bool					m_IsLast;
-	bool					MoreFilesToCome;
-	bool					OneObjectOnly;
-	bool					ReadyToInput;
-	static bool		FormatFilesLoaded;
-	OBBase*				pOb1;
+	OBFormat* 	  pInFormat;
+	OBFormat*	  pOutFormat;
+	std::string	  Options;
+	std::string	  GeneralOptions;
+	std::string	  Title;
+	char		  Dimension[10];
+	int		  Index;
+	unsigned int	  StartNumber;
+	unsigned int	  EndNumber;
+	int	          Count;
+	bool		  m_IsLast;
+	bool		  MoreFilesToCome;
+	bool		  OneObjectOnly;
+	bool		  ReadyToInput;
+	static bool	  FormatFilesLoaded;
+	OBBase*		  pOb1;
 };
 
 ///For OBFormat::Flags()

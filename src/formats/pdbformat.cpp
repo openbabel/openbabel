@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2003 Geoffrey R. Hutchison
+Some portions Copyright (C) 2003-2005 Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -31,8 +31,8 @@ public:
     //Register this format type ID
     PDBFormat()
     {
-        OBConversion::RegisterFormat("pdb",this);
-        OBConversion::RegisterFormat("ent",this);
+        OBConversion::RegisterFormat("pdb",this, "chemical/x-pdb");
+        OBConversion::RegisterFormat("ent",this, "chemical/x-pdb");
     }
 
     virtual const char* Description() //required

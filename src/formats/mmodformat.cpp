@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -26,14 +26,14 @@ public:
     //Register this format type ID
     MacroModFormat()
     {
-        OBConversion::RegisterFormat("mmd",this);
-        OBConversion::RegisterFormat("mmod",this);
+        OBConversion::RegisterFormat("mmd",this, "chemical/x-macromodel-input");
+        OBConversion::RegisterFormat("mmod",this, "chemical/x-macromodel-input");
     }
 
     virtual const char* Description() //required
     {
         return
-            "MacroMod format\n \
+            "MacroModel format\n \
             No comments yet\n \
             ";
     };

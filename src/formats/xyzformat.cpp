@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,12 @@ GNU General Public License for more details.
 #include "obconversion.h"
 #include "obmolecformat.h"
 
+#ifdef HAVE_SSTREAM
+#include <sstream>
+#else
+#include <strstream>
+#endif
+
 using namespace std;
 namespace OpenBabel
 {
@@ -27,7 +33,7 @@ public:
     //Register this format type ID
     XYZFormat()
     {
-        OBConversion::RegisterFormat("xyz",this);
+        OBConversion::RegisterFormat("xyz", this, "chemical/x-xyz");
     }
 
     virtual const char* Description() //required
@@ -75,34 +81,30 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
-
     char buffer[BUFF_SIZE];
 
-    // Read the first line, which should contain the number of atoms in
-    // the molecule. Ignore any blank lines left from a previous molecule
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
+
+    unsigned int natoms;	// [ejk] assumed natoms could not be -ve
 
     if (!ifs.getline(buffer,BUFF_SIZE))
+      {
+	obErrorLog.ThrowError(__FUNCTION__,
+			      "Problems reading an XYZ file: Cannot read the first line.", obWarning);
+	return(false);
+      }
+
+    if (sscanf(buffer, "%d", &natoms) == 0 || !natoms)
     {
-        cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
-        << "  Could not read the first line, file error." << endl;
-        return(false);
+      obErrorLog.ThrowError(__FUNCTION__,
+			    "Problems reading an XYZ file: The first line must contain the number of atoms.", obWarning);
+      return(false);
     }
-    unsigned int natoms;	// [ejk] assumed natoms could not be -ve
-    if (sscanf(buffer,"%d", &natoms) == 0)
-    {
-        cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
-        << "  Problems reading the first line. The first line must contain the number of atoms." << endl
-        << "  OpenBabel found the line '" << buffer << "'" << endl
-        << "  which could not be interpreted as a number." << endl;
-        return(false);
-    }
-    if (!natoms)
-    {
-        cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
-        << "  Problems reading the first line. The first line must contain the number of atoms." << endl
-        << "  OpenBabel found the number '0' which obviously does not work." << endl;
-        return(false);
-    }
+
     mol.ReserveAtoms(natoms);
 
     // The next line contains a title string for the molecule. Use this
@@ -110,8 +112,8 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     // empty. Otherwise, use the title given by the calling function.
     if (!ifs.getline(buffer,BUFF_SIZE))
     {
-        cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
-        << "  Could not read the second line, file error." << endl;
+      obErrorLog.ThrowError(__FUNCTION__,
+			    "Problems reading an XYZ file: Could not read the second line (title/comments).", obWarning);
         return(false);
     }
     if (strlen(buffer) == 0)
@@ -126,20 +128,25 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     {
         if (!ifs.getline(buffer,BUFF_SIZE))
         {
-            cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
-            << "  Could not read line #" << i+2 << ", file error." << endl
-            << "  According to line one, there should be " << natoms << " atoms, and therefore " << natoms+2 << " lines in the file" << endl;
-            return(false);
+	  errorMsg << "Problems reading an XYZ file: "
+		   << "Could not read line #" << i+2 << ", file error." << endl
+		   << " According to line one, there should be " << natoms 
+		   << " atoms, and therefore " << natoms+2 << " lines in the file.";
+
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	  return(false);
         }
         tokenize(vs,buffer);
         if (vs.size() != 4)
         {
-            cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
-            << "  Could not read line #" << i+2 << "." << endl
-            << "  OpenBabel found the line '" << buffer << "'" << endl
-            << "  According to the specifications, this line should contain exactly 4 entries, separated by white space." << endl
-            << "  However, OpenBabel found " << vs.size() << " items." << endl;
-            return(false);
+          errorMsg << "Problems reading an XYZ file: "
+		   << "Could not read line #" << i+2 << "." << endl
+		   << "OpenBabel found the line '" << buffer << "'" << endl
+		   << "According to the specifications, this line should contain exactly 4 entries, separated by white space." << endl
+		   << "However, OpenBabel found " << vs.size() << " items.";
+
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	  return(false);
         }
 
         // Atom Type: get the atomic number from the element table, using
@@ -160,38 +167,46 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         double x = strtod((char*)vs[1].c_str(),&endptr);
         if (endptr == (char*)vs[1].c_str())
         {
-            cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
-            << "  Could not read line #" << i+2 << "." << endl
-            << "  OpenBabel found the line '" << buffer << "'" << endl
-            << "  According to the specifications, this line should contain exactly 4 entries, separated by white space." << endl
-            << "  Item #0: Atom Type, Items #1-#3 cartesian coordinates in Angstrom." << endl
-            << "  OpenBabel could not interpret item #1 as a number." << endl;
-            return(false);
+          errorMsg << "Problems reading an XYZ file: "
+		   << "Could not read line #" << i+2 << "." << endl
+		   << "OpenBabel found the line '" << buffer << "'" << endl
+		   << "According to the specifications, this line should contain exactly 4 entries, separated by white space." << endl
+		   << "OpenBabel could not interpret item #1 as a number.";
+
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	  return(false);
         }
         double y = strtod((char*)vs[2].c_str(),&endptr);
         if (endptr == (char*)vs[2].c_str())
         {
-            cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
-            << "  Could not read line #" << i+2 << "." << endl
-            << "  OpenBabel found the line '" << buffer << "'" << endl
-            << "  According to the specifications, this line should contain exactly 4 entries, separated by white space." << endl
-            << "  Item #0: Atom Type, Items #1-#3 cartesian coordinates in Angstrom." << endl
-            << "  OpenBabel could not interpret item #2 as a number." << endl;
-            return(false);
+          errorMsg << "Problems reading an XYZ file: "
+		   << "Could not read line #" << i+2 << "." << endl
+		   << "OpenBabel found the line '" << buffer << "'" << endl
+		   << "According to the specifications, this line should contain exactly 4 entries, separated by white space." << endl
+		   << "OpenBabel could not interpret item #2 as a number.";
+
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	  return(false);
         }
         double z = strtod((char*)vs[3].c_str(),&endptr);
         if (endptr == (char*)vs[3].c_str())
         {
-            cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
-            << "  Could not read line #" << i+2 << "." << endl
-            << "  OpenBabel found the line '" << buffer << "'" << endl
-            << "  According to the specifications, this line should contain exactly 4 entries, separated by white space." << endl
-            << "  Item #0: Atom Type, Items #1-#3 cartesian coordinates in Angstrom." << endl
-            << "  OpenBabel could not interpret item #3 as a number." << endl;
-            return(false);
+          errorMsg << "Problems reading an XYZ file: "
+		   << "Could not read line #" << i+2 << "." << endl
+		   << "OpenBabel found the line '" << buffer << "'" << endl
+		   << "According to the specifications, this line should contain exactly 4 entries, separated by white space." << endl
+		   << "OpenBabel could not interpret item #3 as a number.";
+
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	  return(false);
         }
         atom->SetVector(x,y,z); //set coordinates
     }
+
+    // clean out any remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
 
     mol.ConnectTheDots();
     mol.PerceiveBondOrders();

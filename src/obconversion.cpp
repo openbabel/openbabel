@@ -181,6 +181,16 @@ FMapType& OBConversion::FormatsMap()
 	return *fm;
 }
 
+///This static function returns a reference to the FormatsMIMEMap
+///which, because it is a static local variable is constructed only once.
+///This fiddle is to avoid the "static initialization order fiasco"
+///See Marshall Cline's C++ FAQ Lite document, www.parashift.com/c++-faq-lite/". 
+FMapType& OBConversion::FormatsMIMEMap()
+{
+	static FMapType* fm = new FMapType;
+	return *fm;
+}
+
 ///////////////////////////////////////////////
 OBConversion::OBConversion(const OBConversion& O)
 {
@@ -198,6 +208,7 @@ OBConversion::OBConversion(const OBConversion& O)
 	Index=0;
 	InFilename=O.InFilename;
 	FormatsMap();//rubbish
+	FormatsMIMEMap();
 }
 
 /////////////////////////////////////////////////
@@ -216,7 +227,7 @@ int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat, const char* 
 {
 	FormatsMap()[ID] = pFormat;
 	if (MIME)
-	  FormatsMap()[MIME] = pFormat;
+	  FormatsMIMEMap()[MIME] = pFormat;
 	if(pFormat->Flags() & DEFAULTFORMAT)
 		pDefaultFormat=pFormat;
 	return FormatsMap().size();
@@ -638,10 +649,10 @@ OBFormat* OBConversion::FormatFromExt(const char* filename)
 
 OBFormat* OBConversion::FormatFromMIME(const char* MIME)
 {
-  if(FormatsMap().find(MIME) == FormatsMap().end())
+  if(FormatsMIMEMap().find(MIME) == FormatsMIMEMap().end())
     return NULL;
   else
-    return FormatsMap()[MIME];
+    return FormatsMIMEMap()[MIME];
 }
 
 //////////////////////////////////////////////////
@@ -811,7 +822,7 @@ path and extension.
 So if the input files were inpath/First.cml, inpath/Second.cml
 and OutputFileName was NEW*.mol, the output files would be
 NEWFirst.mol, NEWSecond.mol.
-   
+
 If FileList is empty, the input stream that has already been set
 (usually in the constructor) is used. If OutputFileName is empty,
 the output stream already set is used.

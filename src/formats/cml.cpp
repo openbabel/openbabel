@@ -4175,7 +4175,9 @@ bool WriteMetadataList(ostream &ofs)
 
     writeStartTagStart(ofs, C_METADATA);
     writeAttribute(ofs, C_NAME, DC_CREATOR);
-    writeAttribute(ofs, C_CONTENT, "OpenBabel version 1-100.1");
+    string obVersion = "Open Babel version ";
+    obVersion += BABEL_VERSION;
+    writeAttribute(ofs, C_CONTENT, obVersion);
     writeCombinedTagEnd(ofs);
 
     writeStartTagStart(ofs, C_METADATA);
@@ -4209,11 +4211,6 @@ bool WriteMetadataList(ostream &ofs)
     writeStartTagStart(ofs, C_METADATA);
     writeAttribute(ofs, C_NAME, DC_CONTRIBUTOR);
     writeAttribute(ofs, C_CONTENT, "unknown");
-    writeCombinedTagEnd(ofs);
-
-    writeStartTagStart(ofs, C_METADATA);
-    writeAttribute(ofs, C_NAME, DC_CREATOR);
-    writeAttribute(ofs, C_CONTENT, "Openbabel V1-100.1");
     writeCombinedTagEnd(ofs);
 
     writeStartTagStart(ofs, C_METADATA);

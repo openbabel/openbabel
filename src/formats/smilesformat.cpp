@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison
 Some portions Copyright (c) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@ public:
     //Register this format type ID
     SMIFormat()
     {
-        OBConversion::RegisterFormat("smi",this);
+        OBConversion::RegisterFormat("smi",this, "chemical/x-daylight-smiles");
     }
 
   virtual const char* GetMIMEType() 
@@ -235,13 +235,13 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
     char buffer[BUFF_SIZE];
 
     // This is a hack to prevent recursion problems.
-    //  we still need to fix the underlying problem -GRH
+    //  we still need to fix the underlying problem (mainly chiral centers) -GRH
     if (mol.NumAtoms() > 1000)
-    {
-        ThrowError("SMILES Conversion failed: Molecule is too large to convert.");
-        cerr << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
-        return(false);
-    }
+      {
+	ThrowError("SMILES Conversion failed: Molecule is too large to convert.");
+	cerr << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
+	return(false);
+      }
 
     OBMol2Smi m2s;
 
@@ -1605,7 +1605,7 @@ void OBMol2Smi::CreateSmiString(OBMol &mol,char *buffer)
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
         //    if ((!atom->IsHydrogen() || atom->GetValence() == 0) && !_uatoms[atom->GetIdx()])
         if (!atom->IsHydrogen() && !_uatoms[atom->GetIdx()])
-            if (!atom->IsChiral()) //don't use chiral atoms as root node
+	  if (!atom->IsChiral()) //don't use chiral atoms as root node
             {
                 //clear out closures in case structure is dot disconnected
                 _vclose.clear();

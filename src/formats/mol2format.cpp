@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,7 @@ public:
     //Register this format type ID
     MOL2Format()
     {
-        OBConversion::RegisterFormat("mol2",this);
+        OBConversion::RegisterFormat("mol2",this, "chemical/x-mol2");
     }
 
     virtual const char* Description() //required

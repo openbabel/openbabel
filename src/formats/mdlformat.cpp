@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (C) 2001-2005 by Geoffrey Hutchison
 Portions Copyright (C) 2004 by Chris Morley
 
 This file is part of the Open Babel project.
@@ -33,10 +34,10 @@ public:
 	//Register this format type ID
 	MOLFormat() 
 	{
-		OBConversion::RegisterFormat("mol",this);
-		OBConversion::RegisterFormat("mdl",this);
-		OBConversion::RegisterFormat("sd",this);
-		OBConversion::RegisterFormat("sdf",this);
+		OBConversion::RegisterFormat("mol",this, "chemical/x-mdl-molfile");
+		OBConversion::RegisterFormat("mdl",this, "chemical/x-mdl-molfile");
+		OBConversion::RegisterFormat("sd",this, "chemical/x-mdl-sdfile");
+		OBConversion::RegisterFormat("sdf",this, "chemical/x-mdl-sdfile");
 	}
 
 	virtual const char* Description()
