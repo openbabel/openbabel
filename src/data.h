@@ -161,7 +161,9 @@ class OBExtensionTable : public OBGlobalDataBase
   bool    CanReadExtension(char *);
   bool    CanWriteExtension(char *);
   bool	  IsReadable(unsigned int);
+  bool    IsReadable(io_type);
   bool	  IsWritable(unsigned int);
+  bool	  IsWritable(io_type);
   void    ParseLine(const char*);
   void    TypeToExtension(io_type,char*);
   void	  TypeToMIME(io_type,char*);

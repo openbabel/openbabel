@@ -625,6 +625,20 @@ bool OBExtensionTable::IsReadable(unsigned int n)
     return _table[n][4] == "1";
 }
 
+bool OBExtensionTable::IsReadable(io_type type)
+{
+  if (!_init) Init();
+
+  vector<vector<string> >::iterator i;
+
+  for (i = _table.begin();i != _table.end();i++)
+    if (type == TextToType((*i)[1]))
+      return (*i)[4] == "1";
+
+  // Never got a match
+  return false;
+}
+
 bool OBExtensionTable::IsWritable(unsigned int n)
 {
   if (!_init) Init();
@@ -633,6 +647,20 @@ bool OBExtensionTable::IsWritable(unsigned int n)
     return false;
   else
     return _table[n][5] == "1";
+}
+
+bool OBExtensionTable::IsWritable(io_type type)
+{
+  if (!_init) Init();
+
+  vector<vector<string> >::iterator i;
+
+  for (i = _table.begin();i != _table.end();i++)
+    if (type == TextToType((*i)[1]))
+      return (*i)[5] == "1";
+
+  // Never got a match
+  return false;
 }
 
 unsigned int OBExtensionTable::Count()
