@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH OPENBABEL 1 "January 20, 2002"
+.TH OPENBABEL 1 "June 23, 2003"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -32,11 +32,29 @@ currently used in molecular modeling software.
 If only input and ouput files are given, Open Babel will guess the file type
 from the filename extension.
 .TP
+.B \-c
+Center molecule
+.TP
+.B \-d
+Delete hydrogens
+.TP
+.B \-f <number>
+Start importing at molecule number specified
+.TP
+.B \-h
+Add hydrogens
+.TP
+.B \-hpH
+Add hydrogens appropriate for pH
+.TP
 .B \-i 
-Specifies input format, see below for the avaiable formats
+Specifies input format, see below for the available formats
+.TP
+.B \-l <number>
+End importing at molecule number specified
 .TP
 .B \-o
-Specifies output format, see below for the avaiable formats
+Specifies output format, see below for the available formats
 .SH INPUT FORMATS
 .B Open Babel 
 recognizes the following input formats:
@@ -45,10 +63,15 @@ recognizes the following input formats:
         bs -- Ball and Stick file
         caccrt -- Cacao Cartesian file
         ccc -- CCC file
+        c3d1 -- Chem3D Cartesian 1 file
+        c3d2 -- Chem3D Cartesian 2 file
+        cml -- Chemical Markup Language file
         box -- Dock 3.5 Box file
+        dmol -- DMol3 Coordinates file
         feat -- Feature file
         gam -- GAMESS Output file
         gamout -- GAMESS Output file
+        gpr -- Ghemical Project file
         mm1gp -- Ghemical MM file
         qm1gp -- Ghemical QM file
         hin -- Hyperchem HIN file
@@ -65,14 +88,18 @@ recognizes the following input formats:
         mol -- MDL Molfile file
         mopcrt -- MOPAC Cartesian file
         mopout -- MOPAC Output file
+        mmads -- MMADS file
         mpqc -- MPQC file
         bgf -- MSI BGF file
         nwo -- NWChem Output file
         pdb -- PDB file
+        ent -- PDB file
         qcout -- QChem Output file
+        res -- ShelX file
         smi -- SMILES file
         mol2 -- Sybyl Mol2 file
         unixyz -- UniChem XYZ file
+        vmol -- ViewMol file
         xyz -- XYZ file
 
 .SH OUTPUT FORMATS
@@ -83,7 +110,10 @@ The following output formats may be written by
         caccrt -- Cacao Cartesian file
         cacint -- Cacao Internal file
         cache -- CAChe MolStruct file
+        c3d1 -- Chem3D Cartesian 1 file
+        c3d2 -- Chem3D Cartesian 2 file
         ct -- ChemDraw Connection Table file
+        cml -- Chemical Markup Language file
         cssr -- CSD CSSR file
         box -- Dock 3.5 Box file
         dmol -- DMol3 Coordinates file
@@ -93,7 +123,7 @@ The following output formats may be written by
         inp -- GAMESS Input file
         gcart -- Gaussian Cartesian file
         gau -- Gaussian Input file
-        mm1gp -- Ghemical MM file
+        gpr -- Ghemical Project file
         gr96A -- GROMOS96 (A) file
         gr96N -- GROMOS96 (nm) file
         hin -- HyperChem HIN file
@@ -108,10 +138,13 @@ The following output formats may be written by
         mdl -- MDL Molfile file
         mol -- MDL Molfile file
         mopcrt -- MOPAC Cartesian file
+        mmads -- MMADS file
         bgf -- MSI BGF file
         csr -- MSI Quanta CSR file
         nw -- NWChem Input file
         pdb -- PDB file
+	ent -- PDB file
+        pov -- POV-Ray Output file
         report -- Report file
         qcin -- QChem Input file
         smi -- SMILES file
@@ -120,8 +153,10 @@ The following output formats may be written by
         txyz -- Tinker XYZ file
         txt -- Titles file
         unixyz -- UniChem XYZ file
+        vmol -- ViewMol file
         xed -- XED file
         xyz -- XYZ file
+        zin -- ZINDO Input file
 \".SH EXAMPLES
 \"To convert an MM2 output file named mm2.grf to a MOPAC internal coordinate
 \"input file named mopac.dat
