@@ -78,7 +78,7 @@ extern void ThrowError(string&);
 OBElementTable::OBElementTable()
 {
   _init = false;
-  _dir = DATADIR;
+  _dir = BABEL_DATADIR;
   _envvar = "BABEL_DATADIR";
   _filename = "element.txt";
   _subdir = "data";
@@ -247,7 +247,7 @@ int OBElementTable::GetAtomicNum(const char *sym, unsigned short iso)
 OBIsotopeTable::OBIsotopeTable()
 {
   _init = false;
-  _dir = DATADIR;
+  _dir = BABEL_DATADIR;
   _envvar = "BABEL_DATADIR";
   _filename = "isotope.txt";
   _subdir = "data";
@@ -348,7 +348,7 @@ Current atom types include (defined in the top line of the data file types.txt):
 OBTypeTable::OBTypeTable()
 {
   _init = false;
-  _dir = DATADIR;
+  _dir = BABEL_DATADIR;
   _envvar = "BABEL_DATADIR";
   _filename = "types.txt";
   _subdir = "data";
@@ -472,7 +472,7 @@ extern OBExtensionTable extab in mol.h.
 OBExtensionTable::OBExtensionTable()
 {
   _init = false;
-  _dir = DATADIR;
+  _dir = BABEL_DATADIR;
   _envvar = "BABEL_DATADIR";
   _filename = "extable.txt";
   _subdir = "data";

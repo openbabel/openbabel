@@ -550,7 +550,7 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
 OBResidueData::OBResidueData()
 {
   _init = false;
-  _dir = DATADIR;
+  _dir = BABEL_DATADIR;
   _envvar = "BABEL_DATADIR";
   _filename = "resdata.txt";
   _subdir = "data";

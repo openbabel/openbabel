@@ -2020,7 +2020,7 @@ host_os=`echo $ac_cv_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
   ac_define_dir=`eval echo $ac_define_dir`
 
 cat >>confdefs.h <<_ACEOF
-#define DATADIR "$ac_define_dir"
+#define BABEL_DATADIR "$ac_define_dir"
 _ACEOF
 
 
