@@ -8,7 +8,9 @@ CC            = @CC@
 CXX	      = @CXX@
 
 CFLAGS        = @CFLAGS@
-CXXFLAGS      = @CXXFLAGS@ -DDATADIR=\"${pkgdatadir}\" -I$(builddir)
+CXXFLAGS      = @CXXFLAGS@ 
+DEFS          = -DDATADIR=\"${pkgdatadir}\" 
+INCS          = -I$(builddir)
 LIBS	      = @LIBS@
 LIBFLAGS      = -DLIBRARY
 
@@ -123,4 +125,4 @@ Makefile:	Makefile.in
 
 .SUFFIXES:	.cpp
 .cpp.o:
-		$(CXX) $(CXXFLAGS) -c $< -o $@
+		$(CXX) $(CXXFLAGS) $(DEFS) $(INCS) -c $< -o $@
