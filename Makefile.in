@@ -22,7 +22,7 @@ HDRS	      = StdAfx.h Vector.h aromatic.h atomtyp.h base.h binary.h \
 		bitgrid.h bitvec.h chiral.h chains.h commandline.h cwrap.h \
 		data.h element.h extable.h fileformat.h grid.h \
 		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
-		oeutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
+		obutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
 		resdata.h ring.h rotor.h smi.h typer.h types.h version.h \
 		chains.h ctransform.h binary_io.h generic.h smarts.h 
 
@@ -30,7 +30,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		bitgrid.o bond.o \
 		chains.o commandline.o data.o molvector.o matrix.o\
 		chiral.o grid.o mdl.o mol.o mol2.o molchrg.o \
-		oeutil.o parsmi.o parsmart.o patty.o quat.o \
+		obutil.o parsmi.o parsmart.o patty.o quat.o \
 		ring.o rotor.o smi.o tokenst.o Vector.o pdb.o ccc.o \
 		mmod.o rand.o box.o balst.o bgf.o cacao.o cache.o chdrw.o \
 		csr.o cssr.o feat.o fh.o gromos96.o cwrap.o \
