@@ -15,7 +15,7 @@ libopenbabel_la_SOURCES = \
 		pdb.cpp phmodel.cpp povray.cpp qchem.cpp rand.cpp report.cpp \
 		residue.cpp ring.cpp rotor.cpp shelx.cpp smi.cpp tinker.cpp \
 		tokenst.cpp typer.cpp unichem.cpp viewmol.cpp xed.cpp xyz.cpp \
-		zindo.cpp
+		zindo.cpp pqs.cpp
 
 libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 

@@ -1,3 +1,15 @@
+2004-02-02  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* src/mdl.cpp (WriteSDFile): Add support for wedge/hatch, as
+	contributed by Eugen Leitl. 
+
+	* src/typer.cpp: Remove debugging information used for
+	SelectRootAtoms development. (oops!)
+
+	* configure, aclocal.m4, */Makefile.am, */Makefile.in: Regenerated
+	using autoconf 2.59, automake 1.8.2, libtool 1.5.2 to prevent recent
+	problems linking on Mac OS X.
+
 2004-01-31  Michael Banck  <mbanck@gmx.net>
 
 	* src/crk.cpp (WriteCRK): Rename loop variable from n to m.
