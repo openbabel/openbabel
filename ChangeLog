@@ -1,3 +1,9 @@
+2003-09-14  Michael Banck <mbanck@gmx.net>
+
+	* src/povray.cpp: Removed getlogin() declaration.
+	(OutputHeader): Removed log_name, don't output login name in
+	Povray header.
+
 2003-09-13  Michael Banck <mbanck@gmx.net>
 
 	* src/chemtool.cpp: New file.
