@@ -119,6 +119,7 @@ void OBAtom::Clear()
   _idx = 0;
   _hyb = 0;
   _ele = (char)0;
+  _isotope = 0;
   _impval = 0;
   _fcharge = 0;
   _type[0] = '\0';
@@ -137,6 +138,7 @@ OBAtom &OBAtom::operator=(OBAtom &src)
   _idx = src.GetIdx();
   _hyb = src.GetHyb();
   _ele = src.GetAtomicNum();
+  _isotope = src.GetIsotope();
   _fcharge = src.GetFormalCharge();
   strcpy(_type,src.GetType());
   _pcharge = src.GetPartialCharge();
@@ -330,6 +332,30 @@ void OBAtom::SetVector(const float x,const float y,const float z)
     }
 }
 
+void OBAtom::SetType(char *type)
+{
+  strcpy(_type,type);
+  if (_ele == 1 && type[0] == 'D')
+    _isotope = 2;
+}
+
+void OBAtom::SetType(string &type)
+{
+  strcpy(_type,type.c_str());
+  if (_ele == 1 && type[0] == 'D')
+    _isotope = 2;
+}
+
+void OBAtom::SetIsotope(unsigned int iso)
+{
+  if (_ele == 1 && iso == 2)
+    SetType("D");
+  else if (_ele == 1 && (iso == 1 || iso == 0))
+    SetType("H");
+
+  _isotope = iso;
+}
+
 OBAtom *OBAtom::GetNextAtom()
 {
   OBMol *mol = (OBMol*)GetParent();
@@ -354,6 +380,11 @@ float OBAtom::GetAtomicMass() const
   return etab.GetMass(_ele);
 }
 
+float OBAtom::GetExactMass() const
+{
+  return isotab.GetExactMass(_ele, _isotope);
+}
+
 char *OBAtom::GetType()
 {
   OBMol *mol = (OBMol*)GetParent();
@@ -369,6 +400,8 @@ char *OBAtom::GetType()
       snprintf(num, 6, "%d", GetAtomicNum());
       tempTable.Translate(_type, num);
     }
+  if (_ele == 1 && _isotope == 2)
+    _type = "D";
 
   return(_type);
 }

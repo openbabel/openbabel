@@ -760,6 +760,18 @@ float OBMol::GetMolWt()
   return(molwt);
 }
 
+float OBMol::GetExactMass()
+{
+  float mass=0.0;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
+
+  for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+    mass += atom->GetExactMass();
+
+  return(mass);
+}
+
 OBMol &OBMol::operator=(const OBMol &source)
      //only atom and bond info is copied from src to dest
      //Conformers are now copied also, MM 2/7/01

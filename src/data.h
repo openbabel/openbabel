@@ -126,7 +126,7 @@ public:
   OBElementTable(void);
   ~OBElementTable();
 
-  int   GetAtomicNum(const char *);
+  int   GetAtomicNum(const char *, unsigned short int iso = 0);
   void  ParseLine(const char*);
   char *GetSymbol(int);
   float GetVdwRad(int);
@@ -137,6 +137,22 @@ public:
   float CorrectedVdwRad(int,int = 3); // atomic #, hybridization
   int	GetMaxBonds(int);
   float GetElectroNeg(int);
+};
+
+// class introduction in data.cpp
+class OBIsotopeTable : public OBGlobalDataBase
+{
+  std::vector<std::vector<std::pair <int, float> > > _isotopes;
+
+ public:
+  
+  OBIsotopeTable(void);
+  ~OBIsotopeTable() {}
+
+  void	ParseLine(const char*);
+  //! Return the exact masss of the isotope
+  //   (or by default, the most abundant isotope)
+  float	GetExactMass(const int atomicNum, const int isotope = 0);
 };
 
 // class introduction in data.cpp

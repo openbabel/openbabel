@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include "element.h"
 #include "types.h"
 #include "extable.h"
+#include "isotope.h"
 
 #include <strstream>
 
@@ -34,6 +35,7 @@ namespace OpenBabel {
 OBExtensionTable extab;
 OBElementTable   etab;
 OBTypeTable      ttab;
+OBIsotopeTable   isotab;
 
 bool tokenize(vector<string>&, const char *buf, const char *delimstr=" \t\n");
 bool tokenize(vector<string> &vcr, string &s, const char *delimstr,int limit=-1);
@@ -210,7 +212,7 @@ float OBElementTable::GetMass(int atomicnum)
   return(_element[atomicnum]->GetMass());
 }
 
-int OBElementTable::GetAtomicNum(const char *sym)
+int OBElementTable::GetAtomicNum(const char *sym, unsigned short iso)
 {
   if (!_init) Init();
 
@@ -219,11 +221,74 @@ int OBElementTable::GetAtomicNum(const char *sym)
       if (!strcmp(sym,(*i)->GetSymbol()))
         return((*i)->GetAtomicNum());
     if (strcmp(sym, "D"))
-      return(1);
+      {
+	iso = 2;
+	return(1);
+      }
     else if (strcmp(sym, "T"))
-      return(1);
+      {
+	iso = 3;
+	return(1);
+      }
 
     return(0);
+}
+
+/** \class OBIsotopeTable
+    \brief Table of atomic isotope masses
+
+*/
+
+OBIsotopeTable::OBIsotopeTable()
+{
+  _init = false;
+  _dir = DATADIR;
+  _envvar = "BABEL_DATADIR";
+  _filename = "isotope.txt";
+  _subdir = "data";
+  _dataptr = IsotopeData;
+}
+
+void OBIsotopeTable::ParseLine(const char *buffer)
+{
+  unsigned int atomicNum, isotope;
+  unsigned int i;
+  float mass;
+  vector<string> vs;
+
+  pair <int, float> entry;
+  vector <pair <int, float> > row;
+
+  if (buffer[0] != '#') // skip comment line (at the top)
+    {
+      tokenize(vs,buffer);
+      if (vs.size() > 3) // atomic number, 0, most abundant mass (...)
+	{
+	  atomicNum = atoi(vs[0].c_str());
+	  for (i = 1; i < vs.size() - 1; i += 2) // make sure i+1 still exists
+	    {
+	      entry.first = atoi(vs[i].c_str());
+	      entry.second = atof(vs[i + 1].c_str());
+	      row.push_back(entry);
+	    }
+	  _isotopes.push_back(row);
+ 	}
+    }
+}
+
+float	OBIsotopeTable::GetExactMass(const int ele, const int isotope)
+{
+  if (!_init) Init();
+
+  if (ele > _isotopes.size() || ele < 0)
+    return 0.0f;
+
+  unsigned int iso;
+  for (iso = 0; iso < _isotopes[ele].size(); iso++)
+    if (isotope == _isotopes[ele][iso].first)
+	return _isotopes[ele][iso].second;
+
+  return 0.0f;
 }
 
 /** \class OBTypeTable

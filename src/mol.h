@@ -154,6 +154,7 @@ protected:
   char                          _impval;	//!< implicit valence
   char                          _type[6];	//!< atomic type
   short int                     _fcharge;	//!< formal charge
+  unsigned short int		_isotope;	//!< isotope (0 = most abundant)
   //unsigned short int          _idx;		//!< index in parent (inherited)
   unsigned short int            _cidx;		//!< index into coordinate array
   unsigned short int            _hyb;		//!< hybridization
@@ -185,12 +186,13 @@ public:
     void SetIdx(int idx)                     {_idx = idx;_cidx = (idx-1)*3;}
     void SetHyb(int hyb)                     {_hyb = hyb;}
     void SetAtomicNum(int atomicnum)         {_ele = (char)atomicnum;}
+    void SetIsotope(unsigned int iso);
     void SetImplicitValence(int val)         {_impval = (char)val;}
     void IncrementImplicitValence()          {_impval++;}
     void DecrementImplicitValence()          {_impval--;}
     void SetFormalCharge(int fcharge)        {_fcharge = fcharge;}
-    void SetType(char *type)                 {strcpy(_type,type);}
-    void SetType(std::string &type)          {strcpy(_type,type.c_str());}
+    void SetType(char *type);
+    void SetType(std::string &type);
     void SetPartialCharge(float pcharge)     {_pcharge = pcharge;}
     void SetVector();
     void SetVector(vector3 &v);                
@@ -218,8 +220,11 @@ public:
     //int        GetStereo()        const {return((int)_stereo);}
     int          GetFormalCharge()  const {return(_fcharge);}
     unsigned int GetAtomicNum()     const {return((unsigned int)_ele);}
+    unsigned short int GetIsotope() const {return(_isotope);}
     //! The atomic mass of this atom given by standard IUPAC average molar mass
     float	 GetAtomicMass()    const;
+    //! The atomic mass of given by the isotope (default is most abundant isotope)
+    float	 GetExactMass()	    const;
     unsigned int GetIdx()           const {return((int)_idx);}
     unsigned int GetCoordinateIdx() const {return((int)_cidx);}
     unsigned int GetCIdx()          const {return((int)_cidx);}
@@ -617,6 +622,8 @@ public:
     float        GetEnergy()                          {return(_energy);}
     //! Standard molar mass given by IUPAC atomic masses
     float        GetMolWt();
+    //! Mass given by isotopes (or most abundant isotope as necessary)
+    float	 GetExactMass();
     float       *GetCoordinates()                     {return(_c);}
     std::vector<OBRing*> &GetSSSR();
     bool         IsCompressed()                       {return _compressed;}
@@ -807,6 +814,7 @@ bool SetOutputType(OBMol&,std::string&);
 extern  OBExtensionTable extab;
 extern  OBElementTable   etab;
 extern  OBTypeTable      ttab;
+extern  OBIsotopeTable   isotab;
 extern  OBChainsParser   chainsparser;
 
 //Utility Macros

@@ -229,7 +229,14 @@ namespace OpenBabel {
 
 bool WriteReport(ostream &ofs,OBMol &mol)
 {
+  char buffer[BUFF_SIZE];
   ofs << "FILENAME: " << mol.GetTitle() << endl;
+  ofs << "MASS: ";
+  sprintf(buffer, "%5.4f", mol.GetMolWt());
+  ofs << buffer << endl;
+  ofs << "EXACT MASS: ";
+  sprintf(buffer, "%5.7f", mol.GetExactMass());
+  ofs << buffer << endl;
   ofs << "INTERATOMIC DISTANCES" << endl;
   WriteDistanceMatrix(ofs, mol);
   ofs << endl << endl << "ATOMIC CHARGES" << endl;
