@@ -1,5 +1,14 @@
 2003-03-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
+	* test/roundtrip.cpp: Detect cases where files have no atoms.
+
+	* test/Makefile.in: Add targets to create roundtrip program.
+
+	* src/parsmi.cpp (ParseComplex): Add isotope information where
+	available.
+
+2003-03-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
 	* src/generic.cpp, src/generic.h: Add support for retrieving
 	OBUnitCell data by a matrix3x3 and add a new method
 	GetOrthoMatrix() for translating from fractional coordinates.
@@ -10,6 +19,16 @@
 
 	* src/math/matrix3x3.h, src/math/matrix3x3.cpp (SetRow): New
 	method to set a row from a vector3.
+
+	* src/mpqc.cpp (ReadMPQC): Fix bugs in MPQC output reading,
+	uncovered by new roundtrip testing.
+
+	* src/cacao.cpp (WriteCaccrt): Make sure the buffer is actually
+	written to the file. Previous output passed roundtrip testing (no
+	coredumps) but nothing was actually written to the file!
+
+	* test/roundtrip.cpp: New file to compare two molecules after
+	roundtripping. (Perhaps it should be called molcmp?)
 
 2003-03-12  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
