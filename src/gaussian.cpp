@@ -17,6 +17,9 @@ using namespace std;
 
 namespace OpenBabel {
 
+// Gaussian output is only tested for Gaussian98. If
+// you encounter problems or success with earlier version
+// please report it. 2002-07-23, Michael Banck<mbanck@gmx.net>
 bool WriteGaussianCart(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
@@ -25,17 +28,19 @@ bool WriteGaussianCart(ostream &ofs,OBMol &mol)
   char buffer[BUFF_SIZE];
   
   ofs << "%cmem=20000000" << endl << '\045';
-  ofs << "#Put Keywords Here" << endl << endl;
+  ofs << "#Put Keywords Here, check Charge and Multiplicity" << endl << endl;
   ofs << "XX " << mol.GetTitle() << endl << endl;
 
   OBAtom *atom;
   string str,str1;
+  // Calculate charge. Should probably be done proper and go into OBMol
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
     atom = mol.GetAtom(i);
     charge += atom->GetFormalCharge();
   }
-  multiplicity = charge + 1;
+  // Caculate Multiplicity FIXME: This is a hack!
+  multiplicity = abs(charge) + 1;
   sprintf(buffer,"  %d  %d", charge, multiplicity);
   ofs << buffer << endl;
   for(i = 1;i <= mol.NumAtoms(); i++)
