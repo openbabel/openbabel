@@ -1,0 +1,26 @@
+// !$*UTF8*$!
+{
+	29B97326FDCFA39411CA2CEA = {
+		activeExec = 0;
+		targetExecs = {
+			macosx = (
+				DA206CF0015C4D9F03C91932,
+			);
+		};
+	};
+	DA206CF0015C4D9F03C91932 = {
+		activeArgIndex = 2147483647;
+		argumentStrings = (
+		);
+		debuggerPlugin = ASKDebugger;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+		);
+	};
+}
