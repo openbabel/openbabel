@@ -213,13 +213,13 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             if (strstr(buffer,"file=")!=NULL)
             {  //external geometry file
                 strcpy(coord_file,strstr(buffer,"file=")+5);
-                if (rindex(coord_file,' ')!=NULL)
-                    *rindex(coord_file,' ')='\0';
+                if (strrchr(coord_file,' ')!=NULL)
+                    *strrchr(coord_file,' ')='\0';
                 if (coord_file[0]!='/')
                 {
                     strcpy(full_coord_path,title);
-                    if (rindex(full_coord_path,'/')!=NULL)
-                        *(rindex(full_coord_path,'/')+1)='\0';
+                    if (strrchr(full_coord_path,'/')!=NULL)
+                        *(strrchr(full_coord_path,'/')+1)='\0';
                     else
                         strcpy(full_coord_path,"");
                 }
@@ -277,8 +277,8 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if (atom_count==0)
         { 	//try .coord file
             strcpy(coord_file,title);
-            if (rindex(coord_file,'.')!=NULL)
-                *rindex(coord_file,'.')='\0';
+            if (strrchr(coord_file,'.')!=NULL)
+                *strrchr(coord_file,'.')='\0';
             strcat(coord_file,".coord");
             coordFileStream.open(coord_file);
             if (!coordFileStream)
