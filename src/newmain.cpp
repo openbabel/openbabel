@@ -17,7 +17,9 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "rotor.h"
 #include "binary.h"
+#ifndef __BORLANDC__ 
 #include "commandline.h"
+#endif
 #include "version.h"
 
 #include "data.h"

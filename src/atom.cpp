@@ -731,7 +731,7 @@ unsigned int OBAtom::BOSum() const
 unsigned int OBAtom::KBOSum() const
 {
   OBBond *bond;
-  unsigned int bosum = 0;
+  unsigned int bosum;
   vector<OBEdgeBase*>::iterator i;
   
   bosum = GetImplicitValence();

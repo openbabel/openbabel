@@ -12,9 +12,15 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 /* ---- C includes ---- */
+// fails under Borland and probably other WIN32
+// simply avoids compile errors;
+#ifndef __BORLANDC__ 
 #include <netdb.h>
 #include <unistd.h>
 #include <sys/param.h>
+#else
+char* getlogin();
+#endif
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>

@@ -1010,8 +1010,7 @@ void startElement(string namespaceURI, string localName, string prefix, vector<p
 	currentAtts = atts;
 	pcdata = "";
 	useBuiltin = false;
-    if (false) {
-	} else if (localName == "atom") {
+    if (localName == "atom") {
         startAtom(atts);
 	} else if (localName == "atomArray") {
         startAtomArray(atts);
@@ -1281,7 +1280,7 @@ bool isXMLName(string n) {
 	if (!( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' )) {
 		ok = false;
 	}
-	while ((c = *str++)) {
+	while ((c = *str++) != 0) {
 		if (c >= '0' && c <= '9') {
 		} else if (c >= 'a' && c <= 'z') {
 		} else if (c >= 'A' && c <= 'Z') {
@@ -1419,8 +1418,7 @@ bool startAngle(vector <pair<string,string> > &atts) {
 	atomRefs3Vector.clear();
 // check other attributes
 	for (vector<pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else if (atts[i].first == "atomRefs") {
@@ -1567,8 +1565,7 @@ bool processAtomBuiltin() {
 	}
 	setCMLType("CML1");
 	processBuiltinPCDATA();
-	if (false) {
-	} else if (currentElem == "coordinate2") {
+	if (currentElem == "coordinate2") {
 		vector <double> fv;
 		processFloatTokens(fv, 2, pcdata);
 // 3d takes precedence over 2D
@@ -1901,8 +1898,7 @@ bool processBondBuiltin() {
 	setCMLType("CML1");
 	if (currentElem == "float") {
 		double value = atof(pcdata.c_str());
-	    if (false) {
-		} else if (builtin == "length") {
+	    if (builtin == "length") {
 			length = value;
 	    } else {
 	      //			cerr << "IGNORED float builtin for bond: " << builtin << endl;
@@ -1910,11 +1906,7 @@ bool processBondBuiltin() {
 		}
 	} else if (currentElem == "integer") {
 		int ival = atoi(pcdata.c_str());
-	    if (false) {
-	    } else {
-	      //			cerr << "IGNORED integer builtin: " << builtin << endl;
-			return false;
-		}
+		return false;
 	} else if (currentElem == "string") {
 	    if (builtin == "atomRef") {
 			if (bondBeginAtom == "") {
@@ -2153,8 +2145,7 @@ bool startCrystal(vector <pair<string,string> > &atts) {
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else if (atts[i].first == "spaceGroup") {
@@ -2179,8 +2170,7 @@ bool processCrystalBuiltin() {
 	processBuiltinPCDATA();
 	if (currentElem == "float") {
 		double f = atof((char*)pcdata.c_str());
-		if (false) {
-		} else if (currentElem == "acell") {
+		if (currentElem == "acell") {
 			cellParam[0] = f;
 		} else if (currentElem == "bcell") {
 			cellParam[1] = f;
@@ -2225,8 +2215,7 @@ bool startElectron(vector <pair<string,string> > &atts) {
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else {
@@ -2261,8 +2250,7 @@ bool startFeature(vector <pair<string,string> > &atts) {
 	}
 // check other attributes
 	for (vector<pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else {
@@ -2294,8 +2282,7 @@ bool startFormula(vector <pair<string,string> > &atts) {
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else {
@@ -2329,8 +2316,7 @@ bool startLength(vector <pair<string,string> > &atts) {
 	atomRefs2Vector.clear();
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else if (atts[i].first == "atomRefs2") {
@@ -2451,7 +2437,7 @@ int getAngleIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2) {
 
 // returns index of torsion between atoms ( starts at 1; 0 = not found; negative = "wrong way round")
 int getTorsionIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2, OBAtom* a3) {
-	for (int i = 0; i < torsionVector.size(); ++i) {
+	for (unsigned int i = 0; i < torsionVector.size(); ++i) {
 		if (a0 == torsionVector[i].first[0] &&
 			a1 == torsionVector[i].first[1] &&
 			a2 == torsionVector[i].first[2] &&
@@ -2459,7 +2445,7 @@ int getTorsionIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2, OBAtom* a3) {
 		if (a0 == torsionVector[i].first[3] &&
 			a1 == torsionVector[i].first[2] &&
 			a2 == torsionVector[i].first[1] &&
-			a3 == torsionVector[i].first[0]) return -(i+1);
+			a3 == torsionVector[i].first[0]) return -((int)i+1);
 	}
 	return 0;
 }
@@ -2469,8 +2455,8 @@ int getTorsionIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2, OBAtom* a3) {
 // returns zero. If torsion is "wrong way round", returns
 // negative serial
 int getFirstTorsionIndexForAtom(OBAtom* a0) {
-	int k = a0->GetIdx();
-	for (int i = 0; i < torsionVector.size(); ++i) {
+	unsigned int k = a0->GetIdx();
+	for (unsigned int i = 0; i < torsionVector.size(); ++i) {
 		if (a0 == torsionVector[i].first[0]) {
 			bool ok = true;
 			for (unsigned int j = 1; j <= 3; ++j) {
@@ -2491,7 +2477,7 @@ int getFirstTorsionIndexForAtom(OBAtom* a0) {
 					break;
 				}
 			}
-			if (ok) return -(i+1);
+			if (ok) return -((int)i+1);
 		}
 	}
 	return 0;
@@ -2670,8 +2656,7 @@ bool startReaction(vector <pair<string,string> > &atts) {
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else {
@@ -2703,8 +2688,7 @@ bool startScalar(vector <pair<string,string> > &atts) {
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else if (atts[i].first == "dataType") {
@@ -2750,8 +2734,7 @@ bool startSequence(vector <pair<string,string> > &atts) {
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else {
@@ -2814,8 +2797,7 @@ bool startSymmetry(vector <pair<string,string> > &atts) {
 	pointgroup = getAttribute(atts, "pointgroup");
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else {
@@ -2864,8 +2846,7 @@ bool startTorsion(vector <pair<string,string> > &atts) {
 	atomRefs4Vector.clear();
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (false) {
-	    } else if (atts[i].first == "id") {
+		if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
 	    } else if (atts[i].first == "convention") {
 	    } else if (atts[i].first == "atomRefs") {
