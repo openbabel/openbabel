@@ -1111,8 +1111,8 @@ void OBMol::EndModify(bool nukePerceivedData)
 
   //kekulize structure
   SetAromaticPerceived();
-  //Kekulize();
-  kekulize();
+  Kekulize();
+  //kekulize();
   UnsetAromaticPerceived();
 
   //    for (atom = BeginAtom(j);atom;atom = NextAtom(j))
@@ -3164,8 +3164,17 @@ void OBMol::PerceiveBondOrders()
     }
   _flags &= (~(OB_KEKULE_MOL));
   //  cout << " calling Kekulize " << endl;
-  //Kekulize();
-  kekulize();
+  Kekulize();
+  // int bi;
+//   OBBond *bond;
+//   for(bi=0;bi <NumBonds(); bi++) {
+//     bond = GetBond(bi);    
+//     std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " " << bond->GetBO() << " ";
+//     if (bond->IsKSingle()) std::cout << "bond is Single\n";
+//     if (bond->IsKDouble()) std::cout << "bond is Double\n";
+//     if (bond->IsKTriple()) std::cout << "bond is Triple\n";
+//   }
+  //kekulize();
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity
   vector<pair<OBAtom*,double> > sortedAtoms;
   vector<double> rad; 

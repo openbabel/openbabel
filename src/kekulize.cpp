@@ -8,8 +8,12 @@
 
 namespace OpenBabel {
 
-void OBMol::kekulize() 
+void OBMol::NewPerceiveKekuleBonds() 
 {
+
+  if (HasKekulePerceived())  return;
+  SetKekulePerceived();
+
   OBAtom *atom;
   int i,j, n, de, minde;
   std::vector<OBAtom*> cycle;
@@ -22,13 +26,16 @@ void OBMol::kekulize()
   int BO;
   int sume, orden, bestorden, bestatom;
   // Init the kekulized bonds
-  //for( i=0; i< NumBonds(); i++ ) {
-  // bond = GetBond(i);
-  // BO = bond->GetBO();
-  // if (BO == 5 || BO == 1) SetKSingle();
-  //  if (BO == 2) SetKDouble();
-  //  if (BO == 3) SetKTriple();
-  //}
+  for( i=0; i< NumBonds(); i++ ) {
+    bond = GetBond(i);
+    BO = bond->GetBO();
+    switch (BO)
+    {
+    case 1: bond->SetKSingle(); break;
+    case 2: bond->SetKDouble(); break;
+    case 3: bond->SetKTriple(); break;
+    }
+  }
 
   // Find all the groups of aromatic cycle
   for( i=1; i<= NumAtoms(); i++ ) {
@@ -118,7 +125,8 @@ void OBMol::kekulize()
     bond = GetBond(i);     
     //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";   
     if (bond->GetBO()==5 ) {
-      bond->SetBO(1); 
+      bond->SetKSingle();
+      bond->SetBO(1);
       //std::cout << "single\n";
     }
     //else
@@ -213,6 +221,7 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
     bond = GetBond(i);    
     // std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";
     if (bond->GetBO()==5 && bcurrentState[i] == DOUBLE) {
+      bond->SetKDouble();
       bond->SetBO(2);
       //std::cout << "double\n";
     }

@@ -294,7 +294,7 @@ bool OBBond::IsKSingle()
 {
   if (_flags & OB_KSINGLE_BOND) return(true);
   if (!((OBMol*)GetParent())->HasKekulePerceived()) 
-	  ((OBMol*)GetParent())->PerceiveKekuleBonds();
+	  ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
 
   return((_flags & OB_KSINGLE_BOND) != 0) ? true : false;
 }
@@ -303,7 +303,7 @@ bool OBBond::IsKDouble()
 {
   if (_flags & OB_KDOUBLE_BOND) return(true);
   if (!((OBMol*)GetParent())->HasKekulePerceived()) 
-	  ((OBMol*)GetParent())->PerceiveKekuleBonds();
+	  ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
 
   return((_flags & OB_KDOUBLE_BOND) != 0) ? true : false;
 }
@@ -312,7 +312,7 @@ bool OBBond::IsKTriple()
 {
   if (_flags & OB_KTRIPLE_BOND) return(true);
   if (!((OBMol*)GetParent())->HasKekulePerceived()) 
-	  ((OBMol*)GetParent())->PerceiveKekuleBonds();
+	  ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
 
   return((_flags & OB_KTRIPLE_BOND) != 0) ? true : false;
 }
