@@ -23,6 +23,8 @@ using namespace std;
 
 namespace OpenBabel {
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief  Compute and print the fingerprint into ofs
 bool WriteFingerprint(ostream &ofs, OBMol &mol)
 {
   fingerprint fpt(mol.GetTitle());
@@ -33,7 +35,8 @@ bool WriteFingerprint(ostream &ofs, OBMol &mol)
 }
 
 
-
+///////////////////////////////////////////////////////////////////////////////
+//! \brief print at which atom a ring close
 void AtomRing::printRingClosure(void)
 {
   vector<int>::iterator i;
@@ -43,6 +46,8 @@ void AtomRing::printRingClosure(void)
   }
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief fragment constructor
 fragment::fragment(OBAtom *atom) 
 {
   AtomRing ar(atom);
@@ -53,6 +58,8 @@ fragment::fragment(OBAtom *atom)
     _index[i]=0;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Get the last atom of the list
 OBAtom *fragment::GetLastAtom(void) 
 {
   if (_atoms.empty()) 
@@ -61,6 +68,8 @@ OBAtom *fragment::GetLastAtom(void)
     return (_atoms.back()).GetAtom();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Get the atom before the last atom
 OBAtom* fragment::GetBeforeLastAtom(void)
 {
   if (_atoms.size() < 2)
@@ -71,7 +80,8 @@ OBAtom* fragment::GetBeforeLastAtom(void)
   return (*i).GetAtom();
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Find if there are ring closure and add them 
 void fragment::SetRingClosure(OBAtom *atom)
 {
   list<AtomRing>::iterator i;
@@ -84,6 +94,8 @@ void fragment::SetRingClosure(OBAtom *atom)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Print the atoms of a fragment
 void fragment::printAtoms(void)
 {
   list<AtomRing>::iterator i;
@@ -93,6 +105,9 @@ void fragment::printAtoms(void)
     cout << " ";
   }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Return the atom index of atom i of the fragment
 int fragment::getIndex(int i)
 {
   if (i<MAX_FRAGMENT_SIZE) 
@@ -103,6 +118,8 @@ int fragment::getIndex(int i)
   }
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Store the index of each atom of the fragment
 void fragment::setIndexes(void)
 {
   list<AtomRing>::iterator i;
@@ -119,6 +136,8 @@ void fragment::setIndexes(void)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Sort the indexes of the atoms of the fragment 
 void fragment::sortIndexes(void)
 {
   int i;
@@ -132,12 +151,16 @@ void fragment::sortIndexes(void)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Compare two indexes
 int compareInt (const void *a, const void *b)
 {
  int *v1 = (int *) a, *v2 = (int *) b;
  return (*v1 > *v2) - (*v1 < *v2);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Print the indexes of the atoms of the fragment
 void fragment::printIndexes(void)
 {
   int i;
@@ -151,6 +174,8 @@ void fragment::printIndexes(void)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Generate a hash number from the atoms of the fragment
 void fragment::setHashNumber(void)
 {
   long int anumber=0, bnumber=0, cnumber=0;
@@ -233,6 +258,8 @@ void fragment::setHashNumber(void)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Fingerprint constructor
 fingerprint::fingerprint(const char *name)
 { 
   _name=name; 
@@ -240,6 +267,9 @@ fingerprint::fingerprint(const char *name)
   _pfsize = 0; 
   _fpt.Resize(1024);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Find all the linear and cyclic fragment of size MAX_FRAGMENT_SIZE
 void fingerprint::GetFragments(OBMol &mol)
 {
   
@@ -255,6 +285,8 @@ void fingerprint::GetFragments(OBMol &mol)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief recursive finding of the fragments
 void fingerprint::expandFragment(fragment &f, OBBitVec &avisit, int n)
 {
 
@@ -303,6 +335,8 @@ void fingerprint::expandFragment(fragment &f, OBBitVec &avisit, int n)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Print all the fragments
 void fingerprint::printFragments(void)
 {
 
@@ -319,6 +353,8 @@ void fingerprint::printFragments(void)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Sort the atom indexes of each fragment
 void fingerprint::sortFragmentIdx(void)
 {
   int i;
@@ -328,6 +364,8 @@ void fingerprint::sortFragmentIdx(void)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Set the atom indexes of each fragment
 void fingerprint::setFragmentIdx(void)
 {
   int i;
@@ -337,6 +375,8 @@ void fingerprint::setFragmentIdx(void)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Set the pointers to each fragment for sorting
 int fingerprint::setPointers(void)
 {
   if ( _pf ) {
@@ -365,7 +405,8 @@ int fingerprint::setPointers(void)
   return 1;
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Print the fragment of each pointer
 void fingerprint::printPointers(void)
 {
   int i;
@@ -381,6 +422,9 @@ void fingerprint::printPointers(void)
   }
   return;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Sort the pointer according to the fragment atom indexes
 void fingerprint::sortPointers(void)
 {
   qsort (_pf, _pfsize, sizeof (fragment *), *compareFragment);
@@ -388,6 +432,9 @@ void fingerprint::sortPointers(void)
 }
 
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Compare two fragments according to the order of the atom indexes
+//  The comparison is valid only if the indexes have been previously sorted
 int compareFragment (const void *a, const void *b)
 {
  fragment **v1 = (fragment **) a, **v2 = (fragment **) b;
@@ -404,6 +451,8 @@ int compareFragment (const void *a, const void *b)
  return 0;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief For each duplicate fragment take the one with the lowest hash number
 void fingerprint::setUniqueFragments(void)
 {
   fragment **puf, **pf;
@@ -453,6 +502,8 @@ void fingerprint::setUniqueFragments(void)
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Print the unique fragment list
 void fingerprint::printUniqueFragments(void)
 {
 
@@ -468,7 +519,8 @@ void fingerprint::printUniqueFragments(void)
   }
   return;
 }
-
+///////////////////////////////////////////////////////////////////////////////
+//! \brief For each hash number set a bit in the bitstring
 void fingerprint::HashFragments(void)
 {
   vector<fragment>::iterator i;
@@ -476,11 +528,13 @@ void fingerprint::HashFragments(void)
   int mod, test;
   for(i= _uflist.begin(); i != _uflist.end(); i++) {
     h = i->getHash();
-    mod = h % 1021;
+    mod = h % 1021; // hashing with a prime number is better than 1024
     _fpt.SetBitOn(mod);
   }
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Print the fingerprint
 void fingerprint::printFingerprint(ostream &ofs)
 {
   int i;
@@ -494,6 +548,8 @@ void fingerprint::printFingerprint(ostream &ofs)
   ofs << endl;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Run the sequence of operations necessary to compute the fingerprint 
 void fingerprint::HashMol(OBMol &mol)
 {
   // Obtain all the linear and ring fragments
