@@ -16,12 +16,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool OEGastChrg::AssignPartialCharges(OEMol &mol)
+bool OBGastChrg::AssignPartialCharges(OBMol &mol)
 {
   //InitialPartialCharges(mol);
   
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   GSVResize(mol.NumAtoms()+1);
   float a,b,c;
@@ -34,9 +34,9 @@ bool OEGastChrg::AssignPartialCharges(OEMol &mol)
   float alpha,charge,denom;
   unsigned j;
   int iter;
-  OEBond *bond;
-  OEAtom *src,*dst;
-  vector<OEEdgeBase*>::iterator k;
+  OBBond *bond;
+  OBAtom *src,*dst;
+  vector<OBEdgeBase*>::iterator k;
   alpha = 1.0;
   for(iter = 0;iter < MX_GASTEIGER_ITERS;iter++) 
     {
@@ -76,10 +76,10 @@ bool OEGastChrg::AssignPartialCharges(OEMol &mol)
   return(true);
 }
 
-void OEGastChrg::InitialPartialCharges(OEMol &mol)
+void OBGastChrg::InitialPartialCharges(OBMol &mol)
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
@@ -91,7 +91,7 @@ void OEGastChrg::InitialPartialCharges(OEMol &mol)
     }
 }
 
-bool OEGastChrg::GasteigerSigmaChi(OEAtom *atom,float &a,float &b,float &c )
+bool OBGastChrg::GasteigerSigmaChi(OBAtom *atom,float &a,float &b,float &c )
 {
   int count;
   float val[3] = {0.0,0.0,0.0};
@@ -168,7 +168,7 @@ bool OEGastChrg::GasteigerSigmaChi(OEAtom *atom,float &a,float &b,float &c )
   return(true);
 }
 
-void OEGastChrg::GSVResize(int size)
+void OBGastChrg::GSVResize(int size)
 {
   vector <GasteigerState*>::iterator i;
   for (i = _gsv.begin();i != _gsv.end();i++) delete *i;
@@ -177,7 +177,7 @@ void OEGastChrg::GSVResize(int size)
   for (int j = 0;j < size;j++) _gsv.push_back(new GasteigerState);
 }
 
-OEGastChrg::~OEGastChrg()
+OBGastChrg::~OBGastChrg()
 {
   vector <GasteigerState*>::iterator i;
   for (i = _gsv.begin();i != _gsv.end();i++) delete *i;

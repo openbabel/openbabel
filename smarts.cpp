@@ -27,27 +27,27 @@ namespace OpenBabel
 {
 
 //
-//OESmartsPattern member functions
+//OBSmartsPattern member functions
 //
 
-bool OESmartsPattern::SeedMatch(OENodeBase *nb)
+bool OBSmartsPattern::SeedMatch(OBNodeBase *nb)
 //routine ONLY used for matching recursive SMARTS
 {
 	_done = false;
 	_single = true;
 	_vmatch.clear();
-	OEGraphBase *g = nb->GetParent();
+	OBGraphBase *g = nb->GetParent();
 	vector<bool> visit(g->NumNodes()); 
 
 	//save visit flags as they are being used further up in the stack
 	int i;
-	OENodeBase *node;
-	vector<OENodeBase*>::iterator j;
+	OBNodeBase *node;
+	vector<OBNodeBase*>::iterator j;
 	for (i=0,node = g->Begin(j);node;node = g->Next(j))
 		visit[i++] = node->Visit;
 	g->ResetVisitFlags();
 
-	OENodeBase *seed = GetFirstSeed();
+	OBNodeBase *seed = GetFirstSeed();
 
 	if (seed->Eval(nb))
 	{
@@ -63,10 +63,10 @@ bool OESmartsPattern::SeedMatch(OENodeBase *nb)
 	return(FinishedMatch());
 }
 
-void OESmartsPattern::GetMatches(vector<vector<int> > &vm)
+void OBSmartsPattern::GetMatches(vector<vector<int> > &vm)
 {
-	vector<OENodeBase*>::iterator j;
-	vector<vector<OENodeBase*> >::iterator i;
+	vector<OBNodeBase*>::iterator j;
+	vector<vector<OBNodeBase*> >::iterator i;
 	for (i = _vmatch.begin();i != _vmatch.end();i++)
 	{
 		vector<int> vtmp;
@@ -77,11 +77,11 @@ void OESmartsPattern::GetMatches(vector<vector<int> > &vm)
 	}
 }
 
-vector<vector<int> > OESmartsPattern::GetMapList()
+vector<vector<int> > OBSmartsPattern::GetMapList()
 {
 	vector<vector<int> > vm;
-	vector<OENodeBase*>::iterator j;
-	vector<vector<OENodeBase*> >::iterator i;
+	vector<OBNodeBase*>::iterator j;
+	vector<vector<OBNodeBase*> >::iterator i;
 	for (i = _vmatch.begin();i != _vmatch.end();i++)
 	{
 		vector<int> vtmp;
@@ -94,7 +94,7 @@ vector<vector<int> > OESmartsPattern::GetMapList()
 	return(vm);
 }
 
-vector<vector<int> > OESmartsPattern::GetUMapList()
+vector<vector<int> > OBSmartsPattern::GetUMapList()
 {
 	vector<vector<int> > vm; 
 	vm.clear();
@@ -102,11 +102,11 @@ vector<vector<int> > OESmartsPattern::GetUMapList()
 	if (!_vmatch.empty())
 	{
 		bool ok;
-		OEBitVec bv;
-		vector<OEBitVec> vbv;
-		vector<OEBitVec>::iterator k;
-		vector<OENodeBase*>::iterator j;
-		vector<vector<OENodeBase*> >::iterator i;
+		OBBitVec bv;
+		vector<OBBitVec> vbv;
+		vector<OBBitVec>::iterator k;
+		vector<OBNodeBase*>::iterator j;
+		vector<vector<OBNodeBase*> >::iterator i;
 		for (i = _vmatch.begin();i != _vmatch.end();i++)
 		{
 			vector<int> vtmp;
@@ -133,18 +133,18 @@ vector<vector<int> > OESmartsPattern::GetUMapList()
 	return(vm);
 }
 
-void OESmartsPattern::PrepForMatch()
+void OBSmartsPattern::PrepForMatch()
 {
 	_vm.clear();
 	SetVisitLock(true);
 	ResetVisitFlags();
 
-	OEEdge *edge;
-	OENode *node,*seed,*nbr;
-	vector<OENodeBase*> curr,next;
-	vector<OENodeBase*>::iterator i,j;
-	vector<OEEdgeBase*>::iterator k;
-	vector<OEEdgeBase*> vedge;
+	OBEdge *edge;
+	OBNode *node,*seed,*nbr;
+	vector<OBNodeBase*> curr,next;
+	vector<OBNodeBase*>::iterator i,j;
+	vector<OBEdgeBase*>::iterator k;
+	vector<OBEdgeBase*> vedge;
 
 	for (node = Begin(i);node;node = Next(i)) //make sure all atoms are covered
 		if (!node->Visit)
@@ -160,7 +160,7 @@ void OESmartsPattern::PrepForMatch()
 				next.clear();
 				for (j = curr.begin();j != curr.end();j++)
 				{
-					for (nbr = ((OENode*)*j)->BeginNbr(k);nbr;nbr = ((OENode*)*j)->NextNbr(k))
+					for (nbr = ((OBNode*)*j)->BeginNbr(k);nbr;nbr = ((OBNode*)*j)->NextNbr(k))
 						if (!nbr->Visit)
 						{
 							if ((*k)->GetBgn() != *j) (*k)->SwapEnds();
@@ -183,27 +183,27 @@ void OESmartsPattern::PrepForMatch()
 				}
 
 			//store bonds associated with seed atom
-			_vm.push_back(pair<OENodeBase*,vector<OEEdgeBase*> > (seed,vedge));
+			_vm.push_back(pair<OBNodeBase*,vector<OBEdgeBase*> > (seed,vedge));
 		}
 
 	SetVisitLock(false);
 }
 
-bool OESmartsPattern::Init(const char *buf)
+bool OBSmartsPattern::Init(const char *buf)
 {
-	OESmartsParser sp;
+	OBSmartsParser sp;
 	return(sp.Parse(*this,buf));
 }
 
-bool OESmartsPattern::Init(string &s)
+bool OBSmartsPattern::Init(string &s)
 {
-	OESmartsParser sp;
+	OBSmartsParser sp;
 	return(sp.Parse(*this,s));
 }
 
-OENode *OESmartsPattern::NewNode(OEExprBase *xb)
+OBNode *OBSmartsPattern::NewNode(OBExprBase *xb)
 {
-	OENode *node = new OENode;
+	OBNode *node = new OBNode;
 	node->SetExpr(xb);
 	node->SetIdx(NumNodes());
 	node->SetParent(this);
@@ -212,9 +212,9 @@ OENode *OESmartsPattern::NewNode(OEExprBase *xb)
 	return(node);
 }
 
-OEEdge* OESmartsPattern::NewEdge(OENode *bgn,OENode *end,OEExprBase *expr)
+OBEdge* OBSmartsPattern::NewEdge(OBNode *bgn,OBNode *end,OBExprBase *expr)
 {
-	OEEdge *edge = new OEEdge(bgn,end,expr);
+	OBEdge *edge = new OBEdge(bgn,end,expr);
 	edge->SetIdx(NumEdges());
 	edge->SetParent(this);
 	_vbond.push_back(edge);
@@ -223,55 +223,55 @@ OEEdge* OESmartsPattern::NewEdge(OENode *bgn,OENode *end,OEExprBase *expr)
 	return(edge);
 }
 
-void OESmartsPattern::ClearMatches()
+void OBSmartsPattern::ClearMatches()
 {
 	_vmatch.clear(); //clear out previous matches
 
-	OENode *node;
-	vector<OENodeBase*>::iterator i;
+	OBNode *node;
+	vector<OBNodeBase*>::iterator i;
 	for (node = Begin(i);node;node = Next(i))
 		node->ResetRecurs();
 }
 
-OENode *OESmartsPattern::Begin(vector<OENodeBase*>::iterator &i)
+OBNode *OBSmartsPattern::Begin(vector<OBNodeBase*>::iterator &i)
 {
 	i = _vatom.begin();
-	return((i != _vatom.end()) ? (OENode*)*i : (OENode*)NULL);
+	return((i != _vatom.end()) ? (OBNode*)*i : (OBNode*)NULL);
 }
 
-OENode *OESmartsPattern::Next(vector<OENodeBase*>::iterator &i)
+OBNode *OBSmartsPattern::Next(vector<OBNodeBase*>::iterator &i)
 {
 	i++;
-	return((i != _vatom.end()) ? (OENode*)*i : (OENode*)NULL);
+	return((i != _vatom.end()) ? (OBNode*)*i : (OBNode*)NULL);
 }
 
-OEEdge *OESmartsPattern::Begin(vector<OEEdgeBase*>::iterator &i) 
+OBEdge *OBSmartsPattern::Begin(vector<OBEdgeBase*>::iterator &i) 
 {
 	i = _vbond.begin();
-	return((i != _vbond.end()) ? (OEEdge*)*i : (OEEdge*)NULL);
+	return((i != _vbond.end()) ? (OBEdge*)*i : (OBEdge*)NULL);
 }
 
-OEEdge *OESmartsPattern::Next(vector<OEEdgeBase*>::iterator &i)
+OBEdge *OBSmartsPattern::Next(vector<OBEdgeBase*>::iterator &i)
 {
 	i++;
-	return((i != _vbond.end()) ? (OEEdge*)*i : (OEEdge*)NULL);
+	return((i != _vbond.end()) ? (OBEdge*)*i : (OBEdge*)NULL);
 }
 
-OENode *OENode::BeginNbr(vector<OEEdgeBase*>::iterator &i)
+OBNode *OBNode::BeginNbr(vector<OBEdgeBase*>::iterator &i)
 {
 	i = _vbond.begin();
-	if (i == _vbond.end()) return((OENode*)NULL);
-	return((this == ((OEEdge*)*i)->GetBgn()) ? (OENode*)((OEEdge*)*i)->GetEnd() : (OENode*)((OEEdge*)*i)->GetBgn());
+	if (i == _vbond.end()) return((OBNode*)NULL);
+	return((this == ((OBEdge*)*i)->GetBgn()) ? (OBNode*)((OBEdge*)*i)->GetEnd() : (OBNode*)((OBEdge*)*i)->GetBgn());
 }
 
-OENode *OENode::NextNbr(vector<OEEdgeBase*>::iterator &i)
+OBNode *OBNode::NextNbr(vector<OBEdgeBase*>::iterator &i)
 {
 	i++;
-	if (i == _vbond.end()) return((OENode*)NULL);
-	return((this == ((OEEdge*)*i)->GetBgn()) ? (OENode*)((OEEdge*)*i)->GetEnd() : (OENode*)((OEEdge*)*i)->GetBgn());
+	if (i == _vbond.end()) return((OBNode*)NULL);
+	return((this == ((OBEdge*)*i)->GetBgn()) ? (OBNode*)((OBEdge*)*i)->GetEnd() : (OBNode*)((OBEdge*)*i)->GetBgn());
 }
 
-OESmartsPattern::OESmartsPattern()
+OBSmartsPattern::OBSmartsPattern()
 {
   _done = false;
   _single = false;
@@ -280,7 +280,7 @@ OESmartsPattern::OESmartsPattern()
   _vm.clear();
 }
 
-OESmartsPattern::OESmartsPattern(const OESmartsPattern &src)
+OBSmartsPattern::OBSmartsPattern(const OBSmartsPattern &src)
 {
   string s = src.GetSMARTS();
   Init(s);
@@ -289,12 +289,12 @@ OESmartsPattern::OESmartsPattern(const OESmartsPattern &src)
   src.GetMatches(_vmatch);
 }
 
-OESmartsPattern::~OESmartsPattern()
+OBSmartsPattern::~OBSmartsPattern()
 {
-	vector<OENodeBase*>::iterator i;
+	vector<OBNodeBase*>::iterator i;
 	for (i = _vatom.begin();i != _vatom.end();i++) delete *i;
 
-	vector<OEEdgeBase*>::iterator j;
+	vector<OBEdgeBase*>::iterator j;
 	for (j = _vbond.begin();j != _vbond.end();j++) delete *j;
 }
 
@@ -302,34 +302,34 @@ OESmartsPattern::~OESmartsPattern()
 //Expression member functions
 //
 
-int OEAndExpr::GetFormalCharge()
+int OBAndExpr::GetFormalCharge()
 {
 	int chrg = _lft->GetFormalCharge();
 	if (chrg != 0) return(chrg);
 	return(_rgt->GetFormalCharge());
 }
 
-unsigned int OEAndExpr::GetAtomicNum()
+unsigned int OBAndExpr::GetAtomicNum()
 {
 	unsigned int ele = _lft->GetAtomicNum();
 	if (ele != 0) return(ele);
 	return(_rgt->GetAtomicNum());
 }
 
-unsigned int OEAndExpr::GetBO()
+unsigned int OBAndExpr::GetBO()
 {
 	unsigned int bo = _lft->GetBO();
 	if (bo != 0) return(bo);
 	return(_rgt->GetBO());
 }
 
-bool OEAndExpr::IsAromatic()
+bool OBAndExpr::IsAromatic()
 {
 	if (_lft->IsAromatic()) return(true);
 	return(_rgt->IsAromatic());
 }
 
-void OEAndExpr::Print(ostream &ofs)
+void OBAndExpr::Print(ostream &ofs)
 {
 	ofs << "((";
 	_lft->Print(ofs);
@@ -338,37 +338,37 @@ void OEAndExpr::Print(ostream &ofs)
 	ofs << "))";
 }
 
-void OEAndExpr::ResetRecurs()
+void OBAndExpr::ResetRecurs()
 {
 	_lft->ResetRecurs();
 	_rgt->ResetRecurs();
 }
 
-int OEOrExpr::GetFormalCharge()
+int OBOrExpr::GetFormalCharge()
 {
 	int chrg = _lft->GetFormalCharge();
 	if (chrg != 0) return(chrg);
 	return(_rgt->GetFormalCharge());
 }
-unsigned int OEOrExpr::GetAtomicNum()
+unsigned int OBOrExpr::GetAtomicNum()
 {
 	unsigned int ele = _lft->GetAtomicNum();
 	if (ele != 0) return(ele);
 	return(_rgt->GetAtomicNum());
 }
 
-unsigned int OEOrExpr::GetBO()
+unsigned int OBOrExpr::GetBO()
 {
 	unsigned int bo = _lft->GetBO();
 	if (bo != 0) return(bo);
 	return(_rgt->GetBO());
 }
-bool OEOrExpr::IsAromatic() 
+bool OBOrExpr::IsAromatic() 
 {
 	return(_lft->IsAromatic() || _rgt->IsAromatic());
 }
 
-void OEOrExpr::Print(ostream &ofs)  
+void OBOrExpr::Print(ostream &ofs)  
 {
 	ofs << "((";
 	_lft->Print(ofs);
@@ -377,54 +377,54 @@ void OEOrExpr::Print(ostream &ofs)
 	ofs << "))";
 }
 
-void OEOrExpr::ResetRecurs()
+void OBOrExpr::ResetRecurs()
 {
 	_lft->ResetRecurs();
 	_rgt->ResetRecurs();
 }
 
-void OENotExpr::Print(ostream &ofs)
+void OBNotExpr::Print(ostream &ofs)
 {
 	ofs << "!(";
 	_expr->Print(ofs);
 	ofs << ")";
 }
 
-void OENotExpr::ResetRecurs()
+void OBNotExpr::ResetRecurs()
 {
 	_expr->ResetRecurs();
 }
 
-void OEConstExpr::Print(ostream &ofs)
+void OBConstExpr::Print(ostream &ofs)
 {
 	ofs << "(TRUE)";
 }
 
-void OEElementExpr::Print(ostream &ofs)
+void OBElementExpr::Print(ostream &ofs)
 {
 	ofs << "#" << _ele;
 }
 
-void OEAromaticExpr::Print(ostream &ofs)  
+void OBAromaticExpr::Print(ostream &ofs)  
 {
 	if (_val) ofs << "Aromatic";
 	else      ofs << "Aliphatic";
 }
 
-bool OERingExpr::Eval(OENodeBase *nb) 
+bool OBRingExpr::Eval(OBNodeBase *nb) 
 {
   if (_val == -1)     return(nb->IsInRing());
   else if (_val == 0) return(!(nb->IsInRing()));
   else return((signed)nb->MemberOfRingCount() == _val);
 }
 
-void OERingExpr::Print(ostream &ofs)
+void OBRingExpr::Print(ostream &ofs)
 {
 	if (_val == -1) ofs << "IsInRing";
 	else            ofs << "Ring=" << _val;
 }
 
-bool OERecursExpr::Eval(OENodeBase *nb)
+bool OBRecursExpr::Eval(OBNodeBase *nb)
 {
 	if (_vtest.empty()) //first match per molecule
 	{
@@ -440,14 +440,14 @@ bool OERecursExpr::Eval(OENodeBase *nb)
 	return(_vmatch[nb->GetIdx()]);
 }
 
-void OERecursExpr::ResetRecurs()
+void OBRecursExpr::ResetRecurs()
 {
 	_vtest.clear();
 	_vmatch.clear();
 	_sp->ClearMatches();
 }
 
-OERecursExpr::~OERecursExpr()
+OBRecursExpr::~OBRecursExpr()
 {
 	if (_sp) delete _sp;
 }

@@ -15,10 +15,10 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-  void WriteCharges(ostream &ofs,OEMol &mol)
+  void WriteCharges(ostream &ofs,OBMol &mol)
   {
     unsigned int i;
-    OEAtom *atom;
+    OBAtom *atom;
     char buffer[BUFF_SIZE];
     
     for(i = 1;i <= mol.NumAtoms(); i++)
@@ -33,13 +33,13 @@ namespace OpenBabel {
       }
   }
 
-  void WriteDistanceMatrix(ostream &ofs,OEMol &mol)
+  void WriteDistanceMatrix(ostream &ofs,OBMol &mol)
   {
     int columns = 7;
     unsigned int max, min = 1;
     unsigned int i,j;
     string type;
-    OEAtom *atom, *atom2;
+    OBAtom *atom, *atom2;
     char buffer[BUFF_SIZE];
     double dst;
 
@@ -153,13 +153,13 @@ namespace OpenBabel {
 //  }	
   
 
-  void WriteAngles(ostream &ofs,OEMol &mol)
+  void WriteAngles(ostream &ofs,OBMol &mol)
   {
     // Alas, we still need to sort these to only list unique entries...
     Vector v1, v2;
-    OEAtom *a, *b, *c, *d;
-    OEBond *bond1, *bond2, *bond3;
-    vector<OEEdgeBase*>::iterator i, j, k;
+    OBAtom *a, *b, *c, *d;
+    OBBond *bond1, *bond2, *bond3;
+    vector<OBEdgeBase*>::iterator i, j, k;
     char buffer[BUFF_SIZE];
 
     for (bond1 = mol.BeginBond(i); bond1; bond1 = mol.NextBond(i))
@@ -204,7 +204,7 @@ namespace OpenBabel {
       }
   }
 
-bool WriteReport(ostream &ofs,OEMol &mol)
+bool WriteReport(ostream &ofs,OBMol &mol)
 {
   ofs << "FILENAME: " << mol.GetTitle() << endl;
   ofs << "INTERATOMIC DISTANCES" << endl;

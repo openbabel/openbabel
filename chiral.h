@@ -16,10 +16,10 @@ GNU General Public License for more details.
 
 #include "matrix.h"
 
-void GraphPotentials(OEMol &mol, vector<float> &pot);
-void construct_g_matrix(OEMol &mol, vector<vector<float> > &m);
-void construct_c_matrix(OEMol &mol,vector<vector<float > > &m);
-float CalcSignedVolume(OEMol &mol,OEAtom*);
+void GraphPotentials(OBMol &mol, vector<float> &pot);
+void construct_g_matrix(OBMol &mol, vector<vector<float> > &m);
+void construct_c_matrix(OBMol &mol,vector<vector<float > > &m);
+float CalcSignedVolume(OBMol &mol,OBAtom*);
 float signed_volume(const Vector &a, const Vector &b, const Vector &c, const Vector &d);
-void GetChirality(OEMol &mol, vector<int> &chirality);
+void GetChirality(OBMol &mol, vector<int> &chirality);
 #endif

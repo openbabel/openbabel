@@ -16,7 +16,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool ReadCaccrt(istream &ifs,OEMol &mol,char *title)
+bool ReadCaccrt(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   int natoms;
@@ -46,7 +46,7 @@ bool ReadCaccrt(istream &ifs,OEMol &mol,char *title)
   int i;
   float x,y,z;
   char type[10];
-  OEAtom *atom;
+  OBAtom *atom;
   Vector v;
 
   for (i = 1; i <= natoms;i++)
@@ -76,11 +76,11 @@ bool ReadCaccrt(istream &ifs,OEMol &mol,char *title)
 }
 
 
-bool WriteCaccrt(ostream &ofs,OEMol &mol)
+bool WriteCaccrt(ostream &ofs,OBMol &mol)
 {
-  OEAtom *atom;
+  OBAtom *atom;
   char type_name[10],buffer[BUFF_SIZE];
-  vector<OENodeBase*>::iterator i;
+  vector<OBNodeBase*>::iterator i;
 
   sprintf(buffer,"%s\n",mol.GetTitle());
   sprintf(buffer,"%3d   DIST  0  0  0\n",mol.NumAtoms());
@@ -101,9 +101,9 @@ bool WriteCaccrt(ostream &ofs,OEMol &mol)
   return(true);
 }
 
-static void SetHilderbrandt(OEMol&,vector<OEInternalCoord*>&);
+static void SetHilderbrandt(OBMol&,vector<OBInternalCoord*>&);
 
-bool WriteCacaoInternal(ostream &ofs,OEMol &mol)
+bool WriteCacaoInternal(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   Vector v;
@@ -114,7 +114,7 @@ bool WriteCacaoInternal(ostream &ofs,OEMol &mol)
   //translate first atom to origin
   v = mol.GetAtom(1)->GetVector(); v *= -1.0f; mol.Translate(v);
 
-  vector<OEInternalCoord*> vit;
+  vector<OBInternalCoord*> vit;
   SetHilderbrandt(mol,vit);
   strcpy(tmptype,etab.GetSymbol(mol.GetAtom(1)->GetAtomicNum()));
 
@@ -135,7 +135,7 @@ bool WriteCacaoInternal(ostream &ofs,OEMol &mol)
     ofs << buffer << endl;
   }
 
-  vector<OEInternalCoord*>::iterator j;
+  vector<OBInternalCoord*>::iterator j;
   for (j = vit.begin();j != vit.end();j++) 
     if (*j)
       delete *j;
@@ -143,19 +143,19 @@ bool WriteCacaoInternal(ostream &ofs,OEMol &mol)
   return(true);
 }
 
-void SetHilderbrandt(OEMol &mol,vector<OEInternalCoord*> &vit)
+void SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
 {
   float sum,r;
 
-  OEAtom dummy1,dummy2;
+  OBAtom dummy1,dummy2;
   dummy1.SetVector(0.0f,0.0f,1.0f);
   dummy2.SetVector(1.0f,0.0f,0.0f);
 
-  OEAtom *atom,*a1,*a2,*ref;
-  vector<OENodeBase*>::iterator ai;
-  vit.push_back((OEInternalCoord*)NULL);
+  OBAtom *atom,*a1,*a2,*ref;
+  vector<OBNodeBase*>::iterator ai;
+  vit.push_back((OBInternalCoord*)NULL);
   for (atom = mol.BeginAtom(ai);atom;atom = mol.NextAtom(ai))
-    vit.push_back(new OEInternalCoord (atom));
+    vit.push_back(new OBInternalCoord (atom));
 
   vit[1]->_a = &dummy1;
   vit[1]->_b = &dummy2;
@@ -166,7 +166,7 @@ void SetHilderbrandt(OEMol &mol,vector<OEInternalCoord*> &vit)
   unsigned int i,j;
   for (i = 2;i <= mol.NumAtoms();i++)
     {
-      ref = (OEAtom*)NULL;
+      ref = (OBAtom*)NULL;
       a1 = mol.GetAtom(i);
       sum = 100.0f;
       for (j = 1;j < i;j++)
@@ -193,7 +193,7 @@ void SetHilderbrandt(OEMol &mol,vector<OEInternalCoord*> &vit)
 	vit[i]->_c = &dummy1;
     }
 
-  OEAtom *a,*b,*c;
+  OBAtom *a,*b,*c;
   Vector v1,v2;
   for (i = 2;i <= mol.NumAtoms();i++)
     {

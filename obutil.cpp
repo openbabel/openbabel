@@ -13,8 +13,8 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "Vector.h"
-#include "oeutil.h"
-#include "oeifstream.h"
+#include "obutil.h"
+#include "obifstream.h"
 
 #ifdef WIN32
 #include <conio.h>
@@ -213,7 +213,7 @@ bool SafeOpen(ifstream &fs,char *filename)
   return(true);
 }
 
-bool SafeOpen(oeifstream &fs,char *filename)
+bool SafeOpen(obifstream &fs,char *filename)
 {
 #ifdef WIN32
 	string s = filename;
@@ -262,7 +262,7 @@ bool SafeOpen(ifstream &fs,string &filename)
   return(SafeOpen(fs,(char*)filename.c_str()));
 }
 
-bool SafeOpen(oeifstream &fs,string &filename)
+bool SafeOpen(obifstream &fs,string &filename)
 {
   return(SafeOpen(fs,(char*)filename.c_str()));
 }
@@ -297,7 +297,7 @@ void CleanAtomType(char *id)
   else                     id[2] = '\0';
 }   
 
-bool SetInputType(OEMol &mol,string &fname)
+bool SetInputType(OBMol &mol,string &fname)
 {
   io_type format;
 
@@ -313,7 +313,7 @@ bool SetInputType(OEMol &mol,string &fname)
   return(true);
 }
 
-bool SetOutputType(OEMol &mol,string &fname)
+bool SetOutputType(OBMol &mol,string &fname)
 {
   io_type format;
 
@@ -330,11 +330,11 @@ bool SetOutputType(OEMol &mol,string &fname)
 }
 
 
-void InternalToCartesian(vector<OEInternalCoord*> &vic,OEMol &mol)
+void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
   Vector n,nn,v1,v2,v3;
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   int index;
 
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
@@ -379,11 +379,11 @@ void InternalToCartesian(vector<OEInternalCoord*> &vic,OEMol &mol)
       mol.DeleteAtom(atom);
 }
 
-void CartesianToInternal(vector<OEInternalCoord*> &vic,OEMol &mol)
+void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
   float r,sum;
-  OEAtom *atom,*nbr,*ref;
-  vector<OENodeBase*>::iterator i,j,m;
+  OBAtom *atom,*nbr,*ref;
+  vector<OBNodeBase*>::iterator i,j,m;
 
   //set reference atoms
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
@@ -423,7 +423,7 @@ void CartesianToInternal(vector<OEInternalCoord*> &vic,OEMol &mol)
   //fill in geometries
   int k;
   Vector v1,v2;
-  OEAtom *a,*b,*c;
+  OBAtom *a,*b,*c;
   for (k = 2;k <= (signed)mol.NumAtoms();k++)
     {
       atom = mol.GetAtom(k); 
@@ -484,12 +484,12 @@ void CartesianToInternal(vector<OEInternalCoord*> &vic,OEMol &mol)
     }
 }
 
-bool OECompareInt(const int &a,const int &b)
+bool OBCompareInt(const int &a,const int &b)
 {
 	return(a<b);
 }
 
-bool OECompareUnsigned(const unsigned int &a,const unsigned int &b)
+bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
 {
 	return(a<b);
 }

@@ -16,7 +16,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool ReadFeat(istream &ifs,OEMol &mol, char *title)
+bool ReadFeat(istream &ifs,OBMol &mol, char *title)
 {
   char buffer[BUFF_SIZE];
   int i,natoms;
@@ -32,7 +32,7 @@ bool ReadFeat(istream &ifs,OEMol &mol, char *title)
 
   float x,y,z;
   char type[20];
-  OEAtom *atom;
+  OBAtom *atom;
   for (i = 0; i < natoms;i++)
   {
     if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
@@ -52,15 +52,15 @@ bool ReadFeat(istream &ifs,OEMol &mol, char *title)
   return(true);
 }
 
-bool WriteFeat(ostream &ofs,OEMol &mol)
+bool WriteFeat(ostream &ofs,OBMol &mol)
 { 
   char buffer[BUFF_SIZE];
   
   ofs << mol.NumAtoms() << endl;
   ofs << mol.GetTitle() << endl;
 
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     sprintf(buffer,"%-3s %8.5f  %8.5f  %8.5f ",

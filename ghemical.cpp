@@ -15,14 +15,14 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadGhemical(istream &ifs,OEMol &mol,char *title)
+bool ReadGhemical(istream &ifs,OBMol &mol,char *title)
 {
   int i;
   int natoms, nbonds;
   char buffer[BUFF_SIZE];
   string str,str1;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
   char bobuf[100];
   string bostr;
@@ -108,7 +108,7 @@ bool ReadGhemical(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteGhemical(ostream &ofs,OEMol &mol)
+bool WriteGhemical(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
@@ -125,7 +125,7 @@ bool WriteGhemical(ostream &ofs,OEMol &mol)
   sprintf(buffer,"!Atoms %d", mol.NumAtoms());
   ofs << buffer << endl;
 
-  OEAtom *atom;
+  OBAtom *atom;
   string str,str1;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
@@ -137,8 +137,8 @@ bool WriteGhemical(ostream &ofs,OEMol &mol)
   sprintf(buffer, "!Bonds %d", mol.NumBonds());
   ofs << buffer << endl;
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
 
   for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
     {

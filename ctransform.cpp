@@ -19,7 +19,7 @@ namespace OpenBabel {
 /*!
 **\brief Constructor
 */
-OECoordTrans::OECoordTrans()
+OBCoordTrans::OBCoordTrans()
   {
     _trans[0] = 0.0f; _trans[1] = 0.0f; _trans[2] = 0.0f;
     _euler[0] = 0.0f; _euler[1] = 0.0f; _euler[2] = 0.0f;
@@ -31,7 +31,7 @@ OECoordTrans::OECoordTrans()
 /*!
 **\brief Copy constructor
 */
-OECoordTrans::OECoordTrans(const OECoordTrans& cp)
+OBCoordTrans::OBCoordTrans(const OBCoordTrans& cp)
   {
     *this = cp;
   }
@@ -39,14 +39,14 @@ OECoordTrans::OECoordTrans(const OECoordTrans& cp)
 /*!
 **\brief Copy constructor
 */
-OECoordTrans::~OECoordTrans()
+OBCoordTrans::~OBCoordTrans()
   {
   }
 
 /*!
 **\brief Assignment operator
 */ 
-OECoordTrans& OECoordTrans::operator=(const OECoordTrans& cp)
+OBCoordTrans& OBCoordTrans::operator=(const OBCoordTrans& cp)
   {
     _trans[0] = cp._trans[0];
     _trans[1] = cp._trans[1];
@@ -69,7 +69,7 @@ OECoordTrans& OECoordTrans::operator=(const OECoordTrans& cp)
 /*!
 **\brief Clears the object as if it were just constructed
 */ 
-void OECoordTrans::Clear()
+void OBCoordTrans::Clear()
   {
     _trans[0] = 0.0f; _trans[1] = 0.0f; _trans[2] = 0.0f;
     _euler[0] = 0.0f; _euler[1] = 0.0f; _euler[2] = 0.0f;
@@ -83,11 +83,11 @@ void OECoordTrans::Clear()
 **\param ccc character array to write too (preallocated)
 **\return The number of bytes written
 */
-unsigned int OECoordTrans::WriteBinary(char* ccc)
+unsigned int OBCoordTrans::WriteBinary(char* ccc)
   {
     unsigned int idx=0;
-    idx += OE_io_write_binary(&ccc[idx], (char*)&_trans[0], sizeof(float), 3);
-    idx += OE_io_write_binary(&ccc[idx], (char*)&_euler[0], sizeof(float), 3);
+    idx += OB_io_write_binary(&ccc[idx], (char*)&_trans[0], sizeof(float), 3);
+    idx += OB_io_write_binary(&ccc[idx], (char*)&_euler[0], sizeof(float), 3);
     return idx;
   }
 
@@ -96,11 +96,11 @@ unsigned int OECoordTrans::WriteBinary(char* ccc)
 **\param ccc character array to read from (preallocated)
 **\return the number of bytes read
 */
-unsigned int OECoordTrans::ReadBinary(char* ccc)
+unsigned int OBCoordTrans::ReadBinary(char* ccc)
   {
     unsigned int idx=0;
-    idx += OE_io_read_binary(&ccc[idx], (char*)&_trans[0], sizeof(float), 3);
-    idx += OE_io_read_binary(&ccc[idx], (char*)&_euler[0], sizeof(float), 3);
+    idx += OB_io_read_binary(&ccc[idx], (char*)&_trans[0], sizeof(float), 3);
+    idx += OB_io_read_binary(&ccc[idx], (char*)&_euler[0], sizeof(float), 3);
     EulerToRmatrix(_euler,_rmat);
     return idx;
   }
@@ -109,20 +109,20 @@ unsigned int OECoordTrans::ReadBinary(char* ccc)
 **\brief Write the object to an output stream
 **\param ostr The output stream
 */
-void OECoordTrans::WriteBinary(ostream& ostr)
+void OBCoordTrans::WriteBinary(ostream& ostr)
   {
-    OE_io_write_binary(ostr, (char*) &_trans[0], sizeof(float), 3);
-    OE_io_write_binary(ostr, (char*) &_euler[0], sizeof(float), 3);
+    OB_io_write_binary(ostr, (char*) &_trans[0], sizeof(float), 3);
+    OB_io_write_binary(ostr, (char*) &_euler[0], sizeof(float), 3);
   }
 
 /*!
 **\brief Read the object from an input stream
 **\param istr The input stream
 */
-void OECoordTrans::ReadBinary(istream& istr)
+void OBCoordTrans::ReadBinary(istream& istr)
   {
-    OE_io_read_binary(istr, (char*) &_trans[0], sizeof(float), 3);
-    OE_io_read_binary(istr, (char*) &_euler[0], sizeof(float), 3);
+    OB_io_read_binary(istr, (char*) &_trans[0], sizeof(float), 3);
+    OB_io_read_binary(istr, (char*) &_euler[0], sizeof(float), 3);
     EulerToRmatrix(_euler,_rmat);
   }
 
@@ -136,7 +136,7 @@ void OECoordTrans::ReadBinary(istream& istr)
 **does not apply so this is \b not the same as applying ct then the
 **original transform.
 */
-OECoordTrans& OECoordTrans::operator+=(const OECoordTrans& ct)
+OBCoordTrans& OBCoordTrans::operator+=(const OBCoordTrans& ct)
   {
     float xyz[12];
     unsigned int i;
@@ -159,7 +159,7 @@ OECoordTrans& OECoordTrans::operator+=(const OECoordTrans& ct)
 **\note Obviously the communative property does not apply hence,
 **ct1+ct2 is \b not the same as ct2+ct1.
 */
-OECoordTrans OECoordTrans::operator+(const OECoordTrans& ct2) const
+OBCoordTrans OBCoordTrans::operator+(const OBCoordTrans& ct2) const
   {
     float xyz[12];
     unsigned int i;
@@ -168,7 +168,7 @@ OECoordTrans OECoordTrans::operator+(const OECoordTrans& ct2) const
     xyz[3*2+1] = 1.0f;
     xyz[3*3+2] = 1.0f;
 
-    OECoordTrans ct;
+    OBCoordTrans ct;
     Transform(xyz,4);
     ct2.Transform(xyz,4);
     ct.Setup(xyz);
@@ -189,7 +189,7 @@ OECoordTrans OECoordTrans::operator+(const OECoordTrans& ct2) const
 **\note init_xyz and final_xyz must be identical sets of coordinates except for
 **the frame of reference.
 */
-void OECoordTrans::Setup(float *init_xyz, float *final_xyz, unsigned int N)
+void OBCoordTrans::Setup(float *init_xyz, float *final_xyz, unsigned int N)
   {
     Clear();
 
@@ -339,7 +339,7 @@ void OECoordTrans::Setup(float *init_xyz, float *final_xyz, unsigned int N)
         for (i=0 ; i<3 ; i++) xyz2[9+i] = zz2[i] + xyz2[i];
  
     //Get transformations from third reference frame to initial and finial reference frames
-    OECoordTrans cti,ctf;
+    OBCoordTrans cti,ctf;
     cti.Setup(xyz1);
     ctf.Setup(xyz2); 
 
@@ -360,7 +360,7 @@ void OECoordTrans::Setup(float *init_xyz, float *final_xyz, unsigned int N)
 **\param sn sine of the angle
 **\return Angle in radians
 */
-double OECoordTrans::Angle(double sn, double cs)
+double OBCoordTrans::Angle(double sn, double cs)
   {
     double angle=0.0;
     if (fabs(cs) < fabs(sn)) {
@@ -387,7 +387,7 @@ double OECoordTrans::Angle(double sn, double cs)
 **instead of converting from reference frame 1 to 2
 **it now converts from 2 to 1.)
 */
-void OECoordTrans::Invert()
+void OBCoordTrans::Invert()
   {
     float xyz[12];
     unsigned int i;
@@ -424,7 +424,7 @@ void OECoordTrans::Invert()
 **\param trans A length 3 array that will be returned
 **with the x,y and z components of the translation.
 */
-void OECoordTrans::GetEulerTranslation(float *euler, float *trans) const
+void OBCoordTrans::GetEulerTranslation(float *euler, float *trans) const
   {
     unsigned int i;
     for (i=0 ; i<3 ; i++) {
@@ -446,7 +446,7 @@ void OECoordTrans::GetEulerTranslation(float *euler, float *trans) const
 **about the z-axis, euler[1] rotation about the
 **x-axis and euler[2] rotation about the z-axis.
 */
-void OECoordTrans::GetTranslationEuler(float *trans, float *euler) const
+void OBCoordTrans::GetTranslationEuler(float *trans, float *euler) const
   {
     //Get rotation
     euler[0] = _euler[0];
@@ -471,7 +471,7 @@ void OECoordTrans::GetTranslationEuler(float *trans, float *euler) const
 **\param trans A length 3 array that will be returned
 **with the x,y and z components of the translation.
 */
-void OECoordTrans::GetRmatrixTranslation(float *rmat, float *trans) const
+void OBCoordTrans::GetRmatrixTranslation(float *rmat, float *trans) const
   {
     unsigned int i;
     for (i=0 ; i<3 ; i++) trans[i] = _trans[i];
@@ -486,7 +486,7 @@ void OECoordTrans::GetRmatrixTranslation(float *rmat, float *trans) const
 **the rotation.
 **\param tvec A Vector that will be returned with the translation.
 */
-void OECoordTrans::GetRmatrixTranslation(Matrix3x3& rmatrix, Vector& tvec)
+void OBCoordTrans::GetRmatrixTranslation(Matrix3x3& rmatrix, Vector& tvec)
   {
     float rmat[9],trans[3];
     GetRmatrixTranslation(rmat,trans); 
@@ -507,7 +507,7 @@ void OECoordTrans::GetRmatrixTranslation(Matrix3x3& rmatrix, Vector& tvec)
 **with the elements of a rotation matrix.  rmat[3*i+j]
 **is the value of the element in the i'th row and j'th column.
 */
-void OECoordTrans::GetTranslationRmatrix(float *trans, float *rmat) const
+void OBCoordTrans::GetTranslationRmatrix(float *trans, float *rmat) const
   {
     float euler[3];
     GetTranslationEuler(trans,euler);
@@ -522,7 +522,7 @@ void OECoordTrans::GetTranslationRmatrix(float *trans, float *rmat) const
 **\param rmatrix A Matrix3x3 that will be returned with
 **the rotation.
 */
-void OECoordTrans::GetTranslationRmatrix(Vector& tvec, Matrix3x3& rmatrix)
+void OBCoordTrans::GetTranslationRmatrix(Vector& tvec, Matrix3x3& rmatrix)
   {
     float rmat[9],trans[3];
     GetTranslationRmatrix(trans,rmat);
@@ -543,7 +543,7 @@ void OECoordTrans::GetTranslationRmatrix(Vector& tvec, Matrix3x3& rmatrix)
 **\param rmat A length 9 array representing the rotation matrix.
 **rmat[3*i+j] is the value of the element in the i'th row and j'th column.
 */
-void OECoordTrans::EulerToRmatrix(float *euler, float *rmat) const
+void OBCoordTrans::EulerToRmatrix(float *euler, float *rmat) const
   {
     float xyz[9];
     unsigned int i,j;
@@ -569,7 +569,7 @@ void OECoordTrans::EulerToRmatrix(float *euler, float *rmat) const
 **\link SetupTranslationEuler() \endlink.  The transformation setup
 **in this function applies the rotation before the translation.
 */
-void OECoordTrans::SetupEulerTranslation(float *euler, float *trans)
+void OBCoordTrans::SetupEulerTranslation(float *euler, float *trans)
   {
     //unsigned int i;
     //for (i=0 ; i<3 ; i++) {_euler[i] = euler[i]; _trans[i] = trans[i];}
@@ -600,7 +600,7 @@ void OECoordTrans::SetupEulerTranslation(float *euler, float *trans)
 **\link SetupEulerTranslation() \endlink.  The transformation setup
 **in this function applies the translation before the rotation.
 */
-void OECoordTrans::SetupTranslationEuler(float *trans, float *euler)
+void OBCoordTrans::SetupTranslationEuler(float *trans, float *euler)
   {
     float xyz[12];
     unsigned int i;
@@ -624,7 +624,7 @@ void OECoordTrans::SetupTranslationEuler(float *trans, float *euler)
 **\link SetupTranslationRmatrix() \endlink.  This transformation setup
 **in this function applies the rotation before the translation.
 */
-void OECoordTrans::SetupRmatrixTranslation(float *rmat, float *trans)
+void OBCoordTrans::SetupRmatrixTranslation(float *rmat, float *trans)
   {
     float xyz[12];
     unsigned int i;
@@ -647,7 +647,7 @@ void OECoordTrans::SetupRmatrixTranslation(float *rmat, float *trans)
 **\link SetupTranslationRmatrix() \endlink.  This transformation setup
 **in this function applies the rotation before the translation.
 */
-void OECoordTrans::SetupRmatrixTranslation(Matrix3x3& rmatrix, Vector& tvec)
+void OBCoordTrans::SetupRmatrixTranslation(Matrix3x3& rmatrix, Vector& tvec)
   {
     float rmat[9],trans[3];
     unsigned int irow,icolumn;
@@ -668,7 +668,7 @@ void OECoordTrans::SetupRmatrixTranslation(Matrix3x3& rmatrix, Vector& tvec)
 **\link SetupRmatrixTranslation() \endlink.  This transformation setup
 **in this function applies the translation before the rotation.
 */
-void OECoordTrans::SetupTranslationRmatrix(float *trans, float *rmat)
+void OBCoordTrans::SetupTranslationRmatrix(float *trans, float *rmat)
   {
     float xyz[12];
     unsigned int i;
@@ -691,7 +691,7 @@ void OECoordTrans::SetupTranslationRmatrix(float *trans, float *rmat)
 **\link SetupRmatrixTranslation() \endlink.  This transformation setup
 **in this function applies the translation before the rotation.
 */
-void OECoordTrans::SetupTranslationRmatrix(Vector& tvec, Matrix3x3& rmatrix)
+void OBCoordTrans::SetupTranslationRmatrix(Vector& tvec, Matrix3x3& rmatrix)
   {
     float rmat[9],trans[3];
     unsigned int irow,icolumn;
@@ -707,7 +707,7 @@ void OECoordTrans::SetupTranslationRmatrix(Vector& tvec, Matrix3x3& rmatrix)
 **\param xyz Array of coordinates to be transformed
 **\param N Number of coordinates in xyz array
 */
-void OECoordTrans::Transform(float *xyz, unsigned int N) const
+void OBCoordTrans::Transform(float *xyz, unsigned int N) const
   {
     unsigned int i;
     float x,y,z;
@@ -727,7 +727,7 @@ void OECoordTrans::Transform(float *xyz, unsigned int N) const
 **\param xyz Array of coordinates to be transformed
 **\param N Number of coordinates in xyz array
 */
-void OECoordTrans::ApplyTranslation(float *trans, float *xyz, unsigned int N) const
+void OBCoordTrans::ApplyTranslation(float *trans, float *xyz, unsigned int N) const
   {
     unsigned int i;
     for (i=0 ; i<N ; i++) {
@@ -744,7 +744,7 @@ void OECoordTrans::ApplyTranslation(float *trans, float *xyz, unsigned int N) co
 **\param xyz Array of coordinates to be transformed
 **\param N Number of coordinates in xyz array
 */
-void OECoordTrans::ApplyRmatrix(float *rmat, float *xyz, unsigned int N) const
+void OBCoordTrans::ApplyRmatrix(float *rmat, float *xyz, unsigned int N) const
   {
     unsigned int i;
     float x,y,z;
@@ -770,7 +770,7 @@ void OECoordTrans::ApplyRmatrix(float *rmat, float *xyz, unsigned int N) const
 **\param xyz Array of coordinates to be transformed
 **\param N Number of coordinates in xyz array
 */
-void OECoordTrans::ApplyEulerInvert(float *euler, float *xyz, unsigned int N) const
+void OBCoordTrans::ApplyEulerInvert(float *euler, float *xyz, unsigned int N) const
   {
     float cs0 = cos(euler[0]);
     float cs1 = cos(euler[1]);
@@ -818,7 +818,7 @@ void OECoordTrans::ApplyEulerInvert(float *euler, float *xyz, unsigned int N) co
 **\param xyz Array of coordinates to be transformed
 **\param N Number of coordinates in xyz array
 **/
-void OECoordTrans::ApplyEuler(float *euler, float *xyz, unsigned int N) const
+void OBCoordTrans::ApplyEuler(float *euler, float *xyz, unsigned int N) const
   {
     float cs0 = cos(euler[0]);
     float cs1 = cos(euler[1]);
@@ -863,7 +863,7 @@ void OECoordTrans::ApplyEuler(float *euler, float *xyz, unsigned int N) const
 **(0,0,0), (1,0,0), (0,1,0) and (0,0,1) from the initial 
 **reference frame transformed into the final reference frame.
 */
-bool OECoordTrans::Setup(float *in_xyz)
+bool OBCoordTrans::Setup(float *in_xyz)
   {
     //Copy coordinate array
     double xyz[12];
@@ -972,7 +972,7 @@ bool OECoordTrans::Setup(float *in_xyz)
     if (fabs(xyz[3*1+0] - 1.0) > tol) error = true;
     if (fabs(xyz[3*2+1] - 1.0) > tol) error = true;
     if (fabs(xyz[3*3+2] - 1.0) > tol) error = true;
-    if (error) {cerr << "WARNING! OECoordTrans::Setup(float*) probable invalid input" << endl; return false;}
+    if (error) {cerr << "WARNING! OBCoordTrans::Setup(float*) probable invalid input" << endl; return false;}
 
     return true;
   }

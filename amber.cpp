@@ -16,14 +16,14 @@ GNU General Public License for more details.
 namespace OpenBabel {
 
 
-bool ReadAmberPrep(istream &ifs,OEMol &mol,char *title)
+bool ReadAmberPrep(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
-  OEAtom *atom;
-  OEInternalCoord *coord;
+  OBAtom *atom;
+  OBInternalCoord *coord;
   vector<string> vs;
-  vector<OEInternalCoord*> internals;
+  vector<OBInternalCoord*> internals;
 
   ttab.SetFromType("XYZ");
   mol.BeginModify();
@@ -34,7 +34,7 @@ bool ReadAmberPrep(istream &ifs,OEMol &mol,char *title)
       if (vs.size() > 8)
 	{
 	  atom = mol.NewAtom();
-	  coord = new OEInternalCoord();
+	  coord = new OBInternalCoord();
 	  if (mol.NumAtoms() > 1)
 	    coord->_a = mol.GetAtom(atoi(vs[4].c_str()));
 	  if (mol.NumAtoms() > 2)

@@ -23,31 +23,31 @@ namespace OpenBabel
 //SMARTS Parser
 //
 
-class OESmartsParser
+class OBSmartsParser
 {
 	const char                    *_ptr;
 	int                            _stereo;
 	int                            _vb;
-	OENode                        *_prev;
-	vector<OENode*>                _vprev;
-	vector<pair<OEEdgeBase*,int> > _vclose;
+	OBNode                        *_prev;
+	vector<OBNode*>                _vprev;
+	vector<pair<OBEdgeBase*,int> > _vclose;
 public:
 	int         GetVectorBinding();
 	void        ReportError() {}
-	void        AddClosure(OEEdgeBase*,int);
-	bool        Parse(OESmartsPattern&,const char*);
-	bool        Parse(OESmartsPattern&,string&);
-	OEExprBase *ParseSimpleAtomPrimitive();
-	OEExprBase *ParseComplexAtomPrimitive();
-	OEExprBase *ParseBondPrimitive();
-	OEExprBase *ParseAtomExpr(int);
-	OEExprBase *ParseBondExpr(int);
-	OEEdgeBase *GetClosure(int);
+	void        AddClosure(OBEdgeBase*,int);
+	bool        Parse(OBSmartsPattern&,const char*);
+	bool        Parse(OBSmartsPattern&,string&);
+	OBExprBase *ParseSimpleAtomPrimitive();
+	OBExprBase *ParseComplexAtomPrimitive();
+	OBExprBase *ParseBondPrimitive();
+	OBExprBase *ParseAtomExpr(int);
+	OBExprBase *ParseBondExpr(int);
+	OBEdgeBase *GetClosure(int);
 };
 
 #define ELEMMAX 104
-#define OE_CLOCK   1
-#define OE_ACLOCK  2
+#define OB_CLOCK   1
+#define OB_ACLOCK  2
 
 } //namespace OpenBabel
 

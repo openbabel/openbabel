@@ -22,119 +22,119 @@ using namespace std;
 namespace OpenBabel
 {
 
-class OEBase;
-class OENodeBase;
-class OEEdgeBase;
-class OEGraphBase;
+class OBBase;
+class OBNodeBase;
+class OBEdgeBase;
+class OBGraphBase;
 
 //
 //Base Classes
 //
 
-class OEBase
+class OBBase
 {
 public:
 };
 
-class OENodeBase : public OEBase
+class OBNodeBase : public OBBase
 {
 protected:
 	unsigned short int  _idx;
-	OEGraphBase        *_parent;
-	vector<OEEdgeBase*> _vbond;
+	OBGraphBase        *_parent;
+	vector<OBEdgeBase*> _vbond;
 public:
 	bool Visit;
-	         OENodeBase()                            {Visit = false;}
-	virtual ~OENodeBase()                            {}
+	         OBNodeBase()                            {Visit = false;}
+	virtual ~OBNodeBase()                            {}
 	void                  SetIdx(int idx)            {_idx = idx;}
-	void                  AddEdge(OEEdgeBase *b)     {_vbond.push_back(b);}
-	void                  SetParent(OEGraphBase*);
-	virtual int           GetFormalCharge()          const {((OENodeBase*)this)->Error(1); return(0);}
+	void                  AddEdge(OBEdgeBase *b)     {_vbond.push_back(b);}
+	void                  SetParent(OBGraphBase*);
+	virtual int           GetFormalCharge()          const {((OBNodeBase*)this)->Error(1); return(0);}
 	virtual unsigned int  GetIdx()                   const {return(_idx);}
-	virtual unsigned int  ExplicitHydrogenCount()    const {((OENodeBase*)this)->Error(22); return(0);}
-	virtual unsigned int  ImplicitHydrogenCount()    const {((OENodeBase*)this)->Error(22); return(0);}
-	virtual unsigned int  GetImplicitValence()       const {((OENodeBase*)this)->Error(3); return(0);}
+	virtual unsigned int  ExplicitHydrogenCount()    const {((OBNodeBase*)this)->Error(22); return(0);}
+	virtual unsigned int  ImplicitHydrogenCount()    const {((OBNodeBase*)this)->Error(22); return(0);}
+	virtual unsigned int  GetImplicitValence()       const {((OBNodeBase*)this)->Error(3); return(0);}
 	virtual unsigned int  GetValence()               const {return(_vbond.size());}
-	virtual unsigned int  GetHvyValence()            const {((OENodeBase*)this)->Error(4);return(0);}
-	virtual unsigned int  KBOSum()                const {((OENodeBase*)this)->Error(5);return(0);}
-	virtual unsigned int  GetHyb()                   const {((OENodeBase*)this)->Error(6);return(0);}
-	virtual unsigned int  MemberOfRingCount()        const {((OENodeBase*)this)->Error(7);return(0);}
-	virtual unsigned int  GetAtomicNum()			 const {((OENodeBase*)this)->Error(8);return(0);}
-	virtual void          SetMatch(OENodeBase*)      {}
+	virtual unsigned int  GetHvyValence()            const {((OBNodeBase*)this)->Error(4);return(0);}
+	virtual unsigned int  KBOSum()                const {((OBNodeBase*)this)->Error(5);return(0);}
+	virtual unsigned int  GetHyb()                   const {((OBNodeBase*)this)->Error(6);return(0);}
+	virtual unsigned int  MemberOfRingCount()        const {((OBNodeBase*)this)->Error(7);return(0);}
+	virtual unsigned int  GetAtomicNum()			 const {((OBNodeBase*)this)->Error(8);return(0);}
+	virtual void          SetMatch(OBNodeBase*)      {}
 	virtual void          SetAromatic()              {}
-	virtual bool          IsInRingSize(int)          const {((OENodeBase*)this)->Error(9);return(false);}
-	virtual bool          IsAromatic()               const {((OENodeBase*)this)->Error(10);return(false);}
-	virtual bool          IsInRing()                 const {((OENodeBase*)this)->Error(11);return(false);}
-	virtual bool          Eval(OENodeBase*)          const {((OENodeBase*)this)->Error(12);return(false);}
-	virtual bool          IsConnected(OENodeBase*);
-	virtual OENodeBase   *GetMatch()                 {((OENodeBase*)this)->Error(13); return(NULL);}
-	virtual OEGraphBase  *GetParent()                {return(_parent);}
-	OEEdgeBase           *Begin(vector<OEEdgeBase*>::iterator&);
-	OEEdgeBase           *Next(vector<OEEdgeBase*>::iterator&);
-	OENodeBase           *BeginNbr(vector<OEEdgeBase*>::iterator&);
-	OENodeBase           *NextNbr(vector<OEEdgeBase*>::iterator&);
+	virtual bool          IsInRingSize(int)          const {((OBNodeBase*)this)->Error(9);return(false);}
+	virtual bool          IsAromatic()               const {((OBNodeBase*)this)->Error(10);return(false);}
+	virtual bool          IsInRing()                 const {((OBNodeBase*)this)->Error(11);return(false);}
+	virtual bool          Eval(OBNodeBase*)          const {((OBNodeBase*)this)->Error(12);return(false);}
+	virtual bool          IsConnected(OBNodeBase*);
+	virtual OBNodeBase   *GetMatch()                 {((OBNodeBase*)this)->Error(13); return(NULL);}
+	virtual OBGraphBase  *GetParent()                {return(_parent);}
+	OBEdgeBase           *Begin(vector<OBEdgeBase*>::iterator&);
+	OBEdgeBase           *Next(vector<OBEdgeBase*>::iterator&);
+	OBNodeBase           *BeginNbr(vector<OBEdgeBase*>::iterator&);
+	OBNodeBase           *NextNbr(vector<OBEdgeBase*>::iterator&);
 	void Error(int f)     {cerr << "atom vf called = " << f << endl;}
 };
 
-class OEEdgeBase : public OEBase
+class OBEdgeBase : public OBBase
 {
 protected:
 	unsigned short int _idx;
-	OENodeBase        *_bgn;
-	OENodeBase        *_end;
-	OEGraphBase       *_parent;
+	OBNodeBase        *_bgn;
+	OBNodeBase        *_end;
+	OBGraphBase       *_parent;
 public:
 	bool Visit;
 
-	         OEEdgeBase() {Visit = false; _bgn = _end = NULL;}
-	         OEEdgeBase(OENodeBase *bgn,OENodeBase *end) {}
-	virtual ~OEEdgeBase()                  {}
+	         OBEdgeBase() {Visit = false; _bgn = _end = NULL;}
+	         OBEdgeBase(OBNodeBase *bgn,OBNodeBase *end) {}
+	virtual ~OBEdgeBase()                  {}
 	virtual void SetClosure()      {}
-	virtual bool IsAromatic()      const {((OEEdgeBase*)this)->Error(1); return(false);}
-	virtual bool IsInRing()        const {((OEEdgeBase*)this)->Error(2); return(false);}
-	virtual bool IsClosure()       {((OEEdgeBase*)this)->Error(3); return(false);}
-	virtual bool Eval(OEEdgeBase*) {((OEEdgeBase*)this)->Error(4); return(false);}
-	virtual unsigned int  GetBO()  const {((OEEdgeBase*)this)->Error(5); return(0);}
+	virtual bool IsAromatic()      const {((OBEdgeBase*)this)->Error(1); return(false);}
+	virtual bool IsInRing()        const {((OBEdgeBase*)this)->Error(2); return(false);}
+	virtual bool IsClosure()       {((OBEdgeBase*)this)->Error(3); return(false);}
+	virtual bool Eval(OBEdgeBase*) {((OBEdgeBase*)this)->Error(4); return(false);}
+	virtual unsigned int  GetBO()  const {((OBEdgeBase*)this)->Error(5); return(0);}
 
-	virtual OEGraphBase* GetParent() {return(_parent);}
+	virtual OBGraphBase* GetParent() {return(_parent);}
 	unsigned int GetIdx()          {return(_idx);}
 	void SetIdx(int idx)           {_idx = idx;}
-	void SetEnd(OENodeBase *n)     {_end = n;}
+	void SetEnd(OBNodeBase *n)     {_end = n;}
 	void SwapEnds()                {swap(_bgn,_end);}
-	void SetParent(OEGraphBase*);               
-	OENodeBase *GetBgn()           {return(_bgn);}
-	OENodeBase *GetEnd()           {return(_end);}
+	void SetParent(OBGraphBase*);               
+	OBNodeBase *GetBgn()           {return(_bgn);}
+	OBNodeBase *GetEnd()           {return(_end);}
 	void Error(int f) {cerr << "bond vf err = " << f << endl;}
 };
 
-class OEGraphBase : public OEBase
+class OBGraphBase : public OBBase
 {
 protected:
 	bool                 _vlock;
-	vector<OENodeBase*>  _vatom;
-	vector<OEEdgeBase*>  _vbond;
+	vector<OBNodeBase*>  _vatom;
+	vector<OBEdgeBase*>  _vbond;
 public:
-	OEGraphBase() 
+	OBGraphBase() 
 	{
 		_vlock = false; 
 		_vatom.clear(); 
 		_vbond.clear();
 	}
-	OEGraphBase(const OEGraphBase &src)
+	OBGraphBase(const OBGraphBase &src)
 	  {
 	    
 	  }
 
-	virtual     ~OEGraphBase()        {}
+	virtual     ~OBGraphBase()        {}
 	unsigned int NumNodes()           {return(_vatom.empty() ? 0 : _vatom.size());}
 	unsigned int NumEdges()           {return(_vbond.empty() ? 0 : _vbond.size());}
 	void        ResetVisitFlags();
 	bool        SetVisitLock(bool);
 	bool        GetVisitLock()        {return(_vlock);}
-	OENodeBase *Begin(vector<OENodeBase*>::iterator&); 
-	OENodeBase *Next(vector<OENodeBase*>::iterator&);
-	OEEdgeBase *Begin(vector<OEEdgeBase*>::iterator&);
-	OEEdgeBase *Next(vector<OEEdgeBase*>::iterator&);
+	OBNodeBase *Begin(vector<OBNodeBase*>::iterator&); 
+	OBNodeBase *Next(vector<OBNodeBase*>::iterator&);
+	OBEdgeBase *Begin(vector<OBEdgeBase*>::iterator&);
+	OBEdgeBase *Next(vector<OBEdgeBase*>::iterator&);
 
 	//substructure search functions
 	virtual bool SingleMatch()                  const {return(false);}
@@ -142,15 +142,15 @@ public:
 	virtual bool FinishedMatch()                const {return(false);}
 	virtual void SetFinishedMatch(bool)         {}
 	virtual void ClearMatches()                 {}
-	virtual void PushBack(vector<OENodeBase*>&) {}
+	virtual void PushBack(vector<OBNodeBase*>&) {}
 	virtual void PrepForMatch()                 {}
-	virtual vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator BgnMatch() {return((vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator) NULL);}
-	virtual vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator EndMatch() {return((vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator) NULL);}
-	virtual OENodeBase *GetFirstSeed() {return((OENodeBase*)NULL);}
-	bool Match(OEGraphBase &,bool singleMatch=false);
-	bool Match(OEGraphBase &,
-		       vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator,
-		       vector<OEEdgeBase*>::iterator);
+	virtual vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator BgnMatch() {return((vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator) NULL);}
+	virtual vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator EndMatch() {return((vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator) NULL);}
+	virtual OBNodeBase *GetFirstSeed() {return((OBNodeBase*)NULL);}
+	bool Match(OBGraphBase &,bool singleMatch=false);
+	bool Match(OBGraphBase &,
+		       vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator,
+		       vector<OBEdgeBase*>::iterator);
 };
 
 } //namespace OpenBabel

@@ -36,10 +36,10 @@ BitGrid::~BitGrid(void)
   Clear();
 }
 
-void BitGrid::Init(OEMol &box, float spacing)
+void BitGrid::Init(OBMol &box, float spacing)
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   for ( atom = box.BeginAtom(i) ; atom ; atom = box.NextAtom(i) )
     {
@@ -113,10 +113,10 @@ void BitGrid::Init(float xmi, float ymi, float zmi, float xma, float yma, float 
   acc.Resize(size);
 }
 
-void BitGrid::Build(OEMol &mol)
+void BitGrid::Build(OBMol &mol)
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   p.assign_types(mol,types);
 
@@ -124,10 +124,10 @@ void BitGrid::Build(OEMol &mol)
     SetBits(atom);
 }
 
-void BitGrid::Build(OEMol &mol, OEBitVec &bits)
+void BitGrid::Build(OBMol &mol, OBBitVec &bits)
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   p.assign_types(mol,types);
 
@@ -136,7 +136,7 @@ void BitGrid::Build(OEMol &mol, OEBitVec &bits)
       SetBits(atom);
 }
 
-void BitGrid::Build(OEMol &mol, vector<int> &atoms)
+void BitGrid::Build(OBMol &mol, vector<int> &atoms)
 {
   vector<int>::iterator i;
 
@@ -146,7 +146,7 @@ void BitGrid::Build(OEMol &mol, vector<int> &atoms)
     SetBits(mol.GetAtom(*i));
 }
 
-void BitGrid::SetBits(OEAtom *atom)
+void BitGrid::SetBits(OBAtom *atom)
 {	
   int i,j,k;
   int xpos   = (int)rint((atom->GetX() - xmin) * inv_spa);

@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool WriteGaussianCart(ostream &ofs,OEMol &mol)
+bool WriteGaussianCart(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
@@ -24,7 +24,7 @@ bool WriteGaussianCart(ostream &ofs,OEMol &mol)
   ofs << "#Put Keywords Here" << endl << endl;
   ttab.SetFromType("INT"); ttab.SetToType("XYZ");
 
-  OEAtom *atom;
+  OBAtom *atom;
   string str,str1;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {

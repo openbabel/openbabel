@@ -12,13 +12,13 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "oeutil.h"
+#include "obutil.h"
 #include "typer.h"
 
 namespace OpenBabel
 {
 
-bool ReadMacroModel(istream &ifs, OEMol &mol, char *defaultTitle)
+bool ReadMacroModel(istream &ifs, OBMol &mol, char *defaultTitle)
 { 
   // Get Title
   char buffer[BUFF_SIZE];
@@ -56,7 +56,7 @@ bool ReadMacroModel(istream &ifs, OEMol &mol, char *defaultTitle)
   char temp_type[10];
   int i,j;
   float charge;
-  OEAtom atom;
+  OBAtom atom;
 
   ttab.SetFromType("MMD");  
   for (i = 1; i <= natoms; i++)
@@ -104,8 +104,8 @@ bool ReadMacroModel(istream &ifs, OEMol &mol, char *defaultTitle)
 
   mol.EndModify();
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator bi;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator bi;
   for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
     if (bond->GetBO() == 5 && !bond->IsInRing())
       bond->SetBO(1);
@@ -115,7 +115,7 @@ bool ReadMacroModel(istream &ifs, OEMol &mol, char *defaultTitle)
   return(true);
 }
 
-bool WriteMacroModel(ostream &ofs,OEMol &mol)
+bool WriteMacroModel(ostream &ofs,OBMol &mol)
 {
   char buffer[BUFF_SIZE];
   sprintf(buffer," %5d %6s      E = %7.3f KJ/mol",
@@ -123,10 +123,10 @@ bool WriteMacroModel(ostream &ofs,OEMol &mol)
   ofs << buffer << endl;
 
   int type,k;
-  OEAtom *atom,*nbr;
+  OBAtom *atom,*nbr;
   string from,to;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
   ttab.SetFromType("INT");
   ttab.SetToType("MMD");
 

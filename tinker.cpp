@@ -15,19 +15,19 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 	
-bool WriteTinker(ostream &ofs,OEMol &mol)
+bool WriteTinker(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
   
   sprintf(buffer,"%6d %-20s",mol.NumAtoms(),mol.GetTitle());
   ofs << buffer << endl;
 
   ttab.SetFromType("INT");
 
-  OEAtom *atom;
+  OBAtom *atom;
   string str,str1;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {

@@ -16,12 +16,12 @@ GNU General Public License for more details.
 namespace OpenBabel 
 {
 
-bool ReadBox(istream &ifs, OEMol &mol,char *)
+bool ReadBox(istream &ifs, OBMol &mol,char *)
 {
   char buffer[BUFF_SIZE];
   vector<string> vs;
   vector<string>::iterator i;
-  OEAtom atom;
+  OBAtom atom;
 
   mol.BeginModify();
   
@@ -53,13 +53,13 @@ bool ReadBox(istream &ifs, OEMol &mol,char *)
   return(true);
 }
 
-bool WriteBox(ostream &ofs,OEMol &mol,float margin)
+bool WriteBox(ostream &ofs,OBMol &mol,float margin)
 {
   char buffer[BUFF_SIZE];
   Vector vcenter,vmin,vmax,vmid,vdim;
   
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   vmax.Set(-10E10,-10E10,-10E10);
   vmin.Set( 10E10, 10E10, 10E10);
 

@@ -18,28 +18,28 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-class OEMolVector
+class OBMolVector
 {
-  vector<OEMol*> _molvec;
+  vector<OBMol*> _molvec;
 
   public :
   
-  ~OEMolVector();
-  OEMolVector() {};
-  OEMolVector(ifstream &ifs, int nToRead= -1)
+  ~OBMolVector();
+  OBMolVector() {};
+  OBMolVector(ifstream &ifs, int nToRead= -1)
     {
       Read(ifs,SDF,SDF,nToRead);
     }
-  OEMolVector(ifstream &ifs, const io_type in_type, const io_type out_type, int nToRead= -1)
+  OBMolVector(ifstream &ifs, const io_type in_type, const io_type out_type, int nToRead= -1)
   {
     Read(ifs,in_type,out_type,nToRead);
   }
   void Read(ifstream &ifs, const io_type in_type, const io_type out_type, int nToRead);
   void Write(ofstream &ofs);
   int GetSize() { return(_molvec.size());}
-  vector<OEMol *> &GetVector() {return(_molvec);}
-  OEMol *GetMol(int i);
-  void   SetMol(int i, OEMol *mol) { _molvec[i]= mol; }
+  vector<OBMol *> &GetVector() {return(_molvec);}
+  OBMol *GetMol(int i);
+  void   SetMol(int i, OBMol *mol) { _molvec[i]= mol; }
 
   bool ReadConfs(ifstream &ifs, const io_type in_type, const io_type out_type);
   bool ReadConfs(ifstream &ifs)

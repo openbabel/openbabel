@@ -15,12 +15,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadMOPAC(istream &ifs,OEMol &mol,char *title)
+bool ReadMOPAC(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
   bool hasPartialCharges = false;
   double energy;
@@ -87,12 +87,12 @@ bool ReadMOPAC(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool ReadMOPACCartesian(istream &ifs,OEMol &mol,char *title)
+bool ReadMOPACCartesian(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   string str;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
 
   ttab.SetFromType("ATN");
@@ -126,7 +126,7 @@ bool ReadMOPACCartesian(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteMOPACCartesian(ostream &ofs,OEMol &mol)
+bool WriteMOPACCartesian(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
@@ -137,7 +137,7 @@ bool WriteMOPACCartesian(ostream &ofs,OEMol &mol)
 
   ttab.SetFromType("INT"); ttab.SetToType("XYZ");
 
-  OEAtom *atom;
+  OBAtom *atom;
   string str,str1;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {

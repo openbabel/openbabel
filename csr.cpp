@@ -21,10 +21,10 @@ static int MolCount = 1;
 
 static void WriteSize(int,ostream&);
 static char *PadString(char*,int);
-static void WriteCSRHeader(ostream&,OEMol&);
-static void WriteCSRCoords(ostream&,OEMol&);
+static void WriteCSRHeader(ostream&,OBMol&);
+static void WriteCSRCoords(ostream&,OBMol&);
 
-bool WriteCSR(ostream &ofs,OEMol &mol)
+bool WriteCSR(ostream &ofs,OBMol &mol)
 {
   if (FirstTime)
   {
@@ -38,7 +38,7 @@ bool WriteCSR(ostream &ofs,OEMol &mol)
   return(true);
 }
 
-void WriteCSRHeader(ostream &ofs,OEMol &mol)
+void WriteCSRHeader(ostream &ofs,OBMol &mol)
 {
   char *molnames;
   int nmol, natom;
@@ -68,7 +68,7 @@ void WriteCSRHeader(ostream &ofs,OEMol &mol)
   delete [] molnames;
 }
 
-void WriteCSRCoords(ostream &ofs,OEMol &mol)
+void WriteCSRCoords(ostream &ofs,OBMol &mol)
 {
   int the_size,jconf;
   float x,y,z,energy;
@@ -91,8 +91,8 @@ void WriteCSRCoords(ostream &ofs,OEMol &mol)
 
   WriteSize(mol.NumAtoms()*sizeof(float),ofs);
 
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     x = atom->x();

@@ -50,14 +50,14 @@ using namespace std;
 namespace OpenBabel {
 
 
-class OEBond;
-class OEAtom;
-class OEResidue;
-class OEMol;
-class OEInternalCoord;
+class OBBond;
+class OBAtom;
+class OBResidue;
+class OBMol;
+class OBInternalCoord;
 
 
-#define oeAssert(__b__) \
+#define obAssert(__b__) \
    if (!(__b__)) {   \
        cerr << "Assert at File " << __FILE__ << " Line " << __LINE__ << endl; \
        int *p= NULL; *p= 10;                                                  \
@@ -68,18 +68,18 @@ class OEInternalCoord;
 /*!
 **\brief An object to hold pose information.
 */
-class OEPose {
+class OBPose {
     protected:
         unsigned int _conf;
-        OECoordTrans _ct;
+        OBCoordTrans _ct;
     public:
         //Constructor, destructor and copy constructor
-        OEPose() { _conf = 0; }
-        OEPose(const OEPose& cp) {*this=cp;}
-        virtual ~OEPose() { _ct.Clear();}
+        OBPose() { _conf = 0; }
+        OBPose(const OBPose& cp) {*this=cp;}
+        virtual ~OBPose() { _ct.Clear();}
 
         //Operator overloads
-        OEPose& operator=(const OEPose& cp) {
+        OBPose& operator=(const OBPose& cp) {
             _ct = cp._ct;
             _conf = cp._conf;
             return *this;
@@ -90,48 +90,48 @@ class OEPose {
 
         //Set functions
         void SetConformer(unsigned int conf) {_conf = conf;}
-        void SetTransform(OECoordTrans ct) {_ct = ct;}
+        void SetTransform(OBCoordTrans ct) {_ct = ct;}
 
         //Get functions
         unsigned int ConformerNum() {return _conf;}
-        OECoordTrans& CoordTrans() {return _ct;}
+        OBCoordTrans& CoordTrans() {return _ct;}
 
         //Binary read and write
         unsigned int WriteBinary(char *ccc) {
             unsigned int idx=0;
             idx += _ct.WriteBinary(&ccc[idx]);
-            idx += OE_io_write_binary(&ccc[idx],(char*)&_conf,sizeof(float),1);
+            idx += OB_io_write_binary(&ccc[idx],(char*)&_conf,sizeof(float),1);
             return idx;
           }
         unsigned int ReadBinary(char *ccc) {
             unsigned int idx=0;
             idx += _ct.ReadBinary(&ccc[idx]);
-            idx += OE_io_read_binary(&ccc[idx],(char*)&_conf,sizeof(float),1);
+            idx += OB_io_read_binary(&ccc[idx],(char*)&_conf,sizeof(float),1);
             return idx;
           }
         void WriteBinary(ostream& ostr) {
             _ct.WriteBinary(ostr);
-            OE_io_write_binary(ostr,(char*)&_conf,sizeof(float),1);
+            OB_io_write_binary(ostr,(char*)&_conf,sizeof(float),1);
           } 
         void ReadBinary(istream& istr) {
             _ct.ReadBinary(istr);
-            OE_io_read_binary(istr,(char*)&_conf,sizeof(float),1);
+            OB_io_read_binary(istr,(char*)&_conf,sizeof(float),1);
           }
   };
 
 
-class OEResidue
+class OBResidue
 {
 public:
 
-  OEResidue(void);
-  virtual ~OEResidue(void);
+  OBResidue(void);
+  virtual ~OBResidue(void);
 
-  OEResidue &operator=(const OEResidue &);
+  OBResidue &operator=(const OBResidue &);
 
-  void AddAtom(OEAtom *atom); 
-  void InsertAtom(OEAtom *atom);
-  void RemoveAtom(OEAtom *atom);
+  void AddAtom(OBAtom *atom); 
+  void InsertAtom(OBAtom *atom);
+  void RemoveAtom(OBAtom *atom);
   void Clear(void);
 
   void    SetName(string &resname)               { _resname  = resname;  }
@@ -140,9 +140,9 @@ public:
   void    SetChainNum(unsigned short chainnum)   { _chainnum = chainnum; }
   void    SetIdx(unsigned short idx)             { _idx      = idx;      }
 
-  void    SetAtomID(OEAtom *atom, string &id)    { _atomid[GetIndex(atom)] = id;     }
-  void    SetHetAtom(OEAtom *atom, bool hetatm)  { _hetatm[GetIndex(atom)] = hetatm; }
-  void    SetSerialNum(OEAtom *atom, unsigned short sernum) { _sernum[GetIndex(atom)] = sernum; }
+  void    SetAtomID(OBAtom *atom, string &id)    { _atomid[GetIndex(atom)] = id;     }
+  void    SetHetAtom(OBAtom *atom, bool hetatm)  { _hetatm[GetIndex(atom)] = hetatm; }
+  void    SetSerialNum(OBAtom *atom, unsigned short sernum) { _sernum[GetIndex(atom)] = sernum; }
 
   string&        GetName(void)                   { return(_resname);  }
   unsigned short GetNum(void)                    { return(_resnum);   }
@@ -150,18 +150,18 @@ public:
   unsigned short GetChainNum(void)               { return(_chainnum); }
   unsigned short GetIdx(void)                    { return(_idx);      }
 
-  string&        GetAtomID(OEAtom *atom)         { return(_atomid[GetIndex(atom)]); }
-  unsigned short GetSerialNum(OEAtom *atom)      { return(_sernum[GetIndex(atom)]); }
-  bool           IsHetAtom(OEAtom *atom)         { return(_hetatm[GetIndex(atom)]); }
+  string&        GetAtomID(OBAtom *atom)         { return(_atomid[GetIndex(atom)]); }
+  unsigned short GetSerialNum(OBAtom *atom)      { return(_sernum[GetIndex(atom)]); }
+  bool           IsHetAtom(OBAtom *atom)         { return(_hetatm[GetIndex(atom)]); }
 
-  OEAtom *BeginAtom(vector<OEAtom*>::iterator &i) 
+  OBAtom *BeginAtom(vector<OBAtom*>::iterator &i) 
     {i = _atoms.begin();return((i ==_atoms.end()) ? NULL:*i);}
-  OEAtom *NextAtom(vector<OEAtom*>::iterator &i) 
+  OBAtom *NextAtom(vector<OBAtom*>::iterator &i) 
     {i++;return((i ==_atoms.end()) ? NULL:*i);}
 
 protected: // methods
 
-  int GetIndex(OEAtom *atom) 
+  int GetIndex(OBAtom *atom) 
   {
     for(unsigned int i=0;i<_atoms.size();i++) if (_atoms[i] == atom) return i;
     return -1; 
@@ -177,23 +177,23 @@ protected: // members
 
   vector<bool>           _hetatm;
   vector<string>         _atomid;
-  vector<OEAtom*>        _atoms;
+  vector<OBAtom*>        _atoms;
   vector<unsigned short> _sernum;
 
 };
 
 //ATOM Property Macros
-#define OE_4RING_ATOM     (1<<1)
-#define OE_3RING_ATOM     (1<<2)
-#define OE_AROMATIC_ATOM  (1<<3)
-#define OE_RING_ATOM      (1<<4)
-#define OE_CSTEREO_ATOM   (1<<5)
-#define OE_ACSTEREO_ATOM  (1<<6)
-#define OE_DONOR_ATOM     (1<<7)
-#define OE_ACCEPTOR_ATOM  (1<<8)
-#define OE_CHIRAL_ATOM    (1<<9)
+#define OB_4RING_ATOM     (1<<1)
+#define OB_3RING_ATOM     (1<<2)
+#define OB_AROMATIC_ATOM  (1<<3)
+#define OB_RING_ATOM      (1<<4)
+#define OB_CSTEREO_ATOM   (1<<5)
+#define OB_ACSTEREO_ATOM  (1<<6)
+#define OB_DONOR_ATOM     (1<<7)
+#define OB_ACCEPTOR_ATOM  (1<<8)
+#define OB_CHIRAL_ATOM    (1<<9)
 
-class OEAtom : public OENodeBase
+class OBAtom : public OBNodeBase
 {
 protected:
   char                          _ele;
@@ -207,18 +207,18 @@ protected:
   float                         _pcharge;
   float                       **_c;
   Vector                        _v;
-  OEResidue                    *_residue;
-//  OEMol                        *_parent;
-  //vector<OEBond*>               _bond;
+  OBResidue                    *_residue;
+//  OBMol                        *_parent;
+  //vector<OBBond*>               _bond;
 
     int  GetFlag()          const {return(_flags);}
     void SetFlag(int flag) {_flags |= flag;}
     bool HasFlag(int flag) {return((_flags & flag) ? true : false);}
 
 public:
-    OEAtom();
-    virtual ~OEAtom();
-    OEAtom &operator=(OEAtom &);
+    OBAtom();
+    virtual ~OBAtom();
+    OBAtom &operator=(OBAtom &);
     void Clear();
     
     //***methods to set atomic information***
@@ -235,21 +235,21 @@ public:
     void SetVector();
     void SetVector(Vector &v);                
     void SetVector(const float,const float,const float);
-    void SetResidue(OEResidue *res)          {_residue=res;}
-//    void SetParent(OEMol *ptr)               {_parent=ptr;}
+    void SetResidue(OBResidue *res)          {_residue=res;}
+//    void SetParent(OBMol *ptr)               {_parent=ptr;}
     void SetCoordPtr(float **c)              {_c = c;_cidx = (GetIdx()-1)*3;}
-    void SetAromatic()                       {SetFlag(OE_AROMATIC_ATOM);}
-    void UnsetAromatic()              {_flags &= (~(OE_AROMATIC_ATOM));}
-    void SetClockwiseStereo()          {SetFlag(OE_CSTEREO_ATOM|OE_CHIRAL_ATOM);}
-    void SetAntiClockwiseStereo()      {SetFlag(OE_ACSTEREO_ATOM|OE_CHIRAL_ATOM);}
+    void SetAromatic()                       {SetFlag(OB_AROMATIC_ATOM);}
+    void UnsetAromatic()              {_flags &= (~(OB_AROMATIC_ATOM));}
+    void SetClockwiseStereo()          {SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM);}
+    void SetAntiClockwiseStereo()      {SetFlag(OB_ACSTEREO_ATOM|OB_CHIRAL_ATOM);}
     void UnsetStereo()                 
       {
-        _flags &= ~(OE_ACSTEREO_ATOM);
-        _flags &= ~(OE_CSTEREO_ATOM);
-        _flags &= ~(OE_CHIRAL_ATOM);
+        _flags &= ~(OB_ACSTEREO_ATOM);
+        _flags &= ~(OB_CSTEREO_ATOM);
+        _flags &= ~(OB_CHIRAL_ATOM);
       }
-    void SetInRing()                         {SetFlag(OE_RING_ATOM);}
-    void SetChiral()                         {SetFlag(OE_CHIRAL_ATOM);}
+    void SetInRing()                         {SetFlag(OB_RING_ATOM);}
+    void SetChiral()                         {SetFlag(OB_CHIRAL_ATOM);}
     void ClearCoordPtr()                     {_c = NULL;_cidx=0;}
 
     //***methods to retrieve atomic information***
@@ -276,27 +276,27 @@ public:
     float     *GetCoordinate()    {return(&(*_c)[_cidx]);}
     float      GetPartialCharge();
     Vector     &GetVector();
-    OEResidue *GetResidue();
-//    OEMol     *GetParent()        {return((OEMol*)_parent);}
+    OBResidue *GetResidue();
+//    OBMol     *GetParent()        {return((OBMol*)_parent);}
     bool       GetNewBondVector(Vector&,float);
-    OEBond    *GetBond(OEAtom *);
-    OEAtom    *GetNextAtom();
+    OBBond    *GetBond(OBAtom *);
+    OBAtom    *GetNextAtom();
 
     //***iterator methods***
-    vector<OEEdgeBase*>::iterator BeginBonds() {return(_vbond.begin());}
-    vector<OEEdgeBase*>::iterator EndBonds()   {return(_vbond.end());}
-    OEBond *BeginBond(vector<OEEdgeBase*>::iterator &i);
-    OEBond *NextBond(vector<OEEdgeBase*>::iterator &i); 
-    OEAtom *BeginNbrAtom(vector<OEEdgeBase*>::iterator &); 
-    OEAtom *NextNbrAtom(vector<OEEdgeBase*>::iterator &); 
+    vector<OBEdgeBase*>::iterator BeginBonds() {return(_vbond.begin());}
+    vector<OBEdgeBase*>::iterator EndBonds()   {return(_vbond.end());}
+    OBBond *BeginBond(vector<OBEdgeBase*>::iterator &i);
+    OBBond *NextBond(vector<OBEdgeBase*>::iterator &i); 
+    OBAtom *BeginNbrAtom(vector<OBEdgeBase*>::iterator &); 
+    OBAtom *NextNbrAtom(vector<OBEdgeBase*>::iterator &); 
 
     //***addition of residue/bond info. for an atom***
-    void NewResidue()                                          {if (!_residue) _residue = new OEResidue;}
+    void NewResidue()                                          {if (!_residue) _residue = new OBResidue;}
     void DeleteResidue()                                       {if (_residue) delete _residue;}
-    void AddBond(OEBond *bond)                                 {_vbond.push_back((OEEdgeBase*)bond);}
-    void InsertBond(vector<OEEdgeBase*>::iterator &i, OEBond *bond)
-      {_vbond.insert(i, (OEEdgeBase*)bond);}
-    bool DeleteBond(OEBond*);
+    void AddBond(OBBond *bond)                                 {_vbond.push_back((OBEdgeBase*)bond);}
+    void InsertBond(vector<OBEdgeBase*>::iterator &i, OBBond *bond)
+      {_vbond.insert(i, (OBEdgeBase*)bond);}
+    bool DeleteBond(OBBond*);
 
     //***requests for atomic property information***
     unsigned int  CountFreeOxygens()      const;
@@ -322,9 +322,9 @@ public:
     bool IsInRing()        const;
     bool IsInRingSize(int) const;
     bool IsHeteroatom();
-    bool IsConnected(OEAtom*);
-    bool IsOneThree(OEAtom*);
-    bool IsOneFour(OEAtom*);
+    bool IsConnected(OBAtom*);
+    bool IsOneThree(OBAtom*);
+    bool IsOneFour(OBAtom*);
     bool IsCarboxylOxygen();
     bool IsPhosphateOxygen();
     bool IsSulfateOxygen();
@@ -335,10 +335,10 @@ public:
     bool IsAromaticNOxide();
     bool IsChiral();
     bool IsAxial();
-    bool IsClockwise()        {return(HasFlag(OE_CSTEREO_ATOM));}
-    bool IsAntiClockwise()    {return(HasFlag(OE_ACSTEREO_ATOM));}
+    bool IsClockwise()        {return(HasFlag(OB_CSTEREO_ATOM));}
+    bool IsAntiClockwise()    {return(HasFlag(OB_ACSTEREO_ATOM));}
     bool HasChiralitySpecified() 
-                              {return(HasFlag(OE_CSTEREO_ATOM|OE_ACSTEREO_ATOM));}
+                              {return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM));}
     bool HasAlphaBetaUnsat(bool includePandS=true);
     bool HasBondOfOrder(unsigned int);
     int  CountBondsOfOrder(unsigned int);
@@ -348,50 +348,50 @@ public:
 };
 
 //BOND Property Macros
-#define OE_AROMATIC_BOND  (1<<1)
-#define OE_WEDGE_BOND     (1<<2)
-#define OE_HASH_BOND      (1<<3)
-#define OE_RING_BOND      (1<<4)
-#define OE_TORUP_BOND     (1<<5)
-#define OE_TORDOWN_BOND   (1<<6)
-#define OE_KSINGLE_BOND   (1<<7) 
-#define OE_KDOUBLE_BOND   (1<<8)
-#define OE_KTRIPLE_BOND   (1<<9)
-#define OE_CLOSURE_BOND   (1<<10)
+#define OB_AROMATIC_BOND  (1<<1)
+#define OB_WEDGE_BOND     (1<<2)
+#define OB_HASH_BOND      (1<<3)
+#define OB_RING_BOND      (1<<4)
+#define OB_TORUP_BOND     (1<<5)
+#define OB_TORDOWN_BOND   (1<<6)
+#define OB_KSINGLE_BOND   (1<<7) 
+#define OB_KDOUBLE_BOND   (1<<8)
+#define OB_KTRIPLE_BOND   (1<<9)
+#define OB_CLOSURE_BOND   (1<<10)
 
-class OEBond : public OEEdgeBase
+class OBBond : public OBEdgeBase
 {
 protected:
   char                    _order;
   unsigned short int      _flags;
-//  OEAtom                 *_bgn;
-//  OEAtom                 *_end;
-//  OEMol                  *_parent;
+//  OBAtom                 *_bgn;
+//  OBAtom                 *_end;
+//  OBMol                  *_parent;
 //  unsigned short int      _idx;
 
   bool HasFlag(int flag) {return((_flags & flag) != 0);}
   void SetFlag(int flag) {_flags |= flag;}
 
 public:
-   OEBond();
-   virtual ~OEBond() {}
+   OBBond();
+   virtual ~OBBond() {}
    //***bond modification methods***
    void SetIdx(int idx)                     {_idx = idx;}
    void SetBO(int order);
-   void SetBegin(OEAtom *begin)             {_bgn = begin;}
-   void SetEnd(OEAtom *end)                 {_end = end;}
-//   void SetParent(OEMol *ptr)               {_parent=ptr;}
-   void SetLength(OEAtom*,float);
-   void Set(int,OEAtom*,OEAtom*,int,int);
+   void SetBegin(OBAtom *begin)             {_bgn = begin;}
+   void SetEnd(OBAtom *end)                 {_end = end;}
+//   void SetParent(OBMol *ptr)               {_parent=ptr;}
+   void SetLength(OBAtom*,float);
+   void Set(int,OBAtom*,OBAtom*,int,int);
    void SetKSingle();
    void SetKDouble();
    void SetKTriple();
-   void SetAromatic()                       {SetFlag(OE_AROMATIC_BOND);}
-   void SetUp()                             {SetFlag(OE_TORUP_BOND);}
-   void SetDown()                           {SetFlag(OE_TORDOWN_BOND);}
-   void SetInRing()                         {SetFlag(OE_RING_BOND);}
-   void SetClosure()                        {SetFlag(OE_CLOSURE_BOND);}
-   void UnsetAromatic()                     {_flags &= (~(OE_AROMATIC_BOND));}
+   void SetAromatic()                       {SetFlag(OB_AROMATIC_BOND);}
+   void SetUp()                             {SetFlag(OB_TORUP_BOND);}
+   void SetDown()                           {SetFlag(OB_TORDOWN_BOND);}
+   void SetInRing()                         {SetFlag(OB_RING_BOND);}
+   void SetClosure()                        {SetFlag(OB_CLOSURE_BOND);}
+   void UnsetAromatic()                     {_flags &= (~(OB_AROMATIC_BOND));}
 
    
    //***bond data request methods***
@@ -400,13 +400,13 @@ public:
    unsigned int     GetFlags()         const    {return(_flags);}
    unsigned int     GetBeginAtomIdx()  const    {return(_bgn->GetIdx());}
    unsigned int     GetEndAtomIdx()    const    {return(_end->GetIdx());}
-   OEAtom *GetBeginAtom()              {return((OEAtom*)_bgn);}
-   OEAtom *GetEndAtom()                {return((OEAtom*)_end);}
-   OEAtom *GetNbrAtom(OEAtom *ptr)     {return((ptr != _bgn)? (OEAtom*)_bgn : (OEAtom*)_end);}
-//   OEMol  *GetParent()                 {return(_parent);}
+   OBAtom *GetBeginAtom()              {return((OBAtom*)_bgn);}
+   OBAtom *GetEndAtom()                {return((OBAtom*)_end);}
+   OBAtom *GetNbrAtom(OBAtom *ptr)     {return((ptr != _bgn)? (OBAtom*)_bgn : (OBAtom*)_end);}
+//   OBMol  *GetParent()                 {return(_parent);}
    float   GetEquibLength();
    float   GetLength();
-   int     GetNbrAtomIdx(OEAtom *ptr) 
+   int     GetNbrAtomIdx(OBAtom *ptr) 
      {return((ptr!=_bgn)?_bgn->GetIdx():_end->GetIdx());}
 
    //***property request methods***
@@ -424,34 +424,34 @@ public:
    bool IsKDouble();
    bool IsKTriple();
    bool IsClosure();
-   bool IsUp()                        {return(HasFlag(OE_TORUP_BOND));}
-   bool IsDown()                      {return(HasFlag(OE_TORDOWN_BOND));}
-   bool IsWedge()                     {return(HasFlag(OE_WEDGE_BOND));}
-   bool IsHash()                      {return(HasFlag(OE_HASH_BOND));}
+   bool IsUp()                        {return(HasFlag(OB_TORUP_BOND));}
+   bool IsDown()                      {return(HasFlag(OB_TORDOWN_BOND));}
+   bool IsWedge()                     {return(HasFlag(OB_WEDGE_BOND));}
+   bool IsHash()                      {return(HasFlag(OB_HASH_BOND));}
 };
 
-//prototype necessary for OEMol
-//bool CompareBonds(const OEBond &*,const OEBond &*);
+//prototype necessary for OBMol
+//bool CompareBonds(const OBBond &*,const OBBond &*);
 
 
 //MOL Property Macros
-#define OE_SSSR_MOL              (1<<1)
-#define OE_RINGFLAGS_MOL         (1<<2)
-#define OE_AROMATIC_MOL          (1<<3)
-#define OE_ATOMTYPES_MOL         (1<<4)
-#define OE_CHIRALITY_MOL         (1<<5)
-#define OE_PCHARGE_MOL           (1<<6)
-#define OE_HYBRID_MOL            (1<<8)
-#define OE_IMPVAL_MOL            (1<<9)
-#define OE_KEKULE_MOL            (1<<10)
-#define OE_CLOSURE_MOL           (1<<11)
-#define OE_H_ADDED_MOL           (1<<12)
-#define OE_PH_CORRECTED_MOL      (1<<13)
-#define OE_AROM_CORRECTED_MOL    (1<<14)
-#define OE_CHAINS_MOL            (1<<15)
-#define OE_CURRENT_CONFORMER -1
+#define OB_SSSR_MOL              (1<<1)
+#define OB_RINGFLAGS_MOL         (1<<2)
+#define OB_AROMATIC_MOL          (1<<3)
+#define OB_ATOMTYPES_MOL         (1<<4)
+#define OB_CHIRALITY_MOL         (1<<5)
+#define OB_PCHARGE_MOL           (1<<6)
+#define OB_HYBRID_MOL            (1<<8)
+#define OB_IMPVAL_MOL            (1<<9)
+#define OB_KEKULE_MOL            (1<<10)
+#define OB_CLOSURE_MOL           (1<<11)
+#define OB_H_ADDED_MOL           (1<<12)
+#define OB_PH_CORRECTED_MOL      (1<<13)
+#define OB_AROM_CORRECTED_MOL    (1<<14)
+#define OB_CHAINS_MOL            (1<<15)
+#define OB_CURRENT_CONFORMER -1
 
-class OEMol : public OEGraphBase
+class OBMol : public OBGraphBase
 {
 protected:
   int                           _flags;
@@ -461,14 +461,14 @@ protected:
   io_type                       _itype;
   io_type                       _otype;
   string                        _title;
-  //vector<OEAtom*>               _atom;
-  //vector<OEBond*>               _bond;
-  vector<OEResidue*>            _residue;
-  vector<OEGenericData*>        _vdata;
+  //vector<OBAtom*>               _atom;
+  //vector<OBBond*>               _bond;
+  vector<OBResidue*>            _residue;
+  vector<OBGenericData*>        _vdata;
   float                         _energy;
   float                        *_c;
   vector<float*>                _vconf;
-  vector<OEPose>                _pose;
+  vector<OBPose>                _pose;
   float                        *_xyz_pose;
   unsigned int                  _cur_pose_idx;
   unsigned short int            _natoms;
@@ -484,29 +484,29 @@ public:
     int GetMod() {return(_mod);}
 
     //***initialization and data (re)size methods***
-    virtual ~OEMol();
-    OEMol(io_type=UNDEFINED,io_type=UNDEFINED);
-    OEMol(const OEMol &);
-    OEMol &operator=(const OEMol &mol);
-    OEMol &operator+=(const OEMol &mol);
+    virtual ~OBMol();
+    OBMol(io_type=UNDEFINED,io_type=UNDEFINED);
+    OBMol(const OBMol &);
+    OBMol &operator=(const OBMol &mol);
+    OBMol &operator+=(const OBMol &mol);
     void IncrementMod() {_mod++;}
     void DecrementMod() {_mod--;}
     void ReserveAtoms(int natoms) {if (natoms && _mod) _vatom.reserve(natoms);}
       
-    virtual OEAtom *CreateAtom(void);
-    virtual OEBond *CreateBond(void);
-    virtual void DestroyAtom(OENodeBase*);
-    virtual void DestroyBond(OEEdgeBase*);
-    bool AddAtom(OEAtom&);
+    virtual OBAtom *CreateAtom(void);
+    virtual OBBond *CreateBond(void);
+    virtual void DestroyAtom(OBNodeBase*);
+    virtual void DestroyBond(OBEdgeBase*);
+    bool AddAtom(OBAtom&);
     bool AddBond(int,int,int,int flags=0,int insertpos=-1);
-    bool AddBond(OEBond&);
-    bool AddResidue(OEResidue&);
-    bool InsertAtom(OEAtom &);
-    bool DeleteAtom(OEAtom*);
-    bool DeleteBond(OEBond*);
-    bool DeleteResidue(OEResidue*);
-    OEAtom    *NewAtom();
-    OEResidue *NewResidue();
+    bool AddBond(OBBond&);
+    bool AddResidue(OBResidue&);
+    bool InsertAtom(OBAtom &);
+    bool DeleteAtom(OBAtom*);
+    bool DeleteBond(OBBond*);
+    bool DeleteResidue(OBResidue*);
+    OBAtom    *NewAtom();
+    OBResidue *NewResidue();
     void SetAutomaticFormalCharge(bool val)     {_autoFormalCharge=val;}
     void SetAutomaticPartialCharge(bool val)    {_autoPartialCharge=val;}
     bool AutomaticFormalCharge()             {return(_autoFormalCharge);}
@@ -517,20 +517,20 @@ public:
     //***methods for handling generic data***
     bool                              HasData(string &);
     bool                              HasData(const char *);
-    bool                              HasData(oeDataType);
-    void                              DeleteData(oeDataType);
-    void                              DeleteData(OEGenericData*);
-    void                              DeleteData(vector<OEGenericData*>&);
-    void                              SetData(OEGenericData *d) {_vdata.push_back(d);     }
+    bool                              HasData(obDataType);
+    void                              DeleteData(obDataType);
+    void                              DeleteData(OBGenericData*);
+    void                              DeleteData(vector<OBGenericData*>&);
+    void                              SetData(OBGenericData *d) {_vdata.push_back(d);     }
     unsigned int                      DataSize()                {return(_vdata.size());   }
-    OEGenericData                    *GetData(oeDataType);
-    OEGenericData                    *GetData(string&);
-    OEGenericData                    *GetData(const char *);
-    vector<OEGenericData*>           &GetData()                 {return(_vdata);         }
-    vector<OEGenericData*>::iterator  BeginData()               {return(_vdata.begin()); }
-    vector<OEGenericData*>::iterator  EndData()                 {return(_vdata.end());   }
+    OBGenericData                    *GetData(obDataType);
+    OBGenericData                    *GetData(string&);
+    OBGenericData                    *GetData(const char *);
+    vector<OBGenericData*>           &GetData()                 {return(_vdata);         }
+    vector<OBGenericData*>::iterator  BeginData()               {return(_vdata.begin()); }
+    vector<OBGenericData*>::iterator  EndData()                 {return(_vdata.end());   }
 
-    //OEMol data retrieval methods
+    //OBMol data retrieval methods
     int          GetFlags()                           {return(_flags);}
     bool         GetGTDVector(vector<int> &);
 	void         GetGIVector(vector<unsigned int> &);
@@ -543,19 +543,19 @@ public:
     unsigned int NumHvyAtoms();
     unsigned int NumResidues()                        {return(_residue.size());}
     unsigned int NumRotors();
-    OEAtom      *GetAtom(int);
-    OEAtom      *GetFirstAtom();
-    OEBond      *GetBond(int); 
-    OEBond      *GetBond(int, int);
-    OEBond      *GetBond(OEAtom*,OEAtom*);
-    OEResidue   *GetResidue(int);
+    OBAtom      *GetAtom(int);
+    OBAtom      *GetFirstAtom();
+    OBBond      *GetBond(int); 
+    OBBond      *GetBond(int, int);
+    OBBond      *GetBond(OBAtom*,OBAtom*);
+    OBResidue   *GetResidue(int);
     float        GetTorsion(int,int,int,int);
-    float        GetTorsion(OEAtom*,OEAtom*,OEAtom*,OEAtom*);
-    void         SetTorsion(OEAtom*,OEAtom*,OEAtom*,OEAtom*,float);
+    float        GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
+    void         SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,float);
     float        GetEnergy()                          {return(_energy);}
     float        GetMolWt();
     float       *GetCoordinates()                     {return(_c);}
-    vector<OERing*> &GetSSSR();
+    vector<OBRing*> &GetSSSR();
     bool         IsCompressed()                       {return _compressed;}
 
     //***data modification methods***
@@ -564,27 +564,27 @@ public:
     void   SetEnergy(float energy)         {_energy = energy;}
     void   SetInputType(io_type type)      {_itype = type;}
     void   SetOutputType(io_type type)     {_otype = type;}
-    void   SetAromaticPerceived()          {SetFlag(OE_AROMATIC_MOL);}
-    void   SetSSSRPerceived()              {SetFlag(OE_SSSR_MOL);}
-    void   SetRingAtomsAndBondsPerceived() {SetFlag(OE_RINGFLAGS_MOL);}
-    void   SetAtomTypesPerceived()         {SetFlag(OE_ATOMTYPES_MOL);}
-    void   SetChainsPerceived()            {SetFlag(OE_CHAINS_MOL);}
-    void   SetChiralityPerceived()         {SetFlag(OE_CHIRALITY_MOL);}
-    void   SetPartialChargesPerceived()    {SetFlag(OE_PCHARGE_MOL);}
-    void   SetHybridizationPerceived()     {SetFlag(OE_HYBRID_MOL);}
-    void   SetImplicitValencePerceived()   {SetFlag(OE_IMPVAL_MOL);}
-    void   SetKekulePerceived()            {SetFlag(OE_KEKULE_MOL);}
-    void   SetClosureBondsPerceived()      {SetFlag(OE_CLOSURE_MOL);}
-    void   SetHydrogensAdded()             {SetFlag(OE_H_ADDED_MOL);}
-    void   SetCorrectedForPH()             {SetFlag(OE_PH_CORRECTED_MOL);}
-    void   SetAromaticCorrected()          {SetFlag(OE_AROM_CORRECTED_MOL);}
-    void   UnsetAromaticPerceived()        {_flags &= (~(OE_AROMATIC_MOL));}
-    void   UnsetPartialChargesPerceived()  {_flags &= (~(OE_PCHARGE_MOL));}
-    void   UnsetImplicitValencePerceived() {_flags &= (~(OE_IMPVAL_MOL));}
+    void   SetAromaticPerceived()          {SetFlag(OB_AROMATIC_MOL);}
+    void   SetSSSRPerceived()              {SetFlag(OB_SSSR_MOL);}
+    void   SetRingAtomsAndBondsPerceived() {SetFlag(OB_RINGFLAGS_MOL);}
+    void   SetAtomTypesPerceived()         {SetFlag(OB_ATOMTYPES_MOL);}
+    void   SetChainsPerceived()            {SetFlag(OB_CHAINS_MOL);}
+    void   SetChiralityPerceived()         {SetFlag(OB_CHIRALITY_MOL);}
+    void   SetPartialChargesPerceived()    {SetFlag(OB_PCHARGE_MOL);}
+    void   SetHybridizationPerceived()     {SetFlag(OB_HYBRID_MOL);}
+    void   SetImplicitValencePerceived()   {SetFlag(OB_IMPVAL_MOL);}
+    void   SetKekulePerceived()            {SetFlag(OB_KEKULE_MOL);}
+    void   SetClosureBondsPerceived()      {SetFlag(OB_CLOSURE_MOL);}
+    void   SetHydrogensAdded()             {SetFlag(OB_H_ADDED_MOL);}
+    void   SetCorrectedForPH()             {SetFlag(OB_PH_CORRECTED_MOL);}
+    void   SetAromaticCorrected()          {SetFlag(OB_AROM_CORRECTED_MOL);}
+    void   UnsetAromaticPerceived()        {_flags &= (~(OB_AROMATIC_MOL));}
+    void   UnsetPartialChargesPerceived()  {_flags &= (~(OB_PCHARGE_MOL));}
+    void   UnsetImplicitValencePerceived() {_flags &= (~(OB_IMPVAL_MOL));}
 
     //***molecule modification methods***
     bool Clear();
-    void RenumberAtoms(vector<OENodeBase*>&);
+    void RenumberAtoms(vector<OBNodeBase*>&);
     void ToInertialFrame(int,float*);
     void ToInertialFrame();
     void Translate(const Vector &v);
@@ -595,12 +595,12 @@ public:
     void Center();
     bool Kekulize();
     bool PerceiveKekuleBonds();
-    bool DeleteHydrogen(OEAtom*);
+    bool DeleteHydrogen(OBAtom*);
     bool DeleteHydrogens();
-    bool DeleteHydrogens(OEAtom*);
+    bool DeleteHydrogens(OBAtom*);
     bool DeleteNonPolarHydrogens();
     bool AddHydrogens(bool polaronly=false,bool correctForPH=true);
-    bool AddHydrogens(OEAtom*);
+    bool AddHydrogens(OBAtom*);
     bool AddPolarHydrogens();
     bool StripSalts();
     bool CorrectForPH();
@@ -611,10 +611,10 @@ public:
     void FindRingAtomsAndBonds();
     void FindChiralCenters();
     void FindChildren(vector<int> &,int,int);
-    void FindChildren(vector<OEAtom*>&,OEAtom*,OEAtom*);
-    void FindLargestFragment(OEBitVec &);
+    void FindChildren(vector<OBAtom*>&,OBAtom*,OBAtom*);
+    void FindLargestFragment(OBBitVec &);
     void ContigFragList(vector<vector<int> >&);
-    void Align(OEAtom*,OEAtom*,Vector&,Vector&);
+    void Align(OBAtom*,OBAtom*,Vector&,Vector&);
     void ConnectTheDots();
 //  void ConnectTheDotsSort();
 
@@ -627,20 +627,20 @@ public:
     bool Has2D();
     bool Has3D();
     bool HasNonZeroCoords();
-    bool HasAromaticPerceived()          {return(HasFlag(OE_AROMATIC_MOL));       }
-    bool HasSSSRPerceived()              {return(HasFlag(OE_SSSR_MOL));           }
-    bool HasRingAtomsAndBondsPerceived() {return(HasFlag(OE_RINGFLAGS_MOL));      }
-    bool HasAtomTypesPerceived()         {return(HasFlag(OE_ATOMTYPES_MOL));      }
-    bool HasChiralityPerceived()         {return(HasFlag(OE_CHIRALITY_MOL));      }
-    bool HasPartialChargesPerceived()    {return(HasFlag(OE_PCHARGE_MOL));        }
-    bool HasHybridizationPerceived()     {return(HasFlag(OE_HYBRID_MOL));         }
-    bool HasImplicitValencePerceived()   {return(HasFlag(OE_IMPVAL_MOL));         }
-    bool HasKekulePerceived()            {return(HasFlag(OE_KEKULE_MOL));         }
-    bool HasClosureBondsPerceived()      {return(HasFlag(OE_CLOSURE_MOL));        }
-    bool HasChainsPerceived()            {return(HasFlag(OE_CHAINS_MOL));         }
-    bool HasHydrogensAdded()             {return(HasFlag(OE_H_ADDED_MOL));        }
-    bool HasAromaticCorrected()          {return(HasFlag(OE_AROM_CORRECTED_MOL)); }
-    bool IsCorrectedForPH()              {return(HasFlag(OE_PH_CORRECTED_MOL));   }
+    bool HasAromaticPerceived()          {return(HasFlag(OB_AROMATIC_MOL));       }
+    bool HasSSSRPerceived()              {return(HasFlag(OB_SSSR_MOL));           }
+    bool HasRingAtomsAndBondsPerceived() {return(HasFlag(OB_RINGFLAGS_MOL));      }
+    bool HasAtomTypesPerceived()         {return(HasFlag(OB_ATOMTYPES_MOL));      }
+    bool HasChiralityPerceived()         {return(HasFlag(OB_CHIRALITY_MOL));      }
+    bool HasPartialChargesPerceived()    {return(HasFlag(OB_PCHARGE_MOL));        }
+    bool HasHybridizationPerceived()     {return(HasFlag(OB_HYBRID_MOL));         }
+    bool HasImplicitValencePerceived()   {return(HasFlag(OB_IMPVAL_MOL));         }
+    bool HasKekulePerceived()            {return(HasFlag(OB_KEKULE_MOL));         }
+    bool HasClosureBondsPerceived()      {return(HasFlag(OB_CLOSURE_MOL));        }
+    bool HasChainsPerceived()            {return(HasFlag(OB_CHAINS_MOL));         }
+    bool HasHydrogensAdded()             {return(HasFlag(OB_H_ADDED_MOL));        }
+    bool HasAromaticCorrected()          {return(HasFlag(OB_AROM_CORRECTED_MOL)); }
+    bool IsCorrectedForPH()              {return(HasFlag(OB_PH_CORRECTED_MOL));   }
     bool IsChiral();
 
 
@@ -648,13 +648,13 @@ public:
     bool Empty() {return(_natoms == 0);}
 
     //***iterator methods***
-    OEAtom *BeginAtom(vector<OENodeBase*>::iterator &i);
-    OEAtom *NextAtom(vector<OENodeBase*>::iterator &i);
-    OEBond *BeginBond(vector<OEEdgeBase*>::iterator &i); 
-    OEBond *NextBond(vector<OEEdgeBase*>::iterator &i); 
-    OEResidue *BeginResidue(vector<OEResidue*>::iterator &i)
+    OBAtom *BeginAtom(vector<OBNodeBase*>::iterator &i);
+    OBAtom *NextAtom(vector<OBNodeBase*>::iterator &i);
+    OBBond *BeginBond(vector<OBEdgeBase*>::iterator &i); 
+    OBBond *NextBond(vector<OBEdgeBase*>::iterator &i); 
+    OBResidue *BeginResidue(vector<OBResidue*>::iterator &i)
       {i = _residue.begin();return((i == _residue.end()) ? NULL:*i);}
-    OEResidue *NextResidue(vector<OEResidue*>::iterator &i)
+    OBResidue *NextResidue(vector<OBResidue*>::iterator &i)
       {i++;return((i == _residue.end()) ? NULL:*i);}
 
     //*** MultiConf member functions
@@ -675,33 +675,30 @@ public:
     unsigned int CurrentPoseIndex();
     void DeletePoses();
     void DeletePose(unsigned int i);
-    void AddPose(OEPose& pose); 
-    void SetPoses(vector<OEPose>& poses);
+    void AddPose(OBPose& pose); 
+    void SetPoses(vector<OBPose>& poses);
     void SetPose(unsigned int i);
     void GetPoseCoordinates(unsigned int i, float *xyz);
-    OEPose& GetPose(unsigned int i);
+    OBPose& GetPose(unsigned int i);
     void ChangePosesToConformers();
 
 
     //misc bond functions
-    void AssignResidueBonds(OEBitVec &);
+    void AssignResidueBonds(OBBitVec &);
     //void SortBonds() {sort(_vbond.begin(),_vbond.end(),CompareBonds);}
 
-    //***IO operations***
-    friend ostream& operator<< ( ostream&, OEMol& ) ;
-    friend istream& operator>> ( istream&, OEMol& ) ;
 };
 
-class OEInternalCoord //class to store internal coordinate values
+class OBInternalCoord //class to store internal coordinate values
 {
 public:
   //class members
-  OEAtom *_a,*_b,*_c;
+  OBAtom *_a,*_b,*_c;
   float   _dst,_ang,_tor;
   //constructor
-  OEInternalCoord(OEAtom *a=(OEAtom*)NULL,
-                  OEAtom *b=(OEAtom*)NULL,
-                  OEAtom *c=(OEAtom*)NULL)
+  OBInternalCoord(OBAtom *a=(OBAtom*)NULL,
+                  OBAtom *b=(OBAtom*)NULL,
+                  OBAtom *c=(OBAtom*)NULL)
     {
       _a = a; _b = b; _c = c;
       _dst = _ang = _tor = 0.0f;
@@ -715,17 +712,17 @@ bool tokenize(vector<string>&, char *buf,char *delimstr=" \t\n");
 bool tokenize(vector<string> &,string&,char*,int limit=-1);
 void ThrowError(char *str);
 void ThrowError(string &str);
-void CartesianToInternal(vector<OEInternalCoord*>&,OEMol&);
-void InternalToCartesian(vector<OEInternalCoord*>&,OEMol&);
+void CartesianToInternal(vector<OBInternalCoord*>&,OBMol&);
+void InternalToCartesian(vector<OBInternalCoord*>&,OBMol&);
 string NewExtension(string&,char*);
-bool SetInputType(OEMol&,string&);
-bool SetOutputType(OEMol&,string&);
+bool SetInputType(OBMol&,string&);
+bool SetOutputType(OBMol&,string&);
 
 //global definitions
-extern  OEExtensionTable extab;
-extern  OEElementTable   etab;
-extern  OETypeTable      ttab;
-extern  OEChainsParser   chainsparser;
+extern  OBExtensionTable extab;
+extern  OBElementTable   etab;
+extern  OBTypeTable      ttab;
+extern  OBChainsParser   chainsparser;
 
 //Utility Macros
 
@@ -761,13 +758,13 @@ extern "C"{
 void qtrfit (float *r,float *f,int size,float u[3][3]);
 float superimpose(float*,float*,int);
 void get_rmat(float*,float*,float*,int);
-void oe_make_rmat(float mat[3][3],float rmat[9]);
+void ob_make_rmat(float mat[3][3],float rmat[9]);
 }
 #else
 void qtrfit (float *r,float *f,int size,float u[3][3]);
 float superimpose(float*,float*,int);
 void get_rmat(float *,float*,float *,int);
-void oe_make_rmat(float mat[3][3],float rmat[9]);
+void ob_make_rmat(float mat[3][3],float rmat[9]);
 #endif //__KCC
 
 #endif //MOL_H

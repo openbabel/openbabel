@@ -15,12 +15,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadBiosymCAR(istream &ifs,OEMol &mol,char *title)
+bool ReadBiosymCAR(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   string str;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
 
   ttab.SetFromType("XYZ");

@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "oeutil.h"
+#include "obutil.h"
 #include "parsmart.h"
 #include "typer.h"
 #include "rotor.h"
@@ -46,7 +46,7 @@ int main(int argc,char *argv[])
   bool addHydrogens = false;
   int arg, inFileArg, outFileArg;
   char *ext;
-  OEFileFormat fileFormat;
+  OBFileFormat fileFormat;
 
   // Parse commandline
   program_name = argv[0];
@@ -142,7 +142,7 @@ int main(int argc,char *argv[])
     }
 
   // Finally, we can do some work!
-  OEMol mol(inFileType, outFileType);
+  OBMol mol(inFileType, outFileType);
 
   fileFormat.ReadMolecule(inFileStream,mol);
   if (removeHydrogens)

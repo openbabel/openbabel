@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadUnichem(istream &ifs,OEMol &mol,char *title)
+bool ReadUnichem(istream &ifs,OBMol &mol,char *title)
 {
   int i;
   int natoms;
@@ -31,7 +31,7 @@ bool ReadUnichem(istream &ifs,OEMol &mol,char *title)
 
   string str;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
 
   for (i = 1; i <= natoms; i ++)
@@ -56,7 +56,7 @@ bool ReadUnichem(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteUnichem(ostream &ofs,OEMol &mol)
+bool WriteUnichem(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
@@ -64,7 +64,7 @@ bool WriteUnichem(ostream &ofs,OEMol &mol)
   ofs << mol.GetTitle() << endl;
   ofs << mol.NumAtoms() << endl;
 
-  OEAtom *atom;
+  OBAtom *atom;
   string str,str1;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {

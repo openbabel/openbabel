@@ -18,7 +18,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool ReadCCC(istream &ifs,OEMol &mol,char *title)
+bool ReadCCC(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   ifs.getline(buffer,BUFF_SIZE);
@@ -33,7 +33,7 @@ bool ReadCCC(istream &ifs,OEMol &mol,char *title)
 
   int end,order;
   float x,y,z;
-  OEAtom atom;
+  OBAtom atom;
   Vector v;
   vector<string> vs;
   char element[3];

@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadHIN(istream &ifs,OEMol &mol,char *title)
+bool ReadHIN(istream &ifs,OBMol &mol,char *title)
 { 
   // Right now only read in the first molecule
   int i;
@@ -23,7 +23,7 @@ bool ReadHIN(istream &ifs,OEMol &mol,char *title)
   char buffer[BUFF_SIZE];
   string str,str1;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
 
   ttab.SetFromType("XYZ");
@@ -66,14 +66,14 @@ bool ReadHIN(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteHIN(ostream &ofs,OEMol &mol)
+bool WriteHIN(ostream &ofs,OBMol &mol)
 {
   unsigned int i, file_num = 1;
   string str,str1;
   char buffer[BUFF_SIZE];
-  OEAtom *atom;
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *atom;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
   char bond_char;
 
   ttab.SetFromType("INT"); ttab.SetToType("XYZ");

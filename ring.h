@@ -18,63 +18,63 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-class OEMol;
-class OEAtom; 
-class OEBond;
+class OBMol;
+class OBAtom; 
+class OBBond;
 
-class OERTree
+class OBRTree
 {
-  OEAtom  *_atom;
-  OERTree *_prv;
+  OBAtom  *_atom;
+  OBRTree *_prv;
  public:
-  OERTree(OEAtom*,OERTree*);
-  ~OERTree() {}
+  OBRTree(OBAtom*,OBRTree*);
+  ~OBRTree() {}
   int  GetAtomIdx();
-  void PathToRoot(vector<OENodeBase*>&);
+  void PathToRoot(vector<OBNodeBase*>&);
 };
 
-class OERing
+class OBRing
 {
-  OEMol *_parent;
+  OBMol *_parent;
  public:
   //public data members
   vector<int> _path;
-  OEBitVec _pathset;
+  OBBitVec _pathset;
   bool findCenterAndNormal(Vector & center, Vector &norm1, Vector &norm2);
 
   //constructors
-  OERing(){};
-  OERing(vector<int>&,int);
-	OERing(const OERing &src);
-	OERing& operator=(const OERing &src);
+  OBRing(){};
+  OBRing(vector<int>&,int);
+	OBRing(const OBRing &src);
+	OBRing& operator=(const OBRing &src);
 
   //member functions
   int    Size()     const     {return(_path.size());}
   int    PathSize() const     {return(_path.size());}
-  bool   IsMember(OEAtom *a);
-	bool	 IsMember(OEBond *b);
+  bool   IsMember(OBAtom *a);
+	bool	 IsMember(OBBond *b);
   bool   IsAromatic();
   bool   IsInRing(int i)      {return(_pathset.BitIsOn(i));}
-  void   SetParent(OEMol *m)  {_parent = m;}
-  OEMol *GetParent()          {return(_parent);}
+  void   SetParent(OBMol *m)  {_parent = m;}
+  OBMol *GetParent()          {return(_parent);}
 };
 
-bool CompareRingSize(const OERing *,const OERing *);
+bool CompareRingSize(const OBRing *,const OBRing *);
 
-class OERingSearch
+class OBRingSearch
 {
-  vector<OEBond*> _bonds;
-  vector<OERing*> _rlist;
+  vector<OBBond*> _bonds;
+  vector<OBRing*> _rlist;
  public:
-  OERingSearch(){}
-  ~OERingSearch();
+  OBRingSearch(){}
+  ~OBRingSearch();
   void    SortRings() {sort(_rlist.begin(),_rlist.end(),CompareRingSize);}
   void    RemoveRedundant(int);
-  void    AddRingFromClosure(OEMol &,OEBond *,int);
+  void    AddRingFromClosure(OBMol &,OBBond *,int);
   void    WriteRings();
   bool    SaveUniqueRing(deque<int>&,deque<int>&);
-  vector<OERing*>::iterator BeginRings() {return(_rlist.begin());}
-  vector<OERing*>::iterator EndRings() {return(_rlist.end());}
+  vector<OBRing*>::iterator BeginRings() {return(_rlist.begin());}
+  vector<OBRing*>::iterator EndRings() {return(_rlist.end());}
 };
 
 }

@@ -22,7 +22,7 @@ GNU General Public License for more details.
 #include <math.h>
 #include "mol.h"
 #include "Vector.h"
-#include "oeutil.h"
+#include "obutil.h"
 
 #ifndef True
 #define True   1
@@ -405,18 +405,18 @@ void GenerateSequence( unsigned int p, unsigned int m,
 //***** Member functions from Random class *****
 //**********************************************
 
-OERandom::OERandom(bool useSysRand) 
+OBRandom::OBRandom(bool useSysRand) 
 {
 
-    this->OERandomUseSysRand= useSysRand;
+    this->OBRandomUseSysRand= useSysRand;
     p = 70092;
     DetermineSequence(p,&m,&a,&c);
     x = 0;  /* seed */
 }
 
-int OERandom::NextInt()
+int OBRandom::NextInt()
 {
-  if (OERandomUseSysRand) { return(rand()); }
+  if (OBRandomUseSysRand) { return(rand()); }
   do {
     DoubleMultiply(a,x,&d);
     DoubleAdd(&d,c);
@@ -426,10 +426,10 @@ int OERandom::NextInt()
   return(x);
 }
 
-float OERandom::NextFloat()
+float OBRandom::NextFloat()
 {
 
-  if (OERandomUseSysRand) { return(float(rand())/float(RAND_MAX)); }
+  if (OBRandomUseSysRand) { return(float(rand())/float(RAND_MAX)); }
   do {
     DoubleMultiply(a,x,&d);
     DoubleAdd(&d,c);
@@ -439,7 +439,7 @@ float OERandom::NextFloat()
   return((float)x/p);
 }
 
-void OERandom::TimeSeed()
+void OBRandom::TimeSeed()
 {
 #ifdef WIN32
 	// for VC++ do it this way

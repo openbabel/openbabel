@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadXYZ(istream &ifs,OEMol &mol,char *title)
+bool ReadXYZ(istream &ifs,OBMol &mol,char *title)
 {
   int i;
   int natoms;
@@ -30,7 +30,7 @@ bool ReadXYZ(istream &ifs,OEMol &mol,char *title)
 
   string str;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
 
   ifs.getline(buffer,BUFF_SIZE);
@@ -56,7 +56,7 @@ bool ReadXYZ(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteXYZ(ostream &ofs,OEMol &mol)
+bool WriteXYZ(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
@@ -67,7 +67,7 @@ bool WriteXYZ(ostream &ofs,OEMol &mol)
   ofs << buffer << endl;
   ttab.SetFromType("INT"); ttab.SetToType("XYZ");
 
-  OEAtom *atom;
+  OBAtom *atom;
   string str,str1;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {

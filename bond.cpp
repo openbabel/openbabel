@@ -16,13 +16,13 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-extern OEAromaticTyper  aromtyper;
+extern OBAromaticTyper  aromtyper;
 
 // *******************************
-// *** OEBond member functions ***
+// *** OBBond member functions ***
 // *******************************
 
-OEBond::OEBond()
+OBBond::OBBond()
  {
    _idx=0;
    _order=0;
@@ -31,7 +31,7 @@ OEBond::OEBond()
    _end=NULL;
  }
 
-void OEBond::Set(int idx,OEAtom *begin,OEAtom *end,int order,int flags)
+void OBBond::Set(int idx,OBAtom *begin,OBAtom *end,int order,int flags)
 {
   SetIdx(idx);
   SetBegin(begin);
@@ -40,7 +40,7 @@ void OEBond::Set(int idx,OEAtom *begin,OEAtom *end,int order,int flags)
   SetFlag(flags);
 }
 
-void OEBond::SetBO(int order)
+void OBBond::SetBO(int order)
 {
   _order = (char)order;
   if (order == 5)
@@ -52,10 +52,10 @@ void OEBond::SetBO(int order)
   else            UnsetAromatic();
 }
 
-void OEBond::SetLength(OEAtom *fixed, float length)
+void OBBond::SetLength(OBAtom *fixed, float length)
 {
   unsigned int i;
-  OEMol *mol = (OEMol*)fixed->GetParent();
+  OBMol *mol = (OBMol*)fixed->GetParent();
   Vector v1,v2,v3,v4,v5;
   vector<int> children;
 
@@ -87,29 +87,29 @@ void OEBond::SetLength(OEAtom *fixed, float length)
     }
 }
    
-bool OEBond::IsRotor()
+bool OBBond::IsRotor()
 {
   return(_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1 && 
 	 _order == 1 && !IsInRing() && _bgn->GetHyb() != 1 &&
 	 _end->GetHyb() != 1);
 }
 
-bool OEBond::IsAmide()
+bool OBBond::IsAmide()
 {
-  OEAtom *a1,*a2;
+  OBAtom *a1,*a2;
   a1 = a2 = NULL;
 
   if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
-    {a1 = (OEAtom*)_bgn; a2 = (OEAtom*)_end;}
+    {a1 = (OBAtom*)_bgn; a2 = (OBAtom*)_end;}
 
   if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
-    {a1 = (OEAtom*)_end; a2 = (OEAtom*)_bgn;}
+    {a1 = (OBAtom*)_end; a2 = (OBAtom*)_bgn;}
 
   if (!a1 || !a2) return(false);
   if (GetBO() != 1) return(false);
   
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
     if (bond->IsCarbonyl())
       return(true);
@@ -117,22 +117,22 @@ bool OEBond::IsAmide()
   return(false);
 }
 
-bool OEBond::IsPrimaryAmide()
+bool OBBond::IsPrimaryAmide()
 {
-  OEAtom *a1,*a2;
+  OBAtom *a1,*a2;
   a1 = a2 = NULL;
 
   if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
-    {a1 = (OEAtom*)_bgn; a2 = (OEAtom*)_end;}
+    {a1 = (OBAtom*)_bgn; a2 = (OBAtom*)_end;}
 
   if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
-    {a1 = (OEAtom*)_end; a2 = (OEAtom*)_bgn;}
+    {a1 = (OBAtom*)_end; a2 = (OBAtom*)_bgn;}
 
   if (!a1 || !a2) return(false);
   if (GetBO() != 1) return(false);
   
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
     if (bond->IsCarbonyl())
       if (a2->GetHvyValence() == 2)
@@ -142,29 +142,29 @@ bool OEBond::IsPrimaryAmide()
   return(false);
 }
 
-bool OEBond::IsSecondaryAmide()
+bool OBBond::IsSecondaryAmide()
 {
   
   
   return(false);
 }
 
-bool OEBond::IsEster()
+bool OBBond::IsEster()
 {
-  OEAtom *a1,*a2;
+  OBAtom *a1,*a2;
   a1 = a2 = NULL;
 
   if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8)
-    {a1 = (OEAtom*)_bgn; a2 = (OEAtom*)_end;}
+    {a1 = (OBAtom*)_bgn; a2 = (OBAtom*)_end;}
 
   if (_bgn->GetAtomicNum() == 8 && _end->GetAtomicNum() == 6)
-    {a1 = (OEAtom*)_end; a2 = (OEAtom*)_bgn;}
+    {a1 = (OBAtom*)_end; a2 = (OBAtom*)_bgn;}
 
   if (!a1 || !a2) return(false);
   if (GetBO() != 1) return(false);
   
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
     if (bond->IsCarbonyl())
       return(true);
@@ -173,7 +173,7 @@ bool OEBond::IsEster()
   return(false);
 }
 
-bool OEBond::IsCarbonyl()
+bool OBBond::IsCarbonyl()
 {
   if (GetBO() != 2) return(false);
   
@@ -184,123 +184,123 @@ bool OEBond::IsCarbonyl()
   return(false);
 }
 
-bool OEBond::IsSingle()
+bool OBBond::IsSingle()
 {
-	if (HasFlag(OE_AROMATIC_BOND)) return(false);
+	if (HasFlag(OB_AROMATIC_BOND)) return(false);
 
-	if (!((OEMol*)GetParent())->HasAromaticPerceived())
+	if (!((OBMol*)GetParent())->HasAromaticPerceived())
 		{
-			aromtyper.AssignAromaticFlags(*((OEMol*)GetParent()));
+			aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
 		}
 
-	if ((this->GetBondOrder()==1) && !(HasFlag(OE_AROMATIC_BOND)))
+	if ((this->GetBondOrder()==1) && !(HasFlag(OB_AROMATIC_BOND)))
 		return(true);
 
 	return(false);
 }
 
-bool OEBond::IsDouble()
+bool OBBond::IsDouble()
 {
-	if	(HasFlag(OE_AROMATIC_BOND)) return(false);
+	if	(HasFlag(OB_AROMATIC_BOND)) return(false);
 
-	if (!((OEMol*)GetParent())->HasAromaticPerceived())
+	if (!((OBMol*)GetParent())->HasAromaticPerceived())
 		{
-			aromtyper.AssignAromaticFlags(*((OEMol*)GetParent()));
+			aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
 		}
 			
-	if ((this->GetBondOrder()==2) && !(HasFlag(OE_AROMATIC_BOND)))
+	if ((this->GetBondOrder()==2) && !(HasFlag(OB_AROMATIC_BOND)))
 		return(true);
 
 	return(false);
 }
 
-bool OEBond::IsAromatic() const
+bool OBBond::IsAromatic() const
 {
-  if (((OEBond*)this)->HasFlag(OE_AROMATIC_BOND)) return(true);
+  if (((OBBond*)this)->HasFlag(OB_AROMATIC_BOND)) return(true);
 
-  OEMol *mol = (OEMol*)((OEBond*)this)->GetParent();
+  OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
   if (!mol->HasAromaticPerceived())
     {
       aromtyper.AssignAromaticFlags(*mol);
-      if (((OEBond*)this)->HasFlag(OE_AROMATIC_BOND)) return(true);
+      if (((OBBond*)this)->HasFlag(OB_AROMATIC_BOND)) return(true);
     }
 
   return(false);
 }
 
-void OEBond::SetKSingle()
+void OBBond::SetKSingle()
 {
-  _flags &= (~(OE_KSINGLE_BOND|OE_KDOUBLE_BOND|OE_KTRIPLE_BOND));
-  _flags |= OE_KSINGLE_BOND;
+  _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
+  _flags |= OB_KSINGLE_BOND;
 }
 
-void OEBond::SetKDouble()
+void OBBond::SetKDouble()
 {
-  _flags &= (~(OE_KSINGLE_BOND|OE_KDOUBLE_BOND|OE_KTRIPLE_BOND));
-  _flags |= OE_KDOUBLE_BOND;
+  _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
+  _flags |= OB_KDOUBLE_BOND;
 }
 
-void OEBond::SetKTriple()
+void OBBond::SetKTriple()
 {
-  _flags &= (~(OE_KSINGLE_BOND|OE_KDOUBLE_BOND|OE_KTRIPLE_BOND));
-  _flags |= OE_KTRIPLE_BOND;
+  _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
+  _flags |= OB_KTRIPLE_BOND;
 }
 
-bool OEBond::IsKSingle()
+bool OBBond::IsKSingle()
 {
-  if (_flags & OE_KSINGLE_BOND) return(true);
-  if (!((OEMol*)GetParent())->HasKekulePerceived()) 
-	  ((OEMol*)GetParent())->PerceiveKekuleBonds();
+  if (_flags & OB_KSINGLE_BOND) return(true);
+  if (!((OBMol*)GetParent())->HasKekulePerceived()) 
+	  ((OBMol*)GetParent())->PerceiveKekuleBonds();
 
-  return((_flags & OE_KSINGLE_BOND) != 0) ? true : false;
+  return((_flags & OB_KSINGLE_BOND) != 0) ? true : false;
 }
 
-bool OEBond::IsKDouble()
+bool OBBond::IsKDouble()
 {
-  if (_flags & OE_KDOUBLE_BOND) return(true);
-  if (!((OEMol*)GetParent())->HasKekulePerceived()) 
-	  ((OEMol*)GetParent())->PerceiveKekuleBonds();
+  if (_flags & OB_KDOUBLE_BOND) return(true);
+  if (!((OBMol*)GetParent())->HasKekulePerceived()) 
+	  ((OBMol*)GetParent())->PerceiveKekuleBonds();
 
-  return((_flags & OE_KDOUBLE_BOND) != 0) ? true : false;
+  return((_flags & OB_KDOUBLE_BOND) != 0) ? true : false;
 }
 
-bool OEBond::IsKTriple()
+bool OBBond::IsKTriple()
 {
-  if (_flags & OE_KTRIPLE_BOND) return(true);
-  if (!((OEMol*)GetParent())->HasKekulePerceived()) 
-	  ((OEMol*)GetParent())->PerceiveKekuleBonds();
+  if (_flags & OB_KTRIPLE_BOND) return(true);
+  if (!((OBMol*)GetParent())->HasKekulePerceived()) 
+	  ((OBMol*)GetParent())->PerceiveKekuleBonds();
 
-  return((_flags & OE_KTRIPLE_BOND) != 0) ? true : false;
+  return((_flags & OB_KTRIPLE_BOND) != 0) ? true : false;
 }
 
-bool OEBond::IsInRing() const
+bool OBBond::IsInRing() const
 {
-  if (((OEBond*)this)->HasFlag(OE_RING_BOND)) return(true);
+  if (((OBBond*)this)->HasFlag(OB_RING_BOND)) return(true);
   
-  OEMol *mol = (OEMol*)((OEBond*)this)->GetParent();
+  OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
   if (!mol->HasRingAtomsAndBondsPerceived())
     {
       mol->FindRingAtomsAndBonds();
-      if (((OEBond*)this)->HasFlag(OE_RING_BOND)) return(true);
+      if (((OBBond*)this)->HasFlag(OB_RING_BOND)) return(true);
     }
 
   return(false);
 }
 
-bool OEBond::IsClosure()
+bool OBBond::IsClosure()
 {
-  OEMol *mol = (OEMol*)GetParent();
+  OBMol *mol = (OBMol*)GetParent();
   if (!mol) return(false);
-  if (mol->HasClosureBondsPerceived()) return(HasFlag(OE_CLOSURE_BOND));
+  if (mol->HasClosureBondsPerceived()) return(HasFlag(OB_CLOSURE_BOND));
   
   mol->SetClosureBondsPerceived();
   
-  OEBond *bond;
-  OEAtom *atom,*nbr;
-  OEBitVec uatoms,ubonds;
-  vector<OENodeBase*> curr,next;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  OBAtom *atom,*nbr;
+  OBBitVec uatoms,ubonds;
+  vector<OBNodeBase*> curr,next;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
 
   uatoms.Resize(mol->NumAtoms()+1);
   ubonds.Resize(mol->NumAtoms()+1);
@@ -319,7 +319,7 @@ bool OEBond::IsClosure()
       for (;!curr.empty();)
 	{
 	  for (i = curr.begin();i != curr.end();i++)
-	    for (nbr = ((OEAtom*)*i)->BeginNbrAtom(j);nbr;nbr = ((OEAtom*)*i)->NextNbrAtom(j))
+	    for (nbr = ((OBAtom*)*i)->BeginNbrAtom(j);nbr;nbr = ((OBAtom*)*i)->NextNbrAtom(j))
 	      if (!uatoms[nbr->GetIdx()])
 		{
 		  uatoms |= nbr->GetIdx();
@@ -336,13 +336,13 @@ bool OEBond::IsClosure()
     if (!ubonds[bond->GetIdx()])
       bond->SetClosure();
   
-  return(HasFlag(OE_CLOSURE_BOND));
+  return(HasFlag(OB_CLOSURE_BOND));
 }
 
-float OEBond::GetEquibLength()
+float OBBond::GetEquibLength()
 {
   float length;
-  OEAtom *begin, *end;
+  OBAtom *begin, *end;
   // CorrectedBondRad will always return a # now
   //  if (!CorrectedBondRad(GetBeginAtom(),rad1)) return(0.0);
   //  if (!CorrectedBondRad(GetEndAtom(),rad2))   return(0.0);
@@ -358,10 +358,10 @@ float OEBond::GetEquibLength()
   return(length);
 }
 
-float OEBond::GetLength()
+float OBBond::GetLength()
 {
   float	d2;
-  OEAtom *begin, *end;
+  OBAtom *begin, *end;
   begin = GetBeginAtom();
   end = GetEndAtom();
   

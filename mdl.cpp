@@ -16,7 +16,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
-bool ReadSDFile(istream &ifs,OEMol &mol,char *title) {
+bool ReadSDFile(istream &ifs,OBMol &mol,char *title) {
   int i,natoms,nbonds;
   char buffer[BUFF_SIZE];
   char *comment = NULL;
@@ -41,7 +41,7 @@ bool ReadSDFile(istream &ifs,OEMol &mol,char *title) {
   float x,y,z;
   char type[5];
   Vector v;
-  OEAtom atom;
+  OBAtom atom;
   int charge;
 
   for (i = 0;i < natoms;i++) {
@@ -83,8 +83,8 @@ bool ReadSDFile(istream &ifs,OEMol &mol,char *title) {
     if (r1.size() >= 12) {  //handle wedge/hash data
       stereo = atoi((r1.substr(9,3)).c_str());
       if (stereo) {
-        if (stereo == 1) flag |= OE_WEDGE_BOND;
-        if (stereo == 6) flag |= OE_HASH_BOND;
+        if (stereo == 1) flag |= OB_WEDGE_BOND;
+        if (stereo == 6) flag |= OB_HASH_BOND;
       }
     }
 
@@ -95,7 +95,7 @@ bool ReadSDFile(istream &ifs,OEMol &mol,char *title) {
 
   if (comment)
   {
-	  OECommentData *cd = new OECommentData;
+	  OBCommentData *cd = new OBCommentData;
 	  mol.SetData(cd);
   }
 
@@ -109,7 +109,7 @@ bool ReadSDFile(istream &ifs,OEMol &mol,char *title) {
       string attr = buff.substr(lt,rt-lt);
       ifs.getline(buffer,BUFF_SIZE);
 
-	  OEPairData *dp = new OEPairData;
+	  OBPairData *dp = new OBPairData;
 	  dp->SetAttribute(attr);
 	  dp->SetValue(buffer);
       mol.SetData(dp);
@@ -122,16 +122,16 @@ bool ReadSDFile(istream &ifs,OEMol &mol,char *title) {
   return(true);
 }
 
-bool WriteSDFile(ostream &ofs,OEMol &mol,char *dimension) {
+bool WriteSDFile(ostream &ofs,OBMol &mol,char *dimension) {
   char buff[BUFF_SIZE];  
 
   ofs << mol.GetTitle() <<  endl;
   sprintf(buff,"  -ISIS-            %s",dimension);
   ofs << buff << endl;
 
-  if (mol.HasData(oeCommentData))
+  if (mol.HasData(obCommentData))
     {
-      OECommentData *cd = (OECommentData*)mol.GetData(oeCommentData);
+      OBCommentData *cd = (OBCommentData*)mol.GetData(obCommentData);
       ofs << cd->GetData() << endl;
     }
   else
@@ -141,8 +141,8 @@ bool WriteSDFile(ostream &ofs,OEMol &mol,char *dimension) {
           mol.NumAtoms(),mol.NumBonds(),0,0,0,0,0,0,0,0,0);
   ofs << buff << endl;
 
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   int charge;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
     switch (atom->GetFormalCharge()) {
@@ -166,13 +166,13 @@ bool WriteSDFile(ostream &ofs,OEMol &mol,char *dimension) {
   }
 
   //so the bonds come out sorted
-  OEAtom *nbr;
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *nbr;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
       if (atom->GetIdx() < nbr->GetIdx()) {
-        bond = (OEBond*) *j;
+        bond = (OBBond*) *j;
         sprintf(buff,"%3d%3d%3d%3d%3d%3d",
                 bond->GetBeginAtomIdx(),
                 bond->GetEndAtomIdx(),
@@ -187,15 +187,15 @@ bool WriteSDFile(ostream &ofs,OEMol &mol,char *dimension) {
   // RWT 4/7/2001
   // now output properties if they exist
   // MTS 4/17/2001
-  // changed to use new OEGenericData class
+  // changed to use new OBGenericData class
 
-  vector<OEGenericData*>::iterator k;
-  vector<OEGenericData*> vdata = mol.GetData();
+  vector<OBGenericData*>::iterator k;
+  vector<OBGenericData*> vdata = mol.GetData();
   for (k = vdata.begin();k != vdata.end();k++)
-	  if ((*k)->GetDataType() == oePairData)
+	  if ((*k)->GetDataType() == obPairData)
 	  {
 		  ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
-		  ofs << ((OEPairData*)(*k))->GetValue() << endl << endl;
+		  ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
 	  }
 
   // end RWT

@@ -21,9 +21,9 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-extern OEAromaticTyper  aromtyper;
+extern OBAromaticTyper  aromtyper;
 
-class OESmilesParser
+class OBSmilesParser
 {
   int _bondflags;
   int _order;
@@ -37,19 +37,19 @@ class OESmilesParser
   vector<bool>         _bvisit;
   char _buffer[BUFF_SIZE];
 public:
-  bool SmiToMol(OEMol&,string&);
-  bool ParseSmiles(OEMol&);
-  bool ParseSimple(OEMol&);
-  bool ParseComplex(OEMol&);
-  bool ParseRingBond(OEMol&);
-	bool ParseExternalBond(OEMol&);
-	bool CapExternalBonds(OEMol &mol);
-  void FindAromaticBonds(OEMol &mol,OEAtom*,int);
-  void FindAromaticBonds(OEMol&);
+  bool SmiToMol(OBMol&,string&);
+  bool ParseSmiles(OBMol&);
+  bool ParseSimple(OBMol&);
+  bool ParseComplex(OBMol&);
+  bool ParseRingBond(OBMol&);
+	bool ParseExternalBond(OBMol&);
+	bool CapExternalBonds(OBMol &mol);
+  void FindAromaticBonds(OBMol &mol,OBAtom*,int);
+  void FindAromaticBonds(OBMol&);
 
 };
 
-bool OESmilesParser::SmiToMol(OEMol &mol,string &s)
+bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
 {
   strcpy(_buffer,s.c_str());
 
@@ -67,7 +67,7 @@ bool OESmilesParser::SmiToMol(OEMol &mol,string &s)
   return(true);
 }
 
-bool OESmilesParser::ParseSmiles(OEMol &mol)
+bool OBSmilesParser::ParseSmiles(OBMol &mol)
 {
   mol.BeginModify();
 
@@ -104,8 +104,8 @@ bool OESmilesParser::ParseSmiles(OEMol &mol)
 		case '=':  _order = 2; break;
 		case '#':  _order = 3; break;
 		case ':':  _order = 5; break;
-		case '/':  _bondflags |= OE_TORDOWN_BOND; break;
-		case '\\': _bondflags |= OE_TORUP_BOND; break;
+		case '/':  _bondflags |= OB_TORDOWN_BOND; break;
+		case '\\': _bondflags |= OB_TORUP_BOND; break;
 		default: 
 			if (!ParseSimple(mol))
 			{
@@ -129,32 +129,32 @@ bool OESmilesParser::ParseSmiles(OEMol &mol)
   return(true);
 }
 
-void OESmilesParser::FindAromaticBonds(OEMol &mol)
+void OBSmilesParser::FindAromaticBonds(OBMol &mol)
 {
   _path.clear(); _avisit.clear(); _bvisit.clear();
   _avisit.resize(mol.NumAtoms()+1);
   _bvisit.resize(mol.NumBonds());
   _path.resize(mol.NumAtoms()+1);
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
     if (!bond->GetBeginAtom()->IsAromatic() || 
 	!bond->GetEndAtom()->IsAromatic())
       _bvisit[bond->GetIdx()] = true;
 
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator j;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator j;
 
   for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
     if(!_avisit[atom->GetIdx()] && atom->IsAromatic())
       FindAromaticBonds(mol,atom,0);
 }
 
-void OESmilesParser::FindAromaticBonds(OEMol &mol,OEAtom *atom,int depth )
+void OBSmilesParser::FindAromaticBonds(OBMol &mol,OBAtom *atom,int depth )
 {
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator k;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator k;
 
   if (_avisit[atom->GetIdx()])
     {
@@ -183,7 +183,7 @@ void OESmilesParser::FindAromaticBonds(OEMol &mol,OEAtom *atom,int depth )
 }
 
 
-bool OESmilesParser::ParseSimple(OEMol &mol)
+bool OBSmilesParser::ParseSimple(OBMol &mol)
 {
   char symbol[3];
   int element;
@@ -228,7 +228,7 @@ bool OESmilesParser::ParseSimple(OEMol &mol)
 	}
     }
 
-  OEAtom *atom = mol.NewAtom();
+  OBAtom *atom = mol.NewAtom();
   atom->SetAtomicNum(element);
   atom->SetType(symbol);
   if (arom) atom->SetAromatic();
@@ -244,7 +244,7 @@ bool OESmilesParser::ParseSimple(OEMol &mol)
   return(true);
 }
 
-bool OESmilesParser::ParseComplex(OEMol &mol)
+bool OBSmilesParser::ParseComplex(OBMol &mol)
 {
   char symbol[3];
   int element=0;
@@ -574,7 +574,7 @@ bool OESmilesParser::ParseComplex(OEMol &mol)
 
   //handle hydrogen count, stereochemistry, and charge
 
-  OEAtom *atom = mol.NewAtom();
+  OBAtom *atom = mol.NewAtom();
   int hcount = 0;
   int charge=0;
   char tmpc[2]; tmpc[1] = '\0';
@@ -639,13 +639,13 @@ bool OESmilesParser::ParseComplex(OEMol &mol)
   return(true);
 }
 
-bool OESmilesParser::CapExternalBonds(OEMol &mol)
+bool OBSmilesParser::CapExternalBonds(OBMol &mol)
 {
 
 	if(_extbond.empty())
 		return(true);
 
-	OEAtom *atom;
+	OBAtom *atom;
 	vector<vector<int> >::iterator bond;
 	
 	for(bond = _extbond.begin();bond != _extbond.end();bond++)
@@ -657,30 +657,30 @@ bool OESmilesParser::CapExternalBonds(OEMol &mol)
 
 		// bond dummy atom to mol via external bond
 		mol.AddBond((*bond)[1],atom->GetIdx(),(*bond)[2],(*bond)[3]);
-		OEBond *refbond = atom->GetBond(mol.GetAtom((*bond)[1]));
+		OBBond *refbond = atom->GetBond(mol.GetAtom((*bond)[1]));
 
 		//record external bond information
-		OEExternalBondData *xbd;
-		if(mol.HasData(oeExternalBondData))
-			xbd = (OEExternalBondData*)mol.GetData(oeExternalBondData);
+		OBExternalBondData *xbd;
+		if(mol.HasData(obExternalBondData))
+			xbd = (OBExternalBondData*)mol.GetData(obExternalBondData);
 		else
 		{
-			xbd = new OEExternalBondData;
+			xbd = new OBExternalBondData;
 			mol.SetData(xbd);
 		}
 		xbd->SetData(atom,refbond,(*bond)[0]);
 
 		/* old code written by AGS -- mts
 		{
-			externalbonds = (vector<pair<int,pair<OEAtom *,OEBond *> > > *)mol.GetData("extBonds");
+			externalbonds = (vector<pair<int,pair<OBAtom *,OBBond *> > > *)mol.GetData("extBonds");
 		}
 		else
 		{
-			externalbonds = new vector<pair<int,pair<OEAtom *,OEBond *> > >;
+			externalbonds = new vector<pair<int,pair<OBAtom *,OBBond *> > >;
 		}
 
 		//save data <external bond count, bond index>
-		externalbonds->push_back(pair<int,pair<OEAtom *,OEBond *> > ((*bond)[0], pair<OEAtom *,OEBond *> (atom,mol.GetBond((*bond)[1],atom->GetIdx()))));
+		externalbonds->push_back(pair<int,pair<OBAtom *,OBBond *> > ((*bond)[0], pair<OBAtom *,OBBond *> (atom,mol.GetBond((*bond)[1],atom->GetIdx()))));
 		mol.SetData("extBonds",externalbonds);
 		*/
 
@@ -690,7 +690,7 @@ bool OESmilesParser::CapExternalBonds(OEMol &mol)
 	return(true);
 }
 
-bool OESmilesParser::ParseExternalBond(OEMol &mol)
+bool OBSmilesParser::ParseExternalBond(OBMol &mol)
 {
 	int digit;
 	char str[10];
@@ -717,12 +717,12 @@ bool OESmilesParser::ParseExternalBond(OEMol &mol)
 			_ptr++;
 			break;
 		case '/':	//chiral, but _order still == 1
-			_bondflags |= OE_TORDOWN_BOND;
+			_bondflags |= OB_TORDOWN_BOND;
 			_ptr++;
 			break;
 			_ptr++;
 		case '\\': // chiral, but _order still == 1
-			_bondflags |= OE_TORUP_BOND;
+			_bondflags |= OB_TORUP_BOND;
 			_ptr++;
 			break;
 		default: // no bond indicator just leave order = 1
@@ -772,7 +772,7 @@ bool OESmilesParser::ParseExternalBond(OEMol &mol)
 
 }
 
-bool OESmilesParser::ParseRingBond(OEMol &mol)
+bool OBSmilesParser::ParseRingBond(OBMol &mol)
 {
   int digit;
   char str[10];
@@ -815,9 +815,9 @@ bool OESmilesParser::ParseRingBond(OEMol &mol)
   return(true);
 }
 
-bool SmiToMol(OEMol &mol,string &smi,char *title)
+bool SmiToMol(OBMol &mol,string &smi,char *title)
 {
-  OESmilesParser sp;
+  OBSmilesParser sp;
   mol.SetTitle(title);
 
   if (!sp.SmiToMol(mol,smi))
@@ -826,7 +826,7 @@ bool SmiToMol(OEMol &mol,string &smi,char *title)
   return(true);
 }
 
-bool ReadSmiles(istream &ifs,OEMol &mol,char *title)
+bool ReadSmiles(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
 

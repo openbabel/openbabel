@@ -15,12 +15,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadNWChem(istream &ifs,OEMol &mol,char *title)
+bool ReadNWChem(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   string str;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
 
   ttab.SetFromType("XYZ");
@@ -63,7 +63,7 @@ bool ReadNWChem(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteNWChem(ostream &ofs,OEMol &mol)
+bool WriteNWChem(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
@@ -73,7 +73,7 @@ bool WriteNWChem(ostream &ofs,OEMol &mol)
 
   ofs << "geometry units angstroms print xyz autosym" << endl;
 
-  OEAtom *atom;
+  OBAtom *atom;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
     atom = mol.GetAtom(i);

@@ -28,32 +28,32 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-OEExtensionTable extab;
-OEElementTable   etab;
-OETypeTable      ttab;
+OBExtensionTable extab;
+OBElementTable   etab;
+OBTypeTable      ttab;
 
 bool tokenize(vector<string>&, char *buf,char *delimstr=" \t\n");
 bool tokenize(vector<string> &vcr, string &s,char *delimstr,int limit=-1);
 extern void ThrowError(char *);
 extern void ThrowError(string&);
 
-OEElementTable::OEElementTable()
+OBElementTable::OBElementTable()
 {
   _init = false;
   _dir = "";
-  _envvar = "OE_DIR";
+  _envvar = "OB_DIR";
   _filename = "element.txt";
   _subdir = "data";
   _dataptr = ElementData;
 }
 
-OEElementTable::~OEElementTable()
+OBElementTable::~OBElementTable()
   {
-    vector<OEElement*>::iterator i;
+    vector<OBElement*>::iterator i;
     for (i = _element.begin();i != _element.end();i++) delete *i;
   }
 
-void OEElementTable::ParseLine(char *buffer)
+void OBElementTable::ParseLine(char *buffer)
 {
   int num,maxbonds;
   char symbol[3];
@@ -71,12 +71,12 @@ void OEElementTable::ParseLine(char *buffer)
 	     &maxbonds,
 	     &mass);
   
-	  OEElement *ele = new OEElement(num,symbol,Rcov,Rbo,Rvdw,maxbonds,mass);
+	  OBElement *ele = new OBElement(num,symbol,Rcov,Rbo,Rvdw,maxbonds,mass);
 	  _element.push_back(ele);
 	}
 }
 
-char *OEElementTable::GetSymbol(int atomicnum)
+char *OBElementTable::GetSymbol(int atomicnum)
 {
   if (!_init) Init();
 
@@ -86,7 +86,7 @@ char *OEElementTable::GetSymbol(int atomicnum)
   return(_element[atomicnum]->GetSymbol());
 }
 
-int OEElementTable::GetMaxBonds(int atomicnum)
+int OBElementTable::GetMaxBonds(int atomicnum)
 {
   if (!_init) Init();
 
@@ -96,7 +96,7 @@ int OEElementTable::GetMaxBonds(int atomicnum)
   return(_element[atomicnum]->GetMaxBonds());
 }
 
-float OEElementTable::GetVdwRad(int atomicnum)
+float OBElementTable::GetVdwRad(int atomicnum)
 {
   if (!_init) Init();
 
@@ -106,7 +106,7 @@ float OEElementTable::GetVdwRad(int atomicnum)
   return(_element[atomicnum]->GetVdwRad());
 }
 
-float OEElementTable::GetBORad(int atomicnum)
+float OBElementTable::GetBORad(int atomicnum)
 {
   if (!_init) Init();
 
@@ -116,7 +116,7 @@ float OEElementTable::GetBORad(int atomicnum)
   return(_element[atomicnum]->GetBoRad());
 }
 
-float OEElementTable::CorrectedBondRad(int atomicnum, int hyb)
+float OBElementTable::CorrectedBondRad(int atomicnum, int hyb)
 {
   float rad;
   if (!_init) Init();
@@ -132,7 +132,7 @@ float OEElementTable::CorrectedBondRad(int atomicnum, int hyb)
   return(rad);
 }
 
-float OEElementTable::CorrectedVdwRad(int atomicnum, int hyb)
+float OBElementTable::CorrectedVdwRad(int atomicnum, int hyb)
 {
   float rad;
   if (!_init) Init();
@@ -148,7 +148,7 @@ float OEElementTable::CorrectedVdwRad(int atomicnum, int hyb)
   return(rad);
 }
 
-float OEElementTable::GetCovalentRad(int atomicnum)
+float OBElementTable::GetCovalentRad(int atomicnum)
 {
   if (!_init) Init();
 
@@ -158,7 +158,7 @@ float OEElementTable::GetCovalentRad(int atomicnum)
   return(_element[atomicnum]->GetCovalentRad());
 }
 
-float OEElementTable::GetMass(int atomicnum)
+float OBElementTable::GetMass(int atomicnum)
 {
   if (!_init) Init();
 
@@ -168,11 +168,11 @@ float OEElementTable::GetMass(int atomicnum)
   return(_element[atomicnum]->GetMass());
 }
 
-int OEElementTable::GetAtomicNum(const char *sym)
+int OBElementTable::GetAtomicNum(const char *sym)
 {
   if (!_init) Init();
 
-    vector<OEElement*>::iterator i;
+    vector<OBElement*>::iterator i;
     for (i = _element.begin();i != _element.end();i++)
     if (!strcmp(sym,(*i)->GetSymbol()))
         return((*i)->GetAtomicNum());
@@ -180,11 +180,11 @@ int OEElementTable::GetAtomicNum(const char *sym)
     return(0);
 }
 
-OETypeTable::OETypeTable()
+OBTypeTable::OBTypeTable()
 {
   _init = false;
   _dir = "";
-  _envvar = "OE_DIR";
+  _envvar = "OB_DIR";
   _filename = "types.txt";
   _subdir = "data";
   _dataptr = TypesData;
@@ -192,7 +192,7 @@ OETypeTable::OETypeTable()
   _from = _to = -1;
 }
 
-void OETypeTable::ParseLine(char *buffer)
+void OBTypeTable::ParseLine(char *buffer)
 {
   if (_linecount == 0)
     sscanf(buffer,"%d%d",&_ncols,&_nrows);
@@ -207,7 +207,7 @@ void OETypeTable::ParseLine(char *buffer)
   _linecount++;
 }
 
-bool OETypeTable::SetFromType(char* from)
+bool OBTypeTable::SetFromType(char* from)
 {
   if (!_init) Init();
 
@@ -226,7 +226,7 @@ bool OETypeTable::SetFromType(char* from)
     return(false);
 }
 
-bool OETypeTable::SetToType(char* to)
+bool OBTypeTable::SetToType(char* to)
 {
   if (!_init) Init();
 
@@ -245,7 +245,7 @@ bool OETypeTable::SetToType(char* to)
     return(false);
 }
 
-bool OETypeTable::Translate(char *to, char *from)
+bool OBTypeTable::Translate(char *to, char *from)
 {
   if (!_init) Init();
 
@@ -258,7 +258,7 @@ bool OETypeTable::Translate(char *to, char *from)
   return(rval);
 }
 
-bool OETypeTable::Translate(string &to,string &from)
+bool OBTypeTable::Translate(string &to,string &from)
 {
   if (!_init) Init();
 
@@ -291,18 +291,18 @@ void Tolower(string &s)
     s[i] = tolower(s[i]);
 }
 
-OEExtensionTable::OEExtensionTable()
+OBExtensionTable::OBExtensionTable()
 {
   _init = false;
   _dir = "";
-  _envvar = "OE_DIR";
+  _envvar = "OB_DIR";
   _filename = "extable.txt";
   _subdir = "data";
   _dataptr = ExtensionTableData;
   _linecount = 0;
 }
 
-void OEExtensionTable::ParseLine(char *buffer)
+void OBExtensionTable::ParseLine(char *buffer)
 {
   if (_linecount > 0)
     {
@@ -406,7 +406,7 @@ io_type TextToType(string typestring)
 
 }
 
-io_type OEExtensionTable::FilenameToType(char *filename)
+io_type OBExtensionTable::FilenameToType(char *filename)
 {
   if (!_init) Init();
 
@@ -430,7 +430,7 @@ io_type OEExtensionTable::FilenameToType(char *filename)
   return(type);
 }
 
-io_type OEExtensionTable::FilenameToType(string &filename)
+io_type OBExtensionTable::FilenameToType(string &filename)
 {
   if (!_init) Init();
 
@@ -454,7 +454,7 @@ io_type OEExtensionTable::FilenameToType(string &filename)
   return(type);
 }
 
-void OEExtensionTable::TypeToExtension(io_type type,char *ext)
+void OBExtensionTable::TypeToExtension(io_type type,char *ext)
 {
   if (!_init) Init();
 
@@ -469,7 +469,7 @@ void OEExtensionTable::TypeToExtension(io_type type,char *ext)
     }
 }
 
-void OEExtensionTable::ExtensionToDescription(char *filename, char *desc)
+void OBExtensionTable::ExtensionToDescription(char *filename, char *desc)
 {
   if (!_init) Init();
 
@@ -491,7 +491,7 @@ void OEExtensionTable::ExtensionToDescription(char *filename, char *desc)
   return;
 }
 
-bool OEExtensionTable::CanReadExtension(char *filename)
+bool OBExtensionTable::CanReadExtension(char *filename)
 {
   if (!_init) Init();
 
@@ -514,7 +514,7 @@ bool OEExtensionTable::CanReadExtension(char *filename)
   return read;
 }
 
-bool OEExtensionTable::CanWriteExtension(char *filename)
+bool OBExtensionTable::CanWriteExtension(char *filename)
 {
   if (!_init) Init();
 
@@ -537,7 +537,7 @@ bool OEExtensionTable::CanWriteExtension(char *filename)
   return write;
 }
 
-const char *OEExtensionTable::GetExtension(unsigned int n)
+const char *OBExtensionTable::GetExtension(unsigned int n)
 {
   if (!_init) Init();
 
@@ -551,7 +551,7 @@ const char *OEExtensionTable::GetExtension(unsigned int n)
     }
 }
 
-const char *OEExtensionTable::GetDescription(unsigned int n)
+const char *OBExtensionTable::GetDescription(unsigned int n)
 {
   if (!_init) Init();
 
@@ -565,7 +565,7 @@ const char *OEExtensionTable::GetDescription(unsigned int n)
     }
 }
 
-io_type OEExtensionTable::GetType(unsigned int n)
+io_type OBExtensionTable::GetType(unsigned int n)
 {
   if (!_init) Init();
 
@@ -584,7 +584,7 @@ io_type OEExtensionTable::GetType(unsigned int n)
     }
 }
  
-bool OEExtensionTable::IsReadable(unsigned int n)
+bool OBExtensionTable::IsReadable(unsigned int n)
 {
   if (!_init) Init();
 
@@ -594,7 +594,7 @@ bool OEExtensionTable::IsReadable(unsigned int n)
     return _table[n][3] == "1";
 }
 
-bool OEExtensionTable::IsWritable(unsigned int n)
+bool OBExtensionTable::IsWritable(unsigned int n)
 {
   if (!_init) Init();
 
@@ -604,13 +604,13 @@ bool OEExtensionTable::IsWritable(unsigned int n)
     return _table[n][4] == "1";
 }
 
-unsigned int OEExtensionTable::Count()
+unsigned int OBExtensionTable::Count()
 {
   if (!_init) Init(); 
   return(_table.size());
 }
 
-void OEGlobalDataBase::Init()
+void OBGlobalDataBase::Init()
 {
   if (_init) return;
   _init = true;

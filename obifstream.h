@@ -11,8 +11,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef OEIFSTREAM_H
-#define OEIFSTREAM_H
+#ifndef OBIFSTREAM_H
+#define OBIFSTREAM_H
 
 #ifdef __sgi
 #include <iostream.h>
@@ -22,7 +22,7 @@ GNU General Public License for more details.
 #include <fstream>
 #endif
 
-class oeifstream : public ifstream
+class obifstream : public ifstream
 {
 public:
   bool SafeGetline(char *buffer,int size)
@@ -48,4 +48,4 @@ public:
     }
 };
 
-#endif //OEIFSTREAM_H
+#endif //OBIFSTREAM_H

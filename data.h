@@ -42,8 +42,8 @@ using namespace std;
 
 namespace OpenBabel {
 
-class OEElement;
-class OEElementTable;
+class OBElement;
+class OBElementTable;
 typedef enum {UNDEFINED,SDF,MOL2,PDB,DELPDB,SMI,BOX,FIX,
 	      OEBINARY,CCC,MMD,ALCHEMY,BALLSTICK,BGF,GHEMICAL,
               XYZ,GAMESSIN,GAMESSOUT,HIN,CACAO,CACAOINT,CACHE, 
@@ -58,7 +58,7 @@ typedef enum {UNDEFINED,SDF,MOL2,PDB,DELPDB,SMI,BOX,FIX,
 	      MACCS,TINKER,CHARMM,QCHEMOUT,TITLE,DMOL,
 	      NWCHEMIN,NWCHEMOUT,RDF,SMIRKS } io_type;
 
-class OEGlobalDataBase
+class OBGlobalDataBase
 {
  protected:
   bool    _init;
@@ -68,27 +68,27 @@ class OEGlobalDataBase
   string  _subdir;
   string  _envvar;
  public:
-  OEGlobalDataBase()
+  OBGlobalDataBase()
     {
       _init = false;
       _dataptr = (char*)NULL;
     }
-  virtual ~OEGlobalDataBase() {}
+  virtual ~OBGlobalDataBase() {}
   void  Init();
   void  SetReadDirectory(char *dir)       {_dir = dir;}
   void  SetEnvironmentVariable(char *var) {_envvar = var;}
   virtual void ParseLine(char*) {}
 };
 
-class OEElement
+class OBElement
 {
   int _num;
   char _symbol[3];
   float _Rcov,_Rbo,_Rvdw,_mass;
   int _maxbonds;
  public:
-  OEElement() {}
-  OEElement(int num,char *sym,float rcov,float rbo,float rvdw,int maxbo,float mass)
+  OBElement() {}
+  OBElement(int num,char *sym,float rcov,float rbo,float rvdw,int maxbo,float mass)
     {
       _num = num;
       strcpy(_symbol,sym);
@@ -107,14 +107,14 @@ class OEElement
   int GetMaxBonds() {return(_maxbonds);}
 };
 
-class OEElementTable : public OEGlobalDataBase
+class OBElementTable : public OBGlobalDataBase
 {
-  vector<OEElement*> _element;
+  vector<OBElement*> _element;
 
 public:
 
-  OEElementTable(void);
-  ~OEElementTable();
+  OBElementTable(void);
+  ~OBElementTable();
 
   int   GetAtomicNum(const char *);
   void  ParseLine(char*);
@@ -128,7 +128,7 @@ public:
   int	GetMaxBonds(int);
 };
 
-class OETypeTable : public OEGlobalDataBase
+class OBTypeTable : public OBGlobalDataBase
 {
   int    _linecount;
   int    _ncols,_nrows,_from,_to;
@@ -137,8 +137,8 @@ class OETypeTable : public OEGlobalDataBase
 
  public:
 
-  OETypeTable(void);
-  ~OETypeTable() {}
+  OBTypeTable(void);
+  ~OBTypeTable() {}
 
   void ParseLine(char*);
   bool SetFromType(char*);
@@ -147,15 +147,15 @@ class OETypeTable : public OEGlobalDataBase
   bool Translate(string &,string &);
 };
 
-class OEExtensionTable : public OEGlobalDataBase
+class OBExtensionTable : public OBGlobalDataBase
 {
   int                     _linecount;
   vector<vector<string> > _table;
 
  public:
 
-  OEExtensionTable(void);
-  ~OEExtensionTable() {}
+  OBExtensionTable(void);
+  ~OBExtensionTable() {}
 
   bool    CanReadExtension(char *);
   bool    CanWriteExtension(char *);

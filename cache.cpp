@@ -16,7 +16,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool WriteCache(ostream &ofs,OEMol &mol)
+bool WriteCache(ostream &ofs,OBMol &mol)
 { 
   char type_name[10];
   char buffer[BUFF_SIZE];
@@ -40,8 +40,8 @@ bool WriteCache(ostream &ofs,OEMol &mol)
   ofs << "property rflag MoleculeEditor noUnit 0 1 HEX" << endl;
   ofs << "ID xyz_coordinates             anum sym	chrg rflag" << endl;
 
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     strcpy(type_name,etab.GetSymbol(atom->GetAtomicNum()));
@@ -65,8 +65,8 @@ bool WriteCache(ostream &ofs,OEMol &mol)
   ofs << "ID rflag type bond_order" << endl;
 
   char bstr[10];
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
       switch (bond->GetBO())

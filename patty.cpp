@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "oeutil.h"
+#include "obutil.h"
 #include "parsmart.h"
 #include "patty.h"
 
@@ -36,14 +36,14 @@ void patty::read_rules(const string &infile)
   ifsP= &ifs;
   if (!ifs)
     {
-      if (getenv("OE_DIR") == NULL)
+      if (getenv("OB_DIR") == NULL)
       {
-        cerr << "The OE_DIR environment variable is not defined" << endl;
+        cerr << "The OB_DIR environment variable is not defined" << endl;
         cerr << "Please define it so the program can find " << infile << endl;
         exit(0);
       }
       else
-        strcpy(patty_dir,getenv("OE_DIR"));
+        strcpy(patty_dir,getenv("OB_DIR"));
       strcat(patty_dir,FILE_SEP_CHAR);  
       strcat(patty_dir,infile.c_str());  
       ifs1.open(patty_dir);  
@@ -108,7 +108,7 @@ void patty::assign_rules(vector<string> &rules)
 	_sp.resize(i);  
 }
 
-void patty::assign_types(OEMol &mol,vector<string> &atm_typ)
+void patty::assign_types(OBMol &mol,vector<string> &atm_typ)
 {
   atm_typ.resize(mol.NumAtoms()+1);
 
@@ -134,7 +134,7 @@ void patty::assign_types(OEMol &mol,vector<string> &atm_typ)
     }
 }
 
-void patty::assign_types(OEMol &mol,vector<int> &atm_typ)
+void patty::assign_types(OBMol &mol,vector<int> &atm_typ)
 {
   atm_typ.resize(mol.NumAtoms()+1);
 
@@ -213,7 +213,7 @@ int patty::type_to_int(const string &type, bool failOnUndefined)
 
 int main(int argc, char *argv[])
 {
-  OEMol mol(SDF,SDF);
+  OBMol mol(SDF,SDF);
   vector<string> types;
 
   ifstream ifs(argv[1]);

@@ -115,7 +115,7 @@
 
 namespace OpenBabel { 
 
-OEChainsParser chainsparser;
+OBChainsParser chainsparser;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Structure / Type Definitions
@@ -317,7 +317,7 @@ static ResidType AminoAcids[AMINOMAX] = {
     { "TYR", "1-4-7~14^22~29(-33)^25~17^7"          } 
         };
 
-/* Pyroglutamate (PCA):        1-4-7-11(=" OE ")-0  PDB Example: 1CEL */
+/* Pyroglutamate (PCA):        1-4-7-11(=" OB ")-0  PDB Example: 1CEL */
 /* Amino-N-Butyric Acid (ABA): 1-4-7                PDB Example: 1BBO */
 /* Selenic Acid (SEC):         1-4-"SEG "(-15)-18   PDB Example: 1GP1 */
 
@@ -614,7 +614,7 @@ void GenerateByteCodes(ByteCode **node, int resid, int curr, int prev, int bond)
 ////////////////////////////////////////////////////////////////////////////////
 
 // validated
-OEChainsParser::OEChainsParser(void)
+OBChainsParser::OBChainsParser(void)
 {
 	int i, res = RESIDMIN;
 
@@ -645,7 +645,7 @@ OEChainsParser::OEChainsParser(void)
 	flags    = NULL;
 }
 
-OEChainsParser::~OEChainsParser(void)
+OBChainsParser::~OBChainsParser(void)
 {
 }
 
@@ -653,7 +653,7 @@ OEChainsParser::~OEChainsParser(void)
 // Setup / Cleanup Functions
 ////////////////////////////////////////////////////////////////////////////////
 
-void OEChainsParser::SetupMol(OEMol &mol)
+void OBChainsParser::SetupMol(OBMol &mol)
 {
 	CleanupMol();
 
@@ -687,7 +687,7 @@ void OEChainsParser::SetupMol(OEMol &mol)
 		flags[i] = 0;
 }
 
-void OEChainsParser::CleanupMol(void)
+void OBChainsParser::CleanupMol(void)
 {
 	if (bitmasks != NULL) delete bitmasks;
 	if (hetflags != NULL) delete hetflags;
@@ -710,11 +710,11 @@ void OEChainsParser::CleanupMol(void)
 	flags    = NULL;
 }
 
-void OEChainsParser::ClearResidueInformation(OEMol &mol)
+void OBChainsParser::ClearResidueInformation(OBMol &mol)
 {
-	OEResidue *residue;
-	vector<OEResidue*> residues;
-	vector<OEResidue*>::iterator r;
+	OBResidue *residue;
+	vector<OBResidue*> residues;
+	vector<OBResidue*>::iterator r;
 
 	for (residue = mol.BeginResidue(r) ; residue ; residue = mol.NextResidue(r))
 		residues.push_back(residue);
@@ -725,14 +725,14 @@ void OEChainsParser::ClearResidueInformation(OEMol &mol)
 	residues.clear();
 }
 
-void OEChainsParser::SetResidueInformation(OEMol &mol)
+void OBChainsParser::SetResidueInformation(OBMol &mol)
 {
     char buffer[256];
     string atomid, name;
 
-    OEAtom    *atom;
-    OEResidue *residue;
-	map<short, OEResidue *> resmap;
+    OBAtom    *atom;
+    OBResidue *residue;
+	map<short, OBResidue *> resmap;
 
     int size = mol.NumAtoms();
     for ( int i = 0 ; i < size ; i++ )
@@ -791,7 +791,7 @@ void OEChainsParser::SetResidueInformation(OEMol &mol)
 // Perception Functions
 ////////////////////////////////////////////////////////////////////////////////
 
-bool OEChainsParser::PerceiveChains(OEMol &mol)
+bool OBChainsParser::PerceiveChains(OBMol &mol)
 {
 	bool result = true;
 
@@ -816,10 +816,10 @@ bool OEChainsParser::PerceiveChains(OEMol &mol)
 // Hetero Atom Perception
 ////////////////////////////////////////////////////////////////////////////////
 
-bool OEChainsParser::DetermineHetAtoms(OEMol &mol)
+bool OBChainsParser::DetermineHetAtoms(OBMol &mol)
 {
-	OEAtom *atom;
-	vector<OENodeBase *>::iterator a;
+	OBAtom *atom;
+	vector<OBNodeBase *>::iterator a;
 	for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
 		if (!atom->IsHydrogen() && atom->GetValence() == 0)
 		{
@@ -833,7 +833,7 @@ bool OEChainsParser::DetermineHetAtoms(OEMol &mol)
 // Connected Chain Perception
 ////////////////////////////////////////////////////////////////////////////////
 
-bool OEChainsParser::DetermineConnectedChains(OEMol &mol)
+bool OBChainsParser::DetermineConnectedChains(OBMol &mol)
 {
 	int resid;
 	int resno;
@@ -846,8 +846,8 @@ bool OEChainsParser::DetermineConnectedChains(OEMol &mol)
     count    = 0;
 	numAtoms = mol.NumAtoms();
 
-	OEAtom *atom;
-	vector<OENodeBase *>::iterator a;
+	OBAtom *atom;
+	vector<OBNodeBase *>::iterator a;
 	for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
 	{
 		idx = atom->GetIdx() - 1;
@@ -885,10 +885,10 @@ bool OEChainsParser::DetermineConnectedChains(OEMol &mol)
 	return true;
 }
 
-int OEChainsParser::RecurseChain(OEMol &mol, int i, int c)
+int OBChainsParser::RecurseChain(OBMol &mol, int i, int c)
 {
-	OEAtom *atom, *nbr;
-	vector<OEEdgeBase *>::iterator b;
+	OBAtom *atom, *nbr;
+	vector<OBEdgeBase *>::iterator b;
     int result;
 
 	atom      = mol.GetAtom(i+1);
@@ -906,7 +906,7 @@ int OEChainsParser::RecurseChain(OEMol &mol, int i, int c)
 // Peptide Backbone Perception
 ////////////////////////////////////////////////////////////////////////////////
 
-bool OEChainsParser::DeterminePeptideBackbone(OEMol &mol)
+bool OBChainsParser::DeterminePeptideBackbone(OBMol &mol)
 {
     ConstrainBackbone(mol, Peptide, MAXPEPTIDE);
         
@@ -940,8 +940,8 @@ bool OEChainsParser::DeterminePeptideBackbone(OEMol &mol)
 
     /* Carbonyl Double Bond */
 
-	OEBond *bond;
-	vector<OEEdgeBase*>::iterator b;
+	OBBond *bond;
+	vector<OBEdgeBase*>::iterator b;
 	for (bond = mol.BeginBond(b) ; bond ; bond = mol.NextBond(b))
 	{
 		if ((atomids[bond->GetBeginAtomIdx()-1] == 2 && atomids[bond->GetEndAtomIdx()-1] == 3) ||
@@ -952,18 +952,18 @@ bool OEChainsParser::DeterminePeptideBackbone(OEMol &mol)
 	return true;
 }
 
-void OEChainsParser::ConstrainBackbone(OEMol &mol, Template *templ, int tmax)
+void OBChainsParser::ConstrainBackbone(OBMol &mol, Template *templ, int tmax)
 {
-    static OEAtom *neighbour[6];
+    static OBAtom *neighbour[6];
     Template *pep;
-    OEAtom *na,*nb,*nc,*nd;
-    OEAtom *atom, *nbr;
+    OBAtom *na,*nb,*nc,*nd;
+    OBAtom *atom, *nbr;
     bool change, result;
     int  count;
     int  i,idx;
 
-	vector<OENodeBase *>::iterator a;
-	vector<OEEdgeBase *>::iterator b;	
+	vector<OBNodeBase *>::iterator a;
+	vector<OBEdgeBase *>::iterator b;	
 
     /* First Pass */
 
@@ -1023,7 +1023,7 @@ void OEChainsParser::ConstrainBackbone(OEMol &mol, Template *templ, int tmax)
     } while( change );
 }
 
-bool OEChainsParser::MatchConstraint(OEAtom *atom, int mask)
+bool OBChainsParser::MatchConstraint(OBAtom *atom, int mask)
 {
     if( mask < 0 )
 		return(atom->GetAtomicNum() == -mask);
@@ -1031,7 +1031,7 @@ bool OEChainsParser::MatchConstraint(OEAtom *atom, int mask)
 		return(((bitmasks[atom->GetIdx()-1]&mask) == 0) ? false : true);
 }
 
-bool OEChainsParser::Match2Constraints(Template *tmpl, OEAtom *na, OEAtom *nb)
+bool OBChainsParser::Match2Constraints(Template *tmpl, OBAtom *na, OBAtom *nb)
 {
     if( MatchConstraint(na,tmpl->n2) )
         if( MatchConstraint(nb,tmpl->n1) )
@@ -1042,7 +1042,7 @@ bool OEChainsParser::Match2Constraints(Template *tmpl, OEAtom *na, OEAtom *nb)
     return( false );
 }
 
-bool OEChainsParser::Match3Constraints(Template *tmpl, OEAtom *na, OEAtom *nb, OEAtom *nc)
+bool OBChainsParser::Match3Constraints(Template *tmpl, OBAtom *na, OBAtom *nb, OBAtom *nc)
 {
     if( MatchConstraint(na,tmpl->n3) )
         if( Match2Constraints(tmpl,nb,nc) )
@@ -1056,7 +1056,7 @@ bool OEChainsParser::Match3Constraints(Template *tmpl, OEAtom *na, OEAtom *nb, O
     return( false );
 }
 
-bool OEChainsParser::Match4Constraints(Template *tmpl, OEAtom *na, OEAtom *nb, OEAtom *nc, OEAtom *nd)
+bool OBChainsParser::Match4Constraints(Template *tmpl, OBAtom *na, OBAtom *nb, OBAtom *nc, OBAtom *nd)
 {
     if( MatchConstraint(na,tmpl->n4) )
         if( Match3Constraints(tmpl,nb,nc,nd) )
@@ -1073,15 +1073,15 @@ bool OEChainsParser::Match4Constraints(Template *tmpl, OEAtom *na, OEAtom *nb, O
     return( false );
 }
 
-void OEChainsParser::TracePeptideChain(OEMol &mol, int i, int r)
+void OBChainsParser::TracePeptideChain(OBMol &mol, int i, int r)
 {
     int neighbour[4];
     int na,nb,nc;
-    OEAtom *atom, *nbr;
+    OBAtom *atom, *nbr;
     int count;
     int j,k,idx;
 
-	vector<OEEdgeBase *>::iterator b;
+	vector<OBEdgeBase *>::iterator b;
 
     /* Determine Neighbours */
 
@@ -1183,7 +1183,7 @@ void OEChainsParser::TracePeptideChain(OEMol &mol, int i, int r)
 // Peptide Sidechains Perception
 ////////////////////////////////////////////////////////////////////////////////
 
-bool OEChainsParser::DeterminePeptideSidechains(OEMol &mol)
+bool OBChainsParser::DeterminePeptideSidechains(OBMol &mol)
 {
 	int resid;
 	int max = mol.NumAtoms();
@@ -1198,7 +1198,7 @@ bool OEChainsParser::DeterminePeptideSidechains(OEMol &mol)
 	return true;
 }
 
-void OEChainsParser::AssignResidue(OEMol &mol, int r, int c, int i)
+void OBChainsParser::AssignResidue(OBMol &mol, int r, int c, int i)
 {
 	int max = mol.NumAtoms();
 	for (int j = 0 ; j < max ; j++)
@@ -1206,7 +1206,7 @@ void OEChainsParser::AssignResidue(OEMol &mol, int r, int c, int i)
 			resids[j] = i;
 }
 
-int OEChainsParser::IdentifyResidue(void *tree, OEMol &mol, int seed, int resno)
+int OBChainsParser::IdentifyResidue(void *tree, OBMol &mol, int seed, int resno)
 {
     ByteCode *ptr;
 
@@ -1226,8 +1226,8 @@ int OEChainsParser::IdentifyResidue(void *tree, OEMol &mol, int seed, int resno)
     AtomCount = 1;
     BondCount = 0;
 
-    OEAtom *atom, *nbr;
-    vector<OEEdgeBase *>::iterator b;
+    OBAtom *atom, *nbr;
+    vector<OBEdgeBase *>::iterator b;
 
     while( ptr )
         switch(ptr->type)
@@ -1307,7 +1307,7 @@ int OEChainsParser::IdentifyResidue(void *tree, OEMol &mol, int seed, int resno)
 // Nucleic Backbone Perception
 ////////////////////////////////////////////////////////////////////////////////
 
-bool OEChainsParser::DetermineNucleicBackbone(OEMol &mol)
+bool OBChainsParser::DetermineNucleicBackbone(OBMol &mol)
 {
     ConstrainBackbone(mol, Nucleotide, MAXNUCLEIC);
 
@@ -1342,15 +1342,15 @@ bool OEChainsParser::DetermineNucleicBackbone(OEMol &mol)
 	return true;
 }
 
-void OEChainsParser::TraceNucleicChain(OEMol &mol, int i, int r)
+void OBChainsParser::TraceNucleicChain(OBMol &mol, int i, int r)
 {
     int neighbour[4];
     int na,nb,nc;
     int count;
     int j,k;
 
-	OEAtom *atom, *nbr;
-	vector<OEEdgeBase *>::iterator b;
+	OBAtom *atom, *nbr;
+	vector<OBEdgeBase *>::iterator b;
 
 	count = 0;
 	atom  = mol.GetAtom(i + 1);	
@@ -1472,7 +1472,7 @@ void OEChainsParser::TraceNucleicChain(OEMol &mol, int i, int r)
 // Nucleic Sidechains Perception
 ////////////////////////////////////////////////////////////////////////////////
 
-bool OEChainsParser::DetermineNucleicSidechains(OEMol &mol)
+bool OBChainsParser::DetermineNucleicSidechains(OBMol &mol)
 {
     for( unsigned int i = 0 ; i < mol.NumAtoms() ; i++ )
 		if( atomids[i] == 49 )
@@ -1488,9 +1488,9 @@ bool OEChainsParser::DetermineNucleicSidechains(OEMol &mol)
 // Hydrogens Perception
 ////////////////////////////////////////////////////////////////////////////////
 
-bool OEChainsParser::DetermineHydrogens(OEMol &mol)
+bool OBChainsParser::DetermineHydrogens(OBMol &mol)
 {
-    OEAtom *atom, *nbr;
+    OBAtom *atom, *nbr;
     int idx,sidx;
 
 	int max = mol.NumAtoms();
@@ -1499,8 +1499,8 @@ bool OEChainsParser::DetermineHydrogens(OEMol &mol)
 
     /* First Pass */
 
-	vector<OENodeBase*>::iterator a;
-	vector<OEEdgeBase*>::iterator b;
+	vector<OBNodeBase*>::iterator a;
+	vector<OBEdgeBase*>::iterator b;
 
     for(atom = mol.BeginAtom(a); atom ; atom = mol.NextAtom(a))
         if(atom->IsHydrogen())
@@ -1537,7 +1537,7 @@ bool OEChainsParser::DetermineHydrogens(OEMol &mol)
 ////////////////////////////////////////////////////////////////////////////////
 
 // validated
-void OEChainsParser::DefineMonomer(void **tree, int resid, char *smiles)
+void OBChainsParser::DefineMonomer(void **tree, int resid, char *smiles)
 {
     int i;
 
@@ -1556,7 +1556,7 @@ void OEChainsParser::DefineMonomer(void **tree, int resid, char *smiles)
     GenerateByteCodes((ByteCode**)tree, resid, 0, 0, 0 );
 }
 
-int OEChainsParser::IdentifyElement(char *ptr)
+int OBChainsParser::IdentifyElement(char *ptr)
 {
     int ch;
 
@@ -1800,7 +1800,7 @@ int OEChainsParser::IdentifyElement(char *ptr)
     return( 0 );
 }
 
-char *OEChainsParser::ParseSmiles(char *ptr, int prev)
+char *OBChainsParser::ParseSmiles(char *ptr, int prev)
 {
     char *name;
     int atomid;

@@ -31,26 +31,26 @@ using namespace std;
 namespace OpenBabel
 {
 
-class OEEdge;
-class OENode;
-class OEGraph;
-class OEExprBase;
-class OESmartsPattern;
+class OBEdge;
+class OBNode;
+class OBGraph;
+class OBExprBase;
+class OBSmartsPattern;
 
 //
 // Base expression class from which all other expressions are derived
 //
 
-class OEExprBase
+class OBExprBase
 {
 public:
-	OEExprBase()                           {}
-	virtual ~OEExprBase()                  {}
+	OBExprBase()                           {}
+	virtual ~OBExprBase()                  {}
 	virtual int  GetFormalCharge()         {return(0);}
 	virtual void ResetRecurs()             {}
 	virtual void Print(ostream&)           {}
-	virtual bool Eval(OENodeBase*)         {return(false);}
-	virtual bool Eval(OEEdgeBase*)         {return(false);}
+	virtual bool Eval(OBNodeBase*)         {return(false);}
+	virtual bool Eval(OBEdgeBase*)         {return(false);}
 	virtual bool IsAromatic()              {return(false);}
 	virtual unsigned int GetAtomicNum()    {return(0);}
 	virtual unsigned int GetBO()           {return(0);}
@@ -60,20 +60,20 @@ public:
 // Logical expressions for both nodes and edges
 //
 
-class OEAndExpr : public OEExprBase
+class OBAndExpr : public OBExprBase
 {
 protected:
-	OEExprBase *_lft;
-	OEExprBase *_rgt;
+	OBExprBase *_lft;
+	OBExprBase *_rgt;
 public:
-	OEAndExpr(OEExprBase *lft,OEExprBase *rgt) {_lft = lft;_rgt = rgt;}
-	~OEAndExpr()
+	OBAndExpr(OBExprBase *lft,OBExprBase *rgt) {_lft = lft;_rgt = rgt;}
+	~OBAndExpr()
 	{
 		if (_lft) delete _lft;
 		if (_rgt) delete _rgt;
 	}
-	bool Eval(OENodeBase *nb) {return((_lft->Eval(nb) && _rgt->Eval(nb)));}
-	bool Eval(OEEdgeBase *eb) {return((_lft->Eval(eb) && _rgt->Eval(eb)));}
+	bool Eval(OBNodeBase *nb) {return((_lft->Eval(nb) && _rgt->Eval(nb)));}
+	bool Eval(OBEdgeBase *eb) {return((_lft->Eval(eb) && _rgt->Eval(eb)));}
 	int          GetFormalCharge();
 	void         Print(ostream&);
 	void         ResetRecurs();
@@ -82,20 +82,20 @@ public:
 	unsigned int GetBO();
 };
 
-class OEOrExpr : public OEExprBase
+class OBOrExpr : public OBExprBase
 {
 protected:
-	OEExprBase *_lft;
-	OEExprBase *_rgt;
+	OBExprBase *_lft;
+	OBExprBase *_rgt;
 public:
-	OEOrExpr(OEExprBase *lft,OEExprBase *rgt) {_lft = lft; _rgt = rgt;}
-	~OEOrExpr()
+	OBOrExpr(OBExprBase *lft,OBExprBase *rgt) {_lft = lft; _rgt = rgt;}
+	~OBOrExpr()
 	{
 		if (_lft) delete _lft;
 		if (_rgt) delete _rgt;
 	}
-	bool Eval(OENodeBase *nb) {return((_lft->Eval(nb) || _rgt->Eval(nb)));}
-	bool Eval(OEEdgeBase *eb) {return((_lft->Eval(eb) || _rgt->Eval(eb)));}
+	bool Eval(OBNodeBase *nb) {return((_lft->Eval(nb) || _rgt->Eval(nb)));}
+	bool Eval(OBEdgeBase *eb) {return((_lft->Eval(eb) || _rgt->Eval(eb)));}
 	int          GetFormalCharge();
 	void         Print(ostream&);
 	void         ResetRecurs();
@@ -104,30 +104,30 @@ public:
 	unsigned int GetBO();
 };
 
-class OENotExpr : public OEExprBase
+class OBNotExpr : public OBExprBase
 {
 protected:
-	OEExprBase *_expr;
+	OBExprBase *_expr;
 public:
-	OENotExpr(OEExprBase *expr) {_expr = expr;}
-	~OENotExpr()                {if (_expr) delete _expr;}
+	OBNotExpr(OBExprBase *expr) {_expr = expr;}
+	~OBNotExpr()                {if (_expr) delete _expr;}
 	void Print(ostream&);
 	void ResetRecurs();
-	bool Eval(OENodeBase *nb)   {return(!_expr->Eval(nb));}
-	bool Eval(OEEdgeBase *eb)   {return(!_expr->Eval(eb));}
+	bool Eval(OBNodeBase *nb)   {return(!_expr->Eval(nb));}
+	bool Eval(OBEdgeBase *eb)   {return(!_expr->Eval(eb));}
 	bool IsAromatic()           {return(!_expr->IsAromatic());}
 };
 
-class OEConstExpr : public OEExprBase
+class OBConstExpr : public OBExprBase
 {
 protected:
 public:
-	OEConstExpr()          {}
-	~OEConstExpr()         {}
+	OBConstExpr()          {}
+	~OBConstExpr()         {}
 	void Print(ostream&);
-	bool Eval(OENodeBase *nb) {return(nb->GetAtomicNum() != 1);}
-	//bool Eval(OENodeBase*) {return(true);}
-	bool Eval(OEEdgeBase*) {return(true);}
+	bool Eval(OBNodeBase *nb) {return(nb->GetAtomicNum() != 1);}
+	//bool Eval(OBNodeBase*) {return(true);}
+	bool Eval(OBEdgeBase*) {return(true);}
 	bool IsAromatic()      {return(true);}
 };
 
@@ -135,28 +135,28 @@ public:
 // Node expression class definitions
 //
 
-class OEElementExpr : public OEExprBase
+class OBElementExpr : public OBExprBase
 {
 protected:
 	unsigned int _ele;
 public:
-	OEElementExpr(int ele) {_ele = ele;}
-	~OEElementExpr() {}
+	OBElementExpr(int ele) {_ele = ele;}
+	~OBElementExpr() {}
 	void Print(ostream &ofs);
-	bool Eval(OENodeBase *nb)    {return(_ele == nb->GetAtomicNum());}
+	bool Eval(OBNodeBase *nb)    {return(_ele == nb->GetAtomicNum());}
 	bool IsAromatic()            {return(true);}
 	unsigned int GetAtomicNum()  {return(_ele);}
 };
 
-class OEAromElemExpr : public OEExprBase
+class OBAromElemExpr : public OBExprBase
 {
 protected:
 	unsigned int  _ele;
 	bool _aro;
 public:
-	OEAromElemExpr(int ele,bool aro) {_ele = ele; _aro = aro;}
-	~OEAromElemExpr() {}
-	bool Eval(OENodeBase *nb)
+	OBAromElemExpr(int ele,bool aro) {_ele = ele; _aro = aro;}
+	~OBAromElemExpr() {}
+	bool Eval(OBNodeBase *nb)
 	{
 	  return(_ele == nb->GetAtomicNum() && _aro == nb->IsAromatic());
 	}
@@ -164,37 +164,37 @@ public:
 	unsigned int GetAtomicNum() {return(_ele);}
 };
 
-class OEAromaticExpr : public OEExprBase //both nodes and edges
+class OBAromaticExpr : public OBExprBase //both nodes and edges
 {
 protected:
 	bool _val;
 public:
-	OEAromaticExpr(bool val) {_val = val;}
-	~OEAromaticExpr() {}
+	OBAromaticExpr(bool val) {_val = val;}
+	~OBAromaticExpr() {}
 	void Print(ostream&);
-	bool Eval(OENodeBase *nb) {return(_val == nb->IsAromatic());}
-	bool Eval(OEEdgeBase *eb) {return(_val == eb->IsAromatic());}
+	bool Eval(OBNodeBase *nb) {return(_val == nb->IsAromatic());}
+	bool Eval(OBEdgeBase *eb) {return(_val == eb->IsAromatic());}
 	bool IsAromatic()         {return(_val);}
 };
 
-class OEMassExpr : public OEExprBase
+class OBMassExpr : public OBExprBase
 {
 protected:
 	int _val;
 public:
-	OEMassExpr(int val) {_val = val;}
-	~OEMassExpr(){}
-	bool Eval(OENodeBase*) {return(false);}
+	OBMassExpr(int val) {_val = val;}
+	~OBMassExpr(){}
+	bool Eval(OBNodeBase*) {return(false);}
 };
 
-class OEHCountExpr : public OEExprBase
+class OBHCountExpr : public OBExprBase
 {
 protected:
 	unsigned int _val;
 public:
-	OEHCountExpr(int val) {_val = val;}
-	~OEHCountExpr() {}
-	bool Eval(OENodeBase *nb) 
+	OBHCountExpr(int val) {_val = val;}
+	~OBHCountExpr() {}
+	bool Eval(OBNodeBase *nb) 
 	  {
             if (nb->ExplicitHydrogenCount() > nb->ImplicitHydrogenCount())
               return(_val == nb->ExplicitHydrogenCount());
@@ -203,114 +203,114 @@ public:
 	  }
 };
 
-class OENegChargeExpr : public OEExprBase
+class OBNegChargeExpr : public OBExprBase
 {
 protected:
 	int _val;
 public:
-	OENegChargeExpr(int val) {_val = -1*abs(val);}
-	~OENegChargeExpr()        {}
-	bool Eval(OENodeBase *nb) {return(nb->GetFormalCharge() == _val);}
+	OBNegChargeExpr(int val) {_val = -1*abs(val);}
+	~OBNegChargeExpr()        {}
+	bool Eval(OBNodeBase *nb) {return(nb->GetFormalCharge() == _val);}
 	int  GetFormalCharge()    {return(_val);}
 };
 
-class OEPosChargeExpr : public OEExprBase
+class OBPosChargeExpr : public OBExprBase
 {
 protected:
 	int _val;
 public:
-	OEPosChargeExpr(int val) {_val = abs(val);}
-	~OEPosChargeExpr()        {}
-	bool Eval(OENodeBase *nb) {return(nb->GetFormalCharge() == _val);}
+	OBPosChargeExpr(int val) {_val = abs(val);}
+	~OBPosChargeExpr()        {}
+	bool Eval(OBNodeBase *nb) {return(nb->GetFormalCharge() == _val);}
 	int  GetFormalCharge()    {return(_val);}
 };
 
-class OEConnectExpr : public OEExprBase
+class OBConnectExpr : public OBExprBase
 {
 protected:
 	unsigned int _val;
 public:
-	OEConnectExpr(int val)    {_val = val;}
-	~OEConnectExpr()          {}
-	bool Eval(OENodeBase *nb) {return(nb->GetImplicitValence() == _val);}
+	OBConnectExpr(int val)    {_val = val;}
+	~OBConnectExpr()          {}
+	bool Eval(OBNodeBase *nb) {return(nb->GetImplicitValence() == _val);}
 };
 
-class OEDegreeExpr : public OEExprBase
+class OBDegreeExpr : public OBExprBase
 {
 protected:
 	unsigned int _val;
 public:
-	OEDegreeExpr(int val)     {_val = val;}
-	~OEDegreeExpr()           {}
-	bool Eval(OENodeBase *nb) {return(nb->GetHvyValence() == _val);}
+	OBDegreeExpr(int val)     {_val = val;}
+	~OBDegreeExpr()           {}
+	bool Eval(OBNodeBase *nb) {return(nb->GetHvyValence() == _val);}
 };
 
-class OEImplicitExpr : public OEExprBase
+class OBImplicitExpr : public OBExprBase
 {
 protected:
 	unsigned int _val;
 public:
-	OEImplicitExpr(int val)   {_val = val;}
-	~OEImplicitExpr()         {}
-	bool Eval(OENodeBase *nb) {return(nb->ImplicitHydrogenCount() == _val);}
+	OBImplicitExpr(int val)   {_val = val;}
+	~OBImplicitExpr()         {}
+	bool Eval(OBNodeBase *nb) {return(nb->ImplicitHydrogenCount() == _val);}
 };
 
-class OERingExpr : public OEExprBase //both nodes and edges
+class OBRingExpr : public OBExprBase //both nodes and edges
 {
 protected:
 	int _val;
 public:
-	OERingExpr(int val = -1)   {_val = val;}
-	~OERingExpr()              {}
+	OBRingExpr(int val = -1)   {_val = val;}
+	~OBRingExpr()              {}
 	void Print(ostream&);
-	bool Eval(OENodeBase *); 
-	bool Eval(OEEdgeBase *eb) {return(eb->IsInRing());}
+	bool Eval(OBNodeBase *); 
+	bool Eval(OBEdgeBase *eb) {return(eb->IsInRing());}
 };
 
-class OESizeExpr : public OEExprBase
+class OBSizeExpr : public OBExprBase
 {
 protected:
 	int _val;
 public:
-	OESizeExpr(int val = 0) {_val = val;}
-	~OESizeExpr()           {}
-	bool Eval(OENodeBase *nb) 
+	OBSizeExpr(int val = 0) {_val = val;}
+	~OBSizeExpr()           {}
+	bool Eval(OBNodeBase *nb) 
 	{
 	  return((_val) ? nb->IsInRingSize(_val) : !nb->IsInRing());
 	}
 };
 
-class OEValenceExpr : public OEExprBase
+class OBValenceExpr : public OBExprBase
 {
 protected:
 	unsigned int _val;
 public:
-	OEValenceExpr(int val)    {_val = val;}
-	~OEValenceExpr()          {}
-	bool Eval(OENodeBase *nb) {return(_val == nb->KBOSum());}
+	OBValenceExpr(int val)    {_val = val;}
+	~OBValenceExpr()          {}
+	bool Eval(OBNodeBase *nb) {return(_val == nb->KBOSum());}
 };
 
-class OEHybExpr : public OEExprBase
+class OBHybExpr : public OBExprBase
 {
 protected:
 	unsigned int _val;
 public:
-	OEHybExpr(int val) {_val = val;}
-	~OEHybExpr()       {}
-	bool Eval(OENodeBase *nb)  {return(_val == nb->GetHyb());}
+	OBHybExpr(int val) {_val = val;}
+	~OBHybExpr()       {}
+	bool Eval(OBNodeBase *nb)  {return(_val == nb->GetHyb());}
 };
 
-class OERecursExpr : public OEExprBase
+class OBRecursExpr : public OBExprBase
 {
 protected:
 	vector<bool>     _vtest;
 	vector<bool>     _vmatch;
-	OESmartsPattern *_sp;
+	OBSmartsPattern *_sp;
 public:
-	OERecursExpr()                    {_sp = NULL;}
-	OERecursExpr(OESmartsPattern *sp) {_sp = sp;}
-	~OERecursExpr();
-	bool Eval(OENodeBase*);
+	OBRecursExpr()                    {_sp = NULL;}
+	OBRecursExpr(OBSmartsPattern *sp) {_sp = sp;}
+	~OBRecursExpr();
+	bool Eval(OBNodeBase*);
 	void ResetRecurs();
 };
 
@@ -318,170 +318,170 @@ public:
 //Edge expression class definitions
 //
 
-class OEDefaultEdgeExpr : public OEExprBase
+class OBDefaultEdgeExpr : public OBExprBase
 {
 protected:
 public:
-	OEDefaultEdgeExpr()       {}
-	~OEDefaultEdgeExpr()      {}
-	bool Eval(OEEdgeBase *eb)  {return((eb->GetBO() == 1 || eb->IsAromatic()));}
+	OBDefaultEdgeExpr()       {}
+	~OBDefaultEdgeExpr()      {}
+	bool Eval(OBEdgeBase *eb)  {return((eb->GetBO() == 1 || eb->IsAromatic()));}
 	unsigned int GetBO() {return(1);}
 };
 
-class OESingleExpr : public OEExprBase
+class OBSingleExpr : public OBExprBase
 {
 protected:
 public:
-	OESingleExpr()  {}
-	~OESingleExpr() {}
+	OBSingleExpr()  {}
+	~OBSingleExpr() {}
 	void Print(ostream &ofs)  {ofs << "Single";}
-	bool Eval(OEEdgeBase *eb) 
+	bool Eval(OBEdgeBase *eb) 
 	  {
 	    return(eb->GetBO() == 1 && !eb->IsAromatic());
 	  }
 	unsigned int GetBO()      {return(1);}
 };
 
-class OEDoubleExpr : public OEExprBase
+class OBDoubleExpr : public OBExprBase
 {
 protected:
 public:
-	OEDoubleExpr()  {}
-	~OEDoubleExpr() {}
+	OBDoubleExpr()  {}
+	~OBDoubleExpr() {}
 	void Print(ostream &ofs)  {ofs << "Double";}
-	bool Eval(OEEdgeBase *eb) 
+	bool Eval(OBEdgeBase *eb) 
 	  {
 	    return(eb->GetBO() == 2 && !eb->IsAromatic());
 	  }
 	unsigned int GetBO()      {return(2);}
 };
 
-class OETripleExpr : public OEExprBase
+class OBTripleExpr : public OBExprBase
 {
 protected:
 public:
-	OETripleExpr()  {}
-	~OETripleExpr() {}
-	bool Eval(OEEdgeBase *eb) {return(eb->GetBO() == 3);}
+	OBTripleExpr()  {}
+	~OBTripleExpr() {}
+	bool Eval(OBEdgeBase *eb) {return(eb->GetBO() == 3);}
 	unsigned int GetBO()      {return(3);}
 };
 
-class OEUpExpr : public OEExprBase
+class OBUpExpr : public OBExprBase
 {
 protected:
 public:
-	OEUpExpr() {}
-	~OEUpExpr() {}
-	bool Eval(OEEdgeBase *eb) {return(false);}
+	OBUpExpr() {}
+	~OBUpExpr() {}
+	bool Eval(OBEdgeBase *eb) {return(false);}
 };
 
-class OEDownExpr : public OEExprBase
+class OBDownExpr : public OBExprBase
 {
 protected:
 public:
-	OEDownExpr()  {}
-	~OEDownExpr() {}
-	bool Eval(OEEdgeBase *eb) {return(false);}
+	OBDownExpr()  {}
+	~OBDownExpr() {}
+	bool Eval(OBEdgeBase *eb) {return(false);}
 };
 
-class OEUpUnspecExpr : public OEExprBase
+class OBUpUnspecExpr : public OBExprBase
 {
 protected:
 public:
-	OEUpUnspecExpr() {}
-	~OEUpUnspecExpr() {}
-	bool Eval(OEEdgeBase *eb) {return(false);}
+	OBUpUnspecExpr() {}
+	~OBUpUnspecExpr() {}
+	bool Eval(OBEdgeBase *eb) {return(false);}
 };
 
-class OEDownUnspecExpr : public OEExprBase
+class OBDownUnspecExpr : public OBExprBase
 {
 protected:
 public:
-	OEDownUnspecExpr()  {}
-	~OEDownUnspecExpr() {}
-	bool Eval(OEEdgeBase *eb) {return(false);}
+	OBDownUnspecExpr()  {}
+	~OBDownUnspecExpr() {}
+	bool Eval(OBEdgeBase *eb) {return(false);}
 };
 
 //
-//OESmartsPattern class definition
+//OBSmartsPattern class definition
 //
 
-class OEEdge : public OEEdgeBase
+class OBEdge : public OBEdgeBase
 {
 protected:
-	OEExprBase *_expr;
+	OBExprBase *_expr;
 	bool        _closure;
 public:
-	OEEdge(OENodeBase *bgn,OENodeBase *end,OEExprBase *expr) 
+	OBEdge(OBNodeBase *bgn,OBNodeBase *end,OBExprBase *expr) 
 	{
 		_bgn = bgn; 
 		_end = end; 
 		_expr = expr;
 		_closure = false;
 	}
-	void ReplaceExpr(OEExprBase *expr)
+	void ReplaceExpr(OBExprBase *expr)
 	{
 		if (_expr) delete _expr;
 		_expr = expr;
 	}
 	void        SetClosure()        {_closure = true;}
 	bool        IsClosure()         {return(_closure);}
-	bool        Eval(OEEdgeBase *e) {return(_expr->Eval(e));}
+	bool        Eval(OBEdgeBase *e) {return(_expr->Eval(e));}
 	unsigned int GetBO()            {return(_expr->GetBO());}
-	OEExprBase *GetExpr()           {return(_expr);}
-	OENodeBase *GetBgn()            {return(_bgn);}
-	OENodeBase *GetEnd()            {return(_end);}
+	OBExprBase *GetExpr()           {return(_expr);}
+	OBNodeBase *GetBgn()            {return(_bgn);}
+	OBNodeBase *GetEnd()            {return(_end);}
 };
 
-class OENode : public OENodeBase
+class OBNode : public OBNodeBase
 {
 	int        _stereo;
 	int        _vb;
-	OENodeBase *_match;
-	OEExprBase *_expr;
+	OBNodeBase *_match;
+	OBExprBase *_expr;
 public:
-	OENode() {_stereo=0; _match = NULL;}
-	virtual ~OENode() {}
+	OBNode() {_stereo=0; _match = NULL;}
+	virtual ~OBNode() {}
 	int     GetFormalCharge()         const  {return(_expr->GetFormalCharge());}
-	void    SetExpr(OEExprBase *expr)        {_expr = expr;}
-	void    SetMatch(OENodeBase *m)          {_match = m;}
+	void    SetExpr(OBExprBase *expr)        {_expr = expr;}
+	void    SetMatch(OBNodeBase *m)          {_match = m;}
 	void    SetVectorBinding(int vb)         {_vb = vb;}
 	void    ResetRecurs()                    {_expr->ResetRecurs();}
 	void    Print(ostream &ofs)              {_expr->Print(ofs);}
-	bool	Eval(OENodeBase *n)       const  {return(_expr->Eval(n));}
+	bool	Eval(OBNodeBase *n)       const  {return(_expr->Eval(n));}
 	bool         IsAromatic()                {return(_expr->IsAromatic());}
 	unsigned int GetVectorBinding()          {return(_vb);}
 	unsigned int GetAtomicNum()       const  {return(_expr->GetAtomicNum());}
-	OENodeBase *GetMatch()                   {return(_match);}
-	OENode *BeginNbr(vector<OEEdgeBase*>::iterator &);
-	OENode *NextNbr(vector<OEEdgeBase*>::iterator &);
+	OBNodeBase *GetMatch()                   {return(_match);}
+	OBNode *BeginNbr(vector<OBEdgeBase*>::iterator &);
+	OBNode *NextNbr(vector<OBEdgeBase*>::iterator &);
 };
 
-class OESmartsPattern : public OEGraphBase
+class OBSmartsPattern : public OBGraphBase
 {
 protected:
 	bool                                            _done;
 	bool                                            _single;
 	string                                          _smarts;
-	vector<vector<OENodeBase*> >                    _vmatch;
-	vector<pair<OENodeBase*,vector<OEEdgeBase*> > > _vm;
+	vector<vector<OBNodeBase*> >                    _vmatch;
+	vector<pair<OBNodeBase*,vector<OBEdgeBase*> > > _vm;
 public:
-	OESmartsPattern();
-	OESmartsPattern(const OESmartsPattern &);
-	~OESmartsPattern();
+	OBSmartsPattern();
+	OBSmartsPattern(const OBSmartsPattern &);
+	~OBSmartsPattern();
 
 
 	//initialization and graph modification methods
 	bool    Init(const char *);
 	bool    Init(string &);
-	OENode *NewNode(OEExprBase*);
-	OEEdge *NewEdge(OENode*,OENode*,OEExprBase*);
+	OBNode *NewNode(OBExprBase*);
+	OBEdge *NewEdge(OBNode*,OBNode*,OBExprBase*);
 	
 	//iterator methods
-	OENode* Begin(vector<OENodeBase*>::iterator &); 
-	OENode* Next(vector<OENodeBase*>::iterator &);
-	OEEdge* Begin(vector<OEEdgeBase*>::iterator &);
-	OEEdge* Next(vector<OEEdgeBase*>::iterator &);
+	OBNode* Begin(vector<OBNodeBase*>::iterator &); 
+	OBNode* Next(vector<OBNodeBase*>::iterator &);
+	OBEdge* Begin(vector<OBEdgeBase*>::iterator &);
+	OBEdge* Next(vector<OBEdgeBase*>::iterator &);
 
 	//routines that perform substructure search
 	bool        SingleMatch()                    const{return(_single);}
@@ -489,24 +489,24 @@ public:
 	void        SetSingleMatch(bool state)       {_single = state;}
 	void        SetFinishedMatch(bool state)     {_done = state;}
 	void        PrepForMatch();
-	void        PushBack(vector<OENodeBase*> &v) {_vmatch.push_back(v);}
+	void        PushBack(vector<OBNodeBase*> &v) {_vmatch.push_back(v);}
 	void        ClearMatches();
-	OENodeBase *GetFirstSeed()                   {return(_vm.begin()->first);}
-	bool        SeedMatch(OENodeBase*);
-	bool        RestrictedMatch(OEGraphBase&,vector<pair<int,int> >&,bool) 
+	OBNodeBase *GetFirstSeed()                   {return(_vm.begin()->first);}
+	bool        SeedMatch(OBNodeBase*);
+	bool        RestrictedMatch(OBGraphBase&,vector<pair<int,int> >&,bool) 
 	{
-		cerr << "need to implement OESmartsPattern::RestrictedMatch()" << endl;
+		cerr << "need to implement OBSmartsPattern::RestrictedMatch()" << endl;
 		exit(0);
 		return(false);
 	}
-	vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator BgnMatch() {return(_vm.begin());}
-	vector<pair<OENodeBase*,vector<OEEdgeBase*> > >::iterator EndMatch() {return(_vm.end());}
+	vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator BgnMatch() {return(_vm.begin());}
+	vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator EndMatch() {return(_vm.end());}
 
 	//data mod methods
 	void SetSMARTS(const char *buf) {_smarts = buf;}
 
 	//methods to return match data
-	void GetMatches(vector<vector<OENodeBase*> > &vm) const {vm = _vmatch;}
+	void GetMatches(vector<vector<OBNodeBase*> > &vm) const {vm = _vmatch;}
 	void GetMatches(vector<vector<int> > &vm);
 	vector<vector<int> > GetMapList();
 	vector<vector<int> > GetUMapList();
@@ -519,7 +519,7 @@ public:
 	unsigned int  NumMatches()              {return((_vmatch.empty()) ? 0 : _vmatch.size());}
 	unsigned int  NumAtoms()                {return(NumNodes());}
 	unsigned int  NumBonds()                {return(NumEdges());}
-	unsigned int  GetVectorBinding(int idx) {return(((OENode*)_vatom[idx])->GetVectorBinding());}
+	unsigned int  GetVectorBinding(int idx) {return(((OBNode*)_vatom[idx])->GetVectorBinding());}
 	unsigned int  GetAtomicNum(int idx)     const {return(_vatom[idx]->GetAtomicNum());}
 
 	//stream output methods

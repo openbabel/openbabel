@@ -17,7 +17,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool ReadBGF(istream &ifs,OEMol &mol,char *title)
+bool ReadBGF(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   char tmp[15],tmptyp[15];
@@ -27,7 +27,7 @@ bool ReadBGF(istream &ifs,OEMol &mol,char *title)
       break;
 
   ttab.SetFromType("DRE"); 
-  OEAtom *atom;
+  OBAtom *atom;
   float x,y,z,chrg;
   for (;;)
   {
@@ -101,11 +101,11 @@ bool ReadBGF(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteBGF(ostream &ofs,OEMol &mol)
+bool WriteBGF(ostream &ofs,OBMol &mol)
 { 
-  vector<OENodeBase*>::iterator i;
+  vector<OBNodeBase*>::iterator i;
   int max_val;
-  OEAtom *atom;
+  OBAtom *atom;
   char buffer[BUFF_SIZE];
   char elmnt_typ[5], dreid_typ[5], atm_sym[10], max_val_str[5];
 
@@ -147,8 +147,8 @@ bool WriteBGF(ostream &ofs,OEMol &mol)
   }
   sprintf(buffer,"FORMAT CONECT (a6,12i6)\n"); ofs << buffer << endl;
 
-  OEAtom *nbr;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *nbr;
+  vector<OBEdgeBase*>::iterator j;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     if (atom->GetValence())
       {

@@ -19,29 +19,29 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-class OERotor;
-class OERotorList;
-class OERotorRule;
-class OERotorRules;
+class OBRotor;
+class OBRotorList;
+class OBRotorRule;
+class OBRotorRules;
 
-class OERotorRule
+class OBRotorRule
 {
   int              _ref[4];
   float            _delta;
   string           _s;
-  OESmartsPattern* _sp;
+  OBSmartsPattern* _sp;
   vector<float>    _vals;
  public:
-  OERotorRule(char *buffer,int ref[4],vector<float> &vals,float d)
+  OBRotorRule(char *buffer,int ref[4],vector<float> &vals,float d)
     {
       _s = buffer;
-      _sp = new OESmartsPattern;
+      _sp = new OBSmartsPattern;
       _sp->Init(buffer);
       memcpy(_ref,ref,sizeof(int)*4);
       _vals = vals;
       _delta = d;
     }
-  ~OERotorRule() {if (_sp) delete _sp;}
+  ~OBRotorRule() {if (_sp) delete _sp;}
 
   bool             IsValid() {return(_sp->IsValid());}
   void             GetReferenceAtoms(int ref[4])  
@@ -50,46 +50,46 @@ class OERotorRule
   float            GetDelta()        {return(_delta);}
   string          &GetSmartsString() {return(_s);}
   vector<float>   &GetTorsionVals() {return(_vals);}
-  OESmartsPattern *GetSmartsPattern() {return(_sp);}
+  OBSmartsPattern *GetSmartsPattern() {return(_sp);}
 };
 
-class OERotorRules : public OEGlobalDataBase
+class OBRotorRules : public OBGlobalDataBase
 {
   bool                 _quiet;
-  vector<OERotorRule*> _vr;
+  vector<OBRotorRule*> _vr;
   vector<float>        _sp3sp3;
   vector<float>        _sp3sp2;
   vector<float>        _sp2sp2;
   public:
-  OERotorRules();
-  ~OERotorRules();
+  OBRotorRules();
+  ~OBRotorRules();
 
   void ParseLine(char*);
   void SetFilename(string &s) {_filename = s;}
-  void GetRotorIncrements(OEMol&,OEBond*,int [4],vector<float>&,float &delta);
+  void GetRotorIncrements(OBMol&,OBBond*,int [4],vector<float>&,float &delta);
   void Quiet() {_quiet=true;};
 };
 
-class OERotor
+class OBRotor
 {
   int _idx,_ref[4];
   int *_rotatoms,_size,_numcoords;
   float _delta;
   float _imag,_refang;
-  OEBond *_bond;
+  OBBond *_bond;
   vector<int> _torsion;
-  OEBitVec _fixedatoms,_evalatoms;
+  OBBitVec _fixedatoms,_evalatoms;
   vector<float> _res;  //torsion resolution
   vector<float> _invmag;
   vector<vector<float> > _sn,_cs,_t;
  public:
-  OERotor();
-  ~OERotor() {if (_rotatoms) delete [] _rotatoms;}
+  OBRotor();
+  ~OBRotor() {if (_rotatoms) delete [] _rotatoms;}
   int     Size()                             {return((_res.empty())?0:_res.size());}
   int     GetIdx() const                     {return(_idx);}
   void    SetNumCoords(int nc)               {_numcoords = nc;}
-  void    SetBond(OEBond *bond)              {_bond = bond;}
-  void    SetEvalAtoms(OEBitVec &bv)         {_evalatoms = bv;}
+  void    SetBond(OBBond *bond)              {_bond = bond;}
+  void    SetEvalAtoms(OBBitVec &bv)         {_evalatoms = bv;}
   void    SetDihedralAtoms(vector<int> &vi)  {_torsion = vi;}
   void    SetDelta(float d)                  {_delta = d;}
   void    SetDihedralAtoms(int ref[4]);
@@ -115,7 +115,7 @@ class OERotor
   void    Set(float*,float,float,float,float);
   void    Precalc(vector<float*>&);
   void    SetIdx(int idx) {_idx = idx;}
-  void    SetFixedAtoms(OEBitVec &bv)          {_fixedatoms = bv;}
+  void    SetFixedAtoms(OBBitVec &bv)          {_fixedatoms = bv;}
   void    SetTorsionValues(vector<float> &tmp) {_res = tmp;}
   void    RemoveSymTorsionValues(int);
   void    GetDihedralAtoms(int ref[4]) {for (int i=0;i<4;i++)ref[i]=_ref[i];}
@@ -123,27 +123,27 @@ class OERotor
   float   CalcTorsion(float *);
   float   CalcBondLength(float*);
   float   GetDelta() {return(_delta);}
-  OEBond *GetBond()  {return(_bond);}
+  OBBond *GetBond()  {return(_bond);}
   vector<int> &GetDihedralAtoms()                {return(_torsion);}
   vector<float> &GetResolution()                 {return(_res);}
   vector<float>::iterator BeginTorIncrement()    {return(_res.begin());}
   vector<float>::iterator EndTorIncrement()      {return(_res.end());}
-  OEBitVec &GetEvalAtoms() {return(_evalatoms);}
-  OEBitVec &GetFixedAtoms() {return(_fixedatoms);}
+  OBBitVec &GetEvalAtoms() {return(_evalatoms);}
+  OBBitVec &GetFixedAtoms() {return(_fixedatoms);}
 };
 
-class OERotorList
+class OBRotorList
 {
   bool _quiet,_removesym;
-  OEBitVec _fix;
-  OERotorRules _rr;
+  OBBitVec _fix;
+  OBRotorRules _rr;
   vector<int> _dffv;         //distance from fixed
-  vector<OERotor*> _rotor;
-  vector<pair<OESmartsPattern*,pair<int,int> > > _vsym2;
-  vector<pair<OESmartsPattern*,pair<int,int> > > _vsym3;
+  vector<OBRotor*> _rotor;
+  vector<pair<OBSmartsPattern*,pair<int,int> > > _vsym2;
+  vector<pair<OBSmartsPattern*,pair<int,int> > > _vsym3;
  public:
-  OERotorList();
-  ~OERotorList();
+  OBRotorList();
+  ~OBRotorList();
 
   int    Size()
     {return((_rotor.empty()) ? 0: _rotor.size());}
@@ -152,26 +152,26 @@ class OERotorList
       _rr.SetFilename(fname);
       _rr.Init();
     }
-  void   SetFixAtoms(OEBitVec &fix)   {_fix = fix;}
+  void   SetFixAtoms(OBBitVec &fix)   {_fix = fix;}
   void   ShutTheHellUp()              {_quiet=true;_rr.Quiet();}
   void   NoSymmetryCondoms()          {_removesym=false;}
   void   Clear();
-  void   RemoveSymVals(OEMol&);
-  void   SetRotAtomsByFix(OEMol&);
-  bool   SetRotAtoms(OEMol&);
-  bool   Setup(OEMol &);
-  bool   FindRotors(OEMol &);
-  bool   IdentifyEvalAtoms(OEMol &);
-  bool   SetEvalAtoms(OEMol&);
-  bool   AssignTorVals(OEMol &);
-  bool   IsFixedBond(OEBond*);
+  void   RemoveSymVals(OBMol&);
+  void   SetRotAtomsByFix(OBMol&);
+  bool   SetRotAtoms(OBMol&);
+  bool   Setup(OBMol &);
+  bool   FindRotors(OBMol &);
+  bool   IdentifyEvalAtoms(OBMol &);
+  bool   SetEvalAtoms(OBMol&);
+  bool   AssignTorVals(OBMol &);
+  bool   IsFixedBond(OBBond*);
   bool   HasFixedAtoms()              {return(!_fix.Empty());}
-  OERotor *BeginRotor(vector<OERotor*>::iterator &i) 
+  OBRotor *BeginRotor(vector<OBRotor*>::iterator &i) 
     {i = _rotor.begin();return((i ==_rotor.end()) ? NULL:*i);}
-  OERotor *NextRotor(vector<OERotor*>::iterator &i) 
+  OBRotor *NextRotor(vector<OBRotor*>::iterator &i) 
       {i++;return((i ==_rotor.end()) ? NULL:*i);}
-  vector<OERotor*>::iterator BeginRotors() {return(_rotor.begin());}
-  vector<OERotor*>::iterator EndRotors() {return(_rotor.end());}
+  vector<OBRotor*>::iterator BeginRotors() {return(_rotor.begin());}
+  vector<OBRotor*>::iterator EndRotors() {return(_rotor.end());}
 };
 
 

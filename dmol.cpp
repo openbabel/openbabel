@@ -18,12 +18,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadDMol(istream &ifs,OEMol &mol,char *title)
+bool ReadDMol(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   string str;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
 
   ttab.SetFromType("XYZ");
@@ -54,14 +54,14 @@ bool ReadDMol(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteDMol(ostream &ofs,OEMol &mol)
+bool WriteDMol(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
   
   ofs << "$coordinates" << endl;
 
-  OEAtom *atom;
+  OBAtom *atom;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
     atom = mol.GetAtom(i);

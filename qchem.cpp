@@ -15,10 +15,10 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool WriteQChem(ostream &ofs,OEMol &mol)
+bool WriteQChem(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
-  OEAtom *atom;
+  OBAtom *atom;
   
   ofs << "$comment" << endl;
   ofs << mol.GetTitle() << endl;
@@ -37,15 +37,15 @@ bool WriteQChem(ostream &ofs,OEMol &mol)
   return(true);
 }
 
-bool ReadQChem(istream &ifs,OEMol &mol,char *title)
+bool ReadQChem(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
   float x,y,z;
-  OEAtom *atom;
-  OEInternalCoord *coord;
+  OBAtom *atom;
+  OBInternalCoord *coord;
   vector<string> vs;
-  vector<OEInternalCoord *> internals; // If we get a z-matrix
+  vector<OBInternalCoord *> internals; // If we get a z-matrix
   int index;
   bool hasPartialCharges = false;
 
@@ -118,7 +118,7 @@ bool ReadQChem(istream &ifs,OEMol &mol,char *title)
 	      atom->SetType(str);
 
 	      tokenize(vs,buffer);
-	      coord = new OEInternalCoord();
+	      coord = new OBInternalCoord();
 	      if (index > 1)
 		{
 		  coord->_a = mol.GetAtom(atoi(vs[2].c_str()));

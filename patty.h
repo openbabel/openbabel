@@ -11,8 +11,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef OE_PATTY
-#define OE_PATTY
+#ifndef OB_PATTY
+#define OB_PATTY
 
 namespace OpenBabel {
 #define PT_CATION      1
@@ -26,7 +26,7 @@ namespace OpenBabel {
 
 class patty
 {
-  vector<OESmartsPattern*> _sp;
+  vector<OBSmartsPattern*> _sp;
   vector<string> smarts;
   vector<string> typ;
   bool debug;
@@ -47,15 +47,15 @@ class patty
     }
   ~patty()
     {
-      vector<OESmartsPattern*>::iterator i;
+      vector<OBSmartsPattern*>::iterator i;
       for (i = _sp.begin();i != _sp.end();i++) delete *i;
     }
   void debug_on() {debug = true;}
   void debug_off() {debug = false;}
   void read_rules(const string &infile);
   void assign_rules(vector<string> &rules);
-  void assign_types(OEMol &mol,vector<string> &atm_typ);
-  void assign_types(OEMol &mol,vector<int> &atm_typ);
+  void assign_types(OBMol &mol,vector<string> &atm_typ);
+  void assign_types(OBMol &mol,vector<int> &atm_typ);
   int type_to_int(const string &type, bool failOnUndefined= false);
 };
 

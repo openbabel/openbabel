@@ -11,8 +11,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef OE_COORDTRANSFORM_INCLUDED
-#define OE_COORDTRANSFORM_INCLUDED
+#ifndef OB_COORDTRANSFORM_INCLUDED
+#define OB_COORDTRANSFORM_INCLUDED
 
 #include <math.h>
 
@@ -38,14 +38,14 @@ namespace OpenBabel {
 **The Invert() member function will reverses the current transformation such that it changes
 **what was originally the final reference frame into what was originally the initial reference frame.
 **A rotation/translation or translation/rotation cooresponding to the objects transformation
-**can be extracted, see the various member functions begining with Get.  The operator+(const OECoordTrans& ct2)
-**and operator+=(const OECoordTrans& ct) are also defined for combining transformation.
+**can be extracted, see the various member functions begining with Get.  The operator+(const OBCoordTrans& ct2)
+**and operator+=(const OBCoordTrans& ct) are also defined for combining transformation.
 **\note \b IMPORTANT : This object can only handle transformations that can be described
 **with Euler angles (i.e., No inversions).  Several member function will take rotation
 **matricies as input, however, it is assumed that these matricies only apply simple
 **rotations that can be described with Euler angles.
 */
-class OECoordTrans {
+class OBCoordTrans {
     protected:
         float _trans[3];
         float _euler[3];
@@ -59,14 +59,14 @@ class OECoordTrans {
         void EulerToRmatrix(float *euler, float *rmat) const;
     public:
         //Constructor, destructor and copy constructor
-        OECoordTrans();
-        OECoordTrans(const OECoordTrans& cp);
-        ~OECoordTrans();
+        OBCoordTrans();
+        OBCoordTrans(const OBCoordTrans& cp);
+        ~OBCoordTrans();
 
         //Operator overloads
-        OECoordTrans& operator=(const OECoordTrans& cp);
-        OECoordTrans& operator+=(const OECoordTrans& ct);
-        OECoordTrans operator+(const OECoordTrans& ct2) const;
+        OBCoordTrans& operator=(const OBCoordTrans& cp);
+        OBCoordTrans& operator+=(const OBCoordTrans& ct);
+        OBCoordTrans operator+(const OBCoordTrans& ct2) const;
 
         //Clear function
         void Clear();
@@ -103,13 +103,13 @@ class OECoordTrans {
   };
 
 /*!
-**\fn OECoordTrans::_trans()
+**\fn OBCoordTrans::_trans()
 **\brief Stores the translation part of the transformation.  This
 **translation is applied after the rotation.
 */
 
 /*!
-**\fn OECoordTrans::_euler()
+**\fn OBCoordTrans::_euler()
 **\brief Stores the rotation part of the transformation in euler angles.
 **This rotation is applied before the translation.  The elements of
 **the array are : euler[0], a rotation about the z-axis; euler[1],
@@ -118,7 +118,7 @@ class OECoordTrans {
 */
 
 /*!
-**\fn OECoordTrans::_rmat()
+**\fn OBCoordTrans::_rmat()
 **\brief Stores the rotation part of the transformation as a
 **rotation matrix.  This rotation is applied before the translation.
 **_rmat[3*i+j] hold the matrix element in the i'th row and j'th column.

@@ -15,13 +15,13 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool WriteXED(ostream &ofs,OEMol &mol)
+bool WriteXED(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
   int type_name, mass;
-  OEAtom *atom;
-  OEBond *bond;
+  OBAtom *atom;
+  OBBond *bond;
   string str,str1;
 
   ttab.SetFromType("INT"); ttab.SetToType("XED");

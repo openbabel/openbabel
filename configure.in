@@ -1,0 +1,46 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(StdAfx.h)
+AM_CONFIG_HEADER(config.h)
+AM_INIT_AUTOMAKE([openbabel], 2.0)
+AC_CANONICAL_HOST
+
+dnl Checks for programs.
+AC_PROG_CXX
+AC_PROG_CXXCPP
+AM_PROG_LIBTOOL
+AC_PROG_INSTALL
+
+AC_LANG_CPLUSPLUS
+dnl Checks for libraries.
+AC_CHECK_LIB(m, asin, , exit)
+
+
+dnl Checks for header files.
+AC_CHECK_HEADER(sys/time.h,, exit)
+AC_CHECK_HEADER(unistd.h,, exit)
+AC_CHECK_HEADER(stdlib.h,, exit)
+AC_CHECK_HEADER(stdio.h,, exit)
+dnl AC_CHECK_HEADER(conio.h,, exit)
+AC_CHECK_HEADER(string.h,, exit)
+AC_CHECK_HEADER(strstream.h,, exit)
+AC_CHECK_HEADER(iostream.h,, exit)
+AC_CHECK_HEADER(fstream.h,, exit)
+AC_CHECK_HEADER(math.h,, exit)
+AC_CHECK_HEADER(time.h,, exit)
+AC_CHECK_HEADER(ctype.h,, exit) 
+AC_CHECK_HEADER(algorithm,, exit)
+AC_CHECK_HEADER(vector,, exit)
+AC_CHECK_HEADER(map,, exit)
+AC_CHECK_HEADER(list,, exit)
+AC_CHECK_HEADER(strstream,, exit)
+AC_CHECK_HEADER(iostream,, exit)
+AC_CHECK_HEADER(fstream,, exit)
+AC_CHECK_HEADER(deque,, exit)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+
+dnl Checks for library functions.
+
+AC_OUTPUT(Makefile)

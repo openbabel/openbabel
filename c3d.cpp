@@ -12,28 +12,28 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "oeutil.h"
+#include "obutil.h"
 
 namespace OpenBabel
 {
-static bool WriteChem3d(ostream &ofs,OEMol &mol, char *mol_typ);
+static bool WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ);
 
-bool WriteChem3d2(ostream &ofs,OEMol &mol)
+bool WriteChem3d2(ostream &ofs,OBMol &mol)
 {
   return(WriteChem3d(ofs,mol,"C3D"));
 }
 
-bool WriteChem3d1(ostream &ofs,OEMol &mol)
+bool WriteChem3d1(ostream &ofs,OBMol &mol)
 {
   return(WriteChem3d(ofs,mol,"MM2"));
 }
 
-bool WriteMmads(ostream &ofs,OEMol &mol)
+bool WriteMmads(ostream &ofs,OBMol &mol)
 {
   return(WriteChem3d(ofs,mol,"MMADS"));
 }
 
-static bool WriteChem3d(ostream &ofs,OEMol &mol, char *mol_typ)
+static bool WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
 { 
   int atnum;
   int type_num;
@@ -50,9 +50,9 @@ static bool WriteChem3d(ostream &ofs,OEMol &mol, char *mol_typ)
 
   ttab.SetFromType("INT"); 
 
-  OEAtom *atom,*nbr;
-  vector<OEAtom*>::iterator i;
-  vector<OEBond*>::iterator j;
+  OBAtom *atom,*nbr;
+  vector<OBAtom*>::iterator i;
+  vector<OBBond*>::iterator j;
 
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
@@ -84,24 +84,24 @@ static bool WriteChem3d(ostream &ofs,OEMol &mol, char *mol_typ)
   return(true);
 }
 
-static bool ReadChem3d(istream&,OEMol&,bool,char*);
+static bool ReadChem3d(istream&,OBMol&,bool,char*);
 
-bool ReadMmads(istream &ifs,OEMol &mol,char *title)
+bool ReadMmads(istream &ifs,OBMol &mol,char *title)
 {
   return(ReadChem3d(ifs,mol,true,"MM2"));
 }
 
-bool ReadChem3d1(istream &ifs,OEMol &mol,char *title)
+bool ReadChem3d1(istream &ifs,OBMol &mol,char *title)
 {
   return(ReadChem3d(ifs,mol,false,"MM2"));
 }
 
-int read_chem3d2(istream &ifs,OEMol &mol,char *title)
+int read_chem3d2(istream &ifs,OBMol &mol,char *title)
 {
   return(ReadChem3d(ifs,mol,false,"C3D"));
 }
 
-bool ReadChem3d(istream &ifs,OEMol &mol,bool mmads,char *type_key)
+bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
 {
   char buffer[BUFF_SIZE];
   int natoms,i;
@@ -153,7 +153,7 @@ bool ReadChem3d(istream &ifs,OEMol &mol,bool mmads,char *type_key)
   ttab.SetToType("INT");
   ttab.SetFromType(type_key);
 
-  OEAtom *atom;
+  OBAtom *atom;
   float x,y,z;
   Vector v;
 

@@ -40,15 +40,15 @@ using namespace std;
 
 namespace OpenBabel {
 
-class OEBitVec
+class OBBitVec
 {
   int _size;
   vector<int> _set;
 public:
-    OEBitVec() {_set.resize(STARTWORDS);_size=_set.size();Clear();}
-    OEBitVec(int bits) 
+    OBBitVec() {_set.resize(STARTWORDS);_size=_set.size();Clear();}
+    OBBitVec(int bits) 
       {_set.resize(bits/SETWORD);_size=_set.size();Clear(); }
-    OEBitVec(const OEBitVec&);
+    OBBitVec(const OBBitVec&);
     void SetBitOn(int);
     void SetBitOff(int);
     void SetRangeOn(int, int);
@@ -77,29 +77,29 @@ public:
     void Clear(void);
     void Negate() { for (int i= 0; i != _size; i++) { _set[i] = ~_set[i]; } }
 
-    OEBitVec &operator= (const OEBitVec &);
-    OEBitVec &operator&= (OEBitVec &);
-    OEBitVec &operator|= (OEBitVec &);
-    OEBitVec &operator|= (const int i) {SetBitOn(i);return(*this);}
-    OEBitVec &operator^= (OEBitVec &);
-    OEBitVec &operator-= (OEBitVec &);
-    OEBitVec &operator+= (OEBitVec &bv);
+    OBBitVec &operator= (const OBBitVec &);
+    OBBitVec &operator&= (OBBitVec &);
+    OBBitVec &operator|= (OBBitVec &);
+    OBBitVec &operator|= (const int i) {SetBitOn(i);return(*this);}
+    OBBitVec &operator^= (OBBitVec &);
+    OBBitVec &operator-= (OBBitVec &);
+    OBBitVec &operator+= (OBBitVec &bv);
     bool operator[] (int bit) 
 	{return((bit/SETWORD >= GetSize()) ? 
 		false : _set[bit/SETWORD]>>(bit%SETWORD)&1);}
 
-    friend OEBitVec operator| (OEBitVec &, OEBitVec &);
-    friend OEBitVec operator& (OEBitVec &,OEBitVec &);
-    friend OEBitVec operator^ (OEBitVec &,OEBitVec &);
-    friend OEBitVec operator- (OEBitVec &,OEBitVec &);
-    friend bool operator== (const OEBitVec &,const OEBitVec &);
+    friend OBBitVec operator| (OBBitVec &, OBBitVec &);
+    friend OBBitVec operator& (OBBitVec &,OBBitVec &);
+    friend OBBitVec operator^ (OBBitVec &,OBBitVec &);
+    friend OBBitVec operator- (OBBitVec &,OBBitVec &);
+    friend bool operator== (const OBBitVec &,const OBBitVec &);
 
-    friend istream& operator>> ( istream&, OEBitVec& );
-    friend ostream& operator<< ( ostream&, const OEBitVec& ) ;
+    friend istream& operator>> ( istream&, OBBitVec& );
+    friend ostream& operator<< ( ostream&, const OBBitVec& ) ;
 };
 
 extern void ThrowError(char *);
-float Tanimoto(OEBitVec&,OEBitVec&);
+float Tanimoto(OBBitVec&,OBBitVec&);
 
 }
 

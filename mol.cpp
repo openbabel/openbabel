@@ -23,10 +23,10 @@ void jacobi(float a[4][4], float *d, float v[4][4]);
 namespace OpenBabel {
 
 extern bool SwabInt;
-extern OEPhModel phmodel;
+extern OBPhModel phmodel;
 
 //
-// OEMol member functions
+// OBMol member functions
 //
 
 bool SortVVInt(const vector<int> &a,const vector<int> &b)
@@ -34,20 +34,20 @@ bool SortVVInt(const vector<int> &a,const vector<int> &b)
   return(a.size() > b.size());
 }
 
-bool SortAtomZ(const pair<OEAtom*,float> &a, const pair<OEAtom*,float> &b)
+bool SortAtomZ(const pair<OBAtom*,float> &a, const pair<OBAtom*,float> &b)
 {
   return (a.second < b.second);
 }
 
-float OEMol::GetTorsion(int a,int b,int c,int d)
+float OBMol::GetTorsion(int a,int b,int c,int d)
 {
-  return(CalcTorsionAngle(((OEAtom*)_vatom[a-1])->GetVector(),
-                          ((OEAtom*)_vatom[b-1])->GetVector(),
-                          ((OEAtom*)_vatom[c-1])->GetVector(),
-                          ((OEAtom*)_vatom[d-1])->GetVector()));
+  return(CalcTorsionAngle(((OBAtom*)_vatom[a-1])->GetVector(),
+                          ((OBAtom*)_vatom[b-1])->GetVector(),
+                          ((OBAtom*)_vatom[c-1])->GetVector(),
+                          ((OBAtom*)_vatom[d-1])->GetVector()));
 }
 
-void OEMol::SetTorsion(OEAtom *a,OEAtom *b,OEAtom *c, OEAtom *d, float ang)
+void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, float ang)
 {
   vector<int> tor;
   vector<int> atoms;
@@ -128,7 +128,7 @@ void OEMol::SetTorsion(OEAtom *a,OEAtom *b,OEAtom *c, OEAtom *d, float ang)
 }
 
 
-float OEMol::GetTorsion(OEAtom *a,OEAtom *b,OEAtom *c,OEAtom *d)
+float OBMol::GetTorsion(OBAtom *a,OBAtom *b,OBAtom *c,OBAtom *d)
 {
   return(CalcTorsionAngle(a->GetVector(),
                           b->GetVector(),
@@ -136,16 +136,16 @@ float OEMol::GetTorsion(OEAtom *a,OEAtom *b,OEAtom *c,OEAtom *d)
                           d->GetVector()));
 }
 
-void OEMol::ContigFragList(vector<vector<int> >&cfl) 
+void OBMol::ContigFragList(vector<vector<int> >&cfl) 
      //each vector<int> contains the atom numbers of a contig fragment
      //the vectors are sorted by size from largest to smallest
 {
   int j;
-  OEAtom *atom;
-  OEBond *bond;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator k;
-  OEBitVec used,curr,next,frag;
+  OBAtom *atom;
+  OBBond *bond;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator k;
+  OBBitVec used,curr,next,frag;
   vector<int> tmp;
 
   used.Resize(NumAtoms()+1);
@@ -185,16 +185,16 @@ void OEMol::ContigFragList(vector<vector<int> >&cfl)
   sort(cfl.begin(),cfl.end(),SortVVInt);
 }
 
-void OEMol::FindLargestFragment(OEBitVec &lf) 
+void OBMol::FindLargestFragment(OBBitVec &lf) 
      //each vector<int> contains the atom numbers of a contig fragment
      //the vectors are sorted by size from largest to smallest
 {
   int j;
-  OEAtom *atom;
-  OEBond *bond;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator k;
-  OEBitVec used,curr,next,frag;
+  OBAtom *atom;
+  OBBond *bond;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator k;
+  OBBitVec used,curr,next,frag;
 
   lf.Clear();
   while ((unsigned)used.CountBits() < NumAtoms())
@@ -225,12 +225,12 @@ void OEMol::FindLargestFragment(OEBitVec &lf)
 }
 
 
-void OEMol::FindChildren(vector<OEAtom*> &children,OEAtom *bgn,OEAtom *end)
+void OBMol::FindChildren(vector<OBAtom*> &children,OBAtom *bgn,OBAtom *end)
      //locates all atoms for which there exists a path to 'second'
      //without going through 'first' 
      //children does not include 'second'
 {
-  OEBitVec used,curr,next;
+  OBBitVec used,curr,next;
 
   used |= bgn->GetIdx();
   used |= end->GetIdx();
@@ -238,8 +238,8 @@ void OEMol::FindChildren(vector<OEAtom*> &children,OEAtom *bgn,OEAtom *end)
   children.clear();
 
   int i;
-  OEAtom *atom,*nbr;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *atom,*nbr;
+  vector<OBEdgeBase*>::iterator j;
 
   for (;;)
     {
@@ -260,21 +260,21 @@ void OEMol::FindChildren(vector<OEAtom*> &children,OEAtom *bgn,OEAtom *end)
     }
 }
 
-void OEMol::FindChildren(vector<int> &children,int first,int second)
+void OBMol::FindChildren(vector<int> &children,int first,int second)
      //locates all atoms for which there exists a path to 'end'
      //without going through 'bgn' 
      //children does not include 'end'
 {
   int i;
-  OEBitVec used,curr,next;
+  OBBitVec used,curr,next;
 
   used.SetBitOn(first);
   used.SetBitOn(second);
   curr.SetBitOn(second);
 
-  OEAtom *atom;
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *atom;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
 
   while (!curr.IsEmpty())
     {
@@ -282,8 +282,8 @@ void OEMol::FindChildren(vector<int> &children,int first,int second)
       for (i = curr.NextBit(-1);i != curr.EndBit();i = curr.NextBit(i))
         {
           atom = GetAtom(i);
-          for (j = atom->BeginBonds(),bond=(OEBond *)*j;
-	       j != atom->EndBonds();j++,bond=(OEBond *)*j)
+          for (j = atom->BeginBonds(),bond=(OBBond *)*j;
+	       j != atom->EndBonds();j++,bond=(OBBond *)*j)
           if (!used.BitIsOn(bond->GetNbrAtomIdx(atom)))
           next.SetBitOn(bond->GetNbrAtomIdx(atom));
         }
@@ -301,7 +301,7 @@ void OEMol::FindChildren(vector<int> &children,int first,int second)
 ** vector is indexed from zero
 */
 
-bool OEMol::GetGTDVector(vector<int> &gtd)
+bool OBMol::GetGTDVector(vector<int> &gtd)
      //calculates the graph theoretical distance for every atom 
      //and puts it into gtd
 {
@@ -309,11 +309,11 @@ bool OEMol::GetGTDVector(vector<int> &gtd)
   gtd.resize(NumAtoms());
   
   int gtdcount,natom;
-  OEBitVec used,curr,next;
-  OEAtom *atom,*atom1;
-  OEBond *bond;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
+  OBBitVec used,curr,next;
+  OBAtom *atom,*atom1;
+  OBBond *bond;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
 
   next.Clear();
 
@@ -351,7 +351,7 @@ bool OEMol::GetGTDVector(vector<int> &gtd)
 ** summation of bond orders connected to the atom
 ** vector is indexed from zero
 */
-void OEMol::GetGIVector(vector<unsigned int> &vid)
+void OBMol::GetGIVector(vector<unsigned int> &vid)
 {
 	vid.clear();
 	vid.resize(NumAtoms()+1);
@@ -360,8 +360,8 @@ void OEMol::GetGIVector(vector<unsigned int> &vid)
 	GetGTDVector(v);
 
 	int i;
-	OEAtom *atom;
-	vector<OENodeBase*>::iterator j;
+	OBAtom *atom;
+	vector<OBNodeBase*>::iterator j;
 	for (i=0,atom = BeginAtom(j);atom;atom = NextAtom(j),i++)
 	{
 		vid[i] =  (unsigned int)v[i];
@@ -373,23 +373,23 @@ void OEMol::GetGIVector(vector<unsigned int> &vid)
 	}
 }
 
-static bool OEComparePairSecond(const pair<OEAtom*,unsigned int> &a,const pair<OEAtom*,unsigned int> &b)
+static bool OBComparePairSecond(const pair<OBAtom*,unsigned int> &a,const pair<OBAtom*,unsigned int> &b)
 {
 	return(a.second < b.second);
 }
 
-static bool OEComparePairFirst(const pair<OEAtom*,unsigned int> &a,const pair<OEAtom*,unsigned int> &b)
+static bool OBComparePairFirst(const pair<OBAtom*,unsigned int> &a,const pair<OBAtom*,unsigned int> &b)
 {
 	return(a.first->GetIdx() < b.first->GetIdx());
 }
 
-static void ClassCount(vector<pair<OEAtom*,unsigned int> > &vp,int &count)
+static void ClassCount(vector<pair<OBAtom*,unsigned int> > &vp,int &count)
 //counts the number of unique symmetry classes in a list
 {
 	count = 0;
 	unsigned int id;
-	vector<pair<OEAtom*,unsigned int> >::iterator k;
-	sort(vp.begin(),vp.end(),OEComparePairSecond);
+	vector<pair<OBAtom*,unsigned int> >::iterator k;
+	sort(vp.begin(),vp.end(),OBComparePairSecond);
 
 	for (k = vp.begin();k != vp.end();k++)
 	{
@@ -409,27 +409,27 @@ static void ClassCount(vector<pair<OEAtom*,unsigned int> > &vp,int &count)
 	count++;
 }
 
-static void	CreateNewClassVector(vector<pair<OEAtom*,unsigned int> > &vp1,vector<pair<OEAtom*,unsigned int> > &vp2)
+static void	CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,vector<pair<OBAtom*,unsigned int> > &vp2)
 //creates a new vector of symmetry classes base on an existing vector
 //helper routine to GetGIDVector
 {
 	int m,id;
-	OEAtom *nbr;
-	vector<OEEdgeBase*>::iterator j;
+	OBAtom *nbr;
+	vector<OBEdgeBase*>::iterator j;
 	vector<unsigned int>::iterator k;
-	vector<pair<OEAtom*,unsigned int> >::iterator i;
-	sort(vp1.begin(),vp1.end(),OEComparePairFirst);
+	vector<pair<OBAtom*,unsigned int> >::iterator i;
+	sort(vp1.begin(),vp1.end(),OBComparePairFirst);
 	vp2.clear();
 	for (i = vp1.begin();i != vp1.end();i++)
 	{
 		vector<unsigned int> vtmp;
 		for (nbr = i->first->BeginNbrAtom(j);nbr;nbr = i->first->NextNbrAtom(j))
 			vtmp.push_back(vp1[nbr->GetIdx()-1].second);
-		sort(vtmp.begin(),vtmp.end(),OECompareUnsigned);
+		sort(vtmp.begin(),vtmp.end(),OBCompareUnsigned);
 		for (id=i->second,m=100,k = vtmp.begin();k != vtmp.end();k++,m*=100)
 			id += *k * m;
 
-		vp2.push_back(pair<OEAtom*,unsigned int> (i->first,id));
+		vp2.push_back(pair<OBAtom*,unsigned int> (i->first,id));
 	}
 }
 
@@ -438,17 +438,17 @@ static void	CreateNewClassVector(vector<pair<OEAtom*,unsigned int> > &vp1,vector
 ** Atoms with the same sym ident are symmetrically equivalent
 ** vector is indexed from zero
 */
-void OEMol::GetGIDVector(vector<unsigned int> &vgid)
+void OBMol::GetGIDVector(vector<unsigned int> &vgid)
 {
 	vector<unsigned int> vgi;
 	GetGIVector(vgi);  //get vector of graph invariants
 
 	int i;
-	OEAtom *atom;
-	vector<OENodeBase*>::iterator j;
-	vector<pair<OEAtom*,unsigned int> > vp1,vp2;
+	OBAtom *atom;
+	vector<OBNodeBase*>::iterator j;
+	vector<pair<OBAtom*,unsigned int> > vp1,vp2;
 	for (i=0,atom = BeginAtom(j);atom;atom = NextAtom(j),i++)
-		vp1.push_back(pair<OEAtom*,unsigned int> (atom,vgi[i]));
+		vp1.push_back(pair<OBAtom*,unsigned int> (atom,vgi[i]));
 
 	int nclass1,nclass2; //number of classes
 	ClassCount(vp1,nclass1);
@@ -466,16 +466,16 @@ void OEMol::GetGIDVector(vector<unsigned int> &vgid)
 	}
 
 	vgid.clear();
-	sort(vp1.begin(),vp1.end(),OEComparePairFirst);
-	vector<pair<OEAtom*,unsigned int> >::iterator k;
+	sort(vp1.begin(),vp1.end(),OBComparePairFirst);
+	vector<pair<OBAtom*,unsigned int> >::iterator k;
 	for (k = vp1.begin();k != vp1.end();k++)
 		vgid.push_back(k->second);
 }
 
-unsigned int OEMol::NumHvyAtoms()
+unsigned int OBMol::NumHvyAtoms()
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator(i);
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator(i);
   unsigned int count = 0;
 
   for(atom = this->BeginAtom(i);atom;atom = this->NextAtom(i))
@@ -486,10 +486,10 @@ unsigned int OEMol::NumHvyAtoms()
   return(count);
 }
 
-unsigned int OEMol::NumRotors()
+unsigned int OBMol::NumRotors()
 {
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
 
   unsigned int count = 0;
   for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -499,7 +499,7 @@ unsigned int OEMol::NumRotors()
   return(count);
 }
 
-OEAtom *OEMol::GetAtom(int idx)
+OBAtom *OBMol::GetAtom(int idx)
      //0 < idx <= NumAtoms
      //returns a pointer to the atom after a safety check
 {
@@ -507,79 +507,79 @@ OEAtom *OEMol::GetAtom(int idx)
     {
       cerr << idx << ' ' << NumAtoms() << endl;
 
-      oeAssert(false);
+      obAssert(false);
       ThrowError("Requested Atom Out of Range");
-      return((OEAtom*)NULL);
+      return((OBAtom*)NULL);
     }
 
-  return((OEAtom*)_vatom[idx-1]);
+  return((OBAtom*)_vatom[idx-1]);
 }
 
-OEAtom *OEMol::GetFirstAtom()
+OBAtom *OBMol::GetFirstAtom()
 {
-  return((_vatom.empty()) ? (OEAtom*)NULL : (OEAtom*)_vatom[0]);
+  return((_vatom.empty()) ? (OBAtom*)NULL : (OBAtom*)_vatom[0]);
 }
 
-OEBond *OEMol::GetBond(int idx)
+OBBond *OBMol::GetBond(int idx)
      //0 <= idx < NumBonds
      //returns a pointer to the bond after a safety check
 {
   if (idx < 0 || (unsigned)idx >= NumBonds())
     {
       ThrowError("Requested Bond Out of Range");
-      return((OEBond*)NULL);
+      return((OBBond*)NULL);
     }
 
-  return((OEBond*)_vbond[idx]);
+  return((OBBond*)_vbond[idx]);
 }
 
-OEBond *OEMol::GetBond(int bgn, int end)
+OBBond *OBMol::GetBond(int bgn, int end)
 {
   return(GetBond(GetAtom(bgn),GetAtom(end)));
 }
 
-OEBond *OEMol::GetBond(OEAtom *bgn,OEAtom *end)
+OBBond *OBMol::GetBond(OBAtom *bgn,OBAtom *end)
 {
-  OEAtom *nbr;
-  vector<OEEdgeBase*>::iterator i;
+  OBAtom *nbr;
+  vector<OBEdgeBase*>::iterator i;
   
   for (nbr = bgn->BeginNbrAtom(i);nbr;nbr = bgn->NextNbrAtom(i))
     if (nbr == end)
-      return((OEBond *)*i);
+      return((OBBond *)*i);
 
-  //oeAssert(false); //should never get here
+  //obAssert(false); //should never get here
 
   return(NULL); //just to keep the SGI compiler happy
 }
 
-OEResidue *OEMol::GetResidue(int idx)
+OBResidue *OBMol::GetResidue(int idx)
 {
     if (idx < 0 || (unsigned)idx >= NumResidues())
     {
         ThrowError("Requested Residue Out of Range");
-        return((OEResidue*)NULL);
+        return((OBResidue*)NULL);
     }
 
     return (_residue[idx]);
 }
 
-vector<OERing*> &OEMol::GetSSSR()
+vector<OBRing*> &OBMol::GetSSSR()
 {
 	if (!HasSSSRPerceived()) 
 		FindSSSR();
 
-	if (!HasData(oeRingData)) 
-		SetData(new OERingData);
+	if (!HasData(obRingData)) 
+		SetData(new OBRingData);
 
-	OERingData *rd = (OERingData *) GetData(oeRingData);
+	OBRingData *rd = (OBRingData *) GetData(obRingData);
 	return(rd->GetData());
 }
 
-float OEMol::GetMolWt()
+float OBMol::GetMolWt()
 {
   float molwt=0.0;
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     molwt += etab.GetMass(atom->GetAtomicNum());
@@ -587,16 +587,16 @@ float OEMol::GetMolWt()
   return(molwt);
 }
 
-OEMol &OEMol::operator=(const OEMol &source)
+OBMol &OBMol::operator=(const OBMol &source)
      //only atom and bond info is copied from src to dest
      //Conformers are now copied also, MM 2/7/01
      //Rotamers and residue information are copied, MM 4-27-01
 {
-  OEMol &src = (OEMol &)source;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
-  OEAtom *atom;
-  OEBond *bond;
+  OBMol &src = (OBMol &)source;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
+  OBAtom *atom;
+  OBBond *bond;
  
   Clear();
   BeginModify();
@@ -619,11 +619,11 @@ OEMol &OEMol::operator=(const OEMol &source)
   unsigned int NumRes = src.NumResidues();
   if (NumRes) {
       unsigned int k;
-      OEResidue *src_res=NULL;
-      OEResidue *res=NULL;
-      OEAtom *src_atom=NULL;
-      OEAtom *atom=NULL;
-      vector<OEAtom*>::iterator ii;
+      OBResidue *src_res=NULL;
+      OBResidue *res=NULL;
+      OBAtom *src_atom=NULL;
+      OBAtom *atom=NULL;
+      vector<OBAtom*>::iterator ii;
       for (k=0 ; k<NumRes ; k++) {
           res = NewResidue();
           src_res = src.GetResidue(k);
@@ -655,17 +655,17 @@ OEMol &OEMol::operator=(const OEMol &source)
     } 
 
   //Copy rotamer list
-  OERotamerList *rml = (OERotamerList *)src.GetData(oeRotamerList);
-  //if (rml) {cout << "DEBUG : OEMol assignment operator.  Source HAS RotamerList" << endl;}
-  //else     {cout << "DEBUG : OEMol assignment operator.  Source does NOT have RotamerList" << endl;}
+  OBRotamerList *rml = (OBRotamerList *)src.GetData(obRotamerList);
+  //if (rml) {cout << "DEBUG : OBMol assignment operator.  Source HAS RotamerList" << endl;}
+  //else     {cout << "DEBUG : OBMol assignment operator.  Source does NOT have RotamerList" << endl;}
   if (rml && rml->NumAtoms() == src.NumAtoms()) {
       //Destroy old rotamer list if necessary
-      if ((OERotamerList *)GetData(oeRotamerList)) {
-          DeleteData(oeRotamerList);
+      if ((OBRotamerList *)GetData(obRotamerList)) {
+          DeleteData(obRotamerList);
         }
 
       //Set base coordinates
-      OERotamerList *cp_rml = new OERotamerList;
+      OBRotamerList *cp_rml = new OBRotamerList;
       unsigned int k,l;
       vector<float*> bc; 
       float *c=NULL;
@@ -706,13 +706,13 @@ OEMol &OEMol::operator=(const OEMol &source)
   return(*this);
 }
 
-OEMol &OEMol::operator+=(const OEMol &source)
+OBMol &OBMol::operator+=(const OBMol &source)
 {
-  OEMol &src = (OEMol &)source;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
-  OEAtom *atom;
-  OEBond *bond;
+  OBMol &src = (OBMol &)source;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
+  OBAtom *atom;
+  OBBond *bond;
 
   BeginModify();
 
@@ -730,11 +730,11 @@ OEMol &OEMol::operator+=(const OEMol &source)
   return(*this);
 }
 
-bool OEMol::Clear()
+bool OBMol::Clear()
      //clear all the info in a molecule
 {
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
   for (i = _vatom.begin();i != _vatom.end();i++) {DestroyAtom(*i); *i = NULL;}    
   for (j = _vbond.begin();j != _vbond.end();j++) {DestroyBond(*j); *j = NULL;}
 
@@ -758,7 +758,7 @@ bool OEMol::Clear()
 
   if (!_vdata.empty()) //clean up generic data
   {
-	  vector<OEGenericData*>::iterator m;
+	  vector<OBGenericData*>::iterator m;
 	  for (m = _vdata.begin();m != _vdata.end();m++) delete *m;
 	  _vdata.clear();
   }
@@ -770,25 +770,25 @@ bool OEMol::Clear()
   return(true);
 }
 
-void OEMol::BeginAccess(void)
+void OBMol::BeginAccess(void)
 {
   if (_access == 0) UnCompress();
   _access++;
 }
 
-void OEMol::EndAccess(void)
+void OBMol::EndAccess(void)
 {
   _access--;
   if (_access == 0) Compress();
 }
 
-void OEMol::BeginModify()
+void OBMol::BeginModify()
 {
   //suck coordinates from _c into _v for each atom
   if (!_mod && !Empty())
     {
-      OEAtom *atom;
-      vector<OENodeBase*>::iterator i;
+      OBAtom *atom;
+      vector<OBNodeBase*>::iterator i;
       for (atom = BeginAtom(i);atom;atom = NextAtom(i))
         {
           atom->SetVector();
@@ -804,20 +804,20 @@ void OEMol::BeginModify()
       DeletePoses();
 
       //Destroy rotamer list if necessary
-      if ((OERotamerList *)GetData("RotamerList")) {
-          delete (OERotamerList *)GetData("RotamerList");
-          DeleteData(oeRotamerList);
+      if ((OBRotamerList *)GetData("RotamerList")) {
+          delete (OBRotamerList *)GetData("RotamerList");
+          DeleteData(obRotamerList);
         }
     }
 
   _mod++;
 }
 
-void OEMol::EndModify(bool nukePerceivedData)
+void OBMol::EndModify(bool nukePerceivedData)
 {
   if (_mod == 0)
     {
-      oeAssert(false);
+      obAssert(false);
       ThrowError("_mod is negative - EndModify() called too many times");
       return;
     }
@@ -842,8 +842,8 @@ void OEMol::EndModify(bool nukePerceivedData)
   _c = c;
 
   int idx;
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator j;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator j;
   for (idx=0,atom = BeginAtom(j);atom;atom = NextAtom(j),idx++)
     {
       atom->SetIdx(idx+1);
@@ -860,70 +860,70 @@ void OEMol::EndModify(bool nukePerceivedData)
   //    for (atom = BeginAtom(j);atom;atom = NextAtom(j))
   //      atom->UnsetAromatic();
 
-  //    OEBond *bond;
-  //    vector<OEEdgeBase*>::iterator k;
+  //    OBBond *bond;
+  //    vector<OBEdgeBase*>::iterator k;
   //    for (bond = BeginBond(k);bond;bond = NextBond(k))
   //      bond->UnsetAromatic();
 
   //UnsetImplicitValencePerceived();
 }
 
-OEAtom *OEMol::CreateAtom(void)
+OBAtom *OBMol::CreateAtom(void)
 {
-  return new OEAtom;
+  return new OBAtom;
 }
 
-OEBond *OEMol::CreateBond(void)
+OBBond *OBMol::CreateBond(void)
 {
-  return new OEBond;
+  return new OBBond;
 }
 
-void OEMol::DestroyAtom(OENodeBase *atom)
+void OBMol::DestroyAtom(OBNodeBase *atom)
 {
   delete atom;
 }
 
-void OEMol::DestroyBond(OEEdgeBase *bond)
+void OBMol::DestroyBond(OBEdgeBase *bond)
 {
   delete bond;
 }
 
-OEAtom *OEMol::NewAtom()
+OBAtom *OBMol::NewAtom()
      //add an atom to a molecule
      //also checks bond_queue for any bonds that should be made to the new atom
 {
   BeginModify();
 
-  OEAtom *oeatom = CreateAtom();
-  oeatom->SetIdx(_natoms+1);
-  oeatom->SetParent(this);
+  OBAtom *obatom = CreateAtom();
+  obatom->SetIdx(_natoms+1);
+  obatom->SetParent(this);
 
 
-#define OEAtomIncrement 100
+#define OBAtomIncrement 100
   if (_vatom.empty() || _natoms+1 >= (signed)_vatom.size())
     {
-      _vatom.resize(_natoms+OEAtomIncrement);
-      vector<OENodeBase*>::iterator j;
+      _vatom.resize(_natoms+OBAtomIncrement);
+      vector<OBNodeBase*>::iterator j;
       for (j = _vatom.begin(),j+=(_natoms+1);j != _vatom.end();j++) 
-		  *j = (OENodeBase*)NULL;
+		  *j = (OBNodeBase*)NULL;
     }
-#undef OEAtomIncrement 
+#undef OBAtomIncrement 
 
-  _vatom[_natoms] = oeatom;
+  _vatom[_natoms] = obatom;
   _natoms++;
 
-  if (HasData(oeVirtualBondData))
+  if (HasData(obVirtualBondData))
     {
       /*add bonds that have been queued*/
-	  OEVirtualBond *vb;
-	  vector<OEGenericData*> verase;
-	  vector<OEGenericData*>::iterator i;
+	  OBVirtualBond *vb;
+	  vector<OBGenericData*> verase;
+	  vector<OBGenericData*>::iterator i;
 	  for (i = BeginData();i != EndData();i++)
-		  if ((*i)->GetDataType() == oeVirtualBondData)
+		  if ((*i)->GetDataType() == obVirtualBondData)
 		  {
-			  vb = (OEVirtualBond*)*i;
+			  vb = (OBVirtualBond*)*i;
 			  if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms) continue;
-			  if (oeatom->GetIdx() == vb->GetBgn() || oeatom->GetIdx() == vb->GetEnd())
+			  if (obatom->GetIdx() == vb->GetBgn() || obatom->GetIdx() == vb->GetEnd())
 			  {
 				  AddBond(vb->GetBgn(),vb->GetEnd(),vb->GetOrder());
 				  verase.push_back(*i);
@@ -935,54 +935,54 @@ OEAtom *OEMol::NewAtom()
     
   EndModify();
 
-  return(oeatom);
+  return(obatom);
 }
 
-OEResidue *OEMol::NewResidue()
+OBResidue *OBMol::NewResidue()
 {
-    OEResidue *oeresidue = new OEResidue;
-    oeresidue->SetIdx(_residue.size());
-    _residue.push_back(oeresidue);
-    return(oeresidue);
+    OBResidue *obresidue = new OBResidue;
+    obresidue->SetIdx(_residue.size());
+    _residue.push_back(obresidue);
+    return(obresidue);
 }
 
-bool OEMol::AddAtom(OEAtom &atom)
+bool OBMol::AddAtom(OBAtom &atom)
      //add an atom to a molecule
      //also checks bond_queue for any bonds that should be made to the new atom
 {
   BeginModify();
 
-    OEAtom *oeatom = CreateAtom();
-    *oeatom = atom;
-    oeatom->SetIdx(_natoms+1);
-    oeatom->SetParent(this);
+    OBAtom *obatom = CreateAtom();
+    *obatom = atom;
+    obatom->SetIdx(_natoms+1);
+    obatom->SetParent(this);
 
 
-#define OEAtomIncrement 100
+#define OBAtomIncrement 100
     if (_vatom.empty() || _natoms+1 >= (signed)_vatom.size())
       {
-        _vatom.resize(_natoms+OEAtomIncrement);
-        vector<OENodeBase*>::iterator j;
+        _vatom.resize(_natoms+OBAtomIncrement);
+        vector<OBNodeBase*>::iterator j;
         for (j = _vatom.begin(),j+=(_natoms+1);j != _vatom.end();j++) 
-			*j = (OENodeBase*)NULL;
+			*j = (OBNodeBase*)NULL;
       }
-#undef OEAtomIncrement 
+#undef OBAtomIncrement 
 
-    _vatom[_natoms] = (OENodeBase*)oeatom;
+    _vatom[_natoms] = (OBNodeBase*)obatom;
     _natoms++;
 
-  if (HasData(oeVirtualBondData))
+  if (HasData(obVirtualBondData))
     {
       /*add bonds that have been queued*/
-	  OEVirtualBond *vb;
-	  vector<OEGenericData*> verase;
-	  vector<OEGenericData*>::iterator i;
+	  OBVirtualBond *vb;
+	  vector<OBGenericData*> verase;
+	  vector<OBGenericData*>::iterator i;
 	  for (i = BeginData();i != EndData();i++)
-		  if ((*i)->GetDataType() == oeVirtualBondData)
+		  if ((*i)->GetDataType() == obVirtualBondData)
 		  {
-			  vb = (OEVirtualBond*)*i;
+			  vb = (OBVirtualBond*)*i;
 			  if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms) continue;
-			  if (oeatom->GetIdx() == vb->GetBgn() || oeatom->GetIdx() == vb->GetEnd())
+			  if (obatom->GetIdx() == vb->GetBgn() || obatom->GetIdx() == vb->GetEnd())
 			  {
 				  AddBond(vb->GetBgn(),vb->GetEnd(),vb->GetOrder());
 				  verase.push_back(*i);
@@ -997,41 +997,41 @@ bool OEMol::AddAtom(OEAtom &atom)
     return(true);
 }
 
-bool OEMol::InsertAtom(OEAtom &atom)
+bool OBMol::InsertAtom(OBAtom &atom)
 {
     BeginModify();
 
-    OEAtom *oeatom = CreateAtom();
-    *oeatom = atom;
-    oeatom->SetIdx(_natoms+1);
-    oeatom->SetParent(this);
+    OBAtom *obatom = CreateAtom();
+    *obatom = atom;
+    obatom->SetIdx(_natoms+1);
+    obatom->SetParent(this);
 
 
-#define OEAtomIncrement 100
+#define OBAtomIncrement 100
     if (_vatom.empty() || _natoms+1 >= (signed)_vatom.size())
       {
-        _vatom.resize(_natoms+OEAtomIncrement);
-        vector<OENodeBase*>::iterator j;
+        _vatom.resize(_natoms+OBAtomIncrement);
+        vector<OBNodeBase*>::iterator j;
         for (j = _vatom.begin(),j+=(_natoms+1);j != _vatom.end();j++) 
-			*j = (OENodeBase*)NULL;
+			*j = (OBNodeBase*)NULL;
       }
-#undef OEAtomIncrement 
+#undef OBAtomIncrement 
 
-    _vatom[_natoms] = (OENodeBase*)oeatom;
+    _vatom[_natoms] = (OBNodeBase*)obatom;
     _natoms++;
 
-  if (HasData(oeVirtualBondData))
+  if (HasData(obVirtualBondData))
     {
       /*add bonds that have been queued*/
-	  OEVirtualBond *vb;
-	  vector<OEGenericData*> verase;
-	  vector<OEGenericData*>::iterator i;
+	  OBVirtualBond *vb;
+	  vector<OBGenericData*> verase;
+	  vector<OBGenericData*>::iterator i;
 	  for (i = BeginData();i != EndData();i++)
-		  if ((*i)->GetDataType() == oeVirtualBondData)
+		  if ((*i)->GetDataType() == obVirtualBondData)
 		  {
-			  vb = (OEVirtualBond*)*i;
+			  vb = (OBVirtualBond*)*i;
 			  if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms) continue;
-			  if (oeatom->GetIdx() == vb->GetBgn() || oeatom->GetIdx() == vb->GetEnd())
+			  if (obatom->GetIdx() == vb->GetBgn() || obatom->GetIdx() == vb->GetEnd())
 			  {
 				  AddBond(vb->GetBgn(),vb->GetEnd(),vb->GetOrder());
 				  verase.push_back(*i);
@@ -1046,23 +1046,23 @@ bool OEMol::InsertAtom(OEAtom &atom)
     return(true);
 }
 
-bool OEMol::AddResidue(OEResidue &residue)
+bool OBMol::AddResidue(OBResidue &residue)
 {
     BeginModify();
 
-    OEResidue *oeresidue = new OEResidue;
-    *oeresidue = residue;
+    OBResidue *obresidue = new OBResidue;
+    *obresidue = residue;
 
-    oeresidue->SetIdx(_residue.size());
+    obresidue->SetIdx(_residue.size());
 
-    _residue.push_back(oeresidue);
+    _residue.push_back(obresidue);
 
     EndModify();
 
     return(true);
 }
 
-bool OEMol::StripSalts()
+bool OBMol::StripSalts()
      //deletes all atoms except for the largest contiguous fragment
 {
   vector<vector<int> > cfl;
@@ -1076,17 +1076,17 @@ bool OEMol::StripSalts()
       if ((*max).size() < (*i).size()) max = i;
 
   vector<int>::iterator j;
-  vector<OENodeBase*> delatoms;
+  vector<OBNodeBase*> delatoms;
   for (i = cfl.begin();i != cfl.end();i++)
       if (i != max)
           for (j = (*i).begin();j != (*i).end();j++) delatoms.push_back(GetAtom(*j));
 
   if (!delatoms.empty())
     {
-      int tmpflags = _flags & (~(OE_SSSR_MOL));
+      int tmpflags = _flags & (~(OB_SSSR_MOL));
       BeginModify();
-      vector<OENodeBase*>::iterator k;
-      for (k = delatoms.begin();k != delatoms.end();k++) DeleteAtom((OEAtom*)*k);
+      vector<OBNodeBase*>::iterator k;
+      for (k = delatoms.begin();k != delatoms.end();k++) DeleteAtom((OBAtom*)*k);
       EndModify();
       _flags = tmpflags;
     }
@@ -1094,11 +1094,11 @@ bool OEMol::StripSalts()
   return(true);
 }
 
-bool OEMol::DeleteNonPolarHydrogens()
+bool OBMol::DeleteNonPolarHydrogens()
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
-  vector<OENodeBase*> delatoms;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBNodeBase*> delatoms;
 
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     if (atom->IsNonPolarHydrogen())
@@ -1120,18 +1120,18 @@ bool OEMol::DeleteNonPolarHydrogens()
       }
 */
 
-  for (i = delatoms.begin();i != delatoms.end();i++)  DeleteAtom((OEAtom *)*i);
+  for (i = delatoms.begin();i != delatoms.end();i++)  DeleteAtom((OBAtom *)*i);
 
   DecrementMod();
 
   return(true);
 }
 
-bool OEMol::DeleteHydrogens()
+bool OBMol::DeleteHydrogens()
 {
-  OEAtom *atom,*nbr;
-  vector<OENodeBase*>::iterator i;
-  vector<OENodeBase*> delatoms,va;
+  OBAtom *atom,*nbr;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBNodeBase*> delatoms,va;
 
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     if (atom->IsHydrogen())
@@ -1140,15 +1140,15 @@ bool OEMol::DeleteHydrogens()
   if (delatoms.empty()) return(true);
 
 /* decide whether these flags need to be reset
-      _flags &= (~(OE_ATOMTYPES_MOL));
-      _flags &= (~(OE_HYBRID_MOL));
-      _flags &= (~(OE_PCHARGE_MOL)); 
-      _flags &= (~(OE_IMPVAL_MOL));
+      _flags &= (~(OB_ATOMTYPES_MOL));
+      _flags &= (~(OB_HYBRID_MOL));
+      _flags &= (~(OB_PCHARGE_MOL)); 
+      _flags &= (~(OB_IMPVAL_MOL));
 */
 
   //find bonds to delete
-  vector<OEEdgeBase*> vdb;
-  vector<OEEdgeBase*>::iterator j;
+  vector<OBEdgeBase*> vdb;
+  vector<OBEdgeBase*>::iterator j;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       if (!atom->IsHydrogen())
           for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
@@ -1156,7 +1156,7 @@ bool OEMol::DeleteHydrogens()
                   vdb.push_back(*j);
 
   IncrementMod();
-  for (j = vdb.begin();j != vdb.end();j++) DeleteBond((OEBond *)*j); //delete bonds
+  for (j = vdb.begin();j != vdb.end();j++) DeleteBond((OBBond *)*j); //delete bonds
   DecrementMod();
    
   int idx1,idx2;
@@ -1184,7 +1184,7 @@ bool OEMol::DeleteHydrogens()
   }
 
   _vatom.clear();
-  for (i = va.begin();i != va.end();i++) _vatom.push_back((OENodeBase*)*i);
+  for (i = va.begin();i != va.end();i++) _vatom.push_back((OBNodeBase*)*i);
 
   //_atom = va;
   //_atom.resize(_atom.size()+1);
@@ -1198,13 +1198,13 @@ bool OEMol::DeleteHydrogens()
   return(true);
 }
 
-bool OEMol::DeleteHydrogens(OEAtom *atom)
+bool OBMol::DeleteHydrogens(OBAtom *atom)
 //deletes all hydrogens attached to the atom passed to the function
 {
-  OEAtom *nbr;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator k;
-  vector<OENodeBase*> delatoms;
+  OBAtom *nbr;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator k;
+  vector<OBNodeBase*> delatoms;
 
   for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
     if (nbr->IsHydrogen())
@@ -1215,24 +1215,24 @@ bool OEMol::DeleteHydrogens(OEAtom *atom)
 
   IncrementMod();
   for (i = delatoms.begin();i != delatoms.end();i++)
-    DeleteHydrogen((OEAtom*)*i);
+    DeleteHydrogen((OBAtom*)*i);
   DecrementMod();
 
   return(true);
 }
 
 
-bool OEMol::DeleteHydrogen(OEAtom *atom)
+bool OBMol::DeleteHydrogen(OBAtom *atom)
 //deletes the hydrogen atom passed to the function
 {
   //find bonds to delete
-  OEAtom *nbr;
-  vector<OEEdgeBase*> vdb;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *nbr;
+  vector<OBEdgeBase*> vdb;
+  vector<OBEdgeBase*>::iterator j;
   for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j)) vdb.push_back(*j);
 
   IncrementMod();
-  for (j = vdb.begin();j != vdb.end();j++) DeleteBond((OEBond*)*j); //delete bonds
+  for (j = vdb.begin();j != vdb.end();j++) DeleteBond((OBBond*)*j); //delete bonds
   DecrementMod();
 
   int idx;
@@ -1256,14 +1256,14 @@ bool OEMol::DeleteHydrogen(OEAtom *atom)
   _natoms--;
 
 //reset all the indices to the atoms
-  vector<OENodeBase*>::iterator i;
+  vector<OBNodeBase*>::iterator i;
   for (idx=1,atom = BeginAtom(i);atom;atom = NextAtom(i),idx++)
     atom->SetIdx(idx);
 
   return(true);
 }
 
-bool OEMol::AddHydrogens(bool polaronly,bool correctForPH)
+bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
 {
   if (!IsCorrectedForPH() && correctForPH) CorrectForPH();
 
@@ -1271,10 +1271,10 @@ bool OEMol::AddHydrogens(bool polaronly,bool correctForPH)
   SetHydrogensAdded();
 
   //count up number of hydrogens to add
-  OEAtom *atom,*h;
+  OBAtom *atom,*h;
   int hcount,count=0;
-  vector<pair<OEAtom*,int> > vhadd;
-  vector<OENodeBase*>::iterator i;
+  vector<pair<OBAtom*,int> > vhadd;
+  vector<OBNodeBase*>::iterator i;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
       if (polaronly && !(atom->IsNitrogen() || atom->IsOxygen() || 
@@ -1285,7 +1285,7 @@ bool OEMol::AddHydrogens(bool polaronly,bool correctForPH)
       if (hcount < 0) hcount = 0;
       if (hcount)
         {
-          vhadd.push_back(pair<OEAtom*,int>(atom,hcount));
+          vhadd.push_back(pair<OBAtom*,int>(atom,hcount));
           count += hcount;
         }
     }
@@ -1313,7 +1313,7 @@ bool OEMol::AddHydrogens(bool polaronly,bool correctForPH)
 
   int m,n;
   Vector v;
-  vector<pair<OEAtom*,int> >::iterator k;
+  vector<pair<OBAtom*,int> >::iterator k;
   float hbrad = etab.CorrectedBondRad(1,0);
 
 
@@ -1345,30 +1345,30 @@ bool OEMol::AddHydrogens(bool polaronly,bool correctForPH)
   SetConformer(0);
 
   //reset atom type and partial charge flags
-  _flags &= (~(OE_PCHARGE_MOL|OE_ATOMTYPES_MOL));
+  _flags &= (~(OB_PCHARGE_MOL|OB_ATOMTYPES_MOL));
 
   return(true);
 }
 
-bool OEMol::AddPolarHydrogens()
+bool OBMol::AddPolarHydrogens()
 {
   return(AddHydrogens(true));
 }
 
-bool OEMol::AddHydrogens(OEAtom *atom)
+bool OBMol::AddHydrogens(OBAtom *atom)
 {
-  OEAtom *h;
+  OBAtom *h;
 
   //count up number of hydrogens to add
   int hcount,count=0;
-  vector<pair<OEAtom*,int> > vhadd;
+  vector<pair<OBAtom*,int> > vhadd;
 
   hcount = atom->GetImplicitValence() - atom->GetValence();
 
   if (hcount < 0) hcount = 0;
   if (hcount)
     {
-      vhadd.push_back(pair<OEAtom*,int>(atom,hcount));
+      vhadd.push_back(pair<OBAtom*,int>(atom,hcount));
       count += hcount;
     }
 
@@ -1393,7 +1393,7 @@ bool OEMol::AddHydrogens(OEAtom *atom)
 
   int m,n;
   Vector v;
-  vector<pair<OEAtom*,int> >::iterator k;
+  vector<pair<OBAtom*,int> >::iterator k;
   float hbrad = etab.CorrectedBondRad(1,0);
 
   for (k = vhadd.begin();k != vhadd.end();k++)
@@ -1420,12 +1420,12 @@ bool OEMol::AddHydrogens(OEAtom *atom)
   SetConformer(0);
 
   //reset atom type and partial charge flags
-  //_flags &= (~(OE_PCHARGE_MOL|OE_ATOMTYPES_MOL));
+  //_flags &= (~(OB_PCHARGE_MOL|OB_ATOMTYPES_MOL));
 
   return(true);
 }
 
-bool OEMol::CorrectForPH()
+bool OBMol::CorrectForPH()
 {
   if (IsCorrectedForPH()) return(true);
   phmodel.CorrectForPH(*this);
@@ -1433,22 +1433,22 @@ bool OEMol::CorrectForPH()
   return(true);
 }
 
-static void ResetVisit(OEMol &mol,vector<int> &visit,int depth)
+static void ResetVisit(OBMol &mol,vector<int> &visit,int depth)
 {
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   
   for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
     if (bond->IsAromatic() && visit[bond->GetIdx()] >= depth)
       visit[bond->GetIdx()] = 0;
 }
 
-static int ValenceSum(OEAtom *atom)
+static int ValenceSum(OBAtom *atom)
 {
   int count = atom->GetImplicitValence();
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   for (bond = atom->BeginBond(i);bond;bond = atom->NextBond(i))
     if (bond->IsKDouble())
       count++;
@@ -1456,11 +1456,11 @@ static int ValenceSum(OEAtom *atom)
   return(count);
 }
 
-static bool KekulePropagate(OEAtom *atom,vector<int> &visit,vector<int> &ival,int depth)
+static bool KekulePropagate(OBAtom *atom,vector<int> &visit,vector<int> &ival,int depth)
 {
   int count = 0;
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   for (bond = atom->BeginBond(i);bond;bond = atom->NextBond(i))
     if (!visit[bond->GetIdx()])
       count++;
@@ -1469,7 +1469,7 @@ static bool KekulePropagate(OEAtom *atom,vector<int> &visit,vector<int> &ival,in
     return(ValenceSum(atom) == ival[atom->GetIdx()]);
 
   bool result = true;
-  OEAtom *nbr;
+  OBAtom *nbr;
 
   if (ValenceSum(atom) >= ival[atom->GetIdx()])
     {
@@ -1477,7 +1477,7 @@ static bool KekulePropagate(OEAtom *atom,vector<int> &visit,vector<int> &ival,in
           if (nbr->IsAromatic() && !visit[(*i)->GetIdx()])
             {
               visit[(*i)->GetIdx()] = depth;
-              ((OEBond*)*i)->SetKSingle();
+              ((OBBond*)*i)->SetKSingle();
               result = KekulePropagate(nbr,visit,ival,depth);
               if (result) break;
 //            if (!result) break;
@@ -1488,7 +1488,7 @@ static bool KekulePropagate(OEAtom *atom,vector<int> &visit,vector<int> &ival,in
       if (nbr->IsAromatic() && !visit[(*i)->GetIdx()])
         {
           visit[(*i)->GetIdx()] = depth;
-          ((OEBond*)*i)->SetKDouble();
+          ((OBBond*)*i)->SetKDouble();
           result = KekulePropagate(nbr,visit,ival,depth);
 		  //break;
           if (result) break;
@@ -1496,32 +1496,32 @@ static bool KekulePropagate(OEAtom *atom,vector<int> &visit,vector<int> &ival,in
   return(result);
 }
 
-int GetCurrentValence(OEAtom *atom)
+int GetCurrentValence(OBAtom *atom)
 {
   int count = atom->GetImplicitValence();
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   for (bond = atom->BeginBond(i);bond;bond = atom->NextBond(i))
   if (bond->IsKDouble()) count++;
   else if (bond->IsKTriple()) count += 2;
   return(count);
 }
 
-bool ExpandKekule(OEMol &mol, vector<OENodeBase*> &va,
-                  vector<OENodeBase*>::iterator i,
+bool ExpandKekule(OBMol &mol, vector<OBNodeBase*> &va,
+                  vector<OBNodeBase*>::iterator i,
 		  vector<int> &maxv,bool secondpass)
 {
 	if (i == va.end())
     {
       //check to see that the ideal valence has been achieved for all atoms
-      vector<OENodeBase*>::iterator j;
+      vector<OBNodeBase*>::iterator j;
       for (j = va.begin();j != va.end();j++)
         {
           //let erroneously aromatic carboxylates pass
-          if (((OEAtom*)*j)->IsOxygen() && ((OEAtom*)*j)->GetValence() == 1)
+          if (((OBAtom*)*j)->IsOxygen() && ((OBAtom*)*j)->GetValence() == 1)
 	    continue;
-          if (GetCurrentValence((OEAtom*)*j) != maxv[(*j)->GetIdx()])
+          if (GetCurrentValence((OBAtom*)*j) != maxv[(*j)->GetIdx()])
 	    return(false);
         }
       return(true);
@@ -1529,9 +1529,9 @@ bool ExpandKekule(OEMol &mol, vector<OENodeBase*> &va,
 
   //jump to next atom in list if current atom doesn't have any attached
   //aromatic bonds
-  OEBond *bond;
-  OEAtom *atom = (OEAtom*)*i;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  OBAtom *atom = (OBAtom*)*i;
+  vector<OBEdgeBase*>::iterator j;
   bool done = true;
   for (bond = atom->BeginBond(j);bond;bond = atom->NextBond(j))
       if (bond->GetBO() == 5)
@@ -1543,14 +1543,14 @@ bool ExpandKekule(OEMol &mol, vector<OENodeBase*> &va,
 	  return(ExpandKekule(mol,va,i+1,maxv,secondpass));
 
   //store list of attached aromatic atoms
-  OEAtom *nbr;
-  vector<OEEdgeBase*> vb;
+  OBAtom *nbr;
+  vector<OBEdgeBase*> vb;
   for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
       if ((*j)->GetBO() == 5)
         {
           vb.push_back(*j);
-          ((OEBond *)*j)->SetBO(1);
-          ((OEBond *)*j)->SetKSingle();
+          ((OBBond *)*j)->SetBO(1);
+          ((OBBond *)*j)->SetKSingle();
         }
 
   //try setting a double bond
@@ -1558,14 +1558,14 @@ bool ExpandKekule(OEMol &mol, vector<OENodeBase*> &va,
     {
 	  for (j = vb.begin();j != vb.end();j++)
         {
-          nbr = ((OEBond *)*j)->GetNbrAtom(atom);
+          nbr = ((OBBond *)*j)->GetNbrAtom(atom);
           if (GetCurrentValence(nbr) <= maxv[nbr->GetIdx()])
             {
-              ((OEBond*)*j)->SetKDouble();
-              ((OEBond*)*j)->SetBO(2);
+              ((OBBond*)*j)->SetKDouble();
+              ((OBBond*)*j)->SetBO(2);
               if (ExpandKekule(mol,va,i+1,maxv,secondpass)) return(true);
-              ((OEBond*)*j)->SetKSingle();
-              ((OEBond*)*j)->SetBO(1);
+              ((OBBond*)*j)->SetKSingle();
+              ((OBBond*)*j)->SetBO(1);
             }
         }
 
@@ -1595,14 +1595,14 @@ bool ExpandKekule(OEMol &mol, vector<OENodeBase*> &va,
 		  atom->SetFormalCharge(1);
 	  	  for (j = vb.begin();j != vb.end();j++)
 		  {
-			  nbr = ((OEBond*)*j)->GetNbrAtom(atom);
+			  nbr = ((OBBond*)*j)->GetNbrAtom(atom);
 			  if (GetCurrentValence(nbr) <= maxv[nbr->GetIdx()])
 			  {
-				  ((OEBond*)*j)->SetKDouble();
-				  ((OEBond*)*j)->SetBO(2);
+				  ((OBBond*)*j)->SetKDouble();
+				  ((OBBond*)*j)->SetBO(2);
 				  if (ExpandKekule(mol,va,i+1,maxv,secondpass)) return(true);
-				  ((OEBond*)*j)->SetKSingle();
-				  ((OEBond*)*j)->SetBO(1);
+				  ((OBBond*)*j)->SetKSingle();
+				  ((OBBond*)*j)->SetBO(1);
 			  }
 		  }
 		  maxv[atom->GetIdx()]--;
@@ -1621,22 +1621,22 @@ bool ExpandKekule(OEMol &mol, vector<OENodeBase*> &va,
   //failed to find a valid solution - reset attached bonds
   for (j = vb.begin();j != vb.end();j++) 
     {
-      ((OEBond*)*j)->SetKSingle();
-      ((OEBond*)*j)->SetBO(5);
+      ((OBBond*)*j)->SetKSingle();
+      ((OBBond*)*j)->SetBO(5);
     }
 
   return(false);
 }
 
-void CorrectBadResonanceForm(OEMol &mol)
+void CorrectBadResonanceForm(OBMol &mol)
 {
   string s;
-  OEBond *b1,*b2,*b3;
-  OEAtom *a1,*a2,*a3,*a4;
+  OBBond *b1,*b2,*b3;
+  OBAtom *a1,*a2,*a3,*a4;
   vector<vector<int> > mlist;
   vector<vector<int> >::iterator i;
 
-  OESmartsPattern acid; acid.Init("[oD1]c[oD1]");
+  OBSmartsPattern acid; acid.Init("[oD1]c[oD1]");
 
   //carboxylic acid
   if (acid.Match(mol))
@@ -1655,7 +1655,7 @@ void CorrectBadResonanceForm(OEMol &mol)
     }
 
   //phosphonic acid
-  OESmartsPattern phosphate; phosphate.Init("[p]([oD1])([oD1])([oD1])[#6,#8]");
+  OBSmartsPattern phosphate; phosphate.Init("[p]([oD1])([oD1])([oD1])[#6,#8]");
   if (phosphate.Match(mol))
     {
       mlist = phosphate.GetUMapList();
@@ -1675,7 +1675,7 @@ void CorrectBadResonanceForm(OEMol &mol)
     }
 
   //amidene and guanidine
-  OESmartsPattern amidene; amidene.Init("[nD1]c([nD1])*");
+  OBSmartsPattern amidene; amidene.Init("[nD1]c([nD1])*");
   if (amidene.Match(mol))
     {
       mlist = amidene.GetUMapList();
@@ -1692,13 +1692,13 @@ void CorrectBadResonanceForm(OEMol &mol)
     }
 }
 
-bool OEMol::PerceiveKekuleBonds()
+bool OBMol::PerceiveKekuleBonds()
 {
   if (HasKekulePerceived())  return(true);
   SetKekulePerceived();
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
 
   //initialize kekule bonds
   bool done = true;
@@ -1730,8 +1730,8 @@ bool OEMol::PerceiveKekuleBonds()
   if (done) return(true);
 
   //set the maximum valence for each aromatic atom
-  OEAtom *atom,*nbr;
-  vector<OENodeBase*>::iterator j,k;
+  OBAtom *atom,*nbr;
+  vector<OBNodeBase*>::iterator j,k;
   vector<int> maxv; maxv.resize(NumAtoms()+1);
 
   for (atom = BeginAtom(j);atom;atom = NextAtom(j))
@@ -1762,7 +1762,7 @@ bool OEMol::PerceiveKekuleBonds()
 
   bool result = true;
   vector<bool> used; used.resize(NumAtoms()+1);
-  vector<OENodeBase*> va,curr,next;
+  vector<OBNodeBase*> va,curr,next;
   for (atom = BeginAtom(j);atom;atom = NextAtom(j))
       if (varo[atom->GetIdx()] && !used[atom->GetIdx()])
         {
@@ -1775,7 +1775,7 @@ bool OEMol::PerceiveKekuleBonds()
             {
               next.clear();
               for (k = curr.begin();k != curr.end();k++)
-                  for (nbr = ((OEAtom*)*k)->BeginNbrAtom(i);nbr;nbr = ((OEAtom*)*k)->NextNbrAtom(i))
+                  for (nbr = ((OBAtom*)*k)->BeginNbrAtom(i);nbr;nbr = ((OBAtom*)*k)->NextNbrAtom(i))
                       if (varo[nbr->GetIdx()] && !used[nbr->GetIdx()])
                         {
                           used[nbr->GetIdx()] = true;
@@ -1793,25 +1793,17 @@ bool OEMol::PerceiveKekuleBonds()
 
   if (!result)
     { 
-      if (NumAtoms() < 256)
-        {
-          io_type tmp = GetOutputType();
-          SetOutputType(SMI);
-          cerr << "Kekulization Error = " << *this;
-          SetOutputType(tmp);
-        }
-      else
-          cerr << "Kekulization Error = " << GetTitle() << endl;
-          //exit(0);
+      cerr << "Kekulization Error = " << GetTitle() << endl;
+      //exit(0);
     }
-
+  
   return(result);
 }
 
-bool OEMol::Kekulize()
+bool OBMol::Kekulize()
 {
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   if (NumAtoms() > 255) return(false);
 
   for (bond = BeginBond(i);bond;bond = NextBond(i))
@@ -1822,7 +1814,7 @@ bool OEMol::Kekulize()
   return(true);
 }
 
-bool OEMol::DeleteAtom(OEAtom *atom)
+bool OBMol::DeleteAtom(OBAtom *atom)
 {
   if (atom->IsHydrogen()) return(DeleteHydrogen(atom));
 
@@ -1831,13 +1823,13 @@ bool OEMol::DeleteAtom(OEAtom *atom)
   //BeginModify() blows away coordinates
 
   //find bonds to delete
-  OEAtom *nbr;
-  vector<OEEdgeBase*> vdb;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *nbr;
+  vector<OBEdgeBase*> vdb;
+  vector<OBEdgeBase*>::iterator j;
   for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
       vdb.push_back(*j);
 
-  for (j = vdb.begin();j != vdb.end();j++) DeleteBond((OEBond *)*j); //delete bonds
+  for (j = vdb.begin();j != vdb.end();j++) DeleteBond((OBBond *)*j); //delete bonds
 
   _vatom.erase(_vatom.begin()+(atom->GetIdx()-1));
   DestroyAtom(atom);
@@ -1845,7 +1837,7 @@ bool OEMol::DeleteAtom(OEAtom *atom)
 
   //reset all the indices to the atoms
   int idx;
-  vector<OENodeBase*>::iterator i;
+  vector<OBNodeBase*>::iterator i;
   for (idx=1,atom = BeginAtom(i);atom;atom = NextAtom(i),idx++)
     atom->SetIdx(idx);
 
@@ -1854,7 +1846,7 @@ bool OEMol::DeleteAtom(OEAtom *atom)
   return(true);
 }
 
-bool OEMol::DeleteResidue(OEResidue *residue)
+bool OBMol::DeleteResidue(OBResidue *residue)
 {
     unsigned short idx = residue->GetIdx();
     for ( unsigned short i = idx ; i < _residue.size() ; i++ )
@@ -1867,21 +1859,21 @@ bool OEMol::DeleteResidue(OEResidue *residue)
     return(true);
 }
 
-bool OEMol::AddBond(int first,int second,int order,int stereo,int insertpos)
+bool OBMol::AddBond(int first,int second,int order,int stereo,int insertpos)
 {
   BeginModify();
 
   if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms()) 
     //atoms exist
     {
-      OEBond *bond = CreateBond();
+      OBBond *bond = CreateBond();
       if (!bond)
         {
           EndModify();
           return(false);
         }
 
-      OEAtom *bgn,*end;
+      OBAtom *bgn,*end;
       bgn = GetAtom(first);
       end = GetAtom(second);
       if (!bgn || !end)
@@ -1900,17 +1892,17 @@ bool OEMol::AddBond(int first,int second,int order,int stereo,int insertpos)
           end->SetAromatic();
         }
 
-#define OEBondIncrement 100
+#define OBBondIncrement 100
       if (_vbond.empty() || _nbonds+1 >= (signed)_vbond.size()) 
         {
-          _vbond.resize(_nbonds+OEBondIncrement);
-          vector<OEEdgeBase*>::iterator i;
+          _vbond.resize(_nbonds+OBBondIncrement);
+          vector<OBEdgeBase*>::iterator i;
           for (i = _vbond.begin(),i+=(_nbonds+1);i != _vbond.end();i++) 
-			  *i = (OEEdgeBase*)NULL;
+			  *i = (OBEdgeBase*)NULL;
         }
-#undef  OEBondIncrement
+#undef  OBBondIncrement
 
-      _vbond[_nbonds] = (OEEdgeBase*)bond;
+      _vbond[_nbonds] = (OBEdgeBase*)bond;
       _nbonds++;
 
       if (insertpos == -1)
@@ -1923,7 +1915,7 @@ bool OEMol::AddBond(int first,int second,int order,int stereo,int insertpos)
           if (insertpos >= bgn->GetValence()) bgn->AddBond(bond);
           else //need to insert the bond for the connectivity order to be preserved
             {    //otherwise stereochemistry gets screwed up
-              vector<OEEdgeBase*>::iterator bi;
+              vector<OBEdgeBase*>::iterator bi;
               bgn->BeginNbrAtom(bi);
               bi += insertpos;
               bgn->InsertBond(bi,bond);
@@ -1932,13 +1924,13 @@ bool OEMol::AddBond(int first,int second,int order,int stereo,int insertpos)
         }
     }
   else //at least one atom doesn't exist yet - add to bond_q
-	  SetData(new OEVirtualBond(first,second,order,stereo));
+	  SetData(new OBVirtualBond(first,second,order,stereo));
 
   EndModify();
   return(true);
 }
 
-bool OEMol::AddBond(OEBond &bond)
+bool OBMol::AddBond(OBBond &bond)
 {
   return(AddBond(bond.GetBeginAtomIdx(),
                  bond.GetEndAtomIdx(),
@@ -1946,7 +1938,7 @@ bool OEMol::AddBond(OEBond &bond)
                  bond.GetFlags()));
 }
 
-bool OEMol::DeleteBond(OEBond *bond)
+bool OBMol::DeleteBond(OBBond *bond)
 {
   BeginModify();
 
@@ -1956,7 +1948,7 @@ bool OEMol::DeleteBond(OEBond *bond)
 
   DestroyBond(bond);
 
-  vector<OEEdgeBase*>::iterator i; int j;
+  vector<OBEdgeBase*>::iterator i; int j;
   for (bond = BeginBond(i),j=0;bond;bond = NextBond(i),j++)
     bond->SetIdx(j);
 
@@ -1965,7 +1957,7 @@ bool OEMol::DeleteBond(OEBond *bond)
   return(true);
 }
 
-void OEMol::Align(OEAtom *a1,OEAtom *a2,Vector &p1,Vector &p2)
+void OBMol::Align(OBAtom *a1,OBAtom *a2,Vector &p1,Vector &p2)
   // aligns atom a on p1 and atom b along p1->p2 vector
 {
   vector<int> children;
@@ -1987,7 +1979,7 @@ void OEMol::Align(OEAtom *a1,OEAtom *a2,Vector &p1,Vector &p2)
 
   //rotate atoms
   Vector v;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<int>::iterator i;
   for (i = children.begin();i != children.end();i++)
     {
@@ -2123,14 +2115,14 @@ Exit_now:
 #undef MAX_SWEEPS
 }
 
-void OEMol::ToInertialFrame()
+void OBMol::ToInertialFrame()
 {
   float m[9];
   for (int i = 0;i < NumConformers();i++)
     ToInertialFrame(i,m);
 }
 
-void OEMol::ToInertialFrame(int conf,float *rmat)
+void OBMol::ToInertialFrame(int conf,float *rmat)
 {
   unsigned int i;
   int count=0;
@@ -2141,8 +2133,8 @@ void OEMol::ToInertialFrame(int conf,float *rmat)
   memset(center,'\0',sizeof(float)*3);
 
   SetConformer(conf);
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator j;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator j;
   //find center of mass
   for (atom = BeginAtom(j);atom;atom = NextAtom(j))
     if (!atom->IsHydrogen())
@@ -2162,7 +2154,7 @@ void OEMol::ToInertialFrame(int conf,float *rmat)
     }
 
   /* find rotation matrix for moment of inertia */
-  oe_make_rmat(m,rmat);
+  ob_make_rmat(m,rmat);
 
   /*
   float v[3][3];
@@ -2193,55 +2185,7 @@ void OEMol::ToInertialFrame(int conf,float *rmat)
   }
 }
 
-istream& operator>> ( istream &ifs, OEMol &mol)
-{
-  bool retcode = false;
-  switch(mol._itype)
-    {
-      case SDF:       retcode = ReadSDFile(ifs,mol);     break;
-      case SMI:       retcode = ReadSmiles(ifs,mol);     break;
-      case MOL2:      retcode = ReadMol2(ifs,mol);       break;
-      case PDB:       retcode = ReadPDB(ifs,mol);        break;
-      case BOX:       retcode = ReadBox(ifs,mol);        break;
-      case CCC:       retcode = ReadCCC(ifs,mol);        break;
-      case MMD:       retcode = ReadMacroModel(ifs,mol); break;
-      case OEBINARY:  retcode = ReadBinary(ifs,mol);     break;
-      case GHEMICAL:  retcode = ReadGhemical(ifs,mol);   break;
-      default:
-        ThrowError("Input type not defined");
-    }
- 
-  if (!retcode)
-    {
-      if (mol.GetMod()) mol.EndModify();
-      mol.Clear();
-    }
-
-  return(ifs);
-}
- 
-ostream& operator<< ( ostream &ofs, OEMol &mol)
-{
-  switch(mol._otype)
-    {
-      case SDF:       WriteSDFile(ofs,mol);     break;
-      case PDB:                                 break;
-      case MOL2:      WriteMol2(ofs,mol);       break;
-      case DELPDB:    WriteDelphiPDB(ofs,mol);  break;
-      case SMI:       WriteSmiles(ofs,mol);     break;
-      case FIX:       WriteFixFile(ofs,mol);    break;
-      case MMD:       WriteMacroModel(ofs,mol); break;
-      case OEBINARY:  WriteBinary(ofs,mol);     break;
-      case GHEMICAL:  WriteGhemical(ofs,mol);   break;
-	  case TITLE:	  WriteTitles(ofs,mol);     break;
-      default:
-        ThrowError("Output type not defined");
-    }
- 
-  return(ofs);
-}                                                                                    
-
-OEMol::OEMol(io_type itype,io_type otype)
+OBMol::OBMol(io_type itype,io_type otype)
 {
   _natoms = _nbonds = 0;
   _mod = 0;
@@ -2264,7 +2208,7 @@ OEMol::OEMol(io_type itype,io_type otype)
   _compressed = false;
 }
 
-OEMol::OEMol(const OEMol &mol)
+OBMol::OBMol(const OBMol &mol)
 {
   _natoms = _nbonds = 0;
   _mod = 0;
@@ -2285,14 +2229,14 @@ OEMol::OEMol(const OEMol &mol)
   *this = mol;
 }
 
-OEMol::~OEMol()
+OBMol::~OBMol()
 {
-  OEAtom    *atom;
-  OEBond    *bond;
-  OEResidue *residue;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
-  vector<OEResidue*>::iterator r;
+  OBAtom    *atom;
+  OBBond    *bond;
+  OBResidue *residue;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
+  vector<OBResidue*>::iterator r;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i)) DestroyAtom(atom);
   for (bond = BeginBond(j);bond;bond = NextBond(j)) DestroyBond(bond);
   for (residue = BeginResidue(r);residue;residue = NextResidue(r)) delete residue;
@@ -2308,18 +2252,18 @@ OEMol::~OEMol()
 
   if (!_vdata.empty())
   {
-    vector<OEGenericData*>::iterator m;
+    vector<OBGenericData*>::iterator m;
     for (m = _vdata.begin();m != _vdata.end();m++) delete *m;
       _vdata.clear();
   }
 }
 
-bool OEMol::HasData(string &s)
+bool OBMol::HasData(string &s)
      //returns true if the generic attribute/value pair exists
 {
   if (_vdata.empty()) return(false);
 
-    vector<OEGenericData*>::iterator i;
+    vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
         if ((*i)->GetAttribute() == s)
@@ -2328,12 +2272,12 @@ bool OEMol::HasData(string &s)
     return(false);
 }
 
-bool OEMol::HasData(const char *s)
+bool OBMol::HasData(const char *s)
      //returns true if the generic attribute/value pair exists
 {
   if (_vdata.empty()) return(false);
 
-    vector<OEGenericData*>::iterator i;
+    vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
         if ((*i)->GetAttribute() == s)
@@ -2343,12 +2287,12 @@ bool OEMol::HasData(const char *s)
 }
 
 
-bool OEMol::HasData(oeDataType dt)
+bool OBMol::HasData(obDataType dt)
      //returns true if the generic attribute/value pair exists
 {
   if (_vdata.empty()) return(false);
 
-    vector<OEGenericData*>::iterator i;
+    vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
         if ((*i)->GetDataType() == dt)
@@ -2357,10 +2301,10 @@ bool OEMol::HasData(oeDataType dt)
     return(false);
 }
 
-OEGenericData *OEMol::GetData(string &s)
+OBGenericData *OBMol::GetData(string &s)
      //returns the value given an attribute
 {
-    vector<OEGenericData*>::iterator i;
+    vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
 		if ((*i)->GetAttribute() == s)
@@ -2369,10 +2313,10 @@ OEGenericData *OEMol::GetData(string &s)
     return(NULL);
 }
 
-OEGenericData *OEMol::GetData(const char *s)
+OBGenericData *OBMol::GetData(const char *s)
      //returns the value given an attribute
 {
-    vector<OEGenericData*>::iterator i;
+    vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
 		if ((*i)->GetAttribute() == s)
@@ -2381,29 +2325,29 @@ OEGenericData *OEMol::GetData(const char *s)
     return(NULL);
 }
 
-OEGenericData *OEMol::GetData(oeDataType dt)
+OBGenericData *OBMol::GetData(obDataType dt)
 {
-    vector<OEGenericData*>::iterator i;
+    vector<OBGenericData*>::iterator i;
     for (i = _vdata.begin();i != _vdata.end();i++)
         if ((*i)->GetDataType() == dt)
             return(*i);
     return(NULL);
 }
 
-void OEMol::DeleteData(oeDataType dt)
+void OBMol::DeleteData(obDataType dt)
 {
-  vector<OEGenericData*> vdata;
-  vector<OEGenericData*>::iterator i;
+  vector<OBGenericData*> vdata;
+  vector<OBGenericData*>::iterator i;
     for (i = _vdata.begin();i != _vdata.end();i++)
         if ((*i)->GetDataType() == dt) delete *i;
         else vdata.push_back(*i);
   _vdata = vdata;
 }
 
-void OEMol::DeleteData(vector<OEGenericData*> &vg)
+void OBMol::DeleteData(vector<OBGenericData*> &vg)
 {
-  vector<OEGenericData*> vdata;
-  vector<OEGenericData*>::iterator i,j;
+  vector<OBGenericData*> vdata;
+  vector<OBGenericData*>::iterator i,j;
 
   bool del;
   for (i = _vdata.begin();i != _vdata.end();i++)
@@ -2421,9 +2365,9 @@ void OEMol::DeleteData(vector<OEGenericData*> &vg)
   _vdata = vdata;
 }
 
-void OEMol::DeleteData(OEGenericData *gd)
+void OBMol::DeleteData(OBGenericData *gd)
 {
-  vector<OEGenericData*>::iterator i;
+  vector<OBGenericData*>::iterator i;
   for (i = _vdata.begin();i != _vdata.end();i++)
 	  if (*i == gd)
 	  {
@@ -2433,10 +2377,10 @@ void OEMol::DeleteData(OEGenericData *gd)
 
 }
 
-bool OEMol::HasNonZeroCoords()
+bool OBMol::HasNonZeroCoords()
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     if (atom->GetVector() != VZero)
@@ -2445,11 +2389,11 @@ bool OEMol::HasNonZeroCoords()
     return(false);
 }
 
-bool OEMol::Has2D()
+bool OBMol::Has2D()
 {
   bool hasX,hasY;
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   hasX = hasY = false;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
@@ -2462,11 +2406,11 @@ bool OEMol::Has2D()
   return(false);
 }
 
-bool OEMol::Has3D()
+bool OBMol::Has3D()
 {
   bool hasX,hasY,hasZ;
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   hasX = hasY = hasZ = false;
   if (this->_c == NULL) return(false);
@@ -2481,10 +2425,10 @@ bool OEMol::Has3D()
   return(false);
 }
 
-bool OEMol::IsChiral()
+bool OBMol::IsChiral()
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     if ((atom->IsCarbon() || atom->IsNitrogen()) && atom->GetHvyValence() > 2 && atom->IsChiral()) 
@@ -2493,20 +2437,20 @@ bool OEMol::IsChiral()
   return(false);
 }
 
-void OEMol::RenumberAtoms(vector<OENodeBase*> &v)
+void OBMol::RenumberAtoms(vector<OBNodeBase*> &v)
 {
   if (Empty()) return;
 
-  OEAtom *atom;
-  vector<OENodeBase*> va;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*> va;
+  vector<OBNodeBase*>::iterator i;
   
   va = v;
 
   if (!va.empty() && va.size() < NumAtoms())
     //make sure all atoms are represented in the vector
     {
-      OEBitVec bv;
+      OBBitVec bv;
       for (i = va.begin();i != va.end();i++) bv |= (*i)->GetIdx();
      
       for (atom = BeginAtom(i);atom;atom = NextAtom(i))
@@ -2522,7 +2466,7 @@ void OEMol::RenumberAtoms(vector<OENodeBase*> &v)
     {
       c = GetConformer(j);
       for (k=0,i = va.begin();i != va.end();i++,k++)
-          memcpy((char*)&ctmp[k*3],(char*)&c[((OEAtom*)*i)->GetCIdx()],sizeof(float)*3);
+          memcpy((char*)&ctmp[k*3],(char*)&c[((OBAtom*)*i)->GetCIdx()],sizeof(float)*3);
       memcpy((char*)c,(char*)ctmp,sizeof(float)*3*NumAtoms());
     }
 
@@ -2535,7 +2479,7 @@ void OEMol::RenumberAtoms(vector<OENodeBase*> &v)
 }
 
 #ifdef REMOVE_LATER
-bool CompareBonds(const OEEdgeBase *a,const OEEdgeBase *b) 
+bool CompareBonds(const OBEdgeBase *a,const OBEdgeBase *b) 
 {
   if (a->GetBgn()->GetIdx() == b->GetBgn()->GetIdx())
     return(a->GetEnd()->GetIdx() < b->GetEnd()->GetIdx());
@@ -2544,91 +2488,21 @@ bool CompareBonds(const OEEdgeBase *a,const OEEdgeBase *b)
 }
 #endif
 
-bool ReadMolecule(istream &ifs, OEMol &mol, const char *filename, char *title)
-{
-  int i, len, exten;
-
-  if (!filename)
-    {
-      cerr << "ReadMolecule error: filename is NULL" << endl;
-      return false;
-    }
-
-  len = strlen(filename);
-  for ( i = 0, exten = 0 ; i < len ; i++ )
-    if ( filename[i] == '.' )
-      exten = i;
-
-  const char *ext = filename + exten + 1;
-
-  if (strcmp(ext,"mol2") == 0)
-    return ReadMol2(ifs,mol,title);
-  else if (strcmp(ext,"sdf") == 0){
-    return ReadSDFile(ifs,mol,title);
-  }
-  else if (strcmp(ext,"pdb") == 0){
-    bool b=ReadPDB(ifs,mol,title);
-    if (strlen(mol.GetTitle()) == 0){ 
-        mol.SetTitle((char*)filename); 
-    }
-    return(b);
-  }
-  else if (strcmp(ext,"box") == 0)
-    return ReadBox(ifs,mol,title);
-  else if (strcmp(ext,"smi") == 0)
-    return ReadSmiles(ifs,mol,title);
-  else
-    {
-      cerr << "ReadMolecule error: " << filename << " : file extension not recognized" << endl;
-      return false;
-    }
-}
-
-bool WriteMolecule(ostream &ofs, OEMol &mol, const char *filename, char *dimension)
-{
-  int i, len, exten;
-
-  if (!filename)
-    {
-      cerr << "WriteMolecule error: filename is NULL" << endl;
-      return false;
-    }
-
-  len = strlen(filename);
-  for ( i = 0, exten = 0 ; i < len ; i++ )
-    if ( filename[i] == '.' )
-      exten = i;
-
-  const char *ext = filename + exten + 1;
-
-  if (strcmp(ext,"mol2") == 0)
-    return WriteMol2(ofs,mol,dimension);
-  else if (strcmp(ext,"sdf") == 0)
-    return WriteSDFile(ofs,mol,dimension);
-  else if (strcmp(ext,"pdb") == 0)
-    return WriteDelphiPDB(ofs,mol);
-  else
-    {
-      cerr << "WriteMolecule error: " << filename << " : file extension not recognized" << endl;
-      return false;
-    }
-}
-
-bool WriteTitles(ostream &ofs, OEMol &mol)
+bool WriteTitles(ostream &ofs, OBMol &mol)
 {
 	ofs << mol.GetTitle() << endl;
 	return true;
 }
 
 /*
-void OEMol::ConnectTheDots(void)
+void OBMol::ConnectTheDots(void)
   //use inter-atomic distances to identify bonds
 {
   if (Empty()) return;
 
   int j,k;
-  OEAtom *atom,*nbr;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom,*nbr;
+  vector<OBNodeBase*>::iterator i;
   vector<float> rad; 
 
   float *c = new float [NumAtoms()*3];
@@ -2661,16 +2535,16 @@ void OEMol::ConnectTheDots(void)
   delete [] c;
 }
 */
-void OEMol::ConnectTheDots(void)
+void OBMol::ConnectTheDots(void)
   //use inter-atomic distances to identify bonds
 {
   if (Empty()) return;
 
   int j,k,max;
   bool unset = false;
-  OEAtom *atom,*nbr;
-  vector<OENodeBase*>::iterator i;
-  vector<pair<OEAtom*,float> > zsortedAtoms;
+  OBAtom *atom,*nbr;
+  vector<OBNodeBase*>::iterator i;
+  vector<pair<OBAtom*,float> > zsortedAtoms;
   vector<float> rad; 
   vector<int> zsorted;
 
@@ -2680,7 +2554,7 @@ void OEMol::ConnectTheDots(void)
   for (j = 0, atom = BeginAtom(i) ; atom ; atom = NextAtom(i), j++)
     {
       (atom->GetVector()).Get(&c[j*3]);
-      pair<OEAtom*,float> entry(atom, atom->GetVector().z());
+      pair<OBAtom*,float> entry(atom, atom->GetVector().z());
       zsortedAtoms.push_back(entry);
     }
   sort(zsortedAtoms.begin(), zsortedAtoms.end(), SortAtomZ);
@@ -2739,9 +2613,9 @@ void OEMol::ConnectTheDots(void)
   }
 
   // Cleanup -- delete long bonds that exceed max valence
-  OEBond *maxbond, *bond;
+  OBBond *maxbond, *bond;
   float maxlength;
-  vector<OEEdgeBase*>::iterator l;
+  vector<OBEdgeBase*>::iterator l;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
       while (atom->BOSum() > etab.GetMaxBonds(atom->GetAtomicNum()))
@@ -2771,7 +2645,7 @@ void OEMol::ConnectTheDots(void)
   delete [] c;
 }
 
-void OEMol::Center()
+void OBMol::Center()
 {
   int j,size;
   float *c,x,y,z,fsize;
@@ -2794,12 +2668,12 @@ void OEMol::Center()
 
 }
 
-Vector OEMol::Center(int nconf)
+Vector OBMol::Center(int nconf)
 {
   SetConformer(nconf);
 
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   float x=0.0,y=0.0,z=0.0;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
@@ -2822,17 +2696,17 @@ Vector OEMol::Center(int nconf)
 }
 
 
-void OEMol::Translate(const Vector &v)
+void OBMol::Translate(const Vector &v)
 {
   for (int i = 0;i < NumConformers();i++) 
     Translate(v,i);
 }
 
-void OEMol::Translate(const Vector &v,int nconf)
+void OBMol::Translate(const Vector &v,int nconf)
 {
   int i,size;
   float x,y,z;
-  float *c = (nconf == OE_CURRENT_CONFORMER)? _c : GetConformer(nconf);
+  float *c = (nconf == OB_CURRENT_CONFORMER)? _c : GetConformer(nconf);
 
   x = v.x(); y = v.y(); z = v.z();
   size = NumAtoms();
@@ -2844,7 +2718,7 @@ void OEMol::Translate(const Vector &v,int nconf)
     }
 }
 
-void OEMol::Rotate(const float u[3][3])
+void OBMol::Rotate(const float u[3][3])
 {
   int i,j,k;
   float m[9];
@@ -2856,17 +2730,17 @@ void OEMol::Rotate(const float u[3][3])
     Rotate(m,i);
 }
 
-void OEMol::Rotate(const float m[9])
+void OBMol::Rotate(const float m[9])
 {
   for (int i = 0;i < NumConformers();i++) 
     Rotate(m,i);
 }
 
-void OEMol::Rotate(const float m[9],int nconf)
+void OBMol::Rotate(const float m[9],int nconf)
 {
   int i,size;
   float x,y,z;
-  float *c = (nconf == OE_CURRENT_CONFORMER)? _c : GetConformer(nconf);
+  float *c = (nconf == OB_CURRENT_CONFORMER)? _c : GetConformer(nconf);
   
   size = NumAtoms();
   for (i = 0;i < size;i++)
@@ -2881,7 +2755,7 @@ void OEMol::Rotate(const float m[9],int nconf)
 }
 
 
-void OEMol::SetConformers(vector<float*> &v)
+void OBMol::SetConformers(vector<float*> &v)
 {
   vector<float*>::iterator i;
   for (i = _vconf.begin();i != _vconf.end();i++)
@@ -2892,15 +2766,15 @@ void OEMol::SetConformers(vector<float*> &v)
 
 }
 
-void OEMol::CopyConformer(float *c,int idx)
+void OBMol::CopyConformer(float *c,int idx)
 {
-  oeAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
+  obAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
   memcpy((char*)_vconf[idx],(char*)c,sizeof(float)*3*NumAtoms());
 }
 
-void OEMol::CopyConformer(double *c,int idx)
+void OBMol::CopyConformer(double *c,int idx)
 {
-  oeAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
+  obAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
 
   unsigned int i;
   for (i = 0;i < NumAtoms();i++)
@@ -2911,7 +2785,7 @@ void OEMol::CopyConformer(double *c,int idx)
     }
 }
 
-void OEMol::DeleteConformer(int idx)
+void OBMol::DeleteConformer(int idx)
 {
   if (idx < 0 || idx >= (signed)_vconf.size()) return;
 
@@ -2919,7 +2793,7 @@ void OEMol::DeleteConformer(int idx)
   _vconf.erase((_vconf.begin()+idx));
 }
 
-bool OEMol::Compress(void)
+bool OBMol::Compress(void)
 {
   int size = 0;
   unsigned char buf[100000];
@@ -2932,7 +2806,7 @@ bool OEMol::Compress(void)
         {
           _compressed = true;
 
-		  OECompressData *cd = new OECompressData;
+		  OBCompressData *cd = new OBCompressData;
 		  cd->SetData(buf,size);
 
           Clear();
@@ -2945,7 +2819,7 @@ bool OEMol::Compress(void)
   return _compressed;
 }
 
-bool OEMol::UnCompress(void)
+bool OBMol::UnCompress(void)
 {
   int size = 0;
   unsigned char *buf;
@@ -2953,7 +2827,7 @@ bool OEMol::UnCompress(void)
 
   if (_compressed)
     {
-	  OECompressData *cd = (OECompressData*)GetData(oeCompressData);
+	  OBCompressData *cd = (OBCompressData*)GetData(obCompressData);
       data = cd->GetData();
 
       if (data != NULL)
@@ -2979,36 +2853,36 @@ bool OEMol::UnCompress(void)
   return false;
 }
 
-OEAtom *OEMol::BeginAtom(vector<OENodeBase*>::iterator &i) 
+OBAtom *OBMol::BeginAtom(vector<OBNodeBase*>::iterator &i) 
 {
 	i = _vatom.begin();
-	return((i == _vatom.end()) ? (OEAtom*)NULL : (OEAtom*)*i);
+	return((i == _vatom.end()) ? (OBAtom*)NULL : (OBAtom*)*i);
 }
 
-OEAtom *OEMol::NextAtom(vector<OENodeBase*>::iterator &i) 
+OBAtom *OBMol::NextAtom(vector<OBNodeBase*>::iterator &i) 
 {
 	i++;
-	return((i == _vatom.end()) ? (OEAtom*)NULL : (OEAtom*)*i);
+	return((i == _vatom.end()) ? (OBAtom*)NULL : (OBAtom*)*i);
 }
 
-OEBond *OEMol::BeginBond(vector<OEEdgeBase*>::iterator &i) 
+OBBond *OBMol::BeginBond(vector<OBEdgeBase*>::iterator &i) 
 {
 	i = _vbond.begin();
-	return((i == _vbond.end()) ? (OEBond*)NULL : (OEBond*)*i);
+	return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
 }
 
-OEBond *OEMol::NextBond(vector<OEEdgeBase*>::iterator &i) 
+OBBond *OBMol::NextBond(vector<OBEdgeBase*>::iterator &i) 
 {
 	i++;
-	return((i == _vbond.end()) ? (OEBond*)NULL : (OEBond*)*i);
+	return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
 }
 
 
-//////Pose Member functions of OEMol/////////
+//////Pose Member functions of OBMol/////////
 /*!
-**\brief Deletes all pose information for the OEMol
+**\brief Deletes all pose information for the OBMol
 */
-void OEMol::DeletePoses()
+void OBMol::DeletePoses()
   {
     //If there are no poses don't do anything
     if (_pose.empty()) return;
@@ -3034,7 +2908,7 @@ void OEMol::DeletePoses()
 **\brief Deletes a specified pose
 **\param i Number of the pose to be deleted
 */
-void OEMol::DeletePose(unsigned int i)
+void OBMol::DeletePose(unsigned int i)
   {
     //Check that a valid pose is being deleted.
     if (i >= NumPoses()) return;
@@ -3050,14 +2924,14 @@ void OEMol::DeletePose(unsigned int i)
 
 /*!
 **\brief Adds an additional pose to the pose array.
-**\param pose An OEPose object holding the pose to be added
+**\param pose An OBPose object holding the pose to be added
 */
-void OEMol::AddPose(OEPose& pose)
+void OBMol::AddPose(OBPose& pose)
   {
     //Check that the pose references a valid conformer
     if (pose.ConformerNum() >= (unsigned int) NumConformers()) {
         ThrowError("WARNING! Pose does not reference a valid conformer");
-        cerr << "WARNING! OEMol::AddPose(OEPose)  ";
+        cerr << "WARNING! OBMol::AddPose(OBPose)  ";
         cerr << "Pose references invalid conformer";
         cerr << endl;
         return;
@@ -3066,17 +2940,17 @@ void OEMol::AddPose(OEPose& pose)
   }
 
 /*!
-**\brief Sets the poses of the OEMol
+**\brief Sets the poses of the OBMol
 **\param poses A vector of poses
 */
-void OEMol::SetPoses(vector<OEPose>& poses)
+void OBMol::SetPoses(vector<OBPose>& poses)
   {
     //Check that all the poses reference valid conformers
     unsigned int i;
     for (i=0 ; i<poses.size() ; i++) {
         if (poses[i].ConformerNum() >= (unsigned int) NumConformers()) {
             ThrowError("WARNING! Poses do not reference valid conformers");
-            cerr << "WARNING! OEMol::SetPoses(vector<OEPose>&)  ";
+            cerr << "WARNING! OBMol::SetPoses(vector<OBPose>&)  ";
             cerr << "Pose references invalid conformer";
             cerr << endl;
             return;
@@ -3095,15 +2969,15 @@ void OEMol::SetPoses(vector<OEPose>& poses)
   }
 
 /*!
-**\brief Sets the OEMol's atomic coordiates to the specified pose
+**\brief Sets the OBMol's atomic coordiates to the specified pose
 **\param i The number of the pose
 */
-void OEMol::SetPose(unsigned int i)
+void OBMol::SetPose(unsigned int i)
   {
     //check that the pose is valid
     if (i >= NumPoses()) {
         ThrowError("WARNING! Invalid pose specified");
-        cerr << "WARNING! OEMol::SetPose(unsigned int) ";
+        cerr << "WARNING! OBMol::SetPose(unsigned int) ";
         cerr << "Invalid pose specified!" << endl;
         return;
       }
@@ -3111,7 +2985,7 @@ void OEMol::SetPose(unsigned int i)
     //Check that the pose references a valid conformer
     if (_pose[i].ConformerNum() >= (unsigned int) NumConformers()) {
         ThrowError("WARNING! Pose references invalid conformer");
-        cerr << "WARNING! OEMol::SetPose(unsigned int) ";
+        cerr << "WARNING! OBMol::SetPose(unsigned int) ";
         cerr << "Pose references invalid conformer" << endl;
         return;
       }
@@ -3139,7 +3013,7 @@ void OEMol::SetPose(unsigned int i)
 **\return The number of the current pose.  If no poses are
 **present 0 is returned.
 */
-unsigned int OEMol::CurrentPoseIndex()
+unsigned int OBMol::CurrentPoseIndex()
   {
     if (_pose.empty()) return 0;
     return _cur_pose_idx;
@@ -3151,12 +3025,12 @@ unsigned int OEMol::CurrentPoseIndex()
 **\param xyz An array (preallocated) that is filled
 **with the coordinates of the pose. 
 */
-void OEMol::GetPoseCoordinates(unsigned int i, float *xyz)
+void OBMol::GetPoseCoordinates(unsigned int i, float *xyz)
   {
     //check that the pose is valid
     if (i >= NumPoses()) {
         ThrowError("WARNING! Invalid pose specified");
-        cerr << "WARNING! OEMol::GetPoseCoordinates(unsigned int) ";
+        cerr << "WARNING! OBMol::GetPoseCoordinates(unsigned int) ";
         cerr << "Invalid pose specified!" << endl;
         return;
       }
@@ -3164,7 +3038,7 @@ void OEMol::GetPoseCoordinates(unsigned int i, float *xyz)
     //Check that the pose references a valid conformer
     if (_pose[i].ConformerNum() >= (unsigned int) NumConformers()) {
         ThrowError("WARNING! Pose references invalid conformer");
-        cerr << "WARNING! OEMol::GetPoseCoordinates(unsigned int) ";
+        cerr << "WARNING! OBMol::GetPoseCoordinates(unsigned int) ";
         cerr << "Pose references invalid conformer" << endl;
         return;
       }
@@ -3184,17 +3058,17 @@ void OEMol::GetPoseCoordinates(unsigned int i, float *xyz)
 /*!
 **\brief Provied access to the pose object
 **\param i The number of the pose desired.
-**\return A reference to the i'th OEPose.
+**\return A reference to the i'th OBPose.
 */
-OEPose& OEMol::GetPose(unsigned int i)
+OBPose& OBMol::GetPose(unsigned int i)
   {
 /*
     //check that the pose is valid
     if (i >= NumPoses()) {
         ThrowError("WARNING! Invalid pose specified");
-        cerr << "WARNING! OEMol::GetPoseCoordinates(unsigned int) ";
+        cerr << "WARNING! OBMol::GetPoseCoordinates(unsigned int) ";
         cerr << "Invalid pose specified!" << endl;
-        OEPose pose;
+        OBPose pose;
         return pose;
       }
 */
@@ -3202,11 +3076,11 @@ OEPose& OEMol::GetPose(unsigned int i)
   }
 
 /*!
-**\brief Converts the poses of the OEMol into conformers.
+**\brief Converts the poses of the OBMol into conformers.
 **This destroys the original conformer list as well as the
 **original pose information.
 */
-void OEMol::ChangePosesToConformers()
+void OBMol::ChangePosesToConformers()
   {
     //If there aren't any poses don't do anything
     if (_pose.empty()) return;
@@ -3220,7 +3094,7 @@ void OEMol::ChangePosesToConformers()
         GetPoseCoordinates(i,dconf[i]);
       }
 
-    //Now that we have the coordinates clear the pose info for OEMol
+    //Now that we have the coordinates clear the pose info for OBMol
     DeletePoses();
 
     //Assign the pose coordinates to the conformers
@@ -3228,28 +3102,28 @@ void OEMol::ChangePosesToConformers()
 
     return;
   }
-//////////End pose member functions of OEMol////////////////
+//////////End pose member functions of OBMol////////////////
 
 //
-// OEResidue member functions
+// OBResidue member functions
 //
 
-OEResidue::OEResidue() 
+OBResidue::OBResidue() 
 {
     _chainnum = 0;
     _resnum   = 0;
     _resname  = "";
 }
 
-OEResidue::~OEResidue()
+OBResidue::~OBResidue()
 {
-    vector<OEAtom*>::iterator a;
+    vector<OBAtom*>::iterator a;
     for ( a = _atoms.begin() ; a != _atoms.end() ; a++ )
         (*a)->SetResidue(NULL);
     _atoms.clear();
 }
 
-OEResidue &OEResidue::operator=(const OEResidue &src)
+OBResidue &OBResidue::operator=(const OBResidue &src)
      //copy residue information
 {
     _chainnum = src._chainnum;
@@ -3261,7 +3135,7 @@ OEResidue &OEResidue::operator=(const OEResidue &src)
     return(*this);
 }
 
-void OEResidue::AddAtom(OEAtom *atom)
+void OBResidue::AddAtom(OBAtom *atom)
 {
     if (atom != NULL)
     {
@@ -3274,7 +3148,7 @@ void OEResidue::AddAtom(OEAtom *atom)
     }
 }
 
-void OEResidue::InsertAtom(OEAtom *atom)
+void OBResidue::InsertAtom(OBAtom *atom)
 {
     if (atom != NULL)
     {
@@ -3287,7 +3161,7 @@ void OEResidue::InsertAtom(OEAtom *atom)
     }
 }
 
-void OEResidue::RemoveAtom(OEAtom *atom)
+void OBResidue::RemoveAtom(OBAtom *atom)
 {
     if (atom != NULL)
     {
@@ -3304,7 +3178,7 @@ void OEResidue::RemoveAtom(OEAtom *atom)
     }
 }
 
-void OEResidue::Clear(void)
+void OBResidue::Clear(void)
 {
   for (unsigned int i = 0 ; i < _atoms.size() ; i++ )
     _atoms[i]->SetResidue(NULL);

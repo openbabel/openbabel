@@ -16,7 +16,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool WriteChemDraw(ostream &ofs,OEMol &mol)
+bool WriteChemDraw(ostream &ofs,OBMol &mol)
 { 
   char buffer[BUFF_SIZE];
 
@@ -24,8 +24,8 @@ bool WriteChemDraw(ostream &ofs,OEMol &mol)
   sprintf(buffer," %d %d",mol.NumAtoms(),mol.NumBonds());
   ofs << buffer << endl;
   
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
@@ -36,8 +36,8 @@ bool WriteChemDraw(ostream &ofs,OEMol &mol)
     ofs << buffer << endl;
   }
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
 
   for(bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
   {

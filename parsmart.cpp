@@ -21,21 +21,21 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool OESmartsParser::Parse(OESmartsPattern &sp,string &s)
+bool OBSmartsParser::Parse(OBSmartsPattern &sp,string &s)
 {
 	return(Parse(sp,s.c_str()));
 }
 
-bool OESmartsParser::Parse(OESmartsPattern &sp,const char *buf)
+bool OBSmartsParser::Parse(OBSmartsPattern &sp,const char *buf)
 {
 	//reset closure info if necessary
 
 	int         vb;
 	int         idx;
-	OENode     *node;
-	OEEdgeBase *cb;
-	OEExprBase *eexpr=NULL;
-	OEExprBase *vexpr=NULL;
+	OBNode     *node;
+	OBEdgeBase *cb;
+	OBExprBase *eexpr=NULL;
+	OBExprBase *vexpr=NULL;
 
 	_prev = NULL;
 	_vprev.clear();
@@ -96,11 +96,11 @@ bool OESmartsParser::Parse(OESmartsPattern &sp,const char *buf)
 			if (_prev) //bond to previous
 			{
 				if (eexpr) sp.NewEdge(_prev,node,eexpr);
-				else       sp.NewEdge(_prev,node,new OEDefaultEdgeExpr);
+				else       sp.NewEdge(_prev,node,new OBDefaultEdgeExpr);
 			}
 
 			_prev = node;
-			eexpr = (OEExprBase*)NULL;
+			eexpr = (OBExprBase*)NULL;
 			break; 
 
 		//bond expression
@@ -132,15 +132,15 @@ bool OESmartsParser::Parse(OESmartsPattern &sp,const char *buf)
 			{
 				cb->SetEnd(_prev);
 				_prev->AddEdge(cb);
-				if (eexpr) ((OEEdge*)cb)->ReplaceExpr(eexpr);
+				if (eexpr) ((OBEdge*)cb)->ReplaceExpr(eexpr);
 			}
 			else //add closure bonds
 			{
 				if (eexpr) cb = sp.NewEdge(_prev,NULL,eexpr);
-				else       cb = sp.NewEdge(_prev,NULL,new OEDefaultEdgeExpr);
+				else       cb = sp.NewEdge(_prev,NULL,new OBDefaultEdgeExpr);
 				AddClosure(cb,idx);
 			}
-			eexpr = (OEExprBase*)NULL;
+			eexpr = (OBExprBase*)NULL;
 			break;
 
 		//simple atom expression
@@ -156,11 +156,11 @@ bool OESmartsParser::Parse(OESmartsPattern &sp,const char *buf)
 			if (_prev) //bond to previous
 			{
 				if (eexpr) sp.NewEdge(_prev,node,eexpr);
-				else       sp.NewEdge(_prev,node,new OEDefaultEdgeExpr);
+				else       sp.NewEdge(_prev,node,new OBDefaultEdgeExpr);
 			}
 
 			_prev = node;
-			eexpr = (OEExprBase*)NULL;
+			eexpr = (OBExprBase*)NULL;
 		} // end switch
 
 	sp.PrepForMatch();
@@ -168,17 +168,17 @@ bool OESmartsParser::Parse(OESmartsPattern &sp,const char *buf)
 	return(true);
 }
 
-OEExprBase *OESmartsParser::ParseAtomExpr( int level )
+OBExprBase *OBSmartsParser::ParseAtomExpr( int level )
 {
     const char *prev;
-    OEExprBase *expr1;
-    OEExprBase *expr2;
+    OBExprBase *expr1;
+    OBExprBase *expr2;
 
     switch( level )
     {
 	case(0): /* Low Precedence Conjunction */
 
-		if( !(expr1=ParseAtomExpr(1)) ) return((OEExprBase*)NULL);
+		if( !(expr1=ParseAtomExpr(1)) ) return((OBExprBase*)NULL);
 
 		while( *_ptr == ';' )
 		{
@@ -186,15 +186,15 @@ OEExprBase *OESmartsParser::ParseAtomExpr( int level )
 			if( !(expr2=ParseAtomExpr(1)) )
 			{
 				delete expr1;
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 			}
-			expr1 = new OEAndExpr(expr1,expr2);
+			expr1 = new OBAndExpr(expr1,expr2);
 		}
 		return(expr1);
 
 	case(1): /* Disjunction */
 
-		if( !(expr1=ParseAtomExpr(2)) ) return((OEExprBase*)NULL);
+		if( !(expr1=ParseAtomExpr(2)) ) return((OBExprBase*)NULL);
 
 		while( *_ptr == ',' )
 		{
@@ -202,15 +202,15 @@ OEExprBase *OESmartsParser::ParseAtomExpr( int level )
 			if( !(expr2=ParseAtomExpr(2)) )
 			{
 				delete expr1;
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 			}
-			expr1 = new OEOrExpr(expr1,expr2);
+			expr1 = new OBOrExpr(expr1,expr2);
 		}
 		return(expr1);
 
 	case(2): /* High Precedence Conjunction */
 
-		if( !(expr1=ParseAtomExpr(3)) ) return((OEExprBase*)NULL);
+		if( !(expr1=ParseAtomExpr(3)) ) return((OBExprBase*)NULL);
 			
 		while( (*_ptr!=']') && (*_ptr!=';') && *_ptr != ',' && *_ptr )
 		{   
@@ -221,11 +221,11 @@ OEExprBase *OESmartsParser::ParseAtomExpr( int level )
 				if( prev != _ptr )
 				{
 					delete expr1;
-					return((OEExprBase*)NULL);
+					return((OBExprBase*)NULL);
 				} 
 				else return(expr1);
 			}
-			expr1 = new OEAndExpr(expr1,expr2);
+			expr1 = new OBAndExpr(expr1,expr2);
 		}
 		return(expr1);
 
@@ -234,26 +234,26 @@ OEExprBase *OESmartsParser::ParseAtomExpr( int level )
 		{
 			_ptr++;
 			if( !(expr1=ParseAtomExpr(3)) )
-				return( (OEExprBase*)NULL);
-			return(new OENotExpr(expr1));
+				return( (OBExprBase*)NULL);
+			return(new OBNotExpr(expr1));
 		}
 		return(ParseComplexAtomPrimitive());
     }
-    return((OEExprBase*)NULL);
+    return((OBExprBase*)NULL);
 }
 
-OEExprBase *OESmartsParser::ParseSimpleAtomPrimitive()
+OBExprBase *OBSmartsParser::ParseSimpleAtomPrimitive()
 {
 	if (islower(*_ptr))
 	{
 		switch( *_ptr)
 		{
-		case 'a':  return(new OEAromaticExpr(true));
-		case 'c':  return(new OEAromElemExpr(6,true));
-		case 'n':  return(new OEAromElemExpr(7,true));
-		case 'o':  return(new OEAromElemExpr(8,true));
-		case 'p':  return(new OEAromElemExpr(15,true));
-		case 's':  return(new OEAromElemExpr(16,true));
+		case 'a':  return(new OBAromaticExpr(true));
+		case 'c':  return(new OBAromElemExpr(6,true));
+		case 'n':  return(new OBAromElemExpr(7,true));
+		case 'o':  return(new OBAromElemExpr(8,true));
+		case 'p':  return(new OBAromElemExpr(15,true));
+		case 's':  return(new OBAromElemExpr(16,true));
 		}
 	}
 	else
@@ -265,32 +265,32 @@ OEExprBase *OESmartsParser::ParseSimpleAtomPrimitive()
 			case 'C':  if( *next == 'l' )
 					   {
 						   _ptr++;
-						   return(new OEElementExpr(17));
+						   return(new OBElementExpr(17));
 					   }
-					   return(new OEAromElemExpr(6,false));
+					   return(new OBAromElemExpr(6,false));
 
-			case 'N':  return(new OEAromElemExpr(7,false));
-			case 'O':  return(new OEAromElemExpr(8,false));
-			case 'S':  return(new OEAromElemExpr(16,false));
-			case 'P':  return(new OEAromElemExpr(15,false));
-			case '*':  return(new OEConstExpr);
-			case 'A':  return(new OEAromaticExpr(false));
+			case 'N':  return(new OBAromElemExpr(7,false));
+			case 'O':  return(new OBAromElemExpr(8,false));
+			case 'S':  return(new OBAromElemExpr(16,false));
+			case 'P':  return(new OBAromElemExpr(15,false));
+			case '*':  return(new OBConstExpr);
+			case 'A':  return(new OBAromaticExpr(false));
 			case 'B':  if( *next == 'r' )
 					   {
 						   _ptr++;
-						   return(new OEElementExpr(35));
+						   return(new OBElementExpr(35));
 					   }
-					   return(new OEElementExpr(5));
+					   return(new OBElementExpr(5));
 
-			case 'F':  return(new OEElementExpr(9 ));
-			case 'I':  return(new OEElementExpr(53));
+			case 'F':  return(new OBElementExpr(9 ));
+			case 'I':  return(new OBElementExpr(53));
 		}
 	}
 
     return(NULL);
 }
 
-OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
+OBExprBase *OBSmartsParser::ParseComplexAtomPrimitive()
 {
     int index;
 
@@ -304,11 +304,11 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 				if( *_ptr == 's' )
 				{
 					_ptr++;
-					return(new OEAromElemExpr(33,true));
+					return(new OBAromElemExpr(33,true));
 				}
-				return(new OEAromaticExpr(true));
+				return(new OBAromaticExpr(true));
 
-			case 'c': return(new OEAromElemExpr(6,true));
+			case 'c': return(new OBAromElemExpr(6,true));
 
 			case 'h':
 				if( isdigit(*_ptr) )
@@ -318,11 +318,11 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 						index = index*10 + ((*_ptr++)-'0');
 				}
 				else index = 1;
-				return(new OEImplicitExpr(index));
+				return(new OBImplicitExpr(index));
 
-			case 'n':  return(new OEAromElemExpr(7,true));
-			case 'o':  return(new OEAromElemExpr(8,true));
-			case 'p':  return(new OEAromElemExpr(15,true));
+			case 'n':  return(new OBAromElemExpr(7,true));
+			case 'o':  return(new OBAromElemExpr(8,true));
+			case 'p':  return(new OBAromElemExpr(15,true));
 
 			case 'r':
 				if( isdigit(*_ptr) )
@@ -331,18 +331,18 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 					while(isdigit(*_ptr))
 						index = index*10 + ((*_ptr++)-'0');
 					if( index == 0 )
-						return(new OERingExpr(0));
-					return(new OESizeExpr(index));
+						return(new OBRingExpr(0));
+					return(new OBSizeExpr(index));
 				}
-				return(new OERingExpr);
+				return(new OBRingExpr);
 
 			case 's':  
 				if(*_ptr == 'i')
 				{
 					_ptr++;
-					return(new OEAromElemExpr(14,true));
+					return(new OBAromElemExpr(14,true));
 				}
-				return(new OEAromElemExpr(16,true));
+				return(new OBAromElemExpr(16,true));
 
 			case 'v':
 				if( isdigit(*_ptr) )
@@ -350,9 +350,9 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 					index = 0;
 					while( isdigit(*_ptr) )
 						index = index*10 + ((*_ptr++)-'0');
-					return(new OEValenceExpr(index));
+					return(new OBValenceExpr(index));
 				}
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 			} //switch
 		} //if (islower())
 		else
@@ -362,27 +362,27 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 			case 'C':  
 				switch( *_ptr++ )
 				{
-				case 'a':  return(new OEElementExpr(20));
-				case 'd':  return(new OEElementExpr(48));
-				case 'e':  return(new OEElementExpr(58));
-				case 'f':  return(new OEElementExpr(98));
-				case 'l':  return(new OEElementExpr(17));
-				case 'm':  return(new OEElementExpr(96));
-				case 'o':  return(new OEElementExpr(27));
-				case 'r':  return(new OEElementExpr(24));
-				case 's':  return(new OEElementExpr(55));
-				case 'u':  return(new OEElementExpr(29));
+				case 'a':  return(new OBElementExpr(20));
+				case 'd':  return(new OBElementExpr(48));
+				case 'e':  return(new OBElementExpr(58));
+				case 'f':  return(new OBElementExpr(98));
+				case 'l':  return(new OBElementExpr(17));
+				case 'm':  return(new OBElementExpr(96));
+				case 'o':  return(new OBElementExpr(27));
+				case 'r':  return(new OBElementExpr(24));
+				case 's':  return(new OBElementExpr(55));
+				case 'u':  return(new OBElementExpr(29));
 				}
 				_ptr--;
-				return(new OEAromElemExpr(6,false));
+				return(new OBAromElemExpr(6,false));
 				
 			case 'H':
 				switch(*_ptr++)
 				{
-				case 'e': return(new OEElementExpr(2));
-				case 'f': return(new OEElementExpr(72));
-				case 'g': return(new OEElementExpr(80));
-				case 'o': return(new OEElementExpr(67));
+				case 'e': return(new OBElementExpr(2));
+				case 'f': return(new OBElementExpr(72));
+				case 'g': return(new OBElementExpr(80));
+				case 'o': return(new OBElementExpr(67));
 				}
 				_ptr--;
 				
@@ -391,161 +391,161 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 					index = 0;
 					while( isdigit(*_ptr) )
 						index = index*10 + ((*_ptr++)-'0');
-					return(new OEHCountExpr(index));
+					return(new OBHCountExpr(index));
 				}	
-				return(new OEHCountExpr(1));
+				return(new OBHCountExpr(1));
 
 			case 'A':
 				switch(*_ptr++)
 				{
-				case 'c':  return(new OEElementExpr(89));
-				case 'g':  return(new OEElementExpr(47));
-				case 'l':  return(new OEElementExpr(13));
-				case 'm':  return(new OEElementExpr(95));
-				case 'r':  return(new OEElementExpr(18));
-				case 's':  return(new OEElementExpr(33));
-				case 't':  return(new OEElementExpr(85));
-				case 'u':  return(new OEElementExpr(79));
+				case 'c':  return(new OBElementExpr(89));
+				case 'g':  return(new OBElementExpr(47));
+				case 'l':  return(new OBElementExpr(13));
+				case 'm':  return(new OBElementExpr(95));
+				case 'r':  return(new OBElementExpr(18));
+				case 's':  return(new OBElementExpr(33));
+				case 't':  return(new OBElementExpr(85));
+				case 'u':  return(new OBElementExpr(79));
 				}
 				_ptr--;
-                return(new OEAromaticExpr(false));
+                return(new OBAromaticExpr(false));
 
 			case 'B':
 				switch( *_ptr++ )
 				{
-				case 'a':  return(new OEElementExpr(56));
-				case 'e':  return(new OEElementExpr( 4));
-				case 'i':  return(new OEElementExpr(83));
-				case 'k':  return(new OEElementExpr(97));
-				case 'r':  return(new OEElementExpr(35));
+				case 'a':  return(new OBElementExpr(56));
+				case 'e':  return(new OBElementExpr( 4));
+				case 'i':  return(new OBElementExpr(83));
+				case 'k':  return(new OBElementExpr(97));
+				case 'r':  return(new OBElementExpr(35));
 				}
 				_ptr--;
-				return (new OEElementExpr(5));
+				return (new OBElementExpr(5));
 
 			case 'D':
 				if( *_ptr == 'y' )
 				{
 					_ptr++;
-					return(new OEElementExpr(66));
+					return(new OBElementExpr(66));
 				}
 				else if(isdigit(*_ptr))
 				{
 					index = 0;
 					while( isdigit(*_ptr) )
 						index = index*10 + ((*_ptr++)-'0');
-					return(new OEDegreeExpr(index));
+					return(new OBDegreeExpr(index));
 				}
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 
 			case 'E':
 				switch(*_ptr++)
 				{
-				case 'r': return(new OEElementExpr(68));
-				case 's': return(new OEElementExpr(99));
-				case 'u': return(new OEElementExpr(63));
+				case 'r': return(new OBElementExpr(68));
+				case 's': return(new OBElementExpr(99));
+				case 'u': return(new OBElementExpr(63));
 				}
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 
 			case 'F':
 				switch(*_ptr++)
 				{
-				case 'e': return(new OEElementExpr(26));
-				case 'm': return(new OEElementExpr(100));
-				case 'r': return(new OEElementExpr(87));
+				case 'e': return(new OBElementExpr(26));
+				case 'm': return(new OBElementExpr(100));
+				case 'r': return(new OBElementExpr(87));
 				}
 				_ptr--;
-				return (new OEElementExpr(9));
+				return (new OBElementExpr(9));
 
 			case 'G':
 				switch(*_ptr++)
 				{
-				case 'a': return(new OEElementExpr(31));
-				case 'd': return(new OEElementExpr(64));
-				case 'e': return(new OEElementExpr(32));
+				case 'a': return(new OBElementExpr(31));
+				case 'd': return(new OBElementExpr(64));
+				case 'e': return(new OBElementExpr(32));
 				}
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 
 			case 'I':
 				switch(*_ptr++)
 				{
-				case 'n': return(new OEElementExpr(49));
-				case 'r': return(new OEElementExpr(77));
+				case 'n': return(new OBElementExpr(49));
+				case 'r': return(new OBElementExpr(77));
 				}				
 				_ptr--;
-				return(new OEElementExpr(53));
+				return(new OBElementExpr(53));
 
 			case 'K':  
 				if( *_ptr++ == 'r' )
-					return(new OEElementExpr(36));
+					return(new OBElementExpr(36));
 				_ptr--;
-				return(new OEElementExpr(19));
+				return(new OBElementExpr(19));
 
 			case 'L':  
 				switch(*_ptr++)
 				{
-				case 'a': return(new OEElementExpr(57));
-				case 'i': return(new OEElementExpr(3));
-				case 'r': return(new OEElementExpr(103));
-				case 'u': return(new OEElementExpr(71));
+				case 'a': return(new OBElementExpr(57));
+				case 'i': return(new OBElementExpr(3));
+				case 'r': return(new OBElementExpr(103));
+				case 'u': return(new OBElementExpr(71));
 				}
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 			
 			case 'M':
 				switch(*_ptr++)
 				{
-				case 'd': return(new OEElementExpr(101));
-				case 'g': return(new OEElementExpr(12));
-				case 'n': return(new OEElementExpr(25));
-				case 'o': return(new OEElementExpr(42));
+				case 'd': return(new OBElementExpr(101));
+				case 'g': return(new OBElementExpr(12));
+				case 'n': return(new OBElementExpr(25));
+				case 'o': return(new OBElementExpr(42));
 				}
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 
 			case 'N':
 				switch( *_ptr++ )
 				{
-				case 'a':  return(new OEElementExpr( 11));
-				case 'b':  return(new OEElementExpr( 41));
-				case 'd':  return(new OEElementExpr( 60));
-				case 'e':  return(new OEElementExpr( 10));
-				case 'i':  return(new OEElementExpr( 28));
-				case 'o':  return(new OEElementExpr(102));
-				case 'p':  return(new OEElementExpr( 93));
+				case 'a':  return(new OBElementExpr( 11));
+				case 'b':  return(new OBElementExpr( 41));
+				case 'd':  return(new OBElementExpr( 60));
+				case 'e':  return(new OBElementExpr( 10));
+				case 'i':  return(new OBElementExpr( 28));
+				case 'o':  return(new OBElementExpr(102));
+				case 'p':  return(new OBElementExpr( 93));
 				}
 				_ptr--;
-				return(new OEAromElemExpr(7,false));
+				return(new OBAromElemExpr(7,false));
 
 			case 'O':
 				if(*_ptr == 's')
 				{
 					_ptr++;
-					return(new OEElementExpr(76));
+					return(new OBElementExpr(76));
 				}
-                return(new OEAromElemExpr(8,false));
+                return(new OBAromElemExpr(8,false));
 
 			case 'P':
 				switch(*_ptr++)
 				{
-				case 'a':  return(new OEElementExpr(91));
-				case 'b':  return(new OEElementExpr(82));
-				case 'd':  return(new OEElementExpr(46));
-				case 'm':  return(new OEElementExpr(61));
-				case 'o':  return(new OEElementExpr(84));
-				case 'r':  return(new OEElementExpr(59));
-				case 't':  return(new OEElementExpr(78));
-				case 'u':  return(new OEElementExpr(94));
+				case 'a':  return(new OBElementExpr(91));
+				case 'b':  return(new OBElementExpr(82));
+				case 'd':  return(new OBElementExpr(46));
+				case 'm':  return(new OBElementExpr(61));
+				case 'o':  return(new OBElementExpr(84));
+				case 'r':  return(new OBElementExpr(59));
+				case 't':  return(new OBElementExpr(78));
+				case 'u':  return(new OBElementExpr(94));
 				}
 				_ptr--;
-				return(new OEElementExpr(15));
+				return(new OBElementExpr(15));
 
 			case 'R':
 				switch( *_ptr++ )
 				{
-				case 'a':  return(new OEElementExpr(88));
-				case 'b':  return(new OEElementExpr(37));
-				case 'e':  return(new OEElementExpr(75));
-				case 'h':  return(new OEElementExpr(45));
-				case 'n':  return(new OEElementExpr(86));
-				case 'u':  return(new OEElementExpr(44));
+				case 'a':  return(new OBElementExpr(88));
+				case 'b':  return(new OBElementExpr(37));
+				case 'e':  return(new OBElementExpr(75));
+				case 'h':  return(new OBElementExpr(45));
+				case 'n':  return(new OBElementExpr(86));
+				case 'u':  return(new OBElementExpr(44));
 				}
 				_ptr--;
                     
@@ -556,71 +556,71 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 						index = index*10 + ((*_ptr++)-'0');
 				}
 				else index = -1;
-				return(new OERingExpr(index));
+				return(new OBRingExpr(index));
 
 			case 'S':  
 				switch( *_ptr++ )
 				{   
-				case 'b':  return(new OEElementExpr(51));
-				case 'c':  return(new OEElementExpr(21));
-				case 'e':  return(new OEElementExpr(34));
-				case 'i':  return(new OEElementExpr(14));
-				case 'm':  return(new OEElementExpr(62));
-				case 'n':  return(new OEElementExpr(50));
-				case 'r':  return(new OEElementExpr(38));
+				case 'b':  return(new OBElementExpr(51));
+				case 'c':  return(new OBElementExpr(21));
+				case 'e':  return(new OBElementExpr(34));
+				case 'i':  return(new OBElementExpr(14));
+				case 'm':  return(new OBElementExpr(62));
+				case 'n':  return(new OBElementExpr(50));
+				case 'r':  return(new OBElementExpr(38));
 				}
 				_ptr--;
-				return(new OEAromElemExpr(16,false));
+				return(new OBAromElemExpr(16,false));
 
 			case 'T':
 				switch( *_ptr++ )
 				{
-				case 'a':  return(new OEElementExpr(73));
-				case 'b':  return(new OEElementExpr(65));
-				case 'c':  return(new OEElementExpr(43));
-				case 'e':  return(new OEElementExpr(52));
-				case 'h':  return(new OEElementExpr(90));
-				case 'i':  return(new OEElementExpr(22));
-				case 'l':  return(new OEElementExpr(81));
-				case 'm':  return(new OEElementExpr(69));
+				case 'a':  return(new OBElementExpr(73));
+				case 'b':  return(new OBElementExpr(65));
+				case 'c':  return(new OBElementExpr(43));
+				case 'e':  return(new OBElementExpr(52));
+				case 'h':  return(new OBElementExpr(90));
+				case 'i':  return(new OBElementExpr(22));
+				case 'l':  return(new OBElementExpr(81));
+				case 'm':  return(new OBElementExpr(69));
 				}
 				_ptr--;
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 
-			case 'U':  return(new OEElementExpr(92));
-			case 'V':  return(new OEElementExpr(23));
-			case 'W':  return(new OEElementExpr(74));
+			case 'U':  return(new OBElementExpr(92));
+			case 'V':  return(new OBElementExpr(23));
+			case 'W':  return(new OBElementExpr(74));
 
 			case 'X':
 				if( *_ptr == 'e' )
 				{
-					_ptr++;  return(new OEElementExpr(54));
+					_ptr++;  return(new OBElementExpr(54));
 				}
 				else if( isdigit(*_ptr) )
 				{
 					index = 0;
 					while( isdigit(*_ptr) )
 						index = index*10 + ((*_ptr++)-'0');
-					return(new OEConnectExpr(index));
+					return(new OBConnectExpr(index));
 				}
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 
 			case 'Y':
 				if( *_ptr == 'b' )
 				{
 					_ptr++;
-					return(new OEElementExpr(70));
+					return(new OBElementExpr(70));
 				}
-				return(new OEElementExpr(39));
+				return(new OBElementExpr(39));
 
 			case 'Z':
 				switch( *_ptr++ )
 				{
-				case 'n':  return(new OEElementExpr(30));
-				case 'r':  return(new OEElementExpr(40));
+				case 'n':  return(new OBElementExpr(30));
+				case 'r':  return(new OBElementExpr(40));
 				}
 				_ptr--;
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 			} //switch
 		} //if (islower)
 	}
@@ -629,22 +629,22 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 		switch( *_ptr++)
 		{   
 		case '#':  
-			if(!isdigit(*_ptr)) return((OEExprBase*)NULL);
+			if(!isdigit(*_ptr)) return((OBExprBase*)NULL);
 			index = 0;
 			while(isdigit(*_ptr)) index = index*10 + ((*_ptr++)-'0');
 			
 			if( index > ELEMMAX )
 			{
 				_ptr--;
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 			}
 			else if( !index )
-				return((OEExprBase*)NULL);
-			return(new OEElementExpr(index));
+				return((OBExprBase*)NULL);
+			return(new OBElementExpr(index));
 
 		case '$':
 			if( *_ptr != '(' ) 
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 			else
 			{
 				int count,size=0;
@@ -656,27 +656,27 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 					if (*_ptr == ')') count--;
 					if (count == 0) {_ptr++;break;}
 				}
-				if (*_ptr == '\0') return((OEExprBase*)NULL);
-				if (size <= 0) return((OEExprBase*)NULL);
+				if (*_ptr == '\0') return((OBExprBase*)NULL);
+				if (size <= 0) return((OBExprBase*)NULL);
 				//make a temp copy of the recursive section
 				char *tmp = new char [size+1];
 				memset(tmp,'\0',sizeof(char)*size+1);
 				memcpy(tmp,start,sizeof(char)*size);
 
-				OESmartsParser sp;
-				OESmartsPattern *pat = new OESmartsPattern;
+				OBSmartsParser sp;
+				OBSmartsPattern *pat = new OBSmartsPattern;
 				if (!sp.Parse(*pat,tmp))
 				{
 					delete pat;
-					return((OEExprBase*)NULL);
+					return((OBExprBase*)NULL);
 				}
 				delete [] tmp;
-				return(new OERecursExpr(pat));
+				return(new OBRecursExpr(pat));
 			}
 			break;
 
         case '*':  
-			return(new OEConstExpr);
+			return(new OBConstExpr);
 
         case '+':
 			if( isdigit(*_ptr) )
@@ -694,7 +694,7 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 					index++;
 				}
 			}
-			return(new OEPosChargeExpr(index));
+			return(new OBPosChargeExpr(index));
 
         case('-'):
 			if( isdigit(*_ptr) )
@@ -712,19 +712,19 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 					index++;
 				}
 			}
-			return(new OENegChargeExpr(index));
+			return(new OBNegChargeExpr(index));
 
         case '@':
 			if (*_ptr == '@')
 			{
 				_ptr++;
-				//_stereo = OE_ACLOCK;
+				//_stereo = OB_ACLOCK;
 			}
 			else
-				//_stereo = OE_CLOCK;
+				//_stereo = OB_CLOCK;
 			if (*_ptr == 'H') _ptr++;
 
-			return(new OENotExpr(new OEConstExpr));
+			return(new OBNotExpr(new OBConstExpr));
 
         case '^': 
 			if (isdigit(*_ptr))
@@ -732,25 +732,25 @@ OEExprBase *OESmartsParser::ParseComplexAtomPrimitive()
 				index = 0;
 				while( isdigit(*_ptr) )
 					index = index*10 + ((*_ptr++)-'0');
-				return(new OEHybExpr(index));
+				return(new OBHybExpr(index));
 			}
 			else
-				return(new OEHybExpr(1));
+				return(new OBHybExpr(1));
 
         case('0'): case('1'): case('2'): case('3'): case('4'):
         case('5'): case('6'): case('7'): case('8'): case('9'):
 			index = _ptr[-1]-'0';
 			while( isdigit(*_ptr) )
 				index = index*10 + ((*_ptr++)-'0');
-			return(new OEMassExpr(index));
+			return(new OBMassExpr(index));
 		}
 	}
 
     _ptr--;
-    return((OEExprBase*)NULL);
+    return((OBExprBase*)NULL);
 }
 
-int OESmartsParser::GetVectorBinding()
+int OBSmartsParser::GetVectorBinding()
 {
   int vb=0;
 
@@ -765,11 +765,11 @@ int OESmartsParser::GetVectorBinding()
   return(vb);
 }
 
-OEExprBase *OESmartsParser::ParseBondExpr( int level )
+OBExprBase *OBSmartsParser::ParseBondExpr( int level )
 {
     const char *prev;
-    OEExprBase *expr1;
-    OEExprBase *expr2;
+    OBExprBase *expr1;
+    OBExprBase *expr2;
 
     switch( level )
     {
@@ -783,9 +783,9 @@ OEExprBase *OESmartsParser::ParseBondExpr( int level )
 			if( !(expr2=ParseBondExpr(1)) )
 			{   
 				delete expr1;
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 			}
-			expr1 = new OEAndExpr(expr1,expr2);
+			expr1 = new OBAndExpr(expr1,expr2);
 		}
 		_ptr--;
 		return(expr1);
@@ -800,15 +800,15 @@ OEExprBase *OESmartsParser::ParseBondExpr( int level )
 			if( !(expr2=ParseBondExpr(2)) )
 			{
 				delete expr1; 
-				return((OEExprBase*)NULL);
+				return((OBExprBase*)NULL);
 			}
-			expr1 = new OEOrExpr(expr1,expr2);
+			expr1 = new OBOrExpr(expr1,expr2);
 		}
 		return(expr1);
 
 	case 2: /* High Precedence Conjunction */
 
-		if( !(expr1=ParseBondExpr(3)) ) return((OEExprBase*)NULL);
+		if( !(expr1=ParseBondExpr(3)) ) return((OBExprBase*)NULL);
 
 		while(*_ptr !=']' && *_ptr !=';' && *_ptr !=',' && *_ptr )
 		{
@@ -819,11 +819,11 @@ OEExprBase *OESmartsParser::ParseBondExpr( int level )
 				if( prev != _ptr )
 				{
 					delete expr1;
-					return((OEExprBase*)NULL);
+					return((OBExprBase*)NULL);
 				} 
 				else return(expr1);
 			}
-			expr1 = new OEAndExpr(expr1,expr2); 
+			expr1 = new OBAndExpr(expr1,expr2); 
 		}
 		return(expr1);
 
@@ -832,50 +832,50 @@ OEExprBase *OESmartsParser::ParseBondExpr( int level )
 			if( *_ptr == '!' )
 			{   
 				_ptr++;
-				if( !(expr1=ParseBondExpr(3)) ) return((OEExprBase*)NULL);
-				return(new OENotExpr(expr1));
+				if( !(expr1=ParseBondExpr(3)) ) return((OBExprBase*)NULL);
+				return(new OBNotExpr(expr1));
 			}
 			return(ParseBondPrimitive());
     }
 
-    return((OEExprBase*)NULL);
+    return((OBExprBase*)NULL);
 }
 
-OEExprBase *OESmartsParser::ParseBondPrimitive()
+OBExprBase *OBSmartsParser::ParseBondPrimitive()
 {
 	switch(*_ptr++)
 	{
-	case '-': return(new OESingleExpr);
-	case '=': return(new OEDoubleExpr);
-	case '#': return(new OETripleExpr);
-	case ':': return(new OEAromaticExpr(true));
-	case '@': return(new OERingExpr);
-	case '~': return(new OEConstExpr);
+	case '-': return(new OBSingleExpr);
+	case '=': return(new OBDoubleExpr);
+	case '#': return(new OBTripleExpr);
+	case ':': return(new OBAromaticExpr(true));
+	case '@': return(new OBRingExpr);
+	case '~': return(new OBConstExpr);
 	case '/':
 		if (*_ptr == '?')
 		{
 			_ptr++;
-			return(new OEUpUnspecExpr);
+			return(new OBUpUnspecExpr);
 		}
-		return(new OEUpExpr);
+		return(new OBUpExpr);
 	case '\\':
 		if (*_ptr)
 		{
 			_ptr++;
-			return(new OEDownUnspecExpr);
+			return(new OBDownUnspecExpr);
 		}
-		return(new OEDownExpr);
+		return(new OBDownExpr);
 	}
 
 	_ptr--;
-	return((OEExprBase*)NULL);
+	return((OBExprBase*)NULL);
 }
 
 
-OEEdgeBase *OESmartsParser::GetClosure(int idx)
+OBEdgeBase *OBSmartsParser::GetClosure(int idx)
 {
-	OEEdgeBase *edge;
-	vector<pair<OEEdgeBase*,int> >::iterator i;
+	OBEdgeBase *edge;
+	vector<pair<OBEdgeBase*,int> >::iterator i;
 	for (i = _vclose.begin();i != _vclose.end();i++)
 		if (idx == i->second)
 		{
@@ -887,9 +887,9 @@ OEEdgeBase *OESmartsParser::GetClosure(int idx)
 	return(NULL);
 }
 
-void OESmartsParser::AddClosure(OEEdgeBase *edge,int idx)
+void OBSmartsParser::AddClosure(OBEdgeBase *edge,int idx)
 {
-	_vclose.push_back(pair<OEEdgeBase*,int> (edge,idx));
+	_vclose.push_back(pair<OBEdgeBase*,int> (edge,idx));
 }
 
 } //namespace OpenBabel

@@ -14,102 +14,102 @@ GNU General Public License for more details.
 #ifndef GENERIC_H
 #define GENERIC_H
 
-//oeData0 through oeData9 are data slots that are not used in OELib, and
+//obData0 through obData9 are data slots that are not used in OpenBabel, and
 //are meant for use in derivative programs.  Macro definitions can be used
 //to define what each data slot is used for.
  
 namespace OpenBabel {
 
-class OEAtom;
-class OEBond; 
+class OBAtom;
+class OBBond; 
 
-enum oeDataType {oeUndefinedData,oePairData,oeEnergyData,
-		 oeCommentData,oeCompressData,oeExternalBondData,oeRotamerList,
-		 oeVirtualBondData,oeRingData,oeData0,oeData1,oeData2,oeData3,
-		 oeData4,oeData5,oeData6,oeData7,oeData8,oeData9};
+enum obDataType {obUndefinedData,obPairData,obEnergyData,
+		 obCommentData,obCompressData,obExternalBondData,obRotamerList,
+		 obVirtualBondData,obRingData,obData0,obData1,obData2,obData3,
+		 obData4,obData5,obData6,obData7,obData8,obData9};
 
-//base class for generic data - use oeData# slots for undefined data types
+//base class for generic data - use obData# slots for undefined data types
 
-class OEGenericData
+class OBGenericData
 {
 protected:
 	string     _attr; //attribute tag
-	oeDataType _type;
+	obDataType _type;
 public:
-	OEGenericData();
-	OEGenericData(const OEGenericData&);
-	virtual ~OEGenericData() {}
+	OBGenericData();
+	OBGenericData(const OBGenericData&);
+	virtual ~OBGenericData() {}
 	void                  SetAttribute(string &v)       {_attr = v;}
 	virtual const string &GetAttribute()          const {return(_attr);}
-	oeDataType      GetDataType()                 const {return(_type);}
+	obDataType      GetDataType()                 const {return(_type);}
 };
 
-class OECommentData : public OEGenericData
+class OBCommentData : public OBGenericData
 {
 protected:
 	string _data;
 public:
-	OECommentData();
-	OECommentData(const OECommentData&);
+	OBCommentData();
+	OBCommentData(const OBCommentData&);
 	void          SetData(string &data)        {_data = data; }
 	void          SetData(const char *d)       {_data = d;    }
 	const string &GetData()              const {return(_data);}
 };
 
-class OEExternalBond
+class OBExternalBond
 {
   int     _idx;
-  OEAtom *_atom;
-  OEBond *_bond;
+  OBAtom *_atom;
+  OBBond *_bond;
 public:
-  OEExternalBond() {}
-  OEExternalBond(OEAtom *,OEBond *,int);
-  OEExternalBond(const OEExternalBond &);
-  ~OEExternalBond(){}
+  OBExternalBond() {}
+  OBExternalBond(OBAtom *,OBBond *,int);
+  OBExternalBond(const OBExternalBond &);
+  ~OBExternalBond(){}
 
   int     GetIdx()  const {return(_idx);  }
-  OEAtom *GetAtom() const {return(_atom); }
-  OEBond *GetBond() const {return(_bond); }
+  OBAtom *GetAtom() const {return(_atom); }
+  OBBond *GetBond() const {return(_bond); }
   void SetIdx(int idx) {_idx = idx;}
-  void SetAtom(OEAtom *atom) {_atom = atom;}
-  void SetBond(OEBond *bond) {_bond = bond;}
+  void SetAtom(OBAtom *atom) {_atom = atom;}
+  void SetBond(OBBond *bond) {_bond = bond;}
 };
 
-class OEExternalBondData : public OEGenericData
+class OBExternalBondData : public OBGenericData
 {
 protected:
-  vector<OEExternalBond> _vexbnd;
+  vector<OBExternalBond> _vexbnd;
 public:
-  OEExternalBondData();
-  void SetData(OEAtom*,OEBond*,int);
-	vector<OEExternalBond> *GetData() {return(&_vexbnd);}
+  OBExternalBondData();
+  void SetData(OBAtom*,OBBond*,int);
+	vector<OBExternalBond> *GetData() {return(&_vexbnd);}
 };
 
-class OECompressData : public OEGenericData
+class OBCompressData : public OBGenericData
 {
 protected:
   int _size;
   unsigned char *_data;
 public:
-  OECompressData();
-  ~OECompressData();
+  OBCompressData();
+  ~OBCompressData();
   void SetData(unsigned char *,int);
   int            GetSize() {return(_size);}
   unsigned char *GetData() {return(_data);}
 };
 
-class OEPairData : public OEGenericData //use to store attribute/value relationships
+class OBPairData : public OBGenericData //use to store attribute/value relationships
 {
  protected:
   string _value;
  public:
-  OEPairData();
+  OBPairData();
   void    SetValue(const char *v) {_value = v;}
   void    SetValue(string &v)     {_value = v;}
   string &GetValue()              {return(_value);}
 };
 
-class OEVirtualBond : public OEGenericData
+class OBVirtualBond : public OBGenericData
 {
 protected:
 	int _bgn;
@@ -117,23 +117,23 @@ protected:
 	int _ord;
 	int _stereo;
 public:
-	OEVirtualBond();           
-	OEVirtualBond(int,int,int,int stereo=0);
+	OBVirtualBond();           
+	OBVirtualBond(int,int,int,int stereo=0);
 	int GetBgn()                           {return(_bgn);}
 	int GetEnd()                           {return(_end);}
 	int GetOrder()                         {return(_ord);}
 	int GetStereo()                        {return(_stereo);}
 };
 
-class OERingData : public OEGenericData
+class OBRingData : public OBGenericData
 {
 protected:
-	vector<OERing*> _vr;
+	vector<OBRing*> _vr;
 public:
-	OERingData();
-	void SetData(vector<OERing*> &vr) {_vr = vr;}
-	void PushBack(OERing *r)          {_vr.push_back(r);}
-	vector<OERing*> &GetData()        {return(_vr);}
+	OBRingData();
+	void SetData(vector<OBRing*> &vr) {_vr = vr;}
+	void PushBack(OBRing *r)          {_vr.push_back(r);}
+	vector<OBRing*> &GetData()        {return(_vr);}
 };
 
 } //end namespace OpenBabel

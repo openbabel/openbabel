@@ -41,13 +41,13 @@ static int bitsoff[SETWORD] =
    else bit = -1;}
 #endif
 
-OEBitVec::OEBitVec(const OEBitVec &bv)
+OBBitVec::OBBitVec(const OBBitVec &bv)
 {
   _size = 0;
   (*this) = bv;
 }
 
-void OEBitVec::SetBitOn(int bit)
+void OBBitVec::SetBitOn(int bit)
 {
   int word = bit/SETWORD;
   bit = bit%SETWORD;
@@ -57,7 +57,7 @@ void OEBitVec::SetBitOn(int bit)
   _set[word] |= (1<<bit);
 }
 
-void OEBitVec::SetRangeOn(int lobit, int hibit)
+void OBBitVec::SetRangeOn(int lobit, int hibit)
 {
     int i;
 
@@ -92,14 +92,14 @@ void OEBitVec::SetRangeOn(int lobit, int hibit)
     }
 }
 
-void OEBitVec::SetBitOff(int bit)
+void OBBitVec::SetBitOff(int bit)
 {
     int word = bit/SETWORD;
     bit = bit%SETWORD;
     _set[word] &= (~(1 << bit));
 }
 
-void OEBitVec::SetRangeOff(int lobit, int hibit)
+void OBBitVec::SetRangeOff(int lobit, int hibit)
 {
     int i;
 
@@ -137,7 +137,7 @@ void OEBitVec::SetRangeOff(int lobit, int hibit)
     }
 }
 
-int OEBitVec::NextBit(int last)
+int OBBitVec::NextBit(int last)
 {
   unsigned s;
    register int bit,wrdcnt;
@@ -175,7 +175,7 @@ int OEBitVec::NextBit(int last)
    return(-1);
 }
 
-bool OEBitVec::Resize(int maxbits)
+bool OBBitVec::Resize(int maxbits)
 {
   if(!maxbits) return(false);
   unsigned int maxword = maxbits/SETWORD;
@@ -189,7 +189,7 @@ bool OEBitVec::Resize(int maxbits)
   return(true);
 }
 
-OEBitVec &OEBitVec::operator= (const OEBitVec &bv)
+OBBitVec &OBBitVec::operator= (const OBBitVec &bv)
 {
   if (_size != bv._size) 
       Resize(bv._size*SETWORD);
@@ -203,7 +203,7 @@ OEBitVec &OEBitVec::operator= (const OEBitVec &bv)
   return(*this);
 }
 
-OEBitVec &OEBitVec::operator&= ( OEBitVec &bv)
+OBBitVec &OBBitVec::operator&= ( OBBitVec &bv)
 {
   int i;
   int min = (bv._size < _size) ? bv._size : _size;
@@ -214,7 +214,7 @@ OEBitVec &OEBitVec::operator&= ( OEBitVec &bv)
     return(*this);
 }
 
-OEBitVec &OEBitVec::operator|= (OEBitVec &bv)
+OBBitVec &OBBitVec::operator|= (OBBitVec &bv)
 {
   if (_size != bv._size) 
     {
@@ -228,7 +228,7 @@ OEBitVec &OEBitVec::operator|= (OEBitVec &bv)
   return(*this);
 }
 
-OEBitVec &OEBitVec::operator^= (OEBitVec &bv)
+OBBitVec &OBBitVec::operator^= (OBBitVec &bv)
 {
   int i;
   if (_size != bv._size) 
@@ -243,20 +243,20 @@ OEBitVec &OEBitVec::operator^= (OEBitVec &bv)
   return(*this);
 }
 
-OEBitVec &OEBitVec::operator-= (OEBitVec &bv)
+OBBitVec &OBBitVec::operator-= (OBBitVec &bv)
 {
   if (GetSize() != bv._size)
   ThrowError("Subtracting sets of != size");
   else
   {
-    OEBitVec tmp;
+    OBBitVec tmp;
     tmp = *this ^ bv;
     *this &= tmp;
   }
   return(*this);
 }
 
-OEBitVec &OEBitVec::operator+= (OEBitVec &bv)
+OBBitVec &OBBitVec::operator+= (OBBitVec &bv)
 {
   int old_size = _size;
   Resize(_size*SETWORD+bv._size*SETWORD);
@@ -264,33 +264,33 @@ OEBitVec &OEBitVec::operator+= (OEBitVec &bv)
   return(*this);
 }
 
-OEBitVec operator| (OEBitVec &bv1,OEBitVec &bv2)
+OBBitVec operator| (OBBitVec &bv1,OBBitVec &bv2)
 {
-    OEBitVec bv;
+    OBBitVec bv;
     bv = bv1;
     bv |= bv2;
 
     return(bv);
 }
 
-OEBitVec operator& (OEBitVec &bv1, OEBitVec &bv2)
+OBBitVec operator& (OBBitVec &bv1, OBBitVec &bv2)
 {
-  OEBitVec bv;
+  OBBitVec bv;
   bv = bv1;
   bv &= bv2;
 
   return(bv);
 }
 
-OEBitVec operator^ (OEBitVec &bv1, OEBitVec &bv2)
+OBBitVec operator^ (OBBitVec &bv1, OBBitVec &bv2)
 {
-    OEBitVec bv;
+    OBBitVec bv;
     bv = bv1;
     bv ^= bv2;
     return(bv);
 }
 
-bool operator== (const OEBitVec &bv1,const OEBitVec &bv2)
+bool operator== (const OBBitVec &bv1,const OBBitVec &bv2)
 {
     if (bv1._size != bv2._size)	return(false);
 
@@ -302,15 +302,15 @@ bool operator== (const OEBitVec &bv1,const OEBitVec &bv2)
     return(true);
 }
 
-OEBitVec operator- (OEBitVec &bv1,OEBitVec &bv2)
+OBBitVec operator- (OBBitVec &bv1,OBBitVec &bv2)
 {
-    OEBitVec bv;
+    OBBitVec bv;
     bv = bv1 ^ bv2;
     bv &= bv1;
     return(bv);
 }
 
-istream& operator>> ( istream &is, OEBitVec &bv )
+istream& operator>> ( istream &is, OBBitVec &bv )
 {
   size_t startpos = 0, endpos = 0;
   vector<string> tokens;
@@ -349,7 +349,7 @@ istream& operator>> ( istream &is, OEBitVec &bv )
   return is;
 }
 
-ostream& operator<< ( ostream &os, const  OEBitVec& bv) 
+ostream& operator<< ( ostream &os, const  OBBitVec& bv) 
 {
   os << "[ " << flush;
 
@@ -363,7 +363,7 @@ ostream& operator<< ( ostream &os, const  OEBitVec& bv)
     return(os);
 }
 
-void OEBitVec::Fold(int nbits)
+void OBBitVec::Fold(int nbits)
 {
   int nwords = nbits/SETWORD;
 
@@ -385,7 +385,7 @@ void OEBitVec::Fold(int nbits)
   _size = nwords;
 }
 
-void OEBitVec::FromVecInt(vector<int> &v)
+void OBBitVec::FromVecInt(vector<int> &v)
 {
     vector<int>::iterator i;
     int max = 0;
@@ -399,7 +399,7 @@ void OEBitVec::FromVecInt(vector<int> &v)
 	SetBitOn(*i);
 }
 
-void OEBitVec::FromString(string &line, int bits)
+void OBBitVec::FromString(string &line, int bits)
 {
   size_t startpos = 0, endpos = 0;
   vector<string> tokens;
@@ -436,7 +436,7 @@ void OEBitVec::FromString(string &line, int bits)
     }
 }
 
-void OEBitVec::ToVecInt(vector<int> &v)
+void OBBitVec::ToVecInt(vector<int> &v)
 {
     v.clear();
     v.reserve(CountBits());
@@ -444,13 +444,13 @@ void OEBitVec::ToVecInt(vector<int> &v)
 	v.push_back(i);
 }
 
-void OEBitVec::Clear()
+void OBBitVec::Clear()
 {
   vector<int>::iterator i;
   for (i = _set.begin();i != _set.end();i++) *i = 0;
 }
 
-int OEBitVec::CountBits()
+int OBBitVec::CountBits()
 {
     int i,count=0;
     for (i = NextBit(-1);i != -1;i = NextBit(i))
@@ -459,7 +459,7 @@ int OEBitVec::CountBits()
     return(count);
 }
 
-bool OEBitVec::IsEmpty()
+bool OBBitVec::IsEmpty()
 {
     vector<int>::iterator i;
     for (i = _set.begin();i != _set.end();i++)
@@ -469,9 +469,9 @@ bool OEBitVec::IsEmpty()
     return(true);
 }
 
-float Tanimoto(OEBitVec &bv1,OEBitVec &bv2)
+float Tanimoto(OBBitVec &bv1,OBBitVec &bv2)
 {
-  OEBitVec bvtmp;
+  OBBitVec bvtmp;
   float andbits,orbits;
 
   bvtmp = bv1 & bv2;

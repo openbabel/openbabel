@@ -14,32 +14,32 @@ GNU General Public License for more details.
 #include "mol.h"
 #include <deque>
 
-#include "oeutil.h"
+#include "obutil.h"
 
 namespace OpenBabel {
 
-static int DetermineFRJ(OEMol &);
-static void BuildOERTreeVector(OEAtom*,OERTree*,vector<OERTree*>&,OEBitVec&);
+static int DetermineFRJ(OBMol &);
+static void BuildOBRTreeVector(OBAtom*,OBRTree*,vector<OBRTree*>&,OBBitVec&);
 
 
-void OEMol::FindSSSR()
+void OBMol::FindSSSR()
 {
   if (HasSSSRPerceived()) return;
   SetSSSRPerceived();
 
-  OERing *ring;
-  vector<OERing*>::iterator j;
+  OBRing *ring;
+  vector<OBRing*>::iterator j;
 
   //get frerejaque taking int account multiple possible spanning graphs
   int frj = DetermineFRJ(*this);
   if (frj)
     {
-	  vector<OERing*> vr;
+	  vector<OBRing*> vr;
       FindRingAtomsAndBonds();
 
-      OEBond *bond;
-      vector<OEEdgeBase*> cbonds;
-      vector<OEEdgeBase*>::iterator k;
+      OBBond *bond;
+      vector<OBEdgeBase*> cbonds;
+      vector<OBEdgeBase*>::iterator k;
 
       //restrict search for rings around closure bonds
       for (bond = BeginBond(k);bond;bond = NextBond(k))
@@ -48,12 +48,12 @@ void OEMol::FindSSSR()
 
       if (!cbonds.empty())
 	{
-	  OERingSearch rs;
+	  OBRingSearch rs;
 	  //search for all rings about closures
-	  vector<OEEdgeBase*>::iterator i;
+	  vector<OBEdgeBase*>::iterator i;
 
 	  for (i = cbonds.begin();i != cbonds.end();i++)
-	    rs.AddRingFromClosure(*this,(OEBond*)*i,0);
+	    rs.AddRingFromClosure(*this,(OBBond*)*i,0);
 	  
 	  rs.SortRings(); //sort ring sizes from smallest to largest
 	  rs.RemoveRedundant(frj);  //full ring set - reduce to SSSR set
@@ -61,20 +61,20 @@ void OEMol::FindSSSR()
 
 	  for (j = rs.BeginRings();j != rs.EndRings();j++)
 	    {
-	      ring = new OERing ((*j)->_path,NumAtoms()+1);
+	      ring = new OBRing ((*j)->_path,NumAtoms()+1);
 	      ring->SetParent(this);
 	      vr.push_back(ring);
 	    }
 	  //rs.WriteRings(); //for debugging only
 	 }
 
-	  if (!HasData(oeRingData)) SetData(new OERingData);
-	  OERingData *rd = (OERingData*)GetData(oeRingData);
+	  if (!HasData(obRingData)) SetData(new OBRingData);
+	  OBRingData *rd = (OBRingData*)GetData(obRingData);
 	  rd->SetData(vr);
     }
 }
 
-static int DetermineFRJ(OEMol &mol)
+static int DetermineFRJ(OBMol &mol)
 {
   vector<vector<int> >::iterator i;
   vector<vector<int> > cfl;
@@ -85,10 +85,10 @@ static int DetermineFRJ(OEMol &mol)
   if (cfl.size() == 1) return(mol.NumBonds() - mol.NumAtoms() + 1);
 
   //count up the atoms and bonds belonging to each graph
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
   int numatoms,numbonds,frj=0;
-  OEBitVec frag;
+  OBBitVec frag;
   for (i = cfl.begin();i != cfl.end();i++)
     {
       frag.Clear();
@@ -104,9 +104,9 @@ static int DetermineFRJ(OEMol &mol)
   return(frj);
 }
 
-void OERingSearch::RemoveRedundant(int frj)
+void OBRingSearch::RemoveRedundant(int frj)
 {
-  OEBitVec tmp;
+  OBBitVec tmp;
   register int i,j;
 
   //remove identical rings
@@ -144,22 +144,22 @@ void OERingSearch::RemoveRedundant(int frj)
 }
 
 
-void OERingSearch::AddRingFromClosure(OEMol &mol,OEBond *cbond,int level)
+void OBRingSearch::AddRingFromClosure(OBMol &mol,OBBond *cbond,int level)
 {
-  vector<OERTree*> t1(mol.NumAtoms()+1,(OERTree*)NULL);
-  vector<OERTree*> t2(mol.NumAtoms()+1,(OERTree*)NULL);
-  OEBitVec bv1,bv2;
+  vector<OBRTree*> t1(mol.NumAtoms()+1,(OBRTree*)NULL);
+  vector<OBRTree*> t2(mol.NumAtoms()+1,(OBRTree*)NULL);
+  OBBitVec bv1,bv2;
 
   bv1.SetBitOn(cbond->GetEndAtomIdx());
   bv2.SetBitOn(cbond->GetBeginAtomIdx());
-  BuildOERTreeVector(cbond->GetBeginAtom(),NULL,t1,bv1);
-  BuildOERTreeVector(cbond->GetEndAtom(),NULL,t2,bv2);
+  BuildOBRTreeVector(cbond->GetBeginAtom(),NULL,t1,bv1);
+  BuildOBRTreeVector(cbond->GetEndAtom(),NULL,t2,bv2);
 
   bool pathok;
   deque<int> p1,p2;
-  vector<OENodeBase*> path1,path2;
-  vector<OENodeBase*>::iterator m,n;
-  vector<OERTree*>::iterator i;
+  vector<OBNodeBase*> path1,path2;
+  vector<OBNodeBase*>::iterator m,n;
+  vector<OBRTree*>::iterator i;
 
   for (i = t1.begin();i != t1.end();i++)
     if (*i)
@@ -197,7 +197,7 @@ void OERingSearch::AddRingFromClosure(OEMol &mol,OEBond *cbond,int level)
 	}
     }
 
-  //clean up OERTree vectors
+  //clean up OBRTree vectors
   for (i = t1.begin();i != t1.end();i++)
     if (*i) delete *i;
       
@@ -205,10 +205,10 @@ void OERingSearch::AddRingFromClosure(OEMol &mol,OEBond *cbond,int level)
     if (*i) delete *i;
 }
 
-bool OERingSearch::SaveUniqueRing(deque<int> &d1,deque<int> &d2)
+bool OBRingSearch::SaveUniqueRing(deque<int> &d1,deque<int> &d2)
 {
   vector<int> path;
-  OEBitVec bv;
+  OBBitVec bv;
   deque<int>::iterator i;
 
   for (i = d1.begin();i != d1.end();i++)
@@ -223,12 +223,12 @@ bool OERingSearch::SaveUniqueRing(deque<int> &d1,deque<int> &d2)
       path.push_back(*i);
     }
 
-  vector<OERing*>::iterator j;
+  vector<OBRing*>::iterator j;
   for (j = _rlist.begin();j != _rlist.end();j++)
     if (bv == (*j)->_pathset)
       return(false);
 
-  OERing *ring = new OERing;
+  OBRing *ring = new OBRing;
   ring->_path = path;
   ring->_pathset = bv;
   _rlist.push_back(ring);
@@ -236,34 +236,34 @@ bool OERingSearch::SaveUniqueRing(deque<int> &d1,deque<int> &d2)
   return(true);
 }
 
-OERingSearch::~OERingSearch()
+OBRingSearch::~OBRingSearch()
 {
-  vector<OERing*>::iterator i;
+  vector<OBRing*>::iterator i;
   for (i = _rlist.begin();i != _rlist.end();i++) delete *i;
 }
 
-bool CompareRingSize(const OERing *a,const OERing *b)
+bool CompareRingSize(const OBRing *a,const OBRing *b)
 {
   return(a->PathSize() < b->PathSize());
 }
 
-void OERingSearch::WriteRings()
+void OBRingSearch::WriteRings()
 {
-  vector<OERing*>::iterator i;
+  vector<OBRing*>::iterator i;
 
   for (i = _rlist.begin();i != _rlist.end();i++)
     cout << (*i)->_pathset << endl;
 }
 
-static void FindRings(OEMol &mol,vector<int> &path,OEBitVec &avisit,
-		      OEBitVec &bvisit, int natom,int depth );
+static void FindRings(OBMol &mol,vector<int> &path,OBBitVec &avisit,
+		      OBBitVec &bvisit, int natom,int depth );
 
-void OEMol::FindRingAtomsAndBonds()
+void OBMol::FindRingAtomsAndBonds()
 {
-  if (HasFlag(OE_RINGFLAGS_MOL)) return;
-  SetFlag(OE_RINGFLAGS_MOL);
+  if (HasFlag(OB_RINGFLAGS_MOL)) return;
+  SetFlag(OB_RINGFLAGS_MOL);
 
-  OEBitVec avisit,bvisit;
+  OBBitVec avisit,bvisit;
   avisit.Resize(NumAtoms()+1);
   bvisit.Resize(NumAtoms()+1);
   vector<int> path;
@@ -274,12 +274,12 @@ void OEMol::FindRingAtomsAndBonds()
       FindRings(*this,path,avisit,bvisit,i,0);
 }
 
-static void FindRings(OEMol &mol,vector<int> &path,OEBitVec &avisit,
-		      OEBitVec &bvisit, int natom,int depth )
+static void FindRings(OBMol &mol,vector<int> &path,OBBitVec &avisit,
+		      OBBitVec &bvisit, int natom,int depth )
 {
-  OEAtom *atom;
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator k;
+  OBAtom *atom;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator k;
 
   if (avisit[natom])
     {
@@ -311,9 +311,9 @@ static void FindRings(OEMol &mol,vector<int> &path,OEBitVec &avisit,
     }
 }
 
-bool OERing::IsAromatic()
+bool OBRing::IsAromatic()
 {
-  OEMol *mol = _parent;
+  OBMol *mol = _parent;
   vector<int>::iterator i;
   for (i = _path.begin();i != _path.end();i++)
     if (!(mol->GetAtom(*i))->IsAromatic())
@@ -322,17 +322,17 @@ bool OERing::IsAromatic()
   return(true);
 }
 
-bool OERing::IsMember(OEAtom *a)
+bool OBRing::IsMember(OBAtom *a)
 {
   return(_pathset.BitIsOn(a->GetIdx()));
 }
 
-bool OERing::IsMember(OEBond *b)
+bool OBRing::IsMember(OBBond *b)
 {
 	return((_pathset.BitIsOn(b->GetBeginAtomIdx()))&&(_pathset.BitIsOn(b->GetEndAtomIdx())));
 }
 
-OERing::OERing(vector<int> &path,int size)
+OBRing::OBRing(vector<int> &path,int size)
 {
   _path = path;
   _pathset.FromVecInt(_path);
@@ -340,10 +340,10 @@ OERing::OERing(vector<int> &path,int size)
 }
 
 /*!
-**\brief OERing copy constructor
-**\param src reference to original OERing object (rhs)
+**\brief OBRing copy constructor
+**\param src reference to original OBRing object (rhs)
 */
-OERing::OERing(const OERing &src)
+OBRing::OBRing(const OBRing &src)
 //no base class
 	:	_pathset(src._pathset),	//chain to member classes
 		_path(src._path)
@@ -353,11 +353,11 @@ OERing::OERing(const OERing &src)
 }
 
 /*!
-**\brief OERing assignemtn operator
-**\param src reference to original OERing object (rhs)
-**\return reference to modified OERing object (lhs)
+**\brief OBRing assignemtn operator
+**\param src reference to original OBRing object (rhs)
+**\return reference to modified OBRing object (lhs)
 */
-OERing& OERing::operator =(const OERing &src)
+OBRing& OBRing::operator =(const OBRing &src)
 {
 	//on identity, return
 	if(this == &src)	return(*this);
@@ -371,19 +371,19 @@ OERing& OERing::operator =(const OERing &src)
 
 	return(*this);
 }
-void BuildOERTreeVector(OEAtom *atom,OERTree *prv,vector<OERTree*> &vt,OEBitVec &bv)
+void BuildOBRTreeVector(OBAtom *atom,OBRTree *prv,vector<OBRTree*> &vt,OBBitVec &bv)
 {
-  vt[atom->GetIdx()] = new OERTree (atom,prv);
+  vt[atom->GetIdx()] = new OBRTree (atom,prv);
 
   int i;
-  OEAtom *nbr;
-  OEMol *mol = (OEMol*)atom->GetParent();
-  OEBitVec curr,used,next;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *nbr;
+  OBMol *mol = (OBMol*)atom->GetParent();
+  OBBitVec curr,used,next;
+  vector<OBEdgeBase*>::iterator j;
   curr |= atom->GetIdx();
   used = bv|curr;
 
-#define OE_RTREE_CUTOFF 20
+#define OB_RTREE_CUTOFF 20
   int level=0;
   for (;;)
     {
@@ -396,38 +396,38 @@ void BuildOERTreeVector(OEAtom *atom,OERTree *prv,vector<OERTree*> &vt,OEBitVec 
 	      {
 		next |= nbr->GetIdx();
 		used |= nbr->GetIdx();
-		vt[nbr->GetIdx()] = new OERTree (nbr,vt[atom->GetIdx()]);
+		vt[nbr->GetIdx()] = new OBRTree (nbr,vt[atom->GetIdx()]);
 	      }
 	}
       
       if (next.Empty()) break;
       curr = next;
       level++;
-      if (level > OE_RTREE_CUTOFF) break;
+      if (level > OB_RTREE_CUTOFF) break;
     }
-#undef OE_RTREE_CUTOFF
+#undef OB_RTREE_CUTOFF
 }
 
-OERTree::OERTree(OEAtom *atom,OERTree *prv)
+OBRTree::OBRTree(OBAtom *atom,OBRTree *prv)
 {
   _atom = atom;
   _prv = prv;
 }
 
-void OERTree::PathToRoot(vector<OENodeBase*> &path)
+void OBRTree::PathToRoot(vector<OBNodeBase*> &path)
 {
   path.push_back(_atom);
   if (_prv) _prv->PathToRoot(path);
 }
 
-int OERTree::GetAtomIdx()
+int OBRTree::GetAtomIdx()
 {
   return(_atom->GetIdx());
 }
 
-bool OERing::findCenterAndNormal(Vector & center, Vector &norm1, Vector &norm2)
+bool OBRing::findCenterAndNormal(Vector & center, Vector &norm1, Vector &norm2)
 {
-    OEMol *mol= this->_parent;
+    OBMol *mol= this->_parent;
     int j= 0;
     const int nA= this->_path.size();
     Vector tmp;

@@ -20,7 +20,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool OEFileFormat::ReadMolecule(istream &ifs, OEMol &mol, char *title)
+bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, char *title)
 {
   switch(mol.GetInputType())
     {
@@ -57,7 +57,7 @@ bool OEFileFormat::ReadMolecule(istream &ifs, OEMol &mol, char *title)
   return((ifs) ? true : false);
 }
 
-bool OEFileFormat::WriteMolecule(ostream &ofs,OEMol &mol, char *dimension)
+bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol, char *dimension)
 {
   switch(mol.GetOutputType())
     {

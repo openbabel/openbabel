@@ -16,7 +16,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool WriteCSSR(ostream &ofs,OEMol &mol)
+bool WriteCSSR(ostream &ofs,OBMol &mol)
 { 
   char buffer[BUFF_SIZE];
 
@@ -30,9 +30,9 @@ bool WriteCSSR(ostream &ofs,OEMol &mol)
   sprintf(buffer,"%4d\n",mol.NumAtoms());
   ofs << buffer << endl;
 
-  OEAtom *atom,*nbr;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *atom,*nbr;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
   vector<int> vtmp(106,0);
 
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))

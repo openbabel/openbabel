@@ -18,9 +18,9 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-extern OEAtomTyper atomtyper;
+extern OBAtomTyper atomtyper;
 
-class OEResidueData : public OEGlobalDataBase
+class OBResidueData : public OBGlobalDataBase
 {
     int                                _resnum;
     vector<string>                     _resname;
@@ -31,26 +31,26 @@ class OEResidueData : public OEGlobalDataBase
     vector<string>                     _vatmtmp;
     vector<pair<string,int> >          _vtmp;
 public:
-    OEResidueData();
+    OBResidueData();
     bool SetResName(string &);
     int  LookupBO(string &);
     int  LookupBO(string &,string&);
     bool LookupType(string &,string&,int&);
-    bool AssignBonds(OEMol &,OEBitVec &);
+    bool AssignBonds(OBMol &,OBBitVec &);
 	void ParseLine(char*);
 };
 
-static bool ParseAtomRecord(char *, OEMol &,int);
-static bool ParseConectRecord(char *,OEMol &);
+static bool ParseAtomRecord(char *, OBMol &,int);
+static bool ParseConectRecord(char *,OBMol &);
 
-static OEResidueData resdat;
+static OBResidueData resdat;
 
-bool ReadPDB(istream &ifs,OEMol &mol,char *title)
+bool ReadPDB(istream &ifs,OBMol &mol,char *title)
 {
   resdat.Init();
   int chainNum = 1;
   char buffer[BUFF_SIZE];
-  OEBitVec bs;
+  OBBitVec bs;
 
   mol.BeginModify();
   while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"END",3))
@@ -79,12 +79,12 @@ bool ReadPDB(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool ReadTerTermPDB(istream &ifs,OEMol &mol,char *title)
+bool ReadTerTermPDB(istream &ifs,OBMol &mol,char *title)
 {
   resdat.Init();
   int chainNum = 1;
   char buffer[BUFF_SIZE];
-  OEBitVec bs;
+  OBBitVec bs;
 
   mol.BeginModify();
   while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"END",3) && !EQn(buffer,"TER",3))
@@ -112,13 +112,13 @@ bool ReadTerTermPDB(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool ReadPDB(vector<string> &vpdb,OEMol &mol,char *title)
+bool ReadPDB(vector<string> &vpdb,OBMol &mol,char *title)
 {
   resdat.Init();
   int chainNum = 1;
   char buffer[BUFF_SIZE];
   vector<string>::iterator i;
-  OEBitVec bs;
+  OBBitVec bs;
 
   mol.BeginModify();
   
@@ -148,10 +148,10 @@ bool ReadPDB(vector<string> &vpdb,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteDelphiPDB(ostream &ofs,OEMol &mol)
+bool WriteDelphiPDB(ostream &ofs,OBMol &mol)
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   char buffer[BUFF_SIZE];
   
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
@@ -168,8 +168,8 @@ bool WriteDelphiPDB(ostream &ofs,OEMol &mol)
 
   int k,bo,count;
   int bond[10];
-  OEAtom *nbr;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *nbr;
+  vector<OBEdgeBase*>::iterator j;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
       count=0;
@@ -191,7 +191,7 @@ bool WriteDelphiPDB(ostream &ofs,OEMol &mol)
   return(true);
 }
 
-static bool ParseAtomRecord(char *buffer, OEMol &mol,int chainNum)
+static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
 /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,1x,i3)" */
 {
   string sbuf = &buffer[6];
@@ -295,7 +295,7 @@ static bool ParseAtomRecord(char *buffer, OEMol &mol,int chainNum)
 
   }
 
-  OEAtom atom;
+  OBAtom atom;
   Vector v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
   atom.SetVector(v);
   
@@ -303,10 +303,10 @@ static bool ParseAtomRecord(char *buffer, OEMol &mol,int chainNum)
   atom.SetType(type);
 
   int        rnum = atoi(resnum.c_str());
-  OEResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
+  OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
   if (res == NULL || res->GetName() != resname || res->GetNum() != rnum)
   {
-      vector<OEResidue*>::iterator ri;
+      vector<OBResidue*>::iterator ri;
       for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
           if (res->GetName() == resname && res->GetNum() == rnum)
               break;
@@ -324,7 +324,7 @@ static bool ParseAtomRecord(char *buffer, OEMol &mol,int chainNum)
       return(false);
   else
   {
-      OEAtom *atom = mol.GetAtom(mol.NumAtoms());
+      OBAtom *atom = mol.GetAtom(mol.NumAtoms());
 
       res->AddAtom(atom);
       res->SetSerialNum(atom, atoi(serno.c_str()));
@@ -335,7 +335,7 @@ static bool ParseAtomRecord(char *buffer, OEMol &mol,int chainNum)
   }
 }
 
-static bool ParseConectRecord(char *buffer,OEMol &mol)
+static bool ParseConectRecord(char *buffer,OBMol &mol)
 {
   vector<string> vs;
   
@@ -353,9 +353,9 @@ static bool ParseConectRecord(char *buffer,OEMol &mol)
   if (vs.size() > 4) con4 = atoi(vs[4].c_str());
   if (!con1) return(false);
 
-  OEAtom *a1,*a2;
-  OEResidue *r1,*r2;
-  vector<OENodeBase*>::iterator i,j;
+  OBAtom *a1,*a2;
+  OBResidue *r1,*r2;
+  vector<OBNodeBase*>::iterator i,j;
   for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
     {
       r1 = a1->GetResidue();
@@ -377,21 +377,21 @@ static bool ParseConectRecord(char *buffer,OEMol &mol)
   return(true);
 }
 
-OEResidueData::OEResidueData()
+OBResidueData::OBResidueData()
 {
   _init = false;
   _dir = "";
-  _envvar = "OE_DIR";
+  _envvar = "OB_DIR";
   _filename = "residue.txt";
   _subdir = "data";
   _dataptr = ResidueData;
 }
 
-bool OEResidueData::AssignBonds(OEMol &mol,OEBitVec &bv)
+bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
 {
-  OEAtom *a1,*a2;
-  OEResidue *r1,*r2;
-  vector<OENodeBase*>::iterator i,j;
+  OBAtom *a1,*a2;
+  OBResidue *r1,*r2;
+  vector<OBNodeBase*>::iterator i,j;
   
   //assign alpha peptide bonds
   for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
@@ -472,8 +472,8 @@ bool OEResidueData::AssignBonds(OEMol &mol,OEBitVec &bv)
       //***valence rule for O-
       if (a1->IsOxygen() && a1->GetValence() == 1)
 	{
-	  OEBond *bond;
-	  bond = (OEBond*)*(a1->BeginBonds());
+	  OBBond *bond;
+	  bond = (OBBond*)*(a1->BeginBonds());
 	  if (bond->GetBO() == 2)
 	    {
 	      a1->SetType("O2"); a1->SetHyb(2);
@@ -498,7 +498,7 @@ bool OEResidueData::AssignBonds(OEMol &mol,OEBitVec &bv)
   return(true);
 }
 
-void OEResidueData::ParseLine(char *buffer)
+void OBResidueData::ParseLine(char *buffer)
 {
    int bo;
     string s;
@@ -534,7 +534,7 @@ void OEResidueData::ParseLine(char *buffer)
 	  }
 }
 
-bool OEResidueData::SetResName(string &s)
+bool OBResidueData::SetResName(string &s)
 {
   unsigned int i;
     for (i = 0;i < _resname.size();i++)
@@ -548,7 +548,7 @@ bool OEResidueData::SetResName(string &s)
     return(false);
 }
 
-int OEResidueData::LookupBO(string &s)
+int OBResidueData::LookupBO(string &s)
 {
     if (_resnum == -1) return(0);
     
@@ -560,7 +560,7 @@ int OEResidueData::LookupBO(string &s)
     return(0);
 }
 
-int OEResidueData::LookupBO(string &s1,string &s2)
+int OBResidueData::LookupBO(string &s1,string &s2)
 {
     if (_resnum == -1) return(0);
     string s;
@@ -575,7 +575,7 @@ int OEResidueData::LookupBO(string &s1,string &s2)
     return(0);
 }
 
-bool OEResidueData::LookupType(string &atmid,string &type,int &hyb)
+bool OBResidueData::LookupType(string &atmid,string &type,int &hyb)
 {
     if (_resnum == -1) return(false);
 
@@ -593,12 +593,12 @@ bool OEResidueData::LookupType(string &atmid,string &type,int &hyb)
     return(false);
 }
 
-bool ReadBox(vector<string> &vbox, OEMol &mol,char *)
+bool ReadBox(vector<string> &vbox, OBMol &mol,char *)
 {
   char buffer[BUFF_SIZE];
   vector<string> vs;
   vector<string>::iterator i,j;
-  OEAtom atom;
+  OBAtom atom;
 
   mol.BeginModify();
   
@@ -633,7 +633,7 @@ bool ReadBox(vector<string> &vbox, OEMol &mol,char *)
   return(true);
 }
 
-bool WritePDB(ostream &ofs,OEMol &mol)
+bool WritePDB(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
@@ -652,8 +652,8 @@ bool WritePDB(ostream &ofs,OEMol &mol)
   sprintf(buffer,"AUTHOR    GENERATED BY BABEL %s",BABEL_VERSION);
   ofs << buffer << endl;
 
-  OEAtom *atom;
-  OEResidue *res;
+  OBAtom *atom;
+  OBResidue *res;
   for (i = 1; i <= mol.NumAtoms(); i++)
   {
     atom = mol.GetAtom(i);
@@ -686,8 +686,8 @@ bool WritePDB(ostream &ofs,OEMol &mol)
     ofs << buffer;
   }
 
-  OEAtom *nbr;
-  vector<OEEdgeBase*>::iterator k;
+  OBAtom *nbr;
+  vector<OBEdgeBase*>::iterator k;
   for (i = 1; i <= mol.NumAtoms(); i ++)
   {
     atom = mol.GetAtom(i);

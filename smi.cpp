@@ -19,11 +19,11 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool WriteSmiles(ostream &ofs,OEMol &mol,char *title)
+bool WriteSmiles(ostream &ofs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE],tmp[BUFF_SIZE];
 
-  OEMol2Smi m2s;
+  OBMol2Smi m2s;
 
   m2s.Init();
   m2s.CorrectAromaticAmineCharge(mol);
@@ -34,12 +34,12 @@ bool WriteSmiles(ostream &ofs,OEMol &mol,char *title)
   return(true);
 }
 
-void OEMol2Smi::CreateSmiString(OEMol &mol,char *buffer)
+void OBMol2Smi::CreateSmiString(OBMol &mol,char *buffer)
 {
-  OEAtom *atom;
-  OESmiNode *root;
+  OBAtom *atom;
+  OBSmiNode *root;
   buffer[0] = '\0';
-  vector<OENodeBase*>::iterator i;
+  vector<OBNodeBase*>::iterator i;
 
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
 //    if ((!atom->IsHydrogen() || atom->GetValence() == 0) && !_uatoms[atom->GetIdx()])
@@ -53,7 +53,7 @@ void OEMol2Smi::CreateSmiString(OEMol &mol,char *buffer)
 	  _vopen.clear();
 	  //dot disconnected structure
 	  if (strlen(buffer) > 0) strcat(buffer,"."); 
-	  root = new OESmiNode (atom);
+	  root = new OBSmiNode (atom);
 	  BuildTree(root);
 	  FindClosureBonds(mol);
 	  if (mol.Has2D()) AssignCisTrans(root);
@@ -62,10 +62,10 @@ void OEMol2Smi::CreateSmiString(OEMol &mol,char *buffer)
 	}
 }
 
-bool OEMol2Smi::BuildTree(OESmiNode *node)
+bool OBMol2Smi::BuildTree(OBSmiNode *node)
 {
-  vector<OEEdgeBase*>::iterator i;
-  OEAtom *nbr,*atom = node->GetAtom();
+  vector<OBEdgeBase*>::iterator i;
+  OBAtom *nbr,*atom = node->GetAtom();
   
   _uatoms.SetBitOn(atom->GetIdx()); //mark the atom as visited
   _atmorder.push_back(atom->GetIdx()); //store the atom ordering
@@ -75,29 +75,29 @@ bool OEMol2Smi::BuildTree(OESmiNode *node)
     if (!nbr->IsHydrogen() && !_uatoms[nbr->GetIdx()])
       {
 			_ubonds.SetBitOn((*i)->GetIdx());
-			OESmiNode *next = new OESmiNode (nbr);
+			OBSmiNode *next = new OBSmiNode (nbr);
 			next->SetParent(atom);
-			node->SetNextNode(next,(OEBond*)*i);
+			node->SetNextNode(next,(OBBond*)*i);
 			BuildTree(next);
 	}
 
   return(true);
 }
 
-void OEMol2Smi::ToSmilesString(OESmiNode *node,char *buffer)
+void OBMol2Smi::ToSmilesString(OBSmiNode *node,char *buffer)
 {
   char tmpbuf[10];
-  OEAtom *atom = node->GetAtom();
+  OBAtom *atom = node->GetAtom();
 
   //write the current atom to the string
   GetSmilesElement(node,tmpbuf);
   strcat(buffer,tmpbuf);
 
     //handle ring closures here
-  vector<pair<int,OEBond*> > vc = GetClosureDigits(atom);
+  vector<pair<int,OBBond*> > vc = GetClosureDigits(atom);
   if (!vc.empty())
     {
-      vector<pair<int,OEBond*> >::iterator i;
+      vector<pair<int,OBBond*> >::iterator i;
       for (i = vc.begin();i != vc.end();i++)
 	{
 	  if (i->second)
@@ -119,7 +119,7 @@ void OEMol2Smi::ToSmilesString(OESmiNode *node,char *buffer)
     }
 
   //follow path to child atoms
-  OEBond *bond;
+  OBBond *bond;
   for (int i = 0;i < node->Size();i++)
     {
       bond = node->GetNextBond(i);
@@ -138,44 +138,44 @@ void OEMol2Smi::ToSmilesString(OESmiNode *node,char *buffer)
     }
 }
 
-void OEMol2Smi::GetClosureAtoms(OEAtom *atom,vector<OENodeBase*> &va)
+void OBMol2Smi::GetClosureAtoms(OBAtom *atom,vector<OBNodeBase*> &va)
 {
 
 //look through closure list for start atom
-  vector<OEEdgeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator i;
   for (i = _vclose.begin();i != _vclose.end();i++)
 	  if (*i)
   {
-	  if (((OEBond*)*i)->GetBeginAtom() == atom)
-	    va.push_back(((OEBond*)*i)->GetEndAtom());
-	  if (((OEBond*)*i)->GetEndAtom() == atom)
-	    va.push_back(((OEBond*)*i)->GetBeginAtom());
+	  if (((OBBond*)*i)->GetBeginAtom() == atom)
+	    va.push_back(((OBBond*)*i)->GetEndAtom());
+	  if (((OBBond*)*i)->GetEndAtom() == atom)
+	    va.push_back(((OBBond*)*i)->GetBeginAtom());
   }
 
-  OEAtom *nbr;
-  vector<pair<OEAtom*,pair<int,int> > >::iterator j;
+  OBAtom *nbr;
+  vector<pair<OBAtom*,pair<int,int> > >::iterator j;
   for (j = _vopen.begin();j != _vopen.end();j++)
 	  for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
 		  if (nbr == j->first)
 			va.push_back(nbr);  
 }
 
-vector<pair<int,OEBond*> > OEMol2Smi::GetClosureDigits(OEAtom *atom)
+vector<pair<int,OBBond*> > OBMol2Smi::GetClosureDigits(OBAtom *atom)
 {
-  vector<pair<int,OEBond*> > vc; vc.clear();
+  vector<pair<int,OBBond*> > vc; vc.clear();
 
   //look through closure list for start atom
   int idx,bo;
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
   for (i = _vclose.begin();i != _vclose.end();i++)
-    if ((bond=(OEBond*)*i))
+    if ((bond=(OBBond*)*i))
       if (bond->GetBeginAtom() == atom || bond->GetEndAtom() == atom)
 	{
 	  idx = GetUnusedIndex();
-	  vc.push_back(pair<int,OEBond*> (idx,bond));
+	  vc.push_back(pair<int,OBBond*> (idx,bond));
 	  bo = (bond->IsAromatic())? 1 : bond->GetBO();
-	  _vopen.push_back(pair<OEAtom*,pair<int,int> >
+	  _vopen.push_back(pair<OBAtom*,pair<int,int> >
 			   (bond->GetNbrAtom(atom),pair<int,int>(idx,bo)));
 	  *i = NULL;//remove bond from closure list
 	}
@@ -183,11 +183,11 @@ vector<pair<int,OEBond*> > OEMol2Smi::GetClosureDigits(OEAtom *atom)
   //try to complete closures
   if (!_vopen.empty())
     {
-      vector<pair<OEAtom*,pair<int,int> > >::iterator j;
+      vector<pair<OBAtom*,pair<int,int> > >::iterator j;
       for (j = _vopen.begin();j != _vopen.end();)
 	if (j->first == atom)
 	  {
-	    vc.push_back(pair<int,OEBond*> (j->second.first,(OEBond*)NULL));
+	    vc.push_back(pair<int,OBBond*> (j->second.first,(OBBond*)NULL));
 	    _vopen.erase(j);
 	    j = _vopen.begin();
 	  }
@@ -197,13 +197,13 @@ vector<pair<int,OEBond*> > OEMol2Smi::GetClosureDigits(OEAtom *atom)
   return(vc);
 }
 
-void OEMol2Smi::FindClosureBonds(OEMol &mol)
+void OBMol2Smi::FindClosureBonds(OBMol &mol)
 {
   //find closure bonds
-  OEAtom *a1,*a2;
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
-  OEBitVec bv;
+  OBAtom *a1,*a2;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
+  OBBitVec bv;
   bv.FromVecInt(_storder);
 
   for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
@@ -215,13 +215,13 @@ void OEMol2Smi::FindClosureBonds(OEMol &mol)
 	  _vclose.push_back(bond);
       }
 
-  vector<OEEdgeBase*>::reverse_iterator j;
+  vector<OBEdgeBase*>::reverse_iterator j;
   vector<int>::iterator k;
 
   //modify _order to reflect ring closures
   for (j = _vclose.rbegin();j != _vclose.rend();j++)
     {
-      bond = (OEBond*)*j;
+      bond = (OBBond*)*j;
       a1 = a2 = NULL;
 
       for (k = _storder.begin();k != _storder.end();k++)
@@ -246,11 +246,11 @@ void OEMol2Smi::FindClosureBonds(OEMol &mol)
     }
 }
 
-int OEMol2Smi::GetUnusedIndex()
+int OBMol2Smi::GetUnusedIndex()
 {
   int idx=1;
 
-  vector<pair<OEAtom*,pair<int,int> > >::iterator j;
+  vector<pair<OBAtom*,pair<int,int> > >::iterator j;
   for (j = _vopen.begin();j != _vopen.end();)
     if (j->second.first == idx)
       {
@@ -262,10 +262,10 @@ int OEMol2Smi::GetUnusedIndex()
   return(idx);
 }
 
-void OEMol2Smi::CorrectAromaticAmineCharge(OEMol &mol)
+void OBMol2Smi::CorrectAromaticAmineCharge(OBMol &mol)
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   _aromNH.clear();
   _aromNH.resize(mol.NumAtoms()+1);
@@ -279,31 +279,31 @@ void OEMol2Smi::CorrectAromaticAmineCharge(OEMol &mol)
 	}
 }
 
-void OEMol2Smi::AssignCisTrans(OESmiNode *node)
+void OBMol2Smi::AssignCisTrans(OBSmiNode *node)
 {
   //traverse the tree searching for acyclic olefins - if it
   //has at least one heavy atom attachment on each end assign stereochem
 
-  OEBond *bond;
+  OBBond *bond;
   for (int i = 0;i < node->Size();i++)
     {
       bond = node->GetNextBond(i);
       if (bond->GetBO() == 2 && !bond->IsInRing())
 	{
-	  OEAtom *b = node->GetAtom();
-	  OEAtom *c = bond->GetNbrAtom(b);
+	  OBAtom *b = node->GetAtom();
+	  OBAtom *c = bond->GetNbrAtom(b);
 
 	//skip allenes
 	  if (b->GetHyb() == 1 || c->GetHyb() == 1) continue;
 
 	  if (b->GetHvyValence() > 1 && c->GetHvyValence() > 1)
 	    {
-	      OEAtom *a,*d;
-	      vector<OEEdgeBase*>::iterator j,k;
+	      OBAtom *a,*d;
+	      vector<OBEdgeBase*>::iterator j,k;
 
 	      //look for bond with assigned stereo as in poly-ene
 	      for (a = b->BeginNbrAtom(j);a;a = b->NextNbrAtom(j))
-		if (((OEBond*)*j)->IsUp() ||((OEBond*)*j)->IsDown())
+		if (((OBBond*)*j)->IsUp() ||((OBBond*)*j)->IsDown())
 		  break;
 
 	      if (!a)
@@ -313,26 +313,26 @@ void OEMol2Smi::AssignCisTrans(OESmiNode *node)
 	      for (d = c->BeginNbrAtom(k);d;d = c->NextNbrAtom(k))
 		if (d != b && !d->IsHydrogen())
 		  break;
-	      oeAssert(a); oeAssert(d);
+	      obAssert(a); obAssert(d);
 	      
-	      if (((OEBond*)*j)->IsUp() || ((OEBond*)*j)->IsDown()) //stereo already assigned
+	      if (((OBBond*)*j)->IsUp() || ((OBBond*)*j)->IsDown()) //stereo already assigned
 		{
 		  if (fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(),
 				       c->GetVector(),d->GetVector())) > 10.0)
-		    if (((OEBond*)*j)->IsUp()) ((OEBond*)*k)->SetUp();
-		    else              ((OEBond*)*k)->SetDown();
+		    if (((OBBond*)*j)->IsUp()) ((OBBond*)*k)->SetUp();
+		    else              ((OBBond*)*k)->SetDown();
 		  else
-		    if (((OEBond*)*j)->IsUp()) ((OEBond*)*k)->SetDown();
-		    else              ((OEBond*)*k)->SetUp();
+		    if (((OBBond*)*j)->IsUp()) ((OBBond*)*k)->SetDown();
+		    else              ((OBBond*)*k)->SetUp();
 		}
 	      else //assign stereo to both ends
 		{
-		  ((OEBond*)*j)->SetUp();
+		  ((OBBond*)*j)->SetUp();
 		  if (fabs(CalcTorsionAngle(a->GetVector(),b->GetVector(),
 				       c->GetVector(),d->GetVector())) > 10.0)
-		    ((OEBond*)*k)->SetUp();
+		    ((OBBond*)*k)->SetUp();
 		  else
-		    ((OEBond*)*k)->SetDown();
+		    ((OBBond*)*k)->SetDown();
 		}
 	    }
 	}
@@ -340,7 +340,7 @@ void OEMol2Smi::AssignCisTrans(OESmiNode *node)
     }
 }
 
-void OEMol2Smi::Init()
+void OBMol2Smi::Init()
   {
   _vclose.clear();
   _atmorder.clear();
@@ -351,14 +351,14 @@ void OEMol2Smi::Init()
   _vopen.clear();
 }
 
-bool OEMol2Smi::GetSmilesElement(OESmiNode *node,char *element)
+bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
 {
   //***handle reference atom stuff here and return***
   char symbol[10];
   bool bracketElement = false;
   bool normalValence = true;
 
-  OEAtom *atom = node->GetAtom();
+  OBAtom *atom = node->GetAtom();
 
   int bosum = atom->KBOSum();
 
@@ -388,7 +388,7 @@ bool OEMol2Smi::GetSmilesElement(OESmiNode *node,char *element)
     }
 
   if (atom->GetHvyValence() > 2 && atom->IsChiral())
-    if (((OEMol*)atom->GetParent())->HasNonZeroCoords() || atom->HasChiralitySpecified())
+    if (((OBMol*)atom->GetParent())->HasNonZeroCoords() || atom->HasChiralitySpecified())
       bracketElement = true;
 
   if (atom->GetFormalCharge() != 0) //bracket charged elements
@@ -399,9 +399,9 @@ bool OEMol2Smi::GetSmilesElement(OESmiNode *node,char *element)
       if (!atom->GetAtomicNum())
 	{
 	  bool external = false;
-	  vector<pair<int,pair<OEAtom *,OEBond *> > > *externalBonds = 
-			(vector<pair<int,pair<OEAtom *,OEBond *> > > *)((OEMol*)atom->GetParent())->GetData("extBonds");
-	  vector<pair<int,pair<OEAtom *,OEBond *> > >::iterator externalBond;
+	  vector<pair<int,pair<OBAtom *,OBBond *> > > *externalBonds = 
+			(vector<pair<int,pair<OBAtom *,OBBond *> > > *)((OBMol*)atom->GetParent())->GetData("extBonds");
+	  vector<pair<int,pair<OBAtom *,OBBond *> > >::iterator externalBond;
 
 	  if (externalBonds)
 	    for(externalBond = externalBonds->begin();externalBond != externalBonds->end();externalBond++)
@@ -410,7 +410,7 @@ bool OEMol2Smi::GetSmilesElement(OESmiNode *node,char *element)
 		  {
 		    external = true;
 		    strcpy(symbol,"&");
-		    OEBond *bond = externalBond->second.second;
+		    OBBond *bond = externalBond->second.second;
 		    if (bond->IsUp())                              strcat(symbol,"\\");
 		    if (bond->IsDown())                            strcat(symbol,"/");
 #ifndef KEKULE
@@ -504,14 +504,14 @@ bool OEMol2Smi::GetSmilesElement(OESmiNode *node,char *element)
   return(true);
 }
 
-bool OEMol2Smi::GetChiralStereo(OESmiNode *node,char *stereo)
+bool OBMol2Smi::GetChiralStereo(OBSmiNode *node,char *stereo)
 {
   bool is2D=false;
   float torsion;
-  OEAtom *a,*b,*c,*d,hydrogen;
+  OBAtom *a,*b,*c,*d,hydrogen;
 
   b = node->GetAtom();
-  OEMol *mol = (OEMol*)b->GetParent();
+  OBMol *mol = (OBMol*)b->GetParent();
 
   if (!mol->HasNonZeroCoords()) //must have come in from smiles string
     {
@@ -528,9 +528,9 @@ bool OEMol2Smi::GetChiralStereo(OESmiNode *node,char *stereo)
     {
       Vector v,vz(0.0,0.0,1.0);
       is2D = true;
-	  OEAtom *nbr;
-      OEBond *bond;
-      vector<OEEdgeBase*>::iterator i;
+	  OBAtom *nbr;
+      OBBond *bond;
+      vector<OBEdgeBase*>::iterator i;
       for (bond = b->BeginBond(i);bond;bond = b->NextBond(i))
 	  {
 		  nbr = bond->GetEndAtom();
@@ -558,17 +558,17 @@ bool OEMol2Smi::GetChiralStereo(OESmiNode *node,char *stereo)
 
   c = d = NULL;
   a = node->GetParent();
-  oeAssert(a); //chiral atom can't be used as root node - must have parent
+  obAssert(a); //chiral atom can't be used as root node - must have parent
       
   if (b->GetHvyValence() == 3) //must have attached hydrogen
     {
       if (b->GetValence() == 4)//has explicit hydrogen
 	{
-	  vector<OEEdgeBase*>::iterator i;
+	  vector<OBEdgeBase*>::iterator i;
 	  for (c = b->BeginNbrAtom(i);c;c = b->NextNbrAtom(i))
 	    if (c->IsHydrogen())
 	      break;
-	  oeAssert(c);
+	  obAssert(c);
 	}
       else  //implicit hydrogen
 	{
@@ -580,20 +580,20 @@ bool OEMol2Smi::GetChiralStereo(OESmiNode *node,char *stereo)
     }
 
   //get connected atoms in order
-  OEAtom *nbr;
+  OBAtom *nbr;
   vector<int>::iterator j;
 
   //try to get neighbors that are closure atoms in the order they appear in the string
-  vector<OENodeBase*> va;
+  vector<OBNodeBase*> va;
   GetClosureAtoms(b,va);
   if (!va.empty())
   {
-	  vector<OENodeBase*>::iterator k;
+	  vector<OBNodeBase*>::iterator k;
 	  for (k = va.begin();k != va.end();k++)
 		  if (*k != a)
 		  {
-			if (!c) c = (OEAtom*)*k;
-			else if (!d) d = (OEAtom*)*k;
+			if (!c) c = (OBAtom*)*k;
+			else if (!d) d = (OBAtom*)*k;
 		  }
   }
 
@@ -616,8 +616,8 @@ bool OEMol2Smi::GetChiralStereo(OESmiNode *node,char *stereo)
   if (is2D)
     {
       Vector v;
-      OEAtom *atom;
-      vector<OENodeBase*>::iterator k;
+      OBAtom *atom;
+      vector<OBNodeBase*>::iterator k;
       for (atom = mol->BeginAtom(k);atom;atom = mol->NextAtom(k))
 	  {
 		  v = atom->GetVector();
@@ -629,17 +629,17 @@ bool OEMol2Smi::GetChiralStereo(OESmiNode *node,char *stereo)
   return(true);
 }
 
-bool WriteFixFile(ostream &ofs,OEMol &mol)
+bool WriteFixFile(ostream &ofs,OBMol &mol)
 {
   char buffer[BUFF_SIZE];
-  OEMol2Smi m2s;
+  OBMol2Smi m2s;
 
   m2s.Init();
   //m2s.AssignCisTrans(mol);
   m2s.CorrectAromaticAmineCharge(mol);
   m2s.CreateSmiString(mol,buffer);
 
-  OEAtom *atom;
+  OBAtom *atom;
   vector<int>::iterator i;
   vector<int> order = m2s.GetOutputOrder();
   ofs << buffer << endl;
@@ -658,7 +658,7 @@ bool WriteFixFile(ostream &ofs,OEMol &mol)
   return(true);
 }
 
-OESmiNode::OESmiNode(OEAtom *atom) 
+OBSmiNode::OBSmiNode(OBAtom *atom) 
 {
   _atom = atom;
   _parent = NULL;
@@ -666,25 +666,25 @@ OESmiNode::OESmiNode(OEAtom *atom)
   _nextbond.clear();
 }
 
-void OESmiNode::SetNextNode(OESmiNode *node,OEBond *bond) 
+void OBSmiNode::SetNextNode(OBSmiNode *node,OBBond *bond) 
 {
   _nextnode.push_back(node);
   _nextbond.push_back(bond);
 }
 
-OESmiNode::~OESmiNode()
+OBSmiNode::~OBSmiNode()
 {
-  vector<OESmiNode*>::iterator i;
+  vector<OBSmiNode*>::iterator i;
   for (i = _nextnode.begin();i != _nextnode.end();i++)
     delete (*i);
 }
 
 
-bool WriteTheSmiles(OEMol & mol,char *out)
+bool WriteTheSmiles(OBMol & mol,char *out)
 {
   char buffer[2*BUFF_SIZE];
 
-  OEMol2Smi m2s;
+  OBMol2Smi m2s;
 
   m2s.Init();
   m2s.CorrectAromaticAmineCharge(mol);

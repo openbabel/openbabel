@@ -14,10 +14,11 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "rotor.h"
 #include "binary.h"
-#include "oeutil.h"
+#include "obutil.h"
 
-#define OE_TITLE_SIZE 254
-#define OE_BINARY_SETWORD 32
+#define OB_TITLE_SIZE 254
+#define OB_BINARY_SETWORD 32
+
 namespace OpenBabel 
 {
 //test byte ordering
@@ -25,7 +26,7 @@ static int SINT = 0x00000001;
 static unsigned char *STPTR = (unsigned char*)&SINT;
 bool SwabInt = (STPTR[0]!=0);
 
-void SetRotorToAngle(float *c,OEAtom **ref,float ang,vector<int> atoms);
+void SetRotorToAngle(float *c,OBAtom **ref,float ang,vector<int> atoms);
 
 int Swab(int i)
 {
@@ -38,13 +39,13 @@ int Swab(int i)
   return(i);
 }
 
-OERotamerList::~OERotamerList()
+OBRotamerList::~OBRotamerList()
 {
   vector<unsigned char*>::iterator i;
   for (i = _vrotamer.begin();i != _vrotamer.end();i++)
     delete [] *i;
 
-  vector<pair<OEAtom**,vector<int> > >::iterator j;
+  vector<pair<OBAtom**,vector<int> > >::iterator j;
   for (j = _vrotor.begin();j != _vrotor.end();j++)
     delete [] j->first;
 
@@ -53,10 +54,10 @@ OERotamerList::~OERotamerList()
   for (k=0 ; k<_c.size() ; k++) delete [] _c[k];
 }
 
-void OERotamerList::GetReferenceArray(unsigned char *ref)
+void OBRotamerList::GetReferenceArray(unsigned char *ref)
 {
   int j;
-  vector<pair<OEAtom**,vector<int> > >::iterator i;
+  vector<pair<OBAtom**,vector<int> > >::iterator i;
   for (j=0,i = _vrotor.begin();i != _vrotor.end();i++)
     {
       ref[j++] = (unsigned char)(i->first[0])->GetIdx();
@@ -66,7 +67,7 @@ void OERotamerList::GetReferenceArray(unsigned char *ref)
     }
 }
 
-void OERotamerList::Setup(OEMol &mol,OERotorList &rl)
+void OBRotamerList::Setup(OBMol &mol,OBRotorList &rl)
 {
   //clear the old stuff out if necessary
   _vres.clear();
@@ -74,26 +75,26 @@ void OERotamerList::Setup(OEMol &mol,OERotorList &rl)
   for (j = _vrotamer.begin();j != _vrotamer.end();j++) delete [] *j;
   _vrotamer.clear();
 
-  vector<pair<OEAtom**,vector<int> > >::iterator k;
+  vector<pair<OBAtom**,vector<int> > >::iterator k;
   for (k = _vrotor.begin();k != _vrotor.end();k++)
     delete [] k->first;
   _vrotor.clear();
 
   //create the new list
-  OERotor *rotor;
-  vector<OERotor*>::iterator i;
+  OBRotor *rotor;
+  vector<OBRotor*>::iterator i;
   vector<int> children;
 
   int ref[4];
-  OEAtom **atomlist;
+  OBAtom **atomlist;
   for (rotor = rl.BeginRotor(i);rotor;rotor = rl.NextRotor(i))
     {
-      atomlist = new OEAtom* [4];
+      atomlist = new OBAtom* [4];
       rotor->GetDihedralAtoms(ref);
       atomlist[0] = mol.GetAtom(ref[0]); atomlist[1] = mol.GetAtom(ref[1]);
       atomlist[2] = mol.GetAtom(ref[2]); atomlist[3] = mol.GetAtom(ref[3]);
       mol.FindChildren(children,ref[1],ref[2]);
-      _vrotor.push_back(pair<OEAtom**,vector<int> > (atomlist,children));
+      _vrotor.push_back(pair<OBAtom**,vector<int> > (atomlist,children));
       _vres.push_back(rotor->GetResolution());
     }
 
@@ -104,7 +105,7 @@ void OERotamerList::Setup(OEMol &mol,OERotorList &rl)
       *n *= RAD_TO_DEG;
 }
 
-void OERotamerList::Setup(OEMol &mol,unsigned char *ref,int nrotors)
+void OBRotamerList::Setup(OBMol &mol,unsigned char *ref,int nrotors)
 {
   //clear the old stuff out if necessary
   _vres.clear();
@@ -112,7 +113,7 @@ void OERotamerList::Setup(OEMol &mol,unsigned char *ref,int nrotors)
   for (j = _vrotamer.begin();j != _vrotamer.end();j++) delete [] *j;
   _vrotamer.clear();
 
-  vector<pair<OEAtom**,vector<int> > >::iterator k;
+  vector<pair<OBAtom**,vector<int> > >::iterator k;
   for (k = _vrotor.begin();k != _vrotor.end();k++)
     delete [] k->first;
   _vrotor.clear();
@@ -122,10 +123,10 @@ void OERotamerList::Setup(OEMol &mol,unsigned char *ref,int nrotors)
   vector<int> children;
 
   int refatoms[4];
-  OEAtom **atomlist;
+  OBAtom **atomlist;
   for (i = 0;i < nrotors;i++)
     {
-      atomlist = new OEAtom* [4];
+      atomlist = new OBAtom* [4];
       refatoms[0] = (int)ref[i*4  ];
       refatoms[1] = (int)ref[i*4+1];
       refatoms[2] = (int)ref[i*4+2];
@@ -135,12 +136,12 @@ void OERotamerList::Setup(OEMol &mol,unsigned char *ref,int nrotors)
       atomlist[1] = mol.GetAtom(refatoms[1]);
       atomlist[2] = mol.GetAtom(refatoms[2]);
       atomlist[3] = mol.GetAtom(refatoms[3]);
-      _vrotor.push_back(pair<OEAtom**,vector<int> > (atomlist,children));
+      _vrotor.push_back(pair<OBAtom**,vector<int> > (atomlist,children));
     }
 
 }
 
-void OERotamerList::AddRotamer(float *c)
+void OBRotamerList::AddRotamer(float *c)
 {
   int idx,size;
   float angle,res=255.0f/360.0f;
@@ -149,7 +150,7 @@ void OERotamerList::AddRotamer(float *c)
   unsigned char *rot = new unsigned char [_vrotor.size()+1];
   rot[0] = (char) 0;
 
-  vector<pair<OEAtom**,vector<int> > >::iterator i;
+  vector<pair<OBAtom**,vector<int> > >::iterator i;
   for (size=1,i = _vrotor.begin();i != _vrotor.end();i++,size++)
     {
       idx = (i->first[0])->GetCIdx(); v1.Set(c[idx],c[idx+1],c[idx+2]);
@@ -166,7 +167,7 @@ void OERotamerList::AddRotamer(float *c)
   _vrotamer.push_back(rot);
 }
 
-void OERotamerList::AddRotamer(int *arr)
+void OBRotamerList::AddRotamer(int *arr)
 {
   unsigned int i;
   float angle,res=255.0f/360.0f;
@@ -184,7 +185,7 @@ void OERotamerList::AddRotamer(int *arr)
   _vrotamer.push_back(rot);
 }
 
-void OERotamerList::AddRotamer(unsigned char *arr)
+void OBRotamerList::AddRotamer(unsigned char *arr)
 {
   unsigned int i;
   float angle,res=255.0f/360.0f;
@@ -202,7 +203,7 @@ void OERotamerList::AddRotamer(unsigned char *arr)
   _vrotamer.push_back(rot);
 }
 
-void OERotamerList::AddRotamers(unsigned char *arr,int nrotamers)
+void OBRotamerList::AddRotamers(unsigned char *arr,int nrotamers)
 {
   int i,size=_vrotor.size()+1;
 
@@ -214,7 +215,7 @@ void OERotamerList::AddRotamers(unsigned char *arr,int nrotamers)
     }
 }
 
-void OERotamerList::ExpandConformerList(OEMol &mol,vector<float*> &clist)
+void OBRotamerList::ExpandConformerList(OBMol &mol,vector<float*> &clist)
 {
   unsigned int j;
   float angle,invres=360.0f/255.0f;
@@ -245,7 +246,7 @@ void OERotamerList::ExpandConformerList(OEMol &mol,vector<float*> &clist)
 }
 
 //Create a conformer list using the internal base set of coordinates
-vector<float*> OERotamerList::CreateConformerList(OEMol& mol)
+vector<float*> OBRotamerList::CreateConformerList(OBMol& mol)
   {
     unsigned int j;
     float angle,invres=360.0f/255.0f;
@@ -272,7 +273,7 @@ vector<float*> OERotamerList::CreateConformerList(OEMol& mol)
   }
 
 //Copies the coordinates in bc, NOT the pointers, into the object
-void OERotamerList::SetBaseCoordinateSets(vector<float*> bc, unsigned int N)
+void OBRotamerList::SetBaseCoordinateSets(vector<float*> bc, unsigned int N)
   {
     unsigned int i,j;
 
@@ -310,7 +311,7 @@ void UnpackCoordinate(float c[3],float max[3],int tmp)
   c[2] = (float)(tmp&0x3ff);          c[2] *= max[2];
 }
 
-bool WriteBinary(ostream &ofs,OEMol &mol)
+bool WriteBinary(ostream &ofs,OBMol &mol)
 {
 	/*
   if (mol.NumAtoms() >= 255 || mol.NumBonds() >= 255)
@@ -334,18 +335,18 @@ bool WriteBinary(ostream &ofs,OEMol &mol)
   return(true);
 }
 
-bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
+bool WriteBinary(unsigned char *buf,int &size,OBMol &mol)
 {
   int m,tmp,idx;
   unsigned int k;
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   vector<float*>::iterator j;
   idx=0;
 
   //read title first
   int len = strlen(mol.GetTitle());
-  if (len > OE_TITLE_SIZE) len = OE_TITLE_SIZE;
+  if (len > OB_TITLE_SIZE) len = OB_TITLE_SIZE;
   if (len > 0)
     {
       buf[idx] = (char)len;
@@ -371,8 +372,8 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
       idx += sizeof(unsigned char);
     }
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator bi;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator bi;
   unsigned char bc[3];
   for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
     {
@@ -384,7 +385,7 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
     }
 
   //Write out conformers and coordinates
-  OERotamerList *rml = (OERotamerList *)mol.GetData(oeRotamerList);
+  OBRotamerList *rml = (OBRotamerList *)mol.GetData(obRotamerList);
   //find min and max
   int imin[3],imax[3];
   float min[3] = {10E10f,10E10f,10E10f};
@@ -442,14 +443,14 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
          (char*)&tmp,sizeof(int)); idx += sizeof(int);
 
   //The third boolean expression in the next if statement is an error check to make
-  //sure than the number of atoms in the OERotamerLists internal coordinates are the
-  //same as the molecules IF we are using the OERotamerLists internal coordinates.
-  //If we are using the OERotamerList's internal coordinates but the number of atoms
+  //sure than the number of atoms in the OBRotamerLists internal coordinates are the
+  //same as the molecules IF we are using the OBRotamerLists internal coordinates.
+  //If we are using the OBRotamerList's internal coordinates but the number of atoms
   //in those coordinates don't match the number of atoms in the molecule then  the
   //rotamer list is incorrect for the molecule and we just default to writing the
   //molecules conformers.  I put this in because it strikes me as a very easy error
   //to make if the molecule is modified in any way and the user is not aware that
-  //he/she is responsible for correctly updating the OERotamerList MM 4/20/01
+  //he/she is responsible for correctly updating the OBRotamerList MM 4/20/01
   if (rml && ((rml) ? rml->NumRotamers() : 0) && (rml->NumBaseCoordinateSets()==0 || rml->NumAtoms() == mol.NumAtoms()) ) {//Store conformers as torsion list
       //Write base coordinates
       float tc[3];
@@ -517,16 +518,16 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
 
   if (mol.NumAtoms()) //set bits on for aromatic atoms
     {
-      nwords = mol.NumAtoms()/OE_BINARY_SETWORD;
-      if (mol.NumAtoms()%OE_BINARY_SETWORD) nwords++;
+      nwords = mol.NumAtoms()/OB_BINARY_SETWORD;
+      if (mol.NumAtoms()%OB_BINARY_SETWORD) nwords++;
       arobits = new unsigned int [nwords];
       memset((char*)arobits,'\0',sizeof(int)*nwords);
 
       for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
 	if (atom->IsAromatic())
 	{
-	  word = (atom->GetIdx()-1)/OE_BINARY_SETWORD;
-	  bit = (atom->GetIdx()-1)%OE_BINARY_SETWORD;
+	  word = (atom->GetIdx()-1)/OB_BINARY_SETWORD;
+	  bit = (atom->GetIdx()-1)%OB_BINARY_SETWORD;
 	  arobits[word] |= (1<<bit);
 	}
       
@@ -539,8 +540,8 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
 
   if (mol.NumBonds()) //set bits on for aromatic bonds
     {
-      nwords = mol.NumBonds()/OE_BINARY_SETWORD;
-      if (mol.NumBonds()%OE_BINARY_SETWORD) nwords++;
+      nwords = mol.NumBonds()/OB_BINARY_SETWORD;
+      if (mol.NumBonds()%OB_BINARY_SETWORD) nwords++;
 
       arobits = new unsigned int [nwords];
       memset((char*)arobits,'\0',sizeof(int)*nwords);
@@ -548,8 +549,8 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
       for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
 	if (bond->IsAromatic())
 	  {
-	    word = (bond->GetIdx())/OE_BINARY_SETWORD;
-	    bit = (bond->GetIdx())%OE_BINARY_SETWORD;
+	    word = (bond->GetIdx())/OB_BINARY_SETWORD;
+	    bit = (bond->GetIdx())%OB_BINARY_SETWORD;
 	    arobits[word] |= (1<<bit);
 	  }
       
@@ -564,11 +565,11 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
   
   //Number of poses
   unsigned int numposes = mol.NumPoses();
-  idx += OE_io_write_binary((char*)&buf[idx],(char*)&numposes, sizeof(unsigned int), 1); 
+  idx += OB_io_write_binary((char*)&buf[idx],(char*)&numposes, sizeof(unsigned int), 1); 
 
   //Specify a version number for the poses
   unsigned short int pose_version=0;
-  idx += OE_io_write_binary((char*)&buf[idx],(char*)&pose_version,sizeof(unsigned short int), 1);
+  idx += OB_io_write_binary((char*)&buf[idx],(char*)&pose_version,sizeof(unsigned short int), 1);
   
   for (k=0 ; k<mol.NumPoses() ; k++) 
 	  idx += mol.GetPose(k).WriteBinary((char*)&buf[idx]); //Each pose
@@ -577,7 +578,7 @@ bool WriteBinary(unsigned char *buf,int &size,OEMol &mol)
   return(true);
 }
 
-bool ReadBinary(istream &ifs,OEMol &mol)
+bool ReadBinary(istream &ifs,OBMol &mol)
 {
   int size = 0;
   unsigned char buf[1000000];
@@ -594,7 +595,7 @@ bool ReadBinary(istream &ifs, unsigned char **bin)
   int size = 0;
   unsigned char buf[100000];
 
-  oeAssert(bin != NULL);
+  obAssert(bin != NULL);
 
 #ifdef __sgi
 
@@ -625,10 +626,10 @@ bool ReadBinary(istream &ifs, unsigned char **bin)
   return(true);
 }
 
-bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
+bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
 {
   int i,j,k,idx,natoms,nbonds,tmp;
-  char title[OE_TITLE_SIZE+1]; 
+  char title[OB_TITLE_SIZE+1]; 
   idx = 0;
 
   //read title
@@ -657,7 +658,7 @@ bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
   
   mol.BeginModify();
   //read atom data
-  OEAtom atom;
+  OBAtom atom;
   for (i = 0;i < natoms;i++)
     {
       atom.SetAtomicNum((int)anum[i]);
@@ -755,7 +756,7 @@ bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
 	{
        
 	  int nrotors;
-	  OERotamerList *rml = new OERotamerList;
+	  OBRotamerList *rml = new OBRotamerList;
 	  memcpy((char*)&nrotors,&buf[idx],sizeof(int)); idx += sizeof(int);
 	  if (SwabInt) nrotors = Swab(nrotors);
 
@@ -772,14 +773,14 @@ bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
 	  rml->AddRotamers(rotamers,rotmrs);
 	  delete [] rotamers;
 	 
-          //Copy the base coordinate list into the OERotamerList object
+          //Copy the base coordinate list into the OBRotamerList object
           rml->SetBaseCoordinateSets(cltmp,mol.NumAtoms());
  
 	  //expand rotamer information to a conformer list
 	  rml->ExpandConformerList(mol,cltmp);
 	  mol.SetConformers(cltmp);
 
-          //Add the OERotamerList to the molecule as user data
+          //Add the OBRotamerList to the molecule as user data
           mol.SetData(rml);
 	} // end else !rotmrs
 		}  // end else nconf==1 && !rotmrs
@@ -793,8 +794,8 @@ bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
 
   if (mol.NumAtoms()) //set bits on for aromatic atoms
     {
-      nwords = mol.NumAtoms()/OE_BINARY_SETWORD;
-      if (mol.NumAtoms()%OE_BINARY_SETWORD) nwords++;
+      nwords = mol.NumAtoms()/OB_BINARY_SETWORD;
+      if (mol.NumAtoms()%OB_BINARY_SETWORD) nwords++;
       arobits = new unsigned int [nwords];
 
       memcpy((unsigned char*)arobits,&buf[idx],sizeof(int)*nwords);
@@ -804,7 +805,7 @@ bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
 	for (i = 0;i < nwords;i++) arobits[i] =  Swab(arobits[i]);
 
       for (i = 0;i < (signed)mol.NumAtoms();i++)
-	if ((arobits[i/OE_BINARY_SETWORD]>>(i%OE_BINARY_SETWORD))&1)
+	if ((arobits[i/OB_BINARY_SETWORD]>>(i%OB_BINARY_SETWORD))&1)
 	  mol.GetAtom(i+1)->SetAromatic();
 
       delete [] arobits;
@@ -812,8 +813,8 @@ bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
 
   if (mol.NumBonds()) //set bits on for aromatic atoms
     {
-      nwords = (mol.NumBonds()/OE_BINARY_SETWORD);
-      if (mol.NumBonds()%OE_BINARY_SETWORD) nwords++;
+      nwords = (mol.NumBonds()/OB_BINARY_SETWORD);
+      if (mol.NumBonds()%OB_BINARY_SETWORD) nwords++;
       arobits = new unsigned int [nwords];
 
       memcpy((unsigned char*)arobits,&buf[idx],sizeof(int)*nwords);
@@ -823,7 +824,7 @@ bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
 	for (i = 0;i < nwords;i++) arobits[i] =  Swab(arobits[i]);
 
       for (i = 0;i < (signed)mol.NumBonds();i++)
-	if ((arobits[i/OE_BINARY_SETWORD]>>(i%OE_BINARY_SETWORD))&1)
+	if ((arobits[i/OB_BINARY_SETWORD]>>(i%OB_BINARY_SETWORD))&1)
 	  mol.GetBond(i)->SetAromatic();
 
       delete [] arobits;
@@ -836,10 +837,10 @@ bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
   unsigned int kk;
   mol.DeletePoses();
   unsigned int Nposes=0;
-  OEPose pose;
-  idx += OE_io_read_binary((char*)&buf[idx],(char*)&Nposes,sizeof(unsigned int), 1); //Read number of poses
+  OBPose pose;
+  idx += OB_io_read_binary((char*)&buf[idx],(char*)&Nposes,sizeof(unsigned int), 1); //Read number of poses
   unsigned short int pose_version;
-  idx += OE_io_read_binary((char*)&buf[idx],(char*)&pose_version,sizeof(unsigned short int), 1); //Read the version number
+  idx += OB_io_read_binary((char*)&buf[idx],(char*)&pose_version,sizeof(unsigned short int), 1); //Read the version number
   if (pose_version == 0) {
       for (kk=0 ; kk<Nposes ; kk++) { //Read in the poses
           idx += pose.ReadBinary((char*)&buf[idx]);
@@ -847,14 +848,14 @@ bool ReadBinary(unsigned char *buf,OEMol &mol,int size)
         }
     }
   else {
-      cerr << "ERROR! in OEMol binary reader, pose version not supported" << endl;
+      cerr << "ERROR! in OBMol binary reader, pose version not supported" << endl;
       return false;
     }
 
   return(true);
 }
 
-void SetRotorToAngle(float *c,OEAtom **ref,float ang,vector<int> atoms)
+void SetRotorToAngle(float *c,OBAtom **ref,float ang,vector<int> atoms)
      //this function will rotate the coordinates of 'atoms'
      //such that tor == ang - atoms in 'tor' should be ordered such 
      //that the 3rd atom is the pivot around which atoms rotate
@@ -933,9 +934,9 @@ void SetRotorToAngle(float *c,OEAtom **ref,float ang,vector<int> atoms)
     }
 }
 
-//OEBinaryDBase class - facilitates random access to OEBinary files
+//OBBinaryDBase class - facilitates random access to OBBinary files
 
-OEBinaryDBase::OEBinaryDBase(char *fname)
+OBBinaryDBase::OBBinaryDBase(char *fname)
 {
   int size;
   streampos pos;
@@ -956,7 +957,7 @@ OEBinaryDBase::OEBinaryDBase(char *fname)
   if (!SafeOpen(_ifs,fname)) exit(0);
 }
 
-OEBinaryDBase::OEBinaryDBase(string &fname)
+OBBinaryDBase::OBBinaryDBase(string &fname)
 {
   int size;
   streampos pos;
@@ -977,14 +978,14 @@ OEBinaryDBase::OEBinaryDBase(string &fname)
   if (!SafeOpen(_ifs,(char*)fname.c_str())) exit(0);
 }
 
-int OEBinaryDBase::Size()
+int OBBinaryDBase::Size()
 {
   return(_vpos.size());
 }
 
-void OEBinaryDBase::GetMolecule(OEMol &mol,int idx)
+void OBBinaryDBase::GetMolecule(OBMol &mol,int idx)
 {
-  OEFileFormat ff;
+  OBFileFormat ff;
   mol.Clear();
   mol.SetInputType(OEBINARY);
   _ifs.seekg(_vpos[idx]);

@@ -16,16 +16,16 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool WriteFenskeZmat(ostream &ofs,OEMol &mol)
+bool WriteFenskeZmat(ostream &ofs,OBMol &mol)
 {
-  OEAtom *atom,*a,*b,*c;
+  OBAtom *atom,*a,*b,*c;
   char type[10],buffer[BUFF_SIZE];
-  vector<OENodeBase*>::iterator i;
+  vector<OBNodeBase*>::iterator i;
   
-  vector<OEInternalCoord*> vic;
-  vic.push_back((OEInternalCoord*)NULL);
+  vector<OBInternalCoord*> vic;
+  vic.push_back((OBInternalCoord*)NULL);
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    vic.push_back(new OEInternalCoord);
+    vic.push_back(new OBInternalCoord);
 
   CartesianToInternal(vic,mol);
 

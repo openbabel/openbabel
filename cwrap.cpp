@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "oeutil.h"
+#include "obutil.h"
 #include "typer.h"
 #include "binary.h"
 
@@ -24,85 +24,85 @@ extern "C"
 using namespace std;
 using namespace OpenBabel;
 
-char AtomicNumToOESymbol(int atomno);
+char AtomicNumToOBSymbol(int atomno);
 
-long int oe_make_dbase(char* fname)
+long int ob_make_dbase(char* fname)
 {
-  return((long int)new OEBinaryDBase (fname));
+  return((long int)new OBBinaryDBase (fname));
 }
 
-int oe_dbase_get_number_of_molecules(long int dbhandle)
+int ob_dbase_get_number_of_molecules(long int dbhandle)
 {
-  return(((OEBinaryDBase*)dbhandle)->Size());
+  return(((OBBinaryDBase*)dbhandle)->Size());
 }
 
-int oe_dbase_get_cmol(int idx,long int mhandle,long int dbhandle)
+int ob_dbase_get_cmol(int idx,long int mhandle,long int dbhandle)
 {
-  ((OEBinaryDBase*)dbhandle)->GetMolecule(*((OEMol*)mhandle),idx);
+  ((OBBinaryDBase*)dbhandle)->GetMolecule(*((OBMol*)mhandle),idx);
 
   return(1);
 }
 
-long int oe_make_cmol()
+long int ob_make_cmol()
 {
-  return((long int)new OEMol);
+  return((long int)new OBMol);
 }
 
-void oe_delete_cmol(long int handle)
+void ob_delete_cmol(long int handle)
 {
-  delete (OEMol*)handle;
+  delete (OBMol*)handle;
 }
 
-int oe_get_cmol_atom_number(int *natoms,long int handle)
+int ob_get_cmol_atom_number(int *natoms,long int handle)
 {
-  *natoms = ((OEMol*)handle)->NumAtoms();
+  *natoms = ((OBMol*)handle)->NumAtoms();
   return(1);
 }
 
-int oe_get_cmol_bond_number(int *nbonds,long int handle)
+int ob_get_cmol_bond_number(int *nbonds,long int handle)
 {
-  *nbonds = ((OEMol*)handle)->NumBonds();
+  *nbonds = ((OBMol*)handle)->NumBonds();
   return(1);
 }
 
-int oe_get_cmol_coordinates(float **c,long int handle)
+int ob_get_cmol_coordinates(float **c,long int handle)
 {
-  *c = ((OEMol*)handle)->GetConformer(0);
+  *c = ((OBMol*)handle)->GetConformer(0);
   return(1);
 }
 
-int oe_get_cmol_element(char *c,long int handle)
+int ob_get_cmol_element(char *c,long int handle)
 {
-  OEAtom *atom;
-  OEMol *mol = (OEMol*)handle;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  OBMol *mol = (OBMol*)handle;
+  vector<OBNodeBase*>::iterator i;
 
   for(atom = mol->BeginAtom(i);atom;atom = mol->NextAtom(i))
-    c[atom->GetIdx()-1] = AtomicNumToOESymbol(atom->GetAtomicNum());
+    c[atom->GetIdx()-1] = AtomicNumToOBSymbol(atom->GetAtomicNum());
 
   return(1);
 }
 
-int oe_get_cmol_name(char *name,long int handle)
+int ob_get_cmol_name(char *name,long int handle)
 {
-  strcpy(name,((OEMol*)handle)->GetTitle());
+  strcpy(name,((OBMol*)handle)->GetTitle());
   return(1);
 }
 
-int oe_get_cmol_conformer_number(int *cnum,long int handle)
+int ob_get_cmol_conformer_number(int *cnum,long int handle)
 {
-  *cnum = ((OEMol*)handle)->NumConformers();
+  *cnum = ((OBMol*)handle)->NumConformers();
   return(1);
 }
 
-int oe_get_cmol_conformer(float **c,int num,long int handle)
+int ob_get_cmol_conformer(float **c,int num,long int handle)
 {
-  *c = ((OEMol*)handle)->GetConformer(num);
+  *c = ((OBMol*)handle)->GetConformer(num);
   return(1);
 }
 
 
-char AtomicNumToOESymbol(int atomno)
+char AtomicNumToOBSymbol(int atomno)
 {
   char ele;
   switch (atomno)

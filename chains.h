@@ -1,13 +1,13 @@
-#ifndef OELIB_CHAINS_H
-#define OELIB_CHAINS_H
+#ifndef OBLIB_CHAINS_H
+#define OBLIB_CHAINS_H
 
 #define MaxMonoAtom 20
 #define MaxMonoBond 20
 
 namespace OpenBabel {
 
-class OEAtom;
-class OEMol;
+class OBAtom;
+class OBMol;
 
 typedef struct 
 {
@@ -16,46 +16,46 @@ typedef struct
     int n1, n2, n3, n4;
 } Template;
 
-class OEChainsParser
+class OBChainsParser
 {
 public:
 
-	OEChainsParser(void);
-	~OEChainsParser(void);
+	OBChainsParser(void);
+	~OBChainsParser(void);
 
-	bool PerceiveChains(OEMol &);
+	bool PerceiveChains(OBMol &);
 
 private: // methods
 
-	bool  DetermineHetAtoms(OEMol &);
-	bool  DetermineConnectedChains(OEMol &);
-	bool  DeterminePeptideBackbone(OEMol &);
-	bool  DeterminePeptideSidechains(OEMol &);
-	bool  DetermineNucleicBackbone(OEMol &);
-	bool  DetermineNucleicSidechains(OEMol &);
-	bool  DetermineHydrogens(OEMol &);
+	bool  DetermineHetAtoms(OBMol &);
+	bool  DetermineConnectedChains(OBMol &);
+	bool  DeterminePeptideBackbone(OBMol &);
+	bool  DeterminePeptideSidechains(OBMol &);
+	bool  DetermineNucleicBackbone(OBMol &);
+	bool  DetermineNucleicSidechains(OBMol &);
+	bool  DetermineHydrogens(OBMol &);
 
-	void  SetupMol(OEMol &);
-    void  SetResidueInformation(OEMol &);
-    void  ClearResidueInformation(OEMol &);
+	void  SetupMol(OBMol &);
+    void  SetResidueInformation(OBMol &);
+    void  ClearResidueInformation(OBMol &);
 	void  CleanupMol(void);
 
-	void  AssignResidue(OEMol &, int, int, int);
-	int   IdentifyResidue(void *, OEMol &, int, int); // ByteCode *
+	void  AssignResidue(OBMol &, int, int, int);
+	int   IdentifyResidue(void *, OBMol &, int, int); // ByteCode *
 
 	void  DefineMonomer(void **, int, char *); // ByteCode **
 	int   IdentifyElement(char *);
 
-	bool  MatchConstraint(OEAtom *, int);
-	bool  Match2Constraints(Template *, OEAtom *, OEAtom *);
-	bool  Match3Constraints(Template *, OEAtom *, OEAtom *, OEAtom *);
-	bool  Match4Constraints(Template *, OEAtom *, OEAtom *, OEAtom *, OEAtom *);
+	bool  MatchConstraint(OBAtom *, int);
+	bool  Match2Constraints(Template *, OBAtom *, OBAtom *);
+	bool  Match3Constraints(Template *, OBAtom *, OBAtom *, OBAtom *);
+	bool  Match4Constraints(Template *, OBAtom *, OBAtom *, OBAtom *, OBAtom *);
 
-	void  ConstrainBackbone(OEMol &, Template *, int);
+	void  ConstrainBackbone(OBMol &, Template *, int);
 
-	int   RecurseChain(OEMol &, int, int);
-	void  TraceNucleicChain(OEMol &, int, int); 
-	void  TracePeptideChain(OEMol &, int, int);
+	int   RecurseChain(OBMol &, int, int);
+	void  TraceNucleicChain(OBMol &, int, int); 
+	void  TracePeptideChain(OBMol &, int, int);
 
 	char *ParseSmiles(char *, int);
 
@@ -79,5 +79,5 @@ private: // members
 };
 
 }
-#endif // OELIB_CHAINS_H
+#endif // OBLIB_CHAINS_H
 

@@ -30,12 +30,12 @@ namespace OpenBabel {
 // create a random unit vector
 // if seed is nonNegative then use this as the seed,
 // otherwise do not seed
-void Vector::randomUnitVector(OERandom *oeRandP)
+void Vector::randomUnitVector(OBRandom *oeRandP)
 {
    bool doFree= false;
    if (oeRandP == NULL){
       doFree= true;
-      oeRandP= new OERandom(true);
+      oeRandP= new OBRandom(true);
       oeRandP->TimeSeed();
    }
 
@@ -340,7 +340,7 @@ float CalcTorsionAngle(Vector &a,Vector &b,Vector &c,Vector &d)
 //MATRIX ROUTINES
 
 
-void Matrix3x3::randomRotation(OERandom &rnd)
+void Matrix3x3::randomRotation(OBRandom &rnd)
 { 
     Vector v1; 
     v1.randomUnitVector(&rnd);

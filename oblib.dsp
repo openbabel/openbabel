@@ -4,21 +4,21 @@
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=oelib - Win32 Debug
+CFG=oblib - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "oelib.mak".
+!MESSAGE NMAKE /f "oblib.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "oelib.mak" CFG="oelib - Win32 Debug"
+!MESSAGE NMAKE /f "oblib.mak" CFG="oblib - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "oelib - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "oelib - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "oblib - Win32 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "oblib - Win32 Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=oelib - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "oelib - Win32 Release"
+!IF  "$(CFG)" == "oblib - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -51,7 +51,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ELSEIF  "$(CFG)" == "oelib - Win32 Debug"
+!ELSEIF  "$(CFG)" == "oblib - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -78,8 +78,8 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "oelib - Win32 Release"
-# Name "oelib - Win32 Debug"
+# Name "oblib - Win32 Release"
+# Name "oblib - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -253,7 +253,7 @@ SOURCE=.\mpqc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\oeutil.cpp
+SOURCE=.\obutil.cpp
 # End Source File
 # Begin Source File
 
@@ -417,11 +417,11 @@ SOURCE=.\molvector.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\oeifstream.h
+SOURCE=.\obifstream.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\oeutil.h
+SOURCE=.\obutil.h
 # End Source File
 # Begin Source File
 

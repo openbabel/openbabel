@@ -13,22 +13,22 @@ GNU General Public License for more details.
 
 #include <list>
 #include "mol.h"
-#include "oeutil.h"
+#include "obutil.h"
 
 using namespace OpenBabel;
 
 #include "matrix.h"
 #include "chiral.h"
 
-void OEMol::FindChiralCenters()
+void OBMol::FindChiralCenters()
 {
   if (HasChiralityPerceived()) return;
   SetChiralityPerceived();
 
   //do quick test to see if there are any possible chiral centers
   bool mayHaveChiralCenter=false;
-  OEAtom *atom,*nbr;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom,*nbr;
+  vector<OBNodeBase*>::iterator i;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3)
       {
@@ -38,8 +38,8 @@ void OEMol::FindChiralCenters()
 
   if (!mayHaveChiralCenter) return;
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
   for (bond = BeginBond(j);bond;bond = NextBond(j))
     if (bond->IsWedge() || bond->IsHash())
 	(bond->GetBeginAtom())->SetChiral();
@@ -87,13 +87,13 @@ void OEMol::FindChiralCenters()
       }
 }
 
-void GetChirality(OEMol &mol, vector<int> &chirality)
+void GetChirality(OBMol &mol, vector<int> &chirality)
 {
   chirality.resize(mol.NumAtoms()+1);
   fill(chirality.begin(),chirality.end(),0);
 
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     if (atom->IsChiral())
       {
@@ -106,7 +106,7 @@ void GetChirality(OEMol &mol, vector<int> &chirality)
 // Calculate the signed volume for an atom.  If the atom has a valence of 3
 // the coordinates of an attached hydrogen are calculated
 
-float CalcSignedVolume(OEMol &mol,OEAtom *atm)
+float CalcSignedVolume(OBMol &mol,OBAtom *atm)
 {
   Vector tmp_crd;
   vector<int> nbr_atms;
@@ -120,8 +120,8 @@ float CalcSignedVolume(OEMol &mol,OEAtom *atm)
     }
 
   // Create a vector with the coordinates of the neighbor atoms
-  OEAtom *nbr;
-  vector<OEEdgeBase*>::iterator bint;
+  OBAtom *nbr;
+  vector<OBEdgeBase*>::iterator bint;
   for (nbr = atm->BeginNbrAtom(bint);nbr;nbr = atm->NextNbrAtom(bint))
     {
       nbr_atms.push_back(nbr->GetIdx());		
@@ -130,7 +130,7 @@ float CalcSignedVolume(OEMol &mol,OEAtom *atm)
   sort(nbr_atms.begin(),nbr_atms.end());
   for (unsigned int i = 0; i < nbr_atms.size(); i++)
     {
-      OEAtom *tmp_atm = mol.GetAtom(nbr_atms[i]);
+      OBAtom *tmp_atm = mol.GetAtom(nbr_atms[i]);
       nbr_crds.push_back(tmp_atm->GetVector());
     }	
 
@@ -163,7 +163,7 @@ float signed_volume(const Vector &a, const Vector &b, const Vector &c, const Vec
 // for an example see
 // Walters, W. P., Yalkowsky, S. H., JCICS, 1996, 36(5), 1015-1017
 
-void GraphPotentials(OEMol &mol, vector<float> &pot)
+void GraphPotentials(OBMol &mol, vector<float> &pot)
 {
   float det;
 
@@ -182,12 +182,12 @@ void GraphPotentials(OEMol &mol, vector<float> &pot)
 // on the diagonal and and -1 on the off diagonal if two
 // atoms are connected.
 
-void construct_g_matrix(OEMol &mol, vector<vector<float> > &m)
+void construct_g_matrix(OBMol &mol, vector<vector<float> > &m)
 {
   unsigned int i,j;
 
-  OEAtom *atm1,*atm2;
-  vector<OENodeBase*>::iterator aint,bint;
+  OBAtom *atm1,*atm2;
+  vector<OBNodeBase*>::iterator aint,bint;
 
   m.resize(mol.NumAtoms());
   for (i = 0; i < m.size(); i++)
@@ -214,11 +214,11 @@ void construct_g_matrix(OEMol &mol, vector<vector<float> > &m)
 
 // Construct the matrix C, which is simply a column vector
 // consisting of the valence for each atom
-void construct_c_matrix(OEMol &mol,vector<vector<float > > &m)
+void construct_c_matrix(OBMol &mol,vector<vector<float > > &m)
 {
   unsigned int i;
-  OEAtom *atm1;
-  vector<OENodeBase*>::iterator aint;
+  OBAtom *atm1;
+  vector<OBNodeBase*>::iterator aint;
   
   m.resize(mol.NumAtoms());
   for (i = 0; i < m.size(); i++)

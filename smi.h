@@ -20,53 +20,53 @@ GNU General Public License for more details.
 
 namespace OpenBabel{
 
-class OESmiNode
+class OBSmiNode
 {
-  OEAtom *_atom,*_parent;
-  vector<OESmiNode*> _nextnode;
-  vector<OEBond*> _nextbond;
+  OBAtom *_atom,*_parent;
+  vector<OBSmiNode*> _nextnode;
+  vector<OBBond*> _nextbond;
 public:
-  OESmiNode(OEAtom *atom);
-  ~OESmiNode();
+  OBSmiNode(OBAtom *atom);
+  ~OBSmiNode();
   int        Size()  {return((_nextnode.empty())?0:_nextnode.size());}
-  void       SetParent(OEAtom *a)              {_parent = a;}
-  void       SetNextNode(OESmiNode*,OEBond*);
-  OEAtom    *GetAtom()                         {return(_atom);}
-  OEAtom    *GetParent()                       {return(_parent);}
-  OEAtom    *GetNextAtom(int i)                {return(_nextnode[i]->GetAtom());}
-  OEBond    *GetNextBond(int i)                {return(_nextbond[i]);}
-  OESmiNode *GetNextNode(int i)                {return(_nextnode[i]);}
+  void       SetParent(OBAtom *a)              {_parent = a;}
+  void       SetNextNode(OBSmiNode*,OBBond*);
+  OBAtom    *GetAtom()                         {return(_atom);}
+  OBAtom    *GetParent()                       {return(_parent);}
+  OBAtom    *GetNextAtom(int i)                {return(_nextnode[i]->GetAtom());}
+  OBBond    *GetNextBond(int i)                {return(_nextbond[i]);}
+  OBSmiNode *GetNextNode(int i)                {return(_nextnode[i]);}
 };
 
-class OEMol2Smi
+class OBMol2Smi
 {
   vector<int> _atmorder;
   vector<int> _storder;
   vector<bool> _aromNH;
-  OEBitVec _uatoms,_ubonds;
-  vector<OEEdgeBase*> _vclose;
-  vector<pair<OEAtom*,pair<int,int> > > _vopen;
+  OBBitVec _uatoms,_ubonds;
+  vector<OBEdgeBase*> _vclose;
+  vector<pair<OBAtom*,pair<int,int> > > _vopen;
 public:
-  OEMol2Smi() {_vclose.clear();}
-  ~OEMol2Smi() {}
+  OBMol2Smi() {_vclose.clear();}
+  ~OBMol2Smi() {}
   int          GetUnusedIndex();
   void         Init();
-  void         CreateSmiString(OEMol&,char*);
-  void         GetClosureAtoms(OEAtom*,vector<OENodeBase*>&);
-  void         FindClosureBonds(OEMol&);
-  void         ToSmilesString(OESmiNode *node,char *buffer);
+  void         CreateSmiString(OBMol&,char*);
+  void         GetClosureAtoms(OBAtom*,vector<OBNodeBase*>&);
+  void         FindClosureBonds(OBMol&);
+  void         ToSmilesString(OBSmiNode *node,char *buffer);
   void         RemoveUsedClosures();
-  void         AssignCisTrans(OESmiNode*);
-  bool         BuildTree(OESmiNode*);
-  bool         GetSmilesElement(OESmiNode*,char*);
-  bool         GetChiralStereo(OESmiNode*,char*);
-  void         CorrectAromaticAmineCharge(OEMol&);
-  vector<pair<int,OEBond*> >  GetClosureDigits(OEAtom*);
+  void         AssignCisTrans(OBSmiNode*);
+  bool         BuildTree(OBSmiNode*);
+  bool         GetSmilesElement(OBSmiNode*,char*);
+  bool         GetChiralStereo(OBSmiNode*,char*);
+  void         CorrectAromaticAmineCharge(OBMol&);
+  vector<pair<int,OBBond*> >  GetClosureDigits(OBAtom*);
   vector<int> &GetOutputOrder()                   {return(_atmorder);}
 };
 
-bool WriteTheSmiles(OEMol & mol,char *out);
-bool WriteSmiles(ostream &ofs, OEMol &mol,char *title);
+bool WriteTheSmiles(OBMol & mol,char *out);
+bool WriteSmiles(ostream &ofs, OBMol &mol,char *title);
 
 }
 

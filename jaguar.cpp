@@ -16,13 +16,13 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadJaguar(istream &ifs,OEMol &mol,char *title)
+bool ReadJaguar(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
   float x,y,z;
   unsigned int i;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
 
   ttab.SetFromType("XYZ");
@@ -87,11 +87,11 @@ bool ReadJaguar(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteJaguar(ostream &ofs,OEMol &mol)
+bool WriteJaguar(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
-  OEAtom *atom;
+  OBAtom *atom;
 
   ofs << mol.GetTitle() << endl << endl;
   ofs << "&gen" << endl;

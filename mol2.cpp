@@ -17,7 +17,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
-bool ReadMol2(istream &ifs,OEMol &mol,char *title)
+bool ReadMol2(istream &ifs,OBMol &mol,char *title)
 {
   bool foundAtomLine = false;
   char buffer[BUFF_SIZE];
@@ -75,7 +75,7 @@ bool ReadMol2(istream &ifs,OEMol &mol,char *title)
 
     int i;
     Vector v;
-    OEAtom atom;
+    OBAtom atom;
     bool hasPartialCharges=false;
     float x,y,z,pcharge;
     char temp_type[BUFF_SIZE];
@@ -130,7 +130,7 @@ bool ReadMol2(istream &ifs,OEMol &mol,char *title)
     //must add generic data after end modify - otherwise it will be blown away
     if (comment)
 	{
-	  OECommentData *cd = new OECommentData;
+	  OBCommentData *cd = new OBCommentData;
 	  cd->SetData(comment);
 	  mol.SetData(cd);
 	  delete [] comment;
@@ -141,7 +141,7 @@ bool ReadMol2(istream &ifs,OEMol &mol,char *title)
     return(true);
 }
 
-bool WriteMol2(ostream &ofs,OEMol &mol,char *dimension)
+bool WriteMol2(ostream &ofs,OBMol &mol,char *dimension)
 {
   string str,str1;
   char buffer[BUFF_SIZE],label[BUFF_SIZE];
@@ -164,7 +164,7 @@ bool WriteMol2(ostream &ofs,OEMol &mol,char *dimension)
   
   if (mol.HasData("Comment"))
     {
-      OECommentData *cd = (OECommentData*)mol.GetData(oeCommentData);
+      OBCommentData *cd = (OBCommentData*)mol.GetData(obCommentData);
       ofs << cd->GetData();
     }
 
@@ -173,8 +173,8 @@ bool WriteMol2(ostream &ofs,OEMol &mol,char *dimension)
 
   ttab.SetFromType("INT");ttab.SetToType("SYB");
 
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
   vector<int> labelcount;labelcount.resize(105); //Number of elements
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
@@ -199,8 +199,8 @@ bool WriteMol2(ostream &ofs,OEMol &mol,char *dimension)
     }
 
   ofs << "@<TRIPOS>BOND" << endl;
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
       if (bond->GetBO() == 5) strcpy(label,"ar");
@@ -215,7 +215,7 @@ bool WriteMol2(ostream &ofs,OEMol &mol,char *dimension)
 
   return(true);
 }
-bool WriteSmiOrderedMol2(ostream &ofs,OEMol &mol,char *dimension)
+bool WriteSmiOrderedMol2(ostream &ofs,OBMol &mol,char *dimension)
 {
   string str,str1;
   char buffer[BUFF_SIZE],label[BUFF_SIZE];
@@ -245,7 +245,7 @@ bool WriteSmiOrderedMol2(ostream &ofs,OEMol &mol,char *dimension)
   ttab.SetFromType("INT");ttab.SetToType("SYB");
 
 	//get smiles order
-	OEMol2Smi m2s;
+	OBMol2Smi m2s;
 	char smibuffer[BUFF_SIZE];
 	m2s.Init();
 	m2s.CorrectAromaticAmineCharge(mol);
@@ -256,8 +256,8 @@ bool WriteSmiOrderedMol2(ostream &ofs,OEMol &mol,char *dimension)
 	smiorder = m2s.GetOutputOrder();
 	int ct;
 
-  OEAtom *atom;
-//  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+//  vector<OBNodeBase*>::iterator i;
   vector<int> labelcount;labelcount.resize(105); //Number of elements
 //  for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
 	for(ct = 1,idx = smiorder.begin();idx != smiorder.end();idx++,ct++) //loop over smiles order
@@ -288,8 +288,8 @@ cerr << (*idx) << " ";
 cerr << endl;
 
   ofs << "@<TRIPOS>BOND" << endl;
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
       if (bond->GetBO() == 5) strcpy(label,"ar");

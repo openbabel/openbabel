@@ -10,7 +10,7 @@ bool SSwabInt = (SSTPTR[0]!=0);
 static const int TMPSIZE = sizeof(double);
 
 /******************** reading generic binary data *************************/
-unsigned int OE_io_read_binary(char* ccc, char *x, unsigned int size, unsigned int count)
+unsigned int OB_io_read_binary(char* ccc, char *x, unsigned int size, unsigned int count)
 {
     if (x == NULL || size == 0)
     	return 0;
@@ -42,7 +42,7 @@ unsigned int OE_io_read_binary(char* ccc, char *x, unsigned int size, unsigned i
     	return sz;
     }
 }
-unsigned int OE_io_read_binary(istream& ifs, char *x, unsigned int size, unsigned int count)
+unsigned int OB_io_read_binary(istream& ifs, char *x, unsigned int size, unsigned int count)
 {
     if (x == NULL || size == 0)
     	return 0;
@@ -76,7 +76,7 @@ unsigned int OE_io_read_binary(istream& ifs, char *x, unsigned int size, unsigne
 }
 
 /******************** writing generic binary data *************************/
-unsigned int OE_io_write_binary(char *ccc, const char *x, unsigned int size, unsigned int count)
+unsigned int OB_io_write_binary(char *ccc, const char *x, unsigned int size, unsigned int count)
 {
     if (x == NULL || size == 0)
     	return 0;
@@ -108,7 +108,7 @@ unsigned int OE_io_write_binary(char *ccc, const char *x, unsigned int size, uns
     	return sz;
     }
 }
-unsigned int OE_io_write_binary(ostream &ofs, const char *x, unsigned int size, unsigned int count)
+unsigned int OB_io_write_binary(ostream &ofs, const char *x, unsigned int size, unsigned int count)
 {
     if (x == NULL || size == 0)
     	return 0;
@@ -143,14 +143,14 @@ unsigned int OE_io_write_binary(ostream &ofs, const char *x, unsigned int size, 
 
 /**********************reading STL strings****************************/
 
-unsigned int OE_io_read_binary(char* ccc, string& str)
+unsigned int OB_io_read_binary(char* ccc, string& str)
 {
     char *buffer;
     unsigned int i = 0, idx = 0;
 
-    idx    += OE_io_read_binary(ccc, (char*) &i, sizeof(unsigned int), 1);
+    idx    += OB_io_read_binary(ccc, (char*) &i, sizeof(unsigned int), 1);
     buffer  = new char[i+1];
-    idx    += OE_io_read_binary(&ccc[idx], buffer, sizeof(char), i);
+    idx    += OB_io_read_binary(&ccc[idx], buffer, sizeof(char), i);
 
     buffer[i] = '\0';
     str       = buffer;
@@ -159,14 +159,14 @@ unsigned int OE_io_read_binary(char* ccc, string& str)
 
     return idx;
 }
-unsigned int OE_io_read_binary(istream& ifs, string& str)
+unsigned int OB_io_read_binary(istream& ifs, string& str)
 {
     char *buffer;
     unsigned int i = 0, idx = 0;
 
-    idx    += OE_io_read_binary(ifs, (char*) &i, sizeof(unsigned int), 1);
+    idx    += OB_io_read_binary(ifs, (char*) &i, sizeof(unsigned int), 1);
     buffer  = new char[i+1];
-    idx    += OE_io_read_binary(ifs, buffer, sizeof(char), i);
+    idx    += OB_io_read_binary(ifs, buffer, sizeof(char), i);
 
     buffer[i] = '\0';
     str       = buffer;
@@ -178,28 +178,28 @@ unsigned int OE_io_read_binary(istream& ifs, string& str)
 
 /******************** writing STL strings *************************/
 
-unsigned int OE_io_write_binary(char* ccc, const string& str)
+unsigned int OB_io_write_binary(char* ccc, const string& str)
 {
     unsigned int idx = 0, size = str.size();
 
-    idx += OE_io_write_binary(ccc, (char*) &size, sizeof(unsigned int), 1);
-    idx += OE_io_write_binary(&ccc[idx], str.c_str(), sizeof(char), size);
+    idx += OB_io_write_binary(ccc, (char*) &size, sizeof(unsigned int), 1);
+    idx += OB_io_write_binary(&ccc[idx], str.c_str(), sizeof(char), size);
 
     return idx;
 }
-unsigned int OE_io_write_binary(ostream& ofs, const string& str)
+unsigned int OB_io_write_binary(ostream& ofs, const string& str)
 {
     unsigned int idx = 0, size = str.size();
 
-    idx += OE_io_write_binary(ofs, (char*) &size, sizeof(unsigned int), 1);
-    idx += OE_io_write_binary(ofs, str.c_str(), sizeof(char), size);
+    idx += OB_io_write_binary(ofs, (char*) &size, sizeof(unsigned int), 1);
+    idx += OB_io_write_binary(ofs, str.c_str(), sizeof(char), size);
 
     return idx;
 }
 
 /******************* writing compressed data *************************/
 /*!
-**\fn OE_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**\fn OB_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 **\brief Writes an unsigned interger array out in a platform independed
 **compressed binary format.
 **\param ccc A character array that the binary is written to
@@ -211,13 +211,13 @@ unsigned int OE_io_write_binary(ostream& ofs, const string& str)
 **\return The number of bytes written to ccc.  This value should
 **always be 1+(NumBits*NumInts)/8 (integer division).
 */
-unsigned int OE_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+unsigned int OB_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
   {
     //If there are no values or x is NULL do nothing
     if (!NumInts || x==NULL) return 0;
  
     //If 32 or more bits are specified simply write uncompressed
-    if (NumBits >=32) return OE_io_write_binary(ccc,(const char*) x, sizeof(unsigned int), NumInts);
+    if (NumBits >=32) return OB_io_write_binary(ccc,(const char*) x, sizeof(unsigned int), NumInts);
 
     bool swap = !SSwabInt; 
     unsigned int bitarraysize = 1+(NumBits*NumInts)/8;
@@ -258,7 +258,7 @@ unsigned int OE_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned i
     return bitarraysize;
   }
 /*!
-**\fn OE_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**\fn OB_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 **\brief Writes an unsigned interger array out in a platform independed
 **compressed binary format.
 **\param ostr An output stream that the binary is written to
@@ -270,24 +270,24 @@ unsigned int OE_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned i
 **\return The number of bytes written to ostr.  This value should
 **always be 1+(NumBits*NumInts)/8 (integer division).
 */
-unsigned int OE_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+unsigned int OB_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
   {
     //If there are no values or x is NULL do nothing
     if (!NumInts || x==NULL) return 0;
  
     //If 32 or more bits are specified simply write uncompressed
-    if (NumBits >=32) return OE_io_write_binary(ostr,(const char*) x, sizeof(unsigned int), NumInts);
+    if (NumBits >=32) return OB_io_write_binary(ostr,(const char*) x, sizeof(unsigned int), NumInts);
 
     unsigned int bitarraysize = 1+(NumBits*NumInts)/8;
     char *cc = new char [bitarraysize];
-    unsigned int idx = OE_io_write_binary_compressed(cc,x,NumBits,NumInts);
+    unsigned int idx = OB_io_write_binary_compressed(cc,x,NumBits,NumInts);
     ostr.write(cc,bitarraysize);
     delete [] cc;
     return idx;
   }
 
 /*!
-**\fn OE_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
+**\fn OB_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
 **\brief Writes a float array out in a platform independed
 **compressed binary format.
 **\param ccc A character array that the binary is written to
@@ -302,11 +302,11 @@ unsigned int OE_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsig
 **There is a loss of resolution of the floats using this routine.
 **The greater the value of NumBits and the smaller the range of values
 **in x, the smaller the loss of resolution.  The function 
-**OE_io_util_calc_NumBits(float *x, unsigned int N, float res)
+**OB_io_util_calc_NumBits(float *x, unsigned int N, float res)
 **will calculate how many bits are required for a given resolution and
 **set of floats.
 */
-unsigned int OE_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
+unsigned int OB_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
   {
     unsigned int idx=0;
 
@@ -314,7 +314,7 @@ unsigned int OE_io_write_binary_compressed(char*ccc, float *x, unsigned int NumB
     if (!Nfloats || x==NULL) return 0;
 
     //If 32 or more bits are specified simply write uncompressed
-    if (NumBits >=32) return OE_io_write_binary(&ccc[idx],(const char*) x, sizeof(unsigned int), Nfloats);
+    if (NumBits >=32) return OB_io_write_binary(&ccc[idx],(const char*) x, sizeof(unsigned int), Nfloats);
 
 
 
@@ -326,8 +326,8 @@ unsigned int OE_io_write_binary_compressed(char*ccc, float *x, unsigned int NumB
         if (x[i] > max) max = x[i];
         if (x[i] < min) min = x[i];
       }
-    idx += OE_io_write_binary(&ccc[idx],(const char*)&max,sizeof(float),1);
-    idx += OE_io_write_binary(&ccc[idx],(const char*)&min,sizeof(float),1);
+    idx += OB_io_write_binary(&ccc[idx],(const char*)&max,sizeof(float),1);
+    idx += OB_io_write_binary(&ccc[idx],(const char*)&min,sizeof(float),1);
 
     //Integerize values and write out 
     unsigned int maxint = (unsigned int) 0; 
@@ -338,13 +338,13 @@ unsigned int OE_io_write_binary_compressed(char*ccc, float *x, unsigned int NumB
             ix[i] = (unsigned int) (((float)maxint*((x[i]-min)/(max-min))) + 0.499999999f);
       }
     else for (i=0 ; i<Nfloats ; i++) ix[i] = (unsigned int) 0;
-    idx += OE_io_write_binary_compressed(&ccc[idx],ix,NumBits,Nfloats);
+    idx += OB_io_write_binary_compressed(&ccc[idx],ix,NumBits,Nfloats);
     delete [] ix;  
 
     return idx;
   }
 /*!
-**\fn OE_io_write_binary_compressed(ostream& ostr, float *x, unsigned int NumBits, unsigned int Nfloats)
+**\fn OB_io_write_binary_compressed(ostream& ostr, float *x, unsigned int NumBits, unsigned int Nfloats)
 **\brief Writes a float array out in a platform independed
 **compressed binary format.
 **\param ostr A character array that the binary is written to
@@ -359,11 +359,11 @@ unsigned int OE_io_write_binary_compressed(char*ccc, float *x, unsigned int NumB
 **There is a loss of resolution of the floats using this routine.
 **The greater the value of NumBits and the smaller the range of values
 **in x, the smaller the loss of resolution.  The function
-**OE_io_util_calc_NumBits(float *x, unsigned int N, float res)
+**OB_io_util_calc_NumBits(float *x, unsigned int N, float res)
 **will calculate how many bits are required for a given resolution and
 **set of floats.
 */
-unsigned int OE_io_write_binary_compressed(ostream& ostr, float *x, unsigned int NumBits, unsigned int Nfloats)
+unsigned int OB_io_write_binary_compressed(ostream& ostr, float *x, unsigned int NumBits, unsigned int Nfloats)
   {
     unsigned int idx=0;
 
@@ -371,7 +371,7 @@ unsigned int OE_io_write_binary_compressed(ostream& ostr, float *x, unsigned int
     if (!Nfloats || x==NULL) return 0;
 
     //If 32 or more bits are specified simply write uncompressed
-    if (NumBits >=32) return OE_io_write_binary(ostr,(const char*) x, sizeof(unsigned int), Nfloats);
+    if (NumBits >=32) return OB_io_write_binary(ostr,(const char*) x, sizeof(unsigned int), Nfloats);
 
     //Write max and min
     unsigned int i;
@@ -381,8 +381,8 @@ unsigned int OE_io_write_binary_compressed(ostream& ostr, float *x, unsigned int
         if (x[i] > max) max = x[i];
         if (x[i] < min) min = x[i];
       }
-    idx += OE_io_write_binary(ostr,(const char*)&max,sizeof(float),1);
-    idx += OE_io_write_binary(ostr,(const char*)&min,sizeof(float),1);
+    idx += OB_io_write_binary(ostr,(const char*)&max,sizeof(float),1);
+    idx += OB_io_write_binary(ostr,(const char*)&min,sizeof(float),1);
  
     //Integerize values and write out
     unsigned int maxint = (unsigned int) 0;
@@ -393,7 +393,7 @@ unsigned int OE_io_write_binary_compressed(ostream& ostr, float *x, unsigned int
             ix[i] = (unsigned int) (((float)maxint*((x[i]-min)/(max-min))) + 0.499999999f);
       }
     else for (i=0 ; i<Nfloats ; i++) ix[i] = (unsigned int) 0;
-    idx += OE_io_write_binary_compressed(ostr,ix,NumBits,Nfloats);
+    idx += OB_io_write_binary_compressed(ostr,ix,NumBits,Nfloats);
     delete [] ix;
 
 
@@ -402,11 +402,11 @@ unsigned int OE_io_write_binary_compressed(ostream& ostr, float *x, unsigned int
 
 /******************* reading compressed data *************************/
 /*!
-**\fn OE_io_read_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**\fn OB_io_read_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 **\brief Reads compressed binary data that was written with either
-**OE_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 **or
-**OE_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 **\param ccc A character array the binary is being read from
 **\param x An array of unsigned ints the binary data will be extracted to
 **\param NumBits The number of bits used to store each unsigned integer
@@ -414,13 +414,13 @@ unsigned int OE_io_write_binary_compressed(ostream& ostr, float *x, unsigned int
 **\return The number of bytes read from ccc.  This value should
 **always be 1+(NumBits*NumInts)/8 (integer division).
 */
-unsigned int OE_io_read_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+unsigned int OB_io_read_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
   {
     //If there are no values or x is NULL do nothing
     if (!NumInts || x==NULL) return 0;
  
     //If 32 or more bits are specified simply read uncompressed
-    if (NumBits >=32) return OE_io_read_binary(ccc,(char*) x, sizeof(unsigned int), NumInts);
+    if (NumBits >=32) return OB_io_read_binary(ccc,(char*) x, sizeof(unsigned int), NumInts);
 
     //Read the values
     bool swap = !SSwabInt;
@@ -468,11 +468,11 @@ unsigned int OE_io_read_binary_compressed(char*ccc, unsigned int *x, unsigned in
   }
 
 /*!
-**\fn OE_io_read_binary_compressed(istream& istr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**\fn OB_io_read_binary_compressed(istream& istr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 **\brief Reads compressed binary data that was written with either
-**OE_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 **or
-**OE_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 **\param istr An input file stream the binary is being read from
 **\param x An array of unsigned ints the binary data will be extracted to
 **\param NumBits The number of bits used to store each unsigned integer
@@ -480,28 +480,28 @@ unsigned int OE_io_read_binary_compressed(char*ccc, unsigned int *x, unsigned in
 **\return The number of bytes read from istr.  This value should
 **always be 1+(NumBits*NumInts)/8 (integer division).
 */
-unsigned int OE_io_read_binary_compressed(istream& istr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+unsigned int OB_io_read_binary_compressed(istream& istr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
   {
     //If there are no values or x is NULL do nothing
     if (!NumInts || x==NULL) return 0;
  
     //If 32 or more bits are specified simply read uncompressed
-    if (NumBits >=32) return OE_io_read_binary(istr,(char*) x, sizeof(unsigned int), NumInts);
+    if (NumBits >=32) return OB_io_read_binary(istr,(char*) x, sizeof(unsigned int), NumInts);
 
     unsigned int bitarraysize = 1+(NumBits*NumInts)/8;
     char *cc = new char [bitarraysize];
     istr.read(cc,bitarraysize);
-    unsigned int idx = OE_io_read_binary_compressed(cc,x,NumBits,NumInts);
+    unsigned int idx = OB_io_read_binary_compressed(cc,x,NumBits,NumInts);
     delete [] cc;
     return idx;
   }
 
 /*!
-**\fn OE_io_read_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
+**\fn OB_io_read_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
 **\brief Reads compressed binary data that was written with either
-**OE_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int NumInts)
 **or
-**OE_io_write_binary_compressed(ostream& ostr, float *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(ostream& ostr, float *x, unsigned int NumBits, unsigned int NumInts)
 **\param ccc A character array the binary is being read from
 **\param x An array of floats the binary data will be extracted to
 **\param NumBits The number of bits used to store each float
@@ -509,7 +509,7 @@ unsigned int OE_io_read_binary_compressed(istream& istr, unsigned int *x, unsign
 **\return The number of bytes read from ccc.  This value should
 **always be 1+(NumBits*NumInts)/8 (integer division).
 */
-unsigned int OE_io_read_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
+unsigned int OB_io_read_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
   {
     unsigned int idx=0;
 
@@ -517,20 +517,20 @@ unsigned int OE_io_read_binary_compressed(char*ccc, float *x, unsigned int NumBi
     if (!Nfloats || x==NULL) return 0;
  
     //If 32 or more bits are specified simply write uncompressed
-    if (NumBits >=32) return OE_io_read_binary(&ccc[idx],(char*) x, sizeof(unsigned int), Nfloats);
+    if (NumBits >=32) return OB_io_read_binary(&ccc[idx],(char*) x, sizeof(unsigned int), Nfloats);
 
     //Read max and min
     float max;
     float min;
-    idx += OE_io_read_binary(&ccc[idx],(char*)&max,sizeof(float),1);
-    idx += OE_io_read_binary(&ccc[idx],(char*)&min,sizeof(float),1);
+    idx += OB_io_read_binary(&ccc[idx],(char*)&max,sizeof(float),1);
+    idx += OB_io_read_binary(&ccc[idx],(char*)&min,sizeof(float),1);
  
     //Read in values
     unsigned int i;
     unsigned int maxint = (unsigned int) 0;
     for (i=0 ; i<NumBits ; i++) maxint |= ((unsigned int)1)<<i;
     unsigned int *ix = new unsigned int [Nfloats];
-    idx += OE_io_read_binary_compressed(&ccc[idx],ix,NumBits,Nfloats);
+    idx += OB_io_read_binary_compressed(&ccc[idx],ix,NumBits,Nfloats);
     for (i=0 ; i<Nfloats ; i++) x[i] = (max-min)*((float)ix[i]/(float)maxint)+min;
     delete [] ix;
 
@@ -538,11 +538,11 @@ unsigned int OE_io_read_binary_compressed(char*ccc, float *x, unsigned int NumBi
   }
 
 /*!
-**\fn OE_io_read_binary_compressed(istream& istr, float *x, unsigned int NumBits, unsigned int Nfloats)
+**\fn OB_io_read_binary_compressed(istream& istr, float *x, unsigned int NumBits, unsigned int Nfloats)
 **\brief Reads compressed binary data that was written with either
-**OE_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int NumInts)
 **or
-**OE_io_write_binary_compressed(ostream& ostr, float *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(ostream& ostr, float *x, unsigned int NumBits, unsigned int NumInts)
 **\param istr An input stream  the binary is being read from
 **\param x An array of floats the binary data will be extracted to
 **\param NumBits The number of bits used to store each float
@@ -550,7 +550,7 @@ unsigned int OE_io_read_binary_compressed(char*ccc, float *x, unsigned int NumBi
 **\return The number of bytes read from istr.  This value should
 **always be 1+(NumBits*NumInts)/8 (integer division).
 */
-unsigned int OE_io_read_binary_compressed(istream& istr, float *x, unsigned int NumBits, unsigned int Nfloats)
+unsigned int OB_io_read_binary_compressed(istream& istr, float *x, unsigned int NumBits, unsigned int Nfloats)
   {
     unsigned int idx=0;
 
@@ -558,20 +558,20 @@ unsigned int OE_io_read_binary_compressed(istream& istr, float *x, unsigned int 
     if (!Nfloats || x==NULL) return 0;
  
     //If 32 or more bits are specified simply write uncompressed
-    if (NumBits >=32) return OE_io_read_binary(istr,(char*) x, sizeof(unsigned int), Nfloats);
+    if (NumBits >=32) return OB_io_read_binary(istr,(char*) x, sizeof(unsigned int), Nfloats);
 
     //Read max and min
     float max;
     float min;
-    idx += OE_io_read_binary(istr,(char*)&max,sizeof(float),1);
-    idx += OE_io_read_binary(istr,(char*)&min,sizeof(float),1);
+    idx += OB_io_read_binary(istr,(char*)&max,sizeof(float),1);
+    idx += OB_io_read_binary(istr,(char*)&min,sizeof(float),1);
  
     //Read in values
     unsigned int i;
     unsigned int maxint = (unsigned int) 0;
     for (i=0 ; i<NumBits ; i++) maxint |= ((unsigned int)1)<<i;
     unsigned int *ix = new unsigned int [Nfloats];
-    idx += OE_io_read_binary_compressed(istr,ix,NumBits,Nfloats);
+    idx += OB_io_read_binary_compressed(istr,ix,NumBits,Nfloats);
     for (i=0 ; i<Nfloats ; i++) x[i] = (max-min)*((float)ix[i]/(float)maxint)+min;
     delete [] ix;
 
@@ -580,17 +580,17 @@ unsigned int OE_io_read_binary_compressed(istream& istr, float *x, unsigned int 
 
 
 /*!
-**\fn OE_io_util_calc_NumBits(unsigned int *x, unsigned int N)
+**\fn OB_io_util_calc_NumBits(unsigned int *x, unsigned int N)
 **\param x an unsigned integer array
 **\paran N The number of values in the unsigned integer array x.
 **\return The number of bits per value required to store the
 **unsigned integer values in x with the 
-**OE_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(char*ccc, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 **and
-**OE_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
+**OB_io_write_binary_compressed(ostream& ostr, unsigned int *x, unsigned int NumBits, unsigned int NumInts)
 ** functions.
 */
-unsigned int OE_io_util_calc_NumBits(unsigned int *x, unsigned int N)
+unsigned int OB_io_util_calc_NumBits(unsigned int *x, unsigned int N)
   {
     if (!N) return 0;
     unsigned int i;
@@ -602,18 +602,18 @@ unsigned int OE_io_util_calc_NumBits(unsigned int *x, unsigned int N)
   }
 
 /*!
-**\fn OE_io_util_calc_NumBits(float *x, unsigned int N, float res)
+**\fn OB_io_util_calc_NumBits(float *x, unsigned int N, float res)
 **\param x A float array
 **\param N The number of values in the float array x.
 **\param The resolution desired.
 **\returns The number of bits per value required to store float
 **the float values in x at a resolution of res (or better) with the
-**OE_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
+**OB_io_write_binary_compressed(char*ccc, float *x, unsigned int NumBits, unsigned int Nfloats)
 **or
-**OE_io_write_binary_compressed(istream& istr, float *x, unsigned int NumBits, unsigned int Nfloats)
+**OB_io_write_binary_compressed(istream& istr, float *x, unsigned int NumBits, unsigned int Nfloats)
 **functions.
 */
-unsigned int OE_io_util_calc_NumBits(float *x, unsigned int N, float res)
+unsigned int OB_io_util_calc_NumBits(float *x, unsigned int N, float res)
   {
     if (!N) return 0;
 
@@ -633,22 +633,22 @@ unsigned int OE_io_util_calc_NumBits(float *x, unsigned int N, float res)
   }
 
 
-/******************* Writing OEBinaryIO objects ************************/
-ostream& operator<<(ostream& ostr, const OEBinaryIO& obj)
+/******************* Writing OBBinaryIO objects ************************/
+ostream& operator<<(ostream& ostr, const OBBinaryIO& obj)
   {
     unsigned int size = obj.BinarySize();
-    OE_io_write_binary(ostr,(const char*)&size,sizeof(unsigned int),1);
+    OB_io_write_binary(ostr,(const char*)&size,sizeof(unsigned int),1);
     obj.WriteBinary(ostr);
     return ostr;
   }
-istream& operator>>(istream& istr, OEBinaryIO& obj)
+istream& operator>>(istream& istr, OBBinaryIO& obj)
   {
     unsigned int size;
-    OE_io_read_binary(istr,(char*)&size,sizeof(unsigned int),1);
+    OB_io_read_binary(istr,(char*)&size,sizeof(unsigned int),1);
     unsigned int size2;
     size2 = obj.ReadBinary(istr);
     if (size != size2) {
-        cerr << "WARNING operator>>(istream& istr, OEBinaryIO& obj) " << endl;
+        cerr << "WARNING operator>>(istream& istr, OBBinaryIO& obj) " << endl;
         cerr << "Record size (" << size << ") is not equal to number of bytes read (" << size2 << ")" << endl;
       }
     return istr;

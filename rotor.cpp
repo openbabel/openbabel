@@ -16,16 +16,16 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-#define OE_DEFAULT_DELTA 10.0f
-static bool GetDFFVector(OEMol&,vector<int>&,OEBitVec&);
-static bool CompareRotor(const pair<OEBond*,int>&,const pair<OEBond*,int>&);
+#define OB_DEFAULT_DELTA 10.0f
+static bool GetDFFVector(OBMol&,vector<int>&,OBBitVec&);
+static bool CompareRotor(const pair<OBBond*,int>&,const pair<OBBond*,int>&);
 
 
   //**************************************
-  //**** OERotorList Member Functions ****
+  //**** OBRotorList Member Functions ****
   //**************************************
 
-bool OERotorList::Setup(OEMol &mol)
+bool OBRotorList::Setup(OBMol &mol)
 {
   Clear();
   FindRotors(mol);
@@ -34,8 +34,8 @@ bool OERotorList::Setup(OEMol &mol)
   SetEvalAtoms(mol);
   AssignTorVals(mol);
   
-  OERotor *rotor;
-  vector<OERotor*>::iterator i;
+  OBRotor *rotor;
+  vector<OBRotor*>::iterator i;
   for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
     if (!rotor->Size())
       {
@@ -50,15 +50,15 @@ bool OERotorList::Setup(OEMol &mol)
   return(true);
 }
 
-bool OERotorList::FindRotors(OEMol &mol)
+bool OBRotorList::FindRotors(OBMol &mol)
 {
   mol.FindRingAtomsAndBonds();
   vector<int> gtd;
   mol.GetGTDVector(gtd);
   
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator i;
-  vector<pair<OEBond*,int> > vtmp;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
+  vector<pair<OBBond*,int> > vtmp;
 
   int score;
   for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
@@ -67,16 +67,16 @@ bool OERotorList::FindRotors(OEMol &mol)
 		if (HasFixedAtoms() && IsFixedBond(bond)) continue;
 		score = gtd[bond->GetBeginAtomIdx()-1] + 
 			gtd[bond->GetEndAtomIdx()-1];
-		vtmp.push_back(pair<OEBond*,int> (bond,score));
+		vtmp.push_back(pair<OBBond*,int> (bond,score));
       }
 
   sort(vtmp.begin(),vtmp.end(),CompareRotor);
 
-  OERotor *rotor;int count;
-  vector<pair<OEBond*,int> >::iterator j;
+  OBRotor *rotor;int count;
+  vector<pair<OBBond*,int> >::iterator j;
   for (j = vtmp.begin(),count=0;j != vtmp.end();j++,count++)
     {
-      rotor = new OERotor;
+      rotor = new OBRotor;
       rotor->SetBond((*j).first);
       rotor->SetIdx(count);
       rotor->SetNumCoords(mol.NumAtoms()*3);
@@ -86,10 +86,10 @@ bool OERotorList::FindRotors(OEMol &mol)
   return(true);
 }
 
-bool OERotorList::IsFixedBond(OEBond *bond)
+bool OBRotorList::IsFixedBond(OBBond *bond)
 {
-  OEAtom *a1,*a2,*a3;
-  vector<OEEdgeBase*>::iterator i;
+  OBAtom *a1,*a2,*a3;
+  vector<OBEdgeBase*>::iterator i;
 
   a1 = bond->GetBeginAtom();
   a2 = bond->GetEndAtom();
@@ -110,17 +110,17 @@ bool OERotorList::IsFixedBond(OEBond *bond)
   return(isfixed);
 }
 
-bool GetDFFVector(OEMol &mol,vector<int> &dffv,OEBitVec &bv)
+bool GetDFFVector(OBMol &mol,vector<int> &dffv,OBBitVec &bv)
 {
   dffv.clear();
   dffv.resize(mol.NumAtoms());
   
   int dffcount,natom;
-  OEBitVec used,curr,next;
-  OEAtom *atom,*atom1;
-  OEBond *bond;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
+  OBBitVec used,curr,next;
+  OBAtom *atom,*atom1;
+  OBBond *bond;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
 
   next.Clear();
 
@@ -162,9 +162,9 @@ bool GetDFFVector(OEMol &mol,vector<int> &dffv,OEBitVec &bv)
 }
 
 
-static float MinimumPairRMS(OEMol&,float*,float*,bool &);
+static float MinimumPairRMS(OBMol&,float*,float*,bool &);
 
-void OERotorList::RemoveSymVals(OEMol &mol)
+void OBRotorList::RemoveSymVals(OBMol &mol)
      //this function rotates each bond to zero and 180 degrees and tests
      //if the 2 conformers are duplicates.  if so - the symmetric torsion
      //values are removed from consideration during a search
@@ -176,8 +176,8 @@ void OERotorList::RemoveSymVals(OEMol &mol)
   bool one2one;
   float cutoff = 0.20f;
 
-  OERotor *rotor;
-  vector<OERotor*>::iterator i;
+  OBRotor *rotor;
+  vector<OBRotor*>::iterator i;
   for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
     {
       //look for 2-fold symmetry about a bond
@@ -189,7 +189,7 @@ void OERotorList::RemoveSymVals(OEMol &mol)
       if (MinimumPairRMS(mol,c1,c2,one2one) <cutoff && !one2one)
 	{
 	  rotor->RemoveSymTorsionValues(2);
-	  OEBond *bond = rotor->GetBond();
+	  OBBond *bond = rotor->GetBond();
 	  
 	  if (!_quiet)
 	    {
@@ -210,7 +210,7 @@ void OERotorList::RemoveSymVals(OEMol &mol)
       if (MinimumPairRMS(mol,c1,c2,one2one) <cutoff && !one2one)
 	{
 	  rotor->RemoveSymTorsionValues(3);
-	  OEBond *bond = rotor->GetBond();
+	  OBBond *bond = rotor->GetBond();
 	  
 	  if (!_quiet)
 	    {
@@ -229,7 +229,7 @@ void OERotorList::RemoveSymVals(OEMol &mol)
   int ref[4];
   vector<vector<int> > mlist;
   vector<vector<int> >::iterator k;
-  vector<pair<OESmartsPattern*,pair<int,int> > >::iterator j;
+  vector<pair<OBSmartsPattern*,pair<int,int> > >::iterator j;
   for (j = _vsym2.begin();j != _vsym2.end();j++)
     if (j->first->Match(mol))
       {
@@ -275,13 +275,13 @@ void OERotorList::RemoveSymVals(OEMol &mol)
       }
 }
 
-static float MinimumPairRMS(OEMol &mol,float *a,float *b,bool &one2one)
+static float MinimumPairRMS(OBMol &mol,float *a,float *b,bool &one2one)
 {
   int i,j,k=0;
   float min,tmp,d_2 = 0.0;
-  OEBitVec bset;
+  OBBitVec bset;
   one2one = true;
-  vector<OENodeBase*> _atom;
+  vector<OBNodeBase*> _atom;
   _atom.resize(mol.NumAtoms());
   for (i = 0;i < (signed)mol.NumAtoms();i++) _atom[i] = mol.GetAtom(i+1);
 
@@ -313,17 +313,17 @@ static float MinimumPairRMS(OEMol &mol,float *a,float *b,bool &one2one)
   return(sqrt(d_2));
 }
 
-bool OERotorList::SetEvalAtoms(OEMol &mol)
+bool OBRotorList::SetEvalAtoms(OBMol &mol)
      //determines which atoms the internal energy should be calculated
      //if a the dihedral angle of the rotor is modified
 {
   int j;
-  OEBond *bond;
-  OEAtom *a1,*a2;
-  OERotor *rotor;
-  vector<OERotor*>::iterator i;
-  OEBitVec eval,curr,next;
-  vector<OEEdgeBase*>::iterator k;
+  OBBond *bond;
+  OBAtom *a1,*a2;
+  OBRotor *rotor;
+  vector<OBRotor*>::iterator i;
+  OBBitVec eval,curr,next;
+  vector<OBEdgeBase*>::iterator k;
 
   for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
     {
@@ -342,7 +342,7 @@ bool OERotorList::SetEvalAtoms(OEMol &mol)
 	      a1 = mol.GetAtom(j);
 	      for (a2 = a1->BeginNbrAtom(k);a2;a2 = a1->NextNbrAtom(k))
 		if (!eval[a2->GetIdx()])
-		  if (!((OEBond*)*k)->IsRotor()||(HasFixedAtoms()&&IsFixedBond((OEBond*)*k)))
+		  if (!((OBBond*)*k)->IsRotor()||(HasFixedAtoms()&&IsFixedBond((OBBond*)*k)))
 		    {
 		      next.SetBitOn(a2->GetIdx());
 		      eval.SetBitOn(a2->GetIdx());
@@ -366,11 +366,11 @@ bool OERotorList::SetEvalAtoms(OEMol &mol)
   return(true);
 }
 
-bool OERotorList::AssignTorVals(OEMol &mol)
+bool OBRotorList::AssignTorVals(OBMol &mol)
 {
-  OEBond *bond;
-  OERotor *rotor;
-  vector<OERotor*>::iterator i;
+  OBBond *bond;
+  OBRotor *rotor;
+  vector<OBRotor*>::iterator i;
 
   int ref[4];
   float delta;
@@ -401,11 +401,11 @@ bool OERotorList::AssignTorVals(OEMol &mol)
   return(true);
 }
 
-bool OERotorList::SetRotAtoms(OEMol &mol)
+bool OBRotorList::SetRotAtoms(OBMol &mol)
 {
-  OERotor *rotor;
+  OBRotor *rotor;
   vector<int> rotatoms,dihed;
-  vector<OERotor*>::iterator i;
+  vector<OBRotor*>::iterator i;
 
   int ref[4];
   vector<int>::iterator j;
@@ -431,13 +431,13 @@ bool OERotorList::SetRotAtoms(OEMol &mol)
   return(true);
 }
 
-void OERotorList::SetRotAtomsByFix(OEMol &mol)
+void OBRotorList::SetRotAtomsByFix(OBMol &mol)
 {
   int ref[4];
-  OERotor *rotor;
+  OBRotor *rotor;
   vector<int> rotatoms,dihed;
   vector<int>::iterator j;
-  vector<OERotor*>::iterator i;
+  vector<OBRotor*>::iterator i;
 
   GetDFFVector(mol,_dffv,_fix);
 
@@ -472,36 +472,36 @@ void OERotorList::SetRotAtomsByFix(OEMol &mol)
     }
 }
 
-OERotorList::OERotorList() 
+OBRotorList::OBRotorList() 
 {
   _rotor.clear();
   _quiet=false;
   _removesym=true;
 
   //para-disub benzene
-  OESmartsPattern *sp;
-  sp = new OESmartsPattern;
+  OBSmartsPattern *sp;
+  sp = new OBSmartsPattern;
   sp->Init("*c1[cD2][cD2]c(*)[cD2][cD2]1");
-  _vsym2.push_back(pair<OESmartsPattern*,pair<int,int> > (sp,pair<int,int> (0,1)));
+  _vsym2.push_back(pair<OBSmartsPattern*,pair<int,int> > (sp,pair<int,int> (0,1)));
 
   //piperidine amide
-  sp = new OESmartsPattern;
+  sp = new OBSmartsPattern;
   sp->Init("O=CN1[CD2][CD2][CD2][CD2][CD2]1");
-  _vsym2.push_back(pair<OESmartsPattern*,pair<int,int> > (sp,pair<int,int> (1,2)));
+  _vsym2.push_back(pair<OBSmartsPattern*,pair<int,int> > (sp,pair<int,int> (1,2)));
 
   //terminal phosphate
-  sp = new OESmartsPattern;
+  sp = new OBSmartsPattern;
   sp->Init("[#8D2][#15,#16](~[#8D1])(~[#8D1])~[#8D1]");
-  _vsym3.push_back(pair<OESmartsPattern*,pair<int,int> > (sp,pair<int,int> (0,1)));
+  _vsym3.push_back(pair<OBSmartsPattern*,pair<int,int> > (sp,pair<int,int> (0,1)));
 
 }
 
-OERotorList::~OERotorList()
+OBRotorList::~OBRotorList()
 {
-  vector<OERotor*>::iterator i;
+  vector<OBRotor*>::iterator i;
   for (i = _rotor.begin();i != _rotor.end();i++)  delete *i;
 
-  vector<pair<OESmartsPattern*,pair<int,int> > >::iterator j;
+  vector<pair<OBSmartsPattern*,pair<int,int> > >::iterator j;
   for (j = _vsym2.begin();j != _vsym2.end();j++)
     delete j->first;
 
@@ -509,31 +509,31 @@ OERotorList::~OERotorList()
     delete j->first;
 }
 
-void OERotorList::Clear()
+void OBRotorList::Clear()
 {
-  vector<OERotor*>::iterator i;
+  vector<OBRotor*>::iterator i;
   for (i = _rotor.begin();i != _rotor.end();i++)  delete *i;
   _rotor.clear();
   _fix.Clear();
 }
 
-bool CompareRotor(const pair<OEBond*,int> &a,const pair<OEBond*,int> &b)
+bool CompareRotor(const pair<OBBond*,int> &a,const pair<OBBond*,int> &b)
 {
   //return(a.second > b.second); //outside->in
   return(a.second < b.second);   //inside->out
 }
 
 //**********************************
-//**** OERotor Member Functions ****
+//**** OBRotor Member Functions ****
 //**********************************
 
-OERotor::OERotor()
+OBRotor::OBRotor()
 {
   _delta = 10.0f;
   _rotatoms = NULL;
 }
 
-float OERotor::CalcTorsion(float *c)
+float OBRotor::CalcTorsion(float *c)
 {
   float v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
   float c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
@@ -573,7 +573,7 @@ float OERotor::CalcTorsion(float *c)
   return(ang);
 }
 
-float OERotor::CalcBondLength(float *c)
+float OBRotor::CalcBondLength(float *c)
 {
   float dx,dy,dz;
 
@@ -583,7 +583,7 @@ float OERotor::CalcBondLength(float *c)
   return(sqrt(SQUARE(dx)+SQUARE(dy)+SQUARE(dz)));
 }
 
-void OERotor::Precalc(vector<float*> &cv)
+void OBRotor::Precalc(vector<float*> &cv)
 {
   float *c,ang;
   vector<float*>::iterator i;
@@ -610,7 +610,7 @@ void OERotor::Precalc(vector<float*> &cv)
 }
 
 
-void OERotor::SetRotor(float *c,int idx,int prev)
+void OBRotor::SetRotor(float *c,int idx,int prev)
 {
   float ang,sn,cs,t,dx,dy,dz,mag;
   
@@ -627,7 +627,7 @@ void OERotor::SetRotor(float *c,int idx,int prev)
   Set(c,sn,cs,t,1.0/mag);
 }
 
-void OERotor::Precompute(float *c)
+void OBRotor::Precompute(float *c)
 {
   float dx,dy,dz;
   dx = c[_torsion[1]]   - c[_torsion[2]];
@@ -638,7 +638,7 @@ void OERotor::Precompute(float *c)
   _refang = CalcTorsion(c);
 }
 
-void OERotor::Set(float *c,int idx)
+void OBRotor::Set(float *c,int idx)
 {
   float ang,sn,cs,t;
 
@@ -675,7 +675,7 @@ void OERotor::Set(float *c,int idx)
     }
 }
 
-void OERotor::Set(float *c,float sn,float cs,float t,float invmag)
+void OBRotor::Set(float *c,float sn,float cs,float t,float invmag)
 {
   float x,y,z,tx,ty,tz,m[9];
 
@@ -709,7 +709,7 @@ void OERotor::Set(float *c,float sn,float cs,float t,float invmag)
     }
 }
 
-void OERotor::RemoveSymTorsionValues(int fold)
+void OBRotor::RemoveSymTorsionValues(int fold)
 {
   vector<float>::iterator i;
   vector<float> tv;
@@ -726,7 +726,7 @@ void OERotor::RemoveSymTorsionValues(int fold)
   _res = tv;
 }
 
-void OERotor::SetDihedralAtoms(int ref[4])
+void OBRotor::SetDihedralAtoms(int ref[4])
 {
   for (int i = 0;i < 4;i++) _ref[i] = ref[i];
   _torsion.resize(4);
@@ -734,7 +734,7 @@ void OERotor::SetDihedralAtoms(int ref[4])
   _torsion[2] = (ref[2]-1)*3; _torsion[3] = (ref[3]-1)*3;
 }
 
-void OERotor::SetRotAtoms(vector<int> &vi) 
+void OBRotor::SetRotAtoms(vector<int> &vi) 
 {
   if (_rotatoms) delete [] _rotatoms;
   _rotatoms = new int [vi.size()];
@@ -743,7 +743,7 @@ void OERotor::SetRotAtoms(vector<int> &vi)
 }
 
 //***************************************
-//**** OERotorRules Member functions ****
+//**** OBRotorRules Member functions ****
 //***************************************
 
 static char TorsionDefaults[] = 
@@ -759,18 +759,18 @@ static char TorsionDefaults[] =
 ,0x31,0x38,0x30,0x2E,0x30,0x20,0x2D,0x39,0x30,0x2E,0x30,0x20,0x39,0x30,0x2E
 ,0x30,0x0A}; 
 
-OERotorRules::OERotorRules()
+OBRotorRules::OBRotorRules()
 {
   _quiet=false;
   _init = false;
   _dir = "";
-  _envvar = "OE_DIR";
+  _envvar = "OB_DIR";
   _filename = "torlib.txt";
   _subdir = "omega";
   _dataptr = TorsionDefaults;
 }
 
-void OERotorRules::ParseLine(char *buffer)
+void OBRotorRules::ParseLine(char *buffer)
 {
   int i;
   int ref[4];
@@ -814,7 +814,7 @@ void OERotorRules::ParseLine(char *buffer)
       for (i = 0;i < 4;i++) ref[i] = atoi(vs[i+1].c_str())-1;
       //possible torsions
       vals.clear();
-      delta = OE_DEFAULT_DELTA;
+      delta = OB_DEFAULT_DELTA;
       for (i = 5;(unsigned)i < vs.size();i++) 
 	{
 	  if (i == (signed)(vs.size()-2) && vs[i] == "Delta")
@@ -832,7 +832,7 @@ void OERotorRules::ParseLine(char *buffer)
 	  err += vs[0];
 	  ThrowError(err);
 	}
-      OERotorRule *rr = new OERotorRule (buffer,ref,vals,delta);
+      OBRotorRule *rr = new OBRotorRule (buffer,ref,vals,delta);
       if (rr->IsValid())
 	_vr.push_back(rr);
       else
@@ -841,7 +841,7 @@ void OERotorRules::ParseLine(char *buffer)
 
 }
 
-void OERotorRules::GetRotorIncrements(OEMol &mol,OEBond *bond,
+void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
 				      int ref[4],vector<float> &vals,float &delta)
 {
   vals.clear();
@@ -849,12 +849,12 @@ void OERotorRules::GetRotorIncrements(OEMol &mol,OEBond *bond,
   vpr.push_back(pair<int,int> (0,bond->GetBeginAtomIdx()));
   vpr.push_back(pair<int,int> (0,bond->GetEndAtomIdx()));
 
-  delta = OE_DEFAULT_DELTA;
+  delta = OB_DEFAULT_DELTA;
 
   int j;
-  OESmartsPattern *sp;
+  OBSmartsPattern *sp;
   vector<vector<int> > map;
-  vector<OERotorRule*>::iterator i;
+  vector<OBRotorRule*>::iterator i;
   for (i = _vr.begin();i != _vr.end();i++)
     {
       sp = (*i)->GetSmartsPattern();
@@ -873,7 +873,7 @@ void OERotorRules::GetRotorIncrements(OEMol &mol,OEBond *bond,
 	  vals = (*i)->GetTorsionVals();
 	  delta = (*i)->GetDelta();
 
-	  OEAtom *a1,*a2,*a3,*a4,*r;
+	  OBAtom *a1,*a2,*a3,*a4,*r;
 	  a1 = mol.GetAtom(ref[0]); a4 = mol.GetAtom(ref[3]);
 	  if (a1->IsHydrogen() && a4->IsHydrogen()) continue; //don't allow hydrogens at both ends
 	  if (a1->IsHydrogen() || a4->IsHydrogen()) //need a heavy atom reference - can use hydrogen
@@ -882,7 +882,7 @@ void OERotorRules::GetRotorIncrements(OEMol &mol,OEBond *bond,
 			a2 = mol.GetAtom(ref[1]); a3 = mol.GetAtom(ref[2]);
 			if (a4->IsHydrogen()) {swap(a1,a4); swap(a2,a3); swapped = true;} 
 
-			vector<OEEdgeBase*>::iterator k;
+			vector<OBEdgeBase*>::iterator k;
 			for (r = a2->BeginNbrAtom(k);r;r = a2->NextNbrAtom(k))
 				if (!r->IsHydrogen() && r != a3)
 					break;
@@ -928,9 +928,9 @@ void OERotorRules::GetRotorIncrements(OEMol &mol,OEBond *bond,
     }
 
   //***didn't match any rules - assign based on hybridization***
-  OEAtom *a1,*a2,*a3,*a4;
+  OBAtom *a1,*a2,*a3,*a4;
   a2 = bond->GetBeginAtom(); a3 = bond->GetEndAtom();
-  vector<OEEdgeBase*>::iterator k;
+  vector<OBEdgeBase*>::iterator k;
 
   for (a1 = a2->BeginNbrAtom(k);a1;a1 = a2->NextNbrAtom(k))
 	  if (!a1->IsHydrogen() && a1 != a3)
@@ -981,13 +981,13 @@ void OERotorRules::GetRotorIncrements(OEMol &mol,OEBond *bond,
     }
 }
 
-OERotorRules::~OERotorRules()
+OBRotorRules::~OBRotorRules()
 {
-  vector<OERotorRule*>::iterator i;
+  vector<OBRotorRule*>::iterator i;
   for (i = _vr.begin();i != _vr.end();i++)
     delete (*i);
 }
 
-#undef OE_DEFAULT_DELTA	  
+#undef OB_DEFAULT_DELTA	  
 }
 

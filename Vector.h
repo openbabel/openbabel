@@ -24,7 +24,7 @@ GNU General Public License for more details.
 #endif
 
 #include <math.h>
-#include "oeutil.h"
+#include "obutil.h"
 
 #ifndef PI
 #define PI 3.1415926535897932384626433f
@@ -108,7 +108,7 @@ class	Vector {
 
 
       // create a random unit vector in R3
-      void randomUnitVector(OERandom *oeRand= NULL);
+      void randomUnitVector(OBRandom *oeRand= NULL);
 
 			//  Member Functions
 			   //  Dot Product
@@ -195,7 +195,7 @@ class Matrix3x3
       m[6] = ele[2][0];m[7] = ele[2][1];m[8] = ele[2][2];
     }
   Matrix3x3 invert();
-  void randomRotation(OERandom &rnd);
+  void randomRotation(OBRandom &rnd);
   float determinant();
   float Get(int i,int j) const {return(ele[i][j]);}
   void  Set(int i,int j, float v) {ele[i][j]= v;}

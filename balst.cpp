@@ -16,7 +16,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool ReadBallAndStick(istream &ifs,OEMol &mol,char *title)
+bool ReadBallAndStick(istream &ifs,OBMol &mol,char *title)
 {
   int i,natoms;
   char buffer[BUFF_SIZE];  
@@ -27,7 +27,7 @@ bool ReadBallAndStick(istream &ifs,OEMol &mol,char *title)
   mol.ReserveAtoms(natoms);
 
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
   vector<string>::iterator j;
 
@@ -56,7 +56,7 @@ bool ReadBallAndStick(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteBallAndStick(ostream &ofs,OEMol &mol)
+bool WriteBallAndStick(ostream &ofs,OBMol &mol)
 { 
   char tmptype[10];
   char buffer[BUFF_SIZE];
@@ -66,9 +66,9 @@ bool WriteBallAndStick(ostream &ofs,OEMol &mol)
   
   sprintf(buffer,"%d",mol.NumAtoms()); ofs << buffer << endl;
   
-  OEAtom *atom,*nbr;
-  vector<OENodeBase*>::iterator i;
-  vector<OEEdgeBase*>::iterator j;
+  OBAtom *atom,*nbr;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
 
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {

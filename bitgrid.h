@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "grid.h"
 #include "bitvec.h"
-#include "oeutil.h"
+#include "obutil.h"
 #include "parsmart.h"
 #include "patty.h"
 
@@ -38,7 +38,7 @@ protected:
   float spacing, inv_spa;
   int   size;
 
-  OEBitVec grid,lipo,don,acc;
+  OBBitVec grid,lipo,don,acc;
 
   patty p;
   vector<string> types;
@@ -49,19 +49,19 @@ public:
   BitGrid(bool);
   ~BitGrid(void);
 
-  void Init(OEMol &, float);
+  void Init(OBMol &, float);
   void Init(float,float,float,float,float,float,float);
-  void Build(OEMol &);
-  void Build(OEMol &, OEBitVec &);
-  void Build(OEMol &, vector<int> &);
-  void SetBits(OEAtom *);
+  void Build(OBMol &);
+  void Build(OBMol &, OBBitVec &);
+  void Build(OBMol &, vector<int> &);
+  void SetBits(OBAtom *);
 
   void Clear(void) { grid.Clear(); lipo.Clear(); don.Clear(); acc.Clear(); }
 
-  OEBitVec &GetBitVec(void)         { return grid; }
-  OEBitVec &GetLipoBitVec(void)     { return lipo; }
-  OEBitVec &GetDonorBitVec(void)    { return don; }
-  OEBitVec &GetAcceptorBitVec(void) { return acc; }
+  OBBitVec &GetBitVec(void)         { return grid; }
+  OBBitVec &GetLipoBitVec(void)     { return lipo; }
+  OBBitVec &GetDonorBitVec(void)    { return don; }
+  OBBitVec &GetAcceptorBitVec(void) { return acc; }
 };
 
 }

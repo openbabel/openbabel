@@ -329,7 +329,7 @@ static int SolveCubic(double A,double B,double C,double D)
 }
 #endif
 
-void oe_make_rmat(float a[3][3],float rmat[9])
+void ob_make_rmat(float a[3][3],float rmat[9])
 {
   float onorm, dnorm;
   float b, dma, q, t, c, s,d[3];
@@ -467,7 +467,7 @@ static int get_roots_3_3(float mat[3][3], float roots[3])
 {
    float rmat[9];
 
-   oe_make_rmat(mat,rmat);
+   ob_make_rmat(mat,rmat);
 
    mat[0][0]=rmat[0];
    mat[0][1]=rmat[3];

@@ -1,4 +1,4 @@
-#OELib Makefile
+#Open Babel Makefile
 
 CC            = @CC@
 CXX	      = @CXX@

@@ -25,17 +25,17 @@ GNU General Public License for more details.
 #include <string>
 using namespace std;
 
-#ifndef OEPolarGrid
-#define OEPolarGrid 0x01
-#endif //OEPolarGrid
+#ifndef OBPolarGrid
+#define OBPolarGrid 0x01
+#endif //OBPolarGrid
 
-#ifndef OELipoGrid
-#define OELipoGrid 0x02
-#endif //OELipoGrid
+#ifndef OBLipoGrid
+#define OBLipoGrid 0x02
+#endif //OBLipoGrid
 
 namespace OpenBabel {
 
-class OEProxGrid
+class OBProxGrid
 {
   int _gridtype;
   int _nxinc,_nyinc,_nzinc,_maxinc;
@@ -44,15 +44,15 @@ class OEProxGrid
 
 public:
 
-  OEProxGrid(int gridtype=0){_gridtype=0;}
-  ~OEProxGrid(){}
-  void Setup(OEMol &,OEMol &,float,float res=0.5);
-  void Setup(OEMol &,OEMol &,float,vector<bool>&,float res=0.5);
+  OBProxGrid(int gridtype=0){_gridtype=0;}
+  ~OBProxGrid(){}
+  void Setup(OBMol &,OBMol &,float,float res=0.5);
+  void Setup(OBMol &,OBMol &,float,vector<bool>&,float res=0.5);
   vector<int> *GetProxVector(float,float,float);
   vector<int> *GetProxVector(float*);
   // For HasFlag force return type to bool so VC6.0 doesn't complain
-  bool LipoGrid() {return((_gridtype&OELipoGrid) ? true : false);}
-  bool PolarGrid() {return(_gridtype&OEPolarGrid);}
+  bool LipoGrid() {return((_gridtype&OBLipoGrid) ? true : false);}
+  bool PolarGrid() {return(_gridtype&OBPolarGrid);}
   void SetGridType(int gridtype) {_gridtype = gridtype;}
   bool PointIsInBox(float x,float y,float z)
     {
@@ -63,7 +63,7 @@ public:
     }
 };
 
-class OEFloatGrid
+class OBFloatGrid
 {
   float *_val;             /* floating point values */
   int   *_ival;            /* for integer values */
@@ -75,9 +75,9 @@ class OEFloatGrid
 
 public:
 
-    OEFloatGrid() : _halfSpace(0.0f) {_val=NULL;_ival=NULL;}
-  ~OEFloatGrid() {if (_ival) delete [] _ival;if (_val) delete [] _val;}
-  void Init(OEMol &,float, float pad= 0.0f); //initialized using boxfile
+    OBFloatGrid() : _halfSpace(0.0f) {_val=NULL;_ival=NULL;}
+  ~OBFloatGrid() {if (_ival) delete [] _ival;if (_val) delete [] _val;}
+  void Init(OBMol &,float, float pad= 0.0f); //initialized using boxfile
   bool PointIsInBox(float x,float y,float z)
     {
       if (x < _xmin || x > _xmax) return(false);
@@ -113,8 +113,8 @@ public:
   float *GetVals() {return(_val);}
   void SetVals(float *ptr) {_val = ptr;}
   Vector Center() { return Vector(_midx,_midy,_midz); } //added by jjc
-  friend ostream& operator<< ( ostream&, const OEFloatGrid& ) ;
-  friend istream& operator>> ( istream&,OEFloatGrid& ) ;
+  friend ostream& operator<< ( ostream&, const OBFloatGrid& ) ;
+  friend istream& operator>> ( istream&,OBFloatGrid& ) ;
 
   float Inject(float x,float y,float z)
     {
@@ -139,7 +139,7 @@ public:
 
 typedef enum { Undefined = -1, PLP, ChemScore } score_t;
 
-class OEScoreGrid
+class OBScoreGrid
 {
 protected:
 
@@ -150,8 +150,8 @@ public:
 
   float score;
 
-  OEScoreGrid(void) { verbose = false; }
-  virtual ~OEScoreGrid(void) {}
+  OBScoreGrid(void) { verbose = false; }
+  virtual ~OBScoreGrid(void) {}
 
   void    SetVerbose(bool v)    { verbose = v; }
   void    SetType(score_t type) { gridtype = type; }
@@ -159,16 +159,16 @@ public:
 
   virtual void   Clear(void) { }
   virtual float  Eval(float *)    { return -1; }
-  virtual float  Eval(OEMol &mol) { return Eval(mol.GetCoordinates()); }
-  virtual void   Init(OEMol &, OEMol &, string &, float) {}
-  virtual void   Setup(OEMol &) {}
-  virtual void   Setup(OEMol &, vector<int> &) {}
+  virtual float  Eval(OBMol &mol) { return Eval(mol.GetCoordinates()); }
+  virtual void   Init(OBMol &, OBMol &, string &, float) {}
+  virtual void   Setup(OBMol &) {}
+  virtual void   Setup(OBMol &, vector<int> &) {}
   virtual void   Setup(vector<int> &) {}
   virtual void   Config(string) {}
   virtual bool   Read(string)       { return false; }
   virtual bool   Write(string)      { return false; }
   virtual Vector Center()           { return VZero; }
-  virtual Vector CenterMol(OEMol &) { return VZero; }
+  virtual Vector CenterMol(OBMol &) { return VZero; }
 };
 
 }

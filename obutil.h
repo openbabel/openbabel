@@ -11,8 +11,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef __OEUTIL_H__
-#define __OEUTIL_H__
+#ifndef __OBUTIL_H__
+#define __OBUTIL_H__
 
 #include <string>
 
@@ -34,7 +34,7 @@ using namespace std;
 namespace OpenBabel {
 
 //*** Stopwatch class used for timing length of execution ***
-class OEStopwatch
+class OBStopwatch
 {
 #ifdef WIN32
   clock_t start, stop;
@@ -66,13 +66,13 @@ class OEStopwatch
 //
 //*** sqrt lookup table - given a distance squared returns distance
 //
-class OESqrtTbl
+class OBSqrtTbl
 {
   float _max,_incr,*_tbl;
  public:
-  OESqrtTbl() {_tbl=NULL;}
-  OESqrtTbl(float max,float incr) {Init(max,incr);}
-  ~OESqrtTbl() {if (_tbl) delete [] _tbl;}
+  OBSqrtTbl() {_tbl=NULL;}
+  OBSqrtTbl(float max,float incr) {Init(max,incr);}
+  ~OBSqrtTbl() {if (_tbl) delete [] _tbl;}
   float Sqrt(float d2) {return((d2 < _max) ? _tbl[(int)(d2*_incr)]:float(sqrt(d2)));}
   void Init(float max,float incr)
     {
@@ -102,17 +102,17 @@ void DoubleMultiply( unsigned int,unsigned int,DoubleType*);
 void DoubleAdd( DoubleType*,unsigned int);
 unsigned int DoubleModulus( DoubleType*,unsigned int);
 
-class OERandom
+class OBRandom
 {
   DoubleType d;
   unsigned int m,a,c;
   unsigned int p;
   unsigned int i;
   unsigned int x;
-  bool OERandomUseSysRand;
+  bool OBRandomUseSysRand;
 
  public:
-    OERandom(bool useSys= false);
+    OBRandom(bool useSys= false);
     void Seed(int seed) {x = seed;}
     void TimeSeed();
     int NextInt();
@@ -133,8 +133,8 @@ void ToUpper(string&);
 void ToUpper(char*);
 void CleanAtomType(char*);
 
-bool OECompareInt(const int &,const int &);
-bool OECompareUnsigned(const unsigned int &,const unsigned int &);
+bool OBCompareInt(const int &,const int &);
+bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
 void SmartsLexReplace(string &,vector<pair<string,string> > &);
 
 //******************triple template*************************
@@ -216,4 +216,4 @@ struct quad{
 }
 
 
-#endif //__OEUTIL_H__
+#endif //__OBUTIL_H__

@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "oeutil.h"
+#include "obutil.h"
 
 #include "molvector.h"
 
@@ -21,7 +21,7 @@ namespace OpenBabel {
 //Functions for dealing with groups of molecules.  MolVec will read either all
 //molecules from a file or a set of conformers.  
 
-OEMolVector::~OEMolVector()
+OBMolVector::~OBMolVector()
 {
   for (unsigned int i = 0; i < _molvec.size(); i++)
     {
@@ -29,18 +29,18 @@ OEMolVector::~OEMolVector()
     }
 }
 
-// Read all molecules from a file into a OEMolVector.  Input and output types
+// Read all molecules from a file into a OBMolVector.  Input and output types
 // default to SDF
 
-void OEMolVector::Read(ifstream &ifs, const io_type in_type, const io_type out_type, int nToRead)
+void OBMolVector::Read(ifstream &ifs, const io_type in_type, const io_type out_type, int nToRead)
 {	
   int nRead= 0;
-  OEFileFormat ff;
+  OBFileFormat ff;
   while (1)
     {
       if (nRead == nToRead) break;
-      OEMol *mol;
-      mol = new OEMol;
+      OBMol *mol;
+      mol = new OBMol;
       (*mol).SetInputType(in_type);
       (*mol).SetOutputType(out_type);
       ff.ReadMolecule(ifs,*mol);
@@ -54,12 +54,12 @@ void OEMolVector::Read(ifstream &ifs, const io_type in_type, const io_type out_t
     }
 }
 
-// Write a OEMolVector to a file.  Output type defaults to SDF
+// Write a OBMolVector to a file.  Output type defaults to SDF
 
-void OEMolVector::Write(ofstream &ofs)
+void OBMolVector::Write(ofstream &ofs)
 {
-  vector<OEMol *>::iterator mol_i;
-  OEFileFormat ff;
+  vector<OBMol *>::iterator mol_i;
+  OBFileFormat ff;
 
   for (mol_i = _molvec.begin(); mol_i != _molvec.end(); mol_i++)
     {
@@ -67,14 +67,14 @@ void OEMolVector::Write(ofstream &ofs)
     }
 }
 
-// Get a specific molecule from a OEMolVector.  Index starts at zero.
-OEMol *OEMolVector::GetMol(int i)
+// Get a specific molecule from a OBMolVector.  Index starts at zero.
+OBMol *OBMolVector::GetMol(int i)
 {
   if (i >= 0 && i < (signed)_molvec.size())
     return(_molvec[i]);
   else
     {
-      cerr << "Index " << i << " out of range in OEMolVector::GetMol " << endl;
+      cerr << "Index " << i << " out of range in OBMolVector::GetMol " << endl;
       return(NULL);
     }
 }
@@ -85,10 +85,10 @@ OEMol *OEMolVector::GetMol(int i)
 // molecules and push them into the vector util it reads a molecule with a
 // different name.  At this point it rewinds the file stream to the beginning
 // of the current molecule and returns
-bool OEMolVector::ReadConfs(ifstream &ifs, const io_type in_type, const io_type out_type)
+bool OBMolVector::ReadConfs(ifstream &ifs, const io_type in_type, const io_type out_type)
 {
-  OEMol *mol;
-  OEFileFormat ff;
+  OBMol *mol;
+  OBFileFormat ff;
   string title,master;
 
   _molvec.resize(0);
@@ -96,7 +96,7 @@ bool OEMolVector::ReadConfs(ifstream &ifs, const io_type in_type, const io_type 
   int i = 1;
   while (1)
     {
-      mol = new OEMol;
+      mol = new OBMol;
       (*mol).SetInputType(in_type);
       (*mol).SetOutputType(out_type);
       streampos sp = ifs.tellg();

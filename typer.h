@@ -19,43 +19,43 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-class OEAtomTyper : public OEGlobalDataBase
+class OBAtomTyper : public OBGlobalDataBase
 {
   int                                            _rc;
   vector<vector<int> >                           _mlist;
-  vector<pair<OESmartsPattern*,int> >            _vinthyb;
-  vector<pair<OESmartsPattern*,int> >            _vimpval;
-  vector<pair<OESmartsPattern*,string> >         _vexttyp;
+  vector<pair<OBSmartsPattern*,int> >            _vinthyb;
+  vector<pair<OBSmartsPattern*,int> >            _vimpval;
+  vector<pair<OBSmartsPattern*,string> >         _vexttyp;
  public:
-  OEAtomTyper();
-  ~OEAtomTyper();
+  OBAtomTyper();
+  ~OBAtomTyper();
 
   void ParseLine(char*);
-  void AssignHyb(OEMol&);
-  void AssignTypes(OEMol&);
-  void AssignImplicitValence(OEMol&);
-  void CorrectAromaticNitrogens(OEMol&);
+  void AssignHyb(OBMol&);
+  void AssignTypes(OBMol&);
+  void AssignImplicitValence(OBMol&);
+  void CorrectAromaticNitrogens(OBMol&);
 };
 
-class OEAromaticTyper : public OEGlobalDataBase
+class OBAromaticTyper : public OBGlobalDataBase
 {
   vector<bool>             _vpa;   //potentially aromatic atoms
   vector<bool>             _visit;
   vector<bool>             _root;
   vector<vector<int> >     _mlist;
-  vector<OESmartsPattern*> _vsp;   //smarts of potentially aromatic atoms
+  vector<OBSmartsPattern*> _vsp;   //smarts of potentially aromatic atoms
   vector<pair<int,int> >   _verange; //min and max number of electrons
   vector<pair<int,int> >   _velec;   //num electrons an atom contributes
  public:
-  OEAromaticTyper();
-  ~OEAromaticTyper();
+  OBAromaticTyper();
+  ~OBAromaticTyper();
 
   void ParseLine(char*);
-  void AssignAromaticFlags(OEMol &);
-  void PropagatePotentialAromatic(OEAtom*);
-  void ExcludeSmallRing(OEMol &);
-  void CheckAromaticity(OEAtom*,int);
-  bool TraverseCycle(OEAtom*,OEAtom*,OEBond*,pair<int,int>&,int);
+  void AssignAromaticFlags(OBMol &);
+  void PropagatePotentialAromatic(OBAtom*);
+  void ExcludeSmallRing(OBMol &);
+  void CheckAromaticity(OBAtom*,int);
+  bool TraverseCycle(OBAtom*,OBAtom*,OBBond*,pair<int,int>&,int);
 };
 
 }

@@ -19,34 +19,34 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-class OEChemTsfm
+class OBChemTsfm
 {
   vector<int>                       _vadel;
   vector<pair<int,int> >            _vele;
   vector<pair<int,int> >            _vchrg;
   vector<pair<int,int> >            _vbdel;
   vector<pair<pair<int,int>,int> >  _vbond;
-  OESmartsPattern _bgn,_end;
+  OBSmartsPattern _bgn,_end;
 public:
-  OEChemTsfm() {}
-  ~OEChemTsfm() {}
+  OBChemTsfm() {}
+  ~OBChemTsfm() {}
   bool Init(string&,string&);
-  bool Apply(OEMol&);
+  bool Apply(OBMol&);
 };
 
 
-class OEPhModel : public OEGlobalDataBase
+class OBPhModel : public OBGlobalDataBase
 {
   vector<vector<int> >                           _mlist;
-  vector<OEChemTsfm*>                            _vtsfm;
-  vector<pair<OESmartsPattern*,vector<float> > > _vschrg;
+  vector<OBChemTsfm*>                            _vtsfm;
+  vector<pair<OBSmartsPattern*,vector<float> > > _vschrg;
  public:
-  OEPhModel();
-  ~OEPhModel();
+  OBPhModel();
+  ~OBPhModel();
 
   void ParseLine(char*);
-  void AssignSeedPartialCharge(OEMol&);
-  void CorrectForPH(OEMol&);
+  void AssignSeedPartialCharge(OBMol&);
+  void CorrectForPH(OBMol&);
 };
 
 

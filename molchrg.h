@@ -18,21 +18,21 @@ namespace OpenBabel {
 
 class GasteigerState;
 
-class OEGastChrg
+class OBGastChrg
 {
   vector <GasteigerState*> _gsv;
-  void InitialPartialCharges(OEMol &);
-  bool GasteigerSigmaChi(OEAtom *,float &,float &,float &);
+  void InitialPartialCharges(OBMol &);
+  bool GasteigerSigmaChi(OBAtom *,float &,float &,float &);
  public:
-  OEGastChrg(){}
-  ~OEGastChrg();
-  bool AssignPartialCharges(OEMol &);
+  OBGastChrg(){}
+  ~OBGastChrg();
+  bool AssignPartialCharges(OBMol &);
   void GSVResize(int);
 };
 
 class GasteigerState 
 {
-  //helper class for OEGastChrg
+  //helper class for OBGastChrg
  public:
   GasteigerState();
   ~GasteigerState() {}

@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-bool ReadAlchemy(istream &ifs,OEMol &mol,char *title)
+bool ReadAlchemy(istream &ifs,OBMol &mol,char *title)
 {
   int i;
   int natoms,nbonds;
@@ -30,7 +30,7 @@ bool ReadAlchemy(istream &ifs,OEMol &mol,char *title)
 
   string str;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
 
   for (i = 1; i <= natoms; i ++)
@@ -70,7 +70,7 @@ bool ReadAlchemy(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteAlchemy(ostream &ofs,OEMol &mol)
+bool WriteAlchemy(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
@@ -82,7 +82,7 @@ bool WriteAlchemy(ostream &ofs,OEMol &mol)
   ofs << buffer << endl;
   ttab.SetFromType("INT"); ttab.SetToType("ALC");
 
-  OEAtom *atom;
+  OBAtom *atom;
   string str,str1;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
@@ -98,8 +98,8 @@ bool WriteAlchemy(ostream &ofs,OEMol &mol)
     ofs << buffer << endl;
   }
 
-  OEBond *bond;
-  vector<OEEdgeBase*>::iterator j;
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator j;
 
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
   {

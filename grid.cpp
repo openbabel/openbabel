@@ -18,10 +18,10 @@ using namespace std;
 
 namespace OpenBabel {
 
-void OEProxGrid::Setup(OEMol &mol,OEMol &box,float cutoff,float res)
+void OBProxGrid::Setup(OBMol &mol,OBMol &box,float cutoff,float res)
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)
@@ -72,11 +72,11 @@ void OEProxGrid::Setup(OEMol &mol,OEMol &box,float cutoff,float res)
   _inc = 1/_inc;
 }
 
-void OEProxGrid::Setup(OEMol &mol,OEMol &box,float cutoff,vector<bool> &use,
+void OBProxGrid::Setup(OBMol &mol,OBMol &box,float cutoff,vector<bool> &use,
 		       float res)
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)
@@ -125,7 +125,7 @@ void OEProxGrid::Setup(OEMol &mol,OEMol &box,float cutoff,vector<bool> &use,
   _inc = 1/_inc;
 }
 
-vector<int> *OEProxGrid::GetProxVector(float x,float y,float z)
+vector<int> *OBProxGrid::GetProxVector(float x,float y,float z)
 {
   if (x < _xmin || x > _xmax) return(NULL);
   if (y < _ymin || y > _ymax) return(NULL);
@@ -140,7 +140,7 @@ vector<int> *OEProxGrid::GetProxVector(float x,float y,float z)
   return(&cell[idx]);
 }
 
-vector<int> *OEProxGrid::GetProxVector(float *c)
+vector<int> *OBProxGrid::GetProxVector(float *c)
 {
   float x,y,z;
   x = c[0];
@@ -160,10 +160,10 @@ vector<int> *OEProxGrid::GetProxVector(float *c)
   return(&cell[idx]);
 }
 
-void OEFloatGrid::Init(OEMol &box,float spacing, float pad)
+void OBFloatGrid::Init(OBMol &box,float spacing, float pad)
 {
-  OEAtom *atom;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  vector<OBNodeBase*>::iterator i;
 
   for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)
@@ -216,7 +216,7 @@ void OEFloatGrid::Init(OEMol &box,float spacing, float pad)
   //return(true);
 }
 
-void OEFloatGrid::IndexToCoords(int idx, float &x, float &y, float &z)
+void OBFloatGrid::IndexToCoords(int idx, float &x, float &y, float &z)
 {
   long int grid_x,grid_y,grid_z;
   
@@ -229,7 +229,7 @@ void OEFloatGrid::IndexToCoords(int idx, float &x, float &y, float &z)
   z = (grid_z * _spacing + _zmin) + this->_halfSpace;
 }
 
-int OEFloatGrid::CoordsToIndex(float &x, float &y, float &z)
+int OBFloatGrid::CoordsToIndex(float &x, float &y, float &z)
 {
   int gx=(int)((x-_xmin)*_inv_spa);
   int gy=(int)((y-_ymin)*_inv_spa);
@@ -238,14 +238,14 @@ int OEFloatGrid::CoordsToIndex(float &x, float &y, float &z)
   return((gz*_ydim*_xdim)+(gy*_xdim)+gx);
 }
 
-void OEFloatGrid::CoordsToIndex(int *idx,float *c)
+void OBFloatGrid::CoordsToIndex(int *idx,float *c)
 {
   idx[0]=(int)((c[0]-_xmin)*_inv_spa);
   idx[1]=(int)((c[1]-_ymin)*_inv_spa);
   idx[2]=(int)((c[2]-_zmin)*_inv_spa);
 }
 
-float OEFloatGrid::Interpolate(float x,float y,float z)
+float OBFloatGrid::Interpolate(float x,float y,float z)
 {
   int n,igx,igy,igz;
   float xydim;
@@ -286,7 +286,7 @@ float OEFloatGrid::Interpolate(float x,float y,float z)
 }
 
 
-float OEFloatGrid::InterpolateDerivatives(float x,float y,float z,float *derivatives)
+float OBFloatGrid::InterpolateDerivatives(float x,float y,float z,float *derivatives)
 {
   int n,igx,igy,igz;
   float xydim;
@@ -356,7 +356,7 @@ float OEFloatGrid::InterpolateDerivatives(float x,float y,float z,float *derivat
 }
 
 
-ostream& operator<< ( ostream &os, const  OEFloatGrid& fg) 
+ostream& operator<< ( ostream &os, const  OBFloatGrid& fg) 
 {
   os.write((const char*)&fg._xmin,sizeof(float));
   os.write((const char*)&fg._xmax,sizeof(float));
@@ -379,7 +379,7 @@ ostream& operator<< ( ostream &os, const  OEFloatGrid& fg)
   return(os);
 }
 
-istream& operator>> ( istream &is,OEFloatGrid& fg) 
+istream& operator>> ( istream &is,OBFloatGrid& fg) 
 {
   is.read((char*)&fg._xmin,sizeof(float));
   is.read((char*)&fg._xmax,sizeof(float));

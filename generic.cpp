@@ -16,49 +16,49 @@ GNU General Public License for more details.
 namespace OpenBabel {
 
 //
-//member functions for OEGenericData class
+//member functions for OBGenericData class
 //
 
-OEGenericData::OEGenericData()
+OBGenericData::OBGenericData()
 {
-  _type = oeUndefinedData;
+  _type = obUndefinedData;
   _attr = "undefined";
 }
 
-OEGenericData::OEGenericData(const OEGenericData &src)
+OBGenericData::OBGenericData(const OBGenericData &src)
 {
   _type = src.GetDataType();
   _attr = src.GetAttribute();
 }
 
 //
-//member functions for OECommentData class
+//member functions for OBCommentData class
 //
 
-OECommentData::OECommentData() 
+OBCommentData::OBCommentData() 
 {
-  _type = oeCommentData; 
+  _type = obCommentData; 
   _attr = "Comment";
 }
 
-OECommentData::OECommentData(const OECommentData &src)
+OBCommentData::OBCommentData(const OBCommentData &src)
 {
-  _type = oeCommentData;
+  _type = obCommentData;
   _attr = "Comment";
   _data = src.GetData();
 }
 
 //
-//member functions for OEExternalBond class
+//member functions for OBExternalBond class
 //
-OEExternalBond::OEExternalBond(OEAtom *atom,OEBond *bond,int idx) 
+OBExternalBond::OBExternalBond(OBAtom *atom,OBBond *bond,int idx) 
 {
   _idx = idx;
   _atom = atom;
   _bond = bond;
 }
 
-OEExternalBond::OEExternalBond(const OEExternalBond &src)
+OBExternalBond::OBExternalBond(const OBExternalBond &src)
 {
   _idx = src.GetIdx();
   _atom = src.GetAtom();
@@ -66,39 +66,39 @@ OEExternalBond::OEExternalBond(const OEExternalBond &src)
 }
 
 //
-//member functions for OEExternalBondData class
+//member functions for OBExternalBondData class
 //
 
-OEExternalBondData::OEExternalBondData()
+OBExternalBondData::OBExternalBondData()
 {
-  _type = oeExternalBondData;
+  _type = obExternalBondData;
   _attr = "ExternalBondData";
 }
 
-void OEExternalBondData::SetData(OEAtom *atom,OEBond *bond,int idx)
+void OBExternalBondData::SetData(OBAtom *atom,OBBond *bond,int idx)
 {
-  OEExternalBond xb(atom,bond,idx);
+  OBExternalBond xb(atom,bond,idx);
   _vexbnd.push_back(xb);
 }
 
 //
-//member functions for OECompressData class
+//member functions for OBCompressData class
 //
 
-OECompressData::OECompressData() 
+OBCompressData::OBCompressData() 
 {
   _size = 0;
   _data = (unsigned char*)NULL; 
-  _type = oeCompressData;
+  _type = obCompressData;
   _attr = "CompressData";
 }
 
-OECompressData::~OECompressData()
+OBCompressData::~OBCompressData()
 {
   if (_data) delete [] _data;
 }
 
-void OECompressData::SetData(unsigned char *d,int size)
+void OBCompressData::SetData(unsigned char *d,int size)
 {
   if (size <= 0) return;
   
@@ -110,31 +110,31 @@ void OECompressData::SetData(unsigned char *d,int size)
 }
 
 //
-//member functions for OEPairData class
+//member functions for OBPairData class
 //
 
-OEPairData::OEPairData()
+OBPairData::OBPairData()
 {
-  _type = oePairData; 
+  _type = obPairData; 
   _attr = "PairData";
 }
 
 //
-//member functions for OEVirtualBond class
-//OEVirtualBond is used to temporarily store bonds that reference
+//member functions for OBVirtualBond class
+//OBVirtualBond is used to temporarily store bonds that reference
 //an atom that has not yet been added to a molecule 
 //
 
-OEVirtualBond::OEVirtualBond()
+OBVirtualBond::OBVirtualBond()
 {
-	_type = oeVirtualBondData;
+	_type = obVirtualBondData;
 	_attr = "VirtualBondData";
 	_bgn = _end = _ord = 0;
 }
 
-OEVirtualBond::OEVirtualBond(int bgn,int end,int ord,int stereo)
+OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo)
 {
-	_type = oeVirtualBondData;
+	_type = obVirtualBondData;
 	_attr = "VirtualBondData";
 	_bgn = bgn;
 	_end = end;
@@ -143,12 +143,12 @@ OEVirtualBond::OEVirtualBond(int bgn,int end,int ord,int stereo)
 }
 
 //
-//member functions for OERingData class - stores SSSR set
+//member functions for OBRingData class - stores SSSR set
 //
 
-OERingData::OERingData()
+OBRingData::OBRingData()
 {
-	_type = oeRingData;
+	_type = obRingData;
 	_attr = "RingData";
 	_vr.clear();
 }

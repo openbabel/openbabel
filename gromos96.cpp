@@ -53,7 +53,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-bool WriteGromos96(ostream &ofs,OEMol &mol,float fac)
+bool WriteGromos96(ostream &ofs,OBMol &mol,float fac)
 { 
   char type_name[10];
   char res_name[10],padded_name[10];
@@ -68,9 +68,9 @@ bool WriteGromos96(ostream &ofs,OEMol &mol,float fac)
   ofs << buffer << endl;
   ofs << "POSITION" << endl;
 
-  OEAtom *atom;
-  OEResidue *res;
-  vector<OENodeBase*>::iterator i;
+  OBAtom *atom;
+  OBResidue *res;
+  vector<OBNodeBase*>::iterator i;
 
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
@@ -108,13 +108,13 @@ bool WriteGromos96(ostream &ofs,OEMol &mol,float fac)
 }
 
 /* these are the routines that babel calls */
-bool WriteGromos96A(ostream &ofs,OEMol &mol)
+bool WriteGromos96A(ostream &ofs,OBMol &mol)
 { 
   return(WriteGromos96(ofs,mol,1.0f));
 }
 
 /* convert A -> nm */
-bool WriteGromos96N(ostream &ofs,OEMol &mol)
+bool WriteGromos96N(ostream &ofs,OBMol &mol)
 { 
   return(WriteGromos96(ofs,mol,0.1f));
 }

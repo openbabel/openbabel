@@ -17,12 +17,12 @@ namespace OpenBabel {
 
 #define BOHR_TO_ANGSTROM 0.529177
 
-bool ReadGAMESS(istream &ifs,OEMol &mol,char *title)
+bool ReadGAMESS(istream &ifs,OBMol &mol,char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
   float x,y,z;
-  OEAtom *atom;
+  OBAtom *atom;
   vector<string> vs;
   bool hasPartialCharges = false;
 
@@ -106,7 +106,7 @@ bool ReadGAMESS(istream &ifs,OEMol &mol,char *title)
   return(true);
 }
 
-bool WriteGAMESS(ostream &ofs,OEMol &mol)
+bool WriteGAMESS(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
   char buffer[BUFF_SIZE];
@@ -116,7 +116,7 @@ bool WriteGAMESS(ostream &ofs,OEMol &mol)
   ofs << mol.GetTitle() << endl;
   ofs << "Put symmetry info here" << endl << endl;
   
-  OEAtom *atom;
+  OBAtom *atom;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
     atom = mol.GetAtom(i);
