@@ -17,6 +17,7 @@ AC_PROG_CXXCPP
 AC_PROG_INSTALL
 
 dnl libtool
+dnl You can set the shared library version in src/Makefile.am
 dnl AC_DISABLE_SHARED
 AM_PROG_LIBTOOL
 

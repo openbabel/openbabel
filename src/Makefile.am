@@ -18,6 +18,7 @@ libopenbabel_la_SOURCES = \
 		zindo.cpp pqs.cpp
 
 libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
+libopenbabel_la_LDFLAGS = -version-info 0:0:0
 
 libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
