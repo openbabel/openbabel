@@ -206,6 +206,8 @@ const char* C_PREFIX           = "cml";
 const char* C_2D = "2D";
 const char* C_3D = "3D";
 
+const char* OB_VERSION = "Open Babel version BABEL_VERSION";
+
 vector <string> CML_ELEMENT_VECTOR;
 string CML_ELEMENT_NAMES = "amount angle atom atomArray atomParity bond bondArray cml crystal electron formula length molecule stereo substance substanceList symmetry torsion ";
 
@@ -728,7 +730,7 @@ void makeAllowedAttributeLists() {
 //}
 
 void cmlError(string msg) {
-     cout << msg << endl;
+  //  cout << " CML Error: " << msg << endl;
 }
 
 bool ReadXML(istream &ifs) {
@@ -1834,19 +1836,19 @@ bool startAtom(vector <pair<string,string> > &atts) {
 		setCMLType(C_CML2);
 	}
 	if (xFract != _EMPTY) {
-        cmlError("Openbabel does not support fractional coordinates");
+        cmlError("OpenBabel does not support fractional coordinates");
         fractional = false;     // to avoid propagation errors
 //		currentY = atof(yFract.c_str());
 //		setCMLType(C_CML2);
 	}
 	if (yFract != _EMPTY) {
-        cmlError("Openbabel does not support fractional coordinates");
+        cmlError("OpenBabel does not support fractional coordinates");
         fractional = false;     // to avoid propagation errors
 //		currentY = atof(yFract.c_str());
 //		setCMLType(C_CML2);
 	}
 	if (zFract != _EMPTY) {
-        cmlError("Openbabel does not support fractional coordinates");
+        cmlError("OpenBabel does not support fractional coordinates");
         fractional = false;     // to avoid propagation errors
 //		currentZ = atof(zFract.c_str());
 //		setCMLType(C_CML2);
@@ -1880,7 +1882,7 @@ bool startAtom(vector <pair<string,string> > &atts) {
         if (sv.size() != 3) {
             cmlError("xyzFract attribute must have 3 floats");
         } else {
-            cmlError("Openbabel does not support fractional coordinates");
+            cmlError("OpenBabel does not support fractional coordinates");
             fractional = false;     // to avoid propagation errors
 //            currentX = atof(sv[0].c_str());
 //            currentY = atof(sv[1].c_str());
@@ -1946,15 +1948,15 @@ bool processAtomArrayChild() {
 		} else if (builtin == C_Z3) {
 			z3Vector.push_back(atof((char*)strings[i].c_str()));
 		} else if (builtin == C_XFRACT) {
-            cmlError("Openbabel does not support fractional coordinates");
+            cmlError("OpenBabel does not support fractional coordinates");
             fractional = false;     // to avoid propagation errors
 //			x3Vector.push_back(atof((char*)strings[i].c_str()));
 		} else if (builtin == C_YFRACT) {
-            cmlError("Openbabel does not support fractional coordinates");
+            cmlError("OpenBabel does not support fractional coordinates");
             fractional = false;     // to avoid propagation errors
 //			y3Vector.push_back(atof((char*)strings[i].c_str()));
 		} else if (builtin == C_ZFRACT) {
-            cmlError("Openbabel does not support fractional coordinates");
+            cmlError("OpenBabel does not support fractional coordinates");
             fractional = false;     // to avoid propagation errors
 //			z3Vector.push_back(atof((char*)strings[i].c_str()));
 		}
@@ -2057,14 +2059,14 @@ bool processAtomBuiltin() {
 }
 
 bool endAtom() {
-// seems to be all Openbabel in this routine    
+// seems to be all OpenBabel in this routine    
 	OBAtom atom;
 	pair<string, OBAtom*> at;
 
 	atom.SetAtomicNum(atomicNum);
 	atom.SetFormalCharge(formalCharge);
     if (fractional) {
-        cmlError("Openbabel does not support fractional coordinates");
+        cmlError("OpenBabel does not support fractional coordinates");
         fractional = false;     // to avoid propagation errors
 //        atom.SetVector(currentX, currentY, currentZ);
     } else {
@@ -2111,7 +2113,7 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 				} else if (strcmp(dimension, C_3D) == 0) {
 // should never get to this until OB is changed
                     if (fractional) {
-                        cmlError("Openbabel does not support fractional coordinates");
+                        cmlError("OpenBabel does not support fractional coordinates");
                         writeAttribute(ofs, C_XFRACT, x);
                         writeAttribute(ofs, C_YFRACT, y);
                         writeAttribute(ofs, C_ZFRACT, z);
@@ -2158,7 +2160,7 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 			} else if (strcmp(dimension, C_3D) == 0) {
                 if (fractional) {
 // should never get here                    
-                    cmlError("Openbabel does not support fractional coordinates");
+                    cmlError("OpenBabel does not support fractional coordinates");
 //                    appendToArray(x3Array, x);
 //                    appendToArray(y3Array, y);
 //                    appendToArray(z3Array, z);
@@ -2339,8 +2341,8 @@ bool WriteAtomArray(ostream &ofs) {
 
 				} else if (strcmp(dimension, C_3D) == 0) {
                     if (fractional) {
-// should never get here in Openbabel
-                        cmlError("Openbabel does not support fractional coordinates");
+// should never get here in OpenBabel
+                        cmlError("OpenBabel does not support fractional coordinates");
                         writeStartTagStart(ofs, C_FLOATARRAY);
                         writeAttribute(ofs, C_BUILTIN, C_XFRACT);
                         writeStartTagEnd(ofs);
@@ -2391,8 +2393,8 @@ bool WriteAtomArray(ostream &ofs) {
                     writeAttribute(ofs, C_Y2, y2Array);
 				} else if (strcmp(dimension, C_3D) == 0) {
                     if (fractional) {
-// should never get here in Openbabel
-                        cmlError("Openbabel does not support fractional coordinates");
+// should never get here in OpenBabel
+                        cmlError("OpenBabel does not support fractional coordinates");
                         writeAttribute(ofs, C_XFRACT, x3Array);
                         writeAttribute(ofs, C_YFRACT, y3Array);
                         writeAttribute(ofs, C_ZFRACT, z3Array);
@@ -3338,13 +3340,13 @@ bool WriteMolecule(ostream &ofs) {
 bool WriteMetadataList(ostream &ofs) {
     
     writeStartTagStart(ofs, C_METADATALIST);
-    writeAttribute(ofs, C_TITLE, "generated automatically from Openbabel");
+    writeAttribute(ofs, C_TITLE, "generated automatically from Open Babel");
     writeStartTagEnd(ofs);
     ofs << endl;
     
     writeStartTagStart(ofs, C_METADATA);
     writeAttribute(ofs, C_NAME, DC_CREATOR);
-    writeAttribute(ofs, C_CONTENT, "OpenBabel version 1-100.1");
+    writeAttribute(ofs, C_CONTENT, OB_VERSION);
     writeCombinedTagEnd(ofs);
         
     writeStartTagStart(ofs, C_METADATA);
@@ -3381,7 +3383,7 @@ bool WriteMetadataList(ostream &ofs) {
         
     writeStartTagStart(ofs, C_METADATA);
     writeAttribute(ofs, C_NAME, DC_CREATOR);
-    writeAttribute(ofs, C_CONTENT, "Openbabel V1-100.1");
+    writeAttribute(ofs, C_CONTENT, OB_VERSION);
     writeCombinedTagEnd(ofs);
         
     writeStartTagStart(ofs, C_METADATA);
