@@ -28,6 +28,39 @@ using namespace std;
 
 namespace OpenBabel {
 
+  /*! \class vector3
+     \brief Represents a vector in the 3-dimensional real space.
+
+The vector3 class was designed to simplify operations with floating
+point coordinates. To this end many of the common operations have been
+overloaded for simplicity. Vector addition, subtraction, scalar
+multiplication, dot product, cross product, magnitude and a number of
+other utility functions are built in to the vector class. For a full
+description of the class member functions please consult the header
+file vector3.h. The following code demonstrates several of the
+functions of the vector class:
+\code
+vector3 v1,v2,v3;
+v1 = VX;
+v2 = VY;
+v3 = cross(v1,v2);
+v3 *= 2.5;
+v3.normalize();
+\endcode
+  */
+
+     /*! This (slow) method allows to access the elements of the
+       vector as if it were an array of floats. If the index is > 2,
+       then a warning is printed, and the program is terminated via
+       exit(-1). Otherwise, if i is 0, 1 or 2, then a reference to x,
+       y or z is returned, respectively.
+       
+       \warning This method is primarily designed to facilitate the
+       integration ('Open Babelization') of code that uses arrays of
+       floats rather than the vector class. Due to the error checks
+       the method is of course very slow and should therefore be
+       avoided in production code.
+     */
   float& vector3::operator[] ( unsigned int i)
   {
     if (i > 2) {
@@ -43,6 +76,14 @@ namespace OpenBabel {
     return _vz;
   }
 
+  /*! replaces *this with a random unit vector, which is (supposed
+    to be) uniformly distributed over the unit sphere. Uses the
+    random number generator obRand, or uses the system number
+    generator with a time seed if obRand == NULL.
+       
+    @param obRand random number generator to use, or 0L, if the
+    system random number generator (with time seed) should be used
+  */
   void vector3::randomUnitVector(OBRandom *obRandP)
   {
     OBRandom *ptr;
@@ -91,6 +132,24 @@ namespace OpenBabel {
       return ( false ) ;
   }
 
+  /*! This method checks if the current vector has length() ==
+    0.0f.  If so, *this remains unchanged. Otherwise, *this is
+    scaled by 1.0/length().
+
+    \warning If length() is very close to zero, but not == 0.0f,
+    this method may behave in unexpected ways and return almost
+    random results; details may depend on your particular floating
+    point implementation. The use of this method is therefore
+    highly discouraged, unless you are certain that length() is in
+    a reasonable range, away from 0.0f (Stefan Kebekus)
+
+    \deprecated This method will probably replaced by a safer
+    algorithm in the future.
+
+    \todo Replace this method with a more fool-proof version.
+
+    @returns a reference to *this
+  */
   vector3& vector3 :: normalize ()  
   {
     float l = length ();
@@ -122,8 +181,25 @@ namespace OpenBabel {
   }
 
 
-  // ***angle***
+  /*! This method calculates the angle between two vectors
+       
+    \warning If length() of any of the two vectors is == 0.0f,
+    this method will divide by zero. If the product of the
+    length() of the two vectors is very close to 0,0f, but not ==
+    0.0f, this method may behave in unexpected ways and return
+    almost random results; details may depend on your particular
+    floating point implementation. The use of this method is
+    therefore highly discouraged, unless you are certain that the
+    length()es are in a reasonable range, away from 0.0f (Stefan
+    Kebekus)
 
+    \deprecated This method will probably replaced by a safer
+    algorithm in the future.
+
+    \todo Replace this method with a more fool-proof version.
+
+    @returns the angle in degrees (0-360)
+  */
   float vectorAngle ( const vector3& v1, const vector3& v2 ) 
   {
     float mag;
@@ -169,6 +245,31 @@ namespace OpenBabel {
     return(torsion);
   }
   
+  /*! This method checks if the current vector *this is zero
+    (i.e. if all entries == 0.0f). If so, a warning message is
+    printed, and the whole program is aborted with exit(0).
+    Otherwise, a vector of length one is generated, which is
+    orthogonal to *this, and stored in v. The resulting vector is
+    not random.
+
+    \warning If the entries of the *this (in particular the
+    z-component) are very close to zero, but not == 0.0f, this
+    method may behave in unexpected ways and return almost random
+    results; details may depend on your particular floating point
+    implementation. The use of this method is therefore highly
+    discouraged, unless you are certain that all components of
+    *this are in a reasonable range, away from 0.0f (Stefan
+    Kebekus)
+
+    \deprecated This method will probably replaced by a safer
+    algorithm in the future.
+
+    \todo Replace this method with a more fool-proof version that
+    does not call exit()
+
+    @param v a reference to a vector where the result will be
+    stored
+  */
   void vector3::createOrthoVector(vector3 &res) const
   {
     vector3 cO;

@@ -60,7 +60,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
 		jaguar.o amber.o generic.o residue.o \
 		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o viewmol.o \
-		cml.o oberror.o
+		cml.o oberror.o zindo.o
 
 EXTRAOBJS     = math/vector3.o math/matrix3x3.o
 

@@ -1,12 +1,20 @@
-/* chains.cpp:
- *
- * Protein/Nucleic Acid Perception
- * Original Author:  Roger Sayle, Metaphorics
- * Original Version: Version 1.6, March 1998
- *
- * Ported & Modified By: Joe Corkery, OpenEye Scientific Software
- * Current Version:      March 2001
- */
+/**********************************************************************
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+(original author, Roger Sayle, version 1.6, March 1998)
+(modified by Joe Corkery, OpenEye Scientific Software, March 2001)
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+***********************************************************************/
 
 ////////////////////////////////////////////////////////////////////////////////
 // File Includes
@@ -319,7 +327,7 @@ static ResidType AminoAcids[AMINOMAX] = {
     { "TYR", "1-4-7~14^22~29(-33)^25~17^7"          } 
         };
 
-/* Pyroglutamate (PCA):        1-4-7-11(=" OB ")-0  PDB Example: 1CEL */
+/* Pyroglutamate (PCA):        1-4-7-11(=" OE ")-0  PDB Example: 1CEL */
 /* Amino-N-Butyric Acid (ABA): 1-4-7                PDB Example: 1BBO */
 /* Selenic Acid (SEC):         1-4-"SEG "(-15)-18   PDB Example: 1GP1 */
 

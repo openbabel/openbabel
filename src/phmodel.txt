@@ -5,6 +5,8 @@
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
+#  pH model data (used by phmodel.cpp:OBPhModel)                             #
+#                                                                            #
 # TRANSFORM: chemical transforms can be used to modify formal charges, bond  #
 #            orders, and to delete atoms (i.e hydrogens). Changes are applied#
 #	     to vector bound atoms (use the [:#] SMARTS notation) and bonds  #

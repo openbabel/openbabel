@@ -3,7 +3,16 @@
 #	                Open Babel file: extable.txt                         #
 #                                                                            #
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Portions Copyright (c) 2002 by Geoffrey R. Hutchison                      #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+#  Columns represent: (used by data.cpp:OBExtensionTable)                    #
+#   - file extension (e.g. *.mol2)                                           #
+#   - internal type code (used by data.cpp::TextToType() method)             #
+#   - text description of file type                                          #
+#   - MIME type associated with file type (or "none" if not yet assigned)    #
+#   - Readability (i.e. 1 if a ReadFoo() method exists, 0 if no code exists) #
+#   - Writeability (as above: 1 if a WriteFoo() method exists, 0 otherwise)  #
 #                                                                            #
 ##############################################################################
 # EXTENSION	TYPE		DESCRIPTION			MIME				READ	WRITE
@@ -70,6 +79,7 @@ unixyz		unichem		UniChem XYZ			none				1	1
 vmol		viewmol		ViewMol				none				1	1
 xed		xed		XED				none				0	1
 xyz		xyz		XYZ				chemical/x-xyz			1	1
+zin		zindo		ZINDO Input			none				0	1
 # Not "ported" from babel yet
 bmin		bmin		Batchmin Command		none				0	0
 cadpac		cadpac		Cambridge CADPAC		none				0	0

@@ -36,6 +36,61 @@ using namespace std;
 
 namespace OpenBabel {
 
+  /*! \class OBSmartsPattern
+      \brief
+
+Substructure search is an incredibly useful tool in the context of a
+small molecule programming library. Having an efficient substructure
+search engine reduces the amount of hard code needed for molecule
+perception, as well as increases the flexibility of certain
+operations. For instance, atom typing can be easily performed based on
+hard coded rules of element type and bond orders (or
+hybridization). Alternatively, atom typing can also be done by
+matching a set of substructure rules read at run time. In the latter
+case customization based on application (such as changing the pH)
+becomes a facile operation. Fortunately for Open Babel and its users,
+Roger Sayle donated a SMARTS parser which became the basis for SMARTS
+matching in Open Babel.
+
+The SMARTS matcher, or OBSmartsPattern, is a separate object which can
+match patterns in the OBMol class. The following code demonstrates how
+to use the OBSmartsPattern class:
+\code
+OBMol mol(SDF,SDF);
+cin >> mol;
+OBSmartsPattern sp;
+sp.Init("CC");
+sp.Match(mol);
+vector<vector<int> > maplist;
+maplist = sp.GetMapList();
+//or maplist = sp.GetUMapList();
+//print out the results
+vector<vector<int> >::iterator i;
+vector<int>::iterator j;
+for (i = maplist.begin();i != maplist.end();i++)
+{
+  for (j = i->begin();j != i->end();j++)
+    cout << j << ' `;
+  cout << endl;
+}
+\endcode
+The preceding code reads in a molecule, initializes a smarts pattern
+ of two single-bonded carbons, and locates all instances of the
+ pattern in the molecule. Note that calling the Match() function
+ does not return the results of the substructure match. The results
+ from a match are stored in the OBSmartsPattern, and a call to
+ GetMapList() or GetUMapList() must be made to extract the
+ results. The function GetMapList() returns all matches of a
+ particular pattern while GetUMapList() returns only the unique
+ matches. For instance, the pattern [OD1]~C~[OD1] describes a
+ carboxylate group. This pattern will match both atom number
+ permutations of the carboxylate, and if GetMapList() is called, both
+ matches will be returned. If GetUMapList() is called only unique
+ matches of the pattern will be returned. A unique match is defined as
+ one which does not cover the identical atoms that a previous match
+ has covered.
+  */
+
 /*============================*/
 /*  Period Table of Elements  */
 /*============================*/

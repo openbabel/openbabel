@@ -67,20 +67,20 @@ public:
 
 class OBFloatGrid
 {
-  float *_val;             /* floating point values */
-  int   *_ival;            /* for integer values */
-  float _midz,_midx,_midy;   /* center of grid in world coordinates */
-  int _ydim,_xdim,_zdim;     /* grid dimensions */
-  float _spacing,_inv_spa;  /* spacing between grid points and its inverse*/
+  float *_val;             //!< floating point values
+  int   *_ival;            //!< for integer values
+  float _midz,_midx,_midy;   //!< center of grid in world coordinates
+  int _ydim,_xdim,_zdim;     //!< grid dimensions
+  float _spacing,_inv_spa;  //!< spacing between grid points and its invers
   float _xmin,_xmax,_ymin,_ymax,_zmin,_zmax;
-  float _halfSpace;         /* half of the grid spacing */        
+  float _halfSpace;         //!< half of the grid spacing */     
 
 public:
 
     OBFloatGrid() : _halfSpace(0.0f) {_val=NULL;_ival=NULL;}
     ~OBFloatGrid() {if (_ival) {delete [] _ival; _ival = NULL;}
                     if (_val) {delete [] _val; _val = NULL;}}
-  void Init(OBMol &,float, float pad= 0.0f); //initialized using boxfile
+  void Init(OBMol &,float, float pad= 0.0f); //!< initialized using boxfile
   bool PointIsInBox(float x,float y,float z)
     {
       return (x>=_xmin) && (x<=_xmax) && 

@@ -53,8 +53,8 @@ private: // methods
 	bool  DetermineHydrogens(OBMol &);
 
 	void  SetupMol(OBMol &);
-    void  SetResidueInformation(OBMol &);
-    void  ClearResidueInformation(OBMol &);
+	void  SetResidueInformation(OBMol &);
+	void  ClearResidueInformation(OBMol &);
 	void  CleanupMol(void);
 
 	void  AssignResidue(OBMol &, int, int, int);
@@ -81,8 +81,8 @@ private: // members
 	void *PDecisionTree; // ByteCode *
 	void *NDecisionTree; // ByteCode *
 
-    int   ResMonoAtom[MaxMonoAtom];
-    int   ResMonoBond[MaxMonoBond];
+	int   ResMonoAtom[MaxMonoAtom];
+	int   ResMonoBond[MaxMonoBond];
 
 	unsigned short *bitmasks;
 	unsigned char  *resids;

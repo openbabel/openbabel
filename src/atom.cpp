@@ -22,6 +22,69 @@ using namespace std;
 
 namespace OpenBabel {
 
+/** \class OBAtom
+    \brief Atom class
+
+ To understand the OBAtom class it is important to state a key
+ decision on which the design was based. In OBabel the atom class
+ existed, but it was only a data container. All data access and
+ modification of atoms was done through the molecule. The result
+ was a molecule class that was very large an unwieldy. So the OBAtom
+ class was made smarter, and many of the atom-specific routines
+ were separated into the OBAtom thereby decentralizing and
+ shrinking the OBMol class. As a result the OBAtom class not only
+ holds data, but facilitates extraction of data perceived from both
+ the atom and the molecule.
+
+ A number of data extraction methods perform what is called
+ `Lazy Evaluation,' which is essentially on-the-fly evaluation.
+ For example, when an atom is queried as to whether it is cyclic
+ or what it's hybridization state is the information is perceived
+ automatically. The perception of a particular trait is actually
+ performed on the entire molecule the first time it is requested of
+ an atom or bond, and stored for subsequent requests for the same
+ trait of additional atoms or bonds.The OBAtom class is similar to
+ OBMol and the whole of Open Babel in that data access and modification
+ is done through Get and Set methods.
+
+ The following code demonstrates how to print out the atom numbers,
+ element numbers, and coordinates of a molecule:
+\code
+   OBMol mol(SDF,SDF);
+   OBFileFormat::ReadMolecule(cin, mol);
+   OBAtom *atom;
+   vector<OBNodeBase*>::iterator i;
+   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+   {
+       cout << atom->GetIdx() << ` `;
+       cout << atom->GetAtomicNum() << ` `;
+       cout << atom->GetVector() << endl;
+   }
+\endcode
+ A number of the property member functions indicate that atoms
+ have some knowlege of their covalently attached neighbor atoms.
+ Bonding information is partly redundant within a molecule in
+ that an OBMol has a complete list of bonds in a molecule, and
+ an OBAtom has a list bonds of which it is a member. The following
+ code demonstrates how an OBAtom uses its bond information to loop
+ over atoms attached to itself:
+\code
+   OBMol mol(SDF,SDF);
+   OBFileFormat::ReadMolecule(cin, mol);
+   OBAtom *atom,*nbr;
+   vector<OBEdgeBase*>::iterator i;
+   atom = mol.GetAtom(1);
+   for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
+   {
+   cout << "atom #" << atom->GetIdx() << " is attached to atom #" << nbr->GetIdx() << endl;
+   }
+\endcode
+ should produce an output like
+\code
+   atom #1 is attached to atom #2
+\endcode
+*/
+
 extern OBAromaticTyper  aromtyper;
 extern OBAtomTyper      atomtyper;
 extern OBPhModel        phmodel;
@@ -40,6 +103,12 @@ OBAtom::~OBAtom()
 {
     if (_residue != NULL)
         _residue->RemoveAtom(this);
+    if (!_vdata.empty())
+      {
+	vector<OBGenericData*>::iterator m;
+	for (m = _vdata.begin();m != _vdata.end();m++) delete *m;
+	_vdata.clear();
+      }
 }
 
 void OBAtom::Clear()
@@ -57,11 +126,13 @@ void OBAtom::Clear()
   _vbond.clear();
   _vbond.reserve(4);
   _residue = (OBResidue*)NULL;
+  _vdata.clear();
 }
 
 OBAtom &OBAtom::operator=(OBAtom &src)
      //copy atom information 
      //bond info is not copied here as ptrs may be invalid
+     //vdata is also not copied yet (again it's unclear what can work)
 {
   _idx = src.GetIdx();
   _hyb = src.GetHyb();
@@ -323,7 +394,6 @@ unsigned int OBAtom::GetHyb() const
 
 
 unsigned int OBAtom::GetHvyValence() const
-     //returns the number of non-hydrogens connected to an atom
 {
   unsigned int count=0;
 
@@ -337,7 +407,6 @@ unsigned int OBAtom::GetHvyValence() const
 }
 
 unsigned int OBAtom::GetHeteroValence() const
-     //returns the number of heteroatoms connected to an atom
 {
   unsigned int count=0;
   OBBond *bond;
@@ -709,6 +778,23 @@ bool OBAtom::DeleteBond(OBBond *bond)
       return(true);
     }
   return(false);
+}
+
+bool OBAtom::MatchesSMARTS(const char *pattern)
+{
+  OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
+  vector<vector<int> > mlist;
+  vector<vector<int> >::iterator l;
+
+  OBSmartsPattern test; test.Init(pattern);
+  if (test.Match(*mol))
+    {
+      mlist = test.GetUMapList();
+      for (l = mlist.begin(); l != mlist.end(); l++)
+	if (GetIdx() == mol->GetAtom((*l)[0])->GetIdx())
+	  return true;
+    }
+  return false;
 }
 
 OBBond *OBAtom::BeginBond(vector<OBEdgeBase*>::iterator &i) 
@@ -1185,6 +1271,125 @@ OBBond *OBAtom::GetBond(OBAtom *nbr)
     if (bond->GetNbrAtom(this) == nbr)
       return bond;
   return NULL;
+}
+
+// OBGenericData methods
+bool OBAtom::HasData(string &s)
+     //returns true if the generic attribute/value pair exists
+{
+  if (_vdata.empty()) return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(true);
+    
+    return(false);
+}
+
+bool OBAtom::HasData(const char *s)
+     //returns true if the generic attribute/value pair exists
+{
+  if (_vdata.empty()) return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(true);
+    
+    return(false);
+}
+
+bool OBAtom::HasData(obDataType dt)
+     //returns true if the generic attribute/value pair exists
+{
+  if (_vdata.empty()) return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt)
+            return(true);
+    
+    return(false);
+}
+
+OBGenericData *OBAtom::GetData(string &s)
+     //returns the value given an attribute
+{
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+                if ((*i)->GetAttribute() == s)
+            return(*i);
+
+    return(NULL);
+}
+
+OBGenericData *OBAtom::GetData(const char *s)
+     //returns the value given an attribute
+{
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+                if ((*i)->GetAttribute() == s)
+            return(*i);
+
+    return(NULL);
+}
+
+OBGenericData *OBAtom::GetData(obDataType dt)
+{
+    vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt)
+            return(*i);
+    return(NULL);
+}
+
+void OBAtom::DeleteData(obDataType dt)
+{
+  vector<OBGenericData*> vdata;
+  vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt) delete *i;
+        else vdata.push_back(*i);
+  _vdata = vdata;
+}
+
+void OBAtom::DeleteData(vector<OBGenericData*> &vg)
+{
+  vector<OBGenericData*> vdata;
+  vector<OBGenericData*>::iterator i,j;
+
+  bool del;
+  for (i = _vdata.begin();i != _vdata.end();i++)
+  {
+          del = false;
+          for (j = vg.begin();j != vg.end();j++)
+                  if (*i == *j)
+                  {
+                          del = true;
+                          break;
+                  }
+           if (del) delete *i;
+           else     vdata.push_back(*i);
+  }
+  _vdata = vdata;
+}
+
+void OBAtom::DeleteData(OBGenericData *gd)
+{
+  vector<OBGenericData*>::iterator i;
+  for (i = _vdata.begin();i != _vdata.end();i++)
+          if (*i == gd)
+          {
+                delete *i;
+                _vdata.erase(i);
+          }
+
 }
 
 }

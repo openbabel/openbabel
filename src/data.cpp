@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2002 by Geoffrey R. Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,6 +14,10 @@ GNU General Public License for more details.
 
 #ifdef WIN32
 #pragma warning (disable : 4786)
+#endif
+
+#ifndef BUFF_SIZE
+#define BUFF_SIZE 1024
 #endif
 
 #include "data.h"
@@ -34,6 +39,34 @@ bool tokenize(vector<string>&, const char *buf, const char *delimstr=" \t\n");
 bool tokenize(vector<string> &vcr, string &s, const char *delimstr,int limit=-1);
 extern void ThrowError(char *);
 extern void ThrowError(string&);
+
+/** \class OBElementTable
+    \brief Periodic Table of the Elements
+
+    Translating element data is a common task given that many file
+  formats give either element symbol or atomic number information, but
+  not both. The OBElementTable class facilitates conversion between
+  textual and numeric element information. An instance of the
+  OBElementTable class (etab) is declared as external in data.cpp. Source
+  files that include the header file mol.h automatically have an extern
+  definition to etab. The following code sample demonstrates the use
+  of the OBElementTable class:
+\code
+ cout << "The symbol for element 6 is " << etab.GetSymbol(6) << endl;
+ cout << "The atomic number for Sulfur is " << etab.GetAtomicNum(16) << endl;
+ cout << "The van der Waal radius for Nitrogen is " << etab.GetVdwRad(7);
+\endcode
+
+  Stored information in the OBElementTable includes atomic:
+   - symbols
+   - van der Waal radii
+   - covalent radii
+   - bond order radii
+   - expected maximum bonding valence
+   - molar mass (by IUPAC recommended atomic masses)
+   - electronegativity
+
+*/
 
 OBElementTable::OBElementTable()
 {
@@ -193,6 +226,55 @@ int OBElementTable::GetAtomicNum(const char *sym)
     return(0);
 }
 
+/** \class OBTypeTable
+    \brief Atom Type Translation Table
+
+Molecular file formats frequently store information about atoms in an
+atom type field. Some formats store only the element for each atom,
+while others include hybridization and local environments, such as the
+Sybyl mol2 atom type field. The OBTypeTable class acts as a translation
+table to convert atom types between a number of different molecular
+file formats. The constructor for OBTypeTable automatically reads the
+text file types.txt. Just as OBElementTable, an instance of
+OBTypeTable (ttab) is declared external in data.cpp and is referenced as
+extern OBTypeTable ttab in mol.h.  The following code demonstrates how
+to use the OBTypeTable class to translate the internal representation
+of atom types in an OBMol Internal to Sybyl Mol2 atom types.
+
+\code
+ttab.SetFromType("INT");
+ttab.SetToType("SYB");
+OEAtom *atom;
+vector<OEAtom*>::iterator i;
+string src,dst;
+for (atom = mol.BeginAtom(i);atom;atom = mol.EndAtom(i))
+{
+src = atom->GetType();
+ttab.Translate(dst,src);
+cout << "atom number " << atom->GetIdx() << "has mol2 type " << dst << endl;
+}
+\endcode
+
+Current atom types include (defined in the top line of the data file types.txt):
+- INT (Open Babel internal codes)
+- ATN (atomic numbers)
+- HYB (hybridization)
+- MMD
+- MM2 (MM2 force field)
+- XYZ (element symbols from XYZ file format)
+- ALC (Alchemy file)
+- HAD
+- MCML
+- C3D (Chem3D)
+- SYB (Sybyl mol2)
+- MOL
+- MAP
+- DRE
+- XED (XED format)
+- DOK (Dock)
+- M3D
+*/
+
 OBTypeTable::OBTypeTable()
 {
   _init = false;
@@ -307,6 +389,16 @@ void Tolower(string &s)
     s[i] = tolower(s[i]);
 }
 
+
+/** \class OBExtensionTable
+    \brief File format/extension table
+
+The constructor for OBExtensionTable automatically reads the
+text file extable.txt. Just as OBElementTable, an instance of
+OBTypeTable (extab) is declared external in data.cpp and is referenced as
+extern OBExtensionTable extab in mol.h. 
+
+*/
 OBExtensionTable::OBExtensionTable()
 {
   _init = false;
@@ -417,6 +509,7 @@ io_type TextToType(string typestring)
   else if (typestring == "NWCHEMOUT")		return(NWCHEMOUT);
   else if (typestring == "TITLE")		return(TITLE);
   else if (typestring == "VIEWMOL")		return(VIEWMOL);
+  else if (typestring == "ZINDO")		return(ZINDO);
   // Add yours here
   else						return(UNDEFINED);
 

@@ -5,6 +5,12 @@
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
+#  Residue records are specified as follows: (used by pdb.cpp:OBResidueData) #
+#  RES <name>								     #
+#  ATOM	Name Type Hybridization		(hydrogens are implicit)	     #
+#  BOND Name1 Name2 BondOrder		(where Name1, Name2 are ATOM records)#
+#  END									     #
+#                                                                            #
 ##############################################################################
 
 RES ALA

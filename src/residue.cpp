@@ -28,6 +28,22 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 
 using namespace std;
 
+/** \class OBResidue
+    \brief Residue information.
+
+    The residue information is drawn from PDB or MOL2 files,
+    and are stored in the OBResidue class. OBResidues are stored inside the 
+    OBAtom class. The residue information for an atom can be requested in 
+    the following way:
+\code
+ OBAtom *atom;
+ OBResidue *r;
+ atom = mol.GetAtom(1);
+ r = atom->GetResidue();
+\endcode
+
+*/
+
 ///////////////////////////////////////////////////////////////////////////////
 // Global Definitions
 ///////////////////////////////////////////////////////////////////////////////
@@ -62,6 +78,110 @@ using namespace std;
 #define AA_CYS (1<<18)
 #define AA_MET (1<<19)
 #define AA_TRP (1<<20)
+
+// Residue Property definitions
+namespace OBAminoAcidProperty {
+static const unsigned int ACIDIC      =  0;
+static const unsigned int ACYCLIC     =  1;
+static const unsigned int ALIPHATIC   =  2;
+static const unsigned int AROMATIC    =  3;
+static const unsigned int BASIC       =  4;
+static const unsigned int BURIED      =  5;
+static const unsigned int CHARGED     =  6;
+static const unsigned int CYCLIC      =  7;
+static const unsigned int HYDROPHOBIC =  8;
+static const unsigned int LARGE       =  9;
+static const unsigned int MEDIUM      = 10;
+static const unsigned int NEGATIVE    = 11;
+static const unsigned int NEUTRAL     = 12;
+static const unsigned int POLAR       = 13;
+static const unsigned int POSITIVE    = 14;
+static const unsigned int SMALL       = 15;
+static const unsigned int SURFACE     = 16;
+}
+
+namespace OBResidueAtomProperty {
+static const unsigned int ALPHA_CARBON     = 0;
+static const unsigned int AMINO_BACKBONE   = 1;
+static const unsigned int BACKBONE         = 2;
+static const unsigned int CYSTEINE_SULPHUR = 3;
+static const unsigned int LIGAND           = 4;
+static const unsigned int NUCLEIC_BACKBONE = 5;
+static const unsigned int SHAPELY_BACKBONE = 6;
+static const unsigned int SHAPELY_SPECIAL  = 7;
+static const unsigned int SIDECHAIN        = 8;
+static const unsigned int SUGAR_PHOSPHATE  = 9;
+}
+/// Residue names
+namespace OBResidueIndex {
+static const unsigned int ALA   =  0;
+static const unsigned int GLY   =  1;
+static const unsigned int LEU   =  2;
+static const unsigned int SER   =  3;
+static const unsigned int VAL   =  4;
+static const unsigned int THR   =  5;
+static const unsigned int LYS   =  6;
+static const unsigned int ASP   =  7;
+static const unsigned int ILE   =  8;
+static const unsigned int ASN   =  9;
+static const unsigned int GLU   = 10;
+static const unsigned int PRO   = 11;
+static const unsigned int ARG   = 12;
+static const unsigned int PHE   = 13;
+static const unsigned int GLN   = 14;
+static const unsigned int TYR   = 15;
+static const unsigned int HIS   = 16;
+static const unsigned int CYS   = 17;
+static const unsigned int MET   = 18;
+static const unsigned int TRP   = 19;
+static const unsigned int ASX   = 20;
+static const unsigned int GLX   = 21;
+static const unsigned int PCA   = 22;
+static const unsigned int HYP   = 23;
+static const unsigned int A     = 24;
+static const unsigned int C     = 25;
+static const unsigned int G     = 26;
+static const unsigned int T     = 27;
+static const unsigned int U     = 28;
+static const unsigned int UPLUS = 29;
+static const unsigned int I     = 30;
+//static const unsigned int _1MA  = 31;
+//static const unsigned int _5MC  = 32;
+static const unsigned int OMC   = 33;
+//static const unsigned int _1MG  = 34;
+//static const unsigned int _2MG  = 35;
+static const unsigned int M2G   = 36;
+//static const unsigned int _7MG  = 37;
+static const unsigned int OMG   = 38;
+static const unsigned int YG    = 39;
+static const unsigned int H2U   = 40;
+//static const unsigned int _5MU  = 41;
+static const unsigned int PSU   = 42;
+static const unsigned int UNK   = 43;
+static const unsigned int ACE   = 44;
+static const unsigned int FOR   = 45;
+static const unsigned int HOH   = 46;
+static const unsigned int DOD   = 47;
+static const unsigned int SO4   = 48;
+static const unsigned int PO4   = 49;
+static const unsigned int NAD   = 50;
+static const unsigned int COA   = 51;
+static const unsigned int NAP   = 52;
+static const unsigned int NDP   = 53;
+}
+/// Residue types.
+namespace OBResidueProperty {
+static const unsigned int AMINO        = 0;
+static const unsigned int AMINO_NUCLEO = 1;
+static const unsigned int COENZYME     = 2;
+static const unsigned int ION          = 3;
+static const unsigned int NUCLEO       = 4;
+static const unsigned int PROTEIN      = 5;
+static const unsigned int PURINE       = 6;
+static const unsigned int PYRIMIDINE   = 7;
+static const unsigned int SOLVENT      = 8;
+static const unsigned int WATER        = 9;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Amino Acid Property Definitions
@@ -851,9 +971,11 @@ OBResidue::OBResidue()
     _reskey   = OBResidueIndex::UNK;
     _resnum   = 0;
     _resname  = "";
+    _vdata.clear();
 }
 
 OBResidue::OBResidue(const OBResidue &src)
+// Currently does not copy vdata information
 {
     _chain    = src._chain;
     _aakey    = src._aakey;
@@ -871,6 +993,12 @@ OBResidue::~OBResidue()
     for ( a = _atoms.begin() ; a != _atoms.end() ; a++ )
         (*a)->SetResidue(NULL);
     _atoms.clear();
+    if (!_vdata.empty())
+      {
+        vector<OBGenericData*>::iterator m;
+        for (m = _vdata.begin();m != _vdata.end();m++) delete *m;
+        _vdata.clear();
+      }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -879,6 +1007,7 @@ OBResidue::~OBResidue()
 
 OBResidue &OBResidue::operator = (const OBResidue &src)
      //copy residue information
+// Currently does not copy vdata informtion
 {
     if (this != &src)
     {
@@ -1249,6 +1378,125 @@ bool OBResidue::GetResidueProperty(int property) const
 bool OBResidue::IsResidueType(int restype) const
 {
     return ((int)_reskey == restype);
+}
+
+// OBGenericData methods
+bool OBResidue::HasData(string &s)
+     //returns true if the generic attribute/value pair exists
+{
+  if (_vdata.empty()) return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(true);
+    
+    return(false);
+}
+
+bool OBResidue::HasData(const char *s)
+     //returns true if the generic attribute/value pair exists
+{
+  if (_vdata.empty()) return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(true);
+    
+    return(false);
+}
+
+bool OBResidue::HasData(obDataType dt)
+     //returns true if the generic attribute/value pair exists
+{
+  if (_vdata.empty()) return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt)
+            return(true);
+    
+    return(false);
+}
+
+OBGenericData *OBResidue::GetData(string &s)
+     //returns the value given an attribute
+{
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+                if ((*i)->GetAttribute() == s)
+            return(*i);
+
+    return(NULL);
+}
+
+OBGenericData *OBResidue::GetData(const char *s)
+     //returns the value given an attribute
+{
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+                if ((*i)->GetAttribute() == s)
+            return(*i);
+
+    return(NULL);
+}
+
+OBGenericData *OBResidue::GetData(obDataType dt)
+{
+    vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt)
+            return(*i);
+    return(NULL);
+}
+
+void OBResidue::DeleteData(obDataType dt)
+{
+  vector<OBGenericData*> vdata;
+  vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt) delete *i;
+        else vdata.push_back(*i);
+  _vdata = vdata;
+}
+
+void OBResidue::DeleteData(vector<OBGenericData*> &vg)
+{
+  vector<OBGenericData*> vdata;
+  vector<OBGenericData*>::iterator i,j;
+
+  bool del;
+  for (i = _vdata.begin();i != _vdata.end();i++)
+  {
+          del = false;
+          for (j = vg.begin();j != vg.end();j++)
+                  if (*i == *j)
+                  {
+                          del = true;
+                          break;
+                  }
+           if (del) delete *i;
+           else     vdata.push_back(*i);
+  }
+  _vdata = vdata;
+}
+
+void OBResidue::DeleteData(OBGenericData *gd)
+{
+  vector<OBGenericData*>::iterator i;
+  for (i = _vdata.begin();i != _vdata.end();i++)
+          if (*i == gd)
+          {
+                delete *i;
+                _vdata.erase(i);
+          }
+
 }
 
 } // end namespace OpenBabel

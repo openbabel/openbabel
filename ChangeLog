@@ -1,3 +1,46 @@
+2002-01-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	Lots of changes from the last few weeks.
+
+	* Doxyfile: Bump to 1.100.1. Make sure to check .cpp files for
+	docs too.
+
+	* Makefile.in (disclean): Remove doc/API for distclean target.
+
+	* src/bin2hex.pl: Add comments to headers about contents
+	(i.e. what the headers do, why they're not supposed to be installed).
+
+	* src/chains.cpp: Fix mistake in Pyroglutamate comment from OE->OB
+	find/replace.
+	
+	* src/aromatic.txt, src/atomtype.txt, src/element.txt,
+	src/extable.txt, src/phmodel.txt, src/resdata.txt, src/types.txt:
+	Updated comments at top of file to give more documentation and
+	point to appropriate source files.
+	
+	* src/atom.cpp, src/base.h, src/bitvec.cpp, src/bitvec.h,
+	src/bond.cpp, src/data.cpp, src/data.h, src/fileformat.h,
+	src/generic.h, src/grid.h, src/mol.cpp, src/mol.cpp,
+	src/molchrg.cpp, src/molchrg.h src/obutil.cpp, src/obutil.h,
+	src/parsmart.cpp, src/parsmart.h, src/patty.cpp, src/patty.h,
+	src/residue.cpp, src/ring.cpp, src/ring.h, src/rotor.h,
+	src/typer.cpp, src/typer.h, src/math/matrix3x3.cpp,
+	src/math/matrix3x3.h, src/math/vector3.cpp, src/math/vector3.h: 
+	Updated Doxygen docs (brief comments in headers mostly, more
+	detailed documentation if available in source files.)
+
+	* src/mol.h, src/atom.cpp, src/bond.cpp, src/residue.cpp: Added
+	support for OBGenericData stored in an OBAtom, OBBond or
+	OBResidue.
+
+	* src/isotope.txt, src/bond.txt: New data files, currently unused.
+
+	* src/Makefile.in: Add new zindo target.
+
+	* src/zindo.cpp: New ZINDO input support.
+
+	* src/fileformat.cpp: Call WriteZindo for ZINDO file format.
+
 2002-12-19  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/tinker.cpp: Add comment that we're using MM2 parameters.

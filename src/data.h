@@ -26,22 +26,12 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
-#ifndef BUFF_SIZE
-#define BUFF_SIZE 1024
-#endif
-
-#ifdef WIN32
-#define FILE_SEP_CHAR "\\"
-#else
-#define FILE_SEP_CHAR "/"
-#endif
-
 namespace OpenBabel {
 
 class OBElement;
 class OBAtom;
-
 class OBElementTable;
+
 typedef enum { UNDEFINED, // Rest are alphabetical, insert as needed
                ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
                CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
@@ -56,31 +46,46 @@ typedef enum { UNDEFINED, // Rest are alphabetical, insert as needed
                PCMODEL, PDB, POV, PREP, QCHEMIN, QCHEMOUT, REPORT,
                SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
                SPARTANSEMI, TGF, TINKER, TITLE, UNICHEM, VIEWMOL,
-               XED, XYZ
+               XED, XYZ, ZINDO
              } io_type;
 
+//! Base data table class, handles reading data files
+//!
+//! Base data table class--reads ASCII data files in various formats
+//! -# Checks for the environment variable _envvar (defaults to "BABEL_DATADIR")
+//!     Tries that directory as well as the _subdir directory of that (def. "data")
+//! -# Checks for the directory _dir (def. determined by the build environment)
+//! -# Reverts to the compiled-in default data
 class OBGlobalDataBase
 {
  protected:
-  bool         _init;
-  const char  *_dataptr;
-  std::string  _filename;
-  std::string  _dir;
-  std::string  _subdir;
-  std::string  _envvar;
+  bool         _init;		//!< has the data been read already
+  const char  *_dataptr;	//!< default data table if file is unreadable
+  std::string  _filename;	//!< file to search for
+  std::string  _dir;		//!< data directory for file if _envvar fails
+  std::string  _subdir;		//!< subdirectory (if using environment variable)
+  std::string  _envvar;		//!< environment variable to check first
  public:
+  //! Constructor
   OBGlobalDataBase()
     {
       _init = false;
       _dataptr = (char*)NULL;
     }
+  //! Destructor
   virtual ~OBGlobalDataBase() {}
+  //! Read in the data file, falling back as needed
   void  Init();
+  //! Set the directory before calling Init()
   void  SetReadDirectory(char *dir)       {_dir = dir;}
+  //! Set the environment variable to use before calling Init()
   void  SetEnvironmentVariable(char *var) {_envvar = var;}
+  //! Specified by particular table classes (parses an individual data line)
   virtual void ParseLine(const char*) {}
 };
 
+//! Element data type
+//! Stores a variety of data about an individual element
 class OBElement
 {
   int _num;
@@ -89,7 +94,8 @@ class OBElement
   int _maxbonds;
  public:
   OBElement() {}
-  OBElement(int num,char *sym,float rcov,float rbo,float rvdw,int maxbo,float mass,float elNeg)
+  OBElement(int num, const char *sym, float rcov, float rbo, 
+	    float rvdw, int maxbo, float mass, float elNeg)
     {
       _num = num;
       strcpy(_symbol,sym);
@@ -110,6 +116,7 @@ class OBElement
   float GetElectroNeg() {return(_elNeg);}
 };
 
+// class introduction in data.cpp
 class OBElementTable : public OBGlobalDataBase
 {
   std::vector<OBElement*> _element;
@@ -132,6 +139,7 @@ public:
   float GetElectroNeg(int);
 };
 
+// class introduction in data.cpp
 class OBTypeTable : public OBGlobalDataBase
 {
   int    _linecount;
@@ -151,6 +159,7 @@ class OBTypeTable : public OBGlobalDataBase
   bool Translate(std::string &,std::string &); // to, from
 };
 
+// class introduction in data.cpp
 class OBExtensionTable : public OBGlobalDataBase
 {
   int                     _linecount;
@@ -181,6 +190,13 @@ class OBExtensionTable : public OBGlobalDataBase
   const char   *GetDescription(unsigned int);
   unsigned int  Count(); 
 };
+
+// Used by other code for reading files
+#ifdef WIN32
+#define FILE_SEP_CHAR "\\"
+#else
+#define FILE_SEP_CHAR "/"
+#endif
 
 }
 

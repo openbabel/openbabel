@@ -51,7 +51,10 @@ if( !$debug ) {
     print "/***************************************************************\n";
     print "This file is part of the Open Babel project.\n";
     print "This is copyright under the GNU General Public License (GPL)\n";
-    print "For more information, see <http://openbabel.sourceforge.net/>\n";
+    print "For more information, see <http://openbabel.sourceforge.net/>\n\n";
+    print "This file contains a binary representation of data tables\n";
+    print " used by Open Babel. It is used as a fallback if the textual\n";
+    print " data table is not found at runtime. It is not a normal header.\n";
     print "***************************************************************/\n";
     print "\n\n";
 

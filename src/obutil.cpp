@@ -25,6 +25,21 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
+  /*! \class OBStopwatch
+     \brief Stopwatch class used for timing length of execution
+
+     The OBStopwatch class makes timing the execution of blocks of
+     code to microsecond accuracy very simple. The class effectively
+     has two functions, Start() and Elapsed(). The usage of the
+     OBStopwatch class is demonstrated by the following code:
+\code
+OBStopwatch sw;
+sw.Start();
+//insert code here
+cout << "Elapsed time = " << sw.Elapsed() << endl;
+\endcode
+  */
+
 void ThrowError(char *str)
 {
   cout << str << endl;

@@ -17,6 +17,34 @@ using namespace std;
 
 namespace OpenBabel {
 
+  /*! \class OBBitVec
+      \brief Fast and efficient bitstring class
+
+The OBBitVec class is a fast and efficient bitstring class that is
+handy to use as a truth table. Truth tables are an easy way to store
+whether a list of items has a particular propery. Instances of
+OBBitVec can by dynamically resized, and have a number of overloaded
+operators that make code simple and readable. The following examples
+demonstrate uses of the OBBitVec class:
+\code
+OBBitVec bv1,bv2,bv3;
+bv1.SetBitOn(5);
+bv2.SetBitOff(200);
+bv1 |= bv2;
+bv1 = bv1 & bv2;
+if (bv1.Empty()) //Empty() returns true if no bits are set on
+{
+cout << "bv1 = " << bv1 << endl;
+}
+ 
+int bit;
+for (bit = bv1.NextBit(0);bit != bv1.EndBit();bit = bv1.NextBit(bit))
+{
+  cout << "the next bit turned on is " << bit << endl;
+}
+\endcode
+   */
+
 static int bitsoff[SETWORD] =
 {
 0xFFFFFFFF,0xFFFFFFFE,0xFFFFFFFC,0xFFFFFFF8,0xFFFFFFF0,0xFFFFFFE0,0xFFFFFFC0,

@@ -23,6 +23,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
+  // class introduction in typer.cpp
 class OBAtomTyper : public OBGlobalDataBase
 {
   int                                                      _rc;

@@ -22,6 +22,7 @@ namespace OpenBabel {
 
 class GasteigerState;
 
+// class introduction in molchrg.cpp
 class OBGastChrg
 {
   std::vector <GasteigerState*> _gsv;

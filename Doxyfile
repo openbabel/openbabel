@@ -4,7 +4,7 @@
 # General configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = "Open Babel"
-PROJECT_NUMBER         = 1.100.0
+PROJECT_NUMBER         = 1.100.1
 OUTPUT_DIRECTORY       = doc/API
 OUTPUT_LANGUAGE        = English
 EXTRACT_ALL            = YES
@@ -52,8 +52,8 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = src/
-FILE_PATTERNS          = *.h
+INPUT                  = src/ src/math/
+FILE_PATTERNS          = *.h *.cpp
 RECURSIVE              = YES
 EXCLUDE                = 
 EXCLUDE_PATTERNS       = 
@@ -65,7 +65,7 @@ FILTER_SOURCE_FILES    = NO
 #---------------------------------------------------------------------------
 # configuration options related to the alphabetical class index
 #---------------------------------------------------------------------------
-ALPHABETICAL_INDEX     = NO
+ALPHABETICAL_INDEX     = YES
 COLS_IN_ALPHA_INDEX    = 5
 IGNORE_PREFIX          = 
 #---------------------------------------------------------------------------

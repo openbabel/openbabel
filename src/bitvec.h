@@ -42,6 +42,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
+  // class introduction in bitvec.cpp
 class OBBitVec
 {
   int _size;

@@ -3,7 +3,19 @@
 #	                Open Babel file: element.txt                         #
 #                                                                            #
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Portions Copyright (c) 2002 by Geoffrey R. Hutchison                      #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+#  Columns represent:  (used by data.cpp:OBElementTable and OBElement)       #
+#   - atomic number (used as an index to the vector as well)                 #
+#   - elemental symbol							     #
+#   - covalent radii							     #
+#   - "bond order radii" (usd in B.O. calc)				     #
+#   - van der Waals radii						     #
+#   - maximum bond valence						     #
+#   - IUPAC recommended atomic masses (in amu)				     #
+#   - electronegativity							     #
+#   - RGB values (ignored)						     #
 #                                                                            #
 ##############################################################################
 # Num	Symb	RCov	RBO	RVdW	Max Bnd	Mass		ElNeg.	Red	Green	Blue

@@ -27,10 +27,15 @@ namespace OpenBabel {
 
 class OBMol;
 
+//! \brief Central read/write file format class
+//! Handles "dispatching" to the various read/write translation methods
+//!  for given io_type and options
 class OBFileFormat
 {
  public:
+  //! Read a molecule from the input stream--calls a Read method by the io_type
   static bool ReadMolecule(std::istream&,OBMol&,const char *title="Untitled");
+  //! Write a molecule to the output stream--calls a Write method by the io_type
   static bool WriteMolecule(std::ostream&,OBMol&,const char *dimension="3D",
 			    const char *options="");
 
@@ -91,7 +96,8 @@ bool WriteCache(std::ostream &,OBMol &);
 bool WriteChem3d1(std::ostream &,OBMol &);
 bool WriteChem3d2(std::ostream &,OBMol &);
 bool WriteChemDraw(std::ostream &,OBMol &);
-bool WriteCML(std::ostream &,OBMol &, const char *dimension="3D", const char *options="");
+bool WriteCML(std::ostream &,OBMol &,
+	      const char *dimension="3D", const char *options="");
 bool WriteCSR(std::ostream &,OBMol &);
 bool WriteCSSR(std::ostream &,OBMol &);
 bool WriteDelphiPDB(std::ostream&,OBMol&);
@@ -126,6 +132,7 @@ bool WriteUnichem(std::ostream &,OBMol &);
 bool WriteViewMol(std::ostream &,OBMol &);
 bool WriteXED(std::ostream &,OBMol &);
 bool WriteXYZ(std::ostream &,OBMol &);
+bool WriteZINDO(std::ostream &, OBMol &);
 // Add yours here
 
 }

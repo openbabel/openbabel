@@ -83,7 +83,7 @@ class OBRotor
   OBBond *_bond;
   std::vector<int> _torsion;
   OBBitVec _fixedatoms,_evalatoms;
-  std::vector<float> _res;  //torsion resolution
+  std::vector<float> _res;  //!< torsion resolution
   std::vector<float> _invmag;
   std::vector<std::vector<float> > _sn,_cs,_t;
  public:
@@ -141,7 +141,7 @@ class OBRotorList
   bool _quiet,_removesym;
   OBBitVec _fix;
   OBRotorRules _rr;
-  std::vector<int> _dffv;         //distance from fixed
+  std::vector<int> _dffv;         //!< distance from fixed
   std::vector<OBRotor*> _rotor;
   std::vector<std::pair<OBSmartsPattern*,std::pair<int,int> > > _vsym2;
   std::vector<std::pair<OBSmartsPattern*,std::pair<int,int> > > _vsym3;

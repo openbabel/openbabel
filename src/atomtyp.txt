@@ -5,14 +5,17 @@
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
+# SMARTS patterns for atom typing (used by typer.cpp:OBAtomTyper)            #
+#                                                                            #
 # INTHYB: used to assign the internal hybridization values for atoms         #
 # IMPVAL: used to assign the implicit valence of an atom                     #
 # EXTTYP: used to assign the external type of an atom for translation to     #
-#         package specific types (I.E. Sybyl Mol2)                           #
+#         package specific types (i.e. Sybyl Mol2)                           #
+#        (these should correspond to INT type names in types.txt too.)       #
 #                                                                            #
 # The LAST PATTERN MATCHED is used to assign values with the corresponding   #
 # INTHYB, IMPVAL, and EXTTYP values. Additions to this file should be placed #
-# in the EXTRA DEFINITIONS section                                           #
+# in the EXTRA DEFINITIONS section (to separate from original patterns.)     #
 #                                                                            #
 ##############################################################################
 

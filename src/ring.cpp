@@ -20,6 +20,46 @@ using namespace std;
 
 namespace OpenBabel {
 
+  /*! \class OBRing
+      \brief Stores information on rings in a molecule from SSSR perception.
+
+Ring information beyond atom and bond membership is usually not
+necessary, but more information can be had about the rings in a
+molecule. The OBRing class is used to store the information from a
+Smallest Set of Smallest Rings (SSSR) perception of a molecule. The
+OBMol member function GetSSSR() stores the information it perceives in
+a vector<OBRing*> inside the molecule. Perception is only done once
+for a molecule unless the connection table is modified. The following
+code demonstrates how to extract the SSSR information:
+\code
+OBMol mol(SDF,SDF);
+cin >> mol;
+vector<OBRing*> vr;
+vr = mol.GetSSSR();
+\endcode
+OBRings store the atom numbers of the atoms in each of the smallest
+set of smallest rings in both a vector<int> and an OBBitVec.
+An example of how to print out the atom numbers present in all SSSR
+rings is show below:
+\code
+vector<OBRing*>::iterator i;
+vector<int>::iterator j;
+vector<OBRing*> *rlist = (vector<OBRing*>*)mol.GetData("RingList");
+for (i = rlist->begin();i != rlist->end();i++)
+{
+  for(j = (*i)->_path.begin();j != (*i)->_path.end();j++)
+      cout << *j << ` `;
+  cout << endl;
+}
+\endcode
+will produce something like the following output for benzene:
+\code
+1 2 3 4 5 6
+\endcode
+Ring information is automatically deleted from an OEMol when it goes
+out of scope or the Clear() member function is called.
+   */
+
 static int DetermineFRJ(OBMol &);
 static void BuildOBRTreeVector(OBAtom*,OBRTree*,vector<OBRTree*>&,OBBitVec&);
 

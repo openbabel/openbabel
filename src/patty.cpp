@@ -24,6 +24,38 @@ using namespace std;
 
 namespace OpenBabel {
 
+  /*! \class patty
+      \brief Programmable Atom Typer
+
+Patty stands for programmable atom typer. The patty class was kindly
+donated by W. Patrick Walters. The patty class provides a more
+flexible means for atom typing than the OBAtomTyper. The behavior of
+patty is similar to the OBAtomTyper in that rules apply only to the
+first atom in the SMARTS pattern. The patty class can read any free
+format ASCII file which contains SMARTS patterns associated with user
+defined atom type. The following is an example of a valid patty rule
+\code
+O=C hbacceptor
+\endcode
+The following is a code sample that demonstrates the use of patty
+class:
+\code
+OBMol mol(SDF,SDF);
+cin >> mol;
+string rulefile = "rules.txt";
+patty p;
+p.read_rules(p);
+vector<string> type;
+p.assign_types(mol,type);
+for (int i = 1;i <= mol.NumAtoms();i++)
+    cout << "atom number " << i << " was given a type " << type[i] << endl;
+\endcode
+The array indices in the vector<string> into which the result values
+are placed match the corresponding atom numbers. Since atoms are
+numbered beginning from one, the first element in the vector<string>
+is empty, and the values are placed in [1...mol.NumAtoms()].
+   */
+
 void patty::read_rules(const string &infile)
 {
   ifstream ifs, ifs1, *ifsP;

@@ -138,7 +138,7 @@ typedef struct {
   int parts;
 } Pattern;
 
-
+// class introduction in parsmart.cpp
 class OBSmartsPattern
 {
 protected:

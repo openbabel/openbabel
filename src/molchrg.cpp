@@ -17,6 +17,35 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
+  /*! \class OBGastChrg
+      \brief Assigns Gasteiger partial charges
+
+The OBGastChrg class is responsible for the assignment of partial
+charges to a molecule according to the Gasteiger charge model (sigma). When
+the partial charge of an atom is requested and partial charges do not
+yet exist for the molecule the OBGastChrg class will automatically be
+called to assign charges for the molecule. If charges have been read
+in for a molecule the following code shows how to force the
+recalculation of partial charges:
+\code
+OBMol mol(MOL2,SDF);
+cin >> mol;
+mol.UnsetPartialChargesPerceived();
+OBAtom *atom;
+vector<OBNodeBase*>::iterator i;
+for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+{
+   cout << "atom number = " << atom->GetIdx();
+   cout << " charge = " << atom->GetPartialCharge() << endl;
+}
+\endcode
+Formal charges are used as seed values of the initial charge of atoms,
+and the partial charge is propagated to neighboring atoms. For
+example, quaternary amines would have a +1 charge, and the effect of
+the positive charge would be felt by neighboring atoms according to
+the Gasteiger model (sigma).
+  */
+
 bool OBGastChrg::AssignPartialCharges(OBMol &mol)
 {
   //InitialPartialCharges(mol);

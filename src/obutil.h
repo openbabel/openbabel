@@ -19,12 +19,7 @@ GNU General Public License for more details.
 #define OB_UTIL_H
 
 #include <string>
-
-#ifdef __sgi
-#include <iostream.h>
-#else
 #include <iostream>
-#endif
 
 #if defined(WIN32)
 #include <time.h>
@@ -34,7 +29,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-//*** Stopwatch class used for timing length of execution ***
+  // class introduction in obutil.cpp
 class OBStopwatch
 {
 #ifdef WIN32
@@ -64,9 +59,8 @@ class OBStopwatch
   float Elapsed() {return(Lap());}
 };
 
-//
-//*** sqrt lookup table - given a distance squared returns distance
-//
+
+//! sqrt lookup table - given a distance squared returns distance
 class OBSqrtTbl
 {
   float _max,_incr,*_tbl;
@@ -96,6 +90,7 @@ class OBSqrtTbl
 };
 
 
+
 //******************************************
 //*** Stuff for random number generation ***
 //******************************************
@@ -109,6 +104,7 @@ void DoubleMultiply( unsigned int,unsigned int,DoubleType*);
 void DoubleAdd( DoubleType*,unsigned int);
 unsigned int DoubleModulus( DoubleType*,unsigned int);
 
+//! Random number generator
 class OBRandom
 {
   DoubleType d;

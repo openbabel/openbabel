@@ -25,6 +25,113 @@ extern OBPhModel	phmodel;
 extern OBAromaticTyper  aromtyper;
 extern OBAtomTyper      atomtyper;
 
+
+/** \class OBMol
+    \brief Molecule Class
+
+ The most important class in Open Babel is OBMol, or the molecule class.
+ The OBMol class is designed to store all the basic information
+ associated with a molecule, to make manipulations on the connection
+ table of a molecule facile, and to provide member functions which
+ automatically perceive information about a molecule. A guided tour
+ of the OBMol class is a good place to start.
+
+ An OBMol class can be declared in either of the following ways:
+\code
+  OBMol mol;
+  //or
+  OBMol mol(SDF,MOL2);
+\endcode
+ The second declaration type sets the input and output formats for a molecule.
+ For example:
+\code
+  #include <iostream.h>
+  #include "mol.h"
+  int main(int argc,char **argv)
+  {
+  OBMol mol(SDF,MOL2);
+  OBFileFormat::ReadMolecule(cin, mol);
+  OBFileFormat::WriteMolecule(cout, mol);
+  return(1);
+  }
+\endcode
+
+ will read in a molecule in SD file format from stdin 
+ (or the C++ equivalent cin) and write a MOL2 format file out
+ to standard out. Additionally, The input and output formats can
+ be altered after declaring an OBMol by the member functions
+ OBMol::SetInputType(enum io_type type) and
+ OBMol::SetOutputType(enum io_type type),
+ where the current values of enum io_type (defined in data.h) are
+ \code {      UNDEFINED,
+              ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
+              CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
+              CHEM3D2, CHEMDRAW, CIF, CML, CSR, CSSR, DELPDB, DMOL, DOCK,
+              FDAT, FEATURE, FH, FIX, FRACT, GAMESSIN, GAMESSOUT,
+              GAUSSIAN92, GAUSSIAN94, GAUSSIANCART, GAUSSIANZMAT,
+              GHEMICAL, GROMOS96A, GROMOS96N, GSTAT, HIN, ICON8,
+              IDATM, JAGUARIN, JAGUAROUT, M3D, MACCS, MACMOL,
+              MICROWORLD, MM2IN, MM2OUT, MM3, MMADS, MMCIF, MMD,
+              MOL2, MOLDEN, MOLIN, MOLINVENT, MOPACCART, MOPACINT,
+              MOPACOUT, MPQC, MSF, NWCHEMIN, NWCHEMOUT, OEBINARY,
+              PCMODEL, PDB, PREP, QCHEMIN, QCHEMOUT, REPORT,
+              SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
+              SPARTANSEMI, TGF, TINKER, TITLE, UNICHEM, VIEWMOL,
+              XED, XYZ
+ }\endcode
+
+ The following lines of code show how to set the input and output
+ types of an OBMol through the member functions:
+\code
+   OBMol mol;
+   mol.SetInputType(SDF);
+   mol.SetOutputType(MOL2);
+\endcode
+ Once a molecule has been read into an OBMol the atoms and bonds
+ can be accessed by the following methods:
+\code
+ OBAtom *atom;
+ atom = mol.GetAtom(5); //random access of an atom
+\endcode
+  or
+\code
+  OBBond *bond;
+bond = mol.GetBond(14); //random access of a bond
+\endcode
+ or
+\code
+   OBAtom *atom;
+   vector<OBNodeBase*>::iterator i;
+   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) //iterator access
+\endcode
+or
+\code
+   OBBond *bond;
+   vector<OBEdgeBase*>::iterator i;
+   for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i)) //iterator access
+\endcode
+It is important to note that atom arrays begin at one and bond arrays
+begin at zero. Requesting atom zero (\code
+OBAtom *atom = mol.GetAtom(0); \endcode
+will result in an error, but
+\code
+   OBBond *bond = mol.GetBond(0);
+\endcode
+ is perfectly valid.
+ Note that this is expected to change in the near future to simplify coding
+ and improve efficiency.
+
+ The ambiguity of numbering issues and off-by-one errors led to the use
+ of iterators in Open Babel. An iterator is essentially just a pointer, but
+ when used in conjunction with Standard Template Library (STL) vectors
+ it provides an unambiguous way to loop over arrays. OBMols store their
+ atom and bond information in STL vectors. Since vectors are template
+ based, a vector of any user defined type can be declared. OBMols declare
+ vector<OBNodeBase*> and vector<OBEdgeBase*> to store atom and bond information.
+ Iterators are then a natural way to loop over the vectors of atoms and bonds.
+
+*/
+
 //
 // OBMol member functions
 //
@@ -137,8 +244,6 @@ float OBMol::GetTorsion(OBAtom *a,OBAtom *b,OBAtom *c,OBAtom *d)
 }
 
 void OBMol::ContigFragList(vector<vector<int> >&cfl) 
-     //each vector<int> contains the atom numbers of a contig fragment
-     //the vectors are sorted by size from largest to smallest
 {
   int j;
   OBAtom *atom;
@@ -186,7 +291,7 @@ void OBMol::ContigFragList(vector<vector<int> >&cfl)
 }
 
 /*!
-**\brief Fills the Generic OETorsionData with torsions from the mol
+**\brief Fills the Generic OBTorsionData with torsions from the mol
 */
 void OBMol::FindTorsions()
 {
@@ -272,11 +377,10 @@ void OBMol::FindLargestFragment(OBBitVec &lf)
     }
 }
 
-
+//! locates all atoms for which there exists a path to 'end'
+//! without going through 'bgn' 
+//! children must not include 'end'
 void OBMol::FindChildren(vector<OBAtom*> &children,OBAtom *bgn,OBAtom *end)
-     //locates all atoms for which there exists a path to 'second'
-     //without going through 'first' 
-     //children does not include 'second'
 {
   OBBitVec used,curr,next;
 
@@ -308,10 +412,10 @@ void OBMol::FindChildren(vector<OBAtom*> &children,OBAtom *bgn,OBAtom *end)
     }
 }
 
+//! locates all atoms for which there exists a path to 'second'
+//! without going through 'first' 
+//! children must not include 'second'
 void OBMol::FindChildren(vector<int> &children,int first,int second)
-     //locates all atoms for which there exists a path to 'end'
-     //without going through 'bgn' 
-     //children does not include 'end'
 {
   int i;
   OBBitVec used,curr,next;
@@ -348,7 +452,6 @@ void OBMol::FindChildren(vector<int> &children,int first,int second)
 **\brief calculates the graph theoretical distance of each atom
 ** vector is indexed from zero
 */
-
 bool OBMol::GetGTDVector(vector<int> &gtd)
      //calculates the graph theoretical distance for every atom 
      //and puts it into gtd
@@ -431,8 +534,8 @@ static bool OBComparePairFirst(const pair<OBAtom*,unsigned int> &a,const pair<OB
 	return(a.first->GetIdx() < b.first->GetIdx());
 }
 
+//! counts the number of unique symmetry classes in a list
 static void ClassCount(vector<pair<OBAtom*,unsigned int> > &vp,unsigned int &count)
-//counts the number of unique symmetry classes in a list
 {
 	count = 0;
 	vector<pair<OBAtom*,unsigned int> >::iterator k;
@@ -478,9 +581,9 @@ static void ClassCount(vector<pair<OBAtom*,unsigned int> > &vp,unsigned int &cou
 #endif
 }
 
+//! creates a new vector of symmetry classes base on an existing vector
+//! helper routine to GetGIDVector
 static void	CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,vector<pair<OBAtom*,unsigned int> > &vp2)
-//creates a new vector of symmetry classes base on an existing vector
-//helper routine to GetGIDVector
 {
 	int m,id;
 	OBAtom *nbr;
@@ -568,9 +671,9 @@ unsigned int OBMol::NumRotors()
   return(count);
 }
 
+//! Returns a pointer to the atom after a safety check
+//! 0 < idx <= NumAtoms
 OBAtom *OBMol::GetAtom(int idx)
-     //0 < idx <= NumAtoms
-     //returns a pointer to the atom after a safety check
 {
   if ((unsigned)idx < 1 || (unsigned)idx > NumAtoms())
     {
@@ -589,9 +692,9 @@ OBAtom *OBMol::GetFirstAtom()
   return((_vatom.empty()) ? (OBAtom*)NULL : (OBAtom*)_vatom[0]);
 }
 
+//! Returns a pointer to the bond after a safety check
+//! 0 <= idx < NumBonds
 OBBond *OBMol::GetBond(int idx)
-     //0 <= idx < NumBonds
-     //returns a pointer to the bond after a safety check
 {
   if (idx < 0 || (unsigned)idx >= NumBonds())
     {
@@ -801,7 +904,6 @@ OBMol &OBMol::operator+=(const OBMol &source)
 }
 
 bool OBMol::Clear()
-     //clear all the info in a molecule
 {
   vector<OBNodeBase*>::iterator i;
   vector<OBEdgeBase*>::iterator j;
@@ -930,7 +1032,7 @@ void OBMol::EndModify(bool nukePerceivedData)
   //    for (bond = BeginBond(k);bond;bond = NextBond(k))
   //      bond->UnsetAromatic();
 
-  //UnsetImplicitValencePerceived();
+  UnsetImplicitValencePerceived();
 }
 
 OBAtom *OBMol::CreateAtom(void)
@@ -2447,8 +2549,11 @@ bool WriteTitles(ostream &ofs, OBMol &mol)
 	return true;
 }
 
+/*! This method adds single bonds between all atoms
+  closer than their combined atomic covalent radii,
+  then "cleans up" making sure bonded atoms are not
+  closer than 0.4A and the atom does not exceed its valence. */
 void OBMol::ConnectTheDots(void)
-  //use inter-atomic distances to identify bonds
 {
   if (Empty()) return;
 
@@ -2557,8 +2662,11 @@ void OBMol::ConnectTheDots(void)
   delete [] c;
 }
 
-// From current connectivity (but little or no atom types)
-// assign multiple bonds to fill out valences, etc.
+/*! This method uses bond angles and geometries from current
+  connectivity to guess atom types and then filling empty valences
+  with multiple bonds. It currently has a pass to detect some
+  frequent functional groups. It still needs a pass to detect aromatic
+  rings to "clean up." */
 void OBMol::PerceiveBondOrders()
 {
   OBAtom *atom, *b, *c;
@@ -2568,6 +2676,8 @@ void OBMol::PerceiveBondOrders()
   vector<OBNodeBase*>::iterator i;
   vector<OBEdgeBase*>::iterator j,k;
   
+  BeginModify();
+
   // Pass 1: Assign estimated hybridization based on avg. angles
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
@@ -2753,30 +2863,30 @@ void OBMol::PerceiveBondOrders()
   // Unfortunately it doesn't work well enough b/c we cannot easily pass off
   // our partially-typed structure to the Kekulize procedure yet.
 
-//   bool typed; // has this ring been typed?
-//   unsigned int loop, loopSize;
-//   for (ringit = rlist.begin(); ringit != rlist.end(); ringit++)
-//     {
-//       typed = false;
-//       loopSize = (*ringit)->PathSize();
-//       if (loopSize == 5 || loopSize == 6)
-// 	{
-// 	  path = (*ringit)->_path;
-// 	  for(loop = 0; loop < loopSize; loop++)
-// 	    {
-// 	      atom = GetAtom(path[loop]);
-// 	      if(atom->HasNonSingleBond() || atom->GetHyb() != 2)
-// 		{
-// 		  typed = true;
-// 		  break;
-// 		}
-// 	    }
+  bool typed; // has this ring been typed?
+  unsigned int loop, loopSize;
+  for (ringit = rlist.begin(); ringit != rlist.end(); ringit++)
+    {
+      typed = false;
+      loopSize = (*ringit)->PathSize();
+      if (loopSize == 5 || loopSize == 6)
+	{
+	  path = (*ringit)->_path;
+	  for(loop = 0; loop < loopSize; loop++)
+	    {
+	      atom = GetAtom(path[loop]);
+	      if(atom->HasNonSingleBond() || atom->GetHyb() != 2)
+		{
+		  typed = true;
+		  break;
+		}
+	    }
 
-// 	  if (!typed)
-// 	    for(loop = 0; loop < loopSize; loop++)
-// 	      (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
-// 	}
-//     }
+	  if (!typed)
+	    for(loop = 0; loop < loopSize; loop++)
+	      (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
+	}
+    }
   // Kekulize();
 
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity
@@ -2868,11 +2978,7 @@ void OBMol::PerceiveBondOrders()
   } // pass 6
 
   // Now let the atom typer go to work again
-  // we're going to create the atoms and bonds in a new molecule
-  // and then copy that back to us
-  _flags &= (~(OB_HYBRID_MOL));
-  _flags &= (~(OB_AROMATIC_MOL));
-  _flags &= (~(OB_ATOMTYPES_MOL));
+  EndModify(true); // "nuke" perceived data
 }
 
 void OBMol::Center()
@@ -2926,12 +3032,16 @@ vector3 OBMol::Center(int nconf)
 }
 
 
+/*! this method adds the vector v to all atom positions in all conformers */
 void OBMol::Translate(const vector3 &v)
 {
   for (int i = 0;i < NumConformers();i++) 
     Translate(v,i);
 }
 
+/*! this method add the vector v to all atom positions in the
+  conformer nconf. If nconf == OB_CURRENT_CONFORMER, then the atom
+  positions in the current conformer are translated. */
 void OBMol::Translate(const vector3 &v,int nconf)
 {
   int i,size;

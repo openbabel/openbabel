@@ -47,6 +47,7 @@ distclean:
 			(cd $$i; $(MAKE) $(MFLAGS) distclean) \
 			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
 		done && test -z "$$fail"
+		rm -rf doc/API
 		rm -f Makefile stamp-h stamp.h
 		rm -rf autom4te.cache
 

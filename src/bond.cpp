@@ -20,6 +20,16 @@ namespace OpenBabel {
 
 extern OBAromaticTyper  aromtyper;
 
+/** \class OBBond
+    \brief Bond class
+ 
+    The OBBond class is straightforward in its data access and
+    modification methods. OBBonds store pointers to the atoms on each end
+    of the bond. In storing pointers to atoms instead of integer indices,
+    the necessity of having to reorder bonds when atoms are shuffled,
+    added, or delete is obviated.
+*/
+
 // *******************************
 // *** OBBond member functions ***
 // *******************************
@@ -31,7 +41,18 @@ OBBond::OBBond()
    _flags=0;
    _bgn=NULL;
    _end=NULL;
+   _vdata.clear();
  }
+
+OBBond::~OBBond()
+{
+  if (!_vdata.empty())
+    {
+      vector<OBGenericData*>::iterator m;
+      for (m = _vdata.begin();m != _vdata.end();m++) delete *m;
+      _vdata.clear();
+    }
+}
 
 void OBBond::Set(int idx,OBAtom *begin,OBAtom *end,int order,int flags)
 {
@@ -372,6 +393,125 @@ float OBBond::GetLength()
   d2 += SQUARE(begin->GetZ() - end->GetZ());
  
   return(sqrt(d2));
+}
+
+// OBGenericData methods
+bool OBBond::HasData(string &s)
+     //returns true if the generic attribute/value pair exists
+{
+  if (_vdata.empty()) return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(true);
+    
+    return(false);
+}
+
+bool OBBond::HasData(const char *s)
+     //returns true if the generic attribute/value pair exists
+{
+  if (_vdata.empty()) return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(true);
+    
+    return(false);
+}
+
+bool OBBond::HasData(obDataType dt)
+     //returns true if the generic attribute/value pair exists
+{
+  if (_vdata.empty()) return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt)
+            return(true);
+    
+    return(false);
+}
+
+OBGenericData *OBBond::GetData(string &s)
+     //returns the value given an attribute
+{
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+                if ((*i)->GetAttribute() == s)
+            return(*i);
+
+    return(NULL);
+}
+
+OBGenericData *OBBond::GetData(const char *s)
+     //returns the value given an attribute
+{
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+                if ((*i)->GetAttribute() == s)
+            return(*i);
+
+    return(NULL);
+}
+
+OBGenericData *OBBond::GetData(obDataType dt)
+{
+    vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt)
+            return(*i);
+    return(NULL);
+}
+
+void OBBond::DeleteData(obDataType dt)
+{
+  vector<OBGenericData*> vdata;
+  vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt) delete *i;
+        else vdata.push_back(*i);
+  _vdata = vdata;
+}
+
+void OBBond::DeleteData(vector<OBGenericData*> &vg)
+{
+  vector<OBGenericData*> vdata;
+  vector<OBGenericData*>::iterator i,j;
+
+  bool del;
+  for (i = _vdata.begin();i != _vdata.end();i++)
+  {
+          del = false;
+          for (j = vg.begin();j != vg.end();j++)
+                  if (*i == *j)
+                  {
+                          del = true;
+                          break;
+                  }
+           if (del) delete *i;
+           else     vdata.push_back(*i);
+  }
+  _vdata = vdata;
+}
+
+void OBBond::DeleteData(OBGenericData *gd)
+{
+  vector<OBGenericData*>::iterator i;
+  for (i = _vdata.begin();i != _vdata.end();i++)
+          if (*i == gd)
+          {
+                delete *i;
+                _vdata.erase(i);
+          }
+
 }
 
 }

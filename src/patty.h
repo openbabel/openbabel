@@ -28,6 +28,7 @@ namespace OpenBabel {
 #define PT_OTHER       7
 #define PT_METAL	   8
 
+// class introduction in patty.cpp
 class patty
 {
   std::vector<OBSmartsPattern*> _sp;

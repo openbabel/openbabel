@@ -38,12 +38,11 @@ enum obDataType {obUndefinedData,obPairData,obEnergyData,
 		 obData4,obData5,obData6,obData7,
 		 obData8,obData9};
 
-//base class for generic data - use obData# slots for undefined data types
-
+//! Base class for generic data - use obData# slots for undefined data types
 class OBGenericData
 {
 protected:
-	std::string     _attr; //attribute tag
+	std::string     _attr; //!< attribute tag
 	obDataType 	_type;
 public:
 	OBGenericData();
@@ -112,7 +111,8 @@ public:
   unsigned char *GetData() {return(_data);}
 };
 
-class OBPairData : public OBGenericData //use to store attribute/value relationships
+//! Used to store attribute/value relationships
+class OBPairData : public OBGenericData
 {
  protected:
   std::string _value;
@@ -197,8 +197,6 @@ public:
   bool IsProtonRotor();
 };
 
-
-
 /*!
 **\brief The Object to hold Torsions as Generic data for OBMol
 */
@@ -224,8 +222,6 @@ public:
 
     bool FillTorsionArray(std::vector<std::vector<unsigned int> > &torsions);
 };
-
-
 
 /*!
 **\brief A class which holds the 3 atoms in an angle and the angle itself

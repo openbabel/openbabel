@@ -6,6 +6,11 @@
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
 #  Conversion between different external atom types                          #
+#    (used by data.cpp:OBTypeTable)                                          #
+#                                                                            #
+#  First line specifies size of the table: # rows   # columns                #
+#  Second line specifies type names used in the code                         #
+#  Remaining lines specify equivalent atomic type names in each column       #
 #                                                                            #
 ##############################################################################
 183	18

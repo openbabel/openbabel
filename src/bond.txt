@@ -1,21 +1,21 @@
-###########################################################################
-# 
-#    Open Babel file: bond.txt
-#
-#  Copyright (c) 2002 by Geoffrey R Hutchison
-#  Part of the Open Babel package, under the GNU General Public License (GPL)
-#
-# Currently unused, will eventually be used by PerceiveBondOrders
-#
-# List of functional groups with double, triple (etc.) bond orders
-# Pattern		Atom1 Atom2 Bond Order (repeat as needed)
-# * = Any atom (for setting non-multiple bonds)
-#
-# NOTE: These are applied in order, first to last. So in the case of "ties"
-#     the last pattern "wins." Thus, it's best to have these in order of
-#     electronegativity (i.e. double bond to oxygen wins over bond to sulphur)
-#
-############################################################################
+##############################################################################
+#                                                                            #
+#    Open Babel file: bond.txt                                               #
+#                                                                            #
+#  Copyright (c) 2002 by Geoffrey R Hutchison                                #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# Currently unused, will eventually be used by PerceiveBondOrders()          #
+#                                                                            #
+# List of functional groups with double, triple (etc.) bond orders           #
+# Pattern		Atom1 Atom2 Bond Order (repeat as needed)            #
+# * = Any atom (for setting non-multiple bonds)                              #
+#                                                                            #
+# NOTE: These are applied in order, first to last. So in the case of "ties"  #
+#     the last pattern "wins." Thus, it's best to have these in order of     #
+#     electronegativity (i.e. double bond to oxygen over sulphur)            #
+#                                                                            #
+##############################################################################
 
 # Azide
 [#7D2][#7D2][#7D1]		0 1 2 1 2 2

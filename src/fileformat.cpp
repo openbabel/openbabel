@@ -119,6 +119,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol,
     case VIEWMOL:   WriteViewMol(ofs,mol);		break;
     case XED:	    WriteXED(ofs,mol);			break;
     case XYZ:	    WriteXYZ(ofs,mol);			break;
+    case ZINDO:	    WriteZINDO(ofs,mol);		break;
 
     default:
       ThrowError("Output type not defined");
