@@ -796,12 +796,57 @@ void OBMol::SetTotalCharge(int charge)
   _totalCharge = charge;
 }
 
+//! Returns the total molecular charge -- if it has not previously been set
+//!  it is calculated from the atomic formal charge information.
+//!  (This may or may not be correct!)
+//!  If you set atomic charges with OBAtom::SetFormalCharge()
+//!   you really should set the molecular charge with OBMol::SetTotalCharge()
 int OBMol::GetTotalCharge()
 {
   if(HasFlag(OB_TCHARGE_MOL))
     return(_totalCharge);
-  else
-    return 0;
+  else // calculate from atomic formal charges (seems the best default)
+    {
+      OBAtom *atom;
+      vector<OBNodeBase*>::iterator i;
+      int chg = 0;
+
+      for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+	chg += atom->GetFormalCharge();
+      return (chg);
+    }
+}
+
+void   OBMol::SetTotalSpinMultiplicity(unsigned int spin)
+{
+  SetFlag(OB_TSPIN_MOL);
+  _totalSpin = spin;
+}
+
+//! Returns the total spin multiplicity -- if it has not previously been set
+//!  it is calculated from the atomic spin multiplicity information
+//!  assuming the high-spin case (i.e. it simply sums the atomic spins,
+//!  making no attempt to pair spins).
+//!  However, if you set atomic spins with OBAtom::SetSpinMultiplicity()
+//!   you really should set the molecular spin with 
+//!   OBMol::SetTotalSpinMultiplicity()
+unsigned int OBMol::GetTotalSpinMultiplicity()
+{
+  if (HasFlag(OB_TSPIN_MOL))
+    return(_totalSpin);
+  else // calculate from atomic spin information (assuming high-spin case)
+    {
+      OBAtom *atom;
+      vector<OBNodeBase*>::iterator i;
+      unsigned int spin = 1;
+
+      for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+	{
+	  if (atom->GetSpinMultiplicity() > 1)
+	    spin += atom->GetSpinMultiplicity() - 1;
+	}
+      return (spin);
+    }
 }
 
 OBMol &OBMol::operator=(const OBMol &source)

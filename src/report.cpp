@@ -1,9 +1,9 @@
 /**********************************************************************
 report.cpp - Report information about the molecule: charge, distance 
-             matrix angle, chiral info.
+             matrix angle, chiral info, etc.
 
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2001-2004 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -224,6 +224,18 @@ bool WriteReport(ostream &ofs,OBMol &mol)
   ofs << "EXACT MASS: ";
   sprintf(buffer, "%5.7f", mol.GetExactMass());
   ofs << buffer << endl;
+  if (mol.GetTotalCharge() != 0)
+    {
+      ofs << "TOTAL CHARGE: ";
+      sprintf(buffer, "%d", mol.GetTotalCharge());
+      ofs << buffer << endl;
+    }
+  if (mol.GetTotalSpinMultiplicity() != 1)
+    {
+      ofs << "TOTAL SPIN: ";
+      sprintf(buffer, "%d", mol.GetTotalSpinMultiplicity());
+      ofs << buffer << endl;
+    }
   ofs << "INTERATOMIC DISTANCES" << endl;
   WriteDistanceMatrix(ofs, mol);
   ofs << endl << endl << "ATOMIC CHARGES" << endl;
@@ -232,14 +244,17 @@ bool WriteReport(ostream &ofs,OBMol &mol)
   WriteAngles(ofs, mol);
   ofs << endl << endl << "TORSION ANGLES" << endl;
   WriteTorsions(ofs, mol);
-  ofs << endl << endl << "CHIRAL ATOMS" << endl;
-  WriteChiral(ofs, mol);
+  if (mol.IsChiral())
+    {
+      ofs << endl << endl << "CHIRAL ATOMS" << endl;
+      WriteChiral(ofs, mol);
+    }
   if (mol.HasData(obCommentData)) {
     ofs << endl << endl << "COMMENTS" << endl;
     OBCommentData *cd = (OBCommentData*)mol.GetData(obCommentData);
     ofs << cd->GetData() << endl;
   }
-
+  ofs << endl << endl;
   return(true);
 }
 

@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2000-2003 by Geoffrey Hutchison
+Copyright (C) 2000-2004 by Geoffrey Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ bool WriteQChem(ostream &ofs,OBMol &mol)
   ofs << "$comment" << endl;
   ofs << mol.GetTitle() << endl;
   ofs << "$end" << endl;
-  ofs << endl << "$molecule" << endl << "0 1" << endl;
+  ofs << endl << "$molecule" << endl;
+  ofs << mol.GetTotalCharge() << " " << mol.GetTotalSpinMultiplicity() << endl;
 
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
@@ -48,7 +49,8 @@ bool ReadQChem(istream &ifs,OBMol &mol,const char *title)
   OBInternalCoord *coord;
   vector<string> vs;
   vector<OBInternalCoord *> internals; // If we get a z-matrix
-  int index;
+  int index, charge = 0;
+  unsigned int spin = 1;
   bool hasPartialCharges = false;
 
   mol.BeginModify();
@@ -94,57 +96,66 @@ bool ReadQChem(istream &ifs,OBMol &mol,const char *title)
 	      tokenize(vs,buffer);
 	    }
 	}
-      // This is still not working completely, so it is ignored for now
       // In principle, the final geometry in cartesians is exactly the same
       // as this geometry, so we shouldn't lose any information
-//       else if(strstr(buffer,"OPTIMIZATION CONVERGED") != NULL)
-// 	{
-//  	  // mol.EndModify();
-//  	  mol.Clear();
-//  	  mol.BeginModify();
-//  	  // Unfortunately this will come in a Z-matrix
-//  	  ifs.getline(buffer,BUFF_SIZE); // *****
-//  	  ifs.getline(buffer,BUFF_SIZE); // blank
-// 	  ifs.getline(buffer,BUFF_SIZE); // Z-matrix Print:
-// 	  ifs.getline(buffer,BUFF_SIZE); // $molecule
-// 	  ifs.getline(buffer,BUFF_SIZE); // Charge,Spin
-	  
-// 	  ifs.getline(buffer,BUFF_SIZE);
-// 	  index = 1;
-// 	  while (strstr(buffer, "$end") == NULL)
-// 	    {
-// 	      tokenize(vs,buffer);
-// 	      atom = mol.NewAtom();
-// 	      atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+      // but we grab the charge and spin from this $molecule block
+      else if(strstr(buffer,"OPTIMIZATION CONVERGED") != NULL)
+ 	{
+  	  // Unfortunately this will come in a Z-matrix, which would
+	  // change our frame of reference -- we'll ignore this geometry
+  	  ifs.getline(buffer,BUFF_SIZE); // *****
+  	  ifs.getline(buffer,BUFF_SIZE); // blank
+ 	  ifs.getline(buffer,BUFF_SIZE); // Z-matrix Print:
+ 	  ifs.getline(buffer,BUFF_SIZE); // $molecule
+ 	  ifs.getline(buffer,BUFF_SIZE); // Charge,Spin
+	  tokenize(vs, buffer, ", \t\n");
+	  if (vs.size() == 2)
+	    {
+	      charge = atoi(vs[0].c_str());
+	      spin = atoi(vs[1].c_str());
+	    }
 
-// 	      tokenize(vs,buffer);
-// 	      coord = new OBInternalCoord();
-// 	      if (index > 1)
-// 		{
-// 		  coord->_a = mol.GetAtom(atoi(vs[2].c_str()));
-// 		  coord->_dst = atof(vs[3].c_str());
-// 		}
-// 	      if (index > 2)
-// 		{
-// 		  coord->_b = mol.GetAtom(atoi(vs[4].c_str()));
-// 		  coord->_ang = atof(vs[5].c_str()) * DEG_TO_RAD;
-// 		}
-// 	      if (index > 3)
-// 		{
-// 		  coord->_c = mol.GetAtom(atoi(vs[6].c_str()));
-// 		  coord->_tor = atof(vs[7].c_str()) * DEG_TO_RAD;
-// 		}
-// 	      index++;
-// 	      ifs.getline(buffer,BUFF_SIZE);
-// 	      internals.push_back(coord);
-// 	    }
-//	  InternalToCartesian(internals, mol);
-    } // while
+ 	  ifs.getline(buffer,BUFF_SIZE);
+	  
+	  // Uncomment the following to use the z-matrix coordinates
+	  // 	  index = 1;
+	  // 	  while (strstr(buffer, "$end") == NULL)
+	  // 	    {
+	  // 	      tokenize(vs,buffer);
+	  // 	      atom = mol.NewAtom();
+	  // 	      atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+	  //
+	  // 	      tokenize(vs,buffer);
+	  // 	      coord = new OBInternalCoord();
+	  // 	      if (index > 1)
+	  // 		{
+	  // 		  coord->_a = mol.GetAtom(atoi(vs[2].c_str()));
+	  // 		  coord->_dst = atof(vs[3].c_str());
+	  // 		}
+	  // 	      if (index > 2)
+	  // 		{
+	  // 		  coord->_b = mol.GetAtom(atoi(vs[4].c_str()));
+	  // 		  coord->_ang = atof(vs[5].c_str()) * DEG_TO_RAD;
+	  // 		}
+	  // 	      if (index > 3)
+	  // 		{
+	  // 		  coord->_c = mol.GetAtom(atoi(vs[6].c_str()));
+	  // 		  coord->_tor = atof(vs[7].c_str()) * DEG_TO_RAD;
+	  // 		}
+	  // 	      index++;
+	  // 	      ifs.getline(buffer,BUFF_SIZE);
+	  // 	      internals.push_back(coord);
+	  //   }  // end while
+	  //	  InternalToCartesian(internals, mol);
+	} // end (OPTIMIZATION CONVERGED)
+    } // end while
   mol.EndModify();
   mol.ConnectTheDots();
   mol.PerceiveBondOrders();
   if (hasPartialCharges)
     mol.SetPartialChargesPerceived();
+  mol.SetTotalCharge(charge);
+  mol.SetTotalSpinMultiplicity(spin);
 
   mol.SetTitle(title);
   return(true);
