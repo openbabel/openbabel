@@ -375,7 +375,8 @@ bool SetOutputType(OBMol &mol,string &fname)
 
 void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
-  vector3 n,nn,v1,v2,v3;
+  vector3 n,nn,v1,v2,v3,avec,bvec,cvec;
+  double dst = 0.0, ang = 0.0, tor = 0.0;
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
   int index;
@@ -387,34 +388,47 @@ void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
   {
     index = atom->GetIdx();
 
-    if      (index == 1)
+    if (vic[index]->_a)
       {
-        atom->SetVector(0.0, 0.0, 0.0);
-        continue;
+	avec = vic[index]->_a->GetVector();
+	dst = vic[index]->_dst;
       }
-    else if (index == 2)
+    else 
       {
-        v1.SetX(-vic[index]->_dst);
-        atom->SetVector(v1);
-        continue;
+	// atom 1
+	atom->SetVector(0.0, 0.0, 0.0);
+	continue;
       }
-    else if (index == 3) 
+    if (vic[index]->_b)
       {
-        v1.SetX(-(vic[index]->_dst * cos(vic[index]->_ang * DEG_TO_RAD)));
-        v1.SetZ(-(vic[index]->_dst * sin(vic[index]->_ang * DEG_TO_RAD)));
-        atom->SetVector(v1);
-        continue;
+	bvec = vic[index]->_b->GetVector();
+	ang = vic[index]->_ang * DEG_TO_RAD;
+      }
+    else {
+	// atom 2
+	atom->SetVector(dst, 0.0, 0.0);
+	continue;
+      }
+    if (vic[index]->_c)
+      {
+	cvec = vic[index]->_c->GetVector();
+	tor = vic[index]->_tor * DEG_TO_RAD;
+      }
+    else {
+	// atom 3
+	cvec = VY;
+	tor = 90. * DEG_TO_RAD;
       }
 
-    v1 = vic[index]->_a->GetVector() - vic[index]->_b->GetVector();
-    v2 = vic[index]->_a->GetVector() - vic[index]->_c->GetVector();
+    v1 = avec - bvec;
+    v2 = avec - cvec;
     n = cross(v1,v2);  nn = cross(v1,n);
     n.normalize();     nn.normalize();
 
-    n  *= -sin(vic[index]->_tor * DEG_TO_RAD);  nn *= cos(vic[index]->_tor * DEG_TO_RAD); 
-    v3 = n + nn; v3.normalize(); v3 *= vic[index]->_dst * sin(vic[index]->_ang * DEG_TO_RAD);
-    v1.normalize();  v1 *= vic[index]->_dst * cos(vic[index]->_ang * DEG_TO_RAD);
-    v2 = vic[index]->_a->GetVector() + v3 - v1;
+    n  *= -sin(tor);  nn *= cos(tor); 
+    v3 = n + nn; v3.normalize(); v3 *= dst * sin(ang);
+    v1.normalize();  v1 *= dst * cos(ang);
+    v2 = avec + v3 - v1;
 
     atom->SetVector(v2);
   }

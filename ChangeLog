@@ -1,3 +1,9 @@
+2004-07-02  Michael Banck  <mbanck@gmx.net>
+
+	* src/obutil.cpp (InternalToCartesian): avec, bvec, cvec, dst, ang,
+	tor: New short circuit variables. Start index at zero again. Fix
+	torsion angle of the fourth atom. Thanks to Gerd Menche.
+
 2004-03-13  Michael Banck  <mbanck@gmx.net>
 
 	* test/unitcell.cpp (TestUnitCell): Use %lf instead of %f to read
