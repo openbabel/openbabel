@@ -1,3 +1,9 @@
+2003-10-03  Michael Banck  <mbanck@gmx.net>
+
+	* src/atom.cpp (GetDistance): New method.
+	* (GetAngle): Likewise.
+	* src/mol.h: Declare them.
+
 2003-09-25  Michael Banck  <mbanck@gmx.net>
  
         * src/mol.h (_internals): New protected class attribute.

@@ -1,6 +1,10 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2003 by Michael Banck
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -883,6 +887,37 @@ OBAtom *OBAtom::NextNbrAtom(vector<OBEdgeBase*>::iterator &i)
   return((i != _vbond.end()) ?  ((OBBond*) *i)->GetNbrAtom(this):NULL);
 }
 
+double OBAtom::GetDistance(OBAtom *b)
+{
+  return(( this->GetVector() - b->GetVector() ).length());
+}
+
+double OBAtom::GetDistance(int b)
+{
+  OBMol *mol = (OBMol*)GetParent();
+  return(( this->GetVector() - mol->GetAtom(b)->GetVector() ).length());
+}
+
+double OBAtom::GetAngle(OBAtom *b, OBAtom *c)
+{
+  vector3 v1,v2;
+
+  v1 = this->GetVector() - b->GetVector();
+  v2 = c->GetVector() - b->GetVector();
+
+  return(vectorAngle(v1, v2));
+}
+
+double OBAtom::GetAngle(int b, int c)
+{
+  OBMol *mol = (OBMol*)GetParent();
+  vector3 v1,v2;
+
+  v1 = this->GetVector() - mol->GetAtom(b)->GetVector();
+  v2 = mol->GetAtom(c)->GetVector() - mol->GetAtom(b)->GetVector();
+
+  return(vectorAngle(v1, v2));
+}
 
 bool OBAtom::GetNewBondVector(vector3 &v,double length)
 {

@@ -277,6 +277,11 @@ public:
     OBAtom *NextNbrAtom(std::vector<OBEdgeBase*>::iterator &); 
     //@}
 
+    double GetDistance(int);
+    double GetDistance(OBAtom*);
+    double GetAngle(int, int);
+    double GetAngle(OBAtom*, OBAtom*);
+
     //! \name Addition of residue/bond info. for an atom
     //@{
     void NewResidue()                  {if (!_residue) _residue = new OBResidue;}
