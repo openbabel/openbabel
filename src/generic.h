@@ -35,7 +35,7 @@ enum obDataType {obUndefinedData,obPairData,obEnergyData,
 		 obCommentData,obCompressData,obExternalBondData,obRotamerList,
 		 obVirtualBondData,obRingData,obTorsionData,obAngleData, 
 		 obSerialNums, obUnitCell, obSpinData, obChargeData,
-		 obData0,obData1,obData2,obData3,
+		 obAuditList, obData0,obData1,obData2,obData3,
 		 obData4,obData5,obData6,obData7,
 		 obData8,obData9};
 
@@ -154,6 +154,31 @@ public:
 	void SetData(std::vector<OBRing*> &vr) {_vr = vr;}
 	void PushBack(OBRing *r)          {_vr.push_back(r);}
 	std::vector<OBRing*> &GetData()        {return(_vr);}
+};
+
+class OBUnitCell: public OBGenericData
+{
+ protected:
+      float _a, _b, _c, _alpha, _beta, _gamma;
+ public:
+      OBUnitCell();
+      OBUnitCell(const OBUnitCell &);
+      ~OBUnitCell() {}
+
+      OBUnitCell &operator=(const OBUnitCell &);
+
+      void SetData(const float a, const float b, const float c, 
+		   const float alpha, const float beta, const float gamma)
+	{ _a = a; _b = b; _c = c; _alpha = alpha; _beta = beta; _gamma = gamma;}
+      void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
+      float GetA()				{return(_a);}
+      float GetB()				{return(_b);}
+      float GetC()				{return(_c);}
+      float GetAlpha()				{return(_alpha);}
+      float GetBeta()				{return(_beta);}
+      float GetGamma()				{return(_gamma);}
+      //! Return v1, v2, v3 cell vectors
+      std::vector<vector3> GetCellVectors();
 };
 
 /*!

@@ -157,6 +157,69 @@ OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo)
 }
 
 //
+// member functions for OBUnitCell class
+//  used for storing information about periodic boundary conditions
+//   with conversion from three-vector to a, b, c, alpha, beta, gamma
+//
+OBUnitCell::OBUnitCell()
+{
+  _a = _b = _c = _alpha = _beta = _gamma = 0.0f;
+}
+
+OBUnitCell::OBUnitCell(const OBUnitCell &src)
+{
+  _a = src._a;
+  _b = src._b;
+  _c = src._c;
+  _alpha = src._alpha;
+  _beta = src._beta;
+  _gamma = src._gamma;
+}
+
+OBUnitCell & OBUnitCell::operator=(const OBUnitCell &src)
+{
+  if(this == &src) 
+    return(*this);
+    
+  _a = src._a;
+  _b = src._b;
+  _c = src._c;
+  _alpha = src._alpha;
+  _beta = src._beta;
+  _gamma = src._gamma;
+    
+  return(*this);
+}
+
+void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
+{
+  _a = v1.length();
+  _b = v2.length();
+  _c = v3.length();
+  _alpha = vectorAngle(v2, v3);
+  _beta = vectorAngle(v1, v3);
+  _gamma = vectorAngle(v1, v2);
+}
+
+vector<vector3> OBUnitCell::GetCellVectors()
+{
+  vector<vector3> v;
+  vector3 cellVec;
+
+  v.reserve(3);
+  cellVec.Set(_a, 0.0f, 0.0f);
+  v.push_back(cellVec);
+  cellVec.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0f);
+  v.push_back(cellVec);
+  cellVec.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
+	      _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
+	      _c*sin(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha));
+  v.push_back(cellVec);
+  
+  return v;
+}
+
+//
 //member functions for OBRingData class - stores SSSR set
 //
 

@@ -18,6 +18,7 @@ bool TestSmarts(void);
 void GenerateRingReference();
 bool TestRings(void);
 bool TestMatrixAlgebra(void);
+bool TestUnitCell(void);
 
 using namespace std;
 using namespace OpenBabel;
@@ -59,7 +60,14 @@ int main(int argc,char *argv[])
   }
   else
     cout << "RING test passed" << endl;
-      
+
+  cout << endl << "Testing datatype conversions ..." << endl;
+  cout << " DATATYPE: unit cell vectors";
+  if (!TestUnitCell()) {
+    cout << endl << "ERROR: *** Unit Cell test failed***" << endl;
+  }
+  else
+    cout << " test passed " << endl;
 
   if (alltests) {
     cout << endl << "All tests passed" << endl;

@@ -19,11 +19,12 @@ builddir      = @top_builddir@test
 
 HDRS	      = 
 
-OBJS	      =	ringtest.o smartstest.o matrixtest.o main.o
+OBJS	      =	ringtest.o smartstest.o matrixtest.o main.o unitcell.o
 
 PROGRAM	      = obtest
 
-DATAFILES     = attype.00.smi smartstest.txt smartsresults.txt ringresults.txt
+DATAFILES     = attype.00.smi smartstest.txt smartsresults.txt \
+		ringresults.txt unitcell.txt
 
 
 $(PROGRAM):     $(OBJS) $(MAIN) 

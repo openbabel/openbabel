@@ -21,13 +21,15 @@ namespace OpenBabel {
 using namespace std;
 using namespace OpenBabel;
 
-int main(int argc,char *argv[])
+bool TestUnitCell()
 {
   float a, b, c, alpha, beta, gamma;
   vector3 v1, v2, v3;
   float x, y, z;
   char buffer[BUFF_SIZE];
   std::ifstream ifs;
+  OBUnitCell cell, cell2;
+  vector<vector3> v3Return;
 
   if (!SafeOpen(ifs,"unitcell.txt")) return(false);
   ifs.getline(buffer,BUFF_SIZE);
@@ -42,32 +44,28 @@ int main(int argc,char *argv[])
   sscanf(buffer,"%f %f %f",&x, &y, &z);
   v3.Set(x, y, z);
 
-  a = v1.length();
-  b = v2.length();
-  c = v3.length();
-  cout << " a: " << a << " b: " << b << " c: " << c << endl;
-  alpha = vectorAngle(v2, v3);
-  beta = vectorAngle(v1, v3);
-  gamma = vectorAngle(v1, v2);
-  cout << " alpha : " << alpha << " beta: " << beta << " gamma: " << gamma << endl;;
+  cell.SetData(v1, v2, v3);
+  a = cell.GetA();
+  b = cell.GetB();
+  c = cell.GetC();
+  alpha = cell.GetAlpha();
+  beta = cell.GetBeta();
+  gamma = cell.GetGamma();
 
-  v1.Set(a, 0.0f, 0.0f);
-  v2.Set(b*cos(DEG_TO_RAD*gamma), b*sin(DEG_TO_RAD*gamma), 0.0f);
-  v3.Set(c*cos(DEG_TO_RAD*beta)*sin(DEG_TO_RAD*alpha),
-	 c*sin(DEG_TO_RAD*beta)*cos(DEG_TO_RAD*alpha),
-	 c*sin(DEG_TO_RAD*beta)*sin(DEG_TO_RAD*alpha));
-  cout << " v1: " << v1 << endl;
-  cout << " v2: " << v2 << endl;
-  cout << " v3: " << v3 << endl;
+  v3Return = cell.GetCellVectors();
 
-  a = v1.length();
-  b = v2.length();
-  c = v3.length();
-  cout << " a: " << a << " b: " << b << " c: " << c << endl;
-  alpha = vectorAngle(v2, v3);
-  beta = vectorAngle(v1, v3);
-  gamma = vectorAngle(v1, v2);
-  cout << " alpha : " << alpha << " beta: " << beta << " gamma: " << gamma << endl;
+  cell2.SetData(v1, v2, v3);
+  a = cell2.GetA();
+  b = cell2.GetB();
+  c = cell2.GetC();
+  alpha = cell2.GetAlpha();
+  beta = cell2.GetBeta();
+  gamma = cell2.GetGamma();
 
-  return(0);
+  if (cell.GetA() != cell2.GetA() || cell.GetB() != cell2.GetB() ||
+      cell.GetC() != cell2.GetC() || cell.GetAlpha() != cell2.GetAlpha() ||
+      cell.GetBeta() != cell2.GetBeta() || cell.GetGamma() != cell2.GetGamma())
+    return(false);
+
+  return(true);
 }
