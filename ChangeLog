@@ -1,3 +1,48 @@
+2005-02-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/atomtyp.txt: Change implicit valence rules for acidic
+	oxygens -- ensure default AddHydrogen() response is to add acidic
+	protons, but correctForPH will not. Fixes PR # 1106706.
+
+	* data/atomtyp.h: Update using bin2hex.pl.
+	
+	* doc/babel.1: Update for new options.
+
+	* src/mol.h: Add oberror.h and update documentation and
+	indentation. Add OB_POS_CHIRAL_ATOM and OB_NEG_CHIRAL_ATOM flags for
+	marking + and - chiral volume and accessor methods.
+	
+	* src/chiral.cpp(GetChirality): Set + and - chiral volume for
+	atoms using these methods.
+
+	* src/main.cpp: Update to handle -imime and -omime flags to set
+	format by supplied MIME type.
+
+	* src/obconversion.cpp, src/obconversion.h: Update to handle MIME
+	types with an additional format map with RegisterFormat(), rather
+	than "polluting" the extension map.
+
+	* src/formats/alchemyformat.cpp, src/formats/cmlformat.cpp,
+	src/formats/crkformat.cpp, src/formats/mdlformat.cpp,
+	src/formats/mmodformat.cpp, src/formats/mol2format.cpp,
+	src/formats/mopacformat.cpp, src/pdbformat.cpp,
+	src/smilesformat.cpp: Register MIME types with the new MIME map as
+	above.
+
+	* src/oberror.cpp: Add a global OBMessageHandler obErrorLog.
+
+	* src/obutil.cpp (ThrowError): Update to use obErrorLog -- to
+	migrate code to the new error logging OBMessageHandler class.
+	
+	* src/bitvec.cpp, src/mol.cpp, src/phmodel.cpp, src/rotor.cpp,
+	src/formats/chem3dformat.cpp, src/xyzformat.cpp: Update
+	ThrowError() calls to use obErrorLog as above.
+
+	* configure.in: Add support to conditionally build documentation
+	if doxygen is availale. Not currently used.
+
+	* */Makefile.in: Update using automake for above.
+	
 2005-02-09  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/obconversion.h, src/obconversion.h.cpp: Added
@@ -18,6 +63,7 @@
 
 	* src/obconversion.h, src/obconversion.h.cpp: rationalized
 	SetInFormat, etc; Added GetInFile; corrected bug in IsOption  
+
 	* src/main.cpp: added -? option as synonym of -H 
 	Check for empty FileList;  
 	In Windows moved saved options file from current folder to TEMP
@@ -104,7 +150,8 @@
 	* src/mol.h, src/mol.cpp: Add OBMol:_dimension, along with
 	accessor methods GetDimension() and SetDimension() for specifying
 	the dimension of the OBMol coordinates. Default is 3 for now --
-	conversion or user code must specify this!
+	conversion or user code must specify this! Among other PRs, fixed
+	PR# 110671.
 
 2005-01-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

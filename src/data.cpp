@@ -33,18 +33,11 @@ GNU General Public License for more details.
 #include "isotope.h"
 #include "mol.h"
 
-#if defined(HAVE_SSTREAM)
-#include <sstream>
-#else
-#include <strstream>
-#endif
-
 using namespace std;
 
 namespace OpenBabel
 {
 
-// OBExtensionTable extab;
 OBElementTable   etab;
 OBTypeTable      ttab;
 OBIsotopeTable   isotab;
@@ -412,7 +405,7 @@ bool OBTypeTable::SetFromType(char* from)
             return(true);
         }
 
-    ThrowError("Requested type column not found");
+    obErrorLog.ThrowError(__FUNCTION__, "Requested type column not found", obInfo);
 
     return(false);
 }
@@ -432,7 +425,7 @@ bool OBTypeTable::SetToType(char* to)
             return(true);
         }
 
-    ThrowError("Requested type column not found");
+    obErrorLog.ThrowError(__FUNCTION__, "Requested type column not found", obInfo);
 
     return(false);
 }
@@ -564,7 +557,7 @@ void OBGlobalDataBase::Init()
             string s = "Unable to open data file '";
             s += _filename;
             s += "'";
-            ThrowError(s);
+	    obErrorLog.ThrowError(__FUNCTION__, s, obInfo);
         }
 
     if (ifs1)

@@ -61,6 +61,8 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
+BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -365,6 +367,9 @@ uninstall-man: uninstall-man1
 	uninstall uninstall-am uninstall-info-am uninstall-man \
 	uninstall-man1
 
+
+@BUILD_DOCS_TRUE@babel.1:	$(srcdir)../src/main.cpp
+@BUILD_DOCS_TRUE@		$(DOXYGEN) $(srcdir)/Doxyfile-man
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -23,8 +23,9 @@ dnl AC_DISABLE_SHARED
 AM_PROG_LIBTOOL
 
 dnl Complain about missing documentation tool doxygen.
+AM_CONDITIONAL(BUILD_DOCS, test x$DOCTOOL = xyes)
 if test "$DOCTOOL" == "no"; then
-AC_MSG_ERROR(Cannot find doxygen. 
+AC_MSG_WARN(Cannot find doxygen to build documentation. 
 	Have a look at http://www.doxygen.org/)
 fi
 
