@@ -764,6 +764,36 @@ double	  OBAtom::SmallestBondAngle()
   return minDegrees;
 }
 
+double	  OBAtom::AverageBondAngle()
+{
+  OBAtom *b, *c;
+  vector3 v1, v2;
+  double degrees, avgDegrees;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j,k;
+  int n=0;
+
+  avgDegrees = 0.0;
+
+  for (b = BeginNbrAtom(j); b; b = NextNbrAtom(j))
+    {
+      k = j;
+      for (c = NextNbrAtom(k); c; c = NextNbrAtom(k))
+	{
+	  v1 = b->GetVector() - GetVector();
+	  v2 = c->GetVector() - GetVector();	
+	  degrees = vectorAngle(v1, v2);
+	  avgDegrees += degrees;
+	  n++;
+	}
+    }
+
+  if (n >=1)
+    avgDegrees /= n;
+  
+  return avgDegrees;
+}
+
 unsigned int OBAtom::CountFreeOxygens() const
 {
   unsigned int count = 0;

@@ -2843,8 +2843,7 @@ void OBMol::PerceiveBondOrders()
 
   OBAtom *atom, *b, *c;
   vector3 v1, v2;
-  int angles;
-  double degrees;
+  double angle;
   vector<OBNodeBase*>::iterator i;
   vector<OBEdgeBase*>::iterator j,k;
   
@@ -2853,26 +2852,12 @@ void OBMol::PerceiveBondOrders()
   // Pass 1: Assign estimated hybridization based on avg. angles
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
-      degrees = 0.0;
-      angles = 0;
-      for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
-	{
-	  k = j;
-	  for (c = atom->NextNbrAtom(k); c; c = atom->NextNbrAtom(k))
-	    {
-	      v1 = b->GetVector() - atom->GetVector();
-	      v2 = c->GetVector() - atom->GetVector();	
-	      degrees += vectorAngle(v1, v2);
-	      angles++;
-	    }
-	}
-      if (angles >= 1)
-	{
-	  if ((degrees / angles) > 155.0)
-	    atom->SetHyb(1);
-	  else if ((degrees / angles) <= 155.0 && (degrees / angles) > 115)
-	    atom->SetHyb(2);
-	}
+      angle = atom->AverageBondAngle();
+      
+      if (angle > 155.0)
+	atom->SetHyb(1);
+      else if ( angle <= 155.0 && angle > 115)
+      	atom->SetHyb(2);
     } // pass 1
 
   // Make sure upcoming calls to GetHyb() don't kill these temporary values
@@ -2897,11 +2882,11 @@ void OBMol::PerceiveBondOrders()
 	{
 	  path = (*ringit)->_path;
 	  torsions = 
-	    GetTorsion(path[0], path[1], path[2], path[3]) +
-	    GetTorsion(path[1], path[2], path[3], path[4]) +
-	    GetTorsion(path[2], path[3], path[4], path[0]) +
-	    GetTorsion(path[3], path[4], path[0], path[1]) +
-	    GetTorsion(path[4], path[0], path[1], path[2]) / 5.0;
+	    ( abs(GetTorsion(path[0], path[1], path[2], path[3])) +
+	      abs(GetTorsion(path[1], path[2], path[3], path[4])) +
+	      abs(GetTorsion(path[2], path[3], path[4], path[0])) +
+	      abs(GetTorsion(path[3], path[4], path[0], path[1])) +
+	      abs(GetTorsion(path[4], path[0], path[1], path[2])) ) / 5.0;
 	  if (torsions <= 7.5)
 	    {
 	      for (ringAtom = 0; ringAtom != path.size(); ringAtom++)
@@ -2916,12 +2901,12 @@ void OBMol::PerceiveBondOrders()
 	{
 	  path = (*ringit)->_path;
 	  torsions = 
-	    GetTorsion(path[0], path[1], path[2], path[3]) +
-	    GetTorsion(path[1], path[2], path[3], path[4]) +
-	    GetTorsion(path[2], path[3], path[4], path[5]) +
-	    GetTorsion(path[3], path[4], path[5], path[0]) +
-	    GetTorsion(path[4], path[5], path[0], path[1]) +
-	    GetTorsion(path[5], path[0], path[1], path[2]) / 6.0;
+	    ( abs(GetTorsion(path[0], path[1], path[2], path[3])) +
+	      abs(GetTorsion(path[1], path[2], path[3], path[4])) +
+	      abs(GetTorsion(path[2], path[3], path[4], path[5])) +
+	      abs(GetTorsion(path[3], path[4], path[5], path[0])) +
+	      abs(GetTorsion(path[4], path[5], path[0], path[1])) +
+	      abs(GetTorsion(path[5], path[0], path[1], path[2])) ) / 6.0;
 	  if (torsions <= 12.0)
 	    {
 	      for (ringAtom = 0; ringAtom != path.size(); ringAtom++)

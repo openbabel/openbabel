@@ -333,6 +333,8 @@ public:
     unsigned int  MemberOfRingSize()	  const;
     //! The smallest angle of bonds to this atom
     double	  SmallestBondAngle();
+    //! The average angle of bonds to this atom
+    double	  AverageBondAngle();
     //! The sum of the bond orders of the bonds to the atom (i.e. double bond = 2...)
     unsigned int  BOSum()                 const;
     //! The sum of the bond orders of bonds to the atom, considering only KDouble, KTriple bonds
