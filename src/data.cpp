@@ -228,11 +228,11 @@ double OBElementTable::GetMass(int atomicnum)
 
 int OBElementTable::GetAtomicNum(const char *sym)
 {
-  unsigned short temp;
+  int temp;
   return GetAtomicNum(sym, temp);
 }
 
-int OBElementTable::GetAtomicNum(const char *sym, unsigned short &iso)
+int OBElementTable::GetAtomicNum(const char *sym, int &iso)
 {
     if (!_init)
         Init();
@@ -251,7 +251,8 @@ int OBElementTable::GetAtomicNum(const char *sym, unsigned short &iso)
         iso = 3;
         return(1);
     }
-
+		else
+			iso = 0;
     return(0);
 }
 
