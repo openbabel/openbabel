@@ -1,3 +1,8 @@
+2005-01-06  Geoffrey Hutchison  <ghutchis@geoffhutchison.net>
+
+	* src/main.cpp, src/obconversion.cpp, src/obconversion.h: Updated
+	files from Chris Morley.
+
 2005-01-01  Geoffrey Hutchison  <ghutchis@geoffhutchison.net>
 
 	* tools/obfit.cpp, tools/obgrep.cpp, tools/obprop.cpp,
