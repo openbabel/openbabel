@@ -1,4 +1,28 @@
- 003-03-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+2003-03-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/Makefile.in: Add support for the isotopes.txt -> .h
+	conversion.
+
+	* src/mol.h: Add support for storing atomic isotopes and
+	"exact mass" methods.
+
+	* src/mol.cpp (GetExactMass): New method, using isotope table.
+	
+	* src/atom.cpp: Add support for atomic isotopes, including
+	modifications to SetType methods to ensure deuterium isotopes
+	translate into the correct type.
+
+	* src/data.h, src/data.cpp: Add new OBIsotopeTable for obtaining
+	exact masses of given element/isotope combinations.
+	(OBElementTable::GetAtomicNum): Expand to return isotope for the
+	case where a "D" or "T" symbol is passed to the table.
+
+	* src/isotope.txt, src/isotope.h: Update to include atomic numbers
+	at the beginning of each line so ParseLine() knows "where it is."
+
+	* src/report.cpp: Add output of molecular weight and exact mass.
+	
+2003-03-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/mopac.cpp (ReadMOPAC): Fix problems with MOPAC partial
 	charges not translating to other formats. (PR#660364)
