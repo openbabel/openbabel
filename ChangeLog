@@ -1,3 +1,9 @@
+2003-12-17  Fabien Fontaine <ffontaine@imim.es>
+	* src/typer.cpp (AssignImplicitValence)
+	Fix protonation of amines bug due to spin multiplicity assignment 
+	move spin multiplicity lines of CM to OBMol::AssignSpinMultiplicity();
+	Add spin multiplicity flag  and related functions in mol.h
+	
 2003-12-08  Fabien Fontaine <ffontaine@imim.es>
 	* src/mol.cpp (DeleteNonPolarHydrogens): uncomment "IncrementMod();"
 	to avoid _c initialization when Deleting atoms
