@@ -1,3 +1,10 @@
+2003-09-21  Peter Murray-Rust pm286@cam.ac.uk
+
+	* src/cml.cpp removed inconsistences between atomRef, atomRef1,
+    atomRef2, and atomRefs2 attributes.
+    * test/cmltest/cs2a.cml changed atomRefs1 and atomRefs2 attributes to atomRef
+    * test/cmltest/test.bat minor edits to allow echo
+    
 2003-09-14  Michael Banck <mbanck@gmx.net>
 
 	* src/povray.cpp: Removed getlogin() declaration.

@@ -5,7 +5,7 @@ REM %2 is inputfile suffix
 REM %3 is inputfile type
 REM e.g. roundtrip foo mol mdl
 
-set BABEL=..\src\babel
+set BABEL=..\..\src\babel
 
 @echo on
 REM CML1 output

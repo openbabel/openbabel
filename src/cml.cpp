@@ -214,10 +214,9 @@ string STMML_ELEMENT_NAMES = "action actionList alternative annotation array app
 
 const char* C_ATOMID           = "atomID";
 const char* C_ATOMREF          = "atomRef";
-const char* C_ATOMREF1        = "atomRef1";
-const char* C_ATOMREF2        = "atomRef2";
+const char* C_ATOMREF1         = "atomRef1";
+const char* C_ATOMREF2         = "atomRef2";
 const char* C_ATOMREFS         = "atomRefs";
-const char* C_ATOMREFS1        = "atomRefs1";
 const char* C_ATOMREFS2        = "atomRefs2";
 const char* C_ATOMREFS3        = "atomRefs3";
 const char* C_ATOMREFS4        = "atomRefs4";
@@ -640,7 +639,7 @@ bool useBuiltin;
 
 bool inputNamespace;
 char *inputPrefix;
-bool inputArray;
+bool inputArray = false;
 
 string cmlType = "";
 bool outputCML1;
@@ -2513,7 +2512,12 @@ bool processBondBuiltin() {
 	return true;
 }
 
-
+/** CML1 with arrays
+  <bondArray>
+    <floatArray builtin="foo">1 2 3 4</floatArray>
+  </bondArray>
+  this processes the floatArray, etc.
+  */
 bool processBondArrayChild() {
 	vector <string> strings;
 
@@ -2633,7 +2637,7 @@ bool WriteBond(ostream &ofs, OBBond* bond) {
 
 bool startBondArray(vector <pair<string,string> > &atts) {
 	vector <string> sv;
-	string atomRef1 = getAttribute(atts, C_ATOMREFS1);
+	string atomRef1 = getAttribute(atts, C_ATOMREF1);
 	if (atomRef1 == _EMPTY) {
         return false;
     }
@@ -2648,7 +2652,7 @@ bool startBondArray(vector <pair<string,string> > &atts) {
         return false;
     }
 	processStringTokens(atomRef1Vector, mynbonds, atomRef1);
-	processStringTokens(atomRef2Vector, mynbonds, getAttribute(atts,  C_ATOMREFS2));
+	processStringTokens(atomRef2Vector, mynbonds, getAttribute(atts, C_ATOMREF2));
 	processStringTokens(orderVector, mynbonds, getAttribute(atts, C_ORDER));
 	processStringTokens(stereoVector, mynbonds, getAttribute(atts, C_STEREO));
     nbonds = mynbonds;
@@ -2656,7 +2660,7 @@ bool startBondArray(vector <pair<string,string> > &atts) {
 }
 
 bool endBondArray() {
-	if (/*cmlType == C_CML2 || */inputArray) {
+	if (inputArray) {
 		if (atomRef1Vector.size() == 0 ||
 			atomRef2Vector.size() == 0) {
 		  cmlError("atomRef arrays must be given for bonds");
@@ -2715,13 +2719,13 @@ bool WriteBondArray(ostream &ofs) {
             ofs << endl;
 
             writeStartTagStart(ofs, C_STRINGARRAY);
-            writeAttribute(ofs, C_BUILTIN, C_ATOMREF1);
+            writeAttribute(ofs, C_BUILTIN, C_ATOMREF);
             writeStartTagEnd(ofs);
 			ofs << atomRef1Array;
             writeEndTag(ofs, C_STRINGARRAY);
 
             writeStartTagStart(ofs, C_STRINGARRAY);
-            writeAttribute(ofs, C_BUILTIN, C_ATOMREF2);
+            writeAttribute(ofs, C_BUILTIN, C_ATOMREF);
             writeStartTagEnd(ofs);
 			ofs << atomRef2Array;
             writeEndTag(ofs, C_STRINGARRAY);
