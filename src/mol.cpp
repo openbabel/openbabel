@@ -2493,8 +2493,8 @@ bool OBMol::Has2D()
   hasX = hasY = false;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
-      if (!hasX && atom->x() != 0.0) hasX = true;
-      if (!hasY && atom->y() != 0.0) hasY = true;
+      if (!hasX && !IsNearZero(atom->x())) hasX = true;
+      if (!hasY && !IsNearZero(atom->y())) hasY = true;
 
       if (hasX && hasY) return(true);
     }
@@ -2511,9 +2511,9 @@ bool OBMol::Has3D()
   if (this->_c == NULL) return(false);
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
-      if (!hasX && atom->x() != 0.0) hasX = true;
-      if (!hasY && atom->y() != 0.0) hasY = true;
-      if (!hasZ && atom->z() != 0.0) hasZ = true;
+      if (!hasX && !IsNearZero(atom->x())) hasX = true;
+      if (!hasY && !IsNearZero(atom->y())) hasY = true;
+      if (!hasZ && !IsNearZero(atom->z())) hasZ = true;
 
       if (hasX && hasY && hasZ) return(true);
     }
@@ -2596,6 +2596,7 @@ bool WriteTitles(ostream &ofs, OBMol &mol)
 void OBMol::ConnectTheDots(void)
 {
   if (Empty()) return;
+  if (!Has3D()) return; // not useful on 2D structures
 
   int j,k,max;
   bool unset = false;
@@ -2709,6 +2710,9 @@ void OBMol::ConnectTheDots(void)
   rings to "clean up." */
 void OBMol::PerceiveBondOrders()
 {
+  if (Empty()) return;
+  if (!Has3D()) return; // not useful on 2D structures
+
   OBAtom *atom, *b, *c;
   vector3 v1, v2;
   int angles;
@@ -2972,7 +2976,7 @@ void OBMol::PerceiveBondOrders()
 	      if ( (b->GetHyb() == 1 || b->GetValence() == 1)
 		   && b->BOSum() + 2 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
 		   && (currentElNeg > maxElNeg ||
-		       (currentElNeg == maxElNeg
+		       (IsNear(currentElNeg,maxElNeg)
 			&& (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
 		  if (b->HasNonSingleBond() || 
@@ -3004,7 +3008,7 @@ void OBMol::PerceiveBondOrders()
 	      if ( (b->GetHyb() == 2 || b->GetValence() == 1)
 		   && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
 		   && (currentElNeg > maxElNeg ||
-                      (currentElNeg == maxElNeg
+		       (IsNear(currentElNeg,maxElNeg)
                        && (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
 		  if (b->HasNonSingleBond() ||
