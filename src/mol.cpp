@@ -1725,8 +1725,13 @@ int GetCurrentValence(OBAtom *atom)
   OBBond *bond;
   vector<OBEdgeBase*>::iterator i;
   for (bond = atom->BeginBond(i);bond;bond = atom->NextBond(i))
-  if (bond->IsKDouble()) count++;
-  else if (bond->IsKTriple()) count += 2;
+    {
+      if (bond->IsKDouble()) count++;
+      else if (bond->IsKTriple()) count += 2;
+      //      else if (bond->IsSingle()) count++;
+      //      else if (bond->IsDouble()) count += 2;
+      //      else if (bond->IsTriple()) count += 3;
+    }
   return(count);
 }
 
@@ -1744,7 +1749,12 @@ bool ExpandKekule(OBMol &mol, vector<OBNodeBase*> &va,
           if (((OBAtom*)*j)->IsOxygen() && ((OBAtom*)*j)->GetValence() == 1)
 	    continue;
           if (GetCurrentValence((OBAtom*)*j) != maxv[(*j)->GetIdx()])
-	    return(false);
+	    {
+	      cout << " ExpandKekule atom: " << ((OBAtom*)*j)->GetIdx() 
+		   << " valence is " << (GetCurrentValence((OBAtom*)*j)) 
+		   << " should be " << maxv[(*j)->GetIdx()] << endl;
+	      return(false);
+	    }
         }
       return(true);
     }
@@ -1778,11 +1788,13 @@ bool ExpandKekule(OBMol &mol, vector<OBNodeBase*> &va,
   //try setting a double bond
   if (GetCurrentValence(atom) < maxv[atom->GetIdx()]) 
     {
-	  for (j = vb.begin();j != vb.end();j++)
+      for (j = vb.begin();j != vb.end();j++)
         {
           nbr = ((OBBond *)*j)->GetNbrAtom(atom);
           if (GetCurrentValence(nbr) <= maxv[nbr->GetIdx()])
             {
+	      cout << "trying a 2 bond on atom " << atom->GetIdx()
+		   << "to atom " << nbr->GetIdx() << endl;
               ((OBBond*)*j)->SetKDouble();
               ((OBBond*)*j)->SetBO(2);
               if (ExpandKekule(mol,va,i+1,maxv,secondpass)) return(true);
@@ -1847,6 +1859,7 @@ bool ExpandKekule(OBMol &mol, vector<OBNodeBase*> &va,
       ((OBBond*)*j)->SetBO(5);
     }
 
+  cout << "failed to find valid solution " << endl;
   return(false);
 }
 
@@ -2009,8 +2022,11 @@ bool OBMol::PerceiveKekuleBonds()
 
           //try it first without protonating aromatic nitrogens
           if (!ExpandKekule(*this,va,va.begin(),maxv,false) && 
-			  !ExpandKekule(*this,va,va.begin(),maxv,true)) 
-			  result = false;
+	      !ExpandKekule(*this,va,va.begin(),maxv,true)) 
+	    {
+	      result = false;
+	      cerr << " Died on atom " << atom->GetIdx() << endl;
+	    }
         }
 
   if (!result)
@@ -2028,6 +2044,8 @@ bool OBMol::Kekulize()
   vector<OBEdgeBase*>::iterator i;
   // Not quite sure why this is here -GRH 2003
   //  if (NumAtoms() > 255) return(false);
+
+  cout << " in Kekulize " << endl;
 
   for (bond = BeginBond(i);bond;bond = NextBond(i))
     if (bond->IsKSingle())      bond->SetBO(1);
@@ -2612,7 +2630,7 @@ bool WriteTitles(ostream &ofs, OBMol &mol)
 void OBMol::ConnectTheDots(void)
 {
   if (Empty()) return;
-  if (!Has3D()) return; // not useful on 2D structures
+//  if (!Has3D()) return; // not useful on 2D structures
 
   int j,k,max;
   bool unset = false;
@@ -2727,7 +2745,7 @@ void OBMol::ConnectTheDots(void)
 void OBMol::PerceiveBondOrders()
 {
   if (Empty()) return;
-  if (!Has3D()) return; // not useful on 2D structures
+  //  if (!Has3D()) return; // not useful on 2D structures
 
   OBAtom *atom, *b, *c;
   vector3 v1, v2;
@@ -2921,7 +2939,10 @@ void OBMol::PerceiveBondOrders()
   //  as potentially aromatic
 
   // This doesn't work perfectly, but it's pretty decent.
-  // (And most of the problems lie in the Kekulization procedure anyway.)
+  //  Need to have a list of SMARTS patterns for common rings
+  //  which would "break ties" on complicated multi-ring systems
+  // (Most of the current problems lie in the interface with the 
+  //   Kekulize code anyway, not in marking everything as potentially aromatic)
 
   bool typed; // has this ring been typed?
   unsigned int loop, loopSize;
@@ -2935,7 +2956,8 @@ void OBMol::PerceiveBondOrders()
 	  for(loop = 0; loop < loopSize; loop++)
 	    {
 	      atom = GetAtom(path[loop]);
-	      if(atom->HasNonSingleBond() || atom->GetHyb() != 2)
+	      if(atom->HasBondOfOrder(2) || atom->HasBondOfOrder(3)
+		 || atom->GetHyb() != 2)
 		{
 		  typed = true;
 		  break;
@@ -2945,12 +2967,14 @@ void OBMol::PerceiveBondOrders()
 	  if (!typed)
 	    for(loop = 0; loop < loopSize; loop++)
 	      {
+		cout << " set aromatic " << path[loop] << endl;
 		(GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
 		(GetBond(path[loop], path[(loop+1) % loopSize]))->UnsetKekule();
 	      }
 	}
     }
   _flags &= (~(OB_KEKULE_MOL));
+  cout << " calling Kekulize " << endl;
   Kekulize();
 
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity
@@ -3039,13 +3063,14 @@ void OBMol::PerceiveBondOrders()
 	  if (c)
 	    (atom->GetBond(c))->SetBO(2);
 	}
-  } // pass 6
+ } // pass 6
 
   // Now let the atom typer go to work again
   _flags &= (~(OB_HYBRID_MOL));
   _flags &= (~(OB_KEKULE_MOL));
   _flags &= (~(OB_AROMATIC_MOL));
   _flags &= (~(OB_ATOMTYPES_MOL));
+  _flags &= (~(OB_IMPVAL_MOL));
   //  EndModify(true); // "nuke" perceived data
 }
 
