@@ -1,3 +1,16 @@
+2004-01-27  Michael Banck  <mbanck@gmx.net>
+
+	* configure.in: Rename defined directory DATADIR to BABEL_DATADIR,
+	to avoid problems with other programs. Closes: #885828.
+	* configure: Regenerated.
+	* src/babelconfig.h.in: Regenerated.
+	* src/bondtyper.cpp: Rename _dir from DATADIR to BABEL_DATADIR.
+	* src/data.cpp: Likwise.
+	* src/pdb.cpp: Likewise.
+	* src/phmodel.cpp: Likewise.
+	* src/rotor.cpp: Likewise.
+	* src/typer.cpp: Likewise.
+
 2003-12-17  Fabien Fontaine <ffontaine@imim.es>
 	* src/typer.cpp (AssignImplicitValence)
 	Fix protonation of amines bug due to spin multiplicity assignment 

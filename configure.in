@@ -8,7 +8,7 @@ AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of Open
 
 AC_CANONICAL_HOST
 
-AC_DEFINE_DIR([DATADIR], [datadir/AC_PACKAGE_NAME], [Where the data files are located])
+AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_NAME], [Where the data files are located])
 
 dnl Checks for programs.
 AC_PROG_CC

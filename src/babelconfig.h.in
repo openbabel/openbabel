@@ -1,10 +1,10 @@
 /* src/babelconfig.h.in.  Generated from configure.in by autoheader.  */
 
+/* Where the data files are located */
+#undef BABEL_DATADIR
+
 /* The version of Open Babel */
 #undef BABEL_VERSION
-
-/* Where the data files are located */
-#undef DATADIR
 
 /* Define to 1 if the system has the type `clock_t'. */
 #undef HAVE_CLOCK_T

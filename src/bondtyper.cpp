@@ -34,7 +34,7 @@ OBBondTyper  bondtyper;
 OBBondTyper::OBBondTyper()
 {
   _init = false;
-  _dir = DATADIR;
+  _dir = BABEL_DATADIR;
   _envvar = "BABEL_DATADIR";
   _filename = "bondtyp.txt";
   _subdir = "data";

@@ -766,7 +766,7 @@ OBRotorRules::OBRotorRules()
 {
   _quiet=false;
   _init = false;
-  _dir = DATADIR;
+  _dir = BABEL_DATADIR;
   _envvar = "BABEL_DATADIR";
   _filename = "torlib.txt";
   _subdir = "omega";
