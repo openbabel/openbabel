@@ -569,6 +569,7 @@ io_type TextToType(string typestring)
   else if (typestring == "PCMODEL")		return(PCMODEL);
   else if (typestring == "JAGUARIN")		return(JAGUARIN);
   else if (typestring == "JAGUAROUT")		return(JAGUAROUT);
+  else if (typestring == "PQS")                 return(PQS);
   else if (typestring == "REPORT")		return(REPORT);
   else if (typestring == "MSF")			return(MSF);
   else if (typestring == "SCHAKAL")		return(SCHAKAL);

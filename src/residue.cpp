@@ -26,20 +26,33 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 // File Includes
 ///////////////////////////////////////////////////////////////////////////////
 
+#include "babelconfig.h"
+
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
+
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
+#endif
 
 #include "mol.h"
 #include "bitvec.h"
 
 using namespace std;
 
+namespace OpenBabel {
 /** \class OBResidue
-    \brief Residue information.
+    \brief Residue information
 
     The residue information is drawn from PDB or MOL2 files,
     and are stored in the OBResidue class. OBResidues are stored inside the 
-    OBAtom class. The residue information for an atom can be requested in 
+    OBAtom class and OBMol classes. 
+    The residue information for an atom can be requested in 
     the following way:
 \code
  OBAtom *atom;
@@ -47,8 +60,15 @@ using namespace std;
  atom = mol.GetAtom(1);
  r = atom->GetResidue();
 \endcode
-
+    The residue information for a molecule can be manipulated too:
+\code
+  cout << "This molecule has " << mol.NumResidues() << " residues." << endl;
+  OBResidue *r;
+  r = mol.GetResidue(1);
+\endcode
 */
+
+} // end namespace OpenBabel
 
 ///////////////////////////////////////////////////////////////////////////////
 // Global Definitions

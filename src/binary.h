@@ -22,7 +22,12 @@ GNU General Public License for more details.
 
 #include <vector>
 #include <map>
+
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
+#endif
 
 #include "mol.h"
 #include "rotor.h"
@@ -61,23 +66,23 @@ public:
     // Support for internal storage of base coordinate sets that
     // rotamers operate on
 
-    // Create a conformer list using the internal base set of coordinates
+    //! Create a conformer list using the internal base set of coordinates
     std::vector<double*> CreateConformerList(OBMol& mol);
 
-    // Copies the mol's conformers (the coordinates, NOT the pointers)
-    // into the object as base coordinates
+    //! Copies the mol's conformers (the coordinates, NOT the pointers)
+    //! into the object as base coordinates
     void SetBaseCoordinateSets(OBMol& mol) {
         SetBaseCoordinateSets(mol.GetConformers(),mol.NumAtoms());
     } 
 
-    // Copies the coordinates in bc, NOT the pointers, into the object
+    //! Copies the coordinates in bc, NOT the pointers, into the object
     void SetBaseCoordinateSets(std::vector<double*> bc, unsigned int N); 
 
     unsigned int NumBaseCoordinateSets() const {
         return (unsigned int)_c.size();
     }
 
-    //Get a pointer to a specific base pointer
+    //! Get a pointer to a specific base pointer
     double *GetBaseCoordinateSet(unsigned int i) {
         return (i<_c.size()) ? _c[i] : NULL;
     }
@@ -85,7 +90,7 @@ public:
     unsigned int NumAtoms() const { return _NBaseCoords; }
 };
 
-
+//! \brief Store a compressed binary database of OBMol as OEBinary files
 class OBBinaryDBase
 {
     std::ifstream		 _ifs;

@@ -26,6 +26,7 @@ namespace OpenBabel {
 
 extern OBAtomTyper atomtyper;
 
+//! \brief Table of common protein residues in PDB files
 class OBResidueData : public OBGlobalDataBase
 {
     int                                _resnum;

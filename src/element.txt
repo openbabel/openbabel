@@ -15,7 +15,7 @@
 #   - maximum bond valence						     #
 #   - IUPAC recommended atomic masses (in amu)				     #
 #   - electronegativity							     #
-#   - RGB values (ignored)						     #
+#   - RGB values (currently ignored)					     #
 #                                                                            #
 ##############################################################################
 # Num	Symb	RCov	RBO	RVdW	Max Bnd	Mass		ElNeg.	Red	Green	Blue

@@ -40,13 +40,22 @@ int main(int argc,char *argv[])
 
   cout << endl << "Testing RINGS..." << endl;
   
+#ifdef TESTDATADIR
+  string testdatadir = TESTDATADIR;
+  string results_file = testdatadir + "ringresults.txt";
+  string smilestypes_file = testdatadir + "attype.00.smi";
+#else
+  string results_file = "ringresults.txt";
+  string smilestypes_file = "attype.00.smi";
+#endif
+
   std::ifstream mifs;
-  if (!SafeOpen(mifs,"attype.00.smi")) {
+  if (!SafeOpen(mifs, (char*)smilestypes_file.c_str())) {
     return -1; // test failed
   }
 
   std::ifstream rifs;
-  if (!SafeOpen(rifs,"ringresults.txt")) {
+  if (!SafeOpen(rifs, (char*)results_file.c_str())) {
     return -1; // test failed
   }
 

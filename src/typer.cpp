@@ -397,6 +397,20 @@ void OBAtomTyper::CorrectAromaticNitrogens(OBMol &mol)
 	atom->SetImplicitValence(3);
 }
 
+/*! \class OBAromaticTyper
+  \brief Assigns aromatic typing to atoms and bonds
+
+  The OBAromaticTyper class is designed to read in a list of 
+  aromatic perception rules and apply them to molecules. The code 
+  that performs typing is not usually used directly -- it is usually 
+  done automatically when their corresponding values are requested of atoms 
+  or bonds.
+\code
+  atom->IsAromatic();
+  bond->IsAromatic();
+  bond->IsDouble(); // needs to check aromaticity and define Kekule structures
+\endcode
+*/
 OBAromaticTyper::OBAromaticTyper()
 {
   _init = false;
@@ -659,8 +673,6 @@ void OBAromaticTyper::SelectRootAtoms(OBMol &mol, bool avoidInnerRingAtoms)
 	    // count the number of neighbor ring atoms
 	    atom = mol.GetAtom(rootAtom);
 	    ringNbrs = heavyNbrs = 0;
-
-	    cout << " in avoid inner root atoms " << endl;
 
 	    for (nbr = atom->BeginNbrAtom(l);nbr;nbr = atom->NextNbrAtom(l))
 	      {

@@ -34,6 +34,7 @@ GNU General Public License for more details.
 #include <fstream.h>
 #endif
 
+//! \brief Custom ifstream with safe getline implementation
 class obifstream : public std::ifstream
 {
 public:

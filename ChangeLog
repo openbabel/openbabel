@@ -1,10 +1,172 @@
-004-02-12 Fabien Fontaine <ffontaine@imim.es>
+2004-02-29  Michael Banck  <mbanck@gmx.net>
+
+	Merged changes from openbabel-1-100-x branch back into HEAD.
+
+	* src/pqs.cpp: New file.
+	* NEWS: Updated from 1.100.2 release.
+	* ChangeLog: Fixed some tabs.
+
+2004-02-10  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* configure, configure.in: Update with notes on versioning for
+	shared library support.
+
+	* src/Makefile.ac, src/Makefile.in: Apply specific 0:0:0 current
+	version for shared libopenbabel -- change this as appropriate for
+	new versions. See libtool manual for more information on what
+	versions are needed for revisions, backwards incompatibility, etc.
+	
+2004-02-18  Michael Banck  <mbanck@gmx.net>
+
+	* src/pqs.cpp: Include <strings.h>, if available.
+
+2004-02-17  Michael Banck  <mbanck@gmx.net>
+
+	* configure.in (AC_INIT): Changed PACKAGE_NAME to 'OpenBabel'.
+	Additionally specifiy PACKAGE_TARNAME as 'openbabel'.
+	(AM_INIT_AUTOMAKE): Removed deprecated arguments PACKAGE and
+	VERSION.
+	(AC_DEFINE_DIR): Use AC_PACKAGE_TARNAME instead of
+	AC_PACKAGE_NAME.
+	* configure: Regenerated.
+
+2004-02-10  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* src/mol.cpp: Documentation updates.
+
+	* NEWS, THANKS: Updates for 1.100.2 release.
+
+	* aromatic.txt, aromatic.txt: Minor updates for aromaticity of
+	various heteroatoms.
+
+	* element.txt: * Minor documentation update.
+
+2004-02-14  Michael Banck  <mbanck@gmx.net>
+
+	* src/base.cpp [HAVE_CONFIG_H]: Removed the conditional around
+	#include babelconfig.h (reverted patch).
+	* src/bgf.cpp, src/data.cpp, src/gromos96.cpp, src/main.cpp,
+	src/newmain.cpp, src/oberror.cpp, src/obutil.cpp, src/patty.cpp,
+	src/pdb.cpp, src/phmodel.cpp, src/povray.cpp, src/residue.cpp,
+	src/rotor.cpp, src/typer.cpp, src/base.h, src/bitvec.h, src/crk.h,
+	src/data.h, src/fileformat.h, src/grid.h, src/mol.h,
+	src/obifstream.h, src/obutil.h: Likewise.
+	
+2004-02-13  Michael Banck  <mbanck@gmx.net>
+
+	* configure.in (AM_INIT_AUTOMAKE): Added 'no-define', to prevent
+	defines for PACKAGE and VERSION in src/babelconfig.h.in, which
+	would confuse other projects.
+	* configure: Regenerated.
+	* src/babelconfig.h.in: Regenerated.
+
+2004-02-12 Fabien Fontaine <ffontaine@imim.es>
 
 	* tools/obgrep.cpp: -t NUM option added to control 
 	the number of match in each molecule
 	*tools/obprop.cpp: new tools added to compute and print 
 	simple molecular properties for non C++ programmers
 	
+2004-02-10  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* configure, configure.in: Change --enable-shared to the
+	default. Build shared libraries except where specified by the
+	user.
+	
+2004-02-10  Michael Banck  <mbanck@gmx.net>
+
+	* test/cmltest/Makefile.am (EXTRA_DIST): Removed auto-generated 
+	.cml files.
+	* test/cmltest/Makefile: Regenerated.
+
+2004-02-09  Michael Banck  <mbanck@gmx.net>
+
+	* src/base.cpp [HAVE_CONFIG_H]: New conditional, wrap babelconfig.h
+	#include into it.
+	* src/bgf.cpp, src/data.cpp, src/gromos96.cpp, src/main.cpp,
+	src/newmain.cpp, src/oberror.cpp, src/obutil.cpp, src/patty.cpp,
+	src/pdb.cpp, src/phmodel.cpp, src/povray.cpp, src/residue.cpp,
+	src/rotor.cpp, src/typer.cpp, src/base.h, src/bitvec.h, src/crk.h,
+	src/data.h, src/fileformat.h, src/grid.h, src/mol.h,
+	src/obifstream.h, src/obutil.h: Likewise.
+
+2004-02-09  Michael Banck  <mbanck@gmx.net>
+
+	* src/base.cpp: Include babelconfig.h.
+	* src/base.h: Likewise.
+	* src/crk.h: Likewise.
+	* src/data.h: Likewise.
+	* src/fileformat.h: Likewise.
+	* src/main.cpp: Likewise.
+	* src/oberror.cpp: Likewise.
+	* src/residue.cpp: Likewise.
+
+2004-02-08  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* src/mol.cpp, src/qchem.cpp, src/gaussian.cpp, src/report.cpp:
+	Improved support for spin multiplicity and total charge --
+	calculate from atomic formal charges and spin multiplicities where
+	not specified.
+
+	* Doxyfile, src/base.cpp, src/base.h, src/binary.cpp,
+	src/binary.h, src/chains.cpp, src/chains.h, src/data.h,
+	src/generic.cpp, src/generic.h, src/grid.h, src/mol.h,
+	src/oberror.h, src/obifstream.h, src/obutil.h, src/parsmart.h,
+	src/parsmi.cpp, src/pdb.cpp, src/phmodel.cpp, src/phmodel.h,
+	src/residue.cpp, src/rotor.cpp, src/typer.cpp, src/typer.h:
+	Updated documentation for generation by doxygen.
+
+2004-02-07  Michael Banck  <mbanck@gmx.net>
+
+	* src/math/matrix3x3.h [ __sgi]: Removed and...
+	[HAVE_IOSTRAM], [HAVE_FSTREAM]: Replaced with this.
+	* src/math/vector3.h: Likewise.
+	* src/base.cpp [#include <iostream>]: Removed and...
+	[HAVE_IOSTREAM, HAVE_IOSTREAM_H]: Replaced with this.
+	* src/base.h: Likewise.
+	* src/crk.h: Likewise.
+	* src/data.h: Likewise.
+	* src/fileformat.h: Likewise.
+	* src/main.cpp: Likewise.
+	* src/mol.h: Likewise.
+	* src/oberror.cpp: Likewise.
+	* src/oberror.h: Likewise.
+	* src/obutil.h: Likewise.
+	* src/residue.cpp: Likewise.
+	* src/base.cpp [#include <fstream>]: Removed and...
+	[HAVE_FSTREAM, HAVE_FSTREAM_H]: Replaced with this.
+	* src/binary.h: Likewise.
+	* src/crk.h: Likewise.
+	* src/data.h: Likewise.
+	* src/fileformat.h: Likewise.
+	* src/main.cpp: Likewise.
+	* src/mol.h: Likewise.
+	* src/residue.cpp: Likewise.
+
+2004-02-06  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* Doxyfile, doc/Doxyfile-man: Updated for 1.100.2 release and for
+	newer doxygen versions.
+
+	* src/base.cpp: Doxygen doc updates. Should produce links to key
+	classes in intro page.
+
+	* src/base.h, src/generic.cpp, src/mol.cpp, src/mol.h,
+	src/math/matrix3x3.cpp, src/math/vector3.cpp: Documentation updates.
+	
+	* src/data.cpp, src/data.h, src/extable.txt, src/extable.h,
+	src/fileformat.cpp, src/fileformat.h: Updates for PQS format,
+	contributed by Pawel Wolinski <pwolinsk@uark.edu>.
+
+	* src/pqs.cpp: New code, as above.
+
+	* src/typer.h: Turn on root-atom detection via SelectRootAtoms.
+	
+	* test/smartstest.txt, test/attype.00.smi: Add new tests for ring
+	and SMARTS testing.
+
+	* test/ringresults.txt, test/smartsresults.txt: Regenerated.
+
 2004-02-06  Michael Banck  <mbanck@gmx.net>
 
 	* src/cml.cpp (debug): Fix loop control variable j.
@@ -15,10 +177,22 @@
 	* tools/obgrep.cpp: -n option added to print 
 	the name of the matched molecules only
 
+2004-02-02  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* src/mdl.cpp (WriteSDFile): Add support for wedge/hatch, as
+	contributed by Eugen Leitl. 
+
+	* src/typer.cpp: Remove debugging information used for
+	SelectRootAtoms development. (oops!)
+
+	* configure, aclocal.m4, */Makefile.am, */Makefile.in: Regenerated
+	using autoconf 2.59, automake 1.8.2, libtool 1.5.2 to prevent recent
+	problems linking on Mac OS X.
+
 2004-01-31  Michael Banck  <mbanck@gmx.net>
 
-        * src/crk.cpp (WriteCRK): Rename loop variable from n to m.
-        Contributed by Chris Morley <c.morley@gaseq.co.uk>.
+	* src/crk.cpp (WriteCRK): Rename loop variable from n to m.
+	Contributed by Chris Morley <c.morley@gaseq.co.uk>.
 
 2004-01-27  Michael Banck  <mbanck@gmx.net>
 
@@ -32,6 +206,44 @@
 	* src/phmodel.cpp: Likewise.
 	* src/rotor.cpp: Likewise.
 	* src/typer.cpp: Likewise.
+
+2004-01-16  Michael Banck  <mbanck@gmx.net>
+
+	* test/Makefile.am (TESTS): Run test-scripts with absolute path
+	$(top_srcdir)/test/, as they are not present in the current
+	directory when building in a builddir.
+	(SUBDIRS): New directive, including cmltest.
+	* test/Makefile.in: Regenerated.
+	* test/cmltest/Makefile.am: New file.
+	* test/cmltest/Makefile.in: New file, autogenerated.
+	* configure.in (AC_OUTPUT): Added test/cmltest/Makefile.
+	* configure: Regenerated.
+
+2004-01-16  Michael Banck  <mbanck@gmx.net>
+
+	Second and last pass of test-suite-in-builddir handling, fixing
+	the shell scripts.
+
+	* test/cml.sh: Export $srcdir and $builddir for use in the called
+	scripts. Prepend $cmltestdir to avoid absolute pathnames.
+	* test/cmltest/test.sh: Define $builddir and specify path to the
+	babel executable from there. Replace every absolute pathname
+	with relative ones.
+	* test/roundtrip.sh: Likewise.
+
+2004-01-13  Michael Banck  <mbanck@gmx.net>
+
+	First shot at making a test-suite run from a build-directory
+	possible.
+
+	* test/Makefile.am (AM_CPPFLAGS): Added -DTESTDATADIR, pointing
+	to $(srcdir)/test, where the test-suite data files are located.
+	* test/Makefile.in: Regenerated.
+	* test/ringtest.cpp: Use strings to handle the filenames. If
+	TESTDATADIR is defined, prepend it to the filename. Transform
+	the string to a char* when calling SafeOpen().
+	* test/smartstest.cpp: Likewise.
+	* test/unitcell.cpp: Likewise.
 
 2003-12-17  Fabien Fontaine <ffontaine@imim.es>
 	* src/typer.cpp (AssignImplicitValence)
@@ -93,7 +305,7 @@
 	* src/povray.cpp (CalcBoundingBox): Decouple declaration of 
 	`unsigned int i' from the for-loop. Contributed by Chris 
 	Morley.
- 
+	
 	* src/Makefile.am (libopenbabelinclude_HEADERS): Added 
 	babelconfig.h
 
@@ -297,23 +509,23 @@
 	* src/mol.h: Declare them.
 
 2003-09-25  Michael Banck  <mbanck@gmx.net>
- 
-        * src/mol.h (_internals): New protected class attribute.
+	
+	* src/mol.h (_internals): New protected class attribute.
 	(GetInternalCoord): New declaration.
-        (SetInternalCoord): New method.
+	(SetInternalCoord): New method.
 	(BeginInternalCoord): New method for iterating over _internals.
 	(NextInternalCoord): Likewise.
 
-        * src/mol.cpp (GetInternalCoord): New method.
+	* src/mol.cpp (GetInternalCoord): New method.
 
 2003-09-21  Peter Murray-Rust <pm286@cam.ac.uk>
 
 	* src/cml.cpp: removed inconsistences between atomRef, atomRef1,
-    	atomRef2, and atomRefs2 attributes.
-    	* test/cmltest/cs2a.cml: changed atomRefs1 and atomRefs2 attributes 
-        to atomRef
-    	* test/cmltest/test.bat: minor edits to allow echo
-    
+	atomRef2, and atomRefs2 attributes.
+	* test/cmltest/cs2a.cml: changed atomRefs1 and atomRefs2 attributes 
+	to atomRef
+	* test/cmltest/test.bat: minor edits to allow echo
+	
 2003-09-14  Michael Banck <mbanck@gmx.net>
 
 	* src/povray.cpp: Removed getlogin() declaration.
@@ -490,7 +702,7 @@
 	- Added -H switch for help().
 	- Reformatted usage() and help() output a bit.
 	- Print out an 'unrecognized option' error message when 
- 	  option parsing fails, in addition to usage().
+	  option parsing fails, in addition to usage().
 	
 2003-06-09  Michael Banck  <mbanck@gmx.net>
 
@@ -552,7 +764,7 @@
 
 	* configure.in: 
 	- Added AC_CONFIG_HEADER(src/babelconfig.h), along with
-    	  two cosmetic changes.
+		  two cosmetic changes.
 	- Define BABEL_VERSION and DATADIR directly. DATADIR is
 	  $datadir/openbabel (i.e. $pkgdatadir in automake) as before,
 	  $datadir can be specified normally as option to ./configure.
@@ -787,7 +999,7 @@
 	tolerance to 2e-6 solves the problem.
 	
 2003-01-15/16  Peter Murray-Rust <pm286@cam.ac.uk>
-               Vincent Favre-Nicolin <vincefn@users.sourceforge.net>
+	       Vincent Favre-Nicolin <vincefn@users.sourceforge.net>
 	
 	* Changes to compile using the free Borland C++ compiler 5.5.1:
 	a few fixes ISO C++ fixes, some #if's and added makefiles (bc32.mak)
@@ -1557,13 +1769,13 @@
 
 2002-01-18  Michael Banck  <mbanck@gmx.net>	
 
-        * Makefile.in, src/Makefile.in: Fixed install target. Removed
+	* Makefile.in, src/Makefile.in: Fixed install target. Removed
 	Primer.html, bin2hex.pl and GNULICENSE from datafiles. Added
 	datafiles to install: target.
 
-        * Makefile.in, src/data.cpp, src/Makefile.in, src/patty.cpp,
+	* Makefile.in, src/data.cpp, src/Makefile.in, src/patty.cpp,
 	src/pdb.cpp, src/phmodel.cpp, src/rotor.cpp, src/typer.cpp:
-        Openbabel now first checks for $BABEL_DATADIR, then looks in
+	Openbabel now first checks for $BABEL_DATADIR, then looks in
 	${pkgdatadir} and finally uses the compiled-in values to get the
 	relevant data.
 	

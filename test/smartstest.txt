@@ -56,3 +56,4 @@
 [C@@H]
 [c1ncccc1]
 [C1CCCC1]
+[CC]

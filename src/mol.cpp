@@ -67,9 +67,9 @@ extern OBAtomTyper      atomtyper;
  (or the C++ equivalent cin) and write a MOL2 format file out
  to standard out. Additionally, The input and output formats can
  be altered after declaring an OBMol by the member functions
- OBMol::SetInputType(enum io_type type) and
- OBMol::SetOutputType(enum io_type type),
- where the current values of enum io_type (defined in data.h) are
+ OBMol::SetInputType(enum #io_type type) and
+ OBMol::SetOutputType(enum #io_type type),
+ where the current values of enum #io_type (defined in data.h) are
  \code {      UNDEFINED,
               ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
               CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
@@ -298,7 +298,7 @@ void OBMol::ContigFragList(vector<vector<int> >&cfl)
 }
 
 /*!
-**\brief Fills the Generic OBTorsionData with torsions from the mol
+**\brief Fills the OBGeneric OBTorsionData with torsions from the mol
 */
 void OBMol::FindTorsions()
 {
@@ -456,8 +456,8 @@ void OBMol::FindChildren(vector<int> &children,int first,int second)
 }
 
 /*!
-**\brief calculates the graph theoretical distance of each atom
-** vector is indexed from zero
+**\brief Calculates the graph theoretical distance of each atom.
+** Vector is indexed from zero
 */
 bool OBMol::GetGTDVector(vector<int> &gtd)
      //calculates the graph theoretical distance for every atom 
@@ -503,11 +503,11 @@ bool OBMol::GetGTDVector(vector<int> &gtd)
 }
 
 /*!
-**\brief calculates a set of graph invariant index using
-** graph theoretical distance, number of connected heavy atoms,
+**\brief Calculates a set of graph invariant indexes using
+** the graph theoretical distance, number of connected heavy atoms,
 ** aromatic boolean, ring boolean, atomic number, and 
-** summation of bond orders connected to the atom
-** vector is indexed from zero
+** summation of bond orders connected to the atom.
+** Vector is indexed from zero
 */
 void OBMol::GetGIVector(vector<unsigned int> &vid)
 {
@@ -613,9 +613,9 @@ static void	CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,vector
 }
 
 /*!
-**\brief Calculates a set of symmetry identifiers for a mol.
-** Atoms with the same sym ident are symmetrically equivalent
-** vector is indexed from zero
+**\brief Calculates a set of symmetry identifiers for a molecule.
+** Atoms with the same symmetry ID are symmetrically equivalent.
+** Vector is indexed from zero
 */
 void OBMol::GetGIDVector(vector<unsigned int> &vgid)
 {
@@ -796,12 +796,57 @@ void OBMol::SetTotalCharge(int charge)
   _totalCharge = charge;
 }
 
+//! Returns the total molecular charge -- if it has not previously been set
+//!  it is calculated from the atomic formal charge information.
+//!  (This may or may not be correct!)
+//!  If you set atomic charges with OBAtom::SetFormalCharge()
+//!   you really should set the molecular charge with OBMol::SetTotalCharge()
 int OBMol::GetTotalCharge()
 {
   if(HasFlag(OB_TCHARGE_MOL))
     return(_totalCharge);
-  else
-    return 0;
+  else // calculate from atomic formal charges (seems the best default)
+    {
+      OBAtom *atom;
+      vector<OBNodeBase*>::iterator i;
+      int chg = 0;
+
+      for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+	chg += atom->GetFormalCharge();
+      return (chg);
+    }
+}
+
+void   OBMol::SetTotalSpinMultiplicity(unsigned int spin)
+{
+  SetFlag(OB_TSPIN_MOL);
+  _totalSpin = spin;
+}
+
+//! Returns the total spin multiplicity -- if it has not previously been set
+//!  it is calculated from the atomic spin multiplicity information
+//!  assuming the high-spin case (i.e. it simply sums the atomic spins,
+//!  making no attempt to pair spins).
+//!  However, if you set atomic spins with OBAtom::SetSpinMultiplicity()
+//!   you really should set the molecular spin with 
+//!   OBMol::SetTotalSpinMultiplicity()
+unsigned int OBMol::GetTotalSpinMultiplicity()
+{
+  if (HasFlag(OB_TSPIN_MOL))
+    return(_totalSpin);
+  else // calculate from atomic spin information (assuming high-spin case)
+    {
+      OBAtom *atom;
+      vector<OBNodeBase*>::iterator i;
+      unsigned int spin = 1;
+
+      for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+	{
+	  if (atom->GetSpinMultiplicity() > 1)
+	    spin += atom->GetSpinMultiplicity() - 1;
+	}
+      return (spin);
+    }
 }
 
 OBMol &OBMol::operator=(const OBMol &source)
@@ -1108,9 +1153,10 @@ void OBMol::DestroyBond(OBEdgeBase *bond)
     }
 }
 
+//! \brief Get a new atom to add to a molecule
+//! 
+//! Also checks bond_queue for any bonds that should be made to the new atom
 OBAtom *OBMol::NewAtom()
-     //add an atom to a molecule
-     //also checks bond_queue for any bonds that should be made to the new atom
 {
   BeginModify();
 
@@ -1167,9 +1213,10 @@ OBResidue *OBMol::NewResidue()
     return(obresidue);
 }
 
+//! \brief Add an atom to a molecule
+//!
+//! Also checks bond_queue for any bonds that should be made to the new atom
 bool OBMol::AddAtom(OBAtom &atom)
-     //add an atom to a molecule
-     //also checks bond_queue for any bonds that should be made to the new atom
 {
   BeginModify();
 
@@ -1285,8 +1332,8 @@ bool OBMol::AddResidue(OBResidue &residue)
     return(true);
 }
 
+//! Deletes all atoms except for the largest contiguous fragment
 bool OBMol::StripSalts()
-     //deletes all atoms except for the largest contiguous fragment
 {
   vector<vector<int> > cfl;
   vector<vector<int> >::iterator i,max;
@@ -2064,7 +2111,7 @@ bool OBMol::PerceiveKekuleBonds()
 	      !ExpandKekule(*this,va,va.begin(),maxv,true)) 
 	    {
 	      result = false;
-	      cerr << " Died on atom " << atom->GetIdx() << endl;
+	      //	      cerr << " Died on atom " << atom->GetIdx() << endl;
 	    }
         }
 
@@ -2243,7 +2290,6 @@ bool OBMol::DeleteBond(OBBond *bond)
 }
 
 void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)
-  // aligns atom a on p1 and atom b along p1->p2 vector
 {
   vector<int> children;
   
@@ -2427,7 +2473,6 @@ OBMol::~OBMol()
 }
 
 bool OBMol::HasData(string &s)
-     //returns true if the generic attribute/value pair exists
 {
   if (_vdata.empty()) return(false);
 

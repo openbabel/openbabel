@@ -2,7 +2,7 @@
 oberror.h - Handle error messages.
 
 Copyright (C) 2002 by Stefan Kebekus
-Some portions Copyright (c) 2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2003-2004 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -18,14 +18,20 @@ General Public License for more details.
 ***********************************************************************/
 
 
-#ifndef OB_error_H
-#define OB_error_H
+#ifndef OB_ERROR_H
+#define OB_ERROR_H
 
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
+
 #include <string>
 
 namespace OpenBabel {
 
+  //! \brief Customizable error handling and logging
 class OBError 
 {
  public:

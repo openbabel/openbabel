@@ -31,7 +31,14 @@ bool TestUnitCell()
   OBUnitCell cell, cell2;
   vector<vector3> v3Return;
 
-  if (!SafeOpen(ifs,"unitcell.txt")) return(false);
+#ifdef TESTDATADIR
+  string testdatadir = TESTDATADIR;
+  string unitcell_file = testdatadir + "unitcell.txt";
+#else
+  string unitcell_file = "unitcell.txt";
+#endif
+
+  if (!SafeOpen(ifs, (char*)unitcell_file.c_str())) return(false);
   ifs.getline(buffer,BUFF_SIZE);
   sscanf(buffer,"%f %f %f",&x, &y, &z);
   v1.Set(x, y, z);

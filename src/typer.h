@@ -7,9 +7,6 @@ Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
 
-This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
-
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
@@ -47,15 +44,16 @@ class OBAtomTyper : public OBGlobalDataBase
   void CorrectAromaticNitrogens(OBMol&);
 };
 
+// class introduction  in 
 class OBAromaticTyper : public OBGlobalDataBase
 {
-  std::vector<bool>             _vpa;   //potentially aromatic atoms
+  std::vector<bool>             _vpa;   //!< potentially aromatic atoms
   std::vector<bool>             _visit;
   std::vector<bool>             _root;
   std::vector<std::vector<int> >     _mlist;
-  std::vector<OBSmartsPattern*> _vsp;   //smarts of potentially aromatic atoms
-  std::vector<std::pair<int,int> >   _verange; //min and max number of electrons
-  std::vector<std::pair<int,int> >   _velec;   //num electrons an atom contributes
+  std::vector<OBSmartsPattern*> _vsp;   //!< SMARTS of potentially aromatic atoms
+  std::vector<std::pair<int,int> >   _verange; //!< min and max number of electrons
+  std::vector<std::pair<int,int> >   _velec;   //!< # electrons an atom contributes
  public:
   OBAromaticTyper();
   ~OBAromaticTyper();
@@ -63,7 +61,7 @@ class OBAromaticTyper : public OBGlobalDataBase
   void ParseLine(const char*);
   void AssignAromaticFlags(OBMol &);
   void PropagatePotentialAromatic(OBAtom*);
-  void SelectRootAtoms(OBMol &, bool avoidInnerRingAtoms = false);
+  void SelectRootAtoms(OBMol &, bool avoidInnerRingAtoms = true);
   void ExcludeSmallRing(OBMol &);
   void CheckAromaticity(OBAtom*,int);
   bool TraverseCycle(OBAtom*,OBAtom*,OBBond*,std::pair<int,int>&,int);

@@ -16,11 +16,23 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include "babelconfig.h"
+
 #ifndef OB_FILEFORMAT_H
 #define OB_FILEFORMAT_H
 
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
+
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
+#endif
+
 #include <algorithm>
 #include <vector>
 #include <string>
@@ -77,6 +89,7 @@ bool ReadMPQC(std::istream &, OBMol &, const char *title="Untitled");
 bool ReadNWChem(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadPDB(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadPDB(std::vector<std::string> &,OBMol &,const char *title="Untitled");
+bool ReadPQS(std::istream &, OBMol &, const char *title="Untitled");
 bool ReadQChem(std::istream &, OBMol &, const char *title="Untitled");
 bool ReadSDFile(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadShelX(std::istream &,OBMol &,const char *title="Untitled");
@@ -127,6 +140,7 @@ bool WriteMOPACCartesian(std::ostream &,OBMol &);
 bool WriteNWChem(std::ostream &,OBMol&);
 bool WritePDB(std::ostream &, OBMol&);
 bool WritePovray(std::ostream &, OBMol&, const char*outputName="Output");
+bool WritePQS(std::ostream &, OBMol&);
 bool WriteQChem(std::ostream &,OBMol &);
 bool WriteReport(std::ostream &,OBMol &);
 bool WriteSDFile(std::ostream &,OBMol &,const char *dimension="3D");

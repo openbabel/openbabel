@@ -40,8 +40,19 @@ int main(int argc,char *argv[])
 
   cout << endl << "Testing SMARTS...  " << endl;
 
+#ifdef TESTDATADIR
+  string testdatadir = TESTDATADIR;
+  string smarts_file = testdatadir + "smartstest.txt";
+  string results_file = testdatadir + "smartsresults.txt";
+  string smilestypes_file = testdatadir + "attype.00.smi";
+#else
+  string smarts_file = "smartstest.txt";
+  string results_file = "smartsresults.txt";
+  string smilestypes_file = "attype.00.smi";
+#endif
+
   std::ifstream ifs;
-  if (!SafeOpen(ifs,"smartstest.txt")){
+  if (!SafeOpen(ifs, (char*)smarts_file.c_str())){
     return -1; // test failed
   }
 
@@ -58,7 +69,7 @@ int main(int argc,char *argv[])
   ifs.close();
   
   std::ifstream rifs;
-  if (!SafeOpen(rifs,"smartsresults.txt")) {
+  if (!SafeOpen(rifs, (char*)results_file.c_str())) {
     return -1; // test failed
   }
   unsigned int npats;
@@ -76,7 +87,7 @@ int main(int argc,char *argv[])
     }
 
   std::ifstream mifs;
-  if (!SafeOpen(mifs,"attype.00.smi")) {
+  if (!SafeOpen(mifs, (char*)smilestypes_file.c_str())) {
     return -1; // test failed
   }
 

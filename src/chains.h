@@ -35,6 +35,7 @@ typedef struct
     int n1, n2, n3, n4;
 } Template;
 
+//! \brief Perceives peptide or nucleotide chains and residues in an OBMol
 class OBChainsParser
 {
 public:

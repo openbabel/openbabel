@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2001-2004 by Geoffrey R. Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,15 +34,7 @@ bool WriteGaussianCart(ostream &ofs,OBMol &mol)
 
   OBAtom *atom;
   string str,str1;
-  // Calculate charge. Should probably be done proper and go into OBMol
-  for(i = 1;i <= mol.NumAtoms(); i++)
-  {
-    atom = mol.GetAtom(i);
-    charge += atom->GetFormalCharge();
-  }
-  // Caculate Multiplicity FIXME: This is a hack!
-  multiplicity = abs(charge) + 1;
-  sprintf(buffer,"  %d  %d", charge, multiplicity);
+  sprintf(buffer,"  %d  %d", mol.GetTotalCharge(), mol.GetTotalSpinMultiplicity());
   ofs << buffer << endl;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
