@@ -7,6 +7,11 @@
 	website rather than text versions.
 
 	* doc/Makefile.in, doc/Makefile.am: Update accordingly.
+
+	* src/cml.cpp(CleanUp): New method to clean up global vector
+	variables after ReadCML() and WriteCML() in attempt to fix
+	PR#736001. Does not change normal command-line path, but should
+	fix library useage when multiple files may be loaded.
 	
 2003-06-22  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
 

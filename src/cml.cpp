@@ -159,25 +159,6 @@ void startElement(string namespaceURI, string localName, string qName, vector <p
 //          Begin the scope of a prefix-URI Namespace mapping.
 void startPrefixMapping(string prefix, string uri);
 
-// variables
-// output stream
-ostream *ofsPtr;
-// tracks level of XML elements
-vector <string> elementStack;
-// current element name
-string parent;
-// current parent element name
-string currentElem;
-// last PCDATA (text) content read
-string pcdata;
-// current attributes
-vector<pair<string,string> > currentAtts;
-// namespaces
-typedef vector<pair<string,string> > namespaceVector_t;
-namespaceVector_t namespaceVector;
-// has rootElement been read?
-bool readRoot;
-
 // ----------------utilities ----------------
 // trims whitespace from start and end of string
 string trim(string s);
@@ -414,6 +395,26 @@ OBAtom *getAtomPtr(string s);
 void debug(ostream &ofs);
 
 // ----------------variables-----------------
+  // \todo Get rid of all the global variables--potential memory leaks.
+
+// variables
+// output stream
+ostream *ofsPtr;
+// tracks level of XML elements
+vector <string> elementStack;
+// current element name
+string parent;
+// current parent element name
+string currentElem;
+// last PCDATA (text) content read
+string pcdata;
+// current attributes
+vector<pair<string,string> > currentAtts;
+// namespaces
+typedef vector<pair<string,string> > namespaceVector_t;
+namespaceVector_t namespaceVector;
+// has rootElement been read?
+bool readRoot;
 
 // all atoms need to be unique IDs in CML; this links IDs to AtomPtrs
 vector <pair <string, OBAtom*> > atomIdVector;
@@ -2889,9 +2890,42 @@ bool WriteTorsion(ostream &ofs, pair <vector<OBAtom*>, double> torsion) {
 
 /**------------------Babel INPUT OUTPUT --------------------------*/
 
+
+  // Clear out all the global variable vectors after read/write
+void CleanUp()
+{
+  atomIdVector.clear();
+  idVector.clear();
+  elementTypeVector.clear();
+  atomicNumVector.clear();
+  formalChargeVector.clear();
+  hydrogenCountVector.clear();
+  x2Vector.clear();
+  y2Vector.clear();
+  x3Vector.clear();
+  y3Vector.clear();
+  z3Vector.clear();
+  atomRefs2Vector.clear();
+  atomRefs3Vector.clear();
+  atomRefs4Vector.clear();
+  atomRef1Vector.clear();
+  atomRef2Vector.clear();
+  orderVector.clear();
+  stereoVector.clear();
+  rotTransVector.clear();
+  rotVector.clear();
+  angleVector.clear();
+  lengthVector.clear();
+  torsionVector.clear();
+  atomParityVector.clear();
+  stereoSVector.clear();
+  internalVector.clear();
+}
+
 bool ReadCML(istream &ifs,OBMol &mol, const char *title) {
 	molPtr = &mol;
 	ReadXML(ifs);
+	CleanUp();
 	return true;
 }
 
@@ -2935,9 +2969,9 @@ bool WriteCML(ostream &ofs,OBMol &mol,const char *dim,const char* xmlOptions)
 	molPtr = &mol;
 	dimension = dim;
 	WriteMolecule(ofs);
+	CleanUp();
 	return true; // [ejk] assumed
 }
-
 
 void debug(ostream &ofs) {
 	ofs << "<table>" << endl;
