@@ -29,19 +29,25 @@ namespace OpenBabel
 // class introduction in typer.cpp
 class OBAtomTyper : public OBGlobalDataBase
 {
-    int                                                      _rc;
-    std::vector<std::vector<int> >                           _mlist;
-    std::vector<std::pair<OBSmartsPattern*,int> >            _vinthyb;
-    std::vector<std::pair<OBSmartsPattern*,int> >            _vimpval;
-    std::vector<std::pair<OBSmartsPattern*,std::string> >    _vexttyp;
+  //    int                                                      _rc;
+  std::vector<std::vector<int> >                           _mlist; //!< match list for atom typing
+  std::vector<std::pair<OBSmartsPattern*,int> >            _vinthyb; //!< internal hybridization rules
+  std::vector<std::pair<OBSmartsPattern*,int> >            _vimpval; //!< internal implicit valence rules
+  std::vector<std::pair<OBSmartsPattern*,std::string> >    _vexttyp; //!< external atom type rules
+
 public:
     OBAtomTyper();
     ~OBAtomTyper();
 
     void ParseLine(const char*);
+    //! Assign atomic hybridization (1 = sp, 2 = sp2, 3 = sp3...)
     void AssignHyb(OBMol&);
+    //! Assign external atomic types (i.e., EXTTYP lines in atomtyp.txt)
     void AssignTypes(OBMol&);
+    //! Assign implicit valence (i.e., given an atomic type, what is the 
+    //! expected number of bonds to this atom
     void AssignImplicitValence(OBMol&);
+    //! Correct typing, valence, and hybridization for aromatic nitrogen atoms
     void CorrectAromaticNitrogens(OBMol&);
 };
 

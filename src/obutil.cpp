@@ -60,31 +60,31 @@ void ThrowError(std::string &str)
   obErrorLog.ThrowError("", str, obInfo);
 }
 
-void PauseExit()
-{
-    exit(0);
-}
-
+//! Comparison function (for sorting ints) returns a < b
 bool OBCompareInt(const int &a,const int &b)
 {
     return(a<b);
 }
 
+//! Comparison function (for sorting unsigned ints) returns a < b
 bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
 {
     return(a<b);
 }
 
+//! Comparison for doubles: returns a < (b + epsilon)
 bool IsNear(const double &a, const double &b, const double epsilon)
 {
     return (fabs(a - b) < epsilon);
 }
 
+//! Comparison for doubles: returns a < (0.0 + epsilon)
 bool IsNearZero(const double &a, const double epsilon)
 {
     return (fabs(a) < epsilon);
 }
 
+//! Utility function: replace the last extension in string &src with new extension char *ext.
 string NewExtension(string &src,char *ext)
 {
     unsigned int pos = (unsigned int)src.find_last_of(".");
@@ -102,8 +102,17 @@ string NewExtension(string &src,char *ext)
     return(dst);
 }
 
-vector3 center_coords(double *c,int size)
+//! Return the geometric centroid to an array of coordinates in double* format
+//!  and center the coordinates to the origin. Operates on the first "size" 
+//!  coordinates in the array.
+vector3 center_coords(double *c, unsigned int size)
 {
+  if (size == 0)
+    {
+      vector3 v(0.0f, 0.0f, 0.0f);
+      return(v);
+    }
+
     int i;
     double x=0,y=0,z=0;
     for (i = 0;i < size;i++)
@@ -125,7 +134,9 @@ vector3 center_coords(double *c,int size)
     return(v);
 }
 
-void rotate_coords(double *c,double m[3][3],int size)
+//! Rotates the coordinate set *c by the transformation matrix m[3][3]
+//!  Operates on the first "size" coordinates in the array.
+void rotate_coords(double *c,double m[3][3],unsigned int size)
 {
     int i;
     double x,y,z;
@@ -140,25 +151,29 @@ void rotate_coords(double *c,double m[3][3],int size)
     }
 }
 
-double calc_rms(double *r,double *f,int size)
+//! Calculate the RMS deviation between the first N coordinates of *r and *f
+double calc_rms(double *r,double *f, unsigned int N)
 {
+  if (N == 0)
+    return 0.0f; // no RMS deviation between two empty sets
+
     int i;
     double d2=0.0;
-    for (i = 0;i < size;i++)
+    for (i = 0;i < N;i++)
     {
         d2 += SQUARE(r[i*3] - f[i*3]) +
               SQUARE(r[i*3+1] - f[i*3+1]) +
               SQUARE(r[i*3+2] - f[i*3+2]);
     }
 
-    d2 /= (double) size;
+    d2 /= (double) N;
     return(sqrt(d2));
 }
 
+//! Rotate the coordinates of 'atoms'
+//! such that tor == ang - atoms in 'tor' should be ordered such
+//! that the 3rd atom is the pivot around which atoms rotate
 void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
-//this function will rotate the coordinates of 'atoms'
-//such that tor == ang - atoms in 'tor' should be ordered such
-//that the 3rd atom is the pivot around which atoms rotate
 {
     double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
     double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
@@ -258,6 +273,8 @@ void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
     }
 }
 
+//! Safely open the supplied filename and return an ifstream, throwing an error
+//! to the default OBMessageHandler error log if it fails.
 bool SafeOpen(ifstream &fs,char *filename)
 {
 #ifdef WIN32
@@ -281,6 +298,8 @@ bool SafeOpen(ifstream &fs,char *filename)
     return(true);
 }
 
+//! Safely open the supplied filename and return an obifstream, throwing an error
+//! to the default OBMessageHandler error log if it fails.
 bool SafeOpen(obifstream &fs,char *filename)
 {
 #ifdef WIN32
@@ -304,6 +323,8 @@ bool SafeOpen(obifstream &fs,char *filename)
     return(true);
 }
 
+//! Safely open the supplied filename and return an ofstream, throwing an error
+//! to the default OBMessageHandler error log if it fails.
 bool SafeOpen(ofstream &fs,char *filename)
 {
 #ifdef WIN32
@@ -327,21 +348,28 @@ bool SafeOpen(ofstream &fs,char *filename)
     return(true);
 }
 
+//! Safely open the supplied filename and return an ifstream, throwing an error
+//! to the default OBMessageHandler error log if it fails.
 bool SafeOpen(ifstream &fs,string &filename)
 {
     return(SafeOpen(fs,(char*)filename.c_str()));
 }
 
+//! Safely open the supplied filename and return an obifstream, throwing an error
+//! to the default OBMessageHandler error log if it fails.
 bool SafeOpen(obifstream &fs,string &filename)
 {
     return(SafeOpen(fs,(char*)filename.c_str()));
 }
 
+//! Safely open the supplied filename and return an ofstream, throwing an error
+//! to the default OBMessageHandler error log if it fails.
 bool SafeOpen(ofstream &fs,string &filename)
 {
     return(SafeOpen(fs,(char*)filename.c_str()));
 }
 
+//! Shift the supplied string to uppercase
 void ToUpper(std::string &s)
 {
     if (s.empty())
@@ -352,6 +380,7 @@ void ToUpper(std::string &s)
             s[i] = toupper(s[i]);
 }
 
+//! Shift the supplied char* to uppercase
 void ToUpper(char *cptr)
 {
     char *c;
@@ -360,6 +389,7 @@ void ToUpper(char *cptr)
             *c = toupper(*c);
 }
 
+//! Shift the supplied string to lowercase
 void ToLower(std::string &s)
 {
     if (s.empty())
@@ -370,6 +400,7 @@ void ToLower(std::string &s)
             s[i] = tolower(s[i]);
 }
 
+//! Shift the supplied char* to lowercase
 void ToLower(char *cptr)
 {
     char *c;
@@ -378,16 +409,23 @@ void ToLower(char *cptr)
             *c = tolower(*c);
 }
 
+//! "Clean" the supplied atom type, shifting the first character to uppercase,
+//! the second character (if it's a letter) to lowercase, and terminating with a NULL
+//! to strip off any trailing characters
 void CleanAtomType(char *id)
 {
     id[0] = toupper(id[0]);
-    id[1] = tolower(id[1]);
     if (isalpha(id[1]) == 0)
         id[1] = '\0';
     else
+      {
+	id[1] = tolower(id[1]);
         id[2] = '\0';
+      }
 }
 
+//! Transform the supplied vector<OBInternalCoord*> into cartesian and update
+//! the OBMol accordingly
 void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
     vector3 n,nn,v1,v2,v3,avec,bvec,cvec;
@@ -462,6 +500,9 @@ void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
             mol.DeleteAtom(atom);
 }
 
+//! Use the supplied OBMol and its Cartesian coordinates to generate
+//! a set of internal (z-matrix) coordinates as supplied in the
+//! vector<OBInternalCoord*> argument.
 void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
     double r,sum;
