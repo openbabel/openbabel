@@ -7,6 +7,7 @@ VPATH         = @srcdir@
 top_srcdir    = @top_srcdir@
 prefix        = @prefix@
 exec_prefix   = @exec_prefix@
+mandir        = @mandir@/man1
 
 DEST	      = @bindir@
 
@@ -45,6 +46,7 @@ distclean:
 
 install:	all
 		(cd src; $(MAKE) $(MFLAGS) install)
+		$(INSTALL) doc/babel.1 $(mandir)
 
 dist:		distclean
 	        rm -rf $(DISTDIR) openbabel.tar.gz
