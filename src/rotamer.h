@@ -1,8 +1,8 @@
 /**********************************************************************
-binary.h - Handle rotamer list and binary base files.
+rotamer.h - Handle rotamer list data.
  
 Copyright (C) 1998-2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -17,8 +17,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef OB_BINARY_H
-#define OB_BINARY_H
+#ifndef OB_ROTAMER_H
+#define OB_ROTAMER_H
 
 #include <vector>
 #include <map>
@@ -143,5 +143,5 @@ int Swab(int);
 
 }
 
-#endif // OB_BINARY_H
+#endif // OB_ROTAMER_H
 

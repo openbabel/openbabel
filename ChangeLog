@@ -1,4 +1,33 @@
-2005-01-19  Geoffrey Hutchison  <geoff@geoffhutchison.net>
+2005-01-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/main.cpp: For non-Win32 platforms, use $HOME/.openbabel to
+	store recent options -- keeping with standard UNIX practices.
+
+	* src/rotamer.cpp, src/rotamer.h: Move OBRotamerList from
+	now-defunct binary.* files to specific rotamer files -- binary
+	format is now obsolete.
+
+	* src/Makefile.am: Remove binary.* and rename to rotamer.*.
+
+	* tools/obrotate.cpp: Rename binary.h to rotamer.h
+	
+	* src/data.cpp, src/data.h: Excise io_type and OBExtensionTable.
+
+	* data/extable.h, data/extable.txt: Ditto.
+
+	* data/Makefile.am: Ditto.
+
+	* tools/*.cpp: Ditto.
+
+	* src/formats/cml.cpp: Remove reference to GetInputType and
+	GetOutputType.
+
+	* src/mol.h, src/mol.cpp: Add OBMol:_dimension, along with
+	accessor methods GetDimension() and SetDimension() for specifying
+	the dimension of the OBMol coordinates. Default is 3 for now --
+	conversion or user code must specify this!
+
+2005-01-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/bondtyper.h src/bondtyper.cpp: New method
 	AssignFunctionalGroupBonds() to replace code in
@@ -39,7 +68,7 @@
 	* windows/OBDLL/map2def2.exe added  
 	* windows/babelconfig.h updated  
 
-2005-01-07  Geoffrey Hutchison  <geoff@geoffhutchison.net>
+2005-01-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.h (GetMIMEType): New method for chemical MIME
 	support.
@@ -48,12 +77,12 @@
 	lower-case and previous Babel standards. Added MIME types where
 	appropriate.
 
-2005-01-06  Geoffrey Hutchison  <geoff@geoffhutchison.net>
+2005-01-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/main.cpp, src/obconversion.cpp, src/obconversion.h: Updated
 	files from Chris Morley.
 
-2005-01-01  Geoffrey Hutchison  <geoff@geoffhutchison.net>
+2005-01-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/obfit.cpp, tools/obgrep.cpp, tools/obprop.cpp,
 	tools/obrotate.cpp, tools/obtanimoto.cpp: Update to use the
@@ -62,7 +91,7 @@
 	* src/formats/*.cpp: Clean out formats which don't currently have
 	format specification URLs.
 
-2004-12-23  Geoffrey Hutchison  <geoff@geoffhutchison.net>
+2004-12-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* *.cpp, *.h: Reformat using astyle --style=ansi.
 
@@ -80,7 +109,7 @@
 	* test/ringtest.cpp, test/smartstest.cpp, test/rountrip.cpp:
 	Convert to using OBConversion from OBFileFormat.
 
-2004-10-19  Geoffrey Hutchison  <geoff@geoffhutchison.net>
+2004-10-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Initial merging of Chris Morley's new file translation framework.
 	Compiles and runs through "babel -H".

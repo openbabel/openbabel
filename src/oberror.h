@@ -2,7 +2,7 @@
 oberror.h - Handle error messages.
  
 Copyright (C) 2002 by Stefan Kebekus
-Some portions Copyright (c) 2003-2004 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2003-2005 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -36,11 +36,12 @@ namespace OpenBabel
 class OBError
 {
 public:
+
     OBError( const std::string &method,
              const std::string &errorMsg,
              const std::string &explanation = "",
              const std::string &possibleCause = "",
-             const std::string &suggestedRemedy ="" );
+             const std::string &suggestedRemedy = "" );
 
     std::string message(void) const;
 
@@ -49,11 +50,14 @@ public:
         return os << er.message();
     };
 
+ protected:
+
     std::string _method;
     std::string _errorMsg;
     std::string _explanation;
     std::string _possibleCause;
     std::string _suggestedRemedy;
+
 };
 
 } // end namespace OpenBabel

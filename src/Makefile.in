@@ -65,11 +65,11 @@ libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libopenbabel_la_DEPENDENCIES = math/libmath.la formats/libformats.la \
 	@LTLIBOBJS@ $(am__empty)
-am_libopenbabel_la_OBJECTS = atom.lo base.lo binary.lo bitvec.lo \
-	bond.lo bondtyper.lo chains.lo chiral.lo data.lo \
-	obconversion.lo fingerprint.lo generic.lo grid.lo kekulize.lo \
-	matrix.lo mol.lo molchrg.lo oberror.lo obutil.lo parsmart.lo \
-	patty.lo phmodel.lo rand.lo residue.lo ring.lo rotor.lo \
+am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
+	bondtyper.lo chains.lo chiral.lo data.lo obconversion.lo \
+	fingerprint.lo generic.lo grid.lo kekulize.lo matrix.lo mol.lo \
+	molchrg.lo oberror.lo obutil.lo parsmart.lo patty.lo \
+	phmodel.lo rand.lo residue.lo ring.lo rotor.lo rotamer.lo \
 	tokenst.lo typer.lo transform.lo
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
@@ -214,25 +214,26 @@ SUBDIRS = math formats
 INCLUDES = -I$(srcdir)/../data/
 lib_LTLIBRARIES = libopenbabel.la
 libopenbabel_la_SOURCES = \
-		atom.cpp base.cpp binary.cpp bitvec.cpp bond.cpp \
+		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
 		obconversion.cpp fingerprint.cpp generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obutil.cpp parsmart.cpp patty.cpp \
 		phmodel.cpp rand.cpp residue.cpp ring.cpp \
-		rotor.cpp tokenst.cpp typer.cpp transform.cpp
+		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
+		transform.cpp
 
 libopenbabel_la_LIBADD = math/libmath.la formats/libformats.la @LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 0:0:0
 libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
-		babelconfig.h base.h binary.h bitvec.h \
+		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		fingerprint.h generic.h grid.h \
 		matrix.h mol.h molchrg.h \
 		oberror.h obifstream.h obutil.h \
 		parsmart.h patty.h phmodel.h ring.h \
-		rotor.h typer.h 
+		rotor.h rotamer.h typer.h 
 
 babel_SOURCES = main.cpp
 babel_LDADD = libopenbabel.la @LIBOBJS@
@@ -364,7 +365,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/strncasecmp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atom.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/binary.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bitvec.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bond.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bondtyper.Plo@am__quote@
@@ -388,6 +388,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rand.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/residue.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ring.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rotamer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rotor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tokenst.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/transform.Plo@am__quote@
