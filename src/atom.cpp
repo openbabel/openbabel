@@ -190,6 +190,17 @@ int OBAtom::CountBondsOfOrder(unsigned int order)
   return(count);
 }
 
+bool OBAtom::HasNonSingleBond()
+{
+  OBBond *bond;
+  vector<OBEdgeBase*>::iterator i;
+  for (bond = BeginBond(i);bond;bond = NextBond(i))
+    if (bond->GetBO() != 1)
+      return(true);
+
+  return(false);
+}
+
 bool OBAtom::IsPolarHydrogen()
 {
   if (!IsHydrogen()) return(false);

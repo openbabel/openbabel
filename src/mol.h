@@ -340,6 +340,7 @@ public:
     bool HasAlphaBetaUnsat(bool includePandS=true);
     bool HasBondOfOrder(unsigned int);
     int  CountBondsOfOrder(unsigned int);
+    bool HasNonSingleBond();
     bool HasSingleBond()      {return(HasBondOfOrder(1));}
     bool HasDoubleBond()      {return(HasBondOfOrder(2));}
     bool HasAromaticBond()    {return(HasBondOfOrder(4));}
