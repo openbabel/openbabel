@@ -1,3 +1,9 @@
+2005-02-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.cpp (operator+): Fix PR#119352 to copy bond flag
+	information when adding bonds. Thanks to Daen de Leon for the bug
+	report and fix.
+
 2005-02-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/atomtyp.txt: Change implicit valence rules for acidic
