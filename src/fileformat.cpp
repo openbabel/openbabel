@@ -71,6 +71,7 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, const char *title)
     case SDF:       result = ReadSDFile(ifs,mol,title);		break;
     case SMI:       result = ReadSmiles(ifs,mol,title);		break;
     case SHELX:	    result = ReadShelX(ifs,mol,title);		break;
+    case TURBOMOLE: result = ReadTurbomole(ifs,mol,title);	break;
     case UNICHEM:   result = ReadUnichem(ifs,mol,title);	break;
     case VIEWMOL:   result = ReadViewMol(ifs,mol,title);	break;
     case XYZ:	    result = ReadXYZ(ifs,mol,title);		break;
@@ -132,6 +133,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol,
     case SMI:       WriteSmiles(ofs,mol);     		break;
     case TINKER:    WriteTinker(ofs,mol);		break;
     case TITLE:	    WriteTitles(ofs,mol); 	        break;
+    case TURBOMOLE: WriteTurbomole(ofs,mol);		break;
     case UNICHEM:   WriteUnichem(ofs,mol);		break;
     case VIEWMOL:   WriteViewMol(ofs,mol);		break;
     case XED:	    WriteXED(ofs,mol);			break;

@@ -586,6 +586,7 @@ io_type TextToType(string typestring)
   else if (typestring == "NWCHEMIN")		return(NWCHEMIN);
   else if (typestring == "NWCHEMOUT")		return(NWCHEMOUT);
   else if (typestring == "TITLE")		return(TITLE);
+  else if (typestring == "TURBOMOLE")		return(TURBOMOLE);
   else if (typestring == "VIEWMOL")		return(VIEWMOL);
   else if (typestring == "ZINDO")		return(ZINDO);
   // Add yours here

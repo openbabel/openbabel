@@ -14,8 +14,8 @@ libopenbabel_la_SOURCES = \
 		oberror.cpp obutil.cpp parsmart.cpp parsmi.cpp patty.cpp \
 		pdb.cpp phmodel.cpp povray.cpp qchem.cpp rand.cpp report.cpp \
 		residue.cpp ring.cpp rotor.cpp shelx.cpp smi.cpp tinker.cpp \
-		tokenst.cpp typer.cpp unichem.cpp viewmol.cpp xed.cpp xyz.cpp \
-		zindo.cpp pqs.cpp
+		tokenst.cpp turbomole.cpp typer.cpp unichem.cpp viewmol.cpp \
+		xed.cpp xyz.cpp zindo.cpp pqs.cpp
 
 libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 0:0:0

@@ -1,6 +1,19 @@
-2004-08-30  Fabien Fontaine <ffontaine@imim.es>
+2004-09-10  Michael Banck  <mbanck@gmx.net>
 
-	*src/mol.cpp bond.cpp kekulize.cpp Kekulize function changed to
+	* src/turbomole.cpp: New file.
+	* src/Makefile.am (libopenbabel_la_SOURCES): Added turbomole.cpp.
+	* src/data.cpp (TextToType): Added TURBOMOLE typestring.
+	* src/data.h (io_type): Added TURBOMOLE.
+	* src/extable.txt: Added turbomole entry for reading and writing.
+	* src/extable.h: Regenerated.
+	* src/fileformat.cpp (ReadMolecule): Added Turbomole handler.
+	(WriteMolecule): Likewise.
+	* src/fileformat.h (ReadTurbomole): Declare it.
+	(WriteTurbomole): Likewise.
+
+2004-08-30  Fabien Fontaine  <ffontaine@imim.es>
+
+	* src/mol.cpp bond.cpp kekulize.cpp: Kekulize function changed to
 	what it was before. PerceiveBondOrders replaced by 
 	NewPerceiveBondOrders. SetK* functions added to NewPerceiveBondOrders
 	

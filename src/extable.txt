@@ -85,6 +85,7 @@ fix		fix		SMILES Fix			none				0	1
 mol2		mol2		Sybyl Mol2			chemical/x-mol2			1	1
 txyz		tinker		Tinker XYZ			none				0	1
 txt		title		Titles				none				0	1
+tur		turbomole	Turbomol			none				1	1
 unixyz		unichem		UniChem XYZ			none				1	1
 vmol		viewmol		ViewMol				none				1	1
 xed		xed		XED				none				0	1

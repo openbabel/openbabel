@@ -58,7 +58,7 @@ typedef enum { UNDEFINED,
                MOPACOUT, MPQC, MSF, NWCHEMIN, NWCHEMOUT, OEBINARY,
                PCMODEL, PDB, POV, PREP, QCHEMIN, QCHEMOUT, REPORT,
                SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
-               SPARTANSEMI, TGF, TINKER, TITLE, UNICHEM, VIEWMOL,
+               SPARTANSEMI, TGF, TINKER, TITLE, TURBOMOLE, UNICHEM, VIEWMOL,
                XED, XYZ, ZINDO, CRK2D, CRK3D, PQS
 	       // Insert new formats here (at the end)
 	       // for backwards compatibility
