@@ -1,0 +1,1572 @@
+#!/bin/sh
+trap 'rm -f conf.subs conf.c conf.cpp conf conf.exe core; exit 1' 1 2 15
+PATH=/usr/bin:$PATH
+IFS=":	 "
+
+# Configure settings
+MODE=fast
+usegcc=0
+extglobal=0
+
+while [ "$1" != "" ] ; do
+    case "$1" in
+        fast)       MODE=fast    ;;
+        safe)       MODE=safe    ;;
+        debug)      MODE=debug   ;;
+        cc|usecc)   usegcc=0     ;;
+        gcc|usegcc) usegcc=1     ;;
+        o32|32)     SGI_ABI=o32  ;;
+        n32)        SGI_ABI=n32  ;;
+        n64|64)     SGI_ABI=n64  ;;
+        *)   echo "Error: configure: unknown argument"
+             exit 1
+             ;;
+    esac
+    shift
+done
+
+
+# Default settings
+CC=
+CXX=
+ABI=
+COPTS1="-O"
+COPTS2="-O"
+LOPTS=
+CMPFLAGS=
+SYSSOCKLIBS=
+SYSSQRTLIB="-lm"
+SYSMPLIBS=
+SYSKMEMLIB=
+DSOLIBS=
+X11INCS=
+X11LIBS=
+WINDRES=
+EXE=
+SRCDIR=
+
+if test $MODE = debug ; then
+    CFLAGS="-g"
+    LFLAGS=
+else
+    CFLAGS=
+    LFLAGS="-s"
+fi
+
+# Determine Operating System
+ostype="unknown"
+osver=`uname -r | sed -n -e 's/\([0-9]\{1,2\}\.[0-9]\).*/\1/p'`
+osmaj=`echo $osver | cut -d. -f1`
+osmin=`echo $osver | cut -d. -f2`
+dist=""
+arch=""
+
+case `uname -s` in
+    SunOS)
+        X11INCS="-I/usr/openwin/include"
+        X11LIBS="-L/usr/openwin/lib"
+        if test "$osmaj" -ge 5 ; then
+            ostype="solaris"
+            osmaj=`expr $osmaj - 3`
+            osver="$osmaj.$osmin"
+
+            SYSSOCKLIBS="-lsocket -lnsl"
+            SYSKMEMLIB="-lkstat"
+            SYSMPLIBS="-lthread"
+            DSOLIBS="-ldl"
+
+            if test -x /usr/bin/isalist ; then
+                arch=`isalist | cut -f1 -d" "`
+            fi
+            if test -z "$arch" ; then
+                arch=`uname -p`
+            fi
+
+            if test -x /opt/SUNWspro/bin/cc ; then
+                CC="/opt/SUNWspro/bin/cc"
+            else
+                CC="true"
+                for dir in $PATH ; do
+                    if test -z "$dir" ; then
+                        continue
+                    fi
+                    if test "$dir/cc" = /usr/ucb/cc ; then
+                        continue
+                    fi
+                    if test -x "$dir/cc" ; then
+                        CC="$dir/cc"
+                        break
+                    fi
+                done
+            fi
+
+            if test -x /opt/SUNWspro/bin/CC ; then
+                CXX="/opt/SUNWspro/bin/CC"
+            fi
+
+            CMPFLAGS="-mt -D_REENTRANT"
+            LSOFLAGS="-G -dy"
+            # CFLAGS="-fd"
+
+            version=`$CC -V 2>&1 | head -1`
+            if test "$version" = "cc: SC3.0.1 13 Jul 1994" ; then
+                if test $MODE = "debug" ; then
+                    CFLAGS="-v -g"
+                    COPTS1="-fast -xO4 -fsimple -native"
+                    arch="sparc"
+                elif test $MODE = "fast" ; then
+                    CFLAGS="-v"
+                    case $arch in
+                        sparcv8*|sparcv9*)
+                            COPTS1="-fast -xO4 -fsimple -native -xcg92"
+                            arch="sparcv8"
+                            ;;
+                        *)  COPTS1="-fast -xO4 -fsimple -native"
+                            arch="sparc"
+                            ;;
+                    esac
+                else
+                    CFLAGS="-v"
+                    COPTS1="-fast -xO4 -fsimple"
+                    arch="sparc"
+                fi
+            elif test "$version" = "cc: SC4.0 18 Oct 1995 C 4.0" ; then
+                if test $MODE = "debug" ; then
+                    CFLAGS="-v -g"
+                else
+                    CFLAGS="-v"
+                fi
+                if test $MODE = "safe" ; then
+                    COPTS1="-fast -xO5 -xtarget=generic -xcrossfile"
+                    arch="sparc"
+                else
+                    if test -x /opt/SUNWspro/bin/fpversion ; then
+                        ARCH="-`/opt/SUNWspro/bin/fpversion -foption`"
+                    else
+                        ARCH=""
+                        for dir in $PATH ; do
+                            if test -z "$dir" ; then
+                                continue
+                            fi
+                            if test -x "$dir/fpversion" ; then
+                                ARCH="-`$dir/fpversion -foption 2> /dev/null`"
+                                break
+                            fi
+                        done
+                    fi
+                    # -xarch=v9a slower than nothing!
+                    arch="sparc"
+                    case "$arch" in
+                        sparc)           ;;
+                        sparcv9+vis)     ARCH="$ARCH -xarch=v9a"
+                                         ;;
+                        sparcv9)         ARCH="$ARCH -xarch=v9"
+                                         ;;
+                        sparcv8plus+vis) ARCH="$ARCH -xarch=v8plusa"
+                                         ;;
+                        sparcv8plus)     ARCH="$ARCH -xarch=v8plus"
+                                         ;;
+                        sparcv8-fsmuld)  ARCH="$ARCH -xarch=v8a"
+                                         ;;
+                        sparcv8)         ARCH="$ARCH -xarch=v8"
+                                         ;;
+                        sparcv7)         ARCH="$ARCH -xarch=v7"
+                                         arch="sparc"
+                                         ;;
+                        *)               arch="unknown"
+                                         ;;
+                    esac
+                    if test $MODE = "fast" ; then
+                        COPTS1="-fast -xO5 $ARCH -xcrossfile"
+                    else
+                        COPTS1="-fast -xO3 $ARCH"
+                    fi
+                fi
+                COPTS1="$COPTS1 -xdepend -fsimple=2 -xsafe=mem"
+            else
+                # "cc: WorkShop Compilers 5.0 98/12/15 C 5.0"
+                if test $MODE = "debug" ; then
+                    CFLAGS="-v -g"
+                else
+                    CFLAGS="-v"
+                fi
+                if test $MODE = "safe" ; then
+                    COPTS1="-fast -xO5 -xtarget=generic -xcrossfile"
+                    arch="sparc"
+                else
+                    if test -x /opt/SUNWspro/bin/fpversion ; then
+                        ARCH="-`/opt/SUNWspro/bin/fpversion -foption`"
+                    else
+                        ARCH=""
+                        for dir in $PATH ; do
+                            if test -z "$dir" ; then
+                                continue
+                            fi
+                            if test -x "$dir/fpversion" ; then
+                                ARCH="-`$dir/fpversion -foption 2> /dev/null`"
+                                break
+                            fi
+                        done
+                    fi
+                    # -xarch=v9a slower than nothing!
+                    arch="sparc"
+                    case "$arch" in
+                        sparc)           ;;
+                        sparcv9+vis)     ARCH="$ARCH -xarch=v9a"
+                                         CSOFLAG="-xcode=pic13"
+                                         ;;
+                        sparcv9)         ARCH="$ARCH -xarch=v9"
+                                         CSOFLAG="-xcode=pic13"
+                                         ;;
+                        sparcv8plus+vis) ARCH="$ARCH -xarch=v8plusa"
+                                         ;;
+                        sparcv8plus)     ARCH="$ARCH -xarch=v8plus"
+                                         ;;
+                        sparcv8-fsmuld)  ARCH="$ARCH -xarch=v8a"
+                                         ;;
+                        sparcv8)         ARCH="$ARCH -xarch=v8"
+                                         ;;
+                        sparcv7)         ARCH="$ARCH -xarch=v7"
+                                         arch="sparc"
+                                         ;;
+                        *)               arch="unknown"
+                                         ;;
+                    esac
+                    if test $MODE = "fast" ; then
+                        COPTS1="-fast -xO5 $ARCH -xcrossfile"
+                    else
+                        COPTS1="-fast -xO3 $ARCH"
+                    fi
+                fi
+                # "-xdepend" optimizer bug in WorkShop C 5.0
+                # COPTS1="$COPTS1 -xdepend -fsimple=2 -xsafe=mem"
+                COPTS1="$COPTS1 -fsimple=2 -xsafe=mem"
+            fi
+
+            #CFLAGS = "$CFLAGS -Xc -xtransition"
+            COPTS2="$COPTS1"
+        elif test "$osmaj" -eq 4 ; then
+            ostype="sunos"
+            COPTS1="-O2"
+            COPTS2="-O4"
+        elif test "$osmaj" -eq 3 ; then
+            ostype="sunos"
+            COPTS1="-O2"
+            if test $MODE = "fast"; then
+                COPTS2="-O4 -f68881"
+                arch="fp"
+            else
+                COPTS2="-O4"
+            fi
+        fi
+        ;;
+
+    IRIX64)
+        ostype="irix"
+        SYSSQRTLIB=
+
+        CC="/usr/bin/cc"
+        CXX="/usr/bin/CC"
+        LSOFLAGS="-shared"
+
+        case "$SGI_ABI" in
+            -32|-o32|32|o32) ABI="-32"  ;;
+            -n32|n32)        ABI="-n32" ;;
+            -64|64)          ABI="-64"  ;;
+            *)               if test $MODE = "safe"; then
+                                 ABI="-32"
+                             else
+                                 ABI="-n32"
+                             fi
+                             ;;
+        esac
+
+        if test $MODE = "fast" ; then
+            CFLAGS="-signed -fullwarn"
+            if test $ABI = "-32" ; then
+                COPTS1="-O2 -Olimit 9999"
+                COPTS2="-O2 -Olimit 9999"
+                case `hinv -t cpu | cut -d" " -f3` in
+                    R12*|R10*|R8*|R5*) arch="mips4"   ;;
+                    R4*)               arch="mips3"   ;;
+                    R6*)               arch="mips2"   ;;
+                    R2*|R3*)           arch="mips1"   ;;
+                    *)                 arch="unknown" ;;
+                esac
+            else
+                IPNUM=`uname -m | tr IP ip`
+                if test $IPNUM = ip22 || test $IPNUM = ip32 ; then
+                    case `hinv -t cpu | cut -d" " -f3` in
+                        R10000) IPNUM=$IPNUM"_10k" ;;
+                        R5000)  IPNUM=$IPNUM"_5k"  ;;
+                        R4400)  IPNUM=$IPNUM"_4k"  ;;
+                    esac
+                fi
+                arch="$IPNUM"
+                COPTS1="-O2 -OPT:Olimit=0"
+                COPTS2="-Ofast=$IPNUM"
+#                COPTS2="-Ofast=$IPNUM -IPA"
+                LOPTS="-IPA"
+            fi
+        elif test $MODE = "debug" ; then
+            CFLAGS="-g3 -signed -fullwarn"
+            if test $ABI = "-32" ; then
+                COPTS1="-O2 -Olimit 9999"
+                COPTS2="-O2 -Olimit 9999"
+            else
+                COPTS1="-O2 -OPT:Olimit=0"
+                COPTS2="-O2 -OPT:Olimit=0"
+            fi
+            case `hinv -t cpu | cut -d" " -f3` in
+                R12*|R10*|R8*|R5*) arch="mips4"   ;;
+                R4*)               arch="mips3"   ;;
+                R6*)               arch="mips2"   ;;
+                R2*|R3*)           arch="mips1"   ;;
+                *)                 arch="unknown" ;;
+            esac
+        else
+            CFLAGS="-signed -fullwarn"
+            if test $ABI = "-32" ; then
+                COPTS1="-mips2 -O2 -Olimit 9999"
+                COPTS2="-mips2 -O2 -Olimit 9999"
+                arch="mips2"
+            else
+                COPTS1="-mips3 -O2 -OPT:Olimit=0"
+                COPTS2="-mips3 -O2 -OPT:Olimit=0"
+                arch="mips3"
+            fi
+        fi
+        ;;
+
+    IRIX)
+        ostype="irix"
+        CC="/usr/bin/cc"
+        CXX="/usr/bin/CC"
+        LSOFLAGS="-shared"
+
+        case "$SGI_ABI" in
+            -32|-o32|32|o32) ABI="-32"  ;;
+            -64|-n32|64|n32) ABI="-n32" ;;
+            *)               if test $MODE = "safe" ; then
+                                 ABI="-32"
+                             else
+                                 ABI="-n32"
+                             fi
+                             ;;
+        esac
+
+        if test "$osmaj" -ge 6 ; then
+            SYSSQRTLIB=
+
+            if test "$MODE" = "fast" ; then
+                CFLAGS="-signed -fullwarn"
+                if test "$ABI" = "-32" ; then 
+                    COPTS1="-O2 -Olimit 9999"
+                    COPTS2="-O2 -Olimit 9999"
+                    case `hinv -t cpu | cut -d" " -f3` in
+                        R12*|R10*|R8*|R5*) arch="mips4"   ;;
+                        R4*)               arch="mips3"   ;;
+                        R6*)               arch="mips2"   ;;
+                        R2*|R3*)           arch="mips1"   ;;
+                        *)                 arch="unknown" ;;
+                    esac
+                else
+                    IPNUM=`/bin/uname -m|tr IP ip`
+                    if test $IPNUM = ip22 || test $IPNUM = ip32 ; then
+                        case `hinv -t cpu | cut -d" " -f3` in
+                            R10000) IPNUM=$IPNUM"_10k" ;;
+                            R5000)  IPNUM=$IPNUM"_5k"  ;;
+                            R4400)  IPNUM=$IPNUM"_4k"  ;;
+                        esac
+                    fi
+                    arch="$IPNUM"
+                    COPTS1="-O2 -OPT:Olimit=0"
+                    COPTS2="-Ofast=$IPNUM"
+#                    COPTS2="-Ofast=$IPNUM -IPA"
+                    LOPTS="-IPA"
+                fi
+            elif test $MODE = "debug" ; then
+                CFLAGS="-g3 -signed -fullwarn"
+                if test "$ABI" = "-32" ; then
+                    COPTS1="-O2 -Olimit 9999"
+                    COPTS2="-O2 -Olimit 9999"
+                else
+                    COPTS1="-O2 -OPT:Olimit=0"
+                    COPTS2="-O2 -OPT:Olimit=0"
+                fi
+                case `hinv -t cpu | cut -d" " -f3` in
+                    R12*|R10*|R8*|R5*) arch="mips4"   ;;
+                    R4*)               arch="mips3"   ;;
+                    R6*)               arch="mips2"   ;;
+                    R2*|R3*)           arch="mips1"   ;;
+                    *)                 arch="unknown" ;;
+                esac
+            else
+                CFLAGS="-signed -fullwarn"
+                if test $ABI = "-32" ; then
+                    COPTS1="-mips2 -O2 -Olimit 9999"
+                    COPTS2="-mips2 -O2 -Olimit 9999"
+                    arch="mips2"
+                else
+                    COPTS1="-mips3 -O2 -OPT:Olimit=0"
+                    COPTS2="-mips3 -O2 -OPT:Olimit=0"
+                    arch="mips3"
+                fi
+            fi
+        elif test "$osmaj" -eq 5 ; then
+            ABI=
+
+            if test "$MODE" = "fast" ; then
+                CFLAGS="-signed -fullwarn"
+                COPTS1="-mips2 -O2 -Olimit 9999"
+                COPTS2="-mips2 -O2 -Olimit 9999"
+                arch="mips2"
+            elif test "$MODE" = "debug" ; then
+                CFLAGS="-g3 -signed -fullwarn"
+                COPTS1="-mips2 -O2 -Olimit 9999"
+                COPTS2="-mips2 -O2 -Olimit 9999"
+                arch="mips2"
+            else
+                CFLAGS="-signed -fullwarn"
+                COPTS1="-mips1 -O2 -Olimit 9999"
+                COPTS2="-mips1 -O2 -Olimit 9999"
+                arch="mips1"
+            fi
+        else
+            SYSMPLIBS="-lmpc"
+            ABI=
+
+            if test $MODE = "debug" ; then
+                CFLAGS="-g -signed -fullwarn"
+                COPTS1=" "
+                COPTS2=" "
+            else
+                CFLAGS="-signed -fullwarn"
+                COPTS1="-O2"
+                COPTS2="-O2"
+            fi
+        fi
+        ;;
+
+    Linux)
+        ostype="linux"
+        CSOFLAGS="-rdynamic"
+        LSOFLAGS="-shared"
+        DSOLIBS="-ldl"
+
+        if test -x /usr/bin/cc ; then
+            CC="/usr/bin/cc"
+        else
+            CC="/usr/bin/gcc"
+        fi
+
+        if test -x /usr/bin/c++ ; then
+            CXX="/usr/bin/c++"
+        else
+            CXX="/usr/bin/g++"
+        fi
+
+
+        ARCH=""
+        if test "$MODE" = "fast" ; then
+            gccver=`$CC --version`
+            egcsver=`echo $gccver | cut -d- -f2`
+            if test -n "$egcsver" ; then
+                gccver="$egcsver"
+            fi
+            gccmaj=`echo $gccver | cut -d. -f1`
+            gccmin=`echo $gccver | cut -d. -f2`
+            case `uname -m` in 
+                i686) if test $gccmaj -gt 2 ; then
+                          arch="686"
+                          ARCH="-mpentiumpro"
+                      elif test $gccmaj -eq 2 ; then
+                          if test $gccmin -ge 8 ; then
+                              arch="686"
+                              ARCH="-mpentiumpro"
+                          else
+                              arch="486"
+                              ARCH="-m486"
+                          fi
+                      else
+                          arch="486"
+                          ARCH="-m486"
+                      fi
+                      ;;
+
+                i586) if test $gccmaj -gt 2 ; then
+                          arch="586"
+                          ARCH="-mpentium"
+                      elif test $gccmaj -eq 2 ; then
+                          if test $gccmin -ge 8 ; then
+                              arch="586"
+                              ARCH="-mpentium"
+                          else
+                              arch="486"
+                              ARCH="-m486"
+                          fi
+                      else
+                          arch="486"
+                          ARCH="-m486"
+                      fi
+                      ;;
+
+                i486) arch="486"
+                      ARCH="-m486"
+                      ;;
+
+                i386) arch="386"
+                      ;;
+
+                ppc)  arch="ppc"
+                      ;;
+
+                *)    arch="unknown"
+                      ;;
+            esac
+        else
+            case `uname -m` in 
+                i686|i586|i486|i386) arch="386" ;;
+                ppc)                 arch="ppc" ;;
+                *)                   arch="unknown" ;;
+            esac
+        fi
+        if test $MODE = "debug" ; then
+            CFLAGS="-g -Wall -pedantic"
+            COPTS1="-O3 -funroll-loops $ARCH"
+            COPTS2="-O3 -ffast-math -funroll-loops $ARCH"
+        else
+            CFLAGS="-Wall"
+            COPTS1="-O3 -funroll-loops $ARCH"
+            COPTS2="-O3 -fomit-frame-pointer -ffast-math -funroll-loops $ARCH"
+        fi
+        if test -f /usr/lib/libpthread.a; then
+            SYSMPLIBS="-lpthread"
+        fi
+        for dir in /usr/X11R6 /usr/X11R5 ; do
+            if test -d "$dir" ; then
+                X11INCS="-I$dir/include"
+                X11LIBS="-L$dir/lib"
+                break
+            fi
+        done
+        ;;
+
+    CYGWIN*)
+        ostype="microsoft"
+        osver="win32"
+        CC="gcc"
+        CXX="g++"
+        ABI="-mno-cygwin"
+        CSOFLAGS="-rdynamic"
+        LSOFLAGS="-shared"
+        WINDRES="windres -O coff"
+        SYSSOCKLIBS="-lwsock32"
+        EXE=".exe"
+
+        ARCH=""
+        if test "$MODE" = "fast" ; then
+            gccver=`$CC --version`
+            egcsver=`echo $gccver | cut -d- -f2`
+            if test -n "$egcsver" ; then
+                gccver="$egcsver"
+            fi
+            gccmaj=`echo $gccver | cut -d. -f1`
+            gccmin=`echo $gccver | cut -d. -f2`
+            case `uname -m` in 
+                i686) if test $gccmaj -gt 2 ; then
+                          arch="686"
+                          ARCH="-mpentiumpro"
+                      elif test $gccmaj -eq 2 ; then
+                          if test $gccmin -ge 8 ; then
+                              arch="686"
+                              ARCH="-mpentiumpro"
+                          else
+                              arch="486"
+                              ARCH="-m486"
+                          fi
+                      else
+                          arch="486"
+                          ARCH="-m486"
+                      fi
+                      ;;
+
+                i586) if test $gccmaj -gt 2 ; then
+                          arch="586"
+                          ARCH="-mpentium"
+                      elif test $gccmaj -eq 2 ; then
+                          if test $gccmin -ge 8 ; then
+                              arch="586"
+                              ARCH="-mpentium"
+                          else
+                              arch="486"
+                              ARCH="-m486"
+                          fi
+                      else
+                          arch="486"
+                          ARCH="-m486"
+                      fi
+                      ;;
+
+                i486) arch="486"
+                      ARCH="-m486"
+                      ;;
+
+                i386) arch="386"
+                      ;;
+                *)    arch="unknown"
+                      ;;
+            esac
+        else
+            case `uname -m` in 
+                i686|i586|i486|i386) arch="386" ;;
+                *)                   arch="unknown" ;;
+            esac
+        fi
+        if test $MODE = "debug" ; then
+            CFLAGS="-g -Wall -pedantic"
+            COPTS1="-O3 -funroll-loops $ARCH"
+            COPTS2="-O3 -ffast-math -funroll-loops $ARCH"
+        else
+            CFLAGS="-Wall"
+            COPTS1="-O3 -funroll-loops $ARCH"
+            COPTS2="-O3 -fomit-frame-pointer -ffast-math -funroll-loops $ARCH"
+        fi
+        ;;
+    CYGWIN*)
+        ostype="cygwin"
+        CC="gcc"
+        CXX="g++"
+        ARCH=""
+        CSOFLAGS="-rdynamic"
+        LSOFLAGS="-shared"
+        WINDRES="windres -O coff"
+        EXE=".exe"
+
+        if test "$MODE" = "fast" ; then
+            gccver=`$CC --version`
+            egcsver=`echo $gccver | cut -d- -f2`
+            if test -n "$egcsver" ; then
+                gccver="$egcsver"
+            fi
+            gccmaj=`echo $gccver | cut -d. -f1`
+            gccmin=`echo $gccver | cut -d. -f2`
+            case `uname -m` in 
+                i686) if test $gccmaj -gt 2 ; then
+                          arch="686"
+                          ARCH="-mpentiumpro"
+                      elif test $gccmaj -eq 2 ; then
+                          if test $gccmin -ge 8 ; then
+                              arch="686"
+                              ARCH="-mpentiumpro"
+                          else
+                              arch="486"
+                              ARCH="-m486"
+                          fi
+                      else
+                          arch="486"
+                          ARCH="-m486"
+                      fi
+                      ;;
+
+                i586) if test $gccmaj -gt 2 ; then
+                          arch="586"
+                          ARCH="-mpentium"
+                      elif test $gccmaj -eq 2 ; then
+                          if test $gccmin -ge 8 ; then
+                              arch="586"
+                              ARCH="-mpentium"
+                          else
+                              arch="486"
+                              ARCH="-m486"
+                          fi
+                      else
+                          arch="486"
+                          ARCH="-m486"
+                      fi
+                      ;;
+
+                i486) arch="486"
+                      ARCH="-m486"
+                      ;;
+
+                i386) arch="386"
+                      ;;
+                *)    arch="unknown"
+                      ;;
+            esac
+        else
+            case `uname -m` in 
+                i686|i586|i486|i386) arch="386" ;;
+                *)                   arch="unknown" ;;
+            esac
+        fi
+        if test $MODE = "debug" ; then
+            CFLAGS="-g -Wall -pedantic"
+            COPTS1="-O3 -funroll-loops $ARCH"
+            COPTS2="-O3 -ffast-math -funroll-loops $ARCH"
+        else
+            CFLAGS="-Wall"
+            COPTS1="-O3 -funroll-loops $ARCH"
+            COPTS2="-O3 -fomit-frame-pointer -ffast-math -funroll-loops $ARCH"
+        fi
+        ;;
+
+    OSF1)
+        ostype="osf1"
+        osmaj=`echo $osmaj | tr -d "VTX"`
+        osver="$osmaj.$osmin"
+
+        CC="/usr/bin/cc"
+        CC="/usr/bin/cxx"
+        CMPFLAGS="-pthread -D_PTHREAD_USE_INLINE"
+        LSOFLAGS="-shared -expect_unresolved \"*\""
+        SYSMPLIBS="-lpthread"
+        SYSKMEMLIB="-lmach"
+
+        if test "$MODE" = "debug" ; then
+            # CFLAGS += "-check -portable"
+            CFLAGS="-std -w0 -g3"
+        else
+            CFLAGS="-std -w0"
+        fi
+        if test "$MODE" = "fast" ; then
+            line=`/usr/sbin/psrinfo -v | head -n 3 | tail -n 1`
+            cpu=`echo "$line" | cut -d" " -f5`
+            case "$cpu" in
+                EV5.6) rev=`echo "$line" | cut -d" " -f6`
+                       if test "$rev" = "(21164PC)" ; then
+                           arch="pca56"
+                       else
+                           arch="ev56"
+                       fi
+                       ;;
+                EV6*)  arch="ev6"       ;;
+                EV5.7) arch="pca56"     ;;
+                EV5.6) arch="ev56"      ;;
+                EV5*)  arch="ev5"       ;;
+                EV4*)  arch="ev4"       ;;
+                LCA4)  arch="ev4"       ;;
+                *)     arch=""          ;;
+            esac
+            if test -z "$arch" ; then
+                COPTS1="-fast -O2 -arch host"
+                COPTS2="-fast -O3 -arch host"
+                arch="unknown"
+            else
+                COPTS1="-fast -O2 -arch $arch"
+                COPTS2="-fast -O3 -arch $arch"
+            fi
+        else
+            COPTS1="-fast -O2"
+            COPTS2="-fast -O3"
+            case `uname -m` in
+                alpha) arch="alpha"   ;;
+                *)     arch="unknown" ;;
+            esac
+        fi
+        ;;
+
+    AIX)
+        ostype="aix"
+        osmaj=`uname -v`
+        osmin=`uname -r`
+        osver="$osmaj.$osmin"
+        CC="/usr/bin/xlc"
+        if test "$MODE" = "debug" ; then
+            CFLAGS="-g -qstrict -qchars=signed -qproto"
+        else
+            CFLAGS="-qstrict -qchars=signed -qproto"
+        fi
+        COPTS1="-O3 -qfold -qignerrno -qinlglue"
+        COPTS2="-O3 -qfold -qignerrno -qinlglue"
+        LSOFLAGS="-G -bnoentry -bexpall"
+        CSOFLAGS="-brtl -bexpall"
+        SYSMPLIBS="-lpthread"
+        ;;
+
+    HP-UX)
+        ostype="hpux"
+        if test $MODE = "debug" ; then
+            CFLAGS="-g -Ae +ESlit"
+        else
+            CFLAGS="-Ae +ESlit"
+        fi
+        COPTS1="+O4 +Onolimit +Oconservative"
+        COPTS2="+O4 +Onolimit +Oconservative"
+        for dir in /usr/lib/X11R6 /usr/lib/X11R5 ; do
+            if test -d "$dir" ; then
+                X11LIBS="-L$dir"
+                break
+            fi
+        done
+        ;;
+
+    ULTRIX)
+        ostype="ultrix"
+        ;;
+
+    *)
+        arch="unknown"
+        ;;
+esac
+
+# Generate C Test Program
+cat > conf.c <<EOF
+int main( void ) {
+    return 0;
+}
+EOF
+
+if test "$usegcc" = 1 ; then
+  # Ignore native C compiler
+  ccok=1
+  CXX=
+  CC=
+else
+  ccok=0
+fi
+
+
+IFS=" "
+if test -n "$CC" && test -x "$CC" ; then
+    FLAGS="$ABI $CFLAGS $COPTS2 $LFLAGS $LOPTS"
+    if { (eval "$CC $FLAGS -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+        echo "Using native C compiler $CC"
+        echo "Using optimizing flags $FLAGS"
+        ccok=1
+    fi
+
+    if test $ccok = 0 ; then
+        COPTS2="$COPTS1"
+        LOPTS=
+        FLAGS="$ABI $CFLAGS $COPTS1 $LFLAGS"
+        if { (eval "$CC $FLAGS -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+            echo "Using native C compiler $CC"
+            echo "Using compiler flags $FLAGS"
+            ccok=1
+        fi
+    fi
+
+    if test $ccok = 0 ; then
+        COPTS1="-O"
+        COPTS2="-O"
+        FLAGS="$ABI $CFLAGS $COPTS1 $LFLAGS"
+        if { (eval "$CC $FLAGS -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+            echo "Using native C compiler $CC"
+            echo "Using compiler flags $FLAGS"
+            ccok=1
+        fi
+    fi
+
+    if test $ccok = 0 ; then
+        arch="unknown"
+        ABI=
+        if test $MODE = "debug" ; then
+            CFLAGS="-g"
+            LFLAGS=
+        else
+            CFLAGS=
+            LFLAGS="-s"
+        fi
+        FLAGS="$CFLAGS $COPTS1 $LFLAGS"
+        if { (eval "$CC $FLAGS -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+            echo "Using native C compiler $CC"
+            echo "Using compiler flags $FLAGS"
+            ccok=1
+        fi
+    fi
+
+    if test $ccok = 0 ; then
+        echo "Ignoring native C compiler $CC"
+        CC=
+    fi
+elif test -n "$CC" ; then
+    echo "Unable to find native C compiler"
+    CC=
+fi
+IFS=":	 "
+
+
+# Find UNIX cc C Compiler
+if test "$ccok" = 0 ; then
+    for dir in $PATH ; do
+        if test -z "$dir" ; then
+            continue
+        fi
+        if test "$dir/cc" = /usr/ucb/cc ; then
+            continue
+        fi
+        if test -x "$dir/cc" ; then
+            if { (eval "$dir/cc -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+                CC="$dir/cc"
+                break
+            fi
+        fi
+    done
+
+    if test -z "$CC" ; then
+        if test -x /usr/ucb/cc ; then
+            if { (eval "/usr/ucb/cc -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+                CC="/usr/ucb/cc"
+            fi
+        fi
+    fi
+
+    if test -n "$CC" ; then
+        echo "Using C compiler $CC"
+        arch="unknown"
+        ABI=
+        CFLAGS=
+        COPTS1=
+        COPTS2=
+        LFLAGS=
+        LOPTS=
+
+        if test $MODE = "debug" ; then
+            if { (eval "$CC -g -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+                CFLAGS="-g"
+                LFLAGS=
+            fi
+        else
+            if { (eval "$CC -s -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+                CFLAGS=
+                LFLAGS="-s"
+            fi
+        fi
+
+        FLAGS="$CFLAGS $LFLAGS"
+        if { (eval "$CC $FLAGS -O2 -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+            COPTS1="-O2"
+            COPTS2="-O2"
+        elif { (eval "$CC $FLAGS -O -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+            COPTS1="-O"
+            COPTS2="-O"
+        fi
+        echo "Using compiler flags $CFLAGS $COPTS1 $LFLAGS"
+        ccok=1
+    fi
+fi
+
+
+# Find GNU GCC C compiler
+if test -z "$CC"; then
+    usegcc=1
+    ccok=0
+    for dir in $PATH; do
+        if test -z "$dir" ; then
+            continue
+        fi
+        if test -x "$dir/gcc" ; then
+            if { (eval "$dir/gcc -o conf conf.c ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+                CC="$dir/gcc"
+                break
+            fi
+        fi
+    done
+fi
+
+if test -z "$CC"; then
+  echo "Error: Unable to find a suitable C compiler cc"
+  exit 1
+fi
+
+if test "$usegcc" = 1 ; then
+    echo "Using GNU C compiler $CC"
+    arch="unknown"
+    ABI=
+    LSOFLAGS="-shared"
+    LOPTS=
+    ARCH=
+
+    gccver=`$CC --version`
+    egcsver=`echo $gccver | cut -d- -f2`
+    if test -n "$egcsver" ; then
+        gccver="$egcsver"
+    fi
+    gccmaj=`echo $gccver | cut -d. -f1`
+    gccmin=`echo $gccver | cut -d. -f2`
+
+    case `uname -s` in
+        SunOS)
+            CMPFLAGS="-D_REENTRANT"
+            if test "$MODE" = fast ; then
+                if test -x /usr/bin/isalist ; then
+                    arch=`isalist | cut -f1 -d" "`
+                fi
+                if test -z "$arch" ; then
+                    arch=`uname -p`
+                fi
+                # Not fully implemented in GCC 2.95.2
+                arch=sparc
+                case "$arch" in
+                    sparcv9+vis)      ARCH="-mcpu=v9 -mvis" ;;
+                    sparcv9)          ARCH="-mcpu=v9"       ;;
+                    sparcv8plus+vis)  ARCH="-mcpu=v8 -mvis" ;;
+                    sparcv8*)  ARCH="-mcpu=v8"
+                               arch="sparcv8"
+                               ;;
+                    *)         arch="sparc"
+                               ;;
+                esac
+            else
+                arch="sparc"
+            fi
+            ;;
+
+        IRIX64)
+            LD="$CC"
+            case "$SGI_ABI" in
+                -32|-o32|32|o32) ABI="-mabi=32"  ;;
+                -n32|n32)        ABI="-mabi=n32" ;;
+                -64|64)          ABI="-mabi=64"  ;;
+                *)               if test "$MODE" = safe ; then
+                                     ABI="-mabi=32"
+                                 else
+                                     ABI="-mabi=n32"
+                                 fi
+                                 ;;
+            esac
+            if test $MODE = fast ; then
+                case `hinv -t cpu | cut -d" " -f3` in
+                    R12*|R10*|R8*|R5*) arch="mips4"
+                                       ARCH="-mips4"
+                                       ;;
+                    R4*)               arch="mips3"
+                                       ARCH="-mips3"
+                                       ;;
+                    R6*)               arch="mips2"
+                                       ARCH="-mips2"
+                                       ;;
+                    R2*|R3*)           arch="mips1"
+                                       ARCH="-mips1"
+                                       ;;
+                esac
+            else
+                arch="mips1"
+            fi
+            ;;
+
+        IRIX)
+            LD="$CC"
+            case "$SGI_ABI" in
+                -32|-o32|32|o32) ABI="-mabi=32"  ;;
+                -64|-n32|64|n32) ABI="-mabi=n32" ;;
+                *)               if test "$MODE" = safe ; then
+                                     ABI="-mabi=32"
+                                 else
+                                     ABI="-mabi=n32"
+                                 fi
+                                 ;;
+            esac
+            if test $MODE = fast ; then
+                case `hinv -t cpu | cut -d" " -f3` in
+                    R12*|R10*|R8*|R5*) arch="mips4"
+                                       ARCH="-mips4"
+                                       ;;
+                    R4*)               arch="mips3"
+                                       ARCH="-mips3"
+                                       ;;
+                    R6*)               arch="mips2"
+                                       ARCH="-mips2"
+                                       ;;
+                    R2*|R3*)           arch="mips1"
+                                       ARCH="-mips1"
+                                       ;;
+                esac
+            else
+                arch="mips1"
+            fi
+            ;;
+
+        Linux)
+            if test $MODE = fast ; then
+                case `uname -m` in
+                    i686) arch="686"
+                          ARCH="-mpentiumpro"
+                          ;;
+                    i586) arch="586"
+                          ARCH="-mpentium"
+                          ;;
+                    i486) arch="486"
+                          ARCH="-m486"
+                          ;;
+                    i386) arch="386"
+                          ;;
+                    ppc)  arch="ppc"
+                          ;;
+                esac
+            else
+                case `uname -m` in
+                    i686|i586|i486|i386) arch="386" ;;
+                    ppc)                 arch="ppc" ;;
+                esac
+            fi
+            ;;
+
+        CYGWIN*)
+            ABI="-mno-cygwin"
+            if test $MODE = fast ; then
+                case `uname -m` in
+                    i686) arch="686"
+                          ARCH="-mpentiumpro"
+                          ;;
+                    i586) arch="586"
+                          ARCH="-mpentium"
+                          ;;
+                    i486) arch="486"
+                          ARCH="-m486"
+                          ;;
+                    i386) arch="386"
+                          ;;
+                    ppc)  arch="ppc"
+                          ;;
+                esac
+            else
+                case `uname -m` in
+                    i686|i586|i486|i386) arch="386" ;;
+                    ppc)                 arch="ppc" ;;
+                esac
+            fi
+            ;;
+    esac
+
+    if test $MODE = "debug" ; then
+        CFLAGS="-g -Wall -pedantic"
+        COPTS1="-O3 -funroll-loops $ARCH"
+        COPTS2="-O3 -ffast-math -funroll-loops $ARCH"
+    else
+        CFLAGS="-Wall"
+        COPTS1="-O3 -funroll-loops $ARCH"
+        COPTS2="-O3 -fomit-frame-pointer -ffast-math -funroll-loops $ARCH"
+    fi
+    echo "Using optimizing flags $ABI $CFLAGS $COPTS2"
+fi
+
+# Generate C++ Test Program
+cat > conf.cpp <<EOF
+int main( void ) {
+    return 0;
+}
+EOF
+
+# Find UNIX C++ Compiler
+if test -z "$CXX"; then
+    for dir in $PATH; do
+        if test -z "$dir" ; then
+            continue
+        fi
+        if test -x "$dir/c++" ; then
+            if { (eval "$dir/c++ -o conf conf.cpp ;") 2> /dev/null > /dev/null ;
+ } && test -s conf && (./conf; exit) 2> /dev/null ; then
+                CXX="$dir/c++"
+                break
+            fi
+        fi
+        if test -x "$dir/CC" ; then
+            if { (eval "$dir/CC -o conf conf.cpp ;") 2> /dev/null > /dev/null ;
+ } && test -s conf && (./conf; exit) 2> /dev/null ; then
+                CXX="$dir/CC"
+                break
+            fi
+        fi
+        if test -x "$dir/cxx" ; then
+            if { (eval "$dir/cxx -o conf conf.cpp ;") 2> /dev/null > /dev/null ;
+ } && test -s conf && (./conf; exit) 2> /dev/null ; then
+                CXX="$dir/cxx"
+                break
+            fi
+        fi
+    done
+fi
+
+if test "$usegcc" = 1 ; then
+  # Ignore native C++ compiler
+  CXX=
+fi
+
+# Find GNU G++ C++ compiler
+if test -z "$CXX"; then
+    for dir in $PATH; do
+        if test -z "$dir" ; then
+            continue
+        fi
+        if test -x "$dir/g++" ; then
+            if { (eval "$dir/g++ -o conf conf.cpp ;") 2> /dev/null > /dev/null ; } && test -s conf && (./conf; exit) 2> /dev/null ; then
+                CXX="$dir/g++"
+                break
+            fi
+        fi
+    done
+fi
+
+if test -z "$CXX"; then
+  echo "Warning: Unable to find a suitable C++ compiler CC"
+  # exit 1
+fi
+
+# Find ld(1)
+if test -z "$LD"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/ld" ; then
+      LD="$dir/ld"
+      break
+    fi
+  done
+fi
+
+if test -z "$LD"; then
+  LD="$CC"
+fi
+
+
+# Operating System Utilities
+
+# Find cp(1)
+if test -z "$CP"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x $dir/cp; then
+      CP="$dir/cp"
+      break
+    fi
+  done
+fi
+
+if test -z "$CP" ; then
+  echo "Error: Unable to find cp(1)"
+  exit 1
+fi
+
+
+# Find cat(1)
+if test -z "$CAT"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/cat" ; then
+      CAT="$dir/cat"
+      break
+    fi
+  done
+fi
+
+if test -z "$CAT"; then
+  echo "Error: Unable to find cat(1)"
+  exit 1
+fi
+
+
+# Find rm(1)
+if test -z "$RM"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/rm" ; then
+      RM="$dir/rm"
+      break
+    fi
+  done
+fi
+
+if test -z "$RM"; then
+  echo "Error: Unable to find rm(1)"
+  exit 1
+fi
+
+
+# Find mkdir(1)
+if test -z "$MKDIR"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/mkdir" ; then
+      MKDIR="$dir/mkdir"
+      break
+    fi
+  done
+fi
+
+if test -z "$MKDIR"; then
+  echo "Error: Unable to find mkdir(1)"
+  exit 1
+fi
+
+
+# Find sed(1)
+if test -z "$SED"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/sed" ; then
+      SED="$dir/sed"
+      break
+    fi
+  done
+fi
+
+if test -z "$SED"; then
+  echo "Error: Unable to find sed(1)"
+  exit 1
+fi
+
+
+# Find gzip(1)
+if test -z "$GZIP"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/gzip" ; then
+      GZIP="$dir/gzip"
+      break
+    fi
+  done
+fi
+
+if test -z "$GZIP"; then
+   if test -x /usr/local/bin/gzip; then
+      GZIP=/usr/local/bin/gzip
+   fi
+fi
+
+if test -z "$GZIP"; then
+  echo "Warning: Unable to find gzip(1)"
+fi
+
+
+# Find uncompress(1)
+if test -z "$UNCOMPRESS"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/uncompress" ; then
+      UNCOMPRESS="$dir/uncompress"
+      break
+    fi
+  done
+fi
+
+if test -z "$UNCOMPRESS"; then
+  if test -x /usr/bsd/uncompress; then
+    UNCOMPRESS=/usr/bsd/uncompress
+  fi
+fi
+
+if test -z "$UNCOMPRESS"; then
+  if test -n "$GZIP"; then
+    UNCOMPRESS="$GZIP -d"
+  fi
+fi
+
+if test -z "$UNCOMPRESS"; then
+  echo "Error: Unable to find either uncompress(1) or gunzip(1)"
+  exit 1
+fi
+
+# Find make(1)
+if test -z "$MAKE"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/make" ; then
+      MAKE="$dir/make"
+      break
+    fi
+  done
+fi
+
+if test -z "$MAKE"; then
+   if test -x /usr/local/bin/make; then
+      MAKE=/usr/local/bin/make
+   fi
+fi
+
+if test -z "$MAKE"; then
+   if test -x /usr/ccs/bin/make; then
+      MAKE=/usr/ccs/bin/make
+   fi
+fi
+
+if test -z "$MAKE"; then
+  echo "Error: Unable to find make(1) or GNU make"
+  exit 1
+fi
+
+
+# Find ar(1)
+if test -z "$AR"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/ar" ; then
+      AR="$dir/ar"
+      break
+    fi
+  done
+fi
+
+if test -z "$AR"; then
+   if test -x /usr/ccs/bin/ar; then
+      AR=/usr/ccs/bin/ar
+   fi
+fi
+
+if test -z "$AR"; then
+   if test -x /usr/local/bin/ar; then
+      AR=/usr/local/bin/ar
+   fi
+fi
+
+if test -z "$AR"; then
+  echo "Error: Unable to find ar(1)"
+  exit 1
+fi
+
+
+# Find true(1)
+if test -z "$TRUE"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/true" ; then
+      TRUE="$dir/true"
+      break
+    fi
+  done
+fi
+
+if test -z "$TRUE"; then
+  echo "Error: Unable to find true(1)"
+  exit 1
+fi
+
+
+# Find chmod(1)
+if test -z "$CHMOD"; then
+  for dir in $PATH; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/chmod" ; then
+      CHMOD="$dir/chmod"
+      break
+    fi
+  done
+fi
+
+if test -z "$CHMOD"; then
+  echo "Warning: Unable to find chmod(1)"
+  CHMOD="@$TRUE"
+  exit 1
+fi
+
+
+# Find strip(1)
+if test -z "$STRIP" ; then
+  for dir in $PATH ; do
+    if test -z "$dir" ; then
+        continue
+    fi
+    if test -x "$dir/strip" ; then
+      STRIP="$dir/strip"
+      break
+    fi
+  done
+fi
+
+if test -z "$STRIP"; then
+   if test -x /usr/ccs/bin/strip; then
+      STRIP=/usr/ccs/bin/strip
+   fi
+fi
+
+if test -z "$STRIP"; then
+  echo "Warning: Unable to find strip(1)"
+  STRIP="@$TRUE"
+fi
+
+
+# Disable strip(1) in debug mode!
+if test $MODE = "debug" ; then
+   STRIP="@$TRUE"
+fi
+
+if test "$arch" = "unknown" ; then
+    echo "Host system type is $ostype-$osver"
+    dist=""
+else
+    if test -n "$arch" ; then
+        dist="$ostype-$osver-$arch"
+    else
+        dist="$ostype-$osver"
+    fi
+    echo "Distribution type is $dist"
+fi
+
+#Set SRCDIR
+prog=$0
+confdir=`echo "$prog" | sed 's%/[^/][^/]*$%%'`
+SRCDIR=`echo "$confdir" | sed 's%\([^/]\)/*$%\1%'`
+
+cat > conf.subs <<EOF
+s%@CC@%$CC%g
+s%@CXX@%$CXX%g
+s%@ABI@%$ABI%g
+s%@CFLAGS@%$CFLAGS%g
+s%@COPTS1@%$COPTS1%g
+s%@COPTS2@%$COPTS2%g
+s%@CMPFLAGS@%$CMPFLAGS%g
+s%@CSOFLAGS@%$CSOFLAGS%g
+s%@LD@%$LD%g
+s%@LOPTS@%$LOPTS%g
+s%@LFLAGS@%$LFLAGS%g
+s%@LSOFLAGS@%$LSOFLAGS%g
+s%@DSOLIBS@%$DSOLIBS%g
+s%@SYSMPLIBS@%$SYSMPLIBS%g
+s%@SYSSOCKLIBS@%$SYSSOCKLIBS%g
+s%@SYSKMEMLIB@%$SYSKMEMLIB%g
+s%@SYSSQRTLIB@%$SYSSQRTLIB%g
+s%@X11INCS@%$X11INCS%g
+s%@X11LIBS@%$X11LIBS%g
+s%@CP@%$CP%g
+s%@RM@%$RM%g
+s%@AR@%$AR%g
+s%@CAT@%$CAT%g
+s%@MKDIR@%$MKDIR%g
+s%@CHMOD@%$CHMOD%g
+s%@SED@%$SED%g
+s%@UNCOMPRESS@%$UNCOMPRESS%g
+s%@GZIP@%$GZIP%g
+s%@MAKE@%$MAKE%g
+s%@STRIP@%$STRIP%g
+s%@EXE@%$EXE%g
+s%@WINDRES@%$WINDRES%g
+s%@SRCDIR@%$SRCDIR%g
+EOF
+
+if test -r Makefile.in ; then
+    sed -f conf.subs Makefile.in > Makefile
+    rm -f conf.subs
+elif test -r $SRCDIR/Makefile.in ; then
+    sed -f conf.subs $SRCDIR/Makefile.in > Makefile
+    rm -f conf.subs
+else
+    echo "$dist" > conf.arch
+fi
+rm -f conf.c conf.cpp conf core conf.exe
+exit 0
+

@@ -1,0 +1,117 @@
+EXTENSION	TYPE		DESCRIPTION			READ	WRITE
+alc		alchemy		Alchemy				1	1
+prep		prep		Amber PREP			1	0
+bs		ballstick	Ball & Stick			1	1
+caccrt		cacao		Cacao Cartesian			1	1
+cacint		cacaoint	Cacao Internal			0	1
+cache		cache		CAChe MolStruct			0	1
+ccc		ccc		CCC				1	0
+ct		chemdraw	ChemDraw Connection Table	0	1
+cssr		cssr		CSD CSSR			0	1
+box		box		Dock 3.5 Box			1	1
+dmol		dmol		DMol3 Coordinates		1	1
+feat		feature		Feature				1	1
+fh		fh		Fenske-Hall Z-Matrix		0	1
+gamin		gamessin	GAMESS Input			0	1
+inp		gamessin	GAMESS Input			0	1
+gam		gamessout	GAMESS Output			1	0
+gamout		gamessout	GAMESS Output			1	0
+gcart		gaussiancart	Gaussian Cartesian		0	1
+gau		gaussiancart	Gaussian Input			0	1
+mm1gp		ghemical	Ghemical MM			1	1
+qm1gp		ghemical	Ghemical QM			1	0
+gr96A		gromos96a	GROMOS96 (A)			0	1
+gr96N		gromos96n	GROMOS96 (nm)			0	1
+hin		hin		HyperChem HIN			1	1
+jin		jaguarin	Jaguar Input			0	1
+jout		jaguarout	Jaguar Output			1	0
+bin		oebinary	OpenEye Binary			1	1
+mmd		mmd		MacroModel			1	1
+mmod		mmd		MacroModel			1	1
+out		mmd		MacroModel			1	1
+dat		mmd		MacroModel			1	1
+car		biosym		MSI Biosym/Insight II CAR	1	0
+sdf		sdf		MDL Isis SDF			1	1
+sd		sdf		MDL Isis SDF			1	1
+mdl		sdf		MDL Molfile			1	1
+mol		sdf		MDL Molfile			1	1
+mopcrt		mopaccart	MOPAC Cartesian			1	1
+mopout		mopacout	MOPAC Output			1	0
+mpqc		mpqc		MPQC				1	0
+bgf		bgf		MSI BGF				1	1
+csr		csr		MSI Quanta CSR			0	1
+nw		nwchemin	NWChem Input			0	1
+nwo		nwchemout	NWChem Output			1	0
+pdb		pdb		PDB				1	1
+ent		pdb		PDB				0	0
+report		report		Report				0	1
+qcin		qchemin		QChem Input			0	1
+qcout		qchemout	QChem Output			1	0
+smi		smi		SMILES				1	1
+fix		fix		SMILES Fix			0	1
+mol2		mol2		Sybyl Mol2			1	1
+txyz		tinker		Tinker XYZ			0	1
+txt		title		Titles				0	1
+unixyz		unichem		UniChem XYZ			1	1
+xed		xed		XED				0	1
+xyz		xyz		XYZ				1	1
+# Not "ported" from babel yet
+bmin		bmin		Batchmin Command		0	0
+cadpac		cadpac		Cambridge CADPAC		0	0
+charmm		charmm		CHARMm				0	0
+c3d1		chem3d1		Chem3D Cartesian 1		0	0
+c3d2		chem3d2		Chem3D Cartesian 2		0	0
+fdat		fdat		CSD FDAT			0	0
+gstat		gstat		CSD GSTAT			0	0
+dock		dock		Dock Database			0	0
+fract		fract		Free Form Fractional		0	0
+m3d		m3d		M3D				0	0
+gzmat		gaussianzmat	Gaussian Z-Matrix		0	0
+g92		gaussian92	Gaussian 92 Output		0	0
+g94		gaussian94	Gaussian 94 Output		0	0
+icon		icon8		Icon 8				0	0
+idatm		idatm		IDATM				0	0
+mcm		macmol		MacMolecule			0	0
+maccs		maccs		MDL Maccs			0	0
+micro		microworld	Micro World			0	0
+mm2in		mm2in		MM2 Input			0	0
+mm2out		mm2out		MM2 Output			0	0
+mm3		mm3		MM3				0	0
+mmads		mmads		MMADS				0	0
+molin		molin		MOLIN				0	0
+miv		molinvent	MolInventor			0	0
+mopin		mopacint	MOPAC Internal			0	0
+cmod		pcmodel		PC Model			0	0
+msf		msf		MSI Quanta MSF			0	0
+schakal		schakal		Schakal				0	0
+shelx		shelx		ShelX				0	0
+spar		spartan		Spartan				0	0
+semi		spartansemi	Spartan Semi-Empirical		0	0
+spmm		spartanmm	Spartan MM			0	0
+# These are off of the Chemical MIME list <http://www.ch.ic.ac.uk/chemime/>
+# or product webpages (e.g. WebLab ViewerPro, ChemDraw, etc.)
+csf		csf		CAChe CSF			0	0
+cdx		cdx		ChemDraw Exchange		0	0
+cdxml		cdxml		ChemDraw XML			0	0
+cer		cerius		MSI Cerius II			0	0
+msi		cerius		MSI Cerius II			0	0
+chm		chemdraw	ChemDraw			0	0
+c3d		chem3d		Chem3D				0	0
+cml		cml		Chemical Markup Language	0	0
+csml		csm		Chemical Style Markup		0	0
+csm		csm		Chemical Style Markup		0	0
+mcif		mmcif		MaroMolecular CIF		0	0
+cbin		cbin		CACTVS binary			0	0
+cascii		cascii		CACTVS ascii			0	0
+ctab		ctab		CACTVS table			0	0
+cif		cif		Crystallographic Interchange	0	0
+cmdf		crystalmaker	CrystalMaker Data		0	0
+cpa		compass		COMPASS				0	0
+bsd		crossfire	Crossfire			0	0
+ctx		ctx		Gasteiger CTX			0	0
+cxf		cxf		CXF				0	0
+emb		embl		EMBL nucleotide			0	0
+ist		isostar		IsoStar Library			0	0
+istr		isostart	IsoStar Library			0	0
+mif		mif		MIF				0	0
+vmd		vmd		Visual Molecular Dynamics	0	0

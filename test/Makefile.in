@@ -1,0 +1,52 @@
+#OELib Makefile
+
+CC            = @CC@
+CXX	      = @CXX@
+
+CFLAGS        = @CFLAGS@ @COPTS1@
+CXXFLAGS      = @CFLAGS@ @COPTS1@ -I../
+LIBFLAGS      = 
+
+LINKER	      = $(CXX)
+LDFLAGS       = -L../
+
+RM            = @RM@ -f
+
+SRCDIR        = @SRCDIR@
+VPATH         = $(SRCDIR)
+
+MAIN	      = main.o
+
+HDRS	      = 
+
+OBJS	      =	smartstest.o ringtest.o
+
+PROGRAM	      = oetest
+
+DATAFILES     = attype.00.smi smartstest.txt smartsresults.txt ringresults.txt
+
+
+$(PROGRAM):     $(OBJS) $(MAIN) 
+		$(LINKER) $(LDFLAGS) $(OBJS) $(MAIN) -o  $(PROGRAM) -loe -lm
+
+all:		$(PROGRAM)
+
+clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
+
+install:	$(PROGRAM)
+		install -s $(PROGRAM) $(DEST)
+
+print:;		$(PRINT) $(HDRS) $(SRCS)
+
+program:        $(PROGRAM)
+
+MAKEFILE      = Makefile
+DEST	      = ${HOME}/bin
+
+# Update the Makefile if the Makefile.in or configure script changes
+Makefile:	Makefile.in configure
+		$(SRCDIR)/configure
+
+.SUFFIXES:	.cpp
+.cpp.o:
+		$(CXX) $(CXXFLAGS) -c $< -o $@

@@ -1,0 +1,89 @@
+#OELib Makefile
+
+CC            = @CC@
+CXX	      = @CXX@
+
+CFLAGS        = @CFLAGS@ @COPTS1@
+CXXFLAGS      = @CFLAGS@ @COPTS1@
+
+LIBFLAGS      = -DLIBRARY 
+
+LINKER	      = $(CXX)
+LDFLAGS       = 
+
+RM            = @RM@ -f
+
+SRCDIR        = @SRCDIR@
+VPATH         = $(SRCDIR)
+
+MAIN	      = main.o
+
+HDRS	      = StdAfx.h Vector.h aromatic.h atomtyp.h base.h binary.h \
+		bitgrid.h bitvec.h chiral.h chains.h commandline.h cwrap.h \
+		data.h element.h extable.h fileformat.h grid.h \
+		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
+		oeutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
+		resdata.h ring.h rotor.h smi.h typer.h types.h version.h \
+		chains.h ctransform.h binary_io.h generic.h smarts.h 
+
+OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
+		bitgrid.o bond.o \
+		chains.o commandline.o data.o molvector.o matrix.o\
+		chiral.o grid.o mdl.o mol.o mol2.o molchrg.o \
+		oeutil.o parsmi.o parsmart.o patty.o quat.o \
+		ring.o rotor.o smi.o tokenst.o Vector.o pdb.o ccc.o \
+		mmod.o rand.o box.o balst.o bgf.o cacao.o cache.o chdrw.o \
+		csr.o cssr.o feat.o fh.o gromos96.o cwrap.o \
+		ghemical.o xyz.o fileformat.o gamess.o hin.o \
+		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
+		jaguar.o amber.o ctransform.o binary_io.o generic.o smarts.o\
+		dmol.o report.o nwchem.o mopac.o gaussian.o
+
+PROGRAM	      = oe
+
+LIBRARY       = liboe.a
+
+DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt\
+		resdata.txt types.txt phmodel.txt GNULICENSE.txt \
+		OELibPrimer.html bin2hex.pl
+
+$(PROGRAM):     $(OBJS) $(MAIN) 
+		$(LINKER) $(LDFLAGS) $(OBJS) $(MAIN) -o  $(PROGRAM) -lm
+		ar -r $(LIBRARY) $(OBJS)
+
+all:		$(PROGRAM)
+
+clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
+
+install:	$(PROGRAM)
+		install -s $(PROGRAM) $(DEST)
+
+print:;		$(PRINT) $(HDRS) $(SRCS)
+
+program:        $(PROGRAM)
+
+dist:;          rm -rf oelib oelib.tgz
+		mkdir oelib
+		cp *.h *.cpp *.c Makefile.in $(DATAFILES) configure oelib 
+		tar -zcvf oelib.tgz oelib
+		rm -rf oelib
+
+datafiles:;   chmod +x bin2hex.pl
+	      bin2hex.pl atomtyp.txt  AtomTypeData       > atomtyp.h
+	      bin2hex.pl element.txt  ElementData        > element.h
+	      bin2hex.pl extable.txt  ExtensionTableData > extable.h
+	      bin2hex.pl resdata.txt  ResidueData        > resdata.h
+	      bin2hex.pl types.txt    TypesData          > types.h
+	      bin2hex.pl aromatic.txt AromaticData       > aromatic.h
+	      bin2hex.pl phmodel.txt  PhModelData        > phmodeldata.h
+
+MAKEFILE      = Makefile
+DEST	      = ${HOME}/bin
+
+# Update the Makefile if the Makefile.in or configure script changes
+Makefile:	Makefile.in configure
+		$(SRCDIR)/configure
+
+.SUFFIXES:	.cpp
+.cpp.o:
+		$(CXX) $(CXXFLAGS) -c $< -o $@
