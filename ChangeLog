@@ -1,4 +1,10 @@
 2002-07-12  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* added documentation to the Vector class, made some functions
+	inline, and commented out some methods of the vector class
+	whose names I found misleading, and which were never used anyway.
+
+2002-07-12  Stefan Kebekus <kebekus@users.sourceforge.net>
 	
 	* configure.in: configure now warns if doxygen is not present
 

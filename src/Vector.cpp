@@ -28,314 +28,131 @@ using namespace std;
 
 namespace OpenBabel {
 
-// create a random unit vector
-// use the supplied RNG if it is non-NULL
-void Vector::randomUnitVector(OBRandom *obRandP)
-{
-  OBRandom *ptr;
-  float f1, f2, f3;
-  
-  if (!obRandP)
-     {
+  void Vector::randomUnitVector(OBRandom *obRandP)
+  {
+    OBRandom *ptr;
+    if (!obRandP) {
       ptr = new OBRandom(true);
       ptr->TimeSeed();
-     }
-  else
-     ptr = obRandP;
-
-   // make sure to sample in the unit sphere
-   do {
-     f1= ptr->NextFloat() - 0.5f;
-     f2= ptr->NextFloat() - 0.5f;
-     f3= ptr->NextFloat() - 0.5f;
-   } while ( (f1*f1+f2*f2+f3*f3) > 0.5 );
-
-   this->Set(f1,f2,f3);
-   this->normalize();
-
-   if (!obRandP) { delete ptr; }
-}
-
-Vector :: Vector ( const float x, const float y, const float z )
-{
-  _vx = x ;
-  _vy = y ;
-  _vz = z ;
-}
-
-Vector :: Vector ( const Vector& v ) 
-{
-  _vx = v._vx ;
-  _vy = v._vy ;
-  _vz = v._vz ;
-}
-
-Vector :: ~Vector () { }
-
-Vector& Vector :: operator= ( const Vector& v ) 
-{
-  if ( this == &v ) return ( *this ) ;
-  
-  _vx = v._vx ;
-  _vy = v._vy ;
-  _vz = v._vz ;
-  
-  return ( *this ) ;
-}
-
-ostream& operator<< ( ostream& co, const Vector& v )
-{
-  co << "< " << v._vx << ", " << v._vy << ", " << v._vz << " >" ;
-  return co ;
-}
-
-int operator== ( const Vector& v1, const Vector& v2 ) 
-{
-  if ( ( v1._vx == v2._vx ) &&
-       ( v1._vy == v2._vy ) &&
-       ( v1._vz == v2._vz ) )
-     return ( true ) ;
-  else
-     return ( false ) ;
-}
-
-int operator!= ( const Vector& v1, const Vector& v2 ) 
-{
-  if ( ( v1._vx != v2._vx ) ||
-       ( v1._vy != v2._vy ) ||
-       ( v1._vz != v2._vz ) )
-     return ( true ) ;
-  else
-     return ( false ) ;
-}
-
-Vector operator+ ( const Vector& v1, const Vector& v2 ) 
-{
-  Vector vv ;
-
-  vv._vx = v1._vx + v2._vx ;
-  vv._vy = v1._vy + v2._vy ;
-  vv._vz = v1._vz + v2._vz ;
-
-  return ( vv ) ;
-}
-
-Vector operator- ( const Vector& v1, const Vector& v2 ) 
-{
-  Vector vv ;
-
-  vv._vx = v1._vx - v2._vx ;
-  vv._vy = v1._vy - v2._vy ;
-  vv._vz = v1._vz - v2._vz ;
-
-  return ( vv ) ;
-}
-
-Vector operator- ( const Vector& v ) 
-{
-  Vector vv ;
-
-  vv._vx = - v._vx ;
-  vv._vy = - v._vy ;
-  vv._vz = - v._vz ;
-
-  return ( vv ) ;
-}
-
-Vector operator* ( const float& c, const Vector& v ) 
-{
-  Vector vv ;
-
-  vv._vx = c * v._vx ;
-  vv._vy = c * v._vy ;
-  vv._vz = c * v._vz ;
-
-  return ( vv ) ;
-}
-
-Vector operator* ( const Vector& v, const float& c ) 
-{
-  Vector vv ;
-
-  vv._vx = c * v._vx ;
-  vv._vy = c * v._vy ;
-  vv._vz = c * v._vz ;
-
-  return ( vv ) ;
-}
-
-Vector operator*(const Vector &v,const Vector &v1)
-{
-  Vector vv ;
-
-  vv._vx = v1._vx * v._vx ;
-  vv._vy = v1._vy * v._vy ;
-  vv._vz = v1._vz * v._vz ;
-
-  return ( vv ) ;
-}
-
-Vector operator/ ( const Vector& v, const float& c ) 
-{
-  Vector vv ;
-
-  vv._vx = v._vx / c ;
-  vv._vy = v._vy / c ;
-  vv._vz = v._vz / c ;
-
-  return ( vv ) ;
-}
-
-Vector& Vector :: operator+= ( const Vector& v ) 
-{
-  _vx += v._vx ;
-  _vy += v._vy ;
-  _vz += v._vz ;
-
-  return *this ;
-}
-
-Vector& Vector :: operator-= ( const Vector& v ) 
-{
-  _vx -= v._vx ;
-  _vy -= v._vy ;
-  _vz -= v._vz ;
-
-  return *this ;
-}
-
-Vector& Vector :: operator+= ( const float *f ) 
-{
-  _vx += f[0];
-  _vy += f[1];
-  _vz += f[2];
-
-  return *this ;
-}
-
-Vector& Vector :: operator-= ( const float *f ) 
-{
-  _vx -= f[0];
-  _vy -= f[1];
-  _vz -= f[2];
-
-  return *this ;
-}
-
-Vector& Vector :: operator*= ( const float& c ) 
-{
-  _vx *= c ;
-  _vy *= c ;
-  _vz *= c ;
-
-  return(*this);
-}
-
-Vector& Vector :: operator/= ( const float& c ) 
-{
-  _vx /= c ;
-  _vy /= c ;
-  _vz /= c ;
-
-  return(*this);
-}
-
-Vector& Vector :: normalize ()  
-{
-  float l =  length () ;
-
-  if (l == 0) return(*this);
-
-  _vx = _vx / l ;
-  _vy = _vy / l ;
-  _vz = _vz / l ;
-
-  return(*this);
-}
-
-float Vector :: length ()  const
-{
-  float l;
-
-  l =  sqrt ( _vx * _vx + _vy * _vy + _vz * _vz ) ;
-  return ( l ) ;
-}
-
-float Vector :: length_2 ()  const
-{
-  float l;
-
-  l =  ( _vx * _vx + _vy * _vy + _vz * _vz ) ;
-  return ( l ) ;
-}
-
-float dot ( const Vector& v1, const Vector& v2 ) 
-{
-  float d;
-
-  d =  v1._vx * v2._vx + v1._vy * v2._vy + v1._vz * v2._vz ;
-  return ( d ) ;
-}
-
-Vector cross ( const Vector& v1, const Vector& v2 ) 
-{
-  Vector vv ;
-
-  vv._vx = v1._vy * v2._vz - v1._vz * v2._vy ;
-  vv._vy = - v1._vx * v2._vz + v1._vz * v2._vx ;
-  vv._vz = v1._vx * v2._vy - v1._vy * v2._vx ;
-
-  return ( vv ) ;
-}
-
-
-// ***angle***
-
-float VectorAngle ( const Vector& v1, const Vector& v2 ) 
-{
-  float mag;
-  float dp;
-
-  mag = v1.length() * v2.length();
-  dp = dot(v1,v2)/mag;
-
-  if (dp < -0.999999)
-     dp = -0.9999999f;
-
-  if (dp > 0.9999999)
-     dp = 0.9999999f;
-
-  if (dp > 1.0)
-     dp = 1.0f;
-
-  return((RAD_TO_DEG * acos(dp)));
-}
-
-float CalcTorsionAngle(const Vector &a, const Vector &b,
-		       const Vector &c, const Vector &d)
-{
-  float torsion;
-  Vector b1,b2,b3,c1,c2,c3;
-  
-  b1 = a - b;
-  b2 = b - c;
-  b3 = c - d;
-  
-  c1 = cross(b1,b2);
-  c2 = cross(b2,b3);
-  c3 = cross(c1,c2);
-  
-  if (c1.length() * c2.length() < 0.001)
-     torsion = 0.0;
-  else
-  {
-    torsion = VectorAngle(c1,c2);
-    if (dot(b2,c3) > 0.0)
-       torsion *= -1.0;
+    } else
+      ptr = obRandP;
+    
+    // obtain a random vector with 0.001 <= length^2 <= 1.0, normalize
+    // the vector to obtain a random vector of length 1.0.
+    float l;
+    do {
+      this->Set(ptr->NextFloat()-0.5f, ptr->NextFloat()-0.5f, ptr->NextFloat()-0.5f);
+      l = length_2();
+    } while ( (l > 1.0) || (l < 0.0001) );
+    this->normalize();
+    
+    if (!obRandP) 
+      delete ptr;
   }
 
-  return(torsion);
-}
+  ostream& operator<< ( ostream& co, const Vector& v )
+  {
+    co << "< " << v._vx << ", " << v._vy << ", " << v._vz << " >" ;
+    return co ;
+  }
+  
+  int operator== ( const Vector& v1, const Vector& v2 ) 
+  {
+    if ( ( v1._vx == v2._vx ) &&
+	 ( v1._vy == v2._vy ) &&
+	 ( v1._vz == v2._vz ) )
+      return ( true ) ;
+    else
+      return ( false ) ;
+  }
+
+  int operator!= ( const Vector& v1, const Vector& v2 ) 
+  {
+    if ( ( v1._vx != v2._vx ) ||
+	 ( v1._vy != v2._vy ) ||
+	 ( v1._vz != v2._vz ) )
+      return ( true ) ;
+    else
+      return ( false ) ;
+  }
+
+  Vector& Vector :: normalize ()  
+  {
+    float l = length ();
+    
+    if (l == 0) 
+      return(*this);
+    
+    _vx = _vx / l ;
+    _vy = _vy / l ;
+    _vz = _vz / l ;
+    
+    return(*this);
+  }
+  
+  float dot ( const Vector& v1, const Vector& v2 ) 
+  {
+    return v1._vx*v2._vx + v1._vy*v2._vy + v1._vz*v2._vz ;
+  }
+  
+  Vector cross ( const Vector& v1, const Vector& v2 ) 
+  {
+    Vector vv ;
+    
+    vv._vx =   v1._vy*v2._vz - v1._vz*v2._vy ;
+    vv._vy = - v1._vx*v2._vz + v1._vz*v2._vx ;
+    vv._vz =   v1._vx*v2._vy - v1._vy*v2._vx ;
+    
+    return ( vv ) ;
+  }
+
+
+  // ***angle***
+
+  float VectorAngle ( const Vector& v1, const Vector& v2 ) 
+  {
+    float mag;
+    float dp;
+
+    mag = v1.length() * v2.length();
+    dp = dot(v1,v2)/mag;
+
+    if (dp < -0.999999)
+      dp = -0.9999999f;
+
+    if (dp > 0.9999999)
+      dp = 0.9999999f;
+
+    if (dp > 1.0)
+      dp = 1.0f;
+
+    return((RAD_TO_DEG * acos(dp)));
+  }
+
+  float CalcTorsionAngle(const Vector &a, const Vector &b,
+			 const Vector &c, const Vector &d)
+  {
+    float torsion;
+    Vector b1,b2,b3,c1,c2,c3;
+  
+    b1 = a - b;
+    b2 = b - c;
+    b3 = c - d;
+    
+    c1 = cross(b1,b2);
+    c2 = cross(b2,b3);
+    c3 = cross(c1,c2);
+  
+    if (c1.length() * c2.length() < 0.001)
+      torsion = 0.0;
+    else {
+      torsion = VectorAngle(c1,c2);
+      if (dot(b2,c3) > 0.0)
+	torsion *= -1.0;
+    }
+    
+    return(torsion);
+  }
 
 //MATRIX ROUTINES
 
@@ -406,18 +223,18 @@ void Matrix3x3::RotAboutAxisByAngle(const Vector &v,const float angle)
 
 void Matrix3x3::RotateCoords(float *c,int noatoms)
 {
-  int i,idx;
-  float x,y,z;
-  for (i = 0;i < noatoms;i++)
-    {
-			idx = i*3;
-      x = c[idx]*ele[0][0] + c[idx+1]*ele[0][1] + c[idx+2]*ele[0][2];
-      y = c[idx]*ele[1][0] + c[idx+1]*ele[1][1] + c[idx+2]*ele[1][2];
-      z = c[idx]*ele[2][0] + c[idx+1]*ele[2][1] + c[idx+2]*ele[2][2];
-      c[idx] = x;c[idx+1] = y;c[idx+2] = z;
-    }
+  for (int i = 0; i < noatoms; i++) {
+    int idx = i*3;
+    float x = c[idx]*ele[0][0] + c[idx+1]*ele[0][1] + c[idx+2]*ele[0][2];
+    float y = c[idx]*ele[1][0] + c[idx+1]*ele[1][1] + c[idx+2]*ele[1][2];
+    float z = c[idx]*ele[2][0] + c[idx+1]*ele[2][1] + c[idx+2]*ele[2][2];
+    c[idx+0] = x;
+    c[idx+1] = y;
+    c[idx+2] = z;
+  }
 }
 
+/* @removed@ misleading operation; matrix multiplication is not commutitative
 Vector operator *(const Vector &v,const Matrix3x3 &m)
 {
   Vector vv;
@@ -428,6 +245,7 @@ Vector operator *(const Vector &v,const Matrix3x3 &m)
 
   return(vv);
 }
+*/
 
 Vector operator *(const Matrix3x3 &m,const Vector &v)
 {
@@ -458,11 +276,10 @@ Matrix3x3 Matrix3x3::invert()
 {
   float t[3][3];
   float det;
-
+  
   det = determinant();
-
-  if (det != 0.0)
-  {
+  
+  if (det != 0.0) {
     t[0][0] = ele[1][1]*ele[2][2] - ele[1][2]*ele[2][1];
     t[1][0] = ele[1][2]*ele[2][0] - ele[1][0]*ele[2][2];
     t[2][0] = ele[1][0]*ele[2][1] - ele[1][1]*ele[2][0];
@@ -472,15 +289,15 @@ Matrix3x3 Matrix3x3::invert()
     t[0][2] = ele[0][1]*ele[1][2] - ele[0][2]*ele[1][1];
     t[1][2] = ele[0][2]*ele[1][0] - ele[0][0]*ele[1][2];
     t[2][2] = ele[0][0]*ele[1][1] - ele[0][1]*ele[1][0];
-
+    
     register int i,j;
     for (i = 0;i < 3;i++)
-       for (j = 0;j < 3;j++)
-	  ele[i][j] = t[i][j];
-
+      for (j = 0;j < 3;j++)
+	ele[i][j] = t[i][j];
+    
     *this /= det;
   }
-    
+  
   return(*this);
 }
 
