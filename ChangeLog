@@ -1,3 +1,7 @@
+2005-04-06  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/formats/inchi: added InChI 1.0 files from NIST.
+
 2005-04-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.cpp: Change "Readonly" and "Writeonly" to
