@@ -1,4 +1,4 @@
-SUBDIRS = src test doc
+SUBDIRS = src test doc tools
 EXTRA_DIST = Doxyfile bc32.mak
 AUTOMAKE_OPTIONS = foreign
 
