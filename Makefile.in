@@ -15,7 +15,7 @@ DESTDIR       =
 INSTALL	      = @INSTALL@
 MKDIRS        = $(top_srcdir)/mkinstalldirs
 
-SUBDIRS	      = src test
+SUBDIRS	      = src src/math test
 DISTDIR       = $(top_srcdir)/../openbabel-$(version)
 
 all:
@@ -47,7 +47,7 @@ distclean:
 			(cd $$i; $(MAKE) $(MFLAGS) distclean) \
 			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
 		done && test -z "$$fail"
-		rm -f Makefile stamp-h
+		rm -f Makefile stamp-h stamp.h
 
 install:	all
 		(cd src; $(MAKE) $(MFLAGS) install)

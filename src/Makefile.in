@@ -7,15 +7,13 @@ bindir        = @bindir@
 
 DESTDIR       = 
 
-SUBDIRS       = math
-
 CC            = @CC@
 CXX	      = @CXX@
 
 CFLAGS        = @CFLAGS@
 CXXFLAGS      = @CXXFLAGS@ 
 DEFS          = -DDATADIR=\"${pkgdatadir}\" 
-INCS          = -I$(builddir)
+INCS          = -I$(srcdir) -I$(builddir)
 LIBS	      = @LIBS@
 LIBFLAGS      = -DLIBRARY
 
@@ -81,18 +79,13 @@ $(LIBRARY):	$(DATAINCS) $(OBJS) $(EXTRAOBJS)
 		$(AR) -r $(LIBRARY) $(OBJS) $(EXTRAOBJS)
 		$(RANLIB) $(LIBRARY)
 
-all:		subdirs $(DATAINCS) $(LIBRARY) $(PROGRAM)
-
-subdirs:	
-                @for i in $(SUBDIRS); do \
-                        (cd $$i; $(MAKE) $(MFLAGS) all) \
-                        || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
-                done && test -z "$$fail"
+all:		$(DATAINCS) $(LIBRARY) $(PROGRAM)
 
 test:		check
 check:		$(PROGRAM)
 
-clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY) 
+clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
+
 distclean:	clean
 		$(RM) version.h Makefile
 

@@ -13,7 +13,7 @@ CXX	      = @CXX@
 CFLAGS        = @CFLAGS@
 CXXFLAGS      = @CXXFLAGS@ 
 DEFS          = -DDATADIR=\"${pkgdatadir}\" 
-INCS          = -I$(builddir)
+INCS          = -I$(srcdir)
 LIBS	      = @LIBS@
 LIBFLAGS      = -DLIBRARY
 
@@ -44,6 +44,10 @@ clean:;		$(RM) $(OBJS)
 distclean:	clean
 
 dist:		distclean
+
+check:
+
+install:
 
 # Update the Makefile if the Makefile.in or configure script changes
 Makefile:	Makefile.in
