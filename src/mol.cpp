@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -2676,7 +2677,7 @@ void OBMol::PerceiveBondOrders()
   vector<OBNodeBase*>::iterator i;
   vector<OBEdgeBase*>::iterator j,k;
   
-  BeginModify();
+  //  BeginModify();
 
   // Pass 1: Assign estimated hybridization based on avg. angles
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
@@ -2863,30 +2864,30 @@ void OBMol::PerceiveBondOrders()
   // Unfortunately it doesn't work well enough b/c we cannot easily pass off
   // our partially-typed structure to the Kekulize procedure yet.
 
-  bool typed; // has this ring been typed?
-  unsigned int loop, loopSize;
-  for (ringit = rlist.begin(); ringit != rlist.end(); ringit++)
-    {
-      typed = false;
-      loopSize = (*ringit)->PathSize();
-      if (loopSize == 5 || loopSize == 6)
-	{
-	  path = (*ringit)->_path;
-	  for(loop = 0; loop < loopSize; loop++)
-	    {
-	      atom = GetAtom(path[loop]);
-	      if(atom->HasNonSingleBond() || atom->GetHyb() != 2)
-		{
-		  typed = true;
-		  break;
-		}
-	    }
+//   bool typed; // has this ring been typed?
+//   unsigned int loop, loopSize;
+//   for (ringit = rlist.begin(); ringit != rlist.end(); ringit++)
+//     {
+//       typed = false;
+//       loopSize = (*ringit)->PathSize();
+//       if (loopSize == 5 || loopSize == 6)
+// 	{
+// 	  path = (*ringit)->_path;
+// 	  for(loop = 0; loop < loopSize; loop++)
+// 	    {
+// 	      atom = GetAtom(path[loop]);
+// 	      if(atom->HasNonSingleBond() || atom->GetHyb() != 2)
+// 		{
+// 		  typed = true;
+// 		  break;
+// 		}
+// 	    }
 
-	  if (!typed)
-	    for(loop = 0; loop < loopSize; loop++)
-	      (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
-	}
-    }
+// 	  if (!typed)
+// 	    for(loop = 0; loop < loopSize; loop++)
+// 	      (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
+// 	}
+//     }
   // Kekulize();
 
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity
@@ -2978,7 +2979,10 @@ void OBMol::PerceiveBondOrders()
   } // pass 6
 
   // Now let the atom typer go to work again
-  EndModify(true); // "nuke" perceived data
+  _flags &= (~(OB_HYBRID_MOL));
+  _flags &= (~(OB_AROMATIC_MOL));
+  _flags &= (~(OB_ATOMTYPES_MOL));
+  //  EndModify(true); // "nuke" perceived data
 }
 
 void OBMol::Center()
