@@ -6,6 +6,8 @@ caccrt		cacao		Cacao Cartesian			none				1	1
 cacint		cacaoint	Cacao Internal			none				0	1
 cache		cache		CAChe MolStruct			none				0	1
 ccc		ccc		CCC				none				1	0
+c3d1		chem3d1		Chem3D Cartesian 1		none				1	1
+c3d2		chem3d2		Chem3D Cartesian 2		none				1	1
 ct		chemdraw	ChemDraw Connection Table	none				0	1
 cssr		cssr		CSD CSSR			none				0	1
 box		box		Dock 3.5 Box			none				1	1
@@ -37,6 +39,7 @@ mdl		sdf		MDL Molfile			chemical/x-mdl-molfile		1	1
 mol		sdf		MDL Molfile			chemical/x-mdl-molfile		1	1
 mopcrt		mopaccart	MOPAC Cartesian			chemical/x-mopac-input		1	1
 mopout		mopacout	MOPAC Output			none				1	0
+mmads		mmads		MMADS				none				1	1
 mpqc		mpqc		MPQC				none				1	0
 bgf		bgf		MSI BGF				none				1	1
 csr		csr		MSI Quanta CSR			none				0	1
@@ -60,8 +63,6 @@ xyz		xyz		XYZ				chemical/x-xyz			1	1
 bmin		bmin		Batchmin Command		none				0	0
 cadpac		cadpac		Cambridge CADPAC		none				0	0
 charmm		charmm		CHARMm				none				0	0
-c3d1		chem3d1		Chem3D Cartesian 1		none				0	0
-c3d2		chem3d2		Chem3D Cartesian 2		none				0	0
 fdat		fdat		CSD FDAT			none				0	0
 gstat		gstat		CSD GSTAT			none				0	0
 dock		dock		Dock Database			none				0	0
@@ -79,7 +80,6 @@ mdn		molden		MOLDEN				none				0	0
 mm2in		mm2in		MM2 Input			none				0	0
 mm2out		mm2out		MM2 Output			none				0	0
 mm3		mm3		MM3				none				0	0
-mmads		mmads		MMADS				none				0	0
 molin		molin		MOLIN				none				0	0
 miv		molinvent	MolInventor			none				0	0
 mopin		mopacint	MOPAC Internal			none				0	0

@@ -96,7 +96,7 @@ bool ReadChem3d1(istream &ifs,OBMol &mol,char *title)
   return(ReadChem3d(ifs,mol,false,"MM2"));
 }
 
-int read_chem3d2(istream &ifs,OBMol &mol,char *title)
+bool ReadChem3d2(istream &ifs,OBMol &mol,char *title)
 {
   return(ReadChem3d(ifs,mol,false,"C3D"));
 }

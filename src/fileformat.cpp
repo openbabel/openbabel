@@ -30,12 +30,15 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, char *title)
     case BOX:       ReadBox(ifs,mol,title);        break;
     case CACAO:	    ReadCaccrt(ifs,mol,title);	   break;
     case CCC:       ReadCCC(ifs,mol,title);        break;
+    case CHEM3D1:   ReadChem3d1(ifs,mol,title);    break;
+    case CHEM3D2:   ReadChem3d2(ifs,mol,title);    break;
     case DMOL:      ReadDMol(ifs,mol,title);       break;
     case FEATURE:   ReadFeat(ifs,mol,title);	   break;
     case GAMESSOUT: ReadGAMESS(ifs,mol,title);	   break;
     case GHEMICAL:  ReadGhemical(ifs,mol,title);   break; 
     case HIN:	    ReadHIN(ifs,mol,title);	   break;
     case MMD:       ReadMacroModel(ifs,mol,title); break;
+    case MMADS:     ReadMmads(ifs,mol,title);      break;
     case MOL2:      ReadMol2(ifs,mol,title);       break;
     case MOPACOUT:  ReadMOPAC(ifs,mol,title);	   break;
     case MOPACCART: ReadMOPACCartesian(ifs,mol,title);break;
@@ -48,6 +51,7 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, char *title)
     case SDF:       ReadSDFile(ifs,mol,title);     break;
     case SMI:       ReadSmiles(ifs,mol,title);     break;
     case UNICHEM:   ReadUnichem(ifs,mol,title);	   break;
+    case VIEWMOL:   ReadViewMol(ifs,mol,title);	   break;
     case XYZ:	    ReadXYZ(ifs,mol,title);	   break;
 
     default:
@@ -68,6 +72,8 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol, char *dimension)
     case CACAOINT:  WriteCacaoInternal(ofs,mol);	break;
     case CACHE:     WriteCache(ofs,mol);		break;
     case CHEMDRAW:  WriteChemDraw(ofs,mol);		break;
+    case CHEM3D1:  WriteChem3d1(ofs,mol);		break;
+    case CHEM3D2:  WriteChem3d2(ofs,mol);		break;
     case CSR:       WriteCSR(ofs,mol);			break;
     case CSSR:      WriteCSSR(ofs,mol);			break;
     case DMOL:      WriteDMol(ofs,mol);			break;
@@ -84,6 +90,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol, char *dimension)
     case JAGUARIN:  WriteJaguar(ofs,mol);		break;
     case OEBINARY:  WriteBinary(ofs,mol);     		break;
     case MMD:       WriteMacroModel(ofs,mol); 		break;
+    case MMADS:     WriteMmads(ofs,mol); 		break;
     case MOL2:      WriteMol2(ofs,mol,dimension);  	break;
     case MOPACCART: WriteMOPACCartesian(ofs,mol);	break;
     case PDB:       WritePDB(ofs,mol);			break;
@@ -94,6 +101,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol, char *dimension)
     case TINKER:    WriteTinker(ofs,mol);		break;
     case TITLE:	    WriteTitles(ofs,mol); 	        break;
     case UNICHEM:   WriteUnichem(ofs,mol);		break;
+    case VIEWMOL:   WriteViewMol(ofs,mol);		break;
     case XED:	    WriteXED(ofs,mol);			break;
     case XYZ:	    WriteXYZ(ofs,mol);			break;
 

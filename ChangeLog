@@ -1,3 +1,18 @@
+2002-02-22  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/Makefile.in: Add viewmol.o.
+
+	* src/viewmol.cpp: New code to read/write ViewMol files as ported
+	from the GPL'ed patch sent by J?rg-R?diger Hill.
+
+	* src/data.h, src/data.cpp, src/extable.txt, src/extable.h: Add
+	ViewMol format and enable Chem3D and derived formats.
+
+	* src/c3d.cpp: Clean up Read methods to match normal declarations.
+
+	* src/fileformat.h, src/fileformat.cpp: Enable Read/Write for
+	Chem3d1, Chem3d2, Mmads and ViewMol formats.
+	
 2002-02-17  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* README, configure.in, configure: Update for next snapshot of
