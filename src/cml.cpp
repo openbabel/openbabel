@@ -214,6 +214,8 @@ string STMML_ELEMENT_NAMES = "action actionList alternative annotation array app
 
 const char* C_ATOMID           = "atomID";
 const char* C_ATOMREF          = "atomRef";
+const char* C_ATOMREF1        = "atomRef1";
+const char* C_ATOMREF2        = "atomRef2";
 const char* C_ATOMREFS         = "atomRefs";
 const char* C_ATOMREFS1        = "atomRefs1";
 const char* C_ATOMREFS2        = "atomRefs2";
@@ -2713,13 +2715,13 @@ bool WriteBondArray(ostream &ofs) {
             ofs << endl;
 
             writeStartTagStart(ofs, C_STRINGARRAY);
-            writeAttribute(ofs, C_BUILTIN, C_ATOMREF);
+            writeAttribute(ofs, C_BUILTIN, C_ATOMREF1);
             writeStartTagEnd(ofs);
 			ofs << atomRef1Array;
             writeEndTag(ofs, C_STRINGARRAY);
 
             writeStartTagStart(ofs, C_STRINGARRAY);
-            writeAttribute(ofs, C_BUILTIN, C_ATOMREF);
+            writeAttribute(ofs, C_BUILTIN, C_ATOMREF2);
             writeStartTagEnd(ofs);
 			ofs << atomRef2Array;
             writeEndTag(ofs, C_STRINGARRAY);
@@ -2732,8 +2734,8 @@ bool WriteBondArray(ostream &ofs) {
 
             writeEndTag(ofs, C_BONDARRAY);
 		} else {
-            writeAttribute(ofs, C_ATOMREFS1, atomRef1Array);
-            writeAttribute(ofs, C_ATOMREFS2, atomRef2Array);
+            writeAttribute(ofs, C_ATOMREF1, atomRef1Array);
+            writeAttribute(ofs, C_ATOMREF2, atomRef2Array);
             writeAttribute(ofs, C_ORDER, orderArray);
 
             writeCombinedTagEnd(ofs);
