@@ -50,8 +50,9 @@ class OBElementTable;
 //!
 //! Base data table class--reads ASCII data files in various formats
 //! -# Checks for the environment variable _envvar (defaults to "BABEL_DATADIR")
-//!     Tries that directory as well as the _subdir directory of that (def. "data")
+//!     - Tries the _subdir directory if defined (def. "data") and then the main directory
 //! -# Checks for the directory _dir (def. determined by the build environment)
+//!     - Tries the subdirectory corresponding to this version, then the main directory
 //! -# Reverts to the compiled-in default data
 class OBGlobalDataBase
 {
@@ -158,13 +159,19 @@ public:
     OBElementTable(void);
     ~OBElementTable();
 
-    int   GetAtomicNum(const char *, unsigned short int iso = 0);
     void  ParseLine(const char*);
+
+    //! Returns the atomic number matching the element symbol passed
+    // or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
+    // a value in the second argument
+    int   GetAtomicNum(const char *, unsigned short int iso = 0);
     char *GetSymbol(int);
     double GetVdwRad(int);
     double GetCovalentRad(int);
+    //! \deprecated -- Use OBElementTable::GetCovalentRad()
     double GetBORad(int);
     double GetMass(int);
+    //! \deprecated -- Use OBElementTable::GetCovalentRad()
     double CorrectedBondRad(int,int = 3); // atomic #, hybridization
     double CorrectedVdwRad(int,int = 3); // atomic #, hybridization
     int	GetMaxBonds(int);

@@ -35,7 +35,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "ChemTool\n \
+            "ChemTool format\n \
             No comments yet\n \
             ";
     };

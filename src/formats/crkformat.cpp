@@ -37,7 +37,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "Chemical Resource Kit Diagram Structure (2D)\n \
+            "Chemical Resource Kit diagram format (2D)\n \
             No comments yet\n \
             ";
     };
@@ -126,6 +126,7 @@ bool CRK2DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         return false;
     }
 
+    mol.SetDimension(2);
     return ReadCRK(ifs,mol,"<Structure2D>");
 }
 
@@ -431,9 +432,9 @@ bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag)
             bnd.Set(n+1,from,to,order,0);
 
             if (stbondStyle[n]==1)
-                bnd.SetUp();
+                bnd.SetWedge();
             if (stbondStyle[n]==2)
-                bnd.SetDown();
+                bnd.SetHash();
             if (stbondOrder[n]==1.5)
                 bnd.SetAromatic();
 
@@ -497,9 +498,9 @@ void CRK2DFormat::WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges)
         if (bnd->IsAromatic())
             order=1.5;
         int style=0;
-        if (bnd->IsUp())
+        if (bnd->IsHash())
             style=1;
-        if (bnd->IsDown() || bnd->IsWedge())
+        if (bnd->IsWedge())
             style=2;
 
         ofs << "   <Bond>" << endl;

@@ -32,7 +32,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "MOPAC Output file\n \
+            "MOPAC Output format\n \
             No comments yet";
     };
 
@@ -170,7 +170,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "MOPAC Cartesian file\n \
+            "MOPAC Cartesian format\n \
             No comments yet";
     };
 

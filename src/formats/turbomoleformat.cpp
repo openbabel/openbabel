@@ -33,7 +33,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "TurboMole Coordinate file\n \
+            "TurboMole Coordinate format\n \
             Incomplete - no bonds\n \
             ";
     };

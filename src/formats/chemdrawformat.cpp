@@ -146,6 +146,7 @@ bool ChemDrawFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   OBAtom *atom;
   double x, y, z;
 
+  mol.SetDimension(2);
   mol.BeginModify();
 
   ifs.getline(buffer,BUFF_SIZE);

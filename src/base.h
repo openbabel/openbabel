@@ -127,8 +127,6 @@ public:
     {
         std::cerr << "atom vf called = " << f << std::endl;
     }
-    /** \defgroup Nonfunctional members of OpenBabel::OBNodeBase */
-    //@{
     /**  \name Nonfunctional members
          Nonfunctional or unused members of OpenBabel::OBNodeBase 
          are to be added by a derived class (e.g., OpenBabel::OBAtom)
@@ -209,7 +207,6 @@ public:
         return(NULL);
     }
     //@}
-    //@}
 };
 
 /** \brief Edge Base Class
@@ -279,8 +276,6 @@ public:
     {
         std::cerr << "bond vf err = " << f << std::endl;
     }
-    /** \defgroup Nonfunctional members of OpenBabel::OBEdgeBase */
-    //@{
     /**  \name Nonfunctional members
       Nonfunctional or unused members of OpenBabel::OBEdgeBase
       are to be added by a derived class (e.g., OpenBabel::OBBond)
@@ -313,7 +308,6 @@ public:
         ((OBEdgeBase*)this)->Error(5);
         return(0);
     }
-    //@}
     //@}
 };
 

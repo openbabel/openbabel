@@ -293,8 +293,12 @@ int main(int argc,char *argv[])
 	Conv.SaveOptionsToFile(OptFile.c_str());
 
 		
+	// send info message to cerr -- don't mess up cout for client programs
 	int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
-	cout << count << " molecule(s) converted" <<endl;
+	if ( count == 1 )
+	  cerr << count << " molecule converted" << endl;
+	else
+	  cerr << count << " molecules converted" << endl;
 
 	if(OutputFileList.size()>1)
 	{

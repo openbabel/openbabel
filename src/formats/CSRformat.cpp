@@ -26,13 +26,13 @@ public:
     //Register this format type ID
     CSRFormat()
     {
-        OBConversion::RegisterFormat("CSR",this);
+        OBConversion::RegisterFormat("csr",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "CSR Format\n \
+            "CSR format\n \
             No comments yet\n \
             ";
     };

@@ -208,8 +208,7 @@ bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             OBResidue *res  = (mol.NumResidues() > 0) ?
                               mol.GetResidue(mol.NumResidues()-1) : NULL;
             if (res == NULL || res->GetName() != resname ||
-                    static_cast<int>(res->GetNum())
-                    != resnum)
+		static_cast<int>(res->GetNum()) != resnum)
             {
                 vector<OBResidue*>::iterator ri;
                 for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
@@ -220,8 +219,7 @@ bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
                 if (res == NULL)
                 {
-                    res = mol.NewResidue()
-                          ;
+                    res = mol.NewResidue();
                     res->SetName(resname);
                     res->SetNum(resnum);
                 }

@@ -39,6 +39,9 @@ public:
             \n";
     };
 
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-mdl-rxn"; };
+
     virtual const char* TargetClassDescription()
     {
         return OBReaction::ClassDescription();

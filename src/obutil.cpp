@@ -53,7 +53,7 @@ void ThrowError(char *str)
     cout << str << endl;
 }
 
-void ThrowError(string &str)
+void ThrowError(std::string &str)
 {
     cout << str << endl;
 }
@@ -340,7 +340,7 @@ bool SafeOpen(ofstream &fs,string &filename)
     return(SafeOpen(fs,(char*)filename.c_str()));
 }
 
-void ToUpper(string &s)
+void ToUpper(std::string &s)
 {
     if (s.empty())
         return;
@@ -358,7 +358,7 @@ void ToUpper(char *cptr)
             *c = toupper(*c);
 }
 
-void ToLower(string &s)
+void ToLower(std::string &s)
 {
     if (s.empty())
         return;

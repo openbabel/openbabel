@@ -41,16 +41,19 @@ public:
 
 	virtual const char* Description()
 	{ return
-"MDL MOL file\n \
+"MDL MOL format\n \
 Reads and writes V2000 and V3000 versions\n \
 Additional command line option for MOL files: -x[flags] (e.g. -x3)\n \
  2  output V2000 (default) or\n \
- 3  output V3000\n \
+ 3  output V3000 (default for >999 atoms or bonds) \n \
 ";
 };
 
 	virtual const char* SpecificationURL(){return
 		"http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";};
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-mdl-molfile"; };
 
 	virtual unsigned int Flags() { return DEFAULTFORMAT;};
 	virtual const char* TargetClassDescription(){return OBMol::ClassDescription();};
@@ -97,8 +100,10 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //creator
   char* dimension = buffer+20;
 	dimension[2]='\0'; //truncate after 2D
-	if(strcmp(dimension,"2D") || strcmp(dimension,"3D"))
-		pConv->SetDimension(dimension);
+	if(strcmp(dimension,"2D") == 0 || strcmp(dimension,"3D") == 0)
+	  pConv->SetDimension(dimension);
+	if(strcmp(dimension,"2D") == 0)
+	  mol.SetDimension(2);
 
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //comment
   if (strlen(buffer) > 0) {
@@ -250,22 +255,20 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	ofs << mol.GetTitle() <<  endl; //line 1
 
 	char td[11];
-	ofs << " OpenBabel"
-			<< GetTimeDate(td)
-			<< dimension << endl; //line2
+	ofs << " OpenBabel" << GetTimeDate(td) <<  dimension << endl; //line2
 
 	if (mol.HasData(obCommentData))
 		{
-			OBCommentData *cd = (OBCommentData*)mol.GetData(obCommentData);
-			ofs << cd->GetData() << endl; //line 3
+		  OBCommentData *cd = (OBCommentData*)mol.GetData(obCommentData);
+		  ofs << cd->GetData() << endl; //line 3
 		}
 	else
-			ofs << endl;
-
-	if(pConv->IsOption('3'))
-	{
-		if(!WriteV3000(ofs,mol,pConv)) return false;
-	}
+	  ofs << endl;
+	
+	if(pConv->IsOption('3') || mol.NumAtoms() > 999 || mol.NumBonds() > 999)
+	  {
+	    if(!WriteV3000(ofs,mol,pConv)) return false;
+	  }
 
 	else
 	{
@@ -597,8 +600,8 @@ bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
 						<< bond->GetEndAtomIdx();
 				//TODO do the following stereo chemistry properly
 				int cfg=0;
-				if(bond->IsUp() || bond->IsWedge()) cfg=1;
-				if(bond->IsDown() || bond->IsHash()) cfg=3;
+				if(bond->IsWedge()) cfg=1;
+				if(bond->IsHash()) cfg=3;
 				if(cfg) ofs << " CFG=" << cfg;
 				ofs << endl;
 			}

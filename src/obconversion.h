@@ -155,11 +155,13 @@ public:
 	/// @name Collection of formats
 	//@{
 	/// @brief Called once by each format class
-	static int				RegisterFormat(const char* ID, OBFormat* pFormat);
+	static int				RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME = NULL);
 	/// @brief Searches registered formats
 	static OBFormat*	FindFormat(const char* ID);
 	/// @brief Searches registered formats for an ID the same as the file extension
 	static OBFormat*	FormatFromExt(const char* filename);
+	/// @brief Searches registered formats for a MIME the same as the chemical MIME type passed
+	static OBFormat*        FormatFromMIME(const char* MIME);
 
 	///Repeatedly called to recover available Formats
 	static bool				GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
@@ -175,6 +177,14 @@ public:
 	std::ostream*		GetOutStream() const {return pOutStream;};
 	bool        SetInAndOutFormats(const char* inID, const char* outID);///< Sets the formats from their ids, e g CML
 	bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
+	bool        SetInFormat(const char* inID)
+	  { return SetInAndOutFormats(inID, NULL); };
+	bool        SetInFormat(OBFormat* pIn)
+	  { return SetInAndOutFormats(pIn, NULL); };
+	bool        SetOutFormat(const char* outID)
+	  { return SetInAndOutFormats(NULL, outID); };
+	bool        SetOutFormat(OBFormat* pOut)
+	  { return SetInAndOutFormats(NULL, pOut); };
 	OBFormat*		GetInFormat() const{return pInFormat;};
 	OBFormat*		GetOutFormat() const{return pOutFormat;};
 	
@@ -189,8 +199,8 @@ public:
 	///
 	const char* GetTitle() const;
 	void        SetTitle(const char* title);
-	const char* GetDimension() const;
-	void				SetDimension(const char* dim);
+	virtual const char* GetDimension() const;
+	virtual void SetDimension(const char* dim);
 
 	bool				SaveOptionsToFile(const char* filename);
 	bool				RestoreOptionsFromFile(const char* filename);

@@ -25,7 +25,7 @@ public:
     //Register this format type ID
     MM3Format()
     {
-        OBConversion::RegisterFormat("MM3",this);
+        OBConversion::RegisterFormat("mm3",this);
     }
 
     virtual const char* Description() //required

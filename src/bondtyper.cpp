@@ -63,7 +63,7 @@ void OBBondTyper::ParseLine(const char *buffer)
         sp = new OBSmartsPattern;
         if (sp->Init(vs[0]))
         {
-            for (int i; i <= vs.size() ; i++)
+            for (int i = 0; i <= vs.size() ; i++)
             {
                 bovector.push_back( atoi((char *)vs[i].c_str()) );
             }

@@ -34,7 +34,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "ShelX \n \
+            "ShelX format\n \
             No comments yet\n \
             ";
     };

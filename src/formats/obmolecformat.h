@@ -31,7 +31,7 @@ public:
 	{
 		OBMol* pmol = new OBMol;
 		bool ret=ReadMolecule(pmol,pConv);
-		if(ret) //Do transformation and return molecule
+		if(ret && pmol->NumAtoms() > 0) //Do transformation and return molecule
 			pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
 		else
 			pConv->AddChemObject(NULL);
@@ -44,7 +44,7 @@ public:
 		OBBase* pOb = pConv->GetChemObject();
 		OBMol* pmol = dynamic_cast<OBMol*> (pOb);
 		bool ret=false;
-		if(pmol)
+		if(pmol && pmol->NumAtoms() > 0)
 			ret=WriteMolecule(pmol,pConv);
 		delete pOb; 
 		return ret;

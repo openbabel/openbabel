@@ -626,14 +626,23 @@ public:
 // Class OBBond
 
 //BOND Property Macros (flags)
+//! An aromatic bond (regardless of bond order)
 #define OB_AROMATIC_BOND  (1<<1)
+//! A solid black wedge in 2D representations -- i.e., "up" from the 2D plane
 #define OB_WEDGE_BOND     (1<<2)
+//! A dashed "hash" bond in 2D representations -- i.e., "down" from the 2D plane
 #define OB_HASH_BOND      (1<<3)
+//! A bond in a ring
 #define OB_RING_BOND      (1<<4)
+//! The "upper" bond in a double bond cis/trans isomer (i.e., "/" in SMILES)
 #define OB_TORUP_BOND     (1<<5)
+//! The "down" bond in a double bond cis/trans isomer (i.e., "\" in SMILES)
 #define OB_TORDOWN_BOND   (1<<6)
+//! A Kekule single bond
 #define OB_KSINGLE_BOND   (1<<7)
+//! A Kekule double bond
 #define OB_KDOUBLE_BOND   (1<<8)
+//! A Kekule triple bond
 #define OB_KTRIPLE_BOND   (1<<9)
 #define OB_CLOSURE_BOND   (1<<10)
 // 11-16 currently unused
@@ -686,30 +695,15 @@ public:
     void SetKSingle();
     void SetKDouble();
     void SetKTriple();
-    void SetAromatic()
-    {
-        SetFlag(OB_AROMATIC_BOND);
-    }
-    void SetUp()
-    {
-        SetFlag(OB_TORUP_BOND);
-    }
-    void SetDown()
-    {
-        SetFlag(OB_TORDOWN_BOND);
-    }
-    void SetInRing()
-    {
-        SetFlag(OB_RING_BOND);
-    }
-    void SetClosure()
-    {
-        SetFlag(OB_CLOSURE_BOND);
-    }
-    void UnsetAromatic()
-    {
-        _flags &= (~(OB_AROMATIC_BOND));
-    }
+    void SetAromatic()    { SetFlag(OB_AROMATIC_BOND); }
+    void SetHash()        { SetFlag(OB_HASH_BOND);     }
+    void SetWedge()       { SetFlag(OB_WEDGE_BOND);    }
+    void SetUp()          { SetFlag(OB_TORUP_BOND);    }
+    void SetDown()        { SetFlag(OB_TORDOWN_BOND);  }
+    void SetInRing()      { SetFlag(OB_RING_BOND);     }
+    void SetClosure()     { SetFlag(OB_CLOSURE_BOND);  }
+
+    void UnsetAromatic()  { _flags &= (~(OB_AROMATIC_BOND)); }
     void UnsetKekule()
     {
         _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
@@ -718,34 +712,13 @@ public:
 
     //! \name bond data request methods
     //@{
-    unsigned int     GetBO()            const
-    {
-        return((int)_order);
-    }
-    unsigned int     GetBondOrder()     const
-    {
-        return((int)_order);
-    }
-    unsigned int     GetFlags()         const
-    {
-        return(_flags);
-    }
-    unsigned int     GetBeginAtomIdx()  const
-    {
-        return(_bgn->GetIdx());
-    }
-    unsigned int     GetEndAtomIdx()    const
-    {
-        return(_end->GetIdx());
-    }
-    OBAtom *GetBeginAtom()
-    {
-        return((OBAtom*)_bgn);
-    }
-    OBAtom *GetEndAtom()
-    {
-        return((OBAtom*)_end);
-    }
+    unsigned int     GetBO()            const { return((int)_order); }
+    unsigned int     GetBondOrder()     const { return((int)_order); }
+    unsigned int     GetFlags()         const { return(_flags);      }
+    unsigned int     GetBeginAtomIdx()  const { return(_bgn->GetIdx()); }
+    unsigned int     GetEndAtomIdx()    const { return(_end->GetIdx()); }
+    OBAtom *GetBeginAtom()    { return((OBAtom*)_bgn);    }
+    OBAtom *GetEndAtom()      { return((OBAtom*)_end);    }
     OBAtom *GetNbrAtom(OBAtom *ptr)
     {
         return((ptr != _bgn)? (OBAtom*)_bgn : (OBAtom*)_end);
@@ -776,22 +749,10 @@ public:
     bool IsKDouble();
     bool IsKTriple();
     bool IsClosure();
-    bool IsUp()
-    {
-        return(HasFlag(OB_TORUP_BOND));
-    }
-    bool IsDown()
-    {
-        return(HasFlag(OB_TORDOWN_BOND));
-    }
-    bool IsWedge()
-    {
-        return(HasFlag(OB_WEDGE_BOND));
-    }
-    bool IsHash()
-    {
-        return(HasFlag(OB_HASH_BOND));
-    }
+    bool IsUp()    {    return(HasFlag(OB_TORUP_BOND));    }
+    bool IsDown()  {    return(HasFlag(OB_TORDOWN_BOND));  }
+    bool IsWedge() {    return(HasFlag(OB_WEDGE_BOND));    }
+    bool IsHash()  {    return(HasFlag(OB_HASH_BOND));     }
     //@}
 
     //! \name Methods for handling generic data
@@ -850,6 +811,7 @@ public:
 #define OB_CHAINS_MOL            (1<<15)
 #define OB_TCHARGE_MOL		 (1<<16)
 #define OB_TSPIN_MOL             (1<<17)
+// flags 18-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
 // class introduction in mol.cpp

@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 2004 by Chris Morley
+Some portions Copyright (C) 2005 by Geoffrey Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -210,9 +211,10 @@ OBConversion::~OBConversion()
 ///
 /// If the compiled format were to be stored separately, like in a DLL, the initialization
 /// code would make an instance of the imported OBFormat class.
-int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat)
+int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME)
 {
 	FormatsMap()[ID] = pFormat;
+	FormatsMap()[MIME] = pFormat;
 	if(pFormat->Flags() & DEFAULTFORMAT)
 		pDefaultFormat=pFormat;
 	return FormatsMap().size();
@@ -569,6 +571,7 @@ void OBConversion::SetOneObjectOnly()
 {
 	OneObjectOnly=true;
 }	
+
 /////////////////////////////////////////////////////////
 OBFormat* OBConversion::FormatFromExt(const char* filename)
 {
@@ -576,6 +579,14 @@ OBFormat* OBConversion::FormatFromExt(const char* filename)
 	if(p)
 		return FindFormat(p+1);
 	return NULL; //if no extension		
+}
+
+OBFormat* OBConversion::FormatFromMIME(const char* MIME)
+{
+  if(FormatsMap().find(MIME) == FormatsMap().end())
+    return NULL;
+  else
+    return FormatsMap()[MIME];
 }
 
 //////////////////////////////////////////////////

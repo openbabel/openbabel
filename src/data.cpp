@@ -492,7 +492,7 @@ void OBGlobalDataBase::Init()
     _init = true;
 
     char buffer[BUFF_SIZE],subbuffer[BUFF_SIZE];
-    ifstream ifs1, ifs2, ifs3, *ifsP;
+    ifstream ifs1, ifs2, ifs3, ifs4, *ifsP;
     // First, look for an environment variable
     if (getenv(_envvar.c_str()) != NULL)
     {
@@ -522,15 +522,29 @@ void OBGlobalDataBase::Init()
     {
         strcpy(buffer,_dir.c_str());
         strcat(buffer,FILE_SEP_CHAR);
+
+	strcpy(subbuffer,buffer);
+	strcat(subbuffer,BABEL_VERSION);
+	strcat(subbuffer,FILE_SEP_CHAR);
+        strcat(subbuffer,(char*)_filename.c_str());
+
         strcat(buffer,(char*)_filename.c_str());
-        ifs3.open(buffer);
-        ifsP = &ifs3;
+
+        ifs3.open(subbuffer);
+        ifsP= &ifs3;
+        if (!(*ifsP))
+        {
+            ifs4.open(buffer);
+            ifsP = &ifs4;
+        }
     }
+
     if ((*ifsP))
     {
         while(ifsP->getline(buffer,BUFF_SIZE))
             ParseLine(buffer);
     }
+
     else
         // If all else fails, use the compiled in values
         if (_dataptr)

@@ -44,7 +44,7 @@ public:
     virtual const char* Description()
     {
         return
-            "SMILES file\n \
+            "SMILES format\n \
             A linear text format which can describe the connectivity\n \
             and chirality of a molecule\n \
             Options e.g. -xt\n \
@@ -170,7 +170,6 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 
     //Define some references so we can use the old parameter names
-    //bool ReadSDFile(istream &ifs,OBMol &mol,const char *title)
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
@@ -207,6 +206,8 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if (vs.size() == 1)
             SmiToMol(mol,vs[0],"");
     }
+
+    mol.SetDimension(0);
 
     return(true);
 }

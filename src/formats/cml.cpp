@@ -2202,6 +2202,7 @@ bool startAtom(vector <pair<string,string> > &atts)
     else if (x2 != _EMPTY)
     {
         currentX = atof(x2.c_str());
+	molPtr->SetDimension(2);
         setCMLType(C_CML2);
     }
     if (y3 != _EMPTY)
@@ -2253,6 +2254,7 @@ bool startAtom(vector <pair<string,string> > &atts)
             currentX = atof(sv[0].c_str());
             currentY = atof(sv[1].c_str());
             setCMLType(C_CML2);
+	    molPtr->SetDimension(2);
         }
     }
     if (xyz3 != _EMPTY)
@@ -2430,6 +2432,7 @@ bool processAtomBuiltin()
                 currentX = fv[0];
                 currentY = fv[1];
             }
+	    molPtr->SetDimension(2);
         }
         else
         {
@@ -2469,6 +2472,7 @@ bool processAtomBuiltin()
         {
             if (cmlDimension != C_3D)
                 currentX = value;
+	    molPtr->SetDimension(2);
         }
         else if (builtin == C_Y2)
         {
@@ -2478,6 +2482,7 @@ bool processAtomBuiltin()
         else if (builtin == C_X3)
         {
             cmlDimension = C_3D;
+	    molPtr->SetDimension(3);
             currentX = value;
         }
         else if (builtin == C_Y3)
@@ -2493,6 +2498,7 @@ bool processAtomBuiltin()
         else if (builtin == C_XFRACT)
         {
             cmlDimension = C_3D;
+	    molPtr->SetDimension(3);
             currentX = value;
             fractional = true;
         }
@@ -3196,11 +3202,11 @@ bool endBond()
         bondPtr->SetBO(getBabelBondOrder(orderString));
     if (stereoString == "W")
     {
-        bondPtr->SetUp();
+        bondPtr->SetWedge();
     }
     else if (stereoString == "H")
     {
-        bondPtr->SetDown();
+        bondPtr->SetHash();
     }
     // length is property of molecule
     if (length >= 0)
@@ -3337,11 +3343,11 @@ bool endBondArray()
             {
                 if (stereoVector[i] == "W")
                 {
-                    bondPtr->SetUp();
+                    bondPtr->SetWedge();
                 }
                 else if (stereoVector[i] == "H")
                 {
-                    bondPtr->SetDown();
+                    bondPtr->SetHash();
                 }
             }
             molPtr->AddBond(*bondPtr);

@@ -15,12 +15,13 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "obconversion.h"
+#include "obmolecformat.h"
 
 using namespace std;
 namespace OpenBabel
 {
 
-class XYZFormat : public OBFormat
+class XYZFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -32,13 +33,16 @@ public:
     virtual const char* Description() //required
     {
         return
-            "XYZ Cartesian coordinates format\n \
+            "XYZ cartesian coordinates format\n \
             No comments yet\n \
             ";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+    virtual const char* SpecificationURL()
+  { return "";}; //optional
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-xyz"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -53,30 +57,6 @@ public:
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-        OBMol* pmol = new OBMol;
-        bool ret=ReadMolecule(pmol,pConv);
-        if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
-        else
-            pConv->AddChemObject(NULL);
-        return ret;
-    };
-
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
 };
 //***
 
@@ -99,7 +79,8 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     char buffer[BUFF_SIZE];
 
     // Read the first line, which should contain the number of atoms in
-    // the molecule.
+    // the molecule. Ignore any blank lines left from a previous molecule
+
     if (!ifs.getline(buffer,BUFF_SIZE))
     {
         cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl

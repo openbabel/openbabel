@@ -10,7 +10,7 @@
 #   - atomic number (used as an index to the vector as well)                 #
 #   - elemental symbol							     #
 #   - covalent radii							     #
-#   - "bond order radii" (usd in B.O. calc)				     #
+#   - "bond order radii" (usd in B.O. calc) DEPRECATED -- use covalent	     #
 #   - van der Waals radii						     #
 #   - maximum bond valence						     #
 #   - IUPAC recommended atomic masses (in amu)				     #

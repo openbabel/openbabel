@@ -32,7 +32,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "MSI Biosym/Insight II CAR file\n \
+            "MSI Biosym/Insight II CAR format\n \
             No comments yet\n \
             ";
     };
@@ -49,13 +49,11 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
 
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
     virtual bool ReadChemObject(OBConversion* pConv)
     {
         OBMol* pmol = new OBMol;
         bool ret=ReadMolecule(pmol,pConv);
-        if(ret) //Do transformation and return molecule
+        if(ret && pmol->NumAtoms() > 0) //Do transformation and return molecule
             pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
         else
             pConv->AddChemObject(NULL);
@@ -79,6 +77,7 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
 
+    bool hasPartialCharges = false;
     char buffer[BUFF_SIZE];
     string str;
     double x,y,z;
@@ -87,40 +86,83 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     mol.BeginModify();
 
-    while	(ifs.getline(buffer,BUFF_SIZE))
+    while (ifs.getline(buffer,BUFF_SIZE)) // header lines
     {
-        if(strstr(buffer,"PBC") != NULL)
+      if(strstr(buffer,"end") != NULL) // end of the previous molecular system
+	{
+	  ifs.getline(buffer,BUFF_SIZE); // title
+	  ifs.getline(buffer,BUFF_SIZE); // DATE
+	  break;
+	}
+	
+      if(strstr(buffer,"PBC") != NULL)
         {
             if(strstr(buffer,"ON") != NULL)
             {
-                ifs.getline(buffer,BUFF_SIZE);
-                ifs.getline(buffer,BUFF_SIZE);
-                ifs.getline(buffer,BUFF_SIZE);
+	      ifs.getline(buffer,BUFF_SIZE); // title
+	      ifs.getline(buffer,BUFF_SIZE); // DATE
+	      ifs.getline(buffer,BUFF_SIZE); // PBC a b c alpha beta gamma SG
+
+	      // parse cell parameters
+	      tokenize(vs,buffer);
+	      if (vs.size() == 8)
+		{
+		  //parse cell values
+		  double A,B,C,Alpha,Beta,Gamma;
+		  A = atof((char*)vs[1].c_str());
+		  B = atof((char*)vs[2].c_str());
+		  C = atof((char*)vs[3].c_str());
+		  Alpha = atof((char*)vs[4].c_str());
+		  Beta  = atof((char*)vs[5].c_str());
+		  Gamma = atof((char*)vs[6].c_str());
+		  OBUnitCell *uc = new OBUnitCell;
+		  uc->SetData(A, B, C, Alpha, Beta, Gamma);
+		  uc->SetSpaceGroup(vs[7]);
+		  mol.SetData(uc);
+		}
             }
             else
             {
-                ifs.getline(buffer,BUFF_SIZE);
-                ifs.getline(buffer,BUFF_SIZE);
+	      ifs.getline(buffer,BUFF_SIZE); // title
+	      ifs.getline(buffer,BUFF_SIZE); // !DATE
             }
             break;
         }
+      // is this a data line in the same molecular system?
+      tokenize(vs,buffer);
+      if (vs.size() >= 8) break;
     }
 
     while	(ifs.getline(buffer,BUFF_SIZE))
     {
-        if(strstr(buffer,"end") != NULL)
+      if(strstr(buffer,"end") != NULL) // finished with this molecule
             break;
 
         atom = mol.NewAtom();
 
         tokenize(vs,buffer);
+	if (vs.size() < 8) break;
+
         atom->SetAtomicNum(etab.GetAtomicNum(vs[7].c_str()));
         x = atof((char*)vs[1].c_str());
         y = atof((char*)vs[2].c_str());
         z = atof((char*)vs[3].c_str());
         atom->SetVector(x,y,z);
+
+	// vs[4] contains "type of residue containing atom"
+	// vs[5] contains "residue sequence name"
+	// vs[6] contains "potential type of atom"
+
+	if (vs.size() == 9)
+	  {
+	    atom->SetPartialCharge(atof((char*)vs[8].c_str()));
+	    hasPartialCharges = true;
+	  }
     }
     mol.EndModify();
+
+    if (hasPartialCharges)
+        mol.SetPartialChargesPerceived();
 
     mol.ConnectTheDots();
     mol.PerceiveBondOrders();

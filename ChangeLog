@@ -1,3 +1,58 @@
+2005-01-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/bondtyper.cpp (ParseLine): Make sure loop variable "i" is
+	initialized, pointed out by Chris Morley.
+
+	* data/element.txt: Add note about deprecated "bond order" radii.
+
+	* src/base.h: Remove \defgroup documentation bits.
+
+	* src/data.h (OBElementTable): Mark bond order radii methods as
+	deprecated.
+
+	* src/chiral.cpp: Add std:: namespace to match headers for
+	documentation. Convert comments to doxygen docs.
+
+	* src/data.cpp (OBGlobalDataBase): When searching for data files,
+	check the environment variable directories, then the compiled-in
+	directory path -- starting with a subdirectory for BABEL_VERSION,
+	followed by the parent directory. Allows for versioning the data
+	files.
+
+	* src/main.cpp: Output "molecules converted" to cerr and use
+	"molecule" converted if only one molecule was found.
+
+	* src/mol.h: Add documentation about "up" and "down" bond flags
+	vs. wedge and hash types.
+
+	* src/obconversion.h, src/obconversion.cpp: Allow MIME types to be
+	registered to match particular extensions/IDs.
+
+	* src/oberror.h, src/oberror.cpp: New class OBMessageHandler to
+	organize errors/messages and allow errors to go to cerr or another
+	output stream. Allows filtering of error levels.
+
+	* src/formats/carformat.cpp: Correct a variety of problems with
+	reading multiple molecules in a CAR file and read in 3D unit cell
+	information if supplied. Bugs reported by Jean Dessolin. Fixes PR#
+	1060110.
+
+	* src/smilesformat.cpp: Set OBMol dimension to 0.
+
+	* src/mdlformat.cpp: Output v3000 files for >999 atoms or >999
+	bonds, as suggested by MDL standard specification. Set OBMol
+	dimension as needed.
+
+	* src/crkformat.cpp (CRK2DFormat::ReadCRK): Fix bugs with
+	wedge/hash and up/down bonds. Assign OBMol dimension to 2.
+
+	* src/cml.cpp: Ditto.
+
+	* src/chemdrawformat.cpp (ReadMolecule): Set OBMol dimension to 2.
+	
+	* src/formats/*.cpp: Ensure consistency of format description
+	naming, particularly to match Open Babel 1.100.x and Babel 1.6.
+	
 2005-01-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/main.cpp: For non-Win32 platforms, use $HOME/.openbabel to

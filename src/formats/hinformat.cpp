@@ -30,7 +30,7 @@ public:
 
     virtual const char* Description() //required
     {
-        return "HyperChem INput format\nNo comments yet\n";
+        return "HyperChem Input format\nNo comments yet\n";
     };
 
     virtual const char* SpecificationURL()

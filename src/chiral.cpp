@@ -110,7 +110,7 @@ void OBMol::FindChiralCenters()
         }
 }
 
-void GetChirality(OBMol &mol, vector<int> &chirality)
+void GetChirality(OBMol &mol, std::vector<int> &chirality)
 {
     chirality.resize(mol.NumAtoms()+1);
     fill(chirality.begin(),chirality.end(),0);
@@ -128,9 +128,8 @@ void GetChirality(OBMol &mol, vector<int> &chirality)
         }
 }
 
-// Calculate the signed volume for an atom.  If the atom has a valence of 3
-// the coordinates of an attached hydrogen are calculated
-
+//! Calculate the signed volume for an atom.  If the atom has a valence of 3
+//! the coordinates of an attached hydrogen are calculated
 double CalcSignedVolume(OBMol &mol,OBAtom *atm)
 {
     vector3 tmp_crd;
@@ -170,7 +169,7 @@ double CalcSignedVolume(OBMol &mol,OBAtom *atm)
     return(signed_volume(nbr_crds[0],nbr_crds[1],nbr_crds[2],nbr_crds[3]));
 }
 
-// calculate a signed volume given a set of 4 coordinates
+//! Calculate a signed volume given a set of 4 coordinates
 double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d)
 {
     vector3 A,B,C;
@@ -181,14 +180,15 @@ double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const
     return(m.determinant());
 }
 
-// Calculate the Graph Potentials of a molecule
-// based on
-// V.E. and Rozenblit, A.B. Golender
-// Logical and Combinatorial Algorithms for Drug Design
-// for an example see
-// Walters, W. P., Yalkowsky, S. H., JCICS, 1996, 36(5), 1015-1017
-
-void GraphPotentials(OBMol &mol, vector<double> &pot)
+//! \brief Calculate the Graph Potentials of a molecule
+//! 
+//! based on
+//! V.E. and Rozenblit, A.B. Golender
+//! <em>Logical and Combinatorial Algorithms for Drug Design</em>. \n
+//! For an example see:
+//! Walters, W. P., Yalkowsky, S. H., \em JCICS, 1996, 36(5), 1015-1017.
+//! <a href="http://dx.doi.org/10.1021/ci950278o">DOI: 10.1021/ci950278o</a>
+void GraphPotentials(OBMol &mol, std::vector<double> &pot)
 {
     double det;
 
@@ -204,11 +204,10 @@ void GraphPotentials(OBMol &mol, vector<double> &pot)
 }
 
 
-// Construct the matrix G, which puts each atoms valence+1
-// on the diagonal and and -1 on the off diagonal if two
-// atoms are connected.
-
-void construct_g_matrix(OBMol &mol, vector<vector<double> > &m)
+//! Construct the matrix G, which puts each atoms valence+1
+//! on the diagonal and and -1 on the off diagonal if two
+//! atoms are connected.
+void construct_g_matrix(OBMol &mol, std::vector<std::vector<double> > &m)
 {
     unsigned int i,j;
 
@@ -238,9 +237,9 @@ void construct_g_matrix(OBMol &mol, vector<vector<double> > &m)
         }
 }
 
-// Construct the matrix C, which is simply a column vector
-// consisting of the valence for each atom
-void construct_c_matrix(OBMol &mol,vector<vector<double > > &m)
+//! Construct the matrix C, which is simply a column vector
+//! consisting of the valence for each atom
+void construct_c_matrix(OBMol &mol,std::vector<std::vector<double > > &m)
 {
     unsigned int i;
     OBAtom *atm1;
