@@ -64,7 +64,6 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,const char *title)
 	{
 	  hasPartialCharges = true;
 	  charges.clear();
-	  cout << " got some charges " << endl;
 	  ifs.getline(buffer,BUFF_SIZE);	// blank
 	  ifs.getline(buffer,BUFF_SIZE);	// column headings
 	  ifs.getline(buffer,BUFF_SIZE);
