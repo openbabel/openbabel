@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 2002 by Stefan Kebekus
+Some portions Copyright (c) 2003 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>

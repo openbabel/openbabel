@@ -111,8 +111,8 @@ or
    vector<OBEdgeBase*>::iterator i;
    for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i)) //iterator access
 \endcode
-It is important to note that atom arrays begin at one and bond arrays
-begin at zero. Requesting atom zero (\code
+It is important to note that atom arrays begin at 1 and bond arrays
+begin at 0. Requesting atom 0 (\code
 OBAtom *atom = mol.GetAtom(0); \endcode
 will result in an error, but
 \code

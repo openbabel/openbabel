@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 2002 by Steffen Reith <streit@streit.cc>
+Some portions Copyright (c) 2003 by Geoffrey R. Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
