@@ -24,13 +24,13 @@ GNU General Public License for more details.
 namespace OpenBabel {
 
 
-
-// Atom + Ring closure in the atom list
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Atom + Ring closure in the atom list
 class AtomRing
 {
  private:
-  OBAtom *_atom;
-  std::vector<int> _ringClosure;
+  OBAtom *_atom;                 //!< atom
+  std::vector<int> _ringClosure; //!< position of the closure atom in the fragment
  public:
   AtomRing(OBAtom *atom) {_atom=atom;}
   int GetAtomIdx(void) {return _atom->GetIdx();}
@@ -40,13 +40,14 @@ class AtomRing
   std::vector<int> GetRingClosure(void) { return _ringClosure;}
 };
 
-
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Linear or cyclic fragment
 class fragment
  {
  private:
-   long int         _hash;
-   std::list<AtomRing> _atoms;   
-   int _index[MAX_FRAGMENT_SIZE];
+   long int         _hash;         //!< hash number 
+   std::list<AtomRing> _atoms;     //!< list of the atoms of the fragment
+   int _index[MAX_FRAGMENT_SIZE];  //!< indexes of the atoms of the fragment
  public:
   fragment(OBAtom *atom); 
   void addAtom(AtomRing atom) { _atoms.push_back(atom);}
@@ -64,15 +65,17 @@ class fragment
   void printHash (void) { std::cout << _hash;}
 };
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Set of linear or cyclic fragment hashed into a bitstring
 class fingerprint
 {
  private:
-  std::string _name;
-  std::vector<fragment> _flist;
-  std::vector<fragment> _uflist;
-  fragment **_pf;
-  int _pfsize;
-  OBBitVec _fpt;
+  std::string _name;            //!< name of the fingerprint
+  std::vector<fragment> _flist; //!< list of all the fragments
+  std::vector<fragment> _uflist;//!< list of unique fragments
+  fragment **_pf;               //!< pointers to each fragment used for sorting
+  int _pfsize;                  //!< size of array _pf
+  OBBitVec _fpt;                //!< fingerprint bitstring
   void setFragmentIdx(void);
   void sortFragmentIdx(void);
   int setPointers(void);
