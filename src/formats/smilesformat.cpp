@@ -16,12 +16,13 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "obconversion.h"
+#include "obmolecformat.h"
 
 using namespace std;
 
 namespace OpenBabel
 {
-class SMIFormat : public OBFormat
+class SMIFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -38,31 +39,6 @@ public:
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-        OBMol* pmol = new OBMol;
-        bool ret=ReadMolecule(pmol,pConv);
-        if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
-        else
-            pConv->AddChemObject(NULL);
-        return ret;
-    };
-
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
-
     ///////////////////////////////////////////////////////
 
     virtual const char* Description()
@@ -73,7 +49,8 @@ public:
             and chirality of a molecule\n \
             Options e.g. -xt\n \
             -n no molecule name\n \
-            -t molecule name only";
+            -t molecule name only\n \
+						-r radicals lower case eg ethyl is Cc";
     };
 
     bool SmiToMol(OBMol &mol,string &smi,const char *title);
@@ -131,6 +108,7 @@ class OBMol2Smi
     OBBitVec _uatoms,_ubonds;
     std::vector<OBEdgeBase*> _vclose;
     std::vector<std::pair<OBAtom*,std::pair<int,int> > > _vopen;
+		OBConversion* _pconv;
 public:
     OBMol2Smi()
     {
@@ -139,7 +117,7 @@ public:
     ~OBMol2Smi()
     {}
     int          GetUnusedIndex();
-    void         Init();
+    void         Init(OBConversion* pconv=NULL);
     void         CreateSmiString(OBMol&,char*);
     void         GetClosureAtoms(OBAtom*,std::vector<OBNodeBase*>&);
     void         FindClosureBonds(OBMol&);
@@ -262,7 +240,7 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
 
     OBMol2Smi m2s;
 
-    m2s.Init();
+    m2s.Init(pConv);
     m2s.CorrectAromaticAmineCharge(mol);
     m2s.CreateSmiString(mol,buffer);
 
@@ -1609,31 +1587,7 @@ bool SMIFormat::SmiToMol(OBMol &mol,string &smi,const char *title)
 
     return(true);
 }
-/*
-bool SMIFormat::WriteSmiles(ostream &ofs,OBMol &mol,const char *title)
-{
-  char buffer[BUFF_SIZE],tmp[BUFF_SIZE];
- 
-  // This is a hack to prevent recursion problems.
-  //  we still need to fix the underlying problem -GRH
-  if (mol.NumAtoms() > 1000)
-    {
-      ThrowError("SMILES Conversion failed: Molecule is too large to convert.");
-      cerr << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
-      return(false);
-    }
- 
-  OBMol2Smi m2s;
- 
-  m2s.Init();
-  m2s.CorrectAromaticAmineCharge(mol);
-  m2s.CreateSmiString(mol,buffer);
- 
-  strcpy(tmp,(title) ? title:mol.GetTitle());
-  ofs << buffer << ' ' << tmp << endl;
-  return *buffer!='\0';//CM Now returns false if empty SMILES string
-}
-*/
+
 void OBMol2Smi::CreateSmiString(OBMol &mol,char *buffer)
 {
     OBAtom *atom;
@@ -1978,7 +1932,7 @@ void OBMol2Smi::AssignCisTrans(OBSmiNode *node)
     }
 }
 
-void OBMol2Smi::Init()
+void OBMol2Smi::Init(OBConversion* pconv)
 {
     _vclose.clear();
     _atmorder.clear();
@@ -1987,6 +1941,7 @@ void OBMol2Smi::Init()
     _uatoms.Clear();
     _ubonds.Clear();
     _vopen.clear();
+		_pconv = pconv;
 }
 
 bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
@@ -2049,11 +2004,15 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
     //This outputs form [CH3][CH3] rather than CC if -h option has been specified
     if (((OBMol*)atom->GetParent())->HasHydrogensAdded())
         bracketElement = true;
-
-    //This outputs explicit H form anyway for radicals
-    if (atom->GetSpinMultiplicity())
-        bracketElement = true;
-
+		else
+		{
+			if (atom->GetSpinMultiplicity())
+			{
+				//For radicals output bracket form anyway unless r option specified
+				if(!(_pconv && _pconv->IsOption ('r')))
+					bracketElement = true;
+			}
+		}
     //CM end
 
     if (!bracketElement)
@@ -2108,6 +2067,9 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
                 symbol[0] = tolower(symbol[0]);
 #endif
 
+					//Radical centres lc if r option set
+				    if(atom->GetSpinMultiplicity() && _pconv && _pconv->IsOption ('r'))
+				        symbol[0] = tolower(symbol[0]);
         }
         strcpy(element,symbol);
 
