@@ -1,0 +1,13 @@
+Makefile
+ii_files
+libbabel.a
+babel
+obtest
+matrixtest
+smartstest
+ringtest
+test-set
+roundtrip
+.deps
+.libs
+*.lo
