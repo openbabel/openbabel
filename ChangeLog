@@ -1,4 +1,10 @@
-2004-08-30  Fabien Fontaine  <ffontaine@imim.es>
+2004-28-30  Fabien Fontaine  <ffontaine@imim.es>
+
+	* tools/obtanimoto.cpp : new tool
+	* tools/README:      update
+	* tools/makefile.am  update
+	
+2004-27-30  Fabien Fontaine  <ffontaine@imim.es>
 
 	* src/fingerprint.cpp: New output format
 	* src/fingerprint.h
