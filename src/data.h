@@ -133,10 +133,12 @@ public:
 
     void  ParseLine(const char*);
 
+    //! \deprecated Does not properly handle 'D' or 'T' hydrogen isotopes
+    int   GetAtomicNum(const char *);
     //! Returns the atomic number matching the element symbol passed
     //! or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
     //! a value in the second argument
-    int   GetAtomicNum(const char *, unsigned short int iso = 0);
+    int   GetAtomicNum(const char *, unsigned short int &iso);
     //! Returns the element symbol matching the atomic number passed
     char *GetSymbol(int);
     //! Returns the van der Waals radius for this atomic number
