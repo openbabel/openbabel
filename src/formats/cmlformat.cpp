@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2002-2003 Peter Murray-Rust.
-Some portions Copyright (c) 2003-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2003-2005 by Geoffrey R. Hutchison
 Some Portions Copyright (C) 2004 by Chris Morley
  
 This file is part of the Open Babel project.

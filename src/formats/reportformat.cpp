@@ -3,7 +3,7 @@ reportformat.cpp - Report information about the molecule: charge, distance
              matrix angle, chiral info, etc.
  
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2004 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2004 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This file is part of the Open Babel project.

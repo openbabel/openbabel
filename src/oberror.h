@@ -2,7 +2,7 @@
 oberror.h - Handle error messages, warnings, notices, etc.
  
 Copyright (C) 2002 by Stefan Kebekus
-Some portions Copyright (c) 2003-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2003-2005 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>

@@ -1,3 +1,13 @@
+2005-03-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* AUTHORS, NEWS, README: Begin updating for a 2.0 release.
+
+	* data/extable.txt: Mark as deprecated. (Should this be deleted?)
+
+	* src/*.h, src/*.cpp, src/math/*.cpp, src/math/*.h,
+	src/formats/*.cpp, tools/*.cpp: Update copyright statements to
+	include 2005 and standardize text.
+
 2005-03-07  Geoff Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/cml.cpp (endMolecule): Only call InternalToCartesian
@@ -389,15 +399,15 @@
 	* src/mol.cpp: Kekulize is replaced by a new kekulize function
 	situated in kekulize.cpp
 
-	* src/mol.cpp (PerceiveBondOrders):new SMART pattern added
+	* src/mol.cpp (PerceiveBondOrders): New SMART pattern added
 	some decision are taken according to the geometry of the bonds
 
 2004-08-24  Fabien Fontaine  <ffontaine@imim.es>
 
 	* src/mol.cpp (PerceiveBondOrders): Bug in calculation of 
-	average torsion angles of cycles fixed
+	average torsion angles of cycles fixed.
 
-	* src/atom.cpp: function AverageBondAngle added
+	* src/atom.cpp: function AverageBondAngle added.
 	
 2004-08-19  Michael Banck  <mbanck@gmx.net>
 

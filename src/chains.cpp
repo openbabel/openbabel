@@ -4,7 +4,7 @@ chains.cpp - Parse chains for macromolecules or SMILES.
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 (original author, Roger Sayle, version 1.6, March 1998)
 (modified by Joe Corkery, OpenEye Scientific Software, March 2001)
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>

@@ -2,8 +2,8 @@
 main.cpp - Main conversion program, command-line handling.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison
-Some portions Copyright (c) 2004-2005 by Chris Morley
+Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2004-2005 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -543,7 +543,7 @@ void help()
 *
 * \par COPYRIGHT
 *  Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-*  Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison \n \n
+*  Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison \n \n
 *  This program is free software; you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
 *  the Free Software Foundation version 2 of the License.\n \n
