@@ -40,15 +40,15 @@ bool TestUnitCell()
 
   if (!SafeOpen(ifs, (char*)unitcell_file.c_str())) return(false);
   ifs.getline(buffer,BUFF_SIZE);
-  sscanf(buffer,"%f %f %f",&x, &y, &z);
+  sscanf(buffer,"%lf %lf %lf",&x, &y, &z);
   v1.Set(x, y, z);
   
   ifs.getline(buffer,BUFF_SIZE);
-  sscanf(buffer,"%f %f %f",&x, &y, &z);
+  sscanf(buffer,"%lf %lf %lf",&x, &y, &z);
   v2.Set(x, y, z);
 
   ifs.getline(buffer,BUFF_SIZE);
-  sscanf(buffer,"%f %f %f",&x, &y, &z);
+  sscanf(buffer,"%lf %lf %lf",&x, &y, &z);
   v3.Set(x, y, z);
 
   cell.SetData(v1, v2, v3);
