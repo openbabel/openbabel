@@ -1,5 +1,10 @@
 2003-11-22  Michael Banck  <mbanck@gmx.net>
 
+	* src/Makefile.am (EXTRA_DIST): Removed newmain.cpp, bondtyper.cpp
+	and bondtyper.h for now.
+
+2003-11-22  Michael Banck  <mbanck@gmx.net>
+
 	* configure.in (AC_CHECK_HEADERS): Added iostream and fstream. 
 	They seem to be not always present on Irix.
 	(AC_HEADER_TIME): New macro.

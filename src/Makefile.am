@@ -39,7 +39,6 @@ pkgdata_DATA = \
 EXTRA_DIST = \
 	bc32.mak borland.bat oblib.dsp oblib.dsw \
 	bin2hex.pl $(pkgdata_DATA) \
-	newmain.cpp bondtyper.cpp bondtyper.h \
 	strncasecmp.c snprintf.c snprintf.h
 
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h extable.h \
