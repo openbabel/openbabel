@@ -238,6 +238,21 @@ bool OBBond::IsDouble()
 	return(false);
 }
 
+bool OBBond::IsTriple()
+{
+	if	(HasFlag(OB_AROMATIC_BOND)) return(false);
+
+	if (!((OBMol*)GetParent())->HasAromaticPerceived())
+		{
+			aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
+		}
+			
+	if ((this->GetBondOrder()==3) && !(HasFlag(OB_AROMATIC_BOND)))
+		return(true);
+
+	return(false);
+}
+
 bool OBBond::IsAromatic() const
 {
   if (((OBBond*)this)->HasFlag(OB_AROMATIC_BOND)) return(true);
