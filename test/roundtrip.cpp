@@ -36,14 +36,14 @@ int main(int argc,char *argv[])
     inFile1 = extab.FilenameToType(argv[1]);
   else
     {
-      cerr << argv[0] << ": Cannot read file-1 format!" << endl;
+      cerr << argv[0] << ": Cannot read file #1 format!" << endl;
       return(-1);
     }
   if (extab.CanReadExtension(argv[2]))
     inFile2 = extab.FilenameToType(argv[2]);
   else
     {
-      cerr << argv[0] << ": Cannot read file-2 format!" << endl;
+      cerr << argv[0] << ": Cannot read file #2 format!" << endl;
       return(-1);
     }
 
@@ -56,12 +56,12 @@ int main(int argc,char *argv[])
 
   if (!inFileStream1)
     {
-      cerr << argv[0] << ": Cannot read input file-1!" << endl;
+      cerr << argv[0] << ": Cannot read input file #1!" << endl;
       return(-1);
     }
   else if (!inFileStream2)
     {
-      cerr << argv[0] << ": Cannot read input file-2!" << endl;
+      cerr << argv[0] << ": Cannot read input file #2!" << endl;
       return(-1);
     }
 
@@ -72,6 +72,18 @@ int main(int argc,char *argv[])
     {
       cout << " ** ERROR ** Number of atoms differ: " << mol.NumAtoms()
 	   << " and " << mol2.NumAtoms() << endl;
+      return(-1);
+    }
+  
+  if (mol.NumAtoms() == 0)
+    {
+      cout << " ** ERROR ** Molecule #1 has no atoms!" << endl;
+      return(-1);
+    }
+  
+  if (mol2.NumAtoms() == 0)
+    {
+      cout << " ** ERROR ** Molecule #2 has no atoms!" << endl;
       return(-1);
     }
 
