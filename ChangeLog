@@ -1,3 +1,9 @@
+2002-08-27  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* test/main.cpp, test/ringtest.cpp, test/smartstest.cpp resolved
+	namespace problems for the tests. The test compile now, but show
+	errors.
+
 2002-08-25  Michael Banck <mbanck@gmx.net>
 
 	* Changed charge to int (gaussian.cpp) and divisor/exponent to 

@@ -13,6 +13,14 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
+namespace OpenBabel {
+  bool SafeOpen(ifstream &fs, char *filename);
+  bool SafeOpen(ofstream &fs, char *filename);
+}
+
+using namespace std;
+using namespace OpenBabel;
+
 bool TestRings(void)
 {
   ifstream mifs;

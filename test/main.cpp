@@ -21,41 +21,44 @@ bool TestRings(void);
 using namespace std;
 using namespace OpenBabel;
 
-void usage();
+
 
 int main(int argc,char *argv[])
 {
-  if (argc != 1) usage();
+  if (argc != 1) {
+    cout << "Usage: obtest" << endl;
+    return 0;
+  }
 
   //GenerateSmartsReference();
   //GenerateRingReference();
 
   bool alltests = true;
 
-
-  if (!TestSmarts())
-    {
-      ThrowError("ERROR: ***SMARTS test failed***");
-      alltests = false;
-    }
-  else ThrowError("SMARTS test passed");
+  cout << endl << "Testing SMARTS..." << endl;
+  if (!TestSmarts()) {
+    cout << "ERROR: ***SMARTS test failed***" << endl;
+    alltests = false;
+  }
+  else
+    cout << "SMARTS test passed" << endl;
     
-  if (!TestRings())
-    {
-      ThrowError("ERROR: ***RING test failed***");
-      alltests = false;
-    }
-  else ThrowError("RING test passed");
+  cout << endl << "Testing RINGS..." << endl;
+  if (!TestRings()) {
+    cout << "ERROR: ***RING test failed***" << endl;
+    alltests = false;
+  }
+  else
+    cout << "RING test passed" << endl;
       
 
-  if (alltests) ThrowError("\nAll tests passed");
-  else          ThrowError("\nSome test(s) failed");  
-
-  return(0);
-}
-
-void usage()
-{
-  ThrowError("Usage: obtest");
-  exit(0);
+  if (alltests) {
+    cout << endl << "All tests passed" << endl;
+    return 0;
+  }
+  else {
+    cout << endl << "Some test(s) failed" << endl;
+    return -1;
+  }
+  return 0;
 }
