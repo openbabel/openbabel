@@ -25,7 +25,7 @@ bool TestUnitCell()
 {
   double a, b, c, alpha, beta, gamma;
   vector3 v1, v2, v3;
-  double x, y, z;
+  double x = 0.0, y = 0.0, z = 0.0;
   char buffer[BUFF_SIZE];
   std::ifstream ifs;
   OBUnitCell cell, cell2;
