@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2002-2003 by Geoffrey Hutchison
+Copyright (C) 2002-2005 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify

@@ -2708,8 +2708,8 @@ bool OBMol::HasData(obDataType dt)
     return(false);
 }
 
+//! Returns the value given an attribute name
 OBGenericData *OBMol::GetData(string &s)
-//returns the value given an attribute
 {
     vector<OBGenericData*>::iterator i;
 
@@ -2720,8 +2720,8 @@ OBGenericData *OBMol::GetData(string &s)
     return(NULL);
 }
 
+//! Returns the value given an attribute name
 OBGenericData *OBMol::GetData(const char *s)
-//returns the value given an attribute
 {
     vector<OBGenericData*>::iterator i;
 

@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2000-2004 by Geoffrey Hutchison
+Copyright (C) 2000-2005 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Michael Banck
 Some portions Copyright (C) 2004 by Chris Morley
  

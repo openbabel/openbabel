@@ -1,4 +1,6 @@
 /**********************************************************************
+bondtyper.h - Bond typer to perceive connectivity and bond orders/types.
+
 Copyright (C) 2003-2005 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.

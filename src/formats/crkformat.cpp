@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 20032-2005 by Dr. Alex M. Clark and Geoffrey Hutchison
+Copyright (C) 2002-2005 by Dr. Alex M. Clark and Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify

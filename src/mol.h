@@ -2,7 +2,7 @@
 mol.h - Handle molecules.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2004 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
  
 This file is part of the Open Babel project.

@@ -5,8 +5,30 @@
 	* data/extable.txt: Mark as deprecated. (Should this be deleted?)
 
 	* src/*.h, src/*.cpp, src/math/*.cpp, src/math/*.h,
-	src/formats/*.cpp, tools/*.cpp: Update copyright statements to
-	include 2005 and standardize text.
+	src/formats/*.cpp, tools/*.cpp, test/*.cpp: Update copyright
+	statements to include 2005 and standardize text.
+
+	* data/Makefile.am: Make sure to include *.h files in a distribution.
+
+	* src/Makefile.am: Make sure to include dlhandler.h,
+	obconversion.h, and reaction.h in a distribution.
+
+	* src/formats/Makefile.am: Make sure to install obmolecformat.h
+	and include in distribution.
+
+	* data/Makefile.in, src/Makefile.in, src/formats/Makefile.in:
+	Regenerated.
+	
+	* src/generic.h: Expand obDataType to include more typical
+	chemical data and offer 16 custom data slots obData0 through
+	obData15. In particular, adds obConformerData and obSymmetryData
+	for future enhancements.
+
+	* src/obutil.cpp, src/tokenst.cpp, src/typer.h: Added more doxygen
+	documentation.
+
+	* tools/obfit.cpp: Further improvements from Konrad -- now loops
+	through multiple matches to fit the match with the smallest RMSD.
 
 2005-03-07  Geoff Hutchison  <babel@geoffhutchison.net>
 

@@ -170,7 +170,7 @@ public:
 
 //***RMS helper methods***/
 void  rotate_coords(double*,double m[3][3],int);
-double calc_rms(double*,double*,int);
+double calc_rms(double*,double*,unsigned int);
 
 // String conversion utilities
 void ToUpper(std::string&);

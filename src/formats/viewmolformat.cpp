@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2002-2003 by Geoffrey Hutchison
+Copyright (C) 2002-2005 by Geoffrey Hutchison
 Based on code Copyright (C) 1999 Joerg-Ruediger Hill
 Some portions Copyright (C) 2004 by Chris Morley
  
