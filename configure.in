@@ -6,7 +6,7 @@ dnl AM_INIT_AUTOMAKE([openbabel], version)
 AC_CANONICAL_HOST
 top_builddir=`pwd`
 AC_SUBST(top_builddir)
-openbabel_version=1.100.0
+openbabel_version=1.100.1
 AC_SUBST(openbabel_version)
 
 dnl Checks for programs.

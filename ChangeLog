@@ -1,5 +1,8 @@
 2003-03-18  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
+	* src/configure.in, src/configure: Update with "1.100.1" version
+	number for now.
+
 	* test/roundtrip.cpp (main): Improve usability by making BOX and
 	SMI file types special cases. (Hard to compare atoms and coords
 	for them.)

@@ -1352,7 +1352,7 @@ host_os=`echo $ac_cv_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
 
 top_builddir=`pwd`
 
-openbabel_version=1.100.0
+openbabel_version=1.100.1
 
 
 ac_ext=c
