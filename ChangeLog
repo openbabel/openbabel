@@ -1,3 +1,16 @@
+2004-08-30  Fabien Fontaine  <ffontaine@imim.es>
+
+	* src/fingerprint.cpp: New output format
+	* src/fingerprint.h
+	* src/Makefile.am (libopenbabel_la_SOURCES): Added fingerprint.cpp.
+	* src/data.cpp (TextToType): Added FINGERPRINT typestring.
+	* src/data.h (io_type): Added FINGERPRINT.
+	* src/extable.txt: Added fingerprint entry for writing.
+	* src/extable.h: Regenerated.
+	* src/fileformat.cpp (ReadMolecule): Added fingerprint handler.
+	(WriteMolecule): Likewise.
+	* src/fileformat.h (WriteFingerprint): Declare it.
+	
 2004-09-10  Michael Banck  <mbanck@gmx.net>
 
 	* src/turbomole.cpp: New file.
