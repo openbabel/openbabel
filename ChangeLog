@@ -1,3 +1,7 @@
+2002-01-24  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* doc/FAQ, doc/babel.1: Minor documentation fixes.
+	
 2002-01-21  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* Makefile.in: Fix problems with the dist target.

@@ -95,8 +95,6 @@ to contribute. Most of us deal with a variety of file formats in our
 work. So it's useful to translate these cleanly. If a format isn't 
 currently supported by Open Babel, see question 2.1 above. If you 
 find bugs please report them. Since it's open source, you can patch 
-e question 2.1 above. If you 
-find bugs please report them. Since it's open source, you can patch 
 the code yourself, recompile and have the problem fixed very quickly.
     If you're inclined to write code, the GPL is an excellent option 
 for the acadmic. You're the original copyright holder, so you can do 
