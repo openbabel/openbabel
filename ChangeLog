@@ -1,3 +1,9 @@
+2002-02-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/mol.cpp (PerceiveBonds): Improve accuracy by picking the
+	closer atom (shorter bond) when there are two atoms with equal
+	electronegativities.
+	
 2002-02-14  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/data.h, src/data.cpp: Add MIME support to OBExtensionTable.

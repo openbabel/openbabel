@@ -2712,12 +2712,11 @@ void OBMol::PerceiveBonds()
   // Pass 5: Check for aromatic rings and assign bonds as appropriate
 
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity
-  //
   vector<pair<OBAtom*,float> > sortedAtoms;
   vector<float> rad; 
   vector<int> sorted;
   int iter, max;
-  float maxElNeg;
+  float maxElNeg, shortestBond, currentElNeg;
 
   for (atom = BeginAtom(i) ; atom ; atom = NextAtom(i))
     {
@@ -2731,22 +2730,27 @@ void OBMol::PerceiveBonds()
   for (iter = 0 ; iter < max ; iter++ )
   {
       atom = sortedAtoms[iter].first;
-      if ( atom->GetHyb() == 1 && 
-	   atom->BOSum() < etab.GetMaxBonds(atom->GetAtomicNum()) )
+      if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
+	   && atom->BOSum() < etab.GetMaxBonds(atom->GetAtomicNum()) )
 	{
 	  // loop through the neighbors looking for a hybrid or terminal atom
 	  // (and pick the one with highest electronegativity first)
 	  // *or* pick a neighbor that's a terminal atom
 	  maxElNeg = 0.0f;
+	  shortestBond = 5000.0f;
 	  c = NULL;
 	  for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
 	    {
+	      currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
 	      if ( (b->GetHyb() == 1 || b->GetValence() == 1)
 		   && b->BOSum() < etab.GetMaxBonds(b->GetAtomicNum())
-		   && etab.GetElectroNeg(b->GetAtomicNum()) >= maxElNeg )
+		   && (currentElNeg > maxElNeg ||
+		       (currentElNeg == maxElNeg
+			&& (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
-		  maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
-		  c = b; // save this atom for later use
+		      shortestBond = (atom->GetBond(b))->GetLength();
+		      maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+		      c = b; // save this atom for later use
 		}
 	    }
 	  if (c)
@@ -2757,13 +2761,18 @@ void OBMol::PerceiveBonds()
 	{
 	  // as above
 	  maxElNeg = 0.0f;
+	  shortestBond = 5000.0f;
 	  c = NULL;
 	  for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
 	    {
+	      currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
 	      if ( (b->GetHyb() == 2 || b->GetValence() == 1)
 		   && b->BOSum() < etab.GetMaxBonds(b->GetAtomicNum())
-		   && etab.GetElectroNeg(b->GetAtomicNum()) >= maxElNeg )
+		   && (currentElNeg > maxElNeg ||
+                      (currentElNeg == maxElNeg
+                       && (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
+		  shortestBond = (atom->GetBond(b))->GetLength();
 		  maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
 		  c = b; // save this atom for later use
 		}
