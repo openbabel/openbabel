@@ -75,6 +75,7 @@ bool ReadPDB(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadPDB(std::vector<std::string> &,OBMol &,const char *title="Untitled");
 bool ReadQChem(std::istream &, OBMol &, const char *title="Untitled");
 bool ReadSDFile(std::istream &,OBMol &,const char *title="Untitled");
+bool ReadShelX(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadSmiles(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadTerTermPDB(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadUnichem(std::istream &, OBMol &, const char *title="Untitled");

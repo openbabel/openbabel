@@ -60,6 +60,7 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, const char *title)
     case QCHEMOUT:  result = ReadQChem(ifs,mol,title);		break;
     case SDF:       result = ReadSDFile(ifs,mol,title);		break;
     case SMI:       result = ReadSmiles(ifs,mol,title);		break;
+    case SHELX:	    result = ReadShelX(ifs,mol,title);		break;
     case UNICHEM:   result = ReadUnichem(ifs,mol,title);	break;
     case VIEWMOL:   result = ReadViewMol(ifs,mol,title);	break;
     case XYZ:	    result = ReadXYZ(ifs,mol,title);		break;

@@ -42,15 +42,15 @@ DATAINCS      = aromatic.h atomtyp.h element.h extable.h \
 		bondtyp.h
 
 HDRS	      = aromatic.h atomtyp.h base.h binary.h \
-		bitgrid.h bitvec.h chiral.h chains.h cwrap.h \
+		bitvec.h chiral.h chains.h cwrap.h \
 		data.h element.h extable.h fileformat.h grid.h \
 		matrix.h mol.h molchrg.h molvector.h obifstream.h \
 		obutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
-		resdata.h ring.h rotor.h smi.h typer.h types.h version.h \
+		resdata.h ring.h rotor.h smi.h typer.h types.h \
 		chains.h generic.h oberror.h isotope.h bondtyp.h
 
 OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
-		bitgrid.o bond.o \
+		bond.o \
 		chains.o data.o molvector.o matrix.o\
 		chiral.o grid.o mdl.o mol.o mol2.o molchrg.o \
 		obutil.o parsmi.o parsmart.o patty.o \
@@ -61,7 +61,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
 		jaguar.o amber.o generic.o residue.o \
 		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o viewmol.o \
-		cml.o oberror.o zindo.o
+		cml.o oberror.o zindo.o shelx.o
 
 EXTRAOBJS     = math/vector3.o math/matrix3x3.o
 
@@ -88,7 +88,7 @@ check:		$(PROGRAM)
 clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
 
 distclean:	clean
-		$(RM) version.h Makefile
+		$(RM) babelconfig.h Makefile
 
 install:	$(PROGRAM)
 		$(MKDIRS) $(DESTDIR)$(bindir)

@@ -495,7 +495,7 @@ public:
 
 // Class OBMol
 
-//MOL Property Macros (flags)
+//MOL Property Macros (flags) -- 32+ bits
 #define OB_SSSR_MOL              (1<<1)
 #define OB_RINGFLAGS_MOL         (1<<2)
 #define OB_AROMATIC_MOL          (1<<3)
@@ -510,6 +510,7 @@ public:
 #define OB_PH_CORRECTED_MOL      (1<<13)
 #define OB_AROM_CORRECTED_MOL    (1<<14)
 #define OB_CHAINS_MOL            (1<<15)
+#define OB_TCHARGE_MOL		 (1<<16)
 #define OB_CURRENT_CONFORMER	 -1
 
 // class introduction in mol.cpp
@@ -602,14 +603,14 @@ public:
     //! \name Data retrieval methods
     //@{
     int          GetFlags()                           {return(_flags);}
-    const char  *GetTitle()                           {return(_title.c_str());}
-    io_type      GetInputType()                       {return(_itype);}
-    io_type      GetOutputType()                      {return(_otype);}
-    unsigned int NumAtoms()                           {return(_natoms);}
-    unsigned int NumBonds()                           {return(_nbonds);}
+    const char  *GetTitle() const                     {return(_title.c_str());}
+    io_type      GetInputType() const                 {return(_itype);}
+    io_type      GetOutputType() const                {return(_otype);}
+    unsigned int NumAtoms() const                     {return(_natoms);}
+    unsigned int NumBonds() const                     {return(_nbonds);}
     //! The number of non-hydrogen atoms
     unsigned int NumHvyAtoms();
-    unsigned int NumResidues()                        {return(_residue.size());}
+    unsigned int NumResidues() const                  {return(_residue.size());}
     unsigned int NumRotors();
     OBAtom      *GetAtom(int);
     OBAtom      *GetFirstAtom();
@@ -617,25 +618,25 @@ public:
     OBBond      *GetBond(int, int);
     OBBond      *GetBond(OBAtom*,OBAtom*);
     OBResidue   *GetResidue(int);
-    double        GetTorsion(int,int,int,int);
-    double        GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
+    double       GetTorsion(int,int,int,int);
+    double       GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
     void         SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double);
-    double        GetEnergy()                          {return(_energy);}
+    double       GetEnergy() const                   {return(_energy);}
     //! Standard molar mass given by IUPAC atomic masses
-    double        GetMolWt();
+    double       GetMolWt();
     //! Mass given by isotopes (or most abundant isotope as necessary)
     double	 GetExactMass();
     int		 GetTotalCharge();
-    double       *GetCoordinates()                     {return(_c);}
+    double      *GetCoordinates()                    {return(_c);}
     std::vector<OBRing*> &GetSSSR();
-    bool         IsCompressed()                       {return _compressed;}
+    bool         IsCompressed() const                {return _compressed;}
     //@}
 
     //***data modification methods***
     void   SetTitle(const char *title)     {_title = title;}
     void   SetTitle(std::string &title)    {_title = title;}
-    void   SetEnergy(double energy)         {_energy = energy;}
-    void   SetTotalCharge(int charge)      {_totalCharge = charge;}
+    void   SetEnergy(double energy)        {_energy = energy;}
+    void   SetTotalCharge(int charge);
     void   SetInputType(io_type type)      {_itype = type;}
     void   SetOutputType(io_type type)     {_otype = type;}
     void   SetAromaticPerceived()          {SetFlag(OB_AROMATIC_MOL);}

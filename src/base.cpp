@@ -221,17 +221,17 @@ and Open Eye Scientific Software, Inc. to take advantage of many of
 the "great minds writing chemical software." Eventually Open Eye
 decided to write a next-generation class library as proprietary
 software. The result was that Open Babel took up where OELib left off,
-using the existing GPL version of OELib and has continued to evolve
+using the existing GPL version of OELib, and has continued to evolve
 and improve.
 
 There are several advantages to having the source code to Open Babel
 available. First, development time can be shortened by basing projects
 on Open Babel. Many chemical and molecular concepts and code are
 already implemented. The fewer people who have to reinvent the wheel
-(or the function), the better.Second, as free software, hopefully 
+(or the function), the better. Second, as free software, hopefully 
 other programmers will contribute to the project.
 
-Thanks to all who have helped with Babel, OBabel, OELib and Open Babel.\
+Thanks to all who have helped with Babel, OBabel, OELib and Open Babel.
 The list is long and growing.
 
 */

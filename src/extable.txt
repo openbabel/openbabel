@@ -70,6 +70,7 @@ pov		pov		POV-Ray Output			none				0	1
 report		report		Report				none				0	1
 qcin		qchemin		Q-Chem Input			none				0	1
 qcout		qchemout	Q-Chem Output			none				1	0
+res		shelx		ShelX				none				1	0
 smi		smi		SMILES				chemical/x-daylight-smiles	1	1
 fix		fix		SMILES Fix			none				0	1
 mol2		mol2		Sybyl Mol2			chemical/x-mol2			1	1
@@ -107,7 +108,6 @@ mopin		mopacint	MOPAC Internal			none				0	0
 cmod		pcmodel		PC Model			none				0	0
 msf		msf		MSI Quanta MSF			none				0	0
 schakal		schakal		Schakal				none				0	0
-res		shelx		ShelX				none				0	0
 spar		spartan		Spartan				none				0	0
 semi		spartansemi	Spartan Semi-Empirical		none				0	0
 spmm		spartanmm	Spartan MM			none				0	0

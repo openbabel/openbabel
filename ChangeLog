@@ -1,3 +1,43 @@
+2003-06-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+
+	Lots of minor bugfixes from the past few weeks.
+	
+	* src/element.txt, src/element.h: Update phosphorus covalent
+	radius as suggested by Jean Brefort (PR# 743730).
+
+	* configure.in: Set "bug report" e-mail address, remove custom
+	openbabel_version variable and change AC_CHECK_HEADER calls to
+	AC_CHECK_HEADERS to gracefully fail and set appropriate HAVE_
+	macros in babelconfig.h.
+
+	* configure, src/babelconfig.h.in: Updated using autoreconf.
+
+	* src/data.cpp, src/povray.cpp: Update to use sstream if present
+	and strstream if not.
+
+	* src/main.cpp: Add support for centering coordinates as well as
+	checking for 2D vs. 3D coordinates when calling WriteMolecule.
+
+	* src/mol.cpp (Kekulize): Remove 255 atom limit discovered by
+	Frank Schmitt. (Some limit is reasonable, but SMARTS matching
+	should be better about matching non-Kekulize'd structures.)
+	
+	* Makefile.in: Use standard PACKAGE_VERSION instead of
+	openbabel_version.
+
+	* src/Makefile.in: Get rid of bitgrid.[cpp,h] and version.h.
+
+	* src/base.cpp: Minor documentation updates.
+	
+	* src/extable.txt, src/extable.h, src/fileformat.cpp,
+	src/fileformat.h: Add in preliminary hooks for ShelX support.
+
+	* src/shelx.cpp, src/bondtyper.h, src/bondtyper.cpp: New files.
+
+	* test/unitcell.cpp: Make sure to initialize variables.
+
+	* test/roundtrip.cpp: Use babelconfig.h instead of version.h.
+	
 2003-04-13  Michael Banck  <mbanck@gmx.net>
 
 	* config.guess, config.sub, ltmain.sh: Updated to current FSF
