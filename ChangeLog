@@ -1,3 +1,8 @@
+2002-12-3  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/data.cpp(ParseLine): Fix bug that ignored the first
+	non-comment line.
+
 2002-12-2  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* Makefile.in, src/Makefile.in, src/math/Makefile.in,

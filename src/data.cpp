@@ -318,7 +318,7 @@ void OBExtensionTable::ParseLine(const char *buffer)
 {
   vector <string> vs;
   
-  if (buffer[0] != '#' && _linecount != 0) // skip comments
+  if (buffer[0] != '#') // skip comments
     {
       tokenize(vs,buffer,"\t\n"); // spaces are a problem
       if (vs.size() == 6)
