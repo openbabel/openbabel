@@ -1,3 +1,18 @@
+2004-02-08  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* src/mol.cpp, src/qchem.cpp, src/gaussian.cpp, src/report.cpp:
+	Improved support for spin multiplicity and total charge --
+	calculate from atomic formal charges and spin multiplicities where
+	not specified.
+
+	* Doxyfile, src/base.cpp, src/base.h, src/binary.cpp,
+	src/binary.h, src/chains.cpp, src/chains.h, src/data.h,
+	src/generic.cpp, src/generic.h, src/grid.h, src/mol.h,
+	src/oberror.h, src/obifstream.h, src/obutil.h, src/parsmart.h,
+	src/parsmi.cpp, src/pdb.cpp, src/phmodel.cpp, src/phmodel.h,
+	src/residue.cpp, src/rotor.cpp, src/typer.cpp, src/typer.h:
+	Updated documentation for generation by doxygen.
+	
 2004-02-06  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
 
 	* Doxyfile, doc/Doxyfile-man: Updated for 1.100.2 release and for

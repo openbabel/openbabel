@@ -161,10 +161,8 @@ protected:
   char                          _impval;	//!< implicit valence
   char                          _type[6];	//!< atomic type
   short int                     _fcharge;	//!< formal charge
-  int		_isotope;	//!< isotope (0 = most abundant)
-
-  //CM 18 Sept 2003
-  int														_spinmultiplicity;// 2 for radical  1 or 3 for carbene
+  int                           _isotope;	//!< isotope (0 = most abundant)
+  int                           _spinmultiplicity;// 2 for radical  1 or 3 for carbene
 
   //unsigned short int          _idx;		//!< index in parent (inherited)
   unsigned short int            _cidx;		//!< index into coordinate array
@@ -202,16 +200,16 @@ public:
     void IncrementImplicitValence()          {_impval++;}
     void DecrementImplicitValence()          {_impval--;}
     void SetFormalCharge(int fcharge)        {_fcharge = fcharge;}
-    void SetSpinMultiplicity(int spin)			 {_spinmultiplicity = spin;} //CM 18 Sept 2003
+    void SetSpinMultiplicity(int spin)	     {_spinmultiplicity = spin;} //CM 18 Sept 2003
     void SetType(char *type);
     void SetType(std::string &type);
     void SetPartialCharge(double pcharge)     {_pcharge = pcharge;}
     void SetVector();
     void SetVector(vector3 &v);                
-    void SetVector(const double,const double,const double);
+    void SetVector(const double x,const double y,const double z);
     void SetResidue(OBResidue *res)          {_residue=res;}
 //  void SetParent(OBMol *ptr)               {_parent=ptr;}
-    void SetCoordPtr(double **c)              {_c = c;_cidx = (GetIdx()-1)*3;}
+    void SetCoordPtr(double **c)             {_c = c;_cidx = (GetIdx()-1)*3;}
     void SetAromatic()                       {SetFlag(OB_AROMATIC_ATOM);}
     void UnsetAromatic()    		     {_flags &= (~(OB_AROMATIC_ATOM));}
     void SetClockwiseStereo()          {SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM);}
@@ -233,7 +231,7 @@ public:
     int          GetFormalCharge()  const {return(_fcharge);}
     unsigned int GetAtomicNum()     const {return((unsigned int)_ele);}
     unsigned short int GetIsotope() const {return(_isotope);}
-		int GetSpinMultiplicity()				const {return(_spinmultiplicity);} //CM 18 Sept 2003   
+    int          GetSpinMultiplicity() const {return(_spinmultiplicity);} //CM 18 Sept 2003   
     //! The atomic mass of this atom given by standard IUPAC average molar mass
     double	 GetAtomicMass()    const;
     //! The atomic mass of given by the isotope (default is most abundant isotope)
@@ -533,6 +531,7 @@ public:
 #define OB_AROM_CORRECTED_MOL    (1<<14)
 #define OB_CHAINS_MOL            (1<<15)
 #define OB_TCHARGE_MOL		 (1<<16)
+#define OB_TSPIN_MOL             (1<<17)
 #define OB_CURRENT_CONFORMER	 -1
 
 // class introduction in mol.cpp
@@ -594,16 +593,30 @@ public:
     OBResidue *NewResidue();
     //@}
 
+    //! \name Molecule modification methods
+    //@{
+    //! Call when making many modifications -- clears conformer/rotomer data.
+    virtual void BeginModify(void);
+    //! Call when done with modificaions -- re-perceive data as needed.
+    virtual void EndModify(bool nukePerceivedData=true);
     int GetMod() {return(_mod);}
     void IncrementMod() {_mod++;}
     void DecrementMod() {_mod--;}
+    //@}
 
+    //! \name Compression methods (via OBCompressData)
+    //@{
     //! Save memory by rolling into the OEBinary format as a buffer
     virtual bool Compress(void);
     //! Roll data out from the obCompressData buffer
     virtual bool UnCompress(void);
-    
-    //! \name Methods for handling generic data
+    //! Call when accessing a compressed molecule to uncompress if needed.
+    virtual void BeginAccess(void);
+    //! Call when finished accessing a compressed molecule to recompress.
+    virtual void EndAccess(void);
+    //@}
+
+    //! \name Generic data handling methods (via OBGenericData)
     //@{
      //! Returns true if the generic attribute/value pair exists
     bool                              HasData(std::string &);
@@ -614,15 +627,15 @@ public:
     void                              DeleteData(obDataType);
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
-    void                              SetData(OBGenericData *d) {_vdata.push_back(d);     }
+    void                              SetData(OBGenericData *d) {_vdata.push_back(d); }
     //! Return the number of OBGenericData items attached to this molecule.
-    unsigned int                      DataSize()                {return(_vdata.size());   }
+    unsigned int                      DataSize()                {return(_vdata.size()); }
     OBGenericData                    *GetData(obDataType);
     OBGenericData                    *GetData(std::string&);
     OBGenericData                    *GetData(const char *);
-    std::vector<OBGenericData*>           &GetData()                 {return(_vdata);         }
+    std::vector<OBGenericData*>           &GetData()                 {return(_vdata); }
     std::vector<OBGenericData*>::iterator  BeginData()               {return(_vdata.begin()); }
-    std::vector<OBGenericData*>::iterator  EndData()                 {return(_vdata.end());   }
+    std::vector<OBGenericData*>::iterator  EndData()                 {return(_vdata.end()); }
     //@}
 
     //! \name Data retrieval methods
@@ -631,10 +644,13 @@ public:
     const char  *GetTitle() const                     {return(_title.c_str());}
     io_type      GetInputType() const                 {return(_itype);}
     io_type      GetOutputType() const                {return(_otype);}
+    //! The number of atoms (i.e. OBAtom children)
     unsigned int NumAtoms() const                     {return(_natoms);}
+    //! The number of bonds (i.e. OBBond children)
     unsigned int NumBonds() const                     {return(_nbonds);}
     //! The number of non-hydrogen atoms
     unsigned int NumHvyAtoms();
+    //! The number of residues (i.e. OBResidue substituents)
     unsigned int NumResidues() const                  {return(_residue.size());}
     //! The number of rotatble bonds
     unsigned int NumRotors();
@@ -656,7 +672,7 @@ public:
     //! Total charge on this molecule (i.e., 0 = neutral, +1, -1...)
     int		 GetTotalCharge();
     //! Total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
-    unsigned int GetTotalSpin();
+    unsigned int GetTotalSpinMultiplicity();
     double      *GetCoordinates()                    {return(_c);}
     std::vector<OBRing*> &GetSSSR();
     bool         IsCompressed() const                {return _compressed;}
@@ -674,7 +690,7 @@ public:
     //! Set the heat of formation for this molecule (in kcal/mol)
     void   SetEnergy(double energy)        {_energy = energy;}
     void   SetTotalCharge(int charge);
-    void   SetTotalSpin(unsigned int spin);
+    void   SetTotalSpinMultiplicity(unsigned int spin);
     void   SetInputType(io_type type)      {_itype = type;}
     void   SetOutputType(io_type type)     {_otype = type;}
     void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord) {_internals = int_coord;}
@@ -764,15 +780,6 @@ public:
     void         GetGIDVector(std::vector<unsigned int> &);
     //@}
 
-    //! Call when accessing a compressed molecule to uncompress if needed.
-    virtual void BeginAccess(void);
-    //! Call when finished accessing a compressed molecule to recompress.
-    virtual void EndAccess(void);
-    //! Call when making many modifications -- clears conformer/rotomer data.
-    virtual void BeginModify(void);
-    //! Call when done with modificaions -- re-perceive data as needed.
-    virtual void EndModify(bool nukePerceivedData=true);
-
     //! \name Methods to check for existence of properties
     //@{
     //! Are there non-zero coordinates in two dimensions (i.e. X and Y)?
@@ -842,9 +849,7 @@ public:
     //@}
 };
 
-/** Class to store internal coordinate values
-    Used to transform from z-matrix to cartesian coordinates.
- */
+//! \brief Used to transform from z-matrix to cartesian coordinates.
 class OBInternalCoord 
 {
 public:

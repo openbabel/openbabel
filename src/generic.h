@@ -38,10 +38,9 @@ enum obDataType {obUndefinedData,obPairData,obEnergyData,
 		 obVirtualBondData,obRingData,obTorsionData,obAngleData, 
 		 obSerialNums, obUnitCell, obSpinData, obChargeData,
 		 obAuditList, obData0,obData1,obData2,obData3,
-		 obData4,obData5,obData6,obData7,
-		 obData8,obData9};
+		 obData4,obData5,obData6,obData7, obData8,obData9};
 
-//! Base class for generic data - use obData# slots for undefined data types
+//! Base class for generic data - use obData# slots for custom data types
 class OBGenericData
 {
 protected:
@@ -58,6 +57,7 @@ public:
 	obDataType                GetDataType()    const {return(_type);}
 };
 
+//! Used to store a comment string (can be multiple lines long)
 class OBCommentData : public OBGenericData
 {
 protected:
@@ -72,6 +72,7 @@ public:
 	const std::string &GetData()              const {return(_data);}
 };
 
+//! \brief Used to store information on an external bond
 class OBExternalBond
 {
   int     _idx;
@@ -91,6 +92,7 @@ public:
   void SetBond(OBBond *bond) {_bond = bond;}
 };
 
+//! \brief Used to store information on external bonds (e.g. in SMILES fragments)
 class OBExternalBondData : public OBGenericData
 {
 protected:
@@ -101,6 +103,10 @@ public:
 	std::vector<OBExternalBond> *GetData() {return(&_vexbnd);}
 };
 
+//! \brief Used to store molecule in a compresed binary form
+//!
+//! Compressed form can be accessed automatically via OBMol::BeginAccess()
+//! and OBMol::EndAccess() or via OBMol::Compress() and OBMol::UnCompress()
 class OBCompressData : public OBGenericData
 {
 protected:
@@ -126,6 +132,8 @@ class OBPairData : public OBGenericData
   std::string &GetValue()              {return(_value);}
 };
 
+//! \brief Used to temporarily store bonds that reference
+//! an atom that has not yet been added to a molecule 
 class OBVirtualBond : public OBGenericData
 {
 protected:
@@ -142,6 +150,7 @@ public:
 	int GetStereo()                        {return(_stereo);}
 };
 
+//! Used to store the SSSR set (filled in by OBMol::GetSSSR())
 class OBRingData : public OBGenericData
 {
 protected:
@@ -158,6 +167,9 @@ public:
 	std::vector<OBRing*> &GetData()        {return(_vr);}
 };
 
+//! \brief Used for storing information about periodic boundary conditions
+//!   with conversion to/from 3 translation vectors and 
+//!  (a, b, c, alpha, beta, gamma)
 class OBUnitCell: public OBGenericData
 {
  protected:
@@ -191,9 +203,8 @@ class OBUnitCell: public OBGenericData
       const std::string GetSpaceGroup() 	{return(_spaceGroup);}
 };
 
-/*!
-**\brief A class which holds the torsion data for a single rotatable bond and all the four atom sets around it
-*/
+//! \brief Used to hold the torsion data for a single rotatable bond 
+//! and all four atoms around it
 class OBTorsion
 {
     friend class OBMol;
@@ -201,9 +212,10 @@ class OBTorsion
 
 protected:
 	std::pair<OBAtom*,OBAtom*> _bc;
-	std::vector<triple<OBAtom*,OBAtom*,double> > _ads; //double is angle in rads
+	//! double is angle in rads
+	std::vector<triple<OBAtom*,OBAtom*,double> > _ads;
 
-  OBTorsion() { _bc.first=0; _bc.second=0; };  //protected for use only by friend classes
+	OBTorsion() { _bc.first=0; _bc.second=0; };  //protected for use only by friend classes
 	OBTorsion(OBAtom *, OBAtom *, OBAtom *, OBAtom *);
 
 	std::vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > GetTorsions();
@@ -233,9 +245,8 @@ public:
   bool IsProtonRotor();
 };
 
-/*!
-**\brief The Object to hold Torsions as Generic data for OBMol
-*/
+//! \brief Used to hold torsions as generic data for OBMol.
+//! Filled by OBMol::FindTorsions()
 class OBTorsionData : public OBGenericData 
 {
     friend class OBMol;
@@ -259,9 +270,7 @@ public:
     bool FillTorsionArray(std::vector<std::vector<unsigned int> > &torsions);
 };
 
-/*!
-**\brief A class which holds the 3 atoms in an angle and the angle itself
-*/
+//! Used to hold the 3 atoms in an angle and the angle itself
 class OBAngle 
 {
     friend class OBMol;
@@ -286,25 +295,23 @@ protected:
 public:
 
 	OBAngle(const OBAngle &);
-    ~OBAngle() { _vertex = NULL; }
+	~OBAngle() { _vertex = NULL; }
 
-    OBAngle &operator = (const OBAngle &);
+	OBAngle &operator = (const OBAngle &);
 	bool     operator ==(const OBAngle &);
 
 	void  Clear();
 
-    double GetAngle() const { return(_radians); }
+	double GetAngle() const { return(_radians); }
 
-    void  SetAngle(double radians) { _radians = radians; }
+	void  SetAngle(double radians) { _radians = radians; }
 	void  SetAtoms(OBAtom *vertex,OBAtom *a,OBAtom *b);
 	void  SetAtoms(triple<OBAtom*,OBAtom*,OBAtom*> &atoms);
 
 };
 
 
-/*!
-**\brief The Object to hold Angle as Generic data for OBMol
-*/
+//! \brief Used to hold all angles in a molecule as generic data for OBMol
 class OBAngleData : public OBGenericData
 {
     friend class OBMol;

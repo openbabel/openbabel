@@ -993,8 +993,8 @@ void SetRotorToAngle(double *c,OBAtom **ref,double ang,vector<int> atoms)
     }
 }
 
-//OBBinaryDBase class - facilitates random access to OBBinary files
-
+//! \class OBBinaryDBase
+//! Facilitates random access to OEBinary files
 OBBinaryDBase::OBBinaryDBase(const char *fname)
 {
     int size;

@@ -53,7 +53,7 @@ typedef enum { UNDEFINED,
 	       // for backwards compatibility
              } io_type;
 
-//! Base data table class, handles reading data files
+//! \brief Base data table class, handles reading data files
 //!
 //! Base data table class--reads ASCII data files in various formats
 //! -# Checks for the environment variable _envvar (defaults to "BABEL_DATADIR")
@@ -88,7 +88,8 @@ class OBGlobalDataBase
   virtual void ParseLine(const char*) {}
 };
 
-//! Element data type
+//! \brief Individual element data type
+//!
 //! Stores a variety of data about an individual element
 class OBElement
 {
@@ -155,7 +156,7 @@ class OBIsotopeTable : public OBGlobalDataBase
 
   void	ParseLine(const char*);
   //! Return the exact masss of the isotope
-  //   (or by default (i.e. "isotope 0") the most abundant isotope)
+  //!   (or by default (i.e. "isotope 0") the most abundant isotope)
   double	GetExactMass(const unsigned int atomicNum,
 			     const unsigned int isotope = 0);
 };

@@ -248,7 +248,7 @@ start with looking at the \link OpenBabel::OBMol OBMol\endlink class,
 designed to store the basic information
 in a molecule and to perceive information about a molecule.
 
-Also important to remember in looking at Open Babel is that most 
+
 transformations and automatic perception of properties is performed in a 
 "lazy" manner. That is, until you call for partial atomic charges, no 
 charges are calculated. This ensures faster transformations of chemical data

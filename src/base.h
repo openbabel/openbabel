@@ -31,7 +31,7 @@ class OBNodeBase;
 class OBEdgeBase;
 class OBGraphBase;
 
-/** Base Class
+/** \brief Base Class
 
  The various classes (Atom, Bond, Molecule) inherit from base classes--
  OBBase is just a placeholder class
@@ -41,7 +41,7 @@ class OBBase
 public:
 };
 
-/** Node Base Class
+/** \brief Node Base Class
 
 The base class for nodes (e.g. atoms) in a graph-theoretical representation.
  */
@@ -58,7 +58,7 @@ protected:
         std::vector<OBEdgeBase*> _vbond;
 
 public:
-	//!<Used internally by graph traversal algorithms
+	//! Used internally by graph traversal algorithms
 	bool Visit;
 
         //! Constructor
@@ -113,7 +113,7 @@ public:
         //@}
 };
 
-/** Edge Base Class
+/** \brief Edge Base Class
 
 The base class for edges (e.g. bonds) in a graph-theoretical representation.
  */
@@ -164,7 +164,7 @@ public:
 	//@}
 };
 
-/*! Graph Base Class
+/*! \brief Graph Base Class
 
 The base class for graphs (e.g. rings, molecules, etc.) in a 
 graph-theoretical representation.

@@ -26,6 +26,8 @@ namespace OpenBabel {
 extern OBAromaticTyper  aromtyper;
 extern OBAtomTyper      atomtyper;
 
+//! \brief Parser for SMILES (Simplified Molecular Input Line Entery System)
+//! patterns
 class OBSmilesParser
 {
   int _bondflags;

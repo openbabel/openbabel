@@ -133,6 +133,16 @@ void OBPhModel::CorrectForPH(OBMol &mol)
   atomtyper.CorrectAromaticNitrogens(mol);
 }
 
+// Portions of this documentation adapted from the JOELib docs, written by
+// Joerg Wegner
+/** \class OBChemTsfm
+    \brief SMARTS based structural modification (chemical transformation)
+
+    Transformation of chemical structures can be used for pH value correction
+    (i.e. via OBPhModel and OBMol::CorrectForPH()). The OBChemTsfm class
+    defines SMARTS based TRANSFORM patterns to delete atoms, change atom types,
+    atom formal charges, and bond types.
+ **/
 bool OBChemTsfm::Init(string &bgn,string &end)
 {
   if (!_bgn.Init(bgn)) return(false);

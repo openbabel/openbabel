@@ -152,7 +152,7 @@ bool IsNear(const double &, const double &, const double epsilon=2e-6);
 bool IsNearZero(const double &, const double epsilon=2e-6);
 
 //******************triple template*************************
-//based on the STL design of the pair<> template
+//! \brief A 3-element templated, based on the design of the STL pair<>
 template <class T1, class T2, class T3>
 struct triple{
 	//type names for the values
@@ -165,21 +165,21 @@ struct triple{
 	T2 second;
 	T3 third;
 
-	/*default constructor
+        /** Default constructor
 	*	T1() and T2() and T3() force initialization for built in types
-	*/
+	**/
 	triple()
 		:	first(T1()),second(T2()),third(T3())
 	{
 	}
 
-	//constructor for 3 values
+	//! Constructor for 3 values
 	triple(const T1 &a, const T2 &b, const T3 &c)
 		:	first(a), second(b), third(c)
 	{
 	}
 
-	//copy constructor with implicit conversions
+	//! Copy constructor with implicit conversions
 	template<class U, class V, class W>
 	triple(const triple<U,V,W> &t)
 		:	first(t.first), second(t.second), third(t.third)
@@ -189,7 +189,7 @@ struct triple{
 };
 
 //**************quad template********************
-//based on the design of the STL pair<> template
+//! \brief A 4-element templated, based on the design of the STL pair<>
 template <class T1, class T2, class T3, class T4>
 struct quad{
 	//type names for the values
