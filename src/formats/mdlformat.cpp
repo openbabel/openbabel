@@ -45,7 +45,7 @@ public:
 Reads and writes V2000 and V3000 versions\n \
 Additional command line option for MOL files: -x[flags] (e.g. -x3)\n \
  2  output V2000 (default) or\n \
- 3  output V3000 (default for >999 atoms or bonds) \n \
+ 3  output V3000 (used for >999 atoms or bonds) \n \
 ";
 };
 
@@ -57,6 +57,20 @@ Additional command line option for MOL files: -x[flags] (e.g. -x3)\n \
 
 	virtual unsigned int Flags() { return DEFAULTFORMAT;};
 	virtual const char* TargetClassDescription(){return OBMol::ClassDescription();};
+
+	virtual int SkipObjects(int n, OBConversion* pConv)
+	{
+		if(n==0) n++;
+		string temp;
+		istream& ifs = *pConv->GetInStream();
+		do
+		{
+			getline(ifs,temp,'$');
+			if(ifs.good())
+				getline(ifs, temp);
+		}while(ifs.good() && temp.substr(0,3)!="$$$" && --n);
+		return ifs.good() ? 1 : -1;	
+	};
 
 ////////////////////////////////////////////////////
 	/// The "API" interface functions
@@ -329,11 +343,19 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 			for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
 				if (atom->GetIdx() < nbr->GetIdx()) {
 					bond = (OBBond*) *j;
+					
+					int stereo=0; //21Jan05 CM
+					if(strcmp(dimension,"2D")==0)
+					{
+						int flag = bond->GetFlags();
+						if (flag & OB_WEDGE_BOND) stereo=1;
+						if (flag & OB_HASH_BOND ) stereo=6;
+					}
 					sprintf(buff,"%3d%3d%3d%3d%3d%3d",
 									bond->GetBeginAtomIdx(),
 									bond->GetEndAtomIdx(),
 									(bond->GetBO() == 5) ? 4 : bond->GetBO(),
-									0/*bond->GetFlag()*/,0,0);
+									stereo,0,0);
 					ofs << buff << endl;
 				}
 
