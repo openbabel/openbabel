@@ -1,3 +1,10 @@
+2002-12-19  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/tinker.cpp: Add comment that we're using MM2 parameters.
+
+	* src/mol.cpp: Fix ugly bug causing crashes with -NO2 groups,
+	reported by Richard Muller.
+
 2002-12-6  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* Doxyfile, README, configure.in, configure: Rename version to
