@@ -1,3 +1,7 @@
+2004-02-18  Michael Banck  <mbanck@gmx.net>
+
+	* src/pqs.cpp: Include <strings.h>, if available.
+
 2004-02-17  Michael Banck  <mbanck@gmx.net>
 
 	* configure.in (AC_INIT): Changed PACKAGE_NAME to 'OpenBabel'.

@@ -15,6 +15,10 @@ GNU General Public License for more details.
 #include "mol.h"
 #include <ctype.h>
 
+#if HAVE_STRINGS_H
+#include <strings.h>
+#endif
+
 using namespace std;
 
 namespace OpenBabel {
