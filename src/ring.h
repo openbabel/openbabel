@@ -47,9 +47,9 @@ class OBRTree
 * for a molecule unless the connection table is modified. The following
 * code demonstrates how to extract the SSSR information:
 \code
-   OEMol mol(SDF,SDF);
+   OBMol mol(SDF,SDF);
    cin >> mol;
-   vector<OERing*> vr;
+   vector<OBRing*> vr;
    vr = mol.GetSSSR();
 \endcode
 * OBRing store the atom numbers of the atoms in each of the smallest
@@ -57,9 +57,9 @@ class OBRTree
 * An example of how to print out the atom numbers present in all SSSR
 * rings is show below.
 \code
-   vector<OERing*>::iterator i;
+   vector<OBRing*>::iterator i;
    vector<int>::iterator j;
-   vector<OERing*> *rlist = (vector<OERing*>*)mol.GetData("RingList");
+   vector<OBRing*> *rlist = (vector<OBRing*>*)mol.GetData("RingList");
    for (i = rlist->begin();i != rlist->end();i++)
    {
        for(j = (*i)->_path.begin();j != (*i)->_path.end();j++)

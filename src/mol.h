@@ -148,11 +148,12 @@ static const unsigned int WATER        = 9;
 /** Residue information.
 *
 * The residue information is drawn from PDB or MOL2 files,
-*and are stored in the OBResidue class. OBResidues are stored inside the 
-* OBAtom class. The residue information for an atom can be requested in the following way:
+* and are stored in the OBResidue class. OBResidues are stored inside the 
+* OBAtom class. The residue information for an atom can be requested in 
+* the following way:
 \code
- OEAtom *atom;
- OEResidue *r;
+ OBAtom *atom;
+ OBResidue *r;
  atom = mol.GetAtom(1);
  r = atom->GetResidue();
 \endcode
@@ -239,31 +240,31 @@ protected: // members
 * decision on which the design was based. In OBabel the atom class
 * existed, but it was only a data container. All data access and
 * modification of atoms was done through the molecule. The result
-* was a molecule class that was very large an unwieldy. I decided
-* to make the OBAtom class smarter, and separate out many of the
-* atom specific routines into the OBAtom thereby decentralizing and
+* was a molecule class that was very large an unwieldy. So the OBAtom
+* class was made smarter, and out many of the atom-specific routines
+* were separated into the OBAtom thereby decentralizing and
 * shrinking the OBMol class. As a result the OBAtom class not only
 * holds data, but facilitates extraction of data perceived from both
 * the atom and the molecule.
 *
 * A number of data extraction methods perform what is called
-* `Lazy Evaluation', which is essentially on the fly evaluation.
+* `Lazy Evaluation,' which is essentially on-the-fly evaluation.
 * For example, when an atom is queried as to whether it is cyclic
 * or what it's hybridization state is the information is perceived
 * automatically. The perception of a particular trait is actually
 * performed on the entire molecule the first time it is requested of
 * an atom or bond, and stored for subsequent requests for the same
 * trait of additional atoms or bonds.The OBAtom class is similar to
-* OBMol and the whole of OBLib in that data access and modification
+* OBMol and the whole of Open Babel in that data access and modification
 * is done through Get and Set methods.
 *
 * The following code demonstrates how to print out the atom numbers,
 * element numbers, and coordinates of a molecule:
 \code
-   OEMol mol(SDF,SDF);
-   cin >> mol;
-   OEAtom *atom;
-   vector<OEAtom*>::iterator i;
+   OBMol mol(SDF,SDF);
+   OBFileFormat::ReadMolecule(cin, mol);
+   OBAtom *atom;
+   vector<OBNodeBase*>::iterator i;
    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
    {
        cout << atom->GetIdx() << ` `;
@@ -274,15 +275,15 @@ protected: // members
 * A number of the property member functions indicate that atoms
 * have some knowlege of their covalently attached neighbor atoms.
 * Bonding information is partly redundant within a molecule in
-* that an OEMol has a complete list of bonds in a molecule, and
-* an OEAtom has a list bonds of which it is a member. The following
-* code demonstrates how an OEAtom uses its bond information to loop
+* that an OBMol has a complete list of bonds in a molecule, and
+* an OBAtom has a list bonds of which it is a member. The following
+* code demonstrates how an OBAtom uses its bond information to loop
 * over atoms attached to itself:
 \code
-   OEMol mol(SDF,SDF);
-   cin >> mol;
-   OEAtom *atom,*nbr;
-   vector<OEBond*>::iterator i;
+   OBMol mol(SDF,SDF);
+   OBFileFormat::ReadMolecule(cin, mol);
+   OBAtom *atom,*nbr;
+   vector<OBEdgeBase*>::iterator i;
    atom = mol.GetAtom(1);
    for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
    {
@@ -561,7 +562,7 @@ public:
 /** Molecule Class
 *
 *
-* The most important class in OpenBabel is OBMol, or the molecule class.
+* The most important class in Open Babel is OBMol, or the molecule class.
 * The OBMol class is designed to store all the basic information
 * associated with a molecule, to make manipulations on the connection
 * table of a molecule facile, and to provide member functions which
@@ -582,8 +583,8 @@ public:
    int main(int argc,char **argv)
    {
    OBMol mol(SDF,MOL2);
-   cin >> mol;
-   cout << mol;
+   OBFileFormat::ReadMolecule(cin, mol);
+   OBFileFormat::WriteMolecule(cout, mol);
    return(1);
    }
 \endcode
@@ -595,7 +596,22 @@ public:
 * OBMol::SetInputType(enum io_type type) and
 * OBMol::SetOutputType(enum io_type type),
 * where the current values of enum io_type are
-* \code {UNDEFINED,SDF,MOL2,PDB,DELPDB,SMI,BOX,FIX,OEBINARY}\endcode
+* \code {
+*              ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
+*              CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
+*              CHEM3D2, CHEMDRAW, CIF, CML, CSR, CSSR, DELPDB, DMOL, DOCK,
+*              FDAT, FEATURE, FH, FIX, FRACT, GAMESSIN, GAMESSOUT,
+*              GAUSSIAN92, GAUSSIAN94, GAUSSIANCART, GAUSSIANZMAT,
+*              GHEMICAL, GROMOS96A, GROMOS96N, GSTAT, HIN, ICON8,
+*              IDATM, JAGUARIN, JAGUAROUT, M3D, MACCS, MACMOL,
+*              MICROWORLD, MM2IN, MM2OUT, MM3, MMADS, MMCIF, MMD,
+*              MOL2, MOLDEN, MOLIN, MOLINVENT, MOPACCART, MOPACINT,
+*              MOPACOUT, MPQC, MSF, NWCHEMIN, NWCHEMOUT, OEBINARY,
+*              PCMODEL, PDB, PREP, QCHEMIN, QCHEMOUT, REPORT,
+*              SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
+*              SPARTANSEMI, TGF, TINKER, TITLE, UNICHEM, VIEWMOL,
+*              XED, XYZ
+* }\endcode
 *
 * The following lines of code show how to set the input and output
 * types of an OBMol through the member functions:
@@ -618,13 +634,13 @@ bond = mol.GetBond(14); //random access of a bond
 * or
 \code
    OBAtom *atom;
-   vector<OEAtom*>::iterator i;
+   vector<OBNodeBase*>::iterator i;
    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) //iterator access
 \endcode
 *or
 \code
    OBBond *bond;
-   vector<OBBond*>::iterator i;
+   vector<OBEdgeBase*>::iterator i;
    for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i)) //iterator access
 \endcode
 *It is important to note that atom arrays begin at one and bond arrays
@@ -635,14 +651,16 @@ OEAtom *atom = mol.GetAtom(0); \endcode
    OEBond *bond = mol.GetBond(0);
 \endcode
 * is perfectly valid.
+* Note that this is expected to change in the near future to simplify coding
+* and improve efficiency.
 
 * The ambiguity of numbering issues and off-by-one errors led to the use
-* of iterators in OELib. An iterator is essentially just a pointer, but
+* of iterators in Open Babel. An iterator is essentially just a pointer, but
 * when used in conjunction with Standard Template Library (STL) vectors
-* it provides an unambiguous way to loop over arrays. OEMols store their
+* it provides an unambiguous way to loop over arrays. OBMols store their
 * atom and bond information in STL vectors. Since vectors are template
-* based, a vector of any user defined type can be declared. OEMols declare
-* vector<OEAtom*> and vector<OEBond*> to store atom and bond information.
+* based, a vector of any user defined type can be declared. OBMols declare
+* vector<OBAtom*> and vector<OBBond*> to store atom and bond information.
 * Iterators are then a natural way to loop over the vectors of atoms and bonds.
 *
 */
@@ -655,14 +673,14 @@ protected:
   bool                          _compressed;
   io_type                       _itype;
   io_type                       _otype;
-  std::string                        _title;
-  //vector<OBAtom*>               _atom;
-  //vector<OBBond*>               _bond;
-  std::vector<OBResidue*>            _residue;
-  std::vector<OBGenericData*>        _vdata;
+  std::string                   _title;
+  //vector<OBAtom*>             _atom;
+  //vector<OBBond*>             _bond;
+  std::vector<OBResidue*>       _residue;
+  std::vector<OBGenericData*>   _vdata;
   float                         _energy;
   float                        *_c;
-  std::vector<float*>                _vconf;
+  std::vector<float*>           _vconf;
   unsigned short int            _natoms;
   unsigned short int            _nbonds;
   unsigned short int            _mod;

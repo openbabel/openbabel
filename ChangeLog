@@ -10,8 +10,30 @@
 	* configure.in, configure, src/Makefile.in: Adjust for various
 	removed (unused) files.
 
-	* src/*.cpp: Adjust all ReadFile methods to use const char* title.
+	* src/fileformat.cpp, src/fileformat.h: Use a const char * title
+	and declare ReadMolecule and WriteMolecule methods static to allow
+	calling w/o needing to instantiate a specific OBFileFormat object.
 	
+	* src/*.cpp: Adjust all ReadFile methods to use const char* title,
+	as above.
+
+	* src/atom.cpp, src/binary.cpp, src/binary.h: Fixes imported from
+	OELib.
+
+	* src/generic.cpp, src/generic.h: Add support for torsion and
+	angle data and associated handlers for OBGenericData.
+
+	* src/main.cpp: Remove obsolete headers.
+
+	* src/mol.cpp, src/mol.h: Add OBMol::FindTorsions method to fill
+	the OBTorsionData in a molecule. Remove the confusing OBPose
+	class. (Conformers are conformers and not managed by a separate
+	class.) Remove residue code, which has migrated to residue.cpp.
+
+	* src/obutil.cpp: Remove unused code.
+
+	* src/pdb.cpp: Add OBSerialNums, imported from OELib.
+
 2002-06-11  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/Makefile.in: Add proper commandline for new bin2hex for
