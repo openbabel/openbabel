@@ -2,6 +2,9 @@
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
 
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
@@ -48,8 +51,11 @@ GNU General Public License for more details.
    Thus, we always assume that we have read coordinates in Angstrom.
 */
 
-#include "mol.h"
+#if HAVE_CONFIG_H
 #include "babelconfig.h"
+#endif
+
+#include "mol.h"
 
 using namespace std;
 

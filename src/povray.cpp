@@ -18,7 +18,10 @@ GNU General Public License for more details.
 #include <stdlib.h>
 
 /* ---- C++ includes ---- */
+#if HAVE_CONFIG_H
 #include "babelconfig.h"
+#endif
+
 #include <string>
 #if defined(HAVE_SSTREAM)
 #include <sstream>

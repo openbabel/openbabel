@@ -1,5 +1,16 @@
 2004-02-09  Michael Banck  <mbanck@gmx.net>
 
+	* src/base.cpp [HAVE_CONFIG_H]: New conditional, wrap babelconfig.h
+	#include into it.
+	* src/bgf.cpp, src/data.cpp, src/gromos96.cpp, src/main.cpp,
+	src/newmain.cpp, src/oberror.cpp, src/obutil.cpp, src/patty.cpp,
+	src/pdb.cpp, src/phmodel.cpp, src/povray.cpp, src/residue.cpp,
+	src/rotor.cpp, src/typer.cpp, src/base.h, src/bitvec.h, src/crk.h,
+	src/data.h, src/fileformat.h, src/grid.h, src/mol.h, 
+	src/obifstream.h, src/obutil.h: Likewise.
+
+2004-02-09  Michael Banck  <mbanck@gmx.net>
+
 	* src/base.cpp: Include babelconfig.h.
 	* src/base.h: Likewise.
 	* src/crk.h: Likewise.
