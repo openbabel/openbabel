@@ -7,6 +7,8 @@ bindir        = @bindir@
 
 DESTDIR       = 
 
+SUBDIRS       = math
+
 CC            = @CC@
 CXX	      = @CXX@
 
@@ -40,7 +42,7 @@ DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt \
 DATAINCS      = aromatic.h atomtyp.h element.h extable.h \
 	        phmodeldata.h resdata.h types.h
 
-HDRS	      = math/vector3.h math/matrix3x3.h aromatic.h atomtyp.h base.h binary.h \
+HDRS	      = aromatic.h atomtyp.h base.h binary.h \
 		bitgrid.h bitvec.h chiral.h chains.h cwrap.h \
 		data.h element.h extable.h fileformat.h grid.h \
 		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
@@ -53,7 +55,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		chains.o data.o molvector.o matrix.o\
 		chiral.o grid.o mdl.o mol.o mol2.o molchrg.o \
 		obutil.o parsmi.o parsmart.o patty.o \
-		ring.o rotor.o smi.o tokenst.o math/vector3.o math/matrix3x3.o pdb.o ccc.o \
+		ring.o rotor.o smi.o tokenst.o pdb.o ccc.o \
 		mmod.o rand.o box.o balst.o bgf.o cacao.o cache.o chdrw.o \
 		csr.o cssr.o feat.o fh.o gromos96.o cwrap.o \
 		ghemical.o xyz.o fileformat.o gamess.o hin.o \
@@ -61,6 +63,8 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		jaguar.o amber.o generic.o residue.o \
 		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o viewmol.o \
 		cml.o oberror.o
+
+EXTRAOBJS     = math/vector3.o math/matrix3x3.o
 
 PROGRAM	      = babel
 
@@ -73,11 +77,17 @@ MAKEFILE      = Makefile
 $(PROGRAM):     $(MAIN) $(LIBRARY)
 		$(LINKER) $(LDFLAGS) -o  $(PROGRAM) $(MAIN) $(LIBRARY) $(LIBS)
 
-$(LIBRARY):	$(DATAINCS) $(OBJS)
-		$(AR) -r $(LIBRARY) $(OBJS)
+$(LIBRARY):	$(DATAINCS) $(OBJS) $(EXTRAOBJS)
+		$(AR) -r $(LIBRARY) $(OBJS) $(EXTRAOBJS)
 		$(RANLIB) $(LIBRARY)
 
-all:		$(DATAINCS) $(LIBRARY) $(PROGRAM)
+all:		subdirs $(DATAINCS) $(LIBRARY) $(PROGRAM)
+
+subdirs:	
+                @for i in $(SUBDIRS); do \
+                        (cd $$i; $(MAKE) $(MFLAGS) all) \
+                        || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+                done && test -z "$$fail"
 
 test:		check
 check:		$(PROGRAM)

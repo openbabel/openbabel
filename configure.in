@@ -64,5 +64,5 @@ AC_C_INLINE
 
 dnl Checks for library functions.
 
-AC_OUTPUT(Makefile src/Makefile test/Makefile src/version.h)
+AC_OUTPUT(Makefile src/Makefile src/math/Makefile test/Makefile src/version.h)
 echo timestamp > stamp.h
