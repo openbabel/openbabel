@@ -759,6 +759,13 @@ public:
     //! Transform to standard Kekule bond structure (presumably from an aromatic form)
     bool Kekulize();
     bool PerceiveKekuleBonds();
+
+    void kekulize();
+    void start_kekulize(std::vector <OBAtom*> &cycle, std::vector<int> &electron);
+    int expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &currentState, std::vector<int> &initState, std::vector<int> &bcurrentState, std::vector<int> &binitState, std::vector<bool> &mark);
+    int getorden( OBAtom *atom);
+    void expandcycle(OBAtom *atom, OBBitVec &avisit);
+
     bool DeleteHydrogen(OBAtom*);
     bool DeleteHydrogens();
     bool DeleteHydrogens(OBAtom*);

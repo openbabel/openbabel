@@ -1111,7 +1111,8 @@ void OBMol::EndModify(bool nukePerceivedData)
 
   //kekulize structure
   SetAromaticPerceived();
-  Kekulize();
+  //Kekulize();
+  kekulize();
   UnsetAromaticPerceived();
 
   //    for (atom = BeginAtom(j);atom;atom = NextAtom(j))
@@ -2843,7 +2844,7 @@ void OBMol::PerceiveBondOrders()
 
   OBAtom *atom, *b, *c;
   vector3 v1, v2;
-  double angle;
+  double angle, dist1, dist2;
   vector<OBNodeBase*>::iterator i;
   vector<OBEdgeBase*>::iterator j,k;
   
@@ -3013,6 +3014,115 @@ void OBMol::PerceiveBondOrders()
         }
     } // Sulfone
 
+  //Ester C(=O)O
+  OBSmartsPattern ester; ester.Init("[#8D1][#6][#8](*)");
+  if (ester.Match(*this))
+    {
+      mlist = ester.GetUMapList();
+      for (l = mlist.begin(); l != mlist.end(); l++)
+        {
+          a1 = GetAtom((*l)[0]);
+          a2 = GetAtom((*l)[1]);
+          a3 = GetAtom((*l)[2]);
+	  a4 = GetAtom((*l)[3]);
+
+	  b1 = a1->GetBond(a2); b2 = a2->GetBond(a3);
+
+          if (!b1 || !b2 ) continue;
+          b1->SetBO(2);
+          b2->SetBO(1);
+        }
+    } // Ester
+  
+  // Carbonyl oxygen C=O
+  OBSmartsPattern carbo; carbo.Init("[#8D1][#6](*)(*)");
+  
+  if (carbo.Match(*this))
+    {
+      mlist = carbo.GetUMapList();
+      for (l = mlist.begin(); l != mlist.end(); l++)
+        {
+          a1 = GetAtom((*l)[0]);
+          a2 = GetAtom((*l)[1]);
+	 
+	  angle = a2->AverageBondAngle();
+	  dist1 = a1->GetDistance(a2);
+	  
+	  // carbonyl geometries ?
+	  if (angle > 115 && angle < 150 && dist1 < 1.28) { 
+	    
+	    if ( !a1->HasDoubleBond() ) {// no double bond already assigned
+	      b1 = a1->GetBond(a2); 
+
+	      if (!b1 ) continue;
+	      b1->SetBO(2);
+	    }
+	  }
+        }
+    } // Carbonyl oxygen
+
+  // thione C=S
+  OBSmartsPattern thione; thione.Init("[#16D1][#6](*)(*)");
+  
+  if (thione.Match(*this))
+    {
+      mlist = thione.GetUMapList();
+      for (l = mlist.begin(); l != mlist.end(); l++)
+        {
+          a1 = GetAtom((*l)[0]);
+          a2 = GetAtom((*l)[1]);
+	 
+	  angle = a2->AverageBondAngle();
+	  dist1 = a1->GetDistance(a2);
+	  
+	  // thione geometries ?
+	  if (angle > 115 && angle < 150 && dist1 < 1.72) { 
+	    
+	    if ( !a1->HasDoubleBond() ) {// no double bond already assigned
+	      b1 = a1->GetBond(a2); 
+
+	      if (!b1 ) continue;
+	      b1->SetBO(2);
+	    }
+	  }
+        }
+    } // thione
+
+  // Isocyanate N=C=O or Isothiocyanate
+  bool dist1OK;
+  OBSmartsPattern isocyanate; isocyanate.Init("[#8,#16;D1][#6D2][#7D2]");
+  if (isocyanate.Match(*this))
+    {
+      mlist = isocyanate.GetUMapList();
+      for (l = mlist.begin(); l != mlist.end(); l++)
+        {
+          a1 = GetAtom((*l)[0]);
+          a2 = GetAtom((*l)[1]);
+	  a3 = GetAtom((*l)[2]);
+
+	  angle = a2->AverageBondAngle();
+	  dist1 = a1->GetDistance(a2);
+	  dist2 = a2->GetDistance(a3);
+	  
+	  // isocyanate geometry or Isotiocyanate geometry ?
+	  if (a1->IsOxygen()) 
+	    dist1OK =  dist1 < 1.28;
+	  else
+	    dist1OK =  dist1 < 1.72;
+	  
+	  if (angle > 150 && dist1OK && dist2 < 1.34) { 
+	      
+	    b1 = a1->GetBond(a2); 
+	    b2 = a2->GetBond(a3);
+	    if (!b1 || !b2) continue;
+	    b1->SetBO(2);
+	    b2->SetBO(2);
+	    
+	  }
+	  
+	}      
+    } // Isocyanate
+
   // Pass 5: Check for aromatic rings and assign bonds as appropriate
   // This is just a quick and dirty approximation that marks everything
   //  as potentially aromatic
@@ -3054,8 +3164,8 @@ void OBMol::PerceiveBondOrders()
     }
   _flags &= (~(OB_KEKULE_MOL));
   //  cout << " calling Kekulize " << endl;
-  Kekulize();
-
+  //Kekulize();
+  kekulize();
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity
   vector<pair<OBAtom*,double> > sortedAtoms;
   vector<double> rad; 

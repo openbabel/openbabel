@@ -9,7 +9,7 @@ libopenbabel_la_SOURCES = \
 		cml.cpp crk.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp \
 		fileformat.cpp gamess.cpp gaussian.cpp generic.cpp \
 		ghemical.cpp grid.cpp gromos96.cpp hin.cpp jaguar.cpp \
-		matrix.cpp mdl.cpp mm3.cpp mmod.cpp mol.cpp mol2.cpp \
+		kekulize.cpp matrix.cpp mdl.cpp mm3.cpp mmod.cpp mol.cpp mol2.cpp \
 		molchrg.cpp molvector.cpp mopac.cpp mpqc.cpp nwchem.cpp \
 		oberror.cpp obutil.cpp parsmart.cpp parsmi.cpp patty.cpp \
 		pdb.cpp phmodel.cpp povray.cpp qchem.cpp rand.cpp report.cpp \
