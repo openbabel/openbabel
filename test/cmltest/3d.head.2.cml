@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <molecule title="NSC 1">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -50,16 +50,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 2">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -129,16 +129,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 3">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -183,16 +183,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 4">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -227,16 +227,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 5">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -301,16 +301,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 6">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -398,16 +398,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 7">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -471,16 +471,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 8">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -551,16 +551,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 9">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -602,16 +602,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 10">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -692,16 +692,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 11">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -788,16 +788,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 12">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -855,16 +855,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 13">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -914,16 +914,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 14">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1004,16 +1004,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 15">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1078,16 +1078,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 16">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1122,16 +1122,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 17">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1262,16 +1262,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 18">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1385,16 +1385,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 19">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1446,16 +1446,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 20">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1515,16 +1515,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 21">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1580,16 +1580,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 22">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1657,16 +1657,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 23">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1732,16 +1732,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 24">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1806,16 +1806,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 25">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1878,16 +1878,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 26">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -1982,16 +1982,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 27">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2074,16 +2074,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 28">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2148,16 +2148,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 29">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2223,16 +2223,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 30">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:35 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2277,16 +2277,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 31">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2343,16 +2343,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 32">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2422,16 +2422,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 33">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2501,16 +2501,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 34">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2557,16 +2557,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 35">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2618,16 +2618,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 36">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2685,16 +2685,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 37">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2796,16 +2796,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 38">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2883,16 +2883,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 39">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -2962,16 +2962,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 40">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3049,16 +3049,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 41">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3142,16 +3142,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 42">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3206,16 +3206,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 43">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3281,16 +3281,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 44">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3341,16 +3341,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 45">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3460,16 +3460,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 46">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3552,16 +3552,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 47">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3636,16 +3636,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 48">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3747,16 +3747,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 49">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3830,16 +3830,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 50">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3894,16 +3894,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 51">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -3999,16 +3999,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 52">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:17 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4099,16 +4099,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 53">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4152,16 +4152,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 54">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4219,16 +4219,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 55">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4300,16 +4300,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 56">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4391,16 +4391,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 57">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4460,16 +4460,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 58">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4583,16 +4583,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 59">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4659,16 +4659,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 60">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4729,16 +4729,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 61">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4827,16 +4827,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 62">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -4937,16 +4937,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 63">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -5030,16 +5030,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 64">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -5130,16 +5130,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 65">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -5255,16 +5255,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 66">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -5363,16 +5363,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 67">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -5446,16 +5446,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 68">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -5547,16 +5547,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 69">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -5647,16 +5647,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 70">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>
@@ -5726,16 +5726,16 @@
 </molecule>
 <?xml version="1.0"?>
 <molecule title="NSC 71">
-<metadataList title="generated automatically from Openbabel">
-<metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<metadataList title="generated automatically from Open Babel">
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <metadata name="dc:identifier" content="Unknown"/>
 <metadata name="dc:content"/>
 <metadata name="dc:rights" content="unknown"/>
 <metadata name="dc:type" content="chemistry"/>
 <metadata name="dc:contributor" content="unknown"/>
-<metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<metadata name="dc:date" content="Sat Nov 08 21:50:18 CST 2003"/>
 <metadata name="cmlm:structure" content="yes"/>
 </metadataList>
 <atomArray>

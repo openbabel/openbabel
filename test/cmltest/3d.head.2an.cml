@@ -1,15 +1,15 @@
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 1">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15" elementType="O O C C C C C C C H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.002100 -0.069100 -0.014400 -1.303400 1.254600 -1.321500 1.236500 -0.052600 -2.598000 2.197100 -2.264100 2.164300 -2.384300 -3.160800 -3.185300" y3="-0.004100 5.241400 1.210200 1.931200 1.966100 3.271200 3.306100 4.027100 1.160000 1.438900 3.798400 3.858800 0.091200 1.410500 1.420600" z3="0.002000 0.032300 0.008700 0.031000 0.000600 0.038900 0.008500 0.025200 0.044500 -0.011200 0.051100 -0.001500 0.035500 0.943800 -0.836000"/>
@@ -18,16 +18,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 2">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28" elementType="C C C C C C C C C C C C C C N S S S S N H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016500 8.204100 0.002100 1.189200 2.528600 4.731900 7.022400 9.420500 1.194600 2.384000 7.180100 9.537600 2.393000 8.401900 5.756700 5.510600 3.026400 2.925500 3.632100 1.343900 -0.962400 8.148200 -0.932900 10.307900 1.187600 10.505500 3.329900 8.476400" y3="1.366600 6.930500 -0.004100 2.105600 4.020800 5.733800 6.153800 6.359200 -0.712400 1.350600 4.782300 5.008500 -0.021300 4.218800 6.558700 4.180400 6.074600 5.737500 2.615100 3.447300 1.887800 7.984400 -0.544600 6.974500 -1.792400 4.577700 -0.558400 3.165500" z3="0.009600 2.503200 0.002000 0.002000 -0.001300 2.316500 2.515600 2.773300 -0.013200 -0.013500 2.818500 3.066800 -0.021000 3.086900 2.274100 2.734400 2.034200 0.004500 -0.019200 0.007400 0.016900 2.274000 0.008400 2.757000 -0.018600 3.276400 -0.032500 3.313600"/>
@@ -36,16 +36,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 3">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17" elementType="Cl C C C C C C O N O O N O O H H H" formalCharge="0 0 0 0 0 0 0 0 1 0 -1 1 0 -1 0 0 0" x3="-1.488800 -0.016700 1.170900 0.002100 2.379100 1.214800 2.403600 1.236400 3.698100 3.719200 4.742200 1.148200 0.084200 2.193500 -0.959300 3.305100 1.231900" y3="-0.893400 1.377900 2.086500 -0.004100 1.415100 -0.680300 0.033400 -2.039300 -0.684300 -1.902100 -0.057000 3.566500 4.159200 4.191600 1.904800 1.971000 -2.314100" z3="0.012100 0.009600 0.002100 0.002000 -0.013100 -0.013200 -0.021200 -0.020300 -0.038400 -0.045600 -0.045400 0.009800 0.022700 0.003200 0.026000 -0.018900 -0.947400"/>
@@ -54,16 +54,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 4">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12" elementType="S N C C C N O O N H H H" formalCharge="0 0 0 0 0 1 0 -1 0 0 0 0" x3="-0.022200 2.156400 0.002100 1.336000 1.696200 -1.125200 -2.272700 -0.905100 2.403000 1.719600 3.372900 1.927700" y3="1.782600 0.795900 -0.004100 -0.238100 2.032300 -0.964000 -0.555700 -2.161900 3.224700 -1.247600 3.213600 4.070300" z3="0.011800 -0.014300 0.002000 -0.012000 -0.003200 0.008000 0.021100 -0.000100 -0.003600 -0.021400 -0.012900 0.005500"/>
@@ -72,16 +72,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 5">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26" elementType="O O C C C C C C C C C C C C C C N H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.002100 -0.068400 -0.014400 1.255000 -1.303300 2.470500 3.662100 -2.503800 -3.705900 3.637900 1.235000 -1.321300 -3.723600 2.435500 -0.051600 -2.539200 4.879200 2.492300 -2.497000 -4.636300 4.565400 -4.667600 2.423700 -2.560100 5.709600 4.898200" y3="-0.004100 5.312300 1.210800 1.969000 1.933800 1.297200 2.020100 1.229000 1.914500 3.411000 3.377000 3.339800 3.297200 4.087400 4.096900 4.013200 1.348800 0.217400 0.149100 1.366000 3.964300 3.821700 5.167300 5.093000 1.850200 0.379000" z3="0.002000 0.032700 0.008700 0.000600 0.018700 -0.015300 -0.023300 0.019800 0.028800 -0.015200 0.008700 0.026800 0.036300 0.000700 0.025100 0.041600 -0.038800 -0.021300 0.013300 0.029600 -0.021000 0.042600 0.007200 0.052700 -0.044300 -0.044100"/>
@@ -90,16 +90,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 6">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37" elementType="Br O Br O C C C C C C C C C C C C C C C C C C C O C O O H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.637600 -0.016200 -2.834500 -2.230300 6.181700 5.558500 5.597700 4.374700 4.345400 3.739600 2.444200 2.376100 1.225000 1.224900 0.050700 3.544800 3.456800 -1.173700 0.002100 1.112300 2.210000 -1.188100 1.043700 2.138700 3.746500 2.679600 4.357000 7.127900 6.024700 6.090500 3.865800 2.160200 0.053100 4.512200 4.357300 2.113900 3.945800" y3="4.334400 1.345000 0.224800 -2.725700 -2.037000 -1.698500 -1.720200 -1.055200 -1.038800 -0.709600 -0.005700 1.457300 -0.718100 -2.127000 -2.805500 2.231100 3.591600 -2.105400 -0.004100 2.082800 4.218100 -0.705100 3.469200 5.573000 -0.714400 -0.134200 -1.047100 -2.557200 -1.951400 -1.987900 -0.777400 -2.666900 -3.885500 1.751000 4.187900 5.856400 -0.824000" z3="0.030400 0.009400 0.029300 0.006700 -0.069900 -1.259100 1.142200 1.173500 -1.250300 -0.037000 -0.021000 -0.012900 -0.013500 -0.021000 -0.014300 -0.020700 -0.013800 0.001100 0.002000 0.002600 0.002800 0.009200 0.010300 0.009900 2.466500 2.489100 3.620400 -0.089600 -2.199900 2.065200 -2.182000 -0.032400 -0.020700 -0.031800 -0.019500 -0.914300 4.466800"/>
@@ -108,16 +108,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 7">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26" elementType="C C C C C C C C C C O O N Cl C C H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.001900 -2.486000 1.256700 -1.289900 -3.680800 1.238200 -1.299900 -3.690300 -0.021900 -2.505100 0.024000 -0.019900 2.459100 2.729200 3.463700 2.731100 -2.484200 -4.610300 -4.627300 -2.519300 3.052300 3.739300 4.347000 1.983500 2.689600 3.722400" y3="1.229100 1.281200 1.973800 1.955300 1.983500 3.311700 3.344800 3.348900 4.056200 4.034500 0.029000 5.258200 1.296900 4.155800 1.566700 0.308400 0.213900 1.460200 3.886000 5.101900 2.257500 0.633800 2.009700 -0.483600 0.791900 -0.118500" z3="0.240900 0.468200 0.000100 0.250000 0.472600 -0.205800 0.035400 0.262100 -0.195500 0.043000 0.424700 -0.382000 -0.014000 -0.485200 1.017600 -1.060500 0.633300 0.642100 0.268100 -0.120900 1.753500 1.509200 0.557500 -1.015300 -2.036600 -0.908300"/>
@@ -126,16 +126,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 8">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29" elementType="O O C C C C C C C C C C C C C C N O O C H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 -1 0 0 0 0 0 0 0 0 0 0" x3="0.114200 4.734500 -0.016700 1.180500 0.002100 1.170100 2.446100 2.445300 3.644700 1.203800 2.402600 3.668200 4.846500 2.403300 3.678600 4.865400 -1.307700 -1.823700 -1.854000 -1.295500 1.510200 3.642000 1.206400 5.776300 3.338300 5.807400 -1.598700 -2.065700 -1.160600" y3="4.168800 1.539200 1.379800 2.089900 -0.004100 3.567800 4.313600 5.705600 6.396100 -0.688100 1.394300 3.618100 5.712200 0.002400 2.140200 4.328300 2.103500 2.395700 2.406900 -0.770400 6.245800 7.476100 -1.768100 6.261500 -0.537900 3.800300 -0.960400 -0.186300 -1.718900" z3="0.023400 -0.034800 0.009600 0.002000 0.002000 0.010500 0.002800 0.010200 0.002500 -0.012700 -0.013400 -0.012500 -0.013000 -0.020400 -0.022000 -0.020100 0.032000 1.095900 -1.013500 0.010300 0.021600 0.008300 -0.017800 -0.019600 -0.031500 -0.031900 1.039900 -0.493400 -0.509600"/>
@@ -144,16 +144,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 9">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16" elementType="C C N N C C O O H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.015500 1.246800 0.002100 1.229200 2.561900 -1.330600 -1.214400 2.445700 3.380700 2.636600 2.619600 -2.149300 -1.384000 -1.409600 -0.980900 2.212200" y3="1.290900 2.042700 -0.004100 3.337600 1.307100 2.026500 -0.728700 4.062300 2.026600 0.676500 0.686000 1.306900 2.647600 2.657000 -1.667000 5.000600" z3="0.009100 0.001100 0.002000 0.008200 -0.015400 0.031900 0.009700 0.000500 -0.019300 0.870600 -0.909300 0.039900 0.926100 -0.853700 0.002500 0.007800"/>
@@ -162,16 +162,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 10">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:36 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34" elementType="P C C C C C C C C C C C C C C C C C C H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.022500 -0.184500 -1.353900 1.033800 1.087900 -1.310600 -0.086700 2.227100 3.581300 1.756200 4.470700 2.655900 4.008200 0.255500 0.390700 0.154800 0.191100 0.426300 0.326600 -0.222200 -2.302400 1.943900 2.039300 -2.224100 1.534000 3.947400 5.529800 2.295800 4.706500 0.232000 0.468900 0.113700 0.531800 0.354800" y3="1.809700 -2.757300 -2.020000 -2.120200 -0.745100 -0.644400 0.001800 1.860400 1.951900 1.929900 2.112800 2.091500 2.181900 3.041300 3.050800 1.829300 0.632400 1.859200 0.652800 -3.833300 -2.522000 -2.700200 -0.248700 -0.069800 1.730400 1.898500 2.184000 2.145500 2.307200 3.971900 3.989900 -0.309800 1.870900 -0.274700" z3="0.012000 0.348300 0.403600 0.192400 0.090300 0.302500 0.144900 1.656000 1.905400 0.346900 0.857900 -0.704200 -0.444200 -2.472400 -3.845700 -1.793200 -2.504900 -4.547900 -3.878100 0.432300 0.525400 0.150200 -0.031400 0.345000 2.474000 2.920100 1.057200 -1.721000 -1.258400 -1.924700 -4.373300 -1.982800 -5.622700 -4.430800"/>
@@ -180,16 +180,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 11">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38" elementType="C C C C C C C C C C O C C C C O H H H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016700 0.002100 1.174900 1.212500 2.385300 2.404100 3.680000 4.856300 3.736700 3.761500 1.156500 -1.292600 -2.468900 -1.374200 -1.349300 1.230900 -0.959200 3.346600 5.792700 4.815900 4.798200 2.898700 4.673100 3.678600 4.698000 2.923600 3.721200 1.161400 -3.405300 -2.410800 -2.428500 -1.333800 -0.536200 -2.310600 -1.291200 -2.285700 -0.511300 1.225500" y3="1.377100 -0.004100 2.086900 -0.681100 1.409800 0.028600 2.181000 1.202700 3.067500 3.055700 3.446500 -0.775300 0.203000 -1.649200 -1.662600 -2.040800 1.904300 -0.498600 1.760500 0.571100 0.579500 3.764500 3.625300 2.444400 3.613500 3.752700 2.424100 3.721300 -0.354700 0.825600 0.835200 -1.017000 -2.346100 -2.207000 -1.040000 -2.220400 -2.359500 -2.315900" z3="0.009600 0.002000 0.002000 -0.013200 -0.013200 -0.021300 -0.022400 -0.038700 -1.268100 1.230200 0.009100 0.010800 0.027800 -1.242400 1.255900 -0.019800 0.016900 -0.032400 -0.045400 0.848700 -0.931100 -1.256500 -1.274800 -2.160500 1.223600 1.241900 2.117700 0.936200 0.034100 0.920600 -0.859300 -2.129500 -1.254500 -1.236100 2.148700 1.262300 1.243800 -0.946800"/>
@@ -198,16 +198,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 12">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23" elementType="C C C N N O C C C C C C C H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.018500 0.002100 1.451100 1.225900 2.112000 1.928400 -1.198300 3.506200 4.092200 5.468000 6.262000 5.681700 4.306500 -0.519200 -0.502100 -0.866500 -1.789500 -1.807200 3.472700 5.924300 7.337700 6.304600 3.853800" y3="1.510200 -0.004100 1.885500 -0.364000 0.709000 3.000600 -0.915100 0.584200 -0.674900 -0.794500 0.337700 1.592900 1.719400 1.892000 1.882300 -1.953400 -0.730300 -0.720700 -1.559500 -1.773300 0.241500 2.475200 2.699900" z3="0.010300 0.002000 -0.001700 -0.011600 -0.014300 -0.000800 0.009000 -0.028300 -0.040600 -0.054900 -0.056900 -0.044100 -0.035600 -0.879400 0.913500 0.000200 0.905900 -0.873900 -0.038700 -0.064200 -0.068000 -0.045000 -0.030500"/>
@@ -216,16 +216,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 13">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19" elementType="Cl N C C C C C C C C C N H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="2.190200 -0.015700 1.077400 1.113500 2.242400 2.367600 3.475800 3.547600 2.400400 0.002100 1.190900 3.604400 0.129600 4.385300 4.508600 -0.934600 1.173300 3.609000 4.442100" y3="5.872800 1.308500 3.431300 2.026600 4.137700 1.371100 3.488200 2.127900 -0.044000 -0.004100 -0.720700 -0.731400 3.949100 4.070500 1.635100 -0.541600 -1.800500 -1.701300 -0.242300" z3="0.013600 0.009200 0.010700 0.002300 0.003800 -0.013200 -0.010600 -0.019500 -0.021600 0.002000 -0.014100 -0.037200 0.021500 -0.015100 -0.031000 0.008100 -0.020000 -0.042800 -0.042600"/>
@@ -234,16 +234,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 14">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35" elementType="H N C C C C C C C C C C C H H H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.002100 -0.011600 1.387400 1.448600 0.766400 -0.660600 -0.611700 2.100000 2.046100 2.758700 2.704800 3.417400 3.363500 1.880700 0.934300 2.489700 0.734600 1.323700 -1.238600 -1.128100 -0.012900 -1.623600 3.139800 1.606200 1.006300 2.539900 3.798500 2.264900 1.665000 3.198600 4.457200 2.923600 2.323700 3.857300 3.871200" y3="-0.004100 1.004800 1.445400 2.974100 3.506000 2.952800 1.425200 0.907400 -0.621700 -1.159700 -2.688800 -3.226800 -4.755800 1.063200 3.358900 3.296800 4.595000 3.182200 3.337000 3.260300 1.044000 1.026600 1.234300 1.286400 -0.948600 -1.000800 -0.832800 -0.780600 -3.015700 -3.067800 -2.899900 -2.847700 -5.082800 -5.134900 -5.139100" z3="0.002000 0.007600 -0.003400 -0.003000 -1.267200 -1.332100 -1.263100 1.239000 1.235800 2.478200 2.475000 3.717500 3.714300 -0.897100 0.877600 0.012300 -1.234100 -2.146300 -0.491600 -2.267500 -2.090300 -1.335500 1.231700 2.133800 1.243100 0.341000 2.470900 3.373000 2.482400 1.580300 3.710100 4.612200 3.721600 2.819500 4.599400"/>
@@ -252,16 +252,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 15">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26" elementType="O C C C C C C C C C C C C C C C H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="4.901300 -0.016500 0.001800 1.201700 1.217100 2.433300 2.471100 3.670800 1.197900 2.456600 3.697900 4.872800 2.405000 3.693100 4.902800 4.911200 -0.956900 -0.933800 0.287600 1.552900 3.693100 1.166600 5.803900 3.317900 5.848100 5.849500" y3="0.066700 1.354900 -0.003700 2.067300 3.463200 4.148900 5.559400 6.197500 -0.717900 1.313900 3.411900 5.493300 -0.089000 1.998600 4.132700 1.278100 1.886000 -0.543100 4.013000 6.127900 7.277200 -1.797300 6.040500 -0.665900 3.610400 1.805700" z3="0.046000 -0.015600 -0.035000 -0.010800 0.009600 0.014100 0.034600 0.039000 -0.050400 -0.027000 -0.002000 0.023200 -0.046300 -0.022200 0.003600 -0.038300 -0.008500 -0.038300 0.021500 0.046400 0.054700 -0.065600 0.027000 -0.057800 -0.008400 -0.125700"/>
@@ -270,16 +270,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 16">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12" elementType="C C C C O N Br O H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.014400 -1.259600 0.794900 -0.705300 0.002100 1.066300 2.792600 1.620100 -1.856000 -1.848000 -1.025900 -1.018000" y3="1.208100 2.067700 3.309200 3.506900 -0.004100 1.998300 1.333500 4.197200 1.889300 1.880200 4.044500 4.035300" z3="0.008700 0.018600 0.015900 0.023500 0.002000 0.002600 -0.016800 0.013100 -0.876200 0.916700 -0.868800 0.924100"/>
@@ -288,16 +288,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 17">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41 a42 a43 a44 a45 a46 a47 a48 a49 a50 a51 a52 a53 a54 a55 a56 a57 a58 a59 a60" elementType="C C C C C C N O C C C C C C C C C C C C C C C H H H H H H H H H H H H H H H H H H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016900 -1.228600 1.175700 1.156000 -1.246400 -0.054400 0.002100 -0.072900 2.491200 2.949900 4.285500 4.744200 6.079800 6.538500 7.874100 8.332800 9.668400 10.127100 11.462700 11.921400 13.257000 13.715700 15.051300 -2.156700 2.083600 -2.188600 -0.831300 0.848600 -0.085700 2.369400 3.237600 3.071600 2.203400 4.163700 5.031900 4.865900 3.997700 5.958000 6.826200 6.660200 5.792000 7.752300 8.620500 8.454500 7.586300 9.546600 10.414800 10.248800 9.380600 11.340900 12.209100 12.043100 11.174900 13.135200 14.003400 13.837400 12.969200 15.378100 14.929500 15.797700" y3="1.395200 2.073500 2.106100 3.487200 3.454200 4.163800 -0.004100 5.523600 1.371100 1.114100 0.367900 0.110900 -0.635300 -0.892300 -1.638500 -1.895500 -2.641700 -2.898700 -3.644900 -3.901900 -4.648100 -4.905100 -5.651300 1.521300 4.040400 3.981900 -0.500500 -0.477600 5.809000 0.419900 1.973700 2.065300 0.511400 -0.583300 0.970500 1.062100 -0.491800 -1.586500 -0.032600 0.058900 -1.495000 -2.589700 -1.035800 -0.944300 -2.498200 -3.592900 -2.039000 -1.947500 -3.501400 -4.596100 -3.042200 -2.950700 -4.504600 -5.599300 -4.045400 -3.953900 -5.507800 -5.834400 -6.602500 -5.048600" z3="0.009700 0.030700 0.002100 0.010200 0.038800 0.026400 0.002000 0.035200 -0.014400 1.422400 1.405600 2.842500 2.825700 4.262500 4.245700 5.682500 5.665700 7.102600 7.085800 8.522600 8.505800 9.942600 9.925800 0.040400 0.004300 0.055100 0.007300 -0.008600 -0.888600 -0.532600 -0.531800 1.940600 1.939800 0.887500 0.888200 3.360600 3.359900 2.307500 2.308300 4.780700 4.779900 3.727500 3.728300 6.200700 6.199900 5.147600 5.148300 7.620700 7.620000 6.567600 6.568400 9.040700 9.040000 7.987600 7.988400 10.460800 10.460000 10.949400 9.407700 9.408400"/>
@@ -306,16 +306,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 18">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41 a42 a43 a44 a45 a46 a47 a48 a49 a50" elementType="C C C C C C C C C C C C C C C C C C O C C O C C C C C C H H H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016600 1.181000 0.002100 2.396600 1.207000 2.400700 8.149900 7.309200 9.386800 9.793500 7.717300 8.966300 6.824200 6.417600 5.587000 6.393200 5.157700 5.562700 3.569500 4.616100 5.971700 6.092800 0.566800 1.166500 1.753000 1.737000 1.140700 0.557100 -0.958800 -0.926900 1.214300 3.337900 7.839900 10.039200 10.761800 9.287200 6.751600 5.271200 6.708900 4.507400 5.228100 4.541100 4.523700 6.770000 6.046700 0.107000 2.219400 2.191100 1.130800 0.092300" y3="1.375800 2.087300 -0.004100 1.397000 -0.684600 0.011200 2.988600 3.231900 3.601300 4.459900 4.098800 4.711200 4.365800 3.319800 3.574100 5.664300 4.864000 5.906900 2.082200 1.109400 1.818800 2.630600 4.258700 3.570500 4.281000 5.661000 6.338800 5.638700 1.903600 -0.554800 -1.764600 -0.525400 2.315800 3.409200 4.934800 5.381500 2.312100 2.764300 6.479300 5.058400 6.912800 0.481200 0.490200 1.076700 2.447000 3.713000 3.752800 6.212700 7.418800 6.173100" z3="0.009600 0.002000 0.002000 -0.013300 -0.012700 -0.020800 -0.014400 1.060100 -0.078200 0.928000 2.078100 2.003800 3.231900 4.058300 5.130700 3.497000 5.385800 4.572200 -0.021300 -0.036400 -0.046000 1.123700 1.062700 0.009600 -1.036100 -1.023500 0.024500 1.065000 0.025900 0.007900 -0.017800 -0.033000 -0.800300 -0.917200 0.871400 2.787400 3.859600 5.771800 2.862500 6.225900 4.778600 0.851200 -0.928600 -0.057500 -0.933600 1.873400 -1.854500 -1.833300 0.030400 1.880400"/>
@@ -324,16 +324,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 19">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21" elementType="C C C C S C C H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.018700 0.002100 0.718200 0.739000 1.588000 1.465500 2.133900 1.003900 -0.545900 -0.528900 0.529300 -1.020500 0.191000 1.740800 1.266100 -0.283600 1.965600 0.415800 2.060300 1.633800 3.183600" y3="1.525800 -0.004100 -0.497500 -2.027300 -2.612300 -4.404800 -5.129800 1.903100 1.886800 1.877300 -0.365100 -0.381400 -0.136400 -0.120200 -2.388400 -2.404600 -4.677000 -4.693200 -6.206900 -4.857600 -4.841400" z3="0.010400 0.002000 -1.256800 -1.265200 -2.757700 -2.507600 -3.677500 0.002700 -0.872600 0.907200 0.885100 0.009800 -2.139800 -1.264500 -0.382100 -1.257500 -1.578100 -2.453400 -3.527200 -4.607000 -3.731700"/>
@@ -342,16 +342,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 20">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24" elementType="N N C C C C C C C C O N C O C H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.014600 1.070700 2.173300 3.440100 3.547700 2.365200 1.113200 2.399600 1.191900 0.003600 3.577600 2.076700 0.869200 -0.138800 0.771500 4.328400 4.515300 1.175100 -0.933100 3.831200 2.878400 1.225600 1.295000 -0.276800" y3="1.308400 3.364300 4.085200 3.489000 2.129100 1.367900 2.027500 -0.043100 -0.721200 -0.004600 -0.713500 5.472400 6.064700 5.390400 7.565000 4.103300 1.649700 -1.801000 -0.542200 -0.860700 6.013700 8.020200 7.902400 7.857600" z3="0.000200 0.006200 0.000400 -0.020000 -0.034000 -0.027200 -0.006800 -0.041200 -0.031000 -0.011300 -0.061400 0.014600 -0.072000 -0.066600 -0.175400 -0.025100 -0.049800 -0.041400 -0.005000 0.860100 0.086700 0.704700 -1.070000 -0.235800"/>
@@ -360,16 +360,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 21">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22" elementType="C C C C C N C C C N O N C H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.017000 0.002100 1.194400 2.380000 2.296400 1.112100 3.642600 4.767600 4.661500 3.450200 -1.091900 5.798100 1.248200 -0.923600 3.722000 5.742300 3.398800 6.668500 5.733500 0.234200 1.766000 1.783300" y3="1.405800 -0.004100 -0.658500 0.107100 1.516400 2.110700 -0.514200 0.262900 1.650300 2.260400 1.992400 2.411700 -2.164500 -0.560500 -1.591300 -0.202000 3.229100 1.983800 3.379600 -2.564400 -2.504800 -2.513800" z3="0.009800 0.002000 -0.012800 -0.020000 -0.011600 0.002800 -0.034700 -0.040900 -0.032100 -0.018700 0.018000 -0.037500 -0.020900 0.008200 -0.040800 -0.052200 -0.013400 -0.047400 -0.031400 -0.013100 -0.917700 0.862200"/>
@@ -378,16 +378,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 22">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28" elementType="N N C C C C C C C C C C O C O O N H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.015700 1.055100 2.151100 3.425000 3.545400 2.369500 1.110500 2.422400 1.206900 0.002100 0.010300 -1.436300 0.022200 1.194900 2.242400 3.605500 2.040400 4.307200 4.517700 -0.933600 0.530100 0.512100 -1.445200 -1.938100 -1.956100 3.859300 1.164300 2.838900" y3="1.304600 3.366300 4.100000 3.516400 2.158100 1.384500 2.031100 -0.024400 -0.724300 -0.004100 -4.311900 -4.810200 -2.860000 -2.195600 -2.811800 -0.679100 5.479800 4.139400 1.688100 -0.543300 -4.684400 -4.674400 -5.900100 -4.447700 -4.437600 -0.819300 5.896000 6.030500" z3="0.009200 0.010500 0.004400 -0.011400 -0.020300 -0.013200 0.002400 -0.021200 -0.012900 0.002000 -0.021100 -0.009300 -0.013000 -0.021100 -0.035200 -0.036400 0.013400 -0.016900 -0.032800 0.008100 0.861600 -0.918300 -0.015400 0.887800 -0.892000 0.886100 0.024000 0.009000"/>
@@ -396,16 +396,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 23">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27" elementType="N N C C C C C C C C C C C C C H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.015900 -1.175100 -4.797400 -5.980900 -3.578000 -5.963700 -3.569000 -4.760800 0.002100 1.215700 2.397600 2.331800 1.097100 3.728000 -2.310100 -4.812400 -6.923500 -6.893800 -2.631100 -4.755500 1.230400 3.237600 1.044000 4.039100 4.471500 3.635600 -2.320300" y3="1.324800 -0.698600 -0.121600 -0.829400 -0.805600 -2.213200 -2.203800 -2.897400 -0.004100 -0.696200 0.021300 1.408400 2.029900 -0.686400 -0.057500 0.958300 -0.302500 -2.762000 -2.739100 -3.977400 -1.776100 1.996700 3.108600 -0.851900 -0.074000 -1.645400 1.022400" z3="0.009300 0.009100 0.045400 0.052000 0.030500 0.044400 0.022500 0.029200 0.002000 -0.013300 -0.020700 -0.012600 0.002500 -0.036700 0.022900 0.046800 0.063800 0.049600 0.010600 0.023000 -0.018900 -0.017800 0.008800 -1.068200 0.473300 0.473200 0.028800"/>
@@ -414,16 +414,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 24">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27" elementType="C C C C C C N C C C C H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016700 0.002100 1.170900 1.208400 2.377300 2.396000 1.156800 1.150500 1.136900 -0.029300 2.369200 -0.959200 -0.925800 1.223100 3.305100 3.338500 2.030600 0.250900 1.141600 2.017000 0.237300 -0.014500 -0.024600 -0.928900 3.249400 2.373900 2.384000" y3="1.378100 -0.004100 2.085500 -0.678900 1.410700 0.028500 4.075000 3.592400 5.543800 3.565500 3.598200 1.905400 -0.556700 -1.758800 1.963400 -0.498700 3.970400 3.946200 5.901900 5.921800 5.897600 2.475600 3.923600 3.919300 3.976200 3.956200 2.508300" z3="0.009600 0.002000 0.002100 -0.013200 -0.013100 -0.021200 1.397400 0.009900 1.405000 2.098400 2.076100 0.017000 0.008300 -0.018400 -0.019700 -0.032400 -0.510300 -0.493700 2.434500 0.884800 0.901400 2.092800 3.127900 1.594800 1.555900 3.105600 2.070500"/>
@@ -432,16 +432,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 25">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26" elementType="N C C C C C C C O C C C H H H H H H H H H H H H H H" formalCharge="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.024700 -2.741800 -1.728700 -4.049400 -2.051100 -4.360400 -3.363500 -0.330600 0.556000 1.417000 -0.769000 -0.400800 -2.500100 -4.832900 -1.274300 -5.386400 -3.614100 1.969200 1.696100 1.655500 -0.639500 -0.392200 -1.827500 0.271400 -0.327900 -1.425000" y3="1.390300 0.653300 -0.310200 0.281600 -1.644700 -1.041100 -2.000500 0.078000 -0.740300 1.502500 1.739800 2.307400 1.686600 1.024600 -2.394500 -1.326000 -3.030700 1.243200 0.822000 2.525700 2.800900 1.152500 1.525300 2.164900 3.336200 2.101700" z3="-0.095600 0.490400 0.522900 0.721400 0.789600 0.984700 1.018500 0.277000 0.397600 -0.353900 -1.312900 0.988600 0.289500 0.697000 0.816000 1.165100 1.224300 0.549400 -1.158300 -0.644400 -1.525900 -2.150300 -1.165800 1.834700 0.635900 1.299600"/>
@@ -450,16 +450,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 26">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41" elementType="C C C C C C C C C C C C C C C C C C C C C I H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.106900 -0.804300 -1.075400 -0.308800 -0.082700 -0.849700 -0.353400 1.736300 3.046200 1.321200 3.941000 2.215900 3.525800 0.309900 -0.358600 0.079000 -1.258400 -0.820100 -1.489400 -1.050900 -2.492600 -3.840000 -0.985200 -1.462200 -0.097300 0.305100 -1.060900 1.036100 3.370700 4.964700 1.891500 4.224700 1.015700 0.601500 -1.781300 -1.000600 -2.192900 -0.789600 -0.957700 -2.727000 -2.605900" y3="1.478600 -2.717800 -1.870900 -2.206600 -0.848600 -0.512900 -0.001800 2.981700 3.196900 1.713200 2.143600 0.659700 0.874900 1.728100 2.154600 2.348200 3.200800 3.395000 3.820900 2.057000 1.673500 2.625700 -3.778100 -2.270300 -2.868200 -0.449300 0.148700 3.803800 4.188100 2.311900 -0.331300 0.051900 0.913200 2.015200 3.533500 3.879500 4.637800 1.656400 3.142900 2.002300 0.591400" z3="0.057300 -0.332300 -1.390700 0.852600 0.978500 -1.264600 -0.080000 0.837200 1.222700 0.477600 1.248600 0.503900 0.889400 -2.398100 -1.265900 -3.611900 -1.347400 -3.693200 -2.561100 1.113300 0.773500 2.170600 -0.429200 -2.316600 1.679600 1.904000 -2.091700 0.821200 1.503300 1.549100 0.222900 0.910400 -2.333800 -4.496400 -0.462900 -4.641400 -2.624900 2.092700 1.128200 -0.239000 0.839500"/>
@@ -468,16 +468,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 27">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36" elementType="N C C C C C C C C C C C C C H H H H H H H H H H H H H H H H H H H H H H" formalCharge="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.615600 2.258600 0.987200 3.042300 0.499600 2.555300 1.283500 3.410100 2.792500 0.132500 -0.886900 -1.514300 0.325300 -1.405900 4.035800 0.902300 3.233100 3.154200 4.461300 2.625900 3.860800 2.276800 -0.566800 0.768800 -0.827900 -1.341900 -1.493500 -2.005900 -2.266200 -0.937700 -0.229800 0.911800 0.992200 -0.739100 -2.104100 -1.961000" y3="-1.123500 -1.208500 -0.771900 -1.822300 -0.949100 -1.998200 -1.562400 -2.666500 -1.009800 -0.103300 -0.474000 -1.839400 -2.074900 -0.476400 -2.163200 -1.701500 -3.741900 -2.273400 -2.467600 -1.914300 -0.798700 -0.172700 0.578600 0.455600 0.515500 -1.170000 -0.423900 -2.651900 -1.150000 -2.247500 -2.831900 -2.555000 -1.543700 0.054800 0.229600 -1.233400" z3="0.722900 -0.747200 -1.069500 -1.706300 -2.350800 -2.988000 -3.310000 -4.033800 0.647900 -0.023700 -2.701800 -0.192400 1.329000 1.778600 -1.454700 -4.310800 -4.014900 -5.017700 -3.825300 1.232900 0.601500 1.118500 -0.507700 0.662500 -3.155100 -3.406500 -1.797600 0.342600 -0.576500 -1.022500 1.883000 0.545700 2.008200 2.457800 1.328900 2.332600"/>
@@ -486,16 +486,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 28">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27" elementType="C C C C C C N O O C C O C C O O H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 1 0 -1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016700 0.002100 1.170900 2.377300 1.208400 2.396000 1.228500 2.291400 0.182100 1.150500 1.130100 -0.016300 2.399400 2.379000 1.459800 3.381900 -0.959200 -0.925800 3.305100 3.338500 0.240300 1.115300 2.020000 0.035900 2.414000 3.289400 3.368800" y3="1.378100 -0.004100 2.085500 1.410700 -0.678900 0.028500 -2.158900 -2.753500 -2.782200 3.592400 4.109600 4.049400 4.115700 5.622500 6.216900 6.304300 1.905400 -0.556700 1.963400 -0.498700 3.736800 5.199500 3.761100 3.702100 3.747200 3.767100 7.271200" z3="0.009600 0.002000 0.002100 -0.013100 -0.013200 -0.020300 -0.020300 -0.033700 -0.012800 0.009900 -1.429800 0.696800 0.722200 0.730000 0.218400 1.305300 0.017000 0.008300 -0.019700 -0.032900 -1.937300 -1.424200 -1.953800 1.597800 1.747900 0.198200 1.310300"/>
@@ -504,16 +504,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 29">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27" elementType="Cl C C C C C C C C C C C C C C O H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.919400 1.979800 1.110200 1.916600 0.993000 0.181400 0.127700 2.516300 2.470500 3.731100 3.657000 4.902800 4.864800 6.226300 1.172800 0.156800 2.697000 2.588200 -0.493700 -0.590300 1.602300 3.768000 3.628800 5.783000 6.622800 6.927000 6.086400" y3="-1.991600 1.802900 2.191900 0.521300 -0.379900 1.278200 -0.000100 5.611700 4.264100 6.259700 3.582000 5.577800 4.242500 6.292600 3.563100 4.115000 2.505900 0.219300 1.573000 -0.707100 6.146300 7.301800 2.539800 3.716200 6.195100 5.852000 7.347700" z3="-2.198000 -1.557600 -0.535500 -2.061700 -1.557300 -0.030900 -0.544200 0.463000 0.098700 0.544700 -0.180400 0.266800 -0.094700 0.358300 0.009500 0.384700 -1.954900 -2.851700 0.758900 -0.155500 0.675800 0.825900 -0.462300 -0.309900 1.368900 -0.351000 0.123100"/>
@@ -522,16 +522,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 30">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17" elementType="C C C C C C O C N O H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016600 1.184700 0.002100 2.400500 1.213300 2.410200 1.227300 1.169500 2.283300 2.268800 -0.958600 -0.926200 3.331500 3.349700 1.221500 0.228800 3.191500" y3="1.373600 2.086500 -0.004100 1.398700 -0.684200 0.020900 -2.042200 3.561700 4.220200 5.636100 1.901600 -0.556000 1.946000 -0.511700 -2.317000 4.092000 5.925200" z3="0.009600 0.002000 0.002000 -0.013400 -0.012700 -0.020800 -0.019700 0.009500 0.002400 0.009700 0.025900 0.007900 -0.019700 -0.032700 -0.946800 0.021000 0.002500"/>
@@ -540,16 +540,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 31">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23" elementType="C C C C C C C C N C H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016700 0.002100 1.170500 1.215200 2.379900 2.405900 1.146100 3.724300 1.237800 -1.292100 -0.959500 3.305200 1.150000 2.025100 0.245500 4.032600 4.478000 3.616100 2.085600 0.405800 -1.614300 -1.143200 -2.054900" y3="1.376800 -0.004100 2.086000 -0.680600 1.415700 0.034900 3.592800 -0.694700 -2.077100 -0.776100 1.903400 1.972600 3.950600 3.973300 3.944400 -0.865400 -0.094500 -1.651900 -2.548400 -2.575700 -0.956700 -1.729300 -0.200700" z3="0.009600 0.002000 0.002100 -0.013200 -0.013500 -0.020700 0.010400 -0.036700 -0.020400 0.010700 0.016900 -0.020100 1.040000 -0.509800 -0.493000 -1.068100 0.473200 0.473400 -0.031000 -0.014900 -1.014800 0.518000 0.535200"/>
@@ -558,16 +558,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 32">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29" elementType="C C C C C C C C C C C C O C N O O C H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 -1 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.073200 0.105200 2.608000 3.812900 1.132200 1.209800 2.538200 4.951100 2.229700 2.275100 3.691100 4.889300 0.225800 1.251000 6.240800 7.244400 6.298600 1.090200 -0.778200 -0.722100 1.719600 3.868300 3.052800 3.132100 3.644300 5.781500 0.629200 2.104800 0.506100" y3="1.321800 -0.054000 -4.245400 -4.905500 2.075300 -0.686500 -2.873500 -4.211700 1.455300 0.080300 -2.179700 -2.852500 -2.784600 -2.159800 -4.926700 -4.318900 -6.122900 3.578000 1.811900 -0.640800 -4.788800 -5.966200 2.049400 -0.402200 -1.118800 -2.317200 3.992200 3.963900 3.864900" z3="-0.791900 -0.699300 0.104600 -0.017000 -0.316400 -0.124100 -0.148700 -0.389000 0.254600 0.353600 -0.523800 -0.641500 0.168800 -0.021000 -0.516500 -0.843700 -0.294100 -0.421500 -1.240400 -1.070400 0.391000 0.178600 0.623200 0.799800 -0.720800 -0.931100 0.475200 -0.519800 -1.296000"/>
@@ -576,16 +576,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 33">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29" elementType="C C C C C C C C C C C C C C O H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="1.133800 2.282600 -0.040400 2.257100 -0.065900 1.083000 -0.262400 -0.119700 -1.136700 -1.868400 -0.850400 -1.725500 -1.292600 -1.528900 -2.407200 1.154800 3.199900 3.154400 -0.983100 1.062900 0.305200 0.563800 -2.552100 -0.738400 -2.297700 -1.641700 -2.434600 -0.678800 -2.218200" y3="-0.383800 0.378600 0.056200 1.581000 1.258500 2.020700 -3.018100 -4.167300 -2.027800 -2.186800 -4.325600 -3.335700 -0.775300 -1.153100 -0.023000 -1.325300 0.035100 2.177000 1.601900 2.960500 -2.896400 -4.940800 -1.413400 -5.223100 -3.460200 -0.247100 -1.754400 -1.726900 0.194300" z3="0.484200 0.384400 -0.097600 -0.297100 -0.779200 -0.879400 -0.405500 -1.160500 -0.812600 -1.974600 -2.323100 -2.729700 0.010700 1.474400 -0.473000 1.012800 0.839300 -0.374400 -1.234400 -1.411300 0.505200 -0.842600 -2.292200 -2.913300 -3.637200 2.069800 1.552700 1.843300 -1.396100"/>
@@ -594,16 +594,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 34">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18" elementType="C C C C C C N O O N O C H H H H H H" formalCharge="0 0 0 0 0 0 1 0 -1 0 0 0 0 0 0 0 0 0" x3="0.003000 0.005800 1.215300 2.398300 2.388400 1.193700 3.681400 4.726900 3.691700 -2.391500 -2.418700 -1.264400 -0.929400 1.224500 3.317600 1.193000 -3.345400 -1.252300" y3="1.321500 -0.017200 -0.648100 0.054300 1.381000 2.012300 -0.612800 0.006100 -1.780600 -0.138700 1.277000 -0.762900 1.816600 -1.683700 1.926100 3.048100 1.538000 -1.829600" z3="0.508200 0.112700 -0.185400 -0.087400 0.305700 0.602100 -0.403000 -0.316900 -0.748700 0.122700 0.134900 0.010500 0.735900 -0.491600 0.381500 0.907600 0.225400 -0.157900"/>
@@ -612,16 +612,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 35">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20" elementType="Cl N C C C C C C C C C O N O O H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 1 0 -1 0 0 0 0 0" x3="2.194200 -0.015700 1.079200 2.244800 1.113800 2.367600 3.477800 2.399400 0.002100 1.192400 3.548800 3.576600 1.168800 0.104400 2.213700 0.132000 4.387800 -0.934500 4.509400 3.828300" y3="5.870000 1.308000 3.429700 4.134800 2.024800 1.367800 3.484200 -0.045300 -0.004100 -0.720700 2.124200 -0.717900 -2.200700 -2.792900 -2.826400 3.948500 4.065800 -0.541900 1.630700 -0.861800" z3="0.014100 0.009200 0.010700 0.003700 0.002300 -0.013200 -0.010700 -0.021600 0.002000 -0.014100 -0.019500 -0.036900 -0.022200 -0.015600 -0.035400 0.021800 -0.015200 0.008100 -0.031000 0.885600"/>
@@ -630,16 +630,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 36">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23" elementType="Cl N C C C C C C C C C C C H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="3.962200 0.047900 1.089700 2.227200 1.148900 2.399500 3.456600 2.456600 0.096900 1.292500 3.552900 4.890000 1.303700 0.144800 2.176500 4.344300 -0.814700 4.933000 5.683700 5.020200 1.466800 0.347300 2.105400" y3="-0.811300 1.412000 3.422200 4.067400 2.071600 1.406500 3.411500 0.052900 0.152500 -0.561000 2.103700 1.408700 -2.007600 3.945200 5.105000 3.946900 -0.344900 0.723200 2.150000 0.850000 -2.070900 -2.466600 -2.531700" z3="0.765600 0.759900 -0.000800 -0.377100 0.385000 0.373900 -0.385400 0.761000 1.121200 1.132400 -0.019200 -0.035200 1.554500 0.000000 -0.672600 -0.688300 1.417700 -0.881700 -0.127300 0.891600 2.630400 1.304300 1.034100"/>
@@ -648,16 +648,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 37">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41 a42 a43 a44 a45" elementType="C C C C C C C C C C C C C C C C C C O C O N H H H H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.920800 0.413500 -1.324400 -0.393600 1.344300 0.940700 1.999100 2.390700 1.631500 1.655600 2.413600 2.046900 1.205000 2.348900 3.617700 -0.020400 -1.164300 0.853400 2.020100 1.867600 0.753600 2.950600 -1.647400 -2.366800 -0.708800 2.386800 1.668000 1.985500 2.677500 1.369100 2.718900 2.066400 2.526800 2.081900 3.498600 3.790500 4.468000 -0.328900 0.230000 -1.414800 -2.037300 -0.855800 0.045300 2.840700 3.839900" y3="2.188400 2.504300 0.866300 -0.140000 1.498100 0.176000 6.420300 7.746000 5.813000 6.531500 8.464800 7.857300 4.367700 3.496200 3.783600 4.193800 5.065300 3.945600 4.097900 4.382700 4.512200 4.524000 2.974300 0.619400 -1.172900 1.744900 -0.610200 5.857400 8.220500 6.056900 9.500700 8.418500 3.722100 2.444700 3.402300 4.859300 3.293900 3.148400 4.494500 4.764600 4.941400 6.110700 4.573200 4.729200 4.420600" z3="0.427800 0.252800 0.423700 0.244600 0.073800 0.069200 2.877000 2.882500 1.690800 0.510100 1.702000 0.515600 1.684800 2.207200 1.401900 2.584200 2.061900 0.256800 -0.594000 -1.901100 -2.368700 -2.690800 0.572200 0.560800 0.242100 -0.063300 -0.070000 3.798600 3.809300 -0.416800 1.706300 -0.407000 3.258500 2.101600 0.387800 1.367700 1.876700 2.579900 3.601600 1.044500 2.702700 2.066200 -0.119000 -3.632500 -2.317500"/>
@@ -666,16 +666,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 38">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33" elementType="C C C C C C C C C C C C C C N C C N O H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-1.054900 -0.285400 -2.358100 -2.891800 -0.819100 -2.122200 0.035300 1.097600 0.076800 2.201300 1.181100 2.243000 1.052200 2.176000 3.043200 1.156900 1.135500 1.264000 1.475700 -0.639300 -2.959400 -3.910200 -0.217700 -2.539400 -0.825500 -0.753000 3.030900 1.213700 3.105000 0.111500 1.729300 1.554100 1.527100" y3="4.067500 3.133500 3.766700 2.532100 1.898800 1.598000 6.619500 5.950000 6.955000 5.615900 6.622200 5.951900 5.583800 6.225300 6.720300 4.087500 3.461200 3.349000 1.955900 5.033700 4.496500 2.297400 1.169000 0.633600 6.883500 7.478400 5.092200 6.885000 5.690300 5.926100 2.547100 4.159100 1.589800" z3="-0.986000 -0.317800 -1.335400 -1.016600 0.001000 -0.348700 3.618600 3.040600 4.959000 3.802900 5.721000 5.143200 1.579500 0.877700 0.336100 1.433100 0.062600 2.472500 2.332400 -1.231100 -1.857200 -1.288900 0.522800 -0.099000 3.022300 5.410600 3.351400 6.768100 5.738900 1.148200 0.071600 -0.662400 3.226000"/>
@@ -684,16 +684,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 39">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29" elementType="C C C C C C C C O C C C C C C H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016700 1.170900 0.002100 2.377300 1.208400 2.396000 -1.331700 -1.756100 -0.761200 -3.071100 -4.258700 -5.465000 -5.483700 -4.296200 -3.089800 1.156300 -0.925800 3.305100 1.223100 3.338500 -1.221700 -2.090600 -1.866100 -0.695400 -4.244000 -6.392800 -6.426200 -4.310800 -2.162000" y3="1.378100 2.085500 -0.004100 1.410700 -0.678900 0.028500 2.113700 2.355000 3.137300 3.090700 2.383200 3.058000 4.440200 5.147600 4.472800 3.165400 -0.556700 1.963400 -1.758800 -0.498700 3.070600 1.517100 1.398200 3.973000 1.303300 2.505300 4.967400 6.227500 5.025500" z3="0.009600 0.002100 0.002000 -0.013000 -0.013100 -0.020100 0.032400 1.482400 2.146000 1.505200 1.518500 1.539400 1.547400 1.535000 1.518500 0.007600 0.008200 -0.019600 -0.018300 -0.032600 -0.478000 -0.473800 1.992800 1.664100 1.512200 1.549000 1.562900 1.540900 1.512600"/>
@@ -702,16 +702,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 40">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33" elementType="C C C C C C C C C C C C O C C O C H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016700 0.002100 1.170500 1.213400 2.379100 2.403200 2.353500 1.153000 2.361500 -0.042300 1.163600 -0.039700 1.168900 -0.197300 1.147200 1.234500 2.608700 -0.959500 -0.925500 3.305100 3.347500 3.285900 3.299500 -0.978700 -0.973500 -0.243900 -0.710400 -0.679800 2.026400 0.246800 3.107700 2.676400 3.090300" y3="1.377200 -0.004100 2.085900 -0.680100 1.414500 0.033300 4.332500 4.087300 4.785900 4.295600 4.995700 4.749400 5.441200 5.556100 3.592700 -2.038900 -2.430600 1.904000 -0.557200 1.970300 -0.490700 4.164700 4.976900 4.103700 4.912600 5.912400 6.262500 4.581200 3.972600 3.944900 -2.040500 -3.518500 -2.031600" z3="0.009600 0.002000 0.002100 -0.013200 -0.013600 -0.020800 2.074500 1.434000 3.379400 2.097100 4.047000 3.401900 5.330900 5.733700 0.010500 -0.020300 -0.035700 0.016900 0.008300 -0.019800 -0.032300 1.555900 3.879500 1.594500 3.919200 6.762800 5.081200 5.664600 -0.509800 -0.492900 0.851400 -0.041800 -0.928400"/>
@@ -720,16 +720,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 41">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36" elementType="C C C C C C C C C C C C C N C C C H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.273700 0.980900 -0.429500 0.669500 2.079900 1.924100 3.177400 3.777000 1.804400 1.031400 3.003800 1.631100 -0.465300 1.994700 1.321500 1.967400 1.150700 -1.131700 -1.409700 0.547900 3.060100 2.782800 3.781000 4.849500 3.472300 1.027000 -0.732000 -0.937700 -0.808800 1.316200 0.295800 1.853000 0.933700 2.445400 2.502900 0.174300" y3="1.500900 2.060700 0.128400 -0.684200 1.248100 -0.124400 4.085200 4.434700 3.937700 4.139800 4.635600 4.489000 3.979900 3.998300 3.567400 5.467000 3.557000 2.135600 -0.308900 -1.756600 1.685400 -0.759400 3.932600 4.549600 4.908000 4.647600 2.947300 4.643200 4.233700 2.478500 3.936200 3.967700 5.811400 5.836500 5.843100 4.036400" z3="0.090400 -0.062100 0.036100 -0.170700 -0.268800 -0.323500 1.367500 2.562700 1.300000 2.427700 3.691200 3.623500 2.353900 -1.121800 -2.354300 -1.117300 -0.003400 0.256400 0.155500 -0.212400 -0.388300 -0.484400 0.485000 2.615600 4.625300 4.504500 2.578800 3.078400 1.351000 -2.403800 -2.356100 -3.217600 -1.149400 -0.210000 -1.989100 -0.073800"/>
@@ -738,16 +738,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 42">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22" elementType="C C C C C C N O O N N O O O C H H H H H H H" formalCharge="0 0 0 0 0 0 1 0 -1 0 1 0 -1 0 0 0 0 0 0 0 0 0" x3="-0.025200 0.011600 1.156700 2.376400 1.232200 2.415000 -1.249900 -2.317000 -1.220800 1.270400 3.716700 4.753300 3.751300 1.119600 2.475700 -0.974500 3.296200 0.586400 1.980700 2.997500 2.967200 2.496800" y3="1.361200 -0.019400 2.086700 1.426500 -0.681100 0.045900 -0.793400 -0.215300 -2.008300 -2.080000 -0.658400 -0.024900 -1.871600 3.446200 3.896200 1.876100 1.992100 -2.586700 -2.542900 3.528800 3.517100 4.985900" z3="0.011300 0.019300 -0.013600 -0.030500 0.002400 -0.023000 0.046400 0.149300 -0.034300 0.011000 -0.041900 0.045500 -0.145000 -0.021900 -0.047900 0.019800 -0.049800 -0.454200 0.482200 0.835700 -0.943900 -0.055500"/>
@@ -756,16 +756,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 43">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27" elementType="C N C C C C C C N C C C C C C H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.029100 -0.085900 1.277400 2.424200 3.638800 3.720900 2.587200 1.367800 -1.327200 -1.270600 -1.439300 -2.598500 -3.592500 -3.431100 -2.274000 2.361400 4.527300 4.673900 2.657600 0.484300 -1.380600 -2.133200 -0.664300 -2.730500 -4.498200 -4.210800 -2.147200" y3="1.484900 0.286700 2.061400 1.267000 1.810100 3.139400 3.932400 3.402600 -0.329900 2.269100 3.048100 3.776600 3.735700 2.965000 2.236500 0.229100 1.196100 3.559800 4.969300 4.023800 -1.157800 0.071100 3.080600 4.379800 4.307400 2.936800 1.639100" z3="-0.048000 -0.564700 0.342800 0.334000 0.699400 1.073900 1.084600 0.715900 -0.769100 0.141200 1.286100 1.456600 0.495100 -0.642600 -0.827400 0.042200 0.693300 1.359300 1.378200 0.720000 -1.271700 -0.408000 2.037500 2.342700 0.633300 -1.389400 -1.718200"/>
@@ -774,16 +774,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 44">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20" elementType="C C C C C C O N C C O H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016900 1.168000 0.002100 2.380300 1.223400 2.403700 3.546000 -1.244500 4.602300 -1.264100 -2.459900 -0.958900 1.154300 1.242400 3.348300 4.533800 4.516100 5.562900 -2.207500 -2.224800" y3="1.392800 2.095900 -0.004100 1.417700 -0.682100 0.028800 2.114600 -2.054800 1.152400 -0.761100 -2.781400 1.920700 3.175800 -1.761900 -0.494600 0.523100 0.532600 1.667500 -0.235400 -3.719400" z3="0.009700 0.002200 0.002000 -0.013500 -0.013300 -0.021700 -0.021400 0.003400 -0.037000 0.010500 0.011600 0.026000 0.008100 -0.019600 -0.034200 0.850300 -0.929500 -0.043800 0.022700 0.004200"/>
@@ -792,16 +792,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 45">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41 a42 a43 a44 a45 a46 a47 a48" elementType="C N C C C C C C C C C C C C C C C C C C C C C C C C C H H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.179800 0.110100 1.381400 2.473600 3.589900 3.627300 2.547200 1.423100 -0.945300 -0.717700 -1.769700 -3.048200 -3.280300 -2.235700 -1.802600 -3.179300 -3.922700 -3.289600 -1.913000 -1.169400 -0.992700 -0.436400 -1.085700 -0.575500 0.583900 1.232700 0.720000 2.445700 4.436300 4.503500 2.582400 0.578700 0.279900 -1.594800 -3.868500 -4.280700 -2.417300 -3.674000 -4.998200 -3.870300 -1.418200 -0.093900 -1.629700 -1.991500 -1.082400 0.982900 2.138600 1.224900" y3="1.039600 -0.255300 1.764500 1.056800 1.737700 3.119600 3.827200 3.157900 1.788000 2.639700 3.334500 3.187700 2.344400 1.648300 -1.681100 -1.743300 -2.371100 -2.936200 -2.873200 -2.246700 -0.991300 -2.019200 -2.280600 -3.223400 -3.905100 -3.644400 -2.704700 -0.022000 1.190800 3.648100 4.905800 3.711500 2.754800 3.994000 3.733400 2.233700 0.993800 -1.301800 -2.420300 -3.427300 -3.315300 -2.198100 -0.296600 -1.748000 -3.427100 -4.641200 -4.176800 -2.503600" z3="-0.587600 -0.709300 -1.061600 -1.563400 -2.003800 -1.948400 -1.451800 -1.013300 0.019200 1.100100 1.660700 1.152900 0.081000 -0.491700 -1.153600 -1.044600 -2.026500 -3.117600 -3.227100 -2.244500 -0.086300 0.865100 2.057200 2.929900 2.610400 1.417900 0.543200 -1.606800 -2.392200 -2.294000 -1.410700 -0.630000 1.497600 2.497900 1.595300 -0.310800 -1.331300 -0.192100 -1.941000 -3.884400 -4.079200 -2.329700 0.461200 2.306800 3.861500 3.292500 1.168400 -0.390100"/>
@@ -810,16 +810,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 46">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35" elementType="N C C C C C C C C C C C C C C C C C C C H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.043400 -0.024300 3.506800 3.276000 2.555300 1.369100 2.094600 1.128900 -2.468000 -1.284800 -3.640500 -3.645700 -1.297100 -2.476500 2.204300 1.257700 3.398400 1.527000 3.659200 2.725100 4.432000 4.023200 2.742400 0.627500 1.916200 -2.464300 -4.556400 -4.566400 -0.385300 -2.487400 2.000000 4.131600 0.799100 4.595400 2.934700" y3="1.282900 0.157800 3.073200 2.787700 2.763100 2.165700 2.190500 1.873900 0.325300 -0.413100 -0.213400 -1.482700 -1.692900 -2.219700 -0.636400 -0.539200 -1.287500 -1.102400 -1.843200 -1.750800 3.545000 3.032600 2.989200 1.924300 1.967700 1.317900 0.356900 -1.899800 -2.269500 -3.209700 -0.207200 -1.363400 -1.030400 -2.352500 -2.187000" z3="-0.761600 -0.086500 -1.897900 -0.563600 -2.853900 -2.482700 -0.177000 -1.136800 0.371400 0.434900 0.859200 1.410000 0.992300 1.476500 -0.868600 0.152900 -0.638500 1.401600 0.601600 1.618300 -2.194100 0.176700 -3.893200 -3.229800 0.864600 -0.054200 0.811000 1.790500 1.044100 1.908000 -1.838400 -1.427800 2.196200 0.776400 2.583800"/>
@@ -828,16 +828,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 47">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31" elementType="N C C C C C C C C C C C C C C C O C H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.015700 1.068400 2.228200 1.111900 2.370800 3.465100 3.546600 2.415600 0.002100 1.204200 1.188700 0.573700 0.562800 1.160200 1.794100 1.772000 3.598000 -1.303600 0.117800 2.188600 4.370500 4.511000 0.106400 0.086600 1.148600 2.275900 2.236900 3.850900 -1.628600 -1.169000 -2.057600" y3="1.305800 3.431800 4.144700 2.027200 1.379100 3.504300 2.144700 -0.032300 -0.004100 -0.722900 -2.205700 -2.892700 -4.272700 -4.974100 -2.917700 -4.297600 -0.694400 -0.756500 3.944200 5.224000 4.093100 1.658600 -2.346100 -4.806100 -6.054000 -2.390600 -4.850300 -0.836200 -0.932400 -1.711700 -0.169500" z3="0.009200 0.010800 0.004000 0.002300 -0.013200 -0.010400 -0.019400 -0.021700 0.002000 -0.014200 -0.023000 -1.068300 -1.071400 -0.039600 1.011100 1.000400 -0.037000 0.011000 0.022300 0.010500 -0.015600 -0.030900 -1.874000 -1.880800 -0.045800 1.821300 1.803400 0.885500 -1.014500 0.518400 0.535500"/>
@@ -846,16 +846,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 48">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41 a42 a43 a44 a45" elementType="O O Cu O O C C C C C C C C C C C C C C H H H H H H H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 -3 0 0 0 0 0 0 -1 0 0 0 0 0 0 0 0 -1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.014500 2.558500 1.306700 1.327300 1.353600 1.403600 2.432400 1.378700 0.002100 1.188000 3.664000 4.911900 -1.302500 -2.466000 1.399900 1.348800 1.450700 1.424300 1.418300 -0.848100 3.432700 1.301300 1.344900 1.139600 3.674500 3.655400 4.920500 5.802700 4.901500 -1.368800 -1.350900 -3.409600 -2.399600 -2.417600 0.536500 2.314900 1.364100 2.212200 0.433800 2.366300 0.588000 2.287000 1.458400 0.508700 1.462900" y3="1.217500 1.102100 1.930200 2.709700 2.691400 3.910400 -0.113100 3.927700 -0.004100 -0.708400 -0.981300 -0.096000 -0.758400 0.235000 4.748100 3.817200 4.712800 3.764700 4.569000 1.707300 1.515300 2.264100 2.233700 -1.787300 -1.615000 -1.606100 0.528800 -0.724000 0.537700 -1.380300 -1.389900 -0.310600 0.856900 0.866500 5.413300 5.339500 4.410600 3.152000 3.225800 5.303700 5.377600 3.099900 4.345100 3.173800 5.648000" z3="0.008700 -0.018200 -0.000100 -1.282600 1.292900 1.229600 -0.023000 -1.203000 0.002000 -0.013300 -0.040500 -0.049400 0.011100 0.028200 -2.467000 -3.680100 2.504400 3.705000 0.017600 0.023300 -0.025900 -2.140400 2.144600 -0.017800 0.846200 -0.933600 0.843700 -0.062100 -0.936100 -0.881600 0.898300 0.034800 0.920900 -0.858900 -2.482900 -2.501000 -4.594300 -3.664200 -3.646100 2.528100 2.547400 3.662000 4.627000 3.681300 0.024800"/>
@@ -864,16 +864,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 49">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31" elementType="C C C C C C C C C C C C C C O O C H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016700 0.002100 1.170900 1.208400 2.377300 2.396000 2.169500 1.136700 2.151000 0.085300 1.098900 0.066500 1.157100 -0.059700 -0.861300 -0.253100 1.150500 -0.959200 -0.925800 1.223100 3.305100 3.338500 2.989300 2.957800 -0.721300 1.084100 -0.754500 2.056700 -1.033900 2.030600 0.250900" y3="1.378100 -0.004100 2.085500 -0.678900 1.410700 0.028500 6.304000 5.601800 7.686200 6.281900 8.366200 7.664100 4.095000 3.572400 4.344300 2.249300 3.592400 1.905400 -0.556700 -1.758800 1.963400 -0.498700 5.772700 8.234800 5.733300 9.446100 8.195400 3.741200 1.913900 3.970400 3.946200" z3="0.009600 0.002000 0.002100 -0.013200 -0.013100 -0.021200 2.055300 1.462800 2.062100 0.877100 1.477600 0.884300 1.455000 2.174200 2.644800 2.291900 0.009900 0.017000 0.008300 -0.018400 -0.019700 -0.032400 2.515900 2.525200 0.413600 1.483500 0.426100 1.958600 2.753400 -0.510300 -0.493700"/>
@@ -882,16 +882,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 50">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22" elementType="N C C C C C C N C C H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.015800 1.195600 0.002100 2.392600 2.329300 1.095200 -1.298300 3.618300 3.592200 4.032800 1.203200 1.036600 -1.622000 -1.156900 -2.056400 3.647600 4.443200 4.377500 3.406400 3.247500 4.218600 4.946300" y3="1.315600 -0.694900 -0.004100 0.020600 1.414100 2.028600 -0.765700 -0.638400 2.236400 2.506800 -1.774900 3.107000 -0.943800 -1.720000 -0.184200 -1.607900 -0.128200 1.691500 3.183200 3.051700 1.560000 3.101600" z3="0.009300 -0.013100 0.002000 -0.020700 -0.012600 0.002500 0.010800 -0.035500 -0.019700 1.420300 -0.018600 0.008500 -1.014600 0.518200 0.535400 -0.040600 -0.040600 -0.543700 -0.526800 1.944300 1.927300 1.415100"/>
@@ -900,16 +900,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 51">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41" elementType="N O C C C C C C C C C C C C C C C C C C C C C C H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.015700 3.598100 1.068100 2.227900 1.111800 2.370800 3.464800 3.546400 2.415800 0.002100 1.204200 1.188700 1.779200 1.762200 1.160200 0.588600 0.572100 3.953400 5.135000 3.138300 5.494100 3.502100 4.677200 -1.303600 0.117400 2.188100 4.370100 4.510900 2.248900 2.219400 1.148900 0.133400 0.103000 5.773100 2.220400 6.413600 2.868200 4.959700 -1.628700 -1.169100 -2.057600" y3="1.305800 -0.694100 3.432000 4.145000 2.027300 1.379400 3.504800 2.145100 -0.032200 -0.004100 -0.722900 -2.205700 -2.905300 -4.285200 -4.974100 -2.905200 -4.285100 -0.893300 -1.554900 -0.430500 -1.755700 -0.634000 -1.298600 -0.756400 3.944200 5.224300 4.093700 1.659100 -2.368500 -4.828400 -6.054000 -2.368300 -4.828100 -1.912800 0.088600 -2.270500 -0.273700 -1.456900 -0.932300 -1.711700 -0.169500" z3="0.009200 -0.037000 0.010800 0.004000 0.002300 -0.013200 -0.010400 -0.019400 -0.021700 0.002000 -0.014200 -0.023000 -1.074000 -1.076600 -0.039100 1.022700 1.006400 1.259300 1.562300 2.282500 2.880900 3.599400 3.898500 0.011000 0.021900 0.010500 -0.015500 -0.030900 -1.885000 -1.890500 -0.045400 1.841900 1.813500 0.767800 2.049300 3.117300 4.396100 4.928900 -1.014500 0.518400 0.535500"/>
@@ -918,16 +918,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 52">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39" elementType="C C C C C C C C C C C C C C C C C C C C N C H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.143100 0.990600 -0.025700 1.225600 2.241900 2.359300 3.396500 2.729500 3.792600 2.457900 3.521800 2.854400 7.017100 5.884300 8.268300 6.002700 8.386800 7.254000 3.723400 4.434100 4.982500 4.520200 -1.120600 0.898900 -0.911400 1.317400 3.127600 3.612700 2.419700 1.936100 3.831900 2.642400 6.924600 9.153300 5.117700 9.364300 7.346500 3.616100 4.627500" y3="0.899700 1.681400 -0.468400 -1.054600 1.095200 -0.272900 -1.900000 -2.155800 -0.611300 -1.122800 0.421500 0.165800 -0.180500 -0.971600 -0.766700 -2.348800 -2.144000 -2.935000 -0.912000 -0.639700 -0.429500 -0.332500 1.358200 2.750200 -1.079100 -2.123400 1.705900 -2.707700 -3.162500 -1.322600 1.428200 0.972700 0.895500 -0.148700 -2.966900 -2.602000 -4.011100 -1.988700 0.744200" z3="-0.088600 -0.208200 0.071200 0.111500 -0.167900 -0.008500 2.801900 3.985300 2.496300 4.862800 3.374300 4.557500 1.295000 1.250800 1.336300 1.247700 1.331800 1.288500 0.035900 -1.224100 -2.196500 1.206400 -0.115600 -0.333500 0.165000 0.237100 -0.262100 2.118300 4.223800 5.787100 3.135900 5.243300 1.294000 1.370500 1.213900 1.363300 1.286800 0.167100 1.075200"/>
@@ -936,16 +936,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 53">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17" elementType="N C C C C C N H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.115000 -0.306600 1.334700 -0.591000 -2.097800 -0.313200 -0.098700 -1.368200 0.069400 0.237000 1.810500 1.532500 1.736600 -0.076500 -2.442000 -2.308400 -2.616400" y3="1.519500 0.064500 1.755900 1.949600 1.705200 3.384000 4.491100 -0.157800 -0.392500 -0.335800 1.176300 2.816200 1.450600 1.380600 1.976400 0.651500 2.313500" z3="-0.024300 0.040400 -0.000300 -1.345900 -1.449600 -1.524500 -1.662400 0.147900 -0.875000 0.896200 -0.791400 -0.157600 0.965800 -2.120200 -2.447600 -1.266400 -0.708600"/>
@@ -954,16 +954,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 54">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23" elementType="O C C C C C C C C C C O C H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.002100 -0.014400 1.195500 -1.217900 -2.575000 -3.546500 0.635700 -0.868200 -3.189300 -1.855200 2.034800 1.811700 3.152700 1.785900 -2.857300 -4.589900 0.972700 0.956000 -3.954900 -1.583100 2.746400 3.877200 3.643000" y3="-0.004100 1.208300 2.111000 2.056400 1.697400 2.673100 3.540100 3.406400 4.010400 4.373900 1.868300 2.483100 0.858400 1.944600 0.655000 2.394200 4.066400 4.075500 4.772100 5.419000 -0.124200 1.147500 0.821400" z3="0.002000 0.008700 0.002000 0.018300 0.021900 0.030800 0.014400 0.023700 0.036100 0.032500 1.229800 2.245000 1.190800 -0.899000 0.017500 0.033200 0.907500 -0.879400 0.043000 0.037100 0.951200 0.429500 2.163600"/>
@@ -972,16 +972,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 55">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30" elementType="S O C C C C C C C C C C C C C C H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.017200 0.002100 2.375400 3.063100 3.701400 3.652500 2.965600 2.326000 1.684600 -0.588600 -2.021500 -3.049600 -4.363900 -4.650100 -3.622100 -2.307700 3.101300 4.238100 4.150700 2.926800 1.788700 2.221900 1.670400 -0.517900 0.033600 -2.825900 -5.167100 -5.677000 -3.845700 -1.504500" y3="1.416800 -0.004100 1.650000 0.453100 0.093700 0.931400 2.128700 2.487400 2.044600 2.022600 1.607300 2.432800 2.051800 0.845700 0.020700 0.403600 -0.201400 -0.841800 0.650300 2.782900 3.422500 1.620800 3.131200 3.110000 1.599500 3.375100 2.696400 0.547800 -0.921800 -0.239300" z3="0.009800 0.002000 1.276900 1.350500 2.522700 3.621200 3.547400 2.375500 -0.003000 -1.601700 -1.815200 -1.399600 -1.595400 -2.207100 -2.623400 -2.431600 0.492200 2.580500 4.537300 4.405800 2.318000 -0.851500 -0.088100 -1.627000 -2.390400 -0.921800 -1.270100 -2.359400 -3.101000 -2.760200"/>
@@ -990,16 +990,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 56">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35" elementType="C C C C C C C C C C C C C C C N C C H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.211300 -1.467300 -0.082300 -2.594400 -1.209500 -2.465500 0.670700 1.488500 0.522600 2.158200 1.191100 2.009700 1.650400 3.102400 0.761400 0.075300 1.287000 1.285900 0.669400 -1.568000 -3.575800 -1.108700 -3.346100 0.144800 -0.116700 2.797800 1.074900 2.533500 3.748500 3.399900 3.193200 2.019200 0.630700 0.927200 2.299000" y3="5.678400 6.192400 4.423200 5.451200 3.682100 4.195900 5.999600 5.593400 7.345800 6.533400 8.285800 7.879600 4.125800 3.711500 3.344100 2.740800 3.862700 2.355300 6.255600 7.173200 5.853100 2.701100 3.617100 5.265300 7.663100 6.216000 9.337600 8.614000 4.197900 4.011700 2.629700 4.343700 1.862100 2.162500 1.967300" z3="-1.055600 -1.318300 -0.490900 -1.016400 -0.189000 -0.452200 2.597300 1.559500 2.874300 0.798700 2.112600 1.075400 1.257800 1.505000 2.132600 2.807700 -0.204900 -0.466900 -1.295600 -1.759100 -1.221000 0.251500 -0.215700 3.189500 3.684900 -0.011600 2.328600 0.481500 0.774200 2.509700 1.407200 -0.853400 0.251200 -1.478000 -0.360600"/>
@@ -1008,16 +1008,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 57">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24" elementType="H N N O C C C C C C C C C H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.002100 -0.011100 -1.228700 -2.227600 2.449200 3.615600 1.164500 1.128200 3.590700 -0.118400 2.368500 -1.186800 -0.184600 2.355300 2.643100 4.556200 3.510600 3.524000 4.497600 2.518500 2.245400 -1.227100 0.326600 0.298800" y3="-0.004100 0.965800 2.951200 0.980900 0.875400 1.756900 1.659000 3.010900 3.045000 3.656300 3.862300 1.616600 5.161800 0.032400 0.501400 1.231500 2.000500 2.796800 3.620100 4.245900 4.699200 5.479500 5.539900 5.554900" z3="0.002000 0.007400 0.030200 0.017500 -0.001400 -0.444700 -0.000200 -0.000200 0.387100 0.018800 -0.028000 0.016500 0.032500 -0.686000 1.003900 -0.280000 -1.502000 1.446400 0.200600 -1.037200 0.659400 0.051500 0.917800 -0.861900"/>
@@ -1026,16 +1026,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 58">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41 a42 a43 a44 a45 a46 a47 a48 a49 a50" elementType="C C C C C C C C C C C C C C C C C C C C N C C C C C C H H H H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.021600 0.261200 1.075200 1.554500 2.368500 2.608200 4.494900 5.050500 4.624100 5.735900 5.308700 5.864600 5.728500 4.264300 4.900500 4.456400 5.728900 5.283700 5.920600 4.018000 4.817600 4.691500 5.366900 6.318200 7.631000 7.992400 7.040200 -0.988400 -0.562000 0.888000 1.741700 3.191800 3.955600 4.949900 6.170500 5.409000 6.399800 3.614500 3.959100 6.226500 5.433300 6.568400 4.006100 5.781400 3.696500 4.341300 6.035900 8.374300 9.018100 7.321900" y3="0.741600 -0.618600 1.623200 -1.097200 1.144600 -0.215600 -1.992400 -2.076500 -0.829300 -0.997800 0.249700 0.165500 -1.350100 0.885600 0.868100 1.948200 1.913200 2.993900 2.976000 -0.737400 0.176100 -0.290500 -2.526800 -3.498800 -3.294100 -2.117800 -1.147700 1.115800 -1.307400 2.685900 -2.159900 1.833400 -2.833500 -2.985300 -1.063800 1.158700 1.008300 0.070700 1.962000 1.899200 3.824400 3.792200 -1.726200 0.039100 -0.708300 -2.686700 -4.417800 -4.053200 -1.957700 -0.230100" z3="-0.445200 -0.502600 -0.291900 -0.406600 -0.196000 -0.253800 -2.260800 -3.523800 -1.525000 -4.050600 -2.052200 -3.315000 2.335800 4.233800 3.006700 5.096900 2.642700 4.732300 3.505600 -0.148300 0.678800 2.066000 2.964700 3.212200 2.830600 2.201000 1.949500 -0.524700 -0.622000 -0.247400 -0.450700 -0.076900 -1.851000 -4.098500 -5.037100 -1.477600 -3.726700 4.516800 6.055500 1.684300 5.406300 3.221500 0.310200 0.413300 2.219700 3.262800 3.704200 3.024700 1.903100 1.454300"/>
@@ -1044,16 +1044,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 59">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27" elementType="C C C C C C C C N N C C C C C C O H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.012900 1.195700 0.022200 2.399200 1.239000 2.443900 1.330300 3.650600 2.521300 3.607900 0.112400 -0.866700 -1.999300 -2.165100 -1.197800 -0.057700 4.834500 -0.926800 1.159400 -0.902200 3.309400 -0.738700 -2.758100 -3.053500 -1.333200 0.699100 4.989900" y3="1.311500 2.046600 -0.037300 1.440100 -0.690300 0.057600 -2.087200 -0.641900 -2.625300 -1.947200 -2.929600 -2.753900 -3.541900 -4.504300 -4.683100 -3.905800 0.017100 1.817900 3.113400 -0.595700 2.021300 -2.002400 -3.406800 -5.118400 -5.435500 -4.049800 0.290200" z3="-0.662500 -0.656900 -0.458700 -0.447800 -0.240900 -0.235500 -0.021400 -0.012600 0.177000 0.179200 -0.013800 -0.991600 -0.979200 0.000700 0.973500 0.967900 0.003600 -0.826300 -0.820900 -0.465100 -0.446600 -1.756700 -1.735800 0.006500 1.736300 1.724800 0.918100"/>
@@ -1062,16 +1062,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 60">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25" elementType="C C O C C C C C C C C N H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.018400 0.002100 1.060500 1.395400 2.260900 3.557800 3.989300 3.124100 1.828500 -0.758400 -0.734500 -1.155800 1.923800 4.233700 5.002300 3.461100 1.153700 -0.773100 -0.248200 -1.780900 -0.207300 -0.749300 -1.757100 -2.002300 -1.142700" y3="1.502800 -0.004100 -0.596100 2.024400 1.696500 2.175000 2.981000 3.308200 2.826100 2.009600 1.996200 -0.693800 1.066800 1.919400 3.355500 3.938200 3.078700 3.099500 1.658100 1.632300 1.635100 3.086100 1.618900 -0.220300 -1.663700" z3="0.010300 0.002000 -0.011300 -0.000400 1.026400 1.016600 -0.020200 -1.047500 -1.039900 -1.229200 1.269100 0.009400 1.836500 1.819200 -0.027500 -1.857300 -1.844400 -1.223200 -2.126000 -1.221500 2.152200 1.275100 1.276800 0.020000 0.004000"/>
@@ -1080,16 +1080,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 61">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38" elementType="C C C C C C C C C C C C C C C C C C C C O O H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.166800 0.318900 0.602600 1.857600 1.573900 2.343400 3.054400 3.155700 3.821900 4.025000 4.690600 4.792200 4.384300 5.347200 4.761000 6.100600 6.686900 7.063500 3.711200 3.918500 4.825600 3.095300 -1.149100 -0.282000 0.223000 2.458400 1.953600 2.372000 2.556400 4.104700 5.289700 5.471100 3.337500 5.053000 6.394800 7.439200 8.110100 3.228300" y3="1.081400 0.549300 1.034900 0.456300 -0.029300 -0.075400 -2.875800 -3.811000 -1.726800 -3.597500 -1.513000 -2.448300 1.656000 2.632100 0.356900 0.034000 2.308900 1.010000 -0.707100 -1.383200 -1.036500 -2.370500 1.529500 0.586000 1.450400 0.419400 -0.444400 -3.040500 -4.708900 -4.328500 -0.614900 -2.281400 1.909500 3.647000 -0.980800 3.071400 0.757800 -2.804300" z3="-0.136000 1.043800 -1.283500 -1.251300 1.076000 -0.071400 -1.099800 -2.112700 -1.140600 -3.166100 -2.194400 -3.207100 -0.513500 -0.689000 -0.228300 -0.118500 -0.580600 -0.294500 -0.036500 1.294300 2.013300 1.681000 -0.162300 1.940400 -2.205300 -2.148000 1.997900 -0.279100 -2.080600 -3.957200 -2.226600 -4.030300 -0.593800 -0.912600 0.105000 -0.718400 -0.208000 2.534900"/>
@@ -1098,16 +1098,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 62">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41 a42 a43 a44 a45" elementType="N C C C C C C C C C C C C C C C C H H H H H H H H H H H H H H H H H H H H H H H H H H H H" formalCharge="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.017800 -2.071600 -1.411700 -3.368300 -2.048600 -4.005600 -3.345400 0.002100 1.360300 1.339600 2.774900 -0.728300 -0.012200 -0.752200 -0.705400 0.034600 -0.681600 -1.575200 -3.883900 -1.532800 -5.018900 -3.842700 0.512300 0.529300 1.887500 1.870500 0.812400 0.829400 3.285100 2.760200 3.302100 -1.750900 -0.743100 1.010400 0.002600 -0.242000 -1.774800 -0.767000 -0.720200 -1.728000 0.049300 1.057200 -0.154400 -0.696400 -1.704200" y3="1.464800 -0.758500 -0.525700 -1.237400 -0.771800 -1.482200 -1.250300 -0.004100 1.973200 3.503100 4.032700 1.951400 1.458000 1.964800 1.938500 1.431700 1.925100 -0.563100 -1.419000 -0.590600 -1.855700 -1.443200 -0.355600 -0.365100 1.612200 1.621700 3.864200 3.854600 3.681100 5.122500 3.671600 1.574100 3.041300 1.835300 0.368100 1.613300 1.587500 3.054700 3.028400 1.561200 0.341800 1.809000 1.564000 3.015000 1.547800" z3="0.010100 -1.179500 0.012700 -1.169600 1.214700 0.032300 1.224500 0.002000 -0.000300 0.008100 -0.002800 -1.180000 -2.438800 -3.678300 1.218700 2.458200 3.717000 -2.118500 -2.101100 2.146100 0.040000 2.163600 -0.894800 0.885100 0.882700 -0.897100 -0.875000 0.904900 -0.899600 0.003200 0.880300 -1.172300 -1.174000 -2.446600 -2.444800 -4.575100 -3.670600 -3.672300 1.224700 1.226400 2.452200 2.450500 4.600100 3.723000 3.724800"/>
@@ -1116,16 +1116,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 63">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36" elementType="C C C C C C C C C C C C C C C C C O H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016700 0.002100 1.170900 1.208400 2.377300 2.396000 -3.401100 -4.569300 -2.984100 -5.328700 -3.756800 -4.922500 3.672000 -1.331900 1.228900 -1.292600 -1.738400 -1.070600 1.156300 3.338500 -2.807500 -4.892700 -6.242900 -3.441100 -5.520300 3.994400 4.434400 3.523600 -1.644100 -1.216900 -2.085900 1.223600 2.128800 0.349100 -1.144300 -2.055000" y3="1.378100 -0.004100 2.085500 -0.678900 1.410700 0.028500 -1.997200 -2.690800 -1.763700 -3.155100 -2.236500 -2.928400 2.181900 2.113800 -2.185700 -0.775300 -1.024700 -0.616500 3.165400 -0.498700 -1.639000 -2.871900 -3.697400 -2.060400 -3.294100 2.363000 1.605700 3.134900 2.285600 3.070700 1.517300 -2.544200 -2.539300 -2.563500 -1.728500 -0.199300" z3="0.009600 0.002000 0.002100 -0.013200 -0.013100 -0.021200 -2.981800 -3.217600 -1.667500 -2.157800 -0.602000 -0.854300 -0.022300 0.019900 -0.020500 0.010800 -1.407000 -2.333200 0.007700 -0.032400 -3.809900 -4.232000 -2.348900 0.415700 -0.032500 1.003000 -0.546500 -0.530200 1.050000 -0.489300 -0.493700 -1.049800 0.482800 0.500400 0.518100 0.535300"/>
@@ -1134,16 +1134,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 64">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39" elementType="C C C C C C C C C C C C C C C C C C C O C H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.178900 0.947500 -0.063400 1.178500 2.189500 2.304900 5.861300 6.620500 4.486600 6.004800 3.871000 4.630200 4.612000 5.249000 4.353000 4.730900 5.625700 5.367500 3.659000 3.500100 2.962700 -1.148600 0.857200 -0.943400 1.268900 3.069400 6.342600 7.694500 6.597900 2.797000 4.149200 4.321600 5.451000 4.529200 6.122800 5.663400 2.070800 3.705900 2.701400" y3="1.116400 1.903700 -0.261100 -0.851300 1.313400 -0.064100 0.137200 0.868600 0.090200 1.553700 0.774600 1.506400 -1.954700 -1.987200 -0.742800 0.436600 -0.807600 0.404200 -0.707500 -2.040600 -1.934600 1.577600 2.979900 -0.876200 -1.927500 1.928500 -0.401600 0.905700 2.125800 0.737300 2.041400 -2.876400 -2.934000 1.383400 -0.833000 1.325700 -1.308300 -1.487400 -2.927200" z3="0.422500 0.273200 0.429900 0.288100 0.131400 0.138400 -0.852700 -1.746900 -0.989800 -2.777700 -2.021100 -2.915000 1.934400 3.160900 1.322000 1.935900 3.775400 3.162500 -0.015300 -0.504800 -1.824700 0.537800 0.267000 0.546800 0.294500 0.014000 -0.050000 -1.639500 -3.475800 -2.128600 -3.720600 1.452200 3.639500 1.457100 4.733900 3.641900 -1.804600 -2.484800 -2.191400"/>
@@ -1152,16 +1152,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 65">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41 a42 a43 a44 a45 a46 a47 a48 a49 a50 a51 a52" elementType="C C C C C C C C C C C C C O O C O O C C C C C C C C H H H H H H H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.737200 0.535100 -0.907600 0.194400 1.637100 1.466700 4.290500 5.403900 3.137700 3.115500 5.382100 4.246600 1.898700 0.833500 1.971600 1.944400 0.981500 1.925100 0.720900 0.848600 1.178300 1.306000 1.967500 3.310800 -0.472100 -1.564500 -1.598300 -1.901600 0.061200 2.631100 2.327600 4.316300 6.296200 6.257600 4.237000 1.175800 -0.139700 0.381200 2.119200 2.103100 0.365100 1.540900 1.787200 1.987800 3.433500 3.337400 4.118600 -0.353700 -0.753300 -1.328900 -2.523700 -1.619200" y3="1.196000 1.734700 -0.156300 -0.970100 0.920900 -0.431500 4.516300 4.919400 5.297100 6.495400 6.097100 6.885200 7.335000 6.853100 8.634400 4.870600 5.606200 3.666200 3.208900 3.457700 4.931200 5.180000 2.582600 3.033400 3.108200 4.068600 1.832600 -0.577100 -2.026600 1.341700 -1.067200 3.598000 4.311100 6.402600 7.803400 9.183600 3.754700 5.554700 5.180200 4.556600 4.931000 6.229800 1.541900 2.678600 4.104700 2.819500 2.497200 3.197700 2.085500 5.079600 3.763000 4.047400" z3="1.475000 1.430500 1.705000 1.890600 1.616100 1.845700 3.204400 3.917600 3.213700 3.952300 4.643500 4.664500 3.971100 4.299900 3.623700 2.452200 2.370100 1.849400 1.179200 -0.325000 -0.572000 -2.076300 -0.893500 -0.316400 -1.013700 -0.539200 1.334400 1.740100 2.071000 1.581000 1.991400 2.636500 3.908400 5.197200 5.233100 3.636000 1.566000 -0.167000 -0.081400 -2.481300 -2.566900 -2.252200 -0.624100 -1.979100 -0.475700 0.752100 -0.814500 -2.093600 -0.762600 -0.871500 -0.957200 0.549200"/>
@@ -1170,16 +1170,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 66">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40 a41 a42 a43" elementType="C C C C C C C C C C C C C C C C C C C C C O C H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.008600 -4.982300 -4.309700 -4.344700 -3.000100 -3.035300 -2.363000 0.726700 0.519500 -0.217300 -0.631700 -1.368300 -1.575500 2.468100 1.436300 3.777700 1.714100 4.055400 3.023700 -0.935600 -0.263200 -0.707800 0.019900 -6.004000 -4.808000 -4.870100 -2.474900 -2.537400 1.628200 1.256800 -0.794000 -2.105900 -2.474600 2.250800 4.583800 0.908000 5.078600 3.240800 -0.779100 -0.732400 1.078300 -0.576600 -0.237300" y3="1.398500 1.192000 2.048500 0.686700 2.401300 1.039800 1.897100 -0.728600 -2.054400 -0.046900 -2.698500 -0.691100 -2.017000 1.212400 1.774700 1.557500 2.681800 2.465300 3.026900 2.282400 1.597100 0.688800 2.929200 0.912900 2.443600 0.017300 3.071000 0.645600 -0.226600 -2.586900 -3.734200 -0.158500 -2.520400 0.506500 1.118400 3.120600 2.734900 3.735100 3.327100 2.146100 3.166800 3.701900 2.882200" z3="-0.054800 -0.046100 0.805200 -1.163700 0.538000 -1.431200 -0.580300 -1.161600 -1.493400 -0.416600 -1.080300 -0.003100 -0.334900 0.371200 -0.356900 0.094100 -1.362300 -0.910700 -1.639400 -0.872200 1.414100 2.074100 2.059500 0.165100 1.678200 -1.828700 1.202800 -2.304800 -1.480600 -2.075800 -1.340200 0.579000 -0.011500 1.159200 0.663100 -1.931600 -1.127200 -2.425400 -0.603400 -1.934400 1.953000 1.574500 3.117600"/>
@@ -1188,16 +1188,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 67">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31" elementType="C C C C C C C S O O C C C C C C C H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.016700 0.002100 1.208400 2.396000 2.377300 1.170900 -1.331900 -1.851500 -2.134000 -0.934900 -3.411700 -4.053900 -3.763900 -4.352900 -5.232200 -5.522900 -4.937200 -0.925800 1.223100 3.338500 3.305100 1.156300 -1.216900 -2.085900 -3.213700 -4.082700 -3.077000 -4.125900 -5.691900 -6.209600 -5.167100" y3="1.378100 -0.004100 -0.678900 0.028500 1.410700 2.085500 2.113800 2.399700 1.148800 3.292400 3.273300 3.628900 4.836800 5.162900 4.281400 3.073900 2.749600 -0.556700 -1.758800 -0.498700 1.963400 3.165400 3.070700 1.517300 4.183900 2.630500 5.525500 6.106300 4.535900 2.385000 1.807900" z3="0.009600 0.002000 -0.013200 -0.021200 -0.014500 0.002100 0.019900 1.734200 2.346400 2.352300 1.429200 2.745400 3.351900 4.559200 5.159800 4.552800 3.343300 0.008300 -0.018400 -0.032400 -0.020100 0.008100 -0.489300 -0.493700 0.863800 0.859500 2.882800 5.033500 6.103400 5.022100 2.867300"/>
@@ -1206,16 +1206,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 68">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 a40" elementType="C C C C C C C C C C C C C O O C C C C C H H H H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.178800 -0.263300 1.058400 0.889400 2.211000 2.126500 0.983100 1.756100 1.538500 3.084600 2.867300 3.640100 2.016500 2.508300 2.241300 3.075700 4.476200 2.460800 3.169200 1.150500 -1.079300 -1.229900 0.823300 3.177600 3.027100 -0.053900 0.934700 3.688300 3.301400 4.677800 4.914200 4.409500 5.102500 1.463000 3.087100 2.394200 2.171500 3.607300 3.795500 0.152700" y3="1.472400 0.093200 2.088800 -0.669500 1.326100 -0.053100 4.813300 4.096300 5.275100 3.841100 5.021200 4.303300 4.008900 3.170800 5.310900 5.712200 5.120200 5.200600 7.238700 3.592400 2.068200 -0.388400 -1.747100 1.807700 -0.649000 5.015600 5.835600 3.280300 5.382600 4.103300 5.484700 4.032700 5.421500 5.622400 5.501900 4.113100 7.660500 7.603200 7.540000 4.014100" z3="0.071200 0.111100 0.053900 0.133600 0.076400 0.115700 2.188500 1.294600 3.367200 1.579200 3.651100 2.757600 -1.151000 -1.869000 -1.387300 -2.505900 -2.335600 -3.810100 -2.550500 0.009900 0.049100 0.125000 0.165500 0.062100 0.134000 1.964600 4.065400 0.881100 4.571600 2.980300 -1.406500 -2.303900 -3.175300 -3.931400 -4.649800 -3.778400 -2.671800 -1.621300 -3.390200 -0.111400"/>
@@ -1224,16 +1224,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 69">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 a30 a31 a32 a33 a34 a35 a36 a37 a38 a39" elementType="C C C C C C C C C C C C C C C N C C C C C C H H H H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="-0.169600 -0.554100 -0.171000 -0.523700 -1.259900 -1.643800 -1.294800 1.331500 2.110700 3.487600 4.085200 3.306000 1.928900 -0.692400 -0.757100 -1.210500 -0.280200 0.892500 1.270600 0.475900 -0.697200 -1.077600 0.404200 -0.223800 -1.534900 -2.218700 -1.597900 1.643800 4.096400 5.161000 3.772900 1.319900 -0.275600 -1.780000 1.513400 2.187200 0.771700 -1.318000 -1.996000" y3="1.439800 0.022500 -1.014600 -2.314600 -2.577500 -1.540300 -0.239800 1.547800 1.141700 1.240700 1.746300 2.153200 2.058200 2.383100 1.811000 2.097600 3.796500 4.310100 5.606500 6.389500 5.876200 4.581100 -0.809100 -3.124900 -3.593300 -1.745800 0.570900 0.746700 0.922800 1.823000 2.547900 2.379600 2.093700 2.322300 3.698400 6.007600 7.402100 6.487700 4.181300" z3="0.157400 -0.181100 0.648700 0.338200 -0.801900 -1.631200 -1.318400 0.236300 -0.830900 -0.758500 0.380800 1.447600 1.373600 -0.927800 1.455000 2.456400 -0.606100 -1.127500 -0.832400 -0.016100 0.504600 0.205900 1.539400 0.986200 -1.044800 -2.522100 -1.964400 -1.721000 -1.592000 0.437700 2.337900 2.205500 -1.892500 -0.969000 -1.765300 -1.239200 0.215100 1.142600 0.609700"/>
@@ -1242,16 +1242,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 70">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27 a28 a29" elementType="C C C C C C C C C C C C C C C H H H H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x3="0.111600 0.124400 1.201900 1.213600 2.298000 2.297100 2.668500 2.704500 2.367800 2.105600 2.443600 2.145100 2.328000 3.558400 1.195600 -0.740900 -0.717600 1.218200 3.144000 3.144000 2.876700 2.936400 1.872800 2.473200 1.943000 3.314100 4.336600 3.914500 0.280000" y3="1.371500 -0.001800 2.121300 -0.637300 1.472600 0.098600 6.444200 7.821900 5.713000 6.384600 8.480200 7.762800 4.240300 3.465500 3.589300 1.866500 -0.582600 -1.713000 2.045800 -0.404200 5.931600 8.388400 5.825900 9.559300 8.283300 2.405300 3.612100 3.818500 4.141300" z3="0.111000 -0.015800 -0.337900 -0.585600 -0.912700 -1.032000 1.208700 1.157200 0.056600 -1.140400 -0.031700 -1.176700 0.103400 0.499200 -0.206400 0.552200 0.330800 -0.682000 -1.262200 -1.475100 2.136300 2.046900 -2.034800 -0.066200 -2.101200 0.566600 -0.249800 1.467000 -0.359300"/>
@@ -1260,16 +1260,16 @@
 </cml:molecule>
 <cml:molecule xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
  title="NSC 71">
-<cml:metadataList title="generated automatically from Openbabel">
-<cml:metadata name="dc:creator" content="OpenBabel version 1-100.1"/>
+<cml:metadataList title="generated automatically from Open Babel">
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
 <cml:metadata name="dc:description" content="Conversion of legacy filetype to CML"/>
 <cml:metadata name="dc:identifier" content="Unknown"/>
 <cml:metadata name="dc:content"/>
 <cml:metadata name="dc:rights" content="unknown"/>
 <cml:metadata name="dc:type" content="chemistry"/>
 <cml:metadata name="dc:contributor" content="unknown"/>
-<cml:metadata name="dc:creator" content="Openbabel V1-100.1"/>
-<cml:metadata name="dc:date" content="Sun Sep 21 16:22:37 GMTDT 2003"/>
+<cml:metadata name="dc:creator" content="Open Babel version BABEL_VERSION"/>
+<cml:metadata name="dc:date" content="Sat Nov 08 21:50:19 CST 2003"/>
 <cml:metadata name="cmlm:structure" content="yes"/>
 </cml:metadataList>
 <cml:atomArray atomID="a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24 a25 a26 a27" elementType="C C C C C C C C C C C C C C C N H H H H H H H H H H H" formalCharge="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" x2="-0.018400 0.002100 0.022900 0.041700 0.039200 0.017500 -0.005700 1.417000 1.396600 1.975800 1.957100 1.358800 0.778800 0.793700 2.129000 2.678400 -0.545500 -0.528600 0.024800 0.058600 0.054600 0.015900 -0.026400 1.927200 2.443300 2.410300 1.344800" y2="1.502800 -0.004100 -0.701600 -2.083800 -2.768500 -2.071000 -0.688800 2.032400 3.539200 4.244000 5.626200 6.303600 5.598800 4.216500 1.544700 1.168400 1.863900 1.854300 -0.166700 -2.628700 -3.848300 -2.605900 -0.143900 1.680800 3.714800 6.176900 7.383500"/>
