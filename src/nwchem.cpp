@@ -13,6 +13,8 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
+using namespace std;
+
 namespace OpenBabel {
 
 bool ReadNWChem(istream &ifs,OBMol &mol,char *title)

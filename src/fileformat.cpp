@@ -18,6 +18,8 @@ GNU General Public License for more details.
 #include "fileformat.h"
 #include "mol.h"
 
+using namespace std;
+
 namespace OpenBabel {
 
 bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, char *title)

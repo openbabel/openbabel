@@ -21,25 +21,25 @@ namespace OpenBabel {
 
 class OBChemTsfm
 {
-  vector<int>                       _vadel;
-  vector<pair<int,int> >            _vele;
-  vector<pair<int,int> >            _vchrg;
-  vector<pair<int,int> >            _vbdel;
-  vector<pair<pair<int,int>,int> >  _vbond;
+  std::vector<int>                       _vadel;
+  std::vector<std::pair<int,int> >            _vele;
+  std::vector<std::pair<int,int> >            _vchrg;
+  std::vector<std::pair<int,int> >            _vbdel;
+  std::vector<std::pair<std::pair<int,int>,int> >  _vbond;
   OBSmartsPattern _bgn,_end;
 public:
   OBChemTsfm() {}
   ~OBChemTsfm() {}
-  bool Init(string&,string&);
+  bool Init(std::string&,std::string&);
   bool Apply(OBMol&);
 };
 
 
 class OBPhModel : public OBGlobalDataBase
 {
-  vector<vector<int> >                           _mlist;
-  vector<OBChemTsfm*>                            _vtsfm;
-  vector<pair<OBSmartsPattern*,vector<float> > > _vschrg;
+  std::vector<std::vector<int> >                           _mlist;
+  std::vector<OBChemTsfm*>                            _vtsfm;
+  std::vector<std::pair<OBSmartsPattern*,std::vector<float> > > _vschrg;
  public:
   OBPhModel();
   ~OBPhModel();

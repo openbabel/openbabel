@@ -17,6 +17,8 @@ GNU General Public License for more details.
 
 //#define KEKULE
 
+using namespace std;
+
 namespace OpenBabel {
 
 bool WriteSmiles(ostream &ofs,OBMol &mol,char *title)

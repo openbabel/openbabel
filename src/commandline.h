@@ -29,8 +29,8 @@ class ArgumentInfo
   bool     found;
   bool     list;
   bool     hasArgument;
-  string   helpString;
-  vector<string> arguments;
+  std::string   helpString;
+  std::vector<std::string> arguments;
 
   ArgumentInfo() {
     numargs = 1;
@@ -43,12 +43,12 @@ class ArgumentInfo
   }
 
   // constructor with Help string 
-  ArgumentInfo( const string & help) : argtyp(-2), numargs(1), argvar(NULL), 
+  ArgumentInfo( const std::string & help) : argtyp(-2), numargs(1), argvar(NULL), 
                                 found(false), list(false), hasArgument(false),
                                 helpString(help) {}
 };
 
-typedef map<string, ArgumentInfo, less<string> > maptype;
+typedef std::map<std::string, ArgumentInfo, std::less<std::string> > maptype;
 
 class CommandLine
 {
@@ -56,7 +56,7 @@ class CommandLine
   
   int argc, switches;
   char **argv;
-  string arglist;
+  std::string arglist;
 
   maptype cmdline;
   void (*usage)(void);
@@ -77,9 +77,9 @@ class CommandLine
   // Switch/Flag followed by Multiple Arguments
 
   void AddSwitch( const char *, int numargs,          bool list = false );
-  void AddSwitch( const char *, vector<int>    &,     bool list = false );
-  void AddSwitch( const char *, vector<float>  &,     bool list = false );
-  void AddSwitch( const char *, vector<string> &,     bool list = false );
+  void AddSwitch( const char *, std::vector<int>    &,     bool list = false );
+  void AddSwitch( const char *, std::vector<float>  &,     bool list = false );
+  void AddSwitch( const char *, std::vector<std::string> &,     bool list = false );
   void AddSwitch( const char *, void (*)(void *),     bool list = false );
 
   // Switch/Flag followed by Single Argument (with default value)
@@ -88,7 +88,7 @@ class CommandLine
   void AddSwitch( const char *, int    &, int    def, bool list = false );
   void AddSwitch( const char *, float  &, float  def, bool list = false );
   void AddSwitch( const char *, char   *, char  *def, bool list = false );
-  void AddSwitch( const char *, string &, string def, bool list = false );
+  void AddSwitch( const char *, std::string &, std::string def, bool list = false );
 
   int ProcessArguments( char *argv[], int argc );
   int ProcessArguments( int argc, char *argv[] ) { return ProcessArguments(argv, argc); }
@@ -103,7 +103,7 @@ class CommandLine
   virtual void Usage();
 
   // Add switched with help string
-  void AddSwitch(const char *arg, string &var, string def, const char *help, bool list= false);
+  void AddSwitch(const char *arg, std::string &var, std::string def, const char *help, bool list= false);
   void AddSwitch(const char *arg, int &var, int def, const char *help, bool list= false);
   void AddSwitch(const char *arg, float &var, float def, const char *help, bool list= false);
 
@@ -111,7 +111,7 @@ class CommandLine
 
   bool getValue(const char *s, int &f);     
   bool getValue(const char *s, float &f);   
-  bool getValue(const char *s, string &ret);
+  bool getValue(const char *s, std::string &ret);
 };
 
 #endif

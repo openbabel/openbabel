@@ -20,7 +20,7 @@ class GasteigerState;
 
 class OBGastChrg
 {
-  vector <GasteigerState*> _gsv;
+  std::vector <GasteigerState*> _gsv;
   void InitialPartialCharges(OBMol &);
   bool GasteigerSigmaChi(OBAtom *,float &,float &,float &);
  public:

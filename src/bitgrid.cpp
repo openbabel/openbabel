@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #endif
 
 using namespace OpenBabel;
+using namespace std;
 
 BitGrid::BitGrid(void)
 {

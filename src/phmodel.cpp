@@ -19,6 +19,8 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 
+using namespace std;
+
 namespace OpenBabel
 {
 

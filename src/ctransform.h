@@ -73,8 +73,8 @@ class OBCoordTrans {
         //Read/Write to binary array/stream
         unsigned int WriteBinary(char* ccc);
         unsigned int ReadBinary(char* ccc);
-        void WriteBinary(ostream& ostr);
-        void ReadBinary(istream& istr);
+        void WriteBinary(std::ostream& ostr);
+        void ReadBinary(std::istream& istr);
 
         //Setup functions
         bool Setup(float *xyz);

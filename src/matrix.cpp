@@ -15,6 +15,8 @@ GNU General Public License for more details.
 #include "Vector.h"
 #include <stdio.h>
 
+using namespace std;
+
 namespace OpenBabel {
 
 void print_matrix(vector<vector<float> > &m)

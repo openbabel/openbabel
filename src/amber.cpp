@@ -13,8 +13,9 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
-namespace OpenBabel {
+using namespace std;
 
+namespace OpenBabel {
 
 bool ReadAmberPrep(istream &ifs,OBMol &mol,char *title)
 {

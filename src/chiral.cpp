@@ -15,10 +15,11 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obutil.h"
 
-using namespace OpenBabel;
-
 #include "matrix.h"
 #include "chiral.h"
+
+using namespace std;
+namespace OpenBabel {
 
 void OBMol::FindChiralCenters()
 {
@@ -229,6 +230,4 @@ void construct_c_matrix(OBMol &mol,vector<vector<float > > &m)
     }
 }
 
-
-
-
+} // namespace

@@ -41,7 +41,7 @@ protected:
   OBBitVec grid,lipo,don,acc;
 
   patty p;
-  vector<string> types;
+  std::vector<std::string> types;
 
 public:
   
@@ -53,7 +53,7 @@ public:
   void Init(float,float,float,float,float,float,float);
   void Build(OBMol &);
   void Build(OBMol &, OBBitVec &);
-  void Build(OBMol &, vector<int> &);
+  void Build(OBMol &, std::vector<int> &);
   void SetBits(OBAtom *);
 
   void Clear(void) { grid.Clear(); lipo.Clear(); don.Clear(); acc.Clear(); }

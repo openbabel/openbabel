@@ -107,11 +107,11 @@ class OBPose {
             idx += OB_io_read_binary(&ccc[idx],(char*)&_conf,sizeof(float),1);
             return idx;
           }
-        void WriteBinary(ostream& ostr) {
+        void WriteBinary(std::ostream& ostr) {
             _ct.WriteBinary(ostr);
             OB_io_write_binary(ostr,(char*)&_conf,sizeof(float),1);
           } 
-        void ReadBinary(istream& istr) {
+        void ReadBinary(std::istream& istr) {
             _ct.ReadBinary(istr);
             OB_io_read_binary(istr,(char*)&_conf,sizeof(float),1);
           }
@@ -132,29 +132,29 @@ public:
   void RemoveAtom(OBAtom *atom);
   void Clear(void);
 
-  void    SetName(string &resname)               { _resname  = resname;  }
+  void    SetName(std::string &resname)               { _resname  = resname;  }
   void    SetNum(unsigned short resnum)          { _resnum   = resnum;   }
   void    SetChain(char chain)                   { _chain    = chain;    }
   void    SetChainNum(unsigned short chainnum)   { _chainnum = chainnum; }
   void    SetIdx(unsigned short idx)             { _idx      = idx;      }
 
-  void    SetAtomID(OBAtom *atom, string &id)    { _atomid[GetIndex(atom)] = id;     }
+  void    SetAtomID(OBAtom *atom, std::string &id)    { _atomid[GetIndex(atom)] = id;     }
   void    SetHetAtom(OBAtom *atom, bool hetatm)  { _hetatm[GetIndex(atom)] = hetatm; }
   void    SetSerialNum(OBAtom *atom, unsigned short sernum) { _sernum[GetIndex(atom)] = sernum; }
 
-  string&        GetName(void)                   { return(_resname);  }
+  std::string&        GetName(void)                   { return(_resname);  }
   unsigned short GetNum(void)                    { return(_resnum);   }
   char           GetChain(void)                  { return(_chain);    }
   unsigned short GetChainNum(void)               { return(_chainnum); }
   unsigned short GetIdx(void)                    { return(_idx);      }
 
-  string&        GetAtomID(OBAtom *atom)         { return(_atomid[GetIndex(atom)]); }
+  std::string&        GetAtomID(OBAtom *atom)         { return(_atomid[GetIndex(atom)]); }
   unsigned short GetSerialNum(OBAtom *atom)      { return(_sernum[GetIndex(atom)]); }
   bool           IsHetAtom(OBAtom *atom)         { return(_hetatm[GetIndex(atom)]); }
 
-  OBAtom *BeginAtom(vector<OBAtom*>::iterator &i) 
+  OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i) 
     {i = _atoms.begin();return((i ==_atoms.end()) ? NULL:*i);}
-  OBAtom *NextAtom(vector<OBAtom*>::iterator &i) 
+  OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i) 
     {i++;return((i ==_atoms.end()) ? NULL:*i);}
 
 protected: // methods
@@ -171,12 +171,12 @@ protected: // members
   char                   _chain;
   unsigned short         _chainnum;
   unsigned short         _resnum;
-  string                 _resname;
+  std::string                 _resname;
 
-  vector<bool>           _hetatm;
-  vector<string>         _atomid;
-  vector<OBAtom*>        _atoms;
-  vector<unsigned short> _sernum;
+  std::vector<bool>           _hetatm;
+  std::vector<std::string>    _atomid;
+  std::vector<OBAtom*>        _atoms;
+  std::vector<unsigned short> _sernum;
 
 };
 
@@ -228,7 +228,7 @@ public:
     void DecrementImplicitValence()          {_impval--;}
     void SetFormalCharge(int fcharge)        {_fcharge = fcharge;}
     void SetType(char *type)                 {strcpy(_type,type);}
-    void SetType(string &type)               {strcpy(_type,type.c_str());}
+    void SetType(std::string &type)               {strcpy(_type,type.c_str());}
     void SetPartialCharge(float pcharge)     {_pcharge = pcharge;}
     void SetVector();
     void SetVector(Vector &v);                
@@ -281,18 +281,18 @@ public:
     OBAtom    *GetNextAtom();
 
     //***iterator methods***
-    vector<OBEdgeBase*>::iterator BeginBonds() {return(_vbond.begin());}
-    vector<OBEdgeBase*>::iterator EndBonds()   {return(_vbond.end());}
-    OBBond *BeginBond(vector<OBEdgeBase*>::iterator &i);
-    OBBond *NextBond(vector<OBEdgeBase*>::iterator &i); 
-    OBAtom *BeginNbrAtom(vector<OBEdgeBase*>::iterator &); 
-    OBAtom *NextNbrAtom(vector<OBEdgeBase*>::iterator &); 
+    std::vector<OBEdgeBase*>::iterator BeginBonds() {return(_vbond.begin());}
+    std::vector<OBEdgeBase*>::iterator EndBonds()   {return(_vbond.end());}
+    OBBond *BeginBond(std::vector<OBEdgeBase*>::iterator &i);
+    OBBond *NextBond(std::vector<OBEdgeBase*>::iterator &i); 
+    OBAtom *BeginNbrAtom(std::vector<OBEdgeBase*>::iterator &); 
+    OBAtom *NextNbrAtom(std::vector<OBEdgeBase*>::iterator &); 
 
     //***addition of residue/bond info. for an atom***
     void NewResidue()                                          {if (!_residue) _residue = new OBResidue;}
     void DeleteResidue()                                       {if (_residue) delete _residue;}
     void AddBond(OBBond *bond)                                 {_vbond.push_back((OBEdgeBase*)bond);}
-    void InsertBond(vector<OBEdgeBase*>::iterator &i, OBBond *bond)
+    void InsertBond(std::vector<OBEdgeBase*>::iterator &i, OBBond *bond)
       {_vbond.insert(i, (OBEdgeBase*)bond);}
     bool DeleteBond(OBBond*);
 
@@ -458,15 +458,15 @@ protected:
   bool                          _compressed;
   io_type                       _itype;
   io_type                       _otype;
-  string                        _title;
+  std::string                        _title;
   //vector<OBAtom*>               _atom;
   //vector<OBBond*>               _bond;
-  vector<OBResidue*>            _residue;
-  vector<OBGenericData*>        _vdata;
+  std::vector<OBResidue*>            _residue;
+  std::vector<OBGenericData*>        _vdata;
   float                         _energy;
   float                        *_c;
-  vector<float*>                _vconf;
-  vector<OBPose>                _pose;
+  std::vector<float*>                _vconf;
+  std::vector<OBPose>                _pose;
   float                        *_xyz_pose;
   unsigned int                  _cur_pose_idx;
   unsigned short int            _natoms;
@@ -513,26 +513,26 @@ public:
     virtual bool UnCompress(void);
     
     //***methods for handling generic data***
-    bool                              HasData(string &);
+    bool                              HasData(std::string &);
     bool                              HasData(const char *);
     bool                              HasData(obDataType);
     void                              DeleteData(obDataType);
     void                              DeleteData(OBGenericData*);
-    void                              DeleteData(vector<OBGenericData*>&);
+    void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d) {_vdata.push_back(d);     }
     unsigned int                      DataSize()                {return(_vdata.size());   }
     OBGenericData                    *GetData(obDataType);
-    OBGenericData                    *GetData(string&);
+    OBGenericData                    *GetData(std::string&);
     OBGenericData                    *GetData(const char *);
-    vector<OBGenericData*>           &GetData()                 {return(_vdata);         }
-    vector<OBGenericData*>::iterator  BeginData()               {return(_vdata.begin()); }
-    vector<OBGenericData*>::iterator  EndData()                 {return(_vdata.end());   }
+    std::vector<OBGenericData*>           &GetData()                 {return(_vdata);         }
+    std::vector<OBGenericData*>::iterator  BeginData()               {return(_vdata.begin()); }
+    std::vector<OBGenericData*>::iterator  EndData()                 {return(_vdata.end());   }
 
     //OBMol data retrieval methods
     int          GetFlags()                           {return(_flags);}
-    bool         GetGTDVector(vector<int> &);
-	void         GetGIVector(vector<unsigned int> &);
-	void         GetGIDVector(vector<unsigned int> &);
+    bool         GetGTDVector(std::vector<int> &);
+    void         GetGIVector(std::vector<unsigned int> &);
+    void         GetGIDVector(std::vector<unsigned int> &);
     const char  *GetTitle()                           {return(_title.c_str());}
     io_type      GetInputType()                       {return(_itype);}
     io_type      GetOutputType()                      {return(_otype);}
@@ -553,12 +553,12 @@ public:
     float        GetEnergy()                          {return(_energy);}
     float        GetMolWt();
     float       *GetCoordinates()                     {return(_c);}
-    vector<OBRing*> &GetSSSR();
+    std::vector<OBRing*> &GetSSSR();
     bool         IsCompressed()                       {return _compressed;}
 
     //***data modification methods***
     void   SetTitle(char *title)           {_title = title;}
-    void   SetTitle(string &title)         {_title = title;}
+    void   SetTitle(std::string &title)         {_title = title;}
     void   SetEnergy(float energy)         {_energy = energy;}
     void   SetInputType(io_type type)      {_itype = type;}
     void   SetOutputType(io_type type)     {_otype = type;}
@@ -582,7 +582,7 @@ public:
 
     //***molecule modification methods***
     bool Clear();
-    void RenumberAtoms(vector<OBNodeBase*>&);
+    void RenumberAtoms(std::vector<OBNodeBase*>&);
     void ToInertialFrame(int,float*);
     void ToInertialFrame();
     void Translate(const Vector &v);
@@ -608,10 +608,10 @@ public:
     void FindSSSR();
     void FindRingAtomsAndBonds();
     void FindChiralCenters();
-    void FindChildren(vector<int> &,int,int);
-    void FindChildren(vector<OBAtom*>&,OBAtom*,OBAtom*);
+    void FindChildren(std::vector<int> &,int,int);
+    void FindChildren(std::vector<OBAtom*>&,OBAtom*,OBAtom*);
     void FindLargestFragment(OBBitVec &);
-    void ContigFragList(vector<vector<int> >&);
+    void ContigFragList(std::vector<std::vector<int> >&);
     void Align(OBAtom*,OBAtom*,Vector&,Vector&);
     void ConnectTheDots();
     void PerceiveBondOrders();
@@ -647,27 +647,27 @@ public:
     bool Empty() {return(_natoms == 0);}
 
     //***iterator methods***
-    OBAtom *BeginAtom(vector<OBNodeBase*>::iterator &i);
-    OBAtom *NextAtom(vector<OBNodeBase*>::iterator &i);
-    OBBond *BeginBond(vector<OBEdgeBase*>::iterator &i); 
-    OBBond *NextBond(vector<OBEdgeBase*>::iterator &i); 
-    OBResidue *BeginResidue(vector<OBResidue*>::iterator &i)
+    OBAtom *BeginAtom(std::vector<OBNodeBase*>::iterator &i);
+    OBAtom *NextAtom(std::vector<OBNodeBase*>::iterator &i);
+    OBBond *BeginBond(std::vector<OBEdgeBase*>::iterator &i); 
+    OBBond *NextBond(std::vector<OBEdgeBase*>::iterator &i); 
+    OBResidue *BeginResidue(std::vector<OBResidue*>::iterator &i)
       {i = _residue.begin();return((i == _residue.end()) ? NULL:*i);}
-    OBResidue *NextResidue(vector<OBResidue*>::iterator &i)
+    OBResidue *NextResidue(std::vector<OBResidue*>::iterator &i)
       {i++;return((i == _residue.end()) ? NULL:*i);}
 
     //*** MultiConf member functions
     int     NumConformers()         {return((_vconf.empty())?0:_vconf.size());}
-    void    SetConformers(vector<float*> &v);
+    void    SetConformers(std::vector<float*> &v);
     void    AddConformer(float *f)                  {_vconf.push_back(f);}
     void    SetConformer(int i)                     {_c = _vconf[i];}
     void    CopyConformer(float*,int);
     void    CopyConformer(double*,int);
     void    DeleteConformer(int);
     float  *GetConformer(int i)                     {return(_vconf[i]);}
-    float  *BeginConformer(vector<float*>::iterator&);
-    float  *NextConformer(vector<float*>::iterator&);
-    vector<float*> &GetConformers()                   {return(_vconf);}
+    float  *BeginConformer(std::vector<float*>::iterator&);
+    float  *NextConformer(std::vector<float*>::iterator&);
+    std::vector<float*> &GetConformers()                   {return(_vconf);}
 
     //Pose Member functions
     unsigned int NumPoses() const {return ((_pose.empty())?0:_pose.size());}
@@ -675,7 +675,7 @@ public:
     void DeletePoses();
     void DeletePose(unsigned int i);
     void AddPose(OBPose& pose); 
-    void SetPoses(vector<OBPose>& poses);
+    void SetPoses(std::vector<OBPose>& poses);
     void SetPose(unsigned int i);
     void GetPoseCoordinates(unsigned int i, float *xyz);
     OBPose& GetPose(unsigned int i);
@@ -707,15 +707,15 @@ public:
 //function prototypes
 // (prototypes for Read/Write are in fileformat.h
 
-bool tokenize(vector<string>&, char *buf,char *delimstr=" \t\n");
-bool tokenize(vector<string> &,string&,char*,int limit=-1);
+bool tokenize(std::vector<std::string>&, char *buf,char *delimstr=" \t\n");
+bool tokenize(std::vector<std::string> &,std::string&,char*,int limit=-1);
 void ThrowError(char *str);
-void ThrowError(string &str);
-void CartesianToInternal(vector<OBInternalCoord*>&,OBMol&);
-void InternalToCartesian(vector<OBInternalCoord*>&,OBMol&);
-string NewExtension(string&,char*);
-bool SetInputType(OBMol&,string&);
-bool SetOutputType(OBMol&,string&);
+void ThrowError(std::string &str);
+void CartesianToInternal(std::vector<OBInternalCoord*>&,OBMol&);
+void InternalToCartesian(std::vector<OBInternalCoord*>&,OBMol&);
+std::string NewExtension(std::string&,char*);
+bool SetInputType(OBMol&,std::string&);
+bool SetOutputType(OBMol&,std::string&);
 
 void qtrfit (float *r,float *f,int size,float u[3][3]);
 float superimpose(float*,float*,int);

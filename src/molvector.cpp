@@ -16,6 +16,8 @@ GNU General Public License for more details.
 
 #include "molvector.h"
 
+using namespace std;
+
 namespace OpenBabel {
 
 //Functions for dealing with groups of molecules.  MolVec will read either all

@@ -15,6 +15,8 @@ GNU General Public License for more details.
 #include "obutil.h"
 #include "typer.h"
 
+using namespace std;
+
 namespace OpenBabel
 {
 

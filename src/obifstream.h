@@ -22,7 +22,7 @@ GNU General Public License for more details.
 #include <fstream>
 #endif
 
-class obifstream : public ifstream
+class obifstream : public std::ifstream
 {
 public:
   bool SafeGetline(char *buffer,int size)

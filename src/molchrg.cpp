@@ -14,6 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "molchrg.h"
 
+using namespace std;
 namespace OpenBabel {
 
 bool OBGastChrg::AssignPartialCharges(OBMol &mol)

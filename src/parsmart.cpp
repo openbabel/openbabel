@@ -18,6 +18,8 @@ GNU General Public License for more details.
 //Code for SMARTS parser
 //
 
+using namespace std;
+
 namespace OpenBabel
 {
 

@@ -39,7 +39,7 @@ class OBNodeBase : public OBBase
 protected:
 	unsigned short int  _idx;
 	OBGraphBase        *_parent;
-	vector<OBEdgeBase*> _vbond;
+	std::vector<OBEdgeBase*> _vbond;
 public:
 	bool Visit;
 	         OBNodeBase()                            {Visit = false;}
@@ -67,11 +67,11 @@ public:
 	virtual bool          IsConnected(OBNodeBase*);
 	virtual OBNodeBase   *GetMatch()                 {((OBNodeBase*)this)->Error(13); return(NULL);}
 	virtual OBGraphBase  *GetParent()                {return(_parent);}
-	OBEdgeBase           *Begin(vector<OBEdgeBase*>::iterator&);
-	OBEdgeBase           *Next(vector<OBEdgeBase*>::iterator&);
-	OBNodeBase           *BeginNbr(vector<OBEdgeBase*>::iterator&);
-	OBNodeBase           *NextNbr(vector<OBEdgeBase*>::iterator&);
-	void Error(int f)     {cerr << "atom vf called = " << f << endl;}
+	OBEdgeBase           *Begin(std::vector<OBEdgeBase*>::iterator&);
+	OBEdgeBase           *Next(std::vector<OBEdgeBase*>::iterator&);
+	OBNodeBase           *BeginNbr(std::vector<OBEdgeBase*>::iterator&);
+	OBNodeBase           *NextNbr(std::vector<OBEdgeBase*>::iterator&);
+	void Error(int f)     {std::cerr << "atom vf called = " << f << std::endl;}
 };
 
 class OBEdgeBase : public OBBase
@@ -98,19 +98,19 @@ public:
 	unsigned int GetIdx()          {return(_idx);}
 	void SetIdx(int idx)           {_idx = idx;}
 	void SetEnd(OBNodeBase *n)     {_end = n;}
-	void SwapEnds()                {swap(_bgn,_end);}
+	void SwapEnds()                {std::swap(_bgn,_end);}
 	void SetParent(OBGraphBase*);               
 	OBNodeBase *GetBgn()           {return(_bgn);}
 	OBNodeBase *GetEnd()           {return(_end);}
-	void Error(int f) {cerr << "bond vf err = " << f << endl;}
+	void Error(int f) {std::cerr << "bond vf err = " << f << std::endl;}
 };
 
 class OBGraphBase : public OBBase
 {
 protected:
 	bool                 _vlock;
-	vector<OBNodeBase*>  _vatom;
-	vector<OBEdgeBase*>  _vbond;
+	std::vector<OBNodeBase*>  _vatom;
+	std::vector<OBEdgeBase*>  _vbond;
 public:
 	OBGraphBase() 
 	{
@@ -129,10 +129,10 @@ public:
 	void        ResetVisitFlags();
 	bool        SetVisitLock(bool);
 	bool        GetVisitLock()        {return(_vlock);}
-	OBNodeBase *Begin(vector<OBNodeBase*>::iterator&); 
-	OBNodeBase *Next(vector<OBNodeBase*>::iterator&);
-	OBEdgeBase *Begin(vector<OBEdgeBase*>::iterator&);
-	OBEdgeBase *Next(vector<OBEdgeBase*>::iterator&);
+	OBNodeBase *Begin(std::vector<OBNodeBase*>::iterator&); 
+	OBNodeBase *Next(std::vector<OBNodeBase*>::iterator&);
+	OBEdgeBase *Begin(std::vector<OBEdgeBase*>::iterator&);
+	OBEdgeBase *Next(std::vector<OBEdgeBase*>::iterator&);
 
 	//substructure search functions
 	virtual bool SingleMatch()                  const {return(false);}
@@ -140,15 +140,17 @@ public:
 	virtual bool FinishedMatch()                const {return(false);}
 	virtual void SetFinishedMatch(bool)         {}
 	virtual void ClearMatches()                 {}
-	virtual void PushBack(vector<OBNodeBase*>&) {}
+	virtual void PushBack(std::vector<OBNodeBase*>&) {}
 	virtual void PrepForMatch()                 {}
-	virtual vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator BgnMatch() {return((vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator) NULL);}
-	virtual vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator EndMatch() {return((vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator) NULL);}
+	virtual std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator BgnMatch() 
+	  {return((std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator) NULL);}
+	virtual std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator EndMatch()
+	  {return((std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator) NULL);}
 	virtual OBNodeBase *GetFirstSeed() {return((OBNodeBase*)NULL);}
 	bool Match(OBGraphBase &,bool singleMatch=false);
 	bool Match(OBGraphBase &,
-		       vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator,
-		       vector<OBEdgeBase*>::iterator);
+		       std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator,
+		       std::vector<OBEdgeBase*>::iterator);
 };
 
 } //namespace OpenBabel

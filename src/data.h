@@ -61,10 +61,10 @@ class OBGlobalDataBase
  protected:
   bool    _init;
   char   *_dataptr;
-  string  _filename;
-  string  _dir;
-  string  _subdir;
-  string  _envvar;
+  std::string  _filename;
+  std::string  _dir;
+  std::string  _subdir;
+  std::string  _envvar;
  public:
   OBGlobalDataBase()
     {
@@ -109,7 +109,7 @@ class OBElement
 
 class OBElementTable : public OBGlobalDataBase
 {
-  vector<OBElement*> _element;
+  std::vector<OBElement*> _element;
 
 public:
 
@@ -133,8 +133,8 @@ class OBTypeTable : public OBGlobalDataBase
 {
   int    _linecount;
   int    _ncols,_nrows,_from,_to;
-  vector<string> _colnames;
-  vector<vector<string> > _table;
+  std::vector<std::string> _colnames;
+  std::vector<std::vector<std::string> > _table;
 
  public:
 
@@ -145,13 +145,13 @@ class OBTypeTable : public OBGlobalDataBase
   bool SetFromType(char*);
   bool SetToType(char*);
   bool Translate(char*,char*); // to, from
-  bool Translate(string &,string &); // to, from
+  bool Translate(std::string &,std::string &); // to, from
 };
 
 class OBExtensionTable : public OBGlobalDataBase
 {
   int                     _linecount;
-  vector<vector<string> > _table;
+  std::vector<std::vector<std::string> > _table;
 
  public:
 
@@ -169,9 +169,9 @@ class OBExtensionTable : public OBGlobalDataBase
 
   io_type       GetType(unsigned int);
   io_type       FilenameToType(char *);
-  io_type       FilenameToType(string &);
+  io_type       FilenameToType(std::string &);
   io_type	MIMEToType(char *);
-  io_type	MIMEToType(string &);
+  io_type	MIMEToType(std::string &);
   const char   *GetExtension(unsigned int);
   const char   *GetDescription(unsigned int);
   unsigned int  Count(); 

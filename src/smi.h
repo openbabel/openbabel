@@ -23,8 +23,8 @@ namespace OpenBabel{
 class OBSmiNode
 {
   OBAtom *_atom,*_parent;
-  vector<OBSmiNode*> _nextnode;
-  vector<OBBond*> _nextbond;
+  std::vector<OBSmiNode*> _nextnode;
+  std::vector<OBBond*> _nextbond;
 public:
   OBSmiNode(OBAtom *atom);
   ~OBSmiNode();
@@ -40,19 +40,19 @@ public:
 
 class OBMol2Smi
 {
-  vector<int> _atmorder;
-  vector<int> _storder;
-  vector<bool> _aromNH;
+  std::vector<int> _atmorder;
+  std::vector<int> _storder;
+  std::vector<bool> _aromNH;
   OBBitVec _uatoms,_ubonds;
-  vector<OBEdgeBase*> _vclose;
-  vector<pair<OBAtom*,pair<int,int> > > _vopen;
+  std::vector<OBEdgeBase*> _vclose;
+  std::vector<std::pair<OBAtom*,std::pair<int,int> > > _vopen;
 public:
   OBMol2Smi() {_vclose.clear();}
   ~OBMol2Smi() {}
   int          GetUnusedIndex();
   void         Init();
   void         CreateSmiString(OBMol&,char*);
-  void         GetClosureAtoms(OBAtom*,vector<OBNodeBase*>&);
+  void         GetClosureAtoms(OBAtom*,std::vector<OBNodeBase*>&);
   void         FindClosureBonds(OBMol&);
   void         ToSmilesString(OBSmiNode *node,char *buffer);
   void         RemoveUsedClosures();
@@ -61,12 +61,12 @@ public:
   bool         GetSmilesElement(OBSmiNode*,char*);
   bool         GetChiralStereo(OBSmiNode*,char*);
   void         CorrectAromaticAmineCharge(OBMol&);
-  vector<pair<int,OBBond*> >  GetClosureDigits(OBAtom*);
-  vector<int> &GetOutputOrder()                   {return(_atmorder);}
+  std::vector<std::pair<int,OBBond*> >  GetClosureDigits(OBAtom*);
+  std::vector<int> &GetOutputOrder()                   {return(_atmorder);}
 };
 
 bool WriteTheSmiles(OBMol & mol,char *out);
-bool WriteSmiles(ostream &ofs, OBMol &mol,char *title);
+bool WriteSmiles(std::ostream &ofs, OBMol &mol,char *title);
 
 }
 

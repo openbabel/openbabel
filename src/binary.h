@@ -24,10 +24,10 @@ namespace OpenBabel
 class OBRotamerList : public OBGenericData
 {
   unsigned int _NBaseCoords;
-  vector<float*> _c;
-  vector<vector<float> > _vres;
-  vector<unsigned char*> _vrotamer;
-  vector<pair<OBAtom**,vector<int> > > _vrotor;
+  std::vector<float*> _c;
+  std::vector<std::vector<float> > _vres;
+  std::vector<unsigned char*> _vrotamer;
+  std::vector<std::pair<OBAtom**,std::vector<int> > > _vrotor;
 
   //Invoking the default copy constructor or
   //assignment operator would cause a serious
@@ -46,9 +46,9 @@ public:
   void AddRotamer(unsigned char *arr);
   void AddRotamers(unsigned char*,int);
   void GetReferenceArray(unsigned char*);
-  void ExpandConformerList(OBMol&,vector<float*>&);
-  vector<unsigned char*>::iterator BeginRotamer() {return(_vrotamer.begin());}
-  vector<unsigned char*>::iterator EndRotamer() {return(_vrotamer.end());}
+  void ExpandConformerList(OBMol&,std::vector<float*>&);
+  std::vector<unsigned char*>::iterator BeginRotamer() {return(_vrotamer.begin());}
+  std::vector<unsigned char*>::iterator EndRotamer() {return(_vrotamer.end());}
 
   //Support for internal storage of base coordinate sets that rotamers operate on
   //Added by MM 4/19/01
@@ -57,13 +57,13 @@ public:
       //assuming was the original intent that was simply never coded.
 
       //Create a conformer list using the internal base set of coordinates
-      vector<float*> CreateConformerList(OBMol& mol);
+      std::vector<float*> CreateConformerList(OBMol& mol);
 
       //Copies the mol's conformers (the coordinates, NOT the pointers) into the object as base coordinates
       void SetBaseCoordinateSets(OBMol& mol) {SetBaseCoordinateSets(mol.GetConformers(),mol.NumAtoms());} 
 
       //Copies the coordinates in bc, NOT the pointers, into the object
-      void SetBaseCoordinateSets(vector<float*> bc, unsigned int N); 
+      void SetBaseCoordinateSets(std::vector<float*> bc, unsigned int N); 
 
       //Returns true if the internal base coordinates are set
       unsigned int NumBaseCoordinateSets() {return _c.size();}
@@ -77,11 +77,11 @@ public:
 
 class OBBinaryDBase
 {
-  ifstream _ifs;
-  vector<streampos> _vpos;
+  std::ifstream _ifs;
+  std::vector<std::streampos> _vpos;
  public:
   OBBinaryDBase(char*);
-  OBBinaryDBase(string&);
+  OBBinaryDBase(std::string&);
   int  Size();
   void GetMolecule(OBMol&,int);
 };

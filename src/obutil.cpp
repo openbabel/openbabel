@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <conio.h>
 #endif
 
+using namespace std;
 namespace OpenBabel {
 
 void ThrowError(char *str)

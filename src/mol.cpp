@@ -15,6 +15,8 @@ GNU General Public License for more details.
 #include "binary.h"
 #include "phmodel.h"
 
+using namespace std;
+
 namespace OpenBabel {
 
 extern bool SwabInt;
@@ -2641,6 +2643,8 @@ void OBMol::ConnectTheDots(void)
   delete [] c;
 }
 
+// From current connectivity (but little or no atom types)
+// assign multiple bonds to fill out valences, etc.
 void OBMol::PerceiveBondOrders()
 {
   OBAtom *atom, *b, *c;

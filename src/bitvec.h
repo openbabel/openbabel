@@ -41,7 +41,7 @@ namespace OpenBabel {
 class OBBitVec
 {
   int _size;
-  vector<int> _set;
+  std::vector<int> _set;
 public:
     OBBitVec() {_set.resize(STARTWORDS);_size=_set.size();Clear();}
     OBBitVec(int bits) 
@@ -69,9 +69,9 @@ public:
 	{return((bit/SETWORD >= GetSize()) ? 
 		false : _set[bit/SETWORD]>>(bit%SETWORD)&1);}
     
-    void FromVecInt(vector<int>&);
-    void FromString(string&,int);
-    void ToVecInt(vector<int>&);
+    void FromVecInt(std::vector<int>&);
+    void FromString(std::string&,int);
+    void ToVecInt(std::vector<int>&);
     void Clear(void);
     void Negate() { for (int i= 0; i != _size; i++) { _set[i] = ~_set[i]; } }
 
@@ -92,8 +92,8 @@ public:
     friend OBBitVec operator- (OBBitVec &,OBBitVec &);
     friend bool operator== (const OBBitVec &,const OBBitVec &);
 
-    friend istream& operator>> ( istream&, OBBitVec& );
-    friend ostream& operator<< ( ostream&, const OBBitVec& ) ;
+    friend std::istream& operator>> ( std::istream&, OBBitVec& );
+    friend std::ostream& operator<< ( std::ostream&, const OBBitVec& ) ;
 };
 
 extern void ThrowError(char *);

@@ -16,6 +16,8 @@ GNU General Public License for more details.
 #include "binary.h"
 #include "obutil.h"
 
+using namespace std;
+
 #define OB_TITLE_SIZE 254
 #define OB_BINARY_SETWORD 32
 

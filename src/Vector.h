@@ -73,7 +73,7 @@ class	Vector {
 
 			//  Output
 
-      friend ostream& operator<< ( ostream&, const Vector& ) ;
+      friend std::ostream& operator<< ( std::ostream&, const Vector& ) ;
 
 			//  Comparison
 
@@ -206,7 +206,7 @@ class Matrix3x3
   void FillOrth(float,float,float,float,float,float);
   friend Vector operator *(const Vector &,const Matrix3x3 &);
   friend Vector operator *(const Matrix3x3 &,const Vector &);
-  friend ostream& operator<< ( ostream&, const Matrix3x3 & ) ;
+  friend std::ostream& operator<< ( std::ostream&, const Matrix3x3 & ) ;
 };
 
 Vector center_coords(float*,int);

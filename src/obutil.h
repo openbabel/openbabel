@@ -121,18 +121,18 @@ void rotate_coords(float*,float m[3][3],int);
 float calc_rms(float*,float*,int);
 
 //**File stream helper methods
-bool SafeOpen(ifstream&,char*);
-bool SafeOpen(ofstream&,char*);
-bool SafeOpen(ifstream&,string&);
-bool SafeOpen(ofstream&,string&);
+bool SafeOpen(std::ifstream&,char*);
+bool SafeOpen(std::ofstream&,char*);
+bool SafeOpen(std::ifstream&,std::string&);
+bool SafeOpen(std::ofstream&,std::string&);
 
-void ToUpper(string&);
+void ToUpper(std::string&);
 void ToUpper(char*);
 void CleanAtomType(char*);
 
 bool OBCompareInt(const int &,const int &);
 bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
-void SmartsLexReplace(string &,vector<pair<string,string> > &);
+void SmartsLexReplace(std::string &,std::vector<std::pair<std::string,std::string> > &);
 
 //******************triple template*************************
 //based on the STL design of the pair<> template

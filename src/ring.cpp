@@ -16,6 +16,8 @@ GNU General Public License for more details.
 
 #include "obutil.h"
 
+using namespace std;
+
 namespace OpenBabel {
 
 static int DetermineFRJ(OBMol &);

@@ -30,7 +30,7 @@ class OBRTree
   OBRTree(OBAtom*,OBRTree*);
   ~OBRTree() {}
   int  GetAtomIdx();
-  void PathToRoot(vector<OBNodeBase*>&);
+  void PathToRoot(std::vector<OBNodeBase*>&);
 };
 
 class OBRing
@@ -38,13 +38,13 @@ class OBRing
   OBMol *_parent;
  public:
   //public data members
-  vector<int> _path;
+  std::vector<int> _path;
   OBBitVec _pathset;
   bool findCenterAndNormal(Vector & center, Vector &norm1, Vector &norm2);
 
   //constructors
   OBRing(){};
-  OBRing(vector<int>&,int);
+  OBRing(std::vector<int>&,int);
 	OBRing(const OBRing &src);
 	OBRing& operator=(const OBRing &src);
 
@@ -63,8 +63,8 @@ bool CompareRingSize(const OBRing *,const OBRing *);
 
 class OBRingSearch
 {
-  vector<OBBond*> _bonds;
-  vector<OBRing*> _rlist;
+  std::vector<OBBond*> _bonds;
+  std::vector<OBRing*> _rlist;
  public:
   OBRingSearch(){}
   ~OBRingSearch();
@@ -72,9 +72,9 @@ class OBRingSearch
   void    RemoveRedundant(int);
   void    AddRingFromClosure(OBMol &,OBBond *,int);
   void    WriteRings();
-  bool    SaveUniqueRing(deque<int>&,deque<int>&);
-  vector<OBRing*>::iterator BeginRings() {return(_rlist.begin());}
-  vector<OBRing*>::iterator EndRings() {return(_rlist.end());}
+  bool    SaveUniqueRing(std::deque<int>&,std::deque<int>&);
+  std::vector<OBRing*>::iterator BeginRings() {return(_rlist.begin());}
+  std::vector<OBRing*>::iterator EndRings() {return(_rlist.end());}
 };
 
 }

@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #define false 0
 #endif
 
+using namespace std;
 
 namespace OpenBabel {
 

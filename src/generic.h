@@ -33,27 +33,27 @@ enum obDataType {obUndefinedData,obPairData,obEnergyData,
 class OBGenericData
 {
 protected:
-	string     _attr; //attribute tag
+	std::string     _attr; //attribute tag
 	obDataType _type;
 public:
 	OBGenericData();
 	OBGenericData(const OBGenericData&);
 	virtual ~OBGenericData() {}
-	void                  SetAttribute(string &v)       {_attr = v;}
-	virtual const string &GetAttribute()          const {return(_attr);}
+	void                  SetAttribute(std::string &v)       {_attr = v;}
+	virtual const std::string &GetAttribute()          const {return(_attr);}
 	obDataType      GetDataType()                 const {return(_type);}
 };
 
 class OBCommentData : public OBGenericData
 {
 protected:
-	string _data;
+	std::string _data;
 public:
 	OBCommentData();
 	OBCommentData(const OBCommentData&);
-	void          SetData(string &data)        {_data = data; }
+	void          SetData(std::string &data)        {_data = data; }
 	void          SetData(const char *d)       {_data = d;    }
-	const string &GetData()              const {return(_data);}
+	const std::string &GetData()              const {return(_data);}
 };
 
 class OBExternalBond
@@ -78,11 +78,11 @@ public:
 class OBExternalBondData : public OBGenericData
 {
 protected:
-  vector<OBExternalBond> _vexbnd;
+  std::vector<OBExternalBond> _vexbnd;
 public:
   OBExternalBondData();
   void SetData(OBAtom*,OBBond*,int);
-	vector<OBExternalBond> *GetData() {return(&_vexbnd);}
+	std::vector<OBExternalBond> *GetData() {return(&_vexbnd);}
 };
 
 class OBCompressData : public OBGenericData
@@ -101,12 +101,12 @@ public:
 class OBPairData : public OBGenericData //use to store attribute/value relationships
 {
  protected:
-  string _value;
+  std::string _value;
  public:
   OBPairData();
   void    SetValue(const char *v) {_value = v;}
-  void    SetValue(string &v)     {_value = v;}
-  string &GetValue()              {return(_value);}
+  void    SetValue(std::string &v)     {_value = v;}
+  std::string &GetValue()              {return(_value);}
 };
 
 class OBVirtualBond : public OBGenericData
@@ -128,12 +128,12 @@ public:
 class OBRingData : public OBGenericData
 {
 protected:
-	vector<OBRing*> _vr;
+	std::vector<OBRing*> _vr;
 public:
 	OBRingData();
-	void SetData(vector<OBRing*> &vr) {_vr = vr;}
+	void SetData(std::vector<OBRing*> &vr) {_vr = vr;}
 	void PushBack(OBRing *r)          {_vr.push_back(r);}
-	vector<OBRing*> &GetData()        {return(_vr);}
+	std::vector<OBRing*> &GetData()        {return(_vr);}
 };
 
 } //end namespace OpenBabel

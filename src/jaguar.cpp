@@ -14,6 +14,8 @@ GNU General Public License for more details.
 #include "mol.h"
 #include <ctype.h>
 
+using namespace std;
+
 namespace OpenBabel {
 
 bool ReadJaguar(istream &ifs,OBMol &mol,char *title)

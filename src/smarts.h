@@ -46,7 +46,7 @@ public:
 	virtual ~OBExprBase()                  {}
 	virtual int  GetFormalCharge()         {return(0);}
 	virtual void ResetRecurs()             {}
-	virtual void Print(ostream&)           {}
+	virtual void Print(std::ostream&)           {}
 	virtual bool Eval(OBNodeBase*)         {return(false);}
 	virtual bool Eval(OBEdgeBase*)         {return(false);}
 	virtual bool IsAromatic()              {return(false);}
@@ -73,7 +73,7 @@ public:
 	bool Eval(OBNodeBase *nb) {return((_lft->Eval(nb) && _rgt->Eval(nb)));}
 	bool Eval(OBEdgeBase *eb) {return((_lft->Eval(eb) && _rgt->Eval(eb)));}
 	int          GetFormalCharge();
-	void         Print(ostream&);
+	void         Print(std::ostream&);
 	void         ResetRecurs();
 	bool         IsAromatic();
 	unsigned int GetAtomicNum();
@@ -95,7 +95,7 @@ public:
 	bool Eval(OBNodeBase *nb) {return((_lft->Eval(nb) || _rgt->Eval(nb)));}
 	bool Eval(OBEdgeBase *eb) {return((_lft->Eval(eb) || _rgt->Eval(eb)));}
 	int          GetFormalCharge();
-	void         Print(ostream&);
+	void         Print(std::ostream&);
 	void         ResetRecurs();
 	bool         IsAromatic();
 	unsigned int GetAtomicNum();
@@ -109,7 +109,7 @@ protected:
 public:
 	OBNotExpr(OBExprBase *expr) {_expr = expr;}
 	~OBNotExpr()                {if (_expr) delete _expr;}
-	void Print(ostream&);
+	void Print(std::ostream&);
 	void ResetRecurs();
 	bool Eval(OBNodeBase *nb)   {return(!_expr->Eval(nb));}
 	bool Eval(OBEdgeBase *eb)   {return(!_expr->Eval(eb));}
@@ -122,7 +122,7 @@ protected:
 public:
 	OBConstExpr()          {}
 	~OBConstExpr()         {}
-	void Print(ostream&);
+	void Print(std::ostream&);
 	bool Eval(OBNodeBase *nb) {return(nb->GetAtomicNum() != 1);}
 	//bool Eval(OBNodeBase*) {return(true);}
 	bool Eval(OBEdgeBase*) {return(true);}
@@ -140,7 +140,7 @@ protected:
 public:
 	OBElementExpr(int ele) {_ele = ele;}
 	~OBElementExpr() {}
-	void Print(ostream &ofs);
+	void Print(std::ostream &ofs);
 	bool Eval(OBNodeBase *nb)    {return(_ele == nb->GetAtomicNum());}
 	bool IsAromatic()            {return(true);}
 	unsigned int GetAtomicNum()  {return(_ele);}
@@ -169,7 +169,7 @@ protected:
 public:
 	OBAromaticExpr(bool val) {_val = val;}
 	~OBAromaticExpr() {}
-	void Print(ostream&);
+	void Print(std::ostream&);
 	bool Eval(OBNodeBase *nb) {return(_val == nb->IsAromatic());}
 	bool Eval(OBEdgeBase *eb) {return(_val == eb->IsAromatic());}
 	bool IsAromatic()         {return(_val);}
@@ -260,7 +260,7 @@ protected:
 public:
 	OBRingExpr(int val = -1)   {_val = val;}
 	~OBRingExpr()              {}
-	void Print(ostream&);
+	void Print(std::ostream&);
 	bool Eval(OBNodeBase *); 
 	bool Eval(OBEdgeBase *eb) {return(eb->IsInRing());}
 };
@@ -301,8 +301,8 @@ public:
 class OBRecursExpr : public OBExprBase
 {
 protected:
-	vector<bool>     _vtest;
-	vector<bool>     _vmatch;
+	std::vector<bool>     _vtest;
+	std::vector<bool>     _vmatch;
 	OBSmartsPattern *_sp;
 public:
 	OBRecursExpr()                    {_sp = NULL;}
@@ -332,7 +332,7 @@ protected:
 public:
 	OBSingleExpr()  {}
 	~OBSingleExpr() {}
-	void Print(ostream &ofs)  {ofs << "Single";}
+	void Print(std::ostream &ofs)  {ofs << "Single";}
 	bool Eval(OBEdgeBase *eb) 
 	  {
 	    return(eb->GetBO() == 1 && !eb->IsAromatic());
@@ -346,7 +346,7 @@ protected:
 public:
 	OBDoubleExpr()  {}
 	~OBDoubleExpr() {}
-	void Print(ostream &ofs)  {ofs << "Double";}
+	void Print(std::ostream &ofs)  {ofs << "Double";}
 	bool Eval(OBEdgeBase *eb) 
 	  {
 	    return(eb->GetBO() == 2 && !eb->IsAromatic());
@@ -445,14 +445,14 @@ public:
 	void    SetMatch(OBNodeBase *m)          {_match = m;}
 	void    SetVectorBinding(int vb)         {_vb = vb;}
 	void    ResetRecurs()                    {_expr->ResetRecurs();}
-	void    Print(ostream &ofs)              {_expr->Print(ofs);}
+	void    Print(std::ostream &ofs)              {_expr->Print(ofs);}
 	bool	Eval(OBNodeBase *n)       const  {return(_expr->Eval(n));}
 	bool         IsAromatic()                {return(_expr->IsAromatic());}
 	unsigned int GetVectorBinding()          {return(_vb);}
 	unsigned int GetAtomicNum()       const  {return(_expr->GetAtomicNum());}
 	OBNodeBase *GetMatch()                   {return(_match);}
-	OBNode *BeginNbr(vector<OBEdgeBase*>::iterator &);
-	OBNode *NextNbr(vector<OBEdgeBase*>::iterator &);
+	OBNode *BeginNbr(std::vector<OBEdgeBase*>::iterator &);
+	OBNode *NextNbr(std::vector<OBEdgeBase*>::iterator &);
 };
 
 class OBSmartsPattern : public OBGraphBase
@@ -460,9 +460,9 @@ class OBSmartsPattern : public OBGraphBase
 protected:
 	bool                                            _done;
 	bool                                            _single;
-	string                                          _smarts;
-	vector<vector<OBNodeBase*> >                    _vmatch;
-	vector<pair<OBNodeBase*,vector<OBEdgeBase*> > > _vm;
+	std::string                                     _smarts;
+	std::vector<std::vector<OBNodeBase*> >          _vmatch;
+	std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > > _vm;
 public:
 	OBSmartsPattern();
 	OBSmartsPattern(const OBSmartsPattern &);
@@ -471,15 +471,15 @@ public:
 
 	//initialization and graph modification methods
 	bool    Init(const char *);
-	bool    Init(string &);
+	bool    Init(std::string &);
 	OBNode *NewNode(OBExprBase*);
 	OBEdge *NewEdge(OBNode*,OBNode*,OBExprBase*);
 	
 	//iterator methods
-	OBNode* Begin(vector<OBNodeBase*>::iterator &); 
-	OBNode* Next(vector<OBNodeBase*>::iterator &);
-	OBEdge* Begin(vector<OBEdgeBase*>::iterator &);
-	OBEdge* Next(vector<OBEdgeBase*>::iterator &);
+	OBNode* Begin(std::vector<OBNodeBase*>::iterator &); 
+	OBNode* Next(std::vector<OBNodeBase*>::iterator &);
+	OBEdge* Begin(std::vector<OBEdgeBase*>::iterator &);
+	OBEdge* Next(std::vector<OBEdgeBase*>::iterator &);
 
 	//routines that perform substructure search
 	bool        SingleMatch()                    const{return(_single);}
@@ -487,33 +487,33 @@ public:
 	void        SetSingleMatch(bool state)       {_single = state;}
 	void        SetFinishedMatch(bool state)     {_done = state;}
 	void        PrepForMatch();
-	void        PushBack(vector<OBNodeBase*> &v) {_vmatch.push_back(v);}
+	void        PushBack(std::vector<OBNodeBase*> &v) {_vmatch.push_back(v);}
 	void        ClearMatches();
 	OBNodeBase *GetFirstSeed()                   {return(_vm.begin()->first);}
 	bool        SeedMatch(OBNodeBase*);
-	bool        RestrictedMatch(OBGraphBase&,vector<pair<int,int> >&,bool) 
+	bool        RestrictedMatch(OBGraphBase&,std::vector<std::pair<int,int> >&,bool) 
 	{
-		cerr << "need to implement OBSmartsPattern::RestrictedMatch()" << endl;
+		std::cerr << "need to implement OBSmartsPattern::RestrictedMatch()" << std::endl;
 		exit(0);
 		return(false);
 	}
-	vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator BgnMatch() {return(_vm.begin());}
-	vector<pair<OBNodeBase*,vector<OBEdgeBase*> > >::iterator EndMatch() {return(_vm.end());}
+	std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator BgnMatch() {return(_vm.begin());}
+	std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator EndMatch() {return(_vm.end());}
 
 	//data mod methods
 	void SetSMARTS(const char *buf) {_smarts = buf;}
 
 	//methods to return match data
-	void GetMatches(vector<vector<OBNodeBase*> > &vm) const {vm = _vmatch;}
-	void GetMatches(vector<vector<int> > &vm);
-	vector<vector<int> > GetMapList();
-	vector<vector<int> > GetUMapList();
+	void GetMatches(std::vector<std::vector<OBNodeBase*> > &vm) const {vm = _vmatch;}
+	void GetMatches(std::vector<std::vector<int> > &vm);
+	std::vector<std::vector<int> > GetMapList();
+	std::vector<std::vector<int> > GetUMapList();
 
 	//misc data retrieval methods
 	int           GetFormalCharge(int idx)  {return(_vatom[idx]->GetFormalCharge());}
 	bool          IsValid()                 {return(!_vatom.empty());}
 	bool          Empty()                   {return(_vatom.empty());}
-	string        GetSMARTS()               const {return(_smarts);}
+	std::string   GetSMARTS()               const {return(_smarts);}
 	unsigned int  NumMatches()              {return((_vmatch.empty()) ? 0 : _vmatch.size());}
 	unsigned int  NumAtoms()                {return(NumNodes());}
 	unsigned int  NumBonds()                {return(NumEdges());}
@@ -521,7 +521,7 @@ public:
 	unsigned int  GetAtomicNum(int idx)     const {return(_vatom[idx]->GetAtomicNum());}
 
 	//stream output methods
-	void WriteMapList(ostream&);
+	void WriteMapList(std::ostream&);
 };
 
 

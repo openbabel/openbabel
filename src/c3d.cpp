@@ -14,8 +14,11 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obutil.h"
 
+using namespace std;
+
 namespace OpenBabel
 {
+
 static bool WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ);
 
 bool WriteChem3d2(ostream &ofs,OBMol &mol)

@@ -13,6 +13,8 @@ GNU General Public License for more details.
 
 #include "mol.h"
 
+using namespace std;
+
 namespace OpenBabel {
 
 bool WriteGaussianCart(ostream &ofs,OBMol &mol)

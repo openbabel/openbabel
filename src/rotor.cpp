@@ -14,6 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "rotor.h"
 
+using namespace std;
 namespace OpenBabel {
 
 #define OB_DEFAULT_DELTA 10.0f

@@ -16,8 +16,9 @@ GNU General Public License for more details.
 #include <iostream>
 #include <fstream>
 
-namespace OpenBabel
-{
+using namespace std;
+
+namespace OpenBabel {
 
 bool OBGraphBase::Match(OBGraphBase &g,bool singleMatch)
 {

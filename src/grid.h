@@ -39,16 +39,16 @@ class OBProxGrid
   int _gridtype;
   int _nxinc,_nyinc,_nzinc,_maxinc;
   float _xmin,_xmax,_ymin,_ymax,_zmin,_zmax,_inc;
-  vector<vector<int> > cell;
+  std::vector<std::vector<int> > cell;
 
 public:
 
   OBProxGrid(int gridtype=0){_gridtype=0;}
   ~OBProxGrid(){}
   void Setup(OBMol &,OBMol &,float,float res=0.5);
-  void Setup(OBMol &,OBMol &,float,vector<bool>&,float res=0.5);
-  vector<int> *GetProxVector(float,float,float);
-  vector<int> *GetProxVector(float*);
+  void Setup(OBMol &,OBMol &,float,std::vector<bool>&,float res=0.5);
+  std::vector<int> *GetProxVector(float,float,float);
+  std::vector<int> *GetProxVector(float*);
   // For HasFlag force return type to bool so VC6.0 doesn't complain
   bool LipoGrid() {return((_gridtype&OBLipoGrid) ? true : false);}
   bool PolarGrid() {return(_gridtype&OBPolarGrid);}
@@ -112,8 +112,8 @@ public:
   float *GetVals() {return(_val);}
   void SetVals(float *ptr) {_val = ptr;}
   Vector Center() { return Vector(_midx,_midy,_midz); } //added by jjc
-  friend ostream& operator<< ( ostream&, const OBFloatGrid& ) ;
-  friend istream& operator>> ( istream&,OBFloatGrid& ) ;
+  friend std::ostream& operator<< ( std::ostream&, const OBFloatGrid& ) ;
+  friend std::istream& operator>> ( std::istream&,OBFloatGrid& ) ;
 
   float Inject(float x,float y,float z)
     {
@@ -159,13 +159,13 @@ public:
   virtual void   Clear(void) { }
   virtual float  Eval(float *)    { return -1; }
   virtual float  Eval(OBMol &mol) { return Eval(mol.GetCoordinates()); }
-  virtual void   Init(OBMol &, OBMol &, string &, float) {}
+  virtual void   Init(OBMol &, OBMol &, std::string &, float) {}
   virtual void   Setup(OBMol &) {}
-  virtual void   Setup(OBMol &, vector<int> &) {}
-  virtual void   Setup(vector<int> &) {}
-  virtual void   Config(string) {}
-  virtual bool   Read(string)       { return false; }
-  virtual bool   Write(string)      { return false; }
+  virtual void   Setup(OBMol &, std::vector<int> &) {}
+  virtual void   Setup(std::vector<int> &) {}
+  virtual void   Config(std::string) {}
+  virtual bool   Read(std::string)       { return false; }
+  virtual bool   Write(std::string)      { return false; }
   virtual Vector Center()           { return VZero; }
   virtual Vector CenterMol(OBMol &) { return VZero; }
 };

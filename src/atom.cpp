@@ -16,6 +16,8 @@ GNU General Public License for more details.
 #include "molchrg.h"
 #include "phmodel.h"
 
+using namespace std;
+
 namespace OpenBabel {
 
 extern OBAromaticTyper  aromtyper;

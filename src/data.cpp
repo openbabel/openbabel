@@ -26,6 +26,8 @@ GNU General Public License for more details.
 #include <strstream>
 #endif
 
+using namespace std;
+
 namespace OpenBabel {
 
 OBExtensionTable extab;

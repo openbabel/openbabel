@@ -14,6 +14,8 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "version.h"
 
+using namespace std;
+
 namespace OpenBabel
 {
 

@@ -29,14 +29,14 @@ class OBSmartsParser
 	int                            _stereo;
 	int                            _vb;
 	OBNode                        *_prev;
-	vector<OBNode*>                _vprev;
-	vector<pair<OBEdgeBase*,int> > _vclose;
+	std::vector<OBNode*>           _vprev;
+	std::vector<std::pair<OBEdgeBase*,int> > _vclose;
 public:
 	int         GetVectorBinding();
 	void        ReportError() {}
 	void        AddClosure(OBEdgeBase*,int);
 	bool        Parse(OBSmartsPattern&,const char*);
-	bool        Parse(OBSmartsPattern&,string&);
+	bool        Parse(OBSmartsPattern&,std::string&);
 	OBExprBase *ParseSimpleAtomPrimitive();
 	OBExprBase *ParseComplexAtomPrimitive();
 	OBExprBase *ParseBondPrimitive();

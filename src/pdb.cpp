@@ -16,6 +16,8 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "resdata.h"
 
+using namespace std;
+
 namespace OpenBabel {
 
 extern OBAtomTyper atomtyper;

@@ -16,6 +16,8 @@ GNU General Public License for more details.
 #define BOHR_TO_ANGSTROM 0.529177249
 #define ANGSTROM_TO_BOHR 1.889725989
 
+using namespace std;
+
 namespace OpenBabel {
 
 bool ReadDMol(istream &ifs,OBMol &mol,char *title)

@@ -27,22 +27,22 @@ class Vector;
  * float *m                 : m[(row * numCols) + col] gives appropriate row/col entry
  */
 
-void print_matrix(vector<vector<float> > &m);
+void print_matrix(std::vector<std::vector<float> > &m);
 void print_matrix_f (float  *m, int rows, int cols);
 void print_matrix_ff(float **m, int rows, int cols);
  
-bool mult_matrix(vector<vector<float> > &c, vector<vector<float> > &a, vector<vector<float> > &b);
+bool mult_matrix(std::vector<std::vector<float> > &c, std::vector<std::vector<float> > &a, std::vector<std::vector<float> > &b);
 bool mult_matrix_f (float  *c, float  *a, float  *b, int rows, int cols);
 bool mult_matrix_ff(float **c, float **a, float **b, int rows, int cols);
 
-bool invert_matrix(vector<vector<float> > &m, float &det);
+bool invert_matrix(std::vector<std::vector<float> > &m, float &det);
 bool invert_matrix_f (float  *m, float &det, int rows, int cols);
 bool invert_matrix_ff(float **m, float &det, int rows, int cols);
 
-bool convert_matrix_f (vector<vector<float> > &src, float  *dst);
-bool convert_matrix_ff(vector<vector<float> > &src, float **dst);
-bool convert_matrix_f (float  *src, vector<vector<float> > &dst, int rows, int cols);
-bool convert_matrix_ff(float **src, vector<vector<float> > &dst, int rows, int cols);
+bool convert_matrix_f (std::vector<std::vector<float> > &src, float  *dst);
+bool convert_matrix_ff(std::vector<std::vector<float> > &src, float **dst);
+bool convert_matrix_f (float  *src, std::vector<std::vector<float> > &dst, int rows, int cols);
+bool convert_matrix_ff(float **src, std::vector<std::vector<float> > &dst, int rows, int cols);
 bool convert_matrix_ff_f(float **src, float  *dst, int rows, int cols);
 bool convert_matrix_f_ff(float  *src, float **dst, int rows, int cols);
 

@@ -21,11 +21,11 @@ namespace OpenBabel {
 
 class OBAtomTyper : public OBGlobalDataBase
 {
-  int                                            _rc;
-  vector<vector<int> >                           _mlist;
-  vector<pair<OBSmartsPattern*,int> >            _vinthyb;
-  vector<pair<OBSmartsPattern*,int> >            _vimpval;
-  vector<pair<OBSmartsPattern*,string> >         _vexttyp;
+  int                                                      _rc;
+  std::vector<std::vector<int> >                           _mlist;
+  std::vector<std::pair<OBSmartsPattern*,int> >            _vinthyb;
+  std::vector<std::pair<OBSmartsPattern*,int> >            _vimpval;
+  std::vector<std::pair<OBSmartsPattern*,std::string> >    _vexttyp;
  public:
   OBAtomTyper();
   ~OBAtomTyper();
@@ -39,13 +39,13 @@ class OBAtomTyper : public OBGlobalDataBase
 
 class OBAromaticTyper : public OBGlobalDataBase
 {
-  vector<bool>             _vpa;   //potentially aromatic atoms
-  vector<bool>             _visit;
-  vector<bool>             _root;
-  vector<vector<int> >     _mlist;
-  vector<OBSmartsPattern*> _vsp;   //smarts of potentially aromatic atoms
-  vector<pair<int,int> >   _verange; //min and max number of electrons
-  vector<pair<int,int> >   _velec;   //num electrons an atom contributes
+  std::vector<bool>             _vpa;   //potentially aromatic atoms
+  std::vector<bool>             _visit;
+  std::vector<bool>             _root;
+  std::vector<std::vector<int> >     _mlist;
+  std::vector<OBSmartsPattern*> _vsp;   //smarts of potentially aromatic atoms
+  std::vector<std::pair<int,int> >   _verange; //min and max number of electrons
+  std::vector<std::pair<int,int> >   _velec;   //num electrons an atom contributes
  public:
   OBAromaticTyper();
   ~OBAromaticTyper();
@@ -55,7 +55,7 @@ class OBAromaticTyper : public OBGlobalDataBase
   void PropagatePotentialAromatic(OBAtom*);
   void ExcludeSmallRing(OBMol &);
   void CheckAromaticity(OBAtom*,int);
-  bool TraverseCycle(OBAtom*,OBAtom*,OBBond*,pair<int,int>&,int);
+  bool TraverseCycle(OBAtom*,OBAtom*,OBBond*,std::pair<int,int>&,int);
 };
 
 }

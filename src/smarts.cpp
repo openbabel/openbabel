@@ -23,6 +23,8 @@ GNU General Public License for more details.
 #include "parsmart.h"
 #include "bitvec.h"
 
+using namespace std;
+
 namespace OpenBabel
 {
 
