@@ -165,6 +165,8 @@ OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo)
 OBUnitCell::OBUnitCell()
 {
   _a = _b = _c = _alpha = _beta = _gamma = 0.0f;
+  _type = obUnitCell;
+  _attr = "UnitCell";
 }
 
 OBUnitCell::OBUnitCell(const OBUnitCell &src)
