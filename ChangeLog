@@ -1,3 +1,29 @@
+2005-04-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.cpp: Change "Readonly" and "Writeonly" to
+	"Read-only" and "Write-only" to match more typical computer
+	documentation (e.g., Windows, UNIX and Mac generally use hyphens.)
+	
+	* src/formats/viewmolformat.cpp (ReadMolecule): Fix
+	multiple-molecule support. Read loop would never hit an $end
+	record and break, thus reading all molecules in a multi-molecule
+	file as one.
+
+	* src/formats/PQSformat.cpp (ReadMolecule): Replace rindex ->
+	strrchr for ISO C/C++ compliance. (Fixes problems with compiling
+	on MinGW/gcc.)
+
+	* src/formats/inchiformat.cpp: Change for loop to while loop to
+	fix compile problems with gcc (and make slightly more readable
+	IMHO), change comment to remove "??/" interpreted as a Unicode
+	trigraph by gcc, and fix mol.SetTitle() call to fix compilation
+	problems with gcc/g++.
+
+	* src/formats/gamessformat.cpp, src/formats/gaussformat.cpp,
+	src/formats/nwchemformat.cpp, src/formats/qchemformat.cpp: Break
+	read and write support into separate formats since output formats
+	are read-only and input formats are write-only.
+	
 2005-04-01  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/formats/inchiformat.cpp, src/formats.inchi_api.h,
@@ -8,12 +34,12 @@
 	although it is cross-platform, because I want to check with
 	NIST first. 
 	 
-	* src/data.cpp, data.h: OBElementTable::GetAtomicNum 
+	* src/data.cpp, src/data.h: OBElementTable::GetAtomicNum 
 	Changed unsigned short int& to int&. More consistent with other 
 	ints since have to use the exact int type when calling. 
 	Now used in mdlformat.cpp.
 
-	*.mdlformat.cpp: V2000 writes and reads isotope info
+	* src/formats/mdlformat.cpp: V2000 writes and reads isotope info
 	(M ISO line),	V2000 V3000 reads D and T. Changes in V2000 
 	writing M RAD	and header. Is #include <iomanip> a problem? 
 
