@@ -98,7 +98,7 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
 		case '[': 
 			if (!ParseComplex(mol)) 
 			{
-				mol.Clear(); mol.EndModify(); 
+				mol.EndModify();mol.Clear();
 				return(false); 
 			}
 			break; 
@@ -250,12 +250,20 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
 {
   char symbol[3];
   int element=0;
+  int isotope=0;
+  int isoPtr=0;
   bool arom=false;
   memset(symbol,'\0',sizeof(char)*3);
 
   _ptr++;
-  //throw out isotope information
-  for (;*_ptr && isdigit(*_ptr);_ptr++);
+
+  //grab isotope information
+  for (;*_ptr && isdigit(*_ptr);_ptr++)
+    {
+      symbol[isoPtr] = *_ptr;
+      isoPtr++;
+    }
+  isotope = atoi(symbol);
   
   //parse element data
   if (isupper(*_ptr))
@@ -617,6 +625,7 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
 
   if (charge) atom->SetFormalCharge(charge);
   atom->SetAtomicNum(element);
+  atom->SetIsotope(isotope);
   atom->SetType(symbol);
   if (arom) atom->SetAromatic();
 
