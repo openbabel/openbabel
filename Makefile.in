@@ -1,5 +1,7 @@
 #Open Babel top-level Makefile
 
+version       = @openbabel_version@
+
 srcdir        = @srcdir@
 VPATH         = @srcdir@
 top_srcdir    = @top_srcdir@
@@ -11,7 +13,7 @@ DEST	      = @bindir@
 INSTALL	      = @INSTALL@
 
 SUBDIRS	      = src test
-DISTDIR       = $(top_srcdir)/../openbabel-dist
+DISTDIR       = $(top_srcdir)/../openbabel-$(version)
 
 all:
 		@for i in $(SUBDIRS); do \
@@ -50,7 +52,7 @@ dist:		distclean
 		tar cf - $(top_srcdir) | (cd $(DISTDIR); tar xf -)
 		(cd $(DISTDIR); rm -fr RCS CVS *~ .#\*);
 		(cd $(DISTDIR); rm -fr */RCS */CVS */*~ */.#\*);
-		(cd $(DISTDIR)/..; tar cvzf openbabel.tar.gz openbabel-dist)
+		(cd $(DISTDIR)/..; tar cvzf openbabel-$(version).tar.gz openbabel-$(version))
 		rm -rf $(DISTDIR)
 
 # Update the Makefiles if things are updated

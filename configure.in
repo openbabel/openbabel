@@ -5,6 +5,8 @@ dnl AM_INIT_AUTOMAKE([openbabel], 1.99)
 AC_CANONICAL_HOST
 top_builddir=`pwd`
 AC_SUBST(top_builddir)
+openbabel_version=1.99
+AC_SUBST(openbabel_version)
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -48,5 +50,5 @@ AC_C_INLINE
 
 dnl Checks for library functions.
 
-AC_OUTPUT(Makefile src/Makefile test/Makefile)
+AC_OUTPUT(Makefile src/Makefile test/Makefile src/version.h)
 echo timestamp > stamp.h
