@@ -718,6 +718,11 @@ string NewExtension(string&,char*);
 bool SetInputType(OBMol&,string&);
 bool SetOutputType(OBMol&,string&);
 
+void qtrfit (float *r,float *f,int size,float u[3][3]);
+float superimpose(float*,float*,int);
+void get_rmat(float*,float*,float*,int);
+void ob_make_rmat(float mat[3][3],float rmat[9]);
+
 //global definitions
 extern  OBExtensionTable extab;
 extern  OBElementTable   etab;
@@ -752,19 +757,5 @@ inline float rint(float x) { return ( (x < 0.0f) ? ceil(x-0.5) : floor(x+0.5f));
 #endif
 
 }
-
-#ifndef __KCC
-extern "C"{
-void qtrfit (float *r,float *f,int size,float u[3][3]);
-float superimpose(float*,float*,int);
-void get_rmat(float*,float*,float*,int);
-void ob_make_rmat(float mat[3][3],float rmat[9]);
-}
-#else
-void qtrfit (float *r,float *f,int size,float u[3][3]);
-float superimpose(float*,float*,int);
-void get_rmat(float *,float*,float *,int);
-void ob_make_rmat(float mat[3][3],float rmat[9]);
-#endif //__KCC
 
 #endif //MOL_H

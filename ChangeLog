@@ -1,4 +1,13 @@
 2002-01-24  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+	
+	* src/Makefile.in: Add c3d.cpp to the compilation list.
+
+	* src/obutil.cpp: Migrate quat.c code here temporarily.
+	
+	* src/mol.cpp, src/mol.h: Resolve problems with declarations of
+	old quat.c code since they now fall under OpenBabel namespace.
+
+2002-01-24  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* doc/FAQ, doc/babel.1: Minor documentation fixes.
 	

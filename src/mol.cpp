@@ -15,11 +15,6 @@ GNU General Public License for more details.
 #include "binary.h"
 #include "phmodel.h"
 
-extern "C"
-{
-void jacobi(float a[4][4], float *d, float v[4][4]);
-}
-
 namespace OpenBabel {
 
 extern bool SwabInt;
