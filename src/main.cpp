@@ -252,7 +252,7 @@ int main(int argc,char *argv[])
 	}
       else // 0 atoms in this molecule! 
 	{
-	  cerr << " error: has zero atoms! " << endl;
+	  //	  cerr << " error: has zero atoms! " << endl;
 	  canRead = false;
 	}
 
