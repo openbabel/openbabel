@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2002 by Geoffrey Hutchison
+Copyright (C) 2002-2003 by Geoffrey Hutchison
 Based on code Copyright (C) 1999 Jörg-Rüdiger Hill
 
 This program is free software; you can redistribute it and/or modify

@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Some portions Copyright (c) 2001-2003 Geoffrey R. Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2000-2002 by Geoffrey R. Hutchison
+Copyright (C) 2000-2003 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
