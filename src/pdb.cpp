@@ -72,6 +72,7 @@ bool ReadPDB(istream &ifs,OBMol &mol,char *title)
   mol.ConnectTheDots();
 
   mol.EndModify();
+  mol.PerceiveBondOrders();
   mol.SetAtomTypesPerceived();
   atomtyper.AssignImplicitValence(mol);
 
@@ -105,6 +106,7 @@ bool ReadTerTermPDB(istream &ifs,OBMol &mol,char *title)
   mol.ConnectTheDots();
 
   mol.EndModify();
+  mol.PerceiveBondOrders();
   mol.SetAtomTypesPerceived();
   atomtyper.AssignImplicitValence(mol);
 
