@@ -1,4 +1,4 @@
-SUBDIRS = math windows
+SUBDIRS = math
 
 lib_LTLIBRARIES = libopenbabel.la
 

@@ -38,6 +38,7 @@ box		box		Dock 3.5 Box			none				1	1
 dmol		dmol		DMol3 Coordinates		none				1	1
 feat		feature		Feature				none				1	1
 fh		fh		Fenske-Hall Z-Matrix		none				0	1
+fpt		fingerprint	2D fingerprint			none				0	1
 gamin		gamessin	GAMESS Input			chemical/x-gamess-input		0	1
 inp		gamessin	GAMESS Input			chemical/x-gamess-input		0	1
 gam		gamessout	GAMESS Output			none				1	0
