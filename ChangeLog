@@ -1,3 +1,8 @@
+2002-08-15  Geoff Hutchison <hutchisn@chem.northwestern.edu>
+
+	* src/pdb.cc: Fix ParseConectRecord to make sure we don't read
+	beyond the vs.size().
+
 2002-08-14  Stefan Kebekus <kebekus@users.sourceforge.net>
 
 	* src/xyz.cpp Set molecule title to the string that is read from

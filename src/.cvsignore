@@ -2,3 +2,4 @@ Makefile
 ii_files
 libbabel.a
 babel
+version.h

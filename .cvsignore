@@ -2,3 +2,6 @@ Makefile
 ii_files
 libbabel.a
 babel
+config.log
+config.status
+stamp.h

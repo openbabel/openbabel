@@ -383,12 +383,12 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
 	    {
 	      r2 = a2->GetResidue();
 	      k = 1;
-	      while (k < 4)
+	      while (k < 4 && k <= vs.size())
 		{
-		  con = 0;
 		  order = 1;
 		  con = atoi(vs[k].c_str());
-		  if (con && ((k+1) < 4) && (atoi(vs[k+1].c_str()) == con))
+		  if (con && ((k+1) < 4) && ((k+1) <= vs.size()) 
+		      && (atoi(vs[k+1].c_str()) == con))
 		    {
 		      order++;
 		      k++;
