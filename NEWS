@@ -1,11 +1,11 @@
-Open Babel 1.100.2 (2004-02-12)
+Open Babel 1.100.2 (2004-02-22)
 
 What's New from 1.100.1:
 
- -Fixed installation of header files. The headers in the math-
-  directory were not installed alongside the other headers.
  -Shared library (version 0:0:0) built by default on POSIX systems
   (e.g. Linux, BSD, Mac OS X...)
+ -Fixed installation of header files. The headers in the math/
+  subdirectory were not installed alongside the other headers.
  -Added tools/ directory with small examples of using libopenbabel:
    * obgrep: Use SMARTS patterns to grep through multi-molecule files.
    * obfit:  Use SMARTS patterns to align molecules on substructures.
