@@ -19,21 +19,27 @@ builddir      = @top_builddir@test
 
 HDRS	      = 
 
-OBJS	      =	ringtest.o smartstest.o matrixtest.o main.o unitcell.o
+OBJS	      =	ringtest.o smartstest.o matrixtest.o main.o unitcell.o \
 
 PROGRAM	      = obtest
 
 DATAFILES     = attype.00.smi smartstest.txt smartsresults.txt \
 		ringresults.txt unitcell.txt
 
+ROUNDOBJS     = roundtrip.o
+
+ROUNDPROG     = roundtrip
 
 $(PROGRAM):     $(OBJS) $(MAIN) 
 		$(LINKER) $(LDFLAGS) $(OBJS) $(MAIN) -o  $(PROGRAM) $(LIBS)
 
+$(ROUNDPROG):	$(ROUNDOBJS)
+		$(LINKER) $(LDFLAGS) $(ROUNDOBJS) -o $(ROUNDPROG) $(LIBS)
+
 all:;		
 
 test:		check
-check:		$(PROGRAM)
+check:		$(PROGRAM) $(ROUNDPROG)
 		-@(cd $(srcdir); cp -f $(DATAFILES) $(PWD) 2>/dev/null)
 		./$(PROGRAM)
 
