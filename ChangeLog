@@ -7,6 +7,14 @@
 
 2003-12-01  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
+	* src/pdb.cpp, src/mol2.cpp, src/gromos96.cpp:
+	Residue perception via OBChainsParser turned on, contributed by
+	Malcolm Gillies.
+
+	* src/atom.cpp(GetResidue): Call SetChainsPerceived--ensures that
+	chain perception code will not be called repeatedly on failure,
+	contributed by Malcolm Gillies.
+
 	* src/crk.h, src/crk.cpp: New files for Chemical Resource Kit
 	support, contriubted by Alex Clark <a.clark@bendcable.com>. 
 
@@ -15,6 +23,11 @@
 	* src/data.cpp, src/data.h, src/extable.txt, src/fileformat.cpp,
 	src/fileformat.h: Changes to support read/write CRK files.
 
+	* src/mol.h: Fix mistake in HasAromaticBond() -- aromatic bonds
+	are "5", not "4"!
+
+	* src/bond.cpp(IsTriple): New method for triple bonds.
+	
 	* src/typer.h: Add new SelectRootAtoms method (defaults to off)
 	contributed from JOELib.
 

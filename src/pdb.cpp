@@ -826,9 +826,8 @@ bool WritePDB(ostream &ofs,OBMol &mol)
 	sprintf(type_name, " %-3s", tmp);
       }
 
-    if (atom->HasResidue())
+    if (res = atom->GetResidue())
       {
-	res = atom->GetResidue();
         het = res->IsHetAtom(atom);
         snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
         snprintf(type_name,5,"%s",(char*)res->GetAtomID(atom).c_str());

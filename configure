@@ -1100,43 +1100,40 @@ case $srcdir in
     ac_srcdir=$ac_top_builddir$srcdir$ac_dir_suffix
     ac_top_srcdir=$ac_top_builddir$srcdir ;;
 esac
-
-# Do not use `cd foo && pwd` to compute absolute paths, because
-# the directories may not exist.
-case `pwd` in
-.) ac_abs_builddir="$ac_dir";;
+case "$ac_dir" in
+.) ac_abs_builddir=$ac_builddir;;
 *)
-  case "$ac_dir" in
-  .) ac_abs_builddir=`pwd`;;
-  [\\/]* | ?:[\\/]* ) ac_abs_builddir="$ac_dir";;
-  *) ac_abs_builddir=`pwd`/"$ac_dir";;
+  case $ac_builddir in
+  .) ac_abs_builddir="$ac_dir";;
+  [\\/]* | ?:[\\/]* ) ac_abs_builddir=$ac_builddir;;
+  *) ac_abs_builddir="$ac_dir"/$ac_builddir;;
   esac;;
 esac
-case $ac_abs_builddir in
+case "$ac_dir" in
 .) ac_abs_top_builddir=${ac_top_builddir}.;;
 *)
   case ${ac_top_builddir}. in
-  .) ac_abs_top_builddir=$ac_abs_builddir;;
+  .) ac_abs_top_builddir="$ac_dir";;
   [\\/]* | ?:[\\/]* ) ac_abs_top_builddir=${ac_top_builddir}.;;
-  *) ac_abs_top_builddir=$ac_abs_builddir/${ac_top_builddir}.;;
+  *) ac_abs_top_builddir="$ac_dir"/${ac_top_builddir}.;;
   esac;;
 esac
-case $ac_abs_builddir in
+case "$ac_dir" in
 .) ac_abs_srcdir=$ac_srcdir;;
 *)
   case $ac_srcdir in
-  .) ac_abs_srcdir=$ac_abs_builddir;;
+  .) ac_abs_srcdir="$ac_dir";;
   [\\/]* | ?:[\\/]* ) ac_abs_srcdir=$ac_srcdir;;
-  *) ac_abs_srcdir=$ac_abs_builddir/$ac_srcdir;;
+  *) ac_abs_srcdir="$ac_dir"/$ac_srcdir;;
   esac;;
 esac
-case $ac_abs_builddir in
+case "$ac_dir" in
 .) ac_abs_top_srcdir=$ac_top_srcdir;;
 *)
   case $ac_top_srcdir in
-  .) ac_abs_top_srcdir=$ac_abs_builddir;;
+  .) ac_abs_top_srcdir="$ac_dir";;
   [\\/]* | ?:[\\/]* ) ac_abs_top_srcdir=$ac_top_srcdir;;
-  *) ac_abs_top_srcdir=$ac_abs_builddir/$ac_top_srcdir;;
+  *) ac_abs_top_srcdir="$ac_dir"/$ac_top_srcdir;;
   esac;;
 esac
 
@@ -1155,7 +1152,7 @@ esac
     else
       echo "$as_me: WARNING: no configuration information is in $ac_dir" >&2
     fi
-    cd "$ac_popdir"
+    cd $ac_popdir
   done
 fi
 
@@ -4449,7 +4446,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 4452 "configure"' > conftest.$ac_ext
+  echo '#line 4449 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -5327,7 +5324,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:5330:" \
+echo "$as_me:5327:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -6354,11 +6351,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6357: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6354: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:6361: \$? = $ac_status" >&5
+   echo "$as_me:6358: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -6586,11 +6583,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6589: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6586: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:6593: \$? = $ac_status" >&5
+   echo "$as_me:6590: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -6653,11 +6650,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6656: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6653: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:6660: \$? = $ac_status" >&5
+   echo "$as_me:6657: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -8771,7 +8768,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 8774 "configure"
+#line 8771 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -8869,7 +8866,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 8872 "configure"
+#line 8869 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11021,11 +11018,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11024: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11021: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:11028: \$? = $ac_status" >&5
+   echo "$as_me:11025: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -11088,11 +11085,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11091: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11088: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:11095: \$? = $ac_status" >&5
+   echo "$as_me:11092: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -12417,7 +12414,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 12420 "configure"
+#line 12417 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12515,7 +12512,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 12518 "configure"
+#line 12515 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -13337,11 +13334,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:13340: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13337: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:13344: \$? = $ac_status" >&5
+   echo "$as_me:13341: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -13404,11 +13401,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:13407: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13404: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:13411: \$? = $ac_status" >&5
+   echo "$as_me:13408: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -15366,11 +15363,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15369: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15366: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15373: \$? = $ac_status" >&5
+   echo "$as_me:15370: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -15598,11 +15595,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15601: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15598: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15605: \$? = $ac_status" >&5
+   echo "$as_me:15602: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -15665,11 +15662,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15668: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15665: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15672: \$? = $ac_status" >&5
+   echo "$as_me:15669: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -17783,7 +17780,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 17786 "configure"
+#line 17783 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -17881,7 +17878,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 17884 "configure"
+#line 17881 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -20858,43 +20855,40 @@ case $srcdir in
     ac_srcdir=$ac_top_builddir$srcdir$ac_dir_suffix
     ac_top_srcdir=$ac_top_builddir$srcdir ;;
 esac
-
-# Do not use `cd foo && pwd` to compute absolute paths, because
-# the directories may not exist.
-case `pwd` in
-.) ac_abs_builddir="$ac_dir";;
+case "$ac_dir" in
+.) ac_abs_builddir=$ac_builddir;;
 *)
-  case "$ac_dir" in
-  .) ac_abs_builddir=`pwd`;;
-  [\\/]* | ?:[\\/]* ) ac_abs_builddir="$ac_dir";;
-  *) ac_abs_builddir=`pwd`/"$ac_dir";;
+  case $ac_builddir in
+  .) ac_abs_builddir="$ac_dir";;
+  [\\/]* | ?:[\\/]* ) ac_abs_builddir=$ac_builddir;;
+  *) ac_abs_builddir="$ac_dir"/$ac_builddir;;
   esac;;
 esac
-case $ac_abs_builddir in
+case "$ac_dir" in
 .) ac_abs_top_builddir=${ac_top_builddir}.;;
 *)
   case ${ac_top_builddir}. in
-  .) ac_abs_top_builddir=$ac_abs_builddir;;
+  .) ac_abs_top_builddir="$ac_dir";;
   [\\/]* | ?:[\\/]* ) ac_abs_top_builddir=${ac_top_builddir}.;;
-  *) ac_abs_top_builddir=$ac_abs_builddir/${ac_top_builddir}.;;
+  *) ac_abs_top_builddir="$ac_dir"/${ac_top_builddir}.;;
   esac;;
 esac
-case $ac_abs_builddir in
+case "$ac_dir" in
 .) ac_abs_srcdir=$ac_srcdir;;
 *)
   case $ac_srcdir in
-  .) ac_abs_srcdir=$ac_abs_builddir;;
+  .) ac_abs_srcdir="$ac_dir";;
   [\\/]* | ?:[\\/]* ) ac_abs_srcdir=$ac_srcdir;;
-  *) ac_abs_srcdir=$ac_abs_builddir/$ac_srcdir;;
+  *) ac_abs_srcdir="$ac_dir"/$ac_srcdir;;
   esac;;
 esac
-case $ac_abs_builddir in
+case "$ac_dir" in
 .) ac_abs_top_srcdir=$ac_top_srcdir;;
 *)
   case $ac_top_srcdir in
-  .) ac_abs_top_srcdir=$ac_abs_builddir;;
+  .) ac_abs_top_srcdir="$ac_dir";;
   [\\/]* | ?:[\\/]* ) ac_abs_top_srcdir=$ac_top_srcdir;;
-  *) ac_abs_top_srcdir=$ac_abs_builddir/$ac_top_srcdir;;
+  *) ac_abs_top_srcdir="$ac_dir"/$ac_top_srcdir;;
   esac;;
 esac
 
@@ -21291,43 +21285,40 @@ case $srcdir in
     ac_srcdir=$ac_top_builddir$srcdir$ac_dir_suffix
     ac_top_srcdir=$ac_top_builddir$srcdir ;;
 esac
-
-# Do not use `cd foo && pwd` to compute absolute paths, because
-# the directories may not exist.
-case `pwd` in
-.) ac_abs_builddir="$ac_dir";;
+case "$ac_dir" in
+.) ac_abs_builddir=$ac_builddir;;
 *)
-  case "$ac_dir" in
-  .) ac_abs_builddir=`pwd`;;
-  [\\/]* | ?:[\\/]* ) ac_abs_builddir="$ac_dir";;
-  *) ac_abs_builddir=`pwd`/"$ac_dir";;
+  case $ac_builddir in
+  .) ac_abs_builddir="$ac_dir";;
+  [\\/]* | ?:[\\/]* ) ac_abs_builddir=$ac_builddir;;
+  *) ac_abs_builddir="$ac_dir"/$ac_builddir;;
   esac;;
 esac
-case $ac_abs_builddir in
+case "$ac_dir" in
 .) ac_abs_top_builddir=${ac_top_builddir}.;;
 *)
   case ${ac_top_builddir}. in
-  .) ac_abs_top_builddir=$ac_abs_builddir;;
+  .) ac_abs_top_builddir="$ac_dir";;
   [\\/]* | ?:[\\/]* ) ac_abs_top_builddir=${ac_top_builddir}.;;
-  *) ac_abs_top_builddir=$ac_abs_builddir/${ac_top_builddir}.;;
+  *) ac_abs_top_builddir="$ac_dir"/${ac_top_builddir}.;;
   esac;;
 esac
-case $ac_abs_builddir in
+case "$ac_dir" in
 .) ac_abs_srcdir=$ac_srcdir;;
 *)
   case $ac_srcdir in
-  .) ac_abs_srcdir=$ac_abs_builddir;;
+  .) ac_abs_srcdir="$ac_dir";;
   [\\/]* | ?:[\\/]* ) ac_abs_srcdir=$ac_srcdir;;
-  *) ac_abs_srcdir=$ac_abs_builddir/$ac_srcdir;;
+  *) ac_abs_srcdir="$ac_dir"/$ac_srcdir;;
   esac;;
 esac
-case $ac_abs_builddir in
+case "$ac_dir" in
 .) ac_abs_top_srcdir=$ac_top_srcdir;;
 *)
   case $ac_top_srcdir in
-  .) ac_abs_top_srcdir=$ac_abs_builddir;;
+  .) ac_abs_top_srcdir="$ac_dir";;
   [\\/]* | ?:[\\/]* ) ac_abs_top_srcdir=$ac_top_srcdir;;
-  *) ac_abs_top_srcdir=$ac_abs_builddir/$ac_top_srcdir;;
+  *) ac_abs_top_srcdir="$ac_dir"/$ac_top_srcdir;;
   esac;;
 esac
 

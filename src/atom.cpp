@@ -375,6 +375,7 @@ OBResidue *OBAtom::GetResidue()
     else if (!((OBMol*)GetParent())->HasChainsPerceived())
     {
         chainsparser.PerceiveChains(*((OBMol*)GetParent()));
+        ((OBMol*)GetParent())->SetChainsPerceived();
         return _residue;
     }
     else

@@ -77,9 +77,8 @@ bool WriteGromos96(ostream &ofs,OBMol &mol,double fac)
 
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-      if (atom->HasResidue())
+      if (res = atom->GetResidue())
 	{
-	  res = atom->GetResidue();
 	  strcpy(res_name,(char*)res->GetName().c_str());
 	  strcpy(type_name,(char*)res->GetAtomID(atom).c_str());
 	  res_num = res->GetNum();

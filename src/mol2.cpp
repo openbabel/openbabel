@@ -244,10 +244,8 @@ bool WriteMol2(ostream &ofs,OBMol &mol,const char *dimension)
       //  Use original atom names if there are residues
       //
       
-      if (atom->HasResidue())
+      if (res = atom->GetResidue())
       {
-	  res = atom->GetResidue();
-
 	  // Use original atom names
 
 	  sprintf(label,"%s",(char*)res->GetAtomID(atom).c_str());
