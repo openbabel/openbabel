@@ -4,8 +4,24 @@
 
 	* test/Makefile.in: Add targets to create roundtrip program.
 
+	* src/cacao.cpp (ReadCaccrt): Add an obUnitCell object to the
+	molecule for keeping track of unit cell data. Call
+	ConnectTheDots() and PerceiveBondOrders().
+	(WriteCaccrt): If obUnitCell data exists, output unit cell data.
+
+	* src/dmol.cpp (ReadDMol): Read $cell vector section if it exists.
+	(WriteDMol): Write unit cell data if it exists.
+
 	* src/parsmi.cpp (ParseComplex): Add isotope information where
 	available.
+
+	* src/generic.cpp (OBUnitCell::ctor): Make sure to set the generic
+	data type and string.
+
+	* src/generic.h (OBUnitCell): Add space group storage as a string.
+
+	* src/mopac.cpp (ReadMOPAC): Remove debugging output left
+	inadvertantly.
 
 2003-03-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
