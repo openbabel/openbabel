@@ -37,10 +37,14 @@
 [#16rD3]=!@O		2	2
 
 #other misc patterns
-# phosphole (not v. aromatic)
-#[#15rD3]		2	2
+# Accounts Chem Res 1978 11 p. 153
+# phosphole, phosphabenzene (not v. aromatic)
+[#15rD3]		2	2
 # selenophene
 [#34rD2]		2	2
-# tellurophene (not v. aromatic)
+# arsabenzene, etc. (*really* not v. aromatic)
+#[#33rD3]		2	2
+# tellurophene, etc. (*really* not v. aromatic)
 #[#52rD2]		2	2
-
+# stilbabenzene, etc. (very little aromatic character)
+#[#51rD3]		2	2
