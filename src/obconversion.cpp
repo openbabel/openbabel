@@ -29,7 +29,6 @@ GNU General Public License for more details.
 #include <sstream>
 #include <map>
 #include "obconversion.h"
-#include "mol.h"
 
 using namespace std;
 namespace OpenBabel {
@@ -448,14 +447,24 @@ int OBConversion::Convert()
 		if(pInStream==&cin)
 			if(pInStream->peek()=='\n')break;
 
-		if( !pInFormat->ReadChemObject(this))
+		
+		bool ret=false;
+		try
 		{
-		  obErrorLog.ThrowError(__FUNCTION__, " Reading a molecule failed.", obDebug);
-			//error or termination request: try to skip past current object
-			pInFormat->SkipObjects(0,this);
-			//TODO Code to allow continuation with next object rather than break
-			//if SkipObjects returned 1
-		 break;
+			ret = pInFormat->ReadChemObject(this);
+		}
+		catch(...)
+		{
+			if(!IsOption('c', true))
+				throw;
+		}
+
+		if(!ret)
+		{
+			//error or termination request: terminate unless
+			// -c option requested and sucessfully can skip past current object
+			if(!IsOption('c', true) || pInFormat->SkipObjects(0,this)!=1) 
+				break;
 		} 
 		// Objects supplied to AddChemObject() which may output them after a delay
 		//ReadyToInput may be made false in AddChemObject()
@@ -490,8 +499,9 @@ bool OBConversion::SetStartAndEnd()
 			if(p++==NULL)
 			{
 				cerr << "Missing \" in options" <<endl;
+				return false;
 			}
-			return false;
+			break;
 		case 'f':
 			StartNumber=atoi(++p);
 			p=strchr(p,'\"')+1; //get past ""
@@ -676,6 +686,7 @@ return "Conversion options\n \
  -f <#> Start import at molecule # specified\n \
  -l <#> End import at molecule # specified\n \
  -a All input files describe a single molecule\n \
+ -c Continue with next object after error, if possible\n \
  -z Use the options used last time\n\n";
 }
 
