@@ -651,7 +651,7 @@ float OBMol::GetMolWt()
   vector<OBNodeBase*>::iterator i;
 
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-    molwt += etab.GetMass(atom->GetAtomicNum());
+    molwt += atom->GetAtomicMass();
 
   return(molwt);
 }

@@ -183,8 +183,12 @@ int OBElementTable::GetAtomicNum(const char *sym)
 
     vector<OBElement*>::iterator i;
     for (i = _element.begin();i != _element.end();i++)
-    if (!strcmp(sym,(*i)->GetSymbol()))
+      if (!strcmp(sym,(*i)->GetSymbol()))
         return((*i)->GetAtomicNum());
+    if (strcmp(sym, "D"))
+      return(1);
+    else if (strcmp(sym, "T"))
+      return(1);
 
     return(0);
 }

@@ -207,6 +207,26 @@ namespace OpenBabel {
       }
   }
 
+  void WriteChiral(ostream &ofs,OBMol &mol)
+  {
+    OBAtom *atom;
+    vector<OBNodeBase*>::iterator i;
+    char buffer[BUFF_SIZE];
+
+    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+      {
+	if (atom->IsChiral())
+	  {
+	    sprintf(buffer,"%4s %5d is chiral: %s",
+		    etab.GetSymbol(atom->GetAtomicNum()),
+		    atom->GetIdx(),
+		    (atom->IsClockwise() ? "clockwise" : "counterclockwise"));
+	
+	    ofs << buffer << endl;
+	  }
+      }
+  }
+
 bool WriteReport(ostream &ofs,OBMol &mol)
 {
   ofs << "FILENAME: " << mol.GetTitle() << endl;
@@ -216,9 +236,10 @@ bool WriteReport(ostream &ofs,OBMol &mol)
   WriteCharges(ofs, mol);
   ofs << endl << endl << "BOND ANGLES" << endl;
   WriteAngles(ofs, mol);
-  ofs << endl << endl << "TORSION ANGLES" << endl;
+  //  ofs << endl << endl << "TORSION ANGLES" << endl;
   //  WriteTorsions(ofs, mol);
-  //  ofs << endl << endl << "CHIRAL ATOMS" << endl;
+  ofs << endl << endl << "CHIRAL ATOMS" << endl;
+  WriteChiral(ofs, mol);
 
   return(true);
 }

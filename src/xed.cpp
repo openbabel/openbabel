@@ -30,9 +30,9 @@ bool WriteXED(ostream &ofs,OBMol &mol)
   sprintf(buffer,"%10.3f%10i%10i",
 	  mol.GetEnergy(),mol.NumAtoms(),mol.NumBonds());
   ofs << buffer << endl;
-  ofs << "File conversion by  Babel" << endl;
+  ofs << "File conversion by Open Babel" << endl;
 
-  for (i = 1; i <= mol.NumBonds(); i++)
+  for (i = 0; i < mol.NumBonds(); i++)
     {
       bond = mol.GetBond(i);
       sprintf(buffer,"%8i%8i",

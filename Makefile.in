@@ -48,6 +48,7 @@ distclean:
 			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
 		done && test -z "$$fail"
 		rm -f Makefile stamp-h stamp.h
+		rm -rf autom4te.cache
 
 install:	all
 		(cd src; $(MAKE) $(MFLAGS) install)
@@ -61,6 +62,7 @@ dist:		distclean
 		tar cf - $(top_srcdir) | (cd $(DISTDIR); tar xf -)
 		(cd $(DISTDIR); rm -fr RCS CVS *~ .#\*);
 		(cd $(DISTDIR); rm -fr */RCS */CVS */*~ */.#\*);
+		(cd $(DISTDIR); find . -name ".cvsignore" | xargs rm -f);
 		(cd $(DISTDIR)/..; tar cvzf openbabel-$(version).tar.gz openbabel-$(version))
 		rm -rf $(DISTDIR)
 

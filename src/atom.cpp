@@ -278,6 +278,11 @@ OBResidue *OBAtom::GetResidue()
         return NULL;
 }
 
+float OBAtom::GetAtomicMass() const
+{
+  return etab.GetMass(_ele);
+}
+
 char *OBAtom::GetType()
 {
   OBMol *mol = (OBMol*)GetParent();

@@ -8,7 +8,7 @@
 #  Conversion between different external atom types                          #
 #                                                                            #
 ##############################################################################
-180	18
+183	18
 INT	ATN	HYB	MMD	MM2	XYZ	ALC	HAD	MCML	C3D	SYB	MOL	MAP	DRE	XED	DOK	M3D	IDX
 X	0	0	62	0	X	Du	0	X	0	Du	26	X	X	21	25	un.0	0
 Mn	25	0	62	0	Mn	Du	0	M	258	Mn	26	Mn	Mn	20	25	Mn.0	1
@@ -42,8 +42,8 @@ Sac	16	2	49	17	S	SO	0	S	161	S.3	29	S3	S_3	12	14	S.4	28
 So2	16	3	49	18	S	SO2	0	S	161	S.o2	30	S3	S_3	12	14	S.4	29
 Sox	16	2	49	18	S	SO2	0	S	161	S.o	30	S3	S_3	12	14	S.4	30
 S	16	3	49	15	S	S3	0	S	164	S.3	10	S3	S_3	12	14	S.2	31
-Bac	5	0	54	27	B	Du	0	B	53	Du	26	B2	B_2	20	20	B.0	32
-Box	5	0	54	26	B	Du	0	B	53	Du	26	B2	B_2	20	20	B.0	33
+Bac	5	0	54	27	B	Du	0	B	53	B	26	B2	B_2	20	20	B.0	32
+Box	5	0	54	26	B	Du	0	B	53	B	26	B2	B_2	20	20	B.0	33
 B	5	0	55	27	B	B	0	B	53	B	26	B3	B_3	20	20	B.0	34
 P3	15	3	53	25	P	P3	0	P	159	P.3	12	P3	P_3	14	13	P.4	35
 Pac	15	2	53	25	P	P3	0	P	159	P.3	12	P3	P_3	14	13	P.4	36
@@ -191,3 +191,6 @@ Sg	106	0	0	0	0	0	0	0	0	Sg	0	0	0	0	0	0	177
 Bh	107	0	0	0	0	0	0	0	0	Bh	0	0	0	0	0	0	178
 Hs	108	0	0	0	0	0	0	0	0	Hs	0	0	0	0	0	0	179
 Mt	109	0	0	0	0	0	0	0	0	Mt	0	0	0	0	0	0	180
+Ar	18	0	0	0	0	0	0	0	0	Ar	0	0	0	0	0	0	181
+B2	5	0	54	26	B	Du	0	B	53	B	26	B2	B_2	20	20	B.0	182
+B3	5	0	55	27	B	B	0	B	53	B	26	B3	B_3	20	20	B.0	183

@@ -32,8 +32,8 @@ gau		gaussiancart	Gaussian Input			chemical/x-gaussian-input	0	1
 gpr		ghemical	Ghemical Project		none				1	1
 mm1gp		ghemical	Ghemical MM			none				1	0
 qm1gp		ghemical	Ghemical QM			none				1	0
-gr96A		gromos96a	GROMOS96 (A)			none				0	1
-gr96N		gromos96n	GROMOS96 (nm)			none				0	1
+gr96a		gromos96a	GROMOS96 (A)			none				0	1
+gr96n		gromos96n	GROMOS96 (nm)			none				0	1
 hin		hin		HyperChem HIN			none				1	1
 jin		jaguarin	Jaguar Input			none				0	1
 jout		jaguarout	Jaguar Output			none				1	0
@@ -59,8 +59,8 @@ pdb		pdb		PDB				chemical/x-pdb			1	1
 ent		pdb		PDB				chemical/x-pdb			1	1
 pov		pov		POV-Ray Output			none				0	1
 report		report		Report				none				0	1
-qcin		qchemin		QChem Input			none				0	1
-qcout		qchemout	QChem Output			none				1	0
+qcin		qchemin		Q-Chem Input			none				0	1
+qcout		qchemout	Q-Chem Output			none				1	0
 smi		smi		SMILES				chemical/x-daylight-smiles	1	1
 fix		fix		SMILES Fix			none				0	1
 mol2		mol2		Sybyl Mol2			chemical/x-mol2			1	1

@@ -33,6 +33,7 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, const char *title)
     {
     case ALCHEMY:   result = ReadAlchemy(ifs,mol,title);	break;
     case BALLSTICK: result = ReadBallAndStick(ifs,mol,title);	break;
+    case BGF:	    result = ReadBGF(ifs,mol,title);		break;
     case BIOSYM:    result = ReadBiosymCAR(ifs,mol,title);	break;
     case BOX:       result = ReadBox(ifs,mol,title);		break;
     case CACAO:	    result = ReadCaccrt(ifs,mol,title);	       	break;
@@ -78,6 +79,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol,
     case ALCHEMY:   WriteAlchemy(ofs,mol);		break;
     case BALLSTICK: WriteBallAndStick(ofs,mol);		break;
     case BGF:	    WriteBGF(ofs,mol);			break;
+    case BOX:	    WriteBox(ofs,mol,1.0);		break;
     case CACAO:     WriteCaccrt(ofs,mol);		break;
     case CACAOINT:  WriteCacaoInternal(ofs,mol);	break;
     case CACHE:     WriteCache(ofs,mol);		break;

@@ -1,6 +1,71 @@
+2002-12-5  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* Doxyfile: Update for 1.99.1 release.
+
+	* Makefile.in (dist): Make sure to remove autom4te.cache, etc.
+
+	* THANKS: Plenty of contributors to this next release!
+
+	* configure.in: When searching for the "ar" program, remember that
+	Solaris has it in /usr/ccs/bin, so we should check there and fall
+	back to the user's $PATH if it's not found.
+
+	* configure: Regeneratre using autoconf-2.56.
+
+	* src/mol.h: Add OBAtom::GetAtomicMass(), which will eventually
+	allow for isotope-labeled atoms.
+
+	* src/atom.cpp: Implement it.
+
+	* src/mol.cpp (GetMolWt): Write using above.
+
+	* src/cml.cpp: For the moment, turn off debugging output. (This
+	should really go through a filter to allow users to see it if
+	needed.)
+
+	* src/data.cpp (GetAtomicNum): Have D and T atoms return for
+	hydrogen. Eventually needs to support isotopes!
+
+	* src/element.txt, src/element.h: Update with current IUPAC
+	masses.
+
+	* src/extable.txt, src/extable.h: Make sure all extensions are
+	lowercased--since all comparisons are done this way. Fixes bug
+	with GROMOS96 translation.
+
+	* src/fileformat.h, src/fileformat.cpp (ReadMolecule): Fix thinko
+	with BGF format--call the proper procedue.
+	(WriteMolecule): Write Box format with a default size. (!!)
+
+	* src/bgf (ReadBGF): Cleanups found from roundtrip testing. Make
+	sure bond records are parsed correctly and run atom types through
+	the element table rather than the type table.
+	(WriteBGF): Change remark to "Open Babel" rather than "Babel" so
+	people know who created the bugs. ;-)
+
+	* src/gromos96.cpp: Use "Open Babel" as above.
+
+	* src/pdb.cpp (WriteDelphiPDB, WritePDB): Make sure we have a
+	proper line length. Bug discovered via roundtrip testing (and our
+	complaints about short CONECT lines).
+
+	* src/povray.cpp: Don't attempt to get a hostname--this introduces
+	all sorts of portability problems. Also use the atomic symbol
+	rather than the atom type. Less flexible, but POV-Ray doesn't like
+	some symbols in atom types (e.g. period in O.co2).
+
+	* src/report.cpp: Add report on chiral atoms. (Probably needs some
+	improvement still.)
+
+	* src/types.h, src/types.txt: Add missing types, notably for Ar
+	and B2, uncovered via roundtrip testing to the c3d file formats.
+
+	* src/xed.cpp: Fix segfault caused by improper iteration over
+	bonds. Uncovered via roundtrip testing.
+
 2002-12-3  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
-	* src/data.cpp(ParseLine): Fix bug that ignored the first
+	* src/data.cpp (ParseLine): Fix bug that ignored the first
 	non-comment line.
 
 2002-12-2  Geoff Hutchison  <hutchisn@chem.northwestern.edu>

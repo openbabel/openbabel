@@ -204,10 +204,9 @@ bool WriteDelphiPDB(ostream &ofs,OBMol &mol)
 	  for (k = 0;k < bo;k++)
 	    bond[count++] = nbr->GetIdx();
 	}
-      sprintf(buffer,"CONECT  %3d  %3d  %3d  %3d  %3d",
+      sprintf(buffer,"CONECT%5d%5d%5d%5d%5d",
 	      bond[0],bond[1],bond[2],bond[3],bond[4]);
-
-      ofs << buffer << endl;
+      ofs << buffer << "                                       " << endl;
     }
 
   ofs << "TER" << endl;
@@ -835,20 +834,26 @@ bool WritePDB(ostream &ofs,OBMol &mol)
   }
 
   OBAtom *nbr;
+  int count;
   vector<OBEdgeBase*>::iterator k;
   for (i = 1; i <= mol.NumAtoms(); i ++)
   {
     atom = mol.GetAtom(i);
-    if (atom->GetValence())
+    if (atom->GetValence() <= 4)
       {
-	sprintf(buffer,"CONECT %5d",i);
+	sprintf(buffer,"CONECT%5d", i);
 	ofs << buffer;
 	for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
 	  {
-	    sprintf(buffer,"%5d",nbr->GetIdx());
+	    sprintf(buffer,"%5d", nbr->GetIdx());
 	    ofs << buffer;
 	  }
-	ofs << endl;
+	for (count = 0; count < (4 - atom->GetValence()); count++)
+	  {
+	    sprintf(buffer, "     ");
+	    ofs << buffer;
+	  }
+	ofs << "                                       " << endl;
       }
   }
   sprintf(buffer,"MASTER        0    0    0    0    0    0    0    0 ");

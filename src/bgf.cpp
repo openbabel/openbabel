@@ -19,7 +19,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-bool ReadBGF(istream &ifs,OBMol &mol,char *title)
+bool ReadBGF(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   char tmp[15],tmptyp[15];
@@ -47,9 +47,7 @@ bool ReadBGF(istream &ifs,OBMol &mol,char *title)
     ttab.Translate(tmp,tmptyp); 
     atom->SetType(tmp);
 
-    ttab.SetToType("ATN"); 
-    ttab.Translate(tmp,tmptyp); 
-    atom->SetAtomicNum(atoi(tmp));
+    atom->SetAtomicNum(etab.GetAtomicNum(tmptyp));
 
     atom->SetVector(x,y,z);
   }
@@ -58,7 +56,7 @@ bool ReadBGF(istream &ifs,OBMol &mol,char *title)
   vector<vector<int> > vcon;
   vector<vector<int> > vord;
 
-  for (i = 0;i <= mol.NumAtoms();i++)
+  for (i = 0; i < mol.NumAtoms();i++)
     {
       vcon.push_back(vtmp);
       vord.push_back(vtmp);
@@ -75,7 +73,7 @@ bool ReadBGF(istream &ifs,OBMol &mol,char *title)
 
       if (EQn(buffer,"CONECT",6))
 	{
-	  bgn = atoi((char*)vs[1].c_str());
+	  bgn = atoi((char*)vs[1].c_str()) - 1;
 	  if (bgn < 1 || bgn > mol.NumAtoms()) continue;
 	  for (i = 2;i < vs.size();i++)
 	    {
@@ -86,7 +84,7 @@ bool ReadBGF(istream &ifs,OBMol &mol,char *title)
       else
 	if (EQn(buffer,"ORDER",5))
 	  {
-	    bgn = atoi((char*)vs[1].c_str());
+	    bgn = atoi((char*)vs[1].c_str()) - 1;
 	    if (bgn < 1 || bgn > mol.NumAtoms()) continue;
 	    if (vs.size() > vord[bgn].size()+2) continue;
 	    for (i = 2;i < vs.size();i++)
@@ -96,9 +94,11 @@ bool ReadBGF(istream &ifs,OBMol &mol,char *title)
 
   unsigned int j;
   for (i = 1;i <= mol.NumAtoms();i++)
-    if (!vcon[i].empty())
-      for (j = 0;j < vcon[i].size();j++)
-	mol.AddBond(i,vcon[i][j],vord[i][j]);
+    if (!vcon[i - 1].empty())
+      for (j = 0;j < vcon[i - 1].size();j++)
+	{
+	  mol.AddBond(i,vcon[i - 1][j],vord[i - 1][j]);
+	}
   
   return(true);
 }
@@ -115,7 +115,7 @@ bool WriteBGF(ostream &ofs,OBMol &mol)
   
   ofs << "BIOGRF 200" << endl;
   sprintf(buffer,"DESCRP %s",mol.GetTitle()); ofs << buffer << endl;
-  sprintf(buffer,"REMARK BGF file created by Babel %s",BABEL_VERSION);
+  sprintf(buffer,"REMARK BGF file created by Open Babel %s",BABEL_VERSION);
   ofs << buffer << endl;
   ofs << "FORCEFIELD DREIDING  " << endl;
   ofs << "FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5)" << endl;

@@ -116,40 +116,6 @@ string MakePrefix(const char* title)
 
 }
 
-bool getFQDomain(char *domain, int len)
-{
- struct hostent* he = (struct hostent*) NULL;
-
- /* ---- Get the hostname ---- */
- if (gethostname(domain, len - 1) == -1) {
-
-  /* ---- Can't get hostname (show an error) ---- */
-  domain[0] = '\0';
-  return false;
-
- };
-   
- /* ---- Use the resolver ---- */
- he = gethostbyname(domain);
- 
- /* --- And check gethostbyname-call ---- */
- if (he == (struct hostent *) NULL) {
-
-  /* ---- Can't get FQDN (show an error) ---- */
-  domain[0] = '\0';
-  return false;
-
- }
-
- /* ---- Now copy result (always terminated with '\0' )---- */ 
- strncpy(domain, he -> h_name, (size_t) len - 1);
- domain[len - 1] = '\0';
-
- /* ---- Everthing is ok ---- */
- return true;
-
-}
-
 void OutputHeader(ostream &ofs, OBMol &mol, string prefix)
 {
  time_t akttime;                              /* Systemtime                        */
@@ -177,17 +143,8 @@ void OutputHeader(ostream &ofs, OBMol &mol, string prefix)
  /* ---- Check for a valid login name and hostname ---- */
  if (log_name != (char *) NULL) {
 
-  if(getFQDomain(domainname,MAXDOMAINNAMELEN)) {
-
-   /* ---- Write login/hostname/domainname ---- */
-   ofs << "//Converted for: " << log_name << "@" << domainname << endl;
-
-  } else {
-
    /* ---- Write login/hostname ---- */
    ofs << "//Converted for: " << log_name << endl;
-
-  }
 
  }
 
@@ -281,7 +238,7 @@ void OutputAtoms(ostream &ofs, OBMol &mol, string prefix)
   /* ---- Write full description of atom i ---- */
   ofs << "#declare " << prefix << "_atom" << i << " = ";
   ofs << "object {" << endl 
-      << "\t  Atom_" << atom -> GetType() << endl 
+      << "\t  Atom_" << etab.GetSymbol(atom->GetAtomicNum()) << endl 
       << "\t  translate " << prefix << "_pos_" << i << endl << "\t }" << endl;
 
  }

@@ -358,6 +358,7 @@ public:
     //int        GetStereo()        const {return((int)_stereo);}
     int          GetFormalCharge()  const {return(_fcharge);}
     unsigned int GetAtomicNum()   const {return((unsigned int)_ele);}
+    float	 GetAtomicMass()  const;
     unsigned int GetIdx()         const {return((int)_idx);}
     unsigned int GetCoordinateIdx() const {return((int)_cidx);}
     unsigned int GetCIdx()          const {return((int)_cidx);}

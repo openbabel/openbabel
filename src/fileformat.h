@@ -41,6 +41,7 @@ class OBFileFormat
 bool ReadAlchemy(std::istream &, OBMol &, const char *title="Untitled");
 bool ReadAmberPrep(std::istream &, OBMol &, const char *title="Untitled");
 bool ReadBallAndStick(std::istream &,OBMol &,const char *title="Untitled");
+bool ReadBGF(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadBinary(std::istream&,OBMol&);
 bool ReadBinary(unsigned char *,OBMol&, int);
 //bool ReadBinary(istream&,unsigned char **);

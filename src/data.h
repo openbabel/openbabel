@@ -39,6 +39,7 @@ GNU General Public License for more details.
 namespace OpenBabel {
 
 class OBElement;
+class OBAtom;
 
 class OBElementTable;
 typedef enum { UNDEFINED, // Rest are alphabetical, insert as needed
