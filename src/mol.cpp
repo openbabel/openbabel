@@ -772,6 +772,11 @@ float OBMol::GetExactMass()
   return(mass);
 }
 
+int OBMol::GetTotalCharge()
+{
+  return(_totalCharge);
+}
+
 OBMol &OBMol::operator=(const OBMol &source)
      //only atom and bond info is copied from src to dest
      //Conformers are now copied also, MM 2/7/01

@@ -625,7 +625,7 @@ public:
     float        GetMolWt();
     //! Mass given by isotopes (or most abundant isotope as necessary)
     float	 GetExactMass();
-    int		 GetTotalCharge()		      {return(_totalCharge);}
+    int		 GetTotalCharge();
     float       *GetCoordinates()                     {return(_c);}
     std::vector<OBRing*> &GetSSSR();
     bool         IsCompressed()                       {return _compressed;}
