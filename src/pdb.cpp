@@ -96,7 +96,9 @@ bool ReadPDB(istream &ifs,OBMol &mol,const char *title)
   mol.ConnectTheDots();
 
   mol.EndModify();
-  mol.PerceiveBondOrders();
+  
+  if (mol.NumAtoms() < 250) // Minimize time required on real proteins
+    mol.PerceiveBondOrders();
   mol.SetAtomTypesPerceived();
   atomtyper.AssignImplicitValence(mol);
 
@@ -131,7 +133,8 @@ bool ReadTerTermPDB(istream &ifs,OBMol &mol,const char *title)
   mol.ConnectTheDots();
 
   mol.EndModify();
-  mol.PerceiveBondOrders();
+  if (mol.NumAtoms() < 250) // Minimize time required on real proteins
+    mol.PerceiveBondOrders();
   mol.SetAtomTypesPerceived();
   atomtyper.AssignImplicitValence(mol);
 
@@ -266,9 +269,11 @@ static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
 
   if (EQn(buffer,"ATOM",4))
   {
-    type = atmid.substr(0,1);
+    type = atmid.substr(0,2);
     if (isdigit(type[0]))
-       type = atmid.substr(1,1);
+      type = atmid.substr(1,1);
+    else if (sbuf[6] == ' ') // one-character element
+      type = atmid.substr(0,1);
 
     if (resname.substr(0,2) == "AS" || resname[0] == 'N')
     {
@@ -288,8 +293,9 @@ static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
   }
   else //must be hetatm record
   {
-    if (isalpha(atmid[0])) type = atmid.substr(0,1);
-    else                   type = atmid.substr(1,1);
+    if (isalpha(atmid[0])) type = atmid.substr(0,2);
+    else if (atmid[0] == ' ') type = atmid.substr(1,1); // one char element
+    else                   type = atmid.substr(1,2);
     if (atmid == resname)
       {
 	type = atmid;
@@ -810,7 +816,9 @@ bool WritePDB(ostream &ofs,OBMol &mol)
 	strncpy(type_name,(char*)res->GetAtomID(atom).c_str(),4);
 
 	//two char. elements are on position 13 and 14 one char. start at 14
-	if (strlen(type_name) < 4)
+	if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
+	{
+	  if (strlen(type_name) < 4)
 	  {
 	    char tmp[10];
 	    strcpy(tmp, type_name);
@@ -818,16 +826,13 @@ bool WritePDB(ostream &ofs,OBMol &mol)
 	    strncpy(type_name,padded_name,4);
 	    type_name[4] = '\0';
 	  }
-	// type_name == 4 since we used strncpy
-	else if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
+	  else
 	  {
-	    type_name[4] = type_name[3];
-	    type_name[3] = type_name[2];
-	    type_name[2] = type_name[1];
-	    type_name[1] = type_name[0];
-	    type_name[0] = type_name[4];
-	    type_name[4] = '\0';
+	    type_name[4] = type_name[3]; type_name[3] = type_name[2];
+	    type_name[2] = type_name[1]; type_name[1] = type_name[0];
+	    type_name[0] = type_name[4]; type_name[4] = '\0';
 	  }
+	}
 	res_num = res->GetNum();
       }
     else
@@ -838,6 +843,7 @@ bool WritePDB(ostream &ofs,OBMol &mol)
 	type_name[4] = '\0';
 	res_num = 1;
       }
+
     element_name = etab.GetSymbol(atom->GetAtomicNum());
     if (strlen(element_name) == 2)
       element_name[1] = toupper(element_name[1]);

@@ -7,6 +7,12 @@
 	SMI file types special cases. (Hard to compare atoms and coords
 	for them.)
 
+	* src/pdb.cpp (WritePDB): Make sure two-character elements end up
+	in the correct columns even with residue information.
+	(ReadPDB): Refer to the original text (with spaces) before
+	deciding if an atom type is a two-character element or a one-char
+	element.
+
 2003-03-17  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 	
 	* src/cml.cpp: Fix unused declarations that cause problems with
