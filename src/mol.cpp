@@ -2640,7 +2640,7 @@ void OBMol::ConnectTheDots(void)
   delete [] c;
 }
 
-void OBMol::PerceiveBonds()
+void OBMol::PerceiveBondOrders()
 {
   OBAtom *atom, *b, *c;
   Vector v1, v2;
@@ -2673,7 +2673,6 @@ void OBMol::PerceiveBonds()
 	    atom->SetHyb(2);
 	}
     } // pass 1
-  SetHybridizationPerceived();
 
   // Pass 2: look for 5-member rings with torsions <= 7.5 degrees
   //         and 6-member rings with torsions <= 12 degrees
