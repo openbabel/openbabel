@@ -21,7 +21,9 @@ using namespace std;
 namespace OpenBabel {
 
 extern bool SwabInt;
-extern OBPhModel phmodel;
+extern OBPhModel	phmodel;
+extern OBAromaticTyper  aromtyper;
+extern OBAtomTyper      atomtyper;
 
 //
 // OBMol member functions
@@ -2751,6 +2753,33 @@ void OBMol::PerceiveBondOrders()
     } // Sulfone
 
   // Pass 5: Check for aromatic rings and assign bonds as appropriate
+  // This is just a quick and dirty approximation that marks everything
+  //  as potentially aromatic
+  bool typed; // has this ring been typed?
+  unsigned int loop, loopSize;
+  for (ringit = rlist.begin(); ringit != rlist.end(); ringit++)
+    {
+      typed = false;
+      loopSize = (*ringit)->PathSize();
+      if (loopSize == 5 || loopSize == 6)
+	{
+	  path = (*ringit)->_path;
+	  for(loop = 0; loop < loopSize; loop++)
+	    {
+	      atom = GetAtom(path[loop]);
+	      if(atom->HasNonSingleBond() || atom->GetHyb() != 2)
+		{
+		  typed = true;
+		  break;
+		}
+	    }
+
+	  if (!typed)
+	    for(loop = 0; loop < loopSize; loop++)
+	      (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
+	}
+    }
+  // Kekulize();
 
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity
   vector<pair<OBAtom*,float> > sortedAtoms;
@@ -2841,7 +2870,11 @@ void OBMol::PerceiveBondOrders()
   } // pass 6
 
   // Now let the atom typer go to work again
+  // we're going to create the atoms and bonds in a new molecule
+  // and then copy that back to us
   _flags &= (~(OB_HYBRID_MOL));
+  _flags &= (~(OB_AROMATIC_MOL));
+  _flags &= (~(OB_ATOMTYPES_MOL));
 }
 
 void OBMol::Center()
