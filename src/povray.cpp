@@ -536,7 +536,6 @@ void OutputUnions(ostream &ofs, OBMol &mol, string prefix)
 }
 
 void OutputMoleculeBonds(ostream &ofs,
-                         OBMol mol, 
                          string prefix,
                          double min_x, double max_x, 
                          double min_y, double max_y, 
@@ -693,7 +692,6 @@ bool WritePovray(ostream &ofs, OBMol &mol, const char* title)
 
   /* ---- Print out description of molecule ---- */
   OutputMoleculeBonds(ofs,
-                      mol,
                       prefix,
                       min_x, max_x,
                       min_y, max_y,

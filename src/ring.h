@@ -76,7 +76,7 @@ class OBRingSearch
   ~OBRingSearch();
   void    SortRings() {std::sort(_rlist.begin(),_rlist.end(),CompareRingSize);}
   void    RemoveRedundant(int);
-  void    AddRingFromClosure(OBMol &,OBBond *,int);
+  void    AddRingFromClosure(OBMol &,OBBond *);
   void    WriteRings();
   bool    SaveUniqueRing(std::deque<int>&,std::deque<int>&);
   std::vector<OBRing*>::iterator BeginRings() {return(_rlist.begin());}

@@ -1,3 +1,15 @@
+2003-06-15  Michael Banck  <mbanck@gmx.net>
+
+	* src/pdb.cpp (WritePDB): Cast atom->GetValence() to int to avoid
+	signed/unsigned comparison.
+	* src/ring.cpp (OBRingSearch::RemoveRedundant): Remove register
+	attribute for i and j to suppress a warning.
+	(OBRingSearch::AddRingFromClosure): Remove unused parameter 
+	`int level'.
+	* src/ring.h (AddRingFromClosure): Remove unused parameter `int'.  
+	* src/povray.cpp (OutputMoleculeBonds): Remove unused parameter
+	`OpenBabel::OBMol mol'.
+
 2003-06-15  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
 
 	Updated to latest autoconf, libtool, automake versions to fix a

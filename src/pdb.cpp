@@ -874,7 +874,7 @@ bool WritePDB(ostream &ofs,OBMol &mol)
 	    sprintf(buffer,"%5d", nbr->GetIdx());
 	    ofs << buffer;
 	  }
-	for (count = 0; count < (4 - atom->GetValence()); count++)
+	for (count = 0; count < (4 - (int)atom->GetValence()); count++)
 	  {
 	    sprintf(buffer, "     ");
 	    ofs << buffer;

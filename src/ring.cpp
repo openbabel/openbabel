@@ -95,7 +95,7 @@ void OBMol::FindSSSR()
 	  vector<OBEdgeBase*>::iterator i;
 
 	  for (i = cbonds.begin();i != cbonds.end();i++)
-	    rs.AddRingFromClosure(*this,(OBBond*)*i,0);
+	    rs.AddRingFromClosure(*this,(OBBond*)*i);
 	  
 	  rs.SortRings(); //sort ring sizes from smallest to largest
 	  rs.RemoveRedundant(frj);  //full ring set - reduce to SSSR set
@@ -149,7 +149,7 @@ static int DetermineFRJ(OBMol &mol)
 void OBRingSearch::RemoveRedundant(int frj)
 {
   OBBitVec tmp;
-  register int i,j;
+  int i,j;
 
   //remove identical rings
   for (i = _rlist.size()-1;i > 0;i--)
@@ -186,7 +186,7 @@ void OBRingSearch::RemoveRedundant(int frj)
 }
 
 
-void OBRingSearch::AddRingFromClosure(OBMol &mol,OBBond *cbond,int level)
+void OBRingSearch::AddRingFromClosure(OBMol &mol,OBBond *cbond)
 {
   vector<OBRTree*> t1(mol.NumAtoms()+1,(OBRTree*)NULL);
   vector<OBRTree*> t2(mol.NumAtoms()+1,(OBRTree*)NULL);
