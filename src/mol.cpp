@@ -1858,8 +1858,9 @@ bool OBMol::AddBond(int first,int second,int order,int stereo,int insertpos)
 {
   BeginModify();
 
-  if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms()) 
-    //atoms exist
+  if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms()
+      && !GetBond(first, second))
+    //atoms exist and bond doesn't
     {
       OBBond *bond = CreateBond();
       if (!bond)

@@ -343,15 +343,11 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
   tokenize(vs,buffer);
   if (vs.empty()) return(false);
   vs.erase(vs.begin());
-  int con1,con2,con3,con4;
-  con1 = con2 = con3 = con4 = 0;
+  int con, order, k;
   int start = atoi(vs[0].c_str());
 
-  if (vs.size() > 1) con1 = atoi(vs[1].c_str());
-  if (vs.size() > 2) con2 = atoi(vs[2].c_str());
-  if (vs.size() > 3) con3 = atoi(vs[3].c_str());
-  if (vs.size() > 4) con4 = atoi(vs[4].c_str());
-  if (!con1) return(false);
+  if (vs.size() > 1) con = atoi(vs[1].c_str());
+  if (!con) return(false);
 
   OBAtom *a1,*a2;
   OBResidue *r1,*r2;
@@ -363,14 +359,23 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
 	  for (a2 = mol.BeginAtom(j);a2;a2 = mol.NextAtom(j))
 	    {
 	      r2 = a2->GetResidue();
-	      if (con1 && r2->GetSerialNum(a2) == con1) 
-		mol.AddBond(a1->GetIdx(),a2->GetIdx(),1);
-	      if (con2 && r2->GetSerialNum(a2) == con2) 
-		mol.AddBond(a1->GetIdx(),a2->GetIdx(),1);
-	      if (con3 && r2->GetSerialNum(a2) == con3) 
-		mol.AddBond(a1->GetIdx(),a2->GetIdx(),1);
-	      if (con4 && r2->GetSerialNum(a2) == con4) 
-		mol.AddBond(a1->GetIdx(),a2->GetIdx(),1);
+	      k = 1;
+	      while (k < vs.size())
+		{
+		  con = 0;
+		  order = 1;
+		  con = atoi(vs[k].c_str());
+		  if (con && (k+1) < vs.size() && atoi(vs[k+1].c_str()) == con)
+		    {
+		      order++;
+		      k++;
+		    }
+		  
+		  if (con && r2->GetSerialNum(a2) == con) 
+		    mol.AddBond(a1->GetIdx(),a2->GetIdx(), order);
+		  
+		  k++;
+		}
 	    }
     }
 

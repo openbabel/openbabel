@@ -62,7 +62,7 @@ bool ReadGhemical(istream &ifs,OBMol &mol,char *title)
     for (i = 0; i < nbonds; i++)
       {
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
-	sscanf(buffer,"%d%d%s",&bgn,&end,bobuf);
+	if (!sscanf(buffer,"%d%d%s",&bgn,&end,bobuf)) return (false);
 	bostr = bobuf; order = 1;
 	if      (bostr == "D")   order = 2;
 	else if (bostr == "T")   order = 3;

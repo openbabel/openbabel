@@ -1,4 +1,16 @@
 2002-02-22  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+	
+	* src/pdb.cpp (ParseConectRecord): Fix bugs in CONECT records with
+	PDB files. Would only read first 4 columns and wouldn't handle
+	multiple bonds. Fixes PR #529744.
+	
+	* src/ghemical.cpp: Add error checking for reading bonds. Don't
+	assume the # of bonds given in the header is correct.
+
+	* src/mol.cpp: Check to see if a bond exists before adding
+	it. (Prevents a bond addition (a,b) followed by (b,a).)
+
+2002-02-22  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/Makefile.in: Add viewmol.o.
 
