@@ -151,7 +151,7 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive pdf-recursive \
 	installdirs-recursive install-recursive uninstall-recursive \
 	check-recursive installcheck-recursive
 DIST_COMMON = README AUTHORS COPYING ChangeLog INSTALL Makefile.am \
-	Makefile.in THANKS acinclude.m4 aclocal.m4 config.guess \
+	Makefile.in NEWS THANKS acinclude.m4 aclocal.m4 config.guess \
 	config.sub configure configure.in depcomp install-sh ltmain.sh \
 	missing mkinstalldirs openbabel.pc.in
 DIST_SUBDIRS = $(SUBDIRS)

@@ -1,3 +1,14 @@
+2003-07-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/data.cpp (GetAtomicNum): Fix mistake in calls to strcasecmp,
+	as pointed out by Chris Morley.
+
+	* src/math/Makefile.am: Make sure math/matrix3x3.h and
+	math/vector3.h are installed with a "make install" as reported by
+	Jean. Fixes PR#761644.
+
+	* Makefile.in, src/math/Makefile.in: Regenerate using automake.
+
 2003-06-26  Michael Banck <mbanck@gmx.net>
 
 	* NEWS: New file.

@@ -225,12 +225,12 @@ int OBElementTable::GetAtomicNum(const char *sym, unsigned short iso)
     for (i = _element.begin();i != _element.end();i++)
       if (!strncasecmp(sym,(*i)->GetSymbol(),2))
         return((*i)->GetAtomicNum());
-    if (strcasecmp(sym, "D"))
+    if (strcasecmp(sym, "D") == 0)
       {
 	iso = 2;
 	return(1);
       }
-    else if (strcasecmp(sym, "T"))
+    else if (strcasecmp(sym, "T") == 0)
       {
 	iso = 3;
 	return(1);

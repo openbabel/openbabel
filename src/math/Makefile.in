@@ -132,7 +132,11 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 noinst_LTLIBRARIES = libmath.la
 libmath_la_SOURCES = matrix3x3.cpp vector3.cpp
-EXTRA_DIST = matrix3x3.h vector3.h
+
+libmathincludedir = $(includedir)/openbabel/math
+libmathinclude_HEADERS = \
+	matrix3x3.h vector3.h
+
 subdir = src/math
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -159,7 +163,9 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 DIST_SOURCES = $(libmath_la_SOURCES)
-DIST_COMMON = Makefile.am Makefile.in
+HEADERS = $(libmathinclude_HEADERS)
+
+DIST_COMMON = $(libmathinclude_HEADERS) Makefile.am Makefile.in
 SOURCES = $(libmath_la_SOURCES)
 
 all: all-am
@@ -237,6 +243,24 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
+libmathincludeHEADERS_INSTALL = $(INSTALL_HEADER)
+install-libmathincludeHEADERS: $(libmathinclude_HEADERS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(libmathincludedir)
+	@list='$(libmathinclude_HEADERS)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " $(libmathincludeHEADERS_INSTALL) $$d$$p $(DESTDIR)$(libmathincludedir)/$$f"; \
+	  $(libmathincludeHEADERS_INSTALL) $$d$$p $(DESTDIR)$(libmathincludedir)/$$f; \
+	done
+
+uninstall-libmathincludeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(libmathinclude_HEADERS)'; for p in $$list; do \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f $(DESTDIR)$(libmathincludedir)/$$f"; \
+	  rm -f $(DESTDIR)$(libmathincludedir)/$$f; \
+	done
 
 ETAGS = etags
 ETAGSFLAGS =
@@ -325,9 +349,10 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES)
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 
 installdirs:
+	$(mkinstalldirs) $(DESTDIR)$(libmathincludedir)
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -370,7 +395,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-libmathincludeHEADERS
 
 install-exec-am:
 
@@ -397,7 +422,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-info-am
+uninstall-am: uninstall-info-am uninstall-libmathincludeHEADERS
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
 	clean-libtool clean-noinstLTLIBRARIES ctags distclean \
@@ -405,11 +430,12 @@ uninstall-am: uninstall-info-am
 	distclean-libtool distclean-tags distdir dvi dvi-am info \
 	info-am install install-am install-data install-data-am \
 	install-exec install-exec-am install-info install-info-am \
-	install-man install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-info-am
+	install-libmathincludeHEADERS install-man install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-info-am \
+	uninstall-libmathincludeHEADERS
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
