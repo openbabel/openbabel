@@ -41,28 +41,28 @@ datatyping, etc. If you do not understand these you are likely to break
 conformance with CML.
 
 The following requests are addressed to anyone or organization making changes to this code
-who has not contacted me. The GPL prevents them being mandatory but they should be 
+who has not contacted me. The GPL prevents them being mandatory but they should be
 respected by anyone who believes in interoperability
 
 The code itself is OpenSource. You may make any changes under
 the terms of the GPL above.
 
-HOWEVER: ANY alteration to the code means that your system may deviate from 
+HOWEVER: ANY alteration to the code means that your system may deviate from
 a compliant CML system. CML has been trademarked precisely to protect its implementation.
 (The International Union of Crystallography has trademarked their CIF
 specification, so this policy is in keeping with accepted practice in
 Open Specifications).
 
 YOU are therefore requested to announce that your code has been modified from that deposited
-by myself or supplied from the current OpenSource site. You should be very careful 
+by myself or supplied from the current OpenSource site. You should be very careful
 in any claims that it complies with any of the published
 CML specifications. You are requested to make it clear to users that your use of
 "CML" the <cml> tag and the CML namespaces posted on http://www.xml-cml.org has
-been made without the knowledge of the authors of CML
+been made without the knowledge of the authors of CML.
 
 This notice must be included with any modified software.
 
-Peter Murray-Rust, 2002
+Peter Murray-Rust, 2002, 2003
 */
 
 #include "mol.h"
@@ -71,8 +71,7 @@ using namespace std;
 namespace OpenBabel {
 
 // default molecule size
-int ATOM_SIZE = 100;
-string _EMPTY = "";
+int ATOMSIZE = 100;
 
 // ----------------lexical processing ------------------
 // this is a crude approximate to a SAX2-parser which omits all DTD events
@@ -159,6 +158,23 @@ void startElement(string namespaceURI, string localName, string qName, vector <p
 //          Begin the scope of a prefix-URI Namespace mapping.
 void startPrefixMapping(string prefix, string uri);
 
+// ----------------XML utilities ----------------
+
+// writes foo="bar" (preceded by space)
+bool writeAttribute(ostream& ofs, string attname, string value);
+// writes <foo or <bar:foo
+bool writeStartTagStart(ostream& ofs, string name);
+// writes >
+bool writeStartTagEnd(ostream& ofs);
+// writes </foo> or </bar:foo>
+bool writeEndTag(ostream& ofs, string name);
+// writes />
+bool writeCombinedTagEnd(ostream& ofs);
+// normalizes string
+string getNormalizedString(char* ch);
+// normalizes string
+string getNormalizedString(string s);
+
 // ----------------utilities ----------------
 // trims whitespace from start and end of string
 string trim(string s);
@@ -174,10 +190,13 @@ vector <string> unusedElementNameVector;
 // ----------------CML elements----------------
 const string CML1_ELEMENT_NAMES = "angle atom atomArray bond bondArray coordinate2 coordinate3 crystal electron feature float floatArray floatMatrix integer integerArray link list molecule reaction sequence string stringArray torsion";
 
-const string CML1_NAMESPACE = "http://www.xml-cml.org/dtd/cml_1_0_1.dtd";
-const string CML2_NAMESPACE = "http://www.xml-cml.org/schema/cml2/core";
-const string STMML_NAMESPACE = "http://www.xml-cml.org/schema/stmml";
-string cmlType = "";
+const char* CML1_NAMESPACE = "http://www.xml-cml.org/dtd/cml_1_0_1.dtd";
+const char* CML2_NAMESPACE = "http://www.xml-cml.org/schema/cml2/core";
+const char* STMML_NAMESPACE = "http://www.xml-cml.org/schema/stmml";
+const char* C_PREFIX           = "cml";
+
+const char* C_2D = "2D";
+const char* C_3D = "3D";
 
 vector <string> CML_ELEMENT_VECTOR;
 string CML_ELEMENT_NAMES = "amount angle atom atomArray atomParity bond bondArray cml crystal electron formula length molecule stereo substance substanceList symmetry torsion ";
@@ -185,6 +204,102 @@ string CML_ELEMENT_NAMES = "amount angle atom atomArray atomParity bond bondArra
 vector <string> STMML_ELEMENT_VECTOR;
 string STMML_ELEMENT_NAMES = "action actionList alternative annotation array appinfo definition description dictionary dimension documentation entry enumeration link list matrix metadataList metadata object observation relatedEntry scalar stmml table unit unitList unitType ";
 
+const char* C_ATOMID           = "atomID";
+const char* C_ATOMREF          = "atomRef";
+const char* C_ATOMREFS         = "atomRefs";
+const char* C_ATOMREFS1        = "atomRefs1";
+const char* C_ATOMREFS2        = "atomRefs2";
+const char* C_ATOMREFS3        = "atomRefs3";
+const char* C_ATOMREFS4        = "atomRefs4";
+const char* C_BUILTIN          = "builtin";
+const char* C_CONVENTION       = "convention";
+const char* C_DATATYPE         = "dataType";
+const char* C_DICTREF          = "dictRef";
+const char* C_FORMALCHARGE     = "formalCharge";
+const char* C_ELEMENTTYPE      = "elementType";
+const char* C_HYDROGENCOUNT    = "hydrogenCount";
+const char* C_ID               = "id";
+const char* C_OCCUPANCY        = "occupancy";
+const char* C_ORDER            = "order";
+const char* C_POINTGROUP       = "pointgroup";
+const char* C_SPACEGROUP       = "spacegroup";
+const char* C_TITLE            = "title";
+const char* C_UNITS            = "units";
+const char* C_X2               = "x2";
+const char* C_Y2               = "y2";
+const char* C_X3               = "x3";
+const char* C_Y3               = "y3";
+const char* C_Z3               = "z3";
+const char* C_XY2              = "xy2";
+const char* C_XYZ3             = "xyz3";
+const char* C_XYZFRACT         = "xyzFract";
+
+const char* C_ANGLE            = "angle";
+const char* C_ARRAY            = "array";
+const char* C_ATOM             = "atom";
+const char* C_ATOMARRAY        = "atomArray";
+const char* C_ATOMPARITY       = "atomParity";
+const char* C_BOND             = "bond";
+const char* C_BONDARRAY        = "bondArray";
+const char* C_CML              = "cml";
+const char* C_COORDINATE2      = "coordinate2";
+const char* C_COORDINATE3      = "coordinate3";
+const char* C_CRYSTAL          = "crystal";
+const char* C_ELECTRON         = "electron";
+const char* C_FEATURE          = "feature";
+const char* C_FLOAT            = "float";
+const char* C_FLOATARRAY       = "floatArray";
+const char* C_FLOATMATRIX      = "floatMatrix";
+const char* C_FORMULA          = "formula";
+const char* C_INTEGER          = "integer";
+const char* C_INTEGERARRAY     = "integerArray";
+const char* C_LENGTH           = "length";
+const char* C_MATRIX           = "matrix";
+const char* C_MOLECULE         = "molecule";
+const char* C_REACTION         = "reaction";
+const char* C_SCALAR           = "scalar";
+const char* C_SEQUENCE         = "sequence";
+const char* C_STEREO           = "stereo";
+const char* C_STRING           = "string";
+const char* C_STRINGARRAY      = "stringArray";
+const char* C_SYMMETRY         = "symmetry";
+const char* C_TORSION          = "torsion";
+
+
+const char* _COLON             = ":";
+const char* _EMPTY             = "";
+const char* _EQUALS            = "=";
+const char* _LANGLE            = "<";
+const char* _NEWLINE           = "\n";
+const char* _QUERY             = "?";
+const char* _QUOTE             = "\"";
+const char* _RANGLE            = ">";
+const char* _SLASH             = "/";
+const char* _SPACE             = " ";
+const char* _SPACE_NEWLINE     = " \n";
+
+const char* X_QUOT             = "quot";
+const char* X_APOS             = "apos";
+const char* X_LT               = "lt";
+const char* X_GT               = "gt";
+const char* X_AMP              = "amp";
+const char* E_TAGO             = "</";
+const char* E_PI               = "?>";
+const char* S_PI               = "<?";
+const char* X_DOCTYPE          = "<!DOCTYPE";
+const char* X_ENCODING         = "encoding";
+const char* X_STANDALONE       = "standalone";
+const char* X_SYSTEM           = "SYSTEM";
+const char* X_VERSION          = "version";
+const char* X_XMLNS            = "xmlns";
+const char* X_XML              = "xml";
+const char* S_COMMENT          = "<!--";
+const char* E_COMMENT          = "-->";
+const char* S_CDATA            = "<![CDATA[";
+const char* E_CDATA            = "]]>";
+
+const string C_CML1              = "CML1";
+const string C_CML2              = "CML2";
 
 // <angle>
 bool startAngle(vector <pair<string,string> > &atts);
@@ -208,9 +323,9 @@ bool processAtomBuiltin();
 // </atom>
 bool endAtom();
 //bool WriteAtom(ostream &ofs, OBAtom* atom, int count);
-vector <string> ATOM_ATTRIBUTE_VECTOR;
-string ATOM_ATTRIBUTES = "id title convention dictRef";
-string ATOM_BUILTINS =
+vector <string> ATOMATTRIBUTE_VECTOR;
+string ATOMATTRIBUTES = "id title convention dictRef";
+string ATOMBUILTINS =
 	"x2 y2 x3 y3 z3 xy2 xyz3 xFract yFract zFract elementType formalCharge hydrogenCount";
 
 // <atomArray>
@@ -332,7 +447,7 @@ vector <string> REACTION_ATTRIBUTE_VECTOR;
 bool startScalar(vector <pair<string,string> > &atts);
 // </scalar>
 bool endScalar();
-string SCALAR_ATTRIBUTES =  "id title convention dataType size units";
+string SCALAR_ATTRIBUTES =  "id title convention dictRef dataType size units";
 vector <string> SCALAR_ATTRIBUTE_VECTOR;
 
 // <sequence>
@@ -350,8 +465,8 @@ bool endStereo(vector <pair<string,string> > &atts);
 bool startString(vector <pair<string,string> > &atts);
 // </string>
 bool endString();
-vector <string> STRING_ATTRIBUTE_VECTOR;
-string STRING_ATTRIBUTES =  "id title count convention builtin";
+vector <string> STRINGATTRIBUTE_VECTOR;
+string STRINGATTRIBUTES =  "id title count convention builtin";
 
 bool addString();
 
@@ -486,18 +601,18 @@ vector <string> stereoVector;
 // using builtins?
 bool useBuiltin;
 
-bool inputCML1;
-bool inputCML2;
 bool inputNamespace;
 char *inputPrefix;
 bool inputArray;
 
+string cmlType = "";
 bool outputCML1;
 bool outputCML2;
 bool outputDoctype;
+bool outputDeclaration;
 bool outputPretty;
 bool outputNamespace;
-char *outputPrefix;
+string outputPrefix;
 bool outputArray;
 bool outputDebug;
 
@@ -541,13 +656,13 @@ void makeAllowedElementLists() {
 
 void makeAllowedAttributeLists() {
 	tokenize(ANGLE_ATTRIBUTE_VECTOR, ANGLE_ATTRIBUTES, " \n");
-	string s = ATOM_ATTRIBUTES;
-	s.append(" ");
-	s.append(ATOM_BUILTINS);
-	tokenize(ATOM_ATTRIBUTE_VECTOR, s, " \n");
+	string s = ATOMATTRIBUTES;
+	s.append(_SPACE);
+	s.append(ATOMBUILTINS);
+	tokenize(ATOMATTRIBUTE_VECTOR, s, " \n");
 	tokenize(ATOMARRAY_ATTRIBUTE_VECTOR, ATOMARRAY_ATTRIBUTES, " \n");
 	s = BOND_ATTRIBUTES;
-	s.append(" ");
+	s.append(_SPACE);
 	s.append(BOND_BUILTINS);
 	tokenize(BOND_ATTRIBUTE_VECTOR, s, " \n");
 	tokenize(BONDARRAY_ATTRIBUTE_VECTOR, BONDARRAY_ATTRIBUTES, " \n");
@@ -572,14 +687,18 @@ void makeAllowedAttributeLists() {
 //void cmlError(int type, string msg, int line) {
 //}
 
+void cmlError(string msg) {
+     cout << msg << endl;
+}
+
 bool ReadXML(istream &ifs) {
 	char buffer[BUFF_SIZE];
 	size_t lt;
 	size_t rt;
     int lineCount = 0;
 
-	currentElem = "";
-	string token = "";
+	currentElem = _EMPTY;
+	string token = _EMPTY;
 	bool lookForOpenTag = true;
 
 	makeAllowedElementLists();
@@ -589,20 +708,20 @@ bool ReadXML(istream &ifs) {
         lineCount++;
 		string buff(buffer);
 // omit whitespace lines
-		if (trim(buff) == "") continue;
+		if (trim(buff) == _EMPTY) continue;
 		if (readRoot) {
 		  	// cmlError(FATAL, "no nonWhitespace allowed after root element: " + buff;
 			return false;
 		}
-// normalize Newlines to " "
-		if (token != "") token += " ";
+// normalize Newlines to SPACE
+		if (token != _EMPTY) token += _SPACE;
 		for (;;) {
 			if (lookForOpenTag) {
 				lt = buff.find("<");
 // not found, more input...
 				if (lt > buff.size()) {
 					token += buff;
-					buff = "";
+					buff = _EMPTY;
 					break;
 				} else {
 // found start of tag
@@ -610,7 +729,7 @@ bool ReadXML(istream &ifs) {
 // process inter-tag characters
 					characters(token);
 					buff = buff.substr(lt);
-					token = "";
+					token = _EMPTY;
 					lookForOpenTag = false;
 				}
 			} else {
@@ -618,7 +737,7 @@ bool ReadXML(istream &ifs) {
 // not found, more input...
 				if (rt > buff.size()) {
 					token += buff;
-					buff = "";
+					buff = _EMPTY;
 					break;
 				} else {
 // found end
@@ -626,11 +745,11 @@ bool ReadXML(istream &ifs) {
 					token += ss;
 					tag(token);
 					buff = buff.substr(rt+1);
-					token = "";
+					token = _EMPTY;
 					lookForOpenTag = true;
 				}
 			}
-			if (buff == "") break;
+			if (buff == _EMPTY) break;
 		}
 	}
 	endDocument();
@@ -647,62 +766,61 @@ void tag(string s) {
 	string sl = toLowerCase(s);
 // XML declaration
 	if (sl.substr(0, 5) == "<?xml") {
-		if (s.substr(l-2, 2) == "?>") {
-//			cout << "xml declaration" << s << endl;
+		if (s.substr(l-2, 2) == E_PI) {
 			string ss = s.substr(5, l-7);
 			splitAttributes(ss, atts);
-			string standalone = getAttribute(atts, "standalone");
+			string standalone = getAttribute(atts, X_STANDALONE);
 			if (standalone == "no") {
-			  //				cerr << "cannot process standalone='no' yet" << endl;
+			  cmlError("cannot process standalone='no' yet");
 			}
-			string version = getAttribute(atts, "version");
+			string version = getAttribute(atts, X_VERSION);
 			if (version != "1.0") {
-			  //				cerr << "XML version must be 1.0" << endl;
+			  cmlError("XML version must be 1.0");
 			}
-			string encoding = toLowerCase(getAttribute(atts, "encoding"));
-			if (encoding != "utf-8" && encoding != "") {
-			  //				cerr << "Cannot support encoding: " << encoding << endl;
+			string encoding = toLowerCase(getAttribute(atts, X_ENCODING));
+			if (encoding != "utf-8" && encoding != _EMPTY) {
+			  cmlError("Cannot support encoding: " + encoding);
 			}
 		} else {
-		  //			cerr << "Bad XML declaration: " << s << endl;
+		  cmlError("Bad XML declaration: " + s);
 		}
 // DOCTYPE is not processed
-	} else if (s.substr(0,9) == "<!DOCTYPE") {
+	} else if (s.substr(0,9) == X_DOCTYPE) {
 		if (s.find("[") <= s.size()) {
-		  //			cout << "cannot process internal subset of DOCTYPE " << s << endl;
+		  			cmlError("cannot process internal subset of DOCTYPE " + s);
 		} else {
 		  //			cout << "DOCTYPE info ignored" << endl;
 		}
 // comments are ignored
-	} else if (s.substr(0,4) == "<!--") {
-		if (s.substr(l-3, 3) == "-->") {
+	} else if (s.substr(0,4) == S_COMMENT) {
+		if (s.substr(l-3, 3) == E_COMMENT) {
 //			cout << "Comment ignored: " << s << endl;
 		} else {
-		  //			cerr << "Bad comment: " << s << endl;
+		  cmlError("Bad comment: " + s);
 		}
 // Processing instructions
-	} else if (s.substr(0,2) == "<?") {
-		if (s.substr(l-2, 2) == "?>") {
+	} else if (s.substr(0,2) == S_PI) {
+		if (s.substr(l-2, 2) == E_PI) {
 			s = s.substr(2, l-4);
-			string::size_type idx = s.find(" ");
+			string::size_type idx = s.find(_SPACE);
 			string target = (idx < s.size()) ? s.substr(0, idx) : s;
-			string data = (idx < s.size()) ? trim(s.substr(idx)) : string("");
+			string data = (idx < s.size()) ? trim(s.substr(idx)) : string(_EMPTY);
 			processingInstruction(target, data);
 		} else {
-		  //			cerr << "Bad PI: " << s << endl;
+		  cmlError("Bad PI: " + s);
 		}
 // CDATA sections
-	} else if (s.substr(0,9) == "<![CDATA[") {
-		if (s.substr(l-3, 3) == "]]>") {
+	} else if (s.substr(0,9) == S_CDATA) {
+		if (s.substr(l-3, 3) == E_CDATA) {
 			pcdata += s.substr(9, l-12);
 		} else {
-		  //			cerr << "Bad CDATA: " << s << endl;
+		  cmlError("Bad CDATA: " + s);
 		}
 // end tag
-	} else if (s.substr(1,1) == "/") {
+	} else if (s.substr(1,1) == _SLASH) {
 		endElement(s.substr(2, l-3));
 // empty tag
-	} else if (s.substr(l-2, 1) == "/") {
+	} else if (s.substr(l-2, 1) == _SLASH) {
 		name = startTag(s.substr(1,l-3));
 		endElement(name);
 // start tag
@@ -718,18 +836,28 @@ string escapeXMLEntities(string s) {
 	for (string::size_type i = 0; i < s.length(); ++i) {
 		ii = (int) cc[i];
 		if (cc[i] == '&') {
-			ss.append("&amp;");
+			ss.append("&");
+            ss.append(X_AMP);
+            ss.append(";");
 		} else if (cc[i] == '"') {
-			ss.append("&quot;");
+			ss.append("&");
+            ss.append(X_QUOT);
+            ss.append(";");
 		} else if (cc[i] == '\'') {
-			ss.append("&apos;");
+			ss.append("&");
+            ss.append(X_APOS);
+            ss.append(";");
 		} else if (cc[i] == '<') {
-			ss.append("&lt;");
+			ss.append("&");
+            ss.append(X_LT);
+            ss.append(";");
 		} else if (cc[i] == '>') {
-			ss.append("&gt;");
+			ss.append("&");
+            ss.append(X_GT);
+            ss.append(";");
 // characters above 255
 		} else if (ii > 255) {
-		  //			cerr << "characters above 255 not supported in CML" << ii <<  endl;
+		  cmlError("characters above 255 not supported in CML: " + ii);
 // characters 128-255
 		} else if (ii > 127) {
 			ss.append("&#");
@@ -742,7 +870,7 @@ string escapeXMLEntities(string s) {
 		} else if (cc[i] == ' ' || cc[i] == '\t' || cc[i] == '\n' || cc[i] == '\r') {
 			ss.append(1, cc[i]);
 		} else {
-		  //			cerr << "non-printing characters not suported: " << (int)cc[i] << endl;
+		  cmlError("non-printing characters not suported: " + (int)cc[i]);
 		}
 	}
 	return ss;
@@ -757,30 +885,29 @@ string processXMLEntities(string s) {
 			ss.append(s);
 			break;
 		}
-		//		cerr << idx << endl;
 		ss.append(s.substr(0, idx));
 		s = s.substr(idx+1);
 		idx = s.find(";");
 		if (idx >= s.length()) {
-		  //			cerr << "entity without closing ; in :" << s0 << ":" << endl;
+		  cmlError("entity without closing ; in :" + s0 + _COLON);
 		}
 		string e = s.substr(0, idx);
-		if (e == "quot") {
+		if (e == X_QUOT) {
 			ss.append("\"");
-		} else if (e == "apos") {
+		} else if (e == X_APOS) {
 			ss.append("'");
-		} else if (e == "lt") {
+		} else if (e == X_LT) {
 			ss.append("<");
-		} else if (e == "gt") {
+		} else if (e == X_GT) {
 			ss.append(">");
-		} else if (e == "amp") {
+		} else if (e == X_AMP) {
 			ss.append("&");
 		} else if (e.substr(0, 1) == "#") {
 			int i = atoi((char*)e.substr(1).c_str());
 			if (i >= 32 && i < 256 || i == 9 || i==10 || i==13) {
 				ss.append(1, (char)i);
 			} else {
-			  //				cerr << "unsupported character: #" << i << endl;
+			  cmlError("unsupported character: #" + i);
 			}
 		} else {
 			skippedEntity(e);
@@ -795,21 +922,21 @@ string startTag(string s) {
 
 	s = trim(s);
 	if (s.find("&") <= s.size()) {
-	  //		cerr << "cannot process entity references..." << s << endl;
+	  cmlError("CML reader cannot process entity references (sorry)..." + s);
 	}
 	string ss = s;
 	string name;
-	string::size_type idx = s.find(" ");
+	string::size_type idx = s.find(_SPACE);
 	if (idx > s.size()) {
 		name = s;
-		s = "";
+		s = _EMPTY;
 	} else {
 		name = s.substr(0, idx);
 		s = trim(s.substr(idx+1));
 	}
 	splitAttributes(s, atts);
 	if (!isXMLName(name)) {
-	  //		cerr << "invalid XML name: " << name << endl;
+	  cmlError("invalid XML name: " + name);
 	}
 	startElement(name, atts);
 	return name;
@@ -821,33 +948,33 @@ void splitAttributes(string s, vector <pair <string, string> > &atts) {
 	while (true) {
 		string::size_type idx = s.find("=");
 		if (idx > s.size()) {
-			if (trim(s) != "") {
-			  //				cerr << "Bad attribute at " << s << endl;
+			if (trim(s) != _EMPTY) {
+			  cmlError("Bad attribute at " + s);
 			}
 			break;
 		}
 		att.first = trim(s.substr(0, idx));
 		s = trim(s.substr(idx+1));
 		if (s.length() < 2) {
-		  //			cerr << "Bad attribute value: " << s << endl;
+		  cmlError("Bad attribute value: " + s);
 			break;
 		}
-// quote or apos
+// quote or X_APOS
 		string quoter = s.substr(0, 1);
 		if (quoter != "\"" && quoter != "\'") {
-		  //			cerr << "Unquoted attribute value: " << s << endl;
+		  cmlError("Unquoted attribute value: " + s);
 			break;
 		}
 		s = s.substr(1);
 		idx = s.find(quoter);
 		if (idx > s.size()) {
-		  //			cerr << "Unbalanced quotes in attribute value: " << s << endl;
+		  cmlError("Unbalanced quotes in attribute value: " + s);
 			break;
 		}
 		att.second = processXMLEntities(s.substr(0, idx));
 		atts.push_back(att);
 		s = trim(s.substr(idx+1));
-		if (trim(s) == "") break;
+		if (trim(s) == _EMPTY) break;
 	}
 }
 
@@ -856,7 +983,7 @@ vector <string> getUnknownAttributes(vector <string> &allowed, vector <pair <str
 	vector <string> badAtts;
 	for (vector<pair <string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		string attName = atts[i].first;
-		if (attName.substr(0, 5) == "xmlns") continue;
+		if (attName.substr(0, 5) == X_XMLNS) continue;
 		bool ok = false;
 		for (vector<string>::size_type j = 0; j < allowed.size(); ++j) {
 			if (allowed[j] == attName) {
@@ -873,7 +1000,7 @@ vector <string> getUnknownAttributes(vector <string> &allowed, vector <pair <str
 
 void printVector(vector <string> v, ostream& ofs) {
 	for (vector<string>::size_type i = 0; i < v.size(); ++i) {
-		ofs << v[i] << " ";
+		ofs << v[i] << _SPACE;
 	}
 }
 
@@ -885,46 +1012,62 @@ void noteUnusedElementName(string name, string msg) {
 }
 
 
-bool writeAttribute(ostream&ofs, string name, int value) {
-	ofs << " " << name << "=\"" << value << "\"";
+bool writeAttribute(ostream &ofs, string name, int value) {
+	ofs << _SPACE << name << _EQUALS << _QUOTE << value << _QUOTE;
 	return true; // [ejk] assumed
 }
 
-bool writeAttribute(ostream&ofs, string name, double value) {
-	ofs << " " << name << "=\"" << value << "\"";
+bool writeAttribute(ostream &ofs, string name, double value) {
+	ofs << _SPACE << name << _EQUALS << _QUOTE << value << _QUOTE;
 	return true; // [ejk] assumed
 }
 
-bool writeAttribute(ostream&ofs, string name, string value) {
+bool writeAttribute(ostream &ofs, string name, string value) {
 	value = trim(value);
-	if (value != "") {
+	if (value != _EMPTY) {
 		string value1 = escapeXMLEntities(value);
-		ofs << " " << name << "=\"" << value1 << "\"";
+        ofs << _SPACE << name << _EQUALS << _QUOTE << value1 << _QUOTE;
 	}
 	return true; // [ejk] assumed
 }
 
+bool writeStartTagStart(ostream& ofs, string name) {
+    ofs << _LANGLE << outputPrefix << name;
+}
+
+bool writeStartTagEnd(ostream& ofs) {
+    ofs << _RANGLE;
+}
+
+bool writeEndTag(ostream& ofs, string name) {
+    ofs << _LANGLE << _SLASH << outputPrefix << name << _RANGLE << endl;
+}
+
+bool writeCombinedTagEnd(ostream& ofs) {
+    ofs << _SLASH << _RANGLE << endl;
+}
+
 bool writeBuiltin(ostream&ofs, string name, int value) {
-	ofs << "<integer builtin=\"" <<  name << "\">" << value << "</integer>" << endl;
+	ofs << "<" << outputPrefix << "integer builtin=\"" <<  name << "\">" << value << E_TAGO << outputPrefix << "integer>" << endl;
 	return true; // [ejk] assumed success
 }
 
 bool writeBuiltin(ostream&ofs, string name, double value) {
-	ofs << "<float builtin=\"" <<  name << "\">" << value << "</float>" << endl;
+	ofs << "<" << outputPrefix << "float builtin=\"" <<  name << "\">" << value << E_TAGO << outputPrefix << "float>" << endl;
 	return true; // [ejk] assumed success
 }
 
 bool writeBuiltin(ostream&ofs, string name, string value) {
 	value = trim(value);
-	if (value != "") {
+	if (value != _EMPTY) {
 		value = escapeXMLEntities(value);
-		ofs << "<string builtin=\"" <<  name << "\">" << value << "</string>" << endl;
+		ofs << "<" << outputPrefix << "string builtin=\"" <<  name << "\">" << value << E_TAGO << outputPrefix << "string>" << endl;
 	}
 	return true; // [ejk] assumed
 }
 
 bool appendToArray(string &array, int value) {
-	if (array != "") array.append(" ");
+	if (array != _EMPTY) array.append(_SPACE);
 	char ss[20];
 	sprintf(ss, "%i", value);
 	string s(ss);
@@ -933,7 +1076,7 @@ bool appendToArray(string &array, int value) {
 }
 
 bool appendToArray(string &array, double value) {
-	if (array != "") array.append(" ");
+	if (array != _EMPTY) array.append(_SPACE);
 	char ss[20];
 	sprintf(ss, "%f", value);
 	string s(ss);
@@ -943,7 +1086,7 @@ bool appendToArray(string &array, double value) {
 
 bool appendToArray(string &array, string value) {
 	value = escapeXMLEntities(value);
-	if (array != "") array.append(" ");
+	if (array != _EMPTY) array.append(_SPACE);
 	array.append(trim(value));
 	return true; // [ejk] assumed
 }
@@ -951,6 +1094,34 @@ bool appendToArray(string &array, string value) {
 bool writePCDATA(ostream&ofs, string value) {
 	ofs << escapeXMLEntities(value);
 	return true; // [ejk] assumed
+}
+
+// normalizes string
+string getNormalizedString(string s) {
+    return getNormalizedString((char*)s.c_str());
+}
+
+// normalizes string
+string getNormalizedString(char* ch) {
+    bool inWhite = true;
+    bool start = true;
+    string s = "";
+    for (int i = 0;; i++) {
+        char c = ch[i];
+        if (c == 0) break;
+        if (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
+            inWhite = true;
+        } else {
+            if (start) {
+                start = false;
+            } else {
+                if (inWhite) s += " ";
+            }
+            inWhite = false;
+            s += c;
+        }
+    }
+    return s;
 }
 
 // ------------------------ SAX events -------------------
@@ -964,22 +1135,22 @@ void startDocument() {
 void endDocument() {
   //	cout << "read CML document" << endl;
 	for (namespaceVector_t::size_type i = 0; i < namespaceVector.size(); ++i) {
-	  //		cout << "namespace :" << namespaceVector[i].first << ":" << namespaceVector[i].second << endl;
+	  //		cout << "namespace :" << namespaceVector[i].first << _COLON << namespaceVector[i].second << endl;
 	}
 }
 
 void startElement(string name, vector<pair<string,string> > &atts) {
 	processAttributes(atts);
 	pair <string, string> nsPair = getNamespacePair(name);
-	name = (nsPair.first == "") ? name : name.substr(nsPair.first.length()+1);
+	name = (nsPair.first == _EMPTY) ? name : name.substr(nsPair.first.length()+1);
 	startElement(nsPair.second, name, nsPair.first, atts);
 }
 
 pair <string, string> getNamespacePair(string name) {
 	pair <string, string> nsPair;
-	nsPair.first = "";
-	nsPair.second = "";
-	string::size_type idx = name.find(":");
+	nsPair.first = _EMPTY;
+	nsPair.second = _EMPTY;
+	string::size_type idx = name.find(_COLON);
 	if (idx < name.length()) {
 		nsPair.first = name.substr(0, idx);
 		name = name.substr(idx+1);
@@ -995,85 +1166,89 @@ pair <string, string> getNamespacePair(string name) {
 
 // records whether this is CMLV1.0 or CML2 (Schema)
 void setCMLType(string ct) {
-	if (cmlType == "") {
-		 cmlType = ct;
+	if (cmlType == _EMPTY) {
+		cmlType = ct;
 	} else if (cmlType != ct) {
-	  //		cerr << "Cannot mix CML namespaces" << ct << "/" << cmlType << endl;
+  	    cmlError("Cannot mix namespaces, was: " + cmlType);
 	}
 }
 
 void startElement(string namespaceURI, string localName, string prefix, vector<pair<string,string> > &atts) {
-//	if (prefix != "") cout << "PREF : " << prefix << endl;
-//	if (namespaceURI != "") cout << "NSURI : " << namespaceURI << endl;
-	if (currentElem != "") elementStack.push_back(currentElem);
+
+   
+	if (currentElem != _EMPTY) elementStack.push_back(currentElem);
 	parent = currentElem;
 	currentElem = trim(localName);
 	currentAtts = atts;
-	pcdata = "";
+	pcdata = _EMPTY;
 	useBuiltin = false;
-    if (localName == "atom") {
+    if (localName == C_ATOM) {
         startAtom(atts);
-	} else if (localName == "atomArray") {
+	} else if (localName == C_ATOMARRAY) {
         startAtomArray(atts);
-	} else if (localName == "atomParity") {
-		setCMLType("CML2");
+	} else if (localName == C_ATOMPARITY) {
+		setCMLType(C_CML2);
         startAtomParity(atts);
-	} else if (localName == "bond") {
+	} else if (localName == C_BOND) {
         startBond(atts);
-	} else if (localName == "bondArray") {
+	} else if (localName == C_BONDARRAY) {
         startBondArray(atts);
-    } else if (localName == "cml") {
+    } else if (localName == C_CML) {
 		startCML(atts);
-    } else if (localName == "crystal") {
+    } else if (localName == C_CRYSTAL) {
 		startCrystal(atts);
-    } else if (localName == "electron") {
+    } else if (localName == C_ELECTRON) {
 		startElectron(atts);
-    } else if (localName == "feature") {
+    } else if (localName == C_FEATURE) {
 		startFeature(atts);
-		setCMLType("CML1");
-    } else if (localName == "formula") {
+		setCMLType(C_CML1);
+    } else if (localName == C_FORMULA) {
 		startFormula(atts);
-    } else if (localName == "molecule") {
+    } else if (localName == C_MOLECULE) {
 		startMolecule(atts);
 	} else if (
-		localName == "coordinate2" ||
-		localName == "coordinate3" ||
-		localName == "float" ||
-		localName == "float" ||
-		localName == "integer" ||
-	    localName == "string") {
-			setCMLType("CML1");
+		localName == C_COORDINATE2 ||
+		localName == C_COORDINATE3 ||
+		localName == C_FLOAT ||
+		localName == C_INTEGER ||
+	    localName == C_STRING) {
+			setCMLType(C_CML1);
 	// delay processing till endElement as we need the pcdata
-	} else if (
-		localName == "floatMatrix" ||
-		localName == "floatArray" ||
-		localName == "integerArray" ||
-	    localName == "stringArray") {
-			setCMLType("CML1");
+	} else if (localName == C_FLOATMATRIX) {
+		setCMLType(C_CML1);
+	} else if (localName == C_FLOATARRAY) {
+//        startFloatArray(atts)
+		setCMLType(C_CML1);
+	} else if (localName == C_INTEGERARRAY) {
+//        startIntegerArray(atts)
+		setCMLType(C_CML1);
+	} else if (localName == C_STRINGARRAY) {
+//        startStringArray(atts)
+		setCMLType(C_CML1);
 	// delay processing till endElement as we need the pcdata
-	} else if (localName == "length") {
-		setCMLType("CML2");
+	} else if (localName == C_LENGTH) {
+		setCMLType(C_CML2);
 		startLength(atts);
-	} else if (localName == "angle") {
+	} else if (localName == C_ANGLE) {
 		startAngle(atts);
-	} else if (localName == "torsion") {
+	} else if (localName == C_TORSION) {
 		startTorsion(atts);
-	} else if (localName == "scalar") {
+	} else if (localName == C_SCALAR) {
 		startScalar(atts);
-		setCMLType("CML2");
-	} else if (localName == "stereo") {
+		setCMLType(C_CML2);
+	} else if (localName == C_STEREO) {
 		startStereo(atts);
-		setCMLType("CML2");
-	} else if (localName == "array") {
-		setCMLType("CML2");
-	} else if (localName == "matrix") {
-		setCMLType("CML2");
+		setCMLType(C_CML2);
+	} else if (localName == C_ARRAY) {
+		setCMLType(C_CML2);
+	} else if (localName == C_MATRIX) {
+		setCMLType(C_CML2);
 // other CML2 elements neglected in babel
 	} else if (
 		localName == "substance" ||
 		localName == "substanceList" ||
 		localName == "amount") {
-		setCMLType("CML2");
+		setCMLType(C_CML2);
 		noteUnusedElementName(localName, "CML2 element not relevant to babel: ");
 	} else if (isInStringVector(CML_ELEMENT_VECTOR, localName)) {
 	  //		cout << "[debug] CML element not relevant to babel: " << localName << endl;
@@ -1102,10 +1277,10 @@ void startElement(string namespaceURI, string localName, string prefix, vector<p
 		localName == "unit" ||
 		localName == "unitType" ||
 		localName == "unitList") {
-		setCMLType("CML2");
+		setCMLType(C_CML2);
 		noteUnusedElementName(localName, "STMML element not relevant to babel: ");
 	} else if (isInStringVector(STMML_ELEMENT_VECTOR, localName)) {
-		setCMLType("CML2");
+		setCMLType(C_CML2);
 		//		cout << "[debug] STMML element not relevant to babel: " << localName << endl;
 	} else {
 	  //		cout << "start element ignored: " << localName << endl;
@@ -1116,8 +1291,8 @@ void processAttributes(vector<pair<string,string> > &atts) {
 	for (vector<pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		string name = atts[i].first;
 		if (!isXMLName(name)) {
-		  //			cerr << "invalid XML name: " << name << endl;
-		} else if (name.substr(0,5) == "xmlns") {
+		  cmlError("invalid XML name: " + name);
+		} else if (name.substr(0,5) == X_XMLNS) {
 			processNamespace(name.substr(5), atts[i].second);
 		}
 	}
@@ -1126,16 +1301,16 @@ void processAttributes(vector<pair<string,string> > &atts) {
 void processNamespace(string name, string value) {
 	pair <string, string> ns;
 
-	string::size_type idx = name.find(":");
-	ns.first = (idx < name.size()) ? name.substr(idx) : string("");
+	string::size_type idx = name.find(_COLON);
+	ns.first = (idx < name.size()) ? name.substr(idx) : string(_EMPTY);
 	ns.second = value;
 	bool nsExists = false;
 	for (namespaceVector_t::size_type i = 0; i < namespaceVector.size(); ++i) {
 		if (ns.first == namespaceVector[i].first) {
 			nsExists = true;
 			if (namespaceVector[i].second != value) {
-			  //				cerr << "redefinition of namespace: " <<
-			  //					namespaceVector[i].second << " => " << value << endl;
+			  cmlError("redefinition of namespace: " +
+			      namespaceVector[i].second + " => " + value);
 			}
 			break;
 		}
@@ -1143,9 +1318,9 @@ void processNamespace(string name, string value) {
 	if (!nsExists) {
 		namespaceVector.push_back(ns);
 		if (ns.second == STMML_NAMESPACE) {
-			setCMLType("CML2");
+			setCMLType(C_CML2);
 		} else if (ns.second == CML2_NAMESPACE) {
-			setCMLType("CML2");
+			setCMLType(C_CML2);
 		} else if (ns.second == CML1_NAMESPACE) {
 		}
 	}
@@ -1153,7 +1328,7 @@ void processNamespace(string name, string value) {
 
 void endElement(string name) {
 	pair <string, string> nsPair = getNamespacePair(name);
-	name = (nsPair.first == "") ? name : name.substr(nsPair.first.length()+1);
+	name = (nsPair.first == _EMPTY) ? name : name.substr(nsPair.first.length()+1);
 	endElement(nsPair.second, name, nsPair.first);
 }
 
@@ -1162,75 +1337,79 @@ void endElement(string namespaceURI, string localName, string prefix) {
 
 	string name = trim(localName);
 	if (name != currentElem) {
-	  //		cerr << "unbalanced tags at: " << name << endl;
+	  cmlError("unbalanced tags at: " + name);
 	}
-    if (name == "molecule") {
+    if (name == C_MOLECULE) {
 		endMolecule();
-	} else if (name == "atom") {
+	} else if (name == C_ATOM) {
 		endAtom();
-	} else if (name == "atomArray") {
+	} else if (name == C_ATOMARRAY) {
 		endAtomArray();
-	} else if (name == "atomParity") {
-		endAtomArray();
-	} else if (name == "bond") {
+	} else if (name == C_ATOMPARITY) {
+		//endAtomArray();
+	} else if (name == C_BOND) {
 		endBond();
-	} else if (name == "bondArray") {
+	} else if (name == C_BONDARRAY) {
 		endBondArray();
-	} else if (name == "crystal") {
+	} else if (name == C_CRYSTAL) {
 		endCrystal();
-	} else if (name == "electron") {
+	} else if (name == C_ELECTRON) {
 		endElectron();
-	} else if (name == "formula") {
+	} else if (name == C_FORMULA) {
 		endFormula();
-	} else if (name == "feature") {
+	} else if (name == C_FEATURE) {
 //		endFormula();
 	} else if (
-		name == "coordinate2" ||
-		name == "coordinate3") {
-		if ("atom" == parent) {
+		name == C_COORDINATE2 ||
+		name == C_COORDINATE3) {
+		if (C_ATOM == parent) {
 			processAtomBuiltin();
 		} else {
 		  //			cout << "IGNORED <" << name << "> as not child of <atom>" << endl;
 		}
 	} else if (
-		name == "float" ||
-		name == "integer" ||
-	    name == "string") {
-		if ("atom" == parent) {
+		name == C_FLOAT ||
+		name == C_INTEGER ||
+	    name == C_STRING) {
+		if (C_ATOM == parent) {
 			processAtomBuiltin();
-		} else if ("bond" == parent) {
+		} else if (C_BOND == parent) {
 			processBondBuiltin();
-		} else if ("molecule" == parent) {
+		} else if (C_MOLECULE == parent) {
 			addString();
 		} else {
 		  //			cout << "IGNORED <" << name << "> as not child of <molecule>, <atom> or <bond>" << endl;
 		}
-	} else if (localName == "array") {
-		setCMLType("CML2");
-	} else if (localName == "matrix") {
-		setCMLType("CML2");
+	} else if (localName == C_ARRAY) {
+		setCMLType(C_CML2);
+	} else if (localName == C_MATRIX) {
+		setCMLType(C_CML2);
 	} else if (
-		localName == "floatMatrix") {
-		setCMLType("CML1");
+		localName == C_FLOATMATRIX) {
+		setCMLType(C_CML1);
 		// no action
 	} else if (
-		localName == "floatArray" ||
-		localName == "integerArray" ||
-	    localName == "stringArray") {
-		if (parent == "atomArray") {
+        localName == C_FLOATARRAY ||
+		localName == C_INTEGERARRAY ||
+	    localName == C_STRINGARRAY) {
+		if (parent == C_ATOMARRAY) {
+            setCMLType(C_CML1);
+            inputArray = true;
 			processAtomArrayChild();
-		} else if (parent == "bondArray") {
+		} else if (parent == C_BONDARRAY) {
+            setCMLType(C_CML1);
+            inputArray = true;
 			processBondArrayChild();
 		}
-	} else if (name == "length") {
+	} else if (name == C_LENGTH) {
 		endLength();
-	} else if (name == "angle") {
+	} else if (name == C_ARRAY) {
 		endAngle();
-	} else if (name == "torsion") {
+	} else if (name == C_TORSION) {
 		endTorsion();
-	} else if (name == "reaction") {
+	} else if (name == C_REACTION) {
 		endReaction();
-	} else if (name == "sequence") {
+	} else if (name == C_SEQUENCE) {
 		endSequence();
 	} else {
 //		cout << "end element ignored: " << name << endl;
@@ -1239,14 +1418,14 @@ void endElement(string namespaceURI, string localName, string prefix) {
     int ns = elementStack.size();
     if (ns > 0) {
 	    currentElem = elementStack[ns-1];
-	    parent = (ns <= 1) ? string("") : elementStack[ns-2];
+	    parent = (ns <= 1) ? string(_EMPTY) : elementStack[ns-2];
 	    elementStack.pop_back();
 	} else {
 	}
 	if (ns == 0) {
 		readRoot = true;
 	}
-	pcdata = "";
+	pcdata = _EMPTY;
 }
 
 void characters(string s) {
@@ -1254,7 +1433,7 @@ void characters(string s) {
 }
 
 void processingInstruction(string target, string data) {
-  //	cout << "PI: " << target << " " << data << endl;
+  //	cout << "PI: " << target << _SPACE << data << endl;
 }
 
 void skippedEntity(string name) {
@@ -1291,7 +1470,7 @@ bool isXMLName(string n) {
 		}
 	}
 	if (!ok) {
-	  //		cerr << "invalid XML name: " << n << endl;
+	  cmlError("invalid XML name: " + n);
 	}
 	return ok;
 }
@@ -1352,8 +1531,8 @@ void processBuiltinPCDATA() {
 // normalize whitespace
 	tokenize(strings, pcdata, " \t\n");
 	if (strings.size() != 1) {
-	  //		cerr << "must give value for builtin" << endl;
-		pcdata = "";
+	  cmlError("must give value for builtin");
+		pcdata = _EMPTY;
 	} else {
 		pcdata = strings[0];
 	}
@@ -1374,16 +1553,16 @@ OBAtom *getAtomPtr(string s) {
 // add results to vector
 void getAtomRefs(vector<string>::size_type size, vector <OBAtom*> &v, string atomRefString) {
 	vector <string> sv;
-	atomRefString += " ";
+	atomRefString += _SPACE;
 	tokenize(sv, atomRefString, " \n");
 	if (sv.size() != size) {
-	  //		cerr << "unexpected size for atomRefs attribute: " << sv.size() << "/" << size << endl;
+//	  cmlError("unexpected size for atomRefs attribute: " + sv.size() + _SLASH + size);
 		return;
 	}
 	for (vector<string>::size_type i = 0; i < size; ++i) {
 		OBAtom* atPtr = getAtomPtr(sv[i]);
 		if (atPtr == 0) {
-		  //			cerr << "cannot find atom: " << sv[i] << endl;
+		  cmlError("cannot find atom: " + sv[i]);
 			return;
 		}
 		v.push_back(atPtr);
@@ -1396,9 +1575,8 @@ void getAtomRefs(vector<string>::size_type size, vector <OBAtom*> &v, string ato
 bool startCML(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(CML_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <cml>: ";
+	  cmlError("unknown attributes on <cml>: ");
 		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 	return true; // [ejk] assumed
 }
@@ -1411,24 +1589,23 @@ bool endCML() {
 bool startAngle(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(ANGLE_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <angle>: ";
+	  cmlError("unknown attributes on <angle>: ");
 		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 	angleUnits = "degrees";
 	atomRefs3Vector.clear();
 // check other attributes
 	for (vector<pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
-	    } else if (atts[i].first == "atomRefs") {
-			setCMLType("CML1");
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
+	    } else if (atts[i].first == C_ATOMREFS) {
+			setCMLType(C_CML1);
 			getAtomRefs(3, atomRefs3Vector, atts[i].second);
-	    } else if (atts[i].first == "atomRefs3") {
-			setCMLType("CML2");
+	    } else if (atts[i].first == C_ATOMREFS3) {
+			setCMLType(C_CML2);
 			getAtomRefs(3, atomRefs3Vector, atts[i].second);
-	    } else if (atts[i].first == "units") {
+	    } else if (atts[i].first == C_UNITS) {
 			angleUnits = atts[i].second;
 	    } else {
 	      //			cout << "IGNORED angle attribute: " << atts[i].first << endl;
@@ -1440,7 +1617,7 @@ bool startAngle(vector <pair<string,string> > &atts) {
 bool endAngle() {
 	pair <vector<OBAtom *>, double> angle;
 	if (atomRefs3Vector.size() != 3) {
-	  //		cerr << "must have defined 3 atoms for angle" << endl;
+	  cmlError("must have defined 3 atoms for angle");
 	}
 	for (unsigned int i = 0; i < 3; ++i) {
 		angle.first.push_back(atomRefs3Vector[i]);
@@ -1452,61 +1629,67 @@ bool endAngle() {
 
 // not yet finished
 bool WriteAngle(ostream &ofs, pair <vector<OBAtom*>, double> angle) {
-	ofs << "<angle";
-	ofs << " atomRefs3=\"a" << angle.first[0]->GetIdx() << " a" << angle.first[1]->GetIdx() << " a" << angle.first[2]->GetIdx() << "\">";
+    writeStartTagStart(ofs, C_ANGLE);
+    string atomRefs3 = "a";
+    atomRefs3 += angle.first[0]->GetIdx();
+    atomRefs3 += " a";
+    atomRefs3 += angle.first[1]->GetIdx();
+    atomRefs3 += " a";
+    atomRefs3 += angle.first[2]->GetIdx();
+    writeAttribute(ofs, C_ATOMREFS3, atomRefs3);
+    writeStartTagEnd(ofs);
 	ofs << angle.second;
-	ofs << "</angle>" << endl;
+    writeEndTag(ofs, C_ANGLE);
 	return true; // [ejk] assumed
 }
 
 // --------------------<atom>/<atomArray>----------------
 
 bool startAtom(vector <pair<string,string> > &atts) {
-	vector <string> badAtts = getUnknownAttributes(ATOM_ATTRIBUTE_VECTOR, atts);
+	vector <string> badAtts = getUnknownAttributes(ATOMATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <atom>: ";
+	  cmlError("unknown attributes on <atom>: ");
 		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 	currentX = currentY = currentZ = 0;
 	formalCharge = 0;
 
-	atomicNum = etab.GetAtomicNum((char*)getAttribute(atts, "elementType").c_str());
-	atomId = getAttribute(atts, "id");
-	formalCharge = atoi(getAttribute(atts, "formalCharge").c_str());
-	string x2 = getAttribute(atts, "x2");
-	string y2 = getAttribute(atts, "y2");
-	string x3 = getAttribute(atts, "x3");
-	string y3 = getAttribute(atts, "y3");
-	string z3 = getAttribute(atts, "z3");
-	if (x3 != "") {
+	atomicNum = etab.GetAtomicNum((char*)getAttribute(atts, C_ELEMENTTYPE).c_str());
+	atomId = getAttribute(atts, C_ID);
+	formalCharge = atoi(getAttribute(atts, C_FORMALCHARGE).c_str());
+	string x2 = getAttribute(atts, C_X2);
+	string y2 = getAttribute(atts, C_Y2);
+	string x3 = getAttribute(atts, C_X3);
+	string y3 = getAttribute(atts, C_Y3);
+	string z3 = getAttribute(atts, C_Z3);
+	if (x3 != _EMPTY) {
 		currentX = atof(x3.c_str());
-		setCMLType("CML2");
-	} else if (x2 != "") {
+		setCMLType(C_CML2);
+	} else if (x2 != _EMPTY) {
 		currentX = atof(x2.c_str());
-		setCMLType("CML2");
+		setCMLType(C_CML2);
 	}
-	if (y3 != "") {
+	if (y3 != _EMPTY) {
 		currentY = atof(y3.c_str());
-		setCMLType("CML2");
-	} else if (y2 != "") {
+		setCMLType(C_CML2);
+	} else if (y2 != _EMPTY) {
 		currentY = atof(y2.c_str());
-		setCMLType("CML2");
+		setCMLType(C_CML2);
 	}
-	if (z3 != "") {
+	if (z3 != _EMPTY) {
 		currentZ = atof(z3.c_str());
-		setCMLType("CML2");
+		setCMLType(C_CML2);
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (atts[i].first == "elementType") {
-	    } else if (atts[i].first == "id") {
-	    } else if (atts[i].first == "formalCharge") {
-	    } else if (atts[i].first == "x2") {
-	    } else if (atts[i].first == "y2") {
-	    } else if (atts[i].first == "x3") {
-	    } else if (atts[i].first == "y3") {
-	    } else if (atts[i].first == "z3") {
+		if (atts[i].first == C_ELEMENTTYPE) {
+	    } else if (atts[i].first == C_ID) {
+	    } else if (atts[i].first == C_FORMALCHARGE) {
+	    } else if (atts[i].first == C_X2) {
+	    } else if (atts[i].first == C_Y2) {
+	    } else if (atts[i].first == C_X3) {
+	    } else if (atts[i].first == C_Y3) {
+	    } else if (atts[i].first == C_Z3) {
 	    } else {
 	      //			cout << "IGNORED atom attribute: " << atts[i].first << endl;
 		}
@@ -1517,37 +1700,37 @@ bool startAtom(vector <pair<string,string> > &atts) {
 bool processAtomArrayChild() {
 	vector <string> strings;
 
-	string builtin = getAttribute(currentAtts, "builtin");
-	if (builtin == "") {
-	  //		cerr << "must have builtin attribute on: " << currentElem << endl;
+	string builtin = getAttribute(currentAtts, C_BUILTIN);
+	if (builtin == _EMPTY) {
+	    cmlError("must have builtin attribute on: " + currentElem);
 	}
 	pcdata += "\n";
 	tokenize(strings, pcdata, " \n\t");
 	if (natoms == 0) {
 		natoms = strings.size();
 		if (natoms == 0) {
-		  //			cerr << "no atoms in array: " << pcdata << endl;
+		    cmlError("no atoms in array: " + pcdata);
 		}
 	}
 	if (static_cast<vector<string>::size_type>(natoms) != strings.size()) {
-	  //		cerr << "inconsistent atoms in arrays: " << pcdata << endl;
+        cmlError("inconsistent atoms in arrays: " + pcdata);
 	}
 	for (int i = 0; i < natoms; ++i) {
-		if (builtin == "elementType") {
-			atomicNumVector.push_back(etab.GetAtomicNum((char*)strings[i].c_str()));
-		} else if (builtin == "atomId") {
+		if (builtin == C_ELEMENTTYPE) {
+			elementTypeVector.push_back(strings[i]);
+		} else if (builtin == C_ATOMID) {
 			idVector.push_back(strings[i]);
-		} else if (builtin == "formalCharge") {
+		} else if (builtin == C_FORMALCHARGE) {
 			formalChargeVector.push_back(atoi((char*)strings[i].c_str()));
-		} else if (builtin == "x2") {
+		} else if (builtin == C_X2) {
 			x2Vector.push_back(atof((char*)strings[i].c_str()));
-		} else if (builtin == "y2") {
+		} else if (builtin == C_Y2) {
 			y2Vector.push_back(atof((char*)strings[i].c_str()));
-		} else if (builtin == "x3") {
+		} else if (builtin == C_X3) {
 			x3Vector.push_back(atof((char*)strings[i].c_str()));
-		} else if (builtin == "y3") {
+		} else if (builtin == C_Y3) {
 			y3Vector.push_back(atof((char*)strings[i].c_str()));
-		} else if (builtin == "z3") {
+		} else if (builtin == C_Z3) {
 			z3Vector.push_back(atof((char*)strings[i].c_str()));
 		}
 	}
@@ -1558,79 +1741,78 @@ bool processAtomArrayChild() {
 bool processAtomBuiltin() {
 	vector3 v;
 
-
-	string builtin = getAttribute(currentAtts, "builtin");
-	if (builtin == "") {
-	  //		cerr << "No builtin attribute for <atom><" << currentElem << ">" << endl;
+	string builtin = getAttribute(currentAtts, C_BUILTIN);
+	if (builtin == _EMPTY) {
+	  cmlError("No builtin attribute for <atom><" + currentElem + ">");
 		return false;
 	}
-	setCMLType("CML1");
+	setCMLType(C_CML1);
 	processBuiltinPCDATA();
-	if (currentElem == "coordinate2") {
+	if (currentElem == C_COORDINATE2) {
 		vector <double> fv;
 		processFloatTokens(fv, 2, pcdata);
 // 3d takes precedence over 2D
-	    if (builtin == "xy2") {
-			if (cmlDimension != "3") {
+	    if (builtin == C_XY2) {
+			if (cmlDimension != C_3D) {
 				currentX = fv[0];
 				currentY = fv[1];
 			}
 	    } else {
-	      //			cerr << "IGNORED coordinate2 builtin: " << builtin << endl;
+	      cmlError("IGNORED coordinate2 builtin: " + builtin);
 			return false;
 	    }
-	} else if (currentElem == "coordinate3") {
+	} else if (currentElem == C_COORDINATE3) {
 		vector <double> fv;
 		processFloatTokens(fv, 3, pcdata);
 // 3d takes precedence over 2D
-	    if (builtin == "xyz3") {
+	    if (builtin == C_XYZ3) {
 			currentX = fv[0];
 			currentY = fv[1];
 			currentZ = fv[2];
-	    } else if (builtin == "xyzFract") {
+	    } else if (builtin == C_XYZFRACT) {
 			currentX = fv[0];
 			currentY = fv[1];
 			currentZ = fv[2];
 			fractional = true;
 	    } else {
-	      //			cerr << "IGNORED coordinate2 builtin: " << builtin << endl;
+	      cmlError("IGNORED coordinate2 builtin: " + builtin);
 			return false;
 	    }
-	} else if (currentElem == "float") {
+	} else if (currentElem == C_FLOAT) {
 		double value = atof(pcdata.c_str());
 // 3d takes precedence over 2D
-	    if (builtin == "x2") {
-			if (cmlDimension != "3") currentX = value;
-	    } else if (builtin == "y2") {
-			if (cmlDimension != "3") currentY = value;
-	    } else if (builtin == "x3") {
-			cmlDimension = "3";
+	    if (builtin == C_X2) {
+			if (cmlDimension != C_3D) currentX = value;
+	    } else if (builtin == C_Y2) {
+			if (cmlDimension != C_3D) currentY = value;
+	    } else if (builtin == C_X3) {
+			cmlDimension = C_3D;
 			currentX = value;
-	    } else if (builtin == "y3") {
-			cmlDimension = "3";
+	    } else if (builtin == C_Y3) {
+			cmlDimension = C_3D;
 			currentY = value;
-	    } else if (builtin == "z3") {
-			cmlDimension = "3";
+	    } else if (builtin == C_Z3) {
+			cmlDimension = C_3D;
 			currentZ = value;
 	    } else {
-	      //			cerr << "IGNORED float builtin: " << builtin << endl;
+	      cmlError("IGNORED float builtin: " + builtin);
 			return false;
 	    }
-	} else if (currentElem == "integer") {
+	} else if (currentElem == C_INTEGER) {
 		int ival = atoi(pcdata.c_str());
-	    if (builtin == "formalCharge") {
+	    if (builtin == C_FORMALCHARGE) {
 			formalCharge = ival;
 	    } else {
-	      //			cerr << "IGNORED integer builtin: " << builtin << endl;
+	      cmlError("IGNORED integer builtin: " + builtin);
 			return false;
 		}
-	} else if (currentElem == "string") {
-	    if (builtin == "elementType") {
+	} else if (currentElem == C_STRING) {
+	    if (builtin == C_ELEMENTTYPE) {
   	        atomicNum = etab.GetAtomicNum((char*)pcdata.c_str());
-	    } else if (builtin == "atomId") {
+	    } else if (builtin == C_ATOMID) {
 			atomId = pcdata;
 	    } else {
-	      //			cerr << "IGNORED string builtin: " << builtin << endl;
+	      cmlError("IGNORED string builtin: " + builtin);
 			return false;
 		}
 	}
@@ -1672,47 +1854,48 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 	string cs(ids);
 	id.append(trim(cs));
 	if (!outputArray) {
-		ofs << "    <atom";
-		writeAttribute(ofs, "id", id);
+        writeStartTagStart(ofs, C_ATOM);
+		writeAttribute(ofs, C_ID, id);
 		if (outputCML2) {
-			writeAttribute(ofs, "elementType", elementType);
-			if (charge != 0) writeAttribute(ofs, "formalCharge", charge);
+			writeAttribute(ofs, C_ELEMENTTYPE, elementType);
+			if (charge != 0) writeAttribute(ofs, C_FORMALCHARGE, charge);
 			if (molPtr->HasNonZeroCoords()) {
-				if (strcmp(dimension, "2D") == 0) {
-					writeAttribute(ofs, "x2", x);
-					writeAttribute(ofs, "y2", y);
-				} else if (strcmp(dimension, "3D") == 0) {
-					writeAttribute(ofs, "x3", x);
-					writeAttribute(ofs, "y3", y);
-					writeAttribute(ofs, "z3", z);
+				if (strcmp(dimension, C_2D) == 0) {
+					writeAttribute(ofs, C_X2, x);
+					writeAttribute(ofs, C_Y2, y);
+				} else if (strcmp(dimension, C_3D) == 0) {
+					writeAttribute(ofs, C_X3, x);
+					writeAttribute(ofs, C_Y3, y);
+					writeAttribute(ofs, C_Z3, z);
 				}
 			}
-			ofs << ">" << endl;
+            writeCombinedTagEnd(ofs);
 		} else {
-			ofs << ">" << endl;
-			writeBuiltin(ofs, "elementType", elementType);
-			if (charge != 0) writeBuiltin(ofs, "formalCharge", charge);
+            writeStartTagEnd(ofs);
+            ofs << endl;
+			writeBuiltin(ofs, C_ELEMENTTYPE, elementType);
+			if (charge != 0) writeBuiltin(ofs, C_FORMALCHARGE, charge);
 			if (molPtr->HasNonZeroCoords()) {
-				if (strcmp(dimension, "2D") == 0) {
-					writeBuiltin(ofs, "x2", x);
-					writeBuiltin(ofs, "y2", y);
-				} else if (strcmp(dimension, "3D") == 0) {
-					writeBuiltin(ofs, "x3", x);
-					writeBuiltin(ofs, "y3", y);
-					writeBuiltin(ofs, "z3", z);
+				if (strcmp(dimension, C_2D) == 0) {
+					writeBuiltin(ofs, C_X2, x);
+					writeBuiltin(ofs, C_Y2, y);
+				} else if (strcmp(dimension, C_3D) == 0) {
+					writeBuiltin(ofs, C_X3, x);
+					writeBuiltin(ofs, C_Y3, y);
+					writeBuiltin(ofs, C_Z3, z);
 				}
 			}
+            writeEndTag(ofs, C_ATOM);
 		}
-		ofs << "    </atom>" << endl;
 	} else {
 		appendToArray(idArray, id);
 		appendToArray(elementArray, elementType);
 		appendToArray(chargeArray, charge);
 		if (molPtr->HasNonZeroCoords()) {
-			if (strcmp(dimension, "2D") == 0) {
+			if (strcmp(dimension, C_2D) == 0) {
 				appendToArray(x2Array, x);
 				appendToArray(y2Array, y);
-			} else if (strcmp(dimension, "3D") == 0) {
+			} else if (strcmp(dimension, C_3D) == 0) {
 				appendToArray(x3Array, x);
 				appendToArray(y3Array, y);
 				appendToArray(z3Array, z);
@@ -1723,69 +1906,93 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 }
 
 void processStringTokens(vector <string> &v, vector<string>::size_type n, string att) {
-	if (att == "") return;
+	if (att == _EMPTY) return;
 	vector <string> sv;
-	att += " ";
-	tokenize(sv, att, " \n");
+	att += _SPACE;
+	tokenize(sv, att, _SPACE_NEWLINE);
 	if (sv.size() != n) {
-	  //		cerr << "inconsistent array attribute sizes: " << sv.size() << "/" << n << endl;
+	    cmlError("inconsistent array attribute sizes: ");
+        cout << sv.size() << _SLASH << n << endl;
 		return;
 	}
-	for (vector<string>::size_type i = 0; i < n; ++i) v[i] = sv[i];
+	for (vector<string>::size_type i = 0; i < n; ++i) {
+        //v[i] = sv[i];
+	    v.push_back(sv[i]);
+    }
 }
 
 void processIntTokens(vector <int> &v, vector<int>::size_type n, string att) {
-	if (att == "") return;
+	if (att == _EMPTY) {
+        return;
+    }
 	vector <string> sv;
-	att += " ";
-	tokenize(sv, att, " \n");
+	att += _SPACE;
+	tokenize(sv, att, _SPACE_NEWLINE);
 	if (sv.size() != n) {
-	  //		cerr << "inconsistent array attribute sizes: " << sv.size() << "/" << n << endl;
+	  cmlError("inconsistent array attribute sizes: ");
+      cerr << sv.size() << _SLASH << n << endl;
 		return;
 	}
-	for (vector<int>::size_type i = 0; i < n; ++i) v[i] = atoi((char*)sv[i].c_str());
+	for (vector<int>::size_type i = 0; i < n; ++i) {
+        v.push_back(atoi((char*)sv[i].c_str()));
+    }
 }
 
 void processFloatTokens(vector <double> &v, vector<double>::size_type n, string att) {
-	if (att == "") return;
+	if (att == _EMPTY) return;
 	vector <string> sv;
-	att += " ";
-	tokenize(sv, att, " \n");
+	att += _SPACE;
+	tokenize(sv, att, _SPACE_NEWLINE);
 	if (sv.size() != n) {
-	  //		cerr << "inconsistent array attribute sizes: " << sv.size() << "/" << n << endl;
+	  cmlError("inconsistent array attribute sizes: ");
+      cerr << sv.size() << _SLASH << n << endl;
 		return;
 	}
-	for (vector<double>::size_type i = 0; i < n; ++i) v[i] = atof((char*)sv[i].c_str());
+	for (vector<double>::size_type i = 0; i < n; ++i) {
+        v.push_back(atof((char*)sv[i].c_str()));
+    }
 }
 
 bool startAtomArray(vector <pair<string,string> > &atts) {
 	vector <string> sv;
-	string atomID = getAttribute(atts, "atomID");
-	if (atomID == "") return false;
-	setCMLType("CML2");
-	atomId += " ";
-	tokenize(sv, atomID, " \n");
-	int natoms = sv.size();
-	processStringTokens(idVector, natoms, atomID);
-	processStringTokens(elementTypeVector, natoms, getAttribute(atts, "elementType"));
-	processIntTokens(formalChargeVector, natoms, getAttribute(atts, "formalCharge"));
-	processIntTokens(hydrogenCountVector, natoms, getAttribute(atts, "hydrogenCount"));
-	processFloatTokens(x2Vector, natoms, getAttribute(atts, "x2"));
-	processFloatTokens(y2Vector, natoms, getAttribute(atts, "y2"));
-	processFloatTokens(x3Vector, natoms, getAttribute(atts, "x3"));
-	processFloatTokens(y3Vector, natoms, getAttribute(atts, "y3"));
-	processFloatTokens(z3Vector, natoms, getAttribute(atts, "z3"));
+	string atomID = getAttribute(atts, C_ATOMID);
+// atomArray with attributes => CML2+array
+// everything else exits here
+	if (atomID == _EMPTY) {
+        return false;
+    }
+// only CML2+array gets to here    
+	setCMLType(C_CML2);
+    inputArray = true;
+	atomId += _SPACE;
+	tokenize(sv, atomID, _SPACE_NEWLINE);
+	int mynatoms = sv.size();
+    if (mynatoms == 0) {
+        cmlError("startAtomArray: No atoms given");
+        return false;
+    }
+    natoms = mynatoms;
+	processStringTokens(idVector, mynatoms, atomID);
+	processStringTokens(elementTypeVector, mynatoms, getAttribute(atts, C_ELEMENTTYPE));
+	string fCharge = getAttribute(atts, C_FORMALCHARGE);
+	processIntTokens(formalChargeVector, mynatoms, fCharge);
+	processIntTokens(hydrogenCountVector, mynatoms, getAttribute(atts, C_HYDROGENCOUNT));
+	processFloatTokens(x2Vector, mynatoms, getAttribute(atts, C_X2));
+	processFloatTokens(y2Vector, mynatoms, getAttribute(atts, C_Y2));
+	processFloatTokens(x3Vector, mynatoms, getAttribute(atts, C_X3));
+	processFloatTokens(y3Vector, mynatoms, getAttribute(atts, C_Y3));
+	processFloatTokens(z3Vector, mynatoms, getAttribute(atts, C_Z3));
+//    cout << "natoms... " << natoms << endl;
 	return true; // [ejk] assumed
 }
 
 bool endAtomArray() {
-	pair<string, OBAtom*> at;
-	if (inputCML2) {
+	if (cmlType == C_CML2 || inputArray) {
 		for (int i = 0; i < natoms; ++i) {
 			OBAtom atom;
-			atom.SetAtomicNum(atomicNumVector[i]);
+            pair<string, OBAtom*> at;
 			if (elementTypeVector.size() > 0) {
-				atom.SetAtomicNum(etab.GetAtomicNum((char*)elementTypeVector[i].c_str()));
+                atom.SetAtomicNum(etab.GetAtomicNum((char*)elementTypeVector[i].c_str()));
 			}
 			if (formalChargeVector.size() > 0) atom.SetFormalCharge(formalChargeVector[i]);
 			vector3 v;
@@ -1811,31 +2018,100 @@ bool WriteAtomArray(ostream &ofs) {
 	vector<OBNodeBase*>::iterator i;
 
 	int count = 0;
-    ofs << "<atomArray>" << endl;
+    writeStartTagStart(ofs, C_ATOMARRAY);
+	if (!outputArray) {
+        writeStartTagEnd(ofs);
+        ofs << endl;
+	}
 	for (atom = molPtr->BeginAtom(i);atom;atom = molPtr->NextAtom(i)) {
 		WriteAtom(ofs, atom, ++count);
 	}
 	if (outputArray) {
-		ofs << "<stringArray builtin=\"atomId\">" << idArray << "</stringArray>" << endl;
-		ofs << "<stringArray builtin=\"elementType\">" << elementArray << "</stringArray>" << endl;
-		ofs << "<integerArray builtin=\"formalCharge\">" << chargeArray << "</integerArray>" << endl;
-		if (molPtr->HasNonZeroCoords()) {
-			if (strcmp(dimension, "2D") == 0) {
-				ofs << "<floatArray builtin=\"x2\">" << x2Array << "</floatArray>" << endl;
-				ofs << "<floatArray builtin=\"y2\">" << y2Array << "</floatArray>" << endl;
-			} else if (strcmp(dimension, "3D") == 0) {
-				ofs << "<floatArray builtin=\"x3\">" << x3Array << "</floatArray>" << endl;
-				ofs << "<floatArray builtin=\"y3\">" << y3Array << "</floatArray>" << endl;
-				ofs << "<floatArray builtin=\"z3\">" << z3Array << "</floatArray>" << endl;
+// CML1 array
+		if (outputCML1) {
+            writeStartTagEnd(ofs);
+            ofs << endl;
+
+            writeStartTagStart(ofs, C_STRINGARRAY);
+            writeAttribute(ofs, C_BUILTIN, C_ATOMID);
+            writeStartTagEnd(ofs);
+            ofs << idArray;
+            writeEndTag(ofs, C_STRINGARRAY);
+
+            writeStartTagStart(ofs, C_STRINGARRAY);
+            writeAttribute(ofs, C_BUILTIN, C_ELEMENTTYPE);
+            writeStartTagEnd(ofs);
+            ofs << elementArray;
+            writeEndTag(ofs, C_STRINGARRAY);
+
+            writeStartTagStart(ofs, C_INTEGERARRAY);
+            writeAttribute(ofs, C_BUILTIN, C_FORMALCHARGE);
+            writeStartTagEnd(ofs);
+            ofs << chargeArray;
+            writeEndTag(ofs, C_INTEGERARRAY);
+
+			if (molPtr->HasNonZeroCoords()) {
+				if (strcmp(dimension, C_2D) == 0) {
+
+                    writeStartTagStart(ofs, C_FLOATARRAY);
+                    writeAttribute(ofs, C_BUILTIN, C_X2);
+                    writeStartTagEnd(ofs);
+                    ofs << x2Array;
+                    writeEndTag(ofs, C_FLOATARRAY);
+
+                    writeStartTagStart(ofs, C_FLOATARRAY);
+                    writeAttribute(ofs, C_BUILTIN, C_Y2);
+                    writeStartTagEnd(ofs);
+                    ofs << y2Array;
+                    writeEndTag(ofs, C_FLOATARRAY);
+
+				} else if (strcmp(dimension, C_3D) == 0) {
+
+                    writeStartTagStart(ofs, C_FLOATARRAY);
+                    writeAttribute(ofs, C_BUILTIN, C_X3);
+                    writeStartTagEnd(ofs);
+                    ofs << x3Array;
+                    writeEndTag(ofs, C_FLOATARRAY);
+
+                    writeStartTagStart(ofs, C_FLOATARRAY);
+                    writeAttribute(ofs, C_BUILTIN, C_Y3);
+                    writeStartTagEnd(ofs);
+                    ofs << y3Array;
+                    writeEndTag(ofs, C_FLOATARRAY);
+
+                    writeStartTagStart(ofs, C_FLOATARRAY);
+                    writeAttribute(ofs, C_BUILTIN, C_Z3);
+                    writeStartTagEnd(ofs);
+                    ofs << z3Array;
+                    writeEndTag(ofs, C_FLOATARRAY);
+				}
 			}
+            writeEndTag(ofs, C_ATOMARRAY);
+// CML2 array
+		} else {
+            writeAttribute(ofs, C_ATOMID, idArray);
+            writeAttribute(ofs, C_ELEMENTTYPE, elementArray);
+            writeAttribute(ofs, C_FORMALCHARGE, chargeArray);
+			if (molPtr->HasNonZeroCoords()) {
+				if (strcmp(dimension, C_2D) == 0) {
+                    writeAttribute(ofs, C_X2, x2Array);
+                    writeAttribute(ofs, C_Y2, y2Array);
+				} else if (strcmp(dimension, C_3D) == 0) {
+                    writeAttribute(ofs, C_X3, x3Array);
+                    writeAttribute(ofs, C_Y3, y3Array);
+                    writeAttribute(ofs, C_Z3, z3Array);
+				}
+			}
+            writeCombinedTagEnd(ofs);
 		}
+	} else {
+        writeEndTag(ofs, C_ATOMARRAY);
 	}
-    ofs << "</atomArray>" << endl;
 	return true; // [ejk] assumed
 }
 
 bool startAtomParity(vector <pair<string,string> > &atts) {
-	atomRefs4 = getAttribute(atts, "atomRefs4");
+	atomRefs4 = getAttribute(atts, C_ATOMREFS4);
 	return true; // [ejk] assumed
 }
 
@@ -1844,11 +2120,11 @@ bool endAtomParity(vector <pair<string,string> > &atts) {
 	vector <OBAtom*> atomRef;
 	getAtomRefs(4, atomRef, atomRefs4);
 	if (atomRef.size() != 4) {
-	  //		cerr << "atomRefs4 must referemce 4 atoms" << endl;
+	  cmlError("atomRefs4 must reference 4 atoms");
 		return false;
 	}
 	for (int i = 0; i < 4; ++i) ap.first.push_back(atomRef[i]);
-	setCMLType("CML2");
+	setCMLType(C_CML2);
 	ap.second = atof((char*)pcdata.c_str());
 	atomParityVector.push_back(ap);
 	return true; // [ejk] assumed
@@ -1863,25 +2139,24 @@ bool WriteAtomParity(ostream &ofs) {
 bool startBond(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(BOND_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <bond>: ";
+  	    cmlError("unknown attributes on <bond>:");
 		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 
 	vector <string> atomRefs;
 
-	bondBeginAtom = "";
-	bondEndAtom = "";
-    orderString = getAttribute(currentAtts, "order");
-    stereoString = getAttribute(currentAtts, "stereo");
-	tokenize(atomRefs, (char*)getAttribute(currentAtts, "atomRefs2").c_str(), " \n\t,");
+	bondBeginAtom = _EMPTY;
+	bondEndAtom = _EMPTY;
+    orderString = getAttribute(currentAtts, C_ORDER);
+    stereoString = getAttribute(currentAtts, C_STEREO);
+	tokenize(atomRefs, (char*)getAttribute(currentAtts, C_ATOMREFS2).c_str(), " \n\t,");
 	if (atomRefs.size() == 0) {
 		return false;
 	} else if (atomRefs.size() != 2) {
-	  //		cerr << "must have 2 atom Refs per bond" << endl;
+	  cmlError("must have 2 atom Refs per bond");
 		return false;
 	} else {
-		setCMLType("CML2");
+		setCMLType(C_CML2);
 	}
 	bondBeginAtom = atomRefs[0];
 	bondEndAtom = atomRefs[1];
@@ -1891,40 +2166,40 @@ bool startBond(vector <pair<string,string> > &atts) {
 // adds builtin attributes for bond
 bool processBondBuiltin() {
 
-	string builtin = getAttribute(currentAtts, "builtin");
-	if (builtin == "") {
-	  //		cerr << "No builtin attribute for <bond><" << currentElem << ">" << endl;
+	string builtin = getAttribute(currentAtts, C_BUILTIN);
+	if (builtin == _EMPTY) {
+	    cmlError("No builtin attribute for <bond><"+currentElem+">");
 		return false;
 	}
-	setCMLType("CML1");
-	if (currentElem == "float") {
+	setCMLType(C_CML1);
+	if (currentElem == C_FLOAT) {
 		double value = atof(pcdata.c_str());
-	    if (builtin == "length") {
+	    if (builtin == C_LENGTH) {
 			length = value;
 	    } else {
-	      //			cerr << "IGNORED float builtin for bond: " << builtin << endl;
+	      cmlError("IGNORED float builtin for bond: "+builtin);
 			return false;
 		}
-	} else if (currentElem == "integer") {
+	} else if (currentElem == C_INTEGER) {
 		int ival = atoi(pcdata.c_str());
 		return false;
-	} else if (currentElem == "string") {
-	    if (builtin == "atomRef") {
-			if (bondBeginAtom == "") {
+	} else if (currentElem == C_STRING) {
+	    if (builtin == C_ATOMREF) {
+			if (bondBeginAtom == _EMPTY) {
 				bondBeginAtom = pcdata;
 			} else {
-				if (bondEndAtom != "") {
+				if (bondEndAtom != _EMPTY) {
 				  //					cerr << "too many atomRef builtins" << endl;
 					return false;
 				}
 				bondEndAtom = pcdata;
 			}
-		} else if (builtin == "order") {
+		} else if (builtin == C_ORDER) {
 			orderString = pcdata;
-	    } else if (builtin == "stereo") {
+	    } else if (builtin == C_STEREO) {
 			stereoString = pcdata;
 	    } else {
-	      //			cerr << "IGNORED integer builtin: " << builtin << endl;
+	      cmlError("IGNORED integer builtin: "+builtin);
 			return false;
 		}
 	}
@@ -1935,20 +2210,20 @@ bool processBondBuiltin() {
 bool processBondArrayChild() {
 	vector <string> strings;
 
-	string builtin = getAttribute(currentAtts, "builtin");
-	if (builtin == "") {
-	  //		cerr << "must have builtin attribute on: " << currentElem << endl;
+	string builtin = getAttribute(currentAtts, C_BUILTIN);
+	if (builtin == _EMPTY) {
+	    cmlError("must have builtin attribute on: "+currentElem);
 	}
 	pcdata += "\n";
 	tokenize(strings, pcdata, " \n\t");
 	if (nbonds == 0) {
 		nbonds = strings.size();
 		if (nbonds == 0) {
-		  //			cerr << "no bonds in array: " << pcdata << endl;
+		    cmlError("no bonds in array: "+pcdata);
 		}
 	}
 	if (nbonds != strings.size()) {
-	  //		cerr << "inconsistent bonds in arrays: " << pcdata << endl;
+	    cmlError("inconsistent bonds in arrays: "+pcdata);
 	}
 	bool atomRef1 = (atomRef1Vector.size() == 0);
 	for (unsigned int i = 0; i < nbonds; ++i) {
@@ -1958,9 +2233,9 @@ bool processBondArrayChild() {
 			} else {
 				atomRef2Vector.push_back(strings[i]);
 			}
-		} else if (builtin == "order") {
+		} else if (builtin == C_ORDER) {
 			orderVector.push_back(strings[i]);
-		} else if (builtin == "stereo") {
+		} else if (builtin == C_STEREO) {
 			stereoVector.push_back(strings[i]);
 		}
 	}
@@ -1975,12 +2250,12 @@ bool endBond() {
 	OBAtom* beginAtomPtr = getAtomPtr(bondBeginAtom);
 	OBAtom* endAtomPtr = getAtomPtr(bondEndAtom);
 	if (beginAtomPtr == 0 || endAtomPtr == 0) {
-	  //		cerr << "could not find atom refs in bond" << endl;
+	    cmlError("could not find atom refs in bond");
 		return false;
 	}
     bondPtr->SetBegin(beginAtomPtr);
     bondPtr->SetEnd(endAtomPtr);
-    if (orderString != "") bondPtr->SetBO(getBabelBondOrder(orderString));
+    if (orderString != _EMPTY) bondPtr->SetBO(getBabelBondOrder(orderString));
     if (stereoString == "W") {
 		bondPtr->SetUp();
 	} else if (stereoString == "H") {
@@ -2023,19 +2298,19 @@ bool WriteBond(ostream &ofs, OBBond* bond) {
 	string bos2(bos);
 	atomRef2.append(trim(bos2));
 	if (!outputArray) {
-		ofs << "    <bond";
-//		writeAttribute(ofs, "id", id);
+        writeStartTagStart(ofs, C_BOND);
 		if (outputCML2) {
-			string aa(atomRef1+" "+atomRef2);
-			writeAttribute(ofs, "atomRefs2", aa);
-			if (strcmp(boChar, "") != 0) writeAttribute(ofs, "order", boChar);
-			ofs << "/>" << endl;
+			string atomRefs2 = atomRef1+_SPACE+atomRef2;
+			writeAttribute(ofs, C_ATOMREFS2, atomRefs2);
+			writeAttribute(ofs, C_ORDER, boChar);
+            writeCombinedTagEnd(ofs);
 		} else {
-			ofs << ">" << endl;
+            writeStartTagEnd(ofs);
+            ofs << endl;
 			writeBuiltin(ofs, "atomRef", atomRef1);
 			writeBuiltin(ofs, "atomRef", atomRef2);
-			if (strcmp(boChar, "") != 0) writeBuiltin(ofs, "order", boChar);
-			ofs << "    </bond>" << endl;
+			writeBuiltin(ofs, C_ORDER, boChar);
+            writeEndTag(ofs, C_BOND);
 		}
 	} else {
 		appendToArray(atomRef1Array, atomRef1);
@@ -2048,23 +2323,27 @@ bool WriteBond(ostream &ofs, OBBond* bond) {
 bool startBondArray(vector <pair<string,string> > &atts) {
 	vector <string> sv;
 	string atomRef1 = getAttribute(atts, "atomRef1");
-	if (atomRef1 == "") return false;
-	setCMLType("CML2");
-	atomRef1 += " ";
+	if (atomRef1 == _EMPTY) {
+        return false;
+    }
+	setCMLType(C_CML2);
+	atomRef1 += _SPACE;
 	tokenize(sv, atomRef1, " \n");
 	int mynbonds = sv.size();	// explicitly not the global nbonds
 	processStringTokens(atomRef1Vector, mynbonds, atomRef1);
 	processStringTokens(atomRef2Vector, mynbonds, getAttribute(atts, "atomRef2"));
-	processStringTokens(orderVector, mynbonds, getAttribute(atts, "order"));
-	processStringTokens(stereoVector, mynbonds, getAttribute(atts, "stereo"));
+	processStringTokens(orderVector, mynbonds, getAttribute(atts, C_ORDER));
+	processStringTokens(stereoVector, mynbonds, getAttribute(atts, C_STEREO));
+    nbonds = mynbonds;
+//    cout << "nbonds " << nbonds << endl;
 	return true; // [ejk] assumed
 }
 
 bool endBondArray() {
-	if (inputCML2) {
+	if (cmlType == C_CML2) {
 		if (atomRef1Vector.size() == 0 ||
 			atomRef2Vector.size() == 0) {
-		  //			cerr << "atomRef arrays must be given for bonds" << endl;
+		  cmlError("atomRef arrays must be given for bonds");
 		}
 		for (unsigned int i = 0; i < nbonds; ++i) {
 			OBBond bond;
@@ -2072,7 +2351,7 @@ bool endBondArray() {
 			OBAtom* beginAtomPtr = getAtomPtr(atomRef1Vector[i]);
 			OBAtom* endAtomPtr = getAtomPtr(atomRef2Vector[i]);
 			if (beginAtomPtr == 0 || endAtomPtr == 0) {
-			  //				cerr << "could not find atom refs in bond" << endl;
+			  cmlError("could not find atom refs in bond");
 				return false;
 			}
 		    bondPtr->SetBegin(beginAtomPtr);
@@ -2092,11 +2371,16 @@ bool endBondArray() {
 }
 
 bool WriteBondArray(ostream &ofs) {
+    cout << "nbonds " << molPtr->NumBonds() << endl;
 	if (molPtr->NumBonds() == 0) return false;
 
-	ofs << "  <bondArray";
-	ofs << ">" << endl;
+    writeStartTagStart(ofs, C_BONDARRAY);
+	if (!outputArray) {
+        writeStartTagEnd(ofs);
+        ofs << endl;
+	}
 	//so the bonds come out sorted
+
 	OBAtom *atom;
 	OBAtom *nbr;
 	OBBond *bond;
@@ -2111,11 +2395,39 @@ bool WriteBondArray(ostream &ofs) {
 		}
 	}
 	if (outputArray) {
-		ofs << "<stringArray builtin=\"atomRef\">" << atomRef1Array << "</stringArray>" << endl;
-		ofs << "<stringArray builtin=\"atomRef\">" << atomRef2Array << "</stringArray>" << endl;
-		ofs << "<stringArray builtin=\"order\">" << orderArray << "</stringArray>" << endl;
+		if (outputCML1) {
+            writeStartTagEnd(ofs);
+            ofs << endl;
+
+            writeStartTagStart(ofs, C_STRINGARRAY);
+            writeAttribute(ofs, C_BUILTIN, C_ATOMREF);
+            writeStartTagEnd(ofs);
+			ofs << atomRef1Array;
+            writeEndTag(ofs, C_STRINGARRAY);
+
+            writeStartTagStart(ofs, C_STRINGARRAY);
+            writeAttribute(ofs, C_BUILTIN, C_ATOMREF);
+            writeStartTagEnd(ofs);
+			ofs << atomRef2Array;
+            writeEndTag(ofs, C_STRINGARRAY);
+
+            writeStartTagStart(ofs, C_STRINGARRAY);
+            writeAttribute(ofs, C_BUILTIN, C_ORDER);
+            writeStartTagEnd(ofs);
+			ofs << orderArray;
+            writeEndTag(ofs, C_STRINGARRAY);
+
+            writeEndTag(ofs, C_BONDARRAY);
+		} else {
+            writeAttribute(ofs, C_ATOMREFS1, atomRef1Array);
+            writeAttribute(ofs, C_ATOMREFS2, atomRef2Array);
+            writeAttribute(ofs, C_ORDER, orderArray);
+
+            writeCombinedTagEnd(ofs);
+		}
+	} else {
+        writeEndTag(ofs, C_BONDARRAY);
 	}
-	ofs << "  </bondArray>" << endl;
 	return true; // [ejk] assumed
 }
 
@@ -2140,17 +2452,16 @@ int getBabelBondFlag(string s) {
 bool startCrystal(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(CRYSTAL_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <crystal>: ";
+	  cmlError("unknown attributes on <crystal>: ");
 		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
-		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
-	    } else if (atts[i].first == "spaceGroup") {
-	    } else if (atts[i].first == "pointGroup") {
+		if (atts[i].first == C_ID) {
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
+	    } else if (atts[i].first == C_SPACEGROUP) {
+	    } else if (atts[i].first == C_POINTGROUP) {
 	    } else {
 	      //			cout << "IGNORED crystal attribute: " << atts[i].first << endl;
 		}
@@ -2162,14 +2473,14 @@ bool startCrystal(vector <pair<string,string> > &atts) {
 bool processCrystalBuiltin() {
 	vector3 v;
 
-	string builtin = getAttribute(currentAtts, "builtin");
-	if (builtin == "") {
-	  //		cerr << "No builtin attribute for <cryst><" << currentElem << ">" << endl;
+	string builtin = getAttribute(currentAtts, C_BUILTIN);
+	if (builtin == _EMPTY) {
+	  cmlError("No builtin attribute for <cryst><"+currentElem+">");
 		return false;
 	}
-	setCMLType("CML1");
+	setCMLType(C_CML1);
 	processBuiltinPCDATA();
-	if (currentElem == "float") {
+	if (currentElem == C_FLOAT) {
 		double f = atof((char*)pcdata.c_str());
 		if (currentElem == "acell") {
 			cellParam[0] = f;
@@ -2184,11 +2495,11 @@ bool processCrystalBuiltin() {
 		} else if (currentElem == "gamma") {
 			cellParam[5] = f;
 		} else {
-		  //			cerr << "IGNORED float builtin: " << builtin << endl;
+		  cmlError("IGNORED float builtin: "+builtin);
 			return false;
 		}
 	} else {
-	  //		cerr << "IGNORED builtin for " << currentElem << " in crystal; " << builtin << endl;
+	  cmlError("IGNORED builtin for "+currentElem+" in crystal; "+builtin);
 	}
 	return true;
 }
@@ -2199,9 +2510,9 @@ bool endCrystal() {
 
 // not yet finished
 bool WriteCrystal(ostream &ofs) {
-	ofs << "<crystal";
-	ofs << ">";
-	ofs << "</crystal>" << endl;
+    writeStartTagStart(ofs, C_CRYSTAL);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_CRYSTAL);
 	return true; // [ejk] assumed
 }
 
@@ -2210,15 +2521,14 @@ bool WriteCrystal(ostream &ofs) {
 bool startElectron(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(ELECTRON_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <electron>: ";
+	  cmlError("unknown attributes on <electron>: ");
 		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
 	    } else {
 	      //			cout << "IGNORED electron attribute: " << atts[i].first << endl;
 		}
@@ -2234,9 +2544,9 @@ bool endElectron() {
 
 // not yet finished
 bool WriteElectron(ostream &ofs) {
-	ofs << "<electron";
-	ofs << ">";
-	ofs << "</electron>" << endl;
+    writeStartTagStart(ofs, C_ELECTRON);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_ELECTRON);
 	return true; // [ejk] assumed
 }
 
@@ -2245,15 +2555,14 @@ bool WriteElectron(ostream &ofs) {
 bool startFeature(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(FEATURE_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <feature>: ";
+	  cmlError("unknown attributes on <feature>: ");
 		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 // check other attributes
 	for (vector<pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
 	    } else {
 	      //			cout << "IGNORED feature attribute: " << atts[i].first << endl;
 		}
@@ -2266,9 +2575,9 @@ bool endFeature() {
 }
 
 bool WriteFeature(ostream &ofs) {
-	ofs << "<feature";
-	ofs << ">";
-	ofs << "</feature>" << endl;
+    writeStartTagStart(ofs, C_FEATURE);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_FEATURE);
 	return true; // [ejk] assumed
 }
 
@@ -2277,15 +2586,14 @@ bool WriteFeature(ostream &ofs) {
 bool startFormula(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(FORMULA_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <formula>: ";
+	  cmlError("unknown attributes on <formula>: ");
 		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
 	    } else {
 	      //			cout << "IGNORED formula attribute: " << atts[i].first << endl;
 		}
@@ -2298,9 +2606,9 @@ bool endFormula() {
 }
 
 bool WriteFormula(ostream &ofs) {
-	ofs << "<formula";
-	ofs << ">";
-	ofs << "</formula>" << endl;
+    writeStartTagStart(ofs, C_FORMULA);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_FORMULA);
 	return true; // [ejk] assumed
 }
 
@@ -2309,20 +2617,19 @@ bool WriteFormula(ostream &ofs) {
 bool startLength(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(LENGTH_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <length>: ";
+	  cmlError("unknown attributes on <length>: ");
 		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 	lengthUnits = "angstrom";
 	atomRefs2Vector.clear();
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
-	    } else if (atts[i].first == "atomRefs2") {
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
+	    } else if (atts[i].first == C_ATOMREFS2) {
 			getAtomRefs(2, atomRefs2Vector, atts[i].second);
-	    } else if (atts[i].first == "units") {
+	    } else if (atts[i].first == C_UNITS) {
 			lengthUnits = atts[i].second;
 	    } else {
 	      //			cout << "IGNORED length attribute: " << atts[i].first << endl;
@@ -2334,7 +2641,7 @@ bool startLength(vector <pair<string,string> > &atts) {
 bool endLength() {
 	pair <vector<OBAtom*>, double> length;
 	if (atomRefs2Vector.size() != 2) {
-	  //		cerr << "must have defined 2 atoms for length" << endl;
+	  cmlError("must have defined 2 atoms for length");
 	}
 	for (int i = 0; i < 2; ++i) {
 		length.first.push_back(atomRefs2Vector[i]);
@@ -2346,10 +2653,14 @@ bool endLength() {
 
 // not yet finished
 bool WriteLength(ostream &ofs, pair <vector<OBAtom*>, double> length) {
-	ofs << "<length";
-	ofs << " atomRefs2=\"a" << length.first[0]->GetIdx() << " a" << length.first[1]->GetIdx() << "\">";
-	ofs << length.second;
-	ofs << "</length>" << endl;
+    writeStartTagStart(ofs, C_LENGTH);
+    string atomRefs2 = "a";
+    atomRefs2 += length.first[0]->GetIdx();
+    atomRefs2 += " a";
+    atomRefs2 += length.first[1]->GetIdx();
+    writeAttribute(ofs, C_ATOMREFS2, atomRefs2);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_LENGTH);
 	return true; // [ejk] assumed
 }
 
@@ -2358,19 +2669,19 @@ bool WriteLength(ostream &ofs, pair <vector<OBAtom*>, double> length) {
 bool startMolecule(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(MOLECULE_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <molecule>: ";
+	  cmlError("unknown attributes on <molecule>: ");
 	  //		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 
 	molPtr->BeginModify();
-	molPtr->ReserveAtoms(ATOM_SIZE);
-	molPtr->SetTitle((char*)getAttribute(atts, "title").c_str());
+	molPtr->ReserveAtoms(ATOMSIZE);
+	molPtr->SetTitle((char*)getAttribute(atts, C_TITLE).c_str());
+    
 	return true; // [ejk] assumed
 }
 
 bool debugMolecule(ostream &ofs) {
-        dimension = "3D";
+    dimension = C_3D;
 	OBAtom *atom;
 	vector<OBNodeBase*>::iterator i;
 	int count = 0;
@@ -2517,9 +2828,12 @@ void generateInternals() {
 // second (distance only)
 	coord = new OBInternalCoord();
 	coord->_a = at0;
+      int a0 = at0->GetIdx();
+      int a1 = at1->GetIdx();
+      int a2 = at2->GetIdx();
 	int idx = getLengthIndex(at0, at1);
 	if (idx == -1) {
-	  //		cerr << "cannot find length: " << at0->GetIdx() << "/" << at1->GetIdx() << endl;
+//	  cmlError("cannot find length: " + a0 + _SLASH + a1);
 		return;
 	}
 	coord->_dst = lengthVector[idx].second;
@@ -2530,13 +2844,13 @@ void generateInternals() {
 	coord->_b = at0;
 	idx = getLengthIndex(at1, at2);
 	if (idx == -1) {
-	  //		cerr << "cannot find length: " << at1 << "/" << at2 << endl;
+//	  cmlError("cannot find length: " + a1 + _SLASH + a2 + endl);
 		return;
 	}
 	coord->_dst = lengthVector[idx].second;
 	idx = getAngleIndex(at0, at1, at2);
 	if (idx == -1) {
-	  //		cerr << "cannot find angle: " << at0 << "/" << at1 << "/" << at2 << endl;
+//	  cmlError("cannot find angle: " + a0 + _SLASH + a1 + _SLASH + at2);
 		return;
 	}
 	coord->_ang = angleVector[idx].second;
@@ -2547,7 +2861,7 @@ void generateInternals() {
 		OBAtom* at0 = molPtr->GetAtom(i+1);
 		idx = getFirstTorsionIndexForAtom(at0);
 		if (idx == 0) {
-		  //			cerr << "cannot find torsion... " << endl;
+		  cmlError("cannot find torsion... ");
 			return;
 		}
 		int iTor = (idx > 0) ? idx-1 : -idx - 1;
@@ -2555,6 +2869,10 @@ void generateInternals() {
 		OBAtom* at1 = torsionVector[iTor].first[1];
 		OBAtom* at2 = torsionVector[iTor].first[2];
 		OBAtom* at3 = torsionVector[iTor].first[3];
+      a0 = at0->GetIdx();
+      a1 = at1->GetIdx();
+      a2 = at2->GetIdx();
+      int a3 = at3->GetIdx();
 // if torsion is "wrong way round", swap atoms
 		if (idx < 0) {
 			OBAtom* temp = at0;
@@ -2571,13 +2889,13 @@ void generateInternals() {
 		coord->_c = at3;
 		idx = getLengthIndex(at2, at3);
 		if (idx == -1) {
-		  //			cerr << "cannot find length: " << at2 << "/" << at3 << endl;
+//		  cmlError(("cannot find length: " + a2) + (_SLASH + a3));
 			return;
 		}
 		coord->_dst = lengthVector[idx].second;
 		int idx = getAngleIndex(at1, at2, at3);
 		if (idx == -1) {
-		  //			cerr << "cannot find angle: " << at1 << "/" << at2 << "/" << at3 << endl;
+//		  cmlError("cannot find angle: " + a1 + (_SLASH + a2) + (_SLASH + a3));
 			return;
 		}
 		coord->_ang = angleVector[idx].second;
@@ -2589,12 +2907,12 @@ void generateInternals() {
 		int aa = (coord->_a != 0) ? coord->_a->GetIdx() : 0;
 		int bb = (coord->_b != 0) ? coord->_b->GetIdx() : 0;
 		int cc = (coord->_c != 0) ? coord->_c->GetIdx() : 0;
-		//		cout << "a" << cc << " ";
-		//		cout << "a" << bb << ":";
-// 		cout << "a" << aa << ":";
-// 		cout << "a" << (i+1) << ":";
-// 		cout << coord->_dst << " ";
-// 		cout << coord->_ang << " ";
+		//		cout << "a" << cc << _SPACE;
+		//		cout << "a" << bb << _COLON;
+// 		cout << "a" << aa << _COLON;
+// 		cout << "a" << (i+1) << _COLON;
+// 		cout << coord->_dst << _SPACE;
+// 		cout << coord->_ang << _SPACE;
 // 		cout << coord->_tor << endl;
 	}
 }
@@ -2616,15 +2934,45 @@ bool endMolecule() {
 
 bool WriteMolecule(ostream &ofs) {
 
-	ofs << "<molecule";
-	writeAttribute(ofs, "title", molPtr->GetTitle());
+	if (outputDeclaration) {
+		ofs << _LANGLE << _QUERY << X_XML << _SPACE << X_VERSION << _EQUALS <<  _QUOTE << "1.0" << _QUOTE << _QUERY << _RANGLE << endl;
+	}
+	if (outputDoctype) {
+		ofs << X_DOCTYPE << _SPACE << C_MOLECULE << _SPACE << X_SYSTEM << _QUOTE << CML1_NAMESPACE << _QUOTE << _RANGLE << endl;
+	}
+	if (outputPretty) {
+//		cout << "<!-- imagine the XML is pretty printed -->" << endl;
+	}
+	outputPrefix = "";
+	if (outputNamespace) {
+		outputPrefix += C_PREFIX;
+		outputPrefix +=_COLON;
+	}
+    writeStartTagStart(ofs, C_MOLECULE);
+	if (outputNamespace) {
+		ofs << _SPACE << X_XMLNS << _COLON << C_PREFIX << _EQUALS << _QUOTE << CML2_NAMESPACE << _QUOTE << endl;
+	}
+    string title = getNormalizedString(molPtr->GetTitle());
+ 	writeAttribute(ofs, C_TITLE, title);
 // a mechanism is needed for IDs on elements
-	writeAttribute(ofs, "id", "m1");
-	ofs << ">" << endl;
+	writeStartTagEnd(ofs);
+    ofs << endl;
 
 	if (molPtr->HasData(obCommentData)) {
 		OBCommentData *cd = (OBCommentData*)molPtr->GetData(obCommentData);
-		ofs << "<string title=\"comment\">" << cd->GetData() << "</comment>" << endl;
+        if (outputCML1) {
+            writeStartTagStart(ofs, C_STRING);
+            writeAttribute(ofs, C_TITLE, "comment");
+            writeStartTagEnd(ofs);
+            ofs << cd->GetData();
+            writeEndTag(ofs, C_STRING);
+        } else if (outputCML2) {
+            writeStartTagStart(ofs, C_SCALAR);
+            writeAttribute(ofs, C_DICTREF, "foo:comment");
+            writeStartTagEnd(ofs);
+            ofs << cd->GetData();
+            writeEndTag(ofs, C_SCALAR);
+        }
 	}
 
 	if (outputDebug) debug(ofs);
@@ -2636,12 +2984,15 @@ bool WriteMolecule(ostream &ofs) {
 	vector<OBGenericData*> vdata = molPtr->GetData();
 	for (k = vdata.begin();k != vdata.end();++k) {
 		if ((*k)->GetDataType() == obPairData) {
-			ofs << "<string title=\"" << (*k)->GetAttribute() << "\">"
-				<< ((OBPairData*)(*k))->GetValue() << "</string>" << endl;
+            writeStartTagStart(ofs, C_STRING);
+            writeAttribute(ofs, C_TITLE, (*k)->GetAttribute());
+            writeStartTagEnd(ofs);
+			ofs << ((OBPairData*)(*k))->GetValue();
+            writeEndTag(ofs, C_STRING);
 		}
 	}
 
-	ofs << "</molecule>" << endl;
+    writeEndTag(ofs, C_MOLECULE);
 
 	return(true);
 }
@@ -2651,15 +3002,14 @@ bool WriteMolecule(ostream &ofs) {
 bool startReaction(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(REACTION_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <reaction>: ";
+	  cmlError("unknown attributes on <reaction>: ");
 	  //		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
 	    } else {
 	      //			cout << "IGNORED reaction attribute: " << atts[i].first << endl;
 		}
@@ -2672,9 +3022,9 @@ bool endReaction() {
 }
 
 bool WriteReaction(ostream &ofs) {
-	ofs << "<reaction";
-	ofs << ">";
-	ofs << "</reaction>" << endl;
+    writeStartTagStart(ofs, C_REACTION);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_REACTION);
 	return true; // [ejk] assumed
 }
 
@@ -2683,18 +3033,17 @@ bool WriteReaction(ostream &ofs) {
 bool startScalar(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(SCALAR_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <scalar>: ";
+	  cmlError("unknown attributes on <scalar>: ");
 	  //		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
-	    } else if (atts[i].first == "dataType") {
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
+	    } else if (atts[i].first == C_DATATYPE) {
 			scalarDataType = atts[i].second;
-	    } else if (atts[i].first == "units") {
+	    } else if (atts[i].first == C_UNITS) {
 			scalarUnits = atts[i].second;
 	    } else {
 	      //			cout << "IGNORED scalar attribute: " << atts[i].first << endl;
@@ -2704,7 +3053,7 @@ bool startScalar(vector <pair<string,string> > &atts) {
 }
 
 bool endScalar() {
-	string title = getAttribute(currentAtts, "title");
+	string title = getAttribute(currentAtts, C_TITLE);
 // only place scalar is required in CML2
 	if (parent == "crystal") {
 		double f = atof((char*)pcdata.c_str());
@@ -2720,7 +3069,9 @@ bool endScalar() {
 
 // not yet finished
 bool WriteScalar(ostream &ofs) {
-	ofs << "<scalar/>" << endl;
+    writeStartTagStart(ofs, C_SCALAR);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_SCALAR);
 	return true; // [ejk] assumed
 }
 
@@ -2729,15 +3080,14 @@ bool WriteScalar(ostream &ofs) {
 bool startSequence(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(SEQUENCE_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <sequence>: ";
+	  cmlError("unknown attributes on <sequence>: ");
 	  //		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
 	    } else {
 	      //			cout << "IGNORED sequence attribute: " << atts[i].first << endl;
 		}
@@ -2751,16 +3101,16 @@ bool endSequence() {
 
 // not yet finished
 bool WriteSequence(ostream &ofs) {
-	ofs << "<sequence";
-	ofs << ">";
-	ofs << "</sequence>" << endl;
+    writeStartTagStart(ofs, C_SEQUENCE);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_SEQUENCE);
 	return true; // [ejk] assumed
 }
 
 // -------------------------<stereo>-------------------
 
 bool startStereo(vector <pair<string,string> > &atts) {
-	atomRefs4 = getAttribute(atts, "atomRefs4");
+	atomRefs4 = getAttribute(atts, C_ATOMREFS4);
 	return true; // [ejk] assumed
 }
 
@@ -2769,18 +3119,20 @@ bool endStereo(vector <pair<string,string> > &atts) {
 	vector <OBAtom*> atomRef;
 	getAtomRefs(4, atomRef, atomRefs4);
 	if (atomRef.size() != 4) {
-	  //		cerr << "atomRefs4 must referemce 4 atoms" << endl;
+	  cmlError("atomRefs4 must referemce 4 atoms");
 		return false;
 	}
 	for (unsigned int i = 0; i < 4; ++i) st.first.push_back(atomRef[i]);
-	setCMLType("CML2");
+	setCMLType(C_CML2);
 	st.second = pcdata;
 	stereoSVector.push_back(st);
 	return true; // [ejk] assumed
 }
 
 bool WriteStereo(ostream &ofs) {
-  //	cout << "WriteStereo NYI" << endl;
+    writeStartTagStart(ofs, C_STEREO);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_STEREO);
 	return true; // [ejk] assumed
 }
 
@@ -2790,17 +3142,16 @@ bool WriteStereo(ostream &ofs) {
 bool startSymmetry(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(SYMMETRY_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <symmetry>: ";
+	  cmlError("unknown attributes on <symmetry>: ");
 	  //		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
-	spacegroup = getAttribute(atts, "spacegroup");
-	pointgroup = getAttribute(atts, "pointgroup");
+	spacegroup = getAttribute(atts, C_SPACEGROUP);
+	pointgroup = getAttribute(atts, C_POINTGROUP);
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
 	    } else {
 	      //			cout << "IGNORED symmetry attribute: " << atts[i].first << endl;
 		}
@@ -2813,19 +3164,19 @@ bool endSymmetry(vector <pair<string,string> > &atts) {
 }
 
 bool WriteSymmetry(ostream &ofs) {
-	ofs << "<symmetry";
-	ofs << " spacegroup=\"" << spacegroup << "\"";
-	ofs << " pointgroup=\"" << pointgroup << "\"";
-	ofs << ">";
-	ofs << "</symmetry>" << endl;
+    writeStartTagStart(ofs, C_SYMMETRY);
+    writeAttribute(ofs, C_SPACEGROUP, spacegroup);
+    writeAttribute(ofs, C_POINTGROUP, pointgroup);
+    writeStartTagEnd(ofs);
+    writeEndTag(ofs, C_SYMMETRY);
 	return true; // [ejk] assumed
 }
 
 
 // -------------------------<string>-------------------
 bool addString() {
-	string title = getAttribute(currentAtts, "title");
-	if (title != "") {
+	string title = getAttribute(currentAtts, C_TITLE);
+	if (title != _EMPTY) {
 		OBPairData *dp = new OBPairData;
 		dp->SetAttribute(title);
 		dp->SetValue(pcdata);
@@ -2839,24 +3190,23 @@ bool addString() {
 bool startTorsion(vector <pair<string,string> > &atts) {
 	vector <string> badAtts = getUnknownAttributes(TORSION_ATTRIBUTE_VECTOR, atts);
 	if (badAtts.size() > 0) {
-	  //		cerr << "unknown attributes on <torsion>: ";
+	  cmlError("unknown attributes on <torsion>: ");
 	  //		printVector(badAtts, cerr);
-		//		cerr << endl;
 	}
 	torsionUnits = "degrees";
 	atomRefs4Vector.clear();
 // check other attributes
 	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "id") {
-	    } else if (atts[i].first == "title") {
-	    } else if (atts[i].first == "convention") {
-	    } else if (atts[i].first == "atomRefs") {
-			setCMLType("CML1");
+	    } else if (atts[i].first == C_TITLE) {
+	    } else if (atts[i].first == C_CONVENTION) {
+	    } else if (atts[i].first == C_ATOMREFS) {
+			setCMLType(C_CML1);
 			getAtomRefs(4, atomRefs4Vector, atts[i].second);
-	    } else if (atts[i].first == "atomRefs4") {
-			setCMLType("CML2");
+	    } else if (atts[i].first == C_ATOMREFS4) {
+			setCMLType(C_CML2);
 			getAtomRefs(4, atomRefs4Vector, atts[i].second);
-	    } else if (atts[i].first == "units") {
+	    } else if (atts[i].first == C_UNITS) {
 			torsionUnits = atts[i].second;
 	    } else {
 	      //			cout << "IGNORED torsion attribute: " << atts[i].first << endl;
@@ -2868,7 +3218,7 @@ bool startTorsion(vector <pair<string,string> > &atts) {
 bool endTorsion() {
 	pair <vector<OBAtom*>, double> torsion;
 	if (atomRefs4Vector.size() != 4) {
-	  //		cerr << "must have defined 4 atoms for torsion" << endl;
+	  cmlError("must have defined 4 atoms for torsion");
 	}
 	for (int i = 0; i < 4; ++i) {
 		torsion.first.push_back(atomRefs4Vector[i]);
@@ -2880,10 +3230,20 @@ bool endTorsion() {
 
 // not yet finished
 bool WriteTorsion(ostream &ofs, pair <vector<OBAtom*>, double> torsion) {
-	ofs << "<torsion";
-	ofs << " atomRefs4=\"a" << torsion.first[0]->GetIdx() << " a" << torsion.first[1]->GetIdx() << " a" << torsion.first[2]->GetIdx() << " a" << torsion.first[3]->GetIdx() << "\">";
+    writeStartTagStart(ofs, C_TORSION);
+    string atomRefs4 = "a";
+    atomRefs4 += torsion.first[0]->GetIdx();
+    atomRefs4 += " a";
+    atomRefs4 += torsion.first[1]->GetIdx();
+    atomRefs4 += " a";
+    atomRefs4 += torsion.first[2]->GetIdx();
+    atomRefs4 += " a";
+    atomRefs4 += torsion.first[3]->GetIdx();
+    writeAttribute(ofs, C_ATOMREFS4, atomRefs4);
+    writeStartTagEnd(ofs);
 	ofs << torsion.second;
-	ofs << "</torsion>" << endl;
+    writeEndTag(ofs, C_TORSION);
+
 	return true; // [ejk] assumed
 }
 
@@ -2925,6 +3285,13 @@ void CleanUp()
 bool ReadCML(istream &ifs,OBMol &mol, const char *title) {
 	molPtr = &mol;
 	ReadXML(ifs);
+
+    cout << "==========================================================" << endl;
+    outputDebug = false;    
+    if (outputDebug) {
+        debug(cout);
+    }
+    
 	CleanUp();
 	return true;
 }
@@ -2955,19 +3322,12 @@ bool WriteCML(ostream &ofs,OBMol &mol,const char *dim,const char* xmlOptions)
 		if (xo.find("c") < xo.length()) outputPrefix = "cml";
 		if (xo.find("a") < xo.length()) outputArray = true;
 		if (xo.find("g") < xo.length()) outputDebug = true;
-// 		cout << "output options: ";
-// 		if (outputCML2) cout << "CML2 ";
-// 		if (outputDoctype) cout << "doctype ";
-// 		if (outputPretty) cout << "pretty ";
-// 		if (outputNamespace) cout <<  "namespace ";
-// 		cout << outputPrefix << " ";
-// 		if (outputArray) cout << "arrays ";
-// 		if (outputDebug) cout << "debug ";
-// 		cout << endl;
+		if (xo.find("v") < xo.length()) outputDeclaration = true;
 	}
 
 	molPtr = &mol;
 	dimension = dim;
+    cout << "dimension: " << dimension << endl;
 	WriteMolecule(ofs);
 	CleanUp();
 	return true; // [ejk] assumed
