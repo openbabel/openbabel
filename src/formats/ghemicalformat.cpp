@@ -25,6 +25,8 @@ public:
     GhemicalFormat()
     {
         OBConversion::RegisterFormat("gpr",this);
+        OBConversion::RegisterFormat("mm1gp",this);
+        OBConversion::RegisterFormat("qm1gp",this);
     }
 
     virtual const char* Description() //required

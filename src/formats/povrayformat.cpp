@@ -75,13 +75,13 @@ public:
     //Register this format type ID
     PovrayFormat()
     {
-        OBConversion::RegisterFormat("POVRAY",this);
+        OBConversion::RegisterFormat("pov",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "Povray format\n \
+            "POV-Ray input format\n \
             No comments yet\n \
             ";
     };

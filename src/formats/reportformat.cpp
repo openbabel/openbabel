@@ -32,7 +32,7 @@ public:
     //Register this format type ID
     ReportFormat()
     {
-        OBConversion::RegisterFormat("REPORT",this);
+        OBConversion::RegisterFormat("report",this);
     }
 
     virtual const char* Description() //required

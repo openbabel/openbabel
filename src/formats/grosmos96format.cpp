@@ -63,13 +63,13 @@ public:
     //Register this format type ID
     GROMOS96Format()
     {
-        OBConversion::RegisterFormat("GROMOS96",this);
+        OBConversion::RegisterFormat("gr96",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "GROMOS96 Format\n \
+            "GROMOS96 format\n \
             Options e.g. -xn\n\
             -n output nm (not Angstroms)";
     };

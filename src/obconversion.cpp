@@ -49,8 +49,6 @@ const type_info& OBFormat::GetType()
 		return typeid(this); //rubbish return if DefaultFormat not set
 };
 
-const char* OBFormat::SpecificationURL() {return "";};
-
 //***************************************************
 
 /** @class OBConversion
@@ -311,13 +309,13 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
 		str=NULL; pFormat=NULL;
 		return false;
 	}
-	static string s; 
-	s=itr->first;
+	static string s;
+	s =itr->first;
 	pFormat = itr->second;
 	if(pFormat)
 	{
 		string description(pFormat->Description());
-		s += "  :  ";
+		s += " -- ";
 		s += description.substr(0,description.find('\n'));
 	}
 

@@ -25,7 +25,7 @@ public:
     //Register this format type ID
     NWChemFormat()
     {
-        OBConversion::RegisterFormat("NWCHEM",this);
+        OBConversion::RegisterFormat("nwo",this);
     }
 
     virtual const char* Description() //required

@@ -26,13 +26,13 @@ public:
     //Register this format type ID
     FenskeZmatFormat()
     {
-        OBConversion::RegisterFormat("FH",this);
+        OBConversion::RegisterFormat("fh",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "FenskeZmat format\n \
+            "Fenske-Hall Z-Matrix format\n \
             No comments yet\n \
             ";
     };

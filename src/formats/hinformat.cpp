@@ -30,14 +30,11 @@ public:
 
     virtual const char* Description() //required
     {
-        return
-            "HyperChem INput format\n \
-            No comments yet\n \
-            ";
+        return "HyperChem INput format\nNo comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+    virtual const char* SpecificationURL()
+  { return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

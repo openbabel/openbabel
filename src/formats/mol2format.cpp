@@ -29,14 +29,14 @@ public:
     //Register this format type ID
     MOL2Format()
     {
-        OBConversion::RegisterFormat("MOL2",this);
+        OBConversion::RegisterFormat("mol2",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "MOL2 format\n \
-            Info not to hand\n \
+            "Sybyl Mol2 format\n \
+            No comments yet\n \
             ";
     };
 
@@ -44,6 +44,9 @@ public:
   {
     return "http://http://www.tripos.com/custResources/mol2Files//";
   }; //optional
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-macromodel-mol2"; };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////

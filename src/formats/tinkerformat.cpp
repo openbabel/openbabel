@@ -26,7 +26,7 @@ public:
     //Register this format type ID
     TinkerFormat()
     {
-        OBConversion::RegisterFormat("TINKER",this);
+        OBConversion::RegisterFormat("txyz",this);
     }
 
     virtual const char* Description() //required

@@ -26,13 +26,13 @@ public:
     //Register this format type ID
     UniChemFormat()
     {
-        OBConversion::RegisterFormat("UNICHEM",this);
+        OBConversion::RegisterFormat("unixyz",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "UniChem format\n \
+            "UniChem XYZ format\n \
             No comments yet\n \
             ";
     };

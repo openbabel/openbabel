@@ -29,14 +29,14 @@ public:
     //Register this format type ID
     RXNFormat()
     {
-        OBConversion::RegisterFormat("RXN",this);
+        OBConversion::RegisterFormat("rxn",this);
     }
 
     virtual const char* Description()
     {
         return
-            "MDL RXN file\n \
-            Just an experiment with a different type of conversion object";
+            "MDL RXN format\n \
+            \n";
     };
 
     virtual const char* TargetClassDescription()

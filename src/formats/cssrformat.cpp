@@ -26,13 +26,13 @@ public:
     //Register this format type ID
     CSSRFormat()
     {
-        OBConversion::RegisterFormat("CSSR",this);
+        OBConversion::RegisterFormat("cssr",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "CSSR Format\n \
+            "CSD CSSR format\n \
             No comments yet\n \
             ";
     };

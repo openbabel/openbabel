@@ -31,13 +31,13 @@ public:
     //Register this format type ID
     PQSFormat()
     {
-        OBConversion::RegisterFormat("PQS",this);
+        OBConversion::RegisterFormat("pqs",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "Parallel Quantum Solutions\n \
+            "Parallel Quantum Solutions file\n \
             No comments yet\n \
             ";
     };

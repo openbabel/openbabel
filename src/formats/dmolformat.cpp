@@ -29,13 +29,13 @@ public:
     //Register this format type ID
     DMolFormat()
     {
-        OBConversion::RegisterFormat("DMol",this);
+        OBConversion::RegisterFormat("dmol",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "DMol format\n \
+            "DMol3 coordinates format\n \
             No comments yet\n \
             ";
     };
@@ -47,7 +47,7 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***

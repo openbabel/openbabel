@@ -44,6 +44,9 @@ public:
     virtual const char* SpecificationURL(){return
             "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";}; //optional
 
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-gamess-input"; };
+
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()

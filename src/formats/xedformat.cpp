@@ -26,7 +26,7 @@ public:
     //Register this format type ID
     XEDFormat()
     {
-        OBConversion::RegisterFormat("XED",this);
+        OBConversion::RegisterFormat("xed",this);
     }
 
     virtual const char* Description() //required

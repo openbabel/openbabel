@@ -27,7 +27,8 @@ public:
     //Register this format type ID
     ShelXFormat()
     {
-        OBConversion::RegisterFormat("SHELX",this);
+        OBConversion::RegisterFormat("res",this);
+        OBConversion::RegisterFormat("ins",this);
     }
 
     virtual const char* Description() //required

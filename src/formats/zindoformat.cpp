@@ -25,13 +25,13 @@ public:
     //Register this format type ID
     ZINDOFormat()
     {
-        OBConversion::RegisterFormat("ZINDO",this);
+        OBConversion::RegisterFormat("zin",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "ZINDO format\n \
+            "ZINDO input format\n \
             No comments yet\n \
             ";
     };

@@ -31,7 +31,7 @@ public:
     //Register this format type ID
     CMLFormat()
     {
-        OBConversion::RegisterFormat("CML",this);
+        OBConversion::RegisterFormat("cml",this);
     }
 
     virtual const char* Description()
@@ -52,6 +52,9 @@ public:
     };
     virtual const char* SpecificationURL(){return
             "http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage";};
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-cml"; };
 
     virtual unsigned int Flags()
     {

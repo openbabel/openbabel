@@ -26,13 +26,13 @@ public:
     //Register this format type ID
     MOPACFormat()
     {
-        OBConversion::RegisterFormat("MOPAC",this);
+        OBConversion::RegisterFormat("mopout",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "Mopac file\n \
+            "MOPAC Output file\n \
             No comments yet";
     };
 
@@ -164,13 +164,13 @@ public:
     //Register this format type ID
     MOPACCARTFormat()
     {
-        OBConversion::RegisterFormat("MOPACCART",this);
+        OBConversion::RegisterFormat("mopcrt",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "MOPACCART file\n \
+            "MOPAC Cartesian file\n \
             No comments yet";
     };
 

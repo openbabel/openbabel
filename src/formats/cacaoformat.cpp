@@ -288,7 +288,7 @@ public:
     //Register this format type ID
     CacaoInternalFormat()
     {
-        OBConversion::RegisterFormat("CACAOINT",this);
+        OBConversion::RegisterFormat("cacint",this);
     }
 
     virtual const char* Description() //required

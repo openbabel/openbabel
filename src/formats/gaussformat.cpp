@@ -42,6 +42,9 @@ public:
     virtual const char* SpecificationURL(){return
             "http://www.gaussian.com/g_ur/m_input.htm";};
 
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-gaussian-input"; };
+
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()

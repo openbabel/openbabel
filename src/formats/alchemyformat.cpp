@@ -37,15 +37,18 @@ public:
             ";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+  virtual const char* SpecificationURL()
+  { return "";}; //optional
 
-    //Flags() can return be any the following combined by | or be omitted if none apply
-    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
-    {
-        return READONEONLY;
-    };
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-alchemy"; };
+
+  //Flags() can return be any the following combined by | or be omitted if none apply
+  // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+  virtual unsigned int Flags()
+  {
+    return READONEONLY;
+  };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////

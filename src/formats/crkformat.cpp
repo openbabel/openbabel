@@ -31,19 +31,22 @@ public:
     //Register this format type ID
     CRK2DFormat()
     {
-        OBConversion::RegisterFormat("CRK2D",this);
+        OBConversion::RegisterFormat("crk2d",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "CRK Diagram Structure (2D)\n \
+            "Chemical Resource Kit Diagram Structure (2D)\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
             "http://crk.sourceforge.net/";}; //optional
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-crk2d"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -157,19 +160,22 @@ public:
     //Register this format type ID
     CRK3DFormat()
     {
-        OBConversion::RegisterFormat("CRK3D",this);
+        OBConversion::RegisterFormat("crk3d",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "CRK 3D format\n \
+            "Chemical Resource Kit 3D format\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
             "http://crk.sourceforge.net/";}; //optional
+
+    virtual const char* GetMIMEType() 
+  { return "chemical/x-crk3d"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

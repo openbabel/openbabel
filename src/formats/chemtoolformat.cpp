@@ -29,7 +29,7 @@ public:
     //Register this format type ID
     CHTFormat()
     {
-        OBConversion::RegisterFormat("CHT",this);
+        OBConversion::RegisterFormat("cht",this);
     }
 
     virtual const char* Description() //required

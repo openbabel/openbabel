@@ -26,13 +26,13 @@ public:
     //Register this format type ID
     CacheFormat()
     {
-        OBConversion::RegisterFormat("CACHE",this);
+        OBConversion::RegisterFormat("cache",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "Cache format\n \
+            "CAChe format\n \
             No comments yet\n \
             ";
     };

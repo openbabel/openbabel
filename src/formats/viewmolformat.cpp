@@ -25,7 +25,7 @@ public:
     //Register this format type ID
     ViewMolFormat()
     {
-        OBConversion::RegisterFormat("VIEWMOL",this);
+        OBConversion::RegisterFormat("vmol",this);
     }
 
     virtual const char* Description() //required

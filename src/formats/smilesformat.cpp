@@ -27,8 +27,11 @@ public:
     //Register this format type ID
     SMIFormat()
     {
-        OBConversion::RegisterFormat("SMI",this);
+        OBConversion::RegisterFormat("smi",this);
     }
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-daylight-smiles"; };
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
@@ -2327,7 +2330,7 @@ public:
     //Register this format type ID
     FIXFormat()
     {
-        OBConversion::RegisterFormat("FIX",this);
+        OBConversion::RegisterFormat("fix",this);
     }
 
     virtual const char* Description() //required

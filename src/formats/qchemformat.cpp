@@ -26,13 +26,13 @@ public:
     //Register this format type ID
     QChemFormat()
     {
-        OBConversion::RegisterFormat("QCHEM",this);
+        OBConversion::RegisterFormat("qcout",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "QChem\n \
+            "QChem Output\n \
             No comments yet\n \
             ";
     };

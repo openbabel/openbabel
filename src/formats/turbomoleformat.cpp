@@ -27,7 +27,7 @@ public:
     //Register this format type ID
     TurbomoleFormat()
     {
-        OBConversion::RegisterFormat("TURBOMOLE",this);
+        OBConversion::RegisterFormat("tmol",this);
     }
 
     virtual const char* Description() //required

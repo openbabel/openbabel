@@ -354,6 +354,6 @@ void help()
 	OBFormat* pFormat;
 	const char* str=NULL;
 	while(OBConversion::GetNextFormat(pos,str,pFormat))
-		cout << str << endl;
+	  cout << "  " << str << endl;
 	cout << "\nSee further specific info and options using -H<format-type>, e.g. -Hcml" << endl;
 }

@@ -115,9 +115,10 @@ public:
 	virtual const std::type_info& GetType();
  	
 	/// @brief Web address where the format is defined.
+	virtual const char* SpecificationURL() { return ""; }
 
-	/// (In case somebody wants to do something fancy.)
-	virtual const char* SpecificationURL();
+	/// @brief Chemical MIME type associated with this file type (if any)
+	virtual const char* GetMIMEType() { return ""; }
 
 /// @brief Decribes the capabilities of the format (Read only etc.)
    

@@ -31,7 +31,8 @@ public:
     //Register this format type ID
     PDBFormat()
     {
-        OBConversion::RegisterFormat("PDB",this);
+        OBConversion::RegisterFormat("pdb",this);
+        OBConversion::RegisterFormat("ent",this);
     }
 
     virtual const char* Description() //required
@@ -44,6 +45,10 @@ public:
 
     virtual const char* SpecificationURL(){return
             "http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html";};
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-pdb"; };
+
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()

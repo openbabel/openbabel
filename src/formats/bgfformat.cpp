@@ -26,7 +26,7 @@ public:
     //Register this format type ID
     BGFFormat()
     {
-        OBConversion::RegisterFormat("BGF",this);
+        OBConversion::RegisterFormat("bgf",this);
     }
 
     virtual const char* Description() //required

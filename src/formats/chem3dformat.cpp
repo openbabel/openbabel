@@ -32,7 +32,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "Chem3D1 format\n \
+            "Chem3D Cartesian 1 format\n \
             No comments yet\n \
             ";
     };
@@ -132,7 +132,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "Chem3D2 format\n \
+            "Chem3D Cartesian2 format\n \
             No comments yet\n \
             ";
     };

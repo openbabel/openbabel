@@ -26,13 +26,13 @@ public:
     //Register this format type ID
     XYZFormat()
     {
-        OBConversion::RegisterFormat("XYZ",this);
+        OBConversion::RegisterFormat("xyz",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "XMOL Cartesian coordinates\n \
+            "XYZ Cartesian coordinates format\n \
             No comments yet\n \
             ";
     };

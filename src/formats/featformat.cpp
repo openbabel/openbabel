@@ -32,7 +32,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "FEAT format\n \
+            "Feature format\n \
             No comments yet\n \
             ";
     };
