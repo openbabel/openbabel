@@ -58,7 +58,7 @@ void OBBond::SetLength(OBAtom *fixed, float length)
 {
   unsigned int i;
   OBMol *mol = (OBMol*)fixed->GetParent();
-  Vector v1,v2,v3,v4,v5;
+  vector3 v1,v2,v3,v4,v5;
   vector<int> children;
 
   int a = fixed->GetIdx();

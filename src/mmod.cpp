@@ -54,7 +54,7 @@ bool ReadMacroModel(istream &ifs, OBMol &mol,const char *defaultTitle)
   // Get Type Bonds, BondOrder, X, Y, Z
   
   float x,y,z;
-  Vector v;
+  vector3 v;
   char temp_type[10];
   int i,j;
   float charge;

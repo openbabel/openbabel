@@ -29,7 +29,7 @@ GNU General Public License for more details.
 #include "base.h"
 #include "data.h"
 #include "chains.h"
-#include "Vector.h"
+#include "math/vector3.h"
 #include "bitvec.h"
 #include "ring.h"
 #include "generic.h"
@@ -308,7 +308,7 @@ protected:
   unsigned short int            _flags;
   float                         _pcharge;
   float                       **_c;
-  Vector                        _v;
+  vector3                        _v;
   OBResidue                    *_residue;
 //  OBMol                        *_parent;
   //vector<OBBond*>               _bond;
@@ -335,7 +335,7 @@ public:
     void SetType(std::string &type)               {strcpy(_type,type.c_str());}
     void SetPartialCharge(float pcharge)     {_pcharge = pcharge;}
     void SetVector();
-    void SetVector(Vector &v);                
+    void SetVector(vector3 &v);                
     void SetVector(const float,const float,const float);
     void SetResidue(OBResidue *res)          {_residue=res;}
 //    void SetParent(OBMol *ptr)               {_parent=ptr;}
@@ -380,10 +380,10 @@ public:
       {if (_c) return((*_c)[_cidx+2]); else return _v.z();}
     float     *GetCoordinate()    {return(&(*_c)[_cidx]);}
     float      GetPartialCharge();
-    Vector     &GetVector();
+    vector3     &GetVector();
     OBResidue *GetResidue();
 //    OBMol     *GetParent()        {return((OBMol*)_parent);}
-    bool       GetNewBondVector(Vector&,float);
+    bool       GetNewBondVector(vector3&,float);
     OBBond    *GetBond(OBAtom *);
     OBAtom    *GetNextAtom();
 
@@ -797,8 +797,8 @@ public:
     void RenumberAtoms(std::vector<OBNodeBase*>&);
     void ToInertialFrame(int,float*);
     void ToInertialFrame();
-    void Translate(const Vector &v);
-    void Translate(const Vector &v,int);
+    void Translate(const vector3 &v);
+    void Translate(const vector3 &v,int);
     void Rotate(const float u[3][3]);
     void Rotate(const float m[9]);
     void Rotate(const float m[9],int nconf);
@@ -814,7 +814,7 @@ public:
     bool AddPolarHydrogens();
     bool StripSalts();
     bool CorrectForPH();
-    Vector Center(int nconf);
+    vector3 Center(int nconf);
 
     //***molecule utilities and perception methods***
     void FindSSSR();
@@ -824,7 +824,7 @@ public:
     void FindChildren(std::vector<OBAtom*>&,OBAtom*,OBAtom*);
     void FindLargestFragment(OBBitVec &);
     void ContigFragList(std::vector<std::vector<int> >&);
-    void Align(OBAtom*,OBAtom*,Vector&,Vector&);
+    void Align(OBAtom*,OBAtom*,vector3&,vector3&);
     void ConnectTheDots();
     void PerceiveBondOrders();
     void FindTorsions();

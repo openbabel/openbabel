@@ -40,7 +40,7 @@ bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
   mol.ReserveAtoms(natoms);
   float x,y,z;
   char type[5];
-  Vector v;
+  vector3 v;
   OBAtom atom;
   int charge;
 

@@ -14,6 +14,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "binary.h"
 #include "phmodel.h"
+#include "math/matrix3x3.h"
 
 using namespace std;
 
@@ -1347,7 +1348,7 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
   IncrementMod();
 
   int m,n;
-  Vector v;
+  vector3 v;
   vector<pair<OBAtom*,int> >::iterator k;
   float hbrad = etab.CorrectedBondRad(1,0);
 
@@ -1442,7 +1443,7 @@ bool OBMol::AddHydrogens(OBAtom *atom)
   IncrementMod();
 
   int m,n;
-  Vector v;
+  vector3 v;
   vector<pair<OBAtom*,int> >::iterator k;
   float hbrad = etab.CorrectedBondRad(1,0);
 
@@ -2012,7 +2013,7 @@ bool OBMol::DeleteBond(OBBond *bond)
   return(true);
 }
 
-void OBMol::Align(OBAtom *a1,OBAtom *a2,Vector &p1,Vector &p2)
+void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)
   // aligns atom a on p1 and atom b along p1->p2 vector
 {
   vector<int> children;
@@ -2022,18 +2023,18 @@ void OBMol::Align(OBAtom *a1,OBAtom *a2,Vector &p1,Vector &p2)
   children.push_back(a2->GetIdx());
 
   //find the rotation vector and angle
-  Vector v1,v2,v3;
+  vector3 v1,v2,v3;
   v1 = p2 - p1;
   v2 = a2->GetVector() - a1->GetVector();
   v3 = cross(v1,v2);
-  float angle = VectorAngle(v1,v2);
+  float angle = vectorAngle(v1,v2);
 
   //find the rotation matrix
-  Matrix3x3 m;
+  matrix3x3 m;
   m.RotAboutAxisByAngle(v3,angle);
 
   //rotate atoms
-  Vector v;
+  vector3 v;
   OBAtom *atom;
   vector<int>::iterator i;
   for (i = children.begin();i != children.end();i++)
@@ -2215,7 +2216,7 @@ void OBMol::ToInertialFrame(int conf,float *rmat)
   float v[3][3];
   jacobi3x3(m,v);
 
-  Vector v1,v2,v3,r1,r2;
+  vector3 v1,v2,v3,r1,r2;
   r1.Set(v[0][0],v[1][0],v[2][0]);
   r2.Set(v[0][1],v[1][1],v[2][1]);
   
@@ -2696,7 +2697,7 @@ void OBMol::ConnectTheDots(void)
 void OBMol::PerceiveBondOrders()
 {
   OBAtom *atom, *b, *c;
-  Vector v1, v2;
+  vector3 v1, v2;
   int angles;
   float degrees;
   vector<OBNodeBase*>::iterator i;
@@ -2714,7 +2715,7 @@ void OBMol::PerceiveBondOrders()
 	    {
 	      v1 = b->GetVector() - atom->GetVector();
 	      v2 = c->GetVector() - atom->GetVector();	
-	      degrees += VectorAngle(v1, v2);
+	      degrees += vectorAngle(v1, v2);
 	      angles++;
 	    }
 	}
@@ -2924,7 +2925,7 @@ void OBMol::Center()
 
 }
 
-Vector OBMol::Center(int nconf)
+vector3 OBMol::Center(int nconf)
 {
   SetConformer(nconf);
 
@@ -2939,8 +2940,8 @@ Vector OBMol::Center(int nconf)
   y /= (float)NumAtoms();
   z /= (float)NumAtoms();
   
-  Vector vtmp;
-  Vector v(x,y,z);
+  vector3 vtmp;
+  vector3 v(x,y,z);
 
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
@@ -2952,13 +2953,13 @@ Vector OBMol::Center(int nconf)
 }
 
 
-void OBMol::Translate(const Vector &v)
+void OBMol::Translate(const vector3 &v)
 {
   for (int i = 0;i < NumConformers();i++) 
     Translate(v,i);
 }
 
-void OBMol::Translate(const Vector &v,int nconf)
+void OBMol::Translate(const vector3 &v,int nconf)
 {
   int i,size;
   float x,y,z;

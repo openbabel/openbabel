@@ -1529,7 +1529,7 @@ bool processAtomArrayChild() {
 
 // adds builtin attributes for atom
 bool processAtomBuiltin() {
-	Vector v;
+	vector3 v;
 
 
 	string builtin = getAttribute(currentAtts, "builtin");
@@ -1759,7 +1759,7 @@ bool endAtomArray() {
 				atom.SetAtomicNum(etab.GetAtomicNum((char*)elementTypeVector[i].c_str()));
 			}
 			if (formalChargeVector.size() > 0) atom.SetFormalCharge(formalChargeVector[i]);
-			Vector v;
+			vector3 v;
 			if (x2Vector.size() > 0) v.SetX(x2Vector[i]);
 			if (y2Vector.size() > 0) v.SetY(y2Vector[i]);
 			if (x3Vector.size() > 0) v.SetX(x3Vector[i]);
@@ -2125,7 +2125,7 @@ bool startCrystal(vector <pair<string,string> > &atts) {
 
 // adds builtin attributes for cryst
 bool processCrystalBuiltin() {
-	Vector v;
+	vector3 v;
 
 	string builtin = getAttribute(currentAtts, "builtin");
 	if (builtin == "") {

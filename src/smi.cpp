@@ -528,7 +528,7 @@ bool OBMol2Smi::GetChiralStereo(OBSmiNode *node,char *stereo)
   //give peudo Z coords if mol is 2D
   if (!mol->Has3D())
     {
-      Vector v,vz(0.0,0.0,1.0);
+      vector3 v,vz(0.0,0.0,1.0);
       is2D = true;
 	  OBAtom *nbr;
       OBBond *bond;
@@ -574,7 +574,7 @@ bool OBMol2Smi::GetChiralStereo(OBSmiNode *node,char *stereo)
 	}
       else  //implicit hydrogen
 	{
-	  Vector v;
+	  vector3 v;
 	  b->GetNewBondVector(v,1.0);
 	  hydrogen.SetVector(v);
 	  c = &hydrogen;
@@ -617,7 +617,7 @@ bool OBMol2Smi::GetChiralStereo(OBSmiNode *node,char *stereo)
   //re-zero psuedo-coords
   if (is2D)
     {
-      Vector v;
+      vector3 v;
       OBAtom *atom;
       vector<OBNodeBase*>::iterator k;
       for (atom = mol->BeginAtom(k);atom;atom = mol->NextAtom(k))

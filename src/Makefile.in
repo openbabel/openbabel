@@ -37,7 +37,7 @@ DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt \
 DATAINCS      = aromatic.h atomtyp.h element.h extable.h \
 	        phmodeldata.h resdata.h types.h
 
-HDRS	      = Vector.h aromatic.h atomtyp.h base.h binary.h \
+HDRS	      = math/vector3.h math/matrix3x3.h aromatic.h atomtyp.h base.h binary.h \
 		bitgrid.h bitvec.h chiral.h chains.h cwrap.h \
 		data.h element.h extable.h fileformat.h grid.h \
 		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
@@ -50,7 +50,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		chains.o data.o molvector.o matrix.o\
 		chiral.o grid.o mdl.o mol.o mol2.o molchrg.o \
 		obutil.o parsmi.o parsmart.o patty.o \
-		ring.o rotor.o smi.o tokenst.o Vector.o pdb.o ccc.o \
+		ring.o rotor.o smi.o tokenst.o math/vector3.o math/matrix3x3.o pdb.o ccc.o \
 		mmod.o rand.o box.o balst.o bgf.o cacao.o cache.o chdrw.o \
 		csr.o cssr.o feat.o fh.o gromos96.o cwrap.o \
 		ghemical.o xyz.o fileformat.o gamess.o hin.o \

@@ -34,7 +34,7 @@ bool ReadCCC(istream &ifs,OBMol &mol,const char *title)
   int end,order;
   float x,y,z;
   OBAtom atom;
-  Vector v;
+  vector3 v;
   vector<string> vs;
   char element[3];
   element[2] = '\0';

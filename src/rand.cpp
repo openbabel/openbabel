@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #include <stdio.h>
 #include <math.h>
 #include "mol.h"
-#include "Vector.h"
+#include "math/vector3.h"
 #include "obutil.h"
 
 #ifndef True

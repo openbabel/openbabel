@@ -164,7 +164,7 @@ void BitGrid::SetBits(OBAtom *atom)
 
   if (fuzzy)
     {
-      Vector grid_pt, mol_pt = atom->GetVector();
+      vector3 grid_pt, mol_pt = atom->GetVector();
       for ( i = startX ; i <= endX ; i++ )
 	{
 	  grid_pt.SetX(((float)i * (float)spacing) + xmin);

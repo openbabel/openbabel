@@ -109,11 +109,11 @@ public:
   void GetMax(float *a) {a[0]=_xmax;a[1]=_ymax;a[2]=_zmax;}
   void GetDim(int *a)   {a[0]=_xdim;a[1]=_ydim;a[2]=_zdim;}
   void GetSpacing(float &s) {s=_spacing;}
-  Vector GetMidpointVector() 
-    {Vector v; v.Set(_midx,_midy,_midz); return(v);}
+  vector3 GetMidpointVector() 
+    {vector3 v; v.Set(_midx,_midy,_midz); return(v);}
   float *GetVals() {return(_val);}
   void SetVals(float *ptr) {_val = ptr;}
-  Vector Center() { return Vector(_midx,_midy,_midz); } //added by jjc
+  vector3 Center() { return vector3(_midx,_midy,_midz); } //added by jjc
   friend std::ostream& operator<< ( std::ostream&, const OBFloatGrid& ) ;
   friend std::istream& operator>> ( std::istream&,OBFloatGrid& ) ;
 
@@ -168,8 +168,8 @@ public:
   virtual void   Config(std::string) {}
   virtual bool   Read(std::string)       { return false; }
   virtual bool   Write(std::string)      { return false; }
-  virtual Vector Center()           { return VZero; }
-  virtual Vector CenterMol(OBMol &) { return VZero; }
+  virtual vector3 Center()           { return VZero; }
+  virtual vector3 CenterMol(OBMol &) { return VZero; }
 };
 
 } // end namespace OpenBabel

@@ -149,7 +149,7 @@ void OBRotamerList::AddRotamer(float *c)
 {
   int idx,size;
   float angle,res=255.0f/360.0f;
-  Vector v1,v2,v3,v4;
+  vector3 v1,v2,v3,v4;
 
   unsigned char *rot = new unsigned char [_vrotor.size()+1];
   rot[0] = (char) 0;
@@ -788,7 +788,7 @@ bool ReadBinary(unsigned char *buf, OBMol &mol, int size)
 
   if (nconfs == 1 && !rotmrs) //only a single conformer
     {
-      Vector v;
+      vector3 v;
       int *tmpi = new int [natoms];
       memcpy((char*)tmpi,&buf[idx],sizeof(int)*natoms); idx += (int)sizeof(int)*natoms;
       float coord[3];

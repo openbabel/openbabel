@@ -14,7 +14,7 @@ GNU General Public License for more details.
 #include <math.h>
 
 #include "mol.h"
-#include "Vector.h"
+#include "math/matrix3x3.h"
 
 #ifndef true
 #define true 1
@@ -28,146 +28,18 @@ using namespace std;
 
 namespace OpenBabel {
 
-  void Vector::randomUnitVector(OBRandom *obRandP)
-  {
-    OBRandom *ptr;
-    if (!obRandP) {
-      ptr = new OBRandom(true);
-      ptr->TimeSeed();
-    } else
-      ptr = obRandP;
-    
-    // obtain a random vector with 0.001 <= length^2 <= 1.0, normalize
-    // the vector to obtain a random vector of length 1.0.
-    float l;
-    do {
-      this->Set(ptr->NextFloat()-0.5f, ptr->NextFloat()-0.5f, ptr->NextFloat()-0.5f);
-      l = length_2();
-    } while ( (l > 1.0) || (l < 0.0001) );
-    this->normalize();
-    
-    if (!obRandP) 
-      delete ptr;
-  }
 
-  ostream& operator<< ( ostream& co, const Vector& v )
-  {
-    co << "< " << v._vx << ", " << v._vy << ", " << v._vz << " >" ;
-    return co ;
-  }
-  
-  int operator== ( const Vector& v1, const Vector& v2 ) 
-  {
-    if ( ( v1._vx == v2._vx ) &&
-	 ( v1._vy == v2._vy ) &&
-	 ( v1._vz == v2._vz ) )
-      return ( true ) ;
-    else
-      return ( false ) ;
-  }
-
-  int operator!= ( const Vector& v1, const Vector& v2 ) 
-  {
-    if ( ( v1._vx != v2._vx ) ||
-	 ( v1._vy != v2._vy ) ||
-	 ( v1._vz != v2._vz ) )
-      return ( true ) ;
-    else
-      return ( false ) ;
-  }
-
-  Vector& Vector :: normalize ()  
-  {
-    float l = length ();
-    
-    if (l == 0) 
-      return(*this);
-    
-    _vx = _vx / l ;
-    _vy = _vy / l ;
-    _vz = _vz / l ;
-    
-    return(*this);
-  }
-  
-  float dot ( const Vector& v1, const Vector& v2 ) 
-  {
-    return v1._vx*v2._vx + v1._vy*v2._vy + v1._vz*v2._vz ;
-  }
-  
-  Vector cross ( const Vector& v1, const Vector& v2 ) 
-  {
-    Vector vv ;
-    
-    vv._vx =   v1._vy*v2._vz - v1._vz*v2._vy ;
-    vv._vy = - v1._vx*v2._vz + v1._vz*v2._vx ;
-    vv._vz =   v1._vx*v2._vy - v1._vy*v2._vx ;
-    
-    return ( vv ) ;
-  }
-
-
-  // ***angle***
-
-  float VectorAngle ( const Vector& v1, const Vector& v2 ) 
-  {
-    float mag;
-    float dp;
-
-    mag = v1.length() * v2.length();
-    dp = dot(v1,v2)/mag;
-
-    if (dp < -0.999999)
-      dp = -0.9999999f;
-
-    if (dp > 0.9999999)
-      dp = 0.9999999f;
-
-    if (dp > 1.0)
-      dp = 1.0f;
-
-    return((RAD_TO_DEG * acos(dp)));
-  }
-
-  float CalcTorsionAngle(const Vector &a, const Vector &b,
-			 const Vector &c, const Vector &d)
-  {
-    float torsion;
-    Vector b1,b2,b3,c1,c2,c3;
-  
-    b1 = a - b;
-    b2 = b - c;
-    b3 = c - d;
-    
-    c1 = cross(b1,b2);
-    c2 = cross(b2,b3);
-    c3 = cross(c1,c2);
-  
-    if (c1.length() * c2.length() < 0.001)
-      torsion = 0.0;
-    else {
-      torsion = VectorAngle(c1,c2);
-      if (dot(b2,c3) > 0.0)
-	torsion *= -1.0;
-    }
-    
-    return(torsion);
-  }
-
-//MATRIX ROUTINES
-
-
-void Matrix3x3::randomRotation(OBRandom &rnd)
+void matrix3x3::randomRotation(OBRandom &rnd)
 { 
   float rotAngle;
-  Vector v1;
+  vector3 v1;
  
   v1.randomUnitVector(&rnd);
   rotAngle = 360.0f * rnd.NextFloat();
   this->RotAboutAxisByAngle(v1,rotAngle);
 }
 
-void Matrix3x3::SetupRotMat(float phi,float theta,float psi)
+void matrix3x3::SetupRotMat(float phi,float theta,float psi)
 {
   float p  = phi * DEG_TO_RAD;
   float h  = theta * DEG_TO_RAD;
@@ -194,14 +66,14 @@ void Matrix3x3::SetupRotMat(float phi,float theta,float psi)
 #define y vtmp.y()
 #define z vtmp.z()
 
-void Matrix3x3::RotAboutAxisByAngle(const Vector &v,const float angle)
+void matrix3x3::RotAboutAxisByAngle(const vector3 &v,const float angle)
 {
   float theta = angle*DEG_TO_RAD;
   float s = sin(theta);
   float c = cos(theta);
   float t = 1 - c;
   
-  Vector vtmp = v;
+  vector3 vtmp = v;
   vtmp.normalize();
   
   ele[0][0] = t*x*x + c;
@@ -221,7 +93,7 @@ void Matrix3x3::RotAboutAxisByAngle(const Vector &v,const float angle)
 #undef y
 #undef z
 
-void Matrix3x3::RotateCoords(float *c,int noatoms)
+void matrix3x3::RotateCoords(float *c,int noatoms)
 {
   for (int i = 0; i < noatoms; i++) {
     int idx = i*3;
@@ -235,9 +107,9 @@ void Matrix3x3::RotateCoords(float *c,int noatoms)
 }
 
 /* @removed@ misleading operation; matrix multiplication is not commutitative
-Vector operator *(const Vector &v,const Matrix3x3 &m)
+vector3 operator *(const vector3 &v,const matrix3x3 &m)
 {
-  Vector vv;
+  vector3 vv;
 
   vv._vx = v._vx*m.ele[0][0] + v._vy*m.ele[0][1] + v._vz*m.ele[0][2];
   vv._vy = v._vx*m.ele[1][0] + v._vy*m.ele[1][1] + v._vz*m.ele[1][2];
@@ -247,9 +119,9 @@ Vector operator *(const Vector &v,const Matrix3x3 &m)
 }
 */
 
-Vector operator *(const Matrix3x3 &m,const Vector &v)
+vector3 operator *(const matrix3x3 &m,const vector3 &v)
 {
-  Vector vv;
+  vector3 vv;
 
   vv._vx = v._vx*m.ele[0][0] + v._vy*m.ele[0][1] + v._vz*m.ele[0][2];
   vv._vy = v._vx*m.ele[1][0] + v._vy*m.ele[1][1] + v._vz*m.ele[1][2];
@@ -258,9 +130,9 @@ Vector operator *(const Matrix3x3 &m,const Vector &v)
   return(vv);
 }
 
-Vector &Vector::operator *= (const Matrix3x3 &m)
+vector3 &vector3::operator *= (const matrix3x3 &m)
 {
-  Vector vv;
+  vector3 vv;
   
   vv.SetX(_vx*m.Get(0,0) + _vy*m.Get(0,1) + _vz*m.Get(0,2));
   vv.SetY(_vx*m.Get(1,0) + _vy*m.Get(1,1) + _vz*m.Get(1,2));
@@ -272,7 +144,7 @@ Vector &Vector::operator *= (const Matrix3x3 &m)
   return(*this);
 }
 
-Matrix3x3 Matrix3x3::invert()
+matrix3x3 matrix3x3::invert()
 {
   float t[3][3];
   float det;
@@ -301,7 +173,7 @@ Matrix3x3 Matrix3x3::invert()
   return(*this);
 }
 
-float Matrix3x3::determinant()
+float matrix3x3::determinant()
 {
   float x,y,z;
 
@@ -312,7 +184,7 @@ float Matrix3x3::determinant()
   return(x + y + z);
 }
 
-Matrix3x3 &Matrix3x3::operator/=(const float &c)
+matrix3x3 &matrix3x3::operator/=(const float &c)
 {
   register int i,j;
 
@@ -327,7 +199,7 @@ Matrix3x3 &Matrix3x3::operator/=(const float &c)
 #define SQUARE(x) ((x)*(x))
 #endif
 
-void Matrix3x3::FillOrth(float Alpha,float Beta, float Gamma, 
+void matrix3x3::FillOrth(float Alpha,float Beta, float Gamma, 
 			 float A, float B, float C)
 {
   float V;
@@ -351,7 +223,7 @@ void Matrix3x3::FillOrth(float Alpha,float Beta, float Gamma,
   ele[2][2] = C*V;
 }
 
-ostream& operator<< ( ostream& co, const Matrix3x3& m )
+ostream& operator<< ( ostream& co, const matrix3x3& m )
 
 {
   co << "[ "
@@ -381,24 +253,5 @@ ostream& operator<< ( ostream& co, const Matrix3x3& m )
   return co ;
 }
 
-void Vector::createOrthoVector(Vector &res) const
-{
-    Vector cO;
-
-    if ((this->x() == 0.0)&&(this->y() == 0.0))
-    {
-        if (this->z() == 0.0){
-            cerr << "makeorthovec zero vector" << endl;
-            exit(0);
-        }
-        cO.SetX(1.0);
-    }
-    else
-    {
-        cO.SetZ(1.0);
-    }
-    res= cross(cO,*this);
-    res.normalize(); 
 }
 
-}          

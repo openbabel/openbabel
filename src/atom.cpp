@@ -16,6 +16,8 @@ GNU General Public License for more details.
 #include "molchrg.h"
 #include "phmodel.h"
 
+#include "math/matrix3x3.h"
+
 using namespace std;
 
 namespace OpenBabel {
@@ -221,7 +223,7 @@ bool OBAtom::IsNonPolarHydrogen()
   return(false);
 }
 
-Vector &OBAtom::GetVector()
+vector3 &OBAtom::GetVector()
 {
   if (!_c) return(_v);
 
@@ -235,7 +237,7 @@ void OBAtom::SetVector()
   if (_c) _v.Set((*_c)[_cidx],(*_c)[_cidx+1],(*_c)[_cidx+2]);
 }
 
-void OBAtom::SetVector(Vector &v)
+void OBAtom::SetVector(vector3 &v)
 {
   if (!_c) _v = v;
   else
@@ -708,7 +710,7 @@ OBAtom *OBAtom::NextNbrAtom(vector<OBEdgeBase*>::iterator &i)
 }
 
 
-bool OBAtom::GetNewBondVector(Vector &v,float length)
+bool OBAtom::GetNewBondVector(vector3 &v,float length)
 {
   // ***experimental code***
 
@@ -725,7 +727,7 @@ bool OBAtom::GetNewBondVector(Vector &v,float length)
 
   if (GetValence() == 1)
     {
-      Vector vtmp,v1,v2;
+      vector3 vtmp,v1,v2;
       atom = BeginNbrAtom(i);
       if (atom)
 	vtmp = GetVector() - atom->GetVector();
@@ -752,7 +754,7 @@ bool OBAtom::GetNewBondVector(Vector &v,float length)
 	  else
 	      v1 = cross(vtmp,v2);
 
-	  Matrix3x3 m;
+	  matrix3x3 m;
 	  m.RotAboutAxisByAngle(v1,60.0);
 	  v = m*vtmp;
 	  v.normalize();
@@ -763,7 +765,7 @@ bool OBAtom::GetNewBondVector(Vector &v,float length)
 	  v1 = cross(vtmp,VX);
 	  v2 = cross(vtmp,VY);
 	  if (v1.length() < v2.length()) v1 = v2;
-	  Matrix3x3 m;
+	  matrix3x3 m;
 	  m.RotAboutAxisByAngle(v1,70.5);
 	  v = m*vtmp;
 	  v.normalize();
@@ -777,7 +779,7 @@ bool OBAtom::GetNewBondVector(Vector &v,float length)
 
   if (GetValence() == 2)
     {
-      Vector v1,v2,vtmp,vsum,vnorm;
+      vector3 v1,v2,vtmp,vsum,vnorm;
       atom = BeginNbrAtom(i);if (!atom) return(false);
       v1 = GetVector() - atom->GetVector();
       atom = NextNbrAtom(i); if (!atom) return(false);
@@ -815,7 +817,7 @@ bool OBAtom::GetNewBondVector(Vector &v,float length)
 
   if (GetValence() == 3)
     {
-      Vector vtmp,vsum;
+      vector3 vtmp,vsum;
       OBAtom *atom;
       vector<OBEdgeBase*>::iterator i;
       for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
@@ -862,7 +864,7 @@ bool OBAtom::HtoMethyl()
 
   OBAtom *hatom;
   br2 = etab.CorrectedBondRad(1,0);
-  Vector v;
+  vector3 v;
   
   for (int j = 0;j < 3;j++)
     {
@@ -879,13 +881,13 @@ bool OBAtom::HtoMethyl()
   return(true);
 }
 
-static void ApplyRotMatToBond(OBMol &mol,Matrix3x3 &m,OBAtom *a1,OBAtom *a2)
+static void ApplyRotMatToBond(OBMol &mol,matrix3x3 &m,OBAtom *a1,OBAtom *a2)
 {
   vector<int> children;
   mol.FindChildren(children,a1->GetIdx(),a2->GetIdx());
   children.push_back(a2->GetIdx());
 
-  Vector v;
+  vector3 v;
   vector<int>::iterator i;
   for (i = children.begin();i != children.end();i++)
     {
@@ -941,8 +943,8 @@ bool OBAtom::SetHybAndGeom(int hyb)
   if (GetValence() > 1)
     {
       float angle;
-      Matrix3x3 m;
-      Vector v1,v2,v3,v4,n,s;
+      matrix3x3 m;
+      vector3 v1,v2,v3,v4,n,s;
       OBAtom *r1,*r2,*r3,*a1,*a2,*a3,*a4;
       r1 = r2 = r3 = a1 = a2 = a3 = a4 = NULL;
 
@@ -969,7 +971,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
 	      v1 = a1->GetVector()-GetVector();v1.normalize();
 	      v2 = a2->GetVector()-GetVector();v2.normalize();
 	      n = cross(v1,v2);
-	      angle = VectorAngle(v1,v2)-targetAngle;
+	      angle = vectorAngle(v1,v2)-targetAngle;
 	      m.RotAboutAxisByAngle(n,-angle);
 	      ApplyRotMatToBond(*mol,m,this,a1);
 	    }
@@ -983,7 +985,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
 	      v3 = a1->GetVector()-GetVector();
 	      s = v1+v2; s.normalize(); s *= -1.0f;
 	      n = cross(s,v3);
-	      angle = VectorAngle(s,v3);
+	      angle = vectorAngle(s,v3);
 	      m.RotAboutAxisByAngle(n,angle);
 	      ApplyRotMatToBond(*mol,m,this,a1);
 	    }
@@ -994,7 +996,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
 		  v1 = a1->GetVector()-GetVector();v1.normalize();
 		  v2 = a2->GetVector()-GetVector();v2.normalize();
 		  n = cross(v1,v2);
-		  angle = VectorAngle(v1,v2)-targetAngle;
+		  angle = vectorAngle(v1,v2)-targetAngle;
 		  m.RotAboutAxisByAngle(n,-angle);
 		  ApplyRotMatToBond(*mol,m,this,a1);
 		}
@@ -1005,7 +1007,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
 		  v3 = a3->GetVector()-GetVector();
 		  s = v1+v2; s.normalize(); s *= -1.0f;
 		  n = cross(s,v3);
-		  angle = VectorAngle(s,v3);
+		  angle = vectorAngle(s,v3);
 		  m.RotAboutAxisByAngle(n,angle);
 		  ApplyRotMatToBond(*mol,m,this,a3);
 		}
@@ -1021,7 +1023,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
 	      v4 = a1->GetVector()-GetVector();
 	      s = v1 + v2 + v3; s *= -1.0f; s.normalize();
 	      n = cross(s,v4);
-	      angle = VectorAngle(s,v4);
+	      angle = vectorAngle(s,v4);
 	      m.RotAboutAxisByAngle(n,angle);
 	      ApplyRotMatToBond(*mol,m,this,a1);
 	    }
@@ -1036,7 +1038,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
 	      n *= 0.816496581f; //sqrt(2/3)
 	      s += n; s.normalize();
 	      n = cross(s,v3);
-	      angle = VectorAngle(s,v3);
+	      angle = vectorAngle(s,v3);
 	      m.RotAboutAxisByAngle(n,angle);
 	      ApplyRotMatToBond(*mol,m,this,a1);
 
@@ -1048,7 +1050,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
 		  v4 = a2->GetVector()-GetVector();
 		  s = v1 + v2 + v3; s *= -1.0f; s.normalize();
 		  n = cross(s,v4);
-		  angle = VectorAngle(s,v4);
+		  angle = vectorAngle(s,v4);
 		  m.RotAboutAxisByAngle(n,angle);
 		  ApplyRotMatToBond(*mol,m,this,a2);
 		}
@@ -1060,7 +1062,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
 		  v1 = a1->GetVector()-GetVector();v1.normalize();
 		  v2 = a2->GetVector()-GetVector();v2.normalize();
 		  n = cross(v1,v2);
-		  angle = VectorAngle(v1,v2)-targetAngle;
+		  angle = vectorAngle(v1,v2)-targetAngle;
 		  m.RotAboutAxisByAngle(n,-angle);
 		  ApplyRotMatToBond(*mol,m,this,a1);
 		}
@@ -1075,7 +1077,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
 		  n *= 0.816496581f; //sqrt(2/3)
 		  s += n; s.normalize();
 		  n = cross(s,v3);
-		  angle = VectorAngle(s,v3);
+		  angle = vectorAngle(s,v3);
 		  m.RotAboutAxisByAngle(n,angle);
 		  ApplyRotMatToBond(*mol,m,this,a3);
 		}
@@ -1119,7 +1121,7 @@ bool OBAtom::SetHybAndGeom(int hyb)
   if (hcount)
     {
       int k;
-      Vector v;
+      vector3 v;
       OBAtom *atom;
       float brsum = etab.CorrectedBondRad(1,0)+
 	etab.CorrectedBondRad(GetAtomicNum(),GetHyb());

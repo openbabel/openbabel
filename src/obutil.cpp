@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "Vector.h"
+#include "math/vector3.h"
 #include "obutil.h"
 #include "obifstream.h"
 
@@ -67,7 +67,7 @@ string NewExtension(string &src,char *ext)
   return(dst);
 }
 
-Vector center_coords(float *c,int size)
+vector3 center_coords(float *c,int size)
 {
   int i;
   float x=0,y=0,z=0;
@@ -84,7 +84,7 @@ Vector center_coords(float *c,int size)
       c[i*3+1] -= y;
       c[i*3+2] -= z;
     }
-  Vector v(x,y,z);
+  vector3 v(x,y,z);
   return(v);
 }
 
@@ -346,7 +346,7 @@ bool SetOutputType(OBMol &mol,string &fname)
 
 void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
-  Vector n,nn,v1,v2,v3;
+  vector3 n,nn,v1,v2,v3;
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
   int index;
@@ -436,7 +436,7 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 
   //fill in geometries
   unsigned int k;
-  Vector v1,v2;
+  vector3 v1,v2;
   OBAtom *a,*b,*c;
   for (k = 2;k <= mol.NumAtoms();k++)
     {
@@ -453,7 +453,7 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
       v1 = atom->GetVector() - a->GetVector();
       v2 = b->GetVector()    - a->GetVector(); 
       vic[k]->_dst = v1.length();
-      vic[k]->_ang = VectorAngle(v1,v2);
+      vic[k]->_ang = vectorAngle(v1,v2);
 
       if (k == 3) continue;
       vic[k]->_tor = CalcTorsionAngle(atom->GetVector(),
@@ -476,7 +476,7 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 	  {
 	    v1 = atom->GetVector() - a->GetVector();
 	    v2 = b->GetVector() - a->GetVector();
-	    ang = fabs(VectorAngle(v1,v2));
+	    ang = fabs(vectorAngle(v1,v2));
 	    if (ang < 5.0f || ang > 175.0f) continue;
 	    
 	    for (c = mol.BeginAtom(m);c && c->GetIdx() < atom->GetIdx();c = mol.NextAtom(m))
@@ -488,7 +488,7 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 	    vic[k]->_b = b;
 	    vic[k]->_c = c;
 	    vic[k]->_dst = v1.length();
-	    vic[k]->_ang = VectorAngle(v1,v2);
+	    vic[k]->_ang = vectorAngle(v1,v2);
 	    vic[k]->_tor = CalcTorsionAngle(atom->GetVector(),
 					    a->GetVector(),
 					    b->GetVector(),

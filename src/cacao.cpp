@@ -12,6 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
+#include "math/matrix3x3.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ bool ReadCaccrt(istream &ifs,OBMol &mol,const char *title)
   char buffer[BUFF_SIZE];
   int natoms;
   float A,B,C,Alpha,Beta,Gamma;
-  Matrix3x3 m;
+  matrix3x3 m;
   
   ifs.getline(buffer,BUFF_SIZE); mol.SetTitle(buffer);
   ifs.getline(buffer,BUFF_SIZE); sscanf(buffer,"%d",&natoms);
@@ -49,7 +50,7 @@ bool ReadCaccrt(istream &ifs,OBMol &mol,const char *title)
   float x,y,z;
   char type[10];
   OBAtom *atom;
-  Vector v;
+  vector3 v;
 
   for (i = 1; i <= natoms;i++)
     {
@@ -104,7 +105,7 @@ static void SetHilderbrandt(OBMol&,vector<OBInternalCoord*>&);
 bool WriteCacaoInternal(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
-  Vector v;
+  vector3 v;
   char tmptype[10],buffer[BUFF_SIZE];
 
   if (mol.Empty()) return(false);
@@ -195,14 +196,14 @@ void SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
     }
 
   OBAtom *a,*b,*c;
-  Vector v1,v2;
+  vector3 v1,v2;
   for (i = 2;i <= mol.NumAtoms();i++)
     {
       atom = mol.GetAtom(i);
       a = vit[i]->_a; b = vit[i]->_b; c = vit[i]->_c;
       v1 = atom->GetVector() - a->GetVector();
       v2 = b->GetVector() - a->GetVector();
-      vit[i]->_ang = VectorAngle(v1,v2);
+      vit[i]->_ang = vectorAngle(v1,v2);
       vit[i]->_tor = CalcTorsionAngle(atom->GetVector(),
 				      a->GetVector(),
 				      b->GetVector(),

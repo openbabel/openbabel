@@ -427,12 +427,12 @@ int OBRTree::GetAtomIdx()
   return(_atom->GetIdx());
 }
 
-bool OBRing::findCenterAndNormal(Vector & center, Vector &norm1, Vector &norm2)
+bool OBRing::findCenterAndNormal(vector3 & center, vector3 &norm1, vector3 &norm2)
 {
     OBMol *mol= this->_parent;
     int j= 0;
     const int nA= this->_path.size();
-    Vector tmp;
+    vector3 tmp;
 
     center.Set(0.0f,0.0f,0.0f);
     norm1.Set(0.0f,0.0f,0.0f);
@@ -443,8 +443,8 @@ bool OBRing::findCenterAndNormal(Vector & center, Vector &norm1, Vector &norm2)
     center/= float(nA);
 
     for (j = 0; j != nA; j++){
-          Vector v1= (mol->GetAtom(_path[j]))->GetVector() - center;
-          Vector v2= (mol->GetAtom(_path[j+1==nA?0:j+1]))->GetVector() - center;
+          vector3 v1= (mol->GetAtom(_path[j]))->GetVector() - center;
+          vector3 v2= (mol->GetAtom(_path[j+1==nA?0:j+1]))->GetVector() - center;
           tmp= cross(v1,v2);
           norm1+= tmp;
     }

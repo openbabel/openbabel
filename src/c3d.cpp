@@ -13,6 +13,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "obutil.h"
+#include "math/matrix3x3.h"
 
 using namespace std;
 
@@ -114,7 +115,7 @@ bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
   float divisor = 1.0f;
   float Alpha,Beta,Gamma,A,B,C;
   bool has_fractional = false, has_divisor = false;
-  Matrix3x3 m;
+  matrix3x3 m;
   
   vector<string> vs;
   ifs.getline(buffer,BUFF_SIZE);
@@ -158,7 +159,7 @@ bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
 
   OBAtom *atom;
   float x,y,z;
-  Vector v;
+  vector3 v;
 
   unsigned int k;
   for (i = 1; i <= natoms; i++)

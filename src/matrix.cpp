@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "matrix.h"
-#include "Vector.h"
+#include "math/vector3.h"
 #include <stdio.h>
 
 using namespace std;

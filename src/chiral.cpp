@@ -17,6 +17,7 @@ GNU General Public License for more details.
 
 #include "matrix.h"
 #include "chiral.h"
+#include "math/matrix3x3.h"
 
 using namespace std;
 namespace OpenBabel {
@@ -109,9 +110,9 @@ void GetChirality(OBMol &mol, vector<int> &chirality)
 
 float CalcSignedVolume(OBMol &mol,OBAtom *atm)
 {
-  Vector tmp_crd;
+  vector3 tmp_crd;
   vector<int> nbr_atms;
-  vector<Vector> nbr_crds;
+  vector<vector3> nbr_crds;
   float hbrad = etab.CorrectedBondRad(1,0);
 	
   if (atm->GetHvyValence() < 3)
@@ -147,13 +148,13 @@ float CalcSignedVolume(OBMol &mol,OBAtom *atm)
 }
 
 // calculate a signed volume given a set of 4 coordinates
-float signed_volume(const Vector &a, const Vector &b, const Vector &c, const Vector &d)
+float signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d)
 {
-  Vector A,B,C;
+  vector3 A,B,C;
   A = b-a;
   B = c-a;
   C = d-a;
-  Matrix3x3 m(A,B,C);
+  matrix3x3 m(A,B,C);
   return(m.determinant());
 }
 

@@ -76,7 +76,7 @@ bool ReadMol2(istream &ifs,OBMol &mol,const char *title)
     mol.ReserveAtoms(natoms);
 
     int i;
-    Vector v;
+    vector3 v;
     OBAtom atom;
     bool hasPartialCharges=false;
     float x,y,z,pcharge;

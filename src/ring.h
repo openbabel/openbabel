@@ -81,7 +81,7 @@ class OBRing
   //public data members
   std::vector<int> _path;
   OBBitVec _pathset;
-  bool findCenterAndNormal(Vector & center, Vector &norm1, Vector &norm2);
+  bool findCenterAndNormal(vector3 & center, vector3 &norm1, vector3 &norm2);
 
   //constructors
   OBRing(){};

@@ -36,7 +36,7 @@ bool ReadBox(istream &ifs, OBMol &mol,const char *title)
 	  string x = sbuf.substr(24,8);
 	  string y = sbuf.substr(32,8);
 	  string z = sbuf.substr(40,8);
-	  Vector v(atof(x.c_str()),atof(y.c_str()),atof(z.c_str()));
+	  vector3 v(atof(x.c_str()),atof(y.c_str()),atof(z.c_str()));
 	  atom.SetVector(v);
 	  if (!mol.AddAtom(atom)) return(false);
 	}
@@ -58,7 +58,7 @@ bool ReadBox(istream &ifs, OBMol &mol,const char *title)
 bool WriteBox(ostream &ofs,OBMol &mol,float margin)
 {
   char buffer[BUFF_SIZE];
-  Vector vcenter,vmin,vmax,vmid,vdim;
+  vector3 vcenter,vmin,vmax,vmid,vdim;
   
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
@@ -78,7 +78,7 @@ bool WriteBox(ostream &ofs,OBMol &mol,float margin)
     }
   vcenter /= (float)mol.NumAtoms();
 
-  Vector vmarg(margin,margin,margin);
+  vector3 vmarg(margin,margin,margin);
   vmin -= vmarg; vmax += vmarg;
   vdim = vmax - vmin;
   vmid = vmin+vmax; vmid /= 2.0f;
@@ -90,7 +90,7 @@ bool WriteBox(ostream &ofs,OBMol &mol,float margin)
 	  vdim.x(),vdim.y(),vdim.z()); ofs << buffer << endl;
   vdim /= 2.0f;
 
-  Vector vtmp;
+  vector3 vtmp;
   int j;
   for (j = 1;j <= 8;j++)
     {

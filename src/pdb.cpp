@@ -319,7 +319,7 @@ static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
   }
 
   OBAtom atom;
-  Vector v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
+  vector3 v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
   atom.SetVector(v);
   
   atom.SetAtomicNum(etab.GetAtomicNum(type.c_str()));
@@ -440,7 +440,7 @@ bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
 	  }
       }
 
-  Vector v;
+  vector3 v;
   int bo,skipres=0;
   string rname = "";
   //assign other residue bonds
@@ -642,7 +642,7 @@ bool ReadBox(vector<string> &vbox, OBMol &mol,const char *)
 	string x = sbuf.substr(24,8);
 	string y = sbuf.substr(32,8);
 	string z = sbuf.substr(40,8);
-	Vector v(atof(x.c_str()),atof(y.c_str()),atof(z.c_str()));
+	vector3 v(atof(x.c_str()),atof(y.c_str()),atof(z.c_str()));
 	atom.SetVector(v);
 	if (!mol.AddAtom(atom)) return(false);
       }

@@ -26,7 +26,7 @@ void GraphPotentials(OBMol &mol, std::vector<float> &pot);
 void construct_g_matrix(OBMol &mol, std::vector<std::vector<float> > &m);
 void construct_c_matrix(OBMol &mol, std::vector<std::vector<float > > &m);
 float CalcSignedVolume(OBMol &mol,OBAtom*);
-float signed_volume(const Vector &a, const Vector &b, const Vector &c, const Vector &d);
+float signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d);
 void GetChirality(OBMol &mol, std::vector<int> &chirality);
 
 }
