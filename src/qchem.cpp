@@ -1,5 +1,9 @@
 /**********************************************************************
 Copyright (C) 2000-2004 by Geoffrey Hutchison
+Some portions (C) 2004 by Michael Banck
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -116,38 +120,38 @@ bool ReadQChem(istream &ifs,OBMol &mol,const char *title)
 	    }
 
  	  ifs.getline(buffer,BUFF_SIZE);
-	  
-	  // Uncomment the following to use the z-matrix coordinates
-	  // 	  index = 1;
-	  // 	  while (strstr(buffer, "$end") == NULL)
-	  // 	    {
-	  // 	      tokenize(vs,buffer);
-	  // 	      atom = mol.NewAtom();
-	  // 	      atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
-	  //
-	  // 	      tokenize(vs,buffer);
-	  // 	      coord = new OBInternalCoord();
-	  // 	      if (index > 1)
-	  // 		{
-	  // 		  coord->_a = mol.GetAtom(atoi(vs[2].c_str()));
-	  // 		  coord->_dst = atof(vs[3].c_str());
-	  // 		}
-	  // 	      if (index > 2)
-	  // 		{
-	  // 		  coord->_b = mol.GetAtom(atoi(vs[4].c_str()));
-	  // 		  coord->_ang = atof(vs[5].c_str()) * DEG_TO_RAD;
-	  // 		}
-	  // 	      if (index > 3)
-	  // 		{
-	  // 		  coord->_c = mol.GetAtom(atoi(vs[6].c_str()));
-	  // 		  coord->_tor = atof(vs[7].c_str()) * DEG_TO_RAD;
-	  // 		}
-	  // 	      index++;
-	  // 	      ifs.getline(buffer,BUFF_SIZE);
-	  // 	      internals.push_back(coord);
-	  //   }  // end while
-	  //	  InternalToCartesian(internals, mol);
-	} // end (OPTIMIZATION CONVERGED)
+
+          coord = new OBInternalCoord();
+          internals.push_back(coord);
+          index = 1;
+          vector<OBNodeBase*>::iterator i;
+          for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
+                tokenize(vs,buffer);
+                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+
+                tokenize(vs,buffer);
+                coord = new OBInternalCoord();
+                if (index > 1)
+                {
+                        coord->_a = mol.GetAtom(atoi(vs[2].c_str()));
+                        coord->_dst = atof(vs[3].c_str());
+                }
+                if (index > 2)
+                {
+                        coord->_b = mol.GetAtom(atoi(vs[4].c_str()));
+                        coord->_ang = atof(vs[5].c_str());
+                }
+                if (index > 3)
+                {
+                        coord->_c = mol.GetAtom(atoi(vs[6].c_str()));
+                        coord->_tor = atof(vs[7].c_str());
+                }
+                index++;
+                ifs.getline(buffer,BUFF_SIZE);
+                internals.push_back(coord);
+          }  // end for
+          InternalToCartesian(internals, mol);
+        } // end (OPTIMIZATION CONVERGED)
     } // end while
   mol.EndModify();
   mol.ConnectTheDots();

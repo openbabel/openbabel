@@ -385,34 +385,35 @@ void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
-    index = atom->GetIdx() - 1;
+    index = atom->GetIdx();
 
-    if      (index == 0)
+    if      (index == 1)
       {
         atom->SetVector(0.0, 0.0, 0.0);
         continue;
       }
-    else if (index == 1)
+    else if (index == 2)
       {
         v1.SetX(-vic[index]->_dst);
         atom->SetVector(v1);
         continue;
       }
-    else if (index == 2)
+    else if (index == 3) 
       {
-        v1.SetX(-vic[index]->_dst * cos(vic[index]->_ang * DEG_TO_RAD ));
-        v1.SetZ(-vic[index]->_dst * sin(vic[index]->_ang * DEG_TO_RAD ));
+        v1.SetX(-(vic[index]->_dst * cos(vic[index]->_ang * DEG_TO_RAD)));
+        v1.SetZ(-(vic[index]->_dst * sin(vic[index]->_ang * DEG_TO_RAD)));
         atom->SetVector(v1);
         continue;
       }
+
     v1 = vic[index]->_a->GetVector() - vic[index]->_b->GetVector();
     v2 = vic[index]->_a->GetVector() - vic[index]->_c->GetVector();
     n = cross(v1,v2);  nn = cross(v1,n);
     n.normalize();     nn.normalize();
 
-    n  *= -sin(vic[index]->_tor * DEG_TO_RAD );  nn *= cos(vic[index]->_tor * DEG_TO_RAD );
-    v3 = n + nn; v3.normalize(); v3 *= vic[index]->_dst * sin(vic[index]->_ang * DEG_TO_RAD );
-    v1.normalize();  v1 *= vic[index]->_dst * cos(vic[index]->_ang * DEG_TO_RAD );
+    n  *= -sin(vic[index]->_tor * DEG_TO_RAD);  nn *= cos(vic[index]->_tor * DEG_TO_RAD); 
+    v3 = n + nn; v3.normalize(); v3 *= vic[index]->_dst * sin(vic[index]->_ang * DEG_TO_RAD);
+    v1.normalize();  v1 *= vic[index]->_dst * cos(vic[index]->_ang * DEG_TO_RAD);
     v2 = vic[index]->_a->GetVector() + v3 - v1;
 
     atom->SetVector(v2);

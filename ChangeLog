@@ -1,3 +1,22 @@
+2004-03-03  Michael Banck  <mbanck@gmx.net>
+
+	Fixes to make InternalToCartesian() and ReadQChem() consistent
+	with CartesianToInternal(), so that round-tripping between
+	InternalToCartesian() and CartesianToInternal() is possible.
+
+	* src/obutil.cpp (InternalToCartesian): Initialize index as
+	atom->GetIdx() rather than atom->GetIdx() - 1. Subsequently,
+	increase the index checks for the first three atoms by one.
+	Convert angles to radians before computing cartesian
+	coordinates.
+
+	* src/qchem.cpp (ReadQChem): Uncommented the z-matrix reading
+	code. Generate one empty internal coordinate in advance.
+	Replaced loop until end of block in input file with a for loop
+	over the existing atoms. Do not generate new atoms in the loop,
+	as they are already present. Do not convert angles to radians
+	any more, this is now done in InternalToCartesian().
+
 2004-02-29  Michael Banck  <mbanck@gmx.net>
 
 	Merged changes from openbabel-1-100-x branch back into HEAD.
