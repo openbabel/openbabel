@@ -30,7 +30,7 @@ srcdir        = @srcdir@
 VPATH         = @srcdir@
 top_srcdir    = @top_srcdir@
 top_builddir  = @top_builddir@
-builddir      = @top_builddir@/src
+builddir      = @top_builddir@src
 
 HDRS	      = vector3.h matrix3x3.h
 

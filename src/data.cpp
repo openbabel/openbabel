@@ -20,11 +20,7 @@ GNU General Public License for more details.
 #include "types.h"
 #include "extable.h"
 
-#ifdef __sgi
-#include <strstream.h>
-#else
 #include <strstream>
-#endif
 
 using namespace std;
 

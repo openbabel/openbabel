@@ -21,7 +21,8 @@ gam		gamessout	GAMESS Output			none				1	0
 gamout		gamessout	GAMESS Output			none				1	0
 gcart		gaussiancart	Gaussian Cartesian		none				0	1
 gau		gaussiancart	Gaussian Input			chemical/x-gaussian-input	0	1
-mm1gp		ghemical	Ghemical MM			none				1	1
+gpr		ghemical	Ghemical Project		none				1	1
+mm1gp		ghemical	Ghemical MM			none				1	0
 qm1gp		ghemical	Ghemical QM			none				1	0
 gr96A		gromos96a	GROMOS96 (A)			none				0	1
 gr96N		gromos96n	GROMOS96 (nm)			none				0	1

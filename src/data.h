@@ -20,13 +20,8 @@ GNU General Public License for more details.
 
 #include <stdio.h>
 
-#ifdef __sgi
-#include <iostream.h>
-#include <fstream.h>
-#else
 #include <iostream>
 #include <fstream>
-#endif
 
 #include <vector>
 #include <string>

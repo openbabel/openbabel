@@ -1,7 +1,27 @@
+2002-09-19  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* configure: Update with new autoconf-2.56
+
+	* src/Makefile.in, src/math/Makefile.in, test/Makefile.in: Remove
+	redundant '/' in path for $(builddir) variable.
+
+	* src/data.cpp: Remove references to depreciated strstream.h
+	header.
+
+	* src/data.h: Likewise.
+
+	* src/mol.cpp: Add "flat ring" pass for 5-member and 6-member
+	rings. Ensures that these are all marked as potential sp2
+	hybrids. Also prevent adding 4 bonds to nitrogen, for now.
+
+	* src/extable.txt, src/extable.h: Update with new Ghemical
+	extension .gpr (same format though).
+
 2002-10-11  Michael Banck <mbanck@gmx.net>
 
-	* Added src/math/Makefile.in, adjusted configure.in and 
-        src/Makefile.in
+	* src/math/Makefile.in: New file.
+
+	* configure.in, src/Makefile.in: Adjust accordingly.
 
 2002-09-19  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 

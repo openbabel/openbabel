@@ -2425,47 +2425,6 @@ bool WriteTitles(ostream &ofs, OBMol &mol)
 	return true;
 }
 
-/*
-void OBMol::ConnectTheDots(void)
-  //use inter-atomic distances to identify bonds
-{
-  if (Empty()) return;
-
-  int j,k;
-  OBAtom *atom,*nbr;
-  vector<OBNodeBase*>::iterator i;
-  vector<float> rad; 
-
-  float *c = new float [NumAtoms()*3];
-  rad.resize(_natoms);
-
-  for (j=0,atom = BeginAtom(i);atom;atom = NextAtom(i),j++)
-    {
-      (atom->GetVector()).Get(&c[j*3]);
-      rad[j] = etab.CorrectedBondRad(atom->GetAtomicNum(),3);
-      rad[j] *= 1.10f;
-    }
-
-  float d2,cutoff;
-  for (j = 0;j < _natoms;j++)
-    for (k = j+1;k < _natoms;k++)
-      {
-        cutoff = rad[j]+rad[k]; 
-        cutoff *= cutoff;
-
-        d2 = SQUARE(c[j*3]-c[k*3]);
-        d2 += SQUARE(c[j*3+1]-c[k*3+1]);
-        d2 += SQUARE(c[j*3+2]-c[k*3+2]);
-        if (d2 > cutoff) continue;
-        atom = GetAtom(j+1); nbr = GetAtom(k+1);
-        if (atom->IsConnected(nbr)) continue;
-        if (atom->IsHydrogen() && nbr->IsHydrogen()) continue;
-        AddBond(j+1,k+1,1);
-      }
-
-  delete [] c;
-}
-*/
 void OBMol::ConnectTheDots(void)
   //use inter-atomic distances to identify bonds
 {
@@ -2618,8 +2577,58 @@ void OBMol::PerceiveBondOrders()
   // Pass 2: look for 5-member rings with torsions <= 7.5 degrees
   //         and 6-member rings with torsions <= 12 degrees
   //         (set all atoms with at least two bonds to sp2)
-  // (GRH): This isn't necessary because flat atoms will have ~120 angles
-  //        on average (exactly flat atoms = 360 deg/3 bonds => 120.0)
+
+  vector<OBRing*> rlist;
+  vector<OBRing*>::iterator ringit;
+  vector<int> path;
+  double torsions = 0.0;
+  int ringAtom;
+
+  if (!HasSSSRPerceived())
+    FindSSSR();
+  rlist = GetSSSR();
+  for (ringit = rlist.begin(); ringit != rlist.end(); ringit++)
+    {
+      if ((*ringit)->PathSize() == 5)
+	{
+	  path = (*ringit)->_path;
+	  torsions = 
+	    GetTorsion(path[0], path[1], path[2], path[3]) +
+	    GetTorsion(path[1], path[2], path[3], path[4]) +
+	    GetTorsion(path[2], path[3], path[4], path[0]) +
+	    GetTorsion(path[3], path[4], path[0], path[1]) +
+	    GetTorsion(path[4], path[0], path[1], path[2]) / 5.0f;
+	  if (torsions <= 7.5)
+	    {
+	      for (ringAtom = 0; ringAtom != path.size(); ringAtom++)
+		{
+		  b = GetAtom(path[ringAtom]);
+		  if (b->GetValence() == 2 || b->GetValence() == 3)
+		    b->SetHyb(2);
+		}
+	    }
+	}
+      else if ((*ringit)->PathSize() == 6)
+	{
+	  path = (*ringit)->_path;
+	  torsions = 
+	    GetTorsion(path[0], path[1], path[2], path[3]) +
+	    GetTorsion(path[1], path[2], path[3], path[4]) +
+	    GetTorsion(path[2], path[3], path[4], path[5]) +
+	    GetTorsion(path[3], path[4], path[5], path[0]) +
+	    GetTorsion(path[4], path[5], path[0], path[1]) +
+	    GetTorsion(path[5], path[0], path[1], path[2]) / 6.0f;
+	  if (torsions <= 12.0)
+	    {
+	      for (ringAtom = 0; ringAtom != path.size(); ringAtom++)
+		{
+		  b = GetAtom(path[ringAtom]);
+		  if (b->GetValence() == 2 || b->GetValence() == 3)
+		    b->SetHyb(2);
+		}
+	    }
+	}
+  }
 
   // Pass 3: "Antialiasing" If an atom marked as sp hybrid isn't 
   //          bonded to another or an sp2 hybrid isn't bonded 
@@ -2673,6 +2682,30 @@ void OBMol::PerceiveBondOrders()
         }
     } // Azide
 
+  // Nitro -NO2
+  OBSmartsPattern nitro; nitro.Init("[#8D1][#7D3][#8D1]");
+  if (nitro.Match(*this))
+    {
+      mlist = nitro.GetUMapList();
+      for (l = mlist.begin(); l != mlist.end(); l++)
+        {
+          a1 = GetAtom((*l)[0]);
+          a2 = GetAtom((*l)[1]);
+          a3 = GetAtom((*l)[2]);
+	  a4 = GetAtom((*l)[3]);
+          b1 = a1->GetBond(a2); b2 = a1->GetBond(a3); b3 = a1->GetBond(a4);
+
+          if (!b1 || !b2 || !b3) continue;
+          b1->SetBO(2);
+          b2->SetBO(2);
+	  b3->SetBO(1);
+	  a4 = GetAtom((*l)[4]);
+	  b3 = a1->GetBond(a4);
+	  if (!b3) continue;
+	  b3->SetBO(1);
+        }      
+    } // Nitro
+
   // Sulphone -SO2-
   OBSmartsPattern sulphone; sulphone.Init("[#16D4]([#8D1])([#8D1])(*)(*)");
   if (sulphone.Match(*this))
@@ -2719,12 +2752,13 @@ void OBMol::PerceiveBondOrders()
   {
       atom = sortedAtoms[iter].first;
       if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
-	   && atom->BOSum() < static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
+	   && atom->BOSum() + 2  <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
 	{
 	  // loop through the neighbors looking for a hybrid or terminal atom
 	  // (and pick the one with highest electronegativity first)
 	  // *or* pick a neighbor that's a terminal atom
-	  if (atom->HasNonSingleBond())
+
+	  if (atom->GetAtomicNum() == 7 && atom->BOSum() + 2 > 3)
 	    continue;
 
 	  maxElNeg = 0.0f;
@@ -2734,12 +2768,12 @@ void OBMol::PerceiveBondOrders()
 	    {
 	      currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
 	      if ( (b->GetHyb() == 1 || b->GetValence() == 1)
-		   && b->BOSum() < static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
+		   && b->BOSum() + 2 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
 		   && (currentElNeg > maxElNeg ||
 		       (currentElNeg == maxElNeg
 			&& (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
-		  if (atom->HasNonSingleBond())
+		  if (b->GetAtomicNum() == 7 && b->BOSum() + 2 > 3)
 		    continue;
 
 		  shortestBond = (atom->GetBond(b))->GetLength();
@@ -2751,12 +2785,12 @@ void OBMol::PerceiveBondOrders()
 	    (atom->GetBond(c))->SetBO(3);
 	}
       else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
-		&& atom->BOSum() < static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
+		&& atom->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
 	{
 	  // as above
-	  if (atom->HasNonSingleBond())
+	  if (atom->GetAtomicNum() == 7 && atom->BOSum() + 1 > 3)
 	    continue;
-	  
+
 	  maxElNeg = 0.0f;
 	  shortestBond = 5000.0f;
 	  c = NULL;
@@ -2764,14 +2798,14 @@ void OBMol::PerceiveBondOrders()
 	    {
 	      currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
 	      if ( (b->GetHyb() == 2 || b->GetValence() == 1)
-		   && b->BOSum() < static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
+		   && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
 		   && (currentElNeg > maxElNeg ||
                       (currentElNeg == maxElNeg
                        && (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
-		  if (atom->HasNonSingleBond())
+		  if (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3)
 		    continue;
-		
+
 		  shortestBond = (atom->GetBond(b))->GetLength();
 		  maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
 		  c = b; // save this atom for later use
