@@ -676,6 +676,7 @@ public:
     void   UnsetPartialChargesPerceived()  {_flags &= (~(OB_PCHARGE_MOL));}
     void   UnsetImplicitValencePerceived() {_flags &= (~(OB_IMPVAL_MOL));}
     void   UnsetFlag(int flag)		   {_flags &= (~(flag));}
+    void   SetFlags(int flags)             {_flags = flags;}
 
     //! \name Molecule modification methods
     //@{

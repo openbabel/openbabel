@@ -143,9 +143,17 @@ void OBAtomTyper::AssignHyb(OBMol &mol)
 
 void OBAtomTyper::AssignImplicitValence(OBMol &mol)
 {
+  // FF Make sure that valence has not been perceived
+  if(mol.HasImplicitValencePerceived())
+    return;
+
   if (!_init) Init();
 
   mol.SetImplicitValencePerceived();
+
+  // FF Ensure that the aromatic typer will not be called
+  int oldflags = mol.GetFlags(); // save the current state flags
+  mol.SetAromaticPerceived();    // and set the aromatic perceived flag on
 
   OBAtom *atom;
   vector<OBNodeBase*>::iterator k;
@@ -190,6 +198,11 @@ void OBAtomTyper::AssignImplicitValence(OBMol &mol)
 			atom->DecrementImplicitValence();
 	}
 	//end CM
+  
+  // FF Come back to the initial flags
+  mol.SetFlags(oldflags);
+
+  return;
 }
 
 
