@@ -1,3 +1,14 @@
+2005-01-12  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/dlhandler.h: Add findFiles decl needed for Windows builds  
+
+2005-01-09  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* windows/*.dsp, *.mak: Synchronize Windows build files to handle 
+	changed file locations and extra source files
+	* windows/OBDLL/map2def2.exe added  
+	* windows/babelconfig.h updated  
+
 2005-01-07  Geoffrey Hutchison  <ghutchis@geoffhutchison.net>
 
 	* src/obconversion.h (GetMIMEType): New method for chemical MIME
