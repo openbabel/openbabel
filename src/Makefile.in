@@ -49,7 +49,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		ghemical.o xyz.o fileformat.o gamess.o hin.o \
 		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
 		jaguar.o amber.o ctransform.o binary_io.o generic.o smarts.o\
-		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o
+		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o viewmol.o
 
 PROGRAM	      = babel
 
