@@ -19,7 +19,7 @@ AC_PROG_RANLIB
 AC_PATH_PROG(AR, ar)
 
 AC_ARG_ENABLE(doxygen, 
-[  --enable-doxygen        Build library documentation using doxygen],
+[  --enable-doxygen        build library documentation using doxygen],
 dnl Check if the documentation tool doxygen is available. If it is not,
 dnl the configure script will print an error message with an url where
 dnl to find it
