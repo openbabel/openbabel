@@ -1,3 +1,10 @@
+2002-08-14  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* src/xyz.cpp Set molecule title to the string that is read from
+	the second line of the file. Set atom type strings to strings read
+	from the file. The reading method now prints +extensive+ and
+	+detailed+ warnings to cerr if is xyz file is bad.
+
 2002-07-26  Stefan Kebekus <kebekus@users.sourceforge.net>
 
 	* src/math/matrix3x3.cpp added a few method useful in symmetry
