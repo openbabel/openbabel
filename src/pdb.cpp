@@ -805,15 +805,16 @@ bool WritePDB(ostream &ofs,OBMol &mol)
     if (atom->HasResidue())
       {
 	res = atom->GetResidue();
-	strcpy(the_res,(char*)res->GetName().c_str());
-	strcpy(type_name,(char*)res->GetAtomID(atom).c_str());
+	strncpy(the_res,(char*)res->GetName().c_str(),3);
+	strncpy(type_name,(char*)res->GetAtomID(atom).c_str(),4);
 
 	//two char. elements are on position 13 and 14 one char. start at 14
 	if (strlen(type_name) < 4)
 	  {
 	    char tmp[10];
 	    strcpy(tmp, type_name);
-	    sprintf(type_name," %-3s", tmp);
+	    sprintf(padded_name," %-3s", tmp);
+	    strncpy(type_name,padded_name,4);
 	  }
 	res_num = res->GetNum();
       }
@@ -821,17 +822,18 @@ bool WritePDB(ostream &ofs,OBMol &mol)
       {
 	strcpy(the_res,"UNK");
 	sprintf(padded_name,"%s",type_name);
-	strcpy(type_name,padded_name);
+	strncpy(type_name,padded_name,4);
 	res_num = 1;
       }
-    sprintf(buffer,"ATOM  %5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00 \n",
+    sprintf(buffer,"ATOM  %5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
 	    i,
 	    type_name,
 	    the_res,
 	    res_num,
 	    atom->GetX(),
 	    atom->GetY(),
-	    atom->GetZ());
+	    atom->GetZ(),
+	    etab.GetSymbol(atom->GetAtomicNum()));
     ofs << buffer;
   }
 
