@@ -25,10 +25,7 @@ GNU General Public License for more details.
 #define BUFF_SIZE 1024
 #endif
 
-#if HAVE_CONFIG_H
 #include "babelconfig.h"
-#endif
-
 #include "data.h"
 #include "element.h"
 #include "types.h"

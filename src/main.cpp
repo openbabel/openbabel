@@ -17,9 +17,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
 #include "babelconfig.h"
-#endif
 
 #include "mol.h"
 #include "molvector.h"
@@ -28,6 +26,7 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "rotor.h"
 #include "binary.h"
+#include "babelconfig.h"
 #include "data.h"
 
 #include <stdio.h>

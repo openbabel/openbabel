@@ -12,11 +12,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "babelconfig.h"
-#endif
-
 #include "mol.h"
+#include "babelconfig.h"
 
 using namespace std;
 
