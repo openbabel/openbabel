@@ -84,17 +84,21 @@ bool WriteCaccrt(ostream &ofs,OBMol &mol)
   char type_name[10],buffer[BUFF_SIZE];
   vector<OBNodeBase*>::iterator i;
 
-  sprintf(buffer,"%s\n",mol.GetTitle());
-  sprintf(buffer,"%3d   DIST  0  0  0\n",mol.NumAtoms());
-  sprintf(buffer,"CELL 1.,1.,1.,90.,90.,90.\n");
+  sprintf(buffer,"%s",mol.GetTitle());
+  ofs << buffer << endl;
+  sprintf(buffer,"%3d   DIST  0  0  0",mol.NumAtoms());
+  ofs << buffer << endl;
+  sprintf(buffer,"CELL 1.,1.,1.,90.,90.,90.");
+  ofs << buffer << endl;
 
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
-    sprintf(buffer,"%2s %7.4f, %7.4f, %7.4f \n",
+    sprintf(buffer,"%2s %7.4f, %7.4f, %7.4f",
             etab.GetSymbol(atom->GetAtomicNum()),
             atom->x(),
             atom->y(),
             atom->z());
+    ofs << buffer << endl;
   }
 
   return(true);
