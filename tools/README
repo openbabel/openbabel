@@ -31,7 +31,7 @@ Since some examples are better than a long explaination, here are some command l
 > obgrep -f "CN" database.smi     # Print methylamine
 > obgrep -f "C[N,O]" database.smi # Print methylamine and methanol
 
-> obgrep -n -t 1 "[O;D1]~C~[O;D1]" database.smi # Print the name of the compounds with a single carboxilic groups
+> obgrep -n -t 1 "[O;D1]~C~[O;D1]" database.smi # Print the name of the compounds with a single carboxilic group
 
 ###############################################################################
 OBFIT
