@@ -55,7 +55,7 @@ bool ReadBox(istream &ifs, OBMol &mol,const char *title)
   return(true);
 }
 
-bool WriteBox(ostream &ofs,OBMol &mol,float margin)
+bool WriteBox(ostream &ofs,OBMol &mol,double margin)
 {
   char buffer[BUFF_SIZE];
   vector3 vcenter,vmin,vmax,vmid,vdim;
@@ -76,19 +76,19 @@ bool WriteBox(ostream &ofs,OBMol &mol,float margin)
       if (atom->y() > vmax.y()) vmax.SetY(atom->y());
       if (atom->z() > vmax.z()) vmax.SetZ(atom->z());
     }
-  vcenter /= (float)mol.NumAtoms();
+  vcenter /= (double)mol.NumAtoms();
 
   vector3 vmarg(margin,margin,margin);
   vmin -= vmarg; vmax += vmarg;
   vdim = vmax - vmin;
-  vmid = vmin+vmax; vmid /= 2.0f;
+  vmid = vmin+vmax; vmid /= 2.0;
 
   ofs << "HEADER    CORNERS OF BOX" << endl;
   sprintf(buffer,"REMARK    CENTER (X Y Z)      %10.3f %10.3f %10.3f",
 	  vmid.x(),vmid.y(),vmid.z()); ofs << buffer << endl;
   sprintf(buffer,"REMARK    DIMENSIONS (X Y Z)  %10.3f %10.3f %10.3f",
 	  vdim.x(),vdim.y(),vdim.z()); ofs << buffer << endl;
-  vdim /= 2.0f;
+  vdim /= 2.0;
 
   vector3 vtmp;
   int j;

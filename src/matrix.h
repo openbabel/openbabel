@@ -26,29 +26,29 @@ namespace OpenBabel {
 class Vector;
 
 /*
- * vector<vector<float> > m : m[row][col] gives appropriate row/col entry
- * float **m                : m[row][col] gives appropriate row/col entry
- * float *m                 : m[(row * numCols) + col] gives appropriate row/col entry
+ * vector<vector<double> > m : m[row][col] gives appropriate row/col entry
+ * double **m                : m[row][col] gives appropriate row/col entry
+ * double *m                 : m[(row * numCols) + col] gives appropriate row/col entry
  */
 
-void print_matrix(std::vector<std::vector<float> > &m);
-void print_matrix_f (float  *m, int rows, int cols);
-void print_matrix_ff(float **m, int rows, int cols);
+void print_matrix(std::vector<std::vector<double> > &m);
+void print_matrix_f (double  *m, int rows, int cols);
+void print_matrix_ff(double **m, int rows, int cols);
  
-bool mult_matrix(std::vector<std::vector<float> > &c, std::vector<std::vector<float> > &a, std::vector<std::vector<float> > &b);
-bool mult_matrix_f (float  *c, float  *a, float  *b, int rows, int cols);
-bool mult_matrix_ff(float **c, float **a, float **b, int rows, int cols);
+bool mult_matrix(std::vector<std::vector<double> > &c, std::vector<std::vector<double> > &a, std::vector<std::vector<double> > &b);
+bool mult_matrix_f (double  *c, double  *a, double  *b, int rows, int cols);
+bool mult_matrix_ff(double **c, double **a, double **b, int rows, int cols);
 
-bool invert_matrix(std::vector<std::vector<float> > &m, float &det);
-bool invert_matrix_f (float  *m, float &det, int rows, int cols);
-bool invert_matrix_ff(float **m, float &det, int rows, int cols);
+bool invert_matrix(std::vector<std::vector<double> > &m, double &det);
+bool invert_matrix_f (double  *m, double &det, int rows, int cols);
+bool invert_matrix_ff(double **m, double &det, int rows, int cols);
 
-bool convert_matrix_f (std::vector<std::vector<float> > &src, float  *dst);
-bool convert_matrix_ff(std::vector<std::vector<float> > &src, float **dst);
-bool convert_matrix_f (float  *src, std::vector<std::vector<float> > &dst, int rows, int cols);
-bool convert_matrix_ff(float **src, std::vector<std::vector<float> > &dst, int rows, int cols);
-bool convert_matrix_ff_f(float **src, float  *dst, int rows, int cols);
-bool convert_matrix_f_ff(float  *src, float **dst, int rows, int cols);
+bool convert_matrix_f (std::vector<std::vector<double> > &src, double  *dst);
+bool convert_matrix_ff(std::vector<std::vector<double> > &src, double **dst);
+bool convert_matrix_f (double  *src, std::vector<std::vector<double> > &dst, int rows, int cols);
+bool convert_matrix_ff(double **src, std::vector<std::vector<double> > &dst, int rows, int cols);
+bool convert_matrix_ff_f(double **src, double  *dst, int rows, int cols);
+bool convert_matrix_f_ff(double  *src, double **dst, int rows, int cols);
 
 }
 

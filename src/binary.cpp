@@ -31,7 +31,7 @@ static int SINT = 0x00000001;
 static unsigned char *STPTR = (unsigned char*)&SINT;
 const bool SwabInt = (STPTR[0]!=0);
 
-void SetRotorToAngle(float *c,OBAtom **ref,float ang,vector<int> atoms);
+void SetRotorToAngle(double *c,OBAtom **ref,double ang,vector<int> atoms);
 
 int Swab(int i)
 {
@@ -102,8 +102,8 @@ void OBRotamerList::Setup(OBMol &mol,OBRotorList &rl)
       _vres.push_back(rotor->GetResolution());
     }
 
-  vector<float>::iterator n;
-  vector<vector<float> >::iterator m;
+  vector<double>::iterator n;
+  vector<vector<double> >::iterator m;
   for (m = _vres.begin();m != _vres.end();m++)
     for (n = m->begin();n != m->end();n++)
       *n *= RAD_TO_DEG;
@@ -145,10 +145,10 @@ void OBRotamerList::Setup(OBMol &mol,unsigned char *ref,int nrotors)
 
 }
 
-void OBRotamerList::AddRotamer(float *c)
+void OBRotamerList::AddRotamer(double *c)
 {
   int idx,size;
-  float angle,res=255.0f/360.0f;
+  double angle,res=255.0f/360.0f;
   vector3 v1,v2,v3,v4;
 
   unsigned char *rot = new unsigned char [_vrotor.size()+1];
@@ -174,7 +174,7 @@ void OBRotamerList::AddRotamer(float *c)
 void OBRotamerList::AddRotamer(int *arr)
 {
   unsigned int i;
-  float angle,res=255.0f/360.0f;
+  double angle,res=255.0f/360.0f;
 
   unsigned char *rot = new unsigned char [_vrotor.size()+1];
   rot[0] = (unsigned char)arr[0];
@@ -192,7 +192,7 @@ void OBRotamerList::AddRotamer(int *arr)
 void OBRotamerList::AddRotamer(unsigned char *arr)
 {
   unsigned int i;
-  float angle,res=255.0f/360.0f;
+  double angle,res=255.0f/360.0f;
 
   unsigned char *rot = new unsigned char [_vrotor.size()+1];
   rot[0] = (unsigned char)arr[0];
@@ -221,23 +221,23 @@ void OBRotamerList::AddRotamers(unsigned char *arr,int nrotamers)
     }
 }
 
-void OBRotamerList::ExpandConformerList(OBMol &mol,vector<float*> &clist)
+void OBRotamerList::ExpandConformerList(OBMol &mol,vector<double*> &clist)
 {
   unsigned int j;
-  float angle,invres=360.0f/255.0f;
+  double angle,invres=360.0f/255.0f;
   unsigned char *conf;
-  vector<float*> tmpclist;
+  vector<double*> tmpclist;
   vector<unsigned char*>::iterator i;
 
   for (i = _vrotamer.begin();i != _vrotamer.end();i++)
     {
       conf = *i;
-      float *c = new float [mol.NumAtoms()*3];
-      memcpy(c,clist[(int)conf[0]],sizeof(float)*mol.NumAtoms()*3);
+      double *c = new double [mol.NumAtoms()*3];
+      memcpy(c,clist[(int)conf[0]],sizeof(double)*mol.NumAtoms()*3);
 
       for (j = 0;j < _vrotor.size();j++)
 	{
-	  angle = invres*((float)conf[j+1]);
+	  angle = invres*((double)conf[j+1]);
 	  if (angle > 180.0) angle -= 360.0;
 	  SetRotorToAngle(c,_vrotor[j].first,angle,_vrotor[j].second);
 	}
@@ -245,30 +245,30 @@ void OBRotamerList::ExpandConformerList(OBMol &mol,vector<float*> &clist)
     }
 
   //transfer the conf list
-  vector<float*>::iterator k;
+  vector<double*>::iterator k;
   for (k = clist.begin();k != clist.end();k++)
     delete [] *k;
   clist = tmpclist;
 }
 
 //Create a conformer list using the internal base set of coordinates
-vector<float*> OBRotamerList::CreateConformerList(OBMol& mol)
+vector<double*> OBRotamerList::CreateConformerList(OBMol& mol)
   {
     unsigned int j;
-    float angle,invres=360.0f/255.0f;
+    double angle,invres=360.0f/255.0f;
     unsigned char *conf;
-    vector<float*> tmpclist;
+    vector<double*> tmpclist;
     vector<unsigned char*>::iterator i;
    
     for (i = _vrotamer.begin();i != _vrotamer.end();i++)
       {
         conf = *i;
-        float *c = new float [mol.NumAtoms()*3];
-        memcpy(c,_c[(int)conf[0]],sizeof(float)*mol.NumAtoms()*3);
+        double *c = new double [mol.NumAtoms()*3];
+        memcpy(c,_c[(int)conf[0]],sizeof(double)*mol.NumAtoms()*3);
    
         for (j = 0;j < _vrotor.size();j++)
           {
-            angle = invres*((float)conf[j+1]);
+            angle = invres*((double)conf[j+1]);
             if (angle > 180.0) angle -= 360.0;
             SetRotorToAngle(c,_vrotor[j].first,angle,_vrotor[j].second);
           }
@@ -279,7 +279,7 @@ vector<float*> OBRotamerList::CreateConformerList(OBMol& mol)
   }
 
 //Copies the coordinates in bc, NOT the pointers, into the object
-void OBRotamerList::SetBaseCoordinateSets(vector<float*> bc, unsigned int N)
+void OBRotamerList::SetBaseCoordinateSets(vector<double*> bc, unsigned int N)
   {
     unsigned int i,j;
 
@@ -288,10 +288,10 @@ void OBRotamerList::SetBaseCoordinateSets(vector<float*> bc, unsigned int N)
     _c.clear();
 
     //Copy new data
-    float *c = NULL;
-    float *cc= NULL;
+    double *c = NULL;
+    double *cc= NULL;
     for (i=0 ; i<bc.size() ; i++) {
-        c = new float [3*N];
+        c = new double [3*N];
         cc = bc[i];
         for (j=0 ; j<3*N ; j++) c[j] = cc[j];
         _c.push_back(c);
@@ -301,20 +301,22 @@ void OBRotamerList::SetBaseCoordinateSets(vector<float*> bc, unsigned int N)
 
 
 
-int PackCoordinate(float c[3],float max[3])
+int PackCoordinate(double c[3],double max[3])
 {
   int tmp;
-  tmp  = ((int)(c[0]*max[0])) << 20;
-  tmp |= ((int)(c[1]*max[1])) << 10;
-  tmp |= ((int)(c[2]*max[2]));
+  float cf;
+  cf = c[0];  tmp  = ((int)(cf*max[0])) << 20;
+  cf = c[1];  tmp |= ((int)(cf*max[1])) << 10;
+  cf = c[2];  tmp |= ((int)(cf*max[2]));
   return(tmp);
 }
 
-void UnpackCoordinate(float c[3],float max[3],int tmp)
+void UnpackCoordinate(double c[3],double max[3],int tmp)
 {
-  c[0] = (float)(tmp>>20);            c[0] *= max[0];
-  c[1] = (float)((tmp&0xffc00)>>10);  c[1] *= max[1];
-  c[2] = (float)(tmp&0x3ff);          c[2] *= max[2];
+  float cf;
+  cf = (float)(tmp>>20);           c[0] = cf; c[0] *= max[0];
+  cf = (float)((tmp&0xffc00)>>10); c[1] = cf; c[1] *= max[1];
+  cf = (float)(tmp&0x3ff);         c[2] = cf; c[2] *= max[2];
 }
 
 bool WriteBinary(ostream &ofs, OBMol &mol)
@@ -337,7 +339,7 @@ bool WriteBinary(ostream &ofs, OBMol &mol)
 
 bool WriteBinary(string &buf, int &size, OBMol &mol)
 {
-    vector<float*>::iterator j;
+    vector<double*>::iterator j;
     unsigned int k, sz;
     int idx, m, tmp;
 
@@ -392,10 +394,10 @@ bool WriteBinary(string &buf, int &size, OBMol &mol)
 
     //find min and max
     int   imin[3], imax[3];
-    float  min[3] = { 10E10f, 10E10f, 10E10f};
-    float  max[3] = {-10E10f,-10E10f,-10E10f};
+    double  min[3] = { 10E10f, 10E10f, 10E10f};
+    double  max[3] = {-10E10f,-10E10f,-10E10f};
 
-    vector<float*> clist;
+    vector<double*> clist;
 
     //If we have a rotamer list with internally stored base coordinates
     //have clist point to them rather than the molecules conformer coordinates
@@ -416,7 +418,7 @@ bool WriteBinary(string &buf, int &size, OBMol &mol)
     sz = mol.NumAtoms() * 3;
     for ( j = clist.begin() ; j != clist.end() ; j++ )
     {
-        float *coords = *j;
+        double *coords = *j;
         for ( k = 0 ; k < sz ; k += 3 )
         {
             if (coords[k  ] < min[0]) min[0] = coords[k  ];
@@ -484,11 +486,11 @@ bool WriteBinary(string &buf, int &size, OBMol &mol)
     {        
         // Write base coordinates
 
-        float tc[3];
+        double tc[3];
         sz = mol.NumAtoms() * 3;
         for ( j = clist.begin() ; j != clist.end() ; j++ )
         {
-            float *coords = *j;
+            double *coords = *j;
             for ( k = 0 ; k < sz ; k += 3 )
             {
                 tc[0] = coords[k  ] - min[0];
@@ -534,11 +536,11 @@ bool WriteBinary(string &buf, int &size, OBMol &mol)
     {
         // Write coordinate conformers 
 
-        float tc[3];
+        double tc[3];
         sz = mol.NumAtoms() * 3;
         for ( j = clist.begin() ; j != clist.end() ; j++ )
         {
-            float *coords = *j;
+            double *coords = *j;
             for ( k = 0 ; k < sz ; k += 3 )
             {
                 tc[0] = coords[k  ] - min[0];
@@ -557,7 +559,7 @@ bool WriteBinary(string &buf, int &size, OBMol &mol)
     else //must be storing single-conformer structure
     {
         //write the coordinates
-        float coord[3];
+        double coord[3];
 	OBAtom *atom2;
 	vector<OBNodeBase*>::iterator i;
 	for (atom2 = mol.BeginAtom(i); atom2; atom2 = mol.NextAtom(i))
@@ -759,7 +761,7 @@ bool ReadBinary(unsigned char *buf, OBMol &mol, int size)
 
   //read the min and max
   int imin[3],imax[3];
-  float min[3],max[3];
+  double min[3],max[3];
   memcpy((char*)imin,&buf[idx],sizeof(int)*3); idx += (int)sizeof(int)*3;
   memcpy((char*)imax,&buf[idx],sizeof(int)*3); idx += (int)sizeof(int)*3;
 
@@ -771,8 +773,8 @@ bool ReadBinary(unsigned char *buf, OBMol &mol, int size)
 	  imin[i] = Swab(imin[i]);
 	  imax[i] = Swab(imax[i]);
 	}
-      min[i] = (float) imin[i]/1000000.0f;
-      max[i] = (float) imax[i]/1000000.0f;
+      min[i] = (double) imin[i]/1000000.0f;
+      max[i] = (double) imax[i]/1000000.0f;
       max[i] = (fabs(max[i])> 0.01) ? max[i]/1023.0f:0.0; 
     }
 
@@ -791,7 +793,7 @@ bool ReadBinary(unsigned char *buf, OBMol &mol, int size)
       vector3 v;
       int *tmpi = new int [natoms];
       memcpy((char*)tmpi,&buf[idx],sizeof(int)*natoms); idx += (int)sizeof(int)*natoms;
-      float coord[3];
+      double coord[3];
       for (i = 0;i < natoms;i++)
 	{
 	  if (SwabInt) tmpi[i] = Swab(tmpi[i]);
@@ -805,12 +807,12 @@ bool ReadBinary(unsigned char *buf, OBMol &mol, int size)
   else
     {
       int *tmpi = new int [natoms];
-      vector<float*> cltmp;
+      vector<double*> cltmp;
       for (i = 0;i < nconfs;i++)
 	{
 	  memcpy((char*)tmpi,(unsigned char*)&buf[idx],sizeof(int)*natoms); 
 	  idx += (int)sizeof(int)*natoms;
-	  float *coord = new float [mol.NumAtoms()*3];
+	  double *coord = new double [mol.NumAtoms()*3];
 	  for (j = 0;j < natoms;j++) 
 	    {
 	      if (SwabInt) tmpi[j] = Swab(tmpi[j]);
@@ -907,16 +909,16 @@ bool ReadBinary(unsigned char *buf, OBMol &mol, int size)
   return(true);
 }
 
-void SetRotorToAngle(float *c,OBAtom **ref,float ang,vector<int> atoms)
+void SetRotorToAngle(double *c,OBAtom **ref,double ang,vector<int> atoms)
      //this function will rotate the coordinates of 'atoms'
      //such that tor == ang - atoms in 'tor' should be ordered such 
      //that the 3rd atom is the pivot around which atoms rotate
      //ang is in degrees
 {
-  float v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
-  float c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
-  float c1mag,c2mag,radang,costheta,m[9];
-  float x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
+  double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
+  double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
+  double c1mag,c2mag,radang,costheta,m[9];
+  double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
 
   int tor[4];
   tor[0] = ref[0]->GetCIdx();

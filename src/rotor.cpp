@@ -17,7 +17,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
-#define OB_DEFAULT_DELTA 10.0f
+#define OB_DEFAULT_DELTA 10.0
 static bool GetDFFVector(OBMol&,vector<int>&,OBBitVec&);
 static bool CompareRotor(const pair<OBBond*,int>&,const pair<OBBond*,int>&);
 
@@ -163,29 +163,29 @@ bool GetDFFVector(OBMol &mol,vector<int> &dffv,OBBitVec &bv)
 }
 
 
-static float MinimumPairRMS(OBMol&,float*,float*,bool &);
+static double MinimumPairRMS(OBMol&,double*,double*,bool &);
 
 void OBRotorList::RemoveSymVals(OBMol &mol)
      //this function rotates each bond to zero and 180 degrees and tests
      //if the 2 conformers are duplicates.  if so - the symmetric torsion
      //values are removed from consideration during a search
 {
-  float *c,*c1,*c2;
-  c1 = new float [mol.NumAtoms()*3];
-  c2 = new float [mol.NumAtoms()*3];
+  double *c,*c1,*c2;
+  c1 = new double [mol.NumAtoms()*3];
+  c2 = new double [mol.NumAtoms()*3];
   c = mol.GetCoordinates();
   bool one2one;
-  float cutoff = 0.20f;
+  double cutoff = 0.20;
 
   OBRotor *rotor;
   vector<OBRotor*>::iterator i;
   for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
     {
       //look for 2-fold symmetry about a bond
-      memcpy(c1,c,sizeof(float)*mol.NumAtoms()*3);
-      memcpy(c2,c,sizeof(float)*mol.NumAtoms()*3);
-      rotor->SetToAngle(c1,(float)(0.0*DEG_TO_RAD));
-      rotor->SetToAngle(c2,(float)(180.0*DEG_TO_RAD));
+      memcpy(c1,c,sizeof(double)*mol.NumAtoms()*3);
+      memcpy(c2,c,sizeof(double)*mol.NumAtoms()*3);
+      rotor->SetToAngle(c1,(double)(0.0*DEG_TO_RAD));
+      rotor->SetToAngle(c2,(double)(180.0*DEG_TO_RAD));
 
       if (MinimumPairRMS(mol,c1,c2,one2one) <cutoff && !one2one)
 	{
@@ -203,10 +203,10 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
 	}
 
       //look for 3-fold symmetry about a bond
-      memcpy(c1,c,sizeof(float)*mol.NumAtoms()*3);
-      memcpy(c2,c,sizeof(float)*mol.NumAtoms()*3);
-      rotor->SetToAngle(c1,(float)(0.0*DEG_TO_RAD)); 
-      rotor->SetToAngle(c2,(float)(120.0*DEG_TO_RAD));
+      memcpy(c1,c,sizeof(double)*mol.NumAtoms()*3);
+      memcpy(c2,c,sizeof(double)*mol.NumAtoms()*3);
+      rotor->SetToAngle(c1,(double)(0.0*DEG_TO_RAD)); 
+      rotor->SetToAngle(c2,(double)(120.0*DEG_TO_RAD));
 
       if (MinimumPairRMS(mol,c1,c2,one2one) <cutoff && !one2one)
 	{
@@ -276,10 +276,10 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
       }
 }
 
-static float MinimumPairRMS(OBMol &mol,float *a,float *b,bool &one2one)
+static double MinimumPairRMS(OBMol &mol,double *a,double *b,bool &one2one)
 {
   int i,j,k=0;
-  float min,tmp,d_2 = 0.0;
+  double min,tmp,d_2 = 0.0;
   OBBitVec bset;
   one2one = true;
   vector<OBNodeBase*> _atom;
@@ -288,7 +288,7 @@ static float MinimumPairRMS(OBMol &mol,float *a,float *b,bool &one2one)
 
   for (i = 0;i < (signed)mol.NumAtoms();i++)
     {
-      min = 10E10f;
+      min = 10E10;
       for (j = 0;j < (signed)mol.NumAtoms();j++)
 	if ((_atom[i])->GetAtomicNum() == (_atom[j])->GetAtomicNum() &&
 	    (_atom[i])->GetHyb()       == (_atom[j])->GetHyb())
@@ -309,7 +309,7 @@ static float MinimumPairRMS(OBMol &mol,float *a,float *b,bool &one2one)
       d_2 += min;
     }
 
-  d_2 /= (float)mol.NumAtoms();
+  d_2 /= (double)mol.NumAtoms();
   
   return(sqrt(d_2));
 }
@@ -374,8 +374,8 @@ bool OBRotorList::AssignTorVals(OBMol &mol)
   vector<OBRotor*>::iterator i;
 
   int ref[4];
-  float delta;
-  vector<float> res;
+  double delta;
+  vector<double> res;
   vector<int> itmp1;
   vector<int>::iterator j;
   for (i = _rotor.begin();i != _rotor.end();i++)
@@ -530,15 +530,15 @@ bool CompareRotor(const pair<OBBond*,int> &a,const pair<OBBond*,int> &b)
 
 OBRotor::OBRotor()
 {
-  _delta = 10.0f;
+  _delta = 10.0;
   _rotatoms = NULL;
 }
 
-float OBRotor::CalcTorsion(float *c)
+double OBRotor::CalcTorsion(double *c)
 {
-  float v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
-  float c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
-  float c1mag,c2mag,ang,costheta;
+  double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
+  double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
+  double c1mag,c2mag,ang,costheta;
 
   //
   //calculate the torsion angle
@@ -565,8 +565,8 @@ float OBRotor::CalcTorsion(float *c)
   if (c1mag*c2mag < 0.01) costheta = 1.0; //avoid div by zero error
   else costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
 
-  if (costheta < -0.9999999) costheta = -0.9999999f;
-  if (costheta >  0.9999999) costheta =  0.9999999f;
+  if (costheta < -0.9999999) costheta = -0.9999999;
+  if (costheta >  0.9999999) costheta =  0.9999999;
 			      
   if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0) ang = -acos(costheta);
   else                                     ang = acos(costheta);
@@ -574,9 +574,9 @@ float OBRotor::CalcTorsion(float *c)
   return(ang);
 }
 
-float OBRotor::CalcBondLength(float *c)
+double OBRotor::CalcBondLength(double *c)
 {
-  float dx,dy,dz;
+  double dx,dy,dz;
 
   dx = c[_torsion[1]] - c[_torsion[2]];
   dy = c[_torsion[1]+1] - c[_torsion[2]+1];
@@ -584,12 +584,12 @@ float OBRotor::CalcBondLength(float *c)
   return(sqrt(SQUARE(dx)+SQUARE(dy)+SQUARE(dz)));
 }
 
-void OBRotor::Precalc(vector<float*> &cv)
+void OBRotor::Precalc(vector<double*> &cv)
 {
-  float *c,ang;
-  vector<float*>::iterator i;
-  vector<float>::iterator j;
-  vector<float> cs,sn,t;
+  double *c,ang;
+  vector<double*>::iterator i;
+  vector<double>::iterator j;
+  vector<double> cs,sn,t;
   for (i = cv.begin();i != cv.end();i++)
     {
       c = *i;
@@ -611,9 +611,9 @@ void OBRotor::Precalc(vector<float*> &cv)
 }
 
 
-void OBRotor::SetRotor(float *c,int idx,int prev)
+void OBRotor::SetRotor(double *c,int idx,int prev)
 {
-  float ang,sn,cs,t,dx,dy,dz,mag;
+  double ang,sn,cs,t,dx,dy,dz,mag;
   
   if (prev == -1) ang = _res[idx] - CalcTorsion(c);
   else            ang = _res[idx] - _res[prev];
@@ -628,9 +628,9 @@ void OBRotor::SetRotor(float *c,int idx,int prev)
   Set(c,sn,cs,t,1.0/mag);
 }
 
-void OBRotor::Precompute(float *c)
+void OBRotor::Precompute(double *c)
 {
-  float dx,dy,dz;
+  double dx,dy,dz;
   dx = c[_torsion[1]]   - c[_torsion[2]];
   dy = c[_torsion[1]+1] - c[_torsion[2]+1];
   dz = c[_torsion[1]+2] - c[_torsion[2]+2];
@@ -639,14 +639,14 @@ void OBRotor::Precompute(float *c)
   _refang = CalcTorsion(c);
 }
 
-void OBRotor::Set(float *c,int idx)
+void OBRotor::Set(double *c,int idx)
 {
-  float ang,sn,cs,t;
+  double ang,sn,cs,t;
 
   ang = _res[idx] - _refang;
   sn = sin(ang); cs = cos(ang); t = 1-cs;
   
-  float x,y,z,tx,ty,tz,m[9];
+  double x,y,z,tx,ty,tz,m[9];
 
   x = c[_torsion[1]]   - c[_torsion[2]];
   y = c[_torsion[1]+1] - c[_torsion[2]+1];
@@ -676,9 +676,9 @@ void OBRotor::Set(float *c,int idx)
     }
 }
 
-void OBRotor::Set(float *c,float sn,float cs,float t,float invmag)
+void OBRotor::Set(double *c,double sn,double cs,double t,double invmag)
 {
-  float x,y,z,tx,ty,tz,m[9];
+  double x,y,z,tx,ty,tz,m[9];
 
   x = c[_torsion[1]]   - c[_torsion[2]];
   y = c[_torsion[1]+1] - c[_torsion[2]+1];
@@ -712,8 +712,8 @@ void OBRotor::Set(float *c,float sn,float cs,float t,float invmag)
 
 void OBRotor::RemoveSymTorsionValues(int fold)
 {
-  vector<float>::iterator i;
-  vector<float> tv;
+  vector<double>::iterator i;
+  vector<double> tv;
   if (_res.size() == 1) return;
 
   for (i = _res.begin();i != _res.end();i++)
@@ -775,8 +775,8 @@ void OBRotorRules::ParseLine(const char *buffer)
 {
   int i;
   int ref[4];
-  float delta;
-  vector<float> vals;
+  double delta;
+  vector<double> vals;
   vector<string> vs;
   vector<string>::iterator j;
   char temp_buffer[BUFF_SIZE];
@@ -844,7 +844,7 @@ void OBRotorRules::ParseLine(const char *buffer)
 }
 
 void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
-				      int ref[4],vector<float> &vals,float &delta)
+				      int ref[4],vector<double> &vals,double &delta)
 {
   vals.clear();
   vector<pair<int,int> > vpr;
@@ -892,19 +892,19 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
 			if (!r) continue; //unable to find reference heavy atom
 //			cerr << "r = " << r->GetIdx() << endl;
 
-			float t1 = mol.GetTorsion(a1,a2,a3,a4);
-			float t2 = mol.GetTorsion(r,a2,a3,a4);
-			float diff = t2 - t1;
-			if (diff > 180.0) diff -= 360.0f;
-			if (diff < -180.0) diff += 360.0f;
+			double t1 = mol.GetTorsion(a1,a2,a3,a4);
+			double t2 = mol.GetTorsion(r,a2,a3,a4);
+			double diff = t2 - t1;
+			if (diff > 180.0) diff -= 360.0;
+			if (diff < -180.0) diff += 360.0;
 			diff *= DEG_TO_RAD;
 
-			vector<float>::iterator m;
+			vector<double>::iterator m;
 			for (m = vals.begin();m != vals.end();m++) 
 			{
 				*m += diff;
-				if (*m < PI) *m += 2.0f*PI;
-				if (*m > PI) *m -= 2.0f*PI;
+				if (*m < PI) *m += 2.0*PI;
+				if (*m > PI) *m -= 2.0*PI;
 			}
 
 			if (swapped) ref[3] = r->GetIdx();

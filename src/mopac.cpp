@@ -22,7 +22,7 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   vector<string> vs;
   vector<double> charges;
@@ -100,7 +100,7 @@ bool ReadMOPACCartesian(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   string str;
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   vector<string> vs;
 

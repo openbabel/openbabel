@@ -76,7 +76,7 @@ bool WriteXED(ostream &ofs,OBMol &mol)
     }
 
     sprintf(buffer,"%6i%15.6f%15.6f%15.6f%6i%12.4f",
-        mass, atom->GetX(),atom->GetY(),atom->GetZ(), type_name, 0.0f);
+        mass, atom->GetX(),atom->GetY(),atom->GetZ(), type_name, 0.0);
     ofs << buffer << endl;
   }
   ofs << "    1         0.0000    0         0.0000" << endl;

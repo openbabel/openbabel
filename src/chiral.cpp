@@ -54,10 +54,10 @@ void OBMol::FindChiralCenters()
 	vector<unsigned int> tlist;
 	vector<unsigned int>::iterator k;
 #else //use Golender floating point method
-	vector<float> gp;  
+	vector<double> gp;  
 	GraphPotentials(*this,gp);
-	vector<float> tlist;
-	vector<float>::iterator k;
+	vector<double> tlist;
+	vector<double>::iterator k;
 #endif
 
   bool ischiral;
@@ -99,8 +99,8 @@ void GetChirality(OBMol &mol, vector<int> &chirality)
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     if (atom->IsChiral())
       {
-	float sv = CalcSignedVolume(mol,atom);
-	if (sv < 0.0f)	chirality[atom->GetIdx()-1] = -1;
+	double sv = CalcSignedVolume(mol,atom);
+	if (sv < 0.0)	chirality[atom->GetIdx()-1] = -1;
 	else if (sv > 0.0)  chirality[atom->GetIdx()-1] = 1;
     }
 }
@@ -108,12 +108,12 @@ void GetChirality(OBMol &mol, vector<int> &chirality)
 // Calculate the signed volume for an atom.  If the atom has a valence of 3
 // the coordinates of an attached hydrogen are calculated
 
-float CalcSignedVolume(OBMol &mol,OBAtom *atm)
+double CalcSignedVolume(OBMol &mol,OBAtom *atm)
 {
   vector3 tmp_crd;
   vector<int> nbr_atms;
   vector<vector3> nbr_crds;
-  float hbrad = etab.CorrectedBondRad(1,0);
+  double hbrad = etab.CorrectedBondRad(1,0);
 	
   if (atm->GetHvyValence() < 3)
     {
@@ -139,7 +139,7 @@ float CalcSignedVolume(OBMol &mol,OBAtom *atm)
   // If we have three heavy atoms we need to calculate the position of the fourth
   if (atm->GetHvyValence() == 3)
     {		
-      float bondlen = hbrad+etab.CorrectedBondRad(atm->GetAtomicNum(),atm->GetHyb());
+      double bondlen = hbrad+etab.CorrectedBondRad(atm->GetAtomicNum(),atm->GetHyb());
       atm->GetNewBondVector(tmp_crd,bondlen);
       nbr_crds.push_back(tmp_crd);
     }
@@ -148,7 +148,7 @@ float CalcSignedVolume(OBMol &mol,OBAtom *atm)
 }
 
 // calculate a signed volume given a set of 4 coordinates
-float signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d)
+double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d)
 {
   vector3 A,B,C;
   A = b-a;
@@ -165,11 +165,11 @@ float signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const 
 // for an example see
 // Walters, W. P., Yalkowsky, S. H., JCICS, 1996, 36(5), 1015-1017
 
-void GraphPotentials(OBMol &mol, vector<float> &pot)
+void GraphPotentials(OBMol &mol, vector<double> &pot)
 {
-  float det;
+  double det;
 
-  vector<vector<float> > g,c,h;
+  vector<vector<double> > g,c,h;
   construct_g_matrix(mol,g);
   invert_matrix(g,det); 
   construct_c_matrix(mol,c);
@@ -184,7 +184,7 @@ void GraphPotentials(OBMol &mol, vector<float> &pot)
 // on the diagonal and and -1 on the off diagonal if two
 // atoms are connected.
 
-void construct_g_matrix(OBMol &mol, vector<vector<float> > &m)
+void construct_g_matrix(OBMol &mol, vector<vector<double> > &m)
 {
   unsigned int i,j;
 
@@ -201,8 +201,8 @@ void construct_g_matrix(OBMol &mol, vector<vector<float> > &m)
 	if (i == j)
 	  {
 	    m[i][j] = atm1->GetValence() + 1;
-	    m[i][j] += (float)atm1->GetAtomicNum()/10.0;
-	    m[i][j] += (float)atm1->GetHyb()/100.0;
+	    m[i][j] += (double)atm1->GetAtomicNum()/10.0;
+	    m[i][j] += (double)atm1->GetHyb()/100.0;
 	  }
 	else
 	  {
@@ -216,7 +216,7 @@ void construct_g_matrix(OBMol &mol, vector<vector<float> > &m)
 
 // Construct the matrix C, which is simply a column vector
 // consisting of the valence for each atom
-void construct_c_matrix(OBMol &mol,vector<vector<float > > &m)
+void construct_c_matrix(OBMol &mol,vector<vector<double > > &m)
 {
   unsigned int i;
   OBAtom *atm1;

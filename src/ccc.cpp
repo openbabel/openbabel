@@ -32,7 +32,7 @@ bool ReadCCC(istream &ifs,OBMol &mol,const char *title)
   mol.ReserveAtoms(natoms);
 
   int end,order;
-  float x,y,z;
+  double x,y,z;
   OBAtom atom;
   vector3 v;
   vector<string> vs;
@@ -46,7 +46,7 @@ bool ReadCCC(istream &ifs,OBMol &mol,const char *title)
       element[0] = buffer[0];
       element[1] = (buffer[1] != ' ') ? buffer[1]:'\0';
       atom.SetAtomicNum(etab.GetAtomicNum(element));
-      sscanf(&buffer[15],"%f%f%f",&x,&y,&z);
+      sscanf(&buffer[15],"%lf%lf%lf",&x,&y,&z);
       v.Set(x,y,z);
       atom.SetVector(v);
 

@@ -53,11 +53,11 @@ bool ReadMacroModel(istream &ifs, OBMol &mol,const char *defaultTitle)
   
   // Get Type Bonds, BondOrder, X, Y, Z
   
-  float x,y,z;
+  double x,y,z;
   vector3 v;
   char temp_type[10];
   int i,j;
-  float charge;
+  double charge;
   OBAtom atom;
 
   ttab.SetFromType("MMD");  
@@ -67,7 +67,7 @@ bool ReadMacroModel(istream &ifs, OBMol &mol,const char *defaultTitle)
       
       int end[6], order[6]; 
 
-      sscanf(buffer,"%s%d%d%d%d%d%d%d%d%d%d%d%d%f%f%f", 
+      sscanf(buffer,"%s%d%d%d%d%d%d%d%d%d%d%d%d%lf%lf%lf", 
 	     temp_type,&end[0],&order[0],&end[1],&order[1],&end[2],&order[2],
 	     &end[3], &order[3], &end[4], &order[4], &end[5], &order[5],
 	     &x, &y, &z);
@@ -95,7 +95,7 @@ bool ReadMacroModel(istream &ifs, OBMol &mol,const char *defaultTitle)
       // stuff for optional fields      
       
       buffer[109]='\0';
-      sscanf(&buffer[101],"%f", &charge);  
+      sscanf(&buffer[101],"%lf", &charge);  
       atom.SetPartialCharge(charge);
       mol.AddAtom(atom);
     }

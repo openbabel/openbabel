@@ -34,12 +34,12 @@ protected:
 
   bool  fuzzy;
 
-  float xmin, ymin, zmin;
-  float xmax, ymax, zmax;
-  float midx, midy, midz;
+  double xmin, ymin, zmin;
+  double xmax, ymax, zmax;
+  double midx, midy, midz;
   int   xdim, ydim, zdim, xydim;
 
-  float spacing, inv_spa;
+  double spacing, inv_spa;
   int   size;
 
   OBBitVec grid,lipo,don,acc;
@@ -53,8 +53,8 @@ public:
   BitGrid(bool);
   ~BitGrid(void);
 
-  void Init(OBMol &, float);
-  void Init(float,float,float,float,float,float,float);
+  void Init(OBMol &, double);
+  void Init(double,double,double,double,double,double,double);
   void Build(OBMol &);
   void Build(OBMol &, OBBitVec &);
   void Build(OBMol &, std::vector<int> &);

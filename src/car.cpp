@@ -21,7 +21,7 @@ bool ReadBiosymCAR(istream &ifs,OBMol &mol, const char *title)
 {
   char buffer[BUFF_SIZE];
   string str;
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   vector<string> vs;
 

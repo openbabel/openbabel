@@ -24,7 +24,7 @@ bool ReadHIN(istream &ifs,OBMol &mol, const char *title)
   int max, bo;
   char buffer[BUFF_SIZE];
   string str,str1;
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   vector<string> vs;
 

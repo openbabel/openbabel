@@ -25,7 +25,7 @@ bool ReadCaccrt(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   int natoms;
-  float A,B,C,Alpha,Beta,Gamma;
+  double A,B,C,Alpha,Beta,Gamma;
   matrix3x3 m;
   
   ifs.getline(buffer,BUFF_SIZE); mol.SetTitle(buffer);
@@ -52,7 +52,7 @@ bool ReadCaccrt(istream &ifs,OBMol &mol,const char *title)
   m = uc->GetOrthoMatrix();
 
   int i;
-  float x,y,z;
+  double x,y,z;
   char type[10];
   OBAtom *atom;
   vector3 v;
@@ -127,7 +127,7 @@ bool WriteCacaoInternal(ostream &ofs,OBMol &mol)
   if (mol.Empty()) return(false);
 
   //translate first atom to origin
-  v = mol.GetAtom(1)->GetVector(); v *= -1.0f; mol.Translate(v);
+  v = mol.GetAtom(1)->GetVector(); v *= -1.0; mol.Translate(v);
 
   vector<OBInternalCoord*> vit;
   SetHilderbrandt(mol,vit);
@@ -166,11 +166,11 @@ void SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
   // Roundtrip testing shows that some atoms are NULL
   //  which causes segfaults when dereferencing later
   //   (e.g. in the last "segment" of this routine
-  float sum,r;
+  double sum,r;
 
   OBAtom dummy1,dummy2;
-  dummy1.SetVector(0.0f,0.0f,1.0f);
-  dummy2.SetVector(1.0f,0.0f,0.0f);
+  dummy1.SetVector(0.0,0.0,1.0);
+  dummy2.SetVector(1.0,0.0,0.0);
 
   OBAtom *atom,*a1,*a2,*ref;
   vector<OBNodeBase*>::iterator ai;
@@ -189,7 +189,7 @@ void SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
     {
       ref = (OBAtom*)NULL;
       a1 = mol.GetAtom(i);
-      sum = 100.0f;
+      sum = 100.0;
       for (j = 1;j < i;j++)
 	{
 	  a2 = mol.GetAtom(j);

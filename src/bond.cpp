@@ -75,7 +75,7 @@ void OBBond::SetBO(int order)
   else            UnsetAromatic();
 }
 
-void OBBond::SetLength(OBAtom *fixed, float length)
+void OBBond::SetLength(OBAtom *fixed, double length)
 {
   unsigned int i;
   OBMol *mol = (OBMol*)fixed->GetParent();
@@ -362,9 +362,9 @@ bool OBBond::IsClosure()
   return(HasFlag(OB_CLOSURE_BOND));
 }
 
-float OBBond::GetEquibLength()
+double OBBond::GetEquibLength()
 {
-  float length;
+  double length;
   OBAtom *begin, *end;
   // CorrectedBondRad will always return a # now
   //  if (!CorrectedBondRad(GetBeginAtom(),rad1)) return(0.0);
@@ -375,15 +375,15 @@ float OBBond::GetEquibLength()
   length = etab.CorrectedBondRad(begin->GetAtomicNum(), begin->GetHyb())
     + etab.CorrectedBondRad(end->GetAtomicNum(), end->GetHyb());
   
-  if (IsAromatic()) length *= 0.93f;
-  else if (GetBO() == 2)         length *= 0.91f;
-  else if (GetBO() == 3)         length *= 0.87f;
+  if (IsAromatic()) length *= 0.93;
+  else if (GetBO() == 2)         length *= 0.91;
+  else if (GetBO() == 3)         length *= 0.87;
   return(length);
 }
 
-float OBBond::GetLength()
+double OBBond::GetLength()
 {
-  float	d2;
+  double	d2;
   OBAtom *begin, *end;
   begin = GetBeginAtom();
   end = GetEndAtom();

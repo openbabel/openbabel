@@ -164,7 +164,7 @@ OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo)
 //
 OBUnitCell::OBUnitCell()
 {
-  _a = _b = _c = _alpha = _beta = _gamma = 0.0f;
+  _a = _b = _c = _alpha = _beta = _gamma = 0.0;
   _type = obUnitCell;
   _attr = "UnitCell";
 }
@@ -210,9 +210,9 @@ vector<vector3> OBUnitCell::GetCellVectors()
   vector3 cellVec;
 
   v.reserve(3);
-  cellVec.Set(_a, 0.0f, 0.0f);
+  cellVec.Set(_a, 0.0, 0.0);
   v.push_back(cellVec);
-  cellVec.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0f);
+  cellVec.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0);
   v.push_back(cellVec);
   cellVec.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
 	      _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
@@ -226,8 +226,8 @@ matrix3x3 OBUnitCell::GetCellMatrix()
 {
   vector3 v1, v2, v3;
 
-  v1.Set(_a, 0.0f, 0.0f);
-  v2.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0f);
+  v1.Set(_a, 0.0, 0.0);
+  v2.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0);
   v3.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
 	      _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
 	      _c*sin(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha));
@@ -239,8 +239,8 @@ matrix3x3 OBUnitCell::GetCellMatrix()
 matrix3x3 OBUnitCell::GetOrthoMatrix()
 {
   matrix3x3 m;
-  float alphaRad, betaRad, gammaRad;
-  float v;
+  double alphaRad, betaRad, gammaRad;
+  double v;
 
   alphaRad = _alpha * DEG_TO_RAD;
   betaRad = _beta * DEG_TO_RAD;
@@ -252,11 +252,11 @@ matrix3x3 OBUnitCell::GetOrthoMatrix()
   m.Set(0,0, _a);
   m.Set(0,1, _b * cos(gammaRad));
   m.Set(0,2, _c * cos(betaRad));
-  m.Set(1,0, 0.0f);
+  m.Set(1,0, 0.0);
   m.Set(1,1, _b * sin(gammaRad));
   m.Set(1,2, _c * (cos(alphaRad)-cos(betaRad)*cos(gammaRad)) / sin(gammaRad));
-  m.Set(2,0, 0.0f);
-  m.Set(2,1, 0.0f);
+  m.Set(2,0, 0.0);
+  m.Set(2,1, 0.0);
   m.Set(2,2, _c * v);
 
   return m;
@@ -562,7 +562,7 @@ unsigned int OBAngleData::FillAngleArray(int **angles, unsigned int &size)
 */
 OBTorsion::OBTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d)
 {
-    triple<OBAtom*,OBAtom*,float> ad(a,d,0.0);
+    triple<OBAtom*,OBAtom*,double> ad(a,d,0.0);
     _ads.push_back(ad);
 
     _bc.first  = b;
@@ -588,7 +588,7 @@ vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > OBTorsion::GetTorsions()
     abcd.third  = _bc.second;
 
     vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > torsions;
-    vector<triple<OBAtom*,OBAtom*,float> >::iterator ad;
+    vector<triple<OBAtom*,OBAtom*,double> >::iterator ad;
 
     for(ad = _ads.begin();ad != _ads.end();ad++)
     {
@@ -630,7 +630,7 @@ void OBTorsion::Clear()
 **\param index the index into the torsion of the OBTorsion
 **\return boolean success
 */
-bool OBTorsion::SetAngle(float radians,unsigned int index)
+bool OBTorsion::SetAngle(double radians,unsigned int index)
 {
     if(index >= _ads.size())
         return(false);
@@ -646,7 +646,7 @@ bool OBTorsion::SetAngle(float radians,unsigned int index)
 **\param index the index into the torsion of the OBTorsion
 **\return boolean success
 */
-bool OBTorsion::GetAngle(float &radians, unsigned int index)
+bool OBTorsion::GetAngle(double &radians, unsigned int index)
 {
     if(index >= _ads.size())
         return false;
@@ -667,7 +667,7 @@ bool OBTorsion::IsProtonRotor()
 {
     bool Aprotor = true;
     bool Dprotor = true;
-    vector<triple<OBAtom*,OBAtom*,float> >::iterator ad;
+    vector<triple<OBAtom*,OBAtom*,double> >::iterator ad;
     for(ad = _ads.begin();ad != _ads.end() && (Aprotor || Dprotor);ad++)
     {
         if(!ad->first->IsHydrogen())
@@ -692,7 +692,7 @@ bool OBTorsion::AddTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d)
         _bc.second = c;
     }
 
-    triple<OBAtom*,OBAtom*,float> ad(a,d,0.0);
+    triple<OBAtom*,OBAtom*,double> ad(a,d,0.0);
     _ads.push_back(ad);
 
     return(true);
@@ -712,7 +712,7 @@ bool OBTorsion::AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &atoms)
         _bc.second = atoms.third;
     }
 
-    triple<OBAtom*,OBAtom*,float> ad(atoms.first,atoms.fourth,0.0);
+    triple<OBAtom*,OBAtom*,double> ad(atoms.first,atoms.fourth,0.0);
     _ads.push_back(ad);
 
     return(true);

@@ -89,7 +89,7 @@ bool WriteBallAndStick(std::ostream &,OBMol &);
 bool WriteBGF(std::ostream &, OBMol &);
 bool WriteBinary(std::ostream&,OBMol&);
 bool WriteBinary(std::string&,int&,OBMol&); 
-bool WriteBox(std::ostream &,OBMol &,float margin);
+bool WriteBox(std::ostream &,OBMol &,double margin);
 bool WriteCaccrt(std::ostream &,OBMol &);
 bool WriteCacaoInternal(std::ostream &,OBMol &);
 bool WriteCache(std::ostream &,OBMol &);

@@ -13,6 +13,12 @@
 	deciding if an atom type is a two-character element or a one-char
 	element.
 
+	* src/*.h, *.cpp: Switch from float to double throughout. Improves
+	accuracy significantly in coordinate transformations.
+
+	* src/binary.cpp (PackCoordinate, UnpackCoordinate): Make sure to
+	cast to float before packing for compatibility with file format.
+
 2003-03-17  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 	
 	* src/cml.cpp: Fix unused declarations that cause problems with

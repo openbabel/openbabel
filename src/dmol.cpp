@@ -24,7 +24,7 @@ bool ReadDMol(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   string str;
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   vector3 v1,v2,v3;
   vector<string> vs;

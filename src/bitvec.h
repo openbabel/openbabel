@@ -102,7 +102,7 @@ public:
 };
 
 extern void ThrowError(char *);
-float Tanimoto(OBBitVec&,OBBitVec&);
+double Tanimoto(OBBitVec&,OBBitVec&);
 
 }
 

@@ -33,7 +33,7 @@ bool WriteFenskeZmat(ostream &ofs,OBMol &mol)
 
   ofs << endl << mol.NumAtoms() << endl;
     
-  float r,w,t;
+  double r,w,t;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   { 
     a = vic[atom->GetIdx()]->_a;

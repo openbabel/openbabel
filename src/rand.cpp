@@ -426,17 +426,17 @@ int OBRandom::NextInt()
   return(x);
 }
 
-float OBRandom::NextFloat()
+double OBRandom::NextFloat()
 {
 
-  if (OBRandomUseSysRand) { return(float(rand())/float(RAND_MAX)); }
+  if (OBRandomUseSysRand) { return(double(rand())/double(RAND_MAX)); }
   do {
     DoubleMultiply(a,x,&d);
     DoubleAdd(&d,c);
     x = DoubleModulus(&d,m);
   } while( x >= p );
   
-  return((float)x/p);
+  return((double)x/p);
 }
 
 void OBRandom::TimeSeed()

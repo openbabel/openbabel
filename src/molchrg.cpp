@@ -54,14 +54,14 @@ bool OBGastChrg::AssignPartialCharges(OBMol &mol)
   vector<OBNodeBase*>::iterator i;
 
   GSVResize(mol.NumAtoms()+1);
-  float a,b,c;
+  double a,b,c;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
       if (!GasteigerSigmaChi(atom,a,b,c)) return(false);
       _gsv[atom->GetIdx()]->SetValues(a,b,c,atom->GetPartialCharge());
     }
 
-  float alpha,charge,denom;
+  double alpha,charge,denom;
   unsigned j;
   int iter;
   OBBond *bond;
@@ -85,12 +85,12 @@ bool OBGastChrg::AssignPartialCharges(OBMol &mol)
 
 	  if (_gsv[src->GetIdx()]->chi >= _gsv[dst->GetIdx()]->chi)
 	    {
-	      if (dst->IsHydrogen()) denom = float(OB_GASTEIGER_DENOM);
+	      if (dst->IsHydrogen()) denom = double(OB_GASTEIGER_DENOM);
 	      else                   denom = _gsv[dst->GetIdx()]->denom;
 	    }
 	  else
 	    {
-	      if (src->IsHydrogen()) denom = float(OB_GASTEIGER_DENOM);
+	      if (src->IsHydrogen()) denom = double(OB_GASTEIGER_DENOM);
 	      else                   denom = _gsv[src->GetIdx()]->denom;
 	    }
 
@@ -113,76 +113,76 @@ void OBGastChrg::InitialPartialCharges(OBMol &mol)
   
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-      if (atom->IsCarboxylOxygen()) atom->SetPartialCharge(-0.500f);
+      if (atom->IsCarboxylOxygen()) atom->SetPartialCharge(-0.500);
       else if (atom->IsPhosphateOxygen() &&
-	       atom->GetHvyValence() == 1) atom->SetPartialCharge(-0.666f);
-      else if (atom->IsSulfateOxygen())   atom->SetPartialCharge(-0.500f);
-      else atom->SetPartialCharge((float)atom->GetFormalCharge());
+	       atom->GetHvyValence() == 1) atom->SetPartialCharge(-0.666);
+      else if (atom->IsSulfateOxygen())   atom->SetPartialCharge(-0.500);
+      else atom->SetPartialCharge((double)atom->GetFormalCharge());
     }
 }
 
-bool OBGastChrg::GasteigerSigmaChi(OBAtom *atom,float &a,float &b,float &c )
+bool OBGastChrg::GasteigerSigmaChi(OBAtom *atom,double &a,double &b,double &c )
 {
   int count;
-  float val[3] = {0.0,0.0,0.0};
+  double val[3] = {0.0,0.0,0.0};
 
   switch(atom->GetAtomicNum()) 
     {
     case 1: //H
-      val[0] = 0.37f;val[1] = 7.17f;val[2] = 12.85f; 
+      val[0] = 0.37;val[1] = 7.17;val[2] = 12.85; 
       break;
     case 6: //C
-      if (atom->GetHyb() == 3)	{val[0] = 0.68f;val[1] = 7.98f;val[2] = 19.04f;}
-      if (atom->GetHyb() == 2)	{val[0] = 0.98f;val[1] = 8.79f;val[2] = 19.62f;}
-      if (atom->GetHyb() == 1)	{val[0] = 1.67f;val[1] = 10.39f;val[2] = 20.57f;}
+      if (atom->GetHyb() == 3)	{val[0] = 0.68;val[1] = 7.98;val[2] = 19.04;}
+      if (atom->GetHyb() == 2)	{val[0] = 0.98;val[1] = 8.79;val[2] = 19.62;}
+      if (atom->GetHyb() == 1)	{val[0] = 1.67;val[1] = 10.39;val[2] = 20.57;}
       break;
     case 7: //N
       if (atom->GetHyb() == 3)
 	{
 	  if (atom->GetValence() == 4 || atom->GetFormalCharge())
-	    {val[0] = 0.0f;val[1] = 0.0f;val[2] = 23.72f;}
+	    {val[0] = 0.0;val[1] = 0.0;val[2] = 23.72;}
 	  else
-	    {val[0] = 2.08f;val[1] = 11.54f;val[2] = 23.72f;}
+	    {val[0] = 2.08;val[1] = 11.54;val[2] = 23.72;}
 	}
 
       if (atom->GetHyb() == 2)
 	{
 	  if (EQ(atom->GetType(),"Npl") || EQ(atom->GetType(),"Nam"))
-	    {val[0] = 2.46f;val[1] = 12.32f;val[2] = 24.86f;}
+	    {val[0] = 2.46;val[1] = 12.32;val[2] = 24.86;}
 	  else
-	    {val[0] = 2.57f;val[1] = 12.87f;val[2] = 24.87f;}
+	    {val[0] = 2.57;val[1] = 12.87;val[2] = 24.87;}
 	}
 
-      if (atom->GetHyb() == 1)	{val[0] = 3.71f;val[1] = 15.68f;val[2] = 27.11f;}
+      if (atom->GetHyb() == 1)	{val[0] = 3.71;val[1] = 15.68;val[2] = 27.11;}
       break;
     case 8: //O
-      if (atom->GetHyb() == 3) {val[0] = 2.65f;val[1] = 14.18f;val[2] = 28.49f;}
-      if (atom->GetHyb() == 2) {val[0] = 3.75f;val[1] = 17.07f;val[2] = 31.33f;}
+      if (atom->GetHyb() == 3) {val[0] = 2.65;val[1] = 14.18;val[2] = 28.49;}
+      if (atom->GetHyb() == 2) {val[0] = 3.75;val[1] = 17.07;val[2] = 31.33;}
       break;
     case 9: //F
-      val[0] = 3.12f;val[1] = 14.66f;val[2] = 30.82f;
+      val[0] = 3.12;val[1] = 14.66;val[2] = 30.82;
       break;
     case 15: //P
-      val[0] = 1.62f;val[1] = 8.90f;val[2] = 18.10f;
+      val[0] = 1.62;val[1] = 8.90;val[2] = 18.10;
       break;
     case 16: //S
       count = atom->CountFreeOxygens();
       if (count == 0 || count == 1) 
-	{val[0] = 2.39f;val[1] = 10.14f;val[2] = 20.65f;}
-      if (count > 1) {val[0] = 2.39f;val[1] = 12.00f;val[2] = 24.00f;}
+	{val[0] = 2.39;val[1] = 10.14;val[2] = 20.65;}
+      if (count > 1) {val[0] = 2.39;val[1] = 12.00;val[2] = 24.00;}
       /*S2? if (count == 0) {val[0] = 2.72;val[1] = 10.88;val[2] = 21.69;}*/
       break;
     case 17: //Cl
-      val[0] = 2.66f;val[1] = 11.00f;val[2] = 22.04f;
+      val[0] = 2.66;val[1] = 11.00;val[2] = 22.04;
       break;
     case 35: //Br
-      val[0] = 2.77f;val[1] = 10.08f;val[2] = 19.71f;
+      val[0] = 2.77;val[1] = 10.08;val[2] = 19.71;
       break;
     case 53: //I
-      val[0] = 2.90f;val[1] = 9.90f;val[2] = 18.82f;
+      val[0] = 2.90;val[1] = 9.90;val[2] = 18.82;
       break;
     case 13: //Al
-      val[0] = 1.06f;val[1] = 5.47f;val[2] = 11.65f;
+      val[0] = 1.06;val[1] = 5.47;val[2] = 11.65;
 	break;
     }
 

@@ -79,7 +79,7 @@ bool WriteZINDO(ostream &ofs,OBMol &mol)
       ofs << " NOP = 1 " << endl;
       ofs << " NDT = 1 " << endl;
       sprintf(buffer," FOP(1) =% 10.6f% 10.6f",
-	      valenceE - 1, 1.0f);
+	      valenceE - 1, 1.0);
       ofs << buffer << endl;
     }
 

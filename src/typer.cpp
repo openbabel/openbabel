@@ -250,7 +250,7 @@ void OBAtomTyper::CorrectAromaticNitrogens(OBMol &mol)
 	}
       
       //calculate what the number of electrons should be for aromaticity
-      int naromatic = 2+4*((int)((float)(rsys.size()-2)*0.25+0.5));
+      int naromatic = 2+4*((int)((double)(rsys.size()-2)*0.25+0.5));
 
       if (nelectrons > naromatic) //try to give one electron back to O or S
 	for (m = v_OS.begin();m != v_OS.end();m++)

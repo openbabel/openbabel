@@ -84,17 +84,17 @@ string NewExtension(string &src,char *ext)
   return(dst);
 }
 
-vector3 center_coords(float *c,int size)
+vector3 center_coords(double *c,int size)
 {
   int i;
-  float x=0,y=0,z=0;
+  double x=0,y=0,z=0;
   for (i = 0;i < size;i++)
     {
       x += c[i*3];
       y += c[i*3+1];
       z += c[i*3+2];
     }
-  x /= (float) size; y /= (float) size; z /= (float) size;
+  x /= (double) size; y /= (double) size; z /= (double) size;
   for (i = 0;i < size;i++)
     {
       c[i*3]   -= x;
@@ -105,10 +105,10 @@ vector3 center_coords(float *c,int size)
   return(v);
 }
 
-void rotate_coords(float *c,float m[3][3],int size)
+void rotate_coords(double *c,double m[3][3],int size)
 {
   int i;
-  float x,y,z;
+  double x,y,z;
   for (i = 0;i < size;i++)
     {
       x = c[i*3]*m[0][0] + c[i*3+1]*m[0][1] + c[i*3+2]*m[0][2];
@@ -118,10 +118,10 @@ void rotate_coords(float *c,float m[3][3],int size)
     }
 }
 
-float calc_rms(float *r,float *f,int size)
+double calc_rms(double *r,double *f,int size)
 {
   int i;
-  float d2=0.0f;
+  double d2=0.0;
   for (i = 0;i < size;i++)
     {
       d2 += SQUARE(r[i*3] - f[i*3]) +
@@ -129,19 +129,19 @@ float calc_rms(float *r,float *f,int size)
 	   SQUARE(r[i*3+2] - f[i*3+2]);
     }
 
-  d2 /= (float) size;
+  d2 /= (double) size;
   return(sqrt(d2));
 }
 
-void SetRotorToAngle(float *c,vector<int> &tor,float ang,vector<int> &atoms)
+void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
      //this function will rotate the coordinates of 'atoms'
      //such that tor == ang - atoms in 'tor' should be ordered such 
      //that the 3rd atom is the pivot around which atoms rotate
 {
-  float v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
-  float c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
-  float c1mag,c2mag,radang,costheta,m[9];
-  float x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
+  double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
+  double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
+  double c1mag,c2mag,radang,costheta,m[9];
+  double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
 
   //
   //calculate the torsion angle
@@ -165,8 +165,8 @@ void SetRotorToAngle(float *c,vector<int> &tor,float ang,vector<int> &atoms)
   if (c1mag*c2mag < 0.01) costheta = 1.0; //avoid div by zero error
   else costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
 
-  if (costheta < -0.999999) costheta = -0.999999f;
-  if (costheta >  0.999999) costheta =  0.999999f;
+  if (costheta < -0.999999) costheta = -0.999999;
+  if (costheta >  0.999999) costheta =  0.999999;
 			      
   if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0) radang = -acos(costheta);
   else                                     radang = acos(costheta);
@@ -377,7 +377,7 @@ void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 
     if      (index == 0)
       {
-	atom->SetVector(0.0f, 0.0f, 0.0f);
+	atom->SetVector(0.0, 0.0, 0.0);
 	continue;
       }
     else if (index == 1)
@@ -415,7 +415,7 @@ void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 
 void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
-  float r,sum;
+  double r,sum;
   OBAtom *atom,*nbr,*ref;
   vector<OBNodeBase*>::iterator i,j,m;
   //set reference atoms
@@ -507,11 +507,11 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 
   //check for linear geometries and try to correct if possible
   bool done;
-  float ang;
+  double ang;
   for (k = 2;k <= mol.NumAtoms();k++)
     {
       ang = fabs(vic[k]->_ang);
-      if (ang > 5.0f && ang < 175.0f) continue;
+      if (ang > 5.0 && ang < 175.0) continue;
       atom = mol.GetAtom(k);
       done = false;
       for (a = mol.BeginAtom(i);a && a->GetIdx() < k && !done;a = mol.NextAtom(i))
@@ -520,7 +520,7 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 	    v1 = atom->GetVector() - a->GetVector();
 	    v2 = b->GetVector() - a->GetVector();
 	    ang = fabs(vectorAngle(v1,v2));
-	    if (ang < 5.0f || ang > 175.0f) continue;
+	    if (ang < 5.0 || ang > 175.0) continue;
 	    
 	    for (c = mol.BeginAtom(m);c && c->GetIdx() < atom->GetIdx();c = mol.NextAtom(m))
 	      if (c != atom && c != a && c != b)
@@ -541,15 +541,15 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
     }
 }
 
-void qtrfit (float *r,float *f,int size, float u[3][3])
+void qtrfit (double *r,double *f,int size, double u[3][3])
 {
   register int i;
-  float xxyx, xxyy, xxyz;
-  float xyyx, xyyy, xyyz;
-  float xzyx, xzyy, xzyz;
-  float d[4],q[4];
-  float c[16],v[16];
-  float rx,ry,rz,fx,fy,fz;
+  double xxyx, xxyy, xxyz;
+  double xyyx, xyyy, xyyz;
+  double xzyx, xzyy, xzyz;
+  double d[4],q[4];
+  double c[16],v[16];
+  double rx,ry,rz,fx,fy,fz;
 
 /* generate the upper triangle of the quadratic form matrix */
 
@@ -595,15 +595,15 @@ void qtrfit (float *r,float *f,int size, float u[3][3])
 /* generate the rotation matrix */
 
  u[0][0] = q[0]*q[0] + q[1]*q[1] - q[2]*q[2] - q[3]*q[3];
- u[1][0] = 2.0f * (q[1] * q[2] - q[0] * q[3]);
- u[2][0] = 2.0f * (q[1] * q[3] + q[0] * q[2]);
+ u[1][0] = 2.0 * (q[1] * q[2] - q[0] * q[3]);
+ u[2][0] = 2.0 * (q[1] * q[3] + q[0] * q[2]);
 
- u[0][1] = 2.0f * (q[2] * q[1] + q[0] * q[3]);
+ u[0][1] = 2.0 * (q[2] * q[1] + q[0] * q[3]);
  u[1][1] = q[0]*q[0] - q[1]*q[1] + q[2]*q[2] - q[3]*q[3];
- u[2][1] = 2.0f * (q[2] * q[3] - q[0] * q[1]);
+ u[2][1] = 2.0 * (q[2] * q[3] - q[0] * q[1]);
 
- u[0][2] = 2.0f * (q[3] * q[1] - q[0] * q[2]);
- u[1][2] = 2.0f * (q[3] * q[2] + q[0] * q[1]);
+ u[0][2] = 2.0 * (q[3] * q[1] - q[0] * q[2]);
+ u[1][2] = 2.0 * (q[3] * q[2] + q[0] * q[1]);
  u[2][2] = q[0]*q[0] - q[1]*q[1] - q[2]*q[2] + q[3]*q[3];
 }
 
@@ -611,10 +611,10 @@ void qtrfit (float *r,float *f,int size, float u[3][3])
 
 static double Roots[4];
 
-#define ApproxZero 1E-6
-#define IsZero(x)  ((float)fabs(x)<ApproxZero)
+#define ApproxZero 1E-7
+#define IsZero(x)  ((double)fabs(x)<ApproxZero)
 #ifndef PI
-#define PI         3.1415926536
+#define PI         3.14159265358979323846226433
 #endif
 #define OneThird      (1.0/3.0)
 #define FourThirdsPI  (4.0*PI/3.0)
@@ -736,15 +736,15 @@ static int SolveCubic(double A,double B,double C,double D)
 
 #define MAX_SWEEPS 50
 
-void ob_make_rmat(float a[3][3],float rmat[9])
+void ob_make_rmat(double a[3][3],double rmat[9])
 {
-  float onorm, dnorm;
-  float b, dma, q, t, c, s,d[3];
-  float atemp, vtemp, dtemp,v[3][3];
-  float r1[3],r2[3],v1[3],v2[3],v3[3];
+  double onorm, dnorm;
+  double b, dma, q, t, c, s,d[3];
+  double atemp, vtemp, dtemp,v[3][3];
+  double r1[3],r2[3],v1[3],v2[3],v3[3];
   int i, j, k, l;
 
-  memset((char*)d,'\0',sizeof(float)*3);
+  memset((char*)d,'\0',sizeof(double)*3);
   
   for (j = 0; j < 3; j++) 
     {
@@ -760,10 +760,10 @@ void ob_make_rmat(float a[3][3],float rmat[9])
       onorm = 0.0;
       for (j = 0; j < 3; j++) 
 	{
-	  dnorm = dnorm + (float)fabs(d[j]);
+	  dnorm = dnorm + (double)fabs(d[j]);
 	  for (i = 0; i <= j - 1; i++) 
 	    {
-	      onorm = onorm + (float)fabs(a[i][j]);
+	      onorm = onorm + (double)fabs(a[i][j]);
 	    }
 	}
       
@@ -780,13 +780,13 @@ void ob_make_rmat(float a[3][3],float rmat[9])
 		    t = b / dma;
 		  else 
 		    {
-		      q = 0.5f * dma / b;
-		      t = 1.0f/((float)fabs(q) + (float)sqrt(1.0+q*q));
+		      q = 0.5 * dma / b;
+		      t = 1.0/((double)fabs(q) + (double)sqrt(1.0+q*q));
 		      if(q < 0.0) t = -t;
 		    }
-		  c = 1.0f/(float)sqrt(t * t + 1.0f);
+		  c = 1.0/(double)sqrt(t * t + 1.0);
 		  s = t * c;
-		  a[i][j] = 0.0f;
+		  a[i][j] = 0.0;
 		  for (k = 0; k <= i-1; k++) 
 		    {
 		      atemp = c * a[k][i] - s * a[k][j];
@@ -811,8 +811,8 @@ void ob_make_rmat(float a[3][3],float rmat[9])
 		      v[k][j] = s * v[k][i] + c * v[k][j];
 		      v[k][i] = vtemp;
 		    }
-		  dtemp = c*c*d[i] + s*s*d[j] - 2.0f*c*s*b;
-		  d[j] = s*s*d[i] + c*c*d[j] +  2.0f*c*s*b;
+		  dtemp = c*c*d[i] + s*s*d[j] - 2.0*c*s*b;
+		  d[j] = s*s*d[i] + c*c*d[j] +  2.0*c*s*b;
 		  d[i] = dtemp;
 		}  /* end if */
 	    } /* end for i */
@@ -850,19 +850,19 @@ Exit_now:
   v3[0] =  r1[1]*r2[2] - r1[2]*r2[1];
   v3[1] = -r1[0]*r2[2] + r1[2]*r2[0];
   v3[2] =  r1[0]*r2[1] - r1[1]*r2[0];
-  s = (float)sqrt(v3[0]*v3[0] + v3[1]*v3[1] + v3[2]*v3[2]);
+  s = (double)sqrt(v3[0]*v3[0] + v3[1]*v3[1] + v3[2]*v3[2]);
   v3[0] /= s; v3[0] /= s; v3[0] /= s;
 
   v2[0] =  v3[1]*r1[2] - v3[2]*r1[1];
   v2[1] = -v3[0]*r1[2] + v3[2]*r1[0];
   v2[2] =  v3[0]*r1[1] - v3[1]*r1[0];
-  s = (float)sqrt(v2[0]*v2[0] + v2[1]*v2[1] + v2[2]*v2[2]);
+  s = (double)sqrt(v2[0]*v2[0] + v2[1]*v2[1] + v2[2]*v2[2]);
   v2[0] /= s; v2[0] /= s; v2[0] /= s;
 
   v1[0] =  v2[1]*v3[2] - v2[2]*v3[1];
   v1[1] = -v2[0]*v3[2] + v2[2]*v3[0];
   v1[2] =  v2[0]*v3[1] - v2[1]*v3[0];
-  s = (float)sqrt(v1[0]*v1[0] + v1[1]*v1[1] + v1[2]*v1[2]);
+  s = (double)sqrt(v1[0]*v1[0] + v1[1]*v1[1] + v1[2]*v1[2]);
   v1[0] /= s; v1[0] /= s; v1[0] /= s;
 
   rmat[0] = v1[0]; rmat[1] = v1[1]; rmat[2] = v1[2];
@@ -870,9 +870,9 @@ Exit_now:
   rmat[6] = v3[0]; rmat[7] = v3[1]; rmat[8] = v3[2];
 }
 
-static int get_roots_3_3(float mat[3][3], float roots[3])
+static int get_roots_3_3(double mat[3][3], double roots[3])
 {
-   float rmat[9];
+   double rmat[9];
 
    ob_make_rmat(mat,rmat);
 
@@ -886,18 +886,18 @@ static int get_roots_3_3(float mat[3][3], float roots[3])
    mat[2][1]=rmat[5];
    mat[2][2]=rmat[8];
 
-   roots[0]=(float)Roots[0];
-   roots[1]=(float)Roots[1];
-   roots[2]=(float)Roots[2];
+   roots[0]=(double)Roots[0];
+   roots[1]=(double)Roots[1];
+   roots[2]=(double)Roots[2];
 
    return 1;
 }
 
-float superimpose(float *r,float *f,int size)
+double superimpose(double *r,double *f,int size)
 {
   int i,j;
-  float x,y,z,d2;
-  float mat[3][3],rmat[3][3],mat2[3][3],roots[3];
+  double x,y,z,d2;
+  double mat[3][3],rmat[3][3],mat2[3][3],roots[3];
 
   /* make inertial cross tensor */
   for(i=0;i<3;i++) 
@@ -932,20 +932,20 @@ float superimpose(float *r,float *f,int size)
       }
   get_roots_3_3(rmat,roots);
 
-  roots[0]=(roots[0]<0.0001) ? 0.0f: (roots[0]);
-  roots[1]=(roots[1]<0.0001) ? 0.0f: (roots[1]);
-  roots[2]=(roots[2]<0.0001) ? 0.0f: (roots[2]);
+  roots[0]=(roots[0]<0.0001) ? 0.0: (roots[0]);
+  roots[1]=(roots[1]<0.0001) ? 0.0: (roots[1]);
+  roots[2]=(roots[2]<0.0001) ? 0.0: (roots[2]);
 
   /* make sqrt of rmat, store in mat*/
 
-  roots[0]=roots[0]<0.0001? 0.0f: 1.0f/(float)sqrt(roots[0]);
-  roots[1]=roots[1]<0.0001? 0.0f: 1.0f/(float)sqrt(roots[1]);
-  roots[2]=roots[2]<0.0001? 0.0f: 1.0f/(float)sqrt(roots[2]);
+  roots[0]=roots[0]<0.0001? 0.0: 1.0/(double)sqrt(roots[0]);
+  roots[1]=roots[1]<0.0001? 0.0: 1.0/(double)sqrt(roots[1]);
+  roots[2]=roots[2]<0.0001? 0.0: 1.0/(double)sqrt(roots[2]);
 
   if(d2<0.0){
-    if( (roots[0]>=roots[1]) && (roots[0]>=roots[2]) ) roots[0]*=-1.0f;
-    if( (roots[1]>roots[0]) && (roots[1]>=roots[2]) )  roots[1]*=-1.0f;
-    if( (roots[2]>roots[1]) && (roots[2]>roots[0]) )   roots[2]*=-1.0f;
+    if( (roots[0]>=roots[1]) && (roots[0]>=roots[2]) ) roots[0]*=-1.0;
+    if( (roots[1]>roots[0]) && (roots[1]>=roots[2]) )  roots[1]*=-1.0;
+    if( (roots[2]>roots[1]) && (roots[2]>roots[0]) )   roots[2]*=-1.0;
   }
 
   for(i=0;i<3;i++)
@@ -976,16 +976,16 @@ float superimpose(float *r,float *f,int size)
       d2 += x*x+y*y+z*z;
     }
 
-  d2 /= (float) size;
+  d2 /= (double) size;
 
-  return((float)sqrt(d2));
+  return((double)sqrt(d2));
 }
 
-void get_rmat(float *rvec,float *r,float *f,int size)
+void get_rmat(double *rvec,double *r,double *f,int size)
 {
   int i,j;
-  float x,d2;
-  float mat[3][3],rmat[3][3],mat2[3][3],roots[3];
+  double x,d2;
+  double mat[3][3],rmat[3][3],mat2[3][3],roots[3];
 
   /* make inertial cross tensor */
   for(i=0;i<3;i++) 
@@ -1019,20 +1019,20 @@ void get_rmat(float *rvec,float *r,float *f,int size)
       }
   get_roots_3_3(rmat,roots);
 
-  roots[0]=(roots[0]<0.0001f) ? 0.0f: (roots[0]);
-  roots[1]=(roots[1]<0.0001f) ? 0.0f: (roots[1]);
-  roots[2]=(roots[2]<0.0001f) ? 0.0f: (roots[2]);
+  roots[0]=(roots[0]<0.0001) ? 0.0: (roots[0]);
+  roots[1]=(roots[1]<0.0001) ? 0.0: (roots[1]);
+  roots[2]=(roots[2]<0.0001) ? 0.0: (roots[2]);
 
   /* make sqrt of rmat, store in mat*/
 
-  roots[0]=(roots[0]<0.0001f) ? 0.0f: 1.0f/(float)sqrt(roots[0]);
-  roots[1]=(roots[1]<0.0001f) ? 0.0f: 1.0f/(float)sqrt(roots[1]);
-  roots[2]=(roots[2]<0.0001f) ? 0.0f: 1.0f/(float)sqrt(roots[2]);
+  roots[0]=(roots[0]<0.0001) ? 0.0: 1.0/(double)sqrt(roots[0]);
+  roots[1]=(roots[1]<0.0001) ? 0.0: 1.0/(double)sqrt(roots[1]);
+  roots[2]=(roots[2]<0.0001) ? 0.0: 1.0/(double)sqrt(roots[2]);
 
   if(d2<0.0){
-    if( (roots[0]>=roots[1]) && (roots[0]>=roots[2]) ) roots[0]*=-1.0f;
-    if( (roots[1]>roots[0]) && (roots[1]>=roots[2]) )  roots[1]*=-1.0f;
-    if( (roots[2]>roots[1]) && (roots[2]>roots[0]) )   roots[2]*=-1.0f;
+    if( (roots[0]>=roots[1]) && (roots[0]>=roots[2]) ) roots[0]*=-1.0;
+    if( (roots[1]>roots[0]) && (roots[1]>=roots[2]) )  roots[1]*=-1.0;
+    if( (roots[2]>roots[1]) && (roots[2]>roots[0]) )   roots[2]*=-1.0;
   }
 
   for(i=0;i<3;i++)

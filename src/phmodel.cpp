@@ -42,7 +42,7 @@ OBPhModel::~OBPhModel()
   vector<OBChemTsfm*>::iterator k;
   for (k = _vtsfm.begin();k != _vtsfm.end();k++)     delete *k;
     
-  vector<pair<OBSmartsPattern*,vector<float> > >::iterator m;
+  vector<pair<OBSmartsPattern*,vector<double> > >::iterator m;
   for (m = _vschrg.begin();m != _vschrg.end();m++)   delete m->first;
 }
 
@@ -77,12 +77,12 @@ void OBPhModel::ParseLine(const char *buffer)
 	  delete sp; sp = NULL;
 	  return;
 	}
-      vector<float> vf;
+      vector<double> vf;
       vector<string>::iterator i;
       for (i = vs.begin()+2;i != vs.end();i++)
 	vf.push_back(atof((char*)i->c_str()));
 
-      _vschrg.push_back(pair<OBSmartsPattern*,vector<float> > (sp,vf));
+      _vschrg.push_back(pair<OBSmartsPattern*,vector<double> > (sp,vf));
     }
 }
 
@@ -93,7 +93,7 @@ void OBPhModel::AssignSeedPartialCharge(OBMol &mol)
   mol.SetPartialChargesPerceived();
   if (!mol.AutomaticPartialCharge()) return;
 
-  vector<pair<OBSmartsPattern*,vector<float> > >::iterator i;
+  vector<pair<OBSmartsPattern*,vector<double> > >::iterator i;
   for (i = _vschrg.begin();i != _vschrg.end();i++)
     if (i->first->Match(mol))
     {

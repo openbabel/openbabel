@@ -518,7 +518,7 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
 bool OBMol2Smi::GetChiralStereo(OBSmiNode *node,char *stereo)
 {
   bool is2D=false;
-  float torsion;
+  double torsion;
   OBAtom *a,*b,*c,*d,hydrogen;
 
   b = node->GetAtom();

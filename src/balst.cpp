@@ -28,7 +28,7 @@ bool ReadBallAndStick(istream &ifs,OBMol &mol, const char *title)
   sscanf(buffer,"%d",&natoms);
   mol.ReserveAtoms(natoms);
 
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   vector<string> vs;
   vector<string>::iterator j;

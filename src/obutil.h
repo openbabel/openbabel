@@ -42,47 +42,47 @@ class OBStopwatch
  public:
 #ifdef WIN32
   void  Start() { start= clock();}
-  float Lap()   
+  double Lap()   
   { 
 	  stop= clock();
-	  return((float)(stop - start) / CLOCKS_PER_SEC);
+	  return((double)(stop - start) / CLOCKS_PER_SEC);
   }
 #else
   void Start() {gettimeofday(&start,(struct timezone *)NULL);}
-  float Lap() 
+  double Lap() 
     {
       gettimeofday(&stop,(struct timezone *)NULL);
       return((stop.tv_sec - start.tv_sec)
-	     + (float)(stop.tv_usec - start.tv_usec)/1000000.0);
+	     + (double)(stop.tv_usec - start.tv_usec)/1000000.0);
     }
 #endif
-  float Elapsed() {return(Lap());}
+  double Elapsed() {return(Lap());}
 };
 
 
 //! sqrt lookup table - given a distance squared returns distance
 class OBSqrtTbl
 {
-  float _max,_incr,*_tbl;
+  double _max,_incr,*_tbl;
  public:
   OBSqrtTbl() {_tbl=NULL; _max = _incr = 0.0;}
-  OBSqrtTbl(float max,float incr) {Init(max,incr);}
+  OBSqrtTbl(double max,double incr) {Init(max,incr);}
   ~OBSqrtTbl() {if (_tbl) {delete [] _tbl; _tbl = NULL;}}
-  float Sqrt(float d2) const
+  double Sqrt(double d2) const
     {
       if (_tbl)
 	return((d2 < _max) ? _tbl[(int)(d2*_incr)]:sqrt(d2));
       else
 	return 0.0;
     }
-  void Init(float max,float incr)
+  void Init(double max,double incr)
     {
-      int i; float r;
+      int i; double r;
       _max = max*max;
       _incr = incr;
       //array size needs to be large enough to account for fp error
-      _tbl = new float [(unsigned int)((_max/_incr)+10)];
-      for (r = (_incr/2.0f),i=0;r <= _max;r += _incr,i++)
+      _tbl = new double [(unsigned int)((_max/_incr)+10)];
+      for (r = (_incr/2.0),i=0;r <= _max;r += _incr,i++)
 	_tbl[i] = sqrt(r);
 
       _incr = 1/_incr;
@@ -119,12 +119,12 @@ class OBRandom
     void Seed(int seed) {x = seed;}
     void TimeSeed();
     int NextInt();
-    float NextFloat();
+    double NextFloat();
 };
 
 //***RMS helper methods***/
-void  rotate_coords(float*,float m[3][3],int);
-float calc_rms(float*,float*,int);
+void  rotate_coords(double*,double m[3][3],int);
+double calc_rms(double*,double*,int);
 
 // String conversion utilities
 void ToUpper(std::string&);

@@ -16,7 +16,7 @@
 #   (we don't currently have a math package that can deal with sig. fig.)    #
 #   so trailing zeros may not be significant and/or useful                   #
 #                                                                            #
-#  Values are from "The 1995 update to the atomic mass evaluation"           #
+#  Values are compiled from "The 1995 update to the atomic mass evaluation"  #
 #                    by G.Audi and A.H.Wapstra                               #
 #           Nuclear Physics A595 vol. 4 p.409-480, December 25, 1995.        #
 #  as made available in the mass_rmd.mas95 file                              #

@@ -37,7 +37,7 @@ BitGrid::~BitGrid(void)
   Clear();
 }
 
-void BitGrid::Init(OBMol &box, float spacing)
+void BitGrid::Init(OBMol &box, double spacing)
 {
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
@@ -85,7 +85,7 @@ void BitGrid::Init(OBMol &box, float spacing)
   acc.Resize(size);
 }
 
-void BitGrid::Init(float xmi, float ymi, float zmi, float xma, float yma, float zma, float spacing)
+void BitGrid::Init(double xmi, double ymi, double zmi, double xma, double yma, double zma, double spacing)
 {
   xmin = xmi; xmax = xma;
   ymin = ymi; ymax = yma;
@@ -160,20 +160,20 @@ void BitGrid::SetBits(OBAtom *atom)
   int endY   = (ydim < ypos + 1) ? ydim : ypos + 1;
   int endZ   = (zdim < zpos + 1) ? zdim : zpos + 1;
 
-  float rad  = etab.CorrectedVdwRad(atom->GetAtomicNum(),atom->GetHyb());
+  double rad  = etab.CorrectedVdwRad(atom->GetAtomicNum(),atom->GetHyb());
 
   if (fuzzy)
     {
       vector3 grid_pt, mol_pt = atom->GetVector();
       for ( i = startX ; i <= endX ; i++ )
 	{
-	  grid_pt.SetX(((float)i * (float)spacing) + xmin);
+	  grid_pt.SetX(((double)i * (double)spacing) + xmin);
 	  for ( j = startY ; j <= endY ; j++ )
 	    {
-	      grid_pt.SetY(((float)j * (float)spacing) + ymin);
+	      grid_pt.SetY(((double)j * (double)spacing) + ymin);
 	      for ( k = startZ ; k <= endZ ; k++ )
 		{
-		  grid_pt.SetZ(((float)k * (float)spacing) + zmin);
+		  grid_pt.SetZ(((double)k * (double)spacing) + zmin);
 		  if ((grid_pt - mol_pt).length() > rad)
 		    continue;
 		  

@@ -27,7 +27,7 @@ class OBGastChrg
 {
   std::vector <GasteigerState*> _gsv;
   void InitialPartialCharges(OBMol &);
-  bool GasteigerSigmaChi(OBAtom *,float &,float &,float &);
+  bool GasteigerSigmaChi(OBAtom *,double &,double &,double &);
  public:
   OBGastChrg(){}
   ~OBGastChrg();
@@ -41,12 +41,12 @@ class GasteigerState
  public:
   GasteigerState();
   ~GasteigerState() {}
-  void SetValues(float _a,float _b,float _c,float _q) 
+  void SetValues(double _a,double _b,double _c,double _q) 
     {a = _a;b = _b;c = _c;denom=a+b+c;q = _q;}
-  float a, b, c;
-  float denom;
-  float chi;
-  float q;
+  double a, b, c;
+  double denom;
+  double chi;
+  double q;
 };
 
 }

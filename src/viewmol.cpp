@@ -18,13 +18,15 @@ using namespace std;
 
 namespace OpenBabel {
 
-#define BOHR_TO_ANGSTROM 0.529177
+#define BOHR_TO_ANGSTROM 0.529177249
+#define ANGSTROM_TO_BOHR 1.889725989
 
 bool ReadViewMol(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   OBAtom *atom;
-  float x,y,z, border;
+  double x,y,z, border;
+  double factor = 1.0;
   int bgn, end, order;
   vector<string> vs;
   bool foundTitle = false;
@@ -42,15 +44,18 @@ bool ReadViewMol(istream &ifs,OBMol &mol,const char *title)
 	}
       else if (strstr(buffer,"$coord") != NULL)
 	{
+	  tokenize(vs,buffer);
+	  if (vs.size() == 2)
+	    factor = atof((char*)vs[1].c_str()); // conversion to angstrom
 	  while (ifs.getline(buffer,BUFF_SIZE))
 	    {
 	      if (buffer[0] == '$') break;
 	      tokenize(vs,buffer);
 	      if (vs.size() != 4) return(false);
 	      atom = mol.NewAtom();
-	      x = atof((char*)vs[0].c_str()) * BOHR_TO_ANGSTROM;
-	      y = atof((char*)vs[1].c_str()) * BOHR_TO_ANGSTROM;
-	      z = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
+	      x = atof((char*)vs[0].c_str()) * factor;
+	      y = atof((char*)vs[1].c_str()) * factor;
+	      z = atof((char*)vs[2].c_str()) * factor;
 	      atom->SetVector(x,y,z); //set coordinates
 	      atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
 	    }
@@ -61,8 +66,8 @@ bool ReadViewMol(istream &ifs,OBMol &mol,const char *title)
 	  while (ifs.getline(buffer,BUFF_SIZE))
 	    {
 	      if (buffer[0] == '$') break;
-	      sscanf(buffer,"%d %d %f",&bgn,&end, &border);
-	      if (border > 1.0f)
+	      sscanf(buffer,"%d %d %lf",&bgn,&end, &border);
+	      if (border > 1.0)
 		order = int(border);
 	      else
 		order = 1;

@@ -2289,7 +2289,7 @@ static bool match(OBMol &mol,Pattern *pat,std::vector<std::vector<int> > &mlist,
 		ra2 = mol.GetAtom((*m)[r2]);
 		ra3 = mol.GetAtom((*m)[r3]);
 		ra4 = mol.GetAtom((*m)[r4]);
-		float sign = CalcTorsionAngle(ra1->GetVector(),
+		double sign = CalcTorsionAngle(ra1->GetVector(),
 					      ra2->GetVector(),
 					      ra3->GetVector(),
 					      ra4->GetVector());

@@ -142,12 +142,12 @@ bool SortVVInt(const vector<int> &a,const vector<int> &b)
   return(a.size() > b.size());
 }
 
-bool SortAtomZ(const pair<OBAtom*,float> &a, const pair<OBAtom*,float> &b)
+bool SortAtomZ(const pair<OBAtom*,double> &a, const pair<OBAtom*,double> &b)
 {
   return (a.second < b.second);
 }
 
-float OBMol::GetTorsion(int a,int b,int c,int d)
+double OBMol::GetTorsion(int a,int b,int c,int d)
 {
   return(CalcTorsionAngle(((OBAtom*)_vatom[a-1])->GetVector(),
                           ((OBAtom*)_vatom[b-1])->GetVector(),
@@ -155,7 +155,7 @@ float OBMol::GetTorsion(int a,int b,int c,int d)
                           ((OBAtom*)_vatom[d-1])->GetVector()));
 }
 
-void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, float ang)
+void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, double ang)
 {
   vector<int> tor;
   vector<int> atoms;
@@ -170,10 +170,10 @@ void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, float ang)
   for (j = 0 ; (unsigned)j < atoms.size() ; j++ )
     atoms[j] = (atoms[j] - 1) * 3;
 
-  float v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
-  float c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
-  float c1mag,c2mag,radang,costheta,m[9];
-  float x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
+  double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
+  double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
+  double c1mag,c2mag,radang,costheta,m[9];
+  double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
 
   //calculate the torsion angle
 
@@ -196,8 +196,8 @@ void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, float ang)
   if (c1mag*c2mag < 0.01) costheta = 1.0; //avoid div by zero error
   else costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
 
-  if (costheta < -0.999999) costheta = -0.999999f;
-  if (costheta >  0.999999) costheta =  0.999999f;
+  if (costheta < -0.999999) costheta = -0.999999;
+  if (costheta >  0.999999) costheta =  0.999999;
                                   
   if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0) radang = -acos(costheta);
   else                                     radang = acos(costheta);
@@ -236,7 +236,7 @@ void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, float ang)
 }
 
 
-float OBMol::GetTorsion(OBAtom *a,OBAtom *b,OBAtom *c,OBAtom *d)
+double OBMol::GetTorsion(OBAtom *a,OBAtom *b,OBAtom *c,OBAtom *d)
 {
   return(CalcTorsionAngle(a->GetVector(),
                           b->GetVector(),
@@ -748,9 +748,9 @@ vector<OBRing*> &OBMol::GetSSSR()
 	return(rd->GetData());
 }
 
-float OBMol::GetMolWt()
+double OBMol::GetMolWt()
 {
-  float molwt=0.0;
+  double molwt=0.0;
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
 
@@ -760,9 +760,9 @@ float OBMol::GetMolWt()
   return(molwt);
 }
 
-float OBMol::GetExactMass()
+double OBMol::GetExactMass()
 {
-  float mass=0.0;
+  double mass=0.0;
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
 
@@ -834,10 +834,10 @@ OBMol &OBMol::operator=(const OBMol &source)
   //Copy conformer information
   if (src.NumConformers() > 1) {
       int k,l;
-      vector<float*> conf;
-      float* xyz = NULL;
+      vector<double*> conf;
+      double* xyz = NULL;
       for (k=0 ; k<src.NumConformers() ; k++) {
-          xyz = new float [3*src.NumAtoms()];
+          xyz = new double [3*src.NumAtoms()];
           for (l=0 ; l<(int) (3*src.NumAtoms()) ; l++) xyz[l] = src.GetConformer(k)[l];
           conf.push_back(xyz);
         }
@@ -857,11 +857,11 @@ OBMol &OBMol::operator=(const OBMol &source)
       //Set base coordinates
       OBRotamerList *cp_rml = new OBRotamerList;
       unsigned int k,l;
-      vector<float*> bc; 
-      float *c=NULL;
-      float *cc=NULL;
+      vector<double*> bc; 
+      double *c=NULL;
+      double *cc=NULL;
       for (k=0 ; k<rml->NumBaseCoordinateSets() ; k++) {
-          c = new float [3*rml->NumAtoms()];
+          c = new double [3*rml->NumAtoms()];
           cc = rml->GetBaseCoordinateSet(k);
           for (l=0 ; l<3*rml->NumAtoms() ; l++) c[l] = cc[l];
           bc.push_back(c);
@@ -938,7 +938,7 @@ bool OBMol::Clear()
   _residue.clear();
 
   //clear out the multiconformer data
-  vector<float*>::iterator k;
+  vector<double*>::iterator k;
   for (k = _vconf.begin();k != _vconf.end();k++)
     delete [] *k;
   _vconf.clear();
@@ -950,7 +950,7 @@ bool OBMol::Clear()
 	  _vdata.clear();
   }
 
-  _c = (float*) NULL;
+  _c = (double*) NULL;
   _flags = 0;
   _mod = 0;
 
@@ -982,7 +982,7 @@ void OBMol::BeginModify()
           atom->ClearCoordPtr();
         }
 
-      vector<float*>::iterator j;
+      vector<double*>::iterator j;
       for (j = _vconf.begin();j != _vconf.end();j++) delete [] *j;
 
       _c = NULL;
@@ -1023,7 +1023,7 @@ void OBMol::EndModify(bool nukePerceivedData)
   if (Empty()) return;
 
   //if atoms present convert coords into array
-  float *c = new float [NumAtoms()*3];
+  double *c = new double [NumAtoms()*3];
   _c = c;
 
   int idx;
@@ -1306,12 +1306,12 @@ bool OBMol::DeleteNonPolarHydrogens()
   IncrementMod();
 
   int idx1,idx2;
-  vector<float*>::iterator j;
+  vector<double*>::iterator j;
   for (idx1=0,idx2=0,atom = BeginAtom(i);atom;atom = NextAtom(i),idx1++)
     if (!atom->IsHydrogen())
       {
         for (j = _vconf.begin();j != _vconf.end();j++)
-           memcpy((char*)&((*j)[idx2*3]),(char*)&((*j)[idx1*3]),sizeof(float)*3);
+           memcpy((char*)&((*j)[idx2*3]),(char*)&((*j)[idx1*3]),sizeof(double)*3);
         idx2++;
       }
 */
@@ -1356,13 +1356,13 @@ bool OBMol::DeleteHydrogens()
   DecrementMod();
    
   int idx1,idx2;
-  vector<float*>::iterator k;
+  vector<double*>::iterator k;
   for (idx1=0,idx2=0,atom = BeginAtom(i);atom;atom = NextAtom(i),idx1++)
     if (!atom->IsHydrogen())
       {
         //Update conformer coordinates
         for (k = _vconf.begin();k != _vconf.end();k++)
-            memcpy((char*)&((*k)[idx2*3]),(char*)&((*k)[idx1*3]),sizeof(float)*3);
+            memcpy((char*)&((*k)[idx2*3]),(char*)&((*k)[idx1*3]),sizeof(double)*3);
 
         idx2++;
         va.push_back(atom);
@@ -1431,9 +1431,9 @@ bool OBMol::DeleteHydrogen(OBAtom *atom)
     {
       idx = atom->GetCIdx();
       int size = NumAtoms()-atom->GetIdx();
-      vector<float*>::iterator k;
+      vector<double*>::iterator k;
       for (k = _vconf.begin();k != _vconf.end();k++)
-          memmove((char*)&(*k)[idx],(char*)&(*k)[idx+3],sizeof(float)*3*size);
+          memmove((char*)&(*k)[idx],(char*)&(*k)[idx+3],sizeof(double)*3*size);
 
     }
   
@@ -1480,13 +1480,13 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
   bool hasCoords = HasNonZeroCoords();
 
   //realloc memory in coordinate arrays for new hydrogens
-  float *tmpf;
-  vector<float*>::iterator j;
+  double *tmpf;
+  vector<double*>::iterator j;
   for (j = _vconf.begin();j != _vconf.end();j++)
     {
-      tmpf = new float [(NumAtoms()+count)*3];
-      memset(tmpf,'\0',sizeof(float)*(NumAtoms()+count)*3);
-      if (hasCoords) memcpy(tmpf,(*j),sizeof(float)*NumAtoms()*3);
+      tmpf = new double [(NumAtoms()+count)*3];
+      memset(tmpf,'\0',sizeof(double)*(NumAtoms()+count)*3);
+      if (hasCoords) memcpy(tmpf,(*j),sizeof(double)*NumAtoms()*3);
       delete []*j;
       *j = tmpf;
     }
@@ -1496,13 +1496,13 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
   int m,n;
   vector3 v;
   vector<pair<OBAtom*,int> >::iterator k;
-  float hbrad = etab.CorrectedBondRad(1,0);
+  double hbrad = etab.CorrectedBondRad(1,0);
 
 
   for (k = vhadd.begin();k != vhadd.end();k++)
     {
       atom = k->first;
-      float bondlen = hbrad+etab.CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
+      double bondlen = hbrad+etab.CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
       for (m = 0;m < k->second;m++)
         {
           for (n = 0;n < NumConformers();n++)
@@ -1515,7 +1515,7 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
                   _c[(NumAtoms())*3+1] = v.y();
                   _c[(NumAtoms())*3+2] = v.z();
                 }
-              else memset((char*)&_c[NumAtoms()*3],'\0',sizeof(float)*3);
+              else memset((char*)&_c[NumAtoms()*3],'\0',sizeof(double)*3);
             }
           h = NewAtom(); h->SetType("H"); h->SetAtomicNum(1);
 
@@ -1576,12 +1576,12 @@ bool OBMol::AddHydrogens(OBAtom *atom)
   if (count == 0) return(true);
 
   //realloc memory in coordinate arrays for new hydroges
-  float *tmpf;
-  vector<float*>::iterator j;
+  double *tmpf;
+  vector<double*>::iterator j;
   for (j = _vconf.begin();j != _vconf.end();j++)
     {
-      tmpf = new float [(NumAtoms()+count)*3+10];
-      memcpy(tmpf,(*j),sizeof(float)*NumAtoms()*3);
+      tmpf = new double [(NumAtoms()+count)*3+10];
+      memcpy(tmpf,(*j),sizeof(double)*NumAtoms()*3);
       delete []*j;
       *j = tmpf;
     }
@@ -1591,12 +1591,12 @@ bool OBMol::AddHydrogens(OBAtom *atom)
   int m,n;
   vector3 v;
   vector<pair<OBAtom*,int> >::iterator k;
-  float hbrad = etab.CorrectedBondRad(1,0);
+  double hbrad = etab.CorrectedBondRad(1,0);
 
   for (k = vhadd.begin();k != vhadd.end();k++)
     {
       atom = k->first;
-      float bondlen = hbrad+etab.CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
+      double bondlen = hbrad+etab.CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
       for (m = 0;m < k->second;m++)
         {
           for (n = 0;n < NumConformers();n++)
@@ -2173,7 +2173,7 @@ void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)
   v1 = p2 - p1;
   v2 = a2->GetVector() - a1->GetVector();
   v3 = cross(v1,v2);
-  float angle = vectorAngle(v1,v2);
+  double angle = vectorAngle(v1,v2);
 
   //find the rotation matrix
   matrix3x3 m;
@@ -2198,47 +2198,57 @@ void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)
 
 void OBMol::ToInertialFrame()
 {
-  float m[9];
+  double m[9];
   for (int i = 0;i < NumConformers();i++)
     ToInertialFrame(i,m);
 }
 
-void OBMol::ToInertialFrame(int conf,float *rmat)
+void OBMol::ToInertialFrame(int conf,double *rmat)
 {
   unsigned int i;
-  int count=0;
-  float x,y,z;
-  float center[3],m[3][3];
+  double x,y,z;
+  double mi;
+  double mass = 0.0;
+  double center[3],m[3][3];
 
-  for (i = 0;i < 3;i++) memset(&m[i],'\0',sizeof(float)*3);
-  memset(center,'\0',sizeof(float)*3);
+  for (i = 0;i < 3;i++) memset(&m[i],'\0',sizeof(double)*3);
+  memset(center,'\0',sizeof(double)*3);
 
   SetConformer(conf);
   OBAtom *atom;
   vector<OBNodeBase*>::iterator j;
   //find center of mass
   for (atom = BeginAtom(j);atom;atom = NextAtom(j))
-    if (!atom->IsHydrogen())
-      {center[0] += atom->x(); center[1] += atom->y();center[2] += atom->z();count++;}
+    {
+      mi = atom->GetAtomicMass();
+      center[0] += mi*atom->x(); 
+      center[1] += mi*atom->y();
+      center[2] += mi*atom->z();
+      mass += mi;
+    }
 
-  center[0] /= (float)count; center[1] /= (float)count; center[2] /= (float)count;
+  center[0] /= mass;
+  center[1] /= mass;
+  center[2] /= mass;
 
   //calculate inertial tensor
   for (atom = BeginAtom(j);atom;atom = NextAtom(j))
-    if (!atom->IsHydrogen())
     {
-      x = atom->x()-center[0]; y = atom->y()-center[1]; z = atom->z()-center[2];
+      x = atom->x()-center[0]; 
+      y = atom->y()-center[1]; 
+      z = atom->z()-center[2];
+      mi = atom->GetAtomicMass();
 
-      m[0][0] += y*y + z*z; m[0][1] -= x*y;       m[0][2] -= x*z;       
-      m[1][0] -= x*y;       m[1][1] += x*x + z*z; m[1][2] -= y*z;       
-      m[2][0] -= x*z;       m[2][1] -= y*z;       m[2][2] += x*x + y*y; 
+      m[0][0] += mi*(y*y+z*z); m[0][1] -= mi*x*y;       m[0][2] -= mi*x*z;
+      m[1][0] -= mi*x*y;       m[1][1] += mi*(x*x+z*z); m[1][2] -= mi*y*z;
+      m[2][0] -= mi*x*z;       m[2][1] -= mi*y*z;       m[2][2] += mi*(x*x+y*y);
     }
 
   /* find rotation matrix for moment of inertia */
   ob_make_rmat(m,rmat);
 
   /* rotate all coordinates */
-  float *c = GetConformer(conf);
+  double *c = GetConformer(conf);
   for(i=0; i < NumAtoms();i++) {
     x = c[i*3]-center[0]; y = c[i*3+1]-center[1]; z = c[i*3+2]-center[2];
     c[i*3]   = x*rmat[0] + y*rmat[1] + z*rmat[2];
@@ -2272,7 +2282,7 @@ OBMol::OBMol(io_type itype,io_type otype)
   _natoms = _nbonds = 0;
   _mod = 0;
   _access = 0;
-  _energy = 0.0f;
+  _energy = 0.0;
   _totalCharge = 0;
   _itype = itype;
   _otype = otype;
@@ -2280,7 +2290,7 @@ OBMol::OBMol(io_type itype,io_type otype)
   _vbond.clear();
   _vdata.clear();
   _title = "";
-  _c = (float*)NULL;
+  _c = (double*)NULL;
   _flags = 0;
   _vconf.clear();
   _autoPartialCharge = true;
@@ -2298,7 +2308,7 @@ OBMol::OBMol(const OBMol &mol)
   _vbond.clear();
   _vdata.clear();
   _title = "";
-  _c = (float*)NULL;
+  _c = (double*)NULL;
   _flags = 0;
   _vconf.clear();
   _autoPartialCharge = true;
@@ -2320,7 +2330,7 @@ OBMol::~OBMol()
   for (residue = BeginResidue(r);residue;residue = NextResidue(r)) delete residue;
 
   //clear out the multiconformer data
-  vector<float*>::iterator k;
+  vector<double*>::iterator k;
   for (k = _vconf.begin();k != _vconf.end();k++)
     delete [] *k;
   _vconf.clear();
@@ -2534,15 +2544,15 @@ void OBMol::RenumberAtoms(vector<OBNodeBase*> &v)
     }
 
   int j,k;
-  float *c;
-  float *ctmp = new float [NumAtoms()*3];
+  double *c;
+  double *ctmp = new double [NumAtoms()*3];
 
   for (j = 0;j < NumConformers();j++)
     {
       c = GetConformer(j);
       for (k=0,i = va.begin();i != va.end();i++,k++)
-          memcpy((char*)&ctmp[k*3],(char*)&c[((OBAtom*)*i)->GetCIdx()],sizeof(float)*3);
-      memcpy((char*)c,(char*)ctmp,sizeof(float)*3*NumAtoms());
+          memcpy((char*)&ctmp[k*3],(char*)&c[((OBAtom*)*i)->GetCIdx()],sizeof(double)*3);
+      memcpy((char*)c,(char*)ctmp,sizeof(double)*3*NumAtoms());
     }
 
   for (k=1,i = va.begin();i != va.end();i++,k++) (*i)->SetIdx(k);
@@ -2581,17 +2591,17 @@ void OBMol::ConnectTheDots(void)
   bool unset = false;
   OBAtom *atom,*nbr;
   vector<OBNodeBase*>::iterator i;
-  vector<pair<OBAtom*,float> > zsortedAtoms;
-  vector<float> rad; 
+  vector<pair<OBAtom*,double> > zsortedAtoms;
+  vector<double> rad; 
   vector<int> zsorted;
 
-  float *c = new float [NumAtoms()*3];
+  double *c = new double [NumAtoms()*3];
   rad.resize(_natoms);
 
   for (j = 0, atom = BeginAtom(i) ; atom ; atom = NextAtom(i), j++)
     {
       (atom->GetVector()).Get(&c[j*3]);
-      pair<OBAtom*,float> entry(atom, atom->GetVector().z());
+      pair<OBAtom*,double> entry(atom, atom->GetVector().z());
       zsortedAtoms.push_back(entry);
     }
   sort(zsortedAtoms.begin(), zsortedAtoms.end(), SortAtomZ);
@@ -2606,7 +2616,7 @@ void OBMol::ConnectTheDots(void)
   }
 
   int idx1, idx2;
-  float d2,cutoff,zd;
+  double d2,cutoff,zd;
   for (j = 0 ; j < max ; j++)
   {
     idx1 = zsorted[j];
@@ -2615,17 +2625,17 @@ void OBMol::ConnectTheDots(void)
         idx2 = zsorted[k];
 
 	// bonded if closer than elemental Rcov + tolerance
-        cutoff = SQUARE(rad[j] + rad[k] + 0.45f); 
+        cutoff = SQUARE(rad[j] + rad[k] + 0.45); 
 
         zd  = SQUARE(c[idx1*3+2] - c[idx2*3+2]);
-	if (zd > 25.0f ) break; // bigger than max cutoff
+	if (zd > 25.0 ) break; // bigger than max cutoff
 
         d2  = SQUARE(c[idx1*3]   - c[idx2*3]);
         d2 += SQUARE(c[idx1*3+1] - c[idx2*3+1]);
         d2 += zd;
   
         if (d2 > cutoff) continue;
-	if (d2 < 0.40f) continue;
+	if (d2 < 0.40) continue;
   
         atom = GetAtom(idx1+1); 
         nbr  = GetAtom(idx2+1);
@@ -2651,11 +2661,11 @@ void OBMol::ConnectTheDots(void)
 
   // Cleanup -- delete long bonds that exceed max valence
   OBBond *maxbond, *bond;
-  float maxlength;
+  double maxlength;
   vector<OBEdgeBase*>::iterator l;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
-      while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) || atom->SmallestBondAngle() < 45.0f)
+      while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) || atom->SmallestBondAngle() < 45.0)
 	{
 	  maxbond = atom->BeginBond(l);
 	  maxlength = maxbond->GetLength();
@@ -2692,7 +2702,7 @@ void OBMol::PerceiveBondOrders()
   OBAtom *atom, *b, *c;
   vector3 v1, v2;
   int angles;
-  float degrees;
+  double degrees;
   vector<OBNodeBase*>::iterator i;
   vector<OBEdgeBase*>::iterator j,k;
   
@@ -2701,7 +2711,7 @@ void OBMol::PerceiveBondOrders()
   // Pass 1: Assign estimated hybridization based on avg. angles
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
-      degrees = 0.0f;
+      degrees = 0.0;
       angles = 0;
       for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
 	{
@@ -2749,7 +2759,7 @@ void OBMol::PerceiveBondOrders()
 	    GetTorsion(path[1], path[2], path[3], path[4]) +
 	    GetTorsion(path[2], path[3], path[4], path[0]) +
 	    GetTorsion(path[3], path[4], path[0], path[1]) +
-	    GetTorsion(path[4], path[0], path[1], path[2]) / 5.0f;
+	    GetTorsion(path[4], path[0], path[1], path[2]) / 5.0;
 	  if (torsions <= 7.5)
 	    {
 	      for (ringAtom = 0; ringAtom != path.size(); ringAtom++)
@@ -2769,7 +2779,7 @@ void OBMol::PerceiveBondOrders()
 	    GetTorsion(path[2], path[3], path[4], path[5]) +
 	    GetTorsion(path[3], path[4], path[5], path[0]) +
 	    GetTorsion(path[4], path[5], path[0], path[1]) +
-	    GetTorsion(path[5], path[0], path[1], path[2]) / 6.0f;
+	    GetTorsion(path[5], path[0], path[1], path[2]) / 6.0;
 	  if (torsions <= 12.0)
 	    {
 	      for (ringAtom = 0; ringAtom != path.size(); ringAtom++)
@@ -2910,15 +2920,15 @@ void OBMol::PerceiveBondOrders()
   // Kekulize();
 
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity
-  vector<pair<OBAtom*,float> > sortedAtoms;
-  vector<float> rad; 
+  vector<pair<OBAtom*,double> > sortedAtoms;
+  vector<double> rad; 
   vector<int> sorted;
   int iter, max;
-  float maxElNeg, shortestBond, currentElNeg;
+  double maxElNeg, shortestBond, currentElNeg;
 
   for (atom = BeginAtom(i) ; atom ; atom = NextAtom(i))
     {
-      pair<OBAtom*,float> entry(atom, etab.GetElectroNeg(atom->GetAtomicNum()));
+      pair<OBAtom*,double> entry(atom, etab.GetElectroNeg(atom->GetAtomicNum()));
       sortedAtoms.push_back(entry);
     }
   sort(sortedAtoms.begin(), sortedAtoms.end(), SortAtomZ);
@@ -2939,8 +2949,8 @@ void OBMol::PerceiveBondOrders()
 	      (atom->GetAtomicNum() == 7 && atom->BOSum() + 2 > 3))
 	    continue;
 
-	  maxElNeg = 0.0f;
-	  shortestBond = 5000.0f;
+	  maxElNeg = 0.0;
+	  shortestBond = 5000.0;
 	  c = NULL;
 	  for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
 	    {
@@ -2971,8 +2981,8 @@ void OBMol::PerceiveBondOrders()
 	      (atom->GetAtomicNum() == 7 && atom->BOSum() + 1 > 3))
 	    continue;
 
-	  maxElNeg = 0.0f;
-	  shortestBond = 5000.0f;
+	  maxElNeg = 0.0;
+	  shortestBond = 5000.0;
 	  c = NULL;
 	  for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
 	    {
@@ -3007,16 +3017,16 @@ void OBMol::PerceiveBondOrders()
 void OBMol::Center()
 {
   int j,size;
-  float *c,x,y,z,fsize;
+  double *c,x,y,z,fsize;
   
   size = NumAtoms();
-  fsize = -1.0f/(float)NumAtoms();
+  fsize = -1.0/(double)NumAtoms();
 
-  vector<float*>::iterator i;
+  vector<double*>::iterator i;
   for (i = _vconf.begin();i != _vconf.end();i++)
     {
       c = *i;
-      x = y = z = 0.0f;
+      x = y = z = 0.0;
       for (j = 0;j < size;j++) {x += c[j*3]; y += c[j*3+1]; z += c[j*3+2];}
       x *= fsize;
       y *= fsize;
@@ -3034,13 +3044,13 @@ vector3 OBMol::Center(int nconf)
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
 
-  float x=0.0,y=0.0,z=0.0;
+  double x=0.0,y=0.0,z=0.0;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {x += atom->x();y += atom->y();z += atom->z();}
 
-  x /= (float)NumAtoms();
-  y /= (float)NumAtoms();
-  z /= (float)NumAtoms();
+  x /= (double)NumAtoms();
+  y /= (double)NumAtoms();
+  z /= (double)NumAtoms();
   
   vector3 vtmp;
   vector3 v(x,y,z);
@@ -3068,8 +3078,8 @@ void OBMol::Translate(const vector3 &v)
 void OBMol::Translate(const vector3 &v,int nconf)
 {
   int i,size;
-  float x,y,z;
-  float *c = (nconf == OB_CURRENT_CONFORMER)? _c : GetConformer(nconf);
+  double x,y,z;
+  double *c = (nconf == OB_CURRENT_CONFORMER)? _c : GetConformer(nconf);
 
   x = v.x(); y = v.y(); z = v.z();
   size = NumAtoms();
@@ -3081,10 +3091,10 @@ void OBMol::Translate(const vector3 &v,int nconf)
     }
 }
 
-void OBMol::Rotate(const float u[3][3])
+void OBMol::Rotate(const double u[3][3])
 {
   int i,j,k;
-  float m[9];
+  double m[9];
   for (k=0,i = 0;i < 3;i++)
     for (j = 0;j < 3;j++)
       m[k++] = u[i][j];
@@ -3093,17 +3103,17 @@ void OBMol::Rotate(const float u[3][3])
     Rotate(m,i);
 }
 
-void OBMol::Rotate(const float m[9])
+void OBMol::Rotate(const double m[9])
 {
   for (int i = 0;i < NumConformers();i++) 
     Rotate(m,i);
 }
 
-void OBMol::Rotate(const float m[9],int nconf)
+void OBMol::Rotate(const double m[9],int nconf)
 {
   int i,size;
-  float x,y,z;
-  float *c = (nconf == OB_CURRENT_CONFORMER)? _c : GetConformer(nconf);
+  double x,y,z;
+  double *c = (nconf == OB_CURRENT_CONFORMER)? _c : GetConformer(nconf);
   
   size = NumAtoms();
   for (i = 0;i < size;i++)
@@ -3118,9 +3128,9 @@ void OBMol::Rotate(const float m[9],int nconf)
 }
 
 
-void OBMol::SetConformers(vector<float*> &v)
+void OBMol::SetConformers(vector<double*> &v)
 {
-  vector<float*>::iterator i;
+  vector<double*>::iterator i;
   for (i = _vconf.begin();i != _vconf.end();i++)
     delete [] *i;
 
@@ -3129,24 +3139,24 @@ void OBMol::SetConformers(vector<float*> &v)
 
 }
 
-void OBMol::CopyConformer(float *c,int idx)
-{
-  obAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
-  memcpy((char*)_vconf[idx],(char*)c,sizeof(float)*3*NumAtoms());
-}
-
 void OBMol::CopyConformer(double *c,int idx)
 {
   obAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
-
-  unsigned int i;
-  for (i = 0;i < NumAtoms();i++)
-    {
-      _vconf[idx][i*3  ] = (float)c[i*3  ];
-      _vconf[idx][i*3+1] = (float)c[i*3+1];
-      _vconf[idx][i*3+2] = (float)c[i*3+2];
-    }
+  memcpy((char*)_vconf[idx],(char*)c,sizeof(double)*3*NumAtoms());
 }
+
+// void OBMol::CopyConformer(double *c,int idx)
+// {
+//   obAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
+
+//   unsigned int i;
+//   for (i = 0;i < NumAtoms();i++)
+//     {
+//       _vconf[idx][i*3  ] = (double)c[i*3  ];
+//       _vconf[idx][i*3+1] = (double)c[i*3+1];
+//       _vconf[idx][i*3+2] = (double)c[i*3+2];
+//     }
+// }
 
 void OBMol::DeleteConformer(int idx)
 {

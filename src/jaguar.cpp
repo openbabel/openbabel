@@ -22,7 +22,7 @@ bool ReadJaguar(istream &ifs,OBMol &mol, const char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
-  float x,y,z;
+  double x,y,z;
   unsigned int i;
   OBAtom *atom;
   vector<string> vs;

@@ -93,7 +93,7 @@ bool ReadXYZ(istream &ifs,OBMol &mol,const char *title)
 
     // Read the atom coordinates
     char *endptr;
-    float x = strtod((char*)vs[1].c_str(),&endptr);
+    double x = strtod((char*)vs[1].c_str(),&endptr);
     if (endptr == (char*)vs[1].c_str()) {
       cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
 	   << "  Could not read line #" << i+2 << "." << endl
@@ -103,7 +103,7 @@ bool ReadXYZ(istream &ifs,OBMol &mol,const char *title)
 	   << "  OpenBabel could not interpret item #1 as a number." << endl;
       return(false);
     }
-    float y = strtod((char*)vs[2].c_str(),&endptr);
+    double y = strtod((char*)vs[2].c_str(),&endptr);
     if (endptr == (char*)vs[2].c_str()) {
       cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
 	   << "  Could not read line #" << i+2 << "." << endl
@@ -113,7 +113,7 @@ bool ReadXYZ(istream &ifs,OBMol &mol,const char *title)
 	   << "  OpenBabel could not interpret item #2 as a number." << endl;
       return(false);
     }
-    float z = strtod((char*)vs[3].c_str(),&endptr);
+    double z = strtod((char*)vs[3].c_str(),&endptr);
     if (endptr == (char*)vs[3].c_str()) {
       cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
 	   << "  Could not read line #" << i+2 << "." << endl

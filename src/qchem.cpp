@@ -43,7 +43,7 @@ bool ReadQChem(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   OBInternalCoord *coord;
   vector<string> vs;

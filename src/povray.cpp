@@ -63,7 +63,7 @@ static const char version[] = "$Id$";
 
 /* ---- Define PI (if needed) ---- */
 #ifndef PI
-#define PI ((double) 3.14159265358979323846)
+#define PI ((double) 3.1415926535897932384626433)
 #endif
 
 /* ---- Convert RAD to DEG ---- */
@@ -183,15 +183,15 @@ void OutputHeader(ostream &ofs, OBMol &mol, string prefix)
 }
 
 void CalcBoundingBox(OBMol &mol,
-                     float &min_x, float &max_x, 
-                     float &min_y, float &max_y, 
-                     float &min_z, float &max_z
+                     double &min_x, double &max_x, 
+                     double &min_y, double &max_y, 
+                     double &min_z, double &max_z
                     )
 {
  /* ---- Init bounding-box variables ---- */
- min_x = (float) 0.0; max_x = (float) 0.0;
- min_y = (float) 0.0; max_y = (float) 0.0;
- min_z = (float) 0.0; max_z = (float) 0.0;
+ min_x = (double) 0.0; max_x = (double) 0.0;
+ min_y = (double) 0.0; max_y = (double) 0.0;
+ min_z = (double) 0.0; max_z = (double) 0.0;
 
  /* ---- Check all atoms ---- */
  for(unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
@@ -260,10 +260,10 @@ void OutputBASBonds(ostream &ofs, OBMol &mol, string prefix)
  /* ---- Write povray-description of all bonds---- */
  for(unsigned int i = 0; i < mol.NumBonds(); ++i) {
 
-  float x1,y1,z1,x2,y2,z2; /* Start and stop coordinates of a bond       */
-  float dist;              /* Distance between (x1|y1|z1) and (x2|y2|z2) */
-  float phi,theta;         /* Angles between (x1|y1|z1) and (x2|y2|z2)   */
-  float dy;                /* Distance between (x1|0|z1) and (x2|0|z2)   */
+  double x1,y1,z1,x2,y2,z2; /* Start and stop coordinates of a bond       */
+  double dist;              /* Distance between (x1|y1|z1) and (x2|y2|z2) */
+  double phi,theta;         /* Angles between (x1|y1|z1) and (x2|y2|z2)   */
+  double dy;                /* Distance between (x1|0|z1) and (x2|0|z2)   */
 
   /* ---- Get a pointer to ith atom ---- */
   OBBond *bond = mol.GetBond(i);
@@ -283,7 +283,7 @@ void OutputBASBonds(ostream &ofs, OBMol &mol, string prefix)
   dy = sqrt(SQUARE(x2-x1) + SQUARE(z2-z1));
 
   /* ---- Calculate Phi and Theta ---- */
-  phi = (float) 0.0; theta = (float) 0.0;
+  phi = (double) 0.0; theta = (double) 0.0;
   if (fabs(dist) >= EPSILON) phi = acos((y2-y1)/dist);
   if (fabs(dy) >= EPSILON) theta = acos((x2-x1)/dy);
 
@@ -300,11 +300,11 @@ void OutputBASBonds(ostream &ofs, OBMol &mol, string prefix)
   }
 
   /* ---- Rotate (Phi) bond if needed ---- */
-  if (fabs(RAD2DEG(-phi) + (float) 90.0) >= EPSILON) {
+  if (fabs(RAD2DEG(-phi) + (double) 90.0) >= EPSILON) {
   
    /* ---- Rotate along z-axis ---- */ 
    ofs << "\t  rotate <0.0000,0.0000," 
-       << RAD2DEG(-phi) + (float) 90.0 
+       << RAD2DEG(-phi) + (double) 90.0 
        << ">" << endl;
 
 
@@ -314,11 +314,11 @@ void OutputBASBonds(ostream &ofs, OBMol &mol, string prefix)
   if (theta >= EPSILON) {
 
    /* ---- Check direction ---- */
-   if ((z2 - z1) >= (float) 0.0) {
+   if ((z2 - z1) >= (double) 0.0) {
 
     /* ---- Rotate along y-Axis (negative) ---- */ 
     ofs << "\t  rotate <0.0000," 
-        << RAD2DEG((float) -1.0 * theta) << ",0.0000>" 
+        << RAD2DEG((double) -1.0 * theta) << ",0.0000>" 
         << endl;
    
    } else {
@@ -345,10 +345,10 @@ void OutputCSTBonds(ostream &ofs, OBMol &mol, string prefix)
  /* ---- Write povray-description of all bonds---- */
  for(unsigned int i = 0; i < mol.NumBonds(); ++i) {
 
-  float x1,y1,z1,x2,y2,z2; /* Start and stop coordinates of a bond       */
-  float dist;              /* Distance between (x1|y1|z1) and (x2|y2|z2) */
-  float phi,theta;         /* Angles between (x1|y1|z1) and (x2|y2|z2)   */
-  float dy;                /* Distance between (x1|0|z1) and (x2|0|z2)   */
+  double x1,y1,z1,x2,y2,z2; /* Start and stop coordinates of a bond       */
+  double dist;              /* Distance between (x1|y1|z1) and (x2|y2|z2) */
+  double phi,theta;         /* Angles between (x1|y1|z1) and (x2|y2|z2)   */
+  double dy;                /* Distance between (x1|0|z1) and (x2|0|z2)   */
 
   /* ---- Get a pointer to ith atom ---- */
   OBBond *bond = mol.GetBond(i);
@@ -368,7 +368,7 @@ void OutputCSTBonds(ostream &ofs, OBMol &mol, string prefix)
   dy = sqrt(SQUARE(x2-x1) + SQUARE(z2-z1));
 
   /* ---- Calculate Phi and Theta ---- */
-  phi = (float) 0.0; theta = (float) 0.0;
+  phi = (double) 0.0; theta = (double) 0.0;
   if (fabs(dist) >= EPSILON) phi = acos((y2-y1)/dist);
   if (fabs(dy) >= EPSILON) theta = acos((x2-x1)/dy);
 
@@ -385,19 +385,19 @@ void OutputCSTBonds(ostream &ofs, OBMol &mol, string prefix)
       << "}" << endl;
 
   /* ---- Scale bond if needed ---- */
-  if (fabs((float) 2.0 * dist) >= EPSILON) {
+  if (fabs((double) 2.0 * dist) >= EPSILON) {
 
    /* ---- Print povray scale-statement (x-Axis) ---- */
-   ofs << "\t    scale <" << (float) 0.5 * dist << ",1.0000,1.0000>" << endl;
+   ofs << "\t    scale <" << (double) 0.5 * dist << ",1.0000,1.0000>" << endl;
 
   }
 
   /* ---- Rotate (Phi) bond if needed ---- */
-  if (fabs(RAD2DEG(-phi) + (float) 90.0) >= EPSILON) {
+  if (fabs(RAD2DEG(-phi) + (double) 90.0) >= EPSILON) {
   
    /* ---- Rotate along z-axis ---- */ 
    ofs << "\t    rotate <0.0000,0.0000," 
-       << RAD2DEG(-phi) + (float) 90.0 
+       << RAD2DEG(-phi) + (double) 90.0 
        << ">" << endl;
 
   }
@@ -406,11 +406,11 @@ void OutputCSTBonds(ostream &ofs, OBMol &mol, string prefix)
   if (theta >= EPSILON) {
 
    /* ---- Check direction ---- */
-   if ((z2 - z1) >= (float) 0.0) {
+   if ((z2 - z1) >= (double) 0.0) {
 
     /* ---- Rotate along y-Axis (negative) ---- */
     ofs << "\t    rotate <0.0000," 
-        << RAD2DEG((float) -1.0 *theta) << ",0.0000>" 
+        << RAD2DEG((double) -1.0 *theta) << ",0.0000>" 
         << endl;
 
    } else {
@@ -438,19 +438,19 @@ void OutputCSTBonds(ostream &ofs, OBMol &mol, string prefix)
       << "}" << endl;
 
   /* ---- Scale bond if needed ---- */
-  if (fabs((float) 2.0 * dist) >= EPSILON) {
+  if (fabs((double) 2.0 * dist) >= EPSILON) {
 
    /* ---- Print povray scale-statement (x-Axis) ---- */
-   ofs << "\t    scale <" << (float) 0.5 * dist << ",1.0000,1.0000>" << endl;
+   ofs << "\t    scale <" << (double) 0.5 * dist << ",1.0000,1.0000>" << endl;
 
   }
 
   /* ---- Rotate (Phi) bond if needed ---- */
-  if (fabs(RAD2DEG(-phi) + (float) 270.0) >= EPSILON) {
+  if (fabs(RAD2DEG(-phi) + (double) 270.0) >= EPSILON) {
   
    /* ---- Rotate along z-axis (oposite to start half) ---- */ 
    ofs << "\t    rotate <0.0000,0.0000," 
-       << (RAD2DEG(-phi) + (float) 90.0) + (float) 180.0
+       << (RAD2DEG(-phi) + (double) 90.0) + (double) 180.0
        << ">" << endl;
 
   }
@@ -459,11 +459,11 @@ void OutputCSTBonds(ostream &ofs, OBMol &mol, string prefix)
   if (fabs(theta) >= EPSILON) {
 
    /* ---- Check direction ---- */
-   if ((z2 - z1) >= (float) 0.0) {
+   if ((z2 - z1) >= (double) 0.0) {
 
     /* ---- Rotate along y-Axis (negative) (oposite orientation) ---- */
     ofs << "\t    rotate <0.0000," 
-        << RAD2DEG((float) -1.0 * theta) 
+        << RAD2DEG((double) -1.0 * theta) 
         << ",0.0000>" 
         << endl;
 
@@ -534,9 +534,9 @@ void OutputUnions(ostream &ofs, OBMol &mol, string prefix)
 void OutputMoleculeBonds(ostream &ofs,
                          OBMol mol, 
                          string prefix,
-                         float min_x, float max_x, 
-                         float min_y, float max_y, 
-                         float min_z, float max_z
+                         double min_x, double max_x, 
+                         double min_y, double max_y, 
+                         double min_z, double max_z
                         )
 {
  /* ---- Write a comment ---- */
@@ -600,17 +600,17 @@ void OutputMoleculeNoBonds(ostream &ofs, string prefix)
 
 void OutputCenterComment(ostream &ofs, 
                          string prefix,
-                         float min_x, float max_x, 
-                         float min_y, float max_y, 
-                         float min_z, float max_z
+                         double min_x, double max_x, 
+                         double min_y, double max_y, 
+                         double min_z, double max_z
                         )
 {
   /* ---- Print center comment (Warn: Vector is multiplied by -1.0)---- */
  ofs << "//Center of molecule " << prefix << " (bounding box)" << endl;
  ofs << "#declare " << prefix << "_center = <"
-     << (float) -1.0 * (min_x + max_x) / (float) 2.0 << ","
-     << (float) -1.0 * (min_y + max_y) / (float) 2.0 << ","
-     << (float) -1.0 * (min_z + max_z) / (float) 2.0 << ">" << endl << endl;
+     << (double) -1.0 * (min_x + max_x) / (double) 2.0 << ","
+     << (double) -1.0 * (min_y + max_y) / (double) 2.0 << ","
+     << (double) -1.0 * (min_z + max_z) / (double) 2.0 << ">" << endl << endl;
 }
 
 
@@ -618,7 +618,7 @@ void OutputCenterComment(ostream &ofs,
 bool WritePovray(ostream &ofs, OBMol &mol, const char* title)
 {
  static long num = 0;
- float min_x, max_x, min_y, max_y, min_z, max_z; /* Edges of bounding box */
+ double min_x, max_x, min_y, max_y, min_z, max_z; /* Edges of bounding box */
  string prefix;
 
  /* ---- We use the molecule-title as our prefix ---- */

@@ -474,13 +474,13 @@ bool OBRing::findCenterAndNormal(vector3 & center, vector3 &norm1, vector3 &norm
     const int nA= this->_path.size();
     vector3 tmp;
 
-    center.Set(0.0f,0.0f,0.0f);
-    norm1.Set(0.0f,0.0f,0.0f);
-    norm2.Set(0.0f,0.0f,0.0f);
+    center.Set(0.0,0.0,0.0);
+    norm1.Set(0.0,0.0,0.0);
+    norm2.Set(0.0,0.0,0.0);
     for (j = 0; j != nA; j++){
        center += (mol->GetAtom(_path[j]))->GetVector();
     }
-    center/= float(nA);
+    center/= double(nA);
 
     for (j = 0; j != nA; j++){
           vector3 v1= (mol->GetAtom(_path[j]))->GetVector() - center;
@@ -488,10 +488,10 @@ bool OBRing::findCenterAndNormal(vector3 & center, vector3 &norm1, vector3 &norm
           tmp= cross(v1,v2);
           norm1+= tmp;
     }
-    norm1/= float(nA);
+    norm1/= double(nA);
     norm1.normalize();
     norm2= norm1;
-    norm2 *= -1.0f;
+    norm2 *= -1.0;
     return(true);
 }
 

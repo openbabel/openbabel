@@ -55,7 +55,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-bool WriteGromos96(ostream &ofs,OBMol &mol,float fac)
+bool WriteGromos96(ostream &ofs,OBMol &mol,double fac)
 { 
   char type_name[10];
   char res_name[10],padded_name[10];
@@ -112,13 +112,13 @@ bool WriteGromos96(ostream &ofs,OBMol &mol,float fac)
 /* these are the routines that babel calls */
 bool WriteGromos96A(ostream &ofs,OBMol &mol)
 { 
-  return(WriteGromos96(ofs,mol,1.0f));
+  return(WriteGromos96(ofs,mol,1.0));
 }
 
 /* convert A -> nm */
 bool WriteGromos96N(ostream &ofs,OBMol &mol)
 { 
-  return(WriteGromos96(ofs,mol,0.1f));
+  return(WriteGromos96(ofs,mol,0.1));
 }
 
 

@@ -32,8 +32,8 @@ namespace OpenBabel
 class OBRotamerList : public OBGenericData
 {
     unsigned int                         _NBaseCoords;
-    std::vector<float*>                       _c;
-    std::vector<std::vector<float> >               _vres;
+    std::vector<double*>                       _c;
+    std::vector<std::vector<double> >               _vres;
     std::vector<unsigned char*>               _vrotamer;
     std::vector<std::pair<OBAtom**,std::vector<int> > > _vrotor;
 
@@ -47,12 +47,12 @@ public:
     void Setup(OBMol&,unsigned char*,int);
     unsigned int NumRotors()   const { return (unsigned int)_vrotor.size();   }
     unsigned int NumRotamers() const { return (unsigned int)_vrotamer.size(); }
-    void AddRotamer(float*);
+    void AddRotamer(double*);
     void AddRotamer(int *arr);
     void AddRotamer(unsigned char *arr);
     void AddRotamers(unsigned char*,int);
     void GetReferenceArray(unsigned char*);
-    void ExpandConformerList(OBMol&,std::vector<float*>&);
+    void ExpandConformerList(OBMol&,std::vector<double*>&);
     std::vector<unsigned char*>::iterator BeginRotamer() {return _vrotamer.begin();}
     std::vector<unsigned char*>::iterator EndRotamer()   {return _vrotamer.end();  }
 
@@ -60,7 +60,7 @@ public:
     // rotamers operate on
 
     // Create a conformer list using the internal base set of coordinates
-    std::vector<float*> CreateConformerList(OBMol& mol);
+    std::vector<double*> CreateConformerList(OBMol& mol);
 
     // Copies the mol's conformers (the coordinates, NOT the pointers)
     // into the object as base coordinates
@@ -69,14 +69,14 @@ public:
     } 
 
     // Copies the coordinates in bc, NOT the pointers, into the object
-    void SetBaseCoordinateSets(std::vector<float*> bc, unsigned int N); 
+    void SetBaseCoordinateSets(std::vector<double*> bc, unsigned int N); 
 
     unsigned int NumBaseCoordinateSets() const {
         return (unsigned int)_c.size();
     }
 
     //Get a pointer to a specific base pointer
-    float *GetBaseCoordinateSet(unsigned int i) {
+    double *GetBaseCoordinateSet(unsigned int i) {
         return (i<_c.size()) ? _c[i] : NULL;
     }
 

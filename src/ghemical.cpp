@@ -23,7 +23,7 @@ bool ReadGhemical(istream &ifs,OBMol &mol, const char *title)
   int natoms, nbonds;
   char buffer[BUFF_SIZE];
   string str,str1;
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   vector<string> vs;
   char bobuf[100];

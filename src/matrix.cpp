@@ -19,7 +19,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-void print_matrix(vector<vector<float> > &m)
+void print_matrix(vector<vector<double> > &m)
 {
     unsigned int i,j;
 
@@ -31,7 +31,7 @@ void print_matrix(vector<vector<float> > &m)
     }
 }
 
-void print_matrix_f(float *m, int rows, int cols)
+void print_matrix_f(double *m, int rows, int cols)
 {
     int i,j,idx;
 
@@ -44,7 +44,7 @@ void print_matrix_f(float *m, int rows, int cols)
     }
 }
 
-void print_matrix_ff(float **m, int rows, int cols)
+void print_matrix_ff(double **m, int rows, int cols)
 {
     int i,j;
 
@@ -56,7 +56,7 @@ void print_matrix_ff(float **m, int rows, int cols)
     }
 }
 
-bool mult_matrix(vector<vector<float> > &c, vector<vector<float> > &a, vector<vector<float> > &b)
+bool mult_matrix(vector<vector<double> > &c, vector<vector<double> > &a, vector<vector<double> > &b)
 {
     unsigned int i,j,k;
 
@@ -79,7 +79,7 @@ bool mult_matrix(vector<vector<float> > &c, vector<vector<float> > &a, vector<ve
     return(true);
 }
 
-bool mult_matrix_f(float *c, float *a, float *b, int rows, int cols)
+bool mult_matrix_f(double *c, double *a, double *b, int rows, int cols)
 {
     int i,j,k,idx;
 
@@ -97,7 +97,7 @@ bool mult_matrix_f(float *c, float *a, float *b, int rows, int cols)
     return(true);
 }
 
-bool mult_matrix_ff(float **c, float **a, float **b, int rows, int cols)
+bool mult_matrix_ff(double **c, double **a, double **b, int rows, int cols)
 {
     int i,j,k;
 
@@ -112,7 +112,7 @@ bool mult_matrix_ff(float **c, float **a, float **b, int rows, int cols)
     return(true);
 }
 
-bool invert_matrix(vector<vector<float> > &mat, float &det)
+bool invert_matrix(vector<vector<double> > &mat, double &det)
 {
     int  i, j, k, m, n, row = 0, col = 0;
     double tempo, big, pvt;
@@ -210,7 +210,7 @@ bool invert_matrix(vector<vector<float> > &mat, float &det)
     return(true);
 }
 
-bool invert_matrix_f(float *mat, float &det, int rows, int cols)
+bool invert_matrix_f(double *mat, double &det, int rows, int cols)
 {
     int  i, j, k, m, n, row = 0, col = 0, idx1, idx2;
     double tempo, big, pvt;
@@ -320,7 +320,7 @@ bool invert_matrix_f(float *mat, float &det, int rows, int cols)
     return(true);
 }
 
-bool invert_matrix_ff(float **mat, float &det, int rows, int cols)
+bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
 {
     int  i, j, k, m, n, row = 0, col = 0;
     double tempo, big, pvt;
@@ -415,7 +415,7 @@ bool invert_matrix_ff(float **mat, float &det, int rows, int cols)
     return(true);
 }
 
-bool convert_matrix_f(vector<vector<float> > &src, float *dst)
+bool convert_matrix_f(vector<vector<double> > &src, double *dst)
 {
     unsigned int i, j, idx;
 
@@ -429,7 +429,7 @@ bool convert_matrix_f(vector<vector<float> > &src, float *dst)
     return true;
 }
 
-bool convert_matrix_ff(vector<vector<float> > &src, float **dst)
+bool convert_matrix_ff(vector<vector<double> > &src, double **dst)
 {
     unsigned int i, j;
 
@@ -440,7 +440,7 @@ bool convert_matrix_ff(vector<vector<float> > &src, float **dst)
     return true;
 }
 
-bool convert_matrix_f(float *src, vector<vector<float> > &dst, int rows, int cols)
+bool convert_matrix_f(double *src, vector<vector<double> > &dst, int rows, int cols)
 {
     int i, j, idx;
 
@@ -456,7 +456,7 @@ bool convert_matrix_f(float *src, vector<vector<float> > &dst, int rows, int col
     return true;
 }
 
-bool convert_matrix_ff(float **src, vector<vector<float> > &dst, int rows, int cols)
+bool convert_matrix_ff(double **src, vector<vector<double> > &dst, int rows, int cols)
 {
     int i, j;
 
@@ -471,7 +471,7 @@ bool convert_matrix_ff(float **src, vector<vector<float> > &dst, int rows, int c
     return true;
 }
 
-bool convert_matrix_f_ff(float *src, float **dst, int rows, int cols)
+bool convert_matrix_f_ff(double *src, double **dst, int rows, int cols)
 {
     int i, j, idx;
 
@@ -485,7 +485,7 @@ bool convert_matrix_f_ff(float *src, float **dst, int rows, int cols)
     return true;
 }
 
-bool convert_matrix_ff_f(float **src, float *dst, int rows, int cols)
+bool convert_matrix_ff_f(double **src, double *dst, int rows, int cols)
 {
     int i, j, idx;
 

@@ -90,12 +90,12 @@ void OBElementTable::ParseLine(const char *buffer)
 {
   int num,maxbonds;
   char symbol[3];
-  float Rbo,Rcov,Rvdw,mass, elNeg;
+  double Rbo,Rcov,Rvdw,mass, elNeg;
 
   if (buffer[0] != '#') // skip comment line (at the top)
     {
       // Ignore RGB columns
-      sscanf(buffer,"%d %s %f %f %f %d %f %f %*f %*f %*f",
+      sscanf(buffer,"%d %s %lf %lf %lf %d %lf %lf %*lf %*lf %*lf",
 	     &num,
 	     symbol,
 	     &Rcov,
@@ -130,84 +130,84 @@ int OBElementTable::GetMaxBonds(int atomicnum)
   return(_element[atomicnum]->GetMaxBonds());
 }
 
-float OBElementTable::GetElectroNeg(int atomicnum)
+double OBElementTable::GetElectroNeg(int atomicnum)
 {
   if (!_init) Init();
 
   if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0f);
+    return(0.0);
 
   return(_element[atomicnum]->GetElectroNeg());
 }
 
-float OBElementTable::GetVdwRad(int atomicnum)
+double OBElementTable::GetVdwRad(int atomicnum)
 {
   if (!_init) Init();
 
   if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0f);
+    return(0.0);
 
   return(_element[atomicnum]->GetVdwRad());
 }
 
-float OBElementTable::GetBORad(int atomicnum)
+double OBElementTable::GetBORad(int atomicnum)
 {
   if (!_init) Init();
 
   if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0f);
+    return(0.0);
 
   return(_element[atomicnum]->GetBoRad());
 }
 
-float OBElementTable::CorrectedBondRad(int atomicnum, int hyb)
+double OBElementTable::CorrectedBondRad(int atomicnum, int hyb)
 {
-  float rad;
+  double rad;
   if (!_init) Init();
 
   if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(1.0f);
+    return(1.0);
 
   rad = _element[atomicnum]->GetBoRad();
 
-  if (hyb == 2)      rad *= 0.95f;
-  else if (hyb == 1) rad *= 0.90f;
+  if (hyb == 2)      rad *= 0.95;
+  else if (hyb == 1) rad *= 0.90;
 
   return(rad);
 }
 
-float OBElementTable::CorrectedVdwRad(int atomicnum, int hyb)
+double OBElementTable::CorrectedVdwRad(int atomicnum, int hyb)
 {
-  float rad;
+  double rad;
   if (!_init) Init();
 
   if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(1.95f);
+    return(1.95);
 
   rad = _element[atomicnum]->GetVdwRad();
 
-  if (hyb == 2)      rad *= 0.95f;
-  else if (hyb == 1) rad *= 0.90f;
+  if (hyb == 2)      rad *= 0.95;
+  else if (hyb == 1) rad *= 0.90;
 
   return(rad);
 }
 
-float OBElementTable::GetCovalentRad(int atomicnum)
+double OBElementTable::GetCovalentRad(int atomicnum)
 {
   if (!_init) Init();
 
   if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0f);
+    return(0.0);
 
   return(_element[atomicnum]->GetCovalentRad());
 }
 
-float OBElementTable::GetMass(int atomicnum)
+double OBElementTable::GetMass(int atomicnum)
 {
   if (!_init) Init();
 
   if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-    return(0.0f);
+    return(0.0);
 
   return(_element[atomicnum]->GetMass());
 }
@@ -218,14 +218,14 @@ int OBElementTable::GetAtomicNum(const char *sym, unsigned short iso)
 
     vector<OBElement*>::iterator i;
     for (i = _element.begin();i != _element.end();i++)
-      if (!strcmp(sym,(*i)->GetSymbol()))
+      if (!strncasecmp(sym,(*i)->GetSymbol(),2))
         return((*i)->GetAtomicNum());
-    if (strcmp(sym, "D"))
+    if (strcasecmp(sym, "D"))
       {
 	iso = 2;
 	return(1);
       }
-    else if (strcmp(sym, "T"))
+    else if (strcasecmp(sym, "T"))
       {
 	iso = 3;
 	return(1);
@@ -253,11 +253,11 @@ void OBIsotopeTable::ParseLine(const char *buffer)
 {
   unsigned int atomicNum, isotope;
   unsigned int i;
-  float mass;
+  double mass;
   vector<string> vs;
 
-  pair <int, float> entry;
-  vector <pair <int, float> > row;
+  pair <int, double> entry;
+  vector <pair <int, double> > row;
 
   if (buffer[0] != '#') // skip comment line (at the top)
     {
@@ -276,19 +276,19 @@ void OBIsotopeTable::ParseLine(const char *buffer)
     }
 }
 
-float	OBIsotopeTable::GetExactMass(const int ele, const int isotope)
+double	OBIsotopeTable::GetExactMass(const int ele, const int isotope)
 {
   if (!_init) Init();
 
   if (ele > _isotopes.size() || ele < 0)
-    return 0.0f;
+    return 0.0;
 
   unsigned int iso;
   for (iso = 0; iso < _isotopes[ele].size(); iso++)
     if (isotope == _isotopes[ele][iso].first)
 	return _isotopes[ele][iso].second;
 
-  return 0.0f;
+  return 0.0;
 }
 
 /** \class OBTypeTable

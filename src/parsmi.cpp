@@ -13,7 +13,6 @@ GNU General Public License for more details.
 
 #ifdef WIN32
 #pragma warning (disable: 4786) // warning: long & complicated stl warning
-#pragma warning (disable: 4305) // warning: truncation from 'const double' to 'const float'
 #endif
 
 #include "mol.h"

@@ -30,13 +30,13 @@ bool ReadBGF(istream &ifs,OBMol &mol,const char *title)
 
   ttab.SetFromType("DRE"); 
   OBAtom *atom;
-  float x,y,z,chrg;
+  double x,y,z,chrg;
   for (;;)
   {
     if (!ifs.getline(buffer,BUFF_SIZE)) break;
     if (EQn(buffer,"FORMAT",6)) break;
       
-    sscanf(buffer,"%*s %*s %*s %*s %*s %*s %f %f %f %s %*s %*s %f",
+    sscanf(buffer,"%*s %*s %*s %*s %*s %*s %lf %lf %lf %s %*s %*s %lf",
 	   &x,&y,&z,
            tmptyp,
 	   &chrg);

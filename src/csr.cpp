@@ -73,50 +73,50 @@ void WriteCSRHeader(ostream &ofs,OBMol &mol)
 void WriteCSRCoords(ostream &ofs,OBMol &mol)
 {
   int the_size,jconf;
-  float x,y,z,energy;
+  double x,y,z,energy;
   char title[100];
   char *tag;
 
-  the_size = sizeof(int) + sizeof(float) + (80 * sizeof(char));
+  the_size = sizeof(int) + sizeof(double) + (80 * sizeof(char));
   
   jconf = 1;
-  energy = -2.584565f;
+  energy = -2.584565;
 
   sprintf(title,"%s:%d",mol.GetTitle(),MolCount);
   tag = PadString(title,80);
 
   WriteSize(the_size,ofs);
   ofs.write((char*)&jconf,sizeof(int));
-  ofs.write((char*)&energy,sizeof(float));
+  ofs.write((char*)&energy,sizeof(double));
   ofs.write(tag,80*sizeof(char));
   WriteSize(the_size,ofs);
 
-  WriteSize(mol.NumAtoms()*sizeof(float),ofs);
+  WriteSize(mol.NumAtoms()*sizeof(double),ofs);
 
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     x = atom->x();
-    ofs.write((char*)&x,sizeof(float));
+    ofs.write((char*)&x,sizeof(double));
   }
-  WriteSize(mol.NumAtoms()*sizeof(float),ofs);
+  WriteSize(mol.NumAtoms()*sizeof(double),ofs);
 
-  WriteSize(mol.NumAtoms()*sizeof(float),ofs);
+  WriteSize(mol.NumAtoms()*sizeof(double),ofs);
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     y = atom->y();
-    ofs.write((char*)&y,sizeof(float));
+    ofs.write((char*)&y,sizeof(double));
   }
-  WriteSize(mol.NumAtoms()*sizeof(float),ofs);
+  WriteSize(mol.NumAtoms()*sizeof(double),ofs);
 
-  WriteSize(mol.NumAtoms()*sizeof(float),ofs);
+  WriteSize(mol.NumAtoms()*sizeof(double),ofs);
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     z = atom->z();
-    ofs.write((char*)&z,sizeof(float));
+    ofs.write((char*)&z,sizeof(double));
   }
-  WriteSize(mol.NumAtoms()*sizeof(float),ofs);
+  WriteSize(mol.NumAtoms()*sizeof(double),ofs);
 
   delete [] tag;
 }

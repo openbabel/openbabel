@@ -23,9 +23,9 @@ using namespace OpenBabel;
 
 bool TestUnitCell()
 {
-  float a, b, c, alpha, beta, gamma;
+  double a, b, c, alpha, beta, gamma;
   vector3 v1, v2, v3;
-  float x, y, z;
+  double x, y, z;
   char buffer[BUFF_SIZE];
   std::ifstream ifs;
   OBUnitCell cell, cell2;

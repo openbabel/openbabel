@@ -43,7 +43,7 @@ check:		$(PROGRAM) $(ROUNDPROG)
 		-@(cd $(srcdir); cp -f $(DATAFILES) $(PWD) 2>/dev/null)
 		./$(PROGRAM)
 
-clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
+clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(ROUNDOBJS) $(ROUNDPROG)
 distclean:	clean
 		$(RM) Makefile
 

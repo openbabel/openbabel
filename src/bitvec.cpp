@@ -497,15 +497,15 @@ bool OBBitVec::IsEmpty()
     return(true);
 }
 
-float Tanimoto(OBBitVec &bv1,OBBitVec &bv2)
+double Tanimoto(OBBitVec &bv1,OBBitVec &bv2)
 {
   OBBitVec bvtmp;
-  float andbits,orbits;
+  double andbits,orbits;
 
   bvtmp = bv1 & bv2;
-  andbits = (float)bvtmp.CountBits();
+  andbits = (double)bvtmp.CountBits();
   bvtmp = bv1 | bv2;
-  orbits  = (float)bvtmp.CountBits();
+  orbits  = (double)bvtmp.CountBits();
   
   return(andbits/orbits);
 }

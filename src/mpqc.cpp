@@ -17,13 +17,13 @@ using namespace std;
 
 namespace OpenBabel {
 
-#define BOHR_TO_ANGSTROM 0.529177
+#define BOHR_TO_ANGSTROM 0.529177249
 
 bool ReadMPQC(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   vector<string> vs;
   bool bohr = true;

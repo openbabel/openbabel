@@ -32,13 +32,13 @@ bool ReadFeat(istream &ifs,OBMol &mol, const char *title)
   if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
   mol.SetTitle(buffer);
 
-  float x,y,z;
+  double x,y,z;
   char type[20];
   OBAtom *atom;
   for (i = 0; i < natoms;i++)
   {
     if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
-    sscanf(buffer,"%s %f %f %f",
+    sscanf(buffer,"%s %lf %lf %lf",
 	   type,
 	   &x,
 	   &y,

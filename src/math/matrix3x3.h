@@ -34,15 +34,15 @@ GNU General Public License for more details.
 #include "math/vector3.h"
 
 #ifndef PI
-#define PI 3.1415926535897932384626433f
+#define PI 3.1415926535897932384626433
 #endif
 
 #ifndef RAD_TO_DEG
-#define RAD_TO_DEG 180.0f/PI
+#define RAD_TO_DEG 180.0/PI
 #endif
 
 #ifndef DEG_TO_RAD
-#define DEG_TO_RAD PI/180.0f
+#define DEG_TO_RAD PI/180.0
 #endif 
 
 namespace OpenBabel {
@@ -53,23 +53,23 @@ namespace OpenBabel {
       //! Elements of the matrix
       /*! This array holds the matrix. The first index refers to the
 	row, the second the column. */
-      float ele[3][3];
+      double ele[3][3];
       
     public:
       //! constructs the zero-matrix
       matrix3x3(void) 
 	{
-	  ele[0][0] = 0.0f; ele[0][1] = 0.0f; ele[0][2] = 0.0f; 
-	  ele[1][0] = 0.0f; ele[1][1] = 0.0f; ele[1][2] = 0.0f; 
-	  ele[2][0] = 0.0f; ele[2][1] = 0.0f; ele[2][2] = 0.0f; 
+	  ele[0][0] = 0.0; ele[0][1] = 0.0; ele[0][2] = 0.0; 
+	  ele[1][0] = 0.0; ele[1][1] = 0.0; ele[1][2] = 0.0; 
+	  ele[2][0] = 0.0; ele[2][1] = 0.0; ele[2][2] = 0.0; 
 	}
 
       //! constructs s times the unit matrix
-      matrix3x3(float s) 
+      matrix3x3(double s) 
 	{
-	  ele[0][0] = s;    ele[0][1] = 0.0f; ele[0][2] = 0.0f; 
-	  ele[1][0] = 0.0f; ele[1][1] = s;    ele[1][2] = 0.0f; 
-	  ele[2][0] = 0.0f; ele[2][1] = 0.0f; ele[2][2] = s; 
+	  ele[0][0] = s;    ele[0][1] = 0.0; ele[0][2] = 0.0; 
+	  ele[1][0] = 0.0; ele[1][1] = s;    ele[1][2] = 0.0; 
+	  ele[2][0] = 0.0; ele[2][1] = 0.0; ele[2][2] = s; 
 	}
 
       //! constructs a matrix from row vectors
@@ -80,10 +80,10 @@ namespace OpenBabel {
 	  ele[2][0] = row3.x();ele[2][1] = row3.y();ele[2][2] = row3.z();
 	}
 
-      //! constructs a matrix from a 3x3-array of floats
-      /*! constructs a matrix from a 3x3-array of floats. The first
+      //! constructs a matrix from a 3x3-array of doubles
+      /*! constructs a matrix from a 3x3-array of doubles. The first
 	index represents the row, the second index the column */
-      matrix3x3(float d[3][3])
+      matrix3x3(double d[3][3])
 	{
 	  ele[0][0] = d[0][0];ele[0][1] = d[0][1];ele[0][2] = d[0][2];
 	  ele[1][0] = d[1][0];ele[1][1] = d[1][1];ele[1][2] = d[1][2];
@@ -92,9 +92,9 @@ namespace OpenBabel {
       
       //! access function
       /*! writes the matrix into the 1-dimensional array m, row by
-	row. The array must be able to hold 9 floats, otherwise your
+	row. The array must be able to hold 9 doubles, otherwise your
 	prgram will segfault. */ 
-      void GetArray(float *m) 
+      void GetArray(double *m) 
 	{
 	  m[0] = ele[0][0];m[1] = ele[0][1];m[2] = ele[0][2];
 	  m[3] = ele[1][0];m[4] = ele[1][1];m[5] = ele[1][2];
@@ -111,7 +111,7 @@ namespace OpenBabel {
       void randomRotation(OBRandom &rnd);
       
       //! returns the determinant of the matrix
-      float determinant() const;
+      double determinant() const;
       
       //! Checks if a matrix is symmetric
       bool isSymmetric(void) const;
@@ -144,7 +144,7 @@ namespace OpenBabel {
 	
 	\todo Replace this method with a more fool-proof version.
       */
-      float Get(int row,int column) const {return(ele[row][column]);}
+      double Get(int row,int column) const {return(ele[row][column]);}
       
       //! access function
       /*! \warning if row or column are not in the range 0..2, random
@@ -153,7 +153,7 @@ namespace OpenBabel {
 	
 	\todo Replace this method with a more fool-proof version.
       */
-      void Set(int row,int column, float v) {ele[row][column]= v;}
+      void Set(int row,int column, double v) {ele[row][column]= v;}
 
       //! access function
       /*! \warning If column is not in the range 0..2, the vector
@@ -177,17 +177,17 @@ namespace OpenBabel {
 
       
       //! divides all entries of the matrix by a scalar c
-      matrix3x3 &operator/=(const float &c);
+      matrix3x3 &operator/=(const double &c);
 
-      void SetupRotMat(float,float,float);
+      void SetupRotMat(double,double,double);
 
       //! calculates a matrix that represents reflection on a plane
       void PlaneReflection(const vector3 &norm);
 
       //! calculates a rotation matrix
-      void RotAboutAxisByAngle(const vector3 &axis, const float angle);
+      void RotAboutAxisByAngle(const vector3 &axis, const double angle);
 
-      void FillOrth(float,float,float,float,float,float);
+      void FillOrth(double,double,double,double,double,double);
 
       //! find the eigenvalues and -vectors of a symmetric matrix
       matrix3x3 findEigenvectorsIfSymmetric(vector3 &eigenvals) const throw(OBError);
@@ -201,10 +201,10 @@ namespace OpenBabel {
       friend std::ostream& operator<< ( std::ostream&, const matrix3x3 & ) ;
 
       //! eigenvalue calculation
-      static void jacobi(unsigned int n, float *a, float *d, float *v);
+      static void jacobi(unsigned int n, double *a, double *d, double *v);
     };
 
-  vector3 center_coords(float*,int);
+  vector3 center_coords(double*,int);
 }
 
 #endif // OB_MATRIX3x3_H

@@ -18,7 +18,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-void OBProxGrid::Setup(OBMol &mol,OBMol &box,float cutoff,float res)
+void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,double res)
 {
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
@@ -55,8 +55,8 @@ void OBProxGrid::Setup(OBMol &mol,OBMol &box,float cutoff,float res)
   cutoff *= cutoff; //don't do sqrts
 
   int k,l,m;
-  float x,y,z,dx_2,dy_2;
-  float *c = mol.GetCoordinates();
+  double x,y,z,dx_2,dy_2;
+  double *c = mol.GetCoordinates();
   size = mol.NumAtoms()*3;
 
   for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
@@ -72,8 +72,8 @@ void OBProxGrid::Setup(OBMol &mol,OBMol &box,float cutoff,float res)
   _inc = 1/_inc;
 }
 
-void OBProxGrid::Setup(OBMol &mol,OBMol &box,float cutoff,vector<bool> &use,
-		       float res)
+void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,vector<bool> &use,
+		       double res)
 {
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
@@ -107,8 +107,8 @@ void OBProxGrid::Setup(OBMol &mol,OBMol &box,float cutoff,vector<bool> &use,
   cutoff *= cutoff; //don't do sqrts
 
   int k,l,m;
-  float x,y,z,dx_2,dy_2;
-  float *c = mol.GetCoordinates();
+  double x,y,z,dx_2,dy_2;
+  double *c = mol.GetCoordinates();
   size = mol.NumAtoms()*3;
 
   for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
@@ -125,7 +125,7 @@ void OBProxGrid::Setup(OBMol &mol,OBMol &box,float cutoff,vector<bool> &use,
   _inc = 1/_inc;
 }
 
-vector<int> *OBProxGrid::GetProxVector(float x,float y,float z)
+vector<int> *OBProxGrid::GetProxVector(double x,double y,double z)
 {
   if (x < _xmin || x > _xmax) return(NULL);
   if (y < _ymin || y > _ymax) return(NULL);
@@ -140,9 +140,9 @@ vector<int> *OBProxGrid::GetProxVector(float x,float y,float z)
   return(&cell[idx]);
 }
 
-vector<int> *OBProxGrid::GetProxVector(float *c)
+vector<int> *OBProxGrid::GetProxVector(double *c)
 {
-  float x,y,z;
+  double x,y,z;
   x = c[0];
   y = c[1];
   z = c[2];
@@ -160,7 +160,7 @@ vector<int> *OBProxGrid::GetProxVector(float *c)
   return(&cell[idx]);
 }
 
-void OBFloatGrid::Init(OBMol &box,float spacing, float pad)
+void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
 {
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
@@ -185,7 +185,7 @@ void OBFloatGrid::Init(OBMol &box,float spacing, float pad)
   _xmin -= pad;   _xmax += pad;
   _ymin -= pad;   _ymax += pad;
   _zmin -= pad;   _zmax += pad;
-  float midx,midy,midz;
+  double midx,midy,midz;
   int xdim,ydim,zdim;
 
   midx=0.5*(_xmax+_xmin);
@@ -204,19 +204,19 @@ void OBFloatGrid::Init(OBMol &box,float spacing, float pad)
   _ydim=ydim;
   _zdim=zdim;
   _spacing=spacing;
-  _halfSpace= _spacing/2.0f;
+  _halfSpace= _spacing/2.0;
   _inv_spa=1.0/spacing;
   _val=NULL;
   _ival=NULL;
 
   int size = _xdim*_ydim*_zdim;
-  _val = new float [size];
-  memset(_val,'\0',sizeof(float)*size);
+  _val = new double [size];
+  memset(_val,'\0',sizeof(double)*size);
 
   //return(true);
 }
 
-void OBFloatGrid::IndexToCoords(int idx, float &x, float &y, float &z)
+void OBFloatGrid::IndexToCoords(int idx, double &x, double &y, double &z)
 {
   long int grid_x,grid_y,grid_z;
   
@@ -224,12 +224,12 @@ void OBFloatGrid::IndexToCoords(int idx, float &x, float &y, float &z)
   grid_z = (int)(idx /(_xdim * _ydim));
   grid_y = (int)((idx - (grid_z * _xdim * _ydim))/_xdim);
 
-  x = ((float)grid_x * _spacing + _xmin) + this->_halfSpace;
-  y = ((float)grid_y * _spacing + _ymin) + this->_halfSpace;
-  z = ((float)grid_z * _spacing + _zmin) + this->_halfSpace;
+  x = ((double)grid_x * _spacing + _xmin) + this->_halfSpace;
+  y = ((double)grid_y * _spacing + _ymin) + this->_halfSpace;
+  z = ((double)grid_z * _spacing + _zmin) + this->_halfSpace;
 }
 
-int OBFloatGrid::CoordsToIndex(float &x, float &y, float &z)
+int OBFloatGrid::CoordsToIndex(double &x, double &y, double &z)
 {
   int gx=(int)((x-_xmin)*_inv_spa);
   int gy=(int)((y-_ymin)*_inv_spa);
@@ -238,20 +238,20 @@ int OBFloatGrid::CoordsToIndex(float &x, float &y, float &z)
   return((gz*_ydim*_xdim)+(gy*_xdim)+gx);
 }
 
-void OBFloatGrid::CoordsToIndex(int *idx,float *c)
+void OBFloatGrid::CoordsToIndex(int *idx,double *c)
 {
   idx[0]=(int)((c[0]-_xmin)*_inv_spa);
   idx[1]=(int)((c[1]-_ymin)*_inv_spa);
   idx[2]=(int)((c[2]-_zmin)*_inv_spa);
 }
 
-float OBFloatGrid::Interpolate(float x,float y,float z)
+double OBFloatGrid::Interpolate(double x,double y,double z)
 {
   int n,igx,igy,igz;
-  float xydim;
-  float gx,gy,gz,fgx,fgy,fgz;
-  float ax,ay,az,bx,by,bz;
-  float AyA,ByA,AyB,ByB,Az,Bz;
+  double xydim;
+  double gx,gy,gz,fgx,fgy,fgz;
+  double ax,ay,az,bx,by,bz;
+  double AyA,ByA,AyB,ByB,Az,Bz;
 
   if((x<=_xmin)||(x>=_xmax)) return(0.0);
   if((y<=_ymin)||(y>=_ymax)) return(0.0);
@@ -261,11 +261,11 @@ float OBFloatGrid::Interpolate(float x,float y,float z)
 
   /* calculate grid voxel and fractional offsets */
   gx=(x-_xmin-_halfSpace)*_inv_spa;   if (gx<0) gx=0; 
-  igx=(int)gx;fgx=gx-(float)igx;
+  igx=(int)gx;fgx=gx-(double)igx;
   gy=(y-_ymin-_halfSpace)*_inv_spa;   if (gy<0) gy=0;
-  igy=(int) gy; fgy= gy - (float) igy;
+  igy=(int) gy; fgy= gy - (double) igy;
   gz=(z-_zmin-_halfSpace)*_inv_spa;   if (gz<0) gz=0;
-  igz=(int) gz; fgz= gz - (float) igz;
+  igz=(int) gz; fgz= gz - (double) igz;
 		
   n=(int)(igx+ _xdim*igy + xydim*igz);
   /* calculate linear weightings */
@@ -286,14 +286,14 @@ float OBFloatGrid::Interpolate(float x,float y,float z)
 }
 
 
-float OBFloatGrid::InterpolateDerivatives(float x,float y,float z,float *derivatives)
+double OBFloatGrid::InterpolateDerivatives(double x,double y,double z,double *derivatives)
 {
   int n,igx,igy,igz;
-  float xydim;
-  float gx,gy,gz,fgx,fgy,fgz;
-  float ax,ay,az,bx,by,bz;
-  float AyA,ByA,AyB,ByB,Az,Bz;
-	float energy,fx,fy,fz;
+  double xydim;
+  double gx,gy,gz,fgx,fgy,fgz;
+  double ax,ay,az,bx,by,bz;
+  double AyA,ByA,AyB,ByB,Az,Bz;
+	double energy,fx,fy,fz;
 
   if((x<=_xmin)||(x>=_xmax)) return(0.0);
   if((y<=_ymin)||(y>=_ymax)) return(0.0);
@@ -303,11 +303,11 @@ float OBFloatGrid::InterpolateDerivatives(float x,float y,float z,float *derivat
 
   /* calculate grid voxel and fractional offsets */
   gx=(x-_xmin-_halfSpace)*_inv_spa;   if (gx<0) gx=0; 
-  igx=(int)gx;fgx=gx-(float)igx;
+  igx=(int)gx;fgx=gx-(double)igx;
   gy=(y-_ymin-_halfSpace)*_inv_spa;   if (gy<0) gy=0;
-  igy=(int) gy; fgy= gy - (float) igy;
+  igy=(int) gy; fgy= gy - (double) igy;
   gz=(z-_zmin-_halfSpace)*_inv_spa;   if (gz<0) gz=0;
-  igz=(int) gz; fgz= gz - (float) igz;
+  igz=(int) gz; fgz= gz - (double) igz;
 		
   n=(int)(igx+ _xdim*igy + xydim*igz);
   /* calculate linear weightings */
@@ -358,62 +358,62 @@ float OBFloatGrid::InterpolateDerivatives(float x,float y,float z,float *derivat
 
 ostream& operator<< ( ostream &os, const  OBFloatGrid& fg) 
 {
-  os.write((const char*)&fg._xmin,sizeof(float));
-  os.write((const char*)&fg._xmax,sizeof(float));
-  os.write((const char*)&fg._ymin,sizeof(float));
-  os.write((const char*)&fg._ymax,sizeof(float));
-  os.write((const char*)&fg._zmin,sizeof(float));
-  os.write((const char*)&fg._zmax,sizeof(float));
+  os.write((const char*)&fg._xmin,sizeof(double));
+  os.write((const char*)&fg._xmax,sizeof(double));
+  os.write((const char*)&fg._ymin,sizeof(double));
+  os.write((const char*)&fg._ymax,sizeof(double));
+  os.write((const char*)&fg._zmin,sizeof(double));
+  os.write((const char*)&fg._zmax,sizeof(double));
 
-  os.write((const char*)&fg._midx,sizeof(float));
-  os.write((const char*)&fg._midy,sizeof(float));
-  os.write((const char*)&fg._midz,sizeof(float));
-  os.write((const char*)&fg._inv_spa,sizeof(float));
-  os.write((const char*)&fg._spacing,sizeof(float));
+  os.write((const char*)&fg._midx,sizeof(double));
+  os.write((const char*)&fg._midy,sizeof(double));
+  os.write((const char*)&fg._midz,sizeof(double));
+  os.write((const char*)&fg._inv_spa,sizeof(double));
+  os.write((const char*)&fg._spacing,sizeof(double));
   os.write((const char*)&fg._xdim,sizeof(int));
   os.write((const char*)&fg._ydim,sizeof(int));
   os.write((const char*)&fg._zdim,sizeof(int));
   os.write((const char*)&fg._val[0],
-	   (sizeof(float)*(fg._xdim*fg._ydim*fg._zdim)));
+	   (sizeof(double)*(fg._xdim*fg._ydim*fg._zdim)));
 
   return(os);
 }
 
 istream& operator>> ( istream &is,OBFloatGrid& fg) 
 {
-  is.read((char*)&fg._xmin,sizeof(float));
-  is.read((char*)&fg._xmax,sizeof(float));
-  is.read((char*)&fg._ymin,sizeof(float));
-  is.read((char*)&fg._ymax,sizeof(float));
-  is.read((char*)&fg._zmin,sizeof(float));
-  is.read((char*)&fg._zmax,sizeof(float));
+  is.read((char*)&fg._xmin,sizeof(double));
+  is.read((char*)&fg._xmax,sizeof(double));
+  is.read((char*)&fg._ymin,sizeof(double));
+  is.read((char*)&fg._ymax,sizeof(double));
+  is.read((char*)&fg._zmin,sizeof(double));
+  is.read((char*)&fg._zmax,sizeof(double));
 
-  is.read((char*)&fg._midx,sizeof(float));
-  is.read((char*)&fg._midy,sizeof(float));
-  is.read((char*)&fg._midz,sizeof(float));
-  is.read((char*)&fg._inv_spa,sizeof(float));
-  is.read((char*)&fg._spacing,sizeof(float));
+  is.read((char*)&fg._midx,sizeof(double));
+  is.read((char*)&fg._midy,sizeof(double));
+  is.read((char*)&fg._midz,sizeof(double));
+  is.read((char*)&fg._inv_spa,sizeof(double));
+  is.read((char*)&fg._spacing,sizeof(double));
   is.read((char*)&fg._xdim,sizeof(int));
   is.read((char*)&fg._ydim,sizeof(int));
   is.read((char*)&fg._zdim,sizeof(int));
   int size = fg._xdim*fg._ydim*fg._zdim;
-  fg._val = new float [size];
-  size *= (int) sizeof(float);
+  fg._val = new double [size];
+  size *= (int) sizeof(double);
 
   is.read((char*)&fg._val[0],size);
-  fg._halfSpace= fg._spacing/2.0f;
+  fg._halfSpace= fg._spacing/2.0;
 
   return(is);
 }
 
 #ifdef FOO
 //linear interpolation routine
-  float Interpolate(float x,float y,float z)
+  double Interpolate(double x,double y,double z)
     {
       int n;
       int igx,igy,igz;
-      float scale,gx,gy,gz,fgx,fgy,fgz;
-      float qzpypx,qzpynx,qznynx,qznypx,qznyx,qzpyx;
+      double scale,gx,gy,gz,fgx,fgy,fgz;
+      double qzpypx,qzpynx,qznynx,qznypx,qznyx,qzpyx;
 
       scale=_inv_spa;
 
@@ -421,9 +421,9 @@ istream& operator>> ( istream &is,OBFloatGrid& fg)
       if((y<=_ymin)||(y>=_ymax)) return(0.0);
       if((z<=_zmin)||(z>=_zmax)) return(0.0);
 
-      gx=(x-_xmin-_halfSpace)*scale; igx=(int) gx; fgx= gx - (float) igx;
-      gy=(y-_ymin-_halfSpace)*scale; igy=(int) gy; fgy= gy - (float) igy;
-      gz=(z-_zmin-_halfSpace)*scale; igz=(int) gz; fgz= gz - (float) igz;
+      gx=(x-_xmin-_halfSpace)*scale; igx=(int) gx; fgx= gx - (double) igx;
+      gy=(y-_ymin-_halfSpace)*scale; igy=(int) gy; fgy= gy - (double) igy;
+      gz=(z-_zmin-_halfSpace)*scale; igz=(int) gz; fgz= gz - (double) igz;
 
       int xydim=_xdim*_ydim;
       n=igx+ _xdim*igy + xydim*igz;

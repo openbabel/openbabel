@@ -31,7 +31,7 @@ namespace OpenBabel {
   /*! \class vector3
      \brief Represents a vector in the 3-dimensional real space.
 
-The vector3 class was designed to simplify operations with floating
+The vector3 class was designed to simplify operations with doubleing
 point coordinates. To this end many of the common operations have been
 overloaded for simplicity. Vector addition, subtraction, scalar
 multiplication, dot product, cross product, magnitude and a number of
@@ -50,18 +50,18 @@ v3.normalize();
   */
 
      /*! This (slow) method allows to access the elements of the
-       vector as if it were an array of floats. If the index is > 2,
+       vector as if it were an array of doubles. If the index is > 2,
        then a warning is printed, and the program is terminated via
        exit(-1). Otherwise, if i is 0, 1 or 2, then a reference to x,
        y or z is returned, respectively.
        
        \warning This method is primarily designed to facilitate the
        integration ('Open Babelization') of code that uses arrays of
-       floats rather than the vector class. Due to the error checks
+       doubles rather than the vector class. Due to the error checks
        the method is of course very slow and should therefore be
        avoided in production code.
      */
-  float& vector3::operator[] ( unsigned int i)
+  double& vector3::operator[] ( unsigned int i)
   {
     if (i > 2) {
       cerr << "ERROR in OpenBabel::vector3::operator[]" << endl
@@ -95,11 +95,11 @@ v3.normalize();
     
     // obtain a random vector with 0.001 <= length^2 <= 1.0, normalize
     // the vector to obtain a random vector of length 1.0.
-    float l;
+    double l;
     do {
-      this->Set(ptr->NextFloat()-0.5f, ptr->NextFloat()-0.5f, ptr->NextFloat()-0.5f);
+      this->Set(ptr->NextFloat()-0.5, ptr->NextFloat()-0.5, ptr->NextFloat()-0.5);
       l = length_2();
-    } while ( (l > 1.0) || (l < 0.0001) );
+    } while ( (l > 1.0) || (l < 1e-4) );
     this->normalize();
     
     if (!obRandP) 
@@ -133,15 +133,15 @@ v3.normalize();
   }
 
   /*! This method checks if the current vector has length() ==
-    0.0f.  If so, *this remains unchanged. Otherwise, *this is
+    0.0.  If so, *this remains unchanged. Otherwise, *this is
     scaled by 1.0/length().
 
-    \warning If length() is very close to zero, but not == 0.0f,
+    \warning If length() is very close to zero, but not == 0.0,
     this method may behave in unexpected ways and return almost
-    random results; details may depend on your particular floating
+    random results; details may depend on your particular doubleing
     point implementation. The use of this method is therefore
     highly discouraged, unless you are certain that length() is in
-    a reasonable range, away from 0.0f (Stefan Kebekus)
+    a reasonable range, away from 0.0 (Stefan Kebekus)
 
     \deprecated This method will probably replaced by a safer
     algorithm in the future.
@@ -152,7 +152,7 @@ v3.normalize();
   */
   vector3& vector3 :: normalize ()  
   {
-    float l = length ();
+    double l = length ();
     
     if (l == 0) 
       return(*this);
@@ -164,7 +164,7 @@ v3.normalize();
     return(*this);
   }
   
-  float dot ( const vector3& v1, const vector3& v2 ) 
+  double dot ( const vector3& v1, const vector3& v2 ) 
   {
     return v1._vx*v2._vx + v1._vy*v2._vy + v1._vz*v2._vz ;
   }
@@ -183,14 +183,14 @@ v3.normalize();
 
   /*! This method calculates the angle between two vectors
        
-    \warning If length() of any of the two vectors is == 0.0f,
+    \warning If length() of any of the two vectors is == 0.0,
     this method will divide by zero. If the product of the
-    length() of the two vectors is very close to 0,0f, but not ==
-    0.0f, this method may behave in unexpected ways and return
+    length() of the two vectors is very close to 0.0, but not ==
+    0.0, this method may behave in unexpected ways and return
     almost random results; details may depend on your particular
-    floating point implementation. The use of this method is
+    doubleing point implementation. The use of this method is
     therefore highly discouraged, unless you are certain that the
-    length()es are in a reasonable range, away from 0.0f (Stefan
+    length()es are in a reasonable range, away from 0.0 (Stefan
     Kebekus)
 
     \deprecated This method will probably replaced by a safer
@@ -200,30 +200,30 @@ v3.normalize();
 
     @returns the angle in degrees (0-360)
   */
-  float vectorAngle ( const vector3& v1, const vector3& v2 ) 
+  double vectorAngle ( const vector3& v1, const vector3& v2 ) 
   {
-    float mag;
-    float dp;
+    double mag;
+    double dp;
 
     mag = v1.length() * v2.length();
     dp = dot(v1,v2)/mag;
 
     if (dp < -0.999999)
-      dp = -0.9999999f;
+      dp = -0.9999999;
 
     if (dp > 0.9999999)
-      dp = 0.9999999f;
+      dp = 0.9999999;
 
     if (dp > 1.0)
-      dp = 1.0f;
+      dp = 1.0;
 
     return((RAD_TO_DEG * acos(dp)));
   }
 
-  float CalcTorsionAngle(const vector3 &a, const vector3 &b,
+  double CalcTorsionAngle(const vector3 &a, const vector3 &b,
 			 const vector3 &c, const vector3 &d)
   {
-    float torsion;
+    double torsion;
     vector3 b1,b2,b3,c1,c2,c3;
   
     b1 = a - b;
@@ -246,19 +246,19 @@ v3.normalize();
   }
   
   /*! This method checks if the current vector *this is zero
-    (i.e. if all entries == 0.0f). If so, a warning message is
+    (i.e. if all entries == 0.0). If so, a warning message is
     printed, and the whole program is aborted with exit(0).
     Otherwise, a vector of length one is generated, which is
     orthogonal to *this, and stored in v. The resulting vector is
     not random.
 
     \warning If the entries of the *this (in particular the
-    z-component) are very close to zero, but not == 0.0f, this
+    z-component) are very close to zero, but not == 0.0, this
     method may behave in unexpected ways and return almost random
-    results; details may depend on your particular floating point
+    results; details may depend on your particular doubleing point
     implementation. The use of this method is therefore highly
     discouraged, unless you are certain that all components of
-    *this are in a reasonable range, away from 0.0f (Stefan
+    *this are in a reasonable range, away from 0.0 (Stefan
     Kebekus)
 
     \deprecated This method will probably replaced by a safer

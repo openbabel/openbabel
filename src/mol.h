@@ -159,8 +159,8 @@ protected:
   unsigned short int            _cidx;		//!< index into coordinate array
   unsigned short int            _hyb;		//!< hybridization
   unsigned short int            _flags;		//!< bitwise flags (e.g. aromaticity)
-  float                         _pcharge;	//!< partial charge
-  float                       **_c;		//!< coordinate array in float*
+  double                         _pcharge;	//!< partial charge
+  double                       **_c;		//!< coordinate array in double*
   vector3                       _v;		//!< coordinate vector
   OBResidue                    *_residue;	//!< parent residue (if applicable)
   //OBMol                      *_parent;        //!< parent molecule (inherited)
@@ -193,13 +193,13 @@ public:
     void SetFormalCharge(int fcharge)        {_fcharge = fcharge;}
     void SetType(char *type);
     void SetType(std::string &type);
-    void SetPartialCharge(float pcharge)     {_pcharge = pcharge;}
+    void SetPartialCharge(double pcharge)     {_pcharge = pcharge;}
     void SetVector();
     void SetVector(vector3 &v);                
-    void SetVector(const float,const float,const float);
+    void SetVector(const double,const double,const double);
     void SetResidue(OBResidue *res)          {_residue=res;}
 //  void SetParent(OBMol *ptr)               {_parent=ptr;}
-    void SetCoordPtr(float **c)              {_c = c;_cidx = (GetIdx()-1)*3;}
+    void SetCoordPtr(double **c)              {_c = c;_cidx = (GetIdx()-1)*3;}
     void SetAromatic()                       {SetFlag(OB_AROMATIC_ATOM);}
     void UnsetAromatic()    		     {_flags &= (~(OB_AROMATIC_ATOM));}
     void SetClockwiseStereo()          {SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM);}
@@ -222,9 +222,9 @@ public:
     unsigned int GetAtomicNum()     const {return((unsigned int)_ele);}
     unsigned short int GetIsotope() const {return(_isotope);}
     //! The atomic mass of this atom given by standard IUPAC average molar mass
-    float	 GetAtomicMass()    const;
+    double	 GetAtomicMass()    const;
     //! The atomic mass of given by the isotope (default is most abundant isotope)
-    float	 GetExactMass()	    const;
+    double	 GetExactMass()	    const;
     unsigned int GetIdx()           const {return((int)_idx);}
     unsigned int GetCoordinateIdx() const {return((int)_cidx);}
     unsigned int GetCIdx()          const {return((int)_cidx);}
@@ -241,26 +241,26 @@ public:
     char        *GetType();
 
     //! The x coordinate
-    float      GetX()             {return(x());}
-    float      x()
+    double      GetX()             {return(x());}
+    double      x()
       {if (_c) return((*_c)[_cidx]); else return _v.x();}
     //! The y coordinate
-    float      GetY()             {return(y());}
-    float      y()
+    double      GetY()             {return(y());}
+    double      y()
       {if (_c) return((*_c)[_cidx+1]); else return _v.y();}
     //! The z coordinate
-    float      GetZ()             {return(z());}
-    float      z()
+    double      GetZ()             {return(z());}
+    double      z()
       {if (_c) return((*_c)[_cidx+2]); else return _v.z();}
-    //! Return the coordinates as a float*
-    float     *GetCoordinate()    {return(&(*_c)[_cidx]);}
+    //! Return the coordinates as a double*
+    double     *GetCoordinate()    {return(&(*_c)[_cidx]);}
     //! Return the coordinates as a vector3 object
     vector3   &GetVector();
-    float      GetPartialCharge();
+    double      GetPartialCharge();
     OBResidue *GetResidue();
     //OBMol   *GetParent()        {return((OBMol*)_parent);}
-    //! Create a vector for a new bond from this atom, with length supplied by the float
-    bool       GetNewBondVector(vector3 &v,float length);
+    //! Create a vector for a new bond from this atom, with length supplied by the double
+    bool       GetNewBondVector(vector3 &v,double length);
     OBBond    *GetBond(OBAtom *);
     OBAtom    *GetNextAtom();
     //@}
@@ -298,7 +298,7 @@ public:
     //! The size of the smallest ring that contains this atom (0 if not in a ring)
     unsigned int  MemberOfRingSize()	  const;
     //! The smallest angle of bonds to this atom
-    float	  SmallestBondAngle();
+    double	  SmallestBondAngle();
     //! The sum of the bond orders of the bonds to the atom (i.e. double bond = 2...)
     unsigned int  BOSum()                 const;
     //! The sum of the bond orders of bonds to the atom, considering only KDouble, KTriple bonds
@@ -421,7 +421,7 @@ public:
    void SetBegin(OBAtom *begin)             {_bgn = begin;}
    void SetEnd(OBAtom *end)                 {_end = end;}
 // void SetParent(OBMol *ptr)               {_parent=ptr;} // (inherited)
-   void SetLength(OBAtom*,float);
+   void SetLength(OBAtom*,double);
    void Set(int,OBAtom*,OBAtom*,int,int);
    void SetKSingle();
    void SetKDouble();
@@ -445,8 +445,8 @@ public:
    OBAtom *GetEndAtom()                {return((OBAtom*)_end);}
    OBAtom *GetNbrAtom(OBAtom *ptr)     {return((ptr != _bgn)? (OBAtom*)_bgn : (OBAtom*)_end);}
 // OBMol  *GetParent()                 {return(_parent);}  // (inherited)
-   float   GetEquibLength();
-   float   GetLength();
+   double   GetEquibLength();
+   double   GetLength();
    int     GetNbrAtomIdx(OBAtom *ptr) 
      {return((ptr!=_bgn)?_bgn->GetIdx():_end->GetIdx());}
    //@}
@@ -527,10 +527,10 @@ protected:
   //vector<OBBond*>             _bond;	//!< not needed (inherited)
   std::vector<OBResidue*>       _residue;//!< Residue information (if applicable)
   std::vector<OBGenericData*>   _vdata;	//!< Custom data
-  float                         _energy;//!< Molecular heat of formation (if applicable)
+  double                         _energy;//!< Molecular heat of formation (if applicable)
   int				_totalCharge; //!< Total charge on the molecule
-  float                        *_c;	//!< coordinate array
-  std::vector<float*>           _vconf;	//!< vector of conformers
+  double                        *_c;	//!< coordinate array
+  std::vector<double*>           _vconf;	//!< vector of conformers
   unsigned short int            _natoms;//!< Number of atoms
   unsigned short int            _nbonds;//!< Number of bonds
   unsigned short int            _mod;	//!< Number of nested calls to BeginModify()
@@ -617,16 +617,16 @@ public:
     OBBond      *GetBond(int, int);
     OBBond      *GetBond(OBAtom*,OBAtom*);
     OBResidue   *GetResidue(int);
-    float        GetTorsion(int,int,int,int);
-    float        GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
-    void         SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,float);
-    float        GetEnergy()                          {return(_energy);}
+    double        GetTorsion(int,int,int,int);
+    double        GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
+    void         SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double);
+    double        GetEnergy()                          {return(_energy);}
     //! Standard molar mass given by IUPAC atomic masses
-    float        GetMolWt();
+    double        GetMolWt();
     //! Mass given by isotopes (or most abundant isotope as necessary)
-    float	 GetExactMass();
+    double	 GetExactMass();
     int		 GetTotalCharge();
-    float       *GetCoordinates()                     {return(_c);}
+    double       *GetCoordinates()                     {return(_c);}
     std::vector<OBRing*> &GetSSSR();
     bool         IsCompressed()                       {return _compressed;}
     //@}
@@ -634,7 +634,7 @@ public:
     //***data modification methods***
     void   SetTitle(const char *title)     {_title = title;}
     void   SetTitle(std::string &title)    {_title = title;}
-    void   SetEnergy(float energy)         {_energy = energy;}
+    void   SetEnergy(double energy)         {_energy = energy;}
     void   SetTotalCharge(int charge)      {_totalCharge = charge;}
     void   SetInputType(io_type type)      {_itype = type;}
     void   SetOutputType(io_type type)     {_otype = type;}
@@ -662,15 +662,15 @@ public:
     //! Clear all information from a molecule
     bool Clear();
     void RenumberAtoms(std::vector<OBNodeBase*>&);
-    void ToInertialFrame(int,float*);
+    void ToInertialFrame(int,double*);
     void ToInertialFrame();
     //! Translates all conformers in the molecule
     void Translate(const vector3 &v);
     //! Translates one conformer in the molecule
     void Translate(const vector3 &v, int conf);
-    void Rotate(const float u[3][3]);
-    void Rotate(const float m[9]);
-    void Rotate(const float m[9],int nconf);
+    void Rotate(const double u[3][3]);
+    void Rotate(const double m[9]);
+    void Rotate(const double m[9],int nconf);
     // Translate to the center of all coordinates (for this conformer)
     void Center();
     //! Transform to standard Kekule bond structure (presumably from an aromatic form)
@@ -756,16 +756,15 @@ public:
     //! \name Multiple conformer member functions
     //@{
     int     NumConformers()         {return((_vconf.empty())?0:_vconf.size());}
-    void    SetConformers(std::vector<float*> &v);
-    void    AddConformer(float *f)                  {_vconf.push_back(f);}
+    void    SetConformers(std::vector<double*> &v);
+    void    AddConformer(double *f)                  {_vconf.push_back(f);}
     void    SetConformer(int i)                     {_c = _vconf[i];}
-    void    CopyConformer(float*,int);
     void    CopyConformer(double*,int);
     void    DeleteConformer(int);
-    float  *GetConformer(int i)                     {return(_vconf[i]);}
-    float  *BeginConformer(std::vector<float*>::iterator&);
-    float  *NextConformer(std::vector<float*>::iterator&);
-    std::vector<float*> &GetConformers()                   {return(_vconf);}
+    double  *GetConformer(int i)                     {return(_vconf[i]);}
+    double  *BeginConformer(std::vector<double*>::iterator&);
+    double  *NextConformer(std::vector<double*>::iterator&);
+    std::vector<double*> &GetConformers()                   {return(_vconf);}
     //@}
 
     //! \name Misc bond functions
@@ -789,14 +788,14 @@ class OBInternalCoord
 public:
   //class members
   OBAtom *_a,*_b,*_c;
-  float   _dst,_ang,_tor;
+  double   _dst,_ang,_tor;
   //! Constructor
   OBInternalCoord(OBAtom *a=(OBAtom*)NULL,
                   OBAtom *b=(OBAtom*)NULL,
                   OBAtom *c=(OBAtom*)NULL)
     {
       _a = a; _b = b; _c = c;
-      _dst = _ang = _tor = 0.0f;
+      _dst = _ang = _tor = 0.0;
     }
 };
 
@@ -844,21 +843,21 @@ extern  OBChainsParser   chainsparser;
 
 
 #ifdef WIN32
-inline float rint(float x) { return ( (x < 0.0f) ? ceil(x-0.5) : floor(x+0.5f));}
+inline double rint(double x) { return ( (x < 0.0) ? ceil(x-0.5) : floor(x+0.5));}
 #endif
 
 #ifndef __KCC
 extern "C"{
-void  get_rmat(float*,float*,float*,int);
-void  ob_make_rmat(float mat[3][3],float rmat[9]);
-void  qtrfit (float *r,float *f,int size,float u[3][3]);
-float superimpose(float*,float*,int);
+void  get_rmat(double*,double*,double*,int);
+void  ob_make_rmat(double mat[3][3],double rmat[9]);
+void  qtrfit (double *r,double *f,int size,double u[3][3]);
+double superimpose(double*,double*,int);
 }
 #else
-void get_rmat(float*,float*,float*,int);
-void ob_make_rmat(float mat[3][3],float rmat[9]);
-void qtrfit (float *r,float *f,int size,float u[3][3]);
-float superimpose(float*,float*,int);
+void get_rmat(double*,double*,double*,int);
+void ob_make_rmat(double mat[3][3],double rmat[9]);
+void qtrfit (double *r,double *f,int size,double u[3][3]);
+double superimpose(double*,double*,int);
 #endif // __KCC
 
 

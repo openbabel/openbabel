@@ -38,7 +38,7 @@ bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
 
   mol.BeginModify();
   mol.ReserveAtoms(natoms);
-  float x,y,z;
+  double x,y,z;
   char type[5];
   vector3 v;
   OBAtom atom;
@@ -48,10 +48,10 @@ bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
     if (!ifs.getline(buffer,BUFF_SIZE))
       return(false);
 
-    if (sscanf(buffer,"%f %f %f %s %*d %d",&x,&y,&z,type,&charge) != 5)
+    if (sscanf(buffer,"%lf %lf %lf %s %*d %d",&x,&y,&z,type,&charge) != 5)
       return(false);
     v.SetX(x);v.SetY(y);v.SetZ(z);
-    atom.SetVector(v);
+    atom.SetVector(x, y, z);
     atom.SetAtomicNum(etab.GetAtomicNum(type));
     atom.SetType(type);
 

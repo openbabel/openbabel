@@ -159,7 +159,7 @@ public:
 class OBUnitCell: public OBGenericData
 {
  protected:
-      float _a, _b, _c, _alpha, _beta, _gamma;
+      double _a, _b, _c, _alpha, _beta, _gamma;
       std::string _spaceGroup;
  public:
       OBUnitCell();
@@ -168,18 +168,18 @@ class OBUnitCell: public OBGenericData
 
       OBUnitCell &operator=(const OBUnitCell &);
 
-      void SetData(const float a, const float b, const float c, 
-		   const float alpha, const float beta, const float gamma)
+      void SetData(const double a, const double b, const double c, 
+		   const double alpha, const double beta, const double gamma)
 	{ _a = a; _b = b; _c = c; _alpha = alpha; _beta = beta; _gamma = gamma;}
       void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
       void SetSpaceGroup(const std::string sg) 	{_spaceGroup = sg;}
 
-      float GetA()				{return(_a);}
-      float GetB()				{return(_b);}
-      float GetC()				{return(_c);}
-      float GetAlpha()				{return(_alpha);}
-      float GetBeta()				{return(_beta);}
-      float GetGamma()				{return(_gamma);}
+      double GetA()				{return(_a);}
+      double GetB()				{return(_b);}
+      double GetC()				{return(_c);}
+      double GetAlpha()				{return(_alpha);}
+      double GetBeta()				{return(_beta);}
+      double GetGamma()				{return(_gamma);}
       //! Return v1, v2, v3 cell vectors
       std::vector<vector3> GetCellVectors();
       //! Return v1, v2, v3 cell vectors as a 3x3 matrix
@@ -199,7 +199,7 @@ class OBTorsion
 
 protected:
 	std::pair<OBAtom*,OBAtom*> _bc;
-	std::vector<triple<OBAtom*,OBAtom*,float> > _ads; //float is angle in rads
+	std::vector<triple<OBAtom*,OBAtom*,double> > _ads; //double is angle in rads
 
   OBTorsion() { _bc.first=0; _bc.second=0; };  //protected for use only by friend classes
 	OBTorsion(OBAtom *, OBAtom *, OBAtom *, OBAtom *);
@@ -218,15 +218,15 @@ public:
   bool AddTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d);
   bool AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &atoms);
 
-  bool SetAngle(float radians, unsigned int index = 0);
+  bool SetAngle(double radians, unsigned int index = 0);
   bool SetData(OBBond *bond);
 
-  bool GetAngle(float &radians, unsigned int index =0);
+  bool GetAngle(double &radians, unsigned int index =0);
   unsigned int GetBondIdx();
   unsigned int GetSize() const {return (unsigned int)_ads.size();}
 
   std::pair<OBAtom*,OBAtom*>                  GetBC()  { return(_bc); }
-  std::vector<triple<OBAtom*,OBAtom*,float> > GetADs() { return(_ads) ;}
+  std::vector<triple<OBAtom*,OBAtom*,double> > GetADs() { return(_ads) ;}
 
   bool IsProtonRotor();
 };
@@ -271,7 +271,7 @@ protected:
 
 	OBAtom                *_vertex;
 	std::pair<OBAtom*,OBAtom*>  _termini;
-	float                  _radians;
+	double                  _radians;
 
 	//protected member functions
 
@@ -291,9 +291,9 @@ public:
 
 	void  Clear();
 
-    float GetAngle() const { return(_radians); }
+    double GetAngle() const { return(_radians); }
 
-    void  SetAngle(float radians) { _radians = radians; }
+    void  SetAngle(double radians) { _radians = radians; }
 	void  SetAtoms(OBAtom *vertex,OBAtom *a,OBAtom *b);
 	void  SetAtoms(triple<OBAtom*,OBAtom*,OBAtom*> &atoms);
 
@@ -376,7 +376,7 @@ public:
 /*!
 **\fn OBTorsion::GetADs()
 **\brief Gets the vector of distal atoms of ABCD torsion
-**\return vector of A,D atom pointers and a float
+**\return vector of A,D atom pointers and a double
 */
 
 } //end namespace OpenBabel

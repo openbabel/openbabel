@@ -66,7 +66,7 @@ int ob_get_cmol_bond_number(int *nbonds,long int handle)
   return(1);
 }
 
-int ob_get_cmol_coordinates(float **c,long int handle)
+int ob_get_cmol_coordinates(double **c,long int handle)
 {
   *c = ((OBMol*)handle)->GetConformer(0);
   return(1);
@@ -96,7 +96,7 @@ int ob_get_cmol_conformer_number(int *cnum,long int handle)
   return(1);
 }
 
-int ob_get_cmol_conformer(float **c,int num,long int handle)
+int ob_get_cmol_conformer(double **c,int num,long int handle)
 {
   *c = ((OBMol*)handle)->GetConformer(num);
   return(1);

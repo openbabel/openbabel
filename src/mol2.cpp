@@ -79,7 +79,7 @@ bool ReadMol2(istream &ifs,OBMol &mol,const char *title)
     vector3 v;
     OBAtom atom;
     bool hasPartialCharges=false;
-    float x,y,z,pcharge;
+    double x,y,z,pcharge;
     char temp_type[BUFF_SIZE], resname[BUFF_SIZE], atmid[BUFF_SIZE];
     int elemno, resnum = -1;
 
@@ -87,7 +87,7 @@ bool ReadMol2(istream &ifs,OBMol &mol,const char *title)
     for (i = 0;i < natoms;i++)
       {
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
-	sscanf(buffer," %*s %s %f %f %f %s %d %s %f",
+	sscanf(buffer," %*s %s %lf %lf %lf %s %d %s %lf",
 	       atmid, &x,&y,&z, temp_type, &resnum, resname, &pcharge);
 
 	atom.SetVector(x, y, z);
@@ -109,7 +109,7 @@ bool ReadMol2(istream &ifs,OBMol &mol,const char *title)
 	atom.SetType(str1);
 	atom.SetPartialCharge(pcharge);
 	if (!mol.AddAtom(atom)) return(false);
-	if (pcharge != 0.0f) hasPartialCharges = true;
+	if (pcharge != 0.0) hasPartialCharges = true;
 
 	// Add residue information if it exists
 	if (resnum != -1 && resname != "")

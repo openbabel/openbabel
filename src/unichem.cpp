@@ -31,7 +31,7 @@ bool ReadUnichem(istream &ifs,OBMol &mol,const char *title)
   mol.ReserveAtoms(natoms);
 
   string str;
-  float x,y,z;
+  double x,y,z;
   OBAtom *atom;
   vector<string> vs;
 

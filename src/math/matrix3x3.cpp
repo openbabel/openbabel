@@ -34,7 +34,7 @@ namespace OpenBabel {
 Rotating points in space can be performed by a vector-matrix
 multiplication. The matrix3x3 class is designed as a helper to the
 vector3 class for rotating points in space. The rotation matrix may be
-initialised by passing in the array of floating point values, by
+initialised by passing in the array of doubleing point values, by
 passing euler angles, or a rotation vector and angle of rotation about
 that vector. Once set, the matrix3x3 class can be used to rotate
 vectors by the overloaded multiplication operator. The following
@@ -52,23 +52,23 @@ demonstrates the usage of the matrix3x3 class:
     the interval 0..360 degrees. */
 void matrix3x3::randomRotation(OBRandom &rnd)
 { 
-  float rotAngle;
+  double rotAngle;
   vector3 v1;
  
   v1.randomUnitVector(&rnd);
-  rotAngle = 360.0f * rnd.NextFloat();
+  rotAngle = 360.0 * rnd.NextFloat();
   this->RotAboutAxisByAngle(v1,rotAngle);
 }
 
-void matrix3x3::SetupRotMat(float phi,float theta,float psi)
+void matrix3x3::SetupRotMat(double phi,double theta,double psi)
 {
-  float p  = phi * DEG_TO_RAD;
-  float h  = theta * DEG_TO_RAD;
-  float b  = psi * DEG_TO_RAD;
+  double p  = phi * DEG_TO_RAD;
+  double h  = theta * DEG_TO_RAD;
+  double b  = psi * DEG_TO_RAD;
 
-  float cx = cos(p);  float sx = sin(p);
-  float cy = cos(h);  float sy = sin(h);
-  float cz = cos(b);  float sz = sin(b);
+  double cx = cos(p);  double sx = sin(p);
+  double cy = cos(h);  double sy = sin(h);
+  double cz = cos(b);  double sz = sin(b);
 
   ele[0][0] = cy*cz;
   ele[0][1] = cy*sz;
@@ -88,11 +88,11 @@ void matrix3x3::SetupRotMat(float phi,float theta,float psi)
 	
   \warning If the vector norm has length zero, this method will
   generate the 0-matrix. If the length of the axis is close to
-  zero, but not == 0.0f, this method may behave in unexpected
+  zero, but not == 0.0, this method may behave in unexpected
   ways and return almost random results; details may depend on
-  your particular floating point implementation. The use of this
+  your particular doubleing point implementation. The use of this
   method is therefore highly discouraged, unless you are certain
-  that the length is in a reasonable range, away from 0.0f
+  that the length is in a reasonable range, away from 0.0
   (Stefan Kebekus)
 	
   \deprecated This method will probably replaced by a safer
@@ -123,11 +123,11 @@ void matrix3x3::PlaneReflection(const vector3 &norm)
 	
   \warning If the vector axis has length zero, this method will
   generate the 0-matrix. If the length of the axis is close to
-  zero, but not == 0.0f, this method may behave in unexpected ways
+  zero, but not == 0.0, this method may behave in unexpected ways
   and return almost random results; details may depend on your
-  particular floating point implementation. The use of this method
+  particular doubleing point implementation. The use of this method
   is therefore highly discouraged, unless you are certain that the
-  length is in a reasonable range, away from 0.0f (Stefan
+  length is in a reasonable range, away from 0.0 (Stefan
   Kebekus)
 	
   \deprecated This method will probably replaced by a safer
@@ -138,12 +138,12 @@ void matrix3x3::PlaneReflection(const vector3 &norm)
   @param axis specifies the axis of the rotation
   @param angle angle in degrees (0..360)
 */
-void matrix3x3::RotAboutAxisByAngle(const vector3 &v,const float angle)
+void matrix3x3::RotAboutAxisByAngle(const vector3 &v,const double angle)
 {
-  float theta = angle*DEG_TO_RAD;
-  float s = sin(theta);
-  float c = cos(theta);
-  float t = 1 - c;
+  double theta = angle*DEG_TO_RAD;
+  double s = sin(theta);
+  double c = cos(theta);
+  double t = 1 - c;
   
   vector3 vtmp = v;
   vtmp.normalize();
@@ -271,16 +271,16 @@ vector3 &vector3::operator *= (const matrix3x3 &m)
   so, nothing is done and an exception is thrown. Otherwise, the
   inverse matrix is calculated and returned. *this is not changed.
 	
-  \warning If the determinant is close to zero, but not == 0.0f,
+  \warning If the determinant is close to zero, but not == 0.0,
   this method may behave in unexpected ways and return almost
-  random results; details may depend on your particular floating
+  random results; details may depend on your particular doubleing
   point implementation. The use of this method is therefore highly
   discouraged, unless you are certain that the determinant is in a
-  reasonable range, away from 0.0f (Stefan Kebekus)
+  reasonable range, away from 0.0 (Stefan Kebekus)
 */
 matrix3x3 matrix3x3::inverse(void) const throw(OBError)
 {
-  float det = determinant();
+  double det = determinant();
   if (fabs(det) <= 1e-6) {
     OBError er("matrix3x3::invert(void)",
                "The method was called on a matrix with |determinant| <= 1e-6.",
@@ -317,9 +317,9 @@ matrix3x3 matrix3x3::transpose(void) const
   return(transpose);
 }
 
-float matrix3x3::determinant(void) const
+double matrix3x3::determinant(void) const
 {
-  float x,y,z;
+  double x,y,z;
 
   x = ele[0][0] * (ele[1][1] * ele[2][2] - ele[1][2] * ele[2][1]);
   y = ele[0][1] * (ele[1][2] * ele[2][0] - ele[1][0] * ele[2][2]);
@@ -429,7 +429,7 @@ matrix3x3 matrix3x3::findEigenvectorsIfSymmetric(vector3 &eigenvals) const throw
     throw er;
   }
 
-  float d[3];
+  double d[3];
   matrix3x3 copyOfThis = *this;
 
   jacobi(3, copyOfThis.ele[0], d, result.ele[0]);
@@ -438,7 +438,7 @@ matrix3x3 matrix3x3::findEigenvectorsIfSymmetric(vector3 &eigenvals) const throw
   return result;
 }
 
-matrix3x3 &matrix3x3::operator/=(const float &c)
+matrix3x3 &matrix3x3::operator/=(const double &c)
 {
   for (int row = 0;row < 3; row++)
     for (int col = 0;col < 3; col++)
@@ -451,27 +451,27 @@ matrix3x3 &matrix3x3::operator/=(const float &c)
 #define SQUARE(x) ((x)*(x))
 #endif
 
-void matrix3x3::FillOrth(float Alpha,float Beta, float Gamma, 
-			 float A, float B, float C)
+void matrix3x3::FillOrth(double Alpha,double Beta, double Gamma, 
+			 double A, double B, double C)
 {
-  float V;
+  double V;
   
   Alpha *= DEG_TO_RAD; Beta  *= DEG_TO_RAD; Gamma *= DEG_TO_RAD;
   
-  V= 1.0f - SQUARE(cos(Alpha)) - SQUARE(cos(Beta)) - SQUARE(cos(Gamma)) 
-    + 2.0f * cos(Alpha) * cos(Beta) *  cos(Gamma);
+  V= 1.0 - SQUARE(cos(Alpha)) - SQUARE(cos(Beta)) - SQUARE(cos(Gamma)) 
+    + 2.0 * cos(Alpha) * cos(Beta) *  cos(Gamma);
   V = sqrt(fabs(V))/sin(Gamma);
   
   ele[0][0] = A;
   ele[0][1] = B*cos(Gamma);
   ele[0][2] = C*cos(Beta);
 
-  ele[1][0] = 0.0f;
+  ele[1][0] = 0.0;
   ele[1][1] = B*sin(Gamma);
   ele[1][2] = C*(cos(Alpha)-cos(Beta)*cos(Gamma))/sin(Gamma);
 
-  ele[2][0] = 0.0f; 
-  ele[2][1] = 0.0f; 
+  ele[2][0] = 0.0; 
+  ele[2][1] = 0.0; 
   ele[2][2] = C*V;
 }
 
@@ -533,7 +533,7 @@ ostream& operator<< ( ostream& co, const matrix3x3& m )
   this function is undefined.  On return, the matrix is
   overwritten with junk.
   
-  @param d pointer to a field of at least n floats which will be
+  @param d pointer to a field of at least n doubles which will be
   overwritten. On return of this function, the entries d[0]..d[n-1]
   will contain the eigenvalues of the matrix.
   
@@ -543,11 +543,11 @@ ostream& operator<< ( ostream& co, const matrix3x3& m )
   orthogonal.
 */
 #define MAX_SWEEPS 50
-void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
+void matrix3x3::jacobi(unsigned int n, double *a, double *d, double *v)
 {
-  float onorm, dnorm;
-  float b, dma, q, t, c, s;
-  float  atemp, vtemp, dtemp;
+  double onorm, dnorm;
+  double b, dma, q, t, c, s;
+  double  atemp, vtemp, dtemp;
   register int i, j, k, l;
   int nrot;
   
@@ -568,9 +568,9 @@ void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
     dnorm = 0.0;
     onorm = 0.0;
     for (j = 0; j < static_cast<int>(n); j++) {
-      dnorm += (float)fabs(d[j]);
+      dnorm += (double)fabs(d[j]);
       for (i = 0; i < j; i++)
-	onorm += (float)fabs(a[n*i+j]);
+	onorm += (double)fabs(a[n*i+j]);
     }
     // Normal end point of this algorithm.
     if((onorm/dnorm) <= 1.0e-12)
@@ -585,15 +585,15 @@ void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
 	  if((fabs(dma) + fabs(b)) <=  fabs(dma))
 	    t = b / dma;
 	  else {
-	    q = 0.5f * dma / b;
-	    t = 1.0f/((float)fabs(q) + (float)sqrt(1.0f+q*q));
-	    if (q < 0.0f)
+	    q = 0.5 * dma / b;
+	    t = 1.0/((double)fabs(q) + (double)sqrt(1.0+q*q));
+	    if (q < 0.0)
 	      t = -t;
 	  }
 	  
-	  c = 1.0f/(float)sqrt(t*t + 1.0f);
+	  c = 1.0/(double)sqrt(t*t + 1.0);
 	  s = t * c;
-	  a[n*i+j] = 0.0f;
+	  a[n*i+j] = 0.0;
 	  
 	  for (k = 0; k <= i-1; k++) {
 	    atemp = c * a[n*k+i] - s * a[n*k+j];
@@ -619,8 +619,8 @@ void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
 	    v[n*k+i] = vtemp;
 	  }
 	  
-	  dtemp = c*c*d[i] + s*s*d[j] - 2.0f*c*s*b;
-	  d[j] = s*s*d[i] + c*c*d[j] +  2.0f*c*s*b;
+	  dtemp = c*c*d[i] + s*s*d[j] - 2.0*c*s*b;
+	  d[j] = s*s*d[i] + c*c*d[j] +  2.0*c*s*b;
 	  d[i] = dtemp;
 	} /* end if */
       } /* end for i */

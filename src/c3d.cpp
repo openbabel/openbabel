@@ -111,9 +111,9 @@ bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
   int natoms,i;
   char tmp[10],tmp1[10];
   char atomic_type[10];
-  double exponent = 0.0f;
-  double divisor = 1.0f;
-  float Alpha,Beta,Gamma,A,B,C;
+  double exponent = 0.0;
+  double divisor = 1.0;
+  double Alpha,Beta,Gamma,A,B,C;
   bool has_fractional = false, has_divisor = false;
   matrix3x3 m;
   
@@ -132,13 +132,13 @@ bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
     switch(vs.size())
       {
       case 7 :
-	sscanf(buffer,"%d%f%f%f%f%f%f",
+	sscanf(buffer,"%d%lf%lf%lf%lf%lf%lf",
 	       &natoms,&Alpha,&Beta,&Gamma,&A,&B,&C);
 	m.FillOrth(Alpha,Beta,Gamma,A,B,C);
 	has_fractional = true;
 	break;
       case 8 :
-	sscanf(buffer,"%d%f%f%f%f%f%f%lf",
+	sscanf(buffer,"%d%lf%lf%lf%lf%lf%lf%lf",
 	       &natoms,&Alpha,&Beta,&Gamma,&A,&B,&C,&exponent);
 	m.FillOrth(Alpha,Beta,Gamma,A,B,C);
 	has_fractional = true;
@@ -158,14 +158,14 @@ bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
   ttab.SetFromType(type_key);
 
   OBAtom *atom;
-  float x,y,z;
+  double x,y,z;
   vector3 v;
 
   unsigned int k;
   for (i = 1; i <= natoms; i++)
   {
     ifs.getline(buffer,BUFF_SIZE);
-    sscanf(buffer,"%s%*d%f%f%f%s",
+    sscanf(buffer,"%s%*d%lf%lf%lf%s",
 	   atomic_type,
 	   &x,
 	   &y,
