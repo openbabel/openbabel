@@ -530,6 +530,7 @@ protected:
   //vector<OBAtom*>             _atom;	//!< not needed (inherited)
   //vector<OBBond*>             _bond;	//!< not needed (inherited)
   std::vector<OBResidue*>       _residue;//!< Residue information (if applicable)
+  std::vector<OBInternalCoord*> _internals;//!< Internal Coordinates (if applicable)
   std::vector<OBGenericData*>   _vdata;	//!< Custom data
   double                         _energy;//!< Molecular heat of formation (if applicable)
   int				_totalCharge; //!< Total charge on the molecule
