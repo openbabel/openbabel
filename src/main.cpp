@@ -97,7 +97,14 @@ int main(int argc,char *argv[])
 		    }
 
 		  break;
-
+		  
+		case '-':
+		  if (inFileArg == 0)
+		    inFileArg = -1;
+		  else
+		    outFileArg = -1;
+		  break;
+		  
 		default:
 		  usage();
 		  break;
@@ -109,7 +116,9 @@ int main(int argc,char *argv[])
 	    outFileArg = arg;
 	}
     }
-  if (inFileArg == 0 || outFileArg == 0)
+  if (inFileArg == 0 || outFileArg == 0
+      || (inFileArg < 0 && !gotInType)
+      || (outFileArg < 0 && !gotOutType))
     usage();
 
   if (!gotInType)
@@ -133,29 +142,42 @@ int main(int argc,char *argv[])
 	}
     }
 
-  ifstream inFileStream(argv[inFileArg]);
-  ofstream outFileStream(argv[outFileArg]);
-
-  if (!inFileStream)
-    {
-      cerr << program_name << ": Cannot read input file!" << endl;
-      exit (-1);
-    }
-  if (!outFileStream)
-    {
-      cerr << program_name << ": Cannot write to output file!" << endl;
-      exit (-1);
-    }
-
   // Finally, we can do some work!
   OBMol mol(inFileType, outFileType);
 
-  fileFormat.ReadMolecule(inFileStream, mol, argv[inFileArg]);
+  // read
+  if (inFileArg > 0)
+    {
+      ifstream inFileStream(argv[inFileArg]);
+      if (!inFileStream)
+	{
+	  cerr << program_name << ": Cannot read input file!" << endl;
+	  exit (-1);
+	}
+      fileFormat.ReadMolecule(inFileStream, mol, argv[inFileArg]);
+    }
+  else
+    fileFormat.ReadMolecule(cin, mol, "STDIN");
+
+  // Perform any requested transformations
   if (removeHydrogens)
     mol.DeleteHydrogens();
   if (addHydrogens)
     mol.AddHydrogens(false, false);
-  fileFormat.WriteMolecule(outFileStream,mol);
+
+  // write
+  if (outFileArg > 0)
+    {
+      ofstream outFileStream(argv[outFileArg]);
+      if (!outFileStream)
+	{
+	  cerr << program_name << ": Cannot write to output file!" << endl;
+	  exit (-1);
+	}
+      fileFormat.WriteMolecule(outFileStream,mol);
+    }
+  else
+    fileFormat.WriteMolecule(cout, mol);
 
   return(0);
 }

@@ -12,6 +12,9 @@
 
 	* src/fileformat.h, src/fileformat.cpp: Enable Read/Write for
 	Chem3d1, Chem3d2, Mmads and ViewMol formats.
+
+	* src/main.cpp: Add support for using '--' to read from STDIN and
+	output to STDOUT. Tackles request #519085.
 	
 2002-02-17  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
