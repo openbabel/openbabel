@@ -59,6 +59,7 @@ bool TestSmarts()
   if (!SafeOpen(mifs,"attype.00.smi")) return(false);
 
   unsigned int k;
+  unsigned int res_line = 0;
   OBMol mol(SMI,SMI);
   vector<string> vs;
   vector<OBSmartsPattern*>::iterator i;
@@ -79,6 +80,7 @@ bool TestSmarts()
 	      ThrowError("error reading reference data");
 	      return(false);
 	    }
+	  res_line++;
 
 	  tokenize(vs,buffer);
 	  (*i)->Match(mol);
@@ -86,9 +88,11 @@ bool TestSmarts()
 	  if (mlist.size() != vs.size())
 	    {
 	      ThrowError("number of matches different than reference");
-	      cerr << "expected " << vs.size() << " got " << mlist.size() << endl;
+	      cerr << "expected " << vs.size() << " matches, found " 
+		   << mlist.size() << endl;
 	      ThrowError((char*)mol.GetTitle());
-	      //	      ThrowError((*i)->GetSMARTS());
+	      ThrowError((*i)->GetSMARTS());
+	      //cerr << " currently on results line" << res_line+1 << endl;
 	      return(false);
 	    }
 	  
@@ -98,8 +102,10 @@ bool TestSmarts()
 		if (atoi((char*)vs[k].c_str()) != mlist[k][0])
 		{
 		  ThrowError("matching atom numbers different than reference");
+		  cerr << "expected " << vs[k] << " but found " 
+		       << mlist[k][0] << endl;
 		  ThrowError((char*)mol.GetTitle());
-		  //		  ThrowError((*i)->GetSMARTS());
+		  ThrowError((*i)->GetSMARTS());
 		  return(false);
 		}
 	    }
