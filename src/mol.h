@@ -362,7 +362,10 @@ public:
     bool IsAromatic()      const;
     bool IsInRing()        const;
     bool IsInRingSize(int) const;
+    //! Is this atom an element in the 15th or 16th main groups (i.e., N, O, P, S ...) ?
     bool IsHeteroatom();
+    //! Is this atom any element except carbon or hydrogen?
+    bool IsNotCorH();
     //! Is this atom connected to the supplied OBAtom?
     bool IsConnected(OBAtom*);
     //! Is this atom related to the supplied OBAtom in a 1,3 bonding pattern?

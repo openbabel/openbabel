@@ -90,129 +90,129 @@ int main(int argc,char **argv)
     FileIn  = argv[index]; 
   }
 
-  // Find Input filetype
-  if (extab.CanReadExtension(FileIn))
-    inFileType = extab.FilenameToType(FileIn);
-  else
-    {
-      cerr << program_name << ": cannot read input format!" << endl;
-      exit (-1);
-    }
-  if (extab.CanWriteExtension(FileIn))
-    outFileType = extab.FilenameToType(FileIn);
-  else
-    {
-      cerr << program_name << ": cannot write input format!" << endl;
-      exit (-1);
-    }
-
-
-  // Match the SMART
-  OBSmartsPattern sp; 
-  vector< vector <int> > maplist;      // list of matched atoms
-  sp.Init(Pattern);
-  ifstream ifs;
-  
-  // Read the file
-  ifs.open(FileIn);
-  if (!ifs)
-    {
-      cerr << program_name << ": cannot read input file!" << endl;
-      exit (-1);
-    }
-
-  OBMol mol(inFileType, outFileType);
-  
-  bool impossible_match;
-
-  // Search for pattern
-  for (c=0;;)
-    {
-      mol.Clear();
-      ifs >> mol;
-      if (mol.Empty()) break;
-      
-      
-      ////////////////////////////////////////////////////////////////
-      // Do not loose time trying to match the pattern if the matching
-      // is impossible.
-      // It is impossible to make a full match if the number of atoms is
-      // different
-      if (full ) 
-	impossible_match = (sp.NumAtoms() == mol.NumHvyAtoms()) ? false : true;
+      // Find Input filetype
+      if (extab.CanReadExtension(FileIn))
+	inFileType = extab.FilenameToType(FileIn);
       else
-	impossible_match = false;
-
-      if (impossible_match) { // -> avoid useless SMART matching attempt 
-	if (invert) {
-	  if (!count) {
-	    if ( name_only )
-	      cout << mol.GetTitle() << endl;
-	    else
-	      cout << mol;
-	  }
-	  c++;
+	{
+	  cerr << program_name << ": cannot read input format!" << endl;
+	  exit (-1);
 	}
-	continue;
-      }
-
-
-      ////////////////////////////////////////////////////////////////
-      // perform SMART matching
-
-      pattern_matched = sp.Match(mol);
+      if (extab.CanWriteExtension(FileIn))
+	outFileType = extab.FilenameToType(FileIn);
+      else
+	{
+	  cerr << program_name << ": cannot write input format!" << endl;
+	  exit (-1);
+	}
       
-      // the number of times the match occured may matter
-      if ( ntimes ) { // ntimes is a positive integer of requested matches   
-	// Here, a match mean a unique match (same set of atoms)
-	// so we need to get the unique match list size
-
-	maplist = sp.GetUMapList();                
-
-	if( maplist.size() == ntimes )
-	  ntimes_matched = true;
-	else
-	  ntimes_matched = false;
-      } 
-      else  {  // ntimes == 0, we don't care about the number of matches
-	ntimes_matched = true; 
-      }
-
-
+      
+      // Match the SMART
+      OBSmartsPattern sp; 
+      vector< vector <int> > maplist;      // list of matched atoms
+      sp.Init(Pattern);
+      ifstream ifs;
+      
+      // Read the file
+      ifs.open(FileIn);
+      if (!ifs)
+	{
+	  cerr << program_name << ": cannot read input file!" << endl;
+	  exit (-1);
+	}
+      
+      OBMol mol(inFileType, outFileType);
+      
+      bool impossible_match;
+      
+      // Search for pattern
+      for (c=0;;)
+	{
+	  mol.Clear();
+	  ifs >> mol;
+	  if (mol.Empty()) break;
+	  
+	  
+	  ////////////////////////////////////////////////////////////////
+	  // Do not loose time trying to match the pattern if the matching
+	  // is impossible.
+	  // It is impossible to make a full match if the number of atoms is
+	  // different
+	  if (full ) 
+	    impossible_match = (sp.NumAtoms() == mol.NumHvyAtoms()) ? false : true;
+	  else
+	    impossible_match = false;
+	  
+	  if (impossible_match) { // -> avoid useless SMART matching attempt 
+	    if (invert) {
+	      if (!count) {
+		if ( name_only )
+		  cout << mol.GetTitle() << endl;
+		else
+		  cout << mol;
+	      }
+	      c++;
+	    }
+	    continue;
+	  }
+	  
+	  
+	  ////////////////////////////////////////////////////////////////
+	  // perform SMART matching
+	  
+	  pattern_matched = sp.Match(mol);
+	  
+	  // the number of times the match occured may matter
+	  if ( ntimes ) { // ntimes is a positive integer of requested matches   
+	    // Here, a match mean a unique match (same set of atoms)
+	    // so we need to get the unique match list size
+	    
+	    maplist = sp.GetUMapList();                
+	    
+	    if( maplist.size() == ntimes )
+	      ntimes_matched = true;
+	    else
+	      ntimes_matched = false;
+	  } 
+	  else  {  // ntimes == 0, we don't care about the number of matches
+	    ntimes_matched = true; 
+	  }
+	  
+	  
+	  ////////////////////////////////////////////////////////////////
+	  // perform a set of tests to guess what to print out
+	  
+	  if ( pattern_matched == true && ntimes_matched == true) { 
+	    if (!invert) {      // do something only when invert flag is off
+	      if (!count) {
+		if ( name_only )
+		  cout << mol.GetTitle() << endl;
+		else
+		  cout << mol;
+	      }
+	      c++;
+	    }
+	    
+	  }
+	  
+	  else { // The SMART pattern do not occur as many times as requested
+	    if (invert) {       // do something only if invert flag is on
+	      if (!count) {
+		if ( name_only )
+		  cout << mol.GetTitle() << endl;
+		else
+		  cout << mol;
+	      }
+	      c++;
+	    }
+	  }
+	} // end for loop
+      
+      
       ////////////////////////////////////////////////////////////////
-      // perform a set of tests to guess what to print out
-
-      if ( pattern_matched == true && ntimes_matched == true) { 
-	if (!invert) {      // do something only when invert flag is off
-	  if (!count) {
-	    if ( name_only )
-	      cout << mol.GetTitle() << endl;
-	    else
-	      cout << mol;
-	  }
-	  c++;
-	}
-	
-      }
-    
-      else { // The SMART pattern do not occur as many times as requested
-	if (invert) {       // do something only if invert flag is on
-	  if (!count) {
-	    if ( name_only )
-	      cout << mol.GetTitle() << endl;
-	    else
-	      cout << mol;
-	  }
-	  c++;
-	}
-      }
-    } // end for loop
-
-
-  ////////////////////////////////////////////////////////////////
-  // Only print the number of matched molecules as requested
-  if (count)
-    cout << c << endl;
-
+      // Only print the number of matched molecules as requested
+      if (count)
+	cout << c << endl;
+  
   return(1);
 } 

@@ -1,3 +1,8 @@
+2004-10-20  Geoffrey Hutchison  <geoff@geoffhutchison.net>
+
+	* Fix problems caused by incomplete branching for the new
+	framework merge.
+
 2004-10-04  Michael Banck  <mbanck@gmx.net>
 
 	* src/crk.cpp: Use sstream if present and strstream if not.

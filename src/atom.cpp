@@ -624,15 +624,28 @@ bool OBAtom::IsHeteroatom()
     {
     case 7:
     case 8:
-    case 9:
     case 15:
     case 16:
-    case 17:
-    case 35:
-    case 53:
+    case 33:
+    case 34:
+    case 51:
+    case 52:
+    case 83:
+    case 84:
       return(true);
     }
   return(false);
+}
+
+bool OBAtom::IsNotCorH()
+{
+  switch(GetAtomicNum())
+    {
+    case 1:
+    case 6:
+      return(false);
+    }
+  return(true);
 }
 
 bool OBAtom::IsAromatic() const
