@@ -145,18 +145,27 @@ bool testEigenvectors()
 }
 
 
-bool TestMatrixAlgebra(void)
+int main(int argc,char *argv[])
 {
+  if (argc != 1) {
+    cout << "Usage: matrixtest" << endl;
+    cout << "   Tests Open Babel matrix manipulations." << endl;
+    return 0;
+  }
+
+  cout << endl << "Testing Matrix Algebra..." << endl;
+
   randomizer.Seed(346534);
 
   for (int i=0; i < 50000 ; i++) {
     if (!testInversion())
-      return false;
+      return -1; // test failed
     if (!testEigenvalues())
-      return false;
+      return -1; // test failed
     if (!testEigenvectors())
-      return false;
+      return -1; // test failed
   }
 
-  return true;
+  // test passed
+  return 0;
 }

@@ -22,13 +22,25 @@ namespace OpenBabel {
 using namespace std;
 using namespace OpenBabel;
 
-bool TestRings(void)
+int main(int argc,char *argv[])
 {
+  if (argc != 1) {
+    cout << "Usage: ringtest" << endl;
+    cout << "   Tests Open Babel ring perception testing." << endl;
+    return 0;
+  }
+
+  cout << endl << "Testing RINGS..." << endl;
+  
   std::ifstream mifs;
-  if (!SafeOpen(mifs,"attype.00.smi")) return(false);
+  if (!SafeOpen(mifs,"attype.00.smi")) {
+    return -1; // test failed
+  }
 
   std::ifstream rifs;
-  if (!SafeOpen(rifs,"ringresults.txt")) return(false);
+  if (!SafeOpen(rifs,"ringresults.txt")) {
+    return -1; // test failed
+  }
 
   unsigned int size;
   OBBond *bond;
@@ -54,7 +66,7 @@ bool TestRings(void)
       if (!rifs.getline(buffer,BUFF_SIZE))
 	{
 	  ThrowError("error reading reference data");
-	  return(false);
+	  return -1; // test failed
 	}
 
       vb.clear();
@@ -69,27 +81,27 @@ bool TestRings(void)
 	  {
 	    ThrowError("ring bond data different than reference");
 	    ThrowError((char*)mol.GetTitle());
-	    return(false);
+	    return -1; // test failed
 	  }
 
       vr = mol.GetSSSR();
       if (!rifs.getline(buffer,BUFF_SIZE))
 	{
 	  ThrowError("error reading reference data");
-	  return(false);
+	  return -1; // test failed
 	}
       sscanf(buffer,"%d",&size);
       if (vr.size() != size) //check SSSR size
 	{
 	  ThrowError("SSSR size different than reference");
 	  ThrowError((char*)mol.GetTitle());
-	  return(false);
+	  return -1; // test failed
 	}
 
       if (!rifs.getline(buffer,BUFF_SIZE))
 	{
 	  ThrowError("error reading reference data");
-	  return(false);
+	  return -1; // test failed
 	}
 
       tokenize(vs,buffer);
@@ -100,7 +112,7 @@ bool TestRings(void)
 	    {
 	      ThrowError("Error in SSSR count");
 	      ThrowError((char*)mol.GetTitle());
-	      return(false);
+	      return -1; // test failed
 	    }
 	  count = 0;
 	  for (m = vr.begin();m != vr.end();m++)
@@ -111,7 +123,7 @@ bool TestRings(void)
 	    {
 	      ThrowError("Ring membership test failed");
 	      ThrowError((char*)mol.GetTitle());
-	      return(false);
+	      return -1; // test failed
 	    }
 
 	  i++;
@@ -120,8 +132,8 @@ bool TestRings(void)
 
     }
 
-
-  return(true);
+  // Passed tests
+  return 0;
 }
 
 void GenerateRingReference()

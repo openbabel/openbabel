@@ -130,31 +130,51 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-noinst_PROGRAMS = obtest roundtrip
-obtest_SOURCES = matrixtest.cpp ringtest.cpp main.cpp smartstest.cpp unitcell.cpp
+noinst_PROGRAMS = obtest matrixtest ringtest smartstest roundtrip
+obtest_SOURCES = main.cpp unitcell.cpp
+matrixtest_SOURCES = matrixtest.cpp
+ringtest_SOURCES = ringtest.cpp
+smartstest_SOURCES = smartstest.cpp
 roundtrip_SOURCES = roundtrip.cpp
 LDADD = ../src/libopenbabel.la
-EXTRA_DIST = smartsresults.txt smartstest.txt unitcell.txt ringresults.txt attype.00.smi cml.sh
-TESTS = obtest cml.sh
+EXTRA_DIST = smartsresults.txt smartstest.txt unitcell.txt ringresults.txt attype.00.smi cml.sh test-set.sh
+TESTS = matrixtest smartstest ringtest obtest cml.sh test-set.sh
+
+AM_CPPFLAGS = -I$(top_srcdir)/src
 subdir = test
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/babelconfig.h
 CONFIG_CLEAN_FILES =
-noinst_PROGRAMS = obtest$(EXEEXT) roundtrip$(EXEEXT)
+noinst_PROGRAMS = obtest$(EXEEXT) matrixtest$(EXEEXT) ringtest$(EXEEXT) \
+	smartstest$(EXEEXT) roundtrip$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
 
-am_obtest_OBJECTS = matrixtest.$(OBJEXT) ringtest.$(OBJEXT) \
-	main.$(OBJEXT) smartstest.$(OBJEXT) unitcell.$(OBJEXT)
+am_matrixtest_OBJECTS = matrixtest.$(OBJEXT)
+matrixtest_OBJECTS = $(am_matrixtest_OBJECTS)
+matrixtest_LDADD = $(LDADD)
+matrixtest_DEPENDENCIES = ../src/libopenbabel.la
+matrixtest_LDFLAGS =
+am_obtest_OBJECTS = main.$(OBJEXT) unitcell.$(OBJEXT)
 obtest_OBJECTS = $(am_obtest_OBJECTS)
 obtest_LDADD = $(LDADD)
 obtest_DEPENDENCIES = ../src/libopenbabel.la
 obtest_LDFLAGS =
+am_ringtest_OBJECTS = ringtest.$(OBJEXT)
+ringtest_OBJECTS = $(am_ringtest_OBJECTS)
+ringtest_LDADD = $(LDADD)
+ringtest_DEPENDENCIES = ../src/libopenbabel.la
+ringtest_LDFLAGS =
 am_roundtrip_OBJECTS = roundtrip.$(OBJEXT)
 roundtrip_OBJECTS = $(am_roundtrip_OBJECTS)
 roundtrip_LDADD = $(LDADD)
 roundtrip_DEPENDENCIES = ../src/libopenbabel.la
 roundtrip_LDFLAGS =
+am_smartstest_OBJECTS = smartstest.$(OBJEXT)
+smartstest_OBJECTS = $(am_smartstest_OBJECTS)
+smartstest_LDADD = $(LDADD)
+smartstest_DEPENDENCIES = ../src/libopenbabel.la
+smartstest_LDFLAGS =
 
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -170,9 +190,10 @@ LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-DIST_SOURCES = $(obtest_SOURCES) $(roundtrip_SOURCES)
+DIST_SOURCES = $(matrixtest_SOURCES) $(obtest_SOURCES) \
+	$(ringtest_SOURCES) $(roundtrip_SOURCES) $(smartstest_SOURCES)
 DIST_COMMON = Makefile.am Makefile.in
-SOURCES = $(obtest_SOURCES) $(roundtrip_SOURCES)
+SOURCES = $(matrixtest_SOURCES) $(obtest_SOURCES) $(ringtest_SOURCES) $(roundtrip_SOURCES) $(smartstest_SOURCES)
 
 all: all-am
 
@@ -190,12 +211,21 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
+matrixtest$(EXEEXT): $(matrixtest_OBJECTS) $(matrixtest_DEPENDENCIES) 
+	@rm -f matrixtest$(EXEEXT)
+	$(CXXLINK) $(matrixtest_LDFLAGS) $(matrixtest_OBJECTS) $(matrixtest_LDADD) $(LIBS)
 obtest$(EXEEXT): $(obtest_OBJECTS) $(obtest_DEPENDENCIES) 
 	@rm -f obtest$(EXEEXT)
 	$(CXXLINK) $(obtest_LDFLAGS) $(obtest_OBJECTS) $(obtest_LDADD) $(LIBS)
+ringtest$(EXEEXT): $(ringtest_OBJECTS) $(ringtest_DEPENDENCIES) 
+	@rm -f ringtest$(EXEEXT)
+	$(CXXLINK) $(ringtest_LDFLAGS) $(ringtest_OBJECTS) $(ringtest_LDADD) $(LIBS)
 roundtrip$(EXEEXT): $(roundtrip_OBJECTS) $(roundtrip_DEPENDENCIES) 
 	@rm -f roundtrip$(EXEEXT)
 	$(CXXLINK) $(roundtrip_LDFLAGS) $(roundtrip_OBJECTS) $(roundtrip_LDADD) $(LIBS)
+smartstest$(EXEEXT): $(smartstest_OBJECTS) $(smartstest_DEPENDENCIES) 
+	@rm -f smartstest$(EXEEXT)
+	$(CXXLINK) $(smartstest_LDFLAGS) $(smartstest_OBJECTS) $(smartstest_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core

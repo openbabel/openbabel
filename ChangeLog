@@ -1,3 +1,20 @@
+2003-11-10  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/main.cpp: Silently ignore cases with 0 atoms in a
+	molecule. This is frequently due to trailing empty lines in a file.
+
+	* test/Makefile.am: Separate the tests in obtest into distinct
+	programs and tests for a more accurate "make check" result.
+
+	* test/main.cpp, test/matrixtest.cpp, test/ringtest.cpp,
+	test/smartstest.cpp: Ditto.
+
+	* test/cml.sh: Skip the test in "make check" if the directory
+	doesn't exist.
+
+	* test/test-set.sh: If the test-set directory exists, then run it,
+	otherwise skip the test.
+
 2003-11-10  Michael Banck  <mbanck@gmx.net>
 
 	* src/math/Makefile.am (AM_CPPFLAGS): New directive, adding

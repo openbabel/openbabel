@@ -22,10 +22,20 @@ namespace OpenBabel {
 using namespace std;
 using namespace OpenBabel;
 
-bool TestSmarts()
+int main(int argc,char *argv[])
 {
+  if (argc != 1) {
+    cout << "Usage: smartstest" << endl;
+    cout << "   Tests Open Babel SMILES/SMARTS pattern matching." << endl;
+    return 0;
+  }
+
+  cout << endl << "Testing SMARTS...  ";
+
   std::ifstream ifs;
-  if (!SafeOpen(ifs,"smartstest.txt")) return(false);
+  if (!SafeOpen(ifs,"smartstest.txt")){
+    return -1; // test failed
+  }
 
   //read in the SMARTS test patterns
   char buffer[BUFF_SIZE];
@@ -40,7 +50,9 @@ bool TestSmarts()
   ifs.close();
   
   std::ifstream rifs;
-  if (!SafeOpen(rifs,"smartsresults.txt")) return(false);
+  if (!SafeOpen(rifs,"smartsresults.txt")) {
+    return -1; // test failed
+  }
   unsigned int npats;
   rifs.getline(buffer,BUFF_SIZE);
   sscanf(buffer,"%d %*s",&npats);
@@ -52,11 +64,13 @@ bool TestSmarts()
       ThrowError("Correct number of patterns not read in");
       sprintf(buffer,"Read in %d, expected %d", vsp.size(), npats);
       ThrowError(buffer);
-      return(false);
+      return -1; // test failed
     }
 
   std::ifstream mifs;
-  if (!SafeOpen(mifs,"attype.00.smi")) return(false);
+  if (!SafeOpen(mifs,"attype.00.smi")) {
+    return -1; // test failed
+  }
 
   unsigned int k;
   unsigned int res_line = 0;
@@ -78,7 +92,7 @@ bool TestSmarts()
 	  if (!rifs.getline(buffer,BUFF_SIZE))
 	    {
 	      ThrowError("error reading reference data");
-	      return(false);
+	      return -1; // test failed
 	    }
 	  res_line++;
 
@@ -93,7 +107,7 @@ bool TestSmarts()
 	      ThrowError((char*)mol.GetTitle());
 	      ThrowError((*i)->GetSMARTS());
 	      //cerr << " currently on results line" << res_line+1 << endl;
-	      return(false);
+	      return -1; // test failed
 	    }
 	  
 	  if (mlist.size())
@@ -106,13 +120,14 @@ bool TestSmarts()
 		       << mlist[k][0] << endl;
 		  ThrowError((char*)mol.GetTitle());
 		  ThrowError((*i)->GetSMARTS());
-		  return(false);
+		  return -1; // test failed
 		}
 	    }
 	}
     }
 
-  return(true);
+  // Passed Test
+  return 0;
 }
 
 void GenerateSmartsReference()
@@ -166,3 +181,4 @@ void GenerateSmartsReference()
 
   ThrowError("SMARTS test results written successfully");
 }
+
