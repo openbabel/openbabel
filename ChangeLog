@@ -1,14 +1,13 @@
 2002-07-12  Stefan Kebekus <kebekus@users.sourceforge.net>
 
-	* added documentation to the Vector class, made some functions
-	inline, and commented out some methods of the vector class
-	whose names I found misleading, and which were never used anyway.
-
-2002-07-12  Stefan Kebekus <kebekus@users.sourceforge.net>
+	* src/Vector.cpp, src/Vector.h: added documentation to the Vector
+	class, made some functions inline, and commented out some methods
+	of the vector class whose names I found misleading, and which were
+	never used anyway.
 	
 	* configure.in: configure now warns if doxygen is not present
 
-	* configure: Updated with autoconf
+	* configure: Updated with autoconf 2.52d.
 
 2002-07-09  Geoff Hutchison <hutchisn@chem.northwestern.edu>
 
@@ -18,6 +17,9 @@
 
 	* src/residue.cpp: Add missing "using namespace std," which also
 	caused problems with namespace-compliant compilers.
+
+	* src/pdb.cpp: For now, disable bond order perception--prevents
+	problems with PDB residues observed by Richard Gillian.
 
 2002-07-01  Richard Gillian <reg8@users.sourceforge.net>
 
