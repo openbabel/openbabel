@@ -1,3 +1,14 @@
+Open Babel 1.100.2
+
+What's New from 1.100.1:
+
+ -Fixed installation of header files. The headers in the math-
+  directory were not installed alongside the other headers.
+
+New File Formats:
+
+  -Export: Chemtool
+
 Open Babel 1.100.1 (2003-6-24)
 
 What's New from 1.100.0:

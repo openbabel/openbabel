@@ -97,6 +97,7 @@ bool WriteCache(std::ostream &,OBMol &);
 bool WriteChem3d1(std::ostream &,OBMol &);
 bool WriteChem3d2(std::ostream &,OBMol &);
 bool WriteChemDraw(std::ostream &,OBMol &);
+bool WriteCHT(std::ostream &,OBMol &);
 bool WriteCML(std::ostream &,OBMol &,
 	      const char *dimension="3D", const char *options="");
 bool WriteCSR(std::ostream &,OBMol &);

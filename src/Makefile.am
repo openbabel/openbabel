@@ -5,7 +5,7 @@ lib_LTLIBRARIES = libopenbabel.la
 libopenbabel_la_SOURCES = \
 		alchemy.cpp amber.cpp atom.cpp balst.cpp base.cpp bgf.cpp \
 		binary.cpp bitvec.cpp bond.cpp box.cpp c3d.cpp cacao.cpp \
-		cache.cpp car.cpp ccc.cpp chains.cpp chdrw.cpp chiral.cpp \
+		cache.cpp car.cpp ccc.cpp chains.cpp chdrw.cpp chemtool.cpp chiral.cpp \
 		cml.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp \
 		fileformat.cpp gamess.cpp gaussian.cpp generic.cpp \
 		ghemical.cpp grid.cpp gromos96.cpp hin.cpp jaguar.cpp \

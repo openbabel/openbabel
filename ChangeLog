@@ -1,3 +1,15 @@
+2003-09-13  Michael Banck <mbanck@gmx.net>
+
+	* src/chemtool.cpp: New file.
+	* src/Makefile.am (libopenbabel_la_SOURCES): Added chemtool.cpp.
+	* src/Makefile.in: Regenerated.
+	* src/data.cpp (TextToType): Added CHEMTOOL typestring.
+	* src/data.h (io_type): Added CHEMTOOL.
+	* src/extable.txt: Added Chemtool writing support.
+	* src/fileformat.cpp (OBFileFormat::WriteMolecule): Added
+	WriteCHT function call for CHEMTOOL io_type.
+	* src/fileformat.h (OBFileFormat): Added WriteCHT() method.
+
 2003-07-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/data.cpp (GetAtomicNum): Fix mistake in calls to strcasecmp,

@@ -85,6 +85,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol,
     case CACAOINT:  WriteCacaoInternal(ofs,mol);	break;
     case CACHE:     WriteCache(ofs,mol);		break;
     case CHEMDRAW:  WriteChemDraw(ofs,mol);		break;
+    case CHEMTOOL:  WriteCHT(ofs,mol);			break;
     case CHEM3D1:   WriteChem3d1(ofs,mol);		break;
     case CHEM3D2:   WriteChem3d2(ofs,mol);		break;
     case CML:       WriteCML(ofs,mol,dimension, options);break;

@@ -521,6 +521,7 @@ io_type TextToType(string typestring)
   else if (typestring == "CACAOINT")		return(CACAOINT);
   else if (typestring == "CACHE")		return(CACHE);
   else if (typestring == "CHEMDRAW")		return(CHEMDRAW);
+  else if (typestring == "CHEMTOOL")		return(CHEMTOOL);
   else if (typestring == "CML")			return(CML);
   else if (typestring == "CSR")			return(CSR);
   else if (typestring == "CSSR")		return(CSSR);

@@ -26,6 +26,7 @@ ccc		ccc		CCC				none				1	0
 c3d1		chem3d1		Chem3D Cartesian 1		none				1	1
 c3d2		chem3d2		Chem3D Cartesian 2		none				1	1
 ct		chemdraw	ChemDraw Connection Table	none				0	1
+cht		chemtool	Chemtool			none				0	1
 cml		cml		Chemical Markup Language	chemical/x-cml			1	1
 cssr		cssr		CSD CSSR			none				0	1
 box		box		Dock 3.5 Box			none				1	1
