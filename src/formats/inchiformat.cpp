@@ -98,39 +98,42 @@ private:
 		bool operator()(const string& s1, const string& s2) const
 		{
 			string::const_iterator p1, p2;
-			for(p1=s1.begin(),p2=s2.begin();++p1,++p2;p1!=s1.end(),p2!=s2.end()) 
+			p1=s1.begin(); p2=s2.begin();
+			while( p1!=s1.end() && p2!=s2.end() )
 			{
-				if(iscntrl(*p1) || iscntrl(*p2) || isspace(*p1) || isspace(*p2))
-					return false; //stop comparison at whitespace. Identical up to here 
-				int n1=-1,n2=-1;
-				if(isdigit(*p1))
-				{
-					n1 = atoi(&*p1);
-					//skip over number
-					while(p1!=s1.end() && isdigit(*p1++)); --p1;
-				}
-				if(isdigit(*p2))
-				{
-					n2 = atoi(&*p2);
-					while(p2!=s2.end() && isdigit(*p2++)); --p2;
-				}
-				if(n1<0 && n2 < 0)
-				{
-					//neither numbers
-					if(*p1 != *p2)
-						return *p1 < *p2;
-				}
-				else if(n1>=0 && n2>0)
-				{
-					//both numbers
-					if(n1!=n2)
-						return n1 < n2;
-				}
-				else if(n1>0)
-					return islower(*p2)!=0;
-				else if(n2>0)
-					return !islower(*p1);
-			}
+			  if(iscntrl(*p1) || iscntrl(*p2) || isspace(*p1) || isspace(*p2))
+			    return false; //stop comparison at whitespace. Identical up to here 
+			  int n1=-1,n2=-1;
+			  if(isdigit(*p1))
+			    {
+			      n1 = atoi(&*p1);
+			      //skip over number
+			      while(p1!=s1.end() && isdigit(*p1++)); --p1;
+			    }
+			  if(isdigit(*p2))
+			    {
+			      n2 = atoi(&*p2);
+			      while(p2!=s2.end() && isdigit(*p2++)); --p2;
+			    }
+			  if(n1<0 && n2 < 0)
+			    {
+			      //neither numbers
+			      if(*p1 != *p2)
+				return *p1 < *p2;
+			    }
+			  else if(n1>=0 && n2>0)
+			    {
+			      //both numbers
+			      if(n1!=n2)
+				return n1 < n2;
+			    }
+			  else if(n1>0)
+			    return islower(*p2)!=0;
+			  else if(n2>0)
+			    return !islower(*p1);
+
+			  ++p1; ++p2; // iterate
+			} // while loop
 			return false; //identical
 		}
 	};
@@ -673,7 +676,7 @@ void InChIFormat::GetComponent(string& ln, vector<string>& section, vector<char>
 	//ln is returned empty when there are no more components
 	tokenize(section,ln,"/");
 	sectionchar.resize(section.size());
-	ln = section[0]; // InChI=???/
+	ln = section[0]; // InChI= xxx/
 
 	//Split each section into subsections for each molecular component
 	//separated by . or ; and possibly with multiplier
@@ -722,7 +725,7 @@ void InChIFormat::GetComponent(string& ln, vector<string>& section, vector<char>
 			section[i].erase(pos);
 		}
 	}
-	if(ln==section[0]) ln.erase(); // InChI=???/
+	if(ln==section[0]) ln.erase(); // InChI=xxx/
 
 }
 ///////////////////////////////////////////////////////////
@@ -989,7 +992,8 @@ bool InChIFormat::AssignBondOrders(OBMol& mol, int Charge)
 	}while(tries--);
 	//return false;
 	string title = mol.GetTitle();
-	mol.SetTitle(title  + " Bond Assignment failed");
+	title += " Bond Assignment failed";
+	mol.SetTitle(title);
 	return true;
 }
 
