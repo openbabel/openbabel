@@ -1,3 +1,10 @@
+2004-08-24  Fabien Fontaine <ffontaine@imim.es>
+
+	* src/mol.cpp (PerceiveBondOrders) Bug in calculation of 
+	average torsion angles of cycles fixed
+
+	*src/atom.cpp function AverageBondAngle added
+	
 2004-08-19  Michael Banck  <mbanck@gmx.net>
 
 	* src/data.cpp: Include mol.h.
