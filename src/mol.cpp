@@ -1153,9 +1153,10 @@ void OBMol::DestroyBond(OBEdgeBase *bond)
     }
 }
 
+//! \brief Get a new atom to add to a molecule
+//! 
+//! Also checks bond_queue for any bonds that should be made to the new atom
 OBAtom *OBMol::NewAtom()
-     //add an atom to a molecule
-     //also checks bond_queue for any bonds that should be made to the new atom
 {
   BeginModify();
 
@@ -1212,9 +1213,10 @@ OBResidue *OBMol::NewResidue()
     return(obresidue);
 }
 
+//! \brief Add an atom to a molecule
+//!
+//! Also checks bond_queue for any bonds that should be made to the new atom
 bool OBMol::AddAtom(OBAtom &atom)
-     //add an atom to a molecule
-     //also checks bond_queue for any bonds that should be made to the new atom
 {
   BeginModify();
 
@@ -1330,8 +1332,8 @@ bool OBMol::AddResidue(OBResidue &residue)
     return(true);
 }
 
+//! Deletes all atoms except for the largest contiguous fragment
 bool OBMol::StripSalts()
-     //deletes all atoms except for the largest contiguous fragment
 {
   vector<vector<int> > cfl;
   vector<vector<int> >::iterator i,max;
