@@ -1,8 +1,37 @@
+2004-03-07  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* src/chdrw.cpp (ReadChemDraw): Add support for reading ChemDraw
+	CT files.
+
+	* src/data.h, src/data.cpp: Change GAUSSIANZMAT to GAUSSIANOUT to
+	allow support for reading G98 and G03 output.
+
+	* src/extable.txt: Add ChemDraw reading and Gaussian 98/03 output
+	to list.
+
+	* src/fileformat.h, src/fileformat.cpp: Ditto.
+
+	* src/extable.h: Regenerate.
+
+	* src/gaussian.cpp: Add support for reading G98/G03 output and
+	writing isotopes where applicable.
+
+	* src/hin.cpp: Fix bug with more recent HIN formats with basis set
+	information.
+
+	* configure, Makefile.in, */Makefile.in: Update with latest
+	autotools.
+
+	* src/mol.cpp, src/mol.h: Backpedal slightly with Fabien's
+	2003-12-17 changes. Use OB_TSPIN_MOL as used by 1.100.2 and
+	revised AssignSpinMultiplicty to assign OBMol::_tspin.
+
 2004-03-03  Michael Banck  <mbanck@gmx.net>
 
 	Fixes to make InternalToCartesian() and ReadQChem() consistent
 	with CartesianToInternal(), so that round-tripping between
-	InternalToCartesian() and CartesianToInternal() is possible.
+	InternalToCartesian() and CartesianToInternal() is
+	possible. Thanks to Gerd Menche for the fix.
 
 	* src/obutil.cpp (InternalToCartesian): Initialize index as
 	atom->GetIdx() rather than atom->GetIdx() - 1. Subsequently,
