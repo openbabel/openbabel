@@ -335,8 +335,8 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
 		s += description.substr(0,description.find('\n'));
 	}
 
-	if(pFormat->Flags() & NOTWRITABLE) s+=" [Readonly]";
-	if(pFormat->Flags() & NOTREADABLE) s+=" [Writeonly]";
+	if(pFormat->Flags() & NOTWRITABLE) s+=" [Read-only]";
+	if(pFormat->Flags() & NOTREADABLE) s+=" [Write-only]";
 
 	str = s.c_str();
 	return true;
