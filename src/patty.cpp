@@ -36,14 +36,14 @@ void patty::read_rules(const string &infile)
   ifsP= &ifs;
   if (!ifs)
     {
-      if (getenv("OB_DIR") == NULL)
+      if (getenv("BABEL_DATADIR") == NULL)
       {
-        cerr << "The OB_DIR environment variable is not defined" << endl;
+        cerr << "The BABEL_DATADIR environment variable is not defined" << endl;
         cerr << "Please define it so the program can find " << infile << endl;
         exit(0);
       }
       else
-        strcpy(patty_dir,getenv("OB_DIR"));
+        strcpy(patty_dir,getenv("BABEL_DATADIR"));
       strcat(patty_dir,FILE_SEP_CHAR);  
       strcat(patty_dir,infile.c_str());  
       ifs1.open(patty_dir);  

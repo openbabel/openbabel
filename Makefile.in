@@ -3,6 +3,8 @@
 srcdir        = @srcdir@
 VPATH         = @srcdir@
 top_srcdir    = @top_srcdir@
+prefix        = @prefix@
+exec_prefix   = @exec_prefix@
 
 DEST	      = @bindir@
 

@@ -763,8 +763,8 @@ OBRotorRules::OBRotorRules()
 {
   _quiet=false;
   _init = false;
-  _dir = "";
-  _envvar = "OB_DIR";
+  _dir = DATADIR;
+  _envvar = "BABEL_DATADIR";
   _filename = "torlib.txt";
   _subdir = "omega";
   _dataptr = TorsionDefaults;

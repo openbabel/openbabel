@@ -28,8 +28,8 @@ extern OBAtomTyper atomtyper;
 OBPhModel::OBPhModel()
 {
   _init = false;
-  _dir = "";
-  _envvar = "OB_DIR";
+  _dir = DATADIR;
+  _envvar = "BABEL_DATADIR";
   _filename = "phmodel.txt";
   _subdir = "data";
   _dataptr = PhModelData;

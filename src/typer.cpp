@@ -28,8 +28,8 @@ OBAtomTyper      atomtyper;
 OBAtomTyper::OBAtomTyper()
 {
   _init = false;
-  _dir = "";
-  _envvar = "OB_DIR";
+  _dir = DATADIR;
+  _envvar = "BABEL_DATADIR";
   _filename = "atomtyp.txt";
   _subdir = "data";
   _dataptr = AtomTypeData;
@@ -339,8 +339,8 @@ void OBAtomTyper::CorrectAromaticNitrogens(OBMol &mol)
 OBAromaticTyper::OBAromaticTyper()
 {
   _init = false;
-  _dir = "";
-  _envvar = "OB_DIR";
+  _dir = DATADIR;
+  _envvar = "BABEL_DATADIR";
   _filename = "aromatic.txt";
   _subdir = "data";
   _dataptr = AromaticData;

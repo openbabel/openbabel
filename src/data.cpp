@@ -40,8 +40,8 @@ extern void ThrowError(string&);
 OBElementTable::OBElementTable()
 {
   _init = false;
-  _dir = "";
-  _envvar = "OB_DIR";
+  _dir = DATADIR;
+  _envvar = "BABEL_DATADIR";
   _filename = "element.txt";
   _subdir = "data";
   _dataptr = ElementData;
@@ -183,8 +183,8 @@ int OBElementTable::GetAtomicNum(const char *sym)
 OBTypeTable::OBTypeTable()
 {
   _init = false;
-  _dir = "";
-  _envvar = "OB_DIR";
+  _dir = DATADIR;
+  _envvar = "BABEL_DATADIR";
   _filename = "types.txt";
   _subdir = "data";
   _dataptr = TypesData;
@@ -294,8 +294,8 @@ void Tolower(string &s)
 OBExtensionTable::OBExtensionTable()
 {
   _init = false;
-  _dir = "";
-  _envvar = "OB_DIR";
+  _dir = DATADIR;
+  _envvar = "BABEL_DATADIR";
   _filename = "extable.txt";
   _subdir = "data";
   _dataptr = ExtensionTableData;
@@ -616,20 +616,9 @@ void OBGlobalDataBase::Init()
   _init = true;
 
   char buffer[BUFF_SIZE],subbuffer[BUFF_SIZE];
-  ifstream ifs, ifs1, ifs2, ifs3, *ifsP;
-  ifs.open((char*)_filename.c_str());
-  ifsP= &ifs;
-
-  if (!(*ifsP) && !_dir.empty())
-    {
-      strcpy(buffer,_dir.c_str());
-      strcat(buffer,FILE_SEP_CHAR);
-      strcat(buffer,(char*)_filename.c_str());
-      ifs1.open(buffer);     // weirdness have to use ifs1 and not ifs
-      ifsP = &ifs1;            // set the pointer so we can use it
-    }
-   
-  if (!(*ifsP) && getenv(_envvar.c_str()) != NULL)
+  ifstream ifs1, ifs2, ifs3, *ifsP;
+  // First, look for an environment variable
+  if (getenv(_envvar.c_str()) != NULL)
   {
     strcpy(buffer,getenv(_envvar.c_str()));
     strcat(buffer,FILE_SEP_CHAR);
@@ -644,21 +633,30 @@ void OBGlobalDataBase::Init()
     strcat(buffer,(char*)_filename.c_str());
 	strcat(subbuffer,(char*)_filename.c_str());
 
-	ifs2.open(subbuffer);
-	ifsP= &ifs2;
+	ifs1.open(subbuffer);
+	ifsP= &ifs1;
 	if (!(*ifsP))
 	{
-		ifs3.open(buffer);
-		ifsP= &ifs3;
+		ifs2.open(buffer);
+		ifsP = &ifs2;
 	}
   }
-
+  // Then, check the configured data directory
+  else // if (!(*ifsP))
+  {
+    strcpy(buffer,_dir.c_str());
+    strcat(buffer,FILE_SEP_CHAR);
+    strcat(buffer,(char*)_filename.c_str());
+    ifs3.open(buffer); 
+    ifsP = &ifs3;      
+  }
   if ((*ifsP))
     {
       for (;ifsP->getline(buffer,BUFF_SIZE);)
 		  ParseLine(buffer);
     }
   else
+  // If all else fails, use the compiled in values
     if (_dataptr)
     {
       char *p1,*p2;
@@ -676,9 +674,9 @@ void OBGlobalDataBase::Init()
       ThrowError(s);
     }
 
-  if (ifs)  ifs.close();
   if (ifs1) ifs1.close();
   if (ifs2) ifs2.close();
+  if (ifs3) ifs3.close();
 }
 
 }
