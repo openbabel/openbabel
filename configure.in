@@ -53,4 +53,4 @@ dnl Checks for library functions.
 AC_CHECK_FUNCS([rint])
 AC_REPLACE_FUNCS([snprintf strncasecmp])
 
-AC_OUTPUT(Makefile src/Makefile src/math/Makefile src/windows/Makefile test/Makefile tools/Makefile doc/Makefile openbabel.pc)
+AC_OUTPUT(Makefile src/Makefile src/math/Makefile src/windows/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile openbabel.pc)
