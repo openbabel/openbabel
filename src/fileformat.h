@@ -58,6 +58,8 @@ bool ReadCCC(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadChem3d1(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadChem3d2(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadCML(std::istream &,OBMol &,const char *title="Untitled");
+bool ReadCRK2D(std::istream &,OBMol &,const char *title="Untitled");
+bool ReadCRK3D(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadDMol(std::istream &,OBMol &,const char *title="Untitled");
 bool ReadFeat(std::istream &, OBMol &, const char *title="Untitled");
 bool ReadGAMESS(std::istream &, OBMol &, const char *title="Untitled");
@@ -100,6 +102,8 @@ bool WriteChemDraw(std::ostream &,OBMol &);
 bool WriteCHT(std::ostream &,OBMol &);
 bool WriteCML(std::ostream &,OBMol &,
 	      const char *dimension="3D", const char *options="");
+bool WriteCRK2D(std::ostream &,OBMol &);
+bool WriteCRK3D(std::ostream &,OBMol &);
 bool WriteCSR(std::ostream &,OBMol &);
 bool WriteCSSR(std::ostream &,OBMol &);
 bool WriteDelphiPDB(std::ostream&,OBMol&);

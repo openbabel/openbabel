@@ -6,7 +6,7 @@ libopenbabel_la_SOURCES = \
 		alchemy.cpp amber.cpp atom.cpp balst.cpp base.cpp bgf.cpp \
 		binary.cpp bitvec.cpp bond.cpp box.cpp c3d.cpp cacao.cpp \
 		cache.cpp car.cpp ccc.cpp chains.cpp chdrw.cpp chemtool.cpp chiral.cpp \
-		cml.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp \
+		cml.cpp crk.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp \
 		fileformat.cpp gamess.cpp gaussian.cpp generic.cpp \
 		ghemical.cpp grid.cpp gromos96.cpp hin.cpp jaguar.cpp \
 		matrix.cpp mdl.cpp mm3.cpp mmod.cpp mol.cpp mol2.cpp \
@@ -22,9 +22,10 @@ libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
 		aromatic.h atomtyp.h babelconfig.h base.h binary.h bitvec.h \
-		bondtyp.h bondtyper.h chains.h chiral.h data.h element.h \
-		extable.h fileformat.h generic.h grid.h isotope.h matrix.h \
-		mol.h molchrg.h molvector.h oberror.h obifstream.h obutil.h \
+		bondtyp.h bondtyper.h chains.h chiral.h crk.h data.h \
+		element.h extable.h fileformat.h generic.h grid.h \
+		isotope.h matrix.h mol.h molchrg.h molvector.h \
+		oberror.h obifstream.h obutil.h \
 		parsmart.h patty.h phmodel.h phmodeldata.h resdata.h ring.h \
 		rotor.h smi.h typer.h types.h
 

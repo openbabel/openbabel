@@ -32,7 +32,7 @@ class OBElement;
 class OBAtom;
 class OBElementTable;
 
-typedef enum { UNDEFINED, // Rest are alphabetical, insert as needed
+typedef enum { UNDEFINED,
                ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
                CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
 	       CHEM3D2, CHEMDRAW, CHEMTOOL, CIF, CML, CSR, CSSR, DELPDB, DMOL,
@@ -46,7 +46,9 @@ typedef enum { UNDEFINED, // Rest are alphabetical, insert as needed
                PCMODEL, PDB, POV, PREP, QCHEMIN, QCHEMOUT, REPORT,
                SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
                SPARTANSEMI, TGF, TINKER, TITLE, UNICHEM, VIEWMOL,
-               XED, XYZ, ZINDO
+               XED, XYZ, ZINDO, CRK2D, CRK3D
+	       // Insert new formats here (at the end) for backwards 
+	       // compatibility
              } io_type;
 
 //! Base data table class, handles reading data files

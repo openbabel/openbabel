@@ -1,20 +1,24 @@
+2003-12-01  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/crk.h, src/crk.cpp: New files for Chemical Resource Kit
+	support, contriubted by Alex Clark <a.clark@bendcable.com>. 
+
+	* src/Makefile.am, src/Makefile.in: As above.
+
+	* src/data.cpp, src/data.h, src/extable.txt, src/fileformat.cpp,
+	src/fileformat.h: Changes to support read/write CRK files.
+
 2003-11-22  Michael Banck  <mbanck@gmx.net>
 
 	* src/povray.cpp (CalcBoundingBox): Decouple declaration of 
 	`unsigned int i' from the for-loop. Contributed by Chris 
-	Morley <c.morley@gaseq.co.uk>.
+	Morley.
  
-2003-11-22  Michael Banck  <mbanck@gmx.net>
-
 	* src/Makefile.am (libopenbabelinclude_HEADERS): Added 
 	babelconfig.h
 
-2003-11-22  Michael Banck  <mbanck@gmx.net>
-
 	* src/Makefile.am (EXTRA_DIST): Removed newmain.cpp, bondtyper.cpp
 	and bondtyper.h for now.
-
-2003-11-22  Michael Banck  <mbanck@gmx.net>
 
 	* configure.in (AC_CHECK_HEADERS): Added iostream and fstream. 
 	They seem to be not always present on Irix.
@@ -39,8 +43,6 @@
 	[WIN32]: Removed, and ...
 	[HAVE_CONIO_H]: Replaced with this.
 	
-2003-11-22  Michael Banck  <mbanck@gmx.net>
-
 	* src/mol.h: Move #include for babelconfig.h to the top.
 
 2003-11-21  Fabien Fontaine  <ffontaine@imim.es>

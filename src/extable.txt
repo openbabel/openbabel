@@ -14,6 +14,9 @@
 #   - Readability (i.e. 1 if a ReadFoo() method exists, 0 if no code exists) #
 #   - Writeability (as above: 1 if a WriteFoo() method exists, 0 otherwise)  #
 #                                                                            #
+#  NOTE: Make sure tabs separate the columns -- spaces can be used in        #
+#        descriptions.                                                       #
+#                                                                            #
 ##############################################################################
 # EXTENSION	TYPE		DESCRIPTION			MIME				READ	WRITE
 alc		alchemy		Alchemy				chemical/x-alchemy		1	1
@@ -28,6 +31,8 @@ c3d2		chem3d2		Chem3D Cartesian 2		none				1	1
 ct		chemdraw	ChemDraw Connection Table	none				0	1
 cht		chemtool	Chemtool			none				0	1
 cml		cml		Chemical Markup Language	chemical/x-cml			1	1
+crk2d		crk2d		CRK2D: Chemical Resource Kit 2D	chemical/x-crk2d		1	1
+crk3d		crk3d		CRK3D: Chemical Resource Kit 3D	chemical/x-crk3d		1	1
 cssr		cssr		CSD CSSR			none				0	1
 box		box		Dock 3.5 Box			none				1	1
 dmol		dmol		DMol3 Coordinates		none				1	1

@@ -523,6 +523,8 @@ io_type TextToType(string typestring)
   else if (typestring == "CHEMDRAW")		return(CHEMDRAW);
   else if (typestring == "CHEMTOOL")		return(CHEMTOOL);
   else if (typestring == "CML")			return(CML);
+  else if (typestring == "CRK2D")               return(CRK2D);
+  else if (typestring == "CRK3D")               return(CRK3D);
   else if (typestring == "CSR")			return(CSR);
   else if (typestring == "CSSR")		return(CSSR);
   else if (typestring == "FEATURE")		return(FEATURE);

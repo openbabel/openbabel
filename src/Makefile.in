@@ -141,7 +141,7 @@ libopenbabel_la_SOURCES = \
 		alchemy.cpp amber.cpp atom.cpp balst.cpp base.cpp bgf.cpp \
 		binary.cpp bitvec.cpp bond.cpp box.cpp c3d.cpp cacao.cpp \
 		cache.cpp car.cpp ccc.cpp chains.cpp chdrw.cpp chemtool.cpp chiral.cpp \
-		cml.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp \
+		cml.cpp crk.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp \
 		fileformat.cpp gamess.cpp gaussian.cpp generic.cpp \
 		ghemical.cpp grid.cpp gromos96.cpp hin.cpp jaguar.cpp \
 		matrix.cpp mdl.cpp mm3.cpp mmod.cpp mol.cpp mol2.cpp \
@@ -157,10 +157,11 @@ libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 
 libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
-		aromatic.h atomtyp.h base.h binary.h bitvec.h bondtyp.h \
-		bondtyper.h chains.h chiral.h data.h element.h extable.h \
-		fileformat.h generic.h grid.h isotope.h matrix.h mol.h \
-		molchrg.h molvector.h oberror.h obifstream.h obutil.h \
+		aromatic.h atomtyp.h babelconfig.h base.h binary.h bitvec.h \
+		bondtyp.h bondtyper.h chains.h chiral.h crk.h data.h \
+		element.h extable.h fileformat.h generic.h grid.h \
+		isotope.h matrix.h mol.h molchrg.h molvector.h \
+		oberror.h obifstream.h obutil.h \
 		parsmart.h patty.h phmodel.h phmodeldata.h resdata.h ring.h \
 		rotor.h smi.h typer.h types.h
 
@@ -177,7 +178,6 @@ pkgdata_DATA = \
 EXTRA_DIST = \
 	bc32.mak borland.bat oblib.dsp oblib.dsw \
 	bin2hex.pl $(pkgdata_DATA) \
-	newmain.cpp bondtyper.cpp bondtyper.h \
 	strncasecmp.c snprintf.c snprintf.h
 
 
@@ -196,13 +196,13 @@ libopenbabel_la_DEPENDENCIES = math/libmath.la @LTLIBOBJS@
 am_libopenbabel_la_OBJECTS = alchemy.lo amber.lo atom.lo balst.lo \
 	base.lo bgf.lo binary.lo bitvec.lo bond.lo box.lo c3d.lo \
 	cacao.lo cache.lo car.lo ccc.lo chains.lo chdrw.lo chemtool.lo \
-	chiral.lo cml.lo csr.lo cssr.lo data.lo dmol.lo feat.lo fh.lo \
-	fileformat.lo gamess.lo gaussian.lo generic.lo ghemical.lo \
-	grid.lo gromos96.lo hin.lo jaguar.lo matrix.lo mdl.lo mm3.lo \
-	mmod.lo mol.lo mol2.lo molchrg.lo molvector.lo mopac.lo mpqc.lo \
-	nwchem.lo oberror.lo obutil.lo parsmart.lo parsmi.lo patty.lo \
-	pdb.lo phmodel.lo povray.lo qchem.lo rand.lo report.lo \
-	residue.lo ring.lo rotor.lo shelx.lo smi.lo tinker.lo \
+	chiral.lo cml.lo crk.lo csr.lo cssr.lo data.lo dmol.lo feat.lo \
+	fh.lo fileformat.lo gamess.lo gaussian.lo generic.lo \
+	ghemical.lo grid.lo gromos96.lo hin.lo jaguar.lo matrix.lo \
+	mdl.lo mm3.lo mmod.lo mol.lo mol2.lo molchrg.lo molvector.lo \
+	mopac.lo mpqc.lo nwchem.lo oberror.lo obutil.lo parsmart.lo \
+	parsmi.lo patty.lo pdb.lo phmodel.lo povray.lo qchem.lo rand.lo \
+	report.lo residue.lo ring.lo rotor.lo shelx.lo smi.lo tinker.lo \
 	tokenst.lo typer.lo unichem.lo viewmol.lo xed.lo xyz.lo \
 	zindo.lo
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
@@ -229,32 +229,32 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/ccc.Plo ./$(DEPDIR)/chains.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/chdrw.Plo ./$(DEPDIR)/chemtool.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/chiral.Plo ./$(DEPDIR)/cml.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/csr.Plo ./$(DEPDIR)/cssr.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/data.Plo ./$(DEPDIR)/dmol.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/feat.Plo ./$(DEPDIR)/fh.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/fileformat.Plo ./$(DEPDIR)/gamess.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/gaussian.Plo ./$(DEPDIR)/generic.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/ghemical.Plo ./$(DEPDIR)/grid.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/gromos96.Plo ./$(DEPDIR)/hin.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/jaguar.Plo ./$(DEPDIR)/main.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/matrix.Plo ./$(DEPDIR)/mdl.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/mm3.Plo ./$(DEPDIR)/mmod.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/mol.Plo ./$(DEPDIR)/mol2.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/molchrg.Plo ./$(DEPDIR)/molvector.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/mopac.Plo ./$(DEPDIR)/mpqc.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/nwchem.Plo ./$(DEPDIR)/oberror.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/obutil.Plo ./$(DEPDIR)/parsmart.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/parsmi.Plo ./$(DEPDIR)/patty.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/pdb.Plo ./$(DEPDIR)/phmodel.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/povray.Plo ./$(DEPDIR)/qchem.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/rand.Plo ./$(DEPDIR)/report.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/residue.Plo ./$(DEPDIR)/ring.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/rotor.Plo ./$(DEPDIR)/shelx.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/smi.Plo ./$(DEPDIR)/tinker.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/tokenst.Plo ./$(DEPDIR)/typer.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/unichem.Plo ./$(DEPDIR)/viewmol.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/xed.Plo ./$(DEPDIR)/xyz.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/zindo.Plo
+@AMDEP_TRUE@	./$(DEPDIR)/crk.Plo ./$(DEPDIR)/csr.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/cssr.Plo ./$(DEPDIR)/data.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/dmol.Plo ./$(DEPDIR)/feat.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/fh.Plo ./$(DEPDIR)/fileformat.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/gamess.Plo ./$(DEPDIR)/gaussian.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/generic.Plo ./$(DEPDIR)/ghemical.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/grid.Plo ./$(DEPDIR)/gromos96.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/hin.Plo ./$(DEPDIR)/jaguar.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/main.Po ./$(DEPDIR)/matrix.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/mdl.Plo ./$(DEPDIR)/mm3.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/mmod.Plo ./$(DEPDIR)/mol.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/mol2.Plo ./$(DEPDIR)/molchrg.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/molvector.Plo ./$(DEPDIR)/mopac.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/mpqc.Plo ./$(DEPDIR)/nwchem.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/oberror.Plo ./$(DEPDIR)/obutil.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/parsmart.Plo ./$(DEPDIR)/parsmi.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/patty.Plo ./$(DEPDIR)/pdb.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/phmodel.Plo ./$(DEPDIR)/povray.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/qchem.Plo ./$(DEPDIR)/rand.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/report.Plo ./$(DEPDIR)/residue.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/ring.Plo ./$(DEPDIR)/rotor.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/shelx.Plo ./$(DEPDIR)/smi.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/tinker.Plo ./$(DEPDIR)/tokenst.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/typer.Plo ./$(DEPDIR)/unichem.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/viewmol.Plo ./$(DEPDIR)/xed.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/xyz.Plo ./$(DEPDIR)/zindo.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) \
@@ -407,6 +407,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemtool.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cml.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crk.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/csr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cssr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@

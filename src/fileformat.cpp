@@ -41,6 +41,8 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, const char *title)
     case CHEM3D1:   result = ReadChem3d1(ifs,mol,title);       	break;
     case CHEM3D2:   result = ReadChem3d2(ifs,mol,title);       	break;
     case CML:       result = ReadCML(ifs,mol,title);		break;
+    case CRK2D:     result = ReadCRK2D(ifs,mol,title);          break;
+    case CRK3D:     result = ReadCRK3D(ifs,mol,title);          break;
     case DMOL:      result = ReadDMol(ifs,mol,title);		break;
     case FEATURE:   result = ReadFeat(ifs,mol,title);		break;
     case GAMESSOUT: result = ReadGAMESS(ifs,mol,title);		break;
@@ -89,6 +91,8 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol,
     case CHEM3D1:   WriteChem3d1(ofs,mol);		break;
     case CHEM3D2:   WriteChem3d2(ofs,mol);		break;
     case CML:       WriteCML(ofs,mol,dimension, options);break;
+    case CRK2D:     WriteCRK2D(ofs,mol);                break;
+    case CRK3D:     WriteCRK3D(ofs,mol);                break;
     case CSR:       WriteCSR(ofs,mol);			break;
     case CSSR:      WriteCSSR(ofs,mol);			break;
     case DMOL:      WriteDMol(ofs,mol);			break;
