@@ -163,6 +163,9 @@ bool WriteCacaoInternal(ostream &ofs,OBMol &mol)
 
 void SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
 {
+  // Roundtrip testing shows that some atoms are NULL
+  //  which causes segfaults when dereferencing later
+  //   (e.g. in the last "segment" of this routine
   float sum,r;
 
   OBAtom dummy1,dummy2;
@@ -205,7 +208,7 @@ void SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
 
   for (i = 4;i <= mol.NumAtoms();i++)
     {
-      if (vit[i]->_b->GetIdx())
+      if (vit[i]->_b && vit[i]->_b->GetIdx())
 	vit[i]->_c = vit[vit[i]->_b->GetIdx()]->_b;
       else
 	vit[i]->_c = &dummy1;

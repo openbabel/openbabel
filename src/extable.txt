@@ -107,7 +107,7 @@ mopin		mopacint	MOPAC Internal			none				0	0
 cmod		pcmodel		PC Model			none				0	0
 msf		msf		MSI Quanta MSF			none				0	0
 schakal		schakal		Schakal				none				0	0
-shelx		shelx		ShelX				none				0	0
+res		shelx		ShelX				none				0	0
 spar		spartan		Spartan				none				0	0
 semi		spartansemi	Spartan Semi-Empirical		none				0	0
 spmm		spartanmm	Spartan MM			none				0	0
@@ -135,5 +135,8 @@ cxf		cxf		CXF				chemical/x-cxf			0	0
 emb		embl		EMBL nucleotide			chemical/x-embl-dl-nucleotide	0	0
 vmd		vmd		Visual Molecular Dynamics	chemical/x-vmd			0	0
 sw		sw		SWISS-PROT			chemical/x-swissprot		0	0
-skc		skc		MDL Isis Setch			none				0	0
-tgf		tgf		MDL Isis TGF			none				0	0
+skc		skc		MDL Isis Sketch			none				0	0
+tgf		tgf		MDL Transportable Graphics	chemical/x-mdl-tgf		0	0
+rxn		rxn		MDL Reaction			chemical/x-mdl-rxn		0	0
+b		molconn		Molconn-Z			chemical/x-molconn-Z		0	0
+fch		gaussiancheck	Gaussian Checkpoint		chemical/x-gaussian-checkpoint	0	0

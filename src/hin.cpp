@@ -28,6 +28,7 @@ bool ReadHIN(istream &ifs,OBMol &mol, const char *title)
   OBAtom *atom;
   vector<string> vs;
 
+  ifs.getline(buffer, BUFF_SIZE);
   while (strstr(buffer,"mol") == NULL)
     ifs.getline(buffer, BUFF_SIZE);
   ifs.getline(buffer, BUFF_SIZE);
@@ -36,7 +37,7 @@ bool ReadHIN(istream &ifs,OBMol &mol, const char *title)
   while (strstr(buffer,"endmol") == NULL)
     {
       tokenize(vs,buffer); // Don't really know how long it'll be
-      if (vs.size() <= 11) break;
+      if (vs.size() < 11) break;
       atom = mol.NewAtom();
       atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
       x = atof((char*)vs[7].c_str());

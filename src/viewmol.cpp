@@ -30,9 +30,6 @@ bool ReadViewMol(istream &ifs,OBMol &mol,const char *title)
   bool foundTitle = false;
   bool foundBonds = false;
 
-  while	(ifs.getline(buffer,BUFF_SIZE))
-    if (buffer[0] == '$') break;
-
   mol.BeginModify();
 
   while	(ifs.getline(buffer,BUFF_SIZE))

@@ -1,3 +1,17 @@
+2003-03-15  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/cacao.cpp (SetHilderbrandt): Fix one coredump found on
+	roundtrip testing and add notes on what needs to be fixed for an
+	iron-clad version of this.
+
+	* src/hin.cpp (ReadHIN): Fix bugs uncovered in latest roundtrip
+	testing. Some lines are exactly 11 tokens long and this should not
+	stop the parsing.
+
+	* src/viewmol.cpp (ReadViewMol): Remove loop attempting to find
+	the first part of the file -- causes problems since two lines
+	instead of one are read off the top.
+
 2003-03-14  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* test/roundtrip.cpp: Detect cases where files have no atoms.
