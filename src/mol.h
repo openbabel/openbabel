@@ -528,7 +528,7 @@ protected:
   std::vector<OBResidue*>       _residue;//!< Residue information (if applicable)
   std::vector<OBGenericData*>   _vdata;	//!< Custom data
   float                         _energy;//!< Molecular heat of formation (if applicable)
-  int				_totalCharge //!< Total charge on the molecule
+  int				_totalCharge; //!< Total charge on the molecule
   float                        *_c;	//!< coordinate array
   std::vector<float*>           _vconf;	//!< vector of conformers
   unsigned short int            _natoms;//!< Number of atoms
