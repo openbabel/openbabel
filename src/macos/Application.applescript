@@ -1,10 +1,20 @@
 -- Application.applescript
 
--- Open Babel Mac OS X GUI
--- version 1.99.1 by Geoffrey Hutchison
--- Copyright 2002 Geoffrey R. Hutchison
--- This code and application are made available 
--- under the GNU General Public License (GPL), version 2 or later.
+-----
+-- Open Babel Mac OS X GUI, version 1.99.1
+-- Copyright © 2002 Geoffrey R. Hutchison
+-- This program (application and code) is free software;
+-- you can redistribute it and/or modify it under the terms of the 
+-- GNU General Public License as published by
+-- the Free Software Foundation version 2 of the License.
+-- See <http://www.gnu.org/licenses/licenses.html#GPL>
+
+-- For more information on Open Babel, see <http://openbabel.sourceforge.net/>
+------
+
+on launched theObject
+	-- to be added shortly
+end launched
 
 on clicked theObject
 	if theObject is equal to button "OpenButton" of box "InputBox" of window "Open Babel" then
@@ -57,7 +67,3 @@ end choose menu item
 on should quit after last window closed theObject
 	return true
 end should quit after last window closed
-
-on launched theObject
-	-- to be added shortly
-end launched
