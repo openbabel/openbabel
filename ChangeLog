@@ -1,4 +1,37 @@
+2003-11-08  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* configure, */Makefile.in: Updated with current autoconf, automake.
+
+	* src/cml.cpp: Add OB_VERSION const to use BABEL_VERSION
+	definition (automagically updated from babelconfig.h).
+
+	* src/extable.txt: Add .ins ShelX extension.
+
+	* test/cml.sh, test/cmltest/roundtrip.sh, test/cmltest/test.sh:
+	Shell scripts to run the CML test suite.
 	
+	* test/smartstest.cpp: Add more debugging information if SMARTS
+	tests fail.
+
+	* src/shelx.cpp: Changes suggested by Louis Ricard
+	<louis.ricard@polytechnique.fr> to fix several ShelX bugs.
+	
+	* src/atom.cpp, src/mdl.cpp, src/mol.h, src/parsmi.cpp, src/smi.cpp,
+	src/typer.cpp: Support for radical centers, contributed by Chris
+	Morley <c.morley@gaseq.co.uk>.
+
+	Changes contributed by Malcolm Gillies <malcolm.b.gillies@anu.edu.au>
+
+	* src/pdb.cpp: (ReadPDB) BUG: OBMol::ConnectTheDots() fails inside a
+	OBMol::BeginModify()/OBMol::EndModify() pair, as OBMol::Has3D() will
+	always return false. Rearrange to avoid this.
+	Use ATOM/HETATM record element name information in columns
+	76-77 to determine element type when possible and necessary.
+	(WritePDB) BUG: writing of ATOM records could fail due to use of
+	strncpy to copy atom and residue names (i.e. lack of null termination)
+	Write HETATM records instead of ATOM records if
+	res->IsHetAtom(atom)==true
+
 2003-10-22  Fabien Fontaine <ffontaine@imim.es>
 
 	Added tools directory: contains utilities using libopenbabel
