@@ -1,3 +1,16 @@
+2002-09-19  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/aromatic.h, src/aromatic.txt: Remove selenium aromatic
+	pattern for now. Fixes test/smartstest error on
+	LABOTEST_LT-2_FE_546.
+
+	* src/c3d.cpp, src/chains.cpp, src/cml.cpp, src/data.cpp,
+	src/jaguar.cpp, src/main.cpp, src/mol.cpp, src/oberror.h,
+	src/pdb.cpp, src/phmodel.cpp, src/ring.cpp, src/smi.cpp,
+	src/xyz.cpp, src/math/matrix3x3.cpp, test/matrixtest.cpp,
+	test/ringtest.cpp, test/smartstest.cpp: Warning fixes contributed
+	by Erik Kruus.
+
 2002-09-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/report.cpp: Fix bug noted by Markku Laukkanen, where the min

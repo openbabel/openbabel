@@ -294,7 +294,7 @@ static void FindRings(OBMol &mol,vector<int> &path,OBBitVec &avisit,
 	  bond->SetInRing();
 	  (bond->GetBeginAtom())->SetInRing();
 	  (bond->GetEndAtom())->SetInRing();
-	  if(bond->GetBeginAtomIdx()==natom || bond->GetEndAtomIdx()==natom)
+	  if(bond->GetBeginAtomIdx()==static_cast<unsigned int>(natom) || bond->GetEndAtomIdx()==static_cast<unsigned int>(natom))
 	    break;
         }
     } 
@@ -347,8 +347,8 @@ OBRing::OBRing(vector<int> &path,int size)
 */
 OBRing::OBRing(const OBRing &src)
 //no base class
-	:	_pathset(src._pathset),	//chain to member classes
-		_path(src._path)
+	:	_path(src._path)
+	,	_pathset(src._pathset)	//chain to member classes
 {
 	//member data
 	_parent = src._parent;  //this is messed up, but what can you do?

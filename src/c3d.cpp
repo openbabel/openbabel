@@ -138,7 +138,7 @@ bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
 	has_fractional = true;
 	break;
       case 8 :
-	sscanf(buffer,"%d%f%f%f%f%f%f%f",
+	sscanf(buffer,"%d%f%f%f%f%f%f%lf",
 	       &natoms,&Alpha,&Beta,&Gamma,&A,&B,&C,&exponent);
 	m.FillOrth(Alpha,Beta,Gamma,A,B,C);
 	has_fractional = true;

@@ -107,11 +107,11 @@ bool writePCDATA(ostream &ofs, string value);
 // manage prefixed namespaces
 pair <string, string> getNamespacePair(string name);
 // split a list of floats
-void processFloatTokens(vector <double> &v, int n, string att);
+void processFloatTokens(vector <double> &v, vector<double>::size_type n, string att);
 // split a list of ints
-void processIntegerTokens(vector <int> &v, int n, string att);
+void processIntegerTokens(vector <int> &v, vector<int>::size_type n, string att);
 // split a list of ints
-void processStringTokens(vector <int> &v, int n, string att);
+void processStringTokens(vector <string> &v, vector<string>::size_type n, string att);
 
 // ----------------SAX2-like callbacks ------------------
 // SAX2 is an OpenSource API for event-based processing of XML documents.
@@ -169,7 +169,8 @@ string pcdata;
 // current attributes
 vector<pair<string,string> > currentAtts;
 // namespaces
-vector<pair<string,string> > namespaceVector;
+typedef vector<pair<string,string> > namespaceVector_t;
+namespaceVector_t namespaceVector;
 // has rootElement been read?
 bool readRoot;
 
@@ -394,7 +395,7 @@ bool processBondArrayChild();
 
 // ----------------CML utilities---------------
 // translates attributes (e.g. atomRefs3) into atomRef vectors
-void getAtomRefs(int size, vector <OBAtom*> &atomRef, string atomRefs);
+void getAtomRefs(vector<string>::size_type size, vector <OBAtom*> &v, string atomRefString);
 
 // ----------------babel stuff---------------
 
@@ -460,7 +461,7 @@ vector <OBAtom*> atomRefs3Vector;
 vector <OBAtom*> atomRefs4Vector;
 
 // bond stuff
-int nbonds;
+unsigned int nbonds;	// [ejk] assumed unsigned is OK, where is the global guy set?
 // ends of bond
 string bondBeginAtom;
 string bondEndAtom;
@@ -524,7 +525,8 @@ vector <pair <vector<OBAtom*>, double> > atomParityVector;
 vector <pair <vector<OBAtom*>, string> > stereoSVector;
 
 // internal coordinates
-vector <OBInternalCoord*> internalVector;
+typedef vector <OBInternalCoord*> internalVector_t;
+internalVector_t internalVector;
 
 /** --------------------- initialization-----------------------*/
 void makeAllowedElementLists() {
@@ -621,6 +623,7 @@ bool ReadXML(istream &ifs) {
 		}
 	}
 	endDocument();
+	return true;	// [ejk] just guessed at this return value
 }
 
 // process anything in balanced <...>
@@ -629,7 +632,7 @@ void tag(string s) {
 	vector <pair <string, string> > atts;
 
 	string name;
-	int l = s.length();
+	string::size_type l = s.length();
 	string sl = toLowerCase(s);
 // XML declaration
 	if (sl.substr(0, 5) == "<?xml") {
@@ -670,7 +673,7 @@ void tag(string s) {
 	} else if (s.substr(0,2) == "<?") {
 		if (s.substr(l-2, 2) == "?>") {
 			s = s.substr(2, l-4);
-			int idx = s.find(" ");
+			string::size_type idx = s.find(" ");
 			string target = (idx < s.size()) ? s.substr(0, idx) : s;
 			string data = (idx < s.size()) ? trim(s.substr(idx)) : "";
 			processingInstruction(target, data);
@@ -701,7 +704,7 @@ string escapeXMLEntities(string s) {
 	string ss;
 	int ii;
 	char *cc = (char*) s.c_str();
-	for (int i = 0; i < s.length(); i++) {
+	for (string::size_type i = 0; i < s.length(); ++i) {
 		ii = (int) cc[i];
 		if (cc[i] == '&') {
 			ss.append("&amp;");
@@ -738,7 +741,7 @@ string processXMLEntities(string s) {
 	string s0(s);
 	string ss;
 	for (;;) {
-		int idx = s.find("&");
+		string::size_type idx = s.find("&");
 		if (idx >= s.length()) {
 			ss.append(s);
 			break;
@@ -785,7 +788,7 @@ string startTag(string s) {
 	}
 	string ss = s;
 	string name;
-	int idx = s.find(" ");
+	string::size_type idx = s.find(" ");
 	if (idx > s.size()) {
 		name = s;
 		s = "";
@@ -805,7 +808,7 @@ void splitAttributes(string s, vector <pair <string, string> > &atts) {
 	pair<string, string> att;
 
 	while (true) {
-		int idx = s.find("=");
+		string::size_type idx = s.find("=");
 		if (idx > s.size()) {
 			if (trim(s) != "") {
 				cerr << "Bad attribute at " << s << endl;
@@ -840,11 +843,11 @@ void splitAttributes(string s, vector <pair <string, string> > &atts) {
 // check attributes against allowed list; result is unknown attributes
 vector <string> getUnknownAttributes(vector <string> &allowed, vector <pair <string, string> > &atts) {
 	vector <string> badAtts;
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector<pair <string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		string attName = atts[i].first;
 		if (attName.substr(0, 5) == "xmlns") continue;
 		bool ok = false;
-		for (int j = 0; j < allowed.size(); j++) {
+		for (vector<string>::size_type j = 0; j < allowed.size(); ++j) {
 			if (allowed[j] == attName) {
 				ok = true;
 				break;
@@ -858,7 +861,7 @@ vector <string> getUnknownAttributes(vector <string> &allowed, vector <pair <str
 }
 
 void printVector(vector <string> v, ostream& ofs) {
-	for (int i = 0; i < v.size(); i++) {
+	for (vector<string>::size_type i = 0; i < v.size(); ++i) {
 		ofs << v[i] << " ";
 	}
 }
@@ -873,10 +876,12 @@ void noteUnusedElementName(string name, string msg) {
 
 bool writeAttribute(ostream&ofs, string name, int value) {
 	ofs << " " << name << "=\"" << value << "\"";
+	return true; // [ejk] assumed
 }
 
 bool writeAttribute(ostream&ofs, string name, double value) {
 	ofs << " " << name << "=\"" << value << "\"";
+	return true; // [ejk] assumed
 }
 
 bool writeAttribute(ostream&ofs, string name, string value) {
@@ -885,14 +890,17 @@ bool writeAttribute(ostream&ofs, string name, string value) {
 		string value1 = escapeXMLEntities(value);
 		ofs << " " << name << "=\"" << value1 << "\"";
 	}
+	return true; // [ejk] assumed
 }
 
 bool writeBuiltin(ostream&ofs, string name, int value) {
 	ofs << "<integer builtin=\"" <<  name << "\">" << value << "</integer>" << endl;
+	return true; // [ejk] assumed success
 }
 
 bool writeBuiltin(ostream&ofs, string name, double value) {
 	ofs << "<float builtin=\"" <<  name << "\">" << value << "</float>" << endl;
+	return true; // [ejk] assumed success
 }
 
 bool writeBuiltin(ostream&ofs, string name, string value) {
@@ -901,6 +909,7 @@ bool writeBuiltin(ostream&ofs, string name, string value) {
 		value = escapeXMLEntities(value);
 		ofs << "<string builtin=\"" <<  name << "\">" << value << "</string>" << endl;
 	}
+	return true; // [ejk] assumed
 }
 
 bool appendToArray(string &array, int value) {
@@ -909,6 +918,7 @@ bool appendToArray(string &array, int value) {
 	sprintf(ss, "%i", value);
 	string s(ss);
 	array.append(trim(ss));
+	return true; // [ejk] assumed
 }
 
 bool appendToArray(string &array, double value) {
@@ -917,16 +927,19 @@ bool appendToArray(string &array, double value) {
 	sprintf(ss, "%f", value);
 	string s(ss);
 	array.append(trim(ss));
+	return true; // [ejk] assumed
 }
 
 bool appendToArray(string &array, string value) {
 	value = escapeXMLEntities(value);
 	if (array != "") array.append(" ");
 	array.append(trim(value));
+	return true; // [ejk] assumed
 }
 
 bool writePCDATA(ostream&ofs, string value) {
 	ofs << escapeXMLEntities(value);
+	return true; // [ejk] assumed
 }
 
 // ------------------------ SAX events -------------------
@@ -939,7 +952,7 @@ void startDocument() {
 // SAX-like call back
 void endDocument() {
 	cout << "read CML document" << endl;
-	for (int i = 0; i < namespaceVector.size(); i++) {
+	for (namespaceVector_t::size_type i = 0; i < namespaceVector.size(); ++i) {
 		cout << "namespace :" << namespaceVector[i].first << ":" << namespaceVector[i].second << endl;
 	}
 }
@@ -955,12 +968,12 @@ pair <string, string> getNamespacePair(string name) {
 	pair <string, string> nsPair;
 	nsPair.first = "";
 	nsPair.second = "";
-	int idx = name.find(":");
+	string::size_type idx = name.find(":");
 	if (idx < name.length()) {
 		nsPair.first = name.substr(0, idx);
 		name = name.substr(idx+1);
 	}
-	for (int i = 0; i < namespaceVector.size(); i++) {
+	for (namespaceVector_t::size_type i = 0; i < namespaceVector.size(); ++i) {
 		if (namespaceVector[i].first == nsPair.first) {
 			nsPair.second = namespaceVector[i].second;
 			break;
@@ -1091,7 +1104,7 @@ void startElement(string namespaceURI, string localName, string prefix, vector<p
 }
 
 void processAttributes(vector<pair<string,string> > &atts) {
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector<pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		string name = atts[i].first;
 		if (!isXMLName(name)) {
 			cerr << "invalid XML name: " << name << endl;
@@ -1104,11 +1117,11 @@ void processAttributes(vector<pair<string,string> > &atts) {
 void processNamespace(string name, string value) {
 	pair <string, string> ns;
 
-	int idx = name.find(":");
+	string::size_type idx = name.find(":");
 	ns.first = (idx < name.size()) ? name.substr(idx) : "";
 	ns.second = value;
 	bool nsExists = false;
-	for (int i = 0; i < namespaceVector.size(); i++) {
+	for (namespaceVector_t::size_type i = 0; i < namespaceVector.size(); ++i) {
 		if (ns.first == namespaceVector[i].first) {
 			nsExists = true;
 			if (namespaceVector[i].second != value) {
@@ -1242,7 +1255,7 @@ void skippedEntity(string name) {
 // gets attribute of given name; "" if not found
 string getAttribute(vector <pair<string, string> > &atts, string name) {
 	string s;
-    for (int i = 0; i < atts.size(); i++) {
+    for (vector<pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == name) {
 			return atts[i].second;
 		}
@@ -1259,7 +1272,7 @@ bool isXMLName(string n) {
 	if (!( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' )) {
 		ok = false;
 	}
-	while (c = *str++) {
+	while ((c = *str++)) {
 		if (c >= '0' && c <= '9') {
 		} else if (c >= 'a' && c <= 'z') {
 		} else if (c >= 'A' && c <= 'Z') {
@@ -1297,7 +1310,7 @@ string trim(string s) {
 string toLowerCase(string s) {
 	string ss(s);
 	unsigned int i;
-	for (i = 0;i < s.size();i++) {
+	for (i = 0;i < s.size();++i) {
 	    ss[i] = tolower(s[i]);
 	}
 	return ss;
@@ -1306,14 +1319,14 @@ string toLowerCase(string s) {
 string toUpperCase(string s) {
 	string ss(s);
 	unsigned int i;
-	for (i = 0;i < s.size();i++) {
+	for (i = 0;i < s.size();++i) {
 	    ss[i] = toupper(s[i]);
 	}
 	return ss;
 }
 
 bool isInStringVector(vector <string> v, string s) {
-	for (int i = 0; i < v.size(); i++) {
+	for (vector<string>::size_type i = 0; i < v.size(); ++i) {
 		if (v[i] == s) {
 			return true;
 		}
@@ -1340,7 +1353,7 @@ void processBuiltinPCDATA() {
 // get pointer to atom
 OBAtom *getAtomPtr(string s) {
 // this is crude... I expect vector<> has a map utility
-	for (int j = 0; j < atomIdVector.size(); j++) {
+	for (string::size_type j = 0; j < atomIdVector.size(); ++j) {
 		if (s == atomIdVector[j].first) {
 			return atomIdVector[j].second;
 		}
@@ -1350,7 +1363,7 @@ OBAtom *getAtomPtr(string s) {
 
 // process atomRefs2="a1 a2", etc.
 // add results to vector
-void getAtomRefs(int size, vector <OBAtom*> &v, string atomRefString) {
+void getAtomRefs(vector<string>::size_type size, vector <OBAtom*> &v, string atomRefString) {
 	vector <string> sv;
 	atomRefString += " ";
 	tokenize(sv, atomRefString, " \n");
@@ -1358,7 +1371,7 @@ void getAtomRefs(int size, vector <OBAtom*> &v, string atomRefString) {
 		cerr << "unexpected size for atomRefs attribute: " << sv.size() << "/" << size << endl;
 		return;
 	}
-	for (int i = 0; i < size; i++) {
+	for (vector<string>::size_type i = 0; i < size; ++i) {
 		OBAtom* atPtr = getAtomPtr(sv[i]);
 		if (atPtr == 0) {
 			cerr << "cannot find atom: " << sv[i] << endl;
@@ -1378,10 +1391,11 @@ bool startCML(vector <pair<string,string> > &atts) {
 		printVector(badAtts, cerr);
 		cerr << endl;
 	}
-
+	return true; // [ejk] assumed
 }
 
 bool endCML() {
+	return true; // [ejk] assumed
 }
 // --------------------<angle>/<angleArray>----------------
 
@@ -1395,7 +1409,7 @@ bool startAngle(vector <pair<string,string> > &atts) {
 	angleUnits = "degrees";
 	atomRefs3Vector.clear();
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector<pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -1412,6 +1426,7 @@ bool startAngle(vector <pair<string,string> > &atts) {
 			cout << "IGNORED angle attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed success
 }
 
 bool endAngle() {
@@ -1419,11 +1434,12 @@ bool endAngle() {
 	if (atomRefs3Vector.size() != 3) {
 		cerr << "must have defined 3 atoms for angle" << endl;
 	}
-	for (int i = 0; i < 3; i++) {
+	for (unsigned int i = 0; i < 3; ++i) {
 		angle.first.push_back(atomRefs3Vector[i]);
 	}
 	angle.second = atof((char*)pcdata.c_str());
 	angleVector.push_back(angle);
+	return true; // [ejk] assumed
 }
 
 // not yet finished
@@ -1432,6 +1448,7 @@ bool WriteAngle(ostream &ofs, pair <vector<OBAtom*>, double> angle) {
 	ofs << " atomRefs3=\"a" << angle.first[0]->GetIdx() << " a" << angle.first[1]->GetIdx() << " a" << angle.first[2]->GetIdx() << "\">";
 	ofs << angle.second;
 	ofs << "</angle>" << endl;
+	return true; // [ejk] assumed
 }
 
 // --------------------<atom>/<atomArray>----------------
@@ -1473,7 +1490,7 @@ bool startAtom(vector <pair<string,string> > &atts) {
 		setCMLType("CML2");
 	}
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (atts[i].first == "elementType") {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "formalCharge") {
@@ -1486,6 +1503,7 @@ bool startAtom(vector <pair<string,string> > &atts) {
 			cout << "IGNORED atom attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool processAtomArrayChild() {
@@ -1503,10 +1521,10 @@ bool processAtomArrayChild() {
 			cerr << "no atoms in array: " << pcdata << endl;
 		}
 	}
-	if (natoms != strings.size()) {
+	if (static_cast<vector<string>::size_type>(natoms) != strings.size()) {
 		cerr << "inconsistent atoms in arrays: " << pcdata << endl;
 	}
-	for (int i = 0; i < natoms; i++) {
+	for (int i = 0; i < natoms; ++i) {
 		if (builtin == "elementType") {
 			atomicNumVector.push_back(etab.GetAtomicNum((char*)strings[i].c_str()));
 		} else if (builtin == "atomId") {
@@ -1525,6 +1543,7 @@ bool processAtomArrayChild() {
 			z3Vector.push_back(atof((char*)strings[i].c_str()));
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 // adds builtin attributes for atom
@@ -1626,6 +1645,7 @@ bool endAtom() {
 	at.first = atomId;
 	at.second = atPtr;
 	atomIdVector.push_back(at);
+	return true; // [ejk] assumed
 }
 
 bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
@@ -1692,9 +1712,10 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 			}
 		}
 	}
+	return true; // [ejk] assumed OK
 }
 
-void processStringTokens(vector <string> &v, int n, string att) {
+void processStringTokens(vector <string> &v, vector<string>::size_type n, string att) {
 	if (att == "") return;
 	vector <string> sv;
 	att += " ";
@@ -1703,10 +1724,10 @@ void processStringTokens(vector <string> &v, int n, string att) {
 		cerr << "inconsistent array attribute sizes: " << sv.size() << "/" << n << endl;
 		return;
 	}
-	for (int i = 0; i < n; i++) v[i] = sv[i];
+	for (vector<string>::size_type i = 0; i < n; ++i) v[i] = sv[i];
 }
 
-void processIntTokens(vector <int> &v, int n, string att) {
+void processIntTokens(vector <int> &v, vector<int>::size_type n, string att) {
 	if (att == "") return;
 	vector <string> sv;
 	att += " ";
@@ -1715,10 +1736,10 @@ void processIntTokens(vector <int> &v, int n, string att) {
 		cerr << "inconsistent array attribute sizes: " << sv.size() << "/" << n << endl;
 		return;
 	}
-	for (int i = 0; i < n; i++) v[i] = atoi((char*)sv[i].c_str());
+	for (vector<int>::size_type i = 0; i < n; ++i) v[i] = atoi((char*)sv[i].c_str());
 }
 
-void processFloatTokens(vector <double> &v, int n, string att) {
+void processFloatTokens(vector <double> &v, vector<double>::size_type n, string att) {
 	if (att == "") return;
 	vector <string> sv;
 	att += " ";
@@ -1727,7 +1748,7 @@ void processFloatTokens(vector <double> &v, int n, string att) {
 		cerr << "inconsistent array attribute sizes: " << sv.size() << "/" << n << endl;
 		return;
 	}
-	for (int i = 0; i < n; i++) v[i] = atof((char*)sv[i].c_str());
+	for (vector<double>::size_type i = 0; i < n; ++i) v[i] = atof((char*)sv[i].c_str());
 }
 
 bool startAtomArray(vector <pair<string,string> > &atts) {
@@ -1747,12 +1768,13 @@ bool startAtomArray(vector <pair<string,string> > &atts) {
 	processFloatTokens(x3Vector, natoms, getAttribute(atts, "x3"));
 	processFloatTokens(y3Vector, natoms, getAttribute(atts, "y3"));
 	processFloatTokens(z3Vector, natoms, getAttribute(atts, "z3"));
+	return true; // [ejk] assumed
 }
 
 bool endAtomArray() {
 	pair<string, OBAtom*> at;
 	if (inputCML2) {
-		for (int i = 0; i < natoms; i++) {
+		for (int i = 0; i < natoms; ++i) {
 			OBAtom atom;
 			atom.SetAtomicNum(atomicNumVector[i]);
 			if (elementTypeVector.size() > 0) {
@@ -1800,10 +1822,12 @@ bool WriteAtomArray(ostream &ofs) {
 			}
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool startAtomParity(vector <pair<string,string> > &atts) {
 	atomRefs4 = getAttribute(atts, "atomRefs4");
+	return true; // [ejk] assumed
 }
 
 bool endAtomParity(vector <pair<string,string> > &atts) {
@@ -1814,14 +1838,16 @@ bool endAtomParity(vector <pair<string,string> > &atts) {
 		cerr << "atomRefs4 must referemce 4 atoms" << endl;
 		return false;
 	}
-	for (int i = 0; i < 4; i++) ap.first.push_back(atomRef[i]);
+	for (int i = 0; i < 4; ++i) ap.first.push_back(atomRef[i]);
 	setCMLType("CML2");
 	ap.second = atof((char*)pcdata.c_str());
 	atomParityVector.push_back(ap);
+	return true; // [ejk] assumed
 }
 
 bool WriteAtomParity(ostream &ofs) {
 	cout << "WriteAtomParity NYI" << endl;
+	return true; // [ejk] assumed
 }
 
 // --------------------<bond><bondArray>----------------
@@ -1850,6 +1876,7 @@ bool startBond(vector <pair<string,string> > &atts) {
 	}
 	bondBeginAtom = atomRefs[0];
 	bondEndAtom = atomRefs[1];
+	return true; // [ejk] assumed
 }
 
 // adds builtin attributes for bond
@@ -1920,7 +1947,7 @@ bool processBondArrayChild() {
 		cerr << "inconsistent bonds in arrays: " << pcdata << endl;
 	}
 	bool atomRef1 = (atomRef1Vector.size() == 0);
-	for (int i = 0; i < nbonds; i++) {
+	for (unsigned int i = 0; i < nbonds; ++i) {
 		if (builtin == "atomRef") {
 			if (atomRef1) {
 				atomRef1Vector.push_back(strings[i]);
@@ -1933,6 +1960,7 @@ bool processBondArrayChild() {
 			stereoVector.push_back(strings[i]);
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endBond() {
@@ -2010,6 +2038,7 @@ bool WriteBond(ostream &ofs, OBBond* bond) {
 		appendToArray(atomRef2Array, atomRef2);
 		appendToArray(orderArray, boChar);
 	}
+	return true; // [ejk] assumed
 }
 
 bool startBondArray(vector <pair<string,string> > &atts) {
@@ -2019,11 +2048,12 @@ bool startBondArray(vector <pair<string,string> > &atts) {
 	setCMLType("CML2");
 	atomRef1 += " ";
 	tokenize(sv, atomRef1, " \n");
-	int nbonds = sv.size();
-	processStringTokens(atomRef1Vector, nbonds, atomRef1);
-	processStringTokens(atomRef2Vector, nbonds, getAttribute(atts, "atomRef2"));
-	processStringTokens(orderVector, nbonds, getAttribute(atts, "order"));
-	processStringTokens(stereoVector, nbonds, getAttribute(atts, "stereo"));
+	int mynbonds = sv.size();	// explicitly not the global nbonds
+	processStringTokens(atomRef1Vector, mynbonds, atomRef1);
+	processStringTokens(atomRef2Vector, mynbonds, getAttribute(atts, "atomRef2"));
+	processStringTokens(orderVector, mynbonds, getAttribute(atts, "order"));
+	processStringTokens(stereoVector, mynbonds, getAttribute(atts, "stereo"));
+	return true; // [ejk] assumed
 }
 
 bool endBondArray() {
@@ -2032,7 +2062,7 @@ bool endBondArray() {
 			atomRef2Vector.size() == 0) {
 			cerr << "atomRef arrays must be given for bonds" << endl;
 		}
-		for (int i = 0; i < nbonds; i++) {
+		for (unsigned int i = 0; i < nbonds; ++i) {
 			OBBond bond;
 			bondPtr = &bond;
 			OBAtom* beginAtomPtr = getAtomPtr(atomRef1Vector[i]);
@@ -2082,6 +2112,7 @@ bool WriteBondArray(ostream &ofs) {
 		ofs << "<stringArray builtin=\"order\">" << orderArray << "</stringArray>" << endl;
 	}
 	ofs << "  </bondArray>" << endl;
+	return true; // [ejk] assumed
 }
 
 // numeric value (babel) from CML order; unknown returns -1
@@ -2110,7 +2141,7 @@ bool startCrystal(vector <pair<string,string> > &atts) {
 		cerr << endl;
 	}
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2121,6 +2152,7 @@ bool startCrystal(vector <pair<string,string> > &atts) {
 			cout << "IGNORED crystal attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 // adds builtin attributes for cryst
@@ -2160,6 +2192,7 @@ bool processCrystalBuiltin() {
 }
 
 bool endCrystal() {
+	return true; // [ejk] assumed
 }
 
 // not yet finished
@@ -2167,6 +2200,7 @@ bool WriteCrystal(ostream &ofs) {
 	ofs << "<crystal";
 	ofs << ">";
 	ofs << "</crystal>" << endl;
+	return true; // [ejk] assumed
 }
 
 // --------------------<electron>----------------
@@ -2179,7 +2213,7 @@ bool startElectron(vector <pair<string,string> > &atts) {
 		cerr << endl;
 	}
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2188,11 +2222,13 @@ bool startElectron(vector <pair<string,string> > &atts) {
 			cout << "IGNORED electron attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endElectron() {
 //	pair <vector<OBAtom*>, double> electron;
 //	electronVector.push_back(electron);
+	return true; // [ejk] assumed
 }
 
 // not yet finished
@@ -2200,6 +2236,7 @@ bool WriteElectron(ostream &ofs) {
 	ofs << "<electron";
 	ofs << ">";
 	ofs << "</electron>" << endl;
+	return true; // [ejk] assumed
 }
 
 // --------------------<feature>----------------
@@ -2212,7 +2249,7 @@ bool startFeature(vector <pair<string,string> > &atts) {
 		cerr << endl;
 	}
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector<pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2221,15 +2258,18 @@ bool startFeature(vector <pair<string,string> > &atts) {
 			cout << "IGNORED feature attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endFeature() {
+	return true; // [ejk] assumed
 }
 
 bool WriteFeature(ostream &ofs) {
 	ofs << "<feature";
 	ofs << ">";
 	ofs << "</feature>" << endl;
+	return true; // [ejk] assumed
 }
 
 // --------------------<formula>----------------
@@ -2242,7 +2282,7 @@ bool startFormula(vector <pair<string,string> > &atts) {
 		cerr << endl;
 	}
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2251,15 +2291,18 @@ bool startFormula(vector <pair<string,string> > &atts) {
 			cout << "IGNORED formula attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endFormula() {
+	return true; // [ejk] assumed
 }
 
 bool WriteFormula(ostream &ofs) {
 	ofs << "<formula";
 	ofs << ">";
 	ofs << "</formula>" << endl;
+	return true; // [ejk] assumed
 }
 
 // --------------------<length>----------------
@@ -2274,7 +2317,7 @@ bool startLength(vector <pair<string,string> > &atts) {
 	lengthUnits = "angstrom";
 	atomRefs2Vector.clear();
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2287,6 +2330,7 @@ bool startLength(vector <pair<string,string> > &atts) {
 			cout << "IGNORED length attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endLength() {
@@ -2294,11 +2338,12 @@ bool endLength() {
 	if (atomRefs2Vector.size() != 2) {
 		cerr << "must have defined 2 atoms for length" << endl;
 	}
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 2; ++i) {
 		length.first.push_back(atomRefs2Vector[i]);
 	}
 	length.second = atof((char*)pcdata.c_str());
 	lengthVector.push_back(length);
+	return true; // [ejk] assumed
 }
 
 // not yet finished
@@ -2307,6 +2352,7 @@ bool WriteLength(ostream &ofs, pair <vector<OBAtom*>, double> length) {
 	ofs << " atomRefs2=\"a" << length.first[0]->GetIdx() << " a" << length.first[1]->GetIdx() << "\">";
 	ofs << length.second;
 	ofs << "</length>" << endl;
+	return true; // [ejk] assumed
 }
 
 // ------------------ <molecule> ----------------
@@ -2322,6 +2368,7 @@ bool startMolecule(vector <pair<string,string> > &atts) {
 	molPtr->BeginModify();
 	molPtr->ReserveAtoms(ATOM_SIZE);
 	molPtr->SetTitle((char*)getAttribute(atts, "title").c_str());
+	return true; // [ejk] assumed
 }
 
 bool debugMolecule(ostream &ofs) {
@@ -2345,30 +2392,31 @@ bool debugMolecule(ostream &ofs) {
 	}
 	if (lengthVector.size() > 0) {
 		ofs << "Lengths: " << endl;
-		for (int i = 0; i < lengthVector.size(); i++) {
+		for (unsigned int i = 0; i < lengthVector.size(); ++i) {
 			pair <vector<OBAtom*>, double> length = lengthVector[i];
 			WriteLength(ofs, length);
 		}
 	}
 	if (angleVector.size() > 0) {
 		ofs << "Angles: " << endl;
-		for (int i = 0; i < angleVector.size(); i++) {
+		for (unsigned int i = 0; i < angleVector.size(); ++i) {
 			pair <vector<OBAtom*>, double> angle = angleVector[i];
 			WriteAngle(ofs, angle);
 		}
 	}
 	if (torsionVector.size() > 0) {
 		ofs << "Torsions: " << endl;
-		for (int i = 0; i < torsionVector.size(); i++) {
+		for (unsigned int i = 0; i < torsionVector.size(); ++i) {
 			pair <vector<OBAtom*>, double> torsion = torsionVector[i];
 			WriteTorsion(ofs, torsion);
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 // returns index of length between atoms ( starts at 0; -1 = not found)
 int getLengthIndex(OBAtom* a0, OBAtom* a1) {
-	for (int i = 0; i < lengthVector.size(); i++) {
+	for (unsigned int i = 0; i < lengthVector.size(); ++i) {
 		if (a0 == lengthVector[i].first[0] &&
 			a1 == lengthVector[i].first[1]) return i;
 		if (a0 == lengthVector[i].first[1] &&
@@ -2379,7 +2427,7 @@ int getLengthIndex(OBAtom* a0, OBAtom* a1) {
 
 // returns index of angle between atoms ( starts at 0; -1 = not found)
 int getAngleIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2) {
-	for (int i = 0; i < angleVector.size(); i++) {
+	for (unsigned int i = 0; i < angleVector.size(); ++i) {
 		if (a0 == angleVector[i].first[0] &&
 			a1 == angleVector[i].first[1] &&
 			a2 == angleVector[i].first[2]) return i;
@@ -2392,7 +2440,7 @@ int getAngleIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2) {
 
 // returns index of torsion between atoms ( starts at 1; 0 = not found; negative = "wrong way round")
 int getTorsionIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2, OBAtom* a3) {
-	for (int i = 0; i < torsionVector.size(); i++) {
+	for (unsigned int i = 0; i < torsionVector.size(); ++i) {
 		if (a0 == torsionVector[i].first[0] &&
 			a1 == torsionVector[i].first[1] &&
 			a2 == torsionVector[i].first[2] &&
@@ -2410,11 +2458,11 @@ int getTorsionIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2, OBAtom* a3) {
 // returns zero. If torsion is "wrong way round", returns
 // negative serial
 int getFirstTorsionIndexForAtom(OBAtom* a0) {
-	int k = a0->GetIdx();
-	for (int i = 0; i < torsionVector.size(); i++) {
+	unsigned int k = a0->GetIdx();
+	for (unsigned int i = 0; i < torsionVector.size(); ++i) {
 		if (a0 == torsionVector[i].first[0]) {
 			bool ok = true;
-			for (int j = 1; j <= 3; j++) {
+			for (unsigned int j = 1; j <= 3; ++j) {
 				OBAtom* atPtr = torsionVector[i].first[j];
 				if (atPtr->GetIdx() > k) {
 					ok = true;
@@ -2425,7 +2473,7 @@ int getFirstTorsionIndexForAtom(OBAtom* a0) {
 		}
  		if (a0 == torsionVector[i].first[3]) {
 			bool ok = true;
-			for (int j = 0; j < 3; j++) {
+			for (unsigned int j = 0; j < 3; ++j) {
 				OBAtom* atPtr = torsionVector[i].first[j];
 				if (atPtr->GetIdx() > k) {
 					ok = true;
@@ -2446,11 +2494,11 @@ void generateInternals() {
     OBInternalCoord *coord;
 
 	if (molPtr->HasNonZeroCoords()) return;
-	int nTors = torsionVector.size();
+	unsigned int nTors = torsionVector.size();
 	if (nTors == 0) return;
-	int nAng = angleVector.size();
+	unsigned int nAng = angleVector.size();
 	if (nAng == 0) return;
-	int nLen = lengthVector.size();
+	unsigned int nLen = lengthVector.size();
 	if (nLen == 0) return;
 	if (nLen + 1 < molPtr->NumAtoms()) {
 		if (nLen > 0) cout << "Not enough lengths to generate all internals" << endl;
@@ -2496,7 +2544,8 @@ void generateInternals() {
 	coord->_ang = angleVector[idx].second;
 	internalVector.push_back(coord);
 
-	for (int i = 3; i < molPtr->NumAtoms(); i++) {
+	// non-infinite loop: already checked that 3 < molPtr->NumAtoms()
+	for (unsigned int i = 3; i < molPtr->NumAtoms(); ++i) {
 		OBAtom* at0 = molPtr->GetAtom(i+1);
 		idx = getFirstTorsionIndexForAtom(at0);
 		if (idx == 0) {
@@ -2537,7 +2586,7 @@ void generateInternals() {
 		coord->_tor = torsionVector[iTor].second;
 		internalVector.push_back(coord);
 	}
-	for (int i = 0; i < internalVector.size(); i++) {
+	for (internalVector_t::size_type i = 0; i < internalVector.size(); ++i) {
 		OBInternalCoord* coord = internalVector[i];
 		int aa = (coord->_a != 0) ? coord->_a->GetIdx() : 0;
 		int bb = (coord->_b != 0) ? coord->_b->GetIdx() : 0;
@@ -2564,6 +2613,7 @@ bool endMolecule() {
 	if (outputDebug) {
 		debug(cout);
 	}
+	return true; // [ejk] assumed
 }
 
 bool WriteMolecule(ostream &ofs) {
@@ -2586,7 +2636,7 @@ bool WriteMolecule(ostream &ofs) {
 
 	vector<OBGenericData*>::iterator k;
 	vector<OBGenericData*> vdata = molPtr->GetData();
-	for (k = vdata.begin();k != vdata.end();k++) {
+	for (k = vdata.begin();k != vdata.end();++k) {
 		if ((*k)->GetDataType() == obPairData) {
 			ofs << "<string title=\"" << (*k)->GetAttribute() << "\">"
 				<< ((OBPairData*)(*k))->GetValue() << "</string>" << endl;
@@ -2608,7 +2658,7 @@ bool startReaction(vector <pair<string,string> > &atts) {
 		cerr << endl;
 	}
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2617,15 +2667,18 @@ bool startReaction(vector <pair<string,string> > &atts) {
 			cout << "IGNORED reaction attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endReaction() {
+	return true; // [ejk] assumed
 }
 
 bool WriteReaction(ostream &ofs) {
 	ofs << "<reaction";
 	ofs << ">";
 	ofs << "</reaction>" << endl;
+	return true; // [ejk] assumed
 }
 
 // --------------------<scalar>----------------
@@ -2638,7 +2691,7 @@ bool startScalar(vector <pair<string,string> > &atts) {
 		cerr << endl;
 	}
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2651,6 +2704,7 @@ bool startScalar(vector <pair<string,string> > &atts) {
 			cout << "IGNORED scalar attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endScalar() {
@@ -2665,11 +2719,13 @@ bool endScalar() {
 		if (title == "beta") cellParam[4] = f;
 		if (title == "gamma") cellParam[5] = f;
 	}
+	return true; // [ejk] assumed
 }
 
 // not yet finished
 bool WriteScalar(ostream &ofs) {
 	ofs << "<scalar/>" << endl;
+	return true; // [ejk] assumed
 }
 
 // --------------------<sequence>----------------
@@ -2682,7 +2738,7 @@ bool startSequence(vector <pair<string,string> > &atts) {
 		cerr << endl;
 	}
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2691,9 +2747,11 @@ bool startSequence(vector <pair<string,string> > &atts) {
 			cout << "IGNORED sequence attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endSequence() {
+	return true; // [ejk] assumed
 }
 
 // not yet finished
@@ -2701,12 +2759,14 @@ bool WriteSequence(ostream &ofs) {
 	ofs << "<sequence";
 	ofs << ">";
 	ofs << "</sequence>" << endl;
+	return true; // [ejk] assumed
 }
 
 // -------------------------<stereo>-------------------
 
 bool startStereo(vector <pair<string,string> > &atts) {
 	atomRefs4 = getAttribute(atts, "atomRefs4");
+	return true; // [ejk] assumed
 }
 
 bool endStereo(vector <pair<string,string> > &atts) {
@@ -2717,14 +2777,16 @@ bool endStereo(vector <pair<string,string> > &atts) {
 		cerr << "atomRefs4 must referemce 4 atoms" << endl;
 		return false;
 	}
-	for (int i = 0; i < 4; i++) st.first.push_back(atomRef[i]);
+	for (unsigned int i = 0; i < 4; ++i) st.first.push_back(atomRef[i]);
 	setCMLType("CML2");
 	st.second = pcdata;
 	stereoSVector.push_back(st);
+	return true; // [ejk] assumed
 }
 
 bool WriteStereo(ostream &ofs) {
 	cout << "WriteStereo NYI" << endl;
+	return true; // [ejk] assumed
 }
 
 
@@ -2740,7 +2802,7 @@ bool startSymmetry(vector <pair<string,string> > &atts) {
 	spacegroup = getAttribute(atts, "spacegroup");
 	pointgroup = getAttribute(atts, "pointgroup");
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2749,9 +2811,11 @@ bool startSymmetry(vector <pair<string,string> > &atts) {
 			cout << "IGNORED symmetry attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endSymmetry(vector <pair<string,string> > &atts) {
+	return true; // [ejk] assumed
 }
 
 bool WriteSymmetry(ostream &ofs) {
@@ -2760,6 +2824,7 @@ bool WriteSymmetry(ostream &ofs) {
 	ofs << " pointgroup=\"" << pointgroup << "\"";
 	ofs << ">";
 	ofs << "</symmetry>" << endl;
+	return true; // [ejk] assumed
 }
 
 
@@ -2772,6 +2837,7 @@ bool addString() {
 		dp->SetValue(pcdata);
 		molPtr->SetData(dp);
 	}
+	return true; // [ejk] assumed
 }
 
 // --------------------<torsion>/<torsionArray>----------------
@@ -2786,7 +2852,7 @@ bool startTorsion(vector <pair<string,string> > &atts) {
 	torsionUnits = "degrees";
 	atomRefs4Vector.clear();
 // check other attributes
-	for (int i = 0; i < atts.size(); i++) {
+	for (vector <pair<string,string> >::size_type i = 0; i < atts.size(); ++i) {
 		if (false) {
 	    } else if (atts[i].first == "id") {
 	    } else if (atts[i].first == "title") {
@@ -2803,6 +2869,7 @@ bool startTorsion(vector <pair<string,string> > &atts) {
 			cout << "IGNORED torsion attribute: " << atts[i].first << endl;
 		}
 	}
+	return true; // [ejk] assumed
 }
 
 bool endTorsion() {
@@ -2810,11 +2877,12 @@ bool endTorsion() {
 	if (atomRefs4Vector.size() != 4) {
 		cerr << "must have defined 4 atoms for torsion" << endl;
 	}
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; ++i) {
 		torsion.first.push_back(atomRefs4Vector[i]);
 	}
 	torsion.second = atof((char*)pcdata.c_str());
 	torsionVector.push_back(torsion);
+	return true; // [ejk] assumed
 }
 
 // not yet finished
@@ -2823,6 +2891,7 @@ bool WriteTorsion(ostream &ofs, pair <vector<OBAtom*>, double> torsion) {
 	ofs << " atomRefs4=\"a" << torsion.first[0]->GetIdx() << " a" << torsion.first[1]->GetIdx() << " a" << torsion.first[2]->GetIdx() << " a" << torsion.first[3]->GetIdx() << "\">";
 	ofs << torsion.second;
 	ofs << "</torsion>" << endl;
+	return true; // [ejk] assumed
 }
 
 
@@ -2874,6 +2943,7 @@ bool WriteCML(ostream &ofs,OBMol &mol,const char *dim,const char* xmlOptions)
 	molPtr = &mol;
 	dimension = dim;
 	WriteMolecule(ofs);
+	return true; // [ejk] assumed
 }
 
 
@@ -2969,7 +3039,7 @@ void debug(ostream &ofs) {
     	ofs << "<th>Arom</th>" << endl;
     	ofs << "</tr>" << endl;
 
-	for (int i = 0; i < molPtr->NumAtoms(); i++) {
+	for (unsigned int i = 0; i < molPtr->NumAtoms(); ++i) {
 		OBAtom* atPtr = molPtr->GetAtom(i+1);
     	ofs << "<tr>" ;
     	ofs << "<td>" << i+1 << "</td>" ;
@@ -3060,7 +3130,7 @@ void debug(ostream &ofs) {
 	ofs << "<th>Hash</th>" << endl;
 	ofs << "</tr>" << endl;
 
-	for (int i = 0; i < molPtr->NumBonds(); i++) {
+	for (unsigned int i = 0; i < molPtr->NumBonds(); ++i) {
 		OBBond* boPtr = molPtr->GetBond(i);
 		ofs << "<tr>" << endl;
 		ofs << "<td>" << i+1 << "</td>" << endl;

@@ -327,11 +327,11 @@ static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
 
   int        rnum = atoi(resnum.c_str());
   OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
-  if (res == NULL || res->GetName() != resname || res->GetNum() != rnum)
+  if (res == NULL || res->GetName() != resname || static_cast<int>(res->GetNum()) != rnum)
   {
       vector<OBResidue*>::iterator ri;
       for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
-          if (res->GetName() == resname && res->GetNum() == rnum)
+          if (res->GetName() == resname && static_cast<int>(res->GetNum()) == rnum)
               break;
 
       if (res == NULL)
@@ -452,7 +452,7 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
   OBAtom *firstAtom = 0L;
   vector<OBNodeBase*>::iterator i;
   for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) 
-    if (a1->GetResidue()->GetSerialNum(a1) == startAtomSerialNumber) {
+    if (static_cast<long int>(a1->GetResidue()->GetSerialNum(a1)) == startAtomSerialNumber) {
       firstAtom = a1;
       break;
     }
@@ -495,7 +495,7 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
     // Find atom that is connected to, write an error message 
     OBAtom *connectedAtom = 0L;
     for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) 
-      if (a1->GetResidue()->GetSerialNum(a1) == boundedAtomsSerialNumbers[k]) {
+      if (static_cast<long int>(a1->GetResidue()->GetSerialNum(a1)) == boundedAtomsSerialNumbers[k]) {
 	connectedAtom = a1;
 	break;
       }
@@ -558,7 +558,8 @@ bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
       }
 
   vector3 v;
-  int bo,skipres=0;
+  int bo;
+  unsigned int skipres=0;
   string rname = "";
   //assign other residue bonds
   for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))

@@ -429,14 +429,14 @@ static bool OBComparePairFirst(const pair<OBAtom*,unsigned int> &a,const pair<OB
 	return(a.first->GetIdx() < b.first->GetIdx());
 }
 
-static void ClassCount(vector<pair<OBAtom*,unsigned int> > &vp,int &count)
+static void ClassCount(vector<pair<OBAtom*,unsigned int> > &vp,unsigned int &count)
 //counts the number of unique symmetry classes in a list
 {
 	count = 0;
-	unsigned int id;
 	vector<pair<OBAtom*,unsigned int> >::iterator k;
 	sort(vp.begin(),vp.end(),OBComparePairSecond);
-
+#if 0 // original version
+	unsigned int id=0; // [ejk] appease gcc's bogus "might be undef'd" warning
 	for (k = vp.begin();k != vp.end();k++)
 	{
 		if (k == vp.begin()) 
@@ -453,6 +453,27 @@ static void ClassCount(vector<pair<OBAtom*,unsigned int> > &vp,int &count)
 			else k->second = count;
 	}
 	count++;
+#else // get rid of warning, moves test out of loop, returns 0 for empty input
+	k = vp.begin();
+	if (k != vp.end()) {
+		unsigned int id = k->second;
+		k->second = 0;
+		++k;
+		for (;k != vp.end(); ++k)
+		{
+			if (k->second != id)
+			{
+				id = k->second;
+				k->second = ++count;
+			}
+			else k->second = count;
+		}
+		++count;
+	} else {
+	  // [ejk] thinks count=0 might be OK for an empty list, but orig code did
+	  //++count;
+	}
+#endif
 }
 
 static void	CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,vector<pair<OBAtom*,unsigned int> > &vp2)
@@ -496,7 +517,7 @@ void OBMol::GetGIDVector(vector<unsigned int> &vgid)
 	for (i=0,atom = BeginAtom(j);atom;atom = NextAtom(j),i++)
 		vp1.push_back(pair<OBAtom*,unsigned int> (atom,vgi[i]));
 
-	int nclass1,nclass2; //number of classes
+	unsigned int nclass1,nclass2; //number of classes
 	ClassCount(vp1,nclass1);
 	
 	if (nclass1 < NumAtoms())
@@ -973,7 +994,8 @@ OBAtom *OBMol::NewAtom()
 		  {
 			  vb = (OBVirtualBond*)*i;
 			  if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms) continue;
-			  if (obatom->GetIdx() == vb->GetBgn() || obatom->GetIdx() == vb->GetEnd())
+			  if (obatom->GetIdx() == static_cast<unsigned int>(vb->GetBgn())
+			   || obatom->GetIdx() == static_cast<unsigned int>(vb->GetEnd()))
 			  {
 				  AddBond(vb->GetBgn(),vb->GetEnd(),vb->GetOrder());
 				  verase.push_back(*i);
@@ -1032,7 +1054,8 @@ bool OBMol::AddAtom(OBAtom &atom)
 		  {
 			  vb = (OBVirtualBond*)*i;
 			  if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms) continue;
-			  if (obatom->GetIdx() == vb->GetBgn() || obatom->GetIdx() == vb->GetEnd())
+			  if (obatom->GetIdx() == static_cast<unsigned int>(vb->GetBgn()) 
+			   || obatom->GetIdx() == static_cast<unsigned int>(vb->GetEnd()))
 			  {
 				  AddBond(vb->GetBgn(),vb->GetEnd(),vb->GetOrder());
 				  verase.push_back(*i);
@@ -1081,7 +1104,8 @@ bool OBMol::InsertAtom(OBAtom &atom)
 		  {
 			  vb = (OBVirtualBond*)*i;
 			  if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms) continue;
-			  if (obatom->GetIdx() == vb->GetBgn() || obatom->GetIdx() == vb->GetEnd())
+			  if (obatom->GetIdx() == static_cast<unsigned int>(vb->GetBgn())
+			   || obatom->GetIdx() == static_cast<unsigned int>(vb->GetEnd()))
 			  {
 				  AddBond(vb->GetBgn(),vb->GetEnd(),vb->GetOrder());
 				  verase.push_back(*i);
@@ -1281,7 +1305,7 @@ bool OBMol::DeleteHydrogen(OBAtom *atom)
   DecrementMod();
 
   int idx;
-  if (atom->GetIdx() != (int) NumAtoms())
+  if (atom->GetIdx() != NumAtoms())
     {
       idx = atom->GetCIdx();
       int size = NumAtoms()-atom->GetIdx();
@@ -1968,7 +1992,7 @@ bool OBMol::AddBond(int first,int second,int order,int stereo,int insertpos)
         }
       else
         {
-          if (insertpos >= bgn->GetValence()) bgn->AddBond(bond);
+          if (insertpos >= static_cast<int>(bgn->GetValence())) bgn->AddBond(bond);
           else //need to insert the bond for the connectivity order to be preserved
             {    //otherwise stereochemistry gets screwed up
               vector<OBEdgeBase*>::iterator bi;
@@ -2525,7 +2549,7 @@ void OBMol::ConnectTheDots(void)
   vector<OBEdgeBase*>::iterator l;
   for (atom = BeginAtom(i);atom;atom = NextAtom(i))
     {
-      while (atom->BOSum() > etab.GetMaxBonds(atom->GetAtomicNum()))
+      while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())))
 	{
 	  maxbond = atom->BeginBond(l);
 	  maxlength = maxbond->GetLength();
@@ -2695,7 +2719,7 @@ void OBMol::PerceiveBondOrders()
   {
       atom = sortedAtoms[iter].first;
       if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
-	   && atom->BOSum() < etab.GetMaxBonds(atom->GetAtomicNum()) )
+	   && atom->BOSum() < static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
 	{
 	  // loop through the neighbors looking for a hybrid or terminal atom
 	  // (and pick the one with highest electronegativity first)
@@ -2710,7 +2734,7 @@ void OBMol::PerceiveBondOrders()
 	    {
 	      currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
 	      if ( (b->GetHyb() == 1 || b->GetValence() == 1)
-		   && b->BOSum() < etab.GetMaxBonds(b->GetAtomicNum())
+		   && b->BOSum() < static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
 		   && (currentElNeg > maxElNeg ||
 		       (currentElNeg == maxElNeg
 			&& (atom->GetBond(b))->GetLength() < shortestBond)) )
@@ -2727,7 +2751,7 @@ void OBMol::PerceiveBondOrders()
 	    (atom->GetBond(c))->SetBO(3);
 	}
       else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
-		&& atom->BOSum() < etab.GetMaxBonds(atom->GetAtomicNum()) )
+		&& atom->BOSum() < static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
 	{
 	  // as above
 	  if (atom->HasNonSingleBond())
@@ -2740,7 +2764,7 @@ void OBMol::PerceiveBondOrders()
 	    {
 	      currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
 	      if ( (b->GetHyb() == 2 || b->GetValence() == 1)
-		   && b->BOSum() < etab.GetMaxBonds(b->GetAtomicNum())
+		   && b->BOSum() < static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
 		   && (currentElNeg > maxElNeg ||
                       (currentElNeg == maxElNeg
                        && (atom->GetBond(b))->GetLength() < shortestBond)) )

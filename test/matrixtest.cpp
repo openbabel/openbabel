@@ -85,6 +85,7 @@ bool testEigenvalues()
     cout << "Matrix eigenvalue test failed, eigenvalues not not ordered." << endl;
     return false;
   }
+  return true;
 }
 
 
@@ -130,6 +131,7 @@ bool testEigenvectors()
       return false;
     }
   }
+  return true;
 }
 
 

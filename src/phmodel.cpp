@@ -72,7 +72,7 @@ void OBPhModel::ParseLine(const char *buffer)
       tokenize(vs,buffer);
       if (vs.empty() || vs.size() < 2) return;
       sp = new OBSmartsPattern;
-      if (!sp->Init(vs[1]) || ((signed)vs.size()-2) != sp->NumAtoms())
+      if (!sp->Init(vs[1]) || (vs.size()-2) != sp->NumAtoms())
 	{
 	  delete sp; sp = NULL;
 	  return;
@@ -133,7 +133,8 @@ bool OBChemTsfm::Init(string &bgn,string &end)
     if (!_end.Init(end)) return(false);
 
   //find atoms to be deleted
-  int i,j,vb;
+  unsigned int i,j;
+  int vb;
   bool found;
   for (i = 0;i < _bgn.NumAtoms();i++)
     if ((vb = _bgn.GetVectorBinding(i)))
@@ -150,7 +151,7 @@ bool OBChemTsfm::Init(string &bgn,string &end)
   //find elements to be changed
   int ele;
   for (i = 0;i < _bgn.NumAtoms();i++)
-    if ((vb = _bgn.GetVectorBinding(i)))
+    if ((vb = _bgn.GetVectorBinding(i)) != 0)
       {
 	ele = _bgn.GetAtomicNum(i);
 	for (j = 0;j < _end.NumAtoms();j++)

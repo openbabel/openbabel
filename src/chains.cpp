@@ -964,8 +964,8 @@ void OBChainsParser::ConstrainBackbone(OBMol &mol, Template *templ, int tmax)
 		idx = atom->GetIdx() - 1;
 		bitmasks[idx] = 0;
 		for ( i = 0 ; i < tmax ; i++ )
-			if ( (templ[i].elem  == atom->GetAtomicNum()) &&
-				 (templ[i].count == atom->GetValence()))
+			if ( (static_cast<unsigned int>(templ[i].elem)  == atom->GetAtomicNum()) &&
+				 (static_cast<unsigned int>(templ[i].count) == atom->GetValence()))
 				bitmasks[idx] |= templ[i].flag;
 	}
 
@@ -1018,7 +1018,7 @@ void OBChainsParser::ConstrainBackbone(OBMol &mol, Template *templ, int tmax)
 bool OBChainsParser::MatchConstraint(OBAtom *atom, int mask)
 {
     if( mask < 0 )
-		return(atom->GetAtomicNum() == -mask);
+		return(atom->GetAtomicNum() == static_cast<unsigned int>(-mask));
     else 
 		return(((bitmasks[atom->GetIdx()-1]&mask) == 0) ? false : true);
 }
@@ -1242,7 +1242,7 @@ int OBChainsParser::IdentifyResidue(void *tree, OBMol &mol, int seed, int resno)
                              break;
 
             case(BC_ELEM):   curr = Stack[StackPtr-1].atom;
-                             if( mol.GetAtom(curr+1)->GetAtomicNum() == ptr->elem.value )
+                             if( mol.GetAtom(curr+1)->GetAtomicNum() == static_cast<unsigned int>(ptr->elem.value) )
                              {   bond = Stack[StackPtr-1].bond;
                                  ResMonoAtom[AtomCount++] = curr;
                                  ResMonoBond[BondCount++] = bond;

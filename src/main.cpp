@@ -40,7 +40,7 @@ int main(int argc,char *argv[])
   bool usePH = false;
   int arg, inFileArg, outFileArg;
   char *ext;
-  char *formatOptions;
+  char *formatOptions=NULL;
   OBFileFormat fileFormat;
 
   // Parse commandline

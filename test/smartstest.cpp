@@ -14,8 +14,8 @@ GNU General Public License for more details.
 #include "mol.h"
 
 namespace OpenBabel {
-  bool SafeOpen(ifstream &fs, char *filename);
-  bool SafeOpen(ofstream &fs, char *filename);
+  bool SafeOpen(std::ifstream &fs, char *filename);
+  bool SafeOpen(std::ofstream &fs, char *filename);
 }
 
 using namespace std;
@@ -23,7 +23,7 @@ using namespace OpenBabel;
 
 bool TestSmarts()
 {
-  ifstream ifs;
+  std::ifstream ifs;
   if (!SafeOpen(ifs,"smartstest.txt")) return(false);
 
   //read in the SMARTS test patterns
@@ -38,7 +38,7 @@ bool TestSmarts()
     }
   ifs.close();
   
-  ifstream rifs;
+  std::ifstream rifs;
   if (!SafeOpen(rifs,"smartsresults.txt")) return(false);
   unsigned int npats;
   rifs.getline(buffer,BUFF_SIZE);
@@ -54,7 +54,7 @@ bool TestSmarts()
       return(false);
     }
 
-  ifstream mifs;
+  std::ifstream mifs;
   if (!SafeOpen(mifs,"attype.00.smi")) return(false);
 
   unsigned int k;
@@ -85,6 +85,7 @@ bool TestSmarts()
 	  if (mlist.size() != vs.size())
 	    {
 	      ThrowError("number of matches different than reference");
+	      cerr << "expected " << vs.size() << " got " << mlist.size() << endl;
 	      ThrowError((char*)mol.GetTitle());
 	      //	      ThrowError((*i)->GetSMARTS());
 	      return(false);
@@ -109,7 +110,7 @@ bool TestSmarts()
 
 void GenerateSmartsReference()
 {
-  ifstream ifs;
+  std::ifstream ifs;
   if (!SafeOpen(ifs,"smartstest.txt")) return;
 
   char buffer[BUFF_SIZE];
@@ -122,11 +123,11 @@ void GenerateSmartsReference()
       else                  delete sp;
     }
 
-  ofstream ofs;
+  std::ofstream ofs;
   if (!SafeOpen(ofs,"smartsresults.txt")) return;
     
   ofs << vsp.size() << " patterns" << endl;
-  ifstream mifs;
+  std::ifstream mifs;
   if (!SafeOpen(mifs,"attype.00.smi")) return;
 
   vector<int> vm;

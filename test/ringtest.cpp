@@ -14,8 +14,8 @@ GNU General Public License for more details.
 #include "mol.h"
 
 namespace OpenBabel {
-  bool SafeOpen(ifstream &fs, char *filename);
-  bool SafeOpen(ofstream &fs, char *filename);
+  bool SafeOpen(std::ifstream &fs, char *filename);
+  bool SafeOpen(std::ofstream &fs, char *filename);
 }
 
 using namespace std;
@@ -23,10 +23,10 @@ using namespace OpenBabel;
 
 bool TestRings(void)
 {
-  ifstream mifs;
+  std::ifstream mifs;
   if (!SafeOpen(mifs,"attype.00.smi")) return(false);
 
-  ifstream rifs;
+  std::ifstream rifs;
   if (!SafeOpen(rifs,"ringresults.txt")) return(false);
 
   unsigned int size;
@@ -125,10 +125,10 @@ bool TestRings(void)
 
 void GenerateRingReference()
 {
-  ifstream ifs;
+  std::ifstream ifs;
   if (!SafeOpen(ifs,"attype.00.smi")) return;
 
-  ofstream ofs;
+  std::ofstream ofs;
   if (!SafeOpen(ofs,"ringresults.txt")) return;
 
   int count;

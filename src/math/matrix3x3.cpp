@@ -380,8 +380,8 @@ void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
 
   // Set v to the identity matrix, set the vector d to contain the
   // diagonal elements of the matrix a
-  for (j = 0; j < n; j++) {
-    for (i = 0; i < n; i++) 
+  for (j = 0; j < static_cast<int>(n); j++) {
+    for (i = 0; i < static_cast<int>(n); i++) 
       v[n*i+j] = 0.0;
     v[n*j+j] = 1.0;
     d[j] = a[n*j+j];
@@ -393,7 +393,7 @@ void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
     // onorm to the maximum norm of the off-diagonal elements
     dnorm = 0.0;
     onorm = 0.0;
-    for (j = 0; j < n; j++) {
+    for (j = 0; j < static_cast<int>(n); j++) {
       dnorm += (float)fabs(d[j]);
       for (i = 0; i < j; i++)
 	onorm += (float)fabs(a[n*i+j]);
@@ -402,7 +402,7 @@ void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
     if((onorm/dnorm) <= 1.0e-12)
       goto Exit_now;
     
-    for (j = 1; j < n; j++) {
+    for (j = 1; j < static_cast<int>(n); j++) {
       for (i = 0; i <= j - 1; i++) {
 
 	b = a[n*i+j];
@@ -433,13 +433,13 @@ void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
 	    a[n*i+k] = atemp;
 	  }
 	  
-	  for (k = j+1; k < n; k++) {
+	  for (k = j+1; k < static_cast<int>(n); k++) {
 	    atemp = c * a[n*i+k] - s * a[n*j+k];
 	    a[n*j+k] = s * a[n*i+k] + c * a[n*j+k];
 	    a[n*i+k] = atemp;
 	  }
 	  
-	  for (k = 0; k < n; k++) {
+	  for (k = 0; k < static_cast<int>(n); k++) {
 	    vtemp = c * v[n*k+i] - s * v[n*k+j];
 	    v[n*k+j] = s * v[n*k+i] + c * v[n*k+j];
 	    v[n*k+i] = vtemp;
@@ -459,10 +459,10 @@ void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
   // smallest eigenvalues come first.
   nrot = l;
   
-  for (j = 0; j < n-1; j++) {
+  for (j = 0; j < static_cast<int>(n)-1; j++) {
     k = j;
     dtemp = d[k];
-    for (i = j+1; i < n; i++)
+    for (i = j+1; i < static_cast<int>(n); i++)
       if(d[i] < dtemp) {
 	k = i;
 	dtemp = d[k];
@@ -471,7 +471,7 @@ void matrix3x3::jacobi(unsigned int n, float *a, float *d, float *v)
     if(k > j) {
       d[k] = d[j];
       d[j] = dtemp;
-      for (i = 0; i < n; i++) {
+      for (i = 0; i < static_cast<int>(n); i++) {
 	dtemp = v[n*i+k];
 	v[n*i+k] = v[n*i+j];
 	v[n*i+j] = dtemp;

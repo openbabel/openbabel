@@ -29,7 +29,7 @@ bool ReadXYZ(istream &ifs,OBMol &mol,const char *title)
 	 << "  Could not read the first line, file error." << endl;
     return(false);
   }
-  int natoms;
+  unsigned int natoms;	// [ejk] assumed natoms could not be -ve
   if (sscanf(buffer,"%d", &natoms) == 0) {
     cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
 	 << "  Problems reading the first line. The first line must contain the number of atoms." << endl

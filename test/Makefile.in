@@ -33,7 +33,7 @@ all:;
 
 test:		check
 check:		$(PROGRAM)
-		(cd $(srcdir); cp $(DATAFILES) $(builddir))
+		-(cd $(srcdir); cp $(DATAFILES) $(builddir))
 		./$(PROGRAM)
 
 clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)

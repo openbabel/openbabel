@@ -63,15 +63,14 @@ bool ReadJaguar(istream &ifs,OBMol &mol, const char *title)
     if (strstr(buffer, "Atomic charges from electrostatic potential") != NULL)
     { 
       mol.SetAutomaticPartialCharge(false);
-      int chgcount=0;
-      int icount;
+      unsigned int chgcount=0;
       while (chgcount<mol.NumAtoms())
       {
         ifs.getline(buffer,BUFF_SIZE);  // blank line
         ifs.getline(buffer,BUFF_SIZE);  // header line
         ifs.getline(buffer,BUFF_SIZE);  // data line
         tokenize(vs,buffer);
-        for (icount=1;icount<vs.size();icount++)
+        for (vector<string>::size_type icount=1;icount<vs.size();++icount)
         {
           chgcount=chgcount+1;
           mol.GetAtom(chgcount)->SetPartialCharge(atof((char*)vs[icount].c_str()));

@@ -83,7 +83,7 @@ char *OBElementTable::GetSymbol(int atomicnum)
 {
   if (!_init) Init();
 
-  if (atomicnum < 0 || atomicnum > _element.size())
+  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
     return("\0");
 
   return(_element[atomicnum]->GetSymbol());
@@ -93,7 +93,7 @@ int OBElementTable::GetMaxBonds(int atomicnum)
 {
   if (!_init) Init();
 
-  if (atomicnum < 0 || atomicnum > _element.size())
+  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
     return(0);
 
   return(_element[atomicnum]->GetMaxBonds());
@@ -103,7 +103,7 @@ float OBElementTable::GetElectroNeg(int atomicnum)
 {
   if (!_init) Init();
 
-  if (atomicnum < 0 || atomicnum > _element.size())
+  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
     return(0.0f);
 
   return(_element[atomicnum]->GetElectroNeg());
@@ -113,7 +113,7 @@ float OBElementTable::GetVdwRad(int atomicnum)
 {
   if (!_init) Init();
 
-  if (atomicnum < 0 || atomicnum > _element.size())
+  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
     return(0.0f);
 
   return(_element[atomicnum]->GetVdwRad());
@@ -123,7 +123,7 @@ float OBElementTable::GetBORad(int atomicnum)
 {
   if (!_init) Init();
 
-  if (atomicnum < 0 || atomicnum > _element.size())
+  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
     return(0.0f);
 
   return(_element[atomicnum]->GetBoRad());
@@ -134,7 +134,7 @@ float OBElementTable::CorrectedBondRad(int atomicnum, int hyb)
   float rad;
   if (!_init) Init();
 
-  if (atomicnum < 0 || atomicnum > _element.size())
+  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
     return(1.0f);
 
   rad = _element[atomicnum]->GetBoRad();
@@ -150,7 +150,7 @@ float OBElementTable::CorrectedVdwRad(int atomicnum, int hyb)
   float rad;
   if (!_init) Init();
 
-  if (atomicnum < 0 || atomicnum > _element.size())
+  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
     return(1.95f);
 
   rad = _element[atomicnum]->GetVdwRad();
@@ -165,7 +165,7 @@ float OBElementTable::GetCovalentRad(int atomicnum)
 {
   if (!_init) Init();
 
-  if (atomicnum < 0 || atomicnum > _element.size())
+  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
     return(0.0f);
 
   return(_element[atomicnum]->GetCovalentRad());
@@ -175,7 +175,7 @@ float OBElementTable::GetMass(int atomicnum)
 {
   if (!_init) Init();
 
-  if (atomicnum < 0 || atomicnum > _element.size())
+  if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
     return(0.0f);
 
   return(_element[atomicnum]->GetMass());

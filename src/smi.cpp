@@ -227,8 +227,8 @@ void OBMol2Smi::FindClosureBonds(OBMol &mol)
       a1 = a2 = NULL;
 
       for (k = _storder.begin();k != _storder.end();k++)
-	if (bond->GetBeginAtomIdx() == *k || 
-	    bond->GetEndAtomIdx() == *k)
+	if (bond->GetBeginAtomIdx() == static_cast<unsigned int>(*k) || 
+	    bond->GetEndAtomIdx() == static_cast<unsigned int>(*k))
 	  if (!a1) a1 = mol.GetAtom(*k);
 	  else if (!a2) 
 	    {
@@ -238,7 +238,7 @@ void OBMol2Smi::FindClosureBonds(OBMol &mol)
 	    }
 
       for (k = _storder.begin();k != _storder.end();k++)
-		if (a1->GetIdx() == *k)
+		if (a1->GetIdx() == static_cast<unsigned int>(*k))
 		{
 			k++;
 			if (k != _storder.end()) _storder.insert(k,a2->GetIdx());

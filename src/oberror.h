@@ -34,7 +34,7 @@ class OBError
 
   std::string message(void) const;
 
-  friend std::ostream& operator<< ( std::ostream &os, const OBError &er ){ os << er.message(); };
+  friend std::ostream& operator<< ( std::ostream &os, const OBError &er ){ return os << er.message(); };
 
   std::string _method;
   std::string _errorMsg;
