@@ -528,6 +528,7 @@ protected:
   std::vector<OBResidue*>       _residue;//!< Residue information (if applicable)
   std::vector<OBGenericData*>   _vdata;	//!< Custom data
   float                         _energy;//!< Molecular heat of formation (if applicable)
+  int				_totalCharge //!< Total charge on the molecule
   float                        *_c;	//!< coordinate array
   std::vector<float*>           _vconf;	//!< vector of conformers
   unsigned short int            _natoms;//!< Number of atoms
@@ -624,6 +625,7 @@ public:
     float        GetMolWt();
     //! Mass given by isotopes (or most abundant isotope as necessary)
     float	 GetExactMass();
+    int		 GetTotalCharge()		      {return(_totalCharge);}
     float       *GetCoordinates()                     {return(_c);}
     std::vector<OBRing*> &GetSSSR();
     bool         IsCompressed()                       {return _compressed;}
@@ -633,6 +635,7 @@ public:
     void   SetTitle(const char *title)     {_title = title;}
     void   SetTitle(std::string &title)    {_title = title;}
     void   SetEnergy(float energy)         {_energy = energy;}
+    void   SetTotalCharge(int charge)      {_totalCharge = charge;}
     void   SetInputType(io_type type)      {_itype = type;}
     void   SetOutputType(io_type type)     {_otype = type;}
     void   SetAromaticPerceived()          {SetFlag(OB_AROMATIC_MOL);}

@@ -2268,6 +2268,7 @@ OBMol::OBMol(io_type itype,io_type otype)
   _mod = 0;
   _access = 0;
   _energy = 0.0f;
+  _totalCharge = 0;
   _itype = itype;
   _otype = otype;
   _vatom.clear();
@@ -2287,6 +2288,7 @@ OBMol::OBMol(const OBMol &mol)
   _natoms = _nbonds = 0;
   _mod = 0;
   _access = 0;
+  _totalCharge = 0;
   _vatom.clear();
   _vbond.clear();
   _vdata.clear();

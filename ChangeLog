@@ -7,6 +7,9 @@
 	along with atom IDs and residue number. Should address feature
 	request PR#697614 submitted by Claudio Cavasotto.
 
+	* src/mol.h, src/mol.cpp: Add API support for a molecular total
+	charge.
+	
 2003-03-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/Makefile.in: Add support for the isotopes.txt -> .h
