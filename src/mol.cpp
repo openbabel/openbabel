@@ -19,7 +19,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "binary.h"
+#include "rotamer.h"
 #include "phmodel.h"
 #include "bondtyper.h"
 #include "math/matrix3x3.h"
@@ -931,9 +931,6 @@ OBMol &OBMol::operator=(const OBMol &source)
     for (bond = src.BeginBond(j);bond;bond = src.NextBond(j))
         AddBond(*bond);
 
-    _itype = src.GetInputType();
-    _otype = src.GetOutputType();
-
     this->_title  = src.GetTitle();
     this->_energy = src.GetEnergy();
 
@@ -1111,19 +1108,7 @@ bool OBMol::Clear()
 
     return(true);
 }
-/*NF
-void OBMol::BeginAccess(void)
-{
-  if (_access == 0) UnCompress();
-  _access++;
-}
- 
-void OBMol::EndAccess(void)
-{
-  _access--;
-  if (_access == 0) Compress();
-}
-*/
+
 void OBMol::BeginModify()
 {
     //suck coordinates from _c into _v for each atom
@@ -2617,15 +2602,13 @@ ostream& operator<< (ostream &ofs, OBMol &mol)
 }
 */
 
-OBMol::OBMol(io_type itype,io_type otype)
+OBMol::OBMol()
 {
     _natoms = _nbonds = 0;
     _mod = 0;
-    //NF  _access = 0;
     _energy = 0.0;
     _totalCharge = 0;
-    _itype = itype;
-    _otype = otype;
+    _dimension = 3;
     _vatom.clear();
     _vbond.clear();
     _vdata.clear();
@@ -2635,14 +2618,12 @@ OBMol::OBMol(io_type itype,io_type otype)
     _vconf.clear();
     _autoPartialCharge = true;
     _autoFormalCharge = true;
-    //NF  _compressed = false;
 }
 
 OBMol::OBMol(const OBMol &mol)
 {
     _natoms = _nbonds = 0;
     _mod = 0;
-    //NF  _access = 0;
     _totalCharge = 0;
     _vatom.clear();
     _vbond.clear();
@@ -2949,7 +2930,7 @@ void OBMol::ConnectTheDots(void)
 {
     if (Empty())
         return;
-    //  if (!Has3D()) return; // not useful on 2D structures
+    if (_dimension != 3) return; // not useful on non-3D structures
 
     int j,k,max;
     bool unset = false;
@@ -3071,7 +3052,7 @@ void OBMol::PerceiveBondOrders()
 {
     if (Empty())
         return;
-    //  if (!Has3D()) return; // not useful on 2D structures
+    if (_dimension != 3) return; // not useful on non-3D structures
 
     OBAtom *atom, *b, *c;
     vector3 v1, v2;

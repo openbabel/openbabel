@@ -859,22 +859,20 @@ protected:
     int                           _flags;	//!< bitfield of flags
     bool                          _autoPartialCharge; //!< Assign partial charges automatically
     bool                          _autoFormalCharge; //!< Assign formal charges automatically
-    //NF  bool                          _compressed; //!< Is the molecule currently compressed?
-    io_type                       _itype;	//!< Input I/O Type
-    io_type                       _otype;	//!< Output I/O Type
     std::string                   _title;	//!< Molecule title
     //vector<OBAtom*>             _atom;	//!< not needed (inherited)
     //vector<OBBond*>             _bond;	//!< not needed (inherited)
+    unsigned short int            _dimension; //!< Dimensionality of coordinates
+    double                        _energy;//!< Molecular heat of formation (if applicable)
+    int				  _totalCharge; //!< Total charge on the molecule
+    unsigned int                  _totalSpin; //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
+    double                        *_c;	//!< coordinate array
+    std::vector<double*>          _vconf;//!< vector of conformers
+    unsigned short int            _natoms;//!< Number of atoms
+    unsigned short int            _nbonds;//!< Number of bonds
     std::vector<OBResidue*>       _residue;//!< Residue information (if applicable)
     std::vector<OBInternalCoord*> _internals;//!< Internal Coordinates (if applicable)
     std::vector<OBGenericData*>   _vdata;	//!< Custom data -- see OBGenericData class for more
-    double                        _energy;//!< Molecular heat of formation (if applicable)
-    int				_totalCharge; //!< Total charge on the molecule
-    unsigned int                  _totalSpin; //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
-    double                        *_c;	//!< coordinate array
-    std::vector<double*>           _vconf;//!< vector of conformers
-    unsigned short int            _natoms;//!< Number of atoms
-    unsigned short int            _nbonds;//!< Number of bonds
     unsigned short int            _mod;	//!< Number of nested calls to BeginModify()
     //NF  unsigned short int            _access;//!< Number of nested calls to BeginAccess()
 
@@ -891,8 +889,8 @@ public:
 
     //! \name Initialization and data (re)size methods
     //@{
-    //! Constructor (input format) (output format)
-    OBMol(io_type=UNDEFINED,io_type=UNDEFINED);
+    //! Constructor
+    OBMol();
     //! Copy constructor
     OBMol(const OBMol &);
     //! Destructor
@@ -992,39 +990,16 @@ public:
 
     //! \name Data retrieval methods
     //@{
-    int          GetFlags()
-    {
-        return(_flags);
-    }
-    const char  *GetTitle() const
-    {
-        return(_title.c_str());
-    }
-    io_type      GetInputType() const
-    {
-        return(_itype);
-    }
-    io_type      GetOutputType() const
-    {
-        return(_otype);
-    }
+    int          GetFlags()               { return(_flags); }
+    const char  *GetTitle() const         { return(_title.c_str()); }
     //! The number of atoms (i.e. OBAtom children)
-    unsigned int NumAtoms() const
-    {
-        return(_natoms);
-    }
+    unsigned int NumAtoms() const         {  return(_natoms); }
     //! The number of bonds (i.e. OBBond children)
-    unsigned int NumBonds() const
-    {
-        return(_nbonds);
-    }
+    unsigned int NumBonds() const         {  return(_nbonds); }
     //! The number of non-hydrogen atoms
     unsigned int NumHvyAtoms();
     //! The number of residues (i.e. OBResidue substituents)
-    unsigned int NumResidues() const
-    {
-        return(_residue.size());
-    }
+    unsigned int NumResidues() const      { return(_residue.size()); }
     //! The number of rotatble bonds
     unsigned int NumRotors();
     OBAtom      *GetAtom(int);
@@ -1037,10 +1012,7 @@ public:
     double       GetTorsion(int,int,int,int);
     double       GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
     //! Heat of formation for this molecule (in kcal/mol)
-    double       GetEnergy() const
-    {
-        return(_energy);
-    }
+    double       GetEnergy() const { return(_energy); }
     //! Standard molar mass given by IUPAC atomic masses (amu)
     double       GetMolWt();
     //! Mass given by isotopes (or most abundant isotope, if not specified)
@@ -1049,10 +1021,9 @@ public:
     int		 GetTotalCharge();
     //! Total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
     unsigned int GetTotalSpinMultiplicity();
-    double      *GetCoordinates()
-    {
-        return(_c);
-    }
+    //! Dimensionality of coordinates (i.e., 0 = unknown or no coord, 2=2D, 3=3D)
+    unsigned short int GetDimension() const { return _dimension; }
+    double      *GetCoordinates() { return(_c); }
     std::vector<OBRing*> &GetSSSR();
     //NF    bool         IsCompressed() const                {return _compressed;}
     //! Get the current flag for whether formal charges are set with pH correction
@@ -1070,29 +1041,13 @@ public:
 
     //! \name Data modification methods
     //@{
-    void   SetTitle(const char *title)
-    {
-        _title = title;
-    }
-    void   SetTitle(std::string &title)
-    {
-        _title = title;
-    }
+    void   SetTitle(const char *title) { _title = title; }
+    void   SetTitle(std::string &title){ _title = title; }
     //! Set the heat of formation for this molecule (in kcal/mol)
-    void   SetEnergy(double energy)
-    {
-        _energy = energy;
-    }
+    void   SetEnergy(double energy) { _energy = energy; }
+    void   SetDimension(unsigned short int d) { _dimension = d; }
     void   SetTotalCharge(int charge);
     void   SetTotalSpinMultiplicity(unsigned int spin);
-    void   SetInputType(io_type type)
-    {
-        _itype = type;
-    }
-    void   SetOutputType(io_type type)
-    {
-        _otype = type;
-    }
     void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord)
     {
         _internals = int_coord;
