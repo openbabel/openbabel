@@ -18,7 +18,9 @@
 	mol.PerceiveBondOrders() method.
 
 	* src/mol.h, src/mol.cpp: Rename PerceiveBonds in favor of
-	more accurate PerceiveBondOrders().
+	more accurate PerceiveBondOrders(). Make sure that
+	auto-hybridization is turned off while bond orders are being
+	perceived and then let it run afterwards.
 	
 2002-02-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 

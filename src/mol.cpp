@@ -2674,6 +2674,9 @@ void OBMol::PerceiveBondOrders()
 	}
     } // pass 1
 
+  // Make sure upcoming calls to GetHyb() don't kill these temporary values
+  SetHybridizationPerceived();
+  
   // Pass 2: look for 5-member rings with torsions <= 7.5 degrees
   //         and 6-member rings with torsions <= 12 degrees
   //         (set all atoms with at least two bonds to sp2)
@@ -2755,8 +2758,8 @@ void OBMol::PerceiveBondOrders()
 	  if (c)
 	    (atom->GetBond(c))->SetBO(3);
 	}
-      else if ( atom->GetHyb() == 2 &&
-		atom->BOSum() < etab.GetMaxBonds(atom->GetAtomicNum()) )
+      else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
+		&& atom->BOSum() < etab.GetMaxBonds(atom->GetAtomicNum()) )
 	{
 	  // as above
 	  maxElNeg = 0.0f;
@@ -2779,7 +2782,10 @@ void OBMol::PerceiveBondOrders()
 	  if (c)
 	    (atom->GetBond(c))->SetBO(2);
 	}
-  }
+  } // pass 6
+
+  // Now let the atom typer go to work again
+  _flags &= (~(OB_HYBRID_MOL));
 }
 
 void OBMol::Center()
