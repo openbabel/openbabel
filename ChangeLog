@@ -1,3 +1,15 @@
+2002-12-2  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* Makefile.in, src/Makefile.in, src/math/Makefile.in,
+	test/Makefile.in: Makefile changes to ensure the src/math
+	directory is called for all targets (including "clean") and
+	testing data files are only copied when needed for $(builddir) !=
+	$(srcdir).
+
+	* src/mol.h: Fix typo in OBMol documentation.
+
+	* src/mol.cpp: Add quick-and-dirty aromatic marking.
+
 2002-12-1  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/bond.txt: Data file for functional group recognition in bond

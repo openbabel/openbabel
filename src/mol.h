@@ -661,7 +661,7 @@ OEAtom *atom = mol.GetAtom(0); \endcode
 * it provides an unambiguous way to loop over arrays. OBMols store their
 * atom and bond information in STL vectors. Since vectors are template
 * based, a vector of any user defined type can be declared. OBMols declare
-* vector<OBAtom*> and vector<OBBond*> to store atom and bond information.
+* vector<OBNodeBase*> and vector<OBEdgeBase*> to store atom and bond information.
 * Iterators are then a natural way to loop over the vectors of atoms and bonds.
 *
 */
