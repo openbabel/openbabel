@@ -1,3 +1,8 @@
+2002-07-26  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* src/math/matrix3x3.cpp added a few method useful in symmetry
+	detection
+
 2002-07-30  Michael Banck <mbanck@gmx.net>
 
 	* src/gaussian.cpp: Last atom was written twice

@@ -62,6 +62,18 @@ void matrix3x3::SetupRotMat(float phi,float theta,float psi)
   ele[2][2] = cx*cy;
 }
 
+void matrix3x3::PlaneReflection(const vector3 &norm)
+{
+  //@@@ add a safety net
+
+  vector3 normtmp = norm;
+  normtmp.normalize();
+
+  SetColumn(0, vector3(1,0,0) - 2*normtmp.x()*normtmp);
+  SetColumn(1, vector3(0,1,0) - 2*normtmp.y()*normtmp);
+  SetColumn(2, vector3(0,0,1) - 2*normtmp.z()*normtmp);
+}
+
 #define x vtmp.x()
 #define y vtmp.y()
 #define z vtmp.z()
@@ -92,6 +104,13 @@ void matrix3x3::RotAboutAxisByAngle(const vector3 &v,const float angle)
 #undef x
 #undef y
 #undef z
+
+void matrix3x3::SetColumn(int column, const vector3 v)
+{
+  ele[0][column] = v.x();
+  ele[1][column] = v.y();
+  ele[2][column] = v.z();
+}
 
 vector3 operator *(const matrix3x3 &m,const vector3 &v)
 {

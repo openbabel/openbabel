@@ -66,6 +66,14 @@ namespace OpenBabel {
 	  ele[2][0] = 0.0f; ele[2][1] = 0.0f; ele[2][2] = 0.0f; 
 	}
 
+      //! constructs s times the unit matrix
+      matrix3x3(float s) 
+	{
+	  ele[0][0] = s;    ele[0][1] = 0.0f; ele[0][2] = 0.0f; 
+	  ele[1][0] = 0.0f; ele[1][1] = s;    ele[1][2] = 0.0f; 
+	  ele[2][0] = 0.0f; ele[2][1] = 0.0f; ele[2][2] = s; 
+	}
+
       //! constructs a matrix from row vectors
       matrix3x3(vector3 row1,vector3 row2,vector3 row3)
 	{
@@ -134,18 +142,49 @@ namespace OpenBabel {
       float Get(int row,int column) const {return(ele[row][column]);}
       
       //! access function
-      /*! \warning row or column are not in the range 0..2, random
+      /*! \warning if row or column are not in the range 0..2, random
 	variables are overwritten, and your program may
 	segfault. (Stefan Kebekus)
 	
 	\todo Replace this method with a more fool-proof version.
       */
-      void  Set(int row,int column, float v) {ele[row][column]= v;}
+      void Set(int row,int column, float v) {ele[row][column]= v;}
+
+      //! access function
+      /*! \warning If column is not in the range 0..2, random
+	variables are overwritten, and your program may
+	segfault. (Stefan Kebekus)
+	
+	\todo Replace this method with a more fool-proof version.
+      */
+      void SetColumn(int column, const vector3 v);
       
       //! divides all entries of the matrix by a scalar c
       matrix3x3 &operator/=(const float &c);
 
       void SetupRotMat(float,float,float);
+
+      //! calculates a matrix that represents reflection on a plane
+      /*! Replaces *this with a matrix that represents reflection on
+	the plane through 0 which is given by the normal vector norm.
+	
+	\warning If the vector norm has length zero, this method will
+	generate the 0-matrix. If the length of the axis is close to
+	zero, but not == 0.0f, this method may behave in unexpected
+	ways and return almost random results; details may depend on
+	your particular floating point implementation. The use of this
+	method is therefore highly discouraged, unless you are certain
+	that the length is in a reasonable range, away from 0.0f
+	(Stefan Kebekus)
+	
+	\deprecated This method will probably replaced by a safer
+	algorithm in the future.
+	
+	\todo Replace this method with a more fool-proof version.
+	
+	@param norm specifies the normal to the plane
+      */
+      void PlaneReflection(const vector3 &norm);
 
       //! calculates a rotation matrix
       /*! Replaces *this with a matrix that represents rotation about the
