@@ -8,7 +8,7 @@ libopenbabel_la_SOURCES = \
 		cache.cpp car.cpp ccc.cpp chains.cpp chdrw.cpp chiral.cpp \
 		cml.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp \
 		fileformat.cpp gamess.cpp gaussian.cpp generic.cpp \
-		ghemical.cpp grid.cpp gromos96.cpp hin.cpp jaguar.cpp main.cpp \
+		ghemical.cpp grid.cpp gromos96.cpp hin.cpp jaguar.cpp \
 		matrix.cpp mdl.cpp mm3.cpp mmod.cpp mol.cpp mol2.cpp \
 		molchrg.cpp molvector.cpp mopac.cpp mpqc.cpp nwchem.cpp \
 		oberror.cpp obutil.cpp parsmart.cpp parsmi.cpp patty.cpp \
@@ -20,13 +20,6 @@ libopenbabel_la_SOURCES = \
 libopenbabel_la_LIBADD = math/libmath.la
 
 libopenbabelincludedir = $(includedir)/openbabel
-libopenbabelinclude_HEADERS = aromatic.h atomtyp.h base.h binary.h \
-                bitvec.h chiral.h chains.h cwrap.h \
-                data.h element.h extable.h fileformat.h grid.h \
-                matrix.h mol.h molchrg.h molvector.h obifstream.h \
-                obutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
-                resdata.h ring.h rotor.h smi.h typer.h types.h \
-                chains.h generic.h oberror.h isotope.h bondtyp.h
 libopenbabelinclude_HEADERS = \
 		aromatic.h atomtyp.h base.h binary.h bitvec.h bondtyp.h \
 		bondtyper.h chains.h chiral.h data.h element.h extable.h \

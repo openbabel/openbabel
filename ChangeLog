@@ -1,3 +1,21 @@
+2003-06-15  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+
+	Updated to latest autoconf, libtool, automake versions to fix a
+	few minor bugs and add libtool-1.5 Mac OS X support.
+
+	* depcomp, ltmain.sh, missing, config.guess, config.sub: Update
+	with latest GNU versions.
+	
+	* src/Makefile.am: Remove main.cpp from targets for library and
+	make sure only one set of headers exists.
+
+	* configure: Regenerated with autoreconf.
+	* */Makefile.in: Regenerated with autoreconf.
+	
+	* openbabel.pc.in: Fix minor typo.
+
+	* *.cvsignore: Add new libtool-generated files.
+
 2003-06-15  Michael Banck  <mbanck@gmx.net>
 
 	Added pkg-config support, thanks to Jean Bréfort.
@@ -31,6 +49,31 @@
 	src/math/Makefile.in: Regenerated.
 
 	* src/babelconfig.h.in: Regenerated.
+
+2003-06-10  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/Makefile.in: Remove cwrap.h and cwrap.o as these have been
+	removed.
+
+	* src/mol.cpp (ConnectTheDots, PerceiveBondOrders): Make sure
+	these don't try to run on 2D structures, fixing bug reported by Jean.
+
+	Remove a variety of compilation warnings.
+	
+	* src/cacao.cpp, src/data.cpp, src/mpqc.cpp, src/povray.cpp:
+	Remove unused variables.
+
+	* src/mopac.cpp: Switch to unsigned int to remove comparison warning.
+
+	* src/obutil.h, src/obutil.cpp: New IsNear and IsNearZero
+	functions to compare floating-point numbers instead of unreliable
+	== operator. Ensures numbers are closer than a user-specified epsilon.
+	
+	* src/mol.cpp, src/mol2.cpp, src/molchrg.cpp,
+	src/math/vector3.cpp: Improve reliability of floating point
+	comparisons. Replace == operator compares with new IsNear and
+	IsNearZero functions.
+	(vector3.cpp probably should replace == operators as well.)
 
 2003-06-09  Michael Banck  <mbanck@gmx.net>
 

@@ -7,3 +7,5 @@ config.status
 stamp.h
 autom4te.cache
 aclocal.m4
+libtool
+openbabel.pc

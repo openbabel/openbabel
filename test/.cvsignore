@@ -4,3 +4,6 @@ libbabel.a
 babel
 obtest
 roundtrip
+.deps
+.libs
+*.lo
