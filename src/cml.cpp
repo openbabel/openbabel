@@ -67,6 +67,10 @@ Peter Murray-Rust, 2002, 2003
 
 #include "mol.h"
 
+# include <time.h>
+/* ---- Size of time-string ---- */
+#define TIME_STR_SIZE 64
+
 using namespace std;
 namespace OpenBabel {
 
@@ -186,6 +190,8 @@ string toLowerCase(string s);
 bool isInStringVector(vector <string> v, string s);
 // list of unused elementNames
 vector <string> unusedElementNameVector;
+// gets datetime in s
+bool getTimestr(string& s);
 
 // ----------------CML elements----------------
 const string CML1_ELEMENT_NAMES = "angle atom atomArray bond bondArray coordinate2 coordinate3 crystal electron feature float floatArray floatMatrix integer integerArray link list molecule reaction sequence string stringArray torsion";
@@ -213,12 +219,14 @@ const char* C_ATOMREFS3        = "atomRefs3";
 const char* C_ATOMREFS4        = "atomRefs4";
 const char* C_BUILTIN          = "builtin";
 const char* C_CONVENTION       = "convention";
+const char* C_CONTENT          = "content";
 const char* C_DATATYPE         = "dataType";
 const char* C_DICTREF          = "dictRef";
 const char* C_FORMALCHARGE     = "formalCharge";
 const char* C_ELEMENTTYPE      = "elementType";
 const char* C_HYDROGENCOUNT    = "hydrogenCount";
 const char* C_ID               = "id";
+const char* C_NAME             = "name";
 const char* C_OCCUPANCY        = "occupancy";
 const char* C_ORDER            = "order";
 const char* C_POINTGROUP       = "pointgroup";
@@ -234,6 +242,19 @@ const char* C_XY2              = "xy2";
 const char* C_XYZ3             = "xyz3";
 const char* C_XYZFRACT         = "xyzFract";
 
+// metadata
+const char* DC_DESCRIPTION     = "dc:description";
+const char* DC_IDENTIFIER      = "dc:identifier";
+const char* DC_CONTENT         = "dc:content";
+const char* DC_RIGHTS          = "dc:rights";
+const char* DC_TYPE            = "dc:type";
+const char* DC_CONTRIBUTOR     = "dc:contributor";
+const char* DC_CREATOR         = "dc:creator";
+const char* DC_DATE            = "dc:date";
+
+const char* CMLM_STRUCTURE     = "cmlm:structure";
+
+// CML and STMML elements                
 const char* C_ANGLE            = "angle";
 const char* C_ARRAY            = "array";
 const char* C_ATOM             = "atom";
@@ -255,6 +276,8 @@ const char* C_INTEGER          = "integer";
 const char* C_INTEGERARRAY     = "integerArray";
 const char* C_LENGTH           = "length";
 const char* C_MATRIX           = "matrix";
+const char* C_METADATA         = "metadata";
+const char* C_METADATALIST     = "metadataList";
 const char* C_MOLECULE         = "molecule";
 const char* C_REACTION         = "reaction";
 const char* C_SCALAR           = "scalar";
@@ -435,6 +458,9 @@ bool endMolecule();
 vector <string> MOLECULE_ATTRIBUTE_VECTOR;
 string MOLECULE_ATTRIBUTES =  "id title count convention";
 
+// <metadataList>
+bool WriteMetadataList(ostream &ofs);
+    
 // <reaction>
 bool startReaction(vector <pair<string,string> > &atts);
 // </reaction>
@@ -1392,13 +1418,11 @@ void endElement(string namespaceURI, string localName, string prefix) {
         localName == C_FLOATARRAY ||
 		localName == C_INTEGERARRAY ||
 	    localName == C_STRINGARRAY) {
+        setCMLType(C_CML1);
+        inputArray = true;
 		if (parent == C_ATOMARRAY) {
-            setCMLType(C_CML1);
-            inputArray = true;
 			processAtomArrayChild();
 		} else if (parent == C_BONDARRAY) {
-            setCMLType(C_CML1);
-            inputArray = true;
 			processBondArrayChild();
 		}
 	} else if (name == C_LENGTH) {
@@ -1982,7 +2006,6 @@ bool startAtomArray(vector <pair<string,string> > &atts) {
 	processFloatTokens(x3Vector, mynatoms, getAttribute(atts, C_X3));
 	processFloatTokens(y3Vector, mynatoms, getAttribute(atts, C_Y3));
 	processFloatTokens(z3Vector, mynatoms, getAttribute(atts, C_Z3));
-//    cout << "natoms... " << natoms << endl;
 	return true; // [ejk] assumed
 }
 
@@ -2147,6 +2170,7 @@ bool startBond(vector <pair<string,string> > &atts) {
 
 	bondBeginAtom = _EMPTY;
 	bondEndAtom = _EMPTY;
+//    bondIdString = getAttribute(currentAtts, C_ID); // Babel can't store IDs
     orderString = getAttribute(currentAtts, C_ORDER);
     stereoString = getAttribute(currentAtts, C_STEREO);
 	tokenize(atomRefs, (char*)getAttribute(currentAtts, C_ATOMREFS2).c_str(), " \n\t,");
@@ -2194,6 +2218,10 @@ bool processBondBuiltin() {
 				}
 				bondEndAtom = pcdata;
 			}
+// maybe id might occur as child, but better as attribute of bond parent
+// anyway Babel can't store it
+//		} else if (builtin == C_ID) {
+//			idString = pcdata;
 		} else if (builtin == C_ORDER) {
 			orderString = pcdata;
 	    } else if (builtin == C_STEREO) {
@@ -2233,6 +2261,9 @@ bool processBondArrayChild() {
 			} else {
 				atomRef2Vector.push_back(strings[i]);
 			}
+// this is the correct way of holding bond Ids in CML1arrays            
+		} else if (builtin == C_ID) {
+			idVector.push_back(strings[i]);
 		} else if (builtin == C_ORDER) {
 			orderVector.push_back(strings[i]);
 		} else if (builtin == C_STEREO) {
@@ -2255,6 +2286,7 @@ bool endBond() {
 	}
     bondPtr->SetBegin(beginAtomPtr);
     bondPtr->SetEnd(endAtomPtr);
+//    if (idString != _EMPTY) bondPtr->SetID(idString);     // no IDs in Babel
     if (orderString != _EMPTY) bondPtr->SetBO(getBabelBondOrder(orderString));
     if (stereoString == "W") {
 		bondPtr->SetUp();
@@ -2322,25 +2354,30 @@ bool WriteBond(ostream &ofs, OBBond* bond) {
 
 bool startBondArray(vector <pair<string,string> > &atts) {
 	vector <string> sv;
-	string atomRef1 = getAttribute(atts, "atomRef1");
+	string atomRef1 = getAttribute(atts, C_ATOMREFS1);
 	if (atomRef1 == _EMPTY) {
         return false;
     }
+// only CML2+array gets to here    
 	setCMLType(C_CML2);
+    inputArray = true;
 	atomRef1 += _SPACE;
-	tokenize(sv, atomRef1, " \n");
+	tokenize(sv, atomRef1, _SPACE_NEWLINE);
 	int mynbonds = sv.size();	// explicitly not the global nbonds
+    if (mynbonds == 0) {
+        cmlError("startBondArray: No bonds given");
+        return false;
+    }
 	processStringTokens(atomRef1Vector, mynbonds, atomRef1);
-	processStringTokens(atomRef2Vector, mynbonds, getAttribute(atts, "atomRef2"));
+	processStringTokens(atomRef2Vector, mynbonds, getAttribute(atts,  C_ATOMREFS2));
 	processStringTokens(orderVector, mynbonds, getAttribute(atts, C_ORDER));
 	processStringTokens(stereoVector, mynbonds, getAttribute(atts, C_STEREO));
     nbonds = mynbonds;
-//    cout << "nbonds " << nbonds << endl;
 	return true; // [ejk] assumed
 }
 
 bool endBondArray() {
-	if (cmlType == C_CML2) {
+	if (/*cmlType == C_CML2 || */inputArray) {
 		if (atomRef1Vector.size() == 0 ||
 			atomRef2Vector.size() == 0) {
 		  cmlError("atomRef arrays must be given for bonds");
@@ -2371,7 +2408,6 @@ bool endBondArray() {
 }
 
 bool WriteBondArray(ostream &ofs) {
-    cout << "nbonds " << molPtr->NumBonds() << endl;
 	if (molPtr->NumBonds() == 0) return false;
 
     writeStartTagStart(ofs, C_BONDARRAY);
@@ -2948,6 +2984,7 @@ bool WriteMolecule(ostream &ofs) {
 		outputPrefix += C_PREFIX;
 		outputPrefix +=_COLON;
 	}
+    
     writeStartTagStart(ofs, C_MOLECULE);
 	if (outputNamespace) {
 		ofs << _SPACE << X_XMLNS << _COLON << C_PREFIX << _EQUALS << _QUOTE << CML2_NAMESPACE << _QUOTE << endl;
@@ -2956,22 +2993,27 @@ bool WriteMolecule(ostream &ofs) {
  	writeAttribute(ofs, C_TITLE, title);
 // a mechanism is needed for IDs on elements
 	writeStartTagEnd(ofs);
+    
     ofs << endl;
+    WriteMetadataList(ofs);
 
 	if (molPtr->HasData(obCommentData)) {
 		OBCommentData *cd = (OBCommentData*)molPtr->GetData(obCommentData);
-        if (outputCML1) {
-            writeStartTagStart(ofs, C_STRING);
-            writeAttribute(ofs, C_TITLE, "comment");
-            writeStartTagEnd(ofs);
-            ofs << cd->GetData();
-            writeEndTag(ofs, C_STRING);
-        } else if (outputCML2) {
-            writeStartTagStart(ofs, C_SCALAR);
-            writeAttribute(ofs, C_DICTREF, "foo:comment");
-            writeStartTagEnd(ofs);
-            ofs << cd->GetData();
-            writeEndTag(ofs, C_SCALAR);
+        string nData = getNormalizedString(cd->GetData());
+        if (nData.length() > 0) {
+            if (outputCML1) {
+                writeStartTagStart(ofs, C_STRING);
+                writeAttribute(ofs, C_TITLE, "comment");
+                writeStartTagEnd(ofs);
+                ofs << nData;
+                writeEndTag(ofs, C_STRING);
+            } else if (outputCML2) {
+                writeStartTagStart(ofs, C_SCALAR);
+                writeAttribute(ofs, C_DICTREF, "foo:comment");
+                writeStartTagEnd(ofs);
+                ofs << nData;
+                writeEndTag(ofs, C_SCALAR);
+            }
         }
 	}
 
@@ -2984,11 +3026,19 @@ bool WriteMolecule(ostream &ofs) {
 	vector<OBGenericData*> vdata = molPtr->GetData();
 	for (k = vdata.begin();k != vdata.end();++k) {
 		if ((*k)->GetDataType() == obPairData) {
-            writeStartTagStart(ofs, C_STRING);
-            writeAttribute(ofs, C_TITLE, (*k)->GetAttribute());
-            writeStartTagEnd(ofs);
-			ofs << ((OBPairData*)(*k))->GetValue();
-            writeEndTag(ofs, C_STRING);
+            if (outputCML1) {
+                writeStartTagStart(ofs, C_STRING);
+                writeAttribute(ofs, C_TITLE, (*k)->GetAttribute());
+                writeStartTagEnd(ofs);
+                ofs << ((OBPairData*)(*k))->GetValue();
+                writeEndTag(ofs, C_STRING);
+            } else if (outputCML2) {
+                writeStartTagStart(ofs, C_SCALAR);
+                writeAttribute(ofs, C_DICTREF, (*k)->GetAttribute());
+                writeStartTagEnd(ofs);
+                ofs << ((OBPairData*)(*k))->GetValue();
+                writeEndTag(ofs, C_SCALAR);
+            }
 		}
 	}
 
@@ -2996,6 +3046,90 @@ bool WriteMolecule(ostream &ofs) {
 
 	return(true);
 }
+
+// --------------------<metadata>----------------
+
+bool WriteMetadataList(ostream &ofs) {
+    
+    writeStartTagStart(ofs, C_METADATALIST);
+    writeAttribute(ofs, C_TITLE, "generated automatically from Openbabel");
+    writeStartTagEnd(ofs);
+    ofs << endl;
+    
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, DC_CREATOR);
+    writeAttribute(ofs, C_CONTENT, "OpenBabel version 1-100.1");
+    writeCombinedTagEnd(ofs);
+        
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, DC_DESCRIPTION);
+    writeAttribute(ofs, C_CONTENT, "Conversion of legacy filetype to CML");
+    writeCombinedTagEnd(ofs);
+        
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, DC_IDENTIFIER);
+    writeAttribute(ofs, C_CONTENT, "Unknown");
+    writeCombinedTagEnd(ofs);
+        
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, DC_CONTENT);
+    string content = cmlType;
+    if (inputArray) content += " array";
+    writeAttribute(ofs, C_CONTENT, content);
+    writeCombinedTagEnd(ofs);
+        
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, DC_RIGHTS);
+    writeAttribute(ofs, C_CONTENT, "unknown");
+    writeCombinedTagEnd(ofs);
+        
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, DC_TYPE);
+    writeAttribute(ofs, C_CONTENT, "chemistry");
+    writeCombinedTagEnd(ofs);
+        
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, DC_CONTRIBUTOR);
+    writeAttribute(ofs, C_CONTENT, "unknown");
+    writeCombinedTagEnd(ofs);
+        
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, DC_CREATOR);
+    writeAttribute(ofs, C_CONTENT, "Openbabel V1-100.1");
+    writeCombinedTagEnd(ofs);
+        
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, DC_DATE);
+    string time;
+    getTimestr(time);
+    writeAttribute(ofs, C_CONTENT, time);
+    writeCombinedTagEnd(ofs);
+        
+    writeStartTagStart(ofs, C_METADATA);
+    writeAttribute(ofs, C_NAME, CMLM_STRUCTURE);
+    writeAttribute(ofs, C_CONTENT, "yes");
+    writeCombinedTagEnd(ofs);
+        
+    writeEndTag(ofs, C_METADATALIST);
+}
+
+bool getTimestr(string& s) {
+    time_t akttime;                              /* Systemtime                        */
+    char timestr[TIME_STR_SIZE + 1] = "";        /* Timestring                        */
+    size_t time_res;                             /* Result of strftime                */
+    char *log_name;                              /* Pointer to buffer with login name */
+    
+    /* ---- Get the system-time ---- */
+    akttime = time((time_t *) NULL);
+    time_res = strftime(timestr,
+                     TIME_STR_SIZE,
+                     "%a %b %d %H:%M:%S %Z %Y",
+                     localtime((time_t *) &akttime)
+                    );
+    s = getNormalizedString(timestr);                    
+    return true;;                    
+}
+
 
 // --------------------<reaction>----------------
 
@@ -3286,7 +3420,6 @@ bool ReadCML(istream &ifs,OBMol &mol, const char *title) {
 	molPtr = &mol;
 	ReadXML(ifs);
 
-    cout << "==========================================================" << endl;
     outputDebug = false;    
     if (outputDebug) {
         debug(cout);
@@ -3327,7 +3460,6 @@ bool WriteCML(ostream &ofs,OBMol &mol,const char *dim,const char* xmlOptions)
 
 	molPtr = &mol;
 	dimension = dim;
-    cout << "dimension: " << dimension << endl;
 	WriteMolecule(ofs);
 	CleanUp();
 	return true; // [ejk] assumed
