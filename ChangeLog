@@ -1,3 +1,8 @@
+2004-02-04 Fabien Fontaine <ffontaine@imim.es>
+
+	* tools/obgrep.cpp: -n option added to print 
+	the name of the matched molecules only
+
 2004-01-31  Michael Banck  <mbanck@gmx.net>
 
         * src/crk.cpp (WriteCRK): Rename loop variable from n to m.
