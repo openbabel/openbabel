@@ -279,11 +279,18 @@ int main(int argc,char *argv[])
 		}
 	}
 
-	const char OptFile[]="options.txt";
+	// Need to make this configurable -- on UNIX should probably be $HOME/.openbabel or similar
+	#ifdef _WIN32
+	const string OptFile = "options.txt";
+	#else
+	string OptFile = getenv("HOME");
+	OptFile.append("/.openbabel");
+	#endif
+
 	if(UseSavedOptions)
-		Conv.RestoreOptionsFromFile(OptFile);
+		Conv.RestoreOptionsFromFile(OptFile.c_str());
 	//Write current options to file
-	Conv.SaveOptionsToFile(OptFile);
+	Conv.SaveOptionsToFile(OptFile.c_str());
 
 		
 	int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
