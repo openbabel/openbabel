@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
 #include <map>
 #include "obconversion.h"
 
@@ -368,6 +369,8 @@ bool OBConversion::SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut)
 //////////////////////////////////////////////////////
 bool OBConversion::SetInFormat(OBFormat* pIn)
 {
+	if(pIn==NULL)
+		return true;
 	pInFormat=pIn;
 	return !(pInFormat->Flags() & NOTREADABLE);
 }
@@ -764,11 +767,14 @@ const char* OBConversion::IsOption(const char ch, bool UseGeneralOptions) const
 	{
 		if(*p++==ch)
 		{
-			if(*p=='"')p++;
+			if(*p=='"')++p;
 			return p;
 		}
-		if(p && *p++=='"')
+		if(p && *p=='"')
+		{
+			++p;
 			while(*p++!='"');
+		}
 	}
 	return NULL;
 }
@@ -854,6 +860,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 	ofstream os;
 	bool HasMultipleOutputFiles=false;
 	int Count=0;
+	bool CommonInFormat = pInFormat ? true:false; //whether set in calling routine
 
 	try
 	{
@@ -918,12 +925,9 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 				for(itr=FileList.begin();itr!=FileList.end();itr++)
 				{
 					InFilename = *itr;
-					ifstream ifs((*itr).c_str());
-					if(!ifs)
-					{
-						cerr << "Cannot open " << *itr <<endl;
+					ifstream ifs;
+					if(!OpenAndSetFormat(CommonInFormat, &ifs))
 						continue;
-					}
 
 					if(HasMultipleOutputFiles)
 					{
@@ -953,12 +957,8 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 			{			
 				//Single input file
 				InFilename = FileList[0];
-				is.open(FileList[0].c_str());
-				if(!is) 
-				{
-					cerr << "Cannot open " << FileList[0] <<endl;
-					return 0;
-				}
+				if(!OpenAndSetFormat(CommonInFormat, &is))
+						return 0;
 				pInStream=&is;
 
 				if(HasMultipleOutputFiles)
@@ -1004,6 +1004,31 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 		cerr << "Conversion failed with an exception. Count=" << Count <<endl;
 		return Count;
 	}
+}
+
+bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
+{
+	//Opens file using InFilename and sets pInFormat if requested
+	is->open(InFilename.c_str());
+	if(!is->good())
+	{
+		cerr << "Cannot open " << InFilename <<endl;
+		return false;
+	}
+	if(!SetFormat)
+	{
+		pInFormat = FormatFromExt(InFilename.c_str());
+		if(pInFormat==NULL)
+		{
+			string::size_type pos = InFilename.rfind('.');
+			string ext;
+			if(pos!=string::npos)
+				ext = InFilename.substr(pos);
+			cerr << "Cannot read input format \"" << ext << '\"' << endl;
+			return false;
+		}
+	}
+	return true;
 }
 
 }//namespace OpenBabel

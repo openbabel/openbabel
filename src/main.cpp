@@ -57,8 +57,8 @@ int main(int argc,char *argv[])
   OBConversion Conv(&cin, &cout); //default input and output are console 
 
   string GenOptions;
-  OBFormat* pInFormat;
-  OBFormat* pOutFormat;
+  OBFormat* pInFormat = NULL;
+  OBFormat* pOutFormat = NULL;
   vector<string> FileList, OutputFileList;
   string OutputFileName;
 
@@ -259,19 +259,21 @@ int main(int argc,char *argv[])
   Conv.SetGeneralOptions(GenOptions.c_str());
   
   if (!gotInType)
-    {
-      if(FileList.empty())
-	{
-	  cerr << "No input file or format spec!" <<endl;
-	  usage();
+  {
+    if(FileList.empty())
+		{
+			cerr << "No input file or format spec!" <<endl;
+			usage();
+		}
+		/* now for each file individually in OBConversion
+		pInFormat = Conv.FormatFromExt(FileList[0].c_str());
+		if(pInFormat==NULL)
+		{
+			cerr << program_name << ": cannot read input format!" << endl;
+			usage();
+		}
+		*/
 	}
-      pInFormat = Conv.FormatFromExt(FileList[0].c_str());
-      if(pInFormat==NULL)
-	{
-	  cerr << program_name << ": cannot read input format!" << endl;
-	  usage();
-	}
-    }
   if (!gotOutType)
     {
       pOutFormat = Conv.FormatFromExt(OutputFileName.c_str());
