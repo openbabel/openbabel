@@ -203,8 +203,8 @@ void OutputAtoms(ostream &ofs, OBMol &mol, string prefix)
 {
  /* ---- Write all coordinates ---- */
  ofs << "//Coodinates of atoms 1 - " << mol.NumAtoms() << endl; 
-
- for(unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
+ unsigned int i;
+ for(i = 1; i <= mol.NumAtoms(); ++i) {
 
   /* ---- Get a pointer to ith atom ---- */
   OBAtom *atom = mol.GetAtom(i);
@@ -220,7 +220,7 @@ void OutputAtoms(ostream &ofs, OBMol &mol, string prefix)
 
  /* ---- Write povray-description of all atoms ---- */
  ofs << endl << "//Povray-description of atoms 1 - " << mol.NumAtoms() << endl;
- for(unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
+ for(i = 1; i <= mol.NumAtoms(); ++i) {
 
   /* ---- Get a pointer to ith atom ---- */
   OBAtom *atom = mol.GetAtom(i);
