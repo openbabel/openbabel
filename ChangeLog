@@ -1,3 +1,10 @@
+2002-06-29  Vincent Favre-Nicolin <vincefn@users.sourceforge.net>
+
+	* src/mol.h: Give sample documentation from the primer for
+	OBResidue, OBAtom and OBMol.
+
+	* src/ring.h: As above for the OBRing class.
+
 2002-06-28  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* configure.in, configure, src/Makefile.in: Adjust for various

@@ -74,7 +74,7 @@ static const unsigned int SHAPELY_SPECIAL  = 7;
 static const unsigned int SIDECHAIN        = 8;
 static const unsigned int SUGAR_PHOSPHATE  = 9;
 }
-
+/// Residue names
 namespace OBResidueIndex {
 static const unsigned int ALA   =  0;
 static const unsigned int GLY   =  1;
@@ -131,7 +131,7 @@ static const unsigned int COA   = 51;
 static const unsigned int NAP   = 52;
 static const unsigned int NDP   = 53;
 }
-
+/// Residue types.
 namespace OBResidueProperty {
 static const unsigned int AMINO        = 0;
 static const unsigned int AMINO_NUCLEO = 1;
@@ -145,6 +145,19 @@ static const unsigned int SOLVENT      = 8;
 static const unsigned int WATER        = 9;
 }
 
+/** Residue information.
+*
+* The residue information is drawn from PDB or MOL2 files,
+*and are stored in the OBResidue class. OBResidues are stored inside the 
+* OBAtom class. The residue information for an atom can be requested in the following way:
+\code
+ OEAtom *atom;
+ OEResidue *r;
+ atom = mol.GetAtom(1);
+ r = atom->GetResidue();
+\endcode
+*
+*/
 class OBResidue
 {
 public:
@@ -220,7 +233,67 @@ protected: // members
 #define OB_DONOR_ATOM     (1<<7)
 #define OB_ACCEPTOR_ATOM  (1<<8)
 #define OB_CHIRAL_ATOM    (1<<9)
-
+/** Atom class
+*
+* To understand the OBAtom class it is important to state a key
+* decision on which the design was based. In OBabel the atom class
+* existed, but it was only a data container. All data access and
+* modification of atoms was done through the molecule. The result
+* was a molecule class that was very large an unwieldy. I decided
+* to make the OBAtom class smarter, and separate out many of the
+* atom specific routines into the OBAtom thereby decentralizing and
+* shrinking the OBMol class. As a result the OBAtom class not only
+* holds data, but facilitates extraction of data perceived from both
+* the atom and the molecule.
+*
+* A number of data extraction methods perform what is called
+* `Lazy Evaluation', which is essentially on the fly evaluation.
+* For example, when an atom is queried as to whether it is cyclic
+* or what it's hybridization state is the information is perceived
+* automatically. The perception of a particular trait is actually
+* performed on the entire molecule the first time it is requested of
+* an atom or bond, and stored for subsequent requests for the same
+* trait of additional atoms or bonds.The OBAtom class is similar to
+* OBMol and the whole of OBLib in that data access and modification
+* is done through Get and Set methods.
+*
+* The following code demonstrates how to print out the atom numbers,
+* element numbers, and coordinates of a molecule:
+\code
+   OEMol mol(SDF,SDF);
+   cin >> mol;
+   OEAtom *atom;
+   vector<OEAtom*>::iterator i;
+   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+   {
+       cout << atom->GetIdx() << ` `;
+       cout << atom->GetAtomicNum() << ` `;
+       cout << atom->GetVector() << endl;
+   }
+\endcode
+* A number of the property member functions indicate that atoms
+* have some knowlege of their covalently attached neighbor atoms.
+* Bonding information is partly redundant within a molecule in
+* that an OEMol has a complete list of bonds in a molecule, and
+* an OEAtom has a list bonds of which it is a member. The following
+* code demonstrates how an OEAtom uses its bond information to loop
+* over atoms attached to itself:
+\code
+   OEMol mol(SDF,SDF);
+   cin >> mol;
+   OEAtom *atom,*nbr;
+   vector<OEBond*>::iterator i;
+   atom = mol.GetAtom(1);
+   for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
+   {
+   cout << "atom #" << atom->GetIdx() << " is attached to atom #" << nbr->GetIdx() << endl;
+   }
+\endcode
+* should produce an output like
+\code
+   atom #1 is attached to atom #2
+\endcode
+*/
 class OBAtom : public OBNodeBase
 {
 protected:
@@ -390,7 +463,10 @@ public:
 #define OB_KDOUBLE_BOND   (1<<8)
 #define OB_KTRIPLE_BOND   (1<<9)
 #define OB_CLOSURE_BOND   (1<<10)
-
+/** Bond class
+* 
+*
+*/
 class OBBond : public OBEdgeBase
 {
 protected:
@@ -482,7 +558,94 @@ public:
 #define OB_AROM_CORRECTED_MOL    (1<<14)
 #define OB_CHAINS_MOL            (1<<15)
 #define OB_CURRENT_CONFORMER -1
+/** Molecule Class
+*
+*
+* The most important class in OpenBabel is OBMol, or the molecule class.
+* The OBMol class is designed to store all the basic information
+* associated with a molecule, to make manipulations on the connection
+* table of a molecule facile, and to provide member functions which
+* automatically perceive information about a molecule. A guided tour
+* of the OBMol class is a good place to start.
+*
+* An OBMol class can be declared in either of the following ways:
+\code
+   OBMol mol;
+   //or
+   OBMol mol(SDF,MOL2);
+\endcode
+* The second declaration type sets the input and output formats for a molecule.
+* For example:
+\code
+   #include <iostream.h>
+   #include "mol.h"
+   int main(int argc,char **argv)
+   {
+   OBMol mol(SDF,MOL2);
+   cin >> mol;
+   cout << mol;
+   return(1);
+   }
+\endcode
+*
+* will read in a molecule in SD file format from stdin 
+* (or the C++ equivalent cin) and write a MOL2 format file out
+* to standard out. Additionally, The input and output formats can
+* be altered after declaring an OBMol by the member functions
+* OBMol::SetInputType(enum io_type type) and
+* OBMol::SetOutputType(enum io_type type),
+* where the current values of enum io_type are
+* \code {UNDEFINED,SDF,MOL2,PDB,DELPDB,SMI,BOX,FIX,OEBINARY}\endcode
+*
+* The following lines of code show how to set the input and output
+* types of an OBMol through the member functions:
+\code
+   OBMol mol;
+   mol.SetInputType(SDF);
+   mol.SetOutputType(MOL2);
+\endcode
+* Once a molecule has been read into an OBMol the atoms and bonds
+* can be accessed by the following methods:
+\code
+ OBAtom *atom;
+ atom = mol.GetAtom(5); //random access of an atom
+\endcode
+*  or
+\code
+  OBBond *bond;
+bond = mol.GetBond(14); //random access of a bond
+\endcode
+* or
+\code
+   OBAtom *atom;
+   vector<OEAtom*>::iterator i;
+   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) //iterator access
+\endcode
+*or
+\code
+   OBBond *bond;
+   vector<OBBond*>::iterator i;
+   for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i)) //iterator access
+\endcode
+*It is important to note that atom arrays begin at one and bond arrays
+* begin at zero. Requesting atom zero (\code
+OEAtom *atom = mol.GetAtom(0); \endcode
+*will result in an error, but
+\code
+   OEBond *bond = mol.GetBond(0);
+\endcode
+* is perfectly valid.
 
+* The ambiguity of numbering issues and off-by-one errors led to the use
+* of iterators in OELib. An iterator is essentially just a pointer, but
+* when used in conjunction with Standard Template Library (STL) vectors
+* it provides an unambiguous way to loop over arrays. OEMols store their
+* atom and bond information in STL vectors. Since vectors are template
+* based, a vector of any user defined type can be declared. OEMols declare
+* vector<OEAtom*> and vector<OEBond*> to store atom and bond information.
+* Iterators are then a natural way to loop over the vectors of atoms and bonds.
+*
+*/
 class OBMol : public OBGraphBase
 {
 protected:
@@ -707,7 +870,8 @@ public:
 
 };
 
-class OBInternalCoord //class to store internal coordinate values
+/// Class to store internal coordinate values
+class OBInternalCoord 
 {
 public:
   //class members
