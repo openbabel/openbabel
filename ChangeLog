@@ -1,0 +1,789 @@
+2002-12-6  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* Doxyfile, README, configure.in, configure: Rename version to
+	1.100.
+
+	* doc/FAQ: Update with a few minor corrections -- synched with
+	website.
+
+	* THANKS: A few omissions -- synched with website.
+
+	* src/mdl.cpp, src/smi.cpp: Throw errors if the molecules are too
+	large, rather than segfault. In MDL, this seems to be a problem
+	inherent in the file format. For SMI, this seems to be a recursion
+	problem.
+
+	* src/mol.cpp: Take out the "quick-and-dirty" aromatic pass, it's
+	too rough to be useful. I need to figure out how to pass off the
+	rough structure to the Kekulize routines.
+
+	* src/types.txt, src/types.h: Make sure there's a default type for
+	an "N" atom, caught by roundtrip testing from PDB files. Fix typo
+	for O.co2 v. Oco2 external type. Also add XYZ forms for all atoms.
+
+2002-12-5  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* Doxyfile: Update for 1.99.1 release.
+
+	* Makefile.in (dist): Make sure to remove autom4te.cache, etc.
+
+	* THANKS: Plenty of contributors to this next release!
+
+	* configure.in: When searching for the "ar" program, remember that
+	Solaris has it in /usr/ccs/bin, so we should check there and fall
+	back to the user's $PATH if it's not found.
+
+	* configure: Regeneratre using autoconf-2.56.
+
+	* src/mol.h: Add OBAtom::GetAtomicMass(), which will eventually
+	allow for isotope-labeled atoms.
+
+	* src/atom.cpp: Implement it.
+
+	* src/mol.cpp (GetMolWt): Write using above.
+
+	* src/cml.cpp: For the moment, turn off debugging output. (This
+	should really go through a filter to allow users to see it if
+	needed.)
+
+	* src/data.cpp (GetAtomicNum): Have D and T atoms return for
+	hydrogen. Eventually needs to support isotopes!
+
+	* src/element.txt, src/element.h: Update with current IUPAC
+	masses.
+
+	* src/extable.txt, src/extable.h: Make sure all extensions are
+	lowercased--since all comparisons are done this way. Fixes bug
+	with GROMOS96 translation.
+
+	* src/fileformat.h, src/fileformat.cpp (ReadMolecule): Fix thinko
+	with BGF format--call the proper procedue.
+	(WriteMolecule): Write Box format with a default size. (!!)
+
+	* src/bgf (ReadBGF): Cleanups found from roundtrip testing. Make
+	sure bond records are parsed correctly and run atom types through
+	the element table rather than the type table.
+	(WriteBGF): Change remark to "Open Babel" rather than "Babel" so
+	people know who created the bugs. ;-)
+
+	* src/gromos96.cpp: Use "Open Babel" as above.
+
+	* src/pdb.cpp (WriteDelphiPDB, WritePDB): Make sure we have a
+	proper line length. Bug discovered via roundtrip testing (and our
+	complaints about short CONECT lines).
+
+	* src/povray.cpp: Don't attempt to get a hostname--this introduces
+	all sorts of portability problems. Also use the atomic symbol
+	rather than the atom type. Less flexible, but POV-Ray doesn't like
+	some symbols in atom types (e.g. period in O.co2).
+
+	* src/report.cpp: Add report on chiral atoms. (Probably needs some
+	improvement still.)
+
+	* src/types.h, src/types.txt: Add missing types, notably for Ar
+	and B2, uncovered via roundtrip testing to the c3d file formats.
+
+	* src/xed.cpp: Fix segfault caused by improper iteration over
+	bonds. Uncovered via roundtrip testing.
+
+2002-12-3  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/data.cpp (ParseLine): Fix bug that ignored the first
+	non-comment line.
+
+2002-12-2  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* Makefile.in, src/Makefile.in, src/math/Makefile.in,
+	test/Makefile.in: Makefile changes to ensure the src/math
+	directory is called for all targets (including "clean") and
+	testing data files are only copied when needed for $(builddir) !=
+	$(srcdir).
+
+	* src/mol.h: Fix typo in OBMol documentation.
+
+	* src/mol.cpp: Add quick-and-dirty aromatic marking.
+
+2002-12-1  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/bond.txt: Data file for functional group recognition in bond
+	order typing (currently unused).
+
+	* src/*.txt: Update with headers, including copyright notice.
+
+	* src/data.cpp: Ignore comment characters (including copyright
+	notice).
+
+	* src/pdb.cpp: Fix bug with reading in residue data--the source
+	file is called resdata.txt, not residue.txt.
+
+2002-11-28  Vincent Favre-Nicolin <vincefn@users.sf.net>
+
+	* src/obutil.cpp(CartesianToInternal): Fix the conversion
+	from cartesian to Internal coordinates. The previous code
+	prevented atom 3 to be bonded with atom 1, and any
+	atom with idx>3 to be bonded with atom 1 or 2, which does
+	happen sometimes...
+
+2002-11-27  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/atom.cpp(MemberOfRingSize): New method -- if atom is in a
+	ring, return size. (Need to fix to designate *which* ring if in
+	multiple.)
+	(SetHybAndGeom): Fix to use scaled bondlengths for aromatic,
+	double and triple bonds and adjust expected bond angles if in a
+	ring.
+
+	* src/mol.cpp: Add << and >> convenience functions based on
+	OBFileFormat objects.
+
+	* src/ghemical.cpp: Fix header line for new "gpr" extension.
+
+	* src/povray.cpp: New file, contributed by Steffen Reith to output
+	POV-Ray scene files.
+	
+	* src/data.cpp, src/data.h: Add POV file type.
+
+	* src/extable.txt, src/extable.h: Likewise.
+
+	* src/fileformat.cpp, src/fileformat.h: Likewise:
+
+	* src/Makefile.in: Add povray.cpp.
+
+	* doc/README.dioxin.pov, doc/README.povray, doc/babel31.inc,
+	doc/dioxin.mol2, doc/dioxin.pov: New files.
+
+2002-11-25  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/mol.cpp, src/mol.h: Add back << and >> convenience functions
+	derived from OBFileFormat methods.
+	(PerceiveBondOrders): Fix bug introduced with previous change--do
+	not add multiple bonds to an atom already with them. (Causes a
+	problem with allene, but this is a rarer situation than the
+	reverse.)
+
+	* src/pdb.cpp (WritePDB, WriteDelphiPDB): Fix ATOM records with
+	correct specification. Should fix problems with 5-digit atom
+	numbers, PR#633719, reported by Kristian Rother.
+	
+2002-11-20  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* configure: Update with new autoconf-2.56
+
+	* src/Makefile.in, src/math/Makefile.in, test/Makefile.in: Remove
+	redundant '/' in path for $(builddir) variable.
+
+	* src/data.cpp: Remove references to depreciated strstream.h
+	header.
+
+	* src/data.h: Likewise.
+
+	* src/mol.cpp: Add "flat ring" pass for 5-member and 6-member
+	rings. Ensures that these are all marked as potential sp2
+	hybrids. Also prevent adding 4 bonds to nitrogen, for now.
+
+	* src/extable.txt, src/extable.h: Update with new Ghemical
+	extension .gpr (same format though).
+
+2002-10-11  Michael Banck <mbanck@gmx.net>
+
+	* src/math/Makefile.in: New file.
+
+	* configure.in, src/Makefile.in: Adjust accordingly.
+
+2002-09-19  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/aromatic.h, src/aromatic.txt: Remove selenium aromatic
+	pattern for now. Fixes test/smartstest error on
+	LABOTEST_LT-2_FE_546.
+
+	* src/c3d.cpp, src/chains.cpp, src/cml.cpp, src/data.cpp,
+	src/jaguar.cpp, src/main.cpp, src/mol.cpp, src/oberror.h,
+	src/pdb.cpp, src/phmodel.cpp, src/ring.cpp, src/smi.cpp,
+	src/xyz.cpp, src/math/matrix3x3.cpp, test/matrixtest.cpp,
+	test/ringtest.cpp, test/smartstest.cpp: Warning fixes contributed
+	by Erik Kruus.
+
+2002-09-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/report.cpp: Fix bug noted by Markku Laukkanen, where the min
+	variable would roll past the maximum number of atoms in a
+	molecule.
+
+	* src/cml.cpp (debugMolecule): Add default dimension. Contributed
+	by Francesco Bresciani.
+
+	* src/obutil.cpp (InternalToCartesian): If vector input is empty,
+	quit early. Contributed by Francesco Bresciani.
+
+	* src/oberror.h, src/oberror.cpp: Namespace fixes to handle
+	problems on gcc-3.1 as reported by Austin Acton and Andrea Tasso.
+
+2002-09-07  Michael Banck <mbanck@gmx.net>
+
+	* Replaced $DEST with $DESTDIR and $bindir
+
+2002-08-30  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* src/math/matrix3x3.cpp, src/math/matrix3x3.h added methods, in
+	particular for eigenvector calculations. Modified the API slightly. 
+	* src/mol.cpp, src/obutil.cpp removed a couple of undocumented
+	mathematical methods that were never used. Make mol use the 
+	eigenvector functions from the matrix class now.	
+	* test/matrixtest.cpp test suite for matrix algebra and eigenvector 
+	calculations
+	* src/oberror.cpp, src/oberror.h introduced a generic error class
+
+2002-08-27  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* test/main.cpp, test/ringtest.cpp, test/smartstest.cpp resolved
+	namespace problems for the tests. The test compile now, but show
+	errors.
+
+2002-08-25  Michael Banck <mbanck@gmx.net>
+
+	* Changed charge to int (gaussian.cpp) and divisor/exponent to 
+	double (c3d.cpp) in order to compile on g++-3.2
+
+2002-08-19  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* src/xyz.cpp more bugfixing. The translator behaves now smarter
+	when interpreting the title and the atom types.
+
+2002-08-16  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* src/pdb.cpp re-wrote routine to read CONECT records. That
+	(hopefully) fixes a number of bugs in the earlier version
+	(inability to read 5-digit serial numbers, accidently reading salt
+	bridges as connects, etc.)
+
+2002-08-15  Geoff Hutchison <hutchisn@chem.northwestern.edu>
+
+	* src/pdb.cc: Fix ParseConectRecord to make sure we don't read
+	beyond the vs.size().
+
+
+2002-08-14  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* src/xyz.cpp Set molecule title to the string that is read from
+	the second line of the file. Set atom type strings to strings read
+	from the file. The reading method now prints +extensive+ and
+	+detailed+ warnings to cerr if is xyz file is bad.
+
+2002-07-26  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* src/math/matrix3x3.cpp added a few method useful in symmetry
+	detection
+
+2002-07-30  Michael Banck <mbanck@gmx.net>
+
+	* src/gaussian.cpp: Last atom was written twice
+
+2002-07-26  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* added documentation
+
+2002-07-24  Michael Banck <mbanck@gmx.net>
+
+	* src/gaussian.cpp: Added some comments/warnings; changed multiplicity
+	calculation to use abs(charge) instead of charge
+	* src/Makefile.in: splitted CXXFLAGS into CXXFLAGS, DEFS and INCS
+
+2002-07-22  Michael Banck <mbanck@gmx.net>
+
+	* src/gaussian.cpp: Fixed WriteGaussianCart() hopefully:
+	- calculate charge and mulitiplicty (the latter being quite shakey
+	  ATM)
+	- do away with the zero after the atom type
+	- don't reference coordinates, write them straight after the atom type
+	- add a blank line at the end
+	* configure.in: Added --enable-doxygen configure option. If enabled,
+	search for doxygen and print an URL if not found
+	* configure: Updated for new configure.in
+
+2002-07-18  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* isolated the 3-dimensional vector and matrix classes, gave them
+	less ambigous names, and put them into a directory "math". Added
+	an access function to the vector class.
+
+2002-07-12  Stefan Kebekus <kebekus@users.sourceforge.net>
+	
+	* added documentation to the Vector class, made some functions
+	inline, and commented out some methods of the vector class
+	whose names I found misleading, and which were never used anyway.
+
+	* src/Vector.cpp, src/Vector.h: added documentation to the Vector
+	class, made some functions inline, and commented out some methods
+	of the vector class whose names I found misleading, and which were
+	never used anyway.
+	
+	* configure.in: configure now warns if doxygen is not present
+
+	* configure: Updated with autoconf 2.52d.
+
+2002-07-09  Geoff Hutchison <hutchisn@chem.northwestern.edu>
+
+	* src/fileformat.h, src/mol.h, src/binary.h: Fix missing std:: in
+	headers, which causes problems with namespace-compliant
+	compilers. Should fix PR #578522.
+
+	* src/residue.cpp: Add missing "using namespace std," which also
+	caused problems with namespace-compliant compilers.
+
+	* src/pdb.cpp: For now, disable bond order perception--prevents
+	problems with PDB residues observed by Richard Gillian.
+
+2002-07-01  Richard Gillian <reg8@users.sourceforge.net>
+
+	* src/main.cpp: Add -hpH to use the "adjust pH" setting for adding
+	hydrogens.
+
+	* src/mol.cpp: When adding hydrogens, if the parent atom is part
+	of a residue, copy this information to the new atoms.
+
+	* src/mol2.cpp: Write residue types and original atom names for
+	the atoms if they exist.
+
+2002-07-01  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* Doxyfile: New file, configuration for Doxygen API documentation.
+
+	* configure: Updated with autoconf 2.52d.
+
+	* Makefile.in: Added automatic API documentation generation. Use
+	"make apidoc".
+
+2002-06-29  Vincent Favre-Nicolin <vincefn@users.sourceforge.net>
+
+	* src/mol.h: Give sample documentation from the primer for
+	OBResidue, OBAtom and OBMol.
+
+	* src/ring.h: As above for the OBRing class.
+
+2002-06-28  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* configure.in, configure, src/Makefile.in: Adjust for various
+	removed (unused) files.
+
+	* src/fileformat.cpp, src/fileformat.h: Use a const char * title
+	and declare ReadMolecule and WriteMolecule methods static to allow
+	calling w/o needing to instantiate a specific OBFileFormat object.
+	
+	* src/*.cpp: Adjust all ReadFile methods to use const char* title,
+	as above.
+
+	* src/atom.cpp, src/binary.cpp, src/binary.h: Fixes imported from
+	OELib.
+
+	* src/generic.cpp, src/generic.h: Add support for torsion and
+	angle data and associated handlers for OBGenericData.
+
+	* src/main.cpp: Remove obsolete headers.
+
+	* src/mol.cpp, src/mol.h: Add OBMol::FindTorsions method to fill
+	the OBTorsionData in a molecule. Remove the confusing OBPose
+	class. (Conformers are conformers and not managed by a separate
+	class.) Remove residue code, which has migrated to residue.cpp.
+
+	* src/obutil.cpp: Remove unused code.
+
+	* src/pdb.cpp: Add OBSerialNums, imported from OELib.
+
+2002-06-11  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/Makefile.in: Add proper commandline for new bin2hex for
+	PhModelData. Remove smarts.* from file lists.
+
+	* src/Vector.cpp: Import changes contributed by Open
+	Eye--improvements in random vector and matrix methods.
+
+	* src/*.h: Improve top comment to refer to Open Babel and update
+	copyright dates. Add uniform #ifdef symbols to prevent clashing
+	with external header files.
+
+	* src/alchemy.cpp, src/atom.cpp, src/balst.cpp, src/chains.cpp:
+	Updates to cut down on buffer overflows, to begin addressing
+	PR#565413.
+
+	* src/data.cpp: Make OBExtensionTable types uniform. Make sure
+	\0 is inserted in the proper place in the buffer when reading from
+	the dataptr in OBGlobalDataBase::Init(). Fixes PR#567420.
+
+	* src/fileformat.cpp: Use updated io_type declarations.
+
+	* src/types.txt: Reformat to remove trailing whitespace and make
+	spacing uniform. (Attempt to minimize problems with reading using
+	OBTypeTable.)
+
+	* src/obutil.[h,cpp]: Remove SmartsLexReplace, which is now
+	migrated to parsmart.[h,cpp].
+
+	* src/parsmart.[h,cpp]: Updated version from code contributed by
+	Open Eye. Includes caching and RestrictedMatch method and seems to
+	solve memory leak problems in older version. Solves PR#536943 and
+	#564096. Includes code from smarts.* files.
+	
+	* src/phmodel.cpp: Update to work with new SMARTS parser.
+
+2002-06-07  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* Makefile.in: Make sure directories are properly created on "make
+	install" which fixes PR#565412.
+
+	* src/Makefile.in: Add support for rebuilding the binary data
+	headers when needed. Also generates library first, then just links
+	this into main.o for the program. Also as above.
+
+	* src/bin2hex.pl: Import a revised version contributed by Open
+	Eye.
+
+	* src/atomtyp.txt, src/extable.txt, src/types.txt: Ditto.
+
+	* src/aromatic.h, src/atomtyp.h, src/element.h, src/extable.h,
+	src/phmodel.h, src/resdata.h, src/types.h: Generate using new
+	bin2hex.pl.
+
+2002-06-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/main.cpp: Add support for -iMIME or -oMIME <mime_type>
+	input. This should facilitate use for web applications (e.g. as a
+	pass-through filter to other programs).
+
+	* src/data.h, src/data.cpp: Add methods
+	IsReadable/IsWritable(io_type).
+
+2002-05-30  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/mol.h, src/atom.cpp (HasNonSingleBond): Add new method to
+	simplify and optimize bond typing code.
+
+	* src/mol.cpp (PerceiveBondOrders): Use it.
+
+	* src/cml.cpp: Fix problems with arrays of OBAtom* since these
+	cause casting problems in ISO C++. Still has a number of "missing
+	return" warnings, though these shouldn't cause problems.
+
+2002-04-23  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/hin.cpp (ReadHIN): Fix bugs in reading HyperChem files as
+	contributed by Tommi Hassinen.
+
+2002-04-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/qchem.cpp: Fix conversion from internal coordinates at the
+	end of a geometry optimization (silly thinko, forgot to convert
+	from deg. to rad. for angles).
+
+2002-04-12  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/bin2hex.pl: Set output header files to be "static const
+	char" instead of plain char. Should prevent some clobbering,
+	e.g. PR #543314.
+
+	* src/aromatic.h, src/atomtyp.h, src/element.h, src/extable.h,
+	src/phmodeldata.h, src/resdata.h, src/types.h: Generate as above.
+
+	* src/aromatic.txt, src/atomtyp.txt, src/phmodel.txt: Change
+	"OELib" in headers to "Open Babel."
+
+	* src/data.h: Make all _dataptr members "const char" and set
+	ParseLine() methods to operate on const char*.
+
+	* src/data.cpp, src/pdb.cpp, src/phmodel.cpp, src/rotor.cpp,
+	src/typer.cpp: As above.
+
+	* src/mol.h: Set tokenize() declarations to operate on const
+	char*.
+
+	* src/tokenst.cpp: As above.
+
+2002-04-05  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/parsmart.cpp: Added some defensive programming when calling
+	delete, also set the pointer to NULL.
+
+	* src/parsmart.h: Add constructor and destructor to
+	OBSmartsParser.
+
+	* src/smarts.h: Add full destructors for OBEdge, OBNode.
+
+	* src/smarts.cpp: As above. Should solve memory leaks, PR #508056.
+	
+2002-03-30  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/*.h: Update headers to use std:: namespace to refer to
+	vectors, strings, pairs, streams, etc.
+
+	* src/*.cpp: As a first stage in full namespace support, add a
+	full "using namespace std;" (to be followed eventually with only
+	importing the necessary namespace portions.
+	
+2002-03-27  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/cml.cpp: Fix use of strcmp() in code in favor of strncmp()
+	to prevent buffer overflow. Fixes problems with 2D/3D export.
+	
+2002-03-26  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/cml.cpp: New CML support, including built-in XML parser,
+	contributed by Peter Murray-Rust.
+
+	* src/Makefile.in: Add cml.cpp to list to support CML compilation.
+
+	* src/data.h, src/data.cpp: Add CML file type.
+
+	* src/extable.txt, src/extable.h: Update to add in .cml files.
+
+	* src.fileformat.cpp, src/fileformat.h: Add in support for CML
+	read/write as well as passing options to WriteMolecule methods.
+
+	* src/main.cpp: Add support for passing output options (currently
+	only XML/CML) to export methods.
+	
+	* src/aromatic.txt: Enable support for recognizing Se in aromatic
+	rings. (Uncommon, but I've been doing work with selenophene
+	recently.)
+
+	* src/pdb.cpp (ParseConectRecord): Fix bugs in CONECT records with
+	PDB files. Would only read first 4 columns and wouldn't handle
+	multiple bonds. Fixes PR #529744. Use PerceiveBondOrders() when
+	using ConnectTheDots() for missing bonds.
+	
+	* src/ghemical.cpp: Add error checking for reading bonds. Don't
+	assume the # of bonds given in the header is correct.
+
+	* src/mol.cpp: Check to see if a bond exists before adding
+	it. (Prevents a bond addition (a,b) followed by (b,a).)
+
+2002-02-22  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/Makefile.in: Add viewmol.o.
+
+	* src/viewmol.cpp: New code to read/write ViewMol files as ported
+	from the GPL'ed patch sent by J?rg-R?diger Hill.
+
+	* src/data.h, src/data.cpp, src/extable.txt, src/extable.h: Add
+	ViewMol format and enable Chem3D and derived formats.
+
+	* src/c3d.cpp: Clean up Read methods to match normal declarations.
+
+	* src/fileformat.h, src/fileformat.cpp: Enable Read/Write for
+	Chem3d1, Chem3d2, Mmads and ViewMol formats.
+
+	* src/main.cpp: Add support for using '--' to read from STDIN and
+	output to STDOUT. Tackles request #519085.
+	
+2002-02-17  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* README, configure.in, configure: Update for next snapshot of
+	1.99.1.
+
+	* src/Makefile.in: Add -I(builddir) to ensure that
+	configure-generated version.h is included.
+
+	* src/alchemy.cpp, src/amber.cpp, src/balst.cpp, src/box.cpp,
+	src/cacao.cpp, src/car.cpp, src/ccc.cpp, src/dmol.cpp,
+	src/feat.cpp, src/gamess.cpp, src/gaussian.cpp, src/hin.cpp,
+	src/jaguar.cpp, src/mopac.cpp, src/mpqc.cpp, src/nwchem.cpp,
+	src/qchem.cpp, src/report.cpp, src/unichem.cpp, src/xyz.cpp:
+	Make sure that SetTitle() is called with the default title if the
+	format doesn't have a title, do not set atom types unless the
+	format supports them (the internal atom typer is better), and for
+	formats without bond information, call the new
+	mol.PerceiveBondOrders() method.
+
+	* src/mol.h, src/mol.cpp: Rename PerceiveBonds in favor of
+	more accurate PerceiveBondOrders(). Make sure that
+	auto-hybridization is turned off while bond orders are being
+	perceived and then let it run afterwards.
+	
+2002-02-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/mol.cpp (PerceiveBonds): Improve accuracy by picking the
+	closer atom (shorter bond) when there are two atoms with equal
+	electronegativities.
+
+	* src/main.cpp: Add -v flag to give version information but not
+	the whole usage report.
+	
+	* src/base.h, src/binary_io.h, src/bitvec.h, src/commandline.h,
+	src/ctransform.h, src/data.h, src/fileformat.h, src/grid.h,
+	src/matrix.h, src/mol.h, src/obutil.h, src/smarts.h: Remove
+	"using" statements from header files which pollute namespace of
+	user code. Fixes PR#493388.
+
+2002-02-14  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/data.h, src/data.cpp: Add MIME support to
+	OBExtensionTable. Progress towards feature request #511533.
+
+	* src/extable.txt, src/extable.h: As above (using as much from the
+	current Chemical MIME page as possible).
+
+	* src/mol.h, src/mol.cpp (PerceiveBonds): Add preliminary support
+	for assigning bond orders based on Roger Sayle's "Cruft to
+	Content" algorithm. Still needs functional group and aromatic ring
+	recognition passes. Progress towards feature request #514589.
+	<http://www.daylight.com/meetings/mug01/Sayle/m4xbondage.html>
+
+	* src/mopac.cc: Fix bugs in read/write methods as pointed out by
+	Radek Liboska. Should solve PR #515884.
+
+	* src/atom.cpp (GetType): Fix bug with atom typing by assigning
+	the ATN type of an atom if the atom typer didn't pick one before.
+
+	* src/gamess.cpp, src/xyz.cpp, src/unichem.cpp, src/ghemical.cpp:
+	Don't try to translate atom types as this causes problems. (Works
+	cleanly now that the GetType() bug is fixed.)
+	
+2002-02-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/data.cpp, src/data.h, src/element.txt: Added support for
+	electronegativity of elements. (Needed for assigning bond types,
+	among other things.)
+
+	* src/element.h: Regenerate using bin2hex.pl.
+
+	* src/ghemical.cpp: Don't try to type atoms, it only causes
+	problems with the internal atom typing.
+
+2002-02-07  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+	
+	* src/Makefile.in: Add c3d.cpp to the compilation list.
+
+	* src/obutil.cpp: Migrate quat.c code here temporarily.
+	
+	* src/mol.cpp, src/mol.h: Resolve problems with declarations of
+	old quat.c code since they now fall under OpenBabel namespace.
+
+2002-02-01  Michael Banck  <mbanck@gmx.net>
+
+	* test/Makefile.in, src/Makefile.in: Delete Makefile when calling
+	distclean target.
+
+	* Makefile.in: Fix install target to create the $(mandir) directory.
+
+2002-02-01  Michael Banck  <mbanck@gmx.net>
+
+	* Makefile.in: Added manpage to install target.
+
+	* configure, configure.in, Makefile.in, src/Makefile.in,
+	src/version.h.in: Put version information in configure.in and made
+	generated tarballs contain it.
+	
+2002-01-24  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* doc/FAQ, doc/babel.1: Minor documentation fixes.
+	
+2002-01-21  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* Makefile.in: Fix problems with the dist target.
+
+	* configure, configure.in: Add 'top_builddir' macro to know where
+	objdir is in the case that we're not building in the source
+	directory.
+
+	* src/Makefile.in: Run the library through 'ranlib', which fixes
+	problems on Mac OS X. Fix problems running 'install' when not
+	building in the source directory.
+
+	* src/unichem.cpp: Fix bug in reading files.
+
+	* src/version.h: Set version to 1.99.
+	
+	* test/Makefile.in: Fix problems with the check target: tests need
+	to be copied to the build dir if we're not in the source directory.
+	
+2002-01-21  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* doc/*: Move documentation to subdirectory--since there will
+	eventually be more than these few morsels.
+
+	* doc/Migration: Add a Migration guide for OELib -> Open Babel changes.
+
+2002-01-20  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* FAQ, README: Added FAQ.
+
+2002-01-20  Michael Banck  <mbanck@gmx.net>	
+
+	* babel.1: Initial import of man page, this is only a rough
+	draft. Should become babel.1.in perhaps, with the available file
+	types determined during the build.
+
+2002-01-18  Michael Banck  <mbanck@gmx.net>	
+
+        * Makefile.in, src/Makefile.in: Fixed install target. Removed
+	Primer.html, bin2hex.pl and GNULICENSE from datafiles. Added
+	datafiles to install: target.
+
+        * Makefile.in, src/data.cpp, src/Makefile.in, src/patty.cpp,
+	src/pdb.cpp, src/phmodel.cpp, src/rotor.cpp, src/typer.cpp:
+        Openbabel now first checks for $BABEL_DATADIR, then looks in
+	${pkgdatadir} and finally uses the compiled-in values to get the
+	relevant data.
+	
+2002-01-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/main.cpp: Use the filename as the default filename when
+	reading molecules.
+
+	* src/qchem.cpp: Disable reading final z-matrix--currently
+	produces very bizzare results for some files.
+
+	* test/Makefile.in: Make sure the main program is compiled too.
+
+	* test/main.cpp, test/ringtest.cpp, test/smartstest.cpp: Update to
+	new OpenBabel API. (Took about a minute to change OE->OB and
+	change to iterate over OBNodeBase and OBEdgeBase.)
+
+	* test/smartstest.txt: Get rid of DOS line endings--lines are not
+	properly read.
+
+2002-01-11  Michael Banck  <mbanck@gmx.net>
+
+	* src/Makefile.in, test/Makefile.in, Makefile.in: Added
+	distclean-targets to src and test's Makefiles and removed stamp.h
+	again (D'OH).
+
+	* Makefile.in: Added 'stamp.h' to distclean:-target and renamed
+	DISTDIR from *openbabel to *openbabel-dist.  ('make dist' fried my
+	CVS-repository because it was named 'openbabel') dist:-target
+	still does not work properly.
+	Removed "\" at the end of first line of distclean:-target
+
+2002-01-09  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* */*: Updated build environment with src/ directory and autoconf
+	configure script. Builds cleanly--haven't tried using the "install
+	target" The test/ subdir needs fixing to remove OELib references.
+
+2001-12-14  Michael Banck  <mbanck@gmx.net>
+
+	* Makefile.in: Changed oeutil.* to the new name obutil.*.
+
+2001-12-14  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* */*: Changed OE prefix to OB -- think I got all the cases, but
+	some may crop up.
+
+	Thanks to Michael Banck:
+	-Added some GNUish files like AUTHORS, etc.
+	-Added configure.in -- will shortly replace configure script with
+	an autoconf one. 
+	-Need to decide how to work ChangeLog--should it go before
+	OELib->OpenBabel change?
+
+	* */*: Many changes to namespace and cleanup of API to work with
+	gcc v. 3. Still need to do big OE prefix cleanup.
+
+2001-11-28  ghutchis  <ghutchis@hydra.chem.northwestern.edu>
+
+	* configure, data.cpp, dmol.cpp, main.cpp, mol.cpp, Primer.html,
+	Makefile.in: Fixes from Ghemical and a first start at the "Open
+	Babel" nomenclature.
+
+2001-11-27  ghutchis  <ghutchis@hydra.chem.northwestern.edu>
+
+	* Import from OE current CVS. (Last GPL'ed version.)
+
