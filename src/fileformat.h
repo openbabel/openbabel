@@ -111,6 +111,7 @@ bool WriteMol2(std::ostream &,OBMol &,const char *dimension="3D");
 bool WriteMOPACCartesian(std::ostream &,OBMol &);
 bool WriteNWChem(std::ostream &,OBMol&);
 bool WritePDB(std::ostream &, OBMol&);
+bool WritePovray(std::ostream &, OBMol&, const char*outputName="Output");
 bool WriteQChem(std::ostream &,OBMol &);
 bool WriteReport(std::ostream &,OBMol &);
 bool WriteSDFile(std::ostream &,OBMol &,const char *dimension="3D");

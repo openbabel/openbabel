@@ -106,6 +106,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol,
     case MOL2:      WriteMol2(ofs,mol,dimension);  	break;
     case MOPACCART: WriteMOPACCartesian(ofs,mol);	break;
     case PDB:       WritePDB(ofs,mol);			break;
+    case POV:	    WritePovray(ofs,mol,options);       break;
     case QCHEMIN:   WriteQChem(ofs,mol);		break;
     case REPORT:    WriteReport(ofs,mol);		break;
     case SDF:       WriteSDFile(ofs,mol,dimension);     break;

@@ -52,7 +52,7 @@ typedef enum { UNDEFINED, // Rest are alphabetical, insert as needed
                MICROWORLD, MM2IN, MM2OUT, MM3, MMADS, MMCIF, MMD,
                MOL2, MOLDEN, MOLIN, MOLINVENT, MOPACCART, MOPACINT,
                MOPACOUT, MPQC, MSF, NWCHEMIN, NWCHEMOUT, OEBINARY,
-               PCMODEL, PDB, PREP, QCHEMIN, QCHEMOUT, REPORT,
+               PCMODEL, PDB, POV, PREP, QCHEMIN, QCHEMOUT, REPORT,
                SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
                SPARTANSEMI, TGF, TINKER, TITLE, UNICHEM, VIEWMOL,
                XED, XYZ

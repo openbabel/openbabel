@@ -332,6 +332,7 @@ io_type TextToType(string typestring)
 {
   if (typestring == "MOL2")			return(MOL2);
   else if (typestring == "PDB")			return(PDB);
+  else if (typestring == "POV")			return(POV);
   else if (typestring == "SDF")			return(SDF);
   else if (typestring == "BOX")			return(BOX);
   else if (typestring == "SMI")			return(SMI);

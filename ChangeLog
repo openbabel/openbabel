@@ -1,3 +1,31 @@
+2002-11-27  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/atom.cpp(MemberOfRingSize): New method -- if atom is in a
+	ring, return size. (Need to fix to designate *which* ring if in
+	multiple.)
+	(SetHybAndGeom): Fix to use scaled bondlengths for aromatic,
+	double and triple bonds and adjust expected bond angles if in a
+	ring.
+
+	* src/mol.cpp: Add << and >> convenience functions based on
+	OBFileFormat objects.
+
+	* src/ghemical.cpp: Fix header line for new "gpr" extension.
+
+	* src/povray.cpp: New file, contributed by Steffen Reith to output
+	POV-Ray scene files.
+	
+	* src/data.cpp, src/data.h: Add POV file type.
+
+	* src/extable.txt, src/extable.h: Likewise.
+
+	* src/fileformat.cpp, src/fileformat.h: Likewise:
+
+	* src/Makefile.in: Add povray.cpp.
+
+	* doc/README.dioxin.pov, doc/README.povray, doc/babel31.inc,
+	doc/dioxin.mol2, doc/dioxin.pov: New files.
+
 2002-11-25  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/mol.cpp, src/mol.h: Add back << and >> convenience functions

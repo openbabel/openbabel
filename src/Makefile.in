@@ -58,7 +58,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		ring.o rotor.o smi.o tokenst.o pdb.o ccc.o \
 		mmod.o rand.o box.o balst.o bgf.o cacao.o cache.o chdrw.o \
 		csr.o cssr.o feat.o fh.o gromos96.o cwrap.o \
-		ghemical.o xyz.o fileformat.o gamess.o hin.o \
+		povray.o ghemical.o xyz.o fileformat.o gamess.o hin.o \
 		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
 		jaguar.o amber.o generic.o residue.o \
 		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o viewmol.o \
