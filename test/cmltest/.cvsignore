@@ -1,4 +1,5 @@
 .cvsignore
+Makefile
 3d.head.2.cml
 3d.head.2an.cml
 cs2a.mol
