@@ -1,9 +1,21 @@
+2002-07-22  Michael Banck <mbanck@gmx.net>
+
+	* src/gaussian.cpp: Fixed WriteGaussianCart() hopefully:
+	- calculate charge and mulitiplicty (the latter being quite shakey
+	  ATM)
+	- do away with the zero after the atom type
+	- don't reference coordinates, write them straight after the atom type
+	- add a blank line at the end
+	* configure.in: Added --enable-doxygen configure option. If enabled,
+	search for doxygen and print an URL if not found
+	* configure: Updated for new configure.in
+
 2002-07-18  Stefan Kebekus <kebekus@users.sourceforge.net>
 
 	* isolated the 3-dimensional vector and matrix classes, gave them
 	less ambigous names, and put them into a directory "math". Added
 	an access function to the vector class.
-	
+
 2002-07-12  Stefan Kebekus <kebekus@users.sourceforge.net>
 	
 	* added documentation to the Vector class, made some functions
