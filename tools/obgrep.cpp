@@ -13,9 +13,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "obutil.h"
 #include "parsmart.h"
-#include "obifstream.h"
 #include <unistd.h>
 
 using namespace std;
@@ -68,7 +66,7 @@ int main(int argc,char **argv)
       err += "   -f    Full match, print matching-molecules when the number\n";
       err += "         of heavy atoms is equal to the number of PATTERN atoms\n";
       ThrowError(err);
-      exit(0);
+      exit(-1);
     }
   else {
     Pattern = argv[index++];

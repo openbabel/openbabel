@@ -126,26 +126,41 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 
-bin_PROGRAMS = obgrep
+bin_PROGRAMS = obgrep obrotate obfit
 obgrep_SOURCES = obgrep.cpp
 obgrep_LDADD = ../src/libopenbabel.la
+
+obrotate_SOURCES = obrotate.cpp
+obrotate_LDADD = ../src/libopenbabel.la
+
+obfit_SOURCES = obfit.cpp
+obfit_LDADD = ../src/libopenbabel.la
 subdir = tools
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/babelconfig.h
 CONFIG_CLEAN_FILES =
-bin_PROGRAMS = obgrep$(EXEEXT)
+bin_PROGRAMS = obgrep$(EXEEXT) obrotate$(EXEEXT) obfit$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
+am_obfit_OBJECTS = obfit.$(OBJEXT)
+obfit_OBJECTS = $(am_obfit_OBJECTS)
+obfit_DEPENDENCIES = ../src/libopenbabel.la
+obfit_LDFLAGS =
 am_obgrep_OBJECTS = obgrep.$(OBJEXT)
 obgrep_OBJECTS = $(am_obgrep_OBJECTS)
 obgrep_DEPENDENCIES = ../src/libopenbabel.la
 obgrep_LDFLAGS =
+am_obrotate_OBJECTS = obrotate.$(OBJEXT)
+obrotate_OBJECTS = $(am_obrotate_OBJECTS)
+obrotate_DEPENDENCIES = ../src/libopenbabel.la
+obrotate_LDFLAGS =
 
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/obgrep.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/obfit.Po ./$(DEPDIR)/obgrep.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/obrotate.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(DEFS) \
@@ -154,9 +169,9 @@ LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-DIST_SOURCES = $(obgrep_SOURCES)
+DIST_SOURCES = $(obfit_SOURCES) $(obgrep_SOURCES) $(obrotate_SOURCES)
 DIST_COMMON = $(srcdir)/Makefile.in Makefile.am
-SOURCES = $(obgrep_SOURCES)
+SOURCES = $(obfit_SOURCES) $(obgrep_SOURCES) $(obrotate_SOURCES)
 
 all: all-am
 
@@ -196,9 +211,15 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
+obfit$(EXEEXT): $(obfit_OBJECTS) $(obfit_DEPENDENCIES) 
+	@rm -f obfit$(EXEEXT)
+	$(CXXLINK) $(obfit_LDFLAGS) $(obfit_OBJECTS) $(obfit_LDADD) $(LIBS)
 obgrep$(EXEEXT): $(obgrep_OBJECTS) $(obgrep_DEPENDENCIES) 
 	@rm -f obgrep$(EXEEXT)
 	$(CXXLINK) $(obgrep_LDFLAGS) $(obgrep_OBJECTS) $(obgrep_LDADD) $(LIBS)
+obrotate$(EXEEXT): $(obrotate_OBJECTS) $(obrotate_DEPENDENCIES) 
+	@rm -f obrotate$(EXEEXT)
+	$(CXXLINK) $(obrotate_LDFLAGS) $(obrotate_OBJECTS) $(obrotate_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
@@ -206,7 +227,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgrep.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotate.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
