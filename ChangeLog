@@ -1,3 +1,15 @@
+2004-01-16  Michael Banck  <mbanck@gmx.net>
+
+	Second and last pass of test-suite-in-builddir handling, fixing 
+	the shell scripts.
+	
+	* test/cml.sh: Export $srcdir and $builddir for use in the called
+	scripts. Prepend $cmltestdir to avoid absolute pathnames.
+	* test/cmltest/test.sh: Define $builddir and specify path to the
+	babel executable from there. Replace every absolute pathname
+	with relative ones.
+	* test/roundtrip.sh: Likewise.
+
 2004-01-13  Michael Banck  <mbanck@gmx.net>
 
         First shot at making a test-suite run from a build-directory
