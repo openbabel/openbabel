@@ -47,9 +47,58 @@ bool WriteChemDraw(ostream &ofs,OBMol &mol)
     sprintf(buffer,"%3d%3d%3d%3d",
 	    bond->GetBeginAtomIdx(),
 	    bond->GetEndAtomIdx(),
-	    bond->GetBO(),1);
+	    bond->GetBO(), bond->GetBO());
     ofs << buffer << endl;
   }
+  return(true);
+}
+
+bool ReadChemDraw(istream &ifs,OBMol &mol, const char *title)
+{ 
+  char buffer[BUFF_SIZE];
+  unsigned int natoms, nbonds;
+  unsigned int bgn, end, order;
+  vector<string> vs;
+  OBAtom *atom;
+  double x, y, z;
+
+  mol.BeginModify();
+
+  ifs.getline(buffer,BUFF_SIZE);
+  if (strlen(buffer) == 0)
+    mol.SetTitle(buffer);
+  else
+    mol.SetTitle(title);
+
+  ifs.getline(buffer,BUFF_SIZE);
+  sscanf(buffer," %d %d", &natoms, &nbonds);
+  
+  for (int i = 1; i <= natoms; i ++)
+  {
+    if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
+    tokenize(vs,buffer);
+    if (vs.size() != 4) return(false);
+    atom = mol.NewAtom();
+
+    x = atof((char*)vs[0].c_str());
+    y = atof((char*)vs[1].c_str());
+    z = atof((char*)vs[2].c_str());
+
+    atom->SetVector(x,y,z); //set coordinates
+    atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
+  }
+
+  if (nbonds != 0)
+    for (int i = 0; i < nbonds; i++)
+      {
+	if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
+	tokenize(vs,buffer);
+	if (vs.size() != 4) return(false);
+        if (!sscanf(buffer,"%d%d%d%*d",&bgn,&end,&order)) return (false);
+	mol.AddBond(bgn,end,order);
+      }
+
+  mol.EndModify();
   return(true);
 }
 
