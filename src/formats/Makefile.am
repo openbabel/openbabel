@@ -17,5 +17,9 @@ libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
 	xedformat.cpp xyzformat.cpp zindoformat.cpp
 
+libformatsincludedir = $(includedir)/openbabel
+libformatsinclude_HEADERS = \
+	obmolecformat.h
+
 EXTRA_DIST = exampleformat.cpp
 

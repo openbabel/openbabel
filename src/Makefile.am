@@ -21,16 +21,16 @@ libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
-		fingerprint.h generic.h grid.h \
+		dlhandler.h fingerprint.h generic.h grid.h \
 		matrix.h mol.h molchrg.h \
+		obconversion.h \
 		oberror.h obifstream.h obutil.h \
-		parsmart.h patty.h phmodel.h ring.h \
-		rotor.h rotamer.h typer.h 
+		parsmart.h patty.h phmodel.h reaction.h \
+		ring.h rotor.h rotamer.h typer.h 
 
 bin_PROGRAMS = babel
 babel_SOURCES = main.cpp
 babel_LDADD = libopenbabel.la @LIBOBJS@
 
 EXTRA_DIST = \
-	bc32.mak borland.bat oblib.dsp oblib.dsw \
 	strncasecmp.c snprintf.c snprintf.h
