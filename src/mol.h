@@ -19,6 +19,8 @@ GNU General Public License for more details.
 #ifndef OB_MOL_H
 #define OB_MOL_H
 
+#include "babelconfig.h"
+
 #include <math.h>
 
 #include <algorithm>
@@ -36,8 +38,6 @@ GNU General Public License for more details.
 #include "generic.h"
 #include "typer.h"
 #include "fileformat.h"
-
-#include "babelconfig.h"
 
 namespace OpenBabel {
 
