@@ -16,7 +16,9 @@ GNU General Public License for more details.
 using namespace std;
 
 namespace OpenBabel {
-	
+
+  // \todo Update to write genuine MM3 files -- this is currently MM2 code.
+
 bool WriteMM3(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
