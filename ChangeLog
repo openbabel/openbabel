@@ -1,3 +1,12 @@
+2002-06-06  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/main.cpp: Add support for -iMIME or -oMIME <mime_type>
+	input. This should facilitate use for web applications (e.g. as a
+	pass-through filter to other programs).
+
+	* src/data.h, src/data.cpp: Add methods
+	IsReadable/IsWritable(io_type).
+
 2002-05-30  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/mol.h, src/atom.cpp (HasNonSingleBond): Add new method to

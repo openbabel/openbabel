@@ -77,7 +77,9 @@ int main(int argc,char *argv[])
 		case 'i':
 		  gotInType = true;
 		  ext = argv[arg] + 2;
-		  if (extab.CanReadExtension(ext))
+		  if (strncasecmp(ext, "MIME", 4) == 0)
+		    outFileType = extab.MIMEToType(ext);
+		  else if (extab.CanReadExtension(ext))
 		    inFileType = extab.FilenameToType(ext);
 		  else
 		    {
@@ -89,7 +91,9 @@ int main(int argc,char *argv[])
 		case 'o':
 		  gotOutType = true;
 		  ext = argv[arg] + 2;
-		  if (extab.CanWriteExtension(ext))
+		  if (strncasecmp(ext, "MIME", 4) == 0)
+		    outFileType = extab.MIMEToType(ext);
+		  else if (extab.CanWriteExtension(ext))
 		    outFileType = extab.FilenameToType(ext);
 		  else
 		    {
