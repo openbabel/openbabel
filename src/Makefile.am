@@ -7,7 +7,7 @@ libopenbabel_la_SOURCES = \
 		binary.cpp bitvec.cpp bond.cpp box.cpp c3d.cpp cacao.cpp \
 		cache.cpp car.cpp ccc.cpp chains.cpp chdrw.cpp chemtool.cpp chiral.cpp \
 		cml.cpp crk.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp \
-		fileformat.cpp gamess.cpp gaussian.cpp generic.cpp \
+		fileformat.cpp fingerprint.cpp gamess.cpp gaussian.cpp generic.cpp \
 		ghemical.cpp grid.cpp gromos96.cpp hin.cpp jaguar.cpp \
 		kekulize.cpp matrix.cpp mdl.cpp mm3.cpp mmod.cpp mol.cpp mol2.cpp \
 		molchrg.cpp molvector.cpp mopac.cpp mpqc.cpp nwchem.cpp \
@@ -24,7 +24,7 @@ libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
 		aromatic.h atomtyp.h babelconfig.h base.h binary.h bitvec.h \
 		bondtyp.h bondtyper.h chains.h chiral.h crk.h data.h \
-		element.h extable.h fileformat.h generic.h grid.h \
+		element.h extable.h fileformat.h fingerprint.h generic.h grid.h \
 		isotope.h matrix.h mol.h molchrg.h molvector.h \
 		oberror.h obifstream.h obutil.h \
 		parsmart.h patty.h phmodel.h phmodeldata.h resdata.h ring.h \
