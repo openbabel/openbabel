@@ -1,3 +1,27 @@
+2005-02-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/ghemicalformat.cpp (ReadMolecule): Add some initial
+	support for ghemical 1.5x files. Reported by Avell Diroll.
+
+	* src/formats/mdlformat.cpp (ReadMolecule): Improve flexibility in
+	handling non-standard SDFiles. Now handles "VAMP" output, thanks
+	to an example file from Dr. James Smith, Erlangen.
+
+	* src/data.h, src/data.cpp (OBElementTable::GetAtomicNum): Fix bug
+	with isotope support as pointed out by Chris Morley -- need to
+	pass a reference back to the isotope value. Added a
+	backwards-compatible one-argument function which throws away the
+	isotope value.
+
+	* src/obconversion.cpp (Convert): Throw a debugging error if the
+	ReadChemObject method returns false.
+
+	* aclocal.m4, config.guess, config.sub, install-sh, ltmain.sh,
+	missing, mkinstalldirs: Update with latest GNU versions from
+	Automake 1.9.5 and libtool 1.5.14.
+
+	* configure, */Makefile.in: Updated automatically from above.
+
 2005-02-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mdlformat.cpp (ReadMolecule): Fix bug where long
