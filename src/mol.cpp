@@ -2715,6 +2715,55 @@ void OBMol::PerceiveBondOrders()
 
   // Pass 4: Check for known functional group patterns and assign bonds
   //         to the canonical form
+  //      Currently we have explicit code to do this, but a "bond typer"
+  //      is in progress to make it simpler to test and debug.
+  OBBond *b1,*b2,*b3;
+  OBAtom *a1,*a2,*a3,*a4;
+  vector<vector<int> > mlist;
+  vector<vector<int> >::iterator l;
+
+  // azide -N=N=N
+  OBSmartsPattern azide; azide.Init("[#7D2][#7D2][#7D1]");
+  if (azide.Match(*this))
+    {
+      mlist = azide.GetUMapList();
+      for (l = mlist.begin(); l != mlist.end(); l++)
+        {
+          a1 = GetAtom((*l)[0]);
+          a2 = GetAtom((*l)[1]);
+          a3 = GetAtom((*l)[2]);
+          b1 = a2->GetBond(a1); b2 = a2->GetBond(a3);
+
+          if (!b1 || !b2) continue;
+          b1->SetBO(2);
+          b2->SetBO(2);
+        }
+    } // Azide
+
+  // Sulphone -SO2-
+  OBSmartsPattern sulphone; sulphone.Init("[#16D4]([#8D1])([#8D1])(*)(*)");
+  if (sulphone.Match(*this))
+    {
+      cerr << " got match! " << endl;
+      mlist = sulphone.GetUMapList();
+      for (l = mlist.begin(); l != mlist.end(); l++)
+        {
+          a1 = GetAtom((*l)[0]);
+          a2 = GetAtom((*l)[1]);
+          a3 = GetAtom((*l)[2]);
+	  a4 = GetAtom((*l)[3]);
+          b1 = a1->GetBond(a2); b2 = a1->GetBond(a3); b3 = a1->GetBond(a4);
+
+          if (!b1 || !b2 || !b3) continue;
+          b1->SetBO(2);
+          b2->SetBO(2);
+	  b3->SetBO(1);
+	  a4 = GetAtom((*l)[4]);
+	  b3 = a1->GetBond(a4);
+	  if (!b3) continue;
+	  b3->SetBO(1);
+        }
+    } // Sulfone
 
   // Pass 5: Check for aromatic rings and assign bonds as appropriate
 
@@ -2743,6 +2792,9 @@ void OBMol::PerceiveBondOrders()
 	  // loop through the neighbors looking for a hybrid or terminal atom
 	  // (and pick the one with highest electronegativity first)
 	  // *or* pick a neighbor that's a terminal atom
+	  if (atom->HasNonSingleBond())
+	    continue;
+
 	  maxElNeg = 0.0f;
 	  shortestBond = 5000.0f;
 	  c = NULL;
@@ -2755,9 +2807,12 @@ void OBMol::PerceiveBondOrders()
 		       (currentElNeg == maxElNeg
 			&& (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
-		      shortestBond = (atom->GetBond(b))->GetLength();
-		      maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
-		      c = b; // save this atom for later use
+		  if (atom->HasNonSingleBond())
+		    continue;
+
+		  shortestBond = (atom->GetBond(b))->GetLength();
+		  maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+		  c = b; // save this atom for later use
 		}
 	    }
 	  if (c)
@@ -2767,6 +2822,9 @@ void OBMol::PerceiveBondOrders()
 		&& atom->BOSum() < etab.GetMaxBonds(atom->GetAtomicNum()) )
 	{
 	  // as above
+	  if (atom->HasNonSingleBond())
+	    continue;
+	  
 	  maxElNeg = 0.0f;
 	  shortestBond = 5000.0f;
 	  c = NULL;
@@ -2779,6 +2837,9 @@ void OBMol::PerceiveBondOrders()
                       (currentElNeg == maxElNeg
                        && (atom->GetBond(b))->GetLength() < shortestBond)) )
 		{
+		  if (atom->HasNonSingleBond())
+		    continue;
+		
 		  shortestBond = (atom->GetBond(b))->GetLength();
 		  maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
 		  c = b; // save this atom for later use
