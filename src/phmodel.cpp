@@ -61,7 +61,7 @@ void OBPhModel::ParseLine(const char *buffer)
       OBChemTsfm *tsfm = new OBChemTsfm;
       if (!tsfm->Init(vs[1],vs[3])) 
 	{
-	  delete tsfm; 
+	  delete tsfm; tsfm = NULL;
 	  return;
 	}
 
@@ -74,7 +74,7 @@ void OBPhModel::ParseLine(const char *buffer)
       sp = new OBSmartsPattern;
       if (!sp->Init(vs[1]) || ((signed)vs.size()-2) != sp->NumAtoms())
 	{
-	  delete sp;
+	  delete sp; sp = NULL;
 	  return;
 	}
       vector<float> vf;

@@ -41,7 +41,7 @@ class OBRotorRule
       _vals = vals;
       _delta = d;
     }
-  ~OBRotorRule() {if (_sp) delete _sp;}
+  ~OBRotorRule() {if (_sp) {delete _sp; _sp = NULL;}}
 
   bool             IsValid() {return(_sp->IsValid());}
   void             GetReferenceAtoms(int ref[4])  

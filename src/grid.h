@@ -75,7 +75,8 @@ class OBFloatGrid
 public:
 
     OBFloatGrid() : _halfSpace(0.0f) {_val=NULL;_ival=NULL;}
-  ~OBFloatGrid() {if (_ival) delete [] _ival;if (_val) delete [] _val;}
+    ~OBFloatGrid() {if (_ival) {delete [] _ival; _ival = NULL;}
+                    if (_val) {delete [] _val; _val = NULL;}}
   void Init(OBMol &,float, float pad= 0.0f); //initialized using boxfile
   bool PointIsInBox(float x,float y,float z)
     {

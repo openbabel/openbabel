@@ -134,6 +134,7 @@ bool ReadMol2(istream &ifs,OBMol &mol,char *title)
 	  cd->SetData(comment);
 	  mol.SetData(cd);
 	  delete [] comment;
+	  comment = NULL;
 	}
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();

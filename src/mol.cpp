@@ -677,21 +677,27 @@ OBMol &OBMol::operator=(const OBMol &source)
 
       //Set reference array
       unsigned char *ref = new unsigned char [rml->NumRotors()*4];
-      rml->GetReferenceArray(ref);
-      cp_rml->Setup((*this),ref,rml->NumRotors());
-      delete [] ref;
+      if (ref)
+	{
+	  rml->GetReferenceArray(ref);
+	  cp_rml->Setup((*this),ref,rml->NumRotors());
+	  delete [] ref;
+	}
 
       //Set Rotamers
       unsigned char *rotamers = new unsigned char [(rml->NumRotors()+1)*rml->NumRotamers()];
-      vector<unsigned char*>::iterator kk;
-      unsigned int idx=0;
-      for (kk = rml->BeginRotamer();kk != rml->EndRotamer();kk++)
-        {
-          memcpy(&rotamers[idx],(const unsigned char*)*kk,sizeof(unsigned char)*(rml->NumRotors()+1));
-          idx += sizeof(unsigned char)*(rml->NumRotors()+1);
-        }
-      cp_rml->AddRotamers(rotamers,rml->NumRotamers());
-      delete [] rotamers;
+      if (rotamers)
+	{
+	  vector<unsigned char*>::iterator kk;
+	  unsigned int idx=0;
+	  for (kk = rml->BeginRotamer();kk != rml->EndRotamer();kk++)
+	    {
+	      memcpy(&rotamers[idx],(const unsigned char*)*kk,sizeof(unsigned char)*(rml->NumRotors()+1));
+	      idx += sizeof(unsigned char)*(rml->NumRotors()+1);
+	    }
+	  cp_rml->AddRotamers(rotamers,rml->NumRotamers());
+	  delete [] rotamers;
+	}
       SetData(cp_rml); 
     }
 
@@ -877,12 +883,20 @@ OBBond *OBMol::CreateBond(void)
 
 void OBMol::DestroyAtom(OBNodeBase *atom)
 {
-  delete atom;
+  if (atom)
+    {
+      delete atom;
+      atom = NULL;
+    }
 }
 
 void OBMol::DestroyBond(OBEdgeBase *bond)
 {
-  delete bond;
+  if (bond)
+    {    
+      delete bond;
+      bond = NULL;
+    }
 }
 
 OBAtom *OBMol::NewAtom()
@@ -1304,7 +1318,7 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
 
   //Just delete the pose coordinate array.  It will automatically
   //be reallocated when SetPose(unsigned int) is called.
-  if (_xyz_pose) delete [] _xyz_pose; _xyz_pose = NULL;
+  if (_xyz_pose) {delete [] _xyz_pose; _xyz_pose = NULL;}
 
   IncrementMod();
 
@@ -1384,7 +1398,7 @@ bool OBMol::AddHydrogens(OBAtom *atom)
 
   //Just delete the pose coordinate array.  It will automatically
   //be reallocated when SetPose(unsigned int) is called.
-  if (_xyz_pose) delete [] _xyz_pose; _xyz_pose = NULL;
+  if (_xyz_pose) {delete [] _xyz_pose; _xyz_pose = NULL;}
 
   IncrementMod();
 
@@ -1851,7 +1865,11 @@ bool OBMol::DeleteResidue(OBResidue *residue)
 
     _residue.erase(_residue.begin() + idx);
 
-    delete residue;
+    if (residue)
+      {
+	delete residue;
+	residue = NULL;
+      }
 
     return(true);
 }
@@ -2246,7 +2264,7 @@ OBMol::~OBMol()
   _vconf.clear();
 
   //Deallocate the pose coordinate array if necessary
-  if (_xyz_pose) delete [] _xyz_pose; _xyz_pose = NULL;
+  if (_xyz_pose) {delete [] _xyz_pose; _xyz_pose = NULL;}
 
   if (!_vdata.empty())
   {
@@ -3104,7 +3122,7 @@ void OBMol::DeletePoses()
       }
 
     //Free the pose coordinate array
-    if (_xyz_pose) delete [] _xyz_pose; _xyz_pose = NULL;
+    if (_xyz_pose) {delete [] _xyz_pose; _xyz_pose = NULL;}
 
     _pose.clear();
 

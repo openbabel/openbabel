@@ -679,7 +679,7 @@ bool WritePDB(ostream &ofs,OBMol &mol)
     else
       {
 	strcpy(the_res,"UNK");
-	sprintf(padded_name,"%2s",type_name);
+	sprintf(padded_name,"%s",type_name);
 	strcpy(type_name,padded_name);
 	res_num = 1;
       }

@@ -51,6 +51,7 @@ long int ob_make_cmol()
 void ob_delete_cmol(long int handle)
 {
   delete (OBMol*)handle;
+  handle = 0;
 }
 
 int ob_get_cmol_atom_number(int *natoms,long int handle)

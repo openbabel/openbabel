@@ -136,7 +136,10 @@ bool WriteCacaoInternal(ostream &ofs,OBMol &mol)
   vector<OBInternalCoord*>::iterator j;
   for (j = vit.begin();j != vit.end();j++) 
     if (*j)
-      delete *j;
+      {
+	delete *j;
+	*j = NULL;
+      }
 
   return(true);
 }

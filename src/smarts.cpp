@@ -277,7 +277,7 @@ OBNode::~OBNode()
 {
   if (_match)
     {
-      delete _match;
+      //      delete _match;
       _match = NULL;
     }
   if (_expr)
@@ -311,12 +311,14 @@ OBSmartsPattern::~OBSmartsPattern()
 	for (i = _vatom.begin();i != _vatom.end();i++)
 	  {
 	    delete *i;
+	    *i = NULL;
 	  }
 
 	vector<OBEdgeBase*>::iterator j;
 	for (j = _vbond.begin();j != _vbond.end();j++)
 	  {
 	    delete *j;
+	    *j = NULL;
 	  }
 }
 
@@ -471,7 +473,7 @@ void OBRecursExpr::ResetRecurs()
 
 OBRecursExpr::~OBRecursExpr()
 {
-	if (_sp) delete _sp;
+  if (_sp) {delete _sp; _sp = NULL;}
 }
 
 }//namespace OpenBabel

@@ -69,7 +69,7 @@ class OBSqrtTbl
  public:
   OBSqrtTbl() {_tbl=NULL;}
   OBSqrtTbl(float max,float incr) {Init(max,incr);}
-  ~OBSqrtTbl() {if (_tbl) delete [] _tbl;}
+  ~OBSqrtTbl() {if (_tbl) {delete [] _tbl; _tbl = NULL;}}
   float Sqrt(float d2) {return((d2 < _max) ? _tbl[(int)(d2*_incr)]:float(sqrt(d2)));}
   void Init(float max,float incr)
     {

@@ -675,7 +675,7 @@ OBExprBase *OBSmartsParser::ParseComplexAtomPrimitive()
 				  delete pat; pat = NULL;
 					return((OBExprBase*)NULL);
 				}
-				delete [] tmp;
+				delete [] tmp; tmp = NULL;
 				return(new OBRecursExpr(pat));
 			}
 			break;

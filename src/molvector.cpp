@@ -28,6 +28,7 @@ OBMolVector::~OBMolVector()
   for (unsigned int i = 0; i < _molvec.size(); i++)
     {
       delete _molvec[i];
+      _molvec[i] = NULL;
     }
 }
 
@@ -50,6 +51,7 @@ void OBMolVector::Read(ifstream &ifs, const io_type in_type, const io_type out_t
       if (!(*mol).NumAtoms())
 	{
 	  delete mol;
+	  mol = NULL;
 	  break;
 	}
       _molvec.push_back(mol);
@@ -105,7 +107,7 @@ bool OBMolVector::ReadConfs(ifstream &ifs, const io_type in_type, const io_type 
       ff.ReadMolecule(ifs,*mol);
       if (mol->NumAtoms() == 0)
         {
-          delete mol;
+          delete mol; mol = NULL;
 	  return(false);
         }
       
@@ -122,7 +124,7 @@ bool OBMolVector::ReadConfs(ifstream &ifs, const io_type in_type, const io_type 
           else
             {
               ifs.seekg(sp);
-              delete mol;
+              delete mol; mol = NULL;
               break;
             }
         }

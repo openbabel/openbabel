@@ -691,25 +691,15 @@ void OBChainsParser::SetupMol(OBMol &mol)
 
 void OBChainsParser::CleanupMol(void)
 {
-	if (bitmasks != NULL) delete bitmasks;
-	if (hetflags != NULL) delete hetflags;
-	if (atomids  != NULL) delete atomids;
-	if (resids   != NULL) delete resids;
-	if (resnos   != NULL) delete resnos;
-	if (sernos   != NULL) delete sernos;
-	if (hcounts  != NULL) delete hcounts;
-	if (chains   != NULL) delete chains;
-	if (flags    != NULL) delete flags;
-
-	bitmasks = NULL;
-	hetflags = NULL;
-	atomids  = NULL;
-	resids   = NULL;
-	resnos   = NULL;
-	sernos   = NULL;
-	hcounts  = NULL;
-	chains   = NULL;
-	flags    = NULL;
+  if (bitmasks != NULL) {delete bitmasks; bitmasks = NULL;}
+  if (hetflags != NULL) {delete hetflags; hetflags = NULL;}
+  if (atomids  != NULL) {delete atomids; atomids = NULL;}
+  if (resids   != NULL) {delete resids; resids = NULL;}
+  if (resnos   != NULL) {delete resnos; resnos = NULL;}
+  if (sernos   != NULL) {delete sernos; sernos = NULL;}
+  if (hcounts  != NULL) {delete hcounts; hcounts = NULL;}
+  if (chains   != NULL) {delete chains; chains = NULL;}
+  if (flags    != NULL) {delete flags; flags = NULL;}
 }
 
 void OBChainsParser::ClearResidueInformation(OBMol &mol)

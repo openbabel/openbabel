@@ -67,8 +67,8 @@ public:
 	OBAndExpr(OBExprBase *lft,OBExprBase *rgt) {_lft = lft;_rgt = rgt;}
 	~OBAndExpr()
 	{
-		if (_lft) delete _lft;
-		if (_rgt) delete _rgt;
+	  if (_lft) {delete _lft; _lft = NULL;}
+	  if (_rgt) {delete _rgt; _rgt = NULL;}
 	}
 	bool Eval(OBNodeBase *nb) {return((_lft->Eval(nb) && _rgt->Eval(nb)));}
 	bool Eval(OBEdgeBase *eb) {return((_lft->Eval(eb) && _rgt->Eval(eb)));}
@@ -89,8 +89,8 @@ public:
 	OBOrExpr(OBExprBase *lft,OBExprBase *rgt) {_lft = lft; _rgt = rgt;}
 	~OBOrExpr()
 	{
-		if (_lft) delete _lft;
-		if (_rgt) delete _rgt;
+	  if (_lft) {delete _lft; _lft = NULL;}
+	  if (_rgt) {delete _rgt; _rgt = NULL;}
 	}
 	bool Eval(OBNodeBase *nb) {return((_lft->Eval(nb) || _rgt->Eval(nb)));}
 	bool Eval(OBEdgeBase *eb) {return((_lft->Eval(eb) || _rgt->Eval(eb)));}
@@ -108,7 +108,7 @@ protected:
 	OBExprBase *_expr;
 public:
 	OBNotExpr(OBExprBase *expr) {_expr = expr;}
-	~OBNotExpr()                {if (_expr) delete _expr;}
+	~OBNotExpr()                {if (_expr) {delete _expr; _expr = NULL;}}
 	void Print(std::ostream&);
 	void ResetRecurs();
 	bool Eval(OBNodeBase *nb)   {return(!_expr->Eval(nb));}
@@ -492,8 +492,10 @@ public:
 	void        ClearMatches();
 	OBNodeBase *GetFirstSeed()                   {return(_vm.begin()->first);}
 	bool        SeedMatch(OBNodeBase*);
-	bool        RestrictedMatch(OBGraphBase&,std::vector<std::pair<int,int> >&,bool) 
-	{
+
+	// Currently unimplemented: OpenEyes gives no documentation on what this should do
+	bool        RestrictedMatch(OBGraphBase&,std::vector<std::pair<int,int> >&,bool)
+	  {
 		std::cerr << "need to implement OBSmartsPattern::RestrictedMatch()" << std::endl;
 		exit(0);
 		return(false);

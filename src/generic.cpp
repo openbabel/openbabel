@@ -97,14 +97,14 @@ OBCompressData::OBCompressData()
 
 OBCompressData::~OBCompressData()
 {
-  if (_data) delete [] _data;
+  if (_data) {delete [] _data; _data = (unsigned char*)NULL;}
 }
 
 void OBCompressData::SetData(unsigned char *d,int size)
 {
   if (size <= 0) return;
   
-  if (_data) delete [] _data;
+  if (_data) {delete [] _data; _data = (unsigned char*)NULL;}
   
   _data = new unsigned char[size];
   memcpy(_data,(char*) d, size);

@@ -49,7 +49,7 @@ void OBAtomTyper::ParseLine(const char *buffer)
       sp = new OBSmartsPattern;
       if (sp->Init(vs[1]))
 	_vinthyb.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
-      else delete sp;
+      else {delete sp; sp = NULL;}
     }
   else if (EQn(buffer,"IMPVAL",6))
     {
@@ -58,7 +58,7 @@ void OBAtomTyper::ParseLine(const char *buffer)
       sp = new OBSmartsPattern;
       if (sp->Init(vs[1]))
 	_vimpval.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
-      else delete sp;
+      else {delete sp; sp = NULL;}
     }
   else if (EQn(buffer,"EXTTYP",6))
     {
@@ -67,18 +67,18 @@ void OBAtomTyper::ParseLine(const char *buffer)
       sp = new OBSmartsPattern;
       if (sp->Init(vs[1]))
 	_vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
-      else delete sp;
+      else {delete sp; sp = NULL;}
     }
 }
 
 OBAtomTyper::~OBAtomTyper()
 {
   vector<pair<OBSmartsPattern*,int> >::iterator i;
-  for (i = _vinthyb.begin();i != _vinthyb.end();i++) delete i->first;
-  for (i = _vimpval.begin();i != _vimpval.end();i++) delete i->first;
+  for (i = _vinthyb.begin();i != _vinthyb.end();i++) {delete i->first; i->first = NULL;}
+  for (i = _vimpval.begin();i != _vimpval.end();i++) {delete i->first; i->first = NULL;}
 
   vector<pair<OBSmartsPattern*,string> >::iterator j;
-  for (j = _vexttyp.begin();j != _vexttyp.end();j++) delete j->first;
+  for (j = _vexttyp.begin();j != _vexttyp.end();j++) {delete j->first; j->first = NULL;}
   
 }
 
@@ -368,7 +368,7 @@ void OBAromaticTyper::ParseLine(const char *buffer)
 			      atoi((char*)vs[2].c_str())));
 	}
       else
-	delete sp;
+	{delete sp; sp = NULL;}
     }
 }
 
@@ -376,7 +376,7 @@ OBAromaticTyper::~OBAromaticTyper()
 {
   vector<OBSmartsPattern*>::iterator i;
    for (i = _vsp.begin();i != _vsp.end();i++)
-     delete *i;
+     {delete *i; *i = NULL;}
 }
 
 void OBAromaticTyper::AssignAromaticFlags(OBMol &mol)
