@@ -1,3 +1,9 @@
+2004-02-10  Michael Banck  <mbanck@gmx.net>
+
+	* test/cmltest/Makefile.am (EXTRA_DIST): Removed auto-generated 
+	.cml files.
+	* test/cmltest/Makefile: Regenerated.
+
 2004-02-09  Michael Banck  <mbanck@gmx.net>
 
 	* src/base.cpp [HAVE_CONFIG_H]: New conditional, wrap babelconfig.h
