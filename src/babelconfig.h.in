@@ -6,23 +6,14 @@
 /* Where the data files are located */
 #undef DATADIR
 
-/* Define to 1 if you have the <algorithm> header file. */
-#undef HAVE_ALGORITHM
-
 /* Define to 1 if you have the <conio.h> header file. */
 #undef HAVE_CONIO_H
 
 /* Define to 1 if you have the <ctype.h> header file. */
 #undef HAVE_CTYPE_H
 
-/* Define to 1 if you have the <deque> header file. */
-#undef HAVE_DEQUE
-
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
-
-/* Define to 1 if you have the <fstream> header file. */
-#undef HAVE_FSTREAM
 
 /* Define to 1 if you have the <fstream.h> header file. */
 #undef HAVE_FSTREAM_H
@@ -30,20 +21,11 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the <iostream> header file. */
-#undef HAVE_IOSTREAM
-
 /* Define to 1 if you have the <iostream.h> header file. */
 #undef HAVE_IOSTREAM_H
 
 /* Define to 1 if you have the `m' library (-lm). */
 #undef HAVE_LIBM
-
-/* Define to 1 if you have the <list> header file. */
-#undef HAVE_LIST
-
-/* Define to 1 if you have the <map> header file. */
-#undef HAVE_MAP
 
 /* Define to 1 if you have the <math.h> header file. */
 #undef HAVE_MATH_H
@@ -95,9 +77,6 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
-
-/* Define to 1 if you have the <vector> header file. */
-#undef HAVE_VECTOR
 
 /* Name of package */
 #undef PACKAGE

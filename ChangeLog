@@ -1,5 +1,16 @@
 2003-11-11  Michael Banck  <mbanck@gmx.net>
 
+	* configure.in (AC_CHECK_HEADERS): Removed checks for some C++ 
+	Standard Library headers (algorithm vector map list iostream
+	fstream deque). They are essential for openbabel and we don't
+	even exit if ./configure does not find them, let alone work
+	around them missing. So in effect, the checks were just wasting
+	CPU cycles until now. stream and strstream are still checked.
+	* configure: Regenerated.
+	* src/babelconfig.h.in: Regenerated.
+
+2003-11-11  Michael Banck  <mbanck@gmx.net>
+
 	* configure.in (AC_REPLACE_FUNCS): New directive, including
 	snprintf and strncasecmp for now.
 	* configure: Regenerated.

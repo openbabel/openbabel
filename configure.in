@@ -40,9 +40,7 @@ AC_CHECK_LIB(m, asin, , exit)
 dnl Checks for header files.
 AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
 AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
-AC_CHECK_HEADERS(ctype.h)
-AC_CHECK_HEADERS(algorithm vector map list strstream iostream fstream)
-AC_CHECK_HEADERS(deque sstream)
+AC_CHECK_HEADERS(ctype.h sstream strstream)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
