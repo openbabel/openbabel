@@ -51,6 +51,14 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "fileformat.h"
 
+#if defined(OBDLL_EXPORTS) //OBDLL being built
+#  define EXTERN __declspec(dllexport) extern
+#elif defined(USING_OBDLL) //program using OBDLL.dll being built
+#  define EXTERN __declspec(dllimport) extern
+#else //Everything else (behaviour as original)
+#  define EXTERN extern
+#endif
+
 namespace OpenBabel {
 
 class OBAtom;
@@ -893,11 +901,11 @@ bool SetInputType(OBMol&,std::string&);
 bool SetOutputType(OBMol&,std::string&);
 
 //global definitions
-extern  OBExtensionTable extab;
-extern  OBElementTable   etab;
-extern  OBTypeTable      ttab;
-extern  OBIsotopeTable   isotab;
-extern  OBChainsParser   chainsparser;
+EXTERN  OBExtensionTable extab;
+EXTERN  OBElementTable   etab;
+EXTERN  OBTypeTable      ttab;
+EXTERN  OBIsotopeTable   isotab;
+EXTERN  OBChainsParser   chainsparser;
 
 //Utility Macros
 

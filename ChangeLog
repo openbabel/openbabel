@@ -1,3 +1,12 @@
+2004-08-19  Michael Banck  <mbanck@gmx.net>
+
+	* src/data.cpp: Include mol.h.
+	(tokenize): Removed declaration, already declared in mol.h.
+
+	* src/mol.h [OBDLL_EXPORTS, USING_OBDLL]: redefine extern as
+	'__declspec(dllexport) extern'. Update global definitions
+	accordingly.
+	
 2004-08-17  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
 
 	* configure.in: Make the check for doxygen to be a typical

@@ -31,6 +31,7 @@ GNU General Public License for more details.
 #include "types.h"
 #include "extable.h"
 #include "isotope.h"
+#include "mol.h"
 
 #if defined(HAVE_SSTREAM)
 #include <sstream>
@@ -47,8 +48,6 @@ OBElementTable   etab;
 OBTypeTable      ttab;
 OBIsotopeTable   isotab;
 
-bool tokenize(vector<string>&, const char *buf, const char *delimstr=" \t\n");
-bool tokenize(vector<string> &vcr, string &s, const char *delimstr,int limit=-1);
 extern void ThrowError(char *);
 extern void ThrowError(string&);
 
