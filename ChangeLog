@@ -1,3 +1,8 @@
+2003-04-13  Michael Banck  <mbanck@gmx.net>
+
+	* config.guess, config.sub, ltmain.sh: Updated to current FSF
+	versions
+
 2003-03-26  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/bondtyp.txt, src/bondtyp.h: Files for the PerceiveBondOrder
