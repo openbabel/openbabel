@@ -72,6 +72,7 @@ report		report		Report				none				0	1
 qcin		qchemin		Q-Chem Input			none				0	1
 qcout		qchemout	Q-Chem Output			none				1	0
 res		shelx		ShelX				none				1	0
+ins		shelx		ShelX				none				1	0
 smi		smi		SMILES				chemical/x-daylight-smiles	1	1
 fix		fix		SMILES Fix			none				0	1
 mol2		mol2		Sybyl Mol2			chemical/x-mol2			1	1
