@@ -49,7 +49,6 @@ GNU General Public License for more details.
 #include "ring.h"
 #include "generic.h"
 #include "typer.h"
-#include "fileformat.h"
 
 #if defined(OBDLL_EXPORTS) //OBDLL being built
 #  define EXTERN __declspec(dllexport) extern
@@ -564,7 +563,7 @@ protected:
   int                           _flags;	//!< bitfield of flags
   bool                          _autoPartialCharge; //!< Assign partial charges automatically
   bool                          _autoFormalCharge; //!< Assign formal charges automatically
-  bool                          _compressed; //!< Is the molecule currently compressed?
+//NF  bool                          _compressed; //!< Is the molecule currently compressed?
   io_type                       _itype;	//!< Input I/O Type
   io_type                       _otype;	//!< Output I/O Type
   std::string                   _title;	//!< Molecule title
@@ -581,7 +580,7 @@ protected:
   unsigned short int            _natoms;//!< Number of atoms
   unsigned short int            _nbonds;//!< Number of bonds
   unsigned short int            _mod;	//!< Number of nested calls to BeginModify()
-  unsigned short int            _access;//!< Number of nested calls to BeginAccess()
+//NF  unsigned short int            _access;//!< Number of nested calls to BeginAccess()
 
   bool  HasFlag(int flag)  {return((_flags & flag) ? true : false);}
   void  SetFlag(int flag)  {_flags |= flag;}
@@ -627,7 +626,7 @@ public:
     void DecrementMod() {_mod--;}
     //@}
 
-    //! \name Compression methods (via OBCompressData)
+/*NF    //! \name Compression methods (via OBCompressData)
     //@{
     //! Save memory by rolling into the OEBinary format as a buffer
     virtual bool Compress(void);
@@ -638,7 +637,7 @@ public:
     //! Call when finished accessing a compressed molecule to recompress.
     virtual void EndAccess(void);
     //@}
-
+*/
     //! \name Generic data handling methods (via OBGenericData)
     //@{
      //! Returns true if the generic attribute/value pair exists
@@ -698,7 +697,7 @@ public:
     unsigned int GetTotalSpinMultiplicity();
     double      *GetCoordinates()                    {return(_c);}
     std::vector<OBRing*> &GetSSSR();
-    bool         IsCompressed() const                {return _compressed;}
+//NF    bool         IsCompressed() const                {return _compressed;}
     //! Get the current flag for whether formal charges are set with pH correction
     bool AutomaticFormalCharge()             {return(_autoFormalCharge);}
     //! Get the current flag for whether partial charges are auto-determined
@@ -745,6 +744,8 @@ public:
 
     //! \name Molecule modification methods
     //@{
+    virtual OBBase*    DoTransformations(const char* Options); //NF Definition in transform.cpp
+    static const char* ClassDescription();
     //! Clear all information from a molecule
     bool Clear();
     void RenumberAtoms(std::vector<OBNodeBase*>&);
@@ -875,7 +876,7 @@ public:
     //void SortBonds() {sort(_vbond.begin(),_vbond.end(),CompareBonds);}
     //@}
 
-    //! \name Convenience functions for I/O
+    //! \name Convenience functions for I/O Removed NF
     //@{
     friend std::ostream&       operator<< ( std::ostream&, OBMol& ) ;
     friend std::istream&       operator>> ( std::istream&, OBMol& ) ;
@@ -913,7 +914,7 @@ bool SetInputType(OBMol&,std::string&);
 bool SetOutputType(OBMol&,std::string&);
 
 //global definitions
-EXTERN  OBExtensionTable extab;
+// EXTERN  OBExtensionTable extab;
 EXTERN  OBElementTable   etab;
 EXTERN  OBTypeTable      ttab;
 EXTERN  OBIsotopeTable   isotab;

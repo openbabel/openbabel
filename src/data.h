@@ -193,6 +193,7 @@ class OBTypeTable : public OBGlobalDataBase
 };
 
 // class introduction in data.cpp
+/*
 class OBExtensionTable : public OBGlobalDataBase
 {
   int                     _linecount;
@@ -223,6 +224,8 @@ class OBExtensionTable : public OBGlobalDataBase
   const char   *GetDescription(unsigned int);
   unsigned int  Count(); 
 };
+
+*/
 
 // Used by other code for reading files
 #ifdef WIN32

@@ -18,7 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "binary.h"
-#include "fileformat.h"
+//NF#include "fileformat.h"
 #include "mol.h"
 #include "obutil.h"
 #include "rotor.h"
@@ -1069,7 +1069,7 @@ int OBBinaryDBase::Size()
 {
     return (int) _vpos.size();
 }
-
+/*NF
 void OBBinaryDBase::GetMolecule(OBMol &mol,int idx)
 {
     OBFileFormat translator;
@@ -1078,7 +1078,7 @@ void OBBinaryDBase::GetMolecule(OBMol &mol,int idx)
     _ifs.seekg(_vpos[idx]);
     translator.ReadMolecule(_ifs,mol);
 }
-
+*/
 OBBinaryDBase::~OBBinaryDBase(void)
 {
 }

@@ -103,6 +103,7 @@ public:
 	std::vector<OBExternalBond> *GetData() {return(&_vexbnd);}
 };
 
+/*NF
 //! \brief Used to store molecule in a compresed binary form
 //!
 //! Compressed form can be accessed automatically via OBMol::BeginAccess()
@@ -119,6 +120,7 @@ public:
   int            GetSize() {return(_size);}
   unsigned char *GetData() {return(_data);}
 };
+*/
 
 //! Used to store attribute/value relationships
 class OBPairData : public OBGenericData

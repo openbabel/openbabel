@@ -46,6 +46,10 @@ class OBGraphBase;
 class OBBase
 {
 public:
+	virtual ~OBBase(){}; //NF
+	virtual OBBase* DoTransformations(const char* Options){return this;} //NF Base type does nothing
+	static const char* ClassDescription(){return "";} //NF
+
 };
 
 /** \brief Node Base Class

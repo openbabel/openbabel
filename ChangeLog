@@ -1,7 +1,20 @@
-2004-10-20  Geoffrey Hutchison  <geoff@geoffhutchison.net>
+2004-10-19  Geoffrey Hutchison  <geoff@geoffhutchison.net>
 
-	* Fix problems caused by incomplete branching for the new
-	framework merge.
+	* Initial merging of Chris Morley's new file translation framework.
+	Compiles and runs through "babel -H".
+
+	* data/* : Move data files and headers to this directory to
+	segregate from source code.
+
+	* configure.in, Makefile.am, */Makefile.am: Build updates.
+
+	* src/: Removed all file translation files. (Now in formats directory.)
+	
+	* src/formats/*: New files.
+
+	* src/windows/*: Removed.
+	
+	* windows/*: New files.
 
 2004-10-04  Michael Banck  <mbanck@gmx.net>
 

@@ -29,7 +29,7 @@ GNU General Public License for more details.
 #include "data.h"
 #include "element.h"
 #include "types.h"
-#include "extable.h"
+// #include "extable.h"
 #include "isotope.h"
 #include "mol.h"
 
@@ -43,7 +43,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-OBExtensionTable extab;
+  // OBExtensionTable extab;
 OBElementTable   etab;
 OBTypeTable      ttab;
 OBIsotopeTable   isotab;
@@ -464,408 +464,408 @@ void Tolower(string &s)
 }
 
 
-/** \class OBExtensionTable
-    \brief File format/extension table
+// /** \class OBExtensionTable
+//     \brief File format/extension table
 
-The constructor for OBExtensionTable automatically reads the
-text file extable.txt. Just as OBElementTable, an instance of
-OBTypeTable (extab) is declared external in data.cpp and is referenced as
-extern OBExtensionTable extab in mol.h. 
+// The constructor for OBExtensionTable automatically reads the
+// text file extable.txt. Just as OBElementTable, an instance of
+// OBTypeTable (extab) is declared external in data.cpp and is referenced as
+// extern OBExtensionTable extab in mol.h. 
 
-*/
-OBExtensionTable::OBExtensionTable()
-{
-  _init = false;
-  _dir = BABEL_DATADIR;
-  _envvar = "BABEL_DATADIR";
-  _filename = "extable.txt";
-  _subdir = "data";
-  _dataptr = ExtensionTableData;
-  _linecount = 0;
-}
+// */
+// OBExtensionTable::OBExtensionTable()
+// {
+//   _init = false;
+//   _dir = BABEL_DATADIR;
+//   _envvar = "BABEL_DATADIR";
+//   _filename = "extable.txt";
+//   _subdir = "data";
+//   _dataptr = ExtensionTableData;
+//   _linecount = 0;
+// }
 
-void OBExtensionTable::ParseLine(const char *buffer)
-{
-  vector <string> vs;
+// void OBExtensionTable::ParseLine(const char *buffer)
+// {
+//   vector <string> vs;
   
-  if (buffer[0] != '#') // skip comments
-    {
-      tokenize(vs,buffer,"\t\n"); // spaces are a problem
-      if (vs.size() == 6)
-	{
-	  Toupper(vs[1]);
-	  _table.push_back(vector <string> (vs));
-	}
-    }
+//   if (buffer[0] != '#') // skip comments
+//     {
+//       tokenize(vs,buffer,"\t\n"); // spaces are a problem
+//       if (vs.size() == 6)
+// 	{
+// 	  Toupper(vs[1]);
+// 	  _table.push_back(vector <string> (vs));
+// 	}
+//     }
 
-  _linecount++;
-}
+//   _linecount++;
+// }
 
-io_type TextToType(string typestring)
-{
-  if (typestring == "MOL2")			return(MOL2);
-  else if (typestring == "PDB")			return(PDB);
-  else if (typestring == "POV")			return(POV);
-  else if (typestring == "SDF")			return(SDF);
-  else if (typestring == "BOX")			return(BOX);
-  else if (typestring == "SMI")			return(SMI);
-  else if (typestring == "MMD")			return(MMD);
-  else if (typestring == "OEBINARY")		return(OEBINARY);
-  else if (typestring == "GHEMICAL")		return(GHEMICAL);
-  else if (typestring == "XYZ")			return(XYZ);
-  else if (typestring == "GAMESSIN")		return(GAMESSIN);
-  else if (typestring == "GAMESSOUT")		return(GAMESSOUT);
-  else if (typestring == "HIN")			return(HIN);
-  else if (typestring == "CCC")			return(CCC);
-  else if (typestring == "BALLSTICK")		return(BALLSTICK);
-  else if (typestring == "ALCHEMY")		return(ALCHEMY);
-  else if (typestring == "BGF")			return(BGF);
-  else if (typestring == "FIX")			return(FIX);
-  else if (typestring == "CACAO")		return(CACAO);
-  else if (typestring == "CACAOINT")		return(CACAOINT);
-  else if (typestring == "CACHE")		return(CACHE);
-  else if (typestring == "CHEMDRAW")		return(CHEMDRAW);
-  else if (typestring == "CHEMTOOL")		return(CHEMTOOL);
-  else if (typestring == "CML")			return(CML);
-  else if (typestring == "CRK2D")               return(CRK2D);
-  else if (typestring == "CRK3D")               return(CRK3D);
-  else if (typestring == "CSR")			return(CSR);
-  else if (typestring == "CSSR")		return(CSSR);
-  else if (typestring == "FEATURE")		return(FEATURE);
-  else if (typestring == "FH")			return(FH);
-  else if (typestring == "GROMOS96A")		return(GROMOS96A);
-  else if (typestring == "GROMOS96N")		return(GROMOS96N);
-  else if (typestring == "QCHEMIN")		return(QCHEMIN);
-  else if (typestring == "QCHEMOUT")		return(QCHEMOUT);
-  else if (typestring == "MPQC")		return(MPQC);
-  else if (typestring == "UNICHEM")		return(UNICHEM);
-  else if (typestring == "TINKER")		return(TINKER);
-  else if (typestring == "PREP")		return(PREP);
-  else if (typestring == "BIOSYM")		return(BIOSYM);
-  else if (typestring == "CADPAC")		return(CADPAC);
-  else if (typestring == "CHEM3D1")		return(CHEM3D1);
-  else if (typestring == "CHEM3D2")		return(CHEM3D2);
-  else if (typestring == "FDAT")		return(FDAT);
-  else if (typestring == "GSTAT")		return(GSTAT);
-  else if (typestring == "DOCK")		return(DOCK);
-  else if (typestring == "FRACT")		return(FRACT);
-  else if (typestring == "M3D")			return(M3D);
-  else if (typestring == "GAUSSIANOUT") 	return(GAUSSIANOUT);
-  else if (typestring == "GAUSSIANCART")	return(GAUSSIANCART);
-  else if (typestring == "GAUSSIAN92")		return(GAUSSIAN92);
-  else if (typestring == "GAUSSIAN94")		return(GAUSSIAN94);
-  else if (typestring == "MACMOL")		return(MACMOL);
-  else if (typestring == "MICROWORLD")		return(MICROWORLD);
-  else if (typestring == "MM2IN")		return(MM2IN);
-  else if (typestring == "MM2OUT")		return(MM2OUT);
-  else if (typestring == "MM3")			return(MM3);
-  else if (typestring == "MMADS")		return(MMADS);
-  else if (typestring == "MOLIN")		return(MOLIN);
-  else if (typestring == "MOLINVENT")		return(MOLINVENT);
-  else if (typestring == "MOPACCART")		return(MOPACCART);
-  else if (typestring == "MOPACINT")		return(MOPACINT);
-  else if (typestring == "MOPACOUT")		return(MOPACOUT);
-  else if (typestring == "PCMODEL")		return(PCMODEL);
-  else if (typestring == "JAGUARIN")		return(JAGUARIN);
-  else if (typestring == "JAGUAROUT")		return(JAGUAROUT);
-  else if (typestring == "PQS")                 return(PQS);
-  else if (typestring == "REPORT")		return(REPORT);
-  else if (typestring == "MSF")			return(MSF);
-  else if (typestring == "SCHAKAL")		return(SCHAKAL);
-  else if (typestring == "SHELX")		return(SHELX);
-  else if (typestring == "SPARTAN")		return(SPARTAN);
-  else if (typestring == "SPARTANSEMI")		return(SPARTANSEMI);
-  else if (typestring == "SPARTANMM")		return(SPARTANMM);
-  else if (typestring == "XED")			return(XED);
-  else if (typestring == "BMIN")		return(BMIN);
-  else if (typestring == "ICON8")		return(ICON8);
-  else if (typestring == "IDATM")		return(IDATM);
-  else if (typestring == "MACCS")		return(MACCS);
-  else if (typestring == "CHARMM")		return(CHARMM);
-  else if (typestring == "DMOL")		return(DMOL);
-  else if (typestring == "NWCHEMIN")		return(NWCHEMIN);
-  else if (typestring == "NWCHEMOUT")		return(NWCHEMOUT);
-  else if (typestring == "TITLE")		return(TITLE);
-  else if (typestring == "TURBOMOLE")		return(TURBOMOLE);
-  else if (typestring == "VIEWMOL")		return(VIEWMOL);
-  else if (typestring == "ZINDO")		return(ZINDO);
-  else if (typestring == "FINGERPRINT")		return(FINGERPRINT);
-  // Add yours here
-  else						return(UNDEFINED);
+// io_type TextToType(string typestring)
+// {
+//   if (typestring == "MOL2")			return(MOL2);
+//   else if (typestring == "PDB")			return(PDB);
+//   else if (typestring == "POV")			return(POV);
+//   else if (typestring == "SDF")			return(SDF);
+//   else if (typestring == "BOX")			return(BOX);
+//   else if (typestring == "SMI")			return(SMI);
+//   else if (typestring == "MMD")			return(MMD);
+//   else if (typestring == "OEBINARY")		return(OEBINARY);
+//   else if (typestring == "GHEMICAL")		return(GHEMICAL);
+//   else if (typestring == "XYZ")			return(XYZ);
+//   else if (typestring == "GAMESSIN")		return(GAMESSIN);
+//   else if (typestring == "GAMESSOUT")		return(GAMESSOUT);
+//   else if (typestring == "HIN")			return(HIN);
+//   else if (typestring == "CCC")			return(CCC);
+//   else if (typestring == "BALLSTICK")		return(BALLSTICK);
+//   else if (typestring == "ALCHEMY")		return(ALCHEMY);
+//   else if (typestring == "BGF")			return(BGF);
+//   else if (typestring == "FIX")			return(FIX);
+//   else if (typestring == "CACAO")		return(CACAO);
+//   else if (typestring == "CACAOINT")		return(CACAOINT);
+//   else if (typestring == "CACHE")		return(CACHE);
+//   else if (typestring == "CHEMDRAW")		return(CHEMDRAW);
+//   else if (typestring == "CHEMTOOL")		return(CHEMTOOL);
+//   else if (typestring == "CML")			return(CML);
+//   else if (typestring == "CRK2D")               return(CRK2D);
+//   else if (typestring == "CRK3D")               return(CRK3D);
+//   else if (typestring == "CSR")			return(CSR);
+//   else if (typestring == "CSSR")		return(CSSR);
+//   else if (typestring == "FEATURE")		return(FEATURE);
+//   else if (typestring == "FH")			return(FH);
+//   else if (typestring == "GROMOS96A")		return(GROMOS96A);
+//   else if (typestring == "GROMOS96N")		return(GROMOS96N);
+//   else if (typestring == "QCHEMIN")		return(QCHEMIN);
+//   else if (typestring == "QCHEMOUT")		return(QCHEMOUT);
+//   else if (typestring == "MPQC")		return(MPQC);
+//   else if (typestring == "UNICHEM")		return(UNICHEM);
+//   else if (typestring == "TINKER")		return(TINKER);
+//   else if (typestring == "PREP")		return(PREP);
+//   else if (typestring == "BIOSYM")		return(BIOSYM);
+//   else if (typestring == "CADPAC")		return(CADPAC);
+//   else if (typestring == "CHEM3D1")		return(CHEM3D1);
+//   else if (typestring == "CHEM3D2")		return(CHEM3D2);
+//   else if (typestring == "FDAT")		return(FDAT);
+//   else if (typestring == "GSTAT")		return(GSTAT);
+//   else if (typestring == "DOCK")		return(DOCK);
+//   else if (typestring == "FRACT")		return(FRACT);
+//   else if (typestring == "M3D")			return(M3D);
+//   else if (typestring == "GAUSSIANOUT") 	return(GAUSSIANOUT);
+//   else if (typestring == "GAUSSIANCART")	return(GAUSSIANCART);
+//   else if (typestring == "GAUSSIAN92")		return(GAUSSIAN92);
+//   else if (typestring == "GAUSSIAN94")		return(GAUSSIAN94);
+//   else if (typestring == "MACMOL")		return(MACMOL);
+//   else if (typestring == "MICROWORLD")		return(MICROWORLD);
+//   else if (typestring == "MM2IN")		return(MM2IN);
+//   else if (typestring == "MM2OUT")		return(MM2OUT);
+//   else if (typestring == "MM3")			return(MM3);
+//   else if (typestring == "MMADS")		return(MMADS);
+//   else if (typestring == "MOLIN")		return(MOLIN);
+//   else if (typestring == "MOLINVENT")		return(MOLINVENT);
+//   else if (typestring == "MOPACCART")		return(MOPACCART);
+//   else if (typestring == "MOPACINT")		return(MOPACINT);
+//   else if (typestring == "MOPACOUT")		return(MOPACOUT);
+//   else if (typestring == "PCMODEL")		return(PCMODEL);
+//   else if (typestring == "JAGUARIN")		return(JAGUARIN);
+//   else if (typestring == "JAGUAROUT")		return(JAGUAROUT);
+//   else if (typestring == "PQS")                 return(PQS);
+//   else if (typestring == "REPORT")		return(REPORT);
+//   else if (typestring == "MSF")			return(MSF);
+//   else if (typestring == "SCHAKAL")		return(SCHAKAL);
+//   else if (typestring == "SHELX")		return(SHELX);
+//   else if (typestring == "SPARTAN")		return(SPARTAN);
+//   else if (typestring == "SPARTANSEMI")		return(SPARTANSEMI);
+//   else if (typestring == "SPARTANMM")		return(SPARTANMM);
+//   else if (typestring == "XED")			return(XED);
+//   else if (typestring == "BMIN")		return(BMIN);
+//   else if (typestring == "ICON8")		return(ICON8);
+//   else if (typestring == "IDATM")		return(IDATM);
+//   else if (typestring == "MACCS")		return(MACCS);
+//   else if (typestring == "CHARMM")		return(CHARMM);
+//   else if (typestring == "DMOL")		return(DMOL);
+//   else if (typestring == "NWCHEMIN")		return(NWCHEMIN);
+//   else if (typestring == "NWCHEMOUT")		return(NWCHEMOUT);
+//   else if (typestring == "TITLE")		return(TITLE);
+//   else if (typestring == "TURBOMOLE")		return(TURBOMOLE);
+//   else if (typestring == "VIEWMOL")		return(VIEWMOL);
+//   else if (typestring == "ZINDO")		return(ZINDO);
+//   else if (typestring == "FINGERPRINT")		return(FINGERPRINT);
+//   // Add yours here
+//   else						return(UNDEFINED);
 
-}
+// }
 
-io_type OBExtensionTable::FilenameToType(char *filename)
-{
-  if (!_init) Init();
+// io_type OBExtensionTable::FilenameToType(char *filename)
+// {
+//   if (!_init) Init();
 
-  vector<vector<string> >::iterator i;
+//   vector<vector<string> >::iterator i;
 
-  vector<string> vs;
-  tokenize(vs,filename,".\n\t");
-  if (vs.empty()) return(UNDEFINED);
+//   vector<string> vs;
+//   tokenize(vs,filename,".\n\t");
+//   if (vs.empty()) return(UNDEFINED);
 
-  string ext = vs[vs.size()-1];
-  Tolower(ext);
+//   string ext = vs[vs.size()-1];
+//   Tolower(ext);
 
-  io_type type = UNDEFINED;
-  for (i = _table.begin();i != _table.end();i++)
-    if ((*i)[0] == ext)
-    {
-      type = TextToType((*i)[1]);
-      break;
-    }
+//   io_type type = UNDEFINED;
+//   for (i = _table.begin();i != _table.end();i++)
+//     if ((*i)[0] == ext)
+//     {
+//       type = TextToType((*i)[1]);
+//       break;
+//     }
 
-  return(type);
-}
+//   return(type);
+// }
 
-io_type OBExtensionTable::FilenameToType(string &filename)
-{
-  return FilenameToType((char *)filename.c_str());
-}
+// io_type OBExtensionTable::FilenameToType(string &filename)
+// {
+//   return FilenameToType((char *)filename.c_str());
+// }
 
-io_type OBExtensionTable::MIMEToType(char *type)
-{
-  if (!_init) Init();
+// io_type OBExtensionTable::MIMEToType(char *type)
+// {
+//   if (!_init) Init();
 
-  vector<vector<string> >::iterator i;
+//   vector<vector<string> >::iterator i;
 
-  if (!type || strlen(type) == 0) return(UNDEFINED);
+//   if (!type || strlen(type) == 0) return(UNDEFINED);
 
-  io_type iotype = UNDEFINED;
-  for (i = _table.begin();i != _table.end();i++)
-    if ((*i)[3] == type)
-    {
-      iotype = TextToType((*i)[1]);
-      break;
-    }
+//   io_type iotype = UNDEFINED;
+//   for (i = _table.begin();i != _table.end();i++)
+//     if ((*i)[3] == type)
+//     {
+//       iotype = TextToType((*i)[1]);
+//       break;
+//     }
 
-  return(iotype);
-}
+//   return(iotype);
+// }
 
-io_type	OBExtensionTable::MIMEToType(string &type)
-{
-  return MIMEToType((char *)type.c_str());
-}
+// io_type	OBExtensionTable::MIMEToType(string &type)
+// {
+//   return MIMEToType((char *)type.c_str());
+// }
 
-void OBExtensionTable::TypeToExtension(io_type type,char *ext)
-{
-  if (!_init) Init();
+// void OBExtensionTable::TypeToExtension(io_type type,char *ext)
+// {
+//   if (!_init) Init();
 
-  vector<vector<string> >::iterator i;
+//   vector<vector<string> >::iterator i;
 
-  for (i = _table.begin();i != _table.end();i++)
-    if (type == TextToType((*i)[1]))
-    {
-      strcpy(ext,(char*)(*i)[0].c_str());
-      break;
-    }
-}
+//   for (i = _table.begin();i != _table.end();i++)
+//     if (type == TextToType((*i)[1]))
+//     {
+//       strcpy(ext,(char*)(*i)[0].c_str());
+//       break;
+//     }
+// }
 
-void OBExtensionTable::TypeToMIME(io_type type,char *ext)
-{
-  if (!_init) Init();
+// void OBExtensionTable::TypeToMIME(io_type type,char *ext)
+// {
+//   if (!_init) Init();
 
-  vector<vector<string> >::iterator i;
+//   vector<vector<string> >::iterator i;
 
-  for (i = _table.begin();i != _table.end();i++)
-    if (type == TextToType((*i)[1]))
-      {
-	if ((*i)[3] != "none")
-	  strcpy(ext,(char*)(*i)[3].c_str());
-	break;
-      }
-}
+//   for (i = _table.begin();i != _table.end();i++)
+//     if (type == TextToType((*i)[1]))
+//       {
+// 	if ((*i)[3] != "none")
+// 	  strcpy(ext,(char*)(*i)[3].c_str());
+// 	break;
+//       }
+// }
 
-void OBExtensionTable::ExtensionToDescription(char *filename, char *desc)
-{
-  if (!_init) Init();
+// void OBExtensionTable::ExtensionToDescription(char *filename, char *desc)
+// {
+//   if (!_init) Init();
 
-  vector<vector<string> >::iterator i;
+//   vector<vector<string> >::iterator i;
 
-  vector<string> vs;
-  tokenize(vs,filename,".\n\t");
-  if (vs.empty()) return;
+//   vector<string> vs;
+//   tokenize(vs,filename,".\n\t");
+//   if (vs.empty()) return;
 
-  string ext = vs[vs.size()-1];
-  Tolower(ext);
+//   string ext = vs[vs.size()-1];
+//   Tolower(ext);
 
-  for (i = _table.begin();i != _table.end();i++)
-    if ((*i)[0] == ext)
-      {
-	strcpy(desc, (char*)(*i)[2].c_str()); break;
-      }
+//   for (i = _table.begin();i != _table.end();i++)
+//     if ((*i)[0] == ext)
+//       {
+// 	strcpy(desc, (char*)(*i)[2].c_str()); break;
+//       }
 
-  return;
-}
+//   return;
+// }
 
-bool OBExtensionTable::CanReadExtension(char *filename)
-{
-  if (!_init) Init();
+// bool OBExtensionTable::CanReadExtension(char *filename)
+// {
+//   if (!_init) Init();
 
-  vector<vector<string> >::iterator i;
+//   vector<vector<string> >::iterator i;
 
-  vector<string> vs;
-  tokenize(vs,filename,".\n\t");
-  if (vs.empty()) return(false);
+//   vector<string> vs;
+//   tokenize(vs,filename,".\n\t");
+//   if (vs.empty()) return(false);
 
-  string ext = vs[vs.size()-1];
-  Tolower(ext);
+//   string ext = vs[vs.size()-1];
+//   Tolower(ext);
 
-  bool read = false;
-  for (i = _table.begin();i != _table.end();i++)
-    if ((*i)[0] == ext && (*i)[4] == "1")
-      {
-	read = true;
-	break;
-      }
-  return read;
-}
+//   bool read = false;
+//   for (i = _table.begin();i != _table.end();i++)
+//     if ((*i)[0] == ext && (*i)[4] == "1")
+//       {
+// 	read = true;
+// 	break;
+//       }
+//   return read;
+// }
 
-bool OBExtensionTable::CanWriteExtension(char *filename)
-{
-  if (!_init) Init();
+// bool OBExtensionTable::CanWriteExtension(char *filename)
+// {
+//   if (!_init) Init();
 
-  vector<vector<string> >::iterator i;
+//   vector<vector<string> >::iterator i;
 
-  vector<string> vs;
-  tokenize(vs,filename,".\n\t");
-  if (vs.empty()) return(false);
+//   vector<string> vs;
+//   tokenize(vs,filename,".\n\t");
+//   if (vs.empty()) return(false);
 
-  string ext = vs[vs.size()-1];
-  Tolower(ext);
+//   string ext = vs[vs.size()-1];
+//   Tolower(ext);
 
-  bool write = false;
-  for (i = _table.begin();i != _table.end();i++)
-    if ((*i)[0] == ext && (*i)[5] == "1")
-      {
-	write = true;
-	break;
-      }
-  return write;
-}
+//   bool write = false;
+//   for (i = _table.begin();i != _table.end();i++)
+//     if ((*i)[0] == ext && (*i)[5] == "1")
+//       {
+// 	write = true;
+// 	break;
+//       }
+//   return write;
+// }
 
-const char *OBExtensionTable::GetExtension(unsigned int n)
-{
-  if (!_init) Init();
+// const char *OBExtensionTable::GetExtension(unsigned int n)
+// {
+//   if (!_init) Init();
 
-  if (n >= _table.size())
-    return NULL;
-  else
-    {
-#if defined(HAVE_SSTREAM)
-      static ostringstream longDesc; //static, avoid N reallocates
-      static char mybuf[100]; //static C string to return
-      longDesc.str(std::string()); //clear string each time
-      longDesc << _table[n][0] << ends;
-      (void) strcpy(mybuf,longDesc.str().c_str());
-      return(mybuf);
-#else
-      /* FIXME: the returned string might be undefined */
-      ostrstream longDesc;
-      longDesc << _table[n][0] << ends;
-      return(longDesc.str());
-#endif
-    }
-}
+//   if (n >= _table.size())
+//     return NULL;
+//   else
+//     {
+// #if defined(HAVE_SSTREAM)
+//       static ostringstream longDesc; //static, avoid N reallocates
+//       static char mybuf[100]; //static C string to return
+//       longDesc.str(std::string()); //clear string each time
+//       longDesc << _table[n][0] << ends;
+//       (void) strcpy(mybuf,longDesc.str().c_str());
+//       return(mybuf);
+// #else
+//       /* FIXME: the returned string might be undefined */
+//       ostrstream longDesc;
+//       longDesc << _table[n][0] << ends;
+//       return(longDesc.str());
+// #endif
+//     }
+// }
 
-const char *OBExtensionTable::GetDescription(unsigned int n)
-{
-  if (!_init) Init();
+// const char *OBExtensionTable::GetDescription(unsigned int n)
+// {
+//   if (!_init) Init();
 
-  if (n >= _table.size())
-    return NULL;
-  else
-    {
- // Need to null-terminate
-#if defined(HAVE_SSTREAM)
-      static ostringstream longDesc; //static, avoid N reallocates
-      static char mybuf[100]; //static C string to return
-      longDesc.str(std::string()); //clear string each time
-      longDesc << _table[n][2] << ends;
-      (void) strcpy(mybuf,longDesc.str().c_str());
-      return(mybuf);
-#else
-      /* FIXME: the returned string might be undefined */
-      ostrstream longDesc;
-      longDesc << _table[n][2] << ends;
-      return(longDesc.str());
-#endif
-    }
-}
+//   if (n >= _table.size())
+//     return NULL;
+//   else
+//     {
+//  // Need to null-terminate
+// #if defined(HAVE_SSTREAM)
+//       static ostringstream longDesc; //static, avoid N reallocates
+//       static char mybuf[100]; //static C string to return
+//       longDesc.str(std::string()); //clear string each time
+//       longDesc << _table[n][2] << ends;
+//       (void) strcpy(mybuf,longDesc.str().c_str());
+//       return(mybuf);
+// #else
+//       /* FIXME: the returned string might be undefined */
+//       ostrstream longDesc;
+//       longDesc << _table[n][2] << ends;
+//       return(longDesc.str());
+// #endif
+//     }
+// }
 
-io_type OBExtensionTable::GetType(unsigned int n)
-{
-  if (!_init) Init();
+// io_type OBExtensionTable::GetType(unsigned int n)
+// {
+//   if (!_init) Init();
 
-  if (n >= _table.size())
-    return UNDEFINED;
-  else
-    {
-      // A bit of a pain to discard the const qualifier...
-      char *temp = new char[_table[n][0].length()];
-      io_type returnVal;
+//   if (n >= _table.size())
+//     return UNDEFINED;
+//   else
+//     {
+//       // A bit of a pain to discard the const qualifier...
+//       char *temp = new char[_table[n][0].length()];
+//       io_type returnVal;
 
-      strcpy(temp, (char*)_table[n][0].c_str());
-      returnVal = FilenameToType(temp);
-      delete [] temp;
-      return returnVal;
-    }
-}
+//       strcpy(temp, (char*)_table[n][0].c_str());
+//       returnVal = FilenameToType(temp);
+//       delete [] temp;
+//       return returnVal;
+//     }
+// }
  
-bool OBExtensionTable::IsReadable(unsigned int n)
-{
-  if (!_init) Init();
+// bool OBExtensionTable::IsReadable(unsigned int n)
+// {
+//   if (!_init) Init();
 
-  if (n >= _table.size())
-    return false;
-  else
-    return _table[n][4] == "1";
-}
+//   if (n >= _table.size())
+//     return false;
+//   else
+//     return _table[n][4] == "1";
+// }
 
-bool OBExtensionTable::IsReadable(io_type type)
-{
-  if (!_init) Init();
+// bool OBExtensionTable::IsReadable(io_type type)
+// {
+//   if (!_init) Init();
 
-  vector<vector<string> >::iterator i;
+//   vector<vector<string> >::iterator i;
 
-  for (i = _table.begin();i != _table.end();i++)
-    if (type == TextToType((*i)[1]))
-      return (*i)[4] == "1";
+//   for (i = _table.begin();i != _table.end();i++)
+//     if (type == TextToType((*i)[1]))
+//       return (*i)[4] == "1";
 
-  // Never got a match
-  return false;
-}
+//   // Never got a match
+//   return false;
+// }
 
-bool OBExtensionTable::IsWritable(unsigned int n)
-{
-  if (!_init) Init();
+// bool OBExtensionTable::IsWritable(unsigned int n)
+// {
+//   if (!_init) Init();
 
-  if (n >= _table.size())
-    return false;
-  else
-    return _table[n][5] == "1";
-}
+//   if (n >= _table.size())
+//     return false;
+//   else
+//     return _table[n][5] == "1";
+// }
 
-bool OBExtensionTable::IsWritable(io_type type)
-{
-  if (!_init) Init();
+// bool OBExtensionTable::IsWritable(io_type type)
+// {
+//   if (!_init) Init();
 
-  vector<vector<string> >::iterator i;
+//   vector<vector<string> >::iterator i;
 
-  for (i = _table.begin();i != _table.end();i++)
-    if (type == TextToType((*i)[1]))
-      return (*i)[5] == "1";
+//   for (i = _table.begin();i != _table.end();i++)
+//     if (type == TextToType((*i)[1]))
+//       return (*i)[5] == "1";
 
-  // Never got a match
-  return false;
-}
+//   // Never got a match
+//   return false;
+// }
 
-unsigned int OBExtensionTable::Count()
-{
-  if (!_init) Init(); 
-  return(_table.size());
-}
+// unsigned int OBExtensionTable::Count()
+// {
+//   if (!_init) Init(); 
+//   return(_table.size());
+// }
 
 void OBGlobalDataBase::Init()
 {
