@@ -25,8 +25,6 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,char *title)
   bool hasPartialCharges = false;
   double energy;
 
-  ttab.SetFromType("XYZ");
-  ttab.SetToType("INT");
   mol.BeginModify();
   while	(ifs.getline(buffer,BUFF_SIZE))
     {
@@ -34,6 +32,7 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,char *title)
 	{
 	  // mol.EndModify();
 	  mol.Clear();
+	  hasPartialCharges = false;
 	  mol.BeginModify();
 	  ifs.getline(buffer,BUFF_SIZE);	// blank
 	  ifs.getline(buffer,BUFF_SIZE);	// column headings
@@ -44,13 +43,10 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,char *title)
 	    {
 	      atom = mol.NewAtom();
 	      atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
-	      atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
 	      x = atof((char*)vs[2].c_str());
 	      y = atof((char*)vs[3].c_str());
 	      z = atof((char*)vs[4].c_str());
 	      atom->SetVector(x,y,z);
-	      ttab.Translate(str,vs[1]); 
-	      atom->SetType(str);
 
 	      if (!ifs.getline(buffer,BUFF_SIZE)) break;
 	      tokenize(vs,buffer);
@@ -95,12 +91,9 @@ bool ReadMOPACCartesian(istream &ifs,OBMol &mol,char *title)
   OBAtom *atom;
   vector<string> vs;
 
-  ttab.SetFromType("ATN");
-  ttab.SetToType("INT");
-
   ifs.getline(buffer,BUFF_SIZE); // keywords
   ifs.getline(buffer,BUFF_SIZE); // filename
-  ifs.getline(buffer,BUFF_SIZE); // title (current ignored)
+  ifs.getline(buffer,BUFF_SIZE); // title (currently ignored)
 
   mol.BeginModify();
   while	(ifs.getline(buffer,BUFF_SIZE))
@@ -114,10 +107,7 @@ bool ReadMOPACCartesian(istream &ifs,OBMol &mol,char *title)
       atom->SetVector(x,y,z); //set coordinates
 
       //set atomic number
-      atom->SetAtomicNum(atoi((char *)vs[0].c_str()));
-      //set type
-      ttab.Translate(str,vs[0]); 
-      atom->SetType(str);
+      atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
     }
 
   mol.EndModify();
@@ -135,15 +125,13 @@ bool WriteMOPACCartesian(ostream &ofs,OBMol &mol)
   ofs << endl;
   ofs << mol.GetTitle() << endl;
 
-  ttab.SetFromType("INT"); ttab.SetToType("XYZ");
-
   OBAtom *atom;
   string str,str1;
   for(i = 1;i <= mol.NumAtoms(); i++)
   {
     atom = mol.GetAtom(i);
-    sprintf(buffer,"%-3d%8.5f 1 %8.5f 1 %8.5f 1",
-	    atom->GetAtomicNum(),
+    sprintf(buffer,"%-3s%8.5f 1 %8.5f 1 %8.5f 1",
+	    etab.GetSymbol(atom->GetAtomicNum()),
 	    atom->GetX(),
 	    atom->GetY(),
 	    atom->GetZ());
