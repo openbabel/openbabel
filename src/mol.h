@@ -49,6 +49,7 @@ GNU General Public License for more details.
 #include "ring.h"
 #include "generic.h"
 #include "typer.h"
+#include "oberror.h"
 
 #if defined(OBDLL_EXPORTS) //OBDLL being built
 #  define EXTERN __declspec(dllexport) extern
@@ -67,7 +68,6 @@ class OBMol;
 class OBInternalCoord;
 
 // Class OBResidue
-
 // class introduction in residue.cpp
 class OBResidue
 {
@@ -82,10 +82,10 @@ public:
 
     OBResidue &operator=(const OBResidue &);
 
-    void AddAtom(OBAtom *atom);
-    void InsertAtom(OBAtom *atom);
-    void RemoveAtom(OBAtom *atom);
-    void Clear(void);
+    void    AddAtom(OBAtom *atom);
+    void    InsertAtom(OBAtom *atom);
+    void    RemoveAtom(OBAtom *atom);
+    void    Clear(void);
 
     void    SetName(const std::string &resname);
     void    SetNum(unsigned int resnum);
@@ -97,13 +97,13 @@ public:
     void    SetHetAtom(OBAtom *atom, bool hetatm);
     void    SetSerialNum(OBAtom *atom, unsigned sernum);
 
-    std::string    GetName(void)			const;
+    std::string    GetName(void)		const;
     unsigned int   GetNum(void)			const;
-    unsigned int	 GetNumAtoms()			const;
-    char           GetChain(void)			const;
+    unsigned int   GetNumAtoms()		const;
+    char           GetChain(void)		const;
     unsigned int   GetChainNum(void)		const;
     unsigned int   GetIdx(void)			const;
-    unsigned int	 GetResKey(void)		const;
+    unsigned int   GetResKey(void)		const;
 
     std::vector<OBAtom*> GetAtoms(void)		const;
     std::vector<OBBond*> GetBonds(bool = true)	const;
@@ -116,7 +116,7 @@ public:
     bool           GetResidueProperty(int)        const;
 
     bool           IsHetAtom(OBAtom *atom)	const;
-    bool		 IsResidueType(int)		const;
+    bool	   IsResidueType(int)		const;
 
     OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);
     OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
@@ -130,38 +130,28 @@ public:
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d)
-    {
-        _vdata.push_back(d);
-    }
+      { _vdata.push_back(d); }
     //! Return the number of OBGenericData items attached to this molecule.
     unsigned int                      DataSize()
-    {
-        return(_vdata.size());
-    }
+      { return(_vdata.size()); }
     OBGenericData                    *GetData(obDataType);
     OBGenericData                    *GetData(std::string&);
     OBGenericData                    *GetData(const char *);
-    std::vector<OBGenericData*>           &GetData()
-    {
-        return(_vdata);
-    }
+    std::vector<OBGenericData*>      &GetData()
+      { return(_vdata); }
     std::vector<OBGenericData*>::iterator  BeginData()
-    {
-        return(_vdata.begin());
-    }
+      { return(_vdata.begin()); }
     std::vector<OBGenericData*>::iterator  EndData()
-    {
-        return(_vdata.end());
-    }
+      { return(_vdata.end()); }
     //@}
 
 protected: // members
 
-    unsigned int	 	      _idx;
-    char      	              _chain;
-    unsigned int		      _aakey;
-    unsigned int	              _reskey;
-    unsigned int		      _resnum;
+    unsigned int	 	_idx;
+    char      	                _chain;
+    unsigned int		_aakey;
+    unsigned int	        _reskey;
+    unsigned int		_resnum;
     std::string                 _resname;
 
     std::vector<bool>           _hetatm;
@@ -172,193 +162,135 @@ protected: // members
 };
 
 
-// Class OBAtom
-
 //ATOM Property Macros (flags)
+//! Atom is in a 4-membered ring
 #define OB_4RING_ATOM     (1<<1)
+//! Atom is in a 3-membered ring
 #define OB_3RING_ATOM     (1<<2)
+//! Atom is aromatic
 #define OB_AROMATIC_ATOM  (1<<3)
+//! Atom is in a ring
 #define OB_RING_ATOM      (1<<4)
+//! Atom has clockwise SMILES chiral stereochemistry (i.e., "@@")
 #define OB_CSTEREO_ATOM   (1<<5)
+//! Atom has anticlockwise SMILES chiral stereochemistry (i.e., "@")
 #define OB_ACSTEREO_ATOM  (1<<6)
+//! Atom is an electron donor
 #define OB_DONOR_ATOM     (1<<7)
+//! Atom is an electron acceptor
 #define OB_ACCEPTOR_ATOM  (1<<8)
+//! Atom is chiral
 #define OB_CHIRAL_ATOM    (1<<9)
-// 10-16 currently unused
+//! Atom has + chiral volume
+#define OB_POS_CHIRAL_ATOM (1<<10)
+//! Atom has - chiral volume
+#define OB_NEG_CHIRAL_ATOM (1<<11)
+// 12-16 currently unused
 
+// Class OBAtom
 // class introduction in atom.cpp
 class OBAtom : public OBNodeBase
 {
 protected:
-    char                          _ele;		//!< atomic number
+    char                          _ele;		//!< atomic number (type char to minimize space -- allows for 0..255 elements)
     char                          _impval;	//!< implicit valence
     char                          _type[6];	//!< atomic type
-    short int                     _fcharge;	//!< formal charge
-    int                           _isotope;	//!< isotope (0 = most abundant)
-    int                           _spinmultiplicity;// 2 for radical  1 or 3 for carbene
+    short                         _fcharge;	//!< formal charge
+    unsigned short                _isotope;	//!< isotope (0 = most abundant)
+    short                           _spinmultiplicity;//!< atomic spin, e.g., 2 for radical  1 or 3 for carbene
 
     //unsigned short int          _idx;		//!< index in parent (inherited)
-    unsigned short int            _cidx;		//!< index into coordinate array
-    unsigned short int            _hyb;		//!< hybridization
-    unsigned short int            _flags;		//!< bitwise flags (e.g. aromaticity)
+    unsigned short            _cidx;     	//!< index into coordinate array
+    unsigned short                _hyb;		//!< hybridization
+    unsigned short                _flags;	//!< bitwise flags (e.g. aromaticity)
     double                         _pcharge;	//!< partial charge
     double                       **_c;		//!< coordinate array in double*
     vector3                       _v;		//!< coordinate vector
     OBResidue                    *_residue;	//!< parent residue (if applicable)
-    //OBMol                      *_parent;        //!< parent molecule (inherited)
-    //vector<OBBond*>             _bond;		//!< connections (inherited)
-    std::vector<OBGenericData*>   _vdata;		//!< custom data
+    //OBMol                      *_parent;      //!< parent molecule (inherited)
+    //vector<OBBond*>             _bond;	//!< connections (inherited)
+    std::vector<OBGenericData*>   _vdata;	//!< custom data
 
-    int  GetFlag()                const
-    {
-        return(_flags);
-    }
-    void SetFlag(int flag)
-    {
-        _flags |= flag;
-    }
-    bool HasFlag(int flag)
-    {
-        return((_flags & flag) ? true : false);
-    }
+    int  GetFlag() const    {  return(_flags);  }
+    void SetFlag(int flag)  { _flags |= flag;   }
+    bool HasFlag(int flag)  {  return((_flags & flag) ? true : false); }
 
 public:
+
     //! Constructor
     OBAtom();
     //! Destructor
     virtual ~OBAtom();
     //! Assignment
-    OBAtom &operator=(OBAtom &);
+    OBAtom &operator = (OBAtom &);
     //! Clear all data
     void Clear();
 
     //! \name Methods to set atomic information
     //@{
-    void SetIdx(int idx)
-    {
-        _idx = idx;
-        _cidx = (idx-1)*3;
-    }
-    void SetHyb(int hyb)
-    {
-        _hyb = hyb;
-    }
-    void SetAtomicNum(int atomicnum)
-    {
-        _ele = (char)atomicnum;
-    }
+    //! Set atom index (i.e., in an OBMol)
+    void SetIdx(int idx)    { _idx = idx; _cidx = (idx-1)*3; }
+    //! Set atom hybridization (i.e., 1 = sp, 2 = sp2, 3 = sp3 ...)
+    void SetHyb(int hyb)    { _hyb = hyb; }
+    //! Set atomic number
+    void SetAtomicNum(int atomicnum)    { _ele = (char)atomicnum; }
+    //! Set isotope number (actual atomic weight is tabulated automatically, 0 = most abundant)
     void SetIsotope(unsigned int iso);
-    void SetImplicitValence(int val)
-    {
-        _impval = (char)val;
-    }
-    void IncrementImplicitValence()
-    {
-        _impval++;
-    }
-    void DecrementImplicitValence()
-    {
-        _impval--;
-    }
-    void SetFormalCharge(int fcharge)
-    {
-        _fcharge = fcharge;
-    }
-    void SetSpinMultiplicity(int spin)
-    {
-        _spinmultiplicity = spin;
-    } //CM 18 Sept 2003
+    void SetImplicitValence(int val)    { _impval = (char)val; }
+    void IncrementImplicitValence()     { _impval++; }
+    void DecrementImplicitValence()     { _impval--; }
+    void SetFormalCharge(int fcharge)   { _fcharge = fcharge; }
+    void SetSpinMultiplicity(short spin){ _spinmultiplicity = spin; }
     void SetType(char *type);
     void SetType(std::string &type);
-    void SetPartialCharge(double pcharge)
-    {
-        _pcharge = pcharge;
-    }
+    void SetPartialCharge(double pcharge){ _pcharge = pcharge; }
     void SetVector();
     void SetVector(vector3 &v);
     void SetVector(const double x,const double y,const double z);
-    void SetResidue(OBResidue *res)
-    {
-        _residue=res;
-    }
-    //  void SetParent(OBMol *ptr)               {_parent=ptr;}
-    void SetCoordPtr(double **c)
-    {
-        _c = c;
-        _cidx = (GetIdx()-1)*3;
-    }
-    void SetAromatic()
-    {
-        SetFlag(OB_AROMATIC_ATOM);
-    }
-    void UnsetAromatic()
-    {
-        _flags &= (~(OB_AROMATIC_ATOM));
-    }
-    void SetClockwiseStereo()
-    {
-        SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM);
-    }
-    void SetAntiClockwiseStereo()
-    {
-        SetFlag(OB_ACSTEREO_ATOM|OB_CHIRAL_ATOM);
-    }
+    void SetResidue(OBResidue *res)     { _residue=res; }
+    //  void SetParent(OBMol *ptr)      { _parent=ptr; } // inherited
+    void SetCoordPtr(double **c)        { _c = c; _cidx = (GetIdx()-1)*3; }
+    void SetAromatic()                  { SetFlag(OB_AROMATIC_ATOM); }
+    void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
+    //! Mark atom as having SMILES clockwise stereochemistry (i.e., "@@")
+    void SetClockwiseStereo()           { SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM); }
+    //! Mark atom as having SMILES anticlockwise stereochemistry (i.e., "@")
+    void SetAntiClockwiseStereo()       { SetFlag(OB_ACSTEREO_ATOM|OB_CHIRAL_ATOM); }
+    //! Mark an atom as having + chiral volume
+    void SetPositiveStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
+    //! Mark an atom as having - chiral volume
+    void SetNegativeStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
+    //! Clear all stereochemistry information
     void UnsetStereo()
     {
         _flags &= ~(OB_ACSTEREO_ATOM);
         _flags &= ~(OB_CSTEREO_ATOM);
+	_flags &= ~(OB_POS_CHIRAL_ATOM);
+	_flags &= ~(OB_NEG_CHIRAL_ATOM);
         _flags &= ~(OB_CHIRAL_ATOM);
     }
-    void SetInRing()
-    {
-        SetFlag(OB_RING_ATOM);
-    }
-    void SetChiral()
-    {
-        SetFlag(OB_CHIRAL_ATOM);
-    }
-    void ClearCoordPtr()
-    {
-        _c = NULL;
-        _cidx=0;
-    }
+    //! Mark an atom as belonging to at least one ring
+    void SetInRing()         { SetFlag(OB_RING_ATOM); }
+    //! Mark an atom as being chiral with unknown stereochemistry
+    void SetChiral()         { SetFlag(OB_CHIRAL_ATOM); }
+    //! Clear coordinates
+    void ClearCoordPtr()     { _c = NULL; _cidx=0; }
     //@}
 
     //! \name Methods to retrieve atomic information
     //@{
-    //int        GetStereo()        const {return((int)_stereo);}
-    int          GetFormalCharge()  const
-    {
-        return(_fcharge);
-    }
-    unsigned int GetAtomicNum()     const
-    {
-        return((unsigned int)_ele);
-    }
-    unsigned short int GetIsotope() const
-    {
-        return(_isotope);
-    }
-    int          GetSpinMultiplicity() const
-    {
-        return(_spinmultiplicity);
-    } //CM 18 Sept 2003
+    //int        GetStereo()        const { return((int)_stereo);}
+    int          GetFormalCharge()  const { return(_fcharge);    }
+    unsigned int GetAtomicNum()     const { return((unsigned int)_ele); }
+    unsigned short int GetIsotope() const { return(_isotope);    }
+    int          GetSpinMultiplicity() const { return(_spinmultiplicity); }
     //! The atomic mass of this atom given by standard IUPAC average molar mass
     double	 GetAtomicMass()    const;
-    //! The atomic mass of given by the isotope (default is most abundant isotope)
+    //! The atomic mass of given by the isotope (default of 0 s most abundant isotope)
     double	 GetExactMass()	    const;
-    unsigned int GetIdx()           const
-    {
-        return((int)_idx);
-    }
-    unsigned int GetCoordinateIdx() const
-    {
-        return((int)_cidx);
-    }
-    unsigned int GetCIdx()          const
-    {
-        return((int)_cidx);
-    }
+    unsigned int GetIdx()           const { return((int)_idx);  }
+    unsigned int GetCoordinateIdx() const { return((int)_cidx); }
+    unsigned int GetCIdx()          const { return((int)_cidx); }
     //! The current number of explicit connections
     unsigned int GetValence()       const
     {
@@ -429,13 +361,9 @@ public:
     //! \name Iterator methods
     //@{
     std::vector<OBEdgeBase*>::iterator BeginBonds()
-    {
-        return(_vbond.begin());
-    }
+      { return(_vbond.begin()); }
     std::vector<OBEdgeBase*>::iterator EndBonds()
-    {
-        return(_vbond.end());
-    }
+      { return(_vbond.end());   }
     OBBond *BeginBond(std::vector<OBEdgeBase*>::iterator &i);
     OBBond *NextBond(std::vector<OBEdgeBase*>::iterator &i);
     OBAtom *BeginNbrAtom(std::vector<OBEdgeBase*>::iterator &);
@@ -544,28 +472,34 @@ public:
     bool IsOneThree(OBAtom*);
     //! Is this atom related to the supplied OBAtom in a 1,4 bonding pattern?
     bool IsOneFour(OBAtom*);
+    //! Is this atom an oxygen in a carboxyl group?
     bool IsCarboxylOxygen();
+    //! Is this atom an oxygen in a phosphate group? 
     bool IsPhosphateOxygen();
+    //
     bool IsSulfateOxygen();
     bool IsNitroOxygen();
     bool IsAmideNitrogen();
     bool IsPolarHydrogen();
     bool IsNonPolarHydrogen();
     bool IsAromaticNOxide();
+    //! Is this atom chiral?
     bool IsChiral();
     bool IsAxial();
-    bool IsClockwise()
-    {
-        return(HasFlag(OB_CSTEREO_ATOM));
-    }
-    bool IsAntiClockwise()
-    {
-        return(HasFlag(OB_ACSTEREO_ATOM));
-    }
+    //! Does this atom have SMILES-specified clockwise "@@" stereochemistry?
+    bool IsClockwise()         { return(HasFlag(OB_CSTEREO_ATOM));  }
+    //! Does this atom have SMILES-specified anticlockwise "@" stereochemistry?
+    bool IsAntiClockwise()     { return(HasFlag(OB_ACSTEREO_ATOM)); }
+    //! Does this atom have a positive chiral volume?
+    bool IsPositiveStereo()    { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
+    //! Does this atom have a negative chiral volume?
+    bool IsNegativeStereo()    { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
+    //! Does this atom have SMILES-specified stereochemistry?
     bool HasChiralitySpecified()
-    {
-        return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM));
-    }
+      { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
+    //! Does this atom have a specified chiral volume?
+    bool HasChiralVolume()
+      { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
     bool HasAlphaBetaUnsat(bool includePandS=true);
     bool HasBondOfOrder(unsigned int);
     int  CountBondsOfOrder(unsigned int);
@@ -901,18 +835,6 @@ public:
     }
     //@}
 
-    /*NF    //! \name Compression methods (via OBCompressData)
-        //@{
-        //! Save memory by rolling into the OEBinary format as a buffer
-        virtual bool Compress(void);
-        //! Roll data out from the obCompressData buffer
-        virtual bool UnCompress(void);
-        //! Call when accessing a compressed molecule to uncompress if needed.
-        virtual void BeginAccess(void);
-        //! Call when finished accessing a compressed molecule to recompress.
-        virtual void EndAccess(void);
-        //@}
-    */
     //! \name Generic data handling methods (via OBGenericData)
     //@{
     //! Returns true if the generic attribute/value pair exists
@@ -1355,11 +1277,11 @@ bool SetInputType(OBMol&,std::string&);
 bool SetOutputType(OBMol&,std::string&);
 
 //global definitions
-// EXTERN  OBExtensionTable extab;
 EXTERN  OBElementTable   etab;
 EXTERN  OBTypeTable      ttab;
 EXTERN  OBIsotopeTable   isotab;
 EXTERN  OBChainsParser   chainsparser;
+EXTERN  OBMessageHandler obErrorLog;
 
 //Utility Macros
 
@@ -1418,8 +1340,6 @@ double superimpose(double*,double*,int);
 #define obAssert(__b__) \
     if (!(__b__)) {   \
         cerr << "Assert at File " << __FILE__ << " Line " << __LINE__ << endl; \
-        int *p= NULL; *p= 10; \
-        exit(-1); \
     }
 
 } // end namespace OpenBabel
