@@ -19,6 +19,10 @@ General Public License for more details.
 
 #include "oberror.h"
 
+using namespace std;
+
+namespace OpenBabel {
+
 OBError::OBError( const string &method, const string &errorMsg, const string &explanation, 
 	   const string &possibleCause, const string &suggestedRemedy)
 {
@@ -45,3 +49,5 @@ string OBError::message() const
   tmp += "==============================\n";
  return tmp;
 }
+
+} // end namespace OpenBabel

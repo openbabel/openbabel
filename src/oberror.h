@@ -21,24 +21,28 @@ General Public License for more details.
 #include <iostream>
 #include <string>
 
+namespace OpenBabel {
+
 class OBError 
 {
  public:
-  OBError( const string &method,
-	   const string &errorMsg,
-	   const string &explanation = "", 
-	   const string &possibleCause = "", 
-	   const string &suggestedRemedy ="" );
+  OBError( const std::string &method,
+	   const std::string &errorMsg,
+	   const std::string &explanation = "", 
+	   const std::string &possibleCause = "", 
+	   const std::string &suggestedRemedy ="" );
 
-  string message(void) const;
+  std::string message(void) const;
 
   friend std::ostream& operator<< ( std::ostream &os, const OBError &er ){ os << er.message(); };
 
-  string _method;
-  string _errorMsg;
-  string _explanation;
-  string _possibleCause;
-  string _suggestedRemedy;
+  std::string _method;
+  std::string _errorMsg;
+  std::string _explanation;
+  std::string _possibleCause;
+  std::string _suggestedRemedy;
 };
+
+} // end namespace OpenBabel
 
 #endif

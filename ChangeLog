@@ -10,6 +10,9 @@
 	* src/obutil.cpp (InternalToCartesian): If vector input is empty,
 	quit early. Contributed by Francesco Bresciani.
 
+	* src/oberror.h, src/oberror.cpp: Namespace fixes to handle
+	problems on gcc-3.1 as reported by Austin Acton and Andrea Tasso.
+
 2002-09-07  Michael Banck <mbanck@gmx.net>
 
 	* Replaced $DEST with $DESTDIR and $bindir
