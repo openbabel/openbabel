@@ -317,11 +317,12 @@ unsigned int i;
   cout << "   1 output CML V1.0 (default)" << endl;
   cout << "   2 output CML V2.0 (Schema)" << endl;
   cout << "   a output array format for atoms and bonds (default <atom>)" << endl;
-  cout << "   p prettyprint output (default no indent)" << endl;
+  cout << "   p prettyprint output (not implemented)" << endl;
   cout << "   n output namespace (default no namespace)" << endl;
   cout << "   c use 'cml' as output namespace prefix (else default) (forces n)" << endl;
   cout << "   d output DOCTYPE (default none)" << endl;
   cout << "   g debug output" << endl;
+  cout << "   v add XML version (declaration)" << endl;
   cout << endl << "Report Bugs to <openbabel-discuss@lists.sourceforge.net>." << endl;
 
 }
