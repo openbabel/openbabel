@@ -368,7 +368,7 @@ public:
     bool HasNonSingleBond();
     bool HasSingleBond()      {return(HasBondOfOrder(1));}
     bool HasDoubleBond()      {return(HasBondOfOrder(2));}
-    bool HasAromaticBond()    {return(HasBondOfOrder(4));}
+    bool HasAromaticBond()    {return(HasBondOfOrder(5));}
     //! Determines if this atom matches the first atom in a given SMARTS pattern
     bool MatchesSMARTS(const char *);
     //@}
@@ -479,6 +479,7 @@ public:
    bool IsCarbonyl();
    bool IsSingle();
    bool IsDouble();
+   bool IsTriple();
    bool IsKSingle();
    bool IsKDouble();
    bool IsKTriple();
