@@ -15,6 +15,12 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obconversion.h"
 
+#if defined(HAVE_SSTREAM)
+#include <sstream>
+#else
+#include <strstream>
+#endif
+
 using namespace std;
 namespace OpenBabel
 {

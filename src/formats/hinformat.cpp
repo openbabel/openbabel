@@ -114,7 +114,11 @@ bool HINFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     {
         tokenize(vs,buffer); // Don't really know how long it'll be
         if (vs.size() < 11)
-            break;
+	  {
+	    ifs.getline(buffer, BUFF_SIZE);
+	    continue;
+	  }
+
         atom = mol.NewAtom();
         atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
         x = atof((char*)vs[7].c_str());

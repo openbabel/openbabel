@@ -20,19 +20,19 @@ using namespace std;
 namespace OpenBabel
 {
 
-class ChemdrawFormat : public OBFormat
+class ChemDrawFormat : public OBFormat
 {
 public:
     //Register this format type ID
-    ChemdrawFormat()
+    ChemDrawFormat()
     {
-        OBConversion::RegisterFormat("CHEMDRAW",this);
+        OBConversion::RegisterFormat("ct",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "ChemDraw format \n \
+            "ChemDraw Connection Table format \n \
             No comments yet\n \
             ";
     };
@@ -44,16 +44,27 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTREADABLE;
+        return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
     ////////////////////////////////////////////////////
     /// The "Convert" interface functions
+    virtual bool ReadChemObject(OBConversion* pConv)
+    {
+        OBMol* pmol = new OBMol;
+        bool ret=ReadMolecule(pmol,pConv);
+        if(ret) //Do transformation and return molecule
+            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
+        else
+            pConv->AddChemObject(NULL);
+        return ret;
+    };
 
     virtual bool WriteChemObject(OBConversion* pConv)
     {
@@ -70,11 +81,11 @@ public:
 //***
 
 //Make an instance of the format class
-ChemdrawFormat theChemdrawFormat;
+ChemDrawFormat theChemDrawFormat;
 
 ////////////////////////////////////////////////////////////////
 
-bool ChemdrawFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+bool ChemDrawFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
@@ -111,10 +122,69 @@ bool ChemdrawFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         sprintf(buffer,"%3d%3d%3d%3d",
                 bond->GetBeginAtomIdx(),
                 bond->GetEndAtomIdx(),
-                bond->GetBO(),1);
+                bond->GetBO(), bond->GetBO());
         ofs << buffer << endl;
     }
     return(true);
 }
+
+bool ChemDrawFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+{
+  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+  if(pmol==NULL)
+    return false;
+  
+  //Define some references so we can use the old parameter names
+  istream &ifs = *pConv->GetInStream();
+  OBMol &mol = *pmol;
+  const char* title = pConv->GetTitle();
+
+  char buffer[BUFF_SIZE];
+  unsigned int natoms, nbonds;
+  unsigned int bgn, end, order;
+  vector<string> vs;
+  OBAtom *atom;
+  double x, y, z;
+
+  mol.BeginModify();
+
+  ifs.getline(buffer,BUFF_SIZE);
+  if (strlen(buffer) == 0)
+    mol.SetTitle(buffer);
+  else
+    mol.SetTitle(title);
+
+  ifs.getline(buffer,BUFF_SIZE);
+  sscanf(buffer," %d %d", &natoms, &nbonds);
+  
+  for (int i = 1; i <= natoms; i ++)
+  {
+    if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
+    tokenize(vs,buffer);
+    if (vs.size() != 4) return(false);
+    atom = mol.NewAtom();
+
+    x = atof((char*)vs[0].c_str());
+    y = atof((char*)vs[1].c_str());
+    z = atof((char*)vs[2].c_str());
+
+    atom->SetVector(x,y,z); //set coordinates
+    atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
+  }
+
+  if (nbonds != 0)
+    for (int i = 0; i < nbonds; i++)
+      {
+	if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
+	tokenize(vs,buffer);
+	if (vs.size() != 4) return(false);
+        if (!sscanf(buffer,"%d%d%d%*d",&bgn,&end,&order)) return (false);
+	mol.AddBond(bgn,end,order);
+      }
+
+  mol.EndModify();
+  return(true);
+}
+
 
 } //namespace OpenBabel

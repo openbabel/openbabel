@@ -230,9 +230,7 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             // Lines setting several other properties are not implemented
         }
     }
-    OBAtomTyper atomtyper;
-    atomtyper.AssignImplicitValence(mol); //and set _spinmultiplicities for H-deficient atoms
-    //CM end
+    mol.AssignSpinMultiplicity();
 
     mol.EndModify();
 

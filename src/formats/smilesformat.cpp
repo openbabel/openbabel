@@ -369,6 +369,7 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
     mol.SetAromaticPerceived();
     FindAromaticBonds(mol);
     FindOrphanAromaticAtoms(mol);// CM 18 Sept 2003
+    mol.AssignSpinMultiplicity();
     mol.UnsetAromaticPerceived();
 
     mol.EndModify();

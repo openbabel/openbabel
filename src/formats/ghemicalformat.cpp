@@ -42,7 +42,7 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -117,7 +117,7 @@ bool GhemicalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     // Get !Info line with number of coord sets
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%*s %d", &i);
-    if (!i || i != 1)
+    if (!i)
         return false;
 
     // Get !Atoms line with number
