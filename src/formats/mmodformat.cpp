@@ -26,7 +26,8 @@ public:
     //Register this format type ID
     MacroModFormat()
     {
-        OBConversion::RegisterFormat("MMD",this);
+        OBConversion::RegisterFormat("mmd",this);
+        OBConversion::RegisterFormat("mmod",this);
     }
 
     virtual const char* Description() //required
@@ -38,7 +39,7 @@ public:
     };
 
     virtual const char* SpecificationURL(){return
-            "http://??";}; //optional
+            "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

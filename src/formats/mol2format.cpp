@@ -40,8 +40,10 @@ public:
             ";
     };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.???.com";}; //optional
+    virtual const char* SpecificationURL()
+  {
+    return "http://http://www.tripos.com/custResources/mol2Files//";
+  }; //optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////

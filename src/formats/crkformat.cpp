@@ -37,7 +37,7 @@ public:
     };
 
     virtual const char* SpecificationURL(){return
-            "http://??";}; //optional
+            "http://crk.sourceforge.net/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -157,13 +157,13 @@ public:
     virtual const char* Description() //required
     {
         return
-            "CRK(3D) format\n \
+            "CRK 3D format\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
-            "http://??";}; //optional
+            "http://crk.sourceforge.net/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

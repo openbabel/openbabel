@@ -27,17 +27,17 @@ public:
     //Register this format type ID
     JaguarFormat()
     {
-        OBConversion::RegisterFormat("JAGUAR",this);
+        OBConversion::RegisterFormat("jout",this);
     }
 
     virtual const char* Description() //required
     {
-        return "Jaguar format\n In and Out formats?\n";
+        return "Jaguar output format\n \n";
     };
 
   virtual const char* SpecificationURL()
   {
-    return "http://??";
+    return "";
   }; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply

@@ -24,14 +24,14 @@ public:
     //Register this format type ID
     GhemicalFormat()
     {
-        OBConversion::RegisterFormat("GHEM",this);
+        OBConversion::RegisterFormat("gpr",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "Ghemical\n \
-            Open sourced molecular modelling\n \
+            "Ghemical format\n \
+            Open source molecular modelling\n \
             ";
     };
 

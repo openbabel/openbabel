@@ -26,19 +26,19 @@ public:
     //Register this format type ID
     CHEM3D1Format()
     {
-        OBConversion::RegisterFormat("CHEM3D1",this);
+        OBConversion::RegisterFormat("c3d1",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "CHEM3D1 format\n \
+            "Chem3D1 format\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
-            "http://??";}; //optional
+            "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -126,19 +126,19 @@ public:
     //Register this format type ID
     CHEM3D2Format()
     {
-        OBConversion::RegisterFormat("CHEM3D2",this);
+        OBConversion::RegisterFormat("c3d2",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "CHEM3D2 format\n \
+            "Chem3D2 format\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
-            "http://??";}; //optional
+            "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

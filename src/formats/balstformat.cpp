@@ -26,7 +26,7 @@ public:
     //Register this format type ID
     BallStickFormat()
     {
-        OBConversion::RegisterFormat("BALLSTICK",this);
+        OBConversion::RegisterFormat("bs",this);
     }
 
     virtual const char* Description() //required
@@ -38,7 +38,7 @@ public:
     };
 
     virtual const char* SpecificationURL(){return
-            "http://??";}; //optional
+            "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

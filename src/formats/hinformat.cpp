@@ -25,7 +25,7 @@ public:
     //Register this format type ID
     HINFormat()
     {
-        OBConversion::RegisterFormat("HIN",this);
+        OBConversion::RegisterFormat("hin",this);
     }
 
     virtual const char* Description() //required
@@ -37,7 +37,7 @@ public:
     };
 
     virtual const char* SpecificationURL(){return
-            "http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage";}; //optional
+            "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

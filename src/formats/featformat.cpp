@@ -26,7 +26,7 @@ public:
     //Register this format type ID
     FEATFormat()
     {
-        OBConversion::RegisterFormat("FEAT",this);
+        OBConversion::RegisterFormat("feat",this);
     }
 
     virtual const char* Description() //required
@@ -38,7 +38,7 @@ public:
     };
 
     virtual const char* SpecificationURL(){return
-            "http://??";}; //optional
+            "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

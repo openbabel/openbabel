@@ -27,7 +27,7 @@ public:
     //Register this format type ID
     CacaoFormat()
     {
-        OBConversion::RegisterFormat("CACAO",this);
+        OBConversion::RegisterFormat("caccrt",this);
     }
 
     virtual const char* Description() //required

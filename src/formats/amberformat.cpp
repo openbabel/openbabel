@@ -26,13 +26,13 @@ public:
     //Register this format type ID
     AmberPrepFormat()
     {
-        OBConversion::RegisterFormat("AMBER",this);
+        OBConversion::RegisterFormat("prep",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "Amber Prep\n \
+            "Amber Prep format\n \
             No comments yet\n \
             ";
     };

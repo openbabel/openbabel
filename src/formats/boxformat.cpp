@@ -26,19 +26,19 @@ public:
     //Register this format type ID
     BoxFormat()
     {
-        OBConversion::RegisterFormat("BOX",this);
+        OBConversion::RegisterFormat("box",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "Box format\n \
+            "Dock 3.5 Box format\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
-            "http://??";}; //optional
+            "http://dock.compbio.ucsf.edu/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

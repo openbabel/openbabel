@@ -26,19 +26,19 @@ public:
     //Register this format type ID
     CARFormat()
     {
-        OBConversion::RegisterFormat("CAR",this);
+        OBConversion::RegisterFormat("car",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "Biosym chemical modeller input\n \
+            "MSI Biosym/Insight II CAR file\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
-            "http://??";}; //optional
+            "";}; //optional
 
     virtual unsigned int Flags()
     {

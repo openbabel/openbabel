@@ -76,8 +76,7 @@ public:
 
     virtual const char* SpecificationURL()
     {
-        return
-            "http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage";
+        return "";
     }
     ; //optional
 

@@ -26,13 +26,16 @@ public:
     //Register this format type ID
     MOLFormat()
     {
-        int n = OBConversion::RegisterFormat("MOL",this);
+        OBConversion::RegisterFormat("mol",this);
+        OBConversion::RegisterFormat("mdl",this);
+        OBConversion::RegisterFormat("sd",this);
+        OBConversion::RegisterFormat("sdf",this);
     }
 
     virtual const char* Description()
     {
         return
-            "MDL MOL file\n \
+            "MDL Molfile\n \
             Not yet updated to V2000 and V3000\n \
             In property block uses only M RAD (read and write) and M CHG(read)\n";
     };

@@ -29,13 +29,14 @@ public:
     //Register this format type ID
     GAMESSFormat()
     {
-        OBConversion::RegisterFormat("GAMESS",this);
+        OBConversion::RegisterFormat("gam",this);
+        OBConversion::RegisterFormat("gamout",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "GAMESS\n \
+            "GAMESS Output\n \
             No comments yet\n \
             ";
     };
