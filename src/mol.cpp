@@ -2714,17 +2714,11 @@ void OBMol::PerceiveBondOrders()
           a1 = GetAtom((*l)[0]);
           a2 = GetAtom((*l)[1]);
           a3 = GetAtom((*l)[2]);
-	  a4 = GetAtom((*l)[3]);
-          b1 = a1->GetBond(a2); b2 = a1->GetBond(a3); b3 = a1->GetBond(a4);
+          b1 = a1->GetBond(a2); b2 = a2->GetBond(a3);
 
-          if (!b1 || !b2 || !b3) continue;
+          if (!b1 || !b2) continue;
           b1->SetBO(2);
           b2->SetBO(2);
-	  b3->SetBO(1);
-	  a4 = GetAtom((*l)[4]);
-	  b3 = a1->GetBond(a4);
-	  if (!b3) continue;
-	  b3->SetBO(1);
         }      
     } // Nitro
 
