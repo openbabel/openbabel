@@ -125,6 +125,22 @@ bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
 bool WriteSDFile(ostream &ofs,OBMol &mol,const char *dimension) {
   char buff[BUFF_SIZE];  
 
+  if (mol.NumAtoms() > 999) // Three digits!
+    {
+      ThrowError("MDL Molfile conversion failed: Molecule is too large to convert.");
+      ThrowError("  File format limited to 999 atoms.");
+      cerr << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
+      return(false);
+    }
+
+  if (mol.NumBonds() > 999) // Three digits!
+    {
+      ThrowError("MDL Molfile conversion failed: Molecule is too large to convert.");
+      ThrowError("  File format limited to 999 bonds.");
+      cerr << "  Molecule size: " << mol.NumBonds() << " atoms " << endl;
+      return(false);
+    }
+
   ofs << mol.GetTitle() <<  endl;
   sprintf(buff,"  -ISIS-            %s",dimension);
   ofs << buff << endl;

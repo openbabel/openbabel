@@ -2755,30 +2755,34 @@ void OBMol::PerceiveBondOrders()
   // Pass 5: Check for aromatic rings and assign bonds as appropriate
   // This is just a quick and dirty approximation that marks everything
   //  as potentially aromatic
-  bool typed; // has this ring been typed?
-  unsigned int loop, loopSize;
-  for (ringit = rlist.begin(); ringit != rlist.end(); ringit++)
-    {
-      typed = false;
-      loopSize = (*ringit)->PathSize();
-      if (loopSize == 5 || loopSize == 6)
-	{
-	  path = (*ringit)->_path;
-	  for(loop = 0; loop < loopSize; loop++)
-	    {
-	      atom = GetAtom(path[loop]);
-	      if(atom->HasNonSingleBond() || atom->GetHyb() != 2)
-		{
-		  typed = true;
-		  break;
-		}
-	    }
 
-	  if (!typed)
-	    for(loop = 0; loop < loopSize; loop++)
-	      (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
-	}
-    }
+  // Unfortunately it doesn't work well enough b/c we cannot easily pass off
+  // our partially-typed structure to the Kekulize procedure yet.
+
+//   bool typed; // has this ring been typed?
+//   unsigned int loop, loopSize;
+//   for (ringit = rlist.begin(); ringit != rlist.end(); ringit++)
+//     {
+//       typed = false;
+//       loopSize = (*ringit)->PathSize();
+//       if (loopSize == 5 || loopSize == 6)
+// 	{
+// 	  path = (*ringit)->_path;
+// 	  for(loop = 0; loop < loopSize; loop++)
+// 	    {
+// 	      atom = GetAtom(path[loop]);
+// 	      if(atom->HasNonSingleBond() || atom->GetHyb() != 2)
+// 		{
+// 		  typed = true;
+// 		  break;
+// 		}
+// 	    }
+
+// 	  if (!typed)
+// 	    for(loop = 0; loop < loopSize; loop++)
+// 	      (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
+// 	}
+//     }
   // Kekulize();
 
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity

@@ -6,7 +6,7 @@ dnl AM_INIT_AUTOMAKE([openbabel], version)
 AC_CANONICAL_HOST
 top_builddir=`pwd`
 AC_SUBST(top_builddir)
-openbabel_version=1.99.1
+openbabel_version=1.100.0
 AC_SUBST(openbabel_version)
 
 dnl Checks for programs.
@@ -29,7 +29,7 @@ dnl to find it
 dnl Complain about missing documentation tool doxygen.
 if test "$DOCTOOL" == "no"; then
 AC_MSG_ERROR(Cannot find doxygen. 
-	Have a look at http://www.stack.nl/~dimitri/doxygen/index.html)
+	Have a look at http://www.doxygen.org/)
 fi
 
 AC_LANG_CPLUSPLUS

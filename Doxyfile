@@ -4,7 +4,7 @@
 # General configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = "Open Babel"
-PROJECT_NUMBER         = 1.99.1
+PROJECT_NUMBER         = 1.100.0
 OUTPUT_DIRECTORY       = doc/API
 OUTPUT_LANGUAGE        = English
 EXTRACT_ALL            = YES

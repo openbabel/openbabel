@@ -25,6 +25,15 @@ bool WriteSmiles(ostream &ofs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE],tmp[BUFF_SIZE];
 
+  // This is a hack to prevent recursion problems.
+  //  we still need to fix the underlying problem -GRH
+  if (mol.NumAtoms() > 1000)
+    {
+      ThrowError("SMILES Conversion failed: Molecule is too large to convert.");
+      cerr << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
+      return(false);
+    }
+
   OBMol2Smi m2s;
 
   m2s.Init();
@@ -635,6 +644,15 @@ bool WriteFixFile(ostream &ofs,OBMol &mol)
 {
   char buffer[BUFF_SIZE];
   OBMol2Smi m2s;
+
+  // This is a hack to prevent recursion problems.
+  //  we still need to fix the underlying problem -GRH
+  if (mol.NumAtoms() > 1000)
+    {
+      ThrowError("SMILES Conversion failed: Molecule is too large to convert.");
+      cerr << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
+      return(false);
+    }
 
   m2s.Init();
   //m2s.AssignCisTrans(mol);

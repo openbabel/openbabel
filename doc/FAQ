@@ -24,6 +24,25 @@ that's what it is--an open version of Babel. But if you like
 one-word, mixed-case project names, then go for OpenBabel. In that 
 case, the space is just too small to be printed.
 
+1.4 How does this relate to the original Babel and OELib, the "next"
+Babel?
+    Along the way, the two original authors started a rewrite of Babel
+into C++ they called OBabel, which was never really publicly
+released. But Matt used some of these ideas in OELib, which was
+generously released under the GNU GPL by his employer, OpenEye
+Software, and some version of this OELib is still available from the
+OELib homepage. http://www.eyesopen.com/oelib.html
+    OpenEye decided that for their purposes, OELib needed a rewrite,
+but this would be closed-source to include some advanced
+algorithms. So the GPL'ed version of OELib would not be
+maintained. Instead, the free version of OELib was renamed to
+"Open Babel" and is still maintained as this project with the blessing
+of Matt and other contributors.
+
+1.5 What's the latest version?
+    As of this writing, the latest version is "1.100" which denotes
+that we're not quite at version 2.0.0 yet. We're close, though.
+
 
 Features, Formats, Roadmap:
 2.1 Why don't you support file format X?
@@ -42,24 +61,29 @@ working code. Also consider pointing developers to this FAQ and the
     The biggest missing feature from Babel is deriving bond types for
 QM files. The Babel code was a mishmash and didn't always did a good
 job, but it was good at lying. There are better algorithms now, but
-they're not implemented yet. Right now it will generally just assign
-single bonds based on distance between elements.
+they're not fully implemented yet. Right now it will generally do what
+it can, but it sometimes gets things wrong. In particular, it needs a
+pass to detect aromatic rings. If you find molecules it mangles,
+please let us know so we can fix the bugs!
 
 2.3 What sorts of features will be added in the future?
     It's an open project, so if features are suggested or donated, 
 they'll be considered as much as anything else on the drawing board. 
-Some things are pretty clear.
+Some things are pretty clear:
     * A test suite, to ensure bug-free translation between formats
-    * Support for additional file formats including CML
-    * Bond type perception (see 2.2)
+    * Support for additional file formats
+    * Better bond type perception (see 2.2)
     * Additional data storage (total charge, spin, point-group 
-symmetry, etc.)
+      symmetry, crystal lattice parameters, etc.)
     * Support for translating beyond bonds and atoms, including
        * charge density
        * eigenvalues/orbital energies
        * eigenvectors and basis-set projection
        * additional calculated data
+    * A stable, flexible API for manipulating molecules and molecular
+      information
     See the TODO list for more details.
+
 2.4 Where's the roadmap again?
     <http://openbabel.sf.net/>
 

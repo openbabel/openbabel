@@ -1,3 +1,26 @@
+2002-12-6  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* Doxyfile, README, configure.in, configure: Rename version to
+	1.100.
+
+	* doc/FAQ: Update with a few minor corrections -- synched with
+	website.
+
+	* THANKS: A few omissions -- synched with website.
+
+	* src/mdl.cpp, src/smi.cpp: Throw errors if the molecules are too
+	large, rather than segfault. In MDL, this seems to be a problem
+	inherent in the file format. For SMI, this seems to be a recursion
+	problem.
+
+	* src/mol.cpp: Take out the "quick-and-dirty" aromatic pass, it's
+	too rough to be useful. I need to figure out how to pass off the
+	rough structure to the Kekulize routines.
+
+	* src/types.txt, src/types.h: Make sure there's a default type for
+	an "N" atom, caught by roundtrip testing from PDB files. Fix typo
+	for O.co2 v. Oco2 external type. Also add XYZ forms for all atoms.
+
 2002-12-5  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* Doxyfile: Update for 1.99.1 release.

@@ -1352,7 +1352,7 @@ host_os=`echo $ac_cv_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
 
 top_builddir=`pwd`
 
-openbabel_version=1.99.1
+openbabel_version=1.100.0
 
 
 ac_ext=c
@@ -3004,9 +3004,9 @@ fi;
 
 if test "$DOCTOOL" == "no"; then
 { { echo "$as_me:$LINENO: error: Cannot find doxygen.
-	Have a look at http://www.stack.nl/~dimitri/doxygen/index.html" >&5
+	Have a look at http://www.doxygen.org/" >&5
 echo "$as_me: error: Cannot find doxygen.
-	Have a look at http://www.stack.nl/~dimitri/doxygen/index.html" >&2;}
+	Have a look at http://www.doxygen.org/" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
