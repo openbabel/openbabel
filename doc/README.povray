@@ -1,0 +1,195 @@
+This file describes the extensions made for generating pictures with babel 
+and povray. This extensions are copyrighted by 
+
+Oliver Weichold (weichold@sas.upenn.edu)
+
+and 
+
+Steffen Reith (streit@streit.cc)
+
+This software is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+
+This software is provided on an "as is" basis, and without warranty of any 
+kind, including but not limited to any implied warranty of merchantability 
+or fitness for a particular purpose.
+
+1. Installation
+---------------
+
+The extension is tested for Linux, but should work with any flavour of 
+UNIX(TM).
+Sorry: We did not test it for DOS/Windows, because we do _not_ use it.
+
+(a) Install povray 3.1 or above (You _really_ need at least 3.1). See 
+    http://www.povray.org/ for instructions, sources and binaries.
+    Please read the povray manual. 
+
+(b) Copy the file babel.inc  to a place where povray can find it as 
+    an include file. 
+    If you have set up povray properly, please try
+
+     cat $POVINI | grep Library_Path=
+
+    for a hint.
+
+(c) Compile babel
+
+(d) Do _NOT_ forget: READ.ME files are not IGNORE.ME files :-(
+    But, as you are here, you seem to like readme files.
+
+2. Usage
+--------
+
+The usage is quite simple. Supposing you have a mol2 file (probably generated
+by Sybyl). You can convert this description of a molecule to a 
+povray file by typing:
+
+  babel -imol2 meer.mol2 -opov meer.inc
+
+(The output-type 'pov' creates povray files. Of course, you can use any type 
+of file supported by babel as input.)
+
+The generated file for povray contains a povray object, representing
+your molecule. The name of the object is simply the name of the 
+output-file without extension (In the example above, you get
+an object called 'meer').
+Now you can use this object in your povray scene.
+
+2.1 Modifiers & Variables
+------------------------
+At the moment, three types of models are supported. They are "Ball and Sticks",
+"Space-Fill" and "Capped-Sticks". You have to "#declare" the desired type by
+adding something like
+
+#declare BAS = true //For Ball and Sticks (Default).
+#declare SPF = true //For Space-Fill
+#declare CST = true //For Capped-Sticks
+
+to the scene description in your .pov file before you import the .inc file (see
+below). If you don't select a type "Ball and Sticks" is the default. 
+
+You can do transparent molecules by adding
+
+#declare TRANS = true
+
+to your .pov file. Please note, that we do not use this feature very often, so
+the transparent texture is not optimal (Feel free to improve it and send us
+your improvement.)
+
+Any time you convert a file to a povray description (.inc file) the center of
+the molecule is calculated, too. The name of the center is always 
+
+'mol_name'_center
+
+where 'mol_name' is the name of the generated povray file without 
+extension. Note that this vector is already mulitplied by -1. So you
+can easily center the molecule to (0|0|0) by adding 
+
+'translate <mol_name>_center'.
+
+to your .pov file.
+
+2.2. Example
+------------
+
+Go to directory 'doc'. (These may have been moved if you are using a
+binary package, like an RPM or .deb.) Here you find a file
+'dioxin.mol2'. Convert it by typing:
+
+ babel -imol2 dioxin.mol2 -opov dioxin.inc
+
+Now have a look at the file 'dioxin.inc'
+
+As a povray scene we use the file dioxin.pov
+
+---------------------------------------------------------------------
+#include "colors.inc"
+#include "skies.inc"
+
+#declare BAS = true //We do a ball and sticks model
+#declare SPF = false 
+#declare CST = false
+#include "dioxin.inc" //Now we include the molecule
+
+background{White}
+sky_sphere{S_Cloud1}
+
+//The molecule
+object{
+       dioxin
+       translate dioxin_center //Translate to (0|0|0) 
+      }
+
+camera {
+        location <0,0,-12>
+        look_at <0,0,0>
+       }
+
+light_source {<0,10,0> 
+              color White
+             } 
+-------------------------------------------------------------------------
+
+now you can render a picture by typing
+
+  x-povray +V +A +D0 +W320 +H200 +Q9 +I dioxin.pov
+
+or
+ 
+  povray +V +A -D +W320 +H200 +Q9 +I dioxin.pov
+
+at the unix shell. (Read the povray-manual or ask your povray admin for
+the right povray command)
+
+Now do a sticks model by changing 
+
+#declare BAS = true
+
+to
+
+#declare BAS = false
+
+and 
+
+#declare CST = false
+
+to
+
+#declare CST = true
+
+Render the new picture (you already know the right command). Now you
+can do a spacefill-model (#declare SPF = true).
+If you do not want to learn much about povray you can use 'dioxin.pov' 
+as a prototype. You only have to change the filename 'dioxin.inc', the
+translate dioxin_center and the distance to the camera.
+Note: Of course it is possible to have more than one molecule in one
+povray scene. Just include all *.inc-files. You can also mix the
+model types. Supposing, you want mol1 as a 'Ball and Sticks' and
+mol2 as a 'Capped-Sticks'-model, you have to change the declarations to
+
+#declare BAS = true 
+#declare SPF = false 
+#declare CST = false
+#include "mol1.inc"
+#declare BAS = false 
+#declare SPF = false 
+#declare CST = true
+#include "mol2.inc"
+
+3. Some pictures
+------------------
+
+See
+
+http://www.streit.cc/ 
+
+for some pictures.
+
+
+                                      Have fun,
+                                                Oliver & Steffen
+
+P.S.: If you want to improve this file, feel free to do so. Please
+send us your improvement :-)

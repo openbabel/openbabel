@@ -1,0 +1,56 @@
+OELib -> Open Babel Migration Guide
+----------------------------------
+  by Geoff Hutchison (January 2002)
+
+At the moment, Open Babel as a separate project is just getting off
+the ground. It is still largely based on the original GPL'ed OELib and
+even the current "Primer" bundled with Open Babel is actually Matt Stahl's
+documentation on OELib.
+
+Recognizing this and that some people will be migrating code from the
+GPL'ed OELib which is no longer maintained to Open Babel, this is a
+short migration guide. Since OpenEye is developing OELib in a
+different direction, this guide will eventually become obsolete. By
+that point, hopefully, more complete documentation to Open Babel will
+exist as well.
+
+
+There are several obvious changes in Open Babel. Foremost, to prevent
+clashes with the OELib API, Open Babel uses the namespace
+OpenBabel. Additionally, all calls to OEFoo have become OBFoo,
+e.g. OEMol -> OBMol, OEAtom -> OBAtom, etc. This also includes source
+files, so oeutil -> obutil, oeifstream.h -> obifstream.h, etc.
+
+In order to conform to ISO C++ and compile successfully on gcc-3.0 and
+later, several changes were necessary to the nasty casting implemented
+in OELib. In particular, OELib often casts between vectors and
+iterators, which is a decided problem. Therefore all iterators over
+vectors of OEBond or OEAtom are implemented as the base classes:
+OBEdgeBase for bonds and OBNodeBase for atoms.
+
+So code like:
+  vector<OEBond*>::iterator j;
+
+  for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
+becomes:
+  vector<OBEdgeBase*>::iterator j;
+
+  for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
+
+Finally, for maintainability purposes, the convenience >> and <<
+operators to read in or write out an OBMol have been removed. Use the
+OBFileFormat class to do this since this code is ensured to be updated
+for new file types.
+
+The build environment is slightly different, though at the moment this
+should present little migration difficulties. In particular, Open
+Babel uses GNU autoconf instead of a custom configure shell script.
+
+Additionally, the global data tables like etab, extab, etc. all
+default to a slightly different priority to find the associated data
+files. First it will check the BABEL_DATADIR environment variable if
+set, then it will check a compiled-in directory path set by the
+configure script, which defaults to {prefix}/share/openbabel. Failing
+that, Open Babel will resort to the compiled in binary data rather
+than reading in a text file. As with OELib, both the environment
+variable and the directory to search may be modified by the calling code.
