@@ -11,12 +11,13 @@ obgrep is a more advanced version of the SMART grep program which was at the end
 
 the following lines are printed in the terminal when obgrep is executed without any argument:
 > obgrep
-Usage: /usr/local/bin/obgrep [options] "PATTERN" <filename>
+Usage: ./obgrep [options] "PATTERN" <filename>
 Options:
    -v    Invert the matching, print non-matching molecules
    -c    Print the number of matched molecules
    -f    Full match, print matching-molecules when the number
          of heavy atoms is equal to the number of PATTERN atoms
+   -n    Only print the name of the molecules
 
 
 Since some examples are better than a long explaination, here are some command lines to perform some queries in a database of SMILES (database.smi)

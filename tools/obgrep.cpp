@@ -26,12 +26,15 @@ int main(int argc,char **argv)
   char *program_name=NULL;
   io_type inFileType = UNDEFINED, outFileType = UNDEFINED;
   int c; 
-  bool count=false, invert=false, full=false;
+  bool count=false, invert=false, full=false, name_only=false;
   char *FileIn = NULL, *Pattern = NULL;
   
   // Parse options
-  while ((c = getopt(argc, argv, "vcf")) != -1)
+  while ((c = getopt(argc, argv, "nvcf")) != -1)
     switch (c) {
+    case 'n': // print the molecule name only
+              name_only = true;
+	      break;
     case 'c': // count the number of match
               count = true;
 	      break;
@@ -65,6 +68,7 @@ int main(int argc,char **argv)
       err += "   -c    Print the number of matched molecules\n";
       err += "   -f    Full match, print matching-molecules when the number\n";
       err += "         of heavy atoms is equal to the number of PATTERN atoms\n";
+      err += "   -n    Only print the name of the molecules\n";
       ThrowError(err);
       exit(-1);
     }
@@ -131,18 +135,28 @@ int main(int argc,char **argv)
       }
 	
       if (sp.Match(mol) ) { // perform SMART matching
-	if (!invert) {
-	  if (!count) cout << mol;
+	if (!invert) {      // do something only when invert flag is off
+	  if (!count) {
+	    if ( name_only )
+	      cout << mol.GetTitle() << endl;
+	    else
+	      cout << mol;
+	  }
 	  c++;
 	}
       }
-      else {
-	if (invert) {
-	  if (!count) cout << mol;
+      else {                // compounds do not match the SMART
+	if (invert) {       // do something only if invert flag is on
+	  if (!count) {
+	    if ( name_only )
+	      cout << mol.GetTitle() << endl;
+	    else
+	      cout << mol;
+	  }
 	  c++;
 	}
       }
-    }
+    } // end for loop
 
   if (count)
     cout << c << endl;
