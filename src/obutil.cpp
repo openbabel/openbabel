@@ -353,6 +353,9 @@ void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
   vector<OBNodeBase*>::iterator i;
   int index;
 
+  if (vic.empty())
+    return;
+
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     index = atom->GetIdx() - 1;

@@ -1,3 +1,15 @@
+2002-09-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/report.cpp: Fix bug noted by Markku Laukkanen, where the min
+	variable would roll past the maximum number of atoms in a
+	molecule.
+
+	* src/cml.cpp (debugMolecule): Add default dimension. Contributed
+	by Francesco Bresciani.
+
+	* src/obutil.cpp (InternalToCartesian): If vector input is empty,
+	quit early. Contributed by Francesco Bresciani.
+
 2002-09-07  Michael Banck <mbanck@gmx.net>
 
 	* Replaced $DEST with $DESTDIR and $bindir

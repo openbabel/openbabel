@@ -49,6 +49,7 @@ namespace OpenBabel {
     while (max <= mol.NumAtoms() + columns)
       {
 	ofs << endl;
+	if (min > mol.NumAtoms()) break;
 	atom = mol.GetAtom(min);
 	
 	sprintf(buffer,"%15s%4d",

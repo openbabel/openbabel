@@ -2325,6 +2325,7 @@ bool startMolecule(vector <pair<string,string> > &atts) {
 }
 
 bool debugMolecule(ostream &ofs) {
+        dimension = "3D";
 	OBAtom *atom;
 	vector<OBNodeBase*>::iterator i;
 	int count = 0;
