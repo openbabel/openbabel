@@ -13,7 +13,11 @@ GNU General Public License for more details.
 
 #include "crk.h"
 
+#if defined(HAVE_SSTREAM)
 #include <sstream>
+#else
+#include <strstream>
+#endif
 
 using namespace std;
 
