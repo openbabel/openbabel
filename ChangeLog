@@ -1,3 +1,7 @@
+2003-12-08  Fabien Fontaine <ffontaine@imim.es>
+	* src/mol.cpp (DeleteNonPolarHydrogens): uncomment "IncrementMod();"
+	to avoid _c initialization when Deleting atoms
+	
 2003-12-01  Michael Banck  <mbanck@gmx.net>
 
 	* src/data.cpp (GetExtension): Make sure that the returned long
