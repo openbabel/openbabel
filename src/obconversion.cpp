@@ -416,15 +416,16 @@ int OBConversion::Convert()
 	}
 
 	if(!pInFormat) return 0;
-	SetStartAndEnd();
+	Count=0;//number objects processed
+	if(!SetStartAndEnd())
+		return 0;
 	if(OneObjectOnly)
 	{
-		EndNumber=1;
+		EndNumber = StartNumber ? StartNumber : 1;
 		OneObjectOnly=false;
 	}
 
 //	Index=0;//number objects output
-	Count=0;//number objects processed
 	ReadyToInput=true;
 	m_IsLast=false;
 	pOb1=NULL;
@@ -435,7 +436,14 @@ int OBConversion::Convert()
 		if(pInStream==&cin)
 			if(pInStream->peek()=='\n')break;
 
-		if( !pInFormat->ReadChemObject(this)) break; 
+		if( !pInFormat->ReadChemObject(this))
+		{
+			//error or termination request: try to skip past current object
+			pInFormat->SkipObjects(0,this);
+			//TODO Code to allow continuation with next object rather than break
+			//if SkipObjects returned 1
+		 break;
+		} 
 		// Objects supplied to AddChemObject() which may output them after a delay
 		//ReadyToInput may be made false in AddChemObject()
 		// by WriteMolecule() returning false  or by Count==EndNumber		
@@ -456,7 +464,7 @@ int OBConversion::Convert()
 	return Index; //The number actually output
 }
 //////////////////////////////////////////////////////
-void OBConversion::SetStartAndEnd()
+bool OBConversion::SetStartAndEnd()
 {
 //Sets starting and ending molecule numbers by parsing GeneralOptions
 	const char* p = GetGeneralOptions();
@@ -470,10 +478,23 @@ void OBConversion::SetStartAndEnd()
 			{
 				cerr << "Missing \" in options" <<endl;
 			}
-			break;
+			return false;
 		case 'f':
 			StartNumber=atoi(++p);
 			p=strchr(p,'\"')+1; //get past ""
+			if(StartNumber>1)
+			{
+				//Try to skip objects now
+				int ret = pInFormat->SkipObjects(StartNumber-1,this);
+				if(ret==-1) //error
+					return false; 
+				if(ret==1) //success:objects skipped
+				{
+					Count = StartNumber-1;
+					StartNumber=0; //do not use old method
+				}
+				//ret==0 use old method
+			}
 			break;
 		case 'l':
 			EndNumber=atoi(++p);
@@ -481,6 +502,7 @@ void OBConversion::SetStartAndEnd()
 			break;
 		}
 	}
+	return true;
 }
 
 //////////////////////////////////////////////////////

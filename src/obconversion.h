@@ -125,6 +125,14 @@ public:
 /// Currently, can be a bitwise OR of any of the following
 /// NOTREADABLE READONEONLY NOTWRITABLE WRITEONEONLY DEFAULTFORMAT
 	virtual unsigned int Flags() { return 0;}; 
+
+	/// @brief Skip past first n objects in input stream (or current one with n=0)
+	/// Returns 1 on success, -1 on error and 0 if not implemented 
+	virtual int SkipObjects(int n, OBConversion* pConv)
+	{
+		return 0; //shows not implemented
+	};
+
 };
 
 //*************************************************
@@ -274,7 +282,7 @@ public:
 	//@}
 
 protected:
-	void             SetStartAndEnd();
+	bool             SetStartAndEnd();
 	static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
 	static int       LoadFormatFiles();
 
