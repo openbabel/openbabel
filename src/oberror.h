@@ -21,6 +21,10 @@ General Public License for more details.
 #ifndef OB_ERROR_H
 #define OB_ERROR_H
 
+#ifndef EXTERN
+#  define EXTERN extern
+#endif
+
 #if HAVE_IOSTREAM
 #include <iostream>
 #elif HAVE_IOSTREAM_H
@@ -94,6 +98,8 @@ class OBMessageHandler
     obMessageLevel         _outputLevel;
     std::ostream           *_outputStream;
   };
+
+EXTERN OBMessageHandler obErrorLog;
 
 } // end namespace OpenBabel
 
