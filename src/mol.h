@@ -797,8 +797,15 @@ public:
     void RenumberAtoms(std::vector<OBNodeBase*>&);
     void ToInertialFrame(int,float*);
     void ToInertialFrame();
+    //! translates all conformers in the molecule
+    /*! this method adds the vector v to all atom positions in all
+      conformers */
     void Translate(const vector3 &v);
-    void Translate(const vector3 &v,int);
+    //! translates one conformer in the molecule
+    /*! this method add the vector v to all atom positions in the
+      conformer conf. If conf == OB_CURRENT_CONFORMER, then the atom
+      positions in the current conformer are translated. */
+    void Translate(const vector3 &v, int conf);
     void Rotate(const float u[3][3]);
     void Rotate(const float m[9]);
     void Rotate(const float m[9],int nconf);

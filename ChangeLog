@@ -1,3 +1,7 @@
+2002-07-26  Stefan Kebekus <kebekus@users.sourceforge.net>
+
+	* added documentation
+
 2002-07-24  Michael Banck <mbanck@gmx.net>
 
 	* src/gaussian.cpp: Added some comments/warnings; changed multiplicity

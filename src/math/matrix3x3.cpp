@@ -93,32 +93,6 @@ void matrix3x3::RotAboutAxisByAngle(const vector3 &v,const float angle)
 #undef y
 #undef z
 
-void matrix3x3::RotateCoords(float *c,int noatoms)
-{
-  for (int i = 0; i < noatoms; i++) {
-    int idx = i*3;
-    float x = c[idx]*ele[0][0] + c[idx+1]*ele[0][1] + c[idx+2]*ele[0][2];
-    float y = c[idx]*ele[1][0] + c[idx+1]*ele[1][1] + c[idx+2]*ele[1][2];
-    float z = c[idx]*ele[2][0] + c[idx+1]*ele[2][1] + c[idx+2]*ele[2][2];
-    c[idx+0] = x;
-    c[idx+1] = y;
-    c[idx+2] = z;
-  }
-}
-
-/* @removed@ misleading operation; matrix multiplication is not commutitative
-vector3 operator *(const vector3 &v,const matrix3x3 &m)
-{
-  vector3 vv;
-
-  vv._vx = v._vx*m.ele[0][0] + v._vy*m.ele[0][1] + v._vz*m.ele[0][2];
-  vv._vy = v._vx*m.ele[1][0] + v._vy*m.ele[1][1] + v._vz*m.ele[1][2];
-  vv._vz = v._vx*m.ele[2][0] + v._vy*m.ele[2][1] + v._vz*m.ele[2][2];
-
-  return(vv);
-}
-*/
-
 vector3 operator *(const matrix3x3 &m,const vector3 &v)
 {
   vector3 vv;
@@ -186,11 +160,9 @@ float matrix3x3::determinant()
 
 matrix3x3 &matrix3x3::operator/=(const float &c)
 {
-  register int i,j;
-
-  for (i = 0;i < 3;i++)
-     for (j = 0;j < 3;j++)
-	ele[i][j] /= c;
+  for (int row = 0;row < 3; row++)
+    for (int col = 0;col < 3; col++)
+      ele[row][col] /= c;
 
   return(*this);
 }
