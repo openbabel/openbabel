@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "_CRTDBG_MAP_ALLOC" /FR /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x809 /d "_DEBUG"
 # ADD RSC /l 0x809 /d "_DEBUG"
@@ -78,6 +78,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# SUBTRACT LINK32 /profile
 
 !ENDIF 
 
@@ -114,15 +115,15 @@ SOURCE=..\..\src\formats\bgfformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\binary.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\bitvec.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\bond.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\bondtyper.cpp
 # End Source File
 # Begin Source File
 
@@ -198,6 +199,10 @@ SOURCE=..\..\src\formats\dmolformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\fastsearch.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\featformat.cpp
 # End Source File
 # Begin Source File
@@ -206,7 +211,16 @@ SOURCE=..\..\src\formats\fhformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\finger2.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\fingerprint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\fingerprintformat.cpp
 # End Source File
 # Begin Source File
 
@@ -350,6 +364,10 @@ SOURCE=..\..\src\ring.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\rotamer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\rotor.cpp
 # End Source File
 # Begin Source File
@@ -426,15 +444,7 @@ SOURCE="C:\Program Files\Microsoft Visual Studio\VC98\Include\BASETSD.H"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\binary.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\bitvec.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\bondtyp.h
 # End Source File
 # Begin Source File
 
@@ -463,6 +473,10 @@ SOURCE=..\..\src\dlhandler.h
 # Begin Source File
 
 SOURCE=..\..\src\extable.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fastsearch.h
 # End Source File
 # Begin Source File
 
@@ -506,6 +520,10 @@ SOURCE=..\..\src\obifstream.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\obmolecformat.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\obutil.h
 # End Source File
 # Begin Source File
@@ -527,6 +545,10 @@ SOURCE=..\..\src\reaction.h
 # Begin Source File
 
 SOURCE=..\..\src\ring.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\rotamer.h
 # End Source File
 # Begin Source File
 

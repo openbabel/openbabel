@@ -43,9 +43,9 @@ CLEAN :
 	-@erase "$(INTDIR)\balstformat.obj"
 	-@erase "$(INTDIR)\base.obj"
 	-@erase "$(INTDIR)\bgfformat.obj"
-	-@erase "$(INTDIR)\binary.obj"
 	-@erase "$(INTDIR)\bitvec.obj"
 	-@erase "$(INTDIR)\bond.obj"
+	-@erase "$(INTDIR)\bondtyper.obj"
 	-@erase "$(INTDIR)\boxformat.obj"
 	-@erase "$(INTDIR)\cacaoformat.obj"
 	-@erase "$(INTDIR)\cacheformat.obj"
@@ -64,9 +64,11 @@ CLEAN :
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
 	-@erase "$(INTDIR)\dmolformat.obj"
+	-@erase "$(INTDIR)\fastsearch.obj"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\fhformat.obj"
 	-@erase "$(INTDIR)\fingerprint.obj"
+	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\generic.obj"
@@ -102,6 +104,7 @@ CLEAN :
 	-@erase "$(INTDIR)\reportformat.obj"
 	-@erase "$(INTDIR)\residue.obj"
 	-@erase "$(INTDIR)\ring.obj"
+	-@erase "$(INTDIR)\rotamer.obj"
 	-@erase "$(INTDIR)\rotor.obj"
 	-@erase "$(INTDIR)\rxnformat.obj"
 	-@erase "$(INTDIR)\shelxformat.obj"
@@ -137,9 +140,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\balstformat.obj" \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bgfformat.obj" \
-	"$(INTDIR)\binary.obj" \
 	"$(INTDIR)\bitvec.obj" \
 	"$(INTDIR)\bond.obj" \
+	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\boxformat.obj" \
 	"$(INTDIR)\cacaoformat.obj" \
 	"$(INTDIR)\cacheformat.obj" \
@@ -158,9 +161,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\data.obj" \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
+	"$(INTDIR)\fastsearch.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
 	"$(INTDIR)\fingerprint.obj" \
+	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\generic.obj" \
@@ -196,6 +201,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\reportformat.obj" \
 	"$(INTDIR)\residue.obj" \
 	"$(INTDIR)\ring.obj" \
+	"$(INTDIR)\rotamer.obj" \
 	"$(INTDIR)\rotor.obj" \
 	"$(INTDIR)\rxnformat.obj" \
 	"$(INTDIR)\shelxformat.obj" \
@@ -241,12 +247,12 @@ CLEAN :
 	-@erase "$(INTDIR)\base.sbr"
 	-@erase "$(INTDIR)\bgfformat.obj"
 	-@erase "$(INTDIR)\bgfformat.sbr"
-	-@erase "$(INTDIR)\binary.obj"
-	-@erase "$(INTDIR)\binary.sbr"
 	-@erase "$(INTDIR)\bitvec.obj"
 	-@erase "$(INTDIR)\bitvec.sbr"
 	-@erase "$(INTDIR)\bond.obj"
 	-@erase "$(INTDIR)\bond.sbr"
+	-@erase "$(INTDIR)\bondtyper.obj"
+	-@erase "$(INTDIR)\bondtyper.sbr"
 	-@erase "$(INTDIR)\boxformat.obj"
 	-@erase "$(INTDIR)\boxformat.sbr"
 	-@erase "$(INTDIR)\cacaoformat.obj"
@@ -283,12 +289,16 @@ CLEAN :
 	-@erase "$(INTDIR)\dlhandler_win32.sbr"
 	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\dmolformat.sbr"
+	-@erase "$(INTDIR)\fastsearch.obj"
+	-@erase "$(INTDIR)\fastsearch.sbr"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\featformat.sbr"
 	-@erase "$(INTDIR)\fhformat.obj"
 	-@erase "$(INTDIR)\fhformat.sbr"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprint.sbr"
+	-@erase "$(INTDIR)\fingerprintformat.obj"
+	-@erase "$(INTDIR)\fingerprintformat.sbr"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gamessformat.sbr"
 	-@erase "$(INTDIR)\gaussformat.obj"
@@ -359,6 +369,8 @@ CLEAN :
 	-@erase "$(INTDIR)\residue.sbr"
 	-@erase "$(INTDIR)\ring.obj"
 	-@erase "$(INTDIR)\ring.sbr"
+	-@erase "$(INTDIR)\rotamer.obj"
+	-@erase "$(INTDIR)\rotamer.sbr"
 	-@erase "$(INTDIR)\rotor.obj"
 	-@erase "$(INTDIR)\rotor.sbr"
 	-@erase "$(INTDIR)\rxnformat.obj"
@@ -399,7 +411,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MLd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MLd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "_CRTDBG_MAP_ALLOC" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBabel.bsc" 
 BSC32_SBRS= \
@@ -409,9 +421,9 @@ BSC32_SBRS= \
 	"$(INTDIR)\balstformat.sbr" \
 	"$(INTDIR)\base.sbr" \
 	"$(INTDIR)\bgfformat.sbr" \
-	"$(INTDIR)\binary.sbr" \
 	"$(INTDIR)\bitvec.sbr" \
 	"$(INTDIR)\bond.sbr" \
+	"$(INTDIR)\bondtyper.sbr" \
 	"$(INTDIR)\boxformat.sbr" \
 	"$(INTDIR)\cacaoformat.sbr" \
 	"$(INTDIR)\cacheformat.sbr" \
@@ -430,9 +442,11 @@ BSC32_SBRS= \
 	"$(INTDIR)\data.sbr" \
 	"$(INTDIR)\dlhandler_win32.sbr" \
 	"$(INTDIR)\dmolformat.sbr" \
+	"$(INTDIR)\fastsearch.sbr" \
 	"$(INTDIR)\featformat.sbr" \
 	"$(INTDIR)\fhformat.sbr" \
 	"$(INTDIR)\fingerprint.sbr" \
+	"$(INTDIR)\fingerprintformat.sbr" \
 	"$(INTDIR)\gamessformat.sbr" \
 	"$(INTDIR)\gaussformat.sbr" \
 	"$(INTDIR)\generic.sbr" \
@@ -468,6 +482,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\reportformat.sbr" \
 	"$(INTDIR)\residue.sbr" \
 	"$(INTDIR)\ring.sbr" \
+	"$(INTDIR)\rotamer.sbr" \
 	"$(INTDIR)\rotor.sbr" \
 	"$(INTDIR)\rxnformat.sbr" \
 	"$(INTDIR)\shelxformat.sbr" \
@@ -498,9 +513,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\balstformat.obj" \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bgfformat.obj" \
-	"$(INTDIR)\binary.obj" \
 	"$(INTDIR)\bitvec.obj" \
 	"$(INTDIR)\bond.obj" \
+	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\boxformat.obj" \
 	"$(INTDIR)\cacaoformat.obj" \
 	"$(INTDIR)\cacheformat.obj" \
@@ -519,9 +534,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\data.obj" \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
+	"$(INTDIR)\fastsearch.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
 	"$(INTDIR)\fingerprint.obj" \
+	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\generic.obj" \
@@ -557,6 +574,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\reportformat.obj" \
 	"$(INTDIR)\residue.obj" \
 	"$(INTDIR)\ring.obj" \
+	"$(INTDIR)\rotamer.obj" \
 	"$(INTDIR)\rotor.obj" \
 	"$(INTDIR)\rxnformat.obj" \
 	"$(INTDIR)\shelxformat.obj" \
@@ -729,24 +747,6 @@ SOURCE=..\..\src\formats\bgfformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\binary.cpp
-
-!IF  "$(CFG)" == "OBabel - Win32 Release"
-
-
-"$(INTDIR)\binary.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
-
-
-"$(INTDIR)\binary.obj"	"$(INTDIR)\binary.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\bitvec.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -778,6 +778,24 @@ SOURCE=..\..\src\bond.cpp
 
 
 "$(INTDIR)\bond.obj"	"$(INTDIR)\bond.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\bondtyper.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\bondtyper.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\bondtyper.obj"	"$(INTDIR)\bondtyper.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1107,6 +1125,24 @@ SOURCE=..\..\src\formats\dmolformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\fastsearch.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\fastsearch.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\fastsearch.obj"	"$(INTDIR)\fastsearch.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\formats\featformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -1143,6 +1179,7 @@ SOURCE=..\..\src\formats\fhformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\finger2.cpp
 SOURCE=..\..\src\fingerprint.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -1156,6 +1193,24 @@ SOURCE=..\..\src\fingerprint.cpp
 
 
 "$(INTDIR)\fingerprint.obj"	"$(INTDIR)\fingerprint.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\fingerprintformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\fingerprintformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\fingerprintformat.obj"	"$(INTDIR)\fingerprintformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1786,6 +1841,24 @@ SOURCE=..\..\src\ring.cpp
 
 
 "$(INTDIR)\ring.obj"	"$(INTDIR)\ring.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\rotamer.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\rotamer.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\rotamer.obj"	"$(INTDIR)\rotamer.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

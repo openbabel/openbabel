@@ -57,8 +57,8 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\OBConv.pdb" /machine:I386 /out:"OBConv.dll" /implib:"$(OUTDIR)\OBConv.lib" 
 LINK32_OBJS= \
-	"$(INTDIR)\obconversion.obj" \
-	"$(INTDIR)\dlhandler_win32.obj"
+	"$(INTDIR)\dlhandler_win32.obj" \
+	"$(INTDIR)\obconversion.obj"
 
 ".\OBConv.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -93,13 +93,13 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".." /I "../../data" /D "_DEBUG" /D "USING_DYNAMIC_LIBS" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".." /I "../../data" /I "../../src" /D "_DEBUG" /D "USING_DYNAMIC_LIBS" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBConv.bsc" 
 BSC32_SBRS= \
-	"$(INTDIR)\obconversion.sbr" \
-	"$(INTDIR)\dlhandler_win32.sbr"
+	"$(INTDIR)\dlhandler_win32.sbr" \
+	"$(INTDIR)\obconversion.sbr"
 
 "$(OUTDIR)\OBConv.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -109,8 +109,8 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBConv.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBConv.dll" /implib:"$(OUTDIR)\OBConv.lib" /pdbtype:sept 
 LINK32_OBJS= \
-	"$(INTDIR)\obconversion.obj" \
-	"$(INTDIR)\dlhandler_win32.obj"
+	"$(INTDIR)\dlhandler_win32.obj" \
+	"$(INTDIR)\obconversion.obj"
 
 "$(OUTDIR)\OBConv.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -160,6 +160,7 @@ LINK32_OBJS= \
 
 
 !IF "$(CFG)" == "OBConv - Win32 Release" || "$(CFG)" == "OBConv - Win32 Debug"
+SOURCE=.\Cinterface.cpp
 SOURCE=..\..\src\dlhandler_win32.cpp
 
 !IF  "$(CFG)" == "OBConv - Win32 Release"

@@ -25,6 +25,10 @@ NULL=
 NULL=nul
 !ENDIF 
 
+CPP=cl.exe
+MTL=midl.exe
+RSC=rc.exe
+
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
 OUTDIR=.\Release
@@ -36,29 +40,22 @@ ALL : ".\OBGUIs.exe"
 CLEAN :
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\base.obj"
-	-@erase "$(INTDIR)\bgf.obj"
-	-@erase "$(INTDIR)\binary.obj"
 	-@erase "$(INTDIR)\bitvec.obj"
 	-@erase "$(INTDIR)\bond.obj"
-	-@erase "$(INTDIR)\box.obj"
-	-@erase "$(INTDIR)\c3d.obj"
-	-@erase "$(INTDIR)\cache.obj"
-	-@erase "$(INTDIR)\car.obj"
-	-@erase "$(INTDIR)\ccc.obj"
+	-@erase "$(INTDIR)\bondtyper.obj"
 	-@erase "$(INTDIR)\chains.obj"
-	-@erase "$(INTDIR)\chdrw.obj"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\cml.obj"
 	-@erase "$(INTDIR)\cmlformat.obj"
-	-@erase "$(INTDIR)\csr.obj"
-	-@erase "$(INTDIR)\cssr.obj"
 	-@erase "$(INTDIR)\data.obj"
-	-@erase "$(INTDIR)\dlhandler_win32..obj"
-	-@erase "$(INTDIR)\dmol.obj"
+	-@erase "$(INTDIR)\dlhandler_win32.obj"
 	-@erase "$(INTDIR)\DynamicOptions.obj"
+	-@erase "$(INTDIR)\fastsearch.obj"
+	-@erase "$(INTDIR)\fingerprint.obj"
+	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\generic.obj"
 	-@erase "$(INTDIR)\grid.obj"
-	-@erase "$(INTDIR)\hin.obj"
+	-@erase "$(INTDIR)\kekulize.obj"
 	-@erase "$(INTDIR)\matrix.obj"
 	-@erase "$(INTDIR)\matrix3x3.obj"
 	-@erase "$(INTDIR)\mdlformat.obj"
@@ -75,17 +72,15 @@ CLEAN :
 	-@erase "$(INTDIR)\patty.obj"
 	-@erase "$(INTDIR)\phmodel.obj"
 	-@erase "$(INTDIR)\rand.obj"
-	-@erase "$(INTDIR)\report.obj"
 	-@erase "$(INTDIR)\residue.obj"
 	-@erase "$(INTDIR)\ring.obj"
+	-@erase "$(INTDIR)\rotamer.obj"
 	-@erase "$(INTDIR)\rotor.obj"
 	-@erase "$(INTDIR)\rxnformat.obj"
 	-@erase "$(INTDIR)\smilesformat.obj"
 	-@erase "$(INTDIR)\StdAfx.obj"
-	-@erase "$(INTDIR)\tinker.obj"
 	-@erase "$(INTDIR)\tokenst.obj"
 	-@erase "$(INTDIR)\transform.obj"
-	-@erase "$(INTDIR)\turbomoleformat.obj"
 	-@erase "$(INTDIR)\typer.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vector3.obj"
@@ -94,42 +89,8 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
-CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\obgui" /I "..\..\src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-MTL=midl.exe
+CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
-RSC=rc.exe
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "NDEBUG" 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUIs.bsc" 
@@ -140,29 +101,22 @@ LINK32_FLAGS=nafxcw.lib libcmt.lib /nologo /subsystem:windows /incremental:no /p
 LINK32_OBJS= \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
-	"$(INTDIR)\bgf.obj" \
-	"$(INTDIR)\binary.obj" \
 	"$(INTDIR)\bitvec.obj" \
 	"$(INTDIR)\bond.obj" \
-	"$(INTDIR)\box.obj" \
-	"$(INTDIR)\c3d.obj" \
-	"$(INTDIR)\cache.obj" \
-	"$(INTDIR)\car.obj" \
-	"$(INTDIR)\ccc.obj" \
+	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\chains.obj" \
-	"$(INTDIR)\chdrw.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\cml.obj" \
 	"$(INTDIR)\cmlformat.obj" \
-	"$(INTDIR)\csr.obj" \
-	"$(INTDIR)\cssr.obj" \
 	"$(INTDIR)\data.obj" \
-	"$(INTDIR)\dlhandler_win32..obj" \
-	"$(INTDIR)\dmol.obj" \
+	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\DynamicOptions.obj" \
+	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\fingerprint.obj" \
+	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
-	"$(INTDIR)\hin.obj" \
+	"$(INTDIR)\kekulize.obj" \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
 	"$(INTDIR)\mdlformat.obj" \
@@ -178,17 +132,15 @@ LINK32_OBJS= \
 	"$(INTDIR)\patty.obj" \
 	"$(INTDIR)\phmodel.obj" \
 	"$(INTDIR)\rand.obj" \
-	"$(INTDIR)\report.obj" \
 	"$(INTDIR)\residue.obj" \
 	"$(INTDIR)\ring.obj" \
+	"$(INTDIR)\rotamer.obj" \
 	"$(INTDIR)\rotor.obj" \
 	"$(INTDIR)\rxnformat.obj" \
 	"$(INTDIR)\smilesformat.obj" \
 	"$(INTDIR)\StdAfx.obj" \
-	"$(INTDIR)\tinker.obj" \
 	"$(INTDIR)\tokenst.obj" \
 	"$(INTDIR)\transform.obj" \
-	"$(INTDIR)\turbomoleformat.obj" \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
 	"$(INTDIR)\OBGUI.res"
@@ -214,52 +166,38 @@ CLEAN :
 	-@erase "$(INTDIR)\atom.sbr"
 	-@erase "$(INTDIR)\base.obj"
 	-@erase "$(INTDIR)\base.sbr"
-	-@erase "$(INTDIR)\bgf.obj"
-	-@erase "$(INTDIR)\bgf.sbr"
-	-@erase "$(INTDIR)\binary.obj"
-	-@erase "$(INTDIR)\binary.sbr"
 	-@erase "$(INTDIR)\bitvec.obj"
 	-@erase "$(INTDIR)\bitvec.sbr"
 	-@erase "$(INTDIR)\bond.obj"
 	-@erase "$(INTDIR)\bond.sbr"
-	-@erase "$(INTDIR)\box.obj"
-	-@erase "$(INTDIR)\box.sbr"
-	-@erase "$(INTDIR)\c3d.obj"
-	-@erase "$(INTDIR)\c3d.sbr"
-	-@erase "$(INTDIR)\cache.obj"
-	-@erase "$(INTDIR)\cache.sbr"
-	-@erase "$(INTDIR)\car.obj"
-	-@erase "$(INTDIR)\car.sbr"
-	-@erase "$(INTDIR)\ccc.obj"
-	-@erase "$(INTDIR)\ccc.sbr"
+	-@erase "$(INTDIR)\bondtyper.obj"
+	-@erase "$(INTDIR)\bondtyper.sbr"
 	-@erase "$(INTDIR)\chains.obj"
 	-@erase "$(INTDIR)\chains.sbr"
-	-@erase "$(INTDIR)\chdrw.obj"
-	-@erase "$(INTDIR)\chdrw.sbr"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\chiral.sbr"
 	-@erase "$(INTDIR)\cml.obj"
 	-@erase "$(INTDIR)\cml.sbr"
 	-@erase "$(INTDIR)\cmlformat.obj"
 	-@erase "$(INTDIR)\cmlformat.sbr"
-	-@erase "$(INTDIR)\csr.obj"
-	-@erase "$(INTDIR)\csr.sbr"
-	-@erase "$(INTDIR)\cssr.obj"
-	-@erase "$(INTDIR)\cssr.sbr"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\data.sbr"
-	-@erase "$(INTDIR)\dlhandler_win32..obj"
-	-@erase "$(INTDIR)\dlhandler_win32..sbr"
-	-@erase "$(INTDIR)\dmol.obj"
-	-@erase "$(INTDIR)\dmol.sbr"
+	-@erase "$(INTDIR)\dlhandler_win32.obj"
+	-@erase "$(INTDIR)\dlhandler_win32.sbr"
 	-@erase "$(INTDIR)\DynamicOptions.obj"
 	-@erase "$(INTDIR)\DynamicOptions.sbr"
+	-@erase "$(INTDIR)\fastsearch.obj"
+	-@erase "$(INTDIR)\fastsearch.sbr"
+	-@erase "$(INTDIR)\fingerprint.obj"
+	-@erase "$(INTDIR)\fingerprint.sbr"
+	-@erase "$(INTDIR)\fingerprintformat.obj"
+	-@erase "$(INTDIR)\fingerprintformat.sbr"
 	-@erase "$(INTDIR)\generic.obj"
 	-@erase "$(INTDIR)\generic.sbr"
 	-@erase "$(INTDIR)\grid.obj"
 	-@erase "$(INTDIR)\grid.sbr"
-	-@erase "$(INTDIR)\hin.obj"
-	-@erase "$(INTDIR)\hin.sbr"
+	-@erase "$(INTDIR)\kekulize.obj"
+	-@erase "$(INTDIR)\kekulize.sbr"
 	-@erase "$(INTDIR)\matrix.obj"
 	-@erase "$(INTDIR)\matrix.sbr"
 	-@erase "$(INTDIR)\matrix3x3.obj"
@@ -291,12 +229,12 @@ CLEAN :
 	-@erase "$(INTDIR)\phmodel.sbr"
 	-@erase "$(INTDIR)\rand.obj"
 	-@erase "$(INTDIR)\rand.sbr"
-	-@erase "$(INTDIR)\report.obj"
-	-@erase "$(INTDIR)\report.sbr"
 	-@erase "$(INTDIR)\residue.obj"
 	-@erase "$(INTDIR)\residue.sbr"
 	-@erase "$(INTDIR)\ring.obj"
 	-@erase "$(INTDIR)\ring.sbr"
+	-@erase "$(INTDIR)\rotamer.obj"
+	-@erase "$(INTDIR)\rotamer.sbr"
 	-@erase "$(INTDIR)\rotor.obj"
 	-@erase "$(INTDIR)\rotor.sbr"
 	-@erase "$(INTDIR)\rxnformat.obj"
@@ -305,14 +243,10 @@ CLEAN :
 	-@erase "$(INTDIR)\smilesformat.sbr"
 	-@erase "$(INTDIR)\StdAfx.obj"
 	-@erase "$(INTDIR)\StdAfx.sbr"
-	-@erase "$(INTDIR)\tinker.obj"
-	-@erase "$(INTDIR)\tinker.sbr"
 	-@erase "$(INTDIR)\tokenst.obj"
 	-@erase "$(INTDIR)\tokenst.sbr"
 	-@erase "$(INTDIR)\transform.obj"
 	-@erase "$(INTDIR)\transform.sbr"
-	-@erase "$(INTDIR)\turbomoleformat.obj"
-	-@erase "$(INTDIR)\turbomoleformat.sbr"
 	-@erase "$(INTDIR)\typer.obj"
 	-@erase "$(INTDIR)\typer.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
@@ -321,14 +255,121 @@ CLEAN :
 	-@erase "$(INTDIR)\vector3.sbr"
 	-@erase "$(OUTDIR)\OBGUIs.bsc"
 	-@erase "$(OUTDIR)\OBGUIs.exe"
-	-@erase "$(OUTDIR)\OBGUIs.ilk"
-	-@erase "$(OUTDIR)\OBGUIs.pdb"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
-CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\obgui" /I "..\..\src" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "_DEBUG" 
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUIs.bsc" 
+BSC32_SBRS= \
+	"$(INTDIR)\atom.sbr" \
+	"$(INTDIR)\base.sbr" \
+	"$(INTDIR)\bitvec.sbr" \
+	"$(INTDIR)\bond.sbr" \
+	"$(INTDIR)\bondtyper.sbr" \
+	"$(INTDIR)\chains.sbr" \
+	"$(INTDIR)\chiral.sbr" \
+	"$(INTDIR)\cml.sbr" \
+	"$(INTDIR)\cmlformat.sbr" \
+	"$(INTDIR)\data.sbr" \
+	"$(INTDIR)\dlhandler_win32.sbr" \
+	"$(INTDIR)\DynamicOptions.sbr" \
+	"$(INTDIR)\fastsearch.sbr" \
+	"$(INTDIR)\fingerprint.sbr" \
+	"$(INTDIR)\fingerprintformat.sbr" \
+	"$(INTDIR)\generic.sbr" \
+	"$(INTDIR)\grid.sbr" \
+	"$(INTDIR)\kekulize.sbr" \
+	"$(INTDIR)\matrix.sbr" \
+	"$(INTDIR)\matrix3x3.sbr" \
+	"$(INTDIR)\mdlformat.sbr" \
+	"$(INTDIR)\mol.sbr" \
+	"$(INTDIR)\mol2format.sbr" \
+	"$(INTDIR)\molchrg.sbr" \
+	"$(INTDIR)\obconversion.sbr" \
+	"$(INTDIR)\oberror.sbr" \
+	"$(INTDIR)\OBGUI.sbr" \
+	"$(INTDIR)\OBGUIDlg.sbr" \
+	"$(INTDIR)\obutil.sbr" \
+	"$(INTDIR)\parsmart.sbr" \
+	"$(INTDIR)\patty.sbr" \
+	"$(INTDIR)\phmodel.sbr" \
+	"$(INTDIR)\rand.sbr" \
+	"$(INTDIR)\residue.sbr" \
+	"$(INTDIR)\ring.sbr" \
+	"$(INTDIR)\rotamer.sbr" \
+	"$(INTDIR)\rotor.sbr" \
+	"$(INTDIR)\rxnformat.sbr" \
+	"$(INTDIR)\smilesformat.sbr" \
+	"$(INTDIR)\StdAfx.sbr" \
+	"$(INTDIR)\tokenst.sbr" \
+	"$(INTDIR)\transform.sbr" \
+	"$(INTDIR)\typer.sbr" \
+	"$(INTDIR)\vector3.sbr"
+
+"$(OUTDIR)\OBGUIs.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+    $(BSC32) @<<
+  $(BSC32_FLAGS) $(BSC32_SBRS)
+<<
+
+LINK32=link.exe
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\atom.obj" \
+	"$(INTDIR)\base.obj" \
+	"$(INTDIR)\bitvec.obj" \
+	"$(INTDIR)\bond.obj" \
+	"$(INTDIR)\bondtyper.obj" \
+	"$(INTDIR)\chains.obj" \
+	"$(INTDIR)\chiral.obj" \
+	"$(INTDIR)\cml.obj" \
+	"$(INTDIR)\cmlformat.obj" \
+	"$(INTDIR)\data.obj" \
+	"$(INTDIR)\dlhandler_win32.obj" \
+	"$(INTDIR)\DynamicOptions.obj" \
+	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\fingerprint.obj" \
+	"$(INTDIR)\fingerprintformat.obj" \
+	"$(INTDIR)\generic.obj" \
+	"$(INTDIR)\grid.obj" \
+	"$(INTDIR)\kekulize.obj" \
+	"$(INTDIR)\matrix.obj" \
+	"$(INTDIR)\matrix3x3.obj" \
+	"$(INTDIR)\mdlformat.obj" \
+	"$(INTDIR)\mol.obj" \
+	"$(INTDIR)\mol2format.obj" \
+	"$(INTDIR)\molchrg.obj" \
+	"$(INTDIR)\obconversion.obj" \
+	"$(INTDIR)\oberror.obj" \
+	"$(INTDIR)\OBGUI.obj" \
+	"$(INTDIR)\OBGUIDlg.obj" \
+	"$(INTDIR)\obutil.obj" \
+	"$(INTDIR)\parsmart.obj" \
+	"$(INTDIR)\patty.obj" \
+	"$(INTDIR)\phmodel.obj" \
+	"$(INTDIR)\rand.obj" \
+	"$(INTDIR)\residue.obj" \
+	"$(INTDIR)\ring.obj" \
+	"$(INTDIR)\rotamer.obj" \
+	"$(INTDIR)\rotor.obj" \
+	"$(INTDIR)\rxnformat.obj" \
+	"$(INTDIR)\smilesformat.obj" \
+	"$(INTDIR)\StdAfx.obj" \
+	"$(INTDIR)\tokenst.obj" \
+	"$(INTDIR)\transform.obj" \
+	"$(INTDIR)\typer.obj" \
+	"$(INTDIR)\vector3.obj" \
+	"$(INTDIR)\OBGUI.res"
+
+"$(OUTDIR)\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ENDIF 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -359,137 +400,6 @@ CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\obgui" /I "..\..\src" /D "_
    $(CPP) @<<
    $(CPP_PROJ) $< 
 <<
-
-MTL=midl.exe
-MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
-RSC=rc.exe
-RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "_DEBUG" 
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUIs.bsc" 
-BSC32_SBRS= \
-	"$(INTDIR)\atom.sbr" \
-	"$(INTDIR)\base.sbr" \
-	"$(INTDIR)\bgf.sbr" \
-	"$(INTDIR)\binary.sbr" \
-	"$(INTDIR)\bitvec.sbr" \
-	"$(INTDIR)\bond.sbr" \
-	"$(INTDIR)\box.sbr" \
-	"$(INTDIR)\c3d.sbr" \
-	"$(INTDIR)\cache.sbr" \
-	"$(INTDIR)\car.sbr" \
-	"$(INTDIR)\ccc.sbr" \
-	"$(INTDIR)\chains.sbr" \
-	"$(INTDIR)\chdrw.sbr" \
-	"$(INTDIR)\chiral.sbr" \
-	"$(INTDIR)\cml.sbr" \
-	"$(INTDIR)\cmlformat.sbr" \
-	"$(INTDIR)\csr.sbr" \
-	"$(INTDIR)\cssr.sbr" \
-	"$(INTDIR)\data.sbr" \
-	"$(INTDIR)\dlhandler_win32..sbr" \
-	"$(INTDIR)\dmol.sbr" \
-	"$(INTDIR)\DynamicOptions.sbr" \
-	"$(INTDIR)\generic.sbr" \
-	"$(INTDIR)\grid.sbr" \
-	"$(INTDIR)\hin.sbr" \
-	"$(INTDIR)\matrix.sbr" \
-	"$(INTDIR)\matrix3x3.sbr" \
-	"$(INTDIR)\mdlformat.sbr" \
-	"$(INTDIR)\mol.sbr" \
-	"$(INTDIR)\mol2format.sbr" \
-	"$(INTDIR)\molchrg.sbr" \
-	"$(INTDIR)\obconversion.sbr" \
-	"$(INTDIR)\oberror.sbr" \
-	"$(INTDIR)\OBGUI.sbr" \
-	"$(INTDIR)\OBGUIDlg.sbr" \
-	"$(INTDIR)\obutil.sbr" \
-	"$(INTDIR)\parsmart.sbr" \
-	"$(INTDIR)\patty.sbr" \
-	"$(INTDIR)\phmodel.sbr" \
-	"$(INTDIR)\rand.sbr" \
-	"$(INTDIR)\report.sbr" \
-	"$(INTDIR)\residue.sbr" \
-	"$(INTDIR)\ring.sbr" \
-	"$(INTDIR)\rotor.sbr" \
-	"$(INTDIR)\rxnformat.sbr" \
-	"$(INTDIR)\smilesformat.sbr" \
-	"$(INTDIR)\StdAfx.sbr" \
-	"$(INTDIR)\tinker.sbr" \
-	"$(INTDIR)\tokenst.sbr" \
-	"$(INTDIR)\transform.sbr" \
-	"$(INTDIR)\turbomoleformat.sbr" \
-	"$(INTDIR)\typer.sbr" \
-	"$(INTDIR)\vector3.sbr"
-
-"$(OUTDIR)\OBGUIs.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
-    $(BSC32) @<<
-  $(BSC32_FLAGS) $(BSC32_SBRS)
-<<
-
-LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" /pdbtype:sept 
-LINK32_OBJS= \
-	"$(INTDIR)\atom.obj" \
-	"$(INTDIR)\base.obj" \
-	"$(INTDIR)\bgf.obj" \
-	"$(INTDIR)\binary.obj" \
-	"$(INTDIR)\bitvec.obj" \
-	"$(INTDIR)\bond.obj" \
-	"$(INTDIR)\box.obj" \
-	"$(INTDIR)\c3d.obj" \
-	"$(INTDIR)\cache.obj" \
-	"$(INTDIR)\car.obj" \
-	"$(INTDIR)\ccc.obj" \
-	"$(INTDIR)\chains.obj" \
-	"$(INTDIR)\chdrw.obj" \
-	"$(INTDIR)\chiral.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
-	"$(INTDIR)\csr.obj" \
-	"$(INTDIR)\cssr.obj" \
-	"$(INTDIR)\data.obj" \
-	"$(INTDIR)\dlhandler_win32..obj" \
-	"$(INTDIR)\dmol.obj" \
-	"$(INTDIR)\DynamicOptions.obj" \
-	"$(INTDIR)\generic.obj" \
-	"$(INTDIR)\grid.obj" \
-	"$(INTDIR)\hin.obj" \
-	"$(INTDIR)\matrix.obj" \
-	"$(INTDIR)\matrix3x3.obj" \
-	"$(INTDIR)\mdlformat.obj" \
-	"$(INTDIR)\mol.obj" \
-	"$(INTDIR)\mol2format.obj" \
-	"$(INTDIR)\molchrg.obj" \
-	"$(INTDIR)\obconversion.obj" \
-	"$(INTDIR)\oberror.obj" \
-	"$(INTDIR)\OBGUI.obj" \
-	"$(INTDIR)\OBGUIDlg.obj" \
-	"$(INTDIR)\obutil.obj" \
-	"$(INTDIR)\parsmart.obj" \
-	"$(INTDIR)\patty.obj" \
-	"$(INTDIR)\phmodel.obj" \
-	"$(INTDIR)\rand.obj" \
-	"$(INTDIR)\report.obj" \
-	"$(INTDIR)\residue.obj" \
-	"$(INTDIR)\ring.obj" \
-	"$(INTDIR)\rotor.obj" \
-	"$(INTDIR)\rxnformat.obj" \
-	"$(INTDIR)\smilesformat.obj" \
-	"$(INTDIR)\StdAfx.obj" \
-	"$(INTDIR)\tinker.obj" \
-	"$(INTDIR)\tokenst.obj" \
-	"$(INTDIR)\transform.obj" \
-	"$(INTDIR)\turbomoleformat.obj" \
-	"$(INTDIR)\typer.obj" \
-	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\OBGUI.res"
-
-"$(OUTDIR)\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ENDIF 
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
@@ -538,42 +448,6 @@ SOURCE=..\..\src\base.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\bgf.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\bgf.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\bgf.obj"	"$(INTDIR)\bgf.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\binary.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\binary.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\binary.obj"	"$(INTDIR)\binary.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\bitvec.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -610,91 +484,19 @@ SOURCE=..\..\src\bond.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\box.cpp
+SOURCE=..\..\src\bondtyper.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
 
-"$(INTDIR)\box.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\bondtyper.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
 
-"$(INTDIR)\box.obj"	"$(INTDIR)\box.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\c3d.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\c3d.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\c3d.obj"	"$(INTDIR)\c3d.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\cache.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\cache.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\cache.obj"	"$(INTDIR)\cache.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\car.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\car.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\car.obj"	"$(INTDIR)\car.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\ccc.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\ccc.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\ccc.obj"	"$(INTDIR)\ccc.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\bondtyper.obj"	"$(INTDIR)\bondtyper.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -713,24 +515,6 @@ SOURCE=..\..\src\chains.cpp
 
 
 "$(INTDIR)\chains.obj"	"$(INTDIR)\chains.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\chdrw.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\chdrw.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\chdrw.obj"	"$(INTDIR)\chdrw.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -790,42 +574,6 @@ SOURCE=..\..\src\formats\cmlformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\csr.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\csr.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\csr.obj"	"$(INTDIR)\csr.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\cssr.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\cssr.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\cssr.obj"	"$(INTDIR)\cssr.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\data.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -844,37 +592,19 @@ SOURCE=..\..\src\data.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\dlhandler_win32..cpp
+SOURCE=..\..\src\dlhandler_win32.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
 
-"$(INTDIR)\dlhandler_win32..obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\dlhandler_win32.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
 
-"$(INTDIR)\dlhandler_win32..obj"	"$(INTDIR)\dlhandler_win32..sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\dmol.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\dmol.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\dmol.obj"	"$(INTDIR)\dmol.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\dlhandler_win32.obj"	"$(INTDIR)\dlhandler_win32.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -893,6 +623,60 @@ SOURCE=..\OBGUI\DynamicOptions.cpp
 
 
 "$(INTDIR)\DynamicOptions.obj"	"$(INTDIR)\DynamicOptions.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fastsearch.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\fastsearch.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\fastsearch.obj"	"$(INTDIR)\fastsearch.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprint.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\fingerprint.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\fingerprint.obj"	"$(INTDIR)\fingerprint.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\fingerprintformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\fingerprintformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\fingerprintformat.obj"	"$(INTDIR)\fingerprintformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -934,19 +718,20 @@ SOURCE=..\..\src\grid.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\hin.cpp
+SOURCE=..\..\src\formats\inchiformat.cpp
+SOURCE=..\..\src\kekulize.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
 
-"$(INTDIR)\hin.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\kekulize.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
 
-"$(INTDIR)\hin.obj"	"$(INTDIR)\hin.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\kekulize.obj"	"$(INTDIR)\kekulize.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1120,14 +905,14 @@ SOURCE=..\OBGUI\OBGUI.rc
 
 
 "$(INTDIR)\OBGUI.res" : $(SOURCE) "$(INTDIR)"
-	$(RSC) /l 0x809 /fo"$(INTDIR)\OBGUI.res" /i "\My Documents\MSVC\OpenBabel Ultimate\windows\OBGUI" /d "NDEBUG" $(SOURCE)
+	$(RSC) /l 0x809 /fo"$(INTDIR)\OBGUI.res" /i "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBGUI" /d "NDEBUG" $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
 
 "$(INTDIR)\OBGUI.res" : $(SOURCE) "$(INTDIR)"
-	$(RSC) /l 0x809 /fo"$(INTDIR)\OBGUI.res" /i "\My Documents\MSVC\OpenBabel Ultimate\windows\OBGUI" /d "_DEBUG" $(SOURCE)
+	$(RSC) /l 0x809 /fo"$(INTDIR)\OBGUI.res" /i "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBGUI" /d "_DEBUG" $(SOURCE)
 
 
 !ENDIF 
@@ -1240,24 +1025,6 @@ SOURCE=..\..\src\rand.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\report.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\report.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\report.obj"	"$(INTDIR)\report.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\residue.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -1289,6 +1056,24 @@ SOURCE=..\..\src\ring.cpp
 
 
 "$(INTDIR)\ring.obj"	"$(INTDIR)\ring.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\rotamer.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\rotamer.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\rotamer.obj"	"$(INTDIR)\rotamer.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1366,24 +1151,6 @@ SOURCE=..\OBGUI\StdAfx.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\tinker.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\tinker.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\tinker.obj"	"$(INTDIR)\tinker.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\tokenst.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -1415,24 +1182,6 @@ SOURCE=..\..\src\transform.cpp
 
 
 "$(INTDIR)\transform.obj"	"$(INTDIR)\transform.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\formats\turbomoleformat.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\turbomoleformat.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\turbomoleformat.obj"	"$(INTDIR)\turbomoleformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

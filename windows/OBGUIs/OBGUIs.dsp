@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GR /GX /I "..\obgui" /I "..\..\src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /FD /c
+# ADD CPP /nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\obgui" /I "..\..\src" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /FR /FD /GZ /c
+# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /FR /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -81,7 +81,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib"
+# SUBTRACT LINK32 /profile
 
 !ENDIF 
 
@@ -102,14 +103,6 @@ SOURCE=..\..\src\base.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\bgf.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\binary.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\bitvec.cpp
 # End Source File
 # Begin Source File
@@ -118,31 +111,11 @@ SOURCE=..\..\src\bond.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\box.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\c3d.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\cache.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\car.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\ccc.cpp
+SOURCE=..\..\src\bondtyper.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\chains.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\chdrw.cpp
 # End Source File
 # Begin Source File
 
@@ -158,27 +131,27 @@ SOURCE=..\..\src\formats\cmlformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\csr.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\cssr.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\data.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\dlhandler_win32..cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\dmol.cpp
+SOURCE=..\..\src\dlhandler_win32.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\OBGUI\DynamicOptions.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fastsearch.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\fingerprintformat.cpp
 # End Source File
 # Begin Source File
 
@@ -190,7 +163,12 @@ SOURCE=..\..\src\grid.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\hin.cpp
+SOURCE=..\..\src\formats\inchiformat.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\kekulize.cpp
 # End Source File
 # Begin Source File
 
@@ -258,15 +236,15 @@ SOURCE=..\..\src\rand.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\report.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\residue.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\ring.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\rotamer.cpp
 # End Source File
 # Begin Source File
 
@@ -286,19 +264,11 @@ SOURCE=..\OBGUI\StdAfx.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\tinker.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\tokenst.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\transform.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\formats\turbomoleformat.cpp
 # End Source File
 # Begin Source File
 
@@ -322,15 +292,11 @@ SOURCE=..\..\src\atomtyp.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\babelconfig.h
+SOURCE=..\babelconfig.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\base.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\binary.h
 # End Source File
 # Begin Source File
 
@@ -371,6 +337,14 @@ SOURCE=..\..\src\element.h
 # Begin Source File
 
 SOURCE=..\..\src\extable.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fastsearch.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint.h
 # End Source File
 # Begin Source File
 
@@ -418,6 +392,10 @@ SOURCE=..\..\src\obifstream.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\obmolecformat.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\obutil.h
 # End Source File
 # Begin Source File
@@ -447,6 +425,10 @@ SOURCE=..\OBGUI\Resource.h
 # Begin Source File
 
 SOURCE=..\..\src\ring.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\rotamer.h
 # End Source File
 # Begin Source File
 

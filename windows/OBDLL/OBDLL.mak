@@ -40,9 +40,9 @@ ALL : ".\OBDLL.dll"
 CLEAN :
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\base.obj"
-	-@erase "$(INTDIR)\binary.obj"
 	-@erase "$(INTDIR)\bitvec.obj"
 	-@erase "$(INTDIR)\bond.obj"
+	-@erase "$(INTDIR)\bondtyper.obj"
 	-@erase "$(INTDIR)\chains.obj"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\data.obj"
@@ -62,6 +62,7 @@ CLEAN :
 	-@erase "$(INTDIR)\rand.obj"
 	-@erase "$(INTDIR)\residue.obj"
 	-@erase "$(INTDIR)\ring.obj"
+	-@erase "$(INTDIR)\rotamer.obj"
 	-@erase "$(INTDIR)\rotor.obj"
 	-@erase "$(INTDIR)\tokenst.obj"
 	-@erase "$(INTDIR)\transform.obj"
@@ -88,14 +89,15 @@ DEF_FILE= \
 LINK32_OBJS= \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
-	"$(INTDIR)\binary.obj" \
 	"$(INTDIR)\bitvec.obj" \
 	"$(INTDIR)\bond.obj" \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\data.obj" \
+	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
+	"$(INTDIR)\kekulize.obj" \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
 	"$(INTDIR)\mol.obj" \
@@ -108,13 +110,13 @@ LINK32_OBJS= \
 	"$(INTDIR)\rand.obj" \
 	"$(INTDIR)\residue.obj" \
 	"$(INTDIR)\ring.obj" \
+	"$(INTDIR)\rotamer.obj" \
 	"$(INTDIR)\rotor.obj" \
 	"$(INTDIR)\tokenst.obj" \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\fingerprint.obj" \
-	"$(INTDIR)\kekulize.obj"
+	"$(INTDIR)\bondtyper.obj"
 
 ".\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -137,12 +139,12 @@ CLEAN :
 	-@erase "$(INTDIR)\atom.sbr"
 	-@erase "$(INTDIR)\base.obj"
 	-@erase "$(INTDIR)\base.sbr"
-	-@erase "$(INTDIR)\binary.obj"
-	-@erase "$(INTDIR)\binary.sbr"
 	-@erase "$(INTDIR)\bitvec.obj"
 	-@erase "$(INTDIR)\bitvec.sbr"
 	-@erase "$(INTDIR)\bond.obj"
 	-@erase "$(INTDIR)\bond.sbr"
+	-@erase "$(INTDIR)\bondtyper.obj"
+	-@erase "$(INTDIR)\bondtyper.sbr"
 	-@erase "$(INTDIR)\chains.obj"
 	-@erase "$(INTDIR)\chains.sbr"
 	-@erase "$(INTDIR)\chiral.obj"
@@ -181,6 +183,8 @@ CLEAN :
 	-@erase "$(INTDIR)\residue.sbr"
 	-@erase "$(INTDIR)\ring.obj"
 	-@erase "$(INTDIR)\ring.sbr"
+	-@erase "$(INTDIR)\rotamer.obj"
+	-@erase "$(INTDIR)\rotamer.sbr"
 	-@erase "$(INTDIR)\rotor.obj"
 	-@erase "$(INTDIR)\rotor.sbr"
 	-@erase "$(INTDIR)\tokenst.obj"
@@ -211,14 +215,15 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBDLL.bsc"
 BSC32_SBRS= \
 	"$(INTDIR)\atom.sbr" \
 	"$(INTDIR)\base.sbr" \
-	"$(INTDIR)\binary.sbr" \
 	"$(INTDIR)\bitvec.sbr" \
 	"$(INTDIR)\bond.sbr" \
 	"$(INTDIR)\chains.sbr" \
 	"$(INTDIR)\chiral.sbr" \
 	"$(INTDIR)\data.sbr" \
+	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\generic.sbr" \
 	"$(INTDIR)\grid.sbr" \
+	"$(INTDIR)\kekulize.sbr" \
 	"$(INTDIR)\matrix.sbr" \
 	"$(INTDIR)\matrix3x3.sbr" \
 	"$(INTDIR)\mol.sbr" \
@@ -231,13 +236,13 @@ BSC32_SBRS= \
 	"$(INTDIR)\rand.sbr" \
 	"$(INTDIR)\residue.sbr" \
 	"$(INTDIR)\ring.sbr" \
+	"$(INTDIR)\rotamer.sbr" \
 	"$(INTDIR)\rotor.sbr" \
 	"$(INTDIR)\tokenst.sbr" \
 	"$(INTDIR)\transform.sbr" \
 	"$(INTDIR)\typer.sbr" \
 	"$(INTDIR)\vector3.sbr" \
-	"$(INTDIR)\fingerprint.sbr" \
-	"$(INTDIR)\kekulize.sbr"
+	"$(INTDIR)\bondtyper.sbr"
 
 "$(OUTDIR)\OBDLL.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -251,14 +256,15 @@ DEF_FILE= \
 LINK32_OBJS= \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
-	"$(INTDIR)\binary.obj" \
 	"$(INTDIR)\bitvec.obj" \
 	"$(INTDIR)\bond.obj" \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\data.obj" \
+	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
+	"$(INTDIR)\kekulize.obj" \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
 	"$(INTDIR)\mol.obj" \
@@ -271,13 +277,13 @@ LINK32_OBJS= \
 	"$(INTDIR)\rand.obj" \
 	"$(INTDIR)\residue.obj" \
 	"$(INTDIR)\ring.obj" \
+	"$(INTDIR)\rotamer.obj" \
 	"$(INTDIR)\rotor.obj" \
 	"$(INTDIR)\tokenst.obj" \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\fingerprint.obj" \
-	"$(INTDIR)\kekulize.obj"
+	"$(INTDIR)\bondtyper.obj"
 
 "$(OUTDIR)\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -377,24 +383,6 @@ SOURCE=..\..\src\base.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\binary.cpp
-
-!IF  "$(CFG)" == "OBDLL - Win32 Release"
-
-
-"$(INTDIR)\binary.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
-
-
-"$(INTDIR)\binary.obj"	"$(INTDIR)\binary.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\bitvec.cpp
 
 !IF  "$(CFG)" == "OBDLL - Win32 Release"
@@ -426,6 +414,24 @@ SOURCE=..\..\src\bond.cpp
 
 
 "$(INTDIR)\bond.obj"	"$(INTDIR)\bond.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\bondtyper.cpp
+
+!IF  "$(CFG)" == "OBDLL - Win32 Release"
+
+
+"$(INTDIR)\bondtyper.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
+
+
+"$(INTDIR)\bondtyper.obj"	"$(INTDIR)\bondtyper.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -738,7 +744,6 @@ SOURCE=..\..\src\rand.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\report.cpp
 SOURCE=..\..\src\residue.cpp
 
 !IF  "$(CFG)" == "OBDLL - Win32 Release"
@@ -770,6 +775,24 @@ SOURCE=..\..\src\ring.cpp
 
 
 "$(INTDIR)\ring.obj"	"$(INTDIR)\ring.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\rotamer.cpp
+
+!IF  "$(CFG)" == "OBDLL - Win32 Release"
+
+
+"$(INTDIR)\rotamer.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
+
+
+"$(INTDIR)\rotamer.obj"	"$(INTDIR)\rotamer.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

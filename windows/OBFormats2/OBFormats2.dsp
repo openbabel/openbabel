@@ -174,6 +174,10 @@ SOURCE=..\..\src\formats\fhformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\fingerprintformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\gamessformat.cpp
 # End Source File
 # Begin Source File
@@ -223,6 +227,10 @@ SOURCE=..\..\src\formats\mpqcformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\nwchemformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\oberror.cpp
 # End Source File
 # Begin Source File
 
@@ -301,5 +309,9 @@ SOURCE=..\..\src\obconversion.h
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # End Group
+# Begin Source File
+
+SOURCE=.\Stereochemistry.txt
+# End Source File
 # End Target
 # End Project

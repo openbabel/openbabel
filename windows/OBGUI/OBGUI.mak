@@ -60,7 +60,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "NDEBUG" /d "_AFXDLL" 
 BSC32=bscmake.exe
@@ -230,7 +230,7 @@ SOURCE=.\DynamicOptions.cpp
 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
-CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\DynamicOptions.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -254,7 +254,7 @@ SOURCE=.\OBGUI.cpp
 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
-CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\OBGUI.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -284,7 +284,7 @@ SOURCE=.\OBGUIDlg.cpp
 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
-CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\OBGUIDlg.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -308,7 +308,7 @@ SOURCE=.\StdAfx.cpp
 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
-CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /Fp"$(INTDIR)\OBGUI.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\StdAfx.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -331,24 +331,24 @@ CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
 "OBConv - Win32 Release" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Release" 
    cd "..\OBGUI"
 
 "OBConv - Win32 ReleaseCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Release" RECURSE=1 CLEAN 
    cd "..\OBGUI"
 
 !ELSEIF  "$(CFG)" == "OBGUI - Win32 Debug"
 
 "OBConv - Win32 Debug" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" 
    cd "..\OBGUI"
 
 "OBConv - Win32 DebugCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" RECURSE=1 CLEAN 
    cd "..\OBGUI"
 

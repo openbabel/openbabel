@@ -106,15 +106,15 @@ SOURCE=..\..\src\base.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\binary.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\bitvec.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\bond.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\bondtyper.cpp
 # End Source File
 # Begin Source File
 
@@ -168,6 +168,13 @@ SOURCE=..\..\src\molchrg.cpp
 # Begin Source File
 
 SOURCE=.\obdll.def
+
+!IF  "$(CFG)" == "OBDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -195,16 +202,15 @@ SOURCE=..\..\src\rand.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\report.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\residue.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\ring.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\rotamer.cpp
 # End Source File
 # Begin Source File
 
@@ -230,26 +236,9 @@ SOURCE=..\..\src\math\vector3.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
-# End Group
-# Begin Source File
-
-SOURCE=..\..\src\aromatic.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\atomtyp.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\babelconfig.h
-# End Source File
 # Begin Source File
 
 SOURCE=..\..\src\base.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\binary.h
 # End Source File
 # Begin Source File
 
@@ -345,11 +334,19 @@ SOURCE=..\..\src\phmodeldata.h
 # End Source File
 # Begin Source File
 
+SOURCE=".\Problem with radicals and EndModify.txt"
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\resdata.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\ring.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\rotamer.h
 # End Source File
 # Begin Source File
 
@@ -371,5 +368,6 @@ SOURCE=..\..\src\types.h
 
 SOURCE=..\..\src\math\vector3.h
 # End Source File
+# End Group
 # End Target
 # End Project

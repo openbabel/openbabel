@@ -58,6 +58,7 @@ CLEAN :
 	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\fhformat.obj"
+	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\ghemicalformat.obj"
@@ -71,6 +72,7 @@ CLEAN :
 	-@erase "$(INTDIR)\mopacformat.obj"
 	-@erase "$(INTDIR)\mpqcformat.obj"
 	-@erase "$(INTDIR)\nwchemformat.obj"
+	-@erase "$(INTDIR)\oberror.obj"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\povrayformat.obj"
 	-@erase "$(INTDIR)\PQSformat.obj"
@@ -122,6 +124,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
@@ -149,7 +152,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\oberror.obj"
 
 ".\OBFormats2.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -208,6 +212,8 @@ CLEAN :
 	-@erase "$(INTDIR)\featformat.sbr"
 	-@erase "$(INTDIR)\fhformat.obj"
 	-@erase "$(INTDIR)\fhformat.sbr"
+	-@erase "$(INTDIR)\fingerprintformat.obj"
+	-@erase "$(INTDIR)\fingerprintformat.sbr"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gamessformat.sbr"
 	-@erase "$(INTDIR)\gaussformat.obj"
@@ -234,6 +240,8 @@ CLEAN :
 	-@erase "$(INTDIR)\mpqcformat.sbr"
 	-@erase "$(INTDIR)\nwchemformat.obj"
 	-@erase "$(INTDIR)\nwchemformat.sbr"
+	-@erase "$(INTDIR)\oberror.obj"
+	-@erase "$(INTDIR)\oberror.sbr"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\pdbformat.sbr"
 	-@erase "$(INTDIR)\povrayformat.obj"
@@ -300,6 +308,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\dmolformat.sbr" \
 	"$(INTDIR)\featformat.sbr" \
 	"$(INTDIR)\fhformat.sbr" \
+	"$(INTDIR)\fingerprintformat.sbr" \
 	"$(INTDIR)\gamessformat.sbr" \
 	"$(INTDIR)\gaussformat.sbr" \
 	"$(INTDIR)\ghemicalformat.sbr" \
@@ -327,7 +336,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\viewmolformat.sbr" \
 	"$(INTDIR)\xedformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr"
+	"$(INTDIR)\zindoformat.sbr" \
+	"$(INTDIR)\oberror.sbr"
 
 "$(OUTDIR)\OBFormats2.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -357,6 +367,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
@@ -384,7 +395,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\oberror.obj"
 
 "$(OUTDIR)\OBFormats2D.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -794,6 +806,24 @@ SOURCE=..\..\src\formats\fhformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\fingerprintformat.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\fingerprintformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\fingerprintformat.obj"	"$(INTDIR)\fingerprintformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\formats\gamessformat.cpp
 
 !IF  "$(CFG)" == "OBFormats2 - Win32 Release"
@@ -1023,6 +1053,24 @@ SOURCE=..\..\src\formats\nwchemformat.cpp
 
 
 "$(INTDIR)\nwchemformat.obj"	"$(INTDIR)\nwchemformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\oberror.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\oberror.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\oberror.obj"	"$(INTDIR)\oberror.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
