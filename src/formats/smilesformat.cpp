@@ -53,8 +53,16 @@ public:
 						-r radicals lower case eg ethyl is Cc";
     };
 
-    bool SmiToMol(OBMol &mol,string &smi,const char *title);
-    //	bool WriteSmiles(std::ostream &ofs, OBMol &mol,const char *title);
+		virtual int SkipObjects(int n, OBConversion* pConv)
+		{
+			if(n==0) return 1; //already points after current line
+			string temp;
+			istream& ifs = *pConv->GetInStream();
+			int i;
+			for(i=0;i<n && ifs.good();i++)
+				getline(ifs, temp);
+			return ifs.good() ? 1 : -1;	
+		};	
 };
 
 //Make an instance of the format class
@@ -199,17 +207,13 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         }
     }
 
-    if (!vs.empty())
-    {
-        if (vs.size() >= 2)
-            SmiToMol(mol,vs[0],(char*)vs[1].c_str());
-        if (vs.size() == 1)
-            SmiToMol(mol,vs[0],"");
-    }
-
+    if (vs.empty())
+			return false;
     mol.SetDimension(0);
-
-    return(true);
+		if (vs.size() >= 2)
+      mol.SetTitle(vs[1].c_str());
+		OBSmilesParser sp;
+		return sp.SmiToMol(mol,vs[0]);
 }
 
 //////////////////////////////////////////////////
@@ -362,21 +366,24 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
 // CM 18 Sept 2003
 void OBSmilesParser::FindOrphanAromaticAtoms(OBMol &mol)
 {
-    //Facilitates the use shorthand for radical entry
+    //Facilitates the use lower case shorthand for radical entry
     //Atoms which are marked as aromatic but have no aromatic bonds
     //are taken to be radical centres
     OBAtom *atom;
     vector<OBNodeBase*>::iterator j;
 
     for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
-        if(atom->IsAromatic() && atom->CountBondsOfOrder(5)<2) //bonds order 5 set in FindAromaticBonds()
+        if(atom->IsAromatic())
+				{
+					if(atom->CountBondsOfOrder(5)<2) //bonds order 5 set in FindAromaticBonds()
             //not proper aromatic atoms - could be conjugated chain or radical centre
             atom->UnsetAromatic();
-        else
-        {
+					else
+					{
             //recognized as aromatic, so are not radicals
             atom->SetSpinMultiplicity(0);
-        }
+					}
+				}
 }
 
 void OBSmilesParser::FindAromaticBonds(OBMol &mol)
@@ -1292,6 +1299,7 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
     OBAtom *atom = mol.NewAtom();
     int hcount = 0;
     int charge=0;
+		int rad=0;
     char tmpc[2];
     tmpc[1] = '\0';
     for (_ptr++;*_ptr && *_ptr != ']';_ptr++)
@@ -1348,6 +1356,13 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
                 _ptr--;
             }
             break;
+				case '.': //CM Feb05
+						rad=2;
+						if(*(++_ptr)=='.')
+							rad=3;
+						else
+							_ptr--;
+						break;
 
         default:
             return(false);
@@ -1356,6 +1371,8 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
 
     if (charge)
         atom->SetFormalCharge(charge);
+		if (rad)
+				atom->SetSpinMultiplicity(rad);
     atom->SetAtomicNum(element);
     atom->SetIsotope(isotope);
     atom->SetType(symbol);
@@ -1577,17 +1594,6 @@ bool OBSmilesParser::ParseRingBond(OBMol &mol)
     return(true);
 }
 
-//Was previously global
-bool SMIFormat::SmiToMol(OBMol &mol,string &smi,const char *title)
-{
-    OBSmilesParser sp;
-    mol.SetTitle(title);
-
-    if (!sp.SmiToMol(mol,smi))
-        return(false);
-
-    return(true);
-}
 
 void OBMol2Smi::CreateSmiString(OBMol &mol,char *buffer)
 {
