@@ -599,6 +599,27 @@ unsigned int OBAtom::MemberOfRingCount() const
   return((unsigned int)count);
 }
 
+unsigned int OBAtom::MemberOfRingSize() const
+{
+  vector<OBRing*> rlist;
+  vector<OBRing*>::iterator i;
+
+  OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
+
+  if (!mol->HasSSSRPerceived())
+    mol->FindSSSR();
+
+  if (!((OBAtom*)this)->IsInRing()) return(0);
+
+  rlist = mol->GetSSSR();
+
+  for (i = rlist.begin();i != rlist.end();i++)
+    if ((*i)->IsInRing(GetIdx()))
+      return((*i)->Size());
+  
+  return(0);
+}
+
 unsigned int OBAtom::CountFreeOxygens() const
 {
   unsigned int count = 0;
@@ -717,6 +738,7 @@ bool OBAtom::GetNewBondVector(vector3 &v,float length)
   OBAtom *atom;
   vector<OBEdgeBase*>::iterator i,j;
   v = VZero;
+
   if (GetValence() == 0)
     {
       v = VX;
@@ -759,8 +781,7 @@ bool OBAtom::GetNewBondVector(vector3 &v,float length)
 	  v = m*vtmp;
 	  v.normalize();
 	}
-
-      if (GetHyb() == 3)
+      else if (GetHyb() == 3)
 	{
 	  v1 = cross(vtmp,VX);
 	  v2 = cross(vtmp,VY);
@@ -788,9 +809,9 @@ bool OBAtom::GetNewBondVector(vector3 &v,float length)
       vsum = v1+v2;
       vsum.normalize();
 
-      if (GetHyb() == 2) v = vsum;
-
-      if (GetHyb() == 3)
+      if (GetHyb() == 2)
+	v = vsum;
+      else if (GetHyb() == 3)
 	{
 	  vnorm = cross(v2,v1);
 	  vnorm.normalize();
@@ -805,12 +826,11 @@ bool OBAtom::GetNewBondVector(vector3 &v,float length)
 	  vsum *= ONE_OVER_SQRT3;
 	  vnorm *= SQRT_TWO_THIRDS;
 
-#undef ONE_OVER_SQRT3
-#undef SQRT_TWO_THIRDS
-
 	  v = vsum + vnorm;
 	}
+
       v *= length;
+
       v += GetVector();
       return(true);
     }
@@ -903,6 +923,7 @@ static void ApplyRotMatToBond(OBMol &mol,matrix3x3 &m,OBAtom *a1,OBAtom *a2)
 bool OBAtom::SetHybAndGeom(int hyb)
 {
   //if (hyb == GetHyb()) return(true);
+  if (GetAtomicNum() == 1) return(false);
   if (hyb == 0 && GetHvyValence() > 1) return(false);
   if (hyb == 1 && GetHvyValence() > 2) return(false);
   if (hyb == 2 && GetHvyValence() > 3) return(false);
@@ -929,15 +950,22 @@ bool OBAtom::SetHybAndGeom(int hyb)
   else if (hyb == 2) targetAngle = 120.0;
   else if (hyb == 1) targetAngle = 180.0;
   else               targetAngle = 0.0;
+  
+  if (IsInRing())
+    targetAngle = 180.0 - (360.0f / MemberOfRingSize());
 
   //adjust attached acyclic bond lengths
-  float br1,br2;
+  float br1,br2, length;
   br1 = etab.CorrectedBondRad(GetAtomicNum(),hyb);
   for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
     if (!(*i)->IsInRing())
     {
       br2 = etab.CorrectedBondRad(nbr->GetAtomicNum(),nbr->GetHyb());
-      ((OBBond*) *i)->SetLength(this,br1+br2);
+      length = br1 + br2;
+      if ((*i)->IsAromatic()) length *= 0.93f;
+      else if ((*i)->GetBO() == 2)         length *= 0.91f;
+      else if ((*i)->GetBO() == 3)         length *= 0.87f;
+      ((OBBond*) *i)->SetLength(this, length);
     }
 
   if (GetValence() > 1)
