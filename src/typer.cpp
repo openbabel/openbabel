@@ -658,8 +658,6 @@ void OBAromaticTyper::SelectRootAtoms(OBMol &mol, bool avoidInnerRingAtoms)
 	    atom = mol.GetAtom(rootAtom);
 	    ringNbrs = heavyNbrs = 0;
 
-	    cout << " in avoid inner root atoms " << endl;
-
 	    for (nbr = atom->BeginNbrAtom(l);nbr;nbr = atom->NextNbrAtom(l))
 	      {
 		// we can get this from atom->GetHvyValence()
