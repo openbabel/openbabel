@@ -1,3 +1,4 @@
+
 /**********************************************************************
 Copyright (C) 2002- Peter Murray-Rust.
 
@@ -566,10 +567,15 @@ void makeAllowedAttributeLists() {
 }
 
 /** ------------------------------XML reader--------------------------*/
+
+//void cmlError(int type, string msg, int line) {
+//}
+
 bool ReadXML(istream &ifs) {
 	char buffer[BUFF_SIZE];
 	size_t lt;
 	size_t rt;
+    int lineCount = 0;
 
 	currentElem = "";
 	string token = "";
@@ -579,12 +585,13 @@ bool ReadXML(istream &ifs) {
 	makeAllowedAttributeLists();
 	startDocument();
 	while (ifs.getline(buffer,BUFF_SIZE)) {
+        lineCount++;
 		string buff(buffer);
 // omit whitespace lines
 		if (trim(buff) == "") continue;
 		if (readRoot) {
-		  //			cerr << "no nonWhitespace allowed after root element: " << buff << endl;
-			break;
+		  	// cmlError(FATAL, "no nonWhitespace allowed after root element: " + buff;
+			return false;
 		}
 // normalize Newlines to " "
 		if (token != "") token += " ";
@@ -1806,6 +1813,7 @@ bool WriteAtomArray(ostream &ofs) {
 	vector<OBNodeBase*>::iterator i;
 
 	int count = 0;
+    ofs << "<atomArray>" << endl;
 	for (atom = molPtr->BeginAtom(i);atom;atom = molPtr->NextAtom(i)) {
 		WriteAtom(ofs, atom, ++count);
 	}
@@ -1824,6 +1832,7 @@ bool WriteAtomArray(ostream &ofs) {
 			}
 		}
 	}
+    ofs << "</atomArray>" << endl;
 	return true; // [ejk] assumed
 }
 
