@@ -145,27 +145,31 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 		char type[5];
 		vector3 v;
 		OBAtom atom;
-		int charge;
+		int charge, scanArgs;
 
 		for (i = 0;i < natoms;i++) {
 			if (!ifs.getline(buffer,BUFF_SIZE))
 				return(false);
 
-			if (sscanf(buffer,"%lf %lf %lf %s %*d %d",&x,&y,&z,type,&charge) != 5)
-				return(false);
+			scanArgs = sscanf(buffer,"%lf %lf %lf %s %*d %d",&x,&y,&z,type,&charge);
+			if (scanArgs <4)
+			  return(false);
 			v.SetX(x);v.SetY(y);v.SetZ(z);
 			atom.SetVector(x, y, z);
 			atom.SetAtomicNum(etab.GetAtomicNum(type));
-			atom.SetType(type);
+			//			atom.SetType(type);
 
-			switch (charge) {
-			case 0: break;
-			case 3: atom.SetFormalCharge(1); break;
-			case 2: atom.SetFormalCharge(2); break;
-			case 1: atom.SetFormalCharge(3); break;
-			case 5: atom.SetFormalCharge(-1); break;
-			case 6: atom.SetFormalCharge(-2); break;
-			case 7: atom.SetFormalCharge(-3); break;
+			if (scanArgs == 5) {
+			  
+			  switch (charge) {
+			  case 0: break;
+			  case 3: atom.SetFormalCharge(1); break;
+			  case 2: atom.SetFormalCharge(2); break;
+			  case 1: atom.SetFormalCharge(3); break;
+			  case 5: atom.SetFormalCharge(-1); break;
+			  case 6: atom.SetFormalCharge(-2); break;
+			  case 7: atom.SetFormalCharge(-3); break;
+			  }
 			}
 
 			if (!mol.AddAtom(atom))
