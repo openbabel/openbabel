@@ -34,7 +34,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
-subdir = src/windows
+subdir = test/cmltest
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
@@ -145,10 +145,10 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-EXTRA_DIST = winbabeldialog.clw  winbabeldialog.dsp  winbabeldialog.h \
-             winbabeldialog.opt  winbabeldialogDlg.cpp winbabeldialog.aps \
-             winbabeldialog.cpp  winbabeldialog.dsw  winbabeldialog.ncb \
-             winbabeldialog.rc   winbabeldialogDlg.h
+EXTRA_DIST = \
+3d.head.sdf      nsc2dcml.xml   nsc3dmol.mol    roundtrip.sh  \
+README-UNIX.txt  nsc2dmol.mol   readme.txt      test.bat      \
+cs2a.cml         nsc3dcml.xml   roundtrip.bat   test.sh 
 
 all: all-am
 
@@ -162,9 +162,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/windows/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  test/cmltest/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  src/windows/Makefile
+	  $(AUTOMAKE) --gnu  test/cmltest/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
