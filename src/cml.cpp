@@ -4,7 +4,7 @@ Some portions Copyright (c) 2003 by Geoffrey R. Hutchison
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation version 2 of the License.
+the Free Software Foundation version 2 of the License.OpenBabel discussion list <openbabel-discuss@lists.sourceforge.net>
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -306,7 +306,7 @@ const char* _QUERY             = "?";
 const char* _QUOTE             = "\"";
 const char* _RANGLE            = ">";
 const char* _SLASH             = "/";
-const char* _SPACE             = " ";
+const char* _SPACE_             = " ";
 const char* _SPACE_NEWLINE     = " \n";
 
 const char* X_QUOT             = "quot";
@@ -699,12 +699,12 @@ void makeAllowedElementLists() {
 void makeAllowedAttributeLists() {
 	tokenize(ANGLE_ATTRIBUTE_VECTOR, ANGLE_ATTRIBUTES, " \n");
 	string s = ATOMATTRIBUTES;
-	s.append(_SPACE);
+	s.append(_SPACE_);
 	s.append(ATOMBUILTINS);
 	tokenize(ATOMATTRIBUTE_VECTOR, s, " \n");
 	tokenize(ATOMARRAY_ATTRIBUTE_VECTOR, ATOMARRAY_ATTRIBUTES, " \n");
 	s = BOND_ATTRIBUTES;
-	s.append(_SPACE);
+	s.append(_SPACE_);
 	s.append(BOND_BUILTINS);
 	tokenize(BOND_ATTRIBUTE_VECTOR, s, " \n");
 	tokenize(BONDARRAY_ATTRIBUTE_VECTOR, BONDARRAY_ATTRIBUTES, " \n");
@@ -765,7 +765,7 @@ bool ReadXML(istream &ifs) {
 			return false;
 		}
 // normalize Newlines to SPACE
-		if (token != _EMPTY) token += _SPACE;
+		if (token != _EMPTY) token += _SPACE_;
 		for (;;) {
             if (inComment) {
                 lt = buff.find(E_COMMENT);
@@ -867,7 +867,7 @@ void tag(string s) {
 	} else if (s.substr(0,2) == S_PI) {
 		if (s.substr(l-2, 2) == E_PI) {
 			s = s.substr(2, l-4);
-			string::size_type idx = s.find(_SPACE);
+			string::size_type idx = s.find(_SPACE_);
 			string target = (idx < s.size()) ? s.substr(0, idx) : s;
 			string data = (idx < s.size()) ? trim(s.substr(idx)) : string(_EMPTY);
 			processingInstruction(target, data);
@@ -991,7 +991,7 @@ string startTag(string s) {
 	}
 	string ss = s;
 	string name;
-	string::size_type idx = s.find(_SPACE);
+	string::size_type idx = s.find(_SPACE_);
 	if (idx > s.size()) {
 		name = s;
 		s = _EMPTY;
@@ -1065,7 +1065,7 @@ vector <string> getUnknownAttributes(vector <string> &allowed, vector <pair <str
 
 void printVector(vector <string> v, ostream& ofs) {
 	for (vector<string>::size_type i = 0; i < v.size(); ++i) {
-		ofs << v[i] << _SPACE;
+		ofs << v[i] << _SPACE_;
 	}
 }
 
@@ -1078,12 +1078,12 @@ void noteUnusedElementName(string name, string msg) {
 
 
 bool writeAttribute(ostream &ofs, string name, int value) {
-	ofs << _SPACE << name << _EQUALS << _QUOTE << value << _QUOTE;
+	ofs << _SPACE_ << name << _EQUALS << _QUOTE << value << _QUOTE;
 	return true; // [ejk] assumed
 }
 
 bool writeAttribute(ostream &ofs, string name, double value) {
-	ofs << _SPACE << name << _EQUALS << _QUOTE << value << _QUOTE;
+	ofs << _SPACE_ << name << _EQUALS << _QUOTE << value << _QUOTE;
 	return true; // [ejk] assumed
 }
 
@@ -1091,25 +1091,29 @@ bool writeAttribute(ostream &ofs, string name, string value) {
 	value = trim(value);
 	if (value != _EMPTY) {
 		string value1 = escapeXMLEntities(value);
-        ofs << _SPACE << name << _EQUALS << _QUOTE << value1 << _QUOTE;
+        ofs << _SPACE_ << name << _EQUALS << _QUOTE << value1 << _QUOTE;
 	}
 	return true; // [ejk] assumed
 }
 
 bool writeStartTagStart(ostream& ofs, string name) {
     ofs << _LANGLE << outputPrefix << name;
+    return true;
 }
 
 bool writeStartTagEnd(ostream& ofs) {
     ofs << _RANGLE;
+    return true;
 }
 
 bool writeEndTag(ostream& ofs, string name) {
     ofs << _LANGLE << _SLASH << outputPrefix << name << _RANGLE << endl;
+    return true;
 }
 
 bool writeCombinedTagEnd(ostream& ofs) {
     ofs << _SLASH << _RANGLE << endl;
+    return true;
 }
 
 bool writeBuiltin(ostream&ofs, string name, int value) {
@@ -1132,7 +1136,7 @@ bool writeBuiltin(ostream&ofs, string name, string value) {
 }
 
 bool appendToArray(string &array, int value) {
-	if (array != _EMPTY) array.append(_SPACE);
+	if (array != _EMPTY) array.append(_SPACE_);
 	char ss[20];
 	sprintf(ss, "%i", value);
 	string s(ss);
@@ -1141,7 +1145,7 @@ bool appendToArray(string &array, int value) {
 }
 
 bool appendToArray(string &array, double value) {
-	if (array != _EMPTY) array.append(_SPACE);
+	if (array != _EMPTY) array.append(_SPACE_);
 	char ss[20];
 	sprintf(ss, "%f", value);
 	string s(ss);
@@ -1151,7 +1155,7 @@ bool appendToArray(string &array, double value) {
 
 bool appendToArray(string &array, string value) {
 	value = escapeXMLEntities(value);
-	if (array != _EMPTY) array.append(_SPACE);
+	if (array != _EMPTY) array.append(_SPACE_);
 	array.append(trim(value));
 	return true; // [ejk] assumed
 }
@@ -1288,6 +1292,7 @@ bool clearMoleculeWorkspace() {
     torsionVector.clear();
     atomParityVector.clear();
     stereoSVector.clear();
+  return true;
 }
 
 void startElement(string name, vector<pair<string,string> > &atts) {
@@ -1582,7 +1587,7 @@ void characters(string s) {
 }
 
 void processingInstruction(string target, string data) {
-  //	cout << "PI: " << target << _SPACE << data << endl;
+  //	cout << "PI: " << target << _SPACE_ << data << endl;
 }
 
 void skippedEntity(string name) {
@@ -1702,7 +1707,7 @@ OBAtom *getAtomPtr(string s) {
 // add results to vector
 void getAtomRefs(vector<string>::size_type size, vector <OBAtom*> &v, string atomRefString) {
 	vector <string> sv;
-	atomRefString += _SPACE;
+	atomRefString += _SPACE_;
 	tokenize(sv, atomRefString, " \n");
 	if (sv.size() != size) {
 //	  cmlError("unexpected size for atomRefs attribute: " + sv.size() + _SLASH + size);
@@ -2178,7 +2183,7 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 void processStringTokens(vector <string> &v, vector<string>::size_type n, string att) {
 	if (att == _EMPTY) return;
 	vector <string> sv;
-	att += _SPACE;
+	att += _SPACE_;
 	tokenize(sv, att, _SPACE_NEWLINE);
 	if (sv.size() != n) {
 	    cmlError("inconsistent array attribute sizes: ");
@@ -2196,7 +2201,7 @@ void processIntTokens(vector <int> &v, vector<int>::size_type n, string att) {
         return;
     }
 	vector <string> sv;
-	att += _SPACE;
+	att += _SPACE_;
 	tokenize(sv, att, _SPACE_NEWLINE);
 	if (sv.size() != n) {
 	  cmlError("inconsistent array attribute sizes: ");
@@ -2211,7 +2216,7 @@ void processIntTokens(vector <int> &v, vector<int>::size_type n, string att) {
 void processFloatTokens(vector <double> &v, vector<double>::size_type n, string att) {
 	if (att == _EMPTY) return;
 	vector <string> sv;
-	att += _SPACE;
+	att += _SPACE_;
 	tokenize(sv, att, _SPACE_NEWLINE);
 	if (sv.size() != n) {
 	  cmlError("inconsistent array attribute sizes: ");
@@ -2235,7 +2240,7 @@ bool startAtomArray(vector <pair<string,string> > &atts) {
 // only CML2+array gets to here    
 	setCMLType(C_CML2);
     inputArray = true;
-	atomId += _SPACE;
+	atomId += _SPACE_;
 	tokenize(sv, atomID, _SPACE_NEWLINE);
 	int mynatoms = sv.size();
     if (mynatoms == 0) {
@@ -2613,11 +2618,12 @@ bool WriteBond(ostream &ofs, OBBond* bond) {
 	string atomRef2 = "a";
 	sprintf(bos, "%i", a2);
 	string bos2(bos);
+    
 	atomRef2.append(trim(bos2));
 	if (!outputArray) {
         writeStartTagStart(ofs, C_BOND);
 		if (outputCML2) {
-			string atomRefs2 = atomRef1+_SPACE+atomRef2;
+			string atomRefs2 = atomRef1+_SPACE_+atomRef2;
 			writeAttribute(ofs, C_ATOMREFS2, atomRefs2);
 			writeAttribute(ofs, C_ORDER, boChar);
             writeCombinedTagEnd(ofs);
@@ -2646,7 +2652,7 @@ bool startBondArray(vector <pair<string,string> > &atts) {
 // only CML2+array gets to here    
 	setCMLType(C_CML2);
     inputArray = true;
-	atomRef1 += _SPACE;
+	atomRef1 += _SPACE_;
 	tokenize(sv, atomRef1, _SPACE_NEWLINE);
 	int mynbonds = sv.size();	// explicitly not the global nbonds
     if (mynbonds == 0) {
@@ -3223,17 +3229,17 @@ void generateInternals() {
 		coord->_tor = torsionVector[iTor].second;
 		internalVector.push_back(coord);
 	}
-	for (internalVector_t::size_type i = 0; i < internalVector.size(); ++i) {
-		OBInternalCoord* coord = internalVector[i];
+	for (internalVector_t::size_type j = 0; j < internalVector.size(); ++j) {
+		OBInternalCoord* coord = internalVector[j]; //CM j was i
 		int aa = (coord->_a != 0) ? coord->_a->GetIdx() : 0;
 		int bb = (coord->_b != 0) ? coord->_b->GetIdx() : 0;
 		int cc = (coord->_c != 0) ? coord->_c->GetIdx() : 0;
-		//		cout << "a" << cc << _SPACE;
+		//		cout << "a" << cc << _SPACE_;
 		//		cout << "a" << bb << _COLON;
 // 		cout << "a" << aa << _COLON;
 // 		cout << "a" << (i+1) << _COLON;
-// 		cout << coord->_dst << _SPACE;
-// 		cout << coord->_ang << _SPACE;
+// 		cout << coord->_dst << _SPACE_;
+// 		cout << coord->_ang << _SPACE_;
 // 		cout << coord->_tor << endl;
 	}
 }
@@ -3257,10 +3263,10 @@ bool WriteMolecule(ostream &ofs) {
     clearMoleculeWorkspace();
     
 	if (outputDeclaration) {
-		ofs << _LANGLE << _QUERY << X_XML << _SPACE << X_VERSION << _EQUALS <<  _QUOTE << "1.0" << _QUOTE << _QUERY << _RANGLE << endl;
+		ofs << _LANGLE << _QUERY << X_XML << _SPACE_ << X_VERSION << _EQUALS <<  _QUOTE << "1.0" << _QUOTE << _QUERY << _RANGLE << endl;
 	}
 	if (outputDoctype) {
-		ofs << X_DOCTYPE << _SPACE << C_MOLECULE << _SPACE << X_SYSTEM << _QUOTE << CML1_NAMESPACE << _QUOTE << _RANGLE << endl;
+		ofs << X_DOCTYPE << _SPACE_ << C_MOLECULE << _SPACE_ << X_SYSTEM << _QUOTE << CML1_NAMESPACE << _QUOTE << _RANGLE << endl;
 	}
 	if (outputPretty) {
 //		cout << "<!-- imagine the XML is pretty printed -->" << endl;
@@ -3273,7 +3279,7 @@ bool WriteMolecule(ostream &ofs) {
     
     writeStartTagStart(ofs, C_MOLECULE);
 	if (outputNamespace) {
-		ofs << _SPACE << X_XMLNS << _COLON << C_PREFIX << _EQUALS << _QUOTE << CML2_NAMESPACE << _QUOTE << endl;
+		ofs << _SPACE_ << X_XMLNS << _COLON << C_PREFIX << _EQUALS << _QUOTE << CML2_NAMESPACE << _QUOTE << endl;
 	}
     string title = getNormalizedString(molPtr->GetTitle());
  	writeAttribute(ofs, C_TITLE, title);
@@ -3399,6 +3405,7 @@ bool WriteMetadataList(ostream &ofs) {
     writeCombinedTagEnd(ofs);
         
     writeEndTag(ofs, C_METADATALIST);
+  return true;
 }
 
 bool getTimestr(string& s) {
@@ -3936,8 +3943,8 @@ void debug(ostream &ofs) {
 	ofs << "<th>Hash</th>" << endl;
 	ofs << "</tr>" << endl;
 
-	for (unsigned int i = 0; i < molPtr->NumBonds(); ++i) {
-		OBBond* boPtr = molPtr->GetBond(i);
+	for (unsigned int j = 0; j < molPtr->NumBonds(); ++j) {
+		OBBond* boPtr = molPtr->GetBond(j);
 		ofs << "<tr>" << endl;
 		ofs << "<td>" << i+1 << "</td>" << endl;
 		ofs << "<td>" << boPtr->GetBO() << "</td>" << endl;
@@ -3971,3 +3978,4 @@ void debug(ostream &ofs) {
 }
 
 }
+
