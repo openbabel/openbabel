@@ -1,3 +1,19 @@
+2005-02-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mdlformat.cpp (ReadMolecule): Fix bug where long
+	property lines would set ifs.fail() and consequently file appeared
+	to be at EOF. Since property lines can be >1024 bytes, read
+	using std::getline(ifs,string). Fixes PR#1120738, thanks to
+	Dr. Christian Laggner for the bug report.
+
+	* doc/Makefile.am: Fix bug in doxygen rule.
+
+	* configure, configure.in, */Makefile.in: Regnerated.
+	
+	* src/data.cpp, src/data.h (CorrectedBondRad): Change to use
+	covalent radii -- this is used internally in many places and
+	cannot easily be removed. Add more doxygen documentation.
+
 2005-02-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp (operator+): Fix PR#119352 to copy bond flag

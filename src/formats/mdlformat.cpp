@@ -239,11 +239,13 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       size_t lt=buff.find("<")+1;
       size_t rt = buff.find_last_of(">");
       string attr = buff.substr(lt,rt-lt);
-      ifs.getline(buffer,BUFF_SIZE);
 
-	  OBPairData *dp = new OBPairData;
-	  dp->SetAttribute(attr);
-	  dp->SetValue(buffer);
+      // sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
+      getline(ifs, buff);
+
+      OBPairData *dp = new OBPairData;
+      dp->SetAttribute(attr);
+      dp->SetValue(buff);
       mol.SetData(dp);
     }
     // end RWT    
@@ -251,7 +253,8 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     if (!strncmp(buffer,"$$$$",4)) break;
     if (!strncmp(buffer,"$MOL",4)) break; //CM
   }
-	delete comment;
+
+  delete comment;
 
   return(true);
 
