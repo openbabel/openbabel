@@ -63,7 +63,7 @@ class OBAromaticTyper : public OBGlobalDataBase
   void ParseLine(const char*);
   void AssignAromaticFlags(OBMol &);
   void PropagatePotentialAromatic(OBAtom*);
-  void SelectRootAtoms(OBMol &, bool avoidInnerRingAtoms = false);
+  void SelectRootAtoms(OBMol &, bool avoidInnerRingAtoms = true);
   void ExcludeSmallRing(OBMol &);
   void CheckAromaticity(OBAtom*,int);
   bool TraverseCycle(OBAtom*,OBAtom*,OBBond*,std::pair<int,int>&,int);
