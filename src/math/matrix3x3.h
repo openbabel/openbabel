@@ -161,6 +161,11 @@ namespace OpenBabel {
       void SetColumn(int column, const vector3 &v) throw(OBError);
 
       //! access function
+      /*! \warning If column is not in the range 0..2, the vector
+	remains unchanged and an exception is thrown. */
+      void SetRow(int row, const vector3 &v) throw(OBError);
+
+      //! access function
       /*! \warning If col is not in the range 0..2, an exception is
 	thrown. */
       vector3 GetColumn(unsigned int col) const throw(OBError);

@@ -179,6 +179,20 @@ void matrix3x3::SetColumn(int col, const vector3 &v) throw(OBError)
   ele[2][col] = v.z();
 }
 
+void matrix3x3::SetRow(int row, const vector3 &v) throw(OBError)
+{
+  if (row > 2) {
+    OBError er("matrix3x3::SetRow(int row, const vector3 &v)",
+               "The method was called with row > 2.",
+               "This is a programming error in your application.");
+    throw er;
+  }
+
+  ele[row][0] = v.x();
+  ele[row][1] = v.y();
+  ele[row][2] = v.z();
+}
+
 vector3 matrix3x3::GetColumn(unsigned int col) const throw(OBError)
 {
   if (col > 2) {
