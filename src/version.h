@@ -15,4 +15,4 @@ GNU General Public License for more details.
    This is the version of the program,
    used in help messages among other places
 */
-#define BABEL_VERSION "2.0a1"
+#define BABEL_VERSION "1.99"

@@ -1,5 +1,24 @@
 2002-01-21  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
+	* Makefile.in: Fix problems with the dist target.
+
+	* configure, configure.in: Add 'top_builddir' macro to know where
+	objdir is in the case that we're not building in the source
+	directory.
+
+	* src/Makefile.in: Run the library through 'ranlib', which fixes
+	problems on Mac OS X. Fix problems running 'install' when not
+	building in the source directory.
+
+	* src/unichem.cpp: Fix bug in reading files.
+
+	* src/version.h: Set version to 1.99.
+	
+	* test/Makefile.in: Fix problems with the check target: tests need
+	to be copied to the build dir if we're not in the source directory.
+	
+2002-01-21  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
 	* doc/*: Move documentation to subdirectory--since there will
 	eventually be more than these few morsels.
 

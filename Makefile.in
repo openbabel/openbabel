@@ -44,15 +44,13 @@ distclean:
 install:	all
 		(cd src; $(MAKE) $(MFLAGS) install)
 
-dist:
+dist:		distclean
 	        rm -rf $(DISTDIR) openbabel.tar.gz
 		mkdir $(DISTDIR)
 		tar cf - $(top_srcdir) | (cd $(DISTDIR); tar xf -)
-		(cd $(DISTDIR); $(MAKE) distclean)
-		-for i in $(SUBDIRS); do \
-			(cd $(DISTDIR)/$$i; rm -fr RCS CVS .#\*); \
-		done && test -z "$$fail"
-		(cd $(DISTDIR)/..; tar cvzf openbabel.tar.gz $(DIST))
+		(cd $(DISTDIR); rm -fr RCS CVS *~ .#\*);
+		(cd $(DISTDIR); rm -fr */RCS */CVS */*~ */.#\*);
+		(cd $(DISTDIR)/..; tar cvzf openbabel.tar.gz openbabel-dist)
 		rm -rf $(DISTDIR)
 
 # Update the Makefiles if things are updated

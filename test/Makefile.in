@@ -14,6 +14,8 @@ LDFLAGS       = -L../src/
 srcdir        = @srcdir@
 VPATH         = @srcdir@
 top_srcdir    = @top_srcdir@
+top_builddir  = @top_builddir@
+builddir      = @top_builddir@/test
 
 HDRS	      = 
 
@@ -31,6 +33,7 @@ all:;
 
 test:		check
 check:		$(PROGRAM)
+		(cd $(srcdir); cp $(DATAFILES) $(builddir))
 		./$(PROGRAM)
 
 clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)

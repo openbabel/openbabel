@@ -46,7 +46,7 @@ bool ReadUnichem(istream &ifs,OBMol &mol,char *title)
     atom->SetVector(x,y,z); //set coordinates
 
     //set atomic number
-    atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+    atom->SetAtomicNum(atoi((char*)vs[0].c_str()));
     //set type
     ttab.SetToType("INT"); ttab.Translate(str,vs[0]); 
     atom->SetType(str);
