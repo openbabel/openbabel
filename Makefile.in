@@ -46,6 +46,7 @@ distclean:
 
 install:	all
 		(cd src; $(MAKE) $(MFLAGS) install)
+		$(INSTALL) -d $(mandir)
 		$(INSTALL) doc/babel.1 $(mandir)
 
 dist:		distclean
