@@ -27,6 +27,7 @@ bool ReadMPQC(istream &ifs,OBMol &mol,const char *title)
   OBAtom *atom;
   vector<string> vs;
   bool bohr = true;
+  int i = 0;
 
   mol.BeginModify();
   while	(ifs.getline(buffer,BUFF_SIZE))
@@ -35,12 +36,12 @@ bool ReadMPQC(istream &ifs,OBMol &mol,const char *title)
 	{
 	  // mol.EndModify();
 	  mol.Clear();
-	  mol.BeginModify();
-	  while	(strstr(buffer,"atoms geometry") == NULL)
+	  while	(strstr(buffer,"geometry") == NULL)
 	    {
 	      if (strstr(buffer,"angstrom") != NULL)
 		bohr = false;
-	      ifs.getline(buffer,BUFF_SIZE);
+	      if (!ifs.getline(buffer,BUFF_SIZE))
+		return(false);
 	    }
 	  ifs.getline(buffer,BUFF_SIZE); // Now we're on the atoms
 	  tokenize(vs,buffer);
@@ -48,25 +49,24 @@ bool ReadMPQC(istream &ifs,OBMol &mol,const char *title)
 	    {
 	      if (bohr)
 		{
-		  x = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
-		  y = atof((char*)vs[3].c_str()) * BOHR_TO_ANGSTROM;
-		  z = atof((char*)vs[4].c_str()) * BOHR_TO_ANGSTROM;
+		  x = atof((char*)vs[3].c_str()) * BOHR_TO_ANGSTROM;
+		  y = atof((char*)vs[4].c_str()) * BOHR_TO_ANGSTROM;
+		  z = atof((char*)vs[5].c_str()) * BOHR_TO_ANGSTROM;
 		}
 	      else {
-		  x = atof((char*)vs[2].c_str());
-		  y = atof((char*)vs[3].c_str());
-		  z = atof((char*)vs[4].c_str());
+		  x = atof((char*)vs[3].c_str());
+		  y = atof((char*)vs[4].c_str());
+		  z = atof((char*)vs[5].c_str());
 		}
 	      atom = mol.NewAtom();
 	      atom->SetVector(x,y,z);
-	      atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+	      atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
 
 	      if (!ifs.getline(buffer,BUFF_SIZE)) break;
 	      tokenize(vs,buffer);
 	    }
 	}
     }
-  mol.EndModify();
 
   mol.ConnectTheDots();
   mol.PerceiveBondOrders();
