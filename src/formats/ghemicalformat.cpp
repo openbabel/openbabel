@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2000-2003 by Geoffrey Hutchison
+Copyright (C) 2000-2005 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -113,7 +113,7 @@ bool GhemicalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     // Get !Header line with version number
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%*s %*s %d", &i);
-    if (!i || i > 100)
+    if (!i)
         return false;
 
     // Get !Info line with number of coord sets
@@ -133,7 +133,7 @@ bool GhemicalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if (!ifs.getline(buffer,BUFF_SIZE))
             return(false);
         tokenize(vs,buffer);
-        if (vs.size() != 2)
+        if (vs.size() < 2)
             return(false);
         atom = mol.NewAtom();
         atom->SetAtomicNum(atoi(vs[1].c_str()));
@@ -176,7 +176,8 @@ bool GhemicalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         atom->SetVector(x,y,z); //set coordinates
     }
 
-    if (ifs.getline(buffer,BUFF_SIZE) && strstr(buffer, "!Charges") != NULL)
+    if (ifs.getline(buffer,BUFF_SIZE) && (strstr(buffer, "!Charges") != NULL
+					  || strstr(buffer, "!PartialCharges") != NULL))
     {
         hasPartialCharges = true;
         for (i = 1; i <= natoms; i ++)
@@ -189,6 +190,13 @@ bool GhemicalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             atom = mol.GetAtom(i);
             atom->SetPartialCharge(atof((char*)vs[1].c_str()));
         }
+    }
+
+    // look for the !End block if it exists
+    while (ifs.getline(buffer,BUFF_SIZE))
+    {
+        if(strstr(buffer,"!End") != NULL)
+	  break;
     }
 
     mol.EndModify();
