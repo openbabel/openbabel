@@ -358,50 +358,167 @@ static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
   }
 }
 
+//! Utility function to read a 5-digit integer starting from a specified column
+/*! This function reads a 5-digit integer, starting from column
+  columnAsSpecifiedInPDB from the buffer, converts it to a long
+  integer, and returns either false or true, if the conversion was
+  successful or not. If the conversion was not successful, the target
+  is set to a random value.
+
+  For instance, the PDB Format Description for a CONECT record specifies
+
+  COLUMNS        DATA TYPE        FIELD           DEFINITION
+  ---------------------------------------------------------------------------------
+  1 -  6         Record name      "CONECT"
+  7 - 11         Integer          serial          Atom serial number
+  ...
+
+  To read the Atom serial number, you would call
+
+  long int target;
+  if ( readIntegerFromRecord(buffer, 7, &target) == false ) {
+    cerr << "Could not parse" << endl;
+  }
+  
+  This function does not check the length of the buffer, or
+  strlen(buffer). If the buffer is not long enough => SEGFAULT. 
+ */
+static bool readIntegerFromRecord(char *buffer, unsigned int columnAsSpecifiedInPDB, long int *target)
+{
+  char integerBuffer[6];
+  integerBuffer[5] = 0;
+
+  strncpy(integerBuffer, buffer+columnAsSpecifiedInPDB-1, 5);
+
+  char *errorCheckingEndPtr;
+  *target = strtol(integerBuffer, &errorCheckingEndPtr, 10);
+  if (integerBuffer == errorCheckingEndPtr)
+    return(false);
+  return(true);
+}
+
+//! Read a CONECT record
+/*! This function reads a CONECT record, as specified
+  http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html,
+  in short:
+
+  COLUMNS         DATA TYPE        FIELD           DEFINITION
+  ---------------------------------------------------------------------------------
+   1 -  6         Record name      "CONECT"
+   7 - 11         Integer          serial          Atom serial number
+  12 - 16         Integer          serial          Serial number of bonded atom
+  17 - 21         Integer          serial          Serial number of bonded atom
+  22 - 26         Integer          serial          Serial number of bonded atom
+  27 - 31         Integer          serial          Serial number of bonded atom
+  32 - 36         Integer          serial          Serial number of hydrogen bonded atom
+  37 - 41         Integer          serial          Serial number of hydrogen bonded atom
+  42 - 46         Integer          serial          Serial number of salt bridged atom
+  47 - 51         Integer          serial          Serial number of hydrogen bonded atom
+  52 - 56         Integer          serial          Serial number of hydrogen bonded atom
+  57 - 61         Integer          serial          Serial number of salt bridged atom
+
+  Hydrogen bonds and salt bridges are ignored. --Stefan Kebekus.
+*/
+
 static bool ParseConectRecord(char *buffer,OBMol &mol)
 {
-  vector<string> vs;
-  
+  // Setup strings and string buffers
   buffer[70] = '\0';
-  tokenize(vs,buffer);
-  if (vs.empty()) return(false);
-  vs.erase(vs.begin());
-  int con, order, k;
-  int start = atoi(vs[0].c_str());
+  if (strlen(buffer) < 70) {
+    cerr << "WARNING: Problems reading a PDB file, method 'static bool ParseConectRecord(char *, OBMol &)'" << endl
+	 << "  Problems reading a CONECT record." << endl
+	 << "  OpenBabel found the line '" << buffer << "'" << endl
+	 << "  According to the PDB specification (http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html)," << endl
+	 << "  the record should have 70 columns, but OpenBabel found " << strlen(buffer) << " columns." << endl
+	 << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+    return(false);
+  }
 
-  if (vs.size() > 1) con = atoi(vs[1].c_str());
-  if (!con) return(false);
+  // Serial number of the first atom, read from column 7-11 of the
+  // connect record, to which the other atoms connect to.
+  long int startAtomSerialNumber;
+  if (readIntegerFromRecord(buffer, 7, &startAtomSerialNumber) == false) {
+    cerr << "WARNING: Problems reading a PDB file, method 'static bool ParseConectRecord(char *, OBMol &)'" << endl
+	 << "  Problems reading a CONECT record." << endl
+	 << "  OpenBabel found the line '" << buffer << "'" << endl
+	 << "  According to the PDB specification (http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html)," << endl
+	 << "  columns 7--11 should contain the serial number of an atom, but OpenBabel was not able" << endl
+	 << "  to interpret these columns. " << endl
+	 << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+    return(false);
+  }
 
-  OBAtom *a1,*a2;
-  OBResidue *r1,*r2;
-  vector<OBNodeBase*>::iterator i,j;
-  for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
-    {
-      r1 = a1->GetResidue();
-      if (r1->GetSerialNum(a1) == start)
-	  for (a2 = mol.BeginAtom(j);a2;a2 = mol.NextAtom(j))
-	    {
-	      r2 = a2->GetResidue();
-	      k = 1;
-	      while (k < 4 && k <= vs.size())
-		{
-		  order = 1;
-		  con = atoi(vs[k].c_str());
-		  if (con && ((k+1) < 4) && ((k+1) <= vs.size()) 
-		      && (atoi(vs[k+1].c_str()) == con))
-		    {
-		      order++;
-		      k++;
-		    }
-		  
-		  if (con && r2->GetSerialNum(a2) == con) 
-		    mol.AddBond(a1->GetIdx(),a2->GetIdx(), order);
-		  
-		  k++;
-		}
-	    }
+  // Find a pointer to the first atom.
+  OBAtom *firstAtom = 0L;
+  vector<OBNodeBase*>::iterator i;
+  for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) 
+    if (a1->GetResidue()->GetSerialNum(a1) == startAtomSerialNumber) {
+      firstAtom = a1;
+      break;
     }
-
+  if (firstAtom == 0L) {
+    cerr << "WARNING: Problems reading a PDB file, method 'static bool ParseConectRecord(char *, OBMol &)'" << endl
+	 << "  Problems reading a CONECT record." << endl
+	 << "  OpenBabel found the line '" << buffer << "'" << endl
+	 << "  According to the PDB specification (http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html)," << endl
+	 << "  columns 7--11 should contain the serial number of an atom, but OpenBabel was not able" << endl
+	 << "  to find an atom with this serial number. " << endl
+	 << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+    return(false);
+  }
+  
+  // Serial numbers of the atoms which bind to firstAtom, read from
+  // columns 12-16, 17-21, 22-27 and 27-31 of the connect record. Note
+  // that we reserve space for 5 integers, but read only four of
+  // them. This is to simplify the determination of the bond order;
+  // see below.
+  long int boundedAtomsSerialNumbers[5]  = {0,0,0,0,0};
+  // Bools which tell us which of the serial numbers in
+  // boundedAtomsSerialNumbers are read from the file, and which are
+  // invalid
+  bool boundedAtomsSerialNumbersValid[5] = {false, false, false, false, false};
+  
+  // Now read the serial numbers. If the first serial number is not
+  // present, this connect record probably contains only hydrogen
+  // bonds and salt bridges, which we ignore. In that case, we just
+  // exit gracefully.
+  boundedAtomsSerialNumbersValid[0] = readIntegerFromRecord(buffer, 12, boundedAtomsSerialNumbers+0);
+  if (boundedAtomsSerialNumbersValid[0] == false) 
+    return(true);
+  boundedAtomsSerialNumbersValid[1] = readIntegerFromRecord(buffer, 17, boundedAtomsSerialNumbers+1);
+  boundedAtomsSerialNumbersValid[2] = readIntegerFromRecord(buffer, 22, boundedAtomsSerialNumbers+2);
+  boundedAtomsSerialNumbersValid[3] = readIntegerFromRecord(buffer, 27, boundedAtomsSerialNumbers+3);
+  
+  // Now iterate over the VALID boundedAtomsSerialNumbers and connect
+  // the atoms.
+  for(unsigned int k=0; boundedAtomsSerialNumbersValid[k]; k++) {
+    // Find atom that is connected to, write an error message 
+    OBAtom *connectedAtom = 0L;
+    for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) 
+      if (a1->GetResidue()->GetSerialNum(a1) == boundedAtomsSerialNumbers[k]) {
+	connectedAtom = a1;
+	break;
+      }
+    if (connectedAtom == 0L) {
+      cerr << "WARNING: Problems reading a PDB file, method 'static bool ParseConectRecord(char *, OBMol &)'" << endl
+	   << "  Problems reading a CONECT record." << endl
+	   << "  OpenBabel found the line '" << buffer << "'" << endl
+	   << "  According to the PDB specification (http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html)," << endl
+	   << "  OpenBabel should connect atoms with serial #" << startAtomSerialNumber << " and #" << boundedAtomsSerialNumbers[k] << endl
+	   << "  However, OpenBabel was not able to find an atom with serial #" << boundedAtomsSerialNumbers[k] << "." << endl
+	   << "  OpenBabel will proceed, and disregard this particular connection." << endl;
+      break;
+    }
+    
+    // Figure the bond order
+    unsigned char order = 0;
+    while(boundedAtomsSerialNumbersValid[k+order+1] && (boundedAtomsSerialNumbers[k+order] == boundedAtomsSerialNumbers[k+order+1]))
+      order++;
+    k += order;
+    
+    // Generate the bond
+    mol.AddBond(firstAtom->GetIdx(), connectedAtom->GetIdx(), order+1);
+  }
   return(true);
 }
 
