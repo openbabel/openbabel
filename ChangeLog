@@ -1,3 +1,9 @@
+2002-07-12  Stefan Kebekus <kebekus@users.sourceforge.net>
+	
+	* configure.in: configure now warns if doxygen is not present
+
+	* configure: Updated with autoconf
+
 2002-07-09  Geoff Hutchison <hutchisn@chem.northwestern.edu>
 
 	* src/fileformat.h, src/mol.h, src/binary.h: Fix missing std:: in

@@ -2499,13 +2499,46 @@ else
 echo "${ECHO_T}no" >&6
 fi
 
+# Extract the first word of "doxygen", so it can be a program name with args.
+set dummy doxygen; ac_word=$2
+echo "$as_me:2504: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_prog_DOCTOOL+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$DOCTOOL"; then
+  ac_cv_prog_DOCTOOL="$DOCTOOL" # Let the user override the test.
+else
+  ac_save_IFS=$IFS; IFS=$ac_path_separator
+ac_dummy="$PATH"
+for ac_dir in $ac_dummy; do
+  IFS=$ac_save_IFS
+  test -z "$ac_dir" && ac_dir=.
+  $as_executable_p "$ac_dir/$ac_word" || continue
+ac_cv_prog_DOCTOOL="doxygen"
+echo "$as_me:2519: found $ac_dir/$ac_word" >&5
+break
+done
+
+  test -z "$ac_cv_prog_DOCTOOL" && ac_cv_prog_DOCTOOL="not-found"
+fi
+fi
+DOCTOOL=$ac_cv_prog_DOCTOOL
+if test -n "$DOCTOOL"; then
+  echo "$as_me:2528: result: $DOCTOOL" >&5
+echo "${ECHO_T}$DOCTOOL" >&6
+else
+  echo "$as_me:2531: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
 ac_ext=cc
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
-echo "$as_me:2508: checking for asin in -lm" >&5
+echo "$as_me:2541: checking for asin in -lm" >&5
 echo $ECHO_N "checking for asin in -lm... $ECHO_C" >&6
 if test "${ac_cv_lib_m_asin+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -2513,7 +2546,7 @@ else
   ac_check_lib_save_LIBS=$LIBS
 LIBS="-lm  $LIBS"
 cat >conftest.$ac_ext <<_ACEOF
-#line 2516 "configure"
+#line 2549 "configure"
 #include "confdefs.h"
 
 /* Override any gcc2 internal prototype to avoid an error.  */
@@ -2538,16 +2571,16 @@ asin ();
 }
 _ACEOF
 rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:2541: \"$ac_link\"") >&5
+if { (eval echo "$as_me:2574: \"$ac_link\"") >&5
   (eval $ac_link) 2>&5
   ac_status=$?
-  echo "$as_me:2544: \$? = $ac_status" >&5
+  echo "$as_me:2577: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:2547: \"$ac_try\"") >&5
+  { (eval echo "$as_me:2580: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:2550: \$? = $ac_status" >&5
+  echo "$as_me:2583: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_cv_lib_m_asin=yes
 else
@@ -2558,7 +2591,7 @@ fi
 rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-echo "$as_me:2561: result: $ac_cv_lib_m_asin" >&5
+echo "$as_me:2594: result: $ac_cv_lib_m_asin" >&5
 echo "${ECHO_T}$ac_cv_lib_m_asin" >&6
 if test $ac_cv_lib_m_asin = yes; then
   cat >>confdefs.h <<_ACEOF
@@ -2571,13 +2604,13 @@ else
   exit
 fi
 
-echo "$as_me:2574: checking for ANSI C header files" >&5
+echo "$as_me:2607: checking for ANSI C header files" >&5
 echo $ECHO_N "checking for ANSI C header files... $ECHO_C" >&6
 if test "${ac_cv_header_stdc+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
-#line 2580 "configure"
+#line 2613 "configure"
 #include "confdefs.h"
 #include <stdlib.h>
 #include <stdarg.h>
@@ -2585,13 +2618,13 @@ else
 #include <float.h>
 
 _ACEOF
-if { (eval echo "$as_me:2588: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:2621: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:2594: \$? = $ac_status" >&5
+  echo "$as_me:2627: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -2613,7 +2646,7 @@ rm -f conftest.err conftest.$ac_ext
 if test $ac_cv_header_stdc = yes; then
   # SunOS 4.x string.h does not declare mem*, contrary to ANSI.
   cat >conftest.$ac_ext <<_ACEOF
-#line 2616 "configure"
+#line 2649 "configure"
 #include "confdefs.h"
 #include <string.h>
 
@@ -2631,7 +2664,7 @@ fi
 if test $ac_cv_header_stdc = yes; then
   # ISC 2.0.2 stdlib.h does not declare free, contrary to ANSI.
   cat >conftest.$ac_ext <<_ACEOF
-#line 2634 "configure"
+#line 2667 "configure"
 #include "confdefs.h"
 #include <stdlib.h>
 
@@ -2652,7 +2685,7 @@ if test $ac_cv_header_stdc = yes; then
   :
 else
   cat >conftest.$ac_ext <<_ACEOF
-#line 2655 "configure"
+#line 2688 "configure"
 #include "confdefs.h"
 #include <ctype.h>
 #if ((' ' & 0x0FF) == 0x020)
@@ -2678,15 +2711,15 @@ main ()
 }
 _ACEOF
 rm -f conftest$ac_exeext
-if { (eval echo "$as_me:2681: \"$ac_link\"") >&5
+if { (eval echo "$as_me:2714: \"$ac_link\"") >&5
   (eval $ac_link) 2>&5
   ac_status=$?
-  echo "$as_me:2684: \$? = $ac_status" >&5
+  echo "$as_me:2717: \$? = $ac_status" >&5
   (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:2686: \"$ac_try\"") >&5
+  { (eval echo "$as_me:2719: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:2689: \$? = $ac_status" >&5
+  echo "$as_me:2722: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   :
 else
@@ -2699,7 +2732,7 @@ rm -f core core.* *.core conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
 fi
 fi
 fi
-echo "$as_me:2702: result: $ac_cv_header_stdc" >&5
+echo "$as_me:2735: result: $ac_cv_header_stdc" >&5
 echo "${ECHO_T}$ac_cv_header_stdc" >&6
 if test $ac_cv_header_stdc = yes; then
 
@@ -2715,29 +2748,29 @@ for ac_header in sys/types.h sys/stat.h stdlib.h string.h memory.h strings.h \
                   inttypes.h stdint.h unistd.h
 do
 as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
-echo "$as_me:2718: checking for $ac_header" >&5
+echo "$as_me:2751: checking for $ac_header" >&5
 echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6
 if eval "test \"\${$as_ac_Header+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
-#line 2724 "configure"
+#line 2757 "configure"
 #include "confdefs.h"
 $ac_includes_default
 
 #include <$ac_header>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:2731: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:2764: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:2734: \$? = $ac_status" >&5
+  echo "$as_me:2767: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:2737: \"$ac_try\"") >&5
+  { (eval echo "$as_me:2770: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:2740: \$? = $ac_status" >&5
+  echo "$as_me:2773: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   eval "$as_ac_Header=yes"
 else
@@ -2747,7 +2780,7 @@ eval "$as_ac_Header=no"
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:2750: result: `eval echo '${'$as_ac_Header'}'`" >&5
+echo "$as_me:2783: result: `eval echo '${'$as_ac_Header'}'`" >&5
 echo "${ECHO_T}`eval echo '${'$as_ac_Header'}'`" >&6
 if test `eval echo '${'$as_ac_Header'}'` = yes; then
   cat >>confdefs.h <<_ACEOF
@@ -2759,34 +2792,34 @@ fi
 done
 
 if test "${ac_cv_header_sys_time_h+set}" = set; then
-  echo "$as_me:2762: checking for sys/time.h" >&5
+  echo "$as_me:2795: checking for sys/time.h" >&5
 echo $ECHO_N "checking for sys/time.h... $ECHO_C" >&6
 if test "${ac_cv_header_sys_time_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:2767: result: $ac_cv_header_sys_time_h" >&5
+echo "$as_me:2800: result: $ac_cv_header_sys_time_h" >&5
 echo "${ECHO_T}$ac_cv_header_sys_time_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:2771: checking sys/time.h usability" >&5
+echo "$as_me:2804: checking sys/time.h usability" >&5
 echo $ECHO_N "checking sys/time.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 2774 "configure"
+#line 2807 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <sys/time.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:2780: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:2813: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:2783: \$? = $ac_status" >&5
+  echo "$as_me:2816: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:2786: \"$ac_try\"") >&5
+  { (eval echo "$as_me:2819: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:2789: \$? = $ac_status" >&5
+  echo "$as_me:2822: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -2795,24 +2828,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:2798: result: $ac_header_compiler" >&5
+echo "$as_me:2831: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:2802: checking sys/time.h presence" >&5
+echo "$as_me:2835: checking sys/time.h presence" >&5
 echo $ECHO_N "checking sys/time.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 2805 "configure"
+#line 2838 "configure"
 #include "confdefs.h"
 #include <sys/time.h>
 _ACEOF
-if { (eval echo "$as_me:2809: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:2842: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:2815: \$? = $ac_status" >&5
+  echo "$as_me:2848: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -2830,32 +2863,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:2833: result: $ac_header_preproc" >&5
+echo "$as_me:2866: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:2839: WARNING: sys/time.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:2872: WARNING: sys/time.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: sys/time.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:2841: WARNING: sys/time.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:2874: WARNING: sys/time.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: sys/time.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:2844: WARNING: sys/time.h: present but cannot be compiled." >&5
+    { echo "$as_me:2877: WARNING: sys/time.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: sys/time.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:2846: WARNING: sys/time.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:2879: WARNING: sys/time.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: sys/time.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:2848: WARNING: sys/time.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:2881: WARNING: sys/time.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: sys/time.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:2851: checking for sys/time.h" >&5
+echo "$as_me:2884: checking for sys/time.h" >&5
 echo $ECHO_N "checking for sys/time.h... $ECHO_C" >&6
 if test "${ac_cv_header_sys_time_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_sys_time_h=$ac_header_preproc
 fi
-echo "$as_me:2858: result: $ac_cv_header_sys_time_h" >&5
+echo "$as_me:2891: result: $ac_cv_header_sys_time_h" >&5
 echo "${ECHO_T}$ac_cv_header_sys_time_h" >&6
 
 fi
@@ -2866,34 +2899,34 @@ else
 fi
 
 if test "${ac_cv_header_unistd_h+set}" = set; then
-  echo "$as_me:2869: checking for unistd.h" >&5
+  echo "$as_me:2902: checking for unistd.h" >&5
 echo $ECHO_N "checking for unistd.h... $ECHO_C" >&6
 if test "${ac_cv_header_unistd_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:2874: result: $ac_cv_header_unistd_h" >&5
+echo "$as_me:2907: result: $ac_cv_header_unistd_h" >&5
 echo "${ECHO_T}$ac_cv_header_unistd_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:2878: checking unistd.h usability" >&5
+echo "$as_me:2911: checking unistd.h usability" >&5
 echo $ECHO_N "checking unistd.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 2881 "configure"
+#line 2914 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <unistd.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:2887: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:2920: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:2890: \$? = $ac_status" >&5
+  echo "$as_me:2923: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:2893: \"$ac_try\"") >&5
+  { (eval echo "$as_me:2926: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:2896: \$? = $ac_status" >&5
+  echo "$as_me:2929: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -2902,24 +2935,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:2905: result: $ac_header_compiler" >&5
+echo "$as_me:2938: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:2909: checking unistd.h presence" >&5
+echo "$as_me:2942: checking unistd.h presence" >&5
 echo $ECHO_N "checking unistd.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 2912 "configure"
+#line 2945 "configure"
 #include "confdefs.h"
 #include <unistd.h>
 _ACEOF
-if { (eval echo "$as_me:2916: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:2949: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:2922: \$? = $ac_status" >&5
+  echo "$as_me:2955: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -2937,32 +2970,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:2940: result: $ac_header_preproc" >&5
+echo "$as_me:2973: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:2946: WARNING: unistd.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:2979: WARNING: unistd.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: unistd.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:2948: WARNING: unistd.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:2981: WARNING: unistd.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: unistd.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:2951: WARNING: unistd.h: present but cannot be compiled." >&5
+    { echo "$as_me:2984: WARNING: unistd.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: unistd.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:2953: WARNING: unistd.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:2986: WARNING: unistd.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: unistd.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:2955: WARNING: unistd.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:2988: WARNING: unistd.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: unistd.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:2958: checking for unistd.h" >&5
+echo "$as_me:2991: checking for unistd.h" >&5
 echo $ECHO_N "checking for unistd.h... $ECHO_C" >&6
 if test "${ac_cv_header_unistd_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_unistd_h=$ac_header_preproc
 fi
-echo "$as_me:2965: result: $ac_cv_header_unistd_h" >&5
+echo "$as_me:2998: result: $ac_cv_header_unistd_h" >&5
 echo "${ECHO_T}$ac_cv_header_unistd_h" >&6
 
 fi
@@ -2973,34 +3006,34 @@ else
 fi
 
 if test "${ac_cv_header_stdlib_h+set}" = set; then
-  echo "$as_me:2976: checking for stdlib.h" >&5
+  echo "$as_me:3009: checking for stdlib.h" >&5
 echo $ECHO_N "checking for stdlib.h... $ECHO_C" >&6
 if test "${ac_cv_header_stdlib_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:2981: result: $ac_cv_header_stdlib_h" >&5
+echo "$as_me:3014: result: $ac_cv_header_stdlib_h" >&5
 echo "${ECHO_T}$ac_cv_header_stdlib_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:2985: checking stdlib.h usability" >&5
+echo "$as_me:3018: checking stdlib.h usability" >&5
 echo $ECHO_N "checking stdlib.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 2988 "configure"
+#line 3021 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <stdlib.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:2994: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3027: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:2997: \$? = $ac_status" >&5
+  echo "$as_me:3030: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3000: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3033: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3003: \$? = $ac_status" >&5
+  echo "$as_me:3036: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3009,24 +3042,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3012: result: $ac_header_compiler" >&5
+echo "$as_me:3045: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3016: checking stdlib.h presence" >&5
+echo "$as_me:3049: checking stdlib.h presence" >&5
 echo $ECHO_N "checking stdlib.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3019 "configure"
+#line 3052 "configure"
 #include "confdefs.h"
 #include <stdlib.h>
 _ACEOF
-if { (eval echo "$as_me:3023: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:3056: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3029: \$? = $ac_status" >&5
+  echo "$as_me:3062: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -3044,32 +3077,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:3047: result: $ac_header_preproc" >&5
+echo "$as_me:3080: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:3053: WARNING: stdlib.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:3086: WARNING: stdlib.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: stdlib.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:3055: WARNING: stdlib.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3088: WARNING: stdlib.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: stdlib.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:3058: WARNING: stdlib.h: present but cannot be compiled." >&5
+    { echo "$as_me:3091: WARNING: stdlib.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: stdlib.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:3060: WARNING: stdlib.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:3093: WARNING: stdlib.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: stdlib.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:3062: WARNING: stdlib.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3095: WARNING: stdlib.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: stdlib.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:3065: checking for stdlib.h" >&5
+echo "$as_me:3098: checking for stdlib.h" >&5
 echo $ECHO_N "checking for stdlib.h... $ECHO_C" >&6
 if test "${ac_cv_header_stdlib_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_stdlib_h=$ac_header_preproc
 fi
-echo "$as_me:3072: result: $ac_cv_header_stdlib_h" >&5
+echo "$as_me:3105: result: $ac_cv_header_stdlib_h" >&5
 echo "${ECHO_T}$ac_cv_header_stdlib_h" >&6
 
 fi
@@ -3080,34 +3113,34 @@ else
 fi
 
 if test "${ac_cv_header_stdio_h+set}" = set; then
-  echo "$as_me:3083: checking for stdio.h" >&5
+  echo "$as_me:3116: checking for stdio.h" >&5
 echo $ECHO_N "checking for stdio.h... $ECHO_C" >&6
 if test "${ac_cv_header_stdio_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:3088: result: $ac_cv_header_stdio_h" >&5
+echo "$as_me:3121: result: $ac_cv_header_stdio_h" >&5
 echo "${ECHO_T}$ac_cv_header_stdio_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:3092: checking stdio.h usability" >&5
+echo "$as_me:3125: checking stdio.h usability" >&5
 echo $ECHO_N "checking stdio.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3095 "configure"
+#line 3128 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <stdio.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:3101: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3134: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:3104: \$? = $ac_status" >&5
+  echo "$as_me:3137: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3107: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3140: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3110: \$? = $ac_status" >&5
+  echo "$as_me:3143: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3116,24 +3149,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3119: result: $ac_header_compiler" >&5
+echo "$as_me:3152: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3123: checking stdio.h presence" >&5
+echo "$as_me:3156: checking stdio.h presence" >&5
 echo $ECHO_N "checking stdio.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3126 "configure"
+#line 3159 "configure"
 #include "confdefs.h"
 #include <stdio.h>
 _ACEOF
-if { (eval echo "$as_me:3130: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:3163: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3136: \$? = $ac_status" >&5
+  echo "$as_me:3169: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -3151,32 +3184,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:3154: result: $ac_header_preproc" >&5
+echo "$as_me:3187: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:3160: WARNING: stdio.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:3193: WARNING: stdio.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: stdio.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:3162: WARNING: stdio.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3195: WARNING: stdio.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: stdio.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:3165: WARNING: stdio.h: present but cannot be compiled." >&5
+    { echo "$as_me:3198: WARNING: stdio.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: stdio.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:3167: WARNING: stdio.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:3200: WARNING: stdio.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: stdio.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:3169: WARNING: stdio.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3202: WARNING: stdio.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: stdio.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:3172: checking for stdio.h" >&5
+echo "$as_me:3205: checking for stdio.h" >&5
 echo $ECHO_N "checking for stdio.h... $ECHO_C" >&6
 if test "${ac_cv_header_stdio_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_stdio_h=$ac_header_preproc
 fi
-echo "$as_me:3179: result: $ac_cv_header_stdio_h" >&5
+echo "$as_me:3212: result: $ac_cv_header_stdio_h" >&5
 echo "${ECHO_T}$ac_cv_header_stdio_h" >&6
 
 fi
@@ -3187,34 +3220,34 @@ else
 fi
 
 if test "${ac_cv_header_string_h+set}" = set; then
-  echo "$as_me:3190: checking for string.h" >&5
+  echo "$as_me:3223: checking for string.h" >&5
 echo $ECHO_N "checking for string.h... $ECHO_C" >&6
 if test "${ac_cv_header_string_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:3195: result: $ac_cv_header_string_h" >&5
+echo "$as_me:3228: result: $ac_cv_header_string_h" >&5
 echo "${ECHO_T}$ac_cv_header_string_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:3199: checking string.h usability" >&5
+echo "$as_me:3232: checking string.h usability" >&5
 echo $ECHO_N "checking string.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3202 "configure"
+#line 3235 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <string.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:3208: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3241: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:3211: \$? = $ac_status" >&5
+  echo "$as_me:3244: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3214: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3247: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3217: \$? = $ac_status" >&5
+  echo "$as_me:3250: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3223,24 +3256,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3226: result: $ac_header_compiler" >&5
+echo "$as_me:3259: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3230: checking string.h presence" >&5
+echo "$as_me:3263: checking string.h presence" >&5
 echo $ECHO_N "checking string.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3233 "configure"
+#line 3266 "configure"
 #include "confdefs.h"
 #include <string.h>
 _ACEOF
-if { (eval echo "$as_me:3237: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:3270: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3243: \$? = $ac_status" >&5
+  echo "$as_me:3276: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -3258,32 +3291,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:3261: result: $ac_header_preproc" >&5
+echo "$as_me:3294: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:3267: WARNING: string.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:3300: WARNING: string.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: string.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:3269: WARNING: string.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3302: WARNING: string.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: string.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:3272: WARNING: string.h: present but cannot be compiled." >&5
+    { echo "$as_me:3305: WARNING: string.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: string.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:3274: WARNING: string.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:3307: WARNING: string.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: string.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:3276: WARNING: string.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3309: WARNING: string.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: string.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:3279: checking for string.h" >&5
+echo "$as_me:3312: checking for string.h" >&5
 echo $ECHO_N "checking for string.h... $ECHO_C" >&6
 if test "${ac_cv_header_string_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_string_h=$ac_header_preproc
 fi
-echo "$as_me:3286: result: $ac_cv_header_string_h" >&5
+echo "$as_me:3319: result: $ac_cv_header_string_h" >&5
 echo "${ECHO_T}$ac_cv_header_string_h" >&6
 
 fi
@@ -3294,34 +3327,34 @@ else
 fi
 
 if test "${ac_cv_header_strstream_h+set}" = set; then
-  echo "$as_me:3297: checking for strstream.h" >&5
+  echo "$as_me:3330: checking for strstream.h" >&5
 echo $ECHO_N "checking for strstream.h... $ECHO_C" >&6
 if test "${ac_cv_header_strstream_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:3302: result: $ac_cv_header_strstream_h" >&5
+echo "$as_me:3335: result: $ac_cv_header_strstream_h" >&5
 echo "${ECHO_T}$ac_cv_header_strstream_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:3306: checking strstream.h usability" >&5
+echo "$as_me:3339: checking strstream.h usability" >&5
 echo $ECHO_N "checking strstream.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3309 "configure"
+#line 3342 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <strstream.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:3315: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3348: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:3318: \$? = $ac_status" >&5
+  echo "$as_me:3351: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3321: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3354: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3324: \$? = $ac_status" >&5
+  echo "$as_me:3357: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3330,24 +3363,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3333: result: $ac_header_compiler" >&5
+echo "$as_me:3366: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3337: checking strstream.h presence" >&5
+echo "$as_me:3370: checking strstream.h presence" >&5
 echo $ECHO_N "checking strstream.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3340 "configure"
+#line 3373 "configure"
 #include "confdefs.h"
 #include <strstream.h>
 _ACEOF
-if { (eval echo "$as_me:3344: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:3377: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3350: \$? = $ac_status" >&5
+  echo "$as_me:3383: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -3365,32 +3398,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:3368: result: $ac_header_preproc" >&5
+echo "$as_me:3401: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:3374: WARNING: strstream.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:3407: WARNING: strstream.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: strstream.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:3376: WARNING: strstream.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3409: WARNING: strstream.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: strstream.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:3379: WARNING: strstream.h: present but cannot be compiled." >&5
+    { echo "$as_me:3412: WARNING: strstream.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: strstream.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:3381: WARNING: strstream.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:3414: WARNING: strstream.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: strstream.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:3383: WARNING: strstream.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3416: WARNING: strstream.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: strstream.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:3386: checking for strstream.h" >&5
+echo "$as_me:3419: checking for strstream.h" >&5
 echo $ECHO_N "checking for strstream.h... $ECHO_C" >&6
 if test "${ac_cv_header_strstream_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_strstream_h=$ac_header_preproc
 fi
-echo "$as_me:3393: result: $ac_cv_header_strstream_h" >&5
+echo "$as_me:3426: result: $ac_cv_header_strstream_h" >&5
 echo "${ECHO_T}$ac_cv_header_strstream_h" >&6
 
 fi
@@ -3401,34 +3434,34 @@ else
 fi
 
 if test "${ac_cv_header_iostream_h+set}" = set; then
-  echo "$as_me:3404: checking for iostream.h" >&5
+  echo "$as_me:3437: checking for iostream.h" >&5
 echo $ECHO_N "checking for iostream.h... $ECHO_C" >&6
 if test "${ac_cv_header_iostream_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:3409: result: $ac_cv_header_iostream_h" >&5
+echo "$as_me:3442: result: $ac_cv_header_iostream_h" >&5
 echo "${ECHO_T}$ac_cv_header_iostream_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:3413: checking iostream.h usability" >&5
+echo "$as_me:3446: checking iostream.h usability" >&5
 echo $ECHO_N "checking iostream.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3416 "configure"
+#line 3449 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <iostream.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:3422: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3455: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:3425: \$? = $ac_status" >&5
+  echo "$as_me:3458: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3428: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3461: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3431: \$? = $ac_status" >&5
+  echo "$as_me:3464: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3437,24 +3470,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3440: result: $ac_header_compiler" >&5
+echo "$as_me:3473: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3444: checking iostream.h presence" >&5
+echo "$as_me:3477: checking iostream.h presence" >&5
 echo $ECHO_N "checking iostream.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3447 "configure"
+#line 3480 "configure"
 #include "confdefs.h"
 #include <iostream.h>
 _ACEOF
-if { (eval echo "$as_me:3451: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:3484: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3457: \$? = $ac_status" >&5
+  echo "$as_me:3490: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -3472,32 +3505,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:3475: result: $ac_header_preproc" >&5
+echo "$as_me:3508: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:3481: WARNING: iostream.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:3514: WARNING: iostream.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: iostream.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:3483: WARNING: iostream.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3516: WARNING: iostream.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: iostream.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:3486: WARNING: iostream.h: present but cannot be compiled." >&5
+    { echo "$as_me:3519: WARNING: iostream.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: iostream.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:3488: WARNING: iostream.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:3521: WARNING: iostream.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: iostream.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:3490: WARNING: iostream.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3523: WARNING: iostream.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: iostream.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:3493: checking for iostream.h" >&5
+echo "$as_me:3526: checking for iostream.h" >&5
 echo $ECHO_N "checking for iostream.h... $ECHO_C" >&6
 if test "${ac_cv_header_iostream_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_iostream_h=$ac_header_preproc
 fi
-echo "$as_me:3500: result: $ac_cv_header_iostream_h" >&5
+echo "$as_me:3533: result: $ac_cv_header_iostream_h" >&5
 echo "${ECHO_T}$ac_cv_header_iostream_h" >&6
 
 fi
@@ -3508,34 +3541,34 @@ else
 fi
 
 if test "${ac_cv_header_fstream_h+set}" = set; then
-  echo "$as_me:3511: checking for fstream.h" >&5
+  echo "$as_me:3544: checking for fstream.h" >&5
 echo $ECHO_N "checking for fstream.h... $ECHO_C" >&6
 if test "${ac_cv_header_fstream_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:3516: result: $ac_cv_header_fstream_h" >&5
+echo "$as_me:3549: result: $ac_cv_header_fstream_h" >&5
 echo "${ECHO_T}$ac_cv_header_fstream_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:3520: checking fstream.h usability" >&5
+echo "$as_me:3553: checking fstream.h usability" >&5
 echo $ECHO_N "checking fstream.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3523 "configure"
+#line 3556 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <fstream.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:3529: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3562: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:3532: \$? = $ac_status" >&5
+  echo "$as_me:3565: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3535: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3568: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3538: \$? = $ac_status" >&5
+  echo "$as_me:3571: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3544,24 +3577,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3547: result: $ac_header_compiler" >&5
+echo "$as_me:3580: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3551: checking fstream.h presence" >&5
+echo "$as_me:3584: checking fstream.h presence" >&5
 echo $ECHO_N "checking fstream.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3554 "configure"
+#line 3587 "configure"
 #include "confdefs.h"
 #include <fstream.h>
 _ACEOF
-if { (eval echo "$as_me:3558: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:3591: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3564: \$? = $ac_status" >&5
+  echo "$as_me:3597: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -3579,32 +3612,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:3582: result: $ac_header_preproc" >&5
+echo "$as_me:3615: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:3588: WARNING: fstream.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:3621: WARNING: fstream.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: fstream.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:3590: WARNING: fstream.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3623: WARNING: fstream.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: fstream.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:3593: WARNING: fstream.h: present but cannot be compiled." >&5
+    { echo "$as_me:3626: WARNING: fstream.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: fstream.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:3595: WARNING: fstream.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:3628: WARNING: fstream.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: fstream.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:3597: WARNING: fstream.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3630: WARNING: fstream.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: fstream.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:3600: checking for fstream.h" >&5
+echo "$as_me:3633: checking for fstream.h" >&5
 echo $ECHO_N "checking for fstream.h... $ECHO_C" >&6
 if test "${ac_cv_header_fstream_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_fstream_h=$ac_header_preproc
 fi
-echo "$as_me:3607: result: $ac_cv_header_fstream_h" >&5
+echo "$as_me:3640: result: $ac_cv_header_fstream_h" >&5
 echo "${ECHO_T}$ac_cv_header_fstream_h" >&6
 
 fi
@@ -3615,34 +3648,34 @@ else
 fi
 
 if test "${ac_cv_header_math_h+set}" = set; then
-  echo "$as_me:3618: checking for math.h" >&5
+  echo "$as_me:3651: checking for math.h" >&5
 echo $ECHO_N "checking for math.h... $ECHO_C" >&6
 if test "${ac_cv_header_math_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:3623: result: $ac_cv_header_math_h" >&5
+echo "$as_me:3656: result: $ac_cv_header_math_h" >&5
 echo "${ECHO_T}$ac_cv_header_math_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:3627: checking math.h usability" >&5
+echo "$as_me:3660: checking math.h usability" >&5
 echo $ECHO_N "checking math.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3630 "configure"
+#line 3663 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <math.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:3636: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3669: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:3639: \$? = $ac_status" >&5
+  echo "$as_me:3672: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3642: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3675: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3645: \$? = $ac_status" >&5
+  echo "$as_me:3678: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3651,24 +3684,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3654: result: $ac_header_compiler" >&5
+echo "$as_me:3687: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3658: checking math.h presence" >&5
+echo "$as_me:3691: checking math.h presence" >&5
 echo $ECHO_N "checking math.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3661 "configure"
+#line 3694 "configure"
 #include "confdefs.h"
 #include <math.h>
 _ACEOF
-if { (eval echo "$as_me:3665: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:3698: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3671: \$? = $ac_status" >&5
+  echo "$as_me:3704: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -3686,32 +3719,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:3689: result: $ac_header_preproc" >&5
+echo "$as_me:3722: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:3695: WARNING: math.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:3728: WARNING: math.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: math.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:3697: WARNING: math.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3730: WARNING: math.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: math.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:3700: WARNING: math.h: present but cannot be compiled." >&5
+    { echo "$as_me:3733: WARNING: math.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: math.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:3702: WARNING: math.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:3735: WARNING: math.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: math.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:3704: WARNING: math.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3737: WARNING: math.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: math.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:3707: checking for math.h" >&5
+echo "$as_me:3740: checking for math.h" >&5
 echo $ECHO_N "checking for math.h... $ECHO_C" >&6
 if test "${ac_cv_header_math_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_math_h=$ac_header_preproc
 fi
-echo "$as_me:3714: result: $ac_cv_header_math_h" >&5
+echo "$as_me:3747: result: $ac_cv_header_math_h" >&5
 echo "${ECHO_T}$ac_cv_header_math_h" >&6
 
 fi
@@ -3722,34 +3755,34 @@ else
 fi
 
 if test "${ac_cv_header_time_h+set}" = set; then
-  echo "$as_me:3725: checking for time.h" >&5
+  echo "$as_me:3758: checking for time.h" >&5
 echo $ECHO_N "checking for time.h... $ECHO_C" >&6
 if test "${ac_cv_header_time_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:3730: result: $ac_cv_header_time_h" >&5
+echo "$as_me:3763: result: $ac_cv_header_time_h" >&5
 echo "${ECHO_T}$ac_cv_header_time_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:3734: checking time.h usability" >&5
+echo "$as_me:3767: checking time.h usability" >&5
 echo $ECHO_N "checking time.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3737 "configure"
+#line 3770 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <time.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:3743: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3776: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:3746: \$? = $ac_status" >&5
+  echo "$as_me:3779: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3749: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3782: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3752: \$? = $ac_status" >&5
+  echo "$as_me:3785: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3758,24 +3791,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3761: result: $ac_header_compiler" >&5
+echo "$as_me:3794: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3765: checking time.h presence" >&5
+echo "$as_me:3798: checking time.h presence" >&5
 echo $ECHO_N "checking time.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3768 "configure"
+#line 3801 "configure"
 #include "confdefs.h"
 #include <time.h>
 _ACEOF
-if { (eval echo "$as_me:3772: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:3805: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3778: \$? = $ac_status" >&5
+  echo "$as_me:3811: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -3793,32 +3826,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:3796: result: $ac_header_preproc" >&5
+echo "$as_me:3829: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:3802: WARNING: time.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:3835: WARNING: time.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: time.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:3804: WARNING: time.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3837: WARNING: time.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: time.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:3807: WARNING: time.h: present but cannot be compiled." >&5
+    { echo "$as_me:3840: WARNING: time.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: time.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:3809: WARNING: time.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:3842: WARNING: time.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: time.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:3811: WARNING: time.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3844: WARNING: time.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: time.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:3814: checking for time.h" >&5
+echo "$as_me:3847: checking for time.h" >&5
 echo $ECHO_N "checking for time.h... $ECHO_C" >&6
 if test "${ac_cv_header_time_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_time_h=$ac_header_preproc
 fi
-echo "$as_me:3821: result: $ac_cv_header_time_h" >&5
+echo "$as_me:3854: result: $ac_cv_header_time_h" >&5
 echo "${ECHO_T}$ac_cv_header_time_h" >&6
 
 fi
@@ -3829,34 +3862,34 @@ else
 fi
 
 if test "${ac_cv_header_ctype_h+set}" = set; then
-  echo "$as_me:3832: checking for ctype.h" >&5
+  echo "$as_me:3865: checking for ctype.h" >&5
 echo $ECHO_N "checking for ctype.h... $ECHO_C" >&6
 if test "${ac_cv_header_ctype_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:3837: result: $ac_cv_header_ctype_h" >&5
+echo "$as_me:3870: result: $ac_cv_header_ctype_h" >&5
 echo "${ECHO_T}$ac_cv_header_ctype_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:3841: checking ctype.h usability" >&5
+echo "$as_me:3874: checking ctype.h usability" >&5
 echo $ECHO_N "checking ctype.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3844 "configure"
+#line 3877 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <ctype.h>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:3850: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3883: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:3853: \$? = $ac_status" >&5
+  echo "$as_me:3886: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3856: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3889: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3859: \$? = $ac_status" >&5
+  echo "$as_me:3892: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3865,24 +3898,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3868: result: $ac_header_compiler" >&5
+echo "$as_me:3901: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3872: checking ctype.h presence" >&5
+echo "$as_me:3905: checking ctype.h presence" >&5
 echo $ECHO_N "checking ctype.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3875 "configure"
+#line 3908 "configure"
 #include "confdefs.h"
 #include <ctype.h>
 _ACEOF
-if { (eval echo "$as_me:3879: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:3912: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3885: \$? = $ac_status" >&5
+  echo "$as_me:3918: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -3900,32 +3933,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:3903: result: $ac_header_preproc" >&5
+echo "$as_me:3936: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:3909: WARNING: ctype.h: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:3942: WARNING: ctype.h: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: ctype.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:3911: WARNING: ctype.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3944: WARNING: ctype.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: ctype.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:3914: WARNING: ctype.h: present but cannot be compiled." >&5
+    { echo "$as_me:3947: WARNING: ctype.h: present but cannot be compiled." >&5
 echo "$as_me: WARNING: ctype.h: present but cannot be compiled." >&2;}
-    { echo "$as_me:3916: WARNING: ctype.h: check for missing prerequisite headers?" >&5
+    { echo "$as_me:3949: WARNING: ctype.h: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: ctype.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:3918: WARNING: ctype.h: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:3951: WARNING: ctype.h: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: ctype.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:3921: checking for ctype.h" >&5
+echo "$as_me:3954: checking for ctype.h" >&5
 echo $ECHO_N "checking for ctype.h... $ECHO_C" >&6
 if test "${ac_cv_header_ctype_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_ctype_h=$ac_header_preproc
 fi
-echo "$as_me:3928: result: $ac_cv_header_ctype_h" >&5
+echo "$as_me:3961: result: $ac_cv_header_ctype_h" >&5
 echo "${ECHO_T}$ac_cv_header_ctype_h" >&6
 
 fi
@@ -3936,34 +3969,34 @@ else
 fi
 
 if test "${ac_cv_header_algorithm+set}" = set; then
-  echo "$as_me:3939: checking for algorithm" >&5
+  echo "$as_me:3972: checking for algorithm" >&5
 echo $ECHO_N "checking for algorithm... $ECHO_C" >&6
 if test "${ac_cv_header_algorithm+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:3944: result: $ac_cv_header_algorithm" >&5
+echo "$as_me:3977: result: $ac_cv_header_algorithm" >&5
 echo "${ECHO_T}$ac_cv_header_algorithm" >&6
 else
   # Is the header compilable?
-echo "$as_me:3948: checking algorithm usability" >&5
+echo "$as_me:3981: checking algorithm usability" >&5
 echo $ECHO_N "checking algorithm usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3951 "configure"
+#line 3984 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <algorithm>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:3957: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:3990: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:3960: \$? = $ac_status" >&5
+  echo "$as_me:3993: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:3963: \"$ac_try\"") >&5
+  { (eval echo "$as_me:3996: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:3966: \$? = $ac_status" >&5
+  echo "$as_me:3999: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -3972,24 +4005,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:3975: result: $ac_header_compiler" >&5
+echo "$as_me:4008: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:3979: checking algorithm presence" >&5
+echo "$as_me:4012: checking algorithm presence" >&5
 echo $ECHO_N "checking algorithm presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 3982 "configure"
+#line 4015 "configure"
 #include "confdefs.h"
 #include <algorithm>
 _ACEOF
-if { (eval echo "$as_me:3986: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:4019: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:3992: \$? = $ac_status" >&5
+  echo "$as_me:4025: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -4007,32 +4040,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:4010: result: $ac_header_preproc" >&5
+echo "$as_me:4043: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:4016: WARNING: algorithm: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:4049: WARNING: algorithm: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: algorithm: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:4018: WARNING: algorithm: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4051: WARNING: algorithm: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: algorithm: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:4021: WARNING: algorithm: present but cannot be compiled." >&5
+    { echo "$as_me:4054: WARNING: algorithm: present but cannot be compiled." >&5
 echo "$as_me: WARNING: algorithm: present but cannot be compiled." >&2;}
-    { echo "$as_me:4023: WARNING: algorithm: check for missing prerequisite headers?" >&5
+    { echo "$as_me:4056: WARNING: algorithm: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: algorithm: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:4025: WARNING: algorithm: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4058: WARNING: algorithm: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: algorithm: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:4028: checking for algorithm" >&5
+echo "$as_me:4061: checking for algorithm" >&5
 echo $ECHO_N "checking for algorithm... $ECHO_C" >&6
 if test "${ac_cv_header_algorithm+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_algorithm=$ac_header_preproc
 fi
-echo "$as_me:4035: result: $ac_cv_header_algorithm" >&5
+echo "$as_me:4068: result: $ac_cv_header_algorithm" >&5
 echo "${ECHO_T}$ac_cv_header_algorithm" >&6
 
 fi
@@ -4043,34 +4076,34 @@ else
 fi
 
 if test "${ac_cv_header_vector+set}" = set; then
-  echo "$as_me:4046: checking for vector" >&5
+  echo "$as_me:4079: checking for vector" >&5
 echo $ECHO_N "checking for vector... $ECHO_C" >&6
 if test "${ac_cv_header_vector+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:4051: result: $ac_cv_header_vector" >&5
+echo "$as_me:4084: result: $ac_cv_header_vector" >&5
 echo "${ECHO_T}$ac_cv_header_vector" >&6
 else
   # Is the header compilable?
-echo "$as_me:4055: checking vector usability" >&5
+echo "$as_me:4088: checking vector usability" >&5
 echo $ECHO_N "checking vector usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4058 "configure"
+#line 4091 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <vector>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:4064: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:4097: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:4067: \$? = $ac_status" >&5
+  echo "$as_me:4100: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:4070: \"$ac_try\"") >&5
+  { (eval echo "$as_me:4103: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:4073: \$? = $ac_status" >&5
+  echo "$as_me:4106: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -4079,24 +4112,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:4082: result: $ac_header_compiler" >&5
+echo "$as_me:4115: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:4086: checking vector presence" >&5
+echo "$as_me:4119: checking vector presence" >&5
 echo $ECHO_N "checking vector presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4089 "configure"
+#line 4122 "configure"
 #include "confdefs.h"
 #include <vector>
 _ACEOF
-if { (eval echo "$as_me:4093: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:4126: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:4099: \$? = $ac_status" >&5
+  echo "$as_me:4132: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -4114,32 +4147,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:4117: result: $ac_header_preproc" >&5
+echo "$as_me:4150: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:4123: WARNING: vector: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:4156: WARNING: vector: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: vector: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:4125: WARNING: vector: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4158: WARNING: vector: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: vector: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:4128: WARNING: vector: present but cannot be compiled." >&5
+    { echo "$as_me:4161: WARNING: vector: present but cannot be compiled." >&5
 echo "$as_me: WARNING: vector: present but cannot be compiled." >&2;}
-    { echo "$as_me:4130: WARNING: vector: check for missing prerequisite headers?" >&5
+    { echo "$as_me:4163: WARNING: vector: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: vector: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:4132: WARNING: vector: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4165: WARNING: vector: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: vector: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:4135: checking for vector" >&5
+echo "$as_me:4168: checking for vector" >&5
 echo $ECHO_N "checking for vector... $ECHO_C" >&6
 if test "${ac_cv_header_vector+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_vector=$ac_header_preproc
 fi
-echo "$as_me:4142: result: $ac_cv_header_vector" >&5
+echo "$as_me:4175: result: $ac_cv_header_vector" >&5
 echo "${ECHO_T}$ac_cv_header_vector" >&6
 
 fi
@@ -4150,34 +4183,34 @@ else
 fi
 
 if test "${ac_cv_header_map+set}" = set; then
-  echo "$as_me:4153: checking for map" >&5
+  echo "$as_me:4186: checking for map" >&5
 echo $ECHO_N "checking for map... $ECHO_C" >&6
 if test "${ac_cv_header_map+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:4158: result: $ac_cv_header_map" >&5
+echo "$as_me:4191: result: $ac_cv_header_map" >&5
 echo "${ECHO_T}$ac_cv_header_map" >&6
 else
   # Is the header compilable?
-echo "$as_me:4162: checking map usability" >&5
+echo "$as_me:4195: checking map usability" >&5
 echo $ECHO_N "checking map usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4165 "configure"
+#line 4198 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <map>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:4171: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:4204: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:4174: \$? = $ac_status" >&5
+  echo "$as_me:4207: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:4177: \"$ac_try\"") >&5
+  { (eval echo "$as_me:4210: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:4180: \$? = $ac_status" >&5
+  echo "$as_me:4213: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -4186,24 +4219,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:4189: result: $ac_header_compiler" >&5
+echo "$as_me:4222: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:4193: checking map presence" >&5
+echo "$as_me:4226: checking map presence" >&5
 echo $ECHO_N "checking map presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4196 "configure"
+#line 4229 "configure"
 #include "confdefs.h"
 #include <map>
 _ACEOF
-if { (eval echo "$as_me:4200: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:4233: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:4206: \$? = $ac_status" >&5
+  echo "$as_me:4239: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -4221,32 +4254,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:4224: result: $ac_header_preproc" >&5
+echo "$as_me:4257: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:4230: WARNING: map: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:4263: WARNING: map: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: map: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:4232: WARNING: map: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4265: WARNING: map: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: map: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:4235: WARNING: map: present but cannot be compiled." >&5
+    { echo "$as_me:4268: WARNING: map: present but cannot be compiled." >&5
 echo "$as_me: WARNING: map: present but cannot be compiled." >&2;}
-    { echo "$as_me:4237: WARNING: map: check for missing prerequisite headers?" >&5
+    { echo "$as_me:4270: WARNING: map: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: map: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:4239: WARNING: map: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4272: WARNING: map: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: map: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:4242: checking for map" >&5
+echo "$as_me:4275: checking for map" >&5
 echo $ECHO_N "checking for map... $ECHO_C" >&6
 if test "${ac_cv_header_map+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_map=$ac_header_preproc
 fi
-echo "$as_me:4249: result: $ac_cv_header_map" >&5
+echo "$as_me:4282: result: $ac_cv_header_map" >&5
 echo "${ECHO_T}$ac_cv_header_map" >&6
 
 fi
@@ -4257,34 +4290,34 @@ else
 fi
 
 if test "${ac_cv_header_list+set}" = set; then
-  echo "$as_me:4260: checking for list" >&5
+  echo "$as_me:4293: checking for list" >&5
 echo $ECHO_N "checking for list... $ECHO_C" >&6
 if test "${ac_cv_header_list+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:4265: result: $ac_cv_header_list" >&5
+echo "$as_me:4298: result: $ac_cv_header_list" >&5
 echo "${ECHO_T}$ac_cv_header_list" >&6
 else
   # Is the header compilable?
-echo "$as_me:4269: checking list usability" >&5
+echo "$as_me:4302: checking list usability" >&5
 echo $ECHO_N "checking list usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4272 "configure"
+#line 4305 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <list>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:4278: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:4311: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:4281: \$? = $ac_status" >&5
+  echo "$as_me:4314: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:4284: \"$ac_try\"") >&5
+  { (eval echo "$as_me:4317: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:4287: \$? = $ac_status" >&5
+  echo "$as_me:4320: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -4293,24 +4326,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:4296: result: $ac_header_compiler" >&5
+echo "$as_me:4329: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:4300: checking list presence" >&5
+echo "$as_me:4333: checking list presence" >&5
 echo $ECHO_N "checking list presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4303 "configure"
+#line 4336 "configure"
 #include "confdefs.h"
 #include <list>
 _ACEOF
-if { (eval echo "$as_me:4307: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:4340: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:4313: \$? = $ac_status" >&5
+  echo "$as_me:4346: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -4328,32 +4361,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:4331: result: $ac_header_preproc" >&5
+echo "$as_me:4364: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:4337: WARNING: list: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:4370: WARNING: list: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: list: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:4339: WARNING: list: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4372: WARNING: list: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: list: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:4342: WARNING: list: present but cannot be compiled." >&5
+    { echo "$as_me:4375: WARNING: list: present but cannot be compiled." >&5
 echo "$as_me: WARNING: list: present but cannot be compiled." >&2;}
-    { echo "$as_me:4344: WARNING: list: check for missing prerequisite headers?" >&5
+    { echo "$as_me:4377: WARNING: list: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: list: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:4346: WARNING: list: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4379: WARNING: list: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: list: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:4349: checking for list" >&5
+echo "$as_me:4382: checking for list" >&5
 echo $ECHO_N "checking for list... $ECHO_C" >&6
 if test "${ac_cv_header_list+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_list=$ac_header_preproc
 fi
-echo "$as_me:4356: result: $ac_cv_header_list" >&5
+echo "$as_me:4389: result: $ac_cv_header_list" >&5
 echo "${ECHO_T}$ac_cv_header_list" >&6
 
 fi
@@ -4364,34 +4397,34 @@ else
 fi
 
 if test "${ac_cv_header_strstream+set}" = set; then
-  echo "$as_me:4367: checking for strstream" >&5
+  echo "$as_me:4400: checking for strstream" >&5
 echo $ECHO_N "checking for strstream... $ECHO_C" >&6
 if test "${ac_cv_header_strstream+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:4372: result: $ac_cv_header_strstream" >&5
+echo "$as_me:4405: result: $ac_cv_header_strstream" >&5
 echo "${ECHO_T}$ac_cv_header_strstream" >&6
 else
   # Is the header compilable?
-echo "$as_me:4376: checking strstream usability" >&5
+echo "$as_me:4409: checking strstream usability" >&5
 echo $ECHO_N "checking strstream usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4379 "configure"
+#line 4412 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <strstream>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:4385: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:4418: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:4388: \$? = $ac_status" >&5
+  echo "$as_me:4421: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:4391: \"$ac_try\"") >&5
+  { (eval echo "$as_me:4424: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:4394: \$? = $ac_status" >&5
+  echo "$as_me:4427: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -4400,24 +4433,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:4403: result: $ac_header_compiler" >&5
+echo "$as_me:4436: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:4407: checking strstream presence" >&5
+echo "$as_me:4440: checking strstream presence" >&5
 echo $ECHO_N "checking strstream presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4410 "configure"
+#line 4443 "configure"
 #include "confdefs.h"
 #include <strstream>
 _ACEOF
-if { (eval echo "$as_me:4414: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:4447: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:4420: \$? = $ac_status" >&5
+  echo "$as_me:4453: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -4435,32 +4468,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:4438: result: $ac_header_preproc" >&5
+echo "$as_me:4471: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:4444: WARNING: strstream: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:4477: WARNING: strstream: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: strstream: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:4446: WARNING: strstream: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4479: WARNING: strstream: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: strstream: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:4449: WARNING: strstream: present but cannot be compiled." >&5
+    { echo "$as_me:4482: WARNING: strstream: present but cannot be compiled." >&5
 echo "$as_me: WARNING: strstream: present but cannot be compiled." >&2;}
-    { echo "$as_me:4451: WARNING: strstream: check for missing prerequisite headers?" >&5
+    { echo "$as_me:4484: WARNING: strstream: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: strstream: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:4453: WARNING: strstream: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4486: WARNING: strstream: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: strstream: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:4456: checking for strstream" >&5
+echo "$as_me:4489: checking for strstream" >&5
 echo $ECHO_N "checking for strstream... $ECHO_C" >&6
 if test "${ac_cv_header_strstream+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_strstream=$ac_header_preproc
 fi
-echo "$as_me:4463: result: $ac_cv_header_strstream" >&5
+echo "$as_me:4496: result: $ac_cv_header_strstream" >&5
 echo "${ECHO_T}$ac_cv_header_strstream" >&6
 
 fi
@@ -4471,34 +4504,34 @@ else
 fi
 
 if test "${ac_cv_header_iostream+set}" = set; then
-  echo "$as_me:4474: checking for iostream" >&5
+  echo "$as_me:4507: checking for iostream" >&5
 echo $ECHO_N "checking for iostream... $ECHO_C" >&6
 if test "${ac_cv_header_iostream+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:4479: result: $ac_cv_header_iostream" >&5
+echo "$as_me:4512: result: $ac_cv_header_iostream" >&5
 echo "${ECHO_T}$ac_cv_header_iostream" >&6
 else
   # Is the header compilable?
-echo "$as_me:4483: checking iostream usability" >&5
+echo "$as_me:4516: checking iostream usability" >&5
 echo $ECHO_N "checking iostream usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4486 "configure"
+#line 4519 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <iostream>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:4492: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:4525: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:4495: \$? = $ac_status" >&5
+  echo "$as_me:4528: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:4498: \"$ac_try\"") >&5
+  { (eval echo "$as_me:4531: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:4501: \$? = $ac_status" >&5
+  echo "$as_me:4534: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -4507,24 +4540,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:4510: result: $ac_header_compiler" >&5
+echo "$as_me:4543: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:4514: checking iostream presence" >&5
+echo "$as_me:4547: checking iostream presence" >&5
 echo $ECHO_N "checking iostream presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4517 "configure"
+#line 4550 "configure"
 #include "confdefs.h"
 #include <iostream>
 _ACEOF
-if { (eval echo "$as_me:4521: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:4554: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:4527: \$? = $ac_status" >&5
+  echo "$as_me:4560: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -4542,32 +4575,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:4545: result: $ac_header_preproc" >&5
+echo "$as_me:4578: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:4551: WARNING: iostream: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:4584: WARNING: iostream: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: iostream: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:4553: WARNING: iostream: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4586: WARNING: iostream: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: iostream: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:4556: WARNING: iostream: present but cannot be compiled." >&5
+    { echo "$as_me:4589: WARNING: iostream: present but cannot be compiled." >&5
 echo "$as_me: WARNING: iostream: present but cannot be compiled." >&2;}
-    { echo "$as_me:4558: WARNING: iostream: check for missing prerequisite headers?" >&5
+    { echo "$as_me:4591: WARNING: iostream: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: iostream: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:4560: WARNING: iostream: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4593: WARNING: iostream: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: iostream: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:4563: checking for iostream" >&5
+echo "$as_me:4596: checking for iostream" >&5
 echo $ECHO_N "checking for iostream... $ECHO_C" >&6
 if test "${ac_cv_header_iostream+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_iostream=$ac_header_preproc
 fi
-echo "$as_me:4570: result: $ac_cv_header_iostream" >&5
+echo "$as_me:4603: result: $ac_cv_header_iostream" >&5
 echo "${ECHO_T}$ac_cv_header_iostream" >&6
 
 fi
@@ -4578,34 +4611,34 @@ else
 fi
 
 if test "${ac_cv_header_fstream+set}" = set; then
-  echo "$as_me:4581: checking for fstream" >&5
+  echo "$as_me:4614: checking for fstream" >&5
 echo $ECHO_N "checking for fstream... $ECHO_C" >&6
 if test "${ac_cv_header_fstream+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:4586: result: $ac_cv_header_fstream" >&5
+echo "$as_me:4619: result: $ac_cv_header_fstream" >&5
 echo "${ECHO_T}$ac_cv_header_fstream" >&6
 else
   # Is the header compilable?
-echo "$as_me:4590: checking fstream usability" >&5
+echo "$as_me:4623: checking fstream usability" >&5
 echo $ECHO_N "checking fstream usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4593 "configure"
+#line 4626 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <fstream>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:4599: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:4632: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:4602: \$? = $ac_status" >&5
+  echo "$as_me:4635: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:4605: \"$ac_try\"") >&5
+  { (eval echo "$as_me:4638: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:4608: \$? = $ac_status" >&5
+  echo "$as_me:4641: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -4614,24 +4647,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:4617: result: $ac_header_compiler" >&5
+echo "$as_me:4650: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:4621: checking fstream presence" >&5
+echo "$as_me:4654: checking fstream presence" >&5
 echo $ECHO_N "checking fstream presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4624 "configure"
+#line 4657 "configure"
 #include "confdefs.h"
 #include <fstream>
 _ACEOF
-if { (eval echo "$as_me:4628: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:4661: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:4634: \$? = $ac_status" >&5
+  echo "$as_me:4667: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -4649,32 +4682,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:4652: result: $ac_header_preproc" >&5
+echo "$as_me:4685: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:4658: WARNING: fstream: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:4691: WARNING: fstream: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: fstream: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:4660: WARNING: fstream: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4693: WARNING: fstream: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: fstream: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:4663: WARNING: fstream: present but cannot be compiled." >&5
+    { echo "$as_me:4696: WARNING: fstream: present but cannot be compiled." >&5
 echo "$as_me: WARNING: fstream: present but cannot be compiled." >&2;}
-    { echo "$as_me:4665: WARNING: fstream: check for missing prerequisite headers?" >&5
+    { echo "$as_me:4698: WARNING: fstream: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: fstream: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:4667: WARNING: fstream: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4700: WARNING: fstream: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: fstream: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:4670: checking for fstream" >&5
+echo "$as_me:4703: checking for fstream" >&5
 echo $ECHO_N "checking for fstream... $ECHO_C" >&6
 if test "${ac_cv_header_fstream+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_fstream=$ac_header_preproc
 fi
-echo "$as_me:4677: result: $ac_cv_header_fstream" >&5
+echo "$as_me:4710: result: $ac_cv_header_fstream" >&5
 echo "${ECHO_T}$ac_cv_header_fstream" >&6
 
 fi
@@ -4685,34 +4718,34 @@ else
 fi
 
 if test "${ac_cv_header_deque+set}" = set; then
-  echo "$as_me:4688: checking for deque" >&5
+  echo "$as_me:4721: checking for deque" >&5
 echo $ECHO_N "checking for deque... $ECHO_C" >&6
 if test "${ac_cv_header_deque+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:4693: result: $ac_cv_header_deque" >&5
+echo "$as_me:4726: result: $ac_cv_header_deque" >&5
 echo "${ECHO_T}$ac_cv_header_deque" >&6
 else
   # Is the header compilable?
-echo "$as_me:4697: checking deque usability" >&5
+echo "$as_me:4730: checking deque usability" >&5
 echo $ECHO_N "checking deque usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4700 "configure"
+#line 4733 "configure"
 #include "confdefs.h"
 $ac_includes_default
 #include <deque>
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:4706: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:4739: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:4709: \$? = $ac_status" >&5
+  echo "$as_me:4742: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:4712: \"$ac_try\"") >&5
+  { (eval echo "$as_me:4745: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:4715: \$? = $ac_status" >&5
+  echo "$as_me:4748: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_header_compiler=yes
 else
@@ -4721,24 +4754,24 @@ cat conftest.$ac_ext >&5
 ac_header_compiler=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
-echo "$as_me:4724: result: $ac_header_compiler" >&5
+echo "$as_me:4757: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:4728: checking deque presence" >&5
+echo "$as_me:4761: checking deque presence" >&5
 echo $ECHO_N "checking deque presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
-#line 4731 "configure"
+#line 4764 "configure"
 #include "confdefs.h"
 #include <deque>
 _ACEOF
-if { (eval echo "$as_me:4735: \"$ac_cpp conftest.$ac_ext\"") >&5
+if { (eval echo "$as_me:4768: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
   ac_status=$?
   egrep -v '^ *\+' conftest.er1 >conftest.err
   rm -f conftest.er1
   cat conftest.err >&5
-  echo "$as_me:4741: \$? = $ac_status" >&5
+  echo "$as_me:4774: \$? = $ac_status" >&5
   (exit $ac_status); } >/dev/null; then
   if test -s conftest.err; then
     ac_cpp_err=$ac_cxx_preproc_warn_flag
@@ -4756,32 +4789,32 @@ else
   ac_header_preproc=no
 fi
 rm -f conftest.err conftest.$ac_ext
-echo "$as_me:4759: result: $ac_header_preproc" >&5
+echo "$as_me:4792: result: $ac_header_preproc" >&5
 echo "${ECHO_T}$ac_header_preproc" >&6
 
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:4765: WARNING: deque: accepted by the compiler, rejected by the preprocessor!" >&5
+    { echo "$as_me:4798: WARNING: deque: accepted by the compiler, rejected by the preprocessor!" >&5
 echo "$as_me: WARNING: deque: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:4767: WARNING: deque: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4800: WARNING: deque: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: deque: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:4770: WARNING: deque: present but cannot be compiled." >&5
+    { echo "$as_me:4803: WARNING: deque: present but cannot be compiled." >&5
 echo "$as_me: WARNING: deque: present but cannot be compiled." >&2;}
-    { echo "$as_me:4772: WARNING: deque: check for missing prerequisite headers?" >&5
+    { echo "$as_me:4805: WARNING: deque: check for missing prerequisite headers?" >&5
 echo "$as_me: WARNING: deque: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:4774: WARNING: deque: proceeding with the preprocessor's result" >&5
+    { echo "$as_me:4807: WARNING: deque: proceeding with the preprocessor's result" >&5
 echo "$as_me: WARNING: deque: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:4777: checking for deque" >&5
+echo "$as_me:4810: checking for deque" >&5
 echo $ECHO_N "checking for deque... $ECHO_C" >&6
 if test "${ac_cv_header_deque+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_cv_header_deque=$ac_header_preproc
 fi
-echo "$as_me:4784: result: $ac_cv_header_deque" >&5
+echo "$as_me:4817: result: $ac_cv_header_deque" >&5
 echo "${ECHO_T}$ac_cv_header_deque" >&6
 
 fi
@@ -4791,7 +4824,7 @@ else
   exit
 fi
 
-echo "$as_me:4794: checking for $CC option to accept ANSI C" >&5
+echo "$as_me:4827: checking for $CC option to accept ANSI C" >&5
 echo $ECHO_N "checking for $CC option to accept ANSI C... $ECHO_C" >&6
 if test "${ac_cv_prog_cc_stdc+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -4799,7 +4832,7 @@ else
   ac_cv_prog_cc_stdc=no
 ac_save_CC=$CC
 cat >conftest.$ac_ext <<_ACEOF
-#line 4802 "configure"
+#line 4835 "configure"
 #include "confdefs.h"
 #include <stdarg.h>
 #include <stdio.h>
@@ -4854,16 +4887,16 @@ for ac_arg in "" -qlanglvl=ansi -std1 -Ae "-Aa -D_HPUX_SOURCE" "-Xc -D__EXTENSIO
 do
   CC="$ac_save_CC $ac_arg"
   rm -f conftest.$ac_objext
-if { (eval echo "$as_me:4857: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:4890: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:4860: \$? = $ac_status" >&5
+  echo "$as_me:4893: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:4863: \"$ac_try\"") >&5
+  { (eval echo "$as_me:4896: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:4866: \$? = $ac_status" >&5
+  echo "$as_me:4899: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_cv_prog_cc_stdc=$ac_arg
 break
@@ -4880,21 +4913,21 @@ fi
 
 case "x$ac_cv_prog_cc_stdc" in
   x|xno)
-    echo "$as_me:4883: result: none needed" >&5
+    echo "$as_me:4916: result: none needed" >&5
 echo "${ECHO_T}none needed" >&6 ;;
   *)
-    echo "$as_me:4886: result: $ac_cv_prog_cc_stdc" >&5
+    echo "$as_me:4919: result: $ac_cv_prog_cc_stdc" >&5
 echo "${ECHO_T}$ac_cv_prog_cc_stdc" >&6
     CC="$CC $ac_cv_prog_cc_stdc" ;;
 esac
 
-echo "$as_me:4891: checking for an ANSI C-conforming const" >&5
+echo "$as_me:4924: checking for an ANSI C-conforming const" >&5
 echo $ECHO_N "checking for an ANSI C-conforming const... $ECHO_C" >&6
 if test "${ac_cv_c_const+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
-#line 4897 "configure"
+#line 4930 "configure"
 #include "confdefs.h"
 
 #ifdef F77_DUMMY_MAIN
@@ -4958,16 +4991,16 @@ main ()
 }
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:4961: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:4994: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:4964: \$? = $ac_status" >&5
+  echo "$as_me:4997: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:4967: \"$ac_try\"") >&5
+  { (eval echo "$as_me:5000: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:4970: \$? = $ac_status" >&5
+  echo "$as_me:5003: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_cv_c_const=yes
 else
@@ -4977,7 +5010,7 @@ ac_cv_c_const=no
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:4980: result: $ac_cv_c_const" >&5
+echo "$as_me:5013: result: $ac_cv_c_const" >&5
 echo "${ECHO_T}$ac_cv_c_const" >&6
 if test $ac_cv_c_const = no; then
 
@@ -4987,7 +5020,7 @@ _ACEOF
 
 fi
 
-echo "$as_me:4990: checking for inline" >&5
+echo "$as_me:5023: checking for inline" >&5
 echo $ECHO_N "checking for inline... $ECHO_C" >&6
 if test "${ac_cv_c_inline+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -4995,7 +5028,7 @@ else
   ac_cv_c_inline=no
 for ac_kw in inline __inline__ __inline; do
   cat >conftest.$ac_ext <<_ACEOF
-#line 4998 "configure"
+#line 5031 "configure"
 #include "confdefs.h"
 #ifndef __cplusplus
 static $ac_kw int static_foo () {return 0; }
@@ -5004,16 +5037,16 @@ $ac_kw int foo () {return 0; }
 
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:5007: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:5040: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:5010: \$? = $ac_status" >&5
+  echo "$as_me:5043: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:5013: \"$ac_try\"") >&5
+  { (eval echo "$as_me:5046: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:5016: \$? = $ac_status" >&5
+  echo "$as_me:5049: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   ac_cv_c_inline=$ac_kw; break
 else
@@ -5024,7 +5057,7 @@ rm -f conftest.$ac_objext conftest.$ac_ext
 done
 
 fi
-echo "$as_me:5027: result: $ac_cv_c_inline" >&5
+echo "$as_me:5060: result: $ac_cv_c_inline" >&5
 echo "${ECHO_T}$ac_cv_c_inline" >&6
 case $ac_cv_c_inline in
   inline | yes) ;;
@@ -5149,7 +5182,7 @@ rm -f confdef2opt.sed
 : ${CONFIG_STATUS=./config.status}
 ac_clean_files_save=$ac_clean_files
 ac_clean_files="$ac_clean_files $CONFIG_STATUS"
-{ echo "$as_me:5152: creating $CONFIG_STATUS" >&5
+{ echo "$as_me:5185: creating $CONFIG_STATUS" >&5
 echo "$as_me: creating $CONFIG_STATUS" >&6;}
 cat >$CONFIG_STATUS <<_ACEOF
 #! $SHELL
@@ -5344,7 +5377,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF
     echo "$ac_cs_version"; exit 0 ;;
   --he | --h)
     # Conflict between --help and --header
-    { { echo "$as_me:5347: error: ambiguous option: $1
+    { { echo "$as_me:5380: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -5363,7 +5396,7 @@ Try \`$0 --help' for more information." >&2;}
     ac_need_defaults=false;;
 
   # This is an error.
-  -*) { { echo "$as_me:5366: error: unrecognized option: $1
+  -*) { { echo "$as_me:5399: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -5386,7 +5419,7 @@ do
   "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
   "test/Makefile" ) CONFIG_FILES="$CONFIG_FILES test/Makefile" ;;
   "src/version.h" ) CONFIG_FILES="$CONFIG_FILES src/version.h" ;;
-  *) { { echo "$as_me:5389: error: invalid argument: $ac_config_target" >&5
+  *) { { echo "$as_me:5422: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;
   esac
@@ -5493,6 +5526,7 @@ s,@INSTALL_DATA@,$INSTALL_DATA,;t t
 s,@RANLIB@,$RANLIB,;t t
 s,@ac_ct_RANLIB@,$ac_ct_RANLIB,;t t
 s,@AR@,$AR,;t t
+s,@DOCTOOL@,$DOCTOOL,;t t
 CEOF
 
 _ACEOF
@@ -5575,7 +5609,7 @@ for as_mkdir_dir in `IFS='/\\'; set X $as_dummy; shift; echo "$@"`; do
       as_incr_dir=$as_incr_dir/$as_mkdir_dir
       test -d "$as_incr_dir" ||
         mkdir "$as_incr_dir" ||
-	{ { echo "$as_me:5578: error: cannot create \"$ac_dir\"" >&5
+	{ { echo "$as_me:5612: error: cannot create \"$ac_dir\"" >&5
 echo "$as_me: error: cannot create \"$ac_dir\"" >&2;}
    { (exit 1); exit 1; }; }
     ;;
@@ -5612,7 +5646,7 @@ esac
   esac
 
   if test x"$ac_file" != x-; then
-    { echo "$as_me:5615: creating $ac_file" >&5
+    { echo "$as_me:5649: creating $ac_file" >&5
 echo "$as_me: creating $ac_file" >&6;}
     rm -f "$ac_file"
   fi
@@ -5630,7 +5664,7 @@ echo "$as_me: creating $ac_file" >&6;}
       -) echo $tmp/stdin ;;
       [\\/$]*)
          # Absolute (can't be DOS-style, as IFS=:)
-         test -f "$f" || { { echo "$as_me:5633: error: cannot find input file: $f" >&5
+         test -f "$f" || { { echo "$as_me:5667: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          echo $f;;
@@ -5643,7 +5677,7 @@ echo "$as_me: error: cannot find input file: $f" >&2;}
            echo $srcdir/$f
          else
            # /dev/null tree
-           { { echo "$as_me:5646: error: cannot find input file: $f" >&5
+           { { echo "$as_me:5680: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          fi;;
@@ -5699,3 +5733,14 @@ if test "$no_create" != yes; then
 fi
 
 echo timestamp > stamp.h
+
+if test "$DOCTOO" == "not-found"; then
+    echo ""
+    echo "You're missing the doxygen documentation tool."
+    echo "OpenBabel will compile and run fine, but without"
+    echo "doxygen you cannot generate OpenBabel API"
+    echo "documentation with 'make apidoc'. Have a look at"
+    echo "http://www.stack.nl/~dimitri/doxygen/index.html,"
+    echo "or find a binary package for your platform."
+    echo ""
+fi
