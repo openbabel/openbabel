@@ -1,3 +1,15 @@
+2002-04-05  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/parsmart.cpp: Added some defensive programming when calling
+	delete, also set the pointer to NULL.
+
+	* src/parsmart.h: Add constructor and destructor to
+	OBSmartsParser.
+
+	* src/smarts.h: Add full destructors for OBEdge, OBNode.
+
+	* src/smarts.cpp: As above. Should solve memory leaks, PR #508056.
+	
 2002-03-30  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/*.h: Update headers to use std:: namespace to refer to

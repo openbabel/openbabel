@@ -417,6 +417,7 @@ public:
 		_expr = expr;
 		_closure = false;
 	}
+	~OBEdge() { if (_expr) { delete _expr; _expr = NULL;} }
 	void ReplaceExpr(OBExprBase *expr)
 	{
 		if (_expr) delete _expr;
@@ -439,7 +440,7 @@ class OBNode : public OBNodeBase
 	OBExprBase *_expr;
 public:
 	OBNode() {_stereo=0; _match = NULL;}
-	virtual ~OBNode() {}
+	virtual ~OBNode();
 	int     GetFormalCharge()         const  {return(_expr->GetFormalCharge());}
 	void    SetExpr(OBExprBase *expr)        {_expr = expr;}
 	void    SetMatch(OBNodeBase *m)          {_match = m;}

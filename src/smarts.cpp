@@ -273,6 +273,20 @@ OBNode *OBNode::NextNbr(vector<OBEdgeBase*>::iterator &i)
 	return((this == ((OBEdge*)*i)->GetBgn()) ? (OBNode*)((OBEdge*)*i)->GetEnd() : (OBNode*)((OBEdge*)*i)->GetBgn());
 }
 
+OBNode::~OBNode()
+{
+  if (_match)
+    {
+      delete _match;
+      _match = NULL;
+    }
+  if (_expr)
+    {
+      delete _expr;
+      _expr = NULL;
+    }
+}
+
 OBSmartsPattern::OBSmartsPattern()
 {
   _done = false;
@@ -294,10 +308,16 @@ OBSmartsPattern::OBSmartsPattern(const OBSmartsPattern &src)
 OBSmartsPattern::~OBSmartsPattern()
 {
 	vector<OBNodeBase*>::iterator i;
-	for (i = _vatom.begin();i != _vatom.end();i++) delete *i;
+	for (i = _vatom.begin();i != _vatom.end();i++)
+	  {
+	    delete *i;
+	  }
 
 	vector<OBEdgeBase*>::iterator j;
-	for (j = _vbond.begin();j != _vbond.end();j++) delete *j;
+	for (j = _vbond.begin();j != _vbond.end();j++)
+	  {
+	    delete *j;
+	  }
 }
 
 //

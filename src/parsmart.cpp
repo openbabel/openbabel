@@ -23,6 +23,10 @@ using namespace std;
 namespace OpenBabel
 {
 
+OBSmartsParser::~OBSmartsParser()
+{
+}
+
 bool OBSmartsParser::Parse(OBSmartsPattern &sp,string &s)
 {
 	return(Parse(sp,s.c_str()));
@@ -38,7 +42,7 @@ bool OBSmartsParser::Parse(OBSmartsPattern &sp,const char *buf)
 	OBEdgeBase *cb;
 	OBExprBase *eexpr=NULL;
 	OBExprBase *vexpr=NULL;
-
+	
 	_prev = NULL;
 	_vprev.clear();
 
@@ -46,7 +50,7 @@ bool OBSmartsParser::Parse(OBSmartsPattern &sp,const char *buf)
       switch(*_ptr)
 	  {
 		//disconnected structure
-        case '.': 
+	        case '.': 
 			if (!_vprev.empty())
 			{
 				ReportError();
@@ -88,11 +92,10 @@ bool OBSmartsParser::Parse(OBSmartsPattern &sp,const char *buf)
 
 			if (*_ptr != ']' || !vexpr)
 			{
-				if (vexpr) delete vexpr;
-				ReportError();
-				return(false);
+			  if (vexpr) {delete vexpr; vexpr = NULL;}
+			  ReportError();
+			  return(false);
 			}
-
 			node = sp.NewNode(vexpr);
 			node->SetVectorBinding(vb);
 			if (_prev) //bond to previous
@@ -187,7 +190,7 @@ OBExprBase *OBSmartsParser::ParseAtomExpr( int level )
 			_ptr++;
 			if( !(expr2=ParseAtomExpr(1)) )
 			{
-				delete expr1;
+			  delete expr1; expr1 = NULL;
 				return((OBExprBase*)NULL);
 			}
 			expr1 = new OBAndExpr(expr1,expr2);
@@ -203,7 +206,7 @@ OBExprBase *OBSmartsParser::ParseAtomExpr( int level )
 			_ptr++;
 			if( !(expr2=ParseAtomExpr(2)) )
 			{
-				delete expr1;
+			  delete expr1; expr1 = NULL;
 				return((OBExprBase*)NULL);
 			}
 			expr1 = new OBOrExpr(expr1,expr2);
@@ -222,7 +225,7 @@ OBExprBase *OBSmartsParser::ParseAtomExpr( int level )
 			{
 				if( prev != _ptr )
 				{
-					delete expr1;
+				  delete expr1; expr1 = NULL;
 					return((OBExprBase*)NULL);
 				} 
 				else return(expr1);
@@ -669,7 +672,7 @@ OBExprBase *OBSmartsParser::ParseComplexAtomPrimitive()
 				OBSmartsPattern *pat = new OBSmartsPattern;
 				if (!sp.Parse(*pat,tmp))
 				{
-					delete pat;
+				  delete pat; pat = NULL;
 					return((OBExprBase*)NULL);
 				}
 				delete [] tmp;
@@ -784,7 +787,7 @@ OBExprBase *OBSmartsParser::ParseBondExpr( int level )
 			_ptr++;
 			if( !(expr2=ParseBondExpr(1)) )
 			{   
-				delete expr1;
+			  delete expr1; expr1 = NULL;
 				return((OBExprBase*)NULL);
 			}
 			expr1 = new OBAndExpr(expr1,expr2);
@@ -801,7 +804,7 @@ OBExprBase *OBSmartsParser::ParseBondExpr( int level )
 			_ptr++;
 			if( !(expr2=ParseBondExpr(2)) )
 			{
-				delete expr1; 
+			  delete expr1; expr1 = NULL;
 				return((OBExprBase*)NULL);
 			}
 			expr1 = new OBOrExpr(expr1,expr2);
@@ -820,7 +823,7 @@ OBExprBase *OBSmartsParser::ParseBondExpr( int level )
 			{   
 				if( prev != _ptr )
 				{
-					delete expr1;
+				  delete expr1; expr1 = NULL;
 					return((OBExprBase*)NULL);
 				} 
 				else return(expr1);

@@ -29,9 +29,12 @@ class OBSmartsParser
 	int                            _stereo;
 	int                            _vb;
 	OBNode                        *_prev;
-	std::vector<OBNode*>           _vprev;
+	std::vector<OBNode*>                _vprev;
 	std::vector<std::pair<OBEdgeBase*,int> > _vclose;
 public:
+	OBSmartsParser()               {}
+	~OBSmartsParser();
+
 	int         GetVectorBinding();
 	void        ReportError() {}
 	void        AddClosure(OBEdgeBase*,int);
