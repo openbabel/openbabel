@@ -1,9 +1,13 @@
+2004-10-04  Michael Banck  <mbanck@gmx.net>
+
+	* src/crk.cpp: Use sstream if present and strstream if not.
+	
 2004-28-30  Fabien Fontaine  <ffontaine@imim.es>
 
 	* tools/obtanimoto.cpp : new tool
 	* tools/README:      update
 	* tools/makefile.am  update
-	
+
 2004-27-30  Fabien Fontaine  <ffontaine@imim.es>
 
 	* src/fingerprint.cpp: New output format
