@@ -84,11 +84,11 @@ class OBElement
 {
   int _num;
   char _symbol[3];
-  float _Rcov,_Rbo,_Rvdw,_mass;
+  float _Rcov,_Rbo,_Rvdw,_mass,_elNeg;
   int _maxbonds;
  public:
   OBElement() {}
-  OBElement(int num,char *sym,float rcov,float rbo,float rvdw,int maxbo,float mass)
+  OBElement(int num,char *sym,float rcov,float rbo,float rvdw,int maxbo,float mass,float elNeg)
     {
       _num = num;
       strcpy(_symbol,sym);
@@ -96,7 +96,8 @@ class OBElement
       _Rbo = rbo;
       _Rvdw = rvdw;
       _maxbonds = maxbo;
-	  _mass = mass;
+      _mass = mass;
+      _elNeg = elNeg;
     }
   int GetAtomicNum() {return(_num);}
   char *GetSymbol() {return(_symbol);}
@@ -105,6 +106,7 @@ class OBElement
   float GetVdwRad() {return(_Rvdw);}
   float GetMass() {return(_mass);}
   int GetMaxBonds() {return(_maxbonds);}
+  float GetElectroNeg() {return(_elNeg);}
 };
 
 class OBElementTable : public OBGlobalDataBase
@@ -126,6 +128,7 @@ public:
   float CorrectedBondRad(int,int = 3); // atomic #, hybridization
   float CorrectedVdwRad(int,int = 3); // atomic #, hybridization
   int	GetMaxBonds(int);
+  float GetElectroNeg(int);
 };
 
 class OBTypeTable : public OBGlobalDataBase
@@ -143,8 +146,8 @@ class OBTypeTable : public OBGlobalDataBase
   void ParseLine(char*);
   bool SetFromType(char*);
   bool SetToType(char*);
-  bool Translate(char*,char*);
-  bool Translate(string &,string &);
+  bool Translate(char*,char*); // to, from
+  bool Translate(string &,string &); // to, from
 };
 
 class OBExtensionTable : public OBGlobalDataBase

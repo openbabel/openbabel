@@ -1,4 +1,12 @@
-2002-01-24  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+2002-02-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/data.cpp, src/data.h, src/element.txt: Added support for
+	electronegativity of elements. (Needed for assigning bond types,
+	among other things.)
+
+	* src/element.h: Regenerate using bin2hex.pl.
+
+2002-02-07  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 	
 	* src/Makefile.in: Add c3d.cpp to the compilation list.
 
@@ -7,6 +15,21 @@
 	* src/mol.cpp, src/mol.h: Resolve problems with declarations of
 	old quat.c code since they now fall under OpenBabel namespace.
 
+2002-02-01  Michael Banck  <mbanck@gmx.net>
+
+	* test/Makefile.in, src/Makefile.in: Delete Makefile when calling
+	distclean target.
+
+	* Makefile.in: Fix install target to create the $(mandir) directory.
+
+2002-02-01  Michael Banck  <mbanck@gmx.net>
+
+	* Makefile.in: Added manpage to install target.
+
+	* configure, configure.in, Makefile.in, src/Makefile.in,
+	src/version.h.in: Put version information in configure.in and made
+	generated tarballs contain it.
+	
 2002-01-24  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* doc/FAQ, doc/babel.1: Minor documentation fixes.

@@ -57,21 +57,22 @@ void OBElementTable::ParseLine(char *buffer)
 {
   int num,maxbonds;
   char symbol[3];
-  float Rbo,Rcov,Rvdw,mass;
+  float Rbo,Rcov,Rvdw,mass, elNeg;
 
   if (buffer[0] != '#') // skip comment line (at the top)
     {
       // Ignore RGB columns
-      sscanf(buffer,"%d %s %f %f %f %d %f %*f %*f %*f",
+      sscanf(buffer,"%d %s %f %f %f %d %f %f %*f %*f %*f",
 	     &num,
 	     symbol,
 	     &Rcov,
 	     &Rbo,
 	     &Rvdw,
 	     &maxbonds,
-	     &mass);
+	     &mass,
+	     &elNeg);
   
-	  OBElement *ele = new OBElement(num,symbol,Rcov,Rbo,Rvdw,maxbonds,mass);
+	  OBElement *ele = new OBElement(num,symbol,Rcov,Rbo,Rvdw,maxbonds,mass,elNeg);
 	  _element.push_back(ele);
 	}
 }
@@ -94,6 +95,16 @@ int OBElementTable::GetMaxBonds(int atomicnum)
     return(0);
 
   return(_element[atomicnum]->GetMaxBonds());
+}
+
+float OBElementTable::GetElectroNeg(int atomicnum)
+{
+  if (!_init) Init();
+
+  if (atomicnum < 0 || atomicnum > _element.size())
+    return(0.0f);
+
+  return(_element[atomicnum]->GetElectroNeg());
 }
 
 float OBElementTable::GetVdwRad(int atomicnum)
