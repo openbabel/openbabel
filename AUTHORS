@@ -1,0 +1,14 @@
+Open Babel AUTHORS
+-------------------
+As might be expected, OpenBabel derives from the older chemistry file
+translator Babel, which was written by Pat Walters and Matt Stahl.
+
+More recently, the code derives from the original GPL-licensed version
+of OELib produced by OpenEye Scientific Software. Contributors include
+(in alphabetical order):
+Joe Corkery, Brian Goldman, Geoff Hutchison, Anthony Nicholls, Roger
+Sayle, Matt Stahl, Bob Tolbert and Pat Walters.
+
+Current authors:
+Michael Banck
+Geoff Hutchison

@@ -1,0 +1,8 @@
+.deps
+.libs
+Makefile
+obfit
+obgrep
+obrotate
+obprop
+obtanimoto
