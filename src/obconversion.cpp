@@ -214,7 +214,8 @@ OBConversion::~OBConversion()
 int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME)
 {
 	FormatsMap()[ID] = pFormat;
-	FormatsMap()[MIME] = pFormat;
+	if (MIME)
+	  FormatsMap()[MIME] = pFormat;
 	if(pFormat->Flags() & DEFAULTFORMAT)
 		pDefaultFormat=pFormat;
 	return FormatsMap().size();
