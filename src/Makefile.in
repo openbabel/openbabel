@@ -74,7 +74,7 @@ check:		$(PROGRAM)
 
 clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY) 
 distclean:	clean
-		$(RM) version.h
+		$(RM) version.h Makefile
 
 install:	$(PROGRAM)
 		$(INSTALL) -d $(DEST)
