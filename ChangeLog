@@ -1,9 +1,20 @@
-2003-09-21  Peter Murray-Rust pm286@cam.ac.uk
+2003-09-25  Michael Banck  <mbanck@gmx.net>
+ 
+        * src/mol.h (_internals): New protected class attribute.
+	(GetInternalCoord): New declaration.
+        (SetInternalCoord): New method.
+	(BeginInternalCoord): New method for iterating over _internals.
+	(NextInternalCoord): Likewise.
 
-	* src/cml.cpp removed inconsistences between atomRef, atomRef1,
-    atomRef2, and atomRefs2 attributes.
-    * test/cmltest/cs2a.cml changed atomRefs1 and atomRefs2 attributes to atomRef
-    * test/cmltest/test.bat minor edits to allow echo
+        * src/mol.cpp (GetInternalCoord): New method.
+
+2003-09-21  Peter Murray-Rust <pm286@cam.ac.uk>
+
+	* src/cml.cpp: removed inconsistences between atomRef, atomRef1,
+    	atomRef2, and atomRefs2 attributes.
+    	* test/cmltest/cs2a.cml: changed atomRefs1 and atomRefs2 attributes 
+        to atomRef
+    	* test/cmltest/test.bat: minor edits to allow echo
     
 2003-09-14  Michael Banck <mbanck@gmx.net>
 

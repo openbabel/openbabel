@@ -1,6 +1,7 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2003 by Michael Banck
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -41,6 +42,7 @@ namespace OpenBabel {
 class OBAtom;
 class OBBond;
 class OBMol;
+class OBInternalCoord;
 
 // Class OBResidue
 
@@ -619,6 +621,7 @@ public:
     OBBond      *GetBond(int, int);
     OBBond      *GetBond(OBAtom*,OBAtom*);
     OBResidue   *GetResidue(int);
+    std::vector<OBInternalCoord*> GetInternalCoord();
     double       GetTorsion(int,int,int,int);
     double       GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
     void         SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double);
@@ -640,6 +643,7 @@ public:
     void   SetTotalCharge(int charge);
     void   SetInputType(io_type type)      {_itype = type;}
     void   SetOutputType(io_type type)     {_otype = type;}
+    void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord) {_internals = int_coord;}
     void   SetAromaticPerceived()          {SetFlag(OB_AROMATIC_MOL);}
     void   SetSSSRPerceived()              {SetFlag(OB_SSSR_MOL);}
     void   SetRingAtomsAndBondsPerceived() {SetFlag(OB_RINGFLAGS_MOL);}
@@ -753,6 +757,10 @@ public:
       {i = _residue.begin();return((i == _residue.end()) ? NULL:*i);}
     OBResidue *NextResidue(std::vector<OBResidue*>::iterator &i)
       {i++;return((i == _residue.end()) ? NULL:*i);}
+    OBInternalCoord *BeginInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
+      {i = _internals.begin();return((i == _internals.end()) ? NULL:*i);}
+    OBInternalCoord *NextInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
+      {i++;return((i == _internals.end()) ? NULL:*i);}
     //@}
 
     //! \name Multiple conformer member functions

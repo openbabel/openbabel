@@ -1,6 +1,10 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
+Some portions Copyright (c) 2003 by Michael Banck
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -734,6 +738,18 @@ OBResidue *OBMol::GetResidue(int idx)
     }
 
     return (_residue[idx]);
+}
+
+std::vector<OBInternalCoord*> OBMol::GetInternalCoord()
+{
+    if (_internals.empty()) {
+        _internals.push_back((OBInternalCoord*)NULL);
+        for(int i = 1; i <= NumAtoms(); i++) {
+            _internals.push_back(new OBInternalCoord);
+        }
+        CartesianToInternal(_internals, *this);
+    }
+    return _internals;
 }
 
 vector<OBRing*> &OBMol::GetSSSR()
