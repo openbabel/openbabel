@@ -514,8 +514,8 @@ double cellParam[6];
 // symmetry
 string spacegroup;
 string pointgroup;
-vector <double[12]> rotTransVector;
-vector <double[9]> rotVector;
+vector <double*> rotTransVector;
+vector <double*> rotVector;
 
 // angle
 vector <pair <vector<OBAtom*>, double> > angleVector;

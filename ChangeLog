@@ -1,4 +1,9 @@
 2003-03-15  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+	
+	* src/cml.cpp: Fix unused declarations that cause problems with
+	the xlC compiler reported by Markku Laukkanen.
+
+2003-03-15  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/cacao.cpp (SetHilderbrandt): Fix one coredump found on
 	roundtrip testing and add notes on what needs to be fixed for an
