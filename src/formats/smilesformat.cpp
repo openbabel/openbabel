@@ -1598,31 +1598,40 @@ bool OBSmilesParser::ParseRingBond(OBMol &mol)
 void OBMol2Smi::CreateSmiString(OBMol &mol,char *buffer)
 {
     OBAtom *atom;
-    OBSmiNode *root;
+    OBSmiNode *root =NULL;
     buffer[0] = '\0';
     vector<OBNodeBase*>::iterator i;
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
         //    if ((!atom->IsHydrogen() || atom->GetValence() == 0) && !_uatoms[atom->GetIdx()])
         if (!atom->IsHydrogen() && !_uatoms[atom->GetIdx()])
-	  if (!atom->IsChiral()) //don't use chiral atoms as root node
-            {
-                //clear out closures in case structure is dot disconnected
-                _vclose.clear();
-                _atmorder.clear();
-                _storder.clear();
-                _vopen.clear();
-                //dot disconnected structure
-                if (strlen(buffer) > 0)
-                    strcat(buffer,".");
-                root = new OBSmiNode (atom);
-                BuildTree(root);
-                FindClosureBonds(mol);
-                if (mol.Has2D())
-                    AssignCisTrans(root);
-                ToSmilesString(root,buffer);
-                delete root;
-            }
+					if (!atom->IsChiral()) //don't use chiral atoms as root node
+					{
+						//clear out closures in case structure is dot disconnected
+						_vclose.clear();
+						_atmorder.clear();
+						_storder.clear();
+						_vopen.clear();
+						//dot disconnected structure
+						if (strlen(buffer) > 0)
+								strcat(buffer,".");
+						root = new OBSmiNode (atom);
+						BuildTree(root);
+						FindClosureBonds(mol);
+						if (mol.Has2D())
+								AssignCisTrans(root);
+						ToSmilesString(root,buffer);
+						delete root;
+					}
+
+		//If no starting node found e.g. [H][H] CM 21Mar05
+		if(root==NULL)
+		{
+			root = new OBSmiNode(mol.GetFirstAtom());
+			BuildTree(root);
+      ToSmilesString(root,buffer);
+      delete root;
+		}
 }
 
 bool OBMol2Smi::BuildTree(OBSmiNode *node)
@@ -1635,7 +1644,8 @@ bool OBMol2Smi::BuildTree(OBSmiNode *node)
     _storder.push_back(atom->GetIdx()); //store the atom ordering for stereo
 
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-        if (!nbr->IsHydrogen() && !_uatoms[nbr->GetIdx()])
+        if ((!nbr->IsHydrogen()||nbr->GetIsotope()||atom->IsHydrogen()) //so D,T is explicit and H2 works!CM 21Mar05
+					&& !_uatoms[nbr->GetIdx()]) 
         {
             _ubonds.SetBitOn((*i)->GetIdx());
             OBSmiNode *next = new OBSmiNode (nbr);
@@ -2006,6 +2016,9 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
     if (atom->GetFormalCharge() != 0) //bracket charged elements
         bracketElement = true;
 
+		if(atom->GetIsotope()) //CM 19Mar05
+				bracketElement = true;
+
     //CM begin 18 Sept 2003
 
     //This outputs form [CH3][CH3] rather than CC if -h option has been specified
@@ -2084,6 +2097,12 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
     }
 
     strcpy(element,"[");
+		if(atom->GetIsotope()) //CM 19Mar05
+		{
+			char iso[4];
+			sprintf(iso,"%d",atom->GetIsotope());
+			strcat(element,iso);
+		}
     if (!atom->GetAtomicNum())
         strcpy(symbol,"*");
     else
@@ -2108,7 +2127,7 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
 
     //add extra hydrogens
     //  if (!normalValence && atom->ImplicitHydrogenCount())
-    if (atom->ImplicitHydrogenCount())
+    if (atom->ImplicitHydrogenCount() && !atom->IsHydrogen()) //CM 21Mar05
     {
         strcat(element,"H");
         if (atom->ImplicitHydrogenCount() > 1)
