@@ -1,7 +1,7 @@
 This directory contains a set of tools aimed to help people for their day to day work.
 All the tools use the Open Babel library, and all are written in a single source code files of around 200 lines.
 
-All these utilities work in the same way, they all require a SMART pattern and at least one input files, they guess the input file format from the filename extention, and they print the results to the standard output. 
+Most of these utilities work in the same way, the first three require a SMART pattern and at least one input files, they guess the input file format from the filename extention, and they print the results to the standard output. 
 See below for more details
 
 ###############################################################################
@@ -63,6 +63,22 @@ obrotate "c1ccncc1CCC" pyridines.sdf 8 7 6 5 90
 keeps the aliphatic chain fixed and moves the pyridyl ring
 
 ###############################################################################
+OBPROP
+
+This is just a little program to show how easy it is to get some common molecular properties from Open Babel.
+Actually, I created it to help a friend (Bet) who wanted to count the number of rings of the compounds of a database. The main idea of this tool is to help non C++ programmer so they can use the advanced features of Open Babel with their favorite scripting language.    
+
+For the moment, there are only 3 properties available
+
+> obprop
+Usage: obprop <filename>
+Output format:
+name NAME
+mol_weight MOLECULAR_WEIGHT
+num_rings NUMBER_OF_RING_(SSSR)
+$$$$
 
 
-Fabien Fontaine, 22d of October 2003
+I Hope that people will feel inspired by these tools and make their own contribution.
+
+Fabien Fontaine, 12th of february 2004
