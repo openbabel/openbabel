@@ -1,3 +1,7 @@
+2003-06-26  Michael Banck <mbanck@gmx.net>
+
+	* NEWS: New file.
+
 2003-06-23  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/main.cpp: Move man documentation to end of file (right

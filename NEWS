@@ -1,0 +1,64 @@
+Open Babel 1.100.1 (2003-6-24)
+
+What's New from 1.100.0:
+
+ -Much better bond typing overall for files converted from formats
+  without bond information (e.g. XYZ, QM codes). Fixed some bugs in
+  1.100.1 and added additional improvments.
+ -Support for the command-line "babel" program to convert some or
+  all structures in a file with multiple molecules. By default this
+  version will convert all molecules in a file. To change this, use
+  the -f and -l command-line options as documented in the man page.
+ -Isotope support, including exact masses in the "report" file
+  format and SMILES data.
+ -Updated API documentation.
+ -Support for the Borland C++ compiler.
+ -Fixed a variety of bugs in the PDB file format support, including
+  better bond typing.
+ -Support for output of residue information in the Sybyl Mol2 file
+  format.
+ -Some support for conversion of unit cell information, both in the
+  library and in some file formats (i.e. DMol3, Cacao).
+ -Coordinates now use double-precision floating point libraries for
+  greater accuracy in conversions.
+ -Fixed a variety of bugs uncovered in roundtrip testing.
+ -Fixed a bug when attempting to perceive bond information on 2D
+  structures.
+ -Fixed several rare bugs that could cause segmentation faults.
+
+New File Formats:
+
+  -Import: ShelX
+  -Export: ZINDO input
+
+A big thanks to all who helped contribute to this release,
+especially those reporting bugs, suggesting features, and donating
+files to the test suite. All of this is greatly appreciated!
+
+
+Open Babel 1.100.0 (2002-12-12)
+
+What's New from 1.99:
+
+ -Bond order typing is performed when importing from formats with no notion of
+  bonds (quantum chemistry programs, XYZ, etc.).  -Now better conforms to the ISO
+  C++ standard, should compile on most modern C++ compilers.
+ -Improved test suite, including "roundtrip" testing, ensuring more accurate translations.
+ -Support for the Chemical Markup Language (CML) and other file formats. (see below)
+ -Improved PDB support -- should read PDB files more accurately and hew closer to the current PDB standard for export.
+ -Improved Gaussian input generation.
+ -Added support for the Chemical MIME standards, including command-line switches.
+ -Added support for using the babel program as a pipe for a "translation filter" for other programs.
+ -Can add hydrogen atoms based on pH.
+ -Fixed a variety of memory leaks, sometimes causing other bugs.
+ -Fixed a wide variety of bugs in various file formats.
+ -Faster SMARTS matching and some overall speedups across the program.
+ -API documentation using the Doxygen system.
+ -Of course there are *many* other bug-fixes and improvements.
+
+New File Formats:
+
+  -Import: NWChem Output
+  -Export: POV-Ray, NWChem Input
+  -Both: CML, ViewMol, Chem3D
+
