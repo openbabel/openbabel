@@ -263,6 +263,7 @@ unsigned int i;
   cout << "   c use 'cml' as output namespace prefix (else default) (forces n)" << endl;
   cout << "   d output DOCTYPE (default none)" << endl;
   cout << "   g debug output" << endl;
+  cout << endl << "Report Bugs to <openbabel-discuss@lists.sourceforge.net>." << endl;
 
   exit(0);
 }
