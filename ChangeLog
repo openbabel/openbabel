@@ -1,3 +1,14 @@
+2004-02-09  Michael Banck  <mbanck@gmx.net>
+
+	* src/base.cpp: Include babelconfig.h.
+	* src/base.h: Likewise.
+	* src/crk.h: Likewise.
+	* src/data.h: Likewise.
+	* src/fileformat.h: Likewise.
+	* src/main.cpp: Likewise.
+	* src/oberror.cpp: Likewise.
+	* src/residue.cpp: Likewise.
+
 2004-02-08  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
 
 	* src/mol.cpp, src/qchem.cpp, src/gaussian.cpp, src/report.cpp:
