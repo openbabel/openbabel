@@ -67,7 +67,7 @@ int main(int argc,char *argv[])
 		    
 		case 'h':
 		  addHydrogens = true;
-		    if (strncmp(argv[arg],"hpH",3) == 0) { usePH = true; }
+		    if (strncmp(argv[arg],"-hpH",4) == 0) { usePH = true; }
 		  break;
 
 		case 'i':
