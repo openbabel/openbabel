@@ -1750,9 +1750,9 @@ bool ExpandKekule(OBMol &mol, vector<OBNodeBase*> &va,
 	    continue;
           if (GetCurrentValence((OBAtom*)*j) != maxv[(*j)->GetIdx()])
 	    {
-	      cout << " ExpandKekule atom: " << ((OBAtom*)*j)->GetIdx() 
-		   << " valence is " << (GetCurrentValence((OBAtom*)*j)) 
-		   << " should be " << maxv[(*j)->GetIdx()] << endl;
+	      //	      cout << " ExpandKekule atom: " << ((OBAtom*)*j)->GetIdx() 
+	      //		   << " valence is " << (GetCurrentValence((OBAtom*)*j)) 
+	      //		   << " should be " << maxv[(*j)->GetIdx()] << endl;
 	      return(false);
 	    }
         }
@@ -1793,8 +1793,8 @@ bool ExpandKekule(OBMol &mol, vector<OBNodeBase*> &va,
           nbr = ((OBBond *)*j)->GetNbrAtom(atom);
           if (GetCurrentValence(nbr) <= maxv[nbr->GetIdx()])
             {
-	      cout << "trying a 2 bond on atom " << atom->GetIdx()
-		   << "to atom " << nbr->GetIdx() << endl;
+	      //	      cout << "trying a 2 bond on atom " << atom->GetIdx()
+	      //		   << "to atom " << nbr->GetIdx() << endl;
               ((OBBond*)*j)->SetKDouble();
               ((OBBond*)*j)->SetBO(2);
               if (ExpandKekule(mol,va,i+1,maxv,secondpass)) return(true);
@@ -1859,7 +1859,7 @@ bool ExpandKekule(OBMol &mol, vector<OBNodeBase*> &va,
       ((OBBond*)*j)->SetBO(5);
     }
 
-  cout << "failed to find valid solution " << endl;
+  //  cout << "failed to find valid solution " << endl;
   return(false);
 }
 
@@ -2045,7 +2045,7 @@ bool OBMol::Kekulize()
   // Not quite sure why this is here -GRH 2003
   //  if (NumAtoms() > 255) return(false);
 
-  cout << " in Kekulize " << endl;
+  //  cout << " in Kekulize " << endl;
 
   for (bond = BeginBond(i);bond;bond = NextBond(i))
     if (bond->IsKSingle())      bond->SetBO(1);
@@ -2967,14 +2967,14 @@ void OBMol::PerceiveBondOrders()
 	  if (!typed)
 	    for(loop = 0; loop < loopSize; loop++)
 	      {
-		cout << " set aromatic " << path[loop] << endl;
+		//		cout << " set aromatic " << path[loop] << endl;
 		(GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
 		(GetBond(path[loop], path[(loop+1) % loopSize]))->UnsetKekule();
 	      }
 	}
     }
   _flags &= (~(OB_KEKULE_MOL));
-  cout << " calling Kekulize " << endl;
+  //  cout << " calling Kekulize " << endl;
   Kekulize();
 
   // Pass 6: Assign remaining bond types, ordered by atom electronegativity
