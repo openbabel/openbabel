@@ -87,19 +87,19 @@ static bool WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
   return(true);
 }
 
-static bool ReadChem3d(istream&,OBMol&,bool,char*);
+static bool ReadChem3d(istream&,OBMol&,bool, char*);
 
-bool ReadMmads(istream &ifs,OBMol &mol,char *title)
+bool ReadMmads(istream &ifs,OBMol &mol,const char *title)
 {
   return(ReadChem3d(ifs,mol,true,"MM2"));
 }
 
-bool ReadChem3d1(istream &ifs,OBMol &mol,char *title)
+bool ReadChem3d1(istream &ifs,OBMol &mol,const char *title)
 {
   return(ReadChem3d(ifs,mol,false,"MM2"));
 }
 
-bool ReadChem3d2(istream &ifs,OBMol &mol,char *title)
+bool ReadChem3d2(istream &ifs,OBMol &mol,const char *title)
 {
   return(ReadChem3d(ifs,mol,false,"C3D"));
 }

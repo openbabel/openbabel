@@ -20,7 +20,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-bool ReadMacroModel(istream &ifs, OBMol &mol, char *defaultTitle)
+bool ReadMacroModel(istream &ifs, OBMol &mol,const char *defaultTitle)
 { 
   // Get Title
   char buffer[BUFF_SIZE];

@@ -47,7 +47,7 @@ class OBProxGrid
 
 public:
 
-  OBProxGrid(int gridtype=0){_gridtype=0;}
+  OBProxGrid(int gridtype=0){_gridtype=gridtype;}
   ~OBProxGrid(){}
   void Setup(OBMol &,OBMol &,float,float res=0.5);
   void Setup(OBMol &,OBMol &,float,std::vector<bool>&,float res=0.5);
@@ -59,10 +59,9 @@ public:
   void SetGridType(int gridtype) {_gridtype = gridtype;}
   bool PointIsInBox(float x,float y,float z)
     {
-      if (x>_xmin && x<_xmax && y>_ymin && y<_ymax &&
-	  z>_zmin && z<_zmax)
-	return(true);
-      return(false);
+      return (x>=_xmin) && (x<=_xmax) && 
+	(y>=_ymin) && (y<=_ymax) &&
+	(z>=_zmin) && (z<=_zmax);
     }
 };
 
@@ -84,17 +83,15 @@ public:
   void Init(OBMol &,float, float pad= 0.0f); //initialized using boxfile
   bool PointIsInBox(float x,float y,float z)
     {
-      if (x < _xmin || x > _xmax) return(false);
-      if (y < _ymin || y > _ymax) return(false);
-      if (z < _zmin || z > _zmax) return(false);
-      return(true);
+      return (x>=_xmin) && (x<=_xmax) && 
+	(y>=_ymin) && (y<=_ymax) &&
+	(z>=_zmin) && (z<=_zmax);
     }
   bool PointIsInBox(float *c)
     {
-      if (c[0] < _xmin || c[0] > _xmax) return(false);
-      if (c[1] < _ymin || c[1] > _ymax) return(false);
-      if (c[2] < _zmin || c[2] > _zmax) return(false);
-      return(true);
+      return (c[0]>=_xmin) && (c[0]<=_xmax) && 
+	(c[1]>=_ymin) && (c[1]<=_ymax) &&
+	(c[2]>=_zmin) && (c[2]<=_zmax);
     }
   float GetXmin() const {return(_xmin);}
   float GetYmin() const {return(_ymin);}

@@ -18,7 +18,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool ReadCCC(istream &ifs,OBMol &mol,char *title)
+bool ReadCCC(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   ifs.getline(buffer,BUFF_SIZE);

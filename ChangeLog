@@ -1,3 +1,10 @@
+2002-06-28  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* configure.in, configure, src/Makefile.in: Adjust for various
+	removed (unused) files.
+
+	* src/*.cpp: Adjust all ReadFile methods to use const char* title.
+	
 2002-06-11  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/Makefile.in: Add proper commandline for new bin2hex for
@@ -27,10 +34,13 @@
 	* src/obutil.[h,cpp]: Remove SmartsLexReplace, which is now
 	migrated to parsmart.[h,cpp].
 
-	* src/parsmart.[h,cpp]: 
-
-	* src/phmodel.cpp: Update to work with new SMARTS parser.
+	* src/parsmart.[h,cpp]: Updated version from code contributed by
+	Open Eye. Includes caching and RestrictedMatch method and seems to
+	solve memory leak problems in older version. Solves PR#536943 and
+	#564096. Includes code from smarts.* files.
 	
+	* src/phmodel.cpp: Update to work with new SMARTS parser.
+
 2002-06-07  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* Makefile.in: Make sure directories are properly created on "make

@@ -17,19 +17,12 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "rotor.h"
 #include "binary.h"
-#include "commandline.h"
 #include "version.h"
 #include "data.h"
 
 #include <stdio.h>
-
-#ifdef __sgi
-#include <iostream.h>
-#include <fstream.h>
-#else
 #include <iostream>
 #include <fstream>
-#endif
 
 using namespace std;
 using namespace OpenBabel;

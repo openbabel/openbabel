@@ -25,23 +25,12 @@ namespace OpenBabel {
 
 void ThrowError(char *str)
 {
-//#ifdef WIN32
-//	_cputs(str);
-//#else
-//    cerr << str << endl;
-    cout << str << endl;
-//#endif
+  cout << str << endl;
 }
 
 void ThrowError(string &str)
 {
-//#ifdef WIN32
-//	_cputs(str.c_str());
-//	_cputs("\n");
-//#else
-//    cerr << str << endl;
-    cout << str << endl;
-//#endif
+  cout << str << endl;
 }
 
 void PauseExit()
@@ -50,19 +39,26 @@ void PauseExit()
 	char buf[1];
 	_cputs("program complete, hit <enter> to continue");
 	_cgets(buf);
-	exit(0);
-#else
-	exit(0);
 #endif
+	exit(0);
 }
 
+bool OBCompareInt(const int &a,const int &b)
+{
+	return(a<b);
+}
+
+bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
+{
+	return(a<b);
+}
 
 string NewExtension(string &src,char *ext)
 {
-  unsigned int pos;
+  unsigned int pos = (unsigned int)src.find_last_of(".");
   string dst;
   
-  if ((pos = src.find_last_of(".")) != string::npos)
+  if (pos != string::npos)
       dst = src.substr(0,pos+1);
   else
     {dst = src; dst += ".";}
@@ -290,6 +286,23 @@ void ToUpper(char *cptr)
       *c = toupper(*c);
 }
 
+void ToLower(string &s)
+{
+  if (s.empty()) return;
+  unsigned int i;
+  for (i = 0;i < s.size();i++)
+    if (isalpha(s[i]) && !isdigit(s[i]))
+      s[i] = tolower(s[i]);
+}
+
+void ToLower(char *cptr)
+{
+  char *c;
+  for (c = cptr;*c != '\0';c++)
+    if (isalpha(*c) && !isdigit(*c))
+      *c = tolower(*c);
+}
+
 void CleanAtomType(char *id)
 {
   id[0] = toupper(id[0]);
@@ -422,10 +435,10 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
   }
 
   //fill in geometries
-  int k;
+  unsigned int k;
   Vector v1,v2;
   OBAtom *a,*b,*c;
-  for (k = 2;k <= (signed)mol.NumAtoms();k++)
+  for (k = 2;k <= mol.NumAtoms();k++)
     {
       atom = mol.GetAtom(k); 
       a = vic[k]->_a;
@@ -452,7 +465,7 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
   //check for linear geometries and try to correct if possible
   bool done;
   float ang;
-  for (k = 2;k <= (signed)mol.NumAtoms();k++)
+  for (k = 2;k <= mol.NumAtoms();k++)
     {
       ang = fabs(vic[k]->_ang);
       if (ang > 5.0f && ang < 175.0f) continue;
@@ -483,133 +496,6 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 	    done = true;
 	  }
     }
-}
-
-bool OBCompareInt(const int &a,const int &b)
-{
-	return(a<b);
-}
-
-bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
-{
-	return(a<b);
-}
-
-//******************triple template*************************
-//based on the STL design of the pair<> template
-
-//comparison
-template<class T1, class T2, class T3>
-bool operator==(const triple<T1,T2,T3> &a, const triple<T1,T2,T3> &b)
-{
-	return a.first == b.first && a.second == b.second && a.third == b.third;
-}
-
-template<class T1, class T2, class T3>
-bool operator< (const triple<T1,T2,T3> &a, const triple<T1,T2,T3> &b)
-{
-	return a.first < b.first ||
-				 ((a.first==b.first) && a.second < b.second) ||
-				 ((a.first==b.first && a.second==b.second) && a.third < b.third);
-}
-
-template<class T1, class T2, class T3>
-bool operator!=(const triple<T1,T2,T3> &a, const triple<T1,T2,T3> &b)
-{
-	return a.first != b.first || a.second != b.second || a.third != b.third;
-}
-
-template<class T1, class T2, class T3>
-bool operator<=(const triple<T1,T2,T3> &a, const triple<T1,T2,T3> &b)
-{
-	return a.first <= b.first ||
-				 ((a.first==b.first) && a.second <= b.second) ||
-				 ((a.first==b.first && a.second==b.second) && a.third <= b.third);
-}
-
-template<class T1, class T2, class T3>
-bool operator> (const triple<T1,T2,T3> &a, const triple<T1,T2,T3> &b)
-{
-	return a.first > b.first ||
-				 ((a.first==b.first) && a.second > b.second) ||
-				 ((a.first==b.first && a.second==b.second) && a.third > b.third);
-}
-
-template<class T1, class T2, class T3>
-bool operator>=(const triple<T1,T2,T3> &a, const triple<T1,T2,T3> &b)
-{
-	return a.first >= b.first ||
-				 ((a.first==b.first) && a.second >= b.second) ||
-				 ((a.first==b.first && a.second==b.second) && a.third >= b.third);
-}
-
-//convenience creation
-template<class T1, class T2, class T3>
-triple<T1,T2,T3> make_triple (const T1&a, const T2 &b, const T3 &c)
-{
-	return triple<T1,T2,T3>(a,b,c);
-}
-
-//**************quad template********************
-//based on the design of the STL pair<> template
-
-//comparison
-template <class T1, class T2, class T3, class T4>
-bool operator==(const quad<T1,T2,T3,T4> &a, const quad<T1,T2,T3,T4> &b)
-{
-	return a.first == b.first && a.second == b.second && 
-				 a.third == b.third && a.fourth == b.fourth;
-}
-
-template <class T1, class T2, class T3, class T4>
-bool operator< (const quad<T1,T2,T3,T4> &a, const quad<T1,T2,T3,T4> &b)
-{
-	return a.first < b.first ||
-				 ((a.first==b.first) && a.second < b.second) ||
-				 ((a.first==b.first && a.second==b.second) && a.third < b.third) ||
-				 ((a.first==b.first && a.second==b.second && a.third==b.third) && a.fourth < b.fourth);
-}
-
-template <class T1, class T2, class T3, class T4>
-bool operator!=(const quad<T1,T2,T3,T4> &a, const quad<T1,T2,T3,T4> &b)
-{
-	return a.first != b.first || a.second != b.second ||
-				 a.third != b.third || a.fourth != b.fourth;
-}
-
-template <class T1, class T2, class T3, class T4>
-bool operator<=(const quad<T1,T2,T3,T4> &a, const quad<T1,T2,T3,T4> &b)
-{
-	return a.first <= b.first ||
-				 ((a.first==b.first) && a.second <= b.second) ||
-				 ((a.first==b.first && a.second==b.second) && a.third <= b.third) ||
-				 ((a.first==b.first && a.second==b.second && a.third==b.third) && a.fourth <= b.fourth);
-}
-
-template <class T1, class T2, class T3, class T4>
-bool operator> (const quad<T1,T2,T3,T4> &a, const quad<T1,T2,T3,T4> &b)
-{
-	return a.first > b.first ||
-				 ((a.first==b.first) && a.second > b.second) ||
-				 ((a.first==b.first && a.second==b.second) && a.third > b.third) ||
-				 ((a.first==b.first && a.second==b.second && a.third==b.third) && a.fourth > b.fourth);
-}
-
-template <class T1, class T2, class T3, class T4>
-bool operator>=(const quad<T1,T2,T3,T4> &a, const quad<T1,T2,T3,T4> &b)
-{
-	return a.first >= b.first ||
-				 ((a.first==b.first) && a.second >= b.second) ||
-				 ((a.first==b.first && a.second==b.second) && a.third >= b.third) ||
-				 ((a.first==b.first && a.second==b.second && a.third==b.third) && a.fourth >= b.fourth);
-
-}
-
-//convenience creation
-template <class T1, class T2, class T3, class T4>
-quad<T1,T2,T3,T4> make_quad (const T1&a, const T2 &b, const T3 &c, const T4 &d)
-{
-	return quad<T1,T2,T3,T4>(a,b,c,d);
 }
 
 // Migrated from quat.c

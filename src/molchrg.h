@@ -50,9 +50,8 @@ class GasteigerState
 
 }
 
-#define MX_GASTEIGER_DENOM  20.02
-#define MX_GASTEIGER_DAMP   0.5
-#define MX_GASTEIGER_ITERS  6
-
+#define OB_GASTEIGER_DENOM  20.02
+#define OB_GASTEIGER_DAMP   0.5
+#define OB_GASTEIGER_ITERS  6
 
 #endif // OB_MOLCHRG_H

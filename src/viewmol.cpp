@@ -20,7 +20,7 @@ namespace OpenBabel {
 
 #define BOHR_TO_ANGSTROM 0.529177
 
-bool ReadViewMol(istream &ifs,OBMol &mol,char *title)
+bool ReadViewMol(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   OBAtom *atom;

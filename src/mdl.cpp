@@ -16,7 +16,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
-bool ReadSDFile(istream &ifs,OBMol &mol,char *title) {
+bool ReadSDFile(istream &ifs,OBMol &mol,const char *title) {
   int i,natoms,nbonds;
   char buffer[BUFF_SIZE];
   char *comment = NULL;
@@ -122,7 +122,7 @@ bool ReadSDFile(istream &ifs,OBMol &mol,char *title) {
   return(true);
 }
 
-bool WriteSDFile(ostream &ofs,OBMol &mol,char *dimension) {
+bool WriteSDFile(ostream &ofs,OBMol &mol,const char *dimension) {
   char buff[BUFF_SIZE];  
 
   ofs << mol.GetTitle() <<  endl;

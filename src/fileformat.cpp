@@ -22,51 +22,56 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, char *title)
+bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, const char *title)
 {
+  bool result;
+
+  if (!ifs)
+    return false;
+  
   switch(mol.GetInputType())
     {
-    case ALCHEMY:   ReadAlchemy(ifs,mol,title);	   break;
-    case BALLSTICK: ReadBallAndStick(ifs,mol,title);break;
-    case BIOSYM:    ReadBiosymCAR(ifs,mol,title);  break;
-    case BOX:       ReadBox(ifs,mol,title);        break;
-    case CACAO:	    ReadCaccrt(ifs,mol,title);	   break;
-    case CCC:       ReadCCC(ifs,mol,title);        break;
-    case CHEM3D1:   ReadChem3d1(ifs,mol,title);    break;
-    case CHEM3D2:   ReadChem3d2(ifs,mol,title);    break;
-    case CML:       ReadCML(ifs,mol,title);        break;
-    case DMOL:      ReadDMol(ifs,mol,title);       break;
-    case FEATURE:   ReadFeat(ifs,mol,title);	   break;
-    case GAMESSOUT: ReadGAMESS(ifs,mol,title);	   break;
-    case GHEMICAL:  ReadGhemical(ifs,mol,title);   break; 
-    case HIN:	    ReadHIN(ifs,mol,title);	   break;
-    case NWCHEMOUT: ReadNWChem(ifs, mol, title);   break;
-    case MMD:       ReadMacroModel(ifs,mol,title); break;
-    case MMADS:     ReadMmads(ifs,mol,title);      break;
-    case MOL2:      ReadMol2(ifs,mol,title);       break;
-    case MOPACOUT:  ReadMOPAC(ifs,mol,title);	   break;
-    case MOPACCART: ReadMOPACCartesian(ifs,mol,title);break;
-    case MPQC:      ReadMPQC(ifs,mol,title);	   break;
-    case OEBINARY:  ReadBinary(ifs,mol); 	   break;
-    case PDB:       ReadPDB(ifs,mol,title);        break;
-    case PREP:	    ReadAmberPrep(ifs,mol,title);  break;
-    case JAGUAROUT: ReadJaguar(ifs,mol,title);     break;
-    case QCHEMOUT:  ReadQChem(ifs,mol,title);	   break;
-    case SDF:       ReadSDFile(ifs,mol,title);     break;
-    case SMI:       ReadSmiles(ifs,mol,title);     break;
-    case UNICHEM:   ReadUnichem(ifs,mol,title);	   break;
-    case VIEWMOL:   ReadViewMol(ifs,mol,title);	   break;
-    case XYZ:	    ReadXYZ(ifs,mol,title);	   break;
-
+    case ALCHEMY:   result = ReadAlchemy(ifs,mol,title);	break;
+    case BALLSTICK: result = ReadBallAndStick(ifs,mol,title);	break;
+    case BIOSYM:    result = ReadBiosymCAR(ifs,mol,title);	break;
+    case BOX:       result = ReadBox(ifs,mol,title);		break;
+    case CACAO:	    result = ReadCaccrt(ifs,mol,title);	       	break;
+    case CCC:       result = ReadCCC(ifs,mol,title);	       	break;
+    case CHEM3D1:   result = ReadChem3d1(ifs,mol,title);       	break;
+    case CHEM3D2:   result = ReadChem3d2(ifs,mol,title);       	break;
+    case CML:       result = ReadCML(ifs,mol,title);		break;
+    case DMOL:      result = ReadDMol(ifs,mol,title);		break;
+    case FEATURE:   result = ReadFeat(ifs,mol,title);		break;
+    case GAMESSOUT: result = ReadGAMESS(ifs,mol,title);		break;
+    case GHEMICAL:  result = ReadGhemical(ifs,mol,title);	break; 
+    case HIN:	    result = ReadHIN(ifs,mol,title);		break;
+    case NWCHEMOUT: result = ReadNWChem(ifs, mol, title);	break;
+    case MMD:       result = ReadMacroModel(ifs,mol,title);	break;
+    case MMADS:     result = ReadMmads(ifs,mol,title);		break;
+    case MOL2:      result = ReadMol2(ifs,mol,title);		break;
+    case MOPACOUT:  result = ReadMOPAC(ifs,mol,title);		break;
+    case MOPACCART: result = ReadMOPACCartesian(ifs,mol,title);	break;
+    case MPQC:      result = ReadMPQC(ifs,mol,title);		break;
+    case OEBINARY:  result = ReadBinary(ifs,mol);		break;
+    case PDB:       result = ReadPDB(ifs,mol,title);		break;
+    case PREP:	    result = ReadAmberPrep(ifs,mol,title);	break;
+    case JAGUAROUT: result = ReadJaguar(ifs,mol,title);		break;
+    case QCHEMOUT:  result = ReadQChem(ifs,mol,title);		break;
+    case SDF:       result = ReadSDFile(ifs,mol,title);		break;
+    case SMI:       result = ReadSmiles(ifs,mol,title);		break;
+    case UNICHEM:   result = ReadUnichem(ifs,mol,title);	break;
+    case VIEWMOL:   result = ReadViewMol(ifs,mol,title);	break;
+    case XYZ:	    result = ReadXYZ(ifs,mol,title);		break;
     default:
       ThrowError("Input type not defined");
+      return false;
     }
   
-  return((ifs) ? true : false);
+  return result;
 }
 
 bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol, 
-				 char *dimension, char *options)
+				 const char *dimension, const char *options)
 {
   switch(mol.GetOutputType())
     {

@@ -16,6 +16,9 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "resdata.h"
 
+#include <vector>
+#include <map>
+
 using namespace std;
 
 namespace OpenBabel {
@@ -34,12 +37,28 @@ class OBResidueData : public OBGlobalDataBase
     vector<pair<string,int> >          _vtmp;
 public:
     OBResidueData();
-    bool SetResName(string &);
-    int  LookupBO(string &);
-    int  LookupBO(string &,string&);
-    bool LookupType(string &,string&,int&);
+    bool SetResName(const string &);
+    int  LookupBO(const string &);
+    int  LookupBO(const string &, const string&);
+    bool LookupType(const string &,string&,int&);
     bool AssignBonds(OBMol &,OBBitVec &);
     void ParseLine(const char*);
+};
+
+class OBSerialNums : public OBGenericData
+{
+public:
+
+        OBSerialNums()                                           
+        { _attr = "obSerialNums"; _type = obData0; }
+        OBSerialNums(const OBSerialNums &cp) : OBGenericData(cp) 
+        { serialMap = cp.serialMap;                }
+
+        map<int,OBAtom*> &GetData()                     { return serialMap; }
+        void              SetData(map<int,OBAtom*> &sm) { serialMap = sm; }
+
+protected:
+        map<int, OBAtom*> serialMap;
 };
 
 static bool ParseAtomRecord(char *, OBMol &,int);
@@ -47,7 +66,7 @@ static bool ParseConectRecord(char *,OBMol &);
 
 static OBResidueData resdat;
 
-bool ReadPDB(istream &ifs,OBMol &mol,char *title)
+bool ReadPDB(istream &ifs,OBMol &mol,const char *title)
 {
   resdat.Init();
   int chainNum = 1;
@@ -82,7 +101,7 @@ bool ReadPDB(istream &ifs,OBMol &mol,char *title)
   return(true);
 }
 
-bool ReadTerTermPDB(istream &ifs,OBMol &mol,char *title)
+bool ReadTerTermPDB(istream &ifs,OBMol &mol,const char *title)
 {
   resdat.Init();
   int chainNum = 1;
@@ -116,7 +135,7 @@ bool ReadTerTermPDB(istream &ifs,OBMol &mol,char *title)
   return(true);
 }
 
-bool ReadPDB(vector<string> &vpdb,OBMol &mol,char *title)
+bool ReadPDB(vector<string> &vpdb,OBMol &mol,const char *title)
 {
   resdat.Init();
   int chainNum = 1;
@@ -364,12 +383,12 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
 	    {
 	      r2 = a2->GetResidue();
 	      k = 1;
-	      while (k < vs.size())
+	      while (k < 4)
 		{
 		  con = 0;
 		  order = 1;
 		  con = atoi(vs[k].c_str());
-		  if (con && (k+1) < vs.size() && atoi(vs[k+1].c_str()) == con)
+		  if (con && ((k+1) < 4) && (atoi(vs[k+1].c_str()) == con))
 		    {
 		      order++;
 		      k++;
@@ -543,7 +562,7 @@ void OBResidueData::ParseLine(const char *buffer)
 	  }
 }
 
-bool OBResidueData::SetResName(string &s)
+bool OBResidueData::SetResName(const string &s)
 {
   unsigned int i;
     for (i = 0;i < _resname.size();i++)
@@ -557,7 +576,7 @@ bool OBResidueData::SetResName(string &s)
     return(false);
 }
 
-int OBResidueData::LookupBO(string &s)
+int OBResidueData::LookupBO(const string &s)
 {
     if (_resnum == -1) return(0);
     
@@ -569,7 +588,7 @@ int OBResidueData::LookupBO(string &s)
     return(0);
 }
 
-int OBResidueData::LookupBO(string &s1,string &s2)
+int OBResidueData::LookupBO(const string &s1, const string &s2)
 {
     if (_resnum == -1) return(0);
     string s;
@@ -584,7 +603,7 @@ int OBResidueData::LookupBO(string &s1,string &s2)
     return(0);
 }
 
-bool OBResidueData::LookupType(string &atmid,string &type,int &hyb)
+bool OBResidueData::LookupType(const string &atmid,string &type,int &hyb)
 {
     if (_resnum == -1) return(false);
 
@@ -602,7 +621,7 @@ bool OBResidueData::LookupType(string &atmid,string &type,int &hyb)
     return(false);
 }
 
-bool ReadBox(vector<string> &vbox, OBMol &mol,char *)
+bool ReadBox(vector<string> &vbox, OBMol &mol,const char *)
 {
   char buffer[BUFF_SIZE];
   vector<string> vs;

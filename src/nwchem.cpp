@@ -17,7 +17,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool ReadNWChem(istream &ifs,OBMol &mol,char *title)
+bool ReadNWChem(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   string str;

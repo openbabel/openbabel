@@ -30,21 +30,8 @@ extern OBPhModel        phmodel;
 
 OBAtom::OBAtom()
 {
-  _c = (float**)NULL;
   _parent = (OBMol*)NULL;
-  _cidx = 0;
-  _flags=0;
-  _idx = 0;
-  _hyb = 0;
-  _ele = (char)0;
-  _impval = 0;
-  _fcharge = 0;
-  //_stereo = 0;
-  _type[0] = '\0';
-  _pcharge = 0.0;
-  _vbond.clear();
-  _vbond.reserve(4);
-  _residue = (OBResidue*)NULL;
+  Clear();
 }
 
 OBAtom::~OBAtom()
@@ -63,7 +50,6 @@ void OBAtom::Clear()
   _ele = (char)0;
   _impval = 0;
   _fcharge = 0;
-  //_stereo = 0;
   _type[0] = '\0';
   _pcharge = 0.0;
   _vbond.clear();
@@ -79,7 +65,6 @@ OBAtom &OBAtom::operator=(OBAtom &src)
   _hyb = src.GetHyb();
   _ele = src.GetAtomicNum();
   _fcharge = src.GetFormalCharge();
-  //_stereo = src.GetStereo();
   strcpy(_type,src.GetType());
   _pcharge = src.GetPartialCharge();
   _v = src.GetVector();
@@ -335,11 +320,11 @@ unsigned int OBAtom::GetHvyValence() const
 {
   unsigned int count=0;
 
-  OBAtom *atom;
+  OBBond *bond;
   vector<OBEdgeBase*>::iterator i;
-  for (atom = ((OBAtom*)this)->BeginNbrAtom(i);atom;atom = ((OBAtom*)this)->NextNbrAtom(i))
-	  if (!atom->IsHydrogen())
-		  count++;
+  for (bond = ((OBAtom*)this)->BeginBond(i); bond; bond = ((OBAtom*)this)->NextBond(i))
+    if (!(bond->GetNbrAtom((OBAtom*)this)->IsHydrogen()))
+	count++;
 
   return(count);
 }
@@ -365,6 +350,12 @@ float OBAtom::GetPartialCharge()
   if (!((OBMol*)GetParent())->HasPartialChargesPerceived())
     {
       //seed partial charges are set in the atom typing procedure
+      OBAtom *atom;
+      OBMol *mol = (OBMol*)GetParent();
+      vector<OBNodeBase*>::iterator i;
+      for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
+	atom->SetPartialCharge(0.0f);
+
       phmodel.AssignSeedPartialCharge(*((OBMol*)GetParent()));
       OBGastChrg gc;
       gc.AssignPartialCharges(*((OBMol*)GetParent()));
@@ -508,19 +499,19 @@ bool OBAtom::IsNitroOxygen()
 
 bool OBAtom::IsHeteroatom()
 {
-	switch(GetAtomicNum())
-	{
-	case 7:
-	case 8:
-	case 9:
-	case 15:
-	case 16:
-	case 17:
-	case 35:
-	case 53:
-		return(true);
-	}
-	return(false);
+  switch(GetAtomicNum())
+    {
+    case 7:
+    case 8:
+    case 9:
+    case 15:
+    case 16:
+    case 17:
+    case 35:
+    case 53:
+      return(true);
+    }
+  return(false);
 }
 
 bool OBAtom::IsAromatic() const
@@ -588,6 +579,7 @@ unsigned int OBAtom::MemberOfRingCount() const
 {
   vector<OBRing*> rlist;
   vector<OBRing*>::iterator i;
+  unsigned int count=0;
 
   OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
 
@@ -596,7 +588,6 @@ unsigned int OBAtom::MemberOfRingCount() const
 
   if (!((OBAtom*)this)->IsInRing()) return(0);
 
-  int count=0;
   rlist = mol->GetSSSR();
 
   for (i = rlist.begin();i != rlist.end();i++)
@@ -610,11 +601,15 @@ unsigned int OBAtom::CountFreeOxygens() const
 {
   unsigned int count = 0;
   OBAtom *atom;
+  OBBond *bond;
   vector<OBEdgeBase*>::iterator i;
 
-  for (atom = ((OBAtom*)this)->BeginNbrAtom(i);atom;atom = ((OBAtom*)this)->NextNbrAtom(i))
-	  if (atom->IsOxygen() && atom->GetHvyValence() == 1)
-		  count++;
+  for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
+    {
+      atom = bond->GetNbrAtom((OBAtom*)this);
+      if (atom->IsOxygen() && atom->GetHvyValence() == 1)
+	count++;
+    }
 
   return(count);
 }

@@ -224,9 +224,9 @@ void OBFloatGrid::IndexToCoords(int idx, float &x, float &y, float &z)
   grid_z = (int)(idx /(_xdim * _ydim));
   grid_y = (int)((idx - (grid_z * _xdim * _ydim))/_xdim);
 
-  x = (grid_x * _spacing + _xmin) + this->_halfSpace;
-  y = (grid_y * _spacing + _ymin) + this->_halfSpace;
-  z = (grid_z * _spacing + _zmin) + this->_halfSpace;
+  x = ((float)grid_x * _spacing + _xmin) + this->_halfSpace;
+  y = ((float)grid_y * _spacing + _ymin) + this->_halfSpace;
+  z = ((float)grid_z * _spacing + _zmin) + this->_halfSpace;
 }
 
 int OBFloatGrid::CoordsToIndex(float &x, float &y, float &z)
@@ -398,7 +398,7 @@ istream& operator>> ( istream &is,OBFloatGrid& fg)
   is.read((char*)&fg._zdim,sizeof(int));
   int size = fg._xdim*fg._ydim*fg._zdim;
   fg._val = new float [size];
-  size *= sizeof(float);
+  size *= (int) sizeof(float);
 
   is.read((char*)&fg._val[0],size);
   fg._halfSpace= fg._spacing/2.0f;

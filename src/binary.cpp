@@ -1,5 +1,6 @@
 /**********************************************************************
-Copyright (C) 1998-2000 by OpenEye Scientific Software, Inc.
+Copyright (C) 1998, 1999, 2000, 2001, 2002
+OpenEye Scientific Software, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -11,22 +12,24 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "mol.h"
-#include "rotor.h"
 #include "binary.h"
+#include "fileformat.h"
+#include "mol.h"
 #include "obutil.h"
+#include "rotor.h"
+
+#define OB_TITLE_SIZE     254
+#define OB_BINARY_SETWORD 32
 
 using namespace std;
 
-#define OB_TITLE_SIZE 254
-#define OB_BINARY_SETWORD 32
-
-namespace OpenBabel 
+namespace OpenBabel
 {
+
 //test byte ordering
 static int SINT = 0x00000001;
 static unsigned char *STPTR = (unsigned char*)&SINT;
-bool SwabInt = (STPTR[0]!=0);
+const bool SwabInt = (STPTR[0]!=0);
 
 void SetRotorToAngle(float *c,OBAtom **ref,float ang,vector<int> atoms);
 
@@ -37,7 +40,6 @@ int Swab(int i)
   c = tmp[0]; tmp[0] = tmp[3]; tmp[3] = c;
   c = tmp[1]; tmp[1] = tmp[2]; tmp[2] = c;
   memcpy((char*)&i,tmp,sizeof(int));
-
   return(i);
 }
 
@@ -207,8 +209,10 @@ void OBRotamerList::AddRotamer(unsigned char *arr)
 
 void OBRotamerList::AddRotamers(unsigned char *arr,int nrotamers)
 {
-  int i,size=_vrotor.size()+1;
+  unsigned int size;
+  int i;
 
+  size = (unsigned int)_vrotor.size()+1;
   for (i = 0;i < nrotamers;i++)
     {
       unsigned char *rot = new unsigned char [size];
@@ -313,322 +317,388 @@ void UnpackCoordinate(float c[3],float max[3],int tmp)
   c[2] = (float)(tmp&0x3ff);          c[2] *= max[2];
 }
 
-bool WriteBinary(ostream &ofs,OBMol &mol)
+bool WriteBinary(ostream &ofs, OBMol &mol)
 {
-	/*
-  if (mol.NumAtoms() >= 255 || mol.NumBonds() >= 255)
-    {
-      string s = "Unable to write molecule '";
-      s += mol.GetTitle();
-      s += "' to binary file - too many atoms or bonds";
-      ThrowError("Unable to write");
-      return(false);
-    }
-	*/
-  int tmp,size;
-  unsigned char buf[1000000];
-  mol.SetOutputType(OEBINARY);
-  WriteBinary(buf,size,mol);
-  tmp = size;
-  if (SwabInt) tmp = Swab(tmp);
-  ofs.write((char*)&tmp,sizeof(int));
-  ofs.write((char*)buf,size);
+    int    size = 0;
+    string buf;
 
-  return(true);
+    mol.SetOutputType(OEBINARY);
+    WriteBinary(buf, size, mol);
+
+    int tmp = size;
+    if (SwabInt) 
+        tmp = Swab(tmp);
+
+    ofs.write((char*)&tmp, sizeof(int));
+    ofs.write((char*)buf.data(), size);
+
+    return true;
 }
 
-bool WriteBinary(unsigned char *buf,int &size,OBMol &mol)
+bool WriteBinary(string &buf, int &size, OBMol &mol)
 {
-  int m,tmp,idx;
-  unsigned int k;
-  OBAtom *atom;
-  vector<OBNodeBase*>::iterator i;
-  vector<float*>::iterator j;
-  idx=0;
+    vector<float*>::iterator j;
+    unsigned int k, sz;
+    int idx, m, tmp;
 
-  //read title first
-  int len = strlen(mol.GetTitle());
-  if (len > OB_TITLE_SIZE) len = OB_TITLE_SIZE;
-  if (len > 0)
+    idx = 0;
+
+    //read title first
+    const char *title = mol.GetTitle();
+    
+    int len = (int) strlen(title);
+    if (len > OB_TITLE_SIZE) 
+        len = OB_TITLE_SIZE;
+    
+    if (len > 0)
     {
-      buf[idx] = (char)len;
-      idx += sizeof(char);
-      memcpy(&buf[idx],mol.GetTitle(),sizeof(char)*len);
-      idx += len;
+        buf += (char) len;
+        buf.insert(++idx, title, len);
+        idx += len;
     }
-  else
+    else
     {
-      buf[idx]=(char)0;
-      idx += sizeof(char);
-    }
-  
-  unsigned char c;
-  tmp = (mol.NumAtoms() << 16) | mol.NumBonds();
-  if (SwabInt) tmp = Swab(tmp);
-  memcpy(&buf[idx],(const char*)&tmp,sizeof(int));idx += sizeof(int);
-
-  for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
-      c = (unsigned char)atom->GetAtomicNum();
-      memcpy(&buf[idx],(const unsigned char*)&c,sizeof(unsigned char));
-      idx += sizeof(unsigned char);
+        buf += (char) 0;
+        idx++;
     }
 
-  OBBond *bond;
-  vector<OBEdgeBase*>::iterator bi;
-  unsigned char bc[3];
-  for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
-    {
-      bc[0] = (unsigned char)bond->GetBeginAtomIdx();
-      bc[1] = (unsigned char)bond->GetEndAtomIdx();
-      bc[2] = (unsigned char)bond->GetBO();
-      memcpy(&buf[idx],(const unsigned char*)bc,sizeof(unsigned char)*3); 
-      idx += sizeof(unsigned char)*3;
-    }
+    tmp = (mol.NumAtoms() << 16) | mol.NumBonds();
+    if (SwabInt) 
+        tmp = Swab(tmp);
+    
+    buf.insert(idx, (const char *) &tmp, sizeof(int));
+    idx += (int) sizeof(int);
 
-  //Write out conformers and coordinates
-  OBRotamerList *rml = (OBRotamerList *)mol.GetData(obRotamerList);
-  //find min and max
-  int imin[3],imax[3];
-  float min[3] = {10E10f,10E10f,10E10f};
-  float max[3] = {-10E10f,-10E10f,-10E10f};
-  vector<float*> clist;
-
-  //If we have a rotamer list with internally stored base coordinates
-  //have clist point to them rather than the molecules conformer coordinates
-  if (rml && ((rml) ? rml->NumRotamers() : 0) && rml->NumBaseCoordinateSets()) {
-      if (rml->NumAtoms() == mol.NumAtoms()) {//Error check, these should match
-          for (k=0 ; k<rml->NumBaseCoordinateSets() ; k++) 
-              clist.push_back(rml->GetBaseCoordinateSet(k));
-        }
-      else clist = mol.GetConformers();
-    }
-  else clist = mol.GetConformers();
- 
-  for (j = clist.begin();j != clist.end();j++)
-    for (k = 0;k < mol.NumAtoms();k++)
+    OBAtom *atom;
+    vector<OBNodeBase*>::iterator atomIter;
+    for (atom = mol.BeginAtom(atomIter); atom; atom = mol.NextAtom(atomIter))
       {
-        if ((*j)[k*3  ] < min[0]) min[0] = (*j)[k*3  ];
-        if ((*j)[k*3+1] < min[1]) min[1] = (*j)[k*3+1];
-        if ((*j)[k*3+2] < min[2]) min[2] = (*j)[k*3+2];
-        if ((*j)[k*3  ] > max[0]) max[0] = (*j)[k*3  ];
-        if ((*j)[k*3+1] > max[1]) max[1] = (*j)[k*3+1];
-        if ((*j)[k*3+2] > max[2]) max[2] = (*j)[k*3+2];
+        buf += (unsigned char) atom->GetAtomicNum();
+        idx++;
       }
- 
-  //store integer versions of min and max
-  for (k = 0;k < 3;k++)
+
+    OBBond *bond;
+    vector<OBEdgeBase*>::iterator bondIter;
+    for (bond = mol.BeginBond(bondIter); bond; bond = mol.NextBond(bondIter))
+      {
+        buf += (unsigned char) bond->GetBeginAtomIdx();
+        buf += (unsigned char) bond->GetEndAtomIdx();
+        buf += (unsigned char) bond->GetBO();
+        idx += 3;
+      }
+
+    //Write out conformers and coordinates
+    OBRotamerList *rml = static_cast<OBRotamerList*>(mol.GetData(obRotamerList));
+
+    //find min and max
+    int   imin[3], imax[3];
+    float  min[3] = { 10E10f, 10E10f, 10E10f};
+    float  max[3] = {-10E10f,-10E10f,-10E10f};
+
+    vector<float*> clist;
+
+    //If we have a rotamer list with internally stored base coordinates
+    //have clist point to them rather than the molecules conformer coordinates
+
+    if (rml && ((rml) ? rml->NumRotamers() : 0) && rml->NumBaseCoordinateSets()) 
     {
-      max[k] -= min[k];
-      imin[k] = (int) (1000000.0f*min[k]);
-      imax[k] = (int) (1000000.0f*max[k]);
-      if (SwabInt)
+        if (rml->NumAtoms() == mol.NumAtoms()) //Error check, these should match
         {
-          imin[k] = Swab(imin[k]);
-          imax[k] = Swab(imax[k]);
+            for ( k = 0 ; k < rml->NumBaseCoordinateSets() ; k++ ) 
+                clist.push_back(rml->GetBaseCoordinateSet(k));
+        }
+        else 
+            clist = mol.GetConformers();
+    }
+    else 
+        clist = mol.GetConformers();
+
+    sz = mol.NumAtoms() * 3;
+    for ( j = clist.begin() ; j != clist.end() ; j++ )
+    {
+        float *coords = *j;
+        for ( k = 0 ; k < sz ; k += 3 )
+        {
+            if (coords[k  ] < min[0]) min[0] = coords[k  ];
+            if (coords[k+1] < min[1]) min[1] = coords[k+1];
+            if (coords[k+2] < min[2]) min[2] = coords[k+2];
+            if (coords[k  ] > max[0]) max[0] = coords[k  ];
+            if (coords[k+1] > max[1]) max[1] = coords[k+1];
+            if (coords[k+2] > max[2]) max[2] = coords[k+2];
         }
     }
- 
-  //write the min and max
-  memcpy((unsigned char *)&buf[idx], (const char*)imin,sizeof(int)*3); idx += sizeof(int)*3;
-  memcpy((unsigned char *)&buf[idx], (const char*)imax,sizeof(int)*3); idx += sizeof(int)*3;
- 
-  //quantize max for packing coordinates
-  for (k = 0;k < 3;k++) max[k] = (fabs(max[k])> 0.01) ? 1023.0f/max[k]:0.0;
 
-  //write the number of confs and rotamers
-  tmp = clist.size(); if (SwabInt) tmp = Swab(tmp);
-  memcpy((unsigned char *)&buf[idx],
-         (char*)&tmp,sizeof(int)); idx += sizeof(int);
-  tmp = (rml) ? rml->NumRotamers() : 0; if (SwabInt) tmp = Swab(tmp);
-  memcpy((unsigned char *)&buf[idx],
-         (char*)&tmp,sizeof(int)); idx += sizeof(int);
+    //store integer versions of min and max
+    for ( k = 0 ; k < 3 ; k++ )
+    {
+        max[k] -= min[k];
+        imin[k] = (int) (1000000.0f * min[k]);
+        imax[k] = (int) (1000000.0f * max[k]);
 
-  //The third boolean expression in the next if statement is an error check to make
-  //sure than the number of atoms in the OBRotamerLists internal coordinates are the
-  //same as the molecules IF we are using the OBRotamerLists internal coordinates.
-  //If we are using the OBRotamerList's internal coordinates but the number of atoms
-  //in those coordinates don't match the number of atoms in the molecule then  the
-  //rotamer list is incorrect for the molecule and we just default to writing the
-  //molecules conformers.  I put this in because it strikes me as a very easy error
-  //to make if the molecule is modified in any way and the user is not aware that
-  //he/she is responsible for correctly updating the OBRotamerList MM 4/20/01
-  if (rml && ((rml) ? rml->NumRotamers() : 0) && (rml->NumBaseCoordinateSets()==0 || rml->NumAtoms() == mol.NumAtoms()) ) {//Store conformers as torsion list
-      //Write base coordinates
-      float tc[3];
-      for (j = clist.begin();j != clist.end();j++)
-        for (k = 0;k < mol.NumAtoms();k++)
-          {
-            for (m = 0;m < 3;m++) tc[m] = (*j)[k*3+m]-min[m];
-            tmp = PackCoordinate(tc,max);
-            if (SwabInt) tmp = Swab(tmp);
-            memcpy((unsigned char *)&buf[idx],
-                   (const char*)&tmp,sizeof(int)); idx += sizeof(int);
-          }
-
-      //Write rotors
-      tmp = rml->NumRotors(); 
-      if (SwabInt) tmp = Swab(tmp);
-      memcpy((unsigned char *)&buf[idx],
-             (const char*)&tmp,sizeof(int)); idx += sizeof(int);
-      unsigned char *ref = new unsigned char [rml->NumRotors()*4];
-      rml->GetReferenceArray(ref);
-      memcpy((unsigned char *)&buf[idx],(const unsigned char*)ref,
-             sizeof(unsigned char)*rml->NumRotors()*4);
-      idx += sizeof(unsigned char)*rml->NumRotors()*4;
-      delete [] ref;
-
-      //Write Rotamers
-      vector<unsigned char*>::iterator k;
-      for (k = rml->BeginRotamer();k != rml->EndRotamer();k++)
+        if (SwabInt)
         {
-	  memcpy((unsigned char *)&buf[idx],(const unsigned char*)*k,
-                 sizeof(unsigned char)*(rml->NumRotors()+1));
-          idx += sizeof(char)*(rml->NumRotors()+1);
+            imin[k] = Swab(imin[k]);
+            imax[k] = Swab(imax[k]);
         }
     }
-  else if (mol.NumConformers() > 1) {//Store conformers as coordinates
-      //Write coordinate conformers 
-      float tc[3];
-      for (j = clist.begin();j != clist.end();j++)
-        for (k = 0;k < mol.NumAtoms();k++)
-          {
-            for (m = 0;m < 3;m++) tc[m] = (*j)[k*3+m]-min[m];
-            tmp = PackCoordinate(tc,max);
-            if (SwabInt) tmp = Swab(tmp);
-            memcpy((unsigned char *)&buf[idx],
-                   (const char*)&tmp,sizeof(int)); idx += sizeof(int);
-          }
+
+    //write the min and max
+    buf.insert(idx, (const char *) imin, sizeof(int) * 3);
+    idx += (int) sizeof(int) * 3;
+
+    buf.insert(idx, (const char *) imax, sizeof(int) * 3);
+    idx += (int) sizeof(int) * 3;
+
+    //quantize max for packing coordinates
+    for ( k = 0 ; k < 3 ; k++ ) 
+        max[k] = (fabs(max[k]) > 0.01) ? 1023.0f / max[k] : 0.0;
+
+    //write the number of confs and rotamers
+    tmp = (int) clist.size();
+    if (SwabInt) 
+        tmp = Swab(tmp);
+    
+    buf.insert(idx, (const char *) &tmp, sizeof(int));
+    idx += (int) sizeof(int);
+
+    tmp = (rml) ? rml->NumRotamers() : 0;
+    if (SwabInt) 
+        tmp = Swab(tmp);
+    
+    buf.insert(idx, (const char *) &tmp, sizeof(int));
+    idx += (int) sizeof(int);
+
+    //The third boolean expression in the next if statement is an error check to make
+    //sure than the number of atoms in the OBRotamerLists internal coordinates are the
+    //same as the molecules IF we are using the OBRotamerLists internal coordinates.
+    //If we are using the OBRotamerList's internal coordinates but the number of atoms
+    //in those coordinates don't match the number of atoms in the molecule then  the
+    //rotamer list is incorrect for the molecule and we just default to writing the
+    //molecules conformers.  I put this in because it strikes me as a very easy error
+    //to make if the molecule is modified in any way and the user is not aware that
+    //he/she is responsible for correctly updating the OBRotamerList MM 4/20/01
+
+    if (rml && ((rml) ? rml->NumRotamers() : 0) && 
+        (rml->NumBaseCoordinateSets() == 0 || rml->NumAtoms() == mol.NumAtoms()) ) 
+        // Store conformers as torsion list
+    {        
+        // Write base coordinates
+
+        float tc[3];
+        sz = mol.NumAtoms() * 3;
+        for ( j = clist.begin() ; j != clist.end() ; j++ )
+        {
+            float *coords = *j;
+            for ( k = 0 ; k < sz ; k += 3 )
+            {
+                tc[0] = coords[k  ] - min[0];
+                tc[1] = coords[k+1] - min[1];
+                tc[2] = coords[k+2] - min[2];
+
+                tmp = PackCoordinate(tc, max);
+                if (SwabInt) 
+                    tmp = Swab(tmp);
+
+                buf.insert(idx, (const char *) &tmp, sizeof(int));
+                idx += (int) sizeof(int);
+            }
+        }
+
+        //Write rotors
+        tmp = rml->NumRotors(); 
+        if (SwabInt) 
+            tmp = Swab(tmp);
+
+        buf.insert(idx, (const char *) &tmp, sizeof(int));
+        idx += (int) sizeof(int);
+
+        unsigned char *ref = new unsigned char [rml->NumRotors() * 4];
+
+        rml->GetReferenceArray(ref);
+
+        buf.insert(idx, (const char *) ref, rml->NumRotors() * 4);
+        idx += (int) rml->NumRotors() * 4;
+
+        delete [] ref;
+
+        //Write Rotamers
+        vector<unsigned char*>::iterator r;
+        sz = rml->NumRotors() + 1;
+        for ( r = rml->BeginRotamer() ; r != rml->EndRotamer() ; r++ )
+        {
+            buf.insert(idx, (const char *) *r, sz);
+            idx += sz;
+        }
     }
-  else //must be storing single-conformer structure
+    else if (mol.NumConformers() > 1) // Store conformers as coordinates
     {
-      //write the coordinates
-      float coord[3];
-      for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-	{
-	  (atom->GetVector()).Get(coord);
-	  for (k = 0;k < 3;k++) coord[k] -= min[k];
-	  tmp = PackCoordinate(coord,max);
-	  if (SwabInt) tmp = Swab(tmp);
-	  memcpy((unsigned char *)&buf[idx],
-		 (const char*)&tmp,sizeof(int)); idx += sizeof(int);
-	}  
+        // Write coordinate conformers 
+
+        float tc[3];
+        sz = mol.NumAtoms() * 3;
+        for ( j = clist.begin() ; j != clist.end() ; j++ )
+        {
+            float *coords = *j;
+            for ( k = 0 ; k < sz ; k += 3 )
+            {
+                tc[0] = coords[k  ] - min[0];
+                tc[1] = coords[k+1] - min[1];
+                tc[2] = coords[k+2] - min[2];
+                
+                tmp = PackCoordinate(tc, max);
+                if (SwabInt) 
+                    tmp = Swab(tmp);
+
+                buf.insert(idx, (const char *) &tmp, sizeof(int));
+                idx += (int) sizeof(int);
+            }
+        }
     }
-
-  int nwords,word,bit;
-  unsigned int *arobits;
-
-  if (mol.NumAtoms()) //set bits on for aromatic atoms
+    else //must be storing single-conformer structure
     {
-      nwords = mol.NumAtoms()/OB_BINARY_SETWORD;
-      if (mol.NumAtoms()%OB_BINARY_SETWORD) nwords++;
-      arobits = new unsigned int [nwords];
-      memset((char*)arobits,'\0',sizeof(int)*nwords);
+        //write the coordinates
+        float coord[3];
+	OBAtom *atom2;
+	vector<OBNodeBase*>::iterator i;
+	for (atom2 = mol.BeginAtom(i); atom2; atom2 = mol.NextAtom(i))
+        {
+            (atom2->GetVector()).Get(coord);
+            coord[0] -= min[0];
+            coord[1] -= min[1];
+            coord[2] -= min[2];
 
-      for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-	if (atom->IsAromatic())
-	{
-	  word = (atom->GetIdx()-1)/OB_BINARY_SETWORD;
-	  bit = (atom->GetIdx()-1)%OB_BINARY_SETWORD;
-	  arobits[word] |= (1<<bit);
-	}
-      
-      if (SwabInt)
-	for (m = 0;m < nwords;m++)
-	  arobits[m] =  Swab(arobits[m]);
-      memcpy(&buf[idx],(const char*)arobits,sizeof(int)*nwords);idx += sizeof(int)*nwords;
-      delete [] arobits;
+            tmp = PackCoordinate(coord,max);
+            if (SwabInt) 
+                tmp = Swab(tmp);
+            
+            buf.insert(idx, (const char *) &tmp, sizeof(int));
+            idx += (int) sizeof(int);
+        }
     }
 
-  if (mol.NumBonds()) //set bits on for aromatic bonds
+    if (mol.NumAtoms()) //set bits on for aromatic atoms
     {
-      nwords = mol.NumBonds()/OB_BINARY_SETWORD;
-      if (mol.NumBonds()%OB_BINARY_SETWORD) nwords++;
+        int nwords = mol.NumAtoms() / OB_BINARY_SETWORD;
+        if (mol.NumAtoms() % OB_BINARY_SETWORD) 
+            nwords++;
+    
+        unsigned int *arobits = new unsigned int [nwords];
+        memset((char*)arobits, '\0', sizeof(int)*nwords);
 
-      arobits = new unsigned int [nwords];
-      memset((char*)arobits,'\0',sizeof(int)*nwords);
+        int word, bit;
+	OBAtom *atom3;
+	for (atom3 = mol.BeginAtom(atomIter); atom3; atom3 = mol.NextAtom(atomIter))
+        {
+            if (atom3->IsAromatic())
+            {
+                word           = (atom3->GetIdx()-1) / OB_BINARY_SETWORD;
+                bit            = (atom3->GetIdx()-1) % OB_BINARY_SETWORD;
+                arobits[word] |= (1<<bit);
+            }
+        }
 
-      for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
-	if (bond->IsAromatic())
-	  {
-	    word = (bond->GetIdx())/OB_BINARY_SETWORD;
-	    bit = (bond->GetIdx())%OB_BINARY_SETWORD;
-	    arobits[word] |= (1<<bit);
-	  }
-      
-      if (SwabInt)
-	for (m = 0;m < nwords;m++)
-	  arobits[m] =  Swab(arobits[m]);
-      memcpy(&buf[idx],(const char*)arobits,sizeof(int)*nwords);idx += sizeof(int)*nwords;
-      delete [] arobits;
+        if (SwabInt)
+            for ( m = 0; m < nwords ; m++)
+                arobits[m] = Swab(arobits[m]);
+
+        buf.insert(idx, (const char *) arobits, sizeof(int) * nwords);
+        idx += (int) sizeof(int) * nwords;
+
+        delete [] arobits;
     }
 
-  //Write pose information
-  
-  //Number of poses
-  unsigned int numposes = mol.NumPoses();
-  idx += OB_io_write_binary((char*)&buf[idx],(char*)&numposes, sizeof(unsigned int), 1); 
+    if (mol.NumBonds()) //set bits on for aromatic bonds
+    {
+        int nwords = mol.NumBonds() / OB_BINARY_SETWORD;
+        if (mol.NumBonds() % OB_BINARY_SETWORD) 
+            nwords++;
 
-  //Specify a version number for the poses
-  unsigned short int pose_version=0;
-  idx += OB_io_write_binary((char*)&buf[idx],(char*)&pose_version,sizeof(unsigned short int), 1);
-  
-  for (k=0 ; k<mol.NumPoses() ; k++) 
-	  idx += mol.GetPose(k).WriteBinary((char*)&buf[idx]); //Each pose
+        unsigned int *arobits = new unsigned int [nwords];
+        memset((char*)arobits, '\0', sizeof(int)*nwords);
 
-  size = idx;
-  return(true);
+        int word, bit;
+	OBBond *bond2;
+	for (bond2 = mol.BeginBond(bondIter); bond2; bond2 = mol.NextBond(bondIter))
+        {
+            if (bond2->IsAromatic())
+            {
+                word           = (bond2->GetIdx()) / OB_BINARY_SETWORD;
+                bit            = (bond2->GetIdx()) % OB_BINARY_SETWORD;
+                arobits[word] |= (1<<bit);
+            }
+        }
+
+        if (SwabInt)
+            for ( m = 0 ; m < nwords ; m++)
+                arobits[m] = Swab(arobits[m]);
+
+        buf.insert(idx, (const char *) arobits, sizeof(int) * nwords);
+        idx += (int) sizeof(int) * nwords;
+
+        delete [] arobits;
+    }
+
+    size = idx;
+    return true;
 }
 
-bool ReadBinary(istream &ifs,OBMol &mol)
+
+bool ReadBinary(istream &ifs, OBMol &mol)
 {
-  int size = 0;
-  unsigned char buf[1000000];
-  if (!ifs.read((char*)&size,sizeof(int))) return(false);
-  if (SwabInt) size = Swab(size);
-  if (!ifs.read((char*)buf,sizeof(char)*size)) return(false);
-  ReadBinary(buf,mol,size);
+    int size = 0;
+    if (!ifs.read((char*)&size,sizeof(int))) 
+        return false;
 
-  return(true);
+    if (SwabInt) 
+        size = Swab(size);
+
+    if (size > 0)
+    {
+        unsigned char *buf = new unsigned char[size];
+
+        if (!ifs.read((char*)buf,(int)sizeof(char)*size)) 
+            return(false);
+
+        ReadBinary(buf,mol,size);
+
+        delete [] buf;
+        return true;
+    }
+    else
+        return false;
 }
+
 
 bool ReadBinary(istream &ifs, unsigned char **bin)
 {
-  int size = 0;
-  unsigned char buf[100000];
+    obAssert(bin != NULL);
 
-  obAssert(bin != NULL);
+    int temp = 0;
+    if (!ifs.read((char*)&temp,sizeof(int)))
+        return false;
 
-#ifdef __sgi
+    int size = (SwabInt) ? Swab(temp) : temp;
 
-  if (!ifs.read((char*)&size,sizeof(int))) return(false);
-  if (SwabInt) size = Swab(size);
-  if (!ifs.read((char*)buf,sizeof(char)*size)) return(false);
+    if (size > 0)
+    {
+        unsigned char *buf = new unsigned char[sizeof(int) + size];
 
-  *bin = new unsigned char[sizeof(int) + (sizeof(char) * size)];
- 
-  memcpy(*bin, &size, sizeof(int));
-  memcpy(*bin + sizeof(int), &buf[0], (sizeof(char) * size));
+        memcpy(buf, &temp, sizeof(int));
+        if (!ifs.read((char*)&buf[sizeof(int)], (int)sizeof(char)*size))
+            return false;
 
-#else
-
-  int temp = 0;
-
-  if (!ifs.read((char*)&temp,sizeof(int))) return(false);
-  if (SwabInt) size = Swab(temp);
-  if (!ifs.read((char*)buf,sizeof(char)*size)) return(false);
-
-  *bin = new unsigned char[sizeof(int) + (sizeof(char) * size)];
- 
-  memcpy(*bin, &temp, sizeof(int));
-  memcpy(*bin + sizeof(int), &buf[0], (sizeof(char) * size));
-
-#endif
-
-  return(true);
+        *bin = buf;        
+        return true;
+    }
+    else
+    {
+        *bin = NULL;
+        return false;
+    }
 }
 
-bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
+
+bool ReadBinary(unsigned char *buf, OBMol &mol, int size)
 {
   int i,j,k,idx,natoms,nbonds,tmp;
   char title[OB_TITLE_SIZE+1]; 
@@ -636,7 +706,7 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
 
   //read title
   i = (int)buf[0];
-  idx += sizeof(char);
+  idx += (int)sizeof(char);
   if (i > 0)
     {
       memcpy(title,&buf[idx],sizeof(char)*i);
@@ -647,7 +717,7 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
     strcpy(title,"****");
 
   //readnumber of atoms and bonds
-  memcpy(&tmp,(unsigned char*)&buf[idx],sizeof(int)); idx += sizeof(int);
+  memcpy(&tmp,(unsigned char*)&buf[idx],sizeof(int)); idx += (int)sizeof(int);
   if (SwabInt) tmp = Swab(tmp);
 
   natoms = (tmp >> 16);
@@ -656,7 +726,7 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
   unsigned char *anum = new unsigned char [natoms];
   memcpy((unsigned char*)anum,
 	 &buf[idx],sizeof(unsigned char)*natoms); 
-  idx += sizeof(unsigned char)*natoms;
+  idx += (int)sizeof(unsigned char)*natoms;
   
   mol.BeginModify();
   //read atom data
@@ -675,7 +745,7 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
   unsigned char *bnd = new unsigned char [nbonds*3];
   memcpy((unsigned char*)bnd,
 	 &buf[idx],sizeof(unsigned char)*3*nbonds); 
-  idx += sizeof(unsigned char)*3*nbonds;
+  idx += (int)sizeof(unsigned char)*3*nbonds;
   for (i = 0;i < nbonds;i++)
     {
       start = bnd[i*3  ];
@@ -690,8 +760,8 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
   //read the min and max
   int imin[3],imax[3];
   float min[3],max[3];
-  memcpy((char*)imin,&buf[idx],sizeof(int)*3); idx += sizeof(int)*3;
-  memcpy((char*)imax,&buf[idx],sizeof(int)*3); idx += sizeof(int)*3;
+  memcpy((char*)imin,&buf[idx],sizeof(int)*3); idx += (int)sizeof(int)*3;
+  memcpy((char*)imax,&buf[idx],sizeof(int)*3); idx += (int)sizeof(int)*3;
 
   //unpack min and max
   for (i = 0;i < 3;i++)
@@ -708,8 +778,8 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
 
   //read conformer information if available
   int nconfs,rotmrs;
-  memcpy((char*)&nconfs,&buf[idx],sizeof(int)); idx += sizeof(int);
-  memcpy((char*)&rotmrs,&buf[idx],sizeof(int)); idx += sizeof(int);
+  memcpy((char*)&nconfs,&buf[idx],sizeof(int)); idx += (int)sizeof(int);
+  memcpy((char*)&rotmrs,&buf[idx],sizeof(int)); idx += (int)sizeof(int);
   if (SwabInt)
     {
       nconfs = Swab(nconfs);
@@ -720,7 +790,7 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
     {
       Vector v;
       int *tmpi = new int [natoms];
-      memcpy((char*)tmpi,&buf[idx],sizeof(int)*natoms); idx += sizeof(int)*natoms;
+      memcpy((char*)tmpi,&buf[idx],sizeof(int)*natoms); idx += (int)sizeof(int)*natoms;
       float coord[3];
       for (i = 0;i < natoms;i++)
 	{
@@ -739,7 +809,7 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
       for (i = 0;i < nconfs;i++)
 	{
 	  memcpy((char*)tmpi,(unsigned char*)&buf[idx],sizeof(int)*natoms); 
-	  idx += sizeof(int)*natoms;
+	  idx += (int)sizeof(int)*natoms;
 	  float *coord = new float [mol.NumAtoms()*3];
 	  for (j = 0;j < natoms;j++) 
 	    {
@@ -759,19 +829,19 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
        
 	  int nrotors;
 	  OBRotamerList *rml = new OBRotamerList;
-	  memcpy((char*)&nrotors,&buf[idx],sizeof(int)); idx += sizeof(int);
+	  memcpy((char*)&nrotors,&buf[idx],sizeof(int)); idx += (int)sizeof(int);
 	  if (SwabInt) nrotors = Swab(nrotors);
 
 	  unsigned char *ref = new unsigned char [nrotors*4];
 	  memcpy((unsigned char*)ref,&buf[idx],sizeof(unsigned char)*nrotors*4);
-	  idx += sizeof(unsigned char)*nrotors*4;
+	  idx += (int)sizeof(unsigned char)*nrotors*4;
 	  rml->Setup(mol,ref,nrotors);
 	  delete [] ref;
 	  
 	  unsigned char *rotamers = new unsigned char [(nrotors+1)*rotmrs];
 	  memcpy((unsigned char*)rotamers,
 		 &buf[idx],sizeof(unsigned char)*(nrotors+1)*rotmrs);
-	  idx += sizeof(unsigned char)*(nrotors+1)*rotmrs;
+	  idx += (int)sizeof(unsigned char)*(nrotors+1)*rotmrs;
 	  rml->AddRotamers(rotamers,rotmrs);
 	  delete [] rotamers;
 	 
@@ -784,8 +854,8 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
 
           //Add the OBRotamerList to the molecule as user data
           mol.SetData(rml);
-	} // end else !rotmrs
-		}  // end else nconf==1 && !rotmrs
+	}
+    }
 
   mol.SetTitle(title);
 
@@ -801,7 +871,7 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
       arobits = new unsigned int [nwords];
 
       memcpy((unsigned char*)arobits,&buf[idx],sizeof(int)*nwords);
-      idx += sizeof(int)*nwords;
+      idx += (int)sizeof(int)*nwords;
 
       if (SwabInt)
 	for (i = 0;i < nwords;i++) arobits[i] =  Swab(arobits[i]);
@@ -820,7 +890,7 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
       arobits = new unsigned int [nwords];
 
       memcpy((unsigned char*)arobits,&buf[idx],sizeof(int)*nwords);
-      idx += sizeof(int)*nwords;
+      idx += (int)sizeof(int)*nwords;
 
       if (SwabInt)
 	for (i = 0;i < nwords;i++) arobits[i] =  Swab(arobits[i]);
@@ -833,26 +903,6 @@ bool ReadBinary(unsigned char *buf,OBMol &mol,int size)
     }
 
   mol.SetAromaticPerceived();
-
-  //Read in poses if present
-  if (idx>=size) return(true);  //Backwards compatibility 
-  unsigned int kk;
-  mol.DeletePoses();
-  unsigned int Nposes=0;
-  OBPose pose;
-  idx += OB_io_read_binary((char*)&buf[idx],(char*)&Nposes,sizeof(unsigned int), 1); //Read number of poses
-  unsigned short int pose_version;
-  idx += OB_io_read_binary((char*)&buf[idx],(char*)&pose_version,sizeof(unsigned short int), 1); //Read the version number
-  if (pose_version == 0) {
-      for (kk=0 ; kk<Nposes ; kk++) { //Read in the poses
-          idx += pose.ReadBinary((char*)&buf[idx]);
-          mol.AddPose(pose);
-        }
-    }
-  else {
-      cerr << "ERROR! in OBMol binary reader, pose version not supported" << endl;
-      return false;
-    }
 
   return(true);
 }
@@ -891,8 +941,8 @@ void SetRotorToAngle(float *c,OBAtom **ref,float ang,vector<int> atoms)
   c3y = -c1x*c2z + c1z*c2x;
   c3z = c1x*c2y - c1y*c2x; 
   
-  c1mag = SQUARE(c1x)+SQUARE(c1y)+SQUARE(c1z);
-  c2mag = SQUARE(c2x)+SQUARE(c2y)+SQUARE(c2z);
+  c1mag = c1x*c1x + c1y*c1y + c1z*c1z;
+  c2mag = c2x*c2x + c2y*c2y + c2z*c2z;
   if (c1mag*c2mag < 0.01) costheta = 1.0; //avoid div by zero error
   else costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
 
@@ -911,7 +961,7 @@ void SetRotorToAngle(float *c,OBAtom **ref,float ang,vector<int> atoms)
 
   sn = sin(rotang); cs = cos(rotang);t = 1 - cs;
   //normalize the rotation vector
-  mag = sqrt(SQUARE(v2x)+SQUARE(v2y)+SQUARE(v2z));
+  mag = sqrt(v2x*v2x + v2y*v2y + v2z*v2z);
   x = v2x/mag; y = v2y/mag; z = v2z/mag;
   
   //set up the rotation matrix
@@ -938,63 +988,94 @@ void SetRotorToAngle(float *c,OBAtom **ref,float ang,vector<int> atoms)
 
 //OBBinaryDBase class - facilitates random access to OBBinary files
 
-OBBinaryDBase::OBBinaryDBase(char *fname)
+OBBinaryDBase::OBBinaryDBase(const char *fname)
 {
-  int size;
-  streampos pos;
-  unsigned char buf[100000];
+    int size;
+    std::streampos pos;
 
-  if (!SafeOpen(_ifs,fname)) exit(0);
-
-  for (;;)
+    _ifs.open(fname);
+    if (!_ifs)
     {
-      pos = _ifs.tellg();
-      if (!_ifs.read((char*)&size,sizeof(int))) break;
-      if (SwabInt) size = Swab(size);
-      if (!_ifs.read((char*)buf,sizeof(char)*size)) break;
-      _vpos.push_back(pos);
+        exit(0);
     }
-  _ifs.close();
 
-  if (!SafeOpen(_ifs,fname)) exit(0);
+    for (;;)
+    {
+        pos = _ifs.tellg();
+        
+        if (!_ifs.read((char*)&size,sizeof(int))) 
+            break;
+        
+        if (SwabInt) 
+            size = Swab(size);
+        
+        if (!_ifs.seekg(size, ostream::cur))
+            break;
+        
+        _vpos.push_back(pos);
+    }
+
+    _ifs.close();
+    _ifs.open(fname);
+    if (!_ifs) 
+    {
+        exit(0);
+    }
 }
 
 OBBinaryDBase::OBBinaryDBase(string &fname)
 {
-  int size;
-  streampos pos;
-  unsigned char buf[100000];
+    int size;
+    std::streampos pos;
 
-  if (!SafeOpen(_ifs,(char*)fname.c_str())) exit(0);
-
-  for (;;)
+    _ifs.open(fname.c_str());
+    if (!_ifs)
     {
-      pos = _ifs.tellg();
-      if (!_ifs.read((char*)&size,sizeof(int))) break;
-      if (SwabInt) size = Swab(size);
-      if (!_ifs.read((char*)buf,sizeof(char)*size)) break;
-      _vpos.push_back(pos);
+        exit(0);
     }
-  _ifs.close();
 
-  if (!SafeOpen(_ifs,(char*)fname.c_str())) exit(0);
+    for (;;)
+    {
+        pos = _ifs.tellg();
+        
+        if (!_ifs.read((char*)&size,sizeof(int))) 
+            break;
+        
+        if (SwabInt) 
+            size = Swab(size);
+        
+        if (!_ifs.seekg(size, ostream::cur))
+            break;
+        
+        _vpos.push_back(pos);
+    }
+
+    _ifs.close();
+    _ifs.open(fname.c_str());
+    if (!_ifs)
+    {
+        exit(0);
+    }
 }
 
 int OBBinaryDBase::Size()
 {
-  return(_vpos.size());
+    return (int) _vpos.size();
 }
 
 void OBBinaryDBase::GetMolecule(OBMol &mol,int idx)
 {
-  OBFileFormat ff;
-  mol.Clear();
-  mol.SetInputType(OEBINARY);
-  _ifs.seekg(_vpos[idx]);
-  ff.ReadMolecule(_ifs,mol);
+    OBFileFormat translator;
+    mol.Clear();
+    mol.SetInputType(OEBINARY);
+    _ifs.seekg(_vpos[idx]);
+    translator.ReadMolecule(_ifs,mol);
+}
 
+OBBinaryDBase::~OBBinaryDBase(void)
+{
 }
 
 
-} //namespace OpenBabel
+} //namespace OpenEye
 

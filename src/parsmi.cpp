@@ -817,7 +817,7 @@ bool OBSmilesParser::ParseRingBond(OBMol &mol)
   return(true);
 }
 
-bool SmiToMol(OBMol &mol,string &smi,char *title)
+bool SmiToMol(OBMol &mol,string &smi,const char *title)
 {
   OBSmilesParser sp;
   mol.SetTitle(title);
@@ -828,7 +828,7 @@ bool SmiToMol(OBMol &mol,string &smi,char *title)
   return(true);
 }
 
-bool ReadSmiles(istream &ifs,OBMol &mol,char *title)
+bool ReadSmiles(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
 

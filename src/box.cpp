@@ -18,7 +18,7 @@ using namespace std;
 namespace OpenBabel 
 {
 
-bool ReadBox(istream &ifs, OBMol &mol,char *title)
+bool ReadBox(istream &ifs, OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   vector<string> vs;

@@ -419,7 +419,7 @@ OBAtom *atomPtr;
 // current Bond
 OBBond *bondPtr;
 // dimensionality of coordinates
-char *dimension;
+const char *dimension;
 // only CML can separate 2 and 3D
 string cmlDimension;
 
@@ -2827,7 +2827,7 @@ bool WriteTorsion(ostream &ofs, pair <vector<OBAtom*>, double> torsion) {
 
 /**------------------Babel INPUT OUTPUT --------------------------*/
 
-bool ReadCML(istream &ifs,OBMol &mol, char *title) {
+bool ReadCML(istream &ifs,OBMol &mol, const char *title) {
 	molPtr = &mol;
 	ReadXML(ifs);
 	return true;
@@ -2835,8 +2835,8 @@ bool ReadCML(istream &ifs,OBMol &mol, char *title) {
 
 // output routines
 
-bool WriteCML(ostream &ofs,OBMol &mol,char *dim, char* xmlOptions) {
-
+bool WriteCML(ostream &ofs,OBMol &mol,const char *dim,const char* xmlOptions)
+{
 	ofsPtr = &ofs;
 	outputCML1 = true;
 	outputCML2 = false;

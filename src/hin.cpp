@@ -17,7 +17,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool ReadHIN(istream &ifs,OBMol &mol,char *title)
+bool ReadHIN(istream &ifs,OBMol &mol, const char *title)
 { 
   // Right now only read in the first molecule
   int i;

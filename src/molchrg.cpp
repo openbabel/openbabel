@@ -39,9 +39,9 @@ bool OBGastChrg::AssignPartialCharges(OBMol &mol)
   OBAtom *src,*dst;
   vector<OBEdgeBase*>::iterator k;
   alpha = 1.0;
-  for(iter = 0;iter < MX_GASTEIGER_ITERS;iter++) 
+  for(iter = 0;iter < OB_GASTEIGER_ITERS;iter++) 
     {
-      alpha *= MX_GASTEIGER_DAMP;
+      alpha *= OB_GASTEIGER_DAMP;
       
       for( j=1;j < _gsv.size();j++)
 	{
@@ -56,12 +56,12 @@ bool OBGastChrg::AssignPartialCharges(OBMol &mol)
 
 	  if (_gsv[src->GetIdx()]->chi >= _gsv[dst->GetIdx()]->chi)
 	    {
-	      if (dst->IsHydrogen()) denom = float(MX_GASTEIGER_DENOM);
+	      if (dst->IsHydrogen()) denom = float(OB_GASTEIGER_DENOM);
 	      else                   denom = _gsv[dst->GetIdx()]->denom;
 	    }
 	  else
 	    {
-	      if (src->IsHydrogen()) denom = float(MX_GASTEIGER_DENOM);
+	      if (src->IsHydrogen()) denom = float(OB_GASTEIGER_DENOM);
 	      else                   denom = _gsv[src->GetIdx()]->denom;
 	    }
 

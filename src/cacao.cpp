@@ -18,7 +18,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-bool ReadCaccrt(istream &ifs,OBMol &mol,char *title)
+bool ReadCaccrt(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   int natoms;

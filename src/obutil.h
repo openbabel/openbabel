@@ -57,8 +57,8 @@ class OBStopwatch
   float Lap() 
     {
       gettimeofday(&stop,(struct timezone *)NULL);
-      return((stop.tv_sec - start.tv_sec) + (float)
-	(stop.tv_usec - start.tv_usec)/1000000.0);
+      return((stop.tv_sec - start.tv_sec)
+	     + (float)(stop.tv_usec - start.tv_usec)/1000000.0);
     }
 #endif
   float Elapsed() {return(Lap());}
@@ -71,19 +71,25 @@ class OBSqrtTbl
 {
   float _max,_incr,*_tbl;
  public:
-  OBSqrtTbl() {_tbl=NULL;}
+  OBSqrtTbl() {_tbl=NULL; _max = _incr = 0.0;}
   OBSqrtTbl(float max,float incr) {Init(max,incr);}
   ~OBSqrtTbl() {if (_tbl) {delete [] _tbl; _tbl = NULL;}}
-  float Sqrt(float d2) {return((d2 < _max) ? _tbl[(int)(d2*_incr)]:float(sqrt(d2)));}
+  float Sqrt(float d2) const
+    {
+      if (_tbl)
+	return((d2 < _max) ? _tbl[(int)(d2*_incr)]:sqrt(d2));
+      else
+	return 0.0;
+    }
   void Init(float max,float incr)
     {
       int i; float r;
       _max = max*max;
       _incr = incr;
       //array size needs to be large enough to account for fp error
-      _tbl = new float [(int)((_max/_incr)+10)];
+      _tbl = new float [(unsigned int)((_max/_incr)+10)];
       for (r = (_incr/2.0f),i=0;r <= _max;r += _incr,i++)
-	_tbl[i] = float(sqrt(r));
+	_tbl[i] = sqrt(r);
 
       _incr = 1/_incr;
     }
@@ -121,17 +127,14 @@ class OBRandom
 };
 
 //***RMS helper methods***/
-void rotate_coords(float*,float m[3][3],int);
+void  rotate_coords(float*,float m[3][3],int);
 float calc_rms(float*,float*,int);
 
-//**File stream helper methods
-bool SafeOpen(std::ifstream&,char*);
-bool SafeOpen(std::ofstream&,char*);
-bool SafeOpen(std::ifstream&,std::string&);
-bool SafeOpen(std::ofstream&,std::string&);
-
+// String conversion utilities
 void ToUpper(std::string&);
 void ToUpper(char*);
+void ToLower(std::string&);
+void ToLower(char *);
 void CleanAtomType(char*);
 
 bool OBCompareInt(const int &,const int &);

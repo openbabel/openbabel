@@ -33,6 +33,18 @@ OBGenericData::OBGenericData(const OBGenericData &src)
   _attr = src.GetAttribute();
 }
 
+
+OBGenericData& OBGenericData::operator = (const OBGenericData &src)
+{
+    if(this == &src) 
+        return(*this);
+    
+    _type = src._type;
+    _attr = src._attr;
+    
+    return(*this);
+}
+
 //
 //member functions for OBCommentData class
 //
@@ -153,6 +165,532 @@ OBRingData::OBRingData()
 	_type = obRingData;
 	_attr = "RingData";
 	_vr.clear();
+}
+
+/*!
+**\brief OBRingData copy constructor
+**\param src reference to original OBRingData object (rhs)
+*/
+OBRingData::OBRingData(const OBRingData &src)
+    :	OBGenericData(src),	//chain to base class
+		_vr(src._vr)				//chain to member classes
+{
+	//no other memeber data
+	//memory management
+
+	vector<OBRing*>::iterator ring;
+
+	for(ring = _vr.begin();ring != _vr.end();ring++)
+	{
+		OBRing *newring = new OBRing;
+		(*newring) = (**ring);	//copy data to new object
+		(*ring)    = newring;	//repoint new pointer to new copy of data
+	}
+}
+
+OBRingData::~OBRingData()
+{
+    vector<OBRing*>::iterator ring;
+    for (ring = _vr.begin();ring != _vr.end();ring++)
+    {
+        delete *ring;
+    }
+}
+
+/*!
+**\brief OBRingdata assignment operator
+**\param src reference to original OBRingData object (rhs)
+**\return reference to changed OBRingData object (lhs)
+*/
+OBRingData& OBRingData::operator =(const OBRingData &src)
+{
+    //on identity, return
+    if(this == &src)	return(*this);
+
+    //chain to base class
+    OBGenericData::operator =(src);
+
+    //member data
+
+    //memory management
+    vector<OBRing*>::iterator ring;
+    for(ring = _vr.begin();ring != _vr.end();ring++)
+    {
+	    delete &*ring;	//deallocate old rings to prevent memory leak
+    }
+
+    _vr.clear();
+    _vr = src._vr;	//copy vector properties
+
+    for(ring = _vr.begin();ring != _vr.end();ring++)
+    {
+	    if(*ring == 0)
+		    continue;
+	    
+	    //allocate and copy ring data
+	    OBRing *newring = new OBRing;
+	    (*newring) = (**ring);
+	    (*ring) = newring;	//redirect pointer
+    }
+    return(*this);
+}
+
+//
+//member functions for OBAngle class - stores all angles
+//
+
+/*!
+**\brief Angle default constructor
+*/
+OBAngle::OBAngle()
+{
+    _vertex         = 0;
+    _termini.first  = 0;
+    _termini.second = 0;
+    _radians        = 0.0;
+}
+
+/*!
+**\brief Angle constructor
+*/
+OBAngle::OBAngle(OBAtom *vertex,OBAtom *a,OBAtom *b)
+{
+	_vertex         = vertex;
+	_termini.first  = a; 
+    _termini.second = b ;
+
+	SortByIndex();
+}
+
+/*!
+**\brief OBAngle copy constructor
+*/
+OBAngle::OBAngle(const OBAngle &src)
+	:	_termini(src._termini)
+{
+	_vertex  = src._vertex;
+	_radians = src._radians;
+}
+
+/*!
+**\brief OBAngle assignment operator
+*/
+OBAngle& OBAngle::operator = (const OBAngle &src)
+{
+	if (this == &src) 
+        return(*this);
+
+	_vertex         = src._vertex;
+	_termini.first  = src._termini.first;
+	_termini.second = src._termini.second;
+	_radians        = src._radians;
+
+	return(*this);
+}
+
+/*!
+**\brief Return OBAngle to its original state
+*/
+void OBAngle::Clear()
+{
+	_vertex         = 0;
+	_termini.first  = 0;
+    _termini.second = 0;
+	_radians        = 0.0;
+	return;
+}
+
+/*!
+**\brief Sets the 3 atoms in the angle
+**\param pointers to each OBAtom
+*/
+void OBAngle::SetAtoms(OBAtom *vertex,OBAtom *a,OBAtom *b)
+{
+	_vertex         = vertex;
+	_termini.first  = a; 
+    _termini.second = b;
+	SortByIndex();
+	return;
+}
+
+/*!
+**\brief Sets the 3 atoms in the angle
+**\param atoms a triple of OBAtom pointers, the first must be the vertex
+*/
+void OBAngle::SetAtoms(triple<OBAtom*,OBAtom*,OBAtom*> &atoms)
+{
+	_vertex         = atoms.first; 
+	_termini.first  = atoms.second;
+	_termini.second = atoms.third;
+	SortByIndex();
+	return;
+}
+
+/*!
+**\brief Retrieves the 3 atom pointer for the angle (vertex first)
+**\return triple of OBAtom pointers 
+*/
+triple<OBAtom*,OBAtom*,OBAtom*> OBAngle::GetAtoms()
+{
+	triple<OBAtom*,OBAtom*,OBAtom*> atoms;
+	atoms.first  = _vertex;
+	atoms.second = _termini.first;
+	atoms.third  = _termini.second;
+    return(atoms);
+}
+
+/*!
+**\brief sorts atoms in angle by order of indices
+*/
+void OBAngle::SortByIndex()
+{
+	OBAtom *tmp;
+
+	if(_termini.first->GetIdx() > _termini.second->GetIdx())
+	{
+		tmp             = _termini.first; 
+		_termini.first  = _termini.second;
+		_termini.second = tmp;
+	}
+}
+
+/*!
+**\brief OBAngle equality operator, is same angle, NOT same value
+**\return boolean equality
+*/
+bool OBAngle::operator ==(const OBAngle &other)
+{
+	return ((_vertex         == other._vertex)        &&
+            (_termini.first  == other._termini.first) &&
+            (_termini.second == other._termini.second));
+}
+
+//
+//member functions for OBAngleData class - stores OBAngle set
+//
+
+/*!
+**\brief OBAngleData constructor
+*/
+OBAngleData::OBAngleData()
+	:	OBGenericData()
+{
+    _type = obAngleData;
+    _attr = "AngleData";
+}
+
+/*!
+**\brief OBAngleData copy constructor
+*/
+OBAngleData::OBAngleData(const OBAngleData &src)
+	:	OBGenericData(src), _angles(src._angles)
+{
+    _type = obAngleData;
+    _attr = "AngleData";
+}
+
+/*!
+**\brief OBAngleData assignment operator
+*/
+OBAngleData& OBAngleData::operator =(const OBAngleData &src)
+{
+	if (this == &src)
+        return(*this);
+
+    _angles = src._angles;
+
+    return(*this);
+}
+
+/*!
+**\brief sets OBAngleData to its original state
+*/
+void OBAngleData::Clear()
+{
+	_angles.clear();
+	return;
+}
+
+/*!
+**\brief Adds a new angle to OBAngleData
+*/
+void OBAngleData::SetData(OBAngle &angle)
+{
+	_angles.push_back(angle);
+	return;
+}
+
+/*!
+**\brief Fills an array with the indices of the atoms in the angle (vertex first)
+**\param angles pointer to the pointer to an array of angles atom indices
+**\param size the current number of rows in the array
+**\return int The number of angles
+*/
+unsigned int OBAngleData::FillAngleArray(int **angles, unsigned int &size)
+{
+    if(_angles.size() > size)
+    {
+        delete [] *angles;
+        *angles = new int[_angles.size()*3];
+        size    = (unsigned int)_angles.size();
+    }
+
+    vector<OBAngle>::iterator angle;
+    int angleIdx = 0;
+    for( angle=_angles.begin(); angle!=_angles.end(); angle++)
+    {
+        *angles[angleIdx++] = angle->_vertex->GetIdx();
+        *angles[angleIdx++] = angle->_termini.first->GetIdx();
+        *angles[angleIdx++] = angle->_termini.second->GetIdx();
+    }
+    return (unsigned int)_angles.size();
+}
+
+//
+//member functions for OBAngleData class - stores OBAngle set
+//
+
+/*!
+**\brief OBTorsion constructor
+*/
+OBTorsion::OBTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d)
+{
+    triple<OBAtom*,OBAtom*,float> ad(a,d,0.0);
+    _ads.push_back(ad);
+
+    _bc.first  = b;
+    _bc.second = c;
+}
+
+/*!
+**\brief OBTorsion copy constructor
+*/
+OBTorsion::OBTorsion(const OBTorsion &src)
+	:	_bc(src._bc), _ads(src._ads)
+{
+}
+
+/*!
+**\brief Returns all the 4 atom sets in OBTorsion
+*/
+vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > OBTorsion::GetTorsions()
+{
+    quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> abcd;
+
+    abcd.second = _bc.first;
+    abcd.third  = _bc.second;
+
+    vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > torsions;
+    vector<triple<OBAtom*,OBAtom*,float> >::iterator ad;
+
+    for(ad = _ads.begin();ad != _ads.end();ad++)
+    {
+        abcd.first = ad->first;
+        abcd.fourth = ad->second;
+        torsions.push_back(abcd);
+    }
+
+    return(torsions);
+}
+
+/*!
+**\brief OBTorsion assignment operator
+*/
+OBTorsion& OBTorsion::operator =(const OBTorsion &src)
+{
+	if (this == &src) 
+        return(*this);
+
+    _bc  = src._bc;
+    _ads = src._ads;
+
+    return(*this);
+}
+
+/*!
+**\brief Returns the OBTorsion to its original state
+*/
+void OBTorsion::Clear()
+{
+    _bc.first  = 0;
+    _bc.second = 0;
+    _ads.erase(_ads.begin(),_ads.end());
+}
+
+/*!
+**\brief Sets the angle of a torsion in OBTorsion
+**\param radians the value to assign to the torsion
+**\param index the index into the torsion of the OBTorsion
+**\return boolean success
+*/
+bool OBTorsion::SetAngle(float radians,unsigned int index)
+{
+    if(index >= _ads.size())
+        return(false);
+
+    _ads[index].third = radians;
+
+    return(true);
+}
+
+/*!
+**\brief Obtains the angle of a torsion in OBTorsion
+**\param radians the value of the angle is set here
+**\param index the index into the torsion of the OBTorsion
+**\return boolean success
+*/
+bool OBTorsion::GetAngle(float &radians, unsigned int index)
+{
+    if(index >= _ads.size())
+        return false;
+    radians = _ads[index].third;
+    return true;
+}
+
+unsigned int OBTorsion::GetBondIdx()
+{
+    return(_bc.first->GetBond(_bc.second)->GetIdx());
+}
+
+/*!
+**\brief determines if torsion has only protons on either the a or d end
+**\return boolean 
+*/
+bool OBTorsion::IsProtonRotor()
+{
+    bool Aprotor = true;
+    bool Dprotor = true;
+    vector<triple<OBAtom*,OBAtom*,float> >::iterator ad;
+    for(ad = _ads.begin();ad != _ads.end() && (Aprotor || Dprotor);ad++)
+    {
+        if(!ad->first->IsHydrogen())
+            Aprotor = false;
+        if(!ad->second->IsHydrogen())
+            Dprotor = false;
+    }
+    return (Aprotor || Dprotor);
+}
+
+/*!
+**\brief adds a new torsion to the OBTorsion object
+*/
+bool OBTorsion::AddTorsion(OBAtom *a,OBAtom *b, OBAtom *c,OBAtom *d)
+{
+    if(!Empty() && (b != _bc.first || c != _bc.second))
+        return(false);
+
+    if(Empty())
+    {
+        _bc.first  = b;
+        _bc.second = c;
+    }
+
+    triple<OBAtom*,OBAtom*,float> ad(a,d,0.0);
+    _ads.push_back(ad);
+
+    return(true);
+}
+
+/*!
+**\brief adds a new torsion to the OBTorsion object
+*/
+bool OBTorsion::AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &atoms)
+{
+    if(!Empty() && (atoms.second != _bc.first || atoms.third != _bc.second))
+        return(false);
+
+    if(Empty())
+    {
+        _bc.first  = atoms.second;
+        _bc.second = atoms.third;
+    }
+
+    triple<OBAtom*,OBAtom*,float> ad(atoms.first,atoms.fourth,0.0);
+    _ads.push_back(ad);
+
+    return(true);
+}
+
+//\!brief OBTorsionData ctor
+OBTorsionData::OBTorsionData()
+{
+    _type = obTorsionData;
+    _attr = "TorsionData";
+}
+
+//
+//member functions for OBTorsionData class - stores OBTorsion set
+//
+OBTorsionData::OBTorsionData(const OBTorsionData &src)
+	:	OBGenericData(src), _torsions(src._torsions)
+{
+    _type = obTorsionData;
+    _attr = "TorsionData";
+}
+
+OBTorsionData& OBTorsionData::operator =(const OBTorsionData &src)
+{
+    if (this == &src) 
+        return(*this);
+
+    OBGenericData::operator =(src);
+
+    _type     = obTorsionData;
+    _attr     = "TorsionData";
+    _torsions = src._torsions;
+
+    return(*this);
+}
+
+void OBTorsionData::Clear()
+{
+    _torsions.clear();
+}
+
+void OBTorsionData::SetData(OBTorsion &torsion)
+{
+    _torsions.push_back(torsion);
+}
+
+/*!
+**\brief Fills a vector with the indices of the atoms in torsions (ordered abcd)
+**\param torsions reference to the vector of abcd atom sets
+**\return boolean success
+*/
+bool OBTorsionData::FillTorsionArray(vector<vector<unsigned int> > &torsions)
+{
+    if(_torsions.size() == 0)
+        return(false);
+
+    vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> > tmpquads,quads;
+    vector<quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> >::iterator thisQuad;
+    vector<OBTorsion>::iterator torsion;
+
+    //generate set of all 4 atom abcd's from torsion structure
+    for (torsion = _torsions.begin();torsion != _torsions.end();torsion++)
+    {
+        tmpquads = torsion->GetTorsions();
+        for(thisQuad = tmpquads.begin();thisQuad != tmpquads.end();thisQuad++)
+	        quads.push_back(*thisQuad);
+    }
+
+    //fill array of torsion atoms
+
+    torsions.clear();
+    torsions.resize(quads.size());
+
+    unsigned int ct = 0;
+
+    for (thisQuad = quads.begin();thisQuad != quads.end();thisQuad++,ct++)
+    {
+        torsions[ct].resize(4);
+        torsions[ct][0] = thisQuad->first->GetIdx()-1;
+        torsions[ct][1] = thisQuad->second->GetIdx()-1;
+        torsions[ct][2] = thisQuad->third->GetIdx()-1;
+        torsions[ct][3] = thisQuad->fourth->GetIdx()-1;
+    }
+
+    return(true);
 }
 
 } //end namespace OpenBabel

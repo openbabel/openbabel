@@ -19,7 +19,7 @@ namespace OpenBabel {
 
 #define BOHR_TO_ANGSTROM 0.529177
 
-bool ReadGAMESS(istream &ifs,OBMol &mol,char *title)
+bool ReadGAMESS(istream &ifs,OBMol &mol, const char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;

@@ -21,7 +21,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool WriteSmiles(ostream &ofs,OBMol &mol,char *title)
+bool WriteSmiles(ostream &ofs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE],tmp[BUFF_SIZE];
 

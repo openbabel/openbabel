@@ -17,7 +17,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool ReadAlchemy(istream &ifs,OBMol &mol,char *title)
+bool ReadAlchemy(istream &ifs,OBMol &mol, const char *title)
 {
   int i;
   int natoms,nbonds;

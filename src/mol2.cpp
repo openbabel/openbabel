@@ -17,13 +17,14 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
-bool ReadMol2(istream &ifs,OBMol &mol,char *title)
+bool ReadMol2(istream &ifs,OBMol &mol,const char *title)
 {
   bool foundAtomLine = false;
   char buffer[BUFF_SIZE];
   char *comment = NULL;
   string str,str1;
   vector<string> vstr;
+  int len;
 
   mol.BeginModify();
 
@@ -55,10 +56,11 @@ bool ReadMol2(istream &ifs,OBMol &mol,char *title)
 	}
       else if (lcount == 5) //comment
 	{
-	if (strlen(buffer) != 0)
+	if ( buffer[0] )
 	  {
-	    comment = new char [strlen(buffer)+1];
-	    strcpy(comment,buffer);
+	    len = (int) strlen(buffer)+1;
+	    comment = new char [len];
+	    memcpy(comment,buffer,len);
 	  }
 	}
     }
@@ -79,22 +81,30 @@ bool ReadMol2(istream &ifs,OBMol &mol,char *title)
     bool hasPartialCharges=false;
     float x,y,z,pcharge;
     char temp_type[BUFF_SIZE];
+    int elemno;
 
     ttab.SetFromType("SYB");
     for (i = 0;i < natoms;i++)
       {
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
 	sscanf(buffer," %*s %*s %f %f %f %s %*s %*s %f",
-	       &x,&y,&z,
-	       temp_type,
-	       &pcharge);
+	       &x,&y,&z, temp_type, &pcharge);
 
-	v.SetX(x);v.SetY(y);v.SetZ(z);
-	atom.SetVector(v);
+	atom.SetVector(x, y, z);
 
 	str = temp_type;
 	ttab.SetToType("ATN"); ttab.Translate(str1,str);
-	atom.SetAtomicNum(atoi(str1.c_str()));
+	elemno = atoi(str1.c_str());
+ 
+	// Handle "CL" and "BR" atom types!
+	if( !elemno && isupper(temp_type[1]) ) 
+	  {
+	    temp_type[1] = (char)tolower(temp_type[1]);
+	    str = temp_type;
+	    ttab.Translate(str1,str);
+	    elemno = atoi(str1.c_str());
+	  }
+	atom.SetAtomicNum(elemno);
 	ttab.SetToType("INT");	ttab.Translate(str1,str);
 	atom.SetType(str1);
 	atom.SetPartialCharge(pcharge);
@@ -106,7 +116,7 @@ bool ReadMol2(istream &ifs,OBMol &mol,char *title)
       {
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
 	str = buffer;
-	if (EQn(buffer,"@<TRIPOS>BOND",13)) break;
+	if (!strncmp(buffer,"@<TRIPOS>BOND",13)) break;
       }
     
     int start,end,order;
@@ -118,9 +128,8 @@ bool ReadMol2(istream &ifs,OBMol &mol,char *title)
       str = temp_type;
       order = 1;
       if (str == "ar" || str == "AR" || str == "Ar") order = 5;
-      else
-	if (str == "AM" || str == "am" || str == "Am") order = 1;
-	else  order = atoi(str.c_str());
+      else if (str == "AM" || str == "am" || str == "Am") order = 1;
+      else  order = atoi(str.c_str());
 
       mol.AddBond(start,end,order);
     }
@@ -142,7 +151,7 @@ bool ReadMol2(istream &ifs,OBMol &mol,char *title)
     return(true);
 }
 
-bool WriteMol2(ostream &ofs,OBMol &mol,char *dimension)
+bool WriteMol2(ostream &ofs,OBMol &mol,const char *dimension)
 {
   string str,str1;
   char buffer[BUFF_SIZE],label[BUFF_SIZE];
@@ -176,7 +185,7 @@ bool WriteMol2(ostream &ofs,OBMol &mol,char *dimension)
 
   OBAtom *atom;
   vector<OBNodeBase*>::iterator i;
-  vector<int> labelcount;labelcount.resize(105); //Number of elements
+  vector<int> labelcount;labelcount.resize(109); //Number of elements
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
       sprintf(label,"%s%d",
@@ -204,7 +213,7 @@ bool WriteMol2(ostream &ofs,OBMol &mol,char *dimension)
   vector<OBEdgeBase*>::iterator j;
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
-      if (bond->GetBO() == 5) strcpy(label,"ar");
+      if (bond->IsAromatic()) strcpy(label,"ar");
       else if (bond->IsAmide()) strcpy(label,"am");
       else sprintf(label,"%d",bond->GetBO());
       sprintf(buffer, "%6d%6d%6d%3s%2s", 
@@ -216,7 +225,7 @@ bool WriteMol2(ostream &ofs,OBMol &mol,char *dimension)
 
   return(true);
 }
-bool WriteSmiOrderedMol2(ostream &ofs,OBMol &mol,char *dimension)
+bool WriteSmiOrderedMol2(ostream &ofs,OBMol &mol,const char *dimension)
 {
   string str,str1;
   char buffer[BUFF_SIZE],label[BUFF_SIZE];
@@ -245,32 +254,32 @@ bool WriteSmiOrderedMol2(ostream &ofs,OBMol &mol,char *dimension)
 
   ttab.SetFromType("INT");ttab.SetToType("SYB");
 
-	//get smiles order
-	OBMol2Smi m2s;
-	char smibuffer[BUFF_SIZE];
-	m2s.Init();
-	m2s.CorrectAromaticAmineCharge(mol);
-	m2s.CreateSmiString(mol,smibuffer);
-	vector<int>::iterator idx;
-	vector<int> smiorder;
-	int *backmap = new int[mol.NumAtoms()];
-	smiorder = m2s.GetOutputOrder();
-	int ct;
+  //get smiles order
+  OBMol2Smi m2s;
+  char smibuffer[BUFF_SIZE];
+
+  m2s.Init();
+  m2s.CorrectAromaticAmineCharge(mol);
+  m2s.CreateSmiString(mol,smibuffer);
+  
+  vector<int>::iterator idx;
+  vector<int> smiorder;
+  int *backmap = new int[mol.NumAtoms()];
+  smiorder = m2s.GetOutputOrder();
+  int ct;
 
   OBAtom *atom;
-//  vector<OBNodeBase*>::iterator i;
-  vector<int> labelcount;labelcount.resize(105); //Number of elements
-//  for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-	for(ct = 1,idx = smiorder.begin();idx != smiorder.end();idx++,ct++) //loop over smiles order
+  vector<int> labelcount;labelcount.resize(109); //Number of elements
+  for(ct = 1,idx = smiorder.begin();idx != smiorder.end();idx++,ct++) //loop over smiles order
     {
-cerr << (*idx) << " ";
-			atom = mol.GetAtom(*idx); //set atom for .mol2 files
-			backmap[atom->GetIdx()] = ct;
-
+      cerr << (*idx) << " ";
+      atom = mol.GetAtom(*idx); //set atom for .mol2 files
+      backmap[atom->GetIdx()] = ct;
+      
       sprintf(label,"%s%d",
 	      etab.GetSymbol(atom->GetAtomicNum()),
 	      ++labelcount[atom->GetAtomicNum()]);
-
+      
       str = atom->GetType();
 
       ttab.Translate(str1,str);
@@ -279,25 +288,26 @@ cerr << (*idx) << " ";
       strcpy(rnum,"1");
 
       sprintf(buffer,"%7d%1s%-6s%12.4f%10.4f%10.4f%1s%-5s%4s%1s %-8s%10.4f",
-	    ct,"",label, 
+	      ct,"",label, 
 	      atom->GetX(),atom->GetY(),atom->GetZ(),
 	      "",str1.c_str(),
 	      rnum,"",rlabel,
 	      atom->GetPartialCharge());
       ofs << buffer << endl;
     }
-cerr << endl;
+  cerr << endl;
 
   ofs << "@<TRIPOS>BOND" << endl;
   OBBond *bond;
   vector<OBEdgeBase*>::iterator j;
   for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
-      if (bond->GetBO() == 5) strcpy(label,"ar");
+      if (bond->IsAromatic()) strcpy(label,"ar");
       else if (bond->IsAmide()) strcpy(label,"am");
       else sprintf(label,"%d",bond->GetBO());
       sprintf(buffer, "%6d%6d%6d%3s%2s", 
-	      bond->GetIdx()+1,backmap[bond->GetBeginAtomIdx()],backmap[bond->GetEndAtomIdx()],
+	      bond->GetIdx()+1,backmap[bond->GetBeginAtomIdx()],
+	      backmap[bond->GetEndAtomIdx()],
 	      "",label);
       ofs << buffer << endl;
     }

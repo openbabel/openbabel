@@ -18,7 +18,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool ReadJaguar(istream &ifs,OBMol &mol,char *title)
+bool ReadJaguar(istream &ifs,OBMol &mol, const char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;

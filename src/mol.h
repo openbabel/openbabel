@@ -15,27 +15,16 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifdef WIN32
-#pragma warning (disable: 4786) // warning: long & complicated stl warning
-#pragma warning (disable: 4305) // warning: truncation from 'const double' to 'const float'
-#endif
-
 #ifndef OB_MOL_H
 #define OB_MOL_H
 
 #include <math.h>
 
-#ifdef __sgi
-#include <iostream.h>
-#include <fstream.h>
-#else
-#include <iostream>
-#include <fstream>
-#endif
-
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <iostream>
+#include <fstream>
 
 #include "base.h"
 #include "data.h"
@@ -46,87 +35,122 @@ GNU General Public License for more details.
 #include "generic.h"
 #include "typer.h"
 #include "fileformat.h"
-#include "binary_io.h"
-#include "ctransform.h"
 
 namespace OpenBabel {
 
-
-class OBBond;
 class OBAtom;
-class OBResidue;
+class OBBond;
 class OBMol;
-class OBInternalCoord;
 
+namespace OBAminoAcidProperty {
+static const unsigned int ACIDIC      =  0;
+static const unsigned int ACYCLIC     =  1;
+static const unsigned int ALIPHATIC   =  2;
+static const unsigned int AROMATIC    =  3;
+static const unsigned int BASIC       =  4;
+static const unsigned int BURIED      =  5;
+static const unsigned int CHARGED     =  6;
+static const unsigned int CYCLIC      =  7;
+static const unsigned int HYDROPHOBIC =  8;
+static const unsigned int LARGE       =  9;
+static const unsigned int MEDIUM      = 10;
+static const unsigned int NEGATIVE    = 11;
+static const unsigned int NEUTRAL     = 12;
+static const unsigned int POLAR       = 13;
+static const unsigned int POSITIVE    = 14;
+static const unsigned int SMALL       = 15;
+static const unsigned int SURFACE     = 16;
+}
 
-#define obAssert(__b__) \
-   if (!(__b__)) {   \
-       cerr << "Assert at File " << __FILE__ << " Line " << __LINE__ << endl; \
-       int *p= NULL; *p= 10;                                                  \
-       exit(-1);                                                              \
-   }
+namespace OBResidueAtomProperty {
+static const unsigned int ALPHA_CARBON     = 0;
+static const unsigned int AMINO_BACKBONE   = 1;
+static const unsigned int BACKBONE         = 2;
+static const unsigned int CYSTEINE_SULPHUR = 3;
+static const unsigned int LIGAND           = 4;
+static const unsigned int NUCLEIC_BACKBONE = 5;
+static const unsigned int SHAPELY_BACKBONE = 6;
+static const unsigned int SHAPELY_SPECIAL  = 7;
+static const unsigned int SIDECHAIN        = 8;
+static const unsigned int SUGAR_PHOSPHATE  = 9;
+}
 
+namespace OBResidueIndex {
+static const unsigned int ALA   =  0;
+static const unsigned int GLY   =  1;
+static const unsigned int LEU   =  2;
+static const unsigned int SER   =  3;
+static const unsigned int VAL   =  4;
+static const unsigned int THR   =  5;
+static const unsigned int LYS   =  6;
+static const unsigned int ASP   =  7;
+static const unsigned int ILE   =  8;
+static const unsigned int ASN   =  9;
+static const unsigned int GLU   = 10;
+static const unsigned int PRO   = 11;
+static const unsigned int ARG   = 12;
+static const unsigned int PHE   = 13;
+static const unsigned int GLN   = 14;
+static const unsigned int TYR   = 15;
+static const unsigned int HIS   = 16;
+static const unsigned int CYS   = 17;
+static const unsigned int MET   = 18;
+static const unsigned int TRP   = 19;
+static const unsigned int ASX   = 20;
+static const unsigned int GLX   = 21;
+static const unsigned int PCA   = 22;
+static const unsigned int HYP   = 23;
+static const unsigned int A     = 24;
+static const unsigned int C     = 25;
+static const unsigned int G     = 26;
+static const unsigned int T     = 27;
+static const unsigned int U     = 28;
+static const unsigned int UPLUS = 29;
+static const unsigned int I     = 30;
+//static const unsigned int _1MA  = 31;
+//static const unsigned int _5MC  = 32;
+static const unsigned int OMC   = 33;
+//static const unsigned int _1MG  = 34;
+//static const unsigned int _2MG  = 35;
+static const unsigned int M2G   = 36;
+//static const unsigned int _7MG  = 37;
+static const unsigned int OMG   = 38;
+static const unsigned int YG    = 39;
+static const unsigned int H2U   = 40;
+//static const unsigned int _5MU  = 41;
+static const unsigned int PSU   = 42;
+static const unsigned int UNK   = 43;
+static const unsigned int ACE   = 44;
+static const unsigned int FOR   = 45;
+static const unsigned int HOH   = 46;
+static const unsigned int DOD   = 47;
+static const unsigned int SO4   = 48;
+static const unsigned int PO4   = 49;
+static const unsigned int NAD   = 50;
+static const unsigned int COA   = 51;
+static const unsigned int NAP   = 52;
+static const unsigned int NDP   = 53;
+}
 
-/*!
-**\brief An object to hold pose information.
-*/
-class OBPose {
-    protected:
-        unsigned int _conf;
-        OBCoordTrans _ct;
-    public:
-        //Constructor, destructor and copy constructor
-        OBPose() { _conf = 0; }
-        OBPose(const OBPose& cp) {*this=cp;}
-        virtual ~OBPose() { _ct.Clear();}
-
-        //Operator overloads
-        OBPose& operator=(const OBPose& cp) {
-            _ct = cp._ct;
-            _conf = cp._conf;
-            return *this;
-          }
-
-        //Clear
-        void Clear() {_ct.Clear();  _conf = 0;}
-
-        //Set functions
-        void SetConformer(unsigned int conf) {_conf = conf;}
-        void SetTransform(OBCoordTrans ct) {_ct = ct;}
-
-        //Get functions
-        unsigned int ConformerNum() {return _conf;}
-        OBCoordTrans& CoordTrans() {return _ct;}
-
-        //Binary read and write
-        unsigned int WriteBinary(char *ccc) {
-            unsigned int idx=0;
-            idx += _ct.WriteBinary(&ccc[idx]);
-            idx += OB_io_write_binary(&ccc[idx],(char*)&_conf,sizeof(float),1);
-            return idx;
-          }
-        unsigned int ReadBinary(char *ccc) {
-            unsigned int idx=0;
-            idx += _ct.ReadBinary(&ccc[idx]);
-            idx += OB_io_read_binary(&ccc[idx],(char*)&_conf,sizeof(float),1);
-            return idx;
-          }
-        void WriteBinary(std::ostream& ostr) {
-            _ct.WriteBinary(ostr);
-            OB_io_write_binary(ostr,(char*)&_conf,sizeof(float),1);
-          } 
-        void ReadBinary(std::istream& istr) {
-            _ct.ReadBinary(istr);
-            OB_io_read_binary(istr,(char*)&_conf,sizeof(float),1);
-          }
-  };
-
+namespace OBResidueProperty {
+static const unsigned int AMINO        = 0;
+static const unsigned int AMINO_NUCLEO = 1;
+static const unsigned int COENZYME     = 2;
+static const unsigned int ION          = 3;
+static const unsigned int NUCLEO       = 4;
+static const unsigned int PROTEIN      = 5;
+static const unsigned int PURINE       = 6;
+static const unsigned int PYRIMIDINE   = 7;
+static const unsigned int SOLVENT      = 8;
+static const unsigned int WATER        = 9;
+}
 
 class OBResidue
 {
 public:
 
   OBResidue(void);
+  OBResidue(const OBResidue &);
   virtual ~OBResidue(void);
 
   OBResidue &operator=(const OBResidue &);
@@ -136,51 +160,53 @@ public:
   void RemoveAtom(OBAtom *atom);
   void Clear(void);
 
-  void    SetName(std::string &resname)               { _resname  = resname;  }
-  void    SetNum(unsigned short resnum)          { _resnum   = resnum;   }
-  void    SetChain(char chain)                   { _chain    = chain;    }
-  void    SetChainNum(unsigned short chainnum)   { _chainnum = chainnum; }
-  void    SetIdx(unsigned short idx)             { _idx      = idx;      }
+  void    SetName(const std::string &resname);
+  void    SetNum(unsigned int resnum);
+  void    SetChain(char chain);
+  void    SetChainNum(unsigned int chainnum);
+  void    SetIdx(unsigned int idx);
 
-  void    SetAtomID(OBAtom *atom, std::string &id)    { _atomid[GetIndex(atom)] = id;     }
-  void    SetHetAtom(OBAtom *atom, bool hetatm)  { _hetatm[GetIndex(atom)] = hetatm; }
-  void    SetSerialNum(OBAtom *atom, unsigned short sernum) { _sernum[GetIndex(atom)] = sernum; }
+  void    SetAtomID(OBAtom *atom, const std::string &id);
+  void    SetHetAtom(OBAtom *atom, bool hetatm);
+  void    SetSerialNum(OBAtom *atom, unsigned sernum);
 
-  std::string&        GetName(void)                   { return(_resname);  }
-  unsigned short GetNum(void)                    { return(_resnum);   }
-  char           GetChain(void)                  { return(_chain);    }
-  unsigned short GetChainNum(void)               { return(_chainnum); }
-  unsigned short GetIdx(void)                    { return(_idx);      }
+  std::string    GetName(void)			const;
+  unsigned int   GetNum(void)			const;
+  unsigned int	 GetNumAtoms()			const;
+  char           GetChain(void)			const;
+  unsigned int   GetChainNum(void)		const;
+  unsigned int   GetIdx(void)			const;
+  unsigned int	 GetResKey(void)		const;
 
-  std::string&        GetAtomID(OBAtom *atom)         { return(_atomid[GetIndex(atom)]); }
-  unsigned short GetSerialNum(OBAtom *atom)      { return(_sernum[GetIndex(atom)]); }
-  bool           IsHetAtom(OBAtom *atom)         { return(_hetatm[GetIndex(atom)]); }
+  vector<OBAtom*> GetAtoms(void)		const;
+  vector<OBBond*> GetBonds(bool = true)		const;
 
-  OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i) 
-    {i = _atoms.begin();return((i ==_atoms.end()) ? NULL:*i);}
-  OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i) 
-    {i++;return((i ==_atoms.end()) ? NULL:*i);}
+  std::string    GetAtomID(OBAtom *atom)	const;
+  unsigned       GetSerialNum(OBAtom *atom)	const;
 
-protected: // methods
+  bool           GetAminoAcidProperty(int)      const;
+  bool           GetAtomProperty(OBAtom *, int) const;
+  bool           GetResidueProperty(int)        const;
 
-  int GetIndex(OBAtom *atom) 
-  {
-    for(unsigned int i=0;i<_atoms.size();i++) if (_atoms[i] == atom) return i;
-    return -1; 
-  }
+  bool           IsHetAtom(OBAtom *atom)	const;
+  bool		 IsResidueType(int)		const;
+
+  OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);
+  OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
 
 protected: // members
 
-  unsigned short         _idx;
-  char                   _chain;
-  unsigned short         _chainnum;
-  unsigned short         _resnum;
+  unsigned int	 	      _idx;
+  char      	              _chain;
+  unsigned int		      _aakey;
+  unsigned int	              _reskey;
+  unsigned int		      _resnum;
   std::string                 _resname;
 
   std::vector<bool>           _hetatm;
   std::vector<std::string>    _atomid;
   std::vector<OBAtom*>        _atoms;
-  std::vector<unsigned short> _sernum;
+  std::vector<unsigned int>   _sernum;
 
 };
 
@@ -474,9 +500,6 @@ protected:
   float                         _energy;
   float                        *_c;
   std::vector<float*>                _vconf;
-  std::vector<OBPose>                _pose;
-  float                        *_xyz_pose;
-  unsigned int                  _cur_pose_idx;
   unsigned short int            _natoms;
   unsigned short int            _nbonds;
   unsigned short int            _mod;
@@ -565,8 +588,8 @@ public:
     bool         IsCompressed()                       {return _compressed;}
 
     //***data modification methods***
-    void   SetTitle(char *title)           {_title = title;}
-    void   SetTitle(std::string &title)         {_title = title;}
+    void   SetTitle(const char *title)     {_title = title;}
+    void   SetTitle(std::string &title)    {_title = title;}
     void   SetEnergy(float energy)         {_energy = energy;}
     void   SetInputType(io_type type)      {_itype = type;}
     void   SetOutputType(io_type type)     {_otype = type;}
@@ -623,6 +646,7 @@ public:
     void Align(OBAtom*,OBAtom*,Vector&,Vector&);
     void ConnectTheDots();
     void PerceiveBondOrders();
+    void FindTorsions();
 //  void ConnectTheDotsSort();
 
     virtual void BeginAccess(void);
@@ -677,19 +701,6 @@ public:
     float  *NextConformer(std::vector<float*>::iterator&);
     std::vector<float*> &GetConformers()                   {return(_vconf);}
 
-    //Pose Member functions
-    unsigned int NumPoses() const {return ((_pose.empty())?0:_pose.size());}
-    unsigned int CurrentPoseIndex();
-    void DeletePoses();
-    void DeletePose(unsigned int i);
-    void AddPose(OBPose& pose); 
-    void SetPoses(std::vector<OBPose>& poses);
-    void SetPose(unsigned int i);
-    void GetPoseCoordinates(unsigned int i, float *xyz);
-    OBPose& GetPose(unsigned int i);
-    void ChangePosesToConformers();
-
-
     //misc bond functions
     void AssignResidueBonds(OBBitVec &);
     //void SortBonds() {sort(_vbond.begin(),_vbond.end(),CompareBonds);}
@@ -725,11 +736,6 @@ std::string NewExtension(std::string&,char*);
 bool SetInputType(OBMol&,std::string&);
 bool SetOutputType(OBMol&,std::string&);
 
-void qtrfit (float *r,float *f,int size,float u[3][3]);
-float superimpose(float*,float*,int);
-void get_rmat(float*,float*,float*,int);
-void ob_make_rmat(float mat[3][3],float rmat[9]);
-
 //global definitions
 extern  OBExtensionTable extab;
 extern  OBElementTable   etab;
@@ -762,6 +768,28 @@ extern  OBChainsParser   chainsparser;
 #ifdef WIN32
 inline float rint(float x) { return ( (x < 0.0f) ? ceil(x-0.5) : floor(x+0.5f));}
 #endif
+
+#ifndef __KCC
+extern "C"{
+void  get_rmat(float*,float*,float*,int);
+void  ob_make_rmat(float mat[3][3],float rmat[9]);
+void  qtrfit (float *r,float *f,int size,float u[3][3]);
+float superimpose(float*,float*,int);
+}
+#else
+void get_rmat(float*,float*,float*,int);
+void ob_make_rmat(float mat[3][3],float rmat[9]);
+void qtrfit (float *r,float *f,int size,float u[3][3]);
+float superimpose(float*,float*,int);
+#endif // __KCC
+
+
+#define obAssert(__b__) \
+    if (!(__b__)) {   \
+        cerr << "Assert at File " << __FILE__ << " Line " << __LINE__ << endl; \
+        int *p= NULL; *p= 10; \
+        exit(-1); \
+    }
 
 }
 

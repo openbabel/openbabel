@@ -20,7 +20,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool ReadDMol(istream &ifs,OBMol &mol,char *title)
+bool ReadDMol(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   string str;

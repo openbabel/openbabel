@@ -18,7 +18,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-bool ReadBallAndStick(istream &ifs,OBMol &mol,char *title)
+bool ReadBallAndStick(istream &ifs,OBMol &mol, const char *title)
 {
   int i,natoms;
   char buffer[BUFF_SIZE];  

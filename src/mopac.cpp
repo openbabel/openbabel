@@ -17,7 +17,7 @@ using namespace std;
 
 namespace OpenBabel {
 
-bool ReadMOPAC(istream &ifs,OBMol &mol,char *title)
+bool ReadMOPAC(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   string str,str1;
@@ -86,7 +86,7 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,char *title)
   return(true);
 }
 
-bool ReadMOPACCartesian(istream &ifs,OBMol &mol,char *title)
+bool ReadMOPACCartesian(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
   string str;

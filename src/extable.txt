@@ -6,7 +6,6 @@ caccrt		cacao		Cacao Cartesian			none				1	1
 cacint		cacaoint	Cacao Internal			none				0	1
 cache		cache		CAChe MolStruct			none				0	1
 ccc		ccc		CCC				none				1	0
-cdx		cdx		ChemDraw CDX Binary		chemical/x-cdx			1	1
 c3d1		chem3d1		Chem3D Cartesian 1		none				1	1
 c3d2		chem3d2		Chem3D Cartesian 2		none				1	1
 ct		chemdraw	ChemDraw Connection Table	none				0	1
@@ -37,8 +36,6 @@ dat		mmd		MacroModel			none				1	1
 car		biosym		MSI Biosym/Insight II CAR	none				1	0
 sdf		sdf		MDL Isis SDF			chemical/x-mdl-sdfile		1	1
 sd		sdf		MDL Isis SDF			chemical/x-mdl-sdfile		1	1
-skc		skc		MDL Isis Setch			none				1	0
-tgf		tgf		MDL Isis TGF			none				1	0
 mdl		sdf		MDL Molfile			chemical/x-mdl-molfile		1	1
 mol		sdf		MDL Molfile			chemical/x-mdl-molfile		1	1
 mopcrt		mopaccart	MOPAC Cartesian			chemical/x-mopac-input		1	1
@@ -97,6 +94,7 @@ spmm		spartanmm	Spartan MM			none				0	0
 # These are off of the Chemical MIME list <http://www.ch.ic.ac.uk/chemime/>
 # or product webpages (e.g. WebLab ViewerPro, ChemDraw, etc.)
 csf		csf		CAChe CSF			chemical/x-cache-csf		0	0
+cdx		cdx		ChemDraw CDX Binary		chemical/x-cdx			0	0
 cdxml		cdxml		ChemDraw XML			none				0	0
 cer		cerius		MSI Cerius II			chemical/x-cerius		0	0
 msi		cerius		MSI Cerius II			chemical/x-cerius		0	0
@@ -117,3 +115,5 @@ cxf		cxf		CXF				chemical/x-cxf			0	0
 emb		embl		EMBL nucleotide			chemical/x-embl-dl-nucleotide	0	0
 vmd		vmd		Visual Molecular Dynamics	chemical/x-vmd			0	0
 sw		sw		SWISS-PROT			chemical/x-swissprot		0	0
+skc		skc		MDL Isis Setch			none				0	0
+tgf		tgf		MDL Isis TGF			none				0	0

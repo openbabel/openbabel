@@ -182,6 +182,54 @@ void OBMol::ContigFragList(vector<vector<int> >&cfl)
   sort(cfl.begin(),cfl.end(),SortVVInt);
 }
 
+/*!
+**\brief Fills the Generic OETorsionData with torsions from the mol
+*/
+void OBMol::FindTorsions()
+{
+        //if already has data return
+        if(HasData(obTorsionData))
+                return;
+ 
+        //get new data and attach it to molecule
+        OBTorsionData *torsions = new OBTorsionData;
+        SetData(torsions);
+ 
+        OBTorsion torsion;
+        vector<OBEdgeBase*>::iterator bi1,bi2,bi3;
+        OBBond* bond;
+        OBAtom *a,*b,*c,*d;
+ 
+        //loop through all bonds generating torsions
+        for(bond = BeginBond(bi1);bond;bond = NextBond(bi1))
+        {
+                b = bond->GetBeginAtom();
+                c = bond->GetEndAtom();
+                if(b->IsHydrogen() || c->IsHydrogen())
+                        continue;
+ 
+                for(a = b->BeginNbrAtom(bi2);a;a = b->NextNbrAtom(bi2))
+                {
+                        if(a == c)
+                                continue;
+ 
+                        for(d = c->BeginNbrAtom(bi3);d;d = c->NextNbrAtom(bi3))
+                        {
+                                if(d == b)
+                                        continue;
+                                torsion.AddTorsion(a,b,c,d);
+                        }
+                }
+                //add torsion to torsionData
+                if(torsion.GetSize())
+                  torsions->SetData(torsion);
+                torsion.Clear();
+        }
+ 
+        return;
+}
+
+
 void OBMol::FindLargestFragment(OBBitVec &lf) 
      //each vector<int> contains the atom numbers of a contig fragment
      //the vectors are sorted by size from largest to smallest
@@ -701,11 +749,6 @@ OBMol &OBMol::operator=(const OBMol &source)
       SetData(cp_rml); 
     }
 
-  
-  //Copy pose information
-  _pose = src._pose;
-  if (!_pose.empty()) SetPose(src.CurrentPoseIndex());
-
   return(*this);
 }
 
@@ -756,9 +799,6 @@ bool OBMol::Clear()
     delete [] *k;
   _vconf.clear();
 
-  //Clear out the pose data
-  DeletePoses();
-
   if (!_vdata.empty()) //clean up generic data
   {
 	  vector<OBGenericData*>::iterator m;
@@ -804,8 +844,6 @@ void OBMol::BeginModify()
       _c = NULL;
       _vconf.clear();
       
-      DeletePoses();
-
       //Destroy rotamer list if necessary
       if ((OBRotamerList *)GetData("RotamerList")) {
           delete (OBRotamerList *)GetData("RotamerList");
@@ -1179,11 +1217,6 @@ bool OBMol::DeleteHydrogens()
         for (k = _vconf.begin();k != _vconf.end();k++)
             memcpy((char*)&((*k)[idx2*3]),(char*)&((*k)[idx1*3]),sizeof(float)*3);
 
-        //Update pose coordinates if necessary
-        if (_xyz_pose) {
-            memcpy((char*)&((_xyz_pose)[idx2*3]),(char*)&((_xyz_pose)[idx1*3]),sizeof(float)*3);
-          }  
-
         idx2++;
         va.push_back(atom);
       }
@@ -1255,11 +1288,6 @@ bool OBMol::DeleteHydrogen(OBAtom *atom)
       for (k = _vconf.begin();k != _vconf.end();k++)
           memmove((char*)&(*k)[idx],(char*)&(*k)[idx+3],sizeof(float)*3*size);
 
-      //Update pose coordinates if necessary
-      if (_xyz_pose) {
-          memmove((char*)&(_xyz_pose)[idx],(char*)&(_xyz_pose)[idx+3],sizeof(float)*3*size);
-        }  
-
     }
   
   _vatom.erase(_vatom.begin()+(atom->GetIdx()-1));
@@ -1315,10 +1343,6 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
       delete []*j;
       *j = tmpf;
     }
-
-  //Just delete the pose coordinate array.  It will automatically
-  //be reallocated when SetPose(unsigned int) is called.
-  if (_xyz_pose) {delete [] _xyz_pose; _xyz_pose = NULL;}
 
   IncrementMod();
 
@@ -1395,10 +1419,6 @@ bool OBMol::AddHydrogens(OBAtom *atom)
       delete []*j;
       *j = tmpf;
     }
-
-  //Just delete the pose coordinate array.  It will automatically
-  //be reallocated when SetPose(unsigned int) is called.
-  if (_xyz_pose) {delete [] _xyz_pose; _xyz_pose = NULL;}
 
   IncrementMod();
 
@@ -2216,9 +2236,6 @@ OBMol::OBMol(io_type itype,io_type otype)
   _c = (float*)NULL;
   _flags = 0;
   _vconf.clear();
-  _xyz_pose = NULL;
-  _pose.clear();
-  _cur_pose_idx=0;
   _autoPartialCharge = true;
   _autoFormalCharge = true;
   _compressed = false;
@@ -2236,9 +2253,6 @@ OBMol::OBMol(const OBMol &mol)
   _c = (float*)NULL;
   _flags = 0;
   _vconf.clear();
-  _xyz_pose = NULL;
-  _pose.clear();
-  _cur_pose_idx=0;
   _autoPartialCharge = true;
   _autoFormalCharge = true;
   _compressed = false;
@@ -2262,9 +2276,6 @@ OBMol::~OBMol()
   for (k = _vconf.begin();k != _vconf.end();k++)
     delete [] *k;
   _vconf.clear();
-
-  //Deallocate the pose coordinate array if necessary
-  if (_xyz_pose) {delete [] _xyz_pose; _xyz_pose = NULL;}
 
   if (!_vdata.empty())
   {
@@ -2762,7 +2773,6 @@ void OBMol::PerceiveBondOrders()
   OBSmartsPattern sulphone; sulphone.Init("[#16D4]([#8D1])([#8D1])(*)(*)");
   if (sulphone.Match(*this))
     {
-      cerr << " got match! " << endl;
       mlist = sulphone.GetUMapList();
       for (l = mlist.begin(); l != mlist.end(); l++)
         {
@@ -3022,22 +3032,22 @@ void OBMol::DeleteConformer(int idx)
 
 bool OBMol::Compress(void)
 {
-  int size = 0;
-  unsigned char buf[100000];
-
   if (!_compressed && NumAtoms() < 256)
     {
+      int size = 0;
+      string buf;
+
       WriteBinary(buf, size, *this);
 		
-      if (size)
+      if (size > 0)
         {
           _compressed = true;
 
-		  OBCompressData *cd = new OBCompressData;
-		  cd->SetData(buf,size);
+	  OBCompressData *cd = new OBCompressData;
+	  cd->SetData((unsigned char*) buf.data(),size);
 
           Clear();
-		  SetData(cd);
+	  SetData(cd);
         }
       else
           _compressed = false;
@@ -3104,320 +3114,4 @@ OBBond *OBMol::NextBond(vector<OBEdgeBase*>::iterator &i)
 	return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
 }
 
-
-//////Pose Member functions of OBMol/////////
-/*!
-**\brief Deletes all pose information for the OBMol
-*/
-void OBMol::DeletePoses()
-  {
-    //If there are no poses don't do anything
-    if (_pose.empty()) return;
-
-    //If the atom coordinate array is pointing to the pose
-    //array change it to point to the 1st conformer
-    if (_c == _xyz_pose && _c != NULL) {
-        if (!_vconf.empty()) _c = _vconf[0];
-        else _c = NULL;
-      }
-
-    //Free the pose coordinate array
-    if (_xyz_pose) {delete [] _xyz_pose; _xyz_pose = NULL;}
-
-    _pose.clear();
-
-    _cur_pose_idx=0;
-
-  }
-
-
-/*!
-**\brief Deletes a specified pose
-**\param i Number of the pose to be deleted
-*/
-void OBMol::DeletePose(unsigned int i)
-  {
-    //Check that a valid pose is being deleted.
-    if (i >= NumPoses()) return;
-
-    //If this is the last pose just call DeletePoses.
-    if (NumPoses() == 1) {DeletePoses(); return;} 
-
-    //Delete the pose
-    _pose.erase(_pose.begin()+i);
-
-    return;
-  }
-
-/*!
-**\brief Adds an additional pose to the pose array.
-**\param pose An OBPose object holding the pose to be added
-*/
-void OBMol::AddPose(OBPose& pose)
-  {
-    //Check that the pose references a valid conformer
-    if (pose.ConformerNum() >= (unsigned int) NumConformers()) {
-        ThrowError("WARNING! Pose does not reference a valid conformer");
-        cerr << "WARNING! OBMol::AddPose(OBPose)  ";
-        cerr << "Pose references invalid conformer";
-        cerr << endl;
-        return;
-      }
-    _pose.push_back(pose);
-  }
-
-/*!
-**\brief Sets the poses of the OBMol
-**\param poses A vector of poses
-*/
-void OBMol::SetPoses(vector<OBPose>& poses)
-  {
-    //Check that all the poses reference valid conformers
-    unsigned int i;
-    for (i=0 ; i<poses.size() ; i++) {
-        if (poses[i].ConformerNum() >= (unsigned int) NumConformers()) {
-            ThrowError("WARNING! Poses do not reference valid conformers");
-            cerr << "WARNING! OBMol::SetPoses(vector<OBPose>&)  ";
-            cerr << "Pose references invalid conformer";
-            cerr << endl;
-            return;
-          }
-      }
-
-    //Set the poses
-    _pose = poses;
-
-    //If the atom coordinate array was looking at poses have it look at the first new pose
-    if (!_pose.empty()) {
-        if (_c == _xyz_pose) SetPose(0);
-      }
-    else if (!_vconf.empty()) SetConformer(0);
-    else _c = NULL;
-  }
-
-/*!
-**\brief Sets the OBMol's atomic coordiates to the specified pose
-**\param i The number of the pose
-*/
-void OBMol::SetPose(unsigned int i)
-  {
-    //check that the pose is valid
-    if (i >= NumPoses()) {
-        ThrowError("WARNING! Invalid pose specified");
-        cerr << "WARNING! OBMol::SetPose(unsigned int) ";
-        cerr << "Invalid pose specified!" << endl;
-        return;
-      }
-
-    //Check that the pose references a valid conformer
-    if (_pose[i].ConformerNum() >= (unsigned int) NumConformers()) {
-        ThrowError("WARNING! Pose references invalid conformer");
-        cerr << "WARNING! OBMol::SetPose(unsigned int) ";
-        cerr << "Pose references invalid conformer" << endl;
-        return;
-      }
-
-    //Make sure the pose coordinate array has memory
-    if (_xyz_pose==NULL) _xyz_pose = new float [3*NumAtoms()];
-
-    //Generate coordinates for the pose
-    unsigned int ii;
-    float *xyz_conf = GetConformer(_pose[i].ConformerNum());
-    for (ii=0 ; ii<3*NumAtoms() ; ii++) _xyz_pose[ii] = xyz_conf[ii];
-    _pose[i].CoordTrans().Transform(_xyz_pose,NumAtoms());
-
-    //Point the atom coordinate pointer to the coordinates of the pose
-    _c = _xyz_pose;
-
-    //Remember current pose
-    _cur_pose_idx = i;
-
-    return;
-  }
-
-/*!
-**\brief Returns the number of the current pose
-**\return The number of the current pose.  If no poses are
-**present 0 is returned.
-*/
-unsigned int OBMol::CurrentPoseIndex()
-  {
-    if (_pose.empty()) return 0;
-    return _cur_pose_idx;
-  }
-
-/*!
-**\brief Returns the coordinates of a pose
-**\param i The number of the pose desired.
-**\param xyz An array (preallocated) that is filled
-**with the coordinates of the pose. 
-*/
-void OBMol::GetPoseCoordinates(unsigned int i, float *xyz)
-  {
-    //check that the pose is valid
-    if (i >= NumPoses()) {
-        ThrowError("WARNING! Invalid pose specified");
-        cerr << "WARNING! OBMol::GetPoseCoordinates(unsigned int) ";
-        cerr << "Invalid pose specified!" << endl;
-        return;
-      }
- 
-    //Check that the pose references a valid conformer
-    if (_pose[i].ConformerNum() >= (unsigned int) NumConformers()) {
-        ThrowError("WARNING! Pose references invalid conformer");
-        cerr << "WARNING! OBMol::GetPoseCoordinates(unsigned int) ";
-        cerr << "Pose references invalid conformer" << endl;
-        return;
-      }
-
-    //Check that xyz is not NULL
-    if (xyz==NULL) return;
- 
-    //Generate coordinates for the pose
-    unsigned int ii;
-    float *xyz_conf = GetConformer(_pose[i].ConformerNum());
-    for (ii=0 ; ii<3*NumAtoms() ; ii++) xyz[ii] = xyz_conf[ii];
-    _pose[i].CoordTrans().Transform(xyz,NumAtoms());
- 
-    return;
-  }
-
-/*!
-**\brief Provied access to the pose object
-**\param i The number of the pose desired.
-**\return A reference to the i'th OBPose.
-*/
-OBPose& OBMol::GetPose(unsigned int i)
-  {
-/*
-    //check that the pose is valid
-    if (i >= NumPoses()) {
-        ThrowError("WARNING! Invalid pose specified");
-        cerr << "WARNING! OBMol::GetPoseCoordinates(unsigned int) ";
-        cerr << "Invalid pose specified!" << endl;
-        OBPose pose;
-        return pose;
-      }
-*/
-    return _pose[i];
-  }
-
-/*!
-**\brief Converts the poses of the OBMol into conformers.
-**This destroys the original conformer list as well as the
-**original pose information.
-*/
-void OBMol::ChangePosesToConformers()
-  {
-    //If there aren't any poses don't do anything
-    if (_pose.empty()) return;
-
-    //Generate the coordinates of all the poses
-    unsigned int i;
-    vector<float*> dconf;
-    dconf.resize(NumPoses());
-    for (i=0 ; i<NumPoses() ; i++) {
-        dconf[i] = new float [3*NumAtoms()];
-        GetPoseCoordinates(i,dconf[i]);
-      }
-
-    //Now that we have the coordinates clear the pose info for OBMol
-    DeletePoses();
-
-    //Assign the pose coordinates to the conformers
-    SetConformers(dconf);
-
-    return;
-  }
-//////////End pose member functions of OBMol////////////////
-
-//
-// OBResidue member functions
-//
-
-OBResidue::OBResidue() 
-{
-    _chainnum = 0;
-    _resnum   = 0;
-    _resname  = "";
-}
-
-OBResidue::~OBResidue()
-{
-    vector<OBAtom*>::iterator a;
-    for ( a = _atoms.begin() ; a != _atoms.end() ; a++ )
-        (*a)->SetResidue(NULL);
-    _atoms.clear();
-}
-
-OBResidue &OBResidue::operator=(const OBResidue &src)
-     //copy residue information
-{
-    _chainnum = src._chainnum;
-    _resnum   = src._resnum;
-    _resname  = src._resname;
-    _atomid   = src._atomid;
-    _hetatm   = src._hetatm;
-    _sernum   = src._sernum;
-    return(*this);
-}
-
-void OBResidue::AddAtom(OBAtom *atom)
-{
-    if (atom != NULL)
-    {
-        atom->SetResidue(this);
-
-        _atoms.push_back(atom);
-        _atomid.push_back("");
-        _hetatm.push_back(false);
-        _sernum.push_back(0);
-    }
-}
-
-void OBResidue::InsertAtom(OBAtom *atom)
-{
-    if (atom != NULL)
-    {
-        atom->SetResidue(this);
-
-        _atoms.push_back(atom);
-        _atomid.resize(_atoms.size());
-        _hetatm.resize(_atoms.size());
-        _sernum.resize(_atoms.size());
-    }
-}
-
-void OBResidue::RemoveAtom(OBAtom *atom)
-{
-    if (atom != NULL)
-    {
-        int idx = GetIndex(atom);
-        if (idx >= 0)
-        {
-            atom->SetResidue(NULL);
-
-            _atoms.erase(_atoms.begin() + idx);
-            _atomid.erase(_atomid.begin() + idx);
-            _hetatm.erase(_hetatm.begin() + idx);
-            _sernum.erase(_sernum.begin() + idx);
-        }
-    }
-}
-
-void OBResidue::Clear(void)
-{
-  for (unsigned int i = 0 ; i < _atoms.size() ; i++ )
-    _atoms[i]->SetResidue(NULL);
-
-    _chainnum = 0;
-    _resnum   = 0;
-    _resname  = "";
-
-    _atoms.clear();
-    _atomid.clear();
-    _hetatm.clear();
-    _sernum.clear();
-}
-
-}
+} // end namespace OpenBabel

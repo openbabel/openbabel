@@ -18,7 +18,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-bool ReadFeat(istream &ifs,OBMol &mol, char *title)
+bool ReadFeat(istream &ifs,OBMol &mol, const char *title)
 {
   char buffer[BUFF_SIZE];
   int i,natoms;
