@@ -43,7 +43,7 @@ HDRS	      = Vector.h aromatic.h atomtyp.h base.h binary.h \
 		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
 		obutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
 		resdata.h ring.h rotor.h smi.h typer.h types.h version.h \
-		chains.h ctransform.h binary_io.h generic.h smarts.h 
+		chains.h ctransform.h binary_io.h generic.h
 
 OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		bitgrid.o bond.o \
@@ -55,7 +55,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		csr.o cssr.o feat.o fh.o gromos96.o cwrap.o \
 		ghemical.o xyz.o fileformat.o gamess.o hin.o \
 		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
-		jaguar.o amber.o ctransform.o binary_io.o generic.o smarts.o\
+		jaguar.o amber.o ctransform.o binary_io.o generic.o \
 		dmol.o report.o nwchem.o mopac.o gaussian.o c3d.o viewmol.o \
 		cml.o
 

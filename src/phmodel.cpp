@@ -167,40 +167,38 @@ bool OBChemTsfm::Init(string &bgn,string &end)
   for (i = 0;i < _bgn.NumAtoms();i++)
 	  if ((vb = _bgn.GetVectorBinding(i)))
       {
-		  chrg = _bgn.GetFormalCharge(i);
+		  chrg = _bgn.GetCharge(i);
 		  for (j = 0;j < _end.NumAtoms();j++)
 			  if (vb == _end.GetVectorBinding(j))
-				  if (chrg != _end.GetFormalCharge(j))
-					  _vchrg.push_back(pair<int,int> (i,_end.GetFormalCharge(j)));
+				  if (chrg != _end.GetCharge(j))
+					  _vchrg.push_back(pair<int,int> (i,_end.GetCharge(j)));
       }
 
   //find bonds to be modified
-  OBEdge *edge1,*edge2;
-  OBNode *bgn1,*bgn2,*end1,*end2;
-  vector<OBEdgeBase*>::iterator k,m;
-  for (edge1 = _bgn.Begin(k);edge1;edge1 = _bgn.Next(k))
-  {
-	  bgn1 = (OBNode*)edge1->GetBgn();
-	  end1 = (OBNode*)edge1->GetEnd();
-	  if (!bgn1->GetVectorBinding()) continue;
-	  if (!end1->GetVectorBinding()) continue;
+  //find bonds to be modified
+  int bsrc,bdst,bord,bvb1,bvb2;
+  int esrc,edst,eord,evb1,evb2;
 
-	  for (edge2 = _end.Begin(m);edge2;edge2 = _end.Next(m))
-	  {
-		  bgn2 = (OBNode*)edge2->GetBgn();
-		  end2 = (OBNode*)edge2->GetEnd();
-		  //check to see edge1 == edge2
-		  if ((bgn1->GetVectorBinding() == bgn2->GetVectorBinding() &&
-			   end1->GetVectorBinding() == end2->GetVectorBinding()) || 
-			  (bgn1->GetVectorBinding() == end2->GetVectorBinding() &&
-			   end1->GetVectorBinding() == bgn2->GetVectorBinding()))
-		  {
-			if (edge1->GetBO() != edge2->GetBO()) //no mod necessary
-			_vbond.push_back(pair<pair<int,int>,int> (pair<int,int> (bgn1->GetIdx(),end1->GetIdx()),edge2->GetBO()));
-			break;
-		  }
-	  }
-  }
+  for (i = 0;i < _bgn.NumBonds();i++)
+    {
+      _bgn.GetBond(bsrc,bdst,bord,i);
+      bvb1 = _bgn.GetVectorBinding(bsrc);
+      bvb2 = _bgn.GetVectorBinding(bdst);
+      if (!bvb1 || !bvb2) continue;
+
+      for (j = 0;j < _end.NumBonds();j++)
+        {
+          _end.GetBond(esrc,edst,eord,j);
+          evb1 = _end.GetVectorBinding(esrc);
+          evb2 = _end.GetVectorBinding(edst);
+          if ((bvb1 == evb1 && bvb2 == evb2) || (bvb1 == evb2 && bvb2 == evb1))
+            {
+              if (bord == eord) break; //nothing to modify if bond orders identical
+              _vbond.push_back(pair<pair<int,int>,int> (pair<int,int> (bsrc,bdst),eord));
+              break;
+            }
+        }
+    }
 
   //make sure there is some kind of transform to do here
   if (_vadel.empty() && _vchrg.empty() && _vbond.empty()) return(false);

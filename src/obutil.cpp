@@ -495,35 +495,6 @@ bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
 	return(a<b);
 }
 
-
-void SmartsLexReplace(string &s,vector<pair<string,string> > &vlex)
-{
-  size_t j,pos;
-  string token,repstr;
-  vector<pair<string,string> >::iterator i;
-
-  for (pos = 0,pos = s.find("$",pos);pos < s.size();pos = s.find("$",pos))
-    //for (pos = 0,pos = s.find("$",pos);pos != string::npos;pos = s.find("$",pos))
-    {
-      pos++;
-      for (j = pos;j < s.size();j++)
-        if (!isalpha(s[j]) && !isdigit(s[j]) && s[j] != '_')
-          break;
-      if (pos == j) continue;
-
-      token = s.substr(pos,j-pos);
-      for (i = vlex.begin();i != vlex.end();i++)
-        if (token == i->first)
-          {
-            repstr = "(" + i->second + ")";
-            s.replace(pos,j-pos,repstr);
-            j = 0;
-			break;
-          }
-      pos = j;
-    }
-}
-
 //******************triple template*************************
 //based on the STL design of the pair<> template
 

@@ -136,7 +136,6 @@ void CleanAtomType(char*);
 
 bool OBCompareInt(const int &,const int &);
 bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
-void SmartsLexReplace(std::string &,std::vector<std::pair<std::string,std::string> > &);
 
 //******************triple template*************************
 //based on the STL design of the pair<> template

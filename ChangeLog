@@ -1,7 +1,7 @@
 2002-06-11  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/Makefile.in: Add proper commandline for new bin2hex for
-	PhModelData.
+	PhModelData. Remove smarts.* from file lists.
 
 	* src/Vector.cpp: Import changes contributed by Open
 	Eye--improvements in random vector and matrix methods.
@@ -23,6 +23,13 @@
 	* src/types.txt: Reformat to remove trailing whitespace and make
 	spacing uniform. (Attempt to minimize problems with reading using
 	OBTypeTable.)
+
+	* src/obutil.[h,cpp]: Remove SmartsLexReplace, which is now
+	migrated to parsmart.[h,cpp].
+
+	* src/parsmart.[h,cpp]: 
+
+	* src/phmodel.cpp: Update to work with new SMARTS parser.
 	
 2002-06-07  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
