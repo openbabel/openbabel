@@ -1,0 +1,136 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH OPENBABEL 1 "January 20, 2002"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+OpenBabel \- a converter for molecular modeling data files
+.SH SYNOPSIS
+.B babel
+.RI [-i<input-type>]\ <infile>\ [-o<output-type>]\ <outfile>
+.SH DESCRIPTION
+.B OpenBabel
+is a program designed to interconvert a number of file formats
+ currently used in molecular modeling software.
+.PP
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics, 
+.\" respectively.
+.SH OPTIONS
+If only input and ouput files are given, OpenBabel will guess the file type
+from the filename extension.
+.TP
+.B \-i 
+Specifies input format, see below for the avaiable formats
+.TP
+.B \-o
+Specifies output format, see below for the avaiable formats
+.SH INPUT FORMATS
+.B Babel 
+recognizes the following input formats:
+        alc -- Alchemy file
+        prep -- AMBER PREP file
+        bs -- Ball and Stick file
+        caccrt -- Cacao Cartesian file
+        ccc -- CCC file
+        box -- Dock 3.5 Box file
+        feat -- Feature file
+        gam -- GAMESS Output file
+        gamout -- GAMESS Output file
+        mm1gp -- Ghemical MM file
+        qm1gp -- Ghemical QM file
+        hin -- Hyperchem HIN file
+        jout -- Jaguar Output file
+        bin -- OpenEye Binary file
+        mmd -- MacroModel file
+        mmod -- MacroModel file
+        out -- MacroModel file
+        dat -- MacroModel file
+        car -- MSI Biosym/Insight II CAR file
+        sdf -- MDL Isis SDF file
+        sd -- MDL Isis SDF file
+        mdl -- MDL Molfile file
+        mol -- MDL Molfile file
+        mopcrt -- MOPAC Cartesian file
+        mopout -- MOPAC Output file
+        mpqc -- MPQC file
+        bgf -- MSI BGF file
+        nwo -- NWChem Output file
+        pdb -- PDB file
+        qcout -- QChem Output file
+        smi -- SMILES file
+        mol2 -- Sybyl Mol2 file
+        unixyz -- UniChem XYZ file
+        xyz -- XYZ file
+
+.SH OUTPUT FORMATS
+The following output formats may be written by 
+.B Babel:
+        alc -- Alchemy file
+        bs -- Ball & Stick file
+        caccrt -- Cacao Cartesian file
+        cacint -- Cacao Internal file
+        cache -- CAChe MolStruct file
+        ct -- ChemDraw Connection Table file
+        cssr -- CSD CSSR file
+        box -- Dock 3.5 Box file
+        dmol -- DMol3 Coordinates file
+        feat -- Feature file
+        fh -- Fenske-Hall Z-Matrix file
+        gamin -- GAMESS Input file
+        inp -- GAMESS Input file
+        gcart -- Gaussian Cartesian file
+        gau -- Gaussian Input file
+        mm1gp -- Ghemical MM file
+        gr96A -- GROMOS96 (A) file
+        gr96N -- GROMOS96 (nm) file
+        hin -- HyperChem HIN file
+        jin -- Jaguar Input file
+        bin -- OpenEye Binary file
+        mmd -- MacroModel file
+        mmod -- MacroModel file
+        out -- MacroModel file
+        dat -- MacroModel file
+        sdf -- MDL Isis SDF file
+        sd -- MDL Isis SDF file
+        mdl -- MDL Molfile file
+        mol -- MDL Molfile file
+        mopcrt -- MOPAC Cartesian file
+        bgf -- MSI BGF file
+        csr -- MSI Quanta CSR file
+        nw -- NWChem Input file
+        pdb -- PDB file
+        report -- Report file
+        qcin -- QChem Input file
+        smi -- SMILES file
+        fix -- SMILES Fix file
+        mol2 -- Sybyl Mol2 file
+        txyz -- Tinker XYZ file
+        txt -- Titles file
+        unixyz -- UniChem XYZ file
+        xed -- XED file
+        xyz -- XYZ file
+\".SH EXAMPLES
+\"To convert an MM2 output file named mm2.grf to a MOPAC internal coordinate
+\"input file named mopac.dat
+
+\".B babel
+\".RI \-imm2out\ mm2.grf\ \-omopint\ mopac.dat
+
+
+.SH AUTHOR
+OpenBabel is derived from OElib, written by Matt Stahl, which is a rewrite of
+the classic babel program. OpenBabel is currently maintained by Geoff Hutchison
+and Michael Banck.
