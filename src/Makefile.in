@@ -64,6 +64,7 @@ test:		check
 check:		$(PROGRAM)
 
 clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
+distclean:	clean
 
 install:	$(PROGRAM)
 		$(INSTALL) $(PROGRAM) $(DEST)

@@ -32,7 +32,7 @@ clean:
 		done && test -z "$$fail"
 
 distclean:
-		rm -f config.cache config.status config.log config.h stamp.h *~ 
+		rm -f config.cache config.status config.log config.h *~ 
 		@for i in $(SUBDIRS); do \
 			(cd $$i; $(MAKE) $(MFLAGS) distclean) \
 			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
