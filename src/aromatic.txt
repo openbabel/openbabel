@@ -29,6 +29,6 @@
 
 #other misc patterns
 [#15rD3]		2	2
-[#34rD2]		2	2
+#[#34rD2]		2	2
 #[#52rD2]		2	2
 
