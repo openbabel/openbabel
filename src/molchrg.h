@@ -1,4 +1,6 @@
 /**********************************************************************
+molchrg.h - Assign Gasteiger partial charges.
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
 

@@ -1,4 +1,6 @@
 /**********************************************************************
+oberror.h - Handle error messages.
+
 Copyright (C) 2002 by Stefan Kebekus
 Some portions Copyright (c) 2003 by Geoffrey R. Hutchison
 

@@ -1,4 +1,6 @@
 /**********************************************************************
+fileformat.h - Read and write file formats.
+
 Copyright (C) 2000-2003 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
