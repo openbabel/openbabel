@@ -59,7 +59,7 @@ typedef enum { UNDEFINED,
                PCMODEL, PDB, POV, PREP, QCHEMIN, QCHEMOUT, REPORT,
                SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
                SPARTANSEMI, TGF, TINKER, TITLE, TURBOMOLE, UNICHEM, VIEWMOL,
-               XED, XYZ, ZINDO, CRK2D, CRK3D, PQS
+               XED, XYZ, ZINDO, CRK2D, CRK3D, PQS, FINGERPRINT
 	       // Insert new formats here (at the end)
 	       // for backwards compatibility
              } io_type;

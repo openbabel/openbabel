@@ -139,6 +139,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol,
     case XED:	    WriteXED(ofs,mol);			break;
     case XYZ:	    WriteXYZ(ofs,mol);			break;
     case ZINDO:	    WriteZINDO(ofs,mol);		break;
+    case FINGERPRINT: WriteFingerprint(ofs,mol);	break;
 
     default:
       ThrowError("Output type not defined");

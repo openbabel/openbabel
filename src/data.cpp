@@ -589,6 +589,7 @@ io_type TextToType(string typestring)
   else if (typestring == "TURBOMOLE")		return(TURBOMOLE);
   else if (typestring == "VIEWMOL")		return(VIEWMOL);
   else if (typestring == "ZINDO")		return(ZINDO);
+  else if (typestring == "FINGERPRINT")		return(FINGERPRINT);
   // Add yours here
   else						return(UNDEFINED);
 

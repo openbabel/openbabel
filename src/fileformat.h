@@ -159,6 +159,7 @@ bool WriteViewMol(std::ostream &,OBMol &);
 bool WriteXED(std::ostream &,OBMol &);
 bool WriteXYZ(std::ostream &,OBMol &);
 bool WriteZINDO(std::ostream &, OBMol &);
+bool WriteFingerprint(std::ostream &, OBMol &); 
 // Add yours here
 
 }
