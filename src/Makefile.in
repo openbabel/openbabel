@@ -125,7 +125,7 @@ types.h:	bin2hex.pl types.txt
 		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
 
 isotope.h:	bin2hex.pl isotope-small.txt
-		(cd $(srcdir); ./bin2hex.pl isotope-small.txt IsotopeData >isotope.h)
+		(cd $(srcdir); ./bin2hex.pl isotope-small.txt IsotopeData ISOTOPE >isotope.h)
 
 # Update the Makefile if the Makefile.in or configure script changes
 Makefile:	Makefile.in
