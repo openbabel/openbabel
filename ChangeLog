@@ -1,3 +1,19 @@
+2005-03-25  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/obconversion.cpp, src/main.cpp, src/obconversion.h:
+	Multiple input files can now be different formats
+	
+	* src/onconversion.h Added virtual function 
+	OBFormat::MakeNewInstance to meet possible future need for
+	formats with member functions. (InChIFormat will.)
+
+	* src/formats/smilesformat.cpp: Can now output isotope info and 
+	input and output H and H2. Pharma might be able to do without 
+	these but Combustion can't.
+	
+	* windows/OBGUI/ Several files: Mods to ease use with multiple 
+	input files, but interface could still do with some work. 
+	
 2005-03-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* AUTHORS, NEWS, README: Begin updating for a 2.0 release.
