@@ -11,6 +11,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include <stdlib.h>
 #include "mol.h"
 
 using namespace std;
@@ -44,17 +45,22 @@ bool ReadXYZ(istream &ifs,OBMol &mol,const char *title)
   }
   mol.ReserveAtoms(natoms);
   
-  // The next line contains a title string for the molecule
-  vector<string> vs;
+  // The next line contains a title string for the molecule. Use this
+  // as the title for the molecule if the line is not
+  // empty. Otherwise, use the title given by the calling function.
   if (!ifs.getline(buffer,BUFF_SIZE)) {
     cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
 	 << "  Could not read the second line, file error." << endl;
     return(false);
   }
-  mol.SetTitle(buffer);
+  if (strlen(buffer) == 0)
+    mol.SetTitle(buffer);
+  else
+    mol.SetTitle(title);
   
   // The next lines contain four items each, separated by white
   // spaces: the atom type, and the coordinates of the atom
+  vector<string> vs;
   for (unsigned int i = 1; i <= natoms; i ++) {
     if (!ifs.getline(buffer,BUFF_SIZE)) {
       cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
@@ -72,14 +78,23 @@ bool ReadXYZ(istream &ifs,OBMol &mol,const char *title)
       return(false);
     }
     
-    // Atom Type
-    OBAtom *atom = mol.NewAtom();
-    atom->SetType((char*)vs[0].c_str());
-    atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));    //set atomic number
-    
-    // Atom coordinates
-    float x,y,z;
-    if (sscanf((char*)vs[1].c_str(), "%f", &x) == 0) {
+    // Atom Type: get the atomic number from the element table, using
+    // the first entry in the currently read line. If the entry makes
+    // sense, set the atomic number and leave the atomic type open
+    // (the type is then later faulted in when atom->GetType() is
+    // called). If the entry does not make sense to use, set the atom
+    // type manually, assuming that the author of the xyz-file had
+    // something "special" in mind.
+    OBAtom *atom  = mol.NewAtom();
+    int atomicNum = etab.GetAtomicNum(vs[0].c_str());
+    atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str())); //set atomic number, or '0' if the atom type is not recognized
+    if (atomicNum == 0)
+      atom->SetType(vs[0]);
+
+    // Read the atom coordinates
+    char *endptr;
+    float x = strtod((char*)vs[1].c_str(),&endptr);
+    if (endptr == (char*)vs[1].c_str()) {
       cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
 	   << "  Could not read line #" << i+2 << "." << endl
 	   << "  OpenBabel found the line '" << buffer << "'" << endl
@@ -88,7 +103,8 @@ bool ReadXYZ(istream &ifs,OBMol &mol,const char *title)
 	   << "  OpenBabel could not interpret item #1 as a number." << endl;
       return(false);
     }
-    if (sscanf((char*)vs[2].c_str(), "%f", &y) == 0) {
+    float y = strtod((char*)vs[2].c_str(),&endptr);
+    if (endptr == (char*)vs[2].c_str()) {
       cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
 	   << "  Could not read line #" << i+2 << "." << endl
 	   << "  OpenBabel found the line '" << buffer << "'" << endl
@@ -97,7 +113,8 @@ bool ReadXYZ(istream &ifs,OBMol &mol,const char *title)
 	   << "  OpenBabel could not interpret item #2 as a number." << endl;
       return(false);
     }
-    if (sscanf((char*)vs[3].c_str(), "%f", &z) == 0) {
+    float z = strtod((char*)vs[3].c_str(),&endptr);
+    if (endptr == (char*)vs[3].c_str()) {
       cerr << "WARNING: Problems reading an XYZ file, method 'bool ReadXYZ(istream &,OBMol &,const char *)'" << endl
 	   << "  Could not read line #" << i+2 << "." << endl
 	   << "  OpenBabel found the line '" << buffer << "'" << endl
@@ -111,14 +128,11 @@ bool ReadXYZ(istream &ifs,OBMol &mol,const char *title)
 
   mol.ConnectTheDots();
   mol.PerceiveBondOrders();
-
-  //@@@ Commented this out. The molecule title is read from the xyz-file, second line. --Stefan Kebekus.
-  //  mol.SetTitle(title);
-
+  
   return(true);
 }
-
-
+  
+  
 bool WriteXYZ(ostream &ofs,OBMol &mol)
 {
   unsigned int i;
