@@ -9,7 +9,7 @@ DEST	      = @bindir@
 INSTALL	      = @INSTALL_PROGRAM@
 
 SUBDIRS	      = src test
-DISTDIR       = $(top_srcdir)/../openbabel
+DISTDIR       = $(top_srcdir)/../openbabel-dist
 
 all:
 		@for i in $(SUBDIRS); do \
@@ -32,7 +32,7 @@ clean:
 		done && test -z "$$fail"
 
 distclean:
-		rm -f config.cache config.status config.log config.h *~
+		rm -f config.cache config.status config.log config.h stamp.h *~ 
 		@for i in $(SUBDIRS); do \
 			(cd $$i; $(MAKE) $(MFLAGS) distclean) \
 			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
