@@ -1,6 +1,7 @@
 /**********************************************************************
 obfit = Fit molecules according to a SMART pattern
 Copyright (C) 2003 Fabien Fontaine
+Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,6 +24,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "parsmart.h"
+#include "obconversion.h"
 #include <unistd.h>
 
 
@@ -79,29 +81,25 @@ int main(int argc,char **argv)
     }
 
     // Find Input filetypes
-    if (extab.CanReadExtension(FileRef))
-        refFileType = extab.FilenameToType(FileRef);
-    else
+    OBConversion conv;
+    OBFormat *refFormat = conv.FormatFromExt(FileRef);
+    if (!refFormat || !conv.SetInAndOutFormats(refFormat,refFormat))
     {
         cerr << program_name << ": cannot read fixed molecule format!" << endl;
         exit (-1);
     }
 
-    if (extab.CanReadExtension(FileMove))
-        mvFileType = extab.FilenameToType(FileMove);
-    else
+    OBFormat *moveFormat = conv.FormatFromExt(FileMove);
+    if (!moveFormat || !conv.SetInAndOutFormats(moveFormat,moveFormat))
     {
         cerr << program_name << ": cannot read moving molecule(s) format!" << endl;
         exit (-1);
     }
-    if (! extab.CanWriteExtension(FileMove))
-    {
-        cerr << program_name << ": cannot write moving molecule format!" << endl;
-        exit (-1);
-    }
+
+    conv.SetInAndOutFormats(refFormat,moveFormat);
 
     ifstream ifsref;
-    OBMol molref(refFileType,mvFileType);
+    OBMol molref;
     vector< vector <int> > maplist;      // list of matched atoms
     vector< vector <int> >::iterator i;  // and its iterators
     vector< int >::iterator j;
@@ -117,7 +115,7 @@ int main(int argc,char **argv)
     }
 
     molref.Clear();
-    ifsref >> molref;
+    conv.Read(&molref,&ifsref);
 
     // and check if the SMART match
     sp.Match(molref);
@@ -163,8 +161,10 @@ int main(int argc,char **argv)
         refcoor[c*3+2] = atom->z();
     }
 
+    conv.SetInAndOutFormats(moveFormat,moveFormat);
+
     ifstream ifsmv;
-    OBMol molmv(mvFileType,mvFileType);
+    OBMol molmv;
     vector <int> mvatoms;
     vector3 tvmv;
     unsigned int size=0;
@@ -182,7 +182,7 @@ int main(int argc,char **argv)
     for (;;)
     {
         molmv.Clear();
-        ifsmv >> molmv;                   // Read molecule
+        conv.Read(&molmv,&ifsmv);                   // Read molecule
         if (molmv.Empty())
             break;
 
@@ -234,7 +234,7 @@ int main(int argc,char **argv)
             //translate the rotated molecule
             molmv.Translate(tvref);
         }
-        cout << molmv;
+        conv.Write(&molmv,&cout);
     }
 
     delete[] refcoor;

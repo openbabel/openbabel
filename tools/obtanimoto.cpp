@@ -1,5 +1,21 @@
+/**********************************************************************
+obtanimoto = Open Babel Tanimoto fingerprint calculation
+Copyright (C) 2003-2004 Fabien Fontaine
+Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
+ 
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+ 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+***********************************************************************/
+
 #include "mol.h"
 #include "fingerprint.h"
+#include "obconversion.h"
 
 using namespace std;
 using namespace OpenBabel;
@@ -18,9 +34,9 @@ int main (int argc, char **argv)
     ifstream ifs;
     unsigned int i;
     // Find Input filetype
-    if (extab.CanReadExtension(FileIn))
-        inFileType = extab.FilenameToType(FileIn);
-    else
+    OBConversion conv;
+    OBFormat *format = conv.FormatFromExt(FileIn);
+    if(!format || !conv.SetInAndOutFormats(format,format))
     {
         cerr << program_name << ": cannot read input format!" << endl;
         exit (-1);
@@ -34,7 +50,7 @@ int main (int argc, char **argv)
     //  }
 
 
-    OBMol mol(inFileType, outFileType);
+    OBMol mol;
     // Read the file
     ifs.open(FileIn);
     if (!ifs)
@@ -43,7 +59,7 @@ int main (int argc, char **argv)
         exit (-1);
     }
 
-    ifs >> mol;
+    conv.Read(&mol,&ifs);
 
     ifs.close();
     // hash the molecule fragments

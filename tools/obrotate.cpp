@@ -1,6 +1,7 @@
 /**********************************************************************
 obrotate = rotate a tortional bond matched by a SMART pattern
 Copyright (C) 2003 Fabien Fontaine
+Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,7 +27,8 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "parsmart.h"
 #include "binary.h"
-#include <unistd.h>
+//#include <unistd.h>
+#include "obconversion.h"
 
 using namespace std;
 using namespace OpenBabel;
@@ -126,20 +128,29 @@ int main(int argc,char **argv)
     ang_array[1] = (unsigned char)rint(angle*res);
 
     // Find Input filetype
-    if (extab.CanReadExtension(FileIn))
+    /*NF
+      if (extab.CanReadExtension(FileIn))
         inFileType = extab.FilenameToType(FileIn);
-    else
-    {
-        cerr << program_name << ": cannot read input format!" << endl;
-        exit (-1);
-    }
-    if (extab.CanWriteExtension(FileIn))
+      else
+        {
+          cerr << program_name << ": cannot read input format!" << endl;
+          exit (-1);
+        }
+      if (extab.CanWriteExtension(FileIn))
         outFileType = extab.FilenameToType(FileIn);
-    else
+      else
+       {
+          cerr << program_name << ": cannot write input format!" << endl;
+          exit (-1);
+        }
+    */
+    OBConversion conv; //NF...
+    OBFormat* format = conv.FormatFromExt(FileIn);
+    if(!(format &&	conv.SetInAndOutFormats(format,format))) //in and out formats same
     {
-        cerr << program_name << ": cannot write input format!" << endl;
+        cerr << program_name << ": cannot read and/or write this file format!" << endl;
         exit (-1);
-    }
+    } //...NF
 
     //Open the molecule file
     ifstream ifs;
@@ -153,7 +164,9 @@ int main(int argc,char **argv)
     }
 
 
-    OBMol mol(inFileType,outFileType);
+
+    //NF OBMol mol(inFileType,outFileType);
+    OBMol mol; //NF
     OBRotamerList rlist;
     vector< vector <int> > maplist;      // list of matched atoms
     vector< vector <int> >::iterator m;  // and its iterators
@@ -163,7 +176,8 @@ int main(int argc,char **argv)
     for (;;)
     {
         mol.Clear();
-        ifs >> mol;                   // Read molecule
+        //NF      ifs >> mol;                   // Read molecule
+        conv.Read(&mol,&ifs); //NF
         if (mol.Empty())
             break;
 
@@ -197,7 +211,8 @@ int main(int argc,char **argv)
             //change the molecule conformation
             mol.SetConformer(0);
         }
-        cout << mol;
+        //NF      cout << mol;
+        conv.Write(&mol,&cout); //NF
     }
 
     return(0);

@@ -1,6 +1,7 @@
 /**********************************************************************
 obprop = Open Babel properties calculation
 Copyright (C) 2003 Fabien Fontaine
+Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,6 +14,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
+#include "obconversion.h"
 #include <unistd.h>
 
 using namespace std;
@@ -54,9 +56,10 @@ int main(int argc,char **argv)
     }
 
     // Find Input filetype
-    if (extab.CanReadExtension(FileIn))
-        inFileType = extab.FilenameToType(FileIn);
-    else
+    OBConversion conv;
+    OBFormat *format = conv.FormatFromExt(FileIn);
+    
+    if (!format || !conv.SetInAndOutFormats(format, format))
     {
         cerr << program_name << ": cannot read input format!" << endl;
         exit (-1);
@@ -72,7 +75,7 @@ int main(int argc,char **argv)
         exit (-1);
     }
 
-    OBMol mol(inFileType, UNDEFINED);
+    OBMol mol;
 
 
     ////////////////////////////////////////////////////////////////////////////
@@ -86,7 +89,7 @@ int main(int argc,char **argv)
     for (c=0;;)
     {
         mol.Clear();
-        ifs >> mol;
+	conv.Read(&mol, &ifs);
         if (mol.Empty())
             break;
 

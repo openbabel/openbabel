@@ -1,6 +1,7 @@
 /**********************************************************************
 obgrep = Open Babel molecule grep
 Copyright (C) 2003 Fabien Fontaine
+Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,6 +14,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
+#include "obconversion.h"
 #include "parsmart.h"
 #include <unistd.h>
 
@@ -31,6 +33,7 @@ int main(int argc,char **argv)
     bool count=false, invert=false, full=false, name_only=false;
     char *FileIn = NULL, *Pattern = NULL;
     program_name = argv[0];
+    OBFormat *pFormat;
 
     // Parse options
     while ((c = getopt(argc, argv, "t:nvcf")) != -1)
@@ -94,27 +97,6 @@ int main(int argc,char **argv)
         FileIn  = argv[index];
     }
 
-    // Find Input filetype
-    if (extab.CanReadExtension(FileIn))
-        inFileType = extab.FilenameToType(FileIn);
-    else
-    {
-        cerr << program_name << ": cannot read input format!" << endl;
-        exit (-1);
-    }
-    if (extab.CanWriteExtension(FileIn))
-        outFileType = extab.FilenameToType(FileIn);
-    else
-    {
-        cerr << program_name << ": cannot write input format!" << endl;
-        exit (-1);
-    }
-
-
-    // Match the SMART
-    OBSmartsPattern sp;
-    vector< vector <int> > maplist;      // list of matched atoms
-    sp.Init(Pattern);
     ifstream ifs;
 
     // Read the file
@@ -125,7 +107,28 @@ int main(int argc,char **argv)
         exit (-1);
     }
 
-    OBMol mol(inFileType, outFileType);
+    OBConversion conv;
+
+    // Find Input filetype
+    pFormat = conv.FormatFromExt(FileIn);
+    if (pFormat == NULL)
+    {
+        cerr << program_name << ": cannot read input format!" << endl;
+        return (-1);
+    }
+
+    if (! conv.SetInAndOutFormats(pFormat, pFormat))
+      {
+	cerr << program_name << ": cannot read or write to this file format" << endl;
+	return (-1);
+      }
+
+    // Match the SMART
+    OBSmartsPattern sp;
+    vector< vector <int> > maplist;      // list of matched atoms
+    sp.Init(Pattern);
+
+    OBMol mol;
 
     bool impossible_match;
 
@@ -133,7 +136,7 @@ int main(int argc,char **argv)
     for (c=0;;)
     {
         mol.Clear();
-        ifs >> mol;
+	conv.Read(&mol, &ifs);
         if (mol.Empty())
             break;
 
@@ -157,7 +160,7 @@ int main(int argc,char **argv)
                     if ( name_only )
                         cout << mol.GetTitle() << endl;
                     else
-                        cout << mol;
+		      conv.Write(&mol, &cout);
                 }
                 c++;
             }
@@ -201,7 +204,7 @@ int main(int argc,char **argv)
                     if ( name_only )
                         cout << mol.GetTitle() << endl;
                     else
-                        cout << mol;
+		      conv.Write(&mol, &cout);
                 }
                 c++;
             }
@@ -217,7 +220,7 @@ int main(int argc,char **argv)
                     if ( name_only )
                         cout << mol.GetTitle() << endl;
                     else
-                        cout << mol;
+                      conv.Write(&mol, &cout);
                 }
                 c++;
             }
