@@ -1,0 +1,73 @@
+/**********************************************************************
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+***********************************************************************/
+
+#ifndef __SMI_H__
+#define __SMI_H__
+
+#include "mol.h"
+#include "typer.h"
+#include "bitvec.h"
+
+namespace OpenBabel{
+
+class OBSmiNode
+{
+  OBAtom *_atom,*_parent;
+  vector<OBSmiNode*> _nextnode;
+  vector<OBBond*> _nextbond;
+public:
+  OBSmiNode(OBAtom *atom);
+  ~OBSmiNode();
+  int        Size()  {return((_nextnode.empty())?0:_nextnode.size());}
+  void       SetParent(OBAtom *a)              {_parent = a;}
+  void       SetNextNode(OBSmiNode*,OBBond*);
+  OBAtom    *GetAtom()                         {return(_atom);}
+  OBAtom    *GetParent()                       {return(_parent);}
+  OBAtom    *GetNextAtom(int i)                {return(_nextnode[i]->GetAtom());}
+  OBBond    *GetNextBond(int i)                {return(_nextbond[i]);}
+  OBSmiNode *GetNextNode(int i)                {return(_nextnode[i]);}
+};
+
+class OBMol2Smi
+{
+  vector<int> _atmorder;
+  vector<int> _storder;
+  vector<bool> _aromNH;
+  OBBitVec _uatoms,_ubonds;
+  vector<OBEdgeBase*> _vclose;
+  vector<pair<OBAtom*,pair<int,int> > > _vopen;
+public:
+  OBMol2Smi() {_vclose.clear();}
+  ~OBMol2Smi() {}
+  int          GetUnusedIndex();
+  void         Init();
+  void         CreateSmiString(OBMol&,char*);
+  void         GetClosureAtoms(OBAtom*,vector<OBNodeBase*>&);
+  void         FindClosureBonds(OBMol&);
+  void         ToSmilesString(OBSmiNode *node,char *buffer);
+  void         RemoveUsedClosures();
+  void         AssignCisTrans(OBSmiNode*);
+  bool         BuildTree(OBSmiNode*);
+  bool         GetSmilesElement(OBSmiNode*,char*);
+  bool         GetChiralStereo(OBSmiNode*,char*);
+  void         CorrectAromaticAmineCharge(OBMol&);
+  vector<pair<int,OBBond*> >  GetClosureDigits(OBAtom*);
+  vector<int> &GetOutputOrder()                   {return(_atmorder);}
+};
+
+bool WriteTheSmiles(OBMol & mol,char *out);
+bool WriteSmiles(ostream &ofs, OBMol &mol,char *title);
+
+}
+
+#endif
