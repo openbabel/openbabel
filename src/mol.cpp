@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "binary.h"
 #include "phmodel.h"
+#include "bondtyper.h"
 #include "math/matrix3x3.h"
 
 using namespace std;
@@ -32,6 +33,7 @@ extern bool SwabInt;
 extern OBPhModel	phmodel;
 extern OBAromaticTyper  aromtyper;
 extern OBAtomTyper      atomtyper;
+extern OBBondTyper      bondtyper;
 
 
 /** \class OBMol
@@ -3178,204 +3180,7 @@ void OBMol::PerceiveBondOrders()
     //         to the canonical form
     //      Currently we have explicit code to do this, but a "bond typer"
     //      is in progress to make it simpler to test and debug.
-    OBBond *b1,*b2,*b3;
-    OBAtom *a1,*a2,*a3,*a4;
-    vector<vector<int> > mlist;
-    vector<vector<int> >::iterator l;
-
-    // azide -N=N=N
-    OBSmartsPattern azide;
-    azide.Init("[#7D2][#7D2][#7D1]");
-    if (azide.Match(*this))
-    {
-        mlist = azide.GetUMapList();
-        for (l = mlist.begin(); l != mlist.end(); l++)
-        {
-            a1 = GetAtom((*l)[0]);
-            a2 = GetAtom((*l)[1]);
-            a3 = GetAtom((*l)[2]);
-            b1 = a2->GetBond(a1);
-            b2 = a2->GetBond(a3);
-
-            if (!b1 || !b2)
-                continue;
-            b1->SetBO(2);
-            b2->SetBO(2);
-        }
-    } // Azide
-
-    // Nitro -NO2
-    OBSmartsPattern nitro;
-    nitro.Init("[#8D1][#7D3][#8D1]");
-    if (nitro.Match(*this))
-    {
-        mlist = nitro.GetUMapList();
-        for (l = mlist.begin(); l != mlist.end(); l++)
-        {
-            a1 = GetAtom((*l)[0]);
-            a2 = GetAtom((*l)[1]);
-            a3 = GetAtom((*l)[2]);
-            b1 = a1->GetBond(a2);
-            b2 = a2->GetBond(a3);
-
-            if (!b1 || !b2)
-                continue;
-            b1->SetBO(2);
-            b2->SetBO(2);
-        }
-    } // Nitro
-
-    // Sulphone -SO2-
-    OBSmartsPattern sulphone;
-    sulphone.Init("[#16D4]([#8D1])([#8D1])(*)(*)");
-    if (sulphone.Match(*this))
-    {
-        mlist = sulphone.GetUMapList();
-        for (l = mlist.begin(); l != mlist.end(); l++)
-        {
-            a1 = GetAtom((*l)[0]);
-            a2 = GetAtom((*l)[1]);
-            a3 = GetAtom((*l)[2]);
-            a4 = GetAtom((*l)[3]);
-            b1 = a1->GetBond(a2);
-            b2 = a1->GetBond(a3);
-            b3 = a1->GetBond(a4);
-
-            if (!b1 || !b2 || !b3)
-                continue;
-            b1->SetBO(2);
-            b2->SetBO(2);
-            b3->SetBO(1);
-            a4 = GetAtom((*l)[4]);
-            b3 = a1->GetBond(a4);
-            if (!b3)
-                continue;
-            b3->SetBO(1);
-        }
-    } // Sulfone
-
-    //Ester C(=O)O
-    OBSmartsPattern ester;
-    ester.Init("[#8D1][#6][#8](*)");
-    if (ester.Match(*this))
-    {
-        mlist = ester.GetUMapList();
-        for (l = mlist.begin(); l != mlist.end(); l++)
-        {
-            a1 = GetAtom((*l)[0]);
-            a2 = GetAtom((*l)[1]);
-            a3 = GetAtom((*l)[2]);
-            a4 = GetAtom((*l)[3]);
-
-            b1 = a1->GetBond(a2);
-            b2 = a2->GetBond(a3);
-
-            if (!b1 || !b2 )
-                continue;
-            b1->SetBO(2);
-            b2->SetBO(1);
-        }
-    } // Ester
-
-    // Carbonyl oxygen C=O
-    OBSmartsPattern carbo;
-    carbo.Init("[#8D1][#6](*)(*)");
-
-    if (carbo.Match(*this))
-    {
-        mlist = carbo.GetUMapList();
-        for (l = mlist.begin(); l != mlist.end(); l++)
-        {
-            a1 = GetAtom((*l)[0]);
-            a2 = GetAtom((*l)[1]);
-
-            angle = a2->AverageBondAngle();
-            dist1 = a1->GetDistance(a2);
-
-            // carbonyl geometries ?
-            if (angle > 115 && angle < 150 && dist1 < 1.28)
-            {
-
-                if ( !a1->HasDoubleBond() )
-                {// no double bond already assigned
-                    b1 = a1->GetBond(a2);
-
-                    if (!b1 )
-                        continue;
-                    b1->SetBO(2);
-                }
-            }
-        }
-    } // Carbonyl oxygen
-
-    // thione C=S
-    OBSmartsPattern thione;
-    thione.Init("[#16D1][#6](*)(*)");
-
-    if (thione.Match(*this))
-    {
-        mlist = thione.GetUMapList();
-        for (l = mlist.begin(); l != mlist.end(); l++)
-        {
-            a1 = GetAtom((*l)[0]);
-            a2 = GetAtom((*l)[1]);
-
-            angle = a2->AverageBondAngle();
-            dist1 = a1->GetDistance(a2);
-
-            // thione geometries ?
-            if (angle > 115 && angle < 150 && dist1 < 1.72)
-            {
-
-                if ( !a1->HasDoubleBond() )
-                {// no double bond already assigned
-                    b1 = a1->GetBond(a2);
-
-                    if (!b1 )
-                        continue;
-                    b1->SetBO(2);
-                }
-            }
-        }
-    } // thione
-
-    // Isocyanate N=C=O or Isothiocyanate
-    bool dist1OK;
-    OBSmartsPattern isocyanate;
-    isocyanate.Init("[#8,#16;D1][#6D2][#7D2]");
-    if (isocyanate.Match(*this))
-    {
-        mlist = isocyanate.GetUMapList();
-        for (l = mlist.begin(); l != mlist.end(); l++)
-        {
-            a1 = GetAtom((*l)[0]);
-            a2 = GetAtom((*l)[1]);
-            a3 = GetAtom((*l)[2]);
-
-            angle = a2->AverageBondAngle();
-            dist1 = a1->GetDistance(a2);
-            dist2 = a2->GetDistance(a3);
-
-            // isocyanate geometry or Isotiocyanate geometry ?
-            if (a1->IsOxygen())
-                dist1OK =  dist1 < 1.28;
-            else
-                dist1OK =  dist1 < 1.72;
-
-            if (angle > 150 && dist1OK && dist2 < 1.34)
-            {
-
-                b1 = a1->GetBond(a2);
-                b2 = a2->GetBond(a3);
-                if (!b1 || !b2)
-                    continue;
-                b1->SetBO(2);
-                b2->SetBO(2);
-
-            }
-
-        }
-    } // Isocyanate
+    bondtyper.AssignFunctionalGroupBonds(*this);
 
     // Pass 5: Check for aromatic rings and assign bonds as appropriate
     // This is just a quick and dirty approximation that marks everything

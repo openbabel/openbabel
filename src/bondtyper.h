@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (c) 2003 by Geoffrey R. Hutchison
+Copyright (c) 2003-2005 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -33,9 +33,16 @@ public:
     OBBondTyper();
     ~OBBondTyper();
 
+    //! \name BondTyper Database Utilities
+    //@{
     void ParseLine(const char*);
-    void ConnectTheDots(OBMol&);
-    void PerceiveBondOrders(OBMol&);
+    //@}
+    
+    //! \name Bond Perception Routines
+    //@{
+    //! Assign bonds to functional groups based on the bond typer database
+    void AssignFunctionalGroupBonds(OBMol &mol);
+    //@}
 };
 
 }
