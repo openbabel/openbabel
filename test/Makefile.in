@@ -17,9 +17,9 @@ top_srcdir    = @top_srcdir@
 
 HDRS	      = 
 
-OBJS	      =	smartstest.o ringtest.o
+OBJS	      =	ringtest.o smartstest.o main.o
 
-PROGRAM	      = oetest
+PROGRAM	      = obtest
 
 DATAFILES     = attype.00.smi smartstest.txt smartsresults.txt ringresults.txt
 
@@ -31,6 +31,7 @@ all:;
 
 test:		check
 check:		$(PROGRAM)
+		./$(PROGRAM)
 
 clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
 distclean:	clean

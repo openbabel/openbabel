@@ -1,0 +1,64 @@
+2002-01-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/main.cpp: Use the filename as the default filename when
+	reading molecules.
+
+	* src/qchem.cpp: Disable reading final z-matrix--currently
+	produces very bizzare results for some files.
+
+	* test/Makefile.in: Make sure the main program is compiled too.
+
+	* test/main.cpp, test/ringtest.cpp, test/smartstest.cpp: Update to
+	new OpenBabel API. (Took about a minute to change OE->OB and
+	change to iterate over OBNodeBase and OBEdgeBase.)
+
+	* test/smartstest.txt: Get rid of DOS line endings--lines are not
+	properly read.
+
+2002-01-11  Michael Banck  <mbanck@gmx.net>
+
+	* src/Makefile.in, test/Makefile.in, Makefile.in: Added
+	distclean-targets to src and test's Makefiles and removed stamp.h
+	again (D'OH).
+
+	* Makefile.in: Added 'stamp.h' to distclean:-target and renamed
+	DISTDIR from *openbabel to *openbabel-dist.  ('make dist' fried my
+	CVS-repository because it was named 'openbabel') dist:-target
+	still does not work properly.
+	Removed "\" at the end of first line of distclean:-target
+
+2002-01-09  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* */*: Updated build environment with src/ directory and autoconf
+	configure script. Builds cleanly--haven't tried using the "install
+	target" The test/ subdir needs fixing to remove OELib references.
+
+2001-12-14  Michael Banck  <mbanck@gmx.net>
+
+	* Makefile.in: Changed oeutil.* to the new name obutil.*.
+
+2001-12-14  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* */*: Changed OE prefix to OB -- think I got all the cases, but
+	some may crop up.
+
+	Thanks to Michael Banck:
+	-Added some GNUish files like AUTHORS, etc.
+	-Added configure.in -- will shortly replace configure script with
+	an autoconf one. 
+	-Need to decide how to work ChangeLog--should it go before
+	OELib->OpenBabel change?
+
+	* */*: Many changes to namespace and cleanup of API to work with
+	gcc v. 3. Still need to do big OE prefix cleanup.
+
+2001-11-28  ghutchis  <ghutchis@hydra.chem.northwestern.edu>
+
+	* configure, data.cpp, dmol.cpp, main.cpp, mol.cpp, Primer.html,
+	Makefile.in: Fixes from Ghemical and a first start at the "Open
+	Babel" nomenclature.
+
+2001-11-27  ghutchis  <ghutchis@hydra.chem.northwestern.edu>
+
+	* Import from OE current CVS. (Last GPL'ed version.)
+

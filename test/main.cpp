@@ -19,7 +19,7 @@ void GenerateRingReference();
 bool TestRings(void);
 
 using namespace std;
-using namespace OpenEye;
+using namespace OpenBabel;
 
 void usage();
 
@@ -56,6 +56,6 @@ int main(int argc,char *argv[])
 
 void usage()
 {
-  ThrowError("Usage: oetest");
+  ThrowError("Usage: obtest");
   exit(0);
 }

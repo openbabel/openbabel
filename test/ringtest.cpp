@@ -22,24 +22,25 @@ bool TestRings(void)
   if (!SafeOpen(rifs,"ringresults.txt")) return(false);
 
   unsigned int size;
-  OEBond *bond;
-  OEAtom *atom;
+  OBBond *bond;
+  OBAtom *atom;
   int count;
   char buffer[BUFF_SIZE];
   vector<string> vs;
-  vector<OERing*> vr;
+  vector<OBRing*> vr;
   vector<bool> vb;
   vector<int> vi;
-  OEMol mol(SMI,SMI);
+  OBMol mol(SMI,SMI);
   vector<string>::iterator i;
-  vector<OEBond*>::iterator j;
-  vector<OEAtom*>::iterator k;
-  vector<OERing*>::iterator m;
+  vector<OBEdgeBase*>::iterator j;
+  vector<OBNodeBase*>::iterator k;
+  vector<OBRing*>::iterator m;
+  OBFileFormat ff;
 
   for (;mifs;)
     {
       mol.Clear();
-      mifs >> mol;
+      ff.ReadMolecule(mifs, mol);
       if (mol.Empty()) continue;
       if (!rifs.getline(buffer,BUFF_SIZE))
 	{
@@ -123,19 +124,20 @@ void GenerateRingReference()
   if (!SafeOpen(ofs,"ringresults.txt")) return;
 
   int count;
-  OEAtom *atom;
-  OEBond *bond;
+  OBAtom *atom;
+  OBBond *bond;
   char buffer[BUFF_SIZE];
-  vector<OERing*> vr;
-  vector<OEBond*>::iterator i;
-  vector<OEAtom*>::iterator j;
-  vector<OERing*>::iterator k;
-  OEMol mol(SMI,SMI);
+  vector<OBRing*> vr;
+  vector<OBEdgeBase*>::iterator i;
+  vector<OBNodeBase*>::iterator j;
+  vector<OBRing*>::iterator k;
+  OBMol mol(SMI,SMI);
+  OBFileFormat ff;
 
   for (;ifs;)
     {
       mol.Clear();
-      ifs >> mol;
+      ff.ReadMolecule(ifs, mol);
       if (mol.Empty()) continue;
       
       //write out ring bonds

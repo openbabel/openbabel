@@ -21,10 +21,10 @@ bool TestSmarts()
 
   //read in the SMARTS test patterns
   char buffer[BUFF_SIZE];
-  vector<OESmartsPattern*> vsp;
+  vector<OBSmartsPattern*> vsp;
   for (;ifs.getline(buffer,BUFF_SIZE);) 
     {
-      OESmartsPattern *sp = new OESmartsPattern;
+      OBSmartsPattern *sp = new OBSmartsPattern;
 
       if (sp->Init(buffer)) vsp.push_back(sp);
       else                  delete sp;
@@ -42,6 +42,8 @@ bool TestSmarts()
   if (npats != vsp.size())
     {
       ThrowError("Correct number of patterns not read in");
+      sprintf(buffer,"Read in %d, expected %d", vsp.size(), npats);
+      ThrowError(buffer);
       return(false);
     }
 
@@ -49,16 +51,17 @@ bool TestSmarts()
   if (!SafeOpen(mifs,"attype.00.smi")) return(false);
 
   unsigned int k;
-  OEMol mol(SMI,SMI);
+  OBMol mol(SMI,SMI);
   vector<string> vs;
-  vector<OESmartsPattern*>::iterator i;
+  vector<OBSmartsPattern*>::iterator i;
   vector<vector<int> > mlist;
+  OBFileFormat ff;
 
   //read in molecules, match SMARTS, and compare results to reference data
   for (;mifs;)
     {
       mol.Clear();
-      mifs >> mol;
+      ff.ReadMolecule(mifs, mol);
       if (mol.Empty()) continue;
       
       for (i = vsp.begin();i != vsp.end();i++)
@@ -76,7 +79,7 @@ bool TestSmarts()
 	    {
 	      ThrowError("number of matches different than reference");
 	      ThrowError((char*)mol.GetTitle());
-	      ThrowError((*i)->GetSMARTS());
+	      //	      ThrowError((*i)->GetSMARTS());
 	      return(false);
 	    }
 	  
@@ -87,7 +90,7 @@ bool TestSmarts()
 		{
 		  ThrowError("matching atom numbers different than reference");
 		  ThrowError((char*)mol.GetTitle());
-		  ThrowError((*i)->GetSMARTS());
+		  //		  ThrowError((*i)->GetSMARTS());
 		  return(false);
 		}
 	    }
@@ -103,10 +106,10 @@ void GenerateSmartsReference()
   if (!SafeOpen(ifs,"smartstest.txt")) return;
 
   char buffer[BUFF_SIZE];
-  vector<OESmartsPattern*> vsp;
+  vector<OBSmartsPattern*> vsp;
   for (;ifs.getline(buffer,BUFF_SIZE);)
     {
-      OESmartsPattern *sp = new OESmartsPattern;
+      OBSmartsPattern *sp = new OBSmartsPattern;
 
       if (sp->Init(buffer)) vsp.push_back(sp);
       else                  delete sp;
@@ -122,13 +125,15 @@ void GenerateSmartsReference()
   vector<int> vm;
   vector<vector<int> > mlist;
   vector<vector<int> >::iterator j;
-  vector<OESmartsPattern*>::iterator i;
-  OEMol mol(SMI,SMI);
+  vector<OBSmartsPattern*>::iterator i;
+  OBMol mol(SMI,SMI);
+  OBFileFormat ff;
 
   for (;mifs;)
     {
       mol.Clear();
-      mifs >> mol;
+      ff.ReadMolecule(mifs, mol);
+
       if (mol.Empty()) continue;
       for (i = vsp.begin();i != vsp.end();i++)
 	{

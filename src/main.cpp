@@ -144,7 +144,7 @@ int main(int argc,char *argv[])
   // Finally, we can do some work!
   OBMol mol(inFileType, outFileType);
 
-  fileFormat.ReadMolecule(inFileStream,mol);
+  fileFormat.ReadMolecule(inFileStream, mol, argv[inFileArg]);
   if (removeHydrogens)
     mol.DeleteHydrogens();
   if (addHydrogens)
