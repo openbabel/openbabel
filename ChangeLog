@@ -12,6 +12,9 @@
 	support and clean up overloaded methods--instead use default
 	values.
 
+	* src/*.txt: Updated copyright information.
+	* src/*.cpp, src/*.h: Ditto. (As needed)
+
 2003-06-15  Michael Banck  <mbanck@gmx.net>
 
 	* src/pdb.cpp (WritePDB): Cast atom->GetValence() to int to avoid

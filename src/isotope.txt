@@ -2,6 +2,7 @@
 #                                                                            #
 #	                Open Babel file: isotope.txt                         #
 #                                                                            #
+#  Copyright (c) 2002-2003 by Geoffrey R. Hutchison                          #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
 #  This file has a series of lines, one for each element                     #

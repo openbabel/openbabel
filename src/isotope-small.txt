@@ -2,6 +2,7 @@
 #                                                                            #
 #	                Open Babel file: isotope-small.txt                   #
 #                                                                            #
+#  Copyright (c) 2002-2003 by Geoffrey R. Hutchison                          #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
 #  Small isotope table with most frequently-used isotopes (as default data)  #
