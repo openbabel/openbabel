@@ -1,3 +1,11 @@
+2003-03-26  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/bondtyp.txt, src/bondtyp.h: Files for the PerceiveBondOrder
+	functional group typing.
+
+	* Src/Makefile.in: Add rules for generating bondtyp.h from the
+	text file.
+	
 2003-03-18  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/configure.in, src/configure: Update with "1.100.1" version
