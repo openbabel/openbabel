@@ -26,8 +26,13 @@ char* getlogin();
 #include <stdlib.h>
 
 /* ---- C++ includes ---- */
+#include "babelconfig.h"
 #include <string>
+#if defined(HAVE_SSTREAM)
+#include <sstream>
+#else
 #include <strstream>
+#endif
 
 /* ---- OpenBabel include ---- */
 #include "mol.h"
@@ -638,10 +643,15 @@ bool WritePovray(ostream &ofs, OBMol &mol, const char* title)
  } else { 
 
   /* ---- Convert the unique molecule-number to a string and set the prefix ---- */
+#if defined(HAVE_SSTREAM)
+  ostringstream numStr;
+  numStr << num << ends;
+  prefix += numStr.str().c_str();
+#else
   ostrstream numStr;
   numStr << num << ends;
   prefix += numStr.str();
-
+#endif
  }
 
  /* ---- Print positions and descriptions of all atoms ---- */

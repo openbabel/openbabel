@@ -27,7 +27,11 @@ GNU General Public License for more details.
 #include "extable.h"
 #include "isotope.h"
 
+#if defined(HAVE_SSTREAM)
+#include <sstream>
+#else
 #include <strstream>
+#endif
 
 using namespace std;
 
@@ -739,9 +743,15 @@ const char *OBExtensionTable::GetExtension(unsigned int n)
     return NULL;
   else
     {
-      ostrstream longDesc; // Need to null-terminate
+#if defined(HAVE_SSTREAM)
+      ostringstream longDesc;
+      longDesc << _table[n][0] << ends;
+      return(longDesc.str().c_str());
+#else
+      ostrstream longDesc;
       longDesc << _table[n][0] << ends;
       return(longDesc.str());
+#endif
     }
 }
 
@@ -753,9 +763,16 @@ const char *OBExtensionTable::GetDescription(unsigned int n)
     return NULL;
   else
     {
-      ostrstream longDesc; // Need to null-terminate
+ // Need to null-terminate
+#if defined(HAVE_SSTREAM)
+      ostringstream longDesc;
+      longDesc << _table[n][2] << ends;
+      return(longDesc.str().c_str());
+#else
+      ostrstream longDesc;
       longDesc << _table[n][2] << ends;
       return(longDesc.str());
+#endif
     }
 }
 
