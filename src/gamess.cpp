@@ -26,8 +26,6 @@ bool ReadGAMESS(istream &ifs,OBMol &mol,char *title)
   vector<string> vs;
   bool hasPartialCharges = false;
 
-  ttab.SetFromType("ATN");
-  ttab.SetToType("INT");
   mol.BeginModify();
   while	(ifs.getline(buffer,BUFF_SIZE))
     {
@@ -48,8 +46,6 @@ bool ReadGAMESS(istream &ifs,OBMol &mol,char *title)
 	      z = atof((char*)vs[4].c_str()) * BOHR_TO_ANGSTROM;
 	      atom->SetVector(x,y,z);
 	      vs[1].erase(vs[1].size() - 2, 2);
-	      ttab.Translate(str,vs[1]); 
-	      atom->SetType(str);
 
 	      if (!ifs.getline(buffer,BUFF_SIZE)) break;
 	      tokenize(vs,buffer);
@@ -73,8 +69,6 @@ bool ReadGAMESS(istream &ifs,OBMol &mol,char *title)
 	      z = atof((char*)vs[4].c_str());
 	      atom->SetVector(x,y,z);
 	      vs[1].erase(vs[1].size() - 2, 2);
-	      ttab.Translate(str,vs[1]); 
-	      atom->SetType(str);
 
 	      if (!ifs.getline(buffer,BUFF_SIZE)) break;
 	      tokenize(vs,buffer);

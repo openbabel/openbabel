@@ -26,7 +26,6 @@ bool ReadXYZ(istream &ifs,OBMol &mol,char *title)
   if (!natoms) return(false);
 
   mol.ReserveAtoms(natoms);
-  ttab.SetFromType("XYZ");
 
   string str;
   float x,y,z;
@@ -47,9 +46,6 @@ bool ReadXYZ(istream &ifs,OBMol &mol,char *title)
 
     //set atomic number
     atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
-    //set type
-    ttab.SetToType("INT"); ttab.Translate(str,vs[0]); 
-    atom->SetType(str);
   }
   mol.ConnectTheDots();
   mol.SetTitle(title);
@@ -65,7 +61,6 @@ bool WriteXYZ(ostream &ofs,OBMol &mol)
   ofs << buffer << endl;
   sprintf(buffer,"%s\t%15.7f", mol.GetTitle(), mol.GetEnergy());
   ofs << buffer << endl;
-  ttab.SetFromType("INT"); ttab.SetToType("XYZ");
 
   OBAtom *atom;
   string str,str1;

@@ -16,6 +16,10 @@
 
 	* src/atom.cpp (GetType): Fix bug with atom typing by assigning
 	the ATN type of an atom if the atom typer didn't pick one before.
+
+	* src/gamess.cpp, src/xyz.cpp, src/unichem.cpp, src/ghemical.cpp:
+	Don't try to translate atom types as this causes problems. (Works
+	cleanly now that the GetType() bug is fixed.)
 	
 2002-02-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 

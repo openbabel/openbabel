@@ -27,7 +27,6 @@ bool ReadUnichem(istream &ifs,OBMol &mol,char *title)
   if (!natoms) return(false);
 
   mol.ReserveAtoms(natoms);
-  ttab.SetFromType("XYZ");
 
   string str;
   float x,y,z;
@@ -47,9 +46,6 @@ bool ReadUnichem(istream &ifs,OBMol &mol,char *title)
 
     //set atomic number
     atom->SetAtomicNum(atoi((char*)vs[0].c_str()));
-    //set type
-    ttab.SetToType("INT"); ttab.Translate(str,vs[0]); 
-    atom->SetType(str);
   }
   mol.ConnectTheDots();
   mol.SetTitle(title);

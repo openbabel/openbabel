@@ -112,7 +112,6 @@ bool WriteGhemical(ostream &ofs,OBMol &mol)
   
   // Ghemical header -- here "version 1.0" format
   ofs << "!Header mm1gp 100" << endl;
-  ttab.SetFromType("INT"); ttab.SetToType("ATN");
 
   // Number of coordinate sets
   ofs << "!Info 1" << endl;
