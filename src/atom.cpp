@@ -377,7 +377,10 @@ OBResidue *OBAtom::GetResidue()
 
 float OBAtom::GetAtomicMass() const
 {
-  return etab.GetMass(_ele);
+  if (_isotope == 0)
+    return etab.GetMass(_ele);
+  else
+    return isotab.GetExactMass(_ele, _isotope);
 }
 
 float OBAtom::GetExactMass() const

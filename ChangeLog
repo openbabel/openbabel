@@ -7,6 +7,10 @@
 	test/unitcell.txt: New test to confirm that unit cell conversions
 	occur accurately.
 
+	* src/atom.cpp (GetAtomicMass): If an isotope has been set, use
+	that as the atomic mass. Otherwise stick to the normal average
+	mass.
+
 2003-03-10  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/generic.h: Add new data type "slots" to obDataType enum.
