@@ -73,7 +73,14 @@ class OBRingSearch
  public:
   OBRingSearch(){}
   ~OBRingSearch();
+#ifdef WIN32
+  void    SortRings() {
+//cerr << "Rings cannot be sorted under WIN32" << endl;
+  }
+#endif
+#ifndef WIN32
   void    SortRings() {sort(_rlist.begin(),_rlist.end(),CompareRingSize);}
+#endif
   void    RemoveRedundant(int);
   void    AddRingFromClosure(OBMol &,OBBond *,int);
   void    WriteRings();

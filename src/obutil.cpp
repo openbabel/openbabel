@@ -53,9 +53,9 @@ void ThrowError(string &str)
 void PauseExit()
 {
 #ifdef WIN32
-	char buf[1];
-	_cputs("program complete, hit <enter> to continue");
-	_cgets(buf);
+//	char buf[1];
+//	_cputs("program complete, hit <enter> to continue");
+//	_cgets(buf);
 #endif
 	exit(0);
 }

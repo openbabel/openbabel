@@ -57,7 +57,7 @@ by myself or supplied from the current OpenSource site. You should be very caref
 in any claims that it complies with any of the published
 CML specifications. You are requested to make it clear to users that your use of
 "CML" the <cml> tag and the CML namespaces posted on http://www.xml-cml.org has
-been made without the knowledge of thge authors of CML
+been made without the knowledge of the authors of CML
 
 This notice must be included with any modified software.
 
@@ -678,7 +678,7 @@ void tag(string s) {
 			s = s.substr(2, l-4);
 			string::size_type idx = s.find(" ");
 			string target = (idx < s.size()) ? s.substr(0, idx) : s;
-			string data = (idx < s.size()) ? trim(s.substr(idx)) : "";
+			string data = (idx < s.size()) ? trim(s.substr(idx)) : string::string("");
 			processingInstruction(target, data);
 		} else {
 		  //			cerr << "Bad PI: " << s << endl;
@@ -1004,7 +1004,6 @@ void startElement(string namespaceURI, string localName, string prefix, vector<p
 	pcdata = "";
 	useBuiltin = false;
     if (false) {
-		startMolecule(atts);
 	} else if (localName == "atom") {
         startAtom(atts);
 	} else if (localName == "atomArray") {
@@ -1121,7 +1120,7 @@ void processNamespace(string name, string value) {
 	pair <string, string> ns;
 
 	string::size_type idx = name.find(":");
-	ns.first = (idx < name.size()) ? name.substr(idx) : "";
+	ns.first = (idx < name.size()) ? name.substr(idx) : string::string("");
 	ns.second = value;
 	bool nsExists = false;
 	for (namespaceVector_t::size_type i = 0; i < namespaceVector.size(); ++i) {
@@ -1233,7 +1232,7 @@ void endElement(string namespaceURI, string localName, string prefix) {
     int ns = elementStack.size();
     if (ns > 0) {
 	    currentElem = elementStack[ns-1];
-	    parent = (ns <= 1) ? "" : elementStack[ns-2];
+	    parent = (ns <= 1) ? string::string("") : elementStack[ns-2];
 	    elementStack.pop_back();
 	} else {
 	}
@@ -2443,7 +2442,7 @@ int getAngleIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2) {
 
 // returns index of torsion between atoms ( starts at 1; 0 = not found; negative = "wrong way round")
 int getTorsionIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2, OBAtom* a3) {
-	for (unsigned int i = 0; i < torsionVector.size(); ++i) {
+	for (int i = 0; i < torsionVector.size(); ++i) {
 		if (a0 == torsionVector[i].first[0] &&
 			a1 == torsionVector[i].first[1] &&
 			a2 == torsionVector[i].first[2] &&
@@ -2461,8 +2460,8 @@ int getTorsionIndex(OBAtom* a0, OBAtom* a1, OBAtom* a2, OBAtom* a3) {
 // returns zero. If torsion is "wrong way round", returns
 // negative serial
 int getFirstTorsionIndexForAtom(OBAtom* a0) {
-	unsigned int k = a0->GetIdx();
-	for (unsigned int i = 0; i < torsionVector.size(); ++i) {
+	int k = a0->GetIdx();
+	for (int i = 0; i < torsionVector.size(); ++i) {
 		if (a0 == torsionVector[i].first[0]) {
 			bool ok = true;
 			for (unsigned int j = 1; j <= 3; ++j) {
