@@ -11,6 +11,10 @@
 	that as the atomic mass. Otherwise stick to the normal average
 	mass.
 
+	* src/isotope-small.txt, src/Makefile.in, src/isotope.h: Smaller
+	set of isotopes for generating default data to minimize growth in
+	executable size.
+
 2003-03-10  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/generic.h: Add new data type "slots" to obDataType enum.

@@ -35,7 +35,8 @@ builddir      = @top_builddir@src
 MAIN	      = main.o
 
 DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt \
-		resdata.txt types.txt phmodel.txt isotope.txt
+		resdata.txt types.txt phmodel.txt \
+		isotope.txt isotope-small.txt
 
 DATAINCS      = aromatic.h atomtyp.h element.h extable.h \
 	        phmodeldata.h resdata.h types.h isotope.h
@@ -123,8 +124,8 @@ resdata.h:	bin2hex.pl resdata.txt
 types.h:	bin2hex.pl types.txt
 		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
 
-isotope.h:	bin2hex.pl isotope.txt
-		(cd $(srcdir); ./bin2hex.pl isotope.txt IsotopeData >isotope.h)
+isotope.h:	bin2hex.pl isotope-small.txt
+		(cd $(srcdir); ./bin2hex.pl isotope-small.txt IsotopeData >isotope.h)
 
 # Update the Makefile if the Makefile.in or configure script changes
 Makefile:	Makefile.in
