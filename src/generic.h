@@ -23,7 +23,7 @@ GNU General Public License for more details.
 #include <string>
 #include <vector>
 
-//obData0 through obData9 are data slots that are not used in OpenBabel, and
+//obData0 through obData15 are data slots that are not used in OpenBabel, and
 //are meant for use in derivative programs.  Macro definitions can be used
 //to define what each data slot is used for.
 
@@ -34,19 +34,22 @@ class OBAtom;
 class OBBond;
 class OBRing;
 
-enum obDataType {obUndefinedData,obPairData,obEnergyData,
-                 obCommentData,obCompressData,obExternalBondData,obRotamerList,
-                 obVirtualBondData,obRingData,obTorsionData,obAngleData,
-                 obSerialNums, obUnitCell, obSpinData, obChargeData,
-                 obAuditList, obData0,obData1,obData2,obData3,
-                 obData4,obData5,obData6,obData7, obData8,obData9};
+enum obDataType {obUndefinedData, obPairData, obEnergyData,
+                 obCommentData, obConformerData, obExternalBondData,
+		 obRotamerList, obVirtualBondData, obRingData, 
+		 obTorsionData, obAngleData, obSerialNums, obUnitCell, 
+		 obSpinData, obChargeData, obSymmetryData, 
+		 obData0, obData1, obData2, obData3, obData4, obData5,
+		 obData6, obData7, obData8, obData9, obData10, obData11,
+                 obData12, obData13, obData14, obData15};
 
 //! Base class for generic data - use obData# slots for custom data types
+//! or store your data as a string and use obPairData or obCommentData
 class OBGenericData
 {
 protected:
     std::string     _attr; //!< attribute tag
-    obDataType 	_type;
+    obDataType 	    _type; //!< attribute type -- declared for each subclasses
 public:
     OBGenericData();
     OBGenericData(const OBGenericData&);
@@ -92,47 +95,28 @@ public:
     }
 };
 
-//! \brief Used to store information on an external bond
+//! \brief Used to store information on an external bond 
+//! (e.g., SMILES fragments)
 class OBExternalBond
 {
     int     _idx;
     OBAtom *_atom;
     OBBond *_bond;
 public:
-    OBExternalBond()
-    {}
+    OBExternalBond()    {}
     OBExternalBond(OBAtom *,OBBond *,int);
     OBExternalBond(const OBExternalBond &);
-    ~OBExternalBond()
-    {}
+    ~OBExternalBond()   {}
 
-    int     GetIdx()  const
-    {
-        return(_idx);
-    }
-    OBAtom *GetAtom() const
-    {
-        return(_atom);
-    }
-    OBBond *GetBond() const
-    {
-        return(_bond);
-    }
-    void SetIdx(int idx)
-    {
-        _idx = idx;
-    }
-    void SetAtom(OBAtom *atom)
-    {
-        _atom = atom;
-    }
-    void SetBond(OBBond *bond)
-    {
-        _bond = bond;
-    }
+    int     GetIdx()  const    {        return(_idx);    }
+    OBAtom *GetAtom() const    {        return(_atom);   }
+    OBBond *GetBond() const    {        return(_bond);   }
+    void SetIdx(int idx)       {        _idx = idx;      }
+    void SetAtom(OBAtom *atom) {        _atom = atom;    }
+    void SetBond(OBBond *bond) {        _bond = bond;    }
 };
 
-//! \brief Used to store information on external bonds (e.g. in SMILES fragments)
+//! \brief Used to store information on external bonds (e.g., in SMILES fragments)
 class OBExternalBondData : public OBGenericData
 {
 protected:
@@ -146,26 +130,7 @@ public:
     }
 };
 
-/*NF
-//! \brief Used to store molecule in a compresed binary form
-//!
-//! Compressed form can be accessed automatically via OBMol::BeginAccess()
-//! and OBMol::EndAccess() or via OBMol::Compress() and OBMol::UnCompress()
-class OBCompressData : public OBGenericData
-{
-protected:
-  int _size;
-  unsigned char *_data;
-public:
-  OBCompressData();
-  ~OBCompressData();
-  void SetData(unsigned char *,int);
-  int            GetSize() {return(_size);}
-  unsigned char *GetData() {return(_data);}
-};
-*/
-
-//! Used to store attribute/value relationships
+//! Used to store arbitrary attribute/value relationships
 class OBPairData : public OBGenericData
 {
 protected:
