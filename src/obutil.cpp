@@ -340,6 +340,7 @@ void CleanAtomType(char *id)
   else                     id[2] = '\0';
 }   
 
+/*
 bool SetInputType(OBMol &mol,string &fname)
 {
   io_type format;
@@ -371,7 +372,7 @@ bool SetOutputType(OBMol &mol,string &fname)
 
   return(true);
 }
-
+*/
 
 void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
