@@ -616,6 +616,7 @@ public:
     void ContigFragList(vector<vector<int> >&);
     void Align(OBAtom*,OBAtom*,Vector&,Vector&);
     void ConnectTheDots();
+    void PerceiveBonds();
 //  void ConnectTheDotsSort();
 
     virtual void BeginAccess(void);

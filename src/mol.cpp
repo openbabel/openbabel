@@ -2640,6 +2640,140 @@ void OBMol::ConnectTheDots(void)
   delete [] c;
 }
 
+void OBMol::PerceiveBonds()
+{
+  OBAtom *atom, *b, *c;
+  Vector v1, v2;
+  int angles;
+  float degrees;
+  vector<OBNodeBase*>::iterator i;
+  vector<OBEdgeBase*>::iterator j,k;
+  
+  // Pass 1: Assign estimated hybridization based on avg. angles
+  for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+    {
+      degrees = 0.0f;
+      angles = 0;
+      for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
+	{
+	  k = j;
+	  for (c = atom->NextNbrAtom(k); c; c = atom->NextNbrAtom(k))
+	    {
+	      v1 = b->GetVector() - atom->GetVector();
+	      v2 = c->GetVector() - atom->GetVector();	
+	      degrees += VectorAngle(v1, v2);
+	      angles++;
+	    }
+	}
+      if (angles >= 1)
+	{
+	  if ((degrees / angles) > 155.0)
+	    atom->SetHyb(1);
+	  else if ((degrees / angles) <= 155.0 && (degrees / angles) > 115)
+	    atom->SetHyb(2);
+	}
+    } // pass 1
+  SetHybridizationPerceived();
+
+  // Pass 2: look for 5-member rings with torsions <= 7.5 degrees
+  //         and 6-member rings with torsions <= 12 degrees
+  //         (set all atoms with at least two bonds to sp2)
+  // (GRH): This isn't necessary because flat atoms will have ~120 angles
+  //        on average (exactly flat atoms = 360 deg/3 bonds => 120.0)
+
+  // Pass 3: "Antialiasing" If an atom marked as sp hybrid isn't 
+  //          bonded to another or an sp2 hybrid isn't bonded 
+  //          to another (or terminal atoms in both cases)
+  //          mark them to a lower hybridization for now
+  bool openNbr;
+  for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+    {
+      if (atom->GetHyb() == 2 || atom->GetHyb() == 1)
+	{
+	  openNbr = false;
+	  for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
+	    {
+	      if (b->GetHyb() < 3 || b->GetValence() == 1)
+		{
+		  openNbr = true;
+		  break;
+		}
+	    }
+	  if (!openNbr && atom->GetHyb() == 2)
+	    atom->SetHyb(3);
+	  else if (!openNbr && atom->GetHyb() == 1)
+	    atom->SetHyb(2);
+	}
+    } // pass 3
+
+  // Pass 4: Check for known functional group patterns and assign bonds
+  //         to the canonical form
+
+  // Pass 5: Check for aromatic rings and assign bonds as appropriate
+
+  // Pass 6: Assign remaining bond types, ordered by atom electronegativity
+  //
+  vector<pair<OBAtom*,float> > sortedAtoms;
+  vector<float> rad; 
+  vector<int> sorted;
+  int iter, max;
+  float maxElNeg;
+
+  for (atom = BeginAtom(i) ; atom ; atom = NextAtom(i))
+    {
+      pair<OBAtom*,float> entry(atom, etab.GetElectroNeg(atom->GetAtomicNum()));
+      sortedAtoms.push_back(entry);
+    }
+  sort(sortedAtoms.begin(), sortedAtoms.end(), SortAtomZ);
+
+  max = sortedAtoms.size();
+
+  for (iter = 0 ; iter < max ; iter++ )
+  {
+      atom = sortedAtoms[iter].first;
+      if ( atom->GetHyb() == 1 && 
+	   atom->BOSum() < etab.GetMaxBonds(atom->GetAtomicNum()) )
+	{
+	  // loop through the neighbors looking for a hybrid or terminal atom
+	  // (and pick the one with highest electronegativity first)
+	  // *or* pick a neighbor that's a terminal atom
+	  maxElNeg = 0.0f;
+	  c = NULL;
+	  for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
+	    {
+	      if ( (b->GetHyb() == 1 || b->GetValence() == 1)
+		   && b->BOSum() < etab.GetMaxBonds(b->GetAtomicNum())
+		   && etab.GetElectroNeg(b->GetAtomicNum()) >= maxElNeg )
+		{
+		  maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+		  c = b; // save this atom for later use
+		}
+	    }
+	  if (c)
+	    (atom->GetBond(c))->SetBO(3);
+	}
+      else if ( atom->GetHyb() == 2 &&
+		atom->BOSum() < etab.GetMaxBonds(atom->GetAtomicNum()) )
+	{
+	  // as above
+	  maxElNeg = 0.0f;
+	  c = NULL;
+	  for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
+	    {
+	      if ( (b->GetHyb() == 2 || b->GetValence() == 1)
+		   && b->BOSum() < etab.GetMaxBonds(b->GetAtomicNum())
+		   && etab.GetElectroNeg(b->GetAtomicNum()) >= maxElNeg )
+		{
+		  maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+		  c = b; // save this atom for later use
+		}
+	    }
+	  if (c)
+	    (atom->GetBond(c))->SetBO(2);
+	}
+  }
+}
+
 void OBMol::Center()
 {
   int j,size;
