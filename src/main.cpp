@@ -253,6 +253,7 @@ unsigned int i;
   cout << " -d Delete Hydrogens " << endl;
   cout << " -h Add Hydrogens " << endl;
   cout << " -hpH Add Hydrogens appropriate for pH (use transforms in phmodel.txt) " << endl; 
+  cout << " -c Center Coordinates " << endl;
   cout << " -x[flags] XML.CML options (e.g. -x1ac)  " << endl;
   cout << "   1 output CML V1.0 (default)" << endl;
   cout << "   2 output CML V2.0 (Schema)" << endl;
