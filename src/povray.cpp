@@ -661,8 +661,10 @@ bool WritePovray(ostream &ofs, OBMol &mol, const char* title)
  /* ---- We use the molecule-title as our prefix ---- */
  if(title != (const char*) NULL) 
   prefix = MakePrefix(title);
+ else if (mol.GetTitle() != (const char *) NULL)
+   prefix = MakePrefix(mol.GetTitle());
  else
-  prefix = "Unknown";
+   prefix = MakePrefix("Unknown");
 
  /* ---- Check if we have already written a molecule to this file ---- */
  if (num == 0) {

@@ -23,7 +23,7 @@ UNIX(TM).
 Sorry: We did not test it for DOS/Windows, because we do _not_ use it.
 
 (a) Install povray 3.1 or above (You _really_ need at least 3.1). See 
-    http:/www.povray.org/ for instructions, sources and binaries.
+    http://www.povray.org/ for instructions, sources and binaries.
     Please read the povray manual. 
 
 (b) Copy the file babel.inc  to a place where povray can find it as 
@@ -46,7 +46,7 @@ The usage is quite simple. Supposing you have a mol2 file (probably generated
 by Sybyl). You can convert this description of a molecule to a 
 povray file by typing:
 
-  babel -v -imol2 meer.mol2 -opov meer.inc
+  babel -imol2 meer.mol2 -opov meer.inc
 
 (The output-type 'pov' creates povray files. Of course, you can use any type 
 of file supported by babel as input.)
@@ -94,10 +94,11 @@ to your .pov file.
 2.2. Example
 ------------
 
-Go to directory 'example'. Here you find a file 'dioxin.mol2'.
-Convert it by typing
+Go to directory 'doc'. (These may have been moved if you are using a
+binary package, like an RPM or .deb.) Here you find a file
+'dioxin.mol2'. Convert it by typing:
 
- babel -v -imol2 dioxin.mol2 -opov dioxin.inc
+ babel -imol2 dioxin.mol2 -opov dioxin.inc
 
 Now have a look at the file 'dioxin.inc'
 
