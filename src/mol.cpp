@@ -2856,6 +2856,10 @@ bool OBMol::IsChiral()
     return(false);
 }
 
+
+//! Renumber the atoms in this molecule according to the order in the supplied
+//! vector. This will return without action if the supplied vector is empty or
+//! does not have the same number of atoms as the molecule.
 void OBMol::RenumberAtoms(vector<OBNodeBase*> &v)
 {
     if (Empty())
@@ -2867,17 +2871,17 @@ void OBMol::RenumberAtoms(vector<OBNodeBase*> &v)
 
     va = v;
 
-    if (!va.empty() && va.size() < NumAtoms())
-        //make sure all atoms are represented in the vector
-    {
-        OBBitVec bv;
-        for (i = va.begin();i != va.end();i++)
-            bv |= (*i)->GetIdx();
+    //make sure all atoms are represented in the vector
+    if (va.empty() || va.size() != NumAtoms())
+      return;
 
-        for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-            if (!bv[atom->GetIdx()])
-                va.push_back(atom);
-    }
+    OBBitVec bv;
+    for (i = va.begin();i != va.end();i++)
+      bv |= (*i)->GetIdx();
+    
+    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+      if (!bv[atom->GetIdx()])
+	va.push_back(atom);
 
     int j,k;
     double *c;
