@@ -1,3 +1,9 @@
+2004-08-30  Fabien Fontaine <ffontaine@imim.es>
+
+	*src/mol.cpp bond.cpp kekulize.cpp Kekulize function changed to
+	what it was before. PerceiveBondOrders replaced by 
+	NewPerceiveBondOrders. SetK* functions added to NewPerceiveBondOrders
+	
 2004-08-27  Michael Banck  <mbanck@gmx.net>
 
 	* mol.h (tokenize): Initialize *delimstr to " \t\n" for the
