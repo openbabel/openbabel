@@ -1,11 +1,11 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/StdAfx.h)
 dnl AM_CONFIG_HEADER(config.h)
-dnl AM_INIT_AUTOMAKE([openbabel], 1.99)
+dnl AM_INIT_AUTOMAKE([openbabel], version)
 AC_CANONICAL_HOST
 top_builddir=`pwd`
 AC_SUBST(top_builddir)
-openbabel_version=1.99
+openbabel_version=1.99.1
 AC_SUBST(openbabel_version)
 
 dnl Checks for programs.

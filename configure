@@ -569,7 +569,7 @@ echo "$ac_t""$host" 1>&6
 
 top_builddir=`pwd`
 
-openbabel_version=1.99
+openbabel_version=1.99.1
 
 
 # Extract the first word of "gcc", so it can be a program name with args.
