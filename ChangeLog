@@ -1,3 +1,8 @@
+2002-04-23  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/hin.cpp (ReadHIN): Fix bugs in reading HyperChem files as
+	contributed by Tommi Hassinen.
+
 2002-04-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/qchem.cpp: Fix conversion from internal coordinates at the

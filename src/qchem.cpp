@@ -85,7 +85,7 @@ bool ReadQChem(istream &ifs,OBMol &mol,char *title)
 	  ifs.getline(buffer,BUFF_SIZE);	// -----------------
 	  ifs.getline(buffer,BUFF_SIZE);
 	  tokenize(vs,buffer);
-	  while (vs.size() == 3)
+	  while (vs.size() >= 3)
 	    {
 	      atom = mol.GetAtom(atoi(vs[0].c_str()));
 	      atom->SetPartialCharge(atof(vs[2].c_str()));

@@ -33,15 +33,15 @@ bool ReadHIN(istream &ifs,OBMol &mol,char *title)
   ifs.getline(buffer, BUFF_SIZE);
   
   mol.BeginModify();
-  while (strstr(buffer,"enmol") == NULL)
+  while (strstr(buffer,"endmol") == NULL)
     {
       tokenize(vs,buffer); // Don't really know how long it'll be
       if (vs.size() <= 11) break;
       atom = mol.NewAtom();
       atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
-      x = atof((char*)vs[6].c_str());
-      y = atof((char*)vs[7].c_str());
-      z = atof((char*)vs[8].c_str());
+      x = atof((char*)vs[7].c_str());
+      y = atof((char*)vs[8].c_str());
+      z = atof((char*)vs[9].c_str());
       atom->SetVector(x,y,z);
       
       max = 11 + 2 * atoi((char *)vs[10].c_str());

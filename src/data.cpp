@@ -694,7 +694,6 @@ void OBGlobalDataBase::Init()
       for (p1 = p2 = _dataptr;*p2 != '\0';p2++)
 	if (*p2 == '\n')
 	  {
-	    // *p2 = '\0';
 	    strncpy(buffer, p1, (p2 - p1));
 	    buffer[(p2 - p1) + 1] = '\0';
 	    ParseLine(buffer);
