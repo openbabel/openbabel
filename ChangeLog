@@ -8,6 +8,21 @@
 	* src/data.cpp, src/data.h, src/extable.txt, src/fileformat.cpp,
 	src/fileformat.h: Changes to support read/write CRK files.
 
+	* src/typer.h: Add new SelectRootAtoms method (defaults to off)
+	contributed from JOELib.
+
+	* src/typer.cpp(SelectRootAtoms): Implement it, as ported from
+	Joerg Wegner's JOELib Java code.
+	(AssignAromaticFlag): Use SelectRootAtoms -- if
+	avoidInnerRingAtoms is set to false, same as previous code.
+	
+	* test/attype.00.smi: Add new test patterns from JOELib tests.
+
+	* test/smartstest.txt: Add new pattern from JOELib tests.
+
+	* test/ringresults.txt, test/smartsresults.txt: Regenerate using
+	current code (i.e. do not use SelectRootAtoms code yet).
+
 2003-11-22  Michael Banck  <mbanck@gmx.net>
 
 	* src/povray.cpp (CalcBoundingBox): Decouple declaration of 

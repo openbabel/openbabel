@@ -256,3 +256,13 @@ CCc1cc(Br)c(N=C=O)c(Br)c1 SALOR_R288780 isocyanate
 c1ncccn1 Test1 pyrimidine
 c1ncncc1 Test2 pyrimidine
 C1CC=CC1 Test3 cyclopentene
+Oc1c(O)c2cccc3ccc4cccc1c4c23 Test4 4,5-dihydroxypyrene
+Oc1c(O)c2ccccc2c3ccccc13 Test5 9,10-dihydroxyphenanthrene
+c1ccc(cc1)-c2nc3c(ccc4ccccc34)o2 Test6
+O1C2=CC=C3C=CC=CC3=C2N=C1C4=CC=CC=C4 Test7
+OC1=C(O)c2cccc3ccc4cccc1c4c23 pyrene-4,5-diol
+Oc1c(O)c2ccccc2c2ccccc12 9,10-dihydroxyphenanthrene
+P(=O)(O)(O)c1cc2c(oc1=O)cccc2 102267
+O=C1C(=C[C@@H]2[C@@H](O1)CCCC2)C1CCCCC1 14860
+c1cc2c(oc1=O)cccc2 2H-chromen-2-one
+c1ccc(cc1)c1nc2c(ccc3ccccc23)o1 2-phenylnaphtho[1,2-d][1,3]oxazole
