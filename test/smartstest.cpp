@@ -30,7 +30,7 @@ int main(int argc,char *argv[])
     return 0;
   }
 
-  cout << endl << "Testing SMARTS...  ";
+  cout << endl << "Testing SMARTS...  " << endl;
 
   std::ifstream ifs;
   if (!SafeOpen(ifs,"smartstest.txt")){
@@ -104,9 +104,10 @@ int main(int argc,char *argv[])
 	      ThrowError("number of matches different than reference");
 	      cerr << "expected " << vs.size() << " matches, found " 
 		   << mlist.size() << endl;
-	      ThrowError((char*)mol.GetTitle());
-	      ThrowError((*i)->GetSMARTS());
-	      //cerr << " currently on results line" << res_line+1 << endl;
+	      cerr << "error with molecule " << mol.GetTitle();
+	      cerr << " on pattern " << (*i)->GetSMARTS() << endl;
+	      if (mlist.size())
+		cerr << "first match: atom #" << mlist[0][0] << endl;
 	      return -1; // test failed
 	    }
 	  
