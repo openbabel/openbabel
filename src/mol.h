@@ -541,7 +541,7 @@ public:
 #define OB_AROM_CORRECTED_MOL    (1<<14)
 #define OB_CHAINS_MOL            (1<<15)
 #define OB_TCHARGE_MOL		 (1<<16)
-#define OB_SPIN_MULTIPLICITY_MOL (1<<17)
+#define OB_TSPIN_MOL             (1<<17)
 #define OB_CURRENT_CONFORMER	 -1
 
 // class introduction in mol.cpp
@@ -723,7 +723,7 @@ public:
     void   SetHydrogensAdded()             {SetFlag(OB_H_ADDED_MOL);}
     void   SetCorrectedForPH()             {SetFlag(OB_PH_CORRECTED_MOL);}
     void   SetAromaticCorrected()          {SetFlag(OB_AROM_CORRECTED_MOL);}
-    void   SetSpinMultiplicityAssigned()   {SetFlag(OB_SPIN_MULTIPLICITY_MOL);}
+    void   SetSpinMultiplicityAssigned()   {SetFlag(OB_TSPIN_MOL);}
     void   UnsetAromaticPerceived()        {_flags &= (~(OB_AROMATIC_MOL));}
     void   UnsetPartialChargesPerceived()  {_flags &= (~(OB_PCHARGE_MOL));}
     void   UnsetImplicitValencePerceived() {_flags &= (~(OB_IMPVAL_MOL));}
@@ -813,7 +813,7 @@ public:
     bool HasHydrogensAdded()             {return(HasFlag(OB_H_ADDED_MOL));        }
     bool HasAromaticCorrected()          {return(HasFlag(OB_AROM_CORRECTED_MOL)); }
     bool IsCorrectedForPH()              {return(HasFlag(OB_PH_CORRECTED_MOL));   }
-    bool HasSpinMultiplicityAssigned()   {return(HasFlag(OB_SPIN_MULTIPLICITY_MOL));}
+    bool HasSpinMultiplicityAssigned()   {return(HasFlag(OB_TSPIN_MOL));}
     bool IsChiral();
     //! Are there any atoms in this molecule?
     bool Empty() {return(_natoms == 0);}

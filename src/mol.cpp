@@ -1737,6 +1737,16 @@ bool OBMol::AssignSpinMultiplicity()
     }
   //end CM
   
+  vector<OBNodeBase*>::iterator i;
+  unsigned int spin = 1;
+  
+  for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+    {
+      if (atom->GetSpinMultiplicity() > 1)
+	spin += atom->GetSpinMultiplicity() - 1;
+    }
+  _totalSpin = spin;
+  
   return (true);
 }
 
