@@ -19,31 +19,48 @@ using namespace std;
 namespace OpenBabel
 {
 
-  // \todo Needs update for unit cell information
 bool WriteCSSR(ostream &ofs,OBMol &mol)
 { 
   char buffer[BUFF_SIZE];
 
-  sprintf(buffer,
-	  " REFERENCE STRUCTURE = 00000   A,B,C =  %6.3f  %6.3f  %6.3f",
-	  1.0,1.0,1.0); 
-  ofs << buffer << endl;
-  sprintf(buffer,
-	  "   ALPHA,BETA,GAMMA =  90.000  90.000  90.000    SPGR =    P1");
-  ofs << buffer << endl;
-  sprintf(buffer,"%4d\n",mol.NumAtoms());
-  ofs << buffer << endl;
+  if (!mol.HasData(obUnitCell))
+    {
+      sprintf(buffer,
+	      " REFERENCE STRUCTURE = 00000   A,B,C =%8.3f%8.3f%8.3f",
+	      1.0,1.0,1.0); 
+      ofs << buffer << endl;
+      sprintf(buffer,
+	      "   ALPHA,BETA,GAMMA =%8.3f%8.3f%8.3f    SPGR =    P1"
+	      , 90.0f, 90.0f, 90.0f);
+      ofs << buffer << endl;
+    }
+  else
+    {
+      OBUnitCell *uc = (OBUnitCell*)mol.GetData(obUnitCell);
+      sprintf(buffer,
+	      " REFERENCE STRUCTURE = 00000   A,B,C =%8.3f%8.3f%8.3f",
+	      uc->GetA(), uc->GetB(), uc->GetC()); 
+      ofs << buffer << endl;
+      sprintf(buffer,
+	      "   ALPHA,BETA,GAMMA =%8.3f%8.3f%8.3f    SPGR =    P1",
+	      uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
+      ofs << buffer << endl;
+    }
+
+  sprintf(buffer,"%4d   1 %s",mol.NumAtoms(), mol.GetTitle());
+  ofs << buffer << endl << endl;
 
   OBAtom *atom,*nbr;
   vector<OBNodeBase*>::iterator i;
   vector<OBEdgeBase*>::iterator j;
   vector<int> vtmp(106,0);
+  int bonds;
 
   for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
   {
     //assign_pdb_number(pdb_types,atom->GetIdx());
     vtmp[atom->GetAtomicNum()]++;
-    sprintf(buffer," %3d%2s%-3d  %8.4f  %8.4f  %8.4f ",
+    sprintf(buffer,"%4d%2s%-3d  %9.5f %9.5f %9.5f ",
 	    atom->GetIdx(),
 	    etab.GetSymbol(atom->GetAtomicNum()),
 	    vtmp[atom->GetAtomicNum()],
@@ -51,12 +68,21 @@ bool WriteCSSR(ostream &ofs,OBMol &mol)
 	    atom->y(),
 	    atom->z());
     ofs << buffer;
-    for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
+    bonds = 0;
+    for (nbr = atom->BeginNbrAtom(j); nbr; nbr = atom->NextNbrAtom(j))
       {
+	if (bonds > 8) break;
 	sprintf(buffer,"%4d",nbr->GetIdx());
 	ofs << buffer;
+	bonds++;
       }
-    ofs << endl;
+    for (; bonds < 8; bonds ++)
+      {
+    	sprintf(buffer,"%4d",0);
+    	ofs << buffer;
+      }
+    sprintf(buffer," %7.3f%4d", atom->GetPartialCharge(), 1);
+    ofs << buffer << endl;
   }
 
   return(true);
