@@ -12,6 +12,7 @@ mandir        = @mandir@/man1
 DEST	      = @bindir@
 
 INSTALL	      = @INSTALL@
+MKDIRS        = $(top_srcdir)/mkinstalldirs
 
 SUBDIRS	      = src test
 DISTDIR       = $(top_srcdir)/../openbabel-$(version)
@@ -46,8 +47,8 @@ distclean:
 
 install:	all
 		(cd src; $(MAKE) $(MFLAGS) install)
-		$(INSTALL) -d $(mandir)
-		$(INSTALL) doc/babel.1 $(mandir)
+		$(MKDIRS) $(mandir)
+		$(INSTALL) $(top_srcdir)/doc/babel.1 $(mandir)
 
 dist:		distclean
 	        rm -rf $(DISTDIR) openbabel.tar.gz

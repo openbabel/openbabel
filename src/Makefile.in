@@ -17,6 +17,7 @@ LDFLAGS       = @LDFLAGS@
 
 RM            = rm -f
 INSTALL	      = @INSTALL@
+MKDIRS        = $(top_srcdir)/mkinstalldirs
 AR	      = @AR@
 RANLIB	      = @RANLIB@
 
@@ -29,6 +30,12 @@ builddir      = @top_builddir@/src
 DEST	      = @bindir@
 
 MAIN	      = main.o
+
+DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt \
+		resdata.txt types.txt phmodel.txt 
+
+DATAINCS      = aromatic.h atomtyp.h element.h extable.h \
+	        phmodeldata.h resdata.h types.h
 
 HDRS	      = StdAfx.h Vector.h aromatic.h atomtyp.h base.h binary.h \
 		bitgrid.h bitvec.h chiral.h chains.h commandline.h cwrap.h \
@@ -56,21 +63,18 @@ PROGRAM	      = babel
 
 LIBRARY       = libopenbabel.a
 
-DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt \
-		resdata.txt types.txt phmodel.txt 
-
 EXTRA_DIST    = bin2hex.pl
 
 MAKEFILE      = Makefile
 
-$(PROGRAM):     $(OBJS) $(MAIN)
-		$(LINKER) $(LDFLAGS) $(OBJS) $(MAIN) -o  $(PROGRAM) $(LIBS)
+$(PROGRAM):     $(MAIN) $(LIBRARY)
+		$(LINKER) $(LDFLAGS) -o  $(PROGRAM) $(MAIN) $(LIBRARY) $(LIBS)
 
-$(LIBRARY):	$(OBJS)
+$(LIBRARY):	$(DATAINCS) $(OBJS)
 		$(AR) -r $(LIBRARY) $(OBJS)
 		$(RANLIB) $(LIBRARY)
 
-all:		$(PROGRAM) $(LIBRARY)
+all:		$(DATAINCS) $(LIBRARY) $(PROGRAM)
 
 test:		check
 check:		$(PROGRAM)
@@ -80,9 +84,9 @@ distclean:	clean
 		$(RM) version.h Makefile
 
 install:	$(PROGRAM)
-		$(INSTALL) -d $(DEST)
+		$(MKDIRS) $(DEST)
 		$(INSTALL) $(PROGRAM) $(DEST)
-		$(INSTALL) -d $(pkgdatadir)
+		$(MKDIRS) $(pkgdatadir)
 		(cd $(srcdir); $(INSTALL) -m644 $(DATAFILES) $(pkgdatadir))
 
 print:;		$(PRINT) $(HDRS) $(SRCS)
@@ -91,17 +95,30 @@ program:        $(PROGRAM)
 
 dist:		distclean
 
-datafiles:;   chmod +x $(srcdir)/bin2hex.pl
-	      $(srcdir)/bin2hex.pl $(srcdir)/atomtyp.txt  AtomTypeData       > atomtyp.h
-	      $(srcdir)/bin2hex.pl $(srcdir)/element.txt  ElementData        > element.h
-	      $(srcdir)/bin2hex.pl $(srcdir)/extable.txt  ExtensionTableData > extable.h
-	      $(srcdir)/bin2hex.pl $(srcdir)/resdata.txt  ResidueData        > resdata.h
-	      $(srcdir)/bin2hex.pl $(srcdir)/types.txt    TypesData          > types.h
-	      $(srcdir)/bin2hex.pl $(srcdir)/aromatic.txt AromaticData       > aromatic.h
-	      $(srcdir)/bin2hex.pl $(srcdir)/phmodel.txt  PhModelData        > phmodeldata.h
+# Generated include files (default data tables)
+aromatic.h:	bin2hex.pl aromatic.txt
+		(cd $(srcdir); ./bin2hex.pl aromatic.txt AromaticData >aromatic.h)
+
+atomtyp.h:	bin2hex.pl atomtyp.txt
+		(cd $(srcdir); ./bin2hex.pl atomtyp.txt AtomTypeData >atomtyp.h)
+
+element.h:	bin2hex.pl element.txt
+		(cd $(srcdir); ./bin2hex.pl element.txt ElementData >element.h)
+
+extable.h:	bin2hex.pl extable.txt
+		(cd $(srcdir); ./bin2hex.pl extable.txt ExtensionTableData >extable.h)
+
+phmodeldata.h:	bin2hex.pl phmodel.txt
+		(cd $(srcdir); ./bin2hex.pl phmodel.txt PhModelData >phmodeldata.h)
+
+resdata.h:	bin2hex.pl resdata.txt
+		(cd $(srcdir); ./bin2hex.pl resdata.txt ResidueData >resdata.h)
+
+types.h:	bin2hex.pl types.txt
+		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
 
 # Update the Makefile if the Makefile.in or configure script changes
-Makefile:	$(srcdir)/Makefile.in
+Makefile:	Makefile.in
 		(cd ..; ./config.status)
 
 .SUFFIXES:	.cpp
