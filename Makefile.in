@@ -8,8 +8,9 @@ top_srcdir    = @top_srcdir@
 prefix        = @prefix@
 exec_prefix   = @exec_prefix@
 mandir        = @mandir@/man1
+bindir        = @bindir@
 
-DEST	      = @bindir@
+DESTDIR       =
 
 INSTALL	      = @INSTALL@
 MKDIRS        = $(top_srcdir)/mkinstalldirs
@@ -50,8 +51,8 @@ distclean:
 
 install:	all
 		(cd src; $(MAKE) $(MFLAGS) install)
-		$(MKDIRS) $(mandir)
-		$(INSTALL) $(top_srcdir)/doc/babel.1 $(mandir)
+		$(MKDIRS) $(DESTDIR)$(mandir)
+		$(INSTALL) $(top_srcdir)/doc/babel.1 $(DESTDIR)$(mandir)
 
 
 dist:		distclean

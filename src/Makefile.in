@@ -3,6 +3,9 @@
 prefix        = @prefix@
 exec_prefix   = @exec_prefix@
 pkgdatadir    = @datadir@/openbabel
+bindir        = @bindir@
+
+DESTDIR       = 
 
 CC            = @CC@
 CXX	      = @CXX@
@@ -28,8 +31,6 @@ VPATH         = @srcdir@
 top_srcdir    = @top_srcdir@
 top_builddir  = @top_builddir@
 builddir      = @top_builddir@/src
-
-DEST	      = @bindir@
 
 MAIN	      = main.o
 
@@ -86,10 +87,10 @@ distclean:	clean
 		$(RM) version.h Makefile
 
 install:	$(PROGRAM)
-		$(MKDIRS) $(DEST)
-		$(INSTALL) $(PROGRAM) $(DEST)
-		$(MKDIRS) $(pkgdatadir)
-		(cd $(srcdir); $(INSTALL) -m644 $(DATAFILES) $(pkgdatadir))
+		$(MKDIRS) $(DESTDIR)$(bindir)
+		$(INSTALL) $(PROGRAM) $(DESTDIR)$(bindir)
+		$(MKDIRS) $(DESTDIR)$(pkgdatadir)
+		(cd $(srcdir); $(INSTALL) -m644 $(DATAFILES) $(DESTDIR)$(pkgdatadir))
 
 print:;		$(PRINT) $(HDRS) $(SRCS)
 
