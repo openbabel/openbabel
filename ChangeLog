@@ -1,3 +1,16 @@
+2003-03-13  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/generic.cpp, src/generic.h: Add support for retrieving
+	OBUnitCell data by a matrix3x3 and add a new method
+	GetOrthoMatrix() for translating from fractional coordinates.
+
+	* src/pdb.cpp (WritePDB): Make sure that residue and atom names
+	are only a maximum length to format columns correctly. Add element
+	symbol to columns 77 and 78 to better support the current standard.
+
+	* src/math/matrix3x3.h, src/math/matrix3x3.cpp (SetRow): New
+	method to set a row from a vector3.
+
 2003-03-12  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/pdb.cpp (WritePDB): Make sure that atom type definitions are
