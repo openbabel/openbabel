@@ -19,6 +19,8 @@ using namespace std;
 namespace OpenBabel
 {
 
+  // CACAO homepage: http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm
+
 bool ReadCaccrt(istream &ifs,OBMol &mol,const char *title)
 {
   char buffer[BUFF_SIZE];
@@ -43,8 +45,11 @@ bool ReadCaccrt(istream &ifs,OBMol &mol,const char *title)
   Alpha = atof((char*)vs[4].c_str());
   Beta  = atof((char*)vs[5].c_str());
   Gamma = atof((char*)vs[6].c_str());
-  
-  m.FillOrth(Alpha,Beta,Gamma,A,B,C);
+
+  OBUnitCell *uc = new OBUnitCell;
+  uc->SetData(A, B, C, Alpha, Beta, Gamma);
+  mol.SetData(uc);
+  m = uc->GetOrthoMatrix();
 
   int i;
   float x,y,z;
@@ -69,10 +74,8 @@ bool ReadCaccrt(istream &ifs,OBMol &mol,const char *title)
       atom->SetVector(v);
     }
 
-  //result = assign_radii(mol);
-  //result = assign_bonds(mol);
-  //result = assign_types(mol);
-  //assign_bond_order(mol);
+  mol.ConnectTheDots();
+  mol.PerceiveBondOrders();
 
   return(true);
 }
@@ -88,7 +91,16 @@ bool WriteCaccrt(ostream &ofs,OBMol &mol)
   ofs << buffer << endl;
   sprintf(buffer,"%3d   DIST  0  0  0",mol.NumAtoms());
   ofs << buffer << endl;
-  sprintf(buffer,"CELL 1.,1.,1.,90.,90.,90.");
+
+  if (!mol.HasData(obUnitCell))
+    sprintf(buffer,"CELL 1.,1.,1.,90.,90.,90.");
+  else
+    {
+      OBUnitCell *uc = (OBUnitCell*)mol.GetData(obUnitCell);
+      sprintf(buffer,"CELL %f,%f,%f,%f,%f,%f",
+	      uc->GetA(), uc->GetB(), uc->GetC(),
+	      uc->GetAlpha(), uc->GetBeta(), uc->GetGamma());
+    }
   ofs << buffer << endl;
 
   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
