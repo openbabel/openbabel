@@ -772,9 +772,18 @@ double OBMol::GetExactMass()
   return(mass);
 }
 
+void OBMol::SetTotalCharge(int charge)
+{
+  SetFlag(OB_TCHARGE_MOL);
+  _totalCharge = charge;
+}
+
 int OBMol::GetTotalCharge()
 {
-  return(_totalCharge);
+  if(HasFlag(OB_TCHARGE_MOL))
+    return(_totalCharge);
+  else
+    return 0;
 }
 
 OBMol &OBMol::operator=(const OBMol &source)
@@ -2001,7 +2010,8 @@ bool OBMol::Kekulize()
 {
   OBBond *bond;
   vector<OBEdgeBase*>::iterator i;
-  if (NumAtoms() > 255) return(false);
+  // Not quite sure why this is here -GRH 2003
+  //  if (NumAtoms() > 255) return(false);
 
   for (bond = BeginBond(i);bond;bond = NextBond(i))
     if (bond->IsKSingle())      bond->SetBO(1);
