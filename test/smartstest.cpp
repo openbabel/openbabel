@@ -22,12 +22,20 @@ namespace OpenBabel {
 using namespace std;
 using namespace OpenBabel;
 
+void GenerateSmartsReference();
+
 int main(int argc,char *argv[])
 {
   if (argc != 1) {
-    cout << "Usage: smartstest" << endl;
-    cout << "   Tests Open Babel SMILES/SMARTS pattern matching." << endl;
-    return 0;
+    if (strncmp(argv[1], "-g", 2))
+      {
+	cout << "Usage: smartstest" << endl;
+	cout << "   Tests Open Babel SMILES/SMARTS pattern matching." << endl;
+	return 0;
+      } else {
+	GenerateSmartsReference();
+	return 0;
+      }
   }
 
   cout << endl << "Testing SMARTS...  " << endl;

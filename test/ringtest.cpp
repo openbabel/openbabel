@@ -22,12 +22,20 @@ namespace OpenBabel {
 using namespace std;
 using namespace OpenBabel;
 
+void GenerateRingReference();
+
 int main(int argc,char *argv[])
 {
   if (argc != 1) {
-    cout << "Usage: ringtest" << endl;
-    cout << "   Tests Open Babel ring perception testing." << endl;
-    return 0;
+    if (strncmp(argv[1], "-g", 2))
+      {
+	cout << "Usage: ringtest" << endl;
+	cout << "   Tests Open Babel ring perception testing." << endl;
+	return 0;
+      } else {
+	GenerateRingReference();
+	return 0;
+      }
   }
 
   cout << endl << "Testing RINGS..." << endl;
@@ -189,5 +197,6 @@ void GenerateRingReference()
 
     }
 
+  ThrowError("Ring perception test results written successfully");
 }
 

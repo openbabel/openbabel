@@ -253,3 +253,6 @@ BC(=O)N1CCCC1C(=O)OC.CN(C)C SALOR_R277371 organometallic
 BC(=O)NCC(=O)OC.CN(C)C SALOR_R277398 organometallic
 BC(=O)NCC.CN SALOR_R277428 organometallic
 CCc1cc(Br)c(N=C=O)c(Br)c1 SALOR_R288780 isocyanate
+c1ncccn1 Test1 pyrimidine
+c1ncncc1 Test2 pyrimidine
+C1CC=CC1 Test3 cyclopentene

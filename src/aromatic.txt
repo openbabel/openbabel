@@ -37,7 +37,10 @@
 [#16rD3]=!@O		2	2
 
 #other misc patterns
-[#15rD3]		2	2
-#[#34rD2]		2	2
+# phosphole (not v. aromatic)
+#[#15rD3]		2	2
+# selenophene
+[#34rD2]		2	2
+# tellurophene (not v. aromatic)
 #[#52rD2]		2	2
 

@@ -123,9 +123,9 @@ EXTTYP	[#6-]					C-
 EXTTYP	[#8^3]					O3
 EXTTYP	[#8^2]					O2
 EXTTYP  [$(Oa)]					O2
-#Uncomment the following 2 lines for correct sybyl atom typing
-#EXTTYP	[$([OD2]C=[O,S])]			O3	#ester oxygen
-#EXTTYP  [$(Oa)]				O3      #aromatic ether
+#The following 2 lines used for correct Sybyl atom typing
+EXTTYP	[$([OD2]C=[O,S])]			O3	#ester oxygen
+EXTTYP  [$(Oa)]					O3      #aromatic ether
 EXTTYP	[#8-]					O-
 EXTTYP  [$([#8D1]~[#6]~[#8D1])]			O.co2  
 
