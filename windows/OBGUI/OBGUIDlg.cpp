@@ -95,6 +95,7 @@ void COBGUIDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(COBGUIDlg)
+	DDX_Control(pDX, IDC_INPATH, m_InPath);
 	DDX_Control(pDX, IDC_OUTCOUNT, m_OutCount);
 	DDX_Control(pDX, IDC_OUTFIXFORMAT, m_OutFixExt);
 	DDX_Control(pDX, IDC_INFIXFORMAT, m_InFixExt);
@@ -166,6 +167,10 @@ BOOL COBGUIDlg::OnInitDialog()
 	
 	m_NoInFile.SetCheck(AfxGetApp()->GetProfileInt("GUI","NoInFile",0));	
 	OnManualinput();
+
+	char curdir[_MAX_PATH]; 
+	GetCurrentDirectory(_MAX_PATH-1,curdir);
+	m_InPath.SetWindowText(curdir);
 
 	//Get data on available formats and add to comboboxes and to filter string
 	char* str=NULL;
@@ -300,7 +305,16 @@ void COBGUIDlg::OnChangeInputfile()
 	m_InputFile.GetWindowText(FileName);
 	FileName.TrimLeft();
 	if(FileName.IsEmpty()) return;
-	string stdfilename(FileName);
+	int pos = FileName.Find(';');
+	if(pos>=0)
+		FileName = FileName.Left(pos);
+	
+	char curdir[_MAX_PATH]; 
+	GetCurrentDirectory(_MAX_PATH-1,curdir);
+	
+
+	string stdfilename(curdir);
+	stdfilename += '\\' + FileName;
 	
 	vector<string> FileList;
 	int nFiles = DLHandler :: findFiles (FileList, stdfilename);
@@ -412,9 +426,11 @@ void COBGUIDlg::OnConvert()
 	if((iSel)<0) return;
 	int oSel = m_OutputCombo.GetCurSel();
 	if((oSel)<0) return;
-	Conv.SetInAndOutFormats(
-		(OBFormat*)m_InputCombo.GetItemDataPtr(iSel),
-		(OBFormat*)m_OutputCombo.GetItemDataPtr(oSel));
+	
+	OBFormat* pInFormat = NULL; 
+	if(m_InFixExt.GetCheck() || m_NoInFile.GetCheck())
+		pInFormat = (OBFormat*)m_InputCombo.GetItemDataPtr(iSel);
+	Conv.SetInAndOutFormats( pInFormat,(OBFormat*)m_OutputCombo.GetItemDataPtr(oSel));
 
 	//GeneralOptions have data from GeneralOptionCheckboxes and InputOptionCheckboxes
 	CString s = GeneralOptionCheckBoxes.GetOptions();
@@ -433,7 +449,7 @@ void COBGUIDlg::OnConvert()
 	CWaitCursor cw;
 
 	CString FileName;
-	m_OutputFile.GetWindowText(FileName);
+		m_OutputFile.GetWindowText(FileName);
 	FileName.TrimLeft();
 	string stdOutputFileName(FileName);
 
@@ -452,9 +468,20 @@ void COBGUIDlg::OnConvert()
 		m_InputFile.GetWindowText(FileName);
 		FileName.TrimLeft();
 		if(FileName.IsEmpty()) return;
-		string stdfilename(FileName);
-
-		DLHandler::findFiles(FileList,stdfilename);
+		
+		char* fcstr = new char[FileName.GetLength()+1];
+		strcpy(fcstr,FileName);
+		char* f = strtok(fcstr,";");
+		while(f)
+		{
+			string stdfilename(f);
+			vector<string> SubFileList;
+			DLHandler::findFiles(SubFileList,stdfilename);
+			FileList.insert(FileList.end(),SubFileList.begin(),SubFileList.end());
+			FileList.size();
+			f = strtok(NULL,";");
+		}
+		delete fcstr;
 	}
 
 	int Count = Conv.FullConvert(FileList, stdOutputFileName, OutputFileList);
@@ -531,9 +558,35 @@ void COBGUIDlg::OnInputFiles()
 
 	CString Filter;
 	GetFilter(Filter,m_InputCombo);
-	CFileDialog dlg(TRUE,NULL,NULL,OFN_HIDEREADONLY,Filter+InputFilterString);
+	CFileDialog dlg(TRUE,NULL,NULL,OFN_HIDEREADONLY|OFN_ALLOWMULTISELECT,Filter+InputFilterString);
  	if(dlg.DoModal()==IDOK)
-		m_InputFile.SetWindowText(dlg.GetPathName());
+	{
+		POSITION pos = dlg.GetStartPosition();
+		CString FullName, NameList;
+		int n=0;
+		while(pos)
+		{
+			n++;
+			FullName = dlg.GetNextPathName(pos);
+			int p = FullName.ReverseFind('\\');
+			if(n>1)
+				NameList += ';';
+			if(p!=-1)
+				NameList += FullName.Mid(p+1);
+		}
+		m_InputFile.SetWindowText(NameList);
+		CString path = dlg.GetPathName();
+		if(n==1)
+		{
+			int p = path.ReverseFind('\\');
+			path = path.Mid(0,p-1);
+		}
+
+		SetCurrentDirectory(path);
+		if(path.GetLength()>50)
+			path = "..." + path.Right(50);
+		m_InPath.SetWindowText(path);
+	}
 }
 
 //////////////////////////////////////////////////

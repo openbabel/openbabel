@@ -79,11 +79,12 @@ BEGIN
     GROUPBOX        "INPUT",IDC_INPUTBOX,7,7,227,279
     GROUPBOX        "OUTPUT",IDC_OUTPUTBOX,430,7,227,279
     LTEXT           "  Format:",IDC_STATIC,8,56,29,8
-    LTEXT           "  File:",IDC_STATIC,8,17,27,8
     LTEXT           "  Format:",IDC_STATIC,431,56,29,8
     LTEXT           "Use CTL RETURN for new line;  RETURN converts.",
                     IDC_CONSOLEINFO,37,90,168,8,NOT WS_VISIBLE
     LTEXT           "",IDC_OUTCOUNT,379,11,43,20
+    CONTROL         "",IDC_INPATH,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,7,17,
+                    224,8
 END
 
 

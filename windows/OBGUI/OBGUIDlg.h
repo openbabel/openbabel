@@ -26,6 +26,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(COBGUIDlg)
 	enum { IDD = IDD_OBGUI_DIALOG };
+	CStatic	m_InPath;
 	CStatic	m_OutCount;
 	CButton	m_OutFixExt;
 	CButton	m_InFixExt;
