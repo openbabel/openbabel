@@ -102,59 +102,40 @@ namespace OpenBabel {
 	min += columns - 1;
       }
     ofs << endl;
-}
+  }
 
+  void WriteTorsions(ostream &ofs,OBMol &mol)
+  {
+    vector<OBEdgeBase*>::iterator bi1,bi2,bi3;
+    OBBond* bond;
+    OBAtom *a,*b,*c,*d;
+    char buffer[BUFF_SIZE];
+ 
+    //loop through all bonds generating torsions
+    for(bond = mol.BeginBond(bi1); bond; bond = mol.NextBond(bi1))
+      {
+	b = bond->GetBeginAtom();
+	c = bond->GetEndAtom();
+ 
+	for(a = b->BeginNbrAtom(bi2);a;a = b->NextNbrAtom(bi2))
+	  {
+	    if(a == c)
+	      continue;
+ 
+	    for(d = c->BeginNbrAtom(bi3);d;d = c->NextNbrAtom(bi3))
+	      {
+		if(d == b)
+		  continue;
 
-//  void print_torsions(ums_type *mol,FILE *file1)
-//  {
-//    int a,b,c,d;
-//    int i,j,k;
-//    double angle1;
-//    int angle_count = 0;
-//    torsion_rec *tr;
-
-
-//    tr = (torsion_rec *)malloc(Atoms * 10 * sizeof(torsion_rec));
-//    if (tr == NULL)
-//    {
-//      printf("Memory Allocation Error\n");
-//      exit(0);
-//    }
-  //    return(CalcTorsionAngle(_atom[a-1]->GetVector(),
-  //			       _atom[b-1]->GetVector(),
-  //			       _atom[c-1]->GetVector(),
-  //			       _atom[d-1]->GetVector()));
-//    for (i = 0; i < Bonds; i++)
-//    {
-//      b = Start(i);
-//      c = End(i);
-//      for (j = 0; j < Valence(Start(i)); j ++)
-//        if (Connection(Start(i),j) != End(i))
-//        {
-//  	a = Connection(Start(i),j);
-//  	for (k = 0; k < Valence(End(i)); k ++)
-//  	  if ((Connection(End(i),k) != Start(i)) &&
-//  	      (Connection(End(i),k) != a))
-//  	  {
-//  	    d = Connection(End(i),k);
-//  	    tr[angle_count].a = a;
-//  	    tr[angle_count].b = b;
-//  	    tr[angle_count].c = c;
-//  	    tr[angle_count].d = d;
-//  	    angle_count ++;
-//  	  }
-//        }
-//    }
-//    qsort(tr,angle_count,sizeof(torsion_rec),QSORT_PROTO compare_torsion);
-//    for (i = 0; i < angle_count; i++)
-//    {
-//      angle1 = torsion(Point(tr[i].a),Point(tr[i].b),Point(tr[i].c),Point(tr[i].d));
-//      fprintf(file1,"%4d %4d %4d %4d %10.3f\n",tr[i].a,tr[i].b,tr[i].c,tr[i].d,angle1);
-//    }
-  
-//    free(tr); 
-//  }	
-  
+		sprintf(buffer,"%4d %4d %4d %4d %10.3f",
+			a->GetIdx(), b->GetIdx(),c->GetIdx(),d->GetIdx(),
+			CalcTorsionAngle(a->GetVector(), b->GetVector(),
+					 c->GetVector(), d->GetVector()));
+		ofs << buffer << endl;
+	      }
+	  }
+      }
+  }
 
   void WriteAngles(ostream &ofs,OBMol &mol)
   {
@@ -169,7 +150,6 @@ namespace OpenBabel {
       {
 	b = bond1->GetBeginAtom();
 	c = bond1->GetEndAtom();
-	ofs << " outer " << endl;
 
 	for (bond2 = b->BeginBond(j); bond2; bond2 = b->NextBond(j))
 	  {
@@ -243,10 +223,15 @@ bool WriteReport(ostream &ofs,OBMol &mol)
   WriteCharges(ofs, mol);
   ofs << endl << endl << "BOND ANGLES" << endl;
   WriteAngles(ofs, mol);
-  //  ofs << endl << endl << "TORSION ANGLES" << endl;
-  //  WriteTorsions(ofs, mol);
+  ofs << endl << endl << "TORSION ANGLES" << endl;
+  WriteTorsions(ofs, mol);
   ofs << endl << endl << "CHIRAL ATOMS" << endl;
   WriteChiral(ofs, mol);
+  if (mol.HasData(obCommentData)) {
+    ofs << endl << endl << "COMMENTS" << endl;
+    OBCommentData *cd = (OBCommentData*)mol.GetData(obCommentData);
+    ofs << cd->GetData() << endl;
+  }
 
   return(true);
 }

@@ -4,6 +4,10 @@
 	written correctly as per the PDB standard. Fixes PR#701620, as
 	suggested by Christian Hofbauer.
 
+	* src/report.cpp: Add support for listing torsion angles. Angle
+	and torsion data is not the same as in Babel 1.6, but is
+	coherent. Fixes feature request PR#568088.
+
 2003-03-11  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/generic.h, src/generic.cpp: Add new OBUnitCell generic data
