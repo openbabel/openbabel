@@ -185,12 +185,18 @@ int main(int argc,char **argv)
         if (molmv.Empty())
             break;
 
-        if (sp.Match(molmv))
-        {          // if match perform rotation
+        if (sp.Match(molmv))          // if match perform rotation
+        {
 
-            maplist = sp.GetUMapList(); // get unique matches
+            maplist = sp.GetMapList(); // get all matches
 
             // Find the matching atoms
+	    
+	    // Looping over all matches to find best match
+	    double rmsd;
+	    double best_rmsd = 999.999;
+	    vector <int> best_mvatoms;
+
             for (i = maplist.begin(); i != maplist.end(); i++)
             {
                 mvatoms.clear(); // Save only the last set of atoms
@@ -198,55 +204,119 @@ int main(int argc,char **argv)
                 {
                     mvatoms.push_back(*j);
                 }
-            }
 
-            tvmv = mass_c(mvatoms, molmv);
-            // center the molecule
-            molmv.Translate(-tvmv);
+		tvmv = mass_c(mvatoms, molmv);
+		// center the molecule
+		molmv.Translate(-tvmv);
 
-            //Find the rotation matrix
-            size = mvatoms.size();
-            if (size != refatoms.size())
-            {
-                err = program_name;
-                err += ": Error: not the same number of SMART atoms";
-                ThrowError(err);
-                exit(-1);
-            }
-            double *mvcoor = new double[size*3];
+		//Find the rotation matrix
+		size = mvatoms.size();
+		if (size != refatoms.size())
+		  {
+		    err = program_name;
+		    err += ": Error: not the same number of SMART atoms";
+		    ThrowError(err);
+		    exit(-1);
+		  }
 
+		double *mvcoor = new double[size*3];
+
+		for(c=0; c < size; c++)
+		  {
+		    atom = molmv.GetAtom(mvatoms[c]);
+		    mvcoor[c*3] = atom->x();
+		    mvcoor[c*3+1] = atom->y();
+		    mvcoor[c*3+2] = atom->z();
+		  }
+
+		// quaternion fit
+		qtrfit(refcoor, mvcoor, size, rmatrix);
+
+		//rotate all the atoms
+		molmv.Rotate(rmatrix);
+
+		// update mvcoor after rotation
+		for(c=0; c < size; c++)
+		  {
+		    atom = molmv.GetAtom(mvatoms[c]);
+		    mvcoor[c*3] = atom->x();
+		    mvcoor[c*3+1] = atom->y();
+		    mvcoor[c*3+2] = atom->z();
+		  }
+
+		rmsd = calc_rms(refcoor,mvcoor,size);
+		if ( rmsd < best_rmsd )
+		  {
+		    best_rmsd = rmsd;
+		    best_mvatoms.clear();
+		    best_mvatoms.resize(mvatoms.size());
+		    best_mvatoms = mvatoms;
+		  }
+                 
+		delete[] mvcoor;
+	    } // loop through matches
+ 
+	    // Refit molecule using best match
+	    mvatoms.clear();
+	    mvatoms.resize(best_mvatoms.size());
+	    mvatoms = best_mvatoms;
+
+	    tvmv = mass_c(mvatoms, molmv);
+	    // center the molecule
+	    molmv.Translate(-tvmv);
+
+	    //Find the rotation matrix
+	    size = mvatoms.size();
+	    if (size != refatoms.size())
+	      {
+		err = program_name;
+		err += ": Error: not the same number of SMART atoms";
+		ThrowError(err);
+		exit(-1);
+	      }
+
+	    double *mvcoor = new double[size*3];
             for(c=0; c<size; c++)
-            {
-                atom = molmv.GetAtom(mvatoms[c]);
-                mvcoor[c*3] = atom->x();
-                mvcoor[c*3+1] = atom->y();
-                mvcoor[c*3+2] = atom->z();
-            }
+	      {
+		atom = molmv.GetAtom(mvatoms[c]);
+		mvcoor[c*3] = atom->x();
+		mvcoor[c*3+1] = atom->y();
+		mvcoor[c*3+2] = atom->z();
+	      }
 
-            // quaternion fit
-            qtrfit(refcoor, mvcoor, size, rmatrix);
+	    // quaternion fit
+	    qtrfit(refcoor, mvcoor, size, rmatrix);
 
-            //rotate all the atoms
-            molmv.Rotate(rmatrix);
+	    //rotate all the atoms
+	    molmv.Rotate(rmatrix);
 
-	    double rmsd = calc_rms(refcoor,mvcoor,size);
+	    for(c=0; c<size; c++)
+	      {
+		atom = molmv.GetAtom(mvatoms[c]);
+		mvcoor[c*3] = atom->x();
+		mvcoor[c*3+1] = atom->y();
+		mvcoor[c*3+2] = atom->z();
+	      }
+	    
+	    rmsd = calc_rms(refcoor,mvcoor,size);
+
 	    char rmsd_string[80];
-	    sprintf(rmsd_string,"%f", rmsd);
-
+	    sprintf(rmsd_string,"%f", best_rmsd);
+  
 	    OBCommentData *cd = new OBCommentData;
 	    molmv.SetData(cd);
-
+  
 	    OBPairData *dp = new OBPairData;
 	    string field_name = "RMSD";
-
+	    
 	    dp->SetAttribute(field_name);
 	    dp->SetValue(rmsd_string);
 	    molmv.SetData(dp);
 
-            delete[] mvcoor;
-
             //translate the rotated molecule
             molmv.Translate(tvref);
+
+	    delete[] mvcoor;
         }
         conv.Write(&molmv,&cout);
     }
