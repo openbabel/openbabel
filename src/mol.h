@@ -870,6 +870,14 @@ extern  OBChainsParser   chainsparser;
 inline double rint(double x) { return ( (x < 0.0) ? ceil(x-0.5) : floor(x+0.5));}
 #endif
 
+#if !HAVE_SNPRINTF
+extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
+#endif
+
+#if !HAVE_STRNCASECMP
+extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
+#endif
+
 #ifndef __KCC
 extern "C"{
 void  get_rmat(double*,double*,double*,int);

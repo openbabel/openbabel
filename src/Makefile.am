@@ -17,7 +17,7 @@ libopenbabel_la_SOURCES = \
 		tokenst.cpp typer.cpp unichem.cpp viewmol.cpp xed.cpp xyz.cpp \
 		zindo.cpp
 
-libopenbabel_la_LIBADD = math/libmath.la
+libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 
 libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
@@ -30,7 +30,7 @@ libopenbabelinclude_HEADERS = \
 
 bin_PROGRAMS = babel
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la
+babel_LDADD = libopenbabel.la @LIBOBJS@
 
 pkgdata_DATA = \
 		aromatic.txt bondtyp.txt extable.txt isotope.txt resdata.txt \
@@ -39,4 +39,5 @@ pkgdata_DATA = \
 EXTRA_DIST = \
 	bc32.mak borland.bat oblib.dsp oblib.dsw \
 	bin2hex.pl $(pkgdata_DATA) \
-	newmain.cpp bondtyper.cpp bondtyper.h
+	newmain.cpp bondtyper.cpp bondtyper.h \
+	strncasecmp.c snprintf.c snprintf.h

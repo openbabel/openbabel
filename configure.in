@@ -49,6 +49,6 @@ AC_C_CONST
 AC_C_INLINE
 
 dnl Checks for library functions.
-
+AC_REPLACE_FUNCS([snprintf strncasecmp])
 
 AC_OUTPUT(Makefile src/Makefile src/math/Makefile src/windows/Makefile test/Makefile tools/Makefile doc/Makefile openbabel.pc)

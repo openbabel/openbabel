@@ -1,3 +1,18 @@
+2003-11-11  Michael Banck  <mbanck@gmx.net>
+
+	* configure.in (AC_REPLACE_FUNCS): New directive, including
+	snprintf and strncasecmp for now.
+	* configure: Regenerated.
+	* src/babelconfig.h.in: Regenerated.
+	* src/Makefile.am (libopenbabel_la_LIBADD): Added @LTLIBOBJS@.
+	(babel_LDADD): Added @LIBOBJS@.
+	* src/Makefile.in: Regenerated.
+	* src/mol.h [!HAVE_SNPRINTF] (snprintf): New declaration.
+	[!HAVE_STRNCASECMP] (strncasecmp): Likewise.
+	* src/snprintf.c: New file, taken from Mark Martinec.
+	* src/snprintf.h: New file, taken from Mark Martinec.
+	* src/strncasecmp.c: New file, taken from gnulib.
+
 2003-11-10  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/main.cpp: Silently ignore cases with 0 atoms in a
