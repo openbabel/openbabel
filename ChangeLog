@@ -1,9 +1,28 @@
+2005-04-01  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/formats/inchiformat.cpp, src/formats.inchi_api.h,
+	windows/InChI_DLL.dll and windows/InChI_DLL.lib
+	my build of version 1.0RC from NIST : writes InChI; format
+	is writeonly because reading code, although included is
+	incomplete. I haven't put the source code for the DLL up,
+	although it is cross-platform, because I want to check with
+	NIST first. 
+	 
+	* src/data.cpp, data.h: OBElementTable::GetAtomicNum 
+	Changed unsigned short int& to int&. More consistent with other 
+	ints since have to use the exact int type when calling. 
+	Now used in mdlformat.cpp.
+
+	*.mdlformat.cpp: V2000 writes and reads isotope info
+	(M ISO line),	V2000 V3000 reads D and T. Changes in V2000 
+	writing M RAD	and header. Is #include <iomanip> a problem? 
+
 2005-03-25  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/obconversion.cpp, src/main.cpp, src/obconversion.h:
 	Multiple input files can now be different formats
 	
-	* src/onconversion.h Added virtual function 
+	* src/onconversion.h: Added virtual function 
 	OBFormat::MakeNewInstance to meet possible future need for
 	formats with member functions. (InChIFormat will.)
 
