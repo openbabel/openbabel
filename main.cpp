@@ -158,7 +158,7 @@ void usage()
 {
 unsigned int i;
 
-  cout << "Babel " << BABEL_VERSION << " -- " << __DATE__ << " -- "
+  cout << "Open Babel " << BABEL_VERSION << " -- " << __DATE__ << " -- "
        << __TIME__ << endl;
   cout << "Usage is : " << endl << program_name 
        << " [-i<input-type>] <name> [-o<output-type>] <name>" << endl;

@@ -856,13 +856,13 @@ void OEMol::EndModify(bool nukePerceivedData)
   Kekulize();
   UnsetAromaticPerceived();
 
-  for (atom = BeginAtom(j);atom;atom = NextAtom(j))
-    atom->UnsetAromatic();
+  //    for (atom = BeginAtom(j);atom;atom = NextAtom(j))
+  //      atom->UnsetAromatic();
 
-  OEBond *bond;
-  vector<OEBond*>::iterator k;
-  for (bond = BeginBond(k);bond;bond = NextBond(k))
-    bond->UnsetAromatic();
+  //    OEBond *bond;
+  //    vector<OEBond*>::iterator k;
+  //    for (bond = BeginBond(k);bond;bond = NextBond(k))
+  //      bond->UnsetAromatic();
 
   //UnsetImplicitValencePerceived();
 }

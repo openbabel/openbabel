@@ -35,9 +35,9 @@ bool ReadDMol(istream &ifs,OEMol &mol,char *title)
   //  ifs.getline(buffer,BUFF_SIZE);
   while (strstr(buffer,"$end") == NULL)
     {
-      if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
+      if (!ifs.getline(buffer,BUFF_SIZE)) break;
       tokenize(vs,buffer);
-      if (vs.size() != 4) return(false);
+      if (vs.size() != 4) break;
       atom = mol.NewAtom();
       //set atomic number
       atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
@@ -48,7 +48,7 @@ bool ReadDMol(istream &ifs,OEMol &mol,char *title)
       y = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
       z = atof((char*)vs[3].c_str()) * BOHR_TO_ANGSTROM;
       atom->SetVector(x,y,z); //set coordinates
-  }
+    }
   mol.ConnectTheDots();
   mol.SetTitle(title);
   return(true);

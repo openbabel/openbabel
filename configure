@@ -479,11 +479,11 @@ case `uname -s` in
             case `uname -m` in 
                 i686) if test $gccmaj -gt 2 ; then
                           arch="686"
-                          ARCH="-mpentiumpro"
+                          ARCH="-march=pentiumpro"
                       elif test $gccmaj -eq 2 ; then
                           if test $gccmin -ge 8 ; then
                               arch="686"
-                              ARCH="-mpentiumpro"
+                              ARCH="-march=pentiumpro"
                           else
                               arch="486"
                               ARCH="-m486"
@@ -496,11 +496,11 @@ case `uname -s` in
 
                 i586) if test $gccmaj -gt 2 ; then
                           arch="586"
-                          ARCH="-mpentium"
+                          ARCH="-march=pentium"
                       elif test $gccmaj -eq 2 ; then
                           if test $gccmin -ge 8 ; then
                               arch="586"
-                              ARCH="-mpentium"
+                              ARCH="-march=pentium"
                           else
                               arch="486"
                               ARCH="-m486"
@@ -511,8 +511,21 @@ case `uname -s` in
                       fi
                       ;;
 
-                i486) arch="486"
-                      ARCH="-m486"
+                i486) if test $gccmaj -gt 2; then
+		          arch="486"
+                          ARCH="-march=486"
+                      elif test $gccmaj -eq 2 ; then
+                          if test $gccmin -ge 8 ; then
+                              arch="486"
+                              ARCH="-march=486"
+			  else
+			      arch="486"
+                              ARCH="-m486"
+			  fi
+		      else
+		          arch="486"
+			  ARCH="-m486"
+		      fi
                       ;;
 
                 i386) arch="386"
@@ -576,11 +589,11 @@ case `uname -s` in
             case `uname -m` in 
                 i686) if test $gccmaj -gt 2 ; then
                           arch="686"
-                          ARCH="-mpentiumpro"
+                          ARCH="-march=pentiumpro"
                       elif test $gccmaj -eq 2 ; then
                           if test $gccmin -ge 8 ; then
                               arch="686"
-                              ARCH="-mpentiumpro"
+                              ARCH="-march=pentiumpro"
                           else
                               arch="486"
                               ARCH="-m486"
@@ -593,11 +606,11 @@ case `uname -s` in
 
                 i586) if test $gccmaj -gt 2 ; then
                           arch="586"
-                          ARCH="-mpentium"
+                          ARCH="-march=pentium"
                       elif test $gccmaj -eq 2 ; then
                           if test $gccmin -ge 8 ; then
                               arch="586"
-                              ARCH="-mpentium"
+                              ARCH="-march=pentium"
                           else
                               arch="486"
                               ARCH="-m486"
@@ -654,11 +667,11 @@ case `uname -s` in
             case `uname -m` in 
                 i686) if test $gccmaj -gt 2 ; then
                           arch="686"
-                          ARCH="-mpentiumpro"
+                          ARCH="-march=pentiumpro"
                       elif test $gccmaj -eq 2 ; then
                           if test $gccmin -ge 8 ; then
                               arch="686"
-                              ARCH="-mpentiumpro"
+                              ARCH="-march=pentiumpro"
                           else
                               arch="486"
                               ARCH="-m486"
@@ -671,11 +684,11 @@ case `uname -s` in
 
                 i586) if test $gccmaj -gt 2 ; then
                           arch="586"
-                          ARCH="-mpentium"
+                          ARCH="-march=pentium"
                       elif test $gccmaj -eq 2 ; then
                           if test $gccmin -ge 8 ; then
                               arch="586"
-                              ARCH="-mpentium"
+                              ARCH="-march=pentium"
                           else
                               arch="486"
                               ARCH="-m486"
@@ -1083,13 +1096,13 @@ if test "$usegcc" = 1 ; then
             if test $MODE = fast ; then
                 case `uname -m` in
                     i686) arch="686"
-                          ARCH="-mpentiumpro"
+                          ARCH="-march=pentiumpro"
                           ;;
                     i586) arch="586"
-                          ARCH="-mpentium"
+                          ARCH="-march=pentium"
                           ;;
                     i486) arch="486"
-                          ARCH="-m486"
+                          ARCH="-march=486"
                           ;;
                     i386) arch="386"
                           ;;
@@ -1109,13 +1122,13 @@ if test "$usegcc" = 1 ; then
             if test $MODE = fast ; then
                 case `uname -m` in
                     i686) arch="686"
-                          ARCH="-mpentiumpro"
+                          ARCH="-march=pentiumpro"
                           ;;
                     i586) arch="586"
-                          ARCH="-mpentium"
+                          ARCH="-march=pentium"
                           ;;
                     i486) arch="486"
-                          ARCH="-m486"
+                          ARCH="-march=486"
                           ;;
                     i386) arch="386"
                           ;;

@@ -459,7 +459,7 @@ void OEExtensionTable::TypeToExtension(io_type type,char *ext)
   if (!_init) Init();
 
   vector<vector<string> >::iterator i;
-  strcpy(ext,"ext");
+  strcpy(ext,"extension"); // silly mol2 and company are too long... :-P
 
   for (i = _table.begin();i != _table.end();i++)
     if (type == TextToType((*i)[1]))
@@ -480,6 +480,7 @@ void OEExtensionTable::ExtensionToDescription(char *filename, char *desc)
   if (vs.empty()) return;
 
   string ext = vs[vs.size()-1];
+  Tolower(ext);
 
   for (i = _table.begin();i != _table.end();i++)
     if ((*i)[0] == ext)
@@ -501,6 +502,8 @@ bool OEExtensionTable::CanReadExtension(char *filename)
   if (vs.empty()) return(false);
 
   string ext = vs[vs.size()-1];
+  Tolower(ext);
+
   bool read = false;
   for (i = _table.begin();i != _table.end();i++)
     if ((*i)[0] == ext && (*i)[3] == "1")
@@ -522,6 +525,8 @@ bool OEExtensionTable::CanWriteExtension(char *filename)
   if (vs.empty()) return(false);
 
   string ext = vs[vs.size()-1];
+  Tolower(ext);
+
   bool write = false;
   for (i = _table.begin();i != _table.end();i++)
     if ((*i)[0] == ext && (*i)[4] == "1")

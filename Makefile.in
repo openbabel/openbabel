@@ -1,4 +1,4 @@
-#OELib Makefile
+#Open Babel Makefile
 
 CC            = @CC@
 CXX	      = @CXX@
@@ -39,13 +39,13 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		jaguar.o amber.o ctransform.o binary_io.o generic.o smarts.o\
 		dmol.o report.o nwchem.o mopac.o gaussian.o
 
-PROGRAM	      = oe
+PROGRAM	      = babel
 
-LIBRARY       = liboe.a
+LIBRARY       = libopenbabel.a
 
 DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt\
 		resdata.txt types.txt phmodel.txt GNULICENSE.txt \
-		OELibPrimer.html bin2hex.pl
+		Primer.html bin2hex.pl
 
 $(PROGRAM):     $(OBJS) $(MAIN) 
 		$(LINKER) $(LDFLAGS) $(OBJS) $(MAIN) -o  $(PROGRAM) -lm
@@ -62,11 +62,11 @@ print:;		$(PRINT) $(HDRS) $(SRCS)
 
 program:        $(PROGRAM)
 
-dist:;          rm -rf oelib oelib.tgz
-		mkdir oelib
-		cp *.h *.cpp *.c Makefile.in $(DATAFILES) configure oelib 
-		tar -zcvf oelib.tgz oelib
-		rm -rf oelib
+dist:;          rm -rf openbabel openbabel.tgz
+		mkdir openbabel
+		cp *.h *.cpp *.c Makefile.in $(DATAFILES) configure openbabel
+		tar -zcvf openbabel.tgz openbabel
+		rm -rf openbabel
 
 datafiles:;   chmod +x bin2hex.pl
 	      bin2hex.pl atomtyp.txt  AtomTypeData       > atomtyp.h
