@@ -78,7 +78,24 @@ mol_weight MOLECULAR_WEIGHT
 num_rings NUMBER_OF_RING_(SSSR)
 $$$$
 
+###############################################################################
+OBTANIMOTO
+
+obtanimoto computes the tanimoto coefficient between the fingerprint of a query molecule and a database of fingerprints. The output is a set of lines containing the molecule's name followed by the tanimoto coefficient. 
+
+Example: How to use obtatimoto with a database of SMILES
+
+babel database.smi database.fpt             # generate the fingerprints
+obtanimoto query.smi database.fpt > tmp.txt # compute the tanimoto coefficients
+paste database.smi tmp.txt > tmp2.txt       #paste the database and the tanimoto file
+gawk '$4 > 0.7 { print $0}' tmp3.txt        #keep only the compounds with a tanimoto coefficient above 0.7
+sort -n -k 4 -r tmp3.txt > tmp4.txt         #sort the compounds according to its tanimoto coefficient
+gawk '{print $1,$2 "_" $4}' tmp4.txt > final.smi #put the similarity coefficient in the compound's name
+
+OK this is not the most efficient way to implement similarity search but at least it works
+
+
 
 I Hope that people will feel inspired by these tools and make their own contribution.
 
-Fabien Fontaine, 12th of february 2004
+Fabien Fontaine, 28th of september 2004

@@ -1,5 +1,5 @@
 
-bin_PROGRAMS = obgrep obrotate obfit obprop
+bin_PROGRAMS = obgrep obrotate obfit obprop obtanimoto
 obgrep_SOURCES = obgrep.cpp
 obgrep_LDADD = ../src/libopenbabel.la
 
@@ -11,5 +11,8 @@ obfit_LDADD = ../src/libopenbabel.la
 
 obprop_SOURCES = obprop.cpp
 obprop_LDADD = ../src/libopenbabel.la
+
+obtanimoto_SOURCES = obtanimoto.cpp
+obtanimoto_LDADD = ../src/libopenbabel.la
 
 AM_CPPFLAGS = -I$(top_srcdir)/src
