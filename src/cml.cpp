@@ -39,22 +39,25 @@ inheritance, schema locations, default qualification, nillability,
 datatyping, etc. If you do not understand these you are likely to break
 conformance with CML.
 
-The following conditions apply to anyone or organization making changes to this code
-who has not contacted me.
+The following requests are addressed to anyone or organization making changes to this code
+who has not contacted me. The GPL prevents them being mandatory but they should be 
+respected by anyone who believes in interoperability
 
 The code itself is OpenSource. You may make any changes under
 the terms of the GPL above.
 
-HOWEVER: ANY alteration to the code means that your system cannot be called
-a CML system. CML has been trademarked precisely to protect its implementation.
+HOWEVER: ANY alteration to the code means that your system may deviate from 
+a compliant CML system. CML has been trademarked precisely to protect its implementation.
 (The International Union of Crystallography has trademarked their CIF
 specification, so this policy is in keeping with accepted practice in
 Open Specifications).
 
-YOU MUST therefore specifically announce that your modified code does not process CML,
-does not obey CML semantics and does not emit CML. You may not generate XML
-which uses the CML namespaces posted on http://www.xml-cml.org and you may not use
-the <cml> tag, with or without a namespace declaration.
+YOU are therefore requested to announce that your code has been modified from that deposited
+by myself or supplied from the current OpenSource site. You should be very careful 
+in any claims that it complies with any of the published
+CML specifications. You are requested to make it clear to users that your use of
+"CML" the <cml> tag and the CML namespaces posted on http://www.xml-cml.org has
+been made without the knowledge of thge authors of CML
 
 This notice must be included with any modified software.
 
