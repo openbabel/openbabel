@@ -900,7 +900,7 @@ public:
 // (prototypes for Read/Write are in fileformat.h
 
 bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n");
-bool tokenize(std::vector<std::string> &,std::string&, const char*,int limit=-1);
+bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
 void ThrowError(char *str);
 void ThrowError(std::string &str);
 void CartesianToInternal(std::vector<OBInternalCoord*>&,OBMol&);

@@ -1,17 +1,22 @@
-2004-08-25  Fabien Fontaine <ffontaine@imim.es>
+2004-08-27  Michael Banck  <mbanck@gmx.net>
 
-	*src/mol.cpp Kekulize is replaced by a new kekulize function
+	* mol.h (tokenize): Initialize *delimstr to " \t\n" for the
+	version of the function using strings as well.
+
+2004-08-25  Fabien Fontaine  <ffontaine@imim.es>
+
+	* src/mol.cpp: Kekulize is replaced by a new kekulize function
 	situated in kekulize.cpp
 
-	*src/mol.cpp (PerceiveBondOrders) new SMART pattern added
+	* src/mol.cpp (PerceiveBondOrders):new SMART pattern added
 	some decision are taken according to the geometry of the bonds
 
-2004-08-24  Fabien Fontaine <ffontaine@imim.es>
+2004-08-24  Fabien Fontaine  <ffontaine@imim.es>
 
-	* src/mol.cpp (PerceiveBondOrders) Bug in calculation of 
+	* src/mol.cpp (PerceiveBondOrders): Bug in calculation of 
 	average torsion angles of cycles fixed
 
-	*src/atom.cpp function AverageBondAngle added
+	* src/atom.cpp: function AverageBondAngle added
 	
 2004-08-19  Michael Banck  <mbanck@gmx.net>
 
