@@ -40,6 +40,7 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, char *title)
     case GAMESSOUT: ReadGAMESS(ifs,mol,title);	   break;
     case GHEMICAL:  ReadGhemical(ifs,mol,title);   break; 
     case HIN:	    ReadHIN(ifs,mol,title);	   break;
+    case NWCHEMOUT: ReadNWChem(ifs, mol, title);   break;
     case MMD:       ReadMacroModel(ifs,mol,title); break;
     case MMADS:     ReadMmads(ifs,mol,title);      break;
     case MOL2:      ReadMol2(ifs,mol,title);       break;
@@ -94,6 +95,7 @@ bool OBFileFormat::WriteMolecule(ostream &ofs,OBMol &mol,
     case HIN:	    WriteHIN(ofs,mol);			break;
     case JAGUARIN:  WriteJaguar(ofs,mol);		break;
     case OEBINARY:  WriteBinary(ofs,mol);     		break;
+    case NWCHEMIN:  WriteNWChem(ofs, mol);		break;
     case MMD:       WriteMacroModel(ofs,mol); 		break;
     case MMADS:     WriteMmads(ofs,mol); 		break;
     case MOL2:      WriteMol2(ofs,mol,dimension);  	break;
