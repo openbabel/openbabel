@@ -21,6 +21,7 @@ GNU General Public License for more details.
 
 #include <ctime>
 #include <vector>
+#include <iomanip>
 #include <map>
 #include "mol.h"
 #include "obconversion.h"
@@ -156,8 +157,11 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 			  return(false);
 			v.SetX(x);v.SetY(y);v.SetZ(z);
 			atom.SetVector(x, y, z);
-			atom.SetAtomicNum(etab.GetAtomicNum(type));
+			int iso=0;
+			atom.SetAtomicNum(etab.GetAtomicNum(type,iso));
 			//			atom.SetType(type);
+			if(iso)
+				atom.SetIsotope(iso);
 
 			if (scanArgs == 5) {
 			  
@@ -199,7 +203,7 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 		}
 
 		//CM start 18 Sept 2003
-		//Read Properties block, currently only M RAD and M CHG 
+		//Read Properties block, currently only M RAD and M CHG M ISO
 
 		while(ifs.getline(buffer,BUFF_SIZE))
 		{
@@ -219,6 +223,8 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 					at->SetSpinMultiplicity(value);
 				else if(r1.substr(3,3)=="CHG")
 					at->SetFormalCharge(value);
+				else if(r1.substr(3,3)=="ISO")
+					at->SetIsotope(value);
 				//Although not done here,according to the specification, 
 				//previously set formal charges should be reset to zero
 				// Lines setting several other properties are not implemented
@@ -315,8 +321,8 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 				return(false);
 			}
 
-		sprintf(buff,"%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
-						mol.NumAtoms(),mol.NumBonds(),0,0,0,0,0,0,0,0,1);// CM 18 Sept 2003 1 was 0 (# extra lines)
+		sprintf(buff,"%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d V2000",
+						mol.NumAtoms(),mol.NumBonds(),0,0,0,0,0,0,0,0,999);
 		ofs << buff << endl;
 
 		OBAtom *atom;
@@ -367,26 +373,29 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 					ofs << buff << endl;
 				}
 
-		//CM start 18 Sept 2003
-		//For radicals
-		char txt[50];
-		*buff=0;
-		int radcount=0;
+		vector<OBAtom*> rads, isos;
+		vector<OBAtom*>::iterator itr;
 		for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
 		{
 			if(atom->GetSpinMultiplicity())
-			{
-				sprintf(txt,"%3d %3d ",atom->GetIdx(),atom->GetSpinMultiplicity()); //radicals=>2 all carbenes=>3	
-				strcat(buff,txt);
-				radcount++;
-			}
+				rads.push_back(atom);
+			if(atom->GetIsotope())
+				isos.push_back(atom);
 		}
-		if (radcount)
+		if(rads.size())
 		{
-			sprintf(txt,"M  RAD%3d ",radcount);
-			ofs << txt << buff << endl;
-		}
-		// CM end
+			ofs << "M  RAD" << setw(3) << rads.size();
+			for(itr=rads.begin();itr!=rads.end();++itr)
+				ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetSpinMultiplicity();
+			ofs << endl;
+		}			
+		if(isos.size())
+		{
+			ofs << "M  ISO" << setw(3) << isos.size();
+			for(itr=isos.begin();itr!=isos.end();++itr)
+				ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetIsotope();
+			ofs << endl;
+		}			
 	}
 
 	ofs << "M  END" << endl;
@@ -488,7 +497,10 @@ bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
     
 		char type[5];
 		strncpy(type,vs[3].c_str(),4);
-		atom.SetAtomicNum(etab.GetAtomicNum(type));
+		int iso=0;
+		atom.SetAtomicNum(etab.GetAtomicNum(type,iso));
+		if(iso)
+			atom.SetIsotope(iso);
     atom.SetType(type); //takes a char not a const char!
 		//mapping vs[7] not implemented
 		
