@@ -1,5 +1,15 @@
 2003-06-09  Michael Banck  <mbanck@gmx.net>
 
+	* src/main.cpp: 
+	- Renamed usage() to help() and added a new method
+	  usage() with a terse usage output and a pointer to help().
+	- Added -H switch for help().
+	- Reformatted usage() and help() output a bit.
+	- Print out an 'unrecognized option' error message when 
+ 	  option parsing fails, in addition to usage().
+	
+2003-06-09  Michael Banck  <mbanck@gmx.net>
+
 	* src/main.cpp: Added a pointer to the Mailing-List for sending
 	bug-reports to the end of usage().
 

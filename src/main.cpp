@@ -59,6 +59,7 @@ using namespace std;
 using namespace OpenBabel;
 
 void usage();
+void help();
 
 // There isn't a great way to do this -- we need to save argv[0] for usage()
 static char *program_name;
@@ -114,7 +115,7 @@ int main(int argc,char *argv[])
 		    inFileType = extab.FilenameToType(ext);
 		  else
 		    {
-		      cerr << program_name << ": Cannot read input format!" << endl;
+		      cerr << program_name << ": cannot read input format!" << endl;
 		      usage();
 		    }
 		  break;
@@ -128,7 +129,7 @@ int main(int argc,char *argv[])
 		    outFileType = extab.FilenameToType(ext);
 		  else
 		    {
-		      cerr << program_name << ": Cannot write output format!" << endl;
+		      cerr << program_name << ": cannot write output format!" << endl;
 		      usage();
 		    }
 
@@ -138,6 +139,10 @@ int main(int argc,char *argv[])
 		  formatOptions = argv[arg];
 		  break;
 
+		case 'H':
+		  help();
+		  exit(0);
+
 		case '-':
 		  if (inFileArg == 0)
 		    inFileArg = -1;
@@ -146,6 +151,7 @@ int main(int argc,char *argv[])
 		  break;
 		  
 		default:
+		  cerr << program_name << ": unrecognized option `-" << argv[arg][1] << "'" << endl;
 		  usage();
 		  break;
 		}
@@ -167,7 +173,7 @@ int main(int argc,char *argv[])
 	inFileType = extab.FilenameToType(argv[inFileArg]);
       else
 	{
-	  cerr << program_name << ": Cannot read input format!" << endl;
+	  cerr << program_name << ": cannot read input format!" << endl;
 	  usage();
 	}
     }
@@ -177,7 +183,7 @@ int main(int argc,char *argv[])
 	outFileType = extab.FilenameToType(argv[outFileArg]);
       else
 	{
-	  cerr << program_name << ": Cannot write output format!" << endl;
+	  cerr << program_name << ": cannot write output format!" << endl;
 	  usage();
 	}
     }
@@ -191,7 +197,7 @@ int main(int argc,char *argv[])
       ifstream inFileStream(argv[inFileArg]);
       if (!inFileStream)
 	{
-	  cerr << program_name << ": Cannot read input file!" << endl;
+	  cerr << program_name << ": cannot read input file!" << endl;
 	  exit (-1);
 	}
       fileFormat.ReadMolecule(inFileStream, mol, argv[inFileArg]);
@@ -220,7 +226,7 @@ int main(int argc,char *argv[])
       ofstream outFileStream(argv[outFileArg]);
       if (!outFileStream)
 	{
-	  cerr << program_name << ": Cannot write to output file!" << endl;
+	  cerr << program_name << ": cannot write to output file!" << endl;
 	  exit (-1);
 	}
       fileFormat.WriteMolecule(outFileStream, mol, dimension, formatOptions);
@@ -233,11 +239,22 @@ int main(int argc,char *argv[])
 
 void usage()
 {
+  cout << "Open Babel " << BABEL_VERSION << " -- " << __DATE__ << " -- "
+       << __TIME__ << endl;
+  cout << "Usage: " << program_name
+       << " [-i<input-type>] <name> [-o<output-type>] <name>" << endl;
+  cout << "Try `babel -H' for more information." << endl;
+
+  exit (0);
+}
+
+void help()
+{
 unsigned int i;
 
   cout << "Open Babel " << BABEL_VERSION << " -- " << __DATE__ << " -- "
        << __TIME__ << endl;
-  cout << "Usage is : " << endl << program_name 
+  cout << "Usage: " << program_name 
        << " [-i<input-type>] <name> [-o<output-type>] <name>" << endl;
   cout << endl << "Currently supported input types" << endl;
   for (i = 0; i < extab.Count(); i++)
@@ -265,5 +282,4 @@ unsigned int i;
   cout << "   g debug output" << endl;
   cout << endl << "Report Bugs to <openbabel-discuss@lists.sourceforge.net>." << endl;
 
-  exit(0);
 }
