@@ -1,3 +1,8 @@
+2003-06-09  Michael Banck  <mbanck@gmx.net>
+
+	* src/main.cpp: Added a pointer to the Mailing-List for sending
+	bug-reports to the end of usage().
+
 2003-06-03  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/mol.h: Add OBBond::UnsetKekule for PerceiveBondOrders support.
