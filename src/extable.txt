@@ -28,7 +28,7 @@ cache		cache		CAChe MolStruct			none				0	1
 ccc		ccc		CCC				none				1	0
 c3d1		chem3d1		Chem3D Cartesian 1		none				1	1
 c3d2		chem3d2		Chem3D Cartesian 2		none				1	1
-ct		chemdraw	ChemDraw Connection Table	none				0	1
+ct		chemdraw	ChemDraw Connection Table	none				1	1
 cht		chemtool	Chemtool			none				0	1
 cml		cml		Chemical Markup Language	chemical/x-cml			1	1
 crk2d		crk2d		CRK2D: Chemical Resource Kit 2D	chemical/x-crk2d		1	1
@@ -42,8 +42,9 @@ gamin		gamessin	GAMESS Input			chemical/x-gamess-input		0	1
 inp		gamessin	GAMESS Input			chemical/x-gamess-input		0	1
 gam		gamessout	GAMESS Output			none				1	0
 gamout		gamessout	GAMESS Output			none				1	0
-gcart		gaussiancart	Gaussian Cartesian		none				0	1
+com		gaussiancart	Gaussian Cartesian		none				0	1
 gau		gaussiancart	Gaussian Input			chemical/x-gaussian-input	0	1
+g98		gaussianout	Gaussian 98/03 Output		none				1	0
 gpr		ghemical	Ghemical Project		none				1	1
 mm1gp		ghemical	Ghemical MM			none				1	0
 qm1gp		ghemical	Ghemical QM			none				1	0
@@ -98,7 +99,6 @@ gstat		gstat		CSD GSTAT			none				0	0
 dock		dock		Dock Database			none				0	0
 fract		fract		Free Form Fractional		none				0	0
 m3d		m3d		M3D				none				0	0
-gzmat		gaussianzmat	Gaussian Z-Matrix		none				0	0
 g92		gaussian92	Gaussian 92 Output		none				0	0
 g94		gaussian94	Gaussian 94 Output		none				0	0
 icon		icon8		Icon 8				none				0	0

@@ -45,12 +45,14 @@ bool OBFileFormat::ReadMolecule(istream &ifs, OBMol &mol, const char *title)
     case CCC:       result = ReadCCC(ifs,mol,title);	       	break;
     case CHEM3D1:   result = ReadChem3d1(ifs,mol,title);       	break;
     case CHEM3D2:   result = ReadChem3d2(ifs,mol,title);       	break;
+    case CHEMDRAW:  result = ReadChemDraw(ifs,mol,title);       break;
     case CML:       result = ReadCML(ifs,mol,title);		break;
     case CRK2D:     result = ReadCRK2D(ifs,mol,title);          break;
     case CRK3D:     result = ReadCRK3D(ifs,mol,title);          break;
     case DMOL:      result = ReadDMol(ifs,mol,title);		break;
     case FEATURE:   result = ReadFeat(ifs,mol,title);		break;
     case GAMESSOUT: result = ReadGAMESS(ifs,mol,title);		break;
+    case GAUSSIANOUT: result = ReadGaussianOut(ifs,mol,title);	break;
     case GHEMICAL:  result = ReadGhemical(ifs,mol,title);	break; 
     case HIN:	    result = ReadHIN(ifs,mol,title);		break;
     case NWCHEMOUT: result = ReadNWChem(ifs, mol, title);	break;

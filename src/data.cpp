@@ -551,7 +551,7 @@ io_type TextToType(string typestring)
   else if (typestring == "DOCK")		return(DOCK);
   else if (typestring == "FRACT")		return(FRACT);
   else if (typestring == "M3D")			return(M3D);
-  else if (typestring == "GAUSSIANZMAT")	return(GAUSSIANZMAT);
+  else if (typestring == "GAUSSIANOUT") 	return(GAUSSIANOUT);
   else if (typestring == "GAUSSIANCART")	return(GAUSSIANCART);
   else if (typestring == "GAUSSIAN92")		return(GAUSSIAN92);
   else if (typestring == "GAUSSIAN94")		return(GAUSSIAN94);
