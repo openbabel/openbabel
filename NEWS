@@ -4,6 +4,10 @@ What's New from 1.100.1:
 
  -Fixed installation of header files. The headers in the math-
   directory were not installed alongside the other headers.
+ -Fixed major omissions in CML readers and writers. All versions of CMl are now
+  supported (CML1/2 and array/nonArray). Also added *.bat
+  file for roundtripping between these formats for both 2- and 3-D data.
+  Fixed bugs in test/cmltest/cs2a.mol.cml (PM-R, 2003-08 and 2003-09)
 
 New File Formats:
 

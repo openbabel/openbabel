@@ -1,4 +1,4 @@
-<!DOCTYPE molecule SYSTEM"http://www.xml-cml.org/dtd/cml_1_0_1.dtd">
+<!DOCTYPE molecule SYSTEM "http://www.xml-cml.org/dtd/cml_1_0_1.dtd">
 <molecule>
 <atomArray>
 <atom id="a1">
