@@ -432,6 +432,7 @@ public:
    void SetInRing()                         {SetFlag(OB_RING_BOND);}
    void SetClosure()                        {SetFlag(OB_CLOSURE_BOND);}
    void UnsetAromatic()                     {_flags &= (~(OB_AROMATIC_BOND));}
+   void UnsetKekule() {_flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));}
    //@}
    
    //! \name bond data request methods

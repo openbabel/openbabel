@@ -6,7 +6,7 @@
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
 #  SMARTS patterns with minimum and maximum pi-electrons contributed to an   #
-#   aromatic system (used by typer.cpp:OBAromaticTyper                       #
+#   aromatic system (used by typer.cpp:OBAromaticTyper)                      #
 #                                                                            #
 ##############################################################################
 

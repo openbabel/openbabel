@@ -1,3 +1,12 @@
+2003-06-03  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/mol.h: Add OBBond::UnsetKekule for PerceiveBondOrders support.
+
+	* src/mol.cpp (PerceiveBondOrders): Add aromatization pass to
+	complete the implementation of Roger Sayle's algorithm. This
+	implementation is rather naive--it types rings, then passes back
+	to Kekulize. Still works pretty well.
+
 2003-06-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
 
 	Lots of minor bugfixes from the past few weeks.
