@@ -1,3 +1,12 @@
+2005-01-13  Chris Morley  <c.morley@gaseq.co.uk>
+
+	Correct number of implicit hydrogens in radicals
+	Previously used decremented implicit valency which sometimes was reset;
+	now correct with _spinmultiplicity. 
+	* src/atom.cpp (ImplicitHydrogenCount): add code   
+	* src/mol.cpp (AddHydrogens): (2 routines) add code
+	* src/mol.cpp (AssignSpinMultiplicity): remove code
+
 2005-01-12  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/dlhandler.h: Add findFiles decl needed for Windows builds  
