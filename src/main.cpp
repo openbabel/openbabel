@@ -60,6 +60,12 @@ int main(int argc,char *argv[])
 	    {
 	      switch (argv[arg][1])
 		{
+		case 'v':
+		  {
+		    cout << "Open Babel " << BABEL_VERSION << " -- " 
+			 << __DATE__ << " -- " << __TIME__ << endl;
+		    exit(0);
+		  }
 		case 'd':
 		  removeHydrogens = true;
 		  break;
