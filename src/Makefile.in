@@ -45,7 +45,7 @@ DATAINCS      = aromatic.h atomtyp.h element.h extable.h \
 HDRS	      = aromatic.h atomtyp.h base.h binary.h \
 		bitgrid.h bitvec.h chiral.h chains.h cwrap.h \
 		data.h element.h extable.h fileformat.h grid.h \
-		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
+		matrix.h mol.h molchrg.h molvector.h obifstream.h \
 		obutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
 		resdata.h ring.h rotor.h smi.h typer.h types.h version.h \
 		chains.h generic.h oberror.h isotope.h bondtyp.h
