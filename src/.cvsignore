@@ -1,0 +1,11 @@
+Makefile
+ii_files
+libbabel.a
+babel
+version.h
+babelconfig.h
+.deps
+stamp-h1
+.libs
+*.lo
+libopenbabel.la
