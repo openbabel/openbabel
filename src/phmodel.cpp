@@ -46,7 +46,7 @@ OBPhModel::~OBPhModel()
   for (m = _vschrg.begin();m != _vschrg.end();m++)   delete m->first;
 }
 
-void OBPhModel::ParseLine(char *buffer)
+void OBPhModel::ParseLine(const char *buffer)
 {
   vector<string> vs;
   OBSmartsPattern *sp;

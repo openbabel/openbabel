@@ -1,4 +1,4 @@
-EXTENSION	TYPE		DESCRIPTION			MIME				READ	WRITE
+# EXTENSION	TYPE		DESCRIPTION			MIME				READ	WRITE
 alc		alchemy		Alchemy				chemical/x-alchemy		1	1
 prep		prep		Amber PREP			none				1	0
 bs		ballstick	Ball & Stick			none				1	1

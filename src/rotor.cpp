@@ -771,7 +771,7 @@ OBRotorRules::OBRotorRules()
   _dataptr = TorsionDefaults;
 }
 
-void OBRotorRules::ParseLine(char *buffer)
+void OBRotorRules::ParseLine(const char *buffer)
 {
   int i;
   int ref[4];
@@ -779,6 +779,7 @@ void OBRotorRules::ParseLine(char *buffer)
   vector<float> vals;
   vector<string> vs;
   vector<string>::iterator j;
+  char temp_buffer[BUFF_SIZE];
 
   if (buffer[0] == '#') return;
   tokenize(vs,buffer);
@@ -810,7 +811,7 @@ void OBRotorRules::ParseLine(char *buffer)
 
   if (!vs.empty() && vs.size() > 5)
     {
-      strcpy(buffer,vs[0].c_str());
+      strcpy(temp_buffer,vs[0].c_str());
       //reference atoms
       for (i = 0;i < 4;i++) ref[i] = atoi(vs[i+1].c_str())-1;
       //possible torsions
@@ -833,7 +834,7 @@ void OBRotorRules::ParseLine(char *buffer)
 	  err += vs[0];
 	  ThrowError(err);
 	}
-      OBRotorRule *rr = new OBRotorRule (buffer,ref,vals,delta);
+      OBRotorRule *rr = new OBRotorRule (temp_buffer,ref,vals,delta);
       if (rr->IsValid())
 	_vr.push_back(rr);
       else

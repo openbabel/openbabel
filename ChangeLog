@@ -1,3 +1,26 @@
+2002-04-12  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/bin2hex.pl: Set output header files to be "static const
+	char" instead of plain char. Should prevent some clobbering,
+	e.g. PR #543314.
+
+	* src/aromatic.h, src/atomtyp.h, src/element.h, src/extable.h,
+	src/phmodeldata.h, src/resdata.h, src/types.h: Generate as above.
+
+	* src/aromatic.txt, src/atomtyp.txt, src/phmodel.txt: Change
+	"OELib" in headers to "Open Babel."
+
+	* src/data.h: Make all _dataptr members "const char" and set
+	ParseLine() methods to operate on const char*.
+
+	* src/data.cpp, src/pdb.cpp, src/phmodel.cpp, src/rotor.cpp,
+	src/typer.cpp: As above.
+
+	* src/mol.h: Set tokenize() declarations to operate on const
+	char*.
+
+	* src/tokenst.cpp: As above.
+
 2002-04-05  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/parsmart.cpp: Added some defensive programming when calling

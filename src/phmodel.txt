@@ -1,5 +1,5 @@
 ################################################################################
-#	                     OELib file: phmodel.txt                           #
+#	                Open Babel file: phmodel.txt                           #
 #                                                                              #
 # TRANSFORM: chemical transforms can be used to modify formal charges, bond    #
 #            orders, and to delete atoms (i.e hydrogens).  Changes are applied #

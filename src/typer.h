@@ -30,7 +30,7 @@ class OBAtomTyper : public OBGlobalDataBase
   OBAtomTyper();
   ~OBAtomTyper();
 
-  void ParseLine(char*);
+  void ParseLine(const char*);
   void AssignHyb(OBMol&);
   void AssignTypes(OBMol&);
   void AssignImplicitValence(OBMol&);
@@ -50,7 +50,7 @@ class OBAromaticTyper : public OBGlobalDataBase
   OBAromaticTyper();
   ~OBAromaticTyper();
 
-  void ParseLine(char*);
+  void ParseLine(const char*);
   void AssignAromaticFlags(OBMol &);
   void PropagatePotentialAromatic(OBAtom*);
   void ExcludeSmallRing(OBMol &);

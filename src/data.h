@@ -59,8 +59,8 @@ typedef enum {UNDEFINED,SDF,MOL2,PDB,DELPDB,SMI,BOX,FIX,
 class OBGlobalDataBase
 {
  protected:
-  bool    _init;
-  char   *_dataptr;
+  bool         _init;
+  const char  *_dataptr;
   std::string  _filename;
   std::string  _dir;
   std::string  _subdir;
@@ -75,7 +75,7 @@ class OBGlobalDataBase
   void  Init();
   void  SetReadDirectory(char *dir)       {_dir = dir;}
   void  SetEnvironmentVariable(char *var) {_envvar = var;}
-  virtual void ParseLine(char*) {}
+  virtual void ParseLine(const char*) {}
 };
 
 class OBElement
@@ -117,7 +117,7 @@ public:
   ~OBElementTable();
 
   int   GetAtomicNum(const char *);
-  void  ParseLine(char*);
+  void  ParseLine(const char*);
   char *GetSymbol(int);
   float GetVdwRad(int);
   float GetCovalentRad(int);
@@ -141,7 +141,7 @@ class OBTypeTable : public OBGlobalDataBase
   OBTypeTable(void);
   ~OBTypeTable() {}
 
-  void ParseLine(char*);
+  void ParseLine(const char*);
   bool SetFromType(char*);
   bool SetToType(char*);
   bool Translate(char*,char*); // to, from
@@ -162,7 +162,7 @@ class OBExtensionTable : public OBGlobalDataBase
   bool    CanWriteExtension(char *);
   bool	  IsReadable(unsigned int);
   bool	  IsWritable(unsigned int);
-  void    ParseLine(char*);
+  void    ParseLine(const char*);
   void    TypeToExtension(io_type,char*);
   void	  TypeToMIME(io_type,char*);
   void    ExtensionToDescription(char*, char*);

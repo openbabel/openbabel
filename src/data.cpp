@@ -34,8 +34,8 @@ OBExtensionTable extab;
 OBElementTable   etab;
 OBTypeTable      ttab;
 
-bool tokenize(vector<string>&, char *buf,char *delimstr=" \t\n");
-bool tokenize(vector<string> &vcr, string &s,char *delimstr,int limit=-1);
+bool tokenize(vector<string>&, const char *buf, const char *delimstr=" \t\n");
+bool tokenize(vector<string> &vcr, string &s, const char *delimstr,int limit=-1);
 extern void ThrowError(char *);
 extern void ThrowError(string&);
 
@@ -55,7 +55,7 @@ OBElementTable::~OBElementTable()
     for (i = _element.begin();i != _element.end();i++) delete *i;
   }
 
-void OBElementTable::ParseLine(char *buffer)
+void OBElementTable::ParseLine(const char *buffer)
 {
   int num,maxbonds;
   char symbol[3];
@@ -205,7 +205,7 @@ OBTypeTable::OBTypeTable()
   _from = _to = -1;
 }
 
-void OBTypeTable::ParseLine(char *buffer)
+void OBTypeTable::ParseLine(const char *buffer)
 {
   if (_linecount == 0)
     sscanf(buffer,"%d%d",&_ncols,&_nrows);
@@ -315,20 +315,17 @@ OBExtensionTable::OBExtensionTable()
   _linecount = 0;
 }
 
-void OBExtensionTable::ParseLine(char *buffer)
+void OBExtensionTable::ParseLine(const char *buffer)
 {
-  if (_linecount > 0)
+  vector <string> vs;
+  
+  if (buffer[0] != '#' && _linecount != 0) // skip comments
     {
-      vector <string> vs;
-      
-      if (buffer[0] != '#') // skip comments
+      tokenize(vs,buffer,"\t\n"); // spaces are a problem
+      if (vs.size() == 6)
 	{
-	  tokenize(vs,buffer,"\t\n"); // spaces are a problem
-	  if (vs.size() == 6)
-	    {
-	      Toupper(vs[1]);
-	      _table.push_back(vector <string> (vs));
-	    }
+	  Toupper(vs[1]);
+	  _table.push_back(vector <string> (vs));
 	}
     }
 
@@ -693,12 +690,14 @@ void OBGlobalDataBase::Init()
   // If all else fails, use the compiled in values
     if (_dataptr)
     {
-      char *p1,*p2;
+      const char *p1,*p2;
       for (p1 = p2 = _dataptr;*p2 != '\0';p2++)
 	if (*p2 == '\n')
 	  {
-	    *p2 = '\0';
-	    ParseLine(p1);
+	    // *p2 = '\0';
+	    strncpy(buffer, p1, (p2 - p1));
+	    buffer[(p2 - p1) + 1] = '\0';
+	    ParseLine(buffer);
 	    p1 = ++p2;
 	  }
     }

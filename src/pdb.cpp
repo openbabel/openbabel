@@ -39,7 +39,7 @@ public:
     int  LookupBO(string &,string&);
     bool LookupType(string &,string&,int&);
     bool AssignBonds(OBMol &,OBBitVec &);
-	void ParseLine(char*);
+    void ParseLine(const char*);
 };
 
 static bool ParseAtomRecord(char *, OBMol &,int);
@@ -507,7 +507,7 @@ bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
   return(true);
 }
 
-void OBResidueData::ParseLine(char *buffer)
+void OBResidueData::ParseLine(const char *buffer)
 {
    int bo;
     string s;

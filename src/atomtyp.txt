@@ -1,5 +1,5 @@
 ################################################################################
-#	                     OELib file: atomtyp.txt                           #
+#	                Open Babel file: atomtyp.txt                           #
 #                                                                              #
 # INTHYB: used to assign the internal hybridization values for atoms           #
 # IMPVAL: used to assign the implicit valence of an atom                       #

@@ -44,7 +44,7 @@ class OBPhModel : public OBGlobalDataBase
   OBPhModel();
   ~OBPhModel();
 
-  void ParseLine(char*);
+  void ParseLine(const char*);
   void AssignSeedPartialCharge(OBMol&);
   void CorrectForPH(OBMol&);
 };

@@ -21,13 +21,13 @@ GNU General Public License for more details.
 
 using namespace std;
 
-bool tokenize(vector<string> &, char *,char *);
+bool tokenize(vector<string> &, const char *, const char *);
 char *trim_spaces(char *string);
-bool tokenize(vector<string> &vcr, string &s,char *delimstr,int limit=-1);
+bool tokenize(vector<string> &vcr, string &s, const char *delimstr,int limit=-1);
 
 namespace OpenBabel {
 
-bool tokenize(vector<string> &vcr, char *buf,char *delimstr)
+bool tokenize(vector<string> &vcr, const char *buf, const char *delimstr)
 {
     vcr.clear();
     string s = buf;
@@ -77,7 +77,7 @@ char *trim_spaces(char *string)
   return(string);
 }
 
-bool tokenize(vector<string> &vcr, string &s,char *delimstr,int limit)
+bool tokenize(vector<string> &vcr, string &s, const char *delimstr,int limit)
 {
   vcr.clear();
   size_t startpos=0,endpos=0;

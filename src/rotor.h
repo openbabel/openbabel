@@ -64,7 +64,7 @@ class OBRotorRules : public OBGlobalDataBase
   OBRotorRules();
   ~OBRotorRules();
 
-  void ParseLine(char*);
+  void ParseLine(const char*);
   void SetFilename(std::string &s) {_filename = s;}
   void GetRotorIncrements(OBMol&,OBBond*,int [4],std::vector<float>&,float &delta);
   void Quiet() {_quiet=true;};

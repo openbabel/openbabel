@@ -37,7 +37,7 @@ OBAtomTyper::OBAtomTyper()
   _dataptr = AtomTypeData;
 }
 
-void OBAtomTyper::ParseLine(char *buffer)
+void OBAtomTyper::ParseLine(const char *buffer)
 {
   vector<string> vs;
   OBSmartsPattern *sp;
@@ -348,18 +348,19 @@ OBAromaticTyper::OBAromaticTyper()
   _dataptr = AromaticData;
 }
 
-void OBAromaticTyper::ParseLine(char *buffer)
+void OBAromaticTyper::ParseLine(const char *buffer)
 {
   OBSmartsPattern *sp;
+  char temp_buffer[BUFF_SIZE];
 
   if (buffer[0] == '#') return;
   vector<string> vs;
   tokenize(vs,buffer);
   if (!vs.empty() && vs.size() == 3)
     {
-      strcpy(buffer,vs[0].c_str());
+      strcpy(temp_buffer,vs[0].c_str());
       sp = new OBSmartsPattern();
-      if (sp->Init(buffer)) 
+      if (sp->Init(temp_buffer)) 
 	{
 	  _vsp.push_back(sp);
 	  _verange.push_back(pair<int,int> 

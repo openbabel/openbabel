@@ -22,7 +22,7 @@ $rem_end    = "end binary data.";
 
 # C / C++
 $_var       = "\n\n/* $rem_begin */\n".
-  "char $ARGV[1]"."[] = ".
+  "static const char $ARGV[1]"."[] = ".
   "/* %d */\n";
 $_begin     = "{";
 $_end       = "};\n";
