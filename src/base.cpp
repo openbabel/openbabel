@@ -194,4 +194,44 @@ bool OBGraphBase::SetVisitLock(bool v)
 	return(true);
 }
 
-}
+} // namespace OpenBabel
+
+/*! \mainpage
+  \section intro Introduction
+
+  (portions adapted from the OELib primer, written by Matt Stahl, Open
+   Eye Scientific Software, Inc.)
+
+It is fair to say that Open Babel (and before it, OELib) is a direct
+result of the original Babel. Programmers have long known that
+application development is facilitated by building software on top of
+libraries rich in functionality. Babel was the first experience for
+Matt Stahl in designing a molecule library. In addition to developing
+Babel, Pat Walters and Matt developed `OBabel' at Vertex
+Pharmaceuticals. OBabel was the first attempt at developing an 
+object oriented molecule library. Although OBabel was a successful
+project, Matt's departure from Vertex Pharmaceuticals provided a great
+opportunity to include much of what I had learned in previous projects
+into a new molecule class library. OELib was then designed to be flexible,
+extensible, portable, and efficient class library for processing small
+molecules.
+
+OELib was released under the GNU General Public License (GPL) by Matt Stahl
+and Open Eye Scientific Software, Inc. to take advantage of many of
+the "great minds writing chemical software." Eventually Open Eye
+decided to write a next-generation class library as proprietary
+software. The result was that Open Babel took up where OELib left off,
+using the existing GPL version of OELib and has continued to evolve
+and improve.
+
+There are several advantages to having the source code to Open Babel
+available. First, development time can be shortened by basing projects
+on Open Babel. Many chemical and molecular concepts and code are
+already implemented. The fewer people who have to reinvent the wheel
+(or the function), the better.Second, as free software, hopefully 
+other programmers will contribute to the project.
+
+Thanks to all who have helped with Babel, OBabel, OELib and Open Babel.\
+The list is long and growing.
+
+*/
