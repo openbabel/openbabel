@@ -1089,6 +1089,9 @@ void OBChainsParser::TracePeptideChain(OBMol &mol, int i, int r)
 	idx  = atom->GetIdx() - 1;
 
     count = 0;
+    // make sure to initialize list;
+    neighbour[0] = neighbour[1] = neighbour[2] = neighbour[3] = 0;
+
 	for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
 		if (!nbr->IsHydrogen())
 			neighbour[count++] = nbr->GetIdx()-1;
@@ -1148,13 +1151,19 @@ void OBChainsParser::TracePeptideChain(OBMol &mol, int i, int r)
 			{   
 				if ( bitmasks[na] & BitCAll )
 				{   
+				  if (na != 0)
+				    {
 					atomids[na] = AI_C;
 					TracePeptideChain(mol,na,r);
+				    }
 				} 
 				else 
 				{   
+				  if (nb != 0)
+				    {
 					atomids[nb] = AI_C;
 					TracePeptideChain(mol,nb,r);
+				    }
 				}
 			}
 			break;

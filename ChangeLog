@@ -1,3 +1,10 @@
+2005-02-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/chains.cpp (TracePeptideChain): Fix crash reported by James
+	Smith <James.Smith@chemie.uni-erlangen.de> from World Drug Index
+	database. Neighbor list was not properly initialized, so
+	bitmasks[] was running past the stack.
+
 2004-11-12  Geoffrey Hutchison  <geoff@geoffhutchison.net>
 
 	* src/openbabel.i: Initial SWIG interface file.
