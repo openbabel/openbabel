@@ -42,7 +42,7 @@ OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
 		bitgrid.o bond.o \
 		chains.o commandline.o data.o molvector.o matrix.o\
 		chiral.o grid.o mdl.o mol.o mol2.o molchrg.o \
-		obutil.o parsmi.o parsmart.o patty.o \
+		obutil.o parsmi.o parsmart.o patty.o quat.o \
 		ring.o rotor.o smi.o tokenst.o Vector.o pdb.o ccc.o \
 		mmod.o rand.o box.o balst.o bgf.o cacao.o cache.o chdrw.o \
 		csr.o cssr.o feat.o fh.o gromos96.o cwrap.o \
