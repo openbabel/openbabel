@@ -120,11 +120,27 @@ void GetChirality(OBMol &mol, std::vector<int> &chirality)
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
         if (atom->IsChiral())
         {
-            double sv = CalcSignedVolume(mol,atom);
-            if (sv < 0.0)
-                chirality[atom->GetIdx()-1] = -1;
-            else if (sv > 0.0)
-                chirality[atom->GetIdx()-1] = 1;
+	  if (!atom->HasChiralVolume())
+	    {
+	      double sv = CalcSignedVolume(mol,atom);
+	      if (sv < 0.0)
+		{
+		  chirality[atom->GetIdx()-1] = -1;
+		  atom->SetNegativeStereo();
+		}
+	      else if (sv > 0.0)
+		{
+		  chirality[atom->GetIdx()-1] = 1;
+		  atom->SetPositiveStereo();
+		}
+	    }
+	  else // already calculated signed volume (e.g., imported from somewhere)
+	    {
+	      if (atom ->IsPositiveStereo())
+		chirality[atom->GetIdx()-1] = 1;
+	      else
+		chirality[atom->GetIdx()-1] = -1;
+	    }
         }
 }
 
