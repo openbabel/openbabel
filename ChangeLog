@@ -1,3 +1,8 @@
+2004-02-06  Michael Banck  <mbanck@gmx.net>
+
+        * src/cml.cpp (debug): Fix loop control variable j.
+        Contributed by Francesco Bresciani <fbresciani@users.sourceforge.net>.
+
 2004-02-02  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
 
 	* src/mdl.cpp (WriteSDFile): Add support for wedge/hatch, as
