@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <map>
 #include "obconversion.h"
+#include "mol.h"
 
 using namespace std;
 namespace OpenBabel {
@@ -449,6 +450,7 @@ int OBConversion::Convert()
 
 		if( !pInFormat->ReadChemObject(this))
 		{
+		  obErrorLog.ThrowError(__FUNCTION__, " Reading a molecule failed.", obDebug);
 			//error or termination request: try to skip past current object
 			pInFormat->SkipObjects(0,this);
 			//TODO Code to allow continuation with next object rather than break
