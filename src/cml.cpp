@@ -1667,10 +1667,10 @@ bool WriteAtomArray(ostream &ofs) {
 		ofs << "<stringArray builtin=\"atomId\">" << idArray << "</stringArray>" << endl;
 		ofs << "<stringArray builtin=\"elementType\">" << elementArray << "</stringArray>" << endl;
 		ofs << "<integerArray builtin=\"formalCharge\">" << chargeArray << "</integerArray>" << endl;
-		if (strcmp(dimension, "2D")) {
+		if (strncmp(dimension, "2D", 2) == 0) {
 			ofs << "<floatArray builtin=\"x2\">" << x2Array << "</floatArray>" << endl;
 			ofs << "<floatArray builtin=\"y2\">" << y2Array << "</floatArray>" << endl;
-		} else if (strcmp(dimension, "3D")) {
+		} else if (strncmp(dimension, "3D", 2) == 0) {
 			ofs << "<floatArray builtin=\"x3\">" << x3Array << "</floatArray>" << endl;
 			ofs << "<floatArray builtin=\"y3\">" << y3Array << "</floatArray>" << endl;
 			ofs << "<floatArray builtin=\"z3\">" << z3Array << "</floatArray>" << endl;
@@ -1701,10 +1701,10 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 		if (outputCML2) {
 			writeAttribute(ofs, "elementType", elementType);
 			if (charge != 0) writeAttribute(ofs, "formalCharge", charge);
-			if (strcmp(dimension, "2D")) {
+			if (strncmp(dimension, "2D", 2) == 0) {
 				writeAttribute(ofs, "x2", x);
 				writeAttribute(ofs, "y2", y);
-			} else if (strcmp(dimension, "3D")) {
+			} else if (strncmp(dimension, "3D", 2) == 0) {
 				writeAttribute(ofs, "x3", x);
 				writeAttribute(ofs, "y3", y);
 				writeAttribute(ofs, "z3", z);
@@ -1714,10 +1714,10 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 			ofs << ">" << endl;
 			writeBuiltin(ofs, "elementType", elementType);
 			if (charge != 0) writeBuiltin(ofs, "formalCharge", charge);
-			if (strcmp(dimension, "2D")) {
+			if (strncmp(dimension, "2D", 2) == 0) {
 				writeBuiltin(ofs, "x2", x);
 				writeBuiltin(ofs, "y2", y);
-			} else if (strcmp(dimension, "3D")) {
+			} else if (strncmp(dimension, "3D", 2) == 0) {
 				writeBuiltin(ofs, "x3", x);
 				writeBuiltin(ofs, "y3", y);
 				writeBuiltin(ofs, "z3", z);
@@ -1728,10 +1728,10 @@ bool WriteAtom(ostream &ofs, OBAtom* atom, int count) {
 		appendToArray(idArray, id);
 		appendToArray(elementArray, elementType);
 		appendToArray(chargeArray, charge);
-		if (strcmp(dimension, "2D")) {
+		if (strncmp(dimension, "2D", 2) == 0) {
 			appendToArray(x2Array, x);
 			appendToArray(y2Array, y);
-		} else if (strcmp(dimension, "3D")) {
+		} else if (strncmp(dimension, "3D", 2) == 0) {
 			appendToArray(x3Array, x);
 			appendToArray(y3Array, y);
 			appendToArray(z3Array, z);

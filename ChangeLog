@@ -1,4 +1,9 @@
-2002-02-22  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+2002-03-27  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/cml.cpp: Fix use of strcmp() in code in favor of strncmp()
+	to prevent buffer overflow. Fixes problems with 2D/3D export.
+	
+2002-03-26  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/cml.cpp: New CML support, including built-in XML parser,
 	contributed by Peter Murray-Rust.
