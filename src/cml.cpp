@@ -204,7 +204,7 @@ string STMML_ELEMENT_NAMES = "action actionList alternative annotation array app
 bool startAngle(vector <pair<string,string> > &atts);
 // </angle>
 bool endAngle();
-bool WriteAngle(ostream &ofs, pair <OBAtom*[3], double> angle);
+bool WriteAngle(ostream &ofs, pair <vector<OBAtom*>, double> angle);
 string ANGLE_ATTRIBUTES =  "id title convention atomRefs atomRefs3 units";
 vector <string> ANGLE_ATTRIBUTE_VECTOR;
 
@@ -322,7 +322,7 @@ vector <string> FLOATMATRIX_ATTRIBUTE_VECTOR;
 bool startLength(vector <pair<string,string> > &atts);
 // </length>
 bool endLength();
-//bool WriteLength(ostream &ofs, pair <OBAtom*[2], double> length);
+//bool WriteLength(ostream &ofs, pair <vector<OBAtom*>, double> length);
 string LENGTH_ATTRIBUTES =  "id title convention atomRefs2 units";
 vector <string> LENGTH_ATTRIBUTE_VECTOR;
 
@@ -373,7 +373,7 @@ bool addString();
 bool startSymmetry(vector <pair<string,string> > &atts);
 // </symmetry>
 bool endSymmetry();
-bool WriteSymmetry(ostream &ofs, pair <OBAtom*[4], double> symmetry);
+bool WriteSymmetry(ostream &ofs, pair <vector<OBAtom*>, double> symmetry);
 string SYMMETRY_ATTRIBUTES =  "id title convention atomRefs atomRefs4 units";
 vector <string> SYMMETRY_ATTRIBUTE_VECTOR;
 
@@ -381,7 +381,7 @@ vector <string> SYMMETRY_ATTRIBUTE_VECTOR;
 bool startTorsion(vector <pair<string,string> > &atts);
 // </torsion>
 bool endTorsion();
-bool WriteTorsion(ostream &ofs, pair <OBAtom*[4], double> torsion);
+bool WriteTorsion(ostream &ofs, pair <vector<OBAtom*>, double> torsion);
 string TORSION_ATTRIBUTES =  "id title convention atomRefs atomRefs4 units";
 vector <string> TORSION_ATTRIBUTE_VECTOR;
 
@@ -513,15 +513,15 @@ vector <double[12]> rotTransVector;
 vector <double[9]> rotVector;
 
 // angle
-vector <pair <OBAtom*[3], double> > angleVector;
+vector <pair <vector<OBAtom*>, double> > angleVector;
 // length
-vector <pair <OBAtom*[2], double> > lengthVector;
+vector <pair <vector<OBAtom*>, double> > lengthVector;
 // torsion
-vector <pair <OBAtom*[4], double> > torsionVector;
+vector <pair <vector<OBAtom*>, double> > torsionVector;
 // atomParity
-vector <pair <OBAtom*[4], double> > atomParityVector;
+vector <pair <vector<OBAtom*>, double> > atomParityVector;
 // stereo
-vector <pair <OBAtom*[4], string> > stereoSVector;
+vector <pair <vector<OBAtom*>, string> > stereoSVector;
 
 // internal coordinates
 vector <OBInternalCoord*> internalVector;
@@ -1415,19 +1415,19 @@ bool startAngle(vector <pair<string,string> > &atts) {
 }
 
 bool endAngle() {
-	pair <OBAtom*[3], double> angle;
+	pair <vector<OBAtom *>, double> angle;
 	if (atomRefs3Vector.size() != 3) {
 		cerr << "must have defined 3 atoms for angle" << endl;
 	}
 	for (int i = 0; i < 3; i++) {
-		angle.first[i] = atomRefs3Vector[i];
+		angle.first.push_back(atomRefs3Vector[i]);
 	}
 	angle.second = atof((char*)pcdata.c_str());
 	angleVector.push_back(angle);
 }
 
 // not yet finished
-bool WriteAngle(ostream &ofs, pair <OBAtom*[3], double> angle) {
+bool WriteAngle(ostream &ofs, pair <vector<OBAtom*>, double> angle) {
 	ofs << "<angle";
 	ofs << " atomRefs3=\"a" << angle.first[0]->GetIdx() << " a" << angle.first[1]->GetIdx() << " a" << angle.first[2]->GetIdx() << "\">";
 	ofs << angle.second;
@@ -1807,14 +1807,14 @@ bool startAtomParity(vector <pair<string,string> > &atts) {
 }
 
 bool endAtomParity(vector <pair<string,string> > &atts) {
-	pair <OBAtom*[4], double> ap;
+	pair <vector<OBAtom*>, double> ap;
 	vector <OBAtom*> atomRef;
 	getAtomRefs(4, atomRef, atomRefs4);
 	if (atomRef.size() != 4) {
 		cerr << "atomRefs4 must referemce 4 atoms" << endl;
 		return false;
 	}
-	for (int i = 0; i < 4; i++) ap.first[i] = atomRef[i];
+	for (int i = 0; i < 4; i++) ap.first.push_back(atomRef[i]);
 	setCMLType("CML2");
 	ap.second = atof((char*)pcdata.c_str());
 	atomParityVector.push_back(ap);
@@ -1936,7 +1936,7 @@ bool processBondArrayChild() {
 }
 
 bool endBond() {
-	pair <OBAtom*[2], double> len;
+	pair <vector<OBAtom*>, double> len;
 	OBBond bond;
 
     bondPtr = &bond;
@@ -1956,8 +1956,8 @@ bool endBond() {
 	}
 // length is property of molecule
 	if (length >= 0) {
-		len.first[0] = beginAtomPtr;
-		len.first[1] = endAtomPtr;
+		len.first.push_back(beginAtomPtr);
+		len.first.push_back(endAtomPtr);
 		len.second = length;
 		lengthVector.push_back(len);
 	}
@@ -2191,7 +2191,7 @@ bool startElectron(vector <pair<string,string> > &atts) {
 }
 
 bool endElectron() {
-//	pair <OBAtom*[2], double> electron;
+//	pair <vector<OBAtom*>, double> electron;
 //	electronVector.push_back(electron);
 }
 
@@ -2290,19 +2290,19 @@ bool startLength(vector <pair<string,string> > &atts) {
 }
 
 bool endLength() {
-	pair <OBAtom*[2], double> length;
+	pair <vector<OBAtom*>, double> length;
 	if (atomRefs2Vector.size() != 2) {
 		cerr << "must have defined 2 atoms for length" << endl;
 	}
 	for (int i = 0; i < 2; i++) {
-		length.first[i] = atomRefs2Vector[i];
+		length.first.push_back(atomRefs2Vector[i]);
 	}
 	length.second = atof((char*)pcdata.c_str());
 	lengthVector.push_back(length);
 }
 
 // not yet finished
-bool WriteLength(ostream &ofs, pair <OBAtom*[2], double> length) {
+bool WriteLength(ostream &ofs, pair <vector<OBAtom*>, double> length) {
 	ofs << "<length";
 	ofs << " atomRefs2=\"a" << length.first[0]->GetIdx() << " a" << length.first[1]->GetIdx() << "\">";
 	ofs << length.second;
@@ -2345,21 +2345,21 @@ bool debugMolecule(ostream &ofs) {
 	if (lengthVector.size() > 0) {
 		ofs << "Lengths: " << endl;
 		for (int i = 0; i < lengthVector.size(); i++) {
-			pair <OBAtom*[2], double> length = lengthVector[i];
+			pair <vector<OBAtom*>, double> length = lengthVector[i];
 			WriteLength(ofs, length);
 		}
 	}
 	if (angleVector.size() > 0) {
 		ofs << "Angles: " << endl;
 		for (int i = 0; i < angleVector.size(); i++) {
-			pair <OBAtom*[3], double> angle = angleVector[i];
+			pair <vector<OBAtom*>, double> angle = angleVector[i];
 			WriteAngle(ofs, angle);
 		}
 	}
 	if (torsionVector.size() > 0) {
 		ofs << "Torsions: " << endl;
 		for (int i = 0; i < torsionVector.size(); i++) {
-			pair <OBAtom*[4], double> torsion = torsionVector[i];
+			pair <vector<OBAtom*>, double> torsion = torsionVector[i];
 			WriteTorsion(ofs, torsion);
 		}
 	}
@@ -2709,14 +2709,14 @@ bool startStereo(vector <pair<string,string> > &atts) {
 }
 
 bool endStereo(vector <pair<string,string> > &atts) {
-	pair <OBAtom*[4], string> st;
+	pair <vector<OBAtom*>, string> st;
 	vector <OBAtom*> atomRef;
 	getAtomRefs(4, atomRef, atomRefs4);
 	if (atomRef.size() != 4) {
 		cerr << "atomRefs4 must referemce 4 atoms" << endl;
 		return false;
 	}
-	for (int i = 0; i < 4; i++) st.first[i] = atomRef[i];
+	for (int i = 0; i < 4; i++) st.first.push_back(atomRef[i]);
 	setCMLType("CML2");
 	st.second = pcdata;
 	stereoSVector.push_back(st);
@@ -2805,19 +2805,19 @@ bool startTorsion(vector <pair<string,string> > &atts) {
 }
 
 bool endTorsion() {
-	pair <OBAtom*[4], double> torsion;
+	pair <vector<OBAtom*>, double> torsion;
 	if (atomRefs4Vector.size() != 4) {
 		cerr << "must have defined 4 atoms for torsion" << endl;
 	}
 	for (int i = 0; i < 4; i++) {
-		torsion.first[i] = atomRefs4Vector[i];
+		torsion.first.push_back(atomRefs4Vector[i]);
 	}
 	torsion.second = atof((char*)pcdata.c_str());
 	torsionVector.push_back(torsion);
 }
 
 // not yet finished
-bool WriteTorsion(ostream &ofs, pair <OBAtom*[4], double> torsion) {
+bool WriteTorsion(ostream &ofs, pair <vector<OBAtom*>, double> torsion) {
 	ofs << "<torsion";
 	ofs << " atomRefs4=\"a" << torsion.first[0]->GetIdx() << " a" << torsion.first[1]->GetIdx() << " a" << torsion.first[2]->GetIdx() << " a" << torsion.first[3]->GetIdx() << "\">";
 	ofs << torsion.second;

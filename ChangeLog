@@ -1,3 +1,14 @@
+2002-05-30  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/mol.h, src/atom.cpp (HasNonSingleBond): Add new method to
+	simplify and optimize bond typing code.
+
+	* src/mol.cpp (PerceiveBondOrders): Use it.
+
+	* src/cml.cpp: Fix problems with arrays of OBAtom* since these
+	cause casting problems in ISO C++. Still has a number of "missing
+	return" warnings, though these shouldn't cause problems.
+
 2002-04-23  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/hin.cpp (ReadHIN): Fix bugs in reading HyperChem files as
