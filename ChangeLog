@@ -1,3 +1,9 @@
+2003-03-12  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/pdb.cpp (WritePDB): Make sure that atom type definitions are
+	written correctly as per the PDB standard. Fixes PR#701620, as
+	suggested by Christian Hofbauer.
+
 2003-03-11  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/generic.h, src/generic.cpp: Add new OBUnitCell generic data

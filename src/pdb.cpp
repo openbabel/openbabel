@@ -791,13 +791,30 @@ bool WritePDB(ostream &ofs,OBMol &mol)
   {
     atom = mol.GetAtom(i);
     strcpy(type_name,etab.GetSymbol(atom->GetAtomicNum()));
-    if (strlen(type_name) > 1) type_name[1] = toupper(type_name[1]);
+
+    //two char. elements are on position 13 and 14 one char. start at 14 
+    if (strlen(type_name) > 1)
+      type_name[1] = toupper(type_name[1]);
+    else
+      {
+	char tmp[10];
+	strcpy(tmp, type_name);
+	sprintf(type_name, " %-3s", tmp);
+      }
 
     if (atom->HasResidue())
       {
 	res = atom->GetResidue();
 	strcpy(the_res,(char*)res->GetName().c_str());
 	strcpy(type_name,(char*)res->GetAtomID(atom).c_str());
+
+	//two char. elements are on position 13 and 14 one char. start at 14
+	if (strlen(type_name) < 4)
+	  {
+	    char tmp[10];
+	    strcpy(tmp, type_name);
+	    sprintf(type_name," %-3s", tmp);
+	  }
 	res_num = res->GetNum();
       }
     else
