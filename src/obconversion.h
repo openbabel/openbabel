@@ -127,12 +127,22 @@ public:
 	virtual unsigned int Flags() { return 0;}; 
 
 	/// @brief Skip past first n objects in input stream (or current one with n=0)
+
 	/// Returns 1 on success, -1 on error and 0 if not implemented 
 	virtual int SkipObjects(int n, OBConversion* pConv)
 	{
-		return 0; //shows not implemented
+		return 0; //shows not implemented in the format class
 	};
 
+	/// @brief Returns a pointer to a new instance of the format, or NULL if fails.
+
+	/// Normally a single global instance is used but this may cause problems
+	/// if there are member variables and the format is used in more than one place
+	/// in the program.
+	virtual OBFormat* MakeNewInstance()
+	{
+		return NULL; //shows not implemented in the format class
+	}
 };
 
 //*************************************************
@@ -279,6 +289,7 @@ protected:
 	static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
 	static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
 	static int       LoadFormatFiles();
+	bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is);
 
 	std::string	  InFilename;
 	std::istream*     pInStream;
