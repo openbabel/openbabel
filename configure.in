@@ -1,14 +1,14 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(openbabel, 1.100.2, openbabel-discuss@lists.sourceforge.net)
+AC_INIT(OpenBabel, 1.100.2, openbabel-discuss@lists.sourceforge.net, openbabel)
 AC_CONFIG_SRCDIR(src/obutil.cpp)
-AM_INIT_AUTOMAKE([AC_PACKAGE_NAME AC_PACKAGE_VERSION no-define])
+AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
 AM_CONFIG_HEADER(src/babelconfig.h)
 AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of Open Babel])
 
 AC_CANONICAL_HOST
 
-AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_NAME], [Where the data files are located])
+AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_TARNAME], [Where the data files are located])
 
 dnl Checks for programs.
 AC_PROG_CC

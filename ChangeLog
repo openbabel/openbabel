@@ -1,3 +1,13 @@
+2004-02-17  Michael Banck  <mbanck@gmx.net>
+
+	* configure.in (AC_INIT): Changed PACKAGE_NAME to 'OpenBabel'.
+	Additionally specifiy PACKAGE_TARNAME as 'openbabel'.
+	(AM_INIT_AUTOMAKE): Removed deprecated arguments PACKAGE and
+	VERSION.
+	(AC_DEFINE_DIR): Use AC_PACKAGE_TARNAME instead of
+	AC_PACKAGE_NAME.
+	* configure: Regenerated.
+
 2004-02-10  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
 
 	* src/mol.cpp: Documentation updates.
