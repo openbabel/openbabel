@@ -36,7 +36,6 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,const char *title)
 	{
 	  // mol.EndModify();
 	  mol.Clear();
-	  hasPartialCharges = false;
 	  mol.BeginModify();
 	  ifs.getline(buffer,BUFF_SIZE);	// blank
 	  ifs.getline(buffer,BUFF_SIZE);	// column headings
@@ -64,6 +63,8 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,const char *title)
       else if(strstr(buffer,"NET ATOMIC CHARGES") != NULL)
 	{
 	  hasPartialCharges = true;
+	  charges.clear();
+	  cout << " got some charges " << endl;
 	  ifs.getline(buffer,BUFF_SIZE);	// blank
 	  ifs.getline(buffer,BUFF_SIZE);	// column headings
 	  ifs.getline(buffer,BUFF_SIZE);
@@ -72,6 +73,7 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,const char *title)
 	    {
 	      atom = mol.GetAtom(atoi(vs[0].c_str()));
 	      atom->SetPartialCharge(atof(vs[2].c_str()));
+	      charges.push_back(atof(vs[2].c_str()));
 
 	      if (!ifs.getline(buffer,BUFF_SIZE)) break;
 	      tokenize(vs,buffer);
@@ -83,7 +85,14 @@ bool ReadMOPAC(istream &ifs,OBMol &mol,const char *title)
   mol.PerceiveBondOrders();
 
   if (hasPartialCharges)
-    mol.SetPartialChargesPerceived();
+    {
+      mol.SetPartialChargesPerceived();
+      for (int i = 1; i <= mol.NumAtoms(); i++)
+	{
+	  atom = mol.GetAtom(i);
+	  atom->SetPartialCharge(charges[i-1]);
+	}
+    }
   mol.SetTitle(title);
   return(true);
 }

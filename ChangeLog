@@ -1,10 +1,20 @@
+ 003-03-02  Geoffrey Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* src/mopac.cpp (ReadMOPAC): Fix problems with MOPAC partial
+	charges not translating to other formats. (PR#660364)
+
 2003-02-28  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/mol.h: Add new method OBAtom::SamllestBondAngle().
 
 	* src/atom.cpp: Implement it.
 
-	* 
+	* src/mol.cpp (ConnectTheDots): Improve bonding by checking for
+	small bond angles while removing long bonds.
+
+	* src/pdb.cpp: Do not attempt to add alpha-peptide
+	bonds. ConnectTheDots is much better at this and doesn't attempt
+	to add strange very long-range bonds.
 
 2003-01-17  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
@@ -78,8 +88,8 @@
 
 	* src/tinker.cpp: Add comment that we're using MM2 parameters.
 
-	* src/mol.cpp: Fix ugly bug causing crashes with -NO2 groups,
-	reported by Richard Muller.
+	* src/mol.cpp (PerceiveBondOrders): Fix ugly bug causing crashes
+	with -NO2 groups, reported by Richard Muller.
 
 2002-12-6  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
