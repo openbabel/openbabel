@@ -1,3 +1,23 @@
+2004-08-17  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* configure.in: Make the check for doxygen to be a typical
+	AC_PATH_PROG -- it's not a critical dependency.
+	
+	* configure, aclocal.m4, config.guess, config.sub, ltmain.sh,
+	 */Makefile.in: Update with latest automake/libtool/autoconf
+	versions (automake-1.9.1, libtool-1.5.8 autoconf 2.59).
+
+	* src/isotope-small.txt, src/isotope.txt: Update with latest data
+	from 2003 canonical data. 
+
+2004-07-20  Geoffrey Hutchison  <ghutchis@wso.williams.edu>
+
+	* src/ghemical.cpp: Ignore multiple coordinate sets -- only read
+	the first one currently, but don't bail if more than one exists.
+
+	* src/cssr.cpp: Update with unit cell information and fixing bugs
+	reported by Mathias Weigt when dealing with SOMFA package.
+
 2004-07-02  Michael Banck  <mbanck@gmx.net>
 
 	* src/obutil.cpp (InternalToCartesian): avec, bvec, cvec, dst, ang,

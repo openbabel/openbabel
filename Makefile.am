@@ -4,3 +4,6 @@ AUTOMAKE_OPTIONS = foreign
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = openbabel.pc
+
+docs:
+	$(DOXYGEN)
