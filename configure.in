@@ -1,14 +1,16 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(StdAfx.h)
-AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE([openbabel], 2.0)
+AC_INIT(src/StdAfx.h)
+dnl AM_CONFIG_HEADER(config.h)
+dnl AM_INIT_AUTOMAKE([openbabel], 2.0)
 AC_CANONICAL_HOST
 
 dnl Checks for programs.
+AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_CXXCPP
-AM_PROG_LIBTOOL
+dnl AM_PROG_LIBTOOL
 AC_PROG_INSTALL
+AC_PATH_PROG(AR, ar)
 
 AC_LANG_CPLUSPLUS
 dnl Checks for libraries.
@@ -43,4 +45,5 @@ AC_C_INLINE
 
 dnl Checks for library functions.
 
-AC_OUTPUT(Makefile)
+AC_OUTPUT(Makefile src/Makefile test/Makefile)
+echo timestamp > stamp.h

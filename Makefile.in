@@ -1,89 +1,74 @@
-#Open Babel Makefile
+#Open Babel top-level Makefile
 
-CC            = @CC@
-CXX	      = @CXX@
+srcdir        = @srcdir@
+VPATH         = @srcdir@
+top_srcdir    = @top_srcdir@
 
-CFLAGS        = @CFLAGS@ @COPTS1@
-CXXFLAGS      = @CFLAGS@ @COPTS1@
+DEST	      = @bindir@
 
-LIBFLAGS      = -DLIBRARY 
+INSTALL	      = @INSTALL_PROGRAM@
 
-LINKER	      = $(CXX)
-LDFLAGS       = 
+SUBDIRS	      = src test
+DISTDIR       = $(top_srcdir)/../openbabel
 
-RM            = @RM@ -f
+all:
+		@for i in $(SUBDIRS); do \
+			(cd $$i; $(MAKE) $(MFLAGS) all) \
+			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+		done && test -z "$$fail"
 
-SRCDIR        = @SRCDIR@
-VPATH         = $(SRCDIR)
+test:		check
+check:
+		@for i in $(SUBDIRS); do \
+			(cd $$i; $(MAKE) $(MFLAGS) check) \
+			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+		done && test -z "$$fail"
 
-MAIN	      = main.o
+clean:
+		rm -f *~
+		@for i in $(SUBDIRS); do \
+			(cd $$i; $(MAKE) $(MFLAGS) clean) \
+			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+		done && test -z "$$fail"
 
-HDRS	      = StdAfx.h Vector.h aromatic.h atomtyp.h base.h binary.h \
-		bitgrid.h bitvec.h chiral.h chains.h commandline.h cwrap.h \
-		data.h element.h extable.h fileformat.h grid.h \
-		matrix.h mol.h molchrg.h molvector.h oeifstream.h \
-		obutil.h parsmart.h patty.h phmodel.h phmodeldata.h \
-		resdata.h ring.h rotor.h smi.h typer.h types.h version.h \
-		chains.h ctransform.h binary_io.h generic.h smarts.h 
+distclean:
+		rm -f config.cache config.status config.log config.h *~ \
+		@for i in $(SUBDIRS); do \
+			(cd $$i; $(MAKE) $(MFLAGS) distclean) \
+			|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+		done && test -z "$$fail"
+		rm -f Makefile stamp-h
 
-OBJS	      =	alchemy.o binary.o typer.o atom.o base.o bitvec.o \
-		bitgrid.o bond.o \
-		chains.o commandline.o data.o molvector.o matrix.o\
-		chiral.o grid.o mdl.o mol.o mol2.o molchrg.o \
-		obutil.o parsmi.o parsmart.o patty.o quat.o \
-		ring.o rotor.o smi.o tokenst.o Vector.o pdb.o ccc.o \
-		mmod.o rand.o box.o balst.o bgf.o cacao.o cache.o chdrw.o \
-		csr.o cssr.o feat.o fh.o gromos96.o cwrap.o \
-		ghemical.o xyz.o fileformat.o gamess.o hin.o \
-		qchem.o tinker.o unichem.o mpqc.o phmodel.o car.o xed.o \
-		jaguar.o amber.o ctransform.o binary_io.o generic.o smarts.o\
-		dmol.o report.o nwchem.o mopac.o gaussian.o
+install:	all
+		$(INSTALL) $(PROGRAM) $(DEST)
 
-PROGRAM	      = babel
+dist:
+	        rm -rf $(DISTDIR) openbabel.tar.gz
+		mkdir $(DISTDIR)
+		tar cf - $(top_srcdir) | (cd $(DISTDIR); tar xf -)
+		(cd $(DISTDIR); $(MAKE) distclean)
+		-for i in $(SUBDIRS); do \
+			(cd $(DISTDIR)/$$i; rm -fr RCS CVS .#\*); \
+		done && test -z "$$fail"
+		(cd $(DISTDIR)/..; tar cvzf openbabel.tar.gz $(DIST))
+		rm -rf $(DISTDIR)
 
-LIBRARY       = libopenbabel.a
+# Update the Makefiles if things are updated
+#$(srcdir)/configure:  configure.in
+#		cd $(srcdir) && autoconf
 
-DATAFILES     = aromatic.txt atomtyp.txt element.txt extable.txt\
-		resdata.txt types.txt phmodel.txt GNULICENSE.txt \
-		Primer.html bin2hex.pl
+# autoheader might not change config.h.in, so touch a stamp file.
+${srcdir}/config.h.in:  stamp-h.in
+${srcdir}/stamp.h.in:  configure.in aclocal.m4
+		cd ${srcdir} && autoheader
+		echo timestamp > ${srcdir}/stamp-h.in
 
-$(PROGRAM):     $(OBJS) $(MAIN) 
-		$(LINKER) $(LDFLAGS) $(OBJS) $(MAIN) -o  $(PROGRAM) -lm
-		ar -r $(LIBRARY) $(OBJS)
+config.h: stamp-h
+stamp-h:  config.h.in config.status
+		./config.status
 
-all:		$(PROGRAM)
+Makefile:  Makefile.in config.status
+		./config.status
 
-clean:;		$(RM) $(OBJS) $(MAIN) $(PROGRAM) $(LIBRARY)
-
-install:	$(PROGRAM)
-		install -s $(PROGRAM) $(DEST)
-
-print:;		$(PRINT) $(HDRS) $(SRCS)
-
-program:        $(PROGRAM)
-
-dist:;          rm -rf openbabel openbabel.tgz
-		mkdir openbabel
-		cp *.h *.cpp *.c Makefile.in $(DATAFILES) configure openbabel
-		tar -zcvf openbabel.tgz openbabel
-		rm -rf openbabel
-
-datafiles:;   chmod +x bin2hex.pl
-	      bin2hex.pl atomtyp.txt  AtomTypeData       > atomtyp.h
-	      bin2hex.pl element.txt  ElementData        > element.h
-	      bin2hex.pl extable.txt  ExtensionTableData > extable.h
-	      bin2hex.pl resdata.txt  ResidueData        > resdata.h
-	      bin2hex.pl types.txt    TypesData          > types.h
-	      bin2hex.pl aromatic.txt AromaticData       > aromatic.h
-	      bin2hex.pl phmodel.txt  PhModelData        > phmodeldata.h
-
-MAKEFILE      = Makefile
-DEST	      = ${HOME}/bin
-
-# Update the Makefile if the Makefile.in or configure script changes
-Makefile:	Makefile.in configure
-		$(SRCDIR)/configure
-
-.SUFFIXES:	.cpp
-.cpp.o:
-		$(CXX) $(CXXFLAGS) -c $< -o $@
+config.status:  configure
+		./config.status --recheck
