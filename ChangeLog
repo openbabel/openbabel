@@ -1,3 +1,32 @@
+2002-01-21  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* doc/*: Move documentation to subdirectory--since there will
+	eventually be more than these few morsels.
+
+	* doc/Migration: Add a Migration guide for OELib -> Open Babel changes.
+
+2002-01-20  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
+
+	* FAQ, README: Added FAQ.
+
+2002-01-20  Michael Banck  <mbanck@gmx.net>	
+
+	* babel.1: Initial import of man page, this is only a rough
+	draft. Should become babel.1.in perhaps, with the available file
+	types determined during the build.
+
+2002-01-18  Michael Banck  <mbanck@gmx.net>	
+
+        * Makefile.in, src/Makefile.in: Fixed install target. Removed
+	Primer.html, bin2hex.pl and GNULICENSE from datafiles. Added
+	datafiles to install: target.
+
+        * Makefile.in, src/data.cpp, src/Makefile.in, src/patty.cpp,
+	src/pdb.cpp, src/phmodel.cpp, src/rotor.cpp, src/typer.cpp:
+        Openbabel now first checks for $BABEL_DATADIR, then looks in
+	${pkgdatadir} and finally uses the compiled-in values to get the
+	relevant data.
+	
 2002-01-16  Geoff Hutchison  <hutchisn@chem.northwestern.edu>
 
 	* src/main.cpp: Use the filename as the default filename when
