@@ -207,6 +207,9 @@ public:
 	OBFormat*   GetInFormat() const{return pInFormat;};
 	OBFormat*   GetOutFormat() const{return pOutFormat;};
 	std::string GetInFilename() const{return InFilename;};
+	
+	///Get the position in the input stream of the object being written
+	std::streampos GetInPos()const{return wInpos;}; 
 
 	const char* GetOptions() const;///< @brief Options for output format
 	void        SetOptions(const char* options);///< @brief Options for output format
@@ -311,13 +314,16 @@ protected:
 	bool		  ReadyToInput;
 	static bool	  FormatFilesLoaded;
 	OBBase*		  pOb1;
+	std::streampos wInpos; ///<position in the input stream of the object being written
 };
 
 ///For OBFormat::Flags()
 #define NOTREADABLE     0x01
 #define READONEONLY     0x02
+#define READBINARY			0x04
 #define NOTWRITABLE     0x10
 #define WRITEONEONLY    0x20
+#define WRITEBINARY			0x40
 #define DEFAULTFORMAT 0x4000
 
 } //namespace OpenBabel

@@ -433,23 +433,28 @@ int OBConversion::Convert()
 	Count=0;//number objects processed
 	if(!SetStartAndEnd())
 		return 0;
-	if(OneObjectOnly)
-	{
-		EndNumber = StartNumber ? StartNumber : 1;
-		OneObjectOnly=false;
-	}
 
-//	Index=0;//number objects output
 	ReadyToInput=true;
 	m_IsLast=false;
 	pOb1=NULL;
 
 	//Input loop
+	streampos rInpos;
 	while(ReadyToInput && pInStream->peek() != EOF && pInStream->good())
 	{
+		//Save input stream position in member variable wInpos so that
+		// it is accessible to the output formats. But it is necessary to 
+		// delay it because the conversion process operates with a queue of 2
+		//wInpos updated here and later in the routine when the queue is unwound
+		wInpos = rInpos;
+		
 		if(pInStream==&cin)
-			if(pInStream->peek()=='\n')break;
-
+		{
+			if(pInStream->peek()=='\n')
+				break;
+		}
+		else
+			rInpos = pInStream->tellg();
 		
 		bool ret=false;
 		try
@@ -458,7 +463,7 @@ int OBConversion::Convert()
 		}
 		catch(...)
 		{
-			if(!IsOption('c', true))
+			if(!IsOption('c', true) && !OneObjectOnly)
 				throw;
 		}
 
@@ -468,7 +473,9 @@ int OBConversion::Convert()
 			// -c option requested and sucessfully can skip past current object
 			if(!IsOption('c', true) || pInFormat->SkipObjects(0,this)!=1) 
 				break;
-		} 
+		}
+		if(OneObjectOnly)
+			break;
 		// Objects supplied to AddChemObject() which may output them after a delay
 		//ReadyToInput may be made false in AddChemObject()
 		// by WriteMolecule() returning false  or by Count==EndNumber		
@@ -477,6 +484,9 @@ int OBConversion::Convert()
 	//Output last object
 	if(!MoreFilesToCome)
 		m_IsLast=true;
+
+	wInpos = rInpos;
+
 	if(pOutFormat)
 		if(!pOutFormat->WriteChemObject(this))
 			Index--;
@@ -485,6 +495,7 @@ int OBConversion::Convert()
 	Count= -1; 
 	EndNumber=StartNumber=0; pOb1=NULL;//leave tidy
 	MoreFilesToCome=false;
+	OneObjectOnly=false;
 
 	return Index; //The number actually output
 }
@@ -861,7 +872,8 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 	bool HasMultipleOutputFiles=false;
 	int Count=0;
 	bool CommonInFormat = pInFormat ? true:false; //whether set in calling routine
-
+	ios_base::openmode omode = 
+		pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
 	try
 	{
 		ofstream ofs;
@@ -874,7 +886,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 			if(OutputFileName.find_first_of('*')!=string::npos) HasMultipleOutputFiles = true;
 			if(!HasMultipleOutputFiles)
 			{
-				os.open(OutputFileName.c_str());
+				os.open(OutputFileName.c_str(),omode);
 				if(!os)
 				{
 					cerr << "Cannot write to " << OutputFileName <<endl;
@@ -934,7 +946,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 						//Batch conversion
 						string batchfile = BatchFileName(OutputFileName,*itr);
 						if(ofs.is_open()) ofs.close();
-						ofs.open(batchfile.c_str());
+						ofs.open(batchfile.c_str(), omode);
 						if(!ofs) 
 						{
 							cerr << "Cannot open " << batchfile << endl;
@@ -979,7 +991,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 
 						if(ofs.is_open()) ofs.close();
 						string incrfile = IncrementedFileName(OutputFileName,Indx++);
-						ofs.open(incrfile.c_str());
+						ofs.open(incrfile.c_str(), omode);
 						if(!ofs)
 						{
 							cerr << "Cannot write to " << incrfile << endl;
@@ -1009,12 +1021,6 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
 {
 	//Opens file using InFilename and sets pInFormat if requested
-	is->open(InFilename.c_str());
-	if(!is->good())
-	{
-		cerr << "Cannot open " << InFilename <<endl;
-		return false;
-	}
 	if(!SetFormat)
 	{
 		pInFormat = FormatFromExt(InFilename.c_str());
@@ -1028,6 +1034,20 @@ bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
 			return false;
 		}
 	}
+
+	ios_base::openmode imode;
+#ifdef ALL_READS_BINARY //Makes unix files compatible with VC++6
+	imode = ios_base::in|ios_base::binary;
+#else
+	imode = pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
+#endif
+	is->open(InFilename.c_str(), imode);
+	if(!is->good())
+	{
+		cerr << "Cannot open " << InFilename <<endl;
+		return false;
+	}
+
 	return true;
 }
 
