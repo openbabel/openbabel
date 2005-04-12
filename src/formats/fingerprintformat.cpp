@@ -14,6 +14,9 @@ GNU General Public License for more details.
 #include "obconversion.h"
 #include "obmolecformat.h"
 #include "fingerprint.h"
+#include <vector>
+#include <string>
+#include <iomanip>
 
 using namespace std;
 namespace OpenBabel {
@@ -28,21 +31,25 @@ public:
 	{ return
 "Fingerprint format\n \
 See Fabien Fontaine's source code\n \
+Options e.g. -xn16\n \
+-f#  finger print type, default <2>\n \
+-n# fold to specified number of 32bit words \n \
+-h  hex output when multiple molecules\n \
 ";
 	};
 
 	virtual unsigned int Flags(){return NOTREADABLE;};
-
-	////////////////////////////////////////////////////
-	/// The "API" interface functions
+private:
+	vector<unsigned int> firstfp;
+	string firstname;
 	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 };
 
 ////////////////////////////////////////////////////
 //Make an instance of the format class
 FingerprintFormat theFingerprintFormat;
-////////////////////////////////////////////////////////////////
 
+//*******************************************************************
 bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -52,10 +59,59 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	ostream &ofs = *pConv->GetOutStream();
 	OBMol &mol = *pmol;
 
-	fingerprint fpt(mol.GetTitle());
-  fpt.HashMol(mol);
-  fpt.printFingerprint(ofs);
+	bool hexoutput=false;
+	if(pConv->IsOption('h') || (pConv->GetOutputIndex()==1 && pConv->IsLast()))
+		hexoutput=true;
 
+	int type=0, nwords=0;
+	const char* p=pConv->IsOption('f');
+	if(p)
+		type=atoi(p);
+	p=pConv->IsOption('n');
+	if(p)
+		nwords = atoi(p);		
+
+	vector<unsigned int> fptvec;
+	if(!GetFingerprint(mol, fptvec, nwords, type))
+		return false;
+	
+  ofs << ">" << mol.GetTitle();
+	if(hexoutput)
+	{
+		int i, bitsset=0;
+		for (i=0;i<fptvec.size();++i)
+		{
+		int wd = fptvec[i];
+		for(;wd;wd=wd<<1)//count bits set by shifting into sign bit until word==0
+			if(wd<0) ++bitsset;
+		}
+		ofs  << "   " << bitsset << " bits set. "; 
+	}
+
+	if(pConv->GetOutputIndex()==1)
+	{
+		//store the fingerprint and name of first molecule
+		firstfp=fptvec;
+		firstname=mol.GetTitle();
+		if(firstname.empty())
+			firstname = "first mol";
+	}
+	else
+		ofs << "   Tanimoto from " << firstname << " = " << Tanimoto(firstfp, fptvec);
+	ofs << endl;
+	
+	int i;
+
+	if(hexoutput)
+	{
+		for(i=fptvec.size()-1;i>=0;i--)
+		{
+			ofs << hex << setfill('0') << setw(8) << fptvec[i] << " " ;
+			if((fptvec.size()-i)%6==0)
+				ofs <<endl;
+		}
+		ofs << dec << endl;
+	}
 	return true;
 }
 
