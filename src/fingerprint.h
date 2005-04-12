@@ -15,9 +15,13 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#ifndef FINGERPRINT_H
+#define FINGERPRINT_H
 
 #include "mol.h"
 #include <list>
+#include <set>
+#include <vector>
 
 #define MAX_FRAGMENT_SIZE 7
 
@@ -61,7 +65,7 @@ public:
 class fragment
 {
 private:
-    long int         _hash;         //!< hash number
+    unsigned int _hash;         //!< hash number
     std::list<AtomRing> _atoms;     //!< list of the atoms of the fragment
     int _index[MAX_FRAGMENT_SIZE];  //!< indexes of the atoms of the fragment
 public:
@@ -84,14 +88,15 @@ public:
     void sortIndexes(void);
     void printIndexes(void);
     void setHashNumber(void);
-    long int getHash (void)
+    unsigned int getHash (void)
     {
         return _hash;
     }
     void printHash (void)
     {
-        std::cout << _hash;
+        std::cout << (unsigned int)_hash; //This only prints the last 32 bits!!!
     }
+
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -124,7 +129,7 @@ public:
             free(_pf);
             _pf=NULL;
         }
-    }//if (_pf) delete [] _pf;}
+    }//if (_pf) delete [] _pf;
     OBBitVec &GetFpt(void)
     {
         return _fpt;
@@ -146,4 +151,32 @@ public:
 
 int compareInt (const void *a, const void *b);
 int compareFragment (const void *a, const void *b);
+
+//**********************************************************
+class fingerprint2 //: public BaseFingerprint
+{
+public:
+	//Calculates the fingerprint. OBBitVec needs to be 1024 bits 
+	virtual void GetFingerprint(OBMol& mol, OBBitVec& fpt);
+private:
+	typedef std::set<std::vector<int> > Fset;
+
+	void getFragments(Fset& fragset, std::vector<int>& levels, std::vector<int> curfrag, 
+			int level, OBAtom* patom, OBBond* pbond);
+	void RemoveDuplicates(Fset& fragset, std::vector<int>& frag);
+	int CalcHash(std::vector<int>& frag);
+	void PrintFpt(std::vector<int>& f, int hash=0);
+};
+
+
+//*********************************************************
+///Global function for getting a fingerprint of specified type in vecwords.
+///Puts fingerprint of specified type folded down to nwords of 32bits into vecwords 
+bool GetFingerprint(OBMol& mol, std::vector<unsigned int>& vecwords, int nwords=0, int type=0);
+
+/// Calculates Tanimoto coefficient (bits set after AND / bits set after OR) 
+double Tanimoto(const std::vector<unsigned int> vec1, const std::vector<unsigned int> vec2); 
+
 } // end namespace OpenBabel
+
+#endif
