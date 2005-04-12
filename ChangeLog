@@ -1,3 +1,38 @@
+2005-04-12  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/finger2.cpp src/fastsearch.h src/fastsearch.cpp:
+	Added. (Fastsearch format really needs to be separated and put
+	into src/formats.)
+
+	* src/formats/fingerprintformat.cpp: Extensive revision to
+	allow choice of fingerprint type and Tanimoto calculation.
+
+	* src/obconversion.h, src/obconversion.cpp (Convert): 
+	Changed implementation of OneObjectOnly
+	Added capability for the write format to retrieve the seek position
+	of the object in the input file: wInpos, GetInPos().
+	Added READBINARY and WRITEBINARY options in format flags
+	which are implemented when files are opened. Applicable for 
+	binary formats (which there are currently none?) in non-unix systems.
+	(FullConvert), (OpenAndSetFormat)For VC++6 in Windows, 
+	opening all files in binary mode seems to	allow	unix text files 
+	to be read. But in case this messes	up Macs or other Windows 
+	implementations it is dependent on a macro ALL_READS_BINARY 
+	being set in babelconfig.h.
+
+	* src/fingerprint.h, src/fingerprint.cpp (HashFragments):
+	Changed h and mod from long int to unsigned int to avoid
+	memory corruption with molecules with heavy atoms. Added
+	the declarations for fingerprint2 class and global
+	GetFingerprint().  
+
+	* src/bitvec.h: Comments to highlight resizing behaviour. 
+
+	* src/format/smilesformat.cpp (OBSmilesParser::ParseSmiles):
+	Mod to prevent unpaired ) causing program to hang.
+
+	* windows: Updated build files
+
 2005-04-06  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/formats/inchi: added InChI 1.0 files from NIST.
