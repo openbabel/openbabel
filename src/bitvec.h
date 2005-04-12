@@ -65,7 +65,8 @@ public:
         _size=_set.size();
         Clear();
     }
-    OBBitVec(const OBBitVec&);
+    ///Copy constructor (result has same number of bits)
+		OBBitVec(const OBBitVec&);
     void SetBitOn(int);
     void SetBitOff(int);
     void SetRangeOn(int, int);
@@ -81,7 +82,8 @@ public:
     {
         return(-1);
     }
-    int GetSize() const
+    ///Returns number of 32 bit words. NOT number of bits.
+		int GetSize() const
     {
         return(_size);
     }
@@ -92,8 +94,10 @@ public:
         return(IsEmpty());
     }
     bool IsEmpty();
-    bool Resize(int);
-    bool BitIsSet(int bit)
+    ///Number of bits increased if necessary but never decreased
+		bool Resize(int maxbits);
+
+		bool BitIsSet(int bit)
     {
         return((bit/SETWORD >= GetSize()) ?
                false : _set[bit/SETWORD]>>(bit%SETWORD)&1);
@@ -116,7 +120,8 @@ public:
         }
     }
 
-    OBBitVec &operator= (const OBBitVec &);
+		///Assignment operator but number of bits is not reduced 
+		OBBitVec &operator= (const OBBitVec &);
     OBBitVec &operator&= (OBBitVec &);
     OBBitVec &operator|= (OBBitVec &);
     OBBitVec &operator|= (const int i)
@@ -141,9 +146,18 @@ public:
 
     friend std::istream& operator>> ( std::istream&, OBBitVec& );
     friend std::ostream& operator<< ( std::ostream&, const OBBitVec& ) ;
+	
+		///Access to data in word size pieces CM
+		void GetWords(std::vector<unsigned int>& vec)
+		{
+			std::vector<int>::iterator itr;
+			for(itr=_set.begin();itr!=_set.end();itr++)
+				vec.push_back(*itr);
+		}
 };
 
 extern void ThrowError(char *);
+///This function can change the size of second parameter. There is an alternative with different parameters.
 double Tanimoto(OBBitVec&,OBBitVec&);
 
 }
