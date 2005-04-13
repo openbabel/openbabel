@@ -101,10 +101,6 @@ PostBuild_Cmds=copy ..\OBConv\Debug\OBConv.dll  .\debug /Y	copy  ..\OBFormats2\d
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\src\fastsearch.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\main.cpp
 # End Source File
 # End Group
@@ -118,10 +114,6 @@ SOURCE=..\babelconfig.h
 # Begin Source File
 
 SOURCE=..\..\src\dlhandler.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\fastsearch.h
 # End Source File
 # Begin Source File
 

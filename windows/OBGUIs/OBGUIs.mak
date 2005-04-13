@@ -51,10 +51,13 @@ CLEAN :
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
 	-@erase "$(INTDIR)\DynamicOptions.obj"
 	-@erase "$(INTDIR)\fastsearch.obj"
+	-@erase "$(INTDIR)\fastsearchformat.obj"
+	-@erase "$(INTDIR)\finger2.obj"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\generic.obj"
 	-@erase "$(INTDIR)\grid.obj"
+	-@erase "$(INTDIR)\inchiformat.obj"
 	-@erase "$(INTDIR)\kekulize.obj"
 	-@erase "$(INTDIR)\matrix.obj"
 	-@erase "$(INTDIR)\matrix3x3.obj"
@@ -89,7 +92,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "NDEBUG" 
 BSC32=bscmake.exe
@@ -97,7 +100,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUIs.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=nafxcw.lib libcmt.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" 
+LINK32_FLAGS=nafxcw.lib libcmt.lib InChI_DLL.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".." 
 LINK32_OBJS= \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
@@ -112,10 +115,12 @@ LINK32_OBJS= \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\DynamicOptions.obj" \
 	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
+	"$(INTDIR)\inchiformat.obj" \
 	"$(INTDIR)\kekulize.obj" \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
@@ -143,7 +148,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\OBGUI.res"
+	"$(INTDIR)\OBGUI.res" \
+	"$(INTDIR)\fastsearchformat.obj"
 
 ".\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -188,6 +194,10 @@ CLEAN :
 	-@erase "$(INTDIR)\DynamicOptions.sbr"
 	-@erase "$(INTDIR)\fastsearch.obj"
 	-@erase "$(INTDIR)\fastsearch.sbr"
+	-@erase "$(INTDIR)\fastsearchformat.obj"
+	-@erase "$(INTDIR)\fastsearchformat.sbr"
+	-@erase "$(INTDIR)\finger2.obj"
+	-@erase "$(INTDIR)\finger2.sbr"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprint.sbr"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
@@ -196,6 +206,8 @@ CLEAN :
 	-@erase "$(INTDIR)\generic.sbr"
 	-@erase "$(INTDIR)\grid.obj"
 	-@erase "$(INTDIR)\grid.sbr"
+	-@erase "$(INTDIR)\inchiformat.obj"
+	-@erase "$(INTDIR)\inchiformat.sbr"
 	-@erase "$(INTDIR)\kekulize.obj"
 	-@erase "$(INTDIR)\kekulize.sbr"
 	-@erase "$(INTDIR)\matrix.obj"
@@ -255,11 +267,13 @@ CLEAN :
 	-@erase "$(INTDIR)\vector3.sbr"
 	-@erase "$(OUTDIR)\OBGUIs.bsc"
 	-@erase "$(OUTDIR)\OBGUIs.exe"
+	-@erase "$(OUTDIR)\OBGUIs.ilk"
+	-@erase "$(OUTDIR)\OBGUIs.pdb"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "_DEBUG" 
 BSC32=bscmake.exe
@@ -278,10 +292,12 @@ BSC32_SBRS= \
 	"$(INTDIR)\dlhandler_win32.sbr" \
 	"$(INTDIR)\DynamicOptions.sbr" \
 	"$(INTDIR)\fastsearch.sbr" \
+	"$(INTDIR)\finger2.sbr" \
 	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\fingerprintformat.sbr" \
 	"$(INTDIR)\generic.sbr" \
 	"$(INTDIR)\grid.sbr" \
+	"$(INTDIR)\inchiformat.sbr" \
 	"$(INTDIR)\kekulize.sbr" \
 	"$(INTDIR)\matrix.sbr" \
 	"$(INTDIR)\matrix3x3.sbr" \
@@ -308,7 +324,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\tokenst.sbr" \
 	"$(INTDIR)\transform.sbr" \
 	"$(INTDIR)\typer.sbr" \
-	"$(INTDIR)\vector3.sbr"
+	"$(INTDIR)\vector3.sbr" \
+	"$(INTDIR)\fastsearchformat.sbr"
 
 "$(OUTDIR)\OBGUIs.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -316,7 +333,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib InChI_DLL.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" /libpath:".." 
 LINK32_OBJS= \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
@@ -331,10 +348,12 @@ LINK32_OBJS= \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\DynamicOptions.obj" \
 	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
+	"$(INTDIR)\inchiformat.obj" \
 	"$(INTDIR)\kekulize.obj" \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
@@ -362,7 +381,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\OBGUI.res"
+	"$(INTDIR)\OBGUI.res" \
+	"$(INTDIR)\fastsearchformat.obj"
 
 "$(OUTDIR)\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -646,6 +666,42 @@ SOURCE=..\..\src\fastsearch.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\fastsearchformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\fastsearchformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\fastsearchformat.obj"	"$(INTDIR)\fastsearchformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\finger2.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\finger2.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\finger2.obj"	"$(INTDIR)\finger2.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\fingerprint.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -719,6 +775,23 @@ SOURCE=..\..\src\grid.cpp
 !ENDIF 
 
 SOURCE=..\..\src\formats\inchiformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\inchiformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\inchiformat.obj"	"$(INTDIR)\inchiformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\kekulize.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"

@@ -46,6 +46,8 @@ CLEAN :
 	-@erase "$(INTDIR)\chains.obj"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\data.obj"
+	-@erase "$(INTDIR)\fastsearch.obj"
+	-@erase "$(INTDIR)\finger2.obj"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\generic.obj"
 	-@erase "$(INTDIR)\grid.obj"
@@ -76,7 +78,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MD /W3 /GR /GX /I "..\math ..\src" /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBDLL.bsc" 
@@ -91,6 +93,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bitvec.obj" \
 	"$(INTDIR)\bond.obj" \
+	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\data.obj" \
@@ -116,7 +119,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\bondtyper.obj"
+	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\fastsearch.obj"
 
 ".\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -151,6 +155,10 @@ CLEAN :
 	-@erase "$(INTDIR)\chiral.sbr"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\data.sbr"
+	-@erase "$(INTDIR)\fastsearch.obj"
+	-@erase "$(INTDIR)\fastsearch.sbr"
+	-@erase "$(INTDIR)\finger2.obj"
+	-@erase "$(INTDIR)\finger2.sbr"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprint.sbr"
 	-@erase "$(INTDIR)\generic.obj"
@@ -217,6 +225,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\base.sbr" \
 	"$(INTDIR)\bitvec.sbr" \
 	"$(INTDIR)\bond.sbr" \
+	"$(INTDIR)\bondtyper.sbr" \
 	"$(INTDIR)\chains.sbr" \
 	"$(INTDIR)\chiral.sbr" \
 	"$(INTDIR)\data.sbr" \
@@ -242,7 +251,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\transform.sbr" \
 	"$(INTDIR)\typer.sbr" \
 	"$(INTDIR)\vector3.sbr" \
-	"$(INTDIR)\bondtyper.sbr"
+	"$(INTDIR)\finger2.sbr" \
+	"$(INTDIR)\fastsearch.sbr"
 
 "$(OUTDIR)\OBDLL.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -250,7 +260,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBDLL.pdb" /map:"OBDLL.map" /debug /machine:I386 /def:".\obdll.def" /out:"$(OUTDIR)\OBDLL.dll" /implib:"$(OUTDIR)\OBDLL.lib" /pdbtype:sept 
+LINK32_FLAGS=kernel32.lib user32.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBDLL.pdb" /map:"OBDLL.map" /debug /machine:I386 /def:".\obdll.def" /out:"$(OUTDIR)\OBDLL.dll" /implib:"$(OUTDIR)\OBDLL.lib" /pdbtype:sept 
 DEF_FILE= \
 	".\obdll.def"
 LINK32_OBJS= \
@@ -258,6 +268,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bitvec.obj" \
 	"$(INTDIR)\bond.obj" \
+	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\data.obj" \
@@ -283,7 +294,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\bondtyper.obj"
+	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\fastsearch.obj"
 
 "$(OUTDIR)\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -437,7 +449,6 @@ SOURCE=..\..\src\bondtyper.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\cache.cpp
 SOURCE=..\..\src\chains.cpp
 
 !IF  "$(CFG)" == "OBDLL - Win32 Release"
@@ -487,6 +498,42 @@ SOURCE=..\..\src\data.cpp
 
 
 "$(INTDIR)\data.obj"	"$(INTDIR)\data.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fastsearch.cpp
+
+!IF  "$(CFG)" == "OBDLL - Win32 Release"
+
+
+"$(INTDIR)\fastsearch.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
+
+
+"$(INTDIR)\fastsearch.obj"	"$(INTDIR)\fastsearch.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\finger2.cpp
+
+!IF  "$(CFG)" == "OBDLL - Win32 Release"
+
+
+"$(INTDIR)\finger2.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
+
+
+"$(INTDIR)\finger2.obj"	"$(INTDIR)\finger2.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

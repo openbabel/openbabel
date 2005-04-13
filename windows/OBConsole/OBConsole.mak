@@ -48,7 +48,6 @@ CLEAN :"OBConv - Win32 ReleaseCLEAN"
 !ELSE 
 CLEAN :
 !ENDIF 
-	-@erase "$(INTDIR)\fastsearch.obj"
 	-@erase "$(INTDIR)\main.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase ".\obabel.exe"
@@ -65,7 +64,6 @@ LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obconv.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\obabel.pdb" /machine:I386 /out:"obabel.exe" /libpath:"..\OBConv\Release" 
 LINK32_OBJS= \
 	"$(INTDIR)\main.obj" \
-	"$(INTDIR)\fastsearch.obj" \
 	"..\OBConv\Release\OBConv.lib"
 
 ".\obabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -108,8 +106,6 @@ CLEAN :"OBConv - Win32 DebugCLEAN"
 !ELSE 
 CLEAN :
 !ENDIF 
-	-@erase "$(INTDIR)\fastsearch.obj"
-	-@erase "$(INTDIR)\fastsearch.sbr"
 	-@erase "$(INTDIR)\main.obj"
 	-@erase "$(INTDIR)\main.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
@@ -126,8 +122,7 @@ CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\OBConversion" /I ".." /D "_
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBConsole.bsc" 
 BSC32_SBRS= \
-	"$(INTDIR)\main.sbr" \
-	"$(INTDIR)\fastsearch.sbr"
+	"$(INTDIR)\main.sbr"
 
 "$(OUTDIR)\OBConsole.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -138,7 +133,6 @@ LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obconv.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\obabel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\obabel.exe" /pdbtype:sept /libpath:"..\OBConv\debug\\" 
 LINK32_OBJS= \
 	"$(INTDIR)\main.obj" \
-	"$(INTDIR)\fastsearch.obj" \
 	"..\OBConv\Debug\OBConv.lib"
 
 "$(OUTDIR)\obabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -205,24 +199,6 @@ $(DS_POSTBUILD_DEP) : "OBConv - Win32 Debug" "$(OUTDIR)\obabel.exe" "$(OUTDIR)\O
 
 
 !IF "$(CFG)" == "OBConsole - Win32 Release" || "$(CFG)" == "OBConsole - Win32 Debug"
-SOURCE=..\..\src\fastsearch.cpp
-
-!IF  "$(CFG)" == "OBConsole - Win32 Release"
-
-
-"$(INTDIR)\fastsearch.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBConsole - Win32 Debug"
-
-
-"$(INTDIR)\fastsearch.obj"	"$(INTDIR)\fastsearch.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\main.cpp
 
 !IF  "$(CFG)" == "OBConsole - Win32 Release"
