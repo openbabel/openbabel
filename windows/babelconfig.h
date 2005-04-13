@@ -20,6 +20,9 @@
 #define __FUNCTION__ __FILE__
 #endif
 
+//Makes unix input files compatible with VC++6
+#define ALL_READS_BINARY
+
 /* Export of functions and global variables from DLLs
 In the header files for the OB core, mol.h etc, exported classes and variables 
 have an OBAPI declaration specifiers.

@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "Gencs"=".\Gencs\Gencs.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "OBConsole"=".\OBConsole\OBConsole.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -31,6 +43,18 @@ Package=<4>
 ###############################################################################
 
 Project: "OBDLL"=".\OBDLL\OBDLL.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OBExtraFormats"=".\OBExtraFormats\OBExtraFormats.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
