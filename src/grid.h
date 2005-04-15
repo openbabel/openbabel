@@ -43,7 +43,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-class OBProxGrid
+class OBAPI OBProxGrid
 {
     int _gridtype;
     int _nxinc,_nyinc,_nzinc,_maxinc;
@@ -83,7 +83,7 @@ public:
     }
 };
 
-class OBFloatGrid
+class OBAPI OBFloatGrid
 {
     double *_val;             //!< doubleing point values
     int   *_ival;            //!< for integer values
@@ -243,7 +243,7 @@ public:
 
 typedef enum { Undefined = -1, PLP, ChemScore } score_t;
 
-class OBScoreGrid
+class OBAPI OBScoreGrid
 {
 protected:
 

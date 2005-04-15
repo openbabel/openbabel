@@ -167,7 +167,7 @@ Pattern;
 
 // class introduction in parsmart.cpp
 //! \brief SMARTS (SMiles ARbitrary Target Specification) substructure searching
-class OBSmartsPattern
+class OBAPI OBSmartsPattern
 {
 protected:
     std::vector<bool>          		_growbond;
@@ -257,7 +257,7 @@ public:
 };
 
 
-class OBSSMatch //used for fast exhaustive matching
+class OBAPI OBSSMatch //used for fast exhaustive matching
 {
 protected:
     bool        *_uatoms;

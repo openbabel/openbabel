@@ -45,7 +45,7 @@ enum obDataType {obUndefinedData, obPairData, obEnergyData,
 
 //! Base class for generic data - use obData# slots for custom data types
 //! or store your data as a string and use obPairData or obCommentData
-class OBGenericData
+class OBAPI OBGenericData
 {
 protected:
     std::string     _attr; //!< attribute tag
@@ -72,7 +72,7 @@ public:
 };
 
 //! Used to store a comment string (can be multiple lines long)
-class OBCommentData : public OBGenericData
+class OBAPI OBCommentData : public OBGenericData
 {
 protected:
     std::string _data;
@@ -97,7 +97,7 @@ public:
 
 //! \brief Used to store information on an external bond 
 //! (e.g., SMILES fragments)
-class OBExternalBond
+class OBAPI OBExternalBond
 {
     int     _idx;
     OBAtom *_atom;
@@ -117,7 +117,7 @@ public:
 };
 
 //! \brief Used to store information on external bonds (e.g., in SMILES fragments)
-class OBExternalBondData : public OBGenericData
+class OBAPI OBExternalBondData : public OBGenericData
 {
 protected:
     std::vector<OBExternalBond> _vexbnd;
@@ -131,7 +131,7 @@ public:
 };
 
 //! Used to store arbitrary attribute/value relationships
-class OBPairData : public OBGenericData
+class OBAPI OBPairData : public OBGenericData
 {
 protected:
     std::string _value;
@@ -153,7 +153,7 @@ public:
 
 //! \brief Used to temporarily store bonds that reference
 //! an atom that has not yet been added to a molecule
-class OBVirtualBond : public OBGenericData
+class OBAPI OBVirtualBond : public OBGenericData
 {
 protected:
     int _bgn;
@@ -182,7 +182,7 @@ public:
 };
 
 //! Used to store the SSSR set (filled in by OBMol::GetSSSR())
-class OBRingData : public OBGenericData
+class OBAPI OBRingData : public OBGenericData
 {
 protected:
     std::vector<OBRing*> _vr;
@@ -210,7 +210,7 @@ public:
 //! \brief Used for storing information about periodic boundary conditions
 //!   with conversion to/from 3 translation vectors and
 //!  (a, b, c, alpha, beta, gamma)
-class OBUnitCell: public OBGenericData
+class OBAPI OBUnitCell: public OBGenericData
 {
 protected:
     double _a, _b, _c, _alpha, _beta, _gamma;
@@ -277,7 +277,7 @@ public:
 
 //! \brief Used to hold the torsion data for a single rotatable bond
 //! and all four atoms around it
-class OBTorsion
+class OBAPI OBTorsion
 {
     friend class OBMol;
     friend class OBTorsionData;
@@ -337,7 +337,7 @@ public:
 
 //! \brief Used to hold torsions as generic data for OBMol.
 //! Filled by OBMol::FindTorsions()
-class OBTorsionData : public OBGenericData
+class OBAPI OBTorsionData : public OBGenericData
 {
     friend class OBMol;
 
@@ -367,7 +367,7 @@ public:
 };
 
 //! Used to hold the 3 atoms in an angle and the angle itself
-class OBAngle
+class OBAPI OBAngle
 {
     friend class OBMol;
     friend class OBAngleData;
@@ -417,7 +417,7 @@ public:
 
 
 //! \brief Used to hold all angles in a molecule as generic data for OBMol
-class OBAngleData : public OBGenericData
+class OBAPI OBAngleData : public OBGenericData
 {
     friend class OBMol;
 

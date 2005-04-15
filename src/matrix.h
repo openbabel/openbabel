@@ -20,13 +20,14 @@ GNU General Public License for more details.
 #ifndef OB_MATRIX_H
 #define OB_MATRIX_H
 
+#include "babelconfig.h"
 #include <vector>
 #include <math.h>
 
 namespace OpenBabel
 {
 
-class Vector;
+class OBAPI Vector;
 
 /*
  * vector<vector<double> > m : m[row][col] gives appropriate row/col entry

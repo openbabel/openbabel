@@ -38,7 +38,7 @@ typedef struct
 Template;
 
 //! \brief Perceives peptide or nucleotide chains and residues in an OBMol
-class OBChainsParser
+class OBAPI OBChainsParser
 {
 public:
 

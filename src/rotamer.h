@@ -42,7 +42,7 @@ bool WriteBinary(std::ostream&,OBMol&);
 bool WriteBinary(std::string&,int&,OBMol&);
 
 
-class OBRotamerList : public OBGenericData
+class OBAPI OBRotamerList : public OBGenericData
 {
     unsigned int                         _NBaseCoords;
     std::vector<double*>                       _c;
@@ -124,7 +124,7 @@ public:
 };
 
 //! \brief Store a compressed binary database of OBMol as OEBinary files
-class OBBinaryDBase
+class OBAPI OBBinaryDBase
 {
     std::ifstream		 _ifs;
     std::vector<std::streampos>  _vpos;

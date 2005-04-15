@@ -31,7 +31,7 @@ namespace OpenBabel
 
 ///////////////////////////////////////////////////////////////////////////////
 //! \brief Atom + Ring closure in the atom list
-class AtomRing
+class OBAPI AtomRing
 {
 private:
     OBAtom *_atom;                 //!< atom
@@ -62,7 +62,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////
 //! \brief Linear or cyclic fragment
-class fragment
+class OBAPI fragment
 {
 private:
     unsigned int _hash;         //!< hash number
@@ -101,7 +101,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////
 //! \brief Set of linear or cyclic fragment hashed into a bitstring
-class fingerprint
+class OBAPI fingerprint
 {
 private:
     std::string _name;            //!< name of the fingerprint
@@ -153,7 +153,7 @@ int compareInt (const void *a, const void *b);
 int compareFragment (const void *a, const void *b);
 
 //**********************************************************
-class fingerprint2 //: public BaseFingerprint
+class OBAPI fingerprint2 //: public BaseFingerprint
 {
 public:
 	//Calculates the fingerprint. OBBitVec needs to be 1024 bits 
@@ -172,10 +172,10 @@ private:
 //*********************************************************
 ///Global function for getting a fingerprint of specified type in vecwords.
 ///Puts fingerprint of specified type folded down to nwords of 32bits into vecwords 
-bool GetFingerprint(OBMol& mol, std::vector<unsigned int>& vecwords, int nwords=0, int type=0);
+bool OBAPI GetFingerprint(OBMol& mol, std::vector<unsigned int>& vecwords, int nwords=0, int type=0);
 
 /// Calculates Tanimoto coefficient (bits set after AND / bits set after OR) 
-double Tanimoto(const std::vector<unsigned int> vec1, const std::vector<unsigned int> vec2); 
+double OBAPI Tanimoto(const std::vector<unsigned int> vec1, const std::vector<unsigned int> vec2); 
 
 } // end namespace OpenBabel
 

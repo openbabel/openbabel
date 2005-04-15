@@ -21,23 +21,24 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 
+#include "babelconfig.h"
 #include <algorithm>
 #include <vector>
 #include <string>
 
 using namespace std;
-
-bool tokenize(vector<string> &, const char *, const char *);
-char *trim_spaces(char *string);
-bool tokenize(vector<string> &vcr, string &s, const char *delimstr,int limit=-1);
-
+/*
+OBAPI bool tokenize(vector<string> &, const char *, const char *);
+OBAPI char *trim_spaces(char *string);
+OBAPI bool tokenize(vector<string> &vcr, string &s, const char *delimstr,int limit=-1);
+*/
 namespace OpenBabel
 {
 
   //! Break a string (supplied as the second argument) into tokens, returned 
   //! in the first argument. Tokens are determined by the delimiters supplied
   //! (defaults to whitespace (i.e., spaces, tabs, newlines)
-bool tokenize(vector<string> &vcr, const char *buf, const char *delimstr)
+OBAPI bool tokenize(vector<string> &vcr, const char *buf, const char *delimstr)
 {
     vcr.clear();
     string s = buf;
@@ -61,7 +62,7 @@ bool tokenize(vector<string> &vcr, const char *buf, const char *delimstr)
 }
 
   //! Trim any trailing spaces at the end of the supplied string.
-char *trim_spaces(char *string)
+OBAPI char *trim_spaces(char *string)
 {
     int length;
 
@@ -92,7 +93,7 @@ char *trim_spaces(char *string)
 //! (defaults to whitespace (i.e., spaces, tabs, newlines)
 //! Only breaks at most 'limit' tokens and the last item in the vector may
 //! include un-parsed tokens.
-bool tokenize(vector<string> &vcr, string &s, const char *delimstr, int limit)
+OBAPI bool tokenize(vector<string> &vcr, string &s, const char *delimstr, int limit)
 {
     vcr.clear();
     size_t startpos=0,endpos=0;

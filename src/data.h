@@ -54,7 +54,7 @@ class OBElementTable;
 //! -# Checks for the directory _dir (def. determined by the build environment)
 //!     - Tries the subdirectory corresponding to this version, then the main directory
 //! -# Reverts to the compiled-in default data
-class OBGlobalDataBase
+class OBAPI OBGlobalDataBase
 {
 protected:
     bool         _init;		//!< has the data been read already
@@ -94,7 +94,7 @@ public:
 //! \brief Individual element data type
 //!
 //! Stores a variety of data about an individual element
-class OBElement
+class OBAPI OBElement
 {
     int _num;
     char _symbol[3];
@@ -122,7 +122,7 @@ public:
 };
 
 // class introduction in data.cpp
-class OBElementTable : public OBGlobalDataBase
+class OBAPI OBElementTable : public OBGlobalDataBase
 {
     std::vector<OBElement*> _element;
 
@@ -163,7 +163,7 @@ public:
 };
 
 // class introduction in data.cpp
-class OBIsotopeTable : public OBGlobalDataBase
+class OBAPI OBIsotopeTable : public OBGlobalDataBase
 {
     std::vector<std::vector<std::pair <unsigned int, double> > > _isotopes;
 
@@ -181,7 +181,7 @@ public:
 };
 
 // class introduction in data.cpp
-class OBTypeTable : public OBGlobalDataBase
+class OBAPI OBTypeTable : public OBGlobalDataBase
 {
     int    _linecount;
     int    _ncols,_nrows,_from,_to;

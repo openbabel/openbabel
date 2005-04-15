@@ -49,43 +49,43 @@ cout << "Elapsed time = " << sw.Elapsed() << endl;
 */
 
 //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
-void ThrowError(char *str)
+OBAPI void ThrowError(char *str)
 {
   obErrorLog.ThrowError("", str, obInfo);
 }
 
 //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
-void ThrowError(std::string &str)
+OBAPI void ThrowError(std::string &str)
 {
   obErrorLog.ThrowError("", str, obInfo);
 }
 
 //! Comparison function (for sorting ints) returns a < b
-bool OBCompareInt(const int &a,const int &b)
+OBAPI bool OBCompareInt(const int &a,const int &b)
 {
     return(a<b);
 }
 
 //! Comparison function (for sorting unsigned ints) returns a < b
-bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
+OBAPI bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
 {
     return(a<b);
 }
 
 //! Comparison for doubles: returns a < (b + epsilon)
-bool IsNear(const double &a, const double &b, const double epsilon)
+OBAPI bool IsNear(const double &a, const double &b, const double epsilon)
 {
     return (fabs(a - b) < epsilon);
 }
 
 //! Comparison for doubles: returns a < (0.0 + epsilon)
-bool IsNearZero(const double &a, const double epsilon)
+OBAPI bool IsNearZero(const double &a, const double epsilon)
 {
     return (fabs(a) < epsilon);
 }
 
 //! Utility function: replace the last extension in string &src with new extension char *ext.
-string NewExtension(string &src,char *ext)
+OBAPI string NewExtension(string &src,char *ext)
 {
     unsigned int pos = (unsigned int)src.find_last_of(".");
     string dst;
@@ -105,7 +105,7 @@ string NewExtension(string &src,char *ext)
 //! Return the geometric centroid to an array of coordinates in double* format
 //!  and center the coordinates to the origin. Operates on the first "size" 
 //!  coordinates in the array.
-vector3 center_coords(double *c, unsigned int size)
+OBAPI vector3 center_coords(double *c, unsigned int size)
 {
   if (size == 0)
     {
@@ -136,7 +136,7 @@ vector3 center_coords(double *c, unsigned int size)
 
 //! Rotates the coordinate set *c by the transformation matrix m[3][3]
 //!  Operates on the first "size" coordinates in the array.
-void rotate_coords(double *c,double m[3][3],unsigned int size)
+OBAPI void rotate_coords(double *c,double m[3][3],unsigned int size)
 {
     int i;
     double x,y,z;
@@ -152,7 +152,7 @@ void rotate_coords(double *c,double m[3][3],unsigned int size)
 }
 
 //! Calculate the RMS deviation between the first N coordinates of *r and *f
-double calc_rms(double *r,double *f, unsigned int N)
+OBAPI double calc_rms(double *r,double *f, unsigned int N)
 {
   if (N == 0)
     return 0.0f; // no RMS deviation between two empty sets
@@ -173,7 +173,7 @@ double calc_rms(double *r,double *f, unsigned int N)
 //! Rotate the coordinates of 'atoms'
 //! such that tor == ang - atoms in 'tor' should be ordered such
 //! that the 3rd atom is the pivot around which atoms rotate
-void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
+OBAPI void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
 {
     double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
     double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
@@ -275,7 +275,7 @@ void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
 
 //! Safely open the supplied filename and return an ifstream, throwing an error
 //! to the default OBMessageHandler error log if it fails.
-bool SafeOpen(ifstream &fs,char *filename)
+OBAPI bool SafeOpen(ifstream &fs,char *filename)
 {
 #ifdef WIN32
     string s = filename;
@@ -300,7 +300,7 @@ bool SafeOpen(ifstream &fs,char *filename)
 
 //! Safely open the supplied filename and return an obifstream, throwing an error
 //! to the default OBMessageHandler error log if it fails.
-bool SafeOpen(obifstream &fs,char *filename)
+OBAPI bool SafeOpen(obifstream &fs,char *filename)
 {
 #ifdef WIN32
     string s = filename;
@@ -325,7 +325,7 @@ bool SafeOpen(obifstream &fs,char *filename)
 
 //! Safely open the supplied filename and return an ofstream, throwing an error
 //! to the default OBMessageHandler error log if it fails.
-bool SafeOpen(ofstream &fs,char *filename)
+OBAPI bool SafeOpen(ofstream &fs,char *filename)
 {
 #ifdef WIN32
     string s = filename;
@@ -350,27 +350,27 @@ bool SafeOpen(ofstream &fs,char *filename)
 
 //! Safely open the supplied filename and return an ifstream, throwing an error
 //! to the default OBMessageHandler error log if it fails.
-bool SafeOpen(ifstream &fs,string &filename)
+OBAPI bool SafeOpen(ifstream &fs,string &filename)
 {
     return(SafeOpen(fs,(char*)filename.c_str()));
 }
 
 //! Safely open the supplied filename and return an obifstream, throwing an error
 //! to the default OBMessageHandler error log if it fails.
-bool SafeOpen(obifstream &fs,string &filename)
+OBAPI bool SafeOpen(obifstream &fs,string &filename)
 {
     return(SafeOpen(fs,(char*)filename.c_str()));
 }
 
 //! Safely open the supplied filename and return an ofstream, throwing an error
 //! to the default OBMessageHandler error log if it fails.
-bool SafeOpen(ofstream &fs,string &filename)
+OBAPI bool SafeOpen(ofstream &fs,string &filename)
 {
     return(SafeOpen(fs,(char*)filename.c_str()));
 }
 
 //! Shift the supplied string to uppercase
-void ToUpper(std::string &s)
+OBAPI void ToUpper(std::string &s)
 {
     if (s.empty())
         return;
@@ -381,7 +381,7 @@ void ToUpper(std::string &s)
 }
 
 //! Shift the supplied char* to uppercase
-void ToUpper(char *cptr)
+OBAPI void ToUpper(char *cptr)
 {
     char *c;
     for (c = cptr;*c != '\0';c++)
@@ -390,7 +390,7 @@ void ToUpper(char *cptr)
 }
 
 //! Shift the supplied string to lowercase
-void ToLower(std::string &s)
+OBAPI void ToLower(std::string &s)
 {
     if (s.empty())
         return;
@@ -401,7 +401,7 @@ void ToLower(std::string &s)
 }
 
 //! Shift the supplied char* to lowercase
-void ToLower(char *cptr)
+OBAPI void ToLower(char *cptr)
 {
     char *c;
     for (c = cptr;*c != '\0';c++)
@@ -412,7 +412,7 @@ void ToLower(char *cptr)
 //! "Clean" the supplied atom type, shifting the first character to uppercase,
 //! the second character (if it's a letter) to lowercase, and terminating with a NULL
 //! to strip off any trailing characters
-void CleanAtomType(char *id)
+OBAPI void CleanAtomType(char *id)
 {
     id[0] = toupper(id[0]);
     if (isalpha(id[1]) == 0)
@@ -426,7 +426,7 @@ void CleanAtomType(char *id)
 
 //! Transform the supplied vector<OBInternalCoord*> into cartesian and update
 //! the OBMol accordingly
-void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
+OBAPI void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
     vector3 n,nn,v1,v2,v3,avec,bvec,cvec;
     double dst = 0.0, ang = 0.0, tor = 0.0;
@@ -503,7 +503,7 @@ void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 //! Use the supplied OBMol and its Cartesian coordinates to generate
 //! a set of internal (z-matrix) coordinates as supplied in the
 //! vector<OBInternalCoord*> argument.
-void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
+OBAPI void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
 {
     double r,sum;
     OBAtom *atom,*nbr,*ref;
@@ -636,7 +636,7 @@ void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
     }
 }
 
-void qtrfit (double *r,double *f,int size, double u[3][3])
+OBAPI void qtrfit (double *r,double *f,int size, double u[3][3])
 {
     register int i;
     double xxyx, xxyy, xxyz;
@@ -738,7 +738,7 @@ static double Roots[4];
  *           equation of degree one.
  *           Ax + B = 0 !!
  */
-static int SolveLinear(double A,double B)
+OBAPI static int SolveLinear(double A,double B)
 {
     if( IsZero(A) )
         return( 0 );
@@ -751,7 +751,7 @@ static int SolveLinear(double A,double B)
  *           linear equation of degree two.
  *           Ax^2 + Bx + C = 0 !!
  */
-static int SolveQuadratic(double A,double B,double C)
+OBAPI static int SolveQuadratic(double A,double B,double C)
 {
     register double Descr, Temp, TwoA;
 
@@ -792,7 +792,7 @@ static int SolveQuadratic(double A,double B,double C)
  *       given value taking into account
  *       that it may be negative.
  */
-static double CubeRoot(double X)
+OBAPI static double CubeRoot(double X)
 {
     if( X>=0.0 )
     {
@@ -802,7 +802,7 @@ static double CubeRoot(double X)
         return -pow( -X, OneThird );
 }
 
-static int SolveCubic(double A,double B,double C,double D)
+OBAPI static int SolveCubic(double A,double B,double C,double D)
 {
     register double TwoA, ThreeA, BOver3A;
     register double Temp, POver3, QOver2;
@@ -855,7 +855,7 @@ static int SolveCubic(double A,double B,double C,double D)
 
 #define MAX_SWEEPS 50
 
-void ob_make_rmat(double a[3][3],double rmat[9])
+OBAPI void ob_make_rmat(double a[3][3],double rmat[9])
 {
     double onorm, dnorm;
     double b, dma, q, t, c, s,d[3];
@@ -1034,7 +1034,7 @@ static int get_roots_3_3(double mat[3][3], double roots[3])
     return 1;
 }
 
-double superimpose(double *r,double *f,int size)
+OBAPI double superimpose(double *r,double *f,int size)
 {
     int i,j;
     double x,y,z,d2;
@@ -1128,7 +1128,7 @@ double superimpose(double *r,double *f,int size)
     return((double)sqrt(d2));
 }
 
-void get_rmat(double *rvec,double *r,double *f,int size)
+OBAPI void get_rmat(double *rvec,double *r,double *f,int size)
 {
     int i,j;
     double x,d2;

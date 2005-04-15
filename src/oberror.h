@@ -38,7 +38,7 @@ namespace OpenBabel
 {
 
 //! \brief Customizable error handling and logging -- store a message, including the method yielding the error.
-class OBError
+class OBAPI OBError
 {
 public:
 
@@ -76,7 +76,7 @@ public:
  };
 
  //! \brief Handle error messages, warnings, debugging information and the like
-class OBMessageHandler
+class OBAPI OBMessageHandler
   {
   public:
     OBMessageHandler();

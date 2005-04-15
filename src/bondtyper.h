@@ -27,7 +27,7 @@ namespace OpenBabel
 
 // class introduction in bondtyper.cpp
 // Used for "perceiving" bonds, e.g. in XYZ or QM files with no bond info.
-class OBBondTyper : public OBGlobalDataBase
+class OBAPI OBBondTyper : public OBGlobalDataBase
 {
     //! SMARTS patterns for functional group typing
     std::vector<std::pair<OBSmartsPattern*, std::vector<int> > >	_fgbonds;

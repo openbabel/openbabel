@@ -27,7 +27,7 @@ namespace OpenBabel
 {
 
 // class introduction in typer.cpp
-class OBAtomTyper : public OBGlobalDataBase
+class OBAPI OBAtomTyper : public OBGlobalDataBase
 {
   //    int                                                      _rc;
   std::vector<std::vector<int> >                           _mlist; //!< match list for atom typing
@@ -52,7 +52,7 @@ public:
 };
 
 // class introduction in typer.cpp
-class OBAromaticTyper : public OBGlobalDataBase
+class OBAPI OBAromaticTyper : public OBGlobalDataBase
 {
     std::vector<bool>             _vpa;   //!< potentially aromatic atoms
     std::vector<bool>             _visit;

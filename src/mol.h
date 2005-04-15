@@ -64,7 +64,7 @@ class OBInternalCoord;
 
 // Class OBResidue
 // class introduction in residue.cpp
-class OBResidue
+class OBAPI OBResidue
 {
 public:
 
@@ -184,7 +184,7 @@ protected: // members
 
 // Class OBAtom
 // class introduction in atom.cpp
-class OBAtom : public OBNodeBase
+class OBAPI OBAtom : public OBNodeBase
 {
 protected:
     char                          _ele;		//!< atomic number (type char to minimize space -- allows for 0..255 elements)
@@ -577,7 +577,7 @@ public:
 // 11-16 currently unused
 
 // class introduction in bond.cpp
-class OBBond : public OBEdgeBase
+class OBAPI OBBond : public OBEdgeBase
 {
 protected:
     char                          _order; //!< Bond order (1, 2, 3, 5=aromatic)
@@ -744,7 +744,7 @@ public:
 #define OB_CURRENT_CONFORMER	 -1
 
 // class introduction in mol.cpp
-class OBMol : public OBGraphBase
+class OBAPI OBMol : public OBGraphBase
 {
 protected:
     int                           _flags;	//!< bitfield of flags
@@ -1240,7 +1240,7 @@ public:
 };
 
 //! \brief Used to transform from z-matrix to cartesian coordinates.
-class OBInternalCoord
+class OBAPI OBInternalCoord
 {
 public:
     //class members
@@ -1259,17 +1259,16 @@ public:
 };
 
 //function prototypes
-// (prototypes for Read/Write are in fileformat.h
 
-bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n");
-bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
-void ThrowError(char *str);
-void ThrowError(std::string &str);
-void CartesianToInternal(std::vector<OBInternalCoord*>&,OBMol&);
-void InternalToCartesian(std::vector<OBInternalCoord*>&,OBMol&);
-std::string NewExtension(std::string&,char*);
-bool SetInputType(OBMol&,std::string&);
-bool SetOutputType(OBMol&,std::string&);
+OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n");
+OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
+OBAPI void ThrowError(char *str);
+OBAPI void ThrowError(std::string &str);
+OBAPI void CartesianToInternal(std::vector<OBInternalCoord*>&,OBMol&);
+OBAPI void InternalToCartesian(std::vector<OBInternalCoord*>&,OBMol&);
+OBAPI std::string NewExtension(std::string&,char*);
+OBAPI bool SetInputType(OBMol&,std::string&);
+OBAPI bool SetOutputType(OBMol&,std::string&);
 
 //global definitions
 EXTERN  OBElementTable   etab;
@@ -1319,16 +1318,16 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #ifndef __KCC
 extern "C"
 {
-    void  get_rmat(double*,double*,double*,int);
-    void  ob_make_rmat(double mat[3][3],double rmat[9]);
-    void  qtrfit (double *r,double *f,int size,double u[3][3]);
-    double superimpose(double*,double*,int);
+    OBAPI void  get_rmat(double*,double*,double*,int);
+    OBAPI void  ob_make_rmat(double mat[3][3],double rmat[9]);
+    OBAPI void  qtrfit (double *r,double *f,int size,double u[3][3]);
+    OBAPI double superimpose(double*,double*,int);
 }
 #else
-void get_rmat(double*,double*,double*,int);
-void ob_make_rmat(double mat[3][3],double rmat[9]);
-void qtrfit (double *r,double *f,int size,double u[3][3]);
-double superimpose(double*,double*,int);
+OBAPI void get_rmat(double*,double*,double*,int);
+OBAPI void ob_make_rmat(double mat[3][3],double rmat[9]);
+OBAPI void qtrfit (double *r,double *f,int size,double u[3][3]);
+OBAPI double superimpose(double*,double*,int);
 #endif // __KCC
 
 

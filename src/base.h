@@ -43,7 +43,7 @@ class OBGraphBase;
  The various classes (Atom, Bond, Molecule) inherit from base classes--
  OBBase is just a placeholder class
 */
-class OBBase
+class OBAPI OBBase
 {
 public:
     virtual ~OBBase()
@@ -64,7 +64,7 @@ public:
  
 The base class for nodes (e.g. atoms) in a graph-theoretical representation.
  */
-class OBNodeBase : public OBBase
+class OBAPI OBNodeBase : public OBBase
 {
 protected:
     //! What is my unique node index? 	GetIdx(), SetIdx(int idx).
@@ -213,7 +213,7 @@ public:
  
 The base class for edges (e.g. bonds) in a graph-theoretical representation.
  */
-class OBEdgeBase : public OBBase
+class OBAPI OBEdgeBase : public OBBase
 {
 protected:
     /// What is my unique edge index? GetIdx(), SetIdx(int idx)
@@ -316,7 +316,7 @@ public:
 The base class for graphs (e.g. rings, molecules, etc.) in a 
 graph-theoretical representation.
  */
-class OBGraphBase : public OBBase
+class OBAPI OBGraphBase : public OBBase
 {
 protected:
     bool                 _vlock;

@@ -48,7 +48,7 @@ namespace OpenBabel
 {
 
 // class introduction in bitvec.cpp
-class OBBitVec
+class OBAPI OBBitVec
 {
     int _size;
     std::vector<int> _set;
@@ -156,9 +156,9 @@ public:
 		}
 };
 
-extern void ThrowError(char *);
+EXTERN void ThrowError(char *);
 ///This function can change the size of second parameter. There is an alternative with different parameters.
-double Tanimoto(OBBitVec&,OBBitVec&);
+OBAPI double Tanimoto(OBBitVec&,OBBitVec&);
 
 }
 

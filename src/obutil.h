@@ -45,7 +45,7 @@ namespace OpenBabel
 {
 
 // class introduction in obutil.cpp
-class OBStopwatch
+class OBAPI OBStopwatch
 {
 #if HAVE_CLOCK_T
     clock_t start, stop;
@@ -87,7 +87,7 @@ public:
 
 
 //! sqrt lookup table - given a distance squared returns distance
-class OBSqrtTbl
+class OBAPI OBSqrtTbl
 {
     double _max,_incr,*_tbl;
 public:
@@ -143,12 +143,12 @@ typedef struct
 }
 DoubleType;
 
-void DoubleMultiply( unsigned int,unsigned int,DoubleType*);
-void DoubleAdd( DoubleType*,unsigned int);
-unsigned int DoubleModulus( DoubleType*,unsigned int);
+OBAPI void DoubleMultiply( unsigned int,unsigned int,DoubleType*);
+OBAPI void DoubleAdd( DoubleType*,unsigned int);
+OBAPI unsigned int DoubleModulus( DoubleType*,unsigned int);
 
 //! Random number generator
-class OBRandom
+class OBAPI OBRandom
 {
     DoubleType d;
     unsigned int m,a,c;
@@ -169,24 +169,24 @@ public:
 };
 
 //***RMS helper methods***/
-void  rotate_coords(double*,double m[3][3],int);
-double calc_rms(double*,double*,unsigned int);
+OBAPI void  rotate_coords(double*,double m[3][3],int);
+OBAPI double calc_rms(double*,double*,unsigned int);
 
 // String conversion utilities
-void ToUpper(std::string&);
-void ToUpper(char*);
-void ToLower(std::string&);
-void ToLower(char *);
-void CleanAtomType(char*);
+OBAPI void ToUpper(std::string&);
+OBAPI void ToUpper(char*);
+OBAPI void ToLower(std::string&);
+OBAPI void ToLower(char *);
+OBAPI void CleanAtomType(char*);
 
 //! Comparison -- returns true if first parameter less than second
-bool OBCompareInt(const int &,const int &);
+OBAPI bool OBCompareInt(const int &,const int &);
 //! Comparison -- returns true if first parameter less than second
-bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
+OBAPI bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
 //! Safe comparison for floats/doubles: true if a and b are closer than epsilon
-bool IsNear(const double &, const double &, const double epsilon=2e-6);
+OBAPI bool IsNear(const double &, const double &, const double epsilon=2e-6);
 //! Safe comparison for floats/doubles: true if a is less than epsilon
-bool IsNearZero(const double &, const double epsilon=2e-6);
+OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
 
 //******************triple template*************************
 //! \brief A 3-element templated, based on the design of the STL pair<>

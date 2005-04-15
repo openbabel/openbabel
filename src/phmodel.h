@@ -27,7 +27,7 @@ namespace OpenBabel
 {
 
 // class introduction in phmodel.cpp
-class OBChemTsfm
+class OBAPI OBChemTsfm
 {
     std::vector<int>                            _vadel;
     std::vector<std::pair<int,int> >            _vele;

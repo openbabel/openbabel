@@ -25,12 +25,12 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-void GraphPotentials(OBMol &mol, std::vector<double> &pot);
-void construct_g_matrix(OBMol &mol, std::vector<std::vector<double> > &m);
-void construct_c_matrix(OBMol &mol, std::vector<std::vector<double > > &m);
-double CalcSignedVolume(OBMol &mol,OBAtom*);
-double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d);
-void GetChirality(OBMol &mol, std::vector<int> &chirality);
+OBAPI void GraphPotentials(OBMol &mol, std::vector<double> &pot);
+OBAPI void construct_g_matrix(OBMol &mol, std::vector<std::vector<double> > &m);
+OBAPI void construct_c_matrix(OBMol &mol, std::vector<std::vector<double > > &m);
+OBAPI double CalcSignedVolume(OBMol &mol,OBAtom*);
+OBAPI double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d);
+OBAPI void GetChirality(OBMol &mol, std::vector<int> &chirality);
 
 }
 

@@ -30,7 +30,7 @@ class OBMol;
 class OBAtom;
 class OBBond;
 
-class OBRTree
+class OBAPI OBRTree
 {
     OBAtom  *_atom;
     OBRTree *_prv;
@@ -43,7 +43,7 @@ public:
 };
 
 // class introduction in ring.cpp
-class OBRing
+class OBAPI OBRing
 {
     OBMol *_parent;
 public:
@@ -88,7 +88,7 @@ public:
 
 bool CompareRingSize(const OBRing *,const OBRing *);
 
-class OBRingSearch
+class OBAPI OBRingSearch
 {
     std::vector<OBBond*> _bonds;
     std::vector<OBRing*> _rlist;

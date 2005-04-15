@@ -31,7 +31,7 @@ class OBRotorList;
 class OBRotorRule;
 class OBRotorRules;
 
-class OBRotorRule
+class OBAPI OBRotorRule
 {
     int              _ref[4];
     double            _delta;
@@ -87,7 +87,7 @@ public:
     }
 };
 
-class OBRotorRules : public OBGlobalDataBase
+class OBAPI OBRotorRules : public OBGlobalDataBase
 {
     bool                 _quiet;
     std::vector<OBRotorRule*> _vr;
@@ -110,7 +110,7 @@ public:
     };
 };
 
-class OBRotor
+class OBAPI OBRotor
 {
     int _idx,_ref[4];
     int *_rotatoms,_size,_numcoords;
@@ -242,7 +242,7 @@ public:
     }
 };
 
-class OBRotorList
+class OBAPI OBRotorList
 {
     bool _quiet,_removesym;
     OBBitVec _fix;

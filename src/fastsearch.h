@@ -30,7 +30,7 @@ struct FptIndex
 	std::vector<unsigned int> seekdata;
 };
 
-class FastSearch
+class OBAPI FastSearch
 {
 	friend class FastSearchIndexer;
 public:
@@ -42,7 +42,7 @@ public:
 
 //**********************************************
 ///Class to make fingerprint index files
-class FastSearchIndexer
+class OBAPI FastSearchIndexer
 {
 public:
 	FastSearchIndexer(std::string datafilename, std::ostream* os, int FptType,

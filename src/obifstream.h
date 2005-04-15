@@ -35,7 +35,7 @@ GNU General Public License for more details.
 #endif
 
 //! \brief Custom ifstream with safe getline implementation
-class obifstream : public std::ifstream
+class OBAPI obifstream : public std::ifstream
 {
 public:
     bool SafeGetline(char *buffer,int size)

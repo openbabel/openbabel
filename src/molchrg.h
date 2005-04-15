@@ -26,7 +26,7 @@ namespace OpenBabel
 class GasteigerState;
 
 // class introduction in molchrg.cpp
-class OBGastChrg
+class OBAPI OBGastChrg
 {
     std::vector <GasteigerState*> _gsv;
     void InitialPartialCharges(OBMol &);
@@ -39,7 +39,7 @@ public:
     void GSVResize(int);
 };
 
-class GasteigerState
+class OBAPI GasteigerState
 {
     //helper class for OBGastChrg
 public:
