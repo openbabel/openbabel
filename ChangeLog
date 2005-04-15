@@ -1,4 +1,16 @@
-2005-04-13  Chris Morley  <c.morley@gaseq.co.uk>
+2005-04-15  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/*.h, src/vector3.cpp, windows/OBDLL/OBDLL.dsp
+	windows/OBDLL/OBDLL.mak :
+	To assist DLL builds, added OBAPI macro to class declarations, 
+	global functions and variables in API files. OBAPI needs to
+	be set to nothing in babelconfig.h for non-DLL builds. 
+	Had to moved the initiallization global variables VZero etc 
+	from vector3.h to vector3.cpp, where it should have been anyway.
+	OBDLL can now be built in a conventional way. The whole API 
+	should be exported but I may have missed some items.
+
+2005-04-13	Chris Morley  <c.morley@gaseq.co.uk>
 
 	*src/fastsearch.cpp, src/formats/fastsearchformat.cpp:
 	Separated format from API code.
