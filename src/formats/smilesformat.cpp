@@ -308,7 +308,9 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
                 _vprev.push_back(_prev);
                 break;
             case ')':
-                _prev = _vprev.back();
+                if(_vprev.empty()) //CM
+									return false;
+								_prev = _vprev.back();
                 _vprev.pop_back();
                 break;
             case '[':
