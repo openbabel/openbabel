@@ -29,9 +29,8 @@ namespace OpenBabel
 {
 
 class OBBase;
-//typedef boost::shared_ptr<OBMol> OBMolPtr;
 
-class OBReaction : public OBBase
+class OBAPI OBReaction : public OBBase
 {
 public:
     ///Reactants and products stored as pointers to molecules stored elsewhere,
