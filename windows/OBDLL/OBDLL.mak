@@ -85,9 +85,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBDLL.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\OBDLL.pdb" /machine:I386 /def:".\obdll.def" /out:"OBDLL.dll" /implib:"$(OUTDIR)\OBDLL.lib" 
-DEF_FILE= \
-	".\obdll.def"
+LINK32_FLAGS=kernel32.lib user32.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\OBDLL.pdb" /machine:I386 /out:"OBDLL.dll" /implib:"$(OUTDIR)\OBDLL.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
@@ -97,6 +95,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\data.obj" \
+	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
@@ -118,9 +118,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\tokenst.obj" \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
-	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\finger2.obj" \
-	"$(INTDIR)\fastsearch.obj"
+	"$(INTDIR)\vector3.obj"
 
 ".\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -229,6 +227,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\chains.sbr" \
 	"$(INTDIR)\chiral.sbr" \
 	"$(INTDIR)\data.sbr" \
+	"$(INTDIR)\fastsearch.sbr" \
+	"$(INTDIR)\finger2.sbr" \
 	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\generic.sbr" \
 	"$(INTDIR)\grid.sbr" \
@@ -250,9 +250,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\tokenst.sbr" \
 	"$(INTDIR)\transform.sbr" \
 	"$(INTDIR)\typer.sbr" \
-	"$(INTDIR)\vector3.sbr" \
-	"$(INTDIR)\finger2.sbr" \
-	"$(INTDIR)\fastsearch.sbr"
+	"$(INTDIR)\vector3.sbr"
 
 "$(OUTDIR)\OBDLL.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -260,9 +258,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBDLL.pdb" /map:"OBDLL.map" /debug /machine:I386 /def:".\obdll.def" /out:"$(OUTDIR)\OBDLL.dll" /implib:"$(OUTDIR)\OBDLL.lib" /pdbtype:sept 
-DEF_FILE= \
-	".\obdll.def"
+LINK32_FLAGS=kernel32.lib user32.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBDLL.pdb" /map:"OBDLL.map" /debug /machine:I386 /out:"$(OUTDIR)\OBDLL.dll" /implib:"$(OUTDIR)\OBDLL.lib" /pdbtype:sept 
 LINK32_OBJS= \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
@@ -272,6 +268,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\data.obj" \
+	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
@@ -293,28 +291,12 @@ LINK32_OBJS= \
 	"$(INTDIR)\tokenst.obj" \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
-	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\finger2.obj" \
-	"$(INTDIR)\fastsearch.obj"
+	"$(INTDIR)\vector3.obj"
 
 "$(OUTDIR)\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
-
-SOURCE="$(InputPath)"
-PostBuild_Desc=Construct new obdll.def from obdll.map
-DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
-
-ALL : $(DS_POSTBUILD_DEP)
-
-# Begin Custom Macros
-OutDir=.\Debug
-# End Custom Macros
-
-$(DS_POSTBUILD_DEP) : "$(OUTDIR)\OBDLL.dll" "$(OUTDIR)\OBDLL.bsc"
-   map2def2.exe obdll.map
-	echo Helper for Post-build step > "$(DS_POSTBUILD_DEP)"
 
 !ENDIF 
 

@@ -81,11 +81,6 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 kernel32.lib user32.lib /nologo /dll /map:"OBDLL.map" /debug /machine:I386 /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
-# Begin Special Build Tool
-SOURCE="$(InputPath)"
-PostBuild_Desc=Construct new obdll.def from obdll.map
-PostBuild_Cmds=map2def2.exe obdll.map
-# End Special Build Tool
 
 !ENDIF 
 
@@ -170,17 +165,6 @@ SOURCE=..\..\src\molchrg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\obdll.def
-
-!IF  "$(CFG)" == "OBDLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\oberror.cpp
 # End Source File
 # Begin Source File
@@ -241,6 +225,14 @@ SOURCE=..\..\src\math\vector3.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=..\..\data\aromatic.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\data\atomtyp.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\base.h
 # End Source File
 # Begin Source File
@@ -249,7 +241,7 @@ SOURCE=..\..\src\bitvec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\bondtyp.h
+SOURCE=..\..\data\bondtyp.h
 # End Source File
 # Begin Source File
 
@@ -269,11 +261,15 @@ SOURCE=..\..\src\data.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\element.h
+SOURCE=..\..\data\element.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\extable.h
+SOURCE=..\..\data\extable.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fastsearch.h
 # End Source File
 # Begin Source File
 
@@ -289,7 +285,7 @@ SOURCE=..\..\src\grid.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\isotope.h
+SOURCE=..\..\data\isotope.h
 # End Source File
 # Begin Source File
 
@@ -333,15 +329,11 @@ SOURCE=..\..\src\phmodel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\phmodeldata.h
+SOURCE=..\..\data\phmodeldata.h
 # End Source File
 # Begin Source File
 
-SOURCE=".\Problem with radicals and EndModify.txt"
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\resdata.h
+SOURCE=..\..\data\resdata.h
 # End Source File
 # Begin Source File
 
@@ -365,16 +357,12 @@ SOURCE=..\..\src\typer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\types.h
+SOURCE=..\..\data\types.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\math\vector3.h
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=..\..\src\fastsearch.h
-# End Source File
 # End Target
 # End Project
