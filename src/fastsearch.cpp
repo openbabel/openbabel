@@ -24,26 +24,22 @@ namespace OpenBabel {
 FastSearch::~FastSearch(){}
 
 //////////////////////////////////////////////////
-string FastSearch::Find(OBMol& mol, istream* pIndexstream, vector<unsigned int>& SeekPositions,
+bool FastSearch::Find(OBMol& mol, vector<unsigned int>& SeekPositions,
 												int MaxCandidates)
 {
 	//Finds molecules in datafilename (which must previously have been indexed)
 	//that match a substructure in mol. datafile name can also be the name of the index file.
 	//The positions of the candidate matching molecules in the original datafile are returned.
 	//When called, datafilename can be either the real data file or the index.
-	//On return it will have been altered to the real datafile name
 	
 	vector<unsigned int>candidates; //indices of matches from fingerprint screen
 	candidates.reserve(MaxCandidates);
-	FptIndex index; //Large size is in vectors whose content is probably not on the stack
-	if(!ReadIndex(pIndexstream, &index))
-		return NULL;
 
-	unsigned int dataSize = index.header.nEntries;
+	unsigned int dataSize = _index.header.nEntries;
 	vector<unsigned int> vecwords;
-	GetFingerprint(mol, vecwords, index.header.words, index.header.fptype); 
-	unsigned int words = index.header.words;
-	unsigned int* nextp = &index.fptdata[0];
+	GetFingerprint(mol, vecwords, _index.header.words, _index.header.fptype); 
+	unsigned int words = _index.header.words;
+	unsigned int* nextp = &_index.fptdata[0];
 	unsigned int* ppat0 = &vecwords[0];
 	register unsigned int* p;
 	register unsigned int* ppat;
@@ -67,34 +63,38 @@ string FastSearch::Find(OBMol& mol, istream* pIndexstream, vector<unsigned int>&
 		}
 	}
 
-	if(i<index.header.nEntries) //premature end to search
+	if(i<_index.header.nEntries) //premature end to search
 		cerr << "Stopped looking after " << i << " molecules." << endl;
 
 	vector<unsigned int>::iterator itr;
 	for(itr=candidates.begin();itr!=candidates.end();itr++)
 	{
-		SeekPositions.push_back(index.seekdata[*itr]);
+		SeekPositions.push_back(_index.seekdata[*itr]);
 	}
-	string df(index.header.datafilename);
-	return df;
+	return true;
 }
 
 /////////////////////////////////////////////////////////
-bool FastSearch::ReadIndex(istream* pIndexstream,FptIndex* pindex)
+string FastSearch::ReadIndex(istream* pIndexstream)
 {
-	//Reads fs index from istream into memory
-	pIndexstream->read((char*)&pindex->header, sizeof(FptIndexHeader));
-	pIndexstream->seekg(pindex->header.headerlength);//allows header length to be changed
+	//Reads fs index from istream into member variables
+	// but first checks whether it is already loaded
+	FptIndexHeader headercopy = _index.header; 
+	pIndexstream->read((char*)&(_index.header), sizeof(FptIndexHeader));
+	if(memcmp(&headercopy,&(_index.header),sizeof(FptIndexHeader)))
+	{
+		pIndexstream->seekg(_index.header.headerlength);//allows header length to be changed
 
-	unsigned int nwords = pindex->header.nEntries * pindex->header.words;
-	pindex->fptdata.resize(nwords);
-	pindex->seekdata.resize(pindex->header.nEntries);
+		unsigned int nwords = _index.header.nEntries * _index.header.words;
+		_index.fptdata.resize(nwords);
+		_index.seekdata.resize(_index.header.nEntries);
 
-	pIndexstream->read((char*)&pindex->fptdata[0], sizeof(unsigned int)*nwords);
-	pIndexstream->read((char*)&pindex->seekdata[0], sizeof(unsigned int)*pindex->header.nEntries);
-	if(pIndexstream->fail())
-		return false;
-	return true;
+		pIndexstream->read((char*)&(_index.fptdata[0]), sizeof(unsigned int) * nwords);
+		pIndexstream->read((char*)&(_index.seekdata[0]), sizeof(unsigned int) * _index.header.nEntries);
+		if(pIndexstream->fail())
+			*(_index.header.datafilename) = '\0';
+	}
+	return _index.header.datafilename;
 }
 
 //*******************************************************
@@ -180,6 +180,26 @@ checking of the fingerprints against the pattern fingerprint is fast.
 The index has two table:
 - an array of fingerprints of the molecules
 - an array of the seek positions in the datasource file of all the molecules
+
+To search in  fastsearch index file:
+ 
+	ifs.open(indexname,ios_base::binary);
+	if(!ifs) return false;
+
+	FastSearch fs;
+	vector<unsigned int> SeekPositions;
+	string datafilename = fs.ReadIndex(&ifs);
+	if(datafilename.empty() || !fs.Find(patternMol, SeekPositions, MaxCandidates))
+		return false;
+	
+	ifstream datastream(datafilename);
+	if(!datastream) return false;
+
+	for(itr=SeekPositions.begin();itr!=SeekPositions.end();itr++)
+	{
+		datastream.seekg(*itr);
+		... read the candidate molecule
+	}
 */
 
 }//Openbabel

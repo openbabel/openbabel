@@ -25,7 +25,7 @@ class FastSearchFormat : public OBFormat
 {
 public:
 	//Register this format type ID
-	FastSearchFormat() : fsi(NULL)
+	FastSearchFormat() : fsi(NULL), MaxCandidates(4000)
 	{
 		OBConversion::RegisterFormat("fs",this);
 	}
@@ -45,6 +45,9 @@ Options (when making index) e.g. -xN25000w2 \n \
 -f# finger print type, default <2>\n \
 -w# number of 32bit words in fingerprint default<4>\n \
 -N# approx number of molecules to be indexed\n \
+\n \
+To set the maximum number of candidates # when searching,\n \
+use the -l# option (not -xl#). Default is 4000.\n \
 ";
 	};
 
@@ -55,6 +58,11 @@ public:
 	virtual bool WriteChemObject(OBConversion* pConv);
 
 private:
+	///big data structure which will remain in memory after it is loaded
+	//until the program ends.
+	FastSearch fs;
+	int MaxCandidates;
+	
 	FastSearchIndexer* fsi;
 };
 
@@ -138,26 +146,29 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	}
 
 	//Have to open input stream again because needs to be in binary mode
-	ifstream ifs(indexname.c_str(),ios_base::binary);
+	ifstream ifs;
+	if(!indexname.empty())
+		ifs.open(indexname.c_str(),ios_base::binary);
 	if(!ifs)
 	{
 		cerr << "Couldn't open " << indexname << endl;
 		return false;
 	}
 
-	//TODO Better way of inputting this
-	int MaxCandidates = 4000;
+	//Use -l option to set the max number of candidates	
+	p = pConv->IsOption('l',true);
+	if(p && atoi(p))
+		MaxCandidates = atoi(p);
 
-	FastSearch fs;
 	vector<unsigned int> SeekPositions;
-	string datafilename = fs.Find(patternMol, &ifs, SeekPositions, MaxCandidates);
-
-	cerr << SeekPositions.size() << " candidates " << endl;
-	if(datafilename.empty())
+	string datafilename = fs.ReadIndex(&ifs);
+	if(datafilename.empty() || !fs.Find(patternMol, SeekPositions, MaxCandidates))
 	{
 		cerr << "Difficulty reading from index " << indexname << endl;
 		return false;
 	}
+
+	cerr << SeekPositions.size() << " candidates " << endl;
 
 	if(SeekPositions.size()!=0)
 	{

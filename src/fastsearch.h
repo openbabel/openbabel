@@ -32,12 +32,12 @@ struct FptIndex
 
 class OBAPI FastSearch
 {
-	friend class FastSearchIndexer;
 public:
-	virtual      ~FastSearch();
-	bool         ReadIndex(std::istream* pIndexstream, FptIndex* pindex);
-	std::string  Find(OBMol& mol, std::istream* pIndexstream, 
-                  	std::vector<unsigned int>& SeekPositions, int MaxCandidates);
+  std::string ReadIndex(std::istream* pIndexstream);
+	virtual    ~FastSearch();
+	bool       Find(OBMol& mol, std::vector<unsigned int>& SeekPositions, int MaxCandidates);
+private:
+	FptIndex   _index;
 };
 
 //**********************************************
