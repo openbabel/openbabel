@@ -1,3 +1,10 @@
+2005-04-17  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/fastsearch.h, src/fastsearch.cpp,
+	src//formats/fastsearchformat.cpp:
+	Mod to keep fastsearch index in memory after it has 
+	been loaded, to shorten subsequent queries.
+
 2005-04-15  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/*.h, src/vector3.cpp, windows/OBDLL/OBDLL.dsp
