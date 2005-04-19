@@ -50,8 +50,11 @@ public:
             Options e.g. -xt\n \
             -n no molecule name\n \
             -t molecule name only\n \
-						-r radicals lower case eg ethyl is Cc";
+	    -r radicals lower case eg ethyl is Cc";
     };
+
+    virtual const char* SpecificationURL(){return
+            "http://www.daylight.com/dayhtml/smiles/";}; //optional
 
 		virtual int SkipObjects(int n, OBConversion* pConv)
 		{
@@ -2326,7 +2329,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "FIX format\n \
+            "SMILES FIX format\n \
             No comments yet\n \
             ";
     };
