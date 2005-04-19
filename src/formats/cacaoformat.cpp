@@ -33,7 +33,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "Cacao format\n \
+            "Cacao Cartesian format\n \
             No comments yet\n \
             ";
     };
@@ -45,7 +45,7 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | WRITEONEONLY;
     };
 
     ////////////////////////////////////////////////////
@@ -294,7 +294,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "CacaoInternal format\n \
+            "Cacao Internal format\n \
             No comments yet\n \
             ";
     };
@@ -306,7 +306,7 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTREADABLE;
+        return NOTREADABLE | WRITEONEONLY;
     };
 
     ////////////////////////////////////////////////////

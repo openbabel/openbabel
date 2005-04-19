@@ -32,7 +32,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "CSR format\n \
+            "MSI Quanta CSR format\n \
             No comments yet\n \
             ";
     };

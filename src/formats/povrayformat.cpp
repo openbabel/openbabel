@@ -87,13 +87,13 @@ public:
     };
 
     virtual const char* SpecificationURL(){return
-            "";}; //optional
+            "http://www.povray.org/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTREADABLE;
+        return NOTREADABLE | WRITEONEONLY;
     };
 
     ////////////////////////////////////////////////////

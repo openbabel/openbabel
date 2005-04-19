@@ -32,7 +32,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "CAChe format\n \
+            "CAChe MolStruct format\n \
             No comments yet\n \
             ";
     };

@@ -30,7 +30,7 @@ public:
 
     virtual const char* Description() //required
     {
-        return "HyperChem Input format\nNo comments yet\n";
+        return "HyperChem HIN format\nNo comments yet\n";
     };
 
     virtual const char* SpecificationURL()
@@ -40,7 +40,7 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***

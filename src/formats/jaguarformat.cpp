@@ -21,11 +21,11 @@ using namespace std;
 namespace OpenBabel
 {
 
-class JaguarFormat : public OBFormat
+class JaguarOutputFormat : public OBFormat
 {
 public:
     //Register this format type ID
-    JaguarFormat()
+    JaguarOutputFormat()
     {
         OBConversion::RegisterFormat("jout",this);
     }
@@ -42,13 +42,12 @@ public:
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags(){return READONEONLY;};
+    virtual unsigned int Flags(){return READONEONLY | NOTWRITABLE;};
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
     ////////////////////////////////////////////////////
     /// The "Convert" interface functions
@@ -63,6 +62,45 @@ public:
         return ret;
     };
 
+};
+//***
+
+//Make an instance of the format class
+JaguarOutputFormat theJaguarOutputFormat;
+
+
+
+class JaguarInputFormat : public OBFormat
+{
+public:
+    //Register this format type ID
+    JaguarInputFormat()
+    {
+        OBConversion::RegisterFormat("jin",this);
+    }
+
+    virtual const char* Description() //required
+    {
+        return "Jaguar input format\n \n";
+    };
+
+  virtual const char* SpecificationURL()
+  {
+    return "";
+  }; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+  {return NOTREADABLE | WRITEONEONLY;};
+
+    //*** This section identical for most OBMol conversions ***
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+    ////////////////////////////////////////////////////
+    /// The "Convert" interface functions
     virtual bool WriteChemObject(OBConversion* pConv)
     {
         //Retrieve the target OBMol
@@ -78,10 +116,12 @@ public:
 //***
 
 //Make an instance of the format class
-JaguarFormat theJaguarFormat;
+JaguarInputFormat theJaguarInputFormat;
+
+
 
 /////////////////////////////////////////////////////////////////
-bool JaguarFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -160,7 +200,7 @@ bool JaguarFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
 ////////////////////////////////////////////////////////////////
 
-bool JaguarFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+bool JaguarInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL) return false;

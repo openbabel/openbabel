@@ -31,7 +31,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "NWChem Output format\n \
+            "NWChem output format\n \
             No comments yet\n \
             ";
     };
@@ -80,7 +80,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "NWChem input\n \
+            "NWChem input format\n \
             No comments yet\n \
             ";
     };

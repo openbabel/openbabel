@@ -32,7 +32,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "BGF format	\n \
+            "MSI BGF format	\n \
             No comments yet\n \
             ";
     };

@@ -1,3 +1,40 @@
+2005-04-19  Geoffrey Hutchison  <ghutchis@Alumina.local>
+
+	* NEWS: Add notes for formats that were changed/deleted.
+	
+	* configure.in, configure, src/babelconfig.h.in: Update to #define
+	OBAPI.
+
+	* test/matrixtest.cpp: Include babelconfig.h.
+
+	* src/bitvec.h: Make sure to define EXTERN if not otherwise
+	defined.
+
+	* src/obiter.cpp, src/obiter.h: STL-style iterators (and #define'd
+	shorthand) for OBAtom, OBMol, OBBond and OBResidue.
+	
+	* src/Makefile.am, src/Makefile.in: Add fastsearch.cpp,
+	finger2.cpp, obiter.cpp, fastsearch.h, obiter.h.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Add
+	fastsearchformat.cpp.
+
+	* src/finger2.cpp (RemoveDuplicates): Enforce "const"
+	declaration.
+
+	* src/fingerprint.h (fingerprint2): Enforce std:: namespace.
+	
+	* src/formats/smilesformat.cpp (SpecificationURL): Add pointer to
+	Daylight webpage.
+	
+	* src/formats/mpqcformat.cpp: Add MPQC input format.
+	
+	* src/formats/qchemformat.cpp, src/formats/povrayformat.cpp,
+	src/formats/nwchemformat.cpp, src/formats/CSRformat.cpp,
+	src/formats/bgfformat.cpp, src/formats/cacaoformat.cpp,
+	src/formats/cacheformat.cpp, src/formats/chemtoolformat.cpp,
+	src/formats/hinformat.cpp: Minor fixes to descriptions.
+
 2005-04-17  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/fastsearch.h, src/fastsearch.cpp,

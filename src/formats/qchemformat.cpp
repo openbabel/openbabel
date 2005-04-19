@@ -32,7 +32,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "QChem output format\n \
+            "Q-Chem output format\n \
             No comments yet\n \
             ";
     };
@@ -83,7 +83,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "QChem input format\n \
+            "Q-Chem input format\n \
             No comments yet\n \
             ";
     };
