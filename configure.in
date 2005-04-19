@@ -10,6 +10,8 @@ AC_CANONICAL_HOST
 
 AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_TARNAME], [Where the data files are located])
 
+AC_DEFINE([OBAPI], [], [Used to export symbols for DLL / shared library builds])
+
 dnl Checks for programs.
 AC_PROG_CC
 AC_PROG_CXX
