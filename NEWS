@@ -19,6 +19,12 @@ New File Formats:
 	  MDL Molfile V3000
   Export: 
 
+Changed formats:
+MMADS - eliminated
+bin - OpenEye binary v 1, eliminated
+GROMOS96 - changed from separate g96a g96nm types to a unified g96 type
+Titles - eliminated
+
 Open Babel 1.100.2 (2004-02-22)
 
 What's New from 1.100.1:
