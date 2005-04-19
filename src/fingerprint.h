@@ -163,8 +163,8 @@ private:
 
 	void getFragments(Fset& fragset, std::vector<int>& levels, std::vector<int> curfrag, 
 			int level, OBAtom* patom, OBBond* pbond);
-	void RemoveDuplicates(Fset& fragset, std::vector<int>& frag);
-	int CalcHash(std::vector<int>& frag);
+	void RemoveDuplicates(Fset& fragset, const std::vector<int>& frag);
+	int CalcHash(const std::vector<int>& frag);
 	void PrintFpt(std::vector<int>& f, int hash=0);
 };
 
