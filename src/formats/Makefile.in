@@ -57,14 +57,14 @@ am_libformats_la_OBJECTS = CSRformat.lo PQSformat.lo alchemyformat.lo \
 	cacaoformat.lo cacheformat.lo carformat.lo cccformat.lo \
 	chem3dformat.lo chemdrawformat.lo chemtoolformat.lo cml.lo \
 	cmlformat.lo crkformat.lo cssrformat.lo dmolformat.lo \
-	featformat.lo fhformat.lo gamessformat.lo gaussformat.lo \
-	ghemicalformat.lo grosmos96format.lo hinformat.lo \
-	jaguarformat.lo mdlformat.lo mm3format.lo mmodformat.lo \
-	mol2format.lo mopacformat.lo mpqcformat.lo nwchemformat.lo \
-	pdbformat.lo povrayformat.lo qchemformat.lo reportformat.lo \
-	rxnformat.lo shelxformat.lo smilesformat.lo tinkerformat.lo \
-	turbomoleformat.lo unichemformat.lo viewmolformat.lo \
-	xedformat.lo xyzformat.lo zindoformat.lo
+	fastsearchformat.lo featformat.lo fhformat.lo gamessformat.lo \
+	gaussformat.lo ghemicalformat.lo grosmos96format.lo \
+	hinformat.lo jaguarformat.lo mdlformat.lo mm3format.lo \
+	mmodformat.lo mol2format.lo mopacformat.lo mpqcformat.lo \
+	nwchemformat.lo pdbformat.lo povrayformat.lo qchemformat.lo \
+	reportformat.lo rxnformat.lo shelxformat.lo smilesformat.lo \
+	tinkerformat.lo turbomoleformat.lo unichemformat.lo \
+	viewmolformat.lo xedformat.lo xyzformat.lo zindoformat.lo
 libformats_la_OBJECTS = $(am_libformats_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -200,10 +200,9 @@ libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
 	cml.cpp cmlformat.cpp crkformat.cpp cssrformat.cpp \
-	dmolformat.cpp featformat.cpp fhformat.cpp \
+	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
 	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
-	grosmos96format.cpp hinformat.cpp \
-	jaguarformat.cpp \
+	grosmos96format.cpp hinformat.cpp jaguarformat.cpp \
 	mdlformat.cpp mm3format.cpp mmodformat.cpp \
 	mol2format.cpp mopacformat.cpp mpqcformat.cpp nwchemformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
@@ -286,6 +285,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crkformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cssrformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dmolformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fastsearchformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/featformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fhformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gamessformat.Plo@am__quote@
