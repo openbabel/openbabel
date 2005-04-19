@@ -120,7 +120,7 @@ void fingerprint2::getFragments(Fset& fragset, vector<int>& levels, vector<int> 
 }
 
 ///////////////////////////////////////////////////
-void fingerprint2::RemoveDuplicates(Fset& fragset, vector<int>& frag)
+void fingerprint2::RemoveDuplicates(Fset& fragset, const vector<int>& frag)
 {
 	vector<int> t1(frag); //temporary copy
 	if(t1[0])
@@ -151,7 +151,7 @@ void fingerprint2::RemoveDuplicates(Fset& fragset, vector<int>& frag)
 	}
 }
 //////////////////////////////////////////////////////////
-int fingerprint2::CalcHash(vector<int>& frag)
+int fingerprint2::CalcHash(const vector<int>& frag)
 {
 	//Something like... whole of fragment treated as a binary number modulus 1021
 	const int MODINT = 108; //2^32 % 1021 
