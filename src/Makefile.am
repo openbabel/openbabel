@@ -7,10 +7,11 @@ lib_LTLIBRARIES = libopenbabel.la
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
-		obconversion.cpp fingerprint.cpp generic.cpp grid.cpp \
+		obconversion.cpp finger2.cpp fingerprint.cpp \
+		fastsearch.cpp generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
-		oberror.cpp obutil.cpp parsmart.cpp patty.cpp \
-		phmodel.cpp rand.cpp residue.cpp ring.cpp \
+		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
+		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
@@ -21,10 +22,10 @@ libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
-		dlhandler.h fingerprint.h generic.h grid.h \
-		matrix.h mol.h molchrg.h \
-		obconversion.h \
-		oberror.h obifstream.h obutil.h \
+		dlhandler.h fastsearch.h fingerprint.h \
+		generic.h grid.h matrix.h mol.h molchrg.h \
+		obconversion.h oberror.h obifstream.h \
+		obiter.h obutil.h \
 		parsmart.h patty.h phmodel.h reaction.h \
 		ring.h rotor.h rotamer.h typer.h 
 

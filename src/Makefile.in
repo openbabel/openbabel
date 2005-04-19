@@ -67,10 +67,10 @@ libopenbabel_la_DEPENDENCIES = math/libmath.la formats/libformats.la \
 	@LTLIBOBJS@ $(am__empty)
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo chains.lo chiral.lo data.lo obconversion.lo \
-	fingerprint.lo generic.lo grid.lo kekulize.lo matrix.lo mol.lo \
-	molchrg.lo oberror.lo obutil.lo parsmart.lo patty.lo \
-	phmodel.lo rand.lo residue.lo ring.lo rotor.lo rotamer.lo \
-	tokenst.lo typer.lo transform.lo
+	finger2.lo fingerprint.lo fastsearch.lo generic.lo grid.lo \
+	kekulize.lo matrix.lo mol.lo molchrg.lo oberror.lo obiter.lo \
+	obutil.lo parsmart.lo patty.lo phmodel.lo rand.lo residue.lo \
+	ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo transform.lo
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -218,10 +218,11 @@ lib_LTLIBRARIES = libopenbabel.la
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
-		obconversion.cpp fingerprint.cpp generic.cpp grid.cpp \
+		obconversion.cpp finger2.cpp fingerprint.cpp \
+		fastsearch.cpp generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
-		oberror.cpp obutil.cpp parsmart.cpp patty.cpp \
-		phmodel.cpp rand.cpp residue.cpp ring.cpp \
+		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
+		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
@@ -231,10 +232,10 @@ libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
-		dlhandler.h fingerprint.h generic.h grid.h \
-		matrix.h mol.h molchrg.h \
-		obconversion.h \
-		oberror.h obifstream.h obutil.h \
+		dlhandler.h fastsearch.h fingerprint.h \
+		generic.h grid.h matrix.h mol.h molchrg.h \
+		obconversion.h oberror.h obifstream.h \
+		obiter.h obutil.h \
 		parsmart.h patty.h phmodel.h reaction.h \
 		ring.h rotor.h rotamer.h typer.h 
 
@@ -373,6 +374,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chains.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fastsearch.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/finger2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generic.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid.Plo@am__quote@
@@ -383,6 +386,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/molchrg.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obconversion.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/oberror.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obiter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obutil.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parsmart.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/patty.Plo@am__quote@
