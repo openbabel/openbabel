@@ -33,7 +33,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "MPQC format\n \
+            "MPQC output format\n \
             No comments yet\n \
             ";
     };
@@ -45,7 +45,7 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTWRITABLE;
+        return NOTWRITABLE | READONEONLY;
     };
 
     ////////////////////////////////////////////////////
@@ -70,6 +70,59 @@ public:
 
 //Make an instance of the format class
 MPQCFormat theMPQCFormat;
+
+
+
+class MPQCInputFormat : public OBFormat
+{
+public:
+    //Register this format type ID
+    MPQCInputFormat()
+    {
+        OBConversion::RegisterFormat("mpqcin",this);
+    }
+
+    virtual const char* Description() //required
+    {
+        return
+            "MPQC simplified input format\n \
+            No comments yet\n \
+            ";
+    };
+
+    virtual const char* SpecificationURL(){return
+            "http://www.mpqc.org/mpqc-html/mpqcinp.html";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+        return NOTREADABLE | WRITEONEONLY;
+    };
+
+    //*** This section identical for most OBMol conversions ***
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+    ////////////////////////////////////////////////////
+    /// The "Convert" interface functions
+    virtual bool WriteChemObject(OBConversion* pConv)
+    {
+        //Retrieve the target OBMol
+        OBBase* pOb = pConv->GetChemObject();
+        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
+        bool ret=false;
+        if(pmol)
+            ret=WriteMolecule(pmol,pConv);
+        delete pOb;
+        return ret;
+    };
+};
+//***
+
+//Make an instance of the format class
+MPQCInputFormat theMPQCInputFormat;
 
 /////////////////////////////////////////////////////////////////
 bool MPQCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -140,5 +193,38 @@ bool MPQCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     return(true);
 }
 
+bool MPQCInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+{
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    if(pmol==NULL)
+        return false;
+
+    //Define some references so we can use the old parameter names
+    ostream &ofs = *pConv->GetOutStream();
+    OBMol &mol = *pmol;
+    const char *dimension = pConv->GetDimension();
+
+    unsigned int i;
+    char buffer[BUFF_SIZE];
+
+    ofs << "% " << mol.GetTitle() << endl;
+    ofs << endl; // keywords/direction lines here
+    ofs << "molecule:" << endl;
+
+    OBAtom *atom;
+    for(i = 1;i <= mol.NumAtoms(); i++)
+    {
+        atom = mol.GetAtom(i);
+        sprintf(buffer,"%4s  %8.5f  %8.5f  %8.5f ",
+                etab.GetSymbol(atom->GetAtomicNum()),
+                atom->GetX(),
+                atom->GetY(),
+                atom->GetZ());
+        ofs << buffer << endl;
+    }
+
+    ofs << endl << endl << endl;
+    return(true);
+}
 
 } //namespace OpenBabel
