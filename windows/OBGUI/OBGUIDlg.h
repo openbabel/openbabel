@@ -68,8 +68,7 @@ protected:
 
 	void GetFilter(CString& Filter, CWnd& Wnd);
 	void StreamtoOutConsole(stringstream& oss, bool bAppend=false);
-
-//	int TestWildcards(const char* filename, std::vector<std::string>* FileList);
+	void DisplayPath(char* path);
 
 	// Generated message map functions
 	//{{AFX_MSG(COBGUIDlg)
@@ -90,7 +89,8 @@ protected:
 	afx_msg void OnManualinput();
 	afx_msg void OnClose();
 	afx_msg void OnChangeInputformat();
-	//}}AFX_MSG
+	afx_msg void OnDropFiles( HDROP hDropInfo );
+//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
 

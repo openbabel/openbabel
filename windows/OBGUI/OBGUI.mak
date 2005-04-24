@@ -83,7 +83,7 @@ LINK32_OBJS= \
 <<
 
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats.obf
+PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats2.obf
 DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
 
 ALL : $(DS_POSTBUILD_DEP)
@@ -168,7 +168,7 @@ LINK32_OBJS= \
 <<
 
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats.obf
+PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats2.obf
 DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
 
 ALL : $(DS_POSTBUILD_DEP)

@@ -81,7 +81,7 @@ BEGIN
     LTEXT           "  Format:",IDC_STATIC,8,56,29,8
     LTEXT           "  Format:",IDC_STATIC,431,56,29,8
     LTEXT           "Use CTL RETURN for new line;  RETURN converts.",
-                    IDC_CONSOLEINFO,37,90,168,8,NOT WS_VISIBLE
+                    IDC_CONSOLEINFO,37,90,168,8
     LTEXT           "",IDC_OUTCOUNT,379,11,43,20
     CONTROL         "",IDC_INPATH,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,7,17,
                     224,8

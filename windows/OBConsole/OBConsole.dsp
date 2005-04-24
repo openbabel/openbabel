@@ -55,7 +55,7 @@ LINK32=link.exe
 # SUBTRACT LINK32 /debug
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy OBConv.dll, OBDLL.dll and OBFormats.obf
+PostBuild_Desc=Copy OBConv.dll, OBDLL.dll and OBFormats2.obf
 PostBuild_Cmds=copy ..\OBConv\OBConv.dll  . /Y	copy  ..\OBFormats2\OBFormats2.obf . /Y	copy ..\OBDLL\OBDLL.dll  .  /Y
 # End Special Build Tool
 
@@ -86,7 +86,7 @@ LINK32=link.exe
 # SUBTRACT LINK32 /nodefaultlib
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy OBConv.dll, OBDLL.dll and OBFormats.obf
+PostBuild_Desc=Copy OBConv.dll, OBDLL.dll and OBFormats2.obf
 PostBuild_Cmds=copy ..\OBConv\Debug\OBConv.dll  .\debug /Y	copy  ..\OBFormats2\debug\OBFormats2D.obf .\debug /Y	copy ..\OBDLL\debug\OBDLL.dll  .\debug  /Y
 # End Special Build Tool
 

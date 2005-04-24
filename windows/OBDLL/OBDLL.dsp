@@ -333,6 +333,10 @@ SOURCE=..\..\data\phmodeldata.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\reaction.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\data\resdata.h
 # End Source File
 # Begin Source File

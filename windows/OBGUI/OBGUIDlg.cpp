@@ -10,6 +10,8 @@
 #include "OBGUI.h"
 #include "OBGUIDlg.h"
 #include "dlhandler.h"
+#include <Shlwapi.h>
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -132,6 +134,7 @@ BEGIN_MESSAGE_MAP(COBGUIDlg, CDialog)
 	ON_BN_CLICKED(IDC_MANUALINPUT, OnManualinput)
 	ON_WM_CLOSE()
 	ON_CBN_SELCHANGE(IDC_INPUTFORMAT, OnChangeInputformat)
+	ON_WM_DROPFILES()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -165,12 +168,14 @@ BOOL COBGUIDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 	
+	DragAcceptFiles();
+	
 	m_NoInFile.SetCheck(AfxGetApp()->GetProfileInt("GUI","NoInFile",0));	
 	OnManualinput();
 
 	char curdir[_MAX_PATH]; 
 	GetCurrentDirectory(_MAX_PATH-1,curdir);
-	m_InPath.SetWindowText(curdir);
+	DisplayPath(curdir);
 
 	//Get data on available formats and add to comboboxes and to filter string
 	char* str=NULL;
@@ -583,9 +588,9 @@ void COBGUIDlg::OnInputFiles()
 		}
 
 		SetCurrentDirectory(path);
-		if(path.GetLength()>50)
-			path = "..." + path.Right(50);
-		m_InPath.SetWindowText(path);
+		char szPath[_MAX_PATH];
+		strcpy(szPath,path);
+		DisplayPath(szPath);
 	}
 }
 
@@ -723,6 +728,41 @@ void COBGUIDlg::OnChangeInputformat()
 	OutputOptionRect=NextOptionRect;
 	OnChangeOutputformat();  //now write output options
 }
+
+void COBGUIDlg::OnDropFiles( HDROP hDropInfo)
+{
+	UINT i = 0;
+	UINT nFiles = ::DragQueryFile(hDropInfo, (UINT) -1, NULL, 0);
+	TCHAR szBase[_MAX_PATH];
+	CString NameList;
+	for (i = 0; i < nFiles; i++)
+	{
+    TCHAR szFileName[_MAX_PATH];
+    ::DragQueryFile(hDropInfo, i, szFileName, _MAX_PATH);
+		if(i==0)
+		{
+			strcpy(szBase, szFileName);
+			PathRemoveFileSpec(szBase);
+		}
+		else
+			NameList += ';';
+		PathStripPath(szFileName);
+		NameList += szFileName;	
+	}
+  m_InputFile.SetWindowText(NameList);
+	SetCurrentDirectory(szBase);
+	DisplayPath(szBase);
+  ::DragFinish(hDropInfo);
+}
+
+//////////////////////////////////////////
+void COBGUIDlg::DisplayPath(char* path)
+{
+	CRect rect;
+	m_InPath.GetWindowRect(rect);
+	PathCompactPath(::GetDC(m_InPath.m_hWnd), path, rect.Width()+70);//70 is a hack to improve appearance
+	m_InPath.SetWindowText(path);
+}	
 
 /*
 /// If filename contains wildcard characters, populates FileList with

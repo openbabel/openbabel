@@ -57,7 +57,7 @@ LINK32=link.exe
 # ADD LINK32 obconv.lib /nologo /subsystem:windows /machine:I386 /out:"OBGUI.exe" /libpath:"..\OBConv\Release\\"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats.obf
+PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats2.obf
 PostBuild_Cmds=Copy  ..\obformats2\obformats2.obf . /Y	Copy  ..\obconv\obconv.dll . /Y	Copy  ..\obdll\obdll.dll . /Y
 # End Special Build Tool
 
@@ -89,7 +89,7 @@ LINK32=link.exe
 # SUBTRACT LINK32 /nodefaultlib
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats.obf
+PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats2.obf
 PostBuild_Cmds=Copy  ..\obconv\debug\obconv.dll  .\debug  /Y	Copy  ..\obformats2\debug\obformats2D.obf .\debug /Y	Copy  ..\obdll\debug\obdll.dll  .\debug  /Y
 # End Special Build Tool
 
