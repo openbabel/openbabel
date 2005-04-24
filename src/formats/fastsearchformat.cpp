@@ -43,7 +43,7 @@ Search an index file by using the fs format for reading:\n \
 The structure spec can be a molecule from a file: -Spatternfile.zzz\n \
 Options (when making index) e.g. -xN25000w2 \n \
 -f# finger print type, default <2>\n \
--w# number of 32bit words in fingerprint default<4>\n \
+-w# number of 32bit words in fingerprint\n \
 -N# approx number of molecules to be indexed\n \
 \n \
 To set the maximum number of candidates # when searching,\n \
@@ -173,26 +173,23 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	if(SeekPositions.size()!=0)
 	{
 		ifstream datastream;
-		if(pConv->GetInFilename()==indexname)
+		//Open the datafile and put it in pConv
+		//datafile name derived from index file probably won't have a file path
+		//but indexname may. Derive a full datafile name
+		string path;
+		int pos = indexname.find_last_of("/\\");
+		if(pos==string::npos)
+			path = datafilename;
+		else
+			path = indexname.substr(0,pos+1) + datafilename;
+		
+		datastream.open(path.c_str());
+		if(!datastream)
 		{
-			//need to open the datafile and put it in pConv
-			//datafile name derived from index file probably won't have a file path
-			//but indexname may. Derive a full datafile name
-			string path;
-			int pos = indexname.find_last_of("/\\");
-			if(pos==string::npos)
-				path = datafilename;
-			else
-				path = indexname.substr(0,pos+1) + datafilename;
-			
-			datastream.open(path.c_str());
-			if(!datastream)
-			{
-				cerr << "Difficulty opening " << path << endl;
-				return false;
-			}
-			pConv->SetInStream(&datastream);
+			cerr << "Difficulty opening " << path << endl;
+			return false;
 		}
+		pConv->SetInStream(&datastream);
 		
 		//Input format is currently fs; set it appropriately
 		if(!pConv->SetInAndOutFormats(pConv->FormatFromExt(datafilename.c_str()),pConv->GetOutFormat()))
@@ -228,13 +225,13 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 		<<  " and may take some time..." << flush;
 	
 	OBStopwatch sw;
-	sw.Start();
 	
 	ostream* pOs = pConv->GetOutStream();
 	bool NewOstreamUsed=false;
 	if(fsi==NULL)
 	{
 		//First pass sets up FastSearchIndexer object
+		sw.Start();
 		if(pOs==&cout)
 		{
 			//No index filename specified
