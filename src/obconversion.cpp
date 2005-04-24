@@ -263,37 +263,7 @@ int OBConversion::LoadFormatFiles()
 	}
 #endif //USING_DYNAMIC_LIBS
 	return count;
-/*
-#ifdef _WIN32
-	//Windows specific
-	//Load all the format DLLs (*.obf) in current directory
-	//Returns the number loaded
-	WIN32_FIND_DATA finddata;
-
-	char path[MAX_PATH+1];
-	if(GetModuleFileName(NULL,path,MAX_PATH)==0) return FALSE;
-	char* p = strrchr(path,'\\');
-	if(p && *p) *(p+1)='\0'; //chop off name after last '\'
-	strcat(path,"*.obf");
-	HANDLE hF = FindFirstFile(path,&finddata);
-	if(hF==INVALID_HANDLE_VALUE) return 0;
-	int count=0;
-	do
-	{
-		if(LoadLibrary(finddata.cFileName))
-			count++;
-		else
-			cerr << finddata.cFileName << " did not load properly. Error no. " << GetLastError() <<endl;
-	}while(FindNextFile(hF,&finddata));
-	FindClose(hF);
-	return count;
-#else
-	//Code for other platforms goes here
-	return 0;
-#endif
-*/
 }
-
 
 /**
   *Returns the ID + the first line of the description in str 
@@ -439,15 +409,8 @@ int OBConversion::Convert()
 	pOb1=NULL;
 
 	//Input loop
-	streampos rInpos;
 	while(ReadyToInput && pInStream->peek() != EOF && pInStream->good())
 	{
-		//Save input stream position in member variable wInpos so that
-		// it is accessible to the output formats. But it is necessary to 
-		// delay it because the conversion process operates with a queue of 2
-		//wInpos updated here and later in the routine when the queue is unwound
-		wInpos = rInpos;
-		
 		if(pInStream==&cin)
 		{
 			if(pInStream->peek()=='\n')
@@ -463,7 +426,7 @@ int OBConversion::Convert()
 		}
 		catch(...)
 		{
-			if(!IsOption('c', true) && !OneObjectOnly)
+			if(!IsOption('e', true) && !OneObjectOnly)
 				throw;
 		}
 
@@ -484,8 +447,6 @@ int OBConversion::Convert()
 	//Output last object
 	if(!MoreFilesToCome)
 		m_IsLast=true;
-
-	wInpos = rInpos;
 
 	if(pOutFormat)
 		if(!pOutFormat->WriteChemObject(this))
@@ -590,11 +551,11 @@ int OBConversion::AddChemObject(OBBase* pOb)
 				}
 			}
 			pOb1=pOb;
+			wInpos = rInpos; //Save the position in the input file to be accessed when writing it
 		}
 	}
 	return Count;
 }
-////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 int OBConversion::GetOutputIndex() const
 {
@@ -700,8 +661,8 @@ return "Conversion options\n \
  -f <#> Start import at molecule # specified\n \
  -l <#> End import at molecule # specified\n \
  -a All input files describe a single molecule\n \
- -c Continue with next object after error, if possible\n \
- -z Use the options used last time\n\n";
+ -e Continue with next object after error, if possible\n \
+";
 }
 
 ////////////////////////////////////////////
@@ -747,6 +708,7 @@ bool OBConversion::IsLast()
 /// If ch is not in the option string (excluding quoted text), returns NULL
 /// If it is, the return value is not NULL and points to the
 /// following quoted text if there is any, but it is terminated by " not NULL.
+/// e.g. ab"text"c"text"
 const char* OBConversion::IsOption(const char ch, bool UseGeneralOptions) const
 {
 	const char* p;
@@ -754,26 +716,7 @@ const char* OBConversion::IsOption(const char ch, bool UseGeneralOptions) const
 		p = GeneralOptions.c_str();
 	else
 		p = Options.c_str();
-/*	
-	while(*p)
-	{
-		const char* str=p;
-		const char* pp=p;
-		if(*p++=='\"') //look for quote
-		{
-			str=p; //start of quote string
-			p=strchr(p,'\"')+1; //...find matching " and move on
-			if(p==NULL) 
-			{
-				cerr << "Unmatched quotes in option string" <<endl;
-				return NULL;
-			}
-		}
-		if(*pp==ch) return str;
-	}
-	return NULL;
-*/
-	//e.g. ab"text"c"text"
+
 	while(p && *p)
 	{
 		if(*p++==ch)

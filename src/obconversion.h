@@ -315,6 +315,7 @@ protected:
 	static bool	  FormatFilesLoaded;
 	OBBase*		  pOb1;
 	std::streampos wInpos; ///<position in the input stream of the object being written
+	std::streampos rInpos; ///<position in the input stream of the object being read
 };
 
 ///For OBFormat::Flags()
