@@ -1,3 +1,25 @@
+2005-04-24  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/obconversion.cpp, src/obconversion.h: 
+	Change implementation of inputfile seek position, to prevent
+	it being affected by newlines at the end of the file.
+	Changed option to ignore errors to -e from -c which was already
+	used for centre coordinates. Removed -z option.
+	Remove some obsolete commented out code. 
+
+	* src/main.cpp: Removed -z option for using previously stored 
+	options. This was conflicting with use with Apache, and was 
+	never of enormous benefit anyway.
+	
+	* src/finger2.cpp, src/fingerprint.h: fingerprint2 revised
+	to properly use canonical hash values. Molecules were being missed.
+	 
+	* src/formats/fastsearchformat.cpp: Ensure datafile file 
+	properly read when it is the specified input file.
+
+	* windows/*.*: Updated Windows build files
+	
+
 2005-04-19  Geoffrey Hutchison  <ghutchis@Alumina.local>
 
 	* NEWS: Add notes for formats that were changed/deleted.
