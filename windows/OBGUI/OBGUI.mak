@@ -68,7 +68,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUI.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=obconv.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUI.pdb" /machine:I386 /out:"OBGUI.exe" /libpath:"..\OBConv\Release\\" 
+LINK32_FLAGS=obconv.lib Shlwapi.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUI.pdb" /machine:I386 /out:"OBGUI.exe" /libpath:"..\OBConv\Release\\" 
 LINK32_OBJS= \
 	"$(INTDIR)\DynamicOptions.obj" \
 	"$(INTDIR)\OBGUI.obj" \
@@ -153,7 +153,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=obconv.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUI.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBGUI.exe" /pdbtype:sept /libpath:"..\OBConv\debug\\" 
+LINK32_FLAGS=obconv.lib Shlwapi.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUI.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBGUI.exe" /pdbtype:sept /libpath:"..\OBConv\debug\\" 
 LINK32_OBJS= \
 	"$(INTDIR)\DynamicOptions.obj" \
 	"$(INTDIR)\OBGUI.obj" \

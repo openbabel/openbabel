@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 obconv.lib /nologo /subsystem:windows /machine:I386 /out:"OBGUI.exe" /libpath:"..\OBConv\Release\\"
+# ADD LINK32 obconv.lib Shlwapi.lib /nologo /subsystem:windows /machine:I386 /out:"OBGUI.exe" /libpath:"..\OBConv\Release\\"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
 PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats2.obf
@@ -85,7 +85,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 obconv.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"..\OBConv\debug\\"
+# ADD LINK32 obconv.lib Shlwapi.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"..\OBConv\debug\\"
 # SUBTRACT LINK32 /nodefaultlib
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
