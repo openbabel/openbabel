@@ -154,9 +154,9 @@ int main(int argc,char *argv[])
 		  Conv.SetOptions(argv[arg]);
 		  break;
 		  
-		case 'z':
-		  UseSavedOptions=true;
-		  break;
+//		case 'z':
+//		  UseSavedOptions=true;
+//		  break;
 		  
 		case '?':
 		case 'H':
@@ -304,7 +304,7 @@ int main(int argc,char *argv[])
 	}
     }
 
-  // Need to make this configurable -- on UNIX should probably be $HOME/.openbabel or similar
+/*  // Need to make this configurable -- on UNIX should probably be $HOME/.openbabel or similar
 #ifdef _WIN32
   string OptFile = getenv("TEMP");
   OptFile.append("\\oboptions.txt");
@@ -317,7 +317,7 @@ int main(int argc,char *argv[])
     Conv.RestoreOptionsFromFile(OptFile.c_str());
   //Write current options to file
   Conv.SaveOptionsToFile(OptFile.c_str());
-
+*/
 		
   // send info message to cerr -- don't mess up cout for client programs
   int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
@@ -384,7 +384,9 @@ void help()
   cout << "       " << program_name << " infile.mol new*.smi and " << program_name << " *.mol *.smi respectively.\n" <<endl;
 #endif
   
-  cout << OBConversion::GetDefaultFormat()->TargetClassDescription();// some more options probably for OBMol
+  OBFormat* pDefault = OBConversion::GetDefaultFormat();
+	if(pDefault)
+		cout << pDefault->TargetClassDescription();// some more options probably for OBMol
   cout << "The following file formats are recognized:" << endl;
   
   Formatpos pos;
