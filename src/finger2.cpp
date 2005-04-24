@@ -18,10 +18,10 @@ GNU General Public License for more details.
 #include <vector>
 #include "bitvec.h"
 #include "fingerprint.h"
-//#ifdef _DEBUG
-// #include "stdafx.h"
-// #undef AddAtom
-//#endif
+#ifdef _DEBUG
+ #include "stdafx.h"
+ #undef AddAtom
+#endif
 using namespace std;
 namespace OpenBabel
 {
@@ -36,37 +36,36 @@ are ignored. A fragment is terminated when the atoms form a ring.
 
 For each of these fragments the atoms, bonding and whether
 they constitute a complete ring is recorded and saved in a std::set
-so that there is only one of each fragment type. The number of fragments is
-further reduced by eliminating chemically identical versions: ones with 
-the atoms listed in reverse order and rings listed starting at different atoms.
+so that there is only one of each fragment type. Chemically identical versions,
+i.e. ones with the atoms listed in reverse order and rings listed starting at 
+different atoms, are identified and only a single canonical fragment is retained.
+
 Each remaining fragment is assigned a hash number from 0 to 1020 which is used
 to set a bit in a 1024 bit vector  
 */
 
 void fingerprint2::GetFingerprint(OBMol& mol,OBBitVec& fp) 
 {
-	Fset fragset;
-
 	//identify fragments starting at every atom
 	OBAtom *patom;
 	vector<OBNodeBase*>::iterator i;
 	for (patom = mol.BeginAtom(i);patom;patom = mol.NextAtom(i))
 	{
 		if(patom->IsHydrogen()) continue;
-
-		vector<int> levels(mol.NumAtoms());
 		vector<int> curfrag;
-	
-		getFragments(fragset, levels, curfrag, 1, patom, NULL);
+		vector<int> levels(mol.NumAtoms());
+		getFragments(levels, curfrag, 1, patom, NULL);
 	}
 	
 //	TRACE("%s %d frags before; ",mol.GetTitle(),fragset.size());
-	Fset::iterator itr;
+
+	//Ensure that each chemically identical fragment is present only in a single
+	DoReverses();
+	DoRings();
+
+	SetItr itr;
 	for(itr=fragset.begin();itr!=fragset.end();++itr)
-	{
-		//Remove some chemically identical fragments
-		RemoveDuplicates(fragset,*itr);
-		
+	{	
 		//Use hash of fragment to set a bit in the fingerprint
 		int hash = CalcHash(*itr);
 		fp.SetBitOn(hash);
@@ -76,13 +75,21 @@ void fingerprint2::GetFingerprint(OBMol& mol,OBBitVec& fp)
 }
 
 //////////////////////////////////////////////////////////
-void fingerprint2::getFragments(Fset& fragset, vector<int>& levels, vector<int> curfrag, 
+void fingerprint2::getFragments(vector<int>& levels, vector<int> curfrag, 
 					int level, OBAtom* patom, OBBond* pbond)
 {
-	//Recursive routine to populate fragset
+	//Recursive routine to analyse schemical structure and populate fragset and ringset
+	//Hydrogens,charges(except dative bonds), spinMultiplicity ignored
+	const int Max_Fragment_Size = 8;
 	int bo=0;
 	if(pbond)
+	{
 		bo = pbond->IsAromatic() ? 5 : pbond->GetBO();
+
+		OBAtom* pprevat = pbond->GetNbrAtom(patom);
+		if(patom->GetFormalCharge() && (patom->GetFormalCharge() == -pprevat->GetFormalCharge()))
+			++bo; //coordinate (dative) bond eg C[N+]([O-])=O is seen as CN(=O)=O
+	}
 	curfrag.push_back(bo);
 	curfrag.push_back(patom->GetAtomicNum());
 	levels[patom->GetIdx()-1] = level;
@@ -99,57 +106,85 @@ void fingerprint2::getFragments(Fset& fragset, vector<int>& levels, vector<int> 
 		int atlevel = levels[pnxtat->GetIdx()-1];
 		if(atlevel) //ring
 		{
-			//If complete ring (last bond is back to starting atom) add bond at front
 			if(atlevel==1)
+			{
+				//If complete ring (last bond is back to starting atom) add bond at front
+				//and save in ringset
 				curfrag[0] = bo;
+				ringset.insert(curfrag);
+				return;
+			}
 		}
 		else //no ring
 		{
-			if(level<=MAX_FRAGMENT_SIZE)
+			if(level<Max_Fragment_Size)
 			{
-				//Do the next atom; curfrag is passed by value and hence copied
 //				TRACE("level=%d size=%d %p frag[0]=%p\n",level, curfrag.size(),&curfrag, &(curfrag[0])); 
-				getFragments(fragset, levels, curfrag, level+1, pnxtat, pnewbond);
+				//Do the next atom; curfrag is passed by value and hence copied
+				getFragments(levels, curfrag, level+1, pnxtat, pnewbond);
 			}
 		}
 	}
 
 	//do not save C,N,O single atom fragments
 	if(level>1 || patom->GetAtomicNum()>8  || patom->GetAtomicNum()<6)
+	{
 		fragset.insert(curfrag); //curfrag ignored if an identical fragment already present
+//		PrintFpt(curfrag,level);
+	}
 }
 
 ///////////////////////////////////////////////////
-void fingerprint2::RemoveDuplicates(Fset& fragset, const vector<int>& frag)
+void fingerprint2::DoReverses()
 {
-	vector<int> t1(frag); //temporary copy
-	if(t1[0])
+	SetItr itr;
+	for(itr=fragset.begin();itr!=fragset.end();)
 	{
-		//is a complete ring
-		int i;
-		for(i=0;i<(t1.size()-1)/2;++i)
+		//Reverse the order of the atoms, add the smallest fragment and remove the larger
+		SetItr titr = itr++; //Ensure have valid next iterator in case current one is erased
+		vector<int> t1(*titr); //temporary copy
+		reverse(t1.begin()+1, t1.end()); //(leave 0 at front alone)
+		if(t1!=*titr)
 		{
-			//rotate atoms in ring and erase from set if present
-			rotate(t1.begin(),t1.begin()+2,t1.end());
-			if(t1!=frag)
+			//Add the larger fragment and delete the smaller
+			if(t1>*titr)
+			{
+				fragset.erase(titr);
+				fragset.insert(t1);
+			}
+			else
 				fragset.erase(t1);
-			
-			//reverse the direction around ring and erase from set if present
-			vector<int> t2(t1);
-			reverse(t2.begin()+1, t2.end());
-			if(t2!=frag)
-				fragset.erase(t2);
 		}
 	}
-	else
+}
+///////////////////////////////////////////////////
+void fingerprint2::DoRings()
+{
+	//For each complete ring fragment, find its largest chemically identical representation
+	//by rotating and reversing, and insert into the main set of fragments
+	SetItr itr;
+	for(itr=ringset.begin();itr!=ringset.end();++itr)
 	{
-		//not a complete ring
-		//reverse the order of the atoms and remove from set if present
-		reverse(t1.begin()+1, t1.end()); //(leave 0 at front alone)
-		if(t1!=frag)
-			fragset.erase(t1);
+		vector<int> t1(*itr); //temporary copy
+		vector<int> maxring(*itr); //the current largest vector
+		int i;
+		for(i=0;i<t1.size()/2-1;++i)
+		{
+			//rotate atoms in ring
+			rotate(t1.begin(),t1.begin()+2,t1.end());
+			if(t1>maxring)
+				maxring=t1;
+			
+			//reverse the direction around ring
+			vector<int> t2(t1);
+			reverse(t2.begin()+1, t2.end());
+			if(t1>maxring)
+				maxring=t1;
+		}
+		fragset.insert(maxring);
 	}
 }
+
 //////////////////////////////////////////////////////////
 int fingerprint2::CalcHash(const vector<int>& frag)
 {
@@ -167,8 +202,8 @@ void fingerprint2::PrintFpt(vector<int>& f, int hash)
 	for(i=0;i<f.size();++i)
 //		TRACE("%d ",f[i]);
 //	TRACE("<%d>\n",hash);
-		cout << f[i] << " ";
-	cout << "<" << hash << ">" << endl;
+		cerr << f[i] << " ";
+	cerr << "<" << hash << ">" << endl;
 }
 
 /* Structure of a fragment (vector<int>)
