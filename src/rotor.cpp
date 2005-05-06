@@ -214,10 +214,10 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
 
             if (!_quiet)
             {
-                cout << "symmetry found = " << ' ';
-                cout << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
-                cout << "rms = " << ' ';
-                cout << MinimumPairRMS(mol,c1,c2,one2one) << endl;
+                cerr << "symmetry found = " << ' ';
+                cerr << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
+                cerr << "rms = " << ' ';
+                cerr << MinimumPairRMS(mol,c1,c2,one2one) << endl;
             }
             continue;
         }
@@ -235,10 +235,10 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
 
             if (!_quiet)
             {
-                cout << "3-fold symmetry found = " << ' ';
-                cout << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
-                cout << "rms = " << ' ';
-                cout << MinimumPairRMS(mol,c1,c2,one2one) << endl;
+                cerr << "3-fold symmetry found = " << ' ';
+                cerr << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
+                cerr << "rms = " << ' ';
+                cerr << MinimumPairRMS(mol,c1,c2,one2one) << endl;
             }
         }
     }
@@ -266,8 +266,8 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
                         rotor->RemoveSymTorsionValues(2);
                         if (!_quiet)
                         {
-                            cout << "2-fold pattern-based symmetry found = " << ' ';
-                            cout << ref[1] << ' ' << ref[2] << endl;
+                            cerr << "2-fold pattern-based symmetry found = " << ' ';
+                            cerr << ref[1] << ' ' << ref[2] << endl;
                         }
                     }
                 }
@@ -288,8 +288,8 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
                         rotor->RemoveSymTorsionValues(3);
                         if (!_quiet)
                         {
-                            cout << "3-fold pattern-based symmetry found = " << ' ';
-                            cout << ref[1] << ' ' << ref[2] << endl;
+                            cerr << "3-fold pattern-based symmetry found = " << ' ';
+                            cerr << ref[1] << ' ' << ref[2] << endl;
                         }
                     }
                 }
@@ -1025,9 +1025,9 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
 
             /*
             	  mol.SetTorsion(r,a2,a3,a4,vals[0]);
-            	  cout << "test = " << (vals[0]-diff)*RAD_TO_DEG << ' ';
-            	  cout << mol.GetTorsion(a1,a2,a3,a4) <<  ' ';
-            	  cout << mol.GetTorsion(r,a2,a3,a4) << endl;
+            	  cerr << "test = " << (vals[0]-diff)*RAD_TO_DEG << ' ';
+            	  cerr << mol.GetTorsion(a1,a2,a3,a4) <<  ' ';
+            	  cerr << mol.GetTorsion(r,a2,a3,a4) << endl;
             	  */
         }
 
@@ -1037,7 +1037,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
             sprintf(buffer,"%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],
                     ((*i)->GetSmartsString()).c_str());
-            cout << buffer << endl;
+            cerr << buffer << endl;
         }
         return;
     }
@@ -1069,7 +1069,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
             char buffer[BUFF_SIZE];
             sprintf(buffer,"%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],"sp3-sp3");
-            cout << buffer << endl;
+            cerr << buffer << endl;
         }
     }
     else
@@ -1082,7 +1082,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
                 char buffer[BUFF_SIZE];
                 sprintf(buffer,"%3d%3d%3d%3d %s",
                         ref[0],ref[1],ref[2],ref[3],"sp2-sp2");
-                cout << buffer << endl;
+                cerr << buffer << endl;
             }
         }
         else //must be sp2-sp3
@@ -1094,7 +1094,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
                 char buffer[BUFF_SIZE];
                 sprintf(buffer,"%3d%3d%3d%3d %s",
                         ref[0],ref[1],ref[2],ref[3],"sp2-sp3");
-                cout << buffer << endl;
+                cerr << buffer << endl;
             }
         }
 }

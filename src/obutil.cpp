@@ -565,7 +565,6 @@ OBAPI void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
                 vic[atom->GetIdx()]->_c = mol.GetAtom(3);
             }
         }
-        //cout << vic[atom->GetIdx()]->_a->GetIdx()<<":"<<vic[atom->GetIdx()]->_b->GetIdx()<<":"<<vic[atom->GetIdx()]->_c->GetIdx()<<endl;
     }
 
     //fill in geometries

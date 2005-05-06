@@ -272,7 +272,7 @@ void fragment::setHashNumber(void)
             bond = mol->GetBond(atomi,atomj);
             if (!bond)
             {
-                cout << "Error: No bond between two atoms\n";
+                cerr << "Error: No bond between two atoms\n";
                 return;
             }
             bnumber *= 4;
@@ -311,7 +311,7 @@ void fragment::setHashNumber(void)
             bond = mol->GetBond(atomi,atomj);
             if (!bond)
             {
-                cout << "Error: No bond between two atoms\n";
+                cerr << "Error: No bond between two atoms\n";
                 return;
             }
             cnumber *= 8;

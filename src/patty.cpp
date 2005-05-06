@@ -158,16 +158,16 @@ void patty::assign_types(OBMol &mol,vector<string> &atm_typ)
         if (match.size())
         {
             if (debug)
-                cout << typ[i] << " " << smarts[i] << " matched " ;
+                cerr << typ[i] << " " << smarts[i] << " matched " ;
 
             for (unsigned int j = 0; j < match.size(); j++)
             {
                 if (debug)
-                    cout << match[j][0] << " ";
+                    cerr << match[j][0] << " ";
                 atm_typ[match[j][0]] = typ[i];
             }
             if (debug)
-                cout << endl;
+                cerr << endl;
         }
     }
 }
@@ -184,16 +184,16 @@ void patty::assign_types(OBMol &mol,vector<int> &atm_typ)
         if (match.size())
         {
             if (debug)
-                cout << typ[i] << " " << smarts[i] << " matched " ;
+                cerr << typ[i] << " " << smarts[i] << " matched " ;
 
             for (unsigned int j = 0; j < match.size(); j++)
             {
                 if (debug)
-                    cout << match[j][0] << " ";
+                    cerr << match[j][0] << " ";
                 atm_typ[match[j][0]] = type_to_int(typ[i]);
             }
             if (debug)
-                cout << endl;
+                cerr << endl;
         }
     }
 }
@@ -264,7 +264,7 @@ int patty::Istype(const std::string &type)
 
 }
 
-#ifdef I_EVER_BUY_A_MICHAEL_BOLTON_ALBUM
+#ifdef COMPILE_PATTY_MAIN
 
 int main(int argc, char *argv[])
 {
