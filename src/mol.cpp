@@ -23,6 +23,13 @@ GNU General Public License for more details.
 #include "phmodel.h"
 #include "bondtyper.h"
 #include "math/matrix3x3.h"
+#include "obiter.h"
+
+#ifdef HAVE_SSTREAM
+#include <sstream>
+#else
+#include <strstream>
+#endif
 
 using namespace std;
 
@@ -846,6 +853,97 @@ double OBMol::GetExactMass()
     return(mass);
 }
 
+//! Stochoimetric formula (e.g., C4H6O).
+//!   This is either set by OBMol::SetFormula() or generated on-the-fly
+//!   using the "Hill order" -- i.e., C first if present, then H if present
+//!   all other elements in alphabetical order.
+string OBMol::GetFormula()
+{
+  string attr = "Formula";
+  OBPairData *dp = (OBPairData *) GetData(attr);
+  
+  if (dp != NULL) // we already set the formula
+    return dp->GetValue();
+
+  // OK, now let's generate the formula and store it for future use.
+  // These are the atomic numbers of the elements in alphabetical order.
+  const int NumElements = 110;
+  const int alphabetical[NumElements] = {
+   89, 47, 13, 95, 18, 33, 85, 79, 5, 56, 4, 107, 83, 97, 35, 6, 20, 48,
+   58, 98, 17, 96, 27, 24, 55, 29, 105, 66, 68, 99, 63, 9, 26, 100, 87, 31,
+   64, 32, 1, 2, 72, 80, 67, 108, 53, 49, 77, 19, 36, 57, 3, 103, 71, 101,
+   12, 25, 42, 109, 7, 11, 41, 60, 10, 28, 102, 93, 8, 76, 15, 91, 82, 46, 
+   61, 84, 59, 78, 94, 88, 37, 75, 104, 45, 86, 44, 16, 51, 21, 34, 106, 14, 
+   62, 50, 38, 73, 65, 43, 52, 90, 22, 81, 69, 92, 110, 23, 74, 54, 39, 70, 
+   30, 40 };
+
+  int atomicCount[NumElements];
+  int index;
+#ifdef HAVE_SSTREAM
+  stringstream formula;
+#else
+  strstream formula;
+#endif
+
+  for (int i = 0; i < NumElements; i++)
+    atomicCount[i] = 0;
+
+  FOR_ATOMS_OF_MOL(a, *this)
+    atomicCount[a->GetAtomicNum() - 1]++;
+  
+  if (atomicCount[5] != 0) // Carbon (i.e. 6 - 1 = 5)
+    {
+      if (atomicCount[5] > 1)
+	formula << "C" << atomicCount[5];
+      else if (atomicCount[5] == 1)
+	formula << "C";
+
+      atomicCount[5] = 0; // So we don't output C twice
+
+      // only output H if there's also carbon -- otherwise do it alphabetical
+      if (atomicCount[0] != 0) // Hydrogen (i.e., 1 - 1 = 0)
+	{
+	  if (atomicCount[0] > 1)
+	    formula << "H" << atomicCount[0];
+	  else if (atomicCount[0] == 1)
+	    formula << "H";
+
+	  atomicCount[0] = 0;
+	}
+    }
+
+  for (int i = 0; i < NumElements; i++)
+    {
+      if (atomicCount[ alphabetical[i]-1 ] > 1)
+	formula << etab.GetSymbol(alphabetical[i]) 
+	  << atomicCount[ alphabetical[i]-1 ];
+      else if (atomicCount[ alphabetical[i]-1 ] == 1)
+	formula << etab.GetSymbol( alphabetical[i] );
+    }
+
+  dp = new OBPairData;
+  dp->SetAttribute(attr);
+  dp->SetValue( formula.str() );
+  SetData(dp);
+  
+  return (formula.str());
+}
+
+void OBMol::SetFormula(string molFormula)
+{
+  string attr = "Formula";
+  OBPairData *dp = (OBPairData *) GetData(attr);
+  
+  if (dp == NULL)
+    {
+      dp = new OBPairData;
+      dp->SetAttribute(attr);
+    }
+  dp->SetValue(molFormula);
+
+  SetData(dp);
+}
+
 void OBMol::SetTotalCharge(int charge)
 {
     SetFlag(OB_TCHARGE_MOL);
@@ -979,8 +1077,6 @@ OBMol &OBMol::operator=(const OBMol &source)
 
     //Copy rotamer list
     OBRotamerList *rml = (OBRotamerList *)src.GetData(obRotamerList);
-    //if (rml) {cout << "DEBUG : OBMol assignment operator.  Source HAS RotamerList" << endl;}
-    //else     {cout << "DEBUG : OBMol assignment operator.  Source does NOT have RotamerList" << endl;}
     if (rml && rml->NumAtoms() == src.NumAtoms())
     {
         //Destroy old rotamer list if necessary
@@ -2013,8 +2109,6 @@ bool ExpandKekule(OBMol &mol, vector<OBNodeBase*> &va,
             nbr = ((OBBond *)*j)->GetNbrAtom(atom);
             if (GetCurrentValence(nbr) <= maxv[nbr->GetIdx()])
             {
-                //	      cout << "trying a 2 bond on atom " << atom->GetIdx()
-                //		   << "to atom " << nbr->GetIdx() << endl;
                 ((OBBond*)*j)->SetKDouble();
                 ((OBBond*)*j)->SetBO(2);
                 if (ExpandKekule(mol,va,i+1,maxv,secondpass))
@@ -2087,7 +2181,6 @@ bool ExpandKekule(OBMol &mol, vector<OBNodeBase*> &va,
         ((OBBond*)*j)->SetBO(5);
     }
 
-    //  cout << "failed to find valid solution " << endl;
     return(false);
 }
 
@@ -2302,8 +2395,6 @@ bool OBMol::Kekulize()
     vector<OBEdgeBase*>::iterator i;
     // Not quite sure why this is here -GRH 2003
     //  if (NumAtoms() > 255) return(false);
-
-    //  cout << " in Kekulize " << endl;
 
     for (bond = BeginBond(i);bond;bond = NextBond(i))
         if (bond->IsKSingle())
@@ -3202,18 +3293,8 @@ void OBMol::PerceiveBondOrders()
         }
     }
     _flags &= (~(OB_KEKULE_MOL));
-    //  cout << " calling Kekulize " << endl;
     Kekulize();
-    // int bi;
-    //   OBBond *bond;
-    //   for(bi=0;bi <NumBonds(); bi++) {
-    //     bond = GetBond(bi);
-    //     std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " " << bond->GetBO() << " ";
-    //     if (bond->IsKSingle()) std::cout << "bond is Single\n";
-    //     if (bond->IsKDouble()) std::cout << "bond is Double\n";
-    //     if (bond->IsKTriple()) std::cout << "bond is Triple\n";
-    //   }
-    //kekulize();
+
     // Pass 6: Assign remaining bond types, ordered by atom electronegativity
     vector<pair<OBAtom*,double> > sortedAtoms;
     vector<double> rad;

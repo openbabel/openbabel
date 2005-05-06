@@ -97,6 +97,7 @@ bool ReportFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     char buffer[BUFF_SIZE];
     ofs << "FILENAME: " << mol.GetTitle() << endl;
+    ofs << "FORMULA: " << mol.GetFormula() << endl;
     ofs << "MASS: ";
     sprintf(buffer, "%5.4f", mol.GetMolWt());
     ofs << buffer << endl;

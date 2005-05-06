@@ -846,17 +846,11 @@ public:
         _vdata.push_back(d);
     }
     //! Return the number of OBGenericData items attached to this molecule.
-    unsigned int                      DataSize()
-    {
-        return(_vdata.size());
-    }
+    unsigned int                      DataSize(){ return(_vdata.size()); }
     OBGenericData                    *GetData(obDataType);
     OBGenericData                    *GetData(std::string&);
     OBGenericData                    *GetData(const char *);
-    std::vector<OBGenericData*>           &GetData()
-    {
-        return(_vdata);
-    }
+    std::vector<OBGenericData*>      &GetData() { return(_vdata); }
     std::vector<OBGenericData*>::iterator  BeginData()
     {
         return(_vdata.begin());
@@ -890,6 +884,8 @@ public:
     std::vector<OBInternalCoord*> GetInternalCoord();
     double       GetTorsion(int,int,int,int);
     double       GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
+    //! \brief Stochoimetric formula (e.g., C4H6O)
+    std::string  GetFormula();
     //! Heat of formation for this molecule (in kcal/mol)
     double       GetEnergy() const { return(_energy); }
     //! Standard molar mass given by IUPAC atomic masses (amu)
@@ -922,6 +918,8 @@ public:
     //@{
     void   SetTitle(const char *title) { _title = title; }
     void   SetTitle(std::string &title){ _title = title; }
+    //! Set the stochiometric formula for this molecule
+    void   SetFormula(std::string molFormula);
     //! Set the heat of formation for this molecule (in kcal/mol)
     void   SetEnergy(double energy) { _energy = energy; }
     void   SetDimension(unsigned short int d) { _dimension = d; }
