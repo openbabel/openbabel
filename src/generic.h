@@ -57,7 +57,7 @@ public:
     {}
     OBGenericData& operator=(const OBGenericData &src);
 
-    void                      SetAttribute(std::string &v)
+    void                      SetAttribute(const std::string &v)
     {
         _attr = v;
     }
@@ -81,7 +81,7 @@ public:
     OBCommentData(const OBCommentData&);
     OBCommentData& operator=(const OBCommentData &src);
 
-    void          SetData(std::string &data)
+    void          SetData(const std::string &data)
     {
         _data = data;
     }
@@ -141,7 +141,7 @@ public:
     {
         _value = v;
     }
-    void    SetValue(std::string &v)
+    void    SetValue(const std::string &v)
     {
         _value = v;
     }
