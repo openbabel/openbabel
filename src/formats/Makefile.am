@@ -1,7 +1,10 @@
+SUBDIRS = inchi
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
 noinst_LTLIBRARIES = libformats.la
+libformats_la_LIBADD = inchi/libinchi.la
+
 libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
@@ -9,8 +12,8 @@ libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	cml.cpp cmlformat.cpp crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
 	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
-	grosmos96format.cpp hinformat.cpp jaguarformat.cpp \
-	mdlformat.cpp mm3format.cpp mmodformat.cpp \
+	grosmos96format.cpp hinformat.cpp inchiformat.cpp \
+	jaguarformat.cpp mdlformat.cpp mm3format.cpp mmodformat.cpp \
 	mol2format.cpp mopacformat.cpp mpqcformat.cpp nwchemformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
@@ -19,7 +22,7 @@ libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 
 libformatsincludedir = $(includedir)/openbabel
 libformatsinclude_HEADERS = \
-	obmolecformat.h
+	obmolecformat.h inchi_api.h
 
 EXTRA_DIST = exampleformat.cpp
 

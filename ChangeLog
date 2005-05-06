@@ -1,3 +1,34 @@
+2005-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchi: Updated with InChI v1.0 release code.
+
+	* src/formats/inchiformat.cpp, src/formats/inchi_api.h: Ditto.
+	
+	* src/formats/inchi/Makefile.am, src/formats/inchi/Makefile.in,
+	src/formats/Makefile.am, configure.in, configure:
+	Update Makefiles for InChI code.
+
+	* src/fingerprint.cpp, src/kekulize.cpp, src/obutil.cpp,
+	src/patty.cpp, src/rotor.cpp: Change error reports 
+	to go to cerr instead of cout. OBMessageHandler will soon grab
+	cerr, but shouldn't block cout (since it's used for output through
+	pipes).
+
+	* src/main.cpp: Send conversion message to clog instead of cerr,
+	avoiding problems with OBMessageHandler rerouting cerr.
+
+	* src/mol.h, src/mol.cpp: New methods GetFormula() and
+	SetFormula() to handle stoichiometric formulas.
+
+	* src/formats/reportformat.cpp: Use it.
+
+	* src/data.h: New method GetNumberOfElements() to return the
+	number of elements in an OBElementTable.
+
+	* src/generic.h: Change SetAttribute to take "const" string
+	arguments. Ditto for SetData for OBCommentData and SetValue for
+	OBPairData.
+
 2005-04-24  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/obconversion.cpp, src/obconversion.h: 
@@ -20,7 +51,7 @@
 	* windows/*.*: Updated Windows build files
 	
 
-2005-04-19  Geoffrey Hutchison  <ghutchis@Alumina.local>
+2005-04-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* NEWS: Add notes for formats that were changed/deleted.
 	

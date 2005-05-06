@@ -20755,7 +20755,7 @@ done
 
 
 
-                                                                                                    ac_config_files="$ac_config_files Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile openbabel.pc"
+                                                                                                              ac_config_files="$ac_config_files Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile src/formats/inchi/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile openbabel.pc"
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -21331,6 +21331,7 @@ do
   "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
   "src/math/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/math/Makefile" ;;
   "src/formats/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/formats/Makefile" ;;
+  "src/formats/inchi/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/formats/inchi/Makefile" ;;
   "test/Makefile" ) CONFIG_FILES="$CONFIG_FILES test/Makefile" ;;
   "test/cmltest/Makefile" ) CONFIG_FILES="$CONFIG_FILES test/cmltest/Makefile" ;;
   "tools/Makefile" ) CONFIG_FILES="$CONFIG_FILES tools/Makefile" ;;
