@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -3061,7 +3062,7 @@ L13:
         ret = CT_USER_QUIT_ERR;
         goto exit_error;
     }
-    if ( pCD->ulTimeOutTime && pCD->ulTimeOutTime  <= ulMyGetTickCount() ) {
+    if ( bInchiTimeIsOver(pCD->ulTimeOutTime) ) {
         ret = CT_TIMEOUT_ERR;
         goto exit_error;
     }
@@ -3560,7 +3561,7 @@ exit_err:
 #endif
 /*****************************************************************************/
 int GetBaseCanonRanking( int num_atoms, int num_at_tg, sp_ATOM* at[],
-                         T_GROUP_INFO *t_group_info, ATOM_SIZES s[], BCN *pBCN, unsigned long ulTimeOutTime )
+                         T_GROUP_INFO *t_group_info, ATOM_SIZES s[], BCN *pBCN, struct tagInchiTime *ulTimeOutTime )
 {
     int ret = 0;
     int iBase;                   /* base structure index, always valid; = TAUT_YES except special fully non-taut mode */

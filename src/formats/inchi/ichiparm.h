@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -98,7 +99,11 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
     bMergeAllInputStructures = 0;
 
     *ulDisplTime  = 0;
-    ip->ulMaxTime = 60000;  /*  milliseconds, default = 60 sec */
+#ifdef INCHI_LIBRARY
+    ip->msec_MaxTime = 0;      /*  milliseconds, default = unlimited in libinchi */
+#else
+    ip->msec_MaxTime = 60000;  /*  milliseconds, default = 60 sec */
+#endif
 
     if ( bReleaseVersion ) {
 
@@ -397,7 +402,7 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
                                     *ulDisplTime = ul;
                                     break;
                                 case 'W':
-                                    ip->ulMaxTime = ul;
+                                    ip->msec_MaxTime = ul;
                                     break;
                             }
                         }
@@ -671,6 +676,10 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             if ( !stricmp( pArg, "EQUNONISO" ) ) {
                 bCompareComponents = CMP_COMPONENTS | CMP_COMPONENTS_NONISO;
             } else
+            if ( !memicmp( pArg, "OP:", 3 ) ) {
+                bOutputPath = 1;
+                strncpy(szOutputPath, pArg+3, sizeof(szOutputPath)-1);
+            } else
             /*============== Char+Value options ==============*/
             if ( !memicmp( pArg, "W", 1 ) && (t = strtod( pArg+1, (char**)&q ), q > pArg+1) ) {
                 if ( errno == ERANGE || t < 0.0 || t*1000.0 > (double)ULONG_MAX)  {
@@ -678,7 +687,7 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
                 } else {
                     ul = (unsigned long)(t*1000.0);  /* max. time per structure */
                 }
-                ip->ulMaxTime = ul;
+                ip->msec_MaxTime = ul;
             } else
             if ( !memicmp( pArg, "F", 1 ) && (c =  (int)strtol( pArg+1, (char**)&q, 10 ), q > pArg+1) ) {
                 nFontSize = -c;                      /* struct. display font size */
@@ -731,6 +740,10 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             }
         }        /*  add missing paths */
         for ( i = 0; p && i < MAX_NUM_PATHS; i ++ ) {
+            if ( ip->path[i] && !stricmp( ip->path[i], "NUL" ) ) {
+                inchi_free( (char *)ip->path[i] ); /* cast deliberately const qualifier */
+                ip->path[i] = NULL;
+            } else
             if ( !ip->path[i] || !ip->path[i][0] ) {
                 len = strlen( p ) + strlen(szNameSuffix) + strlen( ext[i] );
                 if ( sz = (char*)inchi_malloc( (len+1)*sizeof(sz[0]) ) ) {
@@ -1041,9 +1054,9 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
         (ip->bINChIOutputOptions & INCHI_OUT_TABBED_OUTPUT))? ", tabbed":"");
     i = 0;
     /*  other options: line 4 */
-    if ( ip->ulMaxTime ) {
-        unsigned long seconds = ip->ulMaxTime/1000;
-        unsigned long milliseconds = (ip->ulMaxTime%1000);
+    if ( ip->msec_MaxTime ) {
+        unsigned long seconds = ip->msec_MaxTime/1000;
+        unsigned long milliseconds = (ip->msec_MaxTime%1000);
         my_fprintf( log_file, "Timeout per structure: %lu.%03lu sec", seconds, milliseconds);
         i ++;
     } else {
@@ -1331,7 +1344,7 @@ exit_function:
     return 0; /*  failed */
 
 }
-#define NUM_VERSIONS 3
+#define NUM_VERSIONS 4
 #define LEN_VERSIONS 64
 /*******************************************************************/
 static int bMatchOnePrefix( int len, char *str, int lenPrefix[],
@@ -1343,7 +1356,7 @@ static int bMatchOnePrefix( int len, char *str, int lenPrefix[],
     int i;
     for ( i = 0; i < numPrefix; i ++ ) {
         if ( len >= lenPrefix[i] &&
-             !memcmp( str, strPrefix[i], lenPrefix[i] ) ) {
+             !memcmp( str, strPrefix[i], lenPrefix[i] ) ) { 
             return 1;
         }
     }
@@ -1375,16 +1388,20 @@ int DetectInputINChIFileType( FILE **inp_file, INPUT_PARMS *ip, const char *fmod
     if ( !bInitilized ) {
         lenPlnVersion[0]  = sprintf( szPlnVersion[0],  "%s=%s/", INCHI_NAME, INCHI_VERSION );
         lenPlnVersion[1]  = sprintf( szPlnVersion[1],  "INChI=1.12Beta/" );
-        lenPlnVersion[2]  = sprintf( szPlnVersion[2],  "InChI=1.0RC/" );
+        lenPlnVersion[2]  = sprintf( szPlnVersion[2],  "INChI=1.0RC/" );
+        lenPlnVersion[3]  = sprintf( szPlnVersion[3],  "InChI=1.0RC/" );
         lenPlnAuxVer[0]   = sprintf( szPlnAuxVer[0],   "AuxInfo=%s/", INCHI_VERSION );
         lenPlnAuxVer[1]   = sprintf( szPlnAuxVer[1],   "AuxInfo=1.12Beta/" );
         lenPlnAuxVer[2]   = sprintf( szPlnAuxVer[2],   "AuxInfo=1.0RC/" );
+        lenPlnAuxVer[3]   = sprintf( szPlnAuxVer[3],   "AuxInfo=1.0RC/" );
         lenXmlVersion[0]  = sprintf( szXmlVersion[0],  "<%s version=\"%s\">", INCHI_NAME, INCHI_VERSION );
         lenXmlVersion[1]  = sprintf( szXmlVersion[1],  "<INChI version=\"1.12Beta\">" );
-        lenXmlVersion[2]  = sprintf( szXmlVersion[2],  "<InChI version=\"1.0RC\">" );
+        lenXmlVersion[2]  = sprintf( szXmlVersion[2],  "<INChI version=\"1.0RC\">" );
+        lenXmlVersion[3]  = sprintf( szXmlVersion[3],  "<InChI version=\"1.0RC\">" );
         lenXmlIdentVer[0] = sprintf( szXmlIdentVer[0], "<identifier version=\"%s\"", INCHI_VERSION );
         lenXmlIdentVer[1] = sprintf( szXmlIdentVer[1], "<identifier version=\"1.12Beta\"" );
         lenXmlIdentVer[2] = sprintf( szXmlIdentVer[2], "<identifier version=\"1.0RC\"" );
+        lenXmlIdentVer[3] = sprintf( szXmlIdentVer[3], "<identifier version=\"1.0RC\"" );
         lenXmlMsgError    = sprintf( szXmlMsgError,    "<message type=\"error (no %s)\"", INCHI_NAME );
         lenXmlStruct      = strlen(szXmlStruct);
         lenXmlMsgFatal    = strlen(szXmlMsgFatal);

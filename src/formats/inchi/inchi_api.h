@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -37,16 +38,32 @@ typedef enum tagINCHIBondStereo2D {
    INCHI_BOND_STEREO_SINGLE_2EITHER = -4,
    INCHI_BOND_STEREO_SINGLE_2DOWN   = -6,
    /* stereobond-related */
-   INCHI_BOND_STEREO_DOUBLE_EITHER  =  3
+   INCHI_BOND_STEREO_DOUBLE_EITHER  =  3 /* unknown stereobond geometry */
 } inchi_BondStereo2D;
 
+/*************************************************************************
+ * Notes on using INCHI_BOND_STEREO_SINGLE_*  from inchi_BondStereo2D    *
+ *                                                                       *
+ * These stereo markings are used by InChI to characterize a stereogenic *
+ * atom if and only if all neighbors of this atom have same z-coordinate *
+ * as this atom (that is, in case of 2D fragment).                       *
+ * The only exception is INCHI_BOND_STEREO_SINGLE_?EITHER marking which  *
+ * always assigns to the atom an "unknown" parity (u).                   *
+ *                                                                       *
+ * Note that the -NEWPS InChI option changes 2D stereo interpretation:   *
+ * only bonds that have sharp end pointing to the stereogenic atom are   *
+ * considered as being out of plane and only sharp ends of               *
+ * INCHI_BOND_STEREO_SINGLE_?EITHER bonds are considered to determine    *
+ * whether the stereochemistry is unknown.                               *
+ *************************************************************************/
+
 /* sizes definitions */
-#define MAXVAL                   20 /* max number of bonds per atom */
-#define ATOM_EL_LEN               6 /* length of ASCIIZ element symbol field */
-#define NUM_H_ISOTOPES            3 /* number of hydrogen isotopes: protium, D, T */
-#define ISOTOPIC_SHIFT_FLAG   10000  /* add to isotopic shift = */
-                                     /* isotopic mass - average atomic mass*/
-#define ISOTOPIC_SHIFT_MAX      100  /* max abs(isotopic mass - average atomic mass) */
+#define MAXVAL                   20 /* max number of bonds per atom                 */
+#define ATOM_EL_LEN               6 /* length of ASCIIZ element symbol field        */
+#define NUM_H_ISOTOPES            3 /* number of hydrogen isotopes: protium, D, T   */
+#define ISOTOPIC_SHIFT_FLAG   10000 /* add to isotopic mass if isotopic_mass =      */
+                                    /* (isotopic mass - average atomic mass)        */
+#define ISOTOPIC_SHIFT_MAX      100 /* max abs(isotopic mass - average atomic mass) */
 
 #ifndef INCHI_US_CHAR_DEF
 typedef signed char   S_CHAR;
@@ -60,7 +77,7 @@ typedef unsigned short U_SHORT;
 #define INCHI_US_SHORT_DEF
 #endif
 
-typedef  S_SHORT AT_NUM;      /* atom number; starts from 0 */
+typedef  S_SHORT AT_NUM;          /* atom number; starts from 0 */
 
 /*************************************************
  *
@@ -112,8 +129,10 @@ typedef struct tagInchiAtom {
  *           atom[i].bond_type[j], and atom[i].bond_stereo[j])
  *           should be present in one or both adjacency list:
  *             if k = atom[i].neighbor[j] then i may or may not be present in
- *           atom[k].neighbor[] list. You may populate adjacency lists
- *           with only such neighbors that atom[i].neighbor[j] < i
+ *           atom[k].neighbor[] list. For example, the adjacency lists may be
+ *           populated with only such neighbors that atom[i].neighbor[j] < i
+ *           All elements of an adjacency list must be different, that is,
+ *           a bond must be specified in an adjacency list only once.
  *        4. in Molfiles usually
  *           (number of implicit H) = Valence - SUM(bond_type[])
  *        5. Seemingly illogical order of the inchi_Atom members was
@@ -315,16 +334,16 @@ typedef struct tagInchiAtom {
             M                                  M     
 
      before the disconnection:    after the disconnection:
-     atoms C has valence=5 and    the double bond may become
+     atoms C have valence=5 and   the double bond may become
      the double bond is not       stereogenic
      recognized as stereogenic
 
    2) previously stereogenic bond may become non-stereogenic:
 
        M                           M(+)       
-        \    /                           / 
-         N==C      disconnection  (-)N==C  
-             \        ======>            \ 
+        \    /                             / 
+         N==C      disconnection    (-)N==C  
+             \        ======>              \ 
 
    3) Oddball structures, usually resulting from projecting 3D
       structures on the plane, may contain fragment like that
@@ -471,17 +490,18 @@ typedef struct tagINCHI_Output {
     #define INCHI_DECL
 #endif
 
-/* GetINCHI() return values */
+/* GetINCHI(...) and Get_inchi_Input_FromAuxInfo(...) return values: */
 
 typedef enum tagRetValGetINCHI {
  
-    inchi_Ret_SKIP    = -2, /* not used in InChI dll */
+    inchi_Ret_SKIP    = -2, /* not used in InChI library */
     inchi_Ret_EOF     = -1, /* no structural data has been provided */
     inchi_Ret_OKAY    =  0, /* Success; no errors or warnings */
     inchi_Ret_WARNING =  1, /* Success; warning(s) issued */
     inchi_Ret_ERROR   =  2, /* Error: no InChI has been created */
     inchi_Ret_FATAL   =  3, /* Severe error: no InChI has been created (typically, memory allocation failure) */
-    inchi_Ret_UNKNOWN =  4  /* Unknown program error */
+    inchi_Ret_UNKNOWN =  4, /* Unknown program error */
+    inchi_Ret_BUSY    =  5  /* Previuos call to InChI has not returned yet */
 
 } RetValGetINCHI;
 
@@ -493,6 +513,7 @@ extern "C" {
 #endif
 
 /* inchi_Input is created by the user; strings in inchi_Output are allocated and deallocated by InChI */
+/* inchi_Output does not need to be initilized out to zeroes; see FreeINCHI on how to deallocate it   */
 EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out );
 
 /* FreeINCHI() should be called to deallocate char* pointers obtained from each GetINCHI() call */
@@ -509,6 +530,51 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStringLength( char *p );
 #endif
 #endif
 
+ /**********************************************************
+     Using inchi_Input::szOptions related to ChiralFlag
+  **********************************************************
+  Awailable options (use - instead of / for O.S. other than MS Windows):
+  
+      /SUCF            Use Chiral Flag
+      /ChiralFlagON    Set Chiral Flag
+      /ChiralFlagOFF   Set Not-Chiral Flag
+
+   The following table describes the effect of the options
+   ---------------------------------------------------------------
+   Options               Equivalent to    Chiral Flag Information
+                                          stored in AuxInfo
+   ---------------------------------------------------------------
+   /SUCF /ChiralFlagON    /SABS             Chiral Flag
+   /SUCF /ChiralFlagOFF   /SREL             Not-Chiral Flag 
+   /SUCF                  /SREL             none
+   /ChiralFlagON           none             Chiral Flag
+   /ChiralFlagOFF          none             Not-Chiral Flag
+
+  *************************************************************
+    Other options available in InChI Library (case insensitive)
+  *************************************************************
+    /SNon        Exclude stereo (Default: Include Absolute stereo)
+    /SRel        Relative stereo
+    /SRac        Racemic stereo
+
+    /SUU         Include omitted unknown/undefined stereo
+    /NEWPS       Narrow end of wedge points to stereocenter (default: both)
+    /RecMet      Include reconnected bond to metal results
+    /FixedH      Mobile H Perception Off (Default: On)
+    /AuxNone     Omit auxiliary information (default: Include)
+    /NoADP       Disable Aggressive Deprotonation (for testing only)
+    /Compress    Compressed output
+    /DoNotAddH   Overrides inchi_Atom::num_iso_H[0] == -1
+    /Wnumber     Set time-out per structure in seconds; W0 means unlimited
+                 In InChI library the default value is unlimited
+    /OutputSDF   Output SDfile instead of InChI
+    /WarnOnEmptyStructure Warn and produce empty InChI for empty structure
+
+    Empty InChI format:   InChI=1//
+                          AuxInfo=1//
+*/
+
+
 /*****************************************************************
  *
  *
@@ -523,7 +589,7 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStringLength( char *p );
 
 typedef struct tagInchiInpData {
     inchi_Input *pInp;    /* a pointer to pInp that has all items 0 or NULL */
-    int          bChiral; /* the structure was marked as chiral */
+    int          bChiral; /* 1 => the structure was marked as chiral, 2=> not chiral, 0=> not marked */
     char         szErrMsg[STR_ERR_LEN];
 } InchiInpData;
 
@@ -564,23 +630,23 @@ EXPIMP_TEMPLATE INCHI_API void INCHI_DECL Free_inchi_Input( inchi_Input *pInp );
 #endif
 
 
-/* Annotated List of -Exports for libinchi.dll produced by dumpbin:
+/* Annotated List of -Exports for libinchi.dll produced by dumpbin (Win32):
 
  ordinal hint RVA      name
 --------------------------------- C calling conventions, compatible with gcc under Win32
                                   (see inchi_dll.c and vc6_libinchi.def for details)
-       1    0 0004DAC0 FreeINCHI
-       2    1 0004DB00 Free_inchi_Input
-       3    2 0004DAB0 GetINCHI
-       4    3 0004DAD0 GetStringLength
-       5    4 0004DAE0 Get_inchi_Input_FromAuxInfo
+       1    0 0004D800 FreeINCHI
+       2    1 0004D840 Free_inchi_Input
+       3    2 0004D7F0 GetINCHI
+       4    3 0004D810 GetStringLength
+       5    4 0004D820 Get_inchi_Input_FromAuxInfo
 --------------------------------- __stdcall calling conventions, compatible with MS VB 6
                                   (as defined in this file and used in INCHI_MAIN.exe)
-       6    5 0004C030 _FreeINCHI@4
-       7    6 0001D5D0 _Free_inchi_Input@4
-       8    7 0004C080 _GetINCHI@8
-       9    8 0004DA90 _GetStringLength@4
-      10    9 0001D460 _Get_inchi_Input_FromAuxInfo@12
+       6    5 0004BD30 _FreeINCHI@4
+       7    6 0001D7C0 _Free_inchi_Input@4
+       8    7 0004BD80 _GetINCHI@8
+       9    8 0004D7D0 _GetStringLength@4
+      10    9 0001D620 _Get_inchi_Input_FromAuxInfo@12
 
 ------------------- end of the Annotated list-----------------------
 

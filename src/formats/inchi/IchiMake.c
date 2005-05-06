@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -13,6 +14,9 @@
 
 #include "mode.h"
 
+#if( TEST_RENUMB_ATOMS == 1 )
+#include "ichitime.h"
+#endif
 #include "inpdef.h"
 #include "ichi.h"
 #include "strutil.h"
@@ -1919,7 +1923,8 @@ int CompareINChI( INChI *i1, INChI *i2, INChI_Aux *a1, INChI_Aux *a2 )
 int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *orig_inp_data,
                   inp_ATOM *inp_at, INP_ATOM_DATA *out_norm_data[2],
                   int num_inp_at, INCHI_MODE nUserMode,
-                  INCHI_MODE *pbTautFlags, INCHI_MODE *pbTautFlagsDone, unsigned long ulMaxTime, char *pStrErrStruct)
+                  INCHI_MODE *pbTautFlags, INCHI_MODE *pbTautFlagsDone,
+                  struct tagInchiTime *ulMaxTime, char *pStrErrStruct)
 {
 /*
 #define NON_TAUT 0
@@ -1957,10 +1962,13 @@ int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *ori
     int bExtract = 0; /*  EXTR_HAS_ATOM_WITH_DEFINED_PARITY; */
 #endif
 #if( TEST_RENUMB_ATOMS == 1 )
-    unsigned long ulNormTime;
-    unsigned long ulCanonTime, ulCanonTime2;
+    long ulNormTime=0;
+    long ulCanonTime=0, ulCanonTime2=0;
 
-    ulNormTime = ulMyGetTickCount();
+    inchiTime ulNormTimeStart;
+    inchiTime ulCanonTimeStart;
+
+    InchiTimeGet( &ulNormTimeStart );
 #endif
     
     memset( s, 0, sizeof(s) );
@@ -2221,7 +2229,7 @@ int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *ori
         goto exit_function; /*  program error: inconsistent nUserMode or missing taut/non-taut allocation */ /*   <BRKPT> */
     }
 #if( TEST_RENUMB_ATOMS == 1 )
-    ulNormTime = ulMyGetTickCount() - ulNormTime;
+    ulNormTime = InchiTimeElapsed( &ulNormTimeStart);
 #endif
     /************************************************************
      *                                                          *
@@ -2229,7 +2237,7 @@ int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *ori
      *                                                          *
      ************************************************************/
 #if( TEST_RENUMB_ATOMS == 1 )
-        ulCanonTime = ulMyGetTickCount();
+        InchiTimeGet( &ulCanonTimeStart );
 #endif
     if ( (nUserMode & REQ_MODE_NON_ISO) && !(nUserMode & REQ_MODE_ISO) ) {
         /* added for special non-isotopic test mode 2004-10-04 */
@@ -2252,9 +2260,9 @@ int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *ori
         }
         bHasIsotopicAtoms = 0;
     }
-    ret = GetBaseCanonRanking( num_atoms, num_at_tg, at, t_group_info, s, pBCN, ulMaxTime? (ulMaxTime + ulMyGetTickCount()) : 0 );
+    ret = GetBaseCanonRanking( num_atoms, num_at_tg, at, t_group_info, s, pBCN, ulMaxTime );
 #if( TEST_RENUMB_ATOMS == 1 )
-        ulCanonTime = ulMyGetTickCount() - ulCanonTime;
+        ulCanonTime = InchiTimeElapsed( &ulCanonTimeStart );
 #endif
     if ( ret < 0 ) {
         goto exit_function; /*  program error */
@@ -2375,7 +2383,7 @@ int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *ori
          *   '6' A    1|2|4|8|16 Output All
          */
 #if( TEST_RENUMB_ATOMS == 1 )
-        ulCanonTime2 = ulMyGetTickCount();
+        InchiTimeGet( &ulCanonTimeStart );
 #endif
         /***************************************
            The last canonicalization step
@@ -2452,7 +2460,7 @@ int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *ori
             }
         }
 #if( TEST_RENUMB_ATOMS == 1 )
-        ulCanonTime2 = ulMyGetTickCount() - ulCanonTime2;
+        ulCanonTime2 = InchiTimeElapsed( &ulCanonTimeStart );
         pINChI_Aux->ulCanonTime = ulCanonTime+ulCanonTime2;
         pINChI_Aux->ulNormTime  = ulNormTime;
 #endif

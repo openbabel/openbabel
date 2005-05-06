@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -1596,7 +1597,7 @@ done:;      /*  at this point lvl=0. */
             pCS->lNumTotCT ++;
             nTotSuccess = 1;
         }
-        if ( pCS->ulTimeOutTime && pCS->ulTimeOutTime  <= ulMyGetTickCount() ) {
+        if ( bInchiTimeIsOver( pCS->ulTimeOutTime ) ) {
             return CT_TIMEOUT_ERR;
         }
     }

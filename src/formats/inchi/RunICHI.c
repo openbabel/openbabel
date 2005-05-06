@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -16,6 +17,8 @@
 #include <limits.h>
 
 #include "mode.h"       /* moved from below, suggestion by David Mosenkis */
+
+#include "ichitime.h"
 
 #ifndef INCHI_ANSI_ONLY
 #include <conio.h>
@@ -37,7 +40,7 @@
 #include "ichicomp.h"
 
 #if( ADD_CMLPP == 1 )
-#include "ReadCML.hpp"
+#include "readcml.hpp"
 #include "debug.h"
 #endif
 
@@ -112,6 +115,7 @@ int RenumberingTest( INChI *pINChI[][TAUT_NUM], INChI_Aux *pINChI_Aux[][TAUT_NUM
                      STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle, INCHI_FILE *log_file, int i, int num_inp);
 */
 #endif /* } TEST_RENUMB_ATOMS */
+
 
 #ifdef INCHI_LIBRARY
 /*****************************************************************
@@ -1445,7 +1449,7 @@ void SplitTime( unsigned long ulTotalTime, int *hours, int *minutes, int *second
 int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATOM_DATA *orig_inp_data,
                       /* for CML:*/ int inp_index, int *out_index )
 {
-    unsigned long ulTStart, ulTEnd;
+    inchiTime     ulTStart;
     int           nRet = 0, nRet2 = 0;
     int           bGetOrigCoord = !(ip->bINChIOutputOptions & (INCHI_OUT_NO_AUX_INFO | INCHI_OUT_SHORT_AUX_INFO));
     INCHI_MODE InpAtomFlags = 0;  /* reading Molfile may set FLAG_INP_AT_CHIRAL bit */
@@ -1467,7 +1471,7 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
                     strcat( ip->pSdfValue, " [+1]" );
                 }
             }
-            ulTStart = ulMyGetTickCount( );
+            InchiTimeGet( &ulTStart );
             sd->fPtrStart = (inp_file == stdin)? -1 : ftell( inp_file );
             /*  read the original structure */
             nRet2 = MolfileToOrigAtom( inp_file, orig_inp_data, ip->bMergeAllInputStructures, bGetOrigCoord, ip->bDoNotAddH,
@@ -1478,8 +1482,7 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
             if ( !ip->bGetSdfileId || ip->lSdfId == 999999) ip->lSdfId = 0;
             if ( !ip->bGetMolfileNumber || ip->lMolfileNumber < 0 ) ip->lMolfileNumber = 0;
             sd->fPtrEnd = (inp_file == stdin)? -1 : ftell( inp_file );
-            ulTEnd = ulMyGetTickCount( );
-            sd->ulStructTime += ulTEnd-ulTStart;
+            sd->ulStructTime += InchiTimeElapsed( &ulTStart );
 #if( bRELEASE_VERSION == 0 )
             sd->bExtract |= orig_inp_data->bExtract;
 #endif
@@ -1496,6 +1499,9 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
             } else
             if ( ip->bChiralFlag & FLAG_SET_INP_AT_NONCHIRAL ) {
                 InpAtomFlags = FLAG_INP_AT_NONCHIRAL; /* forced by the user */
+            } else
+            if ( (InpAtomFlags & FLAG_INP_AT_CHIRAL) && (InpAtomFlags && FLAG_INP_AT_NONCHIRAL) ) {
+                InpAtomFlags &= ~FLAG_INP_AT_NONCHIRAL;
             }
             /* save requested flags in the AuxInfo */
             sd->bChiralFlag &= ~( FLAG_INP_AT_CHIRAL | FLAG_INP_AT_NONCHIRAL );
@@ -1543,7 +1549,7 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
                     strcat( ip->pSdfValue, " [+1]" );
                 }
             }
-            ulTStart = ulMyGetTickCount( );
+            InchiTimeGet( &ulTStart );
             sd->fPtrStart = (inp_file == stdin)? -1 : ftell( inp_file );
             /*  read the original structure */
             nRet2 = INChIToOrigAtom( inp_file, orig_inp_data, ip->bMergeAllInputStructures,
@@ -1552,8 +1558,8 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
                                &InpAtomFlags, &sd->nStructReadError, sd->pStrErrStruct );
             /*if ( !ip->bGetSdfileId || ip->lSdfId == 999999) ip->lSdfId = 0;*/
             sd->fPtrEnd = (inp_file == stdin)? -1 : ftell( inp_file );
-            ulTEnd = ulMyGetTickCount( );
-            sd->ulStructTime += ulTEnd-ulTStart;
+
+            sd->ulStructTime += InchiTimeElapsed( &ulTStart );
 #if( bRELEASE_VERSION == 0 )
             sd->bExtract |= orig_inp_data->bExtract;
 #endif
@@ -1563,6 +1569,9 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
             } else
             if ( ip->bChiralFlag & FLAG_SET_INP_AT_NONCHIRAL ) {
                 InpAtomFlags = FLAG_INP_AT_NONCHIRAL; /* forced by the user */
+            } else
+            if ( (InpAtomFlags & FLAG_INP_AT_CHIRAL) && (InpAtomFlags && FLAG_INP_AT_NONCHIRAL) ) {
+                InpAtomFlags &= ~FLAG_INP_AT_NONCHIRAL;
             }
             sd->bChiralFlag |= InpAtomFlags; /* copy chiral flag to AuxInfo */
             /* quick fix: modify ip->nMode on the fly */
@@ -1594,7 +1603,7 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
     case INPUT_CMLFILE:
         if ( orig_inp_data ) {
 
-            ulTStart = ulMyGetTickCount( );
+            InchiTimeGet( &ulTStart );
             /*
             if ( inp_index >= 0 ) {
                 sd->fPtrStart = inp_index;
@@ -1611,8 +1620,7 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
                                &sd->nStructReadError, sd->pStrErrStruct );
 
 
-            ulTEnd = ulMyGetTickCount( );
-            sd->ulStructTime += ulTEnd-ulTStart;
+            sd->ulStructTime += InchiTimeElapsed( &ulTStart );
 #if( bRELEASE_VERSION == 0 )
             sd->bExtract |= orig_inp_data->bExtract;
 #endif
@@ -1741,12 +1749,11 @@ int GetOneComponent( STRUCT_DATA *sd, INPUT_PARMS *ip, INCHI_FILE *log_file, INC
                      INP_ATOM_DATA *inp_cur_data,
                      ORIG_ATOM_DATA *orig_inp_data, int i, int num_inp, char *pStr, int nStrLen )
 {
-    unsigned long ulTStart, ulTEnd;
-    ulTStart = ulMyGetTickCount( );
+    inchiTime ulTStart;
+    InchiTimeGet( &ulTStart );
     CreateInpAtomData( inp_cur_data, orig_inp_data->nCurAtLen[i], 0 );
     inp_cur_data->num_at = ExtractConnectedComponent( orig_inp_data->at, orig_inp_data->num_inp_atoms, i+1, inp_cur_data->at );
-    ulTEnd = ulMyGetTickCount( );
-    sd->ulStructTime += ulTEnd-ulTStart;
+    sd->ulStructTime += InchiTimeElapsed( &ulTStart );
 
     /*  error processing */
     if ( inp_cur_data->num_at <= 0 || orig_inp_data->nCurAtLen[i] != inp_cur_data->num_at ) {
@@ -1815,24 +1822,25 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
                             PINChI2 *pINChI, PINChI_Aux2 *pINChI_Aux, int iINChI,
                             int i, int num_inp, INP_ATOM_DATA **inp_norm_data, NORM_CANON_FLAGS *pncFlags, INCHI_FILE *log_file )
 {
-    unsigned long ulTStart, ulTEnd;
+    inchiTime     ulTStart, ulTEnd, *pulTEnd = NULL;
     int           k, num_at, ret = 0;
     int           bOrigCoord;
     INCHI_MODE     bTautFlags     = ip->bTautFlags;
     INCHI_MODE     bTautFlagsDone = (ip->bTautFlagsDone | sd->bTautFlagsDone[INCHI_BAS]);
     INChI       *cur_INChI[TAUT_NUM];
     INChI_Aux   *cur_INChI_Aux[TAUT_NUM];
+    long          lElapsedTime;
     /*
     PINChI2     *pINChI     = pINChI2[iINChI];
     PINChI_Aux2 *pINChI_Aux = pINChI_Aux2[iINChI];
     */
+    InchiTimeGet( &ulTStart );
     bOrigCoord = !(ip->bINChIOutputOptions & (INCHI_OUT_NO_AUX_INFO | INCHI_OUT_SHORT_AUX_INFO));
 
     for ( k = 0; k < TAUT_NUM; k ++ ) {
         cur_INChI[k]      = NULL;
         cur_INChI_Aux[k]  = NULL;
     }
-    ulTStart = ulMyGetTickCount( );
     /*  allocate memory for non-tautimeric (k=0) and tautomeric (k=1) results */
     for ( k = 0; k < TAUT_NUM; k ++ ) {
         int nAllocMode = (k==TAUT_YES? REQ_MODE_TAUT:0) |
@@ -1856,6 +1864,13 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
             FreeInpAtomData( inp_norm_data[k] );
         }
     }
+    lElapsedTime = InchiTimeElapsed( &ulTStart );
+    if ( ip->msec_MaxTime ) {
+        ip->msec_LeftTime -= lElapsedTime;
+    }
+    sd->ulStructTime += lElapsedTime;
+
+
 #if( !defined( INCHI_LIB ) && !defined( INCHI_LIBRARY ) )
 #if( TEST_RENUMB_ATOMS != 1 )
     /*  log file / console output */
@@ -1879,10 +1894,18 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
      * num_at >  0: number of atoms (excluding terminal hydrogen atoms)
      * inp_norm_data[0] => non-tautomeric, inp_norm_data[1] => tautomeric
      */
+    InchiTimeGet( &ulTStart );
+    if ( ip->msec_MaxTime ) {
+        ulTEnd = ulTStart;
+        pulTEnd = &ulTEnd;
+        if ( ip->msec_LeftTime > 0 ) {
+            InchiTimeAddMsec( pulTEnd, ip->msec_LeftTime );
+        }
+    }
     num_at = Create_INChI( cur_INChI, cur_INChI_Aux, orig_inp_data, inp_cur_data->at,
                           inp_norm_data,
                           inp_cur_data->num_at,
-                          ip->nMode, &bTautFlags, &bTautFlagsDone, ip->ulMaxTime, sd->pStrErrStruct);
+                          ip->nMode, &bTautFlags, &bTautFlagsDone, pulTEnd, sd->pStrErrStruct);
     SetConnectedComponentNumber( inp_cur_data->at, inp_cur_data->num_at, i+1 ); /*  normalization alters structure component number */
     for ( k = 0; k < TAUT_NUM; k ++ ) {
         if ( cur_INChI_Aux[k] && cur_INChI_Aux[k]->nNumberOfAtoms > 0 ) {
@@ -1920,8 +1943,11 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
         GetProcessingWarnings(cur_INChI, inp_norm_data, sd);
     }
 
-    ulTEnd = ulMyGetTickCount( );
-    sd->ulStructTime += ulTEnd-ulTStart;
+    lElapsedTime = InchiTimeElapsed( &ulTStart );
+    if ( ip->msec_MaxTime ) {
+        ip->msec_LeftTime -= lElapsedTime;
+    }
+    sd->ulStructTime += lElapsedTime;
 #ifndef INCHI_LIBRARY
     /*  Display the results */
     if ( ip->bDisplay )
@@ -1930,6 +1956,7 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
     /*  a) No matter what happened save the allocated INChI pointers */
     /*  save the INChI of the current component */
 
+    InchiTimeGet( &ulTStart );
     for ( k = 0; k < TAUT_NUM; k ++ ) {
         pINChI[i][k]     = cur_INChI[k];
         pINChI_Aux[i][k] = cur_INChI_Aux[k];
@@ -1985,6 +2012,11 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
     if ( sd->nErrorCode ) {
         ret = _IS_ERROR;
     }
+    lElapsedTime = InchiTimeElapsed( &ulTStart );
+    if ( ip->msec_MaxTime ) {
+        ip->msec_LeftTime -= lElapsedTime;
+    }
+    sd->ulStructTime += lElapsedTime;
     return ret;
 }
 /****************************************************************************************************/
@@ -2984,6 +3016,7 @@ int ProcessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
         sd->bUserQuitComponentDisplay = 0;
         memset( composite_norm_data, 0, sizeof(composite_norm_data) );
         memset( pncFlags, 0, sizeof(*pncFlags) );
+        /* ip->msec_LeftTime = ip->msec_MaxTime; */ /* start timeout countdown */
 
         /* for testing only */
 #if( REMOVE_ION_PAIRS_ORIG_STRU == 1 )
@@ -3066,7 +3099,6 @@ int ProcessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
             if ( /*!sd->nErrorCode &&*/ !sd->bUserQuitComponent && !sd->bUserQuit ) {
                 /*  if successful then returns 0, otherwise returns _IS_FATAL */
                 /*  exctract the structure if requested */
-                /* ulTStart = ulMyGetTickCount( ); */
                 nRet1 = TreatCreateINChIWarning(sd, ip, prep_inp_data, num_inp,
                                  inp_file, log_file, output_file, prb_file,pStr, nStrLen );
                 nRet = inchi_max(nRet, nRet1);
@@ -3265,6 +3297,7 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
     INP_ATOM_DATA InpNormAtData, InpNormTautData;
     INP_ATOM_DATA *inp_norm_data[TAUT_NUM]; /*  = { &InpNormAtData, &InpNormTautData }; */
     ORIG_ATOM_DATA *cur_prep_inp_data = prep_inp_data + iINChI;
+    inchiTime      ulTStart;
 #ifndef INCHI_ANSI_ONLY
     int            bShowStructure = 0;
     int            bStructurePreprocessed = 0; /* All changes except disconnection */
@@ -3311,6 +3344,8 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
     RENUMB_DATA *pRenumbData = &RenumbData;
 #endif
 
+
+    ip->msec_LeftTime = ip->msec_MaxTime; /* start timeout countdown for each component */
 
 #if( TEST_RENUMB_ATOMS == 1 )
     memset( pRenumbData, 0, sizeof(*pRenumbData) );
@@ -3360,6 +3395,9 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
 
     if ( (!prep_inp_data->at || !prep_inp_data->num_inp_atoms) && orig_inp_data->num_inp_atoms > 0 ) {
         /* the structure has not been preprocessed */
+        if ( ip->msec_MaxTime ) {
+            InchiTimeGet( &ulTStart );
+        }
         PreprocessOneStructure( sd, ip, orig_inp_data, prep_inp_data );
         pncFlags->bTautFlags[iINChI][TAUT_YES] =
         pncFlags->bTautFlags[iINChI][TAUT_NON] = sd->bTautFlags[INCHI_BAS] | ip->bTautFlags;
@@ -3435,6 +3473,9 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                 bINCHI_LIB_Flag |= COMP_ORIG_1_RECN;
                 /* preprocessed will be added when output canonicalization results */
             }
+        }
+        if ( ip->msec_MaxTime ) {
+            ip->msec_LeftTime -= InchiTimeElapsed( &ulTStart );
         }
 
         /* display the ORIGINAL, UN-PREPROCESSED structure */
@@ -3550,6 +3591,9 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
     /**************************************************************************/
 
     for ( i = 0, nRet = 0; !sd->bUserQuitComponent && i < cur_prep_inp_data->num_components; i ++ ) {
+        if ( ip->msec_MaxTime ) {
+            InchiTimeGet( &ulTStart );
+        }
 #ifndef INCHI_LIB  /* { */
 #if( bREUSE_INCHI == 1 )
         if ( iINChI == INCHI_REC && (!ip->bDisplay && !(ip->bCompareComponents & CMP_COMPONENTS) ||
@@ -3607,6 +3651,9 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
         /*  a) allocate memory and extract current component */
         /*****************************************************/
         nRet = GetOneComponent( sd, ip, log_file, output_file, inp_cur_data, cur_prep_inp_data, i, num_inp, pStr, nStrLen );
+        if ( ip->msec_MaxTime ) {
+            ip->msec_LeftTime -= InchiTimeElapsed( &ulTStart );
+        }
         switch ( nRet ) {
         case _IS_ERROR:
         case _IS_FATAL:

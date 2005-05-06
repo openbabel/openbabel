@@ -2,14 +2,14 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
 #ifndef __INCHIMAIN_H__
 #define __INCHIMAIN_H__
 
-/* argv[1] => input path */
 #define ESC_KEY       27
 
 /********************************************************************/

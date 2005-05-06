@@ -199,12 +199,12 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 				bo=4;
 			iat.bond_type[nbonds]     = bo;
 
-			S_CHAR bs = INChI_BOND_STEREO_NONE;
+			S_CHAR bs = INCHI_BOND_STEREO_NONE;
 
 			if(pbond->IsWedge())
-				bs = INChI_BOND_STEREO_SINGLE_1UP;
+				bs = INCHI_BOND_STEREO_SINGLE_1UP;
 			if(pbond->IsHash())
-				bs = INChI_BOND_STEREO_SINGLE_1DOWN;
+				bs = INCHI_BOND_STEREO_SINGLE_1DOWN;
 
 			iat.bond_stereo[nbonds++] = bs;
 			if(nbonds>MAXVAL)
@@ -245,7 +245,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 				{
 					inchi_Stereo0D stereo;
 					stereo.central_atom = patom->GetIdx()-1;
-					stereo.type = INChI_StereoType_Tetrahedral;
+					stereo.type = INCHI_StereoType_Tetrahedral;
 					int i=0;
 					vector<OBEdgeBase*>::iterator itr;
 					OBBond *pbond;
@@ -253,11 +253,11 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 						stereo.neighbor[i] = pbond->GetNbrAtomIdx(patom)-1;
 					//if(i!=4)...error
 
-					stereo.parity = INChI_PARITY_UNKNOWN;
+					stereo.parity = INCHI_PARITY_UNKNOWN;
 					if(patom->IsPositiveStereo() || patom->IsClockwise())
-						stereo.parity = INChI_PARITY_ODD;
+						stereo.parity = INCHI_PARITY_ODD;
 					if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
-						stereo.parity = INChI_PARITY_EVEN;
+						stereo.parity = INCHI_PARITY_EVEN;
 					stereoVec.push_back(stereo);
 				}
 			}
@@ -304,15 +304,15 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 					{
 						inchi_Stereo0D stereo;
 						stereo.central_atom = NO_ATOM;
-						stereo.type = INChI_StereoType_DoubleBond;
+						stereo.type = INCHI_StereoType_DoubleBond;
 						stereo.neighbor[0]= pX->GetNbrAtomIdx(pA)-1;
 						stereo.neighbor[1] = pA->GetIdx()-1;
 						stereo.neighbor[2] = pB->GetIdx()-1;
 						stereo.neighbor[3]= pY->GetNbrAtomIdx(pB)-1;
 						if((pX->IsUp() && pY->IsUp())||(pX->IsDown() && pY->IsDown()))
-							stereo.parity = INChI_PARITY_ODD;
+							stereo.parity = INCHI_PARITY_ODD;
 						else
-							stereo.parity = INChI_PARITY_EVEN;
+							stereo.parity = INCHI_PARITY_EVEN;
 						stereoVec.push_back(stereo);
 					}
 				}
@@ -365,7 +365,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 	inchi_Output inout;
 	memset(&inout,0,sizeof(inchi_Output));
-	int ret = GetINChI(&inp, &inout);
+	int ret = GetINCHI(&inp, &inout);
 	if(ret!=inchi_Ret_OKAY)
 	{
 		string mes(inout.szMessage);
@@ -373,12 +373,12 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 			cerr << molID.str() << inout.szMessage << endl;
 		if(ret!=inchi_Ret_WARNING)
 		{
-			FreeINChI(&inout);
+			FreeINCHI(&inout);
 			return false;
 		}
 	}
 	
-	string ostring = inout.szINChI;
+	string ostring = inout.szInChI;
 	if(pConv->IsOption('t'))
 	{
 		ostring += ' ';
@@ -418,11 +418,11 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	if(pConv->IsOption('e'))
 	{
 		if(pConv->GetOutputIndex()==1)
-			firstInchi = inout.szINChI;
+			firstInchi = inout.szInChI;
 		else
 		{
 			ofs << "Molecules " << firstID << "and " << molID.str();
-			switch (CompareInchi(firstInchi.c_str(), inout.szINChI)) 
+			switch (CompareInchi(firstInchi.c_str(), inout.szInChI)) 
 			{
 			case 0:
 				ofs << " are identical" << endl;
@@ -458,7 +458,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		}
 	}
 
-	FreeINChI(&inout);
+	FreeINCHI(&inout);
 	return true;
 }
 

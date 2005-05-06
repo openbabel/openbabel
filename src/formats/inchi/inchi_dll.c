@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -105,6 +106,9 @@ void INCHI_DECL FreeINCHI( inchi_Output *out )
  *    INCHI API: MAIN ENTRY POINT
  *
  ********************************************************************/
+
+int bLibInchiSemaphore = 0;
+
 int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out )
 {
 
@@ -144,6 +148,11 @@ int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out )
     const char *argv[INCHI_MAX_NUM_ARG+1];
     int   argc;
     char *szOptions = NULL;
+
+    if ( bLibInchiSemaphore ) {  /* does not work properly under sufficient stress */
+        return inchi_Ret_BUSY;
+    }
+    bLibInchiSemaphore = 1;
 
 #if( TRACE_MEMORY_LEAKS == 1 )
     _CrtSetDbgFlag(_CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
@@ -198,10 +207,17 @@ repeat:
     memset( pINChI,     0, sizeof(pINChI    ) );
     memset( pINChI_Aux, 0, sizeof(pINChI_Aux) );
     memset( sd,         0, sizeof(*sd) );
+    memset( ip,         0, sizeof(*ip) );
     memset( orig_inp_data     , 0,   sizeof( *orig_inp_data  ) );
     memset( prep_inp_data     , 0, 2*sizeof( *prep_inp_data  ) );
     memset( szSdfDataValue    , 0, sizeof( szSdfDataValue    ) );
-    
+
+    if ( !out ) {
+        nRet = _IS_ERROR;
+        goto exit_function;
+    }
+    memset( out, 0, sizeof(*out) );
+
     /* options */
     if ( inp && inp->szOptions ) {
         szOptions = (char*)inchi_malloc( strlen(inp->szOptions) + 1 );
@@ -209,7 +225,8 @@ repeat:
             strcpy( szOptions, inp->szOptions );
             argc = parse_options_string ( szOptions, argv, INCHI_MAX_NUM_ARG );
         } else {
-            return -1;
+            nRet = _IS_FATAL;
+            goto translate_RetVal; /* emergency exit */
         }
     } else {
         argc = 1;
@@ -440,11 +457,11 @@ exit_function:
 #ifdef INCHI_LIBRARY
     /* output */
     if ( sd->pStrErrStruct[0] ) {
-        if ( out->szMessage = (char *)inchi_malloc( strlen(sd->pStrErrStruct) + 1 ) ) {
+        if ( out && (out->szMessage = (char *)inchi_malloc( strlen(sd->pStrErrStruct) + 1 )) ) {
             strcpy( out->szMessage, sd->pStrErrStruct );
         }
     }
-    if ( output_file->pStr && output_file->nUsedLength > 0 ) {
+    if ( output_file->pStr && output_file->nUsedLength > 0 && out ) {
         char *p;
         out->szInChI   = output_file->pStr;
         out->szAuxInfo = NULL;
@@ -464,8 +481,10 @@ exit_function:
         while ( log_file->nUsedLength && '\n' == log_file->pStr[log_file->nUsedLength-1] ) {
             log_file->pStr[-- log_file->nUsedLength]  = '\0'; /* remove last LF */
         }
-        out->szLog = log_file->pStr;
-        log_file->pStr = NULL;
+        if ( out ) {
+            out->szLog = log_file->pStr;
+            log_file->pStr = NULL;
+        }
     }
     if ( output_file->pStr )
         inchi_free( output_file->pStr );
@@ -487,6 +506,7 @@ translate_RetVal:
     case _IS_UNKNOWN:
     default         : nRet = inchi_Ret_UNKNOWN; break; /* Unlnown program error */
     }
+    bLibInchiSemaphore = 0;
     return nRet;
 }
 

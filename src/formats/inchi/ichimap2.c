@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -1752,7 +1753,7 @@ int CreateCheckSymmPaths( sp_ATOM *at, AT_RANK prev1, AT_RANK cur1, AT_RANK prev
 #define PARITY_IMPOSSIBLE    999
 /**************************************************************************************
   Note:    the following C2v/S4 stereo center symmetry recognition
-           is not included in the final InChI version released in March 2005
+           is not included in the final InChI version released in April 2005
            It is disabled in the mode.h (CHECK_C2v_S4_SYMM = 0)
            As the result, the only central atom in S4 or atoms on C2v axis
            may have pasrity (-) even though these atoms are not stereogenic.

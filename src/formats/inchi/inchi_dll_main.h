@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -11,11 +12,11 @@
 
 #if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif /* _MSC_VER > 1000 */
 
 #if defined(_WIN32) && defined(_MSC_VER) && defined(_USRDLL)
 
-//#define WIN32_LEAN_AND_MEAN		/* Exclude rarely-used stuff from Windows headers */
+/*#define WIN32_LEAN_AND_MEAN */  /* Exclude rarely-used stuff from Windows headers */
 #include <windows.h>
 
 #define  INCHI_DLLMAIN_TYPE APIENTRY

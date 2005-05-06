@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -151,21 +152,18 @@ typedef struct tagFixHOrTautCanonNumbering {
     S_CHAR          *iso_exchg_atnos;     /* canonical: 0=> tautomeric or may have isotopic H exchanged */
     S_CHAR          *iso_exchg_atnosOrig; /* original: 0=> tautomeric or may have isotopic H exchanged */
     
-    /* timeout limit */
-    unsigned long          ulTimeOutTime;
-
 } FTCN;
 
 /******************** BCN *************************************/
 typedef struct tagBaseCanonNumbering {
 
-    AT_RANK       **pRankStack;
-    int             nMaxLenRankStack;
-    int             num_max;        /* allocated nRank[] arrays lengths in pRankStack */
-    int             num_at_tg;  /* all of the following arrays have this length */
-    int             num_atoms;
-    unsigned long   ulTimeOutTime;
-    FTCN            ftcn[TAUT_NUM];
+    AT_RANK            **pRankStack;
+    int                  nMaxLenRankStack;
+    int                  num_max;        /* allocated nRank[] arrays lengths in pRankStack */
+    int                  num_at_tg;  /* all of the following arrays have this length */
+    int                  num_atoms;
+    struct tagInchiTime *ulTimeOutTime;
+    FTCN                 ftcn[TAUT_NUM];
 
 } BCN;
 
@@ -175,20 +173,19 @@ typedef struct tagBaseCanonNumbering {
  */
 typedef struct tagCanonStat {
     /*  statistics */
-    long          lNumBreakTies;
-    long          lNumNeighListIter;
-    long          lNumTotCT;
-    long          lNumDecreasedCT;
-    long          lNumRejectedCT;
-    long          lNumEqualCT;
-    unsigned long ulTimeOutTime;
-    long          lTotalTime;
-    long          lMaxTime;
+    long                 lNumBreakTies;
+    long                 lNumNeighListIter;
+    long                 lNumTotCT;
+    long                 lNumDecreasedCT;
+    long                 lNumRejectedCT;
+    long                 lNumEqualCT;
+    struct tagInchiTime *ulTimeOutTime;
+    long                 lTotalTime;
 
     /* control */
-    int               bFirstCT;
-    int               bKeepSymmRank;
-    int               bStereoIsBetter;
+    int                  bFirstCT;
+    int                  bKeepSymmRank;
+    int                  bStereoIsBetter;
 
     int nCanonFlags;
 
@@ -346,7 +343,7 @@ typedef struct tagCanonData {
 
     AT_RANK  *nAuxRank;
 
-    unsigned long   ulTimeOutTime;
+    struct tagInchiTime *ulTimeOutTime;  /* timeout */
 
 } CANON_DATA;
 /**************************************************/

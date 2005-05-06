@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -25,7 +26,8 @@ int       Free_INChI_Aux( INChI_Aux **ppINChI_Aux );
 int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *orig_inp_data,
                   inp_ATOM *inp_at, INP_ATOM_DATA *inp_norm_data[2],
                   int num_inp_at, INCHI_MODE nUserMode,
-                  INCHI_MODE *pbTautFlags, INCHI_MODE *pbTautFlagsDone, unsigned long ulMaxTime, char *pStrErrStruct);
+                  INCHI_MODE *pbTautFlags, INCHI_MODE *pbTautFlagsDone,
+                  struct tagInchiTime *ulMaxTime, char *pStrErrStruct);
 int FillOutInfAtom(inp_ATOM *norm_at, INF_ATOM_DATA *inf_norm_at_data, int init_num_at,
                    int num_removed_H, int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic, int bIsotopic,
                    INChI *pINChI, INChI_Aux *pINChI_Aux, int bAbcNumbers, INCHI_MODE nMode );

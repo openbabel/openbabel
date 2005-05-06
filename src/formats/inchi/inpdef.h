@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -300,7 +301,11 @@ int DisplayInputStructure( char *szOutputString, inp_ATOM  *at, INF_ATOM_DATA *i
 #endif
 void PrintFileName( const char *fmt, INCHI_FILE *output_file, const char *szFname );
 void MySleep( unsigned long ms );
-unsigned long ulMyGetTickCount( void );
+
+#ifndef __ICHITIME_H__
+struct tagInchiTime;
+int bInchiTimeIsOver( struct tagInchiTime *TickEnd );
+#endif
 
 int get_endpoint_valence( U_CHAR el_number );
 

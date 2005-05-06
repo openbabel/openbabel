@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -10,13 +11,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#ifdef __FreeBSD__
-#include <sys/time.h>
-#endif
-#include <sys/timeb.h>
 
 #include "mode.h"
 
+#include "ichitime.h"
 #include "ichi.h"
 #include "util.h"
 #include "extr_ct.h"
@@ -26,10 +24,6 @@
 #include "ichicant.h"
 #include "ichicano.h"
 #include "ichicomn.h"
-
-#ifdef INCHI_ANSI_ONLY
-#include <time.h>
-#endif
 
 #include "ichicomp.h"
 
@@ -59,32 +53,263 @@ int Canon_INChI1(  int num_atoms, int num_at_tg, sp_ATOM* at, CANON_STAT* pCS, I
 int Canon_INChI2(  int num_atoms, int num_at_tg, sp_ATOM* at, CANON_STAT* pCS, INCHI_MODE nMode);
 int Canon_INChI3(  int num_atoms, int num_at_tg, sp_ATOM* at, CANON_STAT* pCS, INCHI_MODE nMode, int bTautFtcn);
 
+
 #ifdef INCHI_ANSI_ONLY
-/****************************************************************************/
-unsigned long ulMyGetTickCount( void )
-{   /* returns time in milliseconds */
-    unsigned long ulTicks;
-    clock_t  cur_clock = clock();
-    ulTicks = (unsigned long)((1000.0/(double)CLOCKS_PER_SEC)*cur_clock);
-    return ulTicks;
+
+static clock_t InchiClock(void);
+
+#ifdef INCHI_USETIMES
+static clock_t InchiClock(void)
+{
+    struct tms buf;
+    clock_t c = times( &buf );
+    if ( c != (clock_t)-1 ) {
+        return buf.tms_utime;
+    }
+    return 0;
 }
 #else
-/****************************************************************************/
-unsigned long ulMyGetTickCount( void )
-{   /* returns time in milliseconds */
-    unsigned long ulTicks;
-    static unsigned long ulFirstTime;
+static clock_t InchiClock(void)
+{
+    clock_t c = clock();
+    if ( c != (clock_t)-1 ) {
+        return c;
+    }
+    return 0;
+}
+#endif
+
+#define INCHI_MSEC(X)    (long)((1000.0/(double)CLOCKS_PER_SEC)*(X))
+#define INCHI_CLOCK_T(X) (clock_t)( (double)(X) / 1000.0 * (double)CLOCKS_PER_SEC )
+const clock_t FullMaxClock = (clock_t)(-1);
+const clock_t HalfMaxClock = (clock_t)(-1) / 2;
+clock_t MaxPositiveClock = 0;
+clock_t MinNegativeClock = 0;
+clock_t HalfMaxPositiveClock = 0;
+clock_t HalfMinNegativeClock = 0;
+
+static void FillMaxMinClock(void); /* keep compiler happy */
+
+static void FillMaxMinClock(void)
+{
+    if ( !MaxPositiveClock ) {
+        clock_t valPos, val1 = 1;
+        while ( 0 < ((val1 <<= 1), (val1 |= 1)) ) {
+            valPos = val1;
+        }
+        MaxPositiveClock =  valPos;
+        MinNegativeClock = -valPos;
+        HalfMaxPositiveClock = MaxPositiveClock / 2;
+        HalfMinNegativeClock = MinNegativeClock / 2;
+    }
+}
+
+
+/******** get current process time ****************************************/
+void InchiTimeGet( inchiTime *TickEnd )
+{
+    TickEnd->clockTime = InchiClock();
+}
+/******** returns difference TickEnd - TickStart in milliseconds **********/
+long InchiTimeMsecDiff( inchiTime *TickEnd, inchiTime *TickStart )
+{
+    if ( FullMaxClock > 0 ) {
+        clock_t delta;
+        if ( !TickEnd || !TickStart )
+            return 0;
+        /* clock_t is unsigned */
+        if ( TickEnd->clockTime > TickStart->clockTime ) {
+            if ( TickEnd->clockTime > HalfMaxClock &&
+                 TickEnd->clockTime - TickStart->clockTime > HalfMaxClock ) {
+                /* overflow in TickStart->clockTime, actually TickStart->clockTime was later */
+                delta = (FullMaxClock - TickEnd->clockTime) + TickStart->clockTime;
+                return -INCHI_MSEC(delta);
+            }
+            delta = TickEnd->clockTime - TickStart->clockTime;
+            return INCHI_MSEC(delta);
+        } else
+        if ( TickEnd->clockTime < TickStart->clockTime ) {
+            if ( TickStart->clockTime > HalfMaxClock &&
+                 TickStart->clockTime - TickEnd->clockTime > HalfMaxClock ) {
+                /* overflow in TickEnd->clockTime, actually TickEnd->clockTime was later */
+                delta = (FullMaxClock - TickStart->clockTime) + TickEnd->clockTime;
+                return INCHI_MSEC(delta);
+            }
+            delta = TickStart->clockTime - TickEnd->clockTime;
+            return -INCHI_MSEC(delta);
+        }
+        return 0; /* TickEnd->clockTime == TickStart->clockTime */
+    } else {
+        /* may happen under Win32 only where clock_t is SIGNED long */
+        clock_t delta;
+        FillMaxMinClock( );
+        if ( !TickEnd || !TickStart )
+            return 0;
+        if ( TickEnd->clockTime >= 0 && TickStart->clockTime >= 0 ||
+             TickEnd->clockTime <= 0 && TickStart->clockTime <= 0) {
+            delta = TickEnd->clockTime - TickStart->clockTime;
+        } else
+        if ( TickEnd->clockTime >= HalfMaxPositiveClock &&
+             TickStart->clockTime <= HalfMinNegativeClock ) {
+            /* end is earlier than start */
+            delta = (MaxPositiveClock - TickEnd->clockTime) + (TickStart->clockTime - MinNegativeClock);
+            delta = -delta;
+        } else
+        if ( TickEnd->clockTime <= HalfMinNegativeClock &&
+             TickStart->clockTime >= HalfMaxPositiveClock ) {
+            /* start was earlier than end */
+            delta = (MaxPositiveClock - TickStart->clockTime) + (TickEnd->clockTime - MinNegativeClock);
+        } else {
+            /* there was no overflow, clock passed zero */
+            delta = TickEnd->clockTime - TickStart->clockTime;
+        }
+        return INCHI_MSEC(delta);
+    }
+}
+/******************* get elapsed time from TickStart ************************/
+long InchiTimeElapsed( inchiTime *TickStart )
+{
+    inchiTime TickEnd;
+    if ( !TickStart )
+        return 0;
+    InchiTimeGet( &TickEnd );
+    return InchiTimeMsecDiff( &TickEnd, TickStart );
+}
+/******************* add number of milliseconds to time *********************/
+void InchiTimeAddMsec( inchiTime *TickEnd, unsigned long nNumMsec )
+{
+    clock_t delta;
+    if ( !TickEnd )
+        return;
+    if ( FullMaxClock > 0 ) {
+        /* clock_t is unsigned */
+        delta = INCHI_CLOCK_T(nNumMsec);
+        TickEnd->clockTime += delta;
+    } else {
+        /* may happen under Win32 only where clock_t is SIGNED long */
+        /* clock_t is unsigned */
+        FillMaxMinClock( );
+        delta = INCHI_CLOCK_T(nNumMsec);
+        TickEnd->clockTime += delta;
+    }
+}
+/******************* check whether time has expired *********************/
+int bInchiTimeIsOver( inchiTime *TickStart )
+{
+    if ( FullMaxClock > 0 ) {
+        clock_t clockCurrTime;
+        if ( !TickStart )
+            return 0;
+        clockCurrTime = InchiClock();
+        /* clock_t is unsigned */
+        if ( TickStart->clockTime > clockCurrTime ) {
+            if ( TickStart->clockTime > HalfMaxClock &&
+                 TickStart->clockTime - clockCurrTime > HalfMaxClock ) {
+                /* overflow in clockCurrTime, actually clockCurrTime was later */
+                return 1;
+            }
+            return 0;
+        } else
+        if ( TickStart->clockTime < clockCurrTime ) {
+            if ( clockCurrTime > HalfMaxClock &&
+                 clockCurrTime - TickStart->clockTime > HalfMaxClock ) {
+                /* overflow in TickStart->clockTime, actually TickStart->clockTime was later */
+                return 0;
+            }
+            return 1;
+        }
+        return 0; /* TickStart->clockTime == clockCurrTime */
+    } else {
+        /* may happen under Win32 only where clock_t is SIGNED long */
+        clock_t clockCurrTime;
+        FillMaxMinClock( );
+        if ( !TickStart )
+            return 0;
+        clockCurrTime = InchiClock();
+        if ( clockCurrTime >= 0 && TickStart->clockTime >= 0 ||
+             clockCurrTime <= 0 && TickStart->clockTime <= 0) {
+            return (clockCurrTime > TickStart->clockTime);
+        } else
+        if ( clockCurrTime >= HalfMaxPositiveClock &&
+             TickStart->clockTime <= HalfMinNegativeClock ) {
+            /* curr is earlier than start */
+            return 0;
+        } else
+        if ( clockCurrTime <= HalfMinNegativeClock &&
+             TickStart->clockTime >= HalfMaxPositiveClock ) {
+            /* start was earlier than curr */
+            return 1;
+        } else {
+            /* there was no overflow, clock passed zero */
+            return (clockCurrTime > TickStart->clockTime);
+        }
+    }
+}
+
+#else
+
+/******** get current process time ****************************************/
+void InchiTimeGet( inchiTime *TickEnd )
+{
+    if ( TickEnd ) {
+        struct _timeb timeb;
+        _ftime( &timeb );
+        TickEnd->clockTime = (unsigned long)timeb.time;
+        TickEnd->millitime = (long)timeb.millitm;
+    }
+}
+/******** returns difference TickEnd - TickStart in milliseconds **********/
+long InchiTimeMsecDiff( inchiTime *TickEnd, inchiTime *TickStart )
+{
+    long delta;
+    if ( !TickEnd || !TickStart ) {
+        return 0;
+    }
+    if ( TickEnd->clockTime >= TickStart->clockTime ) {
+        delta = (long)(TickEnd->clockTime - TickStart->clockTime);
+        delta *= 1000;
+        delta += TickEnd->millitime - TickStart->millitime;
+    } else {
+        delta = -(long)(TickStart->clockTime - TickEnd->clockTime);
+        delta *= 1000;
+        delta += TickEnd->millitime - TickStart->millitime;
+    }
+    return delta;
+}
+/******************* get elapsed time from TickStart ************************/
+long InchiTimeElapsed( inchiTime *TickStart )
+{
+    inchiTime TickEnd;
+    if ( !TickStart )
+        return 0;
+    InchiTimeGet( &TickEnd );
+    return InchiTimeMsecDiff( &TickEnd, TickStart );
+}
+/******************* add number of milliseconds to time *********************/
+void InchiTimeAddMsec( inchiTime *TickEnd, unsigned long nNumMsec )
+{
+    long delta;
+    if ( !TickEnd )
+        return;
+    TickEnd->clockTime += nNumMsec / 1000;
+    delta = nNumMsec % 1000 + TickEnd->millitime;
+    TickEnd->clockTime += delta / 1000;
+    TickEnd->millitime = delta % 1000;
+}
+/******************* check whether time has expired *********************/
+int bInchiTimeIsOver( inchiTime *TickEnd )
+{
     struct _timeb timeb;
+    if ( !TickEnd )
+        return 0;
     _ftime( &timeb );
-    /* modulo makes timeb.time at least 1024 times less than 0xffffffffUL to avoid an overflow */
-    ulTicks = 1000UL * ((unsigned long)timeb.time % 0x00200000UL) + (unsigned long)timeb.millitm;
-    if ( !ulFirstTime )
-        ulFirstTime = (unsigned long)timeb.time;
-    else
-    if ( (ulFirstTime ^ (unsigned long)timeb.time) & 0x00200000UL )
-        /* an extremely rare event of carry a bit */
-        ulTicks += 1000UL * 0x00200000UL;
-    return ulTicks;
+    if ( TickEnd->clockTime > (unsigned long)timeb.time )
+        return 0;
+    if ( TickEnd->clockTime < (unsigned long)timeb.time ||
+         TickEnd->millitime < (long)timeb.millitm ) {
+        return 1;
+    }
+    return 0;
 }
 #endif
 
@@ -983,7 +1208,7 @@ VII. Optimize isotopic stereo descriptors (optimized)
     CANON_STAT   CS2;
     CANON_STAT* pCS2 = &CS2;
 
-    unsigned long   ulStartTime, ulEndTime;
+    inchiTime   ulStartTime, ulEndTime;
     /*=========== Mode Bits (low 8 bits, bit 0 is Least Significant Bit) ===========
     
       Mode      Bits       Description                                
@@ -1010,7 +1235,7 @@ VII. Optimize isotopic stereo descriptors (optimized)
 
     int bSwitchedAtomToIsotopic = 0;
 
-    ulStartTime = ulMyGetTickCount();
+    InchiTimeGet( &ulStartTime );
     
     *pCS2 = *pCS;  /* save input information and pointers to allocated memory */
 
@@ -1953,8 +2178,8 @@ exit_function:
     qfree( nCanonRankStereo );
     qfree( nCanonRankStereoInv );
 
-    ulEndTime = ulMyGetTickCount();
-    pCS->lTotalTime = (ulEndTime - ulStartTime)*(unsigned long)100;
+    InchiTimeGet( &ulEndTime );
+    pCS->lTotalTime = InchiTimeMsecDiff(&ulEndTime, &ulStartTime);
     return (nRet >= -1)? num_atoms : nRet; /* cannot easily get number of ranks for now */
 
 }

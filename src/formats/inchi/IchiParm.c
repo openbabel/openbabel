@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -37,7 +38,7 @@
 #include "ichicomp.h"
 
 #if( ADD_CMLPP == 1 )
-#include "ReadCML.hpp"
+#include "readcml.hpp"
 #include "debug.h"
 #endif
 

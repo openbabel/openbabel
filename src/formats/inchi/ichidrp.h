@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -87,15 +88,18 @@ typedef struct tagInputParms {
     int             first_struct_number;
     int             last_struct_number;
     INPUT_TYPE      nInputType;
-    INCHI_MODE       nMode;
+    INCHI_MODE      nMode;
     int             bAbcNumbers;
     /*int             bXml;*/
     int             bINChIOutputOptions; /* !(ip->bINChIOutputOptions & INCHI_OUT_PLAIN_TEXT) */
     int             bCtPredecessors;
     int             bXmlStarted;
     int             bDisplayEachComponentINChI;
-    unsigned long   ulMaxTime;
-    unsigned long   ulDisplTime;
+
+    long            msec_MaxTime;   /* was ulMaxTime; max time to run ProsessOneStructure */
+    long            msec_LeftTime;
+
+    long            ulDisplTime; /* not used: max structure or question display time */
     int             bDisplay;
     int             bMergeAllInputStructures;
     int             bSaveWarningStructsAsProblem;
@@ -108,8 +112,8 @@ typedef struct tagInputParms {
     int             bNoStructLabels;
     int             bChiralFlag;
     int             bAllowEmptyStructure;
-    INCHI_MODE       bTautFlags;
-    INCHI_MODE       bTautFlagsDone;
+    INCHI_MODE      bTautFlags;
+    INCHI_MODE      bTautFlagsDone;
 } INPUT_PARMS;
 
 #endif /* __INCHIDRP_H__ */

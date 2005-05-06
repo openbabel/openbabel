@@ -2,7 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * March 22, 2005
+ * Software version 1.00
+ * April 13, 2005
  * Developed at NIST
  */
 
@@ -39,7 +40,7 @@ int INChIToInchi_Input( INCHI_FILE *inp_molfile, inchi_Input *orig_at_data, int 
 /* This contains executable code. Included in lReadAux.c, e_ReadINCH.c, ReadINCH.c,  */
 #include "aux2atom.h"
 
-
+extern int bLibInchiSemaphore;
 /*****************************************************************************************************/
 EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_inchi_Input_FromAuxInfo(
                         char *szInchiAuxInfo, int bDoNotAddH, InchiInpData *pInchiInp )
@@ -51,7 +52,12 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_inchi_Input_FromAuxInfo(
     long         lNumber;                   /* structure number NNN from the input */
     char         szHeader[MAX_SDF_HEADER];  /* stucture label header HHH from the input */
     char         szLabel[MAX_SDF_VALUE];    /* stucture label VVV from the input */
-    {
+    if ( bLibInchiSemaphore ) {  /* does not work properly under sufficient stress */
+        return inchi_Ret_BUSY;
+    }
+    bLibInchiSemaphore = 1;
+
+    if ( pInchiInp && pInchiInp->pInp ) {
         /* clear output fields */
         inchi_Input *pInp      = pInchiInp->pInp;
         char        *szOptions = pInp->szOptions;
@@ -59,6 +65,9 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_inchi_Input_FromAuxInfo(
         memset( pInp,      0, sizeof(*pInp) );
         pInp->szOptions = szOptions;
         pInchiInp->pInp = pInp;
+    } else {
+        bLibInchiSemaphore = 0;
+        return inchi_Ret_ERROR;
     }
     szHeader[0]     = '\0';
     szLabel[0]      = '\0';
@@ -97,7 +106,7 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_inchi_Input_FromAuxInfo(
         Free_inchi_Input( pInchiInp->pInp );
         pInchiInp->bChiral = 0;
     }
-
+    bLibInchiSemaphore = 0;
     return nRet;
 }
 /*****************************************************************************************************/
