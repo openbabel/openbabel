@@ -57,6 +57,7 @@ CLEAN :
 	-@erase "$(INTDIR)\mol.obj"
 	-@erase "$(INTDIR)\molchrg.obj"
 	-@erase "$(INTDIR)\oberror.obj"
+	-@erase "$(INTDIR)\obiter.obj"
 	-@erase "$(INTDIR)\obutil.obj"
 	-@erase "$(INTDIR)\parsmart.obj"
 	-@erase "$(INTDIR)\patty.obj"
@@ -118,7 +119,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\tokenst.obj" \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
-	"$(INTDIR)\vector3.obj"
+	"$(INTDIR)\vector3.obj" \
+	"$(INTDIR)\obiter.obj"
 
 ".\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -175,6 +177,8 @@ CLEAN :
 	-@erase "$(INTDIR)\molchrg.sbr"
 	-@erase "$(INTDIR)\oberror.obj"
 	-@erase "$(INTDIR)\oberror.sbr"
+	-@erase "$(INTDIR)\obiter.obj"
+	-@erase "$(INTDIR)\obiter.sbr"
 	-@erase "$(INTDIR)\obutil.obj"
 	-@erase "$(INTDIR)\obutil.sbr"
 	-@erase "$(INTDIR)\parsmart.obj"
@@ -250,7 +254,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\tokenst.sbr" \
 	"$(INTDIR)\transform.sbr" \
 	"$(INTDIR)\typer.sbr" \
-	"$(INTDIR)\vector3.sbr"
+	"$(INTDIR)\vector3.sbr" \
+	"$(INTDIR)\obiter.sbr"
 
 "$(OUTDIR)\OBDLL.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -291,7 +296,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\tokenst.obj" \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
-	"$(INTDIR)\vector3.obj"
+	"$(INTDIR)\vector3.obj" \
+	"$(INTDIR)\obiter.obj"
 
 "$(OUTDIR)\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -678,6 +684,24 @@ SOURCE=..\..\src\oberror.cpp
 
 
 "$(INTDIR)\oberror.obj"	"$(INTDIR)\oberror.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\obiter.cpp
+
+!IF  "$(CFG)" == "OBDLL - Win32 Release"
+
+
+"$(INTDIR)\obiter.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
+
+
+"$(INTDIR)\obiter.obj"	"$(INTDIR)\obiter.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -95,6 +95,7 @@ CLEAN :
 	-@erase "$(INTDIR)\nwchemformat.obj"
 	-@erase "$(INTDIR)\obconversion.obj"
 	-@erase "$(INTDIR)\oberror.obj"
+	-@erase "$(INTDIR)\obiter.obj"
 	-@erase "$(INTDIR)\obutil.obj"
 	-@erase "$(INTDIR)\parsmart.obj"
 	-@erase "$(INTDIR)\patty.obj"
@@ -165,6 +166,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
 	"$(INTDIR)\finger2.obj" \
@@ -194,6 +196,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\nwchemformat.obj" \
 	"$(INTDIR)\obconversion.obj" \
 	"$(INTDIR)\oberror.obj" \
+	"$(INTDIR)\obiter.obj" \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
@@ -221,8 +224,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj" \
-	"$(INTDIR)\fastsearchformat.obj"
+	"$(INTDIR)\zindoformat.obj"
 
 ".\OBabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -357,6 +359,8 @@ CLEAN :
 	-@erase "$(INTDIR)\obconversion.sbr"
 	-@erase "$(INTDIR)\oberror.obj"
 	-@erase "$(INTDIR)\oberror.sbr"
+	-@erase "$(INTDIR)\obiter.obj"
+	-@erase "$(INTDIR)\obiter.sbr"
 	-@erase "$(INTDIR)\obutil.obj"
 	-@erase "$(INTDIR)\obutil.sbr"
 	-@erase "$(INTDIR)\parsmart.obj"
@@ -455,6 +459,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\dlhandler_win32.sbr" \
 	"$(INTDIR)\dmolformat.sbr" \
 	"$(INTDIR)\fastsearch.sbr" \
+	"$(INTDIR)\fastsearchformat.sbr" \
 	"$(INTDIR)\featformat.sbr" \
 	"$(INTDIR)\fhformat.sbr" \
 	"$(INTDIR)\finger2.sbr" \
@@ -484,6 +489,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\nwchemformat.sbr" \
 	"$(INTDIR)\obconversion.sbr" \
 	"$(INTDIR)\oberror.sbr" \
+	"$(INTDIR)\obiter.sbr" \
 	"$(INTDIR)\obutil.sbr" \
 	"$(INTDIR)\parsmart.sbr" \
 	"$(INTDIR)\patty.sbr" \
@@ -511,8 +517,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\viewmolformat.sbr" \
 	"$(INTDIR)\xedformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr" \
-	"$(INTDIR)\fastsearchformat.sbr"
+	"$(INTDIR)\zindoformat.sbr"
 
 "$(OUTDIR)\OBabel.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -550,6 +555,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
 	"$(INTDIR)\finger2.obj" \
@@ -579,6 +585,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\nwchemformat.obj" \
 	"$(INTDIR)\obconversion.obj" \
 	"$(INTDIR)\oberror.obj" \
+	"$(INTDIR)\obiter.obj" \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
@@ -606,8 +613,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj" \
-	"$(INTDIR)\fastsearchformat.obj"
+	"$(INTDIR)\zindoformat.obj"
 
 "$(OUTDIR)\OBabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -1696,6 +1702,24 @@ SOURCE=..\..\src\oberror.cpp
 
 
 "$(INTDIR)\oberror.obj"	"$(INTDIR)\oberror.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\obiter.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\obiter.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\obiter.obj"	"$(INTDIR)\obiter.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

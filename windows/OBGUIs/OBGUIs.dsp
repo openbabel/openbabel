@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 nafxcw.lib libcmt.lib InChI_DLL.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".."
+# ADD LINK32 nafxcw.lib libcmt.lib InChI_DLL.lib Shlwapi.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".."
 
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib InChI_DLL.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /libpath:".."
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib InChI_DLL.lib Shlwapi.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /libpath:".."
 # SUBTRACT LINK32 /profile
 
 !ENDIF 
@@ -93,6 +93,19 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=..\..\src\assignbonds.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
 # Begin Source File
 
 SOURCE=..\..\src\atom.cpp
@@ -220,6 +233,10 @@ SOURCE=..\OBGUI\OBGUI.rc
 # Begin Source File
 
 SOURCE=..\OBGUI\OBGUIDlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\obiter.cpp
 # End Source File
 # Begin Source File
 
@@ -399,6 +416,10 @@ SOURCE=..\..\src\obifstream.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\obiter.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\obmolecformat.h
 # End Source File
 # Begin Source File
@@ -420,6 +441,10 @@ SOURCE=..\..\src\phmodel.h
 # Begin Source File
 
 SOURCE=..\..\src\phmodeldata.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\reaction.h
 # End Source File
 # Begin Source File
 

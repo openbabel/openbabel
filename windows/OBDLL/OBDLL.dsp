@@ -169,6 +169,10 @@ SOURCE=..\..\src\oberror.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\obiter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\obutil.cpp
 # End Source File
 # Begin Source File
@@ -368,5 +372,9 @@ SOURCE=..\..\data\types.h
 SOURCE=..\..\src\math\vector3.h
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=..\..\src\obiter.h
+# End Source File
 # End Target
 # End Project

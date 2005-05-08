@@ -38,6 +38,7 @@ ALL : ".\OBGUIs.exe"
 
 
 CLEAN :
+	-@erase "$(INTDIR)\assignbonds.obj"
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\base.obj"
 	-@erase "$(INTDIR)\bitvec.obj"
@@ -70,6 +71,7 @@ CLEAN :
 	-@erase "$(INTDIR)\OBGUI.obj"
 	-@erase "$(INTDIR)\OBGUI.res"
 	-@erase "$(INTDIR)\OBGUIDlg.obj"
+	-@erase "$(INTDIR)\obiter.obj"
 	-@erase "$(INTDIR)\obutil.obj"
 	-@erase "$(INTDIR)\parsmart.obj"
 	-@erase "$(INTDIR)\patty.obj"
@@ -100,8 +102,9 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUIs.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=nafxcw.lib libcmt.lib InChI_DLL.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".." 
+LINK32_FLAGS=nafxcw.lib libcmt.lib InChI_DLL.lib Shlwapi.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".." 
 LINK32_OBJS= \
+	"$(INTDIR)\assignbonds.obj" \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bitvec.obj" \
@@ -115,6 +118,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\DynamicOptions.obj" \
 	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
@@ -149,7 +153,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
 	"$(INTDIR)\OBGUI.res" \
-	"$(INTDIR)\fastsearchformat.obj"
+	"$(INTDIR)\obiter.obj"
 
 ".\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -231,6 +235,8 @@ CLEAN :
 	-@erase "$(INTDIR)\OBGUI.sbr"
 	-@erase "$(INTDIR)\OBGUIDlg.obj"
 	-@erase "$(INTDIR)\OBGUIDlg.sbr"
+	-@erase "$(INTDIR)\obiter.obj"
+	-@erase "$(INTDIR)\obiter.sbr"
 	-@erase "$(INTDIR)\obutil.obj"
 	-@erase "$(INTDIR)\obutil.sbr"
 	-@erase "$(INTDIR)\parsmart.obj"
@@ -292,6 +298,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\dlhandler_win32.sbr" \
 	"$(INTDIR)\DynamicOptions.sbr" \
 	"$(INTDIR)\fastsearch.sbr" \
+	"$(INTDIR)\fastsearchformat.sbr" \
 	"$(INTDIR)\finger2.sbr" \
 	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\fingerprintformat.sbr" \
@@ -325,7 +332,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\transform.sbr" \
 	"$(INTDIR)\typer.sbr" \
 	"$(INTDIR)\vector3.sbr" \
-	"$(INTDIR)\fastsearchformat.sbr"
+	"$(INTDIR)\obiter.sbr"
 
 "$(OUTDIR)\OBGUIs.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -333,7 +340,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib InChI_DLL.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" /libpath:".." 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib InChI_DLL.lib Shlwapi.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" /libpath:".." 
 LINK32_OBJS= \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
@@ -348,6 +355,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\DynamicOptions.obj" \
 	"$(INTDIR)\fastsearch.obj" \
+	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
@@ -382,7 +390,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
 	"$(INTDIR)\OBGUI.res" \
-	"$(INTDIR)\fastsearchformat.obj"
+	"$(INTDIR)\obiter.obj"
 
 "$(OUTDIR)\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -432,6 +440,19 @@ LINK32_OBJS= \
 
 
 !IF "$(CFG)" == "OBGUIs - Win32 Release" || "$(CFG)" == "OBGUIs - Win32 Debug"
+SOURCE=..\..\src\assignbonds.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\assignbonds.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+!ENDIF 
+
 SOURCE=..\..\src\atom.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -1003,6 +1024,24 @@ SOURCE=..\OBGUI\OBGUIDlg.cpp
 
 
 "$(INTDIR)\OBGUIDlg.obj"	"$(INTDIR)\OBGUIDlg.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\obiter.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\obiter.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\obiter.obj"	"$(INTDIR)\obiter.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

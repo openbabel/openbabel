@@ -323,6 +323,10 @@ SOURCE=..\..\src\oberror.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\obiter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\obutil.cpp
 # End Source File
 # Begin Source File
@@ -528,6 +532,10 @@ SOURCE=..\..\src\oberror.h
 # Begin Source File
 
 SOURCE=..\..\src\obifstream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\obiter.h
 # End Source File
 # Begin Source File
 

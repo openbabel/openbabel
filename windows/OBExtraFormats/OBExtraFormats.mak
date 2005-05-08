@@ -56,8 +56,8 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib obconv.lib obdll.lib InChI_DLL.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\OBExtra.pdb" /machine:I386 /out:"OBExtra.obf" /implib:"$(OUTDIR)\OBExtra.lib" /libpath:"..\OBDLL\Release" /libpath:"..\OBConv\Release" /libpath:".." 
 LINK32_OBJS= \
-	"$(INTDIR)\inchiformat.obj" \
-	"$(INTDIR)\fastsearchformat.obj"
+	"$(INTDIR)\fastsearchformat.obj" \
+	"$(INTDIR)\inchiformat.obj"
 
 ".\OBExtra.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -91,13 +91,13 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".." /I "..\..\src" /I "..\..\data" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /D "INCHI_LINK_AS_DLL" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".." /I "..\..\src" /I "..\..\data" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "INCHI_LINK_AS_DLL" /D "USING_OBDLL" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBExtraFormats.bsc" 
 BSC32_SBRS= \
-	"$(INTDIR)\inchiformat.sbr" \
-	"$(INTDIR)\fastsearchformat.sbr"
+	"$(INTDIR)\fastsearchformat.sbr" \
+	"$(INTDIR)\inchiformat.sbr"
 
 "$(OUTDIR)\OBExtraFormats.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -107,8 +107,8 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib obconv.lib obdll.lib InChI_DLL.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBExtraD.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBExtraD.obf" /implib:"$(OUTDIR)\OBExtraD.lib" /pdbtype:sept /libpath:"..\OBDLL\Debug" /libpath:"..\OBConv\Debug" /libpath:".." 
 LINK32_OBJS= \
-	"$(INTDIR)\inchiformat.obj" \
-	"$(INTDIR)\fastsearchformat.obj"
+	"$(INTDIR)\fastsearchformat.obj" \
+	"$(INTDIR)\inchiformat.obj"
 
 "$(OUTDIR)\OBExtraD.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
