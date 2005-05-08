@@ -1,3 +1,53 @@
+2005-05-08  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/formats.inchiformat.cpp: remove incomplete code for reading
+	InChi. Add URL. Post libinchi.lb abd libinchi.dll. More options have
+	been documented, but are not yet implemented in OB.
+	
+	*src/base.h, src/base.cpp: The latest MS compiler is more picky, and
+	(correctly) objects to an iterator being returned as NULL in
+	OBGraphBase::BgnMatch() and EndMatch(). To work round this the whole
+	of the code  for "substructure search functions" has been commented 
+	out. These are virtual placeholder functions anyway and are not used
+	internally in the real substructure routines. In the unlikely event 
+	of them being found to be used in an external program wee'll have to 
+	find another fix. 
+
+	* Removed OBConversion::GetDimension(),SetDimension(),SetTitle(),
+	Redefined SetTitle() to return InFileName as a c_str.
+	Made return type of strrchr() const char* (picky compiler). 
+	
+	* src/formats/CSRformat.cpp,PQSformat.cpp,alchemyformat.cpp,balstformat.cpp,
+	bgfformat.cpp,boxformat.cpp,acaoformat.cpp,acheformat.cpp,
+	chem3dformat.cpp,chemdrawformat.cpp,chemtoolformat.cpp,
+	crkformat.cpp,cssrformat.cpp,dmolformat.cpp,featformat.cpp,
+	fhformat.cpp,amessformat.cpp,gaussformat.cpp,ghemicalformat.cpp,
+	grosmos96format.cpp,hinformat.cpp,jaguarformat.cpp,mm3format.cpp,
+	mmodformat.cpp,mol2format.cpp,mopacformat.cpp,mpqcformat.cpp,
+	nwchemformat.cpp,pdbformat.cpp,povrayformat.cpp,qchemformat.cpp,
+	smilesformat.cpp,tinkerformat.cpp,unichemformat.cpp,viewmolformat.cpp,
+	xedformat.cpp,xyzformat.cpp,zindoformat.cpp:
+	Removed
+	    const char *dimension = pConv->GetDimension();
+	
+	* src/formats/cmlformat.cpp, mdlformat.cpp, pqsformat.cpp: 
+	changes to dimension handling (now an int not a string).
+	
+	* src/bitvec.h: replace EXTERN by OBAPI extern and tidied.
+	
+	* src/obiter.h: added several OBAPI.
+	 
+	* src/dlhandler.h, dlhandler_win32.h; Sleep() added.
+
+	* src/main.cpp: Space after -i and -o now allowed (but not yet
+	other options with text). I'm told it is more unix.
+	Made return type of strchr() const char* (picky compiler).
+	Commented out debug code to pause at end (better compiler).
+	
+	Some other files tidied - removal of unused variables.
+	Somewhere else(?) changed a new loop variable name from i to j
+	(rubbish old compiler). 
+
 2005-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/inchi: Updated with InChI v1.0 release code.
@@ -28,7 +78,7 @@
 	* src/generic.h: Change SetAttribute to take "const" string
 	arguments. Ditto for SetData for OBCommentData and SetValue for
 	OBPairData.
-
+	
 2005-04-24  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/obconversion.cpp, src/obconversion.h: 
