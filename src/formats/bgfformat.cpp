@@ -196,7 +196,6 @@ bool BGFFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     vector<OBNodeBase*>::iterator i;
     int max_val;

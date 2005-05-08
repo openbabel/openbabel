@@ -141,7 +141,6 @@ bool CRK2DFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     ofs << "<Property Type=\"DiagramStructure\">" <<  endl;
     ofs << " <Structure2D>" << endl;
@@ -266,7 +265,6 @@ bool CRK3DFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     ofs << "<Property Type=\"ModelStructure\">" <<  endl;
     ofs << " <Structure3D>" << endl;

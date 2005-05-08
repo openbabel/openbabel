@@ -143,7 +143,6 @@ bool BoxFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     //margin hardwired in new framework. Also was in old fileformat
     double margin=1.0;

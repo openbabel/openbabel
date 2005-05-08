@@ -798,7 +798,7 @@ double	  OBAtom::SmallestBondAngle()
     OBAtom *b, *c;
     vector3 v1, v2;
     double degrees, minDegrees;
-    vector<OBNodeBase*>::iterator i;
+//    vector<OBNodeBase*>::iterator i;
     vector<OBEdgeBase*>::iterator j,k;
 
     minDegrees = 360.0;
@@ -823,7 +823,7 @@ double	  OBAtom::AverageBondAngle()
     OBAtom *b, *c;
     vector3 v1, v2;
     double degrees, avgDegrees;
-    vector<OBNodeBase*>::iterator i;
+//    vector<OBNodeBase*>::iterator i;
     vector<OBEdgeBase*>::iterator j,k;
     int n=0;
 

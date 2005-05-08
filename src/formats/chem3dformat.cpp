@@ -114,7 +114,6 @@ bool CHEM3D1Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     return(WriteChem3d(ofs,mol,"MM2"));
 }
@@ -210,7 +209,6 @@ bool CHEM3D2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     return(CHEM3D1Format::WriteChem3d(ofs,mol,"C3D"));
 }

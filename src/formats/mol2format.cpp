@@ -298,8 +298,7 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
-
+ 
     //The old code follows....
     string str,str1;
     char buffer[BUFF_SIZE],label[BUFF_SIZE];

@@ -144,8 +144,6 @@ bool FastSearchIndexer::Add(OBMol& mol, streampos seekpos)
 		_pindex->fptdata.push_back(vecwords[i]);
 	}
 	_pindex->seekdata.push_back(seekpos);
-	int ndata = _pindex->fptdata.size();
-	int nspos = _pindex->seekdata.size();
 	return true;
 }
 

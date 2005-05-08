@@ -31,7 +31,7 @@ namespace OpenBabel
   class OBResidue;
 
   //! \brief Iterate over all atoms in an OBMol
-class OBMolAtomIter {
+class OBAPI OBMolAtomIter {
     std::vector<OBNodeBase*>::iterator _i;
     OBMol *_parent;
     OBAtom *_ptr;
@@ -50,7 +50,7 @@ public:
 };
 
   //! \brief Iterate over all bonds in an OBMol
-class OBMolBondIter {
+class OBAPI OBMolBondIter {
     std::vector<OBEdgeBase*>::iterator _i;
     OBMol *_parent;
     OBBond *_ptr;
@@ -69,7 +69,7 @@ public:
 };
 
   //! \brief Iterate over all neighboring atoms to an OBAtom
-class OBAtomAtomIter {
+class OBAPI OBAtomAtomIter {
     std::vector<OBEdgeBase*>::iterator _i;
     OBAtom *_parent;
     OBAtom *_ptr;
@@ -88,7 +88,7 @@ public:
 };
 
   //! \brief Iterate over all bonds on an OBAtom
-class OBAtomBondIter {
+class OBAPI OBAtomBondIter {
     std::vector<OBEdgeBase*>::iterator _i;
     OBAtom *_parent;
     OBBond *_ptr;
@@ -107,7 +107,7 @@ public:
 };
 
   //! \brief Iterate over all residues in an OBMol
-class OBResidueIter {
+class OBAPI OBResidueIter {
     std::vector<OBResidue*>::iterator _i;
     OBResidue *_ptr;
     OBMol *_parent;
@@ -126,7 +126,7 @@ public:
 };
 
   //! \brief Iterate over all atoms in an OBResidue
-class OBResidueAtomIter {
+class OBAPI OBResidueAtomIter {
     std::vector<OBAtom*>::iterator _i;
     OBResidue *_parent;
     OBAtom    *_ptr;

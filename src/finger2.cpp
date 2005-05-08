@@ -18,10 +18,12 @@ GNU General Public License for more details.
 #include <vector>
 #include "bitvec.h"
 #include "fingerprint.h"
+/*
 #ifdef _DEBUG
  #include "stdafx.h"
  #undef AddAtom
 #endif
+*/
 using namespace std;
 namespace OpenBabel
 {

@@ -213,7 +213,6 @@ bool MacroModFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     char buffer[BUFF_SIZE];
     sprintf(buffer," %5d %6s      E = %7.3f KJ/mol",

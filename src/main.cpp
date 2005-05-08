@@ -84,14 +84,14 @@ int main(int argc,char *argv[])
   else
     program_name=argv[0]+pos+1;
 
-  int arg;
-  for (arg = 1; arg < argc; arg++)
-    {
-      if (argv[arg])
+	int arg;
+	for (arg = 1; arg < argc; arg++)
 	{
-	  if (argv[arg][0] == '-')
-	    {	      
-	      switch (argv[arg][1])
+  if (argv[arg])
+		{
+		if (argv[arg][0] == '-')
+	  {
+		switch (argv[arg][1])
 		{
 		case 'V':
 		  {
@@ -109,7 +109,9 @@ int main(int argc,char *argv[])
 
 		case 'i':
 		  gotInType = true;
-		  iext = argv[arg] + 2;
+			iext = argv[arg] + 2;
+			if(!*iext)
+				iext = argv[++arg]; //space left after -i: use next argument
 
 		  if (strncasecmp(iext, "MIME", 4) == 0)
 		    {
@@ -133,6 +135,8 @@ int main(int argc,char *argv[])
 		case 'o':
 		  gotOutType = true;
 		  oext = argv[arg] + 2;
+			if(!*oext)
+				oext = argv[++arg]; //space left after -i: use next argument
 		  
 		  if (strncasecmp(oext, "MIME", 4) == 0)
 		    {
@@ -182,7 +186,7 @@ int main(int argc,char *argv[])
 			  while(OBConversion::GetNextFormat(pos,str,pFormat))
 			    {
 			      cout << str << endl;
-			      char* p = strchr(pFormat->Description(),'\n');
+			      const char* p = strchr(pFormat->Description(),'\n');
 			      cout << p+1; //second line of description
 			      if(strlen(pFormat->SpecificationURL()))
 				cout << "Specification at: " << pFormat->SpecificationURL();
@@ -192,11 +196,13 @@ int main(int argc,char *argv[])
 		    }
 		  else
 		    help();
+/*
 #ifdef _DEBUG
 		  //CM keep window open
 		  cout << "Press any key to finish" <<endl;
 		  getch();
 #endif
+*/
 		  exit(0);
 		  
 		case '-': //Do nothing
@@ -330,15 +336,16 @@ int main(int argc,char *argv[])
     {
       cerr << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;
     }
-  
+/*
 #ifdef _DEBUG
   //CM keep window open
   cout << "Press any key to finish" <<endl;
   getch();
 #endif
-  
+*/  
   return 0;
 };
+
 
 void usage()
 {
@@ -347,13 +354,13 @@ void usage()
   cout << "Usage: " << program_name
        << " [-i<input-type>] <name> [-o<output-type>] <name>" << endl;
   cout << "Try  -H option for more information." << endl;
-  
+/*  
 #ifdef _DEBUG
   //CM keep window open
   cout << "Press any key to finish" <<endl;
   getch();
 #endif
-  
+*/  
   exit (0);
 }
 

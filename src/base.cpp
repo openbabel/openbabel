@@ -37,7 +37,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-
+/*
 bool OBGraphBase::Match(OBGraphBase &g,bool singleMatch)
 {
     SetFinishedMatch(false);
@@ -137,7 +137,7 @@ bool OBGraphBase::Match(OBGraphBase &g,
 
     return(false);
 }
-
+*/
 OBNodeBase *OBGraphBase::Begin(vector<OBNodeBase*>::iterator &i)
 {
     i = _vatom.begin();

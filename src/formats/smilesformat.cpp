@@ -228,7 +228,6 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
     //bool WriteSDFile(ostream &ofs,OBMol &mol,const char *dimension)
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     if(pConv->IsOption('t')) //Title only option
     {
@@ -2377,7 +2376,6 @@ bool FIXFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     char buffer[BUFF_SIZE];
     OBMol2Smi m2s;

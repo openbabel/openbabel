@@ -912,13 +912,13 @@ string OBMol::GetFormula()
 	}
     }
 
-  for (int i = 0; i < NumElements; i++)
+  for (int j = 0; j < NumElements; j++)
     {
-      if (atomicCount[ alphabetical[i]-1 ] > 1)
-	formula << etab.GetSymbol(alphabetical[i]) 
-	  << atomicCount[ alphabetical[i]-1 ];
-      else if (atomicCount[ alphabetical[i]-1 ] == 1)
-	formula << etab.GetSymbol( alphabetical[i] );
+      if (atomicCount[ alphabetical[j]-1 ] > 1)
+	formula << etab.GetSymbol(alphabetical[j]) 
+	  << atomicCount[ alphabetical[j]-1 ];
+      else if (atomicCount[ alphabetical[j]-1 ] == 1)
+	formula << etab.GetSymbol( alphabetical[j] );
     }
 
   dp = new OBPairData;

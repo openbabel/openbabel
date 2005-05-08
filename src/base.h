@@ -353,7 +353,9 @@ public:
     OBNodeBase *Next(std::vector<OBNodeBase*>::iterator&);
     OBEdgeBase *Begin(std::vector<OBEdgeBase*>::iterator&);
     OBEdgeBase *Next(std::vector<OBEdgeBase*>::iterator&);
-
+	
+/*The following (placeholder) routines removed to avoid finding solution to
+iterators being illegally returned as NULL
     //substructure search functions
     virtual bool SingleMatch()                  const
     {
@@ -373,7 +375,7 @@ public:
     {}
     virtual void PrepForMatch()
     {}
-    virtual std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator BgnMatch()
+	virtual std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator BgnMatch()
     {
         return((std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator) NULL);
     }
@@ -381,7 +383,7 @@ public:
     {
         return((std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator) NULL);
     }
-    virtual OBNodeBase *GetFirstSeed()
+	virtual OBNodeBase *GetFirstSeed()
     {
         return((OBNodeBase*)NULL);
     }
@@ -389,6 +391,7 @@ public:
     bool Match(OBGraphBase &,
                std::vector<std::pair<OBNodeBase*,std::vector<OBEdgeBase*> > >::iterator,
                std::vector<OBEdgeBase*>::iterator);
+*/
 };
 
 } //namespace OpenBabel

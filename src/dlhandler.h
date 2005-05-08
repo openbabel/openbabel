@@ -73,6 +73,7 @@ public:
 	static const char* getFormatFilePattern();
 
 	static char DLHandler::getSeparator();
+	static void DLHandler::Sleep(int n);
 
 };
 

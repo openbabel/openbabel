@@ -120,7 +120,6 @@ bool GROMOS96Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
     double fac = pConv->IsOption('n') ? 0.1 : 1.0; //new framework
 
     char type_name[10];

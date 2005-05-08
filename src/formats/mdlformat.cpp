@@ -116,8 +116,8 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //creator
   char* dimension = buffer+20;
 	dimension[2]='\0'; //truncate after 2D
-	if(strcmp(dimension,"2D") == 0 || strcmp(dimension,"3D") == 0)
-	  pConv->SetDimension(dimension);
+//	if(strcmp(dimension,"2D") == 0 || strcmp(dimension,"3D") == 0)
+//	  pConv->SetDimension(dimension);
 	if(strcmp(dimension,"2D") == 0)
 	  mol.SetDimension(2);
 
@@ -278,7 +278,9 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	//Define some references so we can use the old parameter names
 	ostream &ofs = *pConv->GetOutStream();
 	OBMol &mol = *pmol;
-	const char *dimension = pConv->GetDimension();
+  char dimension[3] = "2D";
+  if(mol.GetDimension()==3)
+		dimension[0]='3';
 
 	ofs << mol.GetTitle() <<  endl; //line 1
 

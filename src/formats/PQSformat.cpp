@@ -239,7 +239,6 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
                     //New framework mods
                     OBConversion coordconv(&coordFileStream);
-                    coordconv.SetTitle(title); //probably not necessary
                     OBFormat* pFormat;
                     if (strstr(buffer,"=car" )!=NULL)
                         pFormat =OBConversion::FindFormat("BIOSYM");
@@ -312,8 +311,7 @@ bool PQSFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
-
+ 
     unsigned int i;
     char buffer[BUFF_SIZE];
     OBAtom *atom;

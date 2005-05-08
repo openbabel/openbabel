@@ -735,7 +735,7 @@ void OBAromaticTyper::SelectRootAtoms(OBMol &mol, bool avoidInnerRingAtoms)
     OBBond *bond;
     OBAtom *atom, *nbr, *nbr2;
     OBRing *ring;
-    vector<OBNodeBase*>::iterator i;
+//    vector<OBNodeBase*>::iterator i;
     vector<OBEdgeBase*>::iterator j, l, nbr2Iter;
     vector<OBRing*> sssRings = mol.GetSSSR();
     vector<OBRing*>::iterator k;

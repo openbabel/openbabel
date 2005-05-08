@@ -365,7 +365,6 @@ void fingerprint::expandFragment(fragment &f, OBBitVec &avisit, int n)
     OBAtom *atom = f.GetLastAtom();
     OBAtom *blatom = f.GetBeforeLastAtom();
     OBAtom *nbr;
-    OBBond *bond;
     std::vector<OBEdgeBase*>::iterator i;
     int natom,Idx;
     if ( !atom )

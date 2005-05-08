@@ -219,12 +219,14 @@ public:
 
 	const char* GetGeneralOptions() const;///< @brief Options related to converted chemical object type 
 	void        SetGeneralOptions(const char* options);////< @brief Options related to converted chemical object type
-	///
+
+	///@brief Returns a default title which is the filename
 	const char* GetTitle() const;
-	void        SetTitle(const char* title);
+
+/*	void        SetTitle(const char* title);
 	virtual const char* GetDimension() const;
 	virtual void SetDimension(const char* dim);
-
+*/
 	bool	    SaveOptionsToFile(const char* filename);
 	bool	    RestoreOptionsFromFile(const char* filename);
 	//@}
@@ -302,8 +304,8 @@ protected:
 	OBFormat*	  pOutFormat;
 	std::string	  Options;
 	std::string	  GeneralOptions;
-	std::string	  Title;
-	char		  Dimension[10];
+//	std::string	  Title;
+//	char		  Dimension[10];
 	int		  Index;
 	unsigned int	  StartNumber;
 	unsigned int	  EndNumber;

@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
-struct FptIndexHeader
+struct OBAPI FptIndexHeader
 {
 	unsigned int headerlength;//offset to data: sizeof(FptIndexHeader)
 	unsigned int nEntries;    //number of fingerprints

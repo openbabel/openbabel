@@ -168,7 +168,7 @@ OBConversion::OBConversion(istream* is, ostream* os) :
 {
 	pInStream=is;
 	pOutStream=os;
-	strcpy(Dimension,"2D");
+//	strcpy(Dimension,"2D");
 	LoadFormatFiles(); 
 }
 
@@ -198,14 +198,14 @@ OBConversion::OBConversion(const OBConversion& O)
 	//Copy constructor. Needed because of strings
 	Options=O.Options;
 	GeneralOptions=O.GeneralOptions;
-	Title=O.Title;
+//	Title=O.Title;
 	pInFormat=O.pInFormat;
 	pOutFormat=O.pOutFormat;
 	pInStream=O.pInStream;
 	pOutStream=O.pOutStream;
 	StartNumber=O.StartNumber;
 	EndNumber=O.EndNumber;
-	strcpy(Dimension,O.Dimension);
+//	strcpy(Dimension,O.Dimension);
 	Index=0;
 	InFilename=O.InFilename;
 	FormatsMap();//rubbish
@@ -599,8 +599,10 @@ void OBConversion::SetGeneralOptions(const char* options)
 
 const char* OBConversion::GetTitle() const
 {
-	return(Title.c_str());
+	return(InFilename.c_str());
 }
+
+/*
 void OBConversion::SetTitle(const char* title)
 {
 	Title=title;
@@ -614,6 +616,7 @@ void OBConversion::SetDimension(const char* dim)
 {
 	strcpy(Dimension,dim);
 }
+*/
 
 void OBConversion::SetMoreFilesToCome()
 {
@@ -628,7 +631,7 @@ void OBConversion::SetOneObjectOnly()
 /////////////////////////////////////////////////////////
 OBFormat* OBConversion::FormatFromExt(const char* filename)
 {
-	char* p = strrchr(filename,'.');
+	const char* p = strrchr(filename,'.');
 	if(p)
 		return FindFormat(p+1);
 	return NULL; //if no extension		

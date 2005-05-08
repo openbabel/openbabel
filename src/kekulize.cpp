@@ -356,8 +356,6 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
 // Give the priority to give two electrons instead of 1
 int OBMol::getorden( OBAtom *atom)
 {
-    int orden;
-
     if ( atom->IsSulfur() )
         return 1;
     if ( atom->IsOxygen() )
@@ -385,7 +383,6 @@ int OBMol::getorden( OBAtom *atom)
 void OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit)
 {
     OBAtom *nbr;
-    OBBond *bond;
     std::vector<OBEdgeBase*>::iterator i;
     int natom;
     //for each neighbour atom test if it is in the aromatic ring

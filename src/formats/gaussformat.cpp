@@ -142,7 +142,6 @@ bool GaussianInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     unsigned int i;
     int charge = 0;
@@ -195,7 +194,7 @@ bool GaussianOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     double x,y,z;
     OBAtom *atom;
     vector<string> vs;
-    int index, charge = 0;
+    int charge = 0;
     unsigned int spin = 1;
     bool hasPartialCharges = false;
     

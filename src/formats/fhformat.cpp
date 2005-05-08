@@ -80,7 +80,6 @@ bool FenskeZmatFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     OBAtom *atom,*a,*b,*c;
     char type[10],buffer[BUFF_SIZE];

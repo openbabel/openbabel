@@ -16,10 +16,11 @@ GNU General Public License for more details.
 
 #include <cstdarg>
 #include <iostream>
-# define WIN32_LEAN_AND_MEAN
-//#include "winbase.h"
-#include <direct.h>
-#include "windows.h"
+//# define WIN32_LEAN_AND_MEAN
+#define VC_EXTRALEAN
+//#include <winbase.h>
+//#include <direct.h>
+#include <windows.h>
 #include "dlhandler.h"
 using namespace std;
 
@@ -103,4 +104,9 @@ bool DLHandler :: openLib(const string& lib_name)
 char DLHandler::getSeparator()
 {
     return '\\';
+}
+
+void DLHandler::Sleep(int n)
+{
+	::Sleep(n);
 }

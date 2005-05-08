@@ -122,8 +122,9 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
-    //****
+    char dimension[3] = "2D";
+    if(mol.GetDimension()==3)
+			dimension[0]='3';
 
     //If more than one molecule to be output, write <cml> at start and </cml> at end.
     if((pConv->GetOutputIndex()==1) && !pConv->IsLast())

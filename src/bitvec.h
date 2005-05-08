@@ -156,11 +156,7 @@ public:
 		}
 };
 
-#ifndef EXTERN
-#  define EXTERN extern
-#endif
-
-EXTERN void ThrowError(char *);
+OBAPI extern void ThrowError(char *);
 ///This function can change the size of second parameter. There is an alternative with different parameters.
 OBAPI double Tanimoto(OBBitVec&,OBBitVec&);
 

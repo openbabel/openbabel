@@ -698,7 +698,6 @@ bool PovrayFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
     const char* title = pmol->GetTitle();
 
     static long num = 0;

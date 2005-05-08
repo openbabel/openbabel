@@ -168,15 +168,14 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     if(pReact==NULL)
         return false;
 
-    OBFormat* pMolFormat = pConv->FindFormat("MOL");
+    OBConversion MolConv(*pConv); //new copy to use to write associated MOL
+	   
+		OBFormat* pMolFormat = pConv->FindFormat("MOL");
     if(pMolFormat==NULL)
     {
         cerr << "MDL MOL format not available\n" <<endl;
         return false;
     }
-
-    OBConversion MolConv(*pConv); //new copy to use to write associated MOL
-    //	MolConv.SetOptions("N"); //so that no $$$$ is written in them.
 
     ostream &ofs = *pConv->GetOutStream();
 
