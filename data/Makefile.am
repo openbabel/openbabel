@@ -1,8 +1,8 @@
-pkgdata_DATA = \
+# Install these as version-specific data. Newer should replace older files.
+tabledir     = $(pkgdatadir)/$(VERSION)
+table_DATA = \
 		aromatic.txt bondtyp.txt isotope.txt resdata.txt \
 		atomtyp.txt element.txt isotope-small.txt phmodel.txt types.txt
-
-# install-data-local: -- need to install version-specific data
 
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h types.h
