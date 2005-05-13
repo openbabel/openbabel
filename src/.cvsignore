@@ -4,6 +4,7 @@ libbabel.a
 babel
 version.h
 babelconfig.h
+config.h
 .deps
 stamp-h1
 .libs

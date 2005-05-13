@@ -15,12 +15,12 @@ libopenbabel_la_SOURCES = \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
-libopenbabel_la_LIBADD = math/libmath.la formats/libformats.la @LTLIBOBJS@
+libopenbabel_la_LIBADD = math/libmath.la formats/libobformats.la @LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 0:0:0
 
 libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
-		babelconfig.h base.h bitvec.h \
+		base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
 		generic.h grid.h matrix.h mol.h molchrg.h \
@@ -31,7 +31,8 @@ libopenbabelinclude_HEADERS = \
 
 bin_PROGRAMS = babel
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la @LIBOBJS@
+babel_LDADD = libopenbabel.la formats/libobformats.la \
+		formats/inchi/libinchi.la @LIBOBJS@
 
 EXTRA_DIST = \
-	strncasecmp.c snprintf.c snprintf.h
+	config.h.in strncasecmp.c snprintf.c snprintf.h

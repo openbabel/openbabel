@@ -44,14 +44,14 @@ bin_PROGRAMS = babel$(EXEEXT)
 subdir = src
 DIST_COMMON = README $(libopenbabelinclude_HEADERS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(srcdir)/babelconfig.h.in snprintf.c strncasecmp.c
+	$(srcdir)/config.h.in snprintf.c strncasecmp.c
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
-CONFIG_HEADER = babelconfig.h
+CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -63,7 +63,7 @@ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
 	"$(DESTDIR)$(libopenbabelincludedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libopenbabel_la_DEPENDENCIES = math/libmath.la formats/libformats.la \
+libopenbabel_la_DEPENDENCIES = math/libmath.la formats/libobformats.la \
 	@LTLIBOBJS@ $(am__empty)
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo chains.lo chiral.lo data.lo obconversion.lo \
@@ -76,7 +76,8 @@ binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_babel_OBJECTS = main.$(OBJEXT)
 babel_OBJECTS = $(am_babel_OBJECTS)
-babel_DEPENDENCIES = libopenbabel.la @LIBOBJS@
+babel_DEPENDENCIES = libopenbabel.la formats/libobformats.la \
+	formats/inchi/libinchi.la @LIBOBJS@
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -226,11 +227,11 @@ libopenbabel_la_SOURCES = \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
-libopenbabel_la_LIBADD = math/libmath.la formats/libformats.la @LTLIBOBJS@
+libopenbabel_la_LIBADD = math/libmath.la formats/libobformats.la @LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 0:0:0
 libopenbabelincludedir = $(includedir)/openbabel
 libopenbabelinclude_HEADERS = \
-		babelconfig.h base.h bitvec.h \
+		base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
 		generic.h grid.h matrix.h mol.h molchrg.h \
@@ -240,11 +241,13 @@ libopenbabelinclude_HEADERS = \
 		ring.h rotor.h rotamer.h typer.h 
 
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la @LIBOBJS@
-EXTRA_DIST = \
-	strncasecmp.c snprintf.c snprintf.h
+babel_LDADD = libopenbabel.la formats/libobformats.la \
+		formats/inchi/libinchi.la @LIBOBJS@
 
-all: babelconfig.h
+EXTRA_DIST = \
+	config.h.in strncasecmp.c snprintf.c snprintf.h
+
+all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
@@ -279,22 +282,22 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 
-babelconfig.h: stamp-h1
+config.h: stamp-h1
 	@if test ! -f $@; then \
 	  rm -f stamp-h1; \
 	  $(MAKE) stamp-h1; \
 	else :; fi
 
-stamp-h1: $(srcdir)/babelconfig.h.in $(top_builddir)/config.status
+stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
 	@rm -f stamp-h1
-	cd $(top_builddir) && $(SHELL) ./config.status src/babelconfig.h
-$(srcdir)/babelconfig.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps) 
+	cd $(top_builddir) && $(SHELL) ./config.status src/config.h
+$(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps) 
 	cd $(top_srcdir) && $(AUTOHEADER)
 	rm -f stamp-h1
 	touch $@
 
 distclean-hdr:
-	-rm -f babelconfig.h stamp-h1
+	-rm -f config.h stamp-h1
 install-libLTLIBRARIES: $(lib_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
 	test -z "$(libdir)" || $(mkdir_p) "$(DESTDIR)$(libdir)"
@@ -550,7 +553,7 @@ ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	mkid -fID $$unique
 tags: TAGS
 
-TAGS: tags-recursive $(HEADERS) $(SOURCES) babelconfig.h.in $(TAGS_DEPENDENCIES) \
+TAGS: tags-recursive $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
@@ -567,7 +570,7 @@ TAGS: tags-recursive $(HEADERS) $(SOURCES) babelconfig.h.in $(TAGS_DEPENDENCIES)
 	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
 	  fi; \
 	done; \
-	list='$(SOURCES) $(HEADERS) babelconfig.h.in $(LISP) $(TAGS_FILES)'; \
+	list='$(SOURCES) $(HEADERS) config.h.in $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
@@ -579,11 +582,11 @@ TAGS: tags-recursive $(HEADERS) $(SOURCES) babelconfig.h.in $(TAGS_DEPENDENCIES)
 	    $$tags $$unique; \
 	fi
 ctags: CTAGS
-CTAGS: ctags-recursive $(HEADERS) $(SOURCES) babelconfig.h.in $(TAGS_DEPENDENCIES) \
+CTAGS: ctags-recursive $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
-	list='$(SOURCES) $(HEADERS) babelconfig.h.in $(LISP) $(TAGS_FILES)'; \
+	list='$(SOURCES) $(HEADERS) config.h.in $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
@@ -645,7 +648,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(HEADERS) babelconfig.h
+all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(HEADERS) config.h
 install-binPROGRAMS: install-libLTLIBRARIES
 
 installdirs: installdirs-recursive

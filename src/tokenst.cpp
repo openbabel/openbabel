@@ -21,7 +21,9 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 
-#include "babelconfig.h"
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 #include <algorithm>
 #include <vector>
 #include <string>

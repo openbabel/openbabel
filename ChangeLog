@@ -1,3 +1,36 @@
+2005-05-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/base.cpp, src/base.h, src/bitvec.h, src/data.cpp,
+	src/data.h, src/dlhandler.h, src/fastsearch.cpp, src/grid.h,
+	src/kekulize.cpp, src/main.cpp, src/matrix.h, src/mol.h,
+	src/obconversion.h, src/oberror.cpp, src/obifstream.h,
+	src/obutil.cpp, src/obutil.h, src/patty.cpp, src/phmodel.cpp,
+	src/residue.cpp, src/rotor.cpp, src/tokenst.cpp, src/typer.cpp,
+	src/formats/PQSformat.cpp, src/formats/pdbformat.cpp,
+	src/formats/povrayformat.cpp, test/matrixtest.cpp,
+	test/ringtest.cpp, test/roundtrip.cpp, test/smartstest.cpp:
+	Rename babelconfig.h to config.h and conditionally #include it
+	based on the HAVE_CONFIG_H define (which on UNIX is passed by the
+	Makefile). This solves PR#885828 in terms on installation and
+	including the build-dependent babelconfig/config headers.
+
+	* configure.in, configure, Makefile.in, doc/Makefile.in,
+	src/Makefile.am, src/Makefile.in, src/math/Makefile.in,
+	test/Makefile.in, test/cmltest/Makefile.in, tools/Makefile.in: Ditto.
+
+	* data/Makefile.am, data/Makefile.in: Update for version-dependent
+	data installation (e.g. /usr/local/share/openbabel/2.0.0/*).
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Don't directly
+	include libinchi (which is now installed separately). Set for
+	installation of libobformats, which should be dynamically linked
+	with libopenbabel.
+
+	* src/formats/inchi/Makefile.am, src/formats/inchi/Makefile.in:
+	Fix problems with case-sensitive filenames. (i.e., filenames
+	changed case in InChI 1.0 release, but were already in CVS tree
+	with lowercase.) Set for shared-library installation of libinchi.
+	
 2005-05-08  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/formats.inchiformat.cpp: remove incomplete code for reading
@@ -10,7 +43,7 @@
 	of the code  for "substructure search functions" has been commented 
 	out. These are virtual placeholder functions anyway and are not used
 	internally in the real substructure routines. In the unlikely event 
-	of them being found to be used in an external program wee'll have to 
+	of them being found to be used in an external program we'll have to 
 	find another fix. 
 
 	* Removed OBConversion::GetDimension(),SetDimension(),SetTitle(),

@@ -20,7 +20,9 @@ GNU General Public License for more details.
 #ifndef OB_MOL_H
 #define OB_MOL_H
 
-#include "babelconfig.h"
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #ifndef EXTERN
 #  define EXTERN extern

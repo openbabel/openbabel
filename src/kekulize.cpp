@@ -1,7 +1,9 @@
 /* Fabien test for a new algorithm to kekulize molecule */
 
 #include "mol.h"
-#include "babelconfig.h"
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #define SINGLE 1
 #define DOUBLE 2

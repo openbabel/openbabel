@@ -1,4 +1,4 @@
-/* src/babelconfig.h.in.  Generated from configure.in by autoheader.  */
+/* src/config.h.in.  Generated from configure.in by autoheader.  */
 
 /* Where the data files are located */
 #undef BABEL_DATADIR

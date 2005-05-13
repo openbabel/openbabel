@@ -12,7 +12,9 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 #include "mol.h"
 #include "obconversion.h"
 #include "typer.h"
@@ -459,7 +461,6 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
         << "  According to the PDB specification (http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html)," << endl
         << "  the record should have 70 columns, but OpenBabel found " << strlen(buffer) << " columns." << endl
         << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
-        return(false);
     }
 
     // Serial number of the first atom, read from column 7-11 of the
@@ -496,8 +497,7 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
         << "  columns 7--11 should contain the serial number of an atom, but OpenBabel was not able" << endl
         << "  to find an atom with this serial number. " << endl
         << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
-        return(false)
-              ;
+        return(false);
     }
 
     // Serial numbers of the atoms which bind to firstAtom, read from
