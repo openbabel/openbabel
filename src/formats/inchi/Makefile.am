@@ -1,13 +1,14 @@
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
-noinst_LTLIBRARIES = libinchi.la
+lib_LTLIBRARIES = libinchi.la
+
 libinchi_la_SOURCES = \
-	ichi_bns.c ichican2.c ichicano.c ichicans.c ichiisot.c \
-	ichilnct.c ichimak2.c ichimake.c ichimap1.c ichimap2.c \
-	ichimap4.c ichinorm.c ichiparm.c ichiprt1.c ichiprt2.c \
-	ichiprt3.c ichiqueu.c ichiring.c ichisort.c ichister.c \
-	ichitaut.c inchi_dll.c inchi_dll_main.c runichi.c \
+	ichi_bns.c IChICan2.c IChICano.c ichicans.c ichiisot.c \
+	ichilnct.c IChIMak2.c IChIMake.c ichimap1.c ichimap2.c \
+	ichimap4.c IChINorm.c IChIParm.c IChIPrt1.c IChIPrt2.c \
+	IChIPrt3.c ichiqueu.c ichiring.c ichisort.c ichister.c \
+	IChITaut.c inchi_dll.c inchi_dll_main.c runichi.c \
 	strutil.c util.c
 
 libinchiincludedir = $(includedir)/openbabel/inchi
