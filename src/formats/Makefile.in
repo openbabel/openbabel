@@ -15,7 +15,7 @@
 @SET_MAKE@
 
 
-SOURCES = $(libformats_la_SOURCES)
+SOURCES = $(libobformats_la_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -40,7 +40,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 subdir = src/formats
-DIST_COMMON = $(libformatsinclude_HEADERS) $(srcdir)/Makefile.am \
+DIST_COMMON = $(libobformatsinclude_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
@@ -48,25 +48,34 @@ am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
-CONFIG_HEADER = $(top_builddir)/src/babelconfig.h
+CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
-LTLIBRARIES = $(noinst_LTLIBRARIES)
-libformats_la_DEPENDENCIES = inchi/libinchi.la
-am_libformats_la_OBJECTS = CSRformat.lo PQSformat.lo alchemyformat.lo \
-	amberformat.lo balstformat.lo bgfformat.lo boxformat.lo \
-	cacaoformat.lo cacheformat.lo carformat.lo cccformat.lo \
-	chem3dformat.lo chemdrawformat.lo chemtoolformat.lo cml.lo \
-	cmlformat.lo crkformat.lo cssrformat.lo dmolformat.lo \
-	fastsearchformat.lo featformat.lo fhformat.lo gamessformat.lo \
-	gaussformat.lo ghemicalformat.lo grosmos96format.lo \
-	hinformat.lo inchiformat.lo jaguarformat.lo mdlformat.lo \
-	mm3format.lo mmodformat.lo mol2format.lo mopacformat.lo \
-	mpqcformat.lo nwchemformat.lo pdbformat.lo povrayformat.lo \
-	qchemformat.lo reportformat.lo rxnformat.lo shelxformat.lo \
-	smilesformat.lo tinkerformat.lo turbomoleformat.lo \
-	unichemformat.lo viewmolformat.lo xedformat.lo xyzformat.lo \
-	zindoformat.lo
-libformats_la_OBJECTS = $(am_libformats_la_OBJECTS)
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+am__installdirs = "$(DESTDIR)$(libdir)" \
+	"$(DESTDIR)$(libobformatsincludedir)"
+libLTLIBRARIES_INSTALL = $(INSTALL)
+LTLIBRARIES = $(lib_LTLIBRARIES)
+libobformats_la_LIBADD =
+am_libobformats_la_OBJECTS = CSRformat.lo PQSformat.lo \
+	alchemyformat.lo amberformat.lo balstformat.lo bgfformat.lo \
+	boxformat.lo cacaoformat.lo cacheformat.lo carformat.lo \
+	cccformat.lo chem3dformat.lo chemdrawformat.lo \
+	chemtoolformat.lo cml.lo cmlformat.lo crkformat.lo \
+	cssrformat.lo dmolformat.lo fastsearchformat.lo featformat.lo \
+	fhformat.lo gamessformat.lo gaussformat.lo ghemicalformat.lo \
+	grosmos96format.lo hinformat.lo inchiformat.lo jaguarformat.lo \
+	mdlformat.lo mm3format.lo mmodformat.lo mol2format.lo \
+	mopacformat.lo mpqcformat.lo nwchemformat.lo pdbformat.lo \
+	povrayformat.lo qchemformat.lo reportformat.lo rxnformat.lo \
+	shelxformat.lo smilesformat.lo tinkerformat.lo \
+	turbomoleformat.lo unichemformat.lo viewmolformat.lo \
+	xedformat.lo xyzformat.lo zindoformat.lo
+libobformats_la_OBJECTS = $(am_libobformats_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -78,23 +87,16 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(libformats_la_SOURCES)
-DIST_SOURCES = $(libformats_la_SOURCES)
+SOURCES = $(libobformats_la_SOURCES)
+DIST_SOURCES = $(libobformats_la_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
 	install-recursive installcheck-recursive installdirs-recursive \
 	pdf-recursive ps-recursive uninstall-info-recursive \
 	uninstall-recursive
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(libformatsincludedir)"
-libformatsincludeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(libformatsinclude_HEADERS)
+libobformatsincludeHEADERS_INSTALL = $(INSTALL_HEADER)
+HEADERS = $(libobformatsinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = $(SUBDIRS)
@@ -203,9 +205,8 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = inchi
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
-noinst_LTLIBRARIES = libformats.la
-libformats_la_LIBADD = inchi/libinchi.la
-libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
+lib_LTLIBRARIES = libobformats.la
+libobformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
@@ -220,8 +221,8 @@ libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
 	xedformat.cpp xyzformat.cpp zindoformat.cpp
 
-libformatsincludedir = $(includedir)/openbabel
-libformatsinclude_HEADERS = \
+libobformatsincludedir = $(includedir)/openbabel
+libobformatsinclude_HEADERS = \
 	obmolecformat.h inchi_api.h
 
 EXTRA_DIST = exampleformat.cpp
@@ -258,17 +259,35 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+install-libLTLIBRARIES: $(lib_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	test -z "$(libdir)" || $(mkdir_p) "$(DESTDIR)$(libdir)"
+	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    f=$(am__strip_dir) \
+	    echo " $(LIBTOOL) --mode=install $(libLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) '$$p' '$(DESTDIR)$(libdir)/$$f'"; \
+	    $(LIBTOOL) --mode=install $(libLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) "$$p" "$(DESTDIR)$(libdir)/$$f"; \
+	  else :; fi; \
+	done
 
-clean-noinstLTLIBRARIES:
-	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
-	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
+uninstall-libLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@set -x; list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  p=$(am__strip_dir) \
+	  echo " $(LIBTOOL) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$p'"; \
+	  $(LIBTOOL) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$p"; \
+	done
+
+clean-libLTLIBRARIES:
+	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
 	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
 	  test "$$dir" != "$$p" || dir=.; \
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libformats.la: $(libformats_la_OBJECTS) $(libformats_la_DEPENDENCIES) 
-	$(CXXLINK)  $(libformats_la_LDFLAGS) $(libformats_la_OBJECTS) $(libformats_la_LIBADD) $(LIBS)
+libobformats.la: $(libobformats_la_OBJECTS) $(libobformats_la_DEPENDENCIES) 
+	$(CXXLINK) -rpath $(libdir) $(libobformats_la_LDFLAGS) $(libobformats_la_OBJECTS) $(libobformats_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -357,22 +376,22 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-libformatsincludeHEADERS: $(libformatsinclude_HEADERS)
+install-libobformatsincludeHEADERS: $(libobformatsinclude_HEADERS)
 	@$(NORMAL_INSTALL)
-	test -z "$(libformatsincludedir)" || $(mkdir_p) "$(DESTDIR)$(libformatsincludedir)"
-	@list='$(libformatsinclude_HEADERS)'; for p in $$list; do \
+	test -z "$(libobformatsincludedir)" || $(mkdir_p) "$(DESTDIR)$(libobformatsincludedir)"
+	@list='$(libobformatsinclude_HEADERS)'; for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  f=$(am__strip_dir) \
-	  echo " $(libformatsincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(libformatsincludedir)/$$f'"; \
-	  $(libformatsincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(libformatsincludedir)/$$f"; \
+	  echo " $(libobformatsincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(libobformatsincludedir)/$$f'"; \
+	  $(libobformatsincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(libobformatsincludedir)/$$f"; \
 	done
 
-uninstall-libformatsincludeHEADERS:
+uninstall-libobformatsincludeHEADERS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(libformatsinclude_HEADERS)'; for p in $$list; do \
+	@list='$(libobformatsinclude_HEADERS)'; for p in $$list; do \
 	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(libformatsincludedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(libformatsincludedir)/$$f"; \
+	  echo " rm -f '$(DESTDIR)$(libobformatsincludedir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(libobformatsincludedir)/$$f"; \
 	done
 
 # This directory's subdirectories are mostly independent; you can cd
@@ -554,7 +573,7 @@ check: check-recursive
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(libformatsincludedir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libobformatsincludedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-recursive
@@ -583,7 +602,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-recursive
 
-clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
+clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-recursive
@@ -602,9 +621,9 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-libformatsincludeHEADERS
+install-data-am: install-libobformatsincludeHEADERS
 
-install-exec-am:
+install-exec-am: install-libLTLIBRARIES
 
 install-info: install-info-recursive
 
@@ -630,24 +649,27 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-libformatsincludeHEADERS
+uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
+	uninstall-libobformatsincludeHEADERS
 
 uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
-	clean clean-generic clean-libtool clean-noinstLTLIBRARIES \
+	clean clean-generic clean-libLTLIBRARIES clean-libtool \
 	clean-recursive ctags ctags-recursive distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-recursive distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-libformatsincludeHEADERS install-man \
-	install-strip installcheck installcheck-am installdirs \
-	installdirs-am maintainer-clean maintainer-clean-generic \
+	install-info-am install-libLTLIBRARIES \
+	install-libobformatsincludeHEADERS install-man install-strip \
+	installcheck installcheck-am installdirs installdirs-am \
+	maintainer-clean maintainer-clean-generic \
 	maintainer-clean-recursive mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool mostlyclean-recursive \
 	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
-	uninstall-info-am uninstall-libformatsincludeHEADERS
+	uninstall-info-am uninstall-libLTLIBRARIES \
+	uninstall-libobformatsincludeHEADERS
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

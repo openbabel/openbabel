@@ -2,10 +2,9 @@ SUBDIRS = inchi
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
-noinst_LTLIBRARIES = libformats.la
-libformats_la_LIBADD = inchi/libinchi.la
+lib_LTLIBRARIES = libobformats.la
 
-libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
+libobformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
@@ -20,8 +19,8 @@ libformats_la_SOURCES = CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
 	xedformat.cpp xyzformat.cpp zindoformat.cpp
 
-libformatsincludedir = $(includedir)/openbabel
-libformatsinclude_HEADERS = \
+libobformatsincludedir = $(includedir)/openbabel
+libobformatsinclude_HEADERS = \
 	obmolecformat.h inchi_api.h
 
 EXTRA_DIST = exampleformat.cpp
