@@ -32,17 +32,19 @@ public:
 "Fingerprint format\n \
 See Fabien Fontaine's source code\n \
 Options e.g. -xn16\n \
--f#  finger print type, default <2>\n \
--n# fold to specified number of 32bit words \n \
--h  hex output when multiple molecules\n \
+ f# finger print type, default <2>\n \
+ n# fold to specified number of 32bit words \n \
+ h  hex output when multiple molecules\n \
 ";
 	};
 
 	virtual unsigned int Flags(){return NOTREADABLE;};
+	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
 private:
 	vector<unsigned int> firstfp;
 	string firstname;
-	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+	bool IsPossibleSubstructure(vector<unsigned int>Mol, vector<unsigned int>Frag);
 };
 
 ////////////////////////////////////////////////////
@@ -97,7 +99,11 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 			firstname = "first mol";
 	}
 	else
+	{
 		ofs << "   Tanimoto from " << firstname << " = " << Tanimoto(firstfp, fptvec);
+		if(IsPossibleSubstructure(fptvec,firstfp))
+			ofs << "\nPossible superstructure of " << firstname;
+	}
 	ofs << endl;
 	
 	int i;
@@ -112,6 +118,15 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		}
 		ofs << dec << endl;
 	}
+	return true;
+}
+
+bool FingerprintFormat::IsPossibleSubstructure(vector<unsigned int>Mol, vector<unsigned int>Frag)
+{
+	//Returns false if Frag is definitely NOT a substructure of Mol
+	int i;
+	for (i=0;i<Mol.size();++i)
+		if((Mol[i] & Frag[i]) ^ Frag[i]) return false;
 	return true;
 }
 

@@ -162,7 +162,7 @@ private:
 	typedef std::set<std::vector<int> > Fset;
 	typedef std::set<std::vector<int> >::iterator SetItr;
 	
-	void getFragments(std::vector<int>& levels, std::vector<int> curfrag, 
+	void getFragments(std::vector<int> levels, std::vector<int> curfrag, 
 			int level, OBAtom* patom, OBBond* pbond);
 	void DoReverses();
 	void DoRings();

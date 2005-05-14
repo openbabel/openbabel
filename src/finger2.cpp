@@ -18,12 +18,12 @@ GNU General Public License for more details.
 #include <vector>
 #include "bitvec.h"
 #include "fingerprint.h"
-/*
+
 #ifdef _DEBUG
  #include "stdafx.h"
  #undef AddAtom
 #endif
-*/
+
 using namespace std;
 namespace OpenBabel
 {
@@ -77,7 +77,7 @@ void fingerprint2::GetFingerprint(OBMol& mol,OBBitVec& fp)
 }
 
 //////////////////////////////////////////////////////////
-void fingerprint2::getFragments(vector<int>& levels, vector<int> curfrag, 
+void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag, 
 					int level, OBAtom* patom, OBBond* pbond)
 {
 	//Recursive routine to analyse schemical structure and populate fragset and ringset
@@ -114,7 +114,7 @@ void fingerprint2::getFragments(vector<int>& levels, vector<int> curfrag,
 				//and save in ringset
 				curfrag[0] = bo;
 				ringset.insert(curfrag);
-				return;
+//				return;
 			}
 		}
 		else //no ring
@@ -122,14 +122,15 @@ void fingerprint2::getFragments(vector<int>& levels, vector<int> curfrag,
 			if(level<Max_Fragment_Size)
 			{
 //				TRACE("level=%d size=%d %p frag[0]=%p\n",level, curfrag.size(),&curfrag, &(curfrag[0])); 
-				//Do the next atom; curfrag is passed by value and hence copied
+				//Do the next atom; levels, curfrag are passed by value and hence copied
 				getFragments(levels, curfrag, level+1, pnxtat, pnewbond);
 			}
 		}
 	}
 
 	//do not save C,N,O single atom fragments
-	if(level>1 || patom->GetAtomicNum()>8  || patom->GetAtomicNum()<6)
+	if(curfrag[0]==0 &&
+		(level>1 || patom->GetAtomicNum()>8  || patom->GetAtomicNum()<6))
 	{
 		fragset.insert(curfrag); //curfrag ignored if an identical fragment already present
 //		PrintFpt(curfrag,level);
@@ -170,7 +171,7 @@ void fingerprint2::DoRings()
 		vector<int> t1(*itr); //temporary copy
 		vector<int> maxring(*itr); //the current largest vector
 		int i;
-		for(i=0;i<t1.size()/2-1;++i)
+		for(i=0;i<t1.size()/2;++i)
 		{
 			//rotate atoms in ring
 			rotate(t1.begin(),t1.begin()+2,t1.end());
@@ -180,10 +181,11 @@ void fingerprint2::DoRings()
 			//reverse the direction around ring
 			vector<int> t2(t1);
 			reverse(t2.begin()+1, t2.end());
-			if(t1>maxring)
-				maxring=t1;
+			if(t2>maxring)
+				maxring=t2;
 		}
 		fragset.insert(maxring);
+		//PrintFpt(maxring,0);
 	}
 }
 
