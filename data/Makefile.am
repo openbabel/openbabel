@@ -8,7 +8,7 @@ BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h types.h
 
 EXTRA_DIST = \
-	bin2hex.pl $(pkgdata_DATA) $(BUILT_SOURCES)
+	bin2hex.pl $(table_DATA) $(BUILT_SOURCES)
 
 aromatic.h:	bin2hex.pl aromatic.txt
 		(cd $(srcdir); ./bin2hex.pl aromatic.txt AromaticData >aromatic.h)
