@@ -42,9 +42,9 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = babel$(EXEEXT)
 subdir = src
-DIST_COMMON = README $(libopenbabelinclude_HEADERS) \
-	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(srcdir)/config.h.in snprintf.c strncasecmp.c
+DIST_COMMON = README $(pkginclude_HEADERS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in $(srcdir)/config.h.in snprintf.c \
+	strncasecmp.c
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -60,24 +60,24 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
-	"$(DESTDIR)$(libopenbabelincludedir)"
+	"$(DESTDIR)$(pkgincludedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libopenbabel_la_DEPENDENCIES = math/libmath.la formats/libobformats.la \
-	@LTLIBOBJS@ $(am__empty)
+libopenbabel_la_DEPENDENCIES = math/libmath.la @LTLIBOBJS@
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
-	bondtyper.lo chains.lo chiral.lo data.lo obconversion.lo \
-	finger2.lo fingerprint.lo fastsearch.lo generic.lo grid.lo \
-	kekulize.lo matrix.lo mol.lo molchrg.lo oberror.lo obiter.lo \
-	obutil.lo parsmart.lo patty.lo phmodel.lo rand.lo residue.lo \
-	ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo transform.lo
+	bondtyper.lo chains.lo chiral.lo data.lo dlhandler_unix.lo \
+	obconversion.lo finger2.lo fingerprint.lo fastsearch.lo \
+	generic.lo grid.lo kekulize.lo matrix.lo mol.lo molchrg.lo \
+	oberror.lo obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo \
+	rand.lo residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo \
+	typer.lo transform.lo
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_babel_OBJECTS = main.$(OBJEXT)
 babel_OBJECTS = $(am_babel_OBJECTS)
-babel_DEPENDENCIES = libopenbabel.la formats/libobformats.la \
-	formats/inchi/libinchi.la @LIBOBJS@
+babel_DEPENDENCIES = libopenbabel.la formats/inchi/libinchi.la \
+	@LIBOBJS@ $(am__empty)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -105,8 +105,8 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	install-recursive installcheck-recursive installdirs-recursive \
 	pdf-recursive ps-recursive uninstall-info-recursive \
 	uninstall-recursive
-libopenbabelincludeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(libopenbabelinclude_HEADERS)
+pkgincludeHEADERS_INSTALL = $(INSTALL_HEADER)
+HEADERS = $(pkginclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = $(SUBDIRS)
@@ -215,11 +215,13 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = math formats
 INCLUDES = -I$(srcdir)/../data/
+AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 lib_LTLIBRARIES = libopenbabel.la
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
-		obconversion.cpp finger2.cpp fingerprint.cpp \
+		dlhandler_unix.cpp obconversion.cpp \
+		finger2.cpp fingerprint.cpp \
 		fastsearch.cpp generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
@@ -227,10 +229,9 @@ libopenbabel_la_SOURCES = \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
-libopenbabel_la_LIBADD = math/libmath.la formats/libobformats.la @LTLIBOBJS@
+libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 0:0:0
-libopenbabelincludedir = $(includedir)/openbabel
-libopenbabelinclude_HEADERS = \
+pkginclude_HEADERS = \
 		base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
@@ -241,7 +242,7 @@ libopenbabelinclude_HEADERS = \
 		ring.h rotor.h rotamer.h typer.h 
 
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la formats/libobformats.la \
+babel_LDADD = libopenbabel.la \
 		formats/inchi/libinchi.la @LIBOBJS@
 
 EXTRA_DIST = \
@@ -377,6 +378,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chains.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_unix.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fastsearch.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/finger2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
@@ -454,22 +456,22 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-libopenbabelincludeHEADERS: $(libopenbabelinclude_HEADERS)
+install-pkgincludeHEADERS: $(pkginclude_HEADERS)
 	@$(NORMAL_INSTALL)
-	test -z "$(libopenbabelincludedir)" || $(mkdir_p) "$(DESTDIR)$(libopenbabelincludedir)"
-	@list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
+	test -z "$(pkgincludedir)" || $(mkdir_p) "$(DESTDIR)$(pkgincludedir)"
+	@list='$(pkginclude_HEADERS)'; for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  f=$(am__strip_dir) \
-	  echo " $(libopenbabelincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(libopenbabelincludedir)/$$f'"; \
-	  $(libopenbabelincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(libopenbabelincludedir)/$$f"; \
+	  echo " $(pkgincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(pkgincludedir)/$$f'"; \
+	  $(pkgincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(pkgincludedir)/$$f"; \
 	done
 
-uninstall-libopenbabelincludeHEADERS:
+uninstall-pkgincludeHEADERS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
+	@list='$(pkginclude_HEADERS)'; for p in $$list; do \
 	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(libopenbabelincludedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(libopenbabelincludedir)/$$f"; \
+	  echo " rm -f '$(DESTDIR)$(pkgincludedir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(pkgincludedir)/$$f"; \
 	done
 
 # This directory's subdirectories are mostly independent; you can cd
@@ -653,7 +655,7 @@ install-binPROGRAMS: install-libLTLIBRARIES
 
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libopenbabelincludedir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkgincludedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-recursive
@@ -701,7 +703,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-libopenbabelincludeHEADERS
+install-data-am: install-pkgincludeHEADERS
 
 install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 
@@ -730,7 +732,7 @@ ps: ps-recursive
 ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-info-am \
-	uninstall-libLTLIBRARIES uninstall-libopenbabelincludeHEADERS
+	uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 
 uninstall-info: uninstall-info-recursive
 
@@ -742,15 +744,14 @@ uninstall-info: uninstall-info-recursive
 	dvi dvi-am html html-am info info-am install install-am \
 	install-binPROGRAMS install-data install-data-am install-exec \
 	install-exec-am install-info install-info-am \
-	install-libLTLIBRARIES install-libopenbabelincludeHEADERS \
-	install-man install-strip installcheck installcheck-am \
-	installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic maintainer-clean-recursive \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am \
+	install-libLTLIBRARIES install-man install-pkgincludeHEADERS \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	maintainer-clean-recursive mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool mostlyclean-recursive \
+	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
 	uninstall-binPROGRAMS uninstall-info-am \
-	uninstall-libLTLIBRARIES uninstall-libopenbabelincludeHEADERS
+	uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

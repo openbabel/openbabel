@@ -1,13 +1,15 @@
 SUBDIRS = math formats
 
 INCLUDES = -I$(srcdir)/../data/
+AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 
 lib_LTLIBRARIES = libopenbabel.la
 
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
-		obconversion.cpp finger2.cpp fingerprint.cpp \
+		dlhandler_unix.cpp obconversion.cpp \
+		finger2.cpp fingerprint.cpp \
 		fastsearch.cpp generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
@@ -15,11 +17,10 @@ libopenbabel_la_SOURCES = \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
-libopenbabel_la_LIBADD = math/libmath.la formats/libobformats.la @LTLIBOBJS@
+libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 0:0:0
 
-libopenbabelincludedir = $(includedir)/openbabel
-libopenbabelinclude_HEADERS = \
+pkginclude_HEADERS = \
 		base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
@@ -31,7 +32,7 @@ libopenbabelinclude_HEADERS = \
 
 bin_PROGRAMS = babel
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la formats/libobformats.la \
+babel_LDADD = libopenbabel.la \
 		formats/inchi/libinchi.la @LIBOBJS@
 
 EXTRA_DIST = \
