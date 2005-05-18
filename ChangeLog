@@ -1,10 +1,34 @@
+2005-05-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/Makefile.am data/Makefile.in: Make sure that data files are
+	included in a "make dist".
+
+	* src/Makefile.am, src/Makefile.in: Build dlhandler_unix.cpp. Use
+	dynamic OBFormat loading.
+
+	* src/dlhandler_unix.cpp: Add initial support for dynamic loading
+	file format modules using $(libdir)/openbabel/*.so
+	paths. Currently this can cause problems when building/debugging
+	before installation. I have a symlink from
+	/usr/local/lib/openbabel -> $(top_builddir)/src/formats/.libs as a
+	workaround.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Build each
+	format as an independent shared-module.
+
+	* src/*.h: Minor updates. Make sure to only #include config.h once
+	per header. Add standard top comments (with description of each
+	file and Open Babel URL, etc.) to all headers.
+
+	* src/dlhandler_win32.cpp: Add file description to top comments.
+
 2005-05-14  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/fingerprint.h, src/finger2.cpp: Yet more bug fixes following 
 	comments by David Hoekman.
 
-	*fingerprintformat.cpp: Added IsPossibleSubstructure() and the display
-	of its result.
+	* fingerprintformat.cpp: Added IsPossibleSubstructure() and the
+	display of its result.
 
 2005-05-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
