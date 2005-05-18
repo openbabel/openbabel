@@ -1,4 +1,6 @@
 /**********************************************************************
+dlhandler_win32.cpp - Dynamic loader for Win32 (handles file format DDLs)
+
 Copyright (C) 2004 by Chris Morley
  
 This file is part of the Open Babel project.
