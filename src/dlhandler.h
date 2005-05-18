@@ -1,4 +1,6 @@
 /**********************************************************************
+dlhandler.h - Dynamic loader for file format modules.
+
 Copyright (C) 2004 by Chris Morley
 
 This file is part of the Open Babel project.
@@ -13,12 +15,14 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #ifndef DLHANDLER_H
 #define DLHANDLER_H
 
 #if HAVE_CONFIG_H
 #include "config.h"
 #endif
+
 #include <string>
 #include <vector>
 

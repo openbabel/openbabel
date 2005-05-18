@@ -17,12 +17,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#ifndef OB_DATA_H
+#define OB_DATA_H
+
 #if HAVE_CONFIG_H
 #include "config.h"
 #endif
-
-#ifndef OB_DATA_H
-#define OB_DATA_H
 
 #include <stdio.h>
 

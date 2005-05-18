@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #if HAVE_CONFIG_H
 #include "config.h"
 #endif
+
 #include <vector>
 #include <math.h>
 

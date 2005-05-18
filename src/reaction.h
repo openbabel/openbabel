@@ -1,4 +1,6 @@
 /**********************************************************************
+reaction.h: Handle chemical reactions (i.e., lists of reagents and products)
+
 Copyright (C) 2004 by Chris Morley
  
 This file is part of the Open Babel project.
@@ -25,6 +27,7 @@ GNU General Public License for more details.
 //#include <boost/shared_ptr.hpp>
 
 using namespace std;
+
 namespace OpenBabel
 {
 

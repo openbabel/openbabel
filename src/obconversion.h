@@ -1,4 +1,6 @@
 /**********************************************************************
+obconversion.h: Declaration of OBFormat and OBConversion
+
 Copyright (C) 2004 by Chris Morley
 
 This file is part of the Open Babel project.
@@ -13,9 +15,9 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #ifndef OB_CONV_H
 #define OB_CONV_H
-//Declaration of OBFormat and OBConversion
 
 #if HAVE_CONFIG_H
 #include "config.h"

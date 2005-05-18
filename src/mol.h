@@ -1,5 +1,6 @@
 /**********************************************************************
-mol.h - Handle molecules.
+mol.h - Handle molecules. Declarations of OBMol, OBAtom, OBBond, OBResidue.
+        (the main header for Open Babel)
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -17,6 +18,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #ifndef OB_MOL_H
 #define OB_MOL_H
 

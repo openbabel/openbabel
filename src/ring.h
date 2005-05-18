@@ -17,8 +17,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef OB_RINGS_H__
-#define OB_RINGS_H__
+#ifndef OB_RING_H
+#define OB_RING_H
 
 #include <deque>
 #include <algorithm>

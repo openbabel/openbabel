@@ -17,14 +17,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #ifndef OB_UTIL_H
 #define OB_UTIL_H
 
-#include <string>
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #if HAVE_IOSTREAM
 #include <iostream>
@@ -42,6 +40,8 @@ GNU General Public License for more details.
 #include <time.h>
 #endif
 #endif
+
+#include <string>
 
 namespace OpenBabel
 {

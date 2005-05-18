@@ -234,45 +234,23 @@ public:
         _gamma = gamma;
     }
     void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
-    void SetSpaceGroup(const std::string sg)
-    {
-        _spaceGroup = sg;
-    }
+    void SetSpaceGroup(const std::string sg) { _spaceGroup = sg; }
 
-    double GetA()
-    {
-        return(_a);
-    }
-    double GetB()
-    {
-        return(_b);
-    }
-    double GetC()
-    {
-        return(_c);
-    }
-    double GetAlpha()
-    {
-        return(_alpha);
-    }
-    double GetBeta()
-    {
-        return(_beta);
-    }
-    double GetGamma()
-    {
-        return(_gamma);
-    }
+    double GetA()    { return(_a);    }
+    double GetB()    { return(_b);    }
+    double GetC()    { return(_c);    }
+    double GetAlpha(){ return(_alpha);}
+    double GetBeta() { return(_beta); }
+    double GetGamma(){ return(_gamma);}
+
     //! Return v1, v2, v3 cell vectors
     std::vector<vector3> GetCellVectors();
     //! Return v1, v2, v3 cell vectors as a 3x3 matrix
     matrix3x3	GetCellMatrix();
     //! Fill in the elements of the orthogonalization matrix
     matrix3x3 GetOrthoMatrix();
-    const std::string GetSpaceGroup()
-    {
-        return(_spaceGroup);
-    }
+
+    const std::string GetSpaceGroup() { return(_spaceGroup); }
 };
 
 //! \brief Used to hold the torsion data for a single rotatable bond

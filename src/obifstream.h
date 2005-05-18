@@ -17,12 +17,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#ifndef OB_IFSTREAM_H
+#define OB_IFSTREAM_H
+
 #if HAVE_CONFIG_H
 #include "config.h"
 #endif
-
-#ifndef OB_IFSTREAM_H
-#define OB_IFSTREAM_H
 
 #if HAVE_IOSTREAM
 #include <iostream>

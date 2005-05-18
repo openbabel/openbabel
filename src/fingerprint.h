@@ -1,5 +1,5 @@
 /**********************************************************************
-Fingerprint.h - Handle fingerprints
+fingerprint.h - Handle fingerprints
  
 Copyright (C) 2004 by Fabien Fontaine.
  
@@ -15,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #ifndef FINGERPRINT_H
 #define FINGERPRINT_H
 

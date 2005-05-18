@@ -1,6 +1,6 @@
-#ifndef FAST_SEARCH_H
-#define FAST_SEARCH_H
 /**********************************************************************
+fastsearch.h - Fast searching of molecular fingerprints
+
 Copyright (C) 2005 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -12,6 +12,9 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
+#ifndef FAST_SEARCH_H
+#define FAST_SEARCH_H
 
 namespace OpenBabel {
 
