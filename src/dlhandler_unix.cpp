@@ -1,49 +1,76 @@
-//*** Completely untested ***
+/**********************************************************************
+dlhandler_unix.cpp - Dynamic loader for UNIX (handles file format shared obj.)
+
+Copyright (C) 2004 by Chris Morley
+Some portions Copyright (C) 2004-2005 by Geoffrey R. Hutchison
+ 
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
+ 
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+ 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+***********************************************************************/
 
 #include "dlhandler.h"
 
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <dlfcn.h>
+
+using namespace std;
 
 //Globals for scandir()
 string targetPattern;
-int matchFiles (const struct dirent *entry_p)
-{
-    return !strcmp(entry_p->d_name, targetPattern)
-       };
 
-bool DLHandler::getConvDirectory(std::string& convPath)
+int matchFiles (struct dirent *entry_p)
+{
+  return (strstr(entry_p->d_name, targetPattern.c_str()) != 0);
+}
+
+bool DLHandler::getConvDirectory(string& convPath)
 {
     //Need to provide the directory from which this shared library was loaded.
     //This is the default directory for format shared library files.
-    return false;
+  
+  string testPath;
+  testPath += OB_MODULE_PATH;
+  convPath = testPath;
+
+  return true;
 }
 
-int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string& pattern, const std::string& path);
+int DLHandler::findFiles (vector <string>& file_list,const string& pattern, const string& path)
 {
-    if(path.empty())
-        path="./"; //use current dir ectory if path is empty
+  string internalPath = path;
 
-    targetPattern=pattern; //make accessible to global function
+  if (path.empty())
+    internalPath="./"; //use current directory if path is empty
 
-    struct dirent **entries_pp;
+  targetPattern = pattern; //make accessible to global function
+  struct dirent **entries_pp;
+  int count = scandir (internalPath.c_str(), &entries_pp, matchFiles, NULL);
 
-    int count = scandir (path.c_str(), &entries_pp, matchFiles, NULL);
+  for(int i=0; i<count; i++)
+    file_list.push_back(path + getSeparator() + (entries_pp[i])->d_name);
 
-    for(int i=0;i<count;i++)
-        file_list.push_back(path + (*entries_pp)->d_name);
-    return count;
+  return count;
 }
 
-bool DLHandler::openLib(const std::string& lib_name)
+bool DLHandler::openLib(const string& lib_name)
 {
-    return dlopen(lib_name, RTLD_LAZY) != 0;
+    return dlopen(lib_name.c_str(), RTLD_LAZY) != 0;
 }
 
 const char* DLHandler::getFormatFilePattern()
 {
-    return "lib*.so.*";
+    return ".so";
 }
 
 char DLHandler::getSeparator()
