@@ -100,6 +100,7 @@ const char* OBMol::ClassDescription()
            -h Add Hydrogens\n \
            -p Add Hydrogens appropriate for pH (use transforms in phmodel.txt)\n \
            -c Center Coordinates\n \
+           -j Join all input molecules into a single output molecule\n \
            -s\"smarts\" Convert only molecules matching SMARTS:\n \
            -v\"smarts\" Convert only molecules NOT matching SMARTS:\n\n" ;
 }
