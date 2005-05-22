@@ -706,6 +706,11 @@ bool OBConversion::IsLast()
 {
 	return m_IsLast;
 }
+////////////////////////////////////////////
+bool OBConversion::IsFirstInput()
+{
+	return (Count==0);
+}
 
 ////////////////////////////////////////////
 /// If ch is not in the option string (excluding quoted text), returns NULL
