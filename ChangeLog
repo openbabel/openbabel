@@ -1,3 +1,16 @@
+2005-05-22  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/obconversion.h, src/obconversion.cpp: Added IsFirstInput().
+
+	* src/formats/obmolecformat.h: Implemented -j format to aggregate
+	into a single output molecule.
+
+	* src/transform.cpp (OBMol::ClassDescription): added -j option 
+	
+	* src/formats/mdlformat.cpp (ReadMolecule): Added offset 
+	reading in a mdl sdf/mol file to a OBMol object which already has 
+	atoms will now add a disconnected fragment.
+
 2005-05-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/Makefile.am data/Makefile.in: Make sure that data files are
