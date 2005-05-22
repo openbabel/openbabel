@@ -18,10 +18,10 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 ///A format which converts to and/or from OBMol can derive from this class
-///To save duplicating the code below.
-///Derive from OBFormat if the object converted is not OBMol or 
-///if interaction with the framework is required during the execution 
-///of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
+/// to save duplicating the code below.
+///Derive directly from OBFormat if the object converted is not OBMol or 
+/// if interaction with the framework is required during the execution 
+/// of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
 
 class OBMoleculeFormat : public OBFormat
 {
@@ -29,7 +29,11 @@ public:
 	/// The "Convert" interface functions
 	virtual bool ReadChemObject(OBConversion* pConv)
 	{
-		OBMol* pmol = new OBMol;
+		static OBMol* pmol;
+		//With j option, reuse pmol except for the first mol
+		if(!pConv->IsOption('j',true) || pConv->IsFirstInput())
+			pmol = new OBMol;
+		
 		bool ret=ReadMolecule(pmol,pConv);
 		if(ret && pmol->NumAtoms() > 0) //Do transformation and return molecule
 			pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
@@ -45,8 +49,14 @@ public:
 		OBMol* pmol = dynamic_cast<OBMol*> (pOb);
 		bool ret=false;
 		if(pmol && pmol->NumAtoms() > 0)
-			ret=WriteMolecule(pmol,pConv);
-		delete pOb; 
+		{	
+			ret=true;
+			if(!pConv->IsOption('j',true) || pConv->IsLast()) //With j option, output only at end
+			{
+				ret=WriteMolecule(pmol,pConv);
+				delete pOb;
+			}
+		}
 		return ret;
 	};
 };

@@ -101,9 +101,11 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 
 	//Define some references so we can use the old parameter names
-	//bool ReadSDFile(istream &ifs,OBMol &mol,const char *title)
 	istream &ifs = *pConv->GetInStream();
 	OBMol &mol = *pmol;
+	
+	// Allows addition of further disconnected atoms to an existing molecule
+	int offset = mol.NumAtoms(); 
 
   int i,natoms,nbonds;
   char buffer[BUFF_SIZE];
@@ -199,7 +201,7 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 				}
 			}
 
-			if (!mol.AddBond(start,end,order,flag)) return(false);
+			if (!mol.AddBond(start+offset,end+offset,order,flag)) return(false);
 		}
 
 		//CM start 18 Sept 2003
@@ -217,7 +219,7 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 				int atomnumber = atoi((r1.substr(pos,3)).c_str());
 				if (atomnumber==0) break;
 				OBAtom* at;
-				at=mol.GetAtom(atomnumber); //atom numbers start at 1
+				at=mol.GetAtom(atomnumber+offset); //atom numbers start at 1
 				int value = atoi((r1.substr(pos+4,3)).c_str());
 				if(r1.substr(3,3)=="RAD")
 					at->SetSpinMultiplicity(value);
