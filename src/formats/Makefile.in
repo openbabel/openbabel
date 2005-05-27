@@ -14,8 +14,13 @@
 
 @SET_MAKE@
 
+# InChI code cannot be distributed with Open Babel due to licensing issues
+# (current InChI code is not released under any sort of free software or 
+#  open source license)
+# SUBDIRS = inchi
 
-SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) $(alchemyformat_la_SOURCES) $(amberformat_la_SOURCES) $(balstformat_la_SOURCES) $(bgfformat_la_SOURCES) $(boxformat_la_SOURCES) $(cacaoformat_la_SOURCES) $(cacheformat_la_SOURCES) $(carformat_la_SOURCES) $(cccformat_la_SOURCES) $(chem3dformat_la_SOURCES) $(chemdrawformat_la_SOURCES) $(chemtoolformat_la_SOURCES) $(cml_la_SOURCES) $(cmlformat_la_SOURCES) $(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) $(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) $(fhformat_la_SOURCES) $(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) $(grosmos96format_la_SOURCES) $(hinformat_la_SOURCES) $(inchiformat_la_SOURCES) $(jaguarformat_la_SOURCES) $(mdlformat_la_SOURCES) $(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
+
+SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) $(alchemyformat_la_SOURCES) $(amberformat_la_SOURCES) $(balstformat_la_SOURCES) $(bgfformat_la_SOURCES) $(boxformat_la_SOURCES) $(cacaoformat_la_SOURCES) $(cacheformat_la_SOURCES) $(carformat_la_SOURCES) $(cccformat_la_SOURCES) $(chem3dformat_la_SOURCES) $(chemdrawformat_la_SOURCES) $(chemtoolformat_la_SOURCES) $(cml_la_SOURCES) $(cmlformat_la_SOURCES) $(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) $(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) $(fhformat_la_SOURCES) $(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) $(grosmos96format_la_SOURCES) $(hinformat_la_SOURCES) $(jaguarformat_la_SOURCES) $(mdlformat_la_SOURCES) $(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -141,9 +146,6 @@ grosmos96format_la_OBJECTS = $(am_grosmos96format_la_OBJECTS)
 hinformat_la_LIBADD =
 am_hinformat_la_OBJECTS = hinformat.lo
 hinformat_la_OBJECTS = $(am_hinformat_la_OBJECTS)
-inchiformat_la_LIBADD =
-am_inchiformat_la_OBJECTS = inchiformat.lo
-inchiformat_la_OBJECTS = $(am_inchiformat_la_OBJECTS)
 jaguarformat_la_LIBADD =
 am_jaguarformat_la_OBJECTS = jaguarformat.lo
 jaguarformat_la_OBJECTS = $(am_jaguarformat_la_OBJECTS)
@@ -234,18 +236,18 @@ SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) \
 	$(featformat_la_SOURCES) $(fhformat_la_SOURCES) \
 	$(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) \
 	$(ghemicalformat_la_SOURCES) $(grosmos96format_la_SOURCES) \
-	$(hinformat_la_SOURCES) $(inchiformat_la_SOURCES) \
-	$(jaguarformat_la_SOURCES) $(mdlformat_la_SOURCES) \
-	$(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) \
-	$(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) \
-	$(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) \
-	$(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) \
-	$(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) \
-	$(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) \
-	$(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
-	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
-	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
-	$(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
+	$(hinformat_la_SOURCES) $(jaguarformat_la_SOURCES) \
+	$(mdlformat_la_SOURCES) $(mm3format_la_SOURCES) \
+	$(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) \
+	$(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) \
+	$(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) \
+	$(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) \
+	$(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) \
+	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
+	$(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
+	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
+	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
+	$(zindoformat_la_SOURCES)
 DIST_SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) \
 	$(alchemyformat_la_SOURCES) $(amberformat_la_SOURCES) \
 	$(balstformat_la_SOURCES) $(bgfformat_la_SOURCES) \
@@ -259,29 +261,22 @@ DIST_SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) \
 	$(featformat_la_SOURCES) $(fhformat_la_SOURCES) \
 	$(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) \
 	$(ghemicalformat_la_SOURCES) $(grosmos96format_la_SOURCES) \
-	$(hinformat_la_SOURCES) $(inchiformat_la_SOURCES) \
-	$(jaguarformat_la_SOURCES) $(mdlformat_la_SOURCES) \
-	$(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) \
-	$(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) \
-	$(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) \
-	$(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) \
-	$(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) \
-	$(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) \
-	$(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
-	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
-	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
-	$(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
-RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
-	html-recursive info-recursive install-data-recursive \
-	install-exec-recursive install-info-recursive \
-	install-recursive installcheck-recursive installdirs-recursive \
-	pdf-recursive ps-recursive uninstall-info-recursive \
-	uninstall-recursive
+	$(hinformat_la_SOURCES) $(jaguarformat_la_SOURCES) \
+	$(mdlformat_la_SOURCES) $(mm3format_la_SOURCES) \
+	$(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) \
+	$(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) \
+	$(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) \
+	$(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) \
+	$(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) \
+	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
+	$(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
+	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
+	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
+	$(zindoformat_la_SOURCES)
 pkgincludeHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(pkginclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = $(SUBDIRS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
@@ -385,11 +380,10 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = inchi
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 EXTRA_DIST = exampleformat.cpp
 pkginclude_HEADERS = \
-	obmolecformat.h inchi_api.h
+	obmolecformat.h # inchi_api.h
 
 pkglib_LTLIBRARIES = \
 	CSRformat.la PQSformat.la alchemyformat.la \
@@ -399,13 +393,14 @@ pkglib_LTLIBRARIES = \
 	cml.la cmlformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	gamessformat.la gaussformat.la ghemicalformat.la \
-	grosmos96format.la hinformat.la inchiformat.la \
+	grosmos96format.la hinformat.la \
 	jaguarformat.la mdlformat.la mm3format.la mmodformat.la \
 	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
 	rxnformat.la shelxformat.la smilesformat.la tinkerformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
-	xedformat.la xyzformat.la zindoformat.la
+	xedformat.la xyzformat.la zindoformat.la \
+	# inchiformat.la
 
 CSRformat_la_SOURCES = CSRformat.cpp
 CSRformat_la_LDFLAGS = -module -avoid-version
@@ -461,8 +456,9 @@ grosmos96format_la_SOURCES = grosmos96format.cpp
 grosmos96format_la_LDFLAGS = -module -avoid-version 
 hinformat_la_SOURCES = hinformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 
-inchiformat_la_SOURCES = inchiformat.cpp
-inchiformat_la_LDFLAGS = -module -avoid-version 
+
+# inchiformat_la_SOURCES = inchiformat.cpp
+# inchiformat_la_LDFLAGS = -module -avoid-version 
 jaguarformat_la_SOURCES = jaguarformat.cpp
 jaguarformat_la_LDFLAGS = -module -avoid-version 
 mdlformat_la_SOURCES = mdlformat.cpp
@@ -507,7 +503,7 @@ xyzformat_la_SOURCES = xyzformat.cpp
 xyzformat_la_LDFLAGS = -module -avoid-version 
 zindoformat_la_SOURCES = zindoformat.cpp
 zindoformat_la_LDFLAGS = -module -avoid-version 
-all: all-recursive
+all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .lo .o .obj
@@ -621,8 +617,6 @@ grosmos96format.la: $(grosmos96format_la_OBJECTS) $(grosmos96format_la_DEPENDENC
 	$(CXXLINK) -rpath $(pkglibdir) $(grosmos96format_la_LDFLAGS) $(grosmos96format_la_OBJECTS) $(grosmos96format_la_LIBADD) $(LIBS)
 hinformat.la: $(hinformat_la_OBJECTS) $(hinformat_la_DEPENDENCIES) 
 	$(CXXLINK) -rpath $(pkglibdir) $(hinformat_la_LDFLAGS) $(hinformat_la_OBJECTS) $(hinformat_la_LIBADD) $(LIBS)
-inchiformat.la: $(inchiformat_la_OBJECTS) $(inchiformat_la_DEPENDENCIES) 
-	$(CXXLINK) -rpath $(pkglibdir) $(inchiformat_la_LDFLAGS) $(inchiformat_la_OBJECTS) $(inchiformat_la_LIBADD) $(LIBS)
 jaguarformat.la: $(jaguarformat_la_OBJECTS) $(jaguarformat_la_DEPENDENCIES) 
 	$(CXXLINK) -rpath $(pkglibdir) $(jaguarformat_la_LDFLAGS) $(jaguarformat_la_OBJECTS) $(jaguarformat_la_LIBADD) $(LIBS)
 mdlformat.la: $(mdlformat_la_OBJECTS) $(mdlformat_la_DEPENDENCIES) 
@@ -701,7 +695,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ghemicalformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grosmos96format.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hinformat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchiformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jaguarformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdlformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mm3format.Plo@am__quote@
@@ -773,77 +766,6 @@ uninstall-pkgincludeHEADERS:
 	  rm -f "$(DESTDIR)$(pkgincludedir)/$$f"; \
 	done
 
-# This directory's subdirectories are mostly independent; you can cd
-# into them and run `make' without going through this Makefile.
-# To change the values of `make' variables: instead of editing Makefiles,
-# (1) if the variable is set in `config.status', edit `config.status'
-#     (which will cause the Makefiles to be regenerated when you run `make');
-# (2) otherwise, pass the desired values on the `make' command line.
-$(RECURSIVE_TARGETS):
-	@failcom='exit 1'; \
-	for f in x $$MAKEFLAGS; do \
-	  case $$f in \
-	    *=* | --[!k]*);; \
-	    *k*) failcom='fail=yes';; \
-	  esac; \
-	done; \
-	dot_seen=no; \
-	target=`echo $@ | sed s/-recursive//`; \
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  echo "Making $$target in $$subdir"; \
-	  if test "$$subdir" = "."; then \
-	    dot_seen=yes; \
-	    local_target="$$target-am"; \
-	  else \
-	    local_target="$$target"; \
-	  fi; \
-	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
-	  || eval $$failcom; \
-	done; \
-	if test "$$dot_seen" = "no"; then \
-	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
-	fi; test -z "$$fail"
-
-mostlyclean-recursive clean-recursive distclean-recursive \
-maintainer-clean-recursive:
-	@failcom='exit 1'; \
-	for f in x $$MAKEFLAGS; do \
-	  case $$f in \
-	    *=* | --[!k]*);; \
-	    *k*) failcom='fail=yes';; \
-	  esac; \
-	done; \
-	dot_seen=no; \
-	case "$@" in \
-	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
-	  *) list='$(SUBDIRS)' ;; \
-	esac; \
-	rev=''; for subdir in $$list; do \
-	  if test "$$subdir" = "."; then :; else \
-	    rev="$$subdir $$rev"; \
-	  fi; \
-	done; \
-	rev="$$rev ."; \
-	target=`echo $@ | sed s/-recursive//`; \
-	for subdir in $$rev; do \
-	  echo "Making $$target in $$subdir"; \
-	  if test "$$subdir" = "."; then \
-	    local_target="$$target-am"; \
-	  else \
-	    local_target="$$target"; \
-	  fi; \
-	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
-	  || eval $$failcom; \
-	done && test -z "$$fail"
-tags-recursive:
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
-	done
-ctags-recursive:
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) ctags); \
-	done
-
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
@@ -854,23 +776,10 @@ ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	mkid -fID $$unique
 tags: TAGS
 
-TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
-	if ($(ETAGS) --etags-include --version) >/dev/null 2>&1; then \
-	  include_option=--etags-include; \
-	  empty_fix=.; \
-	else \
-	  include_option=--include; \
-	  empty_fix=; \
-	fi; \
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  if test "$$subdir" = .; then :; else \
-	    test ! -f $$subdir/TAGS || \
-	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
-	  fi; \
-	done; \
 	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
@@ -883,7 +792,7 @@ TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 	    $$tags $$unique; \
 	fi
 ctags: CTAGS
-CTAGS: ctags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+CTAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
@@ -932,38 +841,22 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  fi; \
 	done
-	list='$(DIST_SUBDIRS)'; for subdir in $$list; do \
-	  if test "$$subdir" = .; then :; else \
-	    test -d "$(distdir)/$$subdir" \
-	    || $(mkdir_p) "$(distdir)/$$subdir" \
-	    || exit 1; \
-	    distdir=`$(am__cd) $(distdir) && pwd`; \
-	    top_distdir=`$(am__cd) $(top_distdir) && pwd`; \
-	    (cd $$subdir && \
-	      $(MAKE) $(AM_MAKEFLAGS) \
-	        top_distdir="$$top_distdir" \
-	        distdir="$$distdir/$$subdir" \
-	        distdir) \
-	      || exit 1; \
-	  fi; \
-	done
 check-am: all-am
-check: check-recursive
+check: check-am
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
-installdirs: installdirs-recursive
-installdirs-am:
+installdirs:
 	for dir in "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(pkgincludedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: install-recursive
-install-exec: install-exec-recursive
-install-data: install-data-recursive
-uninstall: uninstall-recursive
+install: install-am
+install-exec: install-exec-am
+install-data: install-data-am
+uninstall: uninstall-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 
-installcheck: installcheck-recursive
+installcheck: installcheck-am
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
 	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
@@ -979,24 +872,24 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-clean: clean-recursive
+clean: clean-am
 
 clean-am: clean-generic clean-libtool clean-pkglibLTLIBRARIES \
 	mostlyclean-am
 
-distclean: distclean-recursive
+distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-libtool distclean-tags
 
-dvi: dvi-recursive
+dvi: dvi-am
 
 dvi-am:
 
-html: html-recursive
+html: html-am
 
-info: info-recursive
+info: info-am
 
 info-am:
 
@@ -1004,50 +897,46 @@ install-data-am: install-pkgincludeHEADERS
 
 install-exec-am: install-pkglibLTLIBRARIES
 
-install-info: install-info-recursive
+install-info: install-info-am
 
 install-man:
 
 installcheck-am:
 
-maintainer-clean: maintainer-clean-recursive
+maintainer-clean: maintainer-clean-am
 	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
-mostlyclean: mostlyclean-recursive
+mostlyclean: mostlyclean-am
 
 mostlyclean-am: mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool
 
-pdf: pdf-recursive
+pdf: pdf-am
 
 pdf-am:
 
-ps: ps-recursive
+ps: ps-am
 
 ps-am:
 
 uninstall-am: uninstall-info-am uninstall-pkgincludeHEADERS \
 	uninstall-pkglibLTLIBRARIES
 
-uninstall-info: uninstall-info-recursive
-
-.PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
-	clean clean-generic clean-libtool clean-pkglibLTLIBRARIES \
-	clean-recursive ctags ctags-recursive distclean \
+.PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
+	clean-libtool clean-pkglibLTLIBRARIES ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
-	distclean-recursive distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am install-data \
-	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-man install-pkgincludeHEADERS \
-	install-pkglibLTLIBRARIES install-strip installcheck \
-	installcheck-am installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic maintainer-clean-recursive \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am uninstall-info-am \
-	uninstall-pkgincludeHEADERS uninstall-pkglibLTLIBRARIES
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-data install-data-am install-exec \
+	install-exec-am install-info install-info-am install-man \
+	install-pkgincludeHEADERS install-pkglibLTLIBRARIES \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-info-am uninstall-pkgincludeHEADERS \
+	uninstall-pkglibLTLIBRARIES
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

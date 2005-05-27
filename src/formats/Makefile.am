@@ -1,11 +1,14 @@
-SUBDIRS = inchi
+# InChI code cannot be distributed with Open Babel due to licensing issues
+# (current InChI code is not released under any sort of free software or 
+#  open source license)
+# SUBDIRS = inchi
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
 EXTRA_DIST = exampleformat.cpp
 
 pkginclude_HEADERS = \
-	obmolecformat.h inchi_api.h
+	obmolecformat.h # inchi_api.h
 
 pkglib_LTLIBRARIES = \
 	CSRformat.la PQSformat.la alchemyformat.la \
@@ -15,13 +18,14 @@ pkglib_LTLIBRARIES = \
 	cml.la cmlformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	gamessformat.la gaussformat.la ghemicalformat.la \
-	grosmos96format.la hinformat.la inchiformat.la \
+	grosmos96format.la hinformat.la \
 	jaguarformat.la mdlformat.la mm3format.la mmodformat.la \
 	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
 	rxnformat.la shelxformat.la smilesformat.la tinkerformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
-	xedformat.la xyzformat.la zindoformat.la
+	xedformat.la xyzformat.la zindoformat.la \
+	# inchiformat.la
 
 CSRformat_la_SOURCES = CSRformat.cpp
 CSRformat_la_LDFLAGS = -module -avoid-version
@@ -104,8 +108,8 @@ grosmos96format_la_LDFLAGS = -module -avoid-version
 hinformat_la_SOURCES = hinformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 
 
-inchiformat_la_SOURCES = inchiformat.cpp
-inchiformat_la_LDFLAGS = -module -avoid-version 
+# inchiformat_la_SOURCES = inchiformat.cpp
+# inchiformat_la_LDFLAGS = -module -avoid-version 
 
 jaguarformat_la_SOURCES = jaguarformat.cpp
 jaguarformat_la_LDFLAGS = -module -avoid-version 
