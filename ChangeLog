@@ -1,3 +1,37 @@
+2005-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* acinclude.m4: Add CHECK_ZLIB macro for detection of zlib
+	compression library.
+
+	* configure.in, configure, src/config.h.in: Use it.
+	
+	* aclocal.m4, config.guess, config.sub, ltmain.sh: Update for libtool
+	1.5.18.
+
+	* src/Makefile.am, src/Makefile.in: Ignore kekulize.cpp and
+	libinchi. Mark library as 1:0:0 version so that libopenbabel from
+	1.100.x series can coexist.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Ignore InChI
+	code until license issues can be resolved. Do not compile
+	inchiformat.cpp.
+
+	* src/bond.cpp: Use PerceiveKekuleBonds() instead of
+	NewPerceiveKekuleBonds().
+
+	* src/bondtyper.cpp, src/fastsearch.cpp, src/finger2.cpp,
+	src/fingerprint.cpp, src/kekulize.cpp, src/obconversion.cpp,
+	src/transform.cpp, tools/obfit.cpp, tools/obrotate.cpp:
+	Standardize top comments.
+
+	* src/openbabel.i: Initial SWIG file for scripting language
+	wrappers. Modules currently build, but experiencing linking
+	problems on Mac OS X.
+
+	* src/mol.h: Declare replacement C library functions rint(),
+	snprintf(), and strncasecmp() as namespace std:: to fix compile
+	problems with SWIG.
+
 2005-05-22  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/obconversion.h, src/obconversion.cpp: Added IsFirstInput().
