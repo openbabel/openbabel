@@ -11,14 +11,14 @@ libopenbabel_la_SOURCES = \
 		dlhandler_unix.cpp obconversion.cpp \
 		finger2.cpp fingerprint.cpp \
 		fastsearch.cpp generic.cpp grid.cpp \
-		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
+		matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
 libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
-libopenbabel_la_LDFLAGS = -version-info 0:0:0
+libopenbabel_la_LDFLAGS = -version-info 1:0:0
 
 pkginclude_HEADERS = \
 		base.h bitvec.h \
@@ -32,8 +32,8 @@ pkginclude_HEADERS = \
 
 bin_PROGRAMS = babel
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la \
-		formats/inchi/libinchi.la @LIBOBJS@
+babel_LDADD = libopenbabel.la  @LIBOBJS@ \
+	# formats/inchi/libinchi.la
 
 EXTRA_DIST = \
 	config.h.in strncasecmp.c snprintf.c snprintf.h
