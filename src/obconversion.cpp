@@ -1,4 +1,6 @@
 /**********************************************************************
+obconversion.cpp -  Declaration of OBFormat and OBConversion
+
 Copyright (C) 2004 by Chris Morley
 Some portions Copyright (C) 2005 by Geoffrey Hutchison
 

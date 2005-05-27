@@ -1,5 +1,5 @@
 /**********************************************************************
-Fingerprint.cpp: Handle fingerprints.
+fingerprint.cpp: Handle fingerprints.
  
 Copyright (C) 2004 by Fabien Fontaine.
  

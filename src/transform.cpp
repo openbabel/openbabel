@@ -1,4 +1,6 @@
 /**********************************************************************
+transform.cpp - Perform command-line requested transformations
+
 Copyright (C) 2004 by Chris Morley
  
 This file is part of the Open Babel project.

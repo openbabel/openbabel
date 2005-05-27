@@ -1,6 +1,11 @@
 /**********************************************************************
+fastsearch.cpp - Fast molecular search from an indexed file
+
 Copyright (C) 2005 by Chris Morley
  
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
@@ -14,8 +19,14 @@ GNU General Public License for more details.
 #if HAVE_CONFIG_H
 #include "config.h"
 #endif
+
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
+#endif
 #include <vector>
+
 #include "mol.h"
 #include "fingerprint.h"
 #include "fastsearch.h"

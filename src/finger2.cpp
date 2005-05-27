@@ -1,4 +1,6 @@
 /**********************************************************************
+finger2.cpp: Alternate fingerprint algorithm.
+
 Copyright (C) 2005 Chris Morley
  
 This file is part of the Open Babel project.
@@ -13,9 +15,11 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "mol.h"
+
 #include <set>
 #include <vector>
+
+#include "mol.h"
 #include "bitvec.h"
 #include "fingerprint.h"
 
