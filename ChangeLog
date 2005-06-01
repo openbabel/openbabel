@@ -1,3 +1,8 @@
+2005-05-27  Fabien Fontaine <fabfont@users.sourceforge.net>
+
+	* src/kekulize.cpp: Fix bugs reported by Chris Morley and David
+	Hoekman.
+
 2005-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* acinclude.m4: Add CHECK_ZLIB macro for detection of zlib

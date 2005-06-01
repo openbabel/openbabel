@@ -11,6 +11,7 @@ libopenbabel_la_SOURCES = \
 		dlhandler_unix.cpp obconversion.cpp \
 		finger2.cpp fingerprint.cpp \
 		fastsearch.cpp generic.cpp grid.cpp \
+		kekulize.cpp \
 		matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \

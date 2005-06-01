@@ -67,10 +67,10 @@ libopenbabel_la_DEPENDENCIES = math/libmath.la @LTLIBOBJS@
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo chains.lo chiral.lo data.lo dlhandler_unix.lo \
 	obconversion.lo finger2.lo fingerprint.lo fastsearch.lo \
-	generic.lo grid.lo matrix.lo mol.lo molchrg.lo oberror.lo \
-	obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo rand.lo \
-	residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo \
-	transform.lo
+	generic.lo grid.lo kekulize.lo matrix.lo mol.lo molchrg.lo \
+	oberror.lo obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo \
+	rand.lo residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo \
+	typer.lo transform.lo
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -222,6 +222,7 @@ libopenbabel_la_SOURCES = \
 		dlhandler_unix.cpp obconversion.cpp \
 		finger2.cpp fingerprint.cpp \
 		fastsearch.cpp generic.cpp grid.cpp \
+		kekulize.cpp \
 		matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
@@ -229,7 +230,7 @@ libopenbabel_la_SOURCES = \
 		transform.cpp
 
 libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
-libopenbabel_la_LDFLAGS = -version-info 0:0:0
+libopenbabel_la_LDFLAGS = -version-info 1:0:0
 pkginclude_HEADERS = \
 		base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
@@ -383,6 +384,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generic.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kekulize.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrix.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Plo@am__quote@

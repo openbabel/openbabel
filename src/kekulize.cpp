@@ -25,14 +25,14 @@ GNU General Public License for more details.
 #define SINGLE 1
 #define DOUBLE 2
 
-namespace OpenBabel
-{
+using namespace std;
+
+namespace OpenBabel {
 
 void OBMol::NewPerceiveKekuleBonds()
 {
 
-    if (HasKekulePerceived())
-        return;
+  if (HasKekulePerceived())  return;
     SetKekulePerceived();
 
     OBAtom *atom;
@@ -47,30 +47,21 @@ void OBMol::NewPerceiveKekuleBonds()
     int BO;
     int sume, orden, bestorden, bestatom;
     // Init the kekulized bonds
-    for( i=0; i< NumBonds(); i++ )
-    {
+  for( i=0; i< NumBonds(); i++ ) {
         bond = GetBond(i);
         BO = bond->GetBO();
         switch (BO)
         {
-        case 1:
-            bond->SetKSingle();
-            break;
-        case 2:
-            bond->SetKDouble();
-            break;
-        case 3:
-            bond->SetKTriple();
-            break;
+    case 1: bond->SetKSingle(); break;
+    case 2: bond->SetKDouble(); break;
+    case 3: bond->SetKTriple(); break;
         }
     }
 
     // Find all the groups of aromatic cycle
-    for( i=1; i<= NumAtoms(); i++ )
-    {
+  for( i=1; i<= NumAtoms(); i++ ) {
         atom = GetAtom(i);
-        if (atom->HasAromaticBond() && !cvisit[i])
-        { // is new aromatic atom of an aromatic cycle ?
+    if (atom->HasAromaticBond() && !cvisit[i]) { // is new aromatic atom of an aromatic cycle ?
 
             avisit.Clear();
             electron.clear();
@@ -79,38 +70,45 @@ void OBMol::NewPerceiveKekuleBonds()
             avisit.SetBitOn(i);
             expandcycle (atom, avisit);
             //store the atoms of the cycle(s)
-            for(j=1; j<= NumAtoms(); j++)
-            {
-                if ( avisit[j] )
-                {
+      for(j=1; j<= NumAtoms(); j++) {
+	if ( avisit[j] ) {
                     atom = GetAtom(j);
                     cycle.push_back(atom);
                 }
             }
             // At the begining each atom give one electron to the cycle
-            for(j=0; j< cycle.size(); j++)
-            {
+      for(j=0; j< cycle.size(); j++) {
                 electron.push_back(1);
             }
 
             // remove one electron if the atom make a double bond out of the cycle
             sume =0;
-            for(j=0; j< cycle.size(); j++)
-            {
+      for(j=0; j< cycle.size(); j++) {
                 atom = cycle[j];
-                for(bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi))
-                {
-                    if ( bond->IsDouble() )
+	for(bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
+	  if ( bond->IsDouble() ) {
+	    OBAtom *atom2 = bond->GetNbrAtom(atom);
+	    int fcharge = atom->GetFormalCharge();
+	    int fcharge2 = atom2->GetFormalCharge();
+	    if(atom->IsNitrogen() && atom2->IsOxygen() 
+	       && fcharge == 0 && fcharge2 == 0) { //n=O to [n+][O-]
+	      atom->SetFormalCharge(1);
+	      atom2->SetFormalCharge(-1);
+	      bond->SetKSingle();
+	      bond->SetBO(1);
+	    }
+	    else {
                         electron[j] = 0;
                 }
+	  }
+	}
                 // count the number of electrons
                 sume += electron[j];
             }
 
             // find the ideal number of electrons according to the huckel 4n+2 rule
             minde=99;
-            for (i=1; 1; i++)
-            {
+      for (i=1; 1; i++) {
                 n = 4 *i +2;
                 de = n - sume;
                 if (  de < minde )
@@ -122,40 +120,44 @@ void OBMol::NewPerceiveKekuleBonds()
             }
 
             // if huckel rule not satisfied some atoms must give more electrons
-
-            while ( minde != 0 )
-            {
+      //cout << "minde " << minde << endl;
+      while ( minde != 0 ) {
                 bestorden=99;
-                for(j=0; j< cycle.size(); j++)
-                {
-                    if (electron[j] == 1)
-                    {
+	for(j=0; j< cycle.size(); j++) {
+	  if (electron[j] == 1) {
                         orden = getorden(cycle[j]);
-                        if (orden < bestorden)
-                        {
+	    if (orden < bestorden) {
                             bestorden = orden;
                             bestatom = j;
                         }
                     }
                 }
-                if (bestorden==99)
-                {  // no electron giving atom found
-                    std::cerr << "Kekulize Warning: Huckel rule not satisfied for molecule " << GetTitle() << "\n";
+	if (bestorden==99) {  // no electron giving atom found
+	  std::cout << "Kekulize Warning: Huckel rule not satisfied for molecule " << GetTitle() << "\n";
                     break;             // Huckel rule cannot be satisfied
                 }                    // try to kekulize anyway
-                else
-                {
+	else {
                     electron[bestatom] += 1;
                     minde--;
                 }
             }
 
+      //for(j=0; j < cycle.size(); j++) {
+      //OBAtom *cycleAtom = cycle[j];
+      //cout << "\t" << cycleAtom->GetIdx();
+      //}
+      //cout << endl;
+
+      //for(j=0; j < electron.size(); j++) {
+      //cout << "\t" << electron[j];
+      //}
+      //cout << endl;
+
             // kekulize the cycle(s)
             start_kekulize(cycle,electron);
 
             // Set the kekulized cycle(s) as visited
-            for(j=1; j<= NumAtoms(); j++)
-            {
+      for(j=1; j<= NumAtoms(); j++) {
                 if (avisit[j])
                     cvisit.SetBitOn(j);
             }
@@ -163,26 +165,23 @@ void OBMol::NewPerceiveKekuleBonds()
         }
     }
     // Double bond have been assigned, set the remaining aromatic bonds to single
-    //std::cerr << "Set not assigned single bonds\n";
-    for(i=0;i <NumBonds(); i++)
-    {
+  //std::cout << "Set not assigned single bonds\n"; 
+  for(i=0;i <NumBonds(); i++) {
         bond = GetBond(i);
-        //std::cerr << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";
-        if (bond->GetBO()==5 )
-        {
+    //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";   
+    if (bond->GetBO()==5 ) {
             bond->SetKSingle();
             bond->SetBO(1);
-            //std::cerr << "single\n";
+      //std::cout << "single\n";
         }
         //else
-        //  std::cerr << "double\n";
+    //  std::cout << "double\n";
     }
 
     return;
 }
 
-void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &electron)
-{
+void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &electron) {
 
     std::vector<int> initState;
     std::vector<int> currentState;
@@ -195,26 +194,27 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
     OBBond *bond;
 
     //init the atom arrays
-    for(i=0;i <NumAtoms()+1; i++)
-    {
-        initState.push_back(0);
-        currentState.push_back(0);
+  for(i=0;i <NumAtoms()+1; i++) {
+    initState.push_back(-1);
+    currentState.push_back(-1);
         mark.push_back(false);
     }
 
     //init the bond arrays with single bonds
-    for(i=0;i <NumBonds(); i++)
-    {
+  for(i=0;i <NumBonds(); i++) {
         binitState.push_back(SINGLE);
         bcurrentState.push_back(SINGLE);
     }
 
     //set the electron number
-    for( i=0; i< cycle.size(); i++)
-    {
+  for( i=0; i< cycle.size(); i++) {
         atom = cycle[i];
         Idx =  atom->GetIdx();
-        initState[Idx] = electron[i];
+    if ( electron[i] == 1)
+      initState[Idx] = 1; // make 1 double bond
+    else
+      initState[Idx] = 2; // make 2 single bonds
+
         currentState[Idx] = initState[Idx];
     }
 
@@ -223,67 +223,63 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
 
     bool second_pass=false;
     // for( i=1; i<= NumAtoms(); i++) {
-    //     if(currentState[i] == 1) { // the atom can make a double bond
-    //       atom = GetAtom(i);
-    //       //find a neighbour that can make a double bond
-    //       // and start kekulize
-    //       for (nbr = atom->BeginNbrAtom(b);nbr;nbr = atom->NextNbrAtom(b)) {
-    // 	if(currentState[nbr->GetIdx()]==1){
-    // 	  if(!expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark)) {
-    // 	    second_pass=true;
-    // 	  }
+//     if(currentState[i] == 1) { // the atom can make a double bond
+//       atom = GetAtom(i);
+//       //find a neighbour that can make a double bond
+//       // and start kekulize
+//       for (nbr = atom->BeginNbrAtom(b);nbr;nbr = atom->NextNbrAtom(b)) {
+// 	if(currentState[nbr->GetIdx()]==1){
+// 	  if(!expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark)) {
+// 	    second_pass=true;
+// 	  }
 
-    // 	}
-    //       }
-    //     }
-    //   }
+// 	}
+//       }
+//     }
+//   }
     bool expand_successful;
     atom = cycle[0];
-    for (nbr = atom->BeginNbrAtom(b);nbr;nbr = atom->NextNbrAtom(b))
-    {
-        // std::cerr << "Expand kekulize\n";
+  for (nbr = atom->BeginNbrAtom(b);nbr;nbr = atom->NextNbrAtom(b)) {
+    if(initState[nbr->GetIdx()] == -1) //neighbor atom not in the cycle, try next one
+      continue; 
+    //std::cout << "Expand kekulize\n";
         expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark) ;
         //Control that all the electron have been given to the cycle(s)
         expand_successful = true;
-        for( i=0; i< cycle.size(); i++)
-        {
+    for( i=0; i< cycle.size(); i++) {
             atom2 = cycle[i];
             Idx =  atom2->GetIdx();
+      //cout << "\t" << currentState[Idx];
             if (currentState[Idx] == 1)
                 expand_successful=false;
         }
+    //cout << endl;
         if (expand_successful)
             break;
-        else
-        {
-            for(i=0;i <NumAtoms()+1; i++)
-            {
+    else {
+      for(i=0;i <NumAtoms()+1; i++) {
                 currentState[i]=initState[i];
                 mark[i]=false;
             }
-            for(i=0;i <NumBonds(); i++)
-            {
+      for(i=0;i <NumBonds(); i++) {
                 bcurrentState[i]=binitState[i];
             }
         }
     }
-    if (!expand_successful)
-        std::cerr << "kekulize error for molecule " << GetTitle() << "\n";
+  if (!expand_successful) std::cout << "kekulize error for molecule " << GetTitle() << "\n"; 
 
     // Set the double bonds
-    // std::cerr << "Set double bonds\n";
-    for(i=0;i <NumBonds(); i++)
-    {
+  // std::cout << "Set double bonds\n";
+  for(i=0;i <NumBonds(); i++) {
         bond = GetBond(i);
-        // std::cerr << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";
-        if (bond->GetBO()==5 && bcurrentState[i] == DOUBLE)
-        {
+    // std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";
+    if (bond->GetBO()==5 && bcurrentState[i] == DOUBLE) {
             bond->SetKDouble();
             bond->SetBO(2);
-            //std::cerr << "double\n";
+      //std::cout << "double\n";
         }
         //else
-        //std::cerr << "single\n";
+      //std::cout << "single\n";
         //else if (bond->IsAromatic() && bond->GetBO() != 2)
         //  bond->SetBO(1);
     }
@@ -304,35 +300,33 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
     bond = atom1->GetBond(atom2);
     int bIdx = bond->GetIdx();
 
-    if (currentState[Idx1] == 1 && currentState[Idx2] == 1)
-    {
+  if (currentState[Idx1] == 1 && currentState[Idx2] == 1) {
         currentState[Idx1]=0;
         currentState[Idx2]=0;
         // set bond to double
-        //std::cerr << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << "double\n";
+    //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " double\n";
         bcurrentState[bIdx]=DOUBLE;
     }
     else if (currentState[Idx1] == 0 && currentState[Idx2] == 1 ||
              currentState[Idx1] == 2 && currentState[Idx2] == 1 ||
-             currentState[Idx1] == 2 && currentState[Idx2] == 2)
-    {
-        //std::cerr << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << "single\n";
+	   currentState[Idx1] == 2 && currentState[Idx2] == 2) {
+    //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " single\n";
         // leave bond to single
     }
     else if (currentState[Idx1] == 1 && currentState[Idx2] == 0 ||
-             currentState[Idx1] == 1 && currentState[Idx2] == 2)
-    {
+      currentState[Idx1] == 1 && currentState[Idx2] == 2) {
         mark[Idx1]=false;
+    //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " error\n";
         return (0); // error
     }
     else if (currentState[Idx1] == 0 && currentState[Idx2] == 0
-             || currentState[Idx1] == 2 && currentState[Idx2] == 0)
-    {
+      || currentState[Idx1] == 2 && currentState[Idx2] == 0) { 
+    //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " done\n";
         return (1); //done
     }
-    else if (currentState[Idx1] == 0 && currentState[Idx2] == 2)
-    {
+  else if (currentState[Idx1] == 0 && currentState[Idx2] == 2) {
         currentState[Idx2]=0;
+    //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " leave single\n";
         // leave bond to single
     }
 
@@ -341,8 +335,9 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
     for (nbr = atom2->BeginNbrAtom(i);nbr;nbr = atom2->NextNbrAtom(i))
     {
         natom = nbr->GetIdx();
-        if ( !mark[natom] )
-        {
+     if(initState[natom] == -1) //neighbor atom not in the cycle, try next one
+       continue;            
+     if ( !mark[natom] ) {
             done = expand_kekulize(atom2, nbr, currentState, initState, bcurrentState, binitState, mark);
             if ( !done )  // kekulize failed
                 return_false =true;
@@ -351,8 +346,7 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
         }
 
     }
-    if (return_false)
-    { // no good solution found
+  if (return_false) { // no good solution found 
         if (bcurrentState[bIdx] == DOUBLE)
             currentState[Idx1]=initState[Idx1];
 
@@ -362,8 +356,7 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
         return (false);
     }
     // atom 2 cannot make any bond, should not have 1 electron
-    if (currentState[Idx2] == 1)
-    {
+  if (currentState[Idx2] == 1) {
         // currentState[Idx1]=initState[Idx1];
         mark[Idx1]=false;
         return (false);
@@ -372,36 +365,30 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
         return (true);
 }
 
-// Give the priority to give two electrons instead of 1
+//! Give the priority to give two electrons instead of 1
 int OBMol::getorden( OBAtom *atom)
 {
-    if ( atom->IsSulfur() )
-        return 1;
-    if ( atom->IsOxygen() )
-        return 2;
-    if ( atom->GetAtomicNum() == 34 )
-        return 3;
-    if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3)
-        return 5;
-    if ( atom->IsAmideNitrogen() )
-        return 4;
-    if ( atom->IsNitrogen() && atom->GetFormalCharge() == -1)
-        return 6;
-    if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->IsInRingSize(5) )
-        return 7;
-    if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 )
-        return 8;
-    if ( atom->IsCarbon() && atom->GetFormalCharge() == -1)
-        return 9;
+  int orden;
+  
+  if ( atom->IsSulfur() ) return 1;
+  if ( atom->IsOxygen() ) return 2;
+  if ( atom->GetAtomicNum() == 34 ) return 3;
+  if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) return 5;
+  if ( atom->IsAmideNitrogen() ) return 4;
+  if ( atom->IsNitrogen() && atom->GetFormalCharge() == -1) return 6;
+  if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->IsInRingSize(5) ) return 7;
+  if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 ) return 8;
+  if ( atom->IsCarbon() && atom->GetFormalCharge() == -1) return 9;
     //if ( atom->IsCarbon() ) return 9;
 
     return (100); //no atom found
 }
 
-// Recursively find the aromatic atoms with an aromatic bond to the current atom
+//! Recursively find the aromatic atoms with an aromatic bond to the current atom
 void OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit)
 {
     OBAtom *nbr;
+    OBBond *bond;
     std::vector<OBEdgeBase*>::iterator i;
     int natom;
     //for each neighbour atom test if it is in the aromatic ring
@@ -409,8 +396,7 @@ void OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit)
     {
         natom = nbr->GetIdx();
         // if (!avisit[natom] && nbr->IsAromatic() && ((OBBond*) *i)->IsAromatic()) {
-        if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5)
-        {
+     if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5) {
             avisit.SetBitOn(natom);
             expandcycle(nbr, avisit);
         }
