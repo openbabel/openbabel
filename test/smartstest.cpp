@@ -205,7 +205,13 @@ void GenerateSmartsReference()
     vector<vector<int> >::iterator j;
     vector<OBSmartsPattern*>::iterator i;
     OBMol mol;
-    OBConversion conv(&mifs, NULL);
+    OBConversion conv(&mifs, &cout);
+
+    if(! conv.SetInAndOutFormats("SMI","SMI"))
+    {
+        ThrowError("SMILES format is not loaded");
+        return;
+    }
 
     for (;mifs;)
     {
