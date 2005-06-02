@@ -78,8 +78,8 @@ public:
 	//To select OB format files
 	static const char* getFormatFilePattern();
 
-	static char DLHandler::getSeparator();
-	static void DLHandler::Sleep(int n);
+	static char getSeparator();
+	static void Sleep(int n);
 
 };
 
