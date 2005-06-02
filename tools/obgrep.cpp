@@ -25,17 +25,20 @@ using namespace OpenBabel;
 //! \brief Find the molecule(s) with or without a given SMART pattern
 int main(int argc,char **argv)
 {
-    char *program_name=NULL;
-    int c;
+    char c;
     int ntimes=0;
     bool pattern_matched=false, ntimes_matched=true;
     bool count=false, invert=false, full=false, name_only=false;
     char *FileIn = NULL, *Pattern = NULL;
-    program_name = argv[0];
-    OBFormat *pFormat;
+    char *program_name = argv[0];
+    char *iext;
+    bool useInFile = true;
 
+    OBConversion conv(&cin,&cout);
+    OBFormat *pFormat = conv.FindFormat("smi"); // default format is SMILES
+    
     // Parse options
-    while ((c = getopt(argc, argv, "t:nvcf")) != -1)
+    while ((c = getopt(argc, argv, "t:nvcfi:-")) != -1)
         switch (c)
         {
         case 't': // request ntimes unique matches
@@ -48,6 +51,21 @@ int main(int argc,char **argv)
             }
             break;
 
+	case 'i':
+	  iext = optarg;
+
+	  //The ID provided by the OBFormat class is used as 
+	  // the identifying file extension. This is a slight
+	  // reduction in flexibility (which is not currently used)
+	  pFormat = conv.FindFormat(iext);
+	  
+	  if(pFormat==NULL)
+	    {
+	      cerr << program_name << ": cannot read input format!" << endl;
+	      exit(-1);
+	    }
+
+	  break;
         case 'n': // print the molecule name only
             name_only = true;
             break;
@@ -62,6 +80,10 @@ int main(int argc,char **argv)
             full = true;
             break;
 
+	case '-':
+	  useInFile = false;
+	  break;
+
         case '?':
             if (isprint (optopt))
                 fprintf (stderr, "Unknown option `-%c'.\n", optopt);
@@ -74,47 +96,50 @@ int main(int argc,char **argv)
 
     int index = optind;
 
-
-    if (argc-index != 2)
+    if (argc-index != 2 && argc-index != 1)
     {
         string err = "Usage: ";
         err += program_name;
         err += " [options] \"PATTERN\" <filename>\n";
+	err += "If no filename is supplied, then obgrep will use stdin instead.\n";
         err += "Options:\n";
         err += "   -v      Invert the matching, print non-matching molecules\n";
         err += "   -c      Print the number of matched molecules\n";
+	err += "   -i <format> Specify the input and output format\n";
         err += "   -f      Full match, print matching-molecules when the number\n";
         err += "           of heavy atoms is equal to the number of PATTERN atoms\n";
         err += "   -n      Only print the name of the molecules\n";
         err += "   -t NUM  Print a molecule only if the PATTERN occurs NUM times inside the molecule\n";
-        ThrowError(err);
+	cerr << err << ends;
         exit(-1);
     }
     else
     {
         Pattern = argv[index++];
-        FileIn  = argv[index];
+	if (argc - index == 1)
+	  FileIn  = argv[index];
     }
 
-    ifstream ifs;
-
-    // Read the file
-    ifs.open(FileIn);
-    if (!ifs)
-    {
-        cerr << program_name << ": cannot read input file!" << endl;
-        exit (-1);
-    }
-
-    OBConversion conv;
-
-    // Find Input filetype
-    pFormat = conv.FormatFromExt(FileIn);
-    if (pFormat == NULL)
-    {
-        cerr << program_name << ": cannot read input format!" << endl;
-        return (-1);
-    }
+    if (useInFile && FileIn != NULL)
+      {
+	ifstream ifs;
+	// Read the file
+	ifs.open(FileIn);
+	if (!ifs)
+	  {
+	    cerr << program_name << ": cannot read input file!" << endl;
+	    exit (-1);
+	  }
+	conv.SetInStream(&ifs);
+	
+	// Find Input filetype
+	pFormat = conv.FormatFromExt(FileIn);
+	if (pFormat == NULL)
+	  {
+	    cerr << program_name << ": cannot read input format!" << endl;
+	    return (-1);
+	  }
+      }
 
     if (! conv.SetInAndOutFormats(pFormat, pFormat))
       {
@@ -135,7 +160,7 @@ int main(int argc,char **argv)
     for (c=0;;)
     {
         mol.Clear();
-	conv.Read(&mol, &ifs);
+	conv.Read(&mol);
         if (mol.Empty())
             break;
 
