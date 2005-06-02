@@ -147,6 +147,7 @@ INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
+LIBDL = @LIBDL@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -242,7 +243,7 @@ pkginclude_HEADERS = \
 		ring.h rotor.h rotamer.h typer.h 
 
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la  @LIBOBJS@ \
+babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
 	# formats/inchi/libinchi.la
 
 EXTRA_DIST = \

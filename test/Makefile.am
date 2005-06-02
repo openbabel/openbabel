@@ -5,7 +5,7 @@ matrixtest_SOURCES = matrixtest.cpp
 ringtest_SOURCES = ringtest.cpp
 smartstest_SOURCES = smartstest.cpp
 roundtrip_SOURCES = roundtrip.cpp
-LDADD = ../src/libopenbabel.la
+LDADD = ../src/libopenbabel.la @LIBDL@
 EXTRA_DIST = smartsresults.txt smartstest.txt unitcell.txt ringresults.txt attype.00.smi cml.sh test-set.sh
 TESTS = matrixtest smartstest ringtest obtest $(top_srcdir)/test/cml.sh $(top_srcdir)/test/test-set.sh
 

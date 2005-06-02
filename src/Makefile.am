@@ -33,7 +33,7 @@ pkginclude_HEADERS = \
 
 bin_PROGRAMS = babel
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la  @LIBOBJS@ \
+babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
 	# formats/inchi/libinchi.la
 
 EXTRA_DIST = \

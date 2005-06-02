@@ -1,18 +1,18 @@
 
 bin_PROGRAMS = obgrep obrotate obfit obprop obtanimoto
 obgrep_SOURCES = obgrep.cpp
-obgrep_LDADD = ../src/libopenbabel.la
+obgrep_LDADD = ../src/libopenbabel.la @LIBDL@
 
 obrotate_SOURCES = obrotate.cpp
-obrotate_LDADD = ../src/libopenbabel.la
+obrotate_LDADD = ../src/libopenbabel.la @LIBDL@
 
 obfit_SOURCES = obfit.cpp
-obfit_LDADD = ../src/libopenbabel.la
+obfit_LDADD = ../src/libopenbabel.la @LIBDL@
 
 obprop_SOURCES = obprop.cpp
-obprop_LDADD = ../src/libopenbabel.la
+obprop_LDADD = ../src/libopenbabel.la @LIBDL@
 
 obtanimoto_SOURCES = obtanimoto.cpp
-obtanimoto_LDADD = ../src/libopenbabel.la
+obtanimoto_LDADD = ../src/libopenbabel.la @LIBDL@
 
 AM_CPPFLAGS = -I$(top_srcdir)/src

@@ -35,6 +35,8 @@ fi
 AC_LANG_CPLUSPLUS
 dnl Checks for libraries.
 AC_CHECK_LIB(m, asin, , exit)
+AC_CHECK_LIB(c, dlopen, LIBDL="", [AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl")])
+AC_SUBST(LIBDL)
 CHECK_ZLIB
 
 dnl Checks for header files.
@@ -51,5 +53,20 @@ AC_C_INLINE
 dnl Checks for library functions.
 AC_CHECK_FUNCS([rint])
 AC_REPLACE_FUNCS([snprintf strncasecmp])
+
+dnl Gotta figure out whether scandir needs a const or not for the 3rd arg.
+AC_MSG_CHECKING([whether scandir needs a const cast])
+scandirconst_cast=no
+AC_DEFINE(SCANDIR_T, , [set if scandir needs a const])
+
+AC_COMPILE_IFELSE([
+#include <sys/types.h>
+#include <dirent.h>
+ extern int matchFiles (struct dirent *entry_p);
+ struct dirent **entries_pp;
+ int count = scandir ("./", &entries_pp, $dirent_t matchFiles, 0);
+], [AC_DEFINE(SCANDIR_T, [(int (*)(const dirent *))]) scandirconst_cast=yes])
+
+AC_MSG_RESULT([$scandirconst_cast])
 
 AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile openbabel.pc)

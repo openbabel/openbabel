@@ -55,7 +55,7 @@ int DLHandler::findFiles (vector <string>& file_list,const string& pattern, cons
 
   targetPattern = pattern; //make accessible to global function
   struct dirent **entries_pp;
-  int count = scandir (internalPath.c_str(), &entries_pp, matchFiles, NULL);
+  int count = scandir (internalPath.c_str(), &entries_pp, SCANDIR_T matchFiles, NULL);
 
   for(int i=0; i<count; i++)
     file_list.push_back(path + getSeparator() + (entries_pp[i])->d_name);

@@ -1,3 +1,40 @@
+2005-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/dlhandler_unix.cpp: Fix cast bug reported and fixed by Jean
+	Brefort.
+
+	* configure.in, configure, src/Makefile.am, tools/Makefile.am,
+	test/Makefile.am, src/config.h.in, Makefile.in, src/Makefile.in,
+	data/Makefile.in, doc/Makefile.in, src/Makefile.in,
+	src/formats/Makefile.in, src/math/Makefile.in, test/Makefile.in,
+	test/cmltest/Makefile.in, tools/Makefile.in:
+	Add test for scandir cast above. Add test for dlopen in libdl and
+	add it to LDFLAGS if needed. Should fix bug reported by Jean
+	Brefort.
+
+2005-06-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, src/config.h.in: Bump version for
+	2005-06-01 snapshot.
+
+	* test/attype.00.smi: Add label for last test molecule.
+
+	* test/smartsresults.txt: Regenerate using current atom type
+	patterns.
+
+	* test/smartstest.cpp: Make sure to set input and output formats
+	-- otherwise dynamic loading does not find SMILES importer on UNIX.
+
+	* test/unitcell.txt: Switch to ZnO unit cell for new unit cell
+	tests.
+
+	* test/unitcell.cpp: Added some debugging statements to test unit
+	cell translation vectors. (Currently do not seem to "roundtrip"
+	properly.)
+	
+	* tools/obgrep.cpp: Allow input from STDIN to address feature
+	request PR# 1116202.
+
 2005-05-27  Fabien Fontaine <fabfont@users.sourceforge.net>
 
 	* src/kekulize.cpp: Fix bugs reported by Chris Morley and David
