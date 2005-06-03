@@ -29,7 +29,7 @@ using namespace std;
 //Globals for scandir()
 string targetPattern;
 
-int matchFiles (const struct dirent *entry_p)
+int matchFiles (SCANDIR_CONST struct dirent *entry_p)
 {
   return (strstr(entry_p->d_name, targetPattern.c_str()) != 0);
 }

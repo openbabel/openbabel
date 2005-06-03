@@ -21558,6 +21558,11 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
 
+cat >>confdefs.h <<\_ACEOF
+#define SCANDIR_CONST
+_ACEOF
+
+
 cat >conftest.$ac_ext <<_ACEOF
 
 #include <sys/types.h>
@@ -21589,10 +21594,15 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  cat >>confdefs.h <<\_ACEOF
+   cat >>confdefs.h <<\_ACEOF
 #define SCANDIR_T (int (*)(const dirent *))
 _ACEOF
- scandirconst_cast=yes
+
+  cat >>confdefs.h <<\_ACEOF
+#define SCANDIR_CONST const
+_ACEOF
+
+scandirconst_cast=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5

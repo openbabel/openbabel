@@ -112,6 +112,9 @@
 #undef PACKAGE_VERSION
 
 /* set if scandir needs a const */
+#undef SCANDIR_CONST
+
+/* set if scandir needs a const */
 #undef SCANDIR_T
 
 /* Define to 1 if you have the ANSI C header files. */

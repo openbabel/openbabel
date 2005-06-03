@@ -1,3 +1,11 @@
+2005-06-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, src/config.h.in: Define SCANDIR_CONST
+	for the matchFiles scandir() filter function. Should solve problem
+	between BSD (which doesn't need const) and Linux (which does).
+
+	* src/dlhandler_unix.cpp: Use it.
+
 2005-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/dlhandler_unix.cpp: Fix cast bug reported and fixed by Jean

@@ -58,6 +58,7 @@ dnl Gotta figure out whether scandir needs a const or not for the 3rd arg.
 AC_MSG_CHECKING([whether scandir needs a const cast])
 scandirconst_cast=no
 AC_DEFINE(SCANDIR_T, , [set if scandir needs a const])
+AC_DEFINE(SCANDIR_CONST, , [set if scandir needs a const])
 
 AC_COMPILE_IFELSE([
 #include <sys/types.h>
@@ -65,7 +66,10 @@ AC_COMPILE_IFELSE([
  extern int matchFiles (struct dirent *entry_p);
  struct dirent **entries_pp;
  int count = scandir ("./", &entries_pp, $dirent_t matchFiles, 0);
-], [AC_DEFINE(SCANDIR_T, [(int (*)(const dirent *))]) scandirconst_cast=yes])
+], 
+[ AC_DEFINE(SCANDIR_T, [(int (*)(const dirent *))]) 
+  AC_DEFINE(SCANDIR_CONST, [const])
+scandirconst_cast=yes])
 
 AC_MSG_RESULT([$scandirconst_cast])
 
