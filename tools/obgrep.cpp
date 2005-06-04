@@ -16,7 +16,13 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obconversion.h"
 #include "parsmart.h"
-#include <unistd.h>
+
+#ifdef _WIN32
+	typedef char TCHAR;
+	#include "XGetOpt.h"
+#elif
+	#include <unistd.h>
+#endif
 
 using namespace std;
 using namespace OpenBabel;
@@ -39,6 +45,10 @@ int main(int argc,char **argv)
     
     // Parse options
     while ((c = getopt(argc, argv, "t:nvcfi:-")) != -1)
+    {
+	#ifdef _WIN32
+	    char optopt = c;
+	#endif
         switch (c)
         {
         case 't': // request ntimes unique matches
@@ -93,7 +103,7 @@ int main(int argc,char **argv)
                          optopt);
             return 1;
         }
-
+    }
     int index = optind;
 
     if (argc-index != 2 && argc-index != 1)
@@ -120,9 +130,9 @@ int main(int argc,char **argv)
 	  FileIn  = argv[index];
     }
 
+    ifstream ifs;
     if (useInFile && FileIn != NULL)
       {
-	ifstream ifs;
 	// Read the file
 	ifs.open(FileIn);
 	if (!ifs)
@@ -131,6 +141,7 @@ int main(int argc,char **argv)
 	    exit (-1);
 	  }
 	conv.SetInStream(&ifs);
+	
 	
 	// Find Input filetype
 	pFormat = conv.FormatFromExt(FileIn);
