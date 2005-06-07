@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #ifdef _WIN32
 	typedef char TCHAR;
 	#include "XGetOpt.h"
-#elif
+#else
 	#include <unistd.h>
 #endif
 

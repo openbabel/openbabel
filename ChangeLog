@@ -1,4 +1,10 @@
+2005-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/obgrep.cpp: Fixed mistake(?) in #elif define to compile
+	cleanly on GCC.
+
 2005-06-04  Chris Morley  <c.morley@gaseq.co.uk>
+
 	* tools/obgrep.cpp: Correct bug 1213806 and modify to allow 
 	Windows build
 
