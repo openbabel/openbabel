@@ -1,3 +1,26 @@
+2005-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Makefile.am, Makefile.in: Make sure windows/ directory is
+	included in distribution.
+
+	* src/Makefile.am, src/Makefile.in: Include hints for SWIG wrapper
+	generation. Make sure openbabel.i is included in dist.
+
+	* src/mol.h, src/atom.cpp, src/data.cpp, src/main.cpp,
+	src/obconversion.cpp, src/formats/alchemyformat.cpp,
+	src/formats/balstformat.cpp, src/formats/pdbformat.cpp,
+	test/roundtrip.cpp: Move declarations of rint, snprintf,
+	strncasecmp (for platforms that require replacement functions) out
+	of mol.h header and into source files that particularly use these
+	functions. (Pointed out by Jean Brefort.)
+
+	* src/openbabel.i, src/openbabel.py, src/openbabel_python.cpp:
+	Updated SWIG development wrappers.
+
+	* src/kekulize.cpp: Update with Fabien's latest version, should
+	fix recent bug reports (no assigned PR for these). Bug fixed
+	when huckel rule not satisfied + path search.
+
 2005-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/obgrep.cpp: Fixed mistake(?) in #elif define to compile

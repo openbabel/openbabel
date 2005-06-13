@@ -11,12 +11,17 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "mol.h"
 #if HAVE_CONFIG_H
 #include "config.h"
 #endif
+
+#include "mol.h"
 #include "data.h"
 #include "obconversion.h"
+
+#if !HAVE_STRNCASECMP
+extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
+#endif
 
 #include <stdio.h>
 #include <iostream>

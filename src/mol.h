@@ -1301,22 +1301,6 @@ EXTERN  OBMessageHandler obErrorLog;
 #define IsUnsatType(x)  (EQ(x,"Car") || EQ(x,"C2") || EQ(x,"Sox") || EQ(x,"Sac") || EQ(x,"Pac") || EQ(x,"So2"))
 #endif
 
-
-#if !HAVE_RINT
-inline double std::rint(double x)
-{
-    return ( (x < 0.0) ? ceil(x-0.5) : floor(x+0.5));
-}
-#endif
-
-#if !HAVE_SNPRINTF
-extern "C" int std::snprintf( char *, size_t, const char *, /* args */ ...);
-#endif
-
-#if !HAVE_STRNCASECMP
-extern "C" int std::strncasecmp(const char *s1, const char *s2, size_t n);
-#endif
-
 #ifndef __KCC
 extern "C"
 {

@@ -16,6 +16,10 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obconversion.h"
 
+#if !HAVE_SNPRINTF
+extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
+#endif
+
 using namespace std;
 namespace OpenBabel
 {

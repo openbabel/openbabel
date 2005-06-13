@@ -12,13 +12,19 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #if HAVE_CONFIG_H
 #include "config.h"
 #endif
+
 #include "mol.h"
 #include "obconversion.h"
 #include "typer.h"
 #include "resdata.h"
+
+#if !HAVE_SNPRINTF
+extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
+#endif
 
 #include <vector>
 #include <map>
