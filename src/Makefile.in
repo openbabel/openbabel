@@ -224,14 +224,18 @@ libopenbabel_la_SOURCES = \
 		finger2.cpp fingerprint.cpp \
 		fastsearch.cpp generic.cpp grid.cpp \
 		kekulize.cpp \
-		matrix.cpp mol.cpp molchrg.cpp \
-		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
+		matrix.cpp mol.cpp molchrg.cpp oberror.cpp \
+		obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
 libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 1:0:0
+
+#libOBPython_la_SOURCES = openbabel_python.cpp
+#openbabel_python.cpp: openbabel.i
+#	swig -python -c++ -o $@ $<
 pkginclude_HEADERS = \
 		base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
@@ -247,7 +251,8 @@ babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
 	# formats/inchi/libinchi.la
 
 EXTRA_DIST = \
-	config.h.in strncasecmp.c snprintf.c snprintf.h
+	config.h.in strncasecmp.c snprintf.c snprintf.h \
+	openbabel.i
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
