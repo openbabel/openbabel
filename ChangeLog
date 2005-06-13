@@ -1,5 +1,8 @@
 2005-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* configure.in, configure: Update scandir test with fix from Jean
+	Brefort.
+
 	* Makefile.am, Makefile.in: Make sure windows/ directory is
 	included in distribution.
 
