@@ -7,6 +7,10 @@
 	* src/openbabel.py, src/openbabel_python.cpp: Regenerate. SWIG
 	wrapper will now compile and import cleanly into Python.
 
+	* src/bondtyper.cpp (AssignFunctionalGroupBonds): Make sure
+	OBBondTyper data is initialized -- and ensure loop termination is
+	handled correctly. Resolves part of PR#1219611.
+
 2005-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure: Update scandir test with fix from Jean

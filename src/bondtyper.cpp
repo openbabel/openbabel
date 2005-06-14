@@ -58,17 +58,20 @@ void OBBondTyper::ParseLine(const char *buffer)
         tokenize(vs,buffer);
         // Make sure we actually have a SMARTS pattern plus at least one triple
         // and make sure we have the correct number of integers
-        if (vs.empty() || vs.size() < 4 || (vs.size() % 3 == 1))
+	if (vs.empty() || vs.size() < 4)
+	  return; // just ignore empty (or short lines)
+        else if (!vs.empty() && vs.size() >= 4 && (vs.size() % 3 != 1))
         {
             cerr << " Error in OBBondTyper. Pattern is incorrect, found "
             << vs.size() << " tokens." << endl;
             cerr << " Buffer is: " << buffer << endl;
             return;
         }
+
         sp = new OBSmartsPattern;
         if (sp->Init(vs[0]))
         {
-            for (int i = 0; i <= vs.size() ; i++)
+            for (int i = 1; i < vs.size() ; i++)
             {
                 bovector.push_back( atoi((char *)vs[i].c_str()) );
             }
@@ -95,6 +98,9 @@ OBBondTyper::~OBBondTyper()
 
 void OBBondTyper::AssignFunctionalGroupBonds(OBMol &mol)
 {
+  if (!_init)
+    Init();
+
   OBSmartsPattern *currentPattern;
   OBBond *b1, *b2;
   OBAtom *a1,*a2, *a3;
@@ -117,15 +123,16 @@ void OBBondTyper::AssignFunctionalGroupBonds(OBMol &mol)
 	  for (matches = mlist.begin(); matches != mlist.end(); matches++)
 	    {
 	      // Now loop through the bonds to assign from _fgbonds
-	      for (j = 0; j <= assignments.size(); j += 3)
+	      for (j = 0; j < assignments.size(); j += 3)
 		{
 		  // along the assignments vector: atomID1 atomID2 bondOrder
 		  a1 = mol.GetAtom((*matches)[ assignments[j] ]);
 		  a2 = mol.GetAtom((*matches)[ assignments[j+1 ] ]);
+		  if (!a1 || !a2) continue;
+
 		  b1 = a1->GetBond(a2);
 
-		  if (!b1)
-		    continue;
+		  if (!b1) continue;
 		  b1->SetBO(assignments[j+2]);
 		} // bond order assignments
 	    } // each match
