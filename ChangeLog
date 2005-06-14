@@ -11,6 +11,9 @@
 	OBBondTyper data is initialized -- and ensure loop termination is
 	handled correctly. Resolves part of PR#1219611.
 
+	* src/openbabel.pm, src/openbabel_perl.cpp: New files from SWIG --
+	wrappers for Perl.
+
 2005-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure: Update scandir test with fix from Jean
