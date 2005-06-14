@@ -1220,8 +1220,8 @@ public:
     {
         return(_vconf[i]);
     }
-    double  *BeginConformer(std::vector<double*>::iterator&);
-    double  *NextConformer(std::vector<double*>::iterator&);
+    //    double  *BeginConformer(std::vector<double*>::iterator&);
+    //    double  *NextConformer(std::vector<double*>::iterator&);
     std::vector<double*> &GetConformers()
     {
         return(_vconf);
@@ -1230,7 +1230,7 @@ public:
 
     //! \name Misc bond functions
     //@{
-    void AssignResidueBonds(OBBitVec &);
+    //    void AssignResidueBonds(OBBitVec &);
     //void SortBonds() {sort(_vbond.begin(),_vbond.end(),CompareBonds);}
     //@}
 
@@ -1269,8 +1269,8 @@ OBAPI void ThrowError(std::string &str);
 OBAPI void CartesianToInternal(std::vector<OBInternalCoord*>&,OBMol&);
 OBAPI void InternalToCartesian(std::vector<OBInternalCoord*>&,OBMol&);
 OBAPI std::string NewExtension(std::string&,char*);
-OBAPI bool SetInputType(OBMol&,std::string&);
-OBAPI bool SetOutputType(OBMol&,std::string&);
+// OBAPI bool SetInputType(OBMol&,std::string&);
+// OBAPI bool SetOutputType(OBMol&,std::string&);
 
 //global definitions
 EXTERN  OBElementTable   etab;
