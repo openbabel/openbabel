@@ -1,3 +1,12 @@
+2005-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.h: Remove un-implemented BeginConformer, NextConformer,
+	and AssignResidueBonds methods. These block use of the SWIG python
+	wrappers.
+
+	* src/openbabel.py, src/openbabel_python.cpp: Regenerate. SWIG
+	wrapper will now compile and import cleanly into Python.
+
 2005-06-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure: Update scandir test with fix from Jean

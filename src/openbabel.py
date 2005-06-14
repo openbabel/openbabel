@@ -660,10 +660,7 @@ class OBMol(object):
     def CopyConformer(*args): return _openbabel.OBMol_CopyConformer(*args)
     def DeleteConformer(*args): return _openbabel.OBMol_DeleteConformer(*args)
     def GetConformer(*args): return _openbabel.OBMol_GetConformer(*args)
-    def BeginConformer(*args): return _openbabel.OBMol_BeginConformer(*args)
-    def NextConformer(*args): return _openbabel.OBMol_NextConformer(*args)
     def GetConformers(*args): return _openbabel.OBMol_GetConformers(*args)
-    def AssignResidueBonds(*args): return _openbabel.OBMol_AssignResidueBonds(*args)
 
 class OBMolPtr(OBMol):
     def __init__(self, this):
@@ -707,10 +704,6 @@ CartesianToInternal = _openbabel.CartesianToInternal
 InternalToCartesian = _openbabel.InternalToCartesian
 
 NewExtension = _openbabel.NewExtension
-
-SetInputType = _openbabel.SetInputType
-
-SetOutputType = _openbabel.SetOutputType
 BUFF_SIZE = _openbabel.BUFF_SIZE
 
 get_rmat = _openbabel.get_rmat
