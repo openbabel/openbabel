@@ -11,3 +11,4 @@ stamp-h1
 *.lo
 libopenbabel.la
 openbabel.pyc
+*.bundle
