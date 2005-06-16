@@ -23,7 +23,11 @@ libopenbabel_la_LDFLAGS = -version-info 1:0:0
 
 #libOBPython_la_SOURCES = openbabel_python.cpp
 #openbabel_python.cpp: openbabel.i
-#	swig -python -c++ -o $@ $<
+#	swig -python -c++ -modern -o $@ $<
+
+#libOBPerl_la_SOURCES = openbabel_perl.cpp
+#openbabel_perl.cpp: openbabel.i
+#       swig -module "Chemistry::OpenBabel" -perl5 -c++ -o $@ $<
 
 pkginclude_HEADERS = \
 		base.h bitvec.h \
@@ -42,5 +46,5 @@ babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
 
 EXTRA_DIST = \
 	config.h.in strncasecmp.c snprintf.c snprintf.h \
-	openbabel.i
+	openbabel.i openbabel.py openbabel.pm
 
