@@ -181,6 +181,13 @@ OBUnitCell::OBUnitCell(const OBUnitCell &src)
     _alpha = src._alpha;
     _beta = src._beta;
     _gamma = src._gamma;
+    _offset = src._offset;
+
+    _v1 = src._v1;
+    _v2 = src._v2;
+    _v3 = src._v3;
+
+    _spaceGroup = src._spaceGroup;
 }
 
 OBUnitCell & OBUnitCell::operator=(const OBUnitCell &src)
@@ -194,6 +201,13 @@ OBUnitCell & OBUnitCell::operator=(const OBUnitCell &src)
     _alpha = src._alpha;
     _beta = src._beta;
     _gamma = src._gamma;
+    _offset = src._offset;
+
+    _v1 = src._v1;
+    _v2 = src._v2;
+    _v3 = src._v3;
+
+    _spaceGroup = src._spaceGroup;
 
     return(*this);
 }
@@ -206,22 +220,35 @@ void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
     _alpha = vectorAngle(v2, v3);
     _beta = vectorAngle(v1, v3);
     _gamma = vectorAngle(v1, v2);
+    _v1 = v1;
+    _v2 = v2;
+    _v3 = v3;
 }
 
 vector<vector3> OBUnitCell::GetCellVectors()
 {
     vector<vector3> v;
-    vector3 cellVec;
-
     v.reserve(3);
-    cellVec.Set(_a, 0.0, 0.0);
-    v.push_back(cellVec);
-    cellVec.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0);
-    v.push_back(cellVec);
-    cellVec.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
-                _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
-                _c*sin(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha));
-    v.push_back(cellVec);
+
+    if (_v1.length() == 0 && _v2.length() == 0 && _v3.length() == 0)
+      {
+	vector3 cellVec;
+
+	cellVec.Set(_a, 0.0, 0.0);
+	v.push_back(cellVec);
+	cellVec.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0);
+	v.push_back(cellVec);
+	cellVec.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
+		    _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
+		    _c*sin(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha));
+	v.push_back(cellVec);
+      }
+    else
+      {
+	v.push_back(_v1);
+	v.push_back(_v2);
+	v.push_back(_v3);
+      }
 
     return v;
 }
@@ -230,11 +257,20 @@ matrix3x3 OBUnitCell::GetCellMatrix()
 {
     vector3 v1, v2, v3;
 
-    v1.Set(_a, 0.0, 0.0);
-    v2.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0);
-    v3.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
-           _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
-           _c*sin(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha));
+    if (_v1.length() == 0 && _v2.length() == 0 && _v3.length() == 0)
+      {
+	v1.Set(_a, 0.0, 0.0);
+	v2.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0);
+	v3.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
+	       _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
+	       _c*sin(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha));
+      }
+    else
+      {
+	v1 = _v1;
+	v2 = _v2;
+	v3 = _v3;
+      }
 
     matrix3x3 m(v1,v2,v3);
     return m;
@@ -266,6 +302,32 @@ matrix3x3 OBUnitCell::GetOrthoMatrix()
     return m;
 }
 
+
+//
+// member functions for OBSymmetryData class
+//
+OBSymmetryData::OBSymmetryData()
+{
+    _type = obSymmetryData;
+    _attr = "Symmetry";
+}
+
+OBSymmetryData::OBSymmetryData(const OBSymmetryData &src)
+{
+  _pointGroup = src._pointGroup;
+  _spaceGroup = src._spaceGroup;
+}
+
+OBSymmetryData & OBSymmetryData::operator=(const OBSymmetryData &src)
+{
+    if(this == &src)
+        return(*this);
+
+    _pointGroup = src._pointGroup;
+    _spaceGroup = src._spaceGroup;
+
+    return(*this);
+}
 
 //
 //member functions for OBRingData class

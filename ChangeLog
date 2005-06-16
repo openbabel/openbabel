@@ -1,8 +1,22 @@
+2005-06-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/generic.h, src/generic.cpp (OBSymmetryData): New class for
+	storing point group and space group symmetry information.
+	(OBUnitCell): Add support for storing translation vectors for
+	cleaner roundtrip support from v1,v2,v3 ->a,b,c...->v1,v2,v3 and
+	for origin offsets.
+
+	* src/Makefile.am, src/Makefile.in: Add hints for perl module
+	compilation.
+
+	* src/openbabel.pm, src/openbabel_perl.cpp: Change Perl wrapper
+	namespace to Chemistry::OpenBabel on advice of other perl users.
+
 2005-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
-	* src/mol.h: Remove un-implemented BeginConformer, NextConformer,
-	and AssignResidueBonds methods. These block use of the SWIG python
-	wrappers.
+	* src/mol.h: Remove (temporarily) un-implemented BeginConformer,
+	NextConformer, and AssignResidueBonds methods. These block use of
+	the SWIG python wrappers.
 
 	* src/openbabel.py, src/openbabel_python.cpp: Regenerate. SWIG
 	wrapper will now compile and import cleanly into Python.

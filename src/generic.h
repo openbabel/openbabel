@@ -48,27 +48,20 @@ enum obDataType {obUndefinedData, obPairData, obEnergyData,
 class OBAPI OBGenericData
 {
 protected:
-    std::string     _attr; //!< attribute tag
-    obDataType 	    _type; //!< attribute type -- declared for each subclasses
+    std::string     _attr; //!< attribute tag (e.g., "UnitCell", "Comment" or "Author")
+    obDataType 	    _type; //!< attribute type -- declared for each subclass
 public:
     OBGenericData();
     OBGenericData(const OBGenericData&);
-    virtual ~OBGenericData()
-    {}
+    virtual ~OBGenericData()    {}
     OBGenericData& operator=(const OBGenericData &src);
 
     void                      SetAttribute(const std::string &v)
-    {
-        _attr = v;
-    }
+    {        _attr = v;        }
     virtual const std::string &GetAttribute()  const
-    {
-        return(_attr);
-    }
+    {        return(_attr);    }
     obDataType                GetDataType()    const
-    {
-        return(_type);
-    }
+    {        return(_type);    }
 };
 
 //! Used to store a comment string (can be multiple lines long)
@@ -82,17 +75,11 @@ public:
     OBCommentData& operator=(const OBCommentData &src);
 
     void          SetData(const std::string &data)
-    {
-        _data = data;
-    }
+    {        _data = data;    }
     void          SetData(const char *d)
-    {
-        _data = d;
-    }
+    {        _data = d;       }
     const std::string &GetData()              const
-    {
-        return(_data);
-    }
+    {        return(_data);   }
 };
 
 //! \brief Used to store information on an external bond 
@@ -208,32 +195,31 @@ public:
 };
 
 //! \brief Used for storing information about periodic boundary conditions
-//!   with conversion to/from 3 translation vectors and
+//!   with conversion to/from translation vectors and
 //!  (a, b, c, alpha, beta, gamma)
 class OBAPI OBUnitCell: public OBGenericData
 {
 protected:
     double _a, _b, _c, _alpha, _beta, _gamma;
+    vector3 _offset; //!< offset for origin
+    vector3 _v1, _v2, _v3; //!< translation vectors
     std::string _spaceGroup;
 public:
     OBUnitCell();
     OBUnitCell(const OBUnitCell &);
-    ~OBUnitCell()
-    {}
+    ~OBUnitCell()    {}
 
     OBUnitCell &operator=(const OBUnitCell &);
 
     void SetData(const double a, const double b, const double c,
                  const double alpha, const double beta, const double gamma)
-    {
-        _a = a;
-        _b = b;
-        _c = c;
-        _alpha = alpha;
-        _beta = beta;
-        _gamma = gamma;
-    }
+    {   _a = a; _b = b; _c = c;
+        _alpha = alpha; _beta = beta; _gamma = gamma; }
     void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
+    void SetOffset(const vector3 v1) { _offset = v1; }
+    //! Set the space group symbol for this unit cell.
+    //! Does not create an OBSymmetryData entry or attempt to convert
+    //!  between different symbol notations
     void SetSpaceGroup(const std::string sg) { _spaceGroup = sg; }
 
     double GetA()    { return(_a);    }
@@ -242,15 +228,38 @@ public:
     double GetAlpha(){ return(_alpha);}
     double GetBeta() { return(_beta); }
     double GetGamma(){ return(_gamma);}
-
-    //! Return v1, v2, v3 cell vectors
-    std::vector<vector3> GetCellVectors();
-    //! Return v1, v2, v3 cell vectors as a 3x3 matrix
-    matrix3x3	GetCellMatrix();
-    //! Fill in the elements of the orthogonalization matrix
-    matrix3x3 GetOrthoMatrix();
-
+    vector3 GetOffset() { return(_offset); }
     const std::string GetSpaceGroup() { return(_spaceGroup); }
+
+    //! \return v1, v2, v3 cell vectors
+    std::vector<vector3> GetCellVectors();
+    //! \return v1, v2, v3 cell vectors as a 3x3 matrix
+    matrix3x3	GetCellMatrix();
+    //! \return The elements of the orthogonalization matrix, used for converting from fractional to Cartesian coords.
+    matrix3x3 GetOrthoMatrix();
+};
+
+//! \brief Used to hold the point-group and/or space-group symmetry
+//! \todo Add support for translation between symbol notation and symmetry perception
+class OBAPI OBSymmetryData: public OBGenericData
+{
+protected:
+    std::string _spaceGroup;
+    std::string _pointGroup;
+public:
+    OBSymmetryData();
+    OBSymmetryData(const OBSymmetryData &);
+    ~OBSymmetryData()    {}
+
+    OBSymmetryData &operator=(const OBSymmetryData &);
+
+    void SetData(std::string pg, std::string sg = "")
+      { _pointGroup = pg; _spaceGroup = sg; }
+    void SetPointGroup(std::string pg) { _pointGroup = pg; }
+    void SetSpaceGroup(std::string sg) { _spaceGroup = sg; }
+
+    std::string GetPointGroup() { return _pointGroup; }
+    std::string GetSpaceGroup() { return _spaceGroup; }
 };
 
 //! \brief Used to hold the torsion data for a single rotatable bond
