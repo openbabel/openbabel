@@ -1,3 +1,12 @@
+2005-06-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/data.h, src/data.cpp (OBTypeTable): New methods GetToType
+	and GetFromType -- primarily for debugging purposes.
+
+	* src/formats/mol2format.cpp (WriteMolecule): Make sure
+	OBTypeTable is always set to translate to SYB format -- would
+	sometimes be reset to other formats. Fixes PR#1221324.
+
 2005-06-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/generic.h, src/generic.cpp (OBSymmetryData): New class for

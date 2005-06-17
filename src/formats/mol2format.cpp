@@ -330,15 +330,12 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << endl;
     ofs << "@<TRIPOS>ATOM" << endl;
 
-    ttab.SetFromType("INT");
-    ttab.SetToType("SYB");
-
     OBAtom *atom;
     OBResidue *res;
 
     vector<OBNodeBase*>::iterator i;
     vector<int> labelcount;
-    labelcount.resize(109); //Number of elements
+    labelcount.resize( etab.GetNumberOfElements() );
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
 
@@ -352,6 +349,8 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
         str = atom->GetType();
 
+	ttab.SetFromType("INT");
+	ttab.SetToType("SYB");
         ttab.Translate(str1,str);
 
         //
