@@ -196,14 +196,16 @@ class OBAPI OBTypeTable : public OBGlobalDataBase
 public:
 
     OBTypeTable(void);
-    ~OBTypeTable()
-    {}
+    ~OBTypeTable() {}
 
     void ParseLine(const char*);
     bool SetFromType(char*);
     bool SetToType(char*);
     bool Translate(char*,char*); // to, from
     bool Translate(std::string &,std::string &); // to, from
+
+    std::string GetFromType();
+    std::string GetToType();
 };
 
 // Used by other code for reading files

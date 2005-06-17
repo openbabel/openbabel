@@ -474,6 +474,22 @@ bool OBTypeTable::Translate(string &to,string &from)
     return(false);
 }
 
+std::string OBTypeTable::GetFromType()
+{
+    if (!_init)
+        Init();
+
+    return( _colnames[_from] );
+}
+
+std::string OBTypeTable::GetToType()
+{
+    if (!_init)
+        Init();
+
+    return( _colnames[_to] );
+}
+
 void Toupper(string &s)
 {
     unsigned int i;
@@ -576,6 +592,8 @@ void OBGlobalDataBase::Init()
         ifs2.close();
     if (ifs3)
         ifs3.close();
+    if (ifs4)
+        ifs4.close();
 }
 
 }
