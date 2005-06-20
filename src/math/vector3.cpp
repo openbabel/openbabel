@@ -304,4 +304,16 @@ void vector3::createOrthoVector(vector3 &res) const
     res.normalize();
 }
 
+/* Calculate the distance of point a to the plane determined by b,c,d */
+double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d)
+{
+  double angle =0;
+  double dist_ab =0;
+  vector3 v_ba = a-b;
+  vector3 v_normal = cross(c-b, d-b).normalize();
+  angle = vectorAngle(v_normal, v_ba);
+  dist_ab = v_ba.length();
+  return fabs(dist_ab * cos(DEG_TO_RAD * angle));
 }
+
+} // namespace OpenBabel

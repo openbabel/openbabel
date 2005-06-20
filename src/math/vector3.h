@@ -278,8 +278,10 @@ public :
 
 } ;
 
-//  The global constant vector3s
+//! \brief Calculate the distance of point a to the plane determined by b,c,d
+double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d);
 
+//  The global constant vector3s
 const vector3 VZero ( 0.0, 0.0, 0.0 ) ;
 const vector3 VX    ( 1.0, 0.0, 0.0 ) ;
 const vector3 VY    ( 0.0, 1.0, 0.0 ) ;
