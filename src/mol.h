@@ -499,6 +499,12 @@ public:
     //! Does this atom have a specified chiral volume?
     bool HasChiralVolume()
       { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
+    //! Is this atom a hydrogen-bond acceptor (receptor)?
+    bool IsHbondAcceptor();
+    //! Is this atom a hydrogen-bond donor?
+    bool IsHbondDonor();
+    //! Is this a hydrogen atom attached to a hydrogen-bond donor?
+    bool IsHbondDonorH();
     bool HasAlphaBetaUnsat(bool includePandS=true);
     bool HasBondOfOrder(unsigned int);
     int  CountBondsOfOrder(unsigned int);

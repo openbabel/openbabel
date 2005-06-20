@@ -1679,4 +1679,33 @@ void OBAtom::DeleteData(OBGenericData *gd)
 
 }
 
+bool OBAtom::IsHbondAcceptor()
+{
+	return _ele == 7 || _ele == 8 || _ele == 9 ;
+}
+
+bool OBAtom::IsHbondDonor()
+{
+	return MatchesSMARTS("[$([#8,#7H,#9;!H0])]");
+}
+
+bool OBAtom::IsHbondDonorH()
+{
+	if (!IsHydrogen()) return(false);
+
+	OBAtom *atom;
+	OBBond *bond;
+	vector<OBEdgeBase*>::iterator i;
+	for (bond = BeginBond(i);bond;bond = NextBond(i))
+	{
+		atom = bond->GetNbrAtom(this);
+		if (atom->GetAtomicNum() == 7) return(true);
+		if (atom->GetAtomicNum() == 8) return(true);
+		if (atom->GetAtomicNum() == 9) return(true);
+	}
+
+	return(false);
+}
+
+
 }
