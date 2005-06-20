@@ -12,6 +12,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include "mol.h"
 #include "obconversion.h"
 
@@ -23,7 +24,7 @@ namespace OpenBabel
 //another output format, but was not made available in version 100.1.2, nor
 //is it here.
 
-class MOL2Format : public OBFormat
+class MOL2Format : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -40,44 +41,19 @@ public:
             ";
     };
 
-    virtual const char* SpecificationURL()
+  virtual const char* SpecificationURL()
   {
-    return "http://http://www.tripos.com/custResources/mol2Files//";
+    return "http://http://www.tripos.com/custResources/mol2Files/";
   }; //optional
 
   virtual const char* GetMIMEType() 
-  { return "chemical/x-macromodel-mol2"; };
+  { return "chemical/x-mol2"; };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-        OBMol* pmol = new OBMol;
-        bool ret=ReadMolecule(pmol,pConv);
-        if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
-        else
-            pConv->AddChemObject(NULL);
-        return ret;
-    };
-
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
 };
 //***
 
@@ -258,6 +234,25 @@ bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         mol.AddBond(start,end,order);
     }
 
+ 
+    // update neighbour bonds information for each atom.
+    vector<OBNodeBase*>::iterator apos;
+    vector<OBEdgeBase*>::iterator bpos;
+    OBAtom* patom;
+    OBBond* pbond;
+    
+    for (patom = mol.BeginAtom(apos); patom; patom = mol.NextAtom(apos))
+      {
+	patom->ClearBond();
+	for (pbond = mol.BeginBond(bpos); pbond; pbond = mol.NextBond(bpos))
+	  {
+	    if (patom == pbond->GetBeginAtom() || patom == pbond->GetEndAtom())
+	      {
+		patom->AddBond(pbond);
+	      }
+	  }
+      }
+
     mol.EndModify();
 
     //must add generic data after end modify - otherwise it will be blown away
@@ -385,18 +380,22 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "@<TRIPOS>BOND" << endl;
     OBBond *bond;
     vector<OBEdgeBase*>::iterator j;
+    OBSmartsPattern pat;
+    string s1, s2;
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
-        if (bond->IsAromatic())
-            strcpy(label,"ar");
-        else if (bond->IsAmide())
-            strcpy(label,"am");
-        else
-            sprintf(label,"%d",bond->GetBO());
-        sprintf(buffer, "%6d%6d%6d%3s%2s",
-                bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),
-                "",label);
-        ofs << buffer << endl;
+      s1 = bond->GetBeginAtom()->GetType();
+      s2 = bond->GetEndAtom()->GetType();
+      if (bond->IsAromatic() || s1 == "O.co2" || s2 == "O.co2") 
+	strcpy(label,"ar");
+      else if (bond->IsAmide())
+	strcpy(label,"am");
+      else
+	sprintf(label,"%d",bond->GetBO());
+      sprintf(buffer, "%6d%6d%6d%3s%2s",
+	      bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),
+	      "",label);
+      ofs << buffer << endl;
     }
     ofs << endl;
 

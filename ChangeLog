@@ -1,5 +1,9 @@
 2005-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/formats/mol2format.cpp (ReadMolecule, WriteMolecule):
+	Contributions from Zhiguo Liu, notably to clean up bonding table,
+	and to mark O.co2 bonds as "aromatic."
+
 	* src/mol.h, src/atom.cpp: Add new methods IsHbondDonor(),
 	IsHbondAcceptor(), IsHbondDonorH(), contributed by Zhiguo Liu.
 
