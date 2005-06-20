@@ -1,3 +1,12 @@
+2005-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.h, src/atom.cpp: Add new methods IsHbondDonor(),
+	IsHbondAcceptor(), IsHbondDonorH(), contributed by Zhiguo Liu.
+
+	* src/vector3.h, src/vector3.cpp: Add new method Point2Plane() for
+	calculating the distance between a point (vector3) and a point
+	defined by three points (vector3), contributed by Zhiguo Liu.
+
 2005-06-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/data.h, src/data.cpp (OBTypeTable): New methods GetToType
