@@ -1,7 +1,7 @@
 /**********************************************************************
 kekulize.cpp - Alternate algorithm to kekulize a molecule.
 
-Copyright (C) 2004 by Fabien Fontaine
+Copyright (C) 2004-2005 by Fabien Fontaine
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -29,6 +29,17 @@ using namespace std;
 
 namespace OpenBabel {
 
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Kekulize aromatic rings without using implicit valence
+
+//! This new perceive kekule bonds function has been especifically designed to 
+//! handle molecule files without explicit hydrogens such as pdb or xyz.
+//! The function does not rely on GetImplicitValence function
+//! The function looks for groups of aromatic cycle 
+//! For each group it tries to guess the number of electrons given by each atom
+//! in order to satisfy the huckel (4n+2) rule
+//! If the huckel rule cannot be satisfied the algorithm try with its best alternative guess
+//! Then it recursively walk on the atoms of the cycle and assign single and double bonds
 void OBMol::NewPerceiveKekuleBonds() 
 {
 
@@ -62,7 +73,7 @@ void OBMol::NewPerceiveKekuleBonds()
   for( i=1; i<= NumAtoms(); i++ ) {
     atom = GetAtom(i);
     if (atom->HasAromaticBond() && !cvisit[i]) { // is new aromatic atom of an aromatic cycle ?
-      
+
       avisit.Clear();
       electron.clear();
       cycle.clear();
@@ -213,6 +224,12 @@ void OBMol::NewPerceiveKekuleBonds()
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////
+//! \brief Start kekulizing one or a fused set of aromatic ring(s)
+
+//! The initial electronic state indicates if an atoms must make a double bond or not
+//! Kekulizing is attempted recursively for all the atoms bonded to the first atom
+//! of the cycle. 
 void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &electron) {
   
   std::vector<int> initState;
@@ -319,6 +336,10 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
   return;
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//! \brief recursively assign single and double bonds according to the electronical state
+//! of the atoms of the current bond 
 int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &currentState, std::vector<int> &initState, std::vector<int> &bcurrentState, std::vector<int> &binitState, std::vector<bool> &mark)
 {
   int done;
@@ -475,11 +496,9 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
   }
 }
 
-// Give the priority to give two electrons instead of 1
+//! Give the priority to give two electrons instead of 1
 int OBMol::getorden( OBAtom *atom) 
 {
-  int orden;
-  
   if ( atom->IsSulfur() ) return 1;
   if ( atom->IsOxygen() ) return 2;
   if ( atom->GetAtomicNum() == 34 ) return 3;
@@ -494,7 +513,7 @@ int OBMol::getorden( OBAtom *atom)
   return (100); //no atom found
 }
 
-// Recursively find the aromatic atoms with an aromatic bond to the current atom
+//! Recursively find the aromatic atoms with an aromatic bond to the current atom
 void OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit)
 {
   OBAtom *nbr;
