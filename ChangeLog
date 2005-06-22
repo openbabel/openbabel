@@ -1,3 +1,12 @@
+2005-06-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/kekulize.cpp: Update with Fabien's latest version, fixing
+	PR#1214545 and adding doxygen documentation.
+
+	* src/bondtyper.cpp (AssignFunctionalGroupBonds): Mark assigned
+	bonds with KSingle, KDouble, KTriple for OBMol::Kekulize()
+	routine. Fixes PR#1219611.
+
 2005-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mol2format.cpp (ReadMolecule, WriteMolecule):
