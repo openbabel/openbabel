@@ -11,6 +11,18 @@ using namespace std;
 
 namespace OpenBabel {
 
+
+///////////////////////////////////////////////////////////////////////////////
+//! \brief Kekulize aromatic rings without using implicit valence
+
+//! This new perceive kekule bonds function has been especifically designed to 
+//! handle molecule files without explicit hydrogens such as pdb or xyz.
+//! The function does not rely on GetImplicitValence function
+//! The function looks for groups of aromatic cycle 
+//! For each group it tries to guess the number of electrons given by each atom
+//! in order to satisfy the huckel (4n+2) rule
+//! If the huckel rule cannot be satisfied the algorithm try with its best alternative guess
+//! Then it recursively walk on the atoms of the cycle and assign single and double bonds
 void OBMol::NewPerceiveKekuleBonds() 
 {
 
@@ -195,6 +207,12 @@ void OBMol::NewPerceiveKekuleBonds()
   return;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////
+//! \brief Start kekulizing one or a fused set of aromatic ring(s)
+
+//! The initial electronic state indicates if an atoms must make a double bond or not
+//! Kekulizing is attempted recursively for all the atoms bonded to the first atom
+//! of the cycle. 
 void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &electron) {
   
   std::vector<int> initState;
@@ -301,6 +319,10 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
   return;
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//! \brief recursively assign single and double bonds according to the electronical state
+//! of the atoms of the current bond 
 int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &currentState, std::vector<int> &initState, std::vector<int> &bcurrentState, std::vector<int> &binitState, std::vector<bool> &mark)
 {
   int done;
