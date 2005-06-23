@@ -35,12 +35,6 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-//NF declarations from fileformat.h
-bool ReadBinary(std::istream&,OBMol&);
-bool ReadBinary(unsigned char *,OBMol&, int);
-bool WriteBinary(std::ostream&,OBMol&);
-bool WriteBinary(std::string&,int&,OBMol&);
-
 
 class OBAPI OBRotamerList : public OBGenericData
 {
@@ -123,25 +117,11 @@ public:
     }
 };
 
-//! \brief Store a compressed binary database of OBMol as OEBinary files
-class OBAPI OBBinaryDBase
-{
-    std::ifstream		 _ifs;
-    std::vector<std::streampos>  _vpos;
-
-public:
-
-    OBBinaryDBase(const char*);
-    OBBinaryDBase(std::string&);
-    ~OBBinaryDBase();
-
-    int  Size();
-    //NF    void GetMolecule(OBMol&, int);
-};
-
 int Swab(int);
 
 }
 
 #endif // OB_ROTAMER_H
 
+//! \file rotamer.h
+//! \brief Handle rotamer list data.
