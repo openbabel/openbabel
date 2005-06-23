@@ -12,8 +12,10 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include "mol.h"
 #include "obconversion.h"
+#include "obmolecformat.h"
 
 using namespace std;
 namespace OpenBabel
@@ -22,22 +24,23 @@ namespace OpenBabel
 class ViewMolFormat : public OBFormat
 {
 public:
-    //Register this format type ID
-    ViewMolFormat()
-    {
-        OBConversion::RegisterFormat("vmol",this);
-    }
+  //Register this format type ID
+  ViewMolFormat()
+  {
+    OBConversion::RegisterFormat("vmol",this);
+  }
 
-    virtual const char* Description() //required
-    {
+  virtual const char* Description() //required
+  {
         return
-            "ViewMol format\n \
-            No comments yet\n \
-            ";
-    };
+          "ViewMol format\n \
+           No comments yet\n";
+  }
 
-    virtual const char* SpecificationURL(){return
-            "http://viewmol.sourceforge.net/";}; //optional
+  virtual const char* SpecificationURL() //optional
+  {
+    return "http://viewmol.sourceforge.net/";
+  };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -51,31 +54,6 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-        OBMol* pmol = new OBMol;
-        bool ret=ReadMolecule(pmol,pConv);
-        if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
-        else
-            pConv->AddChemObject(NULL);
-        return ret;
-    };
-
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
 };
 //***
 
