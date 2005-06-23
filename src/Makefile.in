@@ -67,10 +67,10 @@ libopenbabel_la_DEPENDENCIES = math/libmath.la @LTLIBOBJS@
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo chains.lo chiral.lo data.lo dlhandler_unix.lo \
 	obconversion.lo finger2.lo fingerprint.lo fastsearch.lo \
-	generic.lo grid.lo kekulize.lo matrix.lo mol.lo molchrg.lo \
-	oberror.lo obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo \
-	rand.lo residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo \
-	typer.lo transform.lo
+	generic.lo grid.lo kekulize.lo mol.lo molchrg.lo oberror.lo \
+	obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo rand.lo \
+	residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo \
+	transform.lo
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -223,8 +223,7 @@ libopenbabel_la_SOURCES = \
 		dlhandler_unix.cpp obconversion.cpp \
 		finger2.cpp fingerprint.cpp \
 		fastsearch.cpp generic.cpp grid.cpp \
-		kekulize.cpp \
-		matrix.cpp mol.cpp molchrg.cpp oberror.cpp \
+		kekulize.cpp mol.cpp molchrg.cpp oberror.cpp \
 		obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
@@ -244,18 +243,15 @@ pkginclude_HEADERS = \
 		base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
-		generic.h grid.h matrix.h mol.h molchrg.h \
-		obconversion.h oberror.h obifstream.h \
-		obiter.h obutil.h \
-		parsmart.h patty.h phmodel.h reaction.h \
-		ring.h rotor.h rotamer.h typer.h 
+		generic.h grid.h mol.h molchrg.h \
+		obconversion.h oberror.h obiter.h 
 
 babel_SOURCES = main.cpp
 babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
 	# formats/inchi/libinchi.la
 
 EXTRA_DIST = \
-	config.h.in strncasecmp.c snprintf.c snprintf.h \
+	babelconfig.h.in strncasecmp.c snprintf.c snprintf.h \
 	openbabel.i openbabel.py openbabel.pm
 
 all: config.h
@@ -396,7 +392,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kekulize.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrix.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/molchrg.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obconversion.Plo@am__quote@
@@ -763,6 +758,9 @@ uninstall-info: uninstall-info-recursive
 	uninstall-binPROGRAMS uninstall-info-am \
 	uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 
+		obmolecformat.h obutil.h \
+		parsmart.h patty.h phmodel.h reaction.h \
+		ring.h rotor.h rotamer.h typer.h 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

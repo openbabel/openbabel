@@ -1,5 +1,10 @@
 /**********************************************************************
+obmolecformat.h - Subclass of OBFormat for conversion of OBMol.
+
 Copyright (C) 2005 Chris Morley
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -10,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #ifndef OB_MOLECULEFORMAT_H
 #define OB_MOLECULEFORMAT_H
 
@@ -17,12 +23,14 @@ GNU General Public License for more details.
 #include "obconversion.h"
 
 namespace OpenBabel {
-///A format which converts to and/or from OBMol can derive from this class
-/// to save duplicating the code below.
-///Derive directly from OBFormat if the object converted is not OBMol or 
-/// if interaction with the framework is required during the execution 
-/// of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
 
+//! \brief An OBFormat convenience subclass for conversion to/from OBMol data
+//!
+//! An OBFormat which converts to and/or from OBMol can derive from this class
+//! to save duplicating the ReadChemObject() and/or WriteChemObject() methods.
+//! Derive directly from OBFormat if the object converted is not OBMol or 
+//! if interaction with the framework is required during the execution 
+//! of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
 class OBMoleculeFormat : public OBFormat
 {
 public:
@@ -63,3 +71,6 @@ public:
 
 }
 #endif //OB_MOLECULEFORMAT_H
+
+//! \file obmolecformat.h
+//! \brief Subclass of OBFormat for conversion of OBMol.

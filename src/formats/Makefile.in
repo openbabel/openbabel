@@ -16,9 +16,9 @@
 
 # InChI code cannot be distributed with Open Babel due to licensing issues
 # (current InChI code is not released under any sort of free software or 
-#  open source license)
+#  open source license. IUPAC is reconsidering the InChI license.)
 # SUBDIRS = inchi
-
+#pkginclude_HEADERS = inchi_api.h
 
 SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) $(alchemyformat_la_SOURCES) $(amberformat_la_SOURCES) $(balstformat_la_SOURCES) $(bgfformat_la_SOURCES) $(boxformat_la_SOURCES) $(cacaoformat_la_SOURCES) $(cacheformat_la_SOURCES) $(carformat_la_SOURCES) $(cccformat_la_SOURCES) $(chem3dformat_la_SOURCES) $(chemdrawformat_la_SOURCES) $(chemtoolformat_la_SOURCES) $(cml_la_SOURCES) $(cmlformat_la_SOURCES) $(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) $(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) $(fhformat_la_SOURCES) $(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) $(grosmos96format_la_SOURCES) $(hinformat_la_SOURCES) $(jaguarformat_la_SOURCES) $(mdlformat_la_SOURCES) $(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
 
@@ -45,8 +45,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 subdir = src/formats
-DIST_COMMON = $(pkginclude_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -61,8 +60,7 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(pkglibdir)" \
-	"$(DESTDIR)$(pkgincludedir)"
+am__installdirs = "$(DESTDIR)$(pkglibdir)"
 pkglibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(pkglib_LTLIBRARIES)
 CSRformat_la_LIBADD =
@@ -273,8 +271,6 @@ DIST_SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) \
 	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
 	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
 	$(zindoformat_la_SOURCES)
-pkgincludeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(pkginclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -383,9 +379,6 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 EXTRA_DIST = exampleformat.cpp
-pkginclude_HEADERS = \
-	obmolecformat.h # inchi_api.h
-
 pkglib_LTLIBRARIES = \
 	CSRformat.la PQSformat.la alchemyformat.la \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
@@ -749,23 +742,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-pkgincludeHEADERS: $(pkginclude_HEADERS)
-	@$(NORMAL_INSTALL)
-	test -z "$(pkgincludedir)" || $(mkdir_p) "$(DESTDIR)$(pkgincludedir)"
-	@list='$(pkginclude_HEADERS)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(pkgincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(pkgincludedir)/$$f'"; \
-	  $(pkgincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(pkgincludedir)/$$f"; \
-	done
-
-uninstall-pkgincludeHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(pkginclude_HEADERS)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(pkgincludedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(pkgincludedir)/$$f"; \
-	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -844,9 +820,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES)
 installdirs:
-	for dir in "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(pkgincludedir)"; do \
+	for dir in "$(DESTDIR)$(pkglibdir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -894,7 +870,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-pkgincludeHEADERS
+install-data-am:
 
 install-exec-am: install-pkglibLTLIBRARIES
 
@@ -922,8 +898,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-pkgincludeHEADERS \
-	uninstall-pkglibLTLIBRARIES
+uninstall-am: uninstall-info-am uninstall-pkglibLTLIBRARIES
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
 	clean-libtool clean-pkglibLTLIBRARIES ctags distclean \
@@ -931,12 +906,11 @@ uninstall-am: uninstall-info-am uninstall-pkgincludeHEADERS \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-exec \
 	install-exec-am install-info install-info-am install-man \
-	install-pkgincludeHEADERS install-pkglibLTLIBRARIES \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-info-am uninstall-pkgincludeHEADERS \
+	install-pkglibLTLIBRARIES install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-info-am \
 	uninstall-pkglibLTLIBRARIES
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

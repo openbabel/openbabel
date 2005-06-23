@@ -11,8 +11,7 @@ libopenbabel_la_SOURCES = \
 		dlhandler_unix.cpp obconversion.cpp \
 		finger2.cpp fingerprint.cpp \
 		fastsearch.cpp generic.cpp grid.cpp \
-		kekulize.cpp \
-		matrix.cpp mol.cpp molchrg.cpp oberror.cpp \
+		kekulize.cpp mol.cpp molchrg.cpp oberror.cpp \
 		obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
@@ -33,9 +32,9 @@ pkginclude_HEADERS = \
 		base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
-		generic.h grid.h matrix.h mol.h molchrg.h \
-		obconversion.h oberror.h obifstream.h \
-		obiter.h obutil.h \
+		generic.h grid.h mol.h molchrg.h \
+		obconversion.h oberror.h obiter.h 
+		obmolecformat.h obutil.h \
 		parsmart.h patty.h phmodel.h reaction.h \
 		ring.h rotor.h rotamer.h typer.h 
 
@@ -45,6 +44,6 @@ babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
 	# formats/inchi/libinchi.la
 
 EXTRA_DIST = \
-	config.h.in strncasecmp.c snprintf.c snprintf.h \
+	babelconfig.h.in strncasecmp.c snprintf.c snprintf.h \
 	openbabel.i openbabel.py openbabel.pm
 

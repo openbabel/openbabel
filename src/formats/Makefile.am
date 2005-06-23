@@ -1,14 +1,12 @@
 # InChI code cannot be distributed with Open Babel due to licensing issues
 # (current InChI code is not released under any sort of free software or 
-#  open source license)
+#  open source license. IUPAC is reconsidering the InChI license.)
 # SUBDIRS = inchi
+#pkginclude_HEADERS = inchi_api.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
 EXTRA_DIST = exampleformat.cpp
-
-pkginclude_HEADERS = \
-	obmolecformat.h # inchi_api.h
 
 pkglib_LTLIBRARIES = \
 	CSRformat.la PQSformat.la alchemyformat.la \
@@ -176,12 +174,4 @@ xyzformat_la_LDFLAGS = -module -avoid-version
 
 zindoformat_la_SOURCES = zindoformat.cpp
 zindoformat_la_LDFLAGS = -module -avoid-version 
-
-
-
-
-
-
-
-
 
