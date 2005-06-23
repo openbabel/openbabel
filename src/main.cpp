@@ -18,9 +18,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 #if HAVE_IOSTREAM
 	#include <iostream>
 #elif HAVE_IOSTREAM_H

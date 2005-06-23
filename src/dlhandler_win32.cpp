@@ -112,3 +112,6 @@ void DLHandler::Sleep(int n)
 {
 	::Sleep(n);
 }
+
+//! \file dlhandler_win32.cpp
+//! \brief Dynamic loader for Win32 (handles file format DDLs)

@@ -1,5 +1,5 @@
 /**********************************************************************
-mol.cpp: Handle molecules.
+mol.cpp - Handle molecules.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -1920,7 +1920,7 @@ bool OBMol::CorrectForPH()
     return(true);
 }
 
-//! \ brief set spin multiplicity for H-deficient atoms
+//! \brief set spin multiplicity for H-deficient atoms
 bool OBMol::AssignSpinMultiplicity()
 {
     if (HasSpinMultiplicityAssigned())
@@ -3536,7 +3536,7 @@ void OBMol::SetConformers(vector<double*> &v)
 
 void OBMol::CopyConformer(double *c,int idx)
 {
-    obAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
+  //    obAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
     memcpy((char*)_vconf[idx],(char*)c,sizeof(double)*3*NumAtoms());
 }
 
@@ -3649,3 +3649,6 @@ OBBond *OBMol::NextBond(vector<OBEdgeBase*>::iterator &i)
 }
 
 } // end namespace OpenBabel
+
+//! \file mol.cpp
+//! \brief Handle molecules. Implementation of OBMol.

@@ -17,15 +17,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
-
+#include "babelconfig.h"
 #include "math/matrix3x3.h"
 #include "math/vector3.h"
 #include "mol.h"
 #include "obutil.h"
-#include "obifstream.h"
 
 #if HAVE_CONIO_H
 #include <conio.h>
@@ -62,25 +58,25 @@ OBAPI void ThrowError(std::string &str)
   obErrorLog.ThrowError("", str, obInfo);
 }
 
-//! Comparison function (for sorting ints) returns a < b
+// Comparison function (for sorting ints) returns a < b
 OBAPI bool OBCompareInt(const int &a,const int &b)
 {
     return(a<b);
 }
 
-//! Comparison function (for sorting unsigned ints) returns a < b
+// Comparison function (for sorting unsigned ints) returns a < b
 OBAPI bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
 {
     return(a<b);
 }
 
-//! Comparison for doubles: returns a < (b + epsilon)
+// Comparison for doubles: returns a < (b + epsilon)
 OBAPI bool IsNear(const double &a, const double &b, const double epsilon)
 {
     return (fabs(a - b) < epsilon);
 }
 
-//! Comparison for doubles: returns a < (0.0 + epsilon)
+// Comparison for doubles: returns a < (0.0 + epsilon)
 OBAPI bool IsNearZero(const double &a, const double epsilon)
 {
     return (fabs(a) < epsilon);
@@ -300,30 +296,6 @@ OBAPI bool SafeOpen(ifstream &fs,char *filename)
     return(true);
 }
 
-//! Safely open the supplied filename and return an obifstream, throwing an error
-//! to the default OBMessageHandler error log if it fails.
-OBAPI bool SafeOpen(obifstream &fs,char *filename)
-{
-#ifdef WIN32
-    string s = filename;
-    if (s.find(".bin") != string::npos)
-        fs.open(filename,ios::binary);
-    else
-#endif
-
-        fs.open(filename);
-
-    if (!fs)
-    {
-        string error = "Unable to open file \'";
-        error += filename;
-        error += "\' in write mode";
-        obErrorLog.ThrowError(__FUNCTION__, error, obError);
-        return(false);
-    }
-
-    return(true);
-}
 
 //! Safely open the supplied filename and return an ofstream, throwing an error
 //! to the default OBMessageHandler error log if it fails.
@@ -353,13 +325,6 @@ OBAPI bool SafeOpen(ofstream &fs,char *filename)
 //! Safely open the supplied filename and return an ifstream, throwing an error
 //! to the default OBMessageHandler error log if it fails.
 OBAPI bool SafeOpen(ifstream &fs,string &filename)
-{
-    return(SafeOpen(fs,(char*)filename.c_str()));
-}
-
-//! Safely open the supplied filename and return an obifstream, throwing an error
-//! to the default OBMessageHandler error log if it fails.
-OBAPI bool SafeOpen(obifstream &fs,string &filename)
 {
     return(SafeOpen(fs,(char*)filename.c_str()));
 }
@@ -1211,4 +1176,7 @@ OBAPI void get_rmat(double *rvec,double *r,double *f,int size)
     rvec[8] = rmat[2][2];
 }
 
-} // Namespace
+} // end namespace OpenBabel
+
+//! \file obutil.cpp
+//! \brief Various utility methods.

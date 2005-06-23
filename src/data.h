@@ -20,9 +20,7 @@ GNU General Public License for more details.
 #ifndef OB_DATA_H
 #define OB_DATA_H
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #include <stdio.h>
 
@@ -218,3 +216,6 @@ public:
 }
 
 #endif //DATA_H
+
+//! \file data.h
+//! \brief Global data and resource file parsers.

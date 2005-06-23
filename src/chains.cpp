@@ -1,5 +1,5 @@
 /**********************************************************************
-chains.cpp - Parse chains for macromolecules or SMILES.
+chains.cpp - Parse for macromolecule chains and residues.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 (original author, Roger Sayle, version 1.6, March 1998)
@@ -2116,4 +2116,7 @@ static void OutputPDBFile(ChainsMolecule *mol, FILE *fp)
 
 #endif
 
-} // End OpenEye Namespace
+} // end namespace OpenBabel
+
+//! \file chains.cpp
+//! \brief Parse for macromolecule chains and residues.

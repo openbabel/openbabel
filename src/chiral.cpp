@@ -1,5 +1,5 @@
 /*********************************************************************
-chiral.cpp - Deal with chiral atoms.
+chiral.cpp - Detect chiral atoms and molecules.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -18,9 +18,9 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <list>
+
 #include "mol.h"
 #include "obutil.h"
-
 #include "matrix.h"
 #include "chiral.h"
 #include "math/matrix3x3.h"
@@ -270,4 +270,7 @@ void construct_c_matrix(OBMol &mol,std::vector<std::vector<double > > &m)
     }
 }
 
-} // namespace
+} // namespace OpenBabel
+
+//! \file chiral.cpp
+//! \brief Detect chiral atoms and molecules.

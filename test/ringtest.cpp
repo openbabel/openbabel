@@ -1,4 +1,9 @@
 /**********************************************************************
+ringtest.cpp - Test ring perception algorithms.
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 Geoffrey R. Hutchison
  
@@ -12,10 +17,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
 #include <fstream>
+
+#include "babelconfig.h"
 #include "mol.h"
 #include "obconversion.h"
 

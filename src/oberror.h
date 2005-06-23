@@ -20,9 +20,7 @@ General Public License for more details.
 #ifndef OB_ERROR_H
 #define OB_ERROR_H
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #ifndef EXTERN
 #  define EXTERN extern
@@ -107,3 +105,6 @@ EXTERN OBMessageHandler obErrorLog;
 } // end namespace OpenBabel
 
 #endif
+
+//! \file oberror.h
+//! \brief Handle error messages, warnings, notices, etc. 

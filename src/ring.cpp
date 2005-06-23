@@ -34,7 +34,7 @@ Ring information beyond atom and bond membership is usually not
 necessary, but more information can be had about the rings in a
 molecule. The OBRing class is used to store the information from a
 Smallest Set of Smallest Rings (SSSR) perception of a molecule. The
-OBMol member function GetSSSR() stores the information it perceives in
+OBMol member function OBMol::GetSSSR() stores the information it perceives in
 a vector<OBRing*> inside the molecule. Perception is only done once
 for a molecule unless the connection table is modified. The following
 code demonstrates how to extract the SSSR information:
@@ -63,7 +63,7 @@ will produce something like the following output for benzene:
 \code
 1 2 3 4 5 6
 \endcode
-Ring information is automatically deleted from an OEMol when it goes
+Ring information is automatically deleted from an OBMol when it goes
 out of scope or the Clear() member function is called.
  */
 
@@ -525,4 +525,7 @@ bool OBRing::findCenterAndNormal(vector3 & center, vector3 &norm1, vector3 &norm
     return(true);
 }
 
-}
+} // end namespace OpenBabel
+
+//! \file ring.cpp
+//! \brief Deal with rings, find smallest set of smallest rings (SSSR).

@@ -1,5 +1,5 @@
 /**********************************************************************
-matrix3x3.cpp - Rotation matrix.
+matrix3x3.cpp - Handle 3D Rotation matrix.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -254,3 +254,6 @@ OBAPI vector3 center_coords(double*,int);
 }
 
 #endif // OB_MATRIX3x3_H
+
+//! \file matrix3x3.h
+//! \brief Handle 3D Rotation matrix.

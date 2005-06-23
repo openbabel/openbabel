@@ -1,7 +1,7 @@
 /**********************************************************************
 dlhandler.h - Dynamic loader for file format modules.
 
-Copyright (C) 2004 by Chris Morley
+Copyright (C) 2004-2005 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -19,9 +19,7 @@ GNU General Public License for more details.
 #ifndef DLHANDLER_H
 #define DLHANDLER_H
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #include <string>
 #include <vector>
@@ -35,13 +33,14 @@ GNU General Public License for more details.
 	#define OBDLL
 #endif
 
-/**
-	* Interface for dynamic libraries. This class defines an interface for
-	* finding and opening dynamic libraries on different platforms 
-	* (the cpp files are different).
-	* It has only what is needed for OpenBabel and is not intended to be 
-	* general purpose.
-	*/
+//! \brief Interface for dynamic libraries.
+//!
+//! This class defines an interface for finding and opening dynamic
+//! loadable libraries on different platforms (e.g., modular plugins)
+//! via different source code files.
+//! It has only what is needed for OpenBabel and is not intended to be 
+//! general purpose. Internally, it is used for dynamic loading and unloading
+//! OBFormat file translation modules.
 class OBCONV DLHandler
 {
 public:
@@ -84,3 +83,6 @@ public:
 };
 
 #endif	/* DLHANDLER_H*/
+
+//! \file dlhandler.h
+//! \brief Dynamic loader for file format modules.

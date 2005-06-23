@@ -77,3 +77,6 @@ char DLHandler::getSeparator()
 {
     return '/';
 }
+
+//! \file dlhandler_unix.cpp
+//! \brief Dynamic loader for UNIX (handles file format shared obj.)

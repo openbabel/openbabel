@@ -1011,3 +1011,5 @@ bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
 
 }//namespace OpenBabel
 
+//! \file obconversion.cpp
+//! \brief Implementation of OBFormat and OBConversion classes.

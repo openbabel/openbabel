@@ -20,9 +20,7 @@ GNU General Public License for more details.
 #ifndef OB_BITVEC_H
 #define OB_BITVEC_H
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #ifdef WIN32
 #pragma warning (disable : 4786)
@@ -165,3 +163,6 @@ OBAPI double Tanimoto(OBBitVec&,OBBitVec&);
 }
 
 #endif // OB_BITVEC_H
+
+//! \file bitvec.h
+//! \brief Fast and efficient bitstring class

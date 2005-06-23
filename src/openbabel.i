@@ -8,7 +8,7 @@
 %include "std_vector.i"
 %include "std_string.i"
 
-%import "config.h"
+%import "babelconfig.h"
 
 %import "base.h"
 %import "data.h"

@@ -1,5 +1,5 @@
 /**********************************************************************
-atom.cpp - Handle OBAtom class
+atom.cpp - Handle OBAtom class.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -328,7 +328,7 @@ vector3 &OBAtom::GetVector()
 
 void OBAtom::SetVector()
 {
-    obAssert(_c);
+  //    obAssert(_c);
     if (_c)
         _v.Set((*_c)[_cidx],(*_c)[_cidx+1],(*_c)[_cidx+2]);
 }
@@ -1707,5 +1707,7 @@ bool OBAtom::IsHbondDonorH()
 	return(false);
 }
 
+} // end namespace OpenBabel
 
-}
+//! \file atom.cpp
+//! \brief Handle OBAtom class

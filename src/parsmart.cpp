@@ -3521,4 +3521,7 @@ void SmartsLexReplace(std::string &s,std::vector<std::pair<std::string,std::stri
     }
 }
 
-}
+} // end namespace OpenBabel
+
+//! \file parsmart.cpp
+//! \brief Implementation of Daylight SMARTS parser.

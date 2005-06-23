@@ -20,9 +20,7 @@ GNU General Public License for more details.
 #ifndef OB_UTIL_H
 #define OB_UTIL_H
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #if HAVE_IOSTREAM
 #include <iostream>
@@ -174,12 +172,16 @@ public:
 OBAPI void  rotate_coords(double*,double m[3][3],int);
 OBAPI double calc_rms(double*,double*,unsigned int);
 
-// String conversion utilities
+//! \name  String conversion utilities
+//@{
+// Documentation in obutil.cpp
 OBAPI void ToUpper(std::string&);
 OBAPI void ToUpper(char*);
 OBAPI void ToLower(std::string&);
 OBAPI void ToLower(char *);
+//! "Clean" the supplied atom type
 OBAPI void CleanAtomType(char*);
+//@}
 
 //! Comparison -- returns true if first parameter less than second
 OBAPI bool OBCompareInt(const int &,const int &);
@@ -204,27 +206,26 @@ struct triple
     T1 first;
     T2 second;
     T3 third;
+  
+  /** Default constructor
+   *	T1() and T2() and T3() force initialization for built in types
+   **/
+  triple():
+    first(T1()),second(T2()),third(T3())
+  {}
 
-    /** Default constructor
-    *	T1() and T2() and T3() force initialization for built in types
-    **/
-    triple()
-            :	first(T1()),second(T2()),third(T3())
-    {}
+  //! Constructor for 3 values
+  triple(const T1 &a, const T2 &b, const T3 &c):
+    first(a), second(b), third(c)
+  {}
 
-    //! Constructor for 3 values
-    triple(const T1 &a, const T2 &b, const T3 &c)
-            :	first(a), second(b), third(c)
-    {}
+  //! Copy constructor with implicit conversions
+  template<class U, class V, class W>
+    triple(const triple<U,V,W> &t):
+      first(t.first), second(t.second), third(t.third)
+  {}
 
-    //! Copy constructor with implicit conversions
-    template<class U, class V, class W>
-    triple(const triple<U,V,W> &t)
-            :	first(t.first), second(t.second), third(t.third)
-    {}
-
-}
-;
+};
 
 //**************quad template********************
 //! \brief A 4-element templated, based on the design of the STL pair<>
@@ -243,28 +244,29 @@ struct quad
     T3 third;
     T4 fourth;
 
-    /*default constructor
+    /*! default constructor
     *	T1() and T2() and T3() force initialization for built in types
     */
-    quad()
-            :	first(T1()),second(T2()),third(T3()),fourth(T4())
-    {}
+  quad():
+    first(T1()),second(T2()),third(T3()),fourth(T4())
+  {}
 
-    //constructor for 3 values
-    quad(const T1 &a, const T2 &b, const T3 &c, const T4 &d)
-            :	first(a), second(b), third(c), fourth(d)
-    {}
+  //! constructor for 3 values
+  quad(const T1 &a, const T2 &b, const T3 &c, const T4 &d):
+    first(a), second(b), third(c), fourth(d)
+  {}
 
-    //copy constructor with implicit conversions
-    template<class U, class V, class W, class X>
-    quad(const quad<U,V,W,X> &q)
-            :	first(q.first), second(q.second), third(q.third), fourth(q.fourth)
-    {}
+  //! copy constructor with implicit conversions
+  template<class U, class V, class W, class X>
+    quad(const quad<U,V,W,X> &q):
+      first(q.first), second(q.second), third(q.third), fourth(q.fourth)
+  {}
 
-}
-;
+};
 
 } // end namespace OpenBabel
 
-
 #endif // OBUTIL_H
+
+//! \file obutil.h
+//! \brief Various utility methods.

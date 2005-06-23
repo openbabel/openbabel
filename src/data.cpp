@@ -25,13 +25,10 @@ GNU General Public License for more details.
 #define BUFF_SIZE 1024
 #endif
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 #include "data.h"
 #include "element.h"
 #include "types.h"
-// #include "extable.h"
 #include "isotope.h"
 #include "mol.h"
 
@@ -338,8 +335,8 @@ of atom types in an OBMol Internal to Sybyl Mol2 atom types.
 \code
 ttab.SetFromType("INT");
 ttab.SetToType("SYB");
-OEAtom *atom;
-vector<OEAtom*>::iterator i;
+OBAtom *atom;
+vector<OBAtom*>::iterator i;
 string src,dst;
 for (atom = mol.BeginAtom(i);atom;atom = mol.EndAtom(i))
 {
@@ -596,5 +593,7 @@ void OBGlobalDataBase::Init()
         ifs4.close();
 }
 
-}
+} // end namespace OpenBabel
 
+//! \file data.cpp
+//! \brief Global data and resource file parsers.

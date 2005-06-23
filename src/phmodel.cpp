@@ -17,9 +17,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
 #include "mol.h"
 #include "phmodel.h"
 #include "phmodeldata.h"
@@ -320,3 +317,6 @@ bool OBChemTsfm::Apply(OBMol &mol)
 }
 
 } //namespace OpenBabel
+
+//! \file phmodel.cpp
+//! \brief Read pH rules and assign charges.

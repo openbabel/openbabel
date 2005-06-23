@@ -13,10 +13,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
-
+#include "babelconfig.h"
 #include "mol.h"
 #include "obconversion.h"
 #include "typer.h"

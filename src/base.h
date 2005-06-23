@@ -20,9 +20,7 @@ GNU General Public License for more details.
 #ifndef OB_BASE_H
 #define OB_BASE_H
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #include <vector>
 
@@ -399,3 +397,6 @@ iterators being illegally returned as NULL
 } //namespace OpenBabel
 
 #endif // OB_BASE_H
+
+//! \file base.h
+//! \brief Base classes to build a graph

@@ -16,10 +16,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include "mol.h"
 
 #define SINGLE 1
@@ -533,3 +529,6 @@ void OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit)
 }
 
 } // end namespace OpenBabel
+
+//! \file kekulize.cpp
+//! \brief Alternate algorithm to kekulize a molecule (OBMol::NewPerceiveKekuleBonds()).

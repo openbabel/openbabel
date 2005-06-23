@@ -1,6 +1,12 @@
 /**********************************************************************
+roundtrip.cpp - Test "roundtrip" results for converting from one molec. format
+                to another.
+
 Copyright (C) 2003-2005 Geoffrey R. Hutchison
  
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
@@ -11,10 +17,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
-
+#include "babelconfig.h"
 #include "mol.h"
 #include "data.h"
 #include "obconversion.h"

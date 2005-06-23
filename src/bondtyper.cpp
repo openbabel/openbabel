@@ -242,4 +242,8 @@ void OBBondTyper::AssignFunctionalGroupBonds(OBMol &mol)
 
 } //namespace OpenBabel;
 
-
+//! \file bondtyper.cpp
+//! \brief Bond typer to perceive connectivity and bond orders/types.
+//! \todo Needs to add aromatic ring bond order assignment.
+//!   Eventually need to migrate OBMol::PerceiveBondOrders(),
+//!   OBMol::ConnectTheDots(), and possibly some of the Kekulize routines

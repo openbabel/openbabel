@@ -1,7 +1,7 @@
 /**********************************************************************
 transform.cpp - Perform command-line requested transformations
 
-Copyright (C) 2004 by Chris Morley
+Copyright (C) 2004-2005 by Chris Morley
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -108,3 +108,7 @@ const char* OBMol::ClassDescription()
 }
 
 } //namespace OpenBabel
+
+//! \file transform.cpp
+//! \brief Perform command-line requested transformations
+//!   (e.g., centering, splitting files, joining, etc.)

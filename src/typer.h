@@ -1,5 +1,5 @@
 /**********************************************************************
-typer.h - Open Babel atom typer.
+typer.h - Open Babel atom and aromaticity typer.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -74,6 +74,9 @@ public:
     bool TraverseCycle(OBAtom*,OBAtom*,OBBond*,std::pair<int,int>&,int);
 };
 
-}
+} //namespace OpenBabel
 
 #endif // OB_TYPER_H
+
+//! \file typer.h
+//! \brief Open Babel atom and aromaticity typer.

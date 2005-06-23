@@ -1,5 +1,5 @@
 /**********************************************************************
-matrix3x3.cpp - Rotation matrix.
+matrix3x3.cpp - Handle 3D rotation matrix.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -562,7 +562,6 @@ ostream& operator<< ( ostream& co, const matrix3x3& m )
   eigenvectors. The eigenvectors are normalized and mutually
   orthogonal.
 */
-#define MAX_SWEEPS 50
 void matrix3x3::jacobi(unsigned int n, double *a, double *d, double *v)
 {
     double onorm, dnorm;
@@ -571,6 +570,7 @@ void matrix3x3::jacobi(unsigned int n, double *a, double *d, double *v)
     register int i, j, k, l;
     int nrot;
 
+    int MAX_SWEEPS=50;
 
     // Set v to the identity matrix, set the vector d to contain the
     // diagonal elements of the matrix a
@@ -689,6 +689,8 @@ Exit_now:
     }
 }
 
+} // end namespace OpenBabel
 
-}
+//! \file matrix3x3.cpp
+//! \brief Handle 3D rotation matrix.
 

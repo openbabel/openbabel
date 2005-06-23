@@ -1,7 +1,7 @@
 /**********************************************************************
-obconversion.h: Declaration of OBFormat and OBConversion
+obconversion.h - Handle file conversions. Declaration of OBFormat, OBConversion
 
-Copyright (C) 2004 by Chris Morley
+Copyright (C) 2004-2005 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -19,13 +19,20 @@ GNU General Public License for more details.
 #ifndef OB_CONV_H
 #define OB_CONV_H
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
+#endif
 #include <vector>
 #include <map>
+
+#include "babelconfig.h"
 #include "dlhandler.h"
 
 // These macros are used in DLL builds. If they have not
@@ -328,11 +335,14 @@ protected:
 ///For OBFormat::Flags()
 #define NOTREADABLE     0x01
 #define READONEONLY     0x02
-#define READBINARY			0x04
+#define READBINARY	0x04
 #define NOTWRITABLE     0x10
 #define WRITEONEONLY    0x20
-#define WRITEBINARY			0x40
+#define WRITEBINARY	0x40
 #define DEFAULTFORMAT 0x4000
 
 } //namespace OpenBabel
 #endif //OB_CONV_H
+
+//! \file
+//! \brief Handle file conversions. Declaration of OBFormat, OBConversion.

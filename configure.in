@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([Open Babel], 2.0.0b1-20050601, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_INIT([Open Babel], 2.0.0b2-20050701, openbabel-discuss@lists.sourceforge.net, openbabel)
 AC_CONFIG_SRCDIR(src/obutil.cpp)
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
@@ -71,5 +71,8 @@ scandirconst_cast=no],
 scandirconst_cast=yes])
 
 AC_MSG_RESULT([$scandirconst_cast], [set if scandir needs a const])
+
+AC_CONFIG_COMMANDS([src/babelconfig.h], 
+                   [cat src/config.h | grep -v PACKAGE >src/babelconfig.h])
 
 AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile openbabel.pc)

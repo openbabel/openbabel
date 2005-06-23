@@ -17,9 +17,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #if HAVE_IOSTREAM
 #include <iostream>
@@ -103,5 +101,8 @@ std::vector<std::string> OBMessageHandler::GetMessagesOfLevel(const obMessageLev
   return results;
 }
 
-
 } // end namespace OpenBabel
+
+//! \file oberror.cpp
+//! \brief Handle error messages, warnings, notices, etc.
+//!  Implements OBMessageHandler class.

@@ -22,14 +22,6 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "math/vector3.h"
 
-#ifndef true
-#define true 1
-#endif
-
-#ifndef false
-#define false 0
-#endif
-
 using namespace std;
 
 namespace OpenBabel
@@ -268,7 +260,7 @@ OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
   \warning If the entries of the *this (in particular the
   z-component) are very close to zero, but not == 0.0, this
   method may behave in unexpected ways and return almost random
-  results; details may depend on your particular doubleing point
+  results; details may depend on your particular floating point
   implementation. The use of this method is therefore highly
   discouraged, unless you are certain that all components of
   *this are in a reasonable range, away from 0.0 (Stefan
@@ -322,3 +314,6 @@ double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d)
 }
 
 } // namespace OpenBabel
+
+//! \file vector3.cpp
+//! \brief Handle 3D coordinates.

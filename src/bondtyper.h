@@ -35,7 +35,7 @@ public:
     OBBondTyper();
     ~OBBondTyper();
 
-    //! \name BondTyper Database Utilities
+    //! \name OBBondTyper Database Utilities
     //@{
     void ParseLine(const char*);
     //@}
@@ -50,3 +50,6 @@ public:
 }
 
 #endif // OB_BONDTYPER_H
+
+//! \file bondtyper.h
+//! \brief Bond typer to perceive connectivity and bond orders/types.

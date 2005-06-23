@@ -291,3 +291,6 @@ OBAPI vector3 center_coords(double*,int);
 }
 
 #endif // OB_VECTOR_H
+
+//! \file
+//! \brief Handle 3D coordinates.

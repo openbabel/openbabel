@@ -433,5 +433,7 @@ void UnpackCoordinate(double c[3],double max[3],int tmp)
     c[2] *= max[2];
 }
 
-} //namespace OpenEye
+} //namespace OpenBabel
 
+//! \file rotamer.cpp
+//! \brief Handle rotamer list data.

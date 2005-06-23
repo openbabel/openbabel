@@ -1,5 +1,5 @@
 /**********************************************************************
-rotor.cpp - Rotate torsional according to rotor rules.
+rotor.cpp - Rotate dihedral angles according to rotor rules.
  
 Copyright (C) 1998-2000 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -17,9 +17,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
 #include "mol.h"
 #include "rotor.h"
 
@@ -1111,3 +1108,5 @@ OBRotorRules::~OBRotorRules()
 #undef OB_DEFAULT_DELTA
 }
 
+//! \file rotor.cpp
+//! \brief Rotate dihedral angles according to rotor rules.

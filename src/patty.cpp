@@ -17,9 +17,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
 #include "mol.h"
 #include "obutil.h"
 #include "parsmart.h"
@@ -298,14 +295,5 @@ int main(int argc, char *argv[])
 
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
+//! \file patty.cpp
+//! \brief Programmable atom typer.

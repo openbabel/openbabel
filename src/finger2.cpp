@@ -1,5 +1,5 @@
 /**********************************************************************
-finger2.cpp: Alternate fingerprint algorithm.
+finger2.cpp - Alternate fingerprint algorithm.
 
 Copyright (C) 2005 Chris Morley
  
@@ -223,7 +223,8 @@ void fingerprint2::PrintFpt(vector<int>& f, int hash)
 */
 
 //***************************************************
-bool GetFingerprint(OBMol& mol, vector<unsigned int>& vecwords, int nwords, int type)
+bool GetFingerprint(OBMol& mol, std::vector<unsigned int>& vecwords,
+		    int nwords, int type)
 {
 	//Handle different fingerprint types in this simple way until the need is demonstrated
 	//for a more sophisticated dynamic method similar to that for formats.
@@ -256,7 +257,8 @@ bool GetFingerprint(OBMol& mol, vector<unsigned int>& vecwords, int nwords, int 
 	return true;
 }
 
-double Tanimoto(const vector<unsigned int> vec1, const vector<unsigned int> vec2) 
+double Tanimoto(const std::vector<unsigned int> vec1, 
+		const std::vector<unsigned int> vec2) 
 {
 	//Independent of sizeof(unsigned int)
 	if(vec1.size()!=vec2.size())
@@ -277,3 +279,6 @@ double Tanimoto(const vector<unsigned int> vec1, const vector<unsigned int> vec2
 }
 
 } //namespace OpenBabel
+
+//! \file finger2.cpp
+//! \brief Alternate fingerprint algorithm.

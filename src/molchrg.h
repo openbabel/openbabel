@@ -67,3 +67,6 @@ public:
 #define OB_GASTEIGER_ITERS  6
 
 #endif // OB_MOLCHRG_H
+
+//! \file molchrg.h
+//! \brief Assign Gasteiger partial charges.

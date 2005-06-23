@@ -521,4 +521,7 @@ void OBRandom::TimeSeed()
 #endif
 }
 
-}
+} //end namespace OpenBabel
+
+//! \file rand.cpp
+//! \brief Pseudo random number generator.

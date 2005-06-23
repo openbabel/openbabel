@@ -1,5 +1,5 @@
 /**********************************************************************
-fingerprint.cpp: Handle fingerprints.
+fingerprint.cpp - Handle fingerprints.
  
 Copyright (C) 2004 by Fabien Fontaine.
  
@@ -650,6 +650,7 @@ void fingerprint::HashMol(OBMol &mol)
     return;
 }
 
+} //end namespace OpenBabel
 
-
-}
+//! \file fingerprint.cpp
+//! \brief Handle fingerprints.

@@ -319,3 +319,5 @@ public:
 
 #endif // OB_ROTOR_H
 
+//! \file rotor.h
+//! \brief Rotate torsional according to rotor rules.

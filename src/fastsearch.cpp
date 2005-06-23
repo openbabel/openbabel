@@ -16,9 +16,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #if HAVE_FSTREAM
 #include <fstream>
@@ -213,6 +211,7 @@ To search in  fastsearch index file:
 	}
 */
 
-}//Openbabel
+} // end namespace OpenBabel
 
-
+//! \file fastsearch.cpp
+//! \brief Fast molecular search from an indexed file

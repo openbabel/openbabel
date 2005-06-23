@@ -17,9 +17,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
 #include "mol.h"
 #include "typer.h"
 #include "atomtyp.h"
@@ -898,4 +895,5 @@ void OBAromaticTyper::ExcludeSmallRing(OBMol &mol)
 
 } //namespace OpenBabel;
 
-
+//! \file typer.cpp
+//! \brief Open Babel atom and aromaticity typer.

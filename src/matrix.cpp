@@ -1,5 +1,5 @@
 /**********************************************************************
-matrix.cpp - Operation on matrix.
+matrix.cpp - Operations on arbitrary-sized matrix.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -26,7 +26,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-void print_matrix(vector<vector<double> > &m)
+void print_matrix(std::vector<std::vector<double> > &m)
 {
     unsigned int i,j;
 
@@ -63,7 +63,9 @@ void print_matrix_ff(double **m, int rows, int cols)
     }
 }
 
-bool mult_matrix(vector<vector<double> > &c, vector<vector<double> > &a, vector<vector<double> > &b)
+bool mult_matrix(std::vector<std::vector<double> > &c,
+		 std::vector<std::vector<double> > &a,
+		 std::vector<std::vector<double> > &b)
 {
     unsigned int i,j,k;
 
@@ -119,7 +121,7 @@ bool mult_matrix_ff(double **c, double **a, double **b, int rows, int cols)
     return(true);
 }
 
-bool invert_matrix(vector<vector<double> > &mat, double &det)
+bool invert_matrix(std::vector<std::vector<double> > &mat, double &det)
 {
     int  i, j, k, m, n, row = 0, col = 0;
     double tempo, big, pvt;
@@ -422,7 +424,7 @@ bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
     return(true);
 }
 
-bool convert_matrix_f(vector<vector<double> > &src, double *dst)
+bool convert_matrix_f(std::vector<std::vector<double> > &src, double *dst)
 {
     unsigned int i, j, idx;
 
@@ -436,7 +438,7 @@ bool convert_matrix_f(vector<vector<double> > &src, double *dst)
     return true;
 }
 
-bool convert_matrix_ff(vector<vector<double> > &src, double **dst)
+bool convert_matrix_ff(std::vector<std::vector<double> > &src, double **dst)
 {
     unsigned int i, j;
 
@@ -447,7 +449,8 @@ bool convert_matrix_ff(vector<vector<double> > &src, double **dst)
     return true;
 }
 
-bool convert_matrix_f(double *src, vector<vector<double> > &dst, int rows, int cols)
+bool convert_matrix_f(double *src, std::vector<std::vector<double> > &dst,
+		      int rows, int cols)
 {
     int i, j, idx;
 
@@ -463,7 +466,8 @@ bool convert_matrix_f(double *src, vector<vector<double> > &dst, int rows, int c
     return true;
 }
 
-bool convert_matrix_ff(double **src, vector<vector<double> > &dst, int rows, int cols)
+bool convert_matrix_ff(double **src, std::vector<std::vector<double> > &dst, 
+		       int rows, int cols)
 {
     int i, j;
 
@@ -505,4 +509,9 @@ bool convert_matrix_ff_f(double **src, double *dst, int rows, int cols)
 
     return true;
 }
-}
+
+} // end namespace OpenBabel
+
+//! \file matrix.cpp
+//! \brief Operations on arbitrary-sized matrix.
+

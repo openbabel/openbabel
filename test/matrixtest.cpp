@@ -1,7 +1,12 @@
 /**********************************************************************
+matrixtest.cpp - Unit tests for matrix manipulations.
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 Geoffrey R. Hutchison
  
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
@@ -12,9 +17,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 #include "math/matrix3x3.h"
 #include "obutil.h"
 

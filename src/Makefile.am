@@ -29,7 +29,7 @@ libopenbabel_la_LDFLAGS = -version-info 1:0:0
 #       swig -module "Chemistry::OpenBabel" -perl5 -c++ -o $@ $<
 
 pkginclude_HEADERS = \
-		base.h bitvec.h \
+		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
 		generic.h grid.h mol.h molchrg.h \
@@ -44,6 +44,6 @@ babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
 	# formats/inchi/libinchi.la
 
 EXTRA_DIST = \
-	babelconfig.h.in strncasecmp.c snprintf.c snprintf.h \
+	strncasecmp.c snprintf.c snprintf.h \
 	openbabel.i openbabel.py openbabel.pm
 

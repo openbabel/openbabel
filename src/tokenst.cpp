@@ -21,12 +21,11 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
 #include <algorithm>
 #include <vector>
 #include <string>
+
+#include "babelconfig.h"
 
 using namespace std;
 /*
@@ -130,7 +129,7 @@ OBAPI bool tokenize(vector<string> &vcr, string &s, const char *delimstr, int li
     return(true);
 }
 
-}
+} // end namespace OpenBabel
 
-
-
+//! \file tokenst.cpp
+//! \brief Tokenize a string.

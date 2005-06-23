@@ -311,4 +311,7 @@ GasteigerState::GasteigerState()
     q = 0.0;
 }
 
-}
+} // end namespace OpenBabel
+
+//! \file molchrg.cpp
+//! \brief Assign Gasteiger partial charges.

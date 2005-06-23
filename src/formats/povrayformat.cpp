@@ -18,20 +18,18 @@ GNU General Public License for more details.
 #include <time.h>
 #include <stdlib.h>
 
+/* ---- OpenBabel include ---- */
+#include "babelconfig.h"
+#include "mol.h"
+#include "obconversion.h"
+
 /* ---- C++ includes ---- */
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
 #include <string>
 #if defined(HAVE_SSTREAM)
 #include <sstream>
 #else
 #include <strstream>
 #endif
-
-/* ---- OpenBabel include ---- */
-#include "mol.h"
-#include "obconversion.h"
 
 /* ---- Max. length of a atom-label ---- */
 #define StrLen 32

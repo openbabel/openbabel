@@ -81,3 +81,6 @@ public :
 } // end namespace OpenBabel
 
 #endif // OB_PATTY_H
+
+//! \file patty.h
+//! \brief Programmable atom typer. (abbreviated P.At.Ty.)

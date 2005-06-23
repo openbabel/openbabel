@@ -1,11 +1,28 @@
+2005-06-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/configure.in, src/configure: Generate babelconfig.h from
+	config.h using AC_CONFIG_COMMANDS as recommended by Jean Brefort.
+
+	* src/*.h src/*.cpp, src/openbabel.i: Convert back from config.h
+	(which still conflicts with other packages on UNIX-ish systems) to
+	babelconfig.h, as above.
+	
+	* src/formats/viewmolformat.cpp: Switch to OBMoleculeFormat.
+	(Testing the difference in compiled code size. Not much.)
+
+	* src/formats/smilesformat.cpp: Remove asserts. (Asserts should
+	not be included in "production" code, IMHO.)
+
+	* Doxyfile, */*.h */*.cpp: Documentation updates.
+
 2005-06-23  Chris Morley  <c.morley@gaseq.co.uk>
 	
-	*src/math/vector3.h, src/math/vector3.cpp: Moved the initiallization
+	* src/math/vector3.h, src/math/vector3.cpp: Moved the initiallization
 	of global variables VZero etc from vector3.h to vector3.cpp.
 	This is recorded for 2005-04-15 but I must have forgotten to 
 	commit it. Added OBAPIs for DLL build compatibility.
 	
-	*src/math/matrix3x3.h: Added OBAPIs.    
+	* src/math/matrix3x3.h: Added OBAPIs.    
 
 2005-06-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
@@ -15,6 +32,16 @@
 	* src/bondtyper.cpp (AssignFunctionalGroupBonds): Mark assigned
 	bonds with KSingle, KDouble, KTriple for OBMol::Kekulize()
 	routine. Fixes PR#1219611.
+
+	* src/obmolecformat.h, src/Makefile.am, src/Makefile.in,
+	src/formats/Makefile.am, src/formats/Makefile.in: Move
+	obmolecformat.h to src/ from src/formats.
+
+	* src/obifstream.h: Removed. Completely unused.
+
+	* src/rotamer.h: Remove Read/WriteBinary declarations and
+	OBBinaryDBase -- unused. We cannot ensure compatibility with
+	OEBinary (which is now a proprietary format).
 
 2005-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

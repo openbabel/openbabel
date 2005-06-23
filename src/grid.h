@@ -20,9 +20,7 @@ GNU General Public License for more details.
 #ifndef OB_GRID_H
 #define OB_GRID_H
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #if HAVE_IOSTREAM
 #include <iostream>
@@ -317,3 +315,6 @@ public:
 } // end namespace OpenBabel
 
 #endif // OB_GRID_H
+
+//! \file grid.h
+//! \brief Handle grids of values.

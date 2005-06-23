@@ -26,9 +26,7 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 // File Includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #if HAVE_IOSTREAM
 #include <iostream>
@@ -1608,3 +1606,6 @@ void OBResidue::DeleteData(OBGenericData *gd)
 }
 
 } // end namespace OpenBabel
+
+//! \file residue.cpp
+//! \brief Handle macromolecule residues.

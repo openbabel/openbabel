@@ -1,5 +1,5 @@
 /**********************************************************************
-bitvec.cpp - Vector of bits.
+bitvec.cpp - Fast and efficient bitstring class.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -533,6 +533,8 @@ double Tanimoto(OBBitVec &bv1,OBBitVec &bv2)
     return(andbits/orbits);
 }
 
+} // end namespace OpenBabel
 
-}
+//! \file bitvec.cpp
+//! \brief Fast and efficient bitstring class
 

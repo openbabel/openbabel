@@ -592,4 +592,7 @@ void OBBond::DeleteData(OBGenericData *gd)
 
 }
 
-}
+} // end namespace OpenBabel
+
+//! \file bond.cpp
+//! \brief Handle OBBond class

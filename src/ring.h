@@ -116,4 +116,7 @@ public:
 
 } // end namespace OpenBabel
 
-#endif // OB_RINGS_H__
+#endif // OB_RING_H
+
+//! \file ring.h
+//! \brief Deal with rings, find smallest set of smallest rings (SSSR).

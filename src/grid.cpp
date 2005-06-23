@@ -1,5 +1,5 @@
 /**********************************************************************
-grid.cpp - Handle grid of values.
+grid.cpp - Handle grids of values.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -532,5 +532,8 @@ double Interpolate(double x,double y,double z)
 }
 #endif
 
+} // end namespace OpenBabel
 
-}
+//! \file grid.cpp
+//! \brief Handle grids of values.
+

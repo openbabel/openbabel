@@ -1,5 +1,5 @@
 /**********************************************************************
-matrix.h - Operation on matrix.
+matrix.h - Operations on arbitrary-sized matrix.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -19,10 +19,6 @@ GNU General Public License for more details.
 
 #ifndef OB_MATRIX_H
 #define OB_MATRIX_H
-
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
 
 #include <vector>
 #include <math.h>
@@ -61,4 +57,5 @@ bool convert_matrix_f_ff(double  *src, double **dst, int rows, int cols);
 
 #endif // OB_MATRIX_H
 
-
+//! \file matrix.h
+//! \brief Operations on arbitrary-sized matrix.

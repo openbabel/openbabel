@@ -1,5 +1,5 @@
 /**********************************************************************
-obiter.h - STL-style iterators for Open Babel
+obiter.h - STL-style iterators for Open Babel.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -153,3 +153,6 @@ public:
 
 } // namespace OpenBabel
 #endif // OB_OBITER_H
+
+//! \file obiter.h
+//! \brief STL-style iterators for Open Babel.

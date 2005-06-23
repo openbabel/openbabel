@@ -1,5 +1,5 @@
 /**********************************************************************
-reaction.h: Handle chemical reactions (i.e., lists of reagents and products)
+reaction.h - Handle chemical reactions (i.e., lists of reagents and products).
 
 Copyright (C) 2004 by Chris Morley
  
@@ -33,11 +33,13 @@ namespace OpenBabel
 
 class OBBase;
 
+//!\brief Used to store chemical reactions (i.e., reactants -> products)
+//!
+//! Reactants and products stored as pointers to molecules stored elsewhere,
+//! since the molecules may be involved in other reactions.
 class OBAPI OBReaction : public OBBase
 {
 public:
-		///Reactants and products stored as pointers to molecules stored elsewhere,
-    ///since the molecules may be involved in other reactions.
     vector<OBMol*> reactants;
     vector<OBMol*> products;
     string title;
@@ -46,3 +48,5 @@ public:
 }
 #endif
 
+//! \file reaction.h
+//! \brief Handle chemical reactions (i.e., lists of reagents and products).

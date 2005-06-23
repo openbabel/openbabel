@@ -279,4 +279,4 @@ void SmartsLexReplace(std::string &,
 #endif // OB_PARSMART_H
 
 //! \file parsmart.h
-//! \brief SMART parser.
+//! \brief Daylight SMARTS parser.

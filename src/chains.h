@@ -1,5 +1,5 @@
 /**********************************************************************
-chains.h - Parse chains for macromolecules or SMILES.
+chains.h - Parse for macromolecule chains and residues
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -103,3 +103,5 @@ private: // members
 }
 #endif // OB_CHAINS_H
 
+//! \file chains.h
+//! \brief Parse for macromolecule chains and residues.

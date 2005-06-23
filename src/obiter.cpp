@@ -245,3 +245,6 @@ namespace OpenBabel
     }
 
 } // namespace OpenBabel
+
+//! \file obiter.cpp
+//! \brief STL-style iterators for Open Babel.

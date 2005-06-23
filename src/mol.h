@@ -22,9 +22,7 @@ GNU General Public License for more details.
 #ifndef OB_MOL_H
 #define OB_MOL_H
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "babelconfig.h"
 
 #ifndef EXTERN
 #  define EXTERN extern
@@ -94,7 +92,7 @@ public:
 
     void    SetAtomID(OBAtom *atom, const std::string &id);
     void    SetHetAtom(OBAtom *atom, bool hetatm);
-    void    SetSerialNum(OBAtom *atom, unsigned sernum);
+    void    SetSerialNum(OBAtom *atom, unsigned int sernum);
 
     std::string    GetName(void)		const;
     unsigned int   GetNum(void)			const;
@@ -146,18 +144,18 @@ public:
 
 protected: // members
 
-    unsigned int	 	_idx;
-    char      	                _chain;
-    unsigned int		_aakey;
-    unsigned int	        _reskey;
-    unsigned int		_resnum;
-    std::string                 _resname;
+    unsigned int	 	_idx;   //!< Residue index (i.e., internal index in an OBMol)
+    char      	                _chain; //!< Chain ID
+    unsigned int		_aakey; //!< Amino Acid key ID -- see SetResidueKeys()
+    unsigned int	        _reskey;//!< Residue key ID -- see SetResidueKeys()
+    unsigned int		_resnum;//!< Residue number (i.e., in file)
+    std::string                 _resname;//!< Residue text name
 
-    std::vector<bool>           _hetatm;
-    std::vector<std::string>    _atomid;
-    std::vector<OBAtom*>        _atoms;
-    std::vector<unsigned int>   _sernum;
-    std::vector<OBGenericData*> _vdata;
+    std::vector<bool>           _hetatm;//!< Is a given atom a HETAM
+    std::vector<std::string>    _atomid;//!< Residue atom text IDs
+    std::vector<OBAtom*>        _atoms; //!< List of OBAtom in this residue
+    std::vector<unsigned int>   _sernum;//!< List of serial numbers
+    std::vector<OBGenericData*> _vdata; //!< Custom data
 };
 
 
@@ -395,6 +393,7 @@ public:
         _vbond.insert(i, (OBEdgeBase*)bond);
     }
     bool DeleteBond(OBBond*);
+	void ClearBond() {_vbond.clear();}
     //@}
 
     //! \name Requests for atomic property information
@@ -430,34 +429,13 @@ public:
     //! \name Property information
     //@{
     //! Is there any residue information?
-    bool HasResidue()
-    {
-        return(_residue != NULL);
-    }
-    bool IsHydrogen()
-    {
-        return(GetAtomicNum() == 1);
-    }
-    bool IsCarbon()
-    {
-        return(GetAtomicNum() == 6);
-    }
-    bool IsNitrogen()
-    {
-        return(GetAtomicNum() == 7);
-    }
-    bool IsOxygen()
-    {
-        return(GetAtomicNum() == 8);
-    }
-    bool IsSulfur()
-    {
-        return(GetAtomicNum() == 16);
-    }
-    bool IsPhosphorus()
-    {
-        return(GetAtomicNum() == 15);
-    }
+    bool HasResidue()    { return(_residue != NULL);    }
+    bool IsHydrogen()    { return(GetAtomicNum() == 1); }
+    bool IsCarbon()      { return(GetAtomicNum() == 6); }
+    bool IsNitrogen()    { return(GetAtomicNum() == 7); }
+    bool IsOxygen()      { return(GetAtomicNum() == 8); }
+    bool IsSulfur()      { return(GetAtomicNum() == 16);}
+    bool IsPhosphorus()  { return(GetAtomicNum() == 15);}
     bool IsAromatic()      const;
     bool IsInRing()        const;
     bool IsInRingSize(int) const;
@@ -471,12 +449,13 @@ public:
     bool IsOneThree(OBAtom*);
     //! Is this atom related to the supplied OBAtom in a 1,4 bonding pattern?
     bool IsOneFour(OBAtom*);
-    //! Is this atom an oxygen in a carboxyl group?
+    //! Is this atom an oxygen in a carboxyl (-CO2 or CO2H) group?
     bool IsCarboxylOxygen();
-    //! Is this atom an oxygen in a phosphate group? 
+    //! Is this atom an oxygen in a phosphate (R-PO3) group? 
     bool IsPhosphateOxygen();
-    //
+    //! Is this atom an oxygen in a sulfate (-SO3) group?
     bool IsSulfateOxygen();
+    //! Is this atom an oxygen in a nitro (-NO2) group?
     bool IsNitroOxygen();
     bool IsAmideNitrogen();
     bool IsPolarHydrogen();
@@ -509,18 +488,9 @@ public:
     bool HasBondOfOrder(unsigned int);
     int  CountBondsOfOrder(unsigned int);
     bool HasNonSingleBond();
-    bool HasSingleBond()
-    {
-        return(HasBondOfOrder(1));
-    }
-    bool HasDoubleBond()
-    {
-        return(HasBondOfOrder(2));
-    }
-    bool HasAromaticBond()
-    {
-        return(HasBondOfOrder(5));
-    }
+    bool HasSingleBond()    {        return(HasBondOfOrder(1));    }
+    bool HasDoubleBond()    {        return(HasBondOfOrder(2));    }
+    bool HasAromaticBond()  {        return(HasBondOfOrder(5));    }
     //! Determines if this atom matches the first atom in a given SMARTS pattern
     bool MatchesSMARTS(const char *);
     //@}
@@ -534,29 +504,18 @@ public:
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d)
-    {
-        _vdata.push_back(d);
-    }
+    {        _vdata.push_back(d);    }
     //! Return the number of OBGenericData items attached to this molecule.
     unsigned int                      DataSize()
-    {
-        return(_vdata.size());
-    }
+    {        return(_vdata.size());    }
     OBGenericData                    *GetData(obDataType);
     OBGenericData                    *GetData(std::string&);
     OBGenericData                    *GetData(const char *);
-    std::vector<OBGenericData*>           &GetData()
-    {
-        return(_vdata);
-    }
+    std::vector<OBGenericData*>      &GetData() { return(_vdata); }
     std::vector<OBGenericData*>::iterator  BeginData()
-    {
-        return(_vdata.begin());
-    }
+    {        return(_vdata.begin());    }
     std::vector<OBGenericData*>::iterator  EndData()
-    {
-        return(_vdata.end());
-    }
+    {        return(_vdata.end());      }
     //@}
 }
 ; // class OBAtom
@@ -763,28 +722,29 @@ protected:
     std::string                   _title;	//!< Molecule title
     //vector<OBAtom*>             _atom;	//!< not needed (inherited)
     //vector<OBBond*>             _bond;	//!< not needed (inherited)
-    unsigned short int            _dimension; //!< Dimensionality of coordinates
-    double                        _energy;//!< Molecular heat of formation (if applicable)
+    unsigned short int            _dimension;   //!< Dimensionality of coordinates
+    double                        _energy;      //!< Molecular heat of formation (if applicable)
     int				  _totalCharge; //!< Total charge on the molecule
-    unsigned int                  _totalSpin; //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
-    double                        *_c;	//!< coordinate array
-    std::vector<double*>          _vconf;//!< vector of conformers
-    unsigned short int            _natoms;//!< Number of atoms
-    unsigned short int            _nbonds;//!< Number of bonds
-    std::vector<OBResidue*>       _residue;//!< Residue information (if applicable)
-    std::vector<OBInternalCoord*> _internals;//!< Internal Coordinates (if applicable)
-    std::vector<OBGenericData*>   _vdata;	//!< Custom data -- see OBGenericData class for more
-    unsigned short int            _mod;	//!< Number of nested calls to BeginModify()
-    //NF  unsigned short int            _access;//!< Number of nested calls to BeginAccess()
+    unsigned int                  _totalSpin;   //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
+    double                       *_c;	        //!< coordinate array
+    std::vector<double*>          _vconf;       //!< vector of conformers
+    unsigned short int            _natoms;      //!< Number of atoms
+    unsigned short int            _nbonds;      //!< Number of bonds
+    std::vector<OBResidue*>       _residue;     //!< Residue information (if applicable)
+    std::vector<OBInternalCoord*> _internals;   //!< Internal Coordinates (if applicable)
+    std::vector<OBGenericData*>   _vdata;       //!< Custom data -- see OBGenericData class for more
+    unsigned short int            _mod;	        //!< Number of nested calls to BeginModify()
 
-    bool  HasFlag(int flag)
-    {
-        return((_flags & flag) ? true : false);
-    }
-    void  SetFlag(int flag)
-    {
-        _flags |= flag;
-    }
+    bool  HasFlag(int flag)    { return((_flags & flag) ? true : false); }
+    void  SetFlag(int flag)    { _flags |= flag; }
+
+    //! \name Internal Kekulization routines -- see kekulize.cpp and NewPerceiveKekuleBonds()
+    //@{
+    void start_kekulize(std::vector <OBAtom*> &cycle, std::vector<int> &electron);
+    int expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &currentState, std::vector<int> &initState, std::vector<int> &bcurrentState, std::vector<int> &binitState, std::vector<bool> &mark);
+    int getorden(OBAtom *atom);
+    void expandcycle(OBAtom *atom, OBBitVec &avisit);
+    //@}
 
 public:
 
@@ -909,18 +869,12 @@ public:
     //! Dimensionality of coordinates (i.e., 0 = unknown or no coord, 2=2D, 3=3D)
     unsigned short int GetDimension() const { return _dimension; }
     double      *GetCoordinates() { return(_c); }
+    //! Return the Smallest Set of Smallest Rings has been run (see OBRing class
     std::vector<OBRing*> &GetSSSR();
-    //NF    bool         IsCompressed() const                {return _compressed;}
     //! Get the current flag for whether formal charges are set with pH correction
-    bool AutomaticFormalCharge()
-    {
-        return(_autoFormalCharge);
-    }
+    bool AutomaticFormalCharge()   { return(_autoFormalCharge);  }
     //! Get the current flag for whether partial charges are auto-determined
-    bool AutomaticPartialCharge()
-    {
-        return(_autoPartialCharge);
-    }
+    bool AutomaticPartialCharge()  { return(_autoPartialCharge); }
     //@}
 
 
@@ -932,132 +886,73 @@ public:
     void   SetFormula(std::string molFormula);
     //! Set the heat of formation for this molecule (in kcal/mol)
     void   SetEnergy(double energy) { _energy = energy; }
+    //! Set the dimension of this molecule (i.e., 0, 1 , 2, 3)
     void   SetDimension(unsigned short int d) { _dimension = d; }
     void   SetTotalCharge(int charge);
     void   SetTotalSpinMultiplicity(unsigned int spin);
     void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord)
-    {
-        _internals = int_coord;
-    }
-    //! Set the flag for determining automatic formal charges with pH
+    { _internals = int_coord; }
+    //! Set the flag for determining automatic formal charges with pH (default=true)
     void SetAutomaticFormalCharge(bool val)
-    {
-        _autoFormalCharge=val;
-    }
-    //! Set the flag for determining partial charges automatically
+    { _autoFormalCharge=val;  }
+    //! Set the flag for determining partial charges automatically (default=true)
     void SetAutomaticPartialCharge(bool val)
-    {
-        _autoPartialCharge=val;
-    }
+    { _autoPartialCharge=val; }
 
-    void   SetAromaticPerceived()
-    {
-        SetFlag(OB_AROMATIC_MOL);
-    }
-    void   SetSSSRPerceived()
-    {
-        SetFlag(OB_SSSR_MOL);
-    }
-    void   SetRingAtomsAndBondsPerceived()
-    {
-        SetFlag(OB_RINGFLAGS_MOL);
-    }
-    void   SetAtomTypesPerceived()
-    {
-        SetFlag(OB_ATOMTYPES_MOL);
-    }
-    void   SetChainsPerceived()
-    {
-        SetFlag(OB_CHAINS_MOL);
-    }
-    void   SetChiralityPerceived()
-    {
-        SetFlag(OB_CHIRALITY_MOL);
-    }
-    void   SetPartialChargesPerceived()
-    {
-        SetFlag(OB_PCHARGE_MOL);
-    }
-    void   SetHybridizationPerceived()
-    {
-        SetFlag(OB_HYBRID_MOL);
-    }
-    void   SetImplicitValencePerceived()
-    {
-        SetFlag(OB_IMPVAL_MOL);
-    }
-    void   SetKekulePerceived()
-    {
-        SetFlag(OB_KEKULE_MOL);
-    }
-    void   SetClosureBondsPerceived()
-    {
-        SetFlag(OB_CLOSURE_MOL);
-    }
-    void   SetHydrogensAdded()
-    {
-        SetFlag(OB_H_ADDED_MOL);
-    }
-    void   SetCorrectedForPH()
-    {
-        SetFlag(OB_PH_CORRECTED_MOL);
-    }
-    void   SetAromaticCorrected()
-    {
-        SetFlag(OB_AROM_CORRECTED_MOL);
-    }
-    void   SetSpinMultiplicityAssigned()
-    {
-        SetFlag(OB_TSPIN_MOL);
-    }
-    void   UnsetAromaticPerceived()
-    {
-        _flags &= (~(OB_AROMATIC_MOL));
-    }
-    void   UnsetPartialChargesPerceived()
-    {
-        _flags &= (~(OB_PCHARGE_MOL));
-    }
-    void   UnsetImplicitValencePerceived()
-    {
-        _flags &= (~(OB_IMPVAL_MOL));
-    }
-    void   UnsetFlag(int flag)
-    {
-        _flags &= (~(flag));
-    }
-    void   SetFlags(int flags)
-    {
-        _flags = flags;
-    }
+    //! Mark that aromaticity has been perceived for this molecule (see OBAromaticTyper)
+    void   SetAromaticPerceived()    { SetFlag(OB_AROMATIC_MOL);    }
+    //! Mark that Smallest Set of Smallest Rings has been run (see OBRing class)
+    void   SetSSSRPerceived()        { SetFlag(OB_SSSR_MOL);        }
+    //! Mark that rings have been perceived (see OBRing class for details)
+    void   SetRingAtomsAndBondsPerceived(){SetFlag(OB_RINGFLAGS_MOL);}
+    //! Mark that atom types have been perceived (see OBAtomTyper for details)
+    void   SetAtomTypesPerceived()   { SetFlag(OB_ATOMTYPES_MOL);   }
+    //! Mark that chains and residues have been perceived (see OBChainsParser)
+    void   SetChainsPerceived()      { SetFlag(OB_CHAINS_MOL);      }
+    //! Mark that chirality has been perceived
+    void   SetChiralityPerceived()   { SetFlag(OB_CHIRALITY_MOL);   }
+    void   SetPartialChargesPerceived(){ SetFlag(OB_PCHARGE_MOL);   }
+    void   SetHybridizationPerceived() { SetFlag(OB_HYBRID_MOL);    }
+    void   SetImplicitValencePerceived(){ SetFlag(OB_IMPVAL_MOL);   }
+    void   SetKekulePerceived()      { SetFlag(OB_KEKULE_MOL);      }
+    void   SetClosureBondsPerceived(){ SetFlag(OB_CLOSURE_MOL);     }
+    void   SetHydrogensAdded()       { SetFlag(OB_H_ADDED_MOL);     }
+    void   SetCorrectedForPH()       { SetFlag(OB_PH_CORRECTED_MOL);}
+    void   SetAromaticCorrected()    { SetFlag(OB_AROM_CORRECTED_MOL);}
+    void   SetSpinMultiplicityAssigned(){ SetFlag(OB_TSPIN_MOL);    }
+    void   SetFlags(int flags)       { _flags = flags;              }
+
+    void   UnsetAromaticPerceived()  { _flags &= (~(OB_AROMATIC_MOL));   }
+    void   UnsetPartialChargesPerceived(){ _flags &= (~(OB_PCHARGE_MOL));}
+    void   UnsetImplicitValencePerceived(){_flags &= (~(OB_IMPVAL_MOL)); }
+    void   UnsetFlag(int flag)       { _flags &= (~(flag));              }
 
     //! \name Molecule modification methods
     //@{
-    virtual OBBase*    DoTransformations(const char* Options); //NF Definition in transform.cpp
+    // Description in transform.cpp
+    virtual OBBase*    DoTransformations(const char* Options);
     static const char* ClassDescription();
     //! Clear all information from a molecule
     bool Clear();
     void RenumberAtoms(std::vector<OBNodeBase*>&);
-    void ToInertialFrame(int,double*);
+    //! Translate one conformer and rotate by a rotation matrix (which is returned) to the inertial frame-of-reference
+    void ToInertialFrame(int conf, double *rmat);
+    //! Translate all conformers to the inertial frame-of-reference
     void ToInertialFrame();
-    //! Translates all conformers in the molecule
+    //! Translates all conformers in the molecule by the supplied vector
     void Translate(const vector3 &v);
-    //! Translates one conformer in the molecule
+    //! Translates one conformer in the molecule by the supplied vector
     void Translate(const vector3 &v, int conf);
     void Rotate(const double u[3][3]);
     void Rotate(const double m[9]);
     void Rotate(const double m[9],int nconf);
-    // Translate to the center of all coordinates (for this conformer)
+    //! Translate to the center of all coordinates (for this conformer)
     void Center();
     //! Transform to standard Kekule bond structure (presumably from an aromatic form)
     bool Kekulize();
     bool PerceiveKekuleBonds();
 
     void NewPerceiveKekuleBonds();
-    void start_kekulize(std::vector <OBAtom*> &cycle, std::vector<int> &electron);
-    int expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &currentState, std::vector<int> &initState, std::vector<int> &bcurrentState, std::vector<int> &binitState, std::vector<bool> &mark);
-    int getorden( OBAtom *atom);
-    void expandcycle(OBAtom *atom, OBBitVec &avisit);
 
     bool DeleteHydrogen(OBAtom*);
     bool DeleteHydrogens();
@@ -1093,7 +988,6 @@ public:
     //! Attempts to perceive multiple bonds based on geometries
     void PerceiveBondOrders();
     void FindTorsions();
-    //  void ConnectTheDotsSort();
     // documented in mol.cpp: graph-theoretical distance for each atom
     bool         GetGTDVector(std::vector<int> &);
     // documented in mol.cpp: graph-invariant index for each atom
@@ -1108,73 +1002,45 @@ public:
     bool Has2D();
     //! Are there non-zero coordinates in all three dimensions (i.e. X, Y, Z)?
     bool Has3D();
+    //! Are there any non-zero coordinates?
     bool HasNonZeroCoords();
-    bool HasAromaticPerceived()
-    {
-        return(HasFlag(OB_AROMATIC_MOL));
-    }
-    bool HasSSSRPerceived()
-    {
-        return(HasFlag(OB_SSSR_MOL));
-    }
-    bool HasRingAtomsAndBondsPerceived()
-    {
-        return(HasFlag(OB_RINGFLAGS_MOL));
-    }
-    bool HasAtomTypesPerceived()
-    {
-        return(HasFlag(OB_ATOMTYPES_MOL));
-    }
-    bool HasChiralityPerceived()
-    {
-        return(HasFlag(OB_CHIRALITY_MOL));
-    }
-    bool HasPartialChargesPerceived()
-    {
-        return(HasFlag(OB_PCHARGE_MOL));
-    }
-    bool HasHybridizationPerceived()
-    {
-        return(HasFlag(OB_HYBRID_MOL));
-    }
-    bool HasImplicitValencePerceived()
-    {
-        return(HasFlag(OB_IMPVAL_MOL));
-    }
-    bool HasKekulePerceived()
-    {
-        return(HasFlag(OB_KEKULE_MOL));
-    }
-    bool HasClosureBondsPerceived()
-    {
-        return(HasFlag(OB_CLOSURE_MOL));
-    }
-    bool HasChainsPerceived()
-    {
-        return(HasFlag(OB_CHAINS_MOL));
-    }
-    bool HasHydrogensAdded()
-    {
-        return(HasFlag(OB_H_ADDED_MOL));
-    }
-    bool HasAromaticCorrected()
-    {
-        return(HasFlag(OB_AROM_CORRECTED_MOL));
-    }
-    bool IsCorrectedForPH()
-    {
-        return(HasFlag(OB_PH_CORRECTED_MOL));
-    }
-    bool HasSpinMultiplicityAssigned()
-    {
-        return(HasFlag(OB_TSPIN_MOL));
-    }
+    bool HasAromaticPerceived()     { return(HasFlag(OB_AROMATIC_MOL)); }
+    bool HasSSSRPerceived()         { return(HasFlag(OB_SSSR_MOL));     }
+    bool HasRingAtomsAndBondsPerceived(){return(HasFlag(OB_RINGFLAGS_MOL));}
+    bool HasAtomTypesPerceived()    { return(HasFlag(OB_ATOMTYPES_MOL));}
+    bool HasChiralityPerceived()    { return(HasFlag(OB_CHIRALITY_MOL));}
+    bool HasPartialChargesPerceived() { return(HasFlag(OB_PCHARGE_MOL));}
+    bool HasHybridizationPerceived() { return(HasFlag(OB_HYBRID_MOL));  }
+    bool HasImplicitValencePerceived() { return(HasFlag(OB_IMPVAL_MOL));}
+    bool HasKekulePerceived() { return(HasFlag(OB_KEKULE_MOL));         }
+    bool HasClosureBondsPerceived() { return(HasFlag(OB_CLOSURE_MOL));  }
+    bool HasChainsPerceived() { return(HasFlag(OB_CHAINS_MOL));         }
+    bool HasHydrogensAdded() { return(HasFlag(OB_H_ADDED_MOL));         }
+    bool HasAromaticCorrected() { return(HasFlag(OB_AROM_CORRECTED_MOL));}
+    bool IsCorrectedForPH() { return(HasFlag(OB_PH_CORRECTED_MOL));     }
+    bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_TSPIN_MOL)); }
+    //! Is this molecule chiral?
     bool IsChiral();
     //! Are there any atoms in this molecule?
-    bool Empty()
-    {
-        return(_natoms == 0);
-    }
+    bool Empty()                       { return(_natoms == 0);          }
+    //@}
+
+    //! \name Multiple conformer member functions
+    //@{
+    int     NumConformers()    { return((_vconf.empty())?0:_vconf.size()); }
+    void    SetConformers(std::vector<double*> &v);
+    void    AddConformer(double *f)    {  _vconf.push_back(f);    }
+    void    SetConformer(int i)        {  _c = _vconf[i];         }
+    void    CopyConformer(double*,int);
+    void    DeleteConformer(int);
+    double  *GetConformer(int i)       {  return(_vconf[i]);      }
+    double  *BeginConformer(std::vector<double*>::iterator&i)
+      { i = _vconf.begin();
+        return((i == _vconf.end()) ? NULL:*i); }
+    double  *NextConformer(std::vector<double*>::iterator&i)
+      { i++;
+        return((i == _vconf.end()) ? NULL:*i); }
+    std::vector<double*> &GetConformers() {   return(_vconf);     }
     //@}
 
     //! \name Iterator methods
@@ -1205,45 +1071,11 @@ public:
     }
     //@}
 
-    //! \name Multiple conformer member functions
+    //  Removed with OBConversion framework
+    //! \name Convenience functions for I/O
     //@{
-    int     NumConformers()
-    {
-        return((_vconf.empty())?0:_vconf.size());
-    }
-    void    SetConformers(std::vector<double*> &v);
-    void    AddConformer(double *f)
-    {
-        _vconf.push_back(f);
-    }
-    void    SetConformer(int i)
-    {
-        _c = _vconf[i];
-    }
-    void    CopyConformer(double*,int);
-    void    DeleteConformer(int);
-    double  *GetConformer(int i)
-    {
-        return(_vconf[i]);
-    }
-    //    double  *BeginConformer(std::vector<double*>::iterator&);
-    //    double  *NextConformer(std::vector<double*>::iterator&);
-    std::vector<double*> &GetConformers()
-    {
-        return(_vconf);
-    }
-    //@}
-
-    //! \name Misc bond functions
-    //@{
-    //    void AssignResidueBonds(OBBitVec &);
-    //void SortBonds() {sort(_vbond.begin(),_vbond.end(),CompareBonds);}
-    //@}
-
-    //! \name Convenience functions for I/O Removed NF
-    //@{
-    friend std::ostream&       operator<< ( std::ostream&, OBMol& ) ;
-    friend std::istream&       operator>> ( std::istream&, OBMol& ) ;
+    // friend std::ostream&       operator<< ( std::ostream&, OBMol& ) ;
+    // friend std::istream&       operator>> ( std::istream&, OBMol& ) ;
     //@}
 };
 
@@ -1282,6 +1114,8 @@ OBAPI std::string NewExtension(std::string&,char*);
 EXTERN  OBElementTable   etab;
 EXTERN  OBTypeTable      ttab;
 EXTERN  OBIsotopeTable   isotab;
+EXTERN  OBAromaticTyper  aromtyper;
+EXTERN  OBAtomTyper      atomtyper;
 EXTERN  OBChainsParser   chainsparser;
 EXTERN  OBMessageHandler obErrorLog;
 
@@ -1322,12 +1156,10 @@ OBAPI void qtrfit (double *r,double *f,int size,double u[3][3]);
 OBAPI double superimpose(double*,double*,int);
 #endif // __KCC
 
-
-#define obAssert(__b__) \
-    if (!(__b__)) {   \
-        cerr << "Assert at File " << __FILE__ << " Line " << __LINE__ << endl; \
-    }
-
 } // end namespace OpenBabel
 
 #endif // OB_MOL_H
+
+//! \file
+//! \brief Handle molecules. Declarations of OBMol, OBAtom, OBBond, OBResidue.
+//!        (the main header for Open Babel)

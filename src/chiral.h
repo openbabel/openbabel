@@ -1,5 +1,5 @@
 /**********************************************************************
-chiral.h - Deal with chiral atoms.
+chiral.h - Detect chiral atoms and molecules.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -35,3 +35,6 @@ OBAPI void GetChirality(OBMol &mol, std::vector<int> &chirality);
 }
 
 #endif // OB_CHIRAL_H
+
+//! \file chiral.h
+//! \brief Detect chiral atoms and molecules.

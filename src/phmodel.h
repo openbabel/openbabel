@@ -64,3 +64,6 @@ public:
 } //namespace OpenBabel
 
 #endif // OB_PHMODEL_H
+
+//! \file phmodel.h
+//! \brief Read pH rules and assign charges.

@@ -1,7 +1,8 @@
 /**********************************************************************
-fingerprint.h - Handle fingerprints
+fingerprint.h - Handle molecular fingerprints.
  
-Copyright (C) 2004 by Fabien Fontaine.
+Copyright (C) 2004-2005 by Fabien Fontaine.
+Some portions Copyright (C) 2005 by Chris Morley.
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -16,8 +17,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef FINGERPRINT_H
-#define FINGERPRINT_H
+#ifndef OB_FINGERPRINT_H
+#define OB_FINGERPRINT_H
 
 #include "mol.h"
 #include <list>
@@ -187,4 +188,7 @@ double OBAPI Tanimoto(const std::vector<unsigned int> vec1, const std::vector<un
 
 } // end namespace OpenBabel
 
-#endif
+#endif //OB_FINGERPRINT_H
+
+//! \file fingerprint.h
+//! \brief Handle molecular fingerprints.

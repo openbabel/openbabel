@@ -1,5 +1,5 @@
 /**********************************************************************
-generic.h - Handle generic data class.
+generic.h - Handle generic data classes. Custom data for atoms, bonds, etc.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
@@ -23,10 +23,6 @@ GNU General Public License for more details.
 #include <string>
 #include <vector>
 
-//obData0 through obData15 are data slots that are not used in OpenBabel, and
-//are meant for use in derivative programs.  Macro definitions can be used
-//to define what each data slot is used for.
-
 namespace OpenBabel
 {
 
@@ -34,6 +30,13 @@ class OBAtom;
 class OBBond;
 class OBRing;
 
+//! \brief Classification of data stored via OBGenericData class and subclasses.
+//!
+//! obDataType can be used as a faster, direct access to a particular category
+//! instead of the slower access via GetData(std::string). 
+//! obData0 through obData15 are data slots that are not used in OpenBabel, and
+//! are meant for use in derivative programs.  Macro definitions can be used
+//! to define what each data slot is used for.
 enum obDataType {obUndefinedData, obPairData, obEnergyData,
                  obCommentData, obConformerData, obExternalBondData,
 		 obRotamerList, obVirtualBondData, obRingData, 
@@ -43,8 +46,10 @@ enum obDataType {obUndefinedData, obPairData, obEnergyData,
 		 obData6, obData7, obData8, obData9, obData10, obData11,
                  obData12, obData13, obData14, obData15};
 
-//! Base class for generic data - use obData# slots for custom data types
-//! or store your data as a string and use obPairData or obCommentData
+//! \brief Base class for generic data
+//! 
+//! Use obData# slots as an obDataType for custom data types
+//! or store your data as a string and use OBPairData for key/value access.
 class OBAPI OBGenericData
 {
 protected:
@@ -240,7 +245,8 @@ public:
 };
 
 //! \brief Used to hold the point-group and/or space-group symmetry
-//! \todo Add support for translation between symbol notation and symmetry perception
+//! \todo Add support for translation between symbol notations.
+//!        Add symmetry perception routines.
 class OBAPI OBSymmetryData: public OBGenericData
 {
 protected:
@@ -433,37 +439,37 @@ public:
 
 //****************doxygen for inline functions***********
 /*!
-**\fn OBTorsionData::GetSize()
+**\fn OBTorsionData::GetSize() const
 **\brief Gets the number of torsion structs
 **\return integer count of the number of torsions
 */
 
 /*!
-**\fn OBTorsionData::GetData()
+**\fn OBTorsionData::GetData() const
 **\brief Gets a vector of the OBTorsions
 **\return the vector of torsions
 */
 
 /*!
-**\fn OBAngleData::GetSize()
+**\fn OBAngleData::GetSize() const
 **\brief Gets the number of angles 
 **\return integer count of the number of angles
 */
 
 /*!
-**\fn OBAngleData::GetData()
+**\fn OBAngleData::GetData() const
 **\brief Gets the angle vector data
-**\return pointer to vector of OBAngles
+**\return pointer to vector<OBAngle>
 */
 
 /*!
-**\fn OBAngle::SetAngle()
+**\fn OBAngle::SetAngle(double angle)
 **\brief Sets the OBAngle angle value
 **\param angle in radians
 */
 
 /*!
-**\fn OBAngle::GetAngle()
+**\fn OBAngle::GetAngle() const
 **\brief Gets the OBAngle angle value
 **\return angle in radians
 */
@@ -489,3 +495,6 @@ public:
 } //end namespace OpenBabel
 
 #endif // OB_GENERIC_H
+
+//! \file generic.h
+//! \brief Handle generic data classes. Custom data for atoms, bonds, etc.
