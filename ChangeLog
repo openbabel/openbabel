@@ -1,3 +1,12 @@
+2005-06-23  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	*src/math/vector3.h, src/math/vector3.cpp: Moved the initiallization
+	of global variables VZero etc from vector3.h to vector3.cpp.
+	This is recorded for 2005-04-15 but I must have forgotten to 
+	commit it. Added OBAPIs for DLL build compatibility.
+	
+	*src/math/matrix3x3.h: Added OBAPIs.    
+
 2005-06-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/kekulize.cpp: Update with Fabien's latest version, fixing
