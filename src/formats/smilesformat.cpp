@@ -1921,8 +1921,8 @@ void OBMol2Smi::AssignCisTrans(OBSmiNode *node)
                 for (d = c->BeginNbrAtom(k);d;d = c->NextNbrAtom(k))
                     if (d != b && !d->IsHydrogen())
                         break;
-                obAssert(a);
-                obAssert(d);
+		//                obAssert(a);
+		//                obAssert(d);
 
                 if (((OBBond*)*j)->IsUp() || ((OBBond*)*j)->IsDown()) //stereo already assigned
                 {
@@ -2239,7 +2239,7 @@ bool OBMol2Smi::GetChiralStereo(OBSmiNode *node,char *stereo)
 
     c = d = NULL;
     a = node->GetParent();
-    obAssert(a); //chiral atom can't be used as root node - must have parent
+    //    obAssert(a); //chiral atom can't be used as root node - must have parent
 
     if (b->GetHvyValence() == 3) //must have attached hydrogen
     {
@@ -2249,7 +2249,7 @@ bool OBMol2Smi::GetChiralStereo(OBSmiNode *node,char *stereo)
             for (c = b->BeginNbrAtom(i);c;c = b->NextNbrAtom(i))
                 if (c->IsHydrogen())
                     break;
-            obAssert(c);
+	    //            obAssert(c);
         }
         else  //implicit hydrogen
         {
