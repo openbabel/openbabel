@@ -55,7 +55,7 @@ namespace OpenBabel
 {
 
 // class introduction in matrix3x3.cpp
-class matrix3x3
+class OBAPI matrix3x3
 {
     //! Elements of the matrix
     /*! This array holds the matrix. The first index refers to the
@@ -239,18 +239,18 @@ public:
     matrix3x3 findEigenvectorsIfSymmetric(vector3 &eigenvals) const throw(OBError);
 
     //! matrix-vector multiplication
-    friend vector3 operator *(const matrix3x3 &,const vector3 &);
+    friend OBAPI vector3 operator *(const matrix3x3 &,const vector3 &);
 
     //! matrix-matrix multiplication
-    friend matrix3x3 operator *(const matrix3x3 &,const matrix3x3 &);
+    friend OBAPI matrix3x3 operator *(const matrix3x3 &,const matrix3x3 &);
 
-    friend std::ostream& operator<< ( std::ostream&, const matrix3x3 & ) ;
+    friend OBAPI std::ostream& operator<< ( std::ostream&, const matrix3x3 & ) ;
 
     //! eigenvalue calculation
     static void jacobi(unsigned int n, double *a, double *d, double *v);
 };
 
-vector3 center_coords(double*,int);
+OBAPI vector3 center_coords(double*,int);
 }
 
 #endif // OB_MATRIX3x3_H

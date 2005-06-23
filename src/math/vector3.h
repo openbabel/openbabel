@@ -53,7 +53,7 @@ namespace OpenBabel
 class matrix3x3;
 
 // class introduction in vector3.cpp
-class	vector3
+class	OBAPI vector3
 {
 private :
     double		_vx, _vy, _vz ;
@@ -123,40 +123,40 @@ public :
     };
 
     //! prints a representation of the vector as a row vector of the form "<0.1,1,2>"
-    friend std::ostream& operator<< ( std::ostream&, const vector3& ) ;
+    friend OBAPI std::ostream& operator<< ( std::ostream&, const vector3& ) ;
 
     //  Comparison
-    friend int operator== ( const vector3&, const vector3& ) ;
-    friend int operator!= ( const vector3&, const vector3& ) ;
+    friend OBAPI int operator== ( const vector3&, const vector3& ) ;
+    friend OBAPI int operator!= ( const vector3&, const vector3& ) ;
 
     //  Sum, Difference, Scalar Product
     //! vector addition
-    friend vector3 operator+ ( const vector3& v1, const vector3& v2)
+    friend OBAPI vector3 operator+ ( const vector3& v1, const vector3& v2)
     {
         return vector3(v1._vx+v2._vx, v1._vy+v2._vy, v1._vz+v2._vz);
     };
     //! vector subtraction
-    friend vector3 operator- ( const vector3& v1, const vector3& v2)
+    friend OBAPI vector3 operator- ( const vector3& v1, const vector3& v2)
     {
         return vector3(v1._vx-v2._vx, v1._vy-v2._vy, v1._vz-v2._vz);
     };
     //! unary minus
-    friend vector3 operator- ( const vector3& v)
+    friend OBAPI vector3 operator- ( const vector3& v)
     {
         return vector3(-v._vx, -v._vy, -v._vz);
     };
     //! multiplication with a scalar
-    friend vector3 operator* ( const double& c, const vector3& v)
+    friend OBAPI vector3 operator* ( const double& c, const vector3& v)
     {
         return vector3( c*v._vx, c*v._vy, c*v._vz);
     };
     //! multiplication with a scalar
-    friend vector3 operator* ( const vector3& v, const double& c)
+    friend OBAPI vector3 operator* ( const vector3& v, const double& c)
     {
         return vector3( c*v._vx, c*v._vy, c*v._vz);
     };
     //! division by a scalar
-    friend vector3 operator/ ( const vector3& v, const double& c)
+    friend OBAPI vector3 operator/ ( const vector3& v, const double& c)
     {
         return vector3( v._vx/c, v._vy/c, v._vz/c);
     };
@@ -168,7 +168,7 @@ public :
     //     friend vector3 operator *(const vector3 &v,const matrix3x3 &m);
 
     //! multiplication of matrix and vector
-    friend vector3 operator *(const matrix3x3 &m,const vector3 &v);
+    friend OBAPI vector3 operator *(const matrix3x3 &m,const vector3 &v);
 
     //  Immediate Sum, Difference, Scalar Product
     vector3& operator+= ( const vector3& v)
@@ -222,16 +222,16 @@ public :
     //  Member Functions
 
     //! dot product of two vectors
-    friend double dot ( const vector3&, const vector3& ) ;
+    friend OBAPI double dot ( const vector3&, const vector3& ) ;
 
     //! cross product of two vectors
-    friend vector3 cross ( const vector3&, const vector3& ) ;
+    friend OBAPI vector3 cross ( const vector3&, const vector3& ) ;
 
     //! calculate angle between vectors
-    friend double vectorAngle ( const vector3& v1, const vector3& v2 );
+    friend OBAPI double vectorAngle ( const vector3& v1, const vector3& v2 );
 
     //! calculate the torsion angle between vectors
-    friend double CalcTorsionAngle(const vector3 &a, const vector3 &b,
+    friend OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
                                    const vector3 &c, const vector3 &d);
 
     //! scales a vector to give it length one.
@@ -279,16 +279,15 @@ public :
 } ;
 
 //! \brief Calculate the distance of point a to the plane determined by b,c,d
-double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d);
+OBAPI double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d);
 
 //  The global constant vector3s
-const vector3 VZero ( 0.0, 0.0, 0.0 ) ;
-const vector3 VX    ( 1.0, 0.0, 0.0 ) ;
-const vector3 VY    ( 0.0, 1.0, 0.0 ) ;
-const vector3 VZ    ( 0.0, 0.0, 1.0 ) ;
+extern OBAPI const vector3 VZero;
+extern OBAPI const vector3 VX;
+extern OBAPI const vector3 VY;
+extern OBAPI const vector3 VZ;
 
-
-vector3 center_coords(double*,int);
+OBAPI vector3 center_coords(double*,int);
 }
 
 #endif // OB_VECTOR_H

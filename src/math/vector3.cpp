@@ -118,13 +118,13 @@ void vector3::randomUnitVector(OBRandom *obRandP)
         delete ptr;
 }
 
-ostream& operator<< ( ostream& co, const vector3& v )
+OBAPI ostream& operator<< ( ostream& co, const vector3& v )
 {
     co << "< " << v._vx << ", " << v._vy << ", " << v._vz << " >" ;
     return co ;
 }
 
-int operator== ( const vector3& v1, const vector3& v2 )
+OBAPI int operator== ( const vector3& v1, const vector3& v2 )
 {
     if ( ( v1._vx == v2._vx ) &&
             ( v1._vy == v2._vy ) &&
@@ -134,7 +134,7 @@ int operator== ( const vector3& v1, const vector3& v2 )
         return ( false ) ;
 }
 
-int operator!= ( const vector3& v1, const vector3& v2 )
+OBAPI int operator!= ( const vector3& v1, const vector3& v2 )
 {
     if ( ( v1._vx != v2._vx ) ||
             ( v1._vy != v2._vy ) ||
@@ -176,12 +176,12 @@ vector3& vector3 :: normalize ()
     return(*this);
 }
 
-double dot ( const vector3& v1, const vector3& v2 )
+OBAPI double dot ( const vector3& v1, const vector3& v2 )
 {
     return v1._vx*v2._vx + v1._vy*v2._vy + v1._vz*v2._vz ;
 }
 
-vector3 cross ( const vector3& v1, const vector3& v2 )
+OBAPI vector3 cross ( const vector3& v1, const vector3& v2 )
 {
     vector3 vv ;
 
@@ -212,7 +212,7 @@ vector3 cross ( const vector3& v1, const vector3& v2 )
 
   @returns the angle in degrees (0-360)
 */
-double vectorAngle ( const vector3& v1, const vector3& v2 )
+OBAPI double vectorAngle ( const vector3& v1, const vector3& v2 )
 {
     double mag;
     double dp;
@@ -232,7 +232,7 @@ double vectorAngle ( const vector3& v1, const vector3& v2 )
     return((RAD_TO_DEG * acos(dp)));
 }
 
-double CalcTorsionAngle(const vector3 &a, const vector3 &b,
+OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
                         const vector3 &c, const vector3 &d)
 {
     double torsion;
@@ -303,6 +303,11 @@ void vector3::createOrthoVector(vector3 &res) const
     res= cross(cO,*this);
     res.normalize();
 }
+
+const vector3 VZero ( 0.0, 0.0, 0.0 ) ;
+const vector3 VX    ( 1.0, 0.0, 0.0 ) ;
+const vector3 VY    ( 0.0, 1.0, 0.0 ) ;
+const vector3 VZ    ( 0.0, 0.0, 1.0 ) ;
 
 /* Calculate the distance of point a to the plane determined by b,c,d */
 double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d)
