@@ -16,18 +16,18 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include <set>
-#include <vector>
-
 #include "mol.h"
 #include "bitvec.h"
 #include "fingerprint.h"
+#include <set>
+#include <vector>
 
+/*
 #ifdef _DEBUG
  #include "stdafx.h"
  #undef AddAtom
 #endif
-
+*/
 using namespace std;
 namespace OpenBabel
 {
@@ -66,8 +66,8 @@ void fingerprint2::GetFingerprint(OBMol& mol,OBBitVec& fp)
 //	TRACE("%s %d frags before; ",mol.GetTitle(),fragset.size());
 
 	//Ensure that each chemically identical fragment is present only in a single
-	DoReverses();
 	DoRings();
+	DoReverses();
 
 	SetItr itr;
 	for(itr=fragset.begin();itr!=fragset.end();++itr)
@@ -86,7 +86,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 {
 	//Recursive routine to analyse schemical structure and populate fragset and ringset
 	//Hydrogens,charges(except dative bonds), spinMultiplicity ignored
-	const int Max_Fragment_Size = 8;
+	const int Max_Fragment_Size = 7;
 	int bo=0;
 	if(pbond)
 	{
@@ -118,7 +118,6 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 				//and save in ringset
 				curfrag[0] = bo;
 				ringset.insert(curfrag);
-//				return;
 			}
 		}
 		else //no ring
@@ -181,6 +180,12 @@ void fingerprint2::DoRings()
 			rotate(t1.begin(),t1.begin()+2,t1.end());
 			if(t1>maxring)
 				maxring=t1;
+			
+			//Add the non-ring form of all ring rotations 
+			int tmp = t1[0];
+			t1[0] = 0;
+			fragset.insert(t1);
+			t1[0] = tmp;
 			
 			//reverse the direction around ring
 			vector<int> t2(t1);
