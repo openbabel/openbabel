@@ -1,3 +1,7 @@
+2005-06-24  Chris Morley  <c.morley@gaseq.co.uk>
+	* src/finger2.cpp (DoRings) Add the non-ring form of all ring
+	rotations to remedy some of faults found by David Hoekman.
+
 2005-06-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Doxyfile, doc/api-header.html, doc/api-footer.html,
