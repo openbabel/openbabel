@@ -1,3 +1,14 @@
+2005-06-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Doxyfile, doc/api-header.html, doc/api-footer.html,
+	doc/api-style.css: Add custom documentation header, footer, and
+	stylesheet.
+
+	* src/generic.h, src/generic.cpp (OBConformerData): Initial
+	framework for custom per-conformer data. Still need to add access
+	to individual conformer "frames" and code to add/delete frames
+	when adding new conformers to an OBMol.
+
 2005-06-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/configure.in, src/configure: Generate babelconfig.h from

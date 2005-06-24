@@ -244,6 +244,50 @@ public:
     matrix3x3 GetOrthoMatrix();
 };
 
+//! \brief Used to hold data on conformers or geometry optimization steps
+class OBAPI OBConformerData: public OBGenericData
+{
+protected:
+  //! Dimensionalities of conformers
+  std::vector<unsigned short>              _vDimension;
+  //! Relative energies of conformers (preferably in kJ/mol)
+  std::vector<double>                      _vEnergies;
+  //! Atomic forces for each conformer
+  std::vector< std::vector< vector3 > >    _vForces;
+  //! Atomic velocities for each conformer (e.g., trajectories)
+  std::vector< std::vector< vector3 > >    _vVelocity;
+  //! Atomic displacements for each conformer (e.g., RMS distances)
+  std::vector< std::vector< vector3 > >    _vDisplace;
+  //! Additional data (as strings)
+  std::vector<std::string>                 _vData;
+    
+public:
+    OBConformerData();
+    OBConformerData(const OBConformerData &);
+    ~OBConformerData()    {}
+
+    OBConformerData &operator=(const OBConformerData &);
+
+    void SetDimension(std::vector<unsigned short> vd) { _vDimension = vd; }
+    void SetEnergies(std::vector<double> ve) { _vEnergies = ve; }
+    void SetForces(std::vector< std::vector< vector3 > > vf) {_vForces = vf;}
+    void SetVelocities(std::vector< std::vector< vector3 > > vv)
+      { _vVelocity = vv; }
+    void SetDisplacements(std::vector< std::vector< vector3 > > vd)
+      { _vDisplace = vd; }
+    void SetData(std::vector<std::string> vdat) { _vData = vdat; }
+
+    std::vector<unsigned short> GetDimension() { return _vDimension; }
+    std::vector<double>         GetEnergies()  { return _vEnergies; }
+    std::vector< std::vector< vector3 > > GetForces() {return _vForces; }
+    std::vector< std::vector< vector3 > > GetVelocities()
+      {return _vVelocity;}
+    std::vector< std::vector< vector3 > > GetDisplacements()
+      {return _vDisplace;}
+    std::vector<std::string>    GetData() { return _vData; }
+
+};
+
 //! \brief Used to hold the point-group and/or space-group symmetry
 //! \todo Add support for translation between symbol notations.
 //!        Add symmetry perception routines.

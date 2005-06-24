@@ -329,6 +329,37 @@ OBSymmetryData & OBSymmetryData::operator=(const OBSymmetryData &src)
     return(*this);
 }
 
+OBConformerData::OBConformerData()
+{
+    _type = obConformerData;
+    _attr = "Conformers";
+}
+
+OBConformerData::OBConformerData(const OBConformerData &src)
+{
+  _vDimension = src._vDimension;
+  _vEnergies = src._vEnergies;
+  _vForces = src._vForces;
+  _vVelocity = src._vVelocity;
+  _vDisplace = src._vDisplace;
+  _vData = src._vData;
+}
+
+OBConformerData & OBConformerData::operator=(const OBConformerData &src)
+{
+    if(this == &src)
+        return(*this);
+
+  _vDimension = src._vDimension;
+  _vEnergies = src._vEnergies;
+  _vForces = src._vForces;
+  _vVelocity = src._vVelocity;
+  _vDisplace = src._vDisplace;
+  _vData = src._vData;
+
+  return(*this);
+}
+
 //
 //member functions for OBRingData class
 //
