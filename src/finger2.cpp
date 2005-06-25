@@ -92,9 +92,9 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 	{
 		bo = pbond->IsAromatic() ? 5 : pbond->GetBO();
 
-		OBAtom* pprevat = pbond->GetNbrAtom(patom);
-		if(patom->GetFormalCharge() && (patom->GetFormalCharge() == -pprevat->GetFormalCharge()))
-			++bo; //coordinate (dative) bond eg C[N+]([O-])=O is seen as CN(=O)=O
+//		OBAtom* pprevat = pbond->GetNbrAtom(patom);
+//		if(patom->GetFormalCharge() && (patom->GetFormalCharge() == -pprevat->GetFormalCharge()))
+//			++bo; //coordinate (dative) bond eg C[N+]([O-])=O is seen as CN(=O)=O
 	}
 	curfrag.push_back(bo);
 	curfrag.push_back(patom->GetAtomicNum());
