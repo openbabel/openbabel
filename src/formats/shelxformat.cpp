@@ -31,16 +31,17 @@ public:
         OBConversion::RegisterFormat("ins",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "ShelX format\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "ShelX format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL(){return
-            "http://shelx.uni-ac.gwdg.de/SHELX/";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://shelx.uni-ac.gwdg.de/SHELX/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -150,8 +151,10 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             ifs.getline(buffer,BUFF_SIZE);
     } //while
 
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
     return(true);
 }
 

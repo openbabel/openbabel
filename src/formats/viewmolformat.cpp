@@ -32,21 +32,21 @@ public:
 
   virtual const char* Description() //required
   {
-        return
-          "ViewMol format\n \
-           No comments yet\n";
-  }
+    return
+      "ViewMol format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
   virtual const char* SpecificationURL() //optional
-  {
-    return "http://viewmol.sourceforge.net/";
-  };
+  { return "http://viewmol.sourceforge.net/"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -137,8 +137,10 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     if (!foundBonds)
     {
-        mol.ConnectTheDots();
-        mol.PerceiveBondOrders();
+      if (!pConv->IsOption('b'))
+	mol.ConnectTheDots();
+      if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+	mol.PerceiveBondOrders();
     }
 
     mol.EndModify();

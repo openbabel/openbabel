@@ -66,13 +66,13 @@ public:
         OBConversion::RegisterFormat("gr96",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "GROMOS96 format\n \
-            Options e.g. -xn\n\
-            -n output nm (not Angstroms)";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "GROMOS96 format\n \
+       Options e.g. -xn\n\
+        n output nm (not Angstroms)";
+  };
 
     virtual const char* SpecificationURL()
     {

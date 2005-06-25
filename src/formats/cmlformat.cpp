@@ -47,9 +47,11 @@ public:
             n  output namespace (default no namespace)\n \
             c  use 'cml' as output namespace prefix (default no namspace)\n \
             d  output DOCTYPE (default none)\n \
-            g  debug output\n \
-            ";
+            s  Output single bonds only\n\
+            b  Disable bonding entirely\n\
+            g  debug output\n";
     };
+
     virtual const char* SpecificationURL(){return
             "http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage";};
 

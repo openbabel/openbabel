@@ -29,16 +29,17 @@ public:
         OBConversion::RegisterFormat("prep",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "Amber Prep format\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "Amber Prep format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.amber.ucsf.edu/amber/formats.html";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://www.amber.ucsf.edu/amber/formats.html";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -119,8 +120,10 @@ bool AmberPrepFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     InternalToCartesian(internals,mol);
     mol.EndModify();
 
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
     mol.SetTitle(title);
     return(true);
 }

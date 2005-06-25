@@ -29,12 +29,14 @@ public:
         OBConversion::RegisterFormat("mopout",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "MOPAC Output format\n \
-            No comments yet";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "MOPAC Output format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
     virtual unsigned int Flags()
     {
@@ -140,8 +142,10 @@ bool MOPACFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         }
     }
     mol.EndModify();
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
 
     if (hasPartialCharges)
     {
@@ -167,12 +171,14 @@ public:
         OBConversion::RegisterFormat("mopcrt",this, "chemical/x-mopac-input");
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "MOPAC Cartesian format\n \
-            No comments yet";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "MOPAC Cartesian format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
@@ -250,8 +256,10 @@ bool MOPACCARTFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
     }
 
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
     mol.SetTitle(title);
 
     return(true);

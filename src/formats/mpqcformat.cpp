@@ -30,16 +30,17 @@ public:
         OBConversion::RegisterFormat("mpqc",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "MPQC output format\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "MPQC output format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.mpqc.org/mpqc-html/mpqcinp.html";}; //optional
+  virtual const char* SpecificationURL()
+  { return "http://www.mpqc.org/mpqc-html/mpqcinp.html";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -185,8 +186,10 @@ bool MPQCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         }
     }
 
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
 
     mol.SetTitle(title);
 

@@ -33,16 +33,17 @@ public:
         OBConversion::RegisterFormat("gamout",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "GAMESS Output\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "GAMESS Output\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";}; //optional
+  virtual const char* SpecificationURL()
+  { return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";}; //optional
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-gamess-output"; };
@@ -223,8 +224,11 @@ bool GAMESSOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         }
     }
     mol.EndModify();
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
 
     if (hasPartialCharges)
         mol.SetPartialChargesPerceived();

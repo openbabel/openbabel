@@ -1,17 +1,43 @@
+2005-06-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/amberformat.cpp, src/formats/cacaoformat.cpp,
+	src/formats/carformat.cpp, src/formats/cmlformat.cpp,
+	src/formats/dmolformat.cpp, src/formats/gamessformat.cpp,
+	src/formats/gaussformat.cpp, src/formats/grosmos96format.cpp,
+	src/formats/jaguarformat.cpp, src/formats/mopacformat.cpp,
+	src/formats/mpqcformat.cpp, src/formats/nwchemformat.cpp,
+	src/formats/pdbformat.cpp, src/formats/qchemformat.cpp,
+	src/formats/shelxformat.cpp, src/formats/turbomoleformat.cpp, 
+	src/formats/unichemformat.cpp, src/formats/viewmolformat.cpp,
+	src/formats/xyzformat.cpp:
+	Add command-line options -xs to prevent PerceiveBondOrders from
+	running (i.e., single bonds only) and -xb to prevent bonding via
+	ConnectTheDots entirely.
+
+	* src/formats/PQSformat.cpp, src/formats/alchemyformat.cpp,
+	src/formats/balstformat.cpp, src/formats/bgfformat.cpp,
+	src/formats/boxformat.cpp, src/formats/chem3dformat.cpp,
+	src/formats/chemdrawformat.cpp, src/formats/crkformat.cpp,
+	src/formats/featformat.cpp, src/formats/ghemicalformat.cpp,
+	src/formats/hinformat.cpp, src/formats/mmodformat.cpp: 
+	Update to use OBMoleculeFormat, eliminate redundant code.
+	
 2005-06-25  Chris Morley  <c.morley@gaseq.co.uk>
-  * src/mol.cpp, src/mol.h, src/transform.cpp: Added
+
+	* src/mol.cpp, src/mol.h, src/transform.cpp: Added
 	OBMol::ConvertDativeBonds() (e.g. [N+]([O-])=O to N(=O)=O )
 	and -b option to invoke it.
 
 	* src/formats/fastsearchformat.cpp, 
 	src/formats/fingerprintformat.cpp:
-	Used ConvertDativeBonds and -b option	so that searches are 
+	Used ConvertDativeBonds and -b option so that searches are 
 	the same with and with dative bond form	in data or target.
 
 	* src/finger2.cpp (getFragments): Removed code which only
 	partially does the above.
 
 2005-06-24  Chris Morley  <c.morley@gaseq.co.uk>
+
 	* src/finger2.cpp (DoRings) Add the non-ring form of all ring
 	rotations to remedy some of faults found by David Hoekman.
 

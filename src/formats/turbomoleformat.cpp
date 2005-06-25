@@ -30,16 +30,17 @@ public:
         OBConversion::RegisterFormat("tmol",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "TurboMole Coordinate format\n \
-            Incomplete - no bonds\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "TurboMole Coordinate format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.turbomole.com/";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://www.turbomole.com/";}; //optional
 
 
     //*** This section identical for most OBMol conversions ***
@@ -47,31 +48,6 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-        OBMol* pmol = new OBMol;
-        bool ret=ReadMolecule(pmol,pConv);
-        if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
-        else
-            pConv->AddChemObject(NULL);
-        return ret;
-    };
-
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
 };
 //***
 
@@ -123,6 +99,12 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         ifs.getline(buff,BUFF_SIZE);
 
     mol.EndModify();
+
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
+
     return true;
 }
 

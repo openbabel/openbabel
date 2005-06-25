@@ -29,16 +29,17 @@ public:
         OBConversion::RegisterFormat("qcout",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "Q-Chem output format\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "Q-Chem output format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.q-chem.com/";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://www.q-chem.com/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -245,8 +246,10 @@ bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         } // end (OPTIMIZATION CONVERGED)
     } // end while
     mol.EndModify();
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
     if (hasPartialCharges)
         mol.SetPartialChargesPerceived();
     mol.SetTotalCharge(charge);

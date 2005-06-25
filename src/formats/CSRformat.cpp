@@ -32,13 +32,12 @@ public:
     virtual const char* Description() //required
     {
         return
-            "MSI Quanta CSR format\n \
-            No comments yet\n \
-            ";
+            "Accelrys/MSI Quanta CSR format\n \
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+  virtual const char* SpecificationURL()
+  {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -66,6 +65,7 @@ public:
         delete pOb;
         return ret;
     };
+
 private:
     //	static bool FirstTime = true; Use new framework functions
     int MolCount; //was = 1;

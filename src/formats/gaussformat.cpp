@@ -30,16 +30,17 @@ public:
         OBConversion::RegisterFormat("g03",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "Gaussian98/03 Output\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "Gaussian98/03 Output\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.gaussian.com/";};
+  virtual const char* SpecificationURL()
+  { return "http://www.gaussian.com/";};
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-gaussian"; };
@@ -255,8 +256,11 @@ bool GaussianOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	  }
       } // end while
     mol.EndModify();
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();
     mol.SetTotalCharge(charge);

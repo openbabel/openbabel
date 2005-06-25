@@ -30,15 +30,17 @@ public:
         OBConversion::RegisterFormat("jout",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return "Jaguar output format\n \n";
+  virtual const char* Description() //required
+  {
+    return 
+      "Jaguar output format\n\
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
     };
 
   virtual const char* SpecificationURL()
-  {
-    return "";
-  }; //optional
+  { return "http://www.schrodinger.com/"; }; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -192,8 +194,10 @@ bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
     mol.EndModify();
 
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
     mol.SetTitle(title);
     return(true);
 }

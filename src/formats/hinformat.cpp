@@ -12,14 +12,16 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include "mol.h"
 #include "obconversion.h"
+#include "obmolecformat.h"
 
 using namespace std;
 namespace OpenBabel
 {
 
-class HINFormat : public OBFormat
+class HINFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -30,10 +32,11 @@ public:
 
     virtual const char* Description() //required
     {
-        return "HyperChem HIN format\nNo comments yet\n";
+        return "HyperChem HIN format\n\
+              No comments yet\n";
     };
 
-    virtual const char* SpecificationURL()
+  virtual const char* SpecificationURL()
   { return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
@@ -48,31 +51,6 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-        OBMol* pmol = new OBMol;
-        bool ret=ReadMolecule(pmol,pConv);
-        if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
-        else
-            pConv->AddChemObject(NULL);
-        return ret;
-    };
-
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
 };
 //***
 

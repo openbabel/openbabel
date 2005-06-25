@@ -30,39 +30,32 @@ namespace OpenBabel
 class XYZFormat : public OBMoleculeFormat
 {
 public:
-    //Register this format type ID
-    XYZFormat()
-    {
-        OBConversion::RegisterFormat("xyz", this, "chemical/x-xyz");
-    }
+  //Register this format type ID
+  XYZFormat()
+  {
+    OBConversion::RegisterFormat("xyz", this, "chemical/x-xyz");
+  }
 
-    virtual const char* Description() //required
-    {
-        return
-            "XYZ cartesian coordinates format\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "XYZ cartesian coordinates format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL()
+  virtual const char* SpecificationURL()
   { return "";}; //optional
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-xyz"; };
 
-    //Flags() can return be any the following combined by | or be omitted if none apply
-    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
-    {
-        return READONEONLY;
-    };
-
-    //*** This section identical for most OBMol conversions ***
-    ////////////////////////////////////////////////////
-    /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
+  //*** This section identical for most OBMol conversions ***
+  ////////////////////////////////////////////////////
+  /// The "API" interface functions
+  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 };
 //***
 
@@ -72,7 +65,6 @@ XYZFormat theXYZFormat;
 /////////////////////////////////////////////////////////////////
 bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
-
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
         return false;
@@ -208,8 +200,10 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
 
     return(true);
 }

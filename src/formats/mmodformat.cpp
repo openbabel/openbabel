@@ -15,12 +15,13 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "obconversion.h"
+#include "obmolecformat.h"
 
 using namespace std;
 namespace OpenBabel
 {
 
-class MacroModFormat : public OBFormat
+class MacroModFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -34,12 +35,11 @@ public:
     {
         return
             "MacroModel format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+  virtual const char* SpecificationURL()
+  {return "";}; //optional
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-macromodel-input"; };
@@ -56,31 +56,6 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-        OBMol* pmol = new OBMol;
-        bool ret=ReadMolecule(pmol,pConv);
-        if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
-        else
-            pConv->AddChemObject(NULL);
-        return ret;
-    };
-
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
 };
 //***
 

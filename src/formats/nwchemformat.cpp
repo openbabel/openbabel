@@ -28,16 +28,17 @@ public:
         OBConversion::RegisterFormat("nwo",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "NWChem output format\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "NWChem output format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -167,10 +168,12 @@ bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             }
         } // if "output coordinates"
     } // while
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
-
     mol.EndModify();
+
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
 
     mol.SetTitle(title);
     return(true);

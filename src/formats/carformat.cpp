@@ -29,21 +29,22 @@ public:
         OBConversion::RegisterFormat("car",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "MSI Biosym/Insight II CAR format\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "Accelrys/MSI Biosym/Insight II CAR format\n \
+       Options e.g. -xs\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n";
+  };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+  virtual const char* SpecificationURL()
+  { return "";}; //optional
 
-    virtual unsigned int Flags()
-    {
-        return NOTWRITABLE;
-    };
+  virtual unsigned int Flags()
+  {
+    return NOTWRITABLE;
+  };
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
@@ -164,8 +165,10 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     if (hasPartialCharges)
         mol.SetPartialChargesPerceived();
 
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption('b'))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      mol.PerceiveBondOrders();
     mol.SetTitle(title);
     return(true);
 }

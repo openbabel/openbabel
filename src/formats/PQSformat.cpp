@@ -36,13 +36,12 @@ public:
         OBConversion::RegisterFormat("pqs",this);
     }
 
-    virtual const char* Description() //required
-    {
-        return
-            "Parallel Quantum Solutions format\n \
-            No comments yet\n \
-            ";
-    };
+  virtual const char* Description() //required
+  {
+    return
+      "Parallel Quantum Solutions format\n \
+       No comments yet";
+  };
 
     virtual const char* SpecificationURL(){return
             "http://www.pqs-chem.com/";};
