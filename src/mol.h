@@ -55,6 +55,7 @@ GNU General Public License for more details.
 #include "generic.h"
 #include "typer.h"
 #include "oberror.h"
+#include "reaction.h" //so it gets notices in DLL builds
 
 namespace OpenBabel
 {
@@ -962,6 +963,9 @@ public:
     bool AddHydrogens(OBAtom*);
     bool AddPolarHydrogens();
     bool StripSalts();
+		//! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O 
+		bool ConvertDativeBonds();
+
     bool CorrectForPH();
     bool AssignSpinMultiplicity();
     vector3 Center(int nconf);

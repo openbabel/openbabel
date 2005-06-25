@@ -56,7 +56,10 @@ OBBase* OBMol::DoTransformations(const char* Opts)
                 return NULL;
             }
             break;
-        case 'd':
+        case 'b' :
+						ret=ConvertDativeBonds();
+						break;
+				case 'd':
             ret=DeleteHydrogens();
             break;
         case 'h':
@@ -101,6 +104,7 @@ const char* OBMol::ClassDescription()
            -d Delete Hydrogens\n \
            -h Add Hydrogens\n \
            -p Add Hydrogens appropriate for pH (use transforms in phmodel.txt)\n \
+					 -b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n \
            -c Center Coordinates\n \
            -j Join all input molecules into a single output molecule\n \
            -s\"smarts\" Convert only molecules matching SMARTS:\n \

@@ -878,7 +878,7 @@ string OBMol::GetFormula()
    30, 40 };
 
   int atomicCount[NumElements];
-  int index;
+//  int index;
 #ifdef HAVE_SSTREAM
   stringstream formula;
 #else
@@ -1273,12 +1273,12 @@ void OBMol::EndModify(bool nukePerceivedData)
     }
     _vconf.push_back(c);
 
-    //kekulize structure
+		//kekulize structure
     SetAromaticPerceived();
     Kekulize();
     //kekulize();
     UnsetAromaticPerceived();
-
+		
     //    for (atom = BeginAtom(j);atom;atom = NextAtom(j))
     //      atom->UnsetAromatic();
 
@@ -1929,7 +1929,7 @@ bool OBMol::AssignSpinMultiplicity()
     SetSpinMultiplicityAssigned();
 		
     OBAtom *atom;
-    int diff, mult;
+    int diff;
     vector<OBNodeBase*>::iterator k;
     //begin CM 18 Sept 2003
     //if there are any explicit Hs on an atom, then they consitute all the Hs
@@ -3146,9 +3146,9 @@ void OBMol::PerceiveBondOrders()
 
     OBAtom *atom, *b, *c;
     vector3 v1, v2;
-    double angle, dist1, dist2;
+    double angle;//, dist1, dist2;
     vector<OBNodeBase*>::iterator i;
-    vector<OBEdgeBase*>::iterator j,k;
+    vector<OBEdgeBase*>::iterator j;//,k;
 
     //  BeginModify();
 
@@ -3623,6 +3623,41 @@ bool OBMol::UnCompress(void)
   return false;
 }
 */
+
+///Converts for instance [N+]([O-])=O to N(=O)=O
+bool OBMol::ConvertDativeBonds()
+{
+	//Look for + and - charges on adjacent atoms
+	OBAtom* patom;
+	vector<OBNodeBase*>::iterator i;
+	for (patom = BeginAtom(i);patom;patom = NextAtom(i))
+	{
+		vector<OBEdgeBase*>::iterator itr;
+		OBBond *pbond;
+		for (pbond = patom->BeginBond(itr);patom->GetFormalCharge() && pbond;pbond = patom->NextBond(itr))
+		{
+			OBAtom* pNbratom = pbond->GetNbrAtom(patom);
+			int chg1 = patom->GetFormalCharge();
+			int chg2 = pNbratom->GetFormalCharge();
+			if((chg1>0 && chg2<0)|| (chg1<0 && chg2>0))
+			{
+				//dative bond. Reduce charges and increase bond order
+				if(chg1>0)
+					--chg1;
+				else 
+					++chg1;
+				patom->SetFormalCharge(chg1);
+				if(chg2>0)
+					--chg2;
+				else 
+					++chg2;
+				pNbratom->SetFormalCharge(chg2);
+				pbond->SetBO(pbond->GetBO()+1);
+			}
+		}		
+	}
+	return true;
+}
 
 OBAtom *OBMol::BeginAtom(vector<OBNodeBase*>::iterator &i)
 {
