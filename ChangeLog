@@ -1,3 +1,16 @@
+2005-06-25  Chris Morley  <c.morley@gaseq.co.uk>
+  * src/mol.cpp, src/mol.h, src/transform.cpp: Added
+	OBMol::ConvertDativeBonds() (e.g. [N+]([O-])=O to N(=O)=O )
+	and -b option to invoke it.
+
+	* src/formats/fastsearchformat.cpp, 
+	src/formats/fingerprintformat.cpp:
+	Used ConvertDativeBonds and -b option	so that searches are 
+	the same with and with dative bond form	in data or target.
+
+	* src/finger2.cpp (getFragments): Removed code which only
+	partially does the above.
+
 2005-06-24  Chris Morley  <c.morley@gaseq.co.uk>
 	* src/finger2.cpp (DoRings) Add the non-ring form of all ring
 	rotations to remedy some of faults found by David Hoekman.
