@@ -76,8 +76,13 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	//Searches index file for structural matches
 	//This function is called only once per search
 
-	//Convert the SMARTS string to an OBMol
 	OBMol patternMol;
+	stringstream smiles(stringstream::out);		
+	ifstream patternstream;
+	OBConversion PatternConv(&patternstream,&smiles);
+	string genopts  = pConv->GetGeneralOptions();
+
+	//Convert the SMARTS string to an OBMol
 	const char* p = pConv->IsOption('s',true);
 	string txt;
 	if(p) 
@@ -91,43 +96,35 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		OBConversion Convsm(&smarts);
 		if(!Convsm.SetInFormat("smi")) return false;
 		Convsm.Read(&patternMol);
+		
+		//erase -s option in GeneralOptions since it will be rewritten
+		string::size_type pos = genopts.find("s\"");
+		genopts[pos] = 'X'; //dummy,anything but s
+		pConv->SetGeneralOptions(genopts.c_str());
 	}
 
-	// or Make OBMol from file in -S option
+	// or Make OBMol from file in -S option	
 	p = pConv->IsOption('S',true);
 	if(p && patternMol.Empty())
 	{
 		txt=p;
 		txt = txt.substr(0,txt.find('"')); //now has filename
-		int pos = txt.find_last_of('.');
+		string::size_type pos = txt.find_last_of('.');
 		if(pos==string::npos)
 		{
 			cerr << "Filename of pattern molecule in -S option must have an extension" << endl;
 			return false;
 		}
-		ifstream patternstream(txt.c_str());
+		patternstream.open(txt.c_str());
 		if(!patternstream)
 		{
 			cerr << "Cannot open " << txt << endl;
 			return false;
 		}
-		stringstream smiles(stringstream::out);		
 
-		OBConversion PatternConv(&patternstream,&smiles);
 		PatternConv.SetOneObjectOnly();
-		if(PatternConv.SetInAndOutFormats(txt.substr(pos+1).c_str(),"smi"))
+		if(PatternConv.SetInFormat(txt.substr(pos+1).c_str()))
 			PatternConv.Read(&patternMol);
-
-		//Convert to SMILES and generate a -s option for use in the final filtering
-		PatternConv.Write(&patternMol);
-		string genopts  = pConv->GetGeneralOptions();
-		//remove name to leave smiles string
-		string smilesstr(smiles.str());
-		pos = smilesstr.find(' ');
-		if(pos!=string::npos)
-			smilesstr = smilesstr.substr(0,pos);
-		genopts += "s\"" + smilesstr + "\"";
-		pConv->SetGeneralOptions(genopts.c_str());
 	}
 
 	if(patternMol.Empty())
@@ -135,10 +132,23 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		cerr << "Cannot derive a molecule from the -s or -S options" << endl;
 		return false;
 	}
+	patternMol.ConvertDativeBonds();//use standard form for dative bonds
+
+	//Convert to SMILES and generate a -s option for use in the final filtering
+	if(!PatternConv.SetOutFormat("smi"))
+		return false;
+	PatternConv.Write(&patternMol);
+	//remove name to leave smiles string
+	string smilesstr(smiles.str());
+	string::size_type pos = smilesstr.find(' ');
+	if(pos!=string::npos)
+		smilesstr = smilesstr.substr(0,pos);
+	genopts += "s\"" + smilesstr + "\"";
+	pConv->SetGeneralOptions(genopts.c_str());
 
 	//Derive index name
 	string indexname = pConv->GetInFilename();
-	int pos=indexname.find_last_of('.');
+	pos=indexname.find_last_of('.');
 	if(pos!=string::npos)
 	{
 		indexname.erase(pos);
@@ -194,7 +204,9 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		//Input format is currently fs; set it appropriately
 		if(!pConv->SetInAndOutFormats(pConv->FormatFromExt(datafilename.c_str()),pConv->GetOutFormat()))
 				return false;
-		
+		genopts = 'b' + genopts;//use standard form for dative bonds
+		pConv->SetGeneralOptions(genopts.c_str());
+
 		//Output the candidate molecules, filtering through s filter
 		vector<unsigned int>::iterator itr;
 		for(itr=SeekPositions.begin();itr!=SeekPositions.end();itr++)
@@ -283,6 +295,8 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 	OBMol* pmol = dynamic_cast<OBMol*> (pOb);
 	if(pmol)
 	{
+		pmol->ConvertDativeBonds();//use standard form for dative bonds
+
 		streampos seekpos = pConv->GetInPos();
 		fsi->Add(*pmol, seekpos );
 	}

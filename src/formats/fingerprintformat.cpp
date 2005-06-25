@@ -61,6 +61,8 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	ostream &ofs = *pConv->GetOutStream();
 	OBMol &mol = *pmol;
 
+	pmol->ConvertDativeBonds();
+
 	bool hexoutput=false;
 	if(pConv->IsOption('h') || (pConv->GetOutputIndex()==1 && pConv->IsLast()))
 		hexoutput=true;
