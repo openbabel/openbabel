@@ -166,10 +166,12 @@ target_alias = @target_alias@
 tabledir = $(pkgdatadir)/$(VERSION)
 table_DATA = \
 		aromatic.txt bondtyp.txt isotope.txt resdata.txt \
-		atomtyp.txt element.txt isotope-small.txt phmodel.txt types.txt
+		atomtyp.txt element.txt isotope-small.txt phmodel.txt \
+		torlib.txt types.txt
 
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
-		isotope.h phmodeldata.h resdata.h types.h
+		isotope.h phmodeldata.h resdata.h \
+		torlib.h types.h
 
 EXTRA_DIST = \
 	bin2hex.pl $(table_DATA) $(BUILT_SOURCES)
@@ -379,6 +381,9 @@ phmodeldata.h:	bin2hex.pl phmodel.txt
 
 resdata.h:	bin2hex.pl resdata.txt
 		(cd $(srcdir); ./bin2hex.pl resdata.txt ResidueData >resdata.h)
+
+torlib.h:	bin2hex.pl torlib.txt
+		(cd $(srcdir); ./bin2hex.pl torlib.txt TorsionDefaults >torlib.h)
 
 types.h:	bin2hex.pl types.txt
 		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)

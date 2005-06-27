@@ -1,3 +1,16 @@
+2005-06-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/torlib.txt, src/torlib.h: New files to implement torsional
+	rules from rotor.cpp::OBRotorRules. Does not (yet) describe all
+	features in OBRotorRules::ParseLine() code.
+
+	* src/rotor.cpp: Use it (rather than declaring the data here).
+
+	* data/Makefile.am, data/Makefile.in: Add rules for torlib.
+
+	* src/phmodel.cpp, src/mol.h, src/oberror.h, src/bondtyper.cpp:
+	Add documentation for global variables.
+
 2005-06-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/amberformat.cpp, src/formats/cacaoformat.cpp,
