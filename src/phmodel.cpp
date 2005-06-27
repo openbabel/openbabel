@@ -30,6 +30,7 @@ using namespace std;
 namespace OpenBabel
 {
 
+  // Global OBPhModel for assigning formal charges and hydrogen addition rules
 OBPhModel phmodel;
 extern OBAtomTyper atomtyper;
 

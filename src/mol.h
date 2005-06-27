@@ -1115,12 +1115,21 @@ OBAPI std::string NewExtension(std::string&,char*);
 // OBAPI bool SetOutputType(OBMol&,std::string&);
 
 //global definitions
+//! Global OBElementTable for element properties
 EXTERN  OBElementTable   etab;
+//! Global OBTypeTable for translating between different atom types
+//! (e.g., Sybyl <-> MM2)
 EXTERN  OBTypeTable      ttab;
+//! Global OBIsotopeTable for isotope properties
 EXTERN  OBIsotopeTable   isotab;
+//! Global OBAromaticTyper for detecting aromatic atoms and bonds
 EXTERN  OBAromaticTyper  aromtyper;
+//! Global OBAtomTyper for marking internal valence, hybridization,
+//!  and atom types (for internal and external use)
 EXTERN  OBAtomTyper      atomtyper;
+//! Global OBChainsParser for detecting macromolecular chains and residues
 EXTERN  OBChainsParser   chainsparser;
+//! Global OBMessageHandler error handler
 EXTERN  OBMessageHandler obErrorLog;
 
 //Utility Macros

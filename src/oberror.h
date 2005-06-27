@@ -98,7 +98,7 @@ class OBAPI OBMessageHandler
     std::vector<std::pair<OBError, obMessageLevel> >  _messageList;
     obMessageLevel         _outputLevel;
     std::ostream           *_outputStream;
-  };
+  }; 
 
 EXTERN OBMessageHandler obErrorLog;
 

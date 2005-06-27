@@ -29,6 +29,7 @@ using namespace std;
 namespace OpenBabel
 {
 
+  //! Global OBBondTyper for perception of bond order assignment.
 OBBondTyper  bondtyper;
 
 /*! \class OBBondTyper
