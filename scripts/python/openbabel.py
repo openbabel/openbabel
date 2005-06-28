@@ -44,141 +44,6 @@ def _swig_setattr_nondynamic_method(set):
     return set_attr
 
 
-class OBFormat(object):
-    def __init__(self): raise RuntimeError, "No constructor defined"
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBFormat instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
-    def ReadMolecule(*args): return _openbabel.OBFormat_ReadMolecule(*args)
-    def ReadChemObject(*args): return _openbabel.OBFormat_ReadChemObject(*args)
-    def WriteMolecule(*args): return _openbabel.OBFormat_WriteMolecule(*args)
-    def WriteChemObject(*args): return _openbabel.OBFormat_WriteChemObject(*args)
-    def Description(*args): return _openbabel.OBFormat_Description(*args)
-    def TargetClassDescription(*args): return _openbabel.OBFormat_TargetClassDescription(*args)
-    def GetType(*args): return _openbabel.OBFormat_GetType(*args)
-    def SpecificationURL(*args): return _openbabel.OBFormat_SpecificationURL(*args)
-    def GetMIMEType(*args): return _openbabel.OBFormat_GetMIMEType(*args)
-    def Flags(*args): return _openbabel.OBFormat_Flags(*args)
-    def SkipObjects(*args): return _openbabel.OBFormat_SkipObjects(*args)
-    def MakeNewInstance(*args): return _openbabel.OBFormat_MakeNewInstance(*args)
-    def __del__(self, destroy=_openbabel.delete_OBFormat):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
-
-class OBFormatPtr(OBFormat):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBFormat
-_openbabel.OBFormat_swigregister(OBFormatPtr)
-
-class CharPtrLess(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::CharPtrLess instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
-    def __call__(*args): return _openbabel.CharPtrLess___call__(*args)
-    def __init__(self, *args):
-        newobj = _openbabel.new_CharPtrLess(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_CharPtrLess):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
-
-class CharPtrLessPtr(CharPtrLess):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = CharPtrLess
-_openbabel.CharPtrLess_swigregister(CharPtrLessPtr)
-
-class OBConversion(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBConversion instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
-    def __init__(self, *args):
-        newobj = _openbabel.new_OBConversion(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBConversion):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
-    RegisterFormat = staticmethod(_openbabel.OBConversion_RegisterFormat)
-    FindFormat = staticmethod(_openbabel.OBConversion_FindFormat)
-    FormatFromExt = staticmethod(_openbabel.OBConversion_FormatFromExt)
-    FormatFromMIME = staticmethod(_openbabel.OBConversion_FormatFromMIME)
-    GetNextFormat = staticmethod(_openbabel.OBConversion_GetNextFormat)
-    Description = staticmethod(_openbabel.OBConversion_Description)
-    def GetInStream(*args): return _openbabel.OBConversion_GetInStream(*args)
-    def GetOutStream(*args): return _openbabel.OBConversion_GetOutStream(*args)
-    def SetInStream(*args): return _openbabel.OBConversion_SetInStream(*args)
-    def SetOutStream(*args): return _openbabel.OBConversion_SetOutStream(*args)
-    def SetInAndOutFormats(*args): return _openbabel.OBConversion_SetInAndOutFormats(*args)
-    def SetInFormat(*args): return _openbabel.OBConversion_SetInFormat(*args)
-    def SetOutFormat(*args): return _openbabel.OBConversion_SetOutFormat(*args)
-    def GetInFormat(*args): return _openbabel.OBConversion_GetInFormat(*args)
-    def GetOutFormat(*args): return _openbabel.OBConversion_GetOutFormat(*args)
-    def GetInFilename(*args): return _openbabel.OBConversion_GetInFilename(*args)
-    def GetInPos(*args): return _openbabel.OBConversion_GetInPos(*args)
-    def GetOptions(*args): return _openbabel.OBConversion_GetOptions(*args)
-    def SetOptions(*args): return _openbabel.OBConversion_SetOptions(*args)
-    def GetGeneralOptions(*args): return _openbabel.OBConversion_GetGeneralOptions(*args)
-    def SetGeneralOptions(*args): return _openbabel.OBConversion_SetGeneralOptions(*args)
-    def GetTitle(*args): return _openbabel.OBConversion_GetTitle(*args)
-    def SaveOptionsToFile(*args): return _openbabel.OBConversion_SaveOptionsToFile(*args)
-    def RestoreOptionsFromFile(*args): return _openbabel.OBConversion_RestoreOptionsFromFile(*args)
-    def Convert(*args): return _openbabel.OBConversion_Convert(*args)
-    def FullConvert(*args): return _openbabel.OBConversion_FullConvert(*args)
-    def AddChemObject(*args): return _openbabel.OBConversion_AddChemObject(*args)
-    def GetChemObject(*args): return _openbabel.OBConversion_GetChemObject(*args)
-    def IsLast(*args): return _openbabel.OBConversion_IsLast(*args)
-    def IsFirstInput(*args): return _openbabel.OBConversion_IsFirstInput(*args)
-    def GetOutputIndex(*args): return _openbabel.OBConversion_GetOutputIndex(*args)
-    def SetOutputIndex(*args): return _openbabel.OBConversion_SetOutputIndex(*args)
-    def SetMoreFilesToCome(*args): return _openbabel.OBConversion_SetMoreFilesToCome(*args)
-    def SetOneObjectOnly(*args): return _openbabel.OBConversion_SetOneObjectOnly(*args)
-    GetDefaultFormat = staticmethod(_openbabel.OBConversion_GetDefaultFormat)
-    def Write(*args): return _openbabel.OBConversion_Write(*args)
-    BatchFileName = staticmethod(_openbabel.OBConversion_BatchFileName)
-    IncrementedFileName = staticmethod(_openbabel.OBConversion_IncrementedFileName)
-
-class OBConversionPtr(OBConversion):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBConversion
-_openbabel.OBConversion_swigregister(OBConversionPtr)
-
-OBConversion_RegisterFormat = _openbabel.OBConversion_RegisterFormat
-
-OBConversion_FindFormat = _openbabel.OBConversion_FindFormat
-
-OBConversion_FormatFromExt = _openbabel.OBConversion_FormatFromExt
-
-OBConversion_FormatFromMIME = _openbabel.OBConversion_FormatFromMIME
-
-OBConversion_GetNextFormat = _openbabel.OBConversion_GetNextFormat
-
-OBConversion_Description = _openbabel.OBConversion_Description
-
-OBConversion_GetDefaultFormat = _openbabel.OBConversion_GetDefaultFormat
-
-OBConversion_BatchFileName = _openbabel.OBConversion_BatchFileName
-
-OBConversion_IncrementedFileName = _openbabel.OBConversion_IncrementedFileName
-
-NOTREADABLE = _openbabel.NOTREADABLE
-READONEONLY = _openbabel.READONEONLY
-READBINARY = _openbabel.READBINARY
-NOTWRITABLE = _openbabel.NOTWRITABLE
-WRITEONEONLY = _openbabel.WRITEONEONLY
-WRITEBINARY = _openbabel.WRITEBINARY
-DEFAULTFORMAT = _openbabel.DEFAULTFORMAT
 class OBResidue(object):
     def __repr__(self):
         return "<%s.%s; proxy of C++ OpenBabel::OBResidue instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
@@ -327,6 +192,7 @@ class OBAtom(object):
     def AddBond(*args): return _openbabel.OBAtom_AddBond(*args)
     def InsertBond(*args): return _openbabel.OBAtom_InsertBond(*args)
     def DeleteBond(*args): return _openbabel.OBAtom_DeleteBond(*args)
+    def ClearBond(*args): return _openbabel.OBAtom_ClearBond(*args)
     def CountFreeOxygens(*args): return _openbabel.OBAtom_CountFreeOxygens(*args)
     def ImplicitHydrogenCount(*args): return _openbabel.OBAtom_ImplicitHydrogenCount(*args)
     def ExplicitHydrogenCount(*args): return _openbabel.OBAtom_ExplicitHydrogenCount(*args)
@@ -369,6 +235,9 @@ class OBAtom(object):
     def IsNegativeStereo(*args): return _openbabel.OBAtom_IsNegativeStereo(*args)
     def HasChiralitySpecified(*args): return _openbabel.OBAtom_HasChiralitySpecified(*args)
     def HasChiralVolume(*args): return _openbabel.OBAtom_HasChiralVolume(*args)
+    def IsHbondAcceptor(*args): return _openbabel.OBAtom_IsHbondAcceptor(*args)
+    def IsHbondDonor(*args): return _openbabel.OBAtom_IsHbondDonor(*args)
+    def IsHbondDonorH(*args): return _openbabel.OBAtom_IsHbondDonorH(*args)
     def HasAlphaBetaUnsat(*args): return _openbabel.OBAtom_HasAlphaBetaUnsat(*args)
     def HasBondOfOrder(*args): return _openbabel.OBAtom_HasBondOfOrder(*args)
     def CountBondsOfOrder(*args): return _openbabel.OBAtom_CountBondsOfOrder(*args)
@@ -583,11 +452,11 @@ class OBMol(object):
     def SetCorrectedForPH(*args): return _openbabel.OBMol_SetCorrectedForPH(*args)
     def SetAromaticCorrected(*args): return _openbabel.OBMol_SetAromaticCorrected(*args)
     def SetSpinMultiplicityAssigned(*args): return _openbabel.OBMol_SetSpinMultiplicityAssigned(*args)
+    def SetFlags(*args): return _openbabel.OBMol_SetFlags(*args)
     def UnsetAromaticPerceived(*args): return _openbabel.OBMol_UnsetAromaticPerceived(*args)
     def UnsetPartialChargesPerceived(*args): return _openbabel.OBMol_UnsetPartialChargesPerceived(*args)
     def UnsetImplicitValencePerceived(*args): return _openbabel.OBMol_UnsetImplicitValencePerceived(*args)
     def UnsetFlag(*args): return _openbabel.OBMol_UnsetFlag(*args)
-    def SetFlags(*args): return _openbabel.OBMol_SetFlags(*args)
     def DoTransformations(*args): return _openbabel.OBMol_DoTransformations(*args)
     ClassDescription = staticmethod(_openbabel.OBMol_ClassDescription)
     def Clear(*args): return _openbabel.OBMol_Clear(*args)
@@ -598,16 +467,13 @@ class OBMol(object):
     def Kekulize(*args): return _openbabel.OBMol_Kekulize(*args)
     def PerceiveKekuleBonds(*args): return _openbabel.OBMol_PerceiveKekuleBonds(*args)
     def NewPerceiveKekuleBonds(*args): return _openbabel.OBMol_NewPerceiveKekuleBonds(*args)
-    def start_kekulize(*args): return _openbabel.OBMol_start_kekulize(*args)
-    def expand_kekulize(*args): return _openbabel.OBMol_expand_kekulize(*args)
-    def getorden(*args): return _openbabel.OBMol_getorden(*args)
-    def expandcycle(*args): return _openbabel.OBMol_expandcycle(*args)
     def DeleteHydrogen(*args): return _openbabel.OBMol_DeleteHydrogen(*args)
     def DeleteHydrogens(*args): return _openbabel.OBMol_DeleteHydrogens(*args)
     def DeleteNonPolarHydrogens(*args): return _openbabel.OBMol_DeleteNonPolarHydrogens(*args)
     def AddHydrogens(*args): return _openbabel.OBMol_AddHydrogens(*args)
     def AddPolarHydrogens(*args): return _openbabel.OBMol_AddPolarHydrogens(*args)
     def StripSalts(*args): return _openbabel.OBMol_StripSalts(*args)
+    def ConvertDativeBonds(*args): return _openbabel.OBMol_ConvertDativeBonds(*args)
     def CorrectForPH(*args): return _openbabel.OBMol_CorrectForPH(*args)
     def AssignSpinMultiplicity(*args): return _openbabel.OBMol_AssignSpinMultiplicity(*args)
     def Center(*args): return _openbabel.OBMol_Center(*args)
@@ -645,6 +511,16 @@ class OBMol(object):
     def HasSpinMultiplicityAssigned(*args): return _openbabel.OBMol_HasSpinMultiplicityAssigned(*args)
     def IsChiral(*args): return _openbabel.OBMol_IsChiral(*args)
     def Empty(*args): return _openbabel.OBMol_Empty(*args)
+    def NumConformers(*args): return _openbabel.OBMol_NumConformers(*args)
+    def SetConformers(*args): return _openbabel.OBMol_SetConformers(*args)
+    def AddConformer(*args): return _openbabel.OBMol_AddConformer(*args)
+    def SetConformer(*args): return _openbabel.OBMol_SetConformer(*args)
+    def CopyConformer(*args): return _openbabel.OBMol_CopyConformer(*args)
+    def DeleteConformer(*args): return _openbabel.OBMol_DeleteConformer(*args)
+    def GetConformer(*args): return _openbabel.OBMol_GetConformer(*args)
+    def BeginConformer(*args): return _openbabel.OBMol_BeginConformer(*args)
+    def NextConformer(*args): return _openbabel.OBMol_NextConformer(*args)
+    def GetConformers(*args): return _openbabel.OBMol_GetConformers(*args)
     def BeginAtom(*args): return _openbabel.OBMol_BeginAtom(*args)
     def NextAtom(*args): return _openbabel.OBMol_NextAtom(*args)
     def BeginBond(*args): return _openbabel.OBMol_BeginBond(*args)
@@ -653,14 +529,6 @@ class OBMol(object):
     def NextResidue(*args): return _openbabel.OBMol_NextResidue(*args)
     def BeginInternalCoord(*args): return _openbabel.OBMol_BeginInternalCoord(*args)
     def NextInternalCoord(*args): return _openbabel.OBMol_NextInternalCoord(*args)
-    def NumConformers(*args): return _openbabel.OBMol_NumConformers(*args)
-    def SetConformers(*args): return _openbabel.OBMol_SetConformers(*args)
-    def AddConformer(*args): return _openbabel.OBMol_AddConformer(*args)
-    def SetConformer(*args): return _openbabel.OBMol_SetConformer(*args)
-    def CopyConformer(*args): return _openbabel.OBMol_CopyConformer(*args)
-    def DeleteConformer(*args): return _openbabel.OBMol_DeleteConformer(*args)
-    def GetConformer(*args): return _openbabel.OBMol_GetConformer(*args)
-    def GetConformers(*args): return _openbabel.OBMol_GetConformers(*args)
 
 class OBMolPtr(OBMol):
     def __init__(self, this):
