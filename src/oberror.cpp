@@ -24,7 +24,6 @@ General Public License for more details.
 #elif HAVE_IOSTREAM_H
 #include <iostream.h>
 #endif
-
 #include <string>
 
 #include "oberror.h"
@@ -36,7 +35,8 @@ namespace OpenBabel
 
   OBMessageHandler obErrorLog;
 
-OBError::OBError( const string &method, const string &errorMsg, const string &explanation,
+OBError::OBError( const string &method, const string &errorMsg, 
+		  const string &explanation,
                   const string &possibleCause, const string &suggestedRemedy) :
   _method(method), _errorMsg(errorMsg), _explanation(explanation),
   _possibleCause(possibleCause), _suggestedRemedy(suggestedRemedy)
@@ -48,7 +48,12 @@ string OBError::message() const
 {
     string tmp = "==============================\n";
 
-    tmp += "*** Open Babel Error in " + _method + string("\n  ") + _errorMsg + "\n";
+    tmp += "*** Open Babel Error ";
+    if (_method.length() != 0)
+      {
+	tmp += " in " + _method + string("\n  ");
+	}
+    tmp += _errorMsg + "\n";
     if (_explanation.size() != 0)
         tmp += "  " + _explanation + "\n";
     if (_possibleCause.size() != 0)
@@ -61,11 +66,19 @@ string OBError::message() const
 
 
 OBMessageHandler::OBMessageHandler() :
-  _outputStream(&cerr), _outputLevel(obWarning)
-{ }
+  _outputStream(&clog), _outputLevel(obWarning)
+{
+  StartErrorWrap();
+}
 
 OBMessageHandler::~OBMessageHandler()
-{ }
+{ 
+  StopErrorWrap();
+
+  // free the internal filter streambuf
+  if (_filterStreamBuf != NULL)
+    delete _filterStreamBuf;
+}
     
 void OBMessageHandler::ThrowError(OBError err, obMessageLevel level)
 {
@@ -80,9 +93,11 @@ void OBMessageHandler::ThrowError(const std::string &method,
 				  const std::string &errorMsg,
 				  obMessageLevel level)
 {
-  OBError err(method, errorMsg);
-
-  ThrowError(err, level);
+  if (errorMsg.length() > 1)
+    {
+      OBError err(method, errorMsg);
+      ThrowError(err, level);
+    }
 }
 
 std::vector<std::string> OBMessageHandler::GetMessagesOfLevel(const obMessageLevel level)
@@ -99,6 +114,32 @@ std::vector<std::string> OBMessageHandler::GetMessagesOfLevel(const obMessageLev
     }
 
   return results;
+}
+
+bool OBMessageHandler::StartErrorWrap()
+{
+  if (_inWrapStreamBuf != NULL)
+    return true; // already wrapped cerr  -- don't go into loops!
+
+  _inWrapStreamBuf = cerr.rdbuf();
+ 
+  if (_filterStreamBuf == NULL)
+    {
+      _filterStreamBuf = new(obLogBuf);
+    }
+
+  cerr.rdbuf(_filterStreamBuf);
+}
+
+bool OBMessageHandler::StopErrorWrap()
+{
+  if (_inWrapStreamBuf == NULL)
+    return true; // never wrapped cerr
+
+  // don't free the filter streambuf yet -- we might start wrapping later
+  // it's freed in the dtor
+
+  cerr.rdbuf(_inWrapStreamBuf);
 }
 
 } // end namespace OpenBabel

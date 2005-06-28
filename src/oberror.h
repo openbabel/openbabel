@@ -31,7 +31,11 @@ General Public License for more details.
 #elif HAVE_IOSTREAM_H
 #include <iostream.h>
 #endif
-
+#if HAVE_SSTREAM
+        #include <sstream>
+#elif
+        #include <sstream.h>
+#endif
 #include <string>
 #include <vector>
 
@@ -68,14 +72,14 @@ public:
 };
 
 //! \brief Levels of error and audit messages to allow filtering
- enum obMessageLevel { 
+enum obMessageLevel { 
    obError,    //!< for critical errors (e.g., cannot read a file)
    obWarning,  //!< for non-critical problems (e.g., molecule appears empty)
    obInfo,     //!< for informative messages (e.g., file is a non-standard format)
    obAuditMsg, //!< for messages auditing methods which destroy or perceive molecular data (e.g., kekulization)
    obDebug     //!< for messages only useful for debugging purposes
- };
-
+};
+ 
  //! \brief Handle error messages, warnings, debugging information and the like
 class OBAPI OBMessageHandler
   {
@@ -94,13 +98,35 @@ class OBAPI OBMessageHandler
     void SetOutputStream(std::ostream *os) { _outputStream = os; }
     std::ostream* GetOutputStream() { return _outputStream; }
 
+    bool StartErrorWrap();
+    bool StopErrorWrap();
+
   protected:
     std::vector<std::pair<OBError, obMessageLevel> >  _messageList;
     obMessageLevel         _outputLevel;
-    std::ostream           *_outputStream;
+    std::ostream          *_outputStream;
+
+    std::streambuf        *_inWrapStreamBuf;
+    std::streambuf        *_filterStreamBuf;
   }; 
 
 EXTERN OBMessageHandler obErrorLog;
+
+//! \brief A minimal streambuf derivative to wrap calls to cerr into 
+//! calls to OBMessageHandler as needed
+ class OBAPI obLogBuf : public std::stringbuf
+  {
+    public:
+      virtual ~obLogBuf() { sync(); }
+    
+    protected:
+    //! Call OBMessageHandler::ThrowError() and flush the buffer
+    int sync()
+    {
+      obErrorLog.ThrowError("", str(), obInfo);
+      str(std::string()); // clear the buffer
+    }
+  };
 
 } // end namespace OpenBabel
 
