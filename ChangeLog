@@ -1,3 +1,12 @@
+2005-06-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/ New directory for perl and python scripting wrappers
+	(and associated setup.py and Makefile.PL build scripts).
+
+	* src/openbabel.i, src/openbabel_python.cpp,
+	src/openbabel_perl.cpp, src/openbabel.py src/openbabel.pm: 
+	Moved, as above.
+
 2005-06-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/torlib.txt, src/torlib.h: New files to implement torsional
@@ -10,6 +19,11 @@
 
 	* src/phmodel.cpp, src/mol.h, src/oberror.h, src/bondtyper.cpp:
 	Add documentation for global variables.
+
+	* src/oberror.h, src/oberror.cpp: Add new class obLogBuf, a
+	streambuf class to filter output going to cerr. Add new methods
+	OBMessageHandler::StartErrorWrap and ::StopErrorWrap to turn on
+	(default) and off wrapping of cerr.
 
 2005-06-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

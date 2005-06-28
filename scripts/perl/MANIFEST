@@ -1,0 +1,7 @@
+Changes
+MANIFEST
+Makefile.PL
+README
+openbabel.pm
+openbabel_perl.cpp
+t/example.t
