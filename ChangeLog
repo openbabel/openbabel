@@ -7,6 +7,9 @@
 	src/openbabel_perl.cpp, src/openbabel.py src/openbabel.pm: 
 	Moved, as above.
 
+	* src/main.cpp: Add -w# flag for filtering different error/warning
+	levels with OBMessageHandler.
+
 2005-06-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/torlib.txt, src/torlib.h: New files to implement torsional

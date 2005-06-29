@@ -46,6 +46,7 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
 #include "obconversion.h"
+#include "oberror.h"
 
 using namespace std;
 using namespace OpenBabel;
@@ -65,6 +66,7 @@ int main(int argc,char *argv[])
   OBFormat* pOutFormat = NULL;
   vector<string> FileList, OutputFileList;
   string OutputFileName;
+  obMessageLevel filterLevel = obWarning;
 
   // Parse commandline
   bool gotInType = false, gotOutType = false;
@@ -88,9 +90,9 @@ int main(int argc,char *argv[])
   else
     program_name=argv[0]+pos+1;
 
-	int arg;
-	for (arg = 1; arg < argc; arg++)
-	{
+  int arg;
+  for (arg = 1; arg < argc; arg++)
+    {
   if (argv[arg])
 		{
 		if (argv[arg][0] == '-')
@@ -155,6 +157,29 @@ int main(int argc,char *argv[])
 		    {
 		      cerr << program_name << ": cannot write output format!" << endl;
 		      usage();
+		    }
+		  break;
+
+		case 'w':
+		  char *warnArg = argv[arg] + 2;
+		  int  warnLevel = (int)strtol(warnArg, (char **)NULL, 10);
+		 
+		  switch (warnLevel)
+		    {
+		    case 1:
+		      filterLevel = obError;
+		      break;
+		    case 2: // already obWarning
+		      break;
+		    case 3:
+		      filterLevel = obInfo;
+		      break;
+		    case 4:
+		      filterLevel = obAuditMsg;
+		      break;
+		    case 5:
+		      filterLevel = obDebug;
+		      break;
 		    }
 		  break;
 		  
@@ -265,7 +290,8 @@ int main(int argc,char *argv[])
   for(itr=tempFileList.begin();itr!=tempFileList.end();itr++)
     DLHandler::findFiles (FileList, *itr);
 #endif
-  
+
+  obErrorLog.SetOutputLevel(filterLevel);
   Conv.SetGeneralOptions(GenOptions.c_str());
   
   if (!gotInType)
@@ -333,7 +359,7 @@ int main(int argc,char *argv[])
   int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
   if ( count == 1 )
     clog << count << " molecule converted" << endl;
-  else
+  else if (count > 1) // could be 0 or -1
     clog << count << " molecules converted" << endl;
   
   if(OutputFileList.size()>1)
@@ -364,7 +390,7 @@ void usage()
   cout << "Press any key to finish" <<endl;
   getch();
 #endif
-*/  
+*/
   exit (0);
 }
 
@@ -384,7 +410,9 @@ void help()
   cout << "  -H Outputs this help text" << endl;
   cout << "  -Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl; 
   cout << "  -Hall Outputs details of all formats" <<endl; 
-  cout << "  -V Outputs version number" <<endl; 
+  cout << "  -V Outputs version number" <<endl;
+  cout << "  -w# (1..5 for errors, warnings, info, auditing, debugging)" << endl;
+  cout << "       set warning message level criteria" << endl;
   cout << "  -m Produces multiple output files, to allow:" <<endl;
   cout << "     Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
   cout << "       puts each molecule into new1.smi new2.smi etc" <<endl;
