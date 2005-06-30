@@ -203,8 +203,8 @@ FMapType& OBConversion::FormatsMIMEMap()
 OBConversion::OBConversion(const OBConversion& O)
 {
 	//Copy constructor. Needed because of strings
-	Options=O.Options;
-	GeneralOptions=O.GeneralOptions;
+//	Options=O.Options;
+//	GeneralOptions=O.GeneralOptions;
 //	Title=O.Title;
 	pInFormat=O.pInFormat;
 	pOutFormat=O.pOutFormat;
@@ -325,22 +325,12 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
 /// Returns true if both formats have been successfully set at sometime
 bool OBConversion::SetInAndOutFormats(const char* inID, const char* outID)
 {
-/*	if(inID)
-		pInFormat = FindFormat(inID);
-  if(outID)
-		pOutFormat= FindFormat(outID);
-	return pInFormat && pOutFormat
-		&& !(pInFormat->Flags() & NOTREADABLE) && !(pOutFormat->Flags() & NOTWRITABLE);
-*/
 	return SetInFormat(inID) && SetOutFormat(outID);
 }
 //////////////////////////////////////////////////////
 
 bool OBConversion::SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut)
 {
-//	pInFormat=pIn;
-//	pOutFormat=pOut;
-//	return !(pInFormat->Flags() & NOTREADABLE) && !(pOutFormat->Flags() & NOTWRITABLE);
 	return SetInFormat(pIn) && SetOutFormat(pOut);
 }
 //////////////////////////////////////////////////////
@@ -433,7 +423,7 @@ int OBConversion::Convert()
 		}
 		catch(...)
 		{
-			if(!IsOption('e', true) && !OneObjectOnly)
+			if(!IsOption("e", GENOPTIONS) && !OneObjectOnly)
 				throw;
 		}
 
@@ -441,7 +431,7 @@ int OBConversion::Convert()
 		{
 			//error or termination request: terminate unless
 			// -c option requested and sucessfully can skip past current object
-			if(!IsOption('c', true) || pInFormat->SkipObjects(0,this)!=1) 
+			if(!IsOption("e", GENOPTIONS) || pInFormat->SkipObjects(0,this)!=1) 
 				break;
 		}
 		if(OneObjectOnly)
@@ -470,43 +460,28 @@ int OBConversion::Convert()
 //////////////////////////////////////////////////////
 bool OBConversion::SetStartAndEnd()
 {
-//Sets starting and ending molecule numbers by parsing GeneralOptions
-	const char* p = GetGeneralOptions();
-	while(*p)
+	const char* p = IsOption("f",GENOPTIONS);
+	if(p)
 	{
-		switch(*(p++))
+		StartNumber=atoi(p);
+		if(StartNumber>1)
 		{
-		case '\"' : //ignore quoted characters
-			p=strchr(p++,'\"');
-			if(p++==NULL)
+			//Try to skip objects now
+			int ret = pInFormat->SkipObjects(StartNumber-1,this);
+			if(ret==-1) //error
+				return false; 
+			if(ret==1) //success:objects skipped
 			{
-				cerr << "Missing \" in options" <<endl;
-				return false;
+				Count = StartNumber-1;
+				StartNumber=0;
 			}
-			break;
-		case 'f':
-			StartNumber=atoi(++p);
-			p=strchr(p,'\"')+1; //get past ""
-			if(StartNumber>1)
-			{
-				//Try to skip objects now
-				int ret = pInFormat->SkipObjects(StartNumber-1,this);
-				if(ret==-1) //error
-					return false; 
-				if(ret==1) //success:objects skipped
-				{
-					Count = StartNumber-1;
-					StartNumber=0; //do not use old method
-				}
-				//ret==0 use old method
-			}
-			break;
-		case 'l':
-			EndNumber=atoi(++p);
-			p=strchr(p,'\"')+1;
-			break;
 		}
 	}
+
+	p = IsOption("l",GENOPTIONS);
+	if(p)
+		EndNumber=atoi(p);
+
 	return true;
 }
 
@@ -584,46 +559,10 @@ OBFormat* OBConversion::FindFormat(const char* ID)
 }
 
 //////////////////////////////////////////////////
-const char* OBConversion::GetOptions() const
-{
-	return(Options.c_str());
-}
-
-void OBConversion::SetOptions(const char* options)
-{
-	Options=options;
-}
-
-const char* OBConversion::GetGeneralOptions() const
-{
-	return(GeneralOptions.c_str());
-}
-
-void OBConversion::SetGeneralOptions(const char* options)
-{
-	GeneralOptions=options;
-}
-
 const char* OBConversion::GetTitle() const
 {
 	return(InFilename.c_str());
 }
-
-/*
-void OBConversion::SetTitle(const char* title)
-{
-	Title=title;
-}
-const char* OBConversion::GetDimension() const
-{
-	return Dimension;
-}
-
-void OBConversion::SetDimension(const char* dim)
-{
-	strcpy(Dimension,dim);
-}
-*/
 
 void OBConversion::SetMoreFilesToCome()
 {
@@ -670,42 +609,10 @@ const char* OBConversion::Description()
 return "Conversion options\n \
  -f <#> Start import at molecule # specified\n \
  -l <#> End import at molecule # specified\n \
- -a All input files describe a single molecule\n \
+ -t All input files describe a single molecule\n \
  -e Continue with next object after error, if possible\n \
+ -w <#> Error warning level; default<2>\n \
 ";
-}
-
-////////////////////////////////////////////
-bool OBConversion::SaveOptionsToFile(const char* filename)
-{
-	//Returns true if successful
-	ofstream os(filename);
-	if(os.good())
-	{
-		os << GetGeneralOptions() << endl;
-		os << GetOptions() << ends;
-		return true;
-	}
-	else
-		return false;
-}
-
-////////////////////////////////////////////
-bool OBConversion::RestoreOptionsFromFile(const char* filename)
-{
-	//Replaces all the conversion options with a string from the specified file
-	ifstream is(filename);
-	if(is.good())
-	{
-		const int BUFLEN = 256;
-		char buf[BUFLEN];
-		is.getline(buf,BUFLEN);
-		SetGeneralOptions(buf);
-		is.getline(buf,BUFLEN);
-		SetOptions(buf);
-		return true;
-	}
-	return false;
 }
 
 ////////////////////////////////////////////
@@ -717,35 +624,6 @@ bool OBConversion::IsLast()
 bool OBConversion::IsFirstInput()
 {
 	return (Count==0);
-}
-
-////////////////////////////////////////////
-/// If ch is not in the option string (excluding quoted text), returns NULL
-/// If it is, the return value is not NULL and points to the
-/// following quoted text if there is any, but it is terminated by " not NULL.
-/// e.g. ab"text"c"text"
-const char* OBConversion::IsOption(const char ch, bool UseGeneralOptions) const
-{
-	const char* p;
-	if(UseGeneralOptions)
-		p = GeneralOptions.c_str();
-	else
-		p = Options.c_str();
-
-	while(p && *p)
-	{
-		if(*p++==ch)
-		{
-			if(*p=='"')++p;
-			return p;
-		}
-		if(p && *p=='"')
-		{
-			++p;
-			while(*p++!='"');
-		}
-	}
-	return NULL;
 }
 
 /////////////////////////////////////////////////
@@ -855,7 +733,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 			}
 		}
 
-		if(IsOption('a',true))
+		if(IsOption("t",GENOPTIONS))
 		{
 			//Concatenate input file option (multiple files, single molecule)
 			if(HasMultipleOutputFiles)
@@ -1007,6 +885,51 @@ bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
 	}
 
 	return true;
+}
+
+///////////////////////////////////////////////
+void OBConversion::AddOption(const char* opt, Option_type opttyp, const char* txt)
+{
+	//Also updates an option
+	if(txt==NULL)
+		OptionsArray[opttyp][opt]=string();
+	else
+		OptionsArray[opttyp][opt]=txt;
+}
+
+const char* OBConversion::IsOption(const char* opt, Option_type opttyp)
+{
+	//Returns NULL if option not found or a pointer to the text if it is
+	map<string,string>::iterator pos;
+	pos = OptionsArray[opttyp].find(opt);
+	if(pos==OptionsArray[opttyp].end())
+		return NULL;
+	return pos->second.c_str();
+}
+
+bool OBConversion::RemoveOption(const char* opt, Option_type opttyp)
+{
+	return OptionsArray[opttyp].erase(opt)!=0;//true if was there
+}
+
+void OBConversion::SetOptions(const char* options, Option_type opttyp)
+{
+	while(*options)
+	{
+		string ch(1, *options++);
+		if(*options=='\"')
+		{
+			string txt = options+1;
+			string::size_type pos = txt.find('\"');
+			if(pos==string::npos)
+				return; //options is illformed
+			txt.erase(pos);
+			OptionsArray[opttyp][ch]= txt;
+			options += pos+2;
+		}
+		else
+			OptionsArray[opttyp][ch] = string();
+	}
 }
 
 }//namespace OpenBabel

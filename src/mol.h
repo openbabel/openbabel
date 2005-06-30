@@ -33,6 +33,7 @@ GNU General Public License for more details.
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <map>
 
 #if HAVE_IOSTREAM
 #include <iostream>
@@ -931,7 +932,7 @@ public:
     //! \name Molecule modification methods
     //@{
     // Description in transform.cpp
-    virtual OBBase*    DoTransformations(const char* Options);
+    virtual OBBase*    DoTransformations(const std::map<std::string,std::string>* pOptions);
     static const char* ClassDescription();
     //! Clear all information from a molecule
     bool Clear();

@@ -125,6 +125,7 @@ EXTERN OBMessageHandler obErrorLog;
     {
       obErrorLog.ThrowError("", str(), obInfo);
       str(std::string()); // clear the buffer
+			return 0;
     }
   };
 

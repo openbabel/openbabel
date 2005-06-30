@@ -222,24 +222,28 @@ public:
 	///Get the position in the input stream of the object being written
 	std::streampos GetInPos()const{return wInpos;}; 
 
-	const char* GetOptions() const;///< @brief Options for output format
-	void        SetOptions(const char* options);///< @brief Options for output format
-
-	///@brief Returns NULL if option not set and a valid pointer if it is 
-	const char* OBConversion::IsOption(const char ch, bool UseGeneralOptions=false) const;
-
-	const char* GetGeneralOptions() const;///< @brief Options related to converted chemical object type 
-	void        SetGeneralOptions(const char* options);////< @brief Options related to converted chemical object type
-
 	///@brief Returns a default title which is the filename
 	const char* GetTitle() const;
+	//@}
+	/// @name Option handling
+	//@{
+	///@brief To refer to -a? , -x? , or -? options
+	enum Option_type { INOPTIONS, OUTOPTIONS, GENOPTIONS };
 
-/*	void        SetTitle(const char* title);
-	virtual const char* GetDimension() const;
-	virtual void SetDimension(const char* dim);
-*/
-	bool	    SaveOptionsToFile(const char* filename);
-	bool	    RestoreOptionsFromFile(const char* filename);
+	///@brief Access the map with option name as key and any associated text as value
+	const std::map<std::string,std::string>* GetOptions(Option_type opttyp)
+	{ return &OptionsArray[opttyp];};
+
+	///@brief Returns NULL if option not set and a valid pointer if it is 
+	const char* IsOption(const char* opt,Option_type opttyp=OUTOPTIONS);
+	
+	///@brief Set an option of specified type, with optional text
+	void AddOption(const char* opt, Option_type opttyp, const char* txt=NULL);
+	
+	bool RemoveOption(const char* opt, Option_type optype);
+
+	///@brief Set several single character options of specified type from string like ab"btext"c"btext"
+	void OBConversion::SetOptions(const char* options, Option_type opttyp);
 	//@}
 
 	/// @name Conversion
@@ -314,10 +318,9 @@ protected:
 	static OBFormat*  pDefaultFormat;
 	OBFormat* 	  pInFormat;
 	OBFormat*	  pOutFormat;
-	std::string	  Options;
-	std::string	  GeneralOptions;
-//	std::string	  Title;
-//	char		  Dimension[10];
+
+	std::map<std::string,std::string> OptionsArray[3];
+
 	int		  Index;
 	unsigned int	  StartNumber;
 	unsigned int	  EndNumber;
@@ -346,3 +349,4 @@ protected:
 
 //! \file
 //! \brief Handle file conversions. Declaration of OBFormat, OBConversion.
+ 

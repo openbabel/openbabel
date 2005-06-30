@@ -23,12 +23,12 @@ using namespace std;
 namespace OpenBabel
 {
 
-OBBase* OBMol::DoTransformations(const char* Opts)
+OBBase* OBMol::DoTransformations(const map<string,string>* pOptions)
 {
     // Perform any requested transformations
     // on a OBMol
-    //The input string has option letters, some of which may be
-    //followed by a quoted string, e.g. dcs"CN"v"CO"
+    //The input map has option letters or name as the key and 
+		//any associated text as the value.
     //For normal(non-filter) transforms:
     // returns a pointer to the OBMol (this) if ok or NULL if not.
     //For filters returns a pointer to the OBMol (this) if there is a  match,
@@ -37,58 +37,54 @@ OBBase* OBMol::DoTransformations(const char* Opts)
     //This is now a virtual function. The OBBase version just returns the OBMol pointer.
     //This is declared in mol.h
 
-    //The filter options, s and v allow a obgrep facility. They can be used together.
+    //The filter options, s and v allow a obgrep facility. 
+		//Used together they must both be true to allow a molecule through.
 
     //Parse GeneralOptions
     int ret=1;
-    bool invert=false, smatch=true, vmatch=true;
+    bool smatch=true, vmatch=true;
 
-    const char* p = Opts; //GetGeneralOptions();
-    while(*p)
-    {
-        switch(*(p++))
-        {
-        case '\"' : //ignore quoted charcters
-            p=strchr(p++,'\"');
-            if(p++==NULL)
-            {
-                cerr << "Missing \" in options" <<endl;
-                return NULL;
-            }
-            break;
-        case 'b' :
-						ret=ConvertDativeBonds();
-						break;
-				case 'd':
-            ret=DeleteHydrogens();
-            break;
-        case 'h':
-            ret=AddHydrogens(false, false);
-            break;
-        case 'c':
-            Center(); //has void return
-            break;
-        case 'p':
-            ret=AddHydrogens(false, true);
-            break;
-        case 'v':
-            invert=true;
-        case 's':
-            //match quoted SMARTS string which follows
-            OBSmartsPattern sp;
-            string smarts(p+1); //after "
-            sp.Init(smarts.substr(0,smarts.find('\"')));
-            bool match = sp.Match(*this); //(*pmol) ;
-            if(invert)
-                vmatch=!match;
-            else
-                smatch=match;
-            invert=false;
-        }
-    }
+		map<string,string>::const_iterator itr;
+
+		if(pOptions->find("b")!=pOptions->end())
+			ret=ConvertDativeBonds();
+
+		if(pOptions->find("d")!=pOptions->end())
+			ret=DeleteHydrogens();
+
+		if(pOptions->find("h")!=pOptions->end())
+      ret=AddHydrogens(false, false);
+
+		if(pOptions->find("p")!=pOptions->end())
+      ret=AddHydrogens(false, true);
+
+		if(pOptions->find("c")!=pOptions->end())
+		{
+			Center();
+			ret=1;
+		}
+
+		itr = pOptions->find("v");
+		if(itr!=pOptions->end())
+		{
+      //inverse match quoted SMARTS string which follows
+      OBSmartsPattern sp;
+      sp.Init(itr->second);
+      vmatch = !sp.Match(*this); //(*pmol) ;
+		}
+
+		itr = pOptions->find("s");
+		if(itr!=pOptions->end())
+		{
+      //match quoted SMARTS string which follows
+      OBSmartsPattern sp;
+      sp.Init(itr->second.c_str());
+      smatch = sp.Match(*this); //(*pmol) ;
+		}
+
     if(!smatch || !vmatch)
     {
-        //filter failed delete OBMol and return NULL
+        //filter failed: delete OBMol and return NULL
         delete this;
         return NULL;
     }
@@ -103,8 +99,7 @@ const char* OBMol::ClassDescription()
            Additional options :\n \
            -d Delete Hydrogens\n \
            -h Add Hydrogens\n \
-           -p Add Hydrogens appropriate for pH (use transforms in phmodel.txt)\n \
-					 -b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n \
+           -p Add Hydrogens appropriate for pH\n \
            -c Center Coordinates\n \
            -j Join all input molecules into a single output molecule\n \
            -s\"smarts\" Convert only molecules matching SMARTS:\n \
@@ -114,5 +109,5 @@ const char* OBMol::ClassDescription()
 } //namespace OpenBabel
 
 //! \file transform.cpp
-//! \brief Perform command-line requested transformations
-//!   (e.g., centering, splitting files, joining, etc.)
+//! \brief Perform command-line requested transformations(e.g. centering)
+//!  and SMARTS filtering

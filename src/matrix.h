@@ -19,7 +19,7 @@ GNU General Public License for more details.
 
 #ifndef OB_MATRIX_H
 #define OB_MATRIX_H
-
+#include "babelconfig.h"
 #include <vector>
 #include <math.h>
 

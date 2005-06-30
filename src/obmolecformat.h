@@ -39,12 +39,12 @@ public:
 	{
 		static OBMol* pmol;
 		//With j option, reuse pmol except for the first mol
-		if(!pConv->IsOption('j',true) || pConv->IsFirstInput())
+		if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsFirstInput())
 			pmol = new OBMol;
 		
 		bool ret=ReadMolecule(pmol,pConv);
 		if(ret && pmol->NumAtoms() > 0) //Do transformation and return molecule
-			pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
+			pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
 		else
 			pConv->AddChemObject(NULL);
 		return ret;
@@ -59,7 +59,7 @@ public:
 		if(pmol && pmol->NumAtoms() > 0)
 		{	
 			ret=true;
-			if(!pConv->IsOption('j',true) || pConv->IsLast()) //With j option, output only at end
+			if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsLast()) //With j option, output only at end
 			{
 				ret=WriteMolecule(pmol,pConv);
 				delete pOb;

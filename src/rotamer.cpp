@@ -35,6 +35,13 @@ static int SINT = 0x00000001;
 static unsigned char *STPTR = (unsigned char*)&SINT;
 const bool SwabInt = (STPTR[0]!=0);
 
+#if !HAVE_RINT
+inline double rint(double x)
+{
+    return ( (x < 0.0) ? ceil(x-0.5) : floor(x+0.5));
+}
+#endif
+
 void SetRotorToAngle(double *c,OBAtom **ref,double ang,vector<int> atoms);
 
 int Swab(int i)

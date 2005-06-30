@@ -129,6 +129,7 @@ bool OBMessageHandler::StartErrorWrap()
     }
 
   cerr.rdbuf(_filterStreamBuf);
+	return false;
 }
 
 bool OBMessageHandler::StopErrorWrap()
@@ -140,6 +141,7 @@ bool OBMessageHandler::StopErrorWrap()
   // it's freed in the dtor
 
   cerr.rdbuf(_inWrapStreamBuf);
+	return false; //??CM
 }
 
 } // end namespace OpenBabel
