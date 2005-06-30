@@ -640,12 +640,12 @@ bool OBSmilesParser::ParseSimple(OBMol &mol)
 
 bool OBSmilesParser::ParseComplex(OBMol &mol)
 {
-    char symbol[3];
+    char symbol[7];
     int element=0;
     int isotope=0;
     int isoPtr=0;
     bool arom=false;
-    memset(symbol,'\0',sizeof(char)*3);
+    memset(symbol,'\0',sizeof(char)*7);
 
     _ptr++;
 
