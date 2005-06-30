@@ -1,3 +1,15 @@
+2005-06-30  Chris Morley  <c.morley@gaseq.co.uk>
+	Major change to how options handled. Many files in
+	/src, /src/formats, /windows altered. (Sorry I don't have a
+	tool to list them all.)
+	The options now stored internally in three std::maps for
+	input, output and general options. These are set on the 
+	command line like -a? -x? and -? respectively.  
+	
+	b and s formats recently added to many formats are now input
+	options.
+	Derived most remaining formats from OBMoleculeFormat.
+
 2005-06-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/ New directory for perl and python scripting wrappers
