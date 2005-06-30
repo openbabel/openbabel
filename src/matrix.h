@@ -26,8 +26,6 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-class OBAPI Vector;
-
 /*
  * vector<vector<double> > m : m[row][col] gives appropriate row/col entry
  * double **m                : m[row][col] gives appropriate row/col entry
