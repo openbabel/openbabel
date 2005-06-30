@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /FD /c
+# ADD CPP /nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 nafxcw.lib libcmt.lib InChI_DLL.lib Shlwapi.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".."
+# ADD LINK32 nafxcw.lib libcmt.lib libinchi.lib Shlwapi.lib cmlppdll.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".."
 
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /FR /FD /GZ /c
+# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /I "..\..\src\formats\cmlpp\source\dom" /I "..\..\src\formats\cmlpp\source\schema" /I "..\..\src\formats\cmlpp\source\tools" /I "..\..\src\formats\cmlpp\source\util" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FR /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib InChI_DLL.lib Shlwapi.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /libpath:".."
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib libinchi.lib Shlwapi.lib cmlppdll.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /libpath:".." /libpath:"..\..\sr\formats\cmlpp\\builds\windows\vc6\cmlppdll\debug"
 # SUBTRACT LINK32 /profile
 
 !ENDIF 
@@ -96,15 +96,7 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=..\..\src\assignbonds.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -160,7 +152,25 @@ SOURCE=..\..\src\fastsearch.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\fingerprint\fastsearchformat.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\fastsearchformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint\finger1.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -168,7 +178,48 @@ SOURCE=..\..\src\finger2.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\fingerprint\finger2.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\finger3.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint\finger3.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\fingerprint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint\fingerprint.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint\fingerprintformat.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -216,6 +267,11 @@ SOURCE=..\..\src\molchrg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE="..\..\src\formats\cmlpp\ob-cml.cpp"
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\obconversion.cpp
 # End Source File
 # Begin Source File
@@ -253,6 +309,10 @@ SOURCE=..\..\src\patty.cpp
 # Begin Source File
 
 SOURCE=..\..\src\phmodel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\qchemformat.cpp
 # End Source File
 # Begin Source File
 
@@ -344,6 +404,10 @@ SOURCE=..\..\src\chiral.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\cmlpp\cmlpp.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\crk.h
 # End Source File
 # Begin Source File
@@ -365,10 +429,36 @@ SOURCE=..\..\src\extable.h
 # Begin Source File
 
 SOURCE=..\..\src\fastsearch.h
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint\fastsearch.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\fingerprint.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint\fingerprint.h
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -377,6 +467,10 @@ SOURCE=..\..\src\generic.h
 # Begin Source File
 
 SOURCE=..\..\src\grid.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\inchi_api.h
 # End Source File
 # Begin Source File
 
@@ -393,6 +487,10 @@ SOURCE=..\..\src\mol.h
 # Begin Source File
 
 SOURCE=..\..\src\molchrg.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\cmlpp\source\tools\MoleculeTool.hpp
 # End Source File
 # Begin Source File
 
@@ -420,7 +518,7 @@ SOURCE=..\..\src\obiter.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\obmolecformat.h
+SOURCE=..\..\src\obmolecformat.h
 # End Source File
 # Begin Source File
 
@@ -481,6 +579,10 @@ SOURCE=..\..\src\typer.h
 # Begin Source File
 
 SOURCE=..\..\src\types.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\math\vector3.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

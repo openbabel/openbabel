@@ -79,7 +79,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MD /W3 /GR /GX /I "..\math ..\src" /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MD /W3 /GR /GX /I "..\math ..\src" /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /D "HAVE_CONFIG_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBDLL.bsc" 
@@ -107,6 +107,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\mol.obj" \
 	"$(INTDIR)\molchrg.obj" \
 	"$(INTDIR)\oberror.obj" \
+	"$(INTDIR)\obiter.obj" \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
@@ -119,8 +120,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\tokenst.obj" \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
-	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\obiter.obj"
+	"$(INTDIR)\vector3.obj"
 
 ".\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -218,7 +218,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MDd /Gm /GR /GX /ZI /Od /I "..\math ..\src" /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MDd /Gm /GR /GX /ZI /Od /I "..\math ..\src" /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBDLL.bsc" 
@@ -242,6 +242,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\mol.sbr" \
 	"$(INTDIR)\molchrg.sbr" \
 	"$(INTDIR)\oberror.sbr" \
+	"$(INTDIR)\obiter.sbr" \
 	"$(INTDIR)\obutil.sbr" \
 	"$(INTDIR)\parsmart.sbr" \
 	"$(INTDIR)\patty.sbr" \
@@ -254,8 +255,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\tokenst.sbr" \
 	"$(INTDIR)\transform.sbr" \
 	"$(INTDIR)\typer.sbr" \
-	"$(INTDIR)\vector3.sbr" \
-	"$(INTDIR)\obiter.sbr"
+	"$(INTDIR)\vector3.sbr"
 
 "$(OUTDIR)\OBDLL.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -284,6 +284,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\mol.obj" \
 	"$(INTDIR)\molchrg.obj" \
 	"$(INTDIR)\oberror.obj" \
+	"$(INTDIR)\obiter.obj" \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
@@ -296,8 +297,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\tokenst.obj" \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
-	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\obiter.obj"
+	"$(INTDIR)\vector3.obj"
 
 "$(OUTDIR)\OBDLL.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<

@@ -59,7 +59,8 @@ protected:
 	stringstream newerr;
 	streambuf* Origclog;
 
-	CDynamicOptions InputOptionCheckBoxes,OutputOptionCheckBoxes,GeneralOptionCheckBoxes;
+	CDynamicOptions InputClassOptionCheckBoxes, InputOptionCheckBoxes, OutputOptionCheckBoxes,
+		GeneralOptionCheckBoxes;
 	OpenBabel::OBConversion Conv;
   ifstream inFileStream;
 	ofstream outFileStream;

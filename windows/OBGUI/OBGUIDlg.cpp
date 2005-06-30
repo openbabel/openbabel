@@ -296,7 +296,7 @@ void COBGUIDlg::OnChangeOutputformat()
 	{
 		NextOptionRect=OutputOptionRect;
 		InputOptionCheckBoxes.InsertText("", this, NextOptionRect); //Blank line
-		OutputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect);
+		OutputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect,"Write ");
 	}
 }
 
@@ -439,10 +439,11 @@ void COBGUIDlg::OnConvert()
 
 	//GeneralOptions have data from GeneralOptionCheckboxes and InputOptionCheckboxes
 	CString s = GeneralOptionCheckBoxes.GetOptions();
-	s += InputOptionCheckBoxes.GetOptions();
-	Conv.SetGeneralOptions(s);
+	s += InputClassOptionCheckBoxes.GetOptions();
+	Conv.SetOptions(s, OBConversion::GENOPTIONS);
 
-	Conv.SetOptions(OutputOptionCheckBoxes.GetOptions());
+	Conv.SetOptions(OutputOptionCheckBoxes.GetOptions(),OBConversion::OUTOPTIONS);
+	Conv.SetOptions(InputOptionCheckBoxes.GetOptions(),OBConversion::INOPTIONS);
 
 
   //redirect cerr
@@ -625,7 +626,7 @@ void COBGUIDlg::OnSize(UINT nType, int cx, int cy)
 	int NewConsoleHeight=  + cy - OrigHeightDiff;
 	if(::IsWindow(m_InConsole.m_hWnd))
 	{
-		const EXTRA=148;
+		const EXTRA=210;
 		m_InConsole.SetWindowPos(NULL,0,0,OrigConsoleWidth,NewConsoleHeight,
 			SWP_NOMOVE | SWP_NOZORDER | SWP_SHOWWINDOW);
 		m_OutConsole.SetWindowPos(NULL,0,0,OrigConsoleWidth,NewConsoleHeight,
@@ -721,8 +722,9 @@ void COBGUIDlg::OnChangeInputformat()
 	if(pFormat)
 	{
 		NextOptionRect=InputOptionRect;
-//		GeneralOptionCheckBoxes.InsertText("", this, NextOptionRect); //Blank line
-		InputOptionCheckBoxes.Construct(pFormat->TargetClassDescription(), this, NextOptionRect);
+		InputClassOptionCheckBoxes.Construct(pFormat->TargetClassDescription(), this, NextOptionRect);
+		InputClassOptionCheckBoxes.InsertText("", this, NextOptionRect); //Blank line
+		InputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect, "Read ");
 	}
 
 	OutputOptionRect=NextOptionRect;

@@ -38,7 +38,6 @@ ALL : ".\OBGUIs.exe"
 
 
 CLEAN :
-	-@erase "$(INTDIR)\assignbonds.obj"
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\base.obj"
 	-@erase "$(INTDIR)\bitvec.obj"
@@ -53,6 +52,7 @@ CLEAN :
 	-@erase "$(INTDIR)\DynamicOptions.obj"
 	-@erase "$(INTDIR)\fastsearch.obj"
 	-@erase "$(INTDIR)\fastsearchformat.obj"
+	-@erase "$(INTDIR)\finger1.obj"
 	-@erase "$(INTDIR)\finger2.obj"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
@@ -76,6 +76,7 @@ CLEAN :
 	-@erase "$(INTDIR)\parsmart.obj"
 	-@erase "$(INTDIR)\patty.obj"
 	-@erase "$(INTDIR)\phmodel.obj"
+	-@erase "$(INTDIR)\qchemformat.obj"
 	-@erase "$(INTDIR)\rand.obj"
 	-@erase "$(INTDIR)\residue.obj"
 	-@erase "$(INTDIR)\ring.obj"
@@ -94,7 +95,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "NDEBUG" 
 BSC32=bscmake.exe
@@ -102,9 +103,8 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUIs.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=nafxcw.lib libcmt.lib InChI_DLL.lib Shlwapi.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".." 
+LINK32_FLAGS=nafxcw.lib libcmt.lib libinchi.lib Shlwapi.lib cmlppdll.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".." 
 LINK32_OBJS= \
-	"$(INTDIR)\assignbonds.obj" \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bitvec.obj" \
@@ -119,6 +119,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\DynamicOptions.obj" \
 	"$(INTDIR)\fastsearch.obj" \
 	"$(INTDIR)\fastsearchformat.obj" \
+	"$(INTDIR)\finger1.obj" \
 	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
@@ -136,6 +137,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\oberror.obj" \
 	"$(INTDIR)\OBGUI.obj" \
 	"$(INTDIR)\OBGUIDlg.obj" \
+	"$(INTDIR)\obiter.obj" \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
@@ -153,7 +155,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
 	"$(INTDIR)\OBGUI.res" \
-	"$(INTDIR)\obiter.obj"
+	"$(INTDIR)\qchemformat.obj"
 
 ".\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -202,6 +204,8 @@ CLEAN :
 	-@erase "$(INTDIR)\fastsearchformat.sbr"
 	-@erase "$(INTDIR)\finger2.obj"
 	-@erase "$(INTDIR)\finger2.sbr"
+	-@erase "$(INTDIR)\finger3.obj"
+	-@erase "$(INTDIR)\finger3.sbr"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprint.sbr"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
@@ -245,6 +249,8 @@ CLEAN :
 	-@erase "$(INTDIR)\patty.sbr"
 	-@erase "$(INTDIR)\phmodel.obj"
 	-@erase "$(INTDIR)\phmodel.sbr"
+	-@erase "$(INTDIR)\qchemformat.obj"
+	-@erase "$(INTDIR)\qchemformat.sbr"
 	-@erase "$(INTDIR)\rand.obj"
 	-@erase "$(INTDIR)\rand.sbr"
 	-@erase "$(INTDIR)\residue.obj"
@@ -279,7 +285,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /I "..\..\src\formats\cmlpp\source\dom" /I "..\..\src\formats\cmlpp\source\schema" /I "..\..\src\formats\cmlpp\source\tools" /I "..\..\src\formats\cmlpp\source\util" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "_DEBUG" 
 BSC32=bscmake.exe
@@ -300,6 +306,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\fastsearch.sbr" \
 	"$(INTDIR)\fastsearchformat.sbr" \
 	"$(INTDIR)\finger2.sbr" \
+	"$(INTDIR)\finger3.sbr" \
 	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\fingerprintformat.sbr" \
 	"$(INTDIR)\generic.sbr" \
@@ -316,6 +323,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\oberror.sbr" \
 	"$(INTDIR)\OBGUI.sbr" \
 	"$(INTDIR)\OBGUIDlg.sbr" \
+	"$(INTDIR)\obiter.sbr" \
 	"$(INTDIR)\obutil.sbr" \
 	"$(INTDIR)\parsmart.sbr" \
 	"$(INTDIR)\patty.sbr" \
@@ -332,7 +340,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\transform.sbr" \
 	"$(INTDIR)\typer.sbr" \
 	"$(INTDIR)\vector3.sbr" \
-	"$(INTDIR)\obiter.sbr"
+	"$(INTDIR)\qchemformat.sbr"
 
 "$(OUTDIR)\OBGUIs.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -340,7 +348,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib InChI_DLL.lib Shlwapi.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" /libpath:".." 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib libinchi.lib Shlwapi.lib cmlppdll.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" /libpath:".." /libpath:"..\..\sr\formats\cmlpp\\builds\windows\vc6\cmlppdll\debug" 
 LINK32_OBJS= \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
@@ -357,6 +365,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\fastsearch.obj" \
 	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\finger3.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\generic.obj" \
@@ -373,6 +382,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\oberror.obj" \
 	"$(INTDIR)\OBGUI.obj" \
 	"$(INTDIR)\OBGUIDlg.obj" \
+	"$(INTDIR)\obiter.obj" \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
@@ -390,7 +400,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
 	"$(INTDIR)\OBGUI.res" \
-	"$(INTDIR)\obiter.obj"
+	"$(INTDIR)\qchemformat.obj"
 
 "$(OUTDIR)\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -441,18 +451,6 @@ LINK32_OBJS= \
 
 !IF "$(CFG)" == "OBGUIs - Win32 Release" || "$(CFG)" == "OBGUIs - Win32 Debug"
 SOURCE=..\..\src\assignbonds.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\assignbonds.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-!ENDIF 
-
 SOURCE=..\..\src\atom.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -687,6 +685,7 @@ SOURCE=..\..\src\fastsearch.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\fingerprint\fastsearchformat.cpp
 SOURCE=..\..\src\formats\fastsearchformat.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -702,6 +701,19 @@ SOURCE=..\..\src\formats\fastsearchformat.cpp
 "$(INTDIR)\fastsearchformat.obj"	"$(INTDIR)\fastsearchformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprint\finger1.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\finger1.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
 !ENDIF 
 
@@ -723,6 +735,21 @@ SOURCE=..\..\src\finger2.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\fingerprint\finger2.cpp
+SOURCE=..\..\src\finger3.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\finger3.obj"	"$(INTDIR)\finger3.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprint\finger3.cpp
 SOURCE=..\..\src\fingerprint.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -741,6 +768,20 @@ SOURCE=..\..\src\fingerprint.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\fingerprint\fingerprint.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\fingerprint.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprint\fingerprintformat.cpp
 SOURCE=..\..\src\formats\fingerprintformat.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -939,6 +980,7 @@ SOURCE=..\..\src\molchrg.cpp
 
 !ENDIF 
 
+SOURCE="..\..\src\formats\cmlpp\ob-cml.cpp"
 SOURCE=..\..\src\obconversion.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -1114,6 +1156,24 @@ SOURCE=..\..\src\phmodel.cpp
 
 
 "$(INTDIR)\phmodel.obj"	"$(INTDIR)\phmodel.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\qchemformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\qchemformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\qchemformat.obj"	"$(INTDIR)\qchemformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

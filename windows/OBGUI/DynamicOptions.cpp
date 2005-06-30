@@ -18,10 +18,11 @@ CDynamicOptions::CDynamicOptions()
 	nID=5678;
 }
 
-void CDynamicOptions::Construct(const char* OptionTxt, CWnd* pWnd, CRect& CtlRect )
+void CDynamicOptions::Construct(const char* OptionTxt, CWnd* pWnd, CRect& CtlRect,
+																const char* StartText)
 {
-/* Reads OptionTxt and starting with the line following each occurrence of "Options"
-interprets each line like
+/* Reads OptionTxt, finds StartText, then "Options" (case insensitive).
+Starting with the line following interprets each line like
   w  use Welsh language (default)
 as an option. Constructs a checkbox with the text except for the first character(w in this case)
 and inserts it into the window starting at the specified position (window coordinates). Subsequent
@@ -43,8 +44,14 @@ When CDynamicOptions::GetOptions() is called it returns a string containing the 
 	strcpy(pNewStr,OptionTxt); //Make a working copy 
 	char* p = pNewStr;
 
-	while(p && (p=strcasestr(p,"option"))) //until end of text; multiple sets of Options found
+	while(p && (p=strcasestr(p,StartText)) && (p=strcasestr(p,"option"))) //until end of text; multiple sets of Options found
+//	for (;(iSet<=EndOptionSet) && p && (p=strcasestr(p,"option"));++iSet)
 	{
+//		if(iSet<StartOptionSet)
+//		{ 
+//			++p; //past found option 
+//			continue;
+//		}
 		bool NextIsRadio=false;
 
 		p = strchr(p,'\n'); //options start on next line
