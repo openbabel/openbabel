@@ -6,6 +6,8 @@
 #define HAVE_IOSTREAM	1
 #define HAVE_FSTREAM 1
 #define HAVE_SSTREAM 1
+#define HAVE_SNPRINTF 1
+#define HAVE_STRNCASECMP 1
 #define BABEL_VERSION  "2.0"
 
 #define BABEL_DATADIR "."
