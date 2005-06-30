@@ -36,21 +36,20 @@ public:
 
     virtual const char* Description()
     {
-        return
-            "Chemical Markup Language\n \
-            XML format\n \
-            Additional command line option for CML: -x[flags] (e.g. -x1ac)\n \
-            1  output CML V1.0 (default) or\n \
-            2  output CML V2.0 (Schema)\n \
-            a  output array format for atoms and bonds (default <atom>)\n \
-            p  prettyprint output (default no indent)\n \
-            n  output namespace (default no namespace)\n \
-            c  use 'cml' as output namespace prefix (default no namspace)\n \
-            d  output DOCTYPE (default none)\n \
-            s  Output single bonds only\n\
-            b  Disable bonding entirely\n\
-            g  debug output\n";
-    };
+        return " \
+Chemical Markup Language\n \
+XML format\n \
+Write options for CML: -x[flags] (e.g. -x1ac)\n \
+1  output CML V1.0 (default) or\n \
+2  output CML V2.0 (Schema)\n \
+a  output array format for atoms and bonds (default <atom>)\n \
+p  prettyprint output (default no indent)\n \
+n  output namespace (default no namespace)\n \
+c  use 'cml' as output namespace prefix (default no namspace)\n \
+d  output DOCTYPE (default none)\n \
+g  debug output\n \
+";
+};
 
     virtual const char* SpecificationURL(){return
             "http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage";};
@@ -75,7 +74,7 @@ public:
         OBMol* pmol = new OBMol;
         bool ret=ReadMolecule(pmol,pConv);
         if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
+            pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
         else
             pConv->AddChemObject(NULL);
         return ret;
@@ -132,8 +131,15 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     if((pConv->GetOutputIndex()==1) && !pConv->IsLast())
         ofs << "<cml>" << endl;
 
-    //Just call the old routine
-    bool ret = WriteCML(ofs, mol, dimension, pConv->GetOptions());
+    char options[20];
+		char* p=options;
+		map<string,string>::const_iterator itr;
+		const map<string,string>* optmap = pConv->GetOptions(OBConversion::OUTOPTIONS);
+		for(itr=optmap->begin();itr!=optmap->end();++itr)
+			*p++ = itr->first[0];
+		*p='\0';
+		//Just call the old routine
+    bool ret = WriteCML(ofs, mol, dimension, options);
 
     if((pConv->GetOutputIndex()>1) && pConv->IsLast())
         ofs << "</cml>" << endl;

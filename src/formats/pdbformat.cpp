@@ -45,9 +45,9 @@ public:
   {
     return
       "Protein Data Bank format\n \
-       Options e.g. -xs\n\
+       Read Options e.g. -as\n\
         s  Output single bonds only\n\
-        b  Disable bonding entirely\n";
+        b  Disable bonding entirely\n\n";
   };
 
   virtual const char* SpecificationURL()
@@ -173,11 +173,11 @@ bool PDBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     /*assign hetatm bonds based on distance*/
     mol.EndModify();
 
-    if (!pConv->IsOption('b'))
+    if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
 
     if (mol.NumAtoms() < 250) // Minimize time required on real proteins
-      if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
 	mol.PerceiveBondOrders();
 
     mol.SetAtomTypesPerceived();

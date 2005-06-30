@@ -34,9 +34,9 @@ public:
   {
     return
       "ViewMol format\n \
-       Options e.g. -xs\n\
+       Read Options e.g. -as\n\
         s  Output single bonds only\n\
-        b  Disable bonding entirely\n";
+        b  Disable bonding entirely\n\n";
   };
 
   virtual const char* SpecificationURL() //optional
@@ -137,9 +137,9 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     if (!foundBonds)
     {
-      if (!pConv->IsOption('b'))
+      if (!pConv->IsOption("b",OBConversion::INOPTIONS))
 	mol.ConnectTheDots();
-      if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+      if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
 	mol.PerceiveBondOrders();
     }
 

@@ -47,7 +47,7 @@ public:
             "SMILES format\n \
             A linear text format which can describe the connectivity\n \
             and chirality of a molecule\n \
-            Options e.g. -xt\n \
+            Write Options e.g. -xt\n \
             -n no molecule name\n \
             -t molecule name only\n \
 	    -r radicals lower case eg ethyl is Cc";
@@ -229,7 +229,7 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    if(pConv->IsOption('t')) //Title only option
+    if(pConv->IsOption("t")) //Title only option
     {
         ofs << mol.GetTitle() <<endl;
         return true;
@@ -253,7 +253,7 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
 
 
     ofs << buffer ;
-    if(!pConv->IsOption('n'))
+    if(!pConv->IsOption("n"))
         ofs << ' ' <<  mol.GetTitle();
     ofs << endl;
 
@@ -2033,7 +2033,7 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
 			if (atom->GetSpinMultiplicity())
 			{
 				//For radicals output bracket form anyway unless r option specified
-				if(!(_pconv && _pconv->IsOption ('r')))
+				if(!(_pconv && _pconv->IsOption ("r")))
 					bracketElement = true;
 			}
 		}
@@ -2092,7 +2092,7 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
 #endif
 
 					//Radical centres lc if r option set
-				    if(atom->GetSpinMultiplicity() && _pconv && _pconv->IsOption ('r'))
+				    if(atom->GetSpinMultiplicity() && _pconv && _pconv->IsOption ("r"))
 				        symbol[0] = tolower(symbol[0]);
         }
         strcpy(element,symbol);

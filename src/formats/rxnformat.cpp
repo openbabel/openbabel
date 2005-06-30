@@ -60,7 +60,7 @@ public:
         OBReaction* pReact = new OBReaction;
         bool ret=ReadMolecule(pReact,pConv); //call the "API" read function
         if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pReact->DoTransformations(pConv->GetGeneralOptions()));
+					pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
         else
             pConv->AddChemObject(NULL);
         return ret;

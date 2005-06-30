@@ -41,13 +41,14 @@ Search an index file by using the fs format for reading:\n \
   obabel index.fs -sSMILES outfile.yyy   or\n \
   obabel datafile.xxx -ifs -sSMILES outfile.yyy\n \
 The structure spec can be a molecule from a file: -Spatternfile.zzz\n \
-Options (when making index) e.g. -xN25000w2 \n \
--f# finger print type, default <2>\n \
--w# number of 32bit words in fingerprint\n \
--N# approx number of molecules to be indexed\n \
 \n \
-To set the maximum number of candidates # when searching,\n \
-use the -l# option (not -xl#). Default is 4000.\n \
+Write Options (when making index) e.g. -xw 2 \n \
+ f# finger print type, default <2>\n \
+ w# number of 32bit words in fingerprint\n \
+ N# approx number of molecules to be indexed\n \
+\n \
+Read Options (when searching) e.g. -an\n \
+ l# the maximum number of candidates. Default=4000\n\n \
 ";
 	};
 
@@ -80,35 +81,30 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	stringstream smiles(stringstream::out);		
 	ifstream patternstream;
 	OBConversion PatternConv(&patternstream,&smiles);
-	string genopts  = pConv->GetGeneralOptions();
 
 	//Convert the SMARTS string to an OBMol
-	const char* p = pConv->IsOption('s',true);
+	const char* p = pConv->IsOption("s",OBConversion::GENOPTIONS);
 	string txt;
 	if(p) 
 	{
 		txt=p;
-		txt = txt.substr(0,txt.find('"')); //now has SMARTS string
-	}
-	if(!txt.empty() && p!=NULL)
-	{
 		stringstream smarts(txt, stringstream::in);		
 		OBConversion Convsm(&smarts);
 		if(!Convsm.SetInFormat("smi")) return false;
 		Convsm.Read(&patternMol);
 		
 		//erase -s option in GeneralOptions since it will be rewritten
-		string::size_type pos = genopts.find("s\"");
-		genopts[pos] = 'X'; //dummy,anything but s
-		pConv->SetGeneralOptions(genopts.c_str());
+		pConv->RemoveOption("s",OBConversion::GENOPTIONS);
+//		string::size_type pos = genopts.find("s\"");
+//		genopts[pos] = 'X'; //dummy,anything but s
+//		pConv->SetGeneralOptions(genopts.c_str());
 	}
 
 	// or Make OBMol from file in -S option	
-	p = pConv->IsOption('S',true);
+	p = pConv->IsOption("S",OBConversion::GENOPTIONS);
 	if(p && patternMol.Empty())
 	{
 		txt=p;
-		txt = txt.substr(0,txt.find('"')); //now has filename
 		string::size_type pos = txt.find_last_of('.');
 		if(pos==string::npos)
 		{
@@ -143,9 +139,10 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	string::size_type pos = smilesstr.find(' ');
 	if(pos!=string::npos)
 		smilesstr = smilesstr.substr(0,pos);
-	genopts += "s\"" + smilesstr + "\"";
-	pConv->SetGeneralOptions(genopts.c_str());
-
+	pConv->AddOption("s", OBConversion::GENOPTIONS, smilesstr.c_str());
+//	genopts += "s\"" + smilesstr + "\"";
+//	pConv->SetGeneralOptions(genopts.c_str());
+	
 	//Derive index name
 	string indexname = pConv->GetInFilename();
 	pos=indexname.find_last_of('.');
@@ -166,7 +163,7 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	}
 
 	//Use -l option to set the max number of candidates	
-	p = pConv->IsOption('l',true);
+	p = pConv->IsOption("l",OBConversion::GENOPTIONS);
 	if(p && atoi(p))
 		MaxCandidates = atoi(p);
 
@@ -204,8 +201,9 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		//Input format is currently fs; set it appropriately
 		if(!pConv->SetInAndOutFormats(pConv->FormatFromExt(datafilename.c_str()),pConv->GetOutFormat()))
 				return false;
-		genopts = 'b' + genopts;//use standard form for dative bonds
-		pConv->SetGeneralOptions(genopts.c_str());
+		pConv->AddOption("b",OBConversion::GENOPTIONS);
+//		genopts = '9' + genopts;//use standard form for dative bonds
+//		pConv->SetGeneralOptions(genopts.c_str());
 
 		//Output the candidate molecules, filtering through s filter
 		vector<unsigned int>::iterator itr;
@@ -213,7 +211,7 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		{
 			datastream.seekg(*itr);
 //				datastream.seekg(*itr - datastream.tellg(), ios_base::cur); //Avoid retrieving start
-			if(pConv->IsOption('c',true)) //***debugging kludge***
+			if(pConv->IsOption("c",OBConversion::GENOPTIONS)) //***debugging kludge***
 			{
 				string ln;
 				getline(datastream,ln);
@@ -263,9 +261,9 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 			NewOstreamUsed=true;
 		}
 
-		const char* p = pConv->IsOption('N');
+		const char* p = pConv->IsOption("N");
 		unsigned int nmols = p ? atoi(p) : 200; //estimate of number of molecules
-		p = pConv->IsOption('w');
+		p = pConv->IsOption("w");
 		unsigned int nwords = p ? atoi(p) : 32; //number 32bit words in each fingerprint
 		if(nmols==0 || nwords==0)
 		{
@@ -273,7 +271,7 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 			return false;
 		}
 		int fptype=0; //fingerprint type
-		p=pConv->IsOption('f');
+		p=pConv->IsOption("f");
 		if(p)
 			fptype=atoi(p);
 

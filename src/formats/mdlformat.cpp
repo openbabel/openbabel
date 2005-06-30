@@ -45,7 +45,7 @@ public:
 	{ return
 "MDL MOL format\n \
 Reads and writes V2000 and V3000 versions\n \
-Additional command line option for MOL files: -x[flags] (e.g. -x3)\n \
+Write Options, e.g. -x3\n \
  2  output V2000 (default) or\n \
  3  output V3000 (used for >999 atoms or bonds) \n \
 ";
@@ -297,7 +297,7 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	else
 	  ofs << endl;
 	
-	if(pConv->IsOption('3') || mol.NumAtoms() > 999 || mol.NumBonds() > 999)
+	if(pConv->IsOption("3") || mol.NumAtoms() > 999 || mol.NumBonds() > 999)
 	  {
 	    if(!WriteV3000(ofs,mol,pConv)) return false;
 	  }

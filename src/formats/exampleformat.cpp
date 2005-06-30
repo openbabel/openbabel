@@ -18,31 +18,31 @@ using namespace std;
 namespace OpenBabel
 {
 
-class XXXFormat : public OBFormat
+class ReactionSmilesFormat : public OBFormat
 {
 public:
     //Register this format type ID
-    XXXFormat()
+    ReactionSmilesFormat()
     {
-        OBConversion::RegisterFormat("XXX",this);
+        OBConversion::RegisterFormat("rsmi",this);
     }
 
     virtual const char* Description() //required
     {
         return
-            "XXX format\n \
+            "ReactionSmiles format\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
-            "";}; //optional
+            "http://www.daylight.com/dayhtml/doc/theory/theory.rxn.html";};
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return 0;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -55,10 +55,11 @@ public:
     /// The "Convert" interface functions
     virtual bool ReadChemObject(OBConversion* pConv)
     {
-        OBMol* pmol = new OBMol;
-        bool ret=ReadMolecule(pmol,pConv);
+        //Makes a new OBReaction and new associated OBMols
+        OBReaction* pReact = new OBReaction;
+        bool ret=ReadMolecule(pReact,pConv); //call the "API" read function
         if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
+            pConv->AddChemObject(pReact->DoTransformations(pConv->GetGeneralOptions()));
         else
             pConv->AddChemObject(NULL);
         return ret;
@@ -66,12 +67,23 @@ public:
 
     virtual bool WriteChemObject(OBConversion* pConv)
     {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
+        //WriteChemObject() always deletes the object retrieved by GetChemObject
+        //For RXN also deletes the associated molecules
+        //Cast to the class type need, e.g. OBMol
+        OBBase* pOb=pConv->GetChemObject();
+        OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
+        if(pReact==NULL)
+            return false;
+
         bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
+        ret=WriteMolecule(pReact,pConv);
+
+        vector<OBMol*>::iterator itr;
+        for(itr=pReact->reactants.begin();itr!=pReact->reactants.end();itr++)
+            delete *itr;
+        for(itr=pReact->products.begin();itr!=pReact->products.end();itr++)
+            delete *itr;
+
         delete pOb;
         return ret;
     };
@@ -79,27 +91,44 @@ public:
 //***
 
 //Make an instance of the format class
-XXXFormat theXXXFormat;
+ReactionSmilesFormat theReactionSmilesFormat;
 
 /////////////////////////////////////////////////////////////////
-bool XXXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+bool ReactionSmilesFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
 
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
-        return false;
+  //It's really a reaction, not a molecule.
+  //Doesn't make a new OBReactionObject, but does make mew reactant and product OBMols
+  OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
 
-    //Define some references so we can use the old parameter names
-    istream &ifs = *pConv->GetInStream();
-    OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
+  OBFormat* pSmiFormat = pConv->FindFormat("smi");
+  if(pSmiFormat==NULL)
+      return false;
 
-    //The old code goes here. Return true, or false on error
+  //Define some references so we can use the old parameter names
+  istream &ifs = *pConv->GetInStream();
+	
+	string ln;
+	getline(ifs,ln);
+	if(!ifs) return false;
+	vector<string> vec;
+	tokenize(vec,ln,'>');
+
+	//Read a MOL file	using the same OBConversion object but with a different format
+  pmol=new OBMol;
+  if(!pSmiFormat->ReadMolecule(pmol,pConv))
+      cerr << "Failed to read the reactant" << endl;
+  pReact->reactants.push_back(pmol);
+
+	string reactantstring, agentstring, productstring;
+	ifs >> reactantstring >> '>' >> agentstring >> '>' >> productstring;
+
+
 }
 
 ////////////////////////////////////////////////////////////////
 
-bool XXXFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+bool ReactionSmilesFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
@@ -108,7 +137,6 @@ bool XXXFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char *dimension = pConv->GetDimension();
 
     //The old code goes here. Return true, or false on error
 }

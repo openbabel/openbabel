@@ -15,12 +15,13 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "obconversion.h"
+#include "obmolecformat.h"
 
 using namespace std;
 namespace OpenBabel
 {
 
-class AmberPrepFormat : public OBFormat
+class AmberPrepFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -33,9 +34,9 @@ public:
   {
     return
       "Amber Prep format\n \
-       Options e.g. -xs\n\
+       Read Options e.g. -as\n\
         s  Output single bonds only\n\
-        b  Disable bonding entirely\n";
+        b  Disable bonding entirely\n\n";
   };
 
   virtual const char* SpecificationURL()
@@ -51,20 +52,6 @@ public:
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-        OBMol* pmol = new OBMol;
-        bool ret=ReadMolecule(pmol,pConv);
-        if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pmol->DoTransformations(pConv->GetGeneralOptions()));
-        else
-            pConv->AddChemObject(NULL);
-        return ret;
-    };
-
 };
 
 //Make an instance of the format class
@@ -120,9 +107,9 @@ bool AmberPrepFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     InternalToCartesian(internals,mol);
     mol.EndModify();
 
-    if (!pConv->IsOption('b'))
+    if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
-    if (!pConv->IsOption('s') && !pConv->IsOption('b'))
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
     mol.SetTitle(title);
     return(true);

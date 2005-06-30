@@ -70,7 +70,7 @@ public:
   {
     return
       "GROMOS96 format\n \
-       Options e.g. -xn\n\
+       Write Options e.g. -xn\n\
         n output nm (not Angstroms)";
   };
 
@@ -120,7 +120,7 @@ bool GROMOS96Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    double fac = pConv->IsOption('n') ? 0.1 : 1.0; //new framework
+    double fac = pConv->IsOption("n") ? 0.1 : 1.0; //new framework
 
     char type_name[10];
     char res_name[10],padded_name[10];

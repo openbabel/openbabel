@@ -31,7 +31,7 @@ public:
 	{ return
 "Fingerprint format\n \
 See Fabien Fontaine's source code\n \
-Options e.g. -xn16\n \
+Write Options e.g. -xn 16\n \
  f# finger print type, default <2>\n \
  n# fold to specified number of 32bit words \n \
  h  hex output when multiple molecules\n \
@@ -64,14 +64,14 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	pmol->ConvertDativeBonds();
 
 	bool hexoutput=false;
-	if(pConv->IsOption('h') || (pConv->GetOutputIndex()==1 && pConv->IsLast()))
+	if(pConv->IsOption("h") || (pConv->GetOutputIndex()==1 && pConv->IsLast()))
 		hexoutput=true;
 
 	int type=0, nwords=0;
-	const char* p=pConv->IsOption('f');
+	const char* p=pConv->IsOption("f");
 	if(p)
 		type=atoi(p);
-	p=pConv->IsOption('n');
+	p=pConv->IsOption("n");
 	if(p)
 		nwords = atoi(p);		
 

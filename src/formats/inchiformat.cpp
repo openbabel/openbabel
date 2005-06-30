@@ -35,7 +35,7 @@ public:
 			return 
 "INChI format\n \
 IUPAC/NIST molecular identifier\n \
-Options e.g. -xat \n \
+Write Options e.g. -xat \n \
  t add molecule name\n \
  a output auxilliary information\n \
  u output only unique molecules\n \
@@ -293,7 +293,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	if(ret!=inchi_Ret_OKAY)
 	{
 		string mes(inout.szMessage);
-		if(!(pConv->IsOption('w') && mes=="Omitted undefined stereo"))
+		if(!(pConv->IsOption("w") && mes=="Omitted undefined stereo"))
 			cerr << molID.str() << inout.szMessage << endl;
 		if(ret!=inchi_Ret_WARNING)
 		{
@@ -303,7 +303,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	}
 	
 	string ostring = inout.szInChI;
-	if(pConv->IsOption('t'))
+	if(pConv->IsOption("t"))
 	{
 		ostring += ' ';
 		ostring +=  mol.GetTitle();
@@ -311,7 +311,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		
 	ostream &ofs = *pConv->GetOutStream();
 
-	if(pConv->IsOption('U'))
+	if(pConv->IsOption("U"))
 	{
 		if(pConv->GetOutputIndex()==1)
 			allInchi.clear();
@@ -326,7 +326,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		}
 		return true;
 	}
-	else if(pConv->IsOption('u'))
+	else if(pConv->IsOption("u"))
 	{
 		if(pConv->GetOutputIndex()==1)
 			allInchi.clear();
@@ -336,10 +336,10 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 	ofs << ostring << endl;
 
-	if (pConv->IsOption('a'))
+	if (pConv->IsOption("a"))
 		ofs << inout.szAuxInfo << endl;
 	
-	if(pConv->IsOption('e'))
+	if(pConv->IsOption("e"))
 	{
 		if(pConv->GetOutputIndex()==1)
 			firstInchi = inout.szInChI;
@@ -454,7 +454,8 @@ Same as -oinchi -xet\n \
 	
 	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	{
-		pConv->SetOptions("et");
+		pConv->AddOption("e",OBConversion::OUTOPTIONS);
+		pConv->AddOption("t",OBConversion::OUTOPTIONS);
 		return theInChIFormat.WriteMolecule(pOb,pConv);
 	};
 	
