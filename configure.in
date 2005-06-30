@@ -18,6 +18,7 @@ AC_PROG_CXX
 AC_PROG_CXXCPP
 AC_PROG_INSTALL
 AC_PATH_PROG(DOXYGEN, doxygen)
+AC_PATH_PROG(SWIG, swig)
 
 dnl libtool
 dnl You can set the shared library version in src/Makefile.am

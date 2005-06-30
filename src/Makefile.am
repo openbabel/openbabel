@@ -11,8 +11,8 @@ libopenbabel_la_SOURCES = \
 		dlhandler_unix.cpp obconversion.cpp \
 		finger2.cpp fingerprint.cpp \
 		fastsearch.cpp generic.cpp grid.cpp \
-		kekulize.cpp mol.cpp molchrg.cpp oberror.cpp \
-		obiter.cpp obutil.cpp parsmart.cpp \
+		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
+		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
@@ -20,19 +20,11 @@ libopenbabel_la_SOURCES = \
 libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 1:0:0
 
-#libOBPython_la_SOURCES = openbabel_python.cpp
-#openbabel_python.cpp: openbabel.i
-#	swig -python -c++ -modern -o $@ $<
-
-#libOBPerl_la_SOURCES = openbabel_perl.cpp
-#openbabel_perl.cpp: openbabel.i
-#       swig -module "Chemistry::OpenBabel" -perl5 -c++ -o $@ $<
-
 pkginclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
-		generic.h grid.h mol.h molchrg.h \
+		generic.h grid.h matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h 
 		obmolecformat.h obutil.h \
 		parsmart.h patty.h phmodel.h reaction.h \

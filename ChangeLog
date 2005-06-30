@@ -1,4 +1,19 @@
+2005-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure: Add a check for swig to allow scripting
+	language wrappers to be rebuilt.
+
+	* Makefile.am: Make sure scripts directory will be added to dist.
+	
+	* src/Makefile.am: Add back matrix.cpp, which was inadvertantly
+	removed.
+
+	* src/matrix.h: Remove unnecessary forward declaration of class Vector.
+
+	* */Makefile.in: Rebuilt.
+
 2005-06-30  Chris Morley  <c.morley@gaseq.co.uk>
+
 	Major change to how options handled. Many files in
 	/src, /src/formats, /windows altered. (Sorry I don't have a
 	tool to list them all.)
