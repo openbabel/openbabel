@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include <vector>
+#include <map>
 
 #if HAVE_IOSTREAM
 #include <iostream>
@@ -49,7 +50,7 @@ public:
     virtual ~OBBase()
     {}
     ; //NF
-    virtual OBBase* DoTransformations(const char* Options)
+    virtual OBBase* DoTransformations(const std::map<std::string,std::string>*pOptions)
     {
         return this;
     } //NF Base type does nothing
