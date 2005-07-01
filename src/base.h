@@ -330,12 +330,8 @@ public:
         _vatom.clear();
         _vbond.clear();
     }
-    OBGraphBase(const OBGraphBase &src)
-    {
-    }
-
-    virtual     ~OBGraphBase()
-    {}
+    OBGraphBase(const OBGraphBase &src) : OBBase() { }
+    virtual     ~OBGraphBase()          { }
     unsigned int NumNodes()
     {
         return(_vatom.empty() ? 0 : _vatom.size());
