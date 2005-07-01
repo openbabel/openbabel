@@ -25,7 +25,7 @@ pkginclude_HEADERS = \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
 		generic.h grid.h matrix.h mol.h molchrg.h \
-		obconversion.h oberror.h obiter.h 
+		obconversion.h oberror.h obiter.h \
 		obmolecformat.h obutil.h \
 		parsmart.h patty.h phmodel.h reaction.h \
 		ring.h rotor.h rotamer.h typer.h 

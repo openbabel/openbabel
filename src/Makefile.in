@@ -237,7 +237,10 @@ pkginclude_HEADERS = \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fastsearch.h fingerprint.h \
 		generic.h grid.h matrix.h mol.h molchrg.h \
-		obconversion.h oberror.h obiter.h 
+		obconversion.h oberror.h obiter.h \
+		obmolecformat.h obutil.h \
+		parsmart.h patty.h phmodel.h reaction.h \
+		ring.h rotor.h rotamer.h typer.h 
 
 babel_SOURCES = main.cpp
 babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
@@ -751,9 +754,6 @@ uninstall-info: uninstall-info-recursive
 	uninstall-binPROGRAMS uninstall-info-am \
 	uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 
-		obmolecformat.h obutil.h \
-		parsmart.h patty.h phmodel.h reaction.h \
-		ring.h rotor.h rotamer.h typer.h 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
