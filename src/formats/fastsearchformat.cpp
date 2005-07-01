@@ -184,7 +184,7 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		//datafile name derived from index file probably won't have a file path
 		//but indexname may. Derive a full datafile name
 		string path;
-		int pos = indexname.find_last_of("/\\");
+		unsigned int pos = indexname.find_last_of("/\\");
 		if(pos==string::npos)
 			path = datafilename;
 		else
@@ -247,7 +247,7 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 			//No index filename specified
 			//Derive index name from datfile name
 			string indexname=pConv->GetInFilename();
-			int pos=indexname.find_last_of('.');
+			unsigned int pos=indexname.find_last_of('.');
 			if(pos!=string::npos)
 				indexname.erase(pos);
 			indexname += ".fs";
@@ -282,7 +282,7 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 			cerr << "No datafile! " << endl;
 			return false;
 		}
-		int pos = datafilename.find_last_of("/\\");
+		unsigned int pos = datafilename.find_last_of("/\\");
 		if(pos!=string::npos)
 			datafilename=datafilename.substr(pos+1);
 		fsi = new FastSearchIndexer(datafilename, pOs, fptype, nwords, nmols);

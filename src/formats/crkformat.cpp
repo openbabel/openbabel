@@ -408,12 +408,12 @@ void CRK2DFormat::WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges)
 {
     double groupCharge=0;
     if (GroupCharges)
-        for(int n=1;n<=mol.NumAtoms();n++)
+        for(unsigned int n=1;n<=mol.NumAtoms();n++)
             groupCharge+=mol.GetAtom(n)->GetFormalCharge();
 
     ofs << "  <Group Charge=\"" << groupCharge << "\" Spin=\"0\">" << endl;
 
-    for(int n=1;n<=mol.NumAtoms();n++)
+    for(unsigned int n=1;n<=mol.NumAtoms();n++)
     {
         OBAtom *atm=mol.GetAtom(n);
 
@@ -436,7 +436,7 @@ void CRK2DFormat::WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges)
         ofs << "   </Atom>" << endl;
     }
 
-    for(int m=0;m<mol.NumBonds();m++)
+    for(unsigned int m=0;m<mol.NumBonds();m++)
     {
         OBBond *bnd=mol.GetBond(m);
 

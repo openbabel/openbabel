@@ -132,7 +132,7 @@ bool ChemDrawFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   ifs.getline(buffer,BUFF_SIZE);
   sscanf(buffer," %d %d", &natoms, &nbonds);
   
-  for (int i = 1; i <= natoms; i ++)
+  for (unsigned int i = 1; i <= natoms; i ++)
   {
     if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
     tokenize(vs,buffer);
@@ -148,7 +148,7 @@ bool ChemDrawFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   }
 
   if (nbonds != 0)
-    for (int i = 0; i < nbonds; i++)
+    for (unsigned int i = 0; i < nbonds; i++)
       {
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
 	tokenize(vs,buffer);

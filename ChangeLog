@@ -1,3 +1,21 @@
+2005-07-01  Geoffrey Hutchison  <ghutchis@Alumina.local>
+
+	* src/formats/chemdrawformat.cpp, src/formats/crkformat.cpp,
+	src/formats/fastsearchformat.cpp, src/formats/mdlformat.cpp,
+	src/bondtyper.cpp, src/oberror.cpp:
+	Fix comparisons between signed and unsigned int.
+
+	* src/base.h (OBBase): Update DoTransformations for new format.
+	(OBGraphBase): Call base class from copy ctor.
+
+	* Doxyfile, doc/api-footer.html, doc/api-header.html: Update for
+	generating website SHTML documentation. Still looks good as a
+	local copy.
+
+	* src/Makefile.am, src/Makefile.in, src/formats/Makefile.am,
+	src/formats/Makefile.in: Update to fix errors from "make dist" for
+	snapshot.
+
 2005-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure: Add a check for swig to allow scripting

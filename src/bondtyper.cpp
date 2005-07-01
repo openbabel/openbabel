@@ -72,7 +72,7 @@ void OBBondTyper::ParseLine(const char *buffer)
         sp = new OBSmartsPattern;
         if (sp->Init(vs[0]))
         {
-            for (int i = 1; i < vs.size() ; i++)
+            for (unsigned int i = 1; i < vs.size() ; i++)
             {
                 bovector.push_back( atoi((char *)vs[i].c_str()) );
             }
@@ -110,7 +110,7 @@ void OBBondTyper::AssignFunctionalGroupBonds(OBMol &mol)
   vector<vector<int> > mlist;
   vector<vector<int> >::iterator matches, l;
   vector<pair<OBSmartsPattern*, vector<int> > >::iterator i;  
-  int j;
+  unsigned int j;
 
   // Loop through for all the functional groups and assign bond orders
   for (i = _fgbonds.begin();i != _fgbonds.end();i++)

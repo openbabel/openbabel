@@ -512,7 +512,7 @@ bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 		vector<string>::iterator itr;
 		for(itr=vs.begin()+8;itr!=vs.end();itr++)
 		{
-			int pos = (*itr).find('=');
+			unsigned int pos = (*itr).find('=');
 			if (pos==string::npos) return false;
 			int val = atoi((*itr).substr(pos+1).c_str());
 
@@ -566,7 +566,7 @@ bool MOLFormat::ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 		vector<string>::iterator itr;
 		for(itr=vs.begin()+6;itr!=vs.end();itr++)
 		{
-			int pos = (*itr).find('=');
+			unsigned int pos = (*itr).find('=');
 			if (pos==string::npos) return false;
 			int val = atoi((*itr).substr(pos+1).c_str());
 
