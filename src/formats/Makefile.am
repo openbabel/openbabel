@@ -20,10 +20,10 @@ pkglib_LTLIBRARIES = \
 	jaguarformat.la mdlformat.la mm3format.la mmodformat.la \
 	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
-	shelxformat.la smilesformat.la tinkerformat.la \
+	rxnformat.la shelxformat.la smilesformat.la tinkerformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
 	xedformat.la xyzformat.la zindoformat.la \
-	# inchiformat.la rxnformat.la
+	# inchiformat.la
 
 CSRformat_la_SOURCES = CSRformat.cpp
 CSRformat_la_LDFLAGS = -module -avoid-version
@@ -145,8 +145,8 @@ qchemformat_la_LDFLAGS = -module -avoid-version
 reportformat_la_SOURCES = reportformat.cpp
 reportformat_la_LDFLAGS = -module -avoid-version 
 
-#rxnformat_la_SOURCES = rxnformat.cpp
-#rxnformat_la_LDFLAGS = -module -avoid-version 
+rxnformat_la_SOURCES = rxnformat.cpp
+rxnformat_la_LDFLAGS = -module -avoid-version 
 
 shelxformat_la_SOURCES = shelxformat.cpp
 shelxformat_la_LDFLAGS = -module -avoid-version 

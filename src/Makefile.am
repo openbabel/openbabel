@@ -36,6 +36,5 @@ babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
 	# formats/inchi/libinchi.la
 
 EXTRA_DIST = \
-	strncasecmp.c snprintf.c snprintf.h \
-	openbabel.i openbabel.py openbabel.pm
+	strncasecmp.c snprintf.c snprintf.h
 
