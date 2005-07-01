@@ -1034,27 +1034,28 @@ SWIG_Perl_SetModule(swig_module_info *module) {
 #define SWIGTYPE_p_a_3__double swig_types[28]
 #define SWIGTYPE_p_double swig_types[29]
 #define SWIGTYPE_p_p_double swig_types[30]
-#define SWIGTYPE_p_std__string swig_types[31]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[32]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[33]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[34]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBEdgeBase_p_t__iterator swig_types[35]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[36]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[37]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[38]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[39]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t swig_types[40]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t__iterator swig_types[41]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[42]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[43]
-#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[44]
-#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[45]
-#define SWIGTYPE_p_std__vectorTint_t swig_types[46]
-#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[47]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[48]
-#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[49]
-static swig_type_info *swig_types[50];
-static swig_module_info swig_module = {swig_types, 50, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[31]
+#define SWIGTYPE_p_std__string swig_types[32]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[33]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[34]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[35]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBEdgeBase_p_t__iterator swig_types[36]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[37]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[38]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[39]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[40]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t swig_types[41]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t__iterator swig_types[42]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[43]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[44]
+#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[45]
+#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[46]
+#define SWIGTYPE_p_std__vectorTint_t swig_types[47]
+#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[48]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[49]
+#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[50]
+static swig_type_info *swig_types[51];
+static swig_module_info swig_module = {swig_types, 51, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -13005,22 +13006,25 @@ XS(_wrap_OBMol_UnsetFlag) {
 XS(_wrap_OBMol_DoTransformations) {
     {
         OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-        char *arg2 = (char *) 0 ;
+        std::map<std::string,std::string > *arg2 = (std::map<std::string,std::string > *) 0 ;
         OpenBabel::OBBase *result;
         int argvi = 0;
         dXSARGS;
         
         if ((items < 2) || (items > 2)) {
-            SWIG_croak("Usage: OBMol_DoTransformations(self,Options);");
+            SWIG_croak("Usage: OBMol_DoTransformations(self,pOptions);");
         }
         {
             if (SWIG_ConvertPtr(ST(0), (void **) &arg1, SWIGTYPE_p_OpenBabel__OBMol,0) < 0) {
                 SWIG_croak("Type error in argument 1 of OBMol_DoTransformations. Expected _p_OpenBabel__OBMol");
             }
         }
-        if (!SvOK((SV*) ST(1))) arg2 = 0;
-        else arg2 = (char *) SvPV(ST(1), PL_na);
-        result = (OpenBabel::OBBase *)(arg1)->DoTransformations((char const *)arg2);
+        {
+            if (SWIG_ConvertPtr(ST(1), (void **) &arg2, SWIGTYPE_p_std__mapTstd__string_std__string_t,0) < 0) {
+                SWIG_croak("Type error in argument 2 of OBMol_DoTransformations. Expected _p_std__mapTstd__string_std__string_t");
+            }
+        }
+        result = (OpenBabel::OBBase *)(arg1)->DoTransformations((std::map<std::string,std::string > const *)arg2);
         
         ST(argvi) = sv_newmortal();
         SWIG_MakePtr(ST(argvi++), (void *) result, SWIGTYPE_p_OpenBabel__OBBase, 0|0);
@@ -17156,6 +17160,7 @@ static swig_type_info _swigt__p_OpenBabel__vector3 = {"_p_OpenBabel__vector3", "
 static swig_type_info _swigt__p_a_3__double = {"_p_a_3__double", "double (*)[3]", 0, 0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, 0};
 static swig_type_info _swigt__p_p_double = {"_p_p_double", "double **", 0, 0, 0};
+static swig_type_info _swigt__p_std__mapTstd__string_std__string_t = {"_p_std__mapTstd__string_std__string_t", "std::map<std::string,std::string > *", 0, 0, 0};
 static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *", 0, 0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBAtom_p_t = {"_p_std__vectorTOpenBabel__OBAtom_p_t", "std::vector<OpenBabel::OBAtom * > *", 0, 0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBAtom_p_t__iterator = {"_p_std__vectorTOpenBabel__OBAtom_p_t__iterator", "std::vector<OpenBabel::OBAtom * >::iterator *", 0, 0, 0};
@@ -17208,6 +17213,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_a_3__double,
   &_swigt__p_double,
   &_swigt__p_p_double,
+  &_swigt__p_std__mapTstd__string_std__string_t,
   &_swigt__p_std__string,
   &_swigt__p_std__vectorTOpenBabel__OBAtom_p_t,
   &_swigt__p_std__vectorTOpenBabel__OBAtom_p_t__iterator,
@@ -17260,6 +17266,7 @@ static swig_cast_info _swigc__p_OpenBabel__vector3[] = {  {&_swigt__p_OpenBabel_
 static swig_cast_info _swigc__p_a_3__double[] = {  {&_swigt__p_a_3__double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_double[] = {  {&_swigt__p_p_double, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__mapTstd__string_std__string_t[] = {  {&_swigt__p_std__mapTstd__string_std__string_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBAtom_p_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBAtom_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBAtom_p_t__iterator[] = {  {&_swigt__p_std__vectorTOpenBabel__OBAtom_p_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
@@ -17312,6 +17319,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_a_3__double,
   _swigc__p_double,
   _swigc__p_p_double,
+  _swigc__p_std__mapTstd__string_std__string_t,
   _swigc__p_std__string,
   _swigc__p_std__vectorTOpenBabel__OBAtom_p_t,
   _swigc__p_std__vectorTOpenBabel__OBAtom_p_t__iterator,

@@ -16,6 +16,9 @@
 	src/formats/Makefile.in: Update to fix errors from "make dist" for
 	snapshot.
 
+	* scripts/perl/openbabel_perl.cpp,
+	scripts/python/openbabel_python.cpp: Updated for 2005-07-01 snapshot.
+
 2005-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure: Add a check for swig to allow scripting

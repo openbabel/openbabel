@@ -1409,31 +1409,32 @@ SWIG_Python_SetModule(swig_module_info *swig_module) {
 #define SWIGTYPE_p_char swig_types[29]
 #define SWIGTYPE_p_double swig_types[30]
 #define SWIGTYPE_p_p_double swig_types[31]
-#define SWIGTYPE_p_std__string swig_types[32]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t swig_types[33]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator swig_types[34]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t swig_types[35]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator swig_types[36]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t swig_types[37]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator swig_types[38]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t swig_types[39]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator swig_types[40]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_std__allocatorTOpenBabel__OBNodeBase_p_t_t swig_types[41]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_std__allocatorTOpenBabel__OBNodeBase_p_t_t__iterator swig_types[42]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_std__allocatorTOpenBabel__OBResidue_p_t_t__iterator swig_types[43]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t swig_types[44]
-#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t swig_types[45]
-#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t__iterator swig_types[46]
-#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t swig_types[47]
-#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t swig_types[48]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t swig_types[49]
-#define SWIGTYPE_p_std__vectorTunsigned_int_std__allocatorTunsigned_int_t_t swig_types[50]
-#define SWIGTYPE_ptrdiff_t swig_types[51]
-#define SWIGTYPE_size_t swig_types[52]
-#define SWIGTYPE_std__ptrdiff_t swig_types[53]
-#define SWIGTYPE_std__size_t swig_types[54]
-static swig_type_info *swig_types[55];
-static swig_module_info swig_module = {swig_types, 55, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t swig_types[32]
+#define SWIGTYPE_p_std__string swig_types[33]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t swig_types[34]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator swig_types[35]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t swig_types[36]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator swig_types[37]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t swig_types[38]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator swig_types[39]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t swig_types[40]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator swig_types[41]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_std__allocatorTOpenBabel__OBNodeBase_p_t_t swig_types[42]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_std__allocatorTOpenBabel__OBNodeBase_p_t_t__iterator swig_types[43]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_std__allocatorTOpenBabel__OBResidue_p_t_t__iterator swig_types[44]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t swig_types[45]
+#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t swig_types[46]
+#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t__iterator swig_types[47]
+#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t swig_types[48]
+#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t swig_types[49]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t swig_types[50]
+#define SWIGTYPE_p_std__vectorTunsigned_int_std__allocatorTunsigned_int_t_t swig_types[51]
+#define SWIGTYPE_ptrdiff_t swig_types[52]
+#define SWIGTYPE_size_t swig_types[53]
+#define SWIGTYPE_std__ptrdiff_t swig_types[54]
+#define SWIGTYPE_std__size_t swig_types[55]
+static swig_type_info *swig_types[56];
+static swig_module_info swig_module = {swig_types, 56, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -11753,7 +11754,7 @@ static PyObject *_wrap_OBMol_UnsetFlag(PyObject *, PyObject *args) {
 static PyObject *_wrap_OBMol_DoTransformations(PyObject *, PyObject *args) {
     PyObject *resultobj = NULL;
     OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-    char *arg2 = (char *) 0 ;
+    std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > *arg2 = (std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > *) 0 ;
     OpenBabel::OBBase *result;
     PyObject * obj0 = 0 ;
     PyObject * obj1 = 0 ;
@@ -11761,10 +11762,9 @@ static PyObject *_wrap_OBMol_DoTransformations(PyObject *, PyObject *args) {
     if(!PyArg_ParseTuple(args,(char *)"OO:OBMol_DoTransformations",&obj0,&obj1)) goto fail;
     SWIG_Python_ConvertPtr(obj0, (void **)&arg1, SWIGTYPE_p_OpenBabel__OBMol, SWIG_POINTER_EXCEPTION | 0);
     if (SWIG_arg_fail(1)) SWIG_fail;
-    if (!SWIG_AsCharPtr(obj1, (char**)&arg2)) {
-        SWIG_arg_fail(2);SWIG_fail;
-    }
-    result = (OpenBabel::OBBase *)(arg1)->DoTransformations((char const *)arg2);
+    SWIG_Python_ConvertPtr(obj1, (void **)&arg2, SWIGTYPE_p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t, SWIG_POINTER_EXCEPTION | 0);
+    if (SWIG_arg_fail(2)) SWIG_fail;
+    result = (OpenBabel::OBBase *)(arg1)->DoTransformations((std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > const *)arg2);
     
     resultobj = SWIG_NewPointerObj((void*)(result), SWIGTYPE_p_OpenBabel__OBBase, 0);
     return resultobj;
@@ -15859,6 +15859,7 @@ static swig_type_info _swigt__p_a_3__double = {"_p_a_3__double", "double (*)[3]"
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, 0};
 static swig_type_info _swigt__p_p_double = {"_p_p_double", "double **", 0, 0, 0};
+static swig_type_info _swigt__p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t = {"_p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t", "std::map<std::string,std::string,std::less<std::string >,std::allocator<std::pair<std::string const,std::string > > > *", 0, 0, 0};
 static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *", 0, 0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t = {"_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t", "std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > > *", 0, 0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator = {"_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator", "std::vector<OpenBabel::OBAtom *,std::allocator<OpenBabel::OBAtom * > >::iterator *", 0, 0, 0};
@@ -15916,6 +15917,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_char,
   &_swigt__p_double,
   &_swigt__p_p_double,
+  &_swigt__p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t,
   &_swigt__p_std__string,
   &_swigt__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t,
   &_swigt__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator,
@@ -15973,6 +15975,7 @@ static swig_cast_info _swigc__p_a_3__double[] = {  {&_swigt__p_a_3__double, 0, 0
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_double[] = {  {&_swigt__p_p_double, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t[] = {  {&_swigt__p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator[] = {  {&_swigt__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
@@ -16030,6 +16033,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_char,
   _swigc__p_double,
   _swigc__p_p_double,
+  _swigc__p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t,
   _swigc__p_std__string,
   _swigc__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t,
   _swigc__p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator,
