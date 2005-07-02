@@ -882,8 +882,8 @@ public:
 
     //! \name Data modification methods
     //@{
-    void   SetTitle(const char *title) { _title = title; }
-    void   SetTitle(std::string &title){ _title = title; }
+    void   SetTitle(const char *title);
+    void   SetTitle(std::string &title);
     //! Set the stochiometric formula for this molecule
     void   SetFormula(std::string molFormula);
     //! Set the heat of formation for this molecule (in kcal/mol)
@@ -1107,6 +1107,8 @@ public:
 
 OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n");
 OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
+//! remove leading and trailing whitespace from a string
+OBAPI void Trim(string& txt);
 OBAPI void ThrowError(char *str);
 OBAPI void ThrowError(std::string &str);
 OBAPI void CartesianToInternal(std::vector<OBInternalCoord*>&,OBMol&);

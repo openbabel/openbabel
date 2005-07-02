@@ -1,3 +1,19 @@
+2005-07-02  Chris Morley  <c.morley@gaseq.co.uk>
+
+	*src/tokenst.cpp: Added Trim(), decl in mol.h
+
+	*src/mol.h, src/mol.cpp (OBMol::SetTitle): Moved definitions
+	to mol.cpp and added trim(). Tidier, but also overcomes
+	Windows(VC++6) problem with CR left at end after getline on
+	stream in binary mode, which is need for unix file compatibilty.
+	For consistency should also be done for OBCommentData::SetData()
+	Would this be safe?
+	 
+	*src/dat.h, src/data.cpp (OBElementTable::GetNumberOfElements):
+	Added initialization and moved definition to to cpp file.
+	MOL2Format was getting uninitialized data. Lazy loading was
+	too lazy.
+
 2005-07-01  Geoffrey Hutchison  <ghutchis@Alumina.local>
 
 	* src/formats/chemdrawformat.cpp, src/formats/crkformat.cpp,
@@ -18,6 +34,12 @@
 
 	* scripts/perl/openbabel_perl.cpp,
 	scripts/python/openbabel_python.cpp: Updated for 2005-07-01 snapshot.
+
+2005-06-30  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/formats/smilesformat.cpp(OBSmilesParser::ParseComplex():
+	Change size of symbol[] in  to 7.	Was failing on iodine 
+	isotope [123I]. Another deficiency found by David Hoekman.
 
 2005-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

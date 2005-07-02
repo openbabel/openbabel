@@ -114,6 +114,13 @@ void OBElementTable::ParseLine(const char *buffer)
     }
 }
 
+int OBElementTable::GetNumberOfElements()
+{ 
+    if (!_init)
+        Init();
+		return _element.size();
+}
+
 char *OBElementTable::GetSymbol(int atomicnum)
 {
     if (!_init)

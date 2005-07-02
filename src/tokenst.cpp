@@ -129,6 +129,21 @@ OBAPI bool tokenize(vector<string> &vcr, string &s, const char *delimstr, int li
     return(true);
 }
 
+OBAPI void Trim(string& txt)
+{
+	string::size_type pos = txt.find_last_not_of(" \t\n\r");
+	if(pos!=string::npos)
+		txt.erase(pos+1);
+	else
+		txt.erase();
+
+	pos = txt.find_first_not_of(" \t\n\r");
+	if(pos!=string::npos)
+		txt.erase(0, pos);
+	else
+		txt.erase();
+}
+
 } // end namespace OpenBabel
 
 //! \file tokenst.cpp

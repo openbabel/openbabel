@@ -152,6 +152,17 @@ will result in an error, but
 //
 // OBMol member functions
 //
+void  OBMol::SetTitle(const char *title)
+{ 
+	_title = title;
+	Trim(_title);
+}
+
+void  OBMol::SetTitle(std::string &title)
+{ 
+	_title = title;
+	Trim(_title);
+}
 
 bool SortVVInt(const vector<int> &a,const vector<int> &b)
 {

@@ -134,7 +134,7 @@ public:
     void  ParseLine(const char*);
 
     //! Returns the number of elements in the periodic table
-    int GetNumberOfElements() { return _element.size(); }
+    int		GetNumberOfElements();
 
     //! \deprecated Does not properly handle 'D' or 'T' hydrogen isotopes
     int   GetAtomicNum(const char *);
