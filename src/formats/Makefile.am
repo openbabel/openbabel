@@ -13,7 +13,7 @@ pkglib_LTLIBRARIES = \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la carformat.la cccformat.la \
 	chem3dformat.la chemdrawformat.la chemtoolformat.la \
-	cml.la cmlformat.la crkformat.la cssrformat.la \
+	cmlformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	gamessformat.la gaussformat.la ghemicalformat.la \
 	grosmos96format.la hinformat.la \
@@ -67,10 +67,7 @@ chemdrawformat_la_LDFLAGS = -module -avoid-version
 chemtoolformat_la_SOURCES = chemtoolformat.cpp
 chemtoolformat_la_LDFLAGS = -module -avoid-version 
 
-cml_la_SOURCES = cml.cpp
-cml_la_LDFLAGS = -module -avoid-version 
-
-cmlformat_la_SOURCES = cmlformat.cpp
+cmlformat_la_SOURCES = cml.cpp cmlformat.cpp
 cmlformat_la_LDFLAGS = -module -avoid-version 
 
 crkformat_la_SOURCES = crkformat.cpp

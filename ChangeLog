@@ -1,3 +1,17 @@
+2005-07-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.h: Move include "babelconfig.h" to the top of
+	all #includes to ensure proper conditional compilation. Suggested
+	by Jean Brefort.
+
+	* src/mol.h: Ensure std:: is used on Trim() declaration.
+
+	* src/generic.h: Call Trim() for OBCommentData().
+
+	* src/formats/Makefile.in, src/formats/Makefile.am: Merge cml.cpp
+	and cmlformat.cpp into a combined library for proper loading -- as
+	reported by Jean.
+
 2005-07-04  Chris Morley  <c.morley@gaseq.co.uk>
 
 	Some of Jean Brefort's suggested patches.
