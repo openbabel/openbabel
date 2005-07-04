@@ -19,6 +19,8 @@ GNU General Public License for more details.
 #ifndef OB_CONV_H
 #define OB_CONV_H
 
+#include "babelconfig.h"
+
 #if HAVE_IOSTREAM
 #include <iostream>
 #elif HAVE_IOSTREAM_H
@@ -32,7 +34,6 @@ GNU General Public License for more details.
 #include <vector>
 #include <map>
 
-#include "babelconfig.h"
 #include "dlhandler.h"
 
 // These macros are used in DLL builds. If they have not
