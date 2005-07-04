@@ -169,9 +169,9 @@ bool OBConversion::FormatFilesLoaded = false;
 OBFormat* OBConversion::pDefaultFormat=NULL;
 
 OBConversion::OBConversion(istream* is, ostream* os) : 
-	StartNumber(1), EndNumber(0),pInFormat(NULL),pOutFormat(NULL),
-	Index(0), pOb1(NULL), Count(-1), m_IsLast(true), MoreFilesToCome(false),
-	OneObjectOnly(false)
+	pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
+	EndNumber(0), Count(-1), m_IsLast(true), MoreFilesToCome(false),
+	OneObjectOnly(false), pOb1(NULL)
 {
 	pInStream=is;
 	pOutStream=os;
@@ -199,7 +199,7 @@ FMapType& OBConversion::FormatsMIMEMap()
 	return *fm;
 }
 
-///////////////////////////////////////////////
+/*///////////////////////////////////////////////
 OBConversion::OBConversion(const OBConversion& O)
 {
 	//Copy constructor. Needed because of strings
@@ -218,7 +218,7 @@ OBConversion::OBConversion(const OBConversion& O)
 	FormatsMap();//rubbish
 	FormatsMIMEMap();
 }
-
+*/
 /////////////////////////////////////////////////
 OBConversion::~OBConversion() 
 {
@@ -515,9 +515,9 @@ int OBConversion::AddChemObject(OBBase* pOb)
 		return Count;
 	}
 	Count++;
-	if(Count>=StartNumber)//keeps reading objects but does nothing with them
+	if(Count>=(int)StartNumber)//keeps reading objects but does nothing with them
 	{	
-		if(Count==EndNumber)
+		if(Count==(int)EndNumber)
 			ReadyToInput=false; //stops any more objects being read
 		if(pOb)
 		{
@@ -702,7 +702,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 {
 	
 	istream* pInStream;
-	ostream* pOutStream;
+	ostream* pOutStream=NULL;
 	ifstream is;
 	ofstream os;
 	bool HasMultipleOutputFiles=false;

@@ -154,6 +154,9 @@ public:
 	{
 		return NULL; //shows not implemented in the format class
 	}
+
+	/// @brief Format classes do not have a destructor
+	virtual ~OBFormat(){};
 };
 
 //*************************************************
@@ -178,7 +181,7 @@ public:
 	//@{
 							OBConversion(std::istream* is=NULL, std::ostream* os=NULL);
 	/// @brief Copy constructor
-							OBConversion(const OBConversion& Conv);
+	//						OBConversion(const OBConversion& Conv);
 	virtual     ~OBConversion(); 
 	//@}	
 	/// @name Collection of formats
@@ -349,4 +352,5 @@ protected:
 
 //! \file
 //! \brief Handle file conversions. Declaration of OBFormat, OBConversion.
+
  
