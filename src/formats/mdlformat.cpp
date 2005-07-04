@@ -441,8 +441,8 @@ bool MOLFormat::ReadV3000Block(istream& ifs, OBMol& mol, OBConversion* pConv,boo
 		{
 			if(!ReadV3000Line(ifs,vs) || vs[2]!="COUNTS") return false;
 			int natoms = atoi(vs[3].c_str());
-			int nbonds = atoi(vs[4].c_str());
-			int chiral = atoi(vs[7].c_str()); 
+			//int nbonds = atoi(vs[4].c_str());
+			//int chiral = atoi(vs[7].c_str()); 
 			//number of s groups, number of 3D contraints, chiral flag and regno not yet implemented
 			mol.ReserveAtoms(natoms);
 
@@ -512,7 +512,7 @@ bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 		vector<string>::iterator itr;
 		for(itr=vs.begin()+8;itr!=vs.end();itr++)
 		{
-			unsigned int pos = (*itr).find('=');
+			string::size_type pos = (*itr).find('=');
 			if (pos==string::npos) return false;
 			int val = atoi((*itr).substr(pos+1).c_str());
 
@@ -566,7 +566,7 @@ bool MOLFormat::ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 		vector<string>::iterator itr;
 		for(itr=vs.begin()+6;itr!=vs.end();itr++)
 		{
-			unsigned int pos = (*itr).find('=');
+			string::size_type pos = (*itr).find('=');
 			if (pos==string::npos) return false;
 			int val = atoi((*itr).substr(pos+1).c_str());
 

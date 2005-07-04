@@ -590,7 +590,7 @@ bool OBSmilesParser::ParseSimple(OBMol &mol)
             //Calculate available valency on prevatom
             //This is far more difficult than it should be!
             //Data not always updated during molecule constuction.
-            int val;
+            int val=0;
             if(prevatom->IsCarbon())
                 val=4;
             else if(prevatom->IsNitrogen())

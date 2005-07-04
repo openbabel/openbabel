@@ -81,7 +81,7 @@ bool CRK2DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
+    mol.SetTitle( pConv->GetTitle()); //default title is the filename
 
     char buffer[BUFF_SIZE];//CM extra buffer
 
@@ -180,7 +180,7 @@ bool CRK3DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
+    mol.SetTitle( pConv->GetTitle()); //default title is the filename
 
     char buffer[BUFF_SIZE];//CM extra buffer
 

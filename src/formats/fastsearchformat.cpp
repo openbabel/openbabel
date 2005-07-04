@@ -25,7 +25,7 @@ class FastSearchFormat : public OBFormat
 {
 public:
 	//Register this format type ID
-	FastSearchFormat() : fsi(NULL), MaxCandidates(4000)
+	FastSearchFormat() : MaxCandidates(4000), fsi(NULL) 
 	{
 		OBConversion::RegisterFormat("fs",this);
 	}
@@ -155,7 +155,7 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	//Have to open input stream again because needs to be in binary mode
 	ifstream ifs;
 	if(!indexname.empty())
-		ifs.open(indexname.c_str(),ios_base::binary);
+		ifs.open(indexname.c_str(),ios::binary);
 	if(!ifs)
 	{
 		cerr << "Couldn't open " << indexname << endl;
@@ -184,7 +184,7 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		//datafile name derived from index file probably won't have a file path
 		//but indexname may. Derive a full datafile name
 		string path;
-		unsigned int pos = indexname.find_last_of("/\\");
+		string::size_type pos = indexname.find_last_of("/\\");
 		if(pos==string::npos)
 			path = datafilename;
 		else
@@ -235,6 +235,7 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 		<<  " and may take some time..." << flush;
 	
 	OBStopwatch sw;
+	sw.Start(); //seems stupid but makes gcc-4 happy
 	
 	ostream* pOs = pConv->GetOutStream();
 	bool NewOstreamUsed=false;
@@ -247,7 +248,7 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 			//No index filename specified
 			//Derive index name from datfile name
 			string indexname=pConv->GetInFilename();
-			unsigned int pos=indexname.find_last_of('.');
+			string::size_type pos=indexname.find_last_of('.');
 			if(pos!=string::npos)
 				indexname.erase(pos);
 			indexname += ".fs";
@@ -282,7 +283,7 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 			cerr << "No datafile! " << endl;
 			return false;
 		}
-		unsigned int pos = datafilename.find_last_of("/\\");
+		string::size_type pos = datafilename.find_last_of("/\\");
 		if(pos!=string::npos)
 			datafilename=datafilename.substr(pos+1);
 		fsi = new FastSearchIndexer(datafilename, pOs, fptype, nwords, nmols);

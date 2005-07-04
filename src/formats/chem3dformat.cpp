@@ -74,7 +74,7 @@ bool CHEM3D1Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
+    mol.SetTitle( pConv->GetTitle()); //default title is the filename
 
     return(ReadChem3d(ifs,mol,false,"MM2"));
 }
@@ -143,7 +143,7 @@ bool CHEM3D2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
+    mol.SetTitle( pConv->GetTitle()); //default title is the filename
 
     return(CHEM3D1Format::ReadChem3d(ifs,mol,false,"C3D"));
 }

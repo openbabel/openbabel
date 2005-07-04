@@ -185,7 +185,7 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "An experimental RXN file" <<endl;
 
     char buf[10];
-    sprintf(buf,"%3i%3i",pReact->reactants.size(),pReact->products.size());
+    sprintf(buf,"%3u%3u",(unsigned)pReact->reactants.size(),pReact->products.size());
     ofs << buf << endl;
 
     vector<OBMol*>::iterator itr;

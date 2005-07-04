@@ -1,3 +1,22 @@
+2005-07-04  Chris Morley  <c.morley@gaseq.co.uk>
+
+	Some of Jean Brefort's suggested patches.
+
+	*src/obconversion.h, src/obconversion.cpp: 
+	The base class OBFormat needs a virtual destructor,but then
+	derived format classes don't need their own; the compiler 
+	will generate one if needed.
+
+	I've realized that OBConversion does not need an explicit 
+	copy constructor and have removed it.
+
+	*src/formats/bgfformat.cpp, cacaoformat.cpp, ccformat.cpp.
+	chem3dformat.cpp, ckrformat.cpp, featformat.cpp, shelxformat.cpp:
+	assigned the filename to OBMol title when reading.
+
+	*src/formats/mdlformat.cpp, src/formats/rxnformat.cpp,
+	src/formats/smilesformat.cpp: 
+
 2005-07-02  Chris Morley  <c.morley@gaseq.co.uk>
 
 	*src/tokenst.cpp: Added Trim(), decl in mol.h
