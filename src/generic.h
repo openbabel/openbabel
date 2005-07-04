@@ -20,6 +20,8 @@ GNU General Public License for more details.
 #ifndef OB_GENERIC_H
 #define OB_GENERIC_H
 
+#include "babelconfig.h"
+
 #include <string>
 #include <vector>
 
@@ -29,6 +31,8 @@ namespace OpenBabel
 class OBAtom;
 class OBBond;
 class OBRing;
+
+OBAPI void Trim(std::string& txt);
 
 //! \brief Classification of data stored via OBGenericData class and subclasses.
 //!
@@ -80,11 +84,11 @@ public:
     OBCommentData& operator=(const OBCommentData &src);
 
     void          SetData(const std::string &data)
-    {        _data = data;    }
+    { _data = data; Trim(_data); }
     void          SetData(const char *d)
-    {        _data = d;       }
+    {_data = d; Trim(_data);     }
     const std::string &GetData()              const
-    {        return(_data);   }
+    {        return(_data);      }
 };
 
 //! \brief Used to store information on an external bond 
