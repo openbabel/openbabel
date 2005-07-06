@@ -99,7 +99,7 @@ void OBElementTable::ParseLine(const char *buffer)
     if (buffer[0] != '#') // skip comment line (at the top)
     {
         // Ignore RGB columns
-        sscanf(buffer,"%d %s %lf %lf %lf %d %lf %lf %*lf %*lf %*lf",
+        sscanf(buffer,"%d %s %lf %lf %lf %d %lf %lf %*f %*f %*f",
                &num,
                symbol,
                &Rcov,
@@ -118,7 +118,8 @@ int OBElementTable::GetNumberOfElements()
 { 
     if (!_init)
         Init();
-		return _element.size();
+    
+    return _element.size();
 }
 
 char *OBElementTable::GetSymbol(int atomicnum)
