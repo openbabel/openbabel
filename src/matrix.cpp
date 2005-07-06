@@ -19,7 +19,6 @@ GNU General Public License for more details.
 
 #include "matrix.h"
 #include "math/vector3.h"
-#include <stdio.h>
 
 using namespace std;
 
@@ -426,14 +425,11 @@ bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
 
 bool convert_matrix_f(std::vector<std::vector<double> > &src, double *dst)
 {
-    unsigned int i, j, idx;
+  unsigned int i, j, idx = 0;
 
     for ( i = 0 ; i < src.size() ; i++ )
-    {
-        idx = i * src[i].size();
-        for ( j = 0 ; j < src[i].size() ; j++ )
-            dst[idx+j] = src[i][j];
-    }
+      for ( j = 0 ; j < src[i].size() ; j++ )
+            dst[idx++] = src[i][j];
 
     return true;
 }
