@@ -404,6 +404,9 @@ OBAPI void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
     if (vic.empty())
         return;
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::InternalToCartesian", obAuditMsg);
+
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
         index = atom->GetIdx();
@@ -475,6 +478,10 @@ OBAPI void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
     double r,sum;
     OBAtom *atom,*nbr,*ref;
     vector<OBNodeBase*>::iterator i,j,m;
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::CartesianToInternal", obAuditMsg);
+
     //set reference atoms
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {

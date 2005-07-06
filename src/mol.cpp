@@ -187,6 +187,9 @@ void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, double ang)
     vector<int> tor;
     vector<int> atoms;
 
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::SetTorsion", obAuditMsg);
+
     tor.push_back(a->GetCIdx());
     tor.push_back(b->GetCIdx());
     tor.push_back(c->GetCIdx());
@@ -400,10 +403,9 @@ void OBMol::FindTorsions()
     return;
 }
 
-
+//! Each vector<int> contains the atom numbers of a contig fragment
+//! The vectors are sorted by size from largest to smallest
 void OBMol::FindLargestFragment(OBBitVec &lf)
-//each vector<int> contains the atom numbers of a contig fragment
-//the vectors are sorted by size from largest to smallest
 {
     int j;
     OBAtom *atom;
@@ -876,6 +878,10 @@ string OBMol::GetFormula()
   if (dp != NULL) // we already set the formula
     return dp->GetValue();
 
+  obErrorLog.ThrowError(__FUNCTION__,
+			"Ran OpenBabel::SetFormula -- Hill order formula",
+			obAuditMsg);
+
   // OK, now let's generate the formula and store it for future use.
   // These are the atomic numbers of the elements in alphabetical order.
   const int NumElements = 110;
@@ -972,6 +978,10 @@ int OBMol::GetTotalCharge()
         return(_totalCharge);
     else // calculate from atomic formal charges (seems the best default)
     {
+      obErrorLog.ThrowError(__FUNCTION__,
+			    "Ran OpenBabel::GetTotalCharge -- calculated from formal charges", 
+			    obAuditMsg);
+
         OBAtom *atom;
         vector<OBNodeBase*>::iterator i;
         int chg = 0;
@@ -1001,6 +1011,10 @@ unsigned int OBMol::GetTotalSpinMultiplicity()
         return(_totalSpin);
     else // calculate from atomic spin information (assuming high-spin case)
     {
+	obErrorLog.ThrowError(__FUNCTION__,
+			      "Ran OpenBabel::GetTotalSpinMultiplicity -- calculating from atomic spins and high spin",
+			      obAuditMsg);
+
         OBAtom *atom;
         vector<OBNodeBase*>::iterator i;
         unsigned int spin = 1;
@@ -1168,6 +1182,9 @@ OBMol &OBMol::operator+=(const OBMol &source)
 
 bool OBMol::Clear()
 {
+  obErrorLog.ThrowError(__FUNCTION__,
+			"Ran OpenBabel::Clear Molecule", obAuditMsg);
+
     vector<OBNodeBase*>::iterator i;
     vector<OBEdgeBase*>::iterator j;
     for (i = _vatom.begin();i != _vatom.end();i++)
@@ -1527,6 +1544,9 @@ bool OBMol::StripSalts()
     if (cfl.empty() || cfl.size() == 1)
         return(false);
 
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::StripSalts", obAuditMsg);
+
     max = cfl.begin();
     for (i = cfl.begin();i != cfl.end();i++)
         if ((*max).size() < (*i).size())
@@ -1558,6 +1578,10 @@ bool OBMol::DeleteNonPolarHydrogens()
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;
     vector<OBNodeBase*> delatoms;
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::DeleteHydrogens -- nonpolar",
+			  obAuditMsg);
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
         if (atom->IsNonPolarHydrogen())
@@ -1595,6 +1619,9 @@ bool OBMol::DeleteHydrogens()
     OBAtom *atom,*nbr;
     vector<OBNodeBase*>::iterator i;
     vector<OBNodeBase*> delatoms,va;
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::DeleteHydrogens", obAuditMsg);
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
         if (atom->IsHydrogen())
@@ -1729,6 +1756,13 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
     if (HasHydrogensAdded())
         return(true);
     SetHydrogensAdded();
+
+    if (!polaronly)
+      obErrorLog.ThrowError(__FUNCTION__,
+			    "Ran OpenBabel::AddHydrogens", obAuditMsg);
+    else
+          obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::AddHydrogens -- polar only", obAuditMsg);
 
     //count up number of hydrogens to add
     OBAtom *atom,*h;
@@ -1928,6 +1962,9 @@ bool OBMol::CorrectForPH()
         return(true);
     phmodel.CorrectForPH(*this);
 
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::CorrectForPH", obAuditMsg);
+
     return(true);
 }
 
@@ -1938,7 +1975,11 @@ bool OBMol::AssignSpinMultiplicity()
         return(true);
 
     SetSpinMultiplicityAssigned();
-		
+
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::AssignSpinMultiplicity",
+			  obAuditMsg);
+
     OBAtom *atom;
     int diff;
     vector<OBNodeBase*>::iterator k;
@@ -2203,6 +2244,9 @@ void CorrectBadResonanceForm(OBMol &mol)
     vector<vector<int> > mlist;
     vector<vector<int> >::iterator i;
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::CorrectBadResonanceForm", obAuditMsg);
+
     OBSmartsPattern acid;
     acid.Init("[oD1]c[oD1]");
 
@@ -2407,6 +2451,9 @@ bool OBMol::Kekulize()
     // Not quite sure why this is here -GRH 2003
     //  if (NumAtoms() > 255) return(false);
 
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::Kekulize", obAuditMsg);
+
     for (bond = BeginBond(i);bond;bond = NextBond(i))
         if (bond->IsKSingle())
             bond->SetBO(1);
@@ -2574,6 +2621,9 @@ void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)
 {
     vector<int> children;
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::Align", obAuditMsg);
+
     //find which atoms to rotate
     FindChildren(children,a1->GetIdx(),a2->GetIdx());
     children.push_back(a2->GetIdx());
@@ -2620,6 +2670,9 @@ void OBMol::ToInertialFrame(int conf,double *rmat)
     double mi;
     double mass = 0.0;
     double center[3],m[3][3];
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::ToInertialFrame", obAuditMsg);
 
     for (i = 0;i < 3;i++)
         memset(&m[i],'\0',sizeof(double)*3);
@@ -2967,6 +3020,9 @@ void OBMol::RenumberAtoms(vector<OBNodeBase*> &v)
     if (Empty())
         return;
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::RenumberAtoms", obAuditMsg);
+
     OBAtom *atom;
     vector<OBNodeBase*> va;
     vector<OBNodeBase*>::iterator i;
@@ -3032,6 +3088,9 @@ void OBMol::ConnectTheDots(void)
     if (Empty())
         return;
     if (_dimension != 3) return; // not useful on non-3D structures
+
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::ConnectTheDots", obAuditMsg);
 
     int j,k,max;
     bool unset = false;
@@ -3154,6 +3213,9 @@ void OBMol::PerceiveBondOrders()
     if (Empty())
         return;
     if (_dimension != 3) return; // not useful on non-3D structures
+
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::PerceiveBondOrders", obAuditMsg);
 
     OBAtom *atom, *b, *c;
     vector3 v1, v2;
@@ -3412,6 +3474,9 @@ void OBMol::Center()
     size = NumAtoms();
     fsize = -1.0/(double)NumAtoms();
 
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::Center", obAuditMsg);
+
     vector<double*>::iterator i;
     for (i = _vconf.begin();i != _vconf.end();i++)
     {
@@ -3439,6 +3504,9 @@ void OBMol::Center()
 
 vector3 OBMol::Center(int nconf)
 {
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::Center", obAuditMsg);
+
     SetConformer(nconf);
 
     OBAtom *atom;
@@ -3476,11 +3544,14 @@ void OBMol::Translate(const vector3 &v)
         Translate(v,i);
 }
 
-/*! this method add the vector v to all atom positions in the
+/*! this method adds the vector v to all atom positions in the
   conformer nconf. If nconf == OB_CURRENT_CONFORMER, then the atom
   positions in the current conformer are translated. */
 void OBMol::Translate(const vector3 &v,int nconf)
 {
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::Translate", obAuditMsg);
+
     int i,size;
     double x,y,z;
     double *c = (nconf == OB_CURRENT_CONFORMER)? _c : GetConformer(nconf);
@@ -3520,6 +3591,9 @@ void OBMol::Rotate(const double m[9],int nconf)
     int i,size;
     double x,y,z;
     double *c = (nconf == OB_CURRENT_CONFORMER)? _c : GetConformer(nconf);
+
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::Rotate", obAuditMsg);
 
     size = NumAtoms();
     for (i = 0;i < size;i++)
@@ -3573,71 +3647,12 @@ void OBMol::DeleteConformer(int idx)
     _vconf.erase((_vconf.begin()+idx));
 }
 
-/* NF
-bool OBMol::Compress(void)
-{
-  if (!_compressed && NumAtoms() < 256)
-    {
-      int size = 0;
-      string buf;
- 
-      WriteBinary(buf, size, *this);
-		
-      if (size > 0)
-        {
-          _compressed = true;
- 
-	  OBCompressData *cd = new OBCompressData;
-	  cd->SetData((unsigned char*) buf.data(),size);
- 
-          Clear();
-	  SetData(cd);
-        }
-      else
-          _compressed = false;
-    }
- 
-  return _compressed;
-}
- 
-bool OBMol::UnCompress(void)
-{
-  int size = 0;
-  unsigned char *buf;
-  unsigned char *data;
- 
-  if (_compressed)
-    {
-	  OBCompressData *cd = (OBCompressData*)GetData(obCompressData);
-      data = cd->GetData();
- 
-      if (data != NULL)
-        {
-		  size = cd->GetSize();
- 
-          if (size > 0)
-            {
-              _compressed = false;
- 
-              buf = new unsigned char[size];
- 
-              memcpy(buf, data, size);
- 
-              Clear();
-              ReadBinary(buf,*this,size);
-			  delete [] buf;
-              return true;
-            }
-        }
-    }
- 
-  return false;
-}
-*/
-
 ///Converts for instance [N+]([O-])=O to N(=O)=O
 bool OBMol::ConvertDativeBonds()
 {
+  obErrorLog.ThrowError(__FUNCTION__,
+			"Ran OpenBabel::ConvertDativeBonds", obAuditMsg);
+
 	//Look for + and - charges on adjacent atoms
 	OBAtom* patom;
 	vector<OBNodeBase*>::iterator i;

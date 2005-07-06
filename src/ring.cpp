@@ -76,6 +76,8 @@ void OBMol::FindSSSR()
     if (HasSSSRPerceived())
         return;
     SetSSSRPerceived();
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::FindSSSR", obAuditMsg);
 
     OBRing *ring;
     vector<OBRing*>::iterator j;
@@ -418,7 +420,7 @@ OBRing::OBRing(const OBRing &src)
 }
 
 /*!
-**\brief OBRing assignemtn operator
+**\brief OBRing assignment operator
 **\param src reference to original OBRing object (rhs)
 **\return reference to modified OBRing object (lhs)
 */

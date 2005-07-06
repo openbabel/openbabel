@@ -859,6 +859,9 @@ bool OBChainsParser::PerceiveChains(OBMol &mol)
     SetResidueInformation(mol);
     CleanupMol();
 
+    obErrorLog.ThrowError(__FUNCTION__,
+			  "Ran OpenBabel::PerceiveChains", obAuditMsg);
+
     return result;
 }
 

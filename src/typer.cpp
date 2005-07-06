@@ -136,6 +136,9 @@ void OBAtomTyper::AssignTypes(OBMol &mol)
     if (!_init)
         Init();
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::AssignTypes", obAuditMsg);
+
     mol.SetAtomTypesPerceived();
 
     vector<vector<int> >::iterator j;
@@ -158,6 +161,8 @@ void OBAtomTyper::AssignHyb(OBMol &mol)
     aromtyper.AssignAromaticFlags(mol);
 
     mol.SetHybridizationPerceived();
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::AssignHybridization", obAuditMsg);
 
     OBAtom *atom;
     vector<OBNodeBase*>::iterator k;
@@ -186,6 +191,8 @@ void OBAtomTyper::AssignImplicitValence(OBMol &mol)
         Init();
 
     mol.SetImplicitValencePerceived();
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::AssignImplicitValence", obAuditMsg);
 
     // FF Ensure that the aromatic typer will not be called
     int oldflags = mol.GetFlags(); // save the current state flags
@@ -257,221 +264,221 @@ void OBAtomTyper::CorrectAromaticNitrogens(OBMol &mol)
 
     return;
 
-    int j;
-    OBAtom *atom,*nbr,*a;
-    vector<OBNodeBase*>::iterator i,m;
-    vector<OBEdgeBase*>::iterator k;
-    OBBitVec curr,used,next;
-    vector<OBNodeBase*> v_N,v_OS;
+//     int j;
+//     OBAtom *atom,*nbr,*a;
+//     vector<OBNodeBase*>::iterator i,m;
+//     vector<OBEdgeBase*>::iterator k;
+//     OBBitVec curr,used,next;
+//     vector<OBNodeBase*> v_N,v_OS;
 
-    vector<bool> _aromNH;
-    _aromNH.clear();
-    _aromNH.resize(mol.NumAtoms()+1);
+//     vector<bool> _aromNH;
+//     _aromNH.clear();
+//     _aromNH.resize(mol.NumAtoms()+1);
 
-    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-        if (atom->IsAromatic() && !atom->IsCarbon() && !used[atom->GetIdx()])
-        {
-            vector<OBNodeBase*> rsys;
-            rsys.push_back(atom);
-            curr |= atom->GetIdx();
-            used |= atom->GetIdx();
+//     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+//         if (atom->IsAromatic() && !atom->IsCarbon() && !used[atom->GetIdx()])
+//         {
+//             vector<OBNodeBase*> rsys;
+//             rsys.push_back(atom);
+//             curr |= atom->GetIdx();
+//             used |= atom->GetIdx();
 
-            while (!curr.Empty())
-            {
-                next.Clear();
-                for (j = curr.NextBit(0);j != curr.EndBit();j = curr.NextBit(j))
-                {
-                    atom = mol.GetAtom(j);
-                    for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-                    {
-                        if (!(*k)->IsAromatic())
-                            continue;
-                        if (used[nbr->GetIdx()])
-                            continue;
+//             while (!curr.Empty())
+//             {
+//                 next.Clear();
+//                 for (j = curr.NextBit(0);j != curr.EndBit();j = curr.NextBit(j))
+//                 {
+//                     atom = mol.GetAtom(j);
+//                     for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
+//                     {
+//                         if (!(*k)->IsAromatic())
+//                             continue;
+//                         if (used[nbr->GetIdx()])
+//                             continue;
 
-                        rsys.push_back(nbr);
-                        next |= nbr->GetIdx();
-                        used |= nbr->GetIdx();
-                    }
-                }
+//                         rsys.push_back(nbr);
+//                         next |= nbr->GetIdx();
+//                         used |= nbr->GetIdx();
+//                     }
+//                 }
 
-                curr = next;
-            }
+//                 curr = next;
+//             }
 
-            //count number of electrons in the ring system
-            v_N.clear();
-            v_OS.clear();
-            int nelectrons = 0;
+//             //count number of electrons in the ring system
+//             v_N.clear();
+//             v_OS.clear();
+//             int nelectrons = 0;
 
-            for (m = rsys.begin();m != rsys.end();m++)
-            {
-                a = (OBAtom *)*m;
+//             for (m = rsys.begin();m != rsys.end();m++)
+//             {
+//                 a = (OBAtom *)*m;
 
-                int hasExoDoubleBond = false;
-                for (nbr = a->BeginNbrAtom(k);nbr;nbr = a->NextNbrAtom(k))
-                    if ((*k)->GetBO() == 2 && !(*k)->IsInRing())
-                        if (nbr->IsOxygen() || nbr->IsSulfur() || nbr->IsNitrogen())
-                            hasExoDoubleBond = true;
+//                 int hasExoDoubleBond = false;
+//                 for (nbr = a->BeginNbrAtom(k);nbr;nbr = a->NextNbrAtom(k))
+//                     if ((*k)->GetBO() == 2 && !(*k)->IsInRing())
+//                         if (nbr->IsOxygen() || nbr->IsSulfur() || nbr->IsNitrogen())
+//                             hasExoDoubleBond = true;
 
-                if (a->IsCarbon() && hasExoDoubleBond)
-                    continue;
+//                 if (a->IsCarbon() && hasExoDoubleBond)
+//                     continue;
 
-                if (a->IsCarbon())
-                    nelectrons++;
-                else
-                    if (a->IsOxygen() || a->IsSulfur())
-                    {
-                        v_OS.push_back(a);
-                        nelectrons += 2;
-                    }
-                    else
-                        if (a->IsNitrogen())
-                        {
-                            v_N.push_back(a); //store nitrogens
-                            nelectrons++;
-                        }
-            }
+//                 if (a->IsCarbon())
+//                     nelectrons++;
+//                 else
+//                     if (a->IsOxygen() || a->IsSulfur())
+//                     {
+//                         v_OS.push_back(a);
+//                         nelectrons += 2;
+//                     }
+//                     else
+//                         if (a->IsNitrogen())
+//                         {
+//                             v_N.push_back(a); //store nitrogens
+//                             nelectrons++;
+//                         }
+//             }
 
-            //calculate what the number of electrons should be for aromaticity
-            int naromatic = 2+4*((int)((double)(rsys.size()-2)*0.25+0.5));
+//             //calculate what the number of electrons should be for aromaticity
+//             int naromatic = 2+4*((int)((double)(rsys.size()-2)*0.25+0.5));
 
-            if (nelectrons > naromatic) //try to give one electron back to O or S
-                for (m = v_OS.begin();m != v_OS.end();m++)
-                {
-                    if (naromatic == nelectrons)
-                        break;
-                    if ((*m)->GetValence() == 2 && (*m)->GetHvyValence() == 2)
-                    {
-                        nelectrons--;
-                        ((OBAtom*)*m)->SetFormalCharge(1);
-                    }
-                }
+//             if (nelectrons > naromatic) //try to give one electron back to O or S
+//                 for (m = v_OS.begin();m != v_OS.end();m++)
+//                 {
+//                     if (naromatic == nelectrons)
+//                         break;
+//                     if ((*m)->GetValence() == 2 && (*m)->GetHvyValence() == 2)
+//                     {
+//                         nelectrons--;
+//                         ((OBAtom*)*m)->SetFormalCharge(1);
+//                     }
+//                 }
 
-            if (v_N.empty())
-                continue; //no nitrogens found in ring
+//             if (v_N.empty())
+//                 continue; //no nitrogens found in ring
 
-            //check for protonated nitrogens
-            for (m = v_N.begin();m != v_N.end();m++)
-            {
-                if (naromatic == nelectrons)
-                    break;
-                if (((OBAtom*)*m)->GetValence() == 3 &&
-                        ((OBAtom*)*m)->GetHvyValence() == 2)
-                {
-                    nelectrons++;
-                    _aromNH[((OBAtom*)*m)->GetIdx()] = true;
-                }
-                if (((OBAtom*)*m)->GetFormalCharge() == -1)
-                {
-                    nelectrons++;
-                    _aromNH[((OBAtom*)*m)->GetIdx()] = false;
-                }
-            }
+//             //check for protonated nitrogens
+//             for (m = v_N.begin();m != v_N.end();m++)
+//             {
+//                 if (naromatic == nelectrons)
+//                     break;
+//                 if (((OBAtom*)*m)->GetValence() == 3 &&
+//                         ((OBAtom*)*m)->GetHvyValence() == 2)
+//                 {
+//                     nelectrons++;
+//                     _aromNH[((OBAtom*)*m)->GetIdx()] = true;
+//                 }
+//                 if (((OBAtom*)*m)->GetFormalCharge() == -1)
+//                 {
+//                     nelectrons++;
+//                     _aromNH[((OBAtom*)*m)->GetIdx()] = false;
+//                 }
+//             }
 
-            //charge up tert nitrogens
-            for (m = v_N.begin();m != v_N.end();m++)
-                if (((OBAtom*)*m)->GetHvyValence() == 3
-                        && ((OBAtom*)*m)->BOSum() < 5)
-                    ((OBAtom*)*m)->SetFormalCharge(1);
+//             //charge up tert nitrogens
+//             for (m = v_N.begin();m != v_N.end();m++)
+//                 if (((OBAtom*)*m)->GetHvyValence() == 3
+//                         && ((OBAtom*)*m)->BOSum() < 5)
+//                     ((OBAtom*)*m)->SetFormalCharge(1);
 
-            //try to uncharge nitrogens first
-            for (m = v_N.begin();m != v_N.end();m++)
-            {
-                if (((OBAtom*)*m)->BOSum() > 4)
-                    continue; //skip n=O
-                if (naromatic == nelectrons)
-                    break;
-                if (((OBAtom*)*m)->GetHvyValence() == 3)
-                {
-                    nelectrons++;
-                    ((OBAtom*)*m)->SetFormalCharge(0);
-                }
-            }
+//             //try to uncharge nitrogens first
+//             for (m = v_N.begin();m != v_N.end();m++)
+//             {
+//                 if (((OBAtom*)*m)->BOSum() > 4)
+//                     continue; //skip n=O
+//                 if (naromatic == nelectrons)
+//                     break;
+//                 if (((OBAtom*)*m)->GetHvyValence() == 3)
+//                 {
+//                     nelectrons++;
+//                     ((OBAtom*)*m)->SetFormalCharge(0);
+//                 }
+//             }
 
-            if (naromatic == nelectrons)
-                continue;
+//             if (naromatic == nelectrons)
+//                 continue;
 
-            //try to protonate amides next
-            for (m = v_N.begin();m != v_N.end();m++)
-            {
-                if (naromatic == nelectrons)
-                    break;
-                if (((OBAtom*)*m)->IsAmideNitrogen() &&
-                        ((OBAtom*)*m)->GetValence() == 2 &&
-                        ((OBAtom*)*m)->GetHvyValence() == 2 &&
-                        !_aromNH[((OBAtom*)*m)->GetIdx()])
-                {
-                    nelectrons++;
-                    _aromNH[((OBAtom*)*m)->GetIdx()] = true;
-                }
-            }
+//             //try to protonate amides next
+//             for (m = v_N.begin();m != v_N.end();m++)
+//             {
+//                 if (naromatic == nelectrons)
+//                     break;
+//                 if (((OBAtom*)*m)->IsAmideNitrogen() &&
+//                         ((OBAtom*)*m)->GetValence() == 2 &&
+//                         ((OBAtom*)*m)->GetHvyValence() == 2 &&
+//                         !_aromNH[((OBAtom*)*m)->GetIdx()])
+//                 {
+//                     nelectrons++;
+//                     _aromNH[((OBAtom*)*m)->GetIdx()] = true;
+//                 }
+//             }
 
-            if (naromatic == nelectrons)
-                continue;
+//             if (naromatic == nelectrons)
+//                 continue;
 
-            //protonate amines in 5 membered rings first - try to match kekule
-            for (m = v_N.begin();m != v_N.end();m++)
-            {
-                if (naromatic == nelectrons)
-                    break;
-                if (((OBAtom*)*m)->GetValence() == 2 &&
-                        !_aromNH[((OBAtom*)*m)->GetIdx()] &&
-                        ((OBAtom*)*m)->IsInRingSize(5) &&
-                        ((OBAtom*)*m)->BOSum() == 2)
-                {
-                    nelectrons++;
-                    _aromNH[((OBAtom*)*m)->GetIdx()] = true;
-                }
-            }
+//             //protonate amines in 5 membered rings first - try to match kekule
+//             for (m = v_N.begin();m != v_N.end();m++)
+//             {
+//                 if (naromatic == nelectrons)
+//                     break;
+//                 if (((OBAtom*)*m)->GetValence() == 2 &&
+//                         !_aromNH[((OBAtom*)*m)->GetIdx()] &&
+//                         ((OBAtom*)*m)->IsInRingSize(5) &&
+//                         ((OBAtom*)*m)->BOSum() == 2)
+//                 {
+//                     nelectrons++;
+//                     _aromNH[((OBAtom*)*m)->GetIdx()] = true;
+//                 }
+//             }
 
-            if (naromatic == nelectrons)
-                continue;
+//             if (naromatic == nelectrons)
+//                 continue;
 
-            //protonate amines in 5 membered rings first - no kekule restriction
-            for (m = v_N.begin();m != v_N.end();m++)
-            {
-                if (naromatic == nelectrons)
-                    break;
-                if ((*m)->GetValence() == 2 && !_aromNH[(*m)->GetIdx()] &&
-                        (*m)->IsInRingSize(5))
-                {
-                    nelectrons++;
-                    _aromNH[(*m)->GetIdx()] = true;
-                }
-            }
+//             //protonate amines in 5 membered rings first - no kekule restriction
+//             for (m = v_N.begin();m != v_N.end();m++)
+//             {
+//                 if (naromatic == nelectrons)
+//                     break;
+//                 if ((*m)->GetValence() == 2 && !_aromNH[(*m)->GetIdx()] &&
+//                         (*m)->IsInRingSize(5))
+//                 {
+//                     nelectrons++;
+//                     _aromNH[(*m)->GetIdx()] = true;
+//                 }
+//             }
 
-            if (naromatic == nelectrons)
-                continue;
+//             if (naromatic == nelectrons)
+//                 continue;
 
-            //then others -- try to find an atom w/o a double bond first
-            for (m = v_N.begin();m != v_N.end();m++)
-            {
-                if (naromatic == nelectrons)
-                    break;
-                if (((OBAtom*)*m)->GetHvyValence() == 2 &&
-                        !_aromNH[((OBAtom*)*m)->GetIdx()] &&
-                        !((OBAtom*)*m)->HasDoubleBond())
-                {
-                    nelectrons++;
-                    _aromNH[(*m)->GetIdx()] = true;
-                }
-            }
+//             //then others -- try to find an atom w/o a double bond first
+//             for (m = v_N.begin();m != v_N.end();m++)
+//             {
+//                 if (naromatic == nelectrons)
+//                     break;
+//                 if (((OBAtom*)*m)->GetHvyValence() == 2 &&
+//                         !_aromNH[((OBAtom*)*m)->GetIdx()] &&
+//                         !((OBAtom*)*m)->HasDoubleBond())
+//                 {
+//                     nelectrons++;
+//                     _aromNH[(*m)->GetIdx()] = true;
+//                 }
+//             }
 
-            for (m = v_N.begin();m != v_N.end();m++)
-            {
-                if (naromatic == nelectrons)
-                    break;
-                if ((*m)->GetHvyValence() == 2 && !_aromNH[(*m)->GetIdx()])
-                {
-                    nelectrons++;
-                    _aromNH[(*m)->GetIdx()] = true;
-                }
-            }
-        }
+//             for (m = v_N.begin();m != v_N.end();m++)
+//             {
+//                 if (naromatic == nelectrons)
+//                     break;
+//                 if ((*m)->GetHvyValence() == 2 && !_aromNH[(*m)->GetIdx()])
+//                 {
+//                     nelectrons++;
+//                     _aromNH[(*m)->GetIdx()] = true;
+//                 }
+//             }
+//         }
 
-    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-        if (_aromNH[atom->GetIdx()] && atom->GetValence() == 2)
-            atom->SetImplicitValence(3);
+//     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+//         if (_aromNH[atom->GetIdx()] && atom->GetValence() == 2)
+//             atom->SetImplicitValence(3);
 }
 
 /*! \class OBAromaticTyper
@@ -544,6 +551,8 @@ void OBAromaticTyper::AssignAromaticFlags(OBMol &mol)
     if (mol.HasAromaticPerceived())
         return;
     mol.SetAromaticPerceived();
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::AssignAromaticFlags", obAuditMsg);
 
     _vpa.clear();
     _vpa.resize(mol.NumAtoms()+1);
@@ -795,7 +804,7 @@ void OBAromaticTyper::SelectRootAtoms(OBMol &mol, bool avoidInnerRingAtoms)
                             int rootAtomNumber=0;
                             int idx=0;
                             // avoiding two root atoms in one ring !
-                            for (int j = 0; j < tmpRootAtoms.size(); j++)
+                            for (unsigned int j = 0; j < tmpRootAtoms.size(); j++)
                             {
                                 idx= tmpRootAtoms[j];
                                 if(ring->IsInRing(idx))
@@ -807,7 +816,7 @@ void OBAromaticTyper::SelectRootAtoms(OBMol &mol, bool avoidInnerRingAtoms)
                             }
                             if(rootAtomNumber<2)
                             {
-                                for (int j = 0; j < tmp.size(); j++)
+                                for (unsigned int j = 0; j < tmp.size(); j++)
                                 {
                                     // find critical ring
                                     if (tmp[j] == rootAtom)
@@ -836,7 +845,7 @@ void OBAromaticTyper::SelectRootAtoms(OBMol &mol, bool avoidInnerRingAtoms)
                             if (checkThisRing)
                             {
                                 // check if we can find another root atom
-                                for (int m = 0; m < tmp.size(); m++)
+                                for (unsigned int m = 0; m < tmp.size(); m++)
                                 {
                                     ringNbrs = heavyNbrs = 0;
                                     for (nbr2 = (mol.GetAtom(tmp[m]))->BeginNbrAtom(nbr2Iter);
