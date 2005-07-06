@@ -62,8 +62,7 @@ int main(int argc,char *argv[])
     }
 
     // Finally, we can do some work!
-    OBMol mol;
-    OBMol mol2;
+    OBMol mol, mol2;
     ifstream inFileStream1(argv[1]);
     ifstream inFileStream2(argv[2]);
 
@@ -92,8 +91,11 @@ int main(int argc,char *argv[])
       return (-1);
     }
 
-    conv1.Read(&mol);
-    conv2.Read(&mol2);
+
+    while (!inFileStream1.eof() && !inFileStream2.eof() )
+    {
+      conv1.Read(&mol);
+      conv2.Read(&mol2);
 
     if (mol.NumAtoms() == 0)
       {
@@ -170,6 +172,15 @@ int main(int argc,char *argv[])
 	      return(-1);
 	    }
       }
+
+    mol.Clear();
+    mol2.Clear();
+    } // while reading molecules
+
+    if ( !inFileStream1.eof() && conv1.Read(&mol) )
+	 cout << " ** ERROR **  File 1 has more molecules! " << endl;
+    else if ( !inFileStream2.eof() && conv2.Read(&mol2) )
+      cout << " ** ERROR **  File 2 has more molecules! " << endl;
     
     return(0);
 }
