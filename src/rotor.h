@@ -268,12 +268,12 @@ public:
     {
         _fix = fix;
     }
-    void   ShutTheHellUp()
+    void   SetQuiet()
     {
         _quiet=true;
         _rr.Quiet();
     }
-    void   NoSymmetryCondoms()
+    void   IgnoreSymmetryRemoval()
     {
         _removesym=false;
     }

@@ -223,7 +223,7 @@ public:
 	OBFormat*   GetOutFormat() const{return pOutFormat;};
 	std::string GetInFilename() const{return InFilename;};
 	
-	///Get the position in the input stream of the object being written
+	///Get the position in the input stream of the object being read
 	std::streampos GetInPos()const{return wInpos;}; 
 
 	///@brief Returns a default title which is the filename
