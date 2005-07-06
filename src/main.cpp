@@ -46,6 +46,7 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
 #include "obconversion.h"
+#include "oberror.h"
 
 using namespace std;
 using namespace OpenBabel;
@@ -66,6 +67,7 @@ int main(int argc,char *argv[])
   OBFormat* pOutFormat = NULL;
   vector<string> FileList, OutputFileList;
   string OutputFileName;
+  obMessageLevel filterLevel = obWarning; // 2 out of 5
 
   // Parse commandline
   bool gotInType = false, gotOutType = false;
@@ -77,7 +79,7 @@ int main(int argc,char *argv[])
 
   //Save name of program without its path (and .exe)
   string pn(argv[0]);
-  int pos;
+  unsigned int pos;
 #ifdef _WIN32
   pos = pn.find(".exe");
   if(pos!=string::npos)
@@ -198,7 +200,7 @@ int main(int argc,char *argv[])
 						char* nam = argv[arg]+2;
  						if(*nam != '\0')
 						{
-							if(*argv[arg+1]!='-') 
+							if(argv[arg+1] && *argv[arg+1]!='-') 
 								Conv.AddOption(nam,OBConversion::GENOPTIONS,argv[++arg]);
 							else
 								Conv.AddOption(nam,OBConversion::GENOPTIONS);
@@ -265,6 +267,32 @@ int main(int argc,char *argv[])
 		}
 	}
   
+	if ( Conv.IsOption("w", OBConversion::GENOPTIONS) )
+	  {
+	    const char *warnArg = Conv.IsOption("w", OBConversion::GENOPTIONS);
+	    int  warnLevel = (int)strtol(warnArg, (char **)NULL, 10); 
+	     
+	    switch (warnLevel) 
+	      { 
+	      case 1: 
+		filterLevel = obError; 
+		break; 
+	      case 2: // already obWarning 
+		break; 
+	      case 3: 
+		filterLevel = obInfo; 
+		break; 
+	      case 4: 
+		filterLevel = obAuditMsg; 
+		break; 
+	      case 5: 
+		filterLevel = obDebug; 
+		break; 
+	      }
+	    
+	    obErrorLog.SetOutputLevel(filterLevel);
+	  }
+
   if(!gotOutType) //the last file is the output
   {
     if(FileList.empty())
@@ -318,7 +346,7 @@ int main(int argc,char *argv[])
 		}
 		else
 		{
-			int pos = OutputFileName.find_last_of('.');
+			unsigned int pos = OutputFileName.find_last_of('.');
 			if(pos==string::npos)
 				OutputFileName += '*';
 			else
@@ -335,7 +363,7 @@ int main(int argc,char *argv[])
   
   if(OutputFileList.size()>1)
   {
-    cerr << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;
+    clog << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;
   }
 /*
 #ifdef _DEBUG
