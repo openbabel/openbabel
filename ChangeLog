@@ -1,3 +1,34 @@
+2005-07-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/data.h (OBElement): Reorder initialization to remove
+	compiler warning. Documentation updates.
+
+	* src/data.cpp (OBElementTable::ParseLine): Format declarations
+	should be ignored for red, blue, green columns in sscanf call.
+
+	* src/main.cpp: Add error log filtering back -- not handled in
+	OBConversion.
+	
+	* src/chains.cpp, src/mol.cpp, src/obutil.cpp, src/ring.cpp,
+	src/typer.cpp:
+	Add obAuditMsg messages for methods substantially altering an OBMol.
+
+	* src/matrix.cpp (convert_matrix_f): Partly unroll loop to
+	increase performance. 
+
+	* src/rotor.h, src/rotamer.cpp, src/obconversion.h: Documentation
+	updates.
+
+	* test/roundtrip.cpp: Loop over all molecules in files, checking
+	to see if one file has more molecules than another.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in:
+	Rename grosmos96format to gromos (correct name of program).
+
+	* src/formats/*format.cpp: Add BeginModify() / EndModify() calls
+	as appropriate (i.e. before and after major changes to OBMol,
+	including ConnectTheDots or PerceiveBondOrders). 
+
 2005-07-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.h: Move include "babelconfig.h" to the top of
