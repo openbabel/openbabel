@@ -47,19 +47,18 @@ p  prettyprint output (default no indent)\n \
 n  output namespace (default no namespace)\n \
 c  use 'cml' as output namespace prefix (default no namspace)\n \
 d  output DOCTYPE (default none)\n \
-g  debug output\n \
-";
+g  debug output\n";
 };
 
-    virtual const char* SpecificationURL(){return
-            "http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage";};
+  virtual const char* SpecificationURL()
+  {return "http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage";};
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-cml"; };
 
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | WRITEONEONLY;
     };
 
     ////////////////////////////////////////////////////

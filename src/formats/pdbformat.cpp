@@ -171,7 +171,6 @@ bool PDBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     resdat.AssignBonds(mol,bs);
     /*assign hetatm bonds based on distance*/
-    mol.EndModify();
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
@@ -179,6 +178,8 @@ bool PDBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     if (mol.NumAtoms() < 250) // Minimize time required on real proteins
       if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
 	mol.PerceiveBondOrders();
+
+    mol.EndModify();
 
     mol.SetAtomTypesPerceived();
     atomtyper.AssignImplicitValence(mol);
@@ -847,7 +848,7 @@ bool PDBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             sprintf(type_name, " %-3s", tmp);
         }
 
-        if (res = atom->GetResidue())
+        if ( (res = atom->GetResidue()) )
         {
             het = res->IsHetAtom(atom);
             snprintf(the_res,4,"%s",(char*)res->GetName().c_str());

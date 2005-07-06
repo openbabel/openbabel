@@ -69,12 +69,11 @@ public:
     {
         return
             "NWChem input format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -155,13 +154,13 @@ bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             }
         } // if "output coordinates"
     } // while
-    mol.EndModify();
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
+    mol.EndModify();
     mol.SetTitle(title);
     return(true);
 }

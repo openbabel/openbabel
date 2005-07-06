@@ -71,12 +71,11 @@ public:
     {
         return
             "Q-Chem input format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.q-chem.com/";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://www.q-chem.com/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -231,11 +230,14 @@ bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 //          InternalToCartesian(internals, mol);
         } // end (OPTIMIZATION CONVERGED)
     } // end while
-    mol.EndModify();
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
+
     if (hasPartialCharges)
         mol.SetPartialChargesPerceived();
     mol.SetTotalCharge(charge);

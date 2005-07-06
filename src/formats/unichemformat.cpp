@@ -84,6 +84,7 @@ bool UniChemFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         return(false);
 
     mol.ReserveAtoms(natoms);
+    mol.BeginModify();
 
     string str;
     double x,y,z;
@@ -110,6 +111,8 @@ bool UniChemFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
     mol.SetTitle(title);
     return(true);
 }

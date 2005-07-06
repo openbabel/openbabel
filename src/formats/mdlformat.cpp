@@ -51,8 +51,8 @@ Write Options, e.g. -x3\n \
 ";
 };
 
-	virtual const char* SpecificationURL(){return
-		"http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";};
+  virtual const char* SpecificationURL()
+  {return "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";};
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-mdl-molfile"; };

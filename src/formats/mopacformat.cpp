@@ -126,11 +126,13 @@ bool MOPACFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             }
         }
     }
-    mol.EndModify();
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
 
     if (hasPartialCharges)
     {

@@ -51,7 +51,7 @@ public:
   // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
   virtual unsigned int Flags()
   {
-    return READONEONLY;
+    return READONEONLY | WRITEONEONLY;
   };
 
     //*** This section identical for most OBMol conversions ***
@@ -88,6 +88,7 @@ bool AlchemyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         return(false);
 
     mol.ReserveAtoms(natoms);
+    mol.BeginModify();
     ttab.SetFromType("ALC");
 
     string str;
@@ -138,6 +139,7 @@ bool AlchemyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         mol.AddBond(bgn,end,order);
     }
 
+    mol.EndModify();
     mol.SetTitle(title);
     return(true);
 }

@@ -33,12 +33,11 @@ public:
     {
         return
             "CAChe MolStruct format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+  virtual const char* SpecificationURL()
+  {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

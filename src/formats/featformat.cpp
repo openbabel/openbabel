@@ -44,7 +44,7 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+      return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***

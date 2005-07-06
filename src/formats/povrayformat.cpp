@@ -82,12 +82,11 @@ public:
     {
         return
             "POV-Ray input format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.povray.org/";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://www.povray.org/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

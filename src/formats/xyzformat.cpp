@@ -113,6 +113,8 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     else
         mol.SetTitle(title);
 
+    mol.BeginModify();
+
     // The next lines contain four items each, separated by white
     // spaces: the atom type, and the coordinates of the atom
     vector<string> vs;
@@ -204,6 +206,8 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
 
     return(true);
 }

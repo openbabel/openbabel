@@ -38,8 +38,7 @@ public:
     {
         return
             "Sybyl Mol2 format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
   virtual const char* SpecificationURL()
@@ -353,7 +352,7 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         //  Use original atom names if there are residues
         //
 
-        if (res = atom->GetResidue())
+        if ( (res = atom->GetResidue()) )
         {
             // Use original atom names
 

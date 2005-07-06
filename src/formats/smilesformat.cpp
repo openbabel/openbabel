@@ -50,11 +50,11 @@ public:
             Write Options e.g. -xt\n \
             -n no molecule name\n \
             -t molecule name only\n \
-	    -r radicals lower case eg ethyl is Cc";
+	    -r radicals lower case eg ethyl is Cc\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.daylight.com/dayhtml/smiles/";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://www.daylight.com/dayhtml/smiles/";}; //optional
 
 		virtual int SkipObjects(int n, OBConversion* pConv)
 		{

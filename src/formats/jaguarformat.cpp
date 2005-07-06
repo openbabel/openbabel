@@ -72,13 +72,11 @@ public:
     };
 
   virtual const char* SpecificationURL()
-  {
-    return "";
-  }; //optional
+  { return "http://www.schrodinger.com/"; }; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+  virtual unsigned int Flags()
   {return NOTREADABLE | WRITEONEONLY;};
 
     //*** This section identical for most OBMol conversions ***
@@ -177,12 +175,13 @@ bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             }
         }
     }
-    mol.EndModify();
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
     mol.SetTitle(title);
     return(true);
 }

@@ -116,6 +116,8 @@ bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         ifs.getline(buffer,BUFF_SIZE); // next line
     }
 
+    mol.BeginModify();
+
     while (strstr(buffer,"$end") == NULL)
     {
         if (!ifs.getline(buffer,BUFF_SIZE))
@@ -136,6 +138,8 @@ bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
     mol.SetTitle(title);
     return(true);
 }

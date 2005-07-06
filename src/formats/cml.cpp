@@ -4055,14 +4055,14 @@ bool endMolecule()
       InternalToCartesian(internalVector, *molPtr);
     }
 
-  molPtr->EndModify();
-  
   if (molPtr->NumBonds() == 0)
     {
       molPtr->ConnectTheDots();
       molPtr->PerceiveBondOrders();
     }
 
+  molPtr->EndModify();
+  
   if (outputDebug)
     {
       //		debug(cout);

@@ -43,14 +43,14 @@ public:
        No comments yet";
   };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.pqs-chem.com/";};
+  virtual const char* SpecificationURL()
+  {return "http://www.pqs-chem.com/";};
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -158,9 +158,10 @@ int ReadPQS_geom(istream &ifs, OBMol &mol, const char *title,
         }
     }
 
-    mol.EndModify();
     mol.ConnectTheDots();
     mol.PerceiveBondOrders();
+
+    mol.EndModify();
     mol.SetTitle(title);
 
     return atom_count;

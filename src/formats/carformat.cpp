@@ -150,15 +150,15 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	    hasPartialCharges = true;
 	  }
     }
-    mol.EndModify();
-
-    if (hasPartialCharges)
-        mol.SetPartialChargesPerceived();
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
+    if (hasPartialCharges)
+        mol.SetPartialChargesPerceived();
     mol.SetTitle(title);
     return(true);
 }

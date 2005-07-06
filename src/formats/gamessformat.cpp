@@ -82,12 +82,11 @@ public:
     {
         return
             "GAMESS Input\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";}; //optional
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-gamess-input"; };
@@ -211,13 +210,13 @@ bool GAMESSOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             }
         }
     }
-    mol.EndModify();
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
+    mol.EndModify();
     if (hasPartialCharges)
         mol.SetPartialChargesPerceived();
     mol.SetTitle(title);

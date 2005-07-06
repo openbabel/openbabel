@@ -38,8 +38,8 @@ public:
             Open source molecular modelling\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.uku.fi/~thassine/ghemical/";}; //optional
+    virtual const char* SpecificationURL()
+  {return "http://www.uku.fi/~thassine/ghemical/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

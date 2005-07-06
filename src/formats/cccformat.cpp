@@ -34,12 +34,11 @@ public:
     {
         return
             "CCC format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+  virtual const char* SpecificationURL()
+  {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -81,6 +80,7 @@ bool CCCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%*s%d",&natoms);
     mol.ReserveAtoms(natoms);
+    mol.BeginModify();
 
     int end,order;
     double x,y,z;
@@ -132,6 +132,7 @@ bool CCCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             }
     }
 
+    mol.EndModify();
     return(true);
 }
 

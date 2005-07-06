@@ -45,11 +45,11 @@ Write Options e.g. -xat \n \
 ";
 	};
 
-	virtual const char* SpecificationURL()
-	{ return "http://www.iupac.org/inchi/";};
+  virtual const char* SpecificationURL()
+  { return "http://www.iupac.org/inchi/";};
 
-	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-					char CompareInchi(const char* Inchi1, const char* Inchi2);
+  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  char CompareInchi(const char* Inchi1, const char* Inchi2);
   virtual unsigned int Flags(){return NOTREADABLE;};
 
 private:

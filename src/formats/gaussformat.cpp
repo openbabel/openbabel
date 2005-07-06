@@ -74,12 +74,11 @@ public:
     {
         return
             "Gaussian 98/03 Cartesian Input\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "http://www.gaussian.com/g_ur/m_input.htm";};
+  virtual const char* SpecificationURL()
+  {return "http://www.gaussian.com/g_ur/m_input.htm";};
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-gaussian"; };
@@ -129,8 +128,6 @@ bool GaussianInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBMol &mol = *pmol;
 
     unsigned int i;
-    int charge = 0;
-    unsigned int multiplicity = 0;
     char buffer[BUFF_SIZE];
 
     ofs << "%" << endl << '\045';
@@ -151,6 +148,7 @@ bool GaussianInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	else
 	  sprintf(buffer,"%-3s(Iso=%d) %10.5f      %10.5f      %10.5f ",
 		  etab.GetSymbol(atom->GetAtomicNum()),
+		  atom->GetIsotope(),
 		  atom->GetX(), atom->GetY(), atom->GetZ());
 	
         ofs << buffer << endl;
@@ -239,12 +237,13 @@ bool GaussianOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	      }
 	  }
       } // end while
-    mol.EndModify();
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();
     mol.SetTotalCharge(charge);

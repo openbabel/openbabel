@@ -32,18 +32,17 @@ public:
     {
         return
             "ZINDO input format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+  virtual const char* SpecificationURL()
+  {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTREADABLE;
+        return NOTREADABLE | WRITEONEONLY;
     };
 
     ////////////////////////////////////////////////////
@@ -147,7 +146,7 @@ bool ZINDOFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         ofs << endl;
         ofs << " NOP = 1 " << endl;
         ofs << " NDT = 1 " << endl;
-        sprintf(buffer," FOP(1) =% 10.6f% 10.6f",
+        sprintf(buffer," FOP(1) =% 4d% 10.6f",
                 valenceE - 1, 1.0);
         ofs << buffer << endl;
     }

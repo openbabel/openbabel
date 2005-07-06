@@ -42,6 +42,12 @@ public:
   virtual const char* SpecificationURL()
   {return "http://www.turbomole.com/";}; //optional
 
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+        return READONEONLY | WRITEONEONLY;
+    };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
@@ -98,13 +104,12 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     while(!(!ifs) && strncmp(buff,"$end",4))
         ifs.getline(buff,BUFF_SIZE);
 
-    mol.EndModify();
-
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
+    mol.EndModify();
     return true;
 }
 

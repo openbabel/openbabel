@@ -38,18 +38,17 @@ public:
     {
         return
             "Ball and Stick format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+  virtual const char* SpecificationURL()
+  {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -85,6 +84,7 @@ bool BallStickFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         return(false);
     sscanf(buffer,"%d",&natoms);
     mol.ReserveAtoms(natoms);
+    mol.BeginModify();
 
     double x,y,z;
     OBAtom *atom;
@@ -111,6 +111,7 @@ bool BallStickFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             mol.AddBond(atom->GetIdx(),atoi((char*)j->c_str()),1);
     }
 
+    mol.EndModify();
     mol.SetTitle(title);
     return(true);
 }

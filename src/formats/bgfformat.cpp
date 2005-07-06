@@ -70,6 +70,7 @@ bool BGFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
     mol.SetTitle( pConv->GetTitle()); //default title is the filename
+    mol.BeginModify();
 
     char buffer[BUFF_SIZE];
     char tmp[15],tmptyp[15];
@@ -157,6 +158,7 @@ bool BGFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                 mol.AddBond(i,vcon[i - 1][j],vord[i - 1][j]);
             }
 
+    mol.EndModify();
     return(true);
 }
 

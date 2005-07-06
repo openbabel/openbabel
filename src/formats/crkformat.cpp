@@ -246,7 +246,7 @@ bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag)
     int atomID,atomNumber;
     double atomX,atomY,atomZ,atomCharge;
     int bondFrom,bondTo,bondStyle;
-    double bondOrder;
+    double bondOrder = 0.0f;
     char buffer[BUFF_SIZE];//was global
 
     mol.BeginModify();
@@ -265,8 +265,10 @@ bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag)
             {
                 inAtom=true;
                 atomNumber=0;
-                atomX=atomY=atomZ=atomCharge=0;
+                atomX= atomY= atomZ= atomCharge =0.0;
             }
+	    else
+	      continue; // atomID <= 0
         }
         else if (strstr(buffer,"<Bond"))
         {

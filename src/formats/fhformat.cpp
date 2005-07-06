@@ -33,18 +33,17 @@ public:
     {
         return
             "Fenske-Hall Z-Matrix format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "";}; //optional
+  virtual const char* SpecificationURL()
+  {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTREADABLE;
+        return NOTREADABLE | WRITEONEONLY;
     };
 
     ////////////////////////////////////////////////////

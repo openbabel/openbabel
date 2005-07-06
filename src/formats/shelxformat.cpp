@@ -112,6 +112,8 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     while (ifs.getline(buffer,BUFF_SIZE) &&!EQn(buffer,"FVAR",4))
         ;
 
+    mol.BeginModify();
+
     //read atom records
     while (ifs.getline(buffer,BUFF_SIZE) &&!EQn(buffer,"HKLF",4))
     {
@@ -143,6 +145,8 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
     return(true);
 }
 

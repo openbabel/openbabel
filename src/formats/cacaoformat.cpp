@@ -113,6 +113,8 @@ bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     OBAtom *atom;
     vector3 v;
 
+    mol.BeginModify();
+
     for (i = 1; i <= natoms;i++)
     {
         if (!ifs.getline(buffer,BUFF_SIZE))
@@ -138,6 +140,7 @@ bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
+    mol.EndModify();
     return(true);
 }
 

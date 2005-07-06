@@ -105,12 +105,13 @@ bool AmberPrepFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         }
     }
     InternalToCartesian(internals,mol);
-    mol.EndModify();
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.EndModify();
     mol.SetTitle(title);
     return(true);
 }
