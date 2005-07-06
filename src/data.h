@@ -61,8 +61,9 @@ protected:
     const char  *_dataptr;	//!< default data table if file is unreadable
     std::string  _filename;	//!< file to search for
     std::string  _dir;		//!< data directory for file if _envvar fails
-    std::string  _subdir;		//!< subdirectory (if using environment variable)
-    std::string  _envvar;		//!< environment variable to check first
+    std::string  _subdir;	//!< subdirectory (if using environment variable)
+    std::string  _envvar;	//!< environment variable to check first
+
 public:
     //! Constructor
     OBGlobalDataBase()
@@ -71,25 +72,16 @@ public:
         _dataptr = (char*)NULL;
     }
     //! Destructor
-    virtual ~OBGlobalDataBase()
-    {}
+    virtual ~OBGlobalDataBase()                  {}
     //! Read in the data file, falling back as needed
     void  Init();
     //! Set the directory before calling Init()
-    void  SetReadDirectory(char *dir)
-    {
-        _dir = dir;
-    }
+    void  SetReadDirectory(char *dir)            { _dir = dir;    }
     //! Set the environment variable to use before calling Init()
-    void  SetEnvironmentVariable(char *var)
-    {
-        _envvar = var;
-    }
+    void  SetEnvironmentVariable(char *var)      { _envvar = var; }
     //! Specified by particular table classes (parses an individual data line)
-    virtual void ParseLine(const char*)
-    {}
-}
-;
+    virtual void ParseLine(const char*)          {}
+};
 
 //! \brief Individual element data type
 //!
@@ -104,20 +96,29 @@ public:
     OBElement()    {}
     OBElement(int num, const char *sym, double rcov, double rbo,
               double rvdw, int maxbo, double mass, double elNeg) :
-      _num(num), _Rcov(rcov), _Rbo(rbo), _Rvdw(rvdw), _maxbonds(maxbo),
-      _mass(mass), _elNeg(elNeg)
+      _num(num), _Rcov(rcov), _Rbo(rbo), _Rvdw(rvdw), 
+      _mass(mass), _elNeg(elNeg), _maxbonds(maxbo)
     {
       strncpy(_symbol, sym, 3);
     }
 
+    //! Returns the atomic number of this element
     int GetAtomicNum()         {       return(_num);    }
+    //! Returns the atomic symbol for this element
     char *GetSymbol()          {       return(_symbol); }
+    //! Returns the covalent radius of this element
     double GetCovalentRad()    {       return(_Rcov);   }
+    //! \brief Returns the "bond order" radius used for 
+    //!  determining multiple covalent bonds.
     //! \deprecated Use GetCovalentRad() instead
     double GetBoRad()          {       return(_Rbo);    }
+    //! Returns the van der Waals radius of this element
     double GetVdwRad()         {       return(_Rvdw);   }
+    //! \return the standard atomic mass for this element (in amu)
     double GetMass()           {       return(_mass);   }
+    //! \return the maximum expected number of bonds to this element
     int GetMaxBonds()          {       return(_maxbonds);}
+    //! \return the Pauling electronegativity for this element
     double GetElectroNeg()     {       return(_elNeg);  }
 };
 
@@ -173,14 +174,13 @@ class OBAPI OBIsotopeTable : public OBGlobalDataBase
 public:
 
     OBIsotopeTable(void);
-    ~OBIsotopeTable()
-    {}
+    ~OBIsotopeTable()    {}
 
     void	ParseLine(const char*);
     //! Return the exact masss of the isotope
     //!   (or by default (i.e. "isotope 0") the most abundant isotope)
     double	GetExactMass(const unsigned int atomicNum,
-                        const unsigned int isotope = 0);
+			     const unsigned int isotope = 0);
 };
 
 // class introduction in data.cpp
@@ -197,12 +197,19 @@ public:
     ~OBTypeTable() {}
 
     void ParseLine(const char*);
-    bool SetFromType(char*);
-    bool SetToType(char*);
-    bool Translate(char*,char*); // to, from
-    bool Translate(std::string &,std::string &); // to, from
 
+    //! Set the initial atom type to be translated
+    bool SetFromType(char*);
+    //! Set the destination atom type for translation
+    bool SetToType(char*);
+    //! Translate atom types
+    bool Translate(char *to, char *from); // to, from
+    //! Translate atom types
+    bool Translate(std::string &to, std::string &from); // to, from
+
+    //! Return the initial atom type to be translated
     std::string GetFromType();
+    //! Return the destination atom type for translation
     std::string GetToType();
 };
 
@@ -213,7 +220,7 @@ public:
 #define FILE_SEP_CHAR "/"
 #endif
 
-}
+} // end namespace OpenBabel
 
 #endif //DATA_H
 
