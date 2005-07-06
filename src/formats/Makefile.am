@@ -16,7 +16,7 @@ pkglib_LTLIBRARIES = \
 	cmlformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	gamessformat.la gaussformat.la ghemicalformat.la \
-	grosmos96format.la hinformat.la \
+	gromos96format.la hinformat.la \
 	jaguarformat.la mdlformat.la mm3format.la mmodformat.la \
 	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
@@ -97,8 +97,8 @@ gaussformat_la_LDFLAGS = -module -avoid-version
 ghemicalformat_la_SOURCES = ghemicalformat.cpp
 ghemicalformat_la_LDFLAGS = -module -avoid-version 
 
-grosmos96format_la_SOURCES = grosmos96format.cpp
-grosmos96format_la_LDFLAGS = -module -avoid-version 
+gromos96format_la_SOURCES = gromos96format.cpp
+gromos96format_la_LDFLAGS = -module -avoid-version 
 
 hinformat_la_SOURCES = hinformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 

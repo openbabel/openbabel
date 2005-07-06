@@ -20,7 +20,7 @@
 # SUBDIRS = inchi
 #pkginclude_HEADERS = inchi_api.h
 
-SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) $(alchemyformat_la_SOURCES) $(amberformat_la_SOURCES) $(balstformat_la_SOURCES) $(bgfformat_la_SOURCES) $(boxformat_la_SOURCES) $(cacaoformat_la_SOURCES) $(cacheformat_la_SOURCES) $(carformat_la_SOURCES) $(cccformat_la_SOURCES) $(chem3dformat_la_SOURCES) $(chemdrawformat_la_SOURCES) $(chemtoolformat_la_SOURCES) $(cmlformat_la_SOURCES) $(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) $(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) $(fhformat_la_SOURCES) $(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) $(grosmos96format_la_SOURCES) $(hinformat_la_SOURCES) $(jaguarformat_la_SOURCES) $(mdlformat_la_SOURCES) $(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
+SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) $(alchemyformat_la_SOURCES) $(amberformat_la_SOURCES) $(balstformat_la_SOURCES) $(bgfformat_la_SOURCES) $(boxformat_la_SOURCES) $(cacaoformat_la_SOURCES) $(cacheformat_la_SOURCES) $(carformat_la_SOURCES) $(cccformat_la_SOURCES) $(chem3dformat_la_SOURCES) $(chemdrawformat_la_SOURCES) $(chemtoolformat_la_SOURCES) $(cmlformat_la_SOURCES) $(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) $(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) $(fhformat_la_SOURCES) $(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) $(gromos96format_la_SOURCES) $(hinformat_la_SOURCES) $(jaguarformat_la_SOURCES) $(mdlformat_la_SOURCES) $(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -135,9 +135,9 @@ gaussformat_la_OBJECTS = $(am_gaussformat_la_OBJECTS)
 ghemicalformat_la_LIBADD =
 am_ghemicalformat_la_OBJECTS = ghemicalformat.lo
 ghemicalformat_la_OBJECTS = $(am_ghemicalformat_la_OBJECTS)
-grosmos96format_la_LIBADD =
-am_grosmos96format_la_OBJECTS = grosmos96format.lo
-grosmos96format_la_OBJECTS = $(am_grosmos96format_la_OBJECTS)
+gromos96format_la_LIBADD =
+am_gromos96format_la_OBJECTS = gromos96format.lo
+gromos96format_la_OBJECTS = $(am_gromos96format_la_OBJECTS)
 hinformat_la_LIBADD =
 am_hinformat_la_OBJECTS = hinformat.lo
 hinformat_la_OBJECTS = $(am_hinformat_la_OBJECTS)
@@ -230,7 +230,7 @@ SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) \
 	$(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) \
 	$(fhformat_la_SOURCES) $(gamessformat_la_SOURCES) \
 	$(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) \
-	$(grosmos96format_la_SOURCES) $(hinformat_la_SOURCES) \
+	$(gromos96format_la_SOURCES) $(hinformat_la_SOURCES) \
 	$(jaguarformat_la_SOURCES) $(mdlformat_la_SOURCES) \
 	$(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) \
 	$(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) \
@@ -254,7 +254,7 @@ DIST_SOURCES = $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) \
 	$(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) \
 	$(fhformat_la_SOURCES) $(gamessformat_la_SOURCES) \
 	$(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) \
-	$(grosmos96format_la_SOURCES) $(hinformat_la_SOURCES) \
+	$(gromos96format_la_SOURCES) $(hinformat_la_SOURCES) \
 	$(jaguarformat_la_SOURCES) $(mdlformat_la_SOURCES) \
 	$(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) \
 	$(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) \
@@ -383,7 +383,7 @@ pkglib_LTLIBRARIES = \
 	cmlformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	gamessformat.la gaussformat.la ghemicalformat.la \
-	grosmos96format.la hinformat.la \
+	gromos96format.la hinformat.la \
 	jaguarformat.la mdlformat.la mm3format.la mmodformat.la \
 	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
@@ -440,8 +440,8 @@ gaussformat_la_SOURCES = gaussformat.cpp
 gaussformat_la_LDFLAGS = -module -avoid-version 
 ghemicalformat_la_SOURCES = ghemicalformat.cpp
 ghemicalformat_la_LDFLAGS = -module -avoid-version 
-grosmos96format_la_SOURCES = grosmos96format.cpp
-grosmos96format_la_LDFLAGS = -module -avoid-version 
+gromos96format_la_SOURCES = gromos96format.cpp
+gromos96format_la_LDFLAGS = -module -avoid-version 
 hinformat_la_SOURCES = hinformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 
 
@@ -599,8 +599,8 @@ gaussformat.la: $(gaussformat_la_OBJECTS) $(gaussformat_la_DEPENDENCIES)
 	$(CXXLINK) -rpath $(pkglibdir) $(gaussformat_la_LDFLAGS) $(gaussformat_la_OBJECTS) $(gaussformat_la_LIBADD) $(LIBS)
 ghemicalformat.la: $(ghemicalformat_la_OBJECTS) $(ghemicalformat_la_DEPENDENCIES) 
 	$(CXXLINK) -rpath $(pkglibdir) $(ghemicalformat_la_LDFLAGS) $(ghemicalformat_la_OBJECTS) $(ghemicalformat_la_LIBADD) $(LIBS)
-grosmos96format.la: $(grosmos96format_la_OBJECTS) $(grosmos96format_la_DEPENDENCIES) 
-	$(CXXLINK) -rpath $(pkglibdir) $(grosmos96format_la_LDFLAGS) $(grosmos96format_la_OBJECTS) $(grosmos96format_la_LIBADD) $(LIBS)
+gromos96format.la: $(gromos96format_la_OBJECTS) $(gromos96format_la_DEPENDENCIES) 
+	$(CXXLINK) -rpath $(pkglibdir) $(gromos96format_la_LDFLAGS) $(gromos96format_la_OBJECTS) $(gromos96format_la_LIBADD) $(LIBS)
 hinformat.la: $(hinformat_la_OBJECTS) $(hinformat_la_DEPENDENCIES) 
 	$(CXXLINK) -rpath $(pkglibdir) $(hinformat_la_LDFLAGS) $(hinformat_la_OBJECTS) $(hinformat_la_LIBADD) $(LIBS)
 jaguarformat.la: $(jaguarformat_la_OBJECTS) $(jaguarformat_la_DEPENDENCIES) 
@@ -679,7 +679,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gamessformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gaussformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ghemicalformat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grosmos96format.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gromos96format.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hinformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jaguarformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdlformat.Plo@am__quote@

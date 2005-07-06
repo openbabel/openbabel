@@ -71,20 +71,19 @@ public:
     return
       "GROMOS96 format\n \
        Write Options e.g. -xn\n\
-        n output nm (not Angstroms)";
+        n output nm (not Angstroms)\n";
   };
 
     virtual const char* SpecificationURL()
     {
         return "";
-    }
-    ; //optional
+    }; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTREADABLE;
+        return NOTREADABLE | WRITEONEONLY;
     };
 
     ////////////////////////////////////////////////////
@@ -141,7 +140,7 @@ bool GROMOS96Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-        if (res = atom->GetResidue())
+      if ( (res = atom->GetResidue()) )
         {
             strcpy(res_name,(char*)res->GetName().c_str());
             strcpy(type_name,(char*)res->GetAtomID(atom).c_str());
