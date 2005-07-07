@@ -38,7 +38,7 @@ int main(int argc,char **argv)
     char *program_name= argv[0];
     int c;
     char *FileIn = NULL;
-
+    bool addHydrogens = false;
 
     if (argc != 2)
     {
@@ -56,6 +56,9 @@ int main(int argc,char **argv)
     else
     {
         FileIn  = argv[1];
+	const char* p = strrchr(FileIn,'.');
+	if(p && strncasecmp(p+1,"SMI", 3) == 0)
+	  addHydrogens = true;
     }
 
     // Find Input filetype
@@ -95,6 +98,9 @@ int main(int argc,char **argv)
 	conv.Read(&mol, &ifs);
         if (mol.Empty())
             break;
+
+	if (addHydrogens) // SMILES file
+	  mol.AddHydrogens();
 
         // Print the properties
         // The name should be enough self explaining
