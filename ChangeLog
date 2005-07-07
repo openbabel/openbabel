@@ -1,3 +1,11 @@
+2005-07-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/atomtyp.txt, data/atomtyp.h: Change implicit valence rules
+	to fix PR#1226444. N=C(N)C is properly interpreted.
+
+	* tools/obprop.cpp: Add hydrogens for SMILES input (checked by
+	.smi extension). Fixes PR#1222443.
+
 2005-07-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/data.h (OBElement): Reorder initialization to remove
