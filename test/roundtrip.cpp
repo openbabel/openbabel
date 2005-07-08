@@ -109,7 +109,8 @@ int main(int argc,char *argv[])
 	return(-1);
       }
 
-    if (strncasecmp(argv[1], "BOX", 3) == 0)
+    const char* p1 = strrchr(argv[1],'.');
+    if (p1 && strncasecmp(p1 + 1, "BOX", 3) == 0)
       {
 	if (mol.NumAtoms() != 8)
 	  {
@@ -119,7 +120,8 @@ int main(int argc,char *argv[])
 	return(0);
       }
 
-    if (strncasecmp(argv[2],"BOX",3) == 0)
+    const char* p2 = strrchr(argv[2],'.');
+    if (p2 && strncasecmp(p2 + 1, "BOX", 3) == 0)
       {
 	if (mol2.NumAtoms() != 8)
 	  {
@@ -129,8 +131,8 @@ int main(int argc,char *argv[])
 	return(0);
       }
 
-    if (strncasecmp(argv[1],"SMI",3) == 0 
-	|| strncasecmp(argv[2],"SMI",3) == 0)
+    if ( (p1 && strncasecmp(p1 + 1, "SMI", 3) == 0)
+	 || (p2 && strncasecmp(p2 + 1, "SMI", 3) == 0) )
       {
 	if (mol.NumHvyAtoms() != mol2.NumHvyAtoms())
 	  {
@@ -162,8 +164,8 @@ int main(int argc,char *argv[])
 	    return(-1);
 	  }
 	
-	if (strncasecmp(argv[1],"SMI",3) !=0
-	    && strncasecmp(argv[2],"SMI",3) != 0)
+	if ( (p1 && strncasecmp(p1 + 1, "SMI", 3) == 0)
+	     || (p2 && strncasecmp(p2 + 1, "SMI", 3) == 0) )
 	  if ((atom1->GetX()-atom2->GetX()>1e-1) ||
 	      (atom1->GetY()-atom2->GetY()>1e-1) ||
 	      (atom1->GetZ()-atom2->GetZ()>1e-1))

@@ -6,6 +6,8 @@
 	* tools/obprop.cpp: Add hydrogens for SMILES input (checked by
 	.smi extension). Fixes PR#1222443.
 
+	* test/roundtrip.cpp: Fix checks for BOX and SMILES extensions.
+
 2005-07-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/data.h (OBElement): Reorder initialization to remove
