@@ -27,6 +27,12 @@ extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
 #include <vector>
 #include <map>
 
+#ifdef HAVE_SSTREAM
+#include <sstream>
+#else
+#include <strstream>
+#endif
+
 using namespace std;
 namespace OpenBabel
 {
@@ -436,16 +442,22 @@ static bool readIntegerFromRecord(char *buffer, unsigned int columnAsSpecifiedIn
 
 static bool ParseConectRecord(char *buffer,OBMol &mol)
 {
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
+
     // Setup strings and string buffers
     buffer[70] = '\0';
     if (strlen(buffer) < 70)
     {
-        cerr << "WARNING: Problems reading a PDB file, method 'static bool ParseConectRecord(char *, OBMol &)'" << endl
-        << "  Problems reading a CONECT record." << endl
-        << "  OpenBabel found the line '" << buffer << "'" << endl
-        << "  According to the PDB specification (http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html)," << endl
-        << "  the record should have 70 columns, but OpenBabel found " << strlen(buffer) << " columns." << endl
-        << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+        errorMsg << "WARNING: Problems reading a PDB file\n"
+		 << "  Problems reading a CONECT record.\n"
+		 << "  According to the PDB specification,\n"
+		 << "  the record should have 70 columns, but OpenBabel found "
+		 << strlen(buffer) << " columns.";
+	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obInfo);
     }
 
     // Serial number of the first atom, read from column 7-11 of the
@@ -453,13 +465,12 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
     long int startAtomSerialNumber;
     if (readIntegerFromRecord(buffer, 7, &startAtomSerialNumber) == false)
     {
-        cerr << "WARNING: Problems reading a PDB file, method 'static bool ParseConectRecord(char *, OBMol &)'" << endl
-        << "  Problems reading a CONECT record." << endl
-        << "  OpenBabel found the line '" << buffer << "'" << endl
-        << "  According to the PDB specification (http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html)," << endl
-        << "  columns 7--11 should contain the serial number of an atom, but OpenBabel was not able" << endl
-        << "  to interpret these columns. " << endl
-        << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+      errorMsg << "WARNING: Problems reading a PDB file\n"
+	       << "  Problems reading a CONECT record.\n"
+	       << "  According to the PDB specification,\n"
+	       << "  columns 7-11 should contain the serial number of an atom.\n"
+	       << "  THIS CONECT RECORD WILL BE IGNORED.";
+	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
         return(false);
     }
 
@@ -475,13 +486,13 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
         }
     if (firstAtom == 0L)
     {
-        cerr << "WARNING: Problems reading a PDB file, method 'static bool ParseConectRecord(char *, OBMol &)'" << endl
-        << "  Problems reading a CONECT record." << endl
-        << "  OpenBabel found the line '" << buffer << "'" << endl
-        << "  According to the PDB specification (http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html)," << endl
-        << "  columns 7--11 should contain the serial number of an atom, but OpenBabel was not able" << endl
-        << "  to find an atom with this serial number. " << endl
-        << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+        errorMsg << "WARNING: Problems reading a PDB file:\n"
+		 << "  Problems reading a CONECT record.\n"
+		 << "  According to the PDB specification,\n"
+		 << "  columns 7-11 should contain the serial number of an atom.\n"
+		 << "  No atom was found with this serial number.\n"
+		 << "  THIS CONECT RECORD WILL BE IGNORED.";
+	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
         return(false);
     }
 
@@ -522,14 +533,15 @@ static bool ParseConectRecord(char *buffer,OBMol &mol)
             }
         if (connectedAtom == 0L)
         {
-            cerr << "WARNING: Problems reading a PDB file, method 'static bool ParseConectRecord(char *, OBMol &)'" << endl
-            << "  Problems reading a CONECT record." << endl
-            << "  OpenBabel found the line '" << buffer << "'" << endl
-            << "  According to the PDB specification (http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html)," << endl
-            << "  OpenBabel should connect atoms with serial #" << startAtomSerialNumber << " and #" << boundedAtomsSerialNumbers[k]
-            << endl
-            << "  However, OpenBabel was not able to find an atom with serial #" << boundedAtomsSerialNumbers[k] << "." << endl
-            << "  OpenBabel will proceed, and disregard this particular connection." << endl;
+            errorMsg << "WARNING: Problems reading a PDB file:\n"
+		     << "  Problems reading a CONECT record.\n"
+		     << "  According to the PDB specification,\n"
+		     << "  Atoms with serial #" << startAtomSerialNumber 
+		     << " and #" << boundedAtomsSerialNumbers[k]
+		     << " should be connected\n"
+		     << "  However, an atom with serial #" << boundedAtomsSerialNumbers[k] << " was not found.\n"
+		     << "  THIS CONECT RECORD WILL BE IGNORED.";
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
             break;
         }
 
