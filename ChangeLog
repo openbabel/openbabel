@@ -1,3 +1,17 @@
+2005-07-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/atom.cpp, src/bond.cpp, src/chiral.cpp, src,molchrg.cpp,
+	src/obmolecformat.h, src/patty.cpp, src/phmodel.cpp, src/ring.cpp,
+	src/rotor.cpp: Add obAuditMsg "audit log" messages for perception
+	and "assignment" methods, including methods with "chemical
+	intelligence" (e.g., OBAtom::HtoMethyl or OBAtom::SetHybAndGeom).
+
+	* src/formats/pdbformat.cpp: Transition CONECT warnings to
+	obErrorLog::ThrowError calls.
+
+	* src/oberror.cpp: Turn off default "error wrapping" of cerr to
+	OBError messages.
+
 2005-07-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/atomtyp.txt, data/atomtyp.h: Change implicit valence rules

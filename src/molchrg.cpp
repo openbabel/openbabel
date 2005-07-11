@@ -56,6 +56,8 @@ the Gasteiger model (sigma).
 bool OBGastChrg::AssignPartialCharges(OBMol &mol)
 {
     //InitialPartialCharges(mol);
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::AssignPartialCharges", obAuditMsg);
 
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;

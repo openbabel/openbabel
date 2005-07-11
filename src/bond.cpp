@@ -89,23 +89,21 @@ void OBBond::SetBO(int order)
 void OBBond::SetLength(OBAtom *fixed, double length)
 {
     unsigned int i;
-    OBMol *mol = (OBMol*)fixed->GetParent()
-                     ;
+    OBMol *mol = (OBMol*)fixed->GetParent();
     vector3 v1,v2,v3,v4,v5;
     vector<int> children;
 
-    int a = fixed->GetIdx()
-                ;
-    int b = GetNbrAtom(fixed)
-            ->GetIdx();
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::SetBondLength", obAuditMsg);
+
+    int a = fixed->GetIdx();
+    int b = GetNbrAtom(fixed)->GetIdx();
 
     mol->FindChildren(children,a,b);
     children.push_back(b);
 
-    v1 = GetNbrAtom(fixed)
-         ->GetVector();
-    v2 = fixed->GetVector()
-             ;
+    v1 = GetNbrAtom(fixed)->GetVector();
+    v2 = fixed->GetVector();
     v3 = v1 - v2;
     v3.normalize();
     v3 *= length;
@@ -193,14 +191,12 @@ bool OBBond::IsPrimaryAmide()
             if (a2->GetHvyValence() == 2)
                 return(true);
 
-
     return(false);
 }
 
+//! \todo Implement this properly -- currently always returns false
 bool OBBond::IsSecondaryAmide()
 {
-
-
     return(false);
 }
 
@@ -231,7 +227,6 @@ bool OBBond::IsEster()
     for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
         if (bond->IsCarbonyl())
             return(true);
-
 
     return(false);
 }
@@ -385,6 +380,9 @@ bool OBBond::IsClosure()
         return(HasFlag(OB_CLOSURE_BOND));
 
     mol->SetClosureBondsPerceived();
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::PerceiveClosureBonds", obAuditMsg);
 
     OBBond *bond;
     OBAtom *atom,*nbr;

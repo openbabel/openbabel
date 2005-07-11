@@ -503,8 +503,8 @@ double OBAtom::GetPartialCharge()
     return(_pcharge);
 }
 
+//! Returns true if nitrogen is part of an amide
 bool OBAtom::IsAmideNitrogen()
-//returns true if nitrogen is part of an amide
 {
     if (!IsNitrogen())
         return(false);
@@ -1158,6 +1158,10 @@ bool OBAtom::HtoMethyl()
 {
     if (!IsHydrogen())
         return(false);
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::HtoMethyl", obAuditMsg);
+
     OBMol *mol = (OBMol*)GetParent();
 
     mol->BeginModify();
@@ -1222,6 +1226,10 @@ static void ApplyRotMatToBond(OBMol &mol,matrix3x3 &m,OBAtom *a1,OBAtom *a2)
 
 bool OBAtom::SetHybAndGeom(int hyb)
 {
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::SetHybridizationAndGeometry",
+			  obAuditMsg);
+
     //if (hyb == GetHyb()) return(true);
     if (GetAtomicNum() == 1)
         return(false);

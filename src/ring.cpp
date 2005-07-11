@@ -328,6 +328,9 @@ void OBMol::FindRingAtomsAndBonds()
         return;
     SetFlag(OB_RINGFLAGS_MOL);
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::FindRingAtomsAndBonds", obAuditMsg);
+
     OBBitVec avisit,bvisit;
     avisit.Resize(NumAtoms()+1);
     bvisit.Resize(NumAtoms()+1);

@@ -66,6 +66,9 @@ bool OBRotorList::FindRotors(OBMol &mol)
     vector<int> gtd;
     mol.GetGTDVector(gtd);
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::FindRotors", obAuditMsg);
+
     OBBond *bond;
     vector<OBEdgeBase*>::iterator i;
     vector<pair<OBBond*,int> > vtmp;

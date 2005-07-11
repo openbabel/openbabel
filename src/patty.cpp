@@ -124,7 +124,7 @@ void patty::assign_rules(vector<string> &rules)
     char tmp_str[BUFF_SIZE];
     unsigned int i;
     OBSmartsPattern *sp;
-
+    
     for ( i = 0 ; i < rules.size() ; i++ )
     {
         strncpy(buffer, rules[i].c_str(), BUFF_SIZE);
@@ -148,6 +148,9 @@ void patty::assign_rules(vector<string> &rules)
 void patty::assign_types(OBMol &mol,vector<string> &atm_typ)
 {
     atm_typ.resize(mol.NumAtoms()+1);
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::PATTY::AssignTypes", obAuditMsg);
 
     for (unsigned int i = 0; i < _sp.size(); i++)
     {
@@ -175,6 +178,9 @@ void patty::assign_types(OBMol &mol,vector<int> &atm_typ)
 {
     atm_typ.resize(mol.NumAtoms()+1);
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::PATTY::AssignTypes", obAuditMsg);
+
     for (unsigned int i = 0; i < _sp.size(); i++)
     {
         _sp[i]->Match(mol);
@@ -200,48 +206,46 @@ void patty::assign_types(OBMol &mol,vector<int> &atm_typ)
 
 int patty::type_to_int(const string &type, bool failOnUndefined)
 {
-
     int result;
-
 
     switch(toupper(type.c_str()[0]))
     {
     case 'C' : // CAT - CATION
-        result = PT_CATION;
-        break;
+      result = PT_CATION;
+      break;
     case 'A' :
-        if (toupper(type.c_str()[1]) == 'N') // ANI - ANION
-            result = PT_ANION;
-        else
-            result = PT_ACCEPTOR;
-        break;
+      if (toupper(type.c_str()[1]) == 'N') // ANI - ANION
+	result = PT_ANION;
+      else
+	result = PT_ACCEPTOR;
+      break;
     case 'P' : // POL - POLAR
-        result = PT_POLAR;
-        break;
+      result = PT_POLAR;
+      break;
     case 'D' : // DON - DONOR
-        result = PT_DONOR;
-        break;
+      result = PT_DONOR;
+      break;
     case 'H' : // HYD - HYDROPHOBIC
-        result = PT_HYDROPHOBIC;
-        break;
+      result = PT_HYDROPHOBIC;
+      break;
     case 'M' : // Metal
-        result = PT_METAL;
-        break;
+      result = PT_METAL;
+      break;
     case 'O' : // OTH - OTHER
-        result = PT_OTHER;
-        break;
+      result = PT_OTHER;
+      break;
     default :
-        // This was added by Brian,
-        // Behavior will fail if type is undefined
-        if (failOnUndefined)
+      // This was added by Brian,
+      // Behavior will fail if type is undefined
+      if (failOnUndefined)
         {
-            cerr << "Unable to find type of feature passed in " << endl;
-            cerr << "Feature passed in is " << type << endl;
-            exit(-1);
+	  cerr << "Unable to find type of feature passed in " << endl;
+	  cerr << "Feature passed in is " << type << endl;
+	  exit(-1);
         }
-        else
+      else
         {
-            result = 7;
+	  result = 7;
         }
     }
     return(result);

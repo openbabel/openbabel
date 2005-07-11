@@ -134,6 +134,9 @@ void OBPhModel::CorrectForPH(OBMol &mol)
 
     mol.SetCorrectedForPH();
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::CorrectForPH", obAuditMsg);
+
     OBAtom *atom;
     vector<OBNodeBase*>::iterator j;
     for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
@@ -251,6 +254,9 @@ bool OBChemTsfm::Apply(OBMol &mol)
         return(false);
 
     vector<vector<int> > mlist = _bgn.GetUMapList();
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::OBChemTransform", obAuditMsg);
 
     if (!_vchrg.empty()) //modify charges
     {

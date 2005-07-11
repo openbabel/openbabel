@@ -35,6 +35,9 @@ void OBMol::FindChiralCenters()
         return;
     SetChiralityPerceived();
 
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::FindChiralCenters", obAuditMsg);
+
     //do quick test to see if there are any possible chiral centers
     bool mayHaveChiralCenter=false;
     OBAtom *atom,*nbr;

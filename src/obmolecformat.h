@@ -38,6 +38,14 @@ public:
 	virtual bool ReadChemObject(OBConversion* pConv)
 	{
 		static OBMol* pmol;
+
+		    std::string auditMsg = "OpenBabel::Read molecule ";
+		    std::string description(Description());
+		    auditMsg += description.substr(0,description.find('\n'));
+		    obErrorLog.ThrowError(__FUNCTION__,
+					  auditMsg,
+					  obAuditMsg);
+
 		//With j option, reuse pmol except for the first mol
 		if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsFirstInput())
 			pmol = new OBMol;
@@ -47,6 +55,7 @@ public:
 			pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
 		else
 			pConv->AddChemObject(NULL);
+
 		return ret;
 	};
 	
@@ -59,6 +68,14 @@ public:
 		if(pmol && pmol->NumAtoms() > 0)
 		{	
 			ret=true;
+
+			std::string auditMsg = "OpenBabel::Read molecule ";
+			std::string description(Description());
+			auditMsg += description.substr(0,description.find('\n'));
+			obErrorLog.ThrowError(__FUNCTION__,
+					      auditMsg,
+					      obAuditMsg);
+
 			if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsLast()) //With j option, output only at end
 			{
 				ret=WriteMolecule(pmol,pConv);
