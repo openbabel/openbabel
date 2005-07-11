@@ -68,7 +68,7 @@ string OBError::message() const
 OBMessageHandler::OBMessageHandler() :
   _outputStream(&clog), _outputLevel(obWarning)
 {
-  StartErrorWrap();
+  //  StartErrorWrap();
 }
 
 OBMessageHandler::~OBMessageHandler()
