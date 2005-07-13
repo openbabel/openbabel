@@ -1,5 +1,5 @@
 /**********************************************************************
-finger2.cpp - Alternate fingerprint algorithm.
+finger2.cpp: fingerprint2 definition and implementation.
 
 Copyright (C) 2005 Chris Morley
  
@@ -17,7 +17,6 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "bitvec.h"
 #include "fingerprint.h"
 #include <set>
 #include <vector>
@@ -31,13 +30,46 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
+/// \brief Fingerprint based on linear fragments up to 7 atoms ID="FP2"
+class fingerprint2 : public OBFingerprint
+{
+public:
+	fingerprint2(string ID, bool IsDefault=false) 
+		: OBFingerprint(ID, IsDefault){};
 
-/*
+	virtual string Description()
+	{ return "Indexes linear fragments up to 7 atoms.";};
+
+	//Calculates the fingerprint 
+	virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0);
+private:
+	typedef std::set<std::vector<int> > Fset;
+	typedef std::set<std::vector<int> >::iterator SetItr;
+	
+	void getFragments(std::vector<int> levels, std::vector<int> curfrag, 
+			int level, OBAtom* patom, OBBond* pbond);
+	void DoReverses();
+	void DoRings();
+
+	int CalcHash(const std::vector<int>& frag);
+	void PrintFpt(std::vector<int>& f, int hash=0);
+
+	Fset fragset;
+	Fset ringset;
+
+};
+
+//***********************************************
+//Make a global instance
+fingerprint2 thefingerprint2("FP2",true);
+//***********************************************
+
+/*! class fingerprint2
 Similar to Fabien Fontain's fingerprint class, with a slightly improved
 algorithm, but re-written using STL which makes it shorter.
  
 A molecule structure is analysed to identify linear fragments of length
-from one to MAX_FRAGMENT_SIZE(=7) atoms but single atom fragments of C,N,and O 
+from one to Max_Fragment_Size = 7 atoms but single atom fragments of C,N,and O 
 are ignored. A fragment is terminated when the atoms form a ring. 
 
 For each of these fragments the atoms, bonding and whether
@@ -50,20 +82,26 @@ Each remaining fragment is assigned a hash number from 0 to 1020 which is used
 to set a bit in a 1024 bit vector  
 */
 
-void fingerprint2::GetFingerprint(OBMol& mol,OBBitVec& fp) 
+bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits) 
 {
+	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+	if(!pmol) return false;
+	fp.resize(1024/bitsperint);
+	fragset.clear();//needed because now only one instance of fp class
+	ringset.clear();
+	
 	//identify fragments starting at every atom
 	OBAtom *patom;
 	vector<OBNodeBase*>::iterator i;
-	for (patom = mol.BeginAtom(i);patom;patom = mol.NextAtom(i))
+	for (patom = pmol->BeginAtom(i);patom;patom = pmol->NextAtom(i))
 	{
 		if(patom->IsHydrogen()) continue;
 		vector<int> curfrag;
-		vector<int> levels(mol.NumAtoms());
+		vector<int> levels(pmol->NumAtoms());
 		getFragments(levels, curfrag, 1, patom, NULL);
 	}
 	
-//	TRACE("%s %d frags before; ",mol.GetTitle(),fragset.size());
+//	TRACE("%s %d frags before; ",pmol->GetTitle(),fragset.size());
 
 	//Ensure that each chemically identical fragment is present only in a single
 	DoRings();
@@ -74,10 +112,14 @@ void fingerprint2::GetFingerprint(OBMol& mol,OBBitVec& fp)
 	{	
 		//Use hash of fragment to set a bit in the fingerprint
 		int hash = CalcHash(*itr);
-		fp.SetBitOn(hash);
-//		PrintFpt(*itr,hash);
+		SetBit(fp,hash);
+		//PrintFpt(*itr,hash);
 	}
+	if(nbits)
+		Fold(fp, nbits);
+
 //	TRACE("%d after\n",fragset.size());
+	return true;
 }
 
 //////////////////////////////////////////////////////////
@@ -227,63 +269,7 @@ void fingerprint2::PrintFpt(vector<int>& f, int hash)
        0    , atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n) 
 */
 
-//***************************************************
-bool GetFingerprint(OBMol& mol, std::vector<unsigned int>& vecwords,
-		    int nwords, int type)
-{
-	//Handle different fingerprint types in this simple way until the need is demonstrated
-	//for a more sophisticated dynamic method similar to that for formats.
-	if(type==0) type=2; //fingerprint2 is the default
-	OBBitVec f(1024);
-	switch(type)
-	{
-		case 1:
-		{
-				//Fabien Fontain's fingerprint
-			fingerprint fpt(mol.GetTitle());
-			fpt.HashMol(mol);	
-			f = fpt.GetFpt();
-			break;
-		}
-		case 2:
-		{
-				//fingerprint2
-			fingerprint2 fing2;
-			fing2.GetFingerprint(mol,f);
-			break;
-		}
-		default:
-			return false;
-	}
-	
-	if(nwords)
-		f.Fold(nwords*SETWORD);
-	f.GetWords(vecwords);
-	return true;
-}
-
-double Tanimoto(const std::vector<unsigned int> vec1, 
-		const std::vector<unsigned int> vec2) 
-{
-	//Independent of sizeof(unsigned int)
-	if(vec1.size()!=vec2.size())
-		return -1; //different number of bits
-	double andbits=0, orbits=0;
-	int i;
-  for (i=0;i<vec1.size();++i)
-	{
-		int andfp = vec1[i] & vec2[i];
-		int orfp = vec1[i] | vec2[i];
-		//Count bits
-		for(;andfp;andfp=andfp<<1)
-			if(andfp<0) ++andbits;
-		for(;orfp;orfp=orfp<<1)
-			if(orfp<0) ++orbits;
-	}
-    return((double)andbits/(double)orbits);
-}
-
 } //namespace OpenBabel
 
 //! \file finger2.cpp
-//! \brief Alternate fingerprint algorithm.
+//! \brief fingerprint2 definition and implementation
