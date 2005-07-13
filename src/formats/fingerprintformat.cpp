@@ -21,6 +21,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
+/// \brief Constructs and displays fingerprints. For details see OBFingerprint class
 class FingerprintFormat : public OBMoleculeFormat
 {
 public:
@@ -30,11 +31,13 @@ public:
 	virtual const char* Description() //required
 	{ return
 "Fingerprint format\n \
-See Fabien Fontaine's source code\n \
-Write Options e.g. -xn 16\n \
- f# finger print type, default <2>\n \
- n# fold to specified number of 32bit words \n \
+Constructs and displays fingerprints and (for multiple input objects)\n \
+the Tanimoto coefficient and whether a superstructure of the first object\n \
+Options e.g. -xfFP3 -xn128\n \
+ f<id> fingerprint type\n \
+ n# fold to specified number of bits, 32, 64, 128, etc.\n \
  h  hex output when multiple molecules\n \
+ F  displays the available fingerprint types\n \
 ";
 	};
 
@@ -54,40 +57,58 @@ FingerprintFormat theFingerprintFormat;
 //*******************************************************************
 bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
-	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-	if(pmol==NULL) return false;
-
-	//Define some references so we can use the old parameter names
 	ostream &ofs = *pConv->GetOutStream();
-	OBMol &mol = *pmol;
 
-	pmol->ConvertDativeBonds();
+	OBFingerprint* pFP;
+	string id;
+	if(pConv->IsOption("F"))
+	{
+		while(OBFingerprint::GetNextFPrt(id, pFP))
+			ofs << id << " -- " << pFP->Description() << endl;
+		return true;
+	}
+
 
 	bool hexoutput=false;
 	if(pConv->IsOption("h") || (pConv->GetOutputIndex()==1 && pConv->IsLast()))
 		hexoutput=true;
 
-	int type=0, nwords=0;
+	string fpid;
+	int nbits=0;
 	const char* p=pConv->IsOption("f");
 	if(p)
-		type=atoi(p);
+	{
+		fpid=p;
+		fpid = fpid.substr(0,fpid.find('"'));
+	}
+
+	pFP = OBFingerprint::FindFingerprint(fpid);
+	if(!pFP)
+	{
+		cerr << "Fingerprint type '" << fpid << "' not available" << endl;
+		return false;
+	}
+
 	p=pConv->IsOption("n");
 	if(p)
-		nwords = atoi(p);		
+		nbits = atoi(p);		
 
 	vector<unsigned int> fptvec;
-	if(!GetFingerprint(mol, fptvec, nwords, type))
+	if(!pFP->GetFingerprint(pOb, fptvec, nbits))
 		return false;
 	
-  ofs << ">" << mol.GetTitle();
+ 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+	if(pmol)
+		ofs << ">" << pmol->GetTitle();
+
 	if(hexoutput)
 	{
 		int i, bitsset=0;
 		for (i=0;i<fptvec.size();++i)
 		{
-		int wd = fptvec[i];
-		for(;wd;wd=wd<<1)//count bits set by shifting into sign bit until word==0
-			if(wd<0) ++bitsset;
+			int wd = fptvec[i];
+			for(;wd;wd=wd<<1)//count bits set by shifting into sign bit until word==0
+				if(wd<0) ++bitsset;
 		}
 		ofs  << "   " << bitsset << " bits set. "; 
 	}
@@ -96,13 +117,14 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	{
 		//store the fingerprint and name of first molecule
 		firstfp=fptvec;
-		firstname=mol.GetTitle();
+		if(pmol)
+			firstname=pmol->GetTitle();
 		if(firstname.empty())
 			firstname = "first mol";
 	}
 	else
 	{
-		ofs << "   Tanimoto from " << firstname << " = " << Tanimoto(firstfp, fptvec);
+		ofs << "   Tanimoto from " << firstname << " = " << OBFingerprint::Tanimoto(firstfp, fptvec);
 		if(IsPossibleSubstructure(fptvec,firstfp))
 			ofs << "\nPossible superstructure of " << firstname;
 	}

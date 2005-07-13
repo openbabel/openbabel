@@ -1,4 +1,5 @@
 /**********************************************************************
+fastsearchformat.cpp: Preparation and searching of fingerprint-based index files
 Copyright (C) 2005 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -16,16 +17,17 @@ GNU General Public License for more details.
 #include <fstream>
 #include "mol.h"
 #include "obconversion.h"
-#include "fastsearch.h"
+#include "fingerprint.h"
 
 using namespace std;
 namespace OpenBabel {
 
+/// \brief Prepares and searches of fingerprint-based index files. See FastSearch class for details
 class FastSearchFormat : public OBFormat
 {
 public:
 	//Register this format type ID
-	FastSearchFormat() : MaxCandidates(4000), fsi(NULL) 
+	FastSearchFormat() : fsi(NULL) 
 	{
 		OBConversion::RegisterFormat("fs",this);
 	}
@@ -34,21 +36,25 @@ public:
 	{ return
 "FastSearching\n \
 Uses molecular fingerprints in an index file.\n \
-Make an index (slow) by using the fs format for writing:\n \
-  obabel datafile.xxx index.fs   or\n \
-  obabel datafile.xxx index.??? -ofs\n \
-Search an index file by using the fs format for reading:\n \
-  obabel index.fs -sSMILES outfile.yyy   or\n \
-  obabel datafile.xxx -ifs -sSMILES outfile.yyy\n \
-The structure spec can be a molecule from a file: -Spatternfile.zzz\n \
+Writing to the fs format makes an index (a slow process)\n \
+  babel datafile.xxx index.fs\n \
+Reading from the fs format does a fast search for:\n \
+  Substructure\n \
+    babel index.fs -sSMILES outfile.yyy   or\n \
+    babel datafile.xxx -ifs -sSMILES outfile.yyy\n \
+  Molecular similarity based on Tanimoto coefficient\n \
+	  babel index.fs -sSMILES outfile.yyy -t0.7  (Tanimoto >0.7)\n \
+	  babel index.fs -sSMILES outfile.yyy -t15   (best 15 molecules)\n \
+  The structure spec can be a molecule from a file: -Spatternfile.zzz\n \
 \n \
-Write Options (when making index) e.g. -xw 2 \n \
- f# finger print type, default <2>\n \
- w# number of 32bit words in fingerprint\n \
- N# approx number of molecules to be indexed\n \
+Write Options (when making index) e.g. -xfFP3 \n \
+ f# Fingerprint type\n \
+ n# Fold fingerprint to # bits\n \
 \n \
-Read Options (when searching) e.g. -an\n \
- l# the maximum number of candidates. Default=4000\n\n \
+Read Options (when searching) e.g. -at0.7\n \
+ t# Do similarity search: #mols or # as min Tanimoto\n \
+ a  Add Tanimoto to title\n \
+ l# Maximum number of candidates. Default<4000>\n\n \
 ";
 	};
 
@@ -62,8 +68,6 @@ private:
 	///big data structure which will remain in memory after it is loaded
 	//until the program ends.
 	FastSearch fs;
-	int MaxCandidates;
-	
 	FastSearchIndexer* fsi;
 };
 
@@ -95,9 +99,6 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		
 		//erase -s option in GeneralOptions since it will be rewritten
 		pConv->RemoveOption("s",OBConversion::GENOPTIONS);
-//		string::size_type pos = genopts.find("s\"");
-//		genopts[pos] = 'X'; //dummy,anything but s
-//		pConv->SetGeneralOptions(genopts.c_str());
 	}
 
 	// or Make OBMol from file in -S option	
@@ -140,8 +141,6 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	if(pos!=string::npos)
 		smilesstr = smilesstr.substr(0,pos);
 	pConv->AddOption("s", OBConversion::GENOPTIONS, smilesstr.c_str());
-//	genopts += "s\"" + smilesstr + "\"";
-//	pConv->SetGeneralOptions(genopts.c_str());
 	
 	//Derive index name
 	string indexname = pConv->GetInFilename();
@@ -162,56 +161,106 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		return false;
 	}
 
-	//Use -l option to set the max number of candidates	
-	p = pConv->IsOption("l",OBConversion::GENOPTIONS);
-	if(p && atoi(p))
-		MaxCandidates = atoi(p);
-
-	vector<unsigned int> SeekPositions;
 	string datafilename = fs.ReadIndex(&ifs);
-	if(datafilename.empty() || !fs.Find(patternMol, SeekPositions, MaxCandidates))
+	if(datafilename.empty())
 	{
 		cerr << "Difficulty reading from index " << indexname << endl;
 		return false;
 	}
 
-	cerr << SeekPositions.size() << " candidates " << endl;
-
-	if(SeekPositions.size()!=0)
+	//Open the datafile and put it in pConv
+	//datafile name derived from index file probably won't have a file path
+	//but indexname may. Derive a full datafile name
+	string path;
+	pos = indexname.find_last_of("/\\");
+	if(pos==string::npos)
+		path = datafilename;
+	else
+		path = indexname.substr(0,pos+1) + datafilename;
+	
+	ifstream datastream(path.c_str());
+	if(!datastream)
 	{
-		ifstream datastream;
-		//Open the datafile and put it in pConv
-		//datafile name derived from index file probably won't have a file path
-		//but indexname may. Derive a full datafile name
-		string path;
-		string::size_type pos = indexname.find_last_of("/\\");
-		if(pos==string::npos)
-			path = datafilename;
-		else
-			path = indexname.substr(0,pos+1) + datafilename;
-		
-		datastream.open(path.c_str());
-		if(!datastream)
-		{
-			cerr << "Difficulty opening " << path << endl;
+		cerr << "Difficulty opening " << path << endl;
+		return false;
+	}
+	pConv->SetInStream(&datastream);
+	
+	//Input format is currently fs; set it appropriately
+	if(!pConv->SetInAndOutFormats(pConv->FormatFromExt(datafilename.c_str()),pConv->GetOutFormat()))
 			return false;
-		}
-		pConv->SetInStream(&datastream);
-		
-		//Input format is currently fs; set it appropriately
-		if(!pConv->SetInAndOutFormats(pConv->FormatFromExt(datafilename.c_str()),pConv->GetOutFormat()))
-				return false;
-		pConv->AddOption("b",OBConversion::GENOPTIONS);
-//		genopts = '9' + genopts;//use standard form for dative bonds
-//		pConv->SetGeneralOptions(genopts.c_str());
+	pConv->AddOption("b",OBConversion::GENOPTIONS);
 
-		//Output the candidate molecules, filtering through s filter
+
+	//Now do searching
+	p = pConv->IsOption("t",OBConversion::INOPTIONS);
+	if(p)
+	{
+		//Do a similarity search
+		multimap<double, unsigned int> SeekposMap;
+		txt=p;
+		if(txt.find('.')==string::npos)
+		{
+			//Finds n molecules with largest Tanimoto
+			int n = atoi(p);
+			fs.FindSimilar(&patternMol, SeekposMap, n);
+		}
+		else
+		{
+			//Finds molecules with Tanimoto > MinTani
+			double MinTani = atof(txt.c_str());
+			fs.FindSimilar(&patternMol, SeekposMap, MinTani);
+		}
+		
+		//Don't want to filter through SMARTS filter
+		pConv->RemoveOption("s", OBConversion::GENOPTIONS);
+		
+		multimap<double, unsigned int>::reverse_iterator itr;
+		for(itr=SeekposMap.rbegin();itr!=SeekposMap.rend();++itr)
+		{
+			datastream.seekg(itr->second);
+
+			if(pConv->IsOption("a", OBConversion::INOPTIONS))
+			{
+				//Adds Tanimoto coeff to title
+				//First remove any previous value
+				pConv->RemoveOption("addtotitle", OBConversion::GENOPTIONS);
+				stringstream ss;
+				ss << " " << itr->first;
+				pConv->AddOption("addtotitle",OBConversion::GENOPTIONS, ss.str().c_str());
+			
+			}
+			pConv->SetOneObjectOnly();
+			pConv->Convert();
+		}
+	}
+
+	else
+
+	{
+		//Do a substructure search
+		int MaxCandidates = 4000;
+		p = pConv->IsOption("l",OBConversion::INOPTIONS);
+		if(p && atoi(p))
+			MaxCandidates = atoi(p);
+		
+		vector<unsigned int> SeekPositions;
+		fs.Find(&patternMol, SeekPositions, MaxCandidates);
+		clog << SeekPositions.size() << " candidates from fingerprint search phase" << endl;
+
+		//Output the candidate molecules 
+		//filtering through s filter, unless the fingerprint type does not require it
+		if(fs.GetFingerprint()->Flags() & OBFingerprint::FPT_UNIQUEBITS)
+			pConv->RemoveOption("s",OBConversion::GENOPTIONS);
+
 		vector<unsigned int>::iterator itr;
 		for(itr=SeekPositions.begin();itr!=SeekPositions.end();itr++)
 		{
 			datastream.seekg(*itr);
-//				datastream.seekg(*itr - datastream.tellg(), ios_base::cur); //Avoid retrieving start
-			if(pConv->IsOption("c",OBConversion::GENOPTIONS)) //***debugging kludge***
+			//	datastream.seekg(*itr - datastream.tellg(), ios_base::cur); //Avoid retrieving start
+
+			//debugging kludge to output all candidates directly
+			if(pConv->IsOption("c",OBConversion::GENOPTIONS))
 			{
 				string ln;
 				getline(datastream,ln);
@@ -222,16 +271,15 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 			pConv->Convert();
 		}
 	}
-
 	return false;	//To finish	
-	}
+}
 
 /////////////////////////////////////////////////////
 bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 {
 	//Prepares an index file
 	if(pConv->GetOutputIndex()==0)
-		cerr << "This will prepare an index of " << pConv->GetInFilename()
+		clog << "This will prepare an index of " << pConv->GetInFilename()
 		<<  " and may take some time..." << flush;
 	
 	OBStopwatch sw;
@@ -262,19 +310,15 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 			NewOstreamUsed=true;
 		}
 
-		const char* p = pConv->IsOption("N");
-		unsigned int nmols = p ? atoi(p) : 200; //estimate of number of molecules
-		p = pConv->IsOption("w");
-		unsigned int nwords = p ? atoi(p) : 32; //number 32bit words in each fingerprint
-		if(nmols==0 || nwords==0)
-		{
-			cerr << "Bad -x option" << endl;
-			return false;
-		}
-		int fptype=0; //fingerprint type
+		int nbits = 0;
+		const char* p = pConv->IsOption("n");
+		if(p)
+			nbits = atoi(p);
+
+		string fpid; //fingerprint type
 		p=pConv->IsOption("f");
 		if(p)
-			fptype=atoi(p);
+			fpid=p;
 
 		//Prepare name without path
 		string datafilename = pConv->GetInFilename();
@@ -283,24 +327,22 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 			cerr << "No datafile! " << endl;
 			return false;
 		}
-		string::size_type pos = datafilename.find_last_of("/\\");
+		int pos = datafilename.find_last_of("/\\");
 		if(pos!=string::npos)
 			datafilename=datafilename.substr(pos+1);
-		fsi = new FastSearchIndexer(datafilename, pOs, fptype, nwords, nmols);
+		fsi = new FastSearchIndexer(datafilename, pOs, fpid, nbits);
 	}
 
-	//All passes provide a molecule for indexing
+	//All passes provide an object for indexing
 	OBBase* pOb = pConv->GetChemObject();
 	OBMol* pmol = dynamic_cast<OBMol*> (pOb);
 	if(pmol)
-	{
 		pmol->ConvertDativeBonds();//use standard form for dative bonds
+	
+	streampos seekpos = pConv->GetInPos();
+	fsi->Add(pOb, seekpos );
 
-		streampos seekpos = pConv->GetInPos();
-		fsi->Add(*pmol, seekpos );
-	}
-
-	if(pmol==NULL || pConv->IsLast())
+	if(pConv->IsLast())
 	{
 		//Last pass 
 		if(NewOstreamUsed)
@@ -310,61 +352,13 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 		//return to starting conditions
 		fsi=NULL;
 
-		cerr << "\n It took " << sw.Elapsed() << endl;
+		clog << "\n It took " << sw.Elapsed() << endl;
 	}
 	delete pOb;
 	return true;
 }
 
-//Fast sub-structure searching using fingerprints
-/*
-A description of fingerprints is at 
-http://www.daylight.com/dayhtml/doc/theory/theory.finger.html)
-http://www.mesaac.com/Fingerprint.htm
-The data source is a text file with many molecules (several million?) in any format.
-A requirement might be to find those molecules which has a substructure
-specified by a SMARTS string. By conventional methods this is prohibitively slow.
-
-To do it quickly, an index of the molecules is prepared containing a
-their fingerprints - a condensed representation of their structure. 
-This process may take a long time but only has to be done once. The index
-can be searched very quickly in a process which eliminates almost all the
-molecules, leaving only a few to be examined more carefully.
-
-The fingerprints are hash values 32 bits or longer
-with each bit representing one or more substructures. If a substructure
-is present in the molecule, then a particular bit is 1. It may also be 1 if
-some other substructure is present. The fast search prepares a fingerprint
-from the requested SMARTS pattern. It finds those	molecules with which have
-fingerprints which have 1 in all the same positions as the pattern fingerprint.
-These candidate matches will include some false positives because of the use of
-each bit for several substructures. But with proper design, the number of
-molecules in this list will be a very small fraction of the total. It is
-feasible to make a definitive substructure search by conventional means in
-this reduced list even if it is slow. It is important, however, that the
-checking of the fingerprints against the pattern fingerprint is fast.
-
-The index has two table:
-- an array of fingerprints of the molecules
-- an array of the seek positions in the datasource file of all the molecules
-
-Keyboard interface
-	To search for SMARTS matches	
-obabel databasefile.fs outfile.yyy -s"smarts"
-or
-obabel databasefile.xxx outfile.yyy -s"smarts" -ifs
-or
-obabel databasefile.xxx outfile.yyy -sPatternfile.zzz -ifs
-
-	To make index
-obabel databasefile.xxx -ofs   (makes databasefile.fs)
-or
-obabel databasefile.xxx namedindex.fs 
-
-fsformat
-does searching in ReadChemObject() and indexing in WriteChemObject()
-
-*/
-
-
 }//Openbabel
+
+//! \file fastsearchformat.cpp
+//! \brief Preparation and searching of fingerprint-based index files
