@@ -102,6 +102,10 @@ SOURCE=..\..\src\formats\amberformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\APIInterface.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\balstformat.cpp
 # End Source File
 # Begin Source File
@@ -174,10 +178,6 @@ SOURCE=..\..\src\formats\fhformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\fingerprintformat.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\formats\gamessformat.cpp
 # End Source File
 # Begin Source File
@@ -190,7 +190,7 @@ SOURCE=..\..\src\formats\ghemicalformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\grosmos96format.cpp
+SOURCE=..\..\src\formats\gromos96format.cpp
 # End Source File
 # Begin Source File
 

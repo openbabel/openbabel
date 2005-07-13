@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib libinchi.lib Shlwapi.lib cmlppdll.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /libpath:".." /libpath:"..\..\sr\formats\cmlpp\\builds\windows\vc6\cmlppdll\debug"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib libinchi.lib Shlwapi.lib cmlpp.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\debug"
 # SUBTRACT LINK32 /profile
 
 !ENDIF 
@@ -148,38 +148,32 @@ SOURCE=..\OBGUI\DynamicOptions.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\fastsearch.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\fingerprint\fastsearchformat.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\formats\fastsearchformat.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\fingerprint\finger1.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
 # PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\finger2.cpp
+SOURCE=..\..\src\fingerprint\finger1.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\fingerprint\finger2.cpp
-# PROP Exclude_From_Build 1
+SOURCE=..\..\src\finger2.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -187,8 +181,6 @@ SOURCE=..\..\src\finger3.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
-# PROP Exclude_From_Build 1
-
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
 !ENDIF 
@@ -196,34 +188,25 @@ SOURCE=..\..\src\finger3.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\fingerprint\finger3.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\fingerprint.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\fingerprint\fingerprint.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
-# PROP Exclude_From_Build 1
-
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\fingerprint\fingerprintformat.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\formats\fingerprintformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -428,37 +411,7 @@ SOURCE=..\..\src\extable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\fastsearch.h
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\fingerprint\fastsearch.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\fingerprint.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\fingerprint\fingerprint.h
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 

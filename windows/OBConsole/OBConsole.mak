@@ -35,11 +35,11 @@ INTDIR=.\Release
 
 !IF "$(RECURSE)" == "0" 
 
-ALL : ".\obabel.exe"
+ALL : ".\babel.exe"
 
 !ELSE 
 
-ALL : "OBConv - Win32 Release" ".\obabel.exe"
+ALL : "OBConv - Win32 Release" ".\babel.exe"
 
 !ENDIF 
 
@@ -50,7 +50,7 @@ CLEAN :
 !ENDIF 
 	-@erase "$(INTDIR)\main.obj"
 	-@erase "$(INTDIR)\vc60.idb"
-	-@erase ".\obabel.exe"
+	-@erase ".\babel.exe"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -61,12 +61,12 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBConsole.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obconv.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\obabel.pdb" /machine:I386 /out:"obabel.exe" /libpath:"..\OBConv\Release" 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obconv.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\babel.pdb" /machine:I386 /out:"babel.exe" /libpath:"..\OBConv\Release" 
 LINK32_OBJS= \
 	"$(INTDIR)\main.obj" \
 	"..\OBConv\Release\OBConv.lib"
 
-".\obabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -77,7 +77,7 @@ DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
 
 ALL : $(DS_POSTBUILD_DEP)
 
-$(DS_POSTBUILD_DEP) : "OBConv - Win32 Release" ".\obabel.exe"
+$(DS_POSTBUILD_DEP) : "OBConv - Win32 Release" ".\babel.exe"
    copy ..\OBConv\OBConv.dll  . /Y
 	copy  ..\OBFormats2\OBFormats2.obf . /Y
 	copy ..\OBDLL\OBDLL.dll  .  /Y
@@ -93,11 +93,11 @@ OutDir=.\Debug
 
 !IF "$(RECURSE)" == "0" 
 
-ALL : "$(OUTDIR)\obabel.exe" "$(OUTDIR)\OBConsole.bsc"
+ALL : "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBConsole.bsc"
 
 !ELSE 
 
-ALL : "OBConv - Win32 Debug" "$(OUTDIR)\obabel.exe" "$(OUTDIR)\OBConsole.bsc"
+ALL : "OBConv - Win32 Debug" "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBConsole.bsc"
 
 !ENDIF 
 
@@ -110,9 +110,9 @@ CLEAN :
 	-@erase "$(INTDIR)\main.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vc60.pdb"
-	-@erase "$(OUTDIR)\obabel.exe"
-	-@erase "$(OUTDIR)\obabel.ilk"
-	-@erase "$(OUTDIR)\obabel.pdb"
+	-@erase "$(OUTDIR)\babel.exe"
+	-@erase "$(OUTDIR)\babel.ilk"
+	-@erase "$(OUTDIR)\babel.pdb"
 	-@erase "$(OUTDIR)\OBConsole.bsc"
 
 "$(OUTDIR)" :
@@ -130,12 +130,12 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obconv.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\obabel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\obabel.exe" /pdbtype:sept /libpath:"..\OBConv\debug\\" 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obconv.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\babel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\babel.exe" /pdbtype:sept /libpath:"..\OBConv\debug\\" 
 LINK32_OBJS= \
 	"$(INTDIR)\main.obj" \
 	"..\OBConv\Debug\OBConv.lib"
 
-"$(OUTDIR)\obabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -150,7 +150,7 @@ ALL : $(DS_POSTBUILD_DEP)
 OutDir=.\Debug
 # End Custom Macros
 
-$(DS_POSTBUILD_DEP) : "OBConv - Win32 Debug" "$(OUTDIR)\obabel.exe" "$(OUTDIR)\OBConsole.bsc"
+$(DS_POSTBUILD_DEP) : "OBConv - Win32 Debug" "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBConsole.bsc"
    copy ..\OBConv\Debug\OBConv.dll  .\debug /Y
 	copy  ..\OBFormats2\debug\OBFormats2D.obf .\debug /Y
 	copy ..\OBDLL\debug\OBDLL.dll  .\debug  /Y

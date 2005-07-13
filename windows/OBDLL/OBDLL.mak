@@ -46,8 +46,6 @@ CLEAN :
 	-@erase "$(INTDIR)\chains.obj"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\data.obj"
-	-@erase "$(INTDIR)\fastsearch.obj"
-	-@erase "$(INTDIR)\finger2.obj"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\generic.obj"
 	-@erase "$(INTDIR)\grid.obj"
@@ -96,8 +94,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\data.obj" \
-	"$(INTDIR)\fastsearch.obj" \
-	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
@@ -155,10 +151,6 @@ CLEAN :
 	-@erase "$(INTDIR)\chiral.sbr"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\data.sbr"
-	-@erase "$(INTDIR)\fastsearch.obj"
-	-@erase "$(INTDIR)\fastsearch.sbr"
-	-@erase "$(INTDIR)\finger2.obj"
-	-@erase "$(INTDIR)\finger2.sbr"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprint.sbr"
 	-@erase "$(INTDIR)\generic.obj"
@@ -231,8 +223,6 @@ BSC32_SBRS= \
 	"$(INTDIR)\chains.sbr" \
 	"$(INTDIR)\chiral.sbr" \
 	"$(INTDIR)\data.sbr" \
-	"$(INTDIR)\fastsearch.sbr" \
-	"$(INTDIR)\finger2.sbr" \
 	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\generic.sbr" \
 	"$(INTDIR)\grid.sbr" \
@@ -273,8 +263,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\data.obj" \
-	"$(INTDIR)\fastsearch.obj" \
-	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
@@ -486,42 +474,6 @@ SOURCE=..\..\src\data.cpp
 
 
 "$(INTDIR)\data.obj"	"$(INTDIR)\data.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\fastsearch.cpp
-
-!IF  "$(CFG)" == "OBDLL - Win32 Release"
-
-
-"$(INTDIR)\fastsearch.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
-
-
-"$(INTDIR)\fastsearch.obj"	"$(INTDIR)\fastsearch.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\finger2.cpp
-
-!IF  "$(CFG)" == "OBDLL - Win32 Release"
-
-
-"$(INTDIR)\finger2.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
-
-
-"$(INTDIR)\finger2.obj"	"$(INTDIR)\finger2.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

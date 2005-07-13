@@ -126,14 +126,6 @@ SOURCE=..\..\src\data.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\fastsearch.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\finger2.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\fingerprint.cpp
 # End Source File
 # Begin Source File
@@ -271,10 +263,6 @@ SOURCE=..\..\data\element.h
 # Begin Source File
 
 SOURCE=..\..\data\extable.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\fastsearch.h
 # End Source File
 # Begin Source File
 

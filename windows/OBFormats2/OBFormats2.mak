@@ -40,6 +40,7 @@ ALL : ".\OBFormats2.obf"
 CLEAN :
 	-@erase "$(INTDIR)\alchemyformat.obj"
 	-@erase "$(INTDIR)\amberformat.obj"
+	-@erase "$(INTDIR)\APIInterface.obj"
 	-@erase "$(INTDIR)\balstformat.obj"
 	-@erase "$(INTDIR)\bgfformat.obj"
 	-@erase "$(INTDIR)\boxformat.obj"
@@ -58,11 +59,10 @@ CLEAN :
 	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\fhformat.obj"
-	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\ghemicalformat.obj"
-	-@erase "$(INTDIR)\grosmos96format.obj"
+	-@erase "$(INTDIR)\gromos96format.obj"
 	-@erase "$(INTDIR)\hinformat.obj"
 	-@erase "$(INTDIR)\jaguarformat.obj"
 	-@erase "$(INTDIR)\mdlformat.obj"
@@ -123,11 +123,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
-	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
-	"$(INTDIR)\grosmos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
 	"$(INTDIR)\mdlformat.obj" \
@@ -151,7 +149,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
+	"$(INTDIR)\gromos96format.obj"
 
 ".\OBFormats2.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -174,6 +174,8 @@ CLEAN :
 	-@erase "$(INTDIR)\alchemyformat.sbr"
 	-@erase "$(INTDIR)\amberformat.obj"
 	-@erase "$(INTDIR)\amberformat.sbr"
+	-@erase "$(INTDIR)\APIInterface.obj"
+	-@erase "$(INTDIR)\APIInterface.sbr"
 	-@erase "$(INTDIR)\balstformat.obj"
 	-@erase "$(INTDIR)\balstformat.sbr"
 	-@erase "$(INTDIR)\bgfformat.obj"
@@ -210,16 +212,14 @@ CLEAN :
 	-@erase "$(INTDIR)\featformat.sbr"
 	-@erase "$(INTDIR)\fhformat.obj"
 	-@erase "$(INTDIR)\fhformat.sbr"
-	-@erase "$(INTDIR)\fingerprintformat.obj"
-	-@erase "$(INTDIR)\fingerprintformat.sbr"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gamessformat.sbr"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\gaussformat.sbr"
 	-@erase "$(INTDIR)\ghemicalformat.obj"
 	-@erase "$(INTDIR)\ghemicalformat.sbr"
-	-@erase "$(INTDIR)\grosmos96format.obj"
-	-@erase "$(INTDIR)\grosmos96format.sbr"
+	-@erase "$(INTDIR)\gromos96format.obj"
+	-@erase "$(INTDIR)\gromos96format.sbr"
 	-@erase "$(INTDIR)\hinformat.obj"
 	-@erase "$(INTDIR)\hinformat.sbr"
 	-@erase "$(INTDIR)\jaguarformat.obj"
@@ -304,11 +304,9 @@ BSC32_SBRS= \
 	"$(INTDIR)\dmolformat.sbr" \
 	"$(INTDIR)\featformat.sbr" \
 	"$(INTDIR)\fhformat.sbr" \
-	"$(INTDIR)\fingerprintformat.sbr" \
 	"$(INTDIR)\gamessformat.sbr" \
 	"$(INTDIR)\gaussformat.sbr" \
 	"$(INTDIR)\ghemicalformat.sbr" \
-	"$(INTDIR)\grosmos96format.sbr" \
 	"$(INTDIR)\hinformat.sbr" \
 	"$(INTDIR)\jaguarformat.sbr" \
 	"$(INTDIR)\mdlformat.sbr" \
@@ -332,7 +330,9 @@ BSC32_SBRS= \
 	"$(INTDIR)\viewmolformat.sbr" \
 	"$(INTDIR)\xedformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr"
+	"$(INTDIR)\zindoformat.sbr" \
+	"$(INTDIR)\APIInterface.sbr" \
+	"$(INTDIR)\gromos96format.sbr"
 
 "$(OUTDIR)\OBFormats2.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -362,11 +362,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
-	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
-	"$(INTDIR)\grosmos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
 	"$(INTDIR)\mdlformat.obj" \
@@ -390,7 +388,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
+	"$(INTDIR)\gromos96format.obj"
 
 "$(OUTDIR)\OBFormats2D.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -471,6 +471,24 @@ SOURCE=..\..\src\formats\amberformat.cpp
 
 
 "$(INTDIR)\amberformat.obj"	"$(INTDIR)\amberformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\APIInterface.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\APIInterface.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\APIInterface.obj"	"$(INTDIR)\APIInterface.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -800,24 +818,6 @@ SOURCE=..\..\src\formats\fhformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\fingerprintformat.cpp
-
-!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
-
-
-"$(INTDIR)\fingerprintformat.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
-
-
-"$(INTDIR)\fingerprintformat.obj"	"$(INTDIR)\fingerprintformat.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\formats\gamessformat.cpp
 
 !IF  "$(CFG)" == "OBFormats2 - Win32 Release"
@@ -872,19 +872,19 @@ SOURCE=..\..\src\formats\ghemicalformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\grosmos96format.cpp
+SOURCE=..\..\src\formats\gromos96format.cpp
 
 !IF  "$(CFG)" == "OBFormats2 - Win32 Release"
 
 
-"$(INTDIR)\grosmos96format.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\gromos96format.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
 
 
-"$(INTDIR)\grosmos96format.obj"	"$(INTDIR)\grosmos96format.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\gromos96format.obj"	"$(INTDIR)\gromos96format.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -33,12 +33,13 @@ RSC=rc.exe
 OUTDIR=.\Release
 INTDIR=.\Release
 
-ALL : ".\OBabel.exe"
+ALL : ".\babel.exe"
 
 
 CLEAN :
 	-@erase "$(INTDIR)\alchemyformat.obj"
 	-@erase "$(INTDIR)\amberformat.obj"
+	-@erase "$(INTDIR)\APIInterface.obj"
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\balstformat.obj"
 	-@erase "$(INTDIR)\base.obj"
@@ -64,11 +65,11 @@ CLEAN :
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
 	-@erase "$(INTDIR)\dmolformat.obj"
-	-@erase "$(INTDIR)\fastsearch.obj"
 	-@erase "$(INTDIR)\fastsearchformat.obj"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\fhformat.obj"
 	-@erase "$(INTDIR)\finger2.obj"
+	-@erase "$(INTDIR)\finger3.obj"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\gamessformat.obj"
@@ -76,7 +77,7 @@ CLEAN :
 	-@erase "$(INTDIR)\generic.obj"
 	-@erase "$(INTDIR)\ghemicalformat.obj"
 	-@erase "$(INTDIR)\grid.obj"
-	-@erase "$(INTDIR)\grosmos96format.obj"
+	-@erase "$(INTDIR)\gromos96format.obj"
 	-@erase "$(INTDIR)\hinformat.obj"
 	-@erase "$(INTDIR)\inchiformat.obj"
 	-@erase "$(INTDIR)\jaguarformat.obj"
@@ -125,7 +126,7 @@ CLEAN :
 	-@erase "$(INTDIR)\xedformat.obj"
 	-@erase "$(INTDIR)\xyzformat.obj"
 	-@erase "$(INTDIR)\zindoformat.obj"
-	-@erase ".\OBabel.exe"
+	-@erase ".\babel.exe"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -136,7 +137,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBabel.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=libinchi.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\OBabel.pdb" /machine:I386 /out:"OBabel.exe" /libpath:".." 
+LINK32_FLAGS=libinchi.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\babel.pdb" /machine:I386 /out:"babel.exe" /libpath:".." 
 LINK32_OBJS= \
 	"$(INTDIR)\alchemyformat.obj" \
 	"$(INTDIR)\amberformat.obj" \
@@ -165,11 +166,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\data.obj" \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
-	"$(INTDIR)\fastsearch.obj" \
 	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
 	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\finger3.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
@@ -177,7 +178,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
 	"$(INTDIR)\grid.obj" \
-	"$(INTDIR)\grosmos96format.obj" \
+	"$(INTDIR)\gromos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
 	"$(INTDIR)\inchiformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
@@ -224,9 +225,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\APIInterface.obj"
 
-".\OBabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -239,7 +241,7 @@ INTDIR=.\Debug
 OutDir=.\Debug
 # End Custom Macros
 
-ALL : "$(OUTDIR)\OBabel.exe" "$(OUTDIR)\OBabel.bsc"
+ALL : "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBabel.bsc"
 
 
 CLEAN :
@@ -247,6 +249,8 @@ CLEAN :
 	-@erase "$(INTDIR)\alchemyformat.sbr"
 	-@erase "$(INTDIR)\amberformat.obj"
 	-@erase "$(INTDIR)\amberformat.sbr"
+	-@erase "$(INTDIR)\APIInterface.obj"
+	-@erase "$(INTDIR)\APIInterface.sbr"
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\atom.sbr"
 	-@erase "$(INTDIR)\balstformat.obj"
@@ -297,8 +301,6 @@ CLEAN :
 	-@erase "$(INTDIR)\dlhandler_win32.sbr"
 	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\dmolformat.sbr"
-	-@erase "$(INTDIR)\fastsearch.obj"
-	-@erase "$(INTDIR)\fastsearch.sbr"
 	-@erase "$(INTDIR)\fastsearchformat.obj"
 	-@erase "$(INTDIR)\fastsearchformat.sbr"
 	-@erase "$(INTDIR)\featformat.obj"
@@ -307,6 +309,8 @@ CLEAN :
 	-@erase "$(INTDIR)\fhformat.sbr"
 	-@erase "$(INTDIR)\finger2.obj"
 	-@erase "$(INTDIR)\finger2.sbr"
+	-@erase "$(INTDIR)\finger3.obj"
+	-@erase "$(INTDIR)\finger3.sbr"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprint.sbr"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
@@ -321,8 +325,8 @@ CLEAN :
 	-@erase "$(INTDIR)\ghemicalformat.sbr"
 	-@erase "$(INTDIR)\grid.obj"
 	-@erase "$(INTDIR)\grid.sbr"
-	-@erase "$(INTDIR)\grosmos96format.obj"
-	-@erase "$(INTDIR)\grosmos96format.sbr"
+	-@erase "$(INTDIR)\gromos96format.obj"
+	-@erase "$(INTDIR)\gromos96format.sbr"
 	-@erase "$(INTDIR)\hinformat.obj"
 	-@erase "$(INTDIR)\hinformat.sbr"
 	-@erase "$(INTDIR)\inchiformat.obj"
@@ -419,10 +423,10 @@ CLEAN :
 	-@erase "$(INTDIR)\xyzformat.sbr"
 	-@erase "$(INTDIR)\zindoformat.obj"
 	-@erase "$(INTDIR)\zindoformat.sbr"
+	-@erase "$(OUTDIR)\babel.exe"
+	-@erase "$(OUTDIR)\babel.ilk"
+	-@erase "$(OUTDIR)\babel.pdb"
 	-@erase "$(OUTDIR)\OBabel.bsc"
-	-@erase "$(OUTDIR)\OBabel.exe"
-	-@erase "$(OUTDIR)\OBabel.ilk"
-	-@erase "$(OUTDIR)\OBabel.pdb"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -458,11 +462,11 @@ BSC32_SBRS= \
 	"$(INTDIR)\data.sbr" \
 	"$(INTDIR)\dlhandler_win32.sbr" \
 	"$(INTDIR)\dmolformat.sbr" \
-	"$(INTDIR)\fastsearch.sbr" \
 	"$(INTDIR)\fastsearchformat.sbr" \
 	"$(INTDIR)\featformat.sbr" \
 	"$(INTDIR)\fhformat.sbr" \
 	"$(INTDIR)\finger2.sbr" \
+	"$(INTDIR)\finger3.sbr" \
 	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\fingerprintformat.sbr" \
 	"$(INTDIR)\gamessformat.sbr" \
@@ -470,7 +474,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\generic.sbr" \
 	"$(INTDIR)\ghemicalformat.sbr" \
 	"$(INTDIR)\grid.sbr" \
-	"$(INTDIR)\grosmos96format.sbr" \
+	"$(INTDIR)\gromos96format.sbr" \
 	"$(INTDIR)\hinformat.sbr" \
 	"$(INTDIR)\inchiformat.sbr" \
 	"$(INTDIR)\jaguarformat.sbr" \
@@ -517,7 +521,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\viewmolformat.sbr" \
 	"$(INTDIR)\xedformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr"
+	"$(INTDIR)\zindoformat.sbr" \
+	"$(INTDIR)\APIInterface.sbr"
 
 "$(OUTDIR)\OBabel.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -525,7 +530,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib libinchi.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\OBabel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBabel.exe" /pdbtype:sept /libpath:".." 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib libinchi.lib cmlpp.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\babel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\babel.exe" /pdbtype:sept /libpath:".." /libpath:"..\..\src\formats\cmlpp\builds\windows\vc6\cmlpplib\Debug" 
 LINK32_OBJS= \
 	"$(INTDIR)\alchemyformat.obj" \
 	"$(INTDIR)\amberformat.obj" \
@@ -554,11 +559,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\data.obj" \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
-	"$(INTDIR)\fastsearch.obj" \
 	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
 	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\finger3.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
@@ -566,7 +571,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
 	"$(INTDIR)\grid.obj" \
-	"$(INTDIR)\grosmos96format.obj" \
+	"$(INTDIR)\gromos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
 	"$(INTDIR)\inchiformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
@@ -613,9 +618,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\APIInterface.obj"
 
-"$(OUTDIR)\OBabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -694,6 +700,24 @@ SOURCE=..\..\src\formats\amberformat.cpp
 
 
 "$(INTDIR)\amberformat.obj"	"$(INTDIR)\amberformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\APIInterface.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\APIInterface.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\APIInterface.obj"	"$(INTDIR)\APIInterface.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1149,24 +1173,6 @@ SOURCE=..\..\src\formats\dmolformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\fastsearch.cpp
-
-!IF  "$(CFG)" == "OBabel - Win32 Release"
-
-
-"$(INTDIR)\fastsearch.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
-
-
-"$(INTDIR)\fastsearch.obj"	"$(INTDIR)\fastsearch.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\formats\fastsearchformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -1234,6 +1240,24 @@ SOURCE=..\..\src\finger2.cpp
 
 
 "$(INTDIR)\finger2.obj"	"$(INTDIR)\finger2.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\finger3.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\finger3.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\finger3.obj"	"$(INTDIR)\finger3.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1365,19 +1389,19 @@ SOURCE=..\..\src\grid.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\grosmos96format.cpp
+SOURCE=..\..\src\formats\gromos96format.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
 
 
-"$(INTDIR)\grosmos96format.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\gromos96format.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
 
 
-"$(INTDIR)\grosmos96format.obj"	"$(INTDIR)\grosmos96format.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\gromos96format.obj"	"$(INTDIR)\gromos96format.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
