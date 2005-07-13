@@ -46,7 +46,7 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
 #include "obconversion.h"
-#include "oberror.h"
+//#include "oberror.h"
 
 using namespace std;
 using namespace OpenBabel;
@@ -67,7 +67,7 @@ int main(int argc,char *argv[])
   OBFormat* pOutFormat = NULL;
   vector<string> FileList, OutputFileList;
   string OutputFileName;
-  obMessageLevel filterLevel = obWarning; // 2 out of 5
+//  obMessageLevel filterLevel = obWarning; // 2 out of 5
 
   // Parse commandline
   bool gotInType = false, gotOutType = false;
@@ -156,7 +156,17 @@ int main(int argc,char *argv[])
 						usage();
 					}
 					break;
-					
+				
+				case 'F':
+					if(!Conv.SetOutFormat("fpt"))
+						cout << "FingerprintFormat needs to be loaded" << endl;
+					else
+					{
+						Conv.AddOption("F",OBConversion::OUTOPTIONS);
+						Conv.Write(NULL);
+					}
+					return 0;
+				
 				case '?':
 				case 'H':
 					if(isalnum(argv[arg][2]))
@@ -180,6 +190,8 @@ int main(int argc,char *argv[])
 							const char* str=NULL;
 							while(OBConversion::GetNextFormat(pos,str,pFormat))
 								{
+									if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
+										continue;
 									cout << str << endl;
 									const char* p = strchr(pFormat->Description(),'\n');
 									cout << p+1; //second line of description
@@ -266,7 +278,21 @@ int main(int argc,char *argv[])
 			}
 		}
 	}
-  
+
+	const char* txt = Conv.IsOption("w",OBConversion::GENOPTIONS);
+	if(txt)
+	{
+		OBConversion apiConv;
+		pOutFormat= OBConversion::FindFormat("obapi");
+		if(pOutFormat)
+		{
+			apiConv.SetOutFormat(pOutFormat);
+			apiConv.AddOption("w", OBConversion::OUTOPTIONS, txt);
+			apiConv.Write(NULL);
+		}
+	}
+
+/*  
 	if ( Conv.IsOption("w", OBConversion::GENOPTIONS) )
 	  {
 	    const char *warnArg = Conv.IsOption("w", OBConversion::GENOPTIONS);
@@ -292,7 +318,7 @@ int main(int argc,char *argv[])
 	    
 	    obErrorLog.SetOutputLevel(filterLevel);
 	  }
-
+*/
   if(!gotOutType) //the last file is the output
   {
     if(FileList.empty())
@@ -410,6 +436,7 @@ void help()
   cout << "  -Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl; 
   cout << "  -Hall Outputs details of all formats" <<endl; 
   cout << "  -V Outputs version number" <<endl; 
+  cout << "  -F Outputs the available fingerprint types" <<endl; 
   cout << "  -m Produces multiple output files, to allow:" <<endl;
   cout << "     Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
   cout << "       puts each molecule into new1.smi new2.smi etc" <<endl;
@@ -429,7 +456,11 @@ void help()
   OBFormat* pFormat;
   const char* str=NULL;
   while(OBConversion::GetNextFormat(pos,str,pFormat))
-    cout << "  " << str << endl;
+  {
+		if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
+			continue;
+		cout << "  " << str << endl;
+	}
   cout << "\nSee further specific info and options using -H<format-type>, e.g. -Hcml" << endl;
 }
 
