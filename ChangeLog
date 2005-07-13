@@ -1,3 +1,34 @@
+2005-07-13  Chris Morley  <c.morley@gaseq.co.uk>
+  * src/fingerprint.cpp, /srcfingerprint.h, src/finger2.cpp: 
+	modified so that fingerprints are dynamic.
+	Incorporated fastsearch into fingerprint.h and .cpp.
+	
+	* Added finger3.cpp: a SMARTS pattern matching fingerprint.
+	Also an incomplete src/patterns.txt. Should probably be moved to
+	data folder although code to allow this not yet included.
+
+	* src/fastsearch.cpp, src/fastsearch.h: deleted
+
+	* src/main.cpp: changed -w handling to pseudo-format, obapi,
+	to avoid having to #include oberror.h.
+	Added two lines to exclude its display in format lists.
+	Added -F option to display available fingerprints.
+
+	* src/obconversion.h: small changes in documentation.
+
+	* src/transform.cpp; added empty test for options and addtotitle
+	option (mainly for use in fastsearch)
+	
+	* src/formats/APIInterface.cpp: Added pseudo format to transfer
+	data from user interface to API.
+	
+	* src/formats/fingerprintformat.cpp, src/formats/fastsearchformat.cpp
+	Modified to make fingerprints dynamic.
+
+	* src/formats/mdlformat.cpp, src/formats/smilesformat.cpp Added
+	extra lines in Description to improve GUI display.
+
+
 2005-07-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/atom.cpp, src/bond.cpp, src/chiral.cpp, src,molchrg.cpp,
