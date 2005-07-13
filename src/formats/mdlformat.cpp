@@ -47,7 +47,7 @@ public:
 Reads and writes V2000 and V3000 versions\n \
 Write Options, e.g. -x3\n \
  2  output V2000 (default) or\n \
- 3  output V3000 (used for >999 atoms or bonds) \n \
+ 3  output V3000 (used for >999 atoms/bonds) \n \
 ";
 };
 

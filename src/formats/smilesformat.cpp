@@ -50,7 +50,7 @@ public:
             Write Options e.g. -xt\n \
             -n no molecule name\n \
             -t molecule name only\n \
-	    -r radicals lower case eg ethyl is Cc\n";
+	    -r radicals lower case eg ethyl is Cc\n\n";
     };
 
   virtual const char* SpecificationURL()
