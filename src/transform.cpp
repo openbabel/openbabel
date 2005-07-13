@@ -41,7 +41,10 @@ OBBase* OBMol::DoTransformations(const map<string,string>* pOptions)
 		//Used together they must both be true to allow a molecule through.
 
     //Parse GeneralOptions
-    int ret=1;
+		if(pOptions->empty())
+			return this;
+
+		int ret=1;
     bool smatch=true, vmatch=true;
 
 		map<string,string>::const_iterator itr;
@@ -61,6 +64,14 @@ OBBase* OBMol::DoTransformations(const map<string,string>* pOptions)
 		if(pOptions->find("c")!=pOptions->end())
 		{
 			Center();
+			ret=1;
+		}
+
+		itr = pOptions->find("addtotitle"); //Appends text to title
+		if(itr!=pOptions->end())
+    {
+			string title(GetTitle());
+			SetTitle(title + itr->second);
 			ret=1;
 		}
 
@@ -96,18 +107,19 @@ OBBase* OBMol::DoTransformations(const map<string,string>* pOptions)
 const char* OBMol::ClassDescription()
 {
     return "For conversions of molecules\n \
-           Additional options :\n \
-           -d Delete Hydrogens\n \
-           -h Add Hydrogens\n \
-           -p Add Hydrogens appropriate for pH\n \
-           -c Center Coordinates\n \
-           -j Join all input molecules into a single output molecule\n \
-           -s\"smarts\" Convert only molecules matching SMARTS:\n \
-           -v\"smarts\" Convert only molecules NOT matching SMARTS:\n\n" ;
+  Additional options :\n \
+  -d Delete Hydrogens\n \
+  -h Add Hydrogens\n \
+  -p Add Hydrogens appropriate for pH\n \
+  -b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n \
+  -c Center Coordinates\n \
+  -j Join all input molecules into a single output molecule\n \
+  -s\"smarts\" Convert only molecules matching SMARTS:\n \
+  -v\"smarts\" Convert only molecules NOT matching SMARTS:\n\n" ;
 }
 
 } //namespace OpenBabel
 
 //! \file transform.cpp
-//! \brief Perform command-line requested transformations(e.g. centering)
+//! \brief Perform command-line requested transformations for OBMol
 //!  and SMARTS filtering
