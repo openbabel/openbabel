@@ -187,6 +187,9 @@ BOOL COBGUIDlg::OnInitDialog()
 	while(Conv.GetNextFormat(pos,str,pFormat))
 	{
 		if(!str || !pFormat) break; //no formats available
+		if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
+			continue;
+
 		char* p = strstr(str," [");
 		if(p) *p='\0'; //remove {Readonly] or [Writeonly]
 
@@ -296,7 +299,9 @@ void COBGUIDlg::OnChangeOutputformat()
 	{
 		NextOptionRect=OutputOptionRect;
 		InputOptionCheckBoxes.InsertText("", this, NextOptionRect); //Blank line
-		OutputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect,"Write ");
+		if(!OutputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect,"Write "))
+			//If no options with "Write" found accept ones without
+			OutputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect);
 	}
 }
 
