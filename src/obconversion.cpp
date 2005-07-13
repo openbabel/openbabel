@@ -288,7 +288,6 @@ int OBConversion::LoadFormatFiles()
   *	}
   *@endcode
   */
-/////////////////////////////////////////////////////////
 bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat)
 {
 
