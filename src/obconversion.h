@@ -231,22 +231,22 @@ public:
 	//@}
 	/// @name Option handling
 	//@{
-	///@brief To refer to -a? , -x? , or -? options
+	///@brief Three types of options set on the the command line by -a? , -x? , or -?
 	enum Option_type { INOPTIONS, OUTOPTIONS, GENOPTIONS };
 
+	///@brief Determine whether an option is set. Returns NULL if option not and a pointer to the associated text if it is 
+	const char* IsOption(const char* opt,Option_type opttyp=OUTOPTIONS);
+	
 	///@brief Access the map with option name as key and any associated text as value
 	const std::map<std::string,std::string>* GetOptions(Option_type opttyp)
 	{ return &OptionsArray[opttyp];};
 
-	///@brief Returns NULL if option not set and a valid pointer if it is 
-	const char* IsOption(const char* opt,Option_type opttyp=OUTOPTIONS);
-	
 	///@brief Set an option of specified type, with optional text
 	void AddOption(const char* opt, Option_type opttyp, const char* txt=NULL);
 	
 	bool RemoveOption(const char* opt, Option_type optype);
 
-	///@brief Set several single character options of specified type from string like ab"btext"c"btext"
+	///@brief Set several single character options of specified type from string like ab"btext"c"ctext"
 	void OBConversion::SetOptions(const char* options, Option_type opttyp);
 	//@}
 
@@ -255,7 +255,7 @@ public:
 	/// @brief Conversion for single input and output stream
 	int         Convert(std::istream* is, std::ostream* os);
 
-	/// @brief Conversion for single input and output stream
+	/// @brief Conversion with existing streams
 	int         Convert();
 
 	/// @brief Conversion with multiple input/output files:
