@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-SOURCES = $(obfit_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) $(obrotate_SOURCES) $(obtanimoto_SOURCES)
+SOURCES = $(obfit_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) $(obrotate_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -39,7 +39,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = obgrep$(EXEEXT) obrotate$(EXEEXT) obfit$(EXEEXT) \
-	obprop$(EXEEXT) obtanimoto$(EXEEXT)
+	obprop$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -65,9 +65,6 @@ obprop_DEPENDENCIES = ../src/libopenbabel.la
 am_obrotate_OBJECTS = obrotate.$(OBJEXT)
 obrotate_OBJECTS = $(am_obrotate_OBJECTS)
 obrotate_DEPENDENCIES = ../src/libopenbabel.la
-am_obtanimoto_OBJECTS = obtanimoto.$(OBJEXT)
-obtanimoto_OBJECTS = $(am_obtanimoto_OBJECTS)
-obtanimoto_DEPENDENCIES = ../src/libopenbabel.la
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -80,9 +77,9 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(obfit_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) \
-	$(obrotate_SOURCES) $(obtanimoto_SOURCES)
+	$(obrotate_SOURCES)
 DIST_SOURCES = $(obfit_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) \
-	$(obrotate_SOURCES) $(obtanimoto_SOURCES)
+	$(obrotate_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -141,6 +138,8 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PYTHON = @PYTHON@
 RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -198,8 +197,9 @@ obfit_SOURCES = obfit.cpp
 obfit_LDADD = ../src/libopenbabel.la @LIBDL@
 obprop_SOURCES = obprop.cpp
 obprop_LDADD = ../src/libopenbabel.la @LIBDL@
-obtanimoto_SOURCES = obtanimoto.cpp
-obtanimoto_LDADD = ../src/libopenbabel.la @LIBDL@
+
+# obtanimoto_SOURCES = obtanimoto.cpp
+# obtanimoto_LDADD = ../src/libopenbabel.la @LIBDL@
 AM_CPPFLAGS = -I$(top_srcdir)/src
 all: all-am
 
@@ -274,9 +274,6 @@ obprop$(EXEEXT): $(obprop_OBJECTS) $(obprop_DEPENDENCIES)
 obrotate$(EXEEXT): $(obrotate_OBJECTS) $(obrotate_DEPENDENCIES) 
 	@rm -f obrotate$(EXEEXT)
 	$(CXXLINK) $(obrotate_LDFLAGS) $(obrotate_OBJECTS) $(obrotate_LDADD) $(LIBS)
-obtanimoto$(EXEEXT): $(obtanimoto_OBJECTS) $(obtanimoto_DEPENDENCIES) 
-	@rm -f obtanimoto$(EXEEXT)
-	$(CXXLINK) $(obtanimoto_LDFLAGS) $(obtanimoto_OBJECTS) $(obtanimoto_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -288,7 +285,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgrep.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obprop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotate.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obtanimoto.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \

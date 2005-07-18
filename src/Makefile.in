@@ -66,7 +66,7 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 libopenbabel_la_DEPENDENCIES = math/libmath.la @LTLIBOBJS@
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo chains.lo chiral.lo data.lo dlhandler_unix.lo \
-	obconversion.lo finger2.lo fingerprint.lo fastsearch.lo \
+	obconversion.lo finger2.lo finger3.lo fingerprint.lo \
 	generic.lo grid.lo kekulize.lo matrix.lo mol.lo molchrg.lo \
 	oberror.lo obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo \
 	rand.lo residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo \
@@ -165,6 +165,8 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PYTHON = @PYTHON@
 RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -222,8 +224,8 @@ libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
 		dlhandler_unix.cpp obconversion.cpp \
-		finger2.cpp fingerprint.cpp \
-		fastsearch.cpp generic.cpp grid.cpp \
+		finger2.cpp finger3.cpp fingerprint.cpp \
+		generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
@@ -235,7 +237,7 @@ libopenbabel_la_LDFLAGS = -version-info 1:0:0
 pkginclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
-		dlhandler.h fastsearch.h fingerprint.h \
+		dlhandler.h fingerprint.h \
 		generic.h grid.h matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \
 		obmolecformat.h obutil.h \
@@ -380,8 +382,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_unix.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fastsearch.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/finger2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/finger3.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generic.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid.Plo@am__quote@
