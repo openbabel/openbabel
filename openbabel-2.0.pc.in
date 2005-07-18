@@ -4,7 +4,7 @@ libdir=@libdir@
 includedir=@includedir@
 pkgincludedir=${includedir}/openbabel
 
-Name: OpenBabel library
+Name: Open Babel library
 Description: libopenbabel
 Version: @VERSION@
 Libs: -L${libdir} -lopenbabel
