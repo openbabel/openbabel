@@ -69,7 +69,7 @@ public:
 		{	
 			ret=true;
 
-			std::string auditMsg = "OpenBabel::Read molecule ";
+			std::string auditMsg = "OpenBabel::Write molecule ";
 			std::string description(Description());
 			auditMsg += description.substr(0,description.find('\n'));
 			obErrorLog.ThrowError(__FUNCTION__,

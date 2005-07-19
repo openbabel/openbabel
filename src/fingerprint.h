@@ -172,7 +172,7 @@ class OBAPI FastSearchIndexer
 {
 //see end of cpp file for detailed documentation
 public:
-	FastSearchIndexer(std::string datafilename, std::ostream* os, std::string fpid,
+	FastSearchIndexer(std::string& datafilename, std::ostream* os, std::string& fpid,
 			int FptBits=0);
 	~FastSearchIndexer();
 

@@ -212,10 +212,25 @@ int main(int argc,char *argv[])
 						char* nam = argv[arg]+2;
  						if(*nam != '\0')
 						{
-							if(argv[arg+1] && *argv[arg+1]!='-') 
-								Conv.AddOption(nam,OBConversion::GENOPTIONS,argv[++arg]);
+							string txt;
+							if(arg<argc-1 && argv[arg+1] && *argv[arg+1]!='-')
+								txt = argv[++arg];
+							if(*nam=='-')
+							{
+								// Is a API directive, e.g.---errorlevel
+								//Send to the pseudoformat "obapi" (without any leading -)
+								OBConversion apiConv;
+								pOutFormat= OBConversion::FindFormat("obapi");
+								if(pOutFormat)
+								{
+									apiConv.SetOutFormat(pOutFormat);
+									apiConv.AddOption(nam+1, OBConversion::OUTOPTIONS, txt.c_str());
+									apiConv.Write(NULL);
+								}
+							}
 							else
-								Conv.AddOption(nam,OBConversion::GENOPTIONS);
+								// Is a long option name, e.g --addtotitle
+								Conv.AddOption(nam,OBConversion::GENOPTIONS,txt.c_str());
 						}
 					}
 					break;
@@ -279,46 +294,6 @@ int main(int argc,char *argv[])
 		}
 	}
 
-	const char* txt = Conv.IsOption("w",OBConversion::GENOPTIONS);
-	if(txt)
-	{
-		OBConversion apiConv;
-		pOutFormat= OBConversion::FindFormat("obapi");
-		if(pOutFormat)
-		{
-			apiConv.SetOutFormat(pOutFormat);
-			apiConv.AddOption("w", OBConversion::OUTOPTIONS, txt);
-			apiConv.Write(NULL);
-		}
-	}
-
-/*  
-	if ( Conv.IsOption("w", OBConversion::GENOPTIONS) )
-	  {
-	    const char *warnArg = Conv.IsOption("w", OBConversion::GENOPTIONS);
-	    int  warnLevel = (int)strtol(warnArg, (char **)NULL, 10); 
-	     
-	    switch (warnLevel) 
-	      { 
-	      case 1: 
-		filterLevel = obError; 
-		break; 
-	      case 2: // already obWarning 
-		break; 
-	      case 3: 
-		filterLevel = obInfo; 
-		break; 
-	      case 4: 
-		filterLevel = obAuditMsg; 
-		break; 
-	      case 5: 
-		filterLevel = obDebug; 
-		break; 
-	      }
-	    
-	    obErrorLog.SetOutputLevel(filterLevel);
-	  }
-*/
   if(!gotOutType) //the last file is the output
   {
     if(FileList.empty())
@@ -391,13 +366,13 @@ int main(int argc,char *argv[])
   {
     clog << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;
   }
-/*
+
 #ifdef _DEBUG
   //CM keep window open
   cout << "Press any key to finish" <<endl;
   getch();
 #endif
-*/  
+  
   return 0;
 };
 
@@ -450,8 +425,12 @@ void help()
   OBFormat* pDefault = OBConversion::GetDefaultFormat();
 	if(pDefault)
 		cout << pDefault->TargetClassDescription();// some more options probably for OBMol
-  cout << "The following file formats are recognized:" << endl;
   
+	OBFormat* pAPI= OBConversion::FindFormat("obapi");
+	if(pAPI)
+		cout << pAPI->Description();
+
+	cout << "The following file formats are recognized:" << endl;
   Formatpos pos;
   OBFormat* pFormat;
   const char* str=NULL;

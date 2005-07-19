@@ -610,7 +610,6 @@ return "Conversion options\n \
  -l <#> End import at molecule # specified\n \
  -t All input files describe a single molecule\n \
  -e Continue with next object after error, if possible\n \
- -w <#> Error warning level; default<2>\n \
 ";
 }
 

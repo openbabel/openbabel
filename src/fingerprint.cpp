@@ -17,7 +17,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #if HAVE_CONFIG_H
-#include "config.h"
+#include "babelconfig.h"
 #include <vector>
 #include <algorithm>
 #endif
@@ -259,8 +259,8 @@ string FastSearch::ReadIndex(istream* pIndexstream)
 }
 
 //*******************************************************
-FastSearchIndexer::FastSearchIndexer(string datafilename, ostream* os, string fpid,
-																		 int FptBits)
+FastSearchIndexer::FastSearchIndexer(string& datafilename, ostream* os, string& fpid,
+			int FptBits)
 {
 	///Starts indexing process
 	_indexstream = os;
