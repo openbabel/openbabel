@@ -29,14 +29,18 @@ public:
   OBAPIInterface()
 	{		OBConversion::RegisterFormat("obapi",this); }
 
-	const char* Description(){return "Interface to OBAPI internals";}
+	const char* Description(){return 
+"Interface to OBAPI internals\n \
+API options, e.g. ---errorlevel 2\n \
+ errorlevel # to control logging and reporting\n \
+\n";}
 
 	unsigned int Flags(){ return (NOTWRITABLE | NOTREADABLE);}
 
 	bool WriteMolecule(OBBase* , OBConversion* pConv)
 	{
-		string txt = pConv->IsOption("w");
-		if(!txt.empty())
+		const char* txt = pConv->IsOption("errorlevel");
+		if(txt)
 		{
 			stringstream ss(txt);
 			int ilevel=-1;
