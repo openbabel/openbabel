@@ -1,3 +1,24 @@
+2005-07-19  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/main.cpp src/formats/APIInterface.cpp: API options are now
+	like ---errorlevel (this was -w) and the name now appears
+	only in APIInterface.cpp. Added a description and called it in
+	help().
+	
+	* src/obmolecformat.h: Changed auditMsg in WriteChemObject to
+	"...Write...);
+
+	* src/fingerprint.h, fingerprint.cpp: Changed parameters of 
+	FastSearchIndexer ctor. Replaced #include "config.h" by
+	#include "babelconfig.h"
+	This may solve David Hoekman's compilation difficulties.
+
+	* src/transform.cpp: Made type conversion more explicit in 
+	addtotitle handler. ditto
+
+	* src.finger3.cpp: looks for data file first in env var and 
+	BABEL_DATADIR 
+
 2005-07-13  Chris Morley  <c.morley@gaseq.co.uk>
   * src/fingerprint.cpp, /srcfingerprint.h, src/finger2.cpp: 
 	modified so that fingerprints are dynamic.
