@@ -55,6 +55,15 @@ public:
 		static vector<string> smartsStrings;
 		if(smartsStrings.empty())
 		{	
+			char* datadir = getenv("BABEL_DATADIR");
+			if(!datadir)
+				datadir = BABEL_DATADIR;
+			if(datadir)
+			{
+				_patternsfile = "/" + _patternsfile;
+				_patternsfile = datadir  + _patternsfile;
+			}
+
 			ifstream ifpatterns(_patternsfile.c_str());
 			if(!ifpatterns)
 			{
@@ -105,6 +114,10 @@ PatternFP thePatternFP("FP3");
 /*! \class PatternFP
 A bit is set when there is a match to one of a list
 of SMARTS patterns in the file (default is patterns.txt).
+Looks for this file first in the folder in the environment variable
+BABEL_DATADIR, then in the folder specified by the macro BABEL_DATADIR
+(probably set in babelconfig.h), and then in the current folder. 
+
 The first line of this file is a comment.
 On each subsequent line there is a SMARTS string and anything 
 after a space is ignored.
