@@ -71,7 +71,8 @@ OBBase* OBMol::DoTransformations(const map<string,string>* pOptions)
 		if(itr!=pOptions->end())
     {
 			string title(GetTitle());
-			SetTitle(title + itr->second);
+			title += itr->second;
+			SetTitle(title.c_str());
 			ret=1;
 		}
 
