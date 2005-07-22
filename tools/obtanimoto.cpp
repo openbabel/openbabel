@@ -66,7 +66,7 @@ int main (int argc, char **argv)
 
     ifs.close();
     // hash the molecule fragments
-    fingerprint fpt(mol.GetTitle());
+    OBFingerprint fpt(mol.GetTitle());
     fpt.HashMol(mol);
 
     ifs.open(FptIn);
