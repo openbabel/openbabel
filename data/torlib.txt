@@ -10,6 +10,15 @@
 #  Hybridization pair (atom types around a rotatable bond)                   #
 #   followed by a list of default bond rotation angles (in degrees)          #
 #                                                                            #
+#  Later lines should specify:                                               #
+#   * A SMARTS pattern for the rotor rule                                    #
+#   * A set of 4 "reference atoms" (as integers, numbered from 1             #
+#      in the specified SMARTS pattern                                       #
+#   * At least one torsion value (in degrees)                                #
+#   * Optionally ending with "Delta" and a delta value                       #
+#      (i.e., the resolution of a dihedral step                              #
+#                                                                            #
+#  SMARTS rules will be attempted first, then hybridization                  #
 #                                                                            #
 ##############################################################################
 
