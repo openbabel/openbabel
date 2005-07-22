@@ -16,8 +16,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef DLHANDLER_H
-#define DLHANDLER_H
+#ifndef OB_DLHANDLER_H
+#define OB_DLHANDLER_H
 
 #include "babelconfig.h"
 

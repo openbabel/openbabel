@@ -16,8 +16,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifndef FINGERPRINT_H
-#define FINGERPRINT_H
+#ifndef OB_FINGERPRINT_H
+#define OB_FINGERPRINT_H
 
 #include <list>
 #include <map>
