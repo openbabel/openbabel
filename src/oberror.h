@@ -38,6 +38,7 @@ General Public License for more details.
 #endif
 #include <string>
 #include <vector>
+#include <deque>
 
 namespace OpenBabel
 {
@@ -72,12 +73,12 @@ public:
 };
 
 //! \brief Levels of error and audit messages to allow filtering
-enum obMessageLevel { 
-   obError,    //!< for critical errors (e.g., cannot read a file)
-   obWarning,  //!< for non-critical problems (e.g., molecule appears empty)
-   obInfo,     //!< for informative messages (e.g., file is a non-standard format)
-   obAuditMsg, //!< for messages auditing methods which destroy or perceive molecular data (e.g., kekulization)
-   obDebug     //!< for messages only useful for debugging purposes
+enum obMessageLevel {
+   obError,     //!< for critical errors (e.g., cannot read a file)
+   obWarning,   //!< for non-critical problems (e.g., molecule appears empty)
+   obInfo,      //!< for informative messages (e.g., file is a non-standard format)
+   obAuditMsg,  //!< for messages auditing methods which destroy or perceive molecular data (e.g., kekulization, atom typing, etc.)
+   obDebug      //!< for messages only useful for debugging purposes
 };
  
  //! \brief Handle error messages, warnings, debugging information and the like
@@ -87,24 +88,45 @@ class OBAPI OBMessageHandler
     OBMessageHandler();
     ~OBMessageHandler();
     
+    //! Throw an error with an already-formatted OBError object
     void ThrowError(OBError err, obMessageLevel level = obDebug);
+    //! Throw an error in the specified method
     void ThrowError(const std::string &method, const std::string &errorMsg, 
 		    obMessageLevel level = obDebug);
+
+    //! Return all messages matching a specified level
     std::vector<std::string> GetMessagesOfLevel(const obMessageLevel);
 
+    //! Start logging messages (default)
+    void StartLogging() { _logging = true; }
+    //! Stop logging messages completely
+    void StopLogging()  { _logging = false; }
+
+    //! Set the maximum number of entries (or 0 for no limit)
+    void SetMaxLogEntries(unsigned int max) { _maxEntries = max; }
+
+    //! Set the level of messages to output
+    //! (i.e., messages with at least this priority will be output)
     void SetOutputLevel(const obMessageLevel level) { _outputLevel = level; }
+    //! \return the current output level
     obMessageLevel GetOutputLevel() { return _outputLevel; }
 
     void SetOutputStream(std::ostream *os) { _outputStream = os; }
     std::ostream* GetOutputStream() { return _outputStream; }
 
+    //! Start "wrapping" messages to cerr into ThrowError calls
     bool StartErrorWrap();
+    //! Turn off "wrapping" messages, restoring normal cerr use (default)
     bool StopErrorWrap();
 
   protected:
-    std::vector<std::pair<OBError, obMessageLevel> >  _messageList;
+    std::deque<std::pair<OBError, obMessageLevel> >  _messageList;
     obMessageLevel         _outputLevel;
     std::ostream          *_outputStream;
+
+    bool                   _logging;
+
+    unsigned int           _maxEntries;
 
     std::streambuf        *_inWrapStreamBuf;
     std::streambuf        *_filterStreamBuf;

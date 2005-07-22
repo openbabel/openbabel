@@ -1,3 +1,25 @@
+2005-07-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* openbabel-2.0.pc.in: Rename pkg-config data to prevent conflicts
+	with 1.x releases.
+
+	* configure.in, configure, */Makefile.in: Ditto.
+
+	* data/torlib.txt: Update documentation on torsion rules using
+	SMARTS patterns.
+
+	* src/Makefile.am, src/Makefile.in: Add finger3.cpp to compilation
+	list, remove fastsearch.cpp.
+
+	* src/dlhandler.h, src/fingerprint.h: Add OB_ prefix to
+	#define/ifdef guards.
+
+	* src/oberror.h, src/oberror.cpp: Add methods to turn off error
+	logging and limit the size of the message queue.
+
+	* src/fingerprint.cpp: Add temporary string to eliminate
+	compilation errors with GCC.
+
 2005-07-19  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/main.cpp src/formats/APIInterface.cpp: API options are now
@@ -20,15 +42,16 @@
 	BABEL_DATADIR 
 
 2005-07-13  Chris Morley  <c.morley@gaseq.co.uk>
-  * src/fingerprint.cpp, /srcfingerprint.h, src/finger2.cpp: 
+
+	* src/fingerprint.cpp, /srcfingerprint.h, src/finger2.cpp: 
 	modified so that fingerprints are dynamic.
 	Incorporated fastsearch into fingerprint.h and .cpp.
 	
-	* Added finger3.cpp: a SMARTS pattern matching fingerprint.
+	* src/finger3.cpp: Added a SMARTS pattern matching fingerprint.
 	Also an incomplete src/patterns.txt. Should probably be moved to
 	data folder although code to allow this not yet included.
 
-	* src/fastsearch.cpp, src/fastsearch.h: deleted
+	* src/fastsearch.cpp, src/fastsearch.h: Deleted
 
 	* src/main.cpp: changed -w handling to pseudo-format, obapi,
 	to avoid having to #include oberror.h.
@@ -48,7 +71,6 @@
 
 	* src/formats/mdlformat.cpp, src/formats/smilesformat.cpp Added
 	extra lines in Description to improve GUI display.
-
 
 2005-07-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

@@ -66,7 +66,7 @@ string OBError::message() const
 
 
 OBMessageHandler::OBMessageHandler() :
-  _outputStream(&clog), _outputLevel(obWarning)
+  _outputLevel(obWarning), _outputStream(&clog), _logging(true)
 {
   //  StartErrorWrap();
 }
@@ -83,9 +83,12 @@ OBMessageHandler::~OBMessageHandler()
 void OBMessageHandler::ThrowError(OBError err, obMessageLevel level)
 {
   pair <OBError, obMessageLevel> p(err, level);
-  _messageList.push_back(p);
 
-  if (level <= _outputLevel)
+  _messageList.push_back(p);
+  if (_maxEntries != 0 && _messageList.size() > _maxEntries)
+    _messageList.pop_front();
+  
+  if (_logging && level <= _outputLevel)
     *_outputStream << err;
 }
 
@@ -103,7 +106,7 @@ void OBMessageHandler::ThrowError(const std::string &method,
 std::vector<std::string> OBMessageHandler::GetMessagesOfLevel(const obMessageLevel level)
 {
   vector<string> results;
-  vector<pair<OBError, obMessageLevel> >::iterator i;
+  deque<pair<OBError, obMessageLevel> >::iterator i;
   pair<OBError, obMessageLevel> message;
 
   for (i = _messageList.begin(); i != _messageList.end(); i++)
