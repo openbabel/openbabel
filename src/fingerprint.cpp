@@ -246,7 +246,8 @@ string FastSearch::ReadIndex(istream* pIndexstream)
 		if(pIndexstream->fail())
 			*(_index.header.datafilename) = '\0';
 		
-		_pFP = OBFingerprint::FindFingerprint(string(_index.header.fpid));
+		string tempFP(_index.header.fpid);
+		_pFP = OBFingerprint::FindFingerprint(tempFP);
 		if(!_pFP)
 		{
 			cerr << "Index has Fingerprints of type '" << _index.header.fpid 
