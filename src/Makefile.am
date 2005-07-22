@@ -9,8 +9,8 @@ libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
 		dlhandler_unix.cpp obconversion.cpp \
-		finger2.cpp fingerprint.cpp \
-		fastsearch.cpp generic.cpp grid.cpp \
+		finger2.cpp finger3.cpp fingerprint.cpp \
+		generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
@@ -23,7 +23,7 @@ libopenbabel_la_LDFLAGS = -version-info 1:0:0
 pkginclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
-		dlhandler.h fastsearch.h fingerprint.h \
+		dlhandler.h fingerprint.h \
 		generic.h grid.h matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \
 		obmolecformat.h obutil.h \
