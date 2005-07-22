@@ -37,7 +37,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(srcdir)/openbabel.pc.in \
+	$(srcdir)/Makefile.in $(srcdir)/openbabel-2.0.pc.in \
 	$(top_srcdir)/configure AUTHORS COPYING ChangeLog INSTALL NEWS \
 	THANKS config.guess config.sub depcomp install-sh ltmain.sh \
 	missing mkinstalldirs
@@ -51,7 +51,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno configure.status.lineno
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config.h
-CONFIG_CLEAN_FILES = openbabel.pc
+CONFIG_CLEAN_FILES = openbabel-2.0.pc
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -138,6 +138,8 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PYTHON = @PYTHON@
 RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -191,7 +193,7 @@ SUBDIRS = src test doc tools data
 EXTRA_DIST = Doxyfile bc32.mak windows scripts
 AUTOMAKE_OPTIONS = foreign
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = openbabel.pc
+pkgconfig_DATA = openbabel-2.0.pc
 all: all-recursive
 
 .SUFFIXES:
@@ -228,7 +230,7 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(srcdir) && $(AUTOCONF)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
-openbabel.pc: $(top_builddir)/config.status $(srcdir)/openbabel.pc.in
+openbabel-2.0.pc: $(top_builddir)/config.status $(srcdir)/openbabel-2.0.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
