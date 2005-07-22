@@ -22,7 +22,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-class CHEM3D1Format : public OBFormat
+class CHEM3D1Format : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -107,7 +107,7 @@ public:
     virtual const char* Description() //required
     {
         return
-            "Chem3D Cartesian2 format\n \
+            "Chem3D Cartesian 2 format\n \
             No comments yet\n";
     };
 

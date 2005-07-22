@@ -21,7 +21,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-class ViewMolFormat : public OBFormat
+class ViewMolFormat : public OBMoleculeFormat
 {
 public:
   //Register this format type ID

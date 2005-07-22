@@ -20,15 +20,15 @@ using namespace std;
 namespace OpenBabel
 {
 
-class GhemicalFormat : public OBFormat
+class GhemicalFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
     GhemicalFormat()
     {
+      //        OBConversion::RegisterFormat("mm1gp",this);
+      //        OBConversion::RegisterFormat("qm1gp",this);
         OBConversion::RegisterFormat("gpr",this);
-        OBConversion::RegisterFormat("mm1gp",this);
-        OBConversion::RegisterFormat("qm1gp",this);
     }
 
     virtual const char* Description() //required
@@ -38,8 +38,8 @@ public:
             Open source molecular modelling\n";
     };
 
-    virtual const char* SpecificationURL()
-  {return "http://www.uku.fi/~thassine/ghemical/";}; //optional
+  virtual const char* SpecificationURL()
+  { return "http://www.uku.fi/~thassine/ghemical/"; }; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
