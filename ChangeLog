@@ -20,6 +20,14 @@
 	* src/fingerprint.cpp: Add temporary string to eliminate
 	compilation errors with GCC.
 
+	* src/formats/chem3dformat.cpp, src/formats/ghemicalformat.cpp,
+	src/formats/viewmolformat.cpp: Fix translation errors -- formats
+	are supposed to be subclasses of OBMoleculeFormat.
+
+	* tools/Makefile.am, tools/Makefile.in: Temporarily disable
+	compilation of obtanimoto -- fingerprint API has changed and this
+	is not updated yet.
+
 2005-07-19  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/main.cpp src/formats/APIInterface.cpp: API options are now
