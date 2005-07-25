@@ -744,7 +744,7 @@ void makeAllowedAttributeLists()
 
 void cmlError(string msg)
 {
-    cout << msg << endl;
+    obErrorLog.ThrowError("CMLFormat", msg, obWarning);
 }
 
 bool ReadXML(istream &ifs)
@@ -3747,10 +3747,11 @@ bool startMolecule(vector <pair<string,string> > &atts)
     vector <string> badAtts = getUnknownAttributes(MOLECULE_ATTRIBUTE_VECTOR, atts);
     if (badAtts.size() > 0)
     {
-        cmlError("unknown attributes on <molecule>: ");
+      //        cmlError("unknown attributes on <molecule>: ");
         //		printVector(badAtts, cerr);
     }
 
+    molPtr->Clear();
     molPtr->BeginModify();
     molPtr->ReserveAtoms(ATOMSIZE);
     molPtr->SetTitle((char*)getAttribute(atts, C_TITLE).c_str());
