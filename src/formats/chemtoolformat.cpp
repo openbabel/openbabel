@@ -36,12 +36,11 @@ public:
     {
         return
             "Chemtool format\n \
-            No comments yet\n \
-            ";
+            No comments yet\n";
     };
 
-    virtual const char* SpecificationURL(){return
-            "http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html";}; //optional
+  virtual const char* SpecificationURL()
+  {return "http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
