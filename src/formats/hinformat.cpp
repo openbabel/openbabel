@@ -39,13 +39,6 @@ public:
   virtual const char* SpecificationURL()
   { return "";}; //optional
 
-    //Flags() can return be any the following combined by | or be omitted if none apply
-    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
-    {
-        return READONEONLY | WRITEONEONLY;
-    };
-
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
@@ -81,7 +74,11 @@ bool HINFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     ifs.getline(buffer, BUFF_SIZE);
     while (strstr(buffer,"mol") == NULL)
+      {
         ifs.getline(buffer, BUFF_SIZE);
+	if (ifs.peek() == EOF || !ifs.good())
+	  return false;
+      }
     ifs.getline(buffer, BUFF_SIZE);
 
     mol.BeginModify();

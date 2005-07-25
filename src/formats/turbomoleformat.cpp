@@ -16,12 +16,13 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "obconversion.h"
+#include "obmolecformat.h"
 
 using namespace std;
 namespace OpenBabel
 {
 
-class TurbomoleFormat : public OBFormat
+class TurbomoleFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -76,6 +77,8 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     do
     {
         ifs.getline(buff,BUFF_SIZE);
+	if (ifs.peek() == EOF || !ifs.good())
+	  return false;
     }
     while(strncmp(buff,"$coord",6));
 

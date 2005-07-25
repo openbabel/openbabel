@@ -86,7 +86,11 @@ bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     ifs.getline(buffer,BUFF_SIZE);
     while (strstr(buffer,"$coordinates") == NULL &&
             strstr(buffer,"$cell vectors") == NULL)
+      {
+	if (ifs.peek() == EOF || !ifs.good())
+	  return false;
         ifs.getline(buffer,BUFF_SIZE);
+      }
 
     if (strstr(buffer,"$cell vectors") != NULL)
     {
