@@ -37,6 +37,10 @@ public:
 	/// The "Convert" interface functions
 	virtual bool ReadChemObject(OBConversion* pConv)
 	{
+	  std::istream &ifs = *pConv->GetInStream();
+	  if (ifs.peek() == EOF || !ifs.good())
+	    return false;
+
 		static OBMol* pmol;
 
 		    std::string auditMsg = "OpenBabel::Read molecule ";
