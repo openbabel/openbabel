@@ -91,9 +91,14 @@ int main(int argc,char *argv[])
       return (-1);
     }
 
-
+    int molCount = 0;
     while (!inFileStream1.eof() && !inFileStream2.eof() )
     {
+      mol.Clear();
+      mol2.Clear();
+      molCount++;
+      cerr << " read " << molCount << " molecules " << endl;
+
       conv1.Read(&mol);
       conv2.Read(&mol2);
 
@@ -175,8 +180,6 @@ int main(int argc,char *argv[])
 	    }
       }
 
-    mol.Clear();
-    mol2.Clear();
     } // while reading molecules
 
     if ( !inFileStream1.eof() && conv1.Read(&mol) )
