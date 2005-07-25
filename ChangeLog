@@ -1,3 +1,25 @@
+2005-07-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/roundtrip.cpp: Migrate OBMol::Clear() statements to more
+	logical place -- right before a read.
+
+	* src/formats/turbomoleformat.cpp, src/formats/hinformat.cpp,
+	src/formats/dmolformat.cpp: Fix bugs found during roundtripping --
+	ReadMolecule() would go into an infinite loop looking for the
+	"next" molecule in a single-molecule file.
+
+	* src/formats/cml.cpp: Migrate to OBMessageHandler framework and
+	make sure to clear the molPtr when a <molecule> beginning record
+	is encountered.
+
+	* src/obmolecformat.h (ReadChemObject): Before attempting to read
+	from the istream, check to see the status -- are we at the end of
+	the stream?
+
+	* src/obconversion.h src/obconversion.cpp: New methods ReadString,
+	ReadFile, WriteString, and WriteFile for convenience access
+	through scripting languages which do not have "stream" support.
+
 2005-07-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* openbabel-2.0.pc.in: Rename pkg-config data to prevent conflicts

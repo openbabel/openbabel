@@ -31,6 +31,14 @@ GNU General Public License for more details.
 #elif HAVE_FSTREAM_H
 #include <fstream.h>
 #endif
+
+#if HAVE_SSTREAM
+        #include <sstream>
+#elif
+        #include <sstream.h>
+#endif
+
+#include <string>
 #include <vector>
 #include <map>
 
@@ -218,7 +226,6 @@ public:
 	bool	      SetOutFormat(const char* outID);
 	bool	      SetOutFormat(OBFormat* pOut);
 
-
 	OBFormat*   GetInFormat() const{return pInFormat;};
 	OBFormat*   GetOutFormat() const{return pOutFormat;};
 	std::string GetInFilename() const{return InFilename;};
@@ -286,7 +293,22 @@ public:
 	/// The output stream can be specified and the change is retained in the OBConversion instance
 	bool				Write(OBBase* pOb, std::ostream* pout=NULL);
 
-	/// @brief Reads an object of a class derived from OB base into pOb.
+	/// @brief Outputs an object of a class derived from OBBase as a string
+	
+	/// Part of "API" interface. 
+	/// The output stream is temporarily changed to the string and then restored
+	/// This method is primarily intended for scripting languages without "stream" classes
+	std::string                     WriteString(OBBase* pOb);
+
+	/// @brief Outputs an object of a class derived from OBBase as a file (with the supplied path)
+	
+	/// Part of "API" interface. 
+	/// The output stream is changed to the supplied file and the change is retained in the
+	/// OBConversion instance.
+	/// This method is primarily intended for scripting languages without "stream" classes
+	bool                            WriteFile(OBBase* pOb, std::string filePath);
+
+	/// @brief Reads an object of a class derived from OBBase into pOb.
 	
 	/// Part of "API" interface. 
 	/// The input stream can be specified and the change is retained in the OBConversion instance
@@ -302,6 +324,25 @@ public:
 		pOb = dynamic_cast<T*>(pOb);
 		return (pOb!=NULL);
 	};
+
+	/// @brief Reads an object of a class derived from OBBase into pOb from the supplied string
+	
+	/// Part of "API" interface. 
+	/// Returns false and pOb=NULL on error
+	/// This method is primarily intended for scripting languages without "stream" classes
+	template<class T> 
+	  bool	ReadString(T* pOb, std::string input);
+
+	/// @brief Reads an object of a class derived from OBBase into pOb from the file specified
+	
+	/// Part of "API" interface. 
+	/// The output stream is changed to the supplied file and the change is retained in the
+	/// OBConversion instance.
+	/// Returns false and pOb=NULL on error 
+	/// This method is primarily intended for scripting languages without "stream" classes
+	template<class T> 
+	  bool	ReadFile(T* pOb, std::string filePath);
+
 
 	///Replaces * in BaseName by InFile without extension and path
 	static std::string BatchFileName(std::string& BaseName, std::string& InFile);

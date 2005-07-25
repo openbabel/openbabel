@@ -602,6 +602,90 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 	return pOutFormat->WriteMolecule(pOb,this);
 }
 
+//////////////////////////////////////////////////
+/// Writes the object pOb but does not delete it afterwards.
+/// The output stream not changed (since we cannot write to this string later)
+/// Returns true if successful.
+std::string OBConversion::WriteString(OBBase* pOb)
+{
+  ostream *oldStream = pOutStream; // save old output
+  stringstream newStream;
+
+  if(pOutFormat)
+    {
+      pOutStream = &newStream;
+      pOutFormat->WriteMolecule(pOb,this);
+    }
+  pOutStream = oldStream;
+
+  return newStream.str();
+}
+
+//////////////////////////////////////////////////
+/// Writes the object pOb but does not delete it afterwards.
+/// The output stream is lastingly changed to point to the file
+/// Returns true if successful.
+bool OBConversion::WriteFile(OBBase* pOb, string filePath)
+{
+	if(!pOutFormat) return false;
+
+	ofstream ofs;
+	ios_base::openmode omode = 
+		pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
+
+	ofs.open(filePath.c_str(),omode);
+	if(!ofs)
+	  {
+	    cerr << "Cannot write to " << filePath <<endl;
+	    return false;
+	  }
+
+	pOutStream= &ofs;
+	return pOutFormat->WriteMolecule(pOb,this);
+}
+
+////////////////////////////////////////////
+template<class T> 
+bool	OBConversion::ReadString(T* pOb, std::string input)
+{
+  stringstream pin(input);
+
+  pInStream = &pin;
+  
+  if(!pInFormat) return false;
+  if(!pInFormat->ReadMolecule(pOb, this))
+    {pOb=NULL; return false;}
+  pOb = dynamic_cast<T*>(pOb);
+  return (pOb!=NULL);
+}
+
+
+////////////////////////////////////////////
+template<class T> 
+bool	OBConversion::ReadFile(T* pOb, std::string filePath)
+{
+  if(!pInFormat) return false;
+
+  ifstream ifs;
+  ios_base::openmode imode = 
+    pOutFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
+
+  ifs.open(filePath.c_str(),imode);
+  if(!ifs)
+    {
+      cerr << "Cannot read from " << filePath << endl;
+      return false;
+    }
+
+  pInStream = &ifs;
+  
+  if(!pInFormat->ReadMolecule(pOb, this))
+    {pOb=NULL; return false;}
+  pOb = dynamic_cast<T*>(pOb);
+  return (pOb!=NULL);
+}
+
+
 ////////////////////////////////////////////
 const char* OBConversion::Description()
 {
