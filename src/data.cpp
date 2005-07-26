@@ -21,10 +21,6 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 
-#ifndef BUFF_SIZE
-#define BUFF_SIZE 1024
-#endif
-
 #include "babelconfig.h"
 #include "data.h"
 #include "element.h"
