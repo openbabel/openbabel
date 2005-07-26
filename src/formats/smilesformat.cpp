@@ -225,7 +225,6 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 
     //Define some references so we can use the old parameter names
-    //bool WriteSDFile(ostream &ofs,OBMol &mol,const char *dimension)
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
@@ -254,7 +253,7 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
 
     ofs << buffer ;
     if(!pConv->IsOption("n"))
-        ofs << ' ' <<  mol.GetTitle();
+        ofs << '\t' <<  mol.GetTitle();
     ofs << endl;
 
     return *buffer!='\0';//CM Now returns false if empty SMILES string
@@ -311,8 +310,8 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
                 break;
             case ')':
                 if(_vprev.empty()) //CM
-									return false;
-								_prev = _vprev.back();
+		  return false;
+		_prev = _vprev.back();
                 _vprev.pop_back();
                 break;
             case '[':
@@ -378,16 +377,16 @@ void OBSmilesParser::FindOrphanAromaticAtoms(OBMol &mol)
 
     for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
         if(atom->IsAromatic())
-				{
-					if(atom->CountBondsOfOrder(5)<2) //bonds order 5 set in FindAromaticBonds()
-            //not proper aromatic atoms - could be conjugated chain or radical centre
-            atom->UnsetAromatic();
-					else
-					{
-            //recognized as aromatic, so are not radicals
-            atom->SetSpinMultiplicity(0);
-					}
-				}
+	  {
+	    if(atom->CountBondsOfOrder(5)<2) //bonds order 5 set in FindAromaticBonds()
+	      //not proper aromatic atoms - could be conjugated chain or radical centre
+	      atom->UnsetAromatic();
+	    else
+	      {
+		//recognized as aromatic, so are not radicals
+		atom->SetSpinMultiplicity(0);
+	      }
+	  }
 }
 
 void OBSmilesParser::FindAromaticBonds(OBMol &mol)
@@ -1609,33 +1608,33 @@ void OBMol2Smi::CreateSmiString(OBMol &mol,char *buffer)
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
         //    if ((!atom->IsHydrogen() || atom->GetValence() == 0) && !_uatoms[atom->GetIdx()])
         if (!atom->IsHydrogen() && !_uatoms[atom->GetIdx()])
-					if (!atom->IsChiral()) //don't use chiral atoms as root node
-					{
-						//clear out closures in case structure is dot disconnected
-						_vclose.clear();
-						_atmorder.clear();
-						_storder.clear();
-						_vopen.clear();
-						//dot disconnected structure
-						if (strlen(buffer) > 0)
-								strcat(buffer,".");
-						root = new OBSmiNode (atom);
-						BuildTree(root);
-						FindClosureBonds(mol);
-						if (mol.Has2D())
-								AssignCisTrans(root);
-						ToSmilesString(root,buffer);
-						delete root;
-					}
-
-		//If no starting node found e.g. [H][H] CM 21Mar05
-		if(root==NULL)
-		{
-			root = new OBSmiNode(mol.GetFirstAtom());
-			BuildTree(root);
-      ToSmilesString(root,buffer);
-      delete root;
-		}
+	  if (!atom->IsChiral()) //don't use chiral atoms as root node
+	    {
+	      //clear out closures in case structure is dot disconnected
+	      _vclose.clear();
+	      _atmorder.clear();
+	      _storder.clear();
+	      _vopen.clear();
+	      //dot disconnected structure
+	      if (strlen(buffer) > 0)
+		strcat(buffer,".");
+	      root = new OBSmiNode (atom);
+	      BuildTree(root);
+	      FindClosureBonds(mol);
+	      if (mol.Has2D())
+		AssignCisTrans(root);
+	      ToSmilesString(root,buffer);
+	      delete root;
+	    }
+    
+    //If no starting node found e.g. [H][H] CM 21Mar05
+    if(root==NULL)
+      {
+	root = new OBSmiNode(mol.GetFirstAtom());
+	BuildTree(root);
+	ToSmilesString(root,buffer);
+	delete root;
+      }
 }
 
 bool OBMol2Smi::BuildTree(OBSmiNode *node)
@@ -2020,8 +2019,8 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
     if (atom->GetFormalCharge() != 0) //bracket charged elements
         bracketElement = true;
 
-		if(atom->GetIsotope()) //CM 19Mar05
-				bracketElement = true;
+    if(atom->GetIsotope()) //CM 19Mar05
+      bracketElement = true;
 
     //CM begin 18 Sept 2003
 
