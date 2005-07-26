@@ -1,3 +1,32 @@
+2005-07-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/atom.cpp (ImplicitHydrogenCount): Add a fix for PR#1226846
+	-- in methyl isocyanide, the carbanion is marked as an implicit
+	valence of 1, but a multiplicity of 0. Now handles this case correctly.
+
+	* src/obconversion.h, src/obconversion.cpp: Switch ReadString and
+	ReadFile to non-template OBBase* arguments to facilitate scripting
+	access. (Handling C++ templates in SWIG is touchy.)
+
+	* scripts/* Updates to add OBConversion framework to scripting
+	interfaces. Includes new perl tests.
+
+	* src/formats/smilesformat.cpp: Add a tab delimiter between SMILES
+	string and title rather than a space as suggested in
+	PR#1241609. Seem to work OK on Daylight's DEPICT online form with
+	tabs or spaces.
+
+	* src/mol.h: Up BUFF_SIZE to 32768 from 1024 to handle larger line
+	lengths in input.
+
+	* src/data.cpp: Remove duplicate BUFF_SIZE declaration.
+
+	* src/kekulize.cpp: Migrate to use OBMessageHandler error
+	reporting.
+
+	* src/fingerprint.h: Rewrite "<nCandidates>" bit, which was
+	assumed to be an HTML tag by doxygen.
+
 2005-07-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/roundtrip.cpp: Migrate OBMol::Clear() statements to more
