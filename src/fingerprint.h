@@ -153,7 +153,7 @@ public:
 	bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
 		double MinTani);
 
-	/// \brief Returns multimap containing the <nCandidates> objects with largest Tanimoto
+	/// \brief Returns multimap containing the nCandidates objects with largest Tanimoto
 	///  coefficients with the target.
 	bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
 		int nCandidates=0);
