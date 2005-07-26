@@ -645,8 +645,7 @@ bool OBConversion::WriteFile(OBBase* pOb, string filePath)
 }
 
 ////////////////////////////////////////////
-template<class T> 
-bool	OBConversion::ReadString(T* pOb, std::string input)
+bool	OBConversion::ReadString(OBBase* pOb, std::string input)
 {
   stringstream pin(input);
 
@@ -655,14 +654,12 @@ bool	OBConversion::ReadString(T* pOb, std::string input)
   if(!pInFormat) return false;
   if(!pInFormat->ReadMolecule(pOb, this))
     {pOb=NULL; return false;}
-  pOb = dynamic_cast<T*>(pOb);
   return (pOb!=NULL);
 }
 
 
 ////////////////////////////////////////////
-template<class T> 
-bool	OBConversion::ReadFile(T* pOb, std::string filePath)
+bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
 {
   if(!pInFormat) return false;
 
@@ -681,7 +678,6 @@ bool	OBConversion::ReadFile(T* pOb, std::string filePath)
   
   if(!pInFormat->ReadMolecule(pOb, this))
     {pOb=NULL; return false;}
-  pOb = dynamic_cast<T*>(pOb);
   return (pOb!=NULL);
 }
 

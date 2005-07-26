@@ -254,7 +254,7 @@ public:
 	bool RemoveOption(const char* opt, Option_type optype);
 
 	///@brief Set several single character options of specified type from string like ab"btext"c"ctext"
-	void OBConversion::SetOptions(const char* options, Option_type opttyp);
+	void SetOptions(const char* options, Option_type opttyp);
 	//@}
 
 	/// @name Conversion
@@ -330,8 +330,7 @@ public:
 	/// Part of "API" interface. 
 	/// Returns false and pOb=NULL on error
 	/// This method is primarily intended for scripting languages without "stream" classes
-	template<class T> 
-	  bool	ReadString(T* pOb, std::string input);
+	  bool	ReadString(OBBase* pOb, std::string input);
 
 	/// @brief Reads an object of a class derived from OBBase into pOb from the file specified
 	
@@ -340,8 +339,7 @@ public:
 	/// OBConversion instance.
 	/// Returns false and pOb=NULL on error 
 	/// This method is primarily intended for scripting languages without "stream" classes
-	template<class T> 
-	  bool	ReadFile(T* pOb, std::string filePath);
+	  bool	ReadFile(OBBase* pOb, std::string filePath);
 
 
 	///Replaces * in BaseName by InFile without extension and path
