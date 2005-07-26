@@ -1,6 +1,7 @@
 %module openbabel
 %{
 #include "mol.h"
+#include "obconversion.h"
 %}
 %include "std_list.i"
 %include "std_map.i"
@@ -19,4 +20,6 @@
 %import "typer.h"
 %import "oberror.h"
 
+%include "obconversion.h"
 %include "mol.h"
+

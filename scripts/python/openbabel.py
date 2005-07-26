@@ -44,6 +44,147 @@ def _swig_setattr_nondynamic_method(set):
     return set_attr
 
 
+class OBFormat(object):
+    def __init__(self): raise RuntimeError, "No constructor defined"
+    def __repr__(self):
+        return "<%s.%s; proxy of C++ OpenBabel::OBFormat instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    def ReadMolecule(*args): return _openbabel.OBFormat_ReadMolecule(*args)
+    def ReadChemObject(*args): return _openbabel.OBFormat_ReadChemObject(*args)
+    def WriteMolecule(*args): return _openbabel.OBFormat_WriteMolecule(*args)
+    def WriteChemObject(*args): return _openbabel.OBFormat_WriteChemObject(*args)
+    def Description(*args): return _openbabel.OBFormat_Description(*args)
+    def TargetClassDescription(*args): return _openbabel.OBFormat_TargetClassDescription(*args)
+    def GetType(*args): return _openbabel.OBFormat_GetType(*args)
+    def SpecificationURL(*args): return _openbabel.OBFormat_SpecificationURL(*args)
+    def GetMIMEType(*args): return _openbabel.OBFormat_GetMIMEType(*args)
+    def Flags(*args): return _openbabel.OBFormat_Flags(*args)
+    def SkipObjects(*args): return _openbabel.OBFormat_SkipObjects(*args)
+    def MakeNewInstance(*args): return _openbabel.OBFormat_MakeNewInstance(*args)
+    def __del__(self, destroy=_openbabel.delete_OBFormat):
+        try:
+            if self.thisown: destroy(self)
+        except: pass
+
+
+class OBFormatPtr(OBFormat):
+    def __init__(self, this):
+        self.this = this
+        if not hasattr(self,"thisown"): self.thisown = 0
+        self.__class__ = OBFormat
+_openbabel.OBFormat_swigregister(OBFormatPtr)
+
+class CharPtrLess(object):
+    def __repr__(self):
+        return "<%s.%s; proxy of C++ OpenBabel::CharPtrLess instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    def __call__(*args): return _openbabel.CharPtrLess___call__(*args)
+    def __init__(self, *args):
+        newobj = _openbabel.new_CharPtrLess(*args)
+        self.this = newobj.this
+        self.thisown = 1
+        del newobj.thisown
+    def __del__(self, destroy=_openbabel.delete_CharPtrLess):
+        try:
+            if self.thisown: destroy(self)
+        except: pass
+
+
+class CharPtrLessPtr(CharPtrLess):
+    def __init__(self, this):
+        self.this = this
+        if not hasattr(self,"thisown"): self.thisown = 0
+        self.__class__ = CharPtrLess
+_openbabel.CharPtrLess_swigregister(CharPtrLessPtr)
+
+class OBConversion(object):
+    def __repr__(self):
+        return "<%s.%s; proxy of C++ OpenBabel::OBConversion instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    def __init__(self, *args):
+        newobj = _openbabel.new_OBConversion(*args)
+        self.this = newobj.this
+        self.thisown = 1
+        del newobj.thisown
+    def __del__(self, destroy=_openbabel.delete_OBConversion):
+        try:
+            if self.thisown: destroy(self)
+        except: pass
+
+    RegisterFormat = staticmethod(_openbabel.OBConversion_RegisterFormat)
+    FindFormat = staticmethod(_openbabel.OBConversion_FindFormat)
+    FormatFromExt = staticmethod(_openbabel.OBConversion_FormatFromExt)
+    FormatFromMIME = staticmethod(_openbabel.OBConversion_FormatFromMIME)
+    GetNextFormat = staticmethod(_openbabel.OBConversion_GetNextFormat)
+    Description = staticmethod(_openbabel.OBConversion_Description)
+    def GetInStream(*args): return _openbabel.OBConversion_GetInStream(*args)
+    def GetOutStream(*args): return _openbabel.OBConversion_GetOutStream(*args)
+    def SetInStream(*args): return _openbabel.OBConversion_SetInStream(*args)
+    def SetOutStream(*args): return _openbabel.OBConversion_SetOutStream(*args)
+    def SetInAndOutFormats(*args): return _openbabel.OBConversion_SetInAndOutFormats(*args)
+    def SetInFormat(*args): return _openbabel.OBConversion_SetInFormat(*args)
+    def SetOutFormat(*args): return _openbabel.OBConversion_SetOutFormat(*args)
+    def GetInFormat(*args): return _openbabel.OBConversion_GetInFormat(*args)
+    def GetOutFormat(*args): return _openbabel.OBConversion_GetOutFormat(*args)
+    def GetInFilename(*args): return _openbabel.OBConversion_GetInFilename(*args)
+    def GetInPos(*args): return _openbabel.OBConversion_GetInPos(*args)
+    def GetTitle(*args): return _openbabel.OBConversion_GetTitle(*args)
+    INOPTIONS = _openbabel.OBConversion_INOPTIONS
+    OUTOPTIONS = _openbabel.OBConversion_OUTOPTIONS
+    GENOPTIONS = _openbabel.OBConversion_GENOPTIONS
+    def IsOption(*args): return _openbabel.OBConversion_IsOption(*args)
+    def GetOptions(*args): return _openbabel.OBConversion_GetOptions(*args)
+    def AddOption(*args): return _openbabel.OBConversion_AddOption(*args)
+    def RemoveOption(*args): return _openbabel.OBConversion_RemoveOption(*args)
+    def SetOptions(*args): return _openbabel.OBConversion_SetOptions(*args)
+    def Convert(*args): return _openbabel.OBConversion_Convert(*args)
+    def FullConvert(*args): return _openbabel.OBConversion_FullConvert(*args)
+    def AddChemObject(*args): return _openbabel.OBConversion_AddChemObject(*args)
+    def GetChemObject(*args): return _openbabel.OBConversion_GetChemObject(*args)
+    def IsLast(*args): return _openbabel.OBConversion_IsLast(*args)
+    def IsFirstInput(*args): return _openbabel.OBConversion_IsFirstInput(*args)
+    def GetOutputIndex(*args): return _openbabel.OBConversion_GetOutputIndex(*args)
+    def SetOutputIndex(*args): return _openbabel.OBConversion_SetOutputIndex(*args)
+    def SetMoreFilesToCome(*args): return _openbabel.OBConversion_SetMoreFilesToCome(*args)
+    def SetOneObjectOnly(*args): return _openbabel.OBConversion_SetOneObjectOnly(*args)
+    GetDefaultFormat = staticmethod(_openbabel.OBConversion_GetDefaultFormat)
+    def Write(*args): return _openbabel.OBConversion_Write(*args)
+    def WriteString(*args): return _openbabel.OBConversion_WriteString(*args)
+    def WriteFile(*args): return _openbabel.OBConversion_WriteFile(*args)
+    def ReadString(*args): return _openbabel.OBConversion_ReadString(*args)
+    def ReadFile(*args): return _openbabel.OBConversion_ReadFile(*args)
+    BatchFileName = staticmethod(_openbabel.OBConversion_BatchFileName)
+    IncrementedFileName = staticmethod(_openbabel.OBConversion_IncrementedFileName)
+
+class OBConversionPtr(OBConversion):
+    def __init__(self, this):
+        self.this = this
+        if not hasattr(self,"thisown"): self.thisown = 0
+        self.__class__ = OBConversion
+_openbabel.OBConversion_swigregister(OBConversionPtr)
+
+OBConversion_RegisterFormat = _openbabel.OBConversion_RegisterFormat
+
+OBConversion_FindFormat = _openbabel.OBConversion_FindFormat
+
+OBConversion_FormatFromExt = _openbabel.OBConversion_FormatFromExt
+
+OBConversion_FormatFromMIME = _openbabel.OBConversion_FormatFromMIME
+
+OBConversion_GetNextFormat = _openbabel.OBConversion_GetNextFormat
+
+OBConversion_Description = _openbabel.OBConversion_Description
+
+OBConversion_GetDefaultFormat = _openbabel.OBConversion_GetDefaultFormat
+
+OBConversion_BatchFileName = _openbabel.OBConversion_BatchFileName
+
+OBConversion_IncrementedFileName = _openbabel.OBConversion_IncrementedFileName
+
+NOTREADABLE = _openbabel.NOTREADABLE
+READONEONLY = _openbabel.READONEONLY
+READBINARY = _openbabel.READBINARY
+NOTWRITABLE = _openbabel.NOTWRITABLE
+WRITEONEONLY = _openbabel.WRITEONEONLY
+WRITEBINARY = _openbabel.WRITEBINARY
+DEFAULTFORMAT = _openbabel.DEFAULTFORMAT
 class OBResidue(object):
     def __repr__(self):
         return "<%s.%s; proxy of C++ OpenBabel::OBResidue instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
