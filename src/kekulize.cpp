@@ -2,6 +2,7 @@
 kekulize.cpp - Alternate algorithm to kekulize a molecule.
 
 Copyright (C) 2004-2005 by Fabien Fontaine
+Some portions Copyright (C) 2005 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -17,6 +18,13 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
+#include "oberror.h"
+
+#ifdef HAVE_SSTREAM
+#include <sstream>
+#else
+#include <strstream>
+#endif
 
 #define SINGLE 1
 #define DOUBLE 2
@@ -130,6 +138,12 @@ void OBMol::NewPerceiveKekuleBonds()
 	  break;
       }
       
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
+
       //cout << "minde before:" << minde << endl;
       // if huckel rule not satisfied some atoms must give more electrons
       //cout << "minde " << minde << endl;
@@ -145,7 +159,8 @@ void OBMol::NewPerceiveKekuleBonds()
 	  }
 	}
 	if (bestorden==99) {  // no electron giving atom found
-	  std::cout << "Kekulize Warning: Huckel rule not satisfied for molecule " << GetTitle() << "\n";
+	  errorMsg << "Kekulize: Huckel rule not satisfied for molecule " << GetTitle() << endl;
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
 	  break;             // Huckel rule cannot be satisfied
 	}                    // try to kekulize anyway
 	else {
@@ -171,7 +186,8 @@ void OBMol::NewPerceiveKekuleBonds()
 	    }
 	  }
 	  if (bestorden==99) {  // no electron giving atom found
-	    std::cout << "Kekulize Warning: Cannot get an even number of electron for molecule " << GetTitle() << "\n";
+	    errorMsg << "Kekulize: Cannot get an even number of electron for molecule " << GetTitle() << "\n";
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
 	    break;             // impossible to choose an atom to obtain an even number of electron
 	  }                    // try to kekulize anyway
 	  else {
@@ -311,7 +327,16 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
       }   
     }
   }
-  if (!expand_successful) std::cout << "kekulize error for molecule " << GetTitle() << "\n"; 
+  if (!expand_successful)
+    {
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
+    errorMsg << "Kekulize Error for molecule " << GetTitle() << endl;
+    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+    }
 
   // Set the double bonds
   // std::cout << "Set double bonds\n";
@@ -381,8 +406,16 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
     // leave bond to single
   }
   else {
-    cout << "unexpected state:" << "atom " << Idx1 << " " << currentState[Idx1] 
+
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
+
+    errorMsg << "unexpected state:" << "atom " << Idx1 << " " << currentState[Idx1] 
 	 << " atom " << Idx2 << " " << currentState[Idx2] << endl;
+    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
     return(false);
   }
 
