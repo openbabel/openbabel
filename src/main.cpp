@@ -220,10 +220,10 @@ int main(int argc,char *argv[])
 								// Is a API directive, e.g.---errorlevel
 								//Send to the pseudoformat "obapi" (without any leading -)
 								OBConversion apiConv;
-								pOutFormat= OBConversion::FindFormat("obapi");
-								if(pOutFormat)
+								OBFormat* pAPI= OBConversion::FindFormat("obapi");
+								if(pAPI)
 								{
-									apiConv.SetOutFormat(pOutFormat);
+									apiConv.SetOutFormat(pAPI);
 									apiConv.AddOption(nam+1, OBConversion::OUTOPTIONS, txt.c_str());
 									apiConv.Write(NULL);
 								}
