@@ -44,7 +44,7 @@ public:
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+        return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -157,6 +157,9 @@ bool BGFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             {
                 mol.AddBond(i,vcon[i - 1][j],vord[i - 1][j]);
             }
+
+    //load up the next line after the END marker
+    ifs.getline(buffer,BUFF_SIZE);
 
     mol.EndModify();
     return(true);
