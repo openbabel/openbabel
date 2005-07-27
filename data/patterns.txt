@@ -1,4 +1,19 @@
-Functional groups as in Checkmol http://merian.pch.univie.ac.at/~nhaider/cheminf/fgtable.pdf
+##############################################################################
+#                                                                            #
+#	                Open Babel file: patterns.txt                        #
+#                                                                            #
+#  Copyright (c) 2005 Chris Morley                                           #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# Functional groups for molecular fingerprinting based on Checkmol:          #
+#   http://merian.pch.univie.ac.at/~nhaider/cheminf/fgtable.pdf              #
+#                                                                            #
+# SMARTS Patterns are used by finger3.cpp:PatternFP                          #
+# Format of each line is a SMARTS pattern, then optionally                   #
+#   followed by a tab character and a pattern number and/or desription       #
+#   (everything after the tab will be ignored by the code                    #
+#                                                                            #
+##############################################################################
 [+]	1
 [-]	2
 [#6][CX3](=O)	3 aldehyde or ketone
