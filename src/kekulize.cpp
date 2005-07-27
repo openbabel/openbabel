@@ -51,7 +51,7 @@ void OBMol::NewPerceiveKekuleBonds()
   SetKekulePerceived();
 
   OBAtom *atom;
-  int i,j, n, de, minde;
+  int n, de, minde;
   std::vector<OBAtom*> cycle;
   OBBitVec avisit,cvisit;
   avisit.Resize(NumAtoms()+1);
@@ -62,7 +62,7 @@ void OBMol::NewPerceiveKekuleBonds()
   int BO;
   int sume, orden, bestorden, bestatom;
   // Init the kekulized bonds
-  for( i=0; i< NumBonds(); i++ ) {
+  for(unsigned i=0; i< NumBonds(); i++ ) {
     bond = GetBond(i);
     BO = bond->GetBO();
     switch (BO)
@@ -74,7 +74,7 @@ void OBMol::NewPerceiveKekuleBonds()
   }
 
   // Find all the groups of aromatic cycle
-  for( i=1; i<= NumAtoms(); i++ ) {
+  for(unsigned i=1; i<= NumAtoms(); i++ ) {
     atom = GetAtom(i);
     if (atom->HasAromaticBond() && !cvisit[i]) { // is new aromatic atom of an aromatic cycle ?
 
@@ -85,20 +85,20 @@ void OBMol::NewPerceiveKekuleBonds()
       avisit.SetBitOn(i);
       expandcycle (atom, avisit);
       //store the atoms of the cycle(s)
-      for(j=1; j<= NumAtoms(); j++) {
+      for(unsigned j=1; j<= NumAtoms(); j++) {
 	if ( avisit[j] ) {
 	  atom = GetAtom(j);
 	  cycle.push_back(atom);
 	}
       }
       // At the begining each atom give one electron to the cycle
-      for(j=0; j< cycle.size(); j++) {
+      for(unsigned j=0; j< cycle.size(); j++) {
 	electron.push_back(1);
       }
       
       // remove one electron if the atom make a double bond out of the cycle
       sume =0;
-      for(j=0; j< cycle.size(); j++) {
+      for(unsigned j=0; j< cycle.size(); j++) {
 	atom = cycle[j];
 	for(bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
 	  if ( bond->IsDouble() ) {
@@ -127,7 +127,7 @@ void OBMol::NewPerceiveKekuleBonds()
 
       // find the ideal number of electrons according to the huckel 4n+2 rule
       minde=99;
-      for (i=1; 1; i++) {
+      for (unsigned i=1; 1; i++) {
 	n = 4 *i +2;
 	de = n - sume;
 	if (  de < minde )
@@ -149,7 +149,7 @@ void OBMol::NewPerceiveKekuleBonds()
       //cout << "minde " << minde << endl;
       while ( minde != 0 ) {
 	bestorden=99;
-	for(j=0; j< cycle.size(); j++) {
+	for(unsigned j=0; j< cycle.size(); j++) {
 	  if (electron[j] == 1) {
 	    orden = getorden(cycle[j]);
 	    if (orden < bestorden) {
@@ -176,7 +176,7 @@ void OBMol::NewPerceiveKekuleBonds()
 	int odd = sume % 2; 
 	//cout << "odd:" << odd << endl;
 	if(odd) { // odd number of electrons try to add an electron to the best possible atom
-	  for(j=0; j< cycle.size(); j++) {
+	  for(unsigned j=0; j< cycle.size(); j++) {
 	    if (electron[j] == 1) {
 	      orden = getorden(cycle[j]);
 	      if (orden < bestorden) {
@@ -212,7 +212,7 @@ void OBMol::NewPerceiveKekuleBonds()
       start_kekulize(cycle,electron);
 
       // Set the kekulized cycle(s) as visited
-      for(j=1; j<= NumAtoms(); j++) {
+      for(unsigned j=1; j<= NumAtoms(); j++) {
 	if (avisit[j])
 	  cvisit.SetBitOn(j);
       }
@@ -221,7 +221,7 @@ void OBMol::NewPerceiveKekuleBonds()
   }
   // Double bond have been assigned, set the remaining aromatic bonds to single
   //std::cout << "Set not assigned single bonds\n"; 
-  for(i=0;i <NumBonds(); i++) {
+  for(unsigned i=0;i <NumBonds(); i++) {
     bond = GetBond(i);     
     //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";   
     if (bond->GetBO()==5 ) {
@@ -249,26 +249,25 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
   std::vector<int> binitState;
   std::vector<int> bcurrentState;
   std::vector<bool> mark;
-  int i;
   unsigned int Idx;
   OBAtom *atom, *atom2;
   OBBond *bond;
 
   //init the atom arrays
-  for(i=0;i <NumAtoms()+1; i++) {
+  for(unsigned i=0;i <NumAtoms()+1; i++) {
     initState.push_back(-1);
     currentState.push_back(-1);
     mark.push_back(false);
   }
   
   //init the bond arrays with single bonds
-  for(i=0;i <NumBonds(); i++) {
+  for(unsigned i=0;i <NumBonds(); i++) {
     binitState.push_back(SINGLE);
     bcurrentState.push_back(SINGLE);
   }
   
   //set the electron number
-  for( i=0; i< cycle.size(); i++) {
+  for(unsigned i=0; i< cycle.size(); i++) {
     atom = cycle[i];
     Idx =  atom->GetIdx();
     if ( electron[i] == 1)
@@ -307,7 +306,7 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
     expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark) ; 
     //Control that all the electron have been given to the cycle(s)
     expand_successful = true;
-    for( i=0; i< cycle.size(); i++) {
+    for(unsigned i=0; i< cycle.size(); i++) {
       atom2 = cycle[i];
       Idx =  atom2->GetIdx();
       //cout << "\t" << currentState[Idx];
@@ -318,11 +317,11 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
     if (expand_successful)
       break;
     else {
-      for(i=0;i <NumAtoms()+1; i++) {
+      for(unsigned i=0;i <NumAtoms()+1; i++) {
 	currentState[i]=initState[i];
 	mark[i]=false;
       }
-      for(i=0;i <NumBonds(); i++) {
+      for(unsigned i=0;i <NumBonds(); i++) {
 	bcurrentState[i]=binitState[i];
       }   
     }
@@ -340,7 +339,7 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
 
   // Set the double bonds
   // std::cout << "Set double bonds\n";
-  for(i=0;i <NumBonds(); i++) {
+  for(unsigned i=0;i <NumBonds(); i++) {
     bond = GetBond(i);    
     // std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";
     if (bond->GetBO()==5 && bcurrentState[i] == DOUBLE) {

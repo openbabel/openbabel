@@ -255,8 +255,7 @@ int patty::type_to_int(const string &type, bool failOnUndefined)
 //! the first position start at 1
 int patty::Istype(const std::string &type)
 {
-    int pos;
-    for( pos=0; pos < typ.size(); pos++)
+    for(unsigned int pos=0; pos < typ.size(); pos++)
     {
         if(typ[pos] == type)
             return (pos + 1);

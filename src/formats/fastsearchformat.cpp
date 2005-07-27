@@ -327,7 +327,7 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 			cerr << "No datafile! " << endl;
 			return false;
 		}
-		int pos = datafilename.find_last_of("/\\");
+		unsigned int pos = datafilename.find_last_of("/\\");
 		if(pos!=string::npos)
 			datafilename=datafilename.substr(pos+1);
 		fsi = new FastSearchIndexer(datafilename, pOs, fpid, nbits);

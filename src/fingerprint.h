@@ -38,7 +38,7 @@ public:
 	void SetBit(std::vector<unsigned int>& vec, int n);	
 
 	/// Repeatedly ORs the top half with the bottom half until no smaller than nbits 
-	void Fold(std::vector<unsigned int>& vec, int nbits); 
+	void Fold(std::vector<unsigned int>& vec, unsigned int nbits); 
 
 	/// Returns fingerprint in vector, which may be resized, folded to nbits (if nbits!=0)
 	virtual bool GetFingerprint(OBBase* pOb, std::vector<unsigned int>& fp, int nbits=0)=0;
@@ -64,7 +64,7 @@ public:
 	{
 		///If used for two vectors, vec1 and vec2, call as Tanimoto(vec1, &vec2[0]);
 		int andbits=0, orbits=0;
-		int i;
+		unsigned int i;
 		for (i=0;i<vec1.size();++i)
 		{
 			int andfp = vec1[i] & p2[i];
@@ -146,7 +146,7 @@ public:
 	virtual ~FastSearch(){};
 
 	/// \brief Does substructure search and returns vector of the file positions of matches 
-	bool    Find(OBBase* pOb, std::vector<unsigned int>& SeekPositions, int MaxCandidates);
+	bool    Find(OBBase* pOb, std::vector<unsigned int>& SeekPositions, unsigned int MaxCandidates);
 
 	/// \brief Returns multimap containing objects whose Tanimoto coefficients with the target
 	///	is greater than the value specified.

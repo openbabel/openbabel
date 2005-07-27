@@ -111,9 +111,8 @@ OBAPI vector3 center_coords(double *c, unsigned int size)
       return(v);
     }
 
-    int i;
     double x=0,y=0,z=0;
-    for (i = 0;i < size;i++)
+    for (unsigned int i = 0;i < size;i++)
     {
         x += c[i*3];
         y += c[i*3+1];
@@ -122,7 +121,7 @@ OBAPI vector3 center_coords(double *c, unsigned int size)
     x /= (double) size;
     y /= (double) size;
     z /= (double) size;
-    for (i = 0;i < size;i++)
+    for (unsigned int i = 0;i < size;i++)
     {
         c[i*3]   -= x;
         c[i*3+1] -= y;
@@ -136,9 +135,8 @@ OBAPI vector3 center_coords(double *c, unsigned int size)
 //!  Operates on the first "size" coordinates in the array.
 OBAPI void rotate_coords(double *c,double m[3][3],unsigned int size)
 {
-    int i;
     double x,y,z;
-    for (i = 0;i < size;i++)
+    for (unsigned int i = 0;i < size;i++)
     {
         x = c[i*3]*m[0][0] + c[i*3+1]*m[0][1] + c[i*3+2]*m[0][2];
         y = c[i*3]*m[1][0] + c[i*3+1]*m[1][1] + c[i*3+2]*m[1][2];
@@ -155,9 +153,8 @@ OBAPI double calc_rms(double *r,double *f, unsigned int N)
   if (N == 0)
     return 0.0f; // no RMS deviation between two empty sets
 
-    int i;
     double d2=0.0;
-    for (i = 0;i < N;i++)
+    for (unsigned int i = 0;i < N;i++)
     {
         d2 += SQUARE(r[i*3] - f[i*3]) +
               SQUARE(r[i*3+1] - f[i*3+1]) +

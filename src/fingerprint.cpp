@@ -49,7 +49,7 @@ void OBFingerprint::SetBit(vector<unsigned int>& vec, int n)
 }
 
 ////////////////////////////////////////	
-void OBFingerprint::Fold(vector<unsigned int>& vec, int nbits)
+void OBFingerprint::Fold(vector<unsigned int>& vec, unsigned int nbits)
 {
 	while(vec.size()*bitsperint/2 >= nbits) 
 		vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
@@ -92,8 +92,7 @@ double OBFingerprint::Tanimoto(const vector<unsigned int>& vec1, const vector<un
 	if(vec1.size()!=vec2.size())
 		return -1; //different number of bits
 	int andbits=0, orbits=0;
-	int i;
-  for (i=0;i<vec1.size();++i)
+	for (unsigned i=0;i<vec1.size();++i)
 	{
 		int andfp = vec1[i] & vec2[i];
 		int orfp = vec1[i] | vec2[i];
@@ -111,7 +110,7 @@ double OBFingerprint::Tanimoto(const vector<unsigned int>& vec1, const vector<un
 	  
 */
 bool FastSearch::Find(OBBase* pOb, vector<unsigned int>& SeekPositions,
-												int MaxCandidates)
+		      unsigned int MaxCandidates)
 {
 	///Finds chemical objects in datafilename (which must previously have been indexed)
 	///that have all the same bits set in their fingerprints as in the fingerprint of
@@ -134,8 +133,8 @@ bool FastSearch::Find(OBBase* pOb, vector<unsigned int>& SeekPositions,
 	unsigned int* ppat0 = &vecwords[0];
 	register unsigned int* p;
 	register unsigned int* ppat;
-	register unsigned int i;
 	register unsigned int a;
+	unsigned int i; // need address of this, can't be register
 	for(i=0;i<dataSize; i++) //speed critical section
 	{
 		p=nextp;
@@ -144,7 +143,7 @@ bool FastSearch::Find(OBBase* pOb, vector<unsigned int>& SeekPositions,
 		a=0;
 		while(p<nextp)
 		{
-			if(a=((*ppat) & (*p++)) ^ (*ppat++)) break;
+			if ( (a=((*ppat) & (*p++)) ^ (*ppat++)) ) break;
 		}
 		if(!a)
 		{
@@ -300,7 +299,7 @@ bool FastSearchIndexer::Add(OBBase* pOb, streampos seekpos)
 	if(_pFP->GetFingerprint(pOb, vecwords, _nbits))
 	{
 		_pindex->header.words = vecwords.size(); //Use size as returned from fingerprint
-		for(int i=0;i<_pindex->header.words;i++)
+		for(unsigned int i=0;i<_pindex->header.words;i++)
 			_pindex->fptdata.push_back(vecwords[i]);
 		_pindex->seekdata.push_back(seekpos);
 		return true;	
