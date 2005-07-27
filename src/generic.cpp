@@ -63,7 +63,8 @@ OBCommentData::OBCommentData()
     _attr = "Comment";
 }
 
-OBCommentData::OBCommentData(const OBCommentData &src)
+OBCommentData::OBCommentData(const OBCommentData &src) :
+  OBGenericData()
 {
     _type = obCommentData;
     _attr = "Comment";
@@ -173,7 +174,8 @@ OBUnitCell::OBUnitCell()
     _attr = "UnitCell";
 }
 
-OBUnitCell::OBUnitCell(const OBUnitCell &src)
+OBUnitCell::OBUnitCell(const OBUnitCell &src) :
+  OBGenericData()
 {
     _a = src._a;
     _b = src._b;
@@ -312,7 +314,8 @@ OBSymmetryData::OBSymmetryData()
     _attr = "Symmetry";
 }
 
-OBSymmetryData::OBSymmetryData(const OBSymmetryData &src)
+OBSymmetryData::OBSymmetryData(const OBSymmetryData &src) :
+  OBGenericData()
 {
   _pointGroup = src._pointGroup;
   _spaceGroup = src._spaceGroup;
@@ -335,7 +338,8 @@ OBConformerData::OBConformerData()
     _attr = "Conformers";
 }
 
-OBConformerData::OBConformerData(const OBConformerData &src)
+OBConformerData::OBConformerData(const OBConformerData &src) :
+  OBGenericData()
 {
   _vDimension = src._vDimension;
   _vEnergies = src._vEnergies;
