@@ -48,6 +48,7 @@ IMPVAL	[#6^2]			3
 IMPVAL	[#6^1]			2
 IMPVAL  [#6^3-]			3
 IMPVAL  [#6^2-]			2
+IMPVAL  [#6^1-]			1 #CM for isocyanides
 IMPVAL  [c+]                    2
 
 IMPVAL	[#8^3]				2
