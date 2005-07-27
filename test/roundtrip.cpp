@@ -97,7 +97,7 @@ int main(int argc,char *argv[])
       mol.Clear();
       mol2.Clear();
       molCount++;
-      cerr << " read " << molCount << " molecules " << endl;
+      //      cerr << " read " << molCount << " molecules " << endl;
 
       conv1.Read(&mol);
       conv2.Read(&mol2);
@@ -157,7 +157,7 @@ int main(int argc,char *argv[])
 	  }
       }
     
-    for(int i = 1;i <= mol.NumAtoms(); i++)
+    for(unsigned int i = 1;i <= mol.NumAtoms(); i++)
       {
 	atom1 = mol.GetAtom(i);
 	atom2 = mol2.GetAtom(i);
