@@ -69,6 +69,10 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
+BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
+BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
+BUILD_SWIG_FALSE = @BUILD_SWIG_FALSE@
+BUILD_SWIG_TRUE = @BUILD_SWIG_TRUE@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -170,7 +174,7 @@ tabledir = $(pkgdatadir)/$(VERSION)
 table_DATA = \
 		aromatic.txt bondtyp.txt isotope.txt resdata.txt \
 		atomtyp.txt element.txt isotope-small.txt phmodel.txt \
-		torlib.txt types.txt
+		patterns.txt torlib.txt types.txt
 
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h \

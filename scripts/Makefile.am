@@ -1,8 +1,15 @@
-#libOBPython_la_SOURCES = openbabel_python.cpp
-#openbabel_python.cpp: openbabel.i
-#	swig -python -c++ -modern -o $@ $<
+EXTRA_DIST = openbabel.i perl python
 
-#libOBPerl_la_SOURCES = openbabel_perl.cpp
-#openbabel_perl.cpp: openbabel.i
-#       swig -module "Chemistry::OpenBabel" -perl5 -c++ -o $@ $<
+#man_MANS = babel.1
 
+if BUILD_SWIG
+BUILT_SOURCES = perl/openbabel_perl.cpp \
+		python/openbabel_python.cpp
+
+perl/openbabel_perl.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+	$(SWIG) -module "Chemistry::OpenBabel" -perl5 -c++ -o $@ \
+		-I$(top_srcdir)/src $<
+
+python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+	$(SWIG) -python -modern -c++ -o $@ -I$(top_srcdir)/src $<
+endif

@@ -3,7 +3,7 @@ EXTRA_DIST = $(man_MANS) Migration.html README.dioxin.pov FAQ.html README.povray
 man_MANS = babel.1
 
 if BUILD_DOCS
-babel.1:	$(srcdir)/../src/main.cpp
+babel.1:	$(top_srcdir)/src/main.cpp $(srcdir)/Doxyfile-man
 		$(DOXYGEN) $(srcdir)/Doxyfile-man
 endif
 

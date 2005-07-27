@@ -9,6 +9,7 @@ INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 EXTRA_DIST = exampleformat.cpp
 
 pkglib_LTLIBRARIES = \
+	APIInterface.la \
 	CSRformat.la PQSformat.la alchemyformat.la \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la carformat.la cccformat.la \
@@ -24,6 +25,9 @@ pkglib_LTLIBRARIES = \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
 	xedformat.la xyzformat.la zindoformat.la \
 	# inchiformat.la
+
+APIInterface_la_SOURCES = APIInterface.cpp
+APIInterface_la_LDFLAGS = -module -avoid-version
 
 CSRformat_la_SOURCES = CSRformat.cpp
 CSRformat_la_LDFLAGS = -module -avoid-version

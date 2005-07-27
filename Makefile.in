@@ -71,7 +71,7 @@ pkgconfigDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(pkgconfig_DATA)
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = $(SUBDIRS)
+DIST_SUBDIRS = data src test tools doc scripts
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -94,6 +94,10 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
+BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
+BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
+BUILD_SWIG_FALSE = @BUILD_SWIG_FALSE@
+BUILD_SWIG_TRUE = @BUILD_SWIG_TRUE@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -189,8 +193,11 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = src test doc tools data
-EXTRA_DIST = Doxyfile bc32.mak windows scripts
+
+# only build in the scripts subdirectory if possible (perl, python, swig, etc.)
+@BUILD_SCRIPTS_TRUE@SCRIPT_DIR = scripts
+SUBDIRS = data src test tools doc $(SCRIPT_DIR)
+EXTRA_DIST = Doxyfile bc32.mak windows
 AUTOMAKE_OPTIONS = foreign
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = openbabel-2.0.pc
@@ -636,7 +643,7 @@ uninstall-info: uninstall-info-recursive
 
 
 docs:
-	$(DOXYGEN)
+	(cd $(top_srcdir); $(DOXYGEN))
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

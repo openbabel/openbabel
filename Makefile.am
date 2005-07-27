@@ -1,9 +1,14 @@
-SUBDIRS = src test doc tools data
-EXTRA_DIST = Doxyfile bc32.mak windows scripts
+# only build in the scripts subdirectory if possible (perl, python, swig, etc.)
+if BUILD_SCRIPTS
+  SCRIPT_DIR = scripts
+endif
+
+SUBDIRS = data src test tools doc $(SCRIPT_DIR)
+EXTRA_DIST = Doxyfile bc32.mak windows
 AUTOMAKE_OPTIONS = foreign
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = openbabel-2.0.pc
 
 docs:
-	$(DOXYGEN)
+	(cd $(top_srcdir); $(DOXYGEN))
