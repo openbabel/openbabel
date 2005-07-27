@@ -919,8 +919,6 @@ unsigned int OBAtom::ImplicitHydrogenCount() const
       impval-=1;
     else if(mult==1 || mult==3) //carbene
       impval-=2;
-    else
-      impval=0;
     return((impval>0)?impval:0);
 }
 
