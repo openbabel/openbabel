@@ -98,7 +98,7 @@ bool TestUnitCell()
     //  v6.length() << endl;
     //    cerr << endl;
 
-    v9 = (1.0f, 1.0f, 1.0f);
+    v9 = vector3(1.0f, 1.0f, 1.0f);
     matrix3x3 m = cell2.GetOrthoMatrix();
     v9 *= m;
 
