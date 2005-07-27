@@ -744,7 +744,7 @@ void makeAllowedAttributeLists()
 
 void cmlError(string msg)
 {
-    obErrorLog.ThrowError("CMLFormat", msg, obWarning);
+    obErrorLog.ThrowError("CMLFormat", msg, obInfo);
 }
 
 bool ReadXML(istream &ifs)
