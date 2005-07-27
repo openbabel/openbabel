@@ -1,3 +1,59 @@
+2005-07-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/fingerprints/*: New directory for finger2.cpp and
+	finger3.cpp. Place new fingerprint formats here.
+
+	* src/Makefile.am, src/Makefile.in: Ditto.
+	
+	* Doxyfile, doc/Doxyfile-man: Updated for new snapshot.
+
+	* configure.in, configure, Makefile.am, Makefile.in: Generate the
+	scripts interfaces automatically if SWIG is installed.
+
+	* scripts/Makefile.am, scripts/Makefile.in: Ditto.
+
+	* src/config.h.in: Add check for libxml2.
+
+	* scripts/perl/*: More documentation.
+
+	* data/Makefile.am, data/Makefile.in: Add patterns.txt fingerprint
+	data to ensure it's installed properly.
+
+	* data/atomtyp.txt, data/atomtyp.h: Add + formal charges on carbon
+	to IMPVAL rules, matching Chris's change below.
+
+	* data/patterns.txt: Add descriptive header, explaining format and
+	purpose of this file.
+
+	* src/fingerprint.cpp, src/fingerprint.h, src/kekulize.cpp,
+	src/obutil.cpp, src/patty.cpp, src/formats/fastsearchformat.cpp:
+	Fix signed/unsigned integer warnings.
+
+	* src/generic.cpp: Fix copy ctor compiler warnings (call base
+	class ctor).
+
+	* src/oberror.h, src/oberror.cpp: Move "level" into OBError class
+	out of OBMessageHandler. Allows OBError to format the message
+	output based on the type of message.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Add
+	APIInterface to build list. Fixes problems passing flags via
+	command-line.
+
+	* src/formats/bgfformat.cpp: Fix bug discovered during
+	roundtripping -- need to move istream to the end of the file, not
+	the END record.
+
+	* src/formats/cml.cpp: Temporarily demote CML errors to info
+	messages -- currently too verbose.
+
+	* test/unitcell.cpp: Fix compilation warning with vector3
+	assignment.
+
+	* test/roundtrip.cpp: Remove debug message left inadvertantly.
+
+	* test/smartsresults.txt: Regenerate after atom typing changes.
+
 2005-07-27  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* data/atomtyp.txt: Add line for C in isocyanide to correct 
@@ -7,7 +63,7 @@
 	which was making other case go wrong.
 
 	* src/main.cpp: renamed the variable which has the result of
-	OBConversion::FindFormat("obapi") because an existing vaiable was 
+	OBConversion::FindFormat("obapi") because an existing variable was 
 	being used.
 
 2005-07-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
