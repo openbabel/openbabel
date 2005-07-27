@@ -8,7 +8,7 @@ WriteMakefile(
     'NAME'	=>  'Chemistry::OpenBabel',
     'AUTHOR'    =>  'Geoffrey Hutchison <openbabel-scripting@lists.sourceforge.net>',
     'VERSION'   => '2.0.0b3',
-    'LIBS'      => ['-L../../src -lopenbabel', '-lopenbabel'],
+    'LIBS'      => '-lopenbabel',
     'CC'        => $CC,
     'LD'        => '$(CC)',
     'INC'       => '-I../../src',

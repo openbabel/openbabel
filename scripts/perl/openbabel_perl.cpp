@@ -518,7 +518,6 @@ SWIG_UnpackDataName(const char *c, void *ptr, size_t sz, const char *name) {
  * perl5.swg
  *
  * Perl5 runtime library
- * $Header$
  * ----------------------------------------------------------------------------- */
 
 #define SWIGPERL
