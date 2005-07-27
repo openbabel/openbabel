@@ -1,3 +1,15 @@
+2005-07-27  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* data/atomtyp.txt: Add line for C in isocyanide to correct 
+	bug 1226846
+
+	* src/atom.cpp (ImplicitHydrogenCount): undo the last correction
+	which was making other case go wrong.
+
+	* src/main.cpp: renamed the variable which has the result of
+	OBConversion::FindFormat("obapi") because an existing vaiable was 
+	being used.
+
 2005-07-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/atom.cpp (ImplicitHydrogenCount): Add a fix for PR#1226846
