@@ -43,7 +43,17 @@ General Public License for more details.
 namespace OpenBabel
 {
 
-//! \brief Customizable error handling and logging -- store a message, including the method yielding the error.
+//! \brief Levels of error and audit messages to allow filtering
+enum obMessageLevel {
+   obError,     //!< for critical errors (e.g., cannot read a file)
+   obWarning,   //!< for non-critical problems (e.g., molecule appears empty)
+   obInfo,      //!< for informative messages (e.g., file is a non-standard format)
+   obAuditMsg,  //!< for messages auditing methods which destroy or perceive molecular data (e.g., kekulization, atom typing, etc.)
+   obDebug      //!< for messages only useful for debugging purposes
+};
+
+//! \brief Customizable error handling and logging -- store a message,
+//!        including the method yielding the error, causes, etc.
 class OBAPI OBError
 {
 public:
@@ -53,14 +63,20 @@ public:
 	   const std::string &errorMsg = "",
 	   const std::string &explanation = "",
 	   const std::string &possibleCause = "",
-	   const std::string &suggestedRemedy = "" );
+	   const std::string &suggestedRemedy = "",
+	   const obMessageLevel = obDebug );
 
-    std::string message(void) const;
+  std::string message(void) const;
+  
+  friend std::ostream& operator<< ( std::ostream &os, const OBError &er )
+    { return os << er.message(); };
 
-    friend std::ostream& operator<< ( std::ostream &os, const OBError &er )
-    {
-        return os << er.message();
-    };
+  std::string    GetMethod()            { return _method;          }
+  std::string    GetError()             { return _errorMsg;        }
+  std::string    GetExplanation()       { return _explanation;     }
+  std::string    GetPossibleCause()     { return _possibleCause;   }
+  std::string    GetSuggestedRemedy()   { return _suggestedRemedy; }
+  obMessageLevel GetLevel()             { return _level;           }
 
  protected:
 
@@ -70,17 +86,9 @@ public:
     std::string _possibleCause;
     std::string _suggestedRemedy;
 
+    obMessageLevel _level;
 };
 
-//! \brief Levels of error and audit messages to allow filtering
-enum obMessageLevel {
-   obError,     //!< for critical errors (e.g., cannot read a file)
-   obWarning,   //!< for non-critical problems (e.g., molecule appears empty)
-   obInfo,      //!< for informative messages (e.g., file is a non-standard format)
-   obAuditMsg,  //!< for messages auditing methods which destroy or perceive molecular data (e.g., kekulization, atom typing, etc.)
-   obDebug      //!< for messages only useful for debugging purposes
-};
- 
  //! \brief Handle error messages, warnings, debugging information and the like
 class OBAPI OBMessageHandler
   {
@@ -89,8 +97,8 @@ class OBAPI OBMessageHandler
     ~OBMessageHandler();
     
     //! Throw an error with an already-formatted OBError object
-    void ThrowError(OBError err, obMessageLevel level = obDebug);
-    //! Throw an error in the specified method
+    void ThrowError(OBError err);
+    //! Throw an error in the specified method with an appropriate level
     void ThrowError(const std::string &method, const std::string &errorMsg, 
 		    obMessageLevel level = obDebug);
 
@@ -104,6 +112,11 @@ class OBAPI OBMessageHandler
 
     //! Set the maximum number of entries (or 0 for no limit)
     void SetMaxLogEntries(unsigned int max) { _maxEntries = max; }
+    //! \return the current maximum number of entries (default = 0 for no limit)
+    unsigned int GetMaxLogEntries() { return _maxEntries; }
+
+    //! Clear the current message log entirely
+    void ClearLog() { _messageList.clear(); }
 
     //! Set the level of messages to output
     //! (i.e., messages with at least this priority will be output)
@@ -120,7 +133,7 @@ class OBAPI OBMessageHandler
     bool StopErrorWrap();
 
   protected:
-    std::deque<std::pair<OBError, obMessageLevel> >  _messageList;
+    std::deque<OBError>    _messageList;
     obMessageLevel         _outputLevel;
     std::ostream          *_outputStream;
 

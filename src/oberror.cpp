@@ -35,24 +35,36 @@ namespace OpenBabel
 
   OBMessageHandler obErrorLog;
 
-OBError::OBError( const string &method, const string &errorMsg, 
+OBError::OBError( const string &method, 
+		  const string &errorMsg, 
 		  const string &explanation,
-                  const string &possibleCause, const string &suggestedRemedy) :
+                  const string &possibleCause,
+		  const string &suggestedRemedy,
+		  const obMessageLevel level) :
   _method(method), _errorMsg(errorMsg), _explanation(explanation),
-  _possibleCause(possibleCause), _suggestedRemedy(suggestedRemedy)
-{
-
-}
+  _possibleCause(possibleCause), _suggestedRemedy(suggestedRemedy),
+  _level(level)
+{ }
 
 string OBError::message() const
 {
     string tmp = "==============================\n";
 
-    tmp += "*** Open Babel Error ";
+    if (_level == obError)
+      tmp += "*** Open Babel Error ";
+    else if (_level == obWarning)
+      tmp += "*** Open Babel Warning ";
+    else if (_level == obInfo)
+      tmp += "*** Open Babel Information ";
+    else if (_level == obAuditMsg)
+      tmp += "*** Open Babel Audit Log ";
+    else
+      tmp += "*** Open Babel Debugging Message ";
+
     if (_method.length() != 0)
       {
 	tmp += " in " + _method + string("\n  ");
-	}
+      }
     tmp += _errorMsg + "\n";
     if (_explanation.size() != 0)
         tmp += "  " + _explanation + "\n";
@@ -60,7 +72,6 @@ string OBError::message() const
         tmp += "  Possible reason: " + _possibleCause + "\n";
     if (_suggestedRemedy.size() != 0)
         tmp += "  Suggestion: " + _suggestedRemedy + "\n";
-    tmp += "==============================\n";
     return tmp;
 }
 
@@ -80,16 +91,16 @@ OBMessageHandler::~OBMessageHandler()
     delete _filterStreamBuf;
 }
     
-void OBMessageHandler::ThrowError(OBError err, obMessageLevel level)
+void OBMessageHandler::ThrowError(OBError err)
 {
-  pair <OBError, obMessageLevel> p(err, level);
-
-  _messageList.push_back(p);
+  _messageList.push_back(err);
   if (_maxEntries != 0 && _messageList.size() > _maxEntries)
     _messageList.pop_front();
   
-  if (_logging && level <= _outputLevel)
-    *_outputStream << err;
+  if (_logging && err.GetLevel() <= _outputLevel)
+    {
+      *_outputStream << err;
+    }
 }
 
 void OBMessageHandler::ThrowError(const std::string &method, 
@@ -98,22 +109,22 @@ void OBMessageHandler::ThrowError(const std::string &method,
 {
   if (errorMsg.length() > 1)
     {
-      OBError err(method, errorMsg);
-      ThrowError(err, level);
+      OBError err(method, errorMsg, "", "", "", level);
+      ThrowError(err);
     }
 }
 
 std::vector<std::string> OBMessageHandler::GetMessagesOfLevel(const obMessageLevel level)
 {
   vector<string> results;
-  deque<pair<OBError, obMessageLevel> >::iterator i;
-  pair<OBError, obMessageLevel> message;
+  deque<OBError>::iterator i;
+  OBError error;
 
   for (i = _messageList.begin(); i != _messageList.end(); i++)
     {
-      message = (*i);
-      if (message.second == level)
-	results.push_back( (message.first).message() );
+      error = (*i);
+      if (error.GetLevel() == level)
+	results.push_back( error.message() );
     }
 
   return results;
