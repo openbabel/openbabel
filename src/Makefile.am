@@ -1,6 +1,6 @@
-SUBDIRS = math formats
+SUBDIRS = math formats fingerprints
 
-INCLUDES = -I$(srcdir)/../data/
+INCLUDES = -I$(top_srcdir)/data/
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 
 lib_LTLIBRARIES = libopenbabel.la
@@ -9,15 +9,15 @@ libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
 		dlhandler_unix.cpp obconversion.cpp \
-		finger2.cpp finger3.cpp fingerprint.cpp \
-		generic.cpp grid.cpp \
+		fingerprint.cpp generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
-libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
+libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
+			@LTLIBOBJS@
 libopenbabel_la_LDFLAGS = -version-info 1:0:0
 
 pkginclude_HEADERS = \
@@ -32,8 +32,7 @@ pkginclude_HEADERS = \
 
 bin_PROGRAMS = babel
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
-	# formats/inchi/libinchi.la
+babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
 
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h

@@ -63,14 +63,14 @@ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
 	"$(DESTDIR)$(pkgincludedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libopenbabel_la_DEPENDENCIES = math/libmath.la @LTLIBOBJS@
+libopenbabel_la_DEPENDENCIES = math/libmath.la \
+	fingerprints/libfingerprints.la @LTLIBOBJS@
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo chains.lo chiral.lo data.lo dlhandler_unix.lo \
-	obconversion.lo finger2.lo finger3.lo fingerprint.lo \
-	generic.lo grid.lo kekulize.lo matrix.lo mol.lo molchrg.lo \
-	oberror.lo obiter.lo obutil.lo parsmart.lo patty.lo phmodel.lo \
-	rand.lo residue.lo ring.lo rotor.lo rotamer.lo tokenst.lo \
-	typer.lo transform.lo
+	obconversion.lo fingerprint.lo generic.lo grid.lo kekulize.lo \
+	matrix.lo mol.lo molchrg.lo oberror.lo obiter.lo obutil.lo \
+	parsmart.lo patty.lo phmodel.lo rand.lo residue.lo ring.lo \
+	rotor.lo rotamer.lo tokenst.lo typer.lo transform.lo
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -121,6 +121,10 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
+BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
+BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
+BUILD_SWIG_FALSE = @BUILD_SWIG_FALSE@
+BUILD_SWIG_TRUE = @BUILD_SWIG_TRUE@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -216,23 +220,24 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = math formats
-INCLUDES = -I$(srcdir)/../data/
+SUBDIRS = math formats fingerprints
+INCLUDES = -I$(top_srcdir)/data/
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 lib_LTLIBRARIES = libopenbabel.la
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
 		dlhandler_unix.cpp obconversion.cpp \
-		finger2.cpp finger3.cpp fingerprint.cpp \
-		generic.cpp grid.cpp \
+		fingerprint.cpp generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
 		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp
 
-libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
+libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
+			@LTLIBOBJS@
+
 libopenbabel_la_LDFLAGS = -version-info 1:0:0
 pkginclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
@@ -245,9 +250,7 @@ pkginclude_HEADERS = \
 		ring.h rotor.h rotamer.h typer.h 
 
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@ \
-	# formats/inchi/libinchi.la
-
+babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h
 
@@ -382,8 +385,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chiral.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_unix.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/finger2.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/finger3.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generic.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid.Plo@am__quote@

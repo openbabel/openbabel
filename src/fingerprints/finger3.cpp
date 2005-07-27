@@ -14,10 +14,13 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include "mol.h"
+
 #include <fstream>
 #include <map>
 #include <string>
+
 #include "fingerprint.h"
 
 using namespace std;
@@ -71,13 +74,16 @@ public:
 				return false;
 			}
 			string smarts, commentline;
-			if(!getline(ifpatterns,commentline)) return false;
+
+			if(!getline(ifpatterns, commentline)) return false;
 			
 			while(ifpatterns.good())
 			{
-				if(getline(ifpatterns,smarts))
+				if( getline(ifpatterns,smarts) 
+				    && smarts.size() > 0 
+				    && smarts[0] != '#')
 				{
-					int pos = smarts.find(' ');
+					unsigned int pos = smarts.find(' ');
 					if(pos!=string::npos)
 						smarts = smarts.substr(0,pos);
 					smartsStrings.push_back(smarts);
@@ -86,7 +92,7 @@ public:
 		}
 
 		//Make fp size the smallest power of two to contain the patterns
-		int n=bitsperint;
+		unsigned int n=bitsperint;
 		while(n<smartsStrings.size())n*=2;
 		fp.resize(n/bitsperint);
 

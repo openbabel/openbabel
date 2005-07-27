@@ -215,7 +215,7 @@ void fingerprint2::DoRings()
 	{
 		vector<int> t1(*itr); //temporary copy
 		vector<int> maxring(*itr); //the current largest vector
-		int i;
+		unsigned int i;
 		for(i=0;i<t1.size()/2;++i)
 		{
 			//rotate atoms in ring
@@ -245,15 +245,15 @@ int fingerprint2::CalcHash(const vector<int>& frag)
 {
 	//Something like... whole of fragment treated as a binary number modulus 1021
 	const int MODINT = 108; //2^32 % 1021 
-	int i, hash=0;
-	for(i=0;i<frag.size();++i)
+	int hash=0;
+	for(unsigned i=0;i<frag.size();++i)
 		hash= (hash*MODINT + (frag[i] % 1021)) % 1021;
 	return hash;
 }
 
 void fingerprint2::PrintFpt(vector<int>& f, int hash)
 {
-	int i;
+	unsigned int i;
 	for(i=0;i<f.size();++i)
 //		TRACE("%d ",f[i]);
 //	TRACE("<%d>\n",hash);
