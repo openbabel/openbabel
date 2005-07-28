@@ -8,6 +8,29 @@ INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
 EXTRA_DIST = exampleformat.cpp
 
+if !BUILD_SHARED
+
+noinst_LTLIBRARIES = libformats.la
+libformats_la_SOURCES = \
+	APIInterface.cpp \
+	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
+	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
+	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
+	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
+	cml.cpp cmlformat.cpp crkformat.cpp cssrformat.cpp \
+	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
+	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
+	gromos96format.cpp hinformat.cpp \
+	jaguarformat.cpp mdlformat.cpp mm3format.cpp mmodformat.cpp \
+	mol2format.cpp mopacformat.cpp mpqcformat.cpp nwchemformat.cpp \
+	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
+	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
+	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
+	xedformat.cpp xyzformat.cpp zindoformat.cpp \
+	# inchiformat.cpp
+
+else BUILD_SHARED
+
 pkglib_LTLIBRARIES = \
 	APIInterface.la \
 	CSRformat.la PQSformat.la alchemyformat.la \
@@ -176,3 +199,4 @@ xyzformat_la_LDFLAGS = -module -avoid-version
 zindoformat_la_SOURCES = zindoformat.cpp
 zindoformat_la_LDFLAGS = -module -avoid-version 
 
+endif

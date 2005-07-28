@@ -65,6 +65,8 @@ BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
+BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
+BUILD_SHARED_TRUE = @BUILD_SHARED_TRUE@
 BUILD_SWIG_FALSE = @BUILD_SWIG_FALSE@
 BUILD_SWIG_TRUE = @BUILD_SWIG_TRUE@
 CC = @CC@
@@ -176,9 +178,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  doc/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  doc/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  doc/Makefile
+	  $(AUTOMAKE) --gnu  doc/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

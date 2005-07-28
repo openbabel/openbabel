@@ -63,14 +63,25 @@ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
 	"$(DESTDIR)$(pkgincludedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libopenbabel_la_DEPENDENCIES = math/libmath.la \
-	fingerprints/libfingerprints.la @LTLIBOBJS@
+@BUILD_SHARED_FALSE@libopenbabel_la_DEPENDENCIES = math/libmath.la \
+@BUILD_SHARED_FALSE@	fingerprints/libfingerprints.la \
+@BUILD_SHARED_FALSE@	formats/libformats.la @LTLIBOBJS@
+@BUILD_SHARED_TRUE@libopenbabel_la_DEPENDENCIES = math/libmath.la \
+@BUILD_SHARED_TRUE@	fingerprints/libfingerprints.la @LTLIBOBJS@
+am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
+	bond.cpp bondtyper.cpp chains.cpp chiral.cpp data.cpp \
+	fingerprint.cpp generic.cpp grid.cpp kekulize.cpp matrix.cpp \
+	mol.cpp molchrg.cpp obconversion.cpp oberror.cpp obiter.cpp \
+	obutil.cpp parsmart.cpp patty.cpp phmodel.cpp rand.cpp \
+	residue.cpp ring.cpp rotor.cpp rotamer.cpp tokenst.cpp \
+	typer.cpp transform.cpp dlhandler_unix.cpp
+@BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
-	bondtyper.lo chains.lo chiral.lo data.lo dlhandler_unix.lo \
-	obconversion.lo fingerprint.lo generic.lo grid.lo kekulize.lo \
-	matrix.lo mol.lo molchrg.lo oberror.lo obiter.lo obutil.lo \
-	parsmart.lo patty.lo phmodel.lo rand.lo residue.lo ring.lo \
-	rotor.lo rotamer.lo tokenst.lo typer.lo transform.lo
+	bondtyper.lo chains.lo chiral.lo data.lo fingerprint.lo \
+	generic.lo grid.lo kekulize.lo matrix.lo mol.lo molchrg.lo \
+	obconversion.lo oberror.lo obiter.lo obutil.lo parsmart.lo \
+	patty.lo phmodel.lo rand.lo residue.lo ring.lo rotor.lo \
+	rotamer.lo tokenst.lo typer.lo transform.lo $(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -97,7 +108,7 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libopenbabel_la_SOURCES) $(babel_SOURCES)
-DIST_SOURCES = $(libopenbabel_la_SOURCES) $(babel_SOURCES)
+DIST_SOURCES = $(am__libopenbabel_la_SOURCES_DIST) $(babel_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -123,6 +134,8 @@ BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
+BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
+BUILD_SHARED_TRUE = @BUILD_SHARED_TRUE@
 BUILD_SWIG_FALSE = @BUILD_SWIG_FALSE@
 BUILD_SWIG_TRUE = @BUILD_SWIG_TRUE@
 CC = @CC@
@@ -222,23 +235,33 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = math formats fingerprints
 INCLUDES = -I$(top_srcdir)/data/
-AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 lib_LTLIBRARIES = libopenbabel.la
+@BUILD_SHARED_FALSE@dlhandler = 
+@BUILD_SHARED_TRUE@dlhandler = dlhandler_unix.cpp
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
-		dlhandler_unix.cpp obconversion.cpp \
 		fingerprint.cpp generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
-		oberror.cpp obiter.cpp obutil.cpp parsmart.cpp \
+		obconversion.cpp oberror.cpp obiter.cpp \
+		obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
-		transform.cpp
-
-libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-			@LTLIBOBJS@
+		transform.cpp $(dlhandler)
 
 libopenbabel_la_LDFLAGS = -version-info 1:0:0
+@BUILD_SHARED_TRUE@AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
+@BUILD_SHARED_FALSE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
+@BUILD_SHARED_FALSE@			formats/libformats.la @LTLIBOBJS@
+
+@BUILD_SHARED_TRUE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
+@BUILD_SHARED_TRUE@			@LTLIBOBJS@
+
+babel_SOURCES = main.cpp
+babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
+EXTRA_DIST = \
+	strncasecmp.c snprintf.c snprintf.h
+
 pkginclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
@@ -248,11 +271,6 @@ pkginclude_HEADERS = \
 		obmolecformat.h obutil.h \
 		parsmart.h patty.h phmodel.h reaction.h \
 		ring.h rotor.h rotamer.h typer.h 
-
-babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
-EXTRA_DIST = \
-	strncasecmp.c snprintf.c snprintf.h
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
@@ -268,9 +286,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  src/Makefile
+	  $(AUTOMAKE) --gnu  src/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
