@@ -96,6 +96,9 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* The file extension used for shared modules */
+#undef MODULE_EXTENSION
+
 /* Used to export symbols for DLL / shared library builds */
 #undef OBAPI
 

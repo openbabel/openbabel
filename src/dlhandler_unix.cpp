@@ -18,6 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "dlhandler.h"
+#include "babelconfig.h"
 
 #include <unistd.h>
 #include <dirent.h>
@@ -70,7 +71,7 @@ bool DLHandler::openLib(const string& lib_name)
 
 const char* DLHandler::getFormatFilePattern()
 {
-    return ".so";
+    return MODULE_EXTENSION;
 }
 
 char DLHandler::getSeparator()
