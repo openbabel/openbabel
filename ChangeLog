@@ -1,3 +1,17 @@
+2005-07-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, */Makefile.in: Add
+	--disable-dynamic-modules configure option for building static
+	file formats library. Should solve temporary Cygwin build problems
+	-- not sure why/how formats aren't installed properly.
+	Partially fixes PR#1246761.
+
+	* src/config.h.in, src/dlhandler_unix.cpp:
+	Properly handle environments where .so isn't the extension
+	for modules.
+
+	* src/formats/mol2format.cpp: Fix typo PR#1246836.
+
 2005-07-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/fingerprints/*: New directory for finger2.cpp and
