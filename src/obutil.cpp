@@ -110,9 +110,9 @@ OBAPI vector3 center_coords(double *c, unsigned int size)
       vector3 v(0.0f, 0.0f, 0.0f);
       return(v);
     }
-
+		unsigned int i; 
     double x=0,y=0,z=0;
-    for (unsigned int i = 0;i < size;i++)
+    for (i = 0;i < size;i++)
     {
         x += c[i*3];
         y += c[i*3+1];
@@ -121,7 +121,7 @@ OBAPI vector3 center_coords(double *c, unsigned int size)
     x /= (double) size;
     y /= (double) size;
     z /= (double) size;
-    for (unsigned int i = 0;i < size;i++)
+    for (i = 0;i < size;i++)
     {
         c[i*3]   -= x;
         c[i*3+1] -= y;
