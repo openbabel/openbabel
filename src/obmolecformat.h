@@ -69,7 +69,16 @@ public:
 		OBBase* pOb = pConv->GetChemObject();
 		OBMol* pmol = dynamic_cast<OBMol*> (pOb);
 		bool ret=false;
-		if(pmol && pmol->NumAtoms() > 0)
+		if(pmol->NumAtoms()==0)
+		{
+			std::string auditMsg = "OpenBabel::Molecule ";
+			auditMsg += pmol->GetTitle();
+			auditMsg += " has 0 atoms";
+			obErrorLog.ThrowError(__FUNCTION__,
+					auditMsg,
+					obInfo);
+		}
+		if(pmol)
 		{	
 			ret=true;
 
