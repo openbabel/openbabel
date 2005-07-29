@@ -1,3 +1,22 @@
+2005-07-29  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/formats/obmolecformat.h: Changed to allowed molecules with
+	 zero atoms to be written, since they can have meaning CML. 
+	 Replaced with a obInfo message.	I hope this
+	doesn't cause problems with other formats. 
+
+	* src/formats/cmlppformat.cpp: cmlpp version of cmlformat
+	For general interest only.
+
+	* src/util.cpp, kekulize.cpp: Make some loop variables VC6 compatible.
+	Maybe it is the only compiler in the universe which uses the old
+	scope rules for loop variables,	but it would be better if they
+	were done like:
+	unsigned i;
+	for(i=0;....{}
+	for(i=0;... {} another loop
+	to avoid "re-initialisation" errors in VC6.
+
 2005-07-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure, */Makefile.in: Add
