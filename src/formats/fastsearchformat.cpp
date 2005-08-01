@@ -81,6 +81,13 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	//Searches index file for structural matches
 	//This function is called only once per search
 
+  std::string auditMsg = "OpenBabel::Read fastsearch index ";
+  std::string description(Description());
+  auditMsg += description.substr(0,description.find('\n'));
+  obErrorLog.ThrowError(__FUNCTION__,
+			auditMsg,
+			obAuditMsg);
+
 	OBMol patternMol;
 	stringstream smiles(stringstream::out);		
 	ifstream patternstream;
@@ -285,6 +292,13 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 	OBStopwatch sw;
 	sw.Start(); //seems stupid but makes gcc-4 happy
 	
+	std::string auditMsg = "OpenBabel::Write fastsearch index ";
+	std::string description(Description());
+        auditMsg += description.substr( 0, description.find('\n') );
+        obErrorLog.ThrowError(__FUNCTION__,
+                              auditMsg,
+                              obAuditMsg);
+
 	ostream* pOs = pConv->GetOutStream();
 	bool NewOstreamUsed=false;
 	if(fsi==NULL)

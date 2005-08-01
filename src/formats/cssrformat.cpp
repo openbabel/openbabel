@@ -63,6 +63,14 @@ public:
         if(pmol)
             ret=WriteMolecule(pmol,pConv);
         delete pOb;
+
+        std::string auditMsg = "OpenBabel::Write molecule ";
+        std::string description(Description());
+        auditMsg += description.substr( 0, description.find('\n') );
+        obErrorLog.ThrowError(__FUNCTION__,
+                              auditMsg,
+                              obAuditMsg);
+
         return ret;
     };
 };

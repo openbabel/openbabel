@@ -1,3 +1,27 @@
+2005-08-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* doc/Makefile.am, doc/Makefile.in: Fix bug with rename of
+	Doxyfile to Doxyfile-man. Handle man page updates.
+
+	* doc/babel.1: Updated man page with doxygen (still needs many
+	updates).
+
+	* src/base.cpp: Documentation update.
+
+	* src/kekulize.cpp: Fix compilation error under GCC caused by
+	Chris' previous change.
+
+	* src/mol.cpp: Remove cerr calls.
+
+	* src/obconversion.cpp (OBconversion::Description): Remove space
+	at end to properly balance spacing in main.cpp.
+
+	* src/formats/*.cpp: Add audit entries for formats not derived
+	from OBMoleculeFormat.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Add
+	cmlppformat.cpp as an example.
+
 2005-07-29  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/formats/obmolecformat.h: Changed to allowed molecules with

@@ -59,6 +59,14 @@ public:
         //Makes a new OBReaction and new associated OBMols
         OBReaction* pReact = new OBReaction;
         bool ret=ReadMolecule(pReact,pConv); //call the "API" read function
+
+	std::string auditMsg = "OpenBabel::Read reaction ";
+	std::string description(Description());
+	auditMsg += description.substr(0,description.find('\n'));
+	obErrorLog.ThrowError(__FUNCTION__,
+			      auditMsg,
+			      obAuditMsg);
+
         if(ret) //Do transformation and return molecule
 					pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
         else
@@ -78,6 +86,13 @@ public:
 
         bool ret=false;
         ret=WriteMolecule(pReact,pConv);
+
+	std::string auditMsg = "OpenBabel::Write reaction ";
+	std::string description(Description());
+        auditMsg += description.substr( 0, description.find('\n') );
+        obErrorLog.ThrowError(__FUNCTION__,
+                              auditMsg,
+                              obAuditMsg);
 
         vector<OBMol*>::iterator itr;
         for(itr=pReact->reactants.begin();itr!=pReact->reactants.end();itr++)

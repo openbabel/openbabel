@@ -72,6 +72,14 @@ g  debug output\n";
     {
         OBMol* pmol = new OBMol;
         bool ret=ReadMolecule(pmol,pConv);
+
+	std::string auditMsg = "OpenBabel::Read molecule ";
+	std::string description(Description());
+	auditMsg += description.substr(0,description.find('\n'));
+	obErrorLog.ThrowError(__FUNCTION__,
+			      auditMsg,
+			      obAuditMsg);
+
         if(ret) //Do transformation and return molecule
             pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
         else
@@ -87,6 +95,14 @@ g  debug output\n";
         bool ret=false;
         if(pmol)
             ret=WriteMolecule(pmol,pConv);
+
+	std::string auditMsg = "OpenBabel::Write molecule ";
+	std::string description(Description());
+        auditMsg += description.substr( 0, description.find('\n') );
+        obErrorLog.ThrowError(__FUNCTION__,
+                              auditMsg,
+                              obAuditMsg);
+
         delete pOb;
         return ret;
     };
