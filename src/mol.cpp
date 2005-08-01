@@ -762,7 +762,6 @@ OBAtom *OBMol::GetAtom(int idx)
 {
     if ((unsigned)idx < 1 || (unsigned)idx > NumAtoms())
     {
-        cerr << idx << ' ' << NumAtoms() << endl;
         obErrorLog.ThrowError(__FUNCTION__, "Requested Atom Out of Range", obDebug);
         return((OBAtom*)NULL);
     }
@@ -821,7 +820,7 @@ std::vector<OBInternalCoord*> OBMol::GetInternalCoord()
     if (_internals.empty())
     {
         _internals.push_back((OBInternalCoord*)NULL);
-        for(int i = 1; i <= NumAtoms(); i++)
+        for(unsigned int i = 1; i <= NumAtoms(); i++)
         {
             _internals.push_back(new OBInternalCoord);
         }
@@ -2019,15 +2018,16 @@ bool OBMol::AssignSpinMultiplicity()
 }
 
 
-static void ResetVisit(OBMol &mol,vector<int> &visit,int depth)
-{
-    OBBond *bond;
-    vector<OBEdgeBase*>::iterator i;
+// Not used anywhere internally -- likely predates OBBase code
+// static void ResetVisit(OBMol &mol,vector<int> &visit,int depth)
+// {
+//     OBBond *bond;
+//     vector<OBEdgeBase*>::iterator i;
 
-    for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
-        if (bond->IsAromatic() && visit[bond->GetIdx()] >= depth)
-            visit[bond->GetIdx()] = 0;
-}
+//     for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
+//         if (bond->IsAromatic() && visit[bond->GetIdx()] >= depth)
+//             visit[bond->GetIdx()] = 0;
+// }
 
 static int ValenceSum(OBAtom *atom)
 {
@@ -2437,7 +2437,7 @@ bool OBMol::PerceiveKekuleBonds()
 
     if (!result)
     {
-        cerr << "Kekulization Error = " << GetTitle() << endl;
+      //        cerr << "Kekulization Error = " << GetTitle() << endl;
         //exit(0);
     }
 
@@ -2770,7 +2770,8 @@ OBMol::OBMol()
     _autoFormalCharge = true;
 }
 
-OBMol::OBMol(const OBMol &mol)
+OBMol::OBMol(const OBMol &mol) :
+  OBGraphBase()
 {
     _natoms = _nbonds = 0;
     _mod = 0;
@@ -3247,7 +3248,6 @@ void OBMol::PerceiveBondOrders()
     vector<OBRing*>::iterator ringit;
     vector<int> path;
     double torsions = 0.0;
-    int ringAtom;
 
     if (!HasSSSRPerceived())
         FindSSSR();
@@ -3265,7 +3265,7 @@ void OBMol::PerceiveBondOrders()
                   fabs(GetTorsion(path[4], path[0], path[1], path[2])) ) / 5.0;
             if (torsions <= 7.5)
             {
-                for (ringAtom = 0; ringAtom != path.size(); ringAtom++)
+                for (unsigned int ringAtom = 0; ringAtom != path.size(); ringAtom++)
                 {
                     b = GetAtom(path[ringAtom]);
                     if (b->GetValence() == 2 || b->GetValence() == 3)
@@ -3285,7 +3285,7 @@ void OBMol::PerceiveBondOrders()
                   fabs(GetTorsion(path[5], path[0], path[1], path[2])) ) / 6.0;
             if (torsions <= 12.0)
             {
-                for (ringAtom = 0; ringAtom != path.size(); ringAtom++)
+                for (unsigned int ringAtom = 0; ringAtom != path.size(); ringAtom++)
                 {
                     b = GetAtom(path[ringAtom]);
                     if (b->GetValence() == 2 || b->GetValence() == 3)
