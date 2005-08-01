@@ -5,5 +5,7 @@ man_MANS = babel.1
 if BUILD_DOCS
 babel.1:	$(top_srcdir)/src/main.cpp $(srcdir)/Doxyfile-man
 		$(DOXYGEN) $(srcdir)/Doxyfile-man
+		mv man/man1/openbabel.1 babel.1
+		rm -rf man
 endif
 

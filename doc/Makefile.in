@@ -380,6 +380,8 @@ uninstall-man: uninstall-man1
 
 @BUILD_DOCS_TRUE@babel.1:	$(top_srcdir)/src/main.cpp $(srcdir)/Doxyfile-man
 @BUILD_DOCS_TRUE@		$(DOXYGEN) $(srcdir)/Doxyfile-man
+@BUILD_DOCS_TRUE@		mv man/man1/openbabel.1 babel.1
+@BUILD_DOCS_TRUE@		rm -rf man
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
