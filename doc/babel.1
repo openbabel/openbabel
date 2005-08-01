@@ -1,45 +1,32 @@
-.\"                                      Hey, EMACS: -*- nroff -*-
-.\" First parameter, NAME, should be all caps
-.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
-.\" other parameters are allowed: see man(7), man(1)
-.TH "openbabel" 1 "31 Jan 2005" "Version 1.100.2" "Open Babel" \" -*- nroff -*-
-.\" Please adjust this date whenever revising the manpage.
-.\"
-.\" Some roff macros, for reference:
-.\" .nh        disable hyphenation
-.\" .hy        enable hyphenation
-.\" .ad l      left justify
-.\" .ad b      justify to both left and right margins
-.\" .nf        disable filling
-.\" .fi        enable filling
-.\" .br        insert line break
-.\" .sp <n>    insert n+1 empty lines
-.\" for manpage-specific macros, see man(7)
-.SH NAME
-Open Babel \- a converter for molecular modeling data files
-.SH SYNOPSIS
-.B babel
-.ad b
-[-H<help-options>] [-V] [-m] 
-.br 
-.ad b 
-[-d] [-h] [-p] 
-.br
-.ad b
-[-s<SMARTS-pattern>] [-v<SMARTS-pattern>] [-f<#>] [-l<#>] 
-.br
-.ad b
-[-c] [-x<format-options>]
-.br 
-.ad b
-[-i<input-type>] <infile> [-o<output-type>] <outfile>
+.TH "openbabel" 1 "27 Jul 2005" "Version 2.0" "Open Babel" \" -*- nroff -*-
 .ad l
-.SH DESCRIPTION
-.B Open Babel 
-is a program designed to interconvert a number of file formats currently used in molecular modeling software. 
+.nh
+.SH NAME
+openbabel \- a converter for molecular modeling data files
+
+.br
+ 
 .PP
+\fBSYNOPSIS\fP.RS 4
+
+.RE
+.PP
+\fBbabel\fP [-H<help-options>] [-V] [-m] [-d] [-h] [-p] [-s<SMARTS-pattern>] [-v<SMARTS-pattern>] [-f<#> -l<#>] [-c] [-x<format-options>] [-i<input-type>] <infile> [-o<output-type>] <outfile>
+.PP
+\fBDESCRIPTION\fP.RS 4
+
+.RE
+.PP
+Open Babel is a program designed to interconvert a number of file formats currently used in molecular modeling software. 
+.br
+
+.br
  Note that OpenBabel can also be used as a library to import molecular formats in other software packages. See the OpenBabel web pages (http://openbabel.sourceforge.net) for more information.
-.SH OPTIONS
+.PP
+\fBOPTIONS\fP.RS 4
+
+.RE
+.PP
 If only input and ouput files are given, Open Babel will guess the file type from the filename extension. 
 .br
 
@@ -91,7 +78,7 @@ If only input and ouput files are given, Open Babel will guess the file type fro
 .br
 
 .br
- \fB-a\fP : All input files describe a single molecule 
+ \fB-t\fP : All input files describe a single molecule 
 .br
 
 .br
@@ -124,7 +111,9 @@ If only input and ouput files are given, Open Babel will guess the file type fro
  Write output to standard output if specified as <outfile> 
 .br
 
-.SH FILE FORMATS
+.br
+.PP
+\fBFILE FORMATS\fP.RS 4
 
 .RE
 .PP
@@ -256,15 +245,19 @@ The following formats are currently supported by Open Babel:
 .br
  zin -- ZINDO input format [Writeonly]
 .PP
-.SH BFORMAT OPTIONS
+\fBFORMAT OPTIONS\fP.RS 4
 Individual file formats may have additional formatting options. 
+.br
+ Input format options are preceded by 'a', e.g. -as 
+.br
+ Output format options are preceded by 'x', e.g. -xn 
 .br
  For further specific information and options, use -H<format-type> 
 .br
  e.g., -Hcml
 .RE
 .PP
-.SH EXAMPLES
+\fBEXAMPLES\fP.RS 4
 
 .IP "\(bu" 2
 Standard conversion 
@@ -275,7 +268,7 @@ Standard conversion
 .IP "\(bu" 2
 Conversion from a SMI file in STDIN to a Mol2 file written to STDOUT 
 .br
- babel -ismi -- -omol2 -- 
+ babel -ismi -omol2 
 .br
 
 .IP "\(bu" 2
@@ -287,7 +280,7 @@ Split a multi-molecule file into new1.smi, new2.smi, etc.
 .PP
 .RE
 .PP
-.SH AUTHORS
+\fBAUTHORS\fP.RS 4
 
 .RE
 .PP
@@ -295,8 +288,8 @@ Open Babel is derived from OElib, written by \fBMatt\fP \fBStahl\fP and other de
 .PP
 For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
 .PP
-.SH COPYRIGHT
-Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. Some portions Copyright (c) 2001-2005 by Geoffrey R. Hutchison 
+\fBCOPYRIGHT\fP.RS 4
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison 
 .br
  
 .br
@@ -307,7 +300,7 @@ Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. Some portions Copyr
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 .RE
 .PP
-.SH SEE ALSO
+\fBSEE ALSO\fP.RS 4
 The web pages for OpenBabel can be found at http://openbabel.sourceforge.net/ 
 .RE
 .PP
