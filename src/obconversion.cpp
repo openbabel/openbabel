@@ -689,8 +689,7 @@ return "Conversion options\n \
  -f <#> Start import at molecule # specified\n \
  -l <#> End import at molecule # specified\n \
  -t All input files describe a single molecule\n \
- -e Continue with next object after error, if possible\n \
-";
+ -e Continue with next object after error, if possible\n";
 }
 
 ////////////////////////////////////////////
