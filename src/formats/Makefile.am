@@ -6,7 +6,7 @@
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
-EXTRA_DIST = exampleformat.cpp
+EXTRA_DIST = exampleformat.cpp cmlppformat.cpp
 
 if !BUILD_SHARED
 

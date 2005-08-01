@@ -549,7 +549,7 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
-EXTRA_DIST = exampleformat.cpp
+EXTRA_DIST = exampleformat.cpp cmlppformat.cpp
 @BUILD_SHARED_FALSE@noinst_LTLIBRARIES = libformats.la
 @BUILD_SHARED_FALSE@libformats_la_SOURCES = \
 @BUILD_SHARED_FALSE@	APIInterface.cpp \
