@@ -86,14 +86,15 @@ void OBMol::NewPerceiveKekuleBonds()
       avisit.SetBitOn(i);
       expandcycle (atom, avisit);
       //store the atoms of the cycle(s)
-      for(unsigned j=1; j<= NumAtoms(); j++) {
+      unsigned int j;
+      for(j=1; j<= NumAtoms(); j++) {
 	if ( avisit[j] ) {
 	  atom = GetAtom(j);
 	  cycle.push_back(atom);
 	}
       }
       // At the begining each atom give one electron to the cycle
-			for(j=0; j< cycle.size(); j++) {
+      for(j=0; j< cycle.size(); j++) {
 	electron.push_back(1);
       }
       
