@@ -234,6 +234,7 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
         return true;
     }
     char buffer[BUFF_SIZE];
+		*buffer='\0'; //empty buffer
 
     // This is a hack to prevent recursion problems.
     //  we still need to fix the underlying problem (mainly chiral centers) -GRH
@@ -244,19 +245,20 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
 	return(false);
       }
 
-    OBMol2Smi m2s;
-
-    m2s.Init(pConv);
-    m2s.CorrectAromaticAmineCharge(mol);
-    m2s.CreateSmiString(mol,buffer);
-
+		if(mol.NumAtoms()!=0)
+    {
+			OBMol2Smi m2s;
+			m2s.Init(pConv);
+			m2s.CorrectAromaticAmineCharge(mol);
+			m2s.CreateSmiString(mol,buffer);
+		}
 
     ofs << buffer ;
     if(!pConv->IsOption("n"))
         ofs << '\t' <<  mol.GetTitle();
     ofs << endl;
 
-    return *buffer!='\0';//CM Now returns false if empty SMILES string
+    return true;
 }
 
 //////////////////////////////////////////////
