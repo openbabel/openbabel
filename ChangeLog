@@ -1,3 +1,9 @@
+2005-08-11  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/molecformat.h: Move test for NULL pmol.
+
+	* src/format/smilesformat.cpp: Molecules with zero atoms now accepted.
+
 2005-08-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* doc/Makefile.am, doc/Makefile.in: Fix bug with rename of
