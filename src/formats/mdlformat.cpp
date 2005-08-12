@@ -527,8 +527,9 @@ bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 			else if((*itr).substr(0,pos)=="CFG")
 			{
 				//Stereo configuration: 0 none; 1 odd parity; 2 even parity; (3 either parity)
-				if(val==1) atom.SetAntiClockwiseStereo();
-				else if(val==2) atom.SetClockwiseStereo();
+				//Reversed 12Aug05 as advised by Nick England
+				if(val==2) atom.SetAntiClockwiseStereo();
+				else if(val==1) atom.SetClockwiseStereo();
 			}
 			else if((*itr).substr(0,pos)=="MASS")
 			{
@@ -646,8 +647,8 @@ bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
 						<< bond->GetEndAtomIdx();
 				//TODO do the following stereo chemistry properly
 				int cfg=0;
-				if(bond->IsWedge()) cfg=1;
-				if(bond->IsHash()) cfg=3;
+				if(bond->IsWedge() || bond->IsUp()  ) cfg=1;
+				if(bond->IsHash()  || bond->IsDown()) cfg=3;
 				if(cfg) ofs << " CFG=" << cfg;
 				ofs << endl;
 			}
