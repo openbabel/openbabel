@@ -1,3 +1,10 @@
+2005-08-12  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/formats/mdlformat.cpp: Following Nick England's discussion,
+	reversed clockwise/anticlockwise in V300 read. 
+	Re-added IsUp() IsDown() in V3000 write. These were removed for some 
+	reason on 31stJan 2005, but are needed for double bond isomers.
+
 2005-08-11  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/molecformat.h: Move test for NULL pmol.
