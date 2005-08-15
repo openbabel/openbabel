@@ -690,7 +690,7 @@ void OBAromaticTyper::CheckAromaticity(OBAtom *atom,int depth)
 
     pair<int,int> erange;
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-        if ((*i)->IsInRing() && !(*i)->IsAromatic())
+      if ((*i)->IsInRing()) // check all rings, regardless of assumed aromaticity
         {
             erange = _velec[atom->GetIdx()];
 
