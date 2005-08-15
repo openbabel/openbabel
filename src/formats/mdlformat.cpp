@@ -1,7 +1,7 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey Hutchison
-Portions Copyright (C) 2004 by Chris Morley
+Portions Copyright (C) 2004-2005 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -15,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #ifdef _WIN32
 #pragma warning (disable : 4786)
 #endif
@@ -325,6 +326,17 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 				return(false);
 			}
 
+		// Check to see if there are any untyped aromatic bonds (GetBO == 5)
+		// These must be kekulized first
+		FOR_BONDS_OF_MOL(b, mol)
+		  {
+		    if (b->GetBO() == 5)
+		      {
+			mol.Kekulize();
+			break;
+		      }
+		  }
+
 		sprintf(buff,"%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d V2000",
 						mol.NumAtoms(),mol.NumBonds(),0,0,0,0,0,0,0,0,999);
 		ofs << buff << endl;
@@ -372,7 +384,7 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 					sprintf(buff,"%3d%3d%3d%3d%3d%3d",
 									bond->GetBeginAtomIdx(),
 									bond->GetEndAtomIdx(),
-									(bond->GetBO() == 5) ? 4 : bond->GetBO(),
+									bond->GetBO(),
 									stereo,0,0);
 					ofs << buff << endl;
 				}
@@ -592,6 +604,18 @@ bool MOLFormat::ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 //////////////////////////////////////////////////////////
 bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
 {
+  // Check to see if there are any untyped aromatic bonds (GetBO == 5)
+  // These must be kekulized first
+  FOR_BONDS_OF_MOL(b, mol)
+    {
+      if (b->GetBO() == 5)
+	{
+	  mol.Kekulize();
+	  break;
+	}
+    }
+  
+  
 	ofs << "  0  0  0     0  0            999 V3000" << endl; //line 4
 	ofs << "M  V30 BEGIN CTAB" <<endl;
 	ofs	<< "M  V30 COUNTS " << mol.NumAtoms() << " " << mol.NumBonds() 
@@ -642,7 +666,7 @@ bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
 				bond = (OBBond*) *j;
 				ofs << "M  V30 "
 						<< index++ << " "
-						<< ((bond->GetBO() == 5) ? 4 : bond->GetBO()) << " "
+						<< bond->GetBO() << " "
 						<< bond->GetBeginAtomIdx() << " "
 						<< bond->GetEndAtomIdx();
 				//TODO do the following stereo chemistry properly
