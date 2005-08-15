@@ -43,7 +43,7 @@ public:
 
   virtual const char* SpecificationURL()
   {
-    return "http://www.tripos.com/custResources/mol2Files/";
+    return "http://www.tripos.com/data/support/mol2.pdf";
   }; //optional
 
   virtual const char* GetMIMEType() 
