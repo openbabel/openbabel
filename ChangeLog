@@ -1,3 +1,25 @@
+2005-08-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/bondtyp.txt, data/bondtyp.h: Add fix for carbonic acid bond
+	typing bug (a.k.a. "multimatch") and carbon dioxide, both
+	contributed by Elmar Krieger. Fixes PR#1253307 and #1257588.
+
+	* src/parsmart.cpp (EvalAtomExpr): Add fixes for PR#1253301,
+	contributed by Elmar Krieger. Solves problems with phosphates and
+	phosphorous acid.
+
+	* src/typer.cpp (CheckAromaticity): Add fix for multi-ring
+	compounds like heme / porphyrins, where not all rings are properly
+	typed as aromatic, contributed by Elmar. Fixes PR#1259786.
+
+	* src/formats/mol2format.cpp: Updated Tripos Mol2 format
+	specfication URL, as contributed by Nick England (PR#1257712).
+
+	* src/formats/mdlformat.cpp: Ensure no "4" aromatic bond orders
+	are used when writing MDL files. If a bond is detected to have
+	BO == 5, re-run Kekulize() on the molecule. Fixes problems
+	mentioned in e-mail discussions initiated by Rich Apodaca.
+
 2005-08-12  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/formats/mdlformat.cpp: Following Nick England's discussion,
