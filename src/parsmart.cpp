@@ -2736,7 +2736,7 @@ static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom)
                 */
 
             case AL_DEGREE:
-                return(expr->leaf.value == (int)atom->GetHvyValence());
+                return(expr->leaf.value == (int)atom->GetValence());
             case AL_VALENCE:
                 return(expr->leaf.value == (int)atom->KBOSum());
             case AL_CONNECT:
@@ -2770,7 +2770,7 @@ static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom)
             case AL_CONST:
                 if( !expr->leaf.value )
                     return false;
-                return(!atom->IsHydrogen());  /* ??? FIXME */
+                return(true);
             default:
                 return false;
             }
