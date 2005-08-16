@@ -1,3 +1,19 @@
+2005-08-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.h: Add obiter.h to standard included headers to allow
+	STL-compatible iterators.
+
+	* data/torlib.txt, data/torlib.h: Add nitro rotation pattern
+	contributed via JOELib2.
+
+	* data/phmodel.txt: Update comment on imidazole charge, transform
+	patterns.
+
+	* data/aromatic.txt, data/aromatic.h: Add "default" aromatic rules
+	for carbon and nitrogen with a range of possible electrons
+	(depending on specific bonds, formal charges, etc.) Solves
+	PR#1257827.
+
 2005-08-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/bondtyp.txt, data/bondtyp.h: Add fix for carbonic acid bond
