@@ -14,6 +14,8 @@
 	(depending on specific bonds, formal charges, etc.) Solves
 	PR#1257827.
 
+	* test/smartsresults.txt: Regenerate after recent typing changes.
+
 2005-08-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/bondtyp.txt, data/bondtyp.h: Add fix for carbonic acid bond
