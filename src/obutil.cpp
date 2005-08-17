@@ -408,7 +408,10 @@ OBAPI void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
     {
         index = atom->GetIdx();
 
-        if (vic[index]->_a)
+	if (!vic[index]) // make sure we always have valid pointers
+	  return;
+
+        if (vic[index]->_a) // make sure we have a valid ptr
         {
             avec = vic[index]->_a->GetVector();
             dst = vic[index]->_dst;
@@ -419,6 +422,7 @@ OBAPI void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
             atom->SetVector(0.0, 0.0, 0.0);
             continue;
         }
+
         if (vic[index]->_b)
         {
             bvec = vic[index]->_b->GetVector();
@@ -430,6 +434,7 @@ OBAPI void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
             atom->SetVector(dst, 0.0, 0.0);
             continue;
         }
+
         if (vic[index]->_c)
         {
             cvec = vic[index]->_c->GetVector();
