@@ -1,3 +1,24 @@
+2005-08-17  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/obconversion.h, obconversion.cpp, main.cpp: Added code
+	to register how many parameters an option takes(currently 0 or 1).
+	Gives extra	flexibility to command line options, like position
+	independence, parameter can start immediately or after a space.
+	Cures bug	#1260540 see bug report.
+
+	* src/formats/fingerprintformat.cpp, fastsearchformats.cpp,
+	APIInterface.cpp, smilesformat.cpp, mdlformat.cpp:
+	Option parameter registrations consequent on above.
+
+	* src/obmolecformat.h: Added GetType() (returns typeid for OBMol).
+	Option parameter registrations for -b -s input options and
+	for API general options which relate to OBMol.
+
+	* src/obconversion.h, obconversion.cpp: Added hook to extend
+	OBConversion (initially for an XML reader). AuxConv is a pointer
+	to an object derived from	OBConversion which is deleted in 
+	the destructor.
+	   
 2005-08-16  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.h: Add obiter.h to standard included headers to allow
