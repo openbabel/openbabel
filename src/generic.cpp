@@ -283,6 +283,37 @@ matrix3x3 OBUnitCell::GetOrthoMatrix()
   return m;
 }
 
+// Based on code in PyMMLib: http://pymmlib.sf.net/
+// Matrix to convert from Cartesian to fractional
+matrix3x3 OBUnitCell::GetFractionalMatrix()
+{
+  matrix3x3 m;
+  double sinAlpha, sinBeta, sinGamma;
+  double cosAlpha, cosBeta, cosGamma;
+  double v;
+
+  sinAlpha = sin(_alpha * DEG_TO_RAD);
+  sinBeta = sin(_beta * DEG_TO_RAD);
+  sinGamma = sin(_gamma * DEG_TO_RAD);
+  cosAlpha = cos(_alpha * DEG_TO_RAD);
+  cosBeta = cos(_beta * DEG_TO_RAD);
+  cosGamma = cos(_gamma * DEG_TO_RAD);
+
+  v = sqrt(1 - SQUARE(cosAlpha) - SQUARE(cosBeta) - SQUARE(cosGamma) +
+	   2 * cosAlpha*cosBeta*cosGamma);
+
+  m.Set(0,0, 1.0f / _a);
+  m.Set(0,1, -cosGamma / (_a * sinGamma) );
+  m.Set(0,2, (cosGamma * cosAlpha - cosBeta) / (_a * v * sinGamma) );
+  m.Set(1,0, 0.0);
+  m.Set(1,1, 1.0f / (_b * sinGamma) );
+  m.Set(1,2, (cosGamma * cosBeta - cosAlpha) / (_b * v * sinGamma) );
+  m.Set(2,0, 0.0);
+  m.Set(2,1, 0.0);
+  m.Set(2,2, sinGamma / (_c * v) );
+
+  return m;
+}
 
 //
 // member functions for OBSymmetryData class

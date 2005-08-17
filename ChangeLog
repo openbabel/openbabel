@@ -24,8 +24,10 @@
 	(FillOrth) Change to matrix specified in PDB documentation:
 	http://www.rcsb.org/pdb/docs/format/pdbguide2.2/part_75.html
 	
-	* src/generic.cpp (OBUnitCell): Simplify code and re-use
-	matrix3x3::FillOrth() rather than duplicate code.
+	* src/generic.cpp, src/generic.h (OBUnitCell): Simplify code and
+	re-use matrix3x3::FillOrth() rather than duplicate code.
+	(OBUnitCell::GetFractionalMatrix): New method to convert from
+	Cartesian to fractional coordinates.
 
 2005-08-17  Chris Morley  <c.morley@gaseq.co.uk>
 	

@@ -244,8 +244,10 @@ public:
     std::vector<vector3> GetCellVectors();
     //! \return v1, v2, v3 cell vectors as a 3x3 matrix
     matrix3x3	GetCellMatrix();
-    //! \return The elements of the orthogonalization matrix, used for converting from fractional to Cartesian coords.
+    //! \return The orthogonalization matrix, used for converting from fractional to Cartesian coords.
     matrix3x3 GetOrthoMatrix();
+    //! \return The fractionalization matrix, used for converting from Cartesian to fractional coords.
+    matrix3x3 GetFractionalMatrix();
 };
 
 //! \brief Used to hold data on conformers or geometry optimization steps
