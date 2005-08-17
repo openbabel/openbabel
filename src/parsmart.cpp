@@ -2887,7 +2887,7 @@ static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom)
                 lftest=(expr->leaf.value==atom->ImplicitHydrogenCount());
                 break;
             case AL_CONST:
-                lftest=!atom->IsHydrogen();
+	      lftest= true; // not limited to non-hydrogens
                 break;
             case AL_MASS:
                 break;
