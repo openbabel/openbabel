@@ -21,7 +21,7 @@ libformats_la_SOURCES = \
 	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
 	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
 	gromos96format.cpp hinformat.cpp \
-	jaguarformat.cpp mdlformat.cpp mm3format.cpp mmodformat.cpp \
+	jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
 	mol2format.cpp mopacformat.cpp mpqcformat.cpp nwchemformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
@@ -41,7 +41,7 @@ pkglib_LTLIBRARIES = \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	gamessformat.la gaussformat.la ghemicalformat.la \
 	gromos96format.la hinformat.la \
-	jaguarformat.la mdlformat.la mm3format.la mmodformat.la \
+	jaguarformat.la mdlformat.la mmodformat.la \
 	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
 	rxnformat.la shelxformat.la smilesformat.la tinkerformat.la \
@@ -139,8 +139,8 @@ jaguarformat_la_LDFLAGS = -module -avoid-version
 mdlformat_la_SOURCES = mdlformat.cpp
 mdlformat_la_LDFLAGS = -module -avoid-version 
 
-mm3format_la_SOURCES = mm3format.cpp
-mm3format_la_LDFLAGS = -module -avoid-version 
+#mm3format_la_SOURCES = mm3format.cpp
+#mm3format_la_LDFLAGS = -module -avoid-version 
 
 mmodformat_la_SOURCES = mmodformat.cpp
 mmodformat_la_LDFLAGS = -module -avoid-version 

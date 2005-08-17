@@ -20,7 +20,7 @@
 # SUBDIRS = inchi
 #pkginclude_HEADERS = inchi_api.h
 
-SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) $(alchemyformat_la_SOURCES) $(amberformat_la_SOURCES) $(balstformat_la_SOURCES) $(bgfformat_la_SOURCES) $(boxformat_la_SOURCES) $(cacaoformat_la_SOURCES) $(cacheformat_la_SOURCES) $(carformat_la_SOURCES) $(cccformat_la_SOURCES) $(chem3dformat_la_SOURCES) $(chemdrawformat_la_SOURCES) $(chemtoolformat_la_SOURCES) $(cmlformat_la_SOURCES) $(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) $(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) $(fhformat_la_SOURCES) $(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) $(gromos96format_la_SOURCES) $(hinformat_la_SOURCES) $(jaguarformat_la_SOURCES) $(libformats_la_SOURCES) $(mdlformat_la_SOURCES) $(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
+SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) $(PQSformat_la_SOURCES) $(alchemyformat_la_SOURCES) $(amberformat_la_SOURCES) $(balstformat_la_SOURCES) $(bgfformat_la_SOURCES) $(boxformat_la_SOURCES) $(cacaoformat_la_SOURCES) $(cacheformat_la_SOURCES) $(carformat_la_SOURCES) $(cccformat_la_SOURCES) $(chem3dformat_la_SOURCES) $(chemdrawformat_la_SOURCES) $(chemtoolformat_la_SOURCES) $(cmlformat_la_SOURCES) $(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) $(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) $(fhformat_la_SOURCES) $(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) $(gromos96format_la_SOURCES) $(hinformat_la_SOURCES) $(jaguarformat_la_SOURCES) $(libformats_la_SOURCES) $(mdlformat_la_SOURCES) $(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -214,12 +214,12 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 	fastsearchformat.cpp featformat.cpp fhformat.cpp \
 	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
 	gromos96format.cpp hinformat.cpp jaguarformat.cpp \
-	mdlformat.cpp mm3format.cpp mmodformat.cpp mol2format.cpp \
-	mopacformat.cpp mpqcformat.cpp nwchemformat.cpp pdbformat.cpp \
-	povrayformat.cpp qchemformat.cpp reportformat.cpp \
-	rxnformat.cpp shelxformat.cpp smilesformat.cpp \
-	tinkerformat.cpp turbomoleformat.cpp unichemformat.cpp \
-	viewmolformat.cpp xedformat.cpp xyzformat.cpp zindoformat.cpp
+	mdlformat.cpp mmodformat.cpp mol2format.cpp mopacformat.cpp \
+	mpqcformat.cpp nwchemformat.cpp pdbformat.cpp povrayformat.cpp \
+	qchemformat.cpp reportformat.cpp rxnformat.cpp shelxformat.cpp \
+	smilesformat.cpp tinkerformat.cpp turbomoleformat.cpp \
+	unichemformat.cpp viewmolformat.cpp xedformat.cpp \
+	xyzformat.cpp zindoformat.cpp
 @BUILD_SHARED_FALSE@am_libformats_la_OBJECTS = APIInterface.lo \
 @BUILD_SHARED_FALSE@	CSRformat.lo PQSformat.lo alchemyformat.lo \
 @BUILD_SHARED_FALSE@	amberformat.lo balstformat.lo bgfformat.lo \
@@ -231,9 +231,9 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 @BUILD_SHARED_FALSE@	featformat.lo fhformat.lo gamessformat.lo \
 @BUILD_SHARED_FALSE@	gaussformat.lo ghemicalformat.lo \
 @BUILD_SHARED_FALSE@	gromos96format.lo hinformat.lo \
-@BUILD_SHARED_FALSE@	jaguarformat.lo mdlformat.lo mm3format.lo \
-@BUILD_SHARED_FALSE@	mmodformat.lo mol2format.lo mopacformat.lo \
-@BUILD_SHARED_FALSE@	mpqcformat.lo nwchemformat.lo pdbformat.lo \
+@BUILD_SHARED_FALSE@	jaguarformat.lo mdlformat.lo mmodformat.lo \
+@BUILD_SHARED_FALSE@	mol2format.lo mopacformat.lo mpqcformat.lo \
+@BUILD_SHARED_FALSE@	nwchemformat.lo pdbformat.lo \
 @BUILD_SHARED_FALSE@	povrayformat.lo qchemformat.lo \
 @BUILD_SHARED_FALSE@	reportformat.lo rxnformat.lo \
 @BUILD_SHARED_FALSE@	shelxformat.lo smilesformat.lo \
@@ -247,11 +247,6 @@ am__mdlformat_la_SOURCES_DIST = mdlformat.cpp
 @BUILD_SHARED_TRUE@am_mdlformat_la_OBJECTS = mdlformat.lo
 mdlformat_la_OBJECTS = $(am_mdlformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_mdlformat_la_rpath = -rpath $(pkglibdir)
-mm3format_la_LIBADD =
-am__mm3format_la_SOURCES_DIST = mm3format.cpp
-@BUILD_SHARED_TRUE@am_mm3format_la_OBJECTS = mm3format.lo
-mm3format_la_OBJECTS = $(am_mm3format_la_OBJECTS)
-@BUILD_SHARED_TRUE@am_mm3format_la_rpath = -rpath $(pkglibdir)
 mmodformat_la_LIBADD =
 am__mmodformat_la_SOURCES_DIST = mmodformat.cpp
 @BUILD_SHARED_TRUE@am_mmodformat_la_OBJECTS = mmodformat.lo
@@ -373,16 +368,16 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(ghemicalformat_la_SOURCES) $(gromos96format_la_SOURCES) \
 	$(hinformat_la_SOURCES) $(jaguarformat_la_SOURCES) \
 	$(libformats_la_SOURCES) $(mdlformat_la_SOURCES) \
-	$(mm3format_la_SOURCES) $(mmodformat_la_SOURCES) \
-	$(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) \
-	$(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) \
-	$(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) \
-	$(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) \
-	$(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) \
-	$(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
-	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
-	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
-	$(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
+	$(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) \
+	$(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) \
+	$(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) \
+	$(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) \
+	$(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) \
+	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
+	$(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
+	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
+	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
+	$(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__PQSformat_la_SOURCES_DIST) \
@@ -413,7 +408,6 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__jaguarformat_la_SOURCES_DIST) \
 	$(am__libformats_la_SOURCES_DIST) \
 	$(am__mdlformat_la_SOURCES_DIST) \
-	$(am__mm3format_la_SOURCES_DIST) \
 	$(am__mmodformat_la_SOURCES_DIST) \
 	$(am__mol2format_la_SOURCES_DIST) \
 	$(am__mopacformat_la_SOURCES_DIST) \
@@ -561,7 +555,7 @@ EXTRA_DIST = exampleformat.cpp cmlppformat.cpp
 @BUILD_SHARED_FALSE@	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
 @BUILD_SHARED_FALSE@	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
 @BUILD_SHARED_FALSE@	gromos96format.cpp hinformat.cpp \
-@BUILD_SHARED_FALSE@	jaguarformat.cpp mdlformat.cpp mm3format.cpp mmodformat.cpp \
+@BUILD_SHARED_FALSE@	jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
 @BUILD_SHARED_FALSE@	mol2format.cpp mopacformat.cpp mpqcformat.cpp nwchemformat.cpp \
 @BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 @BUILD_SHARED_FALSE@	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
@@ -579,7 +573,7 @@ EXTRA_DIST = exampleformat.cpp cmlppformat.cpp
 @BUILD_SHARED_TRUE@	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 @BUILD_SHARED_TRUE@	gamessformat.la gaussformat.la ghemicalformat.la \
 @BUILD_SHARED_TRUE@	gromos96format.la hinformat.la \
-@BUILD_SHARED_TRUE@	jaguarformat.la mdlformat.la mm3format.la mmodformat.la \
+@BUILD_SHARED_TRUE@	jaguarformat.la mdlformat.la mmodformat.la \
 @BUILD_SHARED_TRUE@	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 @BUILD_SHARED_TRUE@	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
 @BUILD_SHARED_TRUE@	rxnformat.la shelxformat.la smilesformat.la tinkerformat.la \
@@ -648,8 +642,9 @@ EXTRA_DIST = exampleformat.cpp cmlppformat.cpp
 @BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@mdlformat_la_SOURCES = mdlformat.cpp
 @BUILD_SHARED_TRUE@mdlformat_la_LDFLAGS = -module -avoid-version 
-@BUILD_SHARED_TRUE@mm3format_la_SOURCES = mm3format.cpp
-@BUILD_SHARED_TRUE@mm3format_la_LDFLAGS = -module -avoid-version 
+
+#mm3format_la_SOURCES = mm3format.cpp
+#mm3format_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@mmodformat_la_SOURCES = mmodformat.cpp
 @BUILD_SHARED_TRUE@mmodformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@mol2format_la_SOURCES = mol2format.cpp
@@ -817,8 +812,6 @@ libformats.la: $(libformats_la_OBJECTS) $(libformats_la_DEPENDENCIES)
 	$(CXXLINK) $(am_libformats_la_rpath) $(libformats_la_LDFLAGS) $(libformats_la_OBJECTS) $(libformats_la_LIBADD) $(LIBS)
 mdlformat.la: $(mdlformat_la_OBJECTS) $(mdlformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_mdlformat_la_rpath) $(mdlformat_la_LDFLAGS) $(mdlformat_la_OBJECTS) $(mdlformat_la_LIBADD) $(LIBS)
-mm3format.la: $(mm3format_la_OBJECTS) $(mm3format_la_DEPENDENCIES) 
-	$(CXXLINK) $(am_mm3format_la_rpath) $(mm3format_la_LDFLAGS) $(mm3format_la_OBJECTS) $(mm3format_la_LIBADD) $(LIBS)
 mmodformat.la: $(mmodformat_la_OBJECTS) $(mmodformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_mmodformat_la_rpath) $(mmodformat_la_LDFLAGS) $(mmodformat_la_OBJECTS) $(mmodformat_la_LIBADD) $(LIBS)
 mol2format.la: $(mol2format_la_OBJECTS) $(mol2format_la_DEPENDENCIES) 
@@ -894,7 +887,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hinformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jaguarformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdlformat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mm3format.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mmodformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol2format.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mopacformat.Plo@am__quote@
