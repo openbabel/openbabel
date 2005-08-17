@@ -234,16 +234,15 @@ vector<vector3> OBUnitCell::GetCellVectors()
 
     if (_v1.length() == 0 && _v2.length() == 0 && _v3.length() == 0)
       {
-	vector3 cellVec;
+	vector3 temp;
+	matrix3x3 m = GetOrthoMatrix();
 
-	cellVec.Set(_a, 0.0, 0.0);
-	v.push_back(cellVec);
-	cellVec.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0);
-	v.push_back(cellVec);
-	cellVec.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
-		    _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
-		    _c*sin(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha));
-	v.push_back(cellVec);
+	temp = vector3(1.0f, 0.0f, 0.0f);
+	v.push_back(m * temp);
+	temp = vector3(0.0f, 1.0f, 0.0f);
+	v.push_back(m * temp);
+	temp = vector3(0.0f, 0.0f, 1.0f);
+	v.push_back(m * temp);
       }
     else
       {
@@ -257,51 +256,31 @@ vector<vector3> OBUnitCell::GetCellVectors()
 
 matrix3x3 OBUnitCell::GetCellMatrix()
 {
-    vector3 v1, v2, v3;
+    matrix3x3 m;
 
     if (_v1.length() == 0 && _v2.length() == 0 && _v3.length() == 0)
       {
-	v1.Set(_a, 0.0, 0.0);
-	v2.Set(_b*cos(DEG_TO_RAD*_gamma), _b*sin(DEG_TO_RAD*_gamma), 0.0);
-	v3.Set(_c*cos(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha),
-	       _c*sin(DEG_TO_RAD*_beta)*cos(DEG_TO_RAD*_alpha),
-	       _c*sin(DEG_TO_RAD*_beta)*sin(DEG_TO_RAD*_alpha));
+	m = GetOrthoMatrix();
       }
     else
       {
+	vector3 v1, v2, v3;
 	v1 = _v1;
 	v2 = _v2;
 	v3 = _v3;
+	m = matrix3x3(v1,v2,v3);
       }
-
-    matrix3x3 m(v1,v2,v3);
     return m;
 }
 
 matrix3x3 OBUnitCell::GetOrthoMatrix()
 {
-    matrix3x3 m;
-    double alphaRad, betaRad, gammaRad;
-    double v;
+  matrix3x3 m;
+  
+  // already here, let's not duplicate the work
+  m.FillOrth(_alpha, _beta, _gamma, _a, _b, _c);
 
-    alphaRad = _alpha * DEG_TO_RAD;
-    betaRad = _beta * DEG_TO_RAD;
-    gammaRad = _gamma * DEG_TO_RAD;
-
-    v = 1 - SQUARE(cos(alphaRad)) - SQUARE(cos(betaRad)) - SQUARE(cos(gammaRad))
-        + 2 * cos(alphaRad) * cos(betaRad) * cos(gammaRad);
-
-    m.Set(0,0, _a);
-    m.Set(0,1, _b * cos(gammaRad));
-    m.Set(0,2, _c * cos(betaRad));
-    m.Set(1,0, 0.0);
-    m.Set(1,1, _b * sin(gammaRad));
-    m.Set(1,2, _c * (cos(alphaRad)-cos(betaRad)*cos(gammaRad)) / sin(gammaRad));
-    m.Set(2,0, 0.0);
-    m.Set(2,1, 0.0);
-    m.Set(2,2, _c * v);
-
-    return m;
+  return m;
 }
 
 
