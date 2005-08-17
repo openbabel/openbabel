@@ -478,9 +478,13 @@ void matrix3x3::FillOrth(double Alpha,double Beta, double Gamma,
     Beta  *= DEG_TO_RAD;
     Gamma *= DEG_TO_RAD;
 
-    V= 1.0 - SQUARE(cos(Alpha)) - SQUARE(cos(Beta)) - SQUARE(cos(Gamma))
-       + 2.0 * cos(Alpha) * cos(Beta) *  cos(Gamma);
-    V = sqrt(fabs(V))/sin(Gamma);
+    // from the PDB specification:
+    //  http://www.rcsb.org/pdb/docs/format/pdbguide2.2/part_75.html
+
+
+    // since we'll ultimately divide by (a * b), we've factored those out here
+    V = C * sqrt(1 - SQUARE(cos(Alpha)) - SQUARE(cos(Beta)) - SQUARE(cos(Gamma))
+		 + 2 * cos(Alpha) * cos(Beta) * cos(Gamma));
 
     ele[0][0] = A;
     ele[0][1] = B*cos(Gamma);
@@ -492,7 +496,7 @@ void matrix3x3::FillOrth(double Alpha,double Beta, double Gamma,
 
     ele[2][0] = 0.0;
     ele[2][1] = 0.0;
-    ele[2][2] = C*V;
+    ele[2][2] = V / (sin(Gamma)); // again, we factored out A * B when defining V
 }
 
 ostream& operator<< ( ostream& co, const matrix3x3& m )

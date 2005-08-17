@@ -186,7 +186,10 @@ public:
     */
     double Get(int row,int column) const
     {
+      if (row >= 0 && row <= 2 && column >= 0 && column <= 2)
         return(ele[row][column]);
+      else
+	return 0.0f;
     }
 
     //! access function
@@ -198,7 +201,8 @@ public:
     */
     void Set(int row,int column, double v)
     {
-        ele[row][column]= v;
+      if (row >= 0 && row <= 2 && column >= 0 && column <= 2)
+	ele[row][column]= v;
     }
 
     //! access function
