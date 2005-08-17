@@ -1,3 +1,24 @@
+2005-08-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/parsmart.cpp: Fix AL_CONST case (currently in non-compiled
+	code) as suggested by Elmar Krieger. Fixes PR#1261285.
+
+	* src/obutil.cpp (InternalToCartesian): Add a check to make sure
+	pointers are valid before dereferencing. Fixes crash caused by
+	Amber PREP reading random binary data in a roundtrip test.
+
+	* src/formats/amberformat.cpp (ReadMolecule): Add a check to only
+	call InternalToCartesian when some coordinates have been read,
+	as above.
+
+	* src/formats/viewmolformat.cpp: Prevent an infinite loop when
+	reading random binary data. Even if no correct records are read,
+	continue to read a new line to look for a new record.
+	
+	* src/formats/Makefile.am, src/formats/Makefile.in: For now,
+	disable compilation of mm3format.cpp since it is incomplete and
+	incorrect. Related to PR#125604, 1252510.
+
 2005-08-17  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/obconversion.h, obconversion.cpp, main.cpp: Added code
