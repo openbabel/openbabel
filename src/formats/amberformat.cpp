@@ -82,7 +82,7 @@ bool AmberPrepFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     while	(ifs.getline(buffer,BUFF_SIZE))
     {
         tokenize(vs,buffer);
-        if (vs.size() > 8)
+        if (vs.size() == 10)
         {
             atom = mol.NewAtom();
             coord = new OBInternalCoord();
@@ -104,7 +104,9 @@ bool AmberPrepFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             tokenize(vs,buffer);
         }
     }
-    InternalToCartesian(internals,mol);
+
+    if (internals.size() > 0)
+      InternalToCartesian(internals,mol);
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
