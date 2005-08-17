@@ -19,6 +19,14 @@
 	disable compilation of mm3format.cpp since it is incomplete and
 	incorrect. Related to PR#125604, 1252510.
 
+	* src/math/matrix3x3.h, src/math/matrix3x3.cpp: 
+	Add some basic error checking to methods marked TODO.
+	(FillOrth) Change to matrix specified in PDB documentation:
+	http://www.rcsb.org/pdb/docs/format/pdbguide2.2/part_75.html
+	
+	* src/generic.cpp (OBUnitCell): Simplify code and re-use
+	matrix3x3::FillOrth() rather than duplicate code.
+
 2005-08-17  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/obconversion.h, obconversion.cpp, main.cpp: Added code
