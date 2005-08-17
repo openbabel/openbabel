@@ -25,11 +25,13 @@ namespace OpenBabel
 class SMIFormat : public OBMoleculeFormat
 {
 public:
-    //Register this format type ID
-    SMIFormat()
-    {
-        OBConversion::RegisterFormat("smi",this, "chemical/x-daylight-smiles");
-    }
+	//Register this format type ID
+	SMIFormat()
+	{
+		OBConversion::RegisterFormat("smi",this, "chemical/x-daylight-smiles");
+		OBConversion::RegisterOptionParam("n", this);
+		OBConversion::RegisterOptionParam("t", this);
+	}
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-daylight-smiles"; };

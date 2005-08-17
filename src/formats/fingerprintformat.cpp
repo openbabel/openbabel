@@ -35,7 +35,7 @@ Constructs and displays fingerprints and (for multiple input objects)\n \
 the Tanimoto coefficient and whether a superstructure of the first object\n \
 Options e.g. -xfFP3 -xn128\n \
  f<id> fingerprint type\n \
- n# fold to specified number of bits, 32, 64, 128, etc.\n \
+ N# fold to specified number of bits, 32, 64, 128, etc.\n \
  h  hex output when multiple molecules\n \
  F  displays the available fingerprint types\n \
 ";
@@ -89,7 +89,7 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		return false;
 	}
 
-	p=pConv->IsOption("n");
+	p=pConv->IsOption("N");
 	if(p)
 		nbits = atoi(p);		
 

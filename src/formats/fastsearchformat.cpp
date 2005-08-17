@@ -30,26 +30,33 @@ public:
 	FastSearchFormat() : fsi(NULL) 
 	{
 		OBConversion::RegisterFormat("fs",this);
+		//The following options take a parameter
+		OBConversion::RegisterOptionParam("S", this, 1, OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("f", this, 1);
+		OBConversion::RegisterOptionParam("N", this, 1);
+		OBConversion::RegisterOptionParam("t", this, 1, OBConversion::INOPTIONS);
+		OBConversion::RegisterOptionParam("l", this, 1, OBConversion::INOPTIONS);
+		OBConversion::RegisterOptionParam("a", this, 0, OBConversion::INOPTIONS);
 	}
 	
 	virtual const char* Description() //required
 	{ return
 "FastSearching\n \
 Uses molecular fingerprints in an index file.\n \
-Writing to the fs format makes an index (a slow process)\n \
+Writing to the fs format makes an index (a very slow process)\n \
   babel datafile.xxx index.fs\n \
 Reading from the fs format does a fast search for:\n \
   Substructure\n \
     babel index.fs -sSMILES outfile.yyy   or\n \
     babel datafile.xxx -ifs -sSMILES outfile.yyy\n \
   Molecular similarity based on Tanimoto coefficient\n \
-	  babel index.fs -sSMILES outfile.yyy -t0.7  (Tanimoto >0.7)\n \
-	  babel index.fs -sSMILES outfile.yyy -t15   (best 15 molecules)\n \
+    babel index.fs -sSMILES outfile.yyy -t0.7  (Tanimoto >0.7)\n \
+    babel index.fs -sSMILES outfile.yyy -t15   (best 15 molecules)\n \
   The structure spec can be a molecule from a file: -Spatternfile.zzz\n \
 \n \
 Write Options (when making index) e.g. -xfFP3 \n \
  f# Fingerprint type\n \
- n# Fold fingerprint to # bits\n \
+ N# Fold fingerprint to # bits\n \
 \n \
 Read Options (when searching) e.g. -at0.7\n \
  t# Do similarity search: #mols or # as min Tanimoto\n \
@@ -325,7 +332,7 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 		}
 
 		int nbits = 0;
-		const char* p = pConv->IsOption("n");
+		const char* p = pConv->IsOption("N");
 		if(p)
 			nbits = atoi(p);
 

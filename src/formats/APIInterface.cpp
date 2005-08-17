@@ -27,7 +27,10 @@ class OBAPIInterface : public OBFormat
 {
 public:
   OBAPIInterface()
-	{		OBConversion::RegisterFormat("obapi",this); }
+	{
+		OBConversion::RegisterFormat("obapi",this);
+		OBConversion::RegisterOptionParam("-errorlevel", this, 1);
+	}
 
 	const char* Description(){return 
 "Interface to OBAPI internals\n \

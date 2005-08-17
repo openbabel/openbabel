@@ -40,6 +40,8 @@ public:
 		OBConversion::RegisterFormat("mdl",this, "chemical/x-mdl-molfile");
 		OBConversion::RegisterFormat("sd",this, "chemical/x-mdl-sdfile");
 		OBConversion::RegisterFormat("sdf",this, "chemical/x-mdl-sdfile");
+		OBConversion::RegisterOptionParam("2", this);
+		OBConversion::RegisterOptionParam("3", this);
 	}
 
 	virtual const char* Description()
