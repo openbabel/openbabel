@@ -171,12 +171,15 @@ OBFormat* OBConversion::pDefaultFormat=NULL;
 OBConversion::OBConversion(istream* is, ostream* os) : 
 	pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
 	EndNumber(0), Count(-1), m_IsLast(true), MoreFilesToCome(false),
-	OneObjectOnly(false), pOb1(NULL)
+	OneObjectOnly(false), pOb1(NULL), pAuxConv(NULL)
 {
 	pInStream=is;
 	pOutStream=os;
-//	strcpy(Dimension,"2D");
-	LoadFormatFiles(); 
+	LoadFormatFiles();
+	
+	//These options take a parameter
+	RegisterOptionParam("f", NULL, 1,GENOPTIONS);
+	RegisterOptionParam("l", NULL, 1,GENOPTIONS);
 }
 
 ///This static function returns a reference to the FormatsMap
@@ -199,29 +202,11 @@ FMapType& OBConversion::FormatsMIMEMap()
 	return *fm;
 }
 
-/*///////////////////////////////////////////////
-OBConversion::OBConversion(const OBConversion& O)
-{
-	//Copy constructor. Needed because of strings
-//	Options=O.Options;
-//	GeneralOptions=O.GeneralOptions;
-//	Title=O.Title;
-	pInFormat=O.pInFormat;
-	pOutFormat=O.pOutFormat;
-	pInStream=O.pInStream;
-	pOutStream=O.pOutStream;
-	StartNumber=O.StartNumber;
-	EndNumber=O.EndNumber;
-//	strcpy(Dimension,O.Dimension);
-	Index=0;
-	InFilename=O.InFilename;
-	FormatsMap();//rubbish
-	FormatsMIMEMap();
-}
-*/
 /////////////////////////////////////////////////
 OBConversion::~OBConversion() 
 {
+	if(pAuxConv!=this)
+		delete pAuxConv;
 }
 
 //////////////////////////////////////////////////////
@@ -1007,6 +992,45 @@ void OBConversion::SetOptions(const char* options, Option_type opttyp)
 		else
 			OptionsArray[opttyp][ch] = string();
 	}
+}
+
+typedef std::map<string,int> OPAMapType;
+OPAMapType& OBConversion::OptionParamArray(Option_type typ)
+{
+	static OPAMapType* opa = new OPAMapType[3];
+	return opa[typ];
+}
+
+void OBConversion::RegisterOptionParam(string name, OBFormat* pFormat,
+																			 int numberParams, Option_type typ)
+{
+	//Gives error message if the number of parameters conflicts with an existing registration
+	map<string,int>::iterator pos;
+	pos =	OptionParamArray(typ).find(name);
+	if(pos!=OptionParamArray(typ).end())
+	{
+		if(pos->second!=numberParams)
+		{
+			string description("API");
+	    if(pFormat)
+				description=pFormat->Description();
+			cerr << "The number of parameters needed by option \"" << name << "\" in " 
+				   << description.substr(0,description.find('\n'))
+				   << " differs from an earlier registration." << endl;
+			return;
+		}
+	}
+	OptionParamArray(typ)[name] = numberParams;
+}
+
+int OBConversion::GetOptionParams(string name, Option_type typ)
+{
+	//returns the number of parameters registered for the option, or 0 if not found
+	map<string,int>::iterator pos;
+	pos =	OptionParamArray(typ).find(name);
+	if(pos==OptionParamArray(typ).end())
+		return 0;
+	return pos->second;
 }
 
 }//namespace OpenBabel

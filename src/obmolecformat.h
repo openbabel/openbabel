@@ -34,6 +34,26 @@ namespace OpenBabel {
 class OBMoleculeFormat : public OBFormat
 {
 public:
+
+	OBMoleculeFormat()
+	{
+		OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
+		OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
+		//The follow are OBMol options, which should not be in OBConversion.
+		//But here isn't entirely appropriate either, since could have
+		//OBMol formats loaded but non of them derived from this class.might
+		//not be included. This possibility is remote.
+		OBConversion::RegisterOptionParam("s", NULL, 1,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("v", NULL, 1,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("h", NULL, 0,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("d", NULL, 0,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("b", NULL, 0,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("c", NULL, 0,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("p", NULL, 0,OBConversion::GENOPTIONS); 
+		OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("j", NULL, 0,OBConversion::GENOPTIONS);
+	};
+
 	/// The "Convert" interface functions
 	virtual bool ReadChemObject(OBConversion* pConv)
 	{
@@ -97,6 +117,12 @@ public:
 		}
 		return ret;
 	};
+
+	const type_info& GetType()
+	{
+		return typeid(OBMol*);
+	};
+
 };
 
 }

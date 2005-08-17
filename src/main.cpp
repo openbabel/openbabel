@@ -51,7 +51,8 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 using namespace std;
 using namespace OpenBabel;
 
-void ReadCharOptions(const char* p, OBConversion& Conv, OBConversion::Option_type opttyp);
+void DoOption(const char* p, OBConversion& Conv, OBConversion::Option_type typ, 
+							int& arg, int argc, char *argv[]); 
 void usage();
 void help();
 
@@ -92,7 +93,6 @@ int main(int argc,char *argv[])
     program_name=argv[0]+pos+1;
 
 	const char* p;
-	char ch[2]="?";
 	int arg;
 	for (arg = 1; arg < argc; arg++)
 	{
@@ -125,7 +125,6 @@ int main(int argc,char *argv[])
 					else
 					{
 						//The ID provided by the OBFormat class is used as the identifying file extension
-						//This is a slight reduction in flexibility (which is not currently used)
 						pInFormat = Conv.FindFormat(iext);
 					}
 					if(pInFormat==NULL)
@@ -212,8 +211,9 @@ int main(int argc,char *argv[])
 						char* nam = argv[arg]+2;
  						if(*nam != '\0')
 						{
-							string txt;
-							if(arg<argc-1 && argv[arg+1] && *argv[arg+1]!='-')
+							const char* txt=NULL;
+							if(Conv.GetOptionParams(nam, OBConversion::OUTOPTIONS)
+									&& arg<argc-1 && argv[arg+1] && *argv[arg+1]!='-')
 								txt = argv[++arg];
 							if(*nam=='-')
 							{
@@ -224,13 +224,13 @@ int main(int argc,char *argv[])
 								if(pAPI)
 								{
 									apiConv.SetOutFormat(pAPI);
-									apiConv.AddOption(nam+1, OBConversion::OUTOPTIONS, txt.c_str());
+									apiConv.AddOption(nam+1, OBConversion::OUTOPTIONS, txt);
 									apiConv.Write(NULL);
 								}
 							}
 							else
 								// Is a long option name, e.g --addtotitle
-								Conv.AddOption(nam,OBConversion::GENOPTIONS,txt.c_str());
+								Conv.AddOption(nam,OBConversion::GENOPTIONS,txt);
 						}
 					}
 					break;
@@ -241,45 +241,17 @@ int main(int argc,char *argv[])
 					
 				case 'a': //single character input option
 					p = argv[arg]+2;
-					while(*p) //can have multiple single char options
-					{
-						*ch = *p++;
-						//if no text immediately following, use text 
-						//from the next arg if it doesn't start with -
-						const char* txt=NULL;
-						if(!*p && arg<argc-1 && *argv[arg+1]!='-')
-							txt = argv[++arg];
-						Conv.AddOption(ch, OBConversion::INOPTIONS, txt);
-					}
+					DoOption(p,Conv,OBConversion::INOPTIONS,arg,argc,argv);
 					break;
 
 				case 'x': //single character output option
 					p = argv[arg]+2;
-					while(*p)
-					{
-						*ch = *p++;
-						const char* txt=NULL;
-						if(!*p && arg<argc-1 && *argv[arg+1]!='-')
-							txt = argv[++arg];
-						Conv.AddOption(ch, OBConversion::OUTOPTIONS, txt);
-					}
+					DoOption(p,Conv,OBConversion::OUTOPTIONS,arg,argc,argv);
 					break;
 					
 				default: //single character general option
 					p = argv[arg]+1;
-					while(*p) 
-					{
-						*ch = *p++;
-						const char* txt=NULL;
-						if(!*p && arg<argc-1 && *argv[arg+1]!='-')
-							txt = argv[++arg];
-						if(!txt && (*ch=='f' || *ch=='l' || *ch=='s' || *ch=='v' || *ch=='w'))
-						{
-							txt = p; //text can follow immediately -sCCC
-							p=ch+1;//'\0' since no more options in this arg
-						}
-						Conv.AddOption(ch, OBConversion::GENOPTIONS, txt);
-					}
+					DoOption(p,Conv,OBConversion::GENOPTIONS,arg,argc,argv);
 					break;
 				}
 			}
@@ -376,6 +348,36 @@ int main(int argc,char *argv[])
   return 0;
 };
 
+void DoOption(const char* p, OBConversion& Conv, OBConversion::Option_type typ, int& arg, int argc, char *argv[]) 
+{
+	while(p && *p) //can have multiple single char options
+	{
+		char ch[2]="?";
+		*ch = *p++;
+		const char* txt=NULL;				
+		//Get the option text if needed
+		int nParams = Conv.GetOptionParams(ch, typ);
+		if(nParams)
+		{
+			if(*p)
+			{
+				txt = p; //use text immediately following the option letter
+				p=NULL; //no more single char options
+			}
+			else if(arg<argc-1)
+			{
+				txt = argv[++arg]; //use text from next arg
+				if(*txt=='-')
+				{
+					//...unless it is another option
+					cerr << "Option -" << ch << " takes a parameter" << endl;
+					exit(0);
+				}
+			}
+		}
+		Conv.AddOption(ch, typ, txt);
+	}
+}
 
 void usage()
 {
@@ -499,11 +501,6 @@ void help()
 *     Convert only molecules matching the SMARTS pattern specified \n\n
 * \b -v\<SMARTS\> :
 *     Convert only molecules \b NOT matching SMARTS pattern specified \n\n
-* \b -z :
-*     Use options used last time, written to ~/.openbabel \n\n
-* \b -- : 
-*     Read input from standard input if specified as \<infile\> \n
-*     Write output to standard output if specified as \<outfile\> \n\n
 *
 * \par FILE FORMATS
 *

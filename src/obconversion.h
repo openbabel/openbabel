@@ -235,6 +235,10 @@ public:
 
 	///@brief Returns a default title which is the filename
 	const char* GetTitle() const;
+
+	///@brief Extension method: deleted in ~OBConversion()
+	OBConversion* GetAuxConv() const {return pAuxConv;};
+	void          SetAuxConv(OBConversion* pConv) {pAuxConv=pConv;};
 	//@}
 	/// @name Option handling
 	//@{
@@ -255,6 +259,13 @@ public:
 
 	///@brief Set several single character options of specified type from string like ab"btext"c"ctext"
 	void SetOptions(const char* options, Option_type opttyp);
+
+	///@brief For example -h takes 0 parameters; -f takes 1. Call in a format constructor.
+	static void RegisterOptionParam(std::string name, OBFormat* pFormat,
+		                              int numberParams=0, Option_type typ=OUTOPTIONS);
+
+	///@brief Returns the number of parameters registered for the option, or 0 if not found
+	static int GetOptionParams(std::string name, Option_type typ);
 	//@}
 
 	/// @name Conversion
@@ -352,6 +363,8 @@ protected:
 	bool             SetStartAndEnd();
 	static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
 	static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
+	typedef std::map<std::string,int> OPAMapType;
+	static OPAMapType& OBConversion::OptionParamArray(Option_type typ);
 	static int       LoadFormatFiles();
 	bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is);
 
@@ -376,6 +389,8 @@ protected:
 	OBBase*		  pOb1;
 	std::streampos wInpos; ///<position in the input stream of the object being written
 	std::streampos rInpos; ///<position in the input stream of the object being read
+	
+	OBConversion* pAuxConv;///<Way to extend OBConversion
 };
 
 ///For OBFormat::Flags()
