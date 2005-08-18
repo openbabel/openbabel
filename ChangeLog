@@ -1,3 +1,20 @@
+2005-08-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/bond.cpp (SetBO): Add calls to SetKSingle(), SetKDouble(),
+	and SetKTriple() as appropriate. This mirrors expected behavior,
+	IMHO.
+
+	* src/bondtyper.cpp: Remove calls to SetKSingle() etc. since these
+	are now covered above. All SetBO() calls are handled
+	correctly. Thanks to Elmar Krieger for noticing this.
+
+	* src/formats/freefracformat.cpp: New format for free-form
+	fractional input (title, unit cell parameters, coordinates).
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Compile it.
+
+	* src/formats/xyzformat.cpp: Fix bug with setting title line.
+
 2005-08-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/parsmart.cpp: Fix AL_CONST case (currently in non-compiled

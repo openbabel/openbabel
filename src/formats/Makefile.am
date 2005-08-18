@@ -19,8 +19,8 @@ libformats_la_SOURCES = \
 	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
 	cml.cpp cmlformat.cpp crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
-	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
-	gromos96format.cpp hinformat.cpp \
+	freefracformat.cpp gamessformat.cpp gaussformat.cpp 
+	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
 	jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
 	mol2format.cpp mopacformat.cpp mpqcformat.cpp nwchemformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
@@ -39,7 +39,7 @@ pkglib_LTLIBRARIES = \
 	chem3dformat.la chemdrawformat.la chemtoolformat.la \
 	cmlformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
-	gamessformat.la gaussformat.la ghemicalformat.la \
+	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
 	gromos96format.la hinformat.la \
 	jaguarformat.la mdlformat.la mmodformat.la \
 	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
@@ -113,7 +113,10 @@ featformat_la_SOURCES = featformat.cpp
 featformat_la_LDFLAGS = -module -avoid-version 
 
 fhformat_la_SOURCES = fhformat.cpp
-fhformat_la_LDFLAGS = -module -avoid-version 
+fhformat_la_LDFLAGS = -module -avoid-version
+
+freefracformat_la_SOURCES = freefracformat.cpp
+freefracformat_la_LDFLAGS = -module -avoid-version 
 
 gamessformat_la_SOURCES = gamessformat.cpp
 gamessformat_la_LDFLAGS = -module -avoid-version 
