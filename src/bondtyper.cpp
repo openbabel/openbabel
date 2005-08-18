@@ -135,14 +135,6 @@ void OBBondTyper::AssignFunctionalGroupBonds(OBMol &mol)
 
 		  if (!b1) continue;
 		  b1->SetBO(assignments[j+2]);
-
-		  if (assignments[j+2] == 1)
-		    b1->SetKSingle();
-		  else if (assignments[j+2] == 2)
-		    b1->SetKDouble();
-		  else if (assignments[j+2] == 3)
-		    b1->SetKTriple();
-
 		} // bond order assignments
 	    } // each match
 	} // current pattern matches

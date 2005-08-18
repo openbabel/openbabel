@@ -83,7 +83,16 @@ void OBBond::SetBO(int order)
             _end->SetAromatic();
     }
     else
+      {
+	if (order == 1)
+	  SetKSingle();
+	else if (order == 2)
+	  SetKDouble();
+	else if (order == 3)
+	  SetKTriple();
+
         UnsetAromatic();
+      }
 }
 
 void OBBond::SetLength(OBAtom *fixed, double length)
