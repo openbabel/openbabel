@@ -1,5 +1,8 @@
 2005-08-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* data/bondtyp.txt, data/bondtyp.h: Add initial porphyrin / heme
+	patterns. Probably still a bit buggy. Addresses PR#1259757.
+
 	* src/bond.cpp (SetBO): Add calls to SetKSingle(), SetKDouble(),
 	and SetKTriple() as appropriate. This mirrors expected behavior,
 	IMHO.
