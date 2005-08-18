@@ -108,7 +108,7 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 			    "Problems reading an XYZ file: Could not read the second line (title/comments).", obWarning);
         return(false);
     }
-    if (strlen(buffer) == 0)
+    if (strlen(buffer) != 0)
         mol.SetTitle(buffer);
     else
         mol.SetTitle(title);
@@ -152,7 +152,7 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         // something "special" in mind.
         OBAtom *atom  = mol.NewAtom();
         int atomicNum = etab.GetAtomicNum(vs[0].c_str());
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str())); //set atomic number, or '0' if the atom type is not recognized
+        atom->SetAtomicNum(atomicNum); //set atomic number, or '0' if the atom type is not recognized
         if (atomicNum == 0)
             atom->SetType(vs[0]);
 
