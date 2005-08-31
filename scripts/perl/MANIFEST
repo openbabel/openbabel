@@ -5,4 +5,5 @@ Makefile.PL
 README
 openbabel.pm
 openbabel_perl.cpp
+examples/example.pl
 t/example.t

@@ -518,6 +518,7 @@ SWIG_UnpackDataName(const char *c, void *ptr, size_t sz, const char *name) {
  * perl5.swg
  *
  * Perl5 runtime library
+ * $Header$
  * ----------------------------------------------------------------------------- */
 
 #define SWIGPERL
@@ -2804,6 +2805,64 @@ XS(_wrap_OBConversion_GetTitle) {
 }
 
 
+XS(_wrap_OBConversion_GetAuxConv) {
+    {
+        OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+        OpenBabel::OBConversion *result;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 1) || (items > 1)) {
+            SWIG_croak("Usage: OBConversion_GetAuxConv(self);");
+        }
+        {
+            if (SWIG_ConvertPtr(ST(0), (void **) &arg1, SWIGTYPE_p_OpenBabel__OBConversion,0) < 0) {
+                SWIG_croak("Type error in argument 1 of OBConversion_GetAuxConv. Expected _p_OpenBabel__OBConversion");
+            }
+        }
+        result = (OpenBabel::OBConversion *)((OpenBabel::OBConversion const *)arg1)->GetAuxConv();
+        
+        ST(argvi) = sv_newmortal();
+        SWIG_MakePtr(ST(argvi++), (void *) result, SWIGTYPE_p_OpenBabel__OBConversion, SWIG_SHADOW|0);
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
+XS(_wrap_OBConversion_SetAuxConv) {
+    {
+        OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+        OpenBabel::OBConversion *arg2 = (OpenBabel::OBConversion *) 0 ;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 2) || (items > 2)) {
+            SWIG_croak("Usage: OBConversion_SetAuxConv(self,pConv);");
+        }
+        {
+            if (SWIG_ConvertPtr(ST(0), (void **) &arg1, SWIGTYPE_p_OpenBabel__OBConversion,0) < 0) {
+                SWIG_croak("Type error in argument 1 of OBConversion_SetAuxConv. Expected _p_OpenBabel__OBConversion");
+            }
+        }
+        {
+            if (SWIG_ConvertPtr(ST(1), (void **) &arg2, SWIGTYPE_p_OpenBabel__OBConversion,0) < 0) {
+                SWIG_croak("Type error in argument 2 of OBConversion_SetAuxConv. Expected _p_OpenBabel__OBConversion");
+            }
+        }
+        (arg1)->SetAuxConv(arg2);
+        
+        
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
 XS(_wrap_OBConversion_IsOption__SWIG_0) {
     {
         OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
@@ -3134,6 +3193,231 @@ XS(_wrap_OBConversion_SetOptions) {
         (arg1)->SetOptions((char const *)arg2,arg3);
         
         
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
+XS(_wrap_OBConversion_RegisterOptionParam__SWIG_0) {
+    {
+        std::string arg1 ;
+        OpenBabel::OBFormat *arg2 = (OpenBabel::OBFormat *) 0 ;
+        int arg3 ;
+        OpenBabel::OBConversion::Option_type arg4 ;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 4) || (items > 4)) {
+            SWIG_croak("Usage: OBConversion_RegisterOptionParam(name,pFormat,numberParams,typ);");
+        }
+        {
+            STRLEN len;
+            const char *ptr = SvPV(ST(0), len);
+            if (!ptr) {
+                SWIG_croak("Undefined variable in argument 1 of OBConversion_RegisterOptionParam.");
+            } else {
+                arg1 = std::string(ptr, len);
+            }
+        }
+        {
+            if (SWIG_ConvertPtr(ST(1), (void **) &arg2, SWIGTYPE_p_OpenBabel__OBFormat,0) < 0) {
+                SWIG_croak("Type error in argument 2 of OBConversion_RegisterOptionParam. Expected _p_OpenBabel__OBFormat");
+            }
+        }
+        arg3 = (int) SvIV(ST(2));
+        arg4 = (OpenBabel::OBConversion::Option_type) SvIV(ST(3));
+        OpenBabel::OBConversion::RegisterOptionParam(arg1,arg2,arg3,arg4);
+        
+        
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
+XS(_wrap_OBConversion_RegisterOptionParam__SWIG_1) {
+    {
+        std::string arg1 ;
+        OpenBabel::OBFormat *arg2 = (OpenBabel::OBFormat *) 0 ;
+        int arg3 ;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 3) || (items > 3)) {
+            SWIG_croak("Usage: OBConversion_RegisterOptionParam(name,pFormat,numberParams);");
+        }
+        {
+            STRLEN len;
+            const char *ptr = SvPV(ST(0), len);
+            if (!ptr) {
+                SWIG_croak("Undefined variable in argument 1 of OBConversion_RegisterOptionParam.");
+            } else {
+                arg1 = std::string(ptr, len);
+            }
+        }
+        {
+            if (SWIG_ConvertPtr(ST(1), (void **) &arg2, SWIGTYPE_p_OpenBabel__OBFormat,0) < 0) {
+                SWIG_croak("Type error in argument 2 of OBConversion_RegisterOptionParam. Expected _p_OpenBabel__OBFormat");
+            }
+        }
+        arg3 = (int) SvIV(ST(2));
+        OpenBabel::OBConversion::RegisterOptionParam(arg1,arg2,arg3);
+        
+        
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
+XS(_wrap_OBConversion_RegisterOptionParam__SWIG_2) {
+    {
+        std::string arg1 ;
+        OpenBabel::OBFormat *arg2 = (OpenBabel::OBFormat *) 0 ;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 2) || (items > 2)) {
+            SWIG_croak("Usage: OBConversion_RegisterOptionParam(name,pFormat);");
+        }
+        {
+            STRLEN len;
+            const char *ptr = SvPV(ST(0), len);
+            if (!ptr) {
+                SWIG_croak("Undefined variable in argument 1 of OBConversion_RegisterOptionParam.");
+            } else {
+                arg1 = std::string(ptr, len);
+            }
+        }
+        {
+            if (SWIG_ConvertPtr(ST(1), (void **) &arg2, SWIGTYPE_p_OpenBabel__OBFormat,0) < 0) {
+                SWIG_croak("Type error in argument 2 of OBConversion_RegisterOptionParam. Expected _p_OpenBabel__OBFormat");
+            }
+        }
+        OpenBabel::OBConversion::RegisterOptionParam(arg1,arg2);
+        
+        
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
+XS(_wrap_OBConversion_RegisterOptionParam) {
+    dXSARGS;
+    
+    if (items == 2) {
+        int _v;
+        {
+            _v = SvPOK(ST(0)) ? 1 : 0;
+        }
+        if (_v) {
+            {
+                void *tmp;
+                if (SWIG_ConvertPtr(ST(1), (void **) &tmp, SWIGTYPE_p_OpenBabel__OBFormat, 0) == -1) {
+                    _v = 0;
+                } else {
+                    _v = 1;
+                }
+            }
+            if (_v) {
+                (*PL_markstack_ptr++);SWIG_CALLXS(_wrap_OBConversion_RegisterOptionParam__SWIG_2); return;
+            }
+        }
+    }
+    if (items == 3) {
+        int _v;
+        {
+            _v = SvPOK(ST(0)) ? 1 : 0;
+        }
+        if (_v) {
+            {
+                void *tmp;
+                if (SWIG_ConvertPtr(ST(1), (void **) &tmp, SWIGTYPE_p_OpenBabel__OBFormat, 0) == -1) {
+                    _v = 0;
+                } else {
+                    _v = 1;
+                }
+            }
+            if (_v) {
+                {
+                    _v = SvIOK(ST(2)) ? 1 : 0;
+                }
+                if (_v) {
+                    (*PL_markstack_ptr++);SWIG_CALLXS(_wrap_OBConversion_RegisterOptionParam__SWIG_1); return;
+                }
+            }
+        }
+    }
+    if (items == 4) {
+        int _v;
+        {
+            _v = SvPOK(ST(0)) ? 1 : 0;
+        }
+        if (_v) {
+            {
+                void *tmp;
+                if (SWIG_ConvertPtr(ST(1), (void **) &tmp, SWIGTYPE_p_OpenBabel__OBFormat, 0) == -1) {
+                    _v = 0;
+                } else {
+                    _v = 1;
+                }
+            }
+            if (_v) {
+                {
+                    _v = SvIOK(ST(2)) ? 1 : 0;
+                }
+                if (_v) {
+                    {
+                        _v = SvIOK(ST(3)) ? 1 : 0;
+                    }
+                    if (_v) {
+                        (*PL_markstack_ptr++);SWIG_CALLXS(_wrap_OBConversion_RegisterOptionParam__SWIG_0); return;
+                    }
+                }
+            }
+        }
+    }
+    
+    croak("No matching function for overloaded 'OBConversion_RegisterOptionParam'");
+    XSRETURN(0);
+}
+
+
+XS(_wrap_OBConversion_GetOptionParams) {
+    {
+        std::string arg1 ;
+        OpenBabel::OBConversion::Option_type arg2 ;
+        int result;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 2) || (items > 2)) {
+            SWIG_croak("Usage: OBConversion_GetOptionParams(name,typ);");
+        }
+        {
+            STRLEN len;
+            const char *ptr = SvPV(ST(0), len);
+            if (!ptr) {
+                SWIG_croak("Undefined variable in argument 1 of OBConversion_GetOptionParams.");
+            } else {
+                arg1 = std::string(ptr, len);
+            }
+        }
+        arg2 = (OpenBabel::OBConversion::Option_type) SvIV(ST(1));
+        result = (int)OpenBabel::OBConversion::GetOptionParams(arg1,arg2);
+        
+        ST(argvi) = sv_newmortal();
+        sv_setiv(ST(argvi++), (IV) result);
         XSRETURN(argvi);
         fail:
         ;
@@ -17939,6 +18223,45 @@ XS(_wrap_OBMol_IsChiral) {
 }
 
 
+XS(_wrap_OBMol_IsDoubleBondGeometry) {
+    {
+        OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+        OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+        OpenBabel::OBAtom *arg3 = (OpenBabel::OBAtom *) 0 ;
+        bool result;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 3) || (items > 3)) {
+            SWIG_croak("Usage: OBMol_IsDoubleBondGeometry(self,a1,a2);");
+        }
+        {
+            if (SWIG_ConvertPtr(ST(0), (void **) &arg1, SWIGTYPE_p_OpenBabel__OBMol,0) < 0) {
+                SWIG_croak("Type error in argument 1 of OBMol_IsDoubleBondGeometry. Expected _p_OpenBabel__OBMol");
+            }
+        }
+        {
+            if (SWIG_ConvertPtr(ST(1), (void **) &arg2, SWIGTYPE_p_OpenBabel__OBAtom,0) < 0) {
+                SWIG_croak("Type error in argument 2 of OBMol_IsDoubleBondGeometry. Expected _p_OpenBabel__OBAtom");
+            }
+        }
+        {
+            if (SWIG_ConvertPtr(ST(2), (void **) &arg3, SWIGTYPE_p_OpenBabel__OBAtom,0) < 0) {
+                SWIG_croak("Type error in argument 3 of OBMol_IsDoubleBondGeometry. Expected _p_OpenBabel__OBAtom");
+            }
+        }
+        result = (bool)(arg1)->IsDoubleBondGeometry(arg2,arg3);
+        
+        ST(argvi) = sv_newmortal();
+        sv_setiv(ST(argvi++), (IV) result);
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
 XS(_wrap_OBMol_Empty) {
     {
         OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
@@ -20115,11 +20438,15 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBConversion_GetInFilename", _wrap_OBConversion_GetInFilename},
 {"Chemistry::OpenBabelc::OBConversion_GetInPos", _wrap_OBConversion_GetInPos},
 {"Chemistry::OpenBabelc::OBConversion_GetTitle", _wrap_OBConversion_GetTitle},
+{"Chemistry::OpenBabelc::OBConversion_GetAuxConv", _wrap_OBConversion_GetAuxConv},
+{"Chemistry::OpenBabelc::OBConversion_SetAuxConv", _wrap_OBConversion_SetAuxConv},
 {"Chemistry::OpenBabelc::OBConversion_IsOption", _wrap_OBConversion_IsOption},
 {"Chemistry::OpenBabelc::OBConversion_GetOptions", _wrap_OBConversion_GetOptions},
 {"Chemistry::OpenBabelc::OBConversion_AddOption", _wrap_OBConversion_AddOption},
 {"Chemistry::OpenBabelc::OBConversion_RemoveOption", _wrap_OBConversion_RemoveOption},
 {"Chemistry::OpenBabelc::OBConversion_SetOptions", _wrap_OBConversion_SetOptions},
+{"Chemistry::OpenBabelc::OBConversion_RegisterOptionParam", _wrap_OBConversion_RegisterOptionParam},
+{"Chemistry::OpenBabelc::OBConversion_GetOptionParams", _wrap_OBConversion_GetOptionParams},
 {"Chemistry::OpenBabelc::OBConversion_Convert", _wrap_OBConversion_Convert},
 {"Chemistry::OpenBabelc::OBConversion_FullConvert", _wrap_OBConversion_FullConvert},
 {"Chemistry::OpenBabelc::OBConversion_AddChemObject", _wrap_OBConversion_AddChemObject},
@@ -20497,6 +20824,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBMol_IsCorrectedForPH", _wrap_OBMol_IsCorrectedForPH},
 {"Chemistry::OpenBabelc::OBMol_HasSpinMultiplicityAssigned", _wrap_OBMol_HasSpinMultiplicityAssigned},
 {"Chemistry::OpenBabelc::OBMol_IsChiral", _wrap_OBMol_IsChiral},
+{"Chemistry::OpenBabelc::OBMol_IsDoubleBondGeometry", _wrap_OBMol_IsDoubleBondGeometry},
 {"Chemistry::OpenBabelc::OBMol_Empty", _wrap_OBMol_Empty},
 {"Chemistry::OpenBabelc::OBMol_NumConformers", _wrap_OBMol_NumConformers},
 {"Chemistry::OpenBabelc::OBMol_SetConformers", _wrap_OBMol_SetConformers},

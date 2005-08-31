@@ -10,8 +10,8 @@
 
 %import "babelconfig.h"
 
-%import "base.h"
 %import "data.h"
+%import "base.h"
 %import "chains.h"
 %import "math/vector3.h"
 %import "bitvec.h"

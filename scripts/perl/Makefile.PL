@@ -7,7 +7,7 @@ $CC = 'g++';
 WriteMakefile(
     'NAME'	=>  'Chemistry::OpenBabel',
     'AUTHOR'    =>  'Geoffrey Hutchison <openbabel-scripting@lists.sourceforge.net>',
-    'VERSION'   => '2.0.0b3',
+    'VERSION'   => '2.0.0b4',
     'LIBS'      => '-lopenbabel',
     'CC'        => $CC,
     'LD'        => '$(CC)',

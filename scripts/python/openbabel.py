@@ -126,6 +126,8 @@ class OBConversion(object):
     def GetInFilename(*args): return _openbabel.OBConversion_GetInFilename(*args)
     def GetInPos(*args): return _openbabel.OBConversion_GetInPos(*args)
     def GetTitle(*args): return _openbabel.OBConversion_GetTitle(*args)
+    def GetAuxConv(*args): return _openbabel.OBConversion_GetAuxConv(*args)
+    def SetAuxConv(*args): return _openbabel.OBConversion_SetAuxConv(*args)
     INOPTIONS = _openbabel.OBConversion_INOPTIONS
     OUTOPTIONS = _openbabel.OBConversion_OUTOPTIONS
     GENOPTIONS = _openbabel.OBConversion_GENOPTIONS
@@ -134,6 +136,8 @@ class OBConversion(object):
     def AddOption(*args): return _openbabel.OBConversion_AddOption(*args)
     def RemoveOption(*args): return _openbabel.OBConversion_RemoveOption(*args)
     def SetOptions(*args): return _openbabel.OBConversion_SetOptions(*args)
+    RegisterOptionParam = staticmethod(_openbabel.OBConversion_RegisterOptionParam)
+    GetOptionParams = staticmethod(_openbabel.OBConversion_GetOptionParams)
     def Convert(*args): return _openbabel.OBConversion_Convert(*args)
     def FullConvert(*args): return _openbabel.OBConversion_FullConvert(*args)
     def AddChemObject(*args): return _openbabel.OBConversion_AddChemObject(*args)
@@ -171,6 +175,10 @@ OBConversion_FormatFromMIME = _openbabel.OBConversion_FormatFromMIME
 OBConversion_GetNextFormat = _openbabel.OBConversion_GetNextFormat
 
 OBConversion_Description = _openbabel.OBConversion_Description
+
+OBConversion_RegisterOptionParam = _openbabel.OBConversion_RegisterOptionParam
+
+OBConversion_GetOptionParams = _openbabel.OBConversion_GetOptionParams
 
 OBConversion_GetDefaultFormat = _openbabel.OBConversion_GetDefaultFormat
 
@@ -651,6 +659,7 @@ class OBMol(object):
     def IsCorrectedForPH(*args): return _openbabel.OBMol_IsCorrectedForPH(*args)
     def HasSpinMultiplicityAssigned(*args): return _openbabel.OBMol_HasSpinMultiplicityAssigned(*args)
     def IsChiral(*args): return _openbabel.OBMol_IsChiral(*args)
+    def IsDoubleBondGeometry(*args): return _openbabel.OBMol_IsDoubleBondGeometry(*args)
     def Empty(*args): return _openbabel.OBMol_Empty(*args)
     def NumConformers(*args): return _openbabel.OBMol_NumConformers(*args)
     def SetConformers(*args): return _openbabel.OBMol_SetConformers(*args)
