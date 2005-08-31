@@ -90,14 +90,20 @@ class OBAPI OBElement
 {
     int _num;
     char _symbol[3];
-    double _Rcov,_Rbo,_Rvdw,_mass,_elNeg;
+    std::string _name;
+    double _Rcov,_Rvdw,_mass,_elNeg,_ionize,_elAffinity;
+    double _red, _green, _blue;
     int _maxbonds;
 public:
     OBElement()    {}
-    OBElement(int num, const char *sym, double rcov, double rbo,
-              double rvdw, int maxbo, double mass, double elNeg) :
-      _num(num), _Rcov(rcov), _Rbo(rbo), _Rvdw(rvdw), 
-      _mass(mass), _elNeg(elNeg), _maxbonds(maxbo)
+    OBElement(int num, const char *sym, double rcov, double rvdw,
+	      int maxbo, double mass, double elNeg, double ionize,
+	      double elAffin, double red, double green, double blue,
+	      std::string name) :
+      _num(num), _name(name), _Rcov(rcov), _Rvdw(rvdw), _mass(mass), 
+      _elNeg(elNeg), _ionize(ionize), _elAffinity(elAffin), 
+      _red(red), _green(green), _blue(blue),
+      _maxbonds(maxbo)
     {
       strncpy(_symbol, sym, 3);
     }
@@ -108,10 +114,6 @@ public:
     char *GetSymbol()          {       return(_symbol); }
     //! Returns the covalent radius of this element
     double GetCovalentRad()    {       return(_Rcov);   }
-    //! \brief Returns the "bond order" radius used for 
-    //!  determining multiple covalent bonds.
-    //! \deprecated Use GetCovalentRad() instead
-    double GetBoRad()          {       return(_Rbo);    }
     //! Returns the van der Waals radius of this element
     double GetVdwRad()         {       return(_Rvdw);   }
     //! \return the standard atomic mass for this element (in amu)
@@ -120,6 +122,18 @@ public:
     int GetMaxBonds()          {       return(_maxbonds);}
     //! \return the Pauling electronegativity for this element
     double GetElectroNeg()     {       return(_elNeg);  }
+    //! \return the ionization potential (in eV) of this element
+    double GetIonization()     {       return(_ionize);  }
+    //! \return the electron affinity (in eV) of this element
+    double GetElectronAffinity(){      return(_elAffinity);  }
+    //! \return the name of this element (in English)
+    std::string GetName()      {       return(_name);    }
+    //! \return the red component of this element's default visualization color
+    double GetRed()            {       return(_red);     }
+    //! \return the green component of this element's default color
+    double GetGreen()          {       return(_green);   }
+    //! \return the blue component of this element's default color
+    double GetBlue()           {       return(_blue);    }
 };
 
 // class introduction in data.cpp
@@ -143,27 +157,33 @@ public:
     //! or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
     //! a value in the second argument
     int   GetAtomicNum(const char *, int &iso);
-    //! Returns the element symbol matching the atomic number passed
+    //! \return the element symbol matching the atomic number passed
     char *GetSymbol(int);
-    //! Returns the van der Waals radius for this atomic number
+    //! \return the van der Waals radius for this atomic number
     double GetVdwRad(int);
-    //! Returns the covalent radius for this atomic number
+    //! \return the covalent radius for this atomic number
     double GetCovalentRad(int);
-    //! \deprecated -- Use OBElementTable::GetCovalentRad()
-    double GetBORad(int);
-    //! Returns the average atomic mass for this element.
+    //! \return the average atomic mass for this element.
     //! For exact isotope masses, use OpenBabel::OBIsotopeTable
     double GetMass(int);
-    //! Returns a "corrected" bonding radius based on the hybridization.
+    //! \return a "corrected" bonding radius based on the hybridization.
     //! Scales the covalent radius by 0.95 for sp2 and 0.90 for sp hybrids
     double CorrectedBondRad(int,int = 3); // atomic #, hybridization
-    //! Returns a "corrected" vdW radius based on the hybridization.
+    //! \return a "corrected" vdW radius based on the hybridization.
     //! Scales the van der Waals radius by 0.95 for sp2 and 0.90 for sp hybrids
     double CorrectedVdwRad(int,int = 3); // atomic #, hybridization
-    //! Returns the maximum expected number of bonds to this element
+    //! \return the maximum expected number of bonds to this element
     int	GetMaxBonds(int);
-    //! Returns the Pauling electronegativity for this element
+    //! \return the Pauling electronegativity for this element
     double GetElectroNeg(int);
+    //! \return the ionization potential (in eV) for this element
+    double GetIonization(int);
+    //! \return the electron affinity (in eV) for this element
+    double GetElectronAffinity(int);
+    //! \return a vector with red, green, blue color values for this element
+    std::vector<double> GetRGB(int);
+    //! \return the name of this element
+    std::string GetName(int);
 };
 
 // class introduction in data.cpp

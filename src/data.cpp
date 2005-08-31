@@ -58,11 +58,10 @@ OBIsotopeTable   isotab;
  cout << "The van der Waal radius for Nitrogen is " << etab.GetVdwRad(7);
 \endcode
  
-  Stored information in the OBElementTable includes atomic:
+  Stored information in the OBElementTable includes elemental:
    - symbols
    - van der Waal radii
    - covalent radii
-   - bond order radii (deprecated -- use covalent instead)
    - expected maximum bonding valence
    - molar mass (by IUPAC recommended atomic masses)
    - electronegativity
@@ -90,23 +89,30 @@ void OBElementTable::ParseLine(const char *buffer)
 {
     int num,maxbonds;
     char symbol[3];
-    double Rbo,Rcov,Rvdw,mass, elNeg;
+    char name[BUFF_SIZE];
+    double Rcov,Rvdw,mass, elNeg, ionize, elAffin;
+    double red, green, blue;
 
     if (buffer[0] != '#') // skip comment line (at the top)
     {
-        // Ignore RGB columns
-        sscanf(buffer,"%d %s %lf %lf %lf %d %lf %lf %*f %*f %*f",
-               &num,
-               symbol,
-               &Rcov,
-               &Rbo,
-               &Rvdw,
-               &maxbonds,
-               &mass,
-               &elNeg);
+      sscanf(buffer,"%d %s %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %s",
+	     &num,
+	     symbol,
+	     &Rcov,
+	     &Rvdw,
+	     &maxbonds,
+	     &mass,
+	     &elNeg,
+	     &ionize,
+	     &elAffin,
+	     &red,
+	     &green,
+	     &blue,
+	     name);
 
-        OBElement *ele = new OBElement(num,symbol,Rcov,Rbo,Rvdw,maxbonds,mass,elNeg);
-        _element.push_back(ele);
+      OBElement *ele = new OBElement(num,symbol,Rcov,Rvdw,maxbonds,mass,elNeg,
+				     ionize, elAffin, red, green, blue, name);
+      _element.push_back(ele);
     }
 }
 
@@ -151,6 +157,63 @@ double OBElementTable::GetElectroNeg(int atomicnum)
     return(_element[atomicnum]->GetElectroNeg());
 }
 
+double OBElementTable::GetIonization(int atomicnum)
+{
+    if (!_init)
+        Init();
+
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(0.0);
+
+    return(_element[atomicnum]->GetIonization());
+}
+
+
+double OBElementTable::GetElectronAffinity(int atomicnum)
+{
+    if (!_init)
+        Init();
+
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return(0.0);
+
+    return(_element[atomicnum]->GetElectronAffinity());
+}
+ 
+vector<double> OBElementTable::GetRGB(int atomicnum)
+{
+    if (!_init)
+        Init();
+
+    vector <double> colors;
+    colors.reserve(3);
+    
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+      {
+	colors.push_back(0.0f);
+	colors.push_back(0.0f);
+	colors.push_back(0.0f);
+        return(colors);
+      }
+
+    colors.push_back(_element[atomicnum]->GetRed());
+    colors.push_back(_element[atomicnum]->GetGreen());
+    colors.push_back(_element[atomicnum]->GetBlue());
+
+    return (colors);
+}
+ 
+string OBElementTable::GetName(int atomicnum)
+{
+    if (!_init)
+        Init();
+
+    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
+        return("Unknown");
+
+    return(_element[atomicnum]->GetName());
+}
+
 double OBElementTable::GetVdwRad(int atomicnum)
 {
     if (!_init)
@@ -160,17 +223,6 @@ double OBElementTable::GetVdwRad(int atomicnum)
         return(0.0);
 
     return(_element[atomicnum]->GetVdwRad());
-}
-
-double OBElementTable::GetBORad(int atomicnum)
-{
-    if (!_init)
-        Init();
-
-    if (atomicnum < 0 || atomicnum > static_cast<int>(_element.size()))
-        return(0.0);
-
-    return(_element[atomicnum]->GetBoRad());
 }
 
 double OBElementTable::CorrectedBondRad(int atomicnum, int hyb)
