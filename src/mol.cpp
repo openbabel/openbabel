@@ -3012,6 +3012,49 @@ bool OBMol::IsChiral()
     return(false);
 }
 
+/*! This method checks if atom1 and atom2 can be connected with a double bond
+  by measuring the torsion angles formed by all connected atoms X-atom1=atom2-Y
+  and checking that they are close to 0 or 180 degrees */
+bool OBMol::IsDoubleBondGeometry(OBAtom *atom1,
+				 OBAtom *atom2)
+{
+  double torsion;
+  OBAtom *nbratom1,*nbratom2;
+  vector<OBEdgeBase*>::iterator i,j;
+  // We concentrate on sp2 atoms with valence up to 3 and ignore the rest (like sp1 or S,P)
+  // As this is called from PerceiveBondOrders, GetHyb() may still be undefined.
+  if (atom1->GetHyb()==1||atom1->GetValence()>3||
+      atom2->GetHyb()==1||atom2->GetValence()>3)
+    return(true);
+
+  for (nbratom1 = atom1->BeginNbrAtom(i); nbratom1;
+       nbratom1 = atom1->NextNbrAtom(i))
+    {
+      if (nbratom1!=atom2)
+	{ 
+	  for (nbratom2 = atom2->BeginNbrAtom(j);
+	       nbratom2; nbratom2 = atom2->NextNbrAtom(j))
+	    {
+	      if (nbratom2!=atom1)
+		{
+		  torsion=fabs(CalcTorsionAngle(nbratom1->GetVector(),
+						atom1->GetVector(),
+						atom2->GetVector(),
+						nbratom2->GetVector()));
+
+		  // >12&&<168 not enough
+		  if (torsion>15&&torsion<165)
+		    {
+		      // Geometry does not match a double bond
+		      return(false);
+		    }
+
+		}
+	    }  // end loop for neighbors of atom2
+	}
+    } // end loop for neighbors of atom1
+  return(true);
+}
 
 //! Renumber the atoms in this molecule according to the order in the supplied
 //! vector. This will return without action if the supplied vector is empty or
@@ -3083,7 +3126,10 @@ bool WriteTitles(ostream &ofs, OBMol &mol)
 /*! This method adds single bonds between all atoms
   closer than their combined atomic covalent radii,
   then "cleans up" making sure bonded atoms are not
-  closer than 0.4A and the atom does not exceed its valence. */
+  closer than 0.4A and the atom does not exceed its valence.
+  It implements blue-obelisk:rebondFrom3DCoordinates.
+  
+ */
 void OBMol::ConnectTheDots(void)
 {
     if (Empty())
@@ -3268,7 +3314,10 @@ void OBMol::PerceiveBondOrders()
                 for (unsigned int ringAtom = 0; ringAtom != path.size(); ringAtom++)
                 {
                     b = GetAtom(path[ringAtom]);
-                    if (b->GetValence() == 2 || b->GetValence() == 3)
+		    // if an aromatic ring atom has valence 3, it is already set
+		    // to sp2 because the average angles should be 120 anyway
+		    // so only look for valence 2
+                    if (b->GetValence() == 2)
                         b->SetHyb(2);
                 }
             }
@@ -3377,8 +3426,18 @@ void OBMol::PerceiveBondOrders()
 
     for (atom = BeginAtom(i) ; atom ; atom = NextAtom(i))
     {
-        pair<OBAtom*,double> entry(atom, etab.GetElectroNeg(atom->GetAtomicNum()));
-        sortedAtoms.push_back(entry);
+      // if atoms have the same electronegativity, make sure those with shorter bonds
+      // are handled first (helps with assignment of conjugated single/double bonds)
+      shortestBond = 1.0e5f;
+      for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
+        {
+	  if (b->GetAtomicNum()!=1) shortestBond =
+				      min(shortestBond,(atom->GetBond(b))->GetLength());
+        }
+      pair<OBAtom*,double> entry(atom,
+				 etab.GetElectroNeg(atom->GetAtomicNum())*1e6+shortestBond);
+
+      sortedAtoms.push_back(entry);
     }
     sort(sortedAtoms.begin(), sortedAtoms.end(), SortAtomZ);
 

@@ -1027,6 +1027,7 @@ public:
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_TSPIN_MOL)); }
     //! Is this molecule chiral?
     bool IsChiral();
+    bool IsDoubleBondGeometry(OBAtom *a1, OBAtom *a2);
     //! Are there any atoms in this molecule?
     bool Empty()                       { return(_natoms == 0);          }
     //@}
