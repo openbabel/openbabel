@@ -18,48 +18,57 @@
 #                                                                            #
 ##############################################################################
 
+# Longest SMARTS first, otherwise a short SMARTS match blocks the longer ones,
+# because all bonds must be single bonds to match.
+
+# Porphyrin
+# this one has explicit bonds to four nitrogens (e.g., metal bond or hydrogens)
+# 0   1  2     3     4    5   6  7  8   9   10  11    12     13  14  15 16 17   18  19  20    21    22   23
+[#6]1(*[#6]([#7D3]2)[#6][#6][#6]2*[#6]3[#6][#6][#6]4[#7D3]3)[#6][#6][#6](*[#6]5[#6][#6][#6]([#7D3]5)*4)[#7D3]1 	0 1 2 1 2 1 2 3 1 2 4 2 4 5 1 5 6 2 6 3 1 6 7 1 7 8 2 8 9 1 9 10 2 10 11 11 22 2 1 8 12 1 11 12 1 0 13 1 13 14 2 14 15 1 15 16 2 16 17 1 17 18 2 18 19 1 19 20 2 20 21 1 20 22 1
+# this one has explicit bonds to two nitrogens
+[#6]1(*[#6]([#7D3]2)[#6][#6][#6]2*[#6]3[#6][#6][#6]4[#7]3)[#6][#6][#6](*[#6]5[#6][#6][#6]([#7D3]5)*4)[#7]1 	0 1 2 1 2 1 2 3 1 2 4 2 4 5 1 5 6 2 6 3 1 6 7 1 7 8 2 8 9 1 9 10 2 10 11 1 8 12 1 11 12 2 0 13 1 13 14 2 14 15 1 15 16 1 16 17 2 17 18 1 18 19 2 19 20 1 20 21 1 20 22 2
+# and this one doesn't have explicit bonds to the nitrogens
+# 0   1   2    3     4   5   6 7   8    9  10  11   12    13  14  15 16 17  18  19  20   21   22  23
+[#6]1(*[#6]([#7]2)[#6][#6][#6]2*[#6]3[#6][#6][#6]4[#7]3)[#6][#6][#6](*[#6]5[#6][#6][#6]([#7]5)*4)[#7]1 	0 1 2  1 2 1  2 3 2  2 4 1  4 5 2  5 6 1  6 3 1  6 7 2  7 8 1  8 9 1  9 10 2  10 11 1  8 12 2  11 22 2  11 12 1  0 13 1  13 14 2  14 15 1  15 16 1  16 17 2  17 18 1 18 19 2 19 20 1 20 21 2 20 22 1 15 23 2
+
 # Azide
-[#7D2][#7D2][#7D1]		0 1 2 1 2 2
+[#7D2][#7D2^1][#7D1]		0 1 2 1 2 2
 # Nitro
-[#8D1][#7D3][#8D1]		0 1 2 1 2 2
+[#8D1][#7D3^2]([#8D1])*		0 1 2 1 2 1 1 3 1
 # Sulphone
 [#16D4]([#8D1])([#8D1])(*)(*)	0 1 2 0 2 2 0 3 1 0 4 1
 # Phosphone
 [#15D4]([#8D1])(*)(*)(*)	0 1 2 0 2 1 0 3 1 0 4 1
 
 # Carboxylic Acid, ester, etc.
-[#8D1][#6D3][#8](*)		0 1 2 1 2 1 1 3 1
+[#6D3^2]([#8D1])([#8])*		0 1 2 0 2 1 0 3 1
 # Carbon dioxide
 [#8D1][#6D2^1][#8D1]		0 1 2 1 2 2
 # Amide C(=O)N
-[#6D3]([#8D1])[#7]		0 1 2 0 2 1
+[#6D3^2]([#8D1])([#7])*		0 1 2 0 2 1 0 3 1
 # Seleninic acid Se(=O)OH
-[#8D1][#34D3][#8]		0 1 2 1 2 1
+[#34D3^2]([#8D1])([#8])*		0 1 2 0 2 1 0 3 1
 # Thioacid / Thioester C(=O)S
-[#6D3]([#8D1])[#16]		0 1 2 0 2 1
+[#6D3^2]([#8D1])([#16])*		0 1 2 0 2 1 0 3 1
 # dithioacid / dithioester C(=S)S
-[#6D3]([#16D1])[#16]		0 1 2 0 2 1
+[#6D3^2]([#16D1])([#16])*		0 1 2 0 2 1 0 3 1
 # thioamide C(=S)N
-[#6D3]([#16D1])[#7]		0 1 2 0 2 1
+[#6D3^2]([#16D1])([#7])*		0 1 2 0 2 1 0 3 1
 
 # allene C=C=C
 # (this is problematic -- need to make sure the center carbon is sp)
 [#6^2][#6D2^1][#6^2]		0 1 2 1 2 2
 
-# amidine -C(=NH)NH2
-# (only need to deal with case with implicit hydrogens)
-# (the code can figure out the other case by itself)
-[#6D3][#7D1][#7D1]	        0 1 2 0 2 1
+# guanidinium and amidine -C(=NH)NH2 without hydrogens
+[#6D3^2;!R]([#7D1H0;!R])([#7;!R])*	0 1 2 0 2 1 0 3 1
+# and also with hydrogens
+# (this can normally be figured out, but is needed to avoid matching the next SMARTS)
+[#6D3^2;!R]([#7D2H1;!R])([#7;!R])*	0 1 2 0 2 1 0 3 1
+# and also with more hydrogens than normal (protonated)
+[#6D3^2;!R]([#7D3H2;!R])([#7;!R])*	0 1 2 0 2 1 0 3 1
 
-# guanidinium (place C=N towards C-N-C nitrogen)
-# as in amidine, only need to deal with case with implicit hydrogens
-[#7D2][#6D3]([#7D2])[#7D2]	0 1 1 1 2 2 1 3 1
-
-# heme / porphyrin or phthalocyanine (yes, it's a long pattern)
-# 0   1   2    3     4   5   6 7   8    9  10  11   12    13  14  15 16 17  18  19  20   21   22  23
-[#6]1(*[#6]([#7]2)[#6][#6][#6]2*[#6]3[#6][#6][#6]4[#7]3)[#6][#6][#6](*[#6]5[#6][#6][#6]([#7]5)*4)[#7]1 	0 1 2 1 2 1 2 3 1 2 4 2 4 5 1 5 6 2 6 3 1 6 7 1 7 8 2 8 9 1 9 10 2 10 11 1 8 12 1 11 12 2 0 13 1 13 14 2 14 15 1 15 16 1 16 17 2 17 18 1 18 19 2 19 20 1 20 21 1 20 22 2
-# this one has explicit bonds to two nitrogens (e.g., metal bond or hydrogens)
-[#6]1(*[#6]([#7X3]2)[#6][#6][#6]2*[#6]3[#6][#6][#6]4[#7]3)[#6][#6][#6](*[#6]5[#6][#6][#6]([#7X3]5)*4)[#7]1 	0 1 2 1 2 1 2 3 1 2 4 2 4 5 1 5 6 2 6 3 1 6 7 1 7 8 2 8 9 1 9 10 2 10 11 1 8 12 1 11 12 2 0 13 1 13 14 2 14 15 1 15 16 1 16 17 2 17 18 1 18 19 2 19 20 1 20 21 1 20 22 2
+# Schiff base, protonated
+[#6D3^2;!R]([#1,#6])([#1,#6])[#7D3^2;!R]([#1])[#6]	0 1 1 0 2 1 0 3 2 3 4 1 3 5 1
 
 ### other potential functional groups that may (or may not) be useful to add
 # imidines ( N=C/N\C=N
