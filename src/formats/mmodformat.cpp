@@ -88,6 +88,9 @@ bool MacroModFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if ( !vs.empty() && vs.size() > 0)
             sscanf(buffer,"%i%*s",&natoms);
 
+	if (natoms == 0)
+	  return false;
+
         if ( !vs.empty() && vs.size() > 1)
             mol.SetTitle(vs[1]);
         else
