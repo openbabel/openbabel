@@ -123,8 +123,7 @@ bool ZINDOFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             valenceE += 7;
             break;
         default:
-            cerr << " tried to get valence electrons for "
-            << atom->GetAtomicNum() << endl;
+	  break;
         }
     }
 
