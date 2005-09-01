@@ -193,7 +193,7 @@ void CacaoFormat::SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
 {
     // Roundtrip testing shows that some atoms are NULL
     //  which causes segfaults when dereferencing later
-    //   (e.g. in the last "segment" of this routine
+    //   (e.g. in the last "segment" of this routine)
     double sum,r;
 
     OBAtom dummy1,dummy2;
@@ -202,15 +202,20 @@ void CacaoFormat::SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
 
     OBAtom *atom,*a1,*a2,*ref;
     vector<OBNodeBase*>::iterator ai;
+
     vit.push_back((OBInternalCoord*)NULL);
     for (atom = mol.BeginAtom(ai);atom;atom = mol.NextAtom(ai))
         vit.push_back(new OBInternalCoord (atom));
 
     vit[1]->_a = &dummy1;
     vit[1]->_b = &dummy2;
-    vit[2]->_b = &dummy1;
-    vit[2]->_c = &dummy2;
-    vit[3]->_c = &dummy1;
+    if (vit.size() > 2) {
+      vit[2]->_b = &dummy1;
+      vit[2]->_c = &dummy2;
+      if  (vit.size() > 3) {
+	vit[3]->_c = &dummy1;
+      }
+    }
 
     unsigned int i,j;
     for (i = 2;i <= mol.NumAtoms();i++)
