@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([Open Babel], 2.0.0b3-20050801, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_INIT([Open Babel], 2.0.0b4-20050901, openbabel-discuss@lists.sourceforge.net, openbabel)
 AC_CONFIG_SRCDIR(src/typer.cpp)
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
@@ -67,7 +67,13 @@ dnl Checks for libraries.
 AC_CHECK_LIB(m, asin, , exit)
 AC_CHECK_LIB(c, dlopen, LIBDL="", [AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl")])
 AC_SUBST(LIBDL)
-AC_CHECK_LIB(xml2, xmlFreeDoc)
+
+XML="no"
+AC_CHECK_LIB(xml2, xmlFreeDoc, 
+   [XML="yes"; LIBS="-lxml2 $LIBS"; 
+    AC_DEFINE(HAVE_LIBXML2, [], [Define to 1 if you have the `xml2' library (-lxml2).]) ] )
+AM_CONDITIONAL(BUILD_XML, test "$XML" == "yes")
+
 CHECK_ZLIB
 
 dnl Checks for header files.
