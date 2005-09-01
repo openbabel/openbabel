@@ -214,6 +214,7 @@ OBUnitCell & OBUnitCell::operator=(const OBUnitCell &src)
     return(*this);
 }
 
+//! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertCartesianIntoNotionalCoordinates">blue-obelisk:convertCartesianIntoNotionalCoordinates</a>
 void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
 {
     _a = v1.length();
@@ -227,6 +228,7 @@ void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
     _v3 = v3;
 }
 
+//! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertNotionalIntoCartesianCoordinates">blue-obelisk:convertNotionalIntoCartesianCoordinates</a>
 vector<vector3> OBUnitCell::GetCellVectors()
 {
     vector<vector3> v;
@@ -273,6 +275,7 @@ matrix3x3 OBUnitCell::GetCellMatrix()
     return m;
 }
 
+//! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#calculateOrthogonalisationMatrix">blue-obelisk:calculateOrthogonalisationMatrix</a>
 matrix3x3 OBUnitCell::GetOrthoMatrix()
 {
   matrix3x3 m;
@@ -284,7 +287,8 @@ matrix3x3 OBUnitCell::GetOrthoMatrix()
 }
 
 // Based on code in PyMMLib: http://pymmlib.sf.net/
-// Matrix to convert from Cartesian to fractional
+//! Matrix to convert from Cartesian to fractional
+//! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertCartesianIntoFractionalCoordinates">blue-obelisk:convertCartesianIntoFractionalCoordinates</a> 
 matrix3x3 OBUnitCell::GetFractionalMatrix()
 {
   matrix3x3 m;

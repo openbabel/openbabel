@@ -829,6 +829,7 @@ std::vector<OBInternalCoord*> OBMol::GetInternalCoord()
     return _internals;
 }
 
+//! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#findSmallestSetOfSmallestRings">blue-obelisk:findSmallestSetOfSmallestRings</a>.
 vector<OBRing*> &OBMol::GetSSSR()
 {
     if (!HasSSSRPerceived())

@@ -65,6 +65,8 @@ will produce something like the following output for benzene:
 \endcode
 Ring information is automatically deleted from an OBMol when it goes
 out of scope or the Clear() member function is called.
+
+Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#findSmallestSetOfSmallestRings">blue-obelisk:findSmallestSetOfSmallestRings</a>.
  */
 
 static int DetermineFRJ(OBMol &);
