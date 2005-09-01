@@ -1,3 +1,66 @@
+2005-09-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure: Bump version to 2.0b4-20050901 for
+	snapshot. Add support for conditional compilation of source based
+	on libxml2.
+
+	* */Makefile.in: Ditto.
+
+	* Doxyfile: Bump version to 2.0b4-20050901.
+
+	* src/base.cpp: Remove reference to fixed version number in
+	documentation.
+
+	* src/obconversion.h: Remove extraneous OBConversion:: on
+	OptionParamArray() decl, which confused doxygen.
+
+	* src/formats/CSRformat.cpp: Attempt to fix crash encountered
+	during roundtrip testing from writing audit message.
+
+	* src/formats/cacaoformat.cpp (SetHilderbrandt): Prevent crashes
+	caused by attempting to derference NULL pointers (i.e., small
+	molecules without a full z-matrix).
+	
+	* src/formats/mmodformat.cpp: Test to be sure # atoms > 0. Fixes
+	crash encountered with roundtrip testing on binary data.
+
+	* src/formats/mdlformat.cpp: Test to be sure bond record refers to
+	existing atoms (i.e., 0 < start <= NumAtoms()). Prevents crash
+	encountered with intentionally invalid MDL files.
+
+	* src/formats/zindoformat.cpp: Remove debugging string for
+	non-standard elements.
+
+	* src/chains.cpp (MatchConstraint): Ensure OBAtom parameters are
+	non-NULL before proceeding. Fixes a bug encountered when
+	roundtripping H2O.
+
+	* src/generic.cpp, src/obutil.cpp, src/ring.cpp src/mol.cpp: Add
+	identifiers for Blue Obelisk algorithm dictionary.
+
+2005-08-31  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/element.txt, data/element.h: Updated with new data from the
+	Blue Obelisk shared repository. Should be more consistent with
+	other values (particularly covalent radii).
+
+	* src/data.h, src/data.cpp (OBElement, OBElementTable): Add
+	support for new data, including ionization potential, electron
+	affinity, name, and visualization colors.
+
+	* data/bondtyp.txt, data/bondtyp.txt: Changes contributed by Elmar
+	for PR#1275146.
+
+	* src/mol.h, src/mol.cpp: Add new method IsDoubleBondGeometry to
+	assist with bond order assignment (PR#1275170). Fix bugs in
+	PerceiveBondOrders with conjugated single/double bonds and biotin
+	PR#1275151, PR#1275160.
+
+	* scripts/*: Updated with current API changes. Added more
+	examples, particularly for Python.
+
+	* Doxyfile: Bump for 2.0b4 snapshot.
+
 2005-08-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/bondtyp.txt, data/bondtyp.h: Add initial porphyrin / heme
