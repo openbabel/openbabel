@@ -364,7 +364,7 @@ protected:
 	static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
 	static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
 	typedef std::map<std::string,int> OPAMapType;
-	static OPAMapType& OBConversion::OptionParamArray(Option_type typ);
+	static OPAMapType& OptionParamArray(Option_type typ);
 	static int       LoadFormatFiles();
 	bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is);
 
