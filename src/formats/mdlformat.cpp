@@ -195,6 +195,10 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 			start = atoi((r1.substr(0,3)).c_str());
 			end = atoi((r1.substr(3,3)).c_str());
 			order = atoi((r1.substr(6,3)).c_str());
+			if (start == 0 || end == 0 || order == 0 ||
+			    start > mol.NumAtoms() || end > mol.NumAtoms())
+			  return false;
+
 			order = (order == 4) ? 5 : order;
 			if (r1.size() >= 12) {  //handle wedge/hash data
 				stereo = atoi((r1.substr(9,3)).c_str());
