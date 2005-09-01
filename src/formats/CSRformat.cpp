@@ -63,9 +63,7 @@ public:
         if(pmol)
             ret=WriteMolecule(pmol,pConv);
 
-	std::string auditMsg = "OpenBabel::Write molecule ";
-	std::string description(Description());
-	auditMsg += description.substr( 0, description.find('\n') );
+	std::string auditMsg = "OpenBabel::Write molecule Accelrys/MSI Quanta CSR format";
 	obErrorLog.ThrowError(__FUNCTION__,
 			      auditMsg,
 			      obAuditMsg);
