@@ -1080,6 +1080,9 @@ void OBChainsParser::ConstrainBackbone(OBMol &mol, Template *templ, int tmax)
 
 bool OBChainsParser::MatchConstraint(OBAtom *atom, int mask)
 {
+  if (atom == NULL)
+    return (false);
+
     if( mask < 0 )
         return(atom->GetAtomicNum() == static_cast<unsigned int>(-mask));
     else
@@ -1088,6 +1091,9 @@ bool OBChainsParser::MatchConstraint(OBAtom *atom, int mask)
 
 bool OBChainsParser::Match2Constraints(Template *tmpl, OBAtom *na, OBAtom *nb)
 {
+  if (na == NULL || nb == NULL)
+    return (false); // don't even try to evaluate it
+
     if( MatchConstraint(na,tmpl->n2) )
         if( MatchConstraint(nb,tmpl->n1) )
             return( true );
@@ -1099,6 +1105,9 @@ bool OBChainsParser::Match2Constraints(Template *tmpl, OBAtom *na, OBAtom *nb)
 
 bool OBChainsParser::Match3Constraints(Template *tmpl, OBAtom *na, OBAtom *nb, OBAtom *nc)
 {
+  if (na == NULL || nb == NULL || nc == NULL)
+    return (false); // don't even try to evaluate it
+
     if( MatchConstraint(na,tmpl->n3) )
         if( Match2Constraints(tmpl,nb,nc) )
             return( true );
@@ -1113,6 +1122,9 @@ bool OBChainsParser::Match3Constraints(Template *tmpl, OBAtom *na, OBAtom *nb, O
 
 bool OBChainsParser::Match4Constraints(Template *tmpl, OBAtom *na, OBAtom *nb, OBAtom *nc, OBAtom *nd)
 {
+  if (na == NULL || nb == NULL || nc == NULL || nd == NULL)
+    return (false); // don't even try to evaluate it
+
     if( MatchConstraint(na,tmpl->n4) )
         if( Match3Constraints(tmpl,nb,nc,nd) )
             return( true );
