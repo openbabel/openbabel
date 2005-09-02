@@ -189,6 +189,7 @@ bool CacaoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     return(true);
 }
 
+//! \todo Make this method bulletproof. Currently it causes segfaults sometimes
 void CacaoFormat::SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
 {
     // Roundtrip testing shows that some atoms are NULL
