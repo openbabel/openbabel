@@ -51,7 +51,7 @@ private:
 	void DoReverses();
 	void DoRings();
 
-	int CalcHash(const std::vector<int>& frag);
+	unsigned int CalcHash(const std::vector<int>& frag);
 	void PrintFpt(std::vector<int>& f, int hash=0);
 
 	Fset fragset;
@@ -241,11 +241,11 @@ void fingerprint2::DoRings()
 }
 
 //////////////////////////////////////////////////////////
-int fingerprint2::CalcHash(const vector<int>& frag)
+unsigned int fingerprint2::CalcHash(const vector<int>& frag)
 {
 	//Something like... whole of fragment treated as a binary number modulus 1021
 	const int MODINT = 108; //2^32 % 1021 
-	int hash=0;
+	unsigned int hash=0;
 	for(unsigned i=0;i<frag.size();++i)
 		hash= (hash*MODINT + (frag[i] % 1021)) % 1021;
 	return hash;

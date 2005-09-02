@@ -1,3 +1,14 @@
+2005-09-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/cacaoformat.cpp (SetHilderbrandt): Mark a todo to
+	ensure this method is completely bulletproof -- still appears to
+	dereference atoms without checking for NULLs.
+
+	* src/fingerprint.h, src/fingerprint.cpp (SetBit): Change to take an
+	unsigned int to prevent crash caused by "negative" parameter.
+
+	* src/fingerprints/finger2.cpp (CalcHash): Ditto.
+	
 2005-09-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure: Bump version to 2.0b4-20050901 for

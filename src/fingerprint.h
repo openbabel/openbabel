@@ -35,7 +35,7 @@ class OBAPI OBFingerprint
 //see end of cpp file for detailed documentation
 public:
 	/// Sets the nth bit
-	void SetBit(std::vector<unsigned int>& vec, int n);	
+	void SetBit(std::vector<unsigned int>& vec, unsigned int n);	
 
 	/// Repeatedly ORs the top half with the bottom half until no smaller than nbits 
 	void Fold(std::vector<unsigned int>& vec, unsigned int nbits); 
