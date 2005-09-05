@@ -2723,18 +2723,8 @@ static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom)
                 if( !expr->leaf.value )
                     return !atom->IsAromatic();
                 return atom->IsAromatic();
-            case AL_HCOUNT:
-                if (atom->ExplicitHydrogenCount() > atom->ImplicitHydrogenCount())
-                    return (expr->leaf.value==(signed int)atom->ExplicitHydrogenCount());
-                else
-                    return (expr->leaf.value==(signed int)atom->ImplicitHydrogenCount());
-                /* Roger's broken code --mts
-                       register int hcount;
-                       hcount = atom->ExplicitHydrogenCount() +
-                                atom->ImplicitHydrogenCount();
-                  return expr->leaf.value == hcount;
-                */
-
+            case AL_HCOUNT: // should always return the number of explicit Hs.
+	      return (expr->leaf.value==(signed int)atom->ExplicitHydrogenCount());
             case AL_DEGREE:
                 return(expr->leaf.value == (int)atom->GetValence());
             case AL_VALENCE:
