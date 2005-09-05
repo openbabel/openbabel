@@ -53,22 +53,27 @@ extern OBBondTyper      bondtyper;
  automatically perceive information about a molecule. A guided tour
  of the OBMol class is a good place to start.
  
- An OBMol class can be declared in either of the following ways:
+ An OBMol class can be declared:
 \code
   OBMol mol;
-  //or
-  OBMol mol(SDF,MOL2);
 \endcode
- The second declaration type sets the input and output formats for a molecule.
+
  For example:
 \code
   #include <iostream.h>
   #include "mol.h"
+  #include "obconversion.h"
   int main(int argc,char **argv)
   {
-  OBMol mol(SDF,MOL2);
-  OBFileFormat::ReadMolecule(cin, mol);
-  OBFileFormat::WriteMolecule(cout, mol);
+  OBConversion conv(&cin,&cout);
+  if(conv.SetInAndOutFormats("SDF","MOL2"))
+	{	
+		OBMol mol;
+		if(conv.Read(&mol))
+		...manipulate molecule 
+		
+		conv->Write(&mol);
+	}
   return(1);
   }
 \endcode
@@ -76,35 +81,10 @@ extern OBBondTyper      bondtyper;
  will read in a molecule in SD file format from stdin 
  (or the C++ equivalent cin) and write a MOL2 format file out
  to standard out. Additionally, The input and output formats can
- be altered after declaring an OBMol by the member functions
- OBMol::SetInputType(enum #io_type type) and
- OBMol::SetOutputType(enum #io_type type),
- where the current values of enum #io_type (defined in data.h) are
- \code {      UNDEFINED,
-              ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
-              CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
-	      CHEM3D2, CHEMDRAW, CHEMTOOL, CIF, CML, CSR, CSSR, DELPDB, DMOL,
-	      DOCK, FDAT, FEATURE, FH, FIX, FRACT, GAMESSIN, GAMESSOUT,
-              GAUSSIAN92, GAUSSIAN94, GAUSSIANCART, GAUSSIANZMAT,
-              GHEMICAL, GROMOS96A, GROMOS96N, GSTAT, HIN, ICON8,
-              IDATM, JAGUARIN, JAGUAROUT, M3D, MACCS, MACMOL,
-              MICROWORLD, MM2IN, MM2OUT, MM3, MMADS, MMCIF, MMD,
-              MOL2, MOLDEN, MOLIN, MOLINVENT, MOPACCART, MOPACINT,
-              MOPACOUT, MPQC, MSF, NWCHEMIN, NWCHEMOUT, OEBINARY,
-              PCMODEL, PDB, PREP, QCHEMIN, QCHEMOUT, REPORT,
-              SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
-              SPARTANSEMI, TGF, TINKER, TITLE, UNICHEM, VIEWMOL,
-              XED, XYZ
- }\endcode
- 
- The following lines of code show how to set the input and output
- types of an OBMol through the member functions:
-\code
-   OBMol mol;
-   mol.SetInputType(SDF);
-   mol.SetOutputType(MOL2);
-\endcode
- Once a molecule has been read into an OBMol the atoms and bonds
+ be altered using the OBConversion class
+
+ Once a molecule has been read into an OBMol (or created via other methods)
+ the atoms and bonds
  can be accessed by the following methods:
 \code
  OBAtom *atom;
@@ -147,6 +127,38 @@ will result in an error, but
  vector<OBNodeBase*> and vector<OBEdgeBase*> to store atom and bond information.
  Iterators are then a natural way to loop over the vectors of atoms and bonds.
  
+ A variety of predefined iterators have been created to simplify
+ common looping requests (e.g., looping over all atoms in a molecule,
+ bonds to a given atom, etc.)
+
+\code
+#include "obiter.h"
+...
+#define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; a++ )
+#define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; b++ )
+#define FOR_NBORS_OF_ATOM(a,p)    for( OBAtomAtomIter    a(p); a; a++ )
+#define FOR_BONDS_OF_ATOM(b,p)    for( OBAtomBondIter    b(p); b; b++ )
+#define FOR_RESIDUES_OF_MOL(r,m)  for( OBResidueIter     r(m); r; r++ )
+#define FOR_ATOMS_OF_RESIDUE(a,r) for( OBResidueAtomIter a(r); a; a++ )
+...
+\endcode
+
+  These convenience functions can be used like so:
+\code
+   #include "obiter.h"
+   #include "mol.h"
+
+   OBMol mol;
+   double exactMass = 0.0f;
+   FOR_ATOMS_OF_MOL(a, mol)
+   {
+       exactMass +=  a->GetExactMass();
+   }
+\endcode
+
+   Note that with these convenience macros, the iterator "a" (or
+   whichever name you pick) is declared for you -- you do not need to
+   do it beforehand.
 */
 
 //
@@ -3011,50 +3023,6 @@ bool OBMol::IsChiral()
             return(true);
 
     return(false);
-}
-
-/*! This method checks if atom1 and atom2 can be connected with a double bond
-  by measuring the torsion angles formed by all connected atoms X-atom1=atom2-Y
-  and checking that they are close to 0 or 180 degrees */
-bool OBMol::IsDoubleBondGeometry(OBAtom *atom1,
-				 OBAtom *atom2)
-{
-  double torsion;
-  OBAtom *nbratom1,*nbratom2;
-  vector<OBEdgeBase*>::iterator i,j;
-  // We concentrate on sp2 atoms with valence up to 3 and ignore the rest (like sp1 or S,P)
-  // As this is called from PerceiveBondOrders, GetHyb() may still be undefined.
-  if (atom1->GetHyb()==1||atom1->GetValence()>3||
-      atom2->GetHyb()==1||atom2->GetValence()>3)
-    return(true);
-
-  for (nbratom1 = atom1->BeginNbrAtom(i); nbratom1;
-       nbratom1 = atom1->NextNbrAtom(i))
-    {
-      if (nbratom1!=atom2)
-	{ 
-	  for (nbratom2 = atom2->BeginNbrAtom(j);
-	       nbratom2; nbratom2 = atom2->NextNbrAtom(j))
-	    {
-	      if (nbratom2!=atom1)
-		{
-		  torsion=fabs(CalcTorsionAngle(nbratom1->GetVector(),
-						atom1->GetVector(),
-						atom2->GetVector(),
-						nbratom2->GetVector()));
-
-		  // >12&&<168 not enough
-		  if (torsion>15&&torsion<165)
-		    {
-		      // Geometry does not match a double bond
-		      return(false);
-		    }
-
-		}
-	    }  // end loop for neighbors of atom2
-	}
-    } // end loop for neighbors of atom1
-  return(true);
 }
 
 //! Renumber the atoms in this molecule according to the order in the supplied

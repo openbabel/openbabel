@@ -159,7 +159,7 @@ protected: // members
     std::vector<OBAtom*>        _atoms; //!< List of OBAtom in this residue
     std::vector<unsigned int>   _sernum;//!< List of serial numbers
     std::vector<OBGenericData*> _vdata; //!< Custom data
-};
+}; // OBResidue
 
 
 //ATOM Property Macros (flags)
@@ -352,7 +352,7 @@ public:
     double      GetPartialCharge();
     OBResidue *GetResidue();
     //OBMol   *GetParent()        {return((OBMol*)_parent);}
-    //! Create a vector for a new bond from this atom, with length supplied by the double
+    //! Create a vector for a new bond from this atom, with length given by the supplied parameter
     bool       GetNewBondVector(vector3 &v,double length);
     OBBond    *GetBond(OBAtom *);
     OBAtom    *GetNextAtom();
@@ -520,8 +520,7 @@ public:
     std::vector<OBGenericData*>::iterator  EndData()
     {        return(_vdata.end());      }
     //@}
-}
-; // class OBAtom
+}; // class OBAtom
 
 
 // Class OBBond
@@ -560,14 +559,8 @@ protected:
     //unsigned short int          _idx;   //!< Not needed, inherited from OBEdgeBase
     std::vector<OBGenericData*>   _vdata; //!< Generic data for custom information
 
-    bool HasFlag(int flag)
-    {
-        return((_flags & flag) != 0);
-    }
-    void SetFlag(int flag)
-    {
-        _flags |= flag;
-    }
+    bool HasFlag(int flag)    { return((_flags & flag) != 0); }
+    void SetFlag(int flag)    { _flags |= flag;               }
 
 public:
     //! Constructor
@@ -654,6 +647,7 @@ public:
     bool IsDown()  {    return(HasFlag(OB_TORDOWN_BOND));  }
     bool IsWedge() {    return(HasFlag(OB_WEDGE_BOND));    }
     bool IsHash()  {    return(HasFlag(OB_HASH_BOND));     }
+    bool IsDoubleBondGeometry();
     //@}
 
     //! \name Methods for handling generic data
@@ -1027,7 +1021,6 @@ public:
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_TSPIN_MOL)); }
     //! Is this molecule chiral?
     bool IsChiral();
-    bool IsDoubleBondGeometry(OBAtom *a1, OBAtom *a2);
     //! Are there any atoms in this molecule?
     bool Empty()                       { return(_natoms == 0);          }
     //@}

@@ -316,6 +316,49 @@ bool OBBond::IsAromatic() const
     return(false);
 }
 
+/*! This method checks if the geometry around this bond looks unsaturated
+  by measuring the torsion angles formed by all connected atoms X-start=end-Y
+  and checking that they are close to 0 or 180 degrees */
+bool OBBond::IsDoubleBondGeometry()
+{
+  double torsion;
+  OBAtom *nbrStart,*nbrEnd;
+  vector<OBEdgeBase*>::iterator i,j;
+  // We concentrate on sp2 atoms with valence up to 3 and ignore the rest (like sp1 or S,P)
+  // As this is called from PerceiveBondOrders, GetHyb() may still be undefined.
+  if (_bgn->GetHyb()==1 || _bgn->GetValence()>3||
+      _end->GetHyb()==1 || _end->GetValence()>3)
+    return(true);
+
+  for (nbrStart = static_cast<OBAtom*>(_bgn)->BeginNbrAtom(i); nbrStart;
+       nbrStart = static_cast<OBAtom*>(_bgn)->NextNbrAtom(i))
+    {
+      if (nbrStart != _end)
+	{ 
+	  for (nbrEnd = static_cast<OBAtom*>(_end)->BeginNbrAtom(j);
+	       nbrEnd; nbrEnd = static_cast<OBAtom*>(_end)->NextNbrAtom(j))
+	    {
+	      if (nbrEnd != _bgn)
+		{
+		  torsion=fabs(CalcTorsionAngle(nbrStart->GetVector(),
+						static_cast<OBAtom*>(_bgn)->GetVector(),
+						static_cast<OBAtom*>(_end)->GetVector(),
+						nbrEnd->GetVector()));
+
+		  // >12&&<168 not enough
+		  if (torsion > 15.0f  && torsion < 165.0f)
+		    {
+		      // Geometry does not match a double bond
+		      return(false);
+		    }
+
+		}
+	    }  // end loop for neighbors of end
+	}
+    } // end loop for neighbors of start
+  return(true);
+}
+
 void OBBond::SetKSingle()
 {
     _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
