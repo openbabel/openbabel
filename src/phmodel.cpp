@@ -67,13 +67,17 @@ void OBPhModel::ParseLine(const char *buffer)
     {
         tokenize(vs,buffer);
         if (vs.empty() || vs.size() < 4)
+	  {
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in phmodel table from phmodel.txt", obInfo);
             return;
+	  }
 
         OBChemTsfm *tsfm = new OBChemTsfm;
         if (!tsfm->Init(vs[1],vs[3]))
         {
             delete tsfm;
             tsfm = NULL;
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in phmodel table from phmodel.txt", obInfo);
             return;
         }
 
@@ -83,14 +87,20 @@ void OBPhModel::ParseLine(const char *buffer)
     {
         tokenize(vs,buffer);
         if (vs.empty() || vs.size() < 2)
+	  {
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in phmodel table from phmodel.txt", obInfo);
             return;
+	  }
+
         sp = new OBSmartsPattern;
         if (!sp->Init(vs[1]) || (vs.size()-2) != sp->NumAtoms())
         {
             delete sp;
             sp = NULL;
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in phmodel table from phmodel.txt", obInfo);
             return;
         }
+
         vector<double> vf;
         vector<string>::iterator i;
         for (i = vs.begin()+2;i != vs.end();i++)

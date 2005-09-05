@@ -68,7 +68,11 @@ void OBAtomTyper::ParseLine(const char *buffer)
     {
         tokenize(vs,buffer);
         if (vs.empty() || vs.size() < 3)
+	  {
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse INTHYB line in atom type table from atomtyp.txt", obInfo);
             return;
+	  }
+
         sp = new OBSmartsPattern;
         if (sp->Init(vs[1]))
             _vinthyb.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
@@ -76,27 +80,38 @@ void OBAtomTyper::ParseLine(const char *buffer)
         {
             delete sp;
             sp = NULL;
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse INTHYB line in atom type table from atomtyp.txt", obInfo);
+	    return;
         }
     }
     else if (EQn(buffer,"IMPVAL",6))
     {
         tokenize(vs,buffer);
         if (vs.empty() || vs.size() < 3)
+	  {
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse IMPVAL line in atom type table from atomtyp.txt", obInfo);
             return;
+	  }
+
         sp = new OBSmartsPattern;
         if (sp->Init(vs[1]))
             _vimpval.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
         else
         {
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse IMPVAL line in atom type table from atomtyp.txt", obInfo);
             delete sp;
             sp = NULL;
+	    return;
         }
     }
     else if (EQn(buffer,"EXTTYP",6))
     {
         tokenize(vs,buffer);
         if (vs.empty() || vs.size() < 3)
+	  {
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
             return;
+	  }
         sp = new OBSmartsPattern;
         if (sp->Init(vs[1]))
             _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
@@ -104,6 +119,8 @@ void OBAtomTyper::ParseLine(const char *buffer)
         {
             delete sp;
             sp = NULL;
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
+	    return;
         }
     }
 }
@@ -527,10 +544,14 @@ void OBAromaticTyper::ParseLine(const char *buffer)
         }
         else
         {
+	    obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in aromatic typer from aromatic.txt", obInfo);
             delete sp;
             sp = NULL;
+	    return;
         }
     }
+    else
+      obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in aromatic typer from aromatic.txt", obInfo);
 }
 
 OBAromaticTyper::~OBAromaticTyper()

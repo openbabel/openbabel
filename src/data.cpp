@@ -60,12 +60,15 @@ OBIsotopeTable   isotab;
  
   Stored information in the OBElementTable includes elemental:
    - symbols
-   - van der Waal radii
    - covalent radii
+   - van der Waal radii
    - expected maximum bonding valence
    - molar mass (by IUPAC recommended atomic masses)
    - electronegativity
- 
+   - ionization potential
+   - electron affinity
+   - RGB colors for visualization programs
+   - names (by IUPAC recommendation)
 */
 
 OBElementTable::OBElementTable()
@@ -353,6 +356,8 @@ void OBIsotopeTable::ParseLine(const char *buffer)
             }
             _isotopes.push_back(row);
         }
+	else
+	  obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in isotope table isotope.txt", obInfo);
     }
 }
 
@@ -440,15 +445,22 @@ void OBTypeTable::ParseLine(const char *buffer)
         return; // just a comment line
 
     if (_linecount == 0)
-        sscanf(buffer,"%d%d",&_ncols,&_nrows);
+        sscanf(buffer,"%d%d",&_nrows,&_ncols);
     else if (_linecount == 1)
         tokenize(_colnames,buffer);
     else
     {
         vector<string> vc;
         tokenize(vc,buffer);
-        if (vc.size() == (unsigned)_nrows)
+        if (vc.size() == (unsigned)_ncols)
             _table.push_back(vc);
+	else
+	  {
+	    stringstream errorMsg;
+	    errorMsg << " Could not parse line in type translation table types.txt -- incorect number of columns";
+	    errorMsg << " found " << vc.size() << " expected " << _ncols << ".";
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+	  }
     }
     _linecount++;
 }
