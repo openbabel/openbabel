@@ -106,7 +106,7 @@ namespace OpenBabel
 #define AA_MET (1<<19)
 #define AA_TRP (1<<20)
 
-// Residue Property definitions
+//! Residue property definitions
 namespace OBAminoAcidProperty
 {
 static const unsigned int ACIDIC      =  0;
@@ -128,6 +128,7 @@ static const unsigned int SMALL       = 15;
 static const unsigned int SURFACE     = 16;
 }
 
+//! Residue atom properties
 namespace OBResidueAtomProperty
 {
 static const unsigned int ALPHA_CARBON     = 0;
