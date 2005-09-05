@@ -41,11 +41,29 @@ OBAPI void Trim(std::string& txt);
 //! obData0 through obData15 are data slots that are not used in OpenBabel, and
 //! are meant for use in derivative programs.  Macro definitions can be used
 //! to define what each data slot is used for.
-enum obDataType {obUndefinedData, obPairData, obEnergyData,
-                 obCommentData, obConformerData, obExternalBondData,
-		 obRotamerList, obVirtualBondData, obRingData, 
-		 obTorsionData, obAngleData, obSerialNums, obUnitCell, 
-		 obSpinData, obChargeData, obSymmetryData, 
+enum obDataType {obUndefinedData,
+		 obPairData,       //!< for arbitrary key/value data
+		 obEnergyData,     //!< for energetics data (e.g., total energy, heat of formation, etc.)
+                 obCommentData,    //!< for storing text comments
+		 obConformerData,  //!< for storing information about conformers
+		 obExternalBondData,//!< for storing bond data external to OpenBabel
+		 obRotamerList,    //!< for generating & manipulating rotamers
+		 obVirtualBondData,//!< for storing bonds to atoms yet to be added
+		 obRingData,       //!< for ring data in a molecule
+		 obTorsionData,    //!< for torsion/dihedral data
+		 obAngleData,      //!< for bond angles in a molecule
+		 obSerialNums,     //!< for residue serial numbers
+		 obUnitCell,       //!< for crystallographic unit cell data
+		 obSpinData,       //!< for spin data, including NMR, atomic and molecular spin, etc.
+		 obChargeData,     //!< for partial, total charges, dipole moments, etc.
+		 obSymmetryData,   //!< for symmetry data -- point and space groups, transforms, etc.
+		 obChiralData,     //!< for arbitrary chiral information (atom, bond, molecule, etc.)
+		 obOccupationData, //!< for atomic, molecular occupation data
+		 obDensityData,    //!< for density (cube) data
+		 obElectronicData, //!< for electronic levels, redox, orbitals, etc.
+		 obVibrationData,  //!< for vibrational modes, frequencies, etc.
+		 obRotationData,   //!< for rotational energy information
+		 obNuclearData,    //!< for nuclear transitions (e.g., decay, fission, fusion)
 		 obData0, obData1, obData2, obData3, obData4, obData5,
 		 obData6, obData7, obData8, obData9, obData10, obData11,
                  obData12, obData13, obData14, obData15};
