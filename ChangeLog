@@ -1,3 +1,25 @@
+2005-09-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/data.cpp: Update documentation, perform more error checking
+	for ParseLine() methods -- report to obErrorLog if needed. Fixes
+	PR#1252607.
+
+	* src/phmodel.cpp, src/typer.cpp (ParseLine): Ditto.
+
+	* src/generic.h: Added additional types to enum obDataType, plus
+	documentation.
+
+	* src/bond.cpp: Switch IsDoubleBondGeometry to OBBond method.
+
+	* src/mol.cpp, src/mol.h: Update OBMol documentation for OBConversion
+	class. Add new PerceiveBondOrders() check for
+	IsDoubleBondGeometry, using patch PR#1275166, contributed by Elmar.
+
+	* src/residue.cpp: Update documentation on property namespaces.
+
+	* src/parsmart.cpp: Fix matching explicit hydrogen count 'H'
+	PR#1275176, contributed by Elmar.
+
 2005-09-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/cacaoformat.cpp (SetHilderbrandt): Mark a todo to
