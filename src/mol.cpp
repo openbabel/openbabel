@@ -3466,10 +3466,14 @@ void OBMol::PerceiveBondOrders()
             {
                 currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
                 if ( (b->GetHyb() == 2 || b->GetValence() == 1)
-                        && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
-                        && (currentElNeg > maxElNeg ||
-                            (IsNear(currentElNeg,maxElNeg)
-                             && (atom->GetBond(b))->GetLength() < shortestBond)) )
+		     && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
+		     && (GetBond(atom, b))->IsDoubleBondGeometry()
+		     && (currentElNeg > maxElNeg ||
+			 (IsNear(currentElNeg,maxElNeg)
+			  // If only the bond length counts, prefer double bonds in the ring
+			  && (((atom->GetBond(b))->GetLength() < shortestBond) 
+			      && (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing()))
+			  || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()))))
                 {
                     if (b->HasNonSingleBond() ||
                             (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
