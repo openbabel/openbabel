@@ -518,6 +518,10 @@ void OBRandom::TimeSeed()
     gettimeofday(&time,(struct timezone *)NULL);
     x = (time.tv_usec%p);
     srand( x );
+#ifdef HAVE_SRANDDEV
+    sranddev();
+#endif
+
 #endif
 }
 
