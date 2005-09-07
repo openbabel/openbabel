@@ -170,6 +170,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 EXTRA_DIST = $(man_MANS) README.dioxin.pov README.povray babel31.inc \
 		dioxin.mol2 dioxin.inc dioxin.png dioxin.pov \
+		Doxyfile-man \
 		Migration.html FAQ.html OBTwoMigration.html
 
 man_MANS = babel.1 obfit.1 obgrep.1 obrotate.1 obprop.1
@@ -185,9 +186,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  doc/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  doc/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  doc/Makefile
+	  $(AUTOMAKE) --foreign  doc/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
