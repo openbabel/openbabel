@@ -1,8 +1,3 @@
-# InChI code cannot be distributed with Open Babel due to licensing issues
-# (current InChI code is not released under any sort of free software or 
-#  open source license. IUPAC is reconsidering the InChI license.)
-# SUBDIRS = inchi
-#pkginclude_HEADERS = inchi_api.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
@@ -26,8 +21,7 @@ libformats_la_SOURCES = \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
 	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
-	xedformat.cpp xyzformat.cpp zindoformat.cpp \
-	# inchiformat.cpp
+	xedformat.cpp xyzformat.cpp zindoformat.cpp
 
 else BUILD_SHARED
 
@@ -46,8 +40,7 @@ pkglib_LTLIBRARIES = \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
 	rxnformat.la shelxformat.la smilesformat.la tinkerformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
-	xedformat.la xyzformat.la zindoformat.la \
-	# inchiformat.la
+	xedformat.la xyzformat.la zindoformat.la
 
 APIInterface_la_SOURCES = APIInterface.cpp
 APIInterface_la_LDFLAGS = -module -avoid-version
@@ -133,9 +126,6 @@ gromos96format_la_LDFLAGS = -module -avoid-version
 hinformat_la_SOURCES = hinformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 
 
-# inchiformat_la_SOURCES = inchiformat.cpp
-# inchiformat_la_LDFLAGS = -module -avoid-version 
-
 jaguarformat_la_SOURCES = jaguarformat.cpp
 jaguarformat_la_LDFLAGS = -module -avoid-version 
 
@@ -203,3 +193,32 @@ zindoformat_la_SOURCES = zindoformat.cpp
 zindoformat_la_LDFLAGS = -module -avoid-version 
 
 endif
+
+# InChI code cannot be distributed with Open Babel due to licensing issues
+# (current InChI code is not released under any sort of free software or 
+#  open source license. IUPAC is supposedly reconsidering the InChI license.)
+#
+# If you "happen" to have the inchi source code and drop it into the following
+# subdirectory, things might work out OK. It might also work if you happen
+# to have a pre-compiled libinchi that's discovered by the configure script.
+#
+# SUBDIRS = inchi
+
+if BUILD_INCHI
+libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
+libopenbabelinclude_HEADERS = inchi_api.h
+
+if !BUILD_SHARED
+libformats_la_SOURCES +=  \
+		inchiformat.cpp
+else
+
+pkglib_LTLIBRARIES += \
+		inchiformat.la
+
+inchiformat_la_SOURCES = inchiformat.cpp
+inchiformat_la_LDFLAGS = -module -avoid-version 
+
+endif #build shared
+
+endif #build inchi

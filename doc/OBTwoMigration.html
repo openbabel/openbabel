@@ -1,0 +1,86 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+<title>Open Babel: Migration from 1.x to 2.0</title>
+</head>
+<body bgcolor="#ffffff">
+
+<h1>Migration from Open Babel 1.x</h1>
+<h2>(a.k.a. What's New in Open Babel 2.0</h2>
+
+<p>$Date$</p>
+
+<h2>General:</h2>
+
+<p>Many things have changed internally in the new Open Babel 2.0
+release, including a variety of new classes, methods, and
+algorithms. For a full list of what's new, see the <a
+href="RELEASE.html">Release Notes</a> and <a href="">Change Log</a>.</p>
+
+<p>This document aims to outline major changes in the Open Babel
+library which differ from previous versions. In general, major version numbers of Open Babel indicate major changes to the library which will break backwards-compatibility in at least some areas.</p>
+
+<h2>OBFileFormat vs. OBConversion</h2>
+
+<p>By far the largest change between Open Babel 1.x and 2.0 is the
+introduction of the OBConversion and OBFormat classes to handle
+reading and writing chemical data, replacing the OBFileFormat
+class. There are several main advantages to these new classes.</p>
+
+<ul>
+<li>Dyanmic loading and unloading of file formats.</li>
+<ul>
+<li>This means that to write a new format, only one file (with the
+format code) is needed. No other code changes are required.</li>
+<li>In Open Babel 1.x, in addition to the file format code, 2 code
+files, 2 header files, and extable.txt needed to be changed.</li>
+</ul>
+<li>Better support for formats which handle multiple molecules "records" in one file (e.g., CML, MDL Molfile, SMILES, etc.).</li>
+<li>Batch conversion, splitting, and joining multiple molecule files.</li>
+<li>Support for handling reaction data (e.g., Reaction SMILES, MDL Rxn files) and other types of chemical data beyond simple molecular files.</li>
+</ul>
+
+<h3>Required Code Changes</h3>
+
+<p>Example code for accessing OBConversion and OBFormat to translate files is included in all of the command-line programs <code>babel</code>, <code>obgrep</code>, <code>obfit</code>, etc. For example:</p>
+
+<pre>
+        OBConversion conv(&cin,&cout);
+        if(conv.SetInAndOutFormats("SMI","MOL"))
+        {       
+                OBMol mol;
+                if(conv.Read(&mol))
+                ...manipulate molecule 
+                
+                conv->Write(&mol);
+        }
+</pre>
+
+<pre>
+        ifstream ifs(filename); //Original code
+
+        OBConversion conv;
+        // Try 
+        OBFormat* inFormat = conv.FormatFromExt(filename);
+        OBFormat* outFormat = conv.GetFormat("ORIG");
+        istream* pIn = &ifs; 
+        stringstream newstream;
+        if(inFormat && outFormat)
+        {
+                conv.SetInAndOutFormats(inFormat,outFormat);
+                conv.Convert(pIn,&newstream);
+                pIn=&newstream;
+        }
+</pre>
+
+<hr width="100">
+
+<p>Open Babel is hosted by:
+<a href="http://sourceforge.net">
+<img src="http://sourceforge.net/sflogo.php?group_id=40728" 
+width="88" height="31" border="0" alt="SourceForge Logo"></a></p>
+
+</body>
+</html>
+
+

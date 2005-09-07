@@ -1,0 +1,109 @@
+.TH "obgrep" 1 "5 Sep 2005" "Version 2.0" "Open Babel" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+obgrep \- an advanced SMARTS grep program
+
+.br
+ 
+.PP
+\fBSYNOPSIS\fP.RS 4
+
+.RE
+.PP
+\fBobgrep\fP [options] '<SMARTS-pattern>' <filename>
+.PP
+\fBDESCRIPTION\fP.RS 4
+
+.RE
+.PP
+The obgrep tool can be used to search for molecules inside multi-molecule database files (e.g., SMILES, SDF, etc.).
+.PP
+\fBOPTIONS\fP.RS 4
+
+.RE
+.PP
+If only a filename is given, obgrep will attempt to guess the file type from the filename extension. 
+.br
+
+.br
+.PP
+\fB-c\fP: Print the number of matches 
+.br
+
+.br
+ \fB-f\fP: Full match, print matching-molecules only when the number of heavy atoms is also equal to the number of atoms in the SMARTS pattern 
+.br
+
+.br
+ \fB-i\fP <format>: Specifies input and output format, see 'babel' for available formats 
+.br
+
+.br
+ \fB-n\fP: Only print the name of the molecules
+.br
+
+.br
+ \fB-t\fP <NUM>: Print a molecule only if the pattern occurs NUM times inside the molecule
+.br
+
+.br
+ \fB-v\fP: Invert the matching, print non-matching molecules 
+.br
+
+.br
+.PP
+\fBEXAMPLES\fP.RS 4
+
+.IP "\(bu" 2
+Print all the molecules with a methylamine group: 
+.br
+ obgrep 'CN' database.smi
+.IP "\(bu" 2
+Print all the molecules without a methylamine group: 
+.br
+ obgrep -v 'CN' database.smi
+.IP "\(bu" 2
+Print the number of molecules without a methylamine group: 
+.br
+ obgrep -v -c 'CN' database.smi
+.IP "\(bu" 2
+Print methylamine (if it exists in the file): 
+.br
+ obgrep -f 'CN' database.smi
+.IP "\(bu" 2
+Print methylamine and/or methanol (if they exist): 
+.br
+ obgrep -f 'C[N,O]' database.smi
+.PP
+.RE
+.PP
+\fBAUTHORS\fP.RS 4
+
+.RE
+.PP
+The obgrep program was contributed by \fBFabien\fP \fBFontaine\fP.
+.PP
+Open Babel is currently maintained by \fBGeoff\fP \fBHutchison\fP, \fBChris\fP \fBMorley\fP and \fBMichael\fP \fBBanck\fP.
+.PP
+For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
+.PP
+\fBCOPYRIGHT\fP.RS 4
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison 
+.br
+ 
+.br
+ This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation version 2 of the License.
+.br
+ 
+.br
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+.RE
+.PP
+\fBSEE ALSO\fP.RS 4
+The web pages for Open Babel can be found at: http://openbabel.sourceforge.net/ 
+.br
+ A guide for constructing SMARTS patterns can be found at: http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html 
+.RE
+.PP
+

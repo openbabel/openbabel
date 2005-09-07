@@ -38,6 +38,7 @@ AC_MSG_WARN(Cannot find doxygen to build documentation.
 fi
 
 dnl Build SWIG interfaces -- ideally use the latest SWIG available!!
+dnl (this will happen also only if MAINTAINER_MODE is set
 AM_CONDITIONAL(BUILD_SWIG, test x"$SWIG" != "x")
 
 SCRIPTING="no"
@@ -74,6 +75,12 @@ AC_CHECK_LIB(xml2, xmlFreeDoc,
     AC_DEFINE(HAVE_LIBXML2, [], [Define to 1 if you have the `xml2' library (-lxml2).]) ] )
 AM_CONDITIONAL(BUILD_XML, test "$XML" == "yes")
 
+INCHI="no"
+AC_CHECK_LIB(inchi, GetINCHI,
+   [INCHI="yes"; LIBS="-linchi $LIBS";
+    AC_DEFINE(HAVE_LIBINCHI, [], [Define to 1 if you have the `inchi` library (-linchi).]) ] )
+AM_CONDITIONAL(BUILD_INCHI, test "$INCHI" == "yes")
+
 CHECK_ZLIB
 
 dnl Checks for header files.
@@ -88,7 +95,7 @@ AC_C_CONST
 AC_C_INLINE
 
 dnl Checks for library functions.
-AC_CHECK_FUNCS([rint])
+AC_CHECK_FUNCS([rint sranddev])
 AC_REPLACE_FUNCS([snprintf strncasecmp])
 
 dnl Gotta figure out whether scandir needs a const or not for the 3rd arg.

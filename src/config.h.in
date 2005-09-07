@@ -33,6 +33,9 @@
 /* Define to 1 if you have the <iostream.h> header file. */
 #undef HAVE_IOSTREAM_H
 
+/* Define to 1 if you have the `inchi` library (-linchi). */
+#undef HAVE_LIBINCHI
+
 /* Define to 1 if you have the `m' library (-lm). */
 #undef HAVE_LIBM
 
@@ -53,6 +56,9 @@
 
 /* Define to 1 if you have the `snprintf' function. */
 #undef HAVE_SNPRINTF
+
+/* Define to 1 if you have the `sranddev' function. */
+#undef HAVE_SRANDDEV
 
 /* Define to 1 if you have the <sstream> header file. */
 #undef HAVE_SSTREAM

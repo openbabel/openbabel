@@ -12,3 +12,6 @@ pkgconfig_DATA = openbabel-2.0.pc
 
 docs:
 	(cd $(top_srcdir); $(DOXYGEN))
+
+dist-hook:
+	find $(distdir)/windows -name CVS | xargs rm -rf

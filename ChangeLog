@@ -1,3 +1,47 @@
+2005-09-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Makefile.am: Add dist-hook to remove CVS directories from
+	included windows/ subdir.
+
+	* configure.in: Add test for libinchi -- compile InChI format if
+	libinchi is already available. (Acceptable under both GPL and
+	InChI terms.)
+
+	* src/formats/Makefile.am: Compile InChI format *ONLY* if libinchi
+	is available already.
+
+	* doc/Makefile.am: Build man pages for all obtools, only if
+	--enable-maintainer-mode was passed to configure.
+
+	* scripts/Makefile.am: Build SWIG wrappers only if
+	--enable-maintainer-mode was passed to configure.
+
+	* src/Makefile.am: Ensure headers are installed into
+	openbabel-2.0/openbabel directory and #include decl are re-written
+	on install.
+
+	* src/math/Makefile.am: Ditto.
+
+	* aclocal.m4, configure, config.guess, install-sh, ltmain.sh,
+	missing, mkinstalldirs, config.sub, */Makefile.in,
+	src/config.h.in: Updated with libtool-1.5.20 and automake-1.9.6
+	after above updates.
+
+	* openbabel-2.0.pc.in: Update to reflect new include path.
+
+	* scripts/openbabel.i: Wrap classes in data.h (OBElementTable,
+	etc.) too.
+
+	* scripts/*: Ditto. Renumber versions from 1.0 to separate from OB
+	release version numbers. (Scripting wrappers will likely change
+	more quickly.)
+
+	* src/data.h, src/main.cpp, tools/obgrep.cpp, tools/obrotate.cpp,
+	tools/obfit.cpp, tools/obprop.cpp: Documentation updates.
+
+	* src/rand.cpp (OBRandom::TimeSeed): If sranddev() is available
+	(i.e., BSD and Macintosh), use it -- higher quality results.
+
 2005-09-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/data.cpp: Update documentation, perform more error checking

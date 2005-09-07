@@ -39,7 +39,8 @@ babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h
 
-pkginclude_HEADERS = \
+libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
+libopenbabelinclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fingerprint.h \
@@ -49,3 +50,10 @@ pkginclude_HEADERS = \
 		parsmart.h patty.h phmodel.h reaction.h \
 		ring.h rotor.h rotamer.h typer.h 
 
+# Use sed to substitute #include "header.h" to #include <openbabel/header.h>
+install-data-hook:
+	for header in $(DESTDIR)$(libopenbabelincludedir)/*.h; do \
+	   sed -e 's!^#include "\([^"]*\)"!#include <openbabel/\1>!' \
+	      < $${header} >$${header}.new; \
+	   mv $${header}.new $${header}; \
+	done
