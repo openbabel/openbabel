@@ -274,3 +274,73 @@ int main(int argc,char **argv)
 
     return(1);
 }
+
+
+/* obgrep man page*/
+/** \page obgrep an advanced SMARTS grep program
+*
+* \n
+* \par SYNOPSIS
+*
+* \b obgrep [options] '<SMARTS-pattern>' \<filename\>
+*
+* \par DESCRIPTION
+*
+* The obgrep tool can be used to search for molecules inside multi-molecule
+* database files (e.g., SMILES, SDF, etc.).
+*
+* \par OPTIONS
+*
+* If only a filename is given, obgrep will attempt to guess
+* the file type from the filename extension. \n\n
+*
+* \b -c:
+*     Print the number of matches \n\n
+* \b -f:
+*     Full match, print matching-molecules only when the number
+*     of heavy atoms is also equal to the number of atoms in the 
+*     SMARTS pattern \n\n
+* \b -i \<format\>:
+*     Specifies input and output format, see "babel" for available formats \n\n
+* \b -n:
+*     Only print the name of the molecules\n\n
+* \b -t \<NUM\>:
+*     Print a molecule only if the pattern occurs NUM times inside the molecule\n\n
+* \b -v:
+*     Invert the matching, print non-matching molecules \n\n
+*
+* \par EXAMPLES
+*  - Print all the molecules with a methylamine group: \n
+*   obgrep "CN" database.smi
+*  - Print all the molecules without a methylamine group: \n
+*   obgrep -v "CN" database.smi
+*  - Print the number of molecules without a methylamine group: \n
+*   obgrep -v -c "CN" database.smi
+*  - Print methylamine (if it exists in the file): \n
+*   obgrep -f "CN" database.smi
+*  - Print methylamine and/or methanol (if they exist): \n
+*   obgrep -f "C[N,O]" database.smi
+*
+* \par AUTHORS
+*
+* The obgrep program was contributed by \b Fabien \b Fontaine.
+*
+* Open Babel is currently maintained by \b Geoff \b Hutchison, \b Chris \b Morley and \b Michael \b Banck.
+*
+* For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
+*
+* \par COPYRIGHT
+*  Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+*  Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison \n \n
+*  This program is free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation version 2 of the License.\n \n
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+* \par SEE ALSO
+*   The web pages for Open Babel can be found at: http://openbabel.sourceforge.net/ \n
+*   A guide for constructing SMARTS patterns can be found at: http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html
+**/

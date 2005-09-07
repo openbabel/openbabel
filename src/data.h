@@ -57,7 +57,7 @@ class OBElementTable;
 class OBAPI OBGlobalDataBase
 {
 protected:
-    bool         _init;		//!< has the data been read already
+    bool         _init;		//!< whether the data been read already
     const char  *_dataptr;	//!< default data table if file is unreadable
     std::string  _filename;	//!< file to search for
     std::string  _dir;		//!< data directory for file if _envvar fails
@@ -108,13 +108,13 @@ public:
       strncpy(_symbol, sym, 3);
     }
 
-    //! Returns the atomic number of this element
+    //! \return the atomic number of this element
     int GetAtomicNum()         {       return(_num);    }
-    //! Returns the atomic symbol for this element
+    //! \return the atomic symbol for this element
     char *GetSymbol()          {       return(_symbol); }
-    //! Returns the covalent radius of this element
+    //! \return the covalent radius of this element
     double GetCovalentRad()    {       return(_Rcov);   }
-    //! Returns the van der Waals radius of this element
+    //! \return the van der Waals radius of this element
     double GetVdwRad()         {       return(_Rvdw);   }
     //! \return the standard atomic mass for this element (in amu)
     double GetMass()           {       return(_mass);   }
@@ -148,12 +148,12 @@ public:
 
     void  ParseLine(const char*);
 
-    //! Returns the number of elements in the periodic table
+    //! \return the number of elements in the periodic table
     int		GetNumberOfElements();
 
     //! \deprecated Does not properly handle 'D' or 'T' hydrogen isotopes
     int   GetAtomicNum(const char *);
-    //! Returns the atomic number matching the element symbol passed
+    //! \return the atomic number matching the element symbol passed
     //! or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
     //! a value in the second argument
     int   GetAtomicNum(const char *, int &iso);

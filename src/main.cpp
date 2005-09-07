@@ -446,7 +446,7 @@ void help()
 }
 
 /* OpenBabel man page*/
-/** \page openbabel a converter for molecular modeling data files
+/** \page babel a converter for chemistry and molecular modeling data files
 *
 * \n
 * \par SYNOPSIS
@@ -457,9 +457,11 @@ void help()
 *
 * Open Babel is a program designed to interconvert a number of 
 * file formats currently used in molecular modeling software. \n\n
-* Note that OpenBabel can also be used as a library to import
-* molecular formats in other software packages. See the OpenBabel
-* web pages (http://openbabel.sourceforge.net) for more information.
+*
+* Note that Open Babel can also be used as a library to interconvert
+* many file formats and to provide standard chemistry software routines.
+* See the Open Babel web pages (http://openbabel.sourceforge.net) for more
+* information.
 *
 * \par OPTIONS
 *
@@ -586,7 +588,7 @@ void help()
 *
 * \par AUTHORS
 *
-* Open Babel is derived from OElib, written by \b Matt \b Stahl and other developers at Open Eye Scientific, Inc., which is a rewrite of the classic babel program. Open Babel is currently maintained by \b Geoff \b Hutchison and \b Michael \b Banck.
+* Open Babel is currently maintained by \b Geoff \b Hutchison, \b Chris \b Morley and \b Michael \b Banck.
 *
 * For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
 *
@@ -602,5 +604,5 @@ void help()
 *  GNU General Public License for more details.
 *
 * \par SEE ALSO
-*   The web pages for OpenBabel can be found at http://openbabel.sourceforge.net/
+*   The web pages for Open Babel can be found at http://openbabel.sourceforge.net/
 **/
