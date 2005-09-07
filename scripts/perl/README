@@ -1,4 +1,4 @@
-Chemistry::OpenBabel version 2.0
+Chemistry::OpenBabel version 1.0
 ================================
 
 This is a Perl "wrapper" to the Open Babel chemistry library. 
@@ -10,6 +10,10 @@ The wrapper is generated using the SWIG package and provides access to
 almost all of the Open Babel interfaces via Perl, including the base
 classes OBMol, OBAtom, OBBond, and OBResidue, as well as the
 conversion framework OBConversion.
+
+The version numbering does not correspond to any particular release of
+Open Babel. For more information on the releases of Chemistry::OpenBabel, see
+the Changes file.
 
 Future development will include a "glue module" to integrate with
 PerlMol and other Perl chemistry projects.

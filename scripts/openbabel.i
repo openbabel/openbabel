@@ -1,8 +1,16 @@
+// needed to work around bug in SWIG -- can't completely override module from command-line
+#ifdef SWIGPERL
+%module "Chemistry::OpenBabel"
+#else
 %module openbabel
+#endif
+
 %{
 #include "mol.h"
 #include "obconversion.h"
+#include "data.h"
 %}
+
 %include "std_list.i"
 %include "std_map.i"
 %include "std_vector.i"
@@ -10,7 +18,8 @@
 
 %import "babelconfig.h"
 
-%import "data.h"
+%include "data.h"
+
 %import "base.h"
 %import "chains.h"
 %import "math/vector3.h"
@@ -22,4 +31,3 @@
 
 %include "obconversion.h"
 %include "mol.h"
-

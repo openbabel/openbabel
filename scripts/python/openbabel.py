@@ -44,6 +44,152 @@ def _swig_setattr_nondynamic_method(set):
     return set_attr
 
 
+class OBGlobalDataBase(object):
+    def __repr__(self):
+        return "<%s.%s; proxy of C++ OpenBabel::OBGlobalDataBase instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    def __init__(self, *args):
+        newobj = _openbabel.new_OBGlobalDataBase(*args)
+        self.this = newobj.this
+        self.thisown = 1
+        del newobj.thisown
+    def __del__(self, destroy=_openbabel.delete_OBGlobalDataBase):
+        try:
+            if self.thisown: destroy(self)
+        except: pass
+
+    def Init(*args): return _openbabel.OBGlobalDataBase_Init(*args)
+    def SetReadDirectory(*args): return _openbabel.OBGlobalDataBase_SetReadDirectory(*args)
+    def SetEnvironmentVariable(*args): return _openbabel.OBGlobalDataBase_SetEnvironmentVariable(*args)
+    def ParseLine(*args): return _openbabel.OBGlobalDataBase_ParseLine(*args)
+
+class OBGlobalDataBasePtr(OBGlobalDataBase):
+    def __init__(self, this):
+        self.this = this
+        if not hasattr(self,"thisown"): self.thisown = 0
+        self.__class__ = OBGlobalDataBase
+_openbabel.OBGlobalDataBase_swigregister(OBGlobalDataBasePtr)
+
+class OBElement(object):
+    def __repr__(self):
+        return "<%s.%s; proxy of C++ OpenBabel::OBElement instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    def __init__(self, *args):
+        newobj = _openbabel.new_OBElement(*args)
+        self.this = newobj.this
+        self.thisown = 1
+        del newobj.thisown
+    def GetAtomicNum(*args): return _openbabel.OBElement_GetAtomicNum(*args)
+    def GetSymbol(*args): return _openbabel.OBElement_GetSymbol(*args)
+    def GetCovalentRad(*args): return _openbabel.OBElement_GetCovalentRad(*args)
+    def GetVdwRad(*args): return _openbabel.OBElement_GetVdwRad(*args)
+    def GetMass(*args): return _openbabel.OBElement_GetMass(*args)
+    def GetMaxBonds(*args): return _openbabel.OBElement_GetMaxBonds(*args)
+    def GetElectroNeg(*args): return _openbabel.OBElement_GetElectroNeg(*args)
+    def GetIonization(*args): return _openbabel.OBElement_GetIonization(*args)
+    def GetElectronAffinity(*args): return _openbabel.OBElement_GetElectronAffinity(*args)
+    def GetName(*args): return _openbabel.OBElement_GetName(*args)
+    def GetRed(*args): return _openbabel.OBElement_GetRed(*args)
+    def GetGreen(*args): return _openbabel.OBElement_GetGreen(*args)
+    def GetBlue(*args): return _openbabel.OBElement_GetBlue(*args)
+    def __del__(self, destroy=_openbabel.delete_OBElement):
+        try:
+            if self.thisown: destroy(self)
+        except: pass
+
+
+class OBElementPtr(OBElement):
+    def __init__(self, this):
+        self.this = this
+        if not hasattr(self,"thisown"): self.thisown = 0
+        self.__class__ = OBElement
+_openbabel.OBElement_swigregister(OBElementPtr)
+
+class OBElementTable(OBGlobalDataBase):
+    def __repr__(self):
+        return "<%s.%s; proxy of C++ OpenBabel::OBElementTable instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    def __init__(self, *args):
+        newobj = _openbabel.new_OBElementTable(*args)
+        self.this = newobj.this
+        self.thisown = 1
+        del newobj.thisown
+    def __del__(self, destroy=_openbabel.delete_OBElementTable):
+        try:
+            if self.thisown: destroy(self)
+        except: pass
+
+    def ParseLine(*args): return _openbabel.OBElementTable_ParseLine(*args)
+    def GetNumberOfElements(*args): return _openbabel.OBElementTable_GetNumberOfElements(*args)
+    def GetAtomicNum(*args): return _openbabel.OBElementTable_GetAtomicNum(*args)
+    def GetSymbol(*args): return _openbabel.OBElementTable_GetSymbol(*args)
+    def GetVdwRad(*args): return _openbabel.OBElementTable_GetVdwRad(*args)
+    def GetCovalentRad(*args): return _openbabel.OBElementTable_GetCovalentRad(*args)
+    def GetMass(*args): return _openbabel.OBElementTable_GetMass(*args)
+    def CorrectedBondRad(*args): return _openbabel.OBElementTable_CorrectedBondRad(*args)
+    def CorrectedVdwRad(*args): return _openbabel.OBElementTable_CorrectedVdwRad(*args)
+    def GetMaxBonds(*args): return _openbabel.OBElementTable_GetMaxBonds(*args)
+    def GetElectroNeg(*args): return _openbabel.OBElementTable_GetElectroNeg(*args)
+    def GetIonization(*args): return _openbabel.OBElementTable_GetIonization(*args)
+    def GetElectronAffinity(*args): return _openbabel.OBElementTable_GetElectronAffinity(*args)
+    def GetRGB(*args): return _openbabel.OBElementTable_GetRGB(*args)
+    def GetName(*args): return _openbabel.OBElementTable_GetName(*args)
+
+class OBElementTablePtr(OBElementTable):
+    def __init__(self, this):
+        self.this = this
+        if not hasattr(self,"thisown"): self.thisown = 0
+        self.__class__ = OBElementTable
+_openbabel.OBElementTable_swigregister(OBElementTablePtr)
+
+class OBIsotopeTable(OBGlobalDataBase):
+    def __repr__(self):
+        return "<%s.%s; proxy of C++ OpenBabel::OBIsotopeTable instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    def __init__(self, *args):
+        newobj = _openbabel.new_OBIsotopeTable(*args)
+        self.this = newobj.this
+        self.thisown = 1
+        del newobj.thisown
+    def __del__(self, destroy=_openbabel.delete_OBIsotopeTable):
+        try:
+            if self.thisown: destroy(self)
+        except: pass
+
+    def ParseLine(*args): return _openbabel.OBIsotopeTable_ParseLine(*args)
+    def GetExactMass(*args): return _openbabel.OBIsotopeTable_GetExactMass(*args)
+
+class OBIsotopeTablePtr(OBIsotopeTable):
+    def __init__(self, this):
+        self.this = this
+        if not hasattr(self,"thisown"): self.thisown = 0
+        self.__class__ = OBIsotopeTable
+_openbabel.OBIsotopeTable_swigregister(OBIsotopeTablePtr)
+
+class OBTypeTable(OBGlobalDataBase):
+    def __repr__(self):
+        return "<%s.%s; proxy of C++ OpenBabel::OBTypeTable instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    def __init__(self, *args):
+        newobj = _openbabel.new_OBTypeTable(*args)
+        self.this = newobj.this
+        self.thisown = 1
+        del newobj.thisown
+    def __del__(self, destroy=_openbabel.delete_OBTypeTable):
+        try:
+            if self.thisown: destroy(self)
+        except: pass
+
+    def ParseLine(*args): return _openbabel.OBTypeTable_ParseLine(*args)
+    def SetFromType(*args): return _openbabel.OBTypeTable_SetFromType(*args)
+    def SetToType(*args): return _openbabel.OBTypeTable_SetToType(*args)
+    def Translate(*args): return _openbabel.OBTypeTable_Translate(*args)
+    def GetFromType(*args): return _openbabel.OBTypeTable_GetFromType(*args)
+    def GetToType(*args): return _openbabel.OBTypeTable_GetToType(*args)
+
+class OBTypeTablePtr(OBTypeTable):
+    def __init__(self, this):
+        self.this = this
+        if not hasattr(self,"thisown"): self.thisown = 0
+        self.__class__ = OBTypeTable
+_openbabel.OBTypeTable_swigregister(OBTypeTablePtr)
+
+FILE_SEP_CHAR = _openbabel.FILE_SEP_CHAR
 class OBFormat(object):
     def __init__(self): raise RuntimeError, "No constructor defined"
     def __repr__(self):
@@ -481,6 +627,7 @@ class OBBond(object):
     def IsDown(*args): return _openbabel.OBBond_IsDown(*args)
     def IsWedge(*args): return _openbabel.OBBond_IsWedge(*args)
     def IsHash(*args): return _openbabel.OBBond_IsHash(*args)
+    def IsDoubleBondGeometry(*args): return _openbabel.OBBond_IsDoubleBondGeometry(*args)
     def HasData(*args): return _openbabel.OBBond_HasData(*args)
     def DeleteData(*args): return _openbabel.OBBond_DeleteData(*args)
     def SetData(*args): return _openbabel.OBBond_SetData(*args)
@@ -659,7 +806,6 @@ class OBMol(object):
     def IsCorrectedForPH(*args): return _openbabel.OBMol_IsCorrectedForPH(*args)
     def HasSpinMultiplicityAssigned(*args): return _openbabel.OBMol_HasSpinMultiplicityAssigned(*args)
     def IsChiral(*args): return _openbabel.OBMol_IsChiral(*args)
-    def IsDoubleBondGeometry(*args): return _openbabel.OBMol_IsDoubleBondGeometry(*args)
     def Empty(*args): return _openbabel.OBMol_Empty(*args)
     def NumConformers(*args): return _openbabel.OBMol_NumConformers(*args)
     def SetConformers(*args): return _openbabel.OBMol_SetConformers(*args)

@@ -69,5 +69,9 @@ if ($numAtoms == 9) {
 }
 
 my $outMDL = $obConversion->WriteString($obMol);
+print "$outMDL\n";
 print "ok 10\n";
 
+my $mass = $Chemistry::OpenBabel::etab->GetMass(2);
+print "mass: $mass\n";
+print "ok 11\n";
