@@ -52,7 +52,8 @@ libopenbabelinclude_HEADERS = \
 
 # Use sed to substitute #include "header.h" to #include <openbabel/header.h>
 install-data-hook:
-	for header in $(DESTDIR)$(libopenbabelincludedir)/*.h; do \
+	for header in $(DESTDIR)$(libopenbabelincludedir)/*.h \
+	      $(DESTDIR)$(libopenbabelincludedir)/math/*.h; do \
 	   sed -e 's!^#include "\([^"]*\)"!#include <openbabel/\1>!' \
 	      < $${header} >$${header}.new; \
 	   mv $${header}.new $${header}; \
