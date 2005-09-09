@@ -41,32 +41,102 @@ OBAPI void Trim(std::string& txt);
 //! obData0 through obData15 are data slots that are not used in OpenBabel, and
 //! are meant for use in derivative programs.  Macro definitions can be used
 //! to define what each data slot is used for.
-enum obDataType {obUndefinedData,
-		 obPairData,       //!< for arbitrary key/value data
-		 obEnergyData,     //!< for energetics data (e.g., total energy, heat of formation, etc.)
-                 obCommentData,    //!< for storing text comments
-		 obConformerData,  //!< for storing information about conformers
-		 obExternalBondData,//!< for storing bond data external to OpenBabel
-		 obRotamerList,    //!< for generating & manipulating rotamers
-		 obVirtualBondData,//!< for storing bonds to atoms yet to be added
-		 obRingData,       //!< for ring data in a molecule
-		 obTorsionData,    //!< for torsion/dihedral data
-		 obAngleData,      //!< for bond angles in a molecule
-		 obSerialNums,     //!< for residue serial numbers
-		 obUnitCell,       //!< for crystallographic unit cell data
-		 obSpinData,       //!< for spin data, including NMR, atomic and molecular spin, etc.
-		 obChargeData,     //!< for partial, total charges, dipole moments, etc.
-		 obSymmetryData,   //!< for symmetry data -- point and space groups, transforms, etc.
-		 obChiralData,     //!< for arbitrary chiral information (atom, bond, molecule, etc.)
-		 obOccupationData, //!< for atomic, molecular occupation data
-		 obDensityData,    //!< for density (cube) data
-		 obElectronicData, //!< for electronic levels, redox, orbitals, etc.
-		 obVibrationData,  //!< for vibrational modes, frequencies, etc.
-		 obRotationData,   //!< for rotational energy information
-		 obNuclearData,    //!< for nuclear transitions (e.g., decay, fission, fusion)
-		 obData0, obData1, obData2, obData3, obData4, obData5,
-		 obData6, obData7, obData8, obData9, obData10, obData11,
-                 obData12, obData13, obData14, obData15};
+namespace OBGenericDataType
+{
+  //! Unknown data type (default)
+  static const unsigned int UndefinedData =      0;
+
+  //! Arbitrary key/value data, i.e., OBPairData
+  static const unsigned int PairData      =      1;
+
+  //! Energetics data (e.g., total energy, heat of formation, etc.)
+  static const unsigned int EnergyData    =      2;
+
+  //! Storing text comments (one per molecule, atom, bond, etc.)
+  //!  (for other data, e.g., author, keyword, ... use OBPairData)
+  static const unsigned int CommentData   =      3;
+
+  //! Arbitrary information about conformers, i.e., OBConformerData
+  static const unsigned int ConformerData =      4;
+
+  //! Bond data external to OpenBabel, i.e., OBExternalBond, OBExternalBondData
+  static const unsigned int ExternalBondData =   5;
+
+  //! Information for generating & manipulating rotamers, i.e. OBRotamerList
+  static const unsigned int RotamerList =        6;
+
+  //! Info. for storing bonds to atoms yet to be added, i.e. OBVirtualBond
+  static const unsigned int VirtualBondData =    7;
+
+  //! Information on rings in a molecule, i.e., OBRingData
+  static const unsigned int RingData =           8;
+
+  //! Information about torsion/dihedral angles,
+  //! i.e., OBTorsionData and OBTorsion
+  static const unsigned int TorsionData =        9;
+
+  //! Bond angles in a molecule, i.e., OBAngle, OBAngleData
+  static const unsigned int AngleData =         10;
+
+  //! Residue serial numbers
+  static const unsigned int SerialNums =        11;
+
+  //! Crystallographic unit cell data, i.e., OBUnitCell
+  static const unsigned int UnitCell =          12;
+
+  //! Spin data, including NMR, atomic and molecular spin, etc.
+  static const unsigned int SpinData =          13;
+
+  //! Arbitrary partial and total charges, dipole moments, etc.
+  static const unsigned int ChargeData =        14;
+
+  //! Symmetry data -- point and space groups, transforms, etc.
+  //!  i.e., OBSymmetryData
+  static const unsigned int SymmetryData =      15;
+
+  //! Arbitrary chiral information (atom, bond, molecule, etc.)
+  //! i.e., OBChiralData
+  static const unsigned int ChiralData =        16;
+
+  //! Atomic and molecular occupation data
+  static const unsigned int OccupationData =    17;
+
+  //! Density (cube) data and surfaces
+  static const unsigned int DensityData =       18;
+
+  //! Electronic levels, redox states, orbitals, etc.
+  static const unsigned int ElectronicData =    19;
+
+  //! Vibrational modes, frequencies, etc.
+  static const unsigned int VibrationData =     20;
+
+  //! Rotational energy information
+  static const unsigned int RotationData =      21;
+
+  //! Nuclear transitions (e.g., decay, fission, fusion)
+  static const unsigned int NuclearData =       22;
+
+  // space for up to 2^14 more entries...
+
+  //! Custom (user-defined data)
+  static const unsigned int CustomData0 = 16384;
+  static const unsigned int CustomData1 = 16385;
+  static const unsigned int CustomData2 = 16386;
+  static const unsigned int CustomData3 = 16387;
+  static const unsigned int CustomData4 = 16388;
+  static const unsigned int CustomData5 = 16389;
+  static const unsigned int CustomData6 = 16390;
+  static const unsigned int CustomData7 = 16391;
+  static const unsigned int CustomData8 = 16392;
+  static const unsigned int CustomData9 = 16393;
+  static const unsigned int CustomData10 = 16394;
+  static const unsigned int CustomData11 = 16395;
+  static const unsigned int CustomData12 = 16396;
+  static const unsigned int CustomData13 = 16397;
+  static const unsigned int CustomData14 = 16398;
+  static const unsigned int CustomData15 = 16399;
+  static const unsigned int CustomData16 = 16400;
+} // end namespace
 
 //! \brief Base class for generic data
 //! 
@@ -76,7 +146,7 @@ class OBAPI OBGenericData
 {
 protected:
     std::string     _attr; //!< attribute tag (e.g., "UnitCell", "Comment" or "Author")
-    obDataType 	    _type; //!< attribute type -- declared for each subclass
+    unsigned int 	    _type; //!< attribute type -- declared for each subclass
 public:
     OBGenericData();
     OBGenericData(const OBGenericData&);
@@ -87,7 +157,7 @@ public:
     {        _attr = v;        }
     virtual const std::string &GetAttribute()  const
     {        return(_attr);    }
-    obDataType                GetDataType()    const
+    unsigned int                GetDataType()    const
     {        return(_type);    }
 };
 
@@ -504,7 +574,34 @@ public:
     }
 };
 
+enum atomreftype{output,input,calcvolume}; // sets which atom4ref is accessed
 
+//! \brief Used to hold chiral inforamtion about the atom as OBGenericData
+class OBAPI OBChiralData : public OBGenericData
+{
+    friend class OBMol;
+    friend class OBAtom;
+
+protected:
+    std::vector<unsigned int> _atom4refs;
+    int parity;
+    std::vector<unsigned int> _atom4refo;
+    std::vector<unsigned int> _atom4refc;
+
+public:
+    std::vector<unsigned int> GetAtom4Refs(atomreftype t) const;
+    unsigned int GetAtomRef(int a,atomreftype t);
+
+    OBChiralData();
+    OBChiralData::OBChiralData(const OBChiralData &src);
+    OBChiralData &operator =(const OBChiralData &);
+    ~OBChiralData(){}
+
+    void Clear();
+    bool SetAtom4Refs(std::vector<unsigned int> atom4refs, atomreftype t);
+    int AddAtomRef(unsigned int atomref, atomreftype t);
+    unsigned int GetSize(atomreftype t) const;
+};
 //****************doxygen for inline functions***********
 /*!
 **\fn OBTorsionData::GetSize() const

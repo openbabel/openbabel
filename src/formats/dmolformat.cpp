@@ -163,9 +163,9 @@ bool DMolFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     unsigned int i;
     char buffer[BUFF_SIZE];
 
-    if (mol.HasData(obUnitCell))
+    if (mol.HasData(OBGenericDataType::UnitCell))
     {
-        OBUnitCell *uc = (OBUnitCell*)mol.GetData(obUnitCell);
+        OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
         vector<vector3> v = uc->GetCellVectors();
         vector3 v1;
 

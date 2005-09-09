@@ -135,10 +135,10 @@ bool ReportFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         ofs << endl << endl << "CHIRAL ATOMS" << endl;
         WriteChiral(ofs, mol);
     }
-    if (mol.HasData(obCommentData))
+    if (mol.HasData(OBGenericDataType::CommentData))
     {
         ofs << endl << endl << "COMMENTS" << endl;
-        OBCommentData *cd = (OBCommentData*)mol.GetData(obCommentData);
+        OBCommentData *cd = (OBCommentData*)mol.GetData(OBGenericDataType::CommentData);
         ofs << cd->GetData() << endl;
     }
     ofs << endl << endl;

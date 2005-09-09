@@ -125,16 +125,16 @@ public:
     //@{
     bool                              HasData(std::string &);
     bool                              HasData(const char *);
-    bool                              HasData(obDataType);
-    void                              DeleteData(obDataType);
+    bool                              HasData(unsigned int type);
+    void                              DeleteData(unsigned int type);
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d)
       { _vdata.push_back(d); }
-    //! Return the number of OBGenericData items attached to this molecule.
+    //! \return the number of OBGenericData items attached to this residue
     unsigned int                      DataSize()
       { return(_vdata.size()); }
-    OBGenericData                    *GetData(obDataType);
+    OBGenericData                    *GetData(unsigned int type);
     OBGenericData                    *GetData(std::string&);
     OBGenericData                    *GetData(const char *);
     std::vector<OBGenericData*>      &GetData()
@@ -259,7 +259,7 @@ public:
     //! Mark an atom as having + chiral volume
     void SetPositiveStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
     //! Mark an atom as having - chiral volume
-    void SetNegativeStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
+    void SetNegativeStereo() { SetFlag(OB_NEG_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
     //! Clear all stereochemistry information
     void UnsetStereo()
     {
@@ -342,12 +342,12 @@ public:
         else
             return _v.z();
     }
-    //! Return the coordinates as a double*
+    //! \return the coordinates as a double*
     double     *GetCoordinate()
     {
         return(&(*_c)[_cidx]);
     }
-    //! Return the coordinates as a vector3 object
+    //! \return the coordinates as a vector3 object
     vector3   &GetVector();
     double      GetPartialCharge();
     OBResidue *GetResidue();
@@ -502,16 +502,16 @@ public:
     //@{
     bool                              HasData(std::string &);
     bool                              HasData(const char *);
-    bool                              HasData(obDataType);
-    void                              DeleteData(obDataType);
+    bool                              HasData(unsigned int type);
+    void                              DeleteData(unsigned int type);
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d)
     {        _vdata.push_back(d);    }
-    //! Return the number of OBGenericData items attached to this molecule.
+    //! \return the number of OBGenericData items attached to this atom
     unsigned int                      DataSize()
     {        return(_vdata.size());    }
-    OBGenericData                    *GetData(obDataType);
+    OBGenericData                    *GetData(unsigned int type);
     OBGenericData                    *GetData(std::string&);
     OBGenericData                    *GetData(const char *);
     std::vector<OBGenericData*>      &GetData() { return(_vdata); }
@@ -643,10 +643,15 @@ public:
     bool IsKDouble();
     bool IsKTriple();
     bool IsClosure();
+    //! \return whether this is the "upper" bond in a double bond cis/trans
+    //!   isomer (i.e., "/" in SMILES)
     bool IsUp()    {    return(HasFlag(OB_TORUP_BOND));    }
+    //! \return whether this is the "lower" bond in a double bond cis/trans
+    //!   isomer (i.e., "\" in SMILES)
     bool IsDown()  {    return(HasFlag(OB_TORDOWN_BOND));  }
     bool IsWedge() {    return(HasFlag(OB_WEDGE_BOND));    }
     bool IsHash()  {    return(HasFlag(OB_HASH_BOND));     }
+    //! \return whether the geometry around this bond looks unsaturated
     bool IsDoubleBondGeometry();
     //@}
 
@@ -654,20 +659,20 @@ public:
     //@{
     bool                              HasData(std::string &);
     bool                              HasData(const char *);
-    bool                              HasData(obDataType);
-    void                              DeleteData(obDataType);
+    bool                              HasData(unsigned int type);
+    void                              DeleteData(unsigned int type);
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d)
     {
         _vdata.push_back(d);
     }
-    //! Return the number of OBGenericData items attached to this molecule.
+    //! \return the number of OBGenericData items attached to this bond
     unsigned int                      DataSize()
     {
         return(_vdata.size());
     }
-    OBGenericData                    *GetData(obDataType);
+    OBGenericData                    *GetData(unsigned int type);
     OBGenericData                    *GetData(std::string&);
     OBGenericData                    *GetData(const char *);
     std::vector<OBGenericData*>           &GetData()
@@ -799,22 +804,22 @@ public:
 
     //! \name Generic data handling methods (via OBGenericData)
     //@{
-    //! Returns true if the generic attribute/value pair exists
+    //! \returns whether the generic attribute/value pair exists
     bool                              HasData(std::string &);
-    //! Returns true if the generic attribute/value pair exists
+    //! \returns whether the generic attribute/value pair exists
     bool                              HasData(const char *);
-    //! Returns true if the generic attribute/value pair exists
-    bool                              HasData(obDataType);
-    void                              DeleteData(obDataType);
+    //! \returns whether the generic attribute/value pair exists
+    bool                              HasData(unsigned int type);
+    void                              DeleteData(unsigned int type);
     void                              DeleteData(OBGenericData*);
     void                              DeleteData(std::vector<OBGenericData*>&);
     void                              SetData(OBGenericData *d)
     {
         _vdata.push_back(d);
     }
-    //! Return the number of OBGenericData items attached to this molecule.
+    //! \return the number of OBGenericData items attached to this molecule.
     unsigned int                      DataSize(){ return(_vdata.size()); }
-    OBGenericData                    *GetData(obDataType);
+    OBGenericData                    *GetData(unsigned int type);
     OBGenericData                    *GetData(std::string&);
     OBGenericData                    *GetData(const char *);
     std::vector<OBGenericData*>      &GetData() { return(_vdata); }
@@ -831,17 +836,19 @@ public:
     //! \name Data retrieval methods
     //@{
     int          GetFlags()               { return(_flags); }
+    //! \return the title of this molecule (often the filename)
     const char  *GetTitle() const         { return(_title.c_str()); }
-    //! The number of atoms (i.e. OBAtom children)
+    //! \return the number of atoms (i.e. OBAtom children)
     unsigned int NumAtoms() const         {  return(_natoms); }
-    //! The number of bonds (i.e. OBBond children)
+    //! \return the number of bonds (i.e. OBBond children)
     unsigned int NumBonds() const         {  return(_nbonds); }
-    //! The number of non-hydrogen atoms
+    //! \return the number of non-hydrogen atoms
     unsigned int NumHvyAtoms();
-    //! The number of residues (i.e. OBResidue substituents)
+    //! \return the number of residues (i.e. OBResidue substituents)
     unsigned int NumResidues() const      { return(_residue.size()); }
-    //! The number of rotatble bonds
+    //! \return the number of rotatble bonds
     unsigned int NumRotors();
+    
     OBAtom      *GetAtom(int);
     OBAtom      *GetFirstAtom();
     OBBond      *GetBond(int);
@@ -849,24 +856,26 @@ public:
     OBBond      *GetBond(OBAtom*,OBAtom*);
     OBResidue   *GetResidue(int);
     std::vector<OBInternalCoord*> GetInternalCoord();
+    //! \return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
     double       GetTorsion(int,int,int,int);
+    //! \return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
     double       GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
-    //! \brief Stochoimetric formula (e.g., C4H6O)
+    //! \return the stochoimetric formula (e.g., C4H6O)
     std::string  GetFormula();
-    //! Heat of formation for this molecule (in kcal/mol)
+    //! \return the heat of formation for this molecule (in kcal/mol)
     double       GetEnergy() const { return(_energy); }
-    //! Standard molar mass given by IUPAC atomic masses (amu)
+    //! \return the standard molar mass given by IUPAC atomic masses (amu)
     double       GetMolWt();
-    //! Mass given by isotopes (or most abundant isotope, if not specified)
+    //! \return the mass given by isotopes (or most abundant isotope, if not specified)
     double	 GetExactMass();
-    //! Total charge on this molecule (i.e., 0 = neutral, +1, -1...)
+    //! \return the total charge on this molecule (i.e., 0 = neutral, +1, -1...)
     int		 GetTotalCharge();
-    //! Total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
+    //! \return the total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
     unsigned int GetTotalSpinMultiplicity();
-    //! Dimensionality of coordinates (i.e., 0 = unknown or no coord, 2=2D, 3=3D)
+    //! \return the dimensionality of coordinates (i.e., 0 = unknown or no coord, 2=2D, 3=3D)
     unsigned short int GetDimension() const { return _dimension; }
     double      *GetCoordinates() { return(_c); }
-    //! Return the Smallest Set of Smallest Rings has been run (see OBRing class
+    //! \return the Smallest Set of Smallest Rings has been run (see OBRing class
     std::vector<OBRing*> &GetSSSR();
     //! Get the current flag for whether formal charges are set with pH correction
     bool AutomaticFormalCharge()   { return(_autoFormalCharge);  }
@@ -888,7 +897,7 @@ public:
     void   SetTotalCharge(int charge);
     void   SetTotalSpinMultiplicity(unsigned int spin);
     void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord)
-    { _internals = int_coord; }
+      { _internals = int_coord; }
     //! Set the flag for determining automatic formal charges with pH (default=true)
     void SetAutomaticFormalCharge(bool val)
     { _autoFormalCharge=val;  }
@@ -908,6 +917,7 @@ public:
     void   SetChainsPerceived()      { SetFlag(OB_CHAINS_MOL);      }
     //! Mark that chirality has been perceived
     void   SetChiralityPerceived()   { SetFlag(OB_CHIRALITY_MOL);   }
+    //! Mark that partial charges have been assigned
     void   SetPartialChargesPerceived(){ SetFlag(OB_PCHARGE_MOL);   }
     void   SetHybridizationPerceived() { SetFlag(OB_HYBRID_MOL);    }
     void   SetImplicitValencePerceived(){ SetFlag(OB_IMPVAL_MOL);   }
@@ -931,6 +941,7 @@ public:
     static const char* ClassDescription();
     //! Clear all information from a molecule
     bool Clear();
+    //! Renumber the atoms of this molecule according to the order in the supplied vector
     void RenumberAtoms(std::vector<OBNodeBase*>&);
     //! Translate one conformer and rotate by a rotation matrix (which is returned) to the inertial frame-of-reference
     void ToInertialFrame(int conf, double *rmat);
@@ -958,9 +969,11 @@ public:
     bool AddHydrogens(bool polaronly=false,bool correctForPH=true);
     bool AddHydrogens(OBAtom*);
     bool AddPolarHydrogens();
+
+    //! Deletes all atoms except for the largest contiguous fragment
     bool StripSalts();
-		//! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O 
-		bool ConvertDativeBonds();
+    //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O 
+    bool ConvertDativeBonds();
 
     bool CorrectForPH();
     bool AssignSpinMultiplicity();
@@ -977,6 +990,8 @@ public:
     void FindChiralCenters();
     void FindChildren(std::vector<int> &,int,int);
     void FindChildren(std::vector<OBAtom*>&,OBAtom*,OBAtom*);
+    //! Each vector<int> contains the atom numbers of a contig fragment
+    //! The vectors are sorted by size from largest to smallest
     void FindLargestFragment(OBBitVec &);
     //! Sort a list of contig fragments by size from largest to smallest
     //! Each vector<int> contains the atom numbers of a contig fragment

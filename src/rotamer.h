@@ -55,7 +55,7 @@ public:
     OBRotamerList()
     {
         _NBaseCoords=0;
-        _type=obRotamerList;
+        _type= OBGenericDataType::RotamerList;
         _attr="RotamerList";
     }
     ~OBRotamerList();

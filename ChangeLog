@@ -1,3 +1,34 @@
+2005-09-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/chiral.h, src/chiral.cpp: Updates from Nick England to
+	compute chiral volume and track the atoms used.
+
+	* tools/obchiral.cpp: New tool from Nick England to print
+	chirality information on molecules.
+
+	* src/formats/mdlformat.cpp, src/formats/smilesformat.cpp: Fixes
+	from Nick to properly interconvert MDL and SMILES chirality
+	flags. Solves PR#1257494.
+	
+	* src/generic.h, src/generic.cpp: New class OBChiralData
+	contributed by Nick for above.
+	Removed obDataType enum, replacing with namespace
+	OBGenericDataType. Allows significantly larger range of "slots"
+	with room for future expansion without breaking
+	backwards-compatibility.
+
+	* src/atom.cpp, src/bond.cpp, src/mol.cpp, src/mol.h,
+	src/residue.cpp, src/ring.cpp, src/rotamer.h,
+	src/formats/cacaoformat.cpp, src/formats/cml.cpp,
+	src/formats/cssrformat.cpp, src/formats/dmolformat.cpp,
+	src/formats/freefracformat.cpp, src/format/mdlformat.cpp,
+	src/format/mol2format.cpp, src/formats/pdbformat.cpp,
+	src/formats/reportformat.cpp, src/formats/smilesformat.cpp:
+	Update to use new OBGenericDataType:: declarations.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Remove
+	mm3format bits. Not correctly implemented.
+
 2005-09-09  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* atom.cpp (operator=): _spinmultiplicity now copied

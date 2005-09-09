@@ -1511,7 +1511,7 @@ bool OBResidue::HasData(const char *s)
     return(false);
 }
 
-bool OBResidue::HasData(obDataType dt)
+bool OBResidue::HasData(unsigned int dt)
 //returns true if the generic attribute/value pair exists
 {
     if (_vdata.empty())
@@ -1550,7 +1550,7 @@ OBGenericData *OBResidue::GetData(const char *s)
     return(NULL);
 }
 
-OBGenericData *OBResidue::GetData(obDataType dt)
+OBGenericData *OBResidue::GetData(unsigned int dt)
 {
     vector<OBGenericData*>::iterator i;
     for (i = _vdata.begin();i != _vdata.end();i++)
@@ -1559,7 +1559,7 @@ OBGenericData *OBResidue::GetData(obDataType dt)
     return(NULL);
 }
 
-void OBResidue::DeleteData(obDataType dt)
+void OBResidue::DeleteData(unsigned int dt)
 {
     vector<OBGenericData*> vdata;
     vector<OBGenericData*>::iterator i;

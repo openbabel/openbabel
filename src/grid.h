@@ -58,8 +58,9 @@ public:
     }
     ~OBProxGrid()
     {}
-    void Setup(OBMol &,OBMol &,double,double res=0.5);
-    void Setup(OBMol &,OBMol &,double,std::vector<bool>&,double res=0.5);
+    void Setup(OBMol &mol,OBMol &box, double cutoff,double resolution = 0.5);
+    void Setup(OBMol &mol,OBMol &box, double cutoff,
+	       std::vector<bool> &use,double resolution = 0.5);
     std::vector<int> *GetProxVector(double,double,double);
     std::vector<int> *GetProxVector(double*);
     // For HasFlag force return type to bool so VC6.0 doesn't complain
@@ -85,12 +86,13 @@ public:
 
 class OBAPI OBFloatGrid
 {
+protected:
     double *_val;             //!< doubleing point values
     int   *_ival;            //!< for integer values
     double _midz,_midx,_midy;   //!< center of grid in world coordinates
     int _ydim,_xdim,_zdim;     //!< grid dimensions
     double _spacing,_inv_spa;  //!< spacing between grid points and its invers
-    double _xmin,_xmax,_ymin,_ymax,_zmin,_zmax;
+    double _xmin,_xmax,_ymin,_ymax,_zmin,_zmax; //!< the min/max values in XYZ axes (i.e., the box)
     double _halfSpace;         //!< half of the grid spacing */
 
 public:
@@ -113,67 +115,28 @@ public:
             _val = NULL;
         }
     }
-    void Init(OBMol &,double, double pad= 0.0); //!< initialized using boxfile
+    //! Initialize the grid using this molecule as a box (plus a padding)
+    //!  with the supplied spacing between points
+    void Init(OBMol &box,double spacing, double pad= 0.0);
     bool PointIsInBox(double x,double y,double z)
     {
         return (x>=_xmin) && (x<=_xmax) &&
                (y>=_ymin) && (y<=_ymax) &&
                (z>=_zmin) && (z<=_zmax);
     }
+    //! \return true if the point falls within the box 
     bool PointIsInBox(double *c)
     {
         return (c[0]>=_xmin) && (c[0]<=_xmax) &&
                (c[1]>=_ymin) && (c[1]<=_ymax) &&
                (c[2]>=_zmin) && (c[2]<=_zmax);
     }
-    double GetXmin() const
-    {
-        return(_xmin);
-    }
-    double GetYmin() const
-    {
-        return(_ymin);
-    }
-    double GetZmin() const
-    {
-        return(_zmin);
-    }
-    double GetXmax() const
-    {
-        return(_xmax);
-    }
-    double GetYmax() const
-    {
-        return(_ymax);
-    }
-    double GetZmax() const
-    {
-        return(_zmax);
-    }
-    double GetSpacing() const
-    {
-        return(_spacing);
-    }
-    double GetScale() const
-    {
-        return(_inv_spa);
-    }
-    double GetHalfSpace() const
-    {
-        return(_halfSpace);
-    }
-    int GetXdim() const
-    {
-        return(_xdim);
-    }
-    int GetYdim() const
-    {
-        return(_ydim);
-    }
-    int GetZdim() const
-    {
-        return(_zdim);
-    }
+    double GetXmin() const    { return(_xmin);    }
+    double GetYmin() const    { return(_ymin);    }
+    double GetZmin() const    { return(_zmin);    }
+    double GetXmax() const    { return(_xmax);    }
+    double GetYmax() const    { return(_ymax);    }
+    double GetZmax() const    { return(_zmax);    }
     void GetMin(double *a)
     {
         a[0]=_xmin;
@@ -186,15 +149,22 @@ public:
         a[1]=_ymax;
         a[2]=_zmax;
     }
+
+    double GetSpacing() const { return(_spacing); }
+    void GetSpacing(double &s)
+    {
+        s=_spacing;
+    }
+    double GetScale() const   { return(_inv_spa); }
+    double GetHalfSpace() const {return(_halfSpace);}
+    int GetXdim() const       { return(_xdim);    }
+    int GetYdim() const       { return(_ydim);    }
+    int GetZdim() const       { return(_zdim);    }
     void GetDim(int *a)
     {
         a[0]=_xdim;
         a[1]=_ydim;
         a[2]=_zdim;
-    }
-    void GetSpacing(double &s)
-    {
-        s=_spacing;
     }
     vector3 GetMidpointVector()
     {
@@ -202,37 +172,17 @@ public:
         v.Set(_midx,_midy,_midz);
         return(v);
     }
-    double *GetVals()
-    {
-        return(_val);
-    }
-    void SetVals(double *ptr)
-    {
-        _val = ptr;
-    }
+    double *GetVals()    {        return(_val);    }
+    void SetVals(double *ptr)    {  _val = ptr;    }
     vector3 Center()
     {
         return vector3(_midx,_midy,_midz);
-    } //added by jjc
+    }
+
     friend std::ostream& operator<< ( std::ostream&, const OBFloatGrid& ) ;
     friend std::istream& operator>> ( std::istream&,OBFloatGrid& ) ;
 
-    double Inject(double x,double y,double z)
-    {
-        if((x<=_xmin)||(x>=_xmax))
-            return(0.0);
-        if((y<=_ymin)||(y>=_ymax))
-            return(0.0);
-        if((z<=_zmin)||(z>=_zmax))
-            return(0.0);
-
-        int gx=(int)((x-_xmin)*_inv_spa);
-        int gy=(int)((y-_ymin)*_inv_spa);
-        int gz=(int)((z-_zmin)*_inv_spa);
-
-        return(_val[(gz*_ydim*_xdim)+(gy*_xdim)+gx]);
-    }
-
+    double Inject(double x,double y,double z);
 
     void IndexToCoords(int idx, double &x, double &y, double &z);
     void CoordsToIndex(int*,double*);

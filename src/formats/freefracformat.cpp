@@ -168,7 +168,7 @@ bool FreeFormFractionalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     ofs << mol.GetTitle() << endl;
 
-    if (!mol.HasData(obUnitCell))
+    if (!mol.HasData(OBGenericDataType::UnitCell))
       {
 	sprintf(buffer,
 		"%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
@@ -177,7 +177,7 @@ bool FreeFormFractionalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       }
     else
       {
-	uc = (OBUnitCell*)mol.GetData(obUnitCell);
+	uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
 	sprintf(buffer,
 		"%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
 		uc->GetA(), uc->GetB(), uc->GetC(),

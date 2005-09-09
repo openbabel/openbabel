@@ -114,7 +114,7 @@ public:
     OBSerialNums()
     {
         _attr = "obSerialNums";
-        _type = obSerialNums;
+        _type = OBGenericDataType::SerialNums;
     }
     OBSerialNums(const OBSerialNums &cp) : OBGenericData(cp)
     {

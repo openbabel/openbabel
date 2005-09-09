@@ -4110,9 +4110,9 @@ bool WriteMolecule(ostream &ofs)
         WriteMetadataList(ofs);
     }
 
-    if (molPtr->HasData(obCommentData))
+    if (molPtr->HasData(OBGenericDataType::CommentData))
     {
-        OBCommentData *cd = (OBCommentData*)molPtr->GetData(obCommentData);
+        OBCommentData *cd = (OBCommentData*)molPtr->GetData(OBGenericDataType::CommentData);
         string nData = getNormalizedString(cd->GetData());
         if (nData.length() > 0)
         {
@@ -4145,7 +4145,7 @@ bool WriteMolecule(ostream &ofs)
     vector<OBGenericData*> vdata = molPtr->GetData();
     for (k = vdata.begin();k != vdata.end();++k)
     {
-        if ((*k)->GetDataType() == obPairData)
+        if ((*k)->GetDataType() == OBGenericDataType::PairData)
         {
             if (outputCML1)
             {

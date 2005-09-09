@@ -547,7 +547,7 @@ bool OBBond::HasData(const char *s)
     return(false);
 }
 
-bool OBBond::HasData(obDataType dt)
+bool OBBond::HasData(unsigned int dt)
 //returns true if the generic attribute/value pair exists
 {
     if (_vdata.empty())
@@ -586,7 +586,7 @@ OBGenericData *OBBond::GetData(const char *s)
     return(NULL);
 }
 
-OBGenericData *OBBond::GetData(obDataType dt)
+OBGenericData *OBBond::GetData(unsigned int dt)
 {
     vector<OBGenericData*>::iterator i;
     for (i = _vdata.begin();i != _vdata.end();i++)
@@ -595,7 +595,7 @@ OBGenericData *OBBond::GetData(obDataType dt)
     return(NULL);
 }
 
-void OBBond::DeleteData(obDataType dt)
+void OBBond::DeleteData(unsigned int dt)
 {
     vector<OBGenericData*> vdata;
     vector<OBGenericData*>::iterator i;

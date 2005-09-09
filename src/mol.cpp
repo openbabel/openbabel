@@ -374,7 +374,7 @@ void OBMol::ContigFragList(vector<vector<int> >&cfl)
 void OBMol::FindTorsions()
 {
     //if already has data return
-    if(HasData(obTorsionData))
+    if(HasData(OBGenericDataType::TorsionData))
         return;
 
     //get new data and attach it to molecule
@@ -415,8 +415,6 @@ void OBMol::FindTorsions()
     return;
 }
 
-//! Each vector<int> contains the atom numbers of a contig fragment
-//! The vectors are sorted by size from largest to smallest
 void OBMol::FindLargestFragment(OBBitVec &lf)
 {
     int j;
@@ -847,10 +845,10 @@ vector<OBRing*> &OBMol::GetSSSR()
     if (!HasSSSRPerceived())
         FindSSSR();
 
-    if (!HasData(obRingData))
+    if (!HasData(OBGenericDataType::RingData))
         SetData(new OBRingData);
 
-    OBRingData *rd = (OBRingData *) GetData(obRingData);
+    OBRingData *rd = (OBRingData *) GetData(OBGenericDataType::RingData);
     return(rd->GetData());
 }
 
@@ -1113,13 +1111,13 @@ OBMol &OBMol::operator=(const OBMol &source)
     }
 
     //Copy rotamer list
-    OBRotamerList *rml = (OBRotamerList *)src.GetData(obRotamerList);
+    OBRotamerList *rml = (OBRotamerList *)src.GetData(OBGenericDataType::RotamerList);
     if (rml && rml->NumAtoms() == src.NumAtoms())
     {
         //Destroy old rotamer list if necessary
-        if ((OBRotamerList *)GetData(obRotamerList))
+        if ((OBRotamerList *)GetData(OBGenericDataType::RotamerList))
         {
-            DeleteData(obRotamerList);
+            DeleteData(OBGenericDataType::RotamerList);
         }
 
         //Set base coordinates
@@ -1262,10 +1260,10 @@ void OBMol::BeginModify()
         _vconf.clear();
 
         //Destroy rotamer list if necessary
-        if ((OBRotamerList *)GetData("RotamerList"))
+        if ((OBRotamerList *)GetData(OBGenericDataType::RotamerList))
         {
-            delete (OBRotamerList *)GetData("RotamerList");
-            DeleteData(obRotamerList);
+            delete (OBRotamerList *)GetData(OBGenericDataType::RotamerList);
+            DeleteData(OBGenericDataType::RotamerList);
         }
     }
 
@@ -1384,14 +1382,14 @@ OBAtom *OBMol::NewAtom()
     _vatom[_natoms] = obatom;
     _natoms++;
 
-    if (HasData(obVirtualBondData))
+    if (HasData(OBGenericDataType::VirtualBondData))
     {
         /*add bonds that have been queued*/
         OBVirtualBond *vb;
         vector<OBGenericData*> verase;
         vector<OBGenericData*>::iterator i;
         for (i = BeginData();i != EndData();i++)
-            if ((*i)->GetDataType() == obVirtualBondData)
+            if ((*i)->GetDataType() == OBGenericDataType::VirtualBondData)
             {
                 vb = (OBVirtualBond*)*i;
                 if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms)
@@ -1448,14 +1446,14 @@ bool OBMol::AddAtom(OBAtom &atom)
     _vatom[_natoms] = (OBNodeBase*)obatom;
     _natoms++;
 
-    if (HasData(obVirtualBondData))
+    if (HasData(OBGenericDataType::VirtualBondData))
     {
         /*add bonds that have been queued*/
         OBVirtualBond *vb;
         vector<OBGenericData*> verase;
         vector<OBGenericData*>::iterator i;
         for (i = BeginData();i != EndData();i++)
-            if ((*i)->GetDataType() == obVirtualBondData)
+            if ((*i)->GetDataType() == OBGenericDataType::VirtualBondData)
             {
                 vb = (OBVirtualBond*)*i;
                 if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms)
@@ -1501,14 +1499,14 @@ bool OBMol::InsertAtom(OBAtom &atom)
     _vatom[_natoms] = (OBNodeBase*)obatom;
     _natoms++;
 
-    if (HasData(obVirtualBondData))
+    if (HasData(OBGenericDataType::VirtualBondData))
     {
         /*add bonds that have been queued*/
         OBVirtualBond *vb;
         vector<OBGenericData*> verase;
         vector<OBGenericData*>::iterator i;
         for (i = BeginData();i != EndData();i++)
-            if ((*i)->GetDataType() == obVirtualBondData)
+            if ((*i)->GetDataType() == OBGenericDataType::VirtualBondData)
             {
                 vb = (OBVirtualBond*)*i;
                 if (vb->GetBgn() > _natoms || vb->GetEnd() > _natoms)
@@ -1546,7 +1544,6 @@ bool OBMol::AddResidue(OBResidue &residue)
     return(true);
 }
 
-//! Deletes all atoms except for the largest contiguous fragment
 bool OBMol::StripSalts()
 {
     vector<vector<int> > cfl;
@@ -2862,7 +2859,7 @@ bool OBMol::HasData(const char *s)
 }
 
 
-bool OBMol::HasData(obDataType dt)
+bool OBMol::HasData(unsigned int dt)
 //returns true if the generic attribute/value pair exists
 {
     if (_vdata.empty())
@@ -2901,7 +2898,7 @@ OBGenericData *OBMol::GetData(const char *s)
     return(NULL);
 }
 
-OBGenericData *OBMol::GetData(obDataType dt)
+OBGenericData *OBMol::GetData(unsigned int dt)
 {
     vector<OBGenericData*>::iterator i;
     for (i = _vdata.begin();i != _vdata.end();i++)
@@ -2910,7 +2907,7 @@ OBGenericData *OBMol::GetData(obDataType dt)
     return(NULL);
 }
 
-void OBMol::DeleteData(obDataType dt)
+void OBMol::DeleteData(unsigned int dt)
 {
     vector<OBGenericData*> vdata;
     vector<OBGenericData*>::iterator i;

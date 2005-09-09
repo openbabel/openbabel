@@ -31,7 +31,7 @@ namespace OpenBabel
 
 OBGenericData::OBGenericData()
 {
-    _type = obUndefinedData;
+    _type = OBGenericDataType::UndefinedData;
     _attr = "undefined";
 }
 
@@ -59,14 +59,14 @@ OBGenericData& OBGenericData::operator = (const OBGenericData &src)
 
 OBCommentData::OBCommentData()
 {
-    _type = obCommentData;
+    _type = OBGenericDataType::CommentData;
     _attr = "Comment";
 }
 
 OBCommentData::OBCommentData(const OBCommentData &src) :
   OBGenericData()
 {
-    _type = obCommentData;
+    _type = OBGenericDataType::CommentData;
     _attr = "Comment";
     _data = src.GetData();
 }
@@ -94,7 +94,7 @@ OBExternalBond::OBExternalBond(const OBExternalBond &src)
 
 OBExternalBondData::OBExternalBondData()
 {
-    _type = obExternalBondData;
+    _type = OBGenericDataType::ExternalBondData;
     _attr = "ExternalBondData";
 }
 
@@ -104,42 +104,13 @@ void OBExternalBondData::SetData(OBAtom *atom,OBBond *bond,int idx)
     _vexbnd.push_back(xb);
 }
 
-/*NF
-//
-//member functions for OBCompressData class
-//
- 
-OBCompressData::OBCompressData() 
-{
-  _size = 0;
-  _data = (unsigned char*)NULL; 
-  _type = obCompressData;
-  _attr = "CompressData";
-}
- 
-OBCompressData::~OBCompressData()
-{
-  if (_data) {delete [] _data; _data = (unsigned char*)NULL;}
-}
- 
-void OBCompressData::SetData(unsigned char *d,int size)
-{
-  if (size <= 0) return;
-  
-  if (_data) {delete [] _data; _data = (unsigned char*)NULL;}
-  
-  _data = new unsigned char[size];
-  memcpy(_data,(char*) d, size);
-  _size = size;
-}
-*/
 //
 //member functions for OBPairData class
 //
 
 OBPairData::OBPairData()
 {
-    _type = obPairData;
+    _type = OBGenericDataType::PairData;
     _attr = "PairData";
 }
 
@@ -149,14 +120,14 @@ OBPairData::OBPairData()
 
 OBVirtualBond::OBVirtualBond()
 {
-    _type = obVirtualBondData;
+    _type = OBGenericDataType::VirtualBondData;
     _attr = "VirtualBondData";
     _bgn = _end = _ord = 0;
 }
 
 OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo)
 {
-    _type = obVirtualBondData;
+    _type = OBGenericDataType::VirtualBondData;
     _attr = "VirtualBondData";
     _bgn = bgn;
     _end = end;
@@ -170,7 +141,7 @@ OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo)
 OBUnitCell::OBUnitCell()
 {
     _a = _b = _c = _alpha = _beta = _gamma = 0.0;
-    _type = obUnitCell;
+    _type = OBGenericDataType::UnitCell;
     _attr = "UnitCell";
 }
 
@@ -324,7 +295,7 @@ matrix3x3 OBUnitCell::GetFractionalMatrix()
 //
 OBSymmetryData::OBSymmetryData()
 {
-    _type = obSymmetryData;
+    _type = OBGenericDataType::SymmetryData;
     _attr = "Symmetry";
 }
 
@@ -348,7 +319,7 @@ OBSymmetryData & OBSymmetryData::operator=(const OBSymmetryData &src)
 
 OBConformerData::OBConformerData()
 {
-    _type = obConformerData;
+    _type = OBGenericDataType::ConformerData;
     _attr = "Conformers";
 }
 
@@ -384,7 +355,7 @@ OBConformerData & OBConformerData::operator=(const OBConformerData &src)
 
 OBRingData::OBRingData()
 {
-    _type = obRingData;
+    _type = OBGenericDataType::RingData;
     _attr = "RingData";
     _vr.clear();
 }
@@ -598,7 +569,7 @@ bool OBAngle::operator ==(const OBAngle &other)
 OBAngleData::OBAngleData()
         :	OBGenericData()
 {
-    _type = obAngleData;
+    _type = OBGenericDataType::AngleData;
     _attr = "AngleData";
 }
 
@@ -608,7 +579,7 @@ OBAngleData::OBAngleData()
 OBAngleData::OBAngleData(const OBAngleData &src)
         :	OBGenericData(src), _angles(src._angles)
 {
-    _type = obAngleData;
+    _type = OBGenericDataType::AngleData;
     _attr = "AngleData";
 }
 
@@ -836,7 +807,7 @@ bool OBTorsion::AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &atoms)
 //\!brief OBTorsionData ctor
 OBTorsionData::OBTorsionData()
 {
-    _type = obTorsionData;
+    _type = OBGenericDataType::TorsionData;
     _attr = "TorsionData";
 }
 
@@ -846,7 +817,7 @@ OBTorsionData::OBTorsionData()
 OBTorsionData::OBTorsionData(const OBTorsionData &src)
         :	OBGenericData(src), _torsions(src._torsions)
 {
-    _type = obTorsionData;
+    _type = OBGenericDataType::TorsionData;
     _attr = "TorsionData";
 }
 
@@ -857,7 +828,7 @@ OBTorsionData& OBTorsionData::operator =(const OBTorsionData &src)
 
     OBGenericData::operator =(src);
 
-    _type     = obTorsionData;
+    _type     = OBGenericDataType::TorsionData;
     _attr     = "TorsionData";
     _torsions = src._torsions;
 
@@ -913,6 +884,106 @@ bool OBTorsionData::FillTorsionArray(vector<vector<unsigned int> > &torsions)
     }
 
     return(true);
+}
+
+//
+// Member functions for OBChiralDarta
+//
+bool OBChiralData::SetAtom4Refs(std::vector<unsigned int> atom4refs, atomreftype t)
+{
+     if (atom4refs.size()>4){cerr << "More than 4 atoms in atom4refs";return(false);}
+     switch(t){
+               case input: _atom4refs = atom4refs;break;
+               case output:_atom4refo = atom4refs;break;
+               case calcvolume:_atom4refc = atom4refs;break;
+               default: cerr<< "Error! AtomRefType called is invalid: "
+                        << t << endl; return(false);
+               }
+     return (true);
+}
+int OBChiralData::AddAtomRef(unsigned int atomref, atomreftype t)
+{
+    switch(t){
+              case input: _atom4refs.push_back(atomref);break;
+              case output: _atom4refo.push_back(atomref);break;
+              case calcvolume:_atom4refc.push_back(atomref);break;
+              default: cerr<<"Error! AtomRefType called is invalid: "
+                       << t << endl; return(false);
+              }
+              
+    return (_atom4refs.size());
+}
+
+unsigned int OBChiralData::GetAtomRef(int a, atomreftype t)
+{
+        switch(t){
+             case input: return(_atom4refs[a]);break;
+             case output: return(_atom4refo[a]);break;
+             case calcvolume: return(_atom4refc[a]);break;
+             default: cerr<<"Error! AtomRefType called is invalid: "
+                       << t << endl; return(false);
+              }  
+}
+std::vector<unsigned int> OBChiralData::GetAtom4Refs(atomreftype t) const
+{
+            switch (t){
+               case output:
+                return(_atom4refo);
+                break;
+               case input:
+                return(_atom4refs);
+                break;
+               case calcvolume:
+                return(_atom4refc);
+                break;
+               default: cerr << "Error! AtomRefType called is invalid: "<<t<<endl;
+                }
+}
+ unsigned int OBChiralData::GetSize(atomreftype t) const
+ {
+          switch (t){
+               case output:
+                return(unsigned int)_atom4refo.size();
+                break;
+               case input:
+                return(unsigned int)_atom4refs.size();
+                break;
+               case calcvolume:
+                return(unsigned int)_atom4refc.size();
+               default: cerr << "Error! AtomRefType called is invalid: "<<t<<endl;
+                }
+ }
+OBChiralData::OBChiralData()
+{
+    _type = OBGenericDataType::ChiralData;
+    _attr = "ChiralData";
+}
+OBChiralData::OBChiralData(const OBChiralData &src)
+{
+  _atom4refs = src._atom4refs;
+  _atom4refo = src._atom4refo;
+  _atom4refc = src._atom4refc;
+  parity=src.parity;
+}
+
+OBChiralData & OBChiralData::operator=(const OBChiralData &src)
+{
+    if(this == &src)
+        return(*this);
+
+    _atom4refs = src._atom4refs;
+    _atom4refo = src._atom4refo;
+    _atom4refc = src._atom4refc;
+    parity=src.parity;
+    return(*this);
+}
+
+void OBChiralData::Clear()
+{
+     _atom4refs.clear();
+    parity=0;
+    _atom4refo.clear();
+    _atom4refc.clear();
 }
 
 } //end namespace OpenBabel

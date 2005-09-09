@@ -180,25 +180,7 @@ vector<int> *OBProxGrid::GetProxVector(double *c)
     y = c[1];
     z = c[2];
 
-    if (x < _xmin || x > _xmax)
-        return(NULL);
-    if (y < _ymin || y > _ymax)
-        return(NULL);
-    if (z < _zmin || z > _zmax)
-        return(NULL);
-
-    x -= _xmin;
-    y -= _ymin;
-    z -= _zmin;
-    int i,j,k,idx;
-    i = (int) (x*_inc);
-    j = (int) (y*_inc);
-    k = (int) (z*_inc);
-    idx = (i*_nyinc*_nzinc)+(j*_nzinc)+k;
-    if (idx >= _maxinc)
-        return(NULL);
-
-    return(&cell[idx]);
+    return( GetProxVector(x, y, z) );
 }
 
 void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
@@ -267,6 +249,22 @@ void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
     memset(_val,'\0',sizeof(double)*size);
 
     //return(true);
+}
+
+double OBFloatGrid::Inject(double x,double y,double z)
+{
+  if((x<=_xmin)||(x>=_xmax))
+    return(0.0);
+  if((y<=_ymin)||(y>=_ymax))
+    return(0.0);
+  if((z<=_zmin)||(z>=_zmax))
+    return(0.0);
+  
+  int gx=(int)((x-_xmin)*_inv_spa);
+  int gy=(int)((y-_ymin)*_inv_spa);
+  int gz=(int)((z-_zmin)*_inv_spa);
+  
+  return(_val[(gz*_ydim*_xdim)+(gy*_xdim)+gx]);
 }
 
 void OBFloatGrid::IndexToCoords(int idx, double &x, double &y, double &z)

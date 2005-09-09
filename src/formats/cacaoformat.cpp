@@ -165,11 +165,11 @@ bool CacaoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     sprintf(buffer,"%3d   DIST  0  0  0",mol.NumAtoms());
     ofs << buffer << endl;
 
-    if (!mol.HasData(obUnitCell))
+    if (!mol.HasData(OBGenericDataType::UnitCell))
         sprintf(buffer,"CELL 1.,1.,1.,90.,90.,90.");
     else
     {
-        OBUnitCell *uc = (OBUnitCell*)mol.GetData(obUnitCell);
+        OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
         sprintf(buffer,"CELL %f,%f,%f,%f,%f,%f",
                 uc->GetA(), uc->GetB(), uc->GetC(),
                 uc->GetAlpha(), uc->GetBeta(), uc->GetGamma());

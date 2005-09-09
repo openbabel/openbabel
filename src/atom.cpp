@@ -1593,7 +1593,7 @@ bool OBAtom::HasData(const char *s)
     return(false);
 }
 
-bool OBAtom::HasData(obDataType dt)
+bool OBAtom::HasData(unsigned int dt)
 //returns true if the generic attribute/value pair exists
 {
     if (_vdata.empty())
@@ -1632,7 +1632,7 @@ OBGenericData *OBAtom::GetData(const char *s)
     return(NULL);
 }
 
-OBGenericData *OBAtom::GetData(obDataType dt)
+OBGenericData *OBAtom::GetData(unsigned int dt)
 {
     vector<OBGenericData*>::iterator i;
     for (i = _vdata.begin();i != _vdata.end();i++)
@@ -1641,7 +1641,7 @@ OBGenericData *OBAtom::GetData(obDataType dt)
     return(NULL);
 }
 
-void OBAtom::DeleteData(obDataType dt)
+void OBAtom::DeleteData(unsigned int dt)
 {
     vector<OBGenericData*> vdata;
     vector<OBGenericData*>::iterator i;

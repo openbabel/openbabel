@@ -93,7 +93,7 @@ bool CSSRFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     char buffer[BUFF_SIZE];
 
-    if (!mol.HasData(obUnitCell))
+    if (!mol.HasData(OBGenericDataType::UnitCell))
       {
 	sprintf(buffer,
 		" REFERENCE STRUCTURE = 00000   A,B,C =%8.3f%8.3f%8.3f",
@@ -106,7 +106,7 @@ bool CSSRFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       }
     else
       {
-	OBUnitCell *uc = (OBUnitCell*)mol.GetData(obUnitCell);
+	OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
 	sprintf(buffer,
 		" REFERENCE STRUCTURE = 00000   A,B,C =%8.3f%8.3f%8.3f",
 		uc->GetA(), uc->GetB(), uc->GetC()); 

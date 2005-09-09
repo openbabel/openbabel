@@ -316,9 +316,9 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "GASTEIGER" << endl;
     ofs << "Energy = " << mol.GetEnergy() << endl;
 
-    if (mol.HasData("Comment"))
+    if (mol.HasData(OBGenericDataType::CommentData))
     {
-        OBCommentData *cd = (OBCommentData*)mol.GetData(obCommentData);
+        OBCommentData *cd = (OBCommentData*)mol.GetData(OBGenericDataType::CommentData);
         ofs << cd->GetData();
     }
 

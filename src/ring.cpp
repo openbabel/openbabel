@@ -122,9 +122,9 @@ void OBMol::FindSSSR()
             //rs.WriteRings(); //for debugging only
         }
 
-        if (!HasData(obRingData))
+        if (!HasData(OBGenericDataType::RingData))
             SetData(new OBRingData);
-        OBRingData *rd = (OBRingData*)GetData(obRingData);
+        OBRingData *rd = (OBRingData*)GetData(OBGenericDataType::RingData);
         rd->SetData(vr);
     }
 }
