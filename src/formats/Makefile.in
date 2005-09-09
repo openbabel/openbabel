@@ -648,9 +648,6 @@ EXTRA_DIST = exampleformat.cpp cmlppformat.cpp
 @BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@mdlformat_la_SOURCES = mdlformat.cpp
 @BUILD_SHARED_TRUE@mdlformat_la_LDFLAGS = -module -avoid-version 
-
-#mm3format_la_SOURCES = mm3format.cpp
-#mm3format_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@mmodformat_la_SOURCES = mmodformat.cpp
 @BUILD_SHARED_TRUE@mmodformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@mol2format_la_SOURCES = mol2format.cpp

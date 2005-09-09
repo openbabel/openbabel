@@ -132,9 +132,6 @@ jaguarformat_la_LDFLAGS = -module -avoid-version
 mdlformat_la_SOURCES = mdlformat.cpp
 mdlformat_la_LDFLAGS = -module -avoid-version 
 
-#mm3format_la_SOURCES = mm3format.cpp
-#mm3format_la_LDFLAGS = -module -avoid-version 
-
 mmodformat_la_SOURCES = mmodformat.cpp
 mmodformat_la_LDFLAGS = -module -avoid-version 
 
