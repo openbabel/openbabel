@@ -1,3 +1,11 @@
+2005-09-09  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* atom.cpp (operator=): _spinmultiplicity now copied
+
+	* obconversion.cpp (SetOneObjectOnly): Set _IsLast
+
+	* obmolecformat.h: Small comment change
+
 2005-09-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Makefile.am: Add dist-hook to remove CVS directories from
