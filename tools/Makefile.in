@@ -36,8 +36,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = obgrep$(EXEEXT) obrotate$(EXEEXT) obfit$(EXEEXT) \
-	obprop$(EXEEXT)
+bin_PROGRAMS = obchiral$(EXEEXT) obgrep$(EXEEXT) obrotate$(EXEEXT) \
+	obfit$(EXEEXT) obprop$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -51,6 +51,9 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
+am_obchiral_OBJECTS = obchiral.$(OBJEXT)
+obchiral_OBJECTS = $(am_obchiral_OBJECTS)
+obchiral_DEPENDENCIES = ../src/libopenbabel.la
 am_obfit_OBJECTS = obfit.$(OBJEXT)
 obfit_OBJECTS = $(am_obfit_OBJECTS)
 obfit_DEPENDENCIES = ../src/libopenbabel.la
@@ -74,10 +77,10 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(obfit_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) \
-	$(obrotate_SOURCES)
-DIST_SOURCES = $(obfit_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) \
-	$(obrotate_SOURCES)
+SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgrep_SOURCES) \
+	$(obprop_SOURCES) $(obrotate_SOURCES)
+DIST_SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgrep_SOURCES) \
+	$(obprop_SOURCES) $(obrotate_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -205,9 +208,8 @@ obfit_SOURCES = obfit.cpp
 obfit_LDADD = ../src/libopenbabel.la @LIBDL@
 obprop_SOURCES = obprop.cpp
 obprop_LDADD = ../src/libopenbabel.la @LIBDL@
-
-# obtanimoto_SOURCES = obtanimoto.cpp
-# obtanimoto_LDADD = ../src/libopenbabel.la @LIBDL@
+obchiral_SOURCES = obchiral.cpp
+obchiral_LDADD = ../src/libopenbabel.la @LIBDL@
 AM_CPPFLAGS = -I$(top_srcdir)/src
 all: all-am
 
@@ -270,6 +272,9 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
+obchiral$(EXEEXT): $(obchiral_OBJECTS) $(obchiral_DEPENDENCIES) 
+	@rm -f obchiral$(EXEEXT)
+	$(CXXLINK) $(obchiral_LDFLAGS) $(obchiral_OBJECTS) $(obchiral_LDADD) $(LIBS)
 obfit$(EXEEXT): $(obfit_OBJECTS) $(obfit_DEPENDENCIES) 
 	@rm -f obfit$(EXEEXT)
 	$(CXXLINK) $(obfit_LDFLAGS) $(obfit_OBJECTS) $(obfit_LDADD) $(LIBS)
@@ -289,6 +294,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obchiral.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgrep.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obprop.Po@am__quote@

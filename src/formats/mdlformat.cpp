@@ -27,11 +27,13 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obconversion.h"
 #include "obmolecformat.h"
+#include "chiral.h"
 
 using namespace std;
 namespace OpenBabel {
 class MOLFormat : public OBMoleculeFormat
 {
+      map<OBAtom*,OBChiralData*> _mapcd; // map of ChiralAtoms and their data
 public:
 	//Register this format type ID
 	MOLFormat() 
@@ -243,7 +245,22 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   mol.AssignSpinMultiplicity();
 
 	mol.EndModify();
-
+	
+//NE add the OBChiralData stored inside the _mapcd to the atoms now after end
+    // modify so they don't get lost.
+    if(_mapcd.size()>0)
+    {
+    int n;
+    OBAtom* atom;
+    OBChiralData* cd;
+    map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
+       for(ChiralSearch=_mapcd.begin();ChiralSearch!=_mapcd.end();ChiralSearch++)
+       {
+        atom=ChiralSearch->first;
+        cd=ChiralSearch->second;
+        atom->SetData(cd);
+       }    
+    }
   if (comment)
   {
 	  OBCommentData *cd = new OBCommentData;
@@ -291,14 +308,16 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(mol.GetDimension()==3)
 		dimension[0]='3';
 
+  mol.FindChiralCenters(); // Needed to mark centers as chiral from formats like xyz
+
 	ofs << mol.GetTitle() <<  endl; //line 1
 
 	char td[11];
 	ofs << " OpenBabel" << GetTimeDate(td) <<  dimension << endl; //line2
 
-	if (mol.HasData(obCommentData))
+	if (mol.HasData(OBGenericDataType::CommentData))
 		{
-		  OBCommentData *cd = (OBCommentData*)mol.GetData(obCommentData);
+		  OBCommentData *cd = (OBCommentData*)mol.GetData(OBGenericDataType::CommentData);
 		  ofs << cd->GetData() << endl; //line 3
 		}
 	else
@@ -431,7 +450,7 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   vector<OBGenericData*>::iterator k;
   vector<OBGenericData*> vdata = mol.GetData();
   for (k = vdata.begin();k != vdata.end();k++)
-	  if ((*k)->GetDataType() == obPairData)
+	  if ((*k)->GetDataType() == OBGenericDataType::PairData)
 	  {
 		  ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
 		  ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
@@ -508,6 +527,7 @@ bool MOLFormat::ReadV3000Line(istream& ifs, vector<string>& vs)
 bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 {	
 	OBAtom atom;
+	bool chiralWatch=false;
 	int obindex;
 	for(obindex=1;;obindex++)
 	{
@@ -548,6 +568,7 @@ bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 				//Reversed 12Aug05 as advised by Nick England
 				if(val==2) atom.SetAntiClockwiseStereo();
 				else if(val==1) atom.SetClockwiseStereo();
+				chiralWatch=true;
 			}
 			else if((*itr).substr(0,pos)=="MASS")
 			{
@@ -561,6 +582,7 @@ bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 			//Unknown properties ignored
 		}
 		if(!mol.AddAtom(atom)) return false;
+		if(chiralWatch)_mapcd[mol.GetAtom(mol.NumAtoms())]= new OBChiralData; // fill the map with chrial data for each chiral atom
     atom.Clear();
 	}
 	return true;
@@ -603,6 +625,22 @@ bool MOLFormat::ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 			}
 		}
 	  if (!mol.AddBond(obstart,obend,order,flag)) return false;
+	  
+	  // after adding a bond to atom "obstart"
+     // search to see if atom is bonded to a chiral atom
+        map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
+        ChiralSearch = _mapcd.find(mol.GetAtom(obstart));
+        if (ChiralSearch!=_mapcd.end())
+        {
+           (ChiralSearch->second)->AddAtomRef(obend, input);
+        }
+     // after adding a bond to atom "obend"
+     // search to see if atom is bonded to a chiral atom
+        ChiralSearch = _mapcd.find(mol.GetAtom(obend));
+        if (ChiralSearch!=_mapcd.end())
+        {
+           (ChiralSearch->second)->AddAtomRef(obstart, input);
+        }
 	}
 	return true;
 }
@@ -632,7 +670,7 @@ bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
 	int index=1;
 	vector<OBNodeBase*>::iterator i;
 	for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-	{
+	{  
 		ofs	<< "M  V30 "
 				<< index++ << " "
 				<< etab.GetSymbol(atom->GetAtomicNum()) << " "
@@ -644,11 +682,52 @@ bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
 			ofs << " CHG=" << atom->GetFormalCharge();
 		if(atom->GetSpinMultiplicity()!=0)
 			ofs << " RAD=" << atom->GetSpinMultiplicity();
-		if(atom->HasChiralitySpecified())
+		if(atom->IsChiral())
 		{
+         // MOLV3000 uses 1234 unless an H then 123H
+         
+         OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
+         if(!cd){ //if no Chiral Data Set, need to make one!
+                 cd=new OBChiralData;
+                 atom->SetData(cd);
+                 }
+             if (atom->GetHvyValence()==3)
+             {
+                OBAtom *nbr;
+                int Hid = (mol.NumAtoms()+1) ;// max Atom ID +1 
+                vector<unsigned int> nbr_atms;
+                vector<OBEdgeBase*>::iterator i;
+                for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
+                {
+                    if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
+                    nbr_atms.push_back(nbr->GetIdx());
+                }
+                sort(nbr_atms.begin(),nbr_atms.end());
+                nbr_atms.push_back(Hid);
+                cd->SetAtom4Refs(nbr_atms,output);   
+             } 
+             else if (atom->GetHvyValence()==4)
+             {
+                vector<unsigned int> nbr_atms;
+                int n;
+                for(n=1;n<5;n++)nbr_atms.push_back(n);
+                cd->SetAtom4Refs(nbr_atms,output); 
+             }
+         double vol=0;         
+         if (mol.HasNonZeroCoords())
+         {
+            vol=CalcSignedVolume(mol,atom);
+            if (vol > 0.0)atom->SetClockwiseStereo();
+            else if(vol < 0.0)atom->SetAntiClockwiseStereo();
+            CorrectChirality(mol,atom,calcvolume,output);
+         }
+         else {            
+              CorrectChirality(mol,atom); // will set the stereochem based on input/output atom4refs
+              }
 			int cfg=0;
-			if (atom->IsClockwise())cfg=1;
+			if(atom->IsClockwise())cfg=1;
 			else if(atom->IsAntiClockwise())cfg=2;
+			
 			ofs << " CFG=" << cfg;
 		}
 		if(atom->GetIsotope()!=0)

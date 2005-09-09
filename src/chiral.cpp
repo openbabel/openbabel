@@ -28,7 +28,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
-
+// Sets atom->IsChiral() to true for chiral atoms
 void OBMol::FindChiralCenters()
 {
     if (HasChiralityPerceived())
@@ -113,6 +113,7 @@ void OBMol::FindChiralCenters()
         }
 }
 
+// Seems to make a vector chirality become filled with array of +/- 1 for chiral atoms.
 void GetChirality(OBMol &mol, std::vector<int> &chirality)
 {
     chirality.resize(mol.NumAtoms()+1);
@@ -147,15 +148,128 @@ void GetChirality(OBMol &mol, std::vector<int> &chirality)
         }
 }
 
+int GetParity4Ref(vector<unsigned int> pref) // Calculates Parity of a vector
+{
+          if(pref.size()!=4)return(-1); // should be given a vector of size 4.
+           int parity=0;
+           for (int i=0;i<3;i++) // do the bubble sort this many times
+           {
+               for(int j=0;j<3;j++) // iterate across the array 4th element has no
+               {                    // right hand neighbour so no need to sort
+                  if (pref[j+1] < pref[j]) // compare the two neighbors
+                  {  
+                     unsigned int tmp = pref[j];        // swap a[j] and a[j+1]  
+                     pref[j] = pref[j+1];
+                     pref[j+1] = tmp;
+                     parity++; // parity odd will invert stereochem
+                  }
+               }
+           } // End Bubble Sort
+    return(parity%2);
+}
+
+bool CorrectChirality(OBMol &mol, OBAtom *atm, atomreftype i, atomreftype o)
+{
+    if (!atm->HasChiralitySpecified()) // if no chirality defined can't do any more for 0D
+               return(false);
+    
+    int parityI=0,parityO=0;
+    OBChiralData* cd=(OBChiralData*)atm->GetData(OBGenericDataType::ChiralData);
+    if ((cd->GetAtom4Refs(input)).size()!=4)return(false); // must have 4 refs
+     parityI=GetParity4Ref(cd->GetAtom4Refs(i)); // Gets Atom4Refs used to define the chirality
+     parityO=GetParity4Ref(cd->GetAtom4Refs(o));//GetsOutput parity.        
+   /* switch (CHTYPE)
+          {
+           case SMILES: // SMILES always uses 1234 atom refs
+            parityO=0; // if parityO==parityI then clockwise in input = clockwise in output
+            break;
+           case MOLV3000: // MOLV3000 uses 1234 unless an H then 123H
+             if (atm->GetHvyValence()==3)
+             {
+                OBAtom *nbr;
+                int Hid=1000;// max Atom ID +1 should be used here
+                vector<int> nbr_atms;
+                vector<OBEdgeBase*>::iterator i;
+                for (nbr = atm->BeginNbrAtom(i);nbr;nbr = atm->NextNbrAtom(i))
+                {
+                    if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
+                    nbr_atms.push_back(nbr->GetIdx());
+                }
+                sort(nbr_atms.begin(),nbr_atms.end());
+                nbr_atms.push_back(Hid);
+                int tmp[4];
+                for(int i=0;i<4;i++){tmp[i]=nbr_atms[i];}
+                parityO=GetParity4Ref(tmp);    
+             } 
+             else if (atm->GetHvyValence()==4)
+              parityO=0;   
+              break;
+             default:
+               parityO=0;                               
+           }*/
+    if (parityO==parityI)
+    {//cout << "Parity is the same"<<endl;
+       return(true);
+    }
+    else if(parityO!=parityI) // Need to invert the Chirality which has been set
+    { //cout << "Parity is Opposite"<<endl;       
+        if (atm->IsClockwise())
+            {atm->UnsetStereo();atm->SetAntiClockwiseStereo();}
+        else if (atm->IsAntiClockwise())
+            {atm->UnsetStereo();atm->SetClockwiseStereo();}
+        else
+            return(false);
+        return(true);
+    }
+}
+
 //! Calculate the signed volume for an atom.  If the atom has a valence of 3
 //! the coordinates of an attached hydrogen are calculated
+// Puts attached Hydrogen last at the moment, like mol V3000 format.
 double CalcSignedVolume(OBMol &mol,OBAtom *atm)
 {
     vector3 tmp_crd;
-    vector<int> nbr_atms;
+    vector<unsigned int> nbr_atms;
     vector<vector3> nbr_crds;
+    bool use_central_atom = false,is2D=false;
     double hbrad = etab.CorrectedBondRad(1,0);
+           
+    if (!mol.Has3D()) //give peudo Z coords if mol is 2D
+    {
+       vector3 v,vz(0.0,0.0,1.0);
+        is2D = true;
+        OBAtom *nbr;
+        OBBond *bond;
+        vector<OBEdgeBase*>::iterator i;
+        for (bond = atm->BeginBond(i);bond;bond = atm->NextBond(i))
+        {
+            nbr = bond->GetEndAtom();
+            if (nbr != atm)
+            {
+                v = nbr->GetVector();
+                if (bond->IsWedge())
+                    v += vz;
+                else
+                    if (bond->IsHash())
+                        v -= vz;
 
+                nbr->SetVector(v);
+            }
+            else
+            {
+                nbr = bond->GetBeginAtom();
+                v = nbr->GetVector();
+                if (bond->IsWedge())
+                    v -= vz;
+                else
+                    if (bond->IsHash())
+                        v += vz;
+
+                nbr->SetVector(v);
+            }
+        }
+    }
+    
     if (atm->GetHvyValence() < 3)
     {
         cerr << "Cannot calculate a signed volume for an atom with a heavy atom valence of " << atm->GetHvyValence() << endl;
@@ -163,6 +277,7 @@ double CalcSignedVolume(OBMol &mol,OBAtom *atm)
     }
 
     // Create a vector with the coordinates of the neighbor atoms
+    // Also make a vector with Atom IDs
     OBAtom *nbr;
     vector<OBEdgeBase*>::iterator bint;
     for (nbr = atm->BeginNbrAtom(bint);nbr;nbr = atm->NextNbrAtom(bint))
@@ -176,7 +291,7 @@ double CalcSignedVolume(OBMol &mol,OBAtom *atm)
         OBAtom *tmp_atm = mol.GetAtom(nbr_atms[i]);
         nbr_crds.push_back(tmp_atm->GetVector());
     }
-
+/*
     // If we have three heavy atoms we need to calculate the position of the fourth
     if (atm->GetHvyValence() == 3)
     {
@@ -184,7 +299,42 @@ double CalcSignedVolume(OBMol &mol,OBAtom *atm)
         atm->GetNewBondVector(tmp_crd,bondlen);
         nbr_crds.push_back(tmp_crd);
     }
+*/
+    for(int i=0;i < nbr_crds.size();i++) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
+    {
+        if (nbr_crds[i]==0 && use_central_atom==false)use_central_atom=true;
+        else if (nbr_crds[i]==0) cerr << "Error! More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation";
+    }
 
+  // If we have three heavy atoms we can use the chiral center atom itself for the fourth
+  // will always give same sign (for tetrahedron), magnitude will be smaller.
+  if(nbr_atms.size()==3 || use_central_atom==true)
+  {
+    nbr_crds.push_back(atm->GetVector());
+    nbr_atms.push_back(mol.NumAtoms()+1); // meed to add largest number on end to work
+    }
+    OBChiralData* cd=(OBChiralData*)atm->GetData(OBGenericDataType::ChiralData); //Set the output atom4refs to the ones used
+    if(cd==NULL)
+    {
+                cd = new OBChiralData;
+                atm->SetData(cd);
+    }
+    cd->SetAtom4Refs(nbr_atms,calcvolume);
+    
+    //re-zero psuedo-coords
+    if (is2D)
+    {
+        vector3 v;
+        OBAtom *atom;
+        vector<OBNodeBase*>::iterator k;
+        for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
+        {
+            v = atom->GetVector();
+            v.SetZ(0.0);
+            atom->SetVector(v);
+        }
+    }
+    
     return(signed_volume(nbr_crds[0],nbr_crds[1],nbr_crds[2],nbr_crds[3]));
 }
 

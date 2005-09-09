@@ -164,6 +164,8 @@ class OBSmilesParser
     vector<bool>         _avisit;
     vector<bool>         _bvisit;
     char _buffer[BUFF_SIZE];
+    bool chiralWatch; // set when a chiral atom is read
+    map<OBAtom*,OBChiralData*> _mapcd; // map of ChiralAtoms and their data
 public:
     bool SmiToMol(OBMol&,string&);
     bool ParseSmiles(OBMol&);
@@ -288,7 +290,7 @@ bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
 bool OBSmilesParser::ParseSmiles(OBMol &mol)
 {
     mol.BeginModify();
-
+    
     for (_ptr=_buffer;*_ptr;_ptr++)
     {
         if (isspace(*_ptr))
@@ -366,6 +368,22 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
     mol.UnsetAromaticPerceived();
 
     mol.EndModify();
+    
+    //NE add the OBChiralData stored inside the _mapcd to the atoms now after end
+    // modify so they don't get lost.
+    if(_mapcd.size()>0)
+    {
+    int n;
+    OBAtom* atom;
+    OBChiralData* cd;
+    map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
+       for(ChiralSearch=_mapcd.begin();ChiralSearch!=_mapcd.end();ChiralSearch++)
+       {
+        atom=ChiralSearch->first;
+        cd=ChiralSearch->second;
+        atom->SetData(cd);
+       }    
+    }
 
     return(true);
 }
@@ -632,6 +650,15 @@ bool OBSmilesParser::ParseSimple(OBMol &mol)
         }
         // CM end
         mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
+        
+        //NE iterate through and see if atom is bonded to chiral atom
+        map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
+        ChiralSearch=_mapcd.find(mol.GetAtom(_prev));
+        if (ChiralSearch!=_mapcd.end())
+        {
+           (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
+          // cout << "Line 650: Adding "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
+        }
     }
     //set values
     _prev = mol.NumAtoms();
@@ -1315,6 +1342,8 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
         {
         case '@':
             _ptr++;
+            chiralWatch=true;
+            _mapcd[atom]= new OBChiralData;
             if (*_ptr == '@')
                 atom->SetClockwiseStereo();
             else
@@ -1387,7 +1416,21 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
         atom->SetAromatic();
 
     if (_prev) //need to add bond
-        mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
+       {
+       mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
+        if(chiralWatch) // if chiral atom need to add its previous into atom4ref
+        {
+            (_mapcd[atom])->AddAtomRef((unsigned int)_prev,input);
+           // cout <<"line 1405: Added atom ref "<<_prev<<" to "<<_mapcd[atom]<<endl;
+        }
+        map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
+        ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
+        if (ChiralSearch!=_mapcd.end())
+        {
+           (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
+          // cout <<"line 1431: Added atom ref "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
+        }
+       }          
 
     //set values
     _prev = mol.NumAtoms();
@@ -1402,8 +1445,14 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
         atom->SetAtomicNum(1);
         atom->SetType("H");
         mol.AddBond(_prev,mol.NumAtoms(),1);
+        if(chiralWatch)
+        {
+           (_mapcd[mol.GetAtom(_prev)])->AddAtomRef(mol.NumAtoms(),input);
+          // cout << "line 1434: Added atom ref "<<mol.NumAtoms()<<" to "<<_mapcd[mol.GetAtom(_prev)]<<endl;
+                       
+        }
     }
-
+    chiralWatch=false;
     return(true);
 }
 
@@ -1429,8 +1478,8 @@ bool OBSmilesParser::CapExternalBonds(OBMol &mol)
 
         //record external bond information
         OBExternalBondData *xbd;
-        if(mol.HasData(obExternalBondData))
-            xbd = (OBExternalBondData*)mol.GetData(obExternalBondData);
+        if(mol.HasData(OBGenericDataType::ExternalBondData))
+            xbd = (OBExternalBondData*)mol.GetData(OBGenericDataType::ExternalBondData);
         else
         {
             xbd = new OBExternalBondData;
@@ -1522,6 +1571,17 @@ bool OBSmilesParser::ParseExternalBond(OBMol &mol)
             bondFlags = (_bondflags > (*j)[3]) ? _bondflags : (*j)[3];
             bondOrder = (_order > (*j)[2]) ? _order : (*j)[2];
             mol.AddBond((*j)[1],_prev,bondOrder,bondFlags);
+            
+                  // after adding a bond to atom "_prev"
+                  // search to see if atom is bonded to a chiral atom
+              map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
+              ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
+              if (ChiralSearch!=_mapcd.end())
+              {
+                 (ChiralSearch->second)->AddAtomRef((*j)[1], input);
+                // cout << "Added external "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
+              }
+            
             _extbond.erase(j);
             _bondflags = 0;
             _order = 0;
@@ -1572,6 +1632,24 @@ bool OBSmilesParser::ParseRingBond(OBMol &mol)
             bf = (_bondflags > (*j)[3]) ? _bondflags : (*j)[3];
             ord = (_order > (*j)[2]) ? _order : (*j)[2];
             mol.AddBond((*j)[1],_prev,ord,bf,(*j)[4]);
+            
+            // after adding a bond to atom "_prev"
+            // search to see if atom is bonded to a chiral atom
+            // need to check both _prev and (*j)[1] as closure is direction independant
+        map<OBAtom*,OBChiralData*>::iterator ChiralSearch,cs2;
+        ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
+        cs2=_mapcd.find(mol.GetAtom((*j)[1]));
+        if (ChiralSearch!=_mapcd.end())
+        {
+           (ChiralSearch->second)->AddAtomRef((*j)[1], input);
+           //cout << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
+        }
+        if (cs2!=_mapcd.end())
+        {
+           (cs2->second)->AddAtomRef(_prev,input);
+          // cout <<"Added ring opening "<<_prev<<" to "<<cs2->second<<endl;
+        }
+            
             //CM ensure neither atoms in ring closure is a radical centre
             OBAtom* patom = mol.GetAtom(_prev);
             patom->SetSpinMultiplicity(0);
