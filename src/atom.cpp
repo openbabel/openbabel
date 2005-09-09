@@ -154,7 +154,8 @@ OBAtom &OBAtom::operator=(OBAtom &src)
     _ele = src.GetAtomicNum();
     _isotope = src.GetIsotope();
     _fcharge = src.GetFormalCharge();
-    strcpy(_type,src.GetType());
+    _spinmultiplicity = src.GetSpinMultiplicity();
+		strcpy(_type,src.GetType());
     _pcharge = src.GetPartialCharge();
     _v = src.GetVector();
     _flags = src.GetFlag();

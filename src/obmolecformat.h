@@ -41,8 +41,8 @@ public:
 		OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
 		//The follow are OBMol options, which should not be in OBConversion.
 		//But here isn't entirely appropriate either, since could have
-		//OBMol formats loaded but non of them derived from this class.might
-		//not be included. This possibility is remote.
+		//OBMol formats loaded but none of them derived from this class.
+		//However, this possibility is remote.
 		OBConversion::RegisterOptionParam("s", NULL, 1,OBConversion::GENOPTIONS);
 		OBConversion::RegisterOptionParam("v", NULL, 1,OBConversion::GENOPTIONS);
 		OBConversion::RegisterOptionParam("h", NULL, 0,OBConversion::GENOPTIONS);

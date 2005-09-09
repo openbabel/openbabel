@@ -208,7 +208,8 @@ OBConversion::~OBConversion()
 	if(pAuxConv!=this)
 		delete pAuxConv;
 }
-
+//NOTE!! This function makes copying OBConversion objects unsafe.
+//TODO Write custom copy constructor. Meanwhile set call SetAuxConv(NULL) in the copy.
 //////////////////////////////////////////////////////
 /// Class information on formats is collected by making an instance of the class
 /// derived from OBFormat(only one is ever required).RegisterFormat() is called 
@@ -556,6 +557,7 @@ void OBConversion::SetMoreFilesToCome()
 void OBConversion::SetOneObjectOnly()
 {
 	OneObjectOnly=true;
+	m_IsLast=true;
 }	
 
 /////////////////////////////////////////////////////////
