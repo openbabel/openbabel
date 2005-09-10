@@ -1,3 +1,21 @@
+2005-09-10  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/formats/libxml: Added libxml2 header files. I have
+	used a Windows DLL for libxml2 and haven't used the 
+	source files,	but I guess they should be added.
+	
+	* src/formats/xml: Added classes for CML, CMLReact,
+	PubChem and a general XMLFormat which chooses based on
+	xmlnamespace. 
+	xml.cpp	amd xml.h contain an extended OBConversion 
+	with libxml2xmlreader and xmlwriter, XMLBaseFormat and 
+	XMLMoleculeFormat	abstract classes. 
+	This subfolder may not be the best place for
+	the format cpp files but are here for the moment because of
+	possible conflict with the existing cml.cpp and cmlformat.cpp
+	which they are intended to replace when their bugs have been
+	reduced.  
+
 2005-09-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/chiral.h, src/chiral.cpp: Updates from Nick England to
