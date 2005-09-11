@@ -1,3 +1,39 @@
+2005-09-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, src/config.h.in, Makefile.in,
+	*/Makefile.in: Update to detect libxml2 headers and libraries
+	using AM_PATH_XML2 and compile src/formats/xml directory.
+
+	* src/formats/Makefile.am: Remove cml.cpp and cmlformat.cpp old
+	code.
+
+	* data/bondtyp.txt, data/bondtyp.h: Updated porphyrin /
+	phthaloc. patterns with hand-written SMARTS and bond
+	orders. Ensures correct bond order assignment.
+
+	* src/data.h, src/data.cpp: Move OBResidueData from pdbformat.cpp,
+	so that other code can use residue data.
+
+	* src/generic.h: Move OBSerialNums from pdbformat.cpp.
+
+	* src/formats/pdbformat.cpp: Remove OBResidueData and OBSerialNums
+	as above.
+
+	* src/formats/smilesformat.cpp (OBSmilesParser): Make sure _mapcd
+	is cleared before reading a molecule -- would crash when
+	reading/writing multiple SMILES files.
+
+	* src/formats/xml/pubchem.cpp, src/formats/xml/xcmlformat.cpp:
+	Change OBMol::SetTitle() calls to be ISO C++ compilant.
+
+	* src/dlhandler_unix.cpp: Add support for multiple search paths
+	for shared format modules. Uses environmental variable
+	BABEL_LIBDIR which can be a colon separated list of paths
+	(e.g. /usr/lib/openbabel:/usr/local/lib/openbabel ...)
+
+	* test/ringresults.txt, test/smartsresults.txt: Regenerate after
+	recent SMARTS and atom typing changes.
+
 2005-09-10  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/formats/libxml: Added libxml2 header files. I have
