@@ -24,7 +24,7 @@ libformats_la_SOURCES = \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
 	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
-	xedformat.cpp xyzformat.cpp zindoformat.cpp
+	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp
 
 else BUILD_SHARED
 
@@ -43,7 +43,7 @@ pkglib_LTLIBRARIES = \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
 	rxnformat.la shelxformat.la smilesformat.la tinkerformat.la \
 	turbomoleformat.la unichemformat.la viewmolformat.la \
-	xedformat.la xyzformat.la zindoformat.la
+	xedformat.la xyzformat.la yasaraformat.la zindoformat.la
 
 APIInterface_la_SOURCES = APIInterface.cpp
 APIInterface_la_LDFLAGS = -module -avoid-version
@@ -185,6 +185,9 @@ xedformat_la_LDFLAGS = -module -avoid-version
 
 xyzformat_la_SOURCES = xyzformat.cpp
 xyzformat_la_LDFLAGS = -module -avoid-version 
+
+yasaraformat_la_SOURCES = yasaraformat.cpp
+yasaraformat_la_LDFLAGS = -module -avoid-version 
 
 zindoformat_la_SOURCES = zindoformat.cpp
 zindoformat_la_LDFLAGS = -module -avoid-version 

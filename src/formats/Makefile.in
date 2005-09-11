@@ -330,6 +330,11 @@ am__xyzformat_la_SOURCES_DIST = xyzformat.cpp
 @BUILD_SHARED_TRUE@am_xyzformat_la_OBJECTS = xyzformat.lo
 xyzformat_la_OBJECTS = $(am_xyzformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_xyzformat_la_rpath = -rpath $(pkglibdir)
+yasaraformat_la_LIBADD =
+am__yasaraformat_la_SOURCES_DIST = yasaraformat.cpp
+@BUILD_SHARED_TRUE@am_yasaraformat_la_OBJECTS = yasaraformat.lo
+yasaraformat_la_OBJECTS = $(am_yasaraformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_yasaraformat_la_rpath = -rpath $(pkglibdir)
 zindoformat_la_LIBADD =
 am__zindoformat_la_SOURCES_DIST = zindoformat.cpp
 @BUILD_SHARED_TRUE@am_zindoformat_la_OBJECTS = zindoformat.lo
@@ -370,7 +375,8 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
 	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
 	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
-	$(xyzformat_la_SOURCES) $(zindoformat_la_SOURCES)
+	$(xyzformat_la_SOURCES) $(yasaraformat_la_SOURCES) \
+	$(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__PQSformat_la_SOURCES_DIST) \
@@ -420,6 +426,7 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__viewmolformat_la_SOURCES_DIST) \
 	$(am__xedformat_la_SOURCES_DIST) \
 	$(am__xyzformat_la_SOURCES_DIST) \
+	$(am__yasaraformat_la_SOURCES_DIST) \
 	$(am__zindoformat_la_SOURCES_DIST)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
@@ -589,7 +596,8 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_TRUE@	smilesformat.la tinkerformat.la \
 @BUILD_SHARED_TRUE@	turbomoleformat.la unichemformat.la \
 @BUILD_SHARED_TRUE@	viewmolformat.la xedformat.la xyzformat.la \
-@BUILD_SHARED_TRUE@	zindoformat.la $(am__append_2)
+@BUILD_SHARED_TRUE@	yasaraformat.la zindoformat.la \
+@BUILD_SHARED_TRUE@	$(am__append_2)
 @BUILD_SHARED_TRUE@APIInterface_la_SOURCES = APIInterface.cpp
 @BUILD_SHARED_TRUE@APIInterface_la_LDFLAGS = -module -avoid-version
 @BUILD_SHARED_TRUE@CSRformat_la_SOURCES = CSRformat.cpp
@@ -684,6 +692,8 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_TRUE@xedformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@xyzformat_la_SOURCES = xyzformat.cpp
 @BUILD_SHARED_TRUE@xyzformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@yasaraformat_la_SOURCES = yasaraformat.cpp
+@BUILD_SHARED_TRUE@yasaraformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@zindoformat_la_SOURCES = zindoformat.cpp
 @BUILD_SHARED_TRUE@zindoformat_la_LDFLAGS = -module -avoid-version 
 
@@ -867,6 +877,8 @@ xedformat.la: $(xedformat_la_OBJECTS) $(xedformat_la_DEPENDENCIES)
 	$(CXXLINK) $(am_xedformat_la_rpath) $(xedformat_la_LDFLAGS) $(xedformat_la_OBJECTS) $(xedformat_la_LIBADD) $(LIBS)
 xyzformat.la: $(xyzformat_la_OBJECTS) $(xyzformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_xyzformat_la_rpath) $(xyzformat_la_LDFLAGS) $(xyzformat_la_OBJECTS) $(xyzformat_la_LIBADD) $(LIBS)
+yasaraformat.la: $(yasaraformat_la_OBJECTS) $(yasaraformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_yasaraformat_la_rpath) $(yasaraformat_la_LDFLAGS) $(yasaraformat_la_OBJECTS) $(yasaraformat_la_LIBADD) $(LIBS)
 zindoformat.la: $(zindoformat_la_OBJECTS) $(zindoformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_zindoformat_la_rpath) $(zindoformat_la_LDFLAGS) $(zindoformat_la_OBJECTS) $(zindoformat_la_LIBADD) $(LIBS)
 
@@ -924,6 +936,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/viewmolformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xedformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xyzformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/yasaraformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zindoformat.Plo@am__quote@
 
 .cpp.o:
@@ -1258,7 +1271,7 @@ uninstall-info: uninstall-info-recursive
 @BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 @BUILD_SHARED_FALSE@	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
 @BUILD_SHARED_FALSE@	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
-@BUILD_SHARED_FALSE@	xedformat.cpp xyzformat.cpp zindoformat.cpp
+@BUILD_SHARED_FALSE@	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
