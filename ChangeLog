@@ -23,6 +23,8 @@
 	is cleared before reading a molecule -- would crash when
 	reading/writing multiple SMILES files.
 
+	* src/formats/yasaraformat.cpp: New format, contributed by Elmar.
+
 	* src/formats/xml/pubchem.cpp, src/formats/xml/xcmlformat.cpp:
 	Change OBMol::SetTitle() calls to be ISO C++ compilant.
 
