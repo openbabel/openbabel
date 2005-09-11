@@ -25,7 +25,17 @@ GNU General Public License for more details.
 #include <sys/stat.h>
 #include <dlfcn.h>
 
+#include <iostream>
+
 using namespace std;
+
+namespace OpenBabel {
+OBAPI bool tokenize(vector<string> &, const char *, const char *);
+}
+
+#ifndef BUFF_SIZE
+#define BUFF_SIZE 32768
+#endif
 
 //Globals for scandir()
 string targetPattern;
@@ -49,17 +59,47 @@ bool DLHandler::getConvDirectory(string& convPath)
 
 int DLHandler::findFiles (vector <string>& file_list,const string& pattern, const string& path)
 {
-  string internalPath = path;
+  string currentPath;
+  vector<string> paths, vs;
+  char buffer[BUFF_SIZE];
 
-  if (path.empty())
-    internalPath="./"; //use current directory if path is empty
+  if (!path.empty())
+    paths.push_back(path);
+
+  if (getenv("BABEL_LIBDIR") != NULL)
+    {
+        strncpy(buffer,getenv("BABEL_LIBDIR"), BUFF_SIZE - 1);
+	// add a trailing NULL just in case
+	buffer[BUFF_SIZE] = '\0';
+
+	OpenBabel::tokenize(vs, buffer, "\r\n\t :");
+
+	if (vs.size() > 0)
+	  {
+	    for (int i = 0; i < vs.size(); i++)
+	      paths.push_back(vs[i]);
+	  }
+    }
+
+  if (paths.size() == 0)
+    paths.push_back("./"); // defaults to current directory
 
   targetPattern = pattern; //make accessible to global function
   struct dirent **entries_pp;
-  int count = scandir (internalPath.c_str(), &entries_pp, SCANDIR_T matchFiles, NULL);
+  int count;
 
-  for(int i=0; i<count; i++)
-    file_list.push_back(path + getSeparator() + (entries_pp[i])->d_name);
+  for (int i = 0; i < paths.size(); i++)
+    {
+      currentPath = paths[i];
+      count = scandir (currentPath.c_str(), &entries_pp, SCANDIR_T matchFiles, NULL);
+
+      for(int i=0; i<count; i++)
+	{
+	  file_list.push_back(currentPath + getSeparator() + (entries_pp[i])->d_name);
+	  free(entries_pp[i]);
+	}
+      free(entries_pp);
+    }
 
   return count;
 }
