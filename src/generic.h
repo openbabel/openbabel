@@ -24,6 +24,7 @@ GNU General Public License for more details.
 
 #include <string>
 #include <vector>
+#include <map>
 
 namespace OpenBabel
 {
@@ -602,6 +603,29 @@ public:
     int AddAtomRef(unsigned int atomref, atomreftype t);
     unsigned int GetSize(atomreftype t) const;
 };
+
+class OBSerialNums : public OBGenericData
+{
+protected:
+    std::map<int, OBAtom*> _serialMap;
+
+public:
+
+    OBSerialNums()
+    {
+        _attr = "obSerialNums";
+        _type = OBGenericDataType::SerialNums;
+    }
+    OBSerialNums(const OBSerialNums &cp) : OBGenericData(cp)
+    {
+        _serialMap = cp._serialMap;
+    }
+
+    std::map<int,OBAtom*> &GetData()    { return _serialMap;    }
+    void SetData(std::map<int,OBAtom*> &sm) { _serialMap = sm;  }
+
+};
+
 //****************doxygen for inline functions***********
 /*!
 **\fn OBTorsionData::GetSize() const

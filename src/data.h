@@ -46,6 +46,9 @@ class OBElement;
 class OBAtom;
 class OBElementTable;
 
+class OBMol;
+class OBBitVec;
+
 //! \brief Base data table class, handles reading data files
 //!
 //! Base data table class--reads ASCII data files in various formats
@@ -231,6 +234,29 @@ public:
     std::string GetFromType();
     //! Return the destination atom type for translation
     std::string GetToType();
+};
+
+//! \brief Table of common protein residues in PDB files
+class OBResidueData : public OBGlobalDataBase
+{
+  int                                               _resnum;
+  std::vector<std::string>                          _resname;
+  std::vector<std::vector<std::string> >            _resatoms;
+  std::vector<std::vector<std::pair<std::string,int> > > _resbonds;
+
+  //variables used only for parsing resdata.txt
+  std::vector<std::string>                          _vatmtmp;
+  std::vector<std::pair<std::string,int> >          _vtmp;
+public:
+
+    OBResidueData();
+    void ParseLine(const char*);
+
+    bool SetResName(const std::string &);
+    int  LookupBO(const std::string &);
+    int  LookupBO(const std::string &, const std::string&);
+    bool LookupType(const std::string &,std::string&,int&);
+    bool AssignBonds(OBMol &,OBBitVec &);
 };
 
 // Used by other code for reading files

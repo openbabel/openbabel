@@ -23,10 +23,14 @@ GNU General Public License for more details.
 
 #include "babelconfig.h"
 #include "data.h"
+#include "mol.h"
+
+// data headers
 #include "element.h"
 #include "types.h"
 #include "isotope.h"
-#include "mol.h"
+#include "resdata.h"
+
 
 #if !HAVE_STRNCASECMP
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
@@ -567,6 +571,219 @@ void Tolower(string &s)
     unsigned int i;
     for (i = 0;i < s.size();i++)
         s[i] = tolower(s[i]);
+}
+
+///////////////////////////////////////////////////////////////////////
+OBResidueData::OBResidueData()
+{
+    _init = false;
+    _dir = BABEL_DATADIR;
+    _envvar = "BABEL_DATADIR";
+    _filename = "resdata.txt";
+    _subdir = "data";
+    _dataptr = ResidueData;
+}
+
+bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
+{
+    OBAtom *a1,*a2;
+    OBResidue *r1,*r2;
+    vector<OBNodeBase*>::iterator i,j;
+    vector3 v;
+
+    int bo;
+    unsigned int skipres=0;
+    string rname = "";
+    //assign residue bonds
+    for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
+    {
+        r1 = a1->GetResidue();
+        if (skipres && r1->GetNum() == skipres)
+            continue;
+
+        if (r1->GetName() != rname)
+        {
+            skipres = SetResName(r1->GetName()) ? 0 : r1->GetNum();
+            rname = r1->GetName();
+        }
+        //assign bonds for each atom
+        for (j=i,a2 = mol.NextAtom(j);a2;a2 = mol.NextAtom(j))
+        {
+            r2 = a2->GetResidue();
+            if (r1->GetNum() != r2->GetNum())
+                break;
+            if (r1->GetName() != r2->GetName())
+                break;
+
+            if ((bo = LookupBO(r1->GetAtomID(a1),r2->GetAtomID(a2))))
+            {
+                v = a1->GetVector() - a2->GetVector();
+                if (v.length_2() < 3.5) //check by distance
+                    mol.AddBond(a1->GetIdx(),a2->GetIdx(),bo);
+            }
+        }
+    }
+
+    int hyb;
+    string type;
+
+    //types and hybridization
+    for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
+    {
+        if (a1->IsOxygen() && !a1->GetValence())
+        {
+            a1->SetType("O3");
+            continue;
+        }
+
+        if (a1->IsHydrogen())
+        {
+            a1->SetType("H");
+            continue;
+        }
+
+        r1 = a1->GetResidue();
+        if (skipres && r1->GetNum() == skipres)
+            continue;
+
+        if (r1->GetName() != rname)
+        {
+            skipres = SetResName(r1->GetName()) ? 0 : r1->GetNum();
+            rname = r1->GetName();
+        }
+
+        //***valence rule for O-
+        if (a1->IsOxygen() && a1->GetValence() == 1)
+        {
+            OBBond *bond;
+            bond = (OBBond*)*(a1->BeginBonds());
+            if (bond->GetBO() == 2)
+            {
+                a1->SetType("O2");
+                a1->SetHyb(2);
+            }
+            if (bond->GetBO() == 1)
+            {
+                a1->SetType("O-");
+                a1->SetHyb(3);
+                a1->SetFormalCharge(-1);
+            }
+        }
+        else
+            if (LookupType(r1->GetAtomID(a1),type,hyb))
+            {
+                a1->SetType(type);
+                a1->SetHyb(hyb);
+            }
+            else // try to figure it out by bond order ???
+            {}
+    }
+
+    return(true);
+}
+
+void OBResidueData::ParseLine(const char *buffer)
+{
+    int bo;
+    string s;
+    vector<string> vs;
+
+    if (buffer[0] == '#')
+        return;
+
+    tokenize(vs,buffer);
+    if (!vs.empty())
+    {
+        if (vs[0] == "BOND")
+        {
+            s = (vs[1] < vs[2]) ? vs[1] + " " + vs[2] :
+                vs[2] + " " + vs[1];
+            bo = atoi(vs[3].c_str());
+            _vtmp.push_back(pair<string,int> (s,bo));
+        }
+
+        if (vs[0] == "ATOM" && vs.size() == 4)
+        {
+            _vatmtmp.push_back(vs[1]);
+            _vatmtmp.push_back(vs[2]);
+            _vatmtmp.push_back(vs[3]);
+        }
+
+        if (vs[0] == "RES")
+            _resname.push_back(vs[1]);
+
+        if (vs[0]== "END")
+        {
+            _resatoms.push_back(_vatmtmp);
+            _resbonds.push_back(_vtmp);
+            _vtmp.clear();
+            _vatmtmp.clear();
+        }
+    }
+}
+
+bool OBResidueData::SetResName(const string &s)
+{
+    unsigned int i;
+    for (i = 0;i < _resname.size();i++)
+        if (_resname[i] == s)
+        {
+            _resnum = i;
+            return(true);
+        }
+
+    _resnum = -1;
+    return(false);
+}
+
+int OBResidueData::LookupBO(const string &s)
+{
+    if (_resnum == -1)
+        return(0);
+
+    unsigned int i;
+    for (i = 0;i < _resbonds[_resnum].size();i++)
+        if (_resbonds[_resnum][i].first == s)
+            return(_resbonds[_resnum][i].second);
+
+    return(0);
+}
+
+int OBResidueData::LookupBO(const string &s1, const string &s2)
+{
+    if (_resnum == -1)
+        return(0);
+    string s;
+
+    s = (s1 < s2) ? s1 + " " + s2 : s2 + " " + s1;
+
+    unsigned int i;
+    for (i = 0;i < _resbonds[_resnum].size();i++)
+        if (_resbonds[_resnum][i].first == s)
+            return(_resbonds[_resnum][i].second);
+
+    return(0);
+}
+
+bool OBResidueData::LookupType(const string &atmid,string &type,int &hyb)
+{
+    if (_resnum == -1)
+        return(false);
+
+    string s;
+    vector<string>::iterator i;
+
+    for (i = _resatoms[_resnum].begin();i != _resatoms[_resnum].end();i+=3)
+        if (atmid == *i)
+        {
+            i++;
+            type = *i;
+            i++;
+            hyb = atoi((*i).c_str());
+            return(true);
+        }
+
+    return(false);
 }
 
 void OBGlobalDataBase::Init()
