@@ -17,7 +17,6 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obconversion.h"
 #include "obmolecformat.h"
-#include "typer.h"
 
 #if !HAVE_SNPRINTF
 extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
@@ -74,9 +73,6 @@ public:
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-private:
-    OBAtomTyper atomtyper; //CM was extern and global
-
 };
 //***
 
@@ -89,7 +85,7 @@ PDBFormat thePDBFormat;
 static bool ParseAtomRecord(char *, OBMol &,int);
 static bool ParseConectRecord(char *,OBMol &);
 
-static OBResidueData resdat;
+extern OBResidueData    resdat;
 
 /////////////////////////////////////////////////////////////////
 bool PDBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -104,7 +100,6 @@ bool PDBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
 
-    resdat.Init();
     int chainNum = 1;
     char buffer[BUFF_SIZE];
     OBBitVec bs;
@@ -207,9 +202,12 @@ static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
     {
         type = atmid.substr(0,2);
         if (isdigit(type[0]))
-            type = atmid.substr(1,1);
-        else if (sbuf[6] == ' ') // one-character element
-            type = atmid.substr(0,1);
+	  type = atmid.substr(1,1);
+        else if (sbuf[6] == ' ' &&
+		 strncasecmp(type.c_str(), "Zn", 2) != 0 &&
+		 strncasecmp(type.c_str(), "Fe", 2) != 0)
+	  type = atmid.substr(0,1);	// one-character element
+	
 
         if (resname.substr(0,2) == "AS" || resname[0] == 'N')
         {
@@ -245,44 +243,45 @@ static bool ParseAtomRecord(char *buffer, OBMol &mol,int chainNum)
                 type[1] = tolower(type[1]);
         }
         else
-        {
-            if (isalpha(atmid[0]))
-                type = atmid.substr(0,2);
+	  {
+	    if (isalpha(atmid[0]))
+	      type = atmid.substr(0,2);
             else if (atmid[0] == ' ')
-                type = atmid.substr(1,1); // one char element
+	      type = atmid.substr(1,1); // one char element
             else
-                type = atmid.substr(1,2);
-            if (atmid == resname)
-            {
-                type = atmid;
-                if (type.size() == 2)
-                    type[1] = tolower(type[1]);
-            }
-            else
-                if (resname == "ADR" || resname == "COA" || resname == "FAD" ||
-                        resname == "GPG" || resname == "NAD" || resname == "NAL" ||
-                        resname == "NDP")
-                {
-                    if (type.size() > 1)
-                        type = type.substr(0,1);
-                    //type.erase(1,type.size()-1);
-                }
-                else
-                    if (isdigit(type[0]))
-                    {
-                        type = type.substr(1,1);
-                        //type.erase(0,1);
-                        //if (type.size() > 1) type.erase(1,type.size()-1);
-                    }
-                    else
-                        if (type.size() > 1 && isdigit(type[1]))
-                            type = type.substr(0,1);
-            //type.erase(1,1);
-                        else
-                            if (type.size() > 1 && isalpha(type[1]) && isupper(type[1]))
-                                type[1] = tolower(type[1]);
-        }
+	      type = atmid.substr(1,2);
 
+            if (atmid == resname)
+	      {
+		type = atmid;
+                if (type.size() == 2)
+		  type[1] = tolower(type[1]);
+	      }
+            else
+	      if (resname == "ADR" || resname == "COA" || resname == "FAD" ||
+		  resname == "GPG" || resname == "NAD" || resname == "NAL" ||
+		  resname == "NDP")
+		{
+		  if (type.size() > 1)
+		    type = type.substr(0,1);
+		  //type.erase(1,type.size()-1);
+                }
+	      else
+		if (isdigit(type[0]))
+		  {
+		    type = type.substr(1,1);
+		    //type.erase(0,1);
+		    //if (type.size() > 1) type.erase(1,type.size()-1);
+		  }
+		else
+		  if (type.size() > 1 && isdigit(type[1]))
+		    type = type.substr(0,1);
+            //type.erase(1,1);
+		  else
+		    if (type.size() > 1 && isalpha(type[1]) && isupper(type[1]))
+		      type[1] = tolower(type[1]);
+	  }
+	
     }
 
     OBAtom atom;

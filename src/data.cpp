@@ -44,6 +44,7 @@ namespace OpenBabel
 OBElementTable   etab;
 OBTypeTable      ttab;
 OBIsotopeTable   isotab;
+OBResidueData    resdat;
 
 /** \class OBElementTable
     \brief Periodic Table of the Elements
