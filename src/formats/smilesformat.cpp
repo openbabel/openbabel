@@ -167,6 +167,10 @@ class OBSmilesParser
     bool chiralWatch; // set when a chiral atom is read
     map<OBAtom*,OBChiralData*> _mapcd; // map of ChiralAtoms and their data
 public:
+
+  OBSmilesParser() { }
+  ~OBSmilesParser() { }
+
     bool SmiToMol(OBMol&,string&);
     bool ParseSmiles(OBMol&);
     bool ParseSimple(OBMol&);
@@ -217,10 +221,12 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     if (vs.empty())
 			return false;
     mol.SetDimension(0);
-		if (vs.size() >= 2)
+
+    if (vs.size() >= 2)
       mol.SetTitle(vs[1].c_str());
-		OBSmilesParser sp;
-		return sp.SmiToMol(mol,vs[0]);
+
+    OBSmilesParser sp;
+    return sp.SmiToMol(mol,vs[0]);
 }
 
 //////////////////////////////////////////////////
@@ -268,7 +274,7 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
 //////////////////////////////////////////////
 
 //CM not needed extern OBAromaticTyper  aromtyper;
-OBAtomTyper atomtyperx; //CM
+//OBAtomTyper atomtyperx; //CM
 
 bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
 {
