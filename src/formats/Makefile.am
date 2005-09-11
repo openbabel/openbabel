@@ -1,7 +1,10 @@
+if BUILD_XML
+SUBDIRS=xml
+endif
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
-EXTRA_DIST = exampleformat.cpp cmlppformat.cpp
+EXTRA_DIST = exampleformat.cpp
 
 if !BUILD_SHARED
 
@@ -12,7 +15,7 @@ libformats_la_SOURCES = \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
-	cml.cpp cmlformat.cpp crkformat.cpp cssrformat.cpp \
+	crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp 
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
@@ -31,7 +34,7 @@ pkglib_LTLIBRARIES = \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la carformat.la cccformat.la \
 	chem3dformat.la chemdrawformat.la chemtoolformat.la \
-	cmlformat.la crkformat.la cssrformat.la \
+	crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
 	gromos96format.la hinformat.la \
@@ -86,9 +89,6 @@ chemdrawformat_la_LDFLAGS = -module -avoid-version
 
 chemtoolformat_la_SOURCES = chemtoolformat.cpp
 chemtoolformat_la_LDFLAGS = -module -avoid-version 
-
-cmlformat_la_SOURCES = cml.cpp cmlformat.cpp
-cmlformat_la_LDFLAGS = -module -avoid-version 
 
 crkformat_la_SOURCES = crkformat.cpp
 crkformat_la_LDFLAGS = -module -avoid-version 

@@ -24,6 +24,9 @@
 /* Define to 1 if you have the <fstream.h> header file. */
 #undef HAVE_FSTREAM_H
 
+/* Define to 1 if you have the <iconv.h> header file. */
+#undef HAVE_ICONV_H
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
@@ -41,6 +44,12 @@
 
 /* Define to 1 if you have the `xml2' library (-lxml2). */
 #undef HAVE_LIBXML2
+
+/* Define to 1 if you have the <libxml/xmlreader.h> header file. */
+#undef HAVE_LIBXML_XMLREADER_H
+
+/* Define to 1 if you have the <libxml/xmlwriter.h> header file. */
+#undef HAVE_LIBXML_XMLWRITER_H
 
 /* Define to 1 if you have the `z' library (-lz). */
 #undef HAVE_LIBZ
@@ -101,6 +110,9 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
+
+/* Define to 1 if you have the <zlib.h> header file. */
+#undef HAVE_ZLIB_H
 
 /* The file extension used for shared modules */
 #undef MODULE_EXTENSION

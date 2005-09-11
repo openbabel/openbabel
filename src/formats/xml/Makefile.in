@@ -14,14 +14,13 @@
 
 @SET_MAKE@
 
-
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
-top_builddir = ../..
+top_builddir = ../../..
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = @INSTALL@
 install_sh_DATA = $(install_sh) -c -m 644
@@ -37,9 +36,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = src/math
-DIST_COMMON = $(libmathinclude_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+subdir = src/formats/xml
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -48,10 +46,36 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
-LTLIBRARIES = $(noinst_LTLIBRARIES)
-libmath_la_LIBADD =
-am_libmath_la_OBJECTS = matrix3x3.lo vector3.lo
-libmath_la_OBJECTS = $(am_libmath_la_OBJECTS)
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+am__installdirs = "$(DESTDIR)$(pkglibdir)"
+pkglibLTLIBRARIES_INSTALL = $(INSTALL)
+LTLIBRARIES = $(pkglib_LTLIBRARIES)
+cmlreactlformat_la_LIBADD =
+am__cmlreactlformat_la_SOURCES_DIST = cmlreactlformat.cpp xml.cpp
+@BUILD_SHARED_TRUE@am_cmlreactlformat_la_OBJECTS = cmlreactlformat.lo \
+@BUILD_SHARED_TRUE@	xml.lo
+cmlreactlformat_la_OBJECTS = $(am_cmlreactlformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_cmlreactlformat_la_rpath = -rpath $(pkglibdir)
+pubchem_la_LIBADD =
+am__pubchem_la_SOURCES_DIST = pubchem.cpp xml.cpp
+@BUILD_SHARED_TRUE@am_pubchem_la_OBJECTS = pubchem.lo xml.lo
+pubchem_la_OBJECTS = $(am_pubchem_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_pubchem_la_rpath = -rpath $(pkglibdir)
+xcmlformat_la_LIBADD =
+am__xcmlformat_la_SOURCES_DIST = xcmlformat.cpp xml.cpp
+@BUILD_SHARED_TRUE@am_xcmlformat_la_OBJECTS = xcmlformat.lo xml.lo
+xcmlformat_la_OBJECTS = $(am_xcmlformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_xcmlformat_la_rpath = -rpath $(pkglibdir)
+xmlformat_la_LIBADD =
+am__xmlformat_la_SOURCES_DIST = xmlformat.cpp xml.cpp
+@BUILD_SHARED_TRUE@am_xmlformat_la_OBJECTS = xmlformat.lo xml.lo
+xmlformat_la_OBJECTS = $(am_xmlformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_xmlformat_la_rpath = -rpath $(pkglibdir)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -63,17 +87,12 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(libmath_la_SOURCES)
-DIST_SOURCES = $(libmath_la_SOURCES)
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(libmathincludedir)"
-libmathincludeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(libmathinclude_HEADERS)
+SOURCES = $(cmlreactlformat_la_SOURCES) $(pubchem_la_SOURCES) \
+	$(xcmlformat_la_SOURCES) $(xmlformat_la_SOURCES)
+DIST_SOURCES = $(am__cmlreactlformat_la_SOURCES_DIST) \
+	$(am__pubchem_la_SOURCES_DIST) \
+	$(am__xcmlformat_la_SOURCES_DIST) \
+	$(am__xmlformat_la_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -123,7 +142,7 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
-LDFLAGS = @LDFLAGS@
+LDFLAGS = @LIBS@ @XML_LIBS@
 LIBDL = @LIBDL@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -196,13 +215,18 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-noinst_LTLIBRARIES = libmath.la
-libmath_la_SOURCES = matrix3x3.cpp vector3.cpp
-libmathincludedir = $(includedir)/openbabel-2.0/openbabel/math
-libmathinclude_HEADERS = \
-	matrix3x3.h vector3.h
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data @XML_CPPFLAGS@
+@BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
+@BUILD_SHARED_TRUE@	cmlreactlformat.la pubchem.la xcmlformat.la xmlformat.la
 
-AM_CPPFLAGS = -I$(top_srcdir)/src
+@BUILD_SHARED_TRUE@cmlreactlformat_la_SOURCES = cmlreactlformat.cpp xml.cpp
+@BUILD_SHARED_TRUE@cmlreactlformat_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@pubchem_la_SOURCES = pubchem.cpp xml.cpp
+@BUILD_SHARED_TRUE@pubchem_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@xcmlformat_la_SOURCES = xcmlformat.cpp xml.cpp
+@BUILD_SHARED_TRUE@xcmlformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@xmlformat_la_SOURCES = xmlformat.cpp xml.cpp
+@BUILD_SHARED_TRUE@xmlformat_la_LDFLAGS = -module -avoid-version
 all: all-am
 
 .SUFFIXES:
@@ -216,9 +240,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/math/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/formats/xml/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  src/math/Makefile
+	  $(AUTOMAKE) --foreign  src/formats/xml/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -236,17 +260,41 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+install-pkglibLTLIBRARIES: $(pkglib_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	test -z "$(pkglibdir)" || $(mkdir_p) "$(DESTDIR)$(pkglibdir)"
+	@list='$(pkglib_LTLIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    f=$(am__strip_dir) \
+	    echo " $(LIBTOOL) --mode=install $(pkglibLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) '$$p' '$(DESTDIR)$(pkglibdir)/$$f'"; \
+	    $(LIBTOOL) --mode=install $(pkglibLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) "$$p" "$(DESTDIR)$(pkglibdir)/$$f"; \
+	  else :; fi; \
+	done
 
-clean-noinstLTLIBRARIES:
-	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
-	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
+uninstall-pkglibLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@set -x; list='$(pkglib_LTLIBRARIES)'; for p in $$list; do \
+	  p=$(am__strip_dir) \
+	  echo " $(LIBTOOL) --mode=uninstall rm -f '$(DESTDIR)$(pkglibdir)/$$p'"; \
+	  $(LIBTOOL) --mode=uninstall rm -f "$(DESTDIR)$(pkglibdir)/$$p"; \
+	done
+
+clean-pkglibLTLIBRARIES:
+	-test -z "$(pkglib_LTLIBRARIES)" || rm -f $(pkglib_LTLIBRARIES)
+	@list='$(pkglib_LTLIBRARIES)'; for p in $$list; do \
 	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
 	  test "$$dir" != "$$p" || dir=.; \
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libmath.la: $(libmath_la_OBJECTS) $(libmath_la_DEPENDENCIES) 
-	$(CXXLINK)  $(libmath_la_LDFLAGS) $(libmath_la_OBJECTS) $(libmath_la_LIBADD) $(LIBS)
+cmlreactlformat.la: $(cmlreactlformat_la_OBJECTS) $(cmlreactlformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_cmlreactlformat_la_rpath) $(cmlreactlformat_la_LDFLAGS) $(cmlreactlformat_la_OBJECTS) $(cmlreactlformat_la_LIBADD) $(LIBS)
+pubchem.la: $(pubchem_la_OBJECTS) $(pubchem_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_pubchem_la_rpath) $(pubchem_la_LDFLAGS) $(pubchem_la_OBJECTS) $(pubchem_la_LIBADD) $(LIBS)
+xcmlformat.la: $(xcmlformat_la_OBJECTS) $(xcmlformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_xcmlformat_la_rpath) $(xcmlformat_la_LDFLAGS) $(xcmlformat_la_OBJECTS) $(xcmlformat_la_LIBADD) $(LIBS)
+xmlformat.la: $(xmlformat_la_OBJECTS) $(xmlformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_xmlformat_la_rpath) $(xmlformat_la_LDFLAGS) $(xmlformat_la_OBJECTS) $(xmlformat_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -254,8 +302,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrix3x3.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vector3.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmlreactlformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pubchem.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xcmlformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xml.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xmlformat.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -287,23 +338,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-libmathincludeHEADERS: $(libmathinclude_HEADERS)
-	@$(NORMAL_INSTALL)
-	test -z "$(libmathincludedir)" || $(mkdir_p) "$(DESTDIR)$(libmathincludedir)"
-	@list='$(libmathinclude_HEADERS)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(libmathincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(libmathincludedir)/$$f'"; \
-	  $(libmathincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(libmathincludedir)/$$f"; \
-	done
-
-uninstall-libmathincludeHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(libmathinclude_HEADERS)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(libmathincludedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(libmathincludedir)/$$f"; \
-	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -382,9 +416,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES)
 installdirs:
-	for dir in "$(DESTDIR)$(libmathincludedir)"; do \
+	for dir in "$(DESTDIR)$(pkglibdir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -413,7 +447,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
+clean-am: clean-generic clean-libtool clean-pkglibLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -432,9 +466,9 @@ info: info-am
 
 info-am:
 
-install-data-am: install-libmathincludeHEADERS
+install-data-am:
 
-install-exec-am:
+install-exec-am: install-pkglibLTLIBRARIES
 
 install-info: install-info-am
 
@@ -460,20 +494,20 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-libmathincludeHEADERS
+uninstall-am: uninstall-info-am uninstall-pkglibLTLIBRARIES
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libtool clean-noinstLTLIBRARIES ctags distclean \
+	clean-libtool clean-pkglibLTLIBRARIES ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am \
-	install-libmathincludeHEADERS install-man install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
+	install-exec-am install-info install-info-am install-man \
+	install-pkglibLTLIBRARIES install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-info-am \
-	uninstall-libmathincludeHEADERS
+	uninstall-pkglibLTLIBRARIES
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

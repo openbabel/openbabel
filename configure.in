@@ -70,9 +70,10 @@ AC_CHECK_LIB(c, dlopen, LIBDL="", [AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl")])
 AC_SUBST(LIBDL)
 
 XML="no"
+AM_PATH_XML2()
 AC_CHECK_LIB(xml2, xmlFreeDoc, 
-   [XML="yes"; LIBS="-lxml2 $LIBS"; 
-    AC_DEFINE(HAVE_LIBXML2, [], [Define to 1 if you have the `xml2' library (-lxml2).]) ] )
+     [XML="yes"; LIBS="-lxml2 $LIBS"; 
+     AC_DEFINE(HAVE_LIBXML2, [], [Define to 1 if you have the `xml2' library (-lxml2).]) ] )
 AM_CONDITIONAL(BUILD_XML, test "$XML" == "yes")
 
 INCHI="no"
@@ -84,6 +85,7 @@ AM_CONDITIONAL(BUILD_INCHI, test "$INCHI" == "yes")
 CHECK_ZLIB
 
 dnl Checks for header files.
+AC_CHECK_HEADERS(zlib.h libxml/xmlreader.h libxml/xmlwriter.h iconv.h)
 AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
 AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
 AC_CHECK_HEADERS(ctype.h iostream fstream sstream strstream)
@@ -119,4 +121,8 @@ AC_MSG_RESULT([$scandirconst_cast], [set if scandir needs a const])
 AC_CONFIG_COMMANDS([src/babelconfig.h], 
                    [cat src/config.h | grep -v PACKAGE >src/babelconfig.h])
 
-AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile src/fingerprints/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile scripts/Makefile openbabel-2.0.pc)
+AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
+		   src/formats/Makefile src/fingerprints/Makefile \
+		   src/formats/xml/Makefile \
+		   test/Makefile test/cmltest/Makefile tools/Makefile \
+		   doc/Makefile scripts/Makefile openbabel-2.0.pc)
