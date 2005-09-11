@@ -103,7 +103,7 @@ bool PubChemFormat::DoElement(const string& name)
 
 	if(name=="PC-CompoundType_id_cid")
 	{
-		_pmol->SetTitle(_pxmlConv->GetContent());
+		_pmol->SetTitle(_pxmlConv->GetContent().c_str());
 	}
 	else if(name=="PC-Bonds_aid1_E")
 	{

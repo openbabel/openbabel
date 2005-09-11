@@ -198,7 +198,7 @@ bool CMLFormat::DoElement(const string& name)
 	else if(name=="name")
 	{
 		if(_pmol)
-			_pmol->SetTitle(_pxmlConv->GetContent());
+			_pmol->SetTitle(_pxmlConv->GetContent().c_str());
 	}
 	else if(name=="formula")
 	{
@@ -553,14 +553,18 @@ bool CMLFormat::DoMolWideData()
 					OBAtom* pAt1 = pDBond->GetBeginAtom();
 					OBAtom* pAt2 = pDBond->GetEndAtom();
 					FOR_NBORS_OF_ATOM(a1,pAt1)
-						if(!a1->IsHydrogen() && &*a1!=pAt2)
-							break;
-					pbond1 = _pmol->GetBond(pAt1->GetIdx(),a1->GetIdx());
+					  {
+					    if(!a1->IsHydrogen() && &*a1!=pAt2)
+					      break;
+					    pbond1 = _pmol->GetBond(pAt1->GetIdx(),a1->GetIdx());
+					  }
 					
 					FOR_NBORS_OF_ATOM(a2,pAt2)
-						if(!a2->IsHydrogen() && &*a2!=pAt1)
-							break;
-					pbond2 = _pmol->GetBond(pAt2->GetIdx(),a2->GetIdx());
+					  {
+					    if(!a2->IsHydrogen() && &*a2!=pAt1)
+					      break;
+					    pbond2 = _pmol->GetBond(pAt2->GetIdx(),a2->GetIdx());
+					  }
 				}
 				else
 				{
