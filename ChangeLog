@@ -1,3 +1,15 @@
+2005-09-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/zipstream.h, src/zipstream.cpp: Modified classes (updated to
+	compile in GCC) to support gzip/zlib compression streams.
+
+	* configure.in, configure, src/Makefile.am, */Makefile.in: Add
+	support for conditional compilation of code depending on zlib. (i.e.,
+	zipstream.cpp).
+
+	* src/obconversion.cpp (FormatFromExt): Change to detect .gz
+	extension and look for previous extension.
+
 2005-09-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure, src/config.h.in, Makefile.in,
