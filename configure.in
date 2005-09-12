@@ -83,6 +83,7 @@ AC_CHECK_LIB(inchi, GetINCHI,
 AM_CONDITIONAL(BUILD_INCHI, test "$INCHI" == "yes")
 
 CHECK_ZLIB
+AM_CONDITIONAL(BUILD_ZLIB, [test "$zlib_cv_libz" = "yes" -a "$zlib_cv_zlib_h" = "yes"])
 
 dnl Checks for header files.
 AC_CHECK_HEADERS(zlib.h libxml/xmlreader.h libxml/xmlwriter.h iconv.h)
