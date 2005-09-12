@@ -34,8 +34,16 @@ GNU General Public License for more details.
 
 #include "obconversion.h"
 
+#ifdef HAVE_LIBZ
+#include "zipstream.h"
+#endif
+
 #if !HAVE_STRNCASECMP
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
+#endif
+
+#ifndef BUFF_SIZE
+#define BUFF_SIZE 32768
 #endif
 
 using namespace std;
@@ -208,8 +216,8 @@ OBConversion::~OBConversion()
 	if(pAuxConv!=this)
 		delete pAuxConv;
 }
-//NOTE!! This function makes copying OBConversion objects unsafe.
-//TODO Write custom copy constructor. Meanwhile set call SetAuxConv(NULL) in the copy.
+// \warning This function makes copying OBConversion objects unsafe.
+// \todo Write custom copy constructor. Meanwhile set call SetAuxConv(NULL) in the copy.
 //////////////////////////////////////////////////////
 /// Class information on formats is collected by making an instance of the class
 /// derived from OBFormat(only one is ever required).RegisterFormat() is called 
@@ -347,6 +355,7 @@ bool OBConversion::SetOutFormat(const char* outID)
 		pOutFormat= FindFormat(outID);
 	return pOutFormat && !(pOutFormat->Flags() & NOTWRITABLE);
 }
+
 //////////////////////////////////////////////////////
 int OBConversion::Convert(istream* is, ostream* os) 
 {
@@ -381,6 +390,10 @@ int OBConversion::Convert()
 		return 0;
 	}
 
+	// GRH -- modified for zipstream
+	//	zlib_stream::zip_istream zIn(*pInStream);
+	//	pInStream = &zIn;
+
 	if(!pInFormat) return 0;
 	Count=0;//number objects processed
 	if(!SetStartAndEnd())
@@ -404,6 +417,9 @@ int OBConversion::Convert()
 		bool ret=false;
 		try
 		{
+
+		  // intermediate gzip uncompression
+
 			ret = pInFormat->ReadChemObject(this);
 		}
 		catch(...)
@@ -563,10 +579,26 @@ void OBConversion::SetOneObjectOnly()
 /////////////////////////////////////////////////////////
 OBFormat* OBConversion::FormatFromExt(const char* filename)
 {
-	const char* p = strrchr(filename,'.');
-	if(p)
-		return FindFormat(p+1);
-	return NULL; //if no extension		
+  string file = filename;
+  size_t extPos = file.rfind(".");
+
+  if(extPos)
+    {
+      // only do this if we actually can read .gz files
+#ifdef HAVE_LIBZ
+      if (file.substr(extPos,3) == ".gz")
+	{
+	  file.erase(extPos);
+	  cerr << file << endl;
+	  extPos = file.rfind(".");
+	  if (extPos)
+	    return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
+	}
+#endif
+      else
+	return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
+    }
+  return NULL; //if no extension		
 }
 
 OBFormat* OBConversion::FormatFromMIME(const char* MIME)
@@ -941,6 +973,7 @@ bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
 #else
 	imode = pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
 #endif
+
 	is->open(InFilename.c_str(), imode);
 	if(!is->good())
 	{
