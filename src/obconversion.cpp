@@ -204,7 +204,9 @@ OBConversion::OBConversion(istream* is, ostream* os) :
 	///at program startup, so that the constructor and LoadFormatFiles
 	///is never called.
 	///This dummy global instance ensures LoadFormatFiles is called.
+#if defined(WIN32) || !defined(USING_DYNAMIC_LIBS)
 	OBConversion dummyConv;
+#endif
 
 ///This static function returns a reference to the FormatsMap
 ///which, because it is a static local variable is constructed only once.
@@ -607,7 +609,6 @@ OBFormat* OBConversion::FormatFromExt(const char* filename)
       if (file.substr(extPos,3) == ".gz")
 	{
 	  file.erase(extPos);
-	  cerr << file << endl;
 	  extPos = file.rfind(".");
 	  if (extPos)
 	    return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
@@ -698,8 +699,12 @@ bool	OBConversion::ReadString(OBBase* pOb, std::string input)
 {
   stringstream pin(input);
 
-  pInStream = &pin;
-  
+  zlib_stream::zip_istream zIn(pin);
+  if(zIn.is_gzip())
+    pInStream = &zIn;
+  else
+    pInStream = &pin;
+
   if(!pInFormat) return false;
   if(!pInFormat->ReadMolecule(pOb, this))
     {pOb=NULL; return false;}
@@ -723,7 +728,11 @@ bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
       return false;
     }
 
-  pInStream = &ifs;
+  zlib_stream::zip_istream zIn(ifs);
+  if(zIn.is_gzip())
+    pInStream = &zIn;
+  else
+    pInStream = &ifs;
   
   if(!pInFormat->ReadMolecule(pOb, this))
     {pOb=NULL; return false;}

@@ -17,8 +17,12 @@ Permission is granted to anyone to use this software for any purpose, including 
 Author: Jonathan de Halleux, dehalleux@pelikhan.com, 2003
 */
 
-#ifndef ZIPSTREAM_HPP
-#define ZIPSTREAM_HPP
+// Modified for Open Babel to work on MS VC++ and modern GCC
+// Modified by Geoffrey R. Hutchison, 2005
+// Modified by Chris Morley, 2005
+
+#ifndef ZIPSTREAM_H
+#define ZIPSTREAM_H
 
 #include <vector>
 #include <iostream>
@@ -53,12 +57,14 @@ template<
 >	
 class basic_zip_streambuf : public std::basic_streambuf<Elem, Tr> 
 {
-public:
+  public:
 	typedef std::basic_ostream<Elem, Tr>& ostream_reference;
-    typedef ElemA char_allocator_type;
+        typedef ElemA char_allocator_type;
 	typedef ByteT byte_type;
-    typedef ByteAT byte_allocator_type;
+        typedef ByteAT byte_allocator_type;
 	typedef byte_type* byte_buffer_type;
+        typedef Elem char_type;
+        typedef typename Tr::int_type int_type;
 	typedef std::vector<byte_type, byte_allocator_type > byte_vector_type;
 	typedef std::vector<char_type, char_allocator_type > char_vector_type;
 
@@ -123,10 +129,12 @@ class basic_unzip_streambuf :
 {
 public:
 	typedef std::basic_istream<Elem, Tr>& istream_reference;
-    typedef ElemA char_allocator_type;
+        typedef ElemA char_allocator_type;
 	typedef ByteT byte_type;
-    typedef ByteAT byte_allocator_type;
+        typedef ByteAT byte_allocator_type;
 	typedef byte_type* byte_buffer_type;
+        typedef Elem char_type;
+        typedef typename Tr::int_type int_type;
 	typedef std::vector<byte_type, byte_allocator_type > byte_vector_type;
 	typedef std::vector<char_type, char_allocator_type > char_vector_type;
 
@@ -312,6 +320,7 @@ public:
 	typedef basic_zip_ostreambase<
         Elem,Tr,ElemA,ByteT,ByteAT> zip_ostreambase_type;
 	typedef std::basic_ostream<Elem,Tr> ostream_type;
+	typedef std::basic_ostream<Elem, Tr>& ostream_reference;
 
 	/** Constructs a zipper ostream decorator
 	 *
@@ -345,7 +354,7 @@ public:
             buffer_size_
             ), 
 		m_is_gzip(is_gzip_),
-		ostream_type(rdbuf())
+		ostream_type(ostream_type::rdbuf())
 	{
 		if (m_is_gzip)
 			add_header();
@@ -361,7 +370,7 @@ public:
 	/// flush inner buffer and zipper buffer
 	basic_zip_ostream<Elem,Tr>& zflush()	
 	{	
-		flush(); rdbuf()->flush(); return *this; 
+		this->flush(); this->rdbuf()->flush(); return *this; 
 	};
 
 private:
@@ -405,6 +414,7 @@ public:
         Elem,Tr,ElemA,ByteT,ByteAT> zip_istreambase_type;
 	typedef std::basic_istream<Elem,Tr> istream_type;
 	typedef unsigned char byte_type;
+	typedef std::basic_istream<Elem, Tr>& istream_reference;
 
 	/** Construct a unzipper stream
 	 *
@@ -421,12 +431,12 @@ public:
 		)
 	  : 
 		zip_istreambase_type(istream_,window_size_, read_buffer_size_, input_buffer_size_), 
-		istream_type(rdbuf()),
+		istream_type(istream_type::rdbuf()),
 		m_is_gzip(false),
 		m_gzip_crc(0),
 		m_gzip_data_size(0)
 	{
- 	      if (rdbuf()->get_zerr()==Z_OK)
+ 	      if (this->rdbuf()->get_zerr()==Z_OK)
 			  check_header();
 	};
 
@@ -441,9 +451,9 @@ public:
 
 	\return true if crc check is succesful 
 	*/
-	bool check_crc() const				{	return get_crc() == m_gzip_crc;};
+	bool check_crc() const				{	return this->get_crc() == m_gzip_crc;};
 	/// return data size check
-	bool check_data_size() const		{	return get_out_size() == m_gzip_data_size;};
+	bool check_data_size() const		{	return this->get_out_size() == m_gzip_data_size;};
 
 	/// return the crc value in the file
 	long get_gzip_crc() const			{	return m_gzip_crc;};
@@ -464,12 +474,53 @@ typedef basic_zip_ostream<char> zip_ostream;
 typedef basic_zip_ostream<wchar_t> zip_wostream;
 /// A typedef for basic_zip_istream<char>
 typedef basic_zip_istream<char> zip_istream;
-/// A typedef for basic_zip_istream<wchart>
+/// A typedef for basic_zip_istream<wchar_t>
 typedef basic_zip_istream<wchar_t> zip_wistream;
 
-}; // zlib_sream
+}; // zlib_stream
+
+#if defined(MSDOS) || (defined(WINDOWS) && !defined(WIN32))
+#  define OS_CODE  0x00
+#endif
+
+#ifdef AMIGA
+#  define OS_CODE  0x01
+#endif
+
+#if defined(VAXC) || defined(VMS)
+#  define OS_CODE  0x02
+#endif
+
+#if defined(ATARI) || defined(atarist)
+#  define OS_CODE  0x05
+#endif
+
+#ifdef OS2
+#  define OS_CODE  0x06
+#endif
+
+#if defined(MACOS) || defined(TARGET_OS_MAC)
+#  define OS_CODE  0x07
+#endif
+
+#ifdef TOPS20
+#  define OS_CODE  0x0a
+#endif
+
+#ifdef WIN32
+#  ifndef __CYGWIN__  /* Cygwin is Unix, not Win32 */
+#    define OS_CODE  0x0b
+#  endif
+#endif
+
+#ifdef __50SERIES /* Prime/PRIMOS */
+#  define OS_CODE  0x0f
+#endif
+
+#ifndef OS_CODE
+#  define OS_CODE  0x03  /* assume Unix */
+#endif
 
 #include "zipstream.cpp"
 
 #endif
-

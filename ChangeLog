@@ -1,3 +1,11 @@
+2005-09-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.cpp: Only use dummy instance on WIN32 or when
+	not using dynamic modules (e.g., CygWin).
+
+	* src/zipstream.cpp, src/zipstream.h: Changes to compile on
+	GCC. (Hopefully it will *still* compile on VC6.)
+
 2005-09-14  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/obconversion.h, obconversion.cpp(Read): Make non-templated

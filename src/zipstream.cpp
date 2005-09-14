@@ -16,11 +16,18 @@ Permission is granted to anyone to use this software for any purpose, including 
 
 Author: Jonathan de Halleux, dehalleux@pelikhan.com, 2003
 */
-#ifndef ZIPSTREAM_IPP
-#define ZIPSTREAM_IPP
+
+// Modified for Open Babel to work on MS VC++ and modern GCC
+// Modified by Geoffrey R. Hutchison, 2005
+// Modified by Chris Morley, 2005
+
+#ifndef ZIPSTREAM_CPP
+#define ZIPSTREAM_CPP
 
 #include "zipstream.h"
 #include <sstream>
+
+using namespace std;
 
 namespace zlib_stream{
 
@@ -106,7 +113,7 @@ namespace detail{
 		Elem,Tr,ElemA,ByteT,ByteAT
 		>::sync ()
 	{ 
-		if ( pptr() && pptr() > pbase()) 
+		if ( this->pptr() && this->pptr() > this->pbase()) 
 		{
 			int c = overflow( EOF);
 
@@ -124,28 +131,19 @@ namespace detail{
 		typename ByteT,
 		typename ByteAT
 	>
-/*	typename basic_zip_streambuf<
-		Elem,Tr,ElemA,ByteT,ByteAT
-		>::int_type 
-		basic_zip_streambuf<
-			Elem,Tr,ElemA,ByteT,ByteAT
-			>::overflow (
+	typename basic_zip_streambuf<Elem,Tr,ElemA,ByteT,ByteAT>::int_type 
+	basic_zip_streambuf<Elem,Tr,ElemA,ByteT,ByteAT>::overflow (
 			typename basic_zip_streambuf<
 				Elem,Tr,ElemA,ByteT,ByteAT
-				>::int_type c
-			)
-*/
-	std::basic_streambuf::int_type 
-		basic_zip_streambuf<Elem,Tr,ElemA,ByteT,ByteAT>::overflow
-		(std::basic_streambuf::int_type c)	
+			>::int_type c)
 	{ 
-        int w = static_cast<int>(pptr() - pbase());
+        int w = static_cast<int>(this->pptr() - this->pbase());
         if (c != EOF) {
-             *pptr() = c;
+             *(this->pptr()) = c;
              ++w;
          }
-         if ( zip_to_stream( pbase(), w)) {
-             setp( pbase(), epptr() - 1);
+         if ( zip_to_stream( this->pbase(), w)) {
+             setp( this->pbase(), this->epptr() - 1);
              return c;
          } else
              return EOF;
@@ -363,21 +361,18 @@ namespace detail{
 		typename ByteT,
 		typename ByteAT
 	>
-   /* basic_unzip_streambuf<
-		Elem,Tr,ElemA,ByteT,ByteAT
-		>::int_type */ 
-	std::basic_streambuf<Elem,Tr>::int_type
+	typename basic_unzip_streambuf<Elem,Tr,ElemA,ByteT,ByteAT>::int_type
 	basic_unzip_streambuf<Elem,Tr,ElemA,ByteT,ByteAT>::underflow() 
 	{ 
-		if ( gptr() && ( gptr() < egptr()))
-			return * reinterpret_cast<unsigned char *>( gptr());
+		if ( this->gptr() && ( this->gptr() < this->egptr()))
+			return * reinterpret_cast<unsigned char *>( this->gptr());
      
-       int n_putback = static_cast<int>(gptr() - eback());
+       int n_putback = static_cast<int>(this->gptr() - this->eback());
        if ( n_putback > 4)
           n_putback = 4;
        memcpy( 
 			&(m_buffer[0]) + (4 - n_putback), 
-			gptr() - n_putback, 
+			this->gptr() - n_putback, 
 			n_putback*sizeof(char_type)
 			);
   
@@ -394,7 +389,7 @@ namespace detail{
               &(m_buffer[0]) + 4 + num);          // end of buffer
     
          // return next character
-         return* reinterpret_cast<unsigned char *>( gptr());    
+         return* reinterpret_cast<unsigned char *>( this->gptr());    
      }
 
 	template<
@@ -407,7 +402,7 @@ namespace detail{
     std::streamsize basic_unzip_streambuf<
 		Elem,Tr,ElemA,ByteT,ByteAT
 		>::unzip_from_stream( 
-			std::basic_streambuf<Elem,Tr>::char_type* buffer_, 
+			Elem* buffer_, 
 			std::streamsize buffer_size_
 			)
 	{
@@ -455,10 +450,10 @@ namespace detail{
 		if (m_zip_stream.avail_in==0)
 			return;
 
-		m_istream.clear( ios::goodbit );
+		m_istream.clear( std::ios::goodbit );
 		m_istream.seekg(
 			-static_cast<int>(m_zip_stream.avail_in),
-			ios_base::cur
+			std::ios_base::cur
 			);
 
 		m_zip_stream.avail_in=0;
@@ -480,19 +475,19 @@ namespace detail{
 	    uInt len;
 		int c;
 		int err=0;
-		z_stream& zip_stream = rdbuf()->get_zip_stream();
+		z_stream& zip_stream = this->rdbuf()->get_zip_stream();
 
 	    /* Check the gzip magic header */
 		 for (len = 0; len < 2; len++) 
 		 {
-			c = (int)rdbuf()->get_istream().get();
+			c = (int)this->rdbuf()->get_istream().get();
 			if (c != detail::gz_magic[len]) 
 			{
 			    if (len != 0) 
-					rdbuf()->get_istream().unget();
+					this->rdbuf()->get_istream().unget();
 			    if (c!= EOF) 
 			    {
-					rdbuf()->get_istream().unget();
+					this->rdbuf()->get_istream().unget();
 			    }
 		    
 			    err = zip_stream.avail_in != 0 ? Z_OK : Z_STREAM_END;
@@ -502,8 +497,8 @@ namespace detail{
 		}
     
 		m_is_gzip = true;
-		method = (int)rdbuf()->get_istream().get();
-		flags = (int)rdbuf()->get_istream().get();
+		method = (int)this->rdbuf()->get_istream().get();
+		flags = (int)this->rdbuf()->get_istream().get();
 		if (method != Z_DEFLATED || (flags & detail::gz_reserved) != 0) 
 		{
 			err = Z_DATA_ERROR;
@@ -512,32 +507,32 @@ namespace detail{
 
 	    /* Discard time, xflags and OS code: */
 	    for (len = 0; len < 6; len++) 
-			rdbuf()->get_istream().get();
+			this->rdbuf()->get_istream().get();
 	
 	    if ((flags & detail::gz_extra_field) != 0) 
 	    { 
 			/* skip the extra field */
-			len  =  (uInt)rdbuf()->get_istream().get();
-			len += ((uInt)rdbuf()->get_istream().get())<<8;
+			len  =  (uInt)this->rdbuf()->get_istream().get();
+			len += ((uInt)this->rdbuf()->get_istream().get())<<8;
 			/* len is garbage if EOF but the loop below will quit anyway */
-			while (len-- != 0 && rdbuf()->get_istream().get() != EOF) ;
+			while (len-- != 0 && this->rdbuf()->get_istream().get() != EOF) ;
 	    }
 	    if ((flags & detail::gz_orig_name) != 0) 
 	    { 
 			/* skip the original file name */
-			while ((c = rdbuf()->get_istream().get()) != 0 && c != EOF) ;
+			while ((c = this->rdbuf()->get_istream().get()) != 0 && c != EOF) ;
 		}
 	    if ((flags & detail::gz_comment) != 0) 
 	    {   
 			/* skip the .gz file comment */
-			while ((c = rdbuf()->get_istream().get()) != 0 && c != EOF) ;
+			while ((c = this->rdbuf()->get_istream().get()) != 0 && c != EOF) ;
 		}
 		if ((flags & detail::gz_head_crc) != 0) 
 		{  /* skip the header crc */
 			for (len = 0; len < 2; len++) 
-				rdbuf()->get_istream().get();
+				this->rdbuf()->get_istream().get();
 		}
-		err = rdbuf()->get_istream().eof() ? Z_DATA_ERROR : Z_OK;
+		err = this->rdbuf()->get_istream().eof() ? Z_DATA_ERROR : Z_OK;
 
 		return err;
 	}
@@ -555,8 +550,8 @@ namespace detail{
 	{		
 		if (m_is_gzip)
 		{
-			read_long( rdbuf()->get_istream(), m_gzip_crc );
-			read_long( rdbuf()->get_istream(), m_gzip_data_size );
+			read_long( this->rdbuf()->get_istream(), m_gzip_crc );
+			read_long( this->rdbuf()->get_istream(), m_gzip_data_size );
 		}
 	}
 
@@ -577,9 +572,9 @@ namespace detail{
 			)
     {
 		static const int size_ul = sizeof(unsigned long);
-		static const int size_c = sizeof(char_type);
+		static const int size_c = sizeof(Elem);
         static const int n_end = size_ul/size_c;
-		out_.write(reinterpret_cast<char_type const*>(&x_), n_end);
+		out_.write(reinterpret_cast<Elem const*>(&x_), n_end);
     }
    
 	template<
@@ -599,9 +594,9 @@ namespace detail{
 			)
 	{
 		static const int size_ul = sizeof(unsigned long);
-		static const int size_c = sizeof(char_type);
+		static const int size_c = sizeof(Elem);
         static const int n_end = size_ul/size_c;
-		in_.read(reinterpret_cast<char*>(&x_),n_end);
+		in_.read(reinterpret_cast<Elem*>(&x_),n_end);
 	}
     
 	template<
@@ -615,9 +610,10 @@ namespace detail{
 		Elem,Tr,ElemA,ByteT,ByteAT
 		>::add_header()
 	{
+	  typedef Elem char_type;
 	    char_type zero=0;
 	    
-        rdbuf()->get_ostream()
+        this->rdbuf()->get_ostream()
 			.put(static_cast<char_type>(detail::gz_magic[0]))
 			.put(static_cast<char_type>(detail::gz_magic[1]))
 			.put(static_cast<char_type>(Z_DEFLATED))
@@ -638,10 +634,10 @@ namespace detail{
 		Elem,Tr,ElemA,ByteT,ByteAT
 		>::add_footer()
 	{
-		put_long( rdbuf()->get_ostream(), rdbuf()->get_crc() );
-		put_long( rdbuf()->get_ostream(), rdbuf()->get_in_size() ); 
+		put_long( this->rdbuf()->get_ostream(), this->rdbuf()->get_crc() );
+		put_long( this->rdbuf()->get_ostream(), this->rdbuf()->get_in_size() ); 
 	};
 
-}; // zlib_sream
+}; // zlib_stream
 
 #endif
