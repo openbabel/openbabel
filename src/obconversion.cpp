@@ -127,6 +127,16 @@ OBConversion::Read() is a templated function so that objects derived
 from OBBase can also be handled, in addition to OBMol, if the format
 routines are written appropriately.
 
+<b>To make a molecule from a SMILES string.</b>
+@code
+	std::string SmilesString;
+	OBMol mol;
+	stringstream ss(SmilesString)
+	OBConversion conv(&ss);
+	if(conv.SetInFormat("smi") && conv.Read(&mol))
+		...
+@endcode
+
 <b>To do a file conversion without manipulating the molecule.</b>
 
 @code
@@ -190,6 +200,12 @@ OBConversion::OBConversion(istream* is, ostream* os) :
 	RegisterOptionParam("l", NULL, 1,GENOPTIONS);
 }
 
+	///In some builds there may be no instance of OBConversion made
+	///at program startup, so that the constructor and LoadFormatFiles
+	///is never called.
+	///This dummy global instance ensures LoadFormatFiles is called.
+	OBConversion dummyConv;
+
 ///This static function returns a reference to the FormatsMap
 ///which, because it is a static local variable is constructed only once.
 ///This fiddle is to avoid the "static initialization order fiasco"
@@ -219,12 +235,13 @@ OBConversion::~OBConversion()
 // \warning This function makes copying OBConversion objects unsafe.
 // \todo Write custom copy constructor. Meanwhile set call SetAuxConv(NULL) in the copy.
 //////////////////////////////////////////////////////
+
 /// Class information on formats is collected by making an instance of the class
-/// derived from OBFormat(only one is ever required).RegisterFormat() is called 
+/// derived from OBFormat(only one is usually required). RegisterFormat() is called 
 /// from its constructor. 
 ///
-/// If the compiled format were to be stored separately, like in a DLL, the initialization
-/// code would make an instance of the imported OBFormat class.
+/// If the compiled format is stored separately, like in a DLL or shared library,
+/// the initialization code makes an instance of the imported OBFormat class.
 int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME)
 {
 	FormatsMap()[ID] = pFormat;
@@ -390,9 +407,10 @@ int OBConversion::Convert()
 		return 0;
 	}
 
-	// GRH -- modified for zipstream
-	//	zlib_stream::zip_istream zIn(*pInStream);
-	//	pInStream = &zIn;
+	//GRH -- modified for zipstream
+	zlib_stream::zip_istream zIn(*pInStream);
+	if(zIn.is_gzip())
+		pInStream = &zIn;
 
 	if(!pInFormat) return 0;
 	Count=0;//number objects processed
@@ -594,8 +612,8 @@ OBFormat* OBConversion::FormatFromExt(const char* filename)
 	  if (extPos)
 	    return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
 	}
-#endif
       else
+#endif
 	return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
     }
   return NULL; //if no extension		
@@ -609,6 +627,18 @@ OBFormat* OBConversion::FormatFromMIME(const char* MIME)
     return FormatsMIMEMap()[MIME];
 }
 
+bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
+{
+	if(pin)
+		pInStream=pin;
+	if(!pInFormat) return false;
+
+	zlib_stream::zip_istream zIn(*pInStream);
+	if(zIn.is_gzip())
+		pInStream = &zIn;
+
+	return pInFormat->ReadMolecule(pOb, this);
+}
 //////////////////////////////////////////////////
 /// Writes the object pOb but does not delete it afterwards.
 /// The output stream is lastingly changed if pout is not NULL

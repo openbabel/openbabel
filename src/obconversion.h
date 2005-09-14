@@ -324,17 +324,7 @@ public:
 	/// Part of "API" interface. 
 	/// The input stream can be specified and the change is retained in the OBConversion instance
 	/// Returns false and pOb=NULL on error 
-	template<class T> 
-		bool	Read(T* pOb, std::istream* pin=NULL)
-	{
-		if(pin)
-			pInStream=pin;
-		if(!pInFormat) return false;
-		if(!pInFormat->ReadMolecule(pOb, this))
-		{pOb=NULL; return false;}
-		pOb = dynamic_cast<T*>(pOb);
-		return (pOb!=NULL);
-	};
+	bool	Read(OBBase* pOb, std::istream* pin=NULL);
 
 	/// @brief Reads an object of a class derived from OBBase into pOb from the supplied string
 	

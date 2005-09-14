@@ -17,15 +17,14 @@ Permission is granted to anyone to use this software for any purpose, including 
 Author: Jonathan de Halleux, dehalleux@pelikhan.com, 2003
 */
 
-/* Modified 2005 by Geoffrey R. Hutchison for modern compiliation in GCC */
-
-#ifndef ZIPSTREAM_H
-#define ZIPSTREAM_H
+#ifndef ZIPSTREAM_HPP
+#define ZIPSTREAM_HPP
 
 #include <vector>
 #include <iostream>
 #include <algorithm>
 #include <zlib.h>
+//#include <zlib/zutil.h>
 
 namespace zlib_stream{
 
@@ -60,7 +59,6 @@ public:
 	typedef ByteT byte_type;
     typedef ByteAT byte_allocator_type;
 	typedef byte_type* byte_buffer_type;
-    typedef Elem char_type;
 	typedef std::vector<byte_type, byte_allocator_type > byte_vector_type;
 	typedef std::vector<char_type, char_allocator_type > char_vector_type;
 
@@ -79,7 +77,7 @@ public:
 	~basic_zip_streambuf();
 
 	int sync ();
-    int overflow (int c);
+    int_type overflow (int_type c);
 
 	/** flushes the zip buffer and output buffer.
 
@@ -129,7 +127,6 @@ public:
 	typedef ByteT byte_type;
     typedef ByteAT byte_allocator_type;
 	typedef byte_type* byte_buffer_type;
-    typedef Elem char_type;
 	typedef std::vector<byte_type, byte_allocator_type > byte_vector_type;
 	typedef std::vector<char_type, char_allocator_type > char_vector_type;
 
@@ -145,7 +142,7 @@ public:
 	
 	~basic_unzip_streambuf();
 
-    int underflow();
+    int_type underflow();
 
 
 	/// returns the compressed input istream
@@ -252,12 +249,12 @@ public:
         > unzip_streambuf_type;
 
 	basic_zip_istreambase( 
-		istream_reference istream_,
+		istream_reference ostream_,
 		size_t window_size_,
 		size_t read_buffer_size_,
 		size_t input_buffer_size_
 		)
-		: m_buf(istream_,window_size_, read_buffer_size_, input_buffer_size_)
+		: m_buf(ostream_,window_size_, read_buffer_size_, input_buffer_size_)
 	{
 		init(&m_buf );
 	};
@@ -315,8 +312,6 @@ public:
 	typedef basic_zip_ostreambase<
         Elem,Tr,ElemA,ByteT,ByteAT> zip_ostreambase_type;
 	typedef std::basic_ostream<Elem,Tr> ostream_type;
-	typedef std::basic_ostream<Elem, Tr>& ostream_reference;
-        typedef Elem char_type;
 
 	/** Constructs a zipper ostream decorator
 	 *
@@ -330,9 +325,9 @@ public:
 
 	 When is_gzip_ is true, a gzip header and footer is automatically added.
 	 */
-	basic_zip_ostream(
+	basic_zip_ostream( 
 		ostream_reference ostream_, 
-		int open_mode = std::ios::out, 
+        int open_mode = std::ios::out, 
 		bool is_gzip_ = false,
 		size_t level_ = Z_DEFAULT_COMPRESSION,
 		EStrategy strategy_ = DefaultStrategy,
@@ -350,7 +345,7 @@ public:
             buffer_size_
             ), 
 		m_is_gzip(is_gzip_),
-		ostream_type(this->rdbuf())
+		ostream_type(rdbuf())
 	{
 		if (m_is_gzip)
 			add_header();
@@ -366,7 +361,7 @@ public:
 	/// flush inner buffer and zipper buffer
 	basic_zip_ostream<Elem,Tr>& zflush()	
 	{	
-		this->flush(); this->rdbuf()->flush(); return *this; 
+		flush(); rdbuf()->flush(); return *this; 
 	};
 
 private:
@@ -410,8 +405,6 @@ public:
         Elem,Tr,ElemA,ByteT,ByteAT> zip_istreambase_type;
 	typedef std::basic_istream<Elem,Tr> istream_type;
 	typedef unsigned char byte_type;
-	typedef std::basic_istream<Elem, Tr>& istream_reference;
-        typedef Elem char_type;
 
 	/** Construct a unzipper stream
 	 *
@@ -420,7 +413,7 @@ public:
 	 * \param read_buffer_size_ 
 	 * \param input_buffer_size_ 
 	 */
-	basic_zip_istream(
+	basic_zip_istream( 
 		istream_reference istream_, 
 		size_t window_size_ = 15,
 		size_t read_buffer_size_ = default_buffer_size,
@@ -428,12 +421,12 @@ public:
 		)
 	  : 
 		zip_istreambase_type(istream_,window_size_, read_buffer_size_, input_buffer_size_), 
-		istream_type(this->rdbuf()),
+		istream_type(rdbuf()),
 		m_is_gzip(false),
 		m_gzip_crc(0),
 		m_gzip_data_size(0)
 	{
- 	      if (this->rdbuf()->get_zerr()==Z_OK)
+ 	      if (rdbuf()->get_zerr()==Z_OK)
 			  check_header();
 	};
 
@@ -448,9 +441,9 @@ public:
 
 	\return true if crc check is succesful 
 	*/
-	bool check_crc() const				{	return this->get_crc() == m_gzip_crc;};
+	bool check_crc() const				{	return get_crc() == m_gzip_crc;};
 	/// return data size check
-	bool check_data_size() const		{	return this->get_out_size() == m_gzip_data_size;};
+	bool check_data_size() const		{	return get_out_size() == m_gzip_data_size;};
 
 	/// return the crc value in the file
 	long get_gzip_crc() const			{	return m_gzip_crc;};
@@ -471,52 +464,12 @@ typedef basic_zip_ostream<char> zip_ostream;
 typedef basic_zip_ostream<wchar_t> zip_wostream;
 /// A typedef for basic_zip_istream<char>
 typedef basic_zip_istream<char> zip_istream;
-/// A typedef for basic_zip_istream<wchar_t>
+/// A typedef for basic_zip_istream<wchart>
 typedef basic_zip_istream<wchar_t> zip_wistream;
 
-}; // zlib_stream
+}; // zlib_sream
 
-#if defined(MSDOS) || (defined(WINDOWS) && !defined(WIN32))
-#  define OS_CODE  0x00
+#include "zipstream.cpp"
+
 #endif
-
-#ifdef AMIGA
-#  define OS_CODE  0x01
-#endif
-
-#if defined(VAXC) || defined(VMS)
-#  define OS_CODE  0x02
-#endif
-
-#if defined(ATARI) || defined(atarist)
-#  define OS_CODE  0x05
-#endif
-
-#ifdef OS2
-#  define OS_CODE  0x06
-#endif
-
-#if defined(MACOS) || defined(TARGET_OS_MAC)
-#  define OS_CODE  0x07
-#endif
-
-#ifdef TOPS20
-#  define OS_CODE  0x0a
-#endif
-
-#ifdef WIN32
-#  ifndef __CYGWIN__  /* Cygwin is Unix, not Win32 */
-#    define OS_CODE  0x0b
-#  endif
-#endif
-
-#ifdef __50SERIES /* Prime/PRIMOS */
-#  define OS_CODE  0x0f
-#endif
-
-#ifndef OS_CODE
-#  define OS_CODE  0x03  /* assume Unix */
-#endif
-
-#endif // HEADER
 
