@@ -1,3 +1,13 @@
+2005-09-14  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/obconversion.h, obconversion.cpp(Read): Make non-templated
+	and move to .cpp; Add zipstream code to Read and Convert,
+	
+	* src/OBConversion.cpp: Add global dummy instance, so that format 
+	files are loaded. (A better way to do this needs to be found.)
+	
+	* src/zipstream h, zipstream.cpp: changed to compile on VC6! 
+
 2005-09-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/zipstream.h, src/zipstream.cpp: Modified classes (updated to
