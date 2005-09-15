@@ -1,3 +1,18 @@
+2005-09-14  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/main.cpp(main): line 322 Mods to place * correctly 
+	when file name has *.gz
+
+	* src/obconversion.cpp, obconversion.h: Removed dummy
+	instance which was causing trouble and called LoadFileFormats()
+	from the initialisation of a static variable. Removed call to
+	LoadFileFormats in constructor.
+
+	* src/obconversion.cpp: Added -z option and code for zipstream
+	output in Convert() and Write(). But ozipstream seems not to be
+	working properly at present. 
+	Messed around with ReadString()	and ReadFile(). 
+
 2005-09-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.cpp: Only use dummy instance on WIN32 or when
