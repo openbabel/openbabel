@@ -375,7 +375,7 @@ protected:
 	bool		  MoreFilesToCome;
 	bool		  OneObjectOnly;
 	bool		  ReadyToInput;
-	static bool	  FormatFilesLoaded;
+	static int FormatFilesLoaded;
 	OBBase*		  pOb1;
 	std::streampos wInpos; ///<position in the input stream of the object being written
 	std::streampos rInpos; ///<position in the input stream of the object being read

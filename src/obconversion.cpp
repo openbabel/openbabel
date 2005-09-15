@@ -182,7 +182,7 @@ can now be used.
 	obconv.dll, obdll.dll, one or more *.obf format files.
 */
     
-bool OBConversion::FormatFilesLoaded = false;
+int OBConversion::FormatFilesLoaded = OBConversion::LoadFormatFiles();
 
 OBFormat* OBConversion::pDefaultFormat=NULL;
 
@@ -193,20 +193,12 @@ OBConversion::OBConversion(istream* is, ostream* os) :
 {
 	pInStream=is;
 	pOutStream=os;
-	LoadFormatFiles();
+//	LoadFormatFiles();
 	
 	//These options take a parameter
 	RegisterOptionParam("f", NULL, 1,GENOPTIONS);
 	RegisterOptionParam("l", NULL, 1,GENOPTIONS);
 }
-
-	///In some builds there may be no instance of OBConversion made
-	///at program startup, so that the constructor and LoadFormatFiles
-	///is never called.
-	///This dummy global instance ensures LoadFormatFiles is called.
-#if defined(WIN32) || !defined(USING_DYNAMIC_LIBS)
-	OBConversion dummyConv;
-#endif
 
 ///This static function returns a reference to the FormatsMap
 ///which, because it is a static local variable is constructed only once.
@@ -258,8 +250,8 @@ int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat, const char* 
 int OBConversion::LoadFormatFiles()
 {
 	int count=0;
-	if(FormatFilesLoaded) return 0;
-	FormatFilesLoaded=true; //so will load files only once
+//	if(FormatFilesLoaded) return 0;
+//	FormatFilesLoaded=true; //so will load files only once
 #ifdef USING_DYNAMIC_LIBS
 	//Depending on availablilty, look successively in 
 	//FORMATFILE_DIR, executable directory,or current directory
@@ -409,10 +401,17 @@ int OBConversion::Convert()
 		return 0;
 	}
 
+#ifdef HAVE_LIBZ
 	//GRH -- modified for zipstream
 	zlib_stream::zip_istream zIn(*pInStream);
 	if(zIn.is_gzip())
 		pInStream = &zIn;
+
+	zlib_stream::zip_ostream zOut(*pOutStream);
+	if(IsOption("z",GENOPTIONS))
+		pOutStream = &zOut;
+
+#endif
 
 	if(!pInFormat) return 0;
 	Count=0;//number objects processed
@@ -634,9 +633,11 @@ bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
 		pInStream=pin;
 	if(!pInFormat) return false;
 
+#ifdef HAVE_LIBZ
 	zlib_stream::zip_istream zIn(*pInStream);
 	if(zIn.is_gzip())
 		pInStream = &zIn;
+#endif
 
 	return pInFormat->ReadMolecule(pOb, this);
 }
@@ -649,6 +650,13 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 	if(pos)
 		pOutStream=pos;
 	if(!pOutFormat) return false;
+
+#ifdef HAVE_LIBZ
+	zlib_stream::zip_ostream zOut(*pOutStream);
+	if(IsOption("z",GENOPTIONS))
+		pOutStream = &zOut;
+#endif
+
 	return pOutFormat->WriteMolecule(pOb,this);
 }
 
@@ -698,7 +706,8 @@ bool OBConversion::WriteFile(OBBase* pOb, string filePath)
 bool	OBConversion::ReadString(OBBase* pOb, std::string input)
 {
   stringstream pin(input);
-
+	return Read(pOb,&pin);
+/*
   zlib_stream::zip_istream zIn(pin);
   if(zIn.is_gzip())
     pInStream = &zIn;
@@ -709,6 +718,7 @@ bool	OBConversion::ReadString(OBBase* pOb, std::string input)
   if(!pInFormat->ReadMolecule(pOb, this))
     {pOb=NULL; return false;}
   return (pOb!=NULL);
+*/
 }
 
 
@@ -727,8 +737,8 @@ bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
       cerr << "Cannot read from " << filePath << endl;
       return false;
     }
-
-  zlib_stream::zip_istream zIn(ifs);
+	return Read(pOb,&ifs);
+/*  zlib_stream::zip_istream zIn(ifs);
   if(zIn.is_gzip())
     pInStream = &zIn;
   else
@@ -737,6 +747,7 @@ bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
   if(!pInFormat->ReadMolecule(pOb, this))
     {pOb=NULL; return false;}
   return (pOb!=NULL);
+*/
 }
 
 
@@ -747,7 +758,8 @@ return "Conversion options\n \
  -f <#> Start import at molecule # specified\n \
  -l <#> End import at molecule # specified\n \
  -t All input files describe a single molecule\n \
- -e Continue with next object after error, if possible\n";
+ -e Continue with next object after error, if possible\n \
+ -z Compress the output\n";
 }
 
 ////////////////////////////////////////////
