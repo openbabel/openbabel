@@ -311,7 +311,7 @@ int main(int argc,char *argv[])
   
   if(SplitOrBatch)
 	{
-		//Put * into output file name
+		//Put * into output file name before extension (or ext.gz)
 		if(OutputFileName.empty())
 		{
 			OutputFileName = "*.";
@@ -319,7 +319,11 @@ int main(int argc,char *argv[])
 		}
 		else
 		{
-			unsigned int pos = OutputFileName.find_last_of('.');
+			unsigned int pos = OutputFileName.rfind(".gz");
+			if(pos==string::npos)
+				pos = OutputFileName.rfind('.');
+			else
+				pos = OutputFileName.rfind('.',pos-1);
 			if(pos==string::npos)
 				OutputFileName += '*';
 			else
