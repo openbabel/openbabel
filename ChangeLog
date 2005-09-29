@@ -17,6 +17,8 @@
 	* configure, configure.in, */Makefile.am, */Makefile.in: Update
 	for new snapshot, minor fixes for distribution.
 
+	* Doxyfile, src/base.cpp: Update for eventual 2.0.0 release.
+
 2005-09-17  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/formats.mpdformat.cpp: Nick England's format for printing

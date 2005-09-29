@@ -220,15 +220,6 @@ bool OBGraphBase::SetVisitLock(bool v)
 }
 
 /*! \mainpage
-  \section warn Beta Developer Documentation
-
-This documentation represents developer documentation for the current CVS 
-version of Open Babel. It represents the current
-state of the code and the documentation as of the day it was
-generated. It is a work in progress while the Open Babel 2.0 release
-is nearing completion. There are bugs in both the code and the
-documentation -- you have been warned. Suggestions, improvements,
-contributions, and/or bug reports are always welcome.
 
   \section intro Introduction and History
  
