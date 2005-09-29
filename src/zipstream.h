@@ -221,7 +221,7 @@ public:
 
     inline
     explicit basic_zip_ostream(ostream_reference ostream,
-                               bool is_gzip = true,
+                               bool is_gzip = false,
                                int level = Z_DEFAULT_COMPRESSION,
                                EStrategy strategy = DefaultStrategy,
                                int window_size = -15 /*windowBits is passed < 0 to suppress zlib header */,
@@ -236,8 +236,11 @@ public:
     basic_zip_ostream<charT, traits>& zflush    (void);
     void                              finished  (void);
 
+    void                              make_gzip() 
+       { add_header(); _is_gzip = true; }
+
 private:
-    
+
     basic_zip_ostream<charT,traits>&  add_header(void);
     basic_zip_ostream<charT,traits>&  add_footer(void);
     
