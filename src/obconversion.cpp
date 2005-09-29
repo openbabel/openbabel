@@ -182,7 +182,7 @@ can now be used.
 	obconv.dll, obdll.dll, one or more *.obf format files.
 */
     
-int OBConversion::FormatFilesLoaded = OBConversion::LoadFormatFiles();
+  int OBConversion::FormatFilesLoaded = OBConversion::LoadFormatFiles();
 
 OBFormat* OBConversion::pDefaultFormat=NULL;
 
@@ -193,7 +193,7 @@ OBConversion::OBConversion(istream* is, ostream* os) :
 {
 	pInStream=is;
 	pOutStream=os;
-//	LoadFormatFiles();
+	//	LoadFormatFiles();
 	
 	//These options take a parameter
 	RegisterOptionParam("f", NULL, 1,GENOPTIONS);
@@ -250,8 +250,8 @@ int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat, const char* 
 int OBConversion::LoadFormatFiles()
 {
 	int count=0;
-//	if(FormatFilesLoaded) return 0;
-//	FormatFilesLoaded=true; //so will load files only once
+	//	if(FormatFilesLoaded) return 0;
+	//	FormatFilesLoaded=true; //so will load files only once
 #ifdef USING_DYNAMIC_LIBS
 	//Depending on availablilty, look successively in 
 	//FORMATFILE_DIR, executable directory,or current directory
@@ -402,19 +402,23 @@ int OBConversion::Convert()
 	}
 
 #ifdef HAVE_LIBZ
-	//GRH -- modified for zipstream
 	zlib_stream::zip_istream zIn(*pInStream);
 	if(zIn.is_gzip())
-		pInStream = &zIn;
+	  pInStream = &zIn;
 
-	zlib_stream::zip_ostream zOut(*pOutStream);
+	// use gzip format
 	if(IsOption("z",GENOPTIONS))
-		pOutStream = &zOut;
-
+	  {
+	    zlib_stream::zip_ostream zOut(*pOutStream);
+	    zOut << " This is just a test! " << endl;
+	    pOutStream = &zOut;
+	    *pOutStream << " More testing ! " << endl;
+	  }
 #endif
 
 	if(!pInFormat) return 0;
 	Count=0;//number objects processed
+
 	if(!SetStartAndEnd())
 		return 0;
 
@@ -436,9 +440,6 @@ int OBConversion::Convert()
 		bool ret=false;
 		try
 		{
-
-		  // intermediate gzip uncompression
-
 			ret = pInFormat->ReadChemObject(this);
 		}
 		catch(...)
@@ -652,9 +653,11 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 	if(!pOutFormat) return false;
 
 #ifdef HAVE_LIBZ
-	zlib_stream::zip_ostream zOut(*pOutStream);
 	if(IsOption("z",GENOPTIONS))
-		pOutStream = &zOut;
+	  {
+	    zlib_stream::zip_ostream zOut(*pOutStream);
+	    pOutStream = &zOut;
+	  }
 #endif
 
 	return pOutFormat->WriteMolecule(pOb,this);
@@ -759,7 +762,7 @@ return "Conversion options\n \
  -l <#> End import at molecule # specified\n \
  -t All input files describe a single molecule\n \
  -e Continue with next object after error, if possible\n \
- -z Compress the output\n";
+ -z Compress the output with gzip\n";
 }
 
 ////////////////////////////////////////////
