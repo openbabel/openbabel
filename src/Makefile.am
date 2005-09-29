@@ -1,5 +1,5 @@
 EXTRA_DIST = \
-	strncasecmp.c snprintf.c snprintf.h zipstream.h
+	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstream.cpp
 
 SUBDIRS = math formats fingerprints
 INCLUDES = -I$(top_srcdir)/data/
@@ -24,10 +24,6 @@ libopenbabel_la_SOURCES = \
 		transform.cpp $(dlhandler)
 
 libopenbabel_la_LDFLAGS = -version-info 1:0:0
-
-if BUILD_ZLIB
-libopenbabel_la_SOURCES += zipstream.cpp
-endif
 
 if BUILD_SHARED
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS

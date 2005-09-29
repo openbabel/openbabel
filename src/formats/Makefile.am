@@ -17,6 +17,7 @@ libformats_la_SOURCES = \
 	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
 	crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
+	fingerprintformat.cpp \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp 
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
 	jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
@@ -36,6 +37,7 @@ pkglib_LTLIBRARIES = \
 	chem3dformat.la chemdrawformat.la chemtoolformat.la \
 	crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
+	fingerprintformat.la \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
 	gromos96format.la hinformat.la \
 	jaguarformat.la mdlformat.la mmodformat.la \
@@ -107,6 +109,9 @@ featformat_la_LDFLAGS = -module -avoid-version
 
 fhformat_la_SOURCES = fhformat.cpp
 fhformat_la_LDFLAGS = -module -avoid-version
+
+fingerprintformat_la_SOURCES = fingerprintformat.cpp
+fingerprintformat_la_LDFLAGS = -module -avoid-version
 
 freefracformat_la_SOURCES = freefracformat.cpp
 freefracformat_la_LDFLAGS = -module -avoid-version 

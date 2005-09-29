@@ -170,6 +170,12 @@ am__fhformat_la_SOURCES_DIST = fhformat.cpp
 @BUILD_SHARED_TRUE@am_fhformat_la_OBJECTS = fhformat.lo
 fhformat_la_OBJECTS = $(am_fhformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_fhformat_la_rpath = -rpath $(pkglibdir)
+fingerprintformat_la_LIBADD =
+am__fingerprintformat_la_SOURCES_DIST = fingerprintformat.cpp
+@BUILD_SHARED_TRUE@am_fingerprintformat_la_OBJECTS =  \
+@BUILD_SHARED_TRUE@	fingerprintformat.lo
+fingerprintformat_la_OBJECTS = $(am_fingerprintformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_fingerprintformat_la_rpath = -rpath $(pkglibdir)
 freefracformat_la_LIBADD =
 am__freefracformat_la_SOURCES_DIST = freefracformat.cpp
 @BUILD_SHARED_TRUE@am_freefracformat_la_OBJECTS = freefracformat.lo
@@ -219,8 +225,9 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 	cacheformat.cpp carformat.cpp cccformat.cpp chem3dformat.cpp \
 	chemdrawformat.cpp chemtoolformat.cpp crkformat.cpp \
 	cssrformat.cpp dmolformat.cpp fastsearchformat.cpp \
-	featformat.cpp fhformat.cpp freefracformat.cpp \
-	gamessformat.cpp gaussformat.cpp inchiformat.cpp
+	featformat.cpp fhformat.cpp fingerprintformat.cpp \
+	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
+	inchiformat.cpp
 @BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@am__objects_1 = inchiformat.lo
 @BUILD_SHARED_FALSE@am_libformats_la_OBJECTS = APIInterface.lo \
 @BUILD_SHARED_FALSE@	CSRformat.lo PQSformat.lo alchemyformat.lo \
@@ -230,9 +237,9 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 @BUILD_SHARED_FALSE@	chemdrawformat.lo chemtoolformat.lo \
 @BUILD_SHARED_FALSE@	crkformat.lo cssrformat.lo dmolformat.lo \
 @BUILD_SHARED_FALSE@	fastsearchformat.lo featformat.lo \
-@BUILD_SHARED_FALSE@	fhformat.lo freefracformat.lo \
-@BUILD_SHARED_FALSE@	gamessformat.lo gaussformat.lo \
-@BUILD_SHARED_FALSE@	$(am__objects_1)
+@BUILD_SHARED_FALSE@	fhformat.lo fingerprintformat.lo \
+@BUILD_SHARED_FALSE@	freefracformat.lo gamessformat.lo \
+@BUILD_SHARED_FALSE@	gaussformat.lo $(am__objects_1)
 libformats_la_OBJECTS = $(am_libformats_la_OBJECTS)
 @BUILD_SHARED_FALSE@am_libformats_la_rpath =
 mdlformat_la_LIBADD =
@@ -361,22 +368,22 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(chemtoolformat_la_SOURCES) $(crkformat_la_SOURCES) \
 	$(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) \
 	$(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) \
-	$(fhformat_la_SOURCES) $(freefracformat_la_SOURCES) \
-	$(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) \
-	$(ghemicalformat_la_SOURCES) $(gromos96format_la_SOURCES) \
-	$(hinformat_la_SOURCES) $(inchiformat_la_SOURCES) \
-	$(jaguarformat_la_SOURCES) $(libformats_la_SOURCES) \
-	$(mdlformat_la_SOURCES) $(mmodformat_la_SOURCES) \
-	$(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) \
-	$(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) \
-	$(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) \
-	$(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) \
-	$(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) \
-	$(smilesformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
-	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
-	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
-	$(xyzformat_la_SOURCES) $(yasaraformat_la_SOURCES) \
-	$(zindoformat_la_SOURCES)
+	$(fhformat_la_SOURCES) $(fingerprintformat_la_SOURCES) \
+	$(freefracformat_la_SOURCES) $(gamessformat_la_SOURCES) \
+	$(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) \
+	$(gromos96format_la_SOURCES) $(hinformat_la_SOURCES) \
+	$(inchiformat_la_SOURCES) $(jaguarformat_la_SOURCES) \
+	$(libformats_la_SOURCES) $(mdlformat_la_SOURCES) \
+	$(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) \
+	$(mopacformat_la_SOURCES) $(mpqcformat_la_SOURCES) \
+	$(nwchemformat_la_SOURCES) $(pdbformat_la_SOURCES) \
+	$(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) \
+	$(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) \
+	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
+	$(tinkerformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
+	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
+	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
+	$(yasaraformat_la_SOURCES) $(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__PQSformat_la_SOURCES_DIST) \
@@ -398,6 +405,7 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__fastsearchformat_la_SOURCES_DIST) \
 	$(am__featformat_la_SOURCES_DIST) \
 	$(am__fhformat_la_SOURCES_DIST) \
+	$(am__fingerprintformat_la_SOURCES_DIST) \
 	$(am__freefracformat_la_SOURCES_DIST) \
 	$(am__gamessformat_la_SOURCES_DIST) \
 	$(am__gaussformat_la_SOURCES_DIST) \
@@ -577,8 +585,9 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_FALSE@	crkformat.cpp cssrformat.cpp \
 @BUILD_SHARED_FALSE@	dmolformat.cpp fastsearchformat.cpp \
 @BUILD_SHARED_FALSE@	featformat.cpp fhformat.cpp \
-@BUILD_SHARED_FALSE@	freefracformat.cpp gamessformat.cpp \
-@BUILD_SHARED_FALSE@	gaussformat.cpp $(am__append_1)
+@BUILD_SHARED_FALSE@	fingerprintformat.cpp freefracformat.cpp \
+@BUILD_SHARED_FALSE@	gamessformat.cpp gaussformat.cpp \
+@BUILD_SHARED_FALSE@	$(am__append_1)
 @BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = APIInterface.la CSRformat.la \
 @BUILD_SHARED_TRUE@	PQSformat.la alchemyformat.la \
 @BUILD_SHARED_TRUE@	amberformat.la balstformat.la bgfformat.la \
@@ -587,12 +596,13 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_TRUE@	chemdrawformat.la chemtoolformat.la \
 @BUILD_SHARED_TRUE@	crkformat.la cssrformat.la dmolformat.la \
 @BUILD_SHARED_TRUE@	fastsearchformat.la featformat.la \
-@BUILD_SHARED_TRUE@	fhformat.la freefracformat.la \
-@BUILD_SHARED_TRUE@	gamessformat.la gaussformat.la \
-@BUILD_SHARED_TRUE@	ghemicalformat.la gromos96format.la \
-@BUILD_SHARED_TRUE@	hinformat.la jaguarformat.la mdlformat.la \
-@BUILD_SHARED_TRUE@	mmodformat.la mol2format.la mopacformat.la \
-@BUILD_SHARED_TRUE@	mpqcformat.la nwchemformat.la pdbformat.la \
+@BUILD_SHARED_TRUE@	fhformat.la fingerprintformat.la \
+@BUILD_SHARED_TRUE@	freefracformat.la gamessformat.la \
+@BUILD_SHARED_TRUE@	gaussformat.la ghemicalformat.la \
+@BUILD_SHARED_TRUE@	gromos96format.la hinformat.la \
+@BUILD_SHARED_TRUE@	jaguarformat.la mdlformat.la mmodformat.la \
+@BUILD_SHARED_TRUE@	mol2format.la mopacformat.la mpqcformat.la \
+@BUILD_SHARED_TRUE@	nwchemformat.la pdbformat.la \
 @BUILD_SHARED_TRUE@	povrayformat.la qchemformat.la \
 @BUILD_SHARED_TRUE@	reportformat.la rxnformat.la shelxformat.la \
 @BUILD_SHARED_TRUE@	smilesformat.la tinkerformat.la \
@@ -642,6 +652,8 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_TRUE@featformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@fhformat_la_SOURCES = fhformat.cpp
 @BUILD_SHARED_TRUE@fhformat_la_LDFLAGS = -module -avoid-version
+@BUILD_SHARED_TRUE@fingerprintformat_la_SOURCES = fingerprintformat.cpp
+@BUILD_SHARED_TRUE@fingerprintformat_la_LDFLAGS = -module -avoid-version
 @BUILD_SHARED_TRUE@freefracformat_la_SOURCES = freefracformat.cpp
 @BUILD_SHARED_TRUE@freefracformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@gamessformat_la_SOURCES = gamessformat.cpp
@@ -823,6 +835,8 @@ featformat.la: $(featformat_la_OBJECTS) $(featformat_la_DEPENDENCIES)
 	$(CXXLINK) $(am_featformat_la_rpath) $(featformat_la_LDFLAGS) $(featformat_la_OBJECTS) $(featformat_la_LIBADD) $(LIBS)
 fhformat.la: $(fhformat_la_OBJECTS) $(fhformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_fhformat_la_rpath) $(fhformat_la_LDFLAGS) $(fhformat_la_OBJECTS) $(fhformat_la_LIBADD) $(LIBS)
+fingerprintformat.la: $(fingerprintformat_la_OBJECTS) $(fingerprintformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_fingerprintformat_la_rpath) $(fingerprintformat_la_LDFLAGS) $(fingerprintformat_la_OBJECTS) $(fingerprintformat_la_LIBADD) $(LIBS)
 freefracformat.la: $(freefracformat_la_OBJECTS) $(freefracformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_freefracformat_la_rpath) $(freefracformat_la_LDFLAGS) $(freefracformat_la_OBJECTS) $(freefracformat_la_LIBADD) $(LIBS)
 gamessformat.la: $(gamessformat_la_OBJECTS) $(gamessformat_la_DEPENDENCIES) 
@@ -911,6 +925,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fastsearchformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/featformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fhformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprintformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/freefracformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gamessformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gaussformat.Plo@am__quote@

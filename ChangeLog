@@ -1,4 +1,21 @@
+2005-09-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/types.h: Updated (as below).
+
+	* src/zipstream.h, src/zipstream.cpp: Updated with cleaned-up
+	versions from OpenSG project.
+
+	* src/obconversion.cpp: Added debugging marks for zipstream --
+	ostream seems to disappear after assignment.
+
+	* src/dlhandler_unix.cpp: Update to fix crashing bugs with global
+	loading of OBConversion::LoadFormatFiles().
+
+	* configure, configure.in, */Makefile.am, */Makefile.in: Update
+	for new snapshot, minor fixes for distribution.
+
 2005-09-17  Chris Morley  <c.morley@gaseq.co.uk>
+
 	* src/formats.mpdformat.cpp: Nick England's format for printing
 	atom types added  (Slightly modifed option handling.)
 

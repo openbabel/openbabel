@@ -38,7 +38,6 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@BUILD_ZLIB_TRUE@am__append_1 = zipstream.cpp
 bin_PROGRAMS = babel$(EXEEXT)
 subdir = src
 DIST_COMMON = README $(libopenbabelinclude_HEADERS) \
@@ -73,16 +72,14 @@ am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	mol.cpp molchrg.cpp obconversion.cpp oberror.cpp obiter.cpp \
 	obutil.cpp parsmart.cpp patty.cpp phmodel.cpp rand.cpp \
 	residue.cpp ring.cpp rotor.cpp rotamer.cpp tokenst.cpp \
-	typer.cpp transform.cpp dlhandler_unix.cpp zipstream.cpp
+	typer.cpp transform.cpp dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
-@BUILD_ZLIB_TRUE@am__objects_2 = zipstream.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo chains.lo chiral.lo data.lo fingerprint.lo \
 	generic.lo grid.lo kekulize.lo matrix.lo mol.lo molchrg.lo \
 	obconversion.lo oberror.lo obiter.lo obutil.lo parsmart.lo \
 	patty.lo phmodel.lo rand.lo residue.lo ring.lo rotor.lo \
-	rotamer.lo tokenst.lo typer.lo transform.lo $(am__objects_1) \
-	$(am__objects_2)
+	rotamer.lo tokenst.lo typer.lo transform.lo $(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -244,20 +241,24 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 EXTRA_DIST = \
-	strncasecmp.c snprintf.c snprintf.h zipstream.h
+	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstream.cpp
 
 SUBDIRS = math formats fingerprints
 INCLUDES = -I$(top_srcdir)/data/
 lib_LTLIBRARIES = libopenbabel.la
 @BUILD_SHARED_FALSE@dlhandler = 
 @BUILD_SHARED_TRUE@dlhandler = dlhandler_unix.cpp
-libopenbabel_la_SOURCES = atom.cpp base.cpp bitvec.cpp bond.cpp \
-	bondtyper.cpp chains.cpp chiral.cpp data.cpp fingerprint.cpp \
-	generic.cpp grid.cpp kekulize.cpp matrix.cpp mol.cpp \
-	molchrg.cpp obconversion.cpp oberror.cpp obiter.cpp obutil.cpp \
-	parsmart.cpp patty.cpp phmodel.cpp rand.cpp residue.cpp \
-	ring.cpp rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
-	transform.cpp $(dlhandler) $(am__append_1)
+libopenbabel_la_SOURCES = \
+		atom.cpp base.cpp bitvec.cpp bond.cpp \
+		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
+		fingerprint.cpp generic.cpp grid.cpp \
+		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
+		obconversion.cpp oberror.cpp obiter.cpp \
+		obutil.cpp parsmart.cpp \
+		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
+		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
+		transform.cpp $(dlhandler)
+
 libopenbabel_la_LDFLAGS = -version-info 1:0:0
 @BUILD_SHARED_TRUE@AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 @BUILD_SHARED_FALSE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
@@ -433,7 +434,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tokenst.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/transform.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/typer.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zipstream.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \

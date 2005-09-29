@@ -217,7 +217,9 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data @XML_CPPFLAGS@
+EXTRA_DIST = xml.h
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
+AM_CPPFLAGS = @XML_CPPFLAGS@
 @BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
 @BUILD_SHARED_TRUE@	cmlreactlformat.la pubchem.la xcmlformat.la xmlformat.la
 

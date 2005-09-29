@@ -1,4 +1,7 @@
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data @XML_CPPFLAGS@
+EXTRA_DIST = xml.h
+
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
+AM_CPPFLAGS =  @XML_CPPFLAGS@
 LDFLAGS = @LIBS@ @XML_LIBS@
 
 if BUILD_SHARED
