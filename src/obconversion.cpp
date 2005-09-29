@@ -406,13 +406,12 @@ int OBConversion::Convert()
 	if(zIn.is_gzip())
 	  pInStream = &zIn;
 
-	// use gzip format
+	zlib_stream::zip_ostream zOut(*pOutStream);
 	if(IsOption("z",GENOPTIONS))
 	  {
-	    zlib_stream::zip_ostream zOut(*pOutStream);
-	    zOut << " This is just a test! " << endl;
+	    // make sure to output the header
+	    zOut.make_gzip();
 	    pOutStream = &zOut;
-	    *pOutStream << " More testing ! " << endl;
 	  }
 #endif
 
@@ -653,9 +652,11 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 	if(!pOutFormat) return false;
 
 #ifdef HAVE_LIBZ
+	zlib_stream::zip_ostream zOut(*pOutStream);
 	if(IsOption("z",GENOPTIONS))
 	  {
-	    zlib_stream::zip_ostream zOut(*pOutStream);
+	    // make sure to output the header
+	    zOut.make_gzip();
 	    pOutStream = &zOut;
 	  }
 #endif
@@ -674,8 +675,7 @@ std::string OBConversion::WriteString(OBBase* pOb)
 
   if(pOutFormat)
     {
-      pOutStream = &newStream;
-      pOutFormat->WriteMolecule(pOb,this);
+      Write(pOb, &newStream);
     }
   pOutStream = oldStream;
 
@@ -701,27 +701,14 @@ bool OBConversion::WriteFile(OBBase* pOb, string filePath)
 	    return false;
 	  }
 
-	pOutStream= &ofs;
-	return pOutFormat->WriteMolecule(pOb,this);
+	return Write(pOb, &ofs);
 }
 
 ////////////////////////////////////////////
 bool	OBConversion::ReadString(OBBase* pOb, std::string input)
 {
   stringstream pin(input);
-	return Read(pOb,&pin);
-/*
-  zlib_stream::zip_istream zIn(pin);
-  if(zIn.is_gzip())
-    pInStream = &zIn;
-  else
-    pInStream = &pin;
-
-  if(!pInFormat) return false;
-  if(!pInFormat->ReadMolecule(pOb, this))
-    {pOb=NULL; return false;}
-  return (pOb!=NULL);
-*/
+  return Read(pOb,&pin);
 }
 
 
@@ -740,17 +727,8 @@ bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
       cerr << "Cannot read from " << filePath << endl;
       return false;
     }
-	return Read(pOb,&ifs);
-/*  zlib_stream::zip_istream zIn(ifs);
-  if(zIn.is_gzip())
-    pInStream = &zIn;
-  else
-    pInStream = &ifs;
-  
-  if(!pInFormat->ReadMolecule(pOb, this))
-    {pOb=NULL; return false;}
-  return (pOb!=NULL);
-*/
+
+  return Read(pOb,&ifs);
 }
 
 

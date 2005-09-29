@@ -3,10 +3,13 @@
 	* data/types.h: Updated (as below).
 
 	* src/zipstream.h, src/zipstream.cpp: Updated with cleaned-up
-	versions from OpenSG project.
+	versions from OpenSG project. Added method to add gzip header
+	after creating stream.
 
-	* src/obconversion.cpp: Added debugging marks for zipstream --
-	ostream seems to disappear after assignment.
+	* src/obconversion.cpp: Clean up WriteString() and WriteFile()
+	methods to use Write() -- eliminates duplicated code. (Maybe
+	Convert should use Read() and Write() similarly.) Now works
+	correctly with gzip output.
 
 	* src/dlhandler_unix.cpp: Update to fix crashing bugs with global
 	loading of OBConversion::LoadFormatFiles().
