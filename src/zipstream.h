@@ -4,523 +4,323 @@ zipstream Library License:
 
 The zlib/libpng License Copyright (c) 2003 Jonathan de Halleux.
 
-This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
+This software is provided 'as-is', without any express or implied warranty. In
+no event will the authors be held liable for any damages arising from the use
+of this software.
 
-Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it freely,
+subject to the following restrictions:
 
-1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+1. The origin of this software must not be misrepresented; you must not claim
+   that you wrote the original software. If you use this software in a
+   product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
 
-2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source distribution
 
 Author: Jonathan de Halleux, dehalleux@pelikhan.com, 2003
+
+Altered by: Andreas Zieringer 2003 for OpenSG project
+            made it platform independent, gzip conform, fixed gzip footer
+
+Altered by: Geoffrey Hutchison 2005 for Open Babel project
+            minor namespace modifications
 */
 
-// Modified for Open Babel to work on MS VC++ and modern GCC
-// Modified by Geoffrey R. Hutchison, 2005
-// Modified by Chris Morley, 2005
-
-#ifndef ZIPSTREAM_H
-#define ZIPSTREAM_H
+#ifndef _ZIPSTREAM_H_
+#define _ZIPSTREAM_H_
 
 #include <vector>
+#include <string>
+#include <streambuf>
+#include <sstream>
 #include <iostream>
 #include <algorithm>
-#include <zlib.h>
-//#include <zlib/zutil.h>
 
-namespace zlib_stream{
+#include <zlib.h>
+
+#ifdef WIN32 /* Window 95 & Windows NT */
+#  define OS_CODE  0x0b
+#endif
+#if defined(MACOS) || defined(TARGET_OS_MAC)
+#  define OS_CODE  0x07
+#endif
+#ifndef OS_CODE
+#  define OS_CODE  0x03  /* assume Unix */
+#endif
+
+namespace zlib_stream {
+
+namespace detail
+{
+    const int gz_magic[2] = {0x1f, 0x8b}; /* gzip magic header */
+
+    /* gzip flag byte */
+    const int gz_ascii_flag =  0x01; /* bit 0 set: file probably ascii text */
+    const int gz_head_crc    = 0x02; /* bit 1 set: header CRC present */
+    const int gz_extra_field = 0x04; /* bit 2 set: extra field present */
+    const int gz_orig_name  =  0x08; /* bit 3 set: original file name present */
+    const int gz_comment    =  0x10; /* bit 4 set: file comment present */
+    const int gz_reserved   =  0xE0; /* bits 5..7: reserved */    
+}
 
 /// default gzip buffer size,
 /// change this to suite your needs
-const size_t default_buffer_size = 4096;
+const size_t zstream_default_buffer_size = 4096;
 
 /// Compression strategy, see zlib doc.
 enum EStrategy
 {
-	StrategyFiltered = 1,
-	StrategyHuffmanOnly = 2,
-	DefaultStrategy = 0
+    StrategyFiltered = 1,
+    StrategyHuffmanOnly = 2,
+    DefaultStrategy = 0
 };
+
+//*****************************************************************************
+//  template class basic_zip_streambuf
+//*****************************************************************************
 
 /** \brief A stream decorator that takes raw input and zips it to a ostream.
 
 The class wraps up the inflate method of the zlib library 1.1.4 http://www.gzip.org/zlib/
 */
-template<
-	typename Elem, 
-	typename Tr = std::char_traits<Elem>,
-    typename ElemA = std::allocator<Elem>,
-    typename ByteT = unsigned char,
-    typename ByteAT = std::allocator<ByteT>
->	
-class basic_zip_streambuf : public std::basic_streambuf<Elem, Tr> 
+template <class charT,
+          class traits = std::char_traits<charT> >
+class basic_zip_streambuf : public std::basic_streambuf<charT, traits>
 {
-  public:
-	typedef std::basic_ostream<Elem, Tr>& ostream_reference;
-        typedef ElemA char_allocator_type;
-	typedef ByteT byte_type;
-        typedef ByteAT byte_allocator_type;
-	typedef byte_type* byte_buffer_type;
-        typedef Elem char_type;
-        typedef typename Tr::int_type int_type;
-	typedef std::vector<byte_type, byte_allocator_type > byte_vector_type;
-	typedef std::vector<char_type, char_allocator_type > char_vector_type;
+public:
+    typedef std::basic_ostream<charT, traits>& ostream_reference;
+    typedef unsigned char byte_type;
+    typedef char          char_type;
+    typedef byte_type* byte_buffer_type;
+    typedef std::vector<byte_type> byte_vector_type;
+    typedef std::vector<char_type> char_vector_type;
+    typedef int int_type;
 
-    /** Construct a zip stream
-     * More info on the following parameters can be found in the zlib documentation.
-     */
-    basic_zip_streambuf(
-		ostream_reference ostream_,
-		size_t level_,
-		EStrategy strategy_,
-		size_t window_size_,
-		size_t memory_level_,
-		size_t buffer_size_
-		);
-	
-	~basic_zip_streambuf();
+    basic_zip_streambuf(ostream_reference ostream,
+                            int level,
+                            EStrategy strategy,
+                            int window_size,
+                            int memory_level,
+                            size_t buffer_size);
 
-	int sync ();
-    int_type overflow (int_type c);
+    ~basic_zip_streambuf(void);
 
-	/** flushes the zip buffer and output buffer.
+    int               sync        (void);
+    int_type          overflow    (int_type c);
+    std::streamsize   flush       (void);
+    inline 
+    ostream_reference get_ostream (void) const;
+    inline 
+    int               get_zerr    (void) const;
+    inline
+    unsigned long     get_crc     (void) const;
+    inline
+    unsigned long     get_in_size (void) const;
+    inline
+    long              get_out_size(void) const;
 
-	This method should be called at the end of the compression. Calling flush multiple times, will lower the
-	compression ratio.
-	*/
-	std::streamsize flush();
-	/// returns a reference to the output stream
-	ostream_reference get_ostream() const	{	return m_ostream;};
-	/// returns the latest zlib error status
-	int get_zerr() const					{	return m_err;};
-	/// returns the crc of the input data compressed so far.
-	long get_crc() const					{	return m_crc;};
-	/// returns the size (bytes) of the input data compressed so far.
-	long get_in_size() const				{	return m_zip_stream.total_in;};
-	/// returns the size (bytes) of the compressed data so far.
-	long get_out_size() const				{	return m_zip_stream.total_out;};
 private:
-	bool zip_to_stream( char_type*, std::streamsize);
-	size_t fill_input_buffer();
-
-	ostream_reference m_ostream;
-	z_stream m_zip_stream;
-    int m_err;
-	byte_vector_type m_output_buffer;
-	char_vector_type m_buffer; 
-	long m_crc;
+    
+    bool              zip_to_stream(char_type *buffer,
+                                    std::streamsize buffer_size);
+    
+    ostream_reference   _ostream;
+    z_stream            _zip_stream;
+    int                 _err;
+    byte_vector_type    _output_buffer;
+    char_vector_type    _buffer;
+    unsigned long       _crc;
 };
+
+
+//*****************************************************************************
+//  template class basic_unzip_streambuf
+//*****************************************************************************
 
 /** \brief A stream decorator that takes compressed input and unzips it to a istream.
 
 The class wraps up the deflate method of the zlib library 1.1.4 http://www.gzip.org/zlib/
 */
-template<
-	typename Elem, 
-	typename Tr = std::char_traits<Elem>,
-    typename ElemA = std::allocator<Elem>,
-    typename ByteT = unsigned char,
-    typename ByteAT = std::allocator<ByteT>
->	
-class basic_unzip_streambuf : 
-	public std::basic_streambuf<Elem, Tr> 
+template <class charT,
+          class traits = std::char_traits<charT> >
+class basic_unzip_streambuf :
+    public std::basic_streambuf<charT, traits>
 {
 public:
-	typedef std::basic_istream<Elem, Tr>& istream_reference;
-        typedef ElemA char_allocator_type;
-	typedef ByteT byte_type;
-        typedef ByteAT byte_allocator_type;
-	typedef byte_type* byte_buffer_type;
-        typedef Elem char_type;
-        typedef typename Tr::int_type int_type;
-	typedef std::vector<byte_type, byte_allocator_type > byte_vector_type;
-	typedef std::vector<char_type, char_allocator_type > char_vector_type;
+    typedef std::basic_istream<charT,traits>& istream_reference;
+    typedef unsigned char byte_type;
+    typedef char          char_type;
+    typedef byte_type* byte_buffer_type;
+    typedef std::vector<byte_type> byte_vector_type;
+    typedef std::vector<char_type> char_vector_type;
+    typedef int int_type;
 
-     /** Construct a unzip stream
+    /** Construct a unzip stream
      * More info on the following parameters can be found in the zlib documentation.
      */
-	 basic_unzip_streambuf(
-		istream_reference istream_,
-		size_t window_size_,
-		size_t read_buffer_size_,
-		size_t input_buffer_size_
-		);
-	
-	~basic_unzip_streambuf();
+    basic_unzip_streambuf(istream_reference istream,
+                          int window_size,
+                          size_t read_buffer_size,
+                          size_t input_buffer_size);
 
-    int_type underflow();
+    ~basic_unzip_streambuf(void);
 
+    int_type underflow(void);
 
-	/// returns the compressed input istream
-	istream_reference get_istream()	{	return m_istream;};
-	/// returns the zlib stream structure
-	z_stream& get_zip_stream()		{	return m_zip_stream;};
-	/// returns the latest zlib error state
-	int get_zerr() const					{	return m_err;};
-	/// returns the crc of the uncompressed data so far 
-	long get_crc() const					{	return m_crc;};
-	/// returns the number of uncompressed bytes
-	long get_out_size() const				{	return m_zip_stream.total_out;};
-	/// returns the number of read compressed bytes
-	long get_in_size() const				{	return m_zip_stream.total_in;};
-private:
-	void put_back_from_zip_stream();
-	std::streamsize unzip_from_stream( char_type*, std::streamsize);
-
-	size_t fill_input_buffer();
-
-	istream_reference m_istream;
-	z_stream m_zip_stream;
-    int m_err;
-	byte_vector_type m_input_buffer;
-	char_vector_type m_buffer; 
-	long m_crc;
-};
-
-/*! \brief Base class for zip ostreams
-
-Contains a basic_zip_streambuf.
-*/
-template<
-	typename Elem, 
-	typename Tr = std::char_traits<Elem>,
-    typename ElemA = std::allocator<Elem>,
-    typename ByteT = unsigned char,
-    typename ByteAT = std::allocator<ByteT>
->	
-class basic_zip_ostreambase : virtual public std::basic_ios<Elem,Tr>
-{
-public:
-	typedef std::basic_ostream<Elem, Tr>& ostream_reference;
-	typedef basic_zip_streambuf<
-        Elem,
-        Tr,
-        ElemA,
-        ByteT,
-        ByteAT
-        > zip_streambuf_type;
-
-    /** Construct a zip stream
-     * More info on the following parameters can be found in the zlib documentation.
-     */
-	basic_zip_ostreambase( 
-		ostream_reference ostream_,
-		size_t level_,
-		EStrategy strategy_,
-		size_t window_size_,
-		size_t memory_level_,
-		size_t buffer_size_
-		)
-		: m_buf(ostream_,level_,strategy_,window_size_,memory_level_,buffer_size_)
-	{
-		init(&m_buf );
-	};
-	
-	/// returns the underlying zip ostream object
-	zip_streambuf_type* rdbuf() { return &m_buf; };
-
-	/// returns the zlib error state
-	int get_zerr() const					{	return m_buf.get_err();};
-	/// returns the uncompressed data crc
-	long get_crc() const					{	return m_buf.get_crc();};
-	/// returns the compressed data size
-	long get_out_size() const				{	return m_buf.get_out_size();};
-	/// returns the uncompressed data size
-	long get_in_size() const				{	return m_buf.get_in_size();};
-private:
-	zip_streambuf_type m_buf;
-};
-
-/*! \brief Base class for unzip istreams
-
-Contains a basic_unzip_streambuf.
-*/
-template<
-	typename Elem, 
-	typename Tr = std::char_traits<Elem>,
-    typename ElemA = std::allocator<Elem>,
-    typename ByteT = unsigned char,
-    typename ByteAT = std::allocator<ByteT>
->
-class basic_zip_istreambase : virtual public std::basic_ios<Elem,Tr>
-{
-public:
-	typedef std::basic_istream<Elem, Tr>& istream_reference;
-	typedef basic_unzip_streambuf<
-        Elem,
-        Tr,
-        ElemA,
-        ByteT,
-        ByteAT
-        > unzip_streambuf_type;
-
-	basic_zip_istreambase( 
-		istream_reference ostream_,
-		size_t window_size_,
-		size_t read_buffer_size_,
-		size_t input_buffer_size_
-		)
-		: m_buf(ostream_,window_size_, read_buffer_size_, input_buffer_size_)
-	{
-		init(&m_buf );
-	};
-	
-	/// returns the underlying unzip istream object
-	unzip_streambuf_type* rdbuf() { return &m_buf; };
-
-	/// returns the zlib error state
-	int get_zerr() const					{	return m_buf.get_zerr();};
-	/// returns the uncompressed data crc
-	long get_crc() const					{	return m_buf.get_crc();};
-	/// returns the uncompressed data size
-	long get_out_size() const				{	return m_buf.get_out_size();};
-	/// returns the compressed data size
-	long get_in_size() const				{	return m_buf.get_in_size();};
-private:
-	unzip_streambuf_type m_buf;
-};
-
-/*! \brief A zipper ostream
-
-This class is a ostream decorator that behaves 'almost' like any other ostream.
-
-At construction, it takes any ostream that shall be used to output of the compressed data.
-
-When finished, you need to call the special method zflush or call the destructor 
-to flush all the intermidiate streams.
-
-Example:
-\code
-// creating the target zip string, could be a fstream
-ostringstream ostringstream_;
-// creating the zip layer
-zip_ostream zipper(ostringstream_);
-
-	
-// writing data	
-zipper<<f<<" "<<d<<" "<<ui<<" "<<ul<<" "<<us<<" "<<c<<" "<<dum;
-// zip ostream needs special flushing...
-zipper.zflush();
-\endcode
-*/
-template<
-	typename Elem, 
-	typename Tr = std::char_traits<Elem>,
-    typename ElemA = std::allocator<Elem>,
-    typename ByteT = unsigned char,
-    typename ByteAT = std::allocator<ByteT>
->	
-class basic_zip_ostream : 
-	public basic_zip_ostreambase<Elem,Tr,ElemA,ByteT,ByteAT>, 
-	public std::basic_ostream<Elem,Tr>
-{
-public:
-	typedef basic_zip_ostreambase<
-        Elem,Tr,ElemA,ByteT,ByteAT> zip_ostreambase_type;
-	typedef std::basic_ostream<Elem,Tr> ostream_type;
-	typedef std::basic_ostream<Elem, Tr>& ostream_reference;
-
-	/** Constructs a zipper ostream decorator
-	 *
-	 * \param ostream_ ostream where the compressed output is written
-	 * \param is_gzip_ true if gzip header and footer have to be added
-	 * \param level_ level of compression 0, bad and fast, 9, good and slower,
-	 * \param strategy_ compression strategy
-	 * \param window_size_ see zlib doc
-	 * \param memory_level_ see zlib doc
-	 * \param buffer_size_ the buffer size used to zip data
-
-	 When is_gzip_ is true, a gzip header and footer is automatically added.
-	 */
-	basic_zip_ostream( 
-		ostream_reference ostream_, 
-        int open_mode = std::ios::out, 
-		bool is_gzip_ = false,
-		size_t level_ = Z_DEFAULT_COMPRESSION,
-		EStrategy strategy_ = DefaultStrategy,
-		size_t window_size_ = 15,
-		size_t memory_level_ = 8,
-		size_t buffer_size_ = default_buffer_size
-		)
-	: 
-		zip_ostreambase_type(
-            ostream_,
-            level_,
-            strategy_,
-            window_size_,
-            memory_level_,
-            buffer_size_
-            ), 
-		m_is_gzip(is_gzip_),
-		ostream_type(ostream_type::rdbuf())
-	{
-		if (m_is_gzip)
-			add_header();
-	};
-	~basic_zip_ostream()
-	{
-		if (m_is_gzip)
-			add_footer();
-	}
-
-	/// returns true if it is a gzip 
-	bool is_gzip() const		{	return m_is_gzip;};
-	/// flush inner buffer and zipper buffer
-	basic_zip_ostream<Elem,Tr>& zflush()	
-	{	
-		this->flush(); this->rdbuf()->flush(); return *this; 
-	};
+    /// returns the compressed input istream
+    inline
+    istream_reference get_istream              (void);
+    inline
+    z_stream&         get_zip_stream           (void);
+    inline
+    int               get_zerr                 (void) const;
+    inline
+    unsigned long     get_crc                  (void) const;
+    inline
+    long              get_out_size             (void) const;
+    inline
+    long              get_in_size              (void) const;
+   
 
 private:
-    static void put_long(ostream_reference out_, unsigned long x_);
+    
+    void              put_back_from_zip_stream (void);
+    
+    std::streamsize   unzip_from_stream        (char_type* buffer,
+                                                std::streamsize buffer_size);
 
-	void add_header();
-	void add_footer();
-	bool m_is_gzip;
+    size_t            fill_input_buffer        (void);
+
+    istream_reference   _istream;
+    z_stream            _zip_stream;
+    int                 _err;
+    byte_vector_type    _input_buffer;
+    char_vector_type    _buffer;
+    unsigned long       _crc;
 };
 
-/*! \brief A zipper istream
+//*****************************************************************************
+//  template class basic_zip_ostream
+//*****************************************************************************
 
-This class is a istream decorator that behaves 'almost' like any other ostream.
-
-At construction, it takes any istream that shall be used to input of the compressed data.
-
-Simlpe example:
-\code
-// create a stream on zip string
-istringstream istringstream_( ostringstream_.str());
-// create unzipper istream
-zip_istream unzipper( istringstream_);
-
-// read and unzip
-unzipper>>f_r>>d_r>>ui_r>>ul_r>>us_r>>c_r>>dum_r;
-\endcode
-*/
-template<
-	typename Elem, 
-	typename Tr = std::char_traits<Elem>,
-    typename ElemA = std::allocator<Elem>,
-    typename ByteT = unsigned char,
-    typename ByteAT = std::allocator<ByteT>
->
-class basic_zip_istream : 
-	public basic_zip_istreambase<Elem,Tr,ElemA,ByteT,ByteAT>, 
-	public std::basic_istream<Elem,Tr>
+template <class charT,
+          class traits = std::char_traits<charT> >
+class basic_zip_ostream :
+    private basic_zip_streambuf<charT, traits>,
+    public std::basic_ostream<charT, traits>
 {
 public:
-	typedef basic_zip_istreambase<
-        Elem,Tr,ElemA,ByteT,ByteAT> zip_istreambase_type;
-	typedef std::basic_istream<Elem,Tr> istream_type;
-	typedef unsigned char byte_type;
-	typedef std::basic_istream<Elem, Tr>& istream_reference;
+    
+    typedef char char_type;
+    typedef std::basic_ostream<charT, traits>& ostream_reference;
 
-	/** Construct a unzipper stream
-	 *
-	 * \param istream_ input buffer
-	 * \param window_size_ 
-	 * \param read_buffer_size_ 
-	 * \param input_buffer_size_ 
-	 */
-	basic_zip_istream( 
-		istream_reference istream_, 
-		size_t window_size_ = 15,
-		size_t read_buffer_size_ = default_buffer_size,
-		size_t input_buffer_size_ = default_buffer_size
-		)
-	  : 
-		zip_istreambase_type(istream_,window_size_, read_buffer_size_, input_buffer_size_), 
-		istream_type(istream_type::rdbuf()),
-		m_is_gzip(false),
-		m_gzip_crc(0),
-		m_gzip_data_size(0)
-	{
- 	      if (this->rdbuf()->get_zerr()==Z_OK)
-			  check_header();
-	};
+    inline
+    explicit basic_zip_ostream(ostream_reference ostream,
+                               bool is_gzip = true,
+                               int level = Z_DEFAULT_COMPRESSION,
+                               EStrategy strategy = DefaultStrategy,
+                               int window_size = -15 /*windowBits is passed < 0 to suppress zlib header */,
+                               int memory_level = 8,
+                               size_t buffer_size = zstream_default_buffer_size);
 
-	/// returns true if it is a gzip file
-	bool is_gzip() const				{	return m_is_gzip;};
-	/// reads the gzip header
-	void read_footer();
-	/** return crc check result
+    ~basic_zip_ostream(void);
 
-	When you have finished reading the compressed data, call read_footer to read the uncompressed data crc.
-	This method compares it to the crc of the uncompressed data.
+    inline
+    bool                              is_gzip   (void) const;
+    inline
+    basic_zip_ostream<charT, traits>& zflush    (void);
+    void                              finished  (void);
 
-	\return true if crc check is succesful 
-	*/
-	bool check_crc() const				{	return this->get_crc() == m_gzip_crc;};
-	/// return data size check
-	bool check_data_size() const		{	return this->get_out_size() == m_gzip_data_size;};
+private:
+    
+    basic_zip_ostream<charT,traits>&  add_header(void);
+    basic_zip_ostream<charT,traits>&  add_footer(void);
+    
+    bool _is_gzip;
+    bool _added_footer;
+};
 
-	/// return the crc value in the file
-	long get_gzip_crc() const			{	return m_gzip_crc;};
-	/// return the data size in the file 
-	long get_gzip_data_size() const		{	return m_gzip_data_size;};
+//*****************************************************************************
+//  template class basic_zip_istream
+//*****************************************************************************
+
+template <class charT,
+          class traits = std::char_traits<charT> >
+class basic_zip_istream :
+    private basic_unzip_streambuf<charT, traits>,
+    public std::basic_istream<charT, traits>
+{
+public:
+    typedef std::basic_istream<charT, traits>& istream_reference;
+
+    explicit basic_zip_istream(istream_reference istream,
+                               int window_size = -15 /*windowBits is passed < 0 to suppress zlib header */,
+                               size_t read_buffer_size = zstream_default_buffer_size,
+                               size_t input_buffer_size = zstream_default_buffer_size);
+
+    inline
+    bool     is_gzip           (void) const;    
+    inline
+    bool     check_crc         (void);
+    inline
+    bool     check_data_size   (void) const;
+    inline
+    long     get_gzip_crc      (void) const;
+    inline
+    long     get_gzip_data_size(void) const;
+    
 protected:
-    static void read_long(istream_reference in_, unsigned long& x_);
-
-	int check_header();
-	bool m_is_gzip;
-	unsigned long m_gzip_crc;
-	unsigned long m_gzip_data_size;
+    
+    int      check_header      (void);
+    void     read_footer       (void);   
+    
+    bool _is_gzip;
+    long _gzip_crc;
+    long _gzip_data_size;
 };
 
 /// A typedef for basic_zip_ostream<char>
 typedef basic_zip_ostream<char> zip_ostream;
-/// A typedef for basic_zip_ostream<wchar_t>
-typedef basic_zip_ostream<wchar_t> zip_wostream;
 /// A typedef for basic_zip_istream<char>
 typedef basic_zip_istream<char> zip_istream;
-/// A typedef for basic_zip_istream<wchar_t>
-typedef basic_zip_istream<wchar_t> zip_wistream;
 
-}; // zlib_stream
+/// A typedef for basic_zip_ostream<wchar_t>
+//typedef basic_zip_ostream<wchar_t> zip_wostream;
+/// A typedef for basic_zip_istream<wchart>
+//typedef basic_zip_istream<wchar_t> zip_wistream;
 
-#if defined(MSDOS) || (defined(WINDOWS) && !defined(WIN32))
-#  define OS_CODE  0x00
-#endif
-
-#ifdef AMIGA
-#  define OS_CODE  0x01
-#endif
-
-#if defined(VAXC) || defined(VMS)
-#  define OS_CODE  0x02
-#endif
-
-#if defined(ATARI) || defined(atarist)
-#  define OS_CODE  0x05
-#endif
-
-#ifdef OS2
-#  define OS_CODE  0x06
-#endif
-
-#if defined(MACOS) || defined(TARGET_OS_MAC)
-#  define OS_CODE  0x07
-#endif
-
-#ifdef TOPS20
-#  define OS_CODE  0x0a
-#endif
-
-#ifdef WIN32
-#  ifndef __CYGWIN__  /* Cygwin is Unix, not Win32 */
-#    define OS_CODE  0x0b
-#  endif
-#endif
-
-#ifdef __50SERIES /* Prime/PRIMOS */
-#  define OS_CODE  0x0f
-#endif
-
-#ifndef OS_CODE
-#  define OS_CODE  0x03  /* assume Unix */
-#endif
+//! Helper function to check whether stream is compressed or not.
+inline bool isGZip(std::istream &is)
+{
+    const int gz_magic[2] = {0x1f, 0x8b};
+    
+    int c1 = (int) is.get();
+    if(c1 != gz_magic[0])
+    {
+        is.putback(c1);
+        return false;
+    }
+    
+    int c2 = (int) is.get();
+    if(c2 != gz_magic[1])
+    {
+        is.putback(c2);
+        is.putback(c1);
+        return false;
+    }
+    
+    is.putback(c2);
+    is.putback(c1);
+    return true;
+}
 
 #include "zipstream.cpp"
 
-#endif
+}
+
+#endif // _ZIPSTREAM_H_
