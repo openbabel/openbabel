@@ -38,11 +38,10 @@ OBAPI bool tokenize(vector<string> &, const char *, const char *);
 #endif
 
 //Globals for scandir()
-string targetPattern;
 
 int matchFiles (SCANDIR_CONST struct dirent *entry_p)
 {
-  return (strstr(entry_p->d_name, targetPattern.c_str()) != 0);
+  return (strstr(entry_p->d_name, DLHandler::getFormatFilePattern()) != 0);
 }
 
 bool DLHandler::getConvDirectory(string& convPath)
@@ -76,7 +75,7 @@ int DLHandler::findFiles (vector <string>& file_list,const string& pattern, cons
 
 	if (vs.size() > 0)
 	  {
-	    for (int i = 0; i < vs.size(); i++)
+	    for (unsigned int i = 0; i < vs.size(); i++)
 	      paths.push_back(vs[i]);
 	  }
     }
@@ -84,11 +83,10 @@ int DLHandler::findFiles (vector <string>& file_list,const string& pattern, cons
   if (paths.size() == 0)
     paths.push_back("./"); // defaults to current directory
 
-  targetPattern = pattern; //make accessible to global function
   struct dirent **entries_pp;
   int count;
 
-  for (int i = 0; i < paths.size(); i++)
+  for (unsigned int i = 0; i < paths.size(); i++)
     {
       currentPath = paths[i];
       count = scandir (currentPath.c_str(), &entries_pp, SCANDIR_T matchFiles, NULL);
@@ -98,9 +96,9 @@ int DLHandler::findFiles (vector <string>& file_list,const string& pattern, cons
 	  file_list.push_back(currentPath + getSeparator() + (entries_pp[i])->d_name);
 	  free(entries_pp[i]);
 	}
-      free(entries_pp);
     }
 
+  //  free(entries_pp);
   return count;
 }
 
