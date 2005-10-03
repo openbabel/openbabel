@@ -21,7 +21,8 @@ libformats_la_SOURCES = \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp 
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
 	jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
-	mol2format.cpp mopacformat.cpp mpqcformat.cpp nwchemformat.cpp \
+	mol2format.cpp mopacformat.cpp mpdformat.cpp mpqcformat.cpp \
+	nwchemformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
 	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
@@ -40,7 +41,7 @@ pkglib_LTLIBRARIES = \
 	fingerprintformat.la \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
 	gromos96format.la hinformat.la \
-	jaguarformat.la mdlformat.la mmodformat.la \
+	jaguarformat.la mdlformat.la mmodformat.la mpdformat.la \
 	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
 	rxnformat.la shelxformat.la smilesformat.la tinkerformat.la \
@@ -148,6 +149,9 @@ mopacformat_la_LDFLAGS = -module -avoid-version
 
 mpqcformat_la_SOURCES = mpqcformat.cpp
 mpqcformat_la_LDFLAGS = -module -avoid-version 
+
+mpdformat_la_SOURCES = mpdformat.cpp
+mpdformat_la_LDFLAGS = -module -avoid-version 
 
 nwchemformat_la_SOURCES = nwchemformat.cpp
 nwchemformat_la_LDFLAGS = -module -avoid-version 
