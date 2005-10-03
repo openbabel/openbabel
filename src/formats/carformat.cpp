@@ -75,17 +75,28 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     OBAtom *atom;
     vector<string> vs;
 
+    // skim through any initial blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
     mol.BeginModify();
 
-    while (ifs.getline(buffer,BUFF_SIZE)) // header lines
+    while (ifs.getline(buffer,BUFF_SIZE))
     {
-      if(strstr(buffer,"end") != NULL) // end of the previous molecular system
+      if(strstr(buffer,"end") != NULL)
 	{
+	  if (mol.NumAtoms() > 0) // we've already read in a molecule, so exit
+	    break;
+	  // else, we hit the end of the previous molecular system
+	  // (in a multimolecule file)
 	  ifs.getline(buffer,BUFF_SIZE); // title
 	  ifs.getline(buffer,BUFF_SIZE); // DATE
-	  break;
 	}
-	
+
+      if (strncmp(buffer, "!BIOSYM", 7) == 0)
+	continue;
+
       if(strstr(buffer,"PBC") != NULL)
         {
             if(strstr(buffer,"ON") != NULL)
@@ -117,40 +128,32 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	      ifs.getline(buffer,BUFF_SIZE); // title
 	      ifs.getline(buffer,BUFF_SIZE); // !DATE
             }
-            break;
-        }
-      // is this a data line in the same molecular system?
+        } // PBC
+
+      // read real data!
       tokenize(vs,buffer);
-      if (vs.size() >= 8) break;
+      if (vs.size() < 8) break;
+
+      atom = mol.NewAtom();
+      
+      atom->SetAtomicNum(etab.GetAtomicNum(vs[7].c_str()));
+      x = atof((char*)vs[1].c_str());
+      y = atof((char*)vs[2].c_str());
+      z = atof((char*)vs[3].c_str());
+      atom->SetVector(x,y,z);
+      
+      // vs[0] contains atom label
+      // vs[4] contains "type of residue containing atom"
+      // vs[5] contains "residue sequence name"
+      // vs[6] contains "potential type of atom"
+      
+      if (vs.size() == 9)
+	{
+	  atom->SetPartialCharge(atof((char*)vs[8].c_str()));
+	  hasPartialCharges = true;
+	}
     }
-
-    while	(ifs.getline(buffer,BUFF_SIZE))
-    {
-      if(strstr(buffer,"end") != NULL) // finished with this molecule
-            break;
-
-        atom = mol.NewAtom();
-
-        tokenize(vs,buffer);
-	if (vs.size() < 8) break;
-
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[7].c_str()));
-        x = atof((char*)vs[1].c_str());
-        y = atof((char*)vs[2].c_str());
-        z = atof((char*)vs[3].c_str());
-        atom->SetVector(x,y,z);
-
-	// vs[4] contains "type of residue containing atom"
-	// vs[5] contains "residue sequence name"
-	// vs[6] contains "potential type of atom"
-
-	if (vs.size() == 9)
-	  {
-	    atom->SetPartialCharge(atof((char*)vs[8].c_str()));
-	    hasPartialCharges = true;
-	  }
-    }
-
+    
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
