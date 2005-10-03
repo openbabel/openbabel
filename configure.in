@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([Open Babel], 2.0.0, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_INIT([Open Babel], 2.0.0b5-20051001, openbabel-discuss@lists.sourceforge.net, openbabel)
 AC_CONFIG_SRCDIR(src/typer.cpp)
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
@@ -11,7 +11,6 @@ AC_ARG_ENABLE(dynamic-modules,
 		       [disable building shared file format modules]),
 		[dynamic_modules="$enable_dynamic_modules"],
 		[dynamic_modules="yes"])
-AM_CONDITIONAL(BUILD_SHARED, test "$dynamic_modules" == "yes")
 
 AC_CANONICAL_HOST
 
@@ -32,7 +31,7 @@ AC_PATH_PROG(PYTHON, python)
 dnl Conditionally build docs, scripts, etc.
 
 AM_CONDITIONAL(BUILD_DOCS, test x"$DOXYGEN" != "x")
-if test x"$DOXYGEN" == "x"; then
+if test x"$DOXYGEN" = "x"; then
 AC_MSG_WARN(Cannot find doxygen to build documentation. 
 	Have a look at http://www.doxygen.org/)
 fi
@@ -49,13 +48,15 @@ SCRIPTING="yes"
 elif test x"$PERL" != "x"; then
 SCRIPTING="yes"
 fi
-AM_CONDITIONAL(BUILD_SCRIPTS, test "$SCRIPTING" == "yes")
+AM_CONDITIONAL(BUILD_SCRIPTS, test "$SCRIPTING" = "yes")
 
 dnl libtool
 dnl You can set the shared library version in src/Makefile.am
 dnl AC_DISABLE_SHARED
 AC_LIBTOOL_DLOPEN
 AM_PROG_LIBTOOL
+
+AM_CONDITIONAL(BUILD_SHARED, test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes")
 
 oldmodule=$module
 module=yes
@@ -74,13 +75,13 @@ AM_PATH_XML2()
 AC_CHECK_LIB(xml2, xmlFreeDoc, 
      [XML="yes"; LIBS="-lxml2 $LIBS"; 
      AC_DEFINE(HAVE_LIBXML2, [], [Define to 1 if you have the `xml2' library (-lxml2).]) ] )
-AM_CONDITIONAL(BUILD_XML, test "$XML" == "yes")
+AM_CONDITIONAL(BUILD_XML, test "$XML" = "yes")
 
 INCHI="no"
 AC_CHECK_LIB(inchi, GetINCHI,
    [INCHI="yes"; LIBS="-linchi $LIBS";
     AC_DEFINE(HAVE_LIBINCHI, [], [Define to 1 if you have the `inchi` library (-linchi).]) ] )
-AM_CONDITIONAL(BUILD_INCHI, test "$INCHI" == "yes")
+AM_CONDITIONAL(BUILD_INCHI, test "$INCHI" = "yes")
 
 CHECK_ZLIB
 AM_CONDITIONAL(BUILD_ZLIB, [test "$zlib_cv_libz" = "yes" -a "$zlib_cv_zlib_h" = "yes"])
