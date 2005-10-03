@@ -210,7 +210,7 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     // if (vs.size() == 2) ...  to
     // if (vs.size() >= 2)
 
-    if (vs.size()>2)
+    if (vs.size() > 2)
     {
         for (unsigned int i=2;i<vs.size(); i++)
         {
@@ -219,7 +219,7 @@ bool SMIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
 
     if (vs.empty())
-			return false;
+      return false;
     mol.SetDimension(0);
 
     if (vs.size() >= 2)
@@ -289,6 +289,8 @@ bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
         mol.Clear();
         return(false);
     }
+
+    mol.AddHydrogens(); // need to add implicit hydrogens
 
     return(true);
 }

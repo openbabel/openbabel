@@ -1,3 +1,23 @@
+2005-10-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure, configure.in: Fix BUILD_SHARED condition to only
+	build dynamic file format modules when shared libraries are also
+	enabled.
+
+	* scripts/*: Update SWIG modules using SWIG 1.3.26rc1.
+
+	* src/formats/smilesformat.cpp: By default, add implicit hydrogens
+	when reading SMILES files.
+
+	* tools/obprop.cpp: No need to add hydrogens to SMILES files, as
+	above.
+
+	* src/formats/carformat.cpp: Modifications to better handle
+	multiple-molecule CAR files, as suggested by Jean Dessolin.
+
+	* test/roundtrip.cpp: Refined error messages to report molecule
+	number and file number (1 vs. 2).
+
 2005-09-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/types.h: Updated (as below).
