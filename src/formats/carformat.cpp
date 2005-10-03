@@ -75,11 +75,6 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     OBAtom *atom;
     vector<string> vs;
 
-    // skim through any initial blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
-      ifs.getline(buffer,BUFF_SIZE);
-
     mol.BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE))
@@ -95,7 +90,9 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	}
 
       if (strncmp(buffer, "!BIOSYM", 7) == 0)
-	continue;
+	{
+	  continue;
+	}
 
       if(strstr(buffer,"PBC") != NULL)
         {
@@ -123,16 +120,19 @@ bool CARFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 		  mol.SetData(uc);
 		}
             }
-            else
+            else // PBC=OFF
             {
 	      ifs.getline(buffer,BUFF_SIZE); // title
 	      ifs.getline(buffer,BUFF_SIZE); // !DATE
             }
+	    continue;
         } // PBC
 
-      // read real data!
+      // reading real data!
       tokenize(vs,buffer);
-      if (vs.size() < 8) break;
+      if (vs.size() < 8) {
+	break;
+      }
 
       atom = mol.NewAtom();
       
