@@ -1,4 +1,4 @@
-# This file was created automatically by SWIG.
+# This file was created automatically by SWIG 1.3.26.
 # Don't modify this file, modify the SWIG interface instead.
 
 import _openbabel
@@ -189,6 +189,32 @@ class OBTypeTablePtr(OBTypeTable):
         self.__class__ = OBTypeTable
 _openbabel.OBTypeTable_swigregister(OBTypeTablePtr)
 
+class OBResidueData(OBGlobalDataBase):
+    def __repr__(self):
+        return "<%s.%s; proxy of C++ OpenBabel::OBResidueData instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    def __init__(self, *args):
+        newobj = _openbabel.new_OBResidueData(*args)
+        self.this = newobj.this
+        self.thisown = 1
+        del newobj.thisown
+    def ParseLine(*args): return _openbabel.OBResidueData_ParseLine(*args)
+    def SetResName(*args): return _openbabel.OBResidueData_SetResName(*args)
+    def LookupBO(*args): return _openbabel.OBResidueData_LookupBO(*args)
+    def LookupType(*args): return _openbabel.OBResidueData_LookupType(*args)
+    def AssignBonds(*args): return _openbabel.OBResidueData_AssignBonds(*args)
+    def __del__(self, destroy=_openbabel.delete_OBResidueData):
+        try:
+            if self.thisown: destroy(self)
+        except: pass
+
+
+class OBResidueDataPtr(OBResidueData):
+    def __init__(self, this):
+        self.this = this
+        if not hasattr(self,"thisown"): self.thisown = 0
+        self.__class__ = OBResidueData
+_openbabel.OBResidueData_swigregister(OBResidueDataPtr)
+
 FILE_SEP_CHAR = _openbabel.FILE_SEP_CHAR
 class OBFormat(object):
     def __init__(self): raise RuntimeError, "No constructor defined"
@@ -298,6 +324,7 @@ class OBConversion(object):
     def Write(*args): return _openbabel.OBConversion_Write(*args)
     def WriteString(*args): return _openbabel.OBConversion_WriteString(*args)
     def WriteFile(*args): return _openbabel.OBConversion_WriteFile(*args)
+    def Read(*args): return _openbabel.OBConversion_Read(*args)
     def ReadString(*args): return _openbabel.OBConversion_ReadString(*args)
     def ReadFile(*args): return _openbabel.OBConversion_ReadFile(*args)
     BatchFileName = staticmethod(_openbabel.OBConversion_BatchFileName)
@@ -877,6 +904,7 @@ ob_make_rmat = _openbabel.ob_make_rmat
 qtrfit = _openbabel.qtrfit
 
 superimpose = _openbabel.superimpose
+
 
 tokenize = _openbabel.tokenize
 
