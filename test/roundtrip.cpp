@@ -33,9 +33,6 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 using namespace std;
 using namespace OpenBabel;
 
-// Needs to become multi-molecule aware
-// check all molecules and check that the number of mols is the same
-
 int main(int argc,char *argv[])
 {
     OBConversion conv;
@@ -104,13 +101,15 @@ int main(int argc,char *argv[])
 
     if (mol.NumAtoms() == 0)
       {
-	cout << " ** ERROR ** Molecule #1 has no atoms!" << endl;
+	cout << " ** ERROR ** molecule " << molCount 
+	     << " in file #1 has no atoms!" << endl;
 	return(-1);
       }
 
     if (mol2.NumAtoms() == 0)
       {
-	cout << " ** ERROR ** Molecule #2 has no atoms!" << endl;
+	cout << " ** ERROR ** molecule " << molCount 
+	     << " in file #2 has no atoms!" << endl;
 	return(-1);
       }
 
@@ -152,7 +151,8 @@ int main(int argc,char *argv[])
 	if (mol.NumAtoms() != mol2.NumAtoms())
 	  {
 	    cout << " ** ERROR ** Number of atoms differ: " << mol.NumAtoms()
-		 << " and " << mol2.NumAtoms() << endl;
+		 << " and " << mol2.NumAtoms()
+		 << " in molecule " << molCount << endl;
 	    return(-1);
 	  }
       }
@@ -165,7 +165,8 @@ int main(int argc,char *argv[])
 	if (atom1->GetAtomicNum() != atom2->GetAtomicNum())
 	  {
 	    cout << " ** ERROR ** Elements for atom " << i << " differ: " <<
-	      atom1->GetAtomicNum() << " and " << atom2->GetAtomicNum() << endl;
+	      atom1->GetAtomicNum() << " and " << atom2->GetAtomicNum()
+		 << " in molecule " << molCount << endl;
 	    return(-1);
 	  }
 	
@@ -175,7 +176,8 @@ int main(int argc,char *argv[])
 	      (atom1->GetY()-atom2->GetY()>1e-1) ||
 	      (atom1->GetZ()-atom2->GetZ()>1e-1))
 	    {
-	      cout << " ** ERROR ** Coordinates for atom " << i << " differ." << endl;
+	      cout << " ** ERROR ** Coordinates for atom " << i << " differ" 
+		   << " in molecule " << molCount << endl;
 	      return(-1);
 	    }
       }
@@ -183,9 +185,11 @@ int main(int argc,char *argv[])
     } // while reading molecules
 
     if ( !inFileStream1.eof() && conv1.Read(&mol) )
-	 cout << " ** ERROR **  File 1 has more molecules! " << endl;
+      if (mol.NumAtoms() > 0)
+	cout << " ** ERROR **  File 1 has more molecules! " << endl;
     else if ( !inFileStream2.eof() && conv2.Read(&mol2) )
-      cout << " ** ERROR **  File 2 has more molecules! " << endl;
+      if (mol2.NumAtoms() > 0)
+	cout << " ** ERROR **  File 2 has more molecules! " << endl;
     
     return(0);
 }
