@@ -36,7 +36,8 @@ using namespace OpenBabel;
 int main(int argc,char **argv)
 {
     char c;
-    int ntimes=0;
+    int ntimes=0; // number of times SMARTS matches in a molecule
+    unsigned int numMatching = 0; // number of matching molecules (for -c flag)
     bool pattern_matched=false, ntimes_matched=true;
     bool count=false, invert=false, full=false, name_only=false;
     char *FileIn = NULL, *Pattern = NULL;
@@ -201,7 +202,7 @@ int main(int argc,char **argv)
                     else
 		      conv.Write(&mol, &cout);
                 }
-                c++;
+                numMatching++;
             }
             continue;
         }
@@ -245,7 +246,7 @@ int main(int argc,char **argv)
                     else
 		      conv.Write(&mol, &cout);
                 }
-                c++;
+                numMatching++;
             }
 
         }
@@ -261,7 +262,7 @@ int main(int argc,char **argv)
                     else
                       conv.Write(&mol, &cout);
                 }
-                c++;
+                numMatching++;
             }
         }
     } // end for loop
@@ -270,7 +271,9 @@ int main(int argc,char **argv)
     ////////////////////////////////////////////////////////////////
     // Only print the number of matched molecules as requested
     if (count)
-        cout << c << endl;
+      {
+        cout << numMatching << endl;
+      }
 
     return(1);
 }
