@@ -522,7 +522,7 @@ basic_zip_ostream<charT, traits>::basic_zip_ostream(ostream_reference ostream,
                                                     size_t buffer_size) :
     basic_zip_streambuf<charT, traits>(ostream, level, strategy, window_size,
                                        memory_level, buffer_size),
-    std::basic_ostream<charT, traits>(ostream_type::rdbuf()),
+    std::basic_ostream<charT, traits>(dynamic_cast<basic_zip_streambuf<charT, traits> *>(this)),
     _is_gzip(is_gzip),
     _added_footer(false)
 {
@@ -644,7 +644,7 @@ basic_zip_istream<charT, traits>::basic_zip_istream(istream_reference istream,
                                                     size_t input_buffer_size)
     : basic_unzip_streambuf<charT, traits>(istream, window_size,
                                            read_buffer_size, input_buffer_size),
-      std::basic_istream<charT, traits>(istream_type::rdbuf()),
+      std::basic_istream<charT, traits>(dynamic_cast<basic_unzip_streambuf<charT, traits> *>(this)),
       _is_gzip(false),
       _gzip_crc(0),
       _gzip_data_size(0)
