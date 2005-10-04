@@ -222,13 +222,13 @@ public:
     void ParseLine(const char*);
 
     //! Set the initial atom type to be translated
-    bool SetFromType(char*);
+    bool SetFromType(const char*);
     //! Set the destination atom type for translation
-    bool SetToType(char*);
+    bool SetToType(const char*);
     //! Translate atom types
-    bool Translate(char *to, char *from); // to, from
+    bool Translate(char *to, const char *from); // to, from
     //! Translate atom types
-    bool Translate(std::string &to, std::string &from); // to, from
+    bool Translate(std::string &to, const std::string &from); // to, from
 
     //! Return the initial atom type to be translated
     std::string GetFromType();

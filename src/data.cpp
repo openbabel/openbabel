@@ -470,7 +470,7 @@ void OBTypeTable::ParseLine(const char *buffer)
     _linecount++;
 }
 
-bool OBTypeTable::SetFromType(char* from)
+bool OBTypeTable::SetFromType(const char* from)
 {
     if (!_init)
         Init();
@@ -490,7 +490,7 @@ bool OBTypeTable::SetFromType(char* from)
     return(false);
 }
 
-bool OBTypeTable::SetToType(char* to)
+bool OBTypeTable::SetToType(const char* to)
 {
     if (!_init)
         Init();
@@ -510,7 +510,7 @@ bool OBTypeTable::SetToType(char* to)
     return(false);
 }
 
-bool OBTypeTable::Translate(char *to, char *from)
+bool OBTypeTable::Translate(char *to, const char *from)
 {
     if (!_init)
         Init();
@@ -524,7 +524,7 @@ bool OBTypeTable::Translate(char *to, char *from)
     return(rval);
 }
 
-bool OBTypeTable::Translate(string &to,string &from)
+bool OBTypeTable::Translate(string &to, const string &from)
 {
     if (!_init)
         Init();
@@ -549,7 +549,10 @@ std::string OBTypeTable::GetFromType()
     if (!_init)
         Init();
 
-    return( _colnames[_from] );
+    if (_from > 0 && _from < _table.size())
+      return( _colnames[_from] );
+    else
+      return( _colnames[0] );
 }
 
 std::string OBTypeTable::GetToType()
@@ -557,7 +560,10 @@ std::string OBTypeTable::GetToType()
     if (!_init)
         Init();
 
-    return( _colnames[_to] );
+    if (_to > 0 && _to < _table.size())
+      return( _colnames[_to] );
+    else
+      return( _colnames[0] );
 }
 
 void Toupper(string &s)
