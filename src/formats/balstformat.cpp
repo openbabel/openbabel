@@ -110,6 +110,11 @@ bool BallStickFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         for (j = vs.begin()+4;j != vs.end();j++)
             mol.AddBond(atom->GetIdx(),atoi((char*)j->c_str()),1);
     }
+    
+    // clean out any remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
 
     mol.EndModify();
     mol.SetTitle(title);

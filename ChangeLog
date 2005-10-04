@@ -1,3 +1,33 @@
+2005-10-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/obgrep.cpp: Fix PR#1286797. Count of matching molecules
+	was stored as a char??. Corrected code to store as unsigned int
+	and output correctly. Thanks to Chris Swain for the bug report.
+
+	* src/zipstream.h, src/zipstream.cpp: Update to (hopefully) fix
+	syntax problems with VC++ experienced by Chris Morley.
+
+	* src/atom.cpp (GetType): Make sure to save and restore
+	OBTypeTable patterns -- otherwise higher-level code will see
+	unexpected type translations.
+
+	* src/data.h src/data.cpp (OBTypeTable): Set const on parameters
+	where needed, add error checking for GetToType and GetFromType()
+	methods.
+
+	* src/formats/*.cpp: Add code to move to ifs.eof() after reading
+	to ensure the multiple-molecule parsing doesn't attempt to add an
+	invalid empty molecule.
+
+	* src/formats/smilesformat.cpp: Add defensive code around chiral
+	search code -- ensure all pointers are valid before dereferencing.
+
+	* test/roundtrip.cpp: Ensure the filestream is not at EOF before
+	attempting to read another molecule (and complain that a format
+	has translated an incorrect number of molecules).
+
+	* tools/README: Remove comments about deprecated obtanimoto program.
+
 2005-10-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure, configure.in: Fix BUILD_SHARED condition to only

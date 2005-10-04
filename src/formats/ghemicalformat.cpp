@@ -175,6 +175,11 @@ bool GhemicalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	  break;
     }
 
+    // clean out remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
     mol.EndModify();
     if (hasPartialCharges)
         mol.SetPartialChargesPerceived();

@@ -139,6 +139,11 @@ bool AlchemyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         mol.AddBond(bgn,end,order);
     }
 
+    // clean out remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
     mol.EndModify();
     mol.SetTitle(title);
     return(true);
@@ -164,8 +169,6 @@ bool AlchemyFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
              mol.NumAtoms(),
              mol.NumBonds());
     ofs << buffer << endl;
-    ttab.SetFromType("INT");
-    ttab.SetToType("ALC");
 
     OBAtom *atom;
     string str,str1;
@@ -173,6 +176,8 @@ bool AlchemyFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     {
         atom = mol.GetAtom(i);
         str = atom->GetType();
+	ttab.SetFromType("INT");
+	ttab.SetToType("ALC");
         ttab.Translate(str1,str);
         snprintf(buffer, BUFF_SIZE, "%5d %-6s%8.4f %8.4f %8.4f     0.0000",
                  i,

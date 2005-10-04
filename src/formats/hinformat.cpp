@@ -123,6 +123,12 @@ bool HINFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         }
         ifs.getline(buffer, BUFF_SIZE);
     }
+
+    // clean out remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
     mol.EndModify();
 
     mol.SetTitle(title);

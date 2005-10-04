@@ -452,6 +452,12 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         mol.AddBond(i+1,linked+1,linktype); } }
     mob_setnext(&srcatom); }
   mem_free(mob);
+
+    // clean out remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
   mol.EndModify();
   if (charged) mol.SetPartialChargesPerceived();
   if (!mol.NumAtoms()) return(false);

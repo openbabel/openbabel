@@ -34,7 +34,9 @@ public:
     {
         return
             "Feature format\n \
-            No comments yet\n";
+       Read Options e.g. -as\n\
+        s  Output single bonds only\n\
+        b  Disable bonding entirely\n\n";
     };
 
   virtual const char* SpecificationURL()
@@ -101,6 +103,16 @@ bool FEATFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         atom->SetVector(x,y,z);
         atom->SetAtomicNum(etab.GetAtomicNum(type));
     }
+
+    // clean out remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
+    if (!pConv->IsOption("b",OBConversion::INOPTIONS))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+      mol.PerceiveBondOrders();
 
     mol.EndModify();
     return(true);

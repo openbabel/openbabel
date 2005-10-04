@@ -254,7 +254,12 @@ bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key
             mol.AddBond(atom->GetIdx(),atoi((char*)vs[k].c_str()),1);
     }
 
-    //assign_bond_order(mol);
+    // clean out remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
+    mol.PerceiveBondOrders();
 
     return(true);
 }

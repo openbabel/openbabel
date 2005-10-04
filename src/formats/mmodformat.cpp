@@ -177,6 +177,11 @@ bool MacroModFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     if ( natoms != (signed)mol.NumAtoms() )
         return(false);
 
+    // clean out remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
     return(true);
 }
 

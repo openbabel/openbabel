@@ -143,6 +143,11 @@ bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
+    // clean out any remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buffer,BUFF_SIZE);
+
     mol.EndModify();
     mol.SetTitle(title);
     return(true);

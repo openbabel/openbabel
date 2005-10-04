@@ -112,6 +112,11 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
+    // clean out remaining blank lines
+    while(ifs.peek() != EOF && ifs.good() && 
+	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+      ifs.getline(buff,BUFF_SIZE);
+
     mol.EndModify();
     return true;
 }

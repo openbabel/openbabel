@@ -200,7 +200,7 @@ bool CRK3DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         return false;
     }
 
-    return CRK2DFormat::ReadCRK(ifs,mol,"<Structure3D<");
+    return CRK2DFormat::ReadCRK(ifs,mol,"<Structure3D>");
 }
 
 ////////////////////////////////////////////////////////////////
