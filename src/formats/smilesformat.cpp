@@ -662,9 +662,9 @@ bool OBSmilesParser::ParseSimple(OBMol &mol)
         //NE iterate through and see if atom is bonded to chiral atom
         map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
         ChiralSearch=_mapcd.find(mol.GetAtom(_prev));
-        if (ChiralSearch!=_mapcd.end())
+        if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
         {
-           (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
+	    (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
           // cout << "Line 650: Adding "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
         }
     }
@@ -1428,12 +1428,15 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
        mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
         if(chiralWatch) // if chiral atom need to add its previous into atom4ref
         {
-            (_mapcd[atom])->AddAtomRef((unsigned int)_prev,input);
+	  if (_mapcd[atom] == NULL)
+            _mapcd[atom]= new OBChiralData;
+	  
+	  (_mapcd[atom])->AddAtomRef((unsigned int)_prev,input);
            // cout <<"line 1405: Added atom ref "<<_prev<<" to "<<_mapcd[atom]<<endl;
         }
         map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
         ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
-        if (ChiralSearch!=_mapcd.end())
+        if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
         {
            (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
           // cout <<"line 1431: Added atom ref "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
@@ -1455,7 +1458,8 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
         mol.AddBond(_prev,mol.NumAtoms(),1);
         if(chiralWatch)
         {
-           (_mapcd[mol.GetAtom(_prev)])->AddAtomRef(mol.NumAtoms(),input);
+	  if (_mapcd[mol.GetAtom(_prev)] != NULL)
+	    (_mapcd[mol.GetAtom(_prev)])->AddAtomRef(mol.NumAtoms(),input);
           // cout << "line 1434: Added atom ref "<<mol.NumAtoms()<<" to "<<_mapcd[mol.GetAtom(_prev)]<<endl;
                        
         }
@@ -1584,7 +1588,7 @@ bool OBSmilesParser::ParseExternalBond(OBMol &mol)
                   // search to see if atom is bonded to a chiral atom
               map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
               ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
-              if (ChiralSearch!=_mapcd.end())
+              if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
               {
                  (ChiralSearch->second)->AddAtomRef((*j)[1], input);
                 // cout << "Added external "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
@@ -1647,12 +1651,12 @@ bool OBSmilesParser::ParseRingBond(OBMol &mol)
         map<OBAtom*,OBChiralData*>::iterator ChiralSearch,cs2;
         ChiralSearch = _mapcd.find(mol.GetAtom(_prev));
         cs2=_mapcd.find(mol.GetAtom((*j)[1]));
-        if (ChiralSearch!=_mapcd.end())
+        if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
         {
-           (ChiralSearch->second)->AddAtomRef((*j)[1], input);
+	    (ChiralSearch->second)->AddAtomRef((*j)[1], input);
            //cout << "Added ring closure "<<(*j)[1]<<" to "<<ChiralSearch->second<<endl;
         }
-        if (cs2!=_mapcd.end())
+        if (cs2!=_mapcd.end() && cs2->second != NULL)
         {
            (cs2->second)->AddAtomRef(_prev,input);
           // cout <<"Added ring opening "<<_prev<<" to "<<cs2->second<<endl;
@@ -1769,9 +1773,17 @@ void OBMol2Smi::ToSmilesString(OBSmiNode *node,char *buffer)
             if (i->second)
             {
                 if (i->second->IsUp())
-                    strcat(buffer,"\\");
+		  {
+		    if ( (i->second->GetBeginAtom())->HasDoubleBond() ||
+			 (i->second->GetEndAtom())->HasDoubleBond() )
+		      strcat(buffer,"\\");
+		  }
                 if (i->second->IsDown())
-                    strcat(buffer,"/");
+		  {
+		    if ( (i->second->GetBeginAtom())->HasDoubleBond() ||
+			 (i->second->GetEndAtom())->HasDoubleBond() )
+		      strcat(buffer,"/");
+		  }
 #ifndef KEKULE
 
                 if (i->second->GetBO() == 2 && !i->second->IsAromatic())
@@ -1801,9 +1813,17 @@ void OBMol2Smi::ToSmilesString(OBSmiNode *node,char *buffer)
         if (i+1 < node->Size())
             strcat(buffer,"(");
         if (bond->IsUp())
-            strcat(buffer,"\\");
+	  {
+	    if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+		 (bond->GetEndAtom())->HasDoubleBond() )
+	      strcat(buffer,"\\");
+	  }
         if (bond->IsDown())
-            strcat(buffer,"/");
+	  {
+	    if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+		 (bond->GetEndAtom())->HasDoubleBond() )
+	      strcat(buffer,"/");
+	  }
 #ifndef KEKULE
 
         if (bond->GetBO() == 2 && !bond->IsAromatic())
@@ -2146,9 +2166,17 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
                         strcpy(symbol,"&");
                         OBBond *bond = externalBond->second.second;
                         if (bond->IsUp())
-                            strcat(symbol,"\\");
+			  {
+			    if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+				 (bond->GetEndAtom())->HasDoubleBond() )
+			      strcat(symbol,"\\");
+			  }
                         if (bond->IsDown())
-                            strcat(symbol,"/");
+			  {
+			    if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+				 (bond->GetEndAtom())->HasDoubleBond() )
+			      strcat(symbol,"/");
+			  }
 #ifndef KEKULE
 
                         if (bond->GetBO() == 2 && !bond->IsAromatic())
