@@ -28,7 +28,7 @@ Altered by: Andreas Zieringer 2003 for OpenSG project
             made it platform independent, gzip conform, fixed gzip footer
 
 Altered by: Geoffrey Hutchison 2005 for Open Babel project
-            minor namespace modifications
+            minor namespace modifications, VC++ compatibility
 */
 
 #ifndef _ZIPSTREAM_H_
@@ -218,6 +218,7 @@ public:
     
     typedef char char_type;
     typedef std::basic_ostream<charT, traits>& ostream_reference;
+    typedef std::basic_ostream<charT, traits> ostream_type;
 
     inline
     explicit basic_zip_ostream(ostream_reference ostream,
@@ -260,6 +261,7 @@ class basic_zip_istream :
 {
 public:
     typedef std::basic_istream<charT, traits>& istream_reference;
+    typedef std::basic_istream<charT, traits> istream_type;
 
     explicit basic_zip_istream(istream_reference istream,
                                int window_size = -15 /*windowBits is passed < 0 to suppress zlib header */,

@@ -28,7 +28,7 @@ Altered by: Andreas Zieringer 2003 for OpenSG project
             made it platform independent, gzip conform, fixed gzip footer
 
 Altered by: Geoffrey Hutchison 2005 for Open Babel project
-            minor namespace modifications
+            minor namespace modifications, VC++ compatibility
 */
 
 //*****************************************************************************
@@ -522,7 +522,7 @@ basic_zip_ostream<charT, traits>::basic_zip_ostream(ostream_reference ostream,
                                                     size_t buffer_size) :
     basic_zip_streambuf<charT, traits>(ostream, level, strategy, window_size,
                                        memory_level, buffer_size),
-    std::basic_ostream<charT, traits>(this),
+    std::basic_ostream<charT, traits>(ostream_type::rdbuf()),
     _is_gzip(is_gzip),
     _added_footer(false)
 {
@@ -553,8 +553,8 @@ bool basic_zip_ostream<charT, traits>::is_gzip(void) const
 template <class charT, class traits> inline
 basic_zip_ostream<charT, traits>& basic_zip_ostream<charT, traits>::zflush(void)
 {
-    std::basic_ostream<charT, traits>::flush();
-    basic_zip_streambuf<charT, traits>::flush();
+    static_cast<std::basic_ostream<charT, traits> *>(this)->flush();
+    static_cast<basic_zip_streambuf<charT, traits> *>(this)->flush();
     return *this;
 }
 
@@ -644,7 +644,7 @@ basic_zip_istream<charT, traits>::basic_zip_istream(istream_reference istream,
                                                     size_t input_buffer_size)
     : basic_unzip_streambuf<charT, traits>(istream, window_size,
                                            read_buffer_size, input_buffer_size),
-      std::basic_istream<charT, traits>(this),
+      std::basic_istream<charT, traits>(istream_type::rdbuf()),
       _is_gzip(false),
       _gzip_crc(0),
       _gzip_data_size(0)
