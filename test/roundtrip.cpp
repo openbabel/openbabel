@@ -184,12 +184,18 @@ int main(int argc,char *argv[])
 
     } // while reading molecules
 
-    if ( !inFileStream1.eof() && conv1.Read(&mol) )
-      if (mol.NumAtoms() > 0)
-	cout << " ** ERROR **  File 1 has more molecules! " << endl;
-    else if ( !inFileStream2.eof() && conv2.Read(&mol2) )
-      if (mol2.NumAtoms() > 0)
-	cout << " ** ERROR **  File 2 has more molecules! " << endl;
+    if ( inFileStream1.good() && inFileStream1.peek() != EOF &&
+	 conv1.Read(&mol) )
+      {
+	if (mol.NumAtoms() > 0)
+	  cout << " ** ERROR **  File 1 has more molecules! " << endl;
+      }
+    else if ( inFileStream2.good() && inFileStream2.peek() != EOF &&
+	      conv2.Read(&mol2) )
+      {
+	if (mol2.NumAtoms() > 0)
+	  cout << " ** ERROR **  File 2 has more molecules! " << endl;
+      }
     
     return(0);
 }
