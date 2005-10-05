@@ -1,3 +1,24 @@
+2005-10-05  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/zipstream.cpp(add_footer): changed 2nd var n to m to
+	accomodate VC6 compiler. (But still not writing properly in VC6)
+
+	* src/obconversion.cpp: moved compression code from Convert()
+	to Convert((std::istream* is, std::ostream* os) and restored
+	pOutStream after conversion. Also in write();
+
+	*  src/obconversion.cpp (FullConvert): moved call to 
+	OneObjectOnly() inside loop in splitting section to cure bug
+	#1313201.
+	
+	* src/formats/fastsearchformat.cpp: Changed Convert() to
+	Convert(NULL,NULL) (two places) so that compression code will
+	be called.	 
+
+	* src/formats/smilesformat.cpp (SmiToMol): removed call to 
+	AddHydrogens().
+
+
 2005-10-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/obgrep.cpp: Fix PR#1286797. Count of matching molecules
