@@ -613,7 +613,7 @@ basic_zip_ostream<charT,traits>& basic_zip_ostream<charT, traits>::add_footer(vo
     }
 
     unsigned long length = this->get_in_size();
-    for(int n=0;n<4;++n)
+    for(int m=0;m<4;++m)
     {
         this->get_ostream().put((int)(length & 0xff));
         length >>= 8;

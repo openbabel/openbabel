@@ -372,7 +372,26 @@ int OBConversion::Convert(istream* is, ostream* os)
 {
 	if(is) pInStream=is;
 	if(os) pOutStream=os;
-	return Convert();
+	ostream* pOrigOutStream = pOutStream;
+
+#ifdef HAVE_LIBZ
+	zlib_stream::zip_istream zIn(*pInStream);
+	if(zIn.is_gzip())
+	  pInStream = &zIn;
+
+	zlib_stream::zip_ostream zOut(*pOutStream);
+	if(IsOption("z",GENOPTIONS))
+	{
+	  // make sure to output the header
+	  zOut.make_gzip();
+	  pOutStream = &zOut;
+	}
+#endif
+
+	int count = Convert();
+	pOutStream = pOrigOutStream;
+	return count;
+
 }
 
 ////////////////////////////////////////////////////
@@ -400,20 +419,6 @@ int OBConversion::Convert()
 		cerr << "input or output stream not set" << endl;
 		return 0;
 	}
-
-#ifdef HAVE_LIBZ
-	zlib_stream::zip_istream zIn(*pInStream);
-	if(zIn.is_gzip())
-	  pInStream = &zIn;
-
-	zlib_stream::zip_ostream zOut(*pOutStream);
-	if(IsOption("z",GENOPTIONS))
-	  {
-	    // make sure to output the header
-	    zOut.make_gzip();
-	    pOutStream = &zOut;
-	  }
-#endif
 
 	if(!pInFormat) return 0;
 	Count=0;//number objects processed
@@ -651,17 +656,20 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 		pOutStream=pos;
 	if(!pOutFormat) return false;
 
+	ostream* pOrigOutStream = pOutStream;
 #ifdef HAVE_LIBZ
 	zlib_stream::zip_ostream zOut(*pOutStream);
 	if(IsOption("z",GENOPTIONS))
-	  {
-	    // make sure to output the header
-	    zOut.make_gzip();
-	    pOutStream = &zOut;
-	  }
+	{
+	  // make sure to output the header
+	  zOut.make_gzip();
+	  pOutStream = &zOut;
+	}
 #endif
 
-	return pOutFormat->WriteMolecule(pOb,this);
+	bool ret = pOutFormat->WriteMolecule(pOb,this);
+	pOutStream = pOrigOutStream;
+	return ret;
 }
 
 //////////////////////////////////////////////////
@@ -942,13 +950,13 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 					//Splitting
 					//Output is put in a temporary stream and written to a file
 					//with an augmenting name only when it contains a valid object. 
-					SetOneObjectOnly();
 					int Indx=1;
 					for(;;)
 					{
 						stringstream ss;
 						SetOutputIndex(0); //reset for new file
-						
+						SetOneObjectOnly();
+
 						int ThisFileCount = Convert(pInStream,&ss);
 						if(ThisFileCount==0) break;
 						Count+=ThisFileCount;
