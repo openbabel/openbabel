@@ -245,7 +245,7 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 			
 			}
 			pConv->SetOneObjectOnly();
-			pConv->Convert();
+			pConv->Convert(NULL,NULL);
 		}
 	}
 
@@ -282,7 +282,7 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 				*pConv->GetOutStream() << "** " << ln << endl;
 			}
 			pConv->SetOneObjectOnly();
-			pConv->Convert();
+			pConv->Convert(NULL,NULL);
 		}
 	}
 	return false;	//To finish	

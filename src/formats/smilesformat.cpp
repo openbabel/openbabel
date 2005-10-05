@@ -283,6 +283,7 @@ bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
     _vprev.clear();
     _rclose.clear();
     _prev=0;
+		chiralWatch=false;
 
     if (!ParseSmiles(mol))
     {
@@ -290,7 +291,7 @@ bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
         return(false);
     }
 
-    mol.AddHydrogens(); // need to add implicit hydrogens
+//    mol.AddHydrogens(); // need to add implicit hydrogens
 
     return(true);
 }
@@ -381,7 +382,6 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
     // modify so they don't get lost.
     if(_mapcd.size()>0)
     {
-    int n;
     OBAtom* atom;
     OBChiralData* cd;
     map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
