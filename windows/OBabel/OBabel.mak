@@ -57,8 +57,7 @@ CLEAN :
 	-@erase "$(INTDIR)\chemdrawformat.obj"
 	-@erase "$(INTDIR)\chemtoolformat.obj"
 	-@erase "$(INTDIR)\chiral.obj"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cmlformat.obj"
+	-@erase "$(INTDIR)\cmlreactlformat.obj"
 	-@erase "$(INTDIR)\crkformat.obj"
 	-@erase "$(INTDIR)\CSRformat.obj"
 	-@erase "$(INTDIR)\cssrformat.obj"
@@ -86,7 +85,6 @@ CLEAN :
 	-@erase "$(INTDIR)\matrix.obj"
 	-@erase "$(INTDIR)\matrix3x3.obj"
 	-@erase "$(INTDIR)\mdlformat.obj"
-	-@erase "$(INTDIR)\mm3format.obj"
 	-@erase "$(INTDIR)\mmodformat.obj"
 	-@erase "$(INTDIR)\mol.obj"
 	-@erase "$(INTDIR)\mol2format.obj"
@@ -104,6 +102,7 @@ CLEAN :
 	-@erase "$(INTDIR)\phmodel.obj"
 	-@erase "$(INTDIR)\povrayformat.obj"
 	-@erase "$(INTDIR)\PQSformat.obj"
+	-@erase "$(INTDIR)\pubchem.obj"
 	-@erase "$(INTDIR)\qchemformat.obj"
 	-@erase "$(INTDIR)\rand.obj"
 	-@erase "$(INTDIR)\reportformat.obj"
@@ -123,7 +122,10 @@ CLEAN :
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vector3.obj"
 	-@erase "$(INTDIR)\viewmolformat.obj"
+	-@erase "$(INTDIR)\xcmlformat.obj"
 	-@erase "$(INTDIR)\xedformat.obj"
+	-@erase "$(INTDIR)\xml.obj"
+	-@erase "$(INTDIR)\xmlformat.obj"
 	-@erase "$(INTDIR)\xyzformat.obj"
 	-@erase "$(INTDIR)\zindoformat.obj"
 	-@erase ".\babel.exe"
@@ -131,16 +133,17 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /ML /W3 /GR /GX /O2 /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /Fp"$(INTDIR)\OBabel.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\..\src\formats\xml" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /Fp"$(INTDIR)\OBabel.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBabel.bsc" 
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=libinchi.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\babel.pdb" /machine:I386 /out:"babel.exe" /libpath:".." 
+LINK32_FLAGS=libinchi.lib cmlpp.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\babel.pdb" /machine:I386 /out:"babel.exe" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\release" 
 LINK32_OBJS= \
 	"$(INTDIR)\alchemyformat.obj" \
 	"$(INTDIR)\amberformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\balstformat.obj" \
 	"$(INTDIR)\base.obj" \
@@ -158,8 +161,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\chemdrawformat.obj" \
 	"$(INTDIR)\chemtoolformat.obj" \
 	"$(INTDIR)\chiral.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
+	"$(INTDIR)\cmlreactlformat.obj" \
 	"$(INTDIR)\crkformat.obj" \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
@@ -187,7 +189,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
 	"$(INTDIR)\mdlformat.obj" \
-	"$(INTDIR)\mm3format.obj" \
 	"$(INTDIR)\mmodformat.obj" \
 	"$(INTDIR)\mol.obj" \
 	"$(INTDIR)\mol2format.obj" \
@@ -205,6 +206,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\phmodel.obj" \
 	"$(INTDIR)\povrayformat.obj" \
 	"$(INTDIR)\PQSformat.obj" \
+	"$(INTDIR)\pubchem.obj" \
 	"$(INTDIR)\qchemformat.obj" \
 	"$(INTDIR)\rand.obj" \
 	"$(INTDIR)\reportformat.obj" \
@@ -223,10 +225,14 @@ LINK32_OBJS= \
 	"$(INTDIR)\unichemformat.obj" \
 	"$(INTDIR)\vector3.obj" \
 	"$(INTDIR)\viewmolformat.obj" \
+	"$(INTDIR)\xcmlformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
+	"$(INTDIR)\xml.obj" \
+	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
-	"$(INTDIR)\APIInterface.obj"
+	"..\libxml2.lib" \
+	"..\zdll.lib"
 
 ".\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -285,10 +291,8 @@ CLEAN :
 	-@erase "$(INTDIR)\chemtoolformat.sbr"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\chiral.sbr"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cml.sbr"
-	-@erase "$(INTDIR)\cmlformat.obj"
-	-@erase "$(INTDIR)\cmlformat.sbr"
+	-@erase "$(INTDIR)\cmlreactlformat.obj"
+	-@erase "$(INTDIR)\cmlreactlformat.sbr"
 	-@erase "$(INTDIR)\crkformat.obj"
 	-@erase "$(INTDIR)\crkformat.sbr"
 	-@erase "$(INTDIR)\CSRformat.obj"
@@ -343,8 +347,6 @@ CLEAN :
 	-@erase "$(INTDIR)\matrix3x3.sbr"
 	-@erase "$(INTDIR)\mdlformat.obj"
 	-@erase "$(INTDIR)\mdlformat.sbr"
-	-@erase "$(INTDIR)\mm3format.obj"
-	-@erase "$(INTDIR)\mm3format.sbr"
 	-@erase "$(INTDIR)\mmodformat.obj"
 	-@erase "$(INTDIR)\mmodformat.sbr"
 	-@erase "$(INTDIR)\mol.obj"
@@ -379,6 +381,8 @@ CLEAN :
 	-@erase "$(INTDIR)\povrayformat.sbr"
 	-@erase "$(INTDIR)\PQSformat.obj"
 	-@erase "$(INTDIR)\PQSformat.sbr"
+	-@erase "$(INTDIR)\pubchem.obj"
+	-@erase "$(INTDIR)\pubchem.sbr"
 	-@erase "$(INTDIR)\qchemformat.obj"
 	-@erase "$(INTDIR)\qchemformat.sbr"
 	-@erase "$(INTDIR)\rand.obj"
@@ -417,8 +421,14 @@ CLEAN :
 	-@erase "$(INTDIR)\vector3.sbr"
 	-@erase "$(INTDIR)\viewmolformat.obj"
 	-@erase "$(INTDIR)\viewmolformat.sbr"
+	-@erase "$(INTDIR)\xcmlformat.obj"
+	-@erase "$(INTDIR)\xcmlformat.sbr"
 	-@erase "$(INTDIR)\xedformat.obj"
 	-@erase "$(INTDIR)\xedformat.sbr"
+	-@erase "$(INTDIR)\xml.obj"
+	-@erase "$(INTDIR)\xml.sbr"
+	-@erase "$(INTDIR)\xmlformat.obj"
+	-@erase "$(INTDIR)\xmlformat.sbr"
 	-@erase "$(INTDIR)\xyzformat.obj"
 	-@erase "$(INTDIR)\xyzformat.sbr"
 	-@erase "$(INTDIR)\zindoformat.obj"
@@ -431,12 +441,13 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MLd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\..\src\formats\xml" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBabel.bsc" 
 BSC32_SBRS= \
 	"$(INTDIR)\alchemyformat.sbr" \
 	"$(INTDIR)\amberformat.sbr" \
+	"$(INTDIR)\APIInterface.sbr" \
 	"$(INTDIR)\atom.sbr" \
 	"$(INTDIR)\balstformat.sbr" \
 	"$(INTDIR)\base.sbr" \
@@ -454,8 +465,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\chemdrawformat.sbr" \
 	"$(INTDIR)\chemtoolformat.sbr" \
 	"$(INTDIR)\chiral.sbr" \
-	"$(INTDIR)\cml.sbr" \
-	"$(INTDIR)\cmlformat.sbr" \
+	"$(INTDIR)\cmlreactlformat.sbr" \
 	"$(INTDIR)\crkformat.sbr" \
 	"$(INTDIR)\CSRformat.sbr" \
 	"$(INTDIR)\cssrformat.sbr" \
@@ -483,7 +493,6 @@ BSC32_SBRS= \
 	"$(INTDIR)\matrix.sbr" \
 	"$(INTDIR)\matrix3x3.sbr" \
 	"$(INTDIR)\mdlformat.sbr" \
-	"$(INTDIR)\mm3format.sbr" \
 	"$(INTDIR)\mmodformat.sbr" \
 	"$(INTDIR)\mol.sbr" \
 	"$(INTDIR)\mol2format.sbr" \
@@ -501,6 +510,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\phmodel.sbr" \
 	"$(INTDIR)\povrayformat.sbr" \
 	"$(INTDIR)\PQSformat.sbr" \
+	"$(INTDIR)\pubchem.sbr" \
 	"$(INTDIR)\qchemformat.sbr" \
 	"$(INTDIR)\rand.sbr" \
 	"$(INTDIR)\reportformat.sbr" \
@@ -519,10 +529,12 @@ BSC32_SBRS= \
 	"$(INTDIR)\unichemformat.sbr" \
 	"$(INTDIR)\vector3.sbr" \
 	"$(INTDIR)\viewmolformat.sbr" \
+	"$(INTDIR)\xcmlformat.sbr" \
 	"$(INTDIR)\xedformat.sbr" \
+	"$(INTDIR)\xml.sbr" \
+	"$(INTDIR)\xmlformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr" \
-	"$(INTDIR)\APIInterface.sbr"
+	"$(INTDIR)\zindoformat.sbr"
 
 "$(OUTDIR)\OBabel.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -530,10 +542,11 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib libinchi.lib cmlpp.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\babel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\babel.exe" /pdbtype:sept /libpath:".." /libpath:"..\..\src\formats\cmlpp\builds\windows\vc6\cmlpplib\Debug" 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib cmlpp.lib libinchi.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\babel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\babel.exe" /pdbtype:sept /libpath:".." /libpath:"..\..\src\formats\cmlpp\builds\windows\vc6\cmlpplib\Debug" 
 LINK32_OBJS= \
 	"$(INTDIR)\alchemyformat.obj" \
 	"$(INTDIR)\amberformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\balstformat.obj" \
 	"$(INTDIR)\base.obj" \
@@ -551,8 +564,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\chemdrawformat.obj" \
 	"$(INTDIR)\chemtoolformat.obj" \
 	"$(INTDIR)\chiral.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
+	"$(INTDIR)\cmlreactlformat.obj" \
 	"$(INTDIR)\crkformat.obj" \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
@@ -580,7 +592,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
 	"$(INTDIR)\mdlformat.obj" \
-	"$(INTDIR)\mm3format.obj" \
 	"$(INTDIR)\mmodformat.obj" \
 	"$(INTDIR)\mol.obj" \
 	"$(INTDIR)\mol2format.obj" \
@@ -598,6 +609,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\phmodel.obj" \
 	"$(INTDIR)\povrayformat.obj" \
 	"$(INTDIR)\PQSformat.obj" \
+	"$(INTDIR)\pubchem.obj" \
 	"$(INTDIR)\qchemformat.obj" \
 	"$(INTDIR)\rand.obj" \
 	"$(INTDIR)\reportformat.obj" \
@@ -616,10 +628,14 @@ LINK32_OBJS= \
 	"$(INTDIR)\unichemformat.obj" \
 	"$(INTDIR)\vector3.obj" \
 	"$(INTDIR)\viewmolformat.obj" \
+	"$(INTDIR)\xcmlformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
+	"$(INTDIR)\xml.obj" \
+	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
-	"$(INTDIR)\APIInterface.obj"
+	"..\libxml2.lib" \
+	"..\zdll.lib"
 
 "$(OUTDIR)\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -1030,36 +1046,21 @@ SOURCE=..\..\src\chiral.cpp
 !ENDIF 
 
 SOURCE=..\..\src\formats\cml.cpp
-
-!IF  "$(CFG)" == "OBabel - Win32 Release"
-
-
-"$(INTDIR)\cml.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
-
-
-"$(INTDIR)\cml.obj"	"$(INTDIR)\cml.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\formats\cmlformat.cpp
+SOURCE=..\..\src\formats\cmlppformat.cpp
+SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
 
 
-"$(INTDIR)\cmlformat.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cmlreactlformat.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
 
 
-"$(INTDIR)\cmlformat.obj"	"$(INTDIR)\cmlformat.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cmlreactlformat.obj"	"$(INTDIR)\cmlreactlformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1227,7 +1228,7 @@ SOURCE=..\..\src\formats\fhformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\finger2.cpp
+SOURCE=..\..\src\fingerprints\finger2.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
 
@@ -1245,7 +1246,7 @@ SOURCE=..\..\src\finger2.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\finger3.cpp
+SOURCE=..\..\src\fingerprints\finger3.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
 
@@ -1546,24 +1547,6 @@ SOURCE=..\..\src\formats\mdlformat.cpp
 
 
 "$(INTDIR)\mdlformat.obj"	"$(INTDIR)\mdlformat.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\formats\mm3format.cpp
-
-!IF  "$(CFG)" == "OBabel - Win32 Release"
-
-
-"$(INTDIR)\mm3format.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
-
-
-"$(INTDIR)\mm3format.obj"	"$(INTDIR)\mm3format.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1870,6 +1853,24 @@ SOURCE=..\..\src\formats\PQSformat.cpp
 
 
 "$(INTDIR)\PQSformat.obj"	"$(INTDIR)\PQSformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\xml\pubchem.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\pubchem.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\pubchem.obj"	"$(INTDIR)\pubchem.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -2199,6 +2200,24 @@ SOURCE=..\..\src\formats\viewmolformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\xml\xcmlformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\xcmlformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\xcmlformat.obj"	"$(INTDIR)\xcmlformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\formats\xedformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -2212,6 +2231,42 @@ SOURCE=..\..\src\formats\xedformat.cpp
 
 
 "$(INTDIR)\xedformat.obj"	"$(INTDIR)\xedformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\xml\xml.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\xml.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\xml.obj"	"$(INTDIR)\xml.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\xml\xmlformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\xmlformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\xmlformat.obj"	"$(INTDIR)\xmlformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -8,6 +8,7 @@
 #define HAVE_SSTREAM 1
 #define HAVE_SNPRINTF 1
 #define HAVE_STRNCASECMP 1
+#define HAVE_LIBZ 1
 #define BABEL_VERSION  "2.0"
 
 #define BABEL_DATADIR "."
@@ -21,6 +22,10 @@
 #ifndef __FUNCTION__
 #define __FUNCTION__ __FILE__
 #endif
+
+//because of conflicts in WINDEF.H
+#undef min
+#define min _MIN
 
 //Makes unix input files compatible with VC++6
 #define ALL_READS_BINARY
