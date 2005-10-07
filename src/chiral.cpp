@@ -300,10 +300,10 @@ double CalcSignedVolume(OBMol &mol,OBAtom *atm)
         nbr_crds.push_back(tmp_crd);
     }
 */
-    for(int i=0;i < nbr_crds.size();i++) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
+    for(int j=0;j < nbr_crds.size();j++) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
     {
-        if (nbr_crds[i]==0 && use_central_atom==false)use_central_atom=true;
-        else if (nbr_crds[i]==0) cerr << "Error! More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation";
+        if (nbr_crds[j]==0 && use_central_atom==false)use_central_atom=true;
+        else if (nbr_crds[j]==0) cerr << "Error! More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation";
     }
 
   // If we have three heavy atoms we can use the chiral center atom itself for the fourth

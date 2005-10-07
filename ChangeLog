@@ -1,3 +1,15 @@
+2005-10-07  Chris Morley  <c.morley@gaseq.co.uk>
+
+	Update Windows build files.
+
+	* src/chiral.cpp(CalcSignedVolume): change name of second
+	loop variable from i to j (VC6 deficiency)
+
+	* src/data.cpp(OBElementTable::ParseLine); make symbol[5]
+	[3] wasn't enough. (Better debugger!)
+
+	* src/fingerprint.cpp: remove #if HAVE_CONFIG
+		
 2005-10-05  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/zipstream.cpp(add_footer): changed 2nd var n to m to

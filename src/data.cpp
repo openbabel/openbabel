@@ -96,7 +96,7 @@ OBElementTable::~OBElementTable()
 void OBElementTable::ParseLine(const char *buffer)
 {
     int num,maxbonds;
-    char symbol[3];
+    char symbol[5];
     char name[BUFF_SIZE];
     double Rcov,Rvdw,mass, elNeg, ionize, elAffin;
     double red, green, blue;
