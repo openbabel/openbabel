@@ -485,12 +485,14 @@ int OBConversion::Convert()
 //////////////////////////////////////////////////////
 bool OBConversion::SetStartAndEnd()
 {
+	int TempStartNumber=0;
 	const char* p = IsOption("f",GENOPTIONS);
 	if(p)
 	{
 		StartNumber=atoi(p);
 		if(StartNumber>1)
 		{
+			TempStartNumber=StartNumber;
 			//Try to skip objects now
 			int ret = pInFormat->SkipObjects(StartNumber-1,this);
 			if(ret==-1) //error
@@ -505,7 +507,11 @@ bool OBConversion::SetStartAndEnd()
 
 	p = IsOption("l",GENOPTIONS);
 	if(p)
+	{
 		EndNumber=atoi(p);
+		if(TempStartNumber && EndNumber<TempStartNumber)
+			EndNumber=TempStartNumber;
+	}
 
 	return true;
 }
@@ -606,21 +612,21 @@ OBFormat* OBConversion::FormatFromExt(const char* filename)
   string file = filename;
   size_t extPos = file.rfind(".");
 
-  if(extPos)
-    {
+  if(extPos!=string::npos)
+	{
       // only do this if we actually can read .gz files
 #ifdef HAVE_LIBZ
-      if (file.substr(extPos,3) == ".gz")
-	{
-	  file.erase(extPos);
-	  extPos = file.rfind(".");
-	  if (extPos)
-	    return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
-	}
-      else
+		if (file.substr(extPos,3) == ".gz")
+		{
+			file.erase(extPos!=string::npos);
+			extPos = file.rfind(".");
+			if (extPos!=string::npos)
+				return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
+		}
+		else
 #endif
-	return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
-    }
+		return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
+	}
   return NULL; //if no extension		
 }
 
