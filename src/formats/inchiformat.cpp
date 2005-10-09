@@ -27,7 +27,9 @@ class InChIFormat : public OBMoleculeFormat
 public:
 	InChIFormat()
 	{
-			OBConversion::RegisterFormat("inchi",this);
+		OBConversion::RegisterFormat("inchi",this);
+		OBConversion::RegisterOptionParam("O", this, 1);
+
 	}
 
 	virtual const char* Description()
@@ -41,15 +43,16 @@ Write Options e.g. -xat \n \
  u output only unique molecules\n \
  U output only unique molecules and sort them\n \
  e compare first molecule to others\n \
- w don't warn on undefined stereo-chemistry alone\n \
+ w don't warn on undef stereo or charge rearrangement\n \
 ";
 	};
 
   virtual const char* SpecificationURL()
   { return "http://www.iupac.org/inchi/";};
 
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-  char CompareInchi(const char* Inchi1, const char* Inchi2);
+  virtual bool  WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  static char   CompareInchi(const char* Inchi1, const char* Inchi2);
+	static string InChIErrorMessage(const char ch);
   virtual unsigned int Flags(){return NOTREADABLE;};
 
 private:
@@ -119,7 +122,9 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 	if(pmol==NULL) return false;
-	OBMol &mol = *pmol;
+	
+	//Use a copy of the molecule - we will be modifying it by adding H 
+	OBMol mol = *pmol;
 
 	stringstream molID;
 	if(strlen(mol.GetTitle())==0)
@@ -293,7 +298,8 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	if(ret!=inchi_Ret_OKAY)
 	{
 		string mes(inout.szMessage);
-		if(!(pConv->IsOption("w") && mes=="Omitted undefined stereo"))
+		if(!(pConv->IsOption("w") 
+			&& (mes=="Omitted undefined stereo" || mes=="Charges were rearranged")))
 			cerr << molID.str() << inout.szMessage << endl;
 		if(ret!=inchi_Ret_WARNING)
 		{
@@ -346,39 +352,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		else
 		{
 			ofs << "Molecules " << firstID << "and " << molID.str();
-			switch (CompareInchi(firstInchi.c_str(), inout.szInChI)) 
-			{
-			case 0:
-				ofs << " are identical" << endl;
-				break;
-			case '+':
-				ofs << " have different formulae" << endl;
-				break;
-			case 'c':
-				ofs << " have different connection tables" << endl;
-				break;
-			case 'h':
-				ofs << " have different bond orders, or radical character" << endl;
-				break;
-			case 'q':
-				ofs << " have different charges" << endl;
-				break;
-			case 'p':
-				ofs << " have different numbers of attached protons" << endl;
-				break;
-			case 'b':
-				ofs << " have different double bond stereochemistry" << endl;
-				break;
-			case 'm':
-			case 't':
-				ofs << " have different sp3 stereochemistry" << endl;
-				break;
-			case 'i':
-				ofs << " have different isotopic composition" << endl;
-				break;
-			default:
-				ofs << " are different" << endl;
-			}
+			ofs << InChIErrorMessage(CompareInchi(firstInchi.c_str(), inout.szInChI)) << endl; 
 		}
 	}
 
@@ -424,6 +398,45 @@ char InChIFormat::CompareInchi(const char* Inchi1, const char* Inchi2)
 		return layers1[i][0];
 }
 
+string InChIFormat::InChIErrorMessage(const char ch)
+{
+	string s;
+	switch (ch) 
+	{
+	case 0:
+		s = " are identical";
+		break;
+	case '+':
+		s = " have different formulae";
+		break;
+	case 'c':
+		s = " have different connection tables";
+		break;
+	case 'h':
+		s = " have different bond orders, or radical character";
+		break;
+	case 'q':
+		s = " have different charges";
+		break;
+	case 'p':
+		s = " have different numbers of attached protons";
+		break;
+	case 'b':
+		s = " have different double bond stereochemistry";
+		break;
+	case 'm':
+	case 't':
+		s = " have different sp3 stereochemistry";
+		break;
+	case 'i':
+		s = " have different isotopic composition";
+		break;
+	default:
+		s = " are different";
+	}
+	return s;
+}
+
 OBAtom* InChIFormat::GetCommonAtom(OBBond* pb1, OBBond* pb2)
 {
 	OBAtom* pa1 = pb1->GetBeginAtom();
@@ -463,6 +476,132 @@ Same as -oinchi -xet\n \
 };
 
 InChICompareFormat theInChICompareFormat;
+
+//*********************************************************
+class TestFormat : public OBMoleculeFormat
+{
+public:
+	//Register this format type ID
+	TestFormat() 
+	{
+		OBConversion::RegisterFormat("test",this);
+	}
+
+	virtual const char* Description()
+	{ return
+"Test format\n \
+Does a round trip conversion and compares before and after using InChI.\n \
+Uses the input format unless -xO set\n \
+Option e.g. -xOsmi\n \
+ O<ext> Test the format that has the specified ID\n\n \
+Also use opts appropriate for the target format.\n \
+";
+	};
+
+	virtual unsigned int Flags() { return NOTREADABLE;}
+	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+};
+/////////////////////////////////////////////////////////////////
+TestFormat theTestFormat;
+/////////////////////////////////////////////////////////////////
+bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+{
+	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+
+	ostream &ofs = *pConv->GetOutStream();
+	OBMol &mol = *pmol;
+	istream* origInStream = pConv->GetInStream(); 
+	ostream* origOutStream = pConv->GetOutStream(); 
+	stringstream ssinchi1, ssinchi2;
+	
+	static int nMols;
+	static int nFailures;
+	if(pConv->GetOutputIndex()==1)
+		nMols=nFailures=0;
+	nMols++;
+
+	//mol has already been input using the target format
+
+	//Send its InChI to a stringstream
+	OBFormat* pInchi = OBConversion::FindFormat("inchi");
+	if(!pInchi)
+	{	cerr << "InChIFormat needs to be installed to use TestFormat" << endl;
+		return false;
+	}
+	pConv->AddOption("w",OBConversion::OUTOPTIONS);//no trivial warnings
+	pConv->SetOutFormat(pInchi);
+	if(!pConv->Write(pmol,&ssinchi1))
+		return false;
+
+	//Use a new OBConversion to write and then read using the target format
+	//(Using the same OBConversion gave problems with CMLFormat)
+	OBConversion NewConv(*pConv);
+	NewConv.SetAuxConv(NULL); //until proper copy constructor for OBConversion written
+	
+	const char* pTargetExt = pConv->IsOption("O");
+	if(pTargetExt)
+	{
+		OBFormat* pTargetFormat = OBConversion::FindFormat(pTargetExt);
+		if(!pTargetFormat)
+		{
+			cerr << pTargetExt <<  " format is not available" << endl;
+			return false;
+		}
+		if(!NewConv.SetInFormat(pTargetFormat))
+		{
+			cerr << pTargetExt << " format being tested needs to be readable" << endl;
+			return false;
+		}
+	}
+
+	if(!NewConv.SetOutFormat(NewConv.GetInFormat()))
+	{
+		cerr << "The input format being tested needs also to be writeable" << endl;
+		return false;
+	}
+	//Output with the target format to a stringstream ss
+	stringstream ss;
+	NewConv.SetOneObjectOnly();
+	NewConv.SetInStream(&ss); //Quirk in CMLFormat: needs to haveinput stream set before writing
+	if(!NewConv.Write(pmol,&ss))
+		return false;
+
+	//Read it back in again using the target format
+	OBMol Remol;
+	if(!NewConv.Read(&Remol))
+		return false;
+
+	//Take the InChI of the reconverted molecule
+	pConv->SetOutFormat(pInchi);
+	if(!pConv->Write(&Remol,&ssinchi2))
+		return false;
+	
+	pConv->SetInStream(origInStream);
+	pConv->SetOutStream(origOutStream);
+	pConv->SetOutFormat(this);
+
+	char ch = InChIFormat::CompareInchi(ssinchi1.str().c_str(), ssinchi2.str().c_str());
+
+	stringstream molID;
+	if(strlen(mol.GetTitle())==0)
+		molID << "Mol #" << nMols;
+	else
+		molID << mol.GetTitle();
+	ofs << molID.str() << " in " << pConv->GetInFilename();
+	if(ch)
+	{
+		ofs << " and its conversion" << InChIFormat::InChIErrorMessage(ch) << endl;
+		++nFailures;
+	}
+	else
+		ofs << " ok" << endl;
+
+	char s = nFailures==1 ? ' ' : 's';
+	if(pConv->IsLast())
+		ofs << nFailures << " failure" << s << endl;
+	return true;
+}
 
 }//namespace OpenBabel
 
