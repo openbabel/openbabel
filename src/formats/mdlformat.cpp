@@ -75,7 +75,7 @@ Write Options, e.g. -x3\n \
 			getline(ifs,temp,'$');
 			if(ifs.good())
 				getline(ifs, temp);
-		}while(ifs.good() && temp.substr(0,3)!="$$$" && --n);
+		}while(ifs.good() && temp.substr(0,3)=="$$$" && --n);
 		return ifs.good() ? 1 : -1;	
 	};
 
@@ -108,7 +108,8 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	//Define some references so we can use the old parameter names
 	istream &ifs = *pConv->GetInStream();
 	OBMol &mol = *pmol;
-	
+	_mapcd.clear();
+
 	// Allows addition of further disconnected atoms to an existing molecule
 	int offset = mol.NumAtoms(); 
 
@@ -142,8 +143,8 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   mol.BeginModify();
 	if(r1.find("V3000")!=string::npos)
 	{
-		indexmap.clear();
-		if(ReadV3000Block(ifs,mol,pConv,false)) return false;
+ 		indexmap.clear();
+		if(!ReadV3000Block(ifs,mol,pConv,false)) return false;
 //		ifs.getline(buffer,BUFF_SIZE); //M END line
 	}
 	else
@@ -250,7 +251,6 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     // modify so they don't get lost.
     if(_mapcd.size()>0)
     {
-    int n;
     OBAtom* atom;
     OBChiralData* cd;
     map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
@@ -261,7 +261,8 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         atom->SetData(cd);
        }    
     }
-  if (comment)
+
+		if (comment)
   {
 	  OBCommentData *cd = new OBCommentData;
 	  mol.SetData(cd);
@@ -484,11 +485,11 @@ bool MOLFormat::ReadV3000Block(istream& ifs, OBMol& mol, OBConversion* pConv,boo
 			mol.ReserveAtoms(natoms);
 
 			ReadV3000Block(ifs,mol,pConv,true);//go for contained blocks	
-			if(!ReadV3000Line(ifs,vs) || vs[2]!="END" || vs[3]!="CTAB") return false;
+			if(!ReadV3000Line(ifs,vs) || (vs[1]!="END" && vs[3]!="CTAB")) return false;
 			return true;
 		}
 		else if(vs[3]=="ATOM")
-			ReadAtomBlock(ifs,mol,pConv);
+          ReadAtomBlock(ifs,mol,pConv);
 		else if(vs[3]=="BOND")
 			ReadBondBlock(ifs,mol,pConv);
 		/*
@@ -502,6 +503,8 @@ bool MOLFormat::ReadV3000Block(istream& ifs, OBMol& mol, OBConversion* pConv,boo
 			//not currently implemented
 		*/
 	}while(DoMany && ifs.good());
+//	if(is3D){mol.SetDimension(3);cout<<"SetDim to 3"<<endl;}
+//	else if(is2D){mol.SetDimension(2);cout<<"SetDim to 2"<<endl;}
 	return true;
 }
 
@@ -511,7 +514,7 @@ bool MOLFormat::ReadV3000Line(istream& ifs, vector<string>& vs)
   char buffer[BUFF_SIZE];
 	if(!ifs.getline(buffer,BUFF_SIZE)) return false;
 	tokenize(vs,buffer," \t\n\r");
-	if(vs[0]!="M" || vs[1]!="V30") return false;
+	if(vs[0]!="M" || (vs[1]!="V30" && vs[1]!="END")) return false;
 	
 	if(buffer[strlen(buffer)-1] == '-') //continuation char
 	{
@@ -536,7 +539,9 @@ bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 		
     indexmap[atoi(vs[2].c_str())] = obindex;
 		atom.SetVector(atof(vs[4].c_str()), atof(vs[5].c_str()), atof(vs[6].c_str()));
-    
+//      if(abs(atof(vs[6].c_str()))>0)is3D=true;
+//      if(abs(atof(vs[4].c_str()))>0)is2D=true;
+//      if(abs(atof(vs[5].c_str()))>0)is2D=true;
 		char type[5];
 		strncpy(type,vs[3].c_str(),4);
 		int iso=0;
@@ -616,11 +621,11 @@ bool MOLFormat::ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 		   //TODO Bond Configuration 2 or 3D??
 				if (val == 1) 
 				{
-					flag |= OB_TORUP_BOND;
+					flag |= OB_WEDGE_BOND;//OB_TORUP_BOND; CM09/09/05
 				}
 				else if (val == 3) 
 				{
-					flag |= OB_TORDOWN_BOND;
+					flag |= OB_HASH_BOND;//OB_TORDOWN_BOND;
 				}
 			}
 		}
@@ -724,6 +729,7 @@ bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
          else {            
               CorrectChirality(mol,atom); // will set the stereochem based on input/output atom4refs
               }
+
 			int cfg=0;
 			if(atom->IsClockwise())cfg=1;
 			else if(atom->IsAntiClockwise())cfg=2;
@@ -756,8 +762,8 @@ bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
 						<< bond->GetEndAtomIdx();
 				//TODO do the following stereo chemistry properly
 				int cfg=0;
-				if(bond->IsWedge() || bond->IsUp()  ) cfg=1;
-				if(bond->IsHash()  || bond->IsDown()) cfg=3;
+				if(bond->IsWedge()) cfg=1;
+				if(bond->IsHash()) cfg=3;
 				if(cfg) ofs << " CFG=" << cfg;
 				ofs << endl;
 			}
