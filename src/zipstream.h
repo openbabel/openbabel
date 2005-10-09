@@ -324,7 +324,7 @@ inline bool isGZip(std::istream &is)
     return true;
 }
 
-#include "zipstream.cpp"
+#include "zipstreamimpl.h"
 
 }
 
