@@ -1,3 +1,21 @@
+2005-10-09  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/obconversion.cpp(FormatFromExt): test failure of 
+	string::find,	etc by return of string::npos
+
+	* src/obconversion.cpp(SetStartAndEnd):
+	If EndNumber < StartNumber output only one object 
+	
+	* src/mdlformat.cpp(SkipObjects): inverted test for "$$$"
+	which was causing -f and -l errors reported by Chris Swain.
+	
+	* src/formats/inchiformat.cpp: Added 'test' format for
+	doing round trip, testing before and after with InChI
+	
+	* src/zipstreamimpl.h: Name changed from zipstream.cpp 
+	
+	* src/zipsteam.h: consequent name change of #include
+	
 2005-10-07  Chris Morley  <c.morley@gaseq.co.uk>
 
 	Update Windows build files.
