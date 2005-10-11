@@ -937,7 +937,8 @@ std::vector<unsigned int> OBChiralData::GetAtom4Refs(atomreftype t) const
                 return(_atom4refc);
                 break;
                default: cerr << "Error! AtomRefType called is invalid: "<<t<<endl;
-                }
+								return(_atom4refo);    
+						}
 }
  unsigned int OBChiralData::GetSize(atomreftype t) const
  {
@@ -951,7 +952,8 @@ std::vector<unsigned int> OBChiralData::GetAtom4Refs(atomreftype t) const
                case calcvolume:
                 return(unsigned int)_atom4refc.size();
                default: cerr << "Error! AtomRefType called is invalid: "<<t<<endl;
-                }
+								return 0;      
+					}
  }
 OBChiralData::OBChiralData()
 {

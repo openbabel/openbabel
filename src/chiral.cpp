@@ -176,8 +176,8 @@ bool CorrectChirality(OBMol &mol, OBAtom *atm, atomreftype i, atomreftype o)
     int parityI=0,parityO=0;
     OBChiralData* cd=(OBChiralData*)atm->GetData(OBGenericDataType::ChiralData);
     if ((cd->GetAtom4Refs(input)).size()!=4)return(false); // must have 4 refs
-     parityI=GetParity4Ref(cd->GetAtom4Refs(i)); // Gets Atom4Refs used to define the chirality
-     parityO=GetParity4Ref(cd->GetAtom4Refs(o));//GetsOutput parity.        
+    parityI=GetParity4Ref(cd->GetAtom4Refs(i)); // Gets Atom4Refs used to define the chirality
+    parityO=GetParity4Ref(cd->GetAtom4Refs(o));//GetsOutput parity.        
    /* switch (CHTYPE)
           {
            case SMILES: // SMILES always uses 1234 atom refs
@@ -221,6 +221,7 @@ bool CorrectChirality(OBMol &mol, OBAtom *atm, atomreftype i, atomreftype o)
             return(false);
         return(true);
     }
+		return false;
 }
 
 //! Calculate the signed volume for an atom.  If the atom has a valence of 3

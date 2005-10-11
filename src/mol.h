@@ -1144,6 +1144,8 @@ EXTERN  OBAtomTyper      atomtyper;
 EXTERN  OBChainsParser   chainsparser;
 //! Global OBMessageHandler error handler
 EXTERN  OBMessageHandler obErrorLog;
+//! Global
+EXTERN  OBResidueData    resdat;
 
 //Utility Macros
 

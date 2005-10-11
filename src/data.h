@@ -237,7 +237,7 @@ public:
 };
 
 //! \brief Table of common protein residues in PDB files
-class OBResidueData : public OBGlobalDataBase
+class OBAPI OBResidueData : public OBGlobalDataBase
 {
   int                                               _resnum;
   std::vector<std::string>                          _resname;
