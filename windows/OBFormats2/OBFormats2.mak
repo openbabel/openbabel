@@ -51,8 +51,6 @@ CLEAN :
 	-@erase "$(INTDIR)\chem3dformat.obj"
 	-@erase "$(INTDIR)\chemdrawformat.obj"
 	-@erase "$(INTDIR)\chemtoolformat.obj"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cmlformat.obj"
 	-@erase "$(INTDIR)\CRKformat.obj"
 	-@erase "$(INTDIR)\CSRformat.obj"
 	-@erase "$(INTDIR)\cssrformat.obj"
@@ -66,7 +64,6 @@ CLEAN :
 	-@erase "$(INTDIR)\hinformat.obj"
 	-@erase "$(INTDIR)\jaguarformat.obj"
 	-@erase "$(INTDIR)\mdlformat.obj"
-	-@erase "$(INTDIR)\mm3format.obj"
 	-@erase "$(INTDIR)\mmodformat.obj"
 	-@erase "$(INTDIR)\mol2format.obj"
 	-@erase "$(INTDIR)\mopacformat.obj"
@@ -105,6 +102,7 @@ LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi3
 LINK32_OBJS= \
 	"$(INTDIR)\alchemyformat.obj" \
 	"$(INTDIR)\amberformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\balstformat.obj" \
 	"$(INTDIR)\bgfformat.obj" \
 	"$(INTDIR)\boxformat.obj" \
@@ -115,8 +113,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\chem3dformat.obj" \
 	"$(INTDIR)\chemdrawformat.obj" \
 	"$(INTDIR)\chemtoolformat.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
 	"$(INTDIR)\CRKformat.obj" \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
@@ -126,10 +122,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
+	"$(INTDIR)\gromos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
 	"$(INTDIR)\mdlformat.obj" \
-	"$(INTDIR)\mm3format.obj" \
 	"$(INTDIR)\mmodformat.obj" \
 	"$(INTDIR)\mol2format.obj" \
 	"$(INTDIR)\mopacformat.obj" \
@@ -149,9 +145,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj" \
-	"$(INTDIR)\APIInterface.obj" \
-	"$(INTDIR)\gromos96format.obj"
+	"$(INTDIR)\zindoformat.obj"
 
 ".\OBFormats2.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -196,10 +190,6 @@ CLEAN :
 	-@erase "$(INTDIR)\chemdrawformat.sbr"
 	-@erase "$(INTDIR)\chemtoolformat.obj"
 	-@erase "$(INTDIR)\chemtoolformat.sbr"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cml.sbr"
-	-@erase "$(INTDIR)\cmlformat.obj"
-	-@erase "$(INTDIR)\cmlformat.sbr"
 	-@erase "$(INTDIR)\CRKformat.obj"
 	-@erase "$(INTDIR)\CRKformat.sbr"
 	-@erase "$(INTDIR)\CSRformat.obj"
@@ -226,8 +216,6 @@ CLEAN :
 	-@erase "$(INTDIR)\jaguarformat.sbr"
 	-@erase "$(INTDIR)\mdlformat.obj"
 	-@erase "$(INTDIR)\mdlformat.sbr"
-	-@erase "$(INTDIR)\mm3format.obj"
-	-@erase "$(INTDIR)\mm3format.sbr"
 	-@erase "$(INTDIR)\mmodformat.obj"
 	-@erase "$(INTDIR)\mmodformat.sbr"
 	-@erase "$(INTDIR)\mol2format.obj"
@@ -286,6 +274,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBFormats2.bsc"
 BSC32_SBRS= \
 	"$(INTDIR)\alchemyformat.sbr" \
 	"$(INTDIR)\amberformat.sbr" \
+	"$(INTDIR)\APIInterface.sbr" \
 	"$(INTDIR)\balstformat.sbr" \
 	"$(INTDIR)\bgfformat.sbr" \
 	"$(INTDIR)\boxformat.sbr" \
@@ -296,8 +285,6 @@ BSC32_SBRS= \
 	"$(INTDIR)\chem3dformat.sbr" \
 	"$(INTDIR)\chemdrawformat.sbr" \
 	"$(INTDIR)\chemtoolformat.sbr" \
-	"$(INTDIR)\cml.sbr" \
-	"$(INTDIR)\cmlformat.sbr" \
 	"$(INTDIR)\CRKformat.sbr" \
 	"$(INTDIR)\CSRformat.sbr" \
 	"$(INTDIR)\cssrformat.sbr" \
@@ -307,10 +294,10 @@ BSC32_SBRS= \
 	"$(INTDIR)\gamessformat.sbr" \
 	"$(INTDIR)\gaussformat.sbr" \
 	"$(INTDIR)\ghemicalformat.sbr" \
+	"$(INTDIR)\gromos96format.sbr" \
 	"$(INTDIR)\hinformat.sbr" \
 	"$(INTDIR)\jaguarformat.sbr" \
 	"$(INTDIR)\mdlformat.sbr" \
-	"$(INTDIR)\mm3format.sbr" \
 	"$(INTDIR)\mmodformat.sbr" \
 	"$(INTDIR)\mol2format.sbr" \
 	"$(INTDIR)\mopacformat.sbr" \
@@ -330,9 +317,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\viewmolformat.sbr" \
 	"$(INTDIR)\xedformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr" \
-	"$(INTDIR)\APIInterface.sbr" \
-	"$(INTDIR)\gromos96format.sbr"
+	"$(INTDIR)\zindoformat.sbr"
 
 "$(OUTDIR)\OBFormats2.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -344,6 +329,7 @@ LINK32_FLAGS=kernel32.lib user32.lib obconv.lib obdll.lib /nologo /dll /incremen
 LINK32_OBJS= \
 	"$(INTDIR)\alchemyformat.obj" \
 	"$(INTDIR)\amberformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\balstformat.obj" \
 	"$(INTDIR)\bgfformat.obj" \
 	"$(INTDIR)\boxformat.obj" \
@@ -354,8 +340,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\chem3dformat.obj" \
 	"$(INTDIR)\chemdrawformat.obj" \
 	"$(INTDIR)\chemtoolformat.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
 	"$(INTDIR)\CRKformat.obj" \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
@@ -365,10 +349,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
+	"$(INTDIR)\gromos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
 	"$(INTDIR)\mdlformat.obj" \
-	"$(INTDIR)\mm3format.obj" \
 	"$(INTDIR)\mmodformat.obj" \
 	"$(INTDIR)\mol2format.obj" \
 	"$(INTDIR)\mopacformat.obj" \
@@ -388,14 +372,27 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj" \
-	"$(INTDIR)\APIInterface.obj" \
-	"$(INTDIR)\gromos96format.obj"
+	"$(INTDIR)\zindoformat.obj"
 
 "$(OUTDIR)\OBFormats2D.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
+
+SOURCE="$(InputPath)"
+PostBuild_Desc=Copy debug versions of obconv.dll, obdll.dll
+DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
+
+ALL : $(DS_POSTBUILD_DEP)
+
+# Begin Custom Macros
+OutDir=.\Debug
+# End Custom Macros
+
+$(DS_POSTBUILD_DEP) : "$(OUTDIR)\OBFormats2D.obf" "$(OUTDIR)\OBFormats2.bsc"
+   Copy  ..\obconv\debug\obconv.dll  .\debug  /Y
+	Copy  ..\obdll\debug\obdll.dll  .\debug  /Y
+	echo Helper for Post-build step > "$(DS_POSTBUILD_DEP)"
 
 !ENDIF 
 
@@ -675,41 +672,7 @@ SOURCE=..\..\src\formats\chemtoolformat.cpp
 !ENDIF 
 
 SOURCE=..\..\src\formats\cml.cpp
-
-!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
-
-
-"$(INTDIR)\cml.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
-
-
-"$(INTDIR)\cml.obj"	"$(INTDIR)\cml.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\formats\cmlformat.cpp
-
-!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
-
-
-"$(INTDIR)\cmlformat.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
-
-
-"$(INTDIR)\cmlformat.obj"	"$(INTDIR)\cmlformat.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\formats\CRKformat.cpp
 
 !IF  "$(CFG)" == "OBFormats2 - Win32 Release"
@@ -939,24 +902,6 @@ SOURCE=..\..\src\formats\mdlformat.cpp
 
 
 "$(INTDIR)\mdlformat.obj"	"$(INTDIR)\mdlformat.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\formats\mm3format.cpp
-
-!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
-
-
-"$(INTDIR)\mm3format.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
-
-
-"$(INTDIR)\mm3format.obj"	"$(INTDIR)\mm3format.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -59,11 +59,11 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib obconv.lib obdll.lib libinchi.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\OBXML.pdb" /machine:I386 /out:"OBXML.obf" /implib:"$(OUTDIR)\OBXML.lib" /libpath:"..\OBDLL\Release" /libpath:"..\OBConv\Release" /libpath:".." 
 LINK32_OBJS= \
-	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\cmlreactlformat.obj" \
 	"$(INTDIR)\pubchem.obj" \
 	"$(INTDIR)\xcmlformat.obj" \
 	"$(INTDIR)\xml.obj" \
+	"$(INTDIR)\xmlformat.obj" \
 	"..\libxml2.lib"
 
 ".\OBXML.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -109,11 +109,11 @@ MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBXMLFormats.bsc" 
 BSC32_SBRS= \
-	"$(INTDIR)\xmlformat.sbr" \
 	"$(INTDIR)\cmlreactlformat.sbr" \
 	"$(INTDIR)\pubchem.sbr" \
 	"$(INTDIR)\xcmlformat.sbr" \
-	"$(INTDIR)\xml.sbr"
+	"$(INTDIR)\xml.sbr" \
+	"$(INTDIR)\xmlformat.sbr"
 
 "$(OUTDIR)\OBXMLFormats.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -123,17 +123,32 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib obconv.lib obdll.lib libinchi.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBXMLD.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBXMLD.obf" /implib:"$(OUTDIR)\OBXMLD.lib" /pdbtype:sept /libpath:"..\OBDLL\Debug" /libpath:"..\OBConv\Debug" /libpath:".." 
 LINK32_OBJS= \
-	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\cmlreactlformat.obj" \
 	"$(INTDIR)\pubchem.obj" \
 	"$(INTDIR)\xcmlformat.obj" \
 	"$(INTDIR)\xml.obj" \
+	"$(INTDIR)\xmlformat.obj" \
 	"..\libxml2.lib"
 
 "$(OUTDIR)\OBXMLD.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
+
+SOURCE="$(InputPath)"
+PostBuild_Desc=Copy debug versions of obconv.dll, obdll.dll
+DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
+
+ALL : $(DS_POSTBUILD_DEP)
+
+# Begin Custom Macros
+OutDir=.\Debug
+# End Custom Macros
+
+$(DS_POSTBUILD_DEP) : "$(OUTDIR)\OBXMLD.obf" "$(OUTDIR)\OBXMLFormats.bsc"
+   Copy  ..\obconv\debug\obconv.dll  .\debug  /Y
+	Copy  ..\obdll\debug\obdll.dll  .\debug  /Y
+	echo Helper for Post-build step > "$(DS_POSTBUILD_DEP)"
 
 !ENDIF 
 

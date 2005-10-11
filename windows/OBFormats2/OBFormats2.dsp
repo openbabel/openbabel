@@ -82,6 +82,11 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 kernel32.lib user32.lib obconv.lib obdll.lib /nologo /dll /debug /machine:I386 /out:"Debug/OBFormats2D.obf" /pdbtype:sept /libpath:"..\OBDLL\Debug" /libpath:"..\OBConv\Debug"
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PostBuild_Desc=Copy debug versions of obconv.dll, obdll.dll
+PostBuild_Cmds=Copy  ..\obconv\debug\obconv.dll  .\debug  /Y	Copy  ..\obdll\debug\obdll.dll  .\debug  /Y
+# End Special Build Tool
 
 !ENDIF 
 
@@ -147,10 +152,12 @@ SOURCE=..\..\src\formats\chemtoolformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\cml.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\formats\cmlformat.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -203,10 +210,6 @@ SOURCE=..\..\src\formats\jaguarformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\mdlformat.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\formats\mm3format.cpp
 # End Source File
 # Begin Source File
 

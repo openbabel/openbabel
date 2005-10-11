@@ -48,7 +48,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MD /W3 /GR /GX /O2 /I ".." /I "../../data" /D "NDEBUG" /D "USING_DYNAMIC_LIBS" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /D "HAVE_CONFIG_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MD /W3 /GR /GX /O2 /I ".." /I "../../data" /I "../../src" /D "NDEBUG" /D "USING_DYNAMIC_LIBS" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /D "HAVE_CONFIG_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBConv.bsc" 
@@ -58,7 +58,8 @@ LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\OBConv.pdb" /machine:I386 /out:"OBConv.dll" /implib:"$(OUTDIR)\OBConv.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\dlhandler_win32.obj" \
-	"$(INTDIR)\obconversion.obj"
+	"$(INTDIR)\obconversion.obj" \
+	"..\zdll.lib"
 
 ".\OBConv.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -110,7 +111,8 @@ LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBConv.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBConv.dll" /implib:"$(OUTDIR)\OBConv.lib" /pdbtype:sept 
 LINK32_OBJS= \
 	"$(INTDIR)\dlhandler_win32.obj" \
-	"$(INTDIR)\obconversion.obj"
+	"$(INTDIR)\obconversion.obj" \
+	"..\zdll.lib"
 
 "$(OUTDIR)\OBConv.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<

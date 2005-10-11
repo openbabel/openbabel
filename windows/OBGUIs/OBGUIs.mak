@@ -38,6 +38,7 @@ ALL : ".\OBGUIs.exe"
 
 
 CLEAN :
+	-@erase "$(INTDIR)\APIInterface.obj"
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\base.obj"
 	-@erase "$(INTDIR)\bitvec.obj"
@@ -45,8 +46,8 @@ CLEAN :
 	-@erase "$(INTDIR)\bondtyper.obj"
 	-@erase "$(INTDIR)\chains.obj"
 	-@erase "$(INTDIR)\chiral.obj"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cmlformat.obj"
+	-@erase "$(INTDIR)\cmlppformat.obj"
+	-@erase "$(INTDIR)\cmlreactlformat.obj"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
 	-@erase "$(INTDIR)\DynamicOptions.obj"
@@ -64,6 +65,7 @@ CLEAN :
 	-@erase "$(INTDIR)\mol.obj"
 	-@erase "$(INTDIR)\mol2format.obj"
 	-@erase "$(INTDIR)\molchrg.obj"
+	-@erase "$(INTDIR)\mpdformat.obj"
 	-@erase "$(INTDIR)\obconversion.obj"
 	-@erase "$(INTDIR)\oberror.obj"
 	-@erase "$(INTDIR)\OBGUI.obj"
@@ -74,6 +76,7 @@ CLEAN :
 	-@erase "$(INTDIR)\parsmart.obj"
 	-@erase "$(INTDIR)\patty.obj"
 	-@erase "$(INTDIR)\phmodel.obj"
+	-@erase "$(INTDIR)\pubchem.obj"
 	-@erase "$(INTDIR)\qchemformat.obj"
 	-@erase "$(INTDIR)\rand.obj"
 	-@erase "$(INTDIR)\residue.obj"
@@ -88,12 +91,15 @@ CLEAN :
 	-@erase "$(INTDIR)\typer.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vector3.obj"
+	-@erase "$(INTDIR)\xcmlformat.obj"
+	-@erase "$(INTDIR)\xml.obj"
+	-@erase "$(INTDIR)\xmlformat.obj"
 	-@erase ".\OBGUIs.exe"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\..\src\formats\xml" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "NDEBUG" 
 BSC32=bscmake.exe
@@ -101,8 +107,9 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUIs.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=nafxcw.lib libcmt.lib libinchi.lib Shlwapi.lib cmlppdll.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".." 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcw.lib libcmt.lib libinchi.lib Shlwapi.lib cmlpp.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\release" 
 LINK32_OBJS= \
+	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bitvec.obj" \
@@ -110,11 +117,15 @@ LINK32_OBJS= \
 	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
+	"$(INTDIR)\cmlppformat.obj" \
+	"$(INTDIR)\cmlreactlformat.obj" \
 	"$(INTDIR)\data.obj" \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\DynamicOptions.obj" \
+	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\finger3.obj" \
+	"$(INTDIR)\fingerprint.obj" \
+	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
 	"$(INTDIR)\inchiformat.obj" \
@@ -125,6 +136,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\mol.obj" \
 	"$(INTDIR)\mol2format.obj" \
 	"$(INTDIR)\molchrg.obj" \
+	"$(INTDIR)\mpdformat.obj" \
 	"$(INTDIR)\obconversion.obj" \
 	"$(INTDIR)\oberror.obj" \
 	"$(INTDIR)\OBGUI.obj" \
@@ -134,6 +146,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
 	"$(INTDIR)\phmodel.obj" \
+	"$(INTDIR)\pubchem.obj" \
 	"$(INTDIR)\qchemformat.obj" \
 	"$(INTDIR)\rand.obj" \
 	"$(INTDIR)\residue.obj" \
@@ -147,11 +160,12 @@ LINK32_OBJS= \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
+	"$(INTDIR)\xcmlformat.obj" \
+	"$(INTDIR)\xml.obj" \
+	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\OBGUI.res" \
-	"$(INTDIR)\finger2.obj" \
-	"$(INTDIR)\finger3.obj" \
-	"$(INTDIR)\fingerprint.obj" \
-	"$(INTDIR)\fingerprintformat.obj"
+	"..\libxml2.lib" \
+	"..\zdll.lib"
 
 ".\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -170,6 +184,8 @@ ALL : "$(OUTDIR)\OBGUIs.exe" "$(OUTDIR)\OBGUIs.bsc"
 
 
 CLEAN :
+	-@erase "$(INTDIR)\APIInterface.obj"
+	-@erase "$(INTDIR)\APIInterface.sbr"
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\atom.sbr"
 	-@erase "$(INTDIR)\base.obj"
@@ -184,10 +200,8 @@ CLEAN :
 	-@erase "$(INTDIR)\chains.sbr"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\chiral.sbr"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cml.sbr"
-	-@erase "$(INTDIR)\cmlformat.obj"
-	-@erase "$(INTDIR)\cmlformat.sbr"
+	-@erase "$(INTDIR)\cmlreactlformat.obj"
+	-@erase "$(INTDIR)\cmlreactlformat.sbr"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\data.sbr"
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
@@ -224,6 +238,8 @@ CLEAN :
 	-@erase "$(INTDIR)\mol2format.sbr"
 	-@erase "$(INTDIR)\molchrg.obj"
 	-@erase "$(INTDIR)\molchrg.sbr"
+	-@erase "$(INTDIR)\mpdformat.obj"
+	-@erase "$(INTDIR)\mpdformat.sbr"
 	-@erase "$(INTDIR)\obconversion.obj"
 	-@erase "$(INTDIR)\obconversion.sbr"
 	-@erase "$(INTDIR)\oberror.obj"
@@ -243,6 +259,8 @@ CLEAN :
 	-@erase "$(INTDIR)\patty.sbr"
 	-@erase "$(INTDIR)\phmodel.obj"
 	-@erase "$(INTDIR)\phmodel.sbr"
+	-@erase "$(INTDIR)\pubchem.obj"
+	-@erase "$(INTDIR)\pubchem.sbr"
 	-@erase "$(INTDIR)\qchemformat.obj"
 	-@erase "$(INTDIR)\qchemformat.sbr"
 	-@erase "$(INTDIR)\rand.obj"
@@ -271,6 +289,12 @@ CLEAN :
 	-@erase "$(INTDIR)\vc60.pdb"
 	-@erase "$(INTDIR)\vector3.obj"
 	-@erase "$(INTDIR)\vector3.sbr"
+	-@erase "$(INTDIR)\xcmlformat.obj"
+	-@erase "$(INTDIR)\xcmlformat.sbr"
+	-@erase "$(INTDIR)\xml.obj"
+	-@erase "$(INTDIR)\xml.sbr"
+	-@erase "$(INTDIR)\xmlformat.obj"
+	-@erase "$(INTDIR)\xmlformat.sbr"
 	-@erase "$(OUTDIR)\OBGUIs.bsc"
 	-@erase "$(OUTDIR)\OBGUIs.exe"
 	-@erase "$(OUTDIR)\OBGUIs.ilk"
@@ -279,12 +303,13 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\OBGUI" /I "..\..\src\formats\cmlpp\source\dom" /I "..\..\src\formats\cmlpp\source\schema" /I "..\..\src\formats\cmlpp\source\tools" /I "..\..\src\formats\cmlpp\source\util" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src\formats\xml" /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\OBGUI" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "_DEBUG" 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUIs.bsc" 
 BSC32_SBRS= \
+	"$(INTDIR)\APIInterface.sbr" \
 	"$(INTDIR)\atom.sbr" \
 	"$(INTDIR)\base.sbr" \
 	"$(INTDIR)\bitvec.sbr" \
@@ -292,8 +317,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\bondtyper.sbr" \
 	"$(INTDIR)\chains.sbr" \
 	"$(INTDIR)\chiral.sbr" \
-	"$(INTDIR)\cml.sbr" \
-	"$(INTDIR)\cmlformat.sbr" \
+	"$(INTDIR)\cmlreactlformat.sbr" \
 	"$(INTDIR)\data.sbr" \
 	"$(INTDIR)\dlhandler_win32.sbr" \
 	"$(INTDIR)\DynamicOptions.sbr" \
@@ -312,6 +336,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\mol.sbr" \
 	"$(INTDIR)\mol2format.sbr" \
 	"$(INTDIR)\molchrg.sbr" \
+	"$(INTDIR)\mpdformat.sbr" \
 	"$(INTDIR)\obconversion.sbr" \
 	"$(INTDIR)\oberror.sbr" \
 	"$(INTDIR)\OBGUI.sbr" \
@@ -321,6 +346,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\parsmart.sbr" \
 	"$(INTDIR)\patty.sbr" \
 	"$(INTDIR)\phmodel.sbr" \
+	"$(INTDIR)\pubchem.sbr" \
 	"$(INTDIR)\qchemformat.sbr" \
 	"$(INTDIR)\rand.sbr" \
 	"$(INTDIR)\residue.sbr" \
@@ -333,7 +359,10 @@ BSC32_SBRS= \
 	"$(INTDIR)\tokenst.sbr" \
 	"$(INTDIR)\transform.sbr" \
 	"$(INTDIR)\typer.sbr" \
-	"$(INTDIR)\vector3.sbr"
+	"$(INTDIR)\vector3.sbr" \
+	"$(INTDIR)\xcmlformat.sbr" \
+	"$(INTDIR)\xml.sbr" \
+	"$(INTDIR)\xmlformat.sbr"
 
 "$(OUTDIR)\OBGUIs.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -343,6 +372,7 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib libinchi.lib Shlwapi.lib cmlpp.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\debug" 
 LINK32_OBJS= \
+	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bitvec.obj" \
@@ -350,8 +380,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
+	"$(INTDIR)\cmlreactlformat.obj" \
 	"$(INTDIR)\data.obj" \
 	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\DynamicOptions.obj" \
@@ -370,6 +399,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\mol.obj" \
 	"$(INTDIR)\mol2format.obj" \
 	"$(INTDIR)\molchrg.obj" \
+	"$(INTDIR)\mpdformat.obj" \
 	"$(INTDIR)\obconversion.obj" \
 	"$(INTDIR)\oberror.obj" \
 	"$(INTDIR)\OBGUI.obj" \
@@ -379,6 +409,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
 	"$(INTDIR)\phmodel.obj" \
+	"$(INTDIR)\pubchem.obj" \
 	"$(INTDIR)\qchemformat.obj" \
 	"$(INTDIR)\rand.obj" \
 	"$(INTDIR)\residue.obj" \
@@ -392,7 +423,12 @@ LINK32_OBJS= \
 	"$(INTDIR)\transform.obj" \
 	"$(INTDIR)\typer.obj" \
 	"$(INTDIR)\vector3.obj" \
-	"$(INTDIR)\OBGUI.res"
+	"$(INTDIR)\xcmlformat.obj" \
+	"$(INTDIR)\xml.obj" \
+	"$(INTDIR)\xmlformat.obj" \
+	"$(INTDIR)\OBGUI.res" \
+	"..\libxml2.lib" \
+	"..\zdll.lib"
 
 "$(OUTDIR)\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -442,6 +478,24 @@ LINK32_OBJS= \
 
 
 !IF "$(CFG)" == "OBGUIs - Win32 Release" || "$(CFG)" == "OBGUIs - Win32 Debug"
+SOURCE=..\..\src\formats\APIInterface.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\APIInterface.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\APIInterface.obj"	"$(INTDIR)\APIInterface.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\assignbonds.cpp
 SOURCE=..\..\src\atom.cpp
 
@@ -570,36 +624,33 @@ SOURCE=..\..\src\chiral.cpp
 !ENDIF 
 
 SOURCE=..\..\src\formats\cml.cpp
+SOURCE=..\..\src\formats\cmlformat.cpp
+SOURCE=..\..\src\formats\cmlppformat.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
 
-"$(INTDIR)\cml.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cmlppformat.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
-
-
-"$(INTDIR)\cml.obj"	"$(INTDIR)\cml.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\cmlformat.cpp
+SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
 
-"$(INTDIR)\cmlformat.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cmlreactlformat.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
 
-"$(INTDIR)\cmlformat.obj"	"$(INTDIR)\cmlformat.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cmlreactlformat.obj"	"$(INTDIR)\cmlreactlformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -672,8 +723,7 @@ SOURCE=..\..\src\formats\fastsearchformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\fingerprint\finger1.cpp
-SOURCE=..\..\src\finger2.cpp
+SOURCE=..\..\src\fingerprints\finger2.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
@@ -691,7 +741,7 @@ SOURCE=..\..\src\finger2.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\finger3.cpp
+SOURCE=..\..\src\fingerprints\finger3.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
 
@@ -925,7 +975,24 @@ SOURCE=..\..\src\molchrg.cpp
 
 !ENDIF 
 
-SOURCE="..\..\src\formats\cmlpp\ob-cml.cpp"
+SOURCE=..\..\src\formats\mpdformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\mpdformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\mpdformat.obj"	"$(INTDIR)\mpdformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\obconversion.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -1101,6 +1168,24 @@ SOURCE=..\..\src\phmodel.cpp
 
 
 "$(INTDIR)\phmodel.obj"	"$(INTDIR)\phmodel.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\xml\pubchem.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\pubchem.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\pubchem.obj"	"$(INTDIR)\pubchem.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1335,6 +1420,60 @@ SOURCE=..\..\src\math\vector3.cpp
 
 
 "$(INTDIR)\vector3.obj"	"$(INTDIR)\vector3.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\xml\xcmlformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\xcmlformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\xcmlformat.obj"	"$(INTDIR)\xcmlformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\xml\xml.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\xml.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\xml.obj"	"$(INTDIR)\xml.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\xml\xmlformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\xmlformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\xmlformat.obj"	"$(INTDIR)\xmlformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

@@ -39,12 +39,12 @@ ALL : ".\babel.exe"
 
 !ELSE 
 
-ALL : "OBConv - Win32 Release" ".\babel.exe"
+ALL : "OBDLL - Win32 Release" "OBConv - Win32 Release" ".\babel.exe"
 
 !ENDIF 
 
 !IF "$(RECURSE)" == "1" 
-CLEAN :"OBConv - Win32 ReleaseCLEAN" 
+CLEAN :"OBConv - Win32 ReleaseCLEAN" "OBDLL - Win32 ReleaseCLEAN" 
 !ELSE 
 CLEAN :
 !ENDIF 
@@ -64,7 +64,8 @@ LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obconv.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\babel.pdb" /machine:I386 /out:"babel.exe" /libpath:"..\OBConv\Release" 
 LINK32_OBJS= \
 	"$(INTDIR)\main.obj" \
-	"..\OBConv\Release\OBConv.lib"
+	"..\OBConv\Release\OBConv.lib" \
+	"..\OBDLL\Release\OBDLL.lib"
 
 ".\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -77,7 +78,7 @@ DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
 
 ALL : $(DS_POSTBUILD_DEP)
 
-$(DS_POSTBUILD_DEP) : "OBConv - Win32 Release" ".\babel.exe"
+$(DS_POSTBUILD_DEP) : "OBDLL - Win32 Release" "OBConv - Win32 Release" ".\babel.exe"
    copy ..\OBConv\OBConv.dll  . /Y
 	copy  ..\OBFormats2\OBFormats2.obf . /Y
 	copy ..\OBDLL\OBDLL.dll  .  /Y
@@ -97,12 +98,12 @@ ALL : "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBConsole.bsc"
 
 !ELSE 
 
-ALL : "OBConv - Win32 Debug" "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBConsole.bsc"
+ALL : "OBDLL - Win32 Debug" "OBConv - Win32 Debug" "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBConsole.bsc"
 
 !ENDIF 
 
 !IF "$(RECURSE)" == "1" 
-CLEAN :"OBConv - Win32 DebugCLEAN" 
+CLEAN :"OBConv - Win32 DebugCLEAN" "OBDLL - Win32 DebugCLEAN" 
 !ELSE 
 CLEAN :
 !ENDIF 
@@ -133,7 +134,8 @@ LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obconv.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\babel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\babel.exe" /pdbtype:sept /libpath:"..\OBConv\debug\\" 
 LINK32_OBJS= \
 	"$(INTDIR)\main.obj" \
-	"..\OBConv\Debug\OBConv.lib"
+	"..\OBConv\Debug\OBConv.lib" \
+	"..\OBDLL\Debug\OBDLL.lib"
 
 "$(OUTDIR)\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -150,7 +152,7 @@ ALL : $(DS_POSTBUILD_DEP)
 OutDir=.\Debug
 # End Custom Macros
 
-$(DS_POSTBUILD_DEP) : "OBConv - Win32 Debug" "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBConsole.bsc"
+$(DS_POSTBUILD_DEP) : "OBDLL - Win32 Debug" "OBConv - Win32 Debug" "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBConsole.bsc"
    copy ..\OBConv\Debug\OBConv.dll  .\debug /Y
 	copy  ..\OBFormats2\debug\OBFormats2D.obf .\debug /Y
 	copy ..\OBDLL\debug\OBDLL.dll  .\debug  /Y
@@ -239,6 +241,32 @@ SOURCE=..\..\src\main.cpp
 "OBConv - Win32 DebugCLEAN" : 
    cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" RECURSE=1 CLEAN 
+   cd "..\OBConsole"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "OBConsole - Win32 Release"
+
+"OBDLL - Win32 Release" : 
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Release" 
+   cd "..\OBConsole"
+
+"OBDLL - Win32 ReleaseCLEAN" : 
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Release" RECURSE=1 CLEAN 
+   cd "..\OBConsole"
+
+!ELSEIF  "$(CFG)" == "OBConsole - Win32 Debug"
+
+"OBDLL - Win32 Debug" : 
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Debug" 
+   cd "..\OBConsole"
+
+"OBDLL - Win32 DebugCLEAN" : 
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Debug" RECURSE=1 CLEAN 
    cd "..\OBConsole"
 
 !ENDIF 

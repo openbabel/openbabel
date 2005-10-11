@@ -40,12 +40,12 @@ ALL : ".\OBGUI.exe"
 
 !ELSE 
 
-ALL : "OBConv - Win32 Release" ".\OBGUI.exe"
+ALL : "OBDLL - Win32 Release" "OBConv - Win32 Release" ".\OBGUI.exe"
 
 !ENDIF 
 
 !IF "$(RECURSE)" == "1" 
-CLEAN :"OBConv - Win32 ReleaseCLEAN" 
+CLEAN :"OBConv - Win32 ReleaseCLEAN" "OBDLL - Win32 ReleaseCLEAN" 
 !ELSE 
 CLEAN :
 !ENDIF 
@@ -75,7 +75,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\OBGUIDlg.obj" \
 	"$(INTDIR)\StdAfx.obj" \
 	"$(INTDIR)\OBGUI.res" \
-	"..\OBConv\Release\OBConv.lib"
+	"..\OBConv\Release\OBConv.lib" \
+	"..\OBDLL\Release\OBDLL.lib"
 
 ".\OBGUI.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -88,7 +89,7 @@ DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
 
 ALL : $(DS_POSTBUILD_DEP)
 
-$(DS_POSTBUILD_DEP) : "OBConv - Win32 Release" ".\OBGUI.exe"
+$(DS_POSTBUILD_DEP) : "OBDLL - Win32 Release" "OBConv - Win32 Release" ".\OBGUI.exe"
    Copy  ..\obformats2\obformats2.obf . /Y
 	Copy  ..\obconv\obconv.dll . /Y
 	Copy  ..\obdll\obdll.dll . /Y
@@ -108,12 +109,12 @@ ALL : "$(OUTDIR)\OBGUI.exe" "$(OUTDIR)\OBGUI.bsc"
 
 !ELSE 
 
-ALL : "OBConv - Win32 Debug" "$(OUTDIR)\OBGUI.exe" "$(OUTDIR)\OBGUI.bsc"
+ALL : "OBDLL - Win32 Debug" "OBConv - Win32 Debug" "$(OUTDIR)\OBGUI.exe" "$(OUTDIR)\OBGUI.bsc"
 
 !ENDIF 
 
 !IF "$(RECURSE)" == "1" 
-CLEAN :"OBConv - Win32 DebugCLEAN" 
+CLEAN :"OBConv - Win32 DebugCLEAN" "OBDLL - Win32 DebugCLEAN" 
 !ELSE 
 CLEAN :
 !ENDIF 
@@ -160,7 +161,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\OBGUIDlg.obj" \
 	"$(INTDIR)\StdAfx.obj" \
 	"$(INTDIR)\OBGUI.res" \
-	"..\OBConv\Debug\OBConv.lib"
+	"..\OBConv\Debug\OBConv.lib" \
+	"..\OBDLL\Debug\OBDLL.lib"
 
 "$(OUTDIR)\OBGUI.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -168,7 +170,7 @@ LINK32_OBJS= \
 <<
 
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats2.obf
+PostBuild_Desc=Copy debug versions of obconv.dll, obdll.dll and *.obf
 DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
 
 ALL : $(DS_POSTBUILD_DEP)
@@ -177,10 +179,12 @@ ALL : $(DS_POSTBUILD_DEP)
 OutDir=.\Debug
 # End Custom Macros
 
-$(DS_POSTBUILD_DEP) : "OBConv - Win32 Debug" "$(OUTDIR)\OBGUI.exe" "$(OUTDIR)\OBGUI.bsc"
-   Copy  ..\obconv\debug\obconv.dll  .\debug  /Y
-	Copy  ..\obformats2\debug\obformats2D.obf .\debug /Y
-	Copy  ..\obdll\debug\obdll.dll  .\debug  /Y
+$(DS_POSTBUILD_DEP) : "OBDLL - Win32 Debug" "OBConv - Win32 Debug" "$(OUTDIR)\OBGUI.exe" "$(OUTDIR)\OBGUI.bsc"
+   XCopy  ..\obconv\debug\obconv.dll  .\debug  /Y
+	XCopy  ..\obformats2\debug\obformats2D.obf .\debug /Y
+	XCopy  ..\obdll\debug\obdll.dll  .\debug  /Y
+	XCopy  ..\obextraformats\debug\obextraD.obf .\debug /Y
+	XCopy  ..\obxmlformats\debug\OBXMLD.obf .\debug /Y
 	echo Helper for Post-build step > "$(DS_POSTBUILD_DEP)"
 
 !ENDIF 
@@ -350,6 +354,32 @@ CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I 
 "OBConv - Win32 DebugCLEAN" : 
    cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" RECURSE=1 CLEAN 
+   cd "..\OBGUI"
+
+!ENDIF 
+
+!IF  "$(CFG)" == "OBGUI - Win32 Release"
+
+"OBDLL - Win32 Release" : 
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Release" 
+   cd "..\OBGUI"
+
+"OBDLL - Win32 ReleaseCLEAN" : 
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Release" RECURSE=1 CLEAN 
+   cd "..\OBGUI"
+
+!ELSEIF  "$(CFG)" == "OBGUI - Win32 Debug"
+
+"OBDLL - Win32 Debug" : 
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Debug" 
+   cd "..\OBGUI"
+
+"OBDLL - Win32 DebugCLEAN" : 
+   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Debug" RECURSE=1 CLEAN 
    cd "..\OBGUI"
 
 !ENDIF 

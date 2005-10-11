@@ -51,8 +51,8 @@ When CDynamicOptions::GetOptions() is called it returns a string containing the 
 		OptionsFound=true;
 		bool NextIsRadio=false;
 
-		p = strchr(p,'\n'); //options start on next line
-		while(p && *(++p)!='\n') //loop for all options until blank line
+		p = strchr(p,'\n')+1; //options start on next line		
+		while(p && *p && *p!='\n') //loop for all options until blank line
 		{
 			bool ProvideEditCtl=false;
 			while(*p && !isalnum(*(p++))); //skip space and punctuation
@@ -140,7 +140,7 @@ When CDynamicOptions::GetOptions() is called it returns a string containing the 
 					if (!NextIsRadio)
 						style |= WS_GROUP; //set only for first of group
 					NextIsRadio=true;
-					*p='\0';
+//					*p='\0';
 				}
 				else
 				{

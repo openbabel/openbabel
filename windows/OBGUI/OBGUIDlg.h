@@ -61,7 +61,7 @@ protected:
 
 	CDynamicOptions InputClassOptionCheckBoxes, InputOptionCheckBoxes, OutputOptionCheckBoxes,
 		GeneralOptionCheckBoxes;
-	OpenBabel::OBConversion Conv;
+	//OpenBabel::OBConversion Conv;
   ifstream inFileStream;
 	ofstream outFileStream;
 	CRect NextOptionRect; //Placeholder for next dynamic option; relative to parent window.

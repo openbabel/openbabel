@@ -184,7 +184,7 @@ BOOL COBGUIDlg::OnInitDialog()
 	InputFilterString="All Chemical Formats|*.";
 	OutputFilterString = InputFilterString;
 	Formatpos pos;
-	while(Conv.GetNextFormat(pos,str,pFormat))
+	while(OBConversion::GetNextFormat(pos,str,pFormat))
 	{
 		if(!str || !pFormat) break; //no formats available
 		if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
@@ -229,7 +229,7 @@ BOOL COBGUIDlg::OnInitDialog()
 	NextOptionRect = CtlRect-rect.TopLeft();
 
 	//Construct checkboxes for General Options
-	GeneralOptionCheckBoxes.Construct(Conv.Description(), this, NextOptionRect);	
+	GeneralOptionCheckBoxes.Construct(OBConversion::Description(), this, NextOptionRect);	
 	InputOptionRect=NextOptionRect;
 
 	OnChangeInputformat(); //write input and then output options

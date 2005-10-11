@@ -109,6 +109,10 @@ SOURCE=..\..\src\main.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\babelconfig.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\dlhandler.h
 # End Source File
 # Begin Source File
