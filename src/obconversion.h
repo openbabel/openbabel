@@ -190,7 +190,7 @@ public:
 	//@{
 							OBConversion(std::istream* is=NULL, std::ostream* os=NULL);
 	/// @brief Copy constructor
-	//						OBConversion(const OBConversion& Conv);
+							OBConversion(const OBConversion& o);
 	virtual     ~OBConversion(); 
 	//@}	
 	/// @name Collection of formats

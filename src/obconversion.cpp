@@ -20,6 +20,10 @@ GNU General Public License for more details.
 
 #ifdef _WIN32
 	#pragma warning (disable : 4786)
+
+	//using 'this' in base class initializer
+	#pragma warning (disable : 4355)
+
 	#ifdef GUI
 		#undef DATADIR
 		#include "stdafx.h" //(includes<windows.h>
@@ -221,13 +225,37 @@ FMapType& OBConversion::FormatsMIMEMap()
 }
 
 /////////////////////////////////////////////////
+OBConversion::OBConversion(const OBConversion& o)
+{
+	Index          = o.Index;
+	Count          = o.Count;
+	StartNumber    = o.StartNumber;
+	EndNumber      = o.EndNumber;
+	pInFormat      = o.pInFormat;
+	pInStream      = o.pInStream;
+	pOutFormat     = o.pOutFormat;
+	pOutStream     = o.pOutStream;
+	OptionsArray[0]= o.OptionsArray[0];
+	OptionsArray[1]= o.OptionsArray[1];
+	OptionsArray[2]= o.OptionsArray[2];
+	InFilename     = o.InFilename;
+	rInpos         = o.rInpos;
+	wInpos         = o.wInpos;
+	m_IsLast       = o.m_IsLast;
+	MoreFilesToCome= o.MoreFilesToCome;
+	OneObjectOnly  = o.OneObjectOnly;
+	pOb1           = o.pOb1;
+	ReadyToInput   = o.ReadyToInput;
+	
+	pAuxConv       = NULL;
+}
+////////////////////////////////////////////////
+
 OBConversion::~OBConversion() 
 {
 	if(pAuxConv!=this)
 		delete pAuxConv;
 }
-// \warning This function makes copying OBConversion objects unsafe.
-// \todo Write custom copy constructor. Meanwhile set call SetAuxConv(NULL) in the copy.
 //////////////////////////////////////////////////////
 
 /// Class information on formats is collected by making an instance of the class
@@ -618,7 +646,7 @@ OBFormat* OBConversion::FormatFromExt(const char* filename)
 #ifdef HAVE_LIBZ
 		if (file.substr(extPos,3) == ".gz")
 		{
-			file.erase(extPos!=string::npos);
+			file.erase(extPos);
 			extPos = file.rfind(".");
 			if (extPos!=string::npos)
 				return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
