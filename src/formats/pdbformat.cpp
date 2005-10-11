@@ -85,7 +85,7 @@ PDBFormat thePDBFormat;
 static bool ParseAtomRecord(char *, OBMol &,int);
 static bool ParseConectRecord(char *,OBMol &);
 
-extern OBResidueData    resdat;
+//extern OBResidueData    resdat; now in mol.h
 
 /////////////////////////////////////////////////////////////////
 bool PDBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
