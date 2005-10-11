@@ -1,3 +1,26 @@
+2005-10-11  Chris Morley  <c.morley@gaseq.co.uk>
+	* src/obconversion.cpp(FormatFromExt): correct mistake 
+	in last mod.
+	src/obconversion.h Add explicit copy constructor for 
+	OBConversion (just so	pAuxConv is set to NULL).
+
+	src/generic.cpp, src/chiral.cpp: added return statements 
+	etc to avoid compiler warnings.
+
+	* src/data.h: Added OBAPI to class OBResidueData (for DLL builds)
+
+	* src/mol.h, src/formats/pdbformat.h, src/data.cpp: Moved 
+	global variable	OBResidueData resdat to data.cpp and
+	treat it like other global variables. (This makes DLL builds
+	easier.) If its use is specific	to pdb format, perhaps it
+	should be a a static variable in PDBFormat?
+	
+	* windows/babelconfig.h: removed HAVE_LIBZ because in DLL
+	builds unzipping code was preventing input of any file. OK
+	in OBGUIs where is now defined in Settings.
+	
+	Updated Windows build files. 
+
 2005-10-09  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/obconversion.cpp(FormatFromExt): test failure of 
