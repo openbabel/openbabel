@@ -78,6 +78,8 @@ public:
     virtual ~OBGlobalDataBase()                  {}
     //! Read in the data file, falling back as needed
     void  Init();
+    //! \return the size of the database (for error checking)
+    virtual unsigned int GetSize()                 { return 0;}
     //! Set the directory before calling Init()
     void  SetReadDirectory(char *dir)            { _dir = dir;    }
     //! Set the environment variable to use before calling Init()
@@ -152,7 +154,8 @@ public:
     void  ParseLine(const char*);
 
     //! \return the number of elements in the periodic table
-    int		GetNumberOfElements();
+    unsigned int		GetNumberOfElements();
+    unsigned int GetSize() { return GetNumberOfElements(); }
 
     //! \deprecated Does not properly handle 'D' or 'T' hydrogen isotopes
     int   GetAtomicNum(const char *);
@@ -199,8 +202,11 @@ public:
     OBIsotopeTable(void);
     ~OBIsotopeTable()    {}
 
+    //! \return the number of elements in the isotope table
+    unsigned int GetSize() { return _isotopes.size(); }
+
     void	ParseLine(const char*);
-    //! Return the exact masss of the isotope
+    //! \return the exact masss of the isotope
     //!   (or by default (i.e. "isotope 0") the most abundant isotope)
     double	GetExactMass(const unsigned int atomicNum,
 			     const unsigned int isotope = 0);
@@ -210,7 +216,8 @@ public:
 class OBAPI OBTypeTable : public OBGlobalDataBase
 {
     int    _linecount;
-    int    _ncols,_nrows,_from,_to;
+    unsigned int    _ncols,_nrows;
+    int             _from,_to;
     std::vector<std::string> _colnames;
     std::vector<std::vector<std::string> > _table;
 
@@ -221,6 +228,9 @@ public:
 
     void ParseLine(const char*);
 
+    //! \return the number of atom types in the translation table
+    unsigned int GetSize() { return _table.size(); }
+
     //! Set the initial atom type to be translated
     bool SetFromType(const char*);
     //! Set the destination atom type for translation
@@ -230,9 +240,9 @@ public:
     //! Translate atom types
     bool Translate(std::string &to, const std::string &from); // to, from
 
-    //! Return the initial atom type to be translated
+    //! \return the initial atom type to be translated
     std::string GetFromType();
-    //! Return the destination atom type for translation
+    //! \return the destination atom type for translation
     std::string GetToType();
 };
 
@@ -252,10 +262,26 @@ public:
     OBResidueData();
     void ParseLine(const char*);
 
+    //! \return the number of residues in the table
+    unsigned int GetSize() { return _resname.size(); }
+
+    //! Sets the table to access the residue information for a specified
+    //!  residue name
+    //! \return whether this residue name is in the table
     bool SetResName(const std::string &);
+    //! \return the bond order for the bond specified in the current residue
+    //! \deprecated Easier to use the two-argument form
     int  LookupBO(const std::string &);
+    //! \return the bond order for the bond specified between the two specified
+    //! atom labels
     int  LookupBO(const std::string &, const std::string&);
+    //! Look up the atom type and hybridization for the atom label specified
+    //! in the first argument for the current residue
+    //! \return whether the atom label specified is found in the current residue
     bool LookupType(const std::string &,std::string&,int&);
+    //! Assign bond orders, atom types and residues for the supplied OBMol
+    //! based on the residue information assigned to atoms
+    //! \deprecated second OBBitVec argument is ignored
     bool AssignBonds(OBMol &,OBBitVec &);
 };
 

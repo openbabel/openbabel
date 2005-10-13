@@ -1,10 +1,37 @@
+2005-10-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* acinclude.m4: Fix bug in CHECK_ZLIB macro to correctly disable
+	zlib support if --without-zlib option is selected.
+
+	* src/data.h, src/typer.h, src/bondtyper.h, src/phmodel.h,
+	src/rotor.h: Add a GetSize() method to all OBGlobalDatabase
+	classes. Ensures a data table is not empty after calling Init().
+	
+	* configure.in, configure, src/config.h.in: Update for a 2005-10-15
+	snapshot. Require libxml2 >= 2.6.0 (which adds the xmlwriter API).
+
+	* doc/api-header.html, doc/api-style.css: Update with new Doxygen
+	version (which adds "tabs" to organize sections).
+
+	* src/Makefile.am, src/Makefile.in: Update to zipstreamimpl.h
+	instead of zipstream.cpp.
+
+	* src/zipstream.h: Switch basic_zip_ostream and
+	basic_unzip_istream to using public base classes, which works
+	around a bug in some versions of GCC.
+
+	* src/formats/xml/Makefile.am, src/formats/xml/Makefile.in: Switch
+	from defining LDFLAGS to correct AM_LDFLAGS (which allows the user
+	to customize LDFLAGS as desired).
+
 2005-10-11  Chris Morley  <c.morley@gaseq.co.uk>
+
 	* src/obconversion.cpp(FormatFromExt): correct mistake 
 	in last mod.
 	src/obconversion.h Add explicit copy constructor for 
 	OBConversion (just so	pAuxConv is set to NULL).
 
-	src/generic.cpp, src/chiral.cpp: added return statements 
+	* src/generic.cpp, src/chiral.cpp: added return statements 
 	etc to avoid compiler warnings.
 
 	* src/data.h: Added OBAPI to class OBResidueData (for DLL builds)

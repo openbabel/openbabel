@@ -124,7 +124,7 @@ void OBElementTable::ParseLine(const char *buffer)
     }
 }
 
-int OBElementTable::GetNumberOfElements()
+unsigned int OBElementTable::GetNumberOfElements()
 { 
     if (!_init)
         Init();
@@ -872,7 +872,7 @@ void OBGlobalDataBase::Init()
             string s = "Unable to open data file '";
             s += _filename;
             s += "'";
-	    obErrorLog.ThrowError(__FUNCTION__, s, obInfo);
+	    obErrorLog.ThrowError(__FUNCTION__, s, obWarning);
         }
 
     if (ifs1)
@@ -883,6 +883,15 @@ void OBGlobalDataBase::Init()
         ifs3.close();
     if (ifs4)
         ifs4.close();
+
+    if (GetSize() == 0)
+      {
+            string s = "Cannot initialize database '";
+            s += _filename;
+            s += "' which may cause further errors.";
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot initialize database", obWarning);
+      }
+      
 }
 
 } // end namespace OpenBabel

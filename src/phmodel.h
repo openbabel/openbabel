@@ -36,11 +36,11 @@ class OBAPI OBChemTsfm
     std::vector<std::pair<std::pair<int,int>,int> >  _vbond;
     OBSmartsPattern _bgn,_end;
 public:
-    OBChemTsfm()
-    {}
-    ~OBChemTsfm()
-    {}
-    bool Init(std::string&,std::string&);
+    OBChemTsfm()    {}
+    ~OBChemTsfm()   {}
+    //! Initialize this transformation with the supplied SMARTS patterns
+    bool Init(std::string&start, std::string &end);
+    //! Apply this transformation to all matches in the supplied OBMol
     bool Apply(OBMol&);
 };
 
@@ -55,6 +55,8 @@ public:
     ~OBPhModel();
 
     void ParseLine(const char*);
+    //! \return the number of chemical transformations
+    unsigned int GetSize()                 { return _vtsfm.size();}
     void AssignSeedPartialCharge(OBMol&);
     void CorrectForPH(OBMol&);
 };

@@ -40,6 +40,9 @@ public:
     ~OBAtomTyper();
 
     void ParseLine(const char*);
+    //! \return the number of implicit valence rules
+    unsigned int GetSize()                 { return _vimpval.size();}
+
     //! Assign atomic hybridization (1 = sp, 2 = sp2, 3 = sp3...)
     void AssignHyb(OBMol&);
     //! Assign external atomic types (i.e., EXTTYP lines in atomtyp.txt)
@@ -64,6 +67,9 @@ class OBAPI OBAromaticTyper : public OBGlobalDataBase
 public:
     OBAromaticTyper();
     ~OBAromaticTyper();
+
+    //! \return the number of SMARTS patterns
+    unsigned int GetSize()                 { return _vsp.size();}
 
     void ParseLine(const char*);
     void AssignAromaticFlags(OBMol &);

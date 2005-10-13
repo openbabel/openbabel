@@ -38,6 +38,8 @@ public:
     //! \name OBBondTyper Database Utilities
     //@{
     void ParseLine(const char*);
+    //! \return the size of the database (for error checking)
+    unsigned int GetSize()                 { return _fgbonds.size();}
     //@}
     
     //! \name Bond Perception Routines

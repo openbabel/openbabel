@@ -99,6 +99,9 @@ public:
     ~OBRotorRules();
 
     void ParseLine(const char*);
+    //! \return the number of rotor rules
+    unsigned int GetSize()                 { return _vr.size();}
+
     void SetFilename(std::string &s)
     {
         _filename = s;
