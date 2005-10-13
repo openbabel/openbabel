@@ -211,7 +211,7 @@ private:
 template <class charT,
           class traits = std::char_traits<charT> >
 class basic_zip_ostream :
-    private basic_zip_streambuf<charT, traits>,
+    public basic_zip_streambuf<charT, traits>,
     public std::basic_ostream<charT, traits>
 {
 public:
@@ -256,7 +256,7 @@ private:
 template <class charT,
           class traits = std::char_traits<charT> >
 class basic_zip_istream :
-    private basic_unzip_streambuf<charT, traits>,
+    public basic_unzip_streambuf<charT, traits>,
     public std::basic_istream<charT, traits>
 {
 public:
