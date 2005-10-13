@@ -2,7 +2,7 @@ EXTRA_DIST = xml.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 AM_CPPFLAGS =  @XML_CPPFLAGS@
-LDFLAGS = @LIBS@ @XML_LIBS@
+AM_LDFLAGS = @LIBS@ @XML_LIBS@
 
 if BUILD_SHARED
 
