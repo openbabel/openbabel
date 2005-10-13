@@ -65,16 +65,17 @@ AC_ARG_WITH(zlib,
     ZLIB_HOME="$withval"
   else
     AC_MSG_WARN([Sorry, $withval does not exist, checking usual places])
+    ZLIB_HOME=/usr/local
   fi
-else
-  AC_MSG_RESULT(no)
-fi])
 
-ZLIB_HOME=/usr/local
 if test ! -f "${ZLIB_HOME}/include/zlib.h"
 then
         ZLIB_HOME=/usr
 fi
+
+else # --without-zlib
+  AC_MSG_RESULT(no)
+fi])
 
 #
 # Locate zlib, if wanted
