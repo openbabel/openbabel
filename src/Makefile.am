@@ -1,5 +1,5 @@
 EXTRA_DIST = \
-	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstream.cpp
+	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h
 
 SUBDIRS = math formats fingerprints
 INCLUDES = -I$(top_srcdir)/data/
