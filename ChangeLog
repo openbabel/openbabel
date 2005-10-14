@@ -1,3 +1,7 @@
+2005-10-14  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	Update Windows build files and documentation. Remove unused files.
+
 2005-10-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* acinclude.m4: Fix bug in CHECK_ZLIB macro to correctly disable
