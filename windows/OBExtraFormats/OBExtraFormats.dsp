@@ -103,6 +103,14 @@ SOURCE=..\..\src\formats\fastsearchformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\fingerprints\finger2.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprints\finger3.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\fingerprintformat.cpp
 # End Source File
 # Begin Source File

@@ -33,21 +33,11 @@ RSC=rc.exe
 OUTDIR=.\Release
 INTDIR=.\Release
 
-!IF "$(RECURSE)" == "0" 
-
 ALL : ".\ProgramTest.exe"
 
-!ELSE 
 
-ALL : "OBDLL - Win32 Release" "OBConv - Win32 Release" ".\ProgramTest.exe"
-
-!ENDIF 
-
-!IF "$(RECURSE)" == "1" 
-CLEAN :"OBConv - Win32 ReleaseCLEAN" "OBDLL - Win32 ReleaseCLEAN" 
-!ELSE 
 CLEAN :
-!ENDIF 
+	-@erase "$(INTDIR)\ctiter.obj"
 	-@erase "$(INTDIR)\prog1.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase ".\ProgramTest.exe"
@@ -55,7 +45,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MD /W3 /GR /GX /O2 /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\ProgramTest.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MD /W3 /GR /GX /O2 /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "USING_DYNAMIC_LIBS" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "HAVE_CONFIG_H" /Fp"$(INTDIR)\ProgramTest.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\ProgramTest.bsc" 
 BSC32_SBRS= \
@@ -63,9 +53,8 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obdll.lib obconv.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\ProgramTest.pdb" /machine:I386 /out:"ProgramTest.exe" /libpath:"..\OBConv\release" /libpath:"..\OBDLL\release" 
 LINK32_OBJS= \
-	"$(INTDIR)\prog1.obj" \
-	"..\OBConv\Release\OBConv.lib" \
-	"..\OBDLL\Release\OBDLL.lib"
+	"$(INTDIR)\ctiter.obj" \
+	"$(INTDIR)\prog1.obj"
 
 ".\ProgramTest.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -80,21 +69,12 @@ INTDIR=.\Debug
 OutDir=.\Debug
 # End Custom Macros
 
-!IF "$(RECURSE)" == "0" 
-
 ALL : "$(OUTDIR)\ProgramTest.exe" "$(OUTDIR)\ProgramTest.bsc"
 
-!ELSE 
 
-ALL : "OBDLL - Win32 Debug" "OBConv - Win32 Debug" "$(OUTDIR)\ProgramTest.exe" "$(OUTDIR)\ProgramTest.bsc"
-
-!ENDIF 
-
-!IF "$(RECURSE)" == "1" 
-CLEAN :"OBConv - Win32 DebugCLEAN" "OBDLL - Win32 DebugCLEAN" 
-!ELSE 
 CLEAN :
-!ENDIF 
+	-@erase "$(INTDIR)\ctiter.obj"
+	-@erase "$(INTDIR)\ctiter.sbr"
 	-@erase "$(INTDIR)\prog1.obj"
 	-@erase "$(INTDIR)\prog1.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
@@ -107,10 +87,11 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "USING_OBDLL" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\ProgramTest.bsc" 
 BSC32_SBRS= \
+	"$(INTDIR)\ctiter.sbr" \
 	"$(INTDIR)\prog1.sbr"
 
 "$(OUTDIR)\ProgramTest.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
@@ -121,9 +102,8 @@ BSC32_SBRS= \
 LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib obdll.lib obconv.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\ProgramTest.pdb" /debug /machine:I386 /out:"$(OUTDIR)\ProgramTest.exe" /pdbtype:sept /libpath:"..\OBConv\debug" /libpath:"..\OBDLL\debug" 
 LINK32_OBJS= \
-	"$(INTDIR)\prog1.obj" \
-	"..\OBConv\Debug\OBConv.lib" \
-	"..\OBDLL\Debug\OBDLL.lib"
+	"$(INTDIR)\ctiter.obj" \
+	"$(INTDIR)\prog1.obj"
 
 "$(OUTDIR)\ProgramTest.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -140,7 +120,7 @@ ALL : $(DS_POSTBUILD_DEP)
 OutDir=.\Debug
 # End Custom Macros
 
-$(DS_POSTBUILD_DEP) : "OBDLL - Win32 Debug" "OBConv - Win32 Debug" "$(OUTDIR)\ProgramTest.exe" "$(OUTDIR)\ProgramTest.bsc"
+$(DS_POSTBUILD_DEP) : "$(OUTDIR)\ProgramTest.exe" "$(OUTDIR)\ProgramTest.bsc"
    copy  ..\obdll\debug\obdll.dll  .\debug  /Y
 	copy  ..\obconv\debug\obconv.dll  .\debug  /Y
 	copy  ..\obformats2\debug\obformats2D.obf  .\debug  /Y
@@ -189,6 +169,22 @@ $(DS_POSTBUILD_DEP) : "OBDLL - Win32 Debug" "OBConv - Win32 Debug" "$(OUTDIR)\Pr
 
 
 !IF "$(CFG)" == "ProgramTest - Win32 Release" || "$(CFG)" == "ProgramTest - Win32 Debug"
+SOURCE=.\ctiter.cpp
+
+!IF  "$(CFG)" == "ProgramTest - Win32 Release"
+
+
+"$(INTDIR)\ctiter.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ProgramTest - Win32 Debug"
+
+
+"$(INTDIR)\ctiter.obj"	"$(INTDIR)\ctiter.sbr" : $(SOURCE) "$(INTDIR)"
+
+
+!ENDIF 
+
 SOURCE=.\prog1.cpp
 
 !IF  "$(CFG)" == "ProgramTest - Win32 Release"
@@ -202,58 +198,6 @@ SOURCE=.\prog1.cpp
 
 "$(INTDIR)\prog1.obj"	"$(INTDIR)\prog1.sbr" : $(SOURCE) "$(INTDIR)"
 
-
-!ENDIF 
-
-!IF  "$(CFG)" == "ProgramTest - Win32 Release"
-
-"OBConv - Win32 Release" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
-   $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Release" 
-   cd "..\ProgramTest"
-
-"OBConv - Win32 ReleaseCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
-   $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Release" RECURSE=1 CLEAN 
-   cd "..\ProgramTest"
-
-!ELSEIF  "$(CFG)" == "ProgramTest - Win32 Debug"
-
-"OBConv - Win32 Debug" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
-   $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" 
-   cd "..\ProgramTest"
-
-"OBConv - Win32 DebugCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBConv"
-   $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" RECURSE=1 CLEAN 
-   cd "..\ProgramTest"
-
-!ENDIF 
-
-!IF  "$(CFG)" == "ProgramTest - Win32 Release"
-
-"OBDLL - Win32 Release" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBDLL"
-   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Release" 
-   cd "..\ProgramTest"
-
-"OBDLL - Win32 ReleaseCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBDLL"
-   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Release" RECURSE=1 CLEAN 
-   cd "..\ProgramTest"
-
-!ELSEIF  "$(CFG)" == "ProgramTest - Win32 Debug"
-
-"OBDLL - Win32 Debug" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBDLL"
-   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Debug" 
-   cd "..\ProgramTest"
-
-"OBDLL - Win32 DebugCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB\openbabel\windows\OBDLL"
-   $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Debug" RECURSE=1 CLEAN 
-   cd "..\ProgramTest"
 
 !ENDIF 
 

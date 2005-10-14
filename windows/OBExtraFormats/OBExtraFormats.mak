@@ -39,6 +39,8 @@ ALL : ".\OBExtra.obf"
 
 CLEAN :
 	-@erase "$(INTDIR)\fastsearchformat.obj"
+	-@erase "$(INTDIR)\finger2.obj"
+	-@erase "$(INTDIR)\finger3.obj"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\inchiformat.obj"
 	-@erase "$(INTDIR)\vc60.idb"
@@ -59,7 +61,9 @@ LINK32_FLAGS=gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.
 LINK32_OBJS= \
 	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
-	"$(INTDIR)\inchiformat.obj"
+	"$(INTDIR)\inchiformat.obj" \
+	"$(INTDIR)\finger3.obj" \
+	"$(INTDIR)\finger2.obj"
 
 ".\OBExtra.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -80,6 +84,10 @@ ALL : "$(OUTDIR)\OBExtraD.obf" "$(OUTDIR)\OBExtraFormats.bsc"
 CLEAN :
 	-@erase "$(INTDIR)\fastsearchformat.obj"
 	-@erase "$(INTDIR)\fastsearchformat.sbr"
+	-@erase "$(INTDIR)\finger2.obj"
+	-@erase "$(INTDIR)\finger2.sbr"
+	-@erase "$(INTDIR)\finger3.obj"
+	-@erase "$(INTDIR)\finger3.sbr"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\fingerprintformat.sbr"
 	-@erase "$(INTDIR)\inchiformat.obj"
@@ -102,7 +110,9 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBExtraFormats.bsc"
 BSC32_SBRS= \
 	"$(INTDIR)\fastsearchformat.sbr" \
 	"$(INTDIR)\fingerprintformat.sbr" \
-	"$(INTDIR)\inchiformat.sbr"
+	"$(INTDIR)\inchiformat.sbr" \
+	"$(INTDIR)\finger3.sbr" \
+	"$(INTDIR)\finger2.sbr"
 
 "$(OUTDIR)\OBExtraFormats.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -114,7 +124,9 @@ LINK32_FLAGS=kernel32.lib user32.lib obconv.lib obdll.lib libinchi.lib /nologo /
 LINK32_OBJS= \
 	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
-	"$(INTDIR)\inchiformat.obj"
+	"$(INTDIR)\inchiformat.obj" \
+	"$(INTDIR)\finger3.obj" \
+	"$(INTDIR)\finger2.obj"
 
 "$(OUTDIR)\OBExtraD.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -192,6 +204,42 @@ SOURCE=..\..\src\formats\fastsearchformat.cpp
 
 
 "$(INTDIR)\fastsearchformat.obj"	"$(INTDIR)\fastsearchformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprints\finger2.cpp
+
+!IF  "$(CFG)" == "OBExtraFormats - Win32 Release"
+
+
+"$(INTDIR)\finger2.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBExtraFormats - Win32 Debug"
+
+
+"$(INTDIR)\finger2.obj"	"$(INTDIR)\finger2.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprints\finger3.cpp
+
+!IF  "$(CFG)" == "OBExtraFormats - Win32 Release"
+
+
+"$(INTDIR)\finger3.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBExtraFormats - Win32 Debug"
+
+
+"$(INTDIR)\finger3.obj"	"$(INTDIR)\finger3.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

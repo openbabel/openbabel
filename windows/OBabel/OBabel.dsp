@@ -171,21 +171,6 @@ SOURCE=..\..\src\chiral.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\cml.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\formats\cmlformat.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\formats\cmlppformat.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 # End Source File
 # Begin Source File
@@ -624,10 +609,6 @@ SOURCE=..\..\src\formats\xml\xml.h
 # Begin Source File
 
 SOURCE=..\libxml2.lib
-# End Source File
-# Begin Source File
-
-SOURCE=..\zdll.lib
 # End Source File
 # End Target
 # End Project

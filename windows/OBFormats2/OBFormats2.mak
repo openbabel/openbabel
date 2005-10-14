@@ -671,8 +671,6 @@ SOURCE=..\..\src\formats\chemtoolformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\cml.cpp
-SOURCE=..\..\src\formats\cmlformat.cpp
 SOURCE=..\..\src\formats\CRKformat.cpp
 
 !IF  "$(CFG)" == "OBFormats2 - Win32 Release"

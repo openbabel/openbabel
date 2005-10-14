@@ -151,16 +151,6 @@ SOURCE=..\..\src\formats\chemtoolformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\cml.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\formats\cmlformat.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\formats\CRKformat.cpp
 # End Source File
 # Begin Source File

@@ -46,7 +46,6 @@ CLEAN :
 	-@erase "$(INTDIR)\bondtyper.obj"
 	-@erase "$(INTDIR)\chains.obj"
 	-@erase "$(INTDIR)\chiral.obj"
-	-@erase "$(INTDIR)\cmlppformat.obj"
 	-@erase "$(INTDIR)\cmlreactlformat.obj"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
@@ -99,7 +98,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\..\src\formats\xml" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\..\src\formats\xml" /I "..\OBGUI" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_LIBZ" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "NDEBUG" 
 BSC32=bscmake.exe
@@ -107,7 +106,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBGUIs.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcw.lib libcmt.lib libinchi.lib Shlwapi.lib cmlpp.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\release" 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcw.lib libcmt.lib libinchi.lib Shlwapi.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\OBGUIs.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib libcmt.lib" /out:"OBGUIs.exe" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\release" 
 LINK32_OBJS= \
 	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\atom.obj" \
@@ -117,7 +116,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
-	"$(INTDIR)\cmlppformat.obj" \
 	"$(INTDIR)\cmlreactlformat.obj" \
 	"$(INTDIR)\data.obj" \
 	"$(INTDIR)\dlhandler_win32.obj" \
@@ -303,7 +301,7 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src\formats\xml" /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\OBGUI" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src\formats\xml" /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\OBGUI" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "GUI" /D "INCHI_LINK_AS_DLL" /D "HAVE_LIBZ" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
 RSC_PROJ=/l 0x809 /fo"$(INTDIR)\OBGUI.res" /d "_DEBUG" 
 BSC32=bscmake.exe
@@ -370,7 +368,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib libinchi.lib Shlwapi.lib cmlpp.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\debug" 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib nafxcwd.lib libcmtd.lib libinchi.lib Shlwapi.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\OBGUIs.pdb" /debug /machine:I386 /nodefaultlib:"nafxcwd.lib libcmtd.lib" /out:"$(OUTDIR)\OBGUIs.exe" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\debug" 
 LINK32_OBJS= \
 	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\atom.obj" \
@@ -620,21 +618,6 @@ SOURCE=..\..\src\chiral.cpp
 "$(INTDIR)\chiral.obj"	"$(INTDIR)\chiral.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
-
-!ENDIF 
-
-SOURCE=..\..\src\formats\cml.cpp
-SOURCE=..\..\src\formats\cmlformat.cpp
-SOURCE=..\..\src\formats\cmlppformat.cpp
-
-!IF  "$(CFG)" == "OBGUIs - Win32 Release"
-
-
-"$(INTDIR)\cmlppformat.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
 
 !ENDIF 
 

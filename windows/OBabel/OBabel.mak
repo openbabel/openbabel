@@ -231,8 +231,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
-	"..\libxml2.lib" \
-	"..\zdll.lib"
+	"..\libxml2.lib"
 
 ".\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -634,8 +633,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
-	"..\libxml2.lib" \
-	"..\zdll.lib"
+	"..\libxml2.lib"
 
 "$(OUTDIR)\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -1045,9 +1043,6 @@ SOURCE=..\..\src\chiral.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\cml.cpp
-SOURCE=..\..\src\formats\cmlformat.cpp
-SOURCE=..\..\src\formats\cmlppformat.cpp
 SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
