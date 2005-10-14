@@ -43,7 +43,7 @@ bool DLHandler::getConvDirectory(string& convPath)
 }
 
 
-int DLHandler :: findFiles (vector<string>& file_list,const string &filename)
+int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::string &filename)
 {
     if(filename.find_first_of("*?")==string::npos)
     {
@@ -58,7 +58,7 @@ int DLHandler :: findFiles (vector<string>& file_list,const string &filename)
         return findFiles(file_list,filename, "");
 }
 
-int DLHandler :: findFiles (vector<string>& file_list,const string &pattern,const string &path)
+int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::string &pattern,const std::string &path)
 {
     WIN32_FIND_DATA file_data;
     HANDLE handle;

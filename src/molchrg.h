@@ -39,9 +39,9 @@ public:
     void GSVResize(int);
 };
 
+//! Helper class for OBGastChrg which stores the Gasteiger states of a given atom
 class OBAPI GasteigerState
 {
-    //helper class for OBGastChrg
 public:
     GasteigerState();
     ~GasteigerState()

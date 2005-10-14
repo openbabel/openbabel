@@ -50,7 +50,8 @@ namespace OpenBabel
 /** \class OBResidue
     \brief Residue information
  
-    The residue information is drawn from PDB or MOL2 files,
+    The residue information is drawn from PDB or MOL2 files (or similar), which
+    track biomolecule information,
     and are stored in the OBResidue class. OBResidues are stored inside the 
     OBAtom class and OBMol classes. 
     The residue information for an atom can be requested in 
@@ -68,8 +69,6 @@ namespace OpenBabel
   r = mol.GetResidue(1);
 \endcode
 */
-
-} // end namespace OpenBabel
 
 ///////////////////////////////////////////////////////////////////////////////
 // Global Definitions
@@ -255,13 +254,6 @@ static const unsigned int WATER        = 9;
                                   (AA_ASN)|(AA_GLU)|(AA_PRO)|(AA_ARG)| \
                                   (AA_GLY)|(AA_SER)|(AA_GLN)|(AA_TYR)| \
                                   (AA_HIS)))
-
-///////////////////////////////////////////////////////////////////////////////
-// Open Babel Namespace
-///////////////////////////////////////////////////////////////////////////////
-
-namespace OpenBabel
-{
 
 ////////////////////////////////////////////////////////////////////////////////
 // Global Variables

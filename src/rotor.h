@@ -31,6 +31,12 @@ class OBRotorList;
 class OBRotorRule;
 class OBRotorRules;
 
+//! \brief A rule for torsional conformer searching, defined by a SMARTS pattern
+//!
+//! Rules define a SMARTS pattern to match and a set of 4 reference atoms
+//! defining the dihedral angle. The rule can either define a set of possible
+//! dihedral angles in degrees or a "delta" (i.e., all multiples of delta will
+//! be considered)
 class OBAPI OBRotorRule
 {
     int              _ref[4];
@@ -39,14 +45,13 @@ class OBAPI OBRotorRule
     OBSmartsPattern* _sp;
     std::vector<double>    _vals;
 public:
-    OBRotorRule(char *buffer,int ref[4],std::vector<double> &vals,double d)
+
+    OBRotorRule(char *buffer,int ref[4],std::vector<double> &vals,double d):
+       _delta(d), _s(buffer), _vals(vals)
     {
-        _s = buffer;
         _sp = new OBSmartsPattern;
         _sp->Init(buffer);
         memcpy(_ref,ref,sizeof(int)*4);
-        _vals = vals;
-        _delta = d;
     }
     ~OBRotorRule()
     {
@@ -57,36 +62,16 @@ public:
         }
     }
 
-    bool             IsValid()
-    {
-        return(_sp->IsValid());
-    }
-    void             GetReferenceAtoms(int ref[4])
-    {
-        memcpy(ref,_ref,sizeof(int)*4);
-    }
-    void             SetDelta(double d)
-    {
-        _delta = d;
-    }
-    double            GetDelta()
-    {
-        return(_delta);
-    }
-    std::string          &GetSmartsString()
-    {
-        return(_s);
-    }
-    std::vector<double>   &GetTorsionVals()
-    {
-        return(_vals);
-    }
-    OBSmartsPattern *GetSmartsPattern()
-    {
-        return(_sp);
-    }
+    bool    IsValid()    {        return(_sp->IsValid());       }
+    void    GetReferenceAtoms(int ref[4]) { memcpy(ref,_ref,sizeof(int)*4); }
+    void    SetDelta(double d)    {       _delta = d;           }
+    double  GetDelta()            {       return(_delta);       }
+    std::string  &GetSmartsString(){      return(_s);           }
+    std::vector<double>   &GetTorsionVals()    { return(_vals); }
+    OBSmartsPattern *GetSmartsPattern() {  return(_sp);         }
 };
 
+//! Database of default hybridization torsional rules and SMARTS-defined OBRotorRule objects
 class OBAPI OBRotorRules : public OBGlobalDataBase
 {
     bool                 _quiet;
@@ -102,17 +87,14 @@ public:
     //! \return the number of rotor rules
     unsigned int GetSize()                 { return _vr.size();}
 
-    void SetFilename(std::string &s)
-    {
-        _filename = s;
-    }
+    //! Set the filename to be used for the database. Default = torlib.txt
+    void SetFilename(std::string &s)       { _filename = s;    }
+
     void GetRotorIncrements(OBMol&,OBBond*,int [4],std::vector<double>&,double &delta);
-    void Quiet()
-    {
-        _quiet=true;
-    };
+    void Quiet()                           { _quiet=true;      }
 };
 
+//! A single rotatable OBBond as part of rotomer searching
 class OBAPI OBRotor
 {
     int _idx,_ref[4];
@@ -245,6 +227,7 @@ public:
     }
 };
 
+//! Given an OBMol, set up a list of possibly rotatable torsions, 
 class OBAPI OBRotorList
 {
     bool _quiet,_removesym;

@@ -79,7 +79,7 @@ void patty::read_rules(const string &infile)
         {
             cerr << "The BABEL_DATADIR environment variable is not defined" << endl;
             cerr << "Please define it so the program can find " << infile << endl;
-            exit(0);
+	    //            exit(0);
         }
         else
             strcpy(patty_dir,getenv("BABEL_DATADIR"));
@@ -97,7 +97,7 @@ void patty::read_rules(const string &infile)
     if (!ifsP)
     {
         cerr << "Could not open " << patty_dir << endl;
-        exit(0);
+	//        exit(0);
     }
     while (ifsP->getline(buffer,BUFF_SIZE))
     {
@@ -117,7 +117,7 @@ void patty::read_rules(const string &infile)
     }
 }
 
-void patty::assign_rules(vector<string> &rules)
+void patty::assign_rules(std::vector<std::string> &rules)
 {
     vector<string> vs;
     char buffer[BUFF_SIZE];
@@ -145,7 +145,7 @@ void patty::assign_rules(vector<string> &rules)
 }
 
 
-void patty::assign_types(OBMol &mol,vector<string> &atm_typ)
+void patty::assign_types(OBMol &mol, std::vector<std::string> &atm_typ)
 {
     atm_typ.resize(mol.NumAtoms()+1);
 
@@ -241,7 +241,7 @@ int patty::type_to_int(const string &type, bool failOnUndefined)
         {
 	  cerr << "Unable to find type of feature passed in " << endl;
 	  cerr << "Feature passed in is " << type << endl;
-	  exit(-1);
+	  //	  exit(-1);
         }
       else
         {
@@ -277,7 +277,7 @@ int main(int argc, char *argv[])
     if (!ifs)
     {
         cerr << "Could not open argv[1] " << endl;
-        exit(0);
+	//        exit(0);
     }
 
     patty p("simple.txt");

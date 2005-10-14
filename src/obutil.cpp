@@ -391,7 +391,7 @@ OBAPI void CleanAtomType(char *id)
 //! Transform the supplied vector<OBInternalCoord*> into cartesian and update
 //! the OBMol accordingly.
 //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#zmatrixCoordinatesIntoCartesianCoordinates">blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates</a>
-OBAPI void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
+OBAPI void InternalToCartesian(std::vector<OBInternalCoord*> &vic,OBMol &mol)
 {
     vector3 n,nn,v1,v2,v3,avec,bvec,cvec;
     double dst = 0.0, ang = 0.0, tor = 0.0;
@@ -477,7 +477,7 @@ OBAPI void InternalToCartesian(vector<OBInternalCoord*> &vic,OBMol &mol)
 //! a set of internal (z-matrix) coordinates as supplied in the
 //! vector<OBInternalCoord*> argument.
 //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#cartesianCoordinatesIntoZmatrixCoordinates">blue-obelisk:cartesianCoordinatesIntoZmatrixCoordinates</a>.
-OBAPI void CartesianToInternal(vector<OBInternalCoord*> &vic,OBMol &mol)
+OBAPI void CartesianToInternal(std::vector<OBInternalCoord*> &vic,OBMol &mol)
 {
     double r,sum;
     OBAtom *atom,*nbr,*ref;

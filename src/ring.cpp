@@ -109,8 +109,8 @@ void OBMol::FindSSSR()
             for (i = cbonds.begin();i != cbonds.end();i++)
                 rs.AddRingFromClosure(*this,(OBBond*)*i);
 
-            rs.SortRings(); //sort ring sizes from smallest to largest
-            rs.RemoveRedundant(frj);  //full ring set - reduce to SSSR set
+            rs.SortRings();
+            rs.RemoveRedundant(frj);
             //store the SSSR set
 
             for (j = rs.BeginRings();j != rs.EndRings();j++)
@@ -119,7 +119,7 @@ void OBMol::FindSSSR()
                 ring->SetParent(this);
                 vr.push_back(ring);
             }
-            //rs.WriteRings(); //for debugging only
+            //rs.WriteRings();
         }
 
         if (!HasData(OBGenericDataType::RingData))
@@ -490,6 +490,8 @@ OBRTree::OBRTree(OBAtom *atom,OBRTree *prv)
     _prv = prv;
 }
 
+//! The supplied path is built up of OBAtom nodes, with the root atom 
+//! the last item in the vector.
 void OBRTree::PathToRoot(vector<OBNodeBase*> &path)
 {
     path.push_back(_atom);

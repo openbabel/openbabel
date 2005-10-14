@@ -660,7 +660,8 @@ void OBAromaticTyper::AssignAromaticFlags(OBMol &mol)
     //cerr << bond->GetIdx() << ' ' << bond->IsAromatic() << endl;
 }
 
-bool OBAromaticTyper::TraverseCycle(OBAtom *root,OBAtom *atom,OBBond *prev,pair<int,int> &er,int depth)
+bool OBAromaticTyper::TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev, 
+				    std::pair<int,int> &er,int depth)
 {
     if (atom == root)
     {

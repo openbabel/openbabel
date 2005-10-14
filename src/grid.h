@@ -33,16 +33,17 @@ GNU General Public License for more details.
 #include <string>
 
 #ifndef OBPolarGrid
-#define OBPolarGrid 0x01
+#define OBPolarGrid 0x01 /* polar interactions? */
 #endif //OBPolarGrid
 
 #ifndef OBLipoGrid
-#define OBLipoGrid 0x02
+#define OBLipoGrid 0x02 /* lipophilicity? */
 #endif //OBLipoGrid
 
 namespace OpenBabel
 {
 
+//! A grid for determining the proximity of a given point to atoms in an OBMol
 class OBAPI OBProxGrid
 {
     int _gridtype;
@@ -63,7 +64,7 @@ public:
 	       std::vector<bool> &use,double resolution = 0.5);
     std::vector<int> *GetProxVector(double,double,double);
     std::vector<int> *GetProxVector(double*);
-    // For HasFlag force return type to bool so VC6.0 doesn't complain
+
     bool LipoGrid()
     {
         return((_gridtype&OBLipoGrid) ? true : false);
@@ -84,11 +85,12 @@ public:
     }
 };
 
+//! Handle floating-point 3D grids (i.e., charge density around an OBMol)
 class OBAPI OBFloatGrid
 {
 protected:
     double *_val;             //!< doubleing point values
-    int   *_ival;            //!< for integer values
+    int   *_ival;            //!< for integer values (deprecated)
     double _midz,_midx,_midy;   //!< center of grid in world coordinates
     int _ydim,_xdim,_zdim;     //!< grid dimensions
     double _spacing,_inv_spa;  //!< spacing between grid points and its invers
@@ -118,6 +120,7 @@ public:
     //! Initialize the grid using this molecule as a box (plus a padding)
     //!  with the supplied spacing between points
     void Init(OBMol &box,double spacing, double pad= 0.0);
+    //! \return whether the supplied XYZ coordinates fall within the box
     bool PointIsInBox(double x,double y,double z)
     {
         return (x>=_xmin) && (x<=_xmax) &&
@@ -182,17 +185,22 @@ public:
     friend std::ostream& operator<< ( std::ostream&, const OBFloatGrid& ) ;
     friend std::istream& operator>> ( std::istream&,OBFloatGrid& ) ;
 
+    //! \return the value at the given point (rounding as needed)
     double Inject(double x,double y,double z);
 
     void IndexToCoords(int idx, double &x, double &y, double &z);
     void CoordsToIndex(int*,double*);
     int CoordsToIndex(double &x, double &y, double &z);
+    //! \return the interpolated value for the given point
     double Interpolate(double,double,double);
+    //! \return the interpolated value for the given point and set the dx, dy, dz derivatives
     double InterpolateDerivatives(double,double,double,double *derivatives);
 };
 
+// scoring function used: PLP = Piecewise Linear Potential or ChemScore algorithm
 typedef enum { Undefined = -1, PLP, ChemScore } score_t;
 
+//! A base class for scoring docking interactions between multiple molecules
 class OBAPI OBScoreGrid
 {
 protected:

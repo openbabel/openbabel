@@ -91,7 +91,7 @@ is used. This allows multiple input and output files, allowing:
 
 These procedures constitute the "Convert" interface. OBConversion
 and the user interface or application program do not need to be
-aware of any other part of OpenBabel - mol.h is not #included. This
+aware of any other part of OpenBabel - mol.h is not \#included. This
 allows any chemical object derived from OBBase to be converted;
 the type of object is decided by the input format class.
 However,currently, almost all the conversions are for molecules of
@@ -867,8 +867,8 @@ On exit, OutputFileList contains the names of the output files.
 
 Returns the number of Chemical objects converted.
 */
-int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
-													 vector<string>& OutputFileList)
+int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& OutputFileName,
+			      std::vector<std::string>& OutputFileList)
 {
 	
 	istream* pInStream;

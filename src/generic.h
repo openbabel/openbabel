@@ -37,11 +37,15 @@ OBAPI void Trim(std::string& txt);
 
 //! \brief Classification of data stored via OBGenericData class and subclasses.
 //!
-//! obDataType can be used as a faster, direct access to a particular category
-//! instead of the slower access via GetData(std::string). 
-//! obData0 through obData15 are data slots that are not used in OpenBabel, and
-//! are meant for use in derivative programs.  Macro definitions can be used
-//! to define what each data slot is used for.
+//! OBGenericDataType can be used as a faster, direct access to a particular category
+//! instead of the slower access via GetData(std::string), which must loop
+//! through all data to find a match with the supplied key. It is implemented
+//! as a set of unsigned integer constants for maximum flexibility and future
+//! expansion.
+//! 
+//! CustomData0 through CustomData15 are data slots that are not used in 
+//! OpenBabel directly and are meant for use in derivative programs.
+//! Macro definitions can be used to define what each data slot is used in your code.
 namespace OBGenericDataType
 {
   //! Unknown data type (default)
@@ -53,8 +57,7 @@ namespace OBGenericDataType
   //! Energetics data (e.g., total energy, heat of formation, etc.)
   static const unsigned int EnergyData    =      2;
 
-  //! Storing text comments (one per molecule, atom, bond, etc.)
-  //!  (for other data, e.g., author, keyword, ... use OBPairData)
+  //! Storing text comments (one per molecule, atom, bond, etc.) (for other data, e.g., author, keyword, ... use OBPairData)
   static const unsigned int CommentData   =      3;
 
   //! Arbitrary information about conformers, i.e., OBConformerData
@@ -72,8 +75,7 @@ namespace OBGenericDataType
   //! Information on rings in a molecule, i.e., OBRingData
   static const unsigned int RingData =           8;
 
-  //! Information about torsion/dihedral angles,
-  //! i.e., OBTorsionData and OBTorsion
+  //! Information about torsion/dihedral angles, i.e., OBTorsionData and OBTorsion
   static const unsigned int TorsionData =        9;
 
   //! Bond angles in a molecule, i.e., OBAngle, OBAngleData
@@ -91,12 +93,10 @@ namespace OBGenericDataType
   //! Arbitrary partial and total charges, dipole moments, etc.
   static const unsigned int ChargeData =        14;
 
-  //! Symmetry data -- point and space groups, transforms, etc.
-  //!  i.e., OBSymmetryData
+  //! Symmetry data -- point and space groups, transforms, etc. i.e., OBSymmetryData
   static const unsigned int SymmetryData =      15;
 
-  //! Arbitrary chiral information (atom, bond, molecule, etc.)
-  //! i.e., OBChiralData
+  //! Arbitrary chiral information (atom, bond, molecule, etc.) i.e., OBChiralData
   static const unsigned int ChiralData =        16;
 
   //! Atomic and molecular occupation data
@@ -136,13 +136,10 @@ namespace OBGenericDataType
   static const unsigned int CustomData13 = 16397;
   static const unsigned int CustomData14 = 16398;
   static const unsigned int CustomData15 = 16399;
-  static const unsigned int CustomData16 = 16400;
 } // end namespace
 
 //! \brief Base class for generic data
-//! 
-//! Use obData# slots as an obDataType for custom data types
-//! or store your data as a string and use OBPairData for key/value access.
+// class introduction in generic.cpp
 class OBAPI OBGenericData
 {
 protected:
@@ -215,7 +212,10 @@ public:
     }
 };
 
-//! Used to store arbitrary attribute/value relationships
+//! \brief Used to store arbitrary attribute/value relationships.
+//!
+//! Ideal for arbitrary text descriptors for molecules, atoms, bonds, residues,
+//!  e.g. in QSAR.
 class OBAPI OBPairData : public OBGenericData
 {
 protected:
@@ -594,7 +594,7 @@ public:
     unsigned int GetAtomRef(int a,atomreftype t);
 
     OBChiralData();
-    OBChiralData::OBChiralData(const OBChiralData &src);
+    OBChiralData(const OBChiralData &src);
     OBChiralData &operator =(const OBChiralData &);
     ~OBChiralData(){}
 
@@ -604,6 +604,7 @@ public:
     unsigned int GetSize(atomreftype t) const;
 };
 
+//! Defines a map between serial numbers (e.g., in a PDB file) and OBAtom objects
 class OBSerialNums : public OBGenericData
 {
 protected:

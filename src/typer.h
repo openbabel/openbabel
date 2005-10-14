@@ -72,11 +72,14 @@ public:
     unsigned int GetSize()                 { return _vsp.size();}
 
     void ParseLine(const char*);
+    //! Assign aromaticity flag to atoms and bonds
     void AssignAromaticFlags(OBMol &);
     void PropagatePotentialAromatic(OBAtom*);
     void SelectRootAtoms(OBMol &, bool avoidInnerRingAtoms = true);
+    //! Remove 3-member rings from consideration
     void ExcludeSmallRing(OBMol &);
-    void CheckAromaticity(OBAtom*,int);
+    //! Check aromaticity starting from the root atom, up to a specified depth
+    void CheckAromaticity(OBAtom *root,int searchDepth);
     bool TraverseCycle(OBAtom*,OBAtom*,OBBond*,std::pair<int,int>&,int);
 };
 

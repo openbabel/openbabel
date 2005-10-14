@@ -1,3 +1,8 @@
+2005-10-14  Geoffrey Hutchison  <ghutchis@Alumina.local>
+
+	* Source-code documentation updates. Ensure all classes and struct
+	definitions have at least a brief description.
+
 2005-10-14  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	Update Windows build files and documentation. Remove unused files.

@@ -25,6 +25,73 @@ using namespace std;
 namespace OpenBabel
 {
 
+  /** \class OBGenericData
+
+OBGenericData is an abstract base class which defines an interface for
+storage, retrieval, and indexing of arbitrary generic data.
+Subclasses of OBGenericData can be used to store custom data
+on a per-atom, per-bond, per-molecule, or per-residue basis.
+Open Babel currently supports a small subset of chemical functionality
+as OBGenericData types, which will expand over time to support additional
+interconversion (e.g., spectroscopy, dynamics, surfaces...)
+
+For your own custom data, either define a custom subclass using 
+an id from the OBGenericDataType::CustomData0 to OBGenericDataType::CustomData15 slots,
+or store your data as a string and use OBPairData for key/value access.
+The latter is <strong>highly</strong> recommended for various text descriptors
+e.g., in QSAR, atom or bond labels, or other textual data.
+
+Example code using OBGenericData
+
+@code
+    if (mol.HasData(OBGenericDataType::UnitCell))
+    {
+        uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+        sprintf(buffer,
+                "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
+                uc->GetA(), uc->GetB(), uc->GetC(),
+                uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
+        ofs << buffer << endl;
+    }
+
+...
+
+  vector<OBGenericData*>::iterator k;
+  vector<OBGenericData*> vdata = mol.GetData();
+  for (k = vdata.begin();k != vdata.end();k++)
+     if ((*k)->GetDataType() == OBGenericDataType::PairData)
+          {
+                  ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
+                  ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
+          }
+@endcode
+
+Similar code also works for OBGenericData stored in an OBAtom or OBBond (or OBResidue).
+
+@code
+    if (!atom.HasData("UserLabel")) // stored textual data as an OBPairData
+      {
+         OBPairData *label = new OBPairData;
+	 label->SetAttribute("UserLabel");
+	 label->SetValue(userInput);
+
+	 atom.SetData(label);
+      }
+
+...
+
+    if (bond.HasData("DisplayType")) // e.g. in a visualization tool
+      {
+        OBPairData *display = dynamic_cast<OBPairData *> bond.GetData("DisplayType");
+	if (display->GetValue() == "wireframe")
+	  {
+	   ... // display a wireframe view
+	  }
+      }
+@endcode
+
+  **/
+
 //
 //member functions for OBGenericData class
 //
@@ -850,7 +917,7 @@ void OBTorsionData::SetData(OBTorsion &torsion)
 **\param torsions reference to the vector of abcd atom sets
 **\return boolean success
 */
-bool OBTorsionData::FillTorsionArray(vector<vector<unsigned int> > &torsions)
+bool OBTorsionData::FillTorsionArray(std::vector<std::vector<unsigned int> > &torsions)
 {
     if(_torsions.size() == 0)
         return(false);
@@ -960,6 +1027,7 @@ OBChiralData::OBChiralData()
     _type = OBGenericDataType::ChiralData;
     _attr = "ChiralData";
 }
+
 OBChiralData::OBChiralData(const OBChiralData &src)
 {
   _atom4refs = src._atom4refs;

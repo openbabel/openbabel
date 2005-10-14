@@ -56,7 +56,7 @@ bool DLHandler::getConvDirectory(string& convPath)
   return true;
 }
 
-int DLHandler::findFiles (vector <string>& file_list,const string& pattern, const string& path)
+int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string& pattern, const std::string& path)
 {
   string currentPath;
   vector<string> paths, vs;

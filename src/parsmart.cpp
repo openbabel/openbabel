@@ -45,7 +45,6 @@ namespace OpenBabel
 {
 
 /*! \class OBSmartsPattern
-    \brief
 
 Substructure search is an incredibly useful tool in the context of a
 small molecule programming library. Having an efficient substructure
@@ -64,8 +63,8 @@ The SMARTS matcher, or OBSmartsPattern, is a separate object which can
 match patterns in the OBMol class. The following code demonstrates how
 to use the OBSmartsPattern class:
 \code
-OBMol mol(SDF,SDF);
-cin >> mol;
+OBMol mol;
+...
 OBSmartsPattern sp;
 sp.Init("CC");
 sp.Match(mol);
@@ -184,7 +183,7 @@ static int CreateAtom(Pattern*,AtomExpr*,int,int vb=0);
 static void FatalAllocationError( char *ptr )
 {
     printf("Error: Unable to allocate %s!\n",ptr);
-    exit(1);
+    //    exit(1);
 }
 
 /*================================*/

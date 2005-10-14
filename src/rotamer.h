@@ -36,6 +36,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
+//! Supports a set of rotomer coordinate sets for some number of potentially rotatable bonds
 class OBAPI OBRotamerList : public OBGenericData
 {
     unsigned int                         _NBaseCoords;
@@ -61,10 +62,12 @@ public:
     ~OBRotamerList();
     void Setup(OBMol&,OBRotorList&);
     void Setup(OBMol&,unsigned char*,int);
+    //! \return the number of rotatable bonds considered
     unsigned int NumRotors()   const
     {
         return (unsigned int)_vrotor.size();
     }
+    //! \return the number of rotamer (conformation) coordinate sets
     unsigned int NumRotamers() const
     {
         return (unsigned int)_vrotamer.size();

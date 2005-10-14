@@ -256,8 +256,8 @@ string FastSearch::ReadIndex(istream* pIndexstream)
 }
 
 //*******************************************************
-FastSearchIndexer::FastSearchIndexer(string& datafilename, ostream* os, string& fpid,
-			int FptBits)
+FastSearchIndexer::FastSearchIndexer(string& datafilename, ostream* os, 
+				     std::string& fpid, int FptBits)
 {
 	///Starts indexing process
 	_indexstream = os;

@@ -244,12 +244,14 @@ public:
     void SetType(char *type);
     void SetType(std::string &type);
     void SetPartialCharge(double pcharge){ _pcharge = pcharge; }
-    void SetVector();
     void SetVector(vector3 &v);
     void SetVector(const double x,const double y,const double z);
+    //! Set the position of this atom from a pointer-driven array of coordinates
+    void SetCoordPtr(double **c)        { _c = c; _cidx = (GetIdx()-1)*3; }
+    //! Set the position of this atom based on the internal pointer array (i.e. from SetCoordPtr() )
+    void SetVector();
     void SetResidue(OBResidue *res)     { _residue=res; }
     //  void SetParent(OBMol *ptr)      { _parent=ptr; } // inherited
-    void SetCoordPtr(double **c)        { _c = c; _cidx = (GetIdx()-1)*3; }
     void SetAromatic()                  { SetFlag(OB_AROMATIC_ATOM); }
     void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
     //! Mark atom as having SMILES clockwise stereochemistry (i.e., "@@")
@@ -273,7 +275,7 @@ public:
     void SetInRing()         { SetFlag(OB_RING_ATOM); }
     //! Mark an atom as being chiral with unknown stereochemistry
     void SetChiral()         { SetFlag(OB_CHIRAL_ATOM); }
-    //! Clear coordinates
+    //! Clear the internal coordinate pointer
     void ClearCoordPtr()     { _c = NULL; _cidx=0; }
     //@}
 
@@ -290,6 +292,7 @@ public:
     double	 GetExactMass()	    const;
     unsigned int GetIdx()           const { return((int)_idx);  }
     unsigned int GetCoordinateIdx() const { return((int)_cidx); }
+    //! \deprecated Use GetCoordinateIdx() instead
     unsigned int GetCIdx()          const { return((int)_cidx); }
     //! The current number of explicit connections
     unsigned int GetValence()       const
@@ -307,10 +310,11 @@ public:
     char        *GetType();
 
     //! The x coordinate
-    double      GetX()
-    {
-        return(x());
-    }
+    double      GetX()    {        return(x());    }
+    //! The y coordinate
+    double      GetY()    {        return(y());    }
+    //! The z coordinate
+    double      GetZ()    {        return(z());    }
     double      x()
     {
         if (_c)
@@ -318,22 +322,12 @@ public:
         else
             return _v.x();
     }
-    //! The y coordinate
-    double      GetY()
-    {
-        return(y());
-    }
     double      y()
     {
         if (_c)
             return((*_c)[_cidx+1]);
         else
             return _v.y();
-    }
-    //! The z coordinate
-    double      GetZ()
-    {
-        return(z());
     }
     double      z()
     {
@@ -349,7 +343,8 @@ public:
     }
     //! \return the coordinates as a vector3 object
     vector3   &GetVector();
-    double      GetPartialCharge();
+    //! \return the partial charge of this atom, calculating a Gasteiger charge if needed
+    double     GetPartialCharge();
     OBResidue *GetResidue();
     //OBMol   *GetParent()        {return((OBMol*)_parent);}
     //! Create a vector for a new bond from this atom, with length given by the supplied parameter
@@ -472,9 +467,9 @@ public:
     //! Does this atom have SMILES-specified anticlockwise "@" stereochemistry?
     bool IsAntiClockwise()     { return(HasFlag(OB_ACSTEREO_ATOM)); }
     //! Does this atom have a positive chiral volume?
-    bool IsPositiveStereo()    { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
+    bool IsPositiveStereo() { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
     //! Does this atom have a negative chiral volume?
-    bool IsNegativeStereo()    { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
+    bool IsNegativeStereo() { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
     //! Does this atom have SMILES-specified stereochemistry?
     bool HasChiralitySpecified()
       { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
@@ -990,8 +985,6 @@ public:
     void FindChiralCenters();
     void FindChildren(std::vector<int> &,int,int);
     void FindChildren(std::vector<OBAtom*>&,OBAtom*,OBAtom*);
-    //! Each vector<int> contains the atom numbers of a contig fragment
-    //! The vectors are sorted by size from largest to smallest
     void FindLargestFragment(OBBitVec &);
     //! Sort a list of contig fragments by size from largest to smallest
     //! Each vector<int> contains the atom numbers of a contig fragment

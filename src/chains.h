@@ -29,6 +29,7 @@ namespace OpenBabel
 class OBAtom;
 class OBMol;
 
+//! Structure for atomic patterns (templates) in residues for OBChainsParser
 typedef struct
 {
     int flag;

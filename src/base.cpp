@@ -34,6 +34,7 @@ GNU General Public License for more details.
 
 using namespace std;
 
+//! Global namespace for all Open Babel code
 namespace OpenBabel
 {
 /*
@@ -223,37 +224,23 @@ bool OBGraphBase::SetVisitLock(bool v)
 
   \section intro Introduction and History
  
-It is fair to say that Open Babel (and before it, OELib) is a direct
-result of the original Babel. Application development is facilitated
+It is fair to say that Open Babel is a direct result of the original Babel.
+Application development is facilitated
 by building software on top of libraries rich in functionality. Babel
 was the first experience for Matt Stahl in designing a molecule
 library. In addition to developing Babel, Pat Walters and Matt
-developed `OBabel' at Vertex Pharmaceuticals. OBabel was the first
-attempt at developing an object oriented molecule library -- while
-successful, Matt later designed a new molecule class library. 
-OELib was then designed to be flexible, extensible, portable, and
-efficient class library for processing small molecules.
+developed `OBabel' at Vertex Pharmaceuticals, a first
+attempt at developing an object oriented molecule library.
+Matt later designed a new molecule class library, OELib -- designed
+to be flexible, extensible, portable, and efficient.
  
 OELib was released under the GNU General Public License (GPL) by Matt Stahl
 and Open Eye Scientific Software, Inc. to take advantage of many of
-the "great minds writing chemical software." Eventually Open Eye
-decided to write a "next-generation" class library as proprietary
-software. The result was that Open Babel took up where OELib and Babel
-left off, using the existing GPL version of OELib, and has continued
-to evolve and improve into a separate high-quality chemistry class
-library and tool.
-
-Open Babel is now a separate project and library and has changed
-considerably from the OELib days.
- 
-There are several advantages to having the source code to Open Babel
-available. First, development time can be shortened by basing projects
-on Open Babel. Many chemical and molecular concepts and code are
-already implemented. The fewer people who have to reinvent the wheel
-(or the function), the better. Second, as free software, hopefully 
-other programmers will contribute to the project. The Open Babel development
-process is completely open and suggestions, bug reports, and contributions
-are always welcomed.
+the "great minds writing chemical software." Open Babel took up where
+OELib and Babel left off, starting from the existing GPL version of
+OELib, and has continued to evolve and improve into a separate
+high-quality chemistry class library and tool. Open Babel is now a
+separate project and library and has changed considerably from the OELib days.
  
 Thanks to all who have helped with Babel, OBabel, OELib and Open Babel.
 The list is long and growing.
@@ -268,20 +255,29 @@ start with looking at the \link OpenBabel::OBMol OBMol\endlink class,
 designed to store the basic information
 in a molecule and to perceive information about a molecule.
 
-Transformations and automatic perception of properties are performed in a 
-"lazy" manner. That is, until you call for partial atomic charges, no 
-charges are calculated. This ensures faster transformations of chemical data
--- properties that are not needed for your code will typically not be 
-calculated. When such data is needed, appropriate routines are called, and a
-"flag" is set (e.g., via OBMol::SetFlag() or OBAtom::SetFlag() etc.) so that
-the code is only run once.
+One of the key philosophies in the code is that transformations and
+automatic perception of properties are performed in a "lazy"
+manner. That is, until you call for partial atomic charges, no
+charges are calculated. This ensures faster transformations of
+chemical data -- properties that are not needed for your code will
+typically not be calculated. When such data is needed, appropriate
+routines are called, and a "flag" is set (e.g., via OBMol::SetFlag
+or OBAtom::SetFlag etc.) so that the code is only run once.
+
+Arbitrary custom data and text descriptors can be stored in any atom,
+bond, molecule, or residue using the \link OpenBabel::OBGenericData
+OBGenericData\endlink or \link OpenBabel::OBPairData
+OBPairData\endlink classes.
 
 Conversion between various chemical file formats is accomplished through
 the \link OpenBabel::OBConversion OBConversion\endlink and \link 
 OpenBabel::OBFormat OBFormat\endlink classes, often through use of the \link 
 OpenBabel::OBMoleculeFormat OBMoleculeFormat\endlink subclass which is designed
 for easy read/write access to one or more \link OpenBabel::OBMol OBMol\endlink
-objects.
+objects. The philosophy of the file format codes is to parse as much
+chemical information from a given file as possible (no data left
+behind) and ideally any perception or transformations will occur when
+writing to some other format later.
 
 */
 

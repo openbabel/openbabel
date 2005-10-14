@@ -51,6 +51,9 @@ and the partial charge is propagated to neighboring atoms. For
 example, quaternary amines would have a +1 charge, and the effect of
 the positive charge would be felt by neighboring atoms according to
 the Gasteiger model (sigma).
+
+For more information, see:
+J. Gasteiger & M. Marsili, "A New Model for Calculating Atomic Charges in Molecules" Tetrahedron Lett., (1978) 3181-3184.
 */
 
 bool OBGastChrg::AssignPartialCharges(OBMol &mol)

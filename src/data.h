@@ -246,7 +246,8 @@ public:
     std::string GetToType();
 };
 
-//! \brief Table of common protein residues in PDB files
+//! \brief Table of common biomolecule residues (for PDB or other files).
+//!   Can assign atom types and bond orders for arbitrary residues
 class OBAPI OBResidueData : public OBGlobalDataBase
 {
   int                                               _resnum;
@@ -254,7 +255,7 @@ class OBAPI OBResidueData : public OBGlobalDataBase
   std::vector<std::vector<std::string> >            _resatoms;
   std::vector<std::vector<std::pair<std::string,int> > > _resbonds;
 
-  //variables used only for parsing resdata.txt
+  //variables used only temporarily for parsing resdata.txt
   std::vector<std::string>                          _vatmtmp;
   std::vector<std::pair<std::string,int> >          _vtmp;
 public:

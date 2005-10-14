@@ -102,7 +102,7 @@ class OBAPI OBMessageHandler
     void ThrowError(const std::string &method, const std::string &errorMsg, 
 		    obMessageLevel level = obDebug);
 
-    //! Return all messages matching a specified level
+    //! \return all messages matching a specified level
     std::vector<std::string> GetMessagesOfLevel(const obMessageLevel);
 
     //! Start logging messages (default)

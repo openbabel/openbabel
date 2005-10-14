@@ -58,7 +58,7 @@ public:
 	  * Note that this is not recursive: it only matches files in the specified path.
 	  * For example, if path = e:\\path\\to\\ and pattern = *.obf it will return
 	  * vector entries lik e:\\path\\to\\cmlformat.obf
-	  * Returns the number of valid files.
+	  * \return the number of valid files.
 	*/
 	static int findFiles (std::vector <std::string>& file_list, 
 			const std::string& pattern, const std::string& path);
@@ -66,7 +66,7 @@ public:
 	/** Searches for files which match a full filename (including the path) which
 	  * contains a wildcard.
 	  * The routine adds matching file names (including path) to a vector of strings .
-	  * Returns the number of matching files.
+	  * \return the number of matching files.
 	  * If no wildcard in name adds name to vector and returns -1.
 	*/
 	static int findFiles (std::vector<std::string>& file_list,const std::string &filename);

@@ -28,7 +28,8 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
-// Sets atom->IsChiral() to true for chiral atoms
+
+//! Sets atom->IsChiral() to true for chiral atoms
 void OBMol::FindChiralCenters()
 {
     if (HasChiralityPerceived())
@@ -123,32 +124,32 @@ void GetChirality(OBMol &mol, std::vector<int> &chirality)
     vector<OBNodeBase*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
         if (atom->IsChiral())
-        {
-	  if (!atom->HasChiralVolume())
-	    {
-	      double sv = CalcSignedVolume(mol,atom);
-	      if (sv < 0.0)
-		{
-		  chirality[atom->GetIdx()-1] = -1;
-		  atom->SetNegativeStereo();
-		}
-	      else if (sv > 0.0)
-		{
+	  {
+	    if (!atom->HasChiralVolume())
+	      {
+		double sv = CalcSignedVolume(mol,atom);
+		if (sv < 0.0)
+		  {
+		    chirality[atom->GetIdx()-1] = -1;
+		    atom->SetNegativeStereo();
+		  }
+		else if (sv > 0.0)
+		  {
+		    chirality[atom->GetIdx()-1] = 1;
+		    atom->SetPositiveStereo();
+		  }
+	      }
+	    else // already calculated signed volume (e.g., imported from somewhere)
+	      {
+		if (atom ->IsPositiveStereo())
 		  chirality[atom->GetIdx()-1] = 1;
-		  atom->SetPositiveStereo();
-		}
-	    }
-	  else // already calculated signed volume (e.g., imported from somewhere)
-	    {
-	      if (atom ->IsPositiveStereo())
-		chirality[atom->GetIdx()-1] = 1;
-	      else
-		chirality[atom->GetIdx()-1] = -1;
-	    }
-        }
+		else
+		  chirality[atom->GetIdx()-1] = -1;
+	      }
+	  }
 }
 
-int GetParity4Ref(vector<unsigned int> pref) // Calculates Parity of a vector
+int GetParity4Ref(vector<unsigned int> pref) 
 {
           if(pref.size()!=4)return(-1); // should be given a vector of size 4.
            int parity=0;
@@ -226,7 +227,7 @@ bool CorrectChirality(OBMol &mol, OBAtom *atm, atomreftype i, atomreftype o)
 
 //! Calculate the signed volume for an atom.  If the atom has a valence of 3
 //! the coordinates of an attached hydrogen are calculated
-// Puts attached Hydrogen last at the moment, like mol V3000 format.
+//! Puts attached Hydrogen last at the moment, like mol V3000 format.
 double CalcSignedVolume(OBMol &mol,OBAtom *atm)
 {
     vector3 tmp_crd;
@@ -274,7 +275,7 @@ double CalcSignedVolume(OBMol &mol,OBAtom *atm)
     if (atm->GetHvyValence() < 3)
     {
         cerr << "Cannot calculate a signed volume for an atom with a heavy atom valence of " << atm->GetHvyValence() << endl;
-        exit(0);
+        return(0.0);
     }
 
     // Create a vector with the coordinates of the neighbor atoms

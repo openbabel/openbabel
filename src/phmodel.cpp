@@ -168,6 +168,8 @@ void OBPhModel::CorrectForPH(OBMol &mol)
     (i.e. via OBPhModel and OBMol::CorrectForPH()). The OBChemTsfm class
     defines SMARTS based TRANSFORM patterns to delete atoms, change atom types,
     atom formal charges, and bond types.
+
+    For storing and converting chemical reaction files, use the OBReaction class.
  **/
 bool OBChemTsfm::Init(string &bgn,string &end)
 {

@@ -23,7 +23,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-OBBase* OBMol::DoTransformations(const map<string,string>* pOptions)
+OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOptions)
 {
     // Perform any requested transformations
     // on a OBMol

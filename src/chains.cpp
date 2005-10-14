@@ -372,7 +372,7 @@ static ByteCode *AllocateByteCode(int type)
     if( !result )
     {
         cerr << "Error: Unable to allocate byte codes in chains.cpp!" << endl;
-        exit(1);
+	//        exit(1);
     }
     result->type = type;
 
@@ -382,7 +382,7 @@ static ByteCode *AllocateByteCode(int type)
 static void FatalMemoryError(void)
 {
     cerr << "Error: Fatal memory allocation error in chains.cpp!" << endl;
-    exit(1);
+    //    exit(1);
 }
 
 void GenerateByteCodes(ByteCode **node, int resid, int curr, int prev, int bond)
@@ -583,7 +583,7 @@ void GenerateByteCodes(ByteCode **node, int resid, int curr, int prev, int bond)
         cerr << "Error: Maximum Monomer Fanout Exceeded!" << endl;
         fprintf(stderr,"Residue %s atom %d\n",ChainsResName[resid],curr);
         fprintf(stderr,"Previous = %d  Fanout = %d\n",prev,count);
-        exit(1);
+	//        exit(1);
     }
     else if( StackPtr )
     {

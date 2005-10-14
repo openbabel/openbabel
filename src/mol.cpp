@@ -316,7 +316,7 @@ double OBMol::GetTorsion(OBAtom *a,OBAtom *b,OBAtom *c,OBAtom *d)
                             d->GetVector()));
 }
 
-void OBMol::ContigFragList(vector<vector<int> >&cfl)
+void OBMol::ContigFragList(std::vector<std::vector<int> >&cfl)
 {
     int j;
     OBAtom *atom;

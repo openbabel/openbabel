@@ -136,6 +136,7 @@ public:
 //*** Stuff for random number generation ***
 //******************************************
 
+//! Used for internal random number generation OBRandom (unless the system random generaor is used)
 typedef struct
 {
     unsigned int hi;

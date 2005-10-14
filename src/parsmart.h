@@ -256,7 +256,7 @@ public:
     }
 };
 
-
+//! Performs fast, exhaustive matching used to find just a single match in match() using recursion and explicit stack handling.
 class OBAPI OBSSMatch //used for fast exhaustive matching
 {
 protected:

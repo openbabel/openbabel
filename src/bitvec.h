@@ -65,39 +65,34 @@ public:
         _size=_set.size();
         Clear();
     }
-    ///Copy constructor (result has same number of bits)
-		OBBitVec(const OBBitVec&);
+    /// Copy constructor (result has same number of bits)
+    OBBitVec(const OBBitVec&);
     void SetBitOn(int);
     void SetBitOff(int);
     void SetRangeOn(int, int);
     void SetRangeOff(int, int);
     void Fold(int);
 
+    //! \return the index of the first bit that is set to true
     int FirstBit(int)
     {
         return (BitIsSet(0) ? 0  : NextBit(0));
     }
     int NextBit(int);
-    int EndBit()
-    {
-        return(-1);
-    }
-    ///Returns number of 32 bit words. NOT number of bits.
-		int GetSize() const
-    {
-        return(_size);
-    }
+    //! \return the index of the last bit (for iterating)
+    int EndBit()    {        return(-1);    }
+    /// \return number of 32 bit words. NOT number of bits.
+    int GetSize() const    { return(_size);    }
+    /// \return the number of bits
     int CountBits();
 
-    bool Empty()
-    {
-        return(IsEmpty());
-    }
+    /// \deprecated Use IsEmpty() instead.
+    bool Empty()   { return(IsEmpty()); }
     bool IsEmpty();
     ///Number of bits increased if necessary but never decreased
-		bool Resize(int maxbits);
+    bool Resize(int maxbits);
 
-		bool BitIsSet(int bit)
+    bool BitIsSet(int bit)
     {
         return((bit/SETWORD >= GetSize()) ?
                false : _set[bit/SETWORD]>>(bit%SETWORD)&1);
@@ -112,6 +107,7 @@ public:
     void FromString(std::string&,int);
     void ToVecInt(std::vector<int>&);
     void Clear(void);
+    //! Inverts every bit in the vector
     void Negate()
     {
         for (int i= 0; i != _size; i++)
@@ -120,8 +116,8 @@ public:
         }
     }
 
-		///Assignment operator but number of bits is not reduced 
-		OBBitVec &operator= (const OBBitVec &);
+    ///Assignment operator but number of bits is not reduced 
+    OBBitVec &operator= (const OBBitVec &);
     OBBitVec &operator&= (OBBitVec &);
     OBBitVec &operator|= (OBBitVec &);
     OBBitVec &operator|= (const int i)
@@ -147,13 +143,13 @@ public:
     friend std::istream& operator>> ( std::istream&, OBBitVec& );
     friend std::ostream& operator<< ( std::ostream&, const OBBitVec& ) ;
 	
-		///Access to data in word size pieces CM
-		void GetWords(std::vector<unsigned int>& vec)
-		{
-			std::vector<int>::iterator itr;
-			for(itr=_set.begin();itr!=_set.end();itr++)
-				vec.push_back(*itr);
-		}
+    ///Access to data in word size pieces CM
+    void GetWords(std::vector<unsigned int>& vec)
+      {
+	std::vector<int>::iterator itr;
+	for(itr=_set.begin();itr!=_set.end();itr++)
+	  vec.push_back(*itr);
+      }
 };
 
 OBAPI extern void ThrowError(char *);
