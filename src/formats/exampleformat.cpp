@@ -11,149 +11,209 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "mol.h"
-#include "obconversion.h"
+/* This is a heavily commented template for a OpenBabel format class.
+
+Format classes are plugins: no modifications are needed to existing code
+to indroduce a new format. The code just needs to be compiled and linked
+with the rest of the OpenBabel code. 
+Alternatively, they can be built (either singly or in groups) as DLLs 
+or shared libraries. [**Extra build info**]
+For a DLL, use the project OBFormats2 as a template.
+
+Each file may contain more than one format.
+
+This compilable, but non-functional example is for a format which
+converts a molecule to and from OpenBabel's internal format OBMol. 
+The conversion framework can handle other types of object, provided 
+they are derived from OBBase. OBReaction is currently the only
+alternative to OBMol and is used in rxnformat.cpp.
+
+For XML formats extra, support for the parsing is provided, see pubchem.cpp
+as an example.  
+*/ 
+
+#include "obmolecformat.h"
 
 using namespace std;
 namespace OpenBabel
 {
 
-class ReactionSmilesFormat : public OBFormat
+class XXXFormat : public OBMoleculeFormat
+// Derive directly from OBFormat for objects which are not molecules.
 {
 public:
-    //Register this format type ID
-    ReactionSmilesFormat()
-    {
-        OBConversion::RegisterFormat("rsmi",this);
-    }
+	//Register this format type ID in the constructor
+  XXXFormat()
+	{
+		/* XXX is the file extension and is case insensitive. A MIME type can be
+		   added as an optional third parameter.
+		   Multiple file extensions can be registered by adding extra statements.*/
+		OBConversion::RegisterFormat("XXX",this);
 
-    virtual const char* Description() //required
-    {
-        return
-            "ReactionSmiles format\n \
-            No comments yet\n \
-            ";
-    };
+		/* If there are any format specific options they should be registered here
+		   so that the commandline interface works properly. 
+		   The first parameter is the option name. If it is a single letter it can be
+		   concatinated with other	single letter options. For output options it can be
+		   multicharcter and is then	written as --optionname on the command line.
+		   The third parameter is the number of parameters the option takes. Currently
+		   this is either 1 or 0 and if it is 0 can be omitted for output options. 
+			 The parameter is always text and needs to be parsed to extract a number.
+		   
+		   Options can apply when writing - 4th parameter is OBConversion::OUTOPTIONS
+		   or can be omitted as shown.	A single letter output option is preceeded 
+		   by -x on the command line.
+		   Or options can apply to the input format - the 4th parameter is 
+		   OBConversion::INOPTIONS. They are then  preceeded by -a on the command line.
+		
+		   Each option letter may be reused in other formats, but within the same group,
+		   INOPTIONS or OUTOPTIONS, must take the same number of parameters (0 or 1).
+		   There will be an error message when OpenBabel	runs if there are conflicts
+		   between formats. A list of formats currently used (which may not be 
+		   comprehensive) is in docs/options.txt.
+		*/
+		OBConversion::RegisterOptionParam("f", this, 1);
+		OBConversion::RegisterOptionParam("n", this);
+		OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
 
-    virtual const char* SpecificationURL(){return
-            "http://www.daylight.com/dayhtml/doc/theory/theory.rxn.html";};
+	}
 
-    //Flags() can return be any the following combined by | or be omitted if none apply
-    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
-    {
-        return 0;
-    };
+	/* The first line of the description should be a brief identifier since it is 
+	   used in dropdown lists, etc. in some user interfaces. The rest is optional.
+	
+	   Describe any format specific options here. This text is parsed to provide
+	   checkboxes, etc for the Windows GUI (for details click the control menu),
+	   so please try to keep to a similar form.
 
-    //*** This section identical for most OBMol conversions ***
-    ////////////////////////////////////////////////////
-    /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+	   Write options are the most common, and the "Write" is optional.
+	   The option f takes a text parameter, so that it is essential that the option
+	   is registered in the constructor of the class.
+	   Finish the options with a blank line as shown, if there are more than one 
+	   group of options, or if there are further comments after them.
+	*/
+	virtual const char* Description() //required
+	{
+		return
+		"XXX format\n \
+		Some comments here, on as many lines as necessay\n \
+		Write Options e.g. -xf3 \n \
+			f# Number of (fictional) levels \n \
+			n  Omit (virtual) title\n \
+		\n \
+		Read Options e.g. -as\n\
+			s  Consider single bonds only\n\
+		";
+  };
 
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-        //Makes a new OBReaction and new associated OBMols
-        OBReaction* pReact = new OBReaction;
-        bool ret=ReadMolecule(pReact,pConv); //call the "API" read function
+  //Optional URL where the file format is specified
+	virtual const char* SpecificationURL(){return
+     "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";};
 
-	std::string auditMsg = "OpenBabel::Read molecule ";
-	std::string description(Description());
-	auditMsg += description.substr(0,description.find('\n'));
-	obErrorLog.ThrowError(__FUNCTION__,
-			      auditMsg,
-			      obAuditMsg);
+  //Optional
+	virtual const char* GetMIMEType() 
+  { return "chemical/x-xxx"; };
 
-        if(ret) //Do transformation and return molecule
-            pConv->AddChemObject(pReact->DoTransformations(pConv->GetGeneralOptions()));
-        else
-            pConv->AddChemObject(NULL);
-        return ret;
-    };
 
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //WriteChemObject() always deletes the object retrieved by GetChemObject
-        //For RXN also deletes the associated molecules
-        //Cast to the class type need, e.g. OBMol
-        OBBase* pOb=pConv->GetChemObject();
-        OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-        if(pReact==NULL)
-            return false;
+  /* Flags() can return be any of the following combined by | 
+	   or be omitted if none apply
+     NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY */
+  virtual unsigned int Flags()
+  {
+      return READONEONLY;
+  };
 
-        bool ret=false;
-        ret=WriteMolecule(pReact,pConv);
+ 	/* This optional function is for formats which can contain more than one
+	   molecule. It is used to quickly position the input stream after the nth
+	   molecule without have to convert and discard all the n molecules. 
+	   See obconversion.cpp for details and mdlformat.cpp for an example.*/
+	virtual int SkipObjects(int n, OBConversion* pConv)
+	{
+		return 0;
+	};
 
-	std::string auditMsg = "OpenBabel::Write molecule ";
-	std::string description(Description());
-        auditMsg += description.substr( 0, description.find('\n') );
-        obErrorLog.ThrowError(__FUNCTION__,
-                              auditMsg,
-                              obAuditMsg);
+	////////////////////////////////////////////////////
+  /// Declarations for the "API" interface functions. Definitions are below
+  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-        vector<OBMol*>::iterator itr;
-        for(itr=pReact->reactants.begin();itr!=pReact->reactants.end();itr++)
-            delete *itr;
-        for(itr=pReact->products.begin();itr!=pReact->products.end();itr++)
-            delete *itr;
-
-        delete pOb;
-        return ret;
-    };
-};
-//***
+private:
+	/* Add declarations for any local function or member variables used.
+	   Generally only a single instance of a format class is used. Keep this in
+	   mind if you employ member variables. */
+};  
+	////////////////////////////////////////////////////
 
 //Make an instance of the format class
-ReactionSmilesFormat theReactionSmilesFormat;
+XXXFormat theXXXFormat;
 
 /////////////////////////////////////////////////////////////////
-bool ReactionSmilesFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+
+bool XXXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
-
-  //It's really a reaction, not a molecule.
-  //Doesn't make a new OBReactionObject, but does make mew reactant and product OBMols
-  OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-
-  OBFormat* pSmiFormat = pConv->FindFormat("smi");
-  if(pSmiFormat==NULL)
+  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+  if(pmol==NULL)
       return false;
 
-  //Define some references so we can use the old parameter names
-  istream &ifs = *pConv->GetInStream();
-	
-	string ln;
-	getline(ifs,ln);
-	if(!ifs) return false;
-	vector<string> vec;
-	tokenize(vec,ln,'>');
+  istream& ifs = *pConv->GetInStream();
 
-	//Read a MOL file	using the same OBConversion object but with a different format
-  pmol=new OBMol;
-  if(!pSmiFormat->ReadMolecule(pmol,pConv))
-      cerr << "Failed to read the reactant" << endl;
-  pReact->reactants.push_back(pmol);
+  pmol->BeginModify();
 
-	string reactantstring, agentstring, productstring;
-	ifs >> reactantstring >> '>' >> agentstring >> '>' >> productstring;
+	/** Parse the input stream and use the OpenBabel API to populate the OBMol **/
 
+	// To use an input option
+	if(pConv->IsOption("s",OBConversion::INOPTIONS))
+	{
+		//Code for when -as is specified
+	}
 
+	/* If the molecule has other than 3D coordinates for its atoms, it
+	is necessary to set the dimension to 0, or 2 */
+	int dim;
+	pmol->SetDimension(dim);
+
+	pmol->EndModify();
+
+	/* For multi-molecule formats, leave the input stream at the start of the
+	   next molecule, ready for this routine to be called again. 
+
+	/* Return true if ok. Returning false means discard the OBMol and stop
+	   converting, unless the -e option is set. With a multi-molecule inputstream
+	   this will skip the current molecule and continue with the next, if SkipObjects()
+	   has been defined. If it has not, and continuation after errors is still required,
+	   it is necessary to leave the input stream at the beginning of next object when
+	   returning false;*/
+	return true;
 }
 
 ////////////////////////////////////////////////////////////////
 
-bool ReactionSmilesFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+bool XXXFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
-        return false;
+  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+  if(pmol==NULL)
+      return false;
 
-    //Define some references so we can use the old parameter names
-    ostream &ofs = *pConv->GetOutStream();
-    OBMol &mol = *pmol;
+  ostream& ofs = *pConv->GetOutStream();
 
-    //The old code goes here. Return true, or false on error
+	/** Write the representation of the OBMol molecule to the output stream **/
+
+	//To use an output option
+	if(!pConv->IsOption("n")) //OBConversion::OUTOPTIONS is the default
+		ofs << "Title = " << pmol->GetTitle() << endl;
+	//or if the option has a parameter
+	int levels=0;
+	const char* p = pConv->IsOption("f");
+	if(p) //p==NULL if f option absent
+		levels = atoi(p);
+
+	// To find out whether this is the first molecule to be output...
+	if(pConv->GetOutputIndex()==0)
+		ofs << "The contents of this file were derived from " << pConv->GetInFilename() << endl;
+	// ... or the last
+	if(!pConv->IsLast())
+		ofs << "$$$$" << endl;
+
+	return true; //or false to stop converting
 }
 
 } //namespace OpenBabel
+
