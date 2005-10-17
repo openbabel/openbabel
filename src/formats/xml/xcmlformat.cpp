@@ -51,7 +51,7 @@ public:
 Chemical Markup Language\n \
 XML format. This implementation uses libxml2.\n \
 Write options for CML: -x[flags] (e.g. -x1ac)\n \
-1  output CML V1.0  rather than V2.0\n \
+1  output CML1 (rather than CML2)\n \
 a  output array format for atoms and bonds\n \
 h  use hydrogenCount for all hydrogens\n \
 m  output metadata\n \
@@ -769,9 +769,11 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	static const xmlChar C_ATOMPARITY[] = "atomParity";
 //	static const xmlChar C_BONDSTEREO[] = "bondStereo";
 
-	static const xmlChar C_X[]                = "x";
-	static const xmlChar C_Y[]                = "y";
-	static const xmlChar C_Z[]                = "z";
+	static const xmlChar C_X2[]               = "x2";
+	static const xmlChar C_Y2[]               = "y2";
+	static const xmlChar C_X3[]               = "x3";
+	static const xmlChar C_Y3[]               = "y3";
+	static const xmlChar C_Z3[]               = "z3";
 	static const xmlChar C_ATOMID[]           = "atomID";
 	static const xmlChar C_ELEMENTTYPE[]      = "elementType";
 	static const xmlChar C_ISOTOPE[]          = "isotope";
@@ -786,6 +788,17 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 /* defined in other functions
 	static const xmlChar C_FORMULA[] = "formula";
 	static const xmlChar C_CONCISE[] = "concise";
+*/
+	//CML1
+	static const xmlChar C_STRING[]       = "string";
+	static const xmlChar C_INTEGER[]      = "integer";
+	static const xmlChar C_FLOAT[]        = "floatg";
+	static const xmlChar C_BUILTIN[]      = "builtin";
+	static const xmlChar C_STRINGARRAY[]  = "stringArray";
+	static const xmlChar C_INTEGERARRAY[] = "integerArray";
+	static const xmlChar C_FLOATARRAY[]   = "floatArray";
+/* used as ordinary text
+	atomRef  
 */
 	_pxmlConv = XMLConversion::GetDerived(pConv,false);
 	if(!_pxmlConv)
@@ -805,6 +818,7 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	
 	bool UseFormulaWithNoBonds=true;
 
+	bool cml1 = _pxmlConv->IsOption("1");
 	bool arrayform = _pxmlConv->IsOption("a");
 	int dim = mol.GetDimension();
 	
@@ -880,94 +894,200 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 					hct << " " << hcount;
 					x << " " << patom->GetX();
 					y << " " << patom->GetY();
-					x << " " << patom->GetZ();
+					z << " " << patom->GetZ();
 				}
 				else
 				{
 					xmlTextWriterStartElementNS(writer(), prefix, C_ATOM, NULL);
 					xmlTextWriterWriteFormatAttribute(writer(), C_ID,"a%d", patom->GetIdx());
-					xmlTextWriterWriteFormatAttribute(writer(), C_ELEMENTTYPE,"%s", el.c_str());
-					if(isotope)
-						xmlTextWriterWriteFormatAttribute(writer(), C_ISOTOPE,"%d", isotope);
+					if(!cml1)
+					{	
+						xmlTextWriterWriteFormatAttribute(writer(), C_ELEMENTTYPE,"%s", el.c_str());
+						if(isotope)
+							xmlTextWriterWriteFormatAttribute(writer(), C_ISOTOPE,"%d", isotope);
 
-					if(charge)
-						xmlTextWriterWriteFormatAttribute(writer(), C_FORMALCHARGE,"%d", charge);
+						if(charge)
+							xmlTextWriterWriteFormatAttribute(writer(), C_FORMALCHARGE,"%d", charge);
 
-					if(spin)
-						xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%d", spin);
+						if(spin)
+							xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%d", spin);
 
-					if(UseHydrogenCount && hcount)
-						xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%d", hcount);
+						if(UseHydrogenCount && hcount)
+							xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%d", hcount);
 
-					if(dim==2 || dim==3)
-					{
-						xmlTextWriterWriteFormatAttribute(writer(), C_X,"%f", patom->GetX());
-						xmlTextWriterWriteFormatAttribute(writer(), C_Y,"%f", patom->GetY());
-
-						if(dim==3)
-							xmlTextWriterWriteFormatAttribute(writer(), C_Z,"%f", patom->GetZ());
-					}
-					if(patom->HasChiralitySpecified())
-					{
-						int cfg=0;
-						if((patom->IsPositiveStereo() || patom->IsClockwise()))
-							cfg=1; //whether +1 or -1 is pure guess. TODO***
-						else if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
-							cfg=-1;
-						if(cfg)
+						if(dim==2)
 						{
-							//in the order they are in OBMol except that any H is put at the end
-							vector<int> ref;
-							ref.clear();
-							int Hidx=0;
-							FOR_NBORS_OF_ATOM(a,patom)
+							xmlTextWriterWriteFormatAttribute(writer(), C_X2,"%f", patom->GetX());
+							xmlTextWriterWriteFormatAttribute(writer(), C_Y2,"%f", patom->GetY());
+						}
+						if(dim==3)
+						{
+							xmlTextWriterWriteFormatAttribute(writer(), C_X3,"%f", patom->GetX());
+							xmlTextWriterWriteFormatAttribute(writer(), C_Y3,"%f", patom->GetY());
+							xmlTextWriterWriteFormatAttribute(writer(), C_Z3,"%f", patom->GetZ());
+						}
+						if(patom->HasChiralitySpecified())
+						{
+							int cfg=0;
+							if((patom->IsPositiveStereo() || patom->IsClockwise()))
+								cfg=1; //whether +1 or -1 is pure guess. TODO***
+							else if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
+								cfg=-1;
+							if(cfg)
 							{
-								if(a->IsHydrogen())
-									Hidx = a->GetIdx();
-								else
-									ref.push_back(a->GetIdx()); 
-							}
-							if(Hidx)
-								ref.push_back(Hidx);
-							if(ref.size()==3)//e.g. using implicit Hs
-								ref.push_back(patom->GetIdx());
+								//in the order they are in OBMol except that any H is put at the end
+								vector<int> ref;
+								ref.clear();
+								int Hidx=0;
+								FOR_NBORS_OF_ATOM(a,patom)
+								{
+									if(a->IsHydrogen())
+										Hidx = a->GetIdx();
+									else
+										ref.push_back(a->GetIdx()); 
+								}
+								if(Hidx)
+									ref.push_back(Hidx);
+								if(ref.size()==3)//e.g. using implicit Hs
+									ref.push_back(patom->GetIdx());
 
-							xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
-							xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
-								"a%d a%d a%d a%d", ref[0], ref[1], ref[2], ref[3]);														
-							xmlTextWriterWriteFormatString(writer(),"%d", cfg);
-							xmlTextWriterEndElement(writer());//atomParity
+								xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
+								xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4,
+									"a%d a%d a%d a%d", ref[0], ref[1], ref[2], ref[3]);														
+								xmlTextWriterWriteFormatString(writer(),"%d", cfg);
+								xmlTextWriterEndElement(writer());//atomParity
+							}
 						}
 					}
+					else
+					{
+						//CML1
+						xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
+						xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "elementType");
+						xmlTextWriterWriteFormatString(writer(),"%s", el.c_str());
+						xmlTextWriterEndElement(writer());
 
+						if(charge)
+						{
+							xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
+							xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "formalCharge");
+							xmlTextWriterWriteFormatString(writer(),"%d", charge);
+							xmlTextWriterEndElement(writer());
+						}
+
+						if(UseHydrogenCount && hcount)
+						{
+							xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
+							xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
+							xmlTextWriterWriteFormatString(writer(),"%d", hcount);
+							xmlTextWriterEndElement(writer());
+						}
+
+						if(dim==2 || dim==3)
+						{
+							xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, NULL);
+							xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "x",dim);
+							xmlTextWriterWriteFormatString(writer(),"%f", patom->GetX());
+							xmlTextWriterEndElement(writer());
+
+							xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, NULL);
+							xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "y",dim);
+							xmlTextWriterWriteFormatString(writer(),"%f", patom->GetY());
+							xmlTextWriterEndElement(writer());
+						}
+
+						if(dim==3)
+						{
+							xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, NULL);
+							xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "z",dim);
+							xmlTextWriterWriteFormatString(writer(),"%f", patom->GetX());
+							xmlTextWriterEndElement(writer());
+						}
+						//Stereochemistry currently not written for CML1
+					}
 					xmlTextWriterEndElement(writer());//atom
 				}
 			}
 		
 			if(arrayform)
 			{
-				xmlTextWriterWriteFormatAttribute(writer(), C_ATOMID,"%s", id.str().c_str());
-				xmlTextWriterWriteFormatAttribute(writer(), C_ELEMENTTYPE,"%s", eltyp.str().c_str());
-				
-				if(anyIsotope)
-					xmlTextWriterWriteFormatAttribute(writer(), C_ISOTOPE,"%s", iso.str().c_str());
-
-				if(anyChg)
-					xmlTextWriterWriteFormatAttribute(writer(), C_FORMALCHARGE,"%s", chg.str().c_str());
-
-				if(anySpin)
-					xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%s", spn.str().c_str());
-
-				if(UseHydrogenCount)
-					xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%s", hct.str().c_str());
-
-				if(dim==2 || dim==3)
+				if(!cml1)
 				{
-					xmlTextWriterWriteFormatAttribute(writer(), C_X,"%s", x.str().c_str());
-					xmlTextWriterWriteFormatAttribute(writer(), C_Y,"%s", y.str().c_str());
+					xmlTextWriterWriteFormatAttribute(writer(), C_ATOMID,"%s", id.str().c_str());
+					xmlTextWriterWriteFormatAttribute(writer(), C_ELEMENTTYPE,"%s", eltyp.str().c_str());
+					
+					if(anyIsotope)
+						xmlTextWriterWriteFormatAttribute(writer(), C_ISOTOPE,"%s", iso.str().c_str());
 
+					if(anyChg)
+						xmlTextWriterWriteFormatAttribute(writer(), C_FORMALCHARGE,"%s", chg.str().c_str());
+
+					if(anySpin)
+						xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%s", spn.str().c_str());
+
+					if(UseHydrogenCount)
+						xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%s", hct.str().c_str());
+
+					if(dim==2)
+					{
+						xmlTextWriterWriteFormatAttribute(writer(), C_X2,"%s", x.str().c_str());
+						xmlTextWriterWriteFormatAttribute(writer(), C_Y2,"%s", y.str().c_str());
+					}
 					if(dim==3)
-						xmlTextWriterWriteFormatAttribute(writer(), C_Z,"%s", z.str().c_str());
+					{
+						xmlTextWriterWriteFormatAttribute(writer(), C_X3,"%s", x.str().c_str());
+						xmlTextWriterWriteFormatAttribute(writer(), C_Y3,"%s", y.str().c_str());
+						xmlTextWriterWriteFormatAttribute(writer(), C_Z3,"%s", z.str().c_str());
+					}
+				}
+				else
+				{
+					//CML1
+					xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+					xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomID");
+					xmlTextWriterWriteFormatString(writer(),"%s", id.str().c_str());
+					xmlTextWriterEndElement(writer());
+
+					xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+					xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "elementType");
+					xmlTextWriterWriteFormatString(writer(),"%s", eltyp.str().c_str());
+					xmlTextWriterEndElement(writer());
+
+					if(anyChg)
+					{
+						xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
+						xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "formalCharge");
+						xmlTextWriterWriteFormatString(writer(),"%s", chg.str().c_str());
+						xmlTextWriterEndElement(writer());
+					}
+
+					if(UseHydrogenCount)
+					{
+						xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
+						xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
+						xmlTextWriterWriteFormatString(writer(),"%s", hct.str().c_str());
+						xmlTextWriterEndElement(writer());
+					}
+
+					if(dim==2 || dim==3)
+					{
+						xmlTextWriterStartElementNS(writer(), prefix, C_FLOATARRAY, NULL);
+						xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "x",dim);
+						xmlTextWriterWriteFormatString(writer(),"%s", x.str().c_str());
+						xmlTextWriterEndElement(writer());
+
+						xmlTextWriterStartElementNS(writer(), prefix, C_FLOATARRAY, NULL);
+						xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "y",dim);
+						xmlTextWriterWriteFormatString(writer(),"%s", y.str().c_str());
+						xmlTextWriterEndElement(writer());
+					}
+					if(dim==3)
+					{
+						xmlTextWriterStartElementNS(writer(), prefix, C_FLOATARRAY, NULL);
+						xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "z",dim);
+						xmlTextWriterWriteFormatString(writer(),"%s", z.str().c_str());
+						xmlTextWriterEndElement(writer());
+					}			
 				}
 			}
 			xmlTextWriterEndElement(writer());//atomArray
@@ -1000,25 +1120,66 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 			else
 			{
 				xmlTextWriterStartElementNS(writer(), prefix, C_BOND, NULL);
-				xmlTextWriterWriteFormatAttribute(writer(), C_ID,"b%d", pbond->GetIdx());
-				xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS2,"a%d a%d",
-					pbond->GetBeginAtomIdx(), pbond->GetEndAtomIdx() );
-				if(bo==5) //aromatic
-					xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%c", 'A');
+//				xmlTextWriterWriteFormatAttribute(writer(), C_ID,"b%d", pbond->GetIdx()); remove bond id
+				if(!cml1)
+				{
+					xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS2,"a%d a%d",
+						pbond->GetBeginAtomIdx(), pbond->GetEndAtomIdx() );
+					if(bo==5) //aromatic
+						xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%c", 'A');
+					else
+						xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%d", bo);
+					
+					if(bo==2)
+						WriteBondStereo(pbond);
+				}
 				else
-					xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%d", bo);
-				
-				if(bo==2)
-					WriteBondStereo(pbond);
+				{
+					//CML1
+					xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
+					xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
+					xmlTextWriterWriteFormatString(writer(),"a%d", pbond->GetBeginAtomIdx());
+					xmlTextWriterEndElement(writer());
 
+					xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
+					xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
+					xmlTextWriterWriteFormatString(writer(),"a%d", pbond->GetEndAtomIdx());
+					xmlTextWriterEndElement(writer());
+
+					xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
+					xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "order");
+					xmlTextWriterWriteFormatString(writer(),"%d", bo);
+					xmlTextWriterEndElement(writer());
+				}
 				xmlTextWriterEndElement(writer());//bond
 			}
 		}
 		if(arrayform)
 		{
-			xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREF1, "%s", ref1.str().c_str());
-			xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREF2, "%s", ref2.str().c_str());
-			xmlTextWriterWriteFormatAttribute(writer(), C_ORDER, "%s", ord.str().c_str());
+			if(!cml1)
+			{
+				xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREF1, "%s", ref1.str().c_str());
+				xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREF2, "%s", ref2.str().c_str());
+				xmlTextWriterWriteFormatAttribute(writer(), C_ORDER, "%s", ord.str().c_str());
+			}
+			else
+			{
+				//CML1
+				xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+				xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
+				xmlTextWriterWriteFormatString(writer(),"%s", ref1.str().c_str());
+				xmlTextWriterEndElement(writer());
+
+				xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+				xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
+				xmlTextWriterWriteFormatString(writer(),"%s", ref2.str().c_str());
+				xmlTextWriterEndElement(writer());
+
+				xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+				xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "order");
+				xmlTextWriterWriteFormatString(writer(),"%s", ord.str().c_str());
+				xmlTextWriterEndElement(writer());
+			}
 		}
 
 		xmlTextWriterEndElement(writer());//bondArray
