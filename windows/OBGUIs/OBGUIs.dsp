@@ -137,6 +137,10 @@ SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\copyformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\data.cpp
 # End Source File
 # Begin Source File

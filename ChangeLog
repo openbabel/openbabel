@@ -1,3 +1,26 @@
+2005-10-17  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/obconversion.h:Replaced std::type_info by type_info
+	in preparation for mods to ensure STL/VC6 compatibility.
+	I hope it will still compile in unix.
+
+	* src/obconversion.cpp,obconversion.h: Added GetInLen(), wInlen,
+	rInlen to provide the length of the object being written.
+	This simple operation is irritatingly complex because of object
+	queue.
+
+	* src/copyformat.cpp: simple new format which allows chemical
+	filtering	from a multi-object file with no possibility of losing
+	content by OB's conversion, e.g. sdf or xml files.
+
+	* src/formats/exampleformat.cpp: Now a heavily commented
+	format template. Maybe should be put in another folder.
+
+	* src/formats/inchiformt.cpp(WriteMolecule): correct bug sometimes
+	causing crash when no 0Dstereo info.
+
+	* windows-vc2005: Added project files for Visual C++ 2005
+
 2005-10-14  Geoffrey Hutchison  <ghutchis@Alumina.local>
 
 	* Source-code documentation updates. Ensure all classes and struct

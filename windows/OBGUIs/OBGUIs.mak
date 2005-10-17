@@ -47,6 +47,7 @@ CLEAN :
 	-@erase "$(INTDIR)\chains.obj"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\cmlreactlformat.obj"
+	-@erase "$(INTDIR)\copyformat.obj"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
 	-@erase "$(INTDIR)\DynamicOptions.obj"
@@ -163,7 +164,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\OBGUI.res" \
 	"..\libxml2.lib" \
-	"..\zdll.lib"
+	"..\zdll.lib" \
+	"$(INTDIR)\copyformat.obj"
 
 ".\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -200,6 +202,8 @@ CLEAN :
 	-@erase "$(INTDIR)\chiral.sbr"
 	-@erase "$(INTDIR)\cmlreactlformat.obj"
 	-@erase "$(INTDIR)\cmlreactlformat.sbr"
+	-@erase "$(INTDIR)\copyformat.obj"
+	-@erase "$(INTDIR)\copyformat.sbr"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\data.sbr"
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
@@ -360,7 +364,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\vector3.sbr" \
 	"$(INTDIR)\xcmlformat.sbr" \
 	"$(INTDIR)\xml.sbr" \
-	"$(INTDIR)\xmlformat.sbr"
+	"$(INTDIR)\xmlformat.sbr" \
+	"$(INTDIR)\copyformat.sbr"
 
 "$(OUTDIR)\OBGUIs.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -426,7 +431,8 @@ LINK32_OBJS= \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\OBGUI.res" \
 	"..\libxml2.lib" \
-	"..\zdll.lib"
+	"..\zdll.lib" \
+	"$(INTDIR)\copyformat.obj"
 
 "$(OUTDIR)\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -634,6 +640,24 @@ SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 
 
 "$(INTDIR)\cmlreactlformat.obj"	"$(INTDIR)\cmlreactlformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\copyformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\copyformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\copyformat.obj"	"$(INTDIR)\copyformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
