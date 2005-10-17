@@ -289,8 +289,10 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 //	*inp.szOptions = '\0';
 	inp.num_atoms = mol.NumAtoms();
-	inp.stereo0D = &stereoVec[0];
 	inp.num_stereo0D = stereoVec.size();
+	if(inp.num_stereo0D>0)
+		
+		inp.stereo0D = &stereoVec[0];
 
 	inchi_Output inout;
 	memset(&inout,0,sizeof(inchi_Output));
