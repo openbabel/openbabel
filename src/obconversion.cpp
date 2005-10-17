@@ -241,6 +241,8 @@ OBConversion::OBConversion(const OBConversion& o)
 	InFilename     = o.InFilename;
 	rInpos         = o.rInpos;
 	wInpos         = o.wInpos;
+	rInlen         = o.rInlen;
+	wInlen         = o.wInlen;
 	m_IsLast       = o.m_IsLast;
 	MoreFilesToCome= o.MoreFilesToCome;
 	OneObjectOnly  = o.OneObjectOnly;
@@ -457,6 +459,7 @@ int OBConversion::Convert()
 	ReadyToInput=true;
 	m_IsLast=false;
 	pOb1=NULL;
+	wInlen=0;
 
 	//Input loop
 	while(ReadyToInput && pInStream->peek() != EOF && pInStream->good())
@@ -473,7 +476,7 @@ int OBConversion::Convert()
 		try
 		{
 			ret = pInFormat->ReadChemObject(this);
-		}
+		}		
 		catch(...)
 		{
 			if(!IsOption("e", GENOPTIONS) && !OneObjectOnly)
@@ -578,6 +581,9 @@ int OBConversion::AddChemObject(OBBase* pOb)
 	{	
 		if(Count==(int)EndNumber)
 			ReadyToInput=false; //stops any more objects being read
+
+		rInlen = pInStream->tellg() - rInpos;
+
 		if(pOb)
 		{
 			if(pOb1 && pOutFormat) //see if there is an object ready to be output
@@ -593,6 +599,7 @@ int OBConversion::AddChemObject(OBBase* pOb)
 			}
 			pOb1=pOb;
 			wInpos = rInpos; //Save the position in the input file to be accessed when writing it
+			wInlen = rInlen;
 		}
 	}
 	return Count;

@@ -132,7 +132,7 @@ public:
 
 	/// Defaults to that used by the default format. Useful for checking 
 	/// that a format can handle a particular object.
-	virtual const std::type_info& GetType();
+	virtual const type_info& GetType();
  	
 	/// @brief Web address where the format is defined.
 	virtual const char* SpecificationURL() { return ""; }
@@ -232,6 +232,9 @@ public:
 	
 	///Get the position in the input stream of the object being read
 	std::streampos GetInPos()const{return wInpos;}; 
+
+	///Get the length in the input stream of the object being read
+	size_t GetInLen()const{return wInlen;}; 
 
 	///@brief Returns a default title which is the filename
 	const char* GetTitle() const;
@@ -379,6 +382,8 @@ protected:
 	OBBase*		  pOb1;
 	std::streampos wInpos; ///<position in the input stream of the object being written
 	std::streampos rInpos; ///<position in the input stream of the object being read
+	size_t wInlen; ///<length in the input stream of the object being written
+	size_t rInlen; ///<length in the input stream of the object being read
 	
 	OBConversion* pAuxConv;///<Way to extend OBConversion
 };
