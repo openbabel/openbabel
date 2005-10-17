@@ -88,7 +88,7 @@ private:
 	bool DoMolWideData();
 	bool ParseFormula(string& formula, OBMol* pmol);
 	
-	void WriteFormula(OBMol mol);
+	void WriteFormula(OBMol& mol);
 	void WriteMetadataList();
 	string getTimestr();
 	void WriteBondStereo(OBBond* pbond);
@@ -1034,10 +1034,8 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	return true;
 }
 
-void CMLFormat::WriteFormula(OBMol mol)
+void CMLFormat::WriteFormula(OBMol& mol)
 {
-	//Using copy of molecule because of modification by adding Hs
-	mol.AddHydrogens(false,false);
 	string formula = mol.GetFormula();
 	//Insert spaces and add 1s if missing
 	string modformula;

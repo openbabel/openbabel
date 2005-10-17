@@ -53,6 +53,9 @@ Minimal extraction of chemical structure information only.\n \
 
 	virtual bool DoElement(const string& name);
 	virtual bool EndElement(const string& name);
+
+	// EndTag is used so that the stream buffer is is filled with the XML from
+	// complete objects, as far as possible. 
 	virtual const char* EndTag(){ return "/PC-Compound>"; };
 
 private:
@@ -78,8 +81,10 @@ PubChemFormat thePubChemFormat;
 
 bool PubChemFormat::DoElement(const string& name)
 {
-	if(name=="PC-Compound")
+	if(name=="PC-Compound") 
 	{
+		//This is the start of the molecule we are extracting and it will
+		//be put into the OBMol* _pmol declared in the parent class.
 		//initialise everything
 		dim=0;
 		AtNum.clear();
@@ -194,7 +199,7 @@ bool PubChemFormat::EndElement(const string& name)
 			pAtom->SetVector(Coordx[i],Coordy[i],Coordz[i]);
 		}
 	}
-	else if(name=="PC-Compound")
+	else if(name=="PC-Compound") //this is the end of the molecule we are extracting
 	{
 		_pmol->EndModify();
 		return false;//means stop parsing
