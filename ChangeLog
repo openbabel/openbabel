@@ -1,4 +1,10 @@
 2005-10-17  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/formats/xml/xcmlformat.cpp: Added CML1 writing.
+	Corrected bug in writing "x","y" instead of "x2","y3" etc.
+	Corrected bug in x and z 3D coords in array mode.  
+
+2005-10-17  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/obconversion.h:Replaced std::type_info by type_info
 	in preparation for mods to ensure STL/VC6 compatibility.
