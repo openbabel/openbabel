@@ -15,7 +15,7 @@ libformats_la_SOURCES = \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
-	crkformat.cpp cssrformat.cpp \
+	copyformat.cpp crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
 	fingerprintformat.cpp \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp 
@@ -36,7 +36,7 @@ pkglib_LTLIBRARIES = \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la carformat.la cccformat.la \
 	chem3dformat.la chemdrawformat.la chemtoolformat.la \
-	crkformat.la cssrformat.la \
+	copyformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	fingerprintformat.la \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
@@ -92,6 +92,9 @@ chemdrawformat_la_LDFLAGS = -module -avoid-version
 
 chemtoolformat_la_SOURCES = chemtoolformat.cpp
 chemtoolformat_la_LDFLAGS = -module -avoid-version 
+
+copyformat_la_SOURCES = copyformat.cpp
+copyformat_la_LDFLAGS = -module -avoid-version 
 
 crkformat_la_SOURCES = crkformat.cpp
 crkformat_la_LDFLAGS = -module -avoid-version 
