@@ -39,8 +39,8 @@ a vector<OBRing*> inside the molecule. Perception is only done once
 for a molecule unless the connection table is modified. The following
 code demonstrates how to extract the SSSR information:
 \code
-OBMol mol(SDF,SDF);
-cin >> mol;
+OBMol mol;
+
 vector<OBRing*> vr;
 vr = mol.GetSSSR();
 \endcode

@@ -95,6 +95,7 @@ public:
 
     void    SetAtomID(OBAtom *atom, const std::string &id);
     void    SetHetAtom(OBAtom *atom, bool hetatm);
+    //! Set the atomic serial number for a given atom (see OBSerialNums)
     void    SetSerialNum(OBAtom *atom, unsigned int sernum);
 
     std::string    GetName(void)		const;
@@ -109,6 +110,7 @@ public:
     std::vector<OBBond*> GetBonds(bool = true)	const;
 
     std::string    GetAtomID(OBAtom *atom)	const;
+    //! \return the serial number of the supplied atom (uses OBSerialNums)
     unsigned       GetSerialNum(OBAtom *atom)	const;
 
     bool           GetAminoAcidProperty(int)      const;
@@ -118,7 +120,9 @@ public:
     bool           IsHetAtom(OBAtom *atom)	const;
     bool	   IsResidueType(int)		const;
 
+    //! \deprecated Use FOR_ATOMS_OF_RESIDUE and OBResidueAtomIter instead
     OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);
+    //! \deprecated Use FOR_ATOMS_OF_RESIDUE and OBResidueAtomIter instead
     OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
 
     //! \name Methods for handling generic data
@@ -355,20 +359,30 @@ public:
 
     //! \name Iterator methods
     //@{
+    //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
     std::vector<OBEdgeBase*>::iterator BeginBonds()
       { return(_vbond.begin()); }
+    //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
     std::vector<OBEdgeBase*>::iterator EndBonds()
       { return(_vbond.end());   }
+    //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
     OBBond *BeginBond(std::vector<OBEdgeBase*>::iterator &i);
+    //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
     OBBond *NextBond(std::vector<OBEdgeBase*>::iterator &i);
+    //! \deprecated Use FOR_NBORS_OF_ATOM and OBAtomAtomIter instead
     OBAtom *BeginNbrAtom(std::vector<OBEdgeBase*>::iterator &);
+    //! \deprecated Use FOR_NBORS_OF_ATOM and OBAtomAtomIter instead
     OBAtom *NextNbrAtom(std::vector<OBEdgeBase*>::iterator &);
     //@}
 
-    double GetDistance(int);
+    //! \return the distance to the atom defined by OBMol::GetAtom()
+    double GetDistance(int index);
+    //! \return the distance to the supplied OBAtom
     double GetDistance(OBAtom*);
-    double GetAngle(int, int);
-    double GetAngle(OBAtom*, OBAtom*);
+    //! \return the angle defined by this atom -> b (vertex) -> c
+    double GetAngle(int b, int c);
+    //! \return the angle defined by this atom -> b (vertex) -> c
+    double GetAngle(OBAtom *b, OBAtom *c);
 
     //! \name Addition of residue/bond info. for an atom
     //@{
@@ -1053,15 +1067,21 @@ public:
 
     //! \name Iterator methods
     //@{
+    //! \deprecated Use FOR_ATOMS_OF_MOL and OBMolAtomIter instead
     OBAtom *BeginAtom(std::vector<OBNodeBase*>::iterator &i);
+    //! \deprecated Use FOR_ATOMS_OF_MOL and OBMolAtomIter instead
     OBAtom *NextAtom(std::vector<OBNodeBase*>::iterator &i);
+    //! \deprecated Use FOR_BONDS_OF_MOL and OBMolBondIter instead
     OBBond *BeginBond(std::vector<OBEdgeBase*>::iterator &i);
+    //! \deprecated Use FOR_BONDS_OF_MOL and OBMolBondIter instead
     OBBond *NextBond(std::vector<OBEdgeBase*>::iterator &i);
+    //! \deprecated Use FOR_RESIDUES_OF_MOL and OBResidueIter instead
     OBResidue *BeginResidue(std::vector<OBResidue*>::iterator &i)
     {
         i = _residue.begin();
         return((i == _residue.end()) ? NULL:*i);
     }
+    //! \deprecated Use FOR_RESIDUES_OF_MOL and OBResidueIter instead
     OBResidue *NextResidue(std::vector<OBResidue*>::iterator &i)
     {
         i++;
@@ -1079,7 +1099,7 @@ public:
     }
     //@}
 
-    //  Removed with OBConversion framework
+    //  Removed with OBConversion framework -- see OBConversion class instead
     //! \name Convenience functions for I/O
     //@{
     // friend std::ostream&       operator<< ( std::ostream&, OBMol& ) ;
@@ -1112,11 +1132,14 @@ OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *deli
 OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
 //! remove leading and trailing whitespace from a string
 OBAPI void Trim(std::string& txt);
+//! \deprecated -- use OBMessageHandler class instead
 OBAPI void ThrowError(char *str);
+//! \deprecated -- use OBMessageHandler class instead
 OBAPI void ThrowError(std::string &str);
 OBAPI void CartesianToInternal(std::vector<OBInternalCoord*>&,OBMol&);
 OBAPI void InternalToCartesian(std::vector<OBInternalCoord*>&,OBMol&);
 OBAPI std::string NewExtension(std::string&,char*);
+// Now handled by OBConversion class
 // OBAPI bool SetInputType(OBMol&,std::string&);
 // OBAPI bool SetOutputType(OBMol&,std::string&);
 
@@ -1137,7 +1160,7 @@ EXTERN  OBAtomTyper      atomtyper;
 EXTERN  OBChainsParser   chainsparser;
 //! Global OBMessageHandler error handler
 EXTERN  OBMessageHandler obErrorLog;
-//! Global
+//! Global OBResidueData biomolecule residue database
 EXTERN  OBResidueData    resdat;
 
 //Utility Macros

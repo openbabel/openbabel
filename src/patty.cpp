@@ -47,8 +47,8 @@ O=C hbacceptor
 The following is a code sample that demonstrates the use of patty
 class:
 \code
-OBMol mol(SDF,SDF);
-cin >> mol;
+OBMol mol;
+
 string rulefile = "rules.txt";
 patty p;
 p.read_rules(p);
@@ -267,6 +267,8 @@ int patty::Istype(const std::string &type)
 }
 
 #ifdef COMPILE_PATTY_MAIN
+// This was written for OB-1.x and would need updating for OB-2.0 if needed
+// Consider it deprecated.
 
 int main(int argc, char *argv[])
 {

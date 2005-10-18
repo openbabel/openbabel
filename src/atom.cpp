@@ -49,7 +49,7 @@ namespace OpenBabel
  the atom and the molecule.
  
  A number of data extraction methods perform what is called
- `Lazy Evaluation,' which is essentially on-the-fly evaluation.
+ <a href="http://en.wikipedia.org/wiki/Lazy_evaluation">`Lazy Evaluation,'</a> which is essentially on-the-fly evaluation.
  For example, when an atom is queried as to whether it is cyclic
  or what it's hybridization state is the information is perceived
  automatically. The perception of a particular trait is actually
@@ -62,8 +62,7 @@ namespace OpenBabel
  The following code demonstrates how to print out the atom numbers,
  element numbers, and coordinates of a molecule:
 \code
-   OBMol mol(SDF,SDF);
-   OBFileFormat::ReadMolecule(cin, mol);
+   OBMol mol;
    OBAtom *atom;
    vector<OBNodeBase*>::iterator i;
    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
@@ -81,8 +80,7 @@ namespace OpenBabel
  code demonstrates how an OBAtom uses its bond information to loop
  over atoms attached to itself:
 \code
-   OBMol mol(SDF,SDF);
-   OBFileFormat::ReadMolecule(cin, mol);
+   OBMol mol;
    OBAtom *atom,*nbr;
    vector<OBEdgeBase*>::iterator i;
    atom = mol.GetAtom(1);

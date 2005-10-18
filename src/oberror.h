@@ -66,8 +66,10 @@ public:
 	   const std::string &suggestedRemedy = "",
 	   const obMessageLevel = obDebug );
 
+  //! \return a formatted message string, including optional explanations, etc.
   std::string message(void) const;
   
+  //! Output a formatted message string
   friend std::ostream& operator<< ( std::ostream &os, const OBError &er )
     { return os << er.message(); };
 
@@ -118,7 +120,7 @@ class OBAPI OBMessageHandler
     //! Clear the current message log entirely
     void ClearLog() { _messageList.clear(); }
 
-    //! Set the level of messages to output
+    //! \brief Set the level of messages to output
     //! (i.e., messages with at least this priority will be output)
     void SetOutputLevel(const obMessageLevel level) { _outputLevel = level; }
     //! \return the current output level
@@ -133,22 +135,29 @@ class OBAPI OBMessageHandler
     bool StopErrorWrap();
 
   protected:
+    //! Log of messages for later retrieval via GetMessagesOfLevel()
     std::deque<OBError>    _messageList;
+
+    //! Filtering level for messages and logging (messages of lower priority will be ignored
     obMessageLevel         _outputLevel;
+
+    // self-explanatory
     std::ostream          *_outputStream;
 
+    //! Whether messages will be logged into _messageList
     bool                   _logging;
-
+    //! The maximum size of _messageList log
     unsigned int           _maxEntries;
 
+    //! The default stream buffer for the output stream (saved if wrapping is ued)
     std::streambuf        *_inWrapStreamBuf;
+    //! The filtered obLogBuf stream buffer to wrap error messages
     std::streambuf        *_filterStreamBuf;
   }; 
 
 EXTERN OBMessageHandler obErrorLog;
 
-//! \brief A minimal streambuf derivative to wrap calls to cerr into 
-//! calls to OBMessageHandler as needed
+//! \brief A minimal streambuf derivative to wrap calls to cerr into calls to OBMessageHandler as needed
  class OBAPI obLogBuf : public std::stringbuf
   {
     public:

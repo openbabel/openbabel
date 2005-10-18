@@ -35,8 +35,8 @@ called to assign charges for the molecule. If charges have been read
 in for a molecule the following code shows how to force the
 recalculation of partial charges:
 \code
-OBMol mol(MOL2,SDF);
-cin >> mol;
+OBMol mol;
+
 mol.UnsetPartialChargesPerceived();
 OBAtom *atom;
 vector<OBNodeBase*>::iterator i;

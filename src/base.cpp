@@ -256,7 +256,7 @@ designed to store the basic information
 in a molecule and to perceive information about a molecule.
 
 One of the key philosophies in the code is that transformations and
-automatic perception of properties are performed in a "lazy"
+automatic perception of properties are performed in a <a href="http://en.wikipedia.org/wiki/Lazy_evaluation">"lazy"</a>
 manner. That is, until you call for partial atomic charges, no
 charges are calculated. This ensures faster transformations of
 chemical data -- properties that are not needed for your code will

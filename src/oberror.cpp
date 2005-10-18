@@ -76,10 +76,78 @@ string OBError::message() const
 }
 
 
+/** \class OBMessageHandler
+
+ OBMessageHandler represents a configurable error system for Open Babel.
+
+A global error log is defined by the Open Babel library for use of
+internal code as well as code built on top of Open Babel. This class
+allows flexible filtering based on urgency (defined by the
+obMessageLevel type), an "audit log" of molecular changes, including
+recall using the GetMessagesOfLevel method, etc.
+
+The default is to only log and output errors of priority
+obMessageLevel::obError or obMessageLevel::obWarning.
+
+Long-running code may wish to set the size of the in-memory error log
+using the StartLogging / StopLogging methods and
+SetMaxLogEntries. Otherwise, the error log may easily fill up,
+requiring large amounts of memory.
+
+If you wish to divert error output to a different std::ostream (i.e.,
+for graphical display, or a file log), use the SetOutputStream method
+-- the default goes to the std::clog stream. Furthermore, some older
+code uses std::cerr for direct error output, rather than the
+ThrowError() methods in this class. To prevent this, you can turn on
+"error wrapping" using the StartErrorWrap method -- this behavior is
+turned off by default.
+
+To make it easy to use the OBMessageHandler class and error logging
+facilities, a global log is defined:
+
+\code
+EXTERN OBMessageHandler obErrorLog;
+\endcode
+
+Therefore, it is very easy to log errors:
+
+\code
+   if (atomIndex < 1 || atomIndex > mol.NumAtoms() )
+    obErrorLog.ThrowError(__FUNCTION__, "Requested Atom Out of Range", obDebug);
+\endcode
+
+or
+
+\code
+     stringstream errorMsg;
+     errorMsg << " Could not parse line in type translation table types.txt -- incorect number of columns";
+     errorMsg << " found " << vc.size() << " expected " << _ncols << ".";
+     obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+\endcode
+
+The __FUNCTION__ builtin is defined by many compilers (e.g., <a
+href="http://gcc.gnu.org/">GCC</a>) but can be defined to an empty
+string on some platforms without this compiler extension.
+
+Output from the error log typically looks like:
+\code
+==============================
+*** Open Babel Audit Log  in ReadChemObject
+  OpenBabel::Read molecule Protein Data Bank format
+==============================
+*** Open Babel Information  in ParseConectRecord
+  WARNING: Problems reading a PDB file
+  Problems reading a CONECT record.
+  According to the PDB specification,
+  the record should have 70 columns, but OpenBabel found 61 columns.
+\endcode
+
+**/
+
 OBMessageHandler::OBMessageHandler() :
   _outputLevel(obWarning), _outputStream(&clog), _logging(true)
 {
-  //  StartErrorWrap();
+  //  StartErrorWrap(); // (don't turn on error wrapping by default)
 }
 
 OBMessageHandler::~OBMessageHandler()

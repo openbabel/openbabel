@@ -27,6 +27,38 @@ using namespace std;
 namespace OpenBabel
 {
 
+  /** \class OBMolAtomIter
+
+  To facilitate iteration through all atoms in a molecule, without resorting
+  to atom indexes (which may change in the future) or the OBMol::BeginAtom()
+  and OBMol::NextAtom() methods which may only be safely used by one method
+  at once (e.g., if a method above your code or underneath your code uses these
+  methods, errors will occur).
+
+  Therefore, it is <strong>highly recommended</strong> to use the separate
+  STL-style iterator classes.
+
+  This has been made significantly easier by a series of macros in the 
+  obiter.h header file:
+
+  \code
+    \#define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; a++ )
+  \endcode
+
+  Here is an example:
+  \code
+     #include "obiter.h"
+   #include "mol.h"
+
+   OBMol mol;
+   double exactMass = 0.0f;
+   FOR_ATOMS_OF_MOL(a, mol)
+   {
+       exactMass +=  a->GetExactMass();
+   }
+  \endcode
+  **/
+
   OBMolAtomIter::OBMolAtomIter(OBMol *mol)
   {
     _parent = mol;
@@ -62,6 +94,39 @@ namespace OpenBabel
     _ptr = _parent->NextAtom(_i);
     return *this;
   }
+
+
+  /** \class OBMolBondIter
+
+  To facilitate iteration through all bonds in a molecule, without resorting
+  to bond indexes (which may change in the future) or the OBMol::BeginBond()
+  and OBMol::NextBond() methods which may only be safely used by one method
+  at once (e.g., if a method above your code or underneath your code uses these
+  methods, errors will occur).
+
+  Therefore, it is <strong>highly recommended</strong> to use the separate
+  STL-style iterator classes.
+
+  This has been made significantly easier by a series of macros in the 
+  obiter.h header file:
+
+  \code
+    \#define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; b++ )
+  \endcode
+
+  Here is an example:
+  \code
+   #include "obiter.h"
+   #include "mol.h"
+
+   OBMol mol;
+   unsigned int bondOrderSum = 0;
+   FOR_BONDS_OF_MOL(b, mol)
+   {
+       bondOrderSum +=  b->GetBO();
+   }
+  \endcode
+  **/
 
   OBMolBondIter::OBMolBondIter(OBMol *mol)
     {
@@ -99,6 +164,40 @@ namespace OpenBabel
         return *this;
     }
 
+  /** \class OBAtomAtomIter
+
+  To facilitate iteration through all neighbors of an atom, without resorting
+  to bond indexes (which may change in the future) or the OBAtom::BeginNbr()
+  and OBAtom::NextNbr() methods which may only be safely used by one method
+  at once (e.g., if a method above your code or underneath your code uses these
+  methods, errors will occur).
+
+  Therefore, it is <strong>highly recommended</strong> to use the separate
+  STL-style iterator classes.
+
+  This has been made significantly easier by a series of macros in the 
+  obiter.h header file:
+
+  \code
+    \#define FOR_NBORS_OF_ATOM(a,p)     for( OBAtomAtomIter     a(p); a; a++ )
+  \endcode
+
+  Here is an example:
+  \code
+   #include "obiter.h"
+   #include "mol.h"
+
+   OBMol mol;
+   FOR_ATOMS_OF_MOL(a, mol)
+   {
+     FOR_NBORS_OF_ATOM(b, a)
+      {
+         ...
+      }
+   }
+  \endcode
+  **/
+
   OBAtomAtomIter::OBAtomAtomIter(OBAtom *atm)
   {
     _parent = atm;
@@ -134,6 +233,39 @@ namespace OpenBabel
         _ptr = _parent->NextNbrAtom(_i);
         return *this;
     }
+
+  /** \class OBAtomBondIter
+
+  To facilitate iteration through all bonds on an atom, without resorting
+  to bond indexes (which may change in the future) or the OBAtom::BeginBond()
+  and OBAtom::NextBond() methods which may only be safely used by one method
+  at once (e.g., if a method above your code or underneath your code uses these
+  methods, errors will occur).
+
+  Therefore, it is <strong>highly recommended</strong> to use the separate
+  STL-style iterator classes.
+
+  This has been made significantly easier by a series of macros in the 
+  obiter.h header file:
+
+  \code
+    \#define FOR_BONDS_OF_ATOM(b,p)     for( OBAtomBondIter     b(p); b; b++ )
+  \endcode
+
+  Here is an example:
+  \code
+   #include "obiter.h"
+   #include "mol.h"
+
+   OBAtom atom;
+   unsigned int tripleBondCount;
+   FOR_BONDS_OF_ATOM(b, atom)
+   {
+      if (b->GetBO() == 3)
+         tripleBondCount++;
+   }
+  \endcode
+  **/
 
   OBAtomBondIter::OBAtomBondIter(OBAtom *atm)
     {
@@ -171,6 +303,41 @@ namespace OpenBabel
         return *this;
     }
 
+  /** \class OBResidueIter
+
+  To facilitate iteration through all residues in a molecule, without resorting
+  to residue indexes (which may change in the future) or the OBMol::BeginResidue()
+  and OBMol::NextResidue() methods which may only be safely used by one method
+  at once (e.g., if a method above your code or underneath your code uses these
+  methods, errors will occur).
+
+  Therefore, it is <strong>highly recommended</strong> to use the separate
+  STL-style iterator classes.
+
+  This has been made significantly easier by a series of macros in the 
+  obiter.h header file:
+
+  \code
+    \#define FOR_RESIDUES_OF_MOL(a,m)     for( OBResidueIter     a(m); a; a++ )
+  \endcode
+
+  Here is an example:
+  \code
+   #include "obiter.h"
+   #include "mol.h"
+
+   OBMol mol;
+   FOR_RESIDUES_OF_MOL(r, mol)
+   {
+     if (r->GetName() == resname && r->GetNum() == rnum) 
+     {
+       // got a match, let's go to work
+       ...
+     }
+   }
+  \endcode
+  **/
+
   OBResidueIter::OBResidueIter(OBMol *mol)
     {
         _parent = mol;
@@ -206,6 +373,44 @@ namespace OpenBabel
         _ptr = _parent->NextResidue(_i);
         return *this;
     }
+
+  /** \class OBResidueAtomIter
+
+  To facilitate iteration through all atoms in a residue, without resorting
+  to atom indexes (which may change in the future) or the OBResidue::BeginAtom()
+  and OBResidue::NextAtom() methods which may only be safely used by one method
+  at once (e.g., if a method above your code or underneath your code uses these
+  methods, errors will occur).
+
+  Therefore, it is <strong>highly recommended</strong> to use the separate
+  STL-style iterator classes.
+
+  This has been made significantly easier by a series of macros in the 
+  obiter.h header file:
+
+  \code
+    \#define FOR_ATOMS_OF_RESIDUE(a,r)     for( OBResidueAtomIter     a(r); a; a++ )
+  \endcode
+
+  Here is an example:
+  \code
+   #include "obiter.h"
+   #include "mol.h"
+
+   OBMol mol;
+   double residueMass = 0.0;
+   FOR_RESIDUES_OF_MOL(r, mol)
+   {
+     if (r->GetName() == resname && r->GetNum() == rnum) 
+     {
+        FOR_ATOMS_OF_RESIDUE(a, r)
+	 {
+	   residueMass += a->GetMass();
+	 }
+     }
+   }
+  \endcode
+  **/
 
   OBResidueAtomIter::OBResidueAtomIter(OBResidue *res)
     {
