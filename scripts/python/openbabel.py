@@ -1,4 +1,4 @@
-# This file was created automatically by SWIG 1.3.26.
+# This file was created automatically by SWIG 1.3.27.
 # Don't modify this file, modify the SWIG interface instead.
 
 import _openbabel
@@ -58,6 +58,7 @@ class OBGlobalDataBase(object):
         except: pass
 
     def Init(*args): return _openbabel.OBGlobalDataBase_Init(*args)
+    def GetSize(*args): return _openbabel.OBGlobalDataBase_GetSize(*args)
     def SetReadDirectory(*args): return _openbabel.OBGlobalDataBase_SetReadDirectory(*args)
     def SetEnvironmentVariable(*args): return _openbabel.OBGlobalDataBase_SetEnvironmentVariable(*args)
     def ParseLine(*args): return _openbabel.OBGlobalDataBase_ParseLine(*args)
@@ -118,6 +119,7 @@ class OBElementTable(OBGlobalDataBase):
 
     def ParseLine(*args): return _openbabel.OBElementTable_ParseLine(*args)
     def GetNumberOfElements(*args): return _openbabel.OBElementTable_GetNumberOfElements(*args)
+    def GetSize(*args): return _openbabel.OBElementTable_GetSize(*args)
     def GetAtomicNum(*args): return _openbabel.OBElementTable_GetAtomicNum(*args)
     def GetSymbol(*args): return _openbabel.OBElementTable_GetSymbol(*args)
     def GetVdwRad(*args): return _openbabel.OBElementTable_GetVdwRad(*args)
@@ -152,6 +154,7 @@ class OBIsotopeTable(OBGlobalDataBase):
             if self.thisown: destroy(self)
         except: pass
 
+    def GetSize(*args): return _openbabel.OBIsotopeTable_GetSize(*args)
     def ParseLine(*args): return _openbabel.OBIsotopeTable_ParseLine(*args)
     def GetExactMass(*args): return _openbabel.OBIsotopeTable_GetExactMass(*args)
 
@@ -176,6 +179,7 @@ class OBTypeTable(OBGlobalDataBase):
         except: pass
 
     def ParseLine(*args): return _openbabel.OBTypeTable_ParseLine(*args)
+    def GetSize(*args): return _openbabel.OBTypeTable_GetSize(*args)
     def SetFromType(*args): return _openbabel.OBTypeTable_SetFromType(*args)
     def SetToType(*args): return _openbabel.OBTypeTable_SetToType(*args)
     def Translate(*args): return _openbabel.OBTypeTable_Translate(*args)
@@ -198,6 +202,7 @@ class OBResidueData(OBGlobalDataBase):
         self.thisown = 1
         del newobj.thisown
     def ParseLine(*args): return _openbabel.OBResidueData_ParseLine(*args)
+    def GetSize(*args): return _openbabel.OBResidueData_GetSize(*args)
     def SetResName(*args): return _openbabel.OBResidueData_SetResName(*args)
     def LookupBO(*args): return _openbabel.OBResidueData_LookupBO(*args)
     def LookupType(*args): return _openbabel.OBResidueData_LookupType(*args)
@@ -297,6 +302,7 @@ class OBConversion(object):
     def GetOutFormat(*args): return _openbabel.OBConversion_GetOutFormat(*args)
     def GetInFilename(*args): return _openbabel.OBConversion_GetInFilename(*args)
     def GetInPos(*args): return _openbabel.OBConversion_GetInPos(*args)
+    def GetInLen(*args): return _openbabel.OBConversion_GetInLen(*args)
     def GetTitle(*args): return _openbabel.OBConversion_GetTitle(*args)
     def GetAuxConv(*args): return _openbabel.OBConversion_GetAuxConv(*args)
     def SetAuxConv(*args): return _openbabel.OBConversion_SetAuxConv(*args)
@@ -460,9 +466,9 @@ class OBAtom(object):
     def SetSpinMultiplicity(*args): return _openbabel.OBAtom_SetSpinMultiplicity(*args)
     def SetType(*args): return _openbabel.OBAtom_SetType(*args)
     def SetPartialCharge(*args): return _openbabel.OBAtom_SetPartialCharge(*args)
+    def SetCoordPtr(*args): return _openbabel.OBAtom_SetCoordPtr(*args)
     def SetVector(*args): return _openbabel.OBAtom_SetVector(*args)
     def SetResidue(*args): return _openbabel.OBAtom_SetResidue(*args)
-    def SetCoordPtr(*args): return _openbabel.OBAtom_SetCoordPtr(*args)
     def SetAromatic(*args): return _openbabel.OBAtom_SetAromatic(*args)
     def UnsetAromatic(*args): return _openbabel.OBAtom_UnsetAromatic(*args)
     def SetClockwiseStereo(*args): return _openbabel.OBAtom_SetClockwiseStereo(*args)
@@ -489,10 +495,10 @@ class OBAtom(object):
     def GetHeteroValence(*args): return _openbabel.OBAtom_GetHeteroValence(*args)
     def GetType(*args): return _openbabel.OBAtom_GetType(*args)
     def GetX(*args): return _openbabel.OBAtom_GetX(*args)
-    def x(*args): return _openbabel.OBAtom_x(*args)
     def GetY(*args): return _openbabel.OBAtom_GetY(*args)
-    def y(*args): return _openbabel.OBAtom_y(*args)
     def GetZ(*args): return _openbabel.OBAtom_GetZ(*args)
+    def x(*args): return _openbabel.OBAtom_x(*args)
+    def y(*args): return _openbabel.OBAtom_y(*args)
     def z(*args): return _openbabel.OBAtom_z(*args)
     def GetCoordinate(*args): return _openbabel.OBAtom_GetCoordinate(*args)
     def GetVector(*args): return _openbabel.OBAtom_GetVector(*args)

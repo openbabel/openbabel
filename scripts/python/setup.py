@@ -12,7 +12,7 @@ obExtension = Extension('openbabel',
                         )
 
 setup(name='openbabel',
-      version='2.0.0b4',
+      version='1.0.0b5',
       description='Chemistry interface to Open Babel',
       author='Geoff Hutchison',
       author_email='openbabel-scripting@lists.sourceforge.net',
