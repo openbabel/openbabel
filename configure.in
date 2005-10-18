@@ -80,10 +80,11 @@ AC_CHECK_LIB(inchi, GetINCHI,
 AM_CONDITIONAL(BUILD_INCHI, test "$INCHI" = "yes")
 
 CHECK_ZLIB
+AC_CHECK_LIB(z, inflateEnd)
+AC_CHECK_HEADERS(zlib.h iconv.h)
 AM_CONDITIONAL(BUILD_ZLIB, [test "$zlib_cv_libz" = "yes" -a "$zlib_cv_zlib_h" = "yes"])
 
 dnl Checks for header files.
-AC_CHECK_HEADERS(zlib.h iconv.h)
 AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
 AC_CHECK_HEADERS(strstream.h iostream.h fstream.h math.h time.h)
 AC_CHECK_HEADERS(ctype.h iostream fstream sstream strstream)
