@@ -118,7 +118,7 @@ public:
 		return ret;
 	};
 
-	const type_info& GetType()
+	const std::type_info& GetType()
 	{
 		return typeid(OBMol*);
 	};

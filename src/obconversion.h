@@ -132,7 +132,7 @@ public:
 
 	/// Defaults to that used by the default format. Useful for checking 
 	/// that a format can handle a particular object.
-	virtual const type_info& GetType();
+	virtual const std::type_info& GetType();
  	
 	/// @brief Web address where the format is defined.
 	virtual const char* SpecificationURL() { return ""; }

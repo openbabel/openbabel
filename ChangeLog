@@ -1,3 +1,16 @@
+2005-10-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* COPYING: Updated FSF address.
+
+	* src/formats/Makefile.*: Add new copyformat code.
+
+	* src/atom.cpp, src/base.cpp, src/ring.cpp, src/patty.cpp,
+	src/mol.h, src/molchrg.cpp, src/oberror.h, src/oberror.cpp,
+	src/obiter.cpp: Documentation updates.
+
+	* src/obconversion.h, src/obmolecformat.h : Revert change of
+	std::type_info -- GCC requires the namespace declaration.
+
 2005-10-17  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/formats/xml/xcmlformat.cpp: Added CML1 writing.
@@ -16,7 +29,7 @@
 	queue.
 
 	* src/copyformat.cpp: simple new format which allows chemical
-	filtering	from a multi-object file with no possibility of losing
+	filtering from a multi-object file with no possibility of losing
 	content by OB's conversion, e.g. sdf or xml files.
 
 	* src/formats/exampleformat.cpp: Now a heavily commented
