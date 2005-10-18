@@ -375,8 +375,69 @@ static ByteCode *AllocateByteCode(int type)
 	//        exit(1);
     }
     result->type = type;
+    result->eval.next     = NULL;
+    result->count.tcond   = NULL; 
+    result->count.fcond   = NULL;
+    result->elem.tcond    = NULL;
+    result->elem.fcond    = NULL;
+    result->ident.tcond   = NULL;
+    result->ident.fcond   = NULL;
+    result->local.tcond   = NULL;
+    result->local.fcond   = NULL;
+    result->assign.atomid = NULL;
+    result->assign.bflags = NULL;
 
     return (result);
+}
+
+static void DeleteByteCode(ByteCode *node)
+{
+  if (node == NULL)
+    return;
+  else
+    {
+      switch (node->type)
+        {
+        case BC_ASSIGN:
+
+	  if (node->assign.atomid != NULL)
+	    free(node->assign.atomid);
+	  if (node->assign.bflags != NULL)
+	    free(node->assign.bflags);
+            
+	  break;
+
+        case BC_COUNT:
+
+	  DeleteByteCode(node->count.tcond);
+	  DeleteByteCode(node->count.fcond);
+	  break;
+        case BC_ELEM:
+
+	  DeleteByteCode(node->elem.tcond);
+	  DeleteByteCode(node->elem.fcond);
+	  break;
+
+        case BC_EVAL:
+
+	  DeleteByteCode(node->eval.next);
+	  break;
+
+        case BC_IDENT:
+
+	  DeleteByteCode(node->ident.tcond);
+	  DeleteByteCode(node->ident.fcond);
+	  break;
+
+        case BC_LOCAL:
+
+	  DeleteByteCode(node->local.tcond);
+	  DeleteByteCode(node->local.fcond);
+	  break;
+        }
+
+      free(node);
+    }
 }
 
 static void FatalMemoryError(void)
@@ -671,7 +732,10 @@ OBChainsParser::OBChainsParser(void)
 }
 
 OBChainsParser::~OBChainsParser(void)
-{}
+{
+  DeleteByteCode((ByteCode*)PDecisionTree);
+  DeleteByteCode((ByteCode*)NDecisionTree);
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // Setup / Cleanup Functions
@@ -695,20 +759,20 @@ void OBChainsParser::SetupMol(OBMol &mol)
     hcounts  = new char[asize];
     chains   = new char[asize];
 
+    memset(bitmasks, 0,   sizeof(unsigned short) * asize);
+    memset(resids,   0,   sizeof(unsigned char)  * asize);
+    memset(hetflags, 0,   sizeof(bool)           * asize);
+    memset(resnos,   0,   sizeof(short)          * asize);
+    memset(sernos,   0,   sizeof(short)          * asize);
+    memset(hcounts,  0,   sizeof(char)           * asize);
+    memset(chains,   ' ', sizeof(char)           * asize);
+    
+    memset(flags,    0,   sizeof(unsigned char)  * bsize);
+
     for ( i = 0 ; i < asize ; i++ )
     {
-        hetflags[i] = false;
-        bitmasks[i] = 0;
         atomids[i]  = -1;
-        resids[i]   = 0;
-        resnos[i]   = 0;
-        sernos[i]   = 0;
-        hcounts[i]  = 0;
-        chains[i]   = ' ';
     }
-
-    for ( i = 0 ; i < bsize ; i++ )
-        flags[i] = 0;
 }
 
 void OBChainsParser::CleanupMol(void)
@@ -775,9 +839,10 @@ void OBChainsParser::ClearResidueInformation(OBMol &mol)
     residues.clear();
 }
 
-void OBChainsParser::SetResidueInformation(OBMol &mol)
+void OBChainsParser::SetResidueInformation(OBMol &mol, bool nukeSingleResidue)
 {
     char buffer[256];
+    char *symbol;
     string atomid, name;
 
     OBAtom    *atom;
@@ -790,7 +855,22 @@ void OBChainsParser::SetResidueInformation(OBMol &mol)
         atom = mol.GetAtom(i+1); // WARNING: ATOM INDEX ISSUE
 
         if (atomids[i] == -1)
-            sprintf(buffer, "%s", etab.GetSymbol(atom->GetAtomicNum()));
+	  {
+            symbol = etab.GetSymbol(atom->GetAtomicNum());
+	    if( symbol[1] )
+	      {
+		buffer[0] = symbol[0];
+		buffer[1] = (char) toupper(symbol[1]);
+	      }
+	    else
+	      {
+		buffer[0] = ' ';
+		buffer[1] = symbol[0];
+	      }
+	    buffer[2] = ' ';
+	    buffer[3] = ' ';
+	    buffer[4] = '\0';
+	  }
         else if (atom->IsHydrogen())
         {
             if (hcounts[i])
@@ -833,7 +913,7 @@ void OBChainsParser::SetResidueInformation(OBMol &mol)
         }
     }
 
-    if (mol.NumResidues() == 1)
+    if (mol.NumResidues() == 1 && nukeSingleResidue)
         mol.DeleteResidue(mol.GetResidue(0));
 }
 
@@ -841,7 +921,7 @@ void OBChainsParser::SetResidueInformation(OBMol &mol)
 // Perception Functions
 ////////////////////////////////////////////////////////////////////////////////
 
-bool OBChainsParser::PerceiveChains(OBMol &mol)
+bool OBChainsParser::PerceiveChains(OBMol &mol, bool nukeSingleResidue)
 {
     bool result = true;
 
@@ -856,7 +936,7 @@ bool OBChainsParser::PerceiveChains(OBMol &mol)
     result = DetermineNucleicSidechains(mol) && result;
     result = DetermineHydrogens(mol)         && result;
 
-    SetResidueInformation(mol);
+    SetResidueInformation(mol, nukeSingleResidue);
     CleanupMol();
 
     obErrorLog.ThrowError(__FUNCTION__,
@@ -942,15 +1022,21 @@ int OBChainsParser::RecurseChain(OBMol &mol, int i, int c)
 {
     OBAtom *atom, *nbr;
     vector<OBEdgeBase *>::iterator b;
-    int result;
+    int result, index;
 
     atom      = mol.GetAtom(i+1);
-    result    = (atom->IsHydrogen()) ? 0 : 1;
+    if (atom->IsHydrogen() )
+      return 0;
+
+    result    = 1;
     chains[i] = c;
 
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
-        if (chains[nbr->GetIdx()-1] == ' ')
-            result += RecurseChain(mol,nbr->GetIdx()-1,c);
+      {
+	index = nbr->GetIdx() - 1;
+        if (chains[index] == ' ')
+            result += RecurseChain(mol, index,c);
+      }
 
     return (result);
 }
@@ -1343,54 +1429,48 @@ int OBChainsParser::IdentifyResidue(void *tree, OBMol &mol, int seed, int resno)
             prev = Stack[StackPtr].prev;
 
             atom = mol.GetAtom(curr+1);
-            for (nbr = atom->BeginNbrAtom(b)
-                       ;
-                    nbr ;
-                    nbr = atom->NextNbrAtom(b))
-            {
+            for (nbr = atom->BeginNbrAtom(b); nbr; nbr = atom->NextNbrAtom(b))
+	      {
                 j = nbr->GetIdx() - 1;
                 if (!((curr == prev) && bitmasks[j]) && (j != prev) && !(nbr->IsHydrogen()))
-                {
+		  {
                     Stack[StackPtr].prev = curr;
                     Stack[StackPtr].atom = j;
                     Stack[StackPtr].bond = (*b)->GetIdx();
                     StackPtr++;
                     bcount++;
-                }
-            }
+		  }
+	      }
 
             ptr = ptr->eval.next;
             break;
 
-        case(BC_COUNT):  if( bcount == ptr->count.value )
-                {
-                    ptr = ptr->count.tcond;
-                }
-                else
-                    ptr = ptr->count.fcond;
-            break;
+        case(BC_COUNT):
+	  if( bcount == ptr->count.value )
+	    {
+	      ptr = ptr->count.tcond;
+	    }
+	  else
+	    ptr = ptr->count.fcond;
+	  break;
 
-        case(BC_ASSIGN): for( i=0;
-                                              i<AtomCount;
-                                              i++ )
-                            if( !bitmasks[ResMonoAtom[i]]
-                              )
-                    {
-                        j = ptr->assign.atomid[i];
-                        atomids[ResMonoAtom[i]] = j;
-                    }
-            for( i=0;
-                    i<BondCount;
-                    i++ )
+        case(BC_ASSIGN): 
+	  for( i=0; i<AtomCount; i++ )
+	    if( !bitmasks[ResMonoAtom[i]] )
+	      {
+		j = ptr->assign.atomid[i];
+		atomids[ResMonoAtom[i]] = j;
+	      }
+	  for( i=0; i<BondCount; i++ )
             {
-                j = ptr->assign.bflags[i]
-                    ;
-                flags[ResMonoBond[i]] = j;
+	      j = ptr->assign.bflags[i];
+	      flags[ResMonoBond[i]] = j;
             }
-            return( ptr->assign.resid );
+	  return( ptr->assign.resid );
+	  break;
 
         default:  /* Illegal Instruction! */
-            return( 0 );
+	  return( 0 );
         }
     return 0;
 }

@@ -46,7 +46,7 @@ public:
     OBChainsParser(void);
     ~OBChainsParser(void);
 
-    bool PerceiveChains(OBMol &);
+    bool PerceiveChains(OBMol &, bool nukeSingleResidue = false);
 
 private: // methods
 
@@ -59,7 +59,7 @@ private: // methods
     bool  DetermineHydrogens(OBMol &);
 
     void  SetupMol(OBMol &);
-    void  SetResidueInformation(OBMol &);
+    void  SetResidueInformation(OBMol &, bool nukeSingleResidue);
     void  ClearResidueInformation(OBMol &);
     void  CleanupMol(void);
 
