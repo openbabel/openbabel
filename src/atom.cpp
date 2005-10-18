@@ -63,9 +63,8 @@ namespace OpenBabel
  element numbers, and coordinates of a molecule:
 \code
    OBMol mol;
-   OBAtom *atom;
-   vector<OBNodeBase*>::iterator i;
-   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+
+   FOR_ATOMS_IN_MOL(atom, mol)
    {
        cout << atom->GetIdx() << ` `;
        cout << atom->GetAtomicNum() << ` `;
@@ -81,14 +80,15 @@ namespace OpenBabel
  over atoms attached to itself:
 \code
    OBMol mol;
-   OBAtom *atom,*nbr;
-   vector<OBEdgeBase*>::iterator i;
+   OBAtom *atom;
+
    atom = mol.GetAtom(1);
-   for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
+   FOR_NBORS_OF_ATOM(nbr, atom)
    {
    cout << "atom #" << atom->GetIdx() << " is attached to atom #" << nbr->GetIdx() << endl;
    }
 \endcode
+
  should produce an output like
 \code
    atom #1 is attached to atom #2

@@ -97,17 +97,13 @@ bond = mol.GetBond(14); //random access of a bond
 \endcode
  or
 \code
-   OBAtom *atom;
-   vector<OBNodeBase*>::iterator i;
-   for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) //iterator access
+   FOR_ATOMS_IN_MOL(atom, mol) // iterator access (see OBMolAtomIter)
 \endcode
 or
 \code
-   OBBond *bond;
-   vector<OBEdgeBase*>::iterator i;
-   for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i)) //iterator access
+   FOR_BONDS_IN_MOL(bond, mol) // iterator access (see OBMolBondIter)
 \endcode
-It is important to note that atom arrays begin at 1 and bond arrays
+It is important to note that atom arrays currently begin at 1 and bond arrays
 begin at 0. Requesting atom 0 (\code
 OBAtom *atom = mol.GetAtom(0); \endcode
 will result in an error, but

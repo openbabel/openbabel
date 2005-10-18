@@ -1,3 +1,24 @@
+2005-10-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Doxyfile: Updated for new doxygen release (1.4.5).
+
+	* NEWS: Updated with initial release notes for 2.0.
+
+	* configure, configure.in: Fix problems with libz detection.
+
+	* doc/OBTwoMigration.html: Add a draft migration guide, touching
+	on four key code updates.
+
+	* doc/*.1: Updated manpages.
+
+	* scripts/*: New versions (1.0.0b5) using SWIG 1.3.27.
+
+	* src/atom.cpp, src/mol.cpp, src/molchrg.cpp: Documentation
+	updates (switching to new iterators).
+
+	* src/chains.h, src/chains.cpp: Updates from last OELib GPL
+	version, which were not previously incorporated.
+
 2005-10-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* COPYING: Updated FSF address.

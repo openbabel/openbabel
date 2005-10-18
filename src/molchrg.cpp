@@ -38,9 +38,7 @@ recalculation of partial charges:
 OBMol mol;
 
 mol.UnsetPartialChargesPerceived();
-OBAtom *atom;
-vector<OBNodeBase*>::iterator i;
-for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+FOR_ATOMS_IN_MOL(atom, mol)
 {
  cout << "atom number = " << atom->GetIdx();
  cout << " charge = " << atom->GetPartialCharge() << endl;
