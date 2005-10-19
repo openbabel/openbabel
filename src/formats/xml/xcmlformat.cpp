@@ -16,6 +16,7 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obconversion.h"
 #include "xml.h"
+#include "math/matrix3x3.h"
 
 #ifdef WIN32
 #pragma warning (disable : 4800)
@@ -92,6 +93,7 @@ private:
 	void WriteMetadataList();
 	string getTimestr();
 	void WriteBondStereo(OBBond* pbond);
+	void WriteCrystal(OBMol& mol);
 
 private:
 	map<string,int> AtomMap; //key=atom id, value= ob atom index
@@ -103,6 +105,9 @@ private:
 	string RawFormula;
 	xmlChar* prefix;
 	string CurrentAtomID;
+	int CrystalScalarsNeeded;
+	vector<double> CrystalVals;
+	OBUnitCell* pUnitCell;
 };
 
 ////////////////////////////////////////////////////////////
@@ -152,6 +157,9 @@ bool CMLFormat::DoElement(const string& name)
 		inBondArray = false;
 		RawFormula.erase();
 		molWideData.clear();
+		CrystalScalarsNeeded=0;
+		CrystalVals.clear();
+		pUnitCell = NULL;
 
 		const xmlChar* ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "title");
 		if(!ptitle)
@@ -202,8 +210,33 @@ bool CMLFormat::DoElement(const string& name)
 	}
 	else if(name=="formula")
 	{
+		//Only concise form is currently supported
 		const xmlChar* pformula = xmlTextReaderGetAttribute(reader(), BAD_CAST "concise");
-		RawFormula = (const char*)pformula;
+		if(pformula)
+			RawFormula = (const char*)pformula;
+	}
+	else if(name=="crystal")
+	{
+		CrystalScalarsNeeded = 6;	
+	}
+	else if(name=="scalar")
+	{
+		if(CrystalScalarsNeeded)
+		{
+			xmlTextReaderRead(reader());
+			const xmlChar* pvalue = xmlTextReaderConstValue(reader());
+			if(pvalue)
+			{
+				CrystalVals.push_back(atof((const char*)pvalue));
+				if(--CrystalScalarsNeeded==0)
+				{
+					pUnitCell = new OBUnitCell;
+					pUnitCell->SetData(CrystalVals[0],CrystalVals[1],CrystalVals[2],
+						CrystalVals[3],CrystalVals[4],CrystalVals[5]);
+					_pmol->SetData(pUnitCell);
+				}
+			}
+		}	
 	}
 
 	// CML1 elements
@@ -317,28 +350,29 @@ bool CMLFormat::DoAtoms()
 			}
 			
 			else if(attrname=="x2" && dim!=3)//ignore 2D dimensions if 3D also provided
-			{
-				dim=2;
 				x=strtod(value.c_str(),NULL);
-			}
 
 			else if(attrname=="y2" && dim!=3)
-				y=strtod(value.c_str(),NULL);
-
-			else if(attrname=="x3")
 			{
-				dim=3;
-				x=strtod(value.c_str(),NULL);
+				dim=2;
+				y=strtod(value.c_str(),NULL);
 			}
 
-			else if(attrname=="y3")
+			else if(attrname=="x3" || (pUnitCell && attrname=="xFract"))
+				x=strtod(value.c_str(),NULL);
+
+			else if(attrname=="y3" || (pUnitCell && attrname=="yFract"))
 				y=strtod(value.c_str(),NULL);
 
-			else if(attrname=="z3")
+			else if(attrname=="z3" || (pUnitCell && attrname=="zFract"))
+			{
+				dim=3;
 				z=strtod(value.c_str(),NULL);
+			}
 
 			else if(attrname=="xy2" && dim!=3)
 			{
+				dim=2;
 				vector<string> vals;
 				tokenize(vals,value);
 				if(vals.size()==2)
@@ -347,8 +381,9 @@ bool CMLFormat::DoAtoms()
 					y=strtod(vals[1].c_str(),NULL);
 				}
 			}
-			 else if(attrname=="xyz3")
+			 else if(attrname=="xyz3" || (pUnitCell && attrname=="xyzFract"))
 			{
+				dim=3;
 				vector<string> vals;
 				tokenize(vals,value);
 				if(vals.size()==3)
@@ -358,9 +393,20 @@ bool CMLFormat::DoAtoms()
 					z=strtod(vals[2].c_str(),NULL);
 				}
 			}
-			
+
 			if(dim)
-				pAtom->SetVector(x, y , z);
+			{
+				if(!pUnitCell)
+					pAtom->SetVector(x, y , z);
+				else
+				{
+					//Coordinates are fractional
+					vector3 v;
+					v.Set(x, y, z);
+					v *= pUnitCell->GetOrthoMatrix();
+					pAtom->SetVector(v);
+				}
+			}
 
 			if(attrname=="hydrogenCount")
 			{
@@ -418,9 +464,6 @@ bool CMLFormat::DoAtoms()
 
 		} //each attribute
 		
-//		_pmol->AddAtom(obatom);
-//		++nAtoms;
-
 	}//each atom
 	
 	_pmol->SetDimension(dim);
@@ -755,6 +798,8 @@ string CMLFormat::getTimestr()
   return timestr;
 }
 
+/////////////////////////////////////////////////////////////
+
 bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
 	static const xmlChar C_MOLECULE[]   = "molecule";
@@ -774,6 +819,9 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	static const xmlChar C_X3[]               = "x3";
 	static const xmlChar C_Y3[]               = "y3";
 	static const xmlChar C_Z3[]               = "z3";
+	static const xmlChar C_XFRACT[]               = "xFract";
+	static const xmlChar C_YFRACT[]               = "yFract";
+	static const xmlChar C_ZFRACT[]               = "zFract";
 	static const xmlChar C_ATOMID[]           = "atomID";
 	static const xmlChar C_ELEMENTTYPE[]      = "elementType";
 	static const xmlChar C_ISOTOPE[]          = "isotope";
@@ -800,6 +848,11 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 /* used as ordinary text
 	atomRef  
 */
+
+	const xmlChar* C_X3orFRACT = C_X3; //Non-fraction coordinates are the default
+	const xmlChar* C_Y3orFRACT = C_Y3;
+	const xmlChar* C_Z3orFRACT = C_Z3;
+
 	_pxmlConv = XMLConversion::GetDerived(pConv,false);
 	if(!_pxmlConv)
 		return false;
@@ -851,6 +904,13 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	if(_pxmlConv->IsOption("m") && _pxmlConv->GetOutputIndex()==1) //only on first molecule
 		WriteMetadataList();
 
+	pUnitCell = NULL;
+	if (!cml1 && mol.HasData(OBGenericDataType::UnitCell))
+	{
+		WriteCrystal(mol);//Output will be in crystallographic form
+		UseFormulaWithNoBonds = false;
+	}
+
 	if(mol.NumAtoms()>0)
 	{
 		if(mol.NumBonds()==0 && UseFormulaWithNoBonds)
@@ -864,6 +924,7 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 					strstream id, eltyp, iso, chg, spn, hct, x, y, z;
 			#endif
 			bool anyChg=false, anySpin=false, anyIsotope=false;
+			double X, Y, Z; //atom coordinates
 
 			OBAtom *patom;
 			vector<OBNodeBase*>::iterator i;
@@ -878,6 +939,24 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 				int isotope =patom->GetIsotope();
 
 				int hcount=patom->ImplicitHydrogenCount();
+
+				X = patom->GetX();
+				Y = patom->GetY();
+				Z = patom->GetZ();
+				if(pUnitCell)
+				{
+					//Convert to fractional coordinates
+					vector3 v = patom->GetVector();
+					v *= pUnitCell->GetFractionalMatrix();
+					X = v.x();
+					Y = v.y();
+					Z = v.z();
+					C_X3orFRACT = C_XFRACT;
+					C_Y3orFRACT = C_YFRACT;
+					C_Z3orFRACT = C_ZFRACT;
+					dim=3; //should already be, but make sure
+				}
+
 				if(arrayform)
 				{
 					if(charge)
@@ -892,14 +971,17 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 					chg << " " << charge;
 					spn << " " << spin;
 					hct << " " << hcount;
-					x << " " << patom->GetX();
-					y << " " << patom->GetY();
-					z << " " << patom->GetZ();
+
+					x << " " << X;
+					y << " " << Y;
+					z << " " << Z;
 				}
 				else
 				{
+					//Non-array form
 					xmlTextWriterStartElementNS(writer(), prefix, C_ATOM, NULL);
 					xmlTextWriterWriteFormatAttribute(writer(), C_ID,"a%d", patom->GetIdx());
+					
 					if(!cml1)
 					{	
 						xmlTextWriterWriteFormatAttribute(writer(), C_ELEMENTTYPE,"%s", el.c_str());
@@ -917,14 +999,14 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 						if(dim==2)
 						{
-							xmlTextWriterWriteFormatAttribute(writer(), C_X2,"%f", patom->GetX());
-							xmlTextWriterWriteFormatAttribute(writer(), C_Y2,"%f", patom->GetY());
+							xmlTextWriterWriteFormatAttribute(writer(), C_X2,"%f", X);
+							xmlTextWriterWriteFormatAttribute(writer(), C_Y2,"%f", Y);
 						}
 						if(dim==3)
 						{
-							xmlTextWriterWriteFormatAttribute(writer(), C_X3,"%f", patom->GetX());
-							xmlTextWriterWriteFormatAttribute(writer(), C_Y3,"%f", patom->GetY());
-							xmlTextWriterWriteFormatAttribute(writer(), C_Z3,"%f", patom->GetZ());
+							xmlTextWriterWriteFormatAttribute(writer(), C_X3orFRACT,"%f", X);
+							xmlTextWriterWriteFormatAttribute(writer(), C_Y3orFRACT,"%f", Y);
+							xmlTextWriterWriteFormatAttribute(writer(), C_Z3orFRACT,"%f", Z);
 						}
 						if(patom->HasChiralitySpecified())
 						{
@@ -987,12 +1069,12 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 						{
 							xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, NULL);
 							xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "x",dim);
-							xmlTextWriterWriteFormatString(writer(),"%f", patom->GetX());
+							xmlTextWriterWriteFormatString(writer(),"%f", X);
 							xmlTextWriterEndElement(writer());
 
 							xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, NULL);
 							xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "y",dim);
-							xmlTextWriterWriteFormatString(writer(),"%f", patom->GetY());
+							xmlTextWriterWriteFormatString(writer(),"%f", Y);
 							xmlTextWriterEndElement(writer());
 						}
 
@@ -1000,7 +1082,7 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 						{
 							xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, NULL);
 							xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "z",dim);
-							xmlTextWriterWriteFormatString(writer(),"%f", patom->GetX());
+							xmlTextWriterWriteFormatString(writer(),"%f", Z);
 							xmlTextWriterEndElement(writer());
 						}
 						//Stereochemistry currently not written for CML1
@@ -1035,9 +1117,9 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 					}
 					if(dim==3)
 					{
-						xmlTextWriterWriteFormatAttribute(writer(), C_X3,"%s", x.str().c_str());
-						xmlTextWriterWriteFormatAttribute(writer(), C_Y3,"%s", y.str().c_str());
-						xmlTextWriterWriteFormatAttribute(writer(), C_Z3,"%s", z.str().c_str());
+						xmlTextWriterWriteFormatAttribute(writer(), C_X3orFRACT,"%s", x.str().c_str());
+						xmlTextWriterWriteFormatAttribute(writer(), C_Y3orFRACT,"%s", y.str().c_str());
+						xmlTextWriterWriteFormatAttribute(writer(), C_Z3orFRACT,"%s", z.str().c_str());
 					}
 				}
 				else
@@ -1263,5 +1345,56 @@ void CMLFormat::WriteBondStereo(OBBond* pbond)
 	xmlTextWriterEndElement(writer());//bondStereo
 }
 
+void CMLFormat::WriteCrystal(OBMol& mol)
+{
+	static const xmlChar C_CRYSTAL[]  = "crystal";
+	static const xmlChar C_SCALAR[] = "scalar";
+	static const xmlChar C_Z[] = "z";
+	static const xmlChar C_TITLE[] = "title";
+	static const xmlChar C_UNITS[] = "units";
+
+	pUnitCell = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+
+	xmlTextWriterStartElementNS(writer(), prefix, C_CRYSTAL, NULL);
+//	xmlTextWriterWriteFormatAttribute(writer(), C_z,"%d", number of molecules per cell);
+
+	xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+	xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "a");
+	xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:angstrom");
+	xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetA());
+	xmlTextWriterEndElement(writer());//scalar
+
+	xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+	xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "b");
+	xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:angstrom");
+	xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetB());
+	xmlTextWriterEndElement(writer());//scalar
+
+	xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+	xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "c");
+	xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:angstrom");
+	xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetC());
+	xmlTextWriterEndElement(writer());//scalar
+
+	xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+	xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "alpha");
+	xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:degree");
+	xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetAlpha());
+	xmlTextWriterEndElement(writer());//scalar
+
+	xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+	xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "beta");
+	xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:degree");
+	xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetBeta());
+	xmlTextWriterEndElement(writer());//scalar
+
+	xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+	xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "gamma");
+	xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:degree");
+	xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetGamma());
+	xmlTextWriterEndElement(writer());//scalar
+
+	xmlTextWriterEndElement(writer());//crystal	
+}
 
 }//namespace
