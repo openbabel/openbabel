@@ -1,3 +1,16 @@
+2005-10-19  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/formats/xcmlformat.cpp: Added reading and writing
+	of <crystal> xFract etc.
+
+	* src/formats/freefracformat.cpp: added kludge for
+	getline() in Windows(binary mode) possibly returning 0x0d 
+	from a blank line.
+	Removed two unreferenced variables
+
+	* doc/OBTwoMigration.html: Replace example of Reaction SMILES
+	(sadly not yet done) by CMLReact. Couple of typos.
+
 2005-10-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Doxyfile: Updated for new doxygen release (1.4.5).
