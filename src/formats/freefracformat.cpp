@@ -66,7 +66,6 @@ bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
 
-    int i;
     char buffer[BUFF_SIZE];
 
     if (!ifs.getline(buffer,BUFF_SIZE))
@@ -114,7 +113,8 @@ bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     while(ifs.getline(buffer,BUFF_SIZE))
       {
-	if (strlen(buffer) == 0) // blank line -- consider it the end of this molecule
+	if (strlen(buffer) == 0 || *buffer == 0x0D) //incl Windows kludge
+		// blank line -- consider it the end of this molecule
 	  break;
 
 	tokenize(vs,buffer);
@@ -162,7 +162,6 @@ bool FreeFormFractionalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
     char buffer[BUFF_SIZE];
     OBUnitCell *uc = NULL;
 
