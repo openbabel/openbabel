@@ -37,7 +37,7 @@ reading and writing chemical data, replacing the OBFileFormat
 class. There are several main advantages to these new classes.</p>
 
 <ul>
-<li>Dyanmic loading and unloading of file formats.</li>
+<li>Dynamic loading and unloading of file formats.</li>
 <ul>
 <li>This means that to write a new format, only one file (with the
 format code) is needed. No other code changes are required.</li>
@@ -46,7 +46,7 @@ files, 2 header files, and extable.txt needed to be changed.</li>
 </ul>
 <li>Better support for formats which handle multiple molecules "records" in one file (e.g., CML, MDL Molfile, SMILES, etc.).</li>
 <li>Batch conversion, splitting, and joining multiple molecule files.</li>
-<li>Support for handling reaction data (e.g., Reaction SMILES, MDL Rxn files) and other types of chemical data beyond simple molecular files.</li>
+<li>Support for handling reaction data (e.g., MDL Rxn, CMLReact files) and other types of chemical data beyond simple molecular files.</li>
 </ul>
 
 <h3>Code Changes</h3>
@@ -59,7 +59,7 @@ files, 2 header files, and extable.txt needed to be changed.</li>
  
       io_type inFileType = extab.FilenameToType(FileIn);
 
-      if (extab.IsReadale(inFileType) && extab.IsWritable(SMI)
+      if (extab.IsReadable(inFileType) && extab.IsWritable(SMI)
       {
           OBMol mol(inFileType, SMI);
           stringstream outstream;
