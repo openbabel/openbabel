@@ -532,14 +532,20 @@ bool OBTypeTable::Translate(string &to, const string &from)
     if (from == "")
         return(false);
 
-    vector<vector<string> >::iterator i;
-    for (i = _table.begin();i != _table.end();i++)
-        if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
-        {
-            to = (*i)[_to];
-            return(true);
-        }
+    if (_from >= 0 && _to >= 0 &&
+	_from < _table.size() && _to < _table.size())
+      {
+	vector<vector<string> >::iterator i;
+	for (i = _table.begin();i != _table.end();i++)
+	  if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
+	    {
+	      to = (*i)[_to];
+	      return(true);
+	    }
+      }
 
+    // Throw an error, copy the string and return false
+    obErrorLog.ThrowError(__FUNCTION__, "Cannot perform atom type translation: table cannot find requested types.", obWarning);
     to = from;
     return(false);
 }
