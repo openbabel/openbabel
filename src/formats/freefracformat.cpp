@@ -53,6 +53,17 @@ public:
 //Make an instance of the format class
 FreeFormFractionalFormat theFreeFormFractionalFormat;
 
+const char * TrimErrors(const std::string data)
+{
+  string temp = data;
+  size_t stdErr = temp.rfind("(");
+  
+  if(stdErr!=string::npos)
+    temp.erase(stdErr);
+  
+  return temp.c_str();
+}
+
 /////////////////////////////////////////////////////////////////
 bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
@@ -93,12 +104,14 @@ bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     //parse cell values
     double A, B, C, Alpha, Beta, Gamma;
-    A = atof((char*)vs[0].c_str());
-    B = atof((char*)vs[1].c_str());
-    C = atof((char*)vs[2].c_str());
-    Alpha = atof((char*)vs[3].c_str());
-    Beta  = atof((char*)vs[4].c_str());
-    Gamma = atof((char*)vs[5].c_str());
+    string temp; // used to trim ending (xx) data from strings
+    
+    A = atof(TrimErrors(vs[0]));
+    B = atof(TrimErrors(vs[1]));
+    C = atof(TrimErrors(vs[2]));
+    Alpha = atof(TrimErrors(vs[3]));
+    Beta  = atof(TrimErrors(vs[4]));
+    Gamma = atof(TrimErrors(vs[5]));
     OBUnitCell *uc = new OBUnitCell;
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
     mol.SetData(uc);
@@ -123,9 +136,9 @@ bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
         atom = mol.NewAtom();
 
-        x = atof((char*)vs[1].c_str());
-        y = atof((char*)vs[2].c_str());
-        z = atof((char*)vs[3].c_str());
+        x = atof(TrimErrors(vs[1]));
+        y = atof(TrimErrors(vs[2]));
+        z = atof(TrimErrors(vs[3]));
 	v.Set(x, y, z);
 	v *= m;
 	//set coordinates -- multiply by orthogonalization matrix
