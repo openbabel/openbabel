@@ -1,4 +1,9 @@
-2005-10-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+2005-10-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/atomtyp.txt, data/atomtyp.h, data/types.txt, data/types.h:
+	Updated Dreiding atom types, contributed by Menno Deij.
+
+2005-10-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Makefile.am, Makefile.in: Make sure both windows and
 	windows-vc2005 directories are included.

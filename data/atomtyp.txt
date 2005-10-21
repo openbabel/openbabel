@@ -152,6 +152,20 @@ EXTTYP	[#16;$([#16D3](~[OD1])~[OD1])]		Sac
 EXTTYP	[#5]					B2
 EXTTYP	[#5D4]					B3
 
+# hydrogens that can be involved in a hydrogen bond
+EXTTYP  [#1]~O                                  HO
+EXTTYP  [#1]~S                                  HS
+EXTTYP  [#1]~N                                  HN
+EXTTYP  [#1]~n                                  HN
+# hydrogens in a bridge between two borons, e.g. diborane
+EXTTYP  [#1]~B~B                                HB
+# aromatic oxygen, e.g. furan
+EXTTYP  [o]                                     Oar
+# sp oxygen, e.g. carbon monoxide
+EXTTYP  [O]#*                                   O1
+# sp nitrogen, e.g. acetonitrile
+EXTTYP  [N]#*					N1
+
 ######################## Add Extra Definitions Here ##########################
 
 
