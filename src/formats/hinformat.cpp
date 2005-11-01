@@ -156,7 +156,7 @@ bool HINFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     char bond_char;
 
     ofs << "mol " << file_num << " " << mol.GetTitle() << endl;
-    ;
+
     for(i = 1;i <= mol.NumAtoms(); i++)
     {
         atom = mol.GetAtom(i);
@@ -189,6 +189,9 @@ bool HINFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
                 bond_char = 's';
                 break;
             }
+	    if (bond->IsAromatic())
+	      bond_char = 'a';
+
             sprintf(buffer,"%d %c ", (bond->GetNbrAtom(atom))->GetIdx(), bond_char);
             ofs << buffer;
         }

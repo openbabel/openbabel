@@ -1,3 +1,8 @@
+2005-11-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/hinformat.cpp: Make sure to mark all aromatic bonds
+	as "a" in output. Fixes bug reported by Rajarshi Guha.
+
 2005-10-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/atomtyp.txt, data/atomtyp.h, data/types.txt, data/types.h:
