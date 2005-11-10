@@ -145,7 +145,7 @@ int nrings(OBMol &mol)
 *
 * \par AUTHORS
 *
-* The obrotate program was contributed by \b Fabien \b Fontaine.
+* The obprop program was contributed by \b Fabien \b Fontaine.
 *
 * Open Babel is currently maintained by \b Geoff \b Hutchison, \b Chris \b Morley and \b Michael \b Banck.
 *

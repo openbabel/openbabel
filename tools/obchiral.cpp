@@ -147,3 +147,45 @@ int main(int argc,char **argv)
 
     return(0);
 } // end main
+
+
+/* obchiral man page*/
+/** \page obchiral print molecular chirality information
+*
+* \n
+* \par SYNOPSIS
+*
+* \b obchiral \<filename\>
+*
+* \par DESCRIPTION
+*
+* The obchiral program is a tool to print the chirality information
+* for all molecules in a file. It also serves as example code for using the
+* Open Babel library (libopenbabel).
+* 
+* \par EXAMPLES
+*
+*   obchiral pyridines.sdf
+*
+* \par AUTHORS
+*
+* The obchiral program was contributed by \b Nick \b England.
+*
+* Open Babel is currently maintained by \b Geoff \b Hutchison, \b Chris \b Morley and \b Michael \b Banck.
+*
+* For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
+*
+* \par COPYRIGHT
+*  Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+*  Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison \n \n
+*  This program is free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation version 2 of the License.\n \n
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+* \par SEE ALSO
+*   The web pages for Open Babel can be found at: http://openbabel.sourceforge.net/ \n
+**/
