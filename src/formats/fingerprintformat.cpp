@@ -85,7 +85,13 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	pFP = OBFingerprint::FindFingerprint(fpid);
 	if(!pFP)
 	{
-		cerr << "Fingerprint type '" << fpid << "' not available" << endl;
+#ifdef HAVE_SSTREAM
+	  stringstream errorMsg;
+#else
+	  strstream errorMsg;
+#endif
+		errorMsg << "Fingerprint type '" << fpid << "' not available" << endl;
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 		return false;
 	}
 

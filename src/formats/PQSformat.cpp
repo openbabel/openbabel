@@ -225,13 +225,19 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                         strcpy(full_coord_path,"");
                 }
                 strcat(full_coord_path,coord_file);
-                cerr<<"ReadPQS: external geometry file referenced: "<< \
+#ifdef HAVE_SSTREAM
+		stringstream errorMsg;
+#else
+		strstream errorMsg;
+#endif
+                errorMsg <<"External geometry file referenced: "<< \
                 full_coord_path<<endl;
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
 
                 coordFileStream.open(full_coord_path);
                 if (!coordFileStream)
                 {
-                    cerr<<"ReadPQS: cannot read external geomentry file!"<<endl;
+		  obErrorLog.ThrowError(__FUNCTION__, "Cannot read external geometry file!", obError);
 		    return(false);
 		    //                    exit (-1);
                 }
@@ -284,7 +290,13 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             coordFileStream.open(coord_file);
             if (!coordFileStream)
             {
-                cerr<<"ReadPQS: cannot read external "<<coord_file<<" file!"<<endl;
+#ifdef HAVE_SSTREAM
+	      stringstream errorMsg;
+#else
+	      strstream errorMsg;
+#endif
+	      errorMsg <<"ReadPQS: cannot read external "<<coord_file<<" file!"<<endl;
+	      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 		return(false);
 		//                exit (-1);
             }
@@ -294,7 +306,7 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         }
     }
     else
-        cerr<<"ReadPQS: error reading PQS file.  GEOM card not found!"<<endl;
+      obErrorLog.ThrowError(__FUNCTION__, "Error reading PQS file.  GEOM card not found!", obWarning);
 
     ifs.seekg(0, ios::end); //move .inp file pointer to the end of file
     if (atom_count>0)

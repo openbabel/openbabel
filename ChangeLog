@@ -1,3 +1,17 @@
+2005-11-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/bgfformat.cpp (ReadMolecule): Fix problem with atom
+	type translation uncovered during roundtrip testing -- atom type
+	was "cleaned" before assignment.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Make sure
+	libinchi is correctly linked to inchiformat module.
+
+	* src/formats/PQSformat.cpp, src/formats/fastsearchformat.cpp,
+	src/formats/fingerprintformat.cpp, src/formats/inchiformat.cpp,
+	src/formats/rxnformat.cpp: Found a few remaining calls to
+	cerr. Updated to use OBMessageHandler framework, fixing PR#1281758.
+
 2005-11-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Doxyfile: Update version number for 2.0 release.

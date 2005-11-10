@@ -181,7 +181,13 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 			iat.bond_stereo[nbonds++] = bs;
 			if(nbonds>MAXVAL)
 			{
-				cerr << "Too many bonds to " << iat.elname << " atom" << endl;
+#ifdef HAVE_SSTREAM
+			  stringstream errorMsg;
+#else
+			  strstream errorMsg;
+#endif
+			  errorMsg << "Too many bonds to " << iat.elname << " atom" << endl;
+			  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 				return false;
 			}
 		}
@@ -306,8 +312,16 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	{
 		string mes(inout.szMessage);
 		if(!(pConv->IsOption("w") 
-			&& (mes=="Omitted undefined stereo" || mes=="Charges were rearranged")))
-			cerr << molID.str() << inout.szMessage << endl;
+		     && (mes=="Omitted undefined stereo" || mes=="Charges were rearranged")))
+		  {
+#ifdef HAVE_SSTREAM
+		    stringstream errorMsg;
+#else
+		    strstream errorMsg;
+#endif
+		    errorMsg << molID.str() << inout.szMessage << endl;
+		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+		  }
 		if(ret!=inchi_Ret_WARNING)
 		{
 			FreeINCHI(&inout);
@@ -533,7 +547,8 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	//Send its InChI to a stringstream
 	OBFormat* pInchi = OBConversion::FindFormat("inchi");
 	if(!pInchi)
-	{	cerr << "InChIFormat needs to be installed to use TestFormat" << endl;
+	{	
+	  obErrorLog.ThrowError(__FUNCTION__, "InChIFormat needs to be installed to use TestFormat", obWarning);
 		return false;
 	}
 	pConv->AddOption("w",OBConversion::OUTOPTIONS);//no trivial warnings
@@ -547,24 +562,32 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	NewConv.SetAuxConv(NULL); //until proper copy constructor for OBConversion written
 	
 	const char* pTargetExt = pConv->IsOption("O");
+#ifdef HAVE_SSTREAM
+	stringstream errorMsg;
+#else
+	strstream errorMsg;
+#endif
 	if(pTargetExt)
 	{
 		OBFormat* pTargetFormat = OBConversion::FindFormat(pTargetExt);
 		if(!pTargetFormat)
 		{
-			cerr << pTargetExt <<  " format is not available" << endl;
+			errorMsg << pTargetExt <<  " format is not available" << endl;
+			obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 			return false;
 		}
 		if(!NewConv.SetInFormat(pTargetFormat))
 		{
-			cerr << pTargetExt << " format being tested needs to be readable" << endl;
+			errorMsg << pTargetExt << " format being tested needs to be readable" << endl;
+			obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 			return false;
 		}
 	}
 
 	if(!NewConv.SetOutFormat(NewConv.GetInFormat()))
 	{
-		cerr << "The input format being tested needs also to be writeable" << endl;
+		errorMsg << "The input format being tested needs also to be writeable" << endl;
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 		return false;
 	}
 	//Output with the target format to a stringstream ss

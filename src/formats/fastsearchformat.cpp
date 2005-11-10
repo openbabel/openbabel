@@ -123,14 +123,21 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		string::size_type pos = txt.find_last_of('.');
 		if(pos==string::npos)
 		{
-			cerr << "Filename of pattern molecule in -S option must have an extension" << endl;
+		  obErrorLog.ThrowError(__FUNCTION__, "Filename of pattern molecule in -S option must have an extension", obError);
 			return false;
 		}
 		patternstream.open(txt.c_str());
 		if(!patternstream)
 		{
-			cerr << "Cannot open " << txt << endl;
-			return false;
+#ifdef HAVE_SSTREAM
+		  stringstream errorMsg;
+#else
+		  strstream errorMsg;
+#endif
+		  
+		  errorMsg << "Cannot open " << txt << endl;
+		  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+		  return false;
 		}
 
 		PatternConv.SetOneObjectOnly();
@@ -140,7 +147,7 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 
 	if(patternMol.Empty())
 	{
-		cerr << "Cannot derive a molecule from the -s or -S options" << endl;
+	  obErrorLog.ThrowError(__FUNCTION__, "Cannot derive a molecule from the -s or -S options", obWarning);
 		return false;
 	}
 	patternMol.ConvertDativeBonds();//use standard form for dative bonds
@@ -167,18 +174,25 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 
 	//Have to open input stream again because needs to be in binary mode
 	ifstream ifs;
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
 	if(!indexname.empty())
 		ifs.open(indexname.c_str(),ios::binary);
 	if(!ifs)
 	{
-		cerr << "Couldn't open " << indexname << endl;
+		errorMsg << "Couldn't open " << indexname << endl;
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 		return false;
 	}
 
 	string datafilename = fs.ReadIndex(&ifs);
 	if(datafilename.empty())
 	{
-		cerr << "Difficulty reading from index " << indexname << endl;
+		errorMsg << "Difficulty reading from index " << indexname << endl;
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 		return false;
 	}
 
@@ -195,7 +209,8 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 	ifstream datastream(path.c_str());
 	if(!datastream)
 	{
-		cerr << "Difficulty opening " << path << endl;
+		errorMsg << "Difficulty opening " << path << endl;
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 		return false;
 	}
 	pConv->SetInStream(&datastream);
@@ -322,10 +337,16 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 				indexname.erase(pos);
 			indexname += ".fs";
 
+#ifdef HAVE_SSTREAM
+			stringstream errorMsg;
+#else
+			strstream errorMsg;
+#endif
 			pOs = new ofstream(indexname.c_str(),ofstream::binary);
 			if(!pOs->good())
 			{
-				cerr << "Cannot open " << indexname << endl;
+				errorMsg << "Cannot open " << indexname << endl;
+				obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 				return false;
 			}
 			NewOstreamUsed=true;
@@ -345,7 +366,7 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 		string datafilename = pConv->GetInFilename();
 		if(datafilename.empty())
 		{
-			cerr << "No datafile! " << endl;
+		  obErrorLog.ThrowError(__FUNCTION__, "No datafile!", obError);
 			return false;
 		}
 		unsigned int pos = datafilename.find_last_of("/\\");

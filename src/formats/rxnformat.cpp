@@ -165,7 +165,7 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         //Read a MOL file	using the same OBConversion object but with a different format
         pmol=new OBMol;
         if(!pMolFormat->ReadMolecule(pmol,pConv))
-            cerr << "Failed to read a reactant" << endl;
+	  obErrorLog.ThrowError(__FUNCTION__, "Failed to read a reactant", obWarning);
         pReact->reactants.push_back(pmol);
     }
 
@@ -174,7 +174,7 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         //Read a MOL file
         pmol=new OBMol;
         if(!pMolFormat->ReadMolecule(pmol,pConv))
-            cerr << "Failed to read a product" << endl;
+	  obErrorLog.ThrowError(__FUNCTION__, "Failed to read a product", obWarning);
         pReact->products.push_back(pmol);
     }
 
@@ -196,7 +196,7 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		OBFormat* pMolFormat = pConv->FindFormat("MOL");
     if(pMolFormat==NULL)
     {
-        cerr << "MDL MOL format not available\n" <<endl;
+      obErrorLog.ThrowError(__FUNCTION__, "MDL MOL format not available", obError);
         return false;
     }
 
