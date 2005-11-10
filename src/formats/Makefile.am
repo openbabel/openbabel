@@ -144,7 +144,7 @@ hinformat_la_SOURCES = hinformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 
 
 inchiformat_la_SOURCES = inchiformat.cpp
-inchiformat_la_LDFLAGS = -module -avoid-version 
+inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
 
 jaguarformat_la_SOURCES = jaguarformat.cpp
 jaguarformat_la_LDFLAGS = -module -avoid-version 
