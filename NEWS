@@ -38,9 +38,7 @@ a stable, flexible interface for developers and users alike.
 - Updated elemental data from the Blue Obelisk Data Repository.
    (project started, in part, to validate the old Open Babel data)
 - Improved z-matrix code (CartesianToInternal / InternalToCartesian).
-- Can export InChI identifiers for molecules on platforms with the
-   InChI library. (Further support is dependent on license changes to
-   the InChI code)
+- Can export IUPAC InChI identifiers.
 - Countless bug fixes.
 
 New File Formats:
@@ -62,6 +60,7 @@ New File Formats:
  	  MPQC input
 	  Open Babel "copy" format (i.e., copy the raw input file)
 	  Sybyl MPD descriptor format
+	  IUPAC InChI descriptor
 
   Changed formats:
           MMADS - eliminated

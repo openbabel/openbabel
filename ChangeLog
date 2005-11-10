@@ -1,3 +1,48 @@
+2005-11-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Doxyfile: Update version number for 2.0 release.
+
+	* NEWS, THANKS: Updates for 2.0 release.
+	
+	* data/patterns.txt: Updated with new version from Chris Morley
+	with corrected SMARTS patterns.
+
+	* doc/Makefile.am: Remove man.1 pages from target list for now -- new
+	versions are much better than doxygen generated versions.
+
+	* doc/api-header.html, doc/api-footer.html: Updated for new
+	website template.
+
+	* doc/*.1: Updated man pages by hand.
+
+	* configure, configure.in, src/config.h.in, */Makefile.in: Updated
+	to always build InChI now that the IUPAC code is distributed under
+	the GNU LGPL.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in,
+	src/formats/inchi/*: Ditto.
+
+	* scripts/perl/Makefile.PL: Make sure to include libz in
+	compilation.
+
+	* src/bitvec.cpp, src/bondtyper.cpp, src/chains.cpp,
+	src/chiral.cpp, src/fingerprint.cpp, src/generic.cpp,
+	src/obconversion.cpp, src/patty.cpp, src/resdiue.cpp,
+	src/rotor.cpp: src/formats/mdlformat.cpp,
+	src/formats/mol2format.cpp, src/formats/smilesformat.cpp:
+	Updated to use OBMessageHandler framework for errors rather than
+	old ThrowError or cerr directly. Solves PR#1281758.
+
+	* src/formats/PQSformat.cpp: Remove calls to exit() which should
+	never be used in production code.
+
+	* src/formats/balstformat.cpp: Add specification URL.
+
+	* tools/Makefile.am, tools/obdoc.cpp: Add hint for "obdoc" tool
+	which creates the file format documentation.
+
+	* tools/obchiral.cpp, tools/obprop.cpp: Add Doxygen man page.
+
 2005-11-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/hinformat.cpp: Make sure to mark all aromatic bonds
