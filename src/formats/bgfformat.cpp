@@ -80,6 +80,7 @@ bool BGFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             break;
 
     ttab.SetFromType("DRE");
+    ttab.SetToType("INT");
     OBAtom *atom;
     double x,y,z,chrg;
     for (;;)
@@ -93,13 +94,12 @@ bool BGFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                &x,&y,&z,
                tmptyp,
                &chrg);
-        CleanAtomType(tmptyp);
         atom = mol.NewAtom();
 
-        ttab.SetToType("INT");
         ttab.Translate(tmp,tmptyp);
         atom->SetType(tmp);
 
+	CleanAtomType(tmptyp);
         atom->SetAtomicNum(etab.GetAtomicNum(tmptyp));
 
         atom->SetVector(x,y,z);
