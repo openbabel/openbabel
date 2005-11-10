@@ -232,7 +232,8 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                 if (!coordFileStream)
                 {
                     cerr<<"ReadPQS: cannot read external geomentry file!"<<endl;
-                    exit (-1);
+		    return(false);
+		    //                    exit (-1);
                 }
                 else
                 {
@@ -284,7 +285,8 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             if (!coordFileStream)
             {
                 cerr<<"ReadPQS: cannot read external "<<coord_file<<" file!"<<endl;
-                exit (-1);
+		return(false);
+		//                exit (-1);
             }
             else
                 atom_count=ReadPQS_geom(coordFileStream,mol,title,0,
