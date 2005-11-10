@@ -42,7 +42,7 @@ public:
     };
 
   virtual const char* SpecificationURL()
-  {return "";}; //optional
+  {return "http://ocwww.chemie.uni-linz.ac.at/mueller/ball_and_stick.html";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
