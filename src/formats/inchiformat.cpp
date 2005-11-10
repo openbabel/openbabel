@@ -1,6 +1,11 @@
 /**********************************************************************
 Copyright (C) 2005 Chris Morley
- 
+
+Based on the IUPAC InChI reference software, which is distributed
+under the GNU LGPL:
+Copyright (C) 2005 The International Union of Pure and Applied Chemistry
+IUPAC International Chemical Identifier (InChI) (contact:secretariat@iupac.org)
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
@@ -35,7 +40,7 @@ public:
 	virtual const char* Description()
 	{
 			return 
-"INChI format\n \
+"InChI format\n \
 IUPAC/NIST molecular identifier\n \
 Write Options e.g. -xat \n \
  t add molecule name\n \
