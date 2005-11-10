@@ -1,45 +1,31 @@
 .Dd November 25, 2005
 .Os "Open Babel" 2.0
-.Dt obprop 1 URM
+.Dt obchiral 1 URM
 .Sh NAME
-.Nm obprop
-.Nd "print standard molecular properties"
+.Nm obchiral
+.Nd "print molecular chirality information"
 .Sh SYNOPSIS
 .Nm
 .Ar filename
 .Sh DESCRIPTION
-The obprop program is a tool to print a set of standard molecular
-properties for all molecules in a file. It also serves as example code
-for using the Open Babel library (libopenbabel).
-.Pp
-Output format includes:
-.br
-name 
-.Op Ar Name
-.br
-mol_weight 
-.Op Ar Molecular Weight
-.br
-num_rings
-.Op Ar Number of Rings (by SSSR)
-.br
-$$$
-.Pp
-The "$$$" is the separator between multiple molecular entries in a file
+.Re
+The obchiral program is a tool to print the chirality information for
+all molecules in a file. It also serves as example code for using the
+Open Babel library (libopenbabel).
 .Sh EXAMPLES
-.Dl "obprop pyridines.sdf"
+.Dl "obchiral pyridines.sdf"
 .Sh SEE ALSO
 .Xr babel 1 ,
-.Xr obchiral 1 ,
 .Xr obfit 1 ,
 .Xr obgrep 1 ,
+.Xr obprop 1 ,
 .Xr obrotate 1 .
-.Pp
+.br
 The web pages for Open Babel can be found at:
-<\fBhttp://openbabel.sourceforge.net/\fR>
+<\fBhttp://openbabel.sourceforge.net/\fR> 
 .Sh AUTHORS
-The obprop program was contributed by
-.An Fabien Fontaine
+The obchiral program was written by
+.An Nick England
 .Pp
 .An -nosplit
 Open Babel is developed by a cast of many, including currrent maintainers
