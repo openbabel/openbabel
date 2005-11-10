@@ -4,8 +4,8 @@ $CC = 'g++';
 $srcdir = '../../src';
 
 # check if we're compiling in the source directory
-$ldfrom = '$(OBJECT) -lopenbabel';
-$ldfrom = "\$(OBJECT) $srcdir/.libs/libopenbabel.a"
+$ldfrom = '$(OBJECT) -lopenbabel -lz';
+$ldfrom = "\$(OBJECT) $srcdir/.libs/libopenbabel.a -lz"
     if (-r "$srcdir/.libs/libopenbabel.a") and (-s _) and (-B _);
 
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
