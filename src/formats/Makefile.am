@@ -1,13 +1,21 @@
-if BUILD_XML
-SUBDIRS=xml
-endif
+SUBDIRS = inchi
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
+# Make sure to install the inchi_api.h header
+libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
+libopenbabelinclude_HEADERS = inchi_api.h
 
 EXTRA_DIST = exampleformat.cpp
 
-if !BUILD_SHARED
+if BUILD_XML
+SUBDIRS += xml
+endif
 
+
+# Unfortunately there are a few formats which still cannot compile shared
+# modules (e.g., Cygwin). So we need to keep a duplicate target for "libformats"
+
+if !BUILD_SHARED
 noinst_LTLIBRARIES = libformats.la
 libformats_la_SOURCES = \
 	APIInterface.cpp \
@@ -18,9 +26,9 @@ libformats_la_SOURCES = \
 	copyformat.cpp crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
 	fingerprintformat.cpp \
-	freefracformat.cpp gamessformat.cpp gaussformat.cpp 
+	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
-	jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
+	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
 	mol2format.cpp mopacformat.cpp mpdformat.cpp mpqcformat.cpp \
 	nwchemformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
@@ -40,7 +48,7 @@ pkglib_LTLIBRARIES = \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	fingerprintformat.la \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
-	gromos96format.la hinformat.la \
+	gromos96format.la hinformat.la inchiformat.la \
 	jaguarformat.la mdlformat.la mmodformat.la mpdformat.la \
 	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
@@ -135,6 +143,9 @@ gromos96format_la_LDFLAGS = -module -avoid-version
 hinformat_la_SOURCES = hinformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 
 
+inchiformat_la_SOURCES = inchiformat.cpp
+inchiformat_la_LDFLAGS = -module -avoid-version 
+
 jaguarformat_la_SOURCES = jaguarformat.cpp
 jaguarformat_la_LDFLAGS = -module -avoid-version 
 
@@ -205,32 +216,3 @@ zindoformat_la_SOURCES = zindoformat.cpp
 zindoformat_la_LDFLAGS = -module -avoid-version 
 
 endif
-
-# InChI code cannot be distributed with Open Babel due to licensing issues
-# (current InChI code is not released under any sort of free software or 
-#  open source license. IUPAC is supposedly reconsidering the InChI license.)
-#
-# If you "happen" to have the inchi source code and drop it into the following
-# subdirectory, things might work out OK. It might also work if you happen
-# to have a pre-compiled libinchi that's discovered by the configure script.
-#
-# SUBDIRS = inchi
-
-if BUILD_INCHI
-libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
-libopenbabelinclude_HEADERS = inchi_api.h
-
-if !BUILD_SHARED
-libformats_la_SOURCES +=  \
-		inchiformat.cpp
-else
-
-pkglib_LTLIBRARIES += \
-		inchiformat.la
-
-inchiformat_la_SOURCES = inchiformat.cpp
-inchiformat_la_LDFLAGS = -module -avoid-version 
-
-endif #build shared
-
-endif #build inchi

@@ -1,4 +1,5 @@
 
+# Not sure if this is actually needed -GRH
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
 lib_LTLIBRARIES = libinchi.la
@@ -11,7 +12,7 @@ libinchi_la_SOURCES = \
 	IChITaut.c inchi_dll.c inchi_dll_main.c runichi.c \
 	strutil.c util.c
 
-libinchiincludedir = $(includedir)/openbabel/inchi
+libinchiincludedir = $(includedir)/inchi
 libinchiinclude_HEADERS = \
 	aux2atom.h comdef.h extr_ct.h ichi.h ichi_bns.h \
 	ichicano.h ichicant.h ichicomn.h ichicomp.h \

@@ -37,15 +37,10 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@am__append_1 = \
-@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@		inchiformat.cpp
-
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@am__append_2 = \
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@		inchiformat.la
-
+@BUILD_XML_TRUE@am__append_1 = xml
 subdir = src/formats
-DIST_COMMON = $(am__libopenbabelinclude_HEADERS_DIST) \
-	$(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(libopenbabelinclude_HEADERS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -213,11 +208,9 @@ hinformat_la_OBJECTS = $(am_hinformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_hinformat_la_rpath = -rpath $(pkglibdir)
 inchiformat_la_LIBADD =
 am__inchiformat_la_SOURCES_DIST = inchiformat.cpp
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@am_inchiformat_la_OBJECTS =  \
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@	inchiformat.lo
+@BUILD_SHARED_TRUE@am_inchiformat_la_OBJECTS = inchiformat.lo
 inchiformat_la_OBJECTS = $(am_inchiformat_la_OBJECTS)
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@am_inchiformat_la_rpath = -rpath \
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@	$(pkglibdir)
+@BUILD_SHARED_TRUE@am_inchiformat_la_rpath = -rpath $(pkglibdir)
 jaguarformat_la_LIBADD =
 am__jaguarformat_la_SOURCES_DIST = jaguarformat.cpp
 @BUILD_SHARED_TRUE@am_jaguarformat_la_OBJECTS = jaguarformat.lo
@@ -232,8 +225,14 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 	crkformat.cpp cssrformat.cpp dmolformat.cpp \
 	fastsearchformat.cpp featformat.cpp fhformat.cpp \
 	fingerprintformat.cpp freefracformat.cpp gamessformat.cpp \
-	gaussformat.cpp inchiformat.cpp
-@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@am__objects_1 = inchiformat.lo
+	gaussformat.cpp ghemicalformat.cpp gromos96format.cpp \
+	hinformat.cpp inchiformat.cpp jaguarformat.cpp mdlformat.cpp \
+	mmodformat.cpp mol2format.cpp mopacformat.cpp mpdformat.cpp \
+	mpqcformat.cpp nwchemformat.cpp pdbformat.cpp povrayformat.cpp \
+	qchemformat.cpp reportformat.cpp rxnformat.cpp shelxformat.cpp \
+	smilesformat.cpp tinkerformat.cpp turbomoleformat.cpp \
+	unichemformat.cpp viewmolformat.cpp xedformat.cpp \
+	xyzformat.cpp yasaraformat.cpp zindoformat.cpp
 @BUILD_SHARED_FALSE@am_libformats_la_OBJECTS = APIInterface.lo \
 @BUILD_SHARED_FALSE@	CSRformat.lo PQSformat.lo alchemyformat.lo \
 @BUILD_SHARED_FALSE@	amberformat.lo balstformat.lo bgfformat.lo \
@@ -245,7 +244,18 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 @BUILD_SHARED_FALSE@	featformat.lo fhformat.lo \
 @BUILD_SHARED_FALSE@	fingerprintformat.lo freefracformat.lo \
 @BUILD_SHARED_FALSE@	gamessformat.lo gaussformat.lo \
-@BUILD_SHARED_FALSE@	$(am__objects_1)
+@BUILD_SHARED_FALSE@	ghemicalformat.lo gromos96format.lo \
+@BUILD_SHARED_FALSE@	hinformat.lo inchiformat.lo \
+@BUILD_SHARED_FALSE@	jaguarformat.lo mdlformat.lo mmodformat.lo \
+@BUILD_SHARED_FALSE@	mol2format.lo mopacformat.lo mpdformat.lo \
+@BUILD_SHARED_FALSE@	mpqcformat.lo nwchemformat.lo pdbformat.lo \
+@BUILD_SHARED_FALSE@	povrayformat.lo qchemformat.lo \
+@BUILD_SHARED_FALSE@	reportformat.lo rxnformat.lo \
+@BUILD_SHARED_FALSE@	shelxformat.lo smilesformat.lo \
+@BUILD_SHARED_FALSE@	tinkerformat.lo turbomoleformat.lo \
+@BUILD_SHARED_FALSE@	unichemformat.lo viewmolformat.lo \
+@BUILD_SHARED_FALSE@	xedformat.lo xyzformat.lo yasaraformat.lo \
+@BUILD_SHARED_FALSE@	zindoformat.lo
 libformats_la_OBJECTS = $(am_libformats_la_OBJECTS)
 @BUILD_SHARED_FALSE@am_libformats_la_rpath =
 mdlformat_la_LIBADD =
@@ -456,12 +466,11 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	install-recursive installcheck-recursive installdirs-recursive \
 	pdf-recursive ps-recursive uninstall-info-recursive \
 	uninstall-recursive
-am__libopenbabelinclude_HEADERS_DIST = inchi_api.h
 libopenbabelincludeHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(libopenbabelinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = xml
+DIST_SUBDIRS = inchi xml
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
@@ -474,8 +483,6 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
-BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
-BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -584,47 +591,53 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-@BUILD_XML_TRUE@SUBDIRS = xml
+SUBDIRS = inchi $(am__append_1)
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
+# Make sure to install the inchi_api.h header
+libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
+libopenbabelinclude_HEADERS = inchi_api.h
 EXTRA_DIST = exampleformat.cpp
+
+# Unfortunately there are a few formats which still cannot compile shared
+# modules (e.g., Cygwin). So we need to keep a duplicate target for "libformats"
 @BUILD_SHARED_FALSE@noinst_LTLIBRARIES = libformats.la
-@BUILD_SHARED_FALSE@libformats_la_SOURCES = APIInterface.cpp \
-@BUILD_SHARED_FALSE@	CSRformat.cpp PQSformat.cpp \
-@BUILD_SHARED_FALSE@	alchemyformat.cpp amberformat.cpp \
-@BUILD_SHARED_FALSE@	balstformat.cpp bgfformat.cpp \
-@BUILD_SHARED_FALSE@	boxformat.cpp cacaoformat.cpp \
-@BUILD_SHARED_FALSE@	cacheformat.cpp carformat.cpp \
-@BUILD_SHARED_FALSE@	cccformat.cpp chem3dformat.cpp \
-@BUILD_SHARED_FALSE@	chemdrawformat.cpp chemtoolformat.cpp \
-@BUILD_SHARED_FALSE@	copyformat.cpp crkformat.cpp \
-@BUILD_SHARED_FALSE@	cssrformat.cpp dmolformat.cpp \
-@BUILD_SHARED_FALSE@	fastsearchformat.cpp featformat.cpp \
-@BUILD_SHARED_FALSE@	fhformat.cpp fingerprintformat.cpp \
-@BUILD_SHARED_FALSE@	freefracformat.cpp gamessformat.cpp \
-@BUILD_SHARED_FALSE@	gaussformat.cpp $(am__append_1)
-@BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = APIInterface.la CSRformat.la \
-@BUILD_SHARED_TRUE@	PQSformat.la alchemyformat.la \
-@BUILD_SHARED_TRUE@	amberformat.la balstformat.la bgfformat.la \
-@BUILD_SHARED_TRUE@	boxformat.la cacaoformat.la cacheformat.la \
-@BUILD_SHARED_TRUE@	carformat.la cccformat.la chem3dformat.la \
-@BUILD_SHARED_TRUE@	chemdrawformat.la chemtoolformat.la \
+@BUILD_SHARED_FALSE@libformats_la_SOURCES = \
+@BUILD_SHARED_FALSE@	APIInterface.cpp \
+@BUILD_SHARED_FALSE@	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
+@BUILD_SHARED_FALSE@	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
+@BUILD_SHARED_FALSE@	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
+@BUILD_SHARED_FALSE@	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
+@BUILD_SHARED_FALSE@	copyformat.cpp crkformat.cpp cssrformat.cpp \
+@BUILD_SHARED_FALSE@	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
+@BUILD_SHARED_FALSE@	fingerprintformat.cpp \
+@BUILD_SHARED_FALSE@	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
+@BUILD_SHARED_FALSE@	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
+@BUILD_SHARED_FALSE@	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
+@BUILD_SHARED_FALSE@	mol2format.cpp mopacformat.cpp mpdformat.cpp mpqcformat.cpp \
+@BUILD_SHARED_FALSE@	nwchemformat.cpp \
+@BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
+@BUILD_SHARED_FALSE@	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
+@BUILD_SHARED_FALSE@	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
+@BUILD_SHARED_FALSE@	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp
+
+@BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
+@BUILD_SHARED_TRUE@	APIInterface.la \
+@BUILD_SHARED_TRUE@	CSRformat.la PQSformat.la alchemyformat.la \
+@BUILD_SHARED_TRUE@	amberformat.la balstformat.la bgfformat.la boxformat.la \
+@BUILD_SHARED_TRUE@	cacaoformat.la cacheformat.la carformat.la cccformat.la \
+@BUILD_SHARED_TRUE@	chem3dformat.la chemdrawformat.la chemtoolformat.la \
 @BUILD_SHARED_TRUE@	copyformat.la crkformat.la cssrformat.la \
-@BUILD_SHARED_TRUE@	dmolformat.la fastsearchformat.la \
-@BUILD_SHARED_TRUE@	featformat.la fhformat.la \
-@BUILD_SHARED_TRUE@	fingerprintformat.la freefracformat.la \
-@BUILD_SHARED_TRUE@	gamessformat.la gaussformat.la \
-@BUILD_SHARED_TRUE@	ghemicalformat.la gromos96format.la \
-@BUILD_SHARED_TRUE@	hinformat.la jaguarformat.la mdlformat.la \
-@BUILD_SHARED_TRUE@	mmodformat.la mpdformat.la mol2format.la \
-@BUILD_SHARED_TRUE@	mopacformat.la mpqcformat.la \
-@BUILD_SHARED_TRUE@	nwchemformat.la pdbformat.la \
-@BUILD_SHARED_TRUE@	povrayformat.la qchemformat.la \
-@BUILD_SHARED_TRUE@	reportformat.la rxnformat.la shelxformat.la \
-@BUILD_SHARED_TRUE@	smilesformat.la tinkerformat.la \
-@BUILD_SHARED_TRUE@	turbomoleformat.la unichemformat.la \
-@BUILD_SHARED_TRUE@	viewmolformat.la xedformat.la xyzformat.la \
-@BUILD_SHARED_TRUE@	yasaraformat.la zindoformat.la \
-@BUILD_SHARED_TRUE@	$(am__append_2)
+@BUILD_SHARED_TRUE@	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
+@BUILD_SHARED_TRUE@	fingerprintformat.la \
+@BUILD_SHARED_TRUE@	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
+@BUILD_SHARED_TRUE@	gromos96format.la hinformat.la inchiformat.la \
+@BUILD_SHARED_TRUE@	jaguarformat.la mdlformat.la mmodformat.la mpdformat.la \
+@BUILD_SHARED_TRUE@	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
+@BUILD_SHARED_TRUE@	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
+@BUILD_SHARED_TRUE@	rxnformat.la shelxformat.la smilesformat.la tinkerformat.la \
+@BUILD_SHARED_TRUE@	turbomoleformat.la unichemformat.la viewmolformat.la \
+@BUILD_SHARED_TRUE@	xedformat.la xyzformat.la yasaraformat.la zindoformat.la
+
 @BUILD_SHARED_TRUE@APIInterface_la_SOURCES = APIInterface.cpp
 @BUILD_SHARED_TRUE@APIInterface_la_LDFLAGS = -module -avoid-version
 @BUILD_SHARED_TRUE@CSRformat_la_SOURCES = CSRformat.cpp
@@ -683,6 +696,8 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_TRUE@gromos96format_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@hinformat_la_SOURCES = hinformat.cpp
 @BUILD_SHARED_TRUE@hinformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@inchiformat_la_SOURCES = inchiformat.cpp
+@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@jaguarformat_la_SOURCES = jaguarformat.cpp
 @BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@mdlformat_la_SOURCES = mdlformat.cpp
@@ -729,20 +744,6 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_TRUE@yasaraformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@zindoformat_la_SOURCES = zindoformat.cpp
 @BUILD_SHARED_TRUE@zindoformat_la_LDFLAGS = -module -avoid-version 
-
-# InChI code cannot be distributed with Open Babel due to licensing issues
-# (current InChI code is not released under any sort of free software or 
-#  open source license. IUPAC is supposedly reconsidering the InChI license.)
-#
-# If you "happen" to have the inchi source code and drop it into the following
-# subdirectory, things might work out OK. It might also work if you happen
-# to have a pre-compiled libinchi that's discovered by the configure script.
-#
-# SUBDIRS = inchi
-@BUILD_INCHI_TRUE@libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
-@BUILD_INCHI_TRUE@libopenbabelinclude_HEADERS = inchi_api.h
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_SOURCES = inchiformat.cpp
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version 
 all: all-recursive
 
 .SUFFIXES:
@@ -1307,14 +1308,6 @@ uninstall-info: uninstall-info-recursive
 	uninstall-libopenbabelincludeHEADERS \
 	uninstall-pkglibLTLIBRARIES
 
-@BUILD_SHARED_FALSE@	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
-@BUILD_SHARED_FALSE@	jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
-@BUILD_SHARED_FALSE@	mol2format.cpp mopacformat.cpp mpdformat.cpp mpqcformat.cpp \
-@BUILD_SHARED_FALSE@	nwchemformat.cpp \
-@BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
-@BUILD_SHARED_FALSE@	rxnformat.cpp shelxformat.cpp smilesformat.cpp tinkerformat.cpp \
-@BUILD_SHARED_FALSE@	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
-@BUILD_SHARED_FALSE@	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
