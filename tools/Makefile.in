@@ -95,8 +95,6 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
-BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
-BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -215,6 +213,9 @@ obprop_SOURCES = obprop.cpp
 obprop_LDADD = ../src/libopenbabel.la @LIBDL@
 obchiral_SOURCES = obchiral.cpp
 obchiral_LDADD = ../src/libopenbabel.la @LIBDL@
+
+# obdoc_SOURCES = obdoc.cpp
+# obdoc_LDADD = ../src/libopenbabel.la @LIBDL@
 AM_CPPFLAGS = -I$(top_srcdir)/src
 all: all-am
 
