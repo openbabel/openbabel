@@ -33,6 +33,9 @@
 	Updated to use OBMessageHandler framework for errors rather than
 	old ThrowError or cerr directly. Solves PR#1281758.
 
+	* src/parsmart.cpp: Actually implement up & down bond
+	primitives. Solves PR#1219329.
+
 	* src/formats/PQSformat.cpp: Remove calls to exit() which should
 	never be used in production code.
 
