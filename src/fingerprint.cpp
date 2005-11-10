@@ -15,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include "babelconfig.h"
 #include <vector>
 #include <algorithm>
@@ -33,6 +34,7 @@ GNU General Public License for more details.
 #include <vector>
 
 #include "fingerprint.h"
+#include "oberror.h"
 
 using namespace std;
 namespace OpenBabel {
@@ -151,7 +153,15 @@ bool FastSearch::Find(OBBase* pOb, vector<unsigned int>& SeekPositions,
 	}
 
 	if(i<_index.header.nEntries) //premature end to search
-		cerr << "Stopped looking after " << i << " molecules." << endl;
+	  {
+#ifdef HAVE_SSTREAM
+	    stringstream errorMsg;
+#else
+	    strstream errorMsg;
+#endif
+	    errorMsg << "Stopped looking after " << i << " molecules." << endl;
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+	  }
 
 	vector<unsigned int>::iterator itr;
 	for(itr=candidates.begin();itr!=candidates.end();itr++)
@@ -246,9 +256,15 @@ string FastSearch::ReadIndex(istream* pIndexstream)
 		_pFP = OBFingerprint::FindFingerprint(tempFP);
 		if(!_pFP)
 		{
-			cerr << "Index has Fingerprints of type '" << _index.header.fpid 
-				<< " which is not currently loaded." << endl;
-			*(_index.header.datafilename) = '\0';	
+#ifdef HAVE_SSTREAM
+		  stringstream errorMsg;
+#else
+		  strstream errorMsg;
+#endif
+		  errorMsg << "Index has Fingerprints of type '" << _index.header.fpid 
+			   << " which is not currently loaded." << endl;
+		  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+		  *(_index.header.datafilename) = '\0';	
 		}
 
 	}
@@ -263,7 +279,15 @@ FastSearchIndexer::FastSearchIndexer(string& datafilename, ostream* os,
 	_indexstream = os;
 	_pFP = OBFingerprint::FindFingerprint(fpid);
 	if(!_pFP)
-		cerr << "Fingerprint type '" << fpid << "' not available" << endl;
+	  {
+#ifdef HAVE_SSTREAM
+	    stringstream errorMsg;
+#else
+	    strstream errorMsg;
+#endif
+	    errorMsg << "Fingerprint type '" << fpid << "' not available" << endl;
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+	  }
 
 	_nbits=FptBits;
 	_pindex= new FptIndex;
@@ -281,7 +305,8 @@ FastSearchIndexer::~FastSearchIndexer()
 	_indexstream->write((const char*)&_pindex->fptdata[0], _pindex->fptdata.size()*sizeof(unsigned int));
 	_indexstream->write((const char*)&_pindex->seekdata[0], _pindex->seekdata.size()*sizeof(unsigned int));
 	if(!_indexstream)
-		cerr << "Difficulty writing index" << endl;
+	  obErrorLog.ThrowError(__FUNCTION__,
+				"Difficulty writing index", obWarning);
 	delete _pindex;
 }
 
@@ -301,7 +326,7 @@ bool FastSearchIndexer::Add(OBBase* pOb, streampos seekpos)
 		_pindex->seekdata.push_back(seekpos);
 		return true;	
 	}
-	cerr << "Failed to make a fingerprint" << endl;
+	obErrorLog.ThrowError(__FUNCTION__, "Failed to make a fingerprint", obWarning);
 	return false;
 
 }

@@ -391,7 +391,15 @@ istream& operator>> ( istream &is, OBBitVec &bv )
         if (bit >= 0)
             bv.SetBitOn(bit);
         else
-            cerr << "Negative Bit: " << bit << endl;
+	  {
+#ifdef HAVE_SSTREAM
+		    stringstream errorMsg;
+#else
+		    strstream errorMsg;
+#endif
+            errorMsg << "Negative Bit: " << bit << endl;
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+	  }
     }
 
     return is;
@@ -482,7 +490,15 @@ void OBBitVec::FromString(string &line, int bits)
         if (bit >= 0)
             SetBitOn(bit);
         else
-            cerr << "Negative Bit: " << bit << endl;
+	  {
+#ifdef HAVE_SSTREAM
+	    stringstream errorMsg;
+#else
+	    strstream errorMsg;
+#endif
+            errorMsg << "Negative Bit: " << bit << endl;
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+	  }
     }
 }
 

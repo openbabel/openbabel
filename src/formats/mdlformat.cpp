@@ -334,23 +334,21 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		//The rest of the function is the same as the original
 		char buff[BUFF_SIZE];  
 
-		if (mol.NumAtoms() > 999) // Three digits!
-			{
-				ThrowError("MDL Molfile conversion failed: Molecule is too large to convert.");
-				ThrowError("  File format limited to 999 atoms.");
-				cerr << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
-	//      delete pOb;
-				return(false);
-			}
-
-		if (mol.NumBonds() > 999) // Three digits!
-			{
-				ThrowError("MDL Molfile conversion failed: Molecule is too large to convert.");
-				ThrowError("  File format limited to 999 bonds.");
-				cerr << "  Molecule size: " << mol.NumBonds() << " atoms " << endl;
-	//      delete pOb;
-				return(false);
-			}
+		if (mol.NumAtoms() > 999 || mol.NumBonds() > 999) // Three digits!
+		  {
+#ifdef HAVE_SSTREAM
+		    stringstream errorMsg;
+#else
+		    strstream errorMsg;
+#endif
+		    errorMsg << "MDL Molfile conversion failed: Molecule is too large to convert." << endl;
+		    errorMsg << "  File format (v2000) is limited to 999 atoms or bonds." << endl;
+		    errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms ";
+		    errorMsg << "and " << mol.NumBonds() << " bonds." << endl;
+		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+		    //      delete pOb;
+		    return(false);
+		  }
 
 		// Check to see if there are any untyped aromatic bonds (GetBO == 5)
 		// These must be kekulized first

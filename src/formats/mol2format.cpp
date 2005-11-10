@@ -131,7 +131,7 @@ bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     {
         mol.EndModify();
         mol.Clear();
-        ThrowError("Unable to read Mol2 format file");
+        obErrorLog.ThrowError(__FUNCTION__, "Unable to read Mol2 format file. No atoms found.", obWarning);
         return(false);
     }
 

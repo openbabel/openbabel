@@ -958,13 +958,18 @@ bool OBTorsionData::FillTorsionArray(std::vector<std::vector<unsigned int> > &to
 //
 bool OBChiralData::SetAtom4Refs(std::vector<unsigned int> atom4refs, atomreftype t)
 {
-     if (atom4refs.size()>4){cerr << "More than 4 atoms in atom4refs";return(false);}
+     if (atom4refs.size()>4)
+       {
+	 obErrorLog.ThrowError(__FUNCTION__, "More than 4 atoms in atom4refs", obDebug);
+	 return(false);
+       }
      switch(t){
                case input: _atom4refs = atom4refs;break;
                case output:_atom4refo = atom4refs;break;
                case calcvolume:_atom4refc = atom4refs;break;
-               default: cerr<< "Error! AtomRefType called is invalid: "
-                        << t << endl; return(false);
+               default: 
+		 obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
+		 return(false);
                }
      return (true);
 }
@@ -974,8 +979,9 @@ int OBChiralData::AddAtomRef(unsigned int atomref, atomreftype t)
               case input: _atom4refs.push_back(atomref);break;
               case output: _atom4refo.push_back(atomref);break;
               case calcvolume:_atom4refc.push_back(atomref);break;
-              default: cerr<<"Error! AtomRefType called is invalid: "
-                       << t << endl; return(false);
+              default:
+		 obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
+		 return(false);
               }
               
     return (_atom4refs.size());
@@ -987,8 +993,9 @@ unsigned int OBChiralData::GetAtomRef(int a, atomreftype t)
              case input: return(_atom4refs[a]);break;
              case output: return(_atom4refo[a]);break;
              case calcvolume: return(_atom4refc[a]);break;
-             default: cerr<<"Error! AtomRefType called is invalid: "
-                       << t << endl; return(false);
+             default:
+		 obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
+		 return(false);
               }  
 }
 std::vector<unsigned int> OBChiralData::GetAtom4Refs(atomreftype t) const
@@ -1003,25 +1010,30 @@ std::vector<unsigned int> OBChiralData::GetAtom4Refs(atomreftype t) const
                case calcvolume:
                 return(_atom4refc);
                 break;
-               default: cerr << "Error! AtomRefType called is invalid: "<<t<<endl;
-								return(_atom4refo);    
-						}
+               default:
+		 obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
+		 return(_atom4refo);
+	    }
 }
- unsigned int OBChiralData::GetSize(atomreftype t) const
- {
-          switch (t){
-               case output:
-                return(unsigned int)_atom4refo.size();
-                break;
-               case input:
-                return(unsigned int)_atom4refs.size();
-                break;
-               case calcvolume:
-                return(unsigned int)_atom4refc.size();
-               default: cerr << "Error! AtomRefType called is invalid: "<<t<<endl;
-								return 0;      
-					}
- }
+
+unsigned int OBChiralData::GetSize(atomreftype t) const
+{
+  switch (t)
+    {
+    case output:
+      return(unsigned int)_atom4refo.size();
+      break;
+    case input:
+      return(unsigned int)_atom4refs.size();
+      break;
+    case calcvolume:
+      return(unsigned int)_atom4refc.size();
+    default:
+		 obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
+		 return(0);
+    }
+}
+
 OBChiralData::OBChiralData()
 {
     _type = OBGenericDataType::ChiralData;
@@ -1029,6 +1041,7 @@ OBChiralData::OBChiralData()
 }
 
 OBChiralData::OBChiralData(const OBChiralData &src)
+  : OBGenericData()
 {
   _atom4refs = src._atom4refs;
   _atom4refo = src._atom4refo;

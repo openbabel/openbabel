@@ -16,6 +16,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
+#include "oberror.h"
 
 #include <fstream>
 #include <map>
@@ -70,8 +71,14 @@ public:
 			ifstream ifpatterns(_patternsfile.c_str());
 			if(!ifpatterns)
 			{
-				cerr << "Cannot open " << _patternsfile << endl;
-				return false;
+#ifdef HAVE_SSTREAM
+			  stringstream errorMsg;
+#else
+			  strstream errorMsg;
+#endif
+			  errorMsg << "Cannot open " << _patternsfile << endl;
+			  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+			  return false;
 			}
 			string smarts, commentline;
 

@@ -77,8 +77,14 @@ void patty::read_rules(const string &infile)
     {
         if (getenv("BABEL_DATADIR") == NULL)
         {
-            cerr << "The BABEL_DATADIR environment variable is not defined" << endl;
-            cerr << "Please define it so the program can find " << infile << endl;
+#ifdef HAVE_SSTREAM
+	  stringstream errorMsg;
+#else
+	  strstream errorMsg;
+#endif
+	  errorMsg << "The BABEL_DATADIR environment variable is not defined" << endl;
+          errorMsg << "Please define it so the program can find " << infile << endl;
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 	    //            exit(0);
         }
         else
@@ -96,7 +102,13 @@ void patty::read_rules(const string &infile)
 
     if (!ifsP)
     {
-        cerr << "Could not open " << patty_dir << endl;
+#ifdef HAVE_SSTREAM
+      stringstream errorMsg;
+#else
+      strstream errorMsg;
+#endif
+        errorMsg << "Could not open " << patty_dir << endl;
+	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 	//        exit(0);
     }
     while (ifsP->getline(buffer,BUFF_SIZE))
@@ -160,16 +172,30 @@ void patty::assign_types(OBMol &mol, std::vector<std::string> &atm_typ)
         if (match.size())
         {
             if (debug)
-                cerr << typ[i] << " " << smarts[i] << " matched " ;
+	      {
+#ifdef HAVE_SSTREAM
+		stringstream errorMsg;
+#else
+		strstream errorMsg;
+#endif
+                errorMsg << typ[i] << " " << smarts[i] << " matched ";
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+	      }
 
             for (unsigned int j = 0; j < match.size(); j++)
             {
                 if (debug)
-                    cerr << match[j][0] << " ";
+		  {
+#ifdef HAVE_SSTREAM
+		    stringstream errorMsg;
+#else
+		    strstream errorMsg;
+#endif
+                    errorMsg << match[j][0] << " ";
+		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+		  }
                 atm_typ[match[j][0]] = typ[i];
             }
-            if (debug)
-                cerr << endl;
         }
     }
 }
@@ -189,16 +215,30 @@ void patty::assign_types(OBMol &mol,vector<int> &atm_typ)
         if (match.size())
         {
             if (debug)
-                cerr << typ[i] << " " << smarts[i] << " matched " ;
+	      {
+#ifdef HAVE_SSTREAM
+		    stringstream errorMsg;
+#else
+		    strstream errorMsg;
+#endif
+                    errorMsg << typ[i] << " " << smarts[i] << " matched " ;
+		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+	      }
 
             for (unsigned int j = 0; j < match.size(); j++)
             {
                 if (debug)
-                    cerr << match[j][0] << " ";
+		  {
+#ifdef HAVE_SSTREAM
+		    stringstream errorMsg;
+#else
+		    strstream errorMsg;
+#endif
+                    errorMsg << match[j][0] << " ";
+		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+		  }
                 atm_typ[match[j][0]] = type_to_int(typ[i]);
             }
-            if (debug)
-                cerr << endl;
         }
     }
 }
@@ -239,8 +279,14 @@ int patty::type_to_int(const string &type, bool failOnUndefined)
       // Behavior will fail if type is undefined
       if (failOnUndefined)
         {
-	  cerr << "Unable to find type of feature passed in " << endl;
-	  cerr << "Feature passed in is " << type << endl;
+#ifdef HAVE_SSTREAM
+	  stringstream errorMsg;
+#else
+	  strstream errorMsg;
+#endif
+	  errorMsg << "Unable to find type of feature passed in " << endl;
+	  errorMsg << "Feature passed in is " << type << endl;
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
 	  //	  exit(-1);
         }
       else
@@ -278,7 +324,7 @@ int main(int argc, char *argv[])
     ifstream ifs(argv[1]);
     if (!ifs)
     {
-        cerr << "Could not open argv[1] " << endl;
+        cerr << "Could not open supplied file " << endl;
 	//        exit(0);
     }
 

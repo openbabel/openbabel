@@ -1043,7 +1043,8 @@ bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
 			string ext;
 			if(pos!=string::npos)
 				ext = InFilename.substr(pos);
-			cerr << "Cannot read input format \"" << ext << '\"' << endl;
+			cerr << "Cannot read input format \"" << ext << '\"' 
+			     << " for file \"" << InFilename << "\"" << endl;
 			return false;
 		}
 	}

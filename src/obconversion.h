@@ -144,6 +144,7 @@ public:
    
 /// Currently, can be a bitwise OR of any of the following
 /// NOTREADABLE READONEONLY NOTWRITABLE WRITEONEONLY DEFAULTFORMAT
+/// READBINARY WRITEBINARY
 	virtual unsigned int Flags() { return 0;}; 
 
 	/// @brief Skip past first n objects in input stream (or current one with n=0)

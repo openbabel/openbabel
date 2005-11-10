@@ -46,12 +46,14 @@ cout << "Elapsed time = " << sw.Elapsed() << endl;
 \endcode
 */
 
+//! Deprecated: use the OBMessageHandler class instead
 //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
 OBAPI void ThrowError(char *str)
 {
   obErrorLog.ThrowError("", str, obInfo);
 }
 
+//! Deprecated: use the OBMessageHandler class instead
 //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
 OBAPI void ThrowError(std::string &str)
 {

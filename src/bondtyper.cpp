@@ -63,10 +63,16 @@ void OBBondTyper::ParseLine(const char *buffer)
 	  return; // just ignore empty (or short lines)
         else if (!vs.empty() && vs.size() >= 4 && (vs.size() % 3 != 1))
         {
-            cerr << " Error in OBBondTyper. Pattern is incorrect, found "
-            << vs.size() << " tokens." << endl;
-            cerr << " Buffer is: " << buffer << endl;
-            return;
+#ifdef HAVE_SSTREAM
+	  stringstream errorMsg;
+#else
+	  strstream errorMsg;
+#endif
+	  errorMsg << " Error in OBBondTyper. Pattern is incorrect, found "
+		   << vs.size() << " tokens." << endl;
+	  errorMsg << " Buffer is: " << buffer << endl;
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+	  return;
         }
 
         sp = new OBSmartsPattern;

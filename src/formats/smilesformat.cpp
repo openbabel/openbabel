@@ -250,18 +250,24 @@ bool SMIFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
     //  we still need to fix the underlying problem (mainly chiral centers) -GRH
     if (mol.NumAtoms() > 1000)
       {
-	ThrowError("SMILES Conversion failed: Molecule is too large to convert.");
-	cerr << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
+#ifdef HAVE_SSTREAM
+	stringstream errorMsg;
+#else
+	strstream errorMsg;
+#endif
+	errorMsg << "SMILES Conversion failed: Molecule is too large to convert. Open Babel is currently limited to 1000 atoms." << endl;
+	errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
+	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 	return(false);
       }
 
-		if(mol.NumAtoms()!=0)
+    if(mol.NumAtoms()!=0)
     {
-			OBMol2Smi m2s;
-			m2s.Init(pConv);
-			m2s.CorrectAromaticAmineCharge(mol);
-			m2s.CreateSmiString(mol,buffer);
-		}
+      OBMol2Smi m2s;
+      m2s.Init(pConv);
+      m2s.CorrectAromaticAmineCharge(mol);
+      m2s.CreateSmiString(mol,buffer);
+    }
 
     ofs << buffer ;
     if(!pConv->IsOption("n"))
@@ -2501,9 +2507,15 @@ bool FIXFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //  we still need to fix the underlying problem -GRH
     if (mol.NumAtoms() > 1000)
     {
-        ThrowError("SMILES Conversion failed: Molecule is too large to convert.");
-        cerr << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
-        return(false);
+#ifdef HAVE_SSTREAM
+      stringstream errorMsg;
+#else
+      strstream errorMsg;
+#endif
+      errorMsg << "SMILES Conversion failed: Molecule is too large to convert. Open Babel is currently limited to 1000 atoms." << endl;
+      errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+      return(false);
     }
 
     m2s.Init();

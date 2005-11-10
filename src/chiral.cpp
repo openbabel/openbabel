@@ -274,8 +274,14 @@ double CalcSignedVolume(OBMol &mol,OBAtom *atm)
     
     if (atm->GetHvyValence() < 3)
     {
-        cerr << "Cannot calculate a signed volume for an atom with a heavy atom valence of " << atm->GetHvyValence() << endl;
-        return(0.0);
+#ifdef HAVE_SSTREAM
+      stringstream errorMsg;
+#else
+      strstream errorMsg;
+#endif
+      errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of " << atm->GetHvyValence() << endl;
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+      return(0.0);
     }
 
     // Create a vector with the coordinates of the neighbor atoms
@@ -305,7 +311,10 @@ double CalcSignedVolume(OBMol &mol,OBAtom *atm)
     for(int j=0;j < nbr_crds.size();j++) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
     {
         if (nbr_crds[j]==0 && use_central_atom==false)use_central_atom=true;
-        else if (nbr_crds[j]==0) cerr << "Error! More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation";
+        else if (nbr_crds[j]==0)
+	  {
+	    obErrorLog.ThrowError(__FUNCTION__, "More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation", obInfo);
+	  }
     }
 
   // If we have three heavy atoms we can use the chiral center atom itself for the fourth

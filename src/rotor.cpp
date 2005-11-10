@@ -217,10 +217,16 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
 
             if (!_quiet)
             {
-                cerr << "symmetry found = " << ' ';
-                cerr << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
-                cerr << "rms = " << ' ';
-                cerr << MinimumPairRMS(mol,c1,c2,one2one) << endl;
+#ifdef HAVE_SSTREAM
+	      stringstream errorMsg;
+#else
+	      strstream errorMsg;
+#endif
+	      errorMsg << "symmetry found = " << ' ';
+	      errorMsg << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
+	      errorMsg << "rms = " << ' ';
+	      errorMsg << MinimumPairRMS(mol,c1,c2,one2one) << endl;
+	      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
             }
             continue;
         }
@@ -238,10 +244,16 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
 
             if (!_quiet)
             {
-                cerr << "3-fold symmetry found = " << ' ';
-                cerr << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
-                cerr << "rms = " << ' ';
-                cerr << MinimumPairRMS(mol,c1,c2,one2one) << endl;
+#ifdef HAVE_SSTREAM
+	      stringstream errorMsg;
+#else
+	      strstream errorMsg;
+#endif
+	      errorMsg << "3-fold symmetry found = " << ' ';
+	      errorMsg << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
+	      errorMsg << "rms = " << ' ';
+	      errorMsg << MinimumPairRMS(mol,c1,c2,one2one) << endl;
+	      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
             }
         }
     }
@@ -269,8 +281,14 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
                         rotor->RemoveSymTorsionValues(2);
                         if (!_quiet)
                         {
-                            cerr << "2-fold pattern-based symmetry found = " << ' ';
-                            cerr << ref[1] << ' ' << ref[2] << endl;
+#ifdef HAVE_SSTREAM
+	      stringstream errorMsg;
+#else
+	      strstream errorMsg;
+#endif
+	      errorMsg << "2-fold pattern-based symmetry found = " << ' ';
+	      errorMsg << ref[1] << ' ' << ref[2] << endl;
+	      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
                         }
                     }
                 }
@@ -291,8 +309,14 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
                         rotor->RemoveSymTorsionValues(3);
                         if (!_quiet)
                         {
-                            cerr << "3-fold pattern-based symmetry found = " << ' ';
-                            cerr << ref[1] << ' ' << ref[2] << endl;
+#ifdef HAVE_SSTREAM
+			  stringstream errorMsg;
+#else
+			  strstream errorMsg;
+#endif
+			  errorMsg << "3-fold pattern-based symmetry found = " << ' ';
+			  errorMsg << ref[1] << ' ' << ref[2] << endl;
+			  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
                         }
                     }
                 }
@@ -1026,7 +1050,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
             sprintf(buffer,"%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],
                     ((*i)->GetSmartsString()).c_str());
-            cerr << buffer << endl;
+            obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
         }
         return;
     }
@@ -1058,7 +1082,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
             char buffer[BUFF_SIZE];
             sprintf(buffer,"%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],"sp3-sp3");
-            cerr << buffer << endl;
+	    obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
         }
     }
     else
@@ -1071,7 +1095,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
                 char buffer[BUFF_SIZE];
                 sprintf(buffer,"%3d%3d%3d%3d %s",
                         ref[0],ref[1],ref[2],ref[3],"sp2-sp2");
-                cerr << buffer << endl;
+		obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
             }
         }
         else //must be sp2-sp3
@@ -1083,7 +1107,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
                 char buffer[BUFF_SIZE];
                 sprintf(buffer,"%3d%3d%3d%3d %s",
                         ref[0],ref[1],ref[2],ref[3],"sp2-sp3");
-                cerr << buffer << endl;
+		obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
             }
         }
 }

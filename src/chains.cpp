@@ -371,7 +371,7 @@ static ByteCode *AllocateByteCode(int type)
     result = (ByteCode*)malloc(sizeof(ByteCode));
     if( !result )
     {
-        cerr << "Error: Unable to allocate byte codes in chains.cpp!" << endl;
+      obErrorLog.ThrowError(__FUNCTION__, "Unable to allocate byte codes for biomolecule residue perception.", obError);
 	//        exit(1);
     }
     result->type = type;
@@ -442,7 +442,7 @@ static void DeleteByteCode(ByteCode *node)
 
 static void FatalMemoryError(void)
 {
-    cerr << "Error: Fatal memory allocation error in chains.cpp!" << endl;
+      obErrorLog.ThrowError(__FUNCTION__, "Unable to allocate memory for biomolecule residue / chain perception.", obError);
     //    exit(1);
 }
 
@@ -641,9 +641,16 @@ void GenerateByteCodes(ByteCode **node, int resid, int curr, int prev, int bond)
     }
     else if( count )
     {
-        cerr << "Error: Maximum Monomer Fanout Exceeded!" << endl;
-        fprintf(stderr,"Residue %s atom %d\n",ChainsResName[resid],curr);
-        fprintf(stderr,"Previous = %d  Fanout = %d\n",prev,count);
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
+        errorMsg << "Maximum Monomer Fanout Exceeded!" << endl;
+        errorMsg << "Residue " << ChainsResName[resid] << " atom " 
+		 << curr << endl;
+	errorMsg << "Previous = " << prev << " Fanout = " << count << endl;
+	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 	//        exit(1);
     }
     else if( StackPtr )
