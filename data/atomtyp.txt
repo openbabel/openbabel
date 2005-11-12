@@ -3,7 +3,7 @@
 #	                Open Babel file: atomtyp.txt                         #
 #                                                                            #
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
-#  Some portions Copyright (c) 2001-2005 Geoffrey R. Hutchison               #
+#  Some portions Copyright (c) 2001-2003 Geoffrey R. Hutchison               #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
 #                                                                            #
 # SMARTS patterns for atom typing (used by typer.cpp:OBAtomTyper)            #
@@ -16,8 +16,7 @@
 #                                                                            #
 # The LAST PATTERN MATCHED is used to assign values with the corresponding   #
 # INTHYB, IMPVAL, and EXTTYP values. Additions to this file should be placed #
-# in the EXTRA DEFINITIONS section (to separate from original patterns).     #
-# This will ensure that your patterns properly override the defaults.        #
+# in the EXTRA DEFINITIONS section (to separate from original patterns.)     #
 #                                                                            #
 ##############################################################################
 
@@ -49,10 +48,7 @@ IMPVAL	[#6^2]			3
 IMPVAL	[#6^1]			2
 IMPVAL  [#6^3-]			3
 IMPVAL  [#6^2-]			2
-IMPVAL  [#6^1-]			1
-IMPVAL  [#6^3+]			3
-IMPVAL  [#6^2+]			2
-IMPVAL  [#6^1+]			1
+IMPVAL  [#6^1-]			1 #CM for isocyanides
 IMPVAL  [c+]                    2
 
 IMPVAL	[#8^3]				2
@@ -77,18 +73,21 @@ IMPVAL	[$(NC=O)]		3
 IMPVAL	[$(N(~[OD1])~[OD1])]	3
 IMPVAL	[$([Nr0]C=[Nr0])]	3
 IMPVAL	[$(N=*)]		2
-#IMPVAL	[$([Nr0]=C[Nr0])]	3   # old pattern -- seems systematically wrong
+#IMPVAL	[$([Nr0]=C[Nr0])]	3 
 IMPVAL	[$([Nr0]=C[Nr0])]	2
 IMPVAL  [$([#7D1-]=*)]          1
 IMPVAL	[n]			2
 IMPVAL	[n-]			2
 IMPVAL  [n+]			3
 
+IMPVAL  [#9D0]		  1
+
 IMPVAL	[#15D4]			4
 IMPVAL	[#15D3]			3
 IMPVAL	[#15D2]			3
 IMPVAL	[#15D1^3]		3
 IMPVAL	[#15D1^2]		3
+IMPVAL  [#15D0]     3
 IMPVAL  [$([#15]=[#6])]         2
 IMPVAL  [pD2]			2
 
@@ -99,6 +98,11 @@ IMPVAL	[$([#16D1]-*)]		2
 IMPVAL	[#16D1^2]		1
 IMPVAL  [s]                     2
 IMPVAL  [#16D1-]		1
+
+IMPVAL  [#16D0]		  2
+IMPVAL  [#17D0]		  1
+IMPVAL  [#35D0]		  1
+IMPVAL  [#53D0]		  1
 
 IMPVAL  [#5]			3
 IMPVAL  [as]			3
@@ -151,20 +155,6 @@ EXTTYP	[#16;$([#16D3](~[OD1])~[OD1])]		Sac
 
 EXTTYP	[#5]					B2
 EXTTYP	[#5D4]					B3
-
-# hydrogens that can be involved in a hydrogen bond
-EXTTYP  [#1]~O                                  HO
-EXTTYP  [#1]~S                                  HS
-EXTTYP  [#1]~N                                  HN
-EXTTYP  [#1]~n                                  HN
-# hydrogens in a bridge between two borons, e.g. diborane
-EXTTYP  [#1]~B~B                                HB
-# aromatic oxygen, e.g. furan
-EXTTYP  [o]                                     Oar
-# sp oxygen, e.g. carbon monoxide
-EXTTYP  [O]#*                                   O1
-# sp nitrogen, e.g. acetonitrile
-EXTTYP  [N]#*					N1
 
 ######################## Add Extra Definitions Here ##########################
 
