@@ -486,7 +486,7 @@ int OBConversion::Convert()
 		if(!ret)
 		{
 			//error or termination request: terminate unless
-			// -c option requested and sucessfully can skip past current object
+			// -e option requested and sucessfully can skip past current object
 			if(!IsOption("e", GENOPTIONS) || pInFormat->SkipObjects(0,this)!=1) 
 				break;
 		}
@@ -915,7 +915,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 			//Concatenate input file option (multiple files, single molecule)
 			if(HasMultipleOutputFiles)
 			{
-				cerr << "Cannot have multiple output files and also concatenate input files (-a option)" <<endl;
+				cerr << "Cannot have multiple output files and also concatenate input files (-t option)" <<endl;
 				return 0;
 			}
 
