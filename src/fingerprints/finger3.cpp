@@ -16,13 +16,13 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
-#include "oberror.h"
 
 #include <fstream>
 #include <map>
 #include <string>
 
 #include "fingerprint.h"
+#include <direct.h>
 
 using namespace std;
 namespace OpenBabel
@@ -30,6 +30,11 @@ namespace OpenBabel
 /// \brief Fingerprint based on list of SMARTS patterns ID="FP3"
 class PatternFP  : public OBFingerprint
 {
+private:
+	vector<string> smartsStrings;
+protected:
+	string _patternsfile;
+
 public:
 	PatternFP(const char* ID, const char* filename=NULL, 
 			bool IsDefault=false) : OBFingerprint(ID, IsDefault)
@@ -56,47 +61,8 @@ public:
 			return false;
 		
 		//Read patterns file if it has not been done already
-		static vector<string> smartsStrings;
 		if(smartsStrings.empty())
-		{	
-			char* datadir = getenv("BABEL_DATADIR");
-			if(!datadir)
-				datadir = BABEL_DATADIR;
-			if(datadir)
-			{
-				_patternsfile = "/" + _patternsfile;
-				_patternsfile = datadir  + _patternsfile;
-			}
-
-			ifstream ifpatterns(_patternsfile.c_str());
-			if(!ifpatterns)
-			{
-#ifdef HAVE_SSTREAM
-			  stringstream errorMsg;
-#else
-			  strstream errorMsg;
-#endif
-			  errorMsg << "Cannot open " << _patternsfile << endl;
-			  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-			  return false;
-			}
-			string smarts, commentline;
-
-			if(!getline(ifpatterns, commentline)) return false;
-			
-			while(ifpatterns.good())
-			{
-				if( getline(ifpatterns,smarts) 
-				    && smarts.size() > 0 
-				    && smarts[0] != '#')
-				{
-					unsigned int pos = smarts.find(' ');
-					if(pos!=string::npos)
-						smarts = smarts.substr(0,pos);
-					smartsStrings.push_back(smarts);
-				}
-			}
-		}
+			ReadPatternFile(_patternsfile, smartsStrings);
 
 		//Make fp size the smallest power of two to contain the patterns
 		unsigned int n=bitsperint;
@@ -115,13 +81,73 @@ public:
 			Fold(fp, nbits);
 		return true;
 	};
-protected:
-	string _patternsfile;
+
+	bool ReadPatternFile(const string& filename, vector<string>& lines)
+	{	
+		//Reads two types of file: SMARTS + comments and vice versa
+		//depending on whether the first line is #Comments after SMARTS
+		//Output strings in vector are SMARTS + comments
+		string file;
+		char* datadir = getenv("BABEL_DATADIR");
+		if(!datadir)
+			datadir = BABEL_DATADIR;
+		if(datadir)
+		{
+			file = "/" + filename;
+			file = datadir  + file;
+		}
+
+		ifstream ifpatterns(file.c_str());
+		if(!ifpatterns)
+		{
+			#ifdef HAVE_SSTREAM 
+				stringstream errorMsg; 
+			#else 
+				strstream errorMsg; 
+			#endif 
+			errorMsg << "Cannot open " << file << endl; 
+			obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError); 
+			return false;
+		}
+		string smarts, formatline;
+
+		if(!getline(ifpatterns, formatline)) return false;
+		if(formatline=="#Comments after SMARTS")
+		{
+			while(ifpatterns.good())
+			{
+				if( getline(ifpatterns,smarts) 
+						&& smarts.size() > 0 
+						&& smarts[0] != '#')
+					lines.push_back(smarts); //leave the comments in
+			}
+		}
+		else
+		{
+			// Christian Laggner's format: SMARTS at end of line
+			while(ifpatterns.good())
+			{
+				if( getline(ifpatterns,smarts) && smarts[0]!='#')
+				{
+					unsigned int pos = smarts.find(':');
+					if(pos!=string::npos)
+					{
+						pos = smarts.find_first_not_of(" \t", pos+1);
+						if(pos!=string::npos)
+							lines.push_back(smarts.substr(pos) + ' ' + smarts.substr(0,pos));
+					}
+				}
+			}
+		}
+		return true;
+	}
 };
 
 //***********************************************
 //Make a global instance
 PatternFP thePatternFP("FP3");
+
+PatternFP FP4PatternFP("FP4", "SMARTS_InteLigand_051110.txt");
 //***********************************************
 
 /*! \class PatternFP
@@ -131,9 +157,8 @@ Looks for this file first in the folder in the environment variable
 BABEL_DATADIR, then in the folder specified by the macro BABEL_DATADIR
 (probably set in babelconfig.h), and then in the current folder. 
 
-The first line of this file is a comment.
-On each subsequent line there is a SMARTS string and anything 
-after a space is ignored.
+On each line there is a SMARTS string and anything 
+after a space is ignored. Lines starting with # are ignored.
 
 Additional fingerprint types using patterns in different files
 can be made by just declaring separate instances like:
