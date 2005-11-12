@@ -208,7 +208,11 @@ bool XMLConversion::ReadXML(XMLBaseFormat* pFormat, OBBase* pOb)
 		if(!ret)
 			//derived format callback has stopped processing by returning false;
 			//leave reader intact so it can be continued to be used.
-			return true;
+			if(!IsOption("n",OBConversion::INOPTIONS))
+			{
+				_LookingForNamespace = true;
+				return true;
+			}
 	}
 
 	if(result==-1)
@@ -299,7 +303,7 @@ streamsize gettomatch(istream& is, char* buf, streamsize count, const char* matc
 		}
 	}
 	return i;
-};
+}
 //***********************************************
 
 ///Static callback function for xmlReaderForIO()
@@ -316,9 +320,9 @@ int XMLConversion::ReadStream(void * context, char * buffer, int len)
 	if(pxmlFormat)
 		endtag = pxmlFormat->EndTag();
 
-	static char* OrigBuffer;
-	if(len==4)
-		OrigBuffer = buffer;
+//	static char* OrigBuffer;
+//	if(len==4)
+//		OrigBuffer = buffer;
 
 	return gettomatch(*ifs, buffer, len , endtag);//was + OrigBuffer - buffer
 }
@@ -337,15 +341,73 @@ int XMLConversion::WriteStream(void * context, const char * buffer, int len)
 } //namespace OpenBabel
 // http://xmlsoft.org/html/libxml-xmlreader.html
 
-
-
 /*
-Namespaces
-This class keeps a map of xml namespaces and the derived classes which implement them.
-It is populated on start by the derived classes calling RegisterXMLFormat
-from their default constructors.
+Programming notes on XML formats
 
-When ReadChemObject()of a derived class is called, the current format is set by
+So that there would be no limitation of file sizes, the libxml2
+reader was chosen. Rather than build a whole xml tree internally
+as a DOM parser does, this provides callbacks when each element,
+etc. is encountered (like SAX). Nevertheless it is aware of the
+XML structure and will fail if it enounters irregular input. It 
+is therefore necessary to use a single instance of the reader for
+each conversion process, rather than one for each object as would
+have been more natural in OB (see below). This input process can
+span multiple input files and is associated with the OBConversion
+object - in particular the reader object is destroyed at the same
+time as the OBConversion object. But it is not as simple as using
+an extended OBConversion derived from the base class, because the
+base OBConversion object has been constructed before the XML format
+has been called. It might have been possible to have the reader as a 
+member variable in OBConversion, but that would make an undesirable
+dependency for obconversion.cpp on the XML formats. 
+
+The way it has been done maintains generality and no dependency.
+OBConversion is given a member variable pAuxConv which is a pointer
+to an OBConversion object. This is deleted in the OBConversion
+destructor. By default pAuxConv is NULL. 
+XMLConversion is a class derived from OBConversion and
+contains the interfacing with libxml2 for both reading and writing.
+When a conversion involves an XML format, an instance of it is made
+and pAuxConv in the original OBConversion is set to point to it.
+This process is potentially extendable to allow other, as yet
+unwritten, OBConversion extensions by having a chain of pointers
+to derived OBConversion objects through their pAuxConv members, 
+with the last one being NULL.  
+
+The design has to make sure that multi-object files are handled
+in a way consistent with the rest of OpenBabel. This is based on
+formats such as SMILES and MDL mol where the objects are just
+concatenated. OpenBabel converts by reading one object at a time
+from the input stream. The position in the input stream (obtained 
+from tellg) is also used to skip objects and as the index in fast
+searching. These depend on input file position being left between
+objects ready to read the next one.
+
+This causes some difficulty when using libxml2 as the XML parser
+because it is a C application and does not have C++ input streams. 
+xmlReaderForIO is used which requests input data from the callback
+routine XMLConversion::ReadStream() which, using the utility routine
+gettomatch(), obtains data from the XML file no further than the end
+of an object, e.g. up to and including </molecule>. This ensures that
+the input stream is between objects after an object has been parsed,
+ready for the next one. 
+
+Parsing XML
+At the start and end of each element the DoElement() and EndElement()
+routines respectively in the format are called. The name of the element
+is passed as a parameter and up to now it has been considered sufficient
+to find the appropriate code using a set of if else statements. Only 
+those of interest need be handled. The attributes and content of the
+element are found by calling libxml2 routines from within the format class.
+Parsing is stopped and an object returned to OBConversion when false is
+returned from DoElement or (more usually) from EndElement.  
+
+Namespaces
+XMLConversion class keeps a static map of xml namespaces and the classes
+derived from XMLBaseFormat which implement them. It is populated on startup
+by the format classes calling RegisterXMLFormat from their default constructors.
+
+When ReadChemObject() of a format class is called, the current format is set by
 there and is used for all namespaces. So if CMLFormat is called it will find
 all the molecules in a CMLReact file.
 
@@ -357,6 +419,8 @@ default format was called, except that the first explicit namespace declaration
 in the xml file that appears in the map can switch the handling to its associated
 format.
  
-The default format is either the first class to register or one which identifies itself as
-the default. */
+The default format is either the first class to register or one which identifies
+itself as the default when calling RegisterXMLFormat(). 
+
+*/
 

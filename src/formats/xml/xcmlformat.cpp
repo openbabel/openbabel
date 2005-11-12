@@ -28,6 +28,9 @@ namespace OpenBabel
 
 class CMLFormat : public XMLMoleculeFormat
 {
+private:
+	const char* CML1NamespaceURI()const{return "http://www.xml-cml.org/dtd/cml_1_0_1.dtd";}
+
 public:
   //Constuctor used on startup which registers this format type ID
 	CMLFormat() 
@@ -41,8 +44,7 @@ public:
 			OBConversion::RegisterOptionParam("h", this);
 
 			XMLConversion::RegisterXMLFormat(this, true);	//this is the default XLMformat
-			XMLConversion::RegisterXMLFormat(this, false, 
-				"http://www.xml-cml.org/dtd/cml_1_0_1.dtd");//CML1 also
+			XMLConversion::RegisterXMLFormat(this, false, CML1NamespaceURI());//CML1 also
   }
 	virtual const char* NamespaceURI()const{return "http://www.xml-cml.org/schema/cml2/core";}
 
@@ -150,16 +152,18 @@ bool CMLFormat::DoElement(const string& name)
 		//Ignore atoms with "ref" attributes
 		if(xmlTextReaderGetAttribute(reader(), BAD_CAST "ref"))
 			return true;
-		
 		AtomArray.clear();
 		BondArray.clear();
-		AtomMap.clear();
 		inBondArray = false;
 		RawFormula.erase();
 		molWideData.clear();
 		CrystalScalarsNeeded=0;
 		CrystalVals.clear();
 		pUnitCell = NULL;
+
+		if(++_embedlevel)
+			return true; //ignore if already inside a molecule
+		AtomMap.clear();
 
 		const xmlChar* ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "title");
 		if(!ptitle)
@@ -306,8 +310,8 @@ bool CMLFormat::EndElement(const string& name)
 				cerr << "Error in formula" << endl;
 		
 		_pmol->EndModify();
-
-		return false;//means stop parsing
+		return (--_embedlevel>=0); //false to stop parsing if no further embedded mols
+//		return false;//means stop parsing
 	}
 	return true;
 }
@@ -318,7 +322,7 @@ bool CMLFormat::EndElement(const string& name)
 bool CMLFormat::DoAtoms()
 {	
 	int dim=0; //dimension of molecule
-	int nAtoms=0;
+	int nAtoms=_pmol->NumAtoms();//was 0
 	cmlArray::iterator AtomIter;
 	for(AtomIter=AtomArray.begin();AtomIter!=AtomArray.end();++AtomIter)
 	{
@@ -643,6 +647,11 @@ bool CMLFormat::DoMolWideData()
 			}
 		}
 	}
+	//Clear here to aid embedded molecules
+	AtomArray.clear();
+	BondArray.clear();
+	molWideData.clear();
+
 	return true;
 }
 
@@ -862,6 +871,7 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 			return false;
 	OBMol &mol = *pmol;
 
+	int numbonds = mol.NumBonds(); //Capture this before deleting Hs
 	bool UseHydrogenCount=false;
 	if(_pxmlConv->IsOption("h"))
 	{
@@ -884,7 +894,10 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		if(!_pxmlConv->IsOption("x"))
 		{
 			xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
-			uri=BAD_CAST NamespaceURI();
+			if(cml1)
+				uri = BAD_CAST CML1NamespaceURI();
+			else
+				uri=BAD_CAST NamespaceURI();
 		}
 		//If more than one molecule to be output, write <cml> at start and </cml> at end.
 		//Except if Option "0" set, e.g. by CMLReactFormat
@@ -913,7 +926,7 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 	if(mol.NumAtoms()>0)
 	{
-		if(mol.NumBonds()==0 && UseFormulaWithNoBonds)
+		if(numbonds==0 && UseFormulaWithNoBonds)
 			WriteFormula(mol);
 		else
 		{

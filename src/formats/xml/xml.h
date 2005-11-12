@@ -21,6 +21,8 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
+//global utility in xml.cpp;
+streamsize gettomatch(istream& is, char* buf, streamsize count, const char* match);
 //forward declaration
 class XMLBaseFormat;
 
@@ -126,6 +128,7 @@ protected:
 	string _prefix;
 	int baseindent, ind;
 	string nsdecl;
+	int _embedlevel;
 
 public:
 	virtual const char* NamespaceURI()const=0;
@@ -161,24 +164,6 @@ protected:
 		else
 			nsdecl.erase();
 	}
-
-	/*Use to open a tag with indent n
-		ofs << sp(n) << "tagname>"...
-	  To close a tag
-		ofs << sp(n,1) << "tagname>"
-		Namespace prefix added if _prefix has been defined.
-	*/
-	std::string sp(int n, bool endtag=false)
-	{
-		string s(baseindent + n,' ');
-		if(endtag)
-			s += " </"; 
-		else
-			s += " <"; 
-		s	+= _prefix ;
-		return s;
-	};
-
 
 	xmlTextReaderPtr reader() const
 	{
@@ -236,7 +221,7 @@ public:
 		_pxmlConv = XMLConversion::GetDerived(pConv,true);
 		if(!_pxmlConv)
 			return false;
-
+		_embedlevel = -1;
 		return _pxmlConv->ReadXML(this,pOb);
 	};
 

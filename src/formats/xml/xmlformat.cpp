@@ -33,7 +33,9 @@ General XML format\n \
 Calls a particular XML format depending on the XML namespace,\n \
 or the default format (which is probably CML).\n \
 This implementation uses libxml2.\n \
-\n\n";
+Read option, e.g. -an\n \
+n  Read objects of first namespace only\n \
+\n";
 	}
 
 	const char* NamespaceURI()const{return "Undefined";};
@@ -69,6 +71,7 @@ This implementation uses libxml2.\n \
 		{
 			XMLConversion* pxmlConv = XMLConversion::GetDerived(pConv);
 			pxmlConv->LookForNamespace();
+			pxmlConv->AddOption("m",OBConversion::INOPTIONS);
 			return pDefault->ReadMolecule(pOb, pConv);
 		}
 		else
