@@ -58,6 +58,7 @@ CLEAN :
 	-@erase "$(INTDIR)\chemtoolformat.obj"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\cmlreactlformat.obj"
+	-@erase "$(INTDIR)\copyformat.obj"
 	-@erase "$(INTDIR)\crkformat.obj"
 	-@erase "$(INTDIR)\CSRformat.obj"
 	-@erase "$(INTDIR)\cssrformat.obj"
@@ -71,6 +72,7 @@ CLEAN :
 	-@erase "$(INTDIR)\finger3.obj"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
+	-@erase "$(INTDIR)\freefracformat.obj"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\generic.obj"
@@ -90,6 +92,7 @@ CLEAN :
 	-@erase "$(INTDIR)\mol2format.obj"
 	-@erase "$(INTDIR)\molchrg.obj"
 	-@erase "$(INTDIR)\mopacformat.obj"
+	-@erase "$(INTDIR)\mpdformat.obj"
 	-@erase "$(INTDIR)\mpqcformat.obj"
 	-@erase "$(INTDIR)\nwchemformat.obj"
 	-@erase "$(INTDIR)\obconversion.obj"
@@ -127,6 +130,7 @@ CLEAN :
 	-@erase "$(INTDIR)\xml.obj"
 	-@erase "$(INTDIR)\xmlformat.obj"
 	-@erase "$(INTDIR)\xyzformat.obj"
+	-@erase "$(INTDIR)\yasaraformat.obj"
 	-@erase "$(INTDIR)\zindoformat.obj"
 	-@erase ".\babel.exe"
 
@@ -231,7 +235,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
-	"..\libxml2.lib"
+	"..\libxml2.lib" \
+	"$(INTDIR)\freefracformat.obj" \
+	"$(INTDIR)\copyformat.obj" \
+	"$(INTDIR)\mpdformat.obj" \
+	"$(INTDIR)\yasaraformat.obj"
 
 ".\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -292,6 +300,8 @@ CLEAN :
 	-@erase "$(INTDIR)\chiral.sbr"
 	-@erase "$(INTDIR)\cmlreactlformat.obj"
 	-@erase "$(INTDIR)\cmlreactlformat.sbr"
+	-@erase "$(INTDIR)\copyformat.obj"
+	-@erase "$(INTDIR)\copyformat.sbr"
 	-@erase "$(INTDIR)\crkformat.obj"
 	-@erase "$(INTDIR)\crkformat.sbr"
 	-@erase "$(INTDIR)\CSRformat.obj"
@@ -318,6 +328,8 @@ CLEAN :
 	-@erase "$(INTDIR)\fingerprint.sbr"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\fingerprintformat.sbr"
+	-@erase "$(INTDIR)\freefracformat.obj"
+	-@erase "$(INTDIR)\freefracformat.sbr"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gamessformat.sbr"
 	-@erase "$(INTDIR)\gaussformat.obj"
@@ -356,6 +368,8 @@ CLEAN :
 	-@erase "$(INTDIR)\molchrg.sbr"
 	-@erase "$(INTDIR)\mopacformat.obj"
 	-@erase "$(INTDIR)\mopacformat.sbr"
+	-@erase "$(INTDIR)\mpdformat.obj"
+	-@erase "$(INTDIR)\mpdformat.sbr"
 	-@erase "$(INTDIR)\mpqcformat.obj"
 	-@erase "$(INTDIR)\mpqcformat.sbr"
 	-@erase "$(INTDIR)\nwchemformat.obj"
@@ -430,6 +444,8 @@ CLEAN :
 	-@erase "$(INTDIR)\xmlformat.sbr"
 	-@erase "$(INTDIR)\xyzformat.obj"
 	-@erase "$(INTDIR)\xyzformat.sbr"
+	-@erase "$(INTDIR)\yasaraformat.obj"
+	-@erase "$(INTDIR)\yasaraformat.sbr"
 	-@erase "$(INTDIR)\zindoformat.obj"
 	-@erase "$(INTDIR)\zindoformat.sbr"
 	-@erase "$(OUTDIR)\babel.exe"
@@ -533,7 +549,11 @@ BSC32_SBRS= \
 	"$(INTDIR)\xml.sbr" \
 	"$(INTDIR)\xmlformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr"
+	"$(INTDIR)\zindoformat.sbr" \
+	"$(INTDIR)\freefracformat.sbr" \
+	"$(INTDIR)\copyformat.sbr" \
+	"$(INTDIR)\mpdformat.sbr" \
+	"$(INTDIR)\yasaraformat.sbr"
 
 "$(OUTDIR)\OBabel.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -633,7 +653,11 @@ LINK32_OBJS= \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
-	"..\libxml2.lib"
+	"..\libxml2.lib" \
+	"$(INTDIR)\freefracformat.obj" \
+	"$(INTDIR)\copyformat.obj" \
+	"$(INTDIR)\mpdformat.obj" \
+	"$(INTDIR)\yasaraformat.obj"
 
 "$(OUTDIR)\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -1061,6 +1085,24 @@ SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\copyformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\copyformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\copyformat.obj"	"$(INTDIR)\copyformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\formats\crkformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -1290,6 +1332,24 @@ SOURCE=..\..\src\formats\fingerprintformat.cpp
 
 
 "$(INTDIR)\fingerprintformat.obj"	"$(INTDIR)\fingerprintformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\freefracformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\freefracformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\freefracformat.obj"	"$(INTDIR)\freefracformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1632,6 +1692,24 @@ SOURCE=..\..\src\formats\mopacformat.cpp
 
 
 "$(INTDIR)\mopacformat.obj"	"$(INTDIR)\mopacformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\mpdformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\mpdformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\mpdformat.obj"	"$(INTDIR)\mpdformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -2280,6 +2358,24 @@ SOURCE=..\..\src\formats\xyzformat.cpp
 
 
 "$(INTDIR)\xyzformat.obj"	"$(INTDIR)\xyzformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\yasaraformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\yasaraformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\yasaraformat.obj"	"$(INTDIR)\yasaraformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

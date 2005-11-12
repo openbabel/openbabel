@@ -149,6 +149,10 @@ SOURCE=..\..\src\dlhandler_win32.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\dmolformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\OBGUI\DynamicOptions.cpp
 # End Source File
 # Begin Source File
@@ -179,6 +183,10 @@ SOURCE=..\..\src\fingerprint.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\fingerprintformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\freefracformat.cpp
 # End Source File
 # Begin Source File
 

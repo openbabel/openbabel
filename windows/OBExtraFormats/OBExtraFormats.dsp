@@ -117,6 +117,10 @@ SOURCE=..\..\src\formats\fingerprintformat.cpp
 
 SOURCE=..\..\src\formats\inchiformat.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\mpdformat.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 

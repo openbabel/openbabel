@@ -50,11 +50,13 @@ CLEAN :
 	-@erase "$(INTDIR)\copyformat.obj"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
+	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\DynamicOptions.obj"
 	-@erase "$(INTDIR)\finger2.obj"
 	-@erase "$(INTDIR)\finger3.obj"
 	-@erase "$(INTDIR)\fingerprint.obj"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
+	-@erase "$(INTDIR)\freefracformat.obj"
 	-@erase "$(INTDIR)\generic.obj"
 	-@erase "$(INTDIR)\grid.obj"
 	-@erase "$(INTDIR)\inchiformat.obj"
@@ -118,13 +120,16 @@ LINK32_OBJS= \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\cmlreactlformat.obj" \
+	"$(INTDIR)\copyformat.obj" \
 	"$(INTDIR)\data.obj" \
 	"$(INTDIR)\dlhandler_win32.obj" \
+	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\DynamicOptions.obj" \
 	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\finger3.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
 	"$(INTDIR)\inchiformat.obj" \
@@ -164,8 +169,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\OBGUI.res" \
 	"..\libxml2.lib" \
-	"..\zdll.lib" \
-	"$(INTDIR)\copyformat.obj"
+	"..\zdll.lib"
 
 ".\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -208,6 +212,8 @@ CLEAN :
 	-@erase "$(INTDIR)\data.sbr"
 	-@erase "$(INTDIR)\dlhandler_win32.obj"
 	-@erase "$(INTDIR)\dlhandler_win32.sbr"
+	-@erase "$(INTDIR)\dmolformat.obj"
+	-@erase "$(INTDIR)\dmolformat.sbr"
 	-@erase "$(INTDIR)\DynamicOptions.obj"
 	-@erase "$(INTDIR)\DynamicOptions.sbr"
 	-@erase "$(INTDIR)\fastsearchformat.obj"
@@ -220,6 +226,8 @@ CLEAN :
 	-@erase "$(INTDIR)\fingerprint.sbr"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\fingerprintformat.sbr"
+	-@erase "$(INTDIR)\freefracformat.obj"
+	-@erase "$(INTDIR)\freefracformat.sbr"
 	-@erase "$(INTDIR)\generic.obj"
 	-@erase "$(INTDIR)\generic.sbr"
 	-@erase "$(INTDIR)\grid.obj"
@@ -320,14 +328,17 @@ BSC32_SBRS= \
 	"$(INTDIR)\chains.sbr" \
 	"$(INTDIR)\chiral.sbr" \
 	"$(INTDIR)\cmlreactlformat.sbr" \
+	"$(INTDIR)\copyformat.sbr" \
 	"$(INTDIR)\data.sbr" \
 	"$(INTDIR)\dlhandler_win32.sbr" \
+	"$(INTDIR)\dmolformat.sbr" \
 	"$(INTDIR)\DynamicOptions.sbr" \
 	"$(INTDIR)\fastsearchformat.sbr" \
 	"$(INTDIR)\finger2.sbr" \
 	"$(INTDIR)\finger3.sbr" \
 	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\fingerprintformat.sbr" \
+	"$(INTDIR)\freefracformat.sbr" \
 	"$(INTDIR)\generic.sbr" \
 	"$(INTDIR)\grid.sbr" \
 	"$(INTDIR)\inchiformat.sbr" \
@@ -364,8 +375,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\vector3.sbr" \
 	"$(INTDIR)\xcmlformat.sbr" \
 	"$(INTDIR)\xml.sbr" \
-	"$(INTDIR)\xmlformat.sbr" \
-	"$(INTDIR)\copyformat.sbr"
+	"$(INTDIR)\xmlformat.sbr"
 
 "$(OUTDIR)\OBGUIs.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -384,14 +394,17 @@ LINK32_OBJS= \
 	"$(INTDIR)\chains.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\cmlreactlformat.obj" \
+	"$(INTDIR)\copyformat.obj" \
 	"$(INTDIR)\data.obj" \
 	"$(INTDIR)\dlhandler_win32.obj" \
+	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\DynamicOptions.obj" \
 	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\finger2.obj" \
 	"$(INTDIR)\finger3.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\grid.obj" \
 	"$(INTDIR)\inchiformat.obj" \
@@ -431,8 +444,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\OBGUI.res" \
 	"..\libxml2.lib" \
-	"..\zdll.lib" \
-	"$(INTDIR)\copyformat.obj"
+	"..\zdll.lib"
 
 "$(OUTDIR)\OBGUIs.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -699,6 +711,24 @@ SOURCE=..\..\src\dlhandler_win32.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\dmolformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\dmolformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\dmolformat.obj"	"$(INTDIR)\dmolformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\OBGUI\DynamicOptions.cpp
 
 !IF  "$(CFG)" == "OBGUIs - Win32 Release"
@@ -797,6 +827,24 @@ SOURCE=..\..\src\formats\fingerprintformat.cpp
 
 
 "$(INTDIR)\fingerprintformat.obj"	"$(INTDIR)\fingerprintformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\freefracformat.cpp
+
+!IF  "$(CFG)" == "OBGUIs - Win32 Release"
+
+
+"$(INTDIR)\freefracformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBGUIs - Win32 Debug"
+
+
+"$(INTDIR)\freefracformat.obj"	"$(INTDIR)\freefracformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

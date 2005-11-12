@@ -175,6 +175,10 @@ SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\copyformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\crkformat.cpp
 # End Source File
 # Begin Source File
@@ -224,6 +228,10 @@ SOURCE=..\..\src\fingerprint.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\fingerprintformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\freefracformat.cpp
 # End Source File
 # Begin Source File
 
@@ -300,6 +308,10 @@ SOURCE=..\..\src\molchrg.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\mopacformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\mpdformat.cpp
 # End Source File
 # Begin Source File
 
@@ -444,6 +456,10 @@ SOURCE=..\..\src\formats\xml\xmlformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\xyzformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\yasaraformat.cpp
 # End Source File
 # Begin Source File
 

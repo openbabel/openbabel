@@ -175,6 +175,10 @@ SOURCE=..\..\src\formats\fhformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\freefracformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\gamessformat.cpp
 # End Source File
 # Begin Source File
@@ -276,6 +280,10 @@ SOURCE=..\..\src\formats\xedformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\xyzformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\yasaraformat.cpp
 # End Source File
 # Begin Source File
 

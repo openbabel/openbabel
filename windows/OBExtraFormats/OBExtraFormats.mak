@@ -43,6 +43,7 @@ CLEAN :
 	-@erase "$(INTDIR)\finger3.obj"
 	-@erase "$(INTDIR)\fingerprintformat.obj"
 	-@erase "$(INTDIR)\inchiformat.obj"
+	-@erase "$(INTDIR)\mpdformat.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(OUTDIR)\OBExtra.exp"
 	-@erase ".\OBExtra.obf"
@@ -60,10 +61,11 @@ LINK32=link.exe
 LINK32_FLAGS=gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib obconv.lib obdll.lib libinchi.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\OBExtra.pdb" /machine:I386 /out:"OBExtra.obf" /implib:"$(OUTDIR)\OBExtra.lib" /libpath:"..\OBDLL\Release" /libpath:"..\OBConv\Release" /libpath:".." 
 LINK32_OBJS= \
 	"$(INTDIR)\fastsearchformat.obj" \
+	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\finger3.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\inchiformat.obj" \
-	"$(INTDIR)\finger3.obj" \
-	"$(INTDIR)\finger2.obj"
+	"$(INTDIR)\mpdformat.obj"
 
 ".\OBExtra.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -92,6 +94,8 @@ CLEAN :
 	-@erase "$(INTDIR)\fingerprintformat.sbr"
 	-@erase "$(INTDIR)\inchiformat.obj"
 	-@erase "$(INTDIR)\inchiformat.sbr"
+	-@erase "$(INTDIR)\mpdformat.obj"
+	-@erase "$(INTDIR)\mpdformat.sbr"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vc60.pdb"
 	-@erase "$(OUTDIR)\OBExtraD.exp"
@@ -109,10 +113,11 @@ BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBExtraFormats.bsc" 
 BSC32_SBRS= \
 	"$(INTDIR)\fastsearchformat.sbr" \
+	"$(INTDIR)\finger2.sbr" \
+	"$(INTDIR)\finger3.sbr" \
 	"$(INTDIR)\fingerprintformat.sbr" \
 	"$(INTDIR)\inchiformat.sbr" \
-	"$(INTDIR)\finger3.sbr" \
-	"$(INTDIR)\finger2.sbr"
+	"$(INTDIR)\mpdformat.sbr"
 
 "$(OUTDIR)\OBExtraFormats.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -123,10 +128,11 @@ LINK32=link.exe
 LINK32_FLAGS=kernel32.lib user32.lib obconv.lib obdll.lib libinchi.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBExtraD.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBExtraD.obf" /implib:"$(OUTDIR)\OBExtraD.lib" /pdbtype:sept /libpath:"..\OBDLL\Debug" /libpath:"..\OBConv\Debug" /libpath:".." 
 LINK32_OBJS= \
 	"$(INTDIR)\fastsearchformat.obj" \
+	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\finger3.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
 	"$(INTDIR)\inchiformat.obj" \
-	"$(INTDIR)\finger3.obj" \
-	"$(INTDIR)\finger2.obj"
+	"$(INTDIR)\mpdformat.obj"
 
 "$(OUTDIR)\OBExtraD.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -276,6 +282,24 @@ SOURCE=..\..\src\formats\inchiformat.cpp
 
 
 "$(INTDIR)\inchiformat.obj"	"$(INTDIR)\inchiformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\mpdformat.cpp
+
+!IF  "$(CFG)" == "OBExtraFormats - Win32 Release"
+
+
+"$(INTDIR)\mpdformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBExtraFormats - Win32 Debug"
+
+
+"$(INTDIR)\mpdformat.obj"	"$(INTDIR)\mpdformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

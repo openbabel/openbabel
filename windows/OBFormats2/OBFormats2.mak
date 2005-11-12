@@ -57,6 +57,7 @@ CLEAN :
 	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\fhformat.obj"
+	-@erase "$(INTDIR)\freefracformat.obj"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\ghemicalformat.obj"
@@ -84,6 +85,7 @@ CLEAN :
 	-@erase "$(INTDIR)\viewmolformat.obj"
 	-@erase "$(INTDIR)\xedformat.obj"
 	-@erase "$(INTDIR)\xyzformat.obj"
+	-@erase "$(INTDIR)\yasaraformat.obj"
 	-@erase "$(INTDIR)\zindoformat.obj"
 	-@erase "$(OUTDIR)\OBFormats2.exp"
 	-@erase ".\OBFormats2.obf"
@@ -145,7 +147,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
+	"$(INTDIR)\yasaraformat.obj"
 
 ".\OBFormats2.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -202,6 +206,8 @@ CLEAN :
 	-@erase "$(INTDIR)\featformat.sbr"
 	-@erase "$(INTDIR)\fhformat.obj"
 	-@erase "$(INTDIR)\fhformat.sbr"
+	-@erase "$(INTDIR)\freefracformat.obj"
+	-@erase "$(INTDIR)\freefracformat.sbr"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gamessformat.sbr"
 	-@erase "$(INTDIR)\gaussformat.obj"
@@ -256,6 +262,8 @@ CLEAN :
 	-@erase "$(INTDIR)\xedformat.sbr"
 	-@erase "$(INTDIR)\xyzformat.obj"
 	-@erase "$(INTDIR)\xyzformat.sbr"
+	-@erase "$(INTDIR)\yasaraformat.obj"
+	-@erase "$(INTDIR)\yasaraformat.sbr"
 	-@erase "$(INTDIR)\zindoformat.obj"
 	-@erase "$(INTDIR)\zindoformat.sbr"
 	-@erase "$(OUTDIR)\OBFormats2.bsc"
@@ -317,7 +325,9 @@ BSC32_SBRS= \
 	"$(INTDIR)\viewmolformat.sbr" \
 	"$(INTDIR)\xedformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr"
+	"$(INTDIR)\zindoformat.sbr" \
+	"$(INTDIR)\freefracformat.sbr" \
+	"$(INTDIR)\yasaraformat.sbr"
 
 "$(OUTDIR)\OBFormats2.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -372,7 +382,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
+	"$(INTDIR)\yasaraformat.obj"
 
 "$(OUTDIR)\OBFormats2D.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -774,6 +786,24 @@ SOURCE=..\..\src\formats\fhformat.cpp
 
 
 "$(INTDIR)\fhformat.obj"	"$(INTDIR)\fhformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\freefracformat.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\freefracformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\freefracformat.obj"	"$(INTDIR)\freefracformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1242,6 +1272,24 @@ SOURCE=..\..\src\formats\xyzformat.cpp
 
 
 "$(INTDIR)\xyzformat.obj"	"$(INTDIR)\xyzformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\yasaraformat.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\yasaraformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\yasaraformat.obj"	"$(INTDIR)\yasaraformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
