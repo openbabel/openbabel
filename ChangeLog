@@ -1,3 +1,36 @@
+2005-11-12  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/finger3.cpp: reads two formats of patterns file. Added FP4
+	with patterns in...
+
+	* data/SMARTS_InteLigand_051110.txt: from Christian Laggner with
+	extra LGPL line.
+
+	* data/patterns.txt: Added extra firstline to identify format.
+
+	* data/atomtyp.txt: Added additional IMPVAL lines for
+	atoms of F Cl Br I P S to allow implicit hydrogens(e.g.in SMILES)
+	and improve the reversibility of add/remove hydrogens. Needs to be
+	put into equiv .h file.
+	 
+	* src/formats/xml/xcmlformat.cpp: Now writes correct namespace uri
+	for CML1. Test for no bonds (for outputting a formula instead)
+	now made before removing hydrogens.
+
+	* src/formats/xml/xcmlformat.cpp, xml.h: Mods to allow nested
+	molecules.
+
+	* src/formats/xml/xml.cpp: XML programming notes added.
+
+	* src/formats/xml/xmlformat.cpp, xml.cpp, xml.h: files can now
+	contain objects of different types, e.g. molecules in cml and pubchem
+	
+	* test-set/others/: added some cml files    
+
+	* src/obconversion.cpp: minor changes to comments
+	
+	Update Windows build files
+
 2005-11-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/bgfformat.cpp (ReadMolecule): Fix problem with atom
