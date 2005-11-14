@@ -46,7 +46,7 @@ public:
   };
 
   virtual const char* SpecificationURL()
-  { return "";}; //optional
+  {return "http://openbabel.sourceforge.net/formats/xyz.shtml";}; //optional
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-xyz"; };

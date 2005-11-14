@@ -40,7 +40,7 @@ public:
   };
 
   virtual const char* SpecificationURL()
-  {return "";}; //optional
+  {return "http://openbabel.sourceforge.net/formats/fract.shtml";}; //optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
