@@ -22,7 +22,9 @@ GNU General Public License for more details.
 #include <string>
 
 #include "fingerprint.h"
+#ifdef WIN32
 #include <direct.h>
+#endif
 
 using namespace std;
 namespace OpenBabel
@@ -87,36 +89,49 @@ public:
 		//Reads two types of file: SMARTS + comments and vice versa
 		//depending on whether the first line is #Comments after SMARTS
 		//Output strings in vector are SMARTS + comments
-		string file;
+		string file = filename;
+		ifstream ifs1, ifs2, *ifsP;
 		char* datadir = getenv("BABEL_DATADIR");
 		if(!datadir)
 			datadir = BABEL_DATADIR;
 		if(datadir)
 		{
-			file = "/" + filename;
-			file = datadir  + file;
+		  file = datadir;
+		  file += "/";
+		  file += filename;
 		}
 
-		ifstream ifpatterns(file.c_str());
-		if(!ifpatterns)
+		ifs1.open(file.c_str());
+		ifsP = &ifs1;
+		if(!(*ifsP))
 		{
-			#ifdef HAVE_SSTREAM 
-				stringstream errorMsg; 
-			#else 
-				strstream errorMsg; 
-			#endif 
-			errorMsg << "Cannot open " << file << endl; 
-			obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError); 
-			return false;
+		  file = datadir;
+		  file += "/";
+		  file += BABEL_VERSION;
+		  file += "/" + filename;
+		  ifs2.open(file.c_str());
+		  ifsP = &ifs2;
 		}
+
+		if(!(*ifsP))
+		  {
+#ifdef HAVE_SSTREAM 
+		    stringstream errorMsg; 
+#else 
+		    strstream errorMsg; 
+#endif 
+		    errorMsg << "Cannot open " << filename << endl; 
+		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError); 
+		    return false;
+		  }
 		string smarts, formatline;
 
-		if(!getline(ifpatterns, formatline)) return false;
+		if(!getline(*ifsP, formatline)) return false;
 		if(formatline=="#Comments after SMARTS")
 		{
-			while(ifpatterns.good())
+			while(ifsP->good())
 			{
-				if( getline(ifpatterns,smarts) 
+				if( getline(*ifsP,smarts) 
 						&& smarts.size() > 0 
 						&& smarts[0] != '#')
 					lines.push_back(smarts); //leave the comments in
@@ -125,9 +140,9 @@ public:
 		else
 		{
 			// Christian Laggner's format: SMARTS at end of line
-			while(ifpatterns.good())
+			while(ifsP->good())
 			{
-				if( getline(ifpatterns,smarts) && smarts[0]!='#')
+				if( getline(*ifsP,smarts) && smarts[0]!='#')
 				{
 					unsigned int pos = smarts.find(':');
 					if(pos!=string::npos)
@@ -155,7 +170,7 @@ A bit is set when there is a match to one of a list
 of SMARTS patterns in the file (default is patterns.txt).
 Looks for this file first in the folder in the environment variable
 BABEL_DATADIR, then in the folder specified by the macro BABEL_DATADIR
-(probably set in babelconfig.h), and then in the current folder. 
+(probably set during compilation in babelconfig.h), and then in the current folder.
 
 On each line there is a SMARTS string and anything 
 after a space is ignored. Lines starting with # are ignored.
