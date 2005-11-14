@@ -161,7 +161,7 @@ int main(int argc,char **argv)
 
 	ofs << "<h2>Options</h2>\n<pre>";
 	ofs << 	description.substr(description.find('\n'), description.size()); 
-	ofs << "\n</pre>\n</h2>" << endl;
+	ofs << "\n</pre>" << endl;
 
 	ofs.close();
       }
