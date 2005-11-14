@@ -208,12 +208,16 @@ bool GaussianOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	    tokenize(vs,buffer);
 	    while (vs.size() == 6)
 	      {
-		atom = mol.NewAtom();
-		atom->SetAtomicNum(atoi((char*)vs[1].c_str()));
-		x = atof((char*)vs[3].c_str());
-		y = atof((char*)vs[4].c_str());
-		z = atof((char*)vs[5].c_str());
-		atom->SetVector(x,y,z);
+		int atomicNum = atoi((char*)vs[1].c_str());
+		if (atomicNum > 0) // translation vectors are "-2"
+		  {
+		    atom = mol.NewAtom();
+		    atom->SetAtomicNum(atoi((char*)vs[1].c_str()));
+		    x = atof((char*)vs[3].c_str());
+		    y = atof((char*)vs[4].c_str());
+		    z = atof((char*)vs[5].c_str());
+		    atom->SetVector(x,y,z);
+		  }
 		
 		if (!ifs.getline(buffer,BUFF_SIZE)) break;
 		tokenize(vs,buffer);
