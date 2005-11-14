@@ -7,6 +7,9 @@
 	* scripts/perl/Makefile.PL, scripts/python/setup.py: Bump version
 	number for 1.0 release.
 
+	* src/obconversion.cpp: Patch from Jean Brefort to ensure dynamic
+	loading of modules occurs correctly on UNIX.
+
 	* src/fingerprints/finger3.cpp: Update to also check versioned
 	directories. Fixes bug reported by Chris Swain.
 

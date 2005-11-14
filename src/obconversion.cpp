@@ -35,6 +35,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <map>
+#include <dlfcn.h>
 
 #include "obconversion.h"
 
@@ -186,7 +187,7 @@ can now be used.
 	obconv.dll, obdll.dll, one or more *.obf format files.
 */
     
-  int OBConversion::FormatFilesLoaded = OBConversion::LoadFormatFiles();
+  int OBConversion::FormatFilesLoaded = 0;
 
 OBFormat* OBConversion::pDefaultFormat=NULL;
 
@@ -197,7 +198,8 @@ OBConversion::OBConversion(istream* is, ostream* os) :
 {
 	pInStream=is;
 	pOutStream=os;
-	//	LoadFormatFiles();
+	if (FormatFilesLoaded == 0)
+		FormatFilesLoaded = LoadFormatFiles();
 	
 	//These options take a parameter
 	RegisterOptionParam("f", NULL, 1,GENOPTIONS);
@@ -301,8 +303,10 @@ int OBConversion::LoadFormatFiles()
 		if(DLHandler::openLib(*itr))
 			count++;
 		else
-			cerr << *itr << " did not load properly." << endl;
+			cerr << *itr << " did not load properly" << endl;
 	}
+#else
+	count = 1; //avoid calling this function several times
 #endif //USING_DYNAMIC_LIBS
 	return count;
 }
