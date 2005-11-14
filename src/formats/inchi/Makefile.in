@@ -39,7 +39,7 @@ build_triplet = @build@
 host_triplet = @host@
 subdir = src/formats/inchi
 DIST_COMMON = $(libinchiinclude_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+	$(srcdir)/Makefile.in COPYING.LIB
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -59,12 +59,12 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libinchi_la_LIBADD =
-am_libinchi_la_OBJECTS = ichi_bns.lo IChICan2.lo IChICano.lo \
-	ichicans.lo ichiisot.lo ichilnct.lo IChIMak2.lo IChIMake.lo \
-	ichimap1.lo ichimap2.lo ichimap4.lo IChINorm.lo IChIParm.lo \
-	IChIPrt1.lo IChIPrt2.lo IChIPrt3.lo ichiqueu.lo ichiring.lo \
-	ichisort.lo ichister.lo IChITaut.lo inchi_dll.lo \
-	inchi_dll_main.lo runichi.lo strutil.lo util.lo
+am_libinchi_la_OBJECTS = IChICan2.lo IChICano.lo IChIPrt1.lo \
+	IChIPrt2.lo IChIPrt3.lo IchiMak2.lo IchiMake.lo IchiNorm.lo \
+	IchiParm.lo IchiTaut.lo RunICHI.lo ichi_bns.lo ichicans.lo \
+	ichiisot.lo ichilnct.lo ichimap1.lo ichimap2.lo ichimap4.lo \
+	ichiqueu.lo ichiring.lo ichisort.lo ichister.lo inchi_dll.lo \
+	inchi_dll_main.lo strutil.lo util.lo
 libinchi_la_OBJECTS = $(am_libinchi_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -208,11 +208,12 @@ target_alias = @target_alias@
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 lib_LTLIBRARIES = libinchi.la
 libinchi_la_SOURCES = \
-	ichi_bns.c IChICan2.c IChICano.c ichicans.c ichiisot.c \
-	ichilnct.c IChIMak2.c IChIMake.c ichimap1.c ichimap2.c \
-	ichimap4.c IChINorm.c IChIParm.c IChIPrt1.c IChIPrt2.c \
-	IChIPrt3.c ichiqueu.c ichiring.c ichisort.c ichister.c \
-	IChITaut.c inchi_dll.c inchi_dll_main.c runichi.c \
+	IChICan2.c IChICano.c IChIPrt1.c IChIPrt2.c \
+	IChIPrt3.c IchiMak2.c IchiMake.c IchiNorm.c \
+	IchiParm.c IchiTaut.c RunICHI.c ichi_bns.c \
+	ichicans.c ichiisot.c ichilnct.c ichimap1.c \
+	ichimap2.c ichimap4.c ichiqueu.c ichiring.c \
+	ichisort.c ichister.c inchi_dll.c inchi_dll_main.c \
 	strutil.c util.c
 
 libinchiincludedir = $(includedir)/inchi
@@ -222,10 +223,10 @@ libinchiinclude_HEADERS = \
 	ichidrp.h ichierr.h ichimain.h ichimake.h \
 	ichinorm.h ichiparm.h ichiring.h ichisize.h \
 	ichister.h ichitaut.h ichitime.h inchi_api.h \
-	inchi_dll.h inchi_dll_main.h inpdef.h lreadmol.h \
-	mode.h strutil.h util.h 
+	inchi_dll.h inchi_dll_main.h inpdef.h \
+	lreadmol.h mode.h strutil.h util.h
 
-EXTRA_DIST = InChI-License.html
+EXTRA_DIST = README.html COPYING.LIB
 all: all-am
 
 .SUFFIXES:
@@ -297,14 +298,15 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChICan2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChICano.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChIMak2.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChIMake.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChINorm.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChIParm.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChIPrt1.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChIPrt2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChIPrt3.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChITaut.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiMak2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiMake.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiNorm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiParm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiTaut.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RunICHI.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichi_bns.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichicans.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichiisot.Plo@am__quote@
@@ -318,7 +320,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichister.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchi_dll.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchi_dll_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runichi.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strutil.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Plo@am__quote@
 
