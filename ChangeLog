@@ -1,3 +1,30 @@
+2005-11-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* data/atomtyp.h: Updated with Chris's recent changes.
+
+	* data/Makefile.am, data/Makefile.in: Add Christian's data file.
+
+	* scripts/perl/Makefile.PL, scripts/python/setup.py: Bump version
+	number for 1.0 release.
+
+	* src/fingerprints/finger3.cpp: Update to also check versioned
+	directories. Fixes bug reported by Chris Swain.
+
+	* src/formats/inchi/Makefile.am, src/formats/inchi/Makefile.in:
+	Fix capitalization errors pointed out by Jean Brefort.
+
+	* src/formats/xyzformat.cpp, src/formats/freefractformat.cpp: Add
+	specification URLs to point to Open Babel website. New format
+	database will give information on what OB reads/writes.
+
+	* src/formats/gaussformat.cpp: Fix error uncovered in roundtrip
+	test with graphite & 2D translation vectors. TV are reported as
+	atomic number -2.
+
+	* test/Makefile.am, test/Makefile.in: Clean-up of Makefile.am.
+
+	* tools/obdoc.cpp: Fix HTML -- there was a trailing </h2> tag.
+
 2005-11-12  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* src/finger3.cpp: reads two formats of patterns file. Added FP4

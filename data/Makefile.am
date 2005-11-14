@@ -3,7 +3,8 @@ tabledir     = $(pkgdatadir)/$(VERSION)
 table_DATA = \
 		aromatic.txt bondtyp.txt isotope.txt resdata.txt \
 		atomtyp.txt element.txt isotope-small.txt phmodel.txt \
-		patterns.txt torlib.txt types.txt
+		patterns.txt torlib.txt types.txt \
+		SMARTS_InteLigand_051110.txt
 
 BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h \
 		isotope.h phmodeldata.h resdata.h \
