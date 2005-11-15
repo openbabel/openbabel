@@ -183,6 +183,7 @@ BOOL COBGUIDlg::OnInitDialog()
 	int nInSel=0,nOutSel=0;
 	InputFilterString="All Chemical Formats|*.";
 	OutputFilterString = InputFilterString;
+	OBConversion dummy; //so that formatfiles get loaded
 	Formatpos pos;
 	while(OBConversion::GetNextFormat(pos,str,pFormat))
 	{
