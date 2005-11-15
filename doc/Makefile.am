@@ -1,7 +1,9 @@
 EXTRA_DIST = $(man_MANS) README.dioxin.pov README.povray babel31.inc \
 		dioxin.mol2 dioxin.inc dioxin.png dioxin.pov \
 		Doxyfile-man \
-		Migration.html FAQ.html OBTwoMigration.html
+		FAQ.html OBTwoMigration.html \
+		babel.html obchiral.html obfit.html obgrep.html \
+		obprop.html obrotate.html 
 
 man_MANS = babel.1 obfit.1 obgrep.1 obrotate.1 obprop.1 obchiral.1
 

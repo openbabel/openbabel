@@ -14,6 +14,12 @@
 
 	* data/types.h, data/types.txt: Added PCM atom types.
 
+	* doc/Makefile.am, doc/Makefile.in: Removed defunct Migration.html
+	(from OELib).
+
+	* doc/FAQ.html, doc/OBTwoMigration.html, scripts/python/Examples.html:
+	Updated documentation (from the new website).
+
 	* src/formats/pcmodelformat.cpp: Initial support for PCModel
 	files. Possibly does not include all atom types, but does read all
 	the initial files I threw at it.
