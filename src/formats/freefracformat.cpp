@@ -122,6 +122,7 @@ bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     string str;
     double x,y,z;
     vector3 v;
+    int atomicNum;
     OBAtom *atom;
 
     while(ifs.getline(buffer,BUFF_SIZE))
@@ -136,15 +137,26 @@ bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
         atom = mol.NewAtom();
 
-        x = atof(TrimErrors(vs[1]));
-        y = atof(TrimErrors(vs[2]));
-        z = atof(TrimErrors(vs[3]));
+	// check to see if first column is number or element symbol
+	// (PCModel has files of the form X Y Z symbol)
+        atomicNum = etab.GetAtomicNum(vs[0].c_str());
+	if (atomicNum == 0 && (isdigit(vs[0][0]) || ispunct(vs[0][0])))
+	  {
+	    x = atof(TrimErrors(vs[0]));
+	    y = atof(TrimErrors(vs[1]));
+	    z = atof(TrimErrors(vs[2]));
+	    atomicNum = etab.GetAtomicNum(vs[3].c_str());
+	  }
+	else
+	  {
+	    x = atof(TrimErrors(vs[1]));
+	    y = atof(TrimErrors(vs[2]));
+	    z = atof(TrimErrors(vs[3]));
+	  }
 	v.Set(x, y, z);
-	v *= m;
-	//set coordinates -- multiply by orthogonalization matrix
+	v *= m;	// get cartesian coordinates -- multiply by orthogonalization matrix
         atom->SetVector(v);
 
-        int atomicNum = etab.GetAtomicNum(vs[0].c_str());
         atom->SetAtomicNum(atomicNum);
     }
 
