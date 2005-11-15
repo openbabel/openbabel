@@ -1,3 +1,22 @@
+2005-11-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Makefile.am, Makefile.in: Remove non-functional b32.mak file
+	from distribution.
+
+	* NEWS, THANKS: Further updates for 2.0 release.
+
+	* data/types.h, data/types.txt: Added PCM atom types.
+
+	* src/formats/pcmodelformat.cpp: Initial support for PCModel
+	files. Possibly does not include all atom types, but does read all
+	the initial files I threw at it.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Compile it.
+
+	* src/formats/freefracformat.cpp: Add support for reading files
+	with atomic symbol in 4th column, rather than first (i.e.,
+	PCModel-style "free form fractional").
+
 2005-11-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* data/atomtyp.h: Updated with Chris's recent changes.
