@@ -1,3 +1,10 @@
+2005-11-15  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/obconversion.cpp: remove #include <dflcn.h>
+
+	* windows/OBGUIDlg.cpp (OnInitDialog): add dummy OBConversion
+	object to load format files.
+
 2005-11-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Makefile.am, Makefile.in: Remove non-functional b32.mak file
