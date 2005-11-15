@@ -35,7 +35,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <map>
-#include <dlfcn.h>
+//#include <dlfcn.h>
 
 #include "obconversion.h"
 
