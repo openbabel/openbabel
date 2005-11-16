@@ -260,6 +260,8 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 			
 			}
 			pConv->SetOneObjectOnly();
+			if(itr != --SeekposMap.rend())
+				pConv->SetMoreFilesToCome();//so that not seen as last on output 
 			pConv->Convert(NULL,NULL);
 		}
 	}
@@ -297,6 +299,8 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 				*pConv->GetOutStream() << "** " << ln << endl;
 			}
 			pConv->SetOneObjectOnly();
+			if(itr+1 != SeekPositions.end())
+				pConv->SetMoreFilesToCome();//so that not seen as last on output 
 			pConv->Convert(NULL,NULL);
 		}
 	}
