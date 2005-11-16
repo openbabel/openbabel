@@ -22,9 +22,6 @@ GNU General Public License for more details.
 #include <string>
 
 #include "fingerprint.h"
-#ifdef WIN32
-#include <direct.h>
-#endif
 
 using namespace std;
 namespace OpenBabel
@@ -67,9 +64,9 @@ public:
 			ReadPatternFile(_patternsfile, smartsStrings);
 
 		//Make fp size the smallest power of two to contain the patterns
-		unsigned int n=bitsperint;
+		unsigned int n=Getbitsperint();
 		while(n<smartsStrings.size())n*=2;
-		fp.resize(n/bitsperint);
+		fp.resize(n/Getbitsperint());
 
 		for(n=0;n<smartsStrings.size();++n)
 		{

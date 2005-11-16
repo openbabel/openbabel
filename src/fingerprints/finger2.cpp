@@ -86,7 +86,7 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 {
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 	if(!pmol) return false;
-	fp.resize(1024/bitsperint);
+	fp.resize(1024/Getbitsperint());
 	fragset.clear();//needed because now only one instance of fp class
 	ringset.clear();
 	

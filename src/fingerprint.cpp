@@ -41,16 +41,17 @@ namespace OpenBabel {
 
 OBFingerprint* OBFingerprint::_pDefault; //static variable
 const unsigned int OBFingerprint::bitsperint = 8 * sizeof(unsigned int);
+int OBFingerprint::rubbish = 666;
 
 void OBFingerprint::SetBit(vector<unsigned int>& vec, unsigned int n)
 {
-	vec[n/bitsperint] |= (1 << (n % bitsperint));
+	vec[n/Getbitsperint()] |= (1 << (n % Getbitsperint()));
 }
 
 ////////////////////////////////////////	
 void OBFingerprint::Fold(vector<unsigned int>& vec, unsigned int nbits)
 {
-	while(vec.size()*bitsperint/2 >= nbits) 
+	while(vec.size()*Getbitsperint()/2 >= nbits) 
 		vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
 			vec.begin()+vec.size()/2, vec.begin(), bit_or()), vec.end());
 }
@@ -119,7 +120,7 @@ bool FastSearch::Find(OBBase* pOb, vector<unsigned int>& SeekPositions,
 	///The positions of the candidate matching molecules in the original datafile are returned.
 	
 	vector<unsigned int> vecwords;
-	_pFP->GetFingerprint(pOb,vecwords, _index.header.words * OBFingerprint::bitsperint);
+	_pFP->GetFingerprint(pOb,vecwords, _index.header.words * OBFingerprint::Getbitsperint());
 	
 	vector<unsigned int>candidates; //indices of matches from fingerprint screen
 	candidates.reserve(MaxCandidates);
@@ -176,7 +177,7 @@ bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned int>& Seekpo
 														 double MinTani)
 {
 	vector<unsigned int> targetfp;
-	_pFP->GetFingerprint(pOb,targetfp, _index.header.words * OBFingerprint::bitsperint);
+	_pFP->GetFingerprint(pOb,targetfp, _index.header.words * OBFingerprint::Getbitsperint());
 
 	unsigned int words = _index.header.words;
 	unsigned int dataSize = _index.header.nEntries;
@@ -211,7 +212,7 @@ bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned int>& Seekpo
 		return false;
 
 	vector<unsigned int> targetfp;
-	_pFP->GetFingerprint(pOb,targetfp, _index.header.words * OBFingerprint::bitsperint);
+	_pFP->GetFingerprint(pOb,targetfp, _index.header.words * OBFingerprint::Getbitsperint());
 
 	unsigned int words = _index.header.words;
 	unsigned int dataSize = _index.header.nEntries;

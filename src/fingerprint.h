@@ -78,7 +78,7 @@ public:
 			return((double)andbits/(double)orbits);
 	};
 	
-	static const unsigned int bitsperint;// = 8 * sizeof(unsigned int);
+	static unsigned int Getbitsperint(){ return bitsperint; }
 
 private:
 	///Function object to set bits
@@ -113,6 +113,8 @@ protected:
 	
 private:
 	static OBFingerprint* _pDefault;
+	static const unsigned int bitsperint;// = 8 * sizeof(unsigned int);
+	static int rubbish;
 };
 
 
