@@ -347,6 +347,10 @@ SOURCE=..\..\src\patty.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\pcmodelformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\pdbformat.cpp
 # End Source File
 # Begin Source File
@@ -625,6 +629,10 @@ SOURCE=..\..\src\formats\xml\xml.h
 # Begin Source File
 
 SOURCE=..\libxml2.lib
+# End Source File
+# Begin Source File
+
+SOURCE=..\zdll.lib
 # End Source File
 # End Target
 # End Project

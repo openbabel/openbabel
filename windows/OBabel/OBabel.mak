@@ -101,6 +101,7 @@ CLEAN :
 	-@erase "$(INTDIR)\obutil.obj"
 	-@erase "$(INTDIR)\parsmart.obj"
 	-@erase "$(INTDIR)\patty.obj"
+	-@erase "$(INTDIR)\pcmodelformat.obj"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\phmodel.obj"
 	-@erase "$(INTDIR)\povrayformat.obj"
@@ -166,6 +167,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\chemtoolformat.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\cmlreactlformat.obj" \
+	"$(INTDIR)\copyformat.obj" \
 	"$(INTDIR)\crkformat.obj" \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
@@ -179,6 +181,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\finger3.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\generic.obj" \
@@ -198,6 +201,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\mol2format.obj" \
 	"$(INTDIR)\molchrg.obj" \
 	"$(INTDIR)\mopacformat.obj" \
+	"$(INTDIR)\mpdformat.obj" \
 	"$(INTDIR)\mpqcformat.obj" \
 	"$(INTDIR)\nwchemformat.obj" \
 	"$(INTDIR)\obconversion.obj" \
@@ -206,6 +210,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
+	"$(INTDIR)\pcmodelformat.obj" \
 	"$(INTDIR)\pdbformat.obj" \
 	"$(INTDIR)\phmodel.obj" \
 	"$(INTDIR)\povrayformat.obj" \
@@ -234,12 +239,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\xml.obj" \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
+	"$(INTDIR)\yasaraformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
 	"..\libxml2.lib" \
-	"$(INTDIR)\freefracformat.obj" \
-	"$(INTDIR)\copyformat.obj" \
-	"$(INTDIR)\mpdformat.obj" \
-	"$(INTDIR)\yasaraformat.obj"
+	"..\zdll.lib"
 
 ".\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -386,6 +389,8 @@ CLEAN :
 	-@erase "$(INTDIR)\parsmart.sbr"
 	-@erase "$(INTDIR)\patty.obj"
 	-@erase "$(INTDIR)\patty.sbr"
+	-@erase "$(INTDIR)\pcmodelformat.obj"
+	-@erase "$(INTDIR)\pcmodelformat.sbr"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\pdbformat.sbr"
 	-@erase "$(INTDIR)\phmodel.obj"
@@ -481,6 +486,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\chemtoolformat.sbr" \
 	"$(INTDIR)\chiral.sbr" \
 	"$(INTDIR)\cmlreactlformat.sbr" \
+	"$(INTDIR)\copyformat.sbr" \
 	"$(INTDIR)\crkformat.sbr" \
 	"$(INTDIR)\CSRformat.sbr" \
 	"$(INTDIR)\cssrformat.sbr" \
@@ -494,6 +500,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\finger3.sbr" \
 	"$(INTDIR)\fingerprint.sbr" \
 	"$(INTDIR)\fingerprintformat.sbr" \
+	"$(INTDIR)\freefracformat.sbr" \
 	"$(INTDIR)\gamessformat.sbr" \
 	"$(INTDIR)\gaussformat.sbr" \
 	"$(INTDIR)\generic.sbr" \
@@ -513,6 +520,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\mol2format.sbr" \
 	"$(INTDIR)\molchrg.sbr" \
 	"$(INTDIR)\mopacformat.sbr" \
+	"$(INTDIR)\mpdformat.sbr" \
 	"$(INTDIR)\mpqcformat.sbr" \
 	"$(INTDIR)\nwchemformat.sbr" \
 	"$(INTDIR)\obconversion.sbr" \
@@ -521,6 +529,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\obutil.sbr" \
 	"$(INTDIR)\parsmart.sbr" \
 	"$(INTDIR)\patty.sbr" \
+	"$(INTDIR)\pcmodelformat.sbr" \
 	"$(INTDIR)\pdbformat.sbr" \
 	"$(INTDIR)\phmodel.sbr" \
 	"$(INTDIR)\povrayformat.sbr" \
@@ -549,11 +558,8 @@ BSC32_SBRS= \
 	"$(INTDIR)\xml.sbr" \
 	"$(INTDIR)\xmlformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr" \
-	"$(INTDIR)\freefracformat.sbr" \
-	"$(INTDIR)\copyformat.sbr" \
-	"$(INTDIR)\mpdformat.sbr" \
-	"$(INTDIR)\yasaraformat.sbr"
+	"$(INTDIR)\yasaraformat.sbr" \
+	"$(INTDIR)\zindoformat.sbr"
 
 "$(OUTDIR)\OBabel.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -584,6 +590,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\chemtoolformat.obj" \
 	"$(INTDIR)\chiral.obj" \
 	"$(INTDIR)\cmlreactlformat.obj" \
+	"$(INTDIR)\copyformat.obj" \
 	"$(INTDIR)\crkformat.obj" \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
@@ -597,6 +604,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\finger3.obj" \
 	"$(INTDIR)\fingerprint.obj" \
 	"$(INTDIR)\fingerprintformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\generic.obj" \
@@ -616,6 +624,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\mol2format.obj" \
 	"$(INTDIR)\molchrg.obj" \
 	"$(INTDIR)\mopacformat.obj" \
+	"$(INTDIR)\mpdformat.obj" \
 	"$(INTDIR)\mpqcformat.obj" \
 	"$(INTDIR)\nwchemformat.obj" \
 	"$(INTDIR)\obconversion.obj" \
@@ -624,6 +633,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
+	"$(INTDIR)\pcmodelformat.obj" \
 	"$(INTDIR)\pdbformat.obj" \
 	"$(INTDIR)\phmodel.obj" \
 	"$(INTDIR)\povrayformat.obj" \
@@ -652,12 +662,10 @@ LINK32_OBJS= \
 	"$(INTDIR)\xml.obj" \
 	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
+	"$(INTDIR)\yasaraformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
 	"..\libxml2.lib" \
-	"$(INTDIR)\freefracformat.obj" \
-	"$(INTDIR)\copyformat.obj" \
-	"$(INTDIR)\mpdformat.obj" \
-	"$(INTDIR)\yasaraformat.obj"
+	"..\zdll.lib"
 
 "$(OUTDIR)\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -1854,6 +1862,24 @@ SOURCE=..\..\src\patty.cpp
 
 
 "$(INTDIR)\patty.obj"	"$(INTDIR)\patty.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\pcmodelformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\pcmodelformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\pcmodelformat.obj"	"$(INTDIR)\pcmodelformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

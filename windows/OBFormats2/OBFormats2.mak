@@ -70,6 +70,7 @@ CLEAN :
 	-@erase "$(INTDIR)\mopacformat.obj"
 	-@erase "$(INTDIR)\mpqcformat.obj"
 	-@erase "$(INTDIR)\nwchemformat.obj"
+	-@erase "$(INTDIR)\pcmodelformat.obj"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\povrayformat.obj"
 	-@erase "$(INTDIR)\PQSformat.obj"
@@ -121,6 +122,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
@@ -147,9 +149,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
+	"$(INTDIR)\yasaraformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
-	"$(INTDIR)\freefracformat.obj" \
-	"$(INTDIR)\yasaraformat.obj"
+	"$(INTDIR)\pcmodelformat.obj"
 
 ".\OBFormats2.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -232,6 +234,8 @@ CLEAN :
 	-@erase "$(INTDIR)\mpqcformat.sbr"
 	-@erase "$(INTDIR)\nwchemformat.obj"
 	-@erase "$(INTDIR)\nwchemformat.sbr"
+	-@erase "$(INTDIR)\pcmodelformat.obj"
+	-@erase "$(INTDIR)\pcmodelformat.sbr"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\pdbformat.sbr"
 	-@erase "$(INTDIR)\povrayformat.obj"
@@ -299,6 +303,7 @@ BSC32_SBRS= \
 	"$(INTDIR)\dmolformat.sbr" \
 	"$(INTDIR)\featformat.sbr" \
 	"$(INTDIR)\fhformat.sbr" \
+	"$(INTDIR)\freefracformat.sbr" \
 	"$(INTDIR)\gamessformat.sbr" \
 	"$(INTDIR)\gaussformat.sbr" \
 	"$(INTDIR)\ghemicalformat.sbr" \
@@ -325,9 +330,9 @@ BSC32_SBRS= \
 	"$(INTDIR)\viewmolformat.sbr" \
 	"$(INTDIR)\xedformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
+	"$(INTDIR)\yasaraformat.sbr" \
 	"$(INTDIR)\zindoformat.sbr" \
-	"$(INTDIR)\freefracformat.sbr" \
-	"$(INTDIR)\yasaraformat.sbr"
+	"$(INTDIR)\pcmodelformat.sbr"
 
 "$(OUTDIR)\OBFormats2.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
     $(BSC32) @<<
@@ -356,6 +361,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
@@ -382,9 +388,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
+	"$(INTDIR)\yasaraformat.obj" \
 	"$(INTDIR)\zindoformat.obj" \
-	"$(INTDIR)\freefracformat.obj" \
-	"$(INTDIR)\yasaraformat.obj"
+	"$(INTDIR)\pcmodelformat.obj"
 
 "$(OUTDIR)\OBFormats2D.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -1020,6 +1026,24 @@ SOURCE=..\..\src\formats\nwchemformat.cpp
 
 
 "$(INTDIR)\nwchemformat.obj"	"$(INTDIR)\nwchemformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\pcmodelformat.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\pcmodelformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\pcmodelformat.obj"	"$(INTDIR)\pcmodelformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

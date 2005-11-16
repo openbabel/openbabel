@@ -227,6 +227,10 @@ SOURCE=..\..\src\formats\nwchemformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\pcmodelformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\pdbformat.cpp
 # End Source File
 # Begin Source File
