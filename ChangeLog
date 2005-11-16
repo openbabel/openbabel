@@ -1,3 +1,23 @@
+2005-11-16  Chris Morley  <c.morley@gaseq.co.uk>
+	
+	* src/obconversion.cpp(Convert): m_IsLast set more definitely
+	as part of solution to bug #1357957.
+	(FullConvert) Extra gzip code to solve bug #1357705.
+	[Windows builds are now reading gzip ok but not always writing it
+	properly.]
+
+	src/formats/fastsearchformat.cpp: Extra lines withconditional
+	SetMoreFilesToCome to solve bug #1357957. [There may possibly be
+	a gzip incompatibility here as well].
+	
+	* src/fingerprint.h, src/fingerprint.cpp, 
+	src/fingerprints/finger2.cpp, src/fingerprints/finger3.cpp:
+	Make bitsperint a private variable and provide a Get(). Not
+	worth doing - the bug was a missing USING_DYNAMIC_LIBS in 
+	the settings for OBExtraFormats project.
+	
+	Windows build files.  
+
 2005-11-15  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/obconversion.cpp: remove #include <dflcn.h>
