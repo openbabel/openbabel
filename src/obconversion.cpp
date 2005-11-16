@@ -502,8 +502,9 @@ int OBConversion::Convert()
 	}
 	
 	//Output last object
-	if(!MoreFilesToCome)
-		m_IsLast=true;
+	//if(!MoreFilesToCome)
+	//	m_IsLast=true;
+	m_IsLast= !MoreFilesToCome;
 
 	if(pOutFormat)
 		if(!pOutFormat->WriteChemObject(this))
@@ -693,7 +694,7 @@ bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
 }
 //////////////////////////////////////////////////
 /// Writes the object pOb but does not delete it afterwards.
-/// The output stream is lastingly changed if pout is not NULL
+/// The output stream is lastingly changed if pos is not NULL
 /// Returns true if successful.
 bool OBConversion::Write(OBBase* pOb, ostream* pos)
 {
@@ -855,7 +856,7 @@ to the single output file.
  
 Splitting
 Done if FileList contains a single file name and OutputFileName
-contains a * . Each chemical object in the input file converted
+contains a * . Each chemical object in the input file is converted
 and sent to a separate file whose name is OutputFileName with the
 * replaced by 1, 2, 3, etc.
 For example, if OutputFileName is NEW*.smi then the output files are
@@ -996,13 +997,22 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 					//Output is put in a temporary stream and written to a file
 					//with an augmenting name only when it contains a valid object. 
 					int Indx=1;
+					#ifdef HAVE_LIBZ
+						zlib_stream::zip_istream zIn(*pInStream);
+					#endif
 					for(;;)
 					{
 						stringstream ss;
+						SetOutStream(&ss);
 						SetOutputIndex(0); //reset for new file
 						SetOneObjectOnly();
 
-						int ThisFileCount = Convert(pInStream,&ss);
+					#ifdef HAVE_LIBZ
+						if(Indx==1 && zIn.is_gzip())
+							SetInStream(&zIn);
+					#endif
+
+						int ThisFileCount = Convert();
 						if(ThisFileCount==0) break;
 						Count+=ThisFileCount;
 
@@ -1014,8 +1024,20 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 							cerr << "Cannot write to " << incrfile << endl;
 							return Count;
 						}
+						
 						OutputFileList.push_back(incrfile);
-						ofs << ss.rdbuf();
+					#ifdef HAVE_LIBZ
+						if(IsOption("z",GENOPTIONS))
+						{
+							zlib_stream::zip_ostream zOut(ofs);
+							// make sure to output the header
+							zOut.make_gzip();
+							zOut << ss.rdbuf();
+						}
+						else
+					#endif
+							ofs << ss.rdbuf();
+
 						ofs.close();
 						ss.clear();
 					}
