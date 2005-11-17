@@ -206,7 +206,7 @@ target_alias = @target_alias@
 # only build in the scripts subdirectory if possible (perl, python, swig, etc.)
 @BUILD_SCRIPTS_TRUE@SCRIPT_DIR = scripts
 SUBDIRS = data src test tools doc $(SCRIPT_DIR)
-EXTRA_DIST = Doxyfile windows windows-vc2005
+EXTRA_DIST = Doxyfile windows windows-vc2005 INSTALL.Windows
 AUTOMAKE_OPTIONS = foreign
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = openbabel-2.0.pc

@@ -4,7 +4,7 @@ if BUILD_SCRIPTS
 endif
 
 SUBDIRS = data src test tools doc $(SCRIPT_DIR)
-EXTRA_DIST = Doxyfile windows windows-vc2005
+EXTRA_DIST = Doxyfile windows windows-vc2005 INSTALL.Windows
 AUTOMAKE_OPTIONS = foreign
 
 pkgconfigdir = $(libdir)/pkgconfig
