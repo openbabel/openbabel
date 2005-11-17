@@ -56,18 +56,18 @@ public:
     };
 
   virtual const char* SpecificationURL()
-  {return "http://www.daylight.com/dayhtml/smiles/";}; //optional
+  {return "http://www.daylight.com/smiles/f_smiles.html";};
 
-		virtual int SkipObjects(int n, OBConversion* pConv)
-		{
-			if(n==0) return 1; //already points after current line
-			string temp;
-			istream& ifs = *pConv->GetInStream();
-			int i;
-			for(i=0;i<n && ifs.good();i++)
-				getline(ifs, temp);
-			return ifs.good() ? 1 : -1;	
-		};	
+  virtual int SkipObjects(int n, OBConversion* pConv)
+  {
+    if(n==0) return 1; //already points after current line
+    string temp;
+    istream& ifs = *pConv->GetInStream();
+    int i;
+    for(i=0;i<n && ifs.good();i++)
+      getline(ifs, temp);
+    return ifs.good() ? 1 : -1;	
+  };	
 };
 
 //Make an instance of the format class

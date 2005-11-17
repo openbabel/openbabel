@@ -40,7 +40,7 @@ public:
   };
 
   virtual const char* SpecificationURL()
-  {return "http://www.amber.ucsf.edu/amber/formats.html";}; //optional
+  {return "http://amber.scripps.edu/doc/prep.html";};
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

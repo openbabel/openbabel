@@ -41,7 +41,7 @@ public:
   };
 
   virtual const char* SpecificationURL()
-  {return "http://www.turbomole.com/";}; //optional
+  {return "http://www.cosmologic.de/turbomole.html";};
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

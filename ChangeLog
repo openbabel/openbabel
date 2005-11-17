@@ -1,3 +1,14 @@
+2005-11-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Makefile.am, Makefile.in: Make sure INSTALL.Windows is included
+	in dist.
+
+	* doc/babel.1: Update with recent format additions.
+
+	* src/formats/amberformat.cpp, src/formats/balstformat.cpp,
+	src/formats/smilesformat.cpp, src/formats/turbomoleformat.cpp:
+	Update specification URLs.
+
 2005-11-16  Chris Morley  <c.morley@gaseq.co.uk>
 	
 	* src/obconversion.cpp(Convert): m_IsLast set more definitely
