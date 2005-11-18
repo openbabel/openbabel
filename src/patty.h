@@ -1,16 +1,16 @@
 /**********************************************************************
 patty.h - Programmable atom typer.
-
+ 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
-
+Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+ 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
-
+ 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,7 +20,8 @@ GNU General Public License for more details.
 #ifndef OB_PATTY_H
 #define OB_PATTY_H
 
-namespace OpenBabel {
+namespace OpenBabel
+{
 #define PT_CATION      1
 #define PT_ANION       2
 #define PT_ACCEPTOR    3
@@ -31,42 +32,55 @@ namespace OpenBabel {
 #define PT_METAL	   8
 
 // class introduction in patty.cpp
-class patty
+class OBAPI patty
 {
-  std::vector<OBSmartsPattern*> _sp;
-  std::vector<std::string> smarts;
-  std::vector<std::string> typ;
-  bool debug;
+    std::vector<OBSmartsPattern*> _sp;
+    std::vector<std::string> smarts;
+    std::vector<std::string> typ;
+    bool debug;
 
-  public :
+public :
 
-  patty() {debug = false;}
-  patty(char *s) 
+    patty()
     {
-      debug = false;
-      read_rules(std::string(s));
+        debug = false;
     }
-  
-  patty(const std::string &s) 
+    patty(char *s)
     {
-      debug = false;
-      read_rules(s);
+        debug = false;
+        read_rules(std::string(s));
     }
-  ~patty()
+
+    patty(const std::string &s)
     {
-      std::vector<OBSmartsPattern*>::iterator i;
-      for (i = _sp.begin();i != _sp.end();i++) delete *i;
+        debug = false;
+        read_rules(s);
     }
-  void debug_on() {debug = true;}
-  void debug_off() {debug = false;}
-  void read_rules(const std::string &infile);
-  void assign_rules(std::vector<std::string> &rules);
-  void assign_types(OBMol &mol,std::vector<std::string> &atm_typ);
-  void assign_types(OBMol &mol,std::vector<int> &atm_typ);
-  int type_to_int(const std::string &type, bool failOnUndefined= false);
-  int Istype(const std::string &type);//!< return atom type index, 0 otherwise 
+    ~patty()
+    {
+        std::vector<OBSmartsPattern*>::iterator i;
+        for (i = _sp.begin();i != _sp.end();i++)
+            delete *i;
+    }
+    void debug_on()
+    {
+        debug = true;
+    }
+    void debug_off()
+    {
+        debug = false;
+    }
+    void read_rules(const std::string &infile);
+    void assign_rules(std::vector<std::string> &rules);
+    void assign_types(OBMol &mol,std::vector<std::string> &atm_typ);
+    void assign_types(OBMol &mol,std::vector<int> &atm_typ);
+    int type_to_int(const std::string &type, bool failOnUndefined= false);
+    int Istype(const std::string &type);//!< return atom type index, 0 otherwise
 };
 
 } // end namespace OpenBabel
 
 #endif // OB_PATTY_H
+
+//! \file patty.h
+//! \brief Programmable atom typer. (abbreviated P.At.Ty.)

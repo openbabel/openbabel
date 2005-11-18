@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GR /GX /O2 /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MT /W3 /GR /GX /O2 /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\..\src\formats\xml" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /YX /FD /c
 # SUBTRACT CPP /Fr
 # ADD BASE RSC /l 0x809 /d "NDEBUG"
 # ADD RSC /l 0x809 /d "NDEBUG"
@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386 /out:"OBabel.exe"
+# ADD LINK32 libinchi.lib cmlpp.lib /nologo /subsystem:console /machine:I386 /out:"babel.exe" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\release"
 # SUBTRACT LINK32 /debug
 
 !ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR /FD /GZ /c
+# ADD CPP /nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\..\src\formats\xml" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FR /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x809 /d "_DEBUG"
 # ADD RSC /l 0x809 /d "_DEBUG"
@@ -77,7 +77,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib cmlpp.lib libinchi.lib /nologo /subsystem:console /debug /machine:I386 /out:"Debug/babel.exe" /pdbtype:sept /libpath:".." /libpath:"..\..\src\formats\cmlpp\builds\windows\vc6\cmlpplib\Debug"
+# SUBTRACT LINK32 /profile
 
 !ENDIF 
 
@@ -98,6 +99,10 @@ SOURCE=..\..\src\formats\amberformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\APIInterface.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\atom.cpp
 # End Source File
 # Begin Source File
@@ -114,15 +119,15 @@ SOURCE=..\..\src\formats\bgfformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\binary.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\bitvec.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\bond.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\bondtyper.cpp
 # End Source File
 # Begin Source File
 
@@ -166,11 +171,11 @@ SOURCE=..\..\src\chiral.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\cml.cpp
+SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\cmlformat.cpp
+SOURCE=..\..\src\formats\copyformat.cpp
 # End Source File
 # Begin Source File
 
@@ -190,11 +195,15 @@ SOURCE=..\..\src\data.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\dlhandler_win32..cpp
+SOURCE=..\..\src\dlhandler_win32.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\formats\dmolformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\fastsearchformat.cpp
 # End Source File
 # Begin Source File
 
@@ -203,6 +212,26 @@ SOURCE=..\..\src\formats\featformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\fhformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprints\finger2.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprints\finger3.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\fingerprintformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\freefracformat.cpp
 # End Source File
 # Begin Source File
 
@@ -226,7 +255,7 @@ SOURCE=..\..\src\grid.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\grosmos96format.cpp
+SOURCE=..\..\src\formats\gromos96format.cpp
 # End Source File
 # Begin Source File
 
@@ -234,7 +263,15 @@ SOURCE=..\..\src\formats\hinformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\inchiformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\jaguarformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\kekulize.cpp
 # End Source File
 # Begin Source File
 
@@ -251,10 +288,6 @@ SOURCE=..\..\src\math\matrix3x3.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\mdlformat.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\formats\mm3format.cpp
 # End Source File
 # Begin Source File
 
@@ -278,6 +311,10 @@ SOURCE=..\..\src\formats\mopacformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\mpdformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\mpqcformat.cpp
 # End Source File
 # Begin Source File
@@ -294,6 +331,10 @@ SOURCE=..\..\src\oberror.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\obiter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\obutil.cpp
 # End Source File
 # Begin Source File
@@ -303,6 +344,10 @@ SOURCE=..\..\src\parsmart.cpp
 # Begin Source File
 
 SOURCE=..\..\src\patty.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\pcmodelformat.cpp
 # End Source File
 # Begin Source File
 
@@ -319,6 +364,10 @@ SOURCE=..\..\src\formats\povrayformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\PQSformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\xml\pubchem.cpp
 # End Source File
 # Begin Source File
 
@@ -339,6 +388,10 @@ SOURCE=..\..\src\residue.cpp
 # Begin Source File
 
 SOURCE=..\..\src\ring.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\rotamer.cpp
 # End Source File
 # Begin Source File
 
@@ -390,11 +443,27 @@ SOURCE=..\..\src\formats\viewmolformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\xml\xcmlformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\xedformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\xml\xml.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\xml\xmlformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\xyzformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\yasaraformat.cpp
 # End Source File
 # Begin Source File
 
@@ -406,15 +475,7 @@ SOURCE=..\..\src\formats\zindoformat.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\..\src\aromatic.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\atomtyp.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\babelconfig.h
+SOURCE=..\babelconfig.h
 # End Source File
 # Begin Source File
 
@@ -426,15 +487,7 @@ SOURCE="C:\Program Files\Microsoft Visual Studio\VC98\Include\BASETSD.H"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\binary.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\bitvec.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\bondtyp.h
 # End Source File
 # Begin Source File
 
@@ -462,11 +515,11 @@ SOURCE=..\..\src\dlhandler.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\element.h
+SOURCE=..\..\src\extable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\extable.h
+SOURCE=..\..\src\fingerprint.h
 # End Source File
 # Begin Source File
 
@@ -478,7 +531,7 @@ SOURCE=..\..\src\grid.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\isotope.h
+SOURCE=..\..\src\formats\inchi_api.h
 # End Source File
 # Begin Source File
 
@@ -510,6 +563,14 @@ SOURCE=..\..\src\obifstream.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\obiter.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\obmolecformat.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\obutil.h
 # End Source File
 # Begin Source File
@@ -526,19 +587,15 @@ SOURCE=..\..\src\phmodel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\phmodeldata.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\reaction.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\resdata.h
+SOURCE=..\..\src\ring.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\ring.h
+SOURCE=..\..\src\rotamer.h
 # End Source File
 # Begin Source File
 
@@ -564,6 +621,18 @@ SOURCE=..\..\src\types.h
 
 SOURCE=..\..\src\math\vector3.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\xml\xml.h
+# End Source File
 # End Group
+# Begin Source File
+
+SOURCE=..\libxml2.lib
+# End Source File
+# Begin Source File
+
+SOURCE=..\zdll.lib
+# End Source File
 # End Target
 # End Project

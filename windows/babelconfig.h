@@ -1,17 +1,34 @@
 #ifndef OB_BCONFIG_H
 #define OB_BCONFIG_H
 //For use with Visual C++ (version 6 sp5)
+#define HAVE_CONIO_H 1
 #define HAVE_CLOCK_T 1
 #define HAVE_IOSTREAM	1
 #define HAVE_FSTREAM 1
-#define BABEL_VERSION  1-100.1
+#define HAVE_SSTREAM 1
+#define HAVE_SNPRINTF 1
+#define HAVE_STRNCASECMP 1
+#define HAVE_LIBZ 1
+#define BABEL_VERSION  "2.0"
 
 #define BABEL_DATADIR "."
 #define snprintf _snprintf
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
+#define rindex(a,b) strrchr((a),(b))
 
 #pragma warning (disable : 4786)
+
+#ifndef __FUNCTION__
+#define __FUNCTION__ __FILE__
+#endif
+
+//because of conflicts in WINDEF.H
+#undef min
+#define min _MIN
+
+//Makes unix input files compatible with VC++6
+#define ALL_READS_BINARY
 
 /* Export of functions and global variables from DLLs
 In the header files for the OB core, mol.h etc, exported classes and variables 
@@ -49,6 +66,13 @@ In non-Windows systems OBAPI and OBCONV need to be defined as empty.
 	#define OBCONV //as nothing in non-Windows system
 #endif
 
+#if defined(OBDLL_EXPORTS) //OBDLL being built
+#  define EXTERN __declspec(dllexport) extern
+#elif defined(USING_OBDLL) //program using OBDLL.dll being built
+#  define EXTERN __declspec(dllimport) extern
+#else //Everything else (behaviour as original)
+#  define EXTERN extern
+#endif
 
 /*
 #ifdef _DEBUG
@@ -61,5 +85,14 @@ static char THIS_FILE[]=__FILE__;
 #endif
 */
 
+/*
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+*/
 
 #endif //OB_BCONFIG_H

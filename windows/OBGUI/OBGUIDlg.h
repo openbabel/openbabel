@@ -26,6 +26,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(COBGUIDlg)
 	enum { IDD = IDD_OBGUI_DIALOG };
+	CStatic	m_InPath;
 	CStatic	m_OutCount;
 	CButton	m_OutFixExt;
 	CButton	m_InFixExt;
@@ -58,8 +59,9 @@ protected:
 	stringstream newerr;
 	streambuf* Origclog;
 
-	CDynamicOptions InputOptionCheckBoxes,OutputOptionCheckBoxes,GeneralOptionCheckBoxes;
-	OpenBabel::OBConversion Conv;
+	CDynamicOptions InputClassOptionCheckBoxes, InputOptionCheckBoxes, OutputOptionCheckBoxes,
+		GeneralOptionCheckBoxes;
+	//OpenBabel::OBConversion Conv;
   ifstream inFileStream;
 	ofstream outFileStream;
 	CRect NextOptionRect; //Placeholder for next dynamic option; relative to parent window.
@@ -67,8 +69,7 @@ protected:
 
 	void GetFilter(CString& Filter, CWnd& Wnd);
 	void StreamtoOutConsole(stringstream& oss, bool bAppend=false);
-
-//	int TestWildcards(const char* filename, std::vector<std::string>* FileList);
+	void DisplayPath(char* path);
 
 	// Generated message map functions
 	//{{AFX_MSG(COBGUIDlg)
@@ -89,7 +90,8 @@ protected:
 	afx_msg void OnManualinput();
 	afx_msg void OnClose();
 	afx_msg void OnChangeInputformat();
-	//}}AFX_MSG
+	afx_msg void OnDropFiles( HDROP hDropInfo );
+//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
 

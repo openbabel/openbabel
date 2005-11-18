@@ -11,3 +11,4 @@ roundtrip
 .deps
 .libs
 *.lo
+.gdb_history

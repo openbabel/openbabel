@@ -1,5 +1,8 @@
 /**********************************************************************
+obconversion.cpp -  Declaration of OBFormat and OBConversion
+
 Copyright (C) 2004 by Chris Morley
+Some portions Copyright (C) 2005 by Geoffrey Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -17,6 +20,10 @@ GNU General Public License for more details.
 
 #ifdef _WIN32
 	#pragma warning (disable : 4786)
+
+	//using 'this' in base class initializer
+	#pragma warning (disable : 4355)
+
 	#ifdef GUI
 		#undef DATADIR
 		#include "stdafx.h" //(includes<windows.h>
@@ -26,8 +33,23 @@ GNU General Public License for more details.
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
 #include <map>
+//#include <dlfcn.h>
+
 #include "obconversion.h"
+
+#ifdef HAVE_LIBZ
+#include "zipstream.h"
+#endif
+
+#if !HAVE_STRNCASECMP
+extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
+#endif
+
+#ifndef BUFF_SIZE
+#define BUFF_SIZE 32768
+#endif
 
 using namespace std;
 namespace OpenBabel {
@@ -48,8 +70,6 @@ const type_info& OBFormat::GetType()
 	else
 		return typeid(this); //rubbish return if DefaultFormat not set
 };
-
-const char* OBFormat::SpecificationURL() {return "";};
 
 //***************************************************
 
@@ -72,7 +92,7 @@ is used. This allows multiple input and output files, allowing:
 
 These procedures constitute the "Convert" interface. OBConversion
 and the user interface or application program do not need to be
-aware of any other part of OpenBabel - mol.h is not #included. This
+aware of any other part of OpenBabel - mol.h is not \#included. This
 allows any chemical object derived from OBBase to be converted;
 the type of object is decided by the input format class.
 However,currently, almost all the conversions are for molecules of
@@ -111,6 +131,16 @@ formats are dynamic and errors are not caught at compile time.
 OBConversion::Read() is a templated function so that objects derived
 from OBBase can also be handled, in addition to OBMol, if the format
 routines are written appropriately.
+
+<b>To make a molecule from a SMILES string.</b>
+@code
+	std::string SmilesString;
+	OBMol mol;
+	stringstream ss(SmilesString)
+	OBConversion conv(&ss);
+	if(conv.SetInFormat("smi") && conv.Read(&mol))
+		...
+@endcode
 
 <b>To do a file conversion without manipulating the molecule.</b>
 
@@ -157,19 +187,23 @@ can now be used.
 	obconv.dll, obdll.dll, one or more *.obf format files.
 */
     
-bool OBConversion::FormatFilesLoaded = false;
+  int OBConversion::FormatFilesLoaded = 0;
 
 OBFormat* OBConversion::pDefaultFormat=NULL;
 
 OBConversion::OBConversion(istream* is, ostream* os) : 
-	StartNumber(1), EndNumber(0),pInFormat(NULL),pOutFormat(NULL),
-	Index(0), pOb1(NULL), Count(-1), m_IsLast(true), MoreFilesToCome(false),
-	OneObjectOnly(false)
+	pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
+	EndNumber(0), Count(-1), m_IsLast(true), MoreFilesToCome(false),
+	OneObjectOnly(false), pOb1(NULL), pAuxConv(NULL)
 {
 	pInStream=is;
 	pOutStream=os;
-	strcpy(Dimension,"2D");
-	LoadFormatFiles(); 
+	if (FormatFilesLoaded == 0)
+		FormatFilesLoaded = LoadFormatFiles();
+	
+	//These options take a parameter
+	RegisterOptionParam("f", NULL, 1,GENOPTIONS);
+	RegisterOptionParam("l", NULL, 1,GENOPTIONS);
 }
 
 ///This static function returns a reference to the FormatsMap
@@ -182,39 +216,63 @@ FMapType& OBConversion::FormatsMap()
 	return *fm;
 }
 
-///////////////////////////////////////////////
-OBConversion::OBConversion(const OBConversion& O)
+///This static function returns a reference to the FormatsMIMEMap
+///which, because it is a static local variable is constructed only once.
+///This fiddle is to avoid the "static initialization order fiasco"
+///See Marshall Cline's C++ FAQ Lite document, www.parashift.com/c++-faq-lite/". 
+FMapType& OBConversion::FormatsMIMEMap()
 {
-	//Copy constructor. Needed because of strings
-	Options=O.Options;
-	GeneralOptions=O.GeneralOptions;
-	Title=O.Title;
-	pInFormat=O.pInFormat;
-	pOutFormat=O.pOutFormat;
-	pInStream=O.pInStream;
-	pOutStream=O.pOutStream;
-	StartNumber=O.StartNumber;
-	EndNumber=O.EndNumber;
-	strcpy(Dimension,O.Dimension);
-	Index=0;
-	FormatsMap();//rubbish
+	static FMapType* fm = new FMapType;
+	return *fm;
 }
 
 /////////////////////////////////////////////////
+OBConversion::OBConversion(const OBConversion& o)
+{
+	Index          = o.Index;
+	Count          = o.Count;
+	StartNumber    = o.StartNumber;
+	EndNumber      = o.EndNumber;
+	pInFormat      = o.pInFormat;
+	pInStream      = o.pInStream;
+	pOutFormat     = o.pOutFormat;
+	pOutStream     = o.pOutStream;
+	OptionsArray[0]= o.OptionsArray[0];
+	OptionsArray[1]= o.OptionsArray[1];
+	OptionsArray[2]= o.OptionsArray[2];
+	InFilename     = o.InFilename;
+	rInpos         = o.rInpos;
+	wInpos         = o.wInpos;
+	rInlen         = o.rInlen;
+	wInlen         = o.wInlen;
+	m_IsLast       = o.m_IsLast;
+	MoreFilesToCome= o.MoreFilesToCome;
+	OneObjectOnly  = o.OneObjectOnly;
+	pOb1           = o.pOb1;
+	ReadyToInput   = o.ReadyToInput;
+	
+	pAuxConv       = NULL;
+}
+////////////////////////////////////////////////
+
 OBConversion::~OBConversion() 
 {
+	if(pAuxConv!=this)
+		delete pAuxConv;
 }
-
 //////////////////////////////////////////////////////
+
 /// Class information on formats is collected by making an instance of the class
-/// derived from OBFormat(only one is ever required).RegisterFormat() is called 
+/// derived from OBFormat(only one is usually required). RegisterFormat() is called 
 /// from its constructor. 
 ///
-/// If the compiled format were to be stored separately, like in a DLL, the initialization
-/// code would make an instance of the imported OBFormat class.
-int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat)
+/// If the compiled format is stored separately, like in a DLL or shared library,
+/// the initialization code makes an instance of the imported OBFormat class.
+int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME)
 {
 	FormatsMap()[ID] = pFormat;
+	if (MIME)
+	  FormatsMIMEMap()[MIME] = pFormat;
 	if(pFormat->Flags() & DEFAULTFORMAT)
 		pDefaultFormat=pFormat;
 	return FormatsMap().size();
@@ -224,8 +282,8 @@ int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat)
 int OBConversion::LoadFormatFiles()
 {
 	int count=0;
-	if(FormatFilesLoaded) return 0;
-	FormatFilesLoaded=true; //so will load files only once
+	//	if(FormatFilesLoaded) return 0;
+	//	FormatFilesLoaded=true; //so will load files only once
 #ifdef USING_DYNAMIC_LIBS
 	//Depending on availablilty, look successively in 
 	//FORMATFILE_DIR, executable directory,or current directory
@@ -245,41 +303,13 @@ int OBConversion::LoadFormatFiles()
 		if(DLHandler::openLib(*itr))
 			count++;
 		else
-			cerr << *itr << " did not load properly." << endl;
+			cerr << *itr << " did not load properly" << endl;
 	}
+#else
+	count = 1; //avoid calling this function several times
 #endif //USING_DYNAMIC_LIBS
 	return count;
-/*
-#ifdef _WIN32
-	//Windows specific
-	//Load all the format DLLs (*.obf) in current directory
-	//Returns the number loaded
-	WIN32_FIND_DATA finddata;
-
-	char path[MAX_PATH+1];
-	if(GetModuleFileName(NULL,path,MAX_PATH)==0) return FALSE;
-	char* p = strrchr(path,'\\');
-	if(p && *p) *(p+1)='\0'; //chop off name after last '\'
-	strcat(path,"*.obf");
-	HANDLE hF = FindFirstFile(path,&finddata);
-	if(hF==INVALID_HANDLE_VALUE) return 0;
-	int count=0;
-	do
-	{
-		if(LoadLibrary(finddata.cFileName))
-			count++;
-		else
-			cerr << finddata.cFileName << " did not load properly. Error no. " << GetLastError() <<endl;
-	}while(FindNextFile(hF,&finddata));
-	FindClose(hF);
-	return count;
-#else
-	//Code for other platforms goes here
-	return 0;
-#endif
-*/
 }
-
 
 /**
   *Returns the ID + the first line of the description in str 
@@ -297,7 +327,6 @@ int OBConversion::LoadFormatFiles()
   *	}
   *@endcode
   */
-/////////////////////////////////////////////////////////
 bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat)
 {
 
@@ -311,18 +340,18 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
 		str=NULL; pFormat=NULL;
 		return false;
 	}
-	static string s; 
-	s=itr->first;
+	static string s;
+	s =itr->first;
 	pFormat = itr->second;
 	if(pFormat)
 	{
 		string description(pFormat->Description());
-		s += "  :  ";
+		s += " -- ";
 		s += description.substr(0,description.find('\n'));
 	}
 
-	if(pFormat->Flags() & NOTWRITABLE) s+=" [Readonly]";
-	if(pFormat->Flags() & NOTREADABLE) s+=" [Writeonly]";
+	if(pFormat->Flags() & NOTWRITABLE) s+=" [Read-only]";
+	if(pFormat->Flags() & NOTREADABLE) s+=" [Write-only]";
 
 	str = s.c_str();
 	return true;
@@ -334,28 +363,69 @@ bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFo
 /// Returns true if both formats have been successfully set at sometime
 bool OBConversion::SetInAndOutFormats(const char* inID, const char* outID)
 {
-	if(inID)
-		pInFormat = FindFormat(inID);
-  if(outID)
-		pOutFormat= FindFormat(outID);
-	return pInFormat && pOutFormat
-		&& !(pInFormat->Flags() & NOTREADABLE) && !(pOutFormat->Flags() & NOTWRITABLE);
+	return SetInFormat(inID) && SetOutFormat(outID);
 }
 //////////////////////////////////////////////////////
 
 bool OBConversion::SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut)
 {
+	return SetInFormat(pIn) && SetOutFormat(pOut);
+}
+//////////////////////////////////////////////////////
+bool OBConversion::SetInFormat(OBFormat* pIn)
+{
+	if(pIn==NULL)
+		return true;
 	pInFormat=pIn;
+	return !(pInFormat->Flags() & NOTREADABLE);
+}
+//////////////////////////////////////////////////////
+bool OBConversion::SetOutFormat(OBFormat* pOut)
+{
 	pOutFormat=pOut;
-	return !(pInFormat->Flags() & NOTREADABLE) && !(pOutFormat->Flags() & NOTWRITABLE);
+	return !(pOutFormat->Flags() & NOTWRITABLE);
+}
+//////////////////////////////////////////////////////
+bool OBConversion::SetInFormat(const char* inID)
+{
+	if(inID)
+		pInFormat = FindFormat(inID);
+	return pInFormat && !(pInFormat->Flags() & NOTREADABLE);
 }
 //////////////////////////////////////////////////////
 
+bool OBConversion::SetOutFormat(const char* outID)
+{
+  if(outID)
+		pOutFormat= FindFormat(outID);
+	return pOutFormat && !(pOutFormat->Flags() & NOTWRITABLE);
+}
+
+//////////////////////////////////////////////////////
 int OBConversion::Convert(istream* is, ostream* os) 
 {
 	if(is) pInStream=is;
 	if(os) pOutStream=os;
-	return Convert();
+	ostream* pOrigOutStream = pOutStream;
+
+#ifdef HAVE_LIBZ
+	zlib_stream::zip_istream zIn(*pInStream);
+	if(zIn.is_gzip())
+	  pInStream = &zIn;
+
+	zlib_stream::zip_ostream zOut(*pOutStream);
+	if(IsOption("z",GENOPTIONS))
+	{
+	  // make sure to output the header
+	  zOut.make_gzip();
+	  pOutStream = &zOut;
+	}
+#endif
+
+	int count = Convert();
+	pOutStream = pOrigOutStream;
+	return count;
+
 }
 
 ////////////////////////////////////////////////////
@@ -385,34 +455,57 @@ int OBConversion::Convert()
 	}
 
 	if(!pInFormat) return 0;
-	SetStartAndEnd();
-	if(OneObjectOnly)
-	{
-		EndNumber=1;
-		OneObjectOnly=false;
-	}
-
-//	Index=0;//number objects output
 	Count=0;//number objects processed
+
+	if(!SetStartAndEnd())
+		return 0;
+
 	ReadyToInput=true;
 	m_IsLast=false;
 	pOb1=NULL;
+	wInlen=0;
 
 	//Input loop
 	while(ReadyToInput && pInStream->peek() != EOF && pInStream->good())
 	{
 		if(pInStream==&cin)
-			if(pInStream->peek()=='\n')break;
+		{
+			if(pInStream->peek()=='\n')
+				break;
+		}
+		else
+			rInpos = pInStream->tellg();
+		
+		bool ret=false;
+		try
+		{
+			ret = pInFormat->ReadChemObject(this);
+		}		
+		catch(...)
+		{
+			if(!IsOption("e", GENOPTIONS) && !OneObjectOnly)
+				throw;
+		}
 
-		if( !pInFormat->ReadChemObject(this)) break; 
+		if(!ret)
+		{
+			//error or termination request: terminate unless
+			// -e option requested and sucessfully can skip past current object
+			if(!IsOption("e", GENOPTIONS) || pInFormat->SkipObjects(0,this)!=1) 
+				break;
+		}
+		if(OneObjectOnly)
+			break;
 		// Objects supplied to AddChemObject() which may output them after a delay
 		//ReadyToInput may be made false in AddChemObject()
 		// by WriteMolecule() returning false  or by Count==EndNumber		
 	}
 	
 	//Output last object
-	if(!MoreFilesToCome)
-		m_IsLast=true;
+	//if(!MoreFilesToCome)
+	//	m_IsLast=true;
+	m_IsLast= !MoreFilesToCome;
+
 	if(pOutFormat)
 		if(!pOutFormat->WriteChemObject(this))
 			Index--;
@@ -421,35 +514,42 @@ int OBConversion::Convert()
 	Count= -1; 
 	EndNumber=StartNumber=0; pOb1=NULL;//leave tidy
 	MoreFilesToCome=false;
+	OneObjectOnly=false;
 
 	return Index; //The number actually output
 }
 //////////////////////////////////////////////////////
-void OBConversion::SetStartAndEnd()
+bool OBConversion::SetStartAndEnd()
 {
-//Sets starting and ending molecule numbers by parsing GeneralOptions
-	const char* p = GetGeneralOptions();
-	while(*p)
+	int TempStartNumber=0;
+	const char* p = IsOption("f",GENOPTIONS);
+	if(p)
 	{
-		switch(*(p++))
+		StartNumber=atoi(p);
+		if(StartNumber>1)
 		{
-		case '\"' : //ignore quoted characters
-			p=strchr(p++,'\"');
-			if(p++==NULL)
+			TempStartNumber=StartNumber;
+			//Try to skip objects now
+			int ret = pInFormat->SkipObjects(StartNumber-1,this);
+			if(ret==-1) //error
+				return false; 
+			if(ret==1) //success:objects skipped
 			{
-				cerr << "Missing \" in options" <<endl;
+				Count = StartNumber-1;
+				StartNumber=0;
 			}
-			break;
-		case 'f':
-			StartNumber=atoi(++p);
-			p=strchr(p,'\"')+1; //get past ""
-			break;
-		case 'l':
-			EndNumber=atoi(++p);
-			p=strchr(p,'\"')+1;
-			break;
 		}
 	}
+
+	p = IsOption("l",GENOPTIONS);
+	if(p)
+	{
+		EndNumber=atoi(p);
+		if(TempStartNumber && EndNumber<TempStartNumber)
+			EndNumber=TempStartNumber;
+	}
+
+	return true;
 }
 
 //////////////////////////////////////////////////////
@@ -482,27 +582,33 @@ int OBConversion::AddChemObject(OBBase* pOb)
 		return Count;
 	}
 	Count++;
-	if(pOb && Count>=StartNumber)//keeps reading objects but does nothing with them
+	if(Count>=(int)StartNumber)//keeps reading objects but does nothing with them
 	{	
-		if(Count==EndNumber)
+		if(Count==(int)EndNumber)
 			ReadyToInput=false; //stops any more objects being read
 
-		if(pOb1 && pOutFormat) //see if there is an object ready to be output
+		rInlen = pInStream->tellg() - rInpos;
+
+		if(pOb)
 		{
-			//Output object
-			if (!pOutFormat->WriteChemObject(this))  
+			if(pOb1 && pOutFormat) //see if there is an object ready to be output
 			{
-				//faultly write, so finish
-				--Index;
-				ReadyToInput=false;
-				return Count;
+				//Output object
+				if (!pOutFormat->WriteChemObject(this))  
+				{
+					//faultly write, so finish
+					--Index;
+					ReadyToInput=false;
+					return Count;
+				}
 			}
+			pOb1=pOb;
+			wInpos = rInpos; //Save the position in the input file to be accessed when writing it
+			wInlen = rInlen;
 		}
-		pOb1=pOb;
 	}
 	return Count;
 }
-////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 int OBConversion::GetOutputIndex() const
 {
@@ -524,42 +630,9 @@ OBFormat* OBConversion::FindFormat(const char* ID)
 }
 
 //////////////////////////////////////////////////
-const char* OBConversion::GetOptions() const
-{
-	return(Options.c_str());
-}
-
-void OBConversion::SetOptions(const char* options)
-{
-	Options=options;
-}
-
-const char* OBConversion::GetGeneralOptions() const
-{
-	return(GeneralOptions.c_str());
-}
-
-void OBConversion::SetGeneralOptions(const char* options)
-{
-	GeneralOptions=options;
-}
-
 const char* OBConversion::GetTitle() const
 {
-	return(Title.c_str());
-}
-void OBConversion::SetTitle(const char* title)
-{
-	Title=title;
-}
-const char* OBConversion::GetDimension() const
-{
-	return Dimension;
-}
-
-void OBConversion::SetDimension(const char* dim)
-{
-	strcpy(Dimension,dim);
+	return(InFilename.c_str());
 }
 
 void OBConversion::SetMoreFilesToCome()
@@ -570,27 +643,148 @@ void OBConversion::SetMoreFilesToCome()
 void OBConversion::SetOneObjectOnly()
 {
 	OneObjectOnly=true;
+	m_IsLast=true;
 }	
+
 /////////////////////////////////////////////////////////
 OBFormat* OBConversion::FormatFromExt(const char* filename)
 {
-	char* p = strrchr(filename,'.');
-	if(p)
-		return FindFormat(p+1);
-	return NULL; //if no extension		
+  string file = filename;
+  size_t extPos = file.rfind(".");
+
+  if(extPos!=string::npos)
+	{
+      // only do this if we actually can read .gz files
+#ifdef HAVE_LIBZ
+		if (file.substr(extPos,3) == ".gz")
+		{
+			file.erase(extPos);
+			extPos = file.rfind(".");
+			if (extPos!=string::npos)
+				return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
+		}
+		else
+#endif
+		return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
+	}
+  return NULL; //if no extension		
 }
 
+OBFormat* OBConversion::FormatFromMIME(const char* MIME)
+{
+  if(FormatsMIMEMap().find(MIME) == FormatsMIMEMap().end())
+    return NULL;
+  else
+    return FormatsMIMEMap()[MIME];
+}
+
+bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
+{
+	if(pin)
+		pInStream=pin;
+	if(!pInFormat) return false;
+
+#ifdef HAVE_LIBZ
+	zlib_stream::zip_istream zIn(*pInStream);
+	if(zIn.is_gzip())
+		pInStream = &zIn;
+#endif
+
+	return pInFormat->ReadMolecule(pOb, this);
+}
 //////////////////////////////////////////////////
 /// Writes the object pOb but does not delete it afterwards.
-/// The output stream is lastingly changed if pout is not NULL
+/// The output stream is lastingly changed if pos is not NULL
 /// Returns true if successful.
 bool OBConversion::Write(OBBase* pOb, ostream* pos)
 {
 	if(pos)
 		pOutStream=pos;
 	if(!pOutFormat) return false;
-	return pOutFormat->WriteMolecule(pOb,this);
+
+	ostream* pOrigOutStream = pOutStream;
+#ifdef HAVE_LIBZ
+	zlib_stream::zip_ostream zOut(*pOutStream);
+	if(IsOption("z",GENOPTIONS))
+	{
+	  // make sure to output the header
+	  zOut.make_gzip();
+	  pOutStream = &zOut;
+	}
+#endif
+
+	bool ret = pOutFormat->WriteMolecule(pOb,this);
+	pOutStream = pOrigOutStream;
+	return ret;
 }
+
+//////////////////////////////////////////////////
+/// Writes the object pOb but does not delete it afterwards.
+/// The output stream not changed (since we cannot write to this string later)
+/// Returns true if successful.
+std::string OBConversion::WriteString(OBBase* pOb)
+{
+  ostream *oldStream = pOutStream; // save old output
+  stringstream newStream;
+
+  if(pOutFormat)
+    {
+      Write(pOb, &newStream);
+    }
+  pOutStream = oldStream;
+
+  return newStream.str();
+}
+
+//////////////////////////////////////////////////
+/// Writes the object pOb but does not delete it afterwards.
+/// The output stream is lastingly changed to point to the file
+/// Returns true if successful.
+bool OBConversion::WriteFile(OBBase* pOb, string filePath)
+{
+	if(!pOutFormat) return false;
+
+	ofstream ofs;
+	ios_base::openmode omode = 
+		pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
+
+	ofs.open(filePath.c_str(),omode);
+	if(!ofs)
+	  {
+	    cerr << "Cannot write to " << filePath <<endl;
+	    return false;
+	  }
+
+	return Write(pOb, &ofs);
+}
+
+////////////////////////////////////////////
+bool	OBConversion::ReadString(OBBase* pOb, std::string input)
+{
+  stringstream pin(input);
+  return Read(pOb,&pin);
+}
+
+
+////////////////////////////////////////////
+bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
+{
+  if(!pInFormat) return false;
+
+  ifstream ifs;
+  ios_base::openmode imode = 
+    pOutFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
+
+  ifs.open(filePath.c_str(),imode);
+  if(!ifs)
+    {
+      cerr << "Cannot read from " << filePath << endl;
+      return false;
+    }
+
+  return Read(pOb,&ifs);
+}
+
 
 ////////////////////////////////////////////
 const char* OBConversion::Description()
@@ -598,40 +792,9 @@ const char* OBConversion::Description()
 return "Conversion options\n \
  -f <#> Start import at molecule # specified\n \
  -l <#> End import at molecule # specified\n \
- -z     Use the options used last time\n\n";
-}
-
-////////////////////////////////////////////
-bool OBConversion::SaveOptionsToFile(const char* filename)
-{
-	//Returns true if successful
-	ofstream os(filename);
-	if(os.good())
-	{
-		os << GetGeneralOptions() << endl;
-		os << GetOptions() << ends;
-		return true;
-	}
-	else
-		return false;
-}
-
-////////////////////////////////////////////
-bool OBConversion::RestoreOptionsFromFile(const char* filename)
-{
-	//Replaces all the conversion options with a string from the specified file
-	ifstream is(filename);
-	if(is.good())
-	{
-		const int BUFLEN = 256;
-		char buf[BUFLEN];
-		is.getline(buf,BUFLEN);
-		SetGeneralOptions(buf);
-		is.getline(buf,BUFLEN);
-		SetOptions(buf);
-		return true;
-	}
-	return false;
+ -t All input files describe a single molecule\n \
+ -e Continue with next object after error, if possible\n \
+ -z Compress the output with gzip\n";
 }
 
 ////////////////////////////////////////////
@@ -639,31 +802,10 @@ bool OBConversion::IsLast()
 {
 	return m_IsLast;
 }
-
 ////////////////////////////////////////////
-/// If ch is not in the option string outside quoted text, returns NULL
-/// If it is the return value is not NULL and points to the
-/// following quoted text if there is any (but it is not NULL terminated).
-const char* OBConversion::IsOption(const char ch) const
+bool OBConversion::IsFirstInput()
 {
-	const char* p = Options.c_str(); 
-	while(*p)
-	{
-		const char* str=p;
-		const char* pp=p;
-		if(*p++=='\"') //look for quote
-		{
-			str=p; //start of quote string
-			p=strchr(p,'\"')+1; //...find matching " and move on
-			if(p==NULL) 
-			{
-				cerr << "Unmatched quotes in option string" <<endl;
-				return NULL;
-			}
-		}
-		if(*pp==ch) return str;
-	}
-	return NULL;
+	return (Count==0);
 }
 
 /////////////////////////////////////////////////
@@ -693,7 +835,6 @@ string OBConversion::IncrementedFileName(string& BaseName, const int Count)
 	{
 		char num[33];
 		snprintf(num, 33, "%d", Count);
-		//		itoa(Count,num,10);
 		ofname.replace(pos,1, num);
 	}
 	return ofname;		
@@ -710,12 +851,12 @@ does not contain a *.
 
 Aggregation
 Done if FileList has more than one file name and OutputFileName does
-not contain * . All the chemical objects are OutputFileName
-converted and sent to the single output file.
+not contain * . All the chemical objects are converted and sent
+to the single output file.
  
 Splitting
 Done if FileList contains a single file name and OutputFileName
-contains a * . Each chemical object in the input file converted
+contains a * . Each chemical object in the input file is converted
 and sent to a separate file whose name is OutputFileName with the
 * replaced by 1, 2, 3, etc.
 For example, if OutputFileName is NEW*.smi then the output files are
@@ -727,28 +868,30 @@ Each input file is converted to an output file whose name is
 OutputFileName with the * replaced by the inputfile name without its
 path and extension.
 So if the input files were inpath/First.cml, inpath/Second.cml
-and OutputFileName was NEW.mol, the output files would be
+and OutputFileName was NEW*.mol, the output files would be
 NEWFirst.mol, NEWSecond.mol.
-   
-If FileList is empty, the input stream already set (usually in the
-constructor) is used. If OutputFileName is empty, the output stream
-already set is used.
+
+If FileList is empty, the input stream that has already been set
+(usually in the constructor) is used. If OutputFileName is empty,
+the output stream already set is used.
 
 On exit, OutputFileList contains the names of the output files.
 
 Returns the number of Chemical objects converted.
 */
-int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
-													 vector<string>& OutputFileList)
+int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& OutputFileName,
+			      std::vector<std::string>& OutputFileList)
 {
 	
 	istream* pInStream;
-	ostream* pOutStream;
+	ostream* pOutStream=NULL;
 	ifstream is;
 	ofstream os;
 	bool HasMultipleOutputFiles=false;
 	int Count=0;
-
+	bool CommonInFormat = pInFormat ? true:false; //whether set in calling routine
+	ios_base::openmode omode = 
+		pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
 	try
 	{
 		ofstream ofs;
@@ -761,7 +904,7 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 			if(OutputFileName.find_first_of('*')!=string::npos) HasMultipleOutputFiles = true;
 			if(!HasMultipleOutputFiles)
 			{
-				os.open(OutputFileName.c_str());
+				os.open(OutputFileName.c_str(),omode);
 				if(!os)
 				{
 					cerr << "Cannot write to " << OutputFileName <<endl;
@@ -770,6 +913,32 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 				OutputFileList.push_back(OutputFileName);
 				pOutStream=&os;
 			}
+		}
+
+		if(IsOption("t",GENOPTIONS))
+		{
+			//Concatenate input file option (multiple files, single molecule)
+			if(HasMultipleOutputFiles)
+			{
+				cerr << "Cannot have multiple output files and also concatenate input files (-t option)" <<endl;
+				return 0;
+			}
+
+			stringstream allinput;
+			vector<string>::iterator itr;
+			for(itr=FileList.begin();itr!=FileList.end();itr++)
+			{
+				ifstream ifs((*itr).c_str());
+				if(!ifs)
+				{
+					cerr << "Cannot open " << *itr <<endl;
+					continue;
+				}
+				allinput << ifs.rdbuf(); //Copy all file contents
+				ifs.close();
+			}
+			Count = Convert(&allinput,pOutStream);
+			return Count;
 		}
 
 		//INPUT
@@ -785,19 +954,17 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 				tempitr--;
 				for(itr=FileList.begin();itr!=FileList.end();itr++)
 				{
-					ifstream ifs((*itr).c_str());
-					if(!ifs)
-					{
-						cerr << "Cannot open " << *itr <<endl;
+					InFilename = *itr;
+					ifstream ifs;
+					if(!OpenAndSetFormat(CommonInFormat, &ifs))
 						continue;
-					}
 
 					if(HasMultipleOutputFiles)
 					{
 						//Batch conversion
 						string batchfile = BatchFileName(OutputFileName,*itr);
 						if(ofs.is_open()) ofs.close();
-						ofs.open(batchfile.c_str());
+						ofs.open(batchfile.c_str(), omode);
 						if(!ofs) 
 						{
 							cerr << "Cannot open " << batchfile << endl;
@@ -819,12 +986,9 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 			else
 			{			
 				//Single input file
-				is.open(FileList[0].c_str());
-				if(!is) 
-				{
-					cerr << "Cannot open " << FileList[0] <<endl;
-					return 0;
-				}
+				InFilename = FileList[0];
+				if(!OpenAndSetFormat(CommonInFormat, &is))
+						return 0;
 				pInStream=&is;
 
 				if(HasMultipleOutputFiles)
@@ -832,27 +996,48 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 					//Splitting
 					//Output is put in a temporary stream and written to a file
 					//with an augmenting name only when it contains a valid object. 
-					SetOneObjectOnly();
 					int Indx=1;
+					#ifdef HAVE_LIBZ
+						zlib_stream::zip_istream zIn(*pInStream);
+					#endif
 					for(;;)
 					{
 						stringstream ss;
+						SetOutStream(&ss);
 						SetOutputIndex(0); //reset for new file
-						
-						int ThisFileCount = Convert(pInStream,&ss);
+						SetOneObjectOnly();
+
+					#ifdef HAVE_LIBZ
+						if(Indx==1 && zIn.is_gzip())
+							SetInStream(&zIn);
+					#endif
+
+						int ThisFileCount = Convert();
 						if(ThisFileCount==0) break;
 						Count+=ThisFileCount;
 
 						if(ofs.is_open()) ofs.close();
 						string incrfile = IncrementedFileName(OutputFileName,Indx++);
-						ofs.open(incrfile.c_str());
+						ofs.open(incrfile.c_str(), omode);
 						if(!ofs)
 						{
 							cerr << "Cannot write to " << incrfile << endl;
 							return Count;
 						}
+						
 						OutputFileList.push_back(incrfile);
-						ofs << ss.rdbuf();
+					#ifdef HAVE_LIBZ
+						if(IsOption("z",GENOPTIONS))
+						{
+							zlib_stream::zip_ostream zOut(ofs);
+							// make sure to output the header
+							zOut.make_gzip();
+							zOut << ss.rdbuf();
+						}
+						else
+					#endif
+							ofs << ss.rdbuf();
+
 						ofs.close();
 						ss.clear();
 					}
@@ -867,10 +1052,131 @@ int OBConversion::FullConvert(vector<string>& FileList, string& OutputFileName,
 	}
 	catch(...)
 	{
-		cerr << "Conversion failed with an exception" <<endl;
+		cerr << "Conversion failed with an exception. Count=" << Count <<endl;
 		return Count;
 	}
 }
 
+bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
+{
+	//Opens file using InFilename and sets pInFormat if requested
+	if(!SetFormat)
+	{
+		pInFormat = FormatFromExt(InFilename.c_str());
+		if(pInFormat==NULL)
+		{
+			string::size_type pos = InFilename.rfind('.');
+			string ext;
+			if(pos!=string::npos)
+				ext = InFilename.substr(pos);
+			cerr << "Cannot read input format \"" << ext << '\"' 
+			     << " for file \"" << InFilename << "\"" << endl;
+			return false;
+		}
+	}
+
+	ios_base::openmode imode;
+#ifdef ALL_READS_BINARY //Makes unix files compatible with VC++6
+	imode = ios_base::in|ios_base::binary;
+#else
+	imode = pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
+#endif
+
+	is->open(InFilename.c_str(), imode);
+	if(!is->good())
+	{
+		cerr << "Cannot open " << InFilename <<endl;
+		return false;
+	}
+
+	return true;
+}
+
+///////////////////////////////////////////////
+void OBConversion::AddOption(const char* opt, Option_type opttyp, const char* txt)
+{
+	//Also updates an option
+	if(txt==NULL)
+		OptionsArray[opttyp][opt]=string();
+	else
+		OptionsArray[opttyp][opt]=txt;
+}
+
+const char* OBConversion::IsOption(const char* opt, Option_type opttyp)
+{
+	//Returns NULL if option not found or a pointer to the text if it is
+	map<string,string>::iterator pos;
+	pos = OptionsArray[opttyp].find(opt);
+	if(pos==OptionsArray[opttyp].end())
+		return NULL;
+	return pos->second.c_str();
+}
+
+bool OBConversion::RemoveOption(const char* opt, Option_type opttyp)
+{
+	return OptionsArray[opttyp].erase(opt)!=0;//true if was there
+}
+
+void OBConversion::SetOptions(const char* options, Option_type opttyp)
+{
+	while(*options)
+	{
+		string ch(1, *options++);
+		if(*options=='\"')
+		{
+			string txt = options+1;
+			string::size_type pos = txt.find('\"');
+			if(pos==string::npos)
+				return; //options is illformed
+			txt.erase(pos);
+			OptionsArray[opttyp][ch]= txt;
+			options += pos+2;
+		}
+		else
+			OptionsArray[opttyp][ch] = string();
+	}
+}
+
+typedef std::map<string,int> OPAMapType;
+OPAMapType& OBConversion::OptionParamArray(Option_type typ)
+{
+	static OPAMapType* opa = new OPAMapType[3];
+	return opa[typ];
+}
+
+void OBConversion::RegisterOptionParam(string name, OBFormat* pFormat,
+																			 int numberParams, Option_type typ)
+{
+	//Gives error message if the number of parameters conflicts with an existing registration
+	map<string,int>::iterator pos;
+	pos =	OptionParamArray(typ).find(name);
+	if(pos!=OptionParamArray(typ).end())
+	{
+		if(pos->second!=numberParams)
+		{
+			string description("API");
+	    if(pFormat)
+				description=pFormat->Description();
+			cerr << "The number of parameters needed by option \"" << name << "\" in " 
+				   << description.substr(0,description.find('\n'))
+				   << " differs from an earlier registration." << endl;
+			return;
+		}
+	}
+	OptionParamArray(typ)[name] = numberParams;
+}
+
+int OBConversion::GetOptionParams(string name, Option_type typ)
+{
+	//returns the number of parameters registered for the option, or 0 if not found
+	map<string,int>::iterator pos;
+	pos =	OptionParamArray(typ).find(name);
+	if(pos==OptionParamArray(typ).end())
+		return 0;
+	return pos->second;
+}
+
 }//namespace OpenBabel
 
+//! \file obconversion.cpp
+//! \brief Implementation of OBFormat and OBConversion classes.

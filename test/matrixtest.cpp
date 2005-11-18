@@ -1,17 +1,23 @@
 /**********************************************************************
+matrixtest.cpp - Unit tests for matrix manipulations.
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2005 Geoffrey R. Hutchison
+ 
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include "babelconfig.h"
 #include "math/matrix3x3.h"
 #include "obutil.h"
 
@@ -22,30 +28,33 @@ OBRandom randomizer;
 
 matrix3x3 randomMatrix(void)
 {
-  matrix3x3 A;
+    matrix3x3 A;
 
-  do{
-    for(int i=0; i<3; i++)
-      for(int j=0; j<3; j++)
-	A.Set(i, j, randomizer.NextFloat());
-  }while(A.determinant() < 0.1);
+    do
+    {
+        for(int i=0; i<3; i++)
+            for(int j=0; j<3; j++)
+                A.Set(i, j, randomizer.NextFloat());
+    }
+    while(A.determinant() < 0.1);
 
-  return A;
+    return A;
 }
 
 // Test the inversion of matrices and the matrix product. Get an
 // invertible random matrix, invert it, multiply and check if the
 // resulting matrix is the unit matrix.
-bool testInversion() 
+bool testInversion()
 {
-  matrix3x3 rnd = randomMatrix();
-  matrix3x3 result = rnd * rnd.inverse();
+    matrix3x3 rnd = randomMatrix();
+    matrix3x3 result = rnd * rnd.inverse();
 
-  if (!result.isUnitMatrix()) {
-    cout << "Matrix inversion test failed." << endl;
-    return false;
-  }
-  return true;
+    if (!result.isUnitMatrix())
+    {
+        cout << "Matrix inversion test failed." << endl;
+        return false;
+    }
+    return true;
 }
 
 
@@ -55,42 +64,44 @@ bool testInversion()
 // diagonal elements.
 bool testEigenvalues()
 {
-  matrix3x3 Diagonal;
-  for(int i=0; i<3; i++)
-    for(int j=0; j<3; j++)
-      Diagonal.Set(i, j, 0.0);
-  Diagonal.Set(0, 0, randomizer.NextFloat());
-  Diagonal.Set(1, 1, Diagonal.Get(0,0)+fabs(randomizer.NextFloat()));
-  Diagonal.Set(2, 2, Diagonal.Get(1,1)+fabs(randomizer.NextFloat()));
+    matrix3x3 Diagonal;
+    for(int i=0; i<3; i++)
+        for(int j=0; j<3; j++)
+            Diagonal.Set(i, j, 0.0);
+    Diagonal.Set(0, 0, randomizer.NextFloat());
+    Diagonal.Set(1, 1, Diagonal.Get(0,0)+fabs(randomizer.NextFloat()));
+    Diagonal.Set(2, 2, Diagonal.Get(1,1)+fabs(randomizer.NextFloat()));
 
-  matrix3x3 rndRotation;
-  rndRotation.randomRotation(randomizer);
+    matrix3x3 rndRotation;
+    rndRotation.randomRotation(randomizer);
 
-  matrix3x3 toDiagonalize = rndRotation * Diagonal * rndRotation.inverse();
-  if (!toDiagonalize.isSymmetric()) {
-    cout << "Matrix eigenvalue test failed, conjugation of a diagonal matrix"
-	 << "with a rotation is not symmetric." << endl;
-    return false;
-  }
-  
-  vector3 eigenvals;
-  toDiagonalize.findEigenvectorsIfSymmetric(eigenvals);
-
-  for(unsigned int j=0; j<3; j++)
-    if ( fabs(eigenvals[j]-Diagonal.Get(j,j)) > 2e-6 )
+    matrix3x3 toDiagonalize = rndRotation * Diagonal * rndRotation.inverse();
+    if (!toDiagonalize.isSymmetric())
     {
-      cout << "Matrix eigenvalue test(" << j << 
-	") failed, wrong eigenvalues computed." << endl;
-      cout << "Expected: " << eigenvals[j] << " and got instead: " 
-	   << Diagonal.Get(j,j) << endl;
-      return false;
+        cout << "Matrix eigenvalue test failed, conjugation of a diagonal matrix"
+        << "with a rotation is not symmetric." << endl;
+        return false;
     }
 
-  if ( (eigenvals[0] >= eigenvals[1]) || (eigenvals[1] >= eigenvals[2]) ) {
-    cout << "Matrix eigenvalue test failed, eigenvalues not not ordered." << endl;
-    return false;
-  }
-  return true;
+    vector3 eigenvals;
+    toDiagonalize.findEigenvectorsIfSymmetric(eigenvals);
+
+    for(unsigned int j=0; j<3; j++)
+        if ( fabs(eigenvals[j]-Diagonal.Get(j,j)) > 2e-6 )
+        {
+            cout << "Matrix eigenvalue test(" << j <<
+            ") failed, wrong eigenvalues computed." << endl;
+            cout << "Expected: " << eigenvals[j] << " and got instead: "
+            << Diagonal.Get(j,j) << endl;
+            return false;
+        }
+
+    if ( (eigenvals[0] >= eigenvals[1]) || (eigenvals[1] >= eigenvals[2]) )
+    {
+        cout << "Matrix eigenvalue test failed, eigenvalues not not ordered." << endl;
+        return false;
+    }
+    return true;
 }
 
 
@@ -99,73 +110,79 @@ bool testEigenvalues()
 // really gives a diagonal matrix. Calculate the matrix-vector
 // products directly to see if the vectors found are eigenvectors
 // indeed, and if the computed eigenvalues are correct.
-bool testEigenvectors() 
+bool testEigenvectors()
 {
-  matrix3x3 rnd = randomMatrix();
-  rnd.Set(0,1, rnd.Get(1,0));
-  rnd.Set(0,2, rnd.Get(2,0));
-  rnd.Set(1,2, rnd.Get(2,1));
-  vector3 eigenvals;
-  matrix3x3 eigenvects = rnd.findEigenvectorsIfSymmetric(eigenvals);
+    matrix3x3 rnd = randomMatrix();
+    rnd.Set(0,1, rnd.Get(1,0));
+    rnd.Set(0,2, rnd.Get(2,0));
+    rnd.Set(1,2, rnd.Get(2,1));
+    vector3 eigenvals;
+    matrix3x3 eigenvects = rnd.findEigenvectorsIfSymmetric(eigenvals);
 
-  // Check if the eigenvects are normalized and mutually orthogonal
-  if (!eigenvects.isOrthogonal()) {
-    cout << "Matrix eigenvector test failed, findEigenvectorsIfSymmetric()"
-	 << " returned a matrix that is not orthogonal." << endl;
-    return false;
-  }
-
-  matrix3x3 shouldBeDiagonal = eigenvects.inverse() * rnd * eigenvects;
-  
-  if (!shouldBeDiagonal.isDiagonal()) {
-    cout << "Matrix eigenvector test failed, matrix is not diagonalized." << endl;
-    return false;
-  }
-  
-  for(unsigned int j=0; j<3; j++)
-    if ( fabs(shouldBeDiagonal.Get(j,j) - eigenvals[j]) > 2e-6 )
+    // Check if the eigenvects are normalized and mutually orthogonal
+    if (!eigenvects.isOrthogonal())
     {
-      cout << "Matrix eigenvector test(" << j << 
-	") failed, wrong eigenvalues computed." << endl;
-      cout << "Expected: " << eigenvals[j] << " and got instead: " 
-	   << shouldBeDiagonal.Get(j,j) << endl;
-      return false;
+        cout << "Matrix eigenvector test failed, findEigenvectorsIfSymmetric()"
+        << " returned a matrix that is not orthogonal." << endl;
+        return false;
     }
 
-  for(unsigned int i=0; i<3; i++ ) {
-    vector3 EV = eigenvects.GetColumn(i);
-    EV = rnd*EV-eigenvals[i]*EV;
-    if (EV.length() > 1e-4) {
-      cout << EV.length() << " Matrix eigenvector test failed,"
-	   << " wrong eigenvector computed for column " << i << "." << endl;
-      return false;
+    matrix3x3 shouldBeDiagonal = eigenvects.inverse() * rnd * eigenvects;
+
+    if (!shouldBeDiagonal.isDiagonal())
+    {
+        cout << "Matrix eigenvector test failed, matrix is not diagonalized." << endl;
+        return false;
     }
-  }
-  return true;
+
+    for(unsigned int j=0; j<3; j++)
+        if ( fabs(shouldBeDiagonal.Get(j,j) - eigenvals[j]) > 2e-6 )
+        {
+            cout << "Matrix eigenvector test(" << j <<
+            ") failed, wrong eigenvalues computed." << endl;
+            cout << "Expected: " << eigenvals[j] << " and got instead: "
+            << shouldBeDiagonal.Get(j,j) << endl;
+            return false;
+        }
+
+    for(unsigned int i=0; i<3; i++ )
+    {
+        vector3 EV = eigenvects.GetColumn(i);
+        EV = rnd*EV-eigenvals[i]*EV;
+        if (EV.length() > 1e-4)
+        {
+            cout << EV.length() << " Matrix eigenvector test failed,"
+            << " wrong eigenvector computed for column " << i << "." << endl;
+            return false;
+        }
+    }
+    return true;
 }
 
 
 int main(int argc,char *argv[])
 {
-  if (argc != 1) {
-    cout << "Usage: matrixtest" << endl;
-    cout << "   Tests Open Babel matrix manipulations." << endl;
+    if (argc != 1)
+    {
+        cout << "Usage: matrixtest" << endl;
+        cout << "   Tests Open Babel matrix manipulations." << endl;
+        return 0;
+    }
+
+    cout << endl << "Testing Matrix Algebra..." << endl;
+
+    randomizer.Seed(346534);
+
+    for (int i=0; i < 50000 ; i++)
+    {
+        if (!testInversion())
+            return -1; // test failed
+        if (!testEigenvalues())
+            return -1; // test failed
+        if (!testEigenvectors())
+            return -1; // test failed
+    }
+
+    // test passed
     return 0;
-  }
-
-  cout << endl << "Testing Matrix Algebra..." << endl;
-
-  randomizer.Seed(346534);
-
-  for (int i=0; i < 50000 ; i++) {
-    if (!testInversion())
-      return -1; // test failed
-    if (!testEigenvalues())
-      return -1; // test failed
-    if (!testEigenvectors())
-      return -1; // test failed
-  }
-
-  // test passed
-  return 0;
 }

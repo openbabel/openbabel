@@ -1,5 +1,7 @@
 /**********************************************************************
-Copyright (C) 2004 by Chris Morley
+dlhandler.h - Dynamic loader for file format modules.
+
+Copyright (C) 2004-2005 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -13,22 +15,33 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#ifndef DLHANDLER_H
-#define DLHANDLER_H
+
+#ifndef OB_DLHANDLER_H
+#define OB_DLHANDLER_H
 
 #include "babelconfig.h"
+
 #include <string>
 #include <vector>
 
+// These macros are used in DLL builds. If they have not
+// been set in babelconfig.h, define them as nothing.
+#ifndef OBCONV
+	#define OBCONV
+#endif
+#ifndef OBDLL
+	#define OBDLL
+#endif
 
-/**
-	* Interface for dynamic libraries. This class defines an interface for
-	* finding and opening dynamic libraries on different platforms 
-	* (the cpp files are different).
-	* It has only what is needed for OpenBabel and is not intended to be 
-	* general purpose.
-	*/
-class DLHandler
+//! \brief Interface for dynamic libraries.
+//!
+//! This class defines an interface for finding and opening dynamic
+//! loadable libraries on different platforms (e.g., modular plugins)
+//! via different source code files.
+//! It has only what is needed for OpenBabel and is not intended to be 
+//! general purpose. Internally, it is used for dynamic loading and unloading
+//! OBFormat file translation modules.
+class OBCONV DLHandler
 {
 public:
 
@@ -45,9 +58,18 @@ public:
 	  * Note that this is not recursive: it only matches files in the specified path.
 	  * For example, if path = e:\\path\\to\\ and pattern = *.obf it will return
 	  * vector entries lik e:\\path\\to\\cmlformat.obf
-	  * Returns the number of valid files.  */
+	  * \return the number of valid files.
+	*/
 	static int findFiles (std::vector <std::string>& file_list, 
 			const std::string& pattern, const std::string& path);
+
+	/** Searches for files which match a full filename (including the path) which
+	  * contains a wildcard.
+	  * The routine adds matching file names (including path) to a vector of strings .
+	  * \return the number of matching files.
+	  * If no wildcard in name adds name to vector and returns -1.
+	*/
+	static int findFiles (std::vector<std::string>& file_list,const std::string &filename);
 
 	/** Opens a dynamic library */
 	static bool openLib(const std::string& lib_name);
@@ -55,8 +77,12 @@ public:
 	//To select OB format files
 	static const char* getFormatFilePattern();
 
-	static char DLHandler::getSeparator();
+	static char getSeparator();
+	static void Sleep(int n);
 
 };
 
 #endif	/* DLHANDLER_H*/
+
+//! \file dlhandler.h
+//! \brief Dynamic loader for file format modules.

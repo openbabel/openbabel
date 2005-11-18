@@ -48,6 +48,7 @@ IMPVAL	[#6^2]			3
 IMPVAL	[#6^1]			2
 IMPVAL  [#6^3-]			3
 IMPVAL  [#6^2-]			2
+IMPVAL  [#6^1-]			1 #CM for isocyanides
 IMPVAL  [c+]                    2
 
 IMPVAL	[#8^3]				2
@@ -56,8 +57,10 @@ IMPVAL	[$([#8]=*)]			1
 IMPVAL	[#8-]				1
 IMPVAL  [$([#8D1]~[#7D3]~[#8D1])]	1
 IMPVAL	[$([#8D1]~[#6]~[#8D1])]		1
-# This is from JOELib
-#IMPVAL	[$([#8D1]-[#6]=[#8D1])]		2
+# This is from JOELib -- add H to acidic oxygens
+IMPVAL	[$([#8D1]-[#6]=[#8D1])]		2
+# But don't add an H for pH-corrected formal-charge = -1 oxygens
+IMPVAL	[$([#8D1-]-[#6]=[#8D1])]	1
 
 IMPVAL	[N^3]			3
 IMPVAL	[N^3+]			4
@@ -70,18 +73,21 @@ IMPVAL	[$(NC=O)]		3
 IMPVAL	[$(N(~[OD1])~[OD1])]	3
 IMPVAL	[$([Nr0]C=[Nr0])]	3
 IMPVAL	[$(N=*)]		2
-IMPVAL	[$([Nr0]=C[Nr0])]	3 
-#IMPVAL	[$([Nr0]=C[Nr0])]	2 #uncomment this line for cansmi testing
+#IMPVAL	[$([Nr0]=C[Nr0])]	3 
+IMPVAL	[$([Nr0]=C[Nr0])]	2
 IMPVAL  [$([#7D1-]=*)]          1
 IMPVAL	[n]			2
 IMPVAL	[n-]			2
 IMPVAL  [n+]			3
+
+IMPVAL  [#9D0]		  1
 
 IMPVAL	[#15D4]			4
 IMPVAL	[#15D3]			3
 IMPVAL	[#15D2]			3
 IMPVAL	[#15D1^3]		3
 IMPVAL	[#15D1^2]		3
+IMPVAL  [#15D0]     3
 IMPVAL  [$([#15]=[#6])]         2
 IMPVAL  [pD2]			2
 
@@ -92,6 +98,11 @@ IMPVAL	[$([#16D1]-*)]		2
 IMPVAL	[#16D1^2]		1
 IMPVAL  [s]                     2
 IMPVAL  [#16D1-]		1
+
+IMPVAL  [#16D0]		  2
+IMPVAL  [#17D0]		  1
+IMPVAL  [#35D0]		  1
+IMPVAL  [#53D0]		  1
 
 IMPVAL  [#5]			3
 IMPVAL  [as]			3

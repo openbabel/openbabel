@@ -1,5 +1,7 @@
 /**********************************************************************
-Copyright (C) 2004 by Chris Morley
+obconversion.h - Handle file conversions. Declaration of OBFormat, OBConversion
+
+Copyright (C) 2004-2005 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -13,15 +15,33 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #ifndef OB_CONV_H
 #define OB_CONV_H
-//Declaration of OBFormat and OBConversion
 
 #include "babelconfig.h"
+
+#if HAVE_IOSTREAM
 #include <iostream>
+#elif HAVE_IOSTREAM_H
+#include <iostream.h>
+#endif
+#if HAVE_FSTREAM
 #include <fstream>
+#elif HAVE_FSTREAM_H
+#include <fstream.h>
+#endif
+
+#if HAVE_SSTREAM
+        #include <sstream>
+#elif
+        #include <sstream.h>
+#endif
+
+#include <string>
 #include <vector>
 #include <map>
+
 #include "dlhandler.h"
 
 // These macros are used in DLL builds. If they have not
@@ -47,7 +67,7 @@ class OBConversion;
 /// to handle two different requirements.
 /// The "Convert" interface is for use in file format conversion applications. The
 /// user interface, a console, a GUI, or another program is kept unaware of the
-/// details of the chemistry and does not need to #include mol.h. It is then
+/// details of the chemistry and does not need to \#include mol.h. It is then
 /// necessary to manipulate only pointers to OBBase in OBConversion and the user
 /// interface, with all the construction and deletion of OBMol etc objects being
 /// done in the Format classes or the OB core. The convention  with "Covert"
@@ -56,7 +76,7 @@ class OBConversion;
 /// functions
 /// 
 /// The "API" interface is for programatic use of the OB routines in application
-/// programs where mol.h is #included. There is generally no creation or
+/// programs where mol.h is \#included. There is generally no creation or
 /// destruction of objects in ReadMolecule() and WriteMolecule() and no restriction
 /// on whether the pointers are to the heap or the stack.
 /// 
@@ -115,15 +135,38 @@ public:
 	virtual const std::type_info& GetType();
  	
 	/// @brief Web address where the format is defined.
+	virtual const char* SpecificationURL() { return ""; }
 
-	/// (In case somebody wants to do something fancy.)
-virtual const char* SpecificationURL();
+	/// @brief Chemical MIME type associated with this file type (if any)
+	virtual const char* GetMIMEType() { return ""; }
 
 /// @brief Decribes the capabilities of the format (Read only etc.)
    
 /// Currently, can be a bitwise OR of any of the following
 /// NOTREADABLE READONEONLY NOTWRITABLE WRITEONEONLY DEFAULTFORMAT
+/// READBINARY WRITEBINARY
 	virtual unsigned int Flags() { return 0;}; 
+
+	/// @brief Skip past first n objects in input stream (or current one with n=0)
+
+	/// Returns 1 on success, -1 on error and 0 if not implemented 
+	virtual int SkipObjects(int n, OBConversion* pConv)
+	{
+		return 0; //shows not implemented in the format class
+	};
+
+	/// @brief Returns a pointer to a new instance of the format, or NULL if fails.
+
+	/// Normally a single global instance is used but this may cause problems
+	/// if there are member variables and the format is used in more than one place
+	/// in the program.
+	virtual OBFormat* MakeNewInstance()
+	{
+		return NULL; //shows not implemented in the format class
+	}
+
+	/// @brief Format classes do not have a destructor
+	virtual ~OBFormat(){};
 };
 
 //*************************************************
@@ -148,58 +191,93 @@ public:
 	//@{
 							OBConversion(std::istream* is=NULL, std::ostream* os=NULL);
 	/// @brief Copy constructor
-							OBConversion(const OBConversion& Conv);
+							OBConversion(const OBConversion& o);
 	virtual     ~OBConversion(); 
 	//@}	
 	/// @name Collection of formats
 	//@{
 	/// @brief Called once by each format class
-	static int				RegisterFormat(const char* ID, OBFormat* pFormat);
+	static int				RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME = NULL);
 	/// @brief Searches registered formats
 	static OBFormat*	FindFormat(const char* ID);
 	/// @brief Searches registered formats for an ID the same as the file extension
 	static OBFormat*	FormatFromExt(const char* filename);
+	/// @brief Searches registered formats for a MIME the same as the chemical MIME type passed
+	static OBFormat*        FormatFromMIME(const char* MIME);
 
 	///Repeatedly called to recover available Formats
-	static bool				GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
-	//@}		
+	static bool	        GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
+	//@}
+		
 	/// @name Information
 	//@{
-
 	static const char* Description(); //generic conversion options
 	//@}
+
 	/// @name Parameter get and set
 	//@{
-	std::istream*		GetInStream() const {return pInStream;};
-	std::ostream*		GetOutStream() const {return pOutStream;};
-	bool        SetInAndOutFormats(const char* inID, const char* outID);///< Sets the formats from their ids, e g CML
-	bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
-	OBFormat*		GetInFormat() const{return pInFormat;};
-	OBFormat*		GetOutFormat() const{return pOutFormat;};
+	std::istream* GetInStream() const {return pInStream;};
+	std::ostream* GetOutStream() const {return pOutStream;};
+	void          SetInStream(std::istream* pIn){pInStream=pIn;};
+	void          SetOutStream(std::ostream* pOut){pOutStream=pOut;};
+	bool          SetInAndOutFormats(const char* inID, const char* outID);///< Sets the formats from their ids, e g CML
+	bool          SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
+	bool	      SetInFormat(const char* inID);
+	bool	      SetInFormat(OBFormat* pIn);
+	bool	      SetOutFormat(const char* outID);
+	bool	      SetOutFormat(OBFormat* pOut);
+
+	OBFormat*   GetInFormat() const{return pInFormat;};
+	OBFormat*   GetOutFormat() const{return pOutFormat;};
+	std::string GetInFilename() const{return InFilename;};
 	
-	const char* GetOptions() const;///< @brief Options for output format
-	void        SetOptions(const char* options);///< @brief Options for output format
+	///Get the position in the input stream of the object being read
+	std::streampos GetInPos()const{return wInpos;}; 
 
-	///@brief Returns NULL if option not set and a valid pointer if it is 
-	const char* OBConversion::IsOption(const char ch) const;
+	///Get the length in the input stream of the object being read
+	size_t GetInLen()const{return wInlen;}; 
 
-	const char* GetGeneralOptions() const;///< @brief Options related to converted chemical object type 
-	void        SetGeneralOptions(const char* options);////< @brief Options related to converted chemical object type
-	///
+	///@brief Returns a default title which is the filename
 	const char* GetTitle() const;
-	void        SetTitle(const char* title);
-	const char* GetDimension() const;
-	void				SetDimension(const char* dim);
 
-	bool				SaveOptionsToFile(const char* filename);
-	bool				RestoreOptionsFromFile(const char* filename);
+	///@brief Extension method: deleted in ~OBConversion()
+	OBConversion* GetAuxConv() const {return pAuxConv;};
+	void          SetAuxConv(OBConversion* pConv) {pAuxConv=pConv;};
 	//@}
+	/// @name Option handling
+	//@{
+	///@brief Three types of options set on the the command line by -a? , -x? , or -?
+	enum Option_type { INOPTIONS, OUTOPTIONS, GENOPTIONS };
+
+	///@brief Determine whether an option is set. Returns NULL if option not and a pointer to the associated text if it is 
+	const char* IsOption(const char* opt,Option_type opttyp=OUTOPTIONS);
+	
+	///@brief Access the map with option name as key and any associated text as value
+	const std::map<std::string,std::string>* GetOptions(Option_type opttyp)
+	{ return &OptionsArray[opttyp];};
+
+	///@brief Set an option of specified type, with optional text
+	void AddOption(const char* opt, Option_type opttyp, const char* txt=NULL);
+	
+	bool RemoveOption(const char* opt, Option_type optype);
+
+	///@brief Set several single character options of specified type from string like ab"btext"c"ctext"
+	void SetOptions(const char* options, Option_type opttyp);
+
+	///@brief For example -h takes 0 parameters; -f takes 1. Call in a format constructor.
+	static void RegisterOptionParam(std::string name, OBFormat* pFormat,
+		                              int numberParams=0, Option_type typ=OUTOPTIONS);
+
+	///@brief Returns the number of parameters registered for the option, or 0 if not found
+	static int GetOptionParams(std::string name, Option_type typ);
+	//@}
+
 	/// @name Conversion
 	//@{
 	/// @brief Conversion for single input and output stream
 	int         Convert(std::istream* is, std::ostream* os);
 
-	/// @brief Conversion for single input and output stream
+	/// @brief Conversion with existing streams
 	int         Convert();
 
 	/// @brief Conversion with multiple input/output files:
@@ -207,11 +285,13 @@ public:
 	int					FullConvert(std::vector<std::string>& FileList,
 										std::string& OutputFileName, std::vector<std::string>& OutputFileList);
 	//@}
+
 	/// @name Conversion loop control
 	//@{
 	int					AddChemObject(OBBase* pOb);///< @brief Adds to internal array during input
 	OBBase*			GetChemObject(); ///< @brief Retrieve from internal array during output
 	bool				IsLast();///< @brief True if no more objects to be output
+	bool				IsFirstInput();///< @brief True if the first input object is being processed
 	int         GetOutputIndex() const ;///< @brief Retrieves number of ChemObjects that have been actually output
 	void				SetOutputIndex(int indx);///< @brief Sets ouput index (maybe to control whether seen as first object)
 	void				SetMoreFilesToCome();///<@brief Used with multiple input files. Off by default.
@@ -228,22 +308,44 @@ public:
 	/// The output stream can be specified and the change is retained in the OBConversion instance
 	bool				Write(OBBase* pOb, std::ostream* pout=NULL);
 
-	/// @brief Reads an object of a class derived from OB base into pOb.
+	/// @brief Outputs an object of a class derived from OBBase as a string
+	
+	/// Part of "API" interface. 
+	/// The output stream is temporarily changed to the string and then restored
+	/// This method is primarily intended for scripting languages without "stream" classes
+	std::string                     WriteString(OBBase* pOb);
+
+	/// @brief Outputs an object of a class derived from OBBase as a file (with the supplied path)
+	
+	/// Part of "API" interface. 
+	/// The output stream is changed to the supplied file and the change is retained in the
+	/// OBConversion instance.
+	/// This method is primarily intended for scripting languages without "stream" classes
+	bool                            WriteFile(OBBase* pOb, std::string filePath);
+
+	/// @brief Reads an object of a class derived from OBBase into pOb.
 	
 	/// Part of "API" interface. 
 	/// The input stream can be specified and the change is retained in the OBConversion instance
 	/// Returns false and pOb=NULL on error 
-	template<class T> 
-		bool	Read(T* pOb, std::istream* pin=NULL)
-	{
-		if(pin)
-			pInStream=pin;
-		if(!pInFormat) return false;
-		if(!pInFormat->ReadMolecule(pOb, this))
-		{pOb=NULL; return false;}
-		pOb = dynamic_cast<T*>(pOb);
-		return (pOb!=NULL);
-	};
+	bool	Read(OBBase* pOb, std::istream* pin=NULL);
+
+	/// @brief Reads an object of a class derived from OBBase into pOb from the supplied string
+	
+	/// Part of "API" interface. 
+	/// Returns false and pOb=NULL on error
+	/// This method is primarily intended for scripting languages without "stream" classes
+	  bool	ReadString(OBBase* pOb, std::string input);
+
+	/// @brief Reads an object of a class derived from OBBase into pOb from the file specified
+	
+	/// Part of "API" interface. 
+	/// The output stream is changed to the supplied file and the change is retained in the
+	/// OBConversion instance.
+	/// Returns false and pOb=NULL on error 
+	/// This method is primarily intended for scripting languages without "stream" classes
+	  bool	ReadFile(OBBase* pOb, std::string filePath);
+
 
 	///Replaces * in BaseName by InFile without extension and path
 	static std::string BatchFileName(std::string& BaseName, std::string& InFile);
@@ -252,38 +354,54 @@ public:
 	//@}
 
 protected:
-	void             SetStartAndEnd();
+	bool             SetStartAndEnd();
 	static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
+	static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
+	typedef std::map<std::string,int> OPAMapType;
+	static OPAMapType& OptionParamArray(Option_type typ);
 	static int       LoadFormatFiles();
+	bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is);
 
-
+	std::string	  InFilename;
 	std::istream*     pInStream;
 	std::ostream*     pOutStream;
 	static OBFormat*  pDefaultFormat;
-	OBFormat* 		pInFormat;
-	OBFormat*			pOutFormat;
-	std::string		Options;
-	std::string		GeneralOptions;
-	std::string		Title;
-	char					Dimension[10];
-	int						Index;
-	unsigned int	StartNumber;
-	unsigned int	EndNumber;
-	int	Count;
-	bool					m_IsLast;
-	bool					MoreFilesToCome;
-	bool					OneObjectOnly;
-	bool					ReadyToInput;
-	static bool		FormatFilesLoaded;
-	OBBase*				pOb1;
+	OBFormat* 	  pInFormat;
+	OBFormat*	  pOutFormat;
+
+	std::map<std::string,std::string> OptionsArray[3];
+
+	int		  Index;
+	unsigned int	  StartNumber;
+	unsigned int	  EndNumber;
+	int	          Count;
+	bool		  m_IsLast;
+	bool		  MoreFilesToCome;
+	bool		  OneObjectOnly;
+	bool		  ReadyToInput;
+	static int FormatFilesLoaded;
+	OBBase*		  pOb1;
+	std::streampos wInpos; ///<position in the input stream of the object being written
+	std::streampos rInpos; ///<position in the input stream of the object being read
+	size_t wInlen; ///<length in the input stream of the object being written
+	size_t rInlen; ///<length in the input stream of the object being read
+	
+	OBConversion* pAuxConv;///<Way to extend OBConversion
 };
 
 ///For OBFormat::Flags()
 #define NOTREADABLE     0x01
 #define READONEONLY     0x02
+#define READBINARY	0x04
 #define NOTWRITABLE     0x10
 #define WRITEONEONLY    0x20
+#define WRITEBINARY	0x40
 #define DEFAULTFORMAT 0x4000
 
 } //namespace OpenBabel
 #endif //OB_CONV_H
+
+//! \file
+//! \brief Handle file conversions. Declaration of OBFormat, OBConversion.
+
+ 

@@ -10,6 +10,8 @@
 #include "OBGUI.h"
 #include "OBGUIDlg.h"
 #include "dlhandler.h"
+#include <Shlwapi.h>
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -95,6 +97,7 @@ void COBGUIDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(COBGUIDlg)
+	DDX_Control(pDX, IDC_INPATH, m_InPath);
 	DDX_Control(pDX, IDC_OUTCOUNT, m_OutCount);
 	DDX_Control(pDX, IDC_OUTFIXFORMAT, m_OutFixExt);
 	DDX_Control(pDX, IDC_INFIXFORMAT, m_InFixExt);
@@ -131,6 +134,7 @@ BEGIN_MESSAGE_MAP(COBGUIDlg, CDialog)
 	ON_BN_CLICKED(IDC_MANUALINPUT, OnManualinput)
 	ON_WM_CLOSE()
 	ON_CBN_SELCHANGE(IDC_INPUTFORMAT, OnChangeInputformat)
+	ON_WM_DROPFILES()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -164,8 +168,14 @@ BOOL COBGUIDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 	
+	DragAcceptFiles();
+	
 	m_NoInFile.SetCheck(AfxGetApp()->GetProfileInt("GUI","NoInFile",0));	
 	OnManualinput();
+
+	char curdir[_MAX_PATH]; 
+	GetCurrentDirectory(_MAX_PATH-1,curdir);
+	DisplayPath(curdir);
 
 	//Get data on available formats and add to comboboxes and to filter string
 	char* str=NULL;
@@ -173,10 +183,14 @@ BOOL COBGUIDlg::OnInitDialog()
 	int nInSel=0,nOutSel=0;
 	InputFilterString="All Chemical Formats|*.";
 	OutputFilterString = InputFilterString;
+	OBConversion dummy; //so that formatfiles get loaded
 	Formatpos pos;
-	while(Conv.GetNextFormat(pos,str,pFormat))
+	while(OBConversion::GetNextFormat(pos,str,pFormat))
 	{
 		if(!str || !pFormat) break; //no formats available
+		if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
+			continue;
+
 		char* p = strstr(str," [");
 		if(p) *p='\0'; //remove {Readonly] or [Writeonly]
 
@@ -216,7 +230,7 @@ BOOL COBGUIDlg::OnInitDialog()
 	NextOptionRect = CtlRect-rect.TopLeft();
 
 	//Construct checkboxes for General Options
-	GeneralOptionCheckBoxes.Construct(Conv.Description(), this, NextOptionRect);	
+	GeneralOptionCheckBoxes.Construct(OBConversion::Description(), this, NextOptionRect);	
 	InputOptionRect=NextOptionRect;
 
 	OnChangeInputformat(); //write input and then output options
@@ -286,7 +300,9 @@ void COBGUIDlg::OnChangeOutputformat()
 	{
 		NextOptionRect=OutputOptionRect;
 		InputOptionCheckBoxes.InsertText("", this, NextOptionRect); //Blank line
-		OutputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect);
+		if(!OutputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect,"Write "))
+			//If no options with "Write" found accept ones without
+			OutputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect);
 	}
 }
 
@@ -300,7 +316,16 @@ void COBGUIDlg::OnChangeInputfile()
 	m_InputFile.GetWindowText(FileName);
 	FileName.TrimLeft();
 	if(FileName.IsEmpty()) return;
-	string stdfilename(FileName);
+	int pos = FileName.Find(';');
+	if(pos>=0)
+		FileName = FileName.Left(pos);
+	
+	char curdir[_MAX_PATH]; 
+	GetCurrentDirectory(_MAX_PATH-1,curdir);
+	
+
+	string stdfilename(curdir);
+	stdfilename += '\\' + FileName;
 	
 	vector<string> FileList;
 	int nFiles = DLHandler :: findFiles (FileList, stdfilename);
@@ -412,16 +437,19 @@ void COBGUIDlg::OnConvert()
 	if((iSel)<0) return;
 	int oSel = m_OutputCombo.GetCurSel();
 	if((oSel)<0) return;
-	Conv.SetInAndOutFormats(
-		(OBFormat*)m_InputCombo.GetItemDataPtr(iSel),
-		(OBFormat*)m_OutputCombo.GetItemDataPtr(oSel));
+	
+	OBFormat* pInFormat = NULL; 
+	if(m_InFixExt.GetCheck() || m_NoInFile.GetCheck())
+		pInFormat = (OBFormat*)m_InputCombo.GetItemDataPtr(iSel);
+	Conv.SetInAndOutFormats( pInFormat,(OBFormat*)m_OutputCombo.GetItemDataPtr(oSel));
 
 	//GeneralOptions have data from GeneralOptionCheckboxes and InputOptionCheckboxes
 	CString s = GeneralOptionCheckBoxes.GetOptions();
-	s += InputOptionCheckBoxes.GetOptions();
-	Conv.SetGeneralOptions(s);
+	s += InputClassOptionCheckBoxes.GetOptions();
+	Conv.SetOptions(s, OBConversion::GENOPTIONS);
 
-	Conv.SetOptions(OutputOptionCheckBoxes.GetOptions());
+	Conv.SetOptions(OutputOptionCheckBoxes.GetOptions(),OBConversion::OUTOPTIONS);
+	Conv.SetOptions(InputOptionCheckBoxes.GetOptions(),OBConversion::INOPTIONS);
 
 
   //redirect cerr
@@ -433,7 +461,7 @@ void COBGUIDlg::OnConvert()
 	CWaitCursor cw;
 
 	CString FileName;
-	m_OutputFile.GetWindowText(FileName);
+		m_OutputFile.GetWindowText(FileName);
 	FileName.TrimLeft();
 	string stdOutputFileName(FileName);
 
@@ -452,9 +480,20 @@ void COBGUIDlg::OnConvert()
 		m_InputFile.GetWindowText(FileName);
 		FileName.TrimLeft();
 		if(FileName.IsEmpty()) return;
-		string stdfilename(FileName);
-
-		DLHandler::findFiles(FileList,stdfilename);
+		
+		char* fcstr = new char[FileName.GetLength()+1];
+		strcpy(fcstr,FileName);
+		char* f = strtok(fcstr,";");
+		while(f)
+		{
+			string stdfilename(f);
+			vector<string> SubFileList;
+			DLHandler::findFiles(SubFileList,stdfilename);
+			FileList.insert(FileList.end(),SubFileList.begin(),SubFileList.end());
+			FileList.size();
+			f = strtok(NULL,";");
+		}
+		delete fcstr;
 	}
 
 	int Count = Conv.FullConvert(FileList, stdOutputFileName, OutputFileList);
@@ -531,9 +570,35 @@ void COBGUIDlg::OnInputFiles()
 
 	CString Filter;
 	GetFilter(Filter,m_InputCombo);
-	CFileDialog dlg(TRUE,NULL,NULL,OFN_HIDEREADONLY,Filter+InputFilterString);
+	CFileDialog dlg(TRUE,NULL,NULL,OFN_HIDEREADONLY|OFN_ALLOWMULTISELECT,Filter+InputFilterString);
  	if(dlg.DoModal()==IDOK)
-		m_InputFile.SetWindowText(dlg.GetPathName());
+	{
+		POSITION pos = dlg.GetStartPosition();
+		CString FullName, NameList;
+		int n=0;
+		while(pos)
+		{
+			n++;
+			FullName = dlg.GetNextPathName(pos);
+			int p = FullName.ReverseFind('\\');
+			if(n>1)
+				NameList += ';';
+			if(p!=-1)
+				NameList += FullName.Mid(p+1);
+		}
+		m_InputFile.SetWindowText(NameList);
+		CString path = dlg.GetPathName();
+		if(n==1)
+		{
+			int p = path.ReverseFind('\\');
+			path = path.Mid(0,p-1);
+		}
+
+		SetCurrentDirectory(path);
+		char szPath[_MAX_PATH];
+		strcpy(szPath,path);
+		DisplayPath(szPath);
+	}
 }
 
 //////////////////////////////////////////////////
@@ -567,7 +632,7 @@ void COBGUIDlg::OnSize(UINT nType, int cx, int cy)
 	int NewConsoleHeight=  + cy - OrigHeightDiff;
 	if(::IsWindow(m_InConsole.m_hWnd))
 	{
-		const EXTRA=148;
+		const EXTRA=210;
 		m_InConsole.SetWindowPos(NULL,0,0,OrigConsoleWidth,NewConsoleHeight,
 			SWP_NOMOVE | SWP_NOZORDER | SWP_SHOWWINDOW);
 		m_OutConsole.SetWindowPos(NULL,0,0,OrigConsoleWidth,NewConsoleHeight,
@@ -663,13 +728,49 @@ void COBGUIDlg::OnChangeInputformat()
 	if(pFormat)
 	{
 		NextOptionRect=InputOptionRect;
-//		GeneralOptionCheckBoxes.InsertText("", this, NextOptionRect); //Blank line
-		InputOptionCheckBoxes.Construct(pFormat->TargetClassDescription(), this, NextOptionRect);
+		InputClassOptionCheckBoxes.Construct(pFormat->TargetClassDescription(), this, NextOptionRect);
+		InputClassOptionCheckBoxes.InsertText("", this, NextOptionRect); //Blank line
+		InputOptionCheckBoxes.Construct(pFormat->Description(), this, NextOptionRect, "Read ");
 	}
 
 	OutputOptionRect=NextOptionRect;
 	OnChangeOutputformat();  //now write output options
 }
+
+void COBGUIDlg::OnDropFiles( HDROP hDropInfo)
+{
+	UINT i = 0;
+	UINT nFiles = ::DragQueryFile(hDropInfo, (UINT) -1, NULL, 0);
+	TCHAR szBase[_MAX_PATH];
+	CString NameList;
+	for (i = 0; i < nFiles; i++)
+	{
+    TCHAR szFileName[_MAX_PATH];
+    ::DragQueryFile(hDropInfo, i, szFileName, _MAX_PATH);
+		if(i==0)
+		{
+			strcpy(szBase, szFileName);
+			PathRemoveFileSpec(szBase);
+		}
+		else
+			NameList += ';';
+		PathStripPath(szFileName);
+		NameList += szFileName;	
+	}
+  m_InputFile.SetWindowText(NameList);
+	SetCurrentDirectory(szBase);
+	DisplayPath(szBase);
+  ::DragFinish(hDropInfo);
+}
+
+//////////////////////////////////////////
+void COBGUIDlg::DisplayPath(char* path)
+{
+	CRect rect;
+	m_InPath.GetWindowRect(rect);
+	PathCompactPath(::GetDC(m_InPath.m_hWnd), path, rect.Width()+70);//70 is a hack to improve appearance
+	m_InPath.SetWindowText(path);
+}	
 
 /*
 /// If filename contains wildcard characters, populates FileList with

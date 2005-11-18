@@ -25,6 +25,10 @@ NULL=
 NULL=nul
 !ENDIF 
 
+CPP=cl.exe
+MTL=midl.exe
+RSC=rc.exe
+
 !IF  "$(CFG)" == "OBFormats2 - Win32 Release"
 
 OUTDIR=.\Release
@@ -36,6 +40,7 @@ ALL : ".\OBFormats2.obf"
 CLEAN :
 	-@erase "$(INTDIR)\alchemyformat.obj"
 	-@erase "$(INTDIR)\amberformat.obj"
+	-@erase "$(INTDIR)\APIInterface.obj"
 	-@erase "$(INTDIR)\balstformat.obj"
 	-@erase "$(INTDIR)\bgfformat.obj"
 	-@erase "$(INTDIR)\boxformat.obj"
@@ -46,27 +51,26 @@ CLEAN :
 	-@erase "$(INTDIR)\chem3dformat.obj"
 	-@erase "$(INTDIR)\chemdrawformat.obj"
 	-@erase "$(INTDIR)\chemtoolformat.obj"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cmlformat.obj"
 	-@erase "$(INTDIR)\CRKformat.obj"
 	-@erase "$(INTDIR)\CSRformat.obj"
 	-@erase "$(INTDIR)\cssrformat.obj"
 	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\fhformat.obj"
+	-@erase "$(INTDIR)\freefracformat.obj"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\ghemicalformat.obj"
-	-@erase "$(INTDIR)\grosmos96format.obj"
+	-@erase "$(INTDIR)\gromos96format.obj"
 	-@erase "$(INTDIR)\hinformat.obj"
 	-@erase "$(INTDIR)\jaguarformat.obj"
 	-@erase "$(INTDIR)\mdlformat.obj"
-	-@erase "$(INTDIR)\mm3format.obj"
 	-@erase "$(INTDIR)\mmodformat.obj"
 	-@erase "$(INTDIR)\mol2format.obj"
 	-@erase "$(INTDIR)\mopacformat.obj"
 	-@erase "$(INTDIR)\mpqcformat.obj"
 	-@erase "$(INTDIR)\nwchemformat.obj"
+	-@erase "$(INTDIR)\pcmodelformat.obj"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\povrayformat.obj"
 	-@erase "$(INTDIR)\PQSformat.obj"
@@ -82,6 +86,7 @@ CLEAN :
 	-@erase "$(INTDIR)\viewmolformat.obj"
 	-@erase "$(INTDIR)\xedformat.obj"
 	-@erase "$(INTDIR)\xyzformat.obj"
+	-@erase "$(INTDIR)\yasaraformat.obj"
 	-@erase "$(INTDIR)\zindoformat.obj"
 	-@erase "$(OUTDIR)\OBFormats2.exp"
 	-@erase ".\OBFormats2.obf"
@@ -89,42 +94,8 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
-CPP_PROJ=/nologo /MD /W3 /GR /GX /O2 /I "..\..\src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USING_DYNAMIC_LIBS" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
-
-.c{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.obj::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.c{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cpp{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-.cxx{$(INTDIR)}.sbr::
-   $(CPP) @<<
-   $(CPP_PROJ) $< 
-<<
-
-MTL=midl.exe
+CPP_PROJ=/nologo /MD /W3 /GR /GX /O2 /I "..\..\data" /I ".." /I "..\..\src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /D "HAVE_CONFIG_H" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
-RSC=rc.exe
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBFormats2.bsc" 
 BSC32_SBRS= \
@@ -134,6 +105,7 @@ LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi3
 LINK32_OBJS= \
 	"$(INTDIR)\alchemyformat.obj" \
 	"$(INTDIR)\amberformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\balstformat.obj" \
 	"$(INTDIR)\bgfformat.obj" \
 	"$(INTDIR)\boxformat.obj" \
@@ -144,22 +116,20 @@ LINK32_OBJS= \
 	"$(INTDIR)\chem3dformat.obj" \
 	"$(INTDIR)\chemdrawformat.obj" \
 	"$(INTDIR)\chemtoolformat.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
 	"$(INTDIR)\CRKformat.obj" \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
 	"$(INTDIR)\dmolformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
-	"$(INTDIR)\grosmos96format.obj" \
+	"$(INTDIR)\gromos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
 	"$(INTDIR)\mdlformat.obj" \
-	"$(INTDIR)\mm3format.obj" \
 	"$(INTDIR)\mmodformat.obj" \
 	"$(INTDIR)\mol2format.obj" \
 	"$(INTDIR)\mopacformat.obj" \
@@ -179,7 +149,9 @@ LINK32_OBJS= \
 	"$(INTDIR)\viewmolformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\yasaraformat.obj" \
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\pcmodelformat.obj"
 
 ".\OBFormats2.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -202,6 +174,8 @@ CLEAN :
 	-@erase "$(INTDIR)\alchemyformat.sbr"
 	-@erase "$(INTDIR)\amberformat.obj"
 	-@erase "$(INTDIR)\amberformat.sbr"
+	-@erase "$(INTDIR)\APIInterface.obj"
+	-@erase "$(INTDIR)\APIInterface.sbr"
 	-@erase "$(INTDIR)\balstformat.obj"
 	-@erase "$(INTDIR)\balstformat.sbr"
 	-@erase "$(INTDIR)\bgfformat.obj"
@@ -222,10 +196,6 @@ CLEAN :
 	-@erase "$(INTDIR)\chemdrawformat.sbr"
 	-@erase "$(INTDIR)\chemtoolformat.obj"
 	-@erase "$(INTDIR)\chemtoolformat.sbr"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cml.sbr"
-	-@erase "$(INTDIR)\cmlformat.obj"
-	-@erase "$(INTDIR)\cmlformat.sbr"
 	-@erase "$(INTDIR)\CRKformat.obj"
 	-@erase "$(INTDIR)\CRKformat.sbr"
 	-@erase "$(INTDIR)\CSRformat.obj"
@@ -238,22 +208,22 @@ CLEAN :
 	-@erase "$(INTDIR)\featformat.sbr"
 	-@erase "$(INTDIR)\fhformat.obj"
 	-@erase "$(INTDIR)\fhformat.sbr"
+	-@erase "$(INTDIR)\freefracformat.obj"
+	-@erase "$(INTDIR)\freefracformat.sbr"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gamessformat.sbr"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\gaussformat.sbr"
 	-@erase "$(INTDIR)\ghemicalformat.obj"
 	-@erase "$(INTDIR)\ghemicalformat.sbr"
-	-@erase "$(INTDIR)\grosmos96format.obj"
-	-@erase "$(INTDIR)\grosmos96format.sbr"
+	-@erase "$(INTDIR)\gromos96format.obj"
+	-@erase "$(INTDIR)\gromos96format.sbr"
 	-@erase "$(INTDIR)\hinformat.obj"
 	-@erase "$(INTDIR)\hinformat.sbr"
 	-@erase "$(INTDIR)\jaguarformat.obj"
 	-@erase "$(INTDIR)\jaguarformat.sbr"
 	-@erase "$(INTDIR)\mdlformat.obj"
 	-@erase "$(INTDIR)\mdlformat.sbr"
-	-@erase "$(INTDIR)\mm3format.obj"
-	-@erase "$(INTDIR)\mm3format.sbr"
 	-@erase "$(INTDIR)\mmodformat.obj"
 	-@erase "$(INTDIR)\mmodformat.sbr"
 	-@erase "$(INTDIR)\mol2format.obj"
@@ -264,6 +234,8 @@ CLEAN :
 	-@erase "$(INTDIR)\mpqcformat.sbr"
 	-@erase "$(INTDIR)\nwchemformat.obj"
 	-@erase "$(INTDIR)\nwchemformat.sbr"
+	-@erase "$(INTDIR)\pcmodelformat.obj"
+	-@erase "$(INTDIR)\pcmodelformat.sbr"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\pdbformat.sbr"
 	-@erase "$(INTDIR)\povrayformat.obj"
@@ -294,6 +266,8 @@ CLEAN :
 	-@erase "$(INTDIR)\xedformat.sbr"
 	-@erase "$(INTDIR)\xyzformat.obj"
 	-@erase "$(INTDIR)\xyzformat.sbr"
+	-@erase "$(INTDIR)\yasaraformat.obj"
+	-@erase "$(INTDIR)\yasaraformat.sbr"
 	-@erase "$(INTDIR)\zindoformat.obj"
 	-@erase "$(INTDIR)\zindoformat.sbr"
 	-@erase "$(OUTDIR)\OBFormats2.bsc"
@@ -305,8 +279,140 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP=cl.exe
-CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USING_DYNAMIC_LIBS" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".." /I "..\..\src" /I "..\..\data" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBFormats2.bsc" 
+BSC32_SBRS= \
+	"$(INTDIR)\alchemyformat.sbr" \
+	"$(INTDIR)\amberformat.sbr" \
+	"$(INTDIR)\APIInterface.sbr" \
+	"$(INTDIR)\balstformat.sbr" \
+	"$(INTDIR)\bgfformat.sbr" \
+	"$(INTDIR)\boxformat.sbr" \
+	"$(INTDIR)\cacaoformat.sbr" \
+	"$(INTDIR)\cacheformat.sbr" \
+	"$(INTDIR)\carformat.sbr" \
+	"$(INTDIR)\cccformat.sbr" \
+	"$(INTDIR)\chem3dformat.sbr" \
+	"$(INTDIR)\chemdrawformat.sbr" \
+	"$(INTDIR)\chemtoolformat.sbr" \
+	"$(INTDIR)\CRKformat.sbr" \
+	"$(INTDIR)\CSRformat.sbr" \
+	"$(INTDIR)\cssrformat.sbr" \
+	"$(INTDIR)\dmolformat.sbr" \
+	"$(INTDIR)\featformat.sbr" \
+	"$(INTDIR)\fhformat.sbr" \
+	"$(INTDIR)\freefracformat.sbr" \
+	"$(INTDIR)\gamessformat.sbr" \
+	"$(INTDIR)\gaussformat.sbr" \
+	"$(INTDIR)\ghemicalformat.sbr" \
+	"$(INTDIR)\gromos96format.sbr" \
+	"$(INTDIR)\hinformat.sbr" \
+	"$(INTDIR)\jaguarformat.sbr" \
+	"$(INTDIR)\mdlformat.sbr" \
+	"$(INTDIR)\mmodformat.sbr" \
+	"$(INTDIR)\mol2format.sbr" \
+	"$(INTDIR)\mopacformat.sbr" \
+	"$(INTDIR)\mpqcformat.sbr" \
+	"$(INTDIR)\nwchemformat.sbr" \
+	"$(INTDIR)\pdbformat.sbr" \
+	"$(INTDIR)\povrayformat.sbr" \
+	"$(INTDIR)\PQSformat.sbr" \
+	"$(INTDIR)\qchemformat.sbr" \
+	"$(INTDIR)\reportformat.sbr" \
+	"$(INTDIR)\rxnformat.sbr" \
+	"$(INTDIR)\shelxformat.sbr" \
+	"$(INTDIR)\smilesformat.sbr" \
+	"$(INTDIR)\tinkerformat.sbr" \
+	"$(INTDIR)\turbomoleformat.sbr" \
+	"$(INTDIR)\unichemformat.sbr" \
+	"$(INTDIR)\viewmolformat.sbr" \
+	"$(INTDIR)\xedformat.sbr" \
+	"$(INTDIR)\xyzformat.sbr" \
+	"$(INTDIR)\yasaraformat.sbr" \
+	"$(INTDIR)\zindoformat.sbr" \
+	"$(INTDIR)\pcmodelformat.sbr"
+
+"$(OUTDIR)\OBFormats2.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+    $(BSC32) @<<
+  $(BSC32_FLAGS) $(BSC32_SBRS)
+<<
+
+LINK32=link.exe
+LINK32_FLAGS=kernel32.lib user32.lib obconv.lib obdll.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBFormats2D.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBFormats2D.obf" /implib:"$(OUTDIR)\OBFormats2D.lib" /pdbtype:sept /libpath:"..\OBDLL\Debug" /libpath:"..\OBConv\Debug" 
+LINK32_OBJS= \
+	"$(INTDIR)\alchemyformat.obj" \
+	"$(INTDIR)\amberformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
+	"$(INTDIR)\balstformat.obj" \
+	"$(INTDIR)\bgfformat.obj" \
+	"$(INTDIR)\boxformat.obj" \
+	"$(INTDIR)\cacaoformat.obj" \
+	"$(INTDIR)\cacheformat.obj" \
+	"$(INTDIR)\carformat.obj" \
+	"$(INTDIR)\cccformat.obj" \
+	"$(INTDIR)\chem3dformat.obj" \
+	"$(INTDIR)\chemdrawformat.obj" \
+	"$(INTDIR)\chemtoolformat.obj" \
+	"$(INTDIR)\CRKformat.obj" \
+	"$(INTDIR)\CSRformat.obj" \
+	"$(INTDIR)\cssrformat.obj" \
+	"$(INTDIR)\dmolformat.obj" \
+	"$(INTDIR)\featformat.obj" \
+	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
+	"$(INTDIR)\gamessformat.obj" \
+	"$(INTDIR)\gaussformat.obj" \
+	"$(INTDIR)\ghemicalformat.obj" \
+	"$(INTDIR)\gromos96format.obj" \
+	"$(INTDIR)\hinformat.obj" \
+	"$(INTDIR)\jaguarformat.obj" \
+	"$(INTDIR)\mdlformat.obj" \
+	"$(INTDIR)\mmodformat.obj" \
+	"$(INTDIR)\mol2format.obj" \
+	"$(INTDIR)\mopacformat.obj" \
+	"$(INTDIR)\mpqcformat.obj" \
+	"$(INTDIR)\nwchemformat.obj" \
+	"$(INTDIR)\pdbformat.obj" \
+	"$(INTDIR)\povrayformat.obj" \
+	"$(INTDIR)\PQSformat.obj" \
+	"$(INTDIR)\qchemformat.obj" \
+	"$(INTDIR)\reportformat.obj" \
+	"$(INTDIR)\rxnformat.obj" \
+	"$(INTDIR)\shelxformat.obj" \
+	"$(INTDIR)\smilesformat.obj" \
+	"$(INTDIR)\tinkerformat.obj" \
+	"$(INTDIR)\turbomoleformat.obj" \
+	"$(INTDIR)\unichemformat.obj" \
+	"$(INTDIR)\viewmolformat.obj" \
+	"$(INTDIR)\xedformat.obj" \
+	"$(INTDIR)\xyzformat.obj" \
+	"$(INTDIR)\yasaraformat.obj" \
+	"$(INTDIR)\zindoformat.obj" \
+	"$(INTDIR)\pcmodelformat.obj"
+
+"$(OUTDIR)\OBFormats2D.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+SOURCE="$(InputPath)"
+PostBuild_Desc=Copy debug versions of obconv.dll, obdll.dll
+DS_POSTBUILD_DEP=$(INTDIR)\postbld.dep
+
+ALL : $(DS_POSTBUILD_DEP)
+
+# Begin Custom Macros
+OutDir=.\Debug
+# End Custom Macros
+
+$(DS_POSTBUILD_DEP) : "$(OUTDIR)\OBFormats2D.obf" "$(OUTDIR)\OBFormats2.bsc"
+   Copy  ..\obconv\debug\obconv.dll  .\debug  /Y
+	Copy  ..\obdll\debug\obdll.dll  .\debug  /Y
+	echo Helper for Post-build step > "$(DS_POSTBUILD_DEP)"
+
+!ENDIF 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -337,125 +443,6 @@ CPP_PROJ=/nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /D "_DEBUG" /D "WIN
    $(CPP) @<<
    $(CPP_PROJ) $< 
 <<
-
-MTL=midl.exe
-MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
-RSC=rc.exe
-BSC32=bscmake.exe
-BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBFormats2.bsc" 
-BSC32_SBRS= \
-	"$(INTDIR)\alchemyformat.sbr" \
-	"$(INTDIR)\amberformat.sbr" \
-	"$(INTDIR)\balstformat.sbr" \
-	"$(INTDIR)\bgfformat.sbr" \
-	"$(INTDIR)\boxformat.sbr" \
-	"$(INTDIR)\cacaoformat.sbr" \
-	"$(INTDIR)\cacheformat.sbr" \
-	"$(INTDIR)\carformat.sbr" \
-	"$(INTDIR)\cccformat.sbr" \
-	"$(INTDIR)\chem3dformat.sbr" \
-	"$(INTDIR)\chemdrawformat.sbr" \
-	"$(INTDIR)\chemtoolformat.sbr" \
-	"$(INTDIR)\cml.sbr" \
-	"$(INTDIR)\cmlformat.sbr" \
-	"$(INTDIR)\CRKformat.sbr" \
-	"$(INTDIR)\CSRformat.sbr" \
-	"$(INTDIR)\cssrformat.sbr" \
-	"$(INTDIR)\dmolformat.sbr" \
-	"$(INTDIR)\featformat.sbr" \
-	"$(INTDIR)\fhformat.sbr" \
-	"$(INTDIR)\gamessformat.sbr" \
-	"$(INTDIR)\gaussformat.sbr" \
-	"$(INTDIR)\ghemicalformat.sbr" \
-	"$(INTDIR)\grosmos96format.sbr" \
-	"$(INTDIR)\hinformat.sbr" \
-	"$(INTDIR)\jaguarformat.sbr" \
-	"$(INTDIR)\mdlformat.sbr" \
-	"$(INTDIR)\mm3format.sbr" \
-	"$(INTDIR)\mmodformat.sbr" \
-	"$(INTDIR)\mol2format.sbr" \
-	"$(INTDIR)\mopacformat.sbr" \
-	"$(INTDIR)\mpqcformat.sbr" \
-	"$(INTDIR)\nwchemformat.sbr" \
-	"$(INTDIR)\pdbformat.sbr" \
-	"$(INTDIR)\povrayformat.sbr" \
-	"$(INTDIR)\PQSformat.sbr" \
-	"$(INTDIR)\qchemformat.sbr" \
-	"$(INTDIR)\reportformat.sbr" \
-	"$(INTDIR)\rxnformat.sbr" \
-	"$(INTDIR)\shelxformat.sbr" \
-	"$(INTDIR)\smilesformat.sbr" \
-	"$(INTDIR)\tinkerformat.sbr" \
-	"$(INTDIR)\turbomoleformat.sbr" \
-	"$(INTDIR)\unichemformat.sbr" \
-	"$(INTDIR)\viewmolformat.sbr" \
-	"$(INTDIR)\xedformat.sbr" \
-	"$(INTDIR)\xyzformat.sbr" \
-	"$(INTDIR)\zindoformat.sbr"
-
-"$(OUTDIR)\OBFormats2.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
-    $(BSC32) @<<
-  $(BSC32_FLAGS) $(BSC32_SBRS)
-<<
-
-LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib obconv.lib obdll.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\OBFormats2D.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBFormats2D.obf" /implib:"$(OUTDIR)\OBFormats2D.lib" /pdbtype:sept /libpath:"..\OBDLL\Debug" /libpath:"..\OBConv\Debug" 
-LINK32_OBJS= \
-	"$(INTDIR)\alchemyformat.obj" \
-	"$(INTDIR)\amberformat.obj" \
-	"$(INTDIR)\balstformat.obj" \
-	"$(INTDIR)\bgfformat.obj" \
-	"$(INTDIR)\boxformat.obj" \
-	"$(INTDIR)\cacaoformat.obj" \
-	"$(INTDIR)\cacheformat.obj" \
-	"$(INTDIR)\carformat.obj" \
-	"$(INTDIR)\cccformat.obj" \
-	"$(INTDIR)\chem3dformat.obj" \
-	"$(INTDIR)\chemdrawformat.obj" \
-	"$(INTDIR)\chemtoolformat.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
-	"$(INTDIR)\CRKformat.obj" \
-	"$(INTDIR)\CSRformat.obj" \
-	"$(INTDIR)\cssrformat.obj" \
-	"$(INTDIR)\dmolformat.obj" \
-	"$(INTDIR)\featformat.obj" \
-	"$(INTDIR)\fhformat.obj" \
-	"$(INTDIR)\gamessformat.obj" \
-	"$(INTDIR)\gaussformat.obj" \
-	"$(INTDIR)\ghemicalformat.obj" \
-	"$(INTDIR)\grosmos96format.obj" \
-	"$(INTDIR)\hinformat.obj" \
-	"$(INTDIR)\jaguarformat.obj" \
-	"$(INTDIR)\mdlformat.obj" \
-	"$(INTDIR)\mm3format.obj" \
-	"$(INTDIR)\mmodformat.obj" \
-	"$(INTDIR)\mol2format.obj" \
-	"$(INTDIR)\mopacformat.obj" \
-	"$(INTDIR)\mpqcformat.obj" \
-	"$(INTDIR)\nwchemformat.obj" \
-	"$(INTDIR)\pdbformat.obj" \
-	"$(INTDIR)\povrayformat.obj" \
-	"$(INTDIR)\PQSformat.obj" \
-	"$(INTDIR)\qchemformat.obj" \
-	"$(INTDIR)\reportformat.obj" \
-	"$(INTDIR)\rxnformat.obj" \
-	"$(INTDIR)\shelxformat.obj" \
-	"$(INTDIR)\smilesformat.obj" \
-	"$(INTDIR)\tinkerformat.obj" \
-	"$(INTDIR)\turbomoleformat.obj" \
-	"$(INTDIR)\unichemformat.obj" \
-	"$(INTDIR)\viewmolformat.obj" \
-	"$(INTDIR)\xedformat.obj" \
-	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
-
-"$(OUTDIR)\OBFormats2D.obf" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ENDIF 
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
@@ -499,6 +486,24 @@ SOURCE=..\..\src\formats\amberformat.cpp
 
 
 "$(INTDIR)\amberformat.obj"	"$(INTDIR)\amberformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\APIInterface.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\APIInterface.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\APIInterface.obj"	"$(INTDIR)\APIInterface.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -684,42 +689,6 @@ SOURCE=..\..\src\formats\chemtoolformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\cml.cpp
-
-!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
-
-
-"$(INTDIR)\cml.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
-
-
-"$(INTDIR)\cml.obj"	"$(INTDIR)\cml.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\formats\cmlformat.cpp
-
-!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
-
-
-"$(INTDIR)\cmlformat.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
-
-
-"$(INTDIR)\cmlformat.obj"	"$(INTDIR)\cmlformat.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\formats\CRKformat.cpp
 
 !IF  "$(CFG)" == "OBFormats2 - Win32 Release"
@@ -828,6 +797,24 @@ SOURCE=..\..\src\formats\fhformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\freefracformat.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\freefracformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\freefracformat.obj"	"$(INTDIR)\freefracformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\formats\gamessformat.cpp
 
 !IF  "$(CFG)" == "OBFormats2 - Win32 Release"
@@ -882,19 +869,19 @@ SOURCE=..\..\src\formats\ghemicalformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\grosmos96format.cpp
+SOURCE=..\..\src\formats\gromos96format.cpp
 
 !IF  "$(CFG)" == "OBFormats2 - Win32 Release"
 
 
-"$(INTDIR)\grosmos96format.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\gromos96format.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
 
 
-"$(INTDIR)\grosmos96format.obj"	"$(INTDIR)\grosmos96format.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\gromos96format.obj"	"$(INTDIR)\gromos96format.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -949,24 +936,6 @@ SOURCE=..\..\src\formats\mdlformat.cpp
 
 
 "$(INTDIR)\mdlformat.obj"	"$(INTDIR)\mdlformat.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\formats\mm3format.cpp
-
-!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
-
-
-"$(INTDIR)\mm3format.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
-
-
-"$(INTDIR)\mm3format.obj"	"$(INTDIR)\mm3format.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1057,6 +1026,24 @@ SOURCE=..\..\src\formats\nwchemformat.cpp
 
 
 "$(INTDIR)\nwchemformat.obj"	"$(INTDIR)\nwchemformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\pcmodelformat.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\pcmodelformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\pcmodelformat.obj"	"$(INTDIR)\pcmodelformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1309,6 +1296,24 @@ SOURCE=..\..\src\formats\xyzformat.cpp
 
 
 "$(INTDIR)\xyzformat.obj"	"$(INTDIR)\xyzformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\yasaraformat.cpp
+
+!IF  "$(CFG)" == "OBFormats2 - Win32 Release"
+
+
+"$(INTDIR)\yasaraformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBFormats2 - Win32 Debug"
+
+
+"$(INTDIR)\yasaraformat.obj"	"$(INTDIR)\yasaraformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

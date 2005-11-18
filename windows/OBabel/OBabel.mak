@@ -33,19 +33,20 @@ RSC=rc.exe
 OUTDIR=.\Release
 INTDIR=.\Release
 
-ALL : ".\OBabel.exe"
+ALL : ".\babel.exe"
 
 
 CLEAN :
 	-@erase "$(INTDIR)\alchemyformat.obj"
 	-@erase "$(INTDIR)\amberformat.obj"
+	-@erase "$(INTDIR)\APIInterface.obj"
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\balstformat.obj"
 	-@erase "$(INTDIR)\base.obj"
 	-@erase "$(INTDIR)\bgfformat.obj"
-	-@erase "$(INTDIR)\binary.obj"
 	-@erase "$(INTDIR)\bitvec.obj"
 	-@erase "$(INTDIR)\bond.obj"
+	-@erase "$(INTDIR)\bondtyper.obj"
 	-@erase "$(INTDIR)\boxformat.obj"
 	-@erase "$(INTDIR)\cacaoformat.obj"
 	-@erase "$(INTDIR)\cacheformat.obj"
@@ -56,50 +57,62 @@ CLEAN :
 	-@erase "$(INTDIR)\chemdrawformat.obj"
 	-@erase "$(INTDIR)\chemtoolformat.obj"
 	-@erase "$(INTDIR)\chiral.obj"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cmlformat.obj"
+	-@erase "$(INTDIR)\cmlreactlformat.obj"
+	-@erase "$(INTDIR)\copyformat.obj"
 	-@erase "$(INTDIR)\crkformat.obj"
 	-@erase "$(INTDIR)\CSRformat.obj"
 	-@erase "$(INTDIR)\cssrformat.obj"
 	-@erase "$(INTDIR)\data.obj"
-	-@erase "$(INTDIR)\dlhandler_win32..obj"
+	-@erase "$(INTDIR)\dlhandler_win32.obj"
 	-@erase "$(INTDIR)\dmolformat.obj"
+	-@erase "$(INTDIR)\fastsearchformat.obj"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\fhformat.obj"
+	-@erase "$(INTDIR)\finger2.obj"
+	-@erase "$(INTDIR)\finger3.obj"
+	-@erase "$(INTDIR)\fingerprint.obj"
+	-@erase "$(INTDIR)\fingerprintformat.obj"
+	-@erase "$(INTDIR)\freefracformat.obj"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gaussformat.obj"
 	-@erase "$(INTDIR)\generic.obj"
 	-@erase "$(INTDIR)\ghemicalformat.obj"
 	-@erase "$(INTDIR)\grid.obj"
-	-@erase "$(INTDIR)\grosmos96format.obj"
+	-@erase "$(INTDIR)\gromos96format.obj"
 	-@erase "$(INTDIR)\hinformat.obj"
+	-@erase "$(INTDIR)\inchiformat.obj"
 	-@erase "$(INTDIR)\jaguarformat.obj"
+	-@erase "$(INTDIR)\kekulize.obj"
 	-@erase "$(INTDIR)\main.obj"
 	-@erase "$(INTDIR)\matrix.obj"
 	-@erase "$(INTDIR)\matrix3x3.obj"
 	-@erase "$(INTDIR)\mdlformat.obj"
-	-@erase "$(INTDIR)\mm3format.obj"
 	-@erase "$(INTDIR)\mmodformat.obj"
 	-@erase "$(INTDIR)\mol.obj"
 	-@erase "$(INTDIR)\mol2format.obj"
 	-@erase "$(INTDIR)\molchrg.obj"
 	-@erase "$(INTDIR)\mopacformat.obj"
+	-@erase "$(INTDIR)\mpdformat.obj"
 	-@erase "$(INTDIR)\mpqcformat.obj"
 	-@erase "$(INTDIR)\nwchemformat.obj"
 	-@erase "$(INTDIR)\obconversion.obj"
 	-@erase "$(INTDIR)\oberror.obj"
+	-@erase "$(INTDIR)\obiter.obj"
 	-@erase "$(INTDIR)\obutil.obj"
 	-@erase "$(INTDIR)\parsmart.obj"
 	-@erase "$(INTDIR)\patty.obj"
+	-@erase "$(INTDIR)\pcmodelformat.obj"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\phmodel.obj"
 	-@erase "$(INTDIR)\povrayformat.obj"
 	-@erase "$(INTDIR)\PQSformat.obj"
+	-@erase "$(INTDIR)\pubchem.obj"
 	-@erase "$(INTDIR)\qchemformat.obj"
 	-@erase "$(INTDIR)\rand.obj"
 	-@erase "$(INTDIR)\reportformat.obj"
 	-@erase "$(INTDIR)\residue.obj"
 	-@erase "$(INTDIR)\ring.obj"
+	-@erase "$(INTDIR)\rotamer.obj"
 	-@erase "$(INTDIR)\rotor.obj"
 	-@erase "$(INTDIR)\rxnformat.obj"
 	-@erase "$(INTDIR)\shelxformat.obj"
@@ -113,31 +126,36 @@ CLEAN :
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vector3.obj"
 	-@erase "$(INTDIR)\viewmolformat.obj"
+	-@erase "$(INTDIR)\xcmlformat.obj"
 	-@erase "$(INTDIR)\xedformat.obj"
+	-@erase "$(INTDIR)\xml.obj"
+	-@erase "$(INTDIR)\xmlformat.obj"
 	-@erase "$(INTDIR)\xyzformat.obj"
+	-@erase "$(INTDIR)\yasaraformat.obj"
 	-@erase "$(INTDIR)\zindoformat.obj"
-	-@erase ".\OBabel.exe"
+	-@erase ".\babel.exe"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /ML /W3 /GR /GX /O2 /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\OBabel.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MT /W3 /GR /GX /O2 /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\..\src\formats\xml" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /Fp"$(INTDIR)\OBabel.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBabel.bsc" 
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\OBabel.pdb" /machine:I386 /out:"OBabel.exe" 
+LINK32_FLAGS=libinchi.lib cmlpp.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\babel.pdb" /machine:I386 /out:"babel.exe" /libpath:".." /libpath:"..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\release" 
 LINK32_OBJS= \
 	"$(INTDIR)\alchemyformat.obj" \
 	"$(INTDIR)\amberformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\balstformat.obj" \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bgfformat.obj" \
-	"$(INTDIR)\binary.obj" \
 	"$(INTDIR)\bitvec.obj" \
 	"$(INTDIR)\bond.obj" \
+	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\boxformat.obj" \
 	"$(INTDIR)\cacaoformat.obj" \
 	"$(INTDIR)\cacheformat.obj" \
@@ -148,50 +166,62 @@ LINK32_OBJS= \
 	"$(INTDIR)\chemdrawformat.obj" \
 	"$(INTDIR)\chemtoolformat.obj" \
 	"$(INTDIR)\chiral.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
+	"$(INTDIR)\cmlreactlformat.obj" \
+	"$(INTDIR)\copyformat.obj" \
 	"$(INTDIR)\crkformat.obj" \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
 	"$(INTDIR)\data.obj" \
-	"$(INTDIR)\dlhandler_win32..obj" \
+	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
+	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\finger3.obj" \
+	"$(INTDIR)\fingerprint.obj" \
+	"$(INTDIR)\fingerprintformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
 	"$(INTDIR)\grid.obj" \
-	"$(INTDIR)\grosmos96format.obj" \
+	"$(INTDIR)\gromos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
+	"$(INTDIR)\inchiformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
+	"$(INTDIR)\kekulize.obj" \
 	"$(INTDIR)\main.obj" \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
 	"$(INTDIR)\mdlformat.obj" \
-	"$(INTDIR)\mm3format.obj" \
 	"$(INTDIR)\mmodformat.obj" \
 	"$(INTDIR)\mol.obj" \
 	"$(INTDIR)\mol2format.obj" \
 	"$(INTDIR)\molchrg.obj" \
 	"$(INTDIR)\mopacformat.obj" \
+	"$(INTDIR)\mpdformat.obj" \
 	"$(INTDIR)\mpqcformat.obj" \
 	"$(INTDIR)\nwchemformat.obj" \
 	"$(INTDIR)\obconversion.obj" \
 	"$(INTDIR)\oberror.obj" \
+	"$(INTDIR)\obiter.obj" \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
+	"$(INTDIR)\pcmodelformat.obj" \
 	"$(INTDIR)\pdbformat.obj" \
 	"$(INTDIR)\phmodel.obj" \
 	"$(INTDIR)\povrayformat.obj" \
 	"$(INTDIR)\PQSformat.obj" \
+	"$(INTDIR)\pubchem.obj" \
 	"$(INTDIR)\qchemformat.obj" \
 	"$(INTDIR)\rand.obj" \
 	"$(INTDIR)\reportformat.obj" \
 	"$(INTDIR)\residue.obj" \
 	"$(INTDIR)\ring.obj" \
+	"$(INTDIR)\rotamer.obj" \
 	"$(INTDIR)\rotor.obj" \
 	"$(INTDIR)\rxnformat.obj" \
 	"$(INTDIR)\shelxformat.obj" \
@@ -204,11 +234,17 @@ LINK32_OBJS= \
 	"$(INTDIR)\unichemformat.obj" \
 	"$(INTDIR)\vector3.obj" \
 	"$(INTDIR)\viewmolformat.obj" \
+	"$(INTDIR)\xcmlformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
+	"$(INTDIR)\xml.obj" \
+	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\yasaraformat.obj" \
+	"$(INTDIR)\zindoformat.obj" \
+	"..\libxml2.lib" \
+	"..\zdll.lib"
 
-".\OBabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+".\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -221,7 +257,7 @@ INTDIR=.\Debug
 OutDir=.\Debug
 # End Custom Macros
 
-ALL : "$(OUTDIR)\OBabel.exe" "$(OUTDIR)\OBabel.bsc"
+ALL : "$(OUTDIR)\babel.exe" "$(OUTDIR)\OBabel.bsc"
 
 
 CLEAN :
@@ -229,6 +265,8 @@ CLEAN :
 	-@erase "$(INTDIR)\alchemyformat.sbr"
 	-@erase "$(INTDIR)\amberformat.obj"
 	-@erase "$(INTDIR)\amberformat.sbr"
+	-@erase "$(INTDIR)\APIInterface.obj"
+	-@erase "$(INTDIR)\APIInterface.sbr"
 	-@erase "$(INTDIR)\atom.obj"
 	-@erase "$(INTDIR)\atom.sbr"
 	-@erase "$(INTDIR)\balstformat.obj"
@@ -237,12 +275,12 @@ CLEAN :
 	-@erase "$(INTDIR)\base.sbr"
 	-@erase "$(INTDIR)\bgfformat.obj"
 	-@erase "$(INTDIR)\bgfformat.sbr"
-	-@erase "$(INTDIR)\binary.obj"
-	-@erase "$(INTDIR)\binary.sbr"
 	-@erase "$(INTDIR)\bitvec.obj"
 	-@erase "$(INTDIR)\bitvec.sbr"
 	-@erase "$(INTDIR)\bond.obj"
 	-@erase "$(INTDIR)\bond.sbr"
+	-@erase "$(INTDIR)\bondtyper.obj"
+	-@erase "$(INTDIR)\bondtyper.sbr"
 	-@erase "$(INTDIR)\boxformat.obj"
 	-@erase "$(INTDIR)\boxformat.sbr"
 	-@erase "$(INTDIR)\cacaoformat.obj"
@@ -263,10 +301,10 @@ CLEAN :
 	-@erase "$(INTDIR)\chemtoolformat.sbr"
 	-@erase "$(INTDIR)\chiral.obj"
 	-@erase "$(INTDIR)\chiral.sbr"
-	-@erase "$(INTDIR)\cml.obj"
-	-@erase "$(INTDIR)\cml.sbr"
-	-@erase "$(INTDIR)\cmlformat.obj"
-	-@erase "$(INTDIR)\cmlformat.sbr"
+	-@erase "$(INTDIR)\cmlreactlformat.obj"
+	-@erase "$(INTDIR)\cmlreactlformat.sbr"
+	-@erase "$(INTDIR)\copyformat.obj"
+	-@erase "$(INTDIR)\copyformat.sbr"
 	-@erase "$(INTDIR)\crkformat.obj"
 	-@erase "$(INTDIR)\crkformat.sbr"
 	-@erase "$(INTDIR)\CSRformat.obj"
@@ -275,14 +313,26 @@ CLEAN :
 	-@erase "$(INTDIR)\cssrformat.sbr"
 	-@erase "$(INTDIR)\data.obj"
 	-@erase "$(INTDIR)\data.sbr"
-	-@erase "$(INTDIR)\dlhandler_win32..obj"
-	-@erase "$(INTDIR)\dlhandler_win32..sbr"
+	-@erase "$(INTDIR)\dlhandler_win32.obj"
+	-@erase "$(INTDIR)\dlhandler_win32.sbr"
 	-@erase "$(INTDIR)\dmolformat.obj"
 	-@erase "$(INTDIR)\dmolformat.sbr"
+	-@erase "$(INTDIR)\fastsearchformat.obj"
+	-@erase "$(INTDIR)\fastsearchformat.sbr"
 	-@erase "$(INTDIR)\featformat.obj"
 	-@erase "$(INTDIR)\featformat.sbr"
 	-@erase "$(INTDIR)\fhformat.obj"
 	-@erase "$(INTDIR)\fhformat.sbr"
+	-@erase "$(INTDIR)\finger2.obj"
+	-@erase "$(INTDIR)\finger2.sbr"
+	-@erase "$(INTDIR)\finger3.obj"
+	-@erase "$(INTDIR)\finger3.sbr"
+	-@erase "$(INTDIR)\fingerprint.obj"
+	-@erase "$(INTDIR)\fingerprint.sbr"
+	-@erase "$(INTDIR)\fingerprintformat.obj"
+	-@erase "$(INTDIR)\fingerprintformat.sbr"
+	-@erase "$(INTDIR)\freefracformat.obj"
+	-@erase "$(INTDIR)\freefracformat.sbr"
 	-@erase "$(INTDIR)\gamessformat.obj"
 	-@erase "$(INTDIR)\gamessformat.sbr"
 	-@erase "$(INTDIR)\gaussformat.obj"
@@ -293,12 +343,16 @@ CLEAN :
 	-@erase "$(INTDIR)\ghemicalformat.sbr"
 	-@erase "$(INTDIR)\grid.obj"
 	-@erase "$(INTDIR)\grid.sbr"
-	-@erase "$(INTDIR)\grosmos96format.obj"
-	-@erase "$(INTDIR)\grosmos96format.sbr"
+	-@erase "$(INTDIR)\gromos96format.obj"
+	-@erase "$(INTDIR)\gromos96format.sbr"
 	-@erase "$(INTDIR)\hinformat.obj"
 	-@erase "$(INTDIR)\hinformat.sbr"
+	-@erase "$(INTDIR)\inchiformat.obj"
+	-@erase "$(INTDIR)\inchiformat.sbr"
 	-@erase "$(INTDIR)\jaguarformat.obj"
 	-@erase "$(INTDIR)\jaguarformat.sbr"
+	-@erase "$(INTDIR)\kekulize.obj"
+	-@erase "$(INTDIR)\kekulize.sbr"
 	-@erase "$(INTDIR)\main.obj"
 	-@erase "$(INTDIR)\main.sbr"
 	-@erase "$(INTDIR)\matrix.obj"
@@ -307,8 +361,6 @@ CLEAN :
 	-@erase "$(INTDIR)\matrix3x3.sbr"
 	-@erase "$(INTDIR)\mdlformat.obj"
 	-@erase "$(INTDIR)\mdlformat.sbr"
-	-@erase "$(INTDIR)\mm3format.obj"
-	-@erase "$(INTDIR)\mm3format.sbr"
 	-@erase "$(INTDIR)\mmodformat.obj"
 	-@erase "$(INTDIR)\mmodformat.sbr"
 	-@erase "$(INTDIR)\mol.obj"
@@ -319,6 +371,8 @@ CLEAN :
 	-@erase "$(INTDIR)\molchrg.sbr"
 	-@erase "$(INTDIR)\mopacformat.obj"
 	-@erase "$(INTDIR)\mopacformat.sbr"
+	-@erase "$(INTDIR)\mpdformat.obj"
+	-@erase "$(INTDIR)\mpdformat.sbr"
 	-@erase "$(INTDIR)\mpqcformat.obj"
 	-@erase "$(INTDIR)\mpqcformat.sbr"
 	-@erase "$(INTDIR)\nwchemformat.obj"
@@ -327,12 +381,16 @@ CLEAN :
 	-@erase "$(INTDIR)\obconversion.sbr"
 	-@erase "$(INTDIR)\oberror.obj"
 	-@erase "$(INTDIR)\oberror.sbr"
+	-@erase "$(INTDIR)\obiter.obj"
+	-@erase "$(INTDIR)\obiter.sbr"
 	-@erase "$(INTDIR)\obutil.obj"
 	-@erase "$(INTDIR)\obutil.sbr"
 	-@erase "$(INTDIR)\parsmart.obj"
 	-@erase "$(INTDIR)\parsmart.sbr"
 	-@erase "$(INTDIR)\patty.obj"
 	-@erase "$(INTDIR)\patty.sbr"
+	-@erase "$(INTDIR)\pcmodelformat.obj"
+	-@erase "$(INTDIR)\pcmodelformat.sbr"
 	-@erase "$(INTDIR)\pdbformat.obj"
 	-@erase "$(INTDIR)\pdbformat.sbr"
 	-@erase "$(INTDIR)\phmodel.obj"
@@ -341,6 +399,8 @@ CLEAN :
 	-@erase "$(INTDIR)\povrayformat.sbr"
 	-@erase "$(INTDIR)\PQSformat.obj"
 	-@erase "$(INTDIR)\PQSformat.sbr"
+	-@erase "$(INTDIR)\pubchem.obj"
+	-@erase "$(INTDIR)\pubchem.sbr"
 	-@erase "$(INTDIR)\qchemformat.obj"
 	-@erase "$(INTDIR)\qchemformat.sbr"
 	-@erase "$(INTDIR)\rand.obj"
@@ -351,6 +411,8 @@ CLEAN :
 	-@erase "$(INTDIR)\residue.sbr"
 	-@erase "$(INTDIR)\ring.obj"
 	-@erase "$(INTDIR)\ring.sbr"
+	-@erase "$(INTDIR)\rotamer.obj"
+	-@erase "$(INTDIR)\rotamer.sbr"
 	-@erase "$(INTDIR)\rotor.obj"
 	-@erase "$(INTDIR)\rotor.sbr"
 	-@erase "$(INTDIR)\rxnformat.obj"
@@ -377,33 +439,42 @@ CLEAN :
 	-@erase "$(INTDIR)\vector3.sbr"
 	-@erase "$(INTDIR)\viewmolformat.obj"
 	-@erase "$(INTDIR)\viewmolformat.sbr"
+	-@erase "$(INTDIR)\xcmlformat.obj"
+	-@erase "$(INTDIR)\xcmlformat.sbr"
 	-@erase "$(INTDIR)\xedformat.obj"
 	-@erase "$(INTDIR)\xedformat.sbr"
+	-@erase "$(INTDIR)\xml.obj"
+	-@erase "$(INTDIR)\xml.sbr"
+	-@erase "$(INTDIR)\xmlformat.obj"
+	-@erase "$(INTDIR)\xmlformat.sbr"
 	-@erase "$(INTDIR)\xyzformat.obj"
 	-@erase "$(INTDIR)\xyzformat.sbr"
+	-@erase "$(INTDIR)\yasaraformat.obj"
+	-@erase "$(INTDIR)\yasaraformat.sbr"
 	-@erase "$(INTDIR)\zindoformat.obj"
 	-@erase "$(INTDIR)\zindoformat.sbr"
+	-@erase "$(OUTDIR)\babel.exe"
+	-@erase "$(OUTDIR)\babel.ilk"
+	-@erase "$(OUTDIR)\babel.pdb"
 	-@erase "$(OUTDIR)\OBabel.bsc"
-	-@erase "$(OUTDIR)\OBabel.exe"
-	-@erase "$(OUTDIR)\OBabel.ilk"
-	-@erase "$(OUTDIR)\OBabel.pdb"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-CPP_PROJ=/nologo /MLd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /MTd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /I "..\..\src\formats" /I "..\..\src\formats\xml" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /D "HAVE_CONFIG_H" /FR"$(INTDIR)\\" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 BSC32=bscmake.exe
 BSC32_FLAGS=/nologo /o"$(OUTDIR)\OBabel.bsc" 
 BSC32_SBRS= \
 	"$(INTDIR)\alchemyformat.sbr" \
 	"$(INTDIR)\amberformat.sbr" \
+	"$(INTDIR)\APIInterface.sbr" \
 	"$(INTDIR)\atom.sbr" \
 	"$(INTDIR)\balstformat.sbr" \
 	"$(INTDIR)\base.sbr" \
 	"$(INTDIR)\bgfformat.sbr" \
-	"$(INTDIR)\binary.sbr" \
 	"$(INTDIR)\bitvec.sbr" \
 	"$(INTDIR)\bond.sbr" \
+	"$(INTDIR)\bondtyper.sbr" \
 	"$(INTDIR)\boxformat.sbr" \
 	"$(INTDIR)\cacaoformat.sbr" \
 	"$(INTDIR)\cacheformat.sbr" \
@@ -414,50 +485,62 @@ BSC32_SBRS= \
 	"$(INTDIR)\chemdrawformat.sbr" \
 	"$(INTDIR)\chemtoolformat.sbr" \
 	"$(INTDIR)\chiral.sbr" \
-	"$(INTDIR)\cml.sbr" \
-	"$(INTDIR)\cmlformat.sbr" \
+	"$(INTDIR)\cmlreactlformat.sbr" \
+	"$(INTDIR)\copyformat.sbr" \
 	"$(INTDIR)\crkformat.sbr" \
 	"$(INTDIR)\CSRformat.sbr" \
 	"$(INTDIR)\cssrformat.sbr" \
 	"$(INTDIR)\data.sbr" \
-	"$(INTDIR)\dlhandler_win32..sbr" \
+	"$(INTDIR)\dlhandler_win32.sbr" \
 	"$(INTDIR)\dmolformat.sbr" \
+	"$(INTDIR)\fastsearchformat.sbr" \
 	"$(INTDIR)\featformat.sbr" \
 	"$(INTDIR)\fhformat.sbr" \
+	"$(INTDIR)\finger2.sbr" \
+	"$(INTDIR)\finger3.sbr" \
+	"$(INTDIR)\fingerprint.sbr" \
+	"$(INTDIR)\fingerprintformat.sbr" \
+	"$(INTDIR)\freefracformat.sbr" \
 	"$(INTDIR)\gamessformat.sbr" \
 	"$(INTDIR)\gaussformat.sbr" \
 	"$(INTDIR)\generic.sbr" \
 	"$(INTDIR)\ghemicalformat.sbr" \
 	"$(INTDIR)\grid.sbr" \
-	"$(INTDIR)\grosmos96format.sbr" \
+	"$(INTDIR)\gromos96format.sbr" \
 	"$(INTDIR)\hinformat.sbr" \
+	"$(INTDIR)\inchiformat.sbr" \
 	"$(INTDIR)\jaguarformat.sbr" \
+	"$(INTDIR)\kekulize.sbr" \
 	"$(INTDIR)\main.sbr" \
 	"$(INTDIR)\matrix.sbr" \
 	"$(INTDIR)\matrix3x3.sbr" \
 	"$(INTDIR)\mdlformat.sbr" \
-	"$(INTDIR)\mm3format.sbr" \
 	"$(INTDIR)\mmodformat.sbr" \
 	"$(INTDIR)\mol.sbr" \
 	"$(INTDIR)\mol2format.sbr" \
 	"$(INTDIR)\molchrg.sbr" \
 	"$(INTDIR)\mopacformat.sbr" \
+	"$(INTDIR)\mpdformat.sbr" \
 	"$(INTDIR)\mpqcformat.sbr" \
 	"$(INTDIR)\nwchemformat.sbr" \
 	"$(INTDIR)\obconversion.sbr" \
 	"$(INTDIR)\oberror.sbr" \
+	"$(INTDIR)\obiter.sbr" \
 	"$(INTDIR)\obutil.sbr" \
 	"$(INTDIR)\parsmart.sbr" \
 	"$(INTDIR)\patty.sbr" \
+	"$(INTDIR)\pcmodelformat.sbr" \
 	"$(INTDIR)\pdbformat.sbr" \
 	"$(INTDIR)\phmodel.sbr" \
 	"$(INTDIR)\povrayformat.sbr" \
 	"$(INTDIR)\PQSformat.sbr" \
+	"$(INTDIR)\pubchem.sbr" \
 	"$(INTDIR)\qchemformat.sbr" \
 	"$(INTDIR)\rand.sbr" \
 	"$(INTDIR)\reportformat.sbr" \
 	"$(INTDIR)\residue.sbr" \
 	"$(INTDIR)\ring.sbr" \
+	"$(INTDIR)\rotamer.sbr" \
 	"$(INTDIR)\rotor.sbr" \
 	"$(INTDIR)\rxnformat.sbr" \
 	"$(INTDIR)\shelxformat.sbr" \
@@ -470,8 +553,12 @@ BSC32_SBRS= \
 	"$(INTDIR)\unichemformat.sbr" \
 	"$(INTDIR)\vector3.sbr" \
 	"$(INTDIR)\viewmolformat.sbr" \
+	"$(INTDIR)\xcmlformat.sbr" \
 	"$(INTDIR)\xedformat.sbr" \
+	"$(INTDIR)\xml.sbr" \
+	"$(INTDIR)\xmlformat.sbr" \
 	"$(INTDIR)\xyzformat.sbr" \
+	"$(INTDIR)\yasaraformat.sbr" \
 	"$(INTDIR)\zindoformat.sbr"
 
 "$(OUTDIR)\OBabel.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
@@ -480,17 +567,18 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\OBabel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\OBabel.exe" /pdbtype:sept 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib cmlpp.lib libinchi.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\babel.pdb" /debug /machine:I386 /out:"$(OUTDIR)\babel.exe" /pdbtype:sept /libpath:".." /libpath:"..\..\src\formats\cmlpp\builds\windows\vc6\cmlpplib\Debug" 
 LINK32_OBJS= \
 	"$(INTDIR)\alchemyformat.obj" \
 	"$(INTDIR)\amberformat.obj" \
+	"$(INTDIR)\APIInterface.obj" \
 	"$(INTDIR)\atom.obj" \
 	"$(INTDIR)\balstformat.obj" \
 	"$(INTDIR)\base.obj" \
 	"$(INTDIR)\bgfformat.obj" \
-	"$(INTDIR)\binary.obj" \
 	"$(INTDIR)\bitvec.obj" \
 	"$(INTDIR)\bond.obj" \
+	"$(INTDIR)\bondtyper.obj" \
 	"$(INTDIR)\boxformat.obj" \
 	"$(INTDIR)\cacaoformat.obj" \
 	"$(INTDIR)\cacheformat.obj" \
@@ -501,50 +589,62 @@ LINK32_OBJS= \
 	"$(INTDIR)\chemdrawformat.obj" \
 	"$(INTDIR)\chemtoolformat.obj" \
 	"$(INTDIR)\chiral.obj" \
-	"$(INTDIR)\cml.obj" \
-	"$(INTDIR)\cmlformat.obj" \
+	"$(INTDIR)\cmlreactlformat.obj" \
+	"$(INTDIR)\copyformat.obj" \
 	"$(INTDIR)\crkformat.obj" \
 	"$(INTDIR)\CSRformat.obj" \
 	"$(INTDIR)\cssrformat.obj" \
 	"$(INTDIR)\data.obj" \
-	"$(INTDIR)\dlhandler_win32..obj" \
+	"$(INTDIR)\dlhandler_win32.obj" \
 	"$(INTDIR)\dmolformat.obj" \
+	"$(INTDIR)\fastsearchformat.obj" \
 	"$(INTDIR)\featformat.obj" \
 	"$(INTDIR)\fhformat.obj" \
+	"$(INTDIR)\finger2.obj" \
+	"$(INTDIR)\finger3.obj" \
+	"$(INTDIR)\fingerprint.obj" \
+	"$(INTDIR)\fingerprintformat.obj" \
+	"$(INTDIR)\freefracformat.obj" \
 	"$(INTDIR)\gamessformat.obj" \
 	"$(INTDIR)\gaussformat.obj" \
 	"$(INTDIR)\generic.obj" \
 	"$(INTDIR)\ghemicalformat.obj" \
 	"$(INTDIR)\grid.obj" \
-	"$(INTDIR)\grosmos96format.obj" \
+	"$(INTDIR)\gromos96format.obj" \
 	"$(INTDIR)\hinformat.obj" \
+	"$(INTDIR)\inchiformat.obj" \
 	"$(INTDIR)\jaguarformat.obj" \
+	"$(INTDIR)\kekulize.obj" \
 	"$(INTDIR)\main.obj" \
 	"$(INTDIR)\matrix.obj" \
 	"$(INTDIR)\matrix3x3.obj" \
 	"$(INTDIR)\mdlformat.obj" \
-	"$(INTDIR)\mm3format.obj" \
 	"$(INTDIR)\mmodformat.obj" \
 	"$(INTDIR)\mol.obj" \
 	"$(INTDIR)\mol2format.obj" \
 	"$(INTDIR)\molchrg.obj" \
 	"$(INTDIR)\mopacformat.obj" \
+	"$(INTDIR)\mpdformat.obj" \
 	"$(INTDIR)\mpqcformat.obj" \
 	"$(INTDIR)\nwchemformat.obj" \
 	"$(INTDIR)\obconversion.obj" \
 	"$(INTDIR)\oberror.obj" \
+	"$(INTDIR)\obiter.obj" \
 	"$(INTDIR)\obutil.obj" \
 	"$(INTDIR)\parsmart.obj" \
 	"$(INTDIR)\patty.obj" \
+	"$(INTDIR)\pcmodelformat.obj" \
 	"$(INTDIR)\pdbformat.obj" \
 	"$(INTDIR)\phmodel.obj" \
 	"$(INTDIR)\povrayformat.obj" \
 	"$(INTDIR)\PQSformat.obj" \
+	"$(INTDIR)\pubchem.obj" \
 	"$(INTDIR)\qchemformat.obj" \
 	"$(INTDIR)\rand.obj" \
 	"$(INTDIR)\reportformat.obj" \
 	"$(INTDIR)\residue.obj" \
 	"$(INTDIR)\ring.obj" \
+	"$(INTDIR)\rotamer.obj" \
 	"$(INTDIR)\rotor.obj" \
 	"$(INTDIR)\rxnformat.obj" \
 	"$(INTDIR)\shelxformat.obj" \
@@ -557,11 +657,17 @@ LINK32_OBJS= \
 	"$(INTDIR)\unichemformat.obj" \
 	"$(INTDIR)\vector3.obj" \
 	"$(INTDIR)\viewmolformat.obj" \
+	"$(INTDIR)\xcmlformat.obj" \
 	"$(INTDIR)\xedformat.obj" \
+	"$(INTDIR)\xml.obj" \
+	"$(INTDIR)\xmlformat.obj" \
 	"$(INTDIR)\xyzformat.obj" \
-	"$(INTDIR)\zindoformat.obj"
+	"$(INTDIR)\yasaraformat.obj" \
+	"$(INTDIR)\zindoformat.obj" \
+	"..\libxml2.lib" \
+	"..\zdll.lib"
 
-"$(OUTDIR)\OBabel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\babel.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -645,6 +751,24 @@ SOURCE=..\..\src\formats\amberformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\APIInterface.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\APIInterface.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\APIInterface.obj"	"$(INTDIR)\APIInterface.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\atom.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -717,24 +841,6 @@ SOURCE=..\..\src\formats\bgfformat.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\binary.cpp
-
-!IF  "$(CFG)" == "OBabel - Win32 Release"
-
-
-"$(INTDIR)\binary.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
-
-
-"$(INTDIR)\binary.obj"	"$(INTDIR)\binary.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
 SOURCE=..\..\src\bitvec.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -766,6 +872,24 @@ SOURCE=..\..\src\bond.cpp
 
 
 "$(INTDIR)\bond.obj"	"$(INTDIR)\bond.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\bondtyper.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\bondtyper.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\bondtyper.obj"	"$(INTDIR)\bondtyper.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -951,37 +1075,37 @@ SOURCE=..\..\src\chiral.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\cml.cpp
+SOURCE=..\..\src\formats\xml\cmlreactlformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
 
 
-"$(INTDIR)\cml.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cmlreactlformat.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
 
 
-"$(INTDIR)\cml.obj"	"$(INTDIR)\cml.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\cmlreactlformat.obj"	"$(INTDIR)\cmlreactlformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\cmlformat.cpp
+SOURCE=..\..\src\formats\copyformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
 
 
-"$(INTDIR)\cmlformat.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\copyformat.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
 
 
-"$(INTDIR)\cmlformat.obj"	"$(INTDIR)\cmlformat.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\copyformat.obj"	"$(INTDIR)\copyformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1059,19 +1183,19 @@ SOURCE=..\..\src\data.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\dlhandler_win32..cpp
+SOURCE=..\..\src\dlhandler_win32.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
 
 
-"$(INTDIR)\dlhandler_win32..obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\dlhandler_win32.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
 
 
-"$(INTDIR)\dlhandler_win32..obj"	"$(INTDIR)\dlhandler_win32..sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\dlhandler_win32.obj"	"$(INTDIR)\dlhandler_win32.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1090,6 +1214,24 @@ SOURCE=..\..\src\formats\dmolformat.cpp
 
 
 "$(INTDIR)\dmolformat.obj"	"$(INTDIR)\dmolformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\fastsearchformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\fastsearchformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\fastsearchformat.obj"	"$(INTDIR)\fastsearchformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1126,6 +1268,96 @@ SOURCE=..\..\src\formats\fhformat.cpp
 
 
 "$(INTDIR)\fhformat.obj"	"$(INTDIR)\fhformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprints\finger2.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\finger2.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\finger2.obj"	"$(INTDIR)\finger2.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprints\finger3.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\finger3.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\finger3.obj"	"$(INTDIR)\finger3.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\fingerprint.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\fingerprint.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\fingerprint.obj"	"$(INTDIR)\fingerprint.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\fingerprintformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\fingerprintformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\fingerprintformat.obj"	"$(INTDIR)\fingerprintformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\freefracformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\freefracformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\freefracformat.obj"	"$(INTDIR)\freefracformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1221,19 +1453,19 @@ SOURCE=..\..\src\grid.cpp
 
 !ENDIF 
 
-SOURCE=..\..\src\formats\grosmos96format.cpp
+SOURCE=..\..\src\formats\gromos96format.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
 
 
-"$(INTDIR)\grosmos96format.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\gromos96format.obj" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
 !ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
 
 
-"$(INTDIR)\grosmos96format.obj"	"$(INTDIR)\grosmos96format.sbr" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\gromos96format.obj"	"$(INTDIR)\gromos96format.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1257,6 +1489,24 @@ SOURCE=..\..\src\formats\hinformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\inchiformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\inchiformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\inchiformat.obj"	"$(INTDIR)\inchiformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\formats\jaguarformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -1270,6 +1520,24 @@ SOURCE=..\..\src\formats\jaguarformat.cpp
 
 
 "$(INTDIR)\jaguarformat.obj"	"$(INTDIR)\jaguarformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\kekulize.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\kekulize.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\kekulize.obj"	"$(INTDIR)\kekulize.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1342,24 +1610,6 @@ SOURCE=..\..\src\formats\mdlformat.cpp
 
 
 "$(INTDIR)\mdlformat.obj"	"$(INTDIR)\mdlformat.sbr" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ENDIF 
-
-SOURCE=..\..\src\formats\mm3format.cpp
-
-!IF  "$(CFG)" == "OBabel - Win32 Release"
-
-
-"$(INTDIR)\mm3format.obj" : $(SOURCE) "$(INTDIR)"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
-
-
-"$(INTDIR)\mm3format.obj"	"$(INTDIR)\mm3format.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1455,6 +1705,24 @@ SOURCE=..\..\src\formats\mopacformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\mpdformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\mpdformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\mpdformat.obj"	"$(INTDIR)\mpdformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\formats\mpqcformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -1527,6 +1795,24 @@ SOURCE=..\..\src\oberror.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\obiter.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\obiter.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\obiter.obj"	"$(INTDIR)\obiter.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\obutil.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -1576,6 +1862,24 @@ SOURCE=..\..\src\patty.cpp
 
 
 "$(INTDIR)\patty.obj"	"$(INTDIR)\patty.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\pcmodelformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\pcmodelformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\pcmodelformat.obj"	"$(INTDIR)\pcmodelformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1648,6 +1952,24 @@ SOURCE=..\..\src\formats\PQSformat.cpp
 
 
 "$(INTDIR)\PQSformat.obj"	"$(INTDIR)\PQSformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\xml\pubchem.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\pubchem.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\pubchem.obj"	"$(INTDIR)\pubchem.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1738,6 +2060,24 @@ SOURCE=..\..\src\ring.cpp
 
 
 "$(INTDIR)\ring.obj"	"$(INTDIR)\ring.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\rotamer.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\rotamer.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\rotamer.obj"	"$(INTDIR)\rotamer.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
@@ -1959,6 +2299,24 @@ SOURCE=..\..\src\formats\viewmolformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\xml\xcmlformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\xcmlformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\xcmlformat.obj"	"$(INTDIR)\xcmlformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\formats\xedformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -1977,6 +2335,42 @@ SOURCE=..\..\src\formats\xedformat.cpp
 
 !ENDIF 
 
+SOURCE=..\..\src\formats\xml\xml.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\xml.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\xml.obj"	"$(INTDIR)\xml.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\xml\xmlformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\xmlformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\xmlformat.obj"	"$(INTDIR)\xmlformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
 SOURCE=..\..\src\formats\xyzformat.cpp
 
 !IF  "$(CFG)" == "OBabel - Win32 Release"
@@ -1990,6 +2384,24 @@ SOURCE=..\..\src\formats\xyzformat.cpp
 
 
 "$(INTDIR)\xyzformat.obj"	"$(INTDIR)\xyzformat.sbr" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ENDIF 
+
+SOURCE=..\..\src\formats\yasaraformat.cpp
+
+!IF  "$(CFG)" == "OBabel - Win32 Release"
+
+
+"$(INTDIR)\yasaraformat.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+!ELSEIF  "$(CFG)" == "OBabel - Win32 Debug"
+
+
+"$(INTDIR)\yasaraformat.obj"	"$(INTDIR)\yasaraformat.sbr" : $(SOURCE) "$(INTDIR)"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

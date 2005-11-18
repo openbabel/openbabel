@@ -15,7 +15,7 @@ class CDynamicOptions
 {
 public:
 	CDynamicOptions();
-	void Construct(const char* OptionTxt, CWnd* pWnd, CRect& CtlRect );
+	bool Construct(const char* OptionTxt, CWnd* pWnd, CRect& CtlRect,	const char* StartText="");
 	virtual ~CDynamicOptions();
 	void InsertText(const char* txt, CWnd* pWnd, CRect& CtlRect );
 	const char* GetOptions();

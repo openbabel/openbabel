@@ -8,3 +8,5 @@ stamp.h
 autom4te.cache
 libtool
 openbabel.pc
+openbabel-2.0.pc
+.gdb_history

@@ -43,8 +43,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I ".." /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /D "USING_DYNAMIC_LIBS" /FD /c
-# SUBTRACT CPP /Fr /YX /Yc /Yu
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I ".." /I "../../data" /I "../../src" /D "NDEBUG" /D "USING_DYNAMIC_LIBS" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /D "HAVE_CONFIG_H" /FD /c
+# SUBTRACT CPP /u /Fr /YX /Yc /Yu
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x809 /d "NDEBUG"
@@ -71,8 +71,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".." /D "_DEBUG" /D "USING_DYNAMIC_LIBS" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /FR /FD /GZ /c
-# SUBTRACT CPP /YX /Yc /Yu
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".." /I "../../data" /I "../../src" /D "_DEBUG" /D "USING_DYNAMIC_LIBS" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBCONV_EXPORTS" /D "HAVE_CONFIG_H" /FR /FD /GZ /c
+# SUBTRACT CPP /u /YX /Yc /Yu
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x809 /d "_DEBUG"
@@ -95,20 +95,17 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\src\dlhandler_win32..cpp
+SOURCE=.\Cinterface.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\dlhandler_win32.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\OBConvDLLinit.cpp
-
-!IF  "$(CFG)" == "OBConv - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "OBConv - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -126,6 +123,18 @@ SOURCE=..\..\src\dlhandler.h
 
 SOURCE=..\..\src\obconversion.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\src\zipstream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\zipstreamimpl.h
+# End Source File
 # End Group
+# Begin Source File
+
+SOURCE=..\zdll.lib
+# End Source File
 # End Target
 # End Project

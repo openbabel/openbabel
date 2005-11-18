@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 1
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBFormats2_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USING_DYNAMIC_LIBS" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\data" /I ".." /I "..\..\src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /D "HAVE_CONFIG_H" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 1
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBFormats2_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\src" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USING_DYNAMIC_LIBS" /FR /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".." /I "..\..\src" /I "..\..\data" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USING_DYNAMIC_LIBS" /D "USING_OBDLL" /D "HAVE_CONFIG_H" /FR /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -82,6 +82,11 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 kernel32.lib user32.lib obconv.lib obdll.lib /nologo /dll /debug /machine:I386 /out:"Debug/OBFormats2D.obf" /pdbtype:sept /libpath:"..\OBDLL\Debug" /libpath:"..\OBConv\Debug"
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PostBuild_Desc=Copy debug versions of obconv.dll, obdll.dll
+PostBuild_Cmds=Copy  ..\obconv\debug\obconv.dll  .\debug  /Y	Copy  ..\obdll\debug\obdll.dll  .\debug  /Y
+# End Special Build Tool
 
 !ENDIF 
 
@@ -99,6 +104,10 @@ SOURCE=..\..\src\formats\alchemyformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\amberformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\APIInterface.cpp
 # End Source File
 # Begin Source File
 
@@ -142,14 +151,6 @@ SOURCE=..\..\src\formats\chemtoolformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\cml.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\formats\cmlformat.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\formats\CRKformat.cpp
 # End Source File
 # Begin Source File
@@ -174,6 +175,10 @@ SOURCE=..\..\src\formats\fhformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\freefracformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\gamessformat.cpp
 # End Source File
 # Begin Source File
@@ -186,7 +191,7 @@ SOURCE=..\..\src\formats\ghemicalformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\formats\grosmos96format.cpp
+SOURCE=..\..\src\formats\gromos96format.cpp
 # End Source File
 # Begin Source File
 
@@ -199,10 +204,6 @@ SOURCE=..\..\src\formats\jaguarformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\mdlformat.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\formats\mm3format.cpp
 # End Source File
 # Begin Source File
 
@@ -223,6 +224,10 @@ SOURCE=..\..\src\formats\mpqcformat.cpp
 # Begin Source File
 
 SOURCE=..\..\src\formats\nwchemformat.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\formats\pcmodelformat.cpp
 # End Source File
 # Begin Source File
 
@@ -282,6 +287,10 @@ SOURCE=..\..\src\formats\xyzformat.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\formats\yasaraformat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\formats\zindoformat.cpp
 # End Source File
 # End Group
@@ -301,5 +310,9 @@ SOURCE=..\..\src\obconversion.h
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # End Group
+# Begin Source File
+
+SOURCE=.\Stereochemistry.txt
+# End Source File
 # End Target
 # End Project

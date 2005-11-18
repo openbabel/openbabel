@@ -1,16 +1,16 @@
 /**********************************************************************
 residue.cpp - Handle macromolecule residues.
-
+ 
 Copyright (C) 2001, 2002  OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
-
+Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+ 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
-
+ 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,7 +20,7 @@ GNU General Public License for more details.
 /**********************************************************************
 Global arrays Residue, ElemDesc and function GetResidueNumber were
 obtained in part or whole from RasMol2 by Roger Sayle.
-***********************************************************************/  
+***********************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////
 // File Includes
@@ -45,11 +45,13 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 
 using namespace std;
 
-namespace OpenBabel {
+namespace OpenBabel
+{
 /** \class OBResidue
     \brief Residue information
-
-    The residue information is drawn from PDB or MOL2 files,
+ 
+    The residue information is drawn from PDB or MOL2 files (or similar), which
+    track biomolecule information,
     and are stored in the OBResidue class. OBResidues are stored inside the 
     OBAtom class and OBMol classes. 
     The residue information for an atom can be requested in 
@@ -67,8 +69,6 @@ namespace OpenBabel {
   r = mol.GetResidue(1);
 \endcode
 */
-
-} // end namespace OpenBabel
 
 ///////////////////////////////////////////////////////////////////////////////
 // Global Definitions
@@ -105,8 +105,9 @@ namespace OpenBabel {
 #define AA_MET (1<<19)
 #define AA_TRP (1<<20)
 
-// Residue Property definitions
-namespace OBAminoAcidProperty {
+//! Residue property definitions
+namespace OBAminoAcidProperty
+{
 static const unsigned int ACIDIC      =  0;
 static const unsigned int ACYCLIC     =  1;
 static const unsigned int ALIPHATIC   =  2;
@@ -126,7 +127,9 @@ static const unsigned int SMALL       = 15;
 static const unsigned int SURFACE     = 16;
 }
 
-namespace OBResidueAtomProperty {
+//! Residue atom properties
+namespace OBResidueAtomProperty
+{
 static const unsigned int ALPHA_CARBON     = 0;
 static const unsigned int AMINO_BACKBONE   = 1;
 static const unsigned int BACKBONE         = 2;
@@ -139,7 +142,8 @@ static const unsigned int SIDECHAIN        = 8;
 static const unsigned int SUGAR_PHOSPHATE  = 9;
 }
 /// Residue names
-namespace OBResidueIndex {
+namespace OBResidueIndex
+{
 static const unsigned int ALA   =  0;
 static const unsigned int GLY   =  1;
 static const unsigned int LEU   =  2;
@@ -196,7 +200,8 @@ static const unsigned int NAP   = 52;
 static const unsigned int NDP   = 53;
 }
 /// Residue types.
-namespace OBResidueProperty {
+namespace OBResidueProperty
+{
 static const unsigned int AMINO        = 0;
 static const unsigned int AMINO_NUCLEO = 1;
 static const unsigned int COENZYME     = 2;
@@ -250,90 +255,84 @@ static const unsigned int WATER        = 9;
                                   (AA_GLY)|(AA_SER)|(AA_GLN)|(AA_TYR)| \
                                   (AA_HIS)))
 
-///////////////////////////////////////////////////////////////////////////////
-// Open Babel Namespace
-///////////////////////////////////////////////////////////////////////////////
-
-namespace OpenBabel {
-
 ////////////////////////////////////////////////////////////////////////////////
 // Global Variables
 ////////////////////////////////////////////////////////////////////////////////
 
 static char Residue[MAXRES][4] = {
-    /*===============*/
-    /*  Amino Acids  */
-    /*===============*/
+                                     /*===============*/
+                                     /*  Amino Acids  */
+                                     /*===============*/
 
-/* Ordered by Cumulative Frequency in Brookhaven *
- * Protein Databank, December 1991               */
+                                     /* Ordered by Cumulative Frequency in Brookhaven *
+                                      * Protein Databank, December 1991               */
 
-          "ALA", /* 8.4% */     "GLY", /* 8.3% */
-          "LEU", /* 8.0% */     "SER", /* 7.5% */
-          "VAL", /* 7.1% */     "THR", /* 6.4% */
-          "LYS", /* 5.8% */     "ASP", /* 5.5% */
-          "ILE", /* 5.2% */     "ASN", /* 4.9% */
-          "GLU", /* 4.9% */     "PRO", /* 4.4% */
-          "ARG", /* 3.8% */     "PHE", /* 3.7% */
-          "GLN", /* 3.5% */     "TYR", /* 3.5% */
-          "HIS", /* 2.3% */     "CYS", /* 2.0% */
-          "MET", /* 1.8% */     "TRP", /* 1.4% */
+                                     "ALA", /* 8.4% */     "GLY", /* 8.3% */
+                                     "LEU", /* 8.0% */     "SER", /* 7.5% */
+                                     "VAL", /* 7.1% */     "THR", /* 6.4% */
+                                     "LYS", /* 5.8% */     "ASP", /* 5.5% */
+                                     "ILE", /* 5.2% */     "ASN", /* 4.9% */
+                                     "GLU", /* 4.9% */     "PRO", /* 4.4% */
+                                     "ARG", /* 3.8% */     "PHE", /* 3.7% */
+                                     "GLN", /* 3.5% */     "TYR", /* 3.5% */
+                                     "HIS", /* 2.3% */     "CYS", /* 2.0% */
+                                     "MET", /* 1.8% */     "TRP", /* 1.4% */
 
-          "ASX", "GLX", "PCA", "HYP",
+                                     "ASX", "GLX", "PCA", "HYP",
 
-    /*===================*/
-    /*  DNA Nucleotides  */
-    /*===================*/
-          "  A", "  C", "  G", "  T",
+                                     /*===================*/
+                                     /*  DNA Nucleotides  */
+                                     /*===================*/
+                                     "  A", "  C", "  G", "  T",
 
-    /*===================*/
-    /*  RNA Nucleotides  */
-    /*===================*/
-          "  U", " +U", "  I", "1MA", 
-          "5MC", "OMC", "1MG", "2MG", 
-          "M2G", "7MG", "OMG", " YG", 
-          "H2U", "5MU", "PSU",
+                                     /*===================*/
+                                     /*  RNA Nucleotides  */
+                                     /*===================*/
+                                     "  U", " +U", "  I", "1MA",
+                                     "5MC", "OMC", "1MG", "2MG",
+                                     "M2G", "7MG", "OMG", " YG",
+                                     "H2U", "5MU", "PSU",
 
-    /*=================*/
-    /*  Miscellaneous  */ 
-    /*=================*/
-          "UNK", "ACE", "FOR", "HOH",
-          "DOD", "SO4", "PO4", "NAD",
-          "COA", "NAP", "NDP"  
-};
+                                     /*=================*/
+                                     /*  Miscellaneous  */
+                                     /*=================*/
+                                     "UNK", "ACE", "FOR", "HOH",
+                                     "DOD", "SO4", "PO4", "NAD",
+                                     "COA", "NAP", "NDP"
+                                 };
 
 /* Avoid SGI Compiler Warnings! */
 static char ElemDesc[MAXELEM][4] = {
-    { ' ', 'N', ' ', ' ' },  /* 0*/
-    { ' ', 'C', 'A', ' ' },  /* 1*/
-    { ' ', 'C', ' ', ' ' },  /* 2*/
-    { ' ', 'O', ' ', ' ' },  /* 3*/   /* 0-3   Amino Acid Backbone    */
-    { ' ', 'C', '\'', ' ' }, /* 4*/
-    { ' ', 'O', 'T', ' ' },  /* 5*/
-    { ' ', 'S', ' ', ' ' },  /* 6*/
-    { ' ', 'P', ' ', ' ' },  /* 7*/   /* 4-7   Shapely Amino Backbone */
-    { ' ', 'O', '1', 'P' },  /* 8*/
-    { ' ', 'O', '2', 'P' },  /* 9*/
-    { ' ', 'O', '5', '*' },  /*10*/
-    { ' ', 'C', '5', '*' },  /*11*/
-    { ' ', 'C', '4', '*' },  /*12*/
-    { ' ', 'O', '4', '*' },  /*13*/
-    { ' ', 'C', '3', '*' },  /*14*/
-    { ' ', 'O', '3', '*' },  /*15*/
-    { ' ', 'C', '2', '*' },  /*16*/
-    { ' ', 'O', '2', '*' },  /*17*/
-    { ' ', 'C', '1', '*' },  /*18*/   /* 7-18  Nucleic Acid Backbone  */
-    { ' ', 'C', 'A', '2' },  /*19*/   /* 19    Shapely Special        */
-    { ' ', 'S', 'G', ' ' },  /*20*/   /* 20    Cysteine Sulphur       */
-    { ' ', 'N', '1', ' ' },  /*21*/
-    { ' ', 'N', '2', ' ' },  /*22*/
-    { ' ', 'N', '3', ' ' },  /*23*/
-    { ' ', 'N', '4', ' ' },  /*24*/
-    { ' ', 'N', '6', ' ' },  /*25*/
-    { ' ', 'O', '2', ' ' },  /*26*/
-    { ' ', 'O', '4', ' ' },  /*27*/
-    { ' ', 'O', '6', ' ' }   /*28*/   /* 21-28 Nucleic Acid H-Bonding */
-};
+                                       { ' ', 'N', ' ', ' ' },  /* 0*/
+                                       { ' ', 'C', 'A', ' ' },  /* 1*/
+                                       { ' ', 'C', ' ', ' ' },  /* 2*/
+                                       { ' ', 'O', ' ', ' ' },  /* 3*/   /* 0-3   Amino Acid Backbone    */
+                                       { ' ', 'C', '\'', ' ' }, /* 4*/
+                                       { ' ', 'O', 'T', ' ' },  /* 5*/
+                                       { ' ', 'S', ' ', ' ' },  /* 6*/
+                                       { ' ', 'P', ' ', ' ' },  /* 7*/   /* 4-7   Shapely Amino Backbone */
+                                       { ' ', 'O', '1', 'P' },  /* 8*/
+                                       { ' ', 'O', '2', 'P' },  /* 9*/
+                                       { ' ', 'O', '5', '*' },  /*10*/
+                                       { ' ', 'C', '5', '*' },  /*11*/
+                                       { ' ', 'C', '4', '*' },  /*12*/
+                                       { ' ', 'O', '4', '*' },  /*13*/
+                                       { ' ', 'C', '3', '*' },  /*14*/
+                                       { ' ', 'O', '3', '*' },  /*15*/
+                                       { ' ', 'C', '2', '*' },  /*16*/
+                                       { ' ', 'O', '2', '*' },  /*17*/
+                                       { ' ', 'C', '1', '*' },  /*18*/   /* 7-18  Nucleic Acid Backbone  */
+                                       { ' ', 'C', 'A', '2' },  /*19*/   /* 19    Shapely Special        */
+                                       { ' ', 'S', 'G', ' ' },  /*20*/   /* 20    Cysteine Sulphur       */
+                                       { ' ', 'N', '1', ' ' },  /*21*/
+                                       { ' ', 'N', '2', ' ' },  /*22*/
+                                       { ' ', 'N', '3', ' ' },  /*23*/
+                                       { ' ', 'N', '4', ' ' },  /*24*/
+                                       { ' ', 'N', '6', ' ' },  /*25*/
+                                       { ' ', 'O', '2', ' ' },  /*26*/
+                                       { ' ', 'O', '4', ' ' },  /*27*/
+                                       { ' ', 'O', '6', ' ' }   /*28*/   /* 21-28 Nucleic Acid H-Bonding */
+                                   };
 
 static unsigned int ResNo  = MINRES;
 static unsigned int ElemNo = MINELEM;
@@ -359,8 +358,8 @@ static unsigned int GetAtomIDNumber(const char *atomid)
 
                 switch(ch3)
                 {
-                case 'A': 
-                    
+                case 'A':
+
                     if (ch4 == ' ')
                         return 1;
                     else if (ch4 == '2')
@@ -413,12 +412,18 @@ static unsigned int GetAtomIDNumber(const char *atomid)
                 {
                     switch (ch3)
                     {
-                    case ' ': return 0;
-                    case '1': return 21;
-                    case '2': return 22;
-                    case '3': return 23;
-                    case '4': return 24;
-                    case '6': return 25;
+                    case ' ':
+                        return 0;
+                    case '1':
+                        return 21;
+                    case '2':
+                        return 22;
+                    case '3':
+                        return 23;
+                    case '4':
+                        return 24;
+                    case '6':
+                        return 25;
                     }
                 }
 
@@ -432,25 +437,25 @@ static unsigned int GetAtomIDNumber(const char *atomid)
 
                     if (ch4 == ' ')
                         return 3;
-                    
+
                     break;
 
                 case 'T':
-                    
+
                     if (ch4 == ' ')
                         return 5;
-                    
+
                     break;
 
                 case '1':
-                    
+
                     if (ch4 == 'P')
                         return 8;
 
                     break;
 
                 case '2':
-                    
+
                     if (ch4 == 'P')
                         return 9;
                     else if (ch4 == '*')
@@ -468,21 +473,21 @@ static unsigned int GetAtomIDNumber(const char *atomid)
                     break;
 
                 case '4':
-                    
+
                     if (ch4 == '*')
                         return 13;
                     else if (ch4 == ' ')
                         return 27;
 
                     break;
-                
+
                 case '5':
 
                     if (ch4 == '*')
                         return 10;
 
                     break;
-                
+
                 case '6':
 
                     if (ch4 == ' ')
@@ -530,14 +535,14 @@ static unsigned int GetAtomIDNumber(const char *atomid)
         }
         else
         {
-            cerr << "Maximum number of atom ids exceeded" << endl;
-            return 0;
+	  obErrorLog.ThrowError(__FUNCTION__, "Maximum number of atom ids exceeded", obWarning);
+	  return 0;
         }
     }
     else
     {
-        cerr << "NULL Atom IDs specified" << endl;
-        return 0;
+      obErrorLog.ThrowError(__FUNCTION__, "NULL Atom IDs specified", obWarning);
+      return 0;
     }
 }
 
@@ -550,389 +555,389 @@ static unsigned int GetResidueNumber(const char *res)
         int ch3 = toupper(res[2]);
 
         switch( ch1 )
-        {   
-        case(' '): 
-            
-            if( ch2 == ' ' )
-            {   
-                switch( ch3 )
-                {   
-                case('A'):  return( 24 );
-                case('C'):  return( 25 );
-                case('G'):  return( 26 );
-                case('T'):  return( 27 );
-                case('U'):  return( 28 );
-                case('I'):  return( 30 );
+        {
+        case(' '):
+
+                        if( ch2 == ' ' )
+                {
+                    switch( ch3 )
+                    {
+                    case('A'):  return( 24 );
+                    case('C'):  return( 25 );
+                    case('G'):  return( 26 );
+                    case('T'):  return( 27 );
+                    case('U'):  return( 28 );
+                    case('I'):  return( 30 );
+                    }
                 }
-            } 
-            else if( ch2 == '+' )
-            {   
-                if( ch3 == 'U' )
-                    return( 29 );
-            } 
-            else if( ch2 == 'Y' )
-            {   
-                if( ch3 == 'G' )
-                    return( 39 );
-            }
-            
-            break;
-
-        case('0'): 
-            
-            if( ch2 == 'M' )
-            {   
-                if( ch3 == 'C' )
-                    return( 33 );
-                else if( ch3 == 'G' )
-                    return( 38 );
-            }
-            
-            break;
-
-        case('1'): 
-            
-            if( ch2 == 'M' )
-            {   
-                if( ch3 == 'A' )
-                    return( 31 );
-                else if( ch3 == 'G' )
-                    return( 34 );
-            }
-            
-            break;
-
-        case('2'): 
-            
-            if( ch2 == 'M' )
-                if( ch3 == 'G' )
-                    return( 35 );
+                else if( ch2 == '+' )
+                {
+                    if( ch3 == 'U' )
+                        return( 29 );
+                }
+                else if( ch2 == 'Y' )
+                {
+                    if( ch3 == 'G' )
+                        return( 39 );
+                }
 
             break;
 
-        case('5'): 
-            
-            if( ch2 == 'M' )
-            {   
-                if( ch3 == 'C' )
-                    return( 32 );
-                else if( ch3 == 'U' )
-                    return( 41 );
-            }
+        case('0'):
+
+                        if( ch2 == 'M' )
+                {
+                    if( ch3 == 'C' )
+                        return( 33 );
+                    else if( ch3 == 'G' )
+                        return( 38 );
+                }
 
             break;
 
-        case('7'): 
-            
-            if( ch2 == 'M' )
-                if( ch3 == 'G' )
-                    return( 37 );
+        case('1'):
+
+                        if( ch2 == 'M' )
+                {
+                    if( ch3 == 'A' )
+                        return( 31 );
+                    else if( ch3 == 'G' )
+                        return( 34 );
+                }
 
             break;
 
-        case('A'): 
-            
-            if( ch2 == 'L' )
-            {   
-                if( ch3 == 'A' )
-                    return(  0 );
-            } 
-            else if( ch2 == 'S' )
-            {   
-                if( ch3 == 'P' )
-                    return(  7 );
-                else if( ch3 == 'N' )
-                    return(  9 );
-                else if( ch3 == 'X' )
-                    return( 20 );
-            }
-            else if( ch2 == 'R' )
-            {   
-                if( ch3 == 'G' )
-                    return( 12 );
-            } 
-            else if( ch2 == 'C' )
-            {   
-                if( ch3 == 'E' )
-                    return( 44 );
-            } 
-            else if( ch2 == 'D' )
-            {   
-                if( ch3 == 'E' )
-                    return( 24 );    /* "ADE" -> "  A" */
-            }
-            
-            break;
+        case('2'):
 
-        case('C'): 
-            
-            if( ch2 == 'Y' )
-            {   
-                if( ch3 == 'S' )
-                    return( 17 );
-                else if( ch3 == 'H' )
-                    return( 17 );    /* "CYH" -> "CYS" */
-                else if( ch3 == 'T' )
-                    return( 25 );    /* "CYT" -> "  C" */
-            }
-            else if( ch2 == 'O' )
-            {
-                if( ch3 == 'A' )
-                    return( 51 );
-            } 
-            else if( ch2 == 'P' )
-            {   
-                if( ch3 == 'R' )
-                    return( 11 );    /* "CPR" -> "PRO" */
-            } 
-            else if( ch2 == 'S' )
-            {   
-                if( ch3 == 'H' )
-                    return( 17 );    /* "CSH" -> "CYS" */
-                else if( ch3 == 'M' )
-                    return( 17 );    /* "CSM" -> "CYS" */
-            }
+                        if( ch2 == 'M' )
+                            if( ch3 == 'G' )
+                                return( 35 );
 
             break;
 
-        case('D'): 
-            
-            if( ch2 == 'O' )
-            {   
-                if( ch3 == 'D' )
-                    return( 47 );
-            } 
-            else if( ch2 == '2' )
-            {   
-                if( ch3 == 'O' )
-                    return( 47 );    /* "D2O" -> "DOD" */
-            }
-            
-            break;
+        case('5'):
 
-        case('F'): 
-            
-            if( ch2 == 'O' )
-                if( ch3 == 'R' )
-                    return( 45 );
+                        if( ch2 == 'M' )
+                {
+                    if( ch3 == 'C' )
+                        return( 32 );
+                    else if( ch3 == 'U' )
+                        return( 41 );
+                }
 
             break;
 
-        case('G'): 
-            
-            if( ch2 == 'L' )
-            {   
-                if( ch3 == 'Y' )
-                    return(  1 );
-                else if( ch3 == 'U' )
-                    return( 10 );
-                else if( ch3 == 'N' )
-                    return( 14 );
-                else if( ch3 == 'X' )
-                    return( 21 );
-            } 
-            else if( ch2 == 'U' )
-            {   
-                if( ch3 == 'A' )
-                    return( 26 );    /* "GUA" -> "  G" */
-            }
-            
-            break;
+        case('7'):
 
-        case('H'): 
-            
-            if( ch2 == 'I' )
-            {   
-                if( ch3 == 'S' )
-                    return( 16 );
-            } 
-            else if( ch2 == 'O' )
-            {   
-                if( ch3 == 'H' )
-                    return( 46 );
-            } 
-            else if( ch2 == 'Y' )
-            {   
-                if( ch3 == 'P' )
-                    return( 23 );
-            } 
-            else if( ch2 == '2' )
-            {   
-                if( ch3 == 'O' )
-                    return( 46 );    /* "H20" -> "HOH" */
-                else if( ch3 == 'U' )
-                    return( 40 );
-            }
-            
-            break;
-
-        case('I'): 
-            
-            if( ch2 == 'L' )
-                if( ch3 == 'E' )
-                    return(  8 );
+                        if( ch2 == 'M' )
+                            if( ch3 == 'G' )
+                                return( 37 );
 
             break;
 
-        case('L'): 
-            
-            if( ch2 == 'E' )
-            {   
-                if( ch3 == 'U' )
-                    return(  2 );
-            } 
-            else if( ch2 == 'Y' )
-            {   
-                if( ch3 == 'S' )
-                    return(  6 );
-            }
-            
-            break;
+        case('A'):
 
-        case('M'): 
-            
-            if( ch2 == 'E' )
-            {   
-                if( ch3 == 'T' )
-                   return( 18 );
-            }
-            else if( ch2 == '2' )
-            {   
-                if( ch3 == 'G' )
-                   return( 36 );
-            }
-
-            break;
-
-        case('N'): 
-            
-            if( ch2 == 'A' )
-            {   
-                if( ch3 == 'D' )
-                    return( 50 );
-                else if( ch3 == 'P' )
-                    return( 52 );
-            }
-            else if( ch2 == 'D' )
-            {   
-                if( ch3 == 'P' )
-                    return( 53 );
-            }
-            
-            break;
-
-        case('P'): 
-            
-            if( ch2 == 'R' )
-            {   
-                if( ch3 == 'O' )
-                    return( 11 );
-            } 
-            else if( ch2 == 'H' )
-            {   
-                if( ch3 == 'E' )
-                    return( 13 );
-            } 
-            else if( ch2 == 'C' )
-            {   
-                if( ch3 == 'A' )
-                    return( 22 );
-            } 
-            else if( ch2 == 'O' )
-            {   
-                if( ch3 == '4' )
-                    return( 49 );
-            } 
-            else if( ch2 == 'S' )
-            {   
-                if( ch3 == 'U' )
-                    return( 42 );
-            }
-            
-            break;
-
-        case('S'): 
-            
-            if( ch2 == 'E' )
-            {   
-                if( ch3 == 'R' )
-                    return(  3 );
-            } 
-            else if( ch2 == 'O' )
-            {   
-                if( ch3 == '4' )
-                    return( 48 );
-                else if( ch3 == 'L' )
-                    return( 46 );    /* "SOL" -> "HOH" */
-            } 
-            else if( ch2 == 'U' )
-            {   
-                if( ch3 == 'L' )
-                    return( 48 );    /* "SUL" -> "SO4" */
-            }
-            
-            break;
-
-        case('T'): 
-            
-            if( ch2 == 'H' )
-            {   
-                if( ch3 == 'R' )
-                    return(  5 );
-                else if( ch3 == 'Y' )
-                    return( 27 );    /* "THY" -> "  T" */
-            } 
-            else if( ch2 == 'Y' )
-            {   
-                if( ch3 == 'R' )
-                    return( 15 );
-            } 
-            else if( ch2 == 'R' )
-            {   
-                if( ch3 == 'P' )
-                    return( 19 );
-                else if( ch3 == 'Y' )
-                    return( 19 );    /* "TRY" -> "TRP" */
-            } 
-            else if( ch2 == 'I' )
-            {   
-                if( ch3 == 'P' )
-                    return( 46 );    /* "TIP" -> "HOH" */
-            }
-            
-            break;
-
-        case('U'): 
-            
-            if( ch2 == 'N' )
-            {   
-                if( ch3 == 'K' )
-                    return( 43 );
-            } 
-            else if( ch2 == 'R' )
-            {   
-                if( ch3 == 'A' )
-                    return( 28 );    /* "URA" -> "  U" */
-                else if( ch3 == 'I' )
-                    return( 28 );    /* "URI" -> "  U" */
-            }
+                        if( ch2 == 'L' )
+                {
+                    if( ch3 == 'A' )
+                        return(  0 );
+                }
+                else if( ch2 == 'S' )
+                {
+                    if( ch3 == 'P' )
+                        return(  7 );
+                    else if( ch3 == 'N' )
+                        return(  9 );
+                    else if( ch3 == 'X' )
+                        return( 20 );
+                }
+                else if( ch2 == 'R' )
+                {
+                    if( ch3 == 'G' )
+                        return( 12 );
+                }
+                else if( ch2 == 'C' )
+                {
+                    if( ch3 == 'E' )
+                        return( 44 );
+                }
+                else if( ch2 == 'D' )
+                {
+                    if( ch3 == 'E' )
+                        return( 24 );    /* "ADE" -> "  A" */
+                }
 
             break;
 
-        case('V'): 
-            
-            if( ch2 == 'A' )
-                if( ch3 == 'L' )
-                    return(  4 );
+        case('C'):
+
+                        if( ch2 == 'Y' )
+                {
+                    if( ch3 == 'S' )
+                        return( 17 );
+                    else if( ch3 == 'H' )
+                        return( 17 );    /* "CYH" -> "CYS" */
+                    else if( ch3 == 'T' )
+                        return( 25 );    /* "CYT" -> "  C" */
+                }
+                else if( ch2 == 'O' )
+                {
+                    if( ch3 == 'A' )
+                        return( 51 );
+                }
+                else if( ch2 == 'P' )
+                {
+                    if( ch3 == 'R' )
+                        return( 11 );    /* "CPR" -> "PRO" */
+                }
+                else if( ch2 == 'S' )
+                {
+                    if( ch3 == 'H' )
+                        return( 17 );    /* "CSH" -> "CYS" */
+                    else if( ch3 == 'M' )
+                        return( 17 );    /* "CSM" -> "CYS" */
+                }
 
             break;
 
-        case('W'): 
-            
-            if( ch2 == 'A' )
-                if( ch3 == 'T' )
-                    return( 46 );    /* "WAT" -> "HOH" */
-                
+        case('D'):
+
+                        if( ch2 == 'O' )
+                {
+                    if( ch3 == 'D' )
+                        return( 47 );
+                }
+                else if( ch2 == '2' )
+                {
+                    if( ch3 == 'O' )
+                        return( 47 );    /* "D2O" -> "DOD" */
+                }
+
+            break;
+
+        case('F'):
+
+                        if( ch2 == 'O' )
+                            if( ch3 == 'R' )
+                                return( 45 );
+
+            break;
+
+        case('G'):
+
+                        if( ch2 == 'L' )
+                {
+                    if( ch3 == 'Y' )
+                        return(  1 );
+                    else if( ch3 == 'U' )
+                        return( 10 );
+                    else if( ch3 == 'N' )
+                        return( 14 );
+                    else if( ch3 == 'X' )
+                        return( 21 );
+                }
+                else if( ch2 == 'U' )
+                {
+                    if( ch3 == 'A' )
+                        return( 26 );    /* "GUA" -> "  G" */
+                }
+
+            break;
+
+        case('H'):
+
+                        if( ch2 == 'I' )
+                {
+                    if( ch3 == 'S' )
+                        return( 16 );
+                }
+                else if( ch2 == 'O' )
+                {
+                    if( ch3 == 'H' )
+                        return( 46 );
+                }
+                else if( ch2 == 'Y' )
+                {
+                    if( ch3 == 'P' )
+                        return( 23 );
+                }
+                else if( ch2 == '2' )
+                {
+                    if( ch3 == 'O' )
+                        return( 46 );    /* "H20" -> "HOH" */
+                    else if( ch3 == 'U' )
+                        return( 40 );
+                }
+
+            break;
+
+        case('I'):
+
+                        if( ch2 == 'L' )
+                            if( ch3 == 'E' )
+                                return(  8 );
+
+            break;
+
+        case('L'):
+
+                        if( ch2 == 'E' )
+                {
+                    if( ch3 == 'U' )
+                        return(  2 );
+                }
+                else if( ch2 == 'Y' )
+                {
+                    if( ch3 == 'S' )
+                        return(  6 );
+                }
+
+            break;
+
+        case('M'):
+
+                        if( ch2 == 'E' )
+                {
+                    if( ch3 == 'T' )
+                        return( 18 );
+                }
+                else if( ch2 == '2' )
+                {
+                    if( ch3 == 'G' )
+                        return( 36 );
+                }
+
+            break;
+
+        case('N'):
+
+                        if( ch2 == 'A' )
+                {
+                    if( ch3 == 'D' )
+                        return( 50 );
+                    else if( ch3 == 'P' )
+                        return( 52 );
+                }
+                else if( ch2 == 'D' )
+                {
+                    if( ch3 == 'P' )
+                        return( 53 );
+                }
+
+            break;
+
+        case('P'):
+
+                        if( ch2 == 'R' )
+                {
+                    if( ch3 == 'O' )
+                        return( 11 );
+                }
+                else if( ch2 == 'H' )
+                {
+                    if( ch3 == 'E' )
+                        return( 13 );
+                }
+                else if( ch2 == 'C' )
+                {
+                    if( ch3 == 'A' )
+                        return( 22 );
+                }
+                else if( ch2 == 'O' )
+                {
+                    if( ch3 == '4' )
+                        return( 49 );
+                }
+                else if( ch2 == 'S' )
+                {
+                    if( ch3 == 'U' )
+                        return( 42 );
+                }
+
+            break;
+
+        case('S'):
+
+                        if( ch2 == 'E' )
+                {
+                    if( ch3 == 'R' )
+                        return(  3 );
+                }
+                else if( ch2 == 'O' )
+                {
+                    if( ch3 == '4' )
+                        return( 48 );
+                    else if( ch3 == 'L' )
+                        return( 46 );    /* "SOL" -> "HOH" */
+                }
+                else if( ch2 == 'U' )
+                {
+                    if( ch3 == 'L' )
+                        return( 48 );    /* "SUL" -> "SO4" */
+                }
+
+            break;
+
+        case('T'):
+
+                        if( ch2 == 'H' )
+                {
+                    if( ch3 == 'R' )
+                        return(  5 );
+                    else if( ch3 == 'Y' )
+                        return( 27 );    /* "THY" -> "  T" */
+                }
+                else if( ch2 == 'Y' )
+                {
+                    if( ch3 == 'R' )
+                        return( 15 );
+                }
+                else if( ch2 == 'R' )
+                {
+                    if( ch3 == 'P' )
+                        return( 19 );
+                    else if( ch3 == 'Y' )
+                        return( 19 );    /* "TRY" -> "TRP" */
+                }
+                else if( ch2 == 'I' )
+                {
+                    if( ch3 == 'P' )
+                        return( 46 );    /* "TIP" -> "HOH" */
+                }
+
+            break;
+
+        case('U'):
+
+                        if( ch2 == 'N' )
+                {
+                    if( ch3 == 'K' )
+                        return( 43 );
+                }
+                else if( ch2 == 'R' )
+                {
+                    if( ch3 == 'A' )
+                        return( 28 );    /* "URA" -> "  U" */
+                    else if( ch3 == 'I' )
+                        return( 28 );    /* "URI" -> "  U" */
+                }
+
+            break;
+
+        case('V'):
+
+                        if( ch2 == 'A' )
+                            if( ch3 == 'L' )
+                                return(  4 );
+
+            break;
+
+        case('W'):
+
+                        if( ch2 == 'A' )
+                            if( ch3 == 'T' )
+                                return( 46 );    /* "WAT" -> "HOH" */
+
             break;
         }
 
@@ -942,7 +947,7 @@ static unsigned int GetResidueNumber(const char *res)
                 return refno;
 
         if ( ResNo < MAXRES - 1 )
-        {
+{
             ResNo++;
             Residue[refno][0] = (char) ch1;
             Residue[refno][1] = (char) ch2;
@@ -954,34 +959,76 @@ static unsigned int GetResidueNumber(const char *res)
     return OBResidueIndex::UNK;
 }
 
-static void SetResidueKeys(const char   *residue, 
-                           unsigned int &reskey, 
+static void SetResidueKeys(const char   *residue,
+                           unsigned int &reskey,
                            unsigned int &aakey)
 {
     reskey = GetResidueNumber(residue);
     switch(reskey)
     {
-    case OBResidueIndex::ALA: aakey = AA_ALA; break;
-    case OBResidueIndex::GLY: aakey = AA_GLY; break;
-    case OBResidueIndex::LEU: aakey = AA_LEU; break;
-    case OBResidueIndex::SER: aakey = AA_SER; break;
-    case OBResidueIndex::VAL: aakey = AA_VAL; break;
-    case OBResidueIndex::THR: aakey = AA_THR; break;
-    case OBResidueIndex::LYS: aakey = AA_LYS; break;
-    case OBResidueIndex::ASP: aakey = AA_ASP; break;
-    case OBResidueIndex::ILE: aakey = AA_ILE; break;
-    case OBResidueIndex::ASN: aakey = AA_ASN; break;
-    case OBResidueIndex::GLU: aakey = AA_GLU; break;
-    case OBResidueIndex::PRO: aakey = AA_PRO; break;
-    case OBResidueIndex::ARG: aakey = AA_ARG; break;
-    case OBResidueIndex::PHE: aakey = AA_PHE; break;
-    case OBResidueIndex::GLN: aakey = AA_GLN; break;
-    case OBResidueIndex::TYR: aakey = AA_TYR; break;
-    case OBResidueIndex::HIS: aakey = AA_HIS; break;
-    case OBResidueIndex::CYS: aakey = AA_CYS; break;
-    case OBResidueIndex::MET: aakey = AA_MET; break;
-    case OBResidueIndex::TRP: aakey = AA_TRP; break;
-    default:             aakey = 0;      break;
+    case OBResidueIndex::ALA:
+        aakey = AA_ALA;
+        break;
+    case OBResidueIndex::GLY:
+        aakey = AA_GLY;
+        break;
+    case OBResidueIndex::LEU:
+        aakey = AA_LEU;
+        break;
+    case OBResidueIndex::SER:
+        aakey = AA_SER;
+        break;
+    case OBResidueIndex::VAL:
+        aakey = AA_VAL;
+        break;
+    case OBResidueIndex::THR:
+        aakey = AA_THR;
+        break;
+    case OBResidueIndex::LYS:
+        aakey = AA_LYS;
+        break;
+    case OBResidueIndex::ASP:
+        aakey = AA_ASP;
+        break;
+    case OBResidueIndex::ILE:
+        aakey = AA_ILE;
+        break;
+    case OBResidueIndex::ASN:
+        aakey = AA_ASN;
+        break;
+    case OBResidueIndex::GLU:
+        aakey = AA_GLU;
+        break;
+    case OBResidueIndex::PRO:
+        aakey = AA_PRO;
+        break;
+    case OBResidueIndex::ARG:
+        aakey = AA_ARG;
+        break;
+    case OBResidueIndex::PHE:
+        aakey = AA_PHE;
+        break;
+    case OBResidueIndex::GLN:
+        aakey = AA_GLN;
+        break;
+    case OBResidueIndex::TYR:
+        aakey = AA_TYR;
+        break;
+    case OBResidueIndex::HIS:
+        aakey = AA_HIS;
+        break;
+    case OBResidueIndex::CYS:
+        aakey = AA_CYS;
+        break;
+    case OBResidueIndex::MET:
+        aakey = AA_MET;
+        break;
+    case OBResidueIndex::TRP:
+        aakey = AA_TRP;
+        break;
+    default:
+        aakey = 0;
+        break;
     }
 }
 
@@ -989,7 +1036,7 @@ static void SetResidueKeys(const char   *residue,
 // OBResidue: Constructors / Destructor
 ///////////////////////////////////////////////////////////////////////////////
 
-OBResidue::OBResidue() 
+OBResidue::OBResidue()
 {
     _chain    = 'A';
     _idx      = 0;
@@ -1020,11 +1067,12 @@ OBResidue::~OBResidue()
         (*a)->SetResidue(NULL);
     _atoms.clear();
     if (!_vdata.empty())
-      {
+    {
         vector<OBGenericData*>::iterator m;
-        for (m = _vdata.begin();m != _vdata.end();m++) delete *m;
+        for (m = _vdata.begin();m != _vdata.end();m++)
+            delete *m;
         _vdata.clear();
-      }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1032,7 +1080,7 @@ OBResidue::~OBResidue()
 ///////////////////////////////////////////////////////////////////////////////
 
 OBResidue &OBResidue::operator = (const OBResidue &src)
-     //copy residue information
+//copy residue information
 // Currently does not copy vdata informtion
 {
     if (this != &src)
@@ -1142,21 +1190,21 @@ void OBResidue::SetNum(unsigned int resnum)
     _resnum = resnum;
 }
 
-void OBResidue::SetAtomID(OBAtom *atom, const string &id) 
+void OBResidue::SetAtomID(OBAtom *atom, const string &id)
 {
     for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
         if (_atoms[i] == atom)
             _atomid[i] = id;
 }
 
-void OBResidue::SetHetAtom(OBAtom *atom, bool hetatm)  
+void OBResidue::SetHetAtom(OBAtom *atom, bool hetatm)
 {
     for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
         if (_atoms[i] == atom)
             _hetatm[i] = hetatm;
 }
 
-void OBResidue::SetSerialNum(OBAtom *atom, unsigned int sernum) 
+void OBResidue::SetSerialNum(OBAtom *atom, unsigned int sernum)
 {
     for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
         if (_atoms[i] == atom)
@@ -1179,10 +1227,10 @@ vector<OBBond*> OBResidue::GetBonds(bool exterior) const
     for ( unsigned int i = 0 ; i < sz ; i++ )
     {
         atom = _atoms[i];
-	OBBond *bond;
-	vector<OBEdgeBase*>::iterator b;
-	for (bond = atom->BeginBond(b) ; bond ; bond = atom->NextBond(b))
-	{
+        OBBond *bond;
+        vector<OBEdgeBase*>::iterator b;
+        for (bond = atom->BeginBond(b) ; bond ; bond = atom->NextBond(b))
+        {
             if (!idxs.BitIsOn(bond->GetIdx()))
             {
                 if (!exterior)
@@ -1201,13 +1249,13 @@ vector<OBBond*> OBResidue::GetBonds(bool exterior) const
     return bonds;
 }
 
-string OBResidue::GetName(void) const 
-{ 
-    return _resname;  
+string OBResidue::GetName(void) const
+{
+    return _resname;
 }
 
-unsigned int OBResidue::GetNum(void) const 
-{ 
+unsigned int OBResidue::GetNum(void) const
+{
     return _resnum;
 }
 
@@ -1216,8 +1264,8 @@ unsigned int OBResidue::GetNumAtoms(void) const
     return (unsigned int)_atoms.size();
 }
 
-char OBResidue::GetChain(void) const 
-{ 
+char OBResidue::GetChain(void) const
+{
     return _chain;
 }
 
@@ -1229,25 +1277,25 @@ unsigned int OBResidue::GetChainNum(void) const
         return (_chain - 'A' + 1);
 }
 
-unsigned int OBResidue::GetIdx(void) const 
-{ 
-    return(_idx); 
+unsigned int OBResidue::GetIdx(void) const
+{
+    return(_idx);
 }
 
-unsigned int OBResidue::GetResKey(void) const 
-{ 
+unsigned int OBResidue::GetResKey(void) const
+{
     return(_reskey);
 }
 
-string OBResidue::GetAtomID(OBAtom *atom) const 
-{ 
+string OBResidue::GetAtomID(OBAtom *atom) const
+{
     for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
         if (_atoms[i] == atom)
             return _atomid[i];
     return "";
 }
 
-unsigned int OBResidue::GetSerialNum(OBAtom *atom) const 
+unsigned int OBResidue::GetSerialNum(OBAtom *atom) const
 {
     for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
         if (_atoms[i] == atom)
@@ -1255,8 +1303,8 @@ unsigned int OBResidue::GetSerialNum(OBAtom *atom) const
     return 0;
 }
 
-bool OBResidue::IsHetAtom(OBAtom *atom) const 
-{ 
+bool OBResidue::IsHetAtom(OBAtom *atom) const
+{
     for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
         if (_atoms[i] == atom)
             return _hetatm[i];
@@ -1287,24 +1335,42 @@ bool OBResidue::GetAminoAcidProperty(int property) const
 {
     switch(property)
     {
-    case OBAminoAcidProperty::ACIDIC:      return IS_ACIDIC(_aakey)      != 0;
-    case OBAminoAcidProperty::ACYCLIC:     return IS_ACYCLIC(_aakey)     != 0;
-    case OBAminoAcidProperty::ALIPHATIC:   return IS_ALIPHATIC(_aakey)   != 0;
-    case OBAminoAcidProperty::AROMATIC:    return IS_AROMATIC(_aakey)    != 0;
-    case OBAminoAcidProperty::BASIC:       return IS_BASIC(_aakey)       != 0;
-    case OBAminoAcidProperty::BURIED:      return IS_BURIED(_aakey)      != 0;
-    case OBAminoAcidProperty::CHARGED:     return IS_CHARGED(_aakey)     != 0;
-    case OBAminoAcidProperty::CYCLIC:      return IS_CYCLIC(_aakey)      != 0;
-    case OBAminoAcidProperty::HYDROPHOBIC: return IS_HYDROPHOBIC(_aakey) != 0;
-    case OBAminoAcidProperty::LARGE:       return IS_LARGE(_aakey)       != 0;
-    case OBAminoAcidProperty::MEDIUM:      return IS_MEDIUM(_aakey)      != 0;
-    case OBAminoAcidProperty::NEGATIVE:    return IS_NEGATIVE(_aakey)    != 0;
-    case OBAminoAcidProperty::NEUTRAL:     return IS_NEUTRAL(_aakey)     != 0;
-    case OBAminoAcidProperty::POLAR:       return IS_POLAR(_aakey)       != 0;
-    case OBAminoAcidProperty::POSITIVE:    return IS_POSITIVE(_aakey)    != 0;
-    case OBAminoAcidProperty::SMALL:       return IS_SMALL(_aakey)       != 0;
-    case OBAminoAcidProperty::SURFACE:     return IS_SURFACE(_aakey)     != 0;
-    default:                               return false;
+    case OBAminoAcidProperty::ACIDIC:
+        return IS_ACIDIC(_aakey)      != 0;
+    case OBAminoAcidProperty::ACYCLIC:
+        return IS_ACYCLIC(_aakey)     != 0;
+    case OBAminoAcidProperty::ALIPHATIC:
+        return IS_ALIPHATIC(_aakey)   != 0;
+    case OBAminoAcidProperty::AROMATIC:
+        return IS_AROMATIC(_aakey)    != 0;
+    case OBAminoAcidProperty::BASIC:
+        return IS_BASIC(_aakey)       != 0;
+    case OBAminoAcidProperty::BURIED:
+        return IS_BURIED(_aakey)      != 0;
+    case OBAminoAcidProperty::CHARGED:
+        return IS_CHARGED(_aakey)     != 0;
+    case OBAminoAcidProperty::CYCLIC:
+        return IS_CYCLIC(_aakey)      != 0;
+    case OBAminoAcidProperty::HYDROPHOBIC:
+        return IS_HYDROPHOBIC(_aakey) != 0;
+    case OBAminoAcidProperty::LARGE:
+        return IS_LARGE(_aakey)       != 0;
+    case OBAminoAcidProperty::MEDIUM:
+        return IS_MEDIUM(_aakey)      != 0;
+    case OBAminoAcidProperty::NEGATIVE:
+        return IS_NEGATIVE(_aakey)    != 0;
+    case OBAminoAcidProperty::NEUTRAL:
+        return IS_NEUTRAL(_aakey)     != 0;
+    case OBAminoAcidProperty::POLAR:
+        return IS_POLAR(_aakey)       != 0;
+    case OBAminoAcidProperty::POSITIVE:
+        return IS_POSITIVE(_aakey)    != 0;
+    case OBAminoAcidProperty::SMALL:
+        return IS_SMALL(_aakey)       != 0;
+    case OBAminoAcidProperty::SURFACE:
+        return IS_SURFACE(_aakey)     != 0;
+    default:
+        return false;
     }
 }
 
@@ -1316,23 +1382,23 @@ bool OBResidue::GetAtomProperty(OBAtom *atom, int property) const
 
         switch(property)
         {
-        case OBResidueAtomProperty::ALPHA_CARBON: 
+        case OBResidueAtomProperty::ALPHA_CARBON:
             return (atomid == 1);
-        
-        case OBResidueAtomProperty::AMINO_BACKBONE: 
+
+        case OBResidueAtomProperty::AMINO_BACKBONE:
             return (atomid <= 3);
-        
-        case OBResidueAtomProperty::BACKBONE: 
+
+        case OBResidueAtomProperty::BACKBONE:
             return (atomid <= 18);
-        
-        case OBResidueAtomProperty::CYSTEINE_SULPHUR: 
+
+        case OBResidueAtomProperty::CYSTEINE_SULPHUR:
             return (atomid == 20);
-        
-        case OBResidueAtomProperty::LIGAND: 
+
+        case OBResidueAtomProperty::LIGAND:
             return IsHetAtom(atom) &&
                    !GetResidueProperty(OBResidueProperty::SOLVENT);
-        
-        case OBResidueAtomProperty::NUCLEIC_BACKBONE: 
+
+        case OBResidueAtomProperty::NUCLEIC_BACKBONE:
             return ((atomid >= 7) && (atomid <= 18));
 
         case OBResidueAtomProperty::SHAPELY_BACKBONE:
@@ -1344,7 +1410,7 @@ bool OBResidue::GetAtomProperty(OBAtom *atom, int property) const
         case OBResidueAtomProperty::SIDECHAIN:
             return GetResidueProperty(OBResidueProperty::AMINO_NUCLEO) &&
                    (atomid > 18);
- 
+
         case OBResidueAtomProperty::SUGAR_PHOSPHATE:
             return (atomid == 7);
         }
@@ -1383,7 +1449,7 @@ bool OBResidue::GetResidueProperty(int property) const
     case OBResidueProperty::PURINE:
         return (_reskey == OBResidueIndex::A) ||
                (_reskey == OBResidueIndex::G);
-    
+
     case OBResidueProperty::PYRIMIDINE:
         return (_reskey == OBResidueIndex::C) ||
                (_reskey == OBResidueIndex::T);
@@ -1408,72 +1474,75 @@ bool OBResidue::IsResidueType(int restype) const
 
 // OBGenericData methods
 bool OBResidue::HasData(string &s)
-     //returns true if the generic attribute/value pair exists
+//returns true if the generic attribute/value pair exists
 {
-  if (_vdata.empty()) return(false);
+    if (_vdata.empty())
+        return(false);
 
     vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
         if ((*i)->GetAttribute() == s)
             return(true);
-    
+
     return(false);
 }
 
 bool OBResidue::HasData(const char *s)
-     //returns true if the generic attribute/value pair exists
+//returns true if the generic attribute/value pair exists
 {
-  if (_vdata.empty()) return(false);
+    if (_vdata.empty())
+        return(false);
 
     vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
         if ((*i)->GetAttribute() == s)
             return(true);
-    
+
     return(false);
 }
 
-bool OBResidue::HasData(obDataType dt)
-     //returns true if the generic attribute/value pair exists
+bool OBResidue::HasData(unsigned int dt)
+//returns true if the generic attribute/value pair exists
 {
-  if (_vdata.empty()) return(false);
+    if (_vdata.empty())
+        return(false);
 
     vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
         if ((*i)->GetDataType() == dt)
             return(true);
-    
+
     return(false);
 }
 
 OBGenericData *OBResidue::GetData(string &s)
-     //returns the value given an attribute
+//returns the value given an attribute
 {
     vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
-                if ((*i)->GetAttribute() == s)
+        if ((*i)->GetAttribute() == s)
             return(*i);
 
     return(NULL);
 }
 
 OBGenericData *OBResidue::GetData(const char *s)
-     //returns the value given an attribute
+//returns the value given an attribute
 {
     vector<OBGenericData*>::iterator i;
 
     for (i = _vdata.begin();i != _vdata.end();i++)
-                if ((*i)->GetAttribute() == s)
+        if ((*i)->GetAttribute() == s)
             return(*i);
 
     return(NULL);
 }
 
-OBGenericData *OBResidue::GetData(obDataType dt)
+OBGenericData *OBResidue::GetData(unsigned int dt)
 {
     vector<OBGenericData*>::iterator i;
     for (i = _vdata.begin();i != _vdata.end();i++)
@@ -1482,47 +1551,54 @@ OBGenericData *OBResidue::GetData(obDataType dt)
     return(NULL);
 }
 
-void OBResidue::DeleteData(obDataType dt)
+void OBResidue::DeleteData(unsigned int dt)
 {
-  vector<OBGenericData*> vdata;
-  vector<OBGenericData*>::iterator i;
+    vector<OBGenericData*> vdata;
+    vector<OBGenericData*>::iterator i;
     for (i = _vdata.begin();i != _vdata.end();i++)
-        if ((*i)->GetDataType() == dt) delete *i;
-        else vdata.push_back(*i);
-  _vdata = vdata;
+        if ((*i)->GetDataType() == dt)
+            delete *i;
+        else
+            vdata.push_back(*i);
+    _vdata = vdata;
 }
 
 void OBResidue::DeleteData(vector<OBGenericData*> &vg)
 {
-  vector<OBGenericData*> vdata;
-  vector<OBGenericData*>::iterator i,j;
+    vector<OBGenericData*> vdata;
+    vector<OBGenericData*>::iterator i,j;
 
-  bool del;
-  for (i = _vdata.begin();i != _vdata.end();i++)
-  {
-          del = false;
-          for (j = vg.begin();j != vg.end();j++)
-                  if (*i == *j)
-                  {
-                          del = true;
-                          break;
-                  }
-           if (del) delete *i;
-           else     vdata.push_back(*i);
-  }
-  _vdata = vdata;
+    bool del;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+    {
+        del = false;
+        for (j = vg.begin();j != vg.end();j++)
+            if (*i == *j)
+            {
+                del = true;
+                break;
+            }
+        if (del)
+            delete *i;
+        else
+            vdata.push_back(*i);
+    }
+    _vdata = vdata;
 }
 
 void OBResidue::DeleteData(OBGenericData *gd)
 {
-  vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();i++)
-          if (*i == gd)
-          {
-                delete *i;
-                _vdata.erase(i);
-          }
+    vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if (*i == gd)
+        {
+            delete *i;
+            _vdata.erase(i);
+        }
 
 }
 
 } // end namespace OpenBabel
+
+//! \file residue.cpp
+//! \brief Handle macromolecule residues.

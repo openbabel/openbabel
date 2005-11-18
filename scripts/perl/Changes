@@ -1,0 +1,7 @@
+Revision history for Chemistry::OpenBabel.
+
+1.0  Xxx 01 2005
+        - First public release.
+	- Offers access to OBMol, OBConversion, and OBGlobalDatabase classes
+	(i.e., anything in mol.h, obconversion.h or data.h)
+	- Corresponds to Open Babel version 2.0 release.

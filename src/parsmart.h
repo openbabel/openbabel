@@ -1,16 +1,16 @@
 /**********************************************************************
-parsmart.h - SMART parser.
-
+parsmart.h - Daylight SMARTS parser.
+ 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
-
+Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+ 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
-
+ 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -57,28 +57,36 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-  //! \brief A SMARTS parser internal atomic expression
+//! \brief A SMARTS parser internal atomic expression
 typedef union _AtomExpr {
+    int type;
+    struct
+    {
         int type;
-        struct {
-            int type;
-            int prop;
-            int value;
-        } leaf;
-        struct {
-            int type;
-            void *recur;
-        } recur;
-        struct {
-            int type;
-            union _AtomExpr *arg;
-        } mon;
-        struct {
-            int type;
-            union _AtomExpr *lft;
-            union _AtomExpr *rgt;
-        } bin;
-    } AtomExpr;
+        int prop;
+        int value;
+    }
+    leaf;
+    struct
+    {
+        int type;
+        void *recur;
+    }
+    recur;
+    struct
+    {
+        int type;
+        union _AtomExpr *arg;
+    }
+    mon;
+    struct
+    {
+        int type;
+        union _AtomExpr *lft;
+        union _AtomExpr *rgt;
+    }
+    bin;
+} AtomExpr;
 
 #define BE_LEAF      0x01
 #define BE_ANDHI     0x02
@@ -101,53 +109,65 @@ typedef union _AtomExpr {
 
 //! \brief A SMARTS parser internal bond expression
 typedef union _BondExpr {
+    int type;
+    struct
+    {
         int type;
-        struct {
-            int type;
-            int prop;
-            int value;
-        } leaf;
-        struct {
-            int type;
-            union _BondExpr *arg;
-        } mon;
-        struct {
-            int type;
-            union _BondExpr *lft;
-            union _BondExpr *rgt;
-        } bin;
-    } BondExpr;
+        int prop;
+        int value;
+    }
+    leaf;
+    struct
+    {
+        int type;
+        union _BondExpr *arg;
+    }
+    mon;
+    struct
+    {
+        int type;
+        union _BondExpr *lft;
+        union _BondExpr *rgt;
+    }
+    bin;
+} BondExpr;
 
 //! \brief A SMARTS parser internal bond specification
-typedef struct {
-        BondExpr *expr;
-        int src,dst;
-        int visit;
-        bool grow;
-    } BondSpec;
+typedef struct
+{
+    BondExpr *expr;
+    int src,dst;
+    int visit;
+    bool grow;
+}
+BondSpec;
 
 //! \brief A SMARTS parser internal bond specification
-typedef struct {
-  AtomExpr *expr;
-  int visit;
-  int part;
-  int chiral_flag;
-  int vb;
-    } AtomSpec;
+typedef struct
+{
+    AtomExpr *expr;
+    int visit;
+    int part;
+    int chiral_flag;
+    int vb;
+}
+AtomSpec;
 
 //! \brief A SMARTS parser internal pattern
-typedef struct {
-  int aalloc,acount;
-  int balloc,bcount;
-  bool ischiral;
-  AtomSpec *atom;
-  BondSpec *bond;
-  int parts;
-} Pattern;
+typedef struct
+{
+    int aalloc,acount;
+    int balloc,bcount;
+    bool ischiral;
+    AtomSpec *atom;
+    BondSpec *bond;
+    int parts;
+}
+Pattern;
 
 // class introduction in parsmart.cpp
 //! \brief SMARTS (SMiles ARbitrary Target Specification) substructure searching
-class OBSmartsPattern
+class OBAPI OBSmartsPattern
 {
 protected:
     std::vector<bool>          		_growbond;
@@ -156,32 +176,63 @@ protected:
     std::string				_str;
 
 public:
-    OBSmartsPattern()  { _pat=NULL; }
+    OBSmartsPattern()
+    {
+        _pat=NULL;
+    }
     virtual ~OBSmartsPattern();
 
-    OBSmartsPattern(const OBSmartsPattern& cp) { _pat = NULL; *this = cp; }
-    OBSmartsPattern& operator=(const OBSmartsPattern& cp) 
+    OBSmartsPattern(const OBSmartsPattern& cp)
     {
-        if (_pat) 
-            delete [] _pat; 
-        _pat = NULL; 
-        std::string s = cp._str; 
-        Init(s); 
+        _pat = NULL;
+        *this = cp;
+    }
+    OBSmartsPattern& operator=(const OBSmartsPattern& cp)
+    {
+        if (_pat)
+            delete [] _pat;
+        _pat = NULL;
+        std::string s = cp._str;
+        Init(s);
         return (*this);
     }
 
-    unsigned int NumMatches() const { return (unsigned int)_mlist.size(); }
-    unsigned int NumAtoms()   const { return _pat ? _pat->acount : 0;     }
-    unsigned int NumBonds()   const { return _pat ? _pat->bcount : 0;     }
+    unsigned int NumMatches() const
+    {
+        return (unsigned int)_mlist.size();
+    }
+    unsigned int NumAtoms()   const
+    {
+        return _pat ? _pat->acount : 0;
+    }
+    unsigned int NumBonds()   const
+    {
+        return _pat ? _pat->bcount : 0;
+    }
 
     int          GetAtomicNum(int);
     void         GetBond(int&,int&,int&,int);
     int          GetCharge(int);
-    const std::string &GetSMARTS() const         {return _str;}
-    std::string  &GetSMARTS()               {return _str;}
-    int          GetVectorBinding(int idx) const { return(_pat->atom[idx].vb); }
-    bool         Empty()                   const { return(_pat == NULL);       }
-    bool         IsValid()                 const { return(_pat != NULL);       }
+    const std::string &GetSMARTS() const
+    {
+        return _str;
+    }
+    std::string  &GetSMARTS()
+    {
+        return _str;
+    }
+    int          GetVectorBinding(int idx) const
+    {
+        return(_pat->atom[idx].vb);
+    }
+    bool         Empty()                   const
+    {
+        return(_pat == NULL);
+    }
+    bool         IsValid()                 const
+    {
+        return(_pat != NULL);
+    }
     bool         Init(const char*);
     bool         Init(const std::string&);
     void         WriteMapList(std::ostream&);
@@ -190,14 +241,23 @@ public:
     bool RestrictedMatch(OBMol &mol, std::vector<std::pair<int,int> > &pairs, bool single=false);
     bool RestrictedMatch(OBMol &mol, OBBitVec &bv, bool single=false);
 
-    std::vector<std::vector<int> > &GetMapList() {return(_mlist);}
+    std::vector<std::vector<int> > &GetMapList()
+    {
+        return(_mlist);
+    }
     std::vector<std::vector<int> > &GetUMapList();
-    std::vector<std::vector<int> >::iterator BeginMList() {return(_mlist.begin());}
-    std::vector<std::vector<int> >::iterator EndMList() {return(_mlist.end());}
+    std::vector<std::vector<int> >::iterator BeginMList()
+    {
+        return(_mlist.begin());
+    }
+    std::vector<std::vector<int> >::iterator EndMList()
+    {
+        return(_mlist.end());
+    }
 };
 
-
-class OBSSMatch //used for fast exhaustive matching
+//! Performs fast, exhaustive matching used to find just a single match in match() using recursion and explicit stack handling.
+class OBAPI OBSSMatch //used for fast exhaustive matching
 {
 protected:
     bool        *_uatoms;
@@ -212,11 +272,11 @@ public:
 };
 
 void SmartsLexReplace(std::string &,
-		      std::vector<std::pair<std::string,std::string> > &);
+                      std::vector<std::pair<std::string,std::string> > &);
 
 } // end namespace OpenBabel
 
 #endif // OB_PARSMART_H
 
-//! \file parsmart.h 
-//! \brief SMART parser.
+//! \file parsmart.h
+//! \brief Daylight SMARTS parser.

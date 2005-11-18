@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /D "GUI" /D "USING_DYNAMIC_LIBS" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "HAVE_LIBZ" /Yu"stdafx.h" /FD /c
 # SUBTRACT CPP /u /Fr
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -54,10 +54,10 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 obconv.lib /nologo /subsystem:windows /machine:I386 /out:"OBGUI.exe" /libpath:"..\OBConv\Release\\"
+# ADD LINK32 obconv.lib Shlwapi.lib /nologo /subsystem:windows /machine:I386 /out:"OBGUI.exe" /libpath:"..\OBConv\Release\\"
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats.obf
+PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats2.obf
 PostBuild_Cmds=Copy  ..\obformats2\obformats2.obf . /Y	Copy  ..\obconv\obconv.dll . /Y	Copy  ..\obdll\obdll.dll . /Y
 # End Special Build Tool
 
@@ -75,7 +75,7 @@ PostBuild_Cmds=Copy  ..\obformats2\obformats2.obf . /Y	Copy  ..\obconv\obconv.dl
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /FR /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "USING_OBDLL" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "GUI" /D "USING_DYNAMIC_LIBS" /D "HAVE_CONFIG_H" /FR /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x809 /d "_DEBUG" /d "_AFXDLL"
@@ -85,12 +85,12 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 obconv.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"..\OBConv\debug\\"
+# ADD LINK32 obconv.lib Shlwapi.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"..\OBConv\debug\\"
 # SUBTRACT LINK32 /nodefaultlib
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Desc=Copy obconv.dll, obdll.dll and obformats.obf
-PostBuild_Cmds=Copy  ..\obconv\debug\obconv.dll  .\debug  /Y	Copy  ..\obformats2\debug\obformats2D.obf .\debug /Y	Copy  ..\obdll\debug\obdll.dll  .\debug  /Y
+PostBuild_Desc=Copy debug versions of obconv.dll, obdll.dll and *.obf
+PostBuild_Cmds=XCopy  ..\obconv\debug\obconv.dll  .\debug  /Y	XCopy  ..\obformats2\debug\obformats2D.obf .\debug /Y	XCopy  ..\obdll\debug\obdll.dll  .\debug  /Y	XCopy  ..\obextraformats\debug\obextraD.obf .\debug /Y	XCopy  ..\obxmlformats\debug\OBXMLD.obf .\debug /Y
 # End Special Build Tool
 
 !ENDIF 

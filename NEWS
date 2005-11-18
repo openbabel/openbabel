@@ -1,3 +1,78 @@
+Open Babel 2.0 (2005-11-25)
+
+What's New from 1.100.2:
+
+This release represents Open Babel's fourth "birthday" and a milestone for
+a stable, flexible interface for developers and users alike.
+
+- New conversion framework. The new framework allows dynamic
+   loading/unloading of file translator modules (i.e., shared
+   libraries, DLLs, DSO, etc.). More importantly, it facilitates adding
+   new formats, since each format is self-contained and no editing of
+   other files is required.
+- Improved support for XML chemistry formats, including CML, PubChem XML, 
+- Support for fingerprinting and calculation of Tanimoto coefficients for 
+   similarity consideration. 
+   (A flexible fingerprint framework is available for developers.)
+- New support for Perl and Python "wrappers" of the Open Babel library.
+- Many enhancements to the Open Babel API: See the Developers API Notes for
+   more information. Some code will require updating, see the 
+   Developer's Migration Guide for details.
+- Support for automatically reading .gz compressed files.
+   (e.g., 1abc.pdb.gz is uncompressed and treated as a PDB file)
+   Use of the -z flag creates gzip-compressed output files.
+- Support for the new IUPAC InChI identifiers.
+- Improved bond order typing, including flexible SMARTS matching in
+   bondtyp.txt.
+- New Kekulization routine -- improves aromaticity detection in aromatic amines
+   like pyrroles, porphyrins, etc.
+- Improved support for radicals and spin multiplicity, including
+   assignment of hydrogens to radicals.
+- Improved support for 2D vs. 3D file formats.
+- New error logging framework keeps an "audit log" of changes to files
+   (hydrogen addition, bond order assignment) and different levels of
+   error reporting / debugging.
+   Use the "---errorlevel 4" flag to access this information.
+- Improved atom typing and hydrogen addition rules.
+- Improved obfit utility will output RMSD and find matches with the
+   best RMSD.
+- Updated isotope data from 2003 IUPAC standard.
+- Updated elemental data from the Blue Obelisk Data Repository.
+   (project started, in part, to validate the old Open Babel data)
+- Improved z-matrix code (CartesianToInternal / InternalToCartesian).
+- Countless bug fixes.
+
+New File Formats:
+  Import & Export: 
+	  ChemDraw CT (Connection Table)
+	  CML Reaction files
+	  MDL Molfile V3000
+	  MDL Rxn files
+	  Open Babel free-form fractional (crystallographic coordinates)
+	  Open Babel fastsearch database format
+	  Open Babel fingerprint formats
+	  PCModel format
+	  YASARA.org YOB format
+	  Turbomole
+          Improved CML support
+  	  Improved Gaussian 98/03 support
+	  Improved SMILES import / export
+  Import-Only:
+          PubChem XML
+  Export-Only: 
+ 	  MPQC input
+	  Open Babel "copy" format (i.e., copy the raw input file)
+	  Sybyl MPD descriptor format
+	  IUPAC InChI descriptor
+
+  Changed formats:
+          MMADS - eliminated
+	  bin - OpenEye binary v 1, eliminated
+	  GROMOS96 - changed from separate g96a & g96nm types to a
+	    unified g96 type. Defaults to output Angstroms, Use -xn
+	    to output nm.
+	  Titles - eliminated -- can be produced with SMILES -xt
+
 Open Babel 1.100.2 (2004-02-22)
 
 What's New from 1.100.1:

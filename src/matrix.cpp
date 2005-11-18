@@ -1,16 +1,16 @@
 /**********************************************************************
-matrix.cpp - Operation on matrix.
-
+matrix.cpp - Operations on arbitrary-sized matrix.
+ 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
-
+Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+ 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
-
+ 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,13 +19,13 @@ GNU General Public License for more details.
 
 #include "matrix.h"
 #include "math/vector3.h"
-#include <stdio.h>
 
 using namespace std;
 
-namespace OpenBabel {
+namespace OpenBabel
+{
 
-void print_matrix(vector<vector<double> > &m)
+void print_matrix(std::vector<std::vector<double> > &m)
 {
     unsigned int i,j;
 
@@ -62,7 +62,9 @@ void print_matrix_ff(double **m, int rows, int cols)
     }
 }
 
-bool mult_matrix(vector<vector<double> > &c, vector<vector<double> > &a, vector<vector<double> > &b)
+bool mult_matrix(std::vector<std::vector<double> > &c,
+		 std::vector<std::vector<double> > &a,
+		 std::vector<std::vector<double> > &b)
 {
     unsigned int i,j,k;
 
@@ -118,14 +120,14 @@ bool mult_matrix_ff(double **c, double **a, double **b, int rows, int cols)
     return(true);
 }
 
-bool invert_matrix(vector<vector<double> > &mat, double &det)
+bool invert_matrix(std::vector<std::vector<double> > &mat, double &det)
 {
     int  i, j, k, m, n, row = 0, col = 0;
     double tempo, big, pvt;
 
     vector<int> pvt_ind;
     vector<vector<int> > index;
-    
+
     int cols = mat[0].size();
     int rows = mat.size();
 
@@ -144,7 +146,7 @@ bool invert_matrix(vector<vector<double> > &mat, double &det)
     }
 
     det = 1.0;
-    
+
     for (i = 0; i < cols; i++)
         pvt_ind[i] = rows+1;
 
@@ -183,7 +185,7 @@ bool invert_matrix(vector<vector<double> > &mat, double &det)
         det *= pvt;
 
         mat[col][col] = 1.0;
-        
+
         for (m = 0; m < cols; m++)
             mat[col][m] /= pvt;
 
@@ -193,7 +195,7 @@ bool invert_matrix(vector<vector<double> > &mat, double &det)
                 tempo = mat[n][col];
                 mat[n][col] = 0.0;
                 for (m = 0; m < cols; m++)
-                mat[n][m] -= mat[col][m] * tempo;
+                    mat[n][m] -= mat[col][m] * tempo;
             }
     }
 
@@ -239,7 +241,7 @@ bool invert_matrix_f(double *mat, double &det, int rows, int cols)
     }
 
     det = 1.0;
-    
+
     for (i = 0; i < cols; i++)
         pvt_ind[i] = rows+1;
 
@@ -286,7 +288,7 @@ bool invert_matrix_f(double *mat, double &det, int rows, int cols)
         det *= pvt;
 
         mat[idx1+col] = 1.0;
-        
+
         for (m = 0; m < cols; m++)
             mat[idx1+m] /= pvt;
 
@@ -349,7 +351,7 @@ bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
     }
 
     det = 1.0;
-    
+
     for (i = 0; i < cols; i++)
         pvt_ind[i] = rows+1;
 
@@ -388,7 +390,7 @@ bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
         det *= pvt;
 
         mat[col][col] = 1.0;
-        
+
         for (m = 0; m < cols; m++)
             mat[col][m] /= pvt;
 
@@ -398,7 +400,7 @@ bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
                 tempo = mat[n][col];
                 mat[n][col] = 0.0;
                 for (m = 0; m < cols; m++)
-                mat[n][m] -= mat[col][m] * tempo;
+                    mat[n][m] -= mat[col][m] * tempo;
             }
     }
 
@@ -421,21 +423,18 @@ bool invert_matrix_ff(double **mat, double &det, int rows, int cols)
     return(true);
 }
 
-bool convert_matrix_f(vector<vector<double> > &src, double *dst)
+bool convert_matrix_f(std::vector<std::vector<double> > &src, double *dst)
 {
-    unsigned int i, j, idx;
+  unsigned int i, j, idx = 0;
 
     for ( i = 0 ; i < src.size() ; i++ )
-    {
-        idx = i * src[i].size();
-        for ( j = 0 ; j < src[i].size() ; j++ )
-            dst[idx+j] = src[i][j];
-    }
+      for ( j = 0 ; j < src[i].size() ; j++ )
+            dst[idx++] = src[i][j];
 
     return true;
 }
 
-bool convert_matrix_ff(vector<vector<double> > &src, double **dst)
+bool convert_matrix_ff(std::vector<std::vector<double> > &src, double **dst)
 {
     unsigned int i, j;
 
@@ -446,7 +445,8 @@ bool convert_matrix_ff(vector<vector<double> > &src, double **dst)
     return true;
 }
 
-bool convert_matrix_f(double *src, vector<vector<double> > &dst, int rows, int cols)
+bool convert_matrix_f(double *src, std::vector<std::vector<double> > &dst,
+		      int rows, int cols)
 {
     int i, j, idx;
 
@@ -462,7 +462,8 @@ bool convert_matrix_f(double *src, vector<vector<double> > &dst, int rows, int c
     return true;
 }
 
-bool convert_matrix_ff(double **src, vector<vector<double> > &dst, int rows, int cols)
+bool convert_matrix_ff(double **src, std::vector<std::vector<double> > &dst, 
+		       int rows, int cols)
 {
     int i, j;
 
@@ -504,4 +505,9 @@ bool convert_matrix_ff_f(double **src, double *dst, int rows, int cols)
 
     return true;
 }
-}
+
+} // end namespace OpenBabel
+
+//! \file matrix.cpp
+//! \brief Operations on arbitrary-sized matrix.
+

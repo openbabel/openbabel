@@ -1,14 +1,22 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(OpenBabel, 2.0.0dev, openbabel-discuss@lists.sourceforge.net, openbabel)
-AC_CONFIG_SRCDIR(src/obutil.cpp)
+AC_INIT([Open Babel], 2.0.0rc1, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_CONFIG_SRCDIR(src/typer.cpp)
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
-AM_CONFIG_HEADER(src/babelconfig.h)
+AM_CONFIG_HEADER(src/config.h)
 AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of Open Babel])
+
+AC_ARG_ENABLE(dynamic-modules,
+	AS_HELP_STRING([--disable-dynamic-modules],
+		       [disable building shared file format modules]),
+		[dynamic_modules="$enable_dynamic_modules"],
+		[dynamic_modules="yes"])
 
 AC_CANONICAL_HOST
 
 AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_TARNAME], [Where the data files are located])
+
+AC_DEFINE([OBAPI], [], [Used to export symbols for DLL / shared library builds])
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -16,21 +24,59 @@ AC_PROG_CXX
 AC_PROG_CXXCPP
 AC_PROG_INSTALL
 AC_PATH_PROG(DOXYGEN, doxygen)
+AC_PATH_PROG(SWIG, swig)
+AC_PATH_PROG(PERL, perl)
+AC_PATH_PROG(PYTHON, python)
+
+dnl Conditionally build docs, scripts, etc.
+
+AM_CONDITIONAL(BUILD_DOCS, test x"$DOXYGEN" != "x")
+if test x"$DOXYGEN" = "x"; then
+AC_MSG_WARN(Cannot find doxygen to build documentation. 
+	Have a look at http://www.doxygen.org/)
+fi
+
+dnl Build SWIG interfaces -- ideally use the latest SWIG available!!
+dnl (this will happen also only if MAINTAINER_MODE is set
+AM_CONDITIONAL(BUILD_SWIG, test x"$SWIG" != "x")
+
+SCRIPTING="no"
+if test x"$SWIG" != "x"; then
+SCRIPTING="yes"
+elif test x"$PYTHON" != "x"; then
+SCRIPTING="yes"
+elif test x"$PERL" != "x"; then
+SCRIPTING="yes"
+fi
+AM_CONDITIONAL(BUILD_SCRIPTS, test "$SCRIPTING" = "yes")
 
 dnl libtool
 dnl You can set the shared library version in src/Makefile.am
 dnl AC_DISABLE_SHARED
+AC_LIBTOOL_DLOPEN
 AM_PROG_LIBTOOL
 
-dnl Complain about missing documentation tool doxygen.
-if test "$DOCTOOL" == "no"; then
-AC_MSG_ERROR(Cannot find doxygen. 
-	Have a look at http://www.doxygen.org/)
-fi
+AM_CONDITIONAL(BUILD_SHARED, test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes")
+
+oldmodule=$module
+module=yes
+eval std_shrext=\"$shrext_cmds\"
+AC_DEFINE_UNQUOTED([MODULE_EXTENSION], ["$std_shrext"], [The file extension used for shared modules])
+module=$oldmodule
 
 AC_LANG_CPLUSPLUS
 dnl Checks for libraries.
 AC_CHECK_LIB(m, asin, , exit)
+AC_CHECK_LIB(c, dlopen, LIBDL="", [AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl")])
+AC_SUBST(LIBDL)
+
+AM_PATH_XML2(2.6.0)
+AM_CONDITIONAL(BUILD_XML, test x"$XML_LIBS" != "x")
+
+CHECK_ZLIB
+AC_CHECK_LIB(z, inflateEnd)
+AC_CHECK_HEADERS(zlib.h iconv.h)
+AM_CONDITIONAL(BUILD_ZLIB, [test "$zlib_cv_libz" = "yes" -a "$zlib_cv_zlib_h" = "yes"])
 
 dnl Checks for header files.
 AC_CHECK_HEADERS(sys/time.h unistd.h stdlib.h stdio.h conio.h string.h)
@@ -44,7 +90,32 @@ AC_C_CONST
 AC_C_INLINE
 
 dnl Checks for library functions.
-AC_CHECK_FUNCS([rint])
+AC_CHECK_FUNCS([rint sranddev])
 AC_REPLACE_FUNCS([snprintf strncasecmp])
 
-AC_OUTPUT(Makefile src/Makefile src/math/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile openbabel.pc)
+dnl Gotta figure out whether scandir needs a const or not for the 3rd arg.
+AC_MSG_CHECKING([whether scandir needs a const cast])
+AC_COMPILE_IFELSE([
+#include <sys/types.h>
+#include <dirent.h>
+ extern int matchFiles (struct dirent *entry_p);
+ struct dirent **entries_pp;
+ int count = scandir ("./", &entries_pp, $dirent_t matchFiles, 0);
+], 
+[ AC_DEFINE(SCANDIR_T, , [set if scandir needs a const]) 
+  AC_DEFINE(SCANDIR_CONST, , [set if scandir needs a const])
+scandirconst_cast=no], 
+[ AC_DEFINE(SCANDIR_T, [(int (*)(const dirent *))], [set if scandir needs a const]) 
+  AC_DEFINE(SCANDIR_CONST, [const])
+scandirconst_cast=yes])
+
+AC_MSG_RESULT([$scandirconst_cast], [set if scandir needs a const])
+
+AC_CONFIG_COMMANDS([src/babelconfig.h], 
+                   [cat src/config.h | grep -v PACKAGE >src/babelconfig.h])
+
+AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
+		   src/formats/Makefile src/fingerprints/Makefile \
+		   src/formats/xml/Makefile src/formats/inchi/Makefile \
+		   test/Makefile test/cmltest/Makefile tools/Makefile \
+		   doc/Makefile scripts/Makefile openbabel-2.0.pc)

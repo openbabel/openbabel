@@ -18,10 +18,12 @@ CDynamicOptions::CDynamicOptions()
 	nID=5678;
 }
 
-void CDynamicOptions::Construct(const char* OptionTxt, CWnd* pWnd, CRect& CtlRect )
+bool CDynamicOptions::Construct(const char* OptionTxt, CWnd* pWnd, CRect& CtlRect,
+																const char* StartText)
 {
-/* Reads OptionTxt and starting with the line following each occurrence of "Options"
-interprets each line like
+/* Reads OptionTxt, finds StartText, then "Options" (case insensitive). 
+Returns true if this stage reached.
+Then starting with the line following interprets each line like
   w  use Welsh language (default)
 as an option. Constructs a checkbox with the text except for the first character(w in this case)
 and inserts it into the window starting at the specified position (window coordinates). Subsequent
@@ -42,13 +44,15 @@ When CDynamicOptions::GetOptions() is called it returns a string containing the 
 	char* pNewStr = new char[strlen(OptionTxt)+1];
 	strcpy(pNewStr,OptionTxt); //Make a working copy 
 	char* p = pNewStr;
-
-	while(p && (p=strcasestr(p,"option"))) //until end of text; multiple sets of Options found
+	
+	bool OptionsFound=false;
+	while(p && (p=strcasestr(p,StartText)) && (p=strcasestr(p,"option"))) //until end of text; multiple sets of Options found
 	{
+		OptionsFound=true;
 		bool NextIsRadio=false;
 
-		p = strchr(p,'\n'); //options start on next line
-		while(p && *(++p)!='\n') //loop for all options until blank line
+		p = strchr(p,'\n')+1; //options start on next line		
+		while(p && *p && *p!='\n') //loop for all options until blank line
 		{
 			bool ProvideEditCtl=false;
 			while(*p && !isalnum(*(p++))); //skip space and punctuation
@@ -136,7 +140,7 @@ When CDynamicOptions::GetOptions() is called it returns a string containing the 
 					if (!NextIsRadio)
 						style |= WS_GROUP; //set only for first of group
 					NextIsRadio=true;
-					*p='\0';
+//					*p='\0';
 				}
 				else
 				{
@@ -178,6 +182,7 @@ When CDynamicOptions::GetOptions() is called it returns a string containing the 
 		}
 	}
 	delete [] pNewStr;
+	return OptionsFound;
 }
 
 //////////////////////////////////////////////

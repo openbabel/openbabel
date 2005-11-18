@@ -1,8 +1,30 @@
+/**********************************************************************
+kekulize.cpp - Alternate algorithm to kekulize a molecule.
 
-/* Fabien test for a new algorithm to kekulize molecule */
+Copyright (C) 2004-2005 by Fabien Fontaine
+Some portions Copyright (C) 2005 by Geoffrey R. Hutchison
+ 
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+ 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+***********************************************************************/
 
 #include "mol.h"
-#include "babelconfig.h"
+#include "oberror.h"
+
+#ifdef HAVE_SSTREAM
+#include <sstream>
+#else
+#include <strstream>
+#endif
 
 #define SINGLE 1
 #define DOUBLE 2
@@ -10,7 +32,6 @@
 using namespace std;
 
 namespace OpenBabel {
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //! \brief Kekulize aromatic rings without using implicit valence
@@ -30,7 +51,7 @@ void OBMol::NewPerceiveKekuleBonds()
   SetKekulePerceived();
 
   OBAtom *atom;
-  int i,j, n, de, minde;
+  int n, de, minde;
   std::vector<OBAtom*> cycle;
   OBBitVec avisit,cvisit;
   avisit.Resize(NumAtoms()+1);
@@ -41,7 +62,8 @@ void OBMol::NewPerceiveKekuleBonds()
   int BO;
   int sume, orden, bestorden, bestatom;
   // Init the kekulized bonds
-  for( i=0; i< NumBonds(); i++ ) {
+  unsigned i;
+	for(i=0; i< NumBonds(); i++ ) {
     bond = GetBond(i);
     BO = bond->GetBO();
     switch (BO)
@@ -53,10 +75,10 @@ void OBMol::NewPerceiveKekuleBonds()
   }
 
   // Find all the groups of aromatic cycle
-  for( i=1; i<= NumAtoms(); i++ ) {
+  for(i=1; i<= NumAtoms(); i++ ) {
     atom = GetAtom(i);
     if (atom->HasAromaticBond() && !cvisit[i]) { // is new aromatic atom of an aromatic cycle ?
-      
+
       avisit.Clear();
       electron.clear();
       cycle.clear();
@@ -64,6 +86,7 @@ void OBMol::NewPerceiveKekuleBonds()
       avisit.SetBitOn(i);
       expandcycle (atom, avisit);
       //store the atoms of the cycle(s)
+      unsigned int j;
       for(j=1; j<= NumAtoms(); j++) {
 	if ( avisit[j] ) {
 	  atom = GetAtom(j);
@@ -117,6 +140,12 @@ void OBMol::NewPerceiveKekuleBonds()
 	  break;
       }
       
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
+
       //cout << "minde before:" << minde << endl;
       // if huckel rule not satisfied some atoms must give more electrons
       //cout << "minde " << minde << endl;
@@ -132,7 +161,8 @@ void OBMol::NewPerceiveKekuleBonds()
 	  }
 	}
 	if (bestorden==99) {  // no electron giving atom found
-	  std::cout << "Kekulize Warning: Huckel rule not satisfied for molecule " << GetTitle() << "\n";
+	  errorMsg << "Kekulize: Huckel rule not satisfied for molecule " << GetTitle() << endl;
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
 	  break;             // Huckel rule cannot be satisfied
 	}                    // try to kekulize anyway
 	else {
@@ -158,7 +188,8 @@ void OBMol::NewPerceiveKekuleBonds()
 	    }
 	  }
 	  if (bestorden==99) {  // no electron giving atom found
-	    std::cout << "Kekulize Warning: Cannot get an even number of electron for molecule " << GetTitle() << "\n";
+	    errorMsg << "Kekulize: Cannot get an even number of electron for molecule " << GetTitle() << "\n";
+	  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
 	    break;             // impossible to choose an atom to obtain an even number of electron
 	  }                    // try to kekulize anyway
 	  else {
@@ -220,13 +251,13 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
   std::vector<int> binitState;
   std::vector<int> bcurrentState;
   std::vector<bool> mark;
-  int i;
   unsigned int Idx;
   OBAtom *atom, *atom2;
   OBBond *bond;
 
   //init the atom arrays
-  for(i=0;i <NumAtoms()+1; i++) {
+  unsigned i;
+	for(i=0;i <NumAtoms()+1; i++) {
     initState.push_back(-1);
     currentState.push_back(-1);
     mark.push_back(false);
@@ -239,7 +270,7 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
   }
   
   //set the electron number
-  for( i=0; i< cycle.size(); i++) {
+  for(i=0; i< cycle.size(); i++) {
     atom = cycle[i];
     Idx =  atom->GetIdx();
     if ( electron[i] == 1)
@@ -278,7 +309,7 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
     expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark) ; 
     //Control that all the electron have been given to the cycle(s)
     expand_successful = true;
-    for( i=0; i< cycle.size(); i++) {
+    for(unsigned i=0; i< cycle.size(); i++) {
       atom2 = cycle[i];
       Idx =  atom2->GetIdx();
       //cout << "\t" << currentState[Idx];
@@ -289,6 +320,7 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
     if (expand_successful)
       break;
     else {
+			unsigned i;
       for(i=0;i <NumAtoms()+1; i++) {
 	currentState[i]=initState[i];
 	mark[i]=false;
@@ -298,7 +330,16 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
       }   
     }
   }
-  if (!expand_successful) std::cout << "kekulize error for molecule " << GetTitle() << "\n"; 
+  if (!expand_successful)
+    {
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
+    errorMsg << "Kekulize Error for molecule " << GetTitle() << endl;
+    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+    }
 
   // Set the double bonds
   // std::cout << "Set double bonds\n";
@@ -368,8 +409,16 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
     // leave bond to single
   }
   else {
-    cout << "unexpected state:" << "atom " << Idx1 << " " << currentState[Idx1] 
+
+#ifdef HAVE_SSTREAM
+    stringstream errorMsg;
+#else
+    strstream errorMsg;
+#endif
+
+    errorMsg << "unexpected state:" << "atom " << Idx1 << " " << currentState[Idx1] 
 	 << " atom " << Idx2 << " " << currentState[Idx2] << endl;
+    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
     return(false);
   }
 
@@ -479,11 +528,9 @@ int OBMol::expand_kekulize(OBAtom *atom1, OBAtom *atom2, std::vector<int> &curre
   }
 }
 
-// Give the priority to give two electrons instead of 1
+//! Give the priority to give two electrons instead of 1
 int OBMol::getorden( OBAtom *atom) 
 {
-  int orden;
-  
   if ( atom->IsSulfur() ) return 1;
   if ( atom->IsOxygen() ) return 2;
   if ( atom->GetAtomicNum() == 34 ) return 3;
@@ -498,11 +545,11 @@ int OBMol::getorden( OBAtom *atom)
   return (100); //no atom found
 }
 
-// Recursively find the aromatic atoms with an aromatic bond to the current atom
+//! Recursively find the aromatic atoms with an aromatic bond to the current atom
 void OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit)
 {
   OBAtom *nbr;
-  OBBond *bond;
+//  OBBond *bond;
   std::vector<OBEdgeBase*>::iterator i;
   int natom;
   //for each neighbour atom test if it is in the aromatic ring
@@ -518,3 +565,6 @@ void OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit)
 }
 
 } // end namespace OpenBabel
+
+//! \file kekulize.cpp
+//! \brief Alternate algorithm to kekulize a molecule (OBMol::NewPerceiveKekuleBonds()).

@@ -1,9 +1,18 @@
-SUBDIRS = src test doc tools
-EXTRA_DIST = Doxyfile bc32.mak
+# only build in the scripts subdirectory if possible (perl, python, swig, etc.)
+if BUILD_SCRIPTS
+  SCRIPT_DIR = scripts
+endif
+
+SUBDIRS = data src test tools doc $(SCRIPT_DIR)
+EXTRA_DIST = Doxyfile windows windows-vc2005 INSTALL.Windows
 AUTOMAKE_OPTIONS = foreign
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = openbabel.pc
+pkgconfig_DATA = openbabel-2.0.pc
 
 docs:
-	$(DOXYGEN)
+	(cd $(top_srcdir); $(DOXYGEN))
+
+dist-hook:
+	find $(distdir)/windows -name CVS | xargs rm -rf
+	find $(distdir)/windows-vc2005 -name CVS | xargs rm -rf

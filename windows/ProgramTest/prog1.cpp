@@ -4,10 +4,12 @@
 #pragma warning (disable : 4786)
 #endif
 
+#include "babelconfig.h"
 #include <conio.h> //for getch
 #include "mol.h"
 #include "OBConversion.h"
 #include "Reaction.h"
+#include "ctiter.h"
 
 using namespace OpenBabel;
 
@@ -49,8 +51,17 @@ Alternatively, it could be compiled and linked with all the rest of OpenBabel co
 		else
 		{
 			//...manipulate the OBMol object
+
+			OBCTIter iter(mol.GetAtom(1));//This iterator accesses the connection table
+			//tree, depth first, starting at the specified atom
+			for(;iter;++iter)
+			{
+				cout << iter->GetType();
+			}
+			cout << endl;
+
 			mol.AddHydrogens();
-			cout << "The MW of this molecule is " << mol.GetMolWt() << endl;
+			cout << "\nThe MW of this molecule is " << mol.GetMolWt() << endl;
 			
 			// write to cout
 			cout <<"Output format is " << conv.GetOutFormat()->Description() << endl;

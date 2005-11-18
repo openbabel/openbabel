@@ -43,7 +43,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBDLL_EXPORTS" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /I "..\..\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /I "..\math ..\src" /I "..\..\src" /I ".." /I "../../data" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /D "HAVE_CONFIG_H" /FD /c
+# SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x809 /d "NDEBUG"
@@ -69,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "OBDLL_EXPORTS" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MDd /Gm /GR /GX /ZI /Od /I "..\math ..\src" /I "..\..\src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /FR /FD /GZ /c
+# ADD CPP /nologo /MDd /Gm /GR /GX /ZI /Od /I "..\math ..\src" /I "..\..\src" /I ".." /I "../../data" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "__KCC" /D "USING_DYNAMIC_LIBS" /D "OBDLL_EXPORTS" /D "HAVE_CONFIG_H" /FR /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x809 /d "_DEBUG"
@@ -79,13 +80,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /map:"OBDLL.map" /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib /nologo /dll /map:"OBDLL.map" /debug /machine:I386 /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
-# Begin Special Build Tool
-SOURCE="$(InputPath)"
-PostBuild_Desc=Construct new obdll.def from obdll.map
-PostBuild_Cmds=map2def2.exe obdll.map
-# End Special Build Tool
 
 !ENDIF 
 
@@ -106,10 +102,6 @@ SOURCE=..\..\src\base.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\binary.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\bitvec.cpp
 # End Source File
 # Begin Source File
@@ -118,7 +110,7 @@ SOURCE=..\..\src\bond.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\cache.cpp
+SOURCE=..\..\src\bondtyper.cpp
 # End Source File
 # Begin Source File
 
@@ -134,11 +126,19 @@ SOURCE=..\..\src\data.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\fingerprint.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\generic.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\grid.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\kekulize.cpp
 # End Source File
 # Begin Source File
 
@@ -158,18 +158,11 @@ SOURCE=..\..\src\molchrg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\obdll.def
-
-!IF  "$(CFG)" == "OBDLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "OBDLL - Win32 Debug"
-
-!ENDIF 
-
+SOURCE=..\..\src\oberror.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\oberror.cpp
+SOURCE=..\..\src\obiter.cpp
 # End Source File
 # Begin Source File
 
@@ -193,15 +186,15 @@ SOURCE=..\..\src\rand.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\report.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\residue.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\ring.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\rotamer.cpp
 # End Source File
 # Begin Source File
 
@@ -227,18 +220,13 @@ SOURCE=..\..\src\math\vector3.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
-# End Group
 # Begin Source File
 
-SOURCE=..\..\src\aromatic.h
+SOURCE=..\..\data\aromatic.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\atomtyp.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\babelconfig.h
+SOURCE=..\..\data\atomtyp.h
 # End Source File
 # Begin Source File
 
@@ -246,15 +234,11 @@ SOURCE=..\..\src\base.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\binary.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\bitvec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\bondtyp.h
+SOURCE=..\..\data\bondtyp.h
 # End Source File
 # Begin Source File
 
@@ -274,11 +258,15 @@ SOURCE=..\..\src\data.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\element.h
+SOURCE=..\..\data\element.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\extable.h
+SOURCE=..\..\data\extable.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\fingerprint.h
 # End Source File
 # Begin Source File
 
@@ -290,7 +278,7 @@ SOURCE=..\..\src\grid.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\isotope.h
+SOURCE=..\..\data\isotope.h
 # End Source File
 # Begin Source File
 
@@ -314,7 +302,7 @@ SOURCE=..\..\src\oberror.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\obifstream.h
+SOURCE=..\..\src\obiter.h
 # End Source File
 # Begin Source File
 
@@ -334,15 +322,23 @@ SOURCE=..\..\src\phmodel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\phmodeldata.h
+SOURCE=..\..\data\phmodeldata.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\resdata.h
+SOURCE=..\..\src\reaction.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\data\resdata.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\ring.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\rotamer.h
 # End Source File
 # Begin Source File
 
@@ -358,11 +354,12 @@ SOURCE=..\..\src\typer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\types.h
+SOURCE=..\..\data\types.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\math\vector3.h
 # End Source File
+# End Group
 # End Target
 # End Project

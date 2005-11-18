@@ -1,11 +1,16 @@
 /**********************************************************************
-obprop = Open Babel properties calculation
+obprop - Open Babel properties calculation
+
 Copyright (C) 2003 Fabien Fontaine
+Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
+ 
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -13,6 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "mol.h"
+#include "obconversion.h"
 #include <unistd.h>
 
 using namespace std;
@@ -29,77 +35,78 @@ int nrings(OBMol &mol);
 
 int main(int argc,char **argv)
 {
-  char *program_name= argv[0];
-  io_type inFileType = UNDEFINED;
-  int c;
-  char *FileIn = NULL;
+    char *program_name= argv[0];
+    int c;
+    char *FileIn = NULL;
 
- 
-  if (argc != 2)
+    if (argc != 2)
     {
-      string err = "Usage: ";
-      err += program_name;
-      err += " <filename>\n";
-      err += "Output format:\n";
-      err += "name NAME\n";
-      err += "mol_weight MOLECULAR_WEIGHT\n";
-      err += "num_rings NUMBER_OF_RING_(SSSR)\n";
-      err += "$$$$";
-      ThrowError(err);
-      exit(-1);
+        string err = "Usage: ";
+        err += program_name;
+        err += " <filename>\n";
+        err += "Output format:\n";
+        err += "name NAME\n";
+        err += "mol_weight MOLECULAR_WEIGHT\n";
+        err += "num_rings NUMBER_OF_RING_(SSSR)\n";
+        err += "$$$$";
+        ThrowError(err);
+        exit(-1);
     }
-  else {
-    FileIn  = argv[1]; 
-  }
-
-  // Find Input filetype
-  if (extab.CanReadExtension(FileIn))
-    inFileType = extab.FilenameToType(FileIn);
-  else
+    else
     {
-      cerr << program_name << ": cannot read input format!" << endl;
-      exit (-1);
+        FileIn  = argv[1];
     }
 
-  ifstream ifs;
-  
-  // Read the file
-  ifs.open(FileIn);
-  if (!ifs)
+    // Find Input filetype
+    OBConversion conv;
+    OBFormat *format = conv.FormatFromExt(FileIn);
+    
+    if (!format || !conv.SetInAndOutFormats(format, format))
     {
-      cerr << program_name << ": cannot read input file!" << endl;
-      exit (-1);
+        cerr << program_name << ": cannot read input format!" << endl;
+        exit (-1);
     }
 
-  OBMol mol(inFileType, UNDEFINED);
-  
+    ifstream ifs;
 
-  ////////////////////////////////////////////////////////////////////////////
-  // List of properties
-  // Name
-  // Molecular weight (Standard molar mass given by IUPAC atomic masses)
-  // Number of rings : the size of the smallest set of smallest rings (SSSR)
-
-  //.....ADD YOURS HERE.....
-
-  for (c=0;;)
+    // Read the file
+    ifs.open(FileIn);
+    if (!ifs)
     {
-      mol.Clear();
-      ifs >> mol;
-      if (mol.Empty()) break;
+        cerr << program_name << ": cannot read input file!" << endl;
+        exit (-1);
+    }
 
-      // Print the properties
-      // The name should be enough self explaining
+    OBMol mol;
 
-      cout << "name " << mol.GetTitle() << endl;
-      cout << "mol_weight "<< mol.GetMolWt() << endl;
-      cout << "num_rings " << nrings(mol) << endl;
-      cout << "$$$$" << endl; // SDF like end of compound descriptor list
+
+    ////////////////////////////////////////////////////////////////////////////
+    // List of properties
+    // Name
+    // Molecular weight (Standard molar mass given by IUPAC atomic masses)
+    // Number of rings : the size of the smallest set of smallest rings (SSSR)
+
+    //.....ADD YOURS HERE.....
+
+    for (c=0;;)
+    {
+        mol.Clear();
+	conv.Read(&mol, &ifs);
+        if (mol.Empty())
+            break;
+
+        // Print the properties
+        // The name should be enough self explaining
+
+        cout << "name " << mol.GetTitle() << endl;
+        cout << "mol_weight "<< mol.GetMolWt() << endl;
+        cout << "num_rings " << nrings(mol) << endl;
+        cout << "$$$$" << endl; // SDF like end of compound descriptor list
 
     } // end for loop
 
-  return(1);
-} 
+    return(1);
+}
 
 
 
@@ -107,11 +114,54 @@ int main(int argc,char **argv)
 //! \brief Return the number of size of the set of smallest rings (SSSR)
 int nrings(OBMol &mol)
 {
-  int nr;
-  vector<OBRing*> vr;
+    int nr;
+    vector<OBRing*> vr;
 
-  vr = mol.GetSSSR();
-  nr = vr.size();
+    vr = mol.GetSSSR();
+    nr = vr.size();
 
-  return (nr);
+    return (nr);
 }
+
+
+
+/* obprop man page*/
+/** \page obprop print standard molecular properties
+*
+* \n
+* \par SYNOPSIS
+*
+* \b obprop \<filename\>
+*
+* \par DESCRIPTION
+*
+* The obprop program is a tool to print a set of standard molecular properties
+* for all molecules in a file. It also serves as example code for using the
+* Open Babel library (libopenbabel).
+* 
+* \par EXAMPLES
+*
+*   obprop pyridines.sdf
+*
+* \par AUTHORS
+*
+* The obprop program was contributed by \b Fabien \b Fontaine.
+*
+* Open Babel is currently maintained by \b Geoff \b Hutchison, \b Chris \b Morley and \b Michael \b Banck.
+*
+* For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
+*
+* \par COPYRIGHT
+*  Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+*  Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison \n \n
+*  This program is free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation version 2 of the License.\n \n
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+* \par SEE ALSO
+*   The web pages for Open Babel can be found at: http://openbabel.sourceforge.net/ \n
+**/

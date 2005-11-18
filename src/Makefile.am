@@ -1,74 +1,60 @@
-SUBDIRS = math
+EXTRA_DIST = \
+	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h
+
+SUBDIRS = math formats fingerprints
+INCLUDES = -I$(top_srcdir)/data/
 
 lib_LTLIBRARIES = libopenbabel.la
 
+if BUILD_SHARED
+dlhandler = dlhandler_unix.cpp
+else
+dlhandler = 
+endif
+
 libopenbabel_la_SOURCES = \
-		alchemy.cpp amber.cpp atom.cpp balst.cpp base.cpp bgf.cpp \
-		binary.cpp bitvec.cpp bond.cpp box.cpp c3d.cpp cacao.cpp \
-		cache.cpp car.cpp ccc.cpp chains.cpp chdrw.cpp chemtool.cpp chiral.cpp \
-		cml.cpp crk.cpp csr.cpp cssr.cpp data.cpp dmol.cpp feat.cpp fh.cpp \
-		fileformat.cpp fingerprint.cpp gamess.cpp gaussian.cpp generic.cpp \
-		ghemical.cpp grid.cpp gromos96.cpp hin.cpp jaguar.cpp \
-		kekulize.cpp matrix.cpp mdl.cpp mm3.cpp mmod.cpp mol.cpp mol2.cpp \
-		molchrg.cpp molvector.cpp mopac.cpp mpqc.cpp nwchem.cpp \
-		oberror.cpp obutil.cpp parsmart.cpp parsmi.cpp patty.cpp \
-		pdb.cpp phmodel.cpp povray.cpp qchem.cpp rand.cpp report.cpp \
-		residue.cpp ring.cpp rotor.cpp shelx.cpp smi.cpp tinker.cpp \
-		tokenst.cpp turbomole.cpp typer.cpp unichem.cpp viewmol.cpp \
-		xed.cpp xyz.cpp zindo.cpp pqs.cpp
+		atom.cpp base.cpp bitvec.cpp bond.cpp \
+		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
+		fingerprint.cpp generic.cpp grid.cpp \
+		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
+		obconversion.cpp oberror.cpp obiter.cpp \
+		obutil.cpp parsmart.cpp \
+		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
+		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
+		transform.cpp $(dlhandler)
 
-libopenbabel_la_LIBADD = math/libmath.la @LTLIBOBJS@
-libopenbabel_la_LDFLAGS = -version-info 0:0:0
+libopenbabel_la_LDFLAGS = -version-info 1:0:0
 
-libopenbabelincludedir = $(includedir)/openbabel
-libopenbabelinclude_HEADERS = \
-		aromatic.h atomtyp.h babelconfig.h base.h binary.h bitvec.h \
-		bondtyp.h bondtyper.h chains.h chiral.h crk.h data.h \
-		element.h extable.h fileformat.h fingerprint.h generic.h grid.h \
-		isotope.h matrix.h mol.h molchrg.h molvector.h \
-		oberror.h obifstream.h obutil.h \
-		parsmart.h patty.h phmodel.h phmodeldata.h resdata.h ring.h \
-		rotor.h smi.h typer.h types.h
+if BUILD_SHARED
+AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
+
+libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
+			@LTLIBOBJS@
+else !BUILD_SHARED
+libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
+			formats/libformats.la @LTLIBOBJS@
+endif
 
 bin_PROGRAMS = babel
 babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la @LIBOBJS@
+babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
 
-pkgdata_DATA = \
-		aromatic.txt bondtyp.txt extable.txt isotope.txt resdata.txt \
-		atomtyp.txt element.txt isotope-small.txt phmodel.txt types.txt
+libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
+libopenbabelinclude_HEADERS = \
+		babelconfig.h base.h bitvec.h \
+		bondtyper.h chains.h chiral.h data.h \
+		dlhandler.h fingerprint.h \
+		generic.h grid.h matrix.h mol.h molchrg.h \
+		obconversion.h oberror.h obiter.h \
+		obmolecformat.h obutil.h \
+		parsmart.h patty.h phmodel.h reaction.h \
+		ring.h rotor.h rotamer.h typer.h 
 
-EXTRA_DIST = \
-	bc32.mak borland.bat oblib.dsp oblib.dsw \
-	bin2hex.pl $(pkgdata_DATA) \
-	strncasecmp.c snprintf.c snprintf.h
-
-BUILT_SOURCES = aromatic.h atomtyp.h bondtyp.h element.h extable.h \
-		isotope.h phmodeldata.h resdata.h types.h
-
-aromatic.h:	bin2hex.pl aromatic.txt
-		(cd $(srcdir); ./bin2hex.pl aromatic.txt AromaticData >aromatic.h)
-
-atomtyp.h:	bin2hex.pl atomtyp.txt
-		(cd $(srcdir); ./bin2hex.pl atomtyp.txt AtomTypeData >atomtyp.h)
-
-bondtyp.h:	bin2hex.pl bondtyp.txt
-		(cd $(srcdir); ./bin2hex.pl bondtyp.txt BondTypeData >bondtyp.h)
-
-element.h:	bin2hex.pl element.txt
-		(cd $(srcdir); ./bin2hex.pl element.txt ElementData >element.h)
-
-extable.h:	bin2hex.pl extable.txt
-		(cd $(srcdir); ./bin2hex.pl extable.txt ExtensionTableData >extable.h)
-
-isotope.h:	bin2hex.pl isotope-small.txt
-		(cd $(srcdir); ./bin2hex.pl isotope-small.txt IsotopeData ISOTOPE >isotope.h)
-
-phmodeldata.h:	bin2hex.pl phmodel.txt
-		(cd $(srcdir); ./bin2hex.pl phmodel.txt PhModelData PHMODELDATA >phmodeldata.h)
-
-resdata.h:	bin2hex.pl resdata.txt
-		(cd $(srcdir); ./bin2hex.pl resdata.txt ResidueData >resdata.h)
-
-types.h:	bin2hex.pl types.txt
-		(cd $(srcdir); ./bin2hex.pl types.txt TypesData >types.h)
+# Use sed to substitute #include "header.h" to #include <openbabel/header.h>
+install-data-hook:
+	for header in $(DESTDIR)$(libopenbabelincludedir)/*.h \
+	      $(DESTDIR)$(libopenbabelincludedir)/math/*.h; do \
+	   sed -e 's!^#include "\([^"]*\)"!#include <openbabel/\1>!' \
+	      < $${header} >$${header}.new; \
+	   mv $${header}.new $${header}; \
+	done

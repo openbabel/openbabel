@@ -1,26 +1,26 @@
 /**********************************************************************
 data.h - Global data and resource file parsers.
-
+ 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison
-
+Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+ 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
-
+ 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
-
+ 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "babelconfig.h"
-
 #ifndef OB_DATA_H
 #define OB_DATA_H
+
+#include "babelconfig.h"
 
 #include <stdio.h>
 
@@ -29,7 +29,7 @@ GNU General Public License for more details.
 #elif HAVE_IOSTREAM_H
 #include <iostream.h>
 #endif
-                                                                                
+
 #if HAVE_FSTREAM
 #include <fstream>
 #elif HAVE_FSTREAM_H
@@ -39,189 +39,251 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
-namespace OpenBabel {
+namespace OpenBabel
+{
 
 class OBElement;
 class OBAtom;
 class OBElementTable;
 
-typedef enum { UNDEFINED,
-               ALCHEMY, BALLSTICK, BGF, BIOSYM, BMIN, BOX, CACAO,
-               CACAOINT, CACHE, CADPAC, CCC, CDX, CHARMM, CHEM3D1,
-	       CHEM3D2, CHEMDRAW, CHEMTOOL, CIF, CML, CSR, CSSR, DELPDB, DMOL,
-	       DOCK, FDAT, FEATURE, FH, FIX, FRACT, GAMESSIN, GAMESSOUT,
-               GAUSSIAN92, GAUSSIAN94, GAUSSIANCART, GAUSSIANOUT,
-               GHEMICAL, GROMOS96A, GROMOS96N, GSTAT, HIN, ICON8,
-               IDATM, JAGUARIN, JAGUAROUT, M3D, MACCS, MACMOL,
-               MICROWORLD, MM2IN, MM2OUT, MM3, MMADS, MMCIF, MMD,
-               MOL2, MOLDEN, MOLIN, MOLINVENT, MOPACCART, MOPACINT,
-               MOPACOUT, MPQC, MSF, NWCHEMIN, NWCHEMOUT, OEBINARY,
-               PCMODEL, PDB, POV, PREP, QCHEMIN, QCHEMOUT, REPORT,
-               SCHAKAL, SDF, SHELX, SKC, SMI, SPARTAN, SPARTANMM,
-               SPARTANSEMI, TGF, TINKER, TITLE, TURBOMOLE, UNICHEM, VIEWMOL,
-               XED, XYZ, ZINDO, CRK2D, CRK3D, PQS, FINGERPRINT
-	       // Insert new formats here (at the end)
-	       // for backwards compatibility
-             } io_type;
+class OBMol;
+class OBBitVec;
 
 //! \brief Base data table class, handles reading data files
 //!
 //! Base data table class--reads ASCII data files in various formats
 //! -# Checks for the environment variable _envvar (defaults to "BABEL_DATADIR")
-//!     Tries that directory as well as the _subdir directory of that (def. "data")
+//!     - Tries the _subdir directory if defined (def. "data") and then the main directory
 //! -# Checks for the directory _dir (def. determined by the build environment)
+//!     - Tries the subdirectory corresponding to this version, then the main directory
 //! -# Reverts to the compiled-in default data
-class OBGlobalDataBase
+class OBAPI OBGlobalDataBase
 {
- protected:
-  bool         _init;		//!< has the data been read already
-  const char  *_dataptr;	//!< default data table if file is unreadable
-  std::string  _filename;	//!< file to search for
-  std::string  _dir;		//!< data directory for file if _envvar fails
-  std::string  _subdir;		//!< subdirectory (if using environment variable)
-  std::string  _envvar;		//!< environment variable to check first
- public:
-  //! Constructor
-  OBGlobalDataBase()
+protected:
+    bool         _init;		//!< whether the data been read already
+    const char  *_dataptr;	//!< default data table if file is unreadable
+    std::string  _filename;	//!< file to search for
+    std::string  _dir;		//!< data directory for file if _envvar fails
+    std::string  _subdir;	//!< subdirectory (if using environment variable)
+    std::string  _envvar;	//!< environment variable to check first
+
+public:
+    //! Constructor
+    OBGlobalDataBase()
     {
-      _init = false;
-      _dataptr = (char*)NULL;
+        _init = false;
+        _dataptr = (char*)NULL;
     }
-  //! Destructor
-  virtual ~OBGlobalDataBase() {}
-  //! Read in the data file, falling back as needed
-  void  Init();
-  //! Set the directory before calling Init()
-  void  SetReadDirectory(char *dir)       {_dir = dir;}
-  //! Set the environment variable to use before calling Init()
-  void  SetEnvironmentVariable(char *var) {_envvar = var;}
-  //! Specified by particular table classes (parses an individual data line)
-  virtual void ParseLine(const char*) {}
+    //! Destructor
+    virtual ~OBGlobalDataBase()                  {}
+    //! Read in the data file, falling back as needed
+    void  Init();
+    //! \return the size of the database (for error checking)
+    virtual unsigned int GetSize()                 { return 0;}
+    //! Set the directory before calling Init()
+    void  SetReadDirectory(char *dir)            { _dir = dir;    }
+    //! Set the environment variable to use before calling Init()
+    void  SetEnvironmentVariable(char *var)      { _envvar = var; }
+    //! Specified by particular table classes (parses an individual data line)
+    virtual void ParseLine(const char*)          {}
 };
 
 //! \brief Individual element data type
 //!
 //! Stores a variety of data about an individual element
-class OBElement
+class OBAPI OBElement
 {
-  int _num;
-  char _symbol[3];
-  double _Rcov,_Rbo,_Rvdw,_mass,_elNeg;
-  int _maxbonds;
- public:
-  OBElement() {}
-  OBElement(int num, const char *sym, double rcov, double rbo, 
-	    double rvdw, int maxbo, double mass, double elNeg)
+    int _num;
+    char _symbol[3];
+    std::string _name;
+    double _Rcov,_Rvdw,_mass,_elNeg,_ionize,_elAffinity;
+    double _red, _green, _blue;
+    int _maxbonds;
+public:
+    OBElement()    {}
+    OBElement(int num, const char *sym, double rcov, double rvdw,
+	      int maxbo, double mass, double elNeg, double ionize,
+	      double elAffin, double red, double green, double blue,
+	      std::string name) :
+      _num(num), _name(name), _Rcov(rcov), _Rvdw(rvdw), _mass(mass), 
+      _elNeg(elNeg), _ionize(ionize), _elAffinity(elAffin), 
+      _red(red), _green(green), _blue(blue),
+      _maxbonds(maxbo)
     {
-      _num = num;
-      strcpy(_symbol,sym);
-      _Rcov = rcov;
-      _Rbo = rbo;
-      _Rvdw = rvdw;
-      _maxbonds = maxbo;
-      _mass = mass;
-      _elNeg = elNeg;
+      strncpy(_symbol, sym, 3);
     }
-  int GetAtomicNum() {return(_num);}
-  char *GetSymbol() {return(_symbol);}
-  double GetCovalentRad() {return(_Rcov);}
-  double GetBoRad() {return(_Rbo);}
-  double GetVdwRad() {return(_Rvdw);}
-  double GetMass() {return(_mass);}
-  int GetMaxBonds() {return(_maxbonds);}
-  double GetElectroNeg() {return(_elNeg);}
+
+    //! \return the atomic number of this element
+    int GetAtomicNum()         {       return(_num);    }
+    //! \return the atomic symbol for this element
+    char *GetSymbol()          {       return(_symbol); }
+    //! \return the covalent radius of this element
+    double GetCovalentRad()    {       return(_Rcov);   }
+    //! \return the van der Waals radius of this element
+    double GetVdwRad()         {       return(_Rvdw);   }
+    //! \return the standard atomic mass for this element (in amu)
+    double GetMass()           {       return(_mass);   }
+    //! \return the maximum expected number of bonds to this element
+    int GetMaxBonds()          {       return(_maxbonds);}
+    //! \return the Pauling electronegativity for this element
+    double GetElectroNeg()     {       return(_elNeg);  }
+    //! \return the ionization potential (in eV) of this element
+    double GetIonization()     {       return(_ionize);  }
+    //! \return the electron affinity (in eV) of this element
+    double GetElectronAffinity(){      return(_elAffinity);  }
+    //! \return the name of this element (in English)
+    std::string GetName()      {       return(_name);    }
+    //! \return the red component of this element's default visualization color
+    double GetRed()            {       return(_red);     }
+    //! \return the green component of this element's default color
+    double GetGreen()          {       return(_green);   }
+    //! \return the blue component of this element's default color
+    double GetBlue()           {       return(_blue);    }
 };
 
 // class introduction in data.cpp
-class OBElementTable : public OBGlobalDataBase
+class OBAPI OBElementTable : public OBGlobalDataBase
 {
-  std::vector<OBElement*> _element;
+    std::vector<OBElement*> _element;
 
 public:
 
-  OBElementTable(void);
-  ~OBElementTable();
+    OBElementTable(void);
+    ~OBElementTable();
 
-  int   GetAtomicNum(const char *, unsigned short int iso = 0);
-  void  ParseLine(const char*);
-  char *GetSymbol(int);
-  double GetVdwRad(int);
-  double GetCovalentRad(int);
-  double GetBORad(int);
-  double GetMass(int);
-  double CorrectedBondRad(int,int = 3); // atomic #, hybridization
-  double CorrectedVdwRad(int,int = 3); // atomic #, hybridization
-  int	GetMaxBonds(int);
-  double GetElectroNeg(int);
+    void  ParseLine(const char*);
+
+    //! \return the number of elements in the periodic table
+    unsigned int		GetNumberOfElements();
+    unsigned int GetSize() { return GetNumberOfElements(); }
+
+    //! \deprecated Does not properly handle 'D' or 'T' hydrogen isotopes
+    int   GetAtomicNum(const char *);
+    //! \return the atomic number matching the element symbol passed
+    //! or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
+    //! a value in the second argument
+    int   GetAtomicNum(const char *, int &iso);
+    //! \return the element symbol matching the atomic number passed
+    char *GetSymbol(int);
+    //! \return the van der Waals radius for this atomic number
+    double GetVdwRad(int);
+    //! \return the covalent radius for this atomic number
+    double GetCovalentRad(int);
+    //! \return the average atomic mass for this element.
+    //! For exact isotope masses, use OpenBabel::OBIsotopeTable
+    double GetMass(int);
+    //! \return a "corrected" bonding radius based on the hybridization.
+    //! Scales the covalent radius by 0.95 for sp2 and 0.90 for sp hybrids
+    double CorrectedBondRad(int,int = 3); // atomic #, hybridization
+    //! \return a "corrected" vdW radius based on the hybridization.
+    //! Scales the van der Waals radius by 0.95 for sp2 and 0.90 for sp hybrids
+    double CorrectedVdwRad(int,int = 3); // atomic #, hybridization
+    //! \return the maximum expected number of bonds to this element
+    int	GetMaxBonds(int);
+    //! \return the Pauling electronegativity for this element
+    double GetElectroNeg(int);
+    //! \return the ionization potential (in eV) for this element
+    double GetIonization(int);
+    //! \return the electron affinity (in eV) for this element
+    double GetElectronAffinity(int);
+    //! \return a vector with red, green, blue color values for this element
+    std::vector<double> GetRGB(int);
+    //! \return the name of this element
+    std::string GetName(int);
 };
 
 // class introduction in data.cpp
-class OBIsotopeTable : public OBGlobalDataBase
+class OBAPI OBIsotopeTable : public OBGlobalDataBase
 {
-  std::vector<std::vector<std::pair <unsigned int, double> > > _isotopes;
+    std::vector<std::vector<std::pair <unsigned int, double> > > _isotopes;
 
- public:
-  
-  OBIsotopeTable(void);
-  ~OBIsotopeTable() {}
+public:
 
-  void	ParseLine(const char*);
-  //! Return the exact masss of the isotope
-  //!   (or by default (i.e. "isotope 0") the most abundant isotope)
-  double	GetExactMass(const unsigned int atomicNum,
+    OBIsotopeTable(void);
+    ~OBIsotopeTable()    {}
+
+    //! \return the number of elements in the isotope table
+    unsigned int GetSize() { return _isotopes.size(); }
+
+    void	ParseLine(const char*);
+    //! \return the exact masss of the isotope
+    //!   (or by default (i.e. "isotope 0") the most abundant isotope)
+    double	GetExactMass(const unsigned int atomicNum,
 			     const unsigned int isotope = 0);
 };
 
 // class introduction in data.cpp
-class OBTypeTable : public OBGlobalDataBase
+class OBAPI OBTypeTable : public OBGlobalDataBase
 {
-  int    _linecount;
-  int    _ncols,_nrows,_from,_to;
-  std::vector<std::string> _colnames;
-  std::vector<std::vector<std::string> > _table;
+    int    _linecount;
+    unsigned int    _ncols,_nrows;
+    int             _from,_to;
+    std::vector<std::string> _colnames;
+    std::vector<std::vector<std::string> > _table;
 
- public:
+public:
 
-  OBTypeTable(void);
-  ~OBTypeTable() {}
+    OBTypeTable(void);
+    ~OBTypeTable() {}
 
-  void ParseLine(const char*);
-  bool SetFromType(char*);
-  bool SetToType(char*);
-  bool Translate(char*,char*); // to, from
-  bool Translate(std::string &,std::string &); // to, from
+    void ParseLine(const char*);
+
+    //! \return the number of atom types in the translation table
+    unsigned int GetSize() { return _table.size(); }
+
+    //! Set the initial atom type to be translated
+    bool SetFromType(const char*);
+    //! Set the destination atom type for translation
+    bool SetToType(const char*);
+    //! Translate atom types
+    bool Translate(char *to, const char *from); // to, from
+    //! Translate atom types
+    bool Translate(std::string &to, const std::string &from); // to, from
+
+    //! \return the initial atom type to be translated
+    std::string GetFromType();
+    //! \return the destination atom type for translation
+    std::string GetToType();
 };
 
-// class introduction in data.cpp
-class OBExtensionTable : public OBGlobalDataBase
+//! \brief Table of common biomolecule residues (for PDB or other files).
+//!   Can assign atom types and bond orders for arbitrary residues
+class OBAPI OBResidueData : public OBGlobalDataBase
 {
-  int                     _linecount;
-  std::vector<std::vector<std::string> > _table;
+  int                                               _resnum;
+  std::vector<std::string>                          _resname;
+  std::vector<std::vector<std::string> >            _resatoms;
+  std::vector<std::vector<std::pair<std::string,int> > > _resbonds;
 
- public:
+  //variables used only temporarily for parsing resdata.txt
+  std::vector<std::string>                          _vatmtmp;
+  std::vector<std::pair<std::string,int> >          _vtmp;
+public:
 
-  OBExtensionTable(void);
-  ~OBExtensionTable() {}
+    OBResidueData();
+    void ParseLine(const char*);
 
-  bool    CanReadExtension(char *);
-  bool    CanWriteExtension(char *);
-  bool	  IsReadable(unsigned int);
-  bool    IsReadable(io_type);
-  bool	  IsWritable(unsigned int);
-  bool	  IsWritable(io_type);
-  void    ParseLine(const char*);
-  void    TypeToExtension(io_type,char*);
-  void	  TypeToMIME(io_type,char*);
-  void    ExtensionToDescription(char*, char*);
+    //! \return the number of residues in the table
+    unsigned int GetSize() { return _resname.size(); }
 
-  io_type       GetType(unsigned int);
-  io_type       FilenameToType(char *);
-  io_type       FilenameToType(std::string &);
-  io_type	MIMEToType(char *);
-  io_type	MIMEToType(std::string &);
-  const char   *GetExtension(unsigned int);
-  const char   *GetDescription(unsigned int);
-  unsigned int  Count(); 
+    //! Sets the table to access the residue information for a specified
+    //!  residue name
+    //! \return whether this residue name is in the table
+    bool SetResName(const std::string &);
+    //! \return the bond order for the bond specified in the current residue
+    //! \deprecated Easier to use the two-argument form
+    int  LookupBO(const std::string &);
+    //! \return the bond order for the bond specified between the two specified
+    //! atom labels
+    int  LookupBO(const std::string &, const std::string&);
+    //! Look up the atom type and hybridization for the atom label specified
+    //! in the first argument for the current residue
+    //! \return whether the atom label specified is found in the current residue
+    bool LookupType(const std::string &,std::string&,int&);
+    //! Assign bond orders, atom types and residues for the supplied OBMol
+    //! based on the residue information assigned to atoms
+    //! \deprecated second OBBitVec argument is ignored
+    bool AssignBonds(OBMol &,OBBitVec &);
 };
 
 // Used by other code for reading files
@@ -231,6 +293,9 @@ class OBExtensionTable : public OBGlobalDataBase
 #define FILE_SEP_CHAR "/"
 #endif
 
-}
+} // end namespace OpenBabel
 
 #endif //DATA_H
+
+//! \file data.h
+//! \brief Global data and resource file parsers.
