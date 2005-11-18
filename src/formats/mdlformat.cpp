@@ -571,6 +571,7 @@ bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
 				//Reversed 12Aug05 as advised by Nick England
 				if(val==2) atom.SetAntiClockwiseStereo();
 				else if(val==1) atom.SetClockwiseStereo();
+				else if(val==3) atom.SetChiral();
 				chiralWatch=true;
 			}
 			else if((*itr).substr(0,pos)=="MASS")
@@ -725,17 +726,17 @@ bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
             CorrectChirality(mol,atom,calcvolume,output);
          }
          else {            
-              CorrectChirality(mol,atom); // will set the stereochem based on input/output atom4refs
-              }
-
-			int cfg=0;
-			if(atom->IsClockwise())cfg=1;
-			else if(atom->IsAntiClockwise())cfg=2;
-			
-			ofs << " CFG=" << cfg;
+	   CorrectChirality(mol,atom); // will set the stereochem based on input/output atom4refs
+	 }
+	 
+	 int cfg=3; // if we don't know, then it's unspecified
+	 if(atom->IsClockwise())cfg=1;
+	 else if(atom->IsAntiClockwise())cfg=2;
+	 
+	 ofs << " CFG=" << cfg;
 		}
 		if(atom->GetIsotope()!=0)
-			ofs << " MASS=" << atom->GetIsotope();
+		  ofs << " MASS=" << atom->GetIsotope();
 		ofs << endl;
 	}
 	ofs << "M  V30 END ATOM" <<endl;

@@ -1,3 +1,8 @@
+2005-11-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mdlformat.cpp: Correctly handle unspecified chiral
+	centers (CFG=3), fixes PR#1324929.
+
 2005-11-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Makefile.am, Makefile.in: Make sure INSTALL.Windows is included
