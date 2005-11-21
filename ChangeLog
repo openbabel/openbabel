@@ -1,3 +1,16 @@
+2005-11-21  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/fingerprint.h, fingerprint.cpp: rearrange so that FptIndex
+	has member functions.
+	 
+	* src/formats/fastsearchformat.cpp: Add -xu option to update
+	index.
+
+	* src/obconversion.cpp (Write): Conditionally remove gz code in
+	Windows. Started crashing with ---errorlevel.
+
+	* windows-vc2005: Add DLL projects for VC++2005
+
 2005-11-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Makefile.am, Makefile.in: Make sure INSTALL.Windows is included
