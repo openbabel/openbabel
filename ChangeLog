@@ -1,3 +1,13 @@
+2005-11-21  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/fingerprint.h, fingerprint.cpp: rearrange so that FptIndex
+	has member functions.
+
+	* src/obconversion.cpp (Write): Conditionally remove gz code in
+	Windows. Started crashing with ---errorlevel.
+
+        * windows-vc2005: Add DLL projects for VC++2005
+
 2005-11-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mdlformat.cpp: Correctly handle unspecified chiral
