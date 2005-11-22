@@ -161,7 +161,7 @@ bool FastSearch::Find(OBBase* pOb, vector<unsigned int>& SeekPositions,
 	    strstream errorMsg;
 #endif
 	    errorMsg << "Stopped looking after " << i << " molecules." << endl;
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 	  }
 
 	vector<unsigned int>::iterator itr;
@@ -231,45 +231,65 @@ bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned int>& Seekpo
 		}
 	}	
 	return true;
-}/////////////////////////////////////////////////////////
+}
+
+/////////////////////////////////////////////////////////
 string FastSearch::ReadIndex(istream* pIndexstream)
 {
 	//Reads fs index from istream into member variables
-	// but first checks whether it is already loaded
-	FptIndexHeader headercopy = _index.header; 
-	pIndexstream->read((char*)&(_index.header), sizeof(FptIndexHeader));
+	_index.Read(pIndexstream);
 
-	if(memcmp(&headercopy,&(_index.header),sizeof(FptIndexHeader)))
+	_pFP = _index.CheckFP();	
+	if(!_pFP)
+		*(_index.header.datafilename) = '\0';
+
+	return _index.header.datafilename; //will be empty on error
+}
+
+//////////////////////////////////////////////////////////
+bool FptIndex::Read(istream* pIndexstream)
+{
+	pIndexstream->read((char*)&(header), sizeof(FptIndexHeader));
+	pIndexstream->seekg(header.headerlength);//allows header length to be changed
+	if(pIndexstream->fail() || header.headerlength != sizeof(FptIndexHeader))
 	{
-		pIndexstream->seekg(_index.header.headerlength);//allows header length to be changed
-
-		unsigned int nwords = _index.header.nEntries * _index.header.words;
-		_index.fptdata.resize(nwords);
-		_index.seekdata.resize(_index.header.nEntries);
-
-		pIndexstream->read((char*)&(_index.fptdata[0]), sizeof(unsigned int) * nwords);
-		pIndexstream->read((char*)&(_index.seekdata[0]), sizeof(unsigned int) * _index.header.nEntries);
-		
-		if(pIndexstream->fail())
-			*(_index.header.datafilename) = '\0';
-		
-		string tempFP(_index.header.fpid);
-		_pFP = OBFingerprint::FindFingerprint(tempFP);
-		if(!_pFP)
-		{
-#ifdef HAVE_SSTREAM
-		  stringstream errorMsg;
-#else
-		  strstream errorMsg;
-#endif
-		  errorMsg << "Index has Fingerprints of type '" << _index.header.fpid 
-			   << " which is not currently loaded." << endl;
-		  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-		  *(_index.header.datafilename) = '\0';	
-		}
-
+		*(header.datafilename) = '\0';
+		return false;
 	}
-	return _index.header.datafilename;
+
+	unsigned int nwords = header.nEntries * header.words;
+	fptdata.resize(nwords);
+	seekdata.resize(header.nEntries);
+
+	pIndexstream->read((char*)&(fptdata[0]), sizeof(unsigned int) * nwords);
+	pIndexstream->read((char*)&(seekdata[0]), sizeof(unsigned int) * header.nEntries);
+	
+	if(pIndexstream->fail())
+	{
+		*(header.datafilename) = '\0';
+		return false;
+	}
+	return true;
+}
+
+//////////////////////////////////////////////////////////
+OBFingerprint* FptIndex::CheckFP()
+{
+	//check that fingerprint type is available
+	string tempFP(header.fpid);
+	OBFingerprint* pFP = OBFingerprint::FindFingerprint(tempFP);
+	if(!pFP)
+	{
+	#ifdef HAVE_SSTREAM
+		stringstream errorMsg;
+	#else
+		strstream errorMsg;
+	#endif
+		errorMsg << "Index has Fingerprints of type '" << header.fpid 
+			 << " which is not currently loaded." << endl;
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+	}
+	return pFP; //NULL if not available
 }
 
 //*******************************************************
@@ -278,23 +298,26 @@ FastSearchIndexer::FastSearchIndexer(string& datafilename, ostream* os,
 {
 	///Starts indexing process
 	_indexstream = os;
-	_pFP = OBFingerprint::FindFingerprint(fpid);
-	if(!_pFP)
-	  {
-#ifdef HAVE_SSTREAM
-	    stringstream errorMsg;
-#else
-	    strstream errorMsg;
-#endif
-	    errorMsg << "Fingerprint type '" << fpid << "' not available" << endl;
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-	  }
-
 	_nbits=FptBits;
 	_pindex= new FptIndex;
 	_pindex->header.headerlength = sizeof(FptIndexHeader);
 	strncpy(_pindex->header.fpid,fpid.c_str(),15);
 	strncpy(_pindex->header.datafilename, datafilename.c_str(), 255);
+
+	//check that fingerprint type is available
+	_pFP = _pindex->CheckFP();	
+}
+
+/////////////////////////////////////////////////////////////
+FastSearchIndexer::FastSearchIndexer(FptIndex* pindex, std::ostream* os)
+{
+	//Uses existing index
+	_indexstream = os;
+	_pindex = pindex;
+	_nbits  = _pindex->header.words * OBFingerprint::Getbitsperint();
+
+	//check that fingerprint type is available
+	_pFP = _pindex->CheckFP();	
 }
 
 /////////////////////////////////////////////////////////////
@@ -329,7 +352,6 @@ bool FastSearchIndexer::Add(OBBase* pOb, streampos seekpos)
 	}
 	obErrorLog.ThrowError(__FUNCTION__, "Failed to make a fingerprint", obWarning);
 	return false;
-
 }
 
 /*!
