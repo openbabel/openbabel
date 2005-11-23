@@ -272,11 +272,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\zconf.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\zipstream.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\zipstreamimpl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\zlib.h"
 				>
 			</File>
 		</Filter>
