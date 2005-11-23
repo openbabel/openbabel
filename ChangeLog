@@ -1,3 +1,50 @@
+2005-11-23  Chris Morley  <c.morley@gaseq.co.uk>
+	
+		* src/fingerprint.h, fingerprint.cpp: rearrange so that FptIndex
+	has member functions.
+	 
+	* src/formats/fastsearchformat.cpp: Add -xu option to update
+	index.
+
+	* src/parsmart.cpp(SMARTSError): Error messages were being
+	writen by fprintf(stderr... and stdout. This made no difference
+	on console output but was not being picked up by the Windows GUI.
+	Changed to obErrorLog style.
+	
+	* src/chains.cpp(GenerateByteCodes): Changed error messages to
+	obErrorLog style.
+	
+	* zipstreamimpl.h(flush):Added test for NULL ostream, which had
+	been causing crashes (in Windows).
+	
+	* kekulize.cpp: L152 bestorden was not being initialized (my new
+	debugger tells me) and the code was testing it. Moved the line 
+	bestorden=99 to before the while loop. Not extensively tested but
+	seems to give the same as before for a few molecules. 
+	
+	* src/obconversion.cpp(Write): Added conditional compilation to
+	remove zipstream call in Windows. Started crashing with 
+	---errorlevel. A kludge until we sort out	the Windows compression
+	problems. Two other similar calls in obconversion are still there...
+	
+	* src/obconversion.cpp(FullConvert): Added SetInStream and changed
+	the names of pInStream and pOutStream which were stupidly
+	given names which are also member variables! It's a bit late to
+	be altering core code like this but splitting, aggregation,
+	batch and normal all seem ok on Windows.
+	
+	* src/finger3.cpp: Change name of FP3 file.
+	
+	* data/SMARTS_InteLigand_051110.txt: replaced by 
+	SMARTS_InteLigand.txt
+	
+	*src/formats/mdlformat.cpp: Writes $$$$ for every molecule to
+	resolve bug #1362781
+		 
+	* INSTALL.windows: rewritten
+
+	windows-vc2005: Add DLL projects and update.
+	
 2005-11-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mdlformat.cpp: Correctly handle unspecified chiral
