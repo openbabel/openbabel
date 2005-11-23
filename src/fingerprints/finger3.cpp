@@ -159,7 +159,7 @@ public:
 //Make a global instance
 PatternFP thePatternFP("FP3");
 
-PatternFP FP4PatternFP("FP4", "SMARTS_InteLigand_051110.txt");
+PatternFP FP4PatternFP("FP4", "SMARTS_InteLigand.txt");
 //***********************************************
 
 /*! \class PatternFP
