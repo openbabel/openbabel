@@ -2631,9 +2631,21 @@
 				RelativePath="..\..\src\formats\xml\xml.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\zipstream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\zipstreamimpl.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\libxml2.lib"
+			>
+		</File>
+		<File
+			RelativePath="..\zdll.lib"
 			>
 		</File>
 	</Files>
