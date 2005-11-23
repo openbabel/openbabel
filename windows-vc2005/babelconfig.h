@@ -9,7 +9,7 @@
 #define HAVE_SNPRINTF 1
 #define HAVE_STRNCASECMP 1
 #define HAVE_LIBZ 1
-#define BABEL_VERSION  "2.0"
+#define BABEL_VERSION  "2.0.0"
 
 #define BABEL_DATADIR "."
 #define snprintf _snprintf
