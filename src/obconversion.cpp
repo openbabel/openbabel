@@ -704,6 +704,7 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 
 	ostream* pOrigOutStream = pOutStream;
 #ifdef HAVE_LIBZ
+#ifndef _WIN32
 	zlib_stream::zip_ostream zOut(*pOutStream);
 	if(IsOption("z",GENOPTIONS))
 	{
@@ -711,6 +712,7 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 	  zOut.make_gzip();
 	  pOutStream = &zOut;
 	}
+#endif
 #endif
 
 	bool ret = pOutFormat->WriteMolecule(pOb,this);
@@ -882,9 +884,8 @@ Returns the number of Chemical objects converted.
 int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& OutputFileName,
 			      std::vector<std::string>& OutputFileList)
 {
-	
-	istream* pInStream;
-	ostream* pOutStream=NULL;
+	ostream* pOs=NULL;
+	istream* pIs=NULL;
 	ifstream is;
 	ofstream os;
 	bool HasMultipleOutputFiles=false;
@@ -898,7 +899,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 
 		//OUTPUT
 		if(OutputFileName.empty())
-			pOutStream = NULL; //use existing stream
+			pOs = NULL; //use existing stream
 		else
 		{
 			if(OutputFileName.find_first_of('*')!=string::npos) HasMultipleOutputFiles = true;
@@ -911,7 +912,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 					return 0;
 				}
 				OutputFileList.push_back(OutputFileName);
-				pOutStream=&os;
+				pOs=&os;
 			}
 		}
 
@@ -937,13 +938,13 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 				allinput << ifs.rdbuf(); //Copy all file contents
 				ifs.close();
 			}
-			Count = Convert(&allinput,pOutStream);
+			Count = Convert(&allinput,pOs);
 			return Count;
 		}
 
 		//INPUT
 		if(FileList.empty())
-			pInStream = NULL;
+			pIs = NULL;
 		else
 		{
 			if(FileList.size()>1)
@@ -978,7 +979,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 					{
 						//Aggregation
 						if(itr!=tempitr) SetMoreFilesToCome();
-						Count = Convert(&ifs,pOutStream);					
+						Count = Convert(&ifs,pOs);					
 					}
 				}
 				return Count;
@@ -989,7 +990,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 				InFilename = FileList[0];
 				if(!OpenAndSetFormat(CommonInFormat, &is))
 						return 0;
-				pInStream=&is;
+				pIs=&is;
 
 				if(HasMultipleOutputFiles)
 				{
@@ -997,8 +998,9 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 					//Output is put in a temporary stream and written to a file
 					//with an augmenting name only when it contains a valid object. 
 					int Indx=1;
+					SetInStream(&is);
 					#ifdef HAVE_LIBZ
-						zlib_stream::zip_istream zIn(*pInStream);
+						zlib_stream::zip_istream zIn(is);
 					#endif
 					for(;;)
 					{
@@ -1047,7 +1049,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 		}
 
 		//Single input and output files
-		Count = Convert(pInStream,pOutStream);
+		Count = Convert(pIs,pOs);
 		return Count;
 	}
 	catch(...)
