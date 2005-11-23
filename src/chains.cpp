@@ -683,10 +683,20 @@ void GenerateByteCodes(ByteCode **node, int resid, int curr, int prev, int bond)
     {
         if( (*node)->assign.resid != resid )
         {
-            fputs("Error: Duplicated Monomer Specification!\n",stderr);
+/*          fputs("Error: Duplicated Monomer Specification!\n",stderr);
             fprintf(stderr,"Residue %s matches resid",ChainsResName[resid]);
             fprintf(stderr,"ue %s!\n",ChainsResName[(*node)->assign.resid]);
-        }
+*/
+					#ifdef HAVE_SSTREAM
+						stringstream errorMsg;
+					#else
+						strstream errorMsg;
+					#endif							
+						errorMsg << "Duplicated Monomer Specification!" << endl;
+						errorMsg << "Residue " << ChainsResName[resid] << " matches residue ";
+						errorMsg << ChainsResName[(*node)->assign.resid] << "!" << endl;
+						obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);						
+				}
     }
 
     /* Restore State! */
