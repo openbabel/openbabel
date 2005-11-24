@@ -1,3 +1,12 @@
+2005-11-24  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* windows-vc2005: upadtae files but struggling with wrong tags
+	on some files. Renamed as OpenBabel.sln
+	
+	* src/INSTALL.WINDOWS: removed. (First draft 2004 by PMR)
+	
+	* src/README: removed. (about 2003 oblib)
+
 2005-11-23  Chris Morley  <c.morley@gaseq.co.uk>
 	
 		* src/fingerprint.h, fingerprint.cpp: rearrange so that FptIndex
