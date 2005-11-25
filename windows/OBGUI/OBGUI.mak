@@ -335,24 +335,24 @@ CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
 "OBConv - Win32 Release" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
+   cd "\My Documents\MSVC\openbabel-2-0-x\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Release" 
    cd "..\OBGUI"
 
 "OBConv - Win32 ReleaseCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
+   cd "\My Documents\MSVC\openbabel-2-0-x\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Release" RECURSE=1 CLEAN 
    cd "..\OBGUI"
 
 !ELSEIF  "$(CFG)" == "OBGUI - Win32 Debug"
 
 "OBConv - Win32 Debug" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
+   cd "\My Documents\MSVC\openbabel-2-0-x\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" 
    cd "..\OBGUI"
 
 "OBConv - Win32 DebugCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBConv"
+   cd "\My Documents\MSVC\openbabel-2-0-x\openbabel\windows\OBConv"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBConv.mak" CFG="OBConv - Win32 Debug" RECURSE=1 CLEAN 
    cd "..\OBGUI"
 
@@ -361,24 +361,24 @@ CPP_SWITCHES=/nologo /MDd /W3 /Gm /Gi /GR /GX /ZI /Od /I "..\..\src" /I ".." /I 
 !IF  "$(CFG)" == "OBGUI - Win32 Release"
 
 "OBDLL - Win32 Release" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   cd "\My Documents\MSVC\openbabel-2-0-x\openbabel\windows\OBDLL"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Release" 
    cd "..\OBGUI"
 
 "OBDLL - Win32 ReleaseCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   cd "\My Documents\MSVC\openbabel-2-0-x\openbabel\windows\OBDLL"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Release" RECURSE=1 CLEAN 
    cd "..\OBGUI"
 
 !ELSEIF  "$(CFG)" == "OBGUI - Win32 Debug"
 
 "OBDLL - Win32 Debug" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   cd "\My Documents\MSVC\openbabel-2-0-x\openbabel\windows\OBDLL"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Debug" 
    cd "..\OBGUI"
 
 "OBDLL - Win32 DebugCLEAN" : 
-   cd "\My Documents\MSVC\OpenBabel Ultimate\CVSforOB2\openbabel\windows\OBDLL"
+   cd "\My Documents\MSVC\openbabel-2-0-x\openbabel\windows\OBDLL"
    $(MAKE) /$(MAKEFLAGS) /F ".\OBDLL.mak" CFG="OBDLL - Win32 Debug" RECURSE=1 CLEAN 
    cd "..\OBGUI"
 

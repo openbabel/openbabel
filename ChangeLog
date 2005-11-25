@@ -1,3 +1,12 @@
+2005-11-25  Chris Morley  <c.morley@gaseq.co.uk>
+
+	* src/formats/mdlformat.cpp, rxnformat.cpp: Yesterdays change
+	broke rxnformat. Add option to supress $$$$.
+	
+	* windows/obabel/OBabel.dsp: This config sees fingerprints ok.
+	
+	* windows/OBRunTime.dsw: rename to OpenBabel.dsw
+	
 2005-11-24  Chris Morley  <c.morley@gaseq.co.uk>
 
 	* windows-vc2005: upadtae files but struggling with wrong tags

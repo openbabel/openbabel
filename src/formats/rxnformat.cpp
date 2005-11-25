@@ -192,6 +192,7 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     OBConversion MolConv(*pConv); //new copy to use to write associated MOL
 		MolConv.SetAuxConv(NULL); //temporary until a proper OBConversion copy constructor written
+		MolConv.AddOption("no$$$$",OBConversion::OUTOPTIONS);
 	   
 		OBFormat* pMolFormat = pConv->FindFormat("MOL");
     if(pMolFormat==NULL)

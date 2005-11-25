@@ -457,7 +457,8 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   // end RWT
 
-	//if(!pConv->IsLast()) $$$$ now written for all molecules
+	//if(!pConv->IsLast()) $$$$ now written for all molecules, except if option set
+	if(!pConv->IsOption("no$$$$"))	
 		ofs << "$$$$" << endl;
 
 	return(true);
