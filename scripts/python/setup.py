@@ -4,7 +4,7 @@ from distutils.core import *
 
 # lang = 'c++'
 
-obExtension = Extension('openbabel',
+obExtension = Extension('_openbabel',
                         ['openbabel_python.cpp'],
                         include_dirs=['../../src'],
                         library_dirs=['../../src'],
