@@ -1,0 +1,24 @@
+EXTRA_DIST = openbabel.i perl python
+
+dist-hook:
+	find $(distdir)/perl -name CVS | xargs rm -rf
+	(cd $(distdir)/perl; $(MAKE) distclean)
+	find $(distdir)/python -name CVS | xargs rm -rf
+	(cd $(distdir)/python; $(PYTHON) setup.py clean)
+
+# build the Perl and Python wrappers if --enable-maintainer-mode was set
+# and SWIG is available -- please use the most recent version of SWIG
+
+if MAINTAINER_MODE
+if BUILD_SWIG
+BUILT_SOURCES = perl/openbabel_perl.cpp \
+		python/openbabel_python.cpp
+
+perl/openbabel_perl.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+	$(SWIG) -perl5 -c++ -o $@ \
+		-I$(top_srcdir)/src $<
+
+python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+	$(SWIG) -python -modern -c++ -o $@ -I$(top_srcdir)/src $<
+endif # BUILD_SWIG
+endif # MAINTAINER_MODE
