@@ -1,4 +1,82 @@
 Developer's Notes and Design Decisions for pyopenbabel.py
 ---------------------------------------------------------
 
+The Atom class
+==============
 
+To find all of the GetVar() methods of the Atom class:
+
+import openbabel
+b = [x for x in openbabel.OBAtom.__dict__.keys() if x.startswith("Get")]
+b.sort()
+for c in b:
+	print c
+
+GetAngle		"NotImplementedError: No matching function for overloaded 'OBAtom_GetAngle'"
+GetAtomicMass		== atomicmass
+GetAtomicNum		== atomicnum
+GetBond			needs two arguments
+GetCIdx			== cidx
+GetCoordinate		replaced by a .coords attribute containing a tuple (x,y,z) (also "Segmentation fault")
+GetCoordinateIdx	== coordidx
+GetData			== data
+GetDistance		"NotImplementedError: No matching function for overloaded 'OBAtom_GetDistance'"
+GetExactMass		== exactmass
+GetFormalCharge		== formalcharge
+GetHeteroValence	== heterovalence
+GetHvyValence		== heavyvalence (if hetero isn't abbreviated, then neither should heavy)
+GetHyb			== hyb
+GetIdx			== idx
+GetImplicitValence	== implicitvalence
+GetIsotope		== isotope
+GetNewBondVector	needs three arguments
+GetNextAtom		not required (given a Molecule, you can loop through the atoms)
+GetPartialCharge	== partialcharge
+GetResidue		"Segmentation fault"
+GetSpinMultiplicity	== spin
+GetType			== type
+GetValence		== valence
+GetVector		== vector
+GetX			replaced by a .coords attribute containing a tuple (x,y,z)
+GetY			replaced by a .coords attribute containing a tuple (x,y,z)
+GetZ			replaced by a .coords attribute containing a tuple (x,y,z)
+
+All attributes are calculated on-the-fly when you ask for them. They are also initialised when you create the atom object, so that dir(myatom) gives a useful list of attributes.
+
+The Molecule class
+==============
+
+To find all of the GetVar() methods of the Molecule class:
+
+import openbabel
+b = [x for x in openbabel.OBMol.__dict__.keys() if x.startswith("Get")]
+b.sort()
+for c in b:
+	print c
+
+GetAtom			replaced by a .atoms attributes containing a list of Atoms
+GetBond			(to be )replaced by a .atoms attributes containing a list of Atoms
+GetConformer
+GetConformers
+GetCoordinates
+GetData
+GetDimension
+GetEnergy
+GetExactMass
+GetFirstAtom		not required (can use .atoms attribute instead)
+GetFlags
+GetFormula		== formula
+GetGIDVector
+GetGIVector
+GetGTDVector
+GetInternalCoord
+GetMod
+GetMolWt		(to be) == molwt
+GetResidue
+GetSSSR
+GetTitle
+GetTorsion
+GetTotalCharge
+GetTotalSpinMultiplicity
+
+All attributes are calculated on-the-fly when you ask for them. They are also initialised when you create the atom object, so that dir(myatom) gives a useful list of attributes.

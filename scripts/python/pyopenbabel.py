@@ -1,6 +1,12 @@
 import openbabel as ob
 
 class Molecule(object):
+    """Represent a molecule."""
+
+    _properties = {
+        'insertprops':'here'
+    }
+    
     def __init__(self):
         self.OBMol = ob.OBMol()
     def __getattr__(self,attr):
@@ -13,26 +19,6 @@ class Molecule(object):
 class Atom(object):
     """Represent an atom."""
     
-    _notwanted = {
-        'coord':'GetCoordinate',
-        'nextatom':'GetNextAtom',
-        'x':'GetX',
-        'y':'GetY',
-        'z':'GetZ',
-        }
-    _notimplemeneted = {
-        'angle':'GetAngle',
-        'distance':'GetDistance',
-        }
-    _needstwoargs = {
-        'bond':'GetBond',
-        }
-    _needsthreeargs = {
-        'newbondvector':'GetNewBondVector'
-        }
-    _segfaults = {
-        'residue':'GetResidue',
-        }
     _properties = {
         'isotope':'GetIsotope',
         'hyb':'GetHyb',
@@ -55,17 +41,19 @@ class Atom(object):
         }
 
     def __init__(self,OBAtom=None,index=None):
+        # For the moment, I will remember the index of the atom in the molecule
+        # I'm not sure if this is useful.
         if not OBAtom:
             OBAtom = ob.OBAtom()
         self.OBAtom = OBAtom
         self.index = index
         
         for x,v in self._properties.iteritems():
-            # setattr(self,x,getattr(self.OBAtom,v)())
             setattr( self,x,getattr(self,x) )
         self.coords = self.coords
     
     def __getattr__(self,attr):
+        # Reminder to add corresponding __setattr__ methods
         if attr == "coords":
             return (self.OBAtom.GetX(),self.OBAtom.GetY(),self.OBAtom.GetZ())
         elif attr in self._properties:
