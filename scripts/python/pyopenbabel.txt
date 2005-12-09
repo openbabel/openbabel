@@ -41,10 +41,10 @@ GetX			replaced by a .coords attribute containing a tuple (x,y,z)
 GetY			replaced by a .coords attribute containing a tuple (x,y,z)
 GetZ			replaced by a .coords attribute containing a tuple (x,y,z)
 
-All attributes are calculated on-the-fly when you ask for them. They are also initialised when you create the atom object, so that dir(myatom) gives a useful list of attributes.
+All attributes are calculated on-the-fly when you ask for them. They are also initialised when you create the Atom object, so that dir(myatom) gives a useful list of attributes.
 
 The Molecule class
-==============
+==================
 
 To find all of the GetVar() methods of the Molecule class:
 
@@ -55,28 +55,28 @@ for c in b:
 	print c
 
 GetAtom			replaced by a .atoms attributes containing a list of Atoms
-GetBond			(to be )replaced by a .atoms attributes containing a list of Atoms
-GetConformer
-GetConformers
-GetCoordinates
-GetData
-GetDimension
-GetEnergy
-GetExactMass
+GetBond			(to be)replaced by a .bonds attributes containing a list of Bonds
+GetConformer		needs two arguments
+GetConformers		== conformers
+GetCoordinates		== coords
+GetData			== data
+GetDimension		== dim
+GetEnergy		== energy
+GetExactMass		== exactmass
 GetFirstAtom		not required (can use .atoms attribute instead)
-GetFlags
+GetFlags		== flags
 GetFormula		== formula
-GetGIDVector
-GetGIVector
-GetGTDVector
-GetInternalCoord
-GetMod
-GetMolWt		(to be) == molwt
-GetResidue
-GetSSSR
-GetTitle
-GetTorsion
-GetTotalCharge
-GetTotalSpinMultiplicity
+GetGIDVector		needs two arguments
+GetGIVector		needs two arguments
+GetGTDVector		== gtdvector
+GetInternalCoord	== internalcoord (or internalcoords??)
+GetMod			== mod
+GetMolWt		== molwt
+GetResidue		needs two arguments
+GetSSSR			== sssr
+GetTitle		== title
+GetTorsion		"NotImplementedError: No matching function for overloaded 'OBMol_GetTorsion'"
+GetTotalCharge		== charge
+GetTotalSpinMultiplicity	== spin
 
-All attributes are calculated on-the-fly when you ask for them. They are also initialised when you create the atom object, so that dir(myatom) gives a useful list of attributes.
+All attributes are calculated on-the-fly when you ask for them. They are also initialised when you create the Molecule object, so that dir(mymolecule) gives a useful list of attributes.
