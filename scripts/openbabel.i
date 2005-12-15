@@ -14,7 +14,7 @@
 %pythoncode %{
 import sys
 import dl
-sys.setdlopenflags(sys.getslopenflags() | dl.RTLD_GLOBAL)
+sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)
 %}
 
 %include "std_list.i"
