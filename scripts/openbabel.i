@@ -11,6 +11,12 @@
 #include "data.h"
 %}
 
+%pythoncode %{
+import sys
+import dl
+sys.setdlopenflags(sys.getslopenflags() | dl.RTLD_GLOBAL)
+%}
+
 %include "std_list.i"
 %include "std_map.i"
 %include "std_vector.i"
