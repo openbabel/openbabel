@@ -149,8 +149,8 @@ void OBMol::NewPerceiveKekuleBonds()
       //cout << "minde before:" << minde << endl;
       // if huckel rule not satisfied some atoms must give more electrons
       //cout << "minde " << minde << endl;
+		bestorden=99;//CM moved to before while loop because wasn't being initialized
       while ( minde != 0 ) {
-	bestorden=99;
 	for(j=0; j< cycle.size(); j++) {
 	  if (electron[j] == 1) {
 	    orden = getorden(cycle[j]);

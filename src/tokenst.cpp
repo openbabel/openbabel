@@ -129,7 +129,7 @@ OBAPI bool tokenize(vector<string> &vcr, string &s, const char *delimstr, int li
     return(true);
 }
 
-OBAPI void Trim(string& txt)
+OBAPI string& Trim(string& txt)
 {
 	string::size_type pos = txt.find_last_not_of(" \t\n\r");
 	if(pos!=string::npos)
@@ -142,6 +142,7 @@ OBAPI void Trim(string& txt)
 		txt.erase(0, pos);
 	else
 		txt.erase();
+	return txt;
 }
 
 } // end namespace OpenBabel

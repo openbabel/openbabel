@@ -29,7 +29,7 @@ public:
   OBAPIInterface()
 	{
 		OBConversion::RegisterFormat("obapi",this);
-		OBConversion::RegisterOptionParam("-errorlevel", this, 1);
+		OBConversion::RegisterOptionParam("-errorlevel", this, 1, OBConversion::GENOPTIONS);
 	}
 
 	const char* Description(){return 
@@ -42,7 +42,7 @@ API options, e.g. ---errorlevel 2\n \
 
 	bool WriteMolecule(OBBase* , OBConversion* pConv)
 	{
-		const char* txt = pConv->IsOption("errorlevel");
+		const char* txt = pConv->IsOption("errorlevel",OBConversion::GENOPTIONS);
 		if(txt)
 		{
 			stringstream ss(txt);

@@ -69,7 +69,7 @@ public:
 		   INOPTIONS or OUTOPTIONS, must take the same number of parameters (0 or 1).
 		   There will be an error message when OpenBabel	runs if there are conflicts
 		   between formats. A list of formats currently used (which may not be 
-		   comprehensive) is in docs/options.txt.
+		   comprehensive) is in docs/options.html.
 		*/
 		OBConversion::RegisterOptionParam("f", this, 1);
 		OBConversion::RegisterOptionParam("n", this);

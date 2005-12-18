@@ -77,7 +77,7 @@ Write Options, e.g. -x3\n \
 				getline(ifs, temp);
 		}while(ifs.good() && temp.substr(0,3)=="$$$" && --n);
 		return ifs.good() ? 1 : -1;	
-	};
+	}
 
 ////////////////////////////////////////////////////
 	/// The "API" interface functions
@@ -92,6 +92,8 @@ private:
 	bool ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
 	bool ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
 	bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
+private:
+	bool HasProperties;
 	char* GetTimeDate(char* td);
 	map<int,int> indexmap; //relates index in file to index in OBMol
 	vector<string> vs;
@@ -103,10 +105,10 @@ MOLFormat theMOLFormat;
 /////////////////////////////////////////////////////////////////
 bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
-	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+		OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 
-	//Define some references so we can use the old parameter names
-	istream &ifs = *pConv->GetInStream();
+		//Define some references so we can use the old parameter names
+		istream &ifs = *pConv->GetInStream();
 	OBMol &mol = *pmol;
 	_mapcd.clear();
 
@@ -219,7 +221,17 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
 		while(ifs.getline(buffer,BUFF_SIZE))
 		{
-			if(!strchr(buffer,'M')) continue;
+			if(!strncmp(buffer,"M  END",6))
+				break;
+			if(strncmp(buffer,"M  CHG",6) && strncmp(buffer,"M  RAD",6) && strncmp(buffer,"M  ISO",6))
+				continue;
+			if(!strncmp(buffer,"S  SKP",6))
+			{
+				int i = atoi(buffer+6);
+				for(;i>0;--i)
+					ifs.getline(buffer,BUFF_SIZE);
+				break;
+			}
 			r1 = buffer;
 			int n = atoi((r1.substr(6,3)).c_str()); //entries on this line
 			if(n==0) break;
@@ -305,7 +317,11 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	//Define some references so we can use the old parameter names
 	ostream &ofs = *pConv->GetOutStream();
 	OBMol &mol = *pmol;
-  char dimension[3] = "2D";
+
+	if(pConv->GetOutputIndex()==1)
+		HasProperties=false;
+
+	char dimension[3] = "2D";
   if(mol.GetDimension()==3)
 		dimension[0]='3';
 
@@ -440,25 +456,26 @@ bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 	ofs << "M  END" << endl;
 
-
-  // RWT 4/7/2001
-  // now output properties if they exist
-  // MTS 4/17/2001
-  // changed to use new OBGenericData class
-
-  vector<OBGenericData*>::iterator k;
-  vector<OBGenericData*> vdata = mol.GetData();
-  for (k = vdata.begin();k != vdata.end();k++)
-	  if ((*k)->GetDataType() == OBGenericDataType::PairData)
-	  {
-		  ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
-		  ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
-	  }
-
-  // end RWT
-
-	if(!pConv->IsLast())
-		ofs << "$$$$" << endl;
+	if(!pConv->IsOption("m")) //No properties output if option m
+	{
+		vector<OBGenericData*>::iterator k;
+	  vector<OBGenericData*> vdata = mol.GetData();
+		for (k = vdata.begin();k != vdata.end();k++)
+		{
+			if ((*k)->GetDataType() == OBGenericDataType::PairData)
+			{
+				HasProperties = true;
+				ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
+				ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
+			}
+		}
+	}
+	
+	//Unless option no$$$$ is set, $$$$ is always written between molecules and
+	//at the end any if properties have been output in any molecule.
+	if(!pConv->IsOption("no$$$$"))
+		if(!pConv->IsLast()  || HasProperties  )	
+			ofs << "$$$$" << endl;
 
 	return(true);
 }
@@ -726,17 +743,17 @@ bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
             CorrectChirality(mol,atom,calcvolume,output);
          }
          else {            
-	   CorrectChirality(mol,atom); // will set the stereochem based on input/output atom4refs
-	 }
-	 
-	 int cfg=3; // if we don't know, then it's unspecified
-	 if(atom->IsClockwise())cfg=1;
-	 else if(atom->IsAntiClockwise())cfg=2;
-	 
-	 ofs << " CFG=" << cfg;
+              CorrectChirality(mol,atom); // will set the stereochem based on input/output atom4refs
+              }
+
+			int cfg=3; // if we don't know, then it's unspecified
+			if(atom->IsClockwise())cfg=1;
+			else if(atom->IsAntiClockwise())cfg=2;
+			
+			ofs << " CFG=" << cfg;
 		}
 		if(atom->GetIsotope()!=0)
-		  ofs << " MASS=" << atom->GetIsotope();
+			ofs << " MASS=" << atom->GetIsotope();
 		ofs << endl;
 	}
 	ofs << "M  V30 END ATOM" <<endl;

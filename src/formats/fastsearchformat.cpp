@@ -34,6 +34,7 @@ public:
 		OBConversion::RegisterOptionParam("S", this, 1, OBConversion::GENOPTIONS);
 		OBConversion::RegisterOptionParam("f", this, 1);
 		OBConversion::RegisterOptionParam("N", this, 1);
+		OBConversion::RegisterOptionParam("u", this, 0);
 		OBConversion::RegisterOptionParam("t", this, 1, OBConversion::INOPTIONS);
 		OBConversion::RegisterOptionParam("l", this, 1, OBConversion::INOPTIONS);
 		OBConversion::RegisterOptionParam("a", this, 0, OBConversion::INOPTIONS);
@@ -57,10 +58,10 @@ Reading from the fs format does a fast search for:\n \
 Write Options (when making index) e.g. -xfFP3 \n \
  f# Fingerprint type\n \
  N# Fold fingerprint to # bits\n \
-\n \
+ u  Update an existing index\n\n \
 Read Options (when searching) e.g. -at0.7\n \
  t# Do similarity search: #mols or # as min Tanimoto\n \
- a  Add Tanimoto to title\n \
+ a  Add Tanimoto coeff to title\n \
  l# Maximum number of candidates. Default<4000>\n\n \
 ";
 	};
@@ -76,6 +77,7 @@ private:
 	//until the program ends.
 	FastSearch fs;
 	FastSearchIndexer* fsi;
+	streampos LastSeekpos; //used during update
 };
 
 ///////////////////////////////////////////////////////////////
@@ -310,50 +312,82 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 /////////////////////////////////////////////////////
 bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 {
-	//Prepares an index file
-	if(pConv->GetOutputIndex()==0)
-		clog << "This will prepare an index of " << pConv->GetInFilename()
-		<<  " and may take some time..." << flush;
-	
+	//Prepares or updates an index file
+
+	bool update = pConv->IsOption("u")!=NULL;
+	string mes("prepare an");
+	if(update)
+		mes = "update the";
+	if(fsi==NULL)
+		clog << "This will " << mes << " index of " << pConv->GetInFilename()
+		     <<  " and may take some time..." << flush;
+			
 	OBStopwatch sw;
-	sw.Start(); //seems stupid but makes gcc-4 happy
+//	sw.Start(); //seems stupid but makes gcc-4 happy
 	
 	std::string auditMsg = "OpenBabel::Write fastsearch index ";
 	std::string description(Description());
         auditMsg += description.substr( 0, description.find('\n') );
-        obErrorLog.ThrowError(__FUNCTION__,
-                              auditMsg,
-                              obAuditMsg);
+        obErrorLog.ThrowError(__FUNCTION__,auditMsg,obAuditMsg);
 
-	ostream* pOs = pConv->GetOutStream();
+	ostream* pOs = pConv->GetOutStream();// with named index it is already open
 	bool NewOstreamUsed=false;
 	if(fsi==NULL)
 	{
 		//First pass sets up FastSearchIndexer object
 		sw.Start();
+		
+		FptIndex* pidx; //used with update
+
 		if(pOs==&cout)
 		{
 			//No index filename specified
-			//Derive index name from datfile name
+			//Derive index name from datafile name
 			string indexname=pConv->GetInFilename();
 			string::size_type pos=indexname.find_last_of('.');
 			if(pos!=string::npos)
 				indexname.erase(pos);
 			indexname += ".fs";
 
-#ifdef HAVE_SSTREAM
-			stringstream errorMsg;
-#else
-			strstream errorMsg;
-#endif
-			pOs = new ofstream(indexname.c_str(),ofstream::binary);
-			if(!pOs->good())
+			bool idxok=true;
+			if(update)
 			{
-				errorMsg << "Cannot open " << indexname << endl;
+				LastSeekpos = 0;
+
+				//Read in existing index
+				idxok=false;
+				ifstream ifs(indexname.c_str(),ifstream::binary);
+				if(ifs.good())
+				{
+					pidx = new FptIndex;
+					idxok = pidx->Read(&ifs);
+				}
+			}//ifs closed here
+
+			pOs = new ofstream(indexname.c_str(),ofstream::binary);
+
+			if(!pOs->good() || !idxok)
+			{
+			#ifdef HAVE_SSTREAM
+				stringstream errorMsg;
+			#else
+				strstream errorMsg;
+			#endif
+				errorMsg << "Trouble opening or reading " << indexname << endl;
 				obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 				return false;
 			}
 			NewOstreamUsed=true;
+		}
+		else // not cout
+		{
+			if(update)
+			{	obErrorLog.ThrowError(__FUNCTION__,
+"Currently, updating	can only be done with index files that \
+have the same name as the datafile. Use the form:\n \
+	babel datafile.xxx -ofs -xu", obError);
+				return false;
+			}
 		}
 
 		int nbits = 0;
@@ -376,7 +410,19 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 		unsigned int pos = datafilename.find_last_of("/\\");
 		if(pos!=string::npos)
 			datafilename=datafilename.substr(pos+1);
-		fsi = new FastSearchIndexer(datafilename, pOs, fpid, nbits);
+
+		if(update)
+		{
+			fsi = new FastSearchIndexer(pidx,pOs);//using existing index
+
+			//Seek to position in datafile of last of old objects
+			LastSeekpos = *(pidx->seekdata.end()-1);
+			pConv->GetInStream()->seekg(LastSeekpos);
+		}
+		else
+			fsi = new FastSearchIndexer(datafilename, pOs, fpid, nbits);
+		
+		obErrorLog.StopLogging();
 	}
 
 	//All passes provide an object for indexing
@@ -386,7 +432,11 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 		pmol->ConvertDativeBonds();//use standard form for dative bonds
 	
 	streampos seekpos = pConv->GetInPos();
-	fsi->Add(pOb, seekpos );
+	if(!update || seekpos>LastSeekpos) 
+		fsi->Add(pOb, seekpos );
+	else
+		//Don't index old objects during update. Don't increment pConv->Index.
+		pConv->SetOutputIndex(pConv->GetOutputIndex()-1);
 
 	if(pConv->IsLast())
 	{
@@ -398,7 +448,13 @@ bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
 		//return to starting conditions
 		fsi=NULL;
 
-		clog << "\n It took " << sw.Elapsed() << endl;
+		obErrorLog.StartLogging();
+
+		double secs = sw.Elapsed();
+		if(secs>150)
+			clog << "\n It took " << secs/60 << " minutes" << endl;
+		else
+			clog << "\n It took " << secs << " seconds" << endl;
 	}
 	delete pOb;
 	return true;

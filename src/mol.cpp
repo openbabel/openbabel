@@ -872,11 +872,98 @@ double OBMol::GetExactMass()
     return(mass);
 }
 
+//! Stochoimetric formula in spaced format e.g. C 4 H 6 O 1
+//! No pair data is stored. Normally use without parameters: GetSpacedFormula()
+string OBMol::GetSpacedFormula(int ones, const char* sp)
+{
+	//Default ones=0, sp=' '. 
+	//Using ones=1 and sp='' will give unspaced formula (and no pair data entry)
+ 	// These are the atomic numbers of the elements in alphabetical order.
+  const int NumElements = 110;
+  const int alphabetical[NumElements] = {
+   89, 47, 13, 95, 18, 33, 85, 79, 5, 56, 4, 107, 83, 97, 35, 6, 20, 48,
+   58, 98, 17, 96, 27, 24, 55, 29, 105, 66, 68, 99, 63, 9, 26, 100, 87, 31,
+   64, 32, 1, 2, 72, 80, 67, 108, 53, 49, 77, 19, 36, 57, 3, 103, 71, 101,
+   12, 25, 42, 109, 7, 11, 41, 60, 10, 28, 102, 93, 8, 76, 15, 91, 82, 46, 
+   61, 84, 59, 78, 94, 88, 37, 75, 104, 45, 86, 44, 16, 51, 21, 34, 106, 14, 
+   62, 50, 38, 73, 65, 43, 52, 90, 22, 81, 69, 92, 110, 23, 74, 54, 39, 70, 
+   30, 40 };
+
+  int atomicCount[NumElements];
+//  int index;
+#ifdef HAVE_SSTREAM
+  stringstream formula;
+#else
+  strstream formula;
+#endif
+
+  for (int i = 0; i < NumElements; i++)
+    atomicCount[i] = 0;
+
+  FOR_ATOMS_OF_MOL(a, *this)
+    atomicCount[a->GetAtomicNum() - 1]++;
+  
+  if (atomicCount[5] != 0) // Carbon (i.e. 6 - 1 = 5)
+    {
+      if (atomicCount[5] > ones)
+	formula << "C" << sp << atomicCount[5] << sp;
+      else if (atomicCount[5] == 1)
+	formula << "C";
+
+      atomicCount[5] = 0; // So we don't output C twice
+
+      // only output H if there's also carbon -- otherwise do it alphabetical
+      if (atomicCount[0] != 0) // Hydrogen (i.e., 1 - 1 = 0)
+	{
+	  if (atomicCount[0] > ones)
+	    formula << "H" << sp << atomicCount[0] << sp;
+	  else if (atomicCount[0] == 1)
+	    formula << "H";
+
+	  atomicCount[0] = 0;
+	}
+    }
+
+  for (int j = 0; j < NumElements; j++)
+    {
+      if (atomicCount[ alphabetical[j]-1 ] > ones)
+	formula << etab.GetSymbol(alphabetical[j]) << sp 
+	  << atomicCount[ alphabetical[j]-1 ] << sp;
+      else if (atomicCount[ alphabetical[j]-1 ] == 1)
+	formula << etab.GetSymbol( alphabetical[j] );
+    }
+
+	return (formula.str());
+}
+
 //! Stochoimetric formula (e.g., C4H6O).
 //!   This is either set by OBMol::SetFormula() or generated on-the-fly
 //!   using the "Hill order" -- i.e., C first if present, then H if present
 //!   all other elements in alphabetical order.
 string OBMol::GetFormula()
+{
+  string attr = "Formula";
+  OBPairData *dp = (OBPairData *) GetData(attr);
+  
+  if (dp != NULL) // we already set the formula
+    return dp->GetValue();
+
+  obErrorLog.ThrowError(__FUNCTION__,
+			"Ran OpenBabel::SetFormula -- Hill order formula",
+			obAuditMsg);
+
+	// OK, now let's generate the formula and store it for future use.
+	string sformula = GetSpacedFormula(1,"");
+
+	dp = new OBPairData;
+  dp->SetAttribute(attr);
+  dp->SetValue( sformula );
+  SetData(dp);
+
+	return sformula;
+}
+
+/*string OBMol::GetFormula()
 {
   string attr = "Formula";
   OBPairData *dp = (OBPairData *) GetData(attr);
@@ -951,7 +1038,7 @@ string OBMol::GetFormula()
   
   return (formula.str());
 }
-
+*/
 void OBMol::SetFormula(string molFormula)
 {
   string attr = "Formula";
@@ -1058,7 +1145,8 @@ OBMol &OBMol::operator=(const OBMol &source)
 
     this->_title  = src.GetTitle();
     this->_energy = src.GetEnergy();
-
+    this->_dimension = src.GetDimension();
+		
     EndModify();
 
     //Copy Residue information
@@ -2782,6 +2870,7 @@ OBMol::OBMol(const OBMol &mol) :
     _natoms = _nbonds = 0;
     _mod = 0;
     _totalCharge = 0;
+    _dimension = 3;
     _vatom.clear();
     _vbond.clear();
     _vdata.clear();
@@ -2816,138 +2905,14 @@ OBMol::~OBMol()
         delete [] *k;
     _vconf.clear();
 
-    if (!_vdata.empty())
+/*    if (!_vdata.empty())
     {
         vector<OBGenericData*>::iterator m;
         for (m = _vdata.begin();m != _vdata.end();m++)
             delete *m;
         _vdata.clear();
     }
-}
-
-bool OBMol::HasData(string &s)
-{
-    if (_vdata.empty())
-        return(false);
-
-    vector<OBGenericData*>::iterator i;
-
-    for (i = _vdata.begin();i != _vdata.end();i++)
-        if ((*i)->GetAttribute() == s)
-            return(true);
-
-    return(false);
-}
-
-bool OBMol::HasData(const char *s)
-//returns true if the generic attribute/value pair exists
-{
-    if (_vdata.empty())
-        return(false);
-
-    vector<OBGenericData*>::iterator i;
-
-    for (i = _vdata.begin();i != _vdata.end();i++)
-        if ((*i)->GetAttribute() == s)
-            return(true);
-
-    return(false);
-}
-
-
-bool OBMol::HasData(unsigned int dt)
-//returns true if the generic attribute/value pair exists
-{
-    if (_vdata.empty())
-        return(false);
-
-    vector<OBGenericData*>::iterator i;
-
-    for (i = _vdata.begin();i != _vdata.end();i++)
-        if ((*i)->GetDataType() == dt)
-            return(true);
-
-    return(false);
-}
-
-//! Returns the value given an attribute name
-OBGenericData *OBMol::GetData(string &s)
-{
-    vector<OBGenericData*>::iterator i;
-
-    for (i = _vdata.begin();i != _vdata.end();i++)
-        if ((*i)->GetAttribute() == s)
-            return(*i);
-
-    return(NULL);
-}
-
-//! Returns the value given an attribute name
-OBGenericData *OBMol::GetData(const char *s)
-{
-    vector<OBGenericData*>::iterator i;
-
-    for (i = _vdata.begin();i != _vdata.end();i++)
-        if ((*i)->GetAttribute() == s)
-            return(*i);
-
-    return(NULL);
-}
-
-OBGenericData *OBMol::GetData(unsigned int dt)
-{
-    vector<OBGenericData*>::iterator i;
-    for (i = _vdata.begin();i != _vdata.end();i++)
-        if ((*i)->GetDataType() == dt)
-            return(*i);
-    return(NULL);
-}
-
-void OBMol::DeleteData(unsigned int dt)
-{
-    vector<OBGenericData*> vdata;
-    vector<OBGenericData*>::iterator i;
-    for (i = _vdata.begin();i != _vdata.end();i++)
-        if ((*i)->GetDataType() == dt)
-            delete *i;
-        else
-            vdata.push_back(*i);
-    _vdata = vdata;
-}
-
-void OBMol::DeleteData(vector<OBGenericData*> &vg)
-{
-    vector<OBGenericData*> vdata;
-    vector<OBGenericData*>::iterator i,j;
-
-    bool del;
-    for (i = _vdata.begin();i != _vdata.end();i++)
-    {
-        del = false;
-        for (j = vg.begin();j != vg.end();j++)
-            if (*i == *j)
-            {
-                del = true;
-                break;
-            }
-        if (del)
-            delete *i;
-        else
-            vdata.push_back(*i);
-    }
-    _vdata = vdata;
-}
-
-void OBMol::DeleteData(OBGenericData *gd)
-{
-    vector<OBGenericData*>::iterator i;
-    for (i = _vdata.begin();i != _vdata.end();i++)
-        if (*i == gd)
-        {
-            delete *i;
-            _vdata.erase(i);
-        }
-
+*/
 }
 
 bool OBMol::HasNonZeroCoords()

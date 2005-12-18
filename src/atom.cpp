@@ -113,13 +113,15 @@ OBAtom::~OBAtom()
 {
     if (_residue != NULL)
         _residue->RemoveAtom(this);
-    if (!_vdata.empty())
+/*
+		if (!_vdata.empty())
     {
         vector<OBGenericData*>::iterator m;
         for (m = _vdata.begin();m != _vdata.end();m++)
             delete *m;
         _vdata.clear();
     }
+*/
 }
 
 void OBAtom::Clear()
@@ -1566,6 +1568,7 @@ OBBond *OBAtom::GetBond(OBAtom *nbr)
     return NULL;
 }
 
+/*Now in OBBase
 // OBGenericData methods
 bool OBAtom::HasData(string &s)
 //returns true if the generic attribute/value pair exists
@@ -1691,6 +1694,7 @@ void OBAtom::DeleteData(OBGenericData *gd)
         }
 
 }
+*/
 
 bool OBAtom::IsHbondAcceptor()
 {

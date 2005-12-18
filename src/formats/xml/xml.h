@@ -15,6 +15,7 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "obconversion.h"
+#include "obmolecformat.h"
 #include "libxml/xmlreader.h"
 #include "libxml/xmlwriter.h"
 
@@ -22,7 +23,7 @@ namespace OpenBabel
 {
 
 //global utility in xml.cpp;
-streamsize gettomatch(istream& is, char* buf, streamsize count, const char* match);
+	std::streamsize gettomatch(std::istream& is, char* buf, std::streamsize count, const char* match);
 //forward declaration
 class XMLBaseFormat;
 
@@ -93,10 +94,10 @@ public:
 	static int WriteStream(void * context, const char * buffer, int len);
 	//static int CloseStream(void* context);
 
-	string GetAttribute(const char* attrname);
+	std::string GetAttribute(const char* attrname);
 
 	///Sets value to element content. Returns false if there is no content. 
-	string XMLConversion::GetContent();
+	std::string XMLConversion::GetContent();
 
 	///Sets value to element content as an integer. Returns false if there is no content. 
 	bool    GetContentInt(int& value);
@@ -107,7 +108,7 @@ public:
 private:
 	static XMLBaseFormat* _pDefault;
 	OBConversion* _pConv;
-	streampos  _requestedpos, _lastpos;  
+	std::streampos  _requestedpos, _lastpos;  
 	xmlTextReaderPtr _reader;
 	xmlTextWriterPtr _writer;
 	xmlOutputBufferPtr _buf;
@@ -125,9 +126,9 @@ protected:
 	XMLConversion* _pxmlConv;
 	
 	//formating for output
-	string _prefix;
+	std::string _prefix;
 	int baseindent, ind;
-	string nsdecl;
+	std::string nsdecl;
 	int _embedlevel;
 
 public:
@@ -138,33 +139,6 @@ public:
 	virtual const char* EndTag(){return ">";};
 	
 protected:
-	void SetFormatting(OBConversion* pConv, std::ostream& ofs)
-	{
-		const char* nstxt = pConv->IsOption("N");
-		if(nstxt)
-		{
-			_prefix = nstxt;
-			_prefix += ":";
-		}
-		else
-			_prefix.erase();
-
-		const char* p = pConv->IsOption("i");
-		baseindent = p ? atoi(p) : 0;
-
-		ind=0;
-
-		if(!pConv->IsOption("x"))
-		{
-			ofs << "<?xml version=\"1.0\"?>\n";
-			nsdecl = " xmlns=\"";
-			nsdecl += NamespaceURI(); 
-			nsdecl += "\""; 
-		}
-		else
-			nsdecl.erase();
-	}
-
 	xmlTextReaderPtr reader() const
 	{
 		return _pxmlConv->GetReader();
@@ -202,8 +176,11 @@ public:
 		if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsFirstInput())
 			pmol = new OBMol;
 		
+		if(pConv->IsOption("C",OBConversion::GENOPTIONS))
+			return OBMoleculeFormat::DeferMolOutput(pmol, pConv, this);
+		
 		bool ret=ReadMolecule(pmol,pConv);
-
+	
 		if(ret && pmol->NumAtoms() > 0) //Do transformation and return molecule
 			pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
 		else
@@ -228,6 +205,9 @@ public:
 
 	virtual bool WriteChemObject(OBConversion* pConv)
 	{
+		if(pConv->IsOption("C",OBConversion::GENOPTIONS))
+			return OBMoleculeFormat::OutputDeferredMols(pConv);
+
 		//Retrieve the target OBMol
 		OBBase* pOb = pConv->GetChemObject();
 		OBMol* pmol = dynamic_cast<OBMol*> (pOb);

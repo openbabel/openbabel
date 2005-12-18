@@ -37,6 +37,131 @@ using namespace std;
 //! Global namespace for all Open Babel code
 namespace OpenBabel
 {
+bool OBBase::HasData(string &s)
+{
+    if (_vdata.empty())
+        return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(true);
+
+    return(false);
+}
+
+bool OBBase::HasData(const char *s)
+//returns true if the generic attribute/value pair exists
+{
+    if (_vdata.empty())
+        return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(true);
+
+    return(false);
+}
+
+
+bool OBBase::HasData(unsigned int dt)
+//returns true if the generic attribute/value pair exists
+{
+    if (_vdata.empty())
+        return(false);
+
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt)
+            return(true);
+
+    return(false);
+}
+
+//! Returns the value given an attribute name
+OBGenericData *OBBase::GetData(string &s)
+{
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(*i);
+
+    return(NULL);
+}
+
+//! Returns the value given an attribute name
+OBGenericData *OBBase::GetData(const char *s)
+{
+    vector<OBGenericData*>::iterator i;
+
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+            return(*i);
+
+    return(NULL);
+}
+
+OBGenericData *OBBase::GetData(unsigned int dt)
+{
+    vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt)
+            return(*i);
+    return(NULL);
+}
+
+void OBBase::DeleteData(unsigned int dt)
+{
+    vector<OBGenericData*> vdata;
+    vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetDataType() == dt)
+            delete *i;
+        else
+            vdata.push_back(*i);
+    _vdata = vdata;
+}
+
+void OBBase::DeleteData(vector<OBGenericData*> &vg)
+{
+    vector<OBGenericData*> vdata;
+    vector<OBGenericData*>::iterator i,j;
+
+    bool del;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+    {
+        del = false;
+        for (j = vg.begin();j != vg.end();j++)
+            if (*i == *j)
+            {
+                del = true;
+                break;
+            }
+        if (del)
+            delete *i;
+        else
+            vdata.push_back(*i);
+    }
+    _vdata = vdata;
+}
+
+void OBBase::DeleteData(OBGenericData *gd)
+{
+    vector<OBGenericData*>::iterator i;
+    for (i = _vdata.begin();i != _vdata.end();i++)
+        if (*i == gd)
+        {
+            delete *i;
+            _vdata.erase(i);
+        }
+
+}
+
 /*
 bool OBGraphBase::Match(OBGraphBase &g,bool singleMatch)
 {

@@ -53,13 +53,14 @@ OBBond::OBBond()
 
 OBBond::~OBBond()
 {
-    if (!_vdata.empty())
+/*  if (!_vdata.empty())
     {
         vector<OBGenericData*>::iterator m;
         for (m = _vdata.begin();m != _vdata.end();m++)
             delete *m;
         _vdata.clear();
     }
+*/
 }
 
 void OBBond::Set(int idx,OBAtom *begin,OBAtom *end,int order,int flags)
@@ -516,6 +517,7 @@ double OBBond::GetLength()
     return(sqrt(d2));
 }
 
+/*Now in OBBase
 // OBGenericData methods
 bool OBBond::HasData(string &s)
 //returns true if the generic attribute/value pair exists
@@ -641,6 +643,7 @@ void OBBond::DeleteData(OBGenericData *gd)
         }
 
 }
+*/
 
 } // end namespace OpenBabel
 

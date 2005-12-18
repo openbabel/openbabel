@@ -194,7 +194,7 @@ OBFormat* OBConversion::pDefaultFormat=NULL;
 OBConversion::OBConversion(istream* is, ostream* os) : 
 	pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
 	EndNumber(0), Count(-1), m_IsLast(true), MoreFilesToCome(false),
-	OneObjectOnly(false), pOb1(NULL), pAuxConv(NULL)
+	OneObjectOnly(false), pOb1(NULL), pAuxConv(NULL),m_IsFirstInput(true)
 {
 	pInStream=is;
 	pOutStream=os;
@@ -250,7 +250,8 @@ OBConversion::OBConversion(const OBConversion& o)
 	OneObjectOnly  = o.OneObjectOnly;
 	pOb1           = o.pOb1;
 	ReadyToInput   = o.ReadyToInput;
-	
+	m_IsFirstInput = o.m_IsFirstInput;
+
 	pAuxConv       = NULL;
 }
 ////////////////////////////////////////////////
@@ -480,6 +481,7 @@ int OBConversion::Convert()
 		try
 		{
 			ret = pInFormat->ReadChemObject(this);
+			m_IsFirstInput=false;
 		}		
 		catch(...)
 		{
@@ -502,11 +504,10 @@ int OBConversion::Convert()
 	}
 	
 	//Output last object
-	//if(!MoreFilesToCome)
-	//	m_IsLast=true;
 	m_IsLast= !MoreFilesToCome;
 
-	if(pOutFormat)
+	//Output is deferred until the end with -C option
+	if(pOutFormat && (!IsOption("C",GENOPTIONS) || m_IsLast))
 		if(!pOutFormat->WriteChemObject(this))
 			Index--;
 	
@@ -640,10 +641,10 @@ void OBConversion::SetMoreFilesToCome()
 	MoreFilesToCome=true;
 }
 
-void OBConversion::SetOneObjectOnly()
+void OBConversion::SetOneObjectOnly(bool b)
 {
-	OneObjectOnly=true;
-	m_IsLast=true;
+	OneObjectOnly=b;
+	m_IsLast=b;
 }	
 
 /////////////////////////////////////////////////////////
@@ -689,7 +690,6 @@ bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
 	if(zIn.is_gzip())
 		pInStream = &zIn;
 #endif
-
 	return pInFormat->ReadMolecule(pOb, this);
 }
 //////////////////////////////////////////////////
@@ -704,6 +704,7 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 
 	ostream* pOrigOutStream = pOutStream;
 #ifdef HAVE_LIBZ
+#ifndef _WIN32
 	zlib_stream::zip_ostream zOut(*pOutStream);
 	if(IsOption("z",GENOPTIONS))
 	{
@@ -711,6 +712,7 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 	  zOut.make_gzip();
 	  pOutStream = &zOut;
 	}
+#endif
 #endif
 
 	bool ret = pOutFormat->WriteMolecule(pOb,this);
@@ -805,7 +807,7 @@ bool OBConversion::IsLast()
 ////////////////////////////////////////////
 bool OBConversion::IsFirstInput()
 {
-	return (Count==0);
+	return m_IsFirstInput;
 }
 
 /////////////////////////////////////////////////
@@ -883,12 +885,14 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 			      std::vector<std::string>& OutputFileList)
 {
 	
-	istream* pInStream;
-	ostream* pOutStream=NULL;
+	istream* pIs=NULL;
+	ostream* pOs=NULL;
 	ifstream is;
 	ofstream os;
+	stringstream ssOut;
 	bool HasMultipleOutputFiles=false;
 	int Count=0;
+	m_IsFirstInput=true;
 	bool CommonInFormat = pInFormat ? true:false; //whether set in calling routine
 	ios_base::openmode omode = 
 		pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
@@ -898,20 +902,34 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 
 		//OUTPUT
 		if(OutputFileName.empty())
-			pOutStream = NULL; //use existing stream
+			pOs = NULL; //use existing stream
 		else
 		{
 			if(OutputFileName.find_first_of('*')!=string::npos) HasMultipleOutputFiles = true;
 			if(!HasMultipleOutputFiles)
 			{
-				os.open(OutputFileName.c_str(),omode);
-				if(!os)
+				//If the output file is the same as any of the input
+				//files, send the output to a temporary stringstream
+				vector<string>::iterator itr;
+				for(itr=FileList.begin();itr!=FileList.end();itr++)
 				{
-					cerr << "Cannot write to " << OutputFileName <<endl;
-					return 0;
+					if(*itr==OutputFileName)
+					{
+						pOs = &ssOut;
+						break;
+					}
+				}
+				if(itr==FileList.end())
+				{
+					os.open(OutputFileName.c_str(),omode);
+					if(!os)
+					{
+						cerr << "Cannot write to " << OutputFileName <<endl;
+						return 0;
+					}
+					pOs=&os;
 				}
 				OutputFileList.push_back(OutputFileName);
-				pOutStream=&os;
 			}
 		}
 
@@ -937,13 +955,13 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 				allinput << ifs.rdbuf(); //Copy all file contents
 				ifs.close();
 			}
-			Count = Convert(&allinput,pOutStream);
+			Count = Convert(&allinput,pOs);
 			return Count;
 		}
 
 		//INPUT
 		if(FileList.empty())
-			pInStream = NULL;
+			pIs = NULL;
 		else
 		{
 			if(FileList.size()>1)
@@ -978,8 +996,20 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 					{
 						//Aggregation
 						if(itr!=tempitr) SetMoreFilesToCome();
-						Count = Convert(&ifs,pOutStream);					
+						Count = Convert(&ifs,pOs);					
 					}
+				}
+
+				if(!os.is_open() && !OutputFileName.empty())
+				{
+					//Output was written to temporary string stream. Output it to the file
+					os.open(OutputFileName.c_str(),omode);
+					if(!os)
+					{
+						cerr << "Cannot write to " << OutputFileName <<endl;
+						return Count;
+					}
+					os << ssOut.rdbuf();
 				}
 				return Count;
 			}
@@ -989,7 +1019,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 				InFilename = FileList[0];
 				if(!OpenAndSetFormat(CommonInFormat, &is))
 						return 0;
-				pInStream=&is;
+				pIs=&is;
 
 				if(HasMultipleOutputFiles)
 				{
@@ -997,8 +1027,9 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 					//Output is put in a temporary stream and written to a file
 					//with an augmenting name only when it contains a valid object. 
 					int Indx=1;
+					SetInStream(&is);
 					#ifdef HAVE_LIBZ
-						zlib_stream::zip_istream zIn(*pInStream);
+						zlib_stream::zip_istream zIn(is);
 					#endif
 					for(;;)
 					{
@@ -1047,7 +1078,19 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 		}
 
 		//Single input and output files
-		Count = Convert(pInStream,pOutStream);
+		Count = Convert(pIs,pOs);
+
+		if(!os.is_open() && !OutputFileName.empty())
+		{
+			//Output was written to temporary string stream. Output it to the file
+			os.open(OutputFileName.c_str(),omode);
+			if(!os)
+			{
+				cerr << "Cannot write to " << OutputFileName <<endl;
+				return Count;
+			}
+			os << ssOut.rdbuf();
+		}
 		return Count;
 	}
 	catch(...)

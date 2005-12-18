@@ -18,6 +18,8 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <ctype.h>
+#include <iostream>
+#include <iomanip>
 
 #include "mol.h"
 #include "bitvec.h"
@@ -554,7 +556,7 @@ static Pattern *ParseSMARTSPart( Pattern*, int );
 
 static Pattern *SMARTSError( Pattern *pat )
 {
-  char *ptr;
+/*  char *ptr;
   
   fprintf(stderr,"SMARTS Error: %s\n",MainPtr);
   
@@ -562,7 +564,17 @@ static Pattern *SMARTSError( Pattern *pat )
   for( ptr=MainPtr; ptr<LexPtr; ptr++ )
     fputc(' ',stdout);
   fputs("^\n",stdout);
-  
+*/
+
+#ifdef HAVE_SSTREAM
+	stringstream errorMsg;
+#else
+	strstream errorMsg;
+#endif
+	errorMsg << "SMARTS Error:\n" << MainPtr << endl;
+	errorMsg << setw(LexPtr-MainPtr+1) << '^' << endl;
+	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+ 
   FreePattern(pat);
   return (Pattern*)0;
 }

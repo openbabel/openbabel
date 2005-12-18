@@ -25,7 +25,7 @@ GNU General Public License for more details.
 #include <string>
 #include <vector>
 #include <map>
-
+#include "math/vector3.h"
 namespace OpenBabel
 {
 
@@ -33,7 +33,7 @@ class OBAtom;
 class OBBond;
 class OBRing;
 
-OBAPI void Trim(std::string& txt);
+OBAPI std::string& Trim(std::string& txt);
 
 //! \brief Classification of data stored via OBGenericData class and subclasses.
 //!
@@ -148,6 +148,12 @@ protected:
 public:
     OBGenericData();
     OBGenericData(const OBGenericData&);
+		
+		//Virtual constructors added see http://www.parashift.com/c++-faq-lite/abcs.html#faq-22.5
+		//to allow copying given only a base class OBGenericData pointer.
+		//It may be necessary to cast the return pointer to the derived class type since we are doing
+		//without Covariant Return Types http://www.parashift.com/c++-faq-lite/virtual-functions.html#faq-20.8
+		virtual OBGenericData* Clone() const = 0;
     virtual ~OBGenericData()    {}
     OBGenericData& operator=(const OBGenericData &src);
 
@@ -167,7 +173,9 @@ protected:
 public:
     OBCommentData();
     OBCommentData(const OBCommentData&);
-    OBCommentData& operator=(const OBCommentData &src);
+		virtual OBGenericData* Clone() const{return new OBCommentData(*this);}
+		
+		OBCommentData& operator=(const OBCommentData &src);
 
     void          SetData(const std::string &data)
     { _data = data; Trim(_data); }
@@ -205,6 +213,7 @@ protected:
     std::vector<OBExternalBond> _vexbnd;
 public:
     OBExternalBondData();
+		virtual OBGenericData* Clone() const{return new OBExternalBondData(*this);}
     void SetData(OBAtom*,OBBond*,int);
     std::vector<OBExternalBond> *GetData()
     {
@@ -222,6 +231,7 @@ protected:
     std::string _value;
 public:
     OBPairData();
+		virtual OBGenericData* Clone() const{return new OBPairData(*this);}
     void    SetValue(const char *v)
     {
         _value = v;
@@ -247,6 +257,7 @@ protected:
     int _stereo;
 public:
     OBVirtualBond();
+		virtual OBGenericData* Clone() const{return new OBVirtualBond(*this);}
     OBVirtualBond(int,int,int,int stereo=0);
     int GetBgn()
     {
@@ -274,6 +285,7 @@ protected:
 public:
     OBRingData();
     OBRingData(const OBRingData &);
+		virtual OBGenericData* Clone() const{return new OBRingData(*this);}
     ~OBRingData();
 
     OBRingData &operator=(const OBRingData &);
@@ -305,6 +317,7 @@ protected:
 public:
     OBUnitCell();
     OBUnitCell(const OBUnitCell &);
+		virtual OBGenericData* Clone() const{return new OBUnitCell(*this);}
     ~OBUnitCell()    {}
 
     OBUnitCell &operator=(const OBUnitCell &);
@@ -359,6 +372,7 @@ protected:
 public:
     OBConformerData();
     OBConformerData(const OBConformerData &);
+		virtual OBGenericData* Clone() const{return new OBConformerData(*this);}
     ~OBConformerData()    {}
 
     OBConformerData &operator=(const OBConformerData &);
@@ -394,6 +408,7 @@ protected:
 public:
     OBSymmetryData();
     OBSymmetryData(const OBSymmetryData &);
+		virtual OBGenericData* Clone() const{return new OBSymmetryData(*this);}
     ~OBSymmetryData()    {}
 
     OBSymmetryData &operator=(const OBSymmetryData &);
@@ -481,6 +496,7 @@ protected:
 
 public:
     OBTorsionData &operator=(const OBTorsionData &);
+		virtual OBGenericData* Clone() const{return new OBTorsionData(*this);}
 
     void Clear();
 
@@ -565,6 +581,7 @@ protected:
 
 public:
     OBAngleData &operator =(const OBAngleData &);
+		virtual OBGenericData* Clone() const{return new OBAngleData(*this);}
 
     void Clear();
     unsigned int FillAngleArray(int **angles, unsigned int &size);
@@ -595,6 +612,7 @@ public:
 
     OBChiralData();
     OBChiralData(const OBChiralData &src);
+		virtual OBGenericData* Clone() const{return new OBChiralData(*this);}
     OBChiralData &operator =(const OBChiralData &);
     ~OBChiralData(){}
 
@@ -621,6 +639,7 @@ public:
     {
         _serialMap = cp._serialMap;
     }
+		virtual OBGenericData* Clone() const{return new OBSerialNums(*this);}
 
     std::map<int,OBAtom*> &GetData()    { return _serialMap;    }
     void SetData(std::map<int,OBAtom*> &sm) { _serialMap = sm;  }

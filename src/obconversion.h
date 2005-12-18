@@ -295,7 +295,7 @@ public:
 	int         GetOutputIndex() const ;///< @brief Retrieves number of ChemObjects that have been actually output
 	void				SetOutputIndex(int indx);///< @brief Sets ouput index (maybe to control whether seen as first object)
 	void				SetMoreFilesToCome();///<@brief Used with multiple input files. Off by default.
-	void				SetOneObjectOnly();///<@brief Used with multiple input files. Off by default.
+	void				SetOneObjectOnly(bool b=true);///<@brief Used with multiple input files. Off by default.
 	//@}
 	/// @name Convenience functions
 	//@{
@@ -375,6 +375,7 @@ protected:
 	unsigned int	  StartNumber;
 	unsigned int	  EndNumber;
 	int	          Count;
+	bool			m_IsFirstInput;
 	bool		  m_IsLast;
 	bool		  MoreFilesToCome;
 	bool		  OneObjectOnly;
@@ -392,11 +393,12 @@ protected:
 ///For OBFormat::Flags()
 #define NOTREADABLE     0x01
 #define READONEONLY     0x02
-#define READBINARY	0x04
+#define READBINARY      0x04
+#define ZEROATOMSOK     0x08
 #define NOTWRITABLE     0x10
 #define WRITEONEONLY    0x20
-#define WRITEBINARY	0x40
-#define DEFAULTFORMAT 0x4000
+#define WRITEBINARY     0x40
+#define DEFAULTFORMAT   0x4000
 
 } //namespace OpenBabel
 #endif //OB_CONV_H

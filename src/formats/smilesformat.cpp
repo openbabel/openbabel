@@ -1406,6 +1406,7 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
                 _ptr--;
             }
             break;
+				case '*': //is this safe?
 				case '.': //CM Feb05
 						rad=2;
 						if(*(++_ptr)=='.')

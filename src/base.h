@@ -30,6 +30,7 @@ GNU General Public License for more details.
 #elif HAVE_IOSTREAM_H
 #include <iostream.h>
 #endif
+#include "generic.h"
 
 namespace OpenBabel
 {
@@ -47,17 +48,60 @@ class OBGraphBase;
 class OBAPI OBBase
 {
 public:
-    virtual ~OBBase()
-    {}
-    ; //NF
-    virtual OBBase* DoTransformations(const std::map<std::string,std::string>*pOptions)
-    {
-        return this;
-    } //NF Base type does nothing
-    static const char* ClassDescription()
-    {
-        return "";
-    } //NF
+	virtual ~OBBase()
+	{
+		if (!_vdata.empty())
+		{
+			std::vector<OBGenericData*>::iterator m;
+			for (m = _vdata.begin();m != _vdata.end();m++)
+					delete *m;
+			_vdata.clear();
+		}
+}
+	; //NF
+	virtual OBBase* DoTransformations(const std::map<std::string,std::string>*pOptions)
+	{
+			return this;
+	} 
+	//Base type does nothing
+	static const char* ClassDescription()
+	{
+			return "";
+	} 
+
+	//! \name Generic data handling methods (via OBGenericData)
+	//@{
+	//! \returns whether the generic attribute/value pair exists
+	bool                              HasData(std::string &);
+	//! \returns whether the generic attribute/value pair exists
+	bool                              HasData(const char *);
+	//! \returns whether the generic attribute/value pair exists
+	bool                              HasData(unsigned int type);
+	void                              DeleteData(unsigned int type);
+	void                              DeleteData(OBGenericData*);
+	void                              DeleteData(std::vector<OBGenericData*>&);
+	void                              SetData(OBGenericData *d)
+	{
+			_vdata.push_back(d);
+	}
+	//! \return the number of OBGenericData items attached to this molecule.
+	unsigned int                      DataSize(){ return(_vdata.size()); }
+	OBGenericData                    *GetData(unsigned int type);
+	OBGenericData                    *GetData(std::string&);
+	OBGenericData                    *GetData(const char *);
+	std::vector<OBGenericData*>      &GetData() { return(_vdata); }
+	std::vector<OBGenericData*>::iterator  BeginData()
+	{
+			return(_vdata.begin());
+	}
+	std::vector<OBGenericData*>::iterator  EndData()
+	{
+			return(_vdata.end());
+	}
+	//@}
+protected:
+	std::vector<OBGenericData*> _vdata; //!< Custom data
+
 
 };
 

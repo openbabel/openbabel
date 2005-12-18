@@ -33,12 +33,18 @@ namespace OpenBabel {
 //! of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
 class OBMoleculeFormat : public OBFormat
 {
+private:
+	static std::map<std::string, OBMol*> IMols;
+
 public:
 
 	OBMoleculeFormat()
 	{
 		OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
 		OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
+		OBConversion::RegisterOptionParam("title", this, 1,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("addtotitle", this, 1,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("property", this, 2, OBConversion::GENOPTIONS);
 		//The follow are OBMol options, which should not be in OBConversion.
 		//But here isn't entirely appropriate either, since could have
 		//OBMol formats loaded but none of them derived from this class.
@@ -52,76 +58,22 @@ public:
 		OBConversion::RegisterOptionParam("p", NULL, 0,OBConversion::GENOPTIONS); 
 		OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
 		OBConversion::RegisterOptionParam("j", NULL, 0,OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("C", NULL, 0,OBConversion::GENOPTIONS);
 	};
 
 	/// The "Convert" interface functions
-	virtual bool ReadChemObject(OBConversion* pConv)
-	{
-	  std::istream &ifs = *pConv->GetInStream();
-	  if (ifs.peek() == EOF || !ifs.good())
-	    return false;
-
-		static OBMol* pmol;
-
-		    std::string auditMsg = "OpenBabel::Read molecule ";
-		    std::string description(Description());
-		    auditMsg += description.substr(0,description.find('\n'));
-		    obErrorLog.ThrowError(__FUNCTION__,
-					  auditMsg,
-					  obAuditMsg);
-
-		//With j option, reuse pmol except for the first mol
-		if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsFirstInput())
-			pmol = new OBMol;
-		
-		bool ret=ReadMolecule(pmol,pConv);
-		if(ret && pmol->NumAtoms() > 0) //Do transformation and return molecule
-			pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
-		else
-			pConv->AddChemObject(NULL);
-
-		return ret;
-	};
+	virtual bool ReadChemObject(OBConversion* pConv);
+	virtual bool WriteChemObject(OBConversion* pConv);
 	
-	virtual bool WriteChemObject(OBConversion* pConv)
-	{
-		//Retrieve the target OBMol
-		OBBase* pOb = pConv->GetChemObject();
-		OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-		bool ret=false;
-		if(pmol)
-		{	
-			if(pmol->NumAtoms()==0)
-			{
-				std::string auditMsg = "OpenBabel::Molecule ";
-				auditMsg += pmol->GetTitle();
-				auditMsg += " has 0 atoms";
-				obErrorLog.ThrowError(__FUNCTION__,
-						auditMsg,
-						obInfo);
-			}
-			ret=true;
-
-			std::string auditMsg = "OpenBabel::Write molecule ";
-			std::string description(Description());
-			auditMsg += description.substr(0,description.find('\n'));
-			obErrorLog.ThrowError(__FUNCTION__,
-					      auditMsg,
-					      obAuditMsg);
-
-			if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsLast()) //With j option, output only at end
-			{
-				ret=WriteMolecule(pmol,pConv);
-				delete pOb;
-			}
-		}
-		return ret;
-	};
+	/// Routines to handle the -C option for combining data from several OBMols
+	static bool DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF);
+	static bool OutputDeferredMols(OBConversion* pConv);
 
 	const std::type_info& GetType()
 	{
 		return typeid(OBMol*);
-	};
+	}
+//////////////////////////////////////////////////////////////
 
 };
 

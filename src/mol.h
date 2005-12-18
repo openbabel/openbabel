@@ -69,7 +69,7 @@ class OBInternalCoord;
 
 // Class OBResidue
 // class introduction in residue.cpp
-class OBAPI OBResidue
+class OBAPI OBResidue : public OBBase
 {
 public:
 
@@ -125,7 +125,8 @@ public:
     //! \deprecated Use FOR_ATOMS_OF_RESIDUE and OBResidueAtomIter instead
     OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
 
-    //! \name Methods for handling generic data
+    /*Now in OBBase
+		//! \name Methods for handling generic data
     //@{
     bool                              HasData(std::string &);
     bool                              HasData(const char *);
@@ -148,6 +149,7 @@ public:
     std::vector<OBGenericData*>::iterator  EndData()
       { return(_vdata.end()); }
     //@}
+		*/
 
 protected: // members
 
@@ -162,7 +164,7 @@ protected: // members
     std::vector<std::string>    _atomid;//!< Residue atom text IDs
     std::vector<OBAtom*>        _atoms; //!< List of OBAtom in this residue
     std::vector<unsigned int>   _sernum;//!< List of serial numbers
-    std::vector<OBGenericData*> _vdata; //!< Custom data
+//    std::vector<OBGenericData*> _vdata; //!< Custom data
 }; // OBResidue
 
 
@@ -213,7 +215,7 @@ protected:
     OBResidue                    *_residue;	//!< parent residue (if applicable)
     //OBMol                      *_parent;      //!< parent molecule (inherited)
     //vector<OBBond*>             _bond;	//!< connections (inherited)
-    std::vector<OBGenericData*>   _vdata;	//!< custom data
+ //   std::vector<OBGenericData*>   _vdata;	//!< custom data
 
     int  GetFlag() const    {  return(_flags);  }
     void SetFlag(int flag)  { _flags |= flag;   }
@@ -507,7 +509,8 @@ public:
     bool MatchesSMARTS(const char *);
     //@}
 
-    //! \name Methods for handling generic data
+    /*Now in OBBase
+		//! \name Methods for handling generic data
     //@{
     bool                              HasData(std::string &);
     bool                              HasData(const char *);
@@ -529,6 +532,7 @@ public:
     std::vector<OBGenericData*>::iterator  EndData()
     {        return(_vdata.end());      }
     //@}
+		*/
 }; // class OBAtom
 
 
@@ -566,7 +570,7 @@ protected:
     //OBAtom                     *_end;   //!< Not needed, inherited from OBEdgeBase
     //OBMol                      *_parent;//!< Not needed, inherited from OBEdgeBase
     //unsigned short int          _idx;   //!< Not needed, inherited from OBEdgeBase
-    std::vector<OBGenericData*>   _vdata; //!< Generic data for custom information
+//    std::vector<OBGenericData*>   _vdata; //!< Generic data for custom information
 
     bool HasFlag(int flag)    { return((_flags & flag) != 0); }
     void SetFlag(int flag)    { _flags |= flag;               }
@@ -664,6 +668,7 @@ public:
     bool IsDoubleBondGeometry();
     //@}
 
+/* Now in OBBase
     //! \name Methods for handling generic data
     //@{
     bool                              HasData(std::string &);
@@ -697,8 +702,8 @@ public:
         return(_vdata.end());
     }
     //@}
-}
-; // class OBBond
+*/
+}; // class OBBond
 
 
 // Class OBMol
@@ -743,7 +748,7 @@ protected:
     unsigned short int            _nbonds;      //!< Number of bonds
     std::vector<OBResidue*>       _residue;     //!< Residue information (if applicable)
     std::vector<OBInternalCoord*> _internals;   //!< Internal Coordinates (if applicable)
-    std::vector<OBGenericData*>   _vdata;       //!< Custom data -- see OBGenericData class for more
+//    std::vector<OBGenericData*>   _vdata;       //!< Custom data -- see OBGenericData class for more
     unsigned short int            _mod;	        //!< Number of nested calls to BeginModify()
 
     bool  HasFlag(int flag)    { return((_flags & flag) ? true : false); }
@@ -811,37 +816,6 @@ public:
     }
     //@}
 
-    //! \name Generic data handling methods (via OBGenericData)
-    //@{
-    //! \returns whether the generic attribute/value pair exists
-    bool                              HasData(std::string &);
-    //! \returns whether the generic attribute/value pair exists
-    bool                              HasData(const char *);
-    //! \returns whether the generic attribute/value pair exists
-    bool                              HasData(unsigned int type);
-    void                              DeleteData(unsigned int type);
-    void                              DeleteData(OBGenericData*);
-    void                              DeleteData(std::vector<OBGenericData*>&);
-    void                              SetData(OBGenericData *d)
-    {
-        _vdata.push_back(d);
-    }
-    //! \return the number of OBGenericData items attached to this molecule.
-    unsigned int                      DataSize(){ return(_vdata.size()); }
-    OBGenericData                    *GetData(unsigned int type);
-    OBGenericData                    *GetData(std::string&);
-    OBGenericData                    *GetData(const char *);
-    std::vector<OBGenericData*>      &GetData() { return(_vdata); }
-    std::vector<OBGenericData*>::iterator  BeginData()
-    {
-        return(_vdata.begin());
-    }
-    std::vector<OBGenericData*>::iterator  EndData()
-    {
-        return(_vdata.end());
-    }
-    //@}
-
     //! \name Data retrieval methods
     //@{
     int          GetFlags()               { return(_flags); }
@@ -871,6 +845,8 @@ public:
     double       GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
     //! \return the stochoimetric formula (e.g., C4H6O)
     std::string  GetFormula();
+		//! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
+		std::string OBMol::GetSpacedFormula(int ones=0, const char* sp=" ");
     //! \return the heat of formation for this molecule (in kcal/mol)
     double       GetEnergy() const { return(_energy); }
     //! \return the standard molar mass given by IUPAC atomic masses (amu)
@@ -1131,7 +1107,7 @@ public:
 OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n");
 OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
 //! remove leading and trailing whitespace from a string
-OBAPI void Trim(std::string& txt);
+OBAPI std::string& Trim(std::string& txt);
 //! \deprecated -- use OBMessageHandler class instead
 OBAPI void ThrowError(char *str);
 //! \deprecated -- use OBMessageHandler class instead

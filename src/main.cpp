@@ -211,10 +211,14 @@ int main(int argc,char *argv[])
 						char* nam = argv[arg]+2;
  						if(*nam != '\0')
 						{
-							const char* txt=NULL;
-							if(Conv.GetOptionParams(nam, OBConversion::OUTOPTIONS)
-									&& arg<argc-1 && argv[arg+1] && *argv[arg+1]!='-')
-								txt = argv[++arg];
+							string txt;
+							unsigned i;
+							for(i=0; i<Conv.GetOptionParams(nam, OBConversion::GENOPTIONS)
+									       && arg<argc-1 && argv[arg+1];++i) //removed  && *argv[arg+1]!='-'
+							{
+								if(!txt.empty()) txt+=' ';
+								txt += argv[++arg];
+							}
 							if(*nam=='-')
 							{
 								// Is a API directive, e.g.---errorlevel
@@ -224,13 +228,13 @@ int main(int argc,char *argv[])
 								if(pAPI)
 								{
 									apiConv.SetOutFormat(pAPI);
-									apiConv.AddOption(nam+1, OBConversion::OUTOPTIONS, txt);
+									apiConv.AddOption(nam+1, OBConversion::GENOPTIONS, txt.c_str());
 									apiConv.Write(NULL);
 								}
 							}
 							else
 								// Is a long option name, e.g --addtotitle
-								Conv.AddOption(nam,OBConversion::GENOPTIONS,txt);
+								Conv.AddOption(nam,OBConversion::GENOPTIONS,txt.c_str());
 						}
 					}
 					break;
@@ -333,11 +337,16 @@ int main(int argc,char *argv[])
 
   // send info message to clog -- don't mess up cerr or cout for user programs
   int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
-  if ( count == 1 )
+	string objectname(pOutFormat->TargetClassDescription());
+	pos = objectname.find('\n');
+	if(count==1) --pos;
+	clog << count << " " << objectname.substr(0,pos) << " converted" << endl;
+
+	/*	if ( count == 1 )
     clog << count << " molecule converted" << endl;
   else
     clog << count << " molecules converted" << endl;
-  
+*/  
   if(OutputFileList.size()>1)
   {
     clog << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;
@@ -390,13 +399,13 @@ void usage()
   cout << "Usage: " << program_name
        << " [-i<input-type>] <name> [-o<output-type>] <name>" << endl;
   cout << "Try  -H option for more information." << endl;
-/*  
+  
 #ifdef _DEBUG
   //CM keep window open
   cout << "Press any key to finish" <<endl;
   getch();
 #endif
-*/  
+  
   exit (0);
 }
 
@@ -430,7 +439,7 @@ void help()
   
   OBFormat* pDefault = OBConversion::GetDefaultFormat();
 	if(pDefault)
-		cout << pDefault->TargetClassDescription();// some more options probably for OBMol
+		cout<<"For conversions of "<< pDefault->TargetClassDescription();// some more options probably for OBMol
   
 	OBFormat* pAPI= OBConversion::FindFormat("obapi");
 	if(pAPI)

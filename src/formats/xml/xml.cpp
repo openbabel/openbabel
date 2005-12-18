@@ -86,8 +86,14 @@ bool XMLConversion::SetupWriter()
     return false;
 	}
 
-	int ret = xmlTextWriterSetIndent(_writer,1);
-	ret = xmlTextWriterSetIndentString(_writer, BAD_CAST " "); 
+	int ret;
+	if(IsOption("c"))
+		ret = xmlTextWriterSetIndent(_writer,0);
+	else
+	{
+		ret = xmlTextWriterSetIndent(_writer,1);
+		ret = xmlTextWriterSetIndentString(_writer, BAD_CAST " "); 
+	}
 	return ret==0;
 }
 

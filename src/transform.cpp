@@ -44,28 +44,33 @@ OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOpti
 		if(pOptions->empty())
 			return this;
 
-		int ret=1;
+		bool ret=true;
     bool smatch=true, vmatch=true;
 
 		map<string,string>::const_iterator itr;
 
 		if(pOptions->find("b")!=pOptions->end())
-			ret=ConvertDativeBonds();
+			if(!ConvertDativeBonds())
+				ret=false;
 
 		if(pOptions->find("d")!=pOptions->end())
-			ret=DeleteHydrogens();
+			if(!DeleteHydrogens())
+				ret=false;
 
 		if(pOptions->find("h")!=pOptions->end())
-      ret=AddHydrogens(false, false);
+      if(!AddHydrogens(false, false))
+				ret=false;
 
 		if(pOptions->find("p")!=pOptions->end())
-      ret=AddHydrogens(false, true);
+      if(!AddHydrogens(false, true))
+				ret=false;
 
 		if(pOptions->find("c")!=pOptions->end())
-		{
 			Center();
-			ret=1;
-		}
+
+		itr = pOptions->find("title"); //Replaces title
+		if(itr!=pOptions->end())
+			SetTitle(itr->second.c_str());
 
 		itr = pOptions->find("addtotitle"); //Appends text to title
 		if(itr!=pOptions->end())
@@ -73,7 +78,36 @@ OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOpti
 			string title(GetTitle());
 			title += itr->second;
 			SetTitle(title.c_str());
-			ret=1;
+		}
+
+		//Add an extra property to the molecule.
+		//Parameter has atrribute and value separated by a space
+		itr = pOptions->find("property");
+		if(itr!=pOptions->end())
+		{
+			string txt(itr->second);
+			string::size_type pos = txt.find(' ');
+			if(pos==string::npos)
+			{
+				obErrorLog.ThrowError(__FUNCTION__, "Missing property value", obError);
+				ret=false;
+			}
+			else
+			{
+				string attr(txt.substr(0,pos)), val(txt.substr(pos+1));
+				//Update value if it already exists
+				OBPairData* dp = dynamic_cast<OBPairData*>(GetData(attr));
+				if(dp)
+					dp->SetValue(val);						
+				else
+				{
+					// Pair did not exist; make new one
+					dp = new OBPairData;
+					dp->SetAttribute(attr);
+					dp->SetValue(val);
+					SetData(dp);
+				}
+			}
 		}
 
 		itr = pOptions->find("v");
@@ -96,27 +130,38 @@ OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOpti
 
     if(!smatch || !vmatch)
     {
-        //filter failed: delete OBMol and return NULL
-        delete this;
-        return NULL;
+      //filter failed: delete OBMol and return NULL
+      delete this;
+      return NULL;
     }
     else
-        return ret ? this : NULL;
+		{
+			if(ret==false)
+			{
+				obErrorLog.ThrowError(__FUNCTION__, "Error executing an option", obError);
+				return NULL;
+			}
+			else
+				return this;
+		}
 }
 
 ///////////////////////////////////////////////////
 const char* OBMol::ClassDescription()
 {
-    return "For conversions of molecules\n \
+    return "molecules\n \
   Additional options :\n \
-  -d Delete Hydrogens\n \
-  -h Add Hydrogens\n \
-  -p Add Hydrogens appropriate for pH\n \
+	-d Delete hydrogens (make implicit)\n \
+	-h Add hydrogens (make explicit)\n \
+  -p Add Hydrogens appropriate for pH model\n \
   -b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n \
   -c Center Coordinates\n \
   -j Join all input molecules into a single output molecule\n \
   -s\"smarts\" Convert only molecules matching SMARTS:\n \
-  -v\"smarts\" Convert only molecules NOT matching SMARTS:\n\n" ;
+  -v\"smarts\" Convert only molecules NOT matching SMARTS:\n \
+	--property <attrib> <value> add or replace a property (SDF)\n \
+	--title <title> Add or replace molecule title\n \
+	--addtotitle <text> Append to title\n\n" ;
 }
 
 } //namespace OpenBabel

@@ -59,6 +59,8 @@ public:
         _type= OBGenericDataType::RotamerList;
         _attr="RotamerList";
     }
+		virtual OBGenericData* Clone() const{return new OBRotamerList(*this);}
+
     ~OBRotamerList();
     void Setup(OBMol&,OBRotorList&);
     void Setup(OBMol&,unsigned char*,int);

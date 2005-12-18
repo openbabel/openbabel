@@ -1066,13 +1066,14 @@ OBResidue::~OBResidue()
     for ( a = _atoms.begin() ; a != _atoms.end() ; a++ )
         (*a)->SetResidue(NULL);
     _atoms.clear();
-    if (!_vdata.empty())
+/*    if (!_vdata.empty())
     {
         vector<OBGenericData*>::iterator m;
         for (m = _vdata.begin();m != _vdata.end();m++)
             delete *m;
         _vdata.clear();
     }
+*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1472,6 +1473,7 @@ bool OBResidue::IsResidueType(int restype) const
     return ((int)_reskey == restype);
 }
 
+/*Now in OBBase
 // OBGenericData methods
 bool OBResidue::HasData(string &s)
 //returns true if the generic attribute/value pair exists
@@ -1597,6 +1599,7 @@ void OBResidue::DeleteData(OBGenericData *gd)
         }
 
 }
+*/
 
 } // end namespace OpenBabel
 
