@@ -166,27 +166,12 @@ protected:
 public:
 	virtual bool ReadChemObject(OBConversion* pConv)
 	{
-		std::string auditMsg = "OpenBabel::Read molecule ";
-		std::string description(Description());
-		auditMsg += description.substr(0,description.find('\n'));
-		obErrorLog.ThrowError(__FUNCTION__, auditMsg, obAuditMsg);
+		return OBMoleculeFormat::ReadChemObjectImpl(pConv, this);
+	};
 
-		//With j option, reuse pmol except for the first mol
-		static OBMol* pmol;
-		if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsFirstInput())
-			pmol = new OBMol;
-		
-		if(pConv->IsOption("C",OBConversion::GENOPTIONS))
-			return OBMoleculeFormat::DeferMolOutput(pmol, pConv, this);
-		
-		bool ret=ReadMolecule(pmol,pConv);
-	
-		if(ret && pmol->NumAtoms() > 0) //Do transformation and return molecule
-			pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
-		else
-			pConv->AddChemObject(NULL);
-
-		return ret;
+	virtual bool WriteChemObject(OBConversion* pConv)
+	{
+		return OBMoleculeFormat::WriteChemObjectImpl(pConv, this);
 	};
 
 	virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -200,45 +185,6 @@ public:
 			return false;
 		_embedlevel = -1;
 		return _pxmlConv->ReadXML(this,pOb);
-	};
-
-
-	virtual bool WriteChemObject(OBConversion* pConv)
-	{
-		if(pConv->IsOption("C",OBConversion::GENOPTIONS))
-			return OBMoleculeFormat::OutputDeferredMols(pConv);
-
-		//Retrieve the target OBMol
-		OBBase* pOb = pConv->GetChemObject();
-		OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-		bool ret=false;
-		if(pmol)
-		{	
-			if(pmol->NumAtoms()==0)
-			{
-				std::string auditMsg = "OpenBabel::Molecule ";
-				auditMsg += pmol->GetTitle();
-				auditMsg += " has 0 atoms";
-				obErrorLog.ThrowError(__FUNCTION__,
-						auditMsg,
-						obInfo);
-			}
-			ret=true;
-
-			std::string auditMsg = "OpenBabel::Write molecule ";
-			std::string description(Description());
-			auditMsg += description.substr(0,description.find('\n'));
-			obErrorLog.ThrowError(__FUNCTION__,
-					      auditMsg,
-					      obAuditMsg);
-
-			if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsLast()) //With j option, output only at end
-			{
-				ret=WriteMolecule(pmol,pConv);
-				delete pOb;
-			}
-		}
-		return ret;
 	};
 
 	const type_info& GetType()

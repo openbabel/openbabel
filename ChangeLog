@@ -1,4 +1,19 @@
-2005-11-16 Chris Morley <ob@gaseq.co.uk>
+2005-12-19 Chris Morley <ob@gaseq.co.uk>
+
+	* src/molecformat.h, molecformat.cpp: Put most of code into static
+	functions which can be called from elsewhere.
+	Changed implementation of the -j option so that combining is done by
+	+= of OBMol so that useable with any format.
+	
+	* src/formats/xml/xml.h(XMLMoleculeFormat): Reduced code duplication
+	by calling static OBMoleculeFormat functions.
+	
+	* src/mol.cpp(operator+=): Combined molecule has a dimension equal
+	to the smallest of its constituents.
+	
+	* src/chiral.h: added missing std:: and #include <vector>
+
+2005-12-18 Chris Morley <ob@gaseq.co.uk>
 
 	* src/obconversion.h, obconversion.cpp (IsFirstInput())mod.
 	(OneObjectOnly) Added inverse call.

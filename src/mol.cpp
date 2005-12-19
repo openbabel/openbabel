@@ -1268,7 +1268,8 @@ OBMol &OBMol::operator+=(const OBMol &source)
         AddAtom(*atom);
     for (bond = src.BeginBond(j) ; bond ; bond = src.NextBond(j))
         AddBond(bond->GetBeginAtomIdx() + prevatms, bond->GetEndAtomIdx() + prevatms, bond->GetBO(), bond->GetFlags());
-
+		if(src.GetDimension()<_dimension)
+			_dimension = src.GetDimension();
     EndModify();
 
     return(*this);

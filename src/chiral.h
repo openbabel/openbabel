@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #ifndef OB_CHIRAL_H
 #define OB_CHIRAL_H
 
+#include <vector>
 #include "matrix.h"
 
 namespace OpenBabel
@@ -35,7 +36,7 @@ OBAPI double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c,
 OBAPI void GetChirality(OBMol &mol, std::vector<int> &chirality);
 
 //! Calculates parity of a vector of 4 items
-OBAPI int GetParity4Ref(vector<unsigned int> pref);
+OBAPI int GetParity4Ref(std::vector<unsigned int> pref);
 OBAPI bool CorrectChirality(OBMol &mol, OBAtom *atm, atomreftype i=input, atomreftype o=output);
 }
 

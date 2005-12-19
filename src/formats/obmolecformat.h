@@ -35,6 +35,7 @@ class OBMoleculeFormat : public OBFormat
 {
 private:
 	static std::map<std::string, OBMol*> IMols;
+	static OBMol* _jmol; //Accumulates molecules with the -j option
 
 public:
 
@@ -61,9 +62,16 @@ public:
 		OBConversion::RegisterOptionParam("C", NULL, 0,OBConversion::GENOPTIONS);
 	};
 
+	//Static routines which can be called from elsewhere
+	static bool ReadChemObjectImpl(OBConversion* pConv, OBFormat*);
+	static bool WriteChemObjectImpl(OBConversion* pConv, OBFormat*);
+
 	/// The "Convert" interface functions
-	virtual bool ReadChemObject(OBConversion* pConv);
-	virtual bool WriteChemObject(OBConversion* pConv);
+	virtual bool ReadChemObject(OBConversion* pConv)
+	{ return ReadChemObjectImpl(pConv, this);}
+		
+	virtual bool WriteChemObject(OBConversion* pConv)
+	{ return WriteChemObjectImpl(pConv, this);}
 	
 	/// Routines to handle the -C option for combining data from several OBMols
 	static bool DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF);

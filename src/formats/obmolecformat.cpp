@@ -21,43 +21,56 @@ namespace OpenBabel
 {
 
 std::map<std::string, OBMol*> OBMoleculeFormat::IMols;
+OBMol* OBMoleculeFormat::_jmol;
 
-bool OBMoleculeFormat::ReadChemObject(OBConversion* pConv)
+bool OBMoleculeFormat::ReadChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
 {
   std::istream &ifs = *pConv->GetInStream();
   if (ifs.peek() == EOF || !ifs.good())
     return false;
 
-	static OBMol* pmol;
+	OBMol* pmol = new OBMol;
 
-	    std::string auditMsg = "OpenBabel::Read molecule ";
-	    std::string description(Description());
-	    auditMsg += description.substr(0,description.find('\n'));
-	    obErrorLog.ThrowError(__FUNCTION__,
-				  auditMsg,
-				  obAuditMsg);
+	std::string auditMsg = "OpenBabel::Read molecule ";
+	std::string description(pFormat->Description());
+	auditMsg += description.substr(0,description.find('\n'));
+	obErrorLog.ThrowError(__FUNCTION__,
+			auditMsg,
+			obAuditMsg);
 
-	//With j option, reuse pmol except for the first mol
-	if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsFirstInput())
-		pmol = new OBMol;
-	
 	if(pConv->IsOption("C",OBConversion::GENOPTIONS))
-		return DeferMolOutput(pmol, pConv, this);
+		return DeferMolOutput(pmol, pConv, pFormat);
 
-	bool ret=ReadMolecule(pmol,pConv);
-	
-	if(ret && (pmol->NumAtoms() > 0 || (Flags()&ZEROATOMSOK))) //Do transformation and return molecule
-		pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
-	else
-		pConv->AddChemObject(NULL);
+	bool ret=pFormat->ReadMolecule(pmol,pConv);
 
+	OBMol* ptmol = NULL; 
+	if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK))) //Do transformation and return molecule
+	{
+		ptmol = static_cast<OBMol*>(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
+		if(ptmol && pConv->IsOption("j",OBConversion::GENOPTIONS))
+		{
+			//With j option, accumulate all mols in to one stored in this class
+			if(pConv->IsFirstInput())
+				_jmol = new OBMol;
+			*_jmol += *ptmol;
+			return true;
+		}
+	}	
+	pConv->AddChemObject(ptmol);
 	return ret;
 }
 
-bool OBMoleculeFormat::WriteChemObject(OBConversion* pConv)
+bool OBMoleculeFormat::WriteChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
 {
 	if(pConv->IsOption("C",OBConversion::GENOPTIONS))
 		return OutputDeferredMols(pConv);
+	if(pConv->IsOption("j",OBConversion::GENOPTIONS))
+	{
+		bool ret=pFormat->WriteMolecule(_jmol,pConv);
+		pConv->SetOutputIndex(1);
+		delete _jmol;
+		return ret;
+	}
 
 	//Retrieve the target OBMol
 	OBBase* pOb = pConv->GetChemObject();
@@ -77,23 +90,20 @@ bool OBMoleculeFormat::WriteChemObject(OBConversion* pConv)
 		ret=true;
 
 		std::string auditMsg = "OpenBabel::Write molecule ";
-		std::string description(Description());
+		std::string description(pFormat->Description());
 		auditMsg += description.substr(0,description.find('\n'));
 		obErrorLog.ThrowError(__FUNCTION__,
 				      auditMsg,
 				      obAuditMsg);
 
-		if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsLast()) //With j option, output only at end
-		{
-			ret=WriteMolecule(pmol,pConv);
-			delete pOb;
-		}
+		ret=pFormat->WriteMolecule(pmol,pConv);
+		delete pOb;
 	}
 	return ret;
 }
 bool OBMoleculeFormat::DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF )
 {
-	/* Instead of sending molecules for output vis AddChemObject(), they are
+	/* Instead of sending molecules for output via AddChemObject(), they are
 	   saved in here in OBMoleculeFormat or discarded. By default they are 
 		 saved only if they are in the first input file. Parts of subsequent
 		 molecules, such as chemical structure, coordinates and OBGenericData
