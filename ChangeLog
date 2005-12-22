@@ -1,3 +1,10 @@
+2005-12-22 Chris Morley <ob@gaseq.co.uk>
+
+* src/main.cpp (main): removed unsigned from pos to correct bug found by 
+Mikael Johansson.
+
+* src/formats/turbomole.cpp: Updates by Mikael Johansson.
+ 
 2005-12-19 Chris Morley <ob@gaseq.co.uk>
 
 	* src/molecformat.h, molecformat.cpp: Put most of code into static
