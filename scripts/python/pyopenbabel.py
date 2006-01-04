@@ -1,11 +1,32 @@
 import openbabel as ob
 
+def readstring(format,string):
+    """Read in a molecule from a string.
+
+    >>> input = "C1=CC=CS1"
+    >>> mymol = readstring("smi",input)
+    >>> len(mymol.atoms)
+    5
+    """
+    obmol = ob.OBMol()
+    obconversion = ob.OBConversion()
+
+# TO DO: Validate the format before passing to SetInFormat
+#        and print a helpful list of alternatives if not valid
+    formatok = obconversion.SetInFormat(format)
+    if not formatok:
+        raise ValueError,"%s is not a recognised OpenBabel format" % format
+
+    obconversion.ReadString(obmol,string)
+    return Molecule(obmol)
+
+
 class Molecule(object):
     """Represent a molecule."""
 
     _getmethods = {
         'conformers':'GetConformers',
-        'coordinates':'GetCoordinates',
+        'coords':'GetCoordinates',
         'data':'GetData',
         'dim':'GetDimension',
         'energy':'GetEnergy',
@@ -21,20 +42,51 @@ class Molecule(object):
         'spin':'GetTotalSpinMultiplicity'
     }
     
-    def __init__(self):
-        self.OBMol = ob.OBMol()
+    def __init__(self,obmol=None):
+
+        self.OBMol = obmol
+        if not self.OBMol:
+            self.OBMol = ob.OBMol()
+
         for x,v in self._getmethods.iteritems():
             setattr( self,x,getattr(self,x) )
         self.atoms = self.atoms
     
     def __getattr__(self,attr):
         if attr == "atoms":
-            listofatoms = [ Atom(self.OBMol.GetAtom(i+1),i+1) for i in range(0,self.OBMol.NumAtoms()) ]
+            listofatoms = [ Atom(self.OBMol.GetAtom(i+1),i+1) for i in range(self.OBMol.NumAtoms()) ]
             return listofatoms
         elif attr in self._getmethods:
             return getattr(self.OBMol,self._getmethods[attr])()
         else:
             raise AttributeError,"Cannot find %s" % attr
+
+    def __iter__(self):
+        """Iterate over the Atoms of the Molecule.
+        
+        This allows constructions such as the following:
+           for atom in mymol:
+               print atom
+        """
+        for atom in self.atoms:
+            yield atom
+
+    def write(self,format="SMI",filename=None):
+        """Write the Molecule to a file or return a string."""
+
+        obconversion = ob.OBConversion()
+        formatok = obconversion.SetOutFormat(format)
+        if not formatok:
+            raise ValueError,"%s is not a recognised OpenBabel format" % format
+
+        if filename:
+            obconversion.WriteFile(self.OBMol,filename)
+        else:
+            return obconversion.WriteString(self.OBMol)
+
+    def __str__(self):
+        return self.write()
+
 
 class Atom(object):
     """Represent an atom."""
@@ -82,14 +134,16 @@ class Atom(object):
             raise AttributeError,"Cannot find %s" % attr
 
     def __str__(self):
-        line = []
-        line.append("Atom: ")
-        line.append("(%f,%f,%f)" % (self.x,self.y,self.z))        
-        return "".join(line)
+        """Create a string representation of the atom.
+
+        >>> a = Atom()
+        >>> print a
+        Atom: 0 (0.0, 0.0, 0.0)
+        """
+        return "Atom: %d %s" % (self.atomicnum, self.coords.__str__())
             
         
 if __name__=="__main__":
-    mol = Molecule()
-    a = Atom()
-    b = Atom()
-     
+    import doctest,pyopenbabel
+    doctest.testmod(pyopenbabel)
+    

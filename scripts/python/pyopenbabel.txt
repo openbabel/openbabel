@@ -80,3 +80,47 @@ GetTotalCharge		== charge
 GetTotalSpinMultiplicity	== spin
 
 All attributes are calculated on-the-fly when you ask for them. They are also initialised when you create the Molecule object, so that dir(mymolecule) gives a useful list of attributes.
+
+Added an iterator over the atoms of the molecule so that you can do things like:
+
+for atom in mymol:
+   print atom
+
+Creating a Molecule from a String
+=================================
+Replaced:
+from openbabel import *
+mymol = OBMol()
+obConversion = OBConversion()
+obConversion.SetInFormat("smi")
+obConversion.ReadString(mymol,"C1=CC=CS1")
+
+With:
+from pyopenbabel import *
+mymol = readstring("smi","C1=CC=CS1")
+
+Reading a Molecule From a File
+==============================
+
+TODO
+
+Writing a Molecule To a File (continued from either of the examples above)
+============================
+
+Replaced:
+obConversion.SetOutFormat("smi")
+obConversion.WriteFile(mymol,"tmp.txt")
+
+With:
+mymol.write("smi",tmp.txt")
+
+Bug Converting To and From Smiles Strings?
+==========================================
+from openbabel import *
+mymol = OBMol()
+obConversion = OBConversion()
+obConversion.SetInAndOutFormats("smi","smi")
+obConversion.ReadString(mymol,"C1=CC=CS1")
+print obConversion.WriteString(mymol)
+'c1sccc1\t\n'
+-- should remove the \t and \n
