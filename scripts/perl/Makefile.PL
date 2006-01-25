@@ -13,7 +13,7 @@ $ldfrom = "\$(OBJECT) $srcdir/.libs/libopenbabel.a -lz"
 WriteMakefile(
     'NAME'	=>  'Chemistry::OpenBabel',
     'AUTHOR'    =>  'Geoffrey Hutchison <openbabel-scripting@lists.sourceforge.net>',
-    'VERSION'   => '1.0.0',
+    'VERSION'   => '1.0.1',
     'LDFROM'    => $ldfrom,
     'CC'        => $CC,
     'LD'        => '$(CC)',

@@ -1,3 +1,7 @@
+import sys
+import dl
+sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)
+
 # This file was created automatically by SWIG 1.3.27.
 # Don't modify this file, modify the SWIG interface instead.
 
@@ -368,6 +372,7 @@ OBConversion_IncrementedFileName = _openbabel.OBConversion_IncrementedFileName
 NOTREADABLE = _openbabel.NOTREADABLE
 READONEONLY = _openbabel.READONEONLY
 READBINARY = _openbabel.READBINARY
+ZEROATOMSOK = _openbabel.ZEROATOMSOK
 NOTWRITABLE = _openbabel.NOTWRITABLE
 WRITEONEONLY = _openbabel.WRITEONEONLY
 WRITEBINARY = _openbabel.WRITEBINARY
@@ -415,13 +420,6 @@ class OBResidue(object):
     def IsResidueType(*args): return _openbabel.OBResidue_IsResidueType(*args)
     def BeginAtom(*args): return _openbabel.OBResidue_BeginAtom(*args)
     def NextAtom(*args): return _openbabel.OBResidue_NextAtom(*args)
-    def HasData(*args): return _openbabel.OBResidue_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBResidue_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBResidue_SetData(*args)
-    def DataSize(*args): return _openbabel.OBResidue_DataSize(*args)
-    def GetData(*args): return _openbabel.OBResidue_GetData(*args)
-    def BeginData(*args): return _openbabel.OBResidue_BeginData(*args)
-    def EndData(*args): return _openbabel.OBResidue_EndData(*args)
 
 class OBResiduePtr(OBResidue):
     def __init__(self, this):
@@ -574,13 +572,6 @@ class OBAtom(object):
     def HasDoubleBond(*args): return _openbabel.OBAtom_HasDoubleBond(*args)
     def HasAromaticBond(*args): return _openbabel.OBAtom_HasAromaticBond(*args)
     def MatchesSMARTS(*args): return _openbabel.OBAtom_MatchesSMARTS(*args)
-    def HasData(*args): return _openbabel.OBAtom_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBAtom_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBAtom_SetData(*args)
-    def DataSize(*args): return _openbabel.OBAtom_DataSize(*args)
-    def GetData(*args): return _openbabel.OBAtom_GetData(*args)
-    def BeginData(*args): return _openbabel.OBAtom_BeginData(*args)
-    def EndData(*args): return _openbabel.OBAtom_EndData(*args)
 
 class OBAtomPtr(OBAtom):
     def __init__(self, this):
@@ -661,13 +652,6 @@ class OBBond(object):
     def IsWedge(*args): return _openbabel.OBBond_IsWedge(*args)
     def IsHash(*args): return _openbabel.OBBond_IsHash(*args)
     def IsDoubleBondGeometry(*args): return _openbabel.OBBond_IsDoubleBondGeometry(*args)
-    def HasData(*args): return _openbabel.OBBond_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBBond_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBBond_SetData(*args)
-    def DataSize(*args): return _openbabel.OBBond_DataSize(*args)
-    def GetData(*args): return _openbabel.OBBond_GetData(*args)
-    def BeginData(*args): return _openbabel.OBBond_BeginData(*args)
-    def EndData(*args): return _openbabel.OBBond_EndData(*args)
 
 class OBBondPtr(OBBond):
     def __init__(self, this):
@@ -726,13 +710,6 @@ class OBMol(object):
     def GetMod(*args): return _openbabel.OBMol_GetMod(*args)
     def IncrementMod(*args): return _openbabel.OBMol_IncrementMod(*args)
     def DecrementMod(*args): return _openbabel.OBMol_DecrementMod(*args)
-    def HasData(*args): return _openbabel.OBMol_HasData(*args)
-    def DeleteData(*args): return _openbabel.OBMol_DeleteData(*args)
-    def SetData(*args): return _openbabel.OBMol_SetData(*args)
-    def DataSize(*args): return _openbabel.OBMol_DataSize(*args)
-    def GetData(*args): return _openbabel.OBMol_GetData(*args)
-    def BeginData(*args): return _openbabel.OBMol_BeginData(*args)
-    def EndData(*args): return _openbabel.OBMol_EndData(*args)
     def GetFlags(*args): return _openbabel.OBMol_GetFlags(*args)
     def GetTitle(*args): return _openbabel.OBMol_GetTitle(*args)
     def NumAtoms(*args): return _openbabel.OBMol_NumAtoms(*args)
