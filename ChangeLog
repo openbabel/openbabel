@@ -1,9 +1,29 @@
+2006-01-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/zipstreamimpl.h (overflow): Patch calls to setp as
+	suggested by Rathann Mierzejewski.
+
+	* scripts/perl/* : Added more unit tests, fixed bug with
+	case-sensitive filesystems, and problems with dynamic loading on
+	Linux. 
+
+	* scripts/python/*: Updated to fix problem with dynamic loading on
+	Linux.
+
+	* aclocal.m4, configure, configure.in, ltmain.sh, */Makefile.in
+	*/Makefile.am: Update to libtool-1.5.22 and ensure libxml2 is only
+	used if v2.6.5 or later.
+
+	* src/kinetics.h: Move from src/formats/xml/ for general utility.
+
+	* src/formats/xml/xcmlformat.cpp: Remove deprecated file.
+
 2005-12-22 Chris Morley <ob@gaseq.co.uk>
 
-* src/main.cpp (main): removed unsigned from pos to correct bug found by 
-Mikael Johansson.
+	* src/main.cpp (main): removed unsigned from pos to correct bug
+	found by Mikael Johansson.
 
-* src/formats/turbomole.cpp: Updates by Mikael Johansson.
+	* src/formats/turbomole.cpp: Updates by Mikael Johansson.
  
 2005-12-19 Chris Morley <ob@gaseq.co.uk>
 
@@ -77,11 +97,9 @@ Mikael Johansson.
 	(mol). Add option -xm to not output any properties.
 	
 	* src/formats/fastsearchformat.cpp: Added -u option for updating index.  
-
 	* src/formats/: add thermoformat.cpp and titleformat.cpp.
 	
 	* src/formats/xml/xml.h: remove SetFormatting; add missing std::	
-
 	* src/formats/xml/xml.cpp: add option to have no xml formating	
 
 	* src/formats/xml/xcmlformat.cpp: add option to output properties.
