@@ -31,6 +31,7 @@ int main(int argc,char **argv)
 
     Formatpos pos;
     OBFormat* pFormat;
+    OBConversion conv;
     const char* str=NULL;
     bool newFormat;
 
@@ -68,7 +69,7 @@ int main(int argc,char **argv)
 
       }
 
-    string notes, description, name, code;
+    string impt, expt, description, name, code;
     ofstream ofs, indexExt, indexName;
 
     indexExt.open("code-index.html");
@@ -86,9 +87,9 @@ int main(int argc,char **argv)
 
 	ofs.open(code.c_str());
 
-	ofs << "<h1>" << name << "<h1>" << endl;
-	ofs << "\n\n" << "<table>" << endl;
-	ofs << "<tr><th>Filename Extensions</th><td>";
+	ofs << name << endl << endl;
+	ofs << "{{Format|" << endl;
+	ofs << " |extensions=";
 	for (unsigned int j = 0; j < extensionList[i].size(); j++)
 	  {
 	    ofs << extensionList[i][j];
@@ -100,68 +101,75 @@ int main(int argc,char **argv)
 	    if (j != extensionList[i].size() - 1)
 	      ofs << ", ";
 	  }
-	ofs << "</td></tr>" << endl;
+	ofs << endl;
 
-	ofs << "<tr><th>Chemical MIME Type</th><td>";
+	ofs << " |mime=";
 	if (strlen(pFormat->GetMIMEType()) != 0)
-	  ofs << pFormat->GetMIMEType() << "</td></tr>" << endl;
+	  ofs << pFormat->GetMIMEType() << endl;
 	else
-	  ofs << "Undefined</td></tr>" << endl;
-	
+	  ofs << "Undefined" << endl;
 
-	ofs << "<tr><th>Specification URL</th><td>";
+	ofs << " |url=";
 	if (strlen(pFormat->SpecificationURL()) != 0)
 	  {
-	    ofs << "<a href=\"" << pFormat->SpecificationURL() << "\">";
-	    ofs << pFormat->SpecificationURL() << "</a>";
+	    ofs << pFormat->SpecificationURL();
 	  }
 	else
 	  ofs << "Unknown";
-	ofs << "</td></tr>" << endl;
+	ofs << endl;
 
-	ofs << "<tr><th>Notes</th><td>";
-	notes.clear();
+	impt.clear();
+	expt.clear();
 	if (pFormat->Flags() & NOTREADABLE)
-	  notes += "Export only";
-	else if (pFormat->Flags() & NOTWRITABLE)
-	  notes += "Import only";
+	  impt += "No";
+	else
+	  impt += "Yes";
+
+	if (pFormat->Flags() & NOTWRITABLE)
+	  expt += "No";
+	else
+	  expt += "Yes";
 
 	if (pFormat->Flags() & READONEONLY)
 	  {
-	    if (notes.size())
-	      notes += ", ";
-	    notes += "One record per input file";
+	    if (impt.size())
+	      impt += ", ";
+	    impt += "One record per input file";
 	  }
 	if (pFormat->Flags() & WRITEONEONLY)
 	  {
-	    if (notes.size())
-	      notes += ", ";
-	    notes += "One record per output file";
+	    if (expt.size())
+	      expt += ", ";
+	    expt += "One record per output file";
 	  }
 	if (pFormat->Flags() & READBINARY)
 	  {
-	    if (notes.size())
-	      notes += ", ";
-	    notes += "Input is a binary file";
+	    if (impt.size())
+	      impt += ", ";
+	    impt += "Input is a binary file";
 	  }
 	if (pFormat->Flags() & WRITEBINARY)
 	  {
-	    if (notes.size())
-	      notes += ", ";
-	    notes += "Output is a binary file";
+	    if (expt.size())
+	      expt += ", ";
+	    expt += "Output is a binary file";
 	  }
 
+	ofs << " |import=";
+	ofs << impt << endl;
+	ofs << " |export=";
+	ofs << expt << endl;
 
-	if (notes.size() == 0)
-	  notes = "None";
-	ofs << notes << "</td></tr>" << endl;
+	ofs << " |version=All" << endl;
+	ofs << " |dimensionality=3D" << endl;
 
-	ofs << "</table>" << endl;
-
-
-	ofs << "<h2>Options</h2>\n<pre>";
+	ofs << " |options=" << endl;
+	ofs << "<pre>";
 	ofs << 	description.substr(description.find('\n'), description.size()); 
-	ofs << "\n</pre>" << endl;
+	ofs << "</pre>" << endl;
+	ofs << "}}" << endl << endl;
+
+	ofs << "[[Category:Formats]]" << endl;
 
 	ofs.close();
       }
