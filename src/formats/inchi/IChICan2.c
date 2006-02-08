@@ -194,7 +194,7 @@ int CtFullCompareLayers( kLeast *kLeastForLayer );
 int CtCompareLayersGetFirstDiff( kLeast *kLeast_rho, int nOneAdditionalLayer,
                                  int *L_rho, int *I_rho, int *k_rho );
 int CtPartCompareLayers( kLeast *kLeast_rho, int L_rho_fix_prev, int nOneAdditionalLayer );
-void UpdateCompareLayers( kLeast kLeastForLayer[], int hz );
+void UpdateCompareLayers( kLeast kLeastForLayer[], int hz_new );
 int GetOneAdditionalLayer( CANON_DATA *pCD, ConTable *pzb_rho_fix );
 
 void CleanNumH( NUM_H *NumH, int len );
@@ -1941,12 +1941,12 @@ int CtPartCompareLayers( kLeast *kLeast_rho, int L_rho_fix_prev, int nOneAdditio
     return 0;
 }
 /****************************************************************/
-void UpdateCompareLayers( kLeast kLeastForLayer[], int hz )
+void UpdateCompareLayers( kLeast kLeastForLayer[], int hz_new )
 {
     int i;
     if ( kLeastForLayer ) {
         for ( i = 0; i < MAX_LAYERS; i ++ ) {
-            if ( abs(kLeastForLayer[i].k) >= hz ) {
+            if ( abs(kLeastForLayer[i].k) >= hz_new ) {
                 kLeastForLayer[i].k = 0;
                 kLeastForLayer[i].i = 0;
             }
