@@ -6,7 +6,7 @@ require DynaLoader;
 package Chemistry::OpenBabelc;
 bootstrap Chemistry::OpenBabel;
 package Chemistry::OpenBabel;
-@EXPORT = qw( ); sub dl_load_flags { 0x01 }
+@EXPORT = qw( );
 
 # ---------- BASE METHODS -------------
 
@@ -538,6 +538,13 @@ sub DESTROY {
 *IsResidueType = *Chemistry::OpenBabelc::OBResidue_IsResidueType;
 *BeginAtom = *Chemistry::OpenBabelc::OBResidue_BeginAtom;
 *NextAtom = *Chemistry::OpenBabelc::OBResidue_NextAtom;
+*HasData = *Chemistry::OpenBabelc::OBResidue_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBResidue_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBResidue_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBResidue_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBResidue_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBResidue_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBResidue_EndData;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -694,6 +701,13 @@ sub DESTROY {
 *HasDoubleBond = *Chemistry::OpenBabelc::OBAtom_HasDoubleBond;
 *HasAromaticBond = *Chemistry::OpenBabelc::OBAtom_HasAromaticBond;
 *MatchesSMARTS = *Chemistry::OpenBabelc::OBAtom_MatchesSMARTS;
+*HasData = *Chemistry::OpenBabelc::OBAtom_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBAtom_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBAtom_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBAtom_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBAtom_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBAtom_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBAtom_EndData;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -779,6 +793,13 @@ sub DESTROY {
 *IsWedge = *Chemistry::OpenBabelc::OBBond_IsWedge;
 *IsHash = *Chemistry::OpenBabelc::OBBond_IsHash;
 *IsDoubleBondGeometry = *Chemistry::OpenBabelc::OBBond_IsDoubleBondGeometry;
+*HasData = *Chemistry::OpenBabelc::OBBond_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBBond_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBBond_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBBond_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBBond_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBBond_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBBond_EndData;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -834,6 +855,13 @@ sub DESTROY {
 *GetMod = *Chemistry::OpenBabelc::OBMol_GetMod;
 *IncrementMod = *Chemistry::OpenBabelc::OBMol_IncrementMod;
 *DecrementMod = *Chemistry::OpenBabelc::OBMol_DecrementMod;
+*HasData = *Chemistry::OpenBabelc::OBMol_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBMol_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBMol_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBMol_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBMol_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBMol_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBMol_EndData;
 *GetFlags = *Chemistry::OpenBabelc::OBMol_GetFlags;
 *GetTitle = *Chemistry::OpenBabelc::OBMol_GetTitle;
 *NumAtoms = *Chemistry::OpenBabelc::OBMol_NumAtoms;
@@ -1028,7 +1056,6 @@ package Chemistry::OpenBabel;
 *NOTREADABLE = *Chemistry::OpenBabelc::NOTREADABLE;
 *READONEONLY = *Chemistry::OpenBabelc::READONEONLY;
 *READBINARY = *Chemistry::OpenBabelc::READBINARY;
-*ZEROATOMSOK = *Chemistry::OpenBabelc::ZEROATOMSOK;
 *NOTWRITABLE = *Chemistry::OpenBabelc::NOTWRITABLE;
 *WRITEONEONLY = *Chemistry::OpenBabelc::WRITEONEONLY;
 *WRITEBINARY = *Chemistry::OpenBabelc::WRITEBINARY;

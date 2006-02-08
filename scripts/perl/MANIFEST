@@ -3,7 +3,7 @@ COPYING					 License (GNU General Public License)
 MANIFEST				 This file (list of files in dist.)
 Makefile.PL				 MakeMaker build
 README					 General information, use, etc.
-openbabel.pm				 Perl interface to Open Babel
+OpenBabel.pm				 Perl interface to Open Babel
 openbabel_perl.cpp			 C++ extension for openbabel.pm
 examples/example.pl			 Examples of Chemistry::OpenBabel
 t/example.t				 Example tests for Chemistry::OpenBabel
