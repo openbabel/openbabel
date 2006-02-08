@@ -18,6 +18,8 @@ GNU General Public License for more details.
 #include "obconversion.h"
 #include "obmolecformat.h"
 
+const double AAU = 0.5291772108;  // Ångström per bohr (CODATA 2002)
+
 using namespace std;
 namespace OpenBabel
 {
@@ -64,7 +66,6 @@ TurbomoleFormat theTurbomoleFormat;
 /////////////////////////////////////////////////////////////////
 bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
-
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
         return false;
@@ -96,7 +97,7 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if(sscanf(buff,"%f %f %f %s",&x,&y,&z,atomtype)!=4)
             return false;
 
-        atom.SetVector(x, y, z);
+        atom.SetVector(x*AAU, y*AAU, z*AAU);
         atom.SetAtomicNum(etab.GetAtomicNum(atomtype));
         atom.SetType(atomtype);
 
@@ -123,6 +124,18 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
 ////////////////////////////////////////////////////////////////
 
+char *strlwr(char *s)
+{
+    if (s != NULL)
+      {
+        char *p;
+        for (p = s; *p; ++p)
+            *p = tolower(*p);
+      }
+    return s;
+}
+
+
 bool TurbomoleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -140,11 +153,11 @@ bool TurbomoleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vector<OBNodeBase*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-        sprintf(buff,"%20.14f  %20.14f  %20.14f %6s",
-                atom->GetX(),
-                atom->GetY(),
-                atom->GetZ(),
-                etab.GetSymbol(atom->GetAtomicNum()) );
+        sprintf(buff,"%20.14f  %20.14f  %20.14f      %s",
+                atom->GetX()/AAU,
+                atom->GetY()/AAU,
+                atom->GetZ()/AAU,
+                strlwr(etab.GetSymbol(atom->GetAtomicNum())) );
         ofs << buff << endl;
     }
     ofs << "$end" << endl;
