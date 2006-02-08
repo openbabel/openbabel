@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([Open Babel], 2.0.0, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_INIT([Open Babel], 2.0.1b1, openbabel-discuss@lists.sourceforge.net, openbabel)
 AC_CONFIG_SRCDIR(src/typer.cpp)
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
@@ -56,7 +56,7 @@ dnl AC_DISABLE_SHARED
 AC_LIBTOOL_DLOPEN
 AM_PROG_LIBTOOL
 
-AM_CONDITIONAL(BUILD_SHARED, test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes")
+AM_CONDITIONAL(BUILD_SHARED, test "$dynamic_modules" = "yes")
 
 oldmodule=$module
 module=yes
@@ -70,7 +70,7 @@ AC_CHECK_LIB(m, asin, , exit)
 AC_CHECK_LIB(c, dlopen, LIBDL="", [AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl")])
 AC_SUBST(LIBDL)
 
-AM_PATH_XML2(2.6.0)
+AM_PATH_XML2(2.6.5)
 AM_CONDITIONAL(BUILD_XML, test x"$XML_LIBS" != "x")
 
 CHECK_ZLIB

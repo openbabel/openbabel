@@ -1,5 +1,6 @@
 EXTRA_DIST = \
-	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h
+	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
+	dlhandler_win32.cpp
 
 SUBDIRS = math formats fingerprints
 INCLUDES = -I$(top_srcdir)/data/
@@ -23,7 +24,7 @@ libopenbabel_la_SOURCES = \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp $(dlhandler)
 
-libopenbabel_la_LDFLAGS = -version-info 1:0:0
+libopenbabel_la_LDFLAGS = -version-info 1:1:0
 
 if BUILD_SHARED
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS

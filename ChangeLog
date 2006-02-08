@@ -1,4 +1,24 @@
-2005-11-26  Geoffrey Hutchison  <ghutchis@Alumina.local>
+2006-02-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/obdoc.cpp: Update to prepare wiki-fied documentation for
+	the new format database/wiki on openbabel.sourceforge.net/wiki/
+
+	* configure.in, configure, */Makefile.in: Update version number to
+	2.0.1b1.
+
+2006-01-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/main.cpp (main): Fix segfault bug reported by Mikael Johansson.
+
+	* src/formats/turbomoleformat.cpp: Updated with bugfixes by Mikael.
+	
+	* src/formats/inchi/IChICan2.c: Fix AIX compilation with 'hz'
+	variable contributed by Mikael.
+
+	* src/zipstreamimpl.h: Fix compilation bug reported by Rathann
+	Mierzejewski.
+	
+2005-11-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 	
 	* NEWS: Updated for 2.0.0 release final.
 
@@ -365,7 +385,7 @@
 
 	* windows-vc2005: Added project files for Visual C++ 2005
 
-2005-10-14  Geoffrey Hutchison  <ghutchis@Alumina.local>
+2005-10-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Source-code documentation updates. Ensure all classes and struct
 	definitions have at least a brief description.
@@ -1320,7 +1340,7 @@
 	MOL2Format was getting uninitialized data. Lazy loading was
 	too lazy.
 
-2005-07-01  Geoffrey Hutchison  <ghutchis@Alumina.local>
+2005-07-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/chemdrawformat.cpp, src/formats/crkformat.cpp,
 	src/formats/fastsearchformat.cpp, src/formats/mdlformat.cpp,
