@@ -80,7 +80,7 @@ int main(int argc,char *argv[])
 
   //Save name of program without its path (and .exe)
   string pn(argv[0]);
-  unsigned int pos;
+  int pos;
 #ifdef _WIN32
   pos = pn.find(".exe");
   if(pos!=string::npos)
