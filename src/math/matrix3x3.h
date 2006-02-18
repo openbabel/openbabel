@@ -178,11 +178,7 @@ public:
     bool isUnitMatrix(void) const;
 
     //! access function
-    /*! \warning row or column are not in the range 0..2, random
-    results are returned, and your program may even
-    segfault. (Stefan Kebekus)
-
-    \todo Replace this method with a more fool-proof version.
+    /*! \warning row or column are not in the range 0..2, zero is returned
     */
     double Get(int row,int column) const
     {
@@ -193,11 +189,7 @@ public:
     }
 
     //! access function
-    /*! \warning if row or column are not in the range 0..2, random
-    variables are overwritten, and your program may
-    segfault. (Stefan Kebekus)
-
-    \todo Replace this method with a more fool-proof version.
+    /*! \warning if row or column are not in the range 0..2, nothing will happen
     */
     void Set(int row,int column, double v)
     {
@@ -225,19 +217,27 @@ public:
     thrown. */
     vector3 GetRow(unsigned int row) const throw(OBError);
 
-
     //! divides all entries of the matrix by a scalar c
     matrix3x3 &operator/=(const double &c);
 
-    void SetupRotMat(double,double,double);
+    //! Calculate a rotation matrix for rotation about the x, y, and z
+    //! axes by the angles specified (in degrees)
+    void SetupRotMat(double x, double y, double z);
 
     //! calculates a matrix that represents reflection on a plane
     void PlaneReflection(const vector3 &norm);
 
-    //! calculates a rotation matrix
+    //! Calculates a rotation matrix, rotating around the specified axis by
+    //! the specified angle (in degrees)
     void RotAboutAxisByAngle(const vector3 &axis, const double angle);
 
-    void FillOrth(double,double,double,double,double,double);
+    //! Calculate an orthogonalisation matrix for a unit cell
+    //! specified by the parameters alpha, beta, gamma, a, b, c
+    //! where alpha, beta, and gamma are the cell angles (in degrees)
+    //! and a, b, and c are the cell vector lengths
+    //! Used by OBUnitCell
+    void FillOrth(double alpha, double beta, double gamma,
+		  double a, double b, double c);
 
     //! find the eigenvalues and -vectors of a symmetric matrix
     matrix3x3 findEigenvectorsIfSymmetric(vector3 &eigenvals) const throw(OBError);
