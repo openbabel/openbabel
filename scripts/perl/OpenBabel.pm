@@ -6,7 +6,7 @@ require DynaLoader;
 package Chemistry::OpenBabelc;
 bootstrap Chemistry::OpenBabel;
 package Chemistry::OpenBabel;
-@EXPORT = qw( );
+@EXPORT = qw( ); sub dl_load_flags { 0x01 }
 
 # ---------- BASE METHODS -------------
 
