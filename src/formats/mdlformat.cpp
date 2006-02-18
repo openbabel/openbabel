@@ -117,7 +117,7 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   int i,natoms,nbonds;
   char buffer[BUFF_SIZE];
-  char *comment = NULL;
+  string comment;
   string r1,r2;
 
   if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
@@ -132,10 +132,9 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	  mol.SetDimension(2);
 
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //comment
-  if (strlen(buffer) > 0) {
-    comment = new char [strlen(buffer)+1];
-    strcpy(comment,buffer);
-  }
+	if (strlen(buffer) > 0) {
+	  comment = buffer;
+	}
 
   if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //atoms and bonds
   r1 = buffer;
@@ -274,39 +273,36 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
        }    
     }
 
-		if (comment)
-  {
-	  OBCommentData *cd = new OBCommentData;
-	  mol.SetData(cd);
+    if (comment.length())
+      {
+	OBCommentData *cd = new OBCommentData;
+	cd->SetData(comment);
+	mol.SetData(cd);
+      }
+
+    // Get property lines
+    while (ifs.getline(buffer,BUFF_SIZE)) {
+      if (strstr(buffer,"<")) {
+	string buff(buffer);
+	size_t lt=buff.find("<")+1;
+	size_t rt = buff.find_last_of(">");
+	string attr = buff.substr(lt,rt-lt);
+	
+	// sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
+	getline(ifs, buff);
+	
+	OBPairData *dp = new OBPairData;
+	dp->SetAttribute(attr);
+	dp->SetValue(buff);
+	mol.SetData(dp);
+      }
+      // end RWT    
+      
+      if (!strncmp(buffer,"$$$$",4)) break;
+      if (!strncmp(buffer,"$MOL",4)) break;
   }
-
-  while (ifs.getline(buffer,BUFF_SIZE)) {
-    // RWT 4/7/2001
-    // added to get properties
-    if (strstr(buffer,"<")) {
-      string buff(buffer);
-      size_t lt=buff.find("<")+1;
-      size_t rt = buff.find_last_of(">");
-      string attr = buff.substr(lt,rt-lt);
-
-      // sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
-      getline(ifs, buff);
-
-      OBPairData *dp = new OBPairData;
-      dp->SetAttribute(attr);
-      dp->SetValue(buff);
-      mol.SetData(dp);
-    }
-    // end RWT    
-
-    if (!strncmp(buffer,"$$$$",4)) break;
-    if (!strncmp(buffer,"$MOL",4)) break; //CM
-  }
-
-  delete comment;
 
   return(true);
-
 }
 
 /////////////////////////////////////////////////////////////////
