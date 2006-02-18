@@ -1,3 +1,14 @@
+2006-02-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/perl/OpenBabel.pm: Add dynaloader flags to ensure format
+	modules are loaded properly on Linux.
+
+	* src/mol.h, src/obiter.cpp, src/math/vector3.cpp,
+	src/math/matrix3x3.cpp: Fix documentation errors.
+
+	* src/formats/mdlformat.cpp: Fix possible memory leak with comment
+	data and ensure comment is stored properly.
+
 2006-02-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/obdoc.cpp: Update to prepare wiki-fied documentation for

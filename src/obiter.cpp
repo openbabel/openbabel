@@ -31,9 +31,7 @@ namespace OpenBabel
 
   To facilitate iteration through all atoms in a molecule, without resorting
   to atom indexes (which may change in the future) or the OBMol::BeginAtom()
-  and OBMol::NextAtom() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
+  and OBMol::NextAtom() methods which may be deprecated in the future.
 
   Therefore, it is <strong>highly recommended</strong> to use the separate
   STL-style iterator classes.
@@ -100,9 +98,7 @@ namespace OpenBabel
 
   To facilitate iteration through all bonds in a molecule, without resorting
   to bond indexes (which may change in the future) or the OBMol::BeginBond()
-  and OBMol::NextBond() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
+  and OBMol::NextBond() methods which may be deprecated in the future.
 
   Therefore, it is <strong>highly recommended</strong> to use the separate
   STL-style iterator classes.
@@ -168,9 +164,7 @@ namespace OpenBabel
 
   To facilitate iteration through all neighbors of an atom, without resorting
   to bond indexes (which may change in the future) or the OBAtom::BeginNbr()
-  and OBAtom::NextNbr() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
+  and OBAtom::NextNbr() methods which may be deprecated in the future.
 
   Therefore, it is <strong>highly recommended</strong> to use the separate
   STL-style iterator classes.
@@ -238,9 +232,7 @@ namespace OpenBabel
 
   To facilitate iteration through all bonds on an atom, without resorting
   to bond indexes (which may change in the future) or the OBAtom::BeginBond()
-  and OBAtom::NextBond() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
+  and OBAtom::NextBond() methods which may be deprecated in the future
 
   Therefore, it is <strong>highly recommended</strong> to use the separate
   STL-style iterator classes.
@@ -307,9 +299,7 @@ namespace OpenBabel
 
   To facilitate iteration through all residues in a molecule, without resorting
   to residue indexes (which may change in the future) or the OBMol::BeginResidue()
-  and OBMol::NextResidue() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
+  and OBMol::NextResidue() methods which may be deprecated in the future.
 
   Therefore, it is <strong>highly recommended</strong> to use the separate
   STL-style iterator classes.
@@ -378,9 +368,7 @@ namespace OpenBabel
 
   To facilitate iteration through all atoms in a residue, without resorting
   to atom indexes (which may change in the future) or the OBResidue::BeginAtom()
-  and OBResidue::NextAtom() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
+  and OBResidue::NextAtom() methods which may be deprecated in the future.
 
   Therefore, it is <strong>highly recommended</strong> to use the separate
   STL-style iterator classes.

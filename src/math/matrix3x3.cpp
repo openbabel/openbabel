@@ -41,7 +41,7 @@ namespace OpenBabel
  Rotating points in space can be performed by a vector-matrix
  multiplication. The matrix3x3 class is designed as a helper to the
  vector3 class for rotating points in space. The rotation matrix may be
- initialised by passing in the array of doubleing point values, by
+ initialised by passing in the array of floating point values, by
  passing euler angles, or a rotation vector and angle of rotation about
  that vector. Once set, the matrix3x3 class can be used to rotate
  vectors by the overloaded multiplication operator. The following
@@ -102,7 +102,7 @@ void matrix3x3::SetupRotMat(double phi,double theta,double psi)
   generate the 0-matrix. If the length of the axis is close to
   zero, but not == 0.0, this method may behave in unexpected
   ways and return almost random results; details may depend on
-  your particular doubleing point implementation. The use of this
+  your particular floating point implementation. The use of this
   method is therefore highly discouraged, unless you are certain
   that the length is in a reasonable range, away from 0.0
   (Stefan Kebekus)
@@ -137,7 +137,7 @@ void matrix3x3::PlaneReflection(const vector3 &norm)
   generate the 0-matrix. If the length of the axis is close to
   zero, but not == 0.0, this method may behave in unexpected ways
   and return almost random results; details may depend on your
-  particular doubleing point implementation. The use of this method
+  particular floating point implementation. The use of this method
   is therefore highly discouraged, unless you are certain that the
   length is in a reasonable range, away from 0.0 (Stefan
   Kebekus)
@@ -289,7 +289,7 @@ vector3 &vector3::operator *= (const matrix3x3 &m)
 	
   \warning If the determinant is close to zero, but not == 0.0,
   this method may behave in unexpected ways and return almost
-  random results; details may depend on your particular doubleing
+  random results; details may depend on your particular floating
   point implementation. The use of this method is therefore highly
   discouraged, unless you are certain that the determinant is in a
   reasonable range, away from 0.0 (Stefan Kebekus)

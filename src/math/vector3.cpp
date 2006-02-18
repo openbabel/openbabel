@@ -30,7 +30,7 @@ namespace OpenBabel
 /*! \class vector3
    \brief Represents a vector in the 3-dimensional real space.
 
-The vector3 class was designed to simplify operations with doubleing
+The vector3 class was designed to simplify operations with floating
 point coordinates. To this end many of the common operations have been
 overloaded for simplicity. Vector addition, subtraction, scalar
 multiplication, dot product, cross product, magnitude and a number of
@@ -142,7 +142,7 @@ OBAPI int operator!= ( const vector3& v1, const vector3& v2 )
 
   \warning If length() is very close to zero, but not == 0.0,
   this method may behave in unexpected ways and return almost
-  random results; details may depend on your particular doubleing
+  random results; details may depend on your particular floating
   point implementation. The use of this method is therefore
   highly discouraged, unless you are certain that length() is in
   a reasonable range, away from 0.0 (Stefan Kebekus)
@@ -192,7 +192,7 @@ OBAPI vector3 cross ( const vector3& v1, const vector3& v2 )
   length() of the two vectors is very close to 0.0, but not ==
   0.0, this method may behave in unexpected ways and return
   almost random results; details may depend on your particular
-  doubleing point implementation. The use of this method is
+  floating point implementation. The use of this method is
   therefore highly discouraged, unless you are certain that the
   length()es are in a reasonable range, away from 0.0 (Stefan
   Kebekus)

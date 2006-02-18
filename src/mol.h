@@ -76,6 +76,9 @@ public:
     //! Constructor
     OBResidue(void);
     //! Copy constructor
+    //! \warning Currently does not copy all associated OBGenericData
+    //! This requires a (minor) API change, and will thus only be fixed in 2.1
+    //! or later releases.
     OBResidue(const OBResidue &);
     //! Destructor
     virtual ~OBResidue(void);
@@ -764,6 +767,9 @@ public:
     //! Constructor
     OBMol();
     //! Copy constructor
+    //! \warning Currently does not copy all associated OBGenericData
+    //! This requires a (minor) API change, and will thus only be fixed in 2.1
+    //! or later releases.
     OBMol(const OBMol &);
     //! Destructor
     virtual ~OBMol();
