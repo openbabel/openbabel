@@ -313,7 +313,9 @@ public:
 	/// Part of "API" interface. 
 	/// The output stream is temporarily changed to the string and then restored
 	/// This method is primarily intended for scripting languages without "stream" classes
-	std::string                     WriteString(OBBase* pOb);
+	/// The optional "trimWhitespace" parameter allows trailing whitespace to be removed
+	/// (e.g., in a SMILES string or InChI, etc.)
+	std::string                     WriteString(OBBase* pOb, bool trimWhitespace = false);
 
 	/// @brief Outputs an object of a class derived from OBBase as a file (with the supplied path)
 	

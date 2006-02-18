@@ -724,10 +724,11 @@ bool OBConversion::Write(OBBase* pOb, ostream* pos)
 /// Writes the object pOb but does not delete it afterwards.
 /// The output stream not changed (since we cannot write to this string later)
 /// Returns true if successful.
-std::string OBConversion::WriteString(OBBase* pOb)
+std::string OBConversion::WriteString(OBBase* pOb, bool trimWhitespace)
 {
   ostream *oldStream = pOutStream; // save old output
   stringstream newStream;
+  string temp;
 
   if(pOutFormat)
     {
@@ -735,7 +736,13 @@ std::string OBConversion::WriteString(OBBase* pOb)
     }
   pOutStream = oldStream;
 
-  return newStream.str();
+  temp = newStream.str();
+  if (trimWhitespace) // trim the trailing whitespace
+    {
+      string::size_type notwhite = temp.find_last_not_of(" \t\n\r");
+      temp.erase(notwhite+1);
+    }
+  return temp;
 }
 
 //////////////////////////////////////////////////
