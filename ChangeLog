@@ -2,7 +2,10 @@
 
 	* ChangeLog.1.x: New file, contains changes for 1.x releases.
 
-	* 
+	* Doxyfile: Update to allow 2.1 documentation generation.
+
+	* configure, configure.in, Makefile.*: Update to test for Perl and
+	"prove" used for new test harness.
 
 	* test/*: New test "harness" using Perl, if available to provide
 	summary output. Yields much better summary information and sets

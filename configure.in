@@ -26,9 +26,13 @@ AC_PROG_INSTALL
 AC_PATH_PROG(DOXYGEN, doxygen)
 AC_PATH_PROG(SWIG, swig)
 AC_PATH_PROG(PERL, perl)
+AC_PATH_PROG(PROVE, prove)
 AC_PATH_PROG(PYTHON, python)
 
 dnl Conditionally build docs, scripts, etc.
+
+dnl Use Perl's "prove" test harness to run unit tests
+AM_CONDITIONAL(PERL_TESTS, test x"$PROVE" != "x")
 
 AM_CONDITIONAL(BUILD_DOCS, test x"$DOXYGEN" != "x")
 if test x"$DOXYGEN" = "x"; then

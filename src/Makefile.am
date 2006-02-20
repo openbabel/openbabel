@@ -5,6 +5,10 @@ EXTRA_DIST = \
 SUBDIRS = math formats fingerprints
 INCLUDES = -I$(top_srcdir)/data/
 
+bin_PROGRAMS = babel
+babel_SOURCES = main.cpp
+babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
+
 lib_LTLIBRARIES = libopenbabel.la
 
 if BUILD_SHARED
@@ -36,10 +40,6 @@ libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 			formats/libformats.la @LTLIBOBJS@
 endif
 
-bin_PROGRAMS = babel
-babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
-
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
 libopenbabelinclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
@@ -50,7 +50,7 @@ libopenbabelinclude_HEADERS = \
 		obconversion.h oberror.h obiter.h \
 		obutil.h \
 		parsmart.h patty.h phmodel.h reaction.h \
-		ring.h rotor.h rotamer.h typer.h 
+		residue.h ring.h rotor.h rotamer.h typer.h 
 
 # Use sed to substitute #include "header.h" to #include <openbabel/header.h>
 install-data-hook:

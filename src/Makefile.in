@@ -185,6 +185,9 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
+PERL_TESTS_FALSE = @PERL_TESTS_FALSE@
+PERL_TESTS_TRUE = @PERL_TESTS_TRUE@
+PROVE = @PROVE@
 PYTHON = @PYTHON@
 RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
@@ -244,6 +247,8 @@ EXTRA_DIST = \
 
 SUBDIRS = math formats fingerprints
 INCLUDES = -I$(top_srcdir)/data/
+babel_SOURCES = main.cpp
+babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
 lib_LTLIBRARIES = libopenbabel.la
 @BUILD_SHARED_FALSE@dlhandler = 
 @BUILD_SHARED_TRUE@dlhandler = dlhandler_unix.cpp
@@ -266,8 +271,6 @@ libopenbabel_la_LDFLAGS = -version-info 2:0:1
 @BUILD_SHARED_TRUE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 @BUILD_SHARED_TRUE@			@LTLIBOBJS@
 
-babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
 libopenbabelinclude_HEADERS = \
 		babelconfig.h base.h bitvec.h \
@@ -278,7 +281,7 @@ libopenbabelinclude_HEADERS = \
 		obconversion.h oberror.h obiter.h \
 		obutil.h \
 		parsmart.h patty.h phmodel.h reaction.h \
-		ring.h rotor.h rotamer.h typer.h 
+		residue.h ring.h rotor.h rotamer.h typer.h 
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive

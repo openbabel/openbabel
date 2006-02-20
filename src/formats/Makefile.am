@@ -24,8 +24,8 @@ libformats_la_SOURCES = \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
 	copyformat.cpp crkformat.cpp cssrformat.cpp \
-	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
-	fingerprintformat.cpp \
+	dmolformat.cpp fastsearchformat.cpp fastaformat.cpp \
+	featformat.cpp fhformat.cpp fingerprintformat.cpp \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
 	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
@@ -46,8 +46,8 @@ pkglib_LTLIBRARIES = \
 	cacaoformat.la cacheformat.la carformat.la cccformat.la \
 	chem3dformat.la chemdrawformat.la chemtoolformat.la \
 	copyformat.la crkformat.la cssrformat.la \
-	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
-	fingerprintformat.la \
+	dmolformat.la fastsearchformat.la fastaformat.la \
+	featformat.la fhformat.la fingerprintformat.la \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
 	gromos96format.la hinformat.la inchiformat.la \
 	jaguarformat.la mdlformat.la mmodformat.la mpdformat.la \
@@ -118,6 +118,9 @@ dmolformat_la_LDFLAGS = -module -avoid-version
 
 fastsearchformat_la_SOURCES = fastsearchformat.cpp
 fastsearchformat_la_LDFLAGS = -module -avoid-version 
+
+fastaformat_la_SOURCES = fastaformat.cpp obmolecformat.cpp
+fastaformat_la_LDFLAGS = -module -avoid-version 
 
 featformat_la_SOURCES = featformat.cpp obmolecformat.cpp
 featformat_la_LDFLAGS = -module -avoid-version 
