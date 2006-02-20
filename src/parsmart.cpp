@@ -1034,11 +1034,13 @@ static AtomExpr *ParseComplexAtomPrimitive( void )
 	LexPtr++;
 	return( GenerateElement(54) );
       }
-    else if( isdigit(*LexPtr) )
+    else
       {
 	index = 0;
 	while( isdigit(*LexPtr) )
 	  index = index*10 + ((*LexPtr++)-'0');
+	if (index == 0) // default to 1 (if no number present)
+	  index = 1;
 	return( BuildAtomLeaf(AL_CONNECT,index) );
       }
       break;

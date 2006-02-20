@@ -1,5 +1,9 @@
 2006-02-20  Geoffrey Hutchison  <ghutchis@Alumina.local>
 
+	* src/parsmart.cpp (ParseComplexAtomPrimitive): Fix PR#1364604 for
+	no default value for "X" primative (should default to one
+	connection if no number is specified).
+
 	* ChangeLog.1.x: New file, contains changes for 1.x releases.
 
 	* Doxyfile: Update to allow 2.1 documentation generation.
