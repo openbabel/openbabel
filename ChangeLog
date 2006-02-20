@@ -1,3 +1,28 @@
+2006-02-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/formats/pdbformat.cpp: Fix PR#1368851 for PDB export with
+        large coordinates. Optionally shifts coordinates if needed.
+
+        * src/mol.h: Fix PR#1373650 -- return NULL if no coordinate array
+        is available. Prevents segfault.
+
+        * src/atom.cpp (GetResidue): Make sure to return NULL if chains
+        perception fails.
+
+        * src/chains.cpp: If only one residue is found, and it's UNK, it's
+        probably not a residue, so nuke it. 
+
+        * src/formats/mol2format.cpp: Combined with two above fixes,
+        ensure atom labels are printed correctly for mol2 files. All three
+        fix PR#1371789.
+
+        * src/obconversion.cpp: Update documentation to point out
+        workaround for PR#1368969 with static members of OBConversion --
+        declare dummy variable to make sure LoadFormatFiles() has been called.
+
+	* tools/obxyz.cpp: New program to allow cartesian transformations
+	(translations, rotations).
+
 2006-02-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* residue.h, residue.cpp: Move residue property definitions into
