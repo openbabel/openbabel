@@ -36,145 +36,162 @@ void GenerateRingReference();
 
 int main(int argc,char *argv[])
 {
-    if (argc != 1)
+  if (argc != 1)
     {
-        if (strncmp(argv[1], "-g", 2))
+      if (strncmp(argv[1], "-g", 2))
         {
-            cout << "Usage: ringtest" << endl;
-            cout << "   Tests Open Babel ring perception testing." << endl;
-            return 0;
+	  cout << "Usage: ringtest" << endl;
+	  cout << "   Tests Open Babel ring perception testing." << endl;
+	  return 0;
         }
-        else
+      else
         {
-            GenerateRingReference();
-            return 0;
+	  GenerateRingReference();
+	  return 0;
         }
     }
 
-    cout << endl << "Testing RINGS..." << endl;
+  cout << "# Testing ring perception..." << endl;
 
 #ifdef TESTDATADIR
 
-    string testdatadir = TESTDATADIR;
-    string results_file = testdatadir + "ringresults.txt";
-    string smilestypes_file = testdatadir + "attype.00.smi";
+  string testdatadir = TESTDATADIR;
+  string results_file = testdatadir + "ringresults.txt";
+  string smilestypes_file = testdatadir + "attype.00.smi";
 #else
 
-    string results_file = "ringresults.txt";
-    string smilestypes_file = "attype.00.smi";
+  string results_file = "ringresults.txt";
+  string smilestypes_file = "attype.00.smi";
 #endif
 
-    std::ifstream mifs;
-    if (!SafeOpen(mifs, (char*)smilestypes_file.c_str()))
+  std::ifstream mifs;
+  if (!SafeOpen(mifs, (char*)smilestypes_file.c_str()))
     {
-        return -1; // test failed
+      cout << "Bail out! Cannot read file " << smilestypes_file << endl;
+      return -1; // test failed
     }
 
-    std::ifstream rifs;
-    if (!SafeOpen(rifs, (char*)results_file.c_str()))
+  std::ifstream rifs;
+  if (!SafeOpen(rifs, (char*)results_file.c_str()))
     {
-        return -1; // test failed
+      cout << "Bail out! Cannot read file " << results_file << endl;
+      return -1; // test failed
     }
 
-    unsigned int size;
-    OBBond *bond;
-    OBAtom *atom;
-    int count;
-    char buffer[BUFF_SIZE];
-    vector<string> vs;
-    vector<OBRing*> vr;
-    vector<bool> vb;
-    vector<int> vi;
-    OBMol mol;
-    vector<string>::iterator i;
-    vector<OBEdgeBase*>::iterator j;
-    vector<OBNodeBase*>::iterator k;
-    vector<OBRing*>::iterator m;
-    OBConversion conv(&mifs, &cout);
+  unsigned int size;
+  OBBond *bond;
+  OBAtom *atom;
+  int count;
+  char buffer[BUFF_SIZE];
+  vector<string> vs;
+  vector<OBRing*> vr;
+  vector<bool> vb;
+  vector<int> vi;
+  OBMol mol;
+  vector<string>::iterator i;
+  vector<OBEdgeBase*>::iterator j;
+  vector<OBNodeBase*>::iterator k;
+  vector<OBRing*>::iterator m;
+  OBConversion conv(&mifs, &cout);
+  unsigned int currentTest = 1;
 
-    if(! conv.SetInAndOutFormats("SMI","SMI"))
+  if(! conv.SetInAndOutFormats("SMI","SMI"))
     {
-        ThrowError("SMILES format is not loaded");
-        return -1;
+      cout << "Bail out! SMILES format is not loaded" << endl;
+      return -1;
     }
 
-    for (;mifs;)
+  for (;mifs;)
     {
-        mol.Clear();
-        conv.Read(&mol);
-        if (mol.Empty())
-            continue;
-        if (!rifs.getline(buffer,BUFF_SIZE))
+      mol.Clear();
+      conv.Read(&mol);
+      if (mol.Empty())
+	continue;
+      if (!rifs.getline(buffer,BUFF_SIZE))
         {
-            ThrowError("error reading reference data");
-            return -1; // test failed
+	  cout << "Bail out! error reading reference data" << endl;
+	  return -1; // test failed
         }
 
-        vb.clear();
-        vb.resize(mol.NumBonds(),false);
-        //check ring bonds
-        tokenize(vs,buffer);
-        for (i = vs.begin();i != vs.end();i++)
-            vb[atoi((char*)i->c_str())] = true;
+      vb.clear();
+      vb.resize(mol.NumBonds(),false);
+      //check ring bonds
+      tokenize(vs,buffer);
+      for (i = vs.begin();i != vs.end();i++)
+	vb[atoi((char*)i->c_str())] = true;
 
-        for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
-            if (vb[bond->GetIdx()] != bond->IsInRing())
+      for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
+	{
+	  if (vb[bond->GetIdx()] != bond->IsInRing())
+	    {
+	      cout << "not ok " << currentTest++
+		   << " # ring bond data different than reference" << endl;
+	      cout << "# Molecule: " << mol.GetTitle() << endl;
+	    }
+	  else
+	    cout << "ok " << currentTest++
+		 << " # correct ring bond data" << endl;
+	}
+
+      vr = mol.GetSSSR();
+      if (!rifs.getline(buffer,BUFF_SIZE))
+        {
+	  cout << "Bail out! error reading reference data" << endl;
+	  return -1; // test failed
+        }
+      sscanf(buffer,"%d",&size);
+      if (vr.size() != size) //check SSSR size
+        {
+	  cout << "not ok " << currentTest++ 
+	       << " # SSSR size different than reference" << endl;
+	  cout << "# Molecule: " << mol.GetTitle() << endl;
+        }
+      else
+	cout << "ok " << currentTest++
+	     << " # SSSR size matches reference" << endl;
+
+      if (!rifs.getline(buffer,BUFF_SIZE))
+        {
+	  cout << "Bail out! error reading reference data" << endl;
+	  return -1; // test failed
+        }
+
+      tokenize(vs,buffer);
+      i = vs.begin();
+      for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
+        {
+	  if (i == vs.end())
             {
-                ThrowError("ring bond data different than reference");
-                ThrowError((char*)mol.GetTitle());
-                return -1; // test failed
+	      cout << "not ok " << currentTest++ << " # error in SSSR count" << endl;
+	      cout << "# Molecule: " << mol.GetTitle() << endl;
             }
+	  else
+	    cout << "ok " << currentTest++ << " # correct SSSR count" << endl;
 
-        vr = mol.GetSSSR();
-        if (!rifs.getline(buffer,BUFF_SIZE))
-        {
-            ThrowError("error reading reference data");
-            return -1; // test failed
-        }
-        sscanf(buffer,"%d",&size);
-        if (vr.size() != size) //check SSSR size
-        {
-            ThrowError("SSSR size different than reference");
-            ThrowError((char*)mol.GetTitle());
-            return -1; // test failed
-        }
+	  count = 0;
+	  for (m = vr.begin();m != vr.end();m++)
+	    if ((*m)->_pathset[atom->GetIdx()])
+	      count++;
 
-        if (!rifs.getline(buffer,BUFF_SIZE))
-        {
-            ThrowError("error reading reference data");
-            return -1; // test failed
-        }
-
-        tokenize(vs,buffer);
-        i = vs.begin();
-        for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
-        {
-            if (i == vs.end())
+	  if (atoi((char*)i->c_str()) != count)
             {
-                ThrowError("Error in SSSR count");
-                ThrowError((char*)mol.GetTitle());
-                return -1; // test failed
+	      cout << "not ok " << currentTest++ << "# ring membership test failed" << endl;
+	      cout << "# Molecule: " << mol.GetTitle() << endl;
             }
-            count = 0;
-            for (m = vr.begin();m != vr.end();m++)
-                if ((*m)->_pathset[atom->GetIdx()])
-                    count++;
+	  else
+	    cout << "ok " << currentTest++ << " # ring membership passed " << endl;
 
-            if (atoi((char*)i->c_str()) != count)
-            {
-                ThrowError("Ring membership test failed");
-                ThrowError((char*)mol.GetTitle());
-                return -1; // test failed
-            }
-
-            i++;
+	  i++;
         }
 
 
     }
 
-    // Passed tests
-    return 0;
+  // return number of tests run
+  cout << "1.." << currentTest - 1 << endl;
+
+  // Passed tests
+  return 0;
 }
 
 void GenerateRingReference()

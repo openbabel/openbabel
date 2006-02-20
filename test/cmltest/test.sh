@@ -5,9 +5,11 @@
 # call, in case the test is called from somewhere eles
 if `env | grep ^builddir > /dev/null 2>&1`; then
    BABEL=$builddir/../src/babel
+   export BABEL_LIBDIR="$builddir/../src/formats/.libs:$builddir/../src/formats/xml/.libs"
 else
    builddir=..
    BABEL=../../src/babel
+   export BABEL_LIBDIR="`pwd`/../../src/formats/.libs:`pwd`/../../src/formats/xml/.libs"
 fi
 
 # test input

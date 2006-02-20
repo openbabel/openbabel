@@ -36,10 +36,10 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-noinst_PROGRAMS = obtest$(EXEEXT) matrixtest$(EXEEXT) \
-	ringtest$(EXEEXT) smartstest$(EXEEXT) roundtrip$(EXEEXT)
+noinst_PROGRAMS = matrixtest$(EXEEXT) ringtest$(EXEEXT) \
+	smartstest$(EXEEXT) roundtrip$(EXEEXT) unitcell$(EXEEXT)
 subdir = test
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -53,10 +53,6 @@ am_matrixtest_OBJECTS = matrixtest.$(OBJEXT)
 matrixtest_OBJECTS = $(am_matrixtest_OBJECTS)
 matrixtest_LDADD = $(LDADD)
 matrixtest_DEPENDENCIES = ../src/libopenbabel.la
-am_obtest_OBJECTS = main.$(OBJEXT) unitcell.$(OBJEXT)
-obtest_OBJECTS = $(am_obtest_OBJECTS)
-obtest_LDADD = $(LDADD)
-obtest_DEPENDENCIES = ../src/libopenbabel.la
 am_ringtest_OBJECTS = ringtest.$(OBJEXT)
 ringtest_OBJECTS = $(am_ringtest_OBJECTS)
 ringtest_LDADD = $(LDADD)
@@ -69,6 +65,10 @@ am_smartstest_OBJECTS = smartstest.$(OBJEXT)
 smartstest_OBJECTS = $(am_smartstest_OBJECTS)
 smartstest_LDADD = $(LDADD)
 smartstest_DEPENDENCIES = ../src/libopenbabel.la
+am_unitcell_OBJECTS = unitcell.$(OBJEXT)
+unitcell_OBJECTS = $(am_unitcell_OBJECTS)
+unitcell_LDADD = $(LDADD)
+unitcell_DEPENDENCIES = ../src/libopenbabel.la
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -80,10 +80,10 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(matrixtest_SOURCES) $(obtest_SOURCES) $(ringtest_SOURCES) \
-	$(roundtrip_SOURCES) $(smartstest_SOURCES)
-DIST_SOURCES = $(matrixtest_SOURCES) $(obtest_SOURCES) \
-	$(ringtest_SOURCES) $(roundtrip_SOURCES) $(smartstest_SOURCES)
+SOURCES = $(matrixtest_SOURCES) $(ringtest_SOURCES) \
+	$(roundtrip_SOURCES) $(smartstest_SOURCES) $(unitcell_SOURCES)
+DIST_SOURCES = $(matrixtest_SOURCES) $(ringtest_SOURCES) \
+	$(roundtrip_SOURCES) $(smartstest_SOURCES) $(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -160,6 +160,9 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
+PERL_TESTS_FALSE = @PERL_TESTS_FALSE@
+PERL_TESTS_TRUE = @PERL_TESTS_TRUE@
+PROVE = @PROVE@
 PYTHON = @PYTHON@
 RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
@@ -214,14 +217,27 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = cmltest
+# Standard automake tests
+@PERL_TESTS_FALSE@TESTS = matrixtest smartstest ringtest unitcell \
+@PERL_TESTS_FALSE@	$(top_srcdir)/test/cml.sh $(top_srcdir)/test/test-set.sh
+
+
+# Use perl's "prove" script and some wrapper .pl scripts to run tests
+# (This provides a nicer summary and verbose results on request)
+@PERL_TESTS_TRUE@TESTS = wrapper.sh
 LDADD = ../src/libopenbabel.la @LIBDL@
 AM_CPPFLAGS = -I$(top_srcdir)/src -DTESTDATADIR="\"$(top_srcdir)/test/\""
-EXTRA_DIST = smartsresults.txt smartstest.txt unitcell.txt ringresults.txt attype.00.smi cml.sh test-set.sh
-TESTS = matrixtest smartstest ringtest obtest $(top_srcdir)/test/cml.sh $(top_srcdir)/test/test-set.sh
-obtest_SOURCES = main.cpp unitcell.cpp
+EXTRA_DIST = smartsresults.txt smartstest.txt \
+		unitcell.txt unitcell_results.txt \
+		ringresults.txt attype.00.smi \
+		cml.sh test-set.sh \
+		matrix.pl unitcell.pl rings.pl \
+		smarts.pl test-set.pl cml.pl
+
 matrixtest_SOURCES = matrixtest.cpp
 ringtest_SOURCES = ringtest.cpp
 smartstest_SOURCES = smartstest.cpp
+unitcell_SOURCES = unitcell.cpp
 roundtrip_SOURCES = roundtrip.cpp
 all: all-recursive
 
@@ -266,9 +282,6 @@ clean-noinstPROGRAMS:
 matrixtest$(EXEEXT): $(matrixtest_OBJECTS) $(matrixtest_DEPENDENCIES) 
 	@rm -f matrixtest$(EXEEXT)
 	$(CXXLINK) $(matrixtest_LDFLAGS) $(matrixtest_OBJECTS) $(matrixtest_LDADD) $(LIBS)
-obtest$(EXEEXT): $(obtest_OBJECTS) $(obtest_DEPENDENCIES) 
-	@rm -f obtest$(EXEEXT)
-	$(CXXLINK) $(obtest_LDFLAGS) $(obtest_OBJECTS) $(obtest_LDADD) $(LIBS)
 ringtest$(EXEEXT): $(ringtest_OBJECTS) $(ringtest_DEPENDENCIES) 
 	@rm -f ringtest$(EXEEXT)
 	$(CXXLINK) $(ringtest_LDFLAGS) $(ringtest_OBJECTS) $(ringtest_LDADD) $(LIBS)
@@ -278,6 +291,9 @@ roundtrip$(EXEEXT): $(roundtrip_OBJECTS) $(roundtrip_DEPENDENCIES)
 smartstest$(EXEEXT): $(smartstest_OBJECTS) $(smartstest_DEPENDENCIES) 
 	@rm -f smartstest$(EXEEXT)
 	$(CXXLINK) $(smartstest_LDFLAGS) $(smartstest_OBJECTS) $(smartstest_LDADD) $(LIBS)
+unitcell$(EXEEXT): $(unitcell_OBJECTS) $(unitcell_DEPENDENCIES) 
+	@rm -f unitcell$(EXEEXT)
+	$(CXXLINK) $(unitcell_LDFLAGS) $(unitcell_OBJECTS) $(unitcell_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -285,7 +301,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrixtest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ringtest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/roundtrip.Po@am__quote@

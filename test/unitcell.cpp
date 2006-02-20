@@ -26,27 +26,48 @@ bool SafeOpen(std::ofstream &fs, char *filename);
 using namespace std;
 using namespace OpenBabel;
 
-bool TestUnitCell()
+int main(int argc,char *argv[])
 {
+    if (argc != 1)
+    {
+        cout << "Usage: unitcell" << endl;
+        cout << "   Tests Open Babel unit cell conversions." << endl;
+        return 0;
+    }
+
+    cout << "# Testing unit cell transformations ..." << endl;
+    cout << "1..12" << endl;
+
     double a, b, c, alpha, beta, gamma;
     vector3 v1, v2, v3, v4, v5, v6, v7, v8, v9;
     double x = 0.0, y = 0.0, z = 0.0;
     char buffer[BUFF_SIZE];
-    std::ifstream ifs;
+    std::ifstream ifs, results;
     OBUnitCell cell, cell2;
     vector<vector3> v3Return;
+    vector<string> vs;
+    unsigned int currTest = 1;
 
 #ifdef TESTDATADIR
-
     string testdatadir = TESTDATADIR;
     string unitcell_file = testdatadir + "unitcell.txt";
+    string results_file = testdatadir + "unitcell_results.txt";
 #else
-
     string unitcell_file = "unitcell.txt";
+    string results_file = testdatadir + "unitcell_results.txt";
 #endif
 
     if (!SafeOpen(ifs, (char*)unitcell_file.c_str()))
-        return(false);
+      {
+	cout << "Bail out! Couldn't open test file 'unitcell.txt'" << endl;
+        return(-1);
+      }
+    if (!SafeOpen(results, (char*)results_file.c_str()))
+      {
+	cout << "Bail out! Couldn't open test file 'unitcell_results.txt'" << endl;
+        return(-1);
+      }
+
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%lf %lf %lf",&x, &y, &z);
     v1.Set(x, y, z);
@@ -60,6 +81,7 @@ bool TestUnitCell()
     v3.Set(x, y, z);
 
     cell.SetData(v1, v2, v3);
+
     a = cell.GetA();
     b = cell.GetB();
     c = cell.GetC();
@@ -67,54 +89,83 @@ bool TestUnitCell()
     beta = cell.GetBeta();
     gamma = cell.GetGamma();
 
-    //    cerr << " a: " << a << " b: " << b << " c: " << c << " alpha: " << alpha
-    //	 << " beta: " << beta << " gamma: " << gamma << endl;
+    results.getline(buffer,BUFF_SIZE);
+    tokenize(vs,buffer);
+    if (vs.size() != 6)
+      {
+	cout << "Bail out! Cannot parse results file 'unitcell_results.txt'" 
+	     << endl;
+	return(-1);
+      }
 
+    if ( IsNear(a, atof(vs[0].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # a distance" << endl;
+    else
+      cout << "not ok " << currTest++ << " # a distance" << endl;
+    if ( IsNear(b, atof(vs[1].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # b distance" << endl;
+    else
+      cout << "not ok " << currTest++ << " # b distance" << endl;
+    if ( IsNear(c, atof(vs[2].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # c distance" << endl;
+    else
+      cout << "not ok " << currTest++ << " # c distance" << endl;
+
+    if ( IsNear(alpha, atof(vs[3].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # alpha angle" << endl;
+    else
+      cout << "not ok " << currTest++ << " # alpha angle" << alpha << endl;
+    if ( IsNear(beta, atof(vs[4].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # beta angle" << endl;
+    else
+      cout << "not ok " << currTest++ << " # beta angle " << beta << endl;
+    if ( IsNear(gamma, atof(vs[5].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # gamma angle" << endl;
+    else
+      cout << "not ok " << currTest++ << " # gamma angle: " << gamma << endl;
+
+
+    // check to see if vector and a,b,c methods are equivalent
     cell2.SetData(a, b, c, alpha, beta, gamma);
+
+    if ( IsNear(a, cell2.GetA(), 1.0e-3) )
+      cout << "ok " << currTest++ << " # a distance" << endl;
+    else
+      cout << "not ok " << currTest++ << " # a distance" << endl;
+    if ( IsNear(b, cell2.GetB(), 1.0e-3) )
+      cout << "ok " << currTest++ << " # b distance" << endl;
+    else
+      cout << "not ok " << currTest++ << " # b distance" << endl;
+    if ( IsNear(c, cell2.GetC(), 1.0e-3) )
+      cout << "ok " << currTest++ << " # c distance" << endl;
+    else
+      cout << "not ok " << currTest++ << " # c distance" << endl;
+
+    if ( IsNear(alpha, cell2.GetAlpha(), 1.0e-3) )
+      cout << "ok " << currTest++ << " # a angle" << endl;
+    else
+      cout << "not ok " << currTest++ << " # a angle" << endl;
+    if ( IsNear(beta, cell2.GetBeta(), 1.0e-3) )
+      cout << "ok " << currTest++ << " # beta angle" << endl;
+    else
+      cout << "not ok " << currTest++ << " # beta angle" << endl;
+    if ( IsNear(gamma, cell2.GetGamma(), 1.0e-3) )
+      cout << "ok " << currTest++ << " # gamma angle" << endl;
+    else
+      cout << "not ok " << currTest++ << " # gamma angle" << endl;
+
     v3Return = cell2.GetCellVectors();
     v4 = v3Return[0];
+    //    cout << v4 << endl;
     v5 = v3Return[1];
+    //    cout << v5 << endl;
     v6 = v3Return[2];
-
-    if (cell.GetA() != cell2.GetA() || cell.GetB() != cell2.GetB() ||
-	cell.GetC() != cell2.GetC() || cell.GetAlpha() != cell2.GetAlpha() ||
-	cell.GetBeta() != cell2.GetBeta() || 
-	cell.GetGamma() != cell2.GetGamma())
-      return(false);
-
-    //    cerr << "x: " << v1.x() << " y: " << v1.y() << " z: " << v1.z() << " " <<
-    //      v1.length() << endl;
-    //    cerr << "x: " << v2.x() << " y: " << v2.y() << " z: " << v2.z() << " " <<
-    //  v2.length() << endl;
-    //    cerr << "x: " << v3.x() << " y: " << v3.y() << " z: " << v3.z() << " " <<
-    //  v3.length() << endl;
-    //    cerr << endl;
-
-    //    cerr << "x: " << v4.x() << " y: " << v4.y() << " z: " << v4.z() << " " <<
-    //  v4.length() << endl;
-    //    cerr << "x: " << v5.x() << " y: " << v5.y() << " z: " << v5.z() << " " <<
-    //  v5.length() << endl;
-    //    cerr << "x: " << v6.x() << " y: " << v6.y() << " z: " << v6.z() << " " <<
-    //  v6.length() << endl;
-    //    cerr << endl;
+    //    cout << v6 << endl;
 
     v9 = vector3(1.0f, 1.0f, 1.0f);
     matrix3x3 m = cell2.GetOrthoMatrix();
     v9 *= m;
+    //    cout << v9 << endl;
 
-    //    cerr << "x: " << v9.x() << " y: " << v9.y() << " z: " << v9.z() << " " <<
-    //  v9.length() << endl;    
-    //    cerr << endl;
-
-    const vector3 testV    ( 0.5, 1.0, 1.5 ) ;
-
-    v7 = testV + v1 + v2 + v3;
-    v8 = testV + v4 + v5 + v6;
-
-    //    cerr << "x: " << v7.x() << " y: " << v7.y() << " z: " << v7.z() << " " <<
-    //      v7.length() << endl;
-    //    cerr << "x: " << v8.x() << " y: " << v8.y() << " z: " << v8.z() << " " <<
-    //     v8.length() << endl;
-
-    return(true);
+    return(0); // success
 }

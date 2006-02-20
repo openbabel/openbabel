@@ -2,7 +2,7 @@ Makefile
 ii_files
 libbabel.a
 babel
-obtest
+unitcell
 matrixtest
 smartstest
 ringtest
