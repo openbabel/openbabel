@@ -8,4 +8,7 @@ obprop
 obtanimoto
 obchiral
 obdoc
+obxyz
+obsmi
+obsmi.cpp
 .gdb_history

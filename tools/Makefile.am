@@ -1,7 +1,7 @@
 
 # obdoc is intended to be used for generating file format documentation
 # and is not a general end-user program
-bin_PROGRAMS = obchiral obgrep obrotate obfit obprop # obdoc
+bin_PROGRAMS = obchiral obgrep obrotate obfit obprop obxyz obsmi # obdoc
 
 obgrep_SOURCES = obgrep.cpp
 obgrep_LDADD = ../src/libopenbabel.la @LIBDL@
@@ -17,6 +17,12 @@ obprop_LDADD = ../src/libopenbabel.la @LIBDL@
 
 obchiral_SOURCES = obchiral.cpp
 obchiral_LDADD = ../src/libopenbabel.la @LIBDL@
+
+obsmi_SOURCES = obsmi.cpp
+obsmi_LDADD = ../src/libopenbabel.la @LIBDL@
+
+obxyz_SOURCES = obxyz.cpp
+obxyz_LDADD = ../src/libopenbabel.la @LIBDL@
 
 # obdoc_SOURCES = obdoc.cpp
 # obdoc_LDADD = ../src/libopenbabel.la @LIBDL@
