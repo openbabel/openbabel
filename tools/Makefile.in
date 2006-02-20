@@ -37,7 +37,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = obchiral$(EXEEXT) obgrep$(EXEEXT) obrotate$(EXEEXT) \
-	obfit$(EXEEXT) obprop$(EXEEXT) obxyz$(EXEEXT) obsmi$(EXEEXT)
+	obfit$(EXEEXT) obprop$(EXEEXT) obxyz$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -66,9 +66,6 @@ obprop_DEPENDENCIES = ../src/libopenbabel.la
 am_obrotate_OBJECTS = obrotate.$(OBJEXT)
 obrotate_OBJECTS = $(am_obrotate_OBJECTS)
 obrotate_DEPENDENCIES = ../src/libopenbabel.la
-am_obsmi_OBJECTS = obsmi.$(OBJEXT)
-obsmi_OBJECTS = $(am_obsmi_OBJECTS)
-obsmi_DEPENDENCIES = ../src/libopenbabel.la
 am_obxyz_OBJECTS = obxyz.$(OBJEXT)
 obxyz_OBJECTS = $(am_obxyz_OBJECTS)
 obxyz_DEPENDENCIES = ../src/libopenbabel.la
@@ -84,11 +81,9 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgrep_SOURCES) \
-	$(obprop_SOURCES) $(obrotate_SOURCES) $(obsmi_SOURCES) \
-	$(obxyz_SOURCES)
+	$(obprop_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES)
 DIST_SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgrep_SOURCES) \
-	$(obprop_SOURCES) $(obrotate_SOURCES) $(obsmi_SOURCES) \
-	$(obxyz_SOURCES)
+	$(obprop_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -224,8 +219,9 @@ obprop_SOURCES = obprop.cpp
 obprop_LDADD = ../src/libopenbabel.la @LIBDL@
 obchiral_SOURCES = obchiral.cpp
 obchiral_LDADD = ../src/libopenbabel.la @LIBDL@
-obsmi_SOURCES = obsmi.cpp
-obsmi_LDADD = ../src/libopenbabel.la @LIBDL@
+
+# obsmi_SOURCES = obsmi.cpp
+# obsmi_LDADD = ../src/libopenbabel.la @LIBDL@
 obxyz_SOURCES = obxyz.cpp
 obxyz_LDADD = ../src/libopenbabel.la @LIBDL@
 
@@ -308,9 +304,6 @@ obprop$(EXEEXT): $(obprop_OBJECTS) $(obprop_DEPENDENCIES)
 obrotate$(EXEEXT): $(obrotate_OBJECTS) $(obrotate_DEPENDENCIES) 
 	@rm -f obrotate$(EXEEXT)
 	$(CXXLINK) $(obrotate_LDFLAGS) $(obrotate_OBJECTS) $(obrotate_LDADD) $(LIBS)
-obsmi$(EXEEXT): $(obsmi_OBJECTS) $(obsmi_DEPENDENCIES) 
-	@rm -f obsmi$(EXEEXT)
-	$(CXXLINK) $(obsmi_LDFLAGS) $(obsmi_OBJECTS) $(obsmi_LDADD) $(LIBS)
 obxyz$(EXEEXT): $(obxyz_OBJECTS) $(obxyz_DEPENDENCIES) 
 	@rm -f obxyz$(EXEEXT)
 	$(CXXLINK) $(obxyz_LDFLAGS) $(obxyz_OBJECTS) $(obxyz_LDADD) $(LIBS)
@@ -326,7 +319,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgrep.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obprop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotate.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obsmi.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obxyz.Po@am__quote@
 
 .cpp.o:
