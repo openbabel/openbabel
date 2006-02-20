@@ -341,6 +341,8 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         sprintf(label,"%s%d",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 ++labelcount[atom->GetAtomicNum()]);
+	strcpy(rlabel,"<1>");
+	strcpy(rnum,"1");
 
         str = atom->GetType();
 
@@ -354,18 +356,8 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
         if ( (res = atom->GetResidue()) )
         {
-            // Use original atom names
-
-            sprintf(label,"%s",(char*)res->GetAtomID(atom).c_str());
-            //	        sprintf(label,"%s",(char*)atom->GetType()); // internal type
             strcpy(rlabel,(char*)res->GetName().c_str());
-            //      strcpy(rnum,(char*)res->GetAtomID(atom).c_str());
             sprintf(rnum,"%d",res->GetNum());
-        }
-        else
-        {
-            strcpy(rlabel,"UNK");
-            strcpy(rnum,"1");
         }
 
         sprintf(buffer,"%7d%1s%-6s%12.4f%10.4f%10.4f%1s%-5s%4s%1s %-8s%10.4f",
