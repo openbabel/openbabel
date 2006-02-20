@@ -346,7 +346,10 @@ public:
     //! \return the coordinates as a double*
     double     *GetCoordinate()
     {
+      if (_c)
         return(&(*_c)[_cidx]);
+      else
+	return NULL;
     }
     //! \return the coordinates as a vector3 object
     vector3   &GetVector();
