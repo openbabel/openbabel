@@ -222,6 +222,8 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
 		while(ifs.getline(buffer,BUFF_SIZE))
 		{
+			if(!strncmp(buffer,"$$$$",4))
+				return true;
 			if(!strncmp(buffer,"M  END",6))
 				break;
 			if(strncmp(buffer,"M  CHG",6) && strncmp(buffer,"M  RAD",6) && strncmp(buffer,"M  ISO",6))
