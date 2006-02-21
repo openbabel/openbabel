@@ -16,6 +16,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 
 #include "mol.h"
 #include "typer.h"
@@ -527,7 +528,7 @@ void OBAromaticTyper::ParseLine(const char *buffer)
     OBSmartsPattern *sp;
     char temp_buffer[BUFF_SIZE];
 
-    if (buffer[0] == '#')
+    if (buffer[0] == '#' || !*buffer) //comment and empty lines
         return;
     vector<string> vs;
     tokenize(vs,buffer);

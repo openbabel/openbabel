@@ -16,6 +16,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 
 #include <ctype.h>
 #include <iostream>
@@ -32,7 +33,7 @@ GNU General Public License for more details.
 
 /* Strict syntax checking! */
 // Currently causes problems with aromatic flags in atomtyp.txt
-// #define STRICT
+// #define OB_PARSMART_STRICT
 #define VERBOSE
 
 #ifdef __sgi
@@ -585,7 +586,7 @@ static AtomExpr *ParseSimpleAtomPrimitive( void )
     {
     case '*':
       return BuildAtomLeaf(AL_CONST,True);
-#ifndef STRICT
+#ifndef OB_PARSMART_STRICT
       
     case 'A':
       return BuildAtomLeaf(AL_AROM,False);
@@ -620,7 +621,7 @@ static AtomExpr *ParseSimpleAtomPrimitive( void )
     case 'S':
       return GenerateAromElem(16,False);
       
-#ifndef STRICT
+#ifndef OB_PARSMART_STRICT
       
     case 'a':
       return BuildAtomLeaf(AL_AROM,True);
@@ -666,7 +667,7 @@ static AtomExpr *ParseComplexAtomPrimitive( void )
     case('$'):  if( *LexPtr != '(' )
       return( (AtomExpr*)0 );
       LexPtr++;
-#ifdef STRICT
+#ifdef OB_PARSMART_STRICT
       
       pat = ParseSMARTSPart(AllocPattern(),0);
 #else
@@ -1354,7 +1355,7 @@ static Pattern *SMARTSParser( Pattern *pat, ParseState *stat,
 	  break;
 	  
         case('('):
-#ifdef STRICT
+#ifdef OB_PARSMART_STRICT
 	  if( (prev==-1) || bexpr )
 	    {
 	      LexPtr--;
@@ -1363,7 +1364,7 @@ static Pattern *SMARTSParser( Pattern *pat, ParseState *stat,
 	  pat = SMARTSParser(pat,stat,prev,part);
 	  if( !pat )
 	    return (Pattern*)0;
-#else /* STRICT */
+#else /* OB_PARSMART_STRICT */
 	  
 	  if( bexpr )
 	    {
@@ -1386,7 +1387,7 @@ static Pattern *SMARTSParser( Pattern *pat, ParseState *stat,
 	      if( !pat )
 		return (Pattern*)0;
             }
-#endif /* STRICT */
+#endif /* OB_PARSMART_STRICT */
 	  
 	  if( *LexPtr != ')' )
 	    return ParseSMARTSError(pat,bexpr);
