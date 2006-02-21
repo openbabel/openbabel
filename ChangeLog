@@ -1,3 +1,27 @@
+2006-02-20 Chris Morley <ob@gaseq.co.uk>
+
+	* src/obconversion.cpp(Description): Make dependent on HAVE_LIBZ.
+	
+	* src/parsmart.cpp: Rename STRICT to OB_PARSMART_STRICT because of
+	conflict in VC8. Not used anyway.
+	
+	* src.typer.cpp(OBAromaticTyper::ParseLine): Ignore blank lines
+	to avoid error messages.
+	
+	* src/formats/mdlformat.cpp: Add Trim() after a getline() to remove
+	erroneous CRs when Windows binary mode used. Add m option to 
+	Description.
+	
+	* src/xml/cmlformat.cpp(WriteFormula): Pass copy of OBMol so that
+	can add implicit hydrogen when molecule is an atom.
+	As suggested by Tappani Kinnunen:
+	Added test for NULL pointer in reading Nasa_OldThermo;
+	deleted erroneous xmlTextWriterStartElementNS(); but
+	have not yet added empty dictRef attribute to property
+	(needs more consideration).
+	
+	* src/format/xml/xml.cpp(ReadXML):Skip over non-elements. 		 
+
 2006-02-20  Geoffrey Hutchison  <ghutchis@Alumina.local>
 
 	* src/parsmart.cpp (ParseComplexAtomPrimitive): Fix PR#1364604 for

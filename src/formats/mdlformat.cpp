@@ -15,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 
 #ifdef _WIN32
 #pragma warning (disable : 4786)
@@ -53,6 +54,7 @@ Reads and writes V2000 and V3000 versions\n \
 Write Options, e.g. -x3\n \
  2  output V2000 (default) or\n \
  3  output V3000 (used for >999 atoms/bonds) \n \
+ m  write no properties\n \
 ";
 };
 
@@ -132,9 +134,9 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	  mol.SetDimension(2);
 
 	if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //comment
-	if (strlen(buffer) > 0) {
-	  comment = buffer;
-	}
+  if (strlen(buffer) > 0) {
+    comment = buffer;
+  }
 
   if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //atoms and bonds
   r1 = buffer;
@@ -273,36 +275,37 @@ bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
        }    
     }
 
-    if (comment.length())
-      {
-	OBCommentData *cd = new OBCommentData;
-	cd->SetData(comment);
-	mol.SetData(cd);
-      }
+		if (comment.length())
+  {
+	  OBCommentData *cd = new OBCommentData;
+	  cd->SetData(comment);
+	  mol.SetData(cd);
+  }
+	
+	//Get property lines
+  while (ifs.getline(buffer,BUFF_SIZE)) {
+    if (strstr(buffer,"<")) {
+      string buff(buffer);
+      size_t lt=buff.find("<")+1;
+      size_t rt = buff.find_last_of(">");
+      string attr = buff.substr(lt,rt-lt);
 
-    // Get property lines
-    while (ifs.getline(buffer,BUFF_SIZE)) {
-      if (strstr(buffer,"<")) {
-	string buff(buffer);
-	size_t lt=buff.find("<")+1;
-	size_t rt = buff.find_last_of(">");
-	string attr = buff.substr(lt,rt-lt);
-	
-	// sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
-	getline(ifs, buff);
-	
-	OBPairData *dp = new OBPairData;
-	dp->SetAttribute(attr);
-	dp->SetValue(buff);
-	mol.SetData(dp);
-      }
-      // end RWT    
-      
-      if (!strncmp(buffer,"$$$$",4)) break;
-      if (!strncmp(buffer,"$MOL",4)) break;
+      // sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
+      getline(ifs, buff);
+
+      OBPairData *dp = new OBPairData;
+      dp->SetAttribute(attr);
+      dp->SetValue(Trim(buff));
+      mol.SetData(dp);
+    }
+    // end RWT    
+
+    if (!strncmp(buffer,"$$$$",4)) break;
+    if (!strncmp(buffer,"$MOL",4)) break;
   }
 
   return(true);
+
 }
 
 /////////////////////////////////////////////////////////////////
