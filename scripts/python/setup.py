@@ -54,5 +54,5 @@ setup(name='openbabel',
       author='Geoff Hutchison',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/',
-      py_modules=['openbabel'],
+      py_modules=['openbabel','pyopenbabel'],
       ext_modules=[obExtension])
