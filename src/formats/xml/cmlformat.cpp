@@ -13,6 +13,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 #include "mol.h"
 #include "obconversion.h"
 #include "xml.h"
@@ -97,7 +98,7 @@ private:
 	bool ParseFormula(string& formula, OBMol* pmol);
 	void ReadNasaThermo();
 
-	void WriteFormula(OBMol& mol);
+	void WriteFormula(OBMol mol); //passes copy of mol
 	void WriteMetadataList();
 	string getTimestr();
 	void WriteBondStereo(OBBond* pbond);
@@ -273,7 +274,7 @@ bool CMLFormat::DoElement(const string& name)
 	else if(name=="property")
 	{
 		const char* pattr  = (const char*)xmlTextReaderGetAttribute(reader(), BAD_CAST "dictRef");
-		if(!strcmp(pattr,"Thermo_OldNasa"))
+		if(pattr && !strcmp(pattr,"Thermo_OldNasa"))
 			ReadNasaThermo();
 		else
 			PropertyScalarsNeeded = 1;	
@@ -1379,10 +1380,13 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	return true;
 }
 
-void CMLFormat::WriteFormula(OBMol& mol)
+void CMLFormat::WriteFormula(OBMol mol)
 {
+	//mol is a copy
 	static const xmlChar C_FORMULA[] = "formula";
 	static const xmlChar C_CONCISE[] = "concise";
+	if(mol.NumAtoms()==1)
+		mol.AddHydrogens(false,false);
 	xmlTextWriterStartElementNS(writer(), prefix, C_FORMULA, NULL);
 	xmlTextWriterWriteFormatAttribute(writer(), C_CONCISE,"%s", mol.GetSpacedFormula().c_str());
 	xmlTextWriterEndElement(writer());//formula
@@ -1480,12 +1484,13 @@ void CMLFormat::WriteCrystal(OBMol& mol)
 
 void CMLFormat::WriteProperties(OBMol& mol, bool& propertyListWritten)
 {
+	static const xmlChar C_DICTREF[]      = "dictRef";
 	static const xmlChar C_PROPERTYLIST[] = "propertyList";
 	static const xmlChar C_PROPERTY[]     = "property";
 	static const xmlChar C_SCALAR[]       = "scalar";
 	static const xmlChar C_TITLE[]        = "title";
 
-	xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTYLIST, NULL);
+//	xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTYLIST, NULL);
 	vector<OBGenericData*>::iterator k;
   vector<OBGenericData*> vdata = mol.GetData();
 	for (k = vdata.begin();k != vdata.end();k++)
