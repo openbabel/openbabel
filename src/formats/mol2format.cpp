@@ -331,6 +331,10 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vector<OBNodeBase*>::iterator i;
     vector<int> labelcount;
     labelcount.resize( etab.GetNumberOfElements() );
+
+    ttab.SetFromType("INT");
+    ttab.SetToType("SYB");
+
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
 
@@ -345,9 +349,6 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	strcpy(rnum,"1");
 
         str = atom->GetType();
-
-	ttab.SetFromType("INT");
-	ttab.SetToType("SYB");
         ttab.Translate(str1,str);
 
         //
@@ -356,8 +357,11 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
         if ( (res = atom->GetResidue()) )
         {
-            strcpy(rlabel,(char*)res->GetName().c_str());
-            sprintf(rnum,"%d",res->GetNum());
+	  // use original atom names defined by residue
+	  sprintf(label,"%s",(char*)res->GetAtomID(atom).c_str());
+	  // make sure that residue name includes its number
+	  sprintf(rlabel,"%s%d",res->GetName().c_str(), res->GetNum());
+	  sprintf(rnum,"%d",res->GetNum());
         }
 
         sprintf(buffer,"%7d%1s%-6s%12.4f%10.4f%10.4f%1s%-5s%4s%1s %-8s%10.4f",
