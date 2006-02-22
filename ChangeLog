@@ -9,6 +9,9 @@
 	from residues, add a residue number to each residue name (e.g.,
 	THR1 vs. THR). Should better match mol2 files from Sybyl.
 
+	* data/atomtyp.txt; Add an implicit valence rule for phosphates to
+	fix PR#1403974.
+
 2006-02-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp: Fix PR#1368851 for PDB export with

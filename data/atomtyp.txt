@@ -90,6 +90,7 @@ IMPVAL	[#15D1^2]		3
 IMPVAL  [#15D0]     3
 IMPVAL  [$([#15]=[#6])]         2
 IMPVAL  [pD2]			2
+IMPVAL  [$([#15]=[#8])]		4 # phosphinate (double bond = one valence)
 
 IMPVAL	[#16D4]			4
 IMPVAL	[#16D3]			3
