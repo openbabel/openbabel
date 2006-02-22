@@ -1,3 +1,17 @@
+2006-02-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/data.cpp (AssignBonds): Make sure that OBResidueData calls
+	Init() before starting and some minor cleanups to atom type
+	assignment, exposed by comparing PDB->Mol2 files from Babel and
+	Sybyl. Thanks to Kevin Parkes for the example file.
+
+	* src/formats/mol2format.cpp (WriteMolecule): Add back atom names
+	from residues, add a residue number to each residue name (e.g.,
+	THR1 vs. THR). Should better match mol2 files from Sybyl.
+
+	* data/atomtyp.txt; Add an implicit valence rule for phosphates to
+	fix PR#1403974.
+
 2006-02-22 Chris Morley <ob@gaseq.co.uk>
 
 	* src/formats/mdlformat.cpp: Mod to read files with no M END.
@@ -25,9 +39,9 @@
 	have not yet added empty dictRef attribute to property
 	(needs more consideration).
 	
-	* src/format/xml/xml.cpp(ReadXML):Skip over non-elements. 		 
+	* src/format/xml/xml.cpp(ReadXML):Skip over non-elements.
 
-2006-02-20  Geoffrey Hutchison  <ghutchis@Alumina.local>
+2006-02-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/parsmart.cpp (ParseComplexAtomPrimitive): Fix PR#1364604 for
 	no default value for "X" primative (should default to one
