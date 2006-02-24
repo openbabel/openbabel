@@ -1,3 +1,39 @@
+2006-02-24  Geoffrey Hutchison  <ghutchis@Alumina.local>
+
+	* scripts/Makefile.*: Build with SWIG 1.3.29 and later using
+	-naturalvar feature, which provides smoother access to class data.
+
+	* scripts/openbabel.i: Add access to parsmart.h, obutil.h,
+	math/vector3.h, ring.h, and vectors of int, double, vector3,
+	OBMol, OBBond, OBResidue, and OBRing for eventual 1.1 wrapper
+	release.
+
+	* scripts/perl/* scripts/python/*: As above.
+
+	* src/obconversion.cpp (ReadFile): Fix bug PR#1435777 for crash
+	when calling when only the input format was set -- code mistakenly
+	referenced pOutFormat.
+
+	* src/obutil.h: Add #ifndef SWIG to prevent wrapping of
+	rotate_coords method.
+
+	* src/parsmart.h: Add #ifndef SWIG to prevent wrapping internal
+	struct's used to form the Pattern type.
+
+	* src/math/vector3.h: Add #ifndef SWIG to prevent wrapping
+	center_coords().
+
+	* test/smartsresults.txt: Update to match recent phosphorus typing
+	rules.
+
+	* test/cmltest/test.sh: Make sure to set BABEL_LIBDIR and prevent
+	"make check" errors.
+
+2006-02-22 Chris Morley <ob@gaseq.co.uk>
+
+        * src/formats/mdlformat.cpp: Mod to read files with no M END.
+        Bug found by Hassan Mamdani.
+
 2006-02-22  Geoffrey Hutchison  <ghutchis@Alumina.local>
 
 	* src/data.cpp (AssignBonds): Make sure that OBResidueData calls

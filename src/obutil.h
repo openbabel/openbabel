@@ -170,7 +170,9 @@ public:
 };
 
 //***RMS helper methods***/
+#ifndef SWIG
 OBAPI void  rotate_coords(double*,double m[3][3],int);
+#endif
 OBAPI double calc_rms(double*,double*,unsigned int);
 
 //! \name  String conversion utilities
