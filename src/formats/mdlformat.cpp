@@ -15,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 
 #ifdef _WIN32
 #pragma warning (disable : 4786)
@@ -30,8 +31,8 @@ GNU General Public License for more details.
 #include "chiral.h"
 
 using namespace std;
-
 namespace OpenBabel {
+
   class MOLFormat : public OBMoleculeFormat
   {
     map<OBAtom*,OBChiralData*> _mapcd; // map of ChiralAtoms and their data
@@ -53,7 +54,9 @@ namespace OpenBabel {
 Reads and writes V2000 and V3000 versions\n \
 Write Options, e.g. -x3\n \
  2  output V2000 (default) or\n \
- 3  output V3000 (used for >999 atoms/bonds) \n";
+ 3  output V3000 (used for >999 atoms/bonds) \n \
+ m  write no properties\n \
+";
     };
 
     virtual const char* SpecificationURL()
@@ -77,7 +80,7 @@ Write Options, e.g. -x3\n \
 	    getline(ifs, temp);
 	}while(ifs.good() && temp.substr(0,3)=="$$$" && --n);
       return ifs.good() ? 1 : -1;	
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
@@ -92,6 +95,8 @@ Write Options, e.g. -x3\n \
     bool ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
     bool ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
     bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
+  private:
+    bool HasProperties;
     char* GetTimeDate(char* td);
     map<int,int> indexmap; //relates index in file to index in OBMol
     vector<string> vs;
@@ -218,7 +223,19 @@ Write Options, e.g. -x3\n \
 
 	while(ifs.getline(buffer,BUFF_SIZE))
 	  {
-	    if(!strchr(buffer,'M')) continue;
+	    if(!strncmp(buffer,"$$$$",4))
+	      return true;
+	    if(!strncmp(buffer,"M  END",6))
+	      break;
+	    if(strncmp(buffer,"M  CHG",6) && strncmp(buffer,"M  RAD",6) && strncmp(buffer,"M  ISO",6))
+	      continue;
+	    if(!strncmp(buffer,"S  SKP",6))
+	      {
+		int i = atoi(buffer+6);
+		for(;i>0;--i)
+		  ifs.getline(buffer,BUFF_SIZE);
+		break;
+	      }
 	    r1 = buffer;
 	    int n = atoi((r1.substr(6,3)).c_str()); //entries on this line
 	    if(n==0) break;
@@ -267,8 +284,8 @@ Write Options, e.g. -x3\n \
 	cd->SetData(comment);
 	mol.SetData(cd);
       }
-
-    // Get properties from SD file
+	
+    //Get property lines
     while (ifs.getline(buffer,BUFF_SIZE)) {
       if (strstr(buffer,"<")) {
 	string buff(buffer);
@@ -278,6 +295,7 @@ Write Options, e.g. -x3\n \
 
 	// sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
 	getline(ifs, buff);
+	Trim(buff);
 
 	OBPairData *dp = new OBPairData;
 	dp->SetAttribute(attr);
@@ -291,6 +309,7 @@ Write Options, e.g. -x3\n \
     }
 
     return(true);
+
   }
 
   /////////////////////////////////////////////////////////////////
@@ -301,6 +320,10 @@ Write Options, e.g. -x3\n \
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
+
+    if(pConv->GetOutputIndex()==1)
+      HasProperties=false;
+
     char dimension[3] = "2D";
     if(mol.GetDimension()==3)
       dimension[0]='3';
@@ -436,26 +459,26 @@ Write Options, e.g. -x3\n \
 
     ofs << "M  END" << endl;
 
-
-    // RWT 4/7/2001
-    // now output properties if they exist
-    // MTS 4/17/2001
-    // changed to use new OBGenericData class
-
-    vector<OBGenericData*>::iterator k;
-    vector<OBGenericData*> vdata = mol.GetData();
-    for (k = vdata.begin();k != vdata.end();k++)
-      if ((*k)->GetDataType() == OBGenericDataType::PairData)
-	{
-	  ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
-	  ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
-	}
-
-    // end RWT
-
-    //if(!pConv->IsLast()) $$$$ now written for all molecules, except if option set
-    if(!pConv->IsOption("no$$$$"))	
-      ofs << "$$$$" << endl;
+    if(!pConv->IsOption("m")) //No properties output if option m
+      {
+	vector<OBGenericData*>::iterator k;
+	vector<OBGenericData*> vdata = mol.GetData();
+	for (k = vdata.begin();k != vdata.end();k++)
+	  {
+	    if ((*k)->GetDataType() == OBGenericDataType::PairData)
+	      {
+		HasProperties = true;
+		ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
+		ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
+	      }
+	  }
+      }
+	
+    //Unless option no$$$$ is set, $$$$ is always written between molecules and
+    //at the end any if properties have been output in any molecule.
+    if(!pConv->IsOption("no$$$$"))
+      if(!pConv->IsLast()  || HasProperties  )	
+	ofs << "$$$$" << endl;
 
     return(true);
   }
@@ -568,6 +591,7 @@ Write Options, e.g. -x3\n \
 		//Reversed 12Aug05 as advised by Nick England
 		if(val==2) atom.SetAntiClockwiseStereo();
 		else if(val==1) atom.SetClockwiseStereo();
+		else if(val==3) atom.SetChiral();
 		chiralWatch=true;
 	      }
 	    else if((*itr).substr(0,pos)=="MASS")
@@ -725,7 +749,7 @@ Write Options, e.g. -x3\n \
               CorrectChirality(mol,atom); // will set the stereochem based on input/output atom4refs
 	    }
 
-	    int cfg=0;
+	    int cfg=3; // if we don't know, then it's unspecified
 	    if(atom->IsClockwise())cfg=1;
 	    else if(atom->IsAntiClockwise())cfg=2;
 			
