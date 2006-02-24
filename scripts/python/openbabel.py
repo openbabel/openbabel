@@ -1,22 +1,23 @@
 import sys
-import dl
-sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)
+if sys.platform.find("linux") != -1:
+    import dl
+    sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)
 
-# This file was created automatically by SWIG 1.3.27.
+# This file was created automatically by SWIG 1.3.29.
 # Don't modify this file, modify the SWIG interface instead.
 
 import _openbabel
-
+import new
+new_instancemethod = new.instancemethod
 def _swig_setattr_nondynamic(self,class_type,name,value,static=1):
+    if (name == "thisown"): return self.this.own(value)
     if (name == "this"):
-        if isinstance(value, class_type):
-            self.__dict__[name] = value.this
-            if hasattr(value,"thisown"): self.__dict__["thisown"] = value.thisown
-            del value.thisown
+        if type(value).__name__ == 'PySwigObject':
+            self.__dict__[name] = value
             return
     method = class_type.__swig_setmethods__.get(name,None)
     if method: return method(self,value)
-    if (not static) or hasattr(self,name) or (name == "thisown"):
+    if (not static) or hasattr(self,name):
         self.__dict__[name] = value
     else:
         raise AttributeError("You cannot add attributes to %s" % self)
@@ -25,9 +26,15 @@ def _swig_setattr(self,class_type,name,value):
     return _swig_setattr_nondynamic(self,class_type,name,value,0)
 
 def _swig_getattr(self,class_type,name):
+    if (name == "thisown"): return self.this.own()
     method = class_type.__swig_getmethods__.get(name,None)
     if method: return method(self)
     raise AttributeError,name
+
+def _swig_repr(self):
+    try: strthis = "at 0x%x" %( self.this, )
+    except: strthis = ""
+    return "<%s.%s; proxy of C++ swig::PySwigIterator instance %s>" % (self.__class__.__module__, self.__class__.__name__, strthis,)
 
 import types
 try:
@@ -41,47 +48,407 @@ del types
 
 def _swig_setattr_nondynamic_method(set):
     def set_attr(self,name,value):
-        if hasattr(self,name) or (name in ("this", "thisown")):
+        if (name == "thisown"): return self.this.own(value)
+        if hasattr(self,name) or (name == "this"):
             set(self,name,value)
         else:
             raise AttributeError("You cannot add attributes to %s" % self)
     return set_attr
 
 
-class OBGlobalDataBase(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBGlobalDataBase instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
-    def __init__(self, *args):
-        newobj = _openbabel.new_OBGlobalDataBase(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBGlobalDataBase):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
+class PySwigIterator(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    def __init__(self): raise AttributeError, "No constructor defined"
+    __repr__ = _swig_repr
+    __swig_destroy__ = _openbabel.delete_PySwigIterator
+    __del__ = lambda self : None;
+    def value(*args): return _openbabel.PySwigIterator_value(*args)
+    def incr(*args): return _openbabel.PySwigIterator_incr(*args)
+    def decr(*args): return _openbabel.PySwigIterator_decr(*args)
+    def distance(*args): return _openbabel.PySwigIterator_distance(*args)
+    def equal(*args): return _openbabel.PySwigIterator_equal(*args)
+    def copy(*args): return _openbabel.PySwigIterator_copy(*args)
+    def next(*args): return _openbabel.PySwigIterator_next(*args)
+    def previous(*args): return _openbabel.PySwigIterator_previous(*args)
+    def advance(*args): return _openbabel.PySwigIterator_advance(*args)
+    def __eq__(*args): return _openbabel.PySwigIterator___eq__(*args)
+    def __ne__(*args): return _openbabel.PySwigIterator___ne__(*args)
+    def __iadd__(*args): return _openbabel.PySwigIterator___iadd__(*args)
+    def __isub__(*args): return _openbabel.PySwigIterator___isub__(*args)
+    def __add__(*args): return _openbabel.PySwigIterator___add__(*args)
+    def __sub__(*args): return _openbabel.PySwigIterator___sub__(*args)
+    def __iter__(self): return self
+PySwigIterator_swigregister = _openbabel.PySwigIterator_swigregister
+PySwigIterator_swigregister(PySwigIterator)
 
+class vectorInt(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorInt_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorInt___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorInt___len__(*args)
+    def pop(*args): return _openbabel.vectorInt_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorInt___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorInt___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorInt___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorInt___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorInt___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorInt___setitem__(*args)
+    def append(*args): return _openbabel.vectorInt_append(*args)
+    def empty(*args): return _openbabel.vectorInt_empty(*args)
+    def size(*args): return _openbabel.vectorInt_size(*args)
+    def clear(*args): return _openbabel.vectorInt_clear(*args)
+    def swap(*args): return _openbabel.vectorInt_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorInt_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorInt_begin(*args)
+    def end(*args): return _openbabel.vectorInt_end(*args)
+    def rbegin(*args): return _openbabel.vectorInt_rbegin(*args)
+    def rend(*args): return _openbabel.vectorInt_rend(*args)
+    def pop_back(*args): return _openbabel.vectorInt_pop_back(*args)
+    def erase(*args): return _openbabel.vectorInt_erase(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_vectorInt(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vectorInt_push_back(*args)
+    def front(*args): return _openbabel.vectorInt_front(*args)
+    def back(*args): return _openbabel.vectorInt_back(*args)
+    def assign(*args): return _openbabel.vectorInt_assign(*args)
+    def resize(*args): return _openbabel.vectorInt_resize(*args)
+    def insert(*args): return _openbabel.vectorInt_insert(*args)
+    def reserve(*args): return _openbabel.vectorInt_reserve(*args)
+    def capacity(*args): return _openbabel.vectorInt_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorInt
+    __del__ = lambda self : None;
+vectorInt_swigregister = _openbabel.vectorInt_swigregister
+vectorInt_swigregister(vectorInt)
+
+class vvInt(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vvInt_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vvInt___nonzero__(*args)
+    def __len__(*args): return _openbabel.vvInt___len__(*args)
+    def pop(*args): return _openbabel.vvInt_pop(*args)
+    def __getslice__(*args): return _openbabel.vvInt___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vvInt___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vvInt___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vvInt___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vvInt___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vvInt___setitem__(*args)
+    def append(*args): return _openbabel.vvInt_append(*args)
+    def empty(*args): return _openbabel.vvInt_empty(*args)
+    def size(*args): return _openbabel.vvInt_size(*args)
+    def clear(*args): return _openbabel.vvInt_clear(*args)
+    def swap(*args): return _openbabel.vvInt_swap(*args)
+    def get_allocator(*args): return _openbabel.vvInt_get_allocator(*args)
+    def begin(*args): return _openbabel.vvInt_begin(*args)
+    def end(*args): return _openbabel.vvInt_end(*args)
+    def rbegin(*args): return _openbabel.vvInt_rbegin(*args)
+    def rend(*args): return _openbabel.vvInt_rend(*args)
+    def pop_back(*args): return _openbabel.vvInt_pop_back(*args)
+    def erase(*args): return _openbabel.vvInt_erase(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_vvInt(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vvInt_push_back(*args)
+    def front(*args): return _openbabel.vvInt_front(*args)
+    def back(*args): return _openbabel.vvInt_back(*args)
+    def assign(*args): return _openbabel.vvInt_assign(*args)
+    def resize(*args): return _openbabel.vvInt_resize(*args)
+    def insert(*args): return _openbabel.vvInt_insert(*args)
+    def reserve(*args): return _openbabel.vvInt_reserve(*args)
+    def capacity(*args): return _openbabel.vvInt_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vvInt
+    __del__ = lambda self : None;
+vvInt_swigregister = _openbabel.vvInt_swigregister
+vvInt_swigregister(vvInt)
+
+class vectorDouble(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorDouble_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorDouble___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorDouble___len__(*args)
+    def pop(*args): return _openbabel.vectorDouble_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorDouble___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorDouble___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorDouble___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorDouble___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorDouble___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorDouble___setitem__(*args)
+    def append(*args): return _openbabel.vectorDouble_append(*args)
+    def empty(*args): return _openbabel.vectorDouble_empty(*args)
+    def size(*args): return _openbabel.vectorDouble_size(*args)
+    def clear(*args): return _openbabel.vectorDouble_clear(*args)
+    def swap(*args): return _openbabel.vectorDouble_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorDouble_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorDouble_begin(*args)
+    def end(*args): return _openbabel.vectorDouble_end(*args)
+    def rbegin(*args): return _openbabel.vectorDouble_rbegin(*args)
+    def rend(*args): return _openbabel.vectorDouble_rend(*args)
+    def pop_back(*args): return _openbabel.vectorDouble_pop_back(*args)
+    def erase(*args): return _openbabel.vectorDouble_erase(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_vectorDouble(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vectorDouble_push_back(*args)
+    def front(*args): return _openbabel.vectorDouble_front(*args)
+    def back(*args): return _openbabel.vectorDouble_back(*args)
+    def assign(*args): return _openbabel.vectorDouble_assign(*args)
+    def resize(*args): return _openbabel.vectorDouble_resize(*args)
+    def insert(*args): return _openbabel.vectorDouble_insert(*args)
+    def reserve(*args): return _openbabel.vectorDouble_reserve(*args)
+    def capacity(*args): return _openbabel.vectorDouble_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorDouble
+    __del__ = lambda self : None;
+vectorDouble_swigregister = _openbabel.vectorDouble_swigregister
+vectorDouble_swigregister(vectorDouble)
+
+class vVector3(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vVector3_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vVector3___nonzero__(*args)
+    def __len__(*args): return _openbabel.vVector3___len__(*args)
+    def pop(*args): return _openbabel.vVector3_pop(*args)
+    def __getslice__(*args): return _openbabel.vVector3___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vVector3___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vVector3___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vVector3___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vVector3___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vVector3___setitem__(*args)
+    def append(*args): return _openbabel.vVector3_append(*args)
+    def empty(*args): return _openbabel.vVector3_empty(*args)
+    def size(*args): return _openbabel.vVector3_size(*args)
+    def clear(*args): return _openbabel.vVector3_clear(*args)
+    def swap(*args): return _openbabel.vVector3_swap(*args)
+    def get_allocator(*args): return _openbabel.vVector3_get_allocator(*args)
+    def begin(*args): return _openbabel.vVector3_begin(*args)
+    def end(*args): return _openbabel.vVector3_end(*args)
+    def rbegin(*args): return _openbabel.vVector3_rbegin(*args)
+    def rend(*args): return _openbabel.vVector3_rend(*args)
+    def pop_back(*args): return _openbabel.vVector3_pop_back(*args)
+    def erase(*args): return _openbabel.vVector3_erase(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_vVector3(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vVector3_push_back(*args)
+    def front(*args): return _openbabel.vVector3_front(*args)
+    def back(*args): return _openbabel.vVector3_back(*args)
+    def assign(*args): return _openbabel.vVector3_assign(*args)
+    def resize(*args): return _openbabel.vVector3_resize(*args)
+    def insert(*args): return _openbabel.vVector3_insert(*args)
+    def reserve(*args): return _openbabel.vVector3_reserve(*args)
+    def capacity(*args): return _openbabel.vVector3_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vVector3
+    __del__ = lambda self : None;
+vVector3_swigregister = _openbabel.vVector3_swigregister
+vVector3_swigregister(vVector3)
+
+class vectorMol(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorMol_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorMol___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorMol___len__(*args)
+    def pop(*args): return _openbabel.vectorMol_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorMol___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorMol___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorMol___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorMol___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorMol___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorMol___setitem__(*args)
+    def append(*args): return _openbabel.vectorMol_append(*args)
+    def empty(*args): return _openbabel.vectorMol_empty(*args)
+    def size(*args): return _openbabel.vectorMol_size(*args)
+    def clear(*args): return _openbabel.vectorMol_clear(*args)
+    def swap(*args): return _openbabel.vectorMol_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorMol_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorMol_begin(*args)
+    def end(*args): return _openbabel.vectorMol_end(*args)
+    def rbegin(*args): return _openbabel.vectorMol_rbegin(*args)
+    def rend(*args): return _openbabel.vectorMol_rend(*args)
+    def pop_back(*args): return _openbabel.vectorMol_pop_back(*args)
+    def erase(*args): return _openbabel.vectorMol_erase(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_vectorMol(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vectorMol_push_back(*args)
+    def front(*args): return _openbabel.vectorMol_front(*args)
+    def back(*args): return _openbabel.vectorMol_back(*args)
+    def assign(*args): return _openbabel.vectorMol_assign(*args)
+    def resize(*args): return _openbabel.vectorMol_resize(*args)
+    def insert(*args): return _openbabel.vectorMol_insert(*args)
+    def reserve(*args): return _openbabel.vectorMol_reserve(*args)
+    def capacity(*args): return _openbabel.vectorMol_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorMol
+    __del__ = lambda self : None;
+vectorMol_swigregister = _openbabel.vectorMol_swigregister
+vectorMol_swigregister(vectorMol)
+
+class vectorBond(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorBond_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorBond___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorBond___len__(*args)
+    def pop(*args): return _openbabel.vectorBond_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorBond___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorBond___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorBond___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorBond___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorBond___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorBond___setitem__(*args)
+    def append(*args): return _openbabel.vectorBond_append(*args)
+    def empty(*args): return _openbabel.vectorBond_empty(*args)
+    def size(*args): return _openbabel.vectorBond_size(*args)
+    def clear(*args): return _openbabel.vectorBond_clear(*args)
+    def swap(*args): return _openbabel.vectorBond_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorBond_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorBond_begin(*args)
+    def end(*args): return _openbabel.vectorBond_end(*args)
+    def rbegin(*args): return _openbabel.vectorBond_rbegin(*args)
+    def rend(*args): return _openbabel.vectorBond_rend(*args)
+    def pop_back(*args): return _openbabel.vectorBond_pop_back(*args)
+    def erase(*args): return _openbabel.vectorBond_erase(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_vectorBond(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vectorBond_push_back(*args)
+    def front(*args): return _openbabel.vectorBond_front(*args)
+    def back(*args): return _openbabel.vectorBond_back(*args)
+    def assign(*args): return _openbabel.vectorBond_assign(*args)
+    def resize(*args): return _openbabel.vectorBond_resize(*args)
+    def insert(*args): return _openbabel.vectorBond_insert(*args)
+    def reserve(*args): return _openbabel.vectorBond_reserve(*args)
+    def capacity(*args): return _openbabel.vectorBond_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorBond
+    __del__ = lambda self : None;
+vectorBond_swigregister = _openbabel.vectorBond_swigregister
+vectorBond_swigregister(vectorBond)
+
+class vectorResidue(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorResidue_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorResidue___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorResidue___len__(*args)
+    def pop(*args): return _openbabel.vectorResidue_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorResidue___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorResidue___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorResidue___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorResidue___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorResidue___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorResidue___setitem__(*args)
+    def append(*args): return _openbabel.vectorResidue_append(*args)
+    def empty(*args): return _openbabel.vectorResidue_empty(*args)
+    def size(*args): return _openbabel.vectorResidue_size(*args)
+    def clear(*args): return _openbabel.vectorResidue_clear(*args)
+    def swap(*args): return _openbabel.vectorResidue_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorResidue_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorResidue_begin(*args)
+    def end(*args): return _openbabel.vectorResidue_end(*args)
+    def rbegin(*args): return _openbabel.vectorResidue_rbegin(*args)
+    def rend(*args): return _openbabel.vectorResidue_rend(*args)
+    def pop_back(*args): return _openbabel.vectorResidue_pop_back(*args)
+    def erase(*args): return _openbabel.vectorResidue_erase(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_vectorResidue(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vectorResidue_push_back(*args)
+    def front(*args): return _openbabel.vectorResidue_front(*args)
+    def back(*args): return _openbabel.vectorResidue_back(*args)
+    def assign(*args): return _openbabel.vectorResidue_assign(*args)
+    def resize(*args): return _openbabel.vectorResidue_resize(*args)
+    def insert(*args): return _openbabel.vectorResidue_insert(*args)
+    def reserve(*args): return _openbabel.vectorResidue_reserve(*args)
+    def capacity(*args): return _openbabel.vectorResidue_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorResidue
+    __del__ = lambda self : None;
+vectorResidue_swigregister = _openbabel.vectorResidue_swigregister
+vectorResidue_swigregister(vectorResidue)
+
+class vectorRing(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def iterator(*args): return _openbabel.vectorRing_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _openbabel.vectorRing___nonzero__(*args)
+    def __len__(*args): return _openbabel.vectorRing___len__(*args)
+    def pop(*args): return _openbabel.vectorRing_pop(*args)
+    def __getslice__(*args): return _openbabel.vectorRing___getslice__(*args)
+    def __setslice__(*args): return _openbabel.vectorRing___setslice__(*args)
+    def __delslice__(*args): return _openbabel.vectorRing___delslice__(*args)
+    def __delitem__(*args): return _openbabel.vectorRing___delitem__(*args)
+    def __getitem__(*args): return _openbabel.vectorRing___getitem__(*args)
+    def __setitem__(*args): return _openbabel.vectorRing___setitem__(*args)
+    def append(*args): return _openbabel.vectorRing_append(*args)
+    def empty(*args): return _openbabel.vectorRing_empty(*args)
+    def size(*args): return _openbabel.vectorRing_size(*args)
+    def clear(*args): return _openbabel.vectorRing_clear(*args)
+    def swap(*args): return _openbabel.vectorRing_swap(*args)
+    def get_allocator(*args): return _openbabel.vectorRing_get_allocator(*args)
+    def begin(*args): return _openbabel.vectorRing_begin(*args)
+    def end(*args): return _openbabel.vectorRing_end(*args)
+    def rbegin(*args): return _openbabel.vectorRing_rbegin(*args)
+    def rend(*args): return _openbabel.vectorRing_rend(*args)
+    def pop_back(*args): return _openbabel.vectorRing_pop_back(*args)
+    def erase(*args): return _openbabel.vectorRing_erase(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_vectorRing(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _openbabel.vectorRing_push_back(*args)
+    def front(*args): return _openbabel.vectorRing_front(*args)
+    def back(*args): return _openbabel.vectorRing_back(*args)
+    def assign(*args): return _openbabel.vectorRing_assign(*args)
+    def resize(*args): return _openbabel.vectorRing_resize(*args)
+    def insert(*args): return _openbabel.vectorRing_insert(*args)
+    def reserve(*args): return _openbabel.vectorRing_reserve(*args)
+    def capacity(*args): return _openbabel.vectorRing_capacity(*args)
+    __swig_destroy__ = _openbabel.delete_vectorRing
+    __del__ = lambda self : None;
+vectorRing_swigregister = _openbabel.vectorRing_swigregister
+vectorRing_swigregister(vectorRing)
+
+class OBGlobalDataBase(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args):
+        this = _openbabel.new_OBGlobalDataBase(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBGlobalDataBase
+    __del__ = lambda self : None;
     def Init(*args): return _openbabel.OBGlobalDataBase_Init(*args)
     def GetSize(*args): return _openbabel.OBGlobalDataBase_GetSize(*args)
     def SetReadDirectory(*args): return _openbabel.OBGlobalDataBase_SetReadDirectory(*args)
     def SetEnvironmentVariable(*args): return _openbabel.OBGlobalDataBase_SetEnvironmentVariable(*args)
     def ParseLine(*args): return _openbabel.OBGlobalDataBase_ParseLine(*args)
-
-class OBGlobalDataBasePtr(OBGlobalDataBase):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBGlobalDataBase
-_openbabel.OBGlobalDataBase_swigregister(OBGlobalDataBasePtr)
+OBGlobalDataBase_swigregister = _openbabel.OBGlobalDataBase_swigregister
+OBGlobalDataBase_swigregister(OBGlobalDataBase)
 
 class OBElement(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBElement instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBElement(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
+        this = _openbabel.new_OBElement(*args)
+        try: self.this.append(this)
+        except: self.this = this
     def GetAtomicNum(*args): return _openbabel.OBElement_GetAtomicNum(*args)
     def GetSymbol(*args): return _openbabel.OBElement_GetSymbol(*args)
     def GetCovalentRad(*args): return _openbabel.OBElement_GetCovalentRad(*args)
@@ -95,32 +462,20 @@ class OBElement(object):
     def GetRed(*args): return _openbabel.OBElement_GetRed(*args)
     def GetGreen(*args): return _openbabel.OBElement_GetGreen(*args)
     def GetBlue(*args): return _openbabel.OBElement_GetBlue(*args)
-    def __del__(self, destroy=_openbabel.delete_OBElement):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
-
-class OBElementPtr(OBElement):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBElement
-_openbabel.OBElement_swigregister(OBElementPtr)
+    __swig_destroy__ = _openbabel.delete_OBElement
+    __del__ = lambda self : None;
+OBElement_swigregister = _openbabel.OBElement_swigregister
+OBElement_swigregister(OBElement)
 
 class OBElementTable(OBGlobalDataBase):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBElementTable instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBElementTable(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBElementTable):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
+        this = _openbabel.new_OBElementTable(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBElementTable
+    __del__ = lambda self : None;
     def ParseLine(*args): return _openbabel.OBElementTable_ParseLine(*args)
     def GetNumberOfElements(*args): return _openbabel.OBElementTable_GetNumberOfElements(*args)
     def GetSize(*args): return _openbabel.OBElementTable_GetSize(*args)
@@ -137,51 +492,33 @@ class OBElementTable(OBGlobalDataBase):
     def GetElectronAffinity(*args): return _openbabel.OBElementTable_GetElectronAffinity(*args)
     def GetRGB(*args): return _openbabel.OBElementTable_GetRGB(*args)
     def GetName(*args): return _openbabel.OBElementTable_GetName(*args)
-
-class OBElementTablePtr(OBElementTable):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBElementTable
-_openbabel.OBElementTable_swigregister(OBElementTablePtr)
+OBElementTable_swigregister = _openbabel.OBElementTable_swigregister
+OBElementTable_swigregister(OBElementTable)
 
 class OBIsotopeTable(OBGlobalDataBase):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBIsotopeTable instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBIsotopeTable(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBIsotopeTable):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
+        this = _openbabel.new_OBIsotopeTable(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBIsotopeTable
+    __del__ = lambda self : None;
     def GetSize(*args): return _openbabel.OBIsotopeTable_GetSize(*args)
     def ParseLine(*args): return _openbabel.OBIsotopeTable_ParseLine(*args)
     def GetExactMass(*args): return _openbabel.OBIsotopeTable_GetExactMass(*args)
-
-class OBIsotopeTablePtr(OBIsotopeTable):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBIsotopeTable
-_openbabel.OBIsotopeTable_swigregister(OBIsotopeTablePtr)
+OBIsotopeTable_swigregister = _openbabel.OBIsotopeTable_swigregister
+OBIsotopeTable_swigregister(OBIsotopeTable)
 
 class OBTypeTable(OBGlobalDataBase):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBTypeTable instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBTypeTable(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBTypeTable):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
+        this = _openbabel.new_OBTypeTable(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBTypeTable
+    __del__ = lambda self : None;
     def ParseLine(*args): return _openbabel.OBTypeTable_ParseLine(*args)
     def GetSize(*args): return _openbabel.OBTypeTable_GetSize(*args)
     def SetFromType(*args): return _openbabel.OBTypeTable_SetFromType(*args)
@@ -189,46 +526,136 @@ class OBTypeTable(OBGlobalDataBase):
     def Translate(*args): return _openbabel.OBTypeTable_Translate(*args)
     def GetFromType(*args): return _openbabel.OBTypeTable_GetFromType(*args)
     def GetToType(*args): return _openbabel.OBTypeTable_GetToType(*args)
-
-class OBTypeTablePtr(OBTypeTable):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBTypeTable
-_openbabel.OBTypeTable_swigregister(OBTypeTablePtr)
+OBTypeTable_swigregister = _openbabel.OBTypeTable_swigregister
+OBTypeTable_swigregister(OBTypeTable)
 
 class OBResidueData(OBGlobalDataBase):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBResidueData instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBResidueData(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
+        this = _openbabel.new_OBResidueData(*args)
+        try: self.this.append(this)
+        except: self.this = this
     def ParseLine(*args): return _openbabel.OBResidueData_ParseLine(*args)
     def GetSize(*args): return _openbabel.OBResidueData_GetSize(*args)
     def SetResName(*args): return _openbabel.OBResidueData_SetResName(*args)
     def LookupBO(*args): return _openbabel.OBResidueData_LookupBO(*args)
     def LookupType(*args): return _openbabel.OBResidueData_LookupType(*args)
     def AssignBonds(*args): return _openbabel.OBResidueData_AssignBonds(*args)
-    def __del__(self, destroy=_openbabel.delete_OBResidueData):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
-
-class OBResidueDataPtr(OBResidueData):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBResidueData
-_openbabel.OBResidueData_swigregister(OBResidueDataPtr)
+    __swig_destroy__ = _openbabel.delete_OBResidueData
+    __del__ = lambda self : None;
+OBResidueData_swigregister = _openbabel.OBResidueData_swigregister
+OBResidueData_swigregister(OBResidueData)
 
 FILE_SEP_CHAR = _openbabel.FILE_SEP_CHAR
+class OBStopwatch(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def Start(*args): return _openbabel.OBStopwatch_Start(*args)
+    def Lap(*args): return _openbabel.OBStopwatch_Lap(*args)
+    def Elapsed(*args): return _openbabel.OBStopwatch_Elapsed(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_OBStopwatch(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBStopwatch
+    __del__ = lambda self : None;
+OBStopwatch_swigregister = _openbabel.OBStopwatch_swigregister
+OBStopwatch_swigregister(OBStopwatch)
+
+class OBSqrtTbl(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args):
+        this = _openbabel.new_OBSqrtTbl(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBSqrtTbl
+    __del__ = lambda self : None;
+    def Sqrt(*args): return _openbabel.OBSqrtTbl_Sqrt(*args)
+    def Init(*args): return _openbabel.OBSqrtTbl_Init(*args)
+OBSqrtTbl_swigregister = _openbabel.OBSqrtTbl_swigregister
+OBSqrtTbl_swigregister(OBSqrtTbl)
+
+class DoubleType(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    hi = property(_openbabel.DoubleType_hi_get, _openbabel.DoubleType_hi_set)
+    lo = property(_openbabel.DoubleType_lo_get, _openbabel.DoubleType_lo_set)
+    def __init__(self, *args):
+        this = _openbabel.new_DoubleType(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_DoubleType
+    __del__ = lambda self : None;
+DoubleType_swigregister = _openbabel.DoubleType_swigregister
+DoubleType_swigregister(DoubleType)
+
+DoubleMultiply = _openbabel.DoubleMultiply
+DoubleAdd = _openbabel.DoubleAdd
+DoubleModulus = _openbabel.DoubleModulus
+class OBRandom(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args):
+        this = _openbabel.new_OBRandom(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def Seed(*args): return _openbabel.OBRandom_Seed(*args)
+    def TimeSeed(*args): return _openbabel.OBRandom_TimeSeed(*args)
+    def NextInt(*args): return _openbabel.OBRandom_NextInt(*args)
+    def NextFloat(*args): return _openbabel.OBRandom_NextFloat(*args)
+    __swig_destroy__ = _openbabel.delete_OBRandom
+    __del__ = lambda self : None;
+OBRandom_swigregister = _openbabel.OBRandom_swigregister
+OBRandom_swigregister(OBRandom)
+
+calc_rms = _openbabel.calc_rms
+CleanAtomType = _openbabel.CleanAtomType
+OBCompareInt = _openbabel.OBCompareInt
+OBCompareUnsigned = _openbabel.OBCompareUnsigned
+PI = _openbabel.PI
+RAD_TO_DEG = _openbabel.RAD_TO_DEG
+DEG_TO_RAD = _openbabel.DEG_TO_RAD
+class vector3(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args):
+        this = _openbabel.new_vector3(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def Set(*args): return _openbabel.vector3_Set(*args)
+    def SetX(*args): return _openbabel.vector3_SetX(*args)
+    def SetY(*args): return _openbabel.vector3_SetY(*args)
+    def SetZ(*args): return _openbabel.vector3_SetZ(*args)
+    def Get(*args): return _openbabel.vector3_Get(*args)
+    def __iadd__(*args): return _openbabel.vector3___iadd__(*args)
+    def __isub__(*args): return _openbabel.vector3___isub__(*args)
+    def __idiv__(*args): return _openbabel.vector3___idiv__(*args)
+    def __imul__(*args): return _openbabel.vector3___imul__(*args)
+    def randomUnitVector(*args): return _openbabel.vector3_randomUnitVector(*args)
+    def normalize(*args): return _openbabel.vector3_normalize(*args)
+    def length(*args): return _openbabel.vector3_length(*args)
+    def length_2(*args): return _openbabel.vector3_length_2(*args)
+    def x(*args): return _openbabel.vector3_x(*args)
+    def y(*args): return _openbabel.vector3_y(*args)
+    def z(*args): return _openbabel.vector3_z(*args)
+    def distSq(*args): return _openbabel.vector3_distSq(*args)
+    def createOrthoVector(*args): return _openbabel.vector3_createOrthoVector(*args)
+    __swig_destroy__ = _openbabel.delete_vector3
+    __del__ = lambda self : None;
+vector3_swigregister = _openbabel.vector3_swigregister
+vector3_swigregister(vector3)
+ToUpper = _openbabel.ToUpper
+ToLower = _openbabel.ToLower
+IsNear = _openbabel.IsNear
+IsNearZero = _openbabel.IsNearZero
+
+Point2Plane = _openbabel.Point2Plane
 class OBFormat(object):
-    def __init__(self): raise RuntimeError, "No constructor defined"
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBFormat instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    def __init__(self): raise AttributeError, "No constructor defined"
+    __repr__ = _swig_repr
     def ReadMolecule(*args): return _openbabel.OBFormat_ReadMolecule(*args)
     def ReadChemObject(*args): return _openbabel.OBFormat_ReadChemObject(*args)
     def WriteMolecule(*args): return _openbabel.OBFormat_WriteMolecule(*args)
@@ -241,54 +668,38 @@ class OBFormat(object):
     def Flags(*args): return _openbabel.OBFormat_Flags(*args)
     def SkipObjects(*args): return _openbabel.OBFormat_SkipObjects(*args)
     def MakeNewInstance(*args): return _openbabel.OBFormat_MakeNewInstance(*args)
-    def __del__(self, destroy=_openbabel.delete_OBFormat):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
-
-class OBFormatPtr(OBFormat):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBFormat
-_openbabel.OBFormat_swigregister(OBFormatPtr)
+    __swig_destroy__ = _openbabel.delete_OBFormat
+    __del__ = lambda self : None;
+OBFormat_swigregister = _openbabel.OBFormat_swigregister
+OBFormat_swigregister(OBFormat)
+cvar = _openbabel.cvar
+VZero = cvar.VZero
+VX = cvar.VX
+VY = cvar.VY
+VZ = cvar.VZ
 
 class CharPtrLess(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::CharPtrLess instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __call__(*args): return _openbabel.CharPtrLess___call__(*args)
     def __init__(self, *args):
-        newobj = _openbabel.new_CharPtrLess(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_CharPtrLess):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
-
-class CharPtrLessPtr(CharPtrLess):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = CharPtrLess
-_openbabel.CharPtrLess_swigregister(CharPtrLessPtr)
+        this = _openbabel.new_CharPtrLess(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_CharPtrLess
+    __del__ = lambda self : None;
+CharPtrLess_swigregister = _openbabel.CharPtrLess_swigregister
+CharPtrLess_swigregister(CharPtrLess)
 
 class OBConversion(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBConversion instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBConversion(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBConversion):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
+        this = _openbabel.new_OBConversion(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBConversion
+    __del__ = lambda self : None;
     RegisterFormat = staticmethod(_openbabel.OBConversion_RegisterFormat)
     FindFormat = staticmethod(_openbabel.OBConversion_FindFormat)
     FormatFromExt = staticmethod(_openbabel.OBConversion_FormatFromExt)
@@ -339,34 +750,18 @@ class OBConversion(object):
     def ReadFile(*args): return _openbabel.OBConversion_ReadFile(*args)
     BatchFileName = staticmethod(_openbabel.OBConversion_BatchFileName)
     IncrementedFileName = staticmethod(_openbabel.OBConversion_IncrementedFileName)
-
-class OBConversionPtr(OBConversion):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBConversion
-_openbabel.OBConversion_swigregister(OBConversionPtr)
-
+OBConversion_swigregister = _openbabel.OBConversion_swigregister
+OBConversion_swigregister(OBConversion)
 OBConversion_RegisterFormat = _openbabel.OBConversion_RegisterFormat
-
 OBConversion_FindFormat = _openbabel.OBConversion_FindFormat
-
 OBConversion_FormatFromExt = _openbabel.OBConversion_FormatFromExt
-
 OBConversion_FormatFromMIME = _openbabel.OBConversion_FormatFromMIME
-
 OBConversion_GetNextFormat = _openbabel.OBConversion_GetNextFormat
-
 OBConversion_Description = _openbabel.OBConversion_Description
-
 OBConversion_RegisterOptionParam = _openbabel.OBConversion_RegisterOptionParam
-
 OBConversion_GetOptionParams = _openbabel.OBConversion_GetOptionParams
-
 OBConversion_GetDefaultFormat = _openbabel.OBConversion_GetDefaultFormat
-
 OBConversion_BatchFileName = _openbabel.OBConversion_BatchFileName
-
 OBConversion_IncrementedFileName = _openbabel.OBConversion_IncrementedFileName
 
 NOTREADABLE = _openbabel.NOTREADABLE
@@ -377,18 +772,14 @@ WRITEONEONLY = _openbabel.WRITEONEONLY
 WRITEBINARY = _openbabel.WRITEBINARY
 DEFAULTFORMAT = _openbabel.DEFAULTFORMAT
 class OBResidue(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBResidue instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBResidue(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBResidue):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
+        this = _openbabel.new_OBResidue(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBResidue
+    __del__ = lambda self : None;
     def AddAtom(*args): return _openbabel.OBResidue_AddAtom(*args)
     def InsertAtom(*args): return _openbabel.OBResidue_InsertAtom(*args)
     def RemoveAtom(*args): return _openbabel.OBResidue_RemoveAtom(*args)
@@ -426,13 +817,8 @@ class OBResidue(object):
     def GetData(*args): return _openbabel.OBResidue_GetData(*args)
     def BeginData(*args): return _openbabel.OBResidue_BeginData(*args)
     def EndData(*args): return _openbabel.OBResidue_EndData(*args)
-
-class OBResiduePtr(OBResidue):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBResidue
-_openbabel.OBResidue_swigregister(OBResiduePtr)
+OBResidue_swigregister = _openbabel.OBResidue_swigregister
+OBResidue_swigregister(OBResidue)
 
 OB_4RING_ATOM = _openbabel.OB_4RING_ATOM
 OB_3RING_ATOM = _openbabel.OB_3RING_ATOM
@@ -446,18 +832,14 @@ OB_CHIRAL_ATOM = _openbabel.OB_CHIRAL_ATOM
 OB_POS_CHIRAL_ATOM = _openbabel.OB_POS_CHIRAL_ATOM
 OB_NEG_CHIRAL_ATOM = _openbabel.OB_NEG_CHIRAL_ATOM
 class OBAtom(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBAtom instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBAtom(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBAtom):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
+        this = _openbabel.new_OBAtom(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBAtom
+    __del__ = lambda self : None;
     def Clear(*args): return _openbabel.OBAtom_Clear(*args)
     def SetIdx(*args): return _openbabel.OBAtom_SetIdx(*args)
     def SetHyb(*args): return _openbabel.OBAtom_SetHyb(*args)
@@ -585,13 +967,8 @@ class OBAtom(object):
     def GetData(*args): return _openbabel.OBAtom_GetData(*args)
     def BeginData(*args): return _openbabel.OBAtom_BeginData(*args)
     def EndData(*args): return _openbabel.OBAtom_EndData(*args)
-
-class OBAtomPtr(OBAtom):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBAtom
-_openbabel.OBAtom_swigregister(OBAtomPtr)
+OBAtom_swigregister = _openbabel.OBAtom_swigregister
+OBAtom_swigregister(OBAtom)
 
 OB_AROMATIC_BOND = _openbabel.OB_AROMATIC_BOND
 OB_WEDGE_BOND = _openbabel.OB_WEDGE_BOND
@@ -604,18 +981,14 @@ OB_KDOUBLE_BOND = _openbabel.OB_KDOUBLE_BOND
 OB_KTRIPLE_BOND = _openbabel.OB_KTRIPLE_BOND
 OB_CLOSURE_BOND = _openbabel.OB_CLOSURE_BOND
 class OBBond(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBBond instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBBond(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBBond):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
+        this = _openbabel.new_OBBond(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBBond
+    __del__ = lambda self : None;
     def SetIdx(*args): return _openbabel.OBBond_SetIdx(*args)
     def SetBO(*args): return _openbabel.OBBond_SetBO(*args)
     def SetBegin(*args): return _openbabel.OBBond_SetBegin(*args)
@@ -672,13 +1045,8 @@ class OBBond(object):
     def GetData(*args): return _openbabel.OBBond_GetData(*args)
     def BeginData(*args): return _openbabel.OBBond_BeginData(*args)
     def EndData(*args): return _openbabel.OBBond_EndData(*args)
-
-class OBBondPtr(OBBond):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBBond
-_openbabel.OBBond_swigregister(OBBondPtr)
+OBBond_swigregister = _openbabel.OBBond_swigregister
+OBBond_swigregister(OBBond)
 
 OB_SSSR_MOL = _openbabel.OB_SSSR_MOL
 OB_RINGFLAGS_MOL = _openbabel.OB_RINGFLAGS_MOL
@@ -698,18 +1066,14 @@ OB_TCHARGE_MOL = _openbabel.OB_TCHARGE_MOL
 OB_TSPIN_MOL = _openbabel.OB_TSPIN_MOL
 OB_CURRENT_CONFORMER = _openbabel.OB_CURRENT_CONFORMER
 class OBMol(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBMol instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     def __init__(self, *args):
-        newobj = _openbabel.new_OBMol(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBMol):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
+        this = _openbabel.new_OBMol(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBMol
+    __del__ = lambda self : None;
     def __iadd__(*args): return _openbabel.OBMol___iadd__(*args)
     def ReserveAtoms(*args): return _openbabel.OBMol_ReserveAtoms(*args)
     def CreateAtom(*args): return _openbabel.OBMol_CreateAtom(*args)
@@ -862,19 +1226,13 @@ class OBMol(object):
     def NextResidue(*args): return _openbabel.OBMol_NextResidue(*args)
     def BeginInternalCoord(*args): return _openbabel.OBMol_BeginInternalCoord(*args)
     def NextInternalCoord(*args): return _openbabel.OBMol_NextInternalCoord(*args)
-
-class OBMolPtr(OBMol):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBMol
-_openbabel.OBMol_swigregister(OBMolPtr)
-
+OBMol_swigregister = _openbabel.OBMol_swigregister
+OBMol_swigregister(OBMol)
 OBMol_ClassDescription = _openbabel.OBMol_ClassDescription
 
 class OBInternalCoord(object):
-    def __repr__(self):
-        return "<%s.%s; proxy of C++ OpenBabel::OBInternalCoord instance at %s>" % (self.__class__.__module__, self.__class__.__name__, self.this,)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
     _a = property(_openbabel.OBInternalCoord__a_get, _openbabel.OBInternalCoord__a_set)
     _b = property(_openbabel.OBInternalCoord__b_get, _openbabel.OBInternalCoord__b_set)
     _c = property(_openbabel.OBInternalCoord__c_get, _openbabel.OBInternalCoord__c_set)
@@ -882,42 +1240,146 @@ class OBInternalCoord(object):
     _ang = property(_openbabel.OBInternalCoord__ang_get, _openbabel.OBInternalCoord__ang_set)
     _tor = property(_openbabel.OBInternalCoord__tor_get, _openbabel.OBInternalCoord__tor_set)
     def __init__(self, *args):
-        newobj = _openbabel.new_OBInternalCoord(*args)
-        self.this = newobj.this
-        self.thisown = 1
-        del newobj.thisown
-    def __del__(self, destroy=_openbabel.delete_OBInternalCoord):
-        try:
-            if self.thisown: destroy(self)
-        except: pass
-
-
-class OBInternalCoordPtr(OBInternalCoord):
-    def __init__(self, this):
-        self.this = this
-        if not hasattr(self,"thisown"): self.thisown = 0
-        self.__class__ = OBInternalCoord
-_openbabel.OBInternalCoord_swigregister(OBInternalCoordPtr)
-
+        this = _openbabel.new_OBInternalCoord(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBInternalCoord
+    __del__ = lambda self : None;
+OBInternalCoord_swigregister = _openbabel.OBInternalCoord_swigregister
+OBInternalCoord_swigregister(OBInternalCoord)
 
 CartesianToInternal = _openbabel.CartesianToInternal
-
 InternalToCartesian = _openbabel.InternalToCartesian
-
 NewExtension = _openbabel.NewExtension
 BUFF_SIZE = _openbabel.BUFF_SIZE
-
 get_rmat = _openbabel.get_rmat
-
 ob_make_rmat = _openbabel.ob_make_rmat
-
 qtrfit = _openbabel.qtrfit
-
 superimpose = _openbabel.superimpose
-
-
+class OBRTree(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args):
+        this = _openbabel.new_OBRTree(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBRTree
+    __del__ = lambda self : None;
+    def GetAtomIdx(*args): return _openbabel.OBRTree_GetAtomIdx(*args)
+    def PathToRoot(*args): return _openbabel.OBRTree_PathToRoot(*args)
+OBRTree_swigregister = _openbabel.OBRTree_swigregister
+OBRTree_swigregister(OBRTree)
 tokenize = _openbabel.tokenize
-
 ThrowError = _openbabel.ThrowError
-cvar = _openbabel.cvar
+
+class OBRing(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    _path = property(_openbabel.OBRing__path_get, _openbabel.OBRing__path_set)
+    _pathset = property(_openbabel.OBRing__pathset_get, _openbabel.OBRing__pathset_set)
+    def findCenterAndNormal(*args): return _openbabel.OBRing_findCenterAndNormal(*args)
+    def __init__(self, *args):
+        this = _openbabel.new_OBRing(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def Size(*args): return _openbabel.OBRing_Size(*args)
+    def PathSize(*args): return _openbabel.OBRing_PathSize(*args)
+    def IsMember(*args): return _openbabel.OBRing_IsMember(*args)
+    def IsAromatic(*args): return _openbabel.OBRing_IsAromatic(*args)
+    def IsInRing(*args): return _openbabel.OBRing_IsInRing(*args)
+    def SetParent(*args): return _openbabel.OBRing_SetParent(*args)
+    def GetParent(*args): return _openbabel.OBRing_GetParent(*args)
+    __swig_destroy__ = _openbabel.delete_OBRing
+    __del__ = lambda self : None;
+OBRing_swigregister = _openbabel.OBRing_swigregister
+OBRing_swigregister(OBRing)
+
+CompareRingSize = _openbabel.CompareRingSize
+class OBRingSearch(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args):
+        this = _openbabel.new_OBRingSearch(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBRingSearch
+    __del__ = lambda self : None;
+    def SortRings(*args): return _openbabel.OBRingSearch_SortRings(*args)
+    def RemoveRedundant(*args): return _openbabel.OBRingSearch_RemoveRedundant(*args)
+    def AddRingFromClosure(*args): return _openbabel.OBRingSearch_AddRingFromClosure(*args)
+    def WriteRings(*args): return _openbabel.OBRingSearch_WriteRings(*args)
+    def SaveUniqueRing(*args): return _openbabel.OBRingSearch_SaveUniqueRing(*args)
+    def BeginRings(*args): return _openbabel.OBRingSearch_BeginRings(*args)
+    def EndRings(*args): return _openbabel.OBRingSearch_EndRings(*args)
+OBRingSearch_swigregister = _openbabel.OBRingSearch_swigregister
+OBRingSearch_swigregister(OBRingSearch)
+
+AE_LEAF = _openbabel.AE_LEAF
+AE_RECUR = _openbabel.AE_RECUR
+AE_NOT = _openbabel.AE_NOT
+AE_ANDHI = _openbabel.AE_ANDHI
+AE_OR = _openbabel.AE_OR
+AE_ANDLO = _openbabel.AE_ANDLO
+AL_CONST = _openbabel.AL_CONST
+AL_MASS = _openbabel.AL_MASS
+AL_AROM = _openbabel.AL_AROM
+AL_ELEM = _openbabel.AL_ELEM
+AL_HCOUNT = _openbabel.AL_HCOUNT
+AL_NEGATIVE = _openbabel.AL_NEGATIVE
+AL_POSITIVE = _openbabel.AL_POSITIVE
+AL_CONNECT = _openbabel.AL_CONNECT
+AL_DEGREE = _openbabel.AL_DEGREE
+AL_IMPLICIT = _openbabel.AL_IMPLICIT
+AL_RINGS = _openbabel.AL_RINGS
+AL_SIZE = _openbabel.AL_SIZE
+AL_VALENCE = _openbabel.AL_VALENCE
+AL_CHIRAL = _openbabel.AL_CHIRAL
+AL_HYB = _openbabel.AL_HYB
+AL_CLOCKWISE = _openbabel.AL_CLOCKWISE
+AL_ANTICLOCKWISE = _openbabel.AL_ANTICLOCKWISE
+class OBSmartsPattern(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    __swig_destroy__ = _openbabel.delete_OBSmartsPattern
+    __del__ = lambda self : None;
+    def __init__(self, *args):
+        this = _openbabel.new_OBSmartsPattern(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def NumMatches(*args): return _openbabel.OBSmartsPattern_NumMatches(*args)
+    def NumAtoms(*args): return _openbabel.OBSmartsPattern_NumAtoms(*args)
+    def NumBonds(*args): return _openbabel.OBSmartsPattern_NumBonds(*args)
+    def GetAtomicNum(*args): return _openbabel.OBSmartsPattern_GetAtomicNum(*args)
+    def GetBond(*args): return _openbabel.OBSmartsPattern_GetBond(*args)
+    def GetCharge(*args): return _openbabel.OBSmartsPattern_GetCharge(*args)
+    def GetSMARTS(*args): return _openbabel.OBSmartsPattern_GetSMARTS(*args)
+    def GetVectorBinding(*args): return _openbabel.OBSmartsPattern_GetVectorBinding(*args)
+    def Empty(*args): return _openbabel.OBSmartsPattern_Empty(*args)
+    def IsValid(*args): return _openbabel.OBSmartsPattern_IsValid(*args)
+    def Init(*args): return _openbabel.OBSmartsPattern_Init(*args)
+    def WriteMapList(*args): return _openbabel.OBSmartsPattern_WriteMapList(*args)
+    def Match(*args): return _openbabel.OBSmartsPattern_Match(*args)
+    def RestrictedMatch(*args): return _openbabel.OBSmartsPattern_RestrictedMatch(*args)
+    def GetMapList(*args): return _openbabel.OBSmartsPattern_GetMapList(*args)
+    def GetUMapList(*args): return _openbabel.OBSmartsPattern_GetUMapList(*args)
+    def BeginMList(*args): return _openbabel.OBSmartsPattern_BeginMList(*args)
+    def EndMList(*args): return _openbabel.OBSmartsPattern_EndMList(*args)
+OBSmartsPattern_swigregister = _openbabel.OBSmartsPattern_swigregister
+OBSmartsPattern_swigregister(OBSmartsPattern)
+
+class OBSSMatch(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args):
+        this = _openbabel.new_OBSSMatch(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _openbabel.delete_OBSSMatch
+    __del__ = lambda self : None;
+    def Match(*args): return _openbabel.OBSSMatch_Match(*args)
+OBSSMatch_swigregister = _openbabel.OBSSMatch_swigregister
+OBSSMatch_swigregister(OBSSMatch)
+
+SmartsLexReplace = _openbabel.SmartsLexReplace
+
 
