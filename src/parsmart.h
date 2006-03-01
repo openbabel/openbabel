@@ -57,6 +57,10 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
+  // mark this so that SWIG will not attempt to wrap for scripting languages
+
+#ifndef SWIG
+
 //! \brief A SMARTS parser internal atomic expression
 typedef union _AtomExpr {
     int type;
@@ -164,6 +168,11 @@ typedef struct
     int parts;
 }
 Pattern;
+#else
+// for SWIG, just forward declare that we have some Pattern struct
+// (but this is private and not wrapped for scripting languages)
+struct Pattern;
+#endif
 
 // class introduction in parsmart.cpp
 //! \brief SMARTS (SMiles ARbitrary Target Specification) substructure searching
