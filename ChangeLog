@@ -1,3 +1,17 @@
+2006-03-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+ 	* src/obconversion.cpp (ReadFile): Fix bug PR#1435777 for crash
+	when calling when only the input format was set -- code mistakenly
+	referenced pOutFormat.
+
+	* src/parsmart.h: Add #ifndef SWIG to prevent wrapping internal
+	struct's used to form the Pattern type.
+
+	* src/formats/mdlformat.cpp: Use old-style Trim() syntax to
+	prevent backwards-incompatibility.
+
+	* test/smartsresults.txt: Update to match previous atom type changes.
+
 2006-02-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * src/data.cpp (AssignBonds): Make sure that OBResidueData calls

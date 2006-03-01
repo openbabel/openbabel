@@ -788,7 +788,7 @@ bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
 
   ifstream ifs;
   ios_base::openmode imode = 
-    pOutFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
+    pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
 
   ifs.open(filePath.c_str(),imode);
   if(!ifs)
