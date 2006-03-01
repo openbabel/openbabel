@@ -687,7 +687,7 @@ Write Options, e.g. -x3\n \
     ofs << "  0  0  0     0  0            999 V3000" << endl; //line 4
     ofs << "M  V30 BEGIN CTAB" <<endl;
     ofs	<< "M  V30 COUNTS " << mol.NumAtoms() << " " << mol.NumBonds() 
-	<< " 0 0 " << mol.IsChiral() << " 0" << endl;
+	<< " 0 0 " << mol.IsChiral() << endl;
 	
     ofs << "M  V30 BEGIN ATOM" <<endl;
     OBAtom *atom;
