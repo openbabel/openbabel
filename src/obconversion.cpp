@@ -1203,7 +1203,9 @@ void OBConversion::SetOptions(const char* options, Option_type opttyp)
 typedef std::map<string,int> OPAMapType;
 OPAMapType& OBConversion::OptionParamArray(Option_type typ)
 {
-	static OPAMapType* opa = new OPAMapType[3];
+	static OPAMapType* opa = NULL;
+	if (!opa)
+	  opa = new OPAMapType[3];
 	return opa[typ];
 }
 
