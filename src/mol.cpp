@@ -876,21 +876,21 @@ double OBMol::GetExactMass()
 //! No pair data is stored. Normally use without parameters: GetSpacedFormula()
 string OBMol::GetSpacedFormula(int ones, const char* sp)
 {
-	//Default ones=0, sp=' '. 
-	//Using ones=1 and sp='' will give unspaced formula (and no pair data entry)
- 	// These are the atomic numbers of the elements in alphabetical order.
+  //Default ones=0, sp=' '. 
+  //Using ones=1 and sp='' will give unspaced formula (and no pair data entry)
+  // These are the atomic numbers of the elements in alphabetical order.
   const int NumElements = 110;
   const int alphabetical[NumElements] = {
-   89, 47, 13, 95, 18, 33, 85, 79, 5, 56, 4, 107, 83, 97, 35, 6, 20, 48,
-   58, 98, 17, 96, 27, 24, 55, 29, 105, 66, 68, 99, 63, 9, 26, 100, 87, 31,
-   64, 32, 1, 2, 72, 80, 67, 108, 53, 49, 77, 19, 36, 57, 3, 103, 71, 101,
-   12, 25, 42, 109, 7, 11, 41, 60, 10, 28, 102, 93, 8, 76, 15, 91, 82, 46, 
-   61, 84, 59, 78, 94, 88, 37, 75, 104, 45, 86, 44, 16, 51, 21, 34, 106, 14, 
-   62, 50, 38, 73, 65, 43, 52, 90, 22, 81, 69, 92, 110, 23, 74, 54, 39, 70, 
-   30, 40 };
+    89, 47, 13, 95, 18, 33, 85, 79, 5, 56, 4, 107, 83, 97, 35, 6, 20, 48,
+    58, 98, 17, 96, 27, 24, 55, 29, 105, 66, 68, 99, 63, 9, 26, 100, 87, 31,
+    64, 32, 1, 2, 72, 80, 67, 108, 53, 49, 77, 19, 36, 57, 3, 103, 71, 101,
+    12, 25, 42, 109, 7, 11, 41, 60, 10, 28, 102, 93, 8, 76, 15, 91, 82, 46, 
+    61, 84, 59, 78, 94, 88, 37, 75, 104, 45, 86, 44, 16, 51, 21, 34, 106, 14, 
+    62, 50, 38, 73, 65, 43, 52, 90, 22, 81, 69, 92, 110, 23, 74, 54, 39, 70, 
+    30, 40 };
 
   int atomicCount[NumElements];
-//  int index;
+  //  int index;
 #ifdef HAVE_SSTREAM
   stringstream formula;
 #else
@@ -900,8 +900,12 @@ string OBMol::GetSpacedFormula(int ones, const char* sp)
   for (int i = 0; i < NumElements; i++)
     atomicCount[i] = 0;
 
-  FOR_ATOMS_OF_MOL(a, *this)
-    atomicCount[a->GetAtomicNum() - 1]++;
+  FOR_ATOMS_OF_MOL(a, *this) {
+    int anum = a->GetAtomicNum();
+    if (anum == 1) continue;	// skip explicit hydrogens
+    atomicCount[anum - 1]++;
+    atomicCount[0] += a->ImplicitHydrogenCount() + a->ExplicitHydrogenCount();
+  }
   
   if (atomicCount[5] != 0) // Carbon (i.e. 6 - 1 = 5)
     {
@@ -928,12 +932,12 @@ string OBMol::GetSpacedFormula(int ones, const char* sp)
     {
       if (atomicCount[ alphabetical[j]-1 ] > ones)
 	formula << etab.GetSymbol(alphabetical[j]) << sp 
-	  << atomicCount[ alphabetical[j]-1 ] << sp;
+		<< atomicCount[ alphabetical[j]-1 ] << sp;
       else if (atomicCount[ alphabetical[j]-1 ] == 1)
 	formula << etab.GetSymbol( alphabetical[j] );
     }
 
-	return (formula.str());
+  return (formula.str());
 }
 
 //! Stochoimetric formula (e.g., C4H6O).

@@ -577,6 +577,7 @@ namespace OpenBabel
 
       bool HasFlag(int flag)    { return((_flags & flag) != 0); }
       void SetFlag(int flag)    { _flags |= flag;               }
+      void UnsetFlag(int flag)  { _flags &= (~(flag));          }
 
     public:
       //! Constructor
@@ -608,12 +609,14 @@ namespace OpenBabel
       void SetAromatic()    { SetFlag(OB_AROMATIC_BOND); }
       void SetHash()        { SetFlag(OB_HASH_BOND);     }
       void SetWedge()       { SetFlag(OB_WEDGE_BOND);    }
-      void SetUp()          { SetFlag(OB_TORUP_BOND);    }
-      void SetDown()        { SetFlag(OB_TORDOWN_BOND);  }
+      void SetUp()          { SetFlag(OB_TORUP_BOND);   UnsetFlag(OB_TORDOWN_BOND); }
+      void SetDown()        { SetFlag(OB_TORDOWN_BOND); UnsetFlag(OB_TORUP_BOND);   }
       void SetInRing()      { SetFlag(OB_RING_BOND);     }
       void SetClosure()     { SetFlag(OB_CLOSURE_BOND);  }
 
-      void UnsetAromatic()  { _flags &= (~(OB_AROMATIC_BOND)); }
+      void UnsetUp()        { UnsetFlag(OB_TORUP_BOND);   }
+      void UnsetDown()      { UnsetFlag(OB_TORDOWN_BOND); }
+      void UnsetAromatic()  { UnsetFlag(OB_AROMATIC_BOND);}
       void UnsetKekule()
 	{
 	  _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
