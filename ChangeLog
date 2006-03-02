@@ -1,3 +1,30 @@
+2006-03-02 Craig James <cjames@emolecules.com>
+
+	* src/bitvec.cpp, src/bitvec.h: Added new operator<(bv1, bv2) that
+	returns true if the bits in bv1 are a subset of the bits in bv2.
+
+	* src/dlhandler_unix.cpp (findFiles): Fixed a memory leak.  The
+	code to free the memory was there but had been commented out.
+
+	* src/mol.h, src/mol.cpp: Added functions UnsetUp(), UnsetDown().
+	Modified SetUp() and SetDown() to also invoke UnsetUp() and
+	UnsetDown(), respectively, so that both up and down flags aren't
+	set simultaneously.  Changed UnsetAromatic() to use UnsetFlag().
+
+	* src/mol.cpp (GetSpacedFormula, GetFormula): Molecular Formula
+	was counting only explicit hydrogens, e.g. might report C20H2.
+	Changed to report the total (implicit plus explicit) hydrogen
+	count so that Molecular Formula is correct.
+
+	* src/obconversion.cpp (OptionParamArray): Fixed memory leak.
+
+	* src/formats/mdlformat.cpp (ReadMolecule): Fixed reference to
+	uninitialized memory that caused random behavior.  Reformatted
+	file to correct indenting problems.
+
+	* src/math/vector3.cpp (Comments only): Added comments to
+	CalcTorsionAngle() explaining how it works.
+	
 2006-03-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
  	* src/obconversion.cpp (ReadFile): Fix bug PR#1435777 for crash
