@@ -358,6 +358,17 @@ OBBitVec operator- (OBBitVec &bv1,OBBitVec &bv2)
     return(bv);
 }
 
+bool operator< (const OBBitVec &bv1, const OBBitVec &bv2) 
+{
+    if (bv1._size > bv2._size)	return(false);
+
+    int i;
+    for (i = 0; i < bv1._size; i++)
+      if (bv1._set[i] != (bv1._set[i] & bv2._set[i]))
+	return(false);
+    return(true);
+}  
+
 istream& operator>> ( istream &is, OBBitVec &bv )
 {
     size_t startpos = 0, endpos = 0;

@@ -139,6 +139,7 @@ public:
     friend OBBitVec operator^ (OBBitVec &,OBBitVec &);
     friend OBBitVec operator- (OBBitVec &,OBBitVec &);
     friend bool operator== (const OBBitVec &,const OBBitVec &);
+    friend bool operator< (const OBBitVec &bv1, const OBBitVec &bv2);
 
     friend std::istream& operator>> ( std::istream&, OBBitVec& );
     friend std::ostream& operator<< ( std::ostream&, const OBBitVec& ) ;
