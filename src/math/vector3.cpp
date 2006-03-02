@@ -224,6 +224,17 @@ OBAPI double vectorAngle ( const vector3& v1, const vector3& v2 )
     return((RAD_TO_DEG * acos(dp)));
 }
 
+/*!  This function calculates the tortion angle of three vectors, represented
+  by four points A--B--C--D, i.e. B and C are vertexes, but none of A--B,
+  B--C, and C--D are colinear.  A "tortion angle" is the amount of "twist"
+  or torsion needed around the B--C axis to bring A--B into the same plane
+  as B--C--D.  The torsion is measured by "looking down" the vector B--C so
+  that B is superimposed on C, then noting how far you'd have to rotate
+  A--B to superimpose A over D.  Angles are + in theanticlockwise
+  direction.  The operation is symmetrical in that if you reverse the image
+  (look from C to B and rotate D over A), you get the same answer.
+*/
+
 OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
                         const vector3 &c, const vector3 &d)
 {
