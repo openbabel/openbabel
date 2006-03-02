@@ -98,7 +98,8 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
 	}
     }
 
-  //  free(entries_pp);
+  if (entries_pp)
+    free(entries_pp);
   return count;
 }
 
