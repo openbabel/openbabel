@@ -212,7 +212,9 @@ namespace OpenBabel {
   ///See Marshall Cline's C++ FAQ Lite document, www.parashift.com/c++-faq-lite/". 
   FMapType& OBConversion::FormatsMap()
   {
-    static FMapType* fm = new FMapType;
+    static FMapType* fm = NULL;
+    if (!fm)
+      fm = new FMapType;
     return *fm;
   }
 
@@ -222,7 +224,9 @@ namespace OpenBabel {
   ///See Marshall Cline's C++ FAQ Lite document, www.parashift.com/c++-faq-lite/". 
   FMapType& OBConversion::FormatsMIMEMap()
   {
-    static FMapType* fm = new FMapType;
+    static FMapType* fm = NULL;
+    if (!fm)
+      fm = new FMapType;
     return *fm;
   }
 
@@ -1147,7 +1151,9 @@ namespace OpenBabel {
   typedef std::map<string,int> OPAMapType;
   OPAMapType& OBConversion::OptionParamArray(Option_type typ)
   {
-    static OPAMapType* opa = new OPAMapType[3];
+    static OPAMapType* opa = NULL;
+    if (!opa)
+      opa = new OPAMapType[3];
     return opa[typ];
   }
 
