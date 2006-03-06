@@ -912,7 +912,12 @@ string OBMol::GetFormula()
     atomicCount[i] = 0;
 
   FOR_ATOMS_OF_MOL(a, *this)
-    atomicCount[a->GetAtomicNum() - 1]++;
+    {
+      int anum = a->GetAtomicNum();
+      if (anum == 1) continue;    // skip explicit hydrogens
+      atomicCount[anum - 1]++;
+      atomicCount[0] += a->ImplicitHydrogenCount() + a->ExplicitHydrogenCount();
+    }
   
   if (atomicCount[5] != 0) // Carbon (i.e. 6 - 1 = 5)
     {
