@@ -17,6 +17,7 @@ endif
 
 if !BUILD_SHARED
 noinst_LTLIBRARIES = libformats.la
+libformats_la_LIBADD = inchi/libinchi.la
 libformats_la_SOURCES = \
 	APIInterface.cpp \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
@@ -28,7 +29,8 @@ libformats_la_SOURCES = \
 	fingerprintformat.cpp \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
-	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
+	inchiformat.cpp \
+	jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
 	mol2format.cpp mopacformat.cpp mpdformat.cpp mpqcformat.cpp \
 	nwchemformat.cpp pcmodelformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \

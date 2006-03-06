@@ -216,7 +216,7 @@ am__jaguarformat_la_SOURCES_DIST = jaguarformat.cpp
 @BUILD_SHARED_TRUE@am_jaguarformat_la_OBJECTS = jaguarformat.lo
 jaguarformat_la_OBJECTS = $(am_jaguarformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_jaguarformat_la_rpath = -rpath $(pkglibdir)
-libformats_la_LIBADD =
+@BUILD_SHARED_FALSE@libformats_la_DEPENDENCIES = inchi/libinchi.la
 am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 	PQSformat.cpp alchemyformat.cpp amberformat.cpp \
 	balstformat.cpp bgfformat.cpp boxformat.cpp cacaoformat.cpp \
@@ -610,6 +610,7 @@ EXTRA_DIST = exampleformat.cpp
 # Unfortunately there are a few formats which still cannot compile shared
 # modules (e.g., Cygwin). So we need to keep a duplicate target for "libformats"
 @BUILD_SHARED_FALSE@noinst_LTLIBRARIES = libformats.la
+@BUILD_SHARED_FALSE@libformats_la_LIBADD = inchi/libinchi.la
 @BUILD_SHARED_FALSE@libformats_la_SOURCES = \
 @BUILD_SHARED_FALSE@	APIInterface.cpp \
 @BUILD_SHARED_FALSE@	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
@@ -621,7 +622,8 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_FALSE@	fingerprintformat.cpp \
 @BUILD_SHARED_FALSE@	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 @BUILD_SHARED_FALSE@	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
-@BUILD_SHARED_FALSE@	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
+@BUILD_SHARED_FALSE@	inchiformat.cpp \
+@BUILD_SHARED_FALSE@	jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
 @BUILD_SHARED_FALSE@	mol2format.cpp mopacformat.cpp mpdformat.cpp mpqcformat.cpp \
 @BUILD_SHARED_FALSE@	nwchemformat.cpp pcmodelformat.cpp \
 @BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
