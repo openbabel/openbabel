@@ -1,4 +1,4 @@
-Chemistry::OpenBabel version 1.0
+Chemistry::OpenBabel version 1.1
 ================================
 
 This is a Perl "wrapper" to the Open Babel chemistry library. 

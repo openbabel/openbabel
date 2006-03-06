@@ -1,3 +1,42 @@
+2006-03-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure, configure.in: Change --disable-dynamic-modules to
+	also default when static builds are used.
+
+	* data/resdata.txt: Correct typo -- now used in data.cpp, not pdb.cpp.
+
+	* src/formats/Makefile.*: Make sure libinchi is linked in when
+	compiling without dynamic modules (i.e., !BUILD_SHARED).
+
+	* scripts/*: Update using SWIG-1.3.29, adding in support for
+	OBGeneric data.
+	
+	* test/roundtrip.cpp: Change reading loop to correctly evaluate
+	EOF for files. Eliminates spurious errors with XML files.
+
+	* test/Makefile.am, test/Makefile.in, test/smartstest.sh,
+	test/ringtest.sh: New "wrapper" scripts to set BABEL_LIBDIR before
+	running tests.
+
+2006-03-02 Craig James <cjames@emolecules.com>
+
+	* src/dlhandler_unix.cpp (findFiles): Fixed a memory leak.  The
+	code to free the memory was there but had been commented out.
+
+	* src/mol.cpp (GetFormula): Molecular Formula
+	was counting only explicit hydrogens, e.g. might report C20H2.
+	Changed to report the total (implicit plus explicit) hydrogen
+	count so the formula is correct.
+
+	* src/obconversion.cpp (OptionParamArray): Fixed memory leaks.
+
+	* src/formats/mdlformat.cpp (ReadMolecule): Fixed reference to
+	uninitialized memory that caused random behavior.  Reformatted
+	file to correct indenting problems.
+
+	* src/math/vector3.cpp (Comments only): Added comments to
+	CalcTorsionAngle() explaining how it works.
+	
 2006-03-01  Geoffrey Hutchison  <ghutchis@Alumina.local>
 
 	* src/formats/mdlformat.cpp: Remove final " 0" for REGNO from

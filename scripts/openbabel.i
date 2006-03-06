@@ -10,10 +10,11 @@
 #include "math/vector3.h"
 
 #include "mol.h"
+#include "generic.h"
 #include "ring.h"
 #include "obconversion.h"
-#include "data.h"
 
+#include "data.h"
 #include "parsmart.h"
 %}
 

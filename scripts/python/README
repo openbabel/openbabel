@@ -1,4 +1,4 @@
-openbabel version 1.0
+openbabel version 1.1
 ================================
 
 This is a Python "wrapper" to the Open Babel chemistry library. 

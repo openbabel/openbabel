@@ -89,7 +89,13 @@ private:
 # define SWIGINTERNINLINE SWIGINTERN SWIGINLINE
 #endif
 
-/* exporting methods for Windows DLLs */
+/* exporting methods */
+#if (__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+#  ifndef GCC_HASCLASSVISIBILITY
+#    define GCC_HASCLASSVISIBILITY
+#  endif
+#endif
+
 #ifndef SWIGEXPORT
 # if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
 #   if defined(STATIC_LINKED)
@@ -98,7 +104,11 @@ private:
 #     define SWIGEXPORT __declspec(dllexport)
 #   endif
 # else
-#   define SWIGEXPORT
+#   if defined(__GNUC__) && defined(GCC_HASCLASSVISIBILITY)
+#     define SWIGEXPORT __attribute__ ((visibility("default")))
+#   else
+#     define SWIGEXPORT
+#   endif
 # endif
 #endif
 
@@ -1202,7 +1212,6 @@ SWIG_Py_Void(void)
   return none;
 }
 
-
 /* PySwigClientData */
 
 typedef struct {
@@ -1887,14 +1896,13 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
       if (dictptr != NULL) {
 	PyObject *dict = *dictptr;
 	obj = dict ? PyDict_GetItem(dict, SWIG_This()) : 0;
-      }      
+      } else {
 #ifdef PyWeakref_CheckProxy
-      else if (PyWeakref_CheckProxy(pyobj)) {
-	PyObject *wobj = PyWeakref_GET_OBJECT(pyobj);
-	return wobj ? SWIG_Python_GetSwigThis(wobj) : 0;
-      }
+	if (PyWeakref_CheckProxy(pyobj)) {
+	  PyObject *wobj = PyWeakref_GET_OBJECT(pyobj);
+	  return wobj ? SWIG_Python_GetSwigThis(wobj) : 0;
+	}
 #endif
-      if (!obj) {
 	obj = PyObject_GetAttr(pyobj,SWIG_This());
 	if (obj) {
 	  Py_DECREF(obj);
@@ -1921,7 +1929,6 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
     return (PySwigObject *)obj;
   }
 }
-
 
 /* Acquire a pointer value */
 
@@ -2133,6 +2140,44 @@ SWIG_Python_NewShadowInstance(PySwigClientData *data, PyObject *swig_this)
 #endif
 }
 
+SWIGRUNTIME void
+SWIG_Python_SetSwigThis(PyObject *inst, PyObject *swig_this)
+{
+ PyObject *dict;
+#if (PY_VERSION_HEX >= 0x02020000) && !defined(SWIG_PYTHON_SLOW_GETSET_THIS)
+ PyObject **dictptr = _PyObject_GetDictPtr(inst);
+ if (dictptr != NULL) {
+   dict = *dictptr;
+   if (dict == NULL) {
+     dict = PyDict_New();
+     *dictptr = dict;
+   }
+   PyDict_SetItem(dict, SWIG_This(), swig_this);
+   return;
+ }
+#endif
+ dict = PyObject_GetAttrString(inst, "__dict__");
+ PyDict_SetItem(dict, SWIG_This(), swig_this);
+ Py_DECREF(dict);
+} 
+
+
+SWIGINTERN PyObject *
+SWIG_Python_InitShadowInstance(PyObject *args) {
+  PyObject *obj[2];
+  if (!SWIG_Python_UnpackTuple(args,(char*)"swiginit", 2, 2, obj)) {
+    return NULL;
+  } else {
+    PySwigObject *sthis = SWIG_Python_GetSwigThis(obj[0]);
+    if (sthis) {
+      PySwigObject_append((PyObject*) sthis, obj[1]);
+    } else {
+      SWIG_Python_SetSwigThis(obj[0], obj[1]);
+    }
+    return SWIG_Py_Void();
+  }
+}
+
 /* Create a new pointer object */
 
 SWIGRUNTIME PyObject *
@@ -2250,6 +2295,34 @@ SWIG_Python_SetModule(swig_module_info *swig_module) {
   }
 }
 
+/* The python cached type query */
+SWIGRUNTIME PyObject *
+SWIG_Python_TypeCache() {
+  static PyObject *SWIG_STATIC_POINTER(cache) = PyDict_New();
+  return cache;
+}
+
+SWIGRUNTIME swig_type_info *
+SWIG_Python_TypeQuery(const char *type)
+{
+  PyObject *cache = SWIG_Python_TypeCache();
+  PyObject *key = PyString_FromString(type); 
+  PyObject *obj = PyDict_GetItem(cache, key);
+  swig_type_info *descriptor;
+  if (obj) {
+    descriptor = (swig_type_info *) PyCObject_AsVoidPtr(obj);
+  } else {
+    swig_module_info *swig_module = SWIG_Python_GetModule();
+    descriptor = SWIG_TypeQueryModule(swig_module, swig_module, type);
+    if (descriptor) {
+      obj = PyCObject_FromVoidPtr(descriptor, NULL);
+      PyDict_SetItem(cache, key, obj);
+      Py_DECREF(obj);
+    }
+  }
+  Py_DECREF(key);
+  return descriptor;
+}
 
 /* 
    For backward compatibility only
@@ -2494,8 +2567,14 @@ static swig_module_info swig_module = {swig_types, 109, 0, 0, 0, 0};
 
 #if (PY_VERSION_HEX <= 0x02000000)
 # if !defined(SWIG_PYTHON_CLASSIC)
-#  warning "This python version probably requires to use swig with the '-classic' option"
+#  error "This python version requires to use swig with the '-classic' option"
 # endif
+#endif
+#if (PY_VERSION_HEX <= 0x02020000)
+# error "This python version requires to use swig with the '-nomodern' option"
+#endif
+#if (PY_VERSION_HEX <= 0x02020000)
+# error "This python version requires to use swig with the '-nomodernargs' option"
 #endif
 
 /*-----------------------------------------------
@@ -2579,10 +2658,11 @@ namespace swig {
 #include "math/vector3.h"
 
 #include "mol.h"
+#include "generic.h"
 #include "ring.h"
 #include "obconversion.h"
-#include "data.h"
 
+#include "data.h"
 #include "parsmart.h"
 
 
@@ -5492,10 +5572,10 @@ fail:
 
 
 SWIGINTERN PyObject *PySwigIterator_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_swig__PySwigIterator, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_swig__PySwigIterator, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_vectorInt_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -6462,7 +6542,8 @@ SWIGINTERN PyObject *_wrap_vectorInt_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self
   std::vector<int >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -6472,15 +6553,16 @@ SWIGINTERN PyObject *_wrap_vectorInt_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorInt_erase" "', argument " "1"" of type '" "std::vector<int > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<int > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_erase" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_erase" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
+    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_erase" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<int >::iterator & >(result)),
@@ -6499,8 +6581,10 @@ SWIGINTERN PyObject *_wrap_vectorInt_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self
   std::vector<int >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
-  swig::PySwigIterator *iter3 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -6511,25 +6595,27 @@ SWIGINTERN PyObject *_wrap_vectorInt_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorInt_erase" "', argument " "1"" of type '" "std::vector<int > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<int > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_erase" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_erase" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
+    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_erase" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
+    }
   }
-  if (SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_erase" "', argument " "3"" of type '" "std::vector<int >::iterator""'");
-  }
-  if (iter3) {
-    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter3);
-    arg3 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_erase" "', argument " "3"" of type '" "std::vector<int >::iterator""'");
+    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_erase" "', argument " "3"" of type '" "std::vector<int >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2,arg3);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<int >::iterator & >(result)),
@@ -6556,10 +6642,8 @@ SWIGINTERN PyObject *_wrap_vectorInt_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
       if (_v) {
         return _wrap_vectorInt_erase__SWIG_0(self, args);
       }
@@ -6571,16 +6655,12 @@ SWIGINTERN PyObject *_wrap_vectorInt_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
       if (_v) {
         swig::PySwigIterator *iter = 0;
-        _v = ((SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), 
-              swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-          && iter
-          && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
         if (_v) {
           return _wrap_vectorInt_erase__SWIG_1(self, args);
         }
@@ -6904,7 +6984,8 @@ SWIGINTERN PyObject *_wrap_vectorInt_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
   std::vector<int >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   std::vector<int >::value_type temp3 ;
   int val3 ;
   int ecode3 = 0 ;
@@ -6918,15 +6999,16 @@ SWIGINTERN PyObject *_wrap_vectorInt_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorInt_insert" "', argument " "1"" of type '" "std::vector<int > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<int > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_insert" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_insert" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
+    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_insert" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -6951,7 +7033,8 @@ SWIGINTERN PyObject *_wrap_vectorInt_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
   std::vector<int >::value_type *arg4 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   size_t val3 ;
   int ecode3 = 0 ;
   std::vector<int >::value_type temp4 ;
@@ -6968,15 +7051,16 @@ SWIGINTERN PyObject *_wrap_vectorInt_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorInt_insert" "', argument " "1"" of type '" "std::vector<int > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<int > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_insert" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_insert" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
+    swig::PySwigIterator_T<std::vector<int >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorInt_insert" "', argument " "2"" of type '" "std::vector<int >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -7013,10 +7097,8 @@ SWIGINTERN PyObject *_wrap_vectorInt_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_int(argv[2], NULL);
@@ -7034,10 +7116,8 @@ SWIGINTERN PyObject *_wrap_vectorInt_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<int >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_size_t(argv[2], NULL);
@@ -7137,10 +7217,10 @@ fail:
 
 
 SWIGINTERN PyObject *vectorInt_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_vvInt_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -8117,7 +8197,8 @@ SWIGINTERN PyObject *_wrap_vvInt_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
   std::vector<std::vector<int > >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -8127,15 +8208,16 @@ SWIGINTERN PyObject *_wrap_vvInt_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vvInt_erase" "', argument " "1"" of type '" "std::vector<std::vector<int > > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<std::vector<int > > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_erase" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_erase" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_erase" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<std::vector<int > >::iterator & >(result)),
@@ -8154,8 +8236,10 @@ SWIGINTERN PyObject *_wrap_vvInt_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
   std::vector<std::vector<int > >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
-  swig::PySwigIterator *iter3 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -8166,25 +8250,27 @@ SWIGINTERN PyObject *_wrap_vvInt_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vvInt_erase" "', argument " "1"" of type '" "std::vector<std::vector<int > > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<std::vector<int > > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_erase" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_erase" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_erase" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    }
   }
-  if (SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_erase" "', argument " "3"" of type '" "std::vector<std::vector<int > >::iterator""'");
-  }
-  if (iter3) {
-    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter3);
-    arg3 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_erase" "', argument " "3"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_erase" "', argument " "3"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2,arg3);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<std::vector<int > >::iterator & >(result)),
@@ -8211,10 +8297,8 @@ SWIGINTERN PyObject *_wrap_vvInt_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
       if (_v) {
         return _wrap_vvInt_erase__SWIG_0(self, args);
       }
@@ -8226,16 +8310,12 @@ SWIGINTERN PyObject *_wrap_vvInt_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
       if (_v) {
         swig::PySwigIterator *iter = 0;
-        _v = ((SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), 
-              swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-          && iter
-          && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
         if (_v) {
           return _wrap_vvInt_erase__SWIG_1(self, args);
         }
@@ -8575,7 +8655,8 @@ SWIGINTERN PyObject *_wrap_vvInt_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(self), 
   std::vector<std::vector<int > >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   int res3 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -8587,15 +8668,16 @@ SWIGINTERN PyObject *_wrap_vvInt_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vvInt_insert" "', argument " "1"" of type '" "std::vector<std::vector<int > > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<std::vector<int > > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_insert" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_insert" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_insert" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    }
   }
   {
     std::vector<int,std::allocator<int > > *ptr = (std::vector<int,std::allocator<int > > *)0;
@@ -8627,7 +8709,8 @@ SWIGINTERN PyObject *_wrap_vvInt_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(self), 
   std::vector<std::vector<int > >::value_type *arg4 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   size_t val3 ;
   int ecode3 = 0 ;
   int res4 = SWIG_OLDOBJ ;
@@ -8642,15 +8725,16 @@ SWIGINTERN PyObject *_wrap_vvInt_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vvInt_insert" "', argument " "1"" of type '" "std::vector<std::vector<int > > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<std::vector<int > > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_insert" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_insert" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vvInt_insert" "', argument " "2"" of type '" "std::vector<std::vector<int > >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -8694,10 +8778,8 @@ SWIGINTERN PyObject *_wrap_vvInt_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
       if (_v) {
         int res = swig::asptr(argv[2], (std::vector<int,std::allocator<int > >**)(0));
         _v = SWIG_CheckState(res);
@@ -8713,10 +8795,8 @@ SWIGINTERN PyObject *_wrap_vvInt_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<std::vector<int > >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_size_t(argv[2], NULL);
@@ -8814,10 +8894,10 @@ fail:
 
 
 SWIGINTERN PyObject *vvInt_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_vectorDouble_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -9784,7 +9864,8 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(s
   std::vector<double >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -9794,15 +9875,16 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(s
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_erase" "', argument " "1"" of type '" "std::vector<double > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<double > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_erase" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_erase" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
+    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_erase" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<double >::iterator & >(result)),
@@ -9821,8 +9903,10 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(s
   std::vector<double >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
-  swig::PySwigIterator *iter3 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -9833,25 +9917,27 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(s
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_erase" "', argument " "1"" of type '" "std::vector<double > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<double > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_erase" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_erase" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
+    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_erase" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
+    }
   }
-  if (SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_erase" "', argument " "3"" of type '" "std::vector<double >::iterator""'");
-  }
-  if (iter3) {
-    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter3);
-    arg3 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_erase" "', argument " "3"" of type '" "std::vector<double >::iterator""'");
+    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_erase" "', argument " "3"" of type '" "std::vector<double >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2,arg3);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<double >::iterator & >(result)),
@@ -9878,10 +9964,8 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
       if (_v) {
         return _wrap_vectorDouble_erase__SWIG_0(self, args);
       }
@@ -9893,16 +9977,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
       if (_v) {
         swig::PySwigIterator *iter = 0;
-        _v = ((SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), 
-              swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-          && iter
-          && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
         if (_v) {
           return _wrap_vectorDouble_erase__SWIG_1(self, args);
         }
@@ -10226,7 +10306,8 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(
   std::vector<double >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   std::vector<double >::value_type temp3 ;
   double val3 ;
   int ecode3 = 0 ;
@@ -10240,15 +10321,16 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_insert" "', argument " "1"" of type '" "std::vector<double > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<double > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_insert" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_insert" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
+    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_insert" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -10273,7 +10355,8 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(
   std::vector<double >::value_type *arg4 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   size_t val3 ;
   int ecode3 = 0 ;
   std::vector<double >::value_type temp4 ;
@@ -10290,15 +10373,16 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_insert" "', argument " "1"" of type '" "std::vector<double > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<double > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_insert" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_insert" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
+    swig::PySwigIterator_T<std::vector<double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorDouble_insert" "', argument " "2"" of type '" "std::vector<double >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -10335,10 +10419,8 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_double(argv[2], NULL);
@@ -10356,10 +10438,8 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<double >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_size_t(argv[2], NULL);
@@ -10459,10 +10539,10 @@ fail:
 
 
 SWIGINTERN PyObject *vectorDouble_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_vVector3_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -11431,7 +11511,8 @@ SWIGINTERN PyObject *_wrap_vVector3_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self)
   std::vector<OpenBabel::vector3 >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -11441,15 +11522,16 @@ SWIGINTERN PyObject *_wrap_vVector3_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vVector3_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::vector3 > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::vector3 > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::vector3 >::iterator & >(result)),
@@ -11468,8 +11550,10 @@ SWIGINTERN PyObject *_wrap_vVector3_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self)
   std::vector<OpenBabel::vector3 >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
-  swig::PySwigIterator *iter3 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -11480,25 +11564,27 @@ SWIGINTERN PyObject *_wrap_vVector3_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vVector3_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::vector3 > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::vector3 > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    }
   }
-  if (SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
-  }
-  if (iter3) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter3);
-    arg3 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2,arg3);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::vector3 >::iterator & >(result)),
@@ -11525,10 +11611,8 @@ SWIGINTERN PyObject *_wrap_vVector3_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
       if (_v) {
         return _wrap_vVector3_erase__SWIG_0(self, args);
       }
@@ -11540,16 +11624,12 @@ SWIGINTERN PyObject *_wrap_vVector3_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
       if (_v) {
         swig::PySwigIterator *iter = 0;
-        _v = ((SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), 
-              swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-          && iter
-          && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
         if (_v) {
           return _wrap_vVector3_erase__SWIG_1(self, args);
         }
@@ -11873,7 +11953,8 @@ SWIGINTERN PyObject *_wrap_vVector3_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(self
   std::vector<OpenBabel::vector3 >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -11886,15 +11967,16 @@ SWIGINTERN PyObject *_wrap_vVector3_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vVector3_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::vector3 > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::vector3 > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    }
   }
   res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__value_type,  0  | 0);
   if (!SWIG_IsOK(res3)) {
@@ -11921,7 +12003,8 @@ SWIGINTERN PyObject *_wrap_vVector3_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(self
   std::vector<OpenBabel::vector3 >::value_type *arg4 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   size_t val3 ;
   int ecode3 = 0 ;
   void *argp4 = 0 ;
@@ -11937,15 +12020,16 @@ SWIGINTERN PyObject *_wrap_vVector3_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vVector3_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::vector3 > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::vector3 > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vVector3_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::vector3 >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -11984,10 +12068,8 @@ SWIGINTERN PyObject *_wrap_vVector3_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
       if (_v) {
         int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__value_type, 0);
         _v = SWIG_CheckState(res);
@@ -12003,10 +12085,8 @@ SWIGINTERN PyObject *_wrap_vVector3_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::vector3 >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_size_t(argv[2], NULL);
@@ -12104,10 +12184,10 @@ fail:
 
 
 SWIGINTERN PyObject *vVector3_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_vectorMol_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -13076,7 +13156,8 @@ SWIGINTERN PyObject *_wrap_vectorMol_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self
   std::vector<OpenBabel::OBMol >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -13086,15 +13167,16 @@ SWIGINTERN PyObject *_wrap_vectorMol_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorMol_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBMol > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBMol > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBMol >::iterator & >(result)),
@@ -13113,8 +13195,10 @@ SWIGINTERN PyObject *_wrap_vectorMol_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self
   std::vector<OpenBabel::OBMol >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
-  swig::PySwigIterator *iter3 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -13125,25 +13209,27 @@ SWIGINTERN PyObject *_wrap_vectorMol_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorMol_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBMol > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBMol > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    }
   }
-  if (SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
-  }
-  if (iter3) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter3);
-    arg3 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2,arg3);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBMol >::iterator & >(result)),
@@ -13170,10 +13256,8 @@ SWIGINTERN PyObject *_wrap_vectorMol_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
       if (_v) {
         return _wrap_vectorMol_erase__SWIG_0(self, args);
       }
@@ -13185,16 +13269,12 @@ SWIGINTERN PyObject *_wrap_vectorMol_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
       if (_v) {
         swig::PySwigIterator *iter = 0;
-        _v = ((SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), 
-              swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-          && iter
-          && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
         if (_v) {
           return _wrap_vectorMol_erase__SWIG_1(self, args);
         }
@@ -13518,7 +13598,8 @@ SWIGINTERN PyObject *_wrap_vectorMol_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
   std::vector<OpenBabel::OBMol >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -13531,15 +13612,16 @@ SWIGINTERN PyObject *_wrap_vectorMol_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorMol_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBMol > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBMol > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    }
   }
   res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__value_type,  0  | 0);
   if (!SWIG_IsOK(res3)) {
@@ -13566,7 +13648,8 @@ SWIGINTERN PyObject *_wrap_vectorMol_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
   std::vector<OpenBabel::OBMol >::value_type *arg4 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   size_t val3 ;
   int ecode3 = 0 ;
   void *argp4 = 0 ;
@@ -13582,15 +13665,16 @@ SWIGINTERN PyObject *_wrap_vectorMol_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorMol_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBMol > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBMol > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorMol_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBMol >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -13629,10 +13713,8 @@ SWIGINTERN PyObject *_wrap_vectorMol_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
       if (_v) {
         int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__value_type, 0);
         _v = SWIG_CheckState(res);
@@ -13648,10 +13730,8 @@ SWIGINTERN PyObject *_wrap_vectorMol_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBMol >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_size_t(argv[2], NULL);
@@ -13749,10 +13829,10 @@ fail:
 
 
 SWIGINTERN PyObject *vectorMol_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_vectorBond_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -14721,7 +14801,8 @@ SWIGINTERN PyObject *_wrap_vectorBond_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
   std::vector<OpenBabel::OBBond >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -14731,15 +14812,16 @@ SWIGINTERN PyObject *_wrap_vectorBond_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorBond_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBBond > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBBond > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBBond >::iterator & >(result)),
@@ -14758,8 +14840,10 @@ SWIGINTERN PyObject *_wrap_vectorBond_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
   std::vector<OpenBabel::OBBond >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
-  swig::PySwigIterator *iter3 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -14770,25 +14854,27 @@ SWIGINTERN PyObject *_wrap_vectorBond_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorBond_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBBond > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBBond > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    }
   }
-  if (SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
-  }
-  if (iter3) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter3);
-    arg3 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2,arg3);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBBond >::iterator & >(result)),
@@ -14815,10 +14901,8 @@ SWIGINTERN PyObject *_wrap_vectorBond_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
       if (_v) {
         return _wrap_vectorBond_erase__SWIG_0(self, args);
       }
@@ -14830,16 +14914,12 @@ SWIGINTERN PyObject *_wrap_vectorBond_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
       if (_v) {
         swig::PySwigIterator *iter = 0;
-        _v = ((SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), 
-              swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-          && iter
-          && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
         if (_v) {
           return _wrap_vectorBond_erase__SWIG_1(self, args);
         }
@@ -15163,7 +15243,8 @@ SWIGINTERN PyObject *_wrap_vectorBond_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(se
   std::vector<OpenBabel::OBBond >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -15176,15 +15257,16 @@ SWIGINTERN PyObject *_wrap_vectorBond_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorBond_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBBond > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBBond > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    }
   }
   res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__value_type,  0  | 0);
   if (!SWIG_IsOK(res3)) {
@@ -15211,7 +15293,8 @@ SWIGINTERN PyObject *_wrap_vectorBond_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(se
   std::vector<OpenBabel::OBBond >::value_type *arg4 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   size_t val3 ;
   int ecode3 = 0 ;
   void *argp4 = 0 ;
@@ -15227,15 +15310,16 @@ SWIGINTERN PyObject *_wrap_vectorBond_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorBond_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBBond > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBBond > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorBond_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBBond >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -15274,10 +15358,8 @@ SWIGINTERN PyObject *_wrap_vectorBond_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
       if (_v) {
         int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__value_type, 0);
         _v = SWIG_CheckState(res);
@@ -15293,10 +15375,8 @@ SWIGINTERN PyObject *_wrap_vectorBond_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBBond >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_size_t(argv[2], NULL);
@@ -15394,10 +15474,10 @@ fail:
 
 
 SWIGINTERN PyObject *vectorBond_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_vectorResidue_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -16366,7 +16446,8 @@ SWIGINTERN PyObject *_wrap_vectorResidue_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(
   std::vector<OpenBabel::OBResidue >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -16376,15 +16457,16 @@ SWIGINTERN PyObject *_wrap_vectorResidue_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorResidue_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBResidue > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBResidue > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBResidue >::iterator & >(result)),
@@ -16403,8 +16485,10 @@ SWIGINTERN PyObject *_wrap_vectorResidue_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(
   std::vector<OpenBabel::OBResidue >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
-  swig::PySwigIterator *iter3 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -16415,25 +16499,27 @@ SWIGINTERN PyObject *_wrap_vectorResidue_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorResidue_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBResidue > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBResidue > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    }
   }
-  if (SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
-  }
-  if (iter3) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter3);
-    arg3 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2,arg3);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBResidue >::iterator & >(result)),
@@ -16460,10 +16546,8 @@ SWIGINTERN PyObject *_wrap_vectorResidue_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
       if (_v) {
         return _wrap_vectorResidue_erase__SWIG_0(self, args);
       }
@@ -16475,16 +16559,12 @@ SWIGINTERN PyObject *_wrap_vectorResidue_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
       if (_v) {
         swig::PySwigIterator *iter = 0;
-        _v = ((SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), 
-              swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-          && iter
-          && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
         if (_v) {
           return _wrap_vectorResidue_erase__SWIG_1(self, args);
         }
@@ -16808,7 +16888,8 @@ SWIGINTERN PyObject *_wrap_vectorResidue_insert__SWIG_0(PyObject *SWIGUNUSEDPARM
   std::vector<OpenBabel::OBResidue >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -16821,15 +16902,16 @@ SWIGINTERN PyObject *_wrap_vectorResidue_insert__SWIG_0(PyObject *SWIGUNUSEDPARM
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorResidue_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBResidue > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBResidue > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    }
   }
   res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__value_type,  0  | 0);
   if (!SWIG_IsOK(res3)) {
@@ -16856,7 +16938,8 @@ SWIGINTERN PyObject *_wrap_vectorResidue_insert__SWIG_1(PyObject *SWIGUNUSEDPARM
   std::vector<OpenBabel::OBResidue >::value_type *arg4 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   size_t val3 ;
   int ecode3 = 0 ;
   void *argp4 = 0 ;
@@ -16872,15 +16955,16 @@ SWIGINTERN PyObject *_wrap_vectorResidue_insert__SWIG_1(PyObject *SWIGUNUSEDPARM
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorResidue_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBResidue > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBResidue > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorResidue_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBResidue >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -16919,10 +17003,8 @@ SWIGINTERN PyObject *_wrap_vectorResidue_insert(PyObject *self, PyObject *args) 
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
       if (_v) {
         int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__value_type, 0);
         _v = SWIG_CheckState(res);
@@ -16938,10 +17020,8 @@ SWIGINTERN PyObject *_wrap_vectorResidue_insert(PyObject *self, PyObject *args) 
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBResidue >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_size_t(argv[2], NULL);
@@ -17039,10 +17119,10 @@ fail:
 
 
 SWIGINTERN PyObject *vectorResidue_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_vectorRing_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -18011,7 +18091,8 @@ SWIGINTERN PyObject *_wrap_vectorRing_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
   std::vector<OpenBabel::OBRing >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -18021,15 +18102,16 @@ SWIGINTERN PyObject *_wrap_vectorRing_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorRing_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBRing >::iterator & >(result)),
@@ -18048,8 +18130,10 @@ SWIGINTERN PyObject *_wrap_vectorRing_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
   std::vector<OpenBabel::OBRing >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
-  swig::PySwigIterator *iter3 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -18060,25 +18144,27 @@ SWIGINTERN PyObject *_wrap_vectorRing_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorRing_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    }
   }
-  if (SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
-  }
-  if (iter3) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter3);
-    arg3 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    }
   }
   result = (arg1)->erase(arg2,arg3);
   resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBRing >::iterator & >(result)),
@@ -18105,10 +18191,8 @@ SWIGINTERN PyObject *_wrap_vectorRing_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
       if (_v) {
         return _wrap_vectorRing_erase__SWIG_0(self, args);
       }
@@ -18120,16 +18204,12 @@ SWIGINTERN PyObject *_wrap_vectorRing_erase(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
       if (_v) {
         swig::PySwigIterator *iter = 0;
-        _v = ((SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), 
-              swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-          && iter
-          && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
         if (_v) {
           return _wrap_vectorRing_erase__SWIG_1(self, args);
         }
@@ -18453,7 +18533,8 @@ SWIGINTERN PyObject *_wrap_vectorRing_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(se
   std::vector<OpenBabel::OBRing >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -18466,15 +18547,16 @@ SWIGINTERN PyObject *_wrap_vectorRing_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorRing_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    }
   }
   res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__value_type,  0  | 0);
   if (!SWIG_IsOK(res3)) {
@@ -18501,7 +18583,8 @@ SWIGINTERN PyObject *_wrap_vectorRing_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(se
   std::vector<OpenBabel::OBRing >::value_type *arg4 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  swig::PySwigIterator *iter2 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
   size_t val3 ;
   int ecode3 = 0 ;
   void *argp4 = 0 ;
@@ -18517,15 +18600,16 @@ SWIGINTERN PyObject *_wrap_vectorRing_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorRing_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBRing > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector<OpenBabel::OBRing > * >(argp1);
-  if (SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0) != SWIG_OK) {
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
     SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
-  }
-  if (iter2) {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t 
-    = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter2);
-    arg2 = iter_t->get_current();
   } else {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorRing_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBRing >::iterator""'");
+    }
   }
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -18564,10 +18648,8 @@ SWIGINTERN PyObject *_wrap_vectorRing_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
       if (_v) {
         int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__value_type, 0);
         _v = SWIG_CheckState(res);
@@ -18583,10 +18665,8 @@ SWIGINTERN PyObject *_wrap_vectorRing_insert(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
-      _v = ((SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), 
-            swig::PySwigIterator::descriptor(), 0) == SWIG_OK)
-        && iter
-        && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBRing >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_size_t(argv[2], NULL);
@@ -18684,10 +18764,10 @@ fail:
 
 
 SWIGINTERN PyObject *vectorRing_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBGlobalDataBase(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -18868,10 +18948,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBGlobalDataBase_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBGlobalDataBase, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBGlobalDataBase, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBElement__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -19429,10 +19509,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBElement_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBElement, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBElement, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBElementTable(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -20234,10 +20314,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBElementTable_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBElementTable, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBElementTable, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBIsotopeTable(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -20455,10 +20535,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBIsotopeTable_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBIsotopeTable, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBIsotopeTable, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBTypeTable(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -20812,10 +20892,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBTypeTable_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBTypeTable, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBTypeTable, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBResidueData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -21194,10 +21274,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBResidueData_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBResidueData, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBResidueData, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_OBStopwatch_Start(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -21301,10 +21381,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBStopwatch_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBStopwatch, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBStopwatch, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBSqrtTbl__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -21480,10 +21560,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBSqrtTbl_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_DoubleType_hi_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -21628,10 +21708,10 @@ fail:
 
 
 SWIGINTERN PyObject *DoubleType_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__DoubleType, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__DoubleType, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_DoubleMultiply(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -21917,10 +21997,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBRandom_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRandom, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRandom, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_calc_rms(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -23618,10 +23698,10 @@ fail:
 
 
 SWIGINTERN PyObject *vector3_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__vector3, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__vector3, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_Point2Plane(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -24123,10 +24203,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBFormat_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBFormat, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBFormat, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_CharPtrLess___call__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -24211,10 +24291,10 @@ fail:
 
 
 SWIGINTERN PyObject *CharPtrLess_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__CharPtrLess, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__CharPtrLess, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBConversion__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -26757,10 +26837,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBConversion_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBConversion, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBConversion, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBResidue__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -28407,10 +28487,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBResidue_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBResidue, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBResidue, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBAtom(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -32453,10 +32533,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBAtom_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBAtom, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBAtom, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBBond(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -34271,10 +34351,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBBond_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBBond, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBBond, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBMol__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -40288,10 +40368,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBMol_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBMol, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBMol, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_OBInternalCoord__a_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -40803,10 +40883,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBInternalCoord_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBInternalCoord, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBInternalCoord, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_tokenize__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -41786,10 +41866,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBRTree_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRTree, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRTree, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_OBRing__path_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -42366,10 +42446,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBRing_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRing, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRing, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_CompareRingSize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -42643,10 +42723,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBRingSearch_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRingSearch, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBRingSearch, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBSmartsPattern__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -43771,10 +43851,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBSmartsPattern_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBSmartsPattern, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBSmartsPattern, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_new_OBSSMatch(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -43960,10 +44040,10 @@ fail:
 
 
 SWIGINTERN PyObject *OBSSMatch_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-    PyObject *obj;
-    if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-    SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBSSMatch, SWIG_NewClientData(obj));
-    return SWIG_Py_Void();
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBSSMatch, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
 }
 
 SWIGINTERN PyObject *_wrap_SmartsLexReplace(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -45994,43 +46074,43 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "WRITEONEONLY",SWIG_From_int(static_cast< int >(0x20)));
   SWIG_Python_SetConstant(d, "WRITEBINARY",SWIG_From_int(static_cast< int >(0x40)));
   SWIG_Python_SetConstant(d, "DEFAULTFORMAT",SWIG_From_int(static_cast< int >(0x4000)));
-  SWIG_Python_SetConstant(d, "OB_4RING_ATOM",SWIG_From_int(static_cast< int >((1<<1))));
-  SWIG_Python_SetConstant(d, "OB_3RING_ATOM",SWIG_From_int(static_cast< int >((1<<2))));
-  SWIG_Python_SetConstant(d, "OB_AROMATIC_ATOM",SWIG_From_int(static_cast< int >((1<<3))));
-  SWIG_Python_SetConstant(d, "OB_RING_ATOM",SWIG_From_int(static_cast< int >((1<<4))));
-  SWIG_Python_SetConstant(d, "OB_CSTEREO_ATOM",SWIG_From_int(static_cast< int >((1<<5))));
-  SWIG_Python_SetConstant(d, "OB_ACSTEREO_ATOM",SWIG_From_int(static_cast< int >((1<<6))));
-  SWIG_Python_SetConstant(d, "OB_DONOR_ATOM",SWIG_From_int(static_cast< int >((1<<7))));
-  SWIG_Python_SetConstant(d, "OB_ACCEPTOR_ATOM",SWIG_From_int(static_cast< int >((1<<8))));
-  SWIG_Python_SetConstant(d, "OB_CHIRAL_ATOM",SWIG_From_int(static_cast< int >((1<<9))));
-  SWIG_Python_SetConstant(d, "OB_POS_CHIRAL_ATOM",SWIG_From_int(static_cast< int >((1<<10))));
-  SWIG_Python_SetConstant(d, "OB_NEG_CHIRAL_ATOM",SWIG_From_int(static_cast< int >((1<<11))));
-  SWIG_Python_SetConstant(d, "OB_AROMATIC_BOND",SWIG_From_int(static_cast< int >((1<<1))));
-  SWIG_Python_SetConstant(d, "OB_WEDGE_BOND",SWIG_From_int(static_cast< int >((1<<2))));
-  SWIG_Python_SetConstant(d, "OB_HASH_BOND",SWIG_From_int(static_cast< int >((1<<3))));
-  SWIG_Python_SetConstant(d, "OB_RING_BOND",SWIG_From_int(static_cast< int >((1<<4))));
-  SWIG_Python_SetConstant(d, "OB_TORUP_BOND",SWIG_From_int(static_cast< int >((1<<5))));
-  SWIG_Python_SetConstant(d, "OB_TORDOWN_BOND",SWIG_From_int(static_cast< int >((1<<6))));
-  SWIG_Python_SetConstant(d, "OB_KSINGLE_BOND",SWIG_From_int(static_cast< int >((1<<7))));
-  SWIG_Python_SetConstant(d, "OB_KDOUBLE_BOND",SWIG_From_int(static_cast< int >((1<<8))));
-  SWIG_Python_SetConstant(d, "OB_KTRIPLE_BOND",SWIG_From_int(static_cast< int >((1<<9))));
-  SWIG_Python_SetConstant(d, "OB_CLOSURE_BOND",SWIG_From_int(static_cast< int >((1<<10))));
-  SWIG_Python_SetConstant(d, "OB_SSSR_MOL",SWIG_From_int(static_cast< int >((1<<1))));
-  SWIG_Python_SetConstant(d, "OB_RINGFLAGS_MOL",SWIG_From_int(static_cast< int >((1<<2))));
-  SWIG_Python_SetConstant(d, "OB_AROMATIC_MOL",SWIG_From_int(static_cast< int >((1<<3))));
-  SWIG_Python_SetConstant(d, "OB_ATOMTYPES_MOL",SWIG_From_int(static_cast< int >((1<<4))));
-  SWIG_Python_SetConstant(d, "OB_CHIRALITY_MOL",SWIG_From_int(static_cast< int >((1<<5))));
-  SWIG_Python_SetConstant(d, "OB_PCHARGE_MOL",SWIG_From_int(static_cast< int >((1<<6))));
-  SWIG_Python_SetConstant(d, "OB_HYBRID_MOL",SWIG_From_int(static_cast< int >((1<<8))));
-  SWIG_Python_SetConstant(d, "OB_IMPVAL_MOL",SWIG_From_int(static_cast< int >((1<<9))));
-  SWIG_Python_SetConstant(d, "OB_KEKULE_MOL",SWIG_From_int(static_cast< int >((1<<10))));
-  SWIG_Python_SetConstant(d, "OB_CLOSURE_MOL",SWIG_From_int(static_cast< int >((1<<11))));
-  SWIG_Python_SetConstant(d, "OB_H_ADDED_MOL",SWIG_From_int(static_cast< int >((1<<12))));
-  SWIG_Python_SetConstant(d, "OB_PH_CORRECTED_MOL",SWIG_From_int(static_cast< int >((1<<13))));
-  SWIG_Python_SetConstant(d, "OB_AROM_CORRECTED_MOL",SWIG_From_int(static_cast< int >((1<<14))));
-  SWIG_Python_SetConstant(d, "OB_CHAINS_MOL",SWIG_From_int(static_cast< int >((1<<15))));
-  SWIG_Python_SetConstant(d, "OB_TCHARGE_MOL",SWIG_From_int(static_cast< int >((1<<16))));
-  SWIG_Python_SetConstant(d, "OB_TSPIN_MOL",SWIG_From_int(static_cast< int >((1<<17))));
+  SWIG_Python_SetConstant(d, "OB_4RING_ATOM",SWIG_From_int(static_cast< int >((1 << 1))));
+  SWIG_Python_SetConstant(d, "OB_3RING_ATOM",SWIG_From_int(static_cast< int >((1 << 2))));
+  SWIG_Python_SetConstant(d, "OB_AROMATIC_ATOM",SWIG_From_int(static_cast< int >((1 << 3))));
+  SWIG_Python_SetConstant(d, "OB_RING_ATOM",SWIG_From_int(static_cast< int >((1 << 4))));
+  SWIG_Python_SetConstant(d, "OB_CSTEREO_ATOM",SWIG_From_int(static_cast< int >((1 << 5))));
+  SWIG_Python_SetConstant(d, "OB_ACSTEREO_ATOM",SWIG_From_int(static_cast< int >((1 << 6))));
+  SWIG_Python_SetConstant(d, "OB_DONOR_ATOM",SWIG_From_int(static_cast< int >((1 << 7))));
+  SWIG_Python_SetConstant(d, "OB_ACCEPTOR_ATOM",SWIG_From_int(static_cast< int >((1 << 8))));
+  SWIG_Python_SetConstant(d, "OB_CHIRAL_ATOM",SWIG_From_int(static_cast< int >((1 << 9))));
+  SWIG_Python_SetConstant(d, "OB_POS_CHIRAL_ATOM",SWIG_From_int(static_cast< int >((1 << 10))));
+  SWIG_Python_SetConstant(d, "OB_NEG_CHIRAL_ATOM",SWIG_From_int(static_cast< int >((1 << 11))));
+  SWIG_Python_SetConstant(d, "OB_AROMATIC_BOND",SWIG_From_int(static_cast< int >((1 << 1))));
+  SWIG_Python_SetConstant(d, "OB_WEDGE_BOND",SWIG_From_int(static_cast< int >((1 << 2))));
+  SWIG_Python_SetConstant(d, "OB_HASH_BOND",SWIG_From_int(static_cast< int >((1 << 3))));
+  SWIG_Python_SetConstant(d, "OB_RING_BOND",SWIG_From_int(static_cast< int >((1 << 4))));
+  SWIG_Python_SetConstant(d, "OB_TORUP_BOND",SWIG_From_int(static_cast< int >((1 << 5))));
+  SWIG_Python_SetConstant(d, "OB_TORDOWN_BOND",SWIG_From_int(static_cast< int >((1 << 6))));
+  SWIG_Python_SetConstant(d, "OB_KSINGLE_BOND",SWIG_From_int(static_cast< int >((1 << 7))));
+  SWIG_Python_SetConstant(d, "OB_KDOUBLE_BOND",SWIG_From_int(static_cast< int >((1 << 8))));
+  SWIG_Python_SetConstant(d, "OB_KTRIPLE_BOND",SWIG_From_int(static_cast< int >((1 << 9))));
+  SWIG_Python_SetConstant(d, "OB_CLOSURE_BOND",SWIG_From_int(static_cast< int >((1 << 10))));
+  SWIG_Python_SetConstant(d, "OB_SSSR_MOL",SWIG_From_int(static_cast< int >((1 << 1))));
+  SWIG_Python_SetConstant(d, "OB_RINGFLAGS_MOL",SWIG_From_int(static_cast< int >((1 << 2))));
+  SWIG_Python_SetConstant(d, "OB_AROMATIC_MOL",SWIG_From_int(static_cast< int >((1 << 3))));
+  SWIG_Python_SetConstant(d, "OB_ATOMTYPES_MOL",SWIG_From_int(static_cast< int >((1 << 4))));
+  SWIG_Python_SetConstant(d, "OB_CHIRALITY_MOL",SWIG_From_int(static_cast< int >((1 << 5))));
+  SWIG_Python_SetConstant(d, "OB_PCHARGE_MOL",SWIG_From_int(static_cast< int >((1 << 6))));
+  SWIG_Python_SetConstant(d, "OB_HYBRID_MOL",SWIG_From_int(static_cast< int >((1 << 8))));
+  SWIG_Python_SetConstant(d, "OB_IMPVAL_MOL",SWIG_From_int(static_cast< int >((1 << 9))));
+  SWIG_Python_SetConstant(d, "OB_KEKULE_MOL",SWIG_From_int(static_cast< int >((1 << 10))));
+  SWIG_Python_SetConstant(d, "OB_CLOSURE_MOL",SWIG_From_int(static_cast< int >((1 << 11))));
+  SWIG_Python_SetConstant(d, "OB_H_ADDED_MOL",SWIG_From_int(static_cast< int >((1 << 12))));
+  SWIG_Python_SetConstant(d, "OB_PH_CORRECTED_MOL",SWIG_From_int(static_cast< int >((1 << 13))));
+  SWIG_Python_SetConstant(d, "OB_AROM_CORRECTED_MOL",SWIG_From_int(static_cast< int >((1 << 14))));
+  SWIG_Python_SetConstant(d, "OB_CHAINS_MOL",SWIG_From_int(static_cast< int >((1 << 15))));
+  SWIG_Python_SetConstant(d, "OB_TCHARGE_MOL",SWIG_From_int(static_cast< int >((1 << 16))));
+  SWIG_Python_SetConstant(d, "OB_TSPIN_MOL",SWIG_From_int(static_cast< int >((1 << 17))));
   SWIG_Python_SetConstant(d, "OB_CURRENT_CONFORMER",SWIG_From_int(static_cast< int >(-1)));
   SWIG_addvarlink(SWIG_globals(),(char*)"etab",etab_get, etab_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ttab",ttab_get, ttab_set);
