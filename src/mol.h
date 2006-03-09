@@ -57,7 +57,6 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "oberror.h"
 #include "obiter.h"
-#include "reaction.h" //so it gets notices in DLL builds
 
 namespace OpenBabel
 {
