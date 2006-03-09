@@ -15,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 #include "mol.h"
 #include "oberror.h"
 #include "obconversion.h"
@@ -35,7 +36,7 @@ public:
 	const char* Description(){return 
 "Interface to OBAPI internals\n \
 API options, e.g. ---errorlevel 2\n \
- errorlevel # to control logging and reporting\n \
+ errorlevel # min warning level displayed\n \
 \n";}
 
 	unsigned int Flags(){ return (NOTWRITABLE | NOTREADABLE);}

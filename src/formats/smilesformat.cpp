@@ -14,6 +14,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 //Contains SMIFormat and FIXFormat classes
 
+#include "babelconfig.h"
 #include "mol.h"
 #include "obconversion.h"
 #include "obmolecformat.h"

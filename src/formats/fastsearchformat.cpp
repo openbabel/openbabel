@@ -11,6 +11,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 
 #include <sstream>
 #include <iostream>
@@ -30,8 +31,9 @@ public:
 	FastSearchFormat() : fsi(NULL) 
 	{
 		OBConversion::RegisterFormat("fs",this);
-		//The following options take a parameter
+		//Specify the number of option taken by options
 		OBConversion::RegisterOptionParam("S", this, 1, OBConversion::GENOPTIONS);
+		OBConversion::RegisterOptionParam("S", this, 1, OBConversion::INOPTIONS);
 		OBConversion::RegisterOptionParam("f", this, 1);
 		OBConversion::RegisterOptionParam("N", this, 1);
 		OBConversion::RegisterOptionParam("u", this, 0);
@@ -61,8 +63,9 @@ Write Options (when making index) e.g. -xfFP3 \n \
  u  Update an existing index\n\n \
 Read Options (when searching) e.g. -at0.7\n \
  t# Do similarity search: #mols or # as min Tanimoto\n \
- a  Add Tanimoto coeff to title\n \
- l# Maximum number of candidates. Default<4000>\n\n \
+ a  Add Tanimoto coeff to title in similarity search\n \
+ l# Maximum number of candidates. Default<4000>\n \
+ S\"filename\"  Structure spec in a file (rather than as SMARTS):\n\n \
 ";
 	};
 
@@ -117,8 +120,10 @@ bool FastSearchFormat::ReadChemObject(OBConversion* pConv)
 		pConv->RemoveOption("s",OBConversion::GENOPTIONS);
 	}
 
-	// or Make OBMol from file in -S option	
+	// or Make OBMol from file in -S option or -aS option	
 	p = pConv->IsOption("S",OBConversion::GENOPTIONS);
+	if(!p)
+		p = pConv->IsOption("S",OBConversion::INOPTIONS);//for GUI mainly
 	if(p && patternMol.Empty())
 	{
 		txt=p;

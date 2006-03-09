@@ -50,6 +50,7 @@ GNU General Public License for more details.
 	 *** But now handled by a command line option in new framework.
 */
 
+#include "babelconfig.h"
 #include "mol.h"
 #include "obconversion.h"
 

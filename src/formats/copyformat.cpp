@@ -10,6 +10,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 #include "obconversion.h"
 
 using namespace std;
@@ -49,7 +50,7 @@ at the start or end and so may no longer be well formed.";
 		ostream& ofs = *pConv->GetOutStream();
 
 		streampos startpos = pConv->GetInPos();
-		size_t len = pConv->GetInLen();
+		int len = pConv->GetInLen();
 		if(len>0)
 		{
 			streampos curpos = ifs.tellg();
