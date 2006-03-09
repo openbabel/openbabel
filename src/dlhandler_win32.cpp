@@ -15,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 
 #include <cstdarg>
 #include <iostream>
@@ -62,6 +63,19 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
 {
     WIN32_FIND_DATA file_data;
     HANDLE handle;
+	handle = FindFirstFile ((path + pattern).c_str(), &file_data);
+	while(handle!=INVALID_HANDLE_VALUE)
+	{
+		ULONG value = (file_data.dwFileAttributes) & FILE_ATTRIBUTE_DIRECTORY;
+		if (value != FILE_ATTRIBUTE_DIRECTORY)
+		{
+		  string s = file_data.cFileName;
+		  file_list.push_back(path + s);
+		}
+		if(!FindNextFile (handle, &file_data))
+			break;
+	}
+/*
     if ((handle = FindFirstFile ((path + pattern).c_str(), &file_data)) == INVALID_HANDLE_VALUE)
         return 0;
 
@@ -70,6 +84,7 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
     {
         string s = file_data.cFileName;
         file_list.push_back(path + s);
+    }
 
         while (FindNextFile (handle, &file_data))
         {
@@ -81,7 +96,7 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
             }
         }
     }
-
+*/
     if (! (FindClose (handle)))
         return 0;// couldn't close search handle
     return file_list.size();
