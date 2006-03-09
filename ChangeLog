@@ -1,3 +1,37 @@
+2006-02-22 Chris Morley <ob@gaseq.co.uk>
+
+	* src/bitvec.cpp, bond.cpp, bondtyper.cpp, chains.cpp,chiral.cpp,
+	generic.cpp,grid.cpp,kekulize.cpp,matrix.cpp,
+	mol.cpp,molchg.cpp,obiter.cpp,patty.cpp,phmodel.cpp,
+	rand.cpp,ring.cpp,rotamer.cpp,	rotor.cpp,tokenst.cpp,transform.cpp
+	/src/formats/ most cpp files
+	/src/formats/xml/pubchem.cpp
+	/src/fingerprints/finger2.cpp, finger3.cpp 
+	/src/math/matrix.cpp, vector.cpp
+	Add #include "babelconfig.h" at top of files. This eases my use
+	of pre-compiled headers and I thought (wrongly) that it would
+	assist memory in leak detection. Many cpp files already have this
+	header directly rather than relying on it through mol.h.
+	Not a very useful exercise, but I hope harmless.
+	
+	* src/obconversion.cpp(FullConvert): Added extra test to remove an
+	extraneous error message under some circumatances. The bug was
+	introduced in when facility to use the same file for input and
+	output was added.
+	Reversed the memory leak related change of 2006-03-02 (see devel
+	forum discussion).
+	
+	* /src/formats/xml/xml.cpp(ReadXML):Add continue shortcut for nodes
+	that are not elements. (SetUpWriter): remove extra writer creation.
+	
+	* /src/dhandler_win32.cpp(findFiles): Rewritten, now handles * and *.*
+	Was getting confused by . and .. directories.
+	
+	* /src/mol.h Remove unnecessary #include "reaction.h"
+	
+	Added /src/GUI for OpenbabelGUI source files. Put here because
+	it is now potentially cross-platform.
+	
 2006-03-02 Craig James <cjames@emolecules.com>
 
 	* src/bitvec.cpp, src/bitvec.h: Added new operator<(bv1, bv2) that
