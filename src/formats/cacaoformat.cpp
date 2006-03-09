@@ -14,7 +14,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
 
-#include "mol.h"
+#include "obmolecformat.h"
 #include "math/matrix3x3.h"
 #include "obconversion.h"
 #include "obmolecformat.h"
@@ -274,7 +274,7 @@ void CacaoFormat::SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
 
 }
 //***************************************************************
-class CacaoInternalFormat : public OBFormat
+class CacaoInternalFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -304,19 +304,6 @@ public:
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
-    ////////////////////////////////////////////////////
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
 };
 
 //Make an instance of the format class

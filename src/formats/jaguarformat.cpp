@@ -14,7 +14,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
 
-#include "mol.h"
+#include "obmolecformat.h"
 #include <ctype.h>
 #include "obconversion.h"
 #include "obmolecformat.h"
@@ -58,7 +58,7 @@ JaguarOutputFormat theJaguarOutputFormat;
 
 
 
-class JaguarInputFormat : public OBFormat
+class JaguarInputFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -80,31 +80,14 @@ public:
   virtual unsigned int Flags()
   {return NOTREADABLE | WRITEONEONLY;};
 
-    //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
-};
-//***
+ };
 
 //Make an instance of the format class
 JaguarInputFormat theJaguarInputFormat;
-
-
 
 /////////////////////////////////////////////////////////////////
 bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)

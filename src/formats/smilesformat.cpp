@@ -15,7 +15,7 @@ GNU General Public License for more details.
 //Contains SMIFormat and FIXFormat classes
 
 #include "babelconfig.h"
-#include "mol.h"
+#include "obmolecformat.h"
 #include "obconversion.h"
 #include "obmolecformat.h"
 
@@ -2441,7 +2441,7 @@ bool OBMol2Smi::GetChiralStereo(OBSmiNode *node,char *stereo)
     return(true);
 }
 //********************************************************
-class FIXFormat : public OBFormat
+class FIXFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -2472,19 +2472,6 @@ public:
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-        delete pOb;
-        return ret;
-    };
 };
 
 //Make an instance of the format class

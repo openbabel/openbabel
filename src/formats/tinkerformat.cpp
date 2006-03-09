@@ -14,14 +14,14 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
 
-#include "mol.h"
+#include "obmolecformat.h"
 #include "obconversion.h"
 
 using namespace std;
 namespace OpenBabel
 {
 
-class TinkerFormat : public OBFormat
+class TinkerFormat : public OBMoleculeFormat
 {
 public:
     //Register this format type ID
@@ -47,34 +47,11 @@ public:
         return NOTREADABLE | WRITEONEONLY;
     };
 
-    //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-        //Retrieve the target OBMol
-        OBBase* pOb = pConv->GetChemObject();
-        OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-        bool ret=false;
-        if(pmol)
-            ret=WriteMolecule(pmol,pConv);
-
-	std::string auditMsg = "OpenBabel::Write molecule ";
-	std::string description(Description());
-        auditMsg += description.substr( 0, description.find('\n') );
-        obErrorLog.ThrowError(__FUNCTION__,
-                              auditMsg,
-                              obAuditMsg);
-
-        delete pOb;
-        return ret;
-    };
 };
-//***
 
 //Make an instance of the format class
 TinkerFormat theTinkerFormat;
