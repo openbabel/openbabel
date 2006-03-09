@@ -22,6 +22,7 @@ GNU General Public License for more details.
  * Roger Sayle, Metaphorics LLC
  * Version 1.2, September 1998
  */
+#include "babelconfig.h"
 
 #include <stdlib.h>
 #include <stdio.h>

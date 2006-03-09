@@ -1020,7 +1020,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 					}
 				}
 
-				if(!os.is_open() && !OutputFileName.empty())
+				if(!os.is_open() && !OutputFileName.empty() && !HasMultipleOutputFiles)
 				{
 					//Output was written to temporary string stream. Output it to the file
 					os.open(OutputFileName.c_str(),omode);
@@ -1200,12 +1200,9 @@ void OBConversion::SetOptions(const char* options, Option_type opttyp)
 	}
 }
 
-typedef std::map<string,int> OPAMapType;
-OPAMapType& OBConversion::OptionParamArray(Option_type typ)
+OBConversion::OPAMapType& OBConversion::OptionParamArray(Option_type typ)
 {
-	static OPAMapType* opa = NULL;
-	if (!opa)
-	  opa = new OPAMapType[3];
+	static OPAMapType* opa = new OPAMapType[3];
 	return opa[typ];
 }
 
