@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include "obconversion.h"
 #include "dlhandler.h"
-#include "SelFormats.h"
+#include "selformats.h"
 #include "OBGUI.h"
 
 /*
