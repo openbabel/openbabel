@@ -75,28 +75,6 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
 		if(!FindNextFile (handle, &file_data))
 			break;
 	}
-/*
-    if ((handle = FindFirstFile ((path + pattern).c_str(), &file_data)) == INVALID_HANDLE_VALUE)
-        return 0;
-
-    ULONG value = (file_data.dwFileAttributes) & FILE_ATTRIBUTE_DIRECTORY;
-    if (value != FILE_ATTRIBUTE_DIRECTORY)
-    {
-        string s = file_data.cFileName;
-        file_list.push_back(path + s);
-    }
-
-        while (FindNextFile (handle, &file_data))
-        {
-            value = (file_data.dwFileAttributes) & FILE_ATTRIBUTE_DIRECTORY;
-            if (value != FILE_ATTRIBUTE_DIRECTORY)
-            {
-                s = file_data.cFileName;
-                file_list.push_back(path + s);
-            }
-        }
-    }
-*/
     if (! (FindClose (handle)))
         return 0;// couldn't close search handle
     return file_list.size();
