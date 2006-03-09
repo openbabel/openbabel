@@ -10,6 +10,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#include "babelconfig.h"
 
 #include "xml.h"
 
@@ -75,11 +76,6 @@ bool XMLConversion::SetupWriter()
 			NULL);        //xmlCharEncodingHandlerPtr
 	_writer = xmlNewTextWriter(_buf);
 
-/*
-	_buf = xmlBufferCreate();
-  _writer = xmlNewTextWriterMemory(_buf, 0);
-*/ 
-	
 	if(!_buf || !_writer)
 	{
 		cerr << "Error setting up xml writer\n" << endl;
@@ -208,7 +204,8 @@ bool XMLConversion::ReadXML(XMLBaseFormat* pFormat, OBBase* pOb)
 			ret= pFormat->DoElement(ElName);
 		else if(typ==XML_READER_TYPE_END_ELEMENT)
 			ret= pFormat->EndElement(ElName);
-		
+		else 
+			continue;
 		_lastpos = GetInStream()->tellg();
 
 		if(!ret)
