@@ -99,8 +99,8 @@ bool OBMoleculeFormat::WriteChemObjectImpl(OBConversion* pConv, OBFormat* pForma
 				      obAuditMsg);
 
 		ret=pFormat->WriteMolecule(pmol,pConv);
-		delete pOb;
 	}
+	delete pOb; //move so that non-OBMol objects are deleted 9March2006
 	return ret;
 }
 bool OBMoleculeFormat::DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF )

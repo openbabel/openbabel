@@ -140,6 +140,7 @@ OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOpti
 			if(ret==false)
 			{
 				obErrorLog.ThrowError(__FUNCTION__, "Error executing an option", obError);
+		      delete this; //added 9March2006
 				return NULL;
 			}
 			else
