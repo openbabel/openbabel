@@ -1,4 +1,25 @@
-2006-02-22 Chris Morley <ob@gaseq.co.uk>
+2006-03-09 Chris Morley <ob@gaseq.co.uk>
+
+	* src/reaction.h, src/format.rxnformat.cpp: revert to previous
+	versions, rxnformat.cpp from OB2.0.0. The boost dependent versions
+	were committed in error -  work in progress on new some new
+	reaction formats.
+	
+	* several formats, mainly output formats, converted to derive from
+	OBMoleculeFormat and their WriteChemObject functions deleted. I
+	don't think these were responsible for memory leaks, but it the
+	less code to maintain the better.
+	
+	* src/formats/obmolecformat.cpp(WriteChemObjectImpl): OBMol
+	object not being deleted in the event of an error. Moved delete
+	statement so that it is.
+	
+	* src/transform.cpp(DoTransformations): ensure OBMol deleted
+	in the event of an error.
+	
+	* src/GUI/OBGUI.cpp: #include selformats.h: make lc 
+	
+2006-03-09 Chris Morley <ob@gaseq.co.uk>
 
 	* src/bitvec.cpp, bond.cpp, bondtyper.cpp, chains.cpp,chiral.cpp,
 	generic.cpp,grid.cpp,kekulize.cpp,matrix.cpp,
