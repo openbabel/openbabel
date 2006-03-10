@@ -56,6 +56,9 @@ public:
 	    -r radicals lower case eg ethyl is Cc\n\n";
     };
 
+    virtual unsigned int Flags() { return DEFAULTFORMAT;};
+    virtual const char* TargetClassDescription(){return OBMol::ClassDescription();};
+
   virtual const char* SpecificationURL()
   {return "http://www.daylight.com/smiles/f_smiles.html";};
 
@@ -313,7 +316,8 @@ bool OBSmilesParser::ParseSmiles(OBMol &mol)
             continue;
         else if (isdigit(*_ptr) || *_ptr == '%') //ring open/close
         {
-            ParseRingBond(mol);
+            if(!ParseRingBond(mol))
+					return false;;
             continue;
         }
         else if(*_ptr == '&') //external bond
@@ -1687,7 +1691,14 @@ bool OBSmilesParser::ParseRingBond(OBMol &mol)
     vtmp[1] = _prev;
     vtmp[2] = _order;
     vtmp[3] = _bondflags;
-    vtmp[4] = mol.GetAtom(_prev)->GetValence(); //store position to insert closure bond
+	 OBAtom* atom = mol.GetAtom(_prev);
+	 if(!atom)
+	 {
+		obErrorLog.ThrowError(__FUNCTION__,"Number not parsed correctly as a ring bond", obError);
+		return false;
+	 }
+
+    vtmp[4] = atom->GetValence(); //store position to insert closure bond
     for (j = _rclose.begin();j != _rclose.end();j++) //correct for multiple closure bonds to a single atom
         if ((*j)[1] == _prev)
             vtmp[4]++;
