@@ -1,3 +1,16 @@
+2006-03-10 Chris Morley <ob@gaseq.co.uk>
+	
+	* /src/formats/smilesformat.cpp: make a default format so that
+	the default object is OBMol even when MOLformat (the other default
+	format) is not present.
+	
+	* /src/formats/smilesformat.cpp(ParseRingBond): prevented crash
+	and give error message when parse failure (e.g. a line starting
+	with a number) - common and of long standing.
+	
+	* /src/formats/obmolecformat.cpp(ReadChemObjImpl): another delete
+	for OBMol object when ReadMolecule returns false;    
+	
 2006-03-09 Chris Morley <ob@gaseq.co.uk>
 
 	* src/reaction.h, src/format.rxnformat.cpp: revert to previous
