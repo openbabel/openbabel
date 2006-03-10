@@ -18,6 +18,12 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 #include "obmolecformat.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 using namespace std;
 namespace OpenBabel
 {
@@ -57,7 +63,9 @@ bool OBMoleculeFormat::ReadChemObjectImpl(OBConversion* pConv, OBFormat* pFormat
 			*_jmol += *ptmol;
 			return true;
 		}
-	}	
+	}
+	else
+		delete pmol;
 	pConv->AddChemObject(ptmol);
 	return ret;
 }
