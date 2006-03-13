@@ -45,12 +45,14 @@ class OBAPI OBRotamerList : public OBGenericData
     std::vector<unsigned char*>               _vrotamer;
     std::vector<std::pair<OBAtom**,std::vector<int> > > _vrotor;
 
-    OBRotamerList(const OBRotamerList &cpy) : OBGenericData(cpy)
+    /*Because contains OBAtom*, these aren't meaningful without knowing the parent molecule
+		OBRotamerList(const OBRotamerList &cpy) : OBGenericData(cpy)
     {}
     OBRotamerList& operator =(const OBRotamerList &)
     {
         return *this;
     }
+		*/
 
 public:
     OBRotamerList()
@@ -59,7 +61,7 @@ public:
         _type= OBGenericDataType::RotamerList;
         _attr="RotamerList";
     }
-		virtual OBGenericData* Clone() const{return new OBRotamerList(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const;
 
     ~OBRotamerList();
     void Setup(OBMol&,OBRotorList&);
@@ -78,7 +80,7 @@ public:
     void AddRotamer(int *arr);
     void AddRotamer(unsigned char *arr);
     void AddRotamers(unsigned char*,int);
-    void GetReferenceArray(unsigned char*);
+    void GetReferenceArray(unsigned char*) const;
     void ExpandConformerList(OBMol&,std::vector<double*>&);
     std::vector<unsigned char*>::iterator BeginRotamer()
     {
@@ -111,7 +113,7 @@ public:
     }
 
     //! Get a pointer to a specific base pointer
-    double *GetBaseCoordinateSet(unsigned int i)
+    double *GetBaseCoordinateSet(unsigned int i) const
     {
         return (i<_c.size()) ? _c[i] : NULL;
     }

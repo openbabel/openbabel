@@ -59,6 +59,58 @@ int Swab(int i)
     return(i);
 }
 
+OBGenericData* OBRotamerList::Clone(OBBase* newparent) const
+{
+	//Since the class contains OBAtom pointers, the new copy use
+	//these from the new molecule, newparent
+	OBMol* newmol = static_cast<OBMol*>(newparent);
+	
+	OBRotamerList *new_rml = new OBRotamerList;
+	new_rml->_attr = _attr;
+	new_rml->_type = _type;
+
+	//Set base coordinates
+	unsigned int k,l;
+	vector<double*> bc;
+	double *c=NULL;
+	double *cc=NULL;
+	for (k=0 ; k<NumBaseCoordinateSets() ; k++)
+	{
+			c = new double [3*NumAtoms()];
+			cc = GetBaseCoordinateSet(k);
+			for (l=0 ; l<3*NumAtoms() ; l++)
+					c[l] = cc[l];
+			bc.push_back(c);
+	}
+	if (NumBaseCoordinateSets())
+			new_rml->SetBaseCoordinateSets(bc,NumAtoms());
+
+	//Set reference array
+	unsigned char *ref = new unsigned char [NumRotors()*4];
+	if (ref)
+	{
+			GetReferenceArray(ref);
+			new_rml->Setup(*newmol,ref,NumRotors()); 
+			delete [] ref;
+	}
+
+	//Set Rotamers
+	unsigned char *rotamers = new unsigned char [(NumRotors()+1)*NumRotamers()];
+	if (rotamers)
+	{
+			vector<unsigned char*>::const_iterator kk;
+			unsigned int idx=0;
+			for (kk = _vrotamer.begin();kk != _vrotamer.end();kk++)
+			{
+					memcpy(&rotamers[idx],(const unsigned char*)*kk,sizeof(unsigned char)*(NumRotors()+1));
+					idx += sizeof(unsigned char)*(NumRotors()+1);
+			}
+			new_rml->AddRotamers(rotamers,NumRotamers());
+			delete [] rotamers;
+	}
+	return new_rml;
+}
+
 OBRotamerList::~OBRotamerList()
 {
     vector<unsigned char*>::iterator i;
@@ -75,10 +127,10 @@ OBRotamerList::~OBRotamerList()
         delete [] _c[k];
 }
 
-void OBRotamerList::GetReferenceArray(unsigned char *ref)
+void OBRotamerList::GetReferenceArray(unsigned char *ref)const
 {
     int j;
-    vector<pair<OBAtom**,vector<int> > >::iterator i;
+		vector<pair<OBAtom**,vector<int> > >::const_iterator i;
     for (j=0,i = _vrotor.begin();i != _vrotor.end();i++)
     {
         ref[j++] = (unsigned char)(i->first[0])->GetIdx();
@@ -417,7 +469,7 @@ void SetRotorToAngle(double *c, OBAtom **ref,double ang,vector<int> atoms)
 int PackCoordinate(double c[3],double max[3])
 {
     int tmp;
-    float cf;
+    double cf;
     cf = c[0];
     tmp  = ((int)(cf*max[0])) << 20;
     cf = c[1];
@@ -429,14 +481,14 @@ int PackCoordinate(double c[3],double max[3])
 
 void UnpackCoordinate(double c[3],double max[3],int tmp)
 {
-    float cf;
-    cf = (float)(tmp>>20);
+    double cf;
+    cf = (double)(tmp>>20);
     c[0] = cf;
     c[0] *= max[0];
-    cf = (float)((tmp&0xffc00)>>10);
+    cf = (double)((tmp&0xffc00)>>10);
     c[1] = cf;
     c[1] *= max[1];
-    cf = (float)(tmp&0x3ff);
+    cf = (double)(tmp&0x3ff);
     c[2] = cf;
     c[2] *= max[2];
 }

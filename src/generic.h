@@ -29,6 +29,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
+class OBBase;
 class OBAtom;
 class OBBond;
 class OBRing;
@@ -143,19 +144,22 @@ namespace OBGenericDataType
 class OBAPI OBGenericData
 {
 protected:
-    std::string     _attr; //!< attribute tag (e.g., "UnitCell", "Comment" or "Author")
-    unsigned int 	    _type; //!< attribute type -- declared for each subclass
+    std::string _attr; //!< attribute tag (e.g., "UnitCell", "Comment" or "Author")
+    unsigned    _type; //!< attribute type -- declared for each subclass
 public:
     OBGenericData();
-    OBGenericData(const OBGenericData&);
+    //Use default copy constructor and assignment operators
+		//OBGenericData(const OBGenericData&);
 		
 		//Virtual constructors added see http://www.parashift.com/c++-faq-lite/abcs.html#faq-22.5
 		//to allow copying given only a base class OBGenericData pointer.
 		//It may be necessary to cast the return pointer to the derived class type since we are doing
 		//without Covariant Return Types http://www.parashift.com/c++-faq-lite/virtual-functions.html#faq-20.8
-		virtual OBGenericData* Clone() const = 0;
+		//A derived class may return NULL if copying inappropriate
+		virtual OBGenericData* Clone(OBBase* parent) const = 0;
     virtual ~OBGenericData()    {}
-    OBGenericData& operator=(const OBGenericData &src);
+    //Use default copy constructor and assignment operators
+		//OBGenericData& operator=(const OBGenericData &src);
 
     void                      SetAttribute(const std::string &v)
     {        _attr = v;        }
@@ -173,7 +177,7 @@ protected:
 public:
     OBCommentData();
     OBCommentData(const OBCommentData&);
-		virtual OBGenericData* Clone() const{return new OBCommentData(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBCommentData(*this);}
 		
 		OBCommentData& operator=(const OBCommentData &src);
 
@@ -213,8 +217,11 @@ protected:
     std::vector<OBExternalBond> _vexbnd;
 public:
     OBExternalBondData();
-		virtual OBGenericData* Clone() const{return new OBExternalBondData(*this);}
-    void SetData(OBAtom*,OBBond*,int);
+		
+		//Copying is not used and too much work to set up
+		virtual OBGenericData* Clone(OBBase* parent) const{return NULL;}
+    
+		void SetData(OBAtom*,OBBond*,int);
     std::vector<OBExternalBond> *GetData()
     {
         return(&_vexbnd);
@@ -231,7 +238,7 @@ protected:
     std::string _value;
 public:
     OBPairData();
-		virtual OBGenericData* Clone() const{return new OBPairData(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBPairData(*this);}
     void    SetValue(const char *v)
     {
         _value = v;
@@ -257,7 +264,7 @@ protected:
     int _stereo;
 public:
     OBVirtualBond();
-		virtual OBGenericData* Clone() const{return new OBVirtualBond(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBVirtualBond(*this);}
     OBVirtualBond(int,int,int,int stereo=0);
     int GetBgn()
     {
@@ -285,7 +292,7 @@ protected:
 public:
     OBRingData();
     OBRingData(const OBRingData &);
-		virtual OBGenericData* Clone() const{return new OBRingData(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBRingData(*this);}
     ~OBRingData();
 
     OBRingData &operator=(const OBRingData &);
@@ -317,7 +324,7 @@ protected:
 public:
     OBUnitCell();
     OBUnitCell(const OBUnitCell &);
-		virtual OBGenericData* Clone() const{return new OBUnitCell(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBUnitCell(*this);}
     ~OBUnitCell()    {}
 
     OBUnitCell &operator=(const OBUnitCell &);
@@ -372,7 +379,7 @@ protected:
 public:
     OBConformerData();
     OBConformerData(const OBConformerData &);
-		virtual OBGenericData* Clone() const{return new OBConformerData(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBConformerData(*this);}
     ~OBConformerData()    {}
 
     OBConformerData &operator=(const OBConformerData &);
@@ -408,7 +415,7 @@ protected:
 public:
     OBSymmetryData();
     OBSymmetryData(const OBSymmetryData &);
-		virtual OBGenericData* Clone() const{return new OBSymmetryData(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBSymmetryData(*this);}
     ~OBSymmetryData()    {}
 
     OBSymmetryData &operator=(const OBSymmetryData &);
@@ -496,7 +503,9 @@ protected:
 
 public:
     OBTorsionData &operator=(const OBTorsionData &);
-		virtual OBGenericData* Clone() const{return new OBTorsionData(*this);}
+
+		//TO BE MODIFIED TO rebase atom pointers
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBTorsionData(*this);}
 
     void Clear();
 
@@ -581,7 +590,7 @@ protected:
 
 public:
     OBAngleData &operator =(const OBAngleData &);
-		virtual OBGenericData* Clone() const{return new OBAngleData(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBAngleData(*this);}
 
     void Clear();
     unsigned int FillAngleArray(int **angles, unsigned int &size);
@@ -612,7 +621,7 @@ public:
 
     OBChiralData();
     OBChiralData(const OBChiralData &src);
-		virtual OBGenericData* Clone() const{return new OBChiralData(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBChiralData(*this);}
     OBChiralData &operator =(const OBChiralData &);
     ~OBChiralData(){}
 
@@ -639,7 +648,9 @@ public:
     {
         _serialMap = cp._serialMap;
     }
-		virtual OBGenericData* Clone() const{return new OBSerialNums(*this);}
+		//Member varaiables contain OBAtom pointers, so copying only vlid within
+		//same molecule, unless code modified, as in OBRotameterList 
+		virtual OBGenericData* Clone(OBBase* parent) const{return new OBSerialNums(*this);}
 
     std::map<int,OBAtom*> &GetData()    { return _serialMap;    }
     void SetData(std::map<int,OBAtom*> &sm) { _serialMap = sm;  }

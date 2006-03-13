@@ -91,7 +91,25 @@ Similar code also works for OBGenericData stored in an OBAtom or OBBond (or OBRe
       }
 @endcode
 
-  **/
+When designing a class derived from OBGenericData you must add a Clone() function.
+For classes used with OBMol this is used when an OBMol object is copied. If your
+class member variables contain pointers to atoms or bonds then it will be necessary
+to ensure that these are updated in Clone() to refer to the new molecule. Without
+these and similar pointers it is more likely that the very simple clone function
+@code
+		virtual OBGenericData* Clone(OBBase* parent) const{return new MyNewClass(*this);}
+@endcode
+and the compiler generated copy constructor would be sufficient. It is recommended
+that, if possible, OBGenericData classes do not store atom and bond pointers. Using
+atom and bond indices instead would allow the simple version of Clone() above. See 
+OBRotameterData::Clone for an example of a more complicated version. For classes
+which are not intended to support copying, Clone can return NULL 
+@code
+		virtual OBGenericData* Clone(OBBase* parent) const{return NULL;}
+@endcode
+Clone is a pure virtual function so that you need to decide what kind of
+function you need and include it explicitly.
+**/
 
 //
 //member functions for OBGenericData class
@@ -103,6 +121,7 @@ OBGenericData::OBGenericData()
     _attr = "undefined";
 }
 
+/* Use default copy constructor and assignment operators
 OBGenericData::OBGenericData(const OBGenericData &src)
 {
     _type = src.GetDataType();
@@ -120,6 +139,7 @@ OBGenericData& OBGenericData::operator = (const OBGenericData &src)
 
     return(*this);
 }
+*/
 
 //
 //member functions for OBCommentData class
