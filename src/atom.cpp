@@ -929,20 +929,24 @@ namespace OpenBabel
       impval-=1;
     else if(mult==1 || mult==3) //carbene
       impval-=2;
+    else if(mult>=4) //CH, Catom
+      impval -= mult-1;
     return((impval>0)?impval:0);
   }
 
-  unsigned int OBAtom::ExplicitHydrogenCount() const
-  {
-    int numH=0;
-    OBAtom *atom;
-    vector<OBEdgeBase*>::iterator i;
-    for (atom = ((OBAtom*)this)->BeginNbrAtom(i);atom;atom = ((OBAtom*)this)->NextNbrAtom(i))
-      if (atom->IsHydrogen())
-	numH++;
+	unsigned int OBAtom::ExplicitHydrogenCount(bool ExcludeIsotopes) const
+	{
+		//If ExcludeIsotopes is true, H atoms with _isotope!=0 are not included.
+		//This excludes D, T and H when _isotope exlicitly set to 1 rather than the default 0.
+		int numH=0;
+		OBAtom *atom;
+		vector<OBEdgeBase*>::iterator i;
+		for (atom = ((OBAtom*)this)->BeginNbrAtom(i);atom;atom = ((OBAtom*)this)->NextNbrAtom(i))
+			if (atom->IsHydrogen() && !(ExcludeIsotopes && atom->GetIsotope()!=0))
+				numH++;
 
-    return(numH);
-  }
+		return(numH);
+	}
 
   bool OBAtom::DeleteBond(OBBond *bond)
   {
