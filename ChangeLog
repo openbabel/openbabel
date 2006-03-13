@@ -1,3 +1,62 @@
+2006-03-13 Chris Morley <ob@gaseq.co.uk>
+
+	* src/mol.cpp(GetSpacedFormula): I like the approach added by
+	Craig to be independent of implicit/explicit H without
+	changing the OBMol. But needs some mods.
+	Remove call to	ExplicitHydrogenCount(); they are already
+	included in ImplicitHydrogenCount(). Add test to correctly
+	handle molecules with no bonds,	hydrogen isotopes. Works with
+	SMILES C C[2H] C[H] (=carbene) [H][H] [2H][H] 
+	Added support for D and T.
+	
+	* src/mol.cpp(GetMolWt and GetExactMass): Mods similar to above
+	so that implicit or explicit H is handled.
+	
+	* src/atom.cpp, atom.h(ExplicitHydrogenCount): Add extra parameter
+	to not count D and T. (Backward compatible) 
+	
+	* src/mol.cpp(AssignSpinMultiplicity): Exclude D and T so that
+	SMILES CC[2H] is interpreted as C2H5D. Previously was CH3CH:
+	
+	* src.formats/smilesformat.cpp(OBMol2Smi::GetSmilesElement):
+	Reduce implicit H count by number of explicit H isotopes, which
+	already were output explicitly. CC[2H]=> add Hs => [CH3][CH2][2H]
+	(ParseComplex): [CH0] means explicitly there are no hydrogens.
+	
+	* src/mol.h, atom.cpp: Added flag on OBAtom to indicate there 
+	are no hydrogens. Added get and set methods.
+	
+	
+	* src/atom.cpp(ImplicitHydrogenCount), src/mol.cpp(AddHydrogens):
+	Add support for SpinMultiplicity>=4. As in molecule CH - the source
+	of ions	in a flame ionization detector.
+	
+	* src/mol.cpp(AssignSpinMultiplicity): Use positively set no Hs to
+	allow SMILES [CH0] = C atom.
+	 
+	* src/rotamer.cpp(PackCoodinates,UnpackCoordinates): Make cf double
+	rather than float to avoid compiler warnings.
+	
+	* src/transform.cpp: Added --addformula option.
+	
+	* src/mol.cpp:(operator=): OBGenericData objects now copied with 
+	OBMol.
+	
+	* src/generic.cpp, generic.h: Clone function given parameter
+	referring to new molecule, so that OBAtom pointers can be rebased.
+	Added documentation that using atom and bond pointer in
+	OBGenericData objects is a bad idea.
+	
+	* src/rotamer.cpp, rotamer.h): Moved code for copying 
+	OBRotatmeterData into Clone(). Significant rewriting required;
+	not tested yet.
+	
+	* src/formats/obmolecformat.cpp(MakeCombinedMolecule): simplify code
+	because of GetFormula changes (don't need to make copy to compare
+	formulae) and OBMol copying changes.
+	
+	* src/GUI: Small bug when selected format begins with t now corrected. 
+	
 2006-03-10 Chris Morley <ob@gaseq.co.uk>
 	
 	* /src/formats/smilesformat.cpp: make a default format so that
