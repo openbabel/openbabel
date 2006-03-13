@@ -206,23 +206,25 @@ OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
 		OBPairData
   */
 	
-	OBMol* pNewMol = new OBMol(*pFirst); //Copies the whole molecule (NOT TRUE CURRENTLY)
+	OBMol* pNewMol = new OBMol(*pFirst); //Copies the whole molecule
 	string title("No title");
-	if(*pFirst->GetTitle()==0)
+	if(*pFirst->GetTitle()!=0)
+		title = pFirst->GetTitle();
+	else
 	{
-		pNewMol->SetTitle(pSecond->GetTitle());
-		if(*pSecond->GetTitle()==0)
-			obErrorLog.ThrowError(__FUNCTION__,"Combined molecule has no title", obWarning);
+		if(*pSecond->GetTitle()!=0)
+			title = pSecond->GetTitle();
 		else
-			title = pNewMol->GetTitle();
+			obErrorLog.ThrowError(__FUNCTION__,"Combined molecule has no title", obWarning);
 	}
+	pNewMol->SetTitle(title);
 
 	bool swap=false;
 	if(pFirst->NumAtoms()==0 && pSecond->NumAtoms()!=0)
 		swap=true;
 	else
 	{
-		//Make hydrogens explicit on copies of molecules
+		/*//Make hydrogens explicit on copies of molecules
 		//in order to do comparisons; leave originals as they were.
 		OBMol pCopy1(*pSecond);
 		OBMol pCopy2(*pFirst);
@@ -231,7 +233,8 @@ OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
 		if(pCopy2.NumBonds()!=0 || pCopy2.NumAtoms()==1)
 			pCopy2.AddHydrogens(false,false);
 
-		if(pCopy1.GetSpacedFormula()!=pCopy2.GetSpacedFormula())
+		if(pCopy1.GetSpacedFormula()!=pCopy2.GetSpacedFormula())*/
+		if(pFirst->GetSpacedFormula()!=pSecond->GetSpacedFormula())
 		{
 			obErrorLog.ThrowError(__FUNCTION__, 
 				title + "cannot be combined with a molecule having a different formula",obError);
@@ -240,33 +243,33 @@ OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
 		}
 		else
 		{
-			if(pCopy2.NumBonds()==0 && pCopy1.NumBonds()!=0)
+			if(pSecond->NumBonds()==0 && pFirst->NumBonds()!=0)
 				swap=true;
 			else
 			{
-				//Compare by inchi; error if different
+				//Compare by inchi; error if different NOT YET IMPLEMENTED
 				//Use the one with the higher dimension
-				if(pCopy2.GetDimension() > pCopy1.GetDimension())
+				if(pSecond->GetDimension() > pFirst->GetDimension())
 					swap=true;
 			}
 		}
 	}
 	if(swap)
 	{
-		*pNewMol = *pSecond; //Doesn't copy all data (yet) 
+		*pNewMol = *pSecond; //Now copies all data 
 		pNewMol->SetTitle(title); //may have been overwritten
 	}
 
 	vector<OBGenericData*>::iterator igd;
-	//Copy OBGenericData from pFirst; may not be necessary when OBMol constructor updated
+/*	//Copy OBGenericData from pFirst; may not be necessary when OBMol constructor updated
 	for(igd=pFirst->BeginData();igd!=pFirst->EndData();++igd)
 	{
 		if((*igd)->GetDataType() == OBGenericDataType::RotamerList)//currently copied in OBMol=
 			continue;
-		OBGenericData* pCopiedData = (*igd)->Clone();
+		OBGenericData* pCopiedData = (*igd)->Clone(pNewMol);
 		pNewMol->SetData(pCopiedData);
 	}
-
+*/
 	//Copy some OBGenericData from pSecond
 	for(igd=pSecond->BeginData();igd!=pSecond->EndData();++igd)
 	{
@@ -281,7 +284,7 @@ OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
 		else if(pNewMol->GetData(datatype)!=NULL)
 			continue;
 
-		OBGenericData* pCopiedData = (*igd)->Clone();
+		OBGenericData* pCopiedData = (*igd)->Clone(pNewMol);
 		pNewMol->SetData(pCopiedData);
 	}
 	return pNewMol;
