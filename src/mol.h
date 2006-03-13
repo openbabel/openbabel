@@ -190,7 +190,9 @@ namespace OpenBabel
 #define OB_POS_CHIRAL_ATOM (1<<10)
   //! Atom has - chiral volume
 #define OB_NEG_CHIRAL_ATOM (1<<11)
-  // 12-16 currently unused
+	//! Atom has no hydrogen attached. Temporary use only during SMILES input
+#define OB_ATOM_HAS_NO_H   (1<<12)
+  // 13-16 currently unused
 
   // Class OBAtom
   // class introduction in atom.cpp
@@ -418,8 +420,8 @@ namespace OpenBabel
       unsigned int  CountFreeOxygens()      const;
       //! The number of hydrogens needed to fill the implicit valence of this atom
       unsigned int  ImplicitHydrogenCount() const;
-      //! The number of hydrogens explicitly bound to this atom currently
-      unsigned int  ExplicitHydrogenCount() const;
+      //! The number of hydrogens explicitly bound to this atom, optionally excluding D,T and isotope explicitly set to 1
+      unsigned int  ExplicitHydrogenCount(bool ExcludeIsotopes=false) const;
       //! The number of rings that contain this atom
       unsigned int  MemberOfRingCount()     const;
       //! The size of the smallest ring that contains this atom (0 if not in a ring)
@@ -440,6 +442,10 @@ namespace OpenBabel
       bool HtoMethyl();
       //! Change the hybridization of this atom and modify the geometry accordingly
       bool SetHybAndGeom(int);
+			//! Mark that atom has no hydrogens attached
+			void ForceNoH() {SetFlag(OB_ATOM_HAS_NO_H);}
+			//! Return true if atom has been marked as having no hydrogens attached
+			bool HasNoHForced() {return HasFlag(OB_ATOM_HAS_NO_H);}
       //@}
 
       //! \name Property information
