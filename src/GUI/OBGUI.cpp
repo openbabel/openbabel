@@ -321,11 +321,11 @@ void OBGUIFrame::OnClose(wxCloseEvent& event)
 	config.Write("InputPath", m_InFileBasePath);
 	
 	wxString ext = m_pInFormat->GetStringSelection();
-	int pos = ext.find_first_of(" /t-");
+	int pos = ext.find_first_of(" \t-");
 	config.Write("InExt", ext.substr(0,pos));
 	
 	ext = m_pOutFormat->GetStringSelection();
-	pos = ext.find_first_of(" /t-");
+	pos = ext.find_first_of(" \t-");
 	config.Write("OutExt", ext.substr(0,pos));
 
 	config.Write("ShowConvOptions",viewMenu->IsChecked(ID_SHOWCONVOPTIONS));
