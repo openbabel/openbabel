@@ -89,7 +89,8 @@ int main(int argc,char *argv[])
     }
 
     int molCount = 0;
-    while (!inFileStream1.eof() && !inFileStream2.eof() )
+    while(inFileStream1.peek() != EOF && inFileStream1.good() && 
+	  inFileStream2.peek() != EOF && inFileStream2.good() )
     {
       mol.Clear();
       mol2.Clear();
@@ -99,21 +100,25 @@ int main(int argc,char *argv[])
       conv1.Read(&mol);
       conv2.Read(&mol2);
 
-    if (mol.NumAtoms() == 0)
+    const char* p1 = strrchr(argv[1],'.');
+    const char* p2 = strrchr(argv[2],'.');
+
+    if (p1 && strncasecmp(p1 + 1, "CML", 3) != 0
+	&& mol.NumAtoms() == 0)
       {
 	cout << " ** ERROR ** molecule " << molCount 
 	     << " in file #1 has no atoms!" << endl;
 	return(-1);
       }
 
-    if (mol2.NumAtoms() == 0)
+    if (p1 && strncasecmp(p1 + 1, "CML", 3) != 0
+	&& mol2.NumAtoms() == 0)
       {
 	cout << " ** ERROR ** molecule " << molCount 
 	     << " in file #2 has no atoms!" << endl;
 	return(-1);
       }
 
-    const char* p1 = strrchr(argv[1],'.');
     if (p1 && strncasecmp(p1 + 1, "BOX", 3) == 0)
       {
 	if (mol.NumAtoms() != 8)
@@ -124,7 +129,6 @@ int main(int argc,char *argv[])
 	return(0);
       }
 
-    const char* p2 = strrchr(argv[2],'.');
     if (p2 && strncasecmp(p2 + 1, "BOX", 3) == 0)
       {
 	if (mol2.NumAtoms() != 8)
@@ -184,6 +188,17 @@ int main(int argc,char *argv[])
 
     } // while reading molecules
 
+    char buffer[BUFF_SIZE];
+    // try skipping any blank lines
+    while(inFileStream1.peek() != EOF && inFileStream1.good() && 
+	  (inFileStream1.peek() == '\n' || inFileStream1.peek() == '\r'))
+      inFileStream1.getline(buffer,BUFF_SIZE);
+
+    while(inFileStream2.peek() != EOF && inFileStream2.good() && 
+	  (inFileStream2.peek() == '\n' || inFileStream2.peek() == '\r'))
+      inFileStream2.getline(buffer,BUFF_SIZE);
+
+    // now check to see if there's anything to read
     if ( inFileStream1.good() && inFileStream1.peek() != EOF &&
 	 conv1.Read(&mol) )
       {
