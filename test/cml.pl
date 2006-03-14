@@ -5,7 +5,7 @@
 $cmltestdir = "./cmltest";
 
 if ( -e "$cmltestdir/test.sh" ) {
-    print "# Testing molecule file roundtripping...\n";
+    print "# Testing CML molecule file roundtripping...\n";
     print "# This test will take quite some time!\n";
     print "# and it currently always passes, so check the results file\n";
     system "(cd $cmltestdir; source test.sh 2>/dev/null;)";
