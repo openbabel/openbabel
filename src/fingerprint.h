@@ -100,7 +100,9 @@ protected:
 	///See Marshall Cline's C++ FAQ Lite document, www.parashift.com/c++-faq-lite/". 
 	static FPMapType& FPtsMap()
 	{
-		static FPMapType* fptm = new FPMapType;
+		static FPMapType* fptm = NULL;
+		if (!fptm)
+		  fptm = new FPMapType;
 		return *fptm;
 	};
 

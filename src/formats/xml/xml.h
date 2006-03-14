@@ -53,7 +53,9 @@ public:
 	///Avoids "static initialization order fiasco"
 	static NsMapType& Namespaces()
 	{
-		static NsMapType* nsm = new NsMapType;
+		static NsMapType* nsm = NULL;
+		if (!nsm)
+		  nsm = new NsMapType;
 		return *nsm;
 	};
 
