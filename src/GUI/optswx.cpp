@@ -215,7 +215,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
 
 				if(NextIsRadio || HasOr)
 				{
-					UINT style = NextIsRadio ? 0 : wxRB_GROUP; //Style only on first radiobutton
+					unsigned int style = NextIsRadio ? 0 : wxRB_GROUP; //Style only on first radiobutton
 					pChk = new wxRadioButton(parent,wxID_ANY,pCaption,
 								wxDefaultPosition, wxDefaultSize, style);
 					NextIsRadio = HasOr;
