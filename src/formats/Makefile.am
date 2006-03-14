@@ -17,6 +17,7 @@ endif
 
 if !BUILD_SHARED
 noinst_LTLIBRARIES = libformats.la
+libformats_la_LIBADD = inchi/libinchi.la
 libformats_la_SOURCES = \
 	APIInterface.cpp \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \

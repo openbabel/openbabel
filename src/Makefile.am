@@ -3,6 +3,10 @@ EXTRA_DIST = \
 	dlhandler_win32.cpp
 
 SUBDIRS = math formats fingerprints
+if BUILD_WXGUI
+SUBDIRS += GUI
+endif
+
 INCLUDES = -I$(top_srcdir)/data/
 
 bin_PROGRAMS = babel
@@ -28,7 +32,7 @@ libopenbabel_la_SOURCES = \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp $(dlhandler)
 
-libopenbabel_la_LDFLAGS = -version-info 2:0:1
+libopenbabel_la_LDFLAGS = -version-info 3:0:1
 
 if BUILD_SHARED
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS

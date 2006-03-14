@@ -101,6 +101,8 @@ BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
 BUILD_SHARED_TRUE = @BUILD_SHARED_TRUE@
 BUILD_SWIG_FALSE = @BUILD_SWIG_FALSE@
 BUILD_SWIG_TRUE = @BUILD_SWIG_TRUE@
+BUILD_WXGUI_FALSE = @BUILD_WXGUI_FALSE@
+BUILD_WXGUI_TRUE = @BUILD_WXGUI_TRUE@
 BUILD_XML_FALSE = @BUILD_XML_FALSE@
 BUILD_XML_TRUE = @BUILD_XML_TRUE@
 BUILD_ZLIB_FALSE = @BUILD_ZLIB_FALSE@
@@ -160,6 +162,9 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 SWIG = @SWIG@
 VERSION = @VERSION@
+WX_CPPFLAGS = @WX_CPPFLAGS@
+WX_CXXFLAGS = @WX_CXXFLAGS@
+WX_LIBS = @WX_LIBS@
 XML2_CONFIG = @XML2_CONFIG@
 XML_CPPFLAGS = @XML_CPPFLAGS@
 XML_LIBS = @XML_LIBS@
@@ -243,9 +248,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/formats/inchi/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/formats/inchi/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  src/formats/inchi/Makefile
+	  $(AUTOMAKE) --gnu  src/formats/inchi/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

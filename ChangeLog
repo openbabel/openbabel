@@ -1,3 +1,35 @@
+2006-03-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * configure.in, configure, src/Makefile.am, src/config.h.in: Add
+	initial support for DLL builds on Cygwin. Seems to compile a
+        libopenbabel.dll, but still linking problems for
+        babel.exe.
+	Also add support for detecting wx widget library to build src/GUI.
+
+	* */Makefile.in: Regenerated using automake.
+
+	* src/GUI/OBGUI.cpp: First pass at removing compilation warnings
+	with GCC -- make sure all functions are passed correctly.
+
+	* src/GUI/stdwx.h: Use a new babel.xpm if needed (e.g., Mac, UNIX).
+	
+	* src/formats/xml/cmlreactlformat.cpp: Add back missing
+	reaction.h.
+
+        * src/fingerprint.h, src/formats/xml/xml.h: Change static
+	declarations to avoid spurious memory leak warnings with
+	valgrind.
+
+	* src/base.h: Add #ifdef to remove non-implemented iterators for
+	SWIG.
+	
+        * scripts/*: Build updates for Perl and Python wrappers.
+	
+	* test/roundtrip.cpp: Update to remove spurious warnings with CML
+	(and other) format translation.
+
+	* test/smartsresults.txt: Update to reflect recent SMARTS updates.
+
 2006-03-13 Chris Morley <ob@gaseq.co.uk>
 
 	* src/mol.cpp(GetSpacedFormula): I like the approach added by
@@ -162,7 +194,8 @@
 	struct's used to form the Pattern type.
 
 	* src/formats/mdlformat.cpp: Use old-style Trim() syntax to
-	prevent backwards-incompatibility.
+	prevent backwards-incompatibility. Remove final " 0" for REGNO from
+	v3000 COUNTS line. Fixes PR#1439475, as susggested by Ernst-Georg.
 
 	* test/smartsresults.txt: Update to match previous atom type changes.
 

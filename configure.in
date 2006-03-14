@@ -16,7 +16,44 @@ AC_CANONICAL_HOST
 
 AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_TARNAME], [Where the data files are located])
 
-AC_DEFINE([OBAPI], [], [Used to export symbols for DLL / shared library builds])
+AH_VERBATIM([OBAPI], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBAPI __declspec(dllimport)
+ #else
+  #define OBAPI __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBAPI
+#endif
+])
+
+AH_VERBATIM([EXTERN], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define EXTERN __declspec(dllimport) extern
+ #else
+  #define EXTERN __declspec(dllexport) extern
+ #endif
+#else //Everything else (behaviour as original)
+ #define EXTERN extern
+#endif
+])
+
+AH_VERBATIM([OBCONV], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBCONV __declspec(dllimport)
+ #else
+  #define OBCONV __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBCONV
+#endif
+])
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -30,6 +67,34 @@ AC_PATH_PROG(PROVE, prove)
 AC_PATH_PROG(PYTHON, python)
 
 dnl Conditionally build docs, scripts, etc.
+
+dnl check for wx widgets for src/GUI
+WXCONFIG=wx-config
+AC_ARG_WITH(wx-config,
+[[  --with-wx-config=FILE     Use the given path to wx-config when determining
+                            wxWidgets configuration; defaults to "wx-config"]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        WXCONFIG=$withval
+    fi
+])
+AC_MSG_CHECKING([wxWidgets version])
+if wxversion=`$WXCONFIG --version`; then
+    AC_MSG_RESULT([$wxversion])
+else
+    AC_MSG_RESULT([not found])
+fi
+
+WX_CPPFLAGS="`$WXCONFIG --cppflags`"
+WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+WX_LIBS="`$WXCONFIG --libs`"
+
+dnl only needed for wx GUI
+AC_SUBST(WX_LIBS)
+AC_SUBST(WX_CXXFLAGS)
+AC_SUBST(WX_CPPFLAGS)
+
+AM_CONDITIONAL(BUILD_WXGUI, test x"$wxversion" != "x")
 
 dnl Use Perl's "prove" test harness to run unit tests
 AM_CONDITIONAL(PERL_TESTS, test x"$PROVE" != "x")
@@ -119,6 +184,7 @@ AC_CONFIG_COMMANDS([src/babelconfig.h],
                    [cat src/config.h | grep -v PACKAGE >src/babelconfig.h])
 
 AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
+		   src/GUI/Makefile \
 		   src/formats/Makefile src/fingerprints/Makefile \
 		   src/formats/xml/Makefile src/formats/inchi/Makefile \
 		   test/Makefile test/cmltest/Makefile tools/Makefile \
