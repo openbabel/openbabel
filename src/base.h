@@ -159,11 +159,13 @@ public:
         return(_vbond.size());
     }
     //! Iterate over my edges, returning my connected nodes.
+#ifndef SWIG
     OBNodeBase           *BeginNbr(std::vector<OBEdgeBase*>::iterator&);
     OBNodeBase           *NextNbr(std::vector<OBEdgeBase*>::iterator&);
     //! Iterate over my edges, returning the edges.
     OBEdgeBase           *Begin(std::vector<OBEdgeBase*>::iterator&);
     OBEdgeBase           *Next(std::vector<OBEdgeBase*>::iterator&);
+#endif
     //! Is \a OBNodeBase* a beginning or end of some edge of mine?
     virtual bool          IsConnected(OBNodeBase*);
 
@@ -390,11 +392,13 @@ public:
     {
         return(_vlock);
     }
+#ifndef SWIG
     OBNodeBase *Begin(std::vector<OBNodeBase*>::iterator&);
     OBNodeBase *Next(std::vector<OBNodeBase*>::iterator&);
     OBEdgeBase *Begin(std::vector<OBEdgeBase*>::iterator&);
     OBEdgeBase *Next(std::vector<OBEdgeBase*>::iterator&);
-	
+#endif
+
 /*The following (placeholder) routines removed to avoid finding solution to
 iterators being illegally returned as NULL
     //substructure search functions
