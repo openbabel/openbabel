@@ -6,5 +6,12 @@ README					 General information, use, etc.
 OpenBabel.pm				 Perl interface to Open Babel
 openbabel_perl.cpp			 C++ extension for openbabel.pm
 examples/example.pl			 Examples of Chemistry::OpenBabel
-t/example.t				 Example tests for Chemistry::OpenBabel
 META.yml                                 Module meta-data (added by MakeMaker)
+t/atom.t				 Example test
+t/bond.t				 Example test
+t/conversion.t				 Example test
+t/data.t				 Example test
+t/format.t				 Example test
+t/internalcoord.t			 Example test
+t/mol.t					 Example test
+t/residue.t				 Example test

@@ -27,12 +27,10 @@ private:
 };
 #endif
 
-/***********************************************************************
- *
+/* -----------------------------------------------------------------------------
  *  This section contains generic SWIG labels for method/variable
  *  declarations/attributes, and other compiler dependent labels.
- *
- ************************************************************************/
+ * ----------------------------------------------------------------------------- */
 
 /* template workaround for compilers that cannot correctly implement the C++ standard */
 #ifndef SWIGTEMPLATEDISAMBIGUATOR
@@ -126,13 +124,12 @@ private:
 # define _CRT_SECURE_NO_DEPRECATE
 #endif
 
-/***********************************************************************
+/* -----------------------------------------------------------------------------
  * swigrun.swg
  *
- *     This file contains generic CAPI SWIG runtime support for pointer
- *     type checking.
- *
- ************************************************************************/
+ * This file contains generic CAPI SWIG runtime support for pointer
+ * type checking.
+ * ----------------------------------------------------------------------------- */
 
 /* This should only be incremented when either the layout of swig_type_info changes,
    or for whatever reason, the runtime changes incompatibly */
@@ -862,14 +859,14 @@ SWIG_Perl_ErrorType(int code) {
 
 
 
-/***********************************************************************
+/* -----------------------------------------------------------------------------
  * perlrun.swg
  *
- *     This file contains the runtime support for Perl modules
- *     and includes code for managing global variables and pointer
- *     type checking.
- *
- ************************************************************************/
+ * This file contains the runtime support for Perl modules
+ * and includes code for managing global variables and pointer
+ * type checking.
+ * ----------------------------------------------------------------------------- */
+
 #ifdef PERL_OBJECT
 #define SWIG_PERL_OBJECT_DECL CPerlObj *SWIGUNUSEDPARM(pPerl),
 #define SWIG_PERL_OBJECT_CALL pPerl,
@@ -8362,44 +8359,6 @@ XS(_wrap_delete_OBElementTable) {
 }
 
 
-XS(_wrap_OBElementTable_ParseLine) {
-  {
-    OpenBabel::OBElementTable *arg1 = (OpenBabel::OBElementTable *) 0 ;
-    char *arg2 = (char *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int res2 ;
-    char *buf2 = 0 ;
-    int alloc2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBElementTable_ParseLine(self,char const *);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBElementTable, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBElementTable_ParseLine" "', argument " "1"" of type '" "OpenBabel::OBElementTable *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBElementTable * >(argp1);
-    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBElementTable_ParseLine" "', argument " "2"" of type '" "char const *""'");
-    }
-    arg2 = buf2;
-    (arg1)->ParseLine((char const *)arg2);
-    
-    
-    if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-    XSRETURN(argvi);
-  fail:
-    
-    if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBElementTable_GetNumberOfElements) {
   {
     OpenBabel::OBElementTable *arg1 = (OpenBabel::OBElementTable *) 0 ;
@@ -8418,34 +8377,6 @@ XS(_wrap_OBElementTable_GetNumberOfElements) {
     }
     arg1 = reinterpret_cast< OpenBabel::OBElementTable * >(argp1);
     result = (unsigned int)(arg1)->GetNumberOfElements();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBElementTable_GetSize) {
-  {
-    OpenBabel::OBElementTable *arg1 = (OpenBabel::OBElementTable *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBElementTable_GetSize(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBElementTable, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBElementTable_GetSize" "', argument " "1"" of type '" "OpenBabel::OBElementTable *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBElementTable * >(argp1);
-    result = (unsigned int)(arg1)->GetSize();
     ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     XSRETURN(argvi);
@@ -9428,72 +9359,6 @@ XS(_wrap_delete_OBIsotopeTable) {
 }
 
 
-XS(_wrap_OBIsotopeTable_GetSize) {
-  {
-    OpenBabel::OBIsotopeTable *arg1 = (OpenBabel::OBIsotopeTable *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBIsotopeTable_GetSize(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBIsotopeTable, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBIsotopeTable_GetSize" "', argument " "1"" of type '" "OpenBabel::OBIsotopeTable *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBIsotopeTable * >(argp1);
-    result = (unsigned int)(arg1)->GetSize();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBIsotopeTable_ParseLine) {
-  {
-    OpenBabel::OBIsotopeTable *arg1 = (OpenBabel::OBIsotopeTable *) 0 ;
-    char *arg2 = (char *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int res2 ;
-    char *buf2 = 0 ;
-    int alloc2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBIsotopeTable_ParseLine(self,char const *);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBIsotopeTable, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBIsotopeTable_ParseLine" "', argument " "1"" of type '" "OpenBabel::OBIsotopeTable *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBIsotopeTable * >(argp1);
-    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBIsotopeTable_ParseLine" "', argument " "2"" of type '" "char const *""'");
-    }
-    arg2 = buf2;
-    (arg1)->ParseLine((char const *)arg2);
-    
-    
-    if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-    XSRETURN(argvi);
-  fail:
-    
-    if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBIsotopeTable_GetExactMass__SWIG_0) {
   {
     OpenBabel::OBIsotopeTable *arg1 = (OpenBabel::OBIsotopeTable *) 0 ;
@@ -9709,72 +9574,6 @@ XS(_wrap_delete_OBTypeTable) {
     delete arg1;
     
     
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBTypeTable_ParseLine) {
-  {
-    OpenBabel::OBTypeTable *arg1 = (OpenBabel::OBTypeTable *) 0 ;
-    char *arg2 = (char *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int res2 ;
-    char *buf2 = 0 ;
-    int alloc2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBTypeTable_ParseLine(self,char const *);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBTypeTable, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBTypeTable_ParseLine" "', argument " "1"" of type '" "OpenBabel::OBTypeTable *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBTypeTable * >(argp1);
-    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBTypeTable_ParseLine" "', argument " "2"" of type '" "char const *""'");
-    }
-    arg2 = buf2;
-    (arg1)->ParseLine((char const *)arg2);
-    
-    
-    if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-    XSRETURN(argvi);
-  fail:
-    
-    if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBTypeTable_GetSize) {
-  {
-    OpenBabel::OBTypeTable *arg1 = (OpenBabel::OBTypeTable *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBTypeTable_GetSize(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBTypeTable, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBTypeTable_GetSize" "', argument " "1"" of type '" "OpenBabel::OBTypeTable *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBTypeTable * >(argp1);
-    result = (unsigned int)(arg1)->GetSize();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -10132,72 +9931,6 @@ XS(_wrap_new_OBResidueData) {
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBResidueData, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
     XSRETURN(argvi);
   fail:
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBResidueData_ParseLine) {
-  {
-    OpenBabel::OBResidueData *arg1 = (OpenBabel::OBResidueData *) 0 ;
-    char *arg2 = (char *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int res2 ;
-    char *buf2 = 0 ;
-    int alloc2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBResidueData_ParseLine(self,char const *);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBResidueData, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBResidueData_ParseLine" "', argument " "1"" of type '" "OpenBabel::OBResidueData *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBResidueData * >(argp1);
-    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBResidueData_ParseLine" "', argument " "2"" of type '" "char const *""'");
-    }
-    arg2 = buf2;
-    (arg1)->ParseLine((char const *)arg2);
-    
-    
-    if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-    XSRETURN(argvi);
-  fail:
-    
-    if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBResidueData_GetSize) {
-  {
-    OpenBabel::OBResidueData *arg1 = (OpenBabel::OBResidueData *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBResidueData_GetSize(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBResidueData, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBResidueData_GetSize" "', argument " "1"" of type '" "OpenBabel::OBResidueData *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBResidueData * >(argp1);
-    result = (unsigned int)(arg1)->GetSize();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
     SWIG_croak_null();
   }
 }
@@ -20395,33 +20128,6 @@ XS(_wrap_OBAtom_SetResidue) {
 }
 
 
-XS(_wrap_OBAtom_SetAromatic) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_SetAromatic(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_SetAromatic" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    (arg1)->SetAromatic();
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBAtom_UnsetAromatic) {
   {
     OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
@@ -20665,62 +20371,6 @@ XS(_wrap_OBAtom_ClearCoordPtr) {
 }
 
 
-XS(_wrap_OBAtom_GetFormalCharge) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_GetFormalCharge(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetFormalCharge" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (int)((OpenBabel::OBAtom const *)arg1)->GetFormalCharge();
-    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_GetAtomicNum) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_GetAtomicNum(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetAtomicNum" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->GetAtomicNum();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBAtom_GetIsotope) {
   {
     OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
@@ -20833,34 +20483,6 @@ XS(_wrap_OBAtom_GetExactMass) {
 }
 
 
-XS(_wrap_OBAtom_GetIdx) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_GetIdx(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetIdx" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->GetIdx();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBAtom_GetCoordinateIdx) {
   {
     OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
@@ -20907,118 +20529,6 @@ XS(_wrap_OBAtom_GetCIdx) {
     }
     arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
     result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->GetCIdx();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_GetValence) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_GetValence(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetValence" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->GetValence();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_GetHyb) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_GetHyb(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetHyb" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->GetHyb();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_GetImplicitValence) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_GetImplicitValence(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetImplicitValence" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->GetImplicitValence();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_GetHvyValence) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_GetHvyValence(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetHvyValence" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->GetHvyValence();
     ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     XSRETURN(argvi);
@@ -22292,90 +21802,6 @@ XS(_wrap_OBAtom_CountFreeOxygens) {
 }
 
 
-XS(_wrap_OBAtom_ImplicitHydrogenCount) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_ImplicitHydrogenCount(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_ImplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->ImplicitHydrogenCount();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_ExplicitHydrogenCount) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_ExplicitHydrogenCount(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_ExplicitHydrogenCount" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->ExplicitHydrogenCount();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_MemberOfRingCount) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_MemberOfRingCount(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_MemberOfRingCount" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->MemberOfRingCount();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBAtom_MemberOfRingSize) {
   {
     OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
@@ -22478,34 +21904,6 @@ XS(_wrap_OBAtom_BOSum) {
     }
     arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
     result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->BOSum();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_KBOSum) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_KBOSum(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_KBOSum" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->KBOSum();
     ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     XSRETURN(argvi);
@@ -22772,100 +22170,6 @@ XS(_wrap_OBAtom_IsPhosphorus) {
     
     XSRETURN(argvi);
   fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_IsAromatic) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_IsAromatic(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (bool)((OpenBabel::OBAtom const *)arg1)->IsAromatic();
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_IsInRing) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_IsInRing(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_IsInRing" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (bool)((OpenBabel::OBAtom const *)arg1)->IsInRing();
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_IsInRingSize) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    int arg2 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int val2 ;
-    int ecode2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBAtom_IsInRingSize(self,int);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_IsInRingSize" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBAtom_IsInRingSize" "', argument " "2"" of type '" "int""'");
-    } 
-    arg2 = static_cast< int >(val2);
-    result = (bool)((OpenBabel::OBAtom const *)arg1)->IsInRingSize(arg2);
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
     
     SWIG_croak_null();
   }
@@ -25362,33 +24666,6 @@ XS(_wrap_OBBond_SetInRing) {
 }
 
 
-XS(_wrap_OBBond_SetClosure) {
-  {
-    OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBBond_SetClosure(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_SetClosure" "', argument " "1"" of type '" "OpenBabel::OBBond *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
-    (arg1)->SetClosure();
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBBond_UnsetAromatic) {
   {
     OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
@@ -25434,34 +24711,6 @@ XS(_wrap_OBBond_UnsetKekule) {
     arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
     (arg1)->UnsetKekule();
     
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBBond_GetBO) {
-  {
-    OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
-    unsigned int result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBBond_GetBO(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_GetBO" "', argument " "1"" of type '" "OpenBabel::OBBond const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
-    result = (unsigned int)((OpenBabel::OBBond const *)arg1)->GetBO();
-    ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -25765,62 +25014,6 @@ XS(_wrap_OBBond_GetNbrAtomIdx) {
     XSRETURN(argvi);
   fail:
     
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBBond_IsAromatic) {
-  {
-    OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBBond_IsAromatic(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_IsAromatic" "', argument " "1"" of type '" "OpenBabel::OBBond const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
-    result = (bool)((OpenBabel::OBBond const *)arg1)->IsAromatic();
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBBond_IsInRing) {
-  {
-    OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBBond_IsInRing(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_IsInRing" "', argument " "1"" of type '" "OpenBabel::OBBond const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
-    result = (bool)((OpenBabel::OBBond const *)arg1)->IsInRing();
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
     
     SWIG_croak_null();
   }
@@ -26153,34 +25346,6 @@ XS(_wrap_OBBond_IsKTriple) {
     }
     arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
     result = (bool)(arg1)->IsKTriple();
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBBond_IsClosure) {
-  {
-    OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBBond_IsClosure(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_IsClosure" "', argument " "1"" of type '" "OpenBabel::OBBond *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
-    result = (bool)(arg1)->IsClosure();
     ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
     
     XSRETURN(argvi);
@@ -31567,44 +30732,6 @@ XS(_wrap_OBMol_UnsetFlag) {
 }
 
 
-XS(_wrap_OBMol_DoTransformations) {
-  {
-    OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
-    std::map<std::string,std::string > *arg2 = (std::map<std::string,std::string > *) 0 ;
-    OpenBabel::OBBase *result = 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBMol_DoTransformations(self,pOptions);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMol_DoTransformations" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_std__mapTstd__string_std__string_t, 0 |  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBMol_DoTransformations" "', argument " "2"" of type '" "std::map<std::string,std::string > const *""'"); 
-    }
-    arg2 = reinterpret_cast< std::map<std::string,std::string > * >(argp2);
-    result = (OpenBabel::OBBase *)(arg1)->DoTransformations((std::map<std::string,std::string > const *)arg2);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBBase, 0 | 0); argvi++ ;
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBMol_ClassDescription) {
   {
     char *result = 0 ;
@@ -36825,11 +35952,11 @@ XS(_wrap_OBRTree_PathToRoot) {
 XS(_wrap_OBRing__path_set) {
   {
     OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
-    std::vector<int > *arg2 = 0 ;
+    std::vector<int > *arg2 = (std::vector<int > *) 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    std::vector<int > temp2 ;
-    std::vector<int > *v2 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -36841,33 +35968,11 @@ XS(_wrap_OBRing__path_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing__path_set" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-    {
-      if (SWIG_ConvertPtr(ST(1),(void **) &v2, 
-          SWIGTYPE_p_std__vectorTint_t,1) != -1) {
-        arg2 = v2;
-      } else if (SvROK(ST(1))) {
-        AV *av = (AV *)SvRV(ST(1));
-        if (SvTYPE(av) != SVt_PVAV)
-        SWIG_croak("Type error in argument 2 of OBRing__path_set. "
-          "Expected an array of ""int");
-        SV **tv;
-        I32 len = av_len(av) + 1;
-        for (int i=0; i<len; i++) {
-          tv = av_fetch(av, i, 0);
-          if (SvIOK(*tv)) {
-            temp2.push_back((int)SvIVX(*tv));
-          } else {
-            SWIG_croak("Type error in argument 2 of "
-              "OBRing__path_set. "
-              "Expected an array of ""int");
-          }
-        }
-        arg2 = &temp2;
-      } else {
-        SWIG_croak("Type error in argument 2 of OBRing__path_set. "
-          "Expected an array of ""int");
-      }
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_std__vectorTint_t, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRing__path_set" "', argument " "2"" of type '" "std::vector<int > *""'"); 
     }
+    arg2 = reinterpret_cast< std::vector<int > * >(argp2);
     if (arg1) (arg1)->_path = *arg2;
     
     
@@ -36899,10 +36004,7 @@ XS(_wrap_OBRing__path_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing__path_get" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-    {
-      std::vector<int > const &_result_ref =  ((arg1)->_path);
-      result = (std::vector<int > *) &_result_ref;
-    }
+    result = (std::vector<int > *)& ((arg1)->_path);
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTint_t, 0 | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
@@ -36916,10 +36018,10 @@ XS(_wrap_OBRing__path_get) {
 XS(_wrap_OBRing__pathset_set) {
   {
     OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
-    OpenBabel::OBBitVec *arg2 = 0 ;
+    OpenBabel::OBBitVec *arg2 = (OpenBabel::OBBitVec *) 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
+    void *argp2 = 0 ;
     int res2 = 0 ;
     int argvi = 0;
     dXSARGS;
@@ -36932,12 +36034,9 @@ XS(_wrap_OBRing__pathset_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing__pathset_set" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__OBBitVec,  0 );
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBBitVec, 0 |  0 );
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRing__pathset_set" "', argument " "2"" of type '" "OpenBabel::OBBitVec const &""'"); 
-    }
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBRing__pathset_set" "', argument " "2"" of type '" "OpenBabel::OBBitVec const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBRing__pathset_set" "', argument " "2"" of type '" "OpenBabel::OBBitVec *""'"); 
     }
     arg2 = reinterpret_cast< OpenBabel::OBBitVec * >(argp2);
     if (arg1) (arg1)->_pathset = *arg2;
@@ -36971,10 +36070,7 @@ XS(_wrap_OBRing__pathset_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBRing__pathset_get" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-    {
-      OpenBabel::OBBitVec const &_result_ref =  ((arg1)->_pathset);
-      result = (OpenBabel::OBBitVec *) &_result_ref;
-    }
+    result = (OpenBabel::OBBitVec *)& ((arg1)->_pathset);
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBBitVec, 0 | 0); argvi++ ;
     
     XSRETURN(argvi);
@@ -40310,9 +39406,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::delete_OBElement", _wrap_delete_OBElement},
 {"Chemistry::OpenBabelc::new_OBElementTable", _wrap_new_OBElementTable},
 {"Chemistry::OpenBabelc::delete_OBElementTable", _wrap_delete_OBElementTable},
-{"Chemistry::OpenBabelc::OBElementTable_ParseLine", _wrap_OBElementTable_ParseLine},
 {"Chemistry::OpenBabelc::OBElementTable_GetNumberOfElements", _wrap_OBElementTable_GetNumberOfElements},
-{"Chemistry::OpenBabelc::OBElementTable_GetSize", _wrap_OBElementTable_GetSize},
 {"Chemistry::OpenBabelc::OBElementTable_GetAtomicNum", _wrap_OBElementTable_GetAtomicNum},
 {"Chemistry::OpenBabelc::OBElementTable_GetSymbol", _wrap_OBElementTable_GetSymbol},
 {"Chemistry::OpenBabelc::OBElementTable_GetVdwRad", _wrap_OBElementTable_GetVdwRad},
@@ -40328,21 +39422,15 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBElementTable_GetName", _wrap_OBElementTable_GetName},
 {"Chemistry::OpenBabelc::new_OBIsotopeTable", _wrap_new_OBIsotopeTable},
 {"Chemistry::OpenBabelc::delete_OBIsotopeTable", _wrap_delete_OBIsotopeTable},
-{"Chemistry::OpenBabelc::OBIsotopeTable_GetSize", _wrap_OBIsotopeTable_GetSize},
-{"Chemistry::OpenBabelc::OBIsotopeTable_ParseLine", _wrap_OBIsotopeTable_ParseLine},
 {"Chemistry::OpenBabelc::OBIsotopeTable_GetExactMass", _wrap_OBIsotopeTable_GetExactMass},
 {"Chemistry::OpenBabelc::new_OBTypeTable", _wrap_new_OBTypeTable},
 {"Chemistry::OpenBabelc::delete_OBTypeTable", _wrap_delete_OBTypeTable},
-{"Chemistry::OpenBabelc::OBTypeTable_ParseLine", _wrap_OBTypeTable_ParseLine},
-{"Chemistry::OpenBabelc::OBTypeTable_GetSize", _wrap_OBTypeTable_GetSize},
 {"Chemistry::OpenBabelc::OBTypeTable_SetFromType", _wrap_OBTypeTable_SetFromType},
 {"Chemistry::OpenBabelc::OBTypeTable_SetToType", _wrap_OBTypeTable_SetToType},
 {"Chemistry::OpenBabelc::OBTypeTable_Translate", _wrap_OBTypeTable_Translate},
 {"Chemistry::OpenBabelc::OBTypeTable_GetFromType", _wrap_OBTypeTable_GetFromType},
 {"Chemistry::OpenBabelc::OBTypeTable_GetToType", _wrap_OBTypeTable_GetToType},
 {"Chemistry::OpenBabelc::new_OBResidueData", _wrap_new_OBResidueData},
-{"Chemistry::OpenBabelc::OBResidueData_ParseLine", _wrap_OBResidueData_ParseLine},
-{"Chemistry::OpenBabelc::OBResidueData_GetSize", _wrap_OBResidueData_GetSize},
 {"Chemistry::OpenBabelc::OBResidueData_SetResName", _wrap_OBResidueData_SetResName},
 {"Chemistry::OpenBabelc::OBResidueData_LookupBO", _wrap_OBResidueData_LookupBO},
 {"Chemistry::OpenBabelc::OBResidueData_LookupType", _wrap_OBResidueData_LookupType},
@@ -40518,7 +39606,6 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBAtom_SetCoordPtr", _wrap_OBAtom_SetCoordPtr},
 {"Chemistry::OpenBabelc::OBAtom_SetVector", _wrap_OBAtom_SetVector},
 {"Chemistry::OpenBabelc::OBAtom_SetResidue", _wrap_OBAtom_SetResidue},
-{"Chemistry::OpenBabelc::OBAtom_SetAromatic", _wrap_OBAtom_SetAromatic},
 {"Chemistry::OpenBabelc::OBAtom_UnsetAromatic", _wrap_OBAtom_UnsetAromatic},
 {"Chemistry::OpenBabelc::OBAtom_SetClockwiseStereo", _wrap_OBAtom_SetClockwiseStereo},
 {"Chemistry::OpenBabelc::OBAtom_SetAntiClockwiseStereo", _wrap_OBAtom_SetAntiClockwiseStereo},
@@ -40528,19 +39615,12 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBAtom_SetInRing", _wrap_OBAtom_SetInRing},
 {"Chemistry::OpenBabelc::OBAtom_SetChiral", _wrap_OBAtom_SetChiral},
 {"Chemistry::OpenBabelc::OBAtom_ClearCoordPtr", _wrap_OBAtom_ClearCoordPtr},
-{"Chemistry::OpenBabelc::OBAtom_GetFormalCharge", _wrap_OBAtom_GetFormalCharge},
-{"Chemistry::OpenBabelc::OBAtom_GetAtomicNum", _wrap_OBAtom_GetAtomicNum},
 {"Chemistry::OpenBabelc::OBAtom_GetIsotope", _wrap_OBAtom_GetIsotope},
 {"Chemistry::OpenBabelc::OBAtom_GetSpinMultiplicity", _wrap_OBAtom_GetSpinMultiplicity},
 {"Chemistry::OpenBabelc::OBAtom_GetAtomicMass", _wrap_OBAtom_GetAtomicMass},
 {"Chemistry::OpenBabelc::OBAtom_GetExactMass", _wrap_OBAtom_GetExactMass},
-{"Chemistry::OpenBabelc::OBAtom_GetIdx", _wrap_OBAtom_GetIdx},
 {"Chemistry::OpenBabelc::OBAtom_GetCoordinateIdx", _wrap_OBAtom_GetCoordinateIdx},
 {"Chemistry::OpenBabelc::OBAtom_GetCIdx", _wrap_OBAtom_GetCIdx},
-{"Chemistry::OpenBabelc::OBAtom_GetValence", _wrap_OBAtom_GetValence},
-{"Chemistry::OpenBabelc::OBAtom_GetHyb", _wrap_OBAtom_GetHyb},
-{"Chemistry::OpenBabelc::OBAtom_GetImplicitValence", _wrap_OBAtom_GetImplicitValence},
-{"Chemistry::OpenBabelc::OBAtom_GetHvyValence", _wrap_OBAtom_GetHvyValence},
 {"Chemistry::OpenBabelc::OBAtom_GetHeteroValence", _wrap_OBAtom_GetHeteroValence},
 {"Chemistry::OpenBabelc::OBAtom_GetType", _wrap_OBAtom_GetType},
 {"Chemistry::OpenBabelc::OBAtom_GetX", _wrap_OBAtom_GetX},
@@ -40571,14 +39651,10 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBAtom_DeleteBond", _wrap_OBAtom_DeleteBond},
 {"Chemistry::OpenBabelc::OBAtom_ClearBond", _wrap_OBAtom_ClearBond},
 {"Chemistry::OpenBabelc::OBAtom_CountFreeOxygens", _wrap_OBAtom_CountFreeOxygens},
-{"Chemistry::OpenBabelc::OBAtom_ImplicitHydrogenCount", _wrap_OBAtom_ImplicitHydrogenCount},
-{"Chemistry::OpenBabelc::OBAtom_ExplicitHydrogenCount", _wrap_OBAtom_ExplicitHydrogenCount},
-{"Chemistry::OpenBabelc::OBAtom_MemberOfRingCount", _wrap_OBAtom_MemberOfRingCount},
 {"Chemistry::OpenBabelc::OBAtom_MemberOfRingSize", _wrap_OBAtom_MemberOfRingSize},
 {"Chemistry::OpenBabelc::OBAtom_SmallestBondAngle", _wrap_OBAtom_SmallestBondAngle},
 {"Chemistry::OpenBabelc::OBAtom_AverageBondAngle", _wrap_OBAtom_AverageBondAngle},
 {"Chemistry::OpenBabelc::OBAtom_BOSum", _wrap_OBAtom_BOSum},
-{"Chemistry::OpenBabelc::OBAtom_KBOSum", _wrap_OBAtom_KBOSum},
 {"Chemistry::OpenBabelc::OBAtom_HtoMethyl", _wrap_OBAtom_HtoMethyl},
 {"Chemistry::OpenBabelc::OBAtom_SetHybAndGeom", _wrap_OBAtom_SetHybAndGeom},
 {"Chemistry::OpenBabelc::OBAtom_HasResidue", _wrap_OBAtom_HasResidue},
@@ -40588,9 +39664,6 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBAtom_IsOxygen", _wrap_OBAtom_IsOxygen},
 {"Chemistry::OpenBabelc::OBAtom_IsSulfur", _wrap_OBAtom_IsSulfur},
 {"Chemistry::OpenBabelc::OBAtom_IsPhosphorus", _wrap_OBAtom_IsPhosphorus},
-{"Chemistry::OpenBabelc::OBAtom_IsAromatic", _wrap_OBAtom_IsAromatic},
-{"Chemistry::OpenBabelc::OBAtom_IsInRing", _wrap_OBAtom_IsInRing},
-{"Chemistry::OpenBabelc::OBAtom_IsInRingSize", _wrap_OBAtom_IsInRingSize},
 {"Chemistry::OpenBabelc::OBAtom_IsHeteroatom", _wrap_OBAtom_IsHeteroatom},
 {"Chemistry::OpenBabelc::OBAtom_IsNotCorH", _wrap_OBAtom_IsNotCorH},
 {"Chemistry::OpenBabelc::OBAtom_IsConnected", _wrap_OBAtom_IsConnected},
@@ -40647,10 +39720,8 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBBond_SetUp", _wrap_OBBond_SetUp},
 {"Chemistry::OpenBabelc::OBBond_SetDown", _wrap_OBBond_SetDown},
 {"Chemistry::OpenBabelc::OBBond_SetInRing", _wrap_OBBond_SetInRing},
-{"Chemistry::OpenBabelc::OBBond_SetClosure", _wrap_OBBond_SetClosure},
 {"Chemistry::OpenBabelc::OBBond_UnsetAromatic", _wrap_OBBond_UnsetAromatic},
 {"Chemistry::OpenBabelc::OBBond_UnsetKekule", _wrap_OBBond_UnsetKekule},
-{"Chemistry::OpenBabelc::OBBond_GetBO", _wrap_OBBond_GetBO},
 {"Chemistry::OpenBabelc::OBBond_GetBondOrder", _wrap_OBBond_GetBondOrder},
 {"Chemistry::OpenBabelc::OBBond_GetFlags", _wrap_OBBond_GetFlags},
 {"Chemistry::OpenBabelc::OBBond_GetBeginAtomIdx", _wrap_OBBond_GetBeginAtomIdx},
@@ -40661,8 +39732,6 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBBond_GetEquibLength", _wrap_OBBond_GetEquibLength},
 {"Chemistry::OpenBabelc::OBBond_GetLength", _wrap_OBBond_GetLength},
 {"Chemistry::OpenBabelc::OBBond_GetNbrAtomIdx", _wrap_OBBond_GetNbrAtomIdx},
-{"Chemistry::OpenBabelc::OBBond_IsAromatic", _wrap_OBBond_IsAromatic},
-{"Chemistry::OpenBabelc::OBBond_IsInRing", _wrap_OBBond_IsInRing},
 {"Chemistry::OpenBabelc::OBBond_IsRotor", _wrap_OBBond_IsRotor},
 {"Chemistry::OpenBabelc::OBBond_IsAmide", _wrap_OBBond_IsAmide},
 {"Chemistry::OpenBabelc::OBBond_IsPrimaryAmide", _wrap_OBBond_IsPrimaryAmide},
@@ -40675,7 +39744,6 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBBond_IsKSingle", _wrap_OBBond_IsKSingle},
 {"Chemistry::OpenBabelc::OBBond_IsKDouble", _wrap_OBBond_IsKDouble},
 {"Chemistry::OpenBabelc::OBBond_IsKTriple", _wrap_OBBond_IsKTriple},
-{"Chemistry::OpenBabelc::OBBond_IsClosure", _wrap_OBBond_IsClosure},
 {"Chemistry::OpenBabelc::OBBond_IsUp", _wrap_OBBond_IsUp},
 {"Chemistry::OpenBabelc::OBBond_IsDown", _wrap_OBBond_IsDown},
 {"Chemistry::OpenBabelc::OBBond_IsWedge", _wrap_OBBond_IsWedge},
@@ -40769,7 +39837,6 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBMol_UnsetPartialChargesPerceived", _wrap_OBMol_UnsetPartialChargesPerceived},
 {"Chemistry::OpenBabelc::OBMol_UnsetImplicitValencePerceived", _wrap_OBMol_UnsetImplicitValencePerceived},
 {"Chemistry::OpenBabelc::OBMol_UnsetFlag", _wrap_OBMol_UnsetFlag},
-{"Chemistry::OpenBabelc::OBMol_DoTransformations", _wrap_OBMol_DoTransformations},
 {"Chemistry::OpenBabelc::OBMol_ClassDescription", _wrap_OBMol_ClassDescription},
 {"Chemistry::OpenBabelc::OBMol_Clear", _wrap_OBMol_Clear},
 {"Chemistry::OpenBabelc::OBMol_RenumberAtoms", _wrap_OBMol_RenumberAtoms},
@@ -40918,7 +39985,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::SmartsLexReplace", _wrap_SmartsLexReplace},
 {0,0}
 };
-/*************************************************************************
+/* -----------------------------------------------------------------------------
  * Type initialization:
  * This problem is tough by the requirement that no dynamic 
  * memory is used. Also, since swig_type_info structures store pointers to 
@@ -40930,7 +39997,7 @@ static swig_command_info swig_commands[] = {
  * swig_module, and does all the lookup, filling in the swig_module.types
  * array with the correct data and linking the correct swig_cast_info
  * structures together.
-
+ *
  * The generated swig_type_info structures are assigned staticly to an initial 
  * array. We just loop though that array, and handle each type individually.
  * First we lookup if this type has been already loaded, and if so, use the
@@ -40944,7 +40011,7 @@ static swig_command_info swig_commands[] = {
  * we find the array of casts associated with the type, and loop through it 
  * adding the casts to the list. The one last trick we need to do is making
  * sure the type pointer in the swig_cast_info struct is correct.
-
+ *
  * First off, we lookup the cast->type name to see if it is already loaded. 
  * There are three cases to handle:
  *  1) If the cast->type has already been loaded AND the type we are adding
@@ -40957,7 +40024,7 @@ static swig_command_info swig_commands[] = {
  *  3) Finally, if cast->type has not already been loaded, then we add that
  *     swig_cast_info to the linked list (because the cast->type) pointer will
  *     be correct.
-**/
+ * ----------------------------------------------------------------------------- */
 
 #ifdef __cplusplus
 extern "C" {
