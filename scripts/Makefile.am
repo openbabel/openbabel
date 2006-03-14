@@ -21,10 +21,12 @@ perl/openbabel_perl.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/
 	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
 python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
-	$(SWIG) -python -modern -c++ -o $@ -I$(top_srcdir)/src $<;
+	$(SWIG) -python -modern -c++ \
+		-o $@ -I$(top_srcdir)/src $<;
 	echo "import sys" >python/ob.py;
-	echo "import dl" >>python/ob.py;
-	echo "sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >>python/ob.py;
+	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
+	echo "    import dl" >>python/ob.py;
+	echo "    sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >>python/ob.py;
 	echo >>python/ob.py;
 	cat python/openbabel.py >>python/ob.py;
 	mv python/ob.py python/openbabel.py;

@@ -65,6 +65,8 @@ BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
 BUILD_SHARED_TRUE = @BUILD_SHARED_TRUE@
 BUILD_SWIG_FALSE = @BUILD_SWIG_FALSE@
 BUILD_SWIG_TRUE = @BUILD_SWIG_TRUE@
+BUILD_WXGUI_FALSE = @BUILD_WXGUI_FALSE@
+BUILD_WXGUI_TRUE = @BUILD_WXGUI_TRUE@
 BUILD_XML_FALSE = @BUILD_XML_FALSE@
 BUILD_XML_TRUE = @BUILD_XML_TRUE@
 BUILD_ZLIB_FALSE = @BUILD_ZLIB_FALSE@
@@ -124,6 +126,9 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 SWIG = @SWIG@
 VERSION = @VERSION@
+WX_CPPFLAGS = @WX_CPPFLAGS@
+WX_CXXFLAGS = @WX_CXXFLAGS@
+WX_LIBS = @WX_LIBS@
 XML2_CONFIG = @XML2_CONFIG@
 XML_CPPFLAGS = @XML_CPPFLAGS@
 XML_LIBS = @XML_LIBS@
@@ -190,9 +195,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  scripts/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  scripts/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  scripts/Makefile
+	  $(AUTOMAKE) --gnu  scripts/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -358,10 +363,12 @@ dist-hook:
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -python -modern -c++ -o $@ -I$(top_srcdir)/src $<;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -python -modern -c++ \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-o $@ -I$(top_srcdir)/src $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "import sys" >python/ob.py;
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "import dl" >>python/ob.py;
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    import dl" >>python/ob.py;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "    sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >>python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo >>python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	cat python/openbabel.py >>python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv python/ob.py python/openbabel.py;

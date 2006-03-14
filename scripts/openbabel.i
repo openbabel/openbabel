@@ -6,9 +6,18 @@
 #endif
 
 %{
+#include "obutil.h"
+#include "math/vector3.h"
+#include "math/matrix3x3.h"
+#include "generic.h"
+
+#include "base.h"
 #include "mol.h"
+#include "ring.h"
 #include "obconversion.h"
+
 #include "data.h"
+#include "parsmart.h"
 %}
 
 %include "std_list.i"
@@ -16,18 +25,34 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+namespace std {
+%template (vectorInt)		vector<int>;
+%template (vvInt)		vector< vector<int> >;
+%template (vectorDouble) 	vector<double>;
+%template (vVector3)		vector<OpenBabel::vector3>;
+
+%template (vectorMol)		vector<OpenBabel::OBMol>;
+%template (vectorBond)		vector<OpenBabel::OBBond>;
+%template (vectorResidue)	vector<OpenBabel::OBResidue>;
+%template (vectorRing)		vector<OpenBabel::OBRing>;
+}
+
 %import "babelconfig.h"
 
 %include "data.h"
+%include "obutil.h"
+%include "math/vector3.h"
+%import "math/matrix3x3.h"
+%include "generic.h"
 
-%import "base.h"
+%include "base.h"
+
 %import "chains.h"
-%import "math/vector3.h"
 %import "bitvec.h"
-%import "ring.h"
-%import "generic.h"
 %import "typer.h"
 %import "oberror.h"
 
 %include "obconversion.h"
 %include "mol.h"
+%include "ring.h"
+%include "parsmart.h"

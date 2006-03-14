@@ -6,7 +6,7 @@ def find_likely_directory():
     """Find (guess!) where Open Babel is installed.
 
     Order of precedence is:
-      $OPENBABEL_INSTALL > /usr/local > /usr > ../../src
+      $OPENBABEL_INSTALL > ../../src > /usr/local > /usr
     """
     name = os.environ.get("OPENBABEL_INSTALL")
     if name: # OPENBABEL_INSTALL is set
@@ -19,6 +19,10 @@ def find_likely_directory():
 
     else: # OPENBABEL_INSTALL is not set
         sys.stderr.write("WARNING: Environment variable OPENBABEL_INSTALL is not set\n")
+	sys.stderr.write("INFO: Looking for library and include files in ../../src\n")
+        if os.path.isfile("../../src/atom.o"):
+            return ["../../src"],["../../src"]
+
         for dirname in ["/usr/local","/usr"]:
             # Look for each of these directories in turn for the directory include/openbabel-2.0
             # (This is version specific, so I may do as Andrew Dalke did for PyDaylight and use
@@ -27,11 +31,6 @@ def find_likely_directory():
                 sys.stderr.write("INFO: Setting OPENBABEL_INSTALL to %s\n" % dirname)
                 return ([dirname+"/include/openbabel-2.0",dirname+"/include/openbabel-2.0/openbabel"],
                         [dirname+"/lib/openbabel"])
-            else:
-                sys.stderr.write("WARNING: Open Babel does not appear to be globally installed\n" +
-                                 "INFO: Looking for library and include files in ../../src\n")
-                if os.path.isfile("../../src/atom.o"):
-                    return ["../../src"],["../../src"]
                 
     sys.stderr.write("ERROR: Cannot find Open Babel library directory\n")
     return (None,None)
@@ -41,7 +40,7 @@ def find_likely_directory():
 
 OBinclude,OBlibrary = find_likely_directory()
 
-obExtension = Extension('_openbabel',
+obExtension = Extension('openbabel',
                         ['openbabel_python.cpp'],
                         include_dirs=OBinclude,
                         library_dirs=OBlibrary,
@@ -49,7 +48,7 @@ obExtension = Extension('_openbabel',
                         )
 
 setup(name='openbabel',
-      version='1.0.0',
+      version='1.1.0',
       description='Python interface to Open Babel',
       author='Geoff Hutchison',
       author_email='openbabel-scripting@lists.sourceforge.net',
