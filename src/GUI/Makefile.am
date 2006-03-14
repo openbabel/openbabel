@@ -1,0 +1,9 @@
+EXTRA_DIST = OBGUI.h optswx.h selformats.h stdwx.h
+
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
+AM_CPPFLAGS =  @WX_CPPFLAGS@
+AM_CXXFLAGS =  @WX_CXXFLAGS@
+
+bin_PROGRAMS = wxbabel
+wxbabel_SOURCES = OBGUI.cpp optswx.cpp stdwx.cpp
+wxbabel_LDADD = ../libopenbabel.la  @LIBDL@ @WX_LIBS@
