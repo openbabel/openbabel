@@ -1,3 +1,18 @@
+2006-03-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, src/Makefile.am, src/config.h.in: Add
+	initial support for DLL builds on Cygwin. Seems to compile a
+	libopenbabel.dll, but still linking problems for babel.exe.
+
+	* */Makefile.in: Regenerated using automake.
+
+	* src/main.cpp: Declare USING_OBDLL for Cygwin DLL usage.
+
+	* scripts/*: Build updates for Perl and Python wrappers.
+
+	* src/fingerprint.h, src/formats/xml/xml.h: Change static
+	declarations to avoid spurious memory leak warnings with valgrind.
+
 2006-03-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure, configure.in: Change --disable-dynamic-modules to

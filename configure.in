@@ -16,7 +16,44 @@ AC_CANONICAL_HOST
 
 AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_TARNAME], [Where the data files are located])
 
-AC_DEFINE([OBAPI], [], [Used to export symbols for DLL / shared library builds])
+AH_VERBATIM([OBAPI], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBAPI __declspec(dllimport)
+ #else
+  #define OBAPI __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBAPI
+#endif
+])
+
+AH_VERBATIM([EXTERN], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define EXTERN __declspec(dllimport) extern
+ #else
+  #define EXTERN __declspec(dllexport) extern
+ #endif
+#else //Everything else (behaviour as original)
+ #define EXTERN extern
+#endif
+])
+
+AH_VERBATIM([OBCONV], 
+[/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBCONV __declspec(dllimport)
+ #else
+  #define OBCONV __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBCONV
+#endif
+])
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -54,8 +91,18 @@ dnl libtool
 dnl You can set the shared library version in src/Makefile.am
 dnl AC_DISABLE_SHARED
 AC_LIBTOOL_DLOPEN
+dnl We do support DLLs on Win32 systems
+AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 
+case $host in
+     *-*-cygwin*)
+	dynamic_modules="no"
+	;;
+     *-*-mingw*)
+	dynamic_modules="no"
+	;;
+esac
 AM_CONDITIONAL(BUILD_SHARED, test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes")
 
 oldmodule=$module
