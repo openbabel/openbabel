@@ -1,3 +1,23 @@
+2006-03-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/xml/xml.h: Fix std:: namespace decl for type_info.
+
+	* src/Makefile.am: Temporarily disable compilation of src/GUI
+	until compile errors are all fixed.
+
+	* scripts/* : More changes to allow building, linking, and running
+	(again!) with current CVS tree.
+
+	* src/generic.h (OBTorsion): Add default code for SetData(OBBond*)
+	-- not sure what this *should* do. Allows compilation of script
+	wrappers.
+
+	* src/obutil.h, src/math/matrix3x3.h, src/math/vector3.h: Add
+	#ifndef SWIG portions to prevent SWIG from choking on some
+	non-class function declarations.
+
+	* */Makefile.in: Regenerate (get rid of bogus --gnu flags).
+
 2006-03-14 Chris Morley <ob@gaseq.co.uk>
 
 	* src/GUI/OBGUI.cpp(Expand): Mods to avoid errors when filenames
