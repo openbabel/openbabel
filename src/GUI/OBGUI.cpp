@@ -949,8 +949,12 @@ int  CFilenames::Expand(std::vector<std::string>& filelist)
 	wxString txt(GetValue());
 	do //for each filename
 	{
-		int nameend = txt.find(';',namestart);			
-		wxFileName fn(txt.substr(namestart, nameend-namestart));
+		int nameend = txt.find(';',namestart);
+		wxString name = txt.substr(namestart, nameend-namestart);
+		name.Trim().Trim(false);
+		if(name.IsEmpty())
+			break;
+		wxFileName fn(name);
 		namestart=nameend+1; // 0 at end
 		fn.MakeAbsolute(frame->GetInFileBasePath());
 		count += DLHandler::findFiles(filelist, std::string(fn.GetFullPath()));
@@ -961,6 +965,8 @@ int  CFilenames::Expand(std::vector<std::string>& filelist)
 bool CFilenames::ToNextFile(int delta)
 {
 	wxString fname(GetValue());
+	if (fname.IsEmpty())
+		return false;
 	long n = GetInsertionPoint();
 	int pos;
 	if(delta>0)
@@ -977,7 +983,10 @@ bool CFilenames::ToNextFile(int delta)
 	{
 		SetInsertionPoint(pos);
 		OBGUIFrame* frame = static_cast<OBGUIFrame*>(GetParent()->GetParent());
-		frame->DisplayInFile(SelectFilename());
+		wxString nxtname = SelectFilename();
+		if(nxtname.IsEmpty())
+			return false;
+		frame->DisplayInFile(nxtname);
 		return true;
 	}
 	else
