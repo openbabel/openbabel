@@ -779,13 +779,15 @@ namespace OpenBabel
       //@{
       //! Constructor
       OBMol();
-      //! Copy constructor
+      //! Copy constructor, copies atoms,bonds and OBGenericData
       OBMol(const OBMol &);
       //! Destructor
       virtual ~OBMol();
-      //! Assignment
-      OBMol &operator=(const OBMol &mol);
-      OBMol &operator+=(const OBMol &mol);
+      //! Assignment, copies atoms,bonds and OBGenericData
+      OBMol &operator=(const OBMol &mol);      
+			//! Copies atoms and bonds but not OBGenericData
+			OBMol &operator+=(const OBMol &mol);
+
       void ReserveAtoms(int natoms)
 	{
 	  if (natoms && _mod)
