@@ -48,9 +48,10 @@ public:
 			OBConversion::RegisterOptionParam("p", this);
 
 			XMLConversion::RegisterXMLFormat(this, true);	//this is the default XLMformat
-			XMLConversion::RegisterXMLFormat(this, false, CML1NamespaceURI());//CML1 also
+			XMLConversion::RegisterXMLFormat(this, false,CML1NamespaceURI());//CML1 also
+			XMLConversion::RegisterXMLFormat(this, false,"http://www.xml-cml.org/schema/cml2/core");//Old CML2 also
   }
-	virtual const char* NamespaceURI()const{return "http://www.xml-cml.org/schema/cml2/core";}
+	virtual const char* NamespaceURI()const{return "http://www.xml-cml.org/schema";}
 
   virtual const char* Description()
   {
