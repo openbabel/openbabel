@@ -35,6 +35,7 @@ public:
   ThermoFormat()
   {
       OBConversion::RegisterFormat("therm",this);
+      OBConversion::RegisterFormat("tdd",this);
   }
 
   virtual const char* Description()
@@ -60,6 +61,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 	if(!pmol)
 		return false;
+	pmol->SetDimension(0);
 	OBNasaThermoData* pND = new OBNasaThermoData; //to store rate constant data
 	pmol->SetData(pND);
 
@@ -119,7 +121,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 			}
 		}
 	}
-	double LoT, HiT, MidT;
+	double LoT, HiT, MidT=0;
 	int nc = sscanf(p,"%c%10lf%10lf10%lf",&phase, &LoT, &HiT, &MidT);
 	pND->SetPhase(phase);
 	pND->SetLoT(LoT);
