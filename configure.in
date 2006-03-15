@@ -6,6 +6,12 @@ AM_MAINTAINER_MODE
 AM_CONFIG_HEADER(src/config.h)
 AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of Open Babel])
 
+AC_ARG_ENABLE(wx-gui,
+	AS_HELP_STRING([--enable-wx-gui],
+		       [enable building the wxWidget GUI (experimental)]),
+		[wx_gui="$enable_wx_gui"],
+		[wx_gui="no"])
+
 AC_ARG_ENABLE(dynamic-modules,
 	AS_HELP_STRING([--disable-dynamic-modules],
 		       [disable building shared file format modules]),
@@ -94,7 +100,7 @@ AC_SUBST(WX_LIBS)
 AC_SUBST(WX_CXXFLAGS)
 AC_SUBST(WX_CPPFLAGS)
 
-AM_CONDITIONAL(BUILD_WXGUI, test x"$wxversion" != "x")
+AM_CONDITIONAL(BUILD_WXGUI, test x"$wxversion" != "x" -a "$wx_gui" = "yes")
 
 dnl Use Perl's "prove" test harness to run unit tests
 AM_CONDITIONAL(PERL_TESTS, test x"$PROVE" != "x")
@@ -122,9 +128,19 @@ AM_CONDITIONAL(BUILD_SCRIPTS, test "$SCRIPTING" = "yes")
 dnl libtool
 dnl You can set the shared library version in src/Makefile.am
 dnl AC_DISABLE_SHARED
+dnl We do support DLLs on Win32 systems
+AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_DLOPEN
 AM_PROG_LIBTOOL
 
+case $host in
+     *-*-cygwin*)
+        dynamic_modules="no"
+        ;;
+     *-*-mingw*)
+        dynamic_modules="no"
+        ;;
+esac
 AM_CONDITIONAL(BUILD_SHARED, test "$dynamic_modules" = "yes" -a "$enable_shared" = "yes")
 
 oldmodule=$module
