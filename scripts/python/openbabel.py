@@ -679,16 +679,6 @@ class OBRandomPtr(OBRandom):
         self.__class__ = OBRandom
 _openbabel.OBRandom_swigregister(OBRandomPtr)
 
-
-rotate_coords = _openbabel.rotate_coords
-
-calc_rms = _openbabel.calc_rms
-
-CleanAtomType = _openbabel.CleanAtomType
-
-OBCompareInt = _openbabel.OBCompareInt
-
-OBCompareUnsigned = _openbabel.OBCompareUnsigned
 PI = _openbabel.PI
 RAD_TO_DEG = _openbabel.RAD_TO_DEG
 DEG_TO_RAD = _openbabel.DEG_TO_RAD
@@ -731,14 +721,6 @@ class vector3Ptr(vector3):
         self.__class__ = vector3
 _openbabel.vector3_swigregister(vector3Ptr)
 
-ToUpper = _openbabel.ToUpper
-
-ToLower = _openbabel.ToLower
-
-IsNear = _openbabel.IsNear
-
-IsNearZero = _openbabel.IsNearZero
-
 dot = _openbabel.dot
 
 cross = _openbabel.cross
@@ -749,8 +731,6 @@ CalcTorsionAngle = _openbabel.CalcTorsionAngle
 
 
 Point2Plane = _openbabel.Point2Plane
-
-center_coords = _openbabel.center_coords
 
 Trim = _openbabel.Trim
 class OBGenericData(object):
