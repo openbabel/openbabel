@@ -4,7 +4,7 @@ EXTRA_DIST = \
 
 SUBDIRS = math formats fingerprints
 if BUILD_WXGUI
-SUBDIRS += GUI
+#SUBDIRS += GUI
 endif
 
 INCLUDES = -I$(top_srcdir)/data/
