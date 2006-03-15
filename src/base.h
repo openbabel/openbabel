@@ -80,9 +80,11 @@ public:
 	void                              DeleteData(unsigned int type);
 	void                              DeleteData(OBGenericData*);
 	void                              DeleteData(std::vector<OBGenericData*>&);
+	//! \adds a data object; does nothing if d==NULL
 	void                              SetData(OBGenericData *d)
 	{
-			_vdata.push_back(d);
+			if(d)
+				_vdata.push_back(d);
 	}
 	//! \return the number of OBGenericData items attached to this molecule.
 	unsigned int                      DataSize(){ return(_vdata.size()); }

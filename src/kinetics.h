@@ -33,7 +33,7 @@ protected:
 	double TroeParams[4];
 	std::map<std::string,double> Efficiencies;
 public:
-	virtual OBGenericData* Clone() const{return new OBRateData(*this);}
+	virtual OBGenericData* Clone(OBBase* parent) const{return new OBRateData(*this);}
 	enum rate_type {A, n, E};
 	enum reaction_type {Arrhenius=55555, ThreeBody, Troe};
 	OBRateData()
@@ -120,7 +120,7 @@ public:
 	OBNasaThermoData(): LoT(300),MidT(1000),HiT(3000),phase('G')
 	{	_type = ThermoData;	_attr = "Nasa thermo data";}
 	
-	virtual OBGenericData* Clone() const{return new OBNasaThermoData(*this);}
+	virtual OBGenericData* Clone(OBBase* parent) const{return new OBNasaThermoData(*this);}
 
 	double GetCoeff(unsigned n) const
 	{
