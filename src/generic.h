@@ -468,7 +468,7 @@ public:
     bool AddTorsion(quad<OBAtom*,OBAtom*,OBAtom*,OBAtom*> &atoms);
 
     bool SetAngle(double radians, unsigned int index = 0);
-    bool SetData(OBBond *bond);
+    bool SetData(OBBond *bond) { return false; }
 
     bool GetAngle(double &radians, unsigned int index =0);
     unsigned int GetBondIdx();
