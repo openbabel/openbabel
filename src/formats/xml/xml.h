@@ -189,7 +189,7 @@ public:
 		return _pxmlConv->ReadXML(this,pOb);
 	};
 
-	const type_info& GetType()
+	const std::type_info& GetType()
 	{
 		return typeid(OBMol*);
 	};
