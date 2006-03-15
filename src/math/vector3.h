@@ -287,7 +287,9 @@ extern OBAPI const vector3 VX;
 extern OBAPI const vector3 VY;
 extern OBAPI const vector3 VZ;
 
+#ifndef SWIG
 OBAPI vector3 center_coords(double*,int);
+#endif
 }
 
 #endif // OB_VECTOR_H

@@ -254,7 +254,9 @@ public:
     static void jacobi(unsigned int n, double *a, double *d, double *v);
 };
 
+#ifndef SWIG
 OBAPI vector3 center_coords(double*,int);
+#endif
 }
 
 #endif // OB_MATRIX3x3_H

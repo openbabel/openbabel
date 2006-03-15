@@ -170,6 +170,7 @@ public:
 };
 
 //***RMS helper methods***/
+#ifndef SWIG
 OBAPI void  rotate_coords(double*,double m[3][3],int);
 OBAPI double calc_rms(double*,double*,unsigned int);
 
@@ -192,6 +193,8 @@ OBAPI bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
 OBAPI bool IsNear(const double &, const double &, const double epsilon=2e-6);
 //! Safe comparison for floats/doubles: true if a is less than epsilon
 OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
+#endif
+// (end part to be skipped by SWIG)
 
 //******************triple template*************************
 //! \brief A 3-element templated, based on the design of the STL pair<>
