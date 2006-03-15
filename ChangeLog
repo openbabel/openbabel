@@ -1,3 +1,24 @@
+2006-03-14 Chris Morley <ob@gaseq.co.uk>
+
+	* src/GUI/OBGUI.cpp(Expand): Mods to avoid errors when filenames
+	are empty, have trailing paces, semicolons, etc.
+	
+	* src/formats/obmolecformat.cpp, obmolecformat.h: Deferred 
+	molecule routines (-C -j options) rewritten to ensure no memory leaks
+	under normal or error conditions. (Previously rather carelessly
+	written, I'm afraid.)
+	
+	* src/formats/smilesformat.cpp: Corrected [CH0] extension on
+	input and made work on output.
+	 
+	* src/formats/thermoformat.cpp: Added SetDimension(0). Initialise
+	MidT. Added tdd extension.
+	
+	* src/.mol.h: Comments on OBMol copy ctor and assignment saying
+	that OBGenericData is copied and on operator+= that it is not.
+
+	* src/base.h, kinetics.h: Mods consequent on OBGenericData changes 
+
 2006-03-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * configure.in, configure, src/Makefile.am, src/config.h.in: Add
@@ -87,8 +108,8 @@
 	because of GetFormula changes (don't need to make copy to compare
 	formulae) and OBMol copying changes.
 	
-	* src/GUI: Small bug when selected format begins with t now corrected. 
-	
+	* src/GUI: Small bug when selected format begins with t now corrected.
+		
 2006-03-10 Chris Morley <ob@gaseq.co.uk>
 	
 	* /src/formats/smilesformat.cpp: make a default format so that
