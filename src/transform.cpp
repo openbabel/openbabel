@@ -81,6 +81,14 @@ OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOpti
 			SetTitle(title.c_str());
 		}
 
+		itr = pOptions->find("addformula"); //Appends tab + formula to title
+		if(itr!=pOptions->end())
+    {
+			string title(GetTitle());
+			title += '\t' + GetSpacedFormula(1,"");//actually unspaced
+			SetTitle(title.c_str());
+		}
+
 		//Add an extra property to the molecule.
 		//Parameter has atrribute and value separated by a space
 		itr = pOptions->find("property");
@@ -152,18 +160,20 @@ OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOpti
 const char* OBMol::ClassDescription()
 {
     return "molecules\n \
-  Additional options :\n \
-	-d Delete hydrogens (make implicit)\n \
-	-h Add hydrogens (make explicit)\n \
-  -p Add Hydrogens appropriate for pH model\n \
-  -b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n \
-  -c Center Coordinates\n \
-  -j Join all input molecules into a single output molecule\n \
-  -s\"smarts\" Convert only molecules matching SMARTS:\n \
-  -v\"smarts\" Convert only molecules NOT matching SMARTS:\n \
-	--property <attrib> <value> add or replace a property (SDF)\n \
-	--title <title> Add or replace molecule title\n \
-	--addtotitle <text> Append to title\n\n" ;
+Additional options :\n \
+-d Delete hydrogens (make implicit)\n \
+-h Add hydrogens (make explicit)\n \
+-p Add Hydrogens appropriate for pH model\n \
+-b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n \
+-c Center Coordinates\n \
+-j Join all input molecules into a single output molecule\n \
+-C Combine mols in first file with others having same name\n \
+-s\"smarts\" Convert only molecules matching SMARTS:\n \
+-v\"smarts\" Convert only molecules NOT matching SMARTS:\n \
+--property <attrib> <value> add or replace a property (SDF)\n \
+--title <title> Add or replace molecule title\n \
+--addtotitle <text> Append to title\n \
+--addformula Append formula to title\n\n" ;
 }
 
 } //namespace OpenBabel
