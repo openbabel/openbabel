@@ -76,6 +76,7 @@ public:
 	/// Routines to handle the -C option for combining data from several OBMols
 	static bool DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF);
 	static bool OutputDeferredMols(OBConversion* pConv);
+	static bool DeleteDeferredMols();
 	static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
 
 	const std::type_info& GetType()

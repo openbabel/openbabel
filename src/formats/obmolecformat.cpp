@@ -61,6 +61,7 @@ bool OBMoleculeFormat::ReadChemObjectImpl(OBConversion* pConv, OBFormat* pFormat
 			if(pConv->IsFirstInput())
 				_jmol = new OBMol;
 			*_jmol += *ptmol;
+			delete ptmol;
 			return true;
 		}
 	}
@@ -159,11 +160,17 @@ bool OBMoleculeFormat::DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat
 		if(itr!=IMols.end())
 		{
 			//Molecule with the same title has been input previously: update it
-			OBMol* pNewMol = MakeCombinedMolecule(itr->second,pmol);
+			OBMol* pNewMol = MakeCombinedMolecule(itr->second, pmol);
 			if(pNewMol)
 			{
 				delete itr->second;
 				IMols[title] = pNewMol;
+			}
+			else
+			{
+				//error: cleanup and return false
+				delete pmol;
+				return DeleteDeferredMols();
 			}
 		}
 		else
@@ -185,10 +192,14 @@ OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
 	/* Makes a new OBMol on the heap by combining two molecules according to the rule below. 
 	  If both have OBGenericData of the same type, or OBPairData with the
 		same attribute,	the version from pFirst is used.
-	  The OBMol object needs to be deleted at some stage.
+		Returns a pointer to a new OBMol which will need deleting by the calling program
+		(probably by being sent to an output format). 
 		If the molecules cannot be regarded as being the same structure a NULL
-	  pointer is returned and an error message logged. 
-	
+	  pointer is returned and an error message logged.
+
+		pFirst and pSecond and the objects they point to are not changed. (const
+		modifiers difficult because class OBMol not designed 
+
 	  Combining molecules: rules for each of the three parts
 		Title:
 		Use the title of pFirst unless it has none, when use that of pSecond.
@@ -206,7 +217,6 @@ OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
 		OBPairData
   */
 	
-	OBMol* pNewMol = new OBMol(*pFirst); //Copies the whole molecule
 	string title("No title");
 	if(*pFirst->GetTitle()!=0)
 		title = pFirst->GetTitle();
@@ -217,33 +227,21 @@ OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
 		else
 			obErrorLog.ThrowError(__FUNCTION__,"Combined molecule has no title", obWarning);
 	}
-	pNewMol->SetTitle(title);
 
 	bool swap=false;
 	if(pFirst->NumAtoms()==0 && pSecond->NumAtoms()!=0)
 		swap=true;
 	else
 	{
-		/*//Make hydrogens explicit on copies of molecules
-		//in order to do comparisons; leave originals as they were.
-		OBMol pCopy1(*pSecond);
-		OBMol pCopy2(*pFirst);
-		if(pCopy1.NumBonds()!=0 || pCopy1.NumAtoms()==1)
-			pCopy1.AddHydrogens(false,false);
-		if(pCopy2.NumBonds()!=0 || pCopy2.NumAtoms()==1)
-			pCopy2.AddHydrogens(false,false);
-
-		if(pCopy1.GetSpacedFormula()!=pCopy2.GetSpacedFormula())*/
 		if(pFirst->GetSpacedFormula()!=pSecond->GetSpacedFormula())
 		{
 			obErrorLog.ThrowError(__FUNCTION__, 
-				title + "cannot be combined with a molecule having a different formula",obError);
-			delete pNewMol;
+				"Molecules with name = " + title + " have different formula",obError);
 			return NULL;
 		}
 		else
 		{
-			if(pSecond->NumBonds()==0 && pFirst->NumBonds()!=0)
+			if(pSecond->NumBonds()!=0 && pFirst->NumBonds()==0)
 				swap=true;
 			else
 			{
@@ -254,26 +252,20 @@ OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
 			}
 		}
 	}
-	if(swap)
-	{
-		*pNewMol = *pSecond; //Now copies all data 
-		pNewMol->SetTitle(title); //may have been overwritten
-	}
 
+	OBMol* pNewMol = new OBMol;
+	pNewMol->SetTitle(title);
+
+	OBMol* pMain = swap ? pSecond : pFirst;
+	OBMol* pOther = swap ? pFirst : pSecond;
+		
+	*pNewMol = *pMain; //Now copies all data 
+
+	//Copy some OBGenericData from the OBMol which did not provide the structure
 	vector<OBGenericData*>::iterator igd;
-/*	//Copy OBGenericData from pFirst; may not be necessary when OBMol constructor updated
-	for(igd=pFirst->BeginData();igd!=pFirst->EndData();++igd)
+	for(igd=pOther->BeginData();igd!=pOther->EndData();++igd)
 	{
-		if((*igd)->GetDataType() == OBGenericDataType::RotamerList)//currently copied in OBMol=
-			continue;
-		OBGenericData* pCopiedData = (*igd)->Clone(pNewMol);
-		pNewMol->SetData(pCopiedData);
-	}
-*/
-	//Copy some OBGenericData from pSecond
-	for(igd=pSecond->BeginData();igd!=pSecond->EndData();++igd)
-	{
-		//copy only if not already data of the same type from pFirst
+		//copy only if not already data of the same type from molecule already copied to pNewMol
 		unsigned datatype = (*igd)->GetDataType();
 		OBGenericData* pData = pNewMol->GetData(datatype);
 		if(datatype==OBGenericDataType::PairData)
@@ -305,10 +297,31 @@ bool OBMoleculeFormat::OutputDeferredMols(OBConversion* pConv)
 		pConv->SetOutputIndex(i);
 		if(itr==lastitr)
 			pConv->SetOneObjectOnly(); //to set IsLast
+
+		std::string auditMsg = "OpenBabel::Write molecule ";
+		std::string description((pConv->GetOutFormat())->Description());
+		auditMsg += description.substr(0,description.find('\n'));
+		obErrorLog.ThrowError(__FUNCTION__, auditMsg,  obAuditMsg);
+
 		ret = pConv->GetOutFormat()->WriteMolecule(itr->second, pConv);
+
+		delete itr->second; //always delete OBMol object
+		itr->second = NULL; // so can be deleted in DeleteDeferredMols()
 		if (!ret) break;
 	}
-	IMols.clear();
+	DeleteDeferredMols();//cleans up in case there have been errors
 	return ret;
 }
+
+bool OBMoleculeFormat::DeleteDeferredMols()
+{
+	//Empties IMols, deteting the OBMol objects whose pointers are stored there 
+	std::map<std::string, OBMol*>::iterator itr;
+	for(itr=IMols.begin();itr!=IMols.end();++itr)
+	{
+		delete itr->second; //usually NULL
+	}
+	IMols.clear();
+	return false;
 }
+} //namespace OpenBabel
