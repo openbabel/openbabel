@@ -81,6 +81,7 @@ IMPVAL	[n-]			2
 IMPVAL  [n+]			3
 
 IMPVAL  [#9D0]		  1
+IMPVAL  [#9D0-]		  0 #[F-]
 
 IMPVAL	[#15D4]			4
 IMPVAL	[#15D3]			3
@@ -102,8 +103,11 @@ IMPVAL  [#16D1-]		1
 
 IMPVAL  [#16D0]		  2
 IMPVAL  [#17D0]		  1
+IMPVAL  [#17D0-]	  0 #[Cl-]
 IMPVAL  [#35D0]		  1
+IMPVAL  [#35D0-]	  0 #[Br-]
 IMPVAL  [#53D0]		  1
+IMPVAL  [#53D0-]	  0 #[I-]
 
 IMPVAL  [#5]			3
 IMPVAL  [as]			3
