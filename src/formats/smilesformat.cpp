@@ -1404,8 +1404,6 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
             {
                 tmpc[0] = *_ptr;
                 hcount = atoi(tmpc);
-								if(hcount==0)
-									atom->ForceNoH();//extension so that [CH0] is C atom
             }
             else
             {
@@ -1463,6 +1461,8 @@ bool OBSmilesParser::ParseComplex(OBMol &mol)
     _bondflags = 0;
 
     //now add hydrogens
+		if(hcount==0)
+			atom->ForceNoH();//ensure AssignMultiplicity regards [C] as C atom
 
     for (int i = 0;i < hcount;i++)
     {
@@ -2157,14 +2157,20 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
 
     //This outputs form [CH3][CH3] rather than CC if -h option has been specified
     if (((OBMol*)atom->GetParent())->HasHydrogensAdded())
-        bracketElement = true;
+		{
+			bracketElement = true;
+			normalValence = false;
+		}
 		else
 		{
 			if (atom->GetSpinMultiplicity())
 			{
 				//For radicals output bracket form anyway unless r option specified
 				if(!(_pconv && _pconv->IsOption ("r")))
+				{
 					bracketElement = true;
+					normalValence = false;
+				}
 			}
 		}
     //CM end
@@ -2273,10 +2279,10 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
 		//output explicitly
 		int nHisotopes = atom->ExplicitHydrogenCount() - atom->ExplicitHydrogenCount(true);
     int nH = atom->ImplicitHydrogenCount() - nHisotopes;
-		if ((nH || atom->GetSpinMultiplicity()) && !atom->IsHydrogen()) //H0 output if necessary for radicals
+		if (!normalValence && nH && !atom->IsHydrogen()) 
     {
         strcat(element,"H");
-        if (nH != 1)
+        if (nH > 1)
         {
             char tcount[10];
             sprintf(tcount,"%d",nH);
