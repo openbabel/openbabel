@@ -1,3 +1,12 @@
+2006-03-16 Chris Morley <ob@gaseq.co.uk>
+
+	* data/atomtyp.txt: IMPVAL for halogen ions
+	
+	* /src/formats/smilesformat.cpp(ParseComplex): Move hcount test
+	back again so that [C] is read as C not CH4
+	(GetSmilesElement): Restrict addition of implicit H by
+	resurrecting normalValence variable. Output [C], not [CH0].
+
 2006-03-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/xml/xml.h: Fix std:: namespace decl for type_info.
