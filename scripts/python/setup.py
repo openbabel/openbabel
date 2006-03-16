@@ -40,7 +40,7 @@ def find_likely_directory():
 
 OBinclude,OBlibrary = find_likely_directory()
 
-obExtension = Extension('openbabel',
+obExtension = Extension('_openbabel',
                         ['openbabel_python.cpp'],
                         include_dirs=OBinclude,
                         library_dirs=OBlibrary,
