@@ -1,3 +1,7 @@
+2006-03-27  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/fastaformat.cpp: Include babelconfig.h.
+
 2006-03-16 Chris Morley <ob@gaseq.co.uk>
 
 	* data/atomtyp.txt: IMPVAL for halogen ions
