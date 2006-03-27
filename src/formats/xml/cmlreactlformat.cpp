@@ -52,7 +52,7 @@ N<prefix> add namespace prefix to elements\n \
 \n";
 	}
 
-  unsigned CMLReactFormat::Flags()
+  unsigned Flags()
   {
     return 0;
   }

@@ -62,8 +62,8 @@ public:
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-    static bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag);
-    static void CRK2DFormat::WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges);
+    static bool ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag);
+    static void WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges);
 
 };
 

@@ -42,8 +42,8 @@ public:
 		///Frees reader and writer if necessary
 		~XMLConversion();
 
-	bool XMLConversion::SetupReader();///< opens libxml2 reader
-	bool XMLConversion::SetupWriter();///< opens libxml2 writer
+	bool SetupReader();///< opens libxml2 reader
+	bool SetupWriter();///< opens libxml2 writer
 
 	///Parses the input xml stream and sends each element to the format's callback routines
 	bool ReadXML(XMLBaseFormat* pFormat, OBBase* pOb);
@@ -60,7 +60,7 @@ public:
 		return *nsm;
 	};
 
-	static void XMLConversion::RegisterXMLFormat(XMLBaseFormat* pFormat,
+	static void RegisterXMLFormat(XMLBaseFormat* pFormat,
 			bool IsDefault=false, const char* uri=NULL);
 
 	///Returns the extended OBConversion class, making it if necessary
@@ -68,9 +68,9 @@ public:
 
 	///Because OBConversion::Convert is still using the unextended OBConversion object
 	///we need to obtain the conversion paramters from it when requested
-	bool XMLConversion::IsLast()
+	bool IsLast()
 	{ return _pConv->IsLast(); }
-	int XMLConversion::GetOutputIndex()
+	int GetOutputIndex()
 	{ return  _pConv->GetOutputIndex(); }
 
 
@@ -99,7 +99,7 @@ public:
 	std::string GetAttribute(const char* attrname);
 
 	///Sets value to element content. Returns false if there is no content. 
-	std::string XMLConversion::GetContent();
+	string GetContent();
 
 	///Sets value to element content as an integer. Returns false if there is no content. 
 	bool    GetContentInt(int& value);
