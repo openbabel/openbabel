@@ -1,12 +1,34 @@
+2006-03-27 Geoffrey Hutchison <babel@geoffhutchison.net>
+
+	* data/atomtyp.txt: IMPVAL for halogen ions.
+
+	* src/formats/smilesformat.cpp: Changes ported from Chris Morley's
+	development version. Reject strings with invalid ring bonds.
+
+	* scripts/: Rebuild with SWIG 1.3.29, including several bug fixes
+	and faster performance.
+
+	* configure.in, configure: Set version number to 2.0.1.
+
 2006-03-27  Michael Banck  <mbanck@gmx.net>
 
-	* src/fingerprint.h: Fix compilation error with gcc-4.1.
-	  Patch by <vlaaad@users.sourceforge.net>.
-	* src/formats/copyformat.cpp: Likewise.
-	* src/formats/crkformat.cpp: Likewise.
-	* src/formats/xml/cmlreactlformat.cpp: Likewise.
-	* src/formats/xml/xml.h: Likewise.
-	* src/formats/xml/xmlformat.cpp: Likewise.
+        * src/fingerprint.h: Fix compilation error with gcc-4.1.
+          Patch by <vlaaad@users.sourceforge.net> (PR#1458311).
+        * src/formats/copyformat.cpp: Likewise.
+        * src/formats/crkformat.cpp: Likewise.
+        * src/formats/xml/cmlreactlformat.cpp: Likewise.
+        * src/formats/xml/xml.h: Likewise.
+        * src/formats/xml/xmlformat.cpp: Likewise.
+
+2006-03-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/Makefile.am, src/Makefile.in : Add @LIBDL@ as
+	suggested by Michael Shigorin (PR#1458706). Make sure
+	babelconfig.h isn't included in dist tarball, as suggested by
+	Michael Banck.
+
+	* scripts/python/setup.py: Fix extension name and remove reference
+	to pyopenbabel (used in 2.1) to properly build python extension.
 
 2006-03-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
