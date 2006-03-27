@@ -41,7 +41,7 @@ def find_likely_directory():
 
 OBinclude,OBlibrary = find_likely_directory()
 
-obExtension = Extension('openbabel',
+obExtension = Extension('_openbabel',
                         ['openbabel_python.cpp'],
                         include_dirs=OBinclude,
                         library_dirs=OBlibrary,
@@ -54,5 +54,5 @@ setup(name='openbabel',
       author='Geoff Hutchison',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/',
-      py_modules=['openbabel','pyopenbabel'],
+      py_modules=['openbabel'],
       ext_modules=[obExtension])
