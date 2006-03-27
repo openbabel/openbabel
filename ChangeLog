@@ -1,3 +1,13 @@
+2006-03-27  Michael Banck  <mbanck@gmx.net>
+
+	* src/fingerprint.h: Fix compilation error with gcc-4.1.
+	  Patch by <vlaaad@users.sourceforge.net>.
+	* src/formats/copyformat.cpp: Likewise.
+	* src/formats/crkformat.cpp: Likewise.
+	* src/formats/xml/cmlreactlformat.cpp: Likewise.
+	* src/formats/xml/xml.h: Likewise.
+	* src/formats/xml/xmlformat.cpp: Likewise.
+
 2006-03-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure, src/Makefile.am, src/config.h.in: Add

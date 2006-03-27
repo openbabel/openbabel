@@ -60,7 +60,7 @@ public:
 	static double Tanimoto(const std::vector<unsigned int>& vec1, const std::vector<unsigned int>& vec2);
 	
 	/// Inline version of Tanimoto() taking a pointer for the second vector
-	static double OBFingerprint::Tanimoto(const std::vector<unsigned int>& vec1, const unsigned int* p2) 
+	static double Tanimoto(const std::vector<unsigned int>& vec1, const unsigned int* p2) 
 	{
 		///If used for two vectors, vec1 and vec2, call as Tanimoto(vec1, &vec2[0]);
 		int andbits=0, orbits=0;

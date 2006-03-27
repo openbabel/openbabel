@@ -41,7 +41,7 @@ at the start or end and so may no longer be well formed.";
   };
 
 	/////////////////////////////////////////////////////////////////
-	virtual bool CopyFormat::WriteChemObject(OBConversion* pConv)
+	virtual bool WriteChemObject(OBConversion* pConv)
 	{
 		pConv->GetChemObject();//needed to increment pConv->Index
 

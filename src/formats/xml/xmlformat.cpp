@@ -21,12 +21,12 @@ namespace OpenBabel
 class XMLFormat : XMLBaseFormat
 {
 public:
-	XMLFormat::XMLFormat()
+	XMLFormat()
   {
       OBConversion::RegisterFormat("xml",this);
   }
 
-  const char* XMLFormat::Description()
+  const char* Description()
   {
       return " \
 General XML format\n \
@@ -40,7 +40,7 @@ n  Read objects of first namespace only\n \
 
 	const char* NamespaceURI()const{return "Undefined";};
 
-  unsigned XMLFormat::Flags()
+  unsigned Flags()
   {
     return NOTWRITABLE;
   }
