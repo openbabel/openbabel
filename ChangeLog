@@ -1,5 +1,9 @@
 2006-03-27  Michael Banck  <mbanck@gmx.net>
 
+	* src/rand.cpp: Include <time.h> and <sys/time.h>.
+
+2006-03-27  Michael Banck  <mbanck@gmx.net>
+
 	* src/fingerprint.h: Fix compilation error with gcc-4.1.
 	  Patch by <vlaaad@users.sourceforge.net>.
 	* src/formats/copyformat.cpp: Likewise.
