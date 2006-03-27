@@ -270,7 +270,7 @@ libopenbabel_la_LDFLAGS = -no-undefined -version-info 1:1:0
 @BUILD_SHARED_FALSE@			formats/libformats.la @LTLIBOBJS@
 
 @BUILD_SHARED_TRUE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-@BUILD_SHARED_TRUE@			@LTLIBOBJS@
+@BUILD_SHARED_TRUE@			@LTLIBOBJS@ @LIBDL@
 
 babel_SOURCES = main.cpp
 babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
@@ -683,6 +683,9 @@ distdir: $(DISTFILES)
 	      || exit 1; \
 	  fi; \
 	done
+	$(MAKE) $(AM_MAKEFLAGS) \
+	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
+	  dist-hook
 check-am: all-am
 check: check-recursive
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(HEADERS) config.h
@@ -775,8 +778,8 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
 	clean clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
-	clean-libtool clean-recursive ctags ctags-recursive distclean \
-	distclean-compile distclean-generic distclean-hdr \
+	clean-libtool clean-recursive ctags ctags-recursive dist-hook \
+	distclean distclean-compile distclean-generic distclean-hdr \
 	distclean-libtool distclean-recursive distclean-tags distdir \
 	dvi dvi-am html html-am info info-am install install-am \
 	install-binPROGRAMS install-data install-data-am \
@@ -800,6 +803,10 @@ install-data-hook:
 	      < $${header} >$${header}.new; \
 	   mv $${header}.new $${header}; \
 	done
+
+# Remove the configure-generated babelconfig.h
+dist-hook:
+	rm $(distdir)/babelconfig.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

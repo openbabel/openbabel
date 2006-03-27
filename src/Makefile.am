@@ -30,7 +30,7 @@ if BUILD_SHARED
 AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 
 libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-			@LTLIBOBJS@
+			@LTLIBOBJS@ @LIBDL@
 else !BUILD_SHARED
 libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 			formats/libformats.la @LTLIBOBJS@
@@ -59,3 +59,7 @@ install-data-hook:
 	      < $${header} >$${header}.new; \
 	   mv $${header}.new $${header}; \
 	done
+
+# Remove the configure-generated babelconfig.h
+dist-hook:
+	rm $(distdir)/babelconfig.h
