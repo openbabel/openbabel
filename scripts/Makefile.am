@@ -16,13 +16,13 @@ BUILT_SOURCES = perl/openbabel_perl.cpp \
 		python/openbabel_python.cpp
 
 perl/openbabel_perl.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
-	$(SWIG) -perl5 -c++ -o $@ \
+	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
 		-I$(top_srcdir)/src $<;
 	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
 python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
-	$(SWIG) -python -modern \
+	$(SWIG) -python -modern -naturalvar -fastinit \
 		-c++ -o $@ -I$(top_srcdir)/src $<;
 	echo "import sys" >python/ob.py;
 	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;

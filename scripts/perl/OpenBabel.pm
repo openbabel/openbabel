@@ -538,7 +538,9 @@ sub DESTROY {
     }
 }
 
+*ParseLine = *Chemistry::OpenBabelc::OBElementTable_ParseLine;
 *GetNumberOfElements = *Chemistry::OpenBabelc::OBElementTable_GetNumberOfElements;
+*GetSize = *Chemistry::OpenBabelc::OBElementTable_GetSize;
 *GetAtomicNum = *Chemistry::OpenBabelc::OBElementTable_GetAtomicNum;
 *GetSymbol = *Chemistry::OpenBabelc::OBElementTable_GetSymbol;
 *GetVdwRad = *Chemistry::OpenBabelc::OBElementTable_GetVdwRad;
@@ -589,6 +591,8 @@ sub DESTROY {
     }
 }
 
+*GetSize = *Chemistry::OpenBabelc::OBIsotopeTable_GetSize;
+*ParseLine = *Chemistry::OpenBabelc::OBIsotopeTable_ParseLine;
 *GetExactMass = *Chemistry::OpenBabelc::OBIsotopeTable_GetExactMass;
 sub DISOWN {
     my $self = shift;
@@ -627,6 +631,8 @@ sub DESTROY {
     }
 }
 
+*ParseLine = *Chemistry::OpenBabelc::OBTypeTable_ParseLine;
+*GetSize = *Chemistry::OpenBabelc::OBTypeTable_GetSize;
 *SetFromType = *Chemistry::OpenBabelc::OBTypeTable_SetFromType;
 *SetToType = *Chemistry::OpenBabelc::OBTypeTable_SetToType;
 *Translate = *Chemistry::OpenBabelc::OBTypeTable_Translate;
@@ -658,6 +664,8 @@ sub new {
     bless $self, $pkg if defined($self);
 }
 
+*ParseLine = *Chemistry::OpenBabelc::OBResidueData_ParseLine;
+*GetSize = *Chemistry::OpenBabelc::OBResidueData_GetSize;
 *SetResName = *Chemistry::OpenBabelc::OBResidueData_SetResName;
 *LookupBO = *Chemistry::OpenBabelc::OBResidueData_LookupBO;
 *LookupType = *Chemistry::OpenBabelc::OBResidueData_LookupType;
@@ -1179,6 +1187,7 @@ sub DESTROY {
 *SetCoordPtr = *Chemistry::OpenBabelc::OBAtom_SetCoordPtr;
 *SetVector = *Chemistry::OpenBabelc::OBAtom_SetVector;
 *SetResidue = *Chemistry::OpenBabelc::OBAtom_SetResidue;
+*SetAromatic = *Chemistry::OpenBabelc::OBAtom_SetAromatic;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBAtom_UnsetAromatic;
 *SetClockwiseStereo = *Chemistry::OpenBabelc::OBAtom_SetClockwiseStereo;
 *SetAntiClockwiseStereo = *Chemistry::OpenBabelc::OBAtom_SetAntiClockwiseStereo;
@@ -1188,12 +1197,19 @@ sub DESTROY {
 *SetInRing = *Chemistry::OpenBabelc::OBAtom_SetInRing;
 *SetChiral = *Chemistry::OpenBabelc::OBAtom_SetChiral;
 *ClearCoordPtr = *Chemistry::OpenBabelc::OBAtom_ClearCoordPtr;
+*GetFormalCharge = *Chemistry::OpenBabelc::OBAtom_GetFormalCharge;
+*GetAtomicNum = *Chemistry::OpenBabelc::OBAtom_GetAtomicNum;
 *GetIsotope = *Chemistry::OpenBabelc::OBAtom_GetIsotope;
 *GetSpinMultiplicity = *Chemistry::OpenBabelc::OBAtom_GetSpinMultiplicity;
 *GetAtomicMass = *Chemistry::OpenBabelc::OBAtom_GetAtomicMass;
 *GetExactMass = *Chemistry::OpenBabelc::OBAtom_GetExactMass;
+*GetIdx = *Chemistry::OpenBabelc::OBAtom_GetIdx;
 *GetCoordinateIdx = *Chemistry::OpenBabelc::OBAtom_GetCoordinateIdx;
 *GetCIdx = *Chemistry::OpenBabelc::OBAtom_GetCIdx;
+*GetValence = *Chemistry::OpenBabelc::OBAtom_GetValence;
+*GetHyb = *Chemistry::OpenBabelc::OBAtom_GetHyb;
+*GetImplicitValence = *Chemistry::OpenBabelc::OBAtom_GetImplicitValence;
+*GetHvyValence = *Chemistry::OpenBabelc::OBAtom_GetHvyValence;
 *GetHeteroValence = *Chemistry::OpenBabelc::OBAtom_GetHeteroValence;
 *GetType = *Chemistry::OpenBabelc::OBAtom_GetType;
 *GetX = *Chemistry::OpenBabelc::OBAtom_GetX;
@@ -1224,10 +1240,14 @@ sub DESTROY {
 *DeleteBond = *Chemistry::OpenBabelc::OBAtom_DeleteBond;
 *ClearBond = *Chemistry::OpenBabelc::OBAtom_ClearBond;
 *CountFreeOxygens = *Chemistry::OpenBabelc::OBAtom_CountFreeOxygens;
+*ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtom_ImplicitHydrogenCount;
+*ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtom_ExplicitHydrogenCount;
+*MemberOfRingCount = *Chemistry::OpenBabelc::OBAtom_MemberOfRingCount;
 *MemberOfRingSize = *Chemistry::OpenBabelc::OBAtom_MemberOfRingSize;
 *SmallestBondAngle = *Chemistry::OpenBabelc::OBAtom_SmallestBondAngle;
 *AverageBondAngle = *Chemistry::OpenBabelc::OBAtom_AverageBondAngle;
 *BOSum = *Chemistry::OpenBabelc::OBAtom_BOSum;
+*KBOSum = *Chemistry::OpenBabelc::OBAtom_KBOSum;
 *HtoMethyl = *Chemistry::OpenBabelc::OBAtom_HtoMethyl;
 *SetHybAndGeom = *Chemistry::OpenBabelc::OBAtom_SetHybAndGeom;
 *HasResidue = *Chemistry::OpenBabelc::OBAtom_HasResidue;
@@ -1237,6 +1257,9 @@ sub DESTROY {
 *IsOxygen = *Chemistry::OpenBabelc::OBAtom_IsOxygen;
 *IsSulfur = *Chemistry::OpenBabelc::OBAtom_IsSulfur;
 *IsPhosphorus = *Chemistry::OpenBabelc::OBAtom_IsPhosphorus;
+*IsAromatic = *Chemistry::OpenBabelc::OBAtom_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBAtom_IsInRing;
+*IsInRingSize = *Chemistry::OpenBabelc::OBAtom_IsInRingSize;
 *IsHeteroatom = *Chemistry::OpenBabelc::OBAtom_IsHeteroatom;
 *IsNotCorH = *Chemistry::OpenBabelc::OBAtom_IsNotCorH;
 *IsConnected = *Chemistry::OpenBabelc::OBAtom_IsConnected;
@@ -1328,8 +1351,10 @@ sub DESTROY {
 *SetUp = *Chemistry::OpenBabelc::OBBond_SetUp;
 *SetDown = *Chemistry::OpenBabelc::OBBond_SetDown;
 *SetInRing = *Chemistry::OpenBabelc::OBBond_SetInRing;
+*SetClosure = *Chemistry::OpenBabelc::OBBond_SetClosure;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBBond_UnsetAromatic;
 *UnsetKekule = *Chemistry::OpenBabelc::OBBond_UnsetKekule;
+*GetBO = *Chemistry::OpenBabelc::OBBond_GetBO;
 *GetBondOrder = *Chemistry::OpenBabelc::OBBond_GetBondOrder;
 *GetFlags = *Chemistry::OpenBabelc::OBBond_GetFlags;
 *GetBeginAtomIdx = *Chemistry::OpenBabelc::OBBond_GetBeginAtomIdx;
@@ -1340,6 +1365,8 @@ sub DESTROY {
 *GetEquibLength = *Chemistry::OpenBabelc::OBBond_GetEquibLength;
 *GetLength = *Chemistry::OpenBabelc::OBBond_GetLength;
 *GetNbrAtomIdx = *Chemistry::OpenBabelc::OBBond_GetNbrAtomIdx;
+*IsAromatic = *Chemistry::OpenBabelc::OBBond_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBBond_IsInRing;
 *IsRotor = *Chemistry::OpenBabelc::OBBond_IsRotor;
 *IsAmide = *Chemistry::OpenBabelc::OBBond_IsAmide;
 *IsPrimaryAmide = *Chemistry::OpenBabelc::OBBond_IsPrimaryAmide;
@@ -1352,6 +1379,7 @@ sub DESTROY {
 *IsKSingle = *Chemistry::OpenBabelc::OBBond_IsKSingle;
 *IsKDouble = *Chemistry::OpenBabelc::OBBond_IsKDouble;
 *IsKTriple = *Chemistry::OpenBabelc::OBBond_IsKTriple;
+*IsClosure = *Chemistry::OpenBabelc::OBBond_IsClosure;
 *IsUp = *Chemistry::OpenBabelc::OBBond_IsUp;
 *IsDown = *Chemistry::OpenBabelc::OBBond_IsDown;
 *IsWedge = *Chemistry::OpenBabelc::OBBond_IsWedge;
@@ -1480,6 +1508,7 @@ sub DESTROY {
 *UnsetPartialChargesPerceived = *Chemistry::OpenBabelc::OBMol_UnsetPartialChargesPerceived;
 *UnsetImplicitValencePerceived = *Chemistry::OpenBabelc::OBMol_UnsetImplicitValencePerceived;
 *UnsetFlag = *Chemistry::OpenBabelc::OBMol_UnsetFlag;
+*DoTransformations = *Chemistry::OpenBabelc::OBMol_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBMol_ClassDescription;
 *Clear = *Chemistry::OpenBabelc::OBMol_Clear;
 *RenumberAtoms = *Chemistry::OpenBabelc::OBMol_RenumberAtoms;

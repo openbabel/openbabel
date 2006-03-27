@@ -356,13 +356,13 @@ dist-hook:
 	(cd $(distdir)/python; rm -rf build)
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@perl/openbabel_perl.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -perl5 -c++ -o $@ \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-I$(top_srcdir)/src $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -python -modern \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -python -modern -naturalvar -fastinit \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-c++ -o $@ -I$(top_srcdir)/src $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "import sys" >python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "if sys.platform.find(\"linux\") != -1:"  >>python/ob.py;
