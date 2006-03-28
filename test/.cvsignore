@@ -5,6 +5,7 @@ babel
 unitcell
 matrixtest
 smartstest
+aromatest
 ringtest
 test-set
 roundtrip

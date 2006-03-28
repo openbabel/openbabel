@@ -1,3 +1,11 @@
+2006-03-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/aromatest.cpp: New test to check aromaticity. When supplied
+	with a test file, it checks to be sure all non-hydrogen atoms are
+	aromatic.
+
+	* scripts/*: Update scripting wrappers with SWIG 1.3.29.
+
 2006-03-27  Michael Banck  <mbanck@gmx.net>
 
 	* src/rand.cpp: Include <time.h> and <sys/time.h>.

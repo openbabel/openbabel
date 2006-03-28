@@ -1,6 +1,6 @@
 SUBDIRS = cmltest
 
-noinst_PROGRAMS = matrixtest ringtest smartstest roundtrip unitcell
+noinst_PROGRAMS = matrixtest ringtest smartstest roundtrip unitcell aromatest
 
 if PERL_TESTS
 # Use perl's "prove" script and some wrapper .pl scripts to run tests
@@ -20,10 +20,12 @@ EXTRA_DIST = smartsresults.txt smartstest.txt \
 		ringresults.txt attype.00.smi \
 		cml.sh test-set.sh \
 		matrix.pl unitcell.pl rings.pl \
-		smarts.pl test-set.pl cml.pl
+		smarts.pl test-set.pl cml.pl \
+		aromatest.pl
 
 matrixtest_SOURCES = matrixtest.cpp
 ringtest_SOURCES = ringtest.cpp
 smartstest_SOURCES = smartstest.cpp
 unitcell_SOURCES = unitcell.cpp
 roundtrip_SOURCES = roundtrip.cpp
+aromatest_SOURCES = aromatest.cpp
