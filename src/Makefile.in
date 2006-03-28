@@ -38,7 +38,6 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@BUILD_WXGUI_TRUE@am__append_1 = GUI
 bin_PROGRAMS = babel$(EXEEXT)
 subdir = src
 DIST_COMMON = $(libopenbabelinclude_HEADERS) $(srcdir)/Makefile.am \
@@ -118,13 +117,14 @@ libopenbabelincludeHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(libopenbabelinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = math formats fingerprints GUI
+DIST_SUBDIRS = $(SUBDIRS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
 AMDEP_TRUE = @AMDEP_TRUE@
 AMTAR = @AMTAR@
 AR = @AR@
+AS = @AS@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
@@ -155,6 +155,7 @@ CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DLLTOOL = @DLLTOOL@
 DOXYGEN = @DOXYGEN@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
@@ -179,6 +180,7 @@ MAINT = @MAINT@
 MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
 MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -205,9 +207,12 @@ XML2_CONFIG = @XML2_CONFIG@
 XML_CPPFLAGS = @XML_CPPFLAGS@
 XML_LIBS = @XML_LIBS@
 ac_ct_AR = @ac_ct_AR@
+ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
+ac_ct_DLLTOOL = @ac_ct_DLLTOOL@
 ac_ct_F77 = @ac_ct_F77@
+ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
@@ -251,7 +256,8 @@ EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
 	dlhandler_win32.cpp
 
-SUBDIRS = math formats fingerprints $(am__append_1)
+SUBDIRS = math formats fingerprints
+#SUBDIRS += GUI
 INCLUDES = -I$(top_srcdir)/data/
 babel_SOURCES = main.cpp
 babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
@@ -275,7 +281,7 @@ libopenbabel_la_LDFLAGS = -version-info 3:0:1
 @BUILD_SHARED_FALSE@			formats/libformats.la @LTLIBOBJS@
 
 @BUILD_SHARED_TRUE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
-@BUILD_SHARED_TRUE@			@LTLIBOBJS@
+@BUILD_SHARED_TRUE@			@LTLIBOBJS@ @LIBDL@
 
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
 libopenbabelinclude_HEADERS = \
@@ -687,6 +693,9 @@ distdir: $(DISTFILES)
 	      || exit 1; \
 	  fi; \
 	done
+	$(MAKE) $(AM_MAKEFLAGS) \
+	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
+	  dist-hook
 check-am: all-am
 check: check-recursive
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(HEADERS) config.h
@@ -779,8 +788,8 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
 	clean clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
-	clean-libtool clean-recursive ctags ctags-recursive distclean \
-	distclean-compile distclean-generic distclean-hdr \
+	clean-libtool clean-recursive ctags ctags-recursive dist-hook \
+	distclean distclean-compile distclean-generic distclean-hdr \
 	distclean-libtool distclean-recursive distclean-tags distdir \
 	dvi dvi-am html html-am info info-am install install-am \
 	install-binPROGRAMS install-data install-data-am \
@@ -804,6 +813,10 @@ install-data-hook:
 	      < $${header} >$${header}.new; \
 	   mv $${header}.new $${header}; \
 	done
+
+# Remove the configure-generated babelconfig.h
+dist-hook:
+	rm $(distdir)/babelconfig.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

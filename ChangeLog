@@ -6,6 +6,11 @@
 
 	* scripts/*: Update scripting wrappers with SWIG 1.3.29.
 
+	* src/Makefile.am, src/Makefile.in : Add @LIBDL@ as
+	suggested by Michael Shigorin (PR#1458706). Make sure
+	babelconfig.h isn't included in dist tarball, as suggested by
+	Michael Banck.
+
 2006-03-27  Michael Banck  <mbanck@gmx.net>
 
 	* src/rand.cpp: Include <time.h> and <sys/time.h>.
