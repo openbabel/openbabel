@@ -645,6 +645,10 @@ public:
     //@{
     bool IsAromatic() const;
     bool IsInRing() const;
+    //! Is the bond a rotatable bond?
+    //!  Currently, this function classifies any bond with at least one heavy
+    //!  atom, no sp-hybrid atoms (e.g., a triple bond somewhere) not in a ring
+    //!  as a potential rotor. No other bond typing is attempted.
     bool IsRotor();
     bool IsAmide();
     bool IsPrimaryAmide();
@@ -864,7 +868,7 @@ public:
     unsigned int NumHvyAtoms();
     //! \return the number of residues (i.e. OBResidue substituents)
     unsigned int NumResidues() const      { return(_residue.size()); }
-    //! \return the number of rotatble bonds
+    //! \return the number of rotatble bonds. See OBBond::IsRotor() for details
     unsigned int NumRotors();
     
     OBAtom      *GetAtom(int);
