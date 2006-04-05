@@ -21,254 +21,255 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-//global utility in xml.cpp;
-streamsize gettomatch(istream& is, char* buf, streamsize count, const char* match);
-//forward declaration
-class XMLBaseFormat;
+  //global utility in xml.cpp;
+  std::streamsize gettomatch(std::istream& is, char* buf, std::streamsize count,
+			     const char* match);
+  //forward declaration
+  class XMLBaseFormat;
 
-//******************************************************
-//XMLConversion class
+  //******************************************************
+  //XMLConversion class
 
-/// An extended OBConversion class which includes a libxml2 reader for use with XML formats
-/// Copies an OBConversion and then extends it with a XML parser. 
-/// Instances made on the heap are deleted when the original OBConversion object is.
-class XMLConversion : public OBConversion
-{
-public:
-	///Existing OBConversion instance copied
-		XMLConversion(OBConversion* pConv);
-		
-		///Frees reader and writer if necessary
-		~XMLConversion();
-
-	bool SetupReader();///< opens libxml2 reader
-	bool SetupWriter();///< opens libxml2 writer
-
-	///Parses the input xml stream and sends each element to the format's callback routines
-	bool ReadXML(XMLBaseFormat* pFormat, OBBase* pOb);
-
-	typedef std::map<std::string, XMLBaseFormat*> NsMapType;
-
-	///This static function returns a reference to the map
-	///Avoids "static initialization order fiasco"
-	static NsMapType& Namespaces()
+  /// An extended OBConversion class which includes a libxml2 reader for use with XML formats
+  /// Copies an OBConversion and then extends it with a XML parser. 
+  /// Instances made on the heap are deleted when the original OBConversion object is.
+  class XMLConversion : public OBConversion
+    {
+    public:
+      ///Existing OBConversion instance copied
+      XMLConversion(OBConversion* pConv);
+  
+      ///Frees reader and writer if necessary
+      ~XMLConversion();
+  
+      bool SetupReader();///< opens libxml2 reader
+      bool SetupWriter();///< opens libxml2 writer
+  
+      ///Parses the input xml stream and sends each element to the format's callback routines
+      bool ReadXML(XMLBaseFormat* pFormat, OBBase* pOb);
+  
+      typedef std::map<std::string, XMLBaseFormat*> NsMapType;
+  
+      ///This static function returns a reference to the map
+      ///Avoids "static initialization order fiasco"
+      static NsMapType& Namespaces()
 	{
-		static NsMapType* nsm = NULL;
-		if (!nsm)
-		  nsm = new NsMapType;
-		return *nsm;
+	  static NsMapType* nsm = NULL;
+	  if (!nsm)
+	    nsm = new NsMapType;
+	  return *nsm;
 	};
 
-	static void RegisterXMLFormat(XMLBaseFormat* pFormat,
-			bool IsDefault=false, const char* uri=NULL);
-
-	///Returns the extended OBConversion class, making it if necessary
-	static XMLConversion* GetDerived(OBConversion* pConv, bool ForReading=true);
-
-	///Because OBConversion::Convert is still using the unextended OBConversion object
-	///we need to obtain the conversion paramters from it when requested
-	bool IsLast()
+      static void RegisterXMLFormat(XMLBaseFormat* pFormat,
+				    bool IsDefault=false, const char* uri=NULL);
+  
+      ///Returns the extended OBConversion class, making it if necessary
+      static XMLConversion* GetDerived(OBConversion* pConv, bool ForReading=true);
+  
+      ///Because OBConversion::Convert is still using the unextended OBConversion object
+      ///we need to obtain the conversion paramters from it when requested
+      bool IsLast()
 	{ return _pConv->IsLast(); }
-	int GetOutputIndex()
+      int GetOutputIndex()
 	{ return  _pConv->GetOutputIndex(); }
-
-
-	xmlTextReaderPtr GetReader() const
+  
+  
+      xmlTextReaderPtr GetReader() const
 	{		return _reader;	};
 
-	xmlTextWriterPtr GetWriter() const
+      xmlTextWriterPtr GetWriter() const
 	{		return _writer;	};
 
-	void OutputToStream()
+      void OutputToStream()
 	{
-		int ret=xmlOutputBufferFlush(_buf);
+	  int ret=xmlOutputBufferFlush(_buf);
 	}
 
-	static XMLBaseFormat* GetDefaultXMLClass() //TODO make dependent on object type
+      static XMLBaseFormat* GetDefaultXMLClass() //TODO make dependent on object type
 	{   return _pDefault;};
 
-	void LookForNamespace()
+      void LookForNamespace()
 	{   _LookingForNamespace = true; };
 
-	///Static callback functions for xmlReaderForIO()
-	static int ReadStream(void * context, char * buffer, int len);
-	static int WriteStream(void * context, const char * buffer, int len);
-	//static int CloseStream(void* context);
+      ///Static callback functions for xmlReaderForIO()
+      static int ReadStream(void * context, char * buffer, int len);
+      static int WriteStream(void * context, const char * buffer, int len);
+      //static int CloseStream(void* context);
 
-	string GetAttribute(const char* attrname);
+      std::string GetAttribute(const char* attrname);
 
-	///Sets value to element content. Returns false if there is no content. 
-	string GetContent();
+      ///Sets value to element content. Returns false if there is no content. 
+      std::string GetContent();
 
-	///Sets value to element content as an integer. Returns false if there is no content. 
-	bool    GetContentInt(int& value);
+      ///Sets value to element content as an integer. Returns false if there is no content. 
+      bool    GetContentInt(int& value);
 
-	///Sets value to element content as an double. Returns false if there is no content. 
-	bool GetContentDouble(double& value);
+      ///Sets value to element content as an double. Returns false if there is no content. 
+      bool GetContentDouble(double& value);
 
-private:
-	static XMLBaseFormat* _pDefault;
-	OBConversion* _pConv;
-	streampos  _requestedpos, _lastpos;  
-	xmlTextReaderPtr _reader;
-	xmlTextWriterPtr _writer;
-	xmlOutputBufferPtr _buf;
-	//	xmlBufferPtr _buf;
-	bool _LookingForNamespace;
-public:	
-	bool _SkipNextRead;
-};
+    private:
+      static XMLBaseFormat* _pDefault;
+      OBConversion* _pConv;
+      std::streampos  _requestedpos, _lastpos;  
+      xmlTextReaderPtr _reader;
+      xmlTextWriterPtr _writer;
+      xmlOutputBufferPtr _buf;
+      //	xmlBufferPtr _buf;
+      bool _LookingForNamespace;
+    public:	
+      bool _SkipNextRead;
+    };
 
-//*************************************************
-/// Abstract class containing common functionality for XML formats.
-class XMLBaseFormat : public OBFormat
-{
-protected:
-	XMLConversion* _pxmlConv;
+  //*************************************************
+  /// Abstract class containing common functionality for XML formats.
+  class XMLBaseFormat : public OBFormat
+    {
+    protected:
+      XMLConversion* _pxmlConv;
 	
-	//formating for output
-	string _prefix;
-	int baseindent, ind;
-	string nsdecl;
-	int _embedlevel;
+      //formating for output
+      std::string _prefix;
+      int baseindent, ind;
+      std::string nsdecl;
+      int _embedlevel;
 
-public:
-	virtual const char* NamespaceURI()const=0;
-	virtual bool DoElement(const std::string& ElName){return false;};
-	virtual bool EndElement(const std::string& ElName){return false;};
-	 /// The tag at the end of the chemical object e.g. "/molecule>"
-	virtual const char* EndTag(){return ">";};
+    public:
+      virtual const char* NamespaceURI()const=0;
+      virtual bool DoElement(const std::string& ElName){return false;};
+      virtual bool EndElement(const std::string& ElName){return false;};
+      /// The tag at the end of the chemical object e.g. "/molecule>"
+      virtual const char* EndTag(){return ">";};
 	
-protected:
-	void SetFormatting(OBConversion* pConv, std::ostream& ofs)
+    protected:
+      void SetFormatting(OBConversion* pConv, std::ostream& ofs)
 	{
-		const char* nstxt = pConv->IsOption("N");
-		if(nstxt)
-		{
-			_prefix = nstxt;
-			_prefix += ":";
-		}
-		else
-			_prefix.erase();
+	  const char* nstxt = pConv->IsOption("N");
+	  if(nstxt)
+	    {
+	      _prefix = nstxt;
+	      _prefix += ":";
+	    }
+	  else
+	    _prefix.erase();
 
-		const char* p = pConv->IsOption("i");
-		baseindent = p ? atoi(p) : 0;
+	  const char* p = pConv->IsOption("i");
+	  baseindent = p ? atoi(p) : 0;
 
-		ind=0;
+	  ind=0;
 
-		if(!pConv->IsOption("x"))
-		{
-			ofs << "<?xml version=\"1.0\"?>\n";
-			nsdecl = " xmlns=\"";
-			nsdecl += NamespaceURI(); 
-			nsdecl += "\""; 
-		}
-		else
-			nsdecl.erase();
+	  if(!pConv->IsOption("x"))
+	    {
+	      ofs << "<?xml version=\"1.0\"?>\n";
+	      nsdecl = " xmlns=\"";
+	      nsdecl += NamespaceURI(); 
+	      nsdecl += "\""; 
+	    }
+	  else
+	    nsdecl.erase();
 	}
 
-	xmlTextReaderPtr reader() const
+      xmlTextReaderPtr reader() const
 	{
-		return _pxmlConv->GetReader();
+	  return _pxmlConv->GetReader();
 	}
 
-	xmlTextWriterPtr writer() const
+      xmlTextWriterPtr writer() const
 	{
-		return _pxmlConv->GetWriter();
-	}
-	
-	void OutputToStream()
-	{
-		_pxmlConv->OutputToStream();
+	  return _pxmlConv->GetWriter();
 	}
 	
-};
-
-//*************************************************
-///Abstract class containing common functionality for XML formats which represent molecules
-class XMLMoleculeFormat : public XMLBaseFormat
-{
-protected:
-	OBMol* _pmol;
-
-public:
-	virtual bool ReadChemObject(OBConversion* pConv)
+      void OutputToStream()
 	{
-		std::string auditMsg = "OpenBabel::Read molecule ";
-		std::string description(Description());
-		auditMsg += description.substr(0,description.find('\n'));
-		obErrorLog.ThrowError(__FUNCTION__, auditMsg, obAuditMsg);
+	  _pxmlConv->OutputToStream();
+	}
+	
+    };
 
-		//With j option, reuse pmol except for the first mol
-		static OBMol* pmol;
-		if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsFirstInput())
-			pmol = new OBMol;
+  //*************************************************
+  ///Abstract class containing common functionality for XML formats which represent molecules
+  class XMLMoleculeFormat : public XMLBaseFormat
+    {
+    protected:
+      OBMol* _pmol;
+
+    public:
+      virtual bool ReadChemObject(OBConversion* pConv)
+	{
+	  std::string auditMsg = "OpenBabel::Read molecule ";
+	  std::string description(Description());
+	  auditMsg += description.substr(0,description.find('\n'));
+	  obErrorLog.ThrowError(__FUNCTION__, auditMsg, obAuditMsg);
+
+	  //With j option, reuse pmol except for the first mol
+	  static OBMol* pmol;
+	  if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsFirstInput())
+	    pmol = new OBMol;
 		
-		bool ret=ReadMolecule(pmol,pConv);
+	  bool ret=ReadMolecule(pmol,pConv);
 
-		if(ret && pmol->NumAtoms() > 0) //Do transformation and return molecule
-			pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
-		else
-			pConv->AddChemObject(NULL);
+	  if(ret && pmol->NumAtoms() > 0) //Do transformation and return molecule
+	    pConv->AddChemObject(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
+	  else
+	    pConv->AddChemObject(NULL);
 
-		return ret;
+	  return ret;
 	};
 
-	virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
+      virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	{
-		_pmol = dynamic_cast<OBMol*>(pOb);
-		if(!_pmol)
-			return false;
+	  _pmol = dynamic_cast<OBMol*>(pOb);
+	  if(!_pmol)
+	    return false;
 
-		_pxmlConv = XMLConversion::GetDerived(pConv,true);
-		if(!_pxmlConv)
-			return false;
-		_embedlevel = -1;
-		return _pxmlConv->ReadXML(this,pOb);
+	  _pxmlConv = XMLConversion::GetDerived(pConv,true);
+	  if(!_pxmlConv)
+	    return false;
+	  _embedlevel = -1;
+	  return _pxmlConv->ReadXML(this,pOb);
 	};
 
 
-	virtual bool WriteChemObject(OBConversion* pConv)
+      virtual bool WriteChemObject(OBConversion* pConv)
 	{
-		//Retrieve the target OBMol
-		OBBase* pOb = pConv->GetChemObject();
-		OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-		bool ret=false;
-		if(pmol)
-		{	
-			if(pmol->NumAtoms()==0)
-			{
-				std::string auditMsg = "OpenBabel::Molecule ";
-				auditMsg += pmol->GetTitle();
-				auditMsg += " has 0 atoms";
-				obErrorLog.ThrowError(__FUNCTION__,
-						auditMsg,
-						obInfo);
-			}
-			ret=true;
-
-			std::string auditMsg = "OpenBabel::Write molecule ";
-			std::string description(Description());
-			auditMsg += description.substr(0,description.find('\n'));
-			obErrorLog.ThrowError(__FUNCTION__,
-					      auditMsg,
-					      obAuditMsg);
-
-			if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsLast()) //With j option, output only at end
-			{
-				ret=WriteMolecule(pmol,pConv);
-				delete pOb;
-			}
+	  //Retrieve the target OBMol
+	  OBBase* pOb = pConv->GetChemObject();
+	  OBMol* pmol = dynamic_cast<OBMol*> (pOb);
+	  bool ret=false;
+	  if(pmol)
+	    {	
+	      if(pmol->NumAtoms()==0)
+		{
+		  std::string auditMsg = "OpenBabel::Molecule ";
+		  auditMsg += pmol->GetTitle();
+		  auditMsg += " has 0 atoms";
+		  obErrorLog.ThrowError(__FUNCTION__,
+					auditMsg,
+					obInfo);
 		}
-		return ret;
+	      ret=true;
+
+	      std::string auditMsg = "OpenBabel::Write molecule ";
+	      std::string description(Description());
+	      auditMsg += description.substr(0,description.find('\n'));
+	      obErrorLog.ThrowError(__FUNCTION__,
+				    auditMsg,
+				    obAuditMsg);
+
+	      if(!pConv->IsOption("j",OBConversion::GENOPTIONS) || pConv->IsLast()) //With j option, output only at end
+		{
+		  ret=WriteMolecule(pmol,pConv);
+		  delete pOb;
+		}
+	    }
+	  return ret;
 	};
 
-	const type_info& GetType()
+      const std::type_info& GetType()
 	{
-		return typeid(OBMol*);
+	  return typeid(OBMol*);
 	};
 
-};
+    };
 
 
 }//namespace
