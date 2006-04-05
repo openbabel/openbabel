@@ -1,3 +1,33 @@
+2006-04-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* NEWS: Update for 2.0.1 release notes.
+
+	* configure, configure.in, acinclude.m4: Add new configure options
+	for silent libtool use & compiler flags.
+
+	* scripts/Makefile.am, scripts/Makefile.in: Provide better
+	"distclean" target to remove python build targets and backup
+	files.
+
+	* src/mol.h: Update IsRotor() and NumRotors() documentation to
+	explain the current minimal definition of a rotatable
+	bond. Addresses PR#1463505.
+
+	* src/oberror.cpp: By default, retain a maximum of the 100 most
+	recent entries in the error log in memory. All errors will be
+	filtered and sent to output, but only retain some (not all). Fixes
+	PR#1439893.
+
+	* src/formats/inchi/Makefile.am, src/formats/inchi/Makefile.in:
+	Only install the inchi_api.h header.
+
+	* src/formats/xml/Makefile.am, src/formats/xml/Makefile.in: Turn
+	off optimization -- appears to fix crashes on FC4 and FC5,
+	PR#1447233.
+
+	* src/formats/xml/xml.h: Add std:: namespace declarations, solving
+	compilation problems on some GCC compiler versions.
+
 2006-03-27 Geoffrey Hutchison <babel@geoffhutchison.net>
 
 	* data/atomtyp.txt: IMPVAL for halogen ions.
