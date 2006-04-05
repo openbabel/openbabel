@@ -28,6 +28,10 @@
 	* src/formats/xml/xml.h: Add std:: namespace declarations, solving
 	compilation problems on some GCC compiler versions.
 
+	* src/formats/Makefile.am, */Makefile.in: Changes to only build
+	libinchi when the library is not available on the system. Fixes
+	PR#146451.
+
 2006-03-27 Geoffrey Hutchison <babel@geoffhutchison.net>
 
 	* data/atomtyp.txt: IMPVAL for halogen ions.

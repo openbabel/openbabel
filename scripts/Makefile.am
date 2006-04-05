@@ -5,7 +5,8 @@ dist-hook:
 	(cd $(distdir)/perl; $(MAKE) distclean)
 	find $(distdir)/python -name CVS | xargs rm -rf
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
-	(cd $(distdir)/python; rm -rf build)
+	(cd $(distdir)/python; rm -rf build; rm -rf *.pyc *.so)
+	find $(distdir) -name "*~" | xargs rm -rf
 
 # build the Perl and Python wrappers if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG

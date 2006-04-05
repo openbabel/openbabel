@@ -465,7 +465,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE MAINT build build_cpu build_vendor build_os host host_cpu host_vendor host_os CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP DOXYGEN SWIG PERL PYTHON BUILD_DOCS_TRUE BUILD_DOCS_FALSE BUILD_SWIG_TRUE BUILD_SWIG_FALSE BUILD_SCRIPTS_TRUE BUILD_SCRIPTS_FALSE EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP CPP F77 FFLAGS ac_ct_F77 LIBTOOL BUILD_SHARED_TRUE BUILD_SHARED_FALSE LIBDL XML2_CONFIG XML_CPPFLAGS XML_LIBS BUILD_XML_TRUE BUILD_XML_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE MAINT build build_cpu build_vendor build_os host host_cpu host_vendor host_os CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP DOXYGEN SWIG PERL PYTHON BUILD_DOCS_TRUE BUILD_DOCS_FALSE BUILD_SWIG_TRUE BUILD_SWIG_FALSE BUILD_SCRIPTS_TRUE BUILD_SCRIPTS_FALSE EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP CPP F77 FFLAGS ac_ct_F77 LIBTOOL BUILD_SHARED_TRUE BUILD_SHARED_FALSE LIBDL XML2_CONFIG XML_CPPFLAGS XML_LIBS BUILD_XML_TRUE BUILD_XML_FALSE BUILD_INCHI_TRUE BUILD_INCHI_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -19919,6 +19919,87 @@ else
 fi
 
 
+echo "$as_me:$LINENO: checking for GetINCHI in -linchi" >&5
+echo $ECHO_N "checking for GetINCHI in -linchi... $ECHO_C" >&6
+if test "${ac_cv_lib_inchi_GetINCHI+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-linchi  $LIBS"
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+   builtin and then its argument prototype would still apply.  */
+char GetINCHI ();
+int
+main ()
+{
+GetINCHI ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_cxx_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_lib_inchi_GetINCHI=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_lib_inchi_GetINCHI=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+echo "$as_me:$LINENO: result: $ac_cv_lib_inchi_GetINCHI" >&5
+echo "${ECHO_T}$ac_cv_lib_inchi_GetINCHI" >&6
+if test $ac_cv_lib_inchi_GetINCHI = yes; then
+  LIBINCHI="-linchi"
+else
+  LIBINCHI=""
+fi
+
+
+
+if test x"$LIBINCHI" == "x"; then
+  BUILD_INCHI_TRUE=
+  BUILD_INCHI_FALSE='#'
+else
+  BUILD_INCHI_TRUE='#'
+  BUILD_INCHI_FALSE=
+fi
+
+
 #
 # Handle user hints
 #
@@ -21737,6 +21818,13 @@ echo "$as_me: error: conditional \"BUILD_XML\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
+if test -z "${BUILD_INCHI_TRUE}" && test -z "${BUILD_INCHI_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"BUILD_INCHI\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"BUILD_INCHI\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
 if test -z "${BUILD_ZLIB_TRUE}" && test -z "${BUILD_ZLIB_FALSE}"; then
   { { echo "$as_me:$LINENO: error: conditional \"BUILD_ZLIB\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
@@ -22382,6 +22470,8 @@ s,@XML_CPPFLAGS@,$XML_CPPFLAGS,;t t
 s,@XML_LIBS@,$XML_LIBS,;t t
 s,@BUILD_XML_TRUE@,$BUILD_XML_TRUE,;t t
 s,@BUILD_XML_FALSE@,$BUILD_XML_FALSE,;t t
+s,@BUILD_INCHI_TRUE@,$BUILD_INCHI_TRUE,;t t
+s,@BUILD_INCHI_FALSE@,$BUILD_INCHI_FALSE,;t t
 s,@BUILD_ZLIB_TRUE@,$BUILD_ZLIB_TRUE,;t t
 s,@BUILD_ZLIB_FALSE@,$BUILD_ZLIB_FALSE,;t t
 s,@LIBOBJS@,$LIBOBJS,;t t

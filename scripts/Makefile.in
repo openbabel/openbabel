@@ -60,6 +60,8 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
+BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
+BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -353,7 +355,8 @@ dist-hook:
 	(cd $(distdir)/perl; $(MAKE) distclean)
 	find $(distdir)/python -name CVS | xargs rm -rf
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
-	(cd $(distdir)/python; rm -rf build)
+	(cd $(distdir)/python; rm -rf build; rm -rf *.pyc *.so)
+	find $(distdir) -name "*~" | xargs rm -rf
 
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@perl/openbabel_perl.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
