@@ -910,6 +910,58 @@ namespace OpenBabel
       
   }
 
+string OpenDatafile(ifstream& ifs, const string& filename)
+{
+/**Opens the filestream with the first file called filename found by looking 
+	successively in the following directories:
+	- the current directory
+	- the directory in the environment variable BABEL_DATADIR
+	  or in the macro BABEL_DATADIR if the environment variable is not set
+	- in a subdirectory of the BABEL_DATADIR directory with the version of 
+	  OpenBabel as its name
+	Returns the full name of the file that was opened (i.e with path) except 
+	if it is in current directory
+*/
+	ios_base::openmode imode = ios_base::in;
+#ifdef ALL_READS_BINARY //Makes unix files compatible with VC++6
+		imode = ios_base::in|ios_base::binary;
+#endif
+	ifs.close();
+	ifs.clear();
+	ifs.open(filename.c_str(),imode);
+	if(ifs)
+		return filename;
+
+	string file;
+	char* datadir = getenv("BABEL_DATADIR");
+	if(!datadir)
+		datadir = BABEL_DATADIR;
+	if(datadir)
+	{
+	  file = datadir;
+	  file += '/';
+	  file += filename;
+	}
+
+	ifs.clear();
+	ifs.open(file.c_str(),imode);
+	if(ifs)
+		return file;;
+
+	ifs.clear();
+	ifs.open(file.c_str(),imode);
+	if(ifs)
+		return file;
+  file = datadir;
+  file += "/";
+  file += BABEL_VERSION;
+  file += "/" + filename;
+
+	ifs.clear();
+  ifs.open(file.c_str(),imode);
+	return file;
+}
+
 } // end namespace OpenBabel
 
 //! \file data.cpp

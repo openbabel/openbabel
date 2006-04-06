@@ -286,6 +286,9 @@ public:
     bool AssignBonds(OBMol &,OBBitVec &);
 };
 
+//! Opens a datafile in a directory where OpenBabel expects to find it.
+OBAPI std::string OpenDatafile(std::ifstream& fs, const std::string& filename);
+
 // Used by other code for reading files
 #ifdef WIN32
 #define FILE_SEP_CHAR "\\"
