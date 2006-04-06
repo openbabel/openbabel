@@ -1,3 +1,16 @@
+2006-04-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/dlhandler_unix.cpp: Upgrade to use the opendir/readdir
+	replacement for the non-portable scandir contributed by Mikael
+	Johansson.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Fix error in
+	logic with building inchi, introduced yesterday. D'oh!
+
+	* src/formats/inchi/Makefile.am, src/formats/inchi/Makefile.in:
+	Add --no-undefined flag to produce proper compilation on Windows
+	(i.e., Cygwin).
+
 2006-04-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* NEWS: Update for 2.0.1 release notes.

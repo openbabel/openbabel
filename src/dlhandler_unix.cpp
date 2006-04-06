@@ -22,6 +22,7 @@ GNU General Public License for more details.
 
 #include <unistd.h>
 #include <dirent.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <dlfcn.h>
 
@@ -46,13 +47,13 @@ int matchFiles (SCANDIR_CONST struct dirent *entry_p)
 
 bool DLHandler::getConvDirectory(string& convPath)
 {
-    //Need to provide the directory from which this shared library was loaded.
-    //This is the default directory for format shared library files.
+  //Need to provide the directory from which this shared library was loaded.
+  //This is the default directory for format shared library files.
   
   string testPath;
   testPath += OB_MODULE_PATH;
   convPath = testPath;
-
+  
   return true;
 }
 
@@ -61,61 +62,89 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
   string currentPath;
   vector<string> paths, vs;
   char buffer[BUFF_SIZE];
-
+  
   if (!path.empty())
     paths.push_back(path);
-
+  
   if (getenv("BABEL_LIBDIR") != NULL)
     {
-        strncpy(buffer,getenv("BABEL_LIBDIR"), BUFF_SIZE - 1);
-	// add a trailing NULL just in case
-	buffer[BUFF_SIZE] = '\0';
-
-	OpenBabel::tokenize(vs, buffer, "\r\n\t :");
-
-	if (vs.size() > 0)
-	  {
-	    for (unsigned int i = 0; i < vs.size(); i++)
-	      paths.push_back(vs[i]);
-	  }
+      strncpy(buffer,getenv("BABEL_LIBDIR"), BUFF_SIZE - 1);
+      // add a trailing NULL just in case
+      buffer[BUFF_SIZE] = '\0';
+      
+      OpenBabel::tokenize(vs, buffer, "\r\n\t :");
+      
+      if (vs.size() > 0)
+	{
+	  for (unsigned int i = 0; i < vs.size(); i++)
+	    paths.push_back(vs[i]);
+	}
     }
-
+  
   if (paths.size() == 0)
     paths.push_back("./"); // defaults to current directory
 
-  struct dirent **entries_pp;
-  int count;
-
+  /* Old method using scandir. Replaced with readdir (below) as for example
+   * Solaris pre 10 doesn't implement scandir.
+   
+   struct dirent **entries_pp;
+   int count;
+   
+   for (unsigned int i = 0; i < paths.size(); i++)
+   {
+   currentPath = paths[i];
+   count = scandir (currentPath.c_str(), &entries_pp, SCANDIR_T matchFiles, NULL);
+   
+   for(int i=0; i<count; i++)
+   {
+   file_list.push_back(currentPath + getSeparator() + (entries_pp[i])->d_name);
+   free(entries_pp[i]);
+   }
+   }
+   
+   if (entries_pp)
+   free(entries_pp);
+   * 
+   */
+  
+  DIR *dp;
+  struct dirent *entry;
+  
   for (unsigned int i = 0; i < paths.size(); i++)
     {
-      currentPath = paths[i];
-      count = scandir (currentPath.c_str(), &entries_pp, SCANDIR_T matchFiles, NULL);
-
-      for(int i=0; i<count; i++)
-	{
-	  file_list.push_back(currentPath + getSeparator() + (entries_pp[i])->d_name);
-	  free(entries_pp[i]);
+      currentPath=paths[i];
+      
+      if ((dp = opendir(currentPath.c_str())) == NULL)
+	continue; // no big deal, this path causes an error
+      else 
+        {
+          while((entry = readdir(dp)) != NULL) 
+	    {
+	      if (matchFiles(entry) != 0) 
+		file_list.push_back(currentPath + getSeparator() + (entry)->d_name);
+	    }
+	  closedir(dp); // calls free(dp) -- no memory leak
 	}
     }
-
-  if (entries_pp)
-    free(entries_pp);
-  return count;
+  
+  if (file_list.size() == 0)
+    return(-1); // error, didn't find any files at all
+  return file_list.size();
 }
 
 bool DLHandler::openLib(const string& lib_name)
 {
-    return dlopen(lib_name.c_str(), RTLD_LAZY) != 0;
+  return dlopen(lib_name.c_str(), RTLD_LAZY) != 0;
 }
 
 const char* DLHandler::getFormatFilePattern()
 {
-    return MODULE_EXTENSION;
+  return MODULE_EXTENSION;
 }
 
 char DLHandler::getSeparator()
 {
-    return '/';
+  return '/';
 }
 
 //! \file dlhandler_unix.cpp
