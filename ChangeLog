@@ -1,3 +1,33 @@
+2006-03-18 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/obconversion.cpp, obconversion.h,
+	src/formats/molecformat.cpp, src/formats/rxnformat.cpp:
+	The ability to stop conversion on a write error has somehow
+	been removed. Restored this by changing the return of 
+	AddChemObject()	to a bool indicating any failure of 
+	WriteChemObject(). I don't expect that many people are
+	programming at this depth for this change to matter.
+	
+	* src/mol.cpp(AddHydrogens): Do not add hydrogens
+	when to a molecule which has no bonds and more than one atom. We
+	do need a review to clarify these functions, but they are generally
+	working ok. 
+	
+	* src/data.cpp, data.h: Added a global function OpenDatafile which
+	looks in the normal places for data files. It also starts in the
+	current directory. If this is acceptable, it could be used to collect
+	the code for this functionality in one place. 
+	
+	* src/formats/xml/xml.h: added std:: to a string
+	
+	* src/GUI/OBGUI.cpp:Added warning when output extensions mixed.
+	
+	*/src/GUI/optswx.cpp: Be less restrictive with punctuation in options.
+	
+	* src/formats/inchiformat.cpp: Now calculates InChI for C and CH.
+	
+	* src/formats/thermoformat.cpp: minor parsing corrections
+
 2006-03-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/aromatest.cpp: New test to check aromaticity. When supplied
