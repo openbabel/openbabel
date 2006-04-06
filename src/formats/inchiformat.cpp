@@ -204,6 +204,12 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		else
 			iat.isotopic_mass = 0 ;
 		iat.radical = patom->GetSpinMultiplicity();
+		//InChI doesn't recognize spin miltiplicity of 4 or 5 (as used in OB for CH and C atom)
+		if(iat.radical>=4)
+		{
+			iat.radical=0;
+			iat.num_iso_H[0] = 0; //no implicit hydrogens
+		}
 		iat.charge  = patom->GetFormalCharge();
 	}
 	
@@ -308,21 +314,17 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 	inchi_Output inout;
 	memset(&inout,0,sizeof(inchi_Output));
+
 	int ret = GetINCHI(&inp, &inout);
+
 	if(ret!=inchi_Ret_OKAY)
 	{
 		string mes(inout.szMessage);
 		if(!(pConv->IsOption("w") 
 		     && (mes=="Omitted undefined stereo" || mes=="Charges were rearranged")))
-		  {
-#ifdef HAVE_SSTREAM
-		    stringstream errorMsg;
-#else
-		    strstream errorMsg;
-#endif
-		    errorMsg << molID.str() << inout.szMessage << endl;
-		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-		  }
+	  {
+			obErrorLog.ThrowError("InChI code", molID.str() + ':' + mes, obWarning);
+	  }
 		if(ret!=inchi_Ret_WARNING)
 		{
 			FreeINCHI(&inout);

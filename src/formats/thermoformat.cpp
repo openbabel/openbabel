@@ -74,7 +74,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 	//find line with 1 in col 80
 	do
 	{
-		if(!ifs.getline(ln,BUFF_SIZE))
+		if(!ifs.getline(ln,BUFF_SIZE) || !strncasecmp(ln,"END",3))
 			return false; 
 	}while(ln[79]!='1');
 
@@ -156,7 +156,7 @@ bool ThermoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	if(!pND)
 	{
     obErrorLog.ThrowError(__FUNCTION__,"No thermo data in " + title, obWarning);
-		return true;
+		return false;
 	}
 	ostream &ofs = *pConv->GetOutStream();
 	int i;

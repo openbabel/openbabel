@@ -67,7 +67,7 @@ bool OBMoleculeFormat::ReadChemObjectImpl(OBConversion* pConv, OBFormat* pFormat
 	}
 	else
 		delete pmol;
-	pConv->AddChemObject(ptmol);
+	ret = ret && pConv->AddChemObject(ptmol); //success of both writing and reading
 	return ret;
 }
 
@@ -198,7 +198,7 @@ OBMol* OBMoleculeFormat::MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond)
 	  pointer is returned and an error message logged.
 
 		pFirst and pSecond and the objects they point to are not changed. (const
-		modifiers difficult because class OBMol not designed 
+		modifiers difficult because class OBMol not designed appropriately)
 
 	  Combining molecules: rules for each of the three parts
 		Title:
@@ -324,4 +324,6 @@ bool OBMoleculeFormat::DeleteDeferredMols()
 	IMols.clear();
 	return false;
 }
+
+
 } //namespace OpenBabel

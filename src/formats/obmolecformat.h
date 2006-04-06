@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #ifndef OB_MOLECULEFORMAT_H
 #define OB_MOLECULEFORMAT_H
 
+#include <hash_map>
 #include "mol.h"
 #include "obconversion.h"
 
@@ -74,10 +75,14 @@ public:
 	{ return WriteChemObjectImpl(pConv, this);}
 	
 	/// Routines to handle the -C option for combining data from several OBMols
-	static bool DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF);
-	static bool OutputDeferredMols(OBConversion* pConv);
-	static bool DeleteDeferredMols();
+	static bool   DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF);
+	static bool   OutputDeferredMols(OBConversion* pConv);
+	static bool   DeleteDeferredMols();
 	static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
+	
+	typedef stdext::hash_map<std::string, unsigned> NameIndexType;
+	static bool   ReadNameIndex(NameIndexType& index, const std::string& datafilename,
+									OBFormat* pInFormat);
 
 	const std::type_info& GetType()
 	{
