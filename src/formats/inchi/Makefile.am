@@ -4,6 +4,7 @@ INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 
 lib_LTLIBRARIES = libinchi.la
 
+libinchi_la_LDFLAGS = -no-undefined
 libinchi_la_SOURCES = \
 	IChICan2.c IChICano.c IChIPrt1.c IChIPrt2.c \
 	IChIPrt3.c IchiMak2.c IchiMake.c IchiNorm.c \
