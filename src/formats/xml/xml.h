@@ -99,7 +99,7 @@ public:
 	std::string GetAttribute(const char* attrname);
 
 	///Sets value to element content. Returns false if there is no content. 
-	string GetContent();
+	std::string GetContent();
 
 	///Sets value to element content as an integer. Returns false if there is no content. 
 	bool    GetContentInt(int& value);
