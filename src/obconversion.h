@@ -288,7 +288,7 @@ public:
 
 	/// @name Conversion loop control
 	//@{
-	int					AddChemObject(OBBase* pOb);///< @brief Adds to internal array during input
+	bool				AddChemObject(OBBase* pOb);///< @brief Adds to internal array during input
 	OBBase*			GetChemObject(); ///< @brief Retrieve from internal array during output
 	bool				IsLast();///< @brief True if no more objects to be output
 	bool				IsFirstInput();///< @brief True if the first input object is being processed

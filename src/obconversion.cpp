@@ -514,7 +514,7 @@ int OBConversion::Convert()
 
 	//Output is deferred until the end with -C option
 	if(pOutFormat && (!IsOption("C",GENOPTIONS) || m_IsLast))
-		if(!pOutFormat->WriteChemObject(this))
+		if(pOb1 && !pOutFormat->WriteChemObject(this))
 			Index--;
 	
 	//Put AddChemObject() into non-queue mode
@@ -579,9 +579,8 @@ OBBase* OBConversion::GetChemObject()
 ///    Count is incremented with each call, even if pOb=NULL. 
 ///    Objects are not added to the queue if the count is outside the range  
 ///    StartNumber to EndNumber. There is no upper limit if EndNumber is zero. 
-///    The return value is the number of objects, including this one, which have been
-///    input (but not necessarily output).
-int OBConversion::AddChemObject(OBBase* pOb)
+///    The return value is the return code from WriteChemObject - false on error.
+bool OBConversion::AddChemObject(OBBase* pOb)
 {
 	if(Count<0) 
 	{
@@ -605,8 +604,9 @@ int OBConversion::AddChemObject(OBBase* pOb)
 				{
 					//faultly write, so finish
 					--Index;
-					ReadyToInput=false;
-					return Count;
+					//ReadyToInput=false;
+					pOb1=NULL;
+					return false;
 				}
 			}
 			pOb1=pOb;
@@ -614,7 +614,7 @@ int OBConversion::AddChemObject(OBBase* pOb)
 			wInlen = rInlen;
 		}
 	}
-	return Count;
+	return true;
 }
 //////////////////////////////////////////////////////
 int OBConversion::GetOutputIndex() const
