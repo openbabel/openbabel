@@ -149,12 +149,12 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
 				{
 					//Put the next word in the editbox
 					char* tok=strtok(pdef," :-\t</\"\'");
-					pdefWord = strtok(NULL," :-</\t;.,\"\'>");
+					pdefWord = strtok(NULL," :-</\t;,\"\'>");
 
 					//delete caption after default or after <default etc
 					*pdef='\0';
 					while(isspace(*(--pdef)));
-					if(!strpbrk(pdef,"([<{-:;")) pdef++ ;
+					if(!strpbrk(pdef,"([<{-;")) pdef++ ;
 					*pdef='\0';
 				}
 				wxStaticText* pEdCaption = new wxStaticText(parent,wxID_STATIC,pCaption);

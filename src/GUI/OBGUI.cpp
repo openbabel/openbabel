@@ -460,6 +460,12 @@ void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
 		}
 		stdOutputFileName = OutFileName;
 	}
+	OBFormat* pOutFileFormat = Conv.FormatFromExt(OutFileName);
+	if(!m_pNoOutFile->IsChecked() && pOutFileFormat && (pOutFileFormat!=pOutFormat))
+		if(wxMessageBox("The output file name extension does not correspond \
+with the output format.\nDo you wish to continue the conversion?",
+			"Is the output filename correct?", wxOK | wxCANCEL)!=wxOK)
+			return;
 
 	//Setup input file
 	std::vector<std::string> FileList, OutputFileList;
