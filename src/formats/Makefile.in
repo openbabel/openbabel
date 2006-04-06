@@ -217,8 +217,8 @@ am__jaguarformat_la_SOURCES_DIST = jaguarformat.cpp
 @BUILD_SHARED_TRUE@am_jaguarformat_la_OBJECTS = jaguarformat.lo
 jaguarformat_la_OBJECTS = $(am_jaguarformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_jaguarformat_la_rpath = -rpath $(pkglibdir)
-@BUILD_INCHI_FALSE@@BUILD_SHARED_FALSE@libformats_la_DEPENDENCIES =  \
-@BUILD_INCHI_FALSE@@BUILD_SHARED_FALSE@	inchi/libinchi.la
+@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_DEPENDENCIES =  \
+@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@	inchi/libinchi.la
 am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 	PQSformat.cpp alchemyformat.cpp amberformat.cpp \
 	balstformat.cpp bgfformat.cpp boxformat.cpp cacaoformat.cpp \
@@ -620,8 +620,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 # Unfortunately there are a few formats which still cannot compile shared
 # modules (e.g., Cygwin). So we need to keep a duplicate target for "libformats"
 @BUILD_SHARED_FALSE@noinst_LTLIBRARIES = libformats.la
-@BUILD_INCHI_FALSE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = inchi/libinchi.la
-@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = -linchi
+@BUILD_INCHI_FALSE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = -linchi
+@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = inchi/libinchi.la
 @BUILD_SHARED_FALSE@libformats_la_SOURCES = \
 @BUILD_SHARED_FALSE@	APIInterface.cpp \
 @BUILD_SHARED_FALSE@	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
@@ -720,9 +720,9 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@hinformat_la_SOURCES = hinformat.cpp
 @BUILD_SHARED_TRUE@hinformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@inchiformat_la_SOURCES = inchiformat.cpp
-@BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version
-@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LIBADD = -linchi
+@BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version
+@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
+@BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LIBADD = -linchi
 @BUILD_SHARED_TRUE@jaguarformat_la_SOURCES = jaguarformat.cpp
 @BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@mdlformat_la_SOURCES = mdlformat.cpp

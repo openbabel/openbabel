@@ -19,7 +19,7 @@ endif
 
 if !BUILD_SHARED
 noinst_LTLIBRARIES = libformats.la
-if !BUILD_INCHI
+if BUILD_INCHI
 libformats_la_LIBADD = inchi/libinchi.la
 else
 libformats_la_LIBADD = -linchi
@@ -153,7 +153,7 @@ hinformat_la_SOURCES = hinformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 
 
 inchiformat_la_SOURCES = inchiformat.cpp
-if !BUILD_INCHI
+if BUILD_INCHI
 inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
 else
 inchiformat_la_LDFLAGS = -module -avoid-version
