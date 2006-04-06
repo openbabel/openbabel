@@ -1851,6 +1851,12 @@ bool OBMol::AddHydrogens(bool polaronly,bool correctForPH)
 		return(true);
 	SetHydrogensAdded();
 
+	if(NumBonds()==0 && NumAtoms()!=1)
+	{
+		obErrorLog.ThrowError(__FUNCTION__,
+			"Did not run OpenBabel::AddHydrogens on molecule with no bonds", obAuditMsg);
+		return true;
+	}
 	if (!polaronly)
 		obErrorLog.ThrowError(__FUNCTION__,
 			"Ran OpenBabel::AddHydrogens", obAuditMsg);
