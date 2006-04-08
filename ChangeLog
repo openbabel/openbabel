@@ -1,3 +1,9 @@
+2006-04-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/openbabel.i, scripts/*: Update to add Cygwin DLL headers.
+
+	* THANKS: Update with contributors to 2.0.1 release.
+
 2006-04-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/dlhandler_unix.cpp: Upgrade to use the opendir/readdir

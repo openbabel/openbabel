@@ -15,7 +15,7 @@ def find_likely_directory():
             sys.stderr.write("ERROR: $OPENBABEL_INSTALL (%s) is not a directory\n" % name)
         else:
             return ([name+"/include/openbabel-2.0",name+"/include/openbabel-2.0/openbabel"],
-                    [name+"/lib/openbabel"])
+                    [name+"/lib"])
 
     else: # OPENBABEL_INSTALL is not set
         sys.stderr.write("WARNING: Environment variable OPENBABEL_INSTALL is not set\n")
@@ -26,7 +26,7 @@ def find_likely_directory():
             if os.path.isdir(dirname+"/include/openbabel-2.0"):
                 sys.stderr.write("INFO: Setting OPENBABEL_INSTALL to %s\n" % dirname)
                 return ([dirname+"/include/openbabel-2.0",dirname+"/include/openbabel-2.0/openbabel"],
-                        [dirname+"/lib/openbabel"])
+                        [dirname+"/lib"])
             else:
                 sys.stderr.write("WARNING: Open Babel does not appear to be globally installed\n" +
                                  "INFO: Looking for library and include files in ../../src\n")

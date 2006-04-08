@@ -2667,6 +2667,12 @@ namespace swig {
 }
 
 
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
+
+
 #include "obutil.h"
 #include "math/vector3.h"
 
