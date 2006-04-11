@@ -362,7 +362,7 @@ namespace OpenBabel
   static bool readIntegerFromRecord(char *buffer, unsigned int columnAsSpecifiedInPDB, long int *target)
   {
     char integerBuffer[6];
-    integerBuffer[5] = 0;
+    integerBuffer[5] = '\0';
 
     strncpy(integerBuffer, buffer+columnAsSpecifiedInPDB-1, 5);
 
@@ -403,8 +403,10 @@ namespace OpenBabel
 #else
     strstream errorMsg;
 #endif
+    string clearError;
 
     // Setup strings and string buffers
+    vector<string> vs;
     buffer[70] = '\0';
     if (strlen(buffer) < 70)
       {
@@ -412,46 +414,16 @@ namespace OpenBabel
                  << "  Problems reading a CONECT record.\n"
                  << "  According to the PDB specification,\n"
                  << "  the record should have 70 columns, but OpenBabel found "
-                 << strlen(buffer) << " columns.";
+                 << strlen(buffer) << " columns." << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obInfo);
+	errorMsg.str(clearError);
       }
 
     // Serial number of the first atom, read from column 7-11 of the
     // connect record, to which the other atoms connect to.
     long int startAtomSerialNumber;
-    if (readIntegerFromRecord(buffer, 7, &startAtomSerialNumber) == false)
-      {
-        errorMsg << "WARNING: Problems reading a PDB file\n"
-                 << "  Problems reading a CONECT record.\n"
-                 << "  According to the PDB specification,\n"
-                 << "  columns 7-11 should contain the serial number of an atom.\n"
-                 << "  THIS CONECT RECORD WILL BE IGNORED.";
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-        return(false);
-      }
-
-    // Find a pointer to the first atom.
-    OBAtom *firstAtom = 0L;
-    vector<OBNodeBase*>::iterator i;
-    for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
-      if (static_cast<long int>(a1->GetResidue()->
-                                GetSerialNum(a1)) == startAtomSerialNumber)
-        {
-          firstAtom = a1;
-          break;
-        }
-    if (firstAtom == 0L)
-      {
-        errorMsg << "WARNING: Problems reading a PDB file:\n"
-                 << "  Problems reading a CONECT record.\n"
-                 << "  According to the PDB specification,\n"
-                 << "  columns 7-11 should contain the serial number of an atom.\n"
-                 << "  No atom was found with this serial number.\n"
-                 << "  THIS CONECT RECORD WILL BE IGNORED.";
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-        return(false);
-      }
-
+    // A pointer to the first atom.
+    OBAtom *firstAtom = NULL;
     // Serial numbers of the atoms which bind to firstAtom, read from
     // columns 12-16, 17-21, 22-27 and 27-31 of the connect record. Note
     // that we reserve space for 5 integers, but read only four of
@@ -463,16 +435,84 @@ namespace OpenBabel
     // invalid
     bool boundedAtomsSerialNumbersValid[5] = {false, false, false, false, false};
 
-    // Now read the serial numbers. If the first serial number is not
-    // present, this connect record probably contains only hydrogen
-    // bonds and salt bridges, which we ignore. In that case, we just
-    // exit gracefully.
-    boundedAtomsSerialNumbersValid[0] = readIntegerFromRecord(buffer, 12, boundedAtomsSerialNumbers+0);
-    if (boundedAtomsSerialNumbersValid[0] == false)
-      return(true);
-    boundedAtomsSerialNumbersValid[1] = readIntegerFromRecord(buffer, 17, boundedAtomsSerialNumbers+1);
-    boundedAtomsSerialNumbersValid[2] = readIntegerFromRecord(buffer, 22, boundedAtomsSerialNumbers+2);
-    boundedAtomsSerialNumbersValid[3] = readIntegerFromRecord(buffer, 27, boundedAtomsSerialNumbers+3);
+    // Pragmatic approach -- too many non-standard PDB files out there
+    // (including some old ones from us)
+    // So if we have a small number of atoms, then try to break by spaces
+    // Otherwise (i.e., NumAtoms() > 9,999 we need to go by position)
+    // We'll switch back and forth a few times to save duplicating common code
+
+    if (mol.NumAtoms() <= 9999)
+      {
+	// make sure we don't look at salt bridges or whatever, so cut the buffer short
+	buffer[32] = '\0';
+	tokenize(vs,buffer);
+	if( vs.empty() || vs.size() < 2) 
+	  return false;
+	vs.erase(vs.begin()); // remove "CONECT"
+
+	startAtomSerialNumber = atoi(vs[0].c_str());
+      }
+    else
+      {
+	if (readIntegerFromRecord(buffer, 7, &startAtomSerialNumber) == false)
+	  {
+	    errorMsg << "WARNING: Problems reading a PDB file\n"
+		     << "  Problems reading a CONECT record.\n"
+		     << "  According to the PDB specification,\n"
+		     << "  columns 7-11 should contain the serial number of an atom.\n"
+		     << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	    return(false);
+	  }
+      }
+
+    vector<OBNodeBase*>::iterator i;
+    for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
+      if (static_cast<long int>(a1->GetResidue()->
+				GetSerialNum(a1)) == startAtomSerialNumber)
+	{
+	  firstAtom = a1;
+	  break;
+	}
+    if (firstAtom == NULL)
+      {
+	errorMsg << "WARNING: Problems reading a PDB file:\n"
+		 << "  Problems reading a CONECT record.\n"
+		 << "  According to the PDB specification,\n"
+		 << "  columns 7-11 should contain the serial number of an atom.\n"
+		 << "  No atom was found with this serial number.\n"
+		 << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+	return(false);
+      }
+
+    if (mol.NumAtoms() < 9999)
+      {
+	if (vs.size() > 1) boundedAtomsSerialNumbers[0] = atoi(vs[1].c_str());
+	if (vs.size() > 2) boundedAtomsSerialNumbers[1] = atoi(vs[2].c_str());
+	if (vs.size() > 3) boundedAtomsSerialNumbers[2] = atoi(vs[3].c_str());
+	if (vs.size() > 4) boundedAtomsSerialNumbers[3] = atoi(vs[4].c_str());
+
+	unsigned int limit = 4;
+	if (vs.size() <= 4)
+	  limit = vs.size() - 1;
+
+	for (unsigned int i = 0; i < limit; i++)
+	  boundedAtomsSerialNumbersValid[i] = true;
+      }
+    else
+      {
+	// Now read the serial numbers. If the first serial number is not
+	// present, this connect record probably contains only hydrogen
+	// bonds and salt bridges, which we ignore. In that case, we just
+	// exit gracefully.
+	boundedAtomsSerialNumbersValid[0] = readIntegerFromRecord(buffer, 12, boundedAtomsSerialNumbers+0);
+	if (boundedAtomsSerialNumbersValid[0] == false)
+	  return(true);
+	boundedAtomsSerialNumbersValid[1] = readIntegerFromRecord(buffer, 17, boundedAtomsSerialNumbers+1);
+	boundedAtomsSerialNumbersValid[2] = readIntegerFromRecord(buffer, 22, boundedAtomsSerialNumbers+2);
+	boundedAtomsSerialNumbersValid[3] = readIntegerFromRecord(buffer, 27, boundedAtomsSerialNumbers+3);
+      }
 
     // Now iterate over the VALID boundedAtomsSerialNumbers and connect
     // the atoms.
@@ -496,9 +536,9 @@ namespace OpenBabel
                      << " and #" << boundedAtomsSerialNumbers[k]
                      << " should be connected\n"
                      << "  However, an atom with serial #" << boundedAtomsSerialNumbers[k] << " was not found.\n"
-                     << "  THIS CONECT RECORD WILL BE IGNORED.";
+                     << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
             obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-            break;
+	    return(false);
           }
 
         // Figure the bond order
@@ -507,7 +547,7 @@ namespace OpenBabel
                                                             == boundedAtomsSerialNumbers[k+order+1]))
           order++;
         k += order;
-
+	
         // Generate the bond
         mol.AddBond(firstAtom->GetIdx(), connectedAtom->GetIdx(), order+1);
       }
