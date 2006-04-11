@@ -1,3 +1,21 @@
+2006-04-11  Geoffrey Hutchison  <ghutchis@Alumina.local>
+
+	* src/obconversion.h, src/obconversion.cpp: Added a test to be
+	sure that we do not check gzip encoding multiple times (much less
+	try to gzip repeatedly). Fix PR#1465586 where ReadString() or
+	ReadFile() followed by Read() will fail because input streams are
+	closed prematurely.
+
+	* src/atom.cpp (ImplicitHydrogenCount): Fix a bug where formulas
+	were calculated incorrectly -- explicit hydrogens should count
+	against an implicit hydrogen count too.
+
+	* src/mol.cpp (AddBond): Fix a bug exposed by PDB parsing, where
+	code attempts to add a bond from one atom to itself.
+
+	* src/formats/mol2format.cpp: Fix residue parsing to remove
+	calls to create a residue when in fact, the molecule has no residues.
+
 2006-04-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/openbabel.i, scripts/*: Update to add Cygwin DLL headers.

@@ -194,7 +194,7 @@ namespace OpenBabel {
   OBConversion::OBConversion(istream* is, ostream* os) : 
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsLast(true), MoreFilesToCome(false),
-    OneObjectOnly(false), pOb1(NULL), pAuxConv(NULL)
+    OneObjectOnly(false), CheckedForGzip(false), pOb1(NULL), pAuxConv(NULL)
   {
     pInStream=is;
     pOutStream=os;
@@ -254,6 +254,7 @@ namespace OpenBabel {
     OneObjectOnly  = o.OneObjectOnly;
     pOb1           = o.pOb1;
     ReadyToInput   = o.ReadyToInput;
+    CheckedForGzip   = o.CheckedForGzip;
 	
     pAuxConv       = NULL;
   }
@@ -413,14 +414,18 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////
   int OBConversion::Convert(istream* is, ostream* os) 
   {
-    if(is) pInStream=is;
+    if(is) {pInStream=is; CheckedForGzip = false;}
     if(os) pOutStream=os;
     ostream* pOrigOutStream = pOutStream;
 
 #ifdef HAVE_LIBZ
-    zlib_stream::zip_istream zIn(*pInStream);
-    if(zIn.is_gzip())
-      pInStream = &zIn;
+    if (!CheckedForGzip)
+      {
+	CheckedForGzip = true;
+	zlib_stream::zip_istream zIn(*pInStream);
+	if(zIn.is_gzip())
+	  pInStream = &zIn;
+      }
 
     zlib_stream::zip_ostream zOut(*pOutStream);
     if(IsOption("z",GENOPTIONS))
@@ -690,13 +695,20 @@ namespace OpenBabel {
   bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
   {
     if(pin)
-      pInStream=pin;
+      {
+	pInStream=pin;
+	CheckedForGzip = false;
+      }
     if(!pInFormat) return false;
 
 #ifdef HAVE_LIBZ
-    zlib_stream::zip_istream zIn(*pInStream);
-    if(zIn.is_gzip())
-      pInStream = &zIn;
+    if (!CheckedForGzip)
+      {
+	CheckedForGzip = true;
+	zlib_stream::zip_istream zIn(*pInStream);
+	if(zIn.is_gzip())
+	  pInStream = &zIn;
+      }
 #endif
 
     return pInFormat->ReadMolecule(pOb, this);
@@ -772,8 +784,8 @@ namespace OpenBabel {
   ////////////////////////////////////////////
   bool	OBConversion::ReadString(OBBase* pOb, std::string input)
   {
-    stringstream pin(input);
-    return Read(pOb,&pin);
+    stringstream *pin = new stringstream(input);
+    return Read(pOb,pin);
   }
 
 
@@ -782,18 +794,18 @@ namespace OpenBabel {
   {
     if(!pInFormat) return false;
 
-    ifstream ifs;
+    ifstream *ifs = new ifstream;
     ios_base::openmode imode = 
       pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
 
-    ifs.open(filePath.c_str(),imode);
-    if(!ifs)
+    ifs->open(filePath.c_str(),imode);
+    if(!ifs || !ifs->good())
       {
 	cerr << "Cannot read from " << filePath << endl;
 	return false;
       }
 
-    return Read(pOb,&ifs);
+    return Read(pOb,ifs);
   }
 
 
