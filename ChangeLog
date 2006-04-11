@@ -1,4 +1,4 @@
-2006-04-11  Geoffrey Hutchison  <ghutchis@Alumina.local>
+2006-04-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.h, src/obconversion.cpp: Added a test to be
 	sure that we do not check gzip encoding multiple times (much less
@@ -8,13 +8,24 @@
 
 	* src/atom.cpp (ImplicitHydrogenCount): Fix a bug where formulas
 	were calculated incorrectly -- explicit hydrogens should count
-	against an implicit hydrogen count too.
+	against an implicit hydrogen count too. Fixes part of PR#1463787.
+	(i.e., SMARTS 'h' token was matching total number of hydrogens)
 
 	* src/mol.cpp (AddBond): Fix a bug exposed by PDB parsing, where
 	code attempts to add a bond from one atom to itself.
 
 	* src/formats/mol2format.cpp: Fix residue parsing to remove
 	calls to create a residue when in fact, the molecule has no residues.
+
+	* src/formats/pdbformat.cpp: Fix CONECT record parsing to read
+	malformed records (e.g., created by very old Open Babel versions)
+	via splitting by spaces. Fixes PR#1468802.
+
+	* src/parsmart.cpp: Reformat indentation for clearer code
+	reading. Fix bug with syntax of 'H' token -- should refer to the
+	*total* number of hydrogens. PR#1463787.
+
+	* test/smartsresults.txt: Regenerate after above bug-fixes.
 
 2006-04-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
