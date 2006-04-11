@@ -919,9 +919,10 @@ namespace OpenBabel
     OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
     if (mol && !mol->HasImplicitValencePerceived())
       atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
+    // _impval is assigned by the atomtyper -- same as GetImplicitValence()
+    int impval = _impval - GetValence();
 
-    int impval = _impval - GetHvyValence();
-    //Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
+    // we need to modify this implicit valence if we have a radical
     int mult = GetSpinMultiplicity();
     if(mult==2) //radical
       impval-=1;
