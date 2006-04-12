@@ -7,6 +7,9 @@
 	* src/formats/smilesformat.cpp (GetChiralStereo): If we have a 2D
 	molecule and stereochemistry is unspecified, don't assume we have
 	a particular stereochemistry. Partly address PR#1463796.
+	Also fix a problem with writing chiral "H" designations with explicit
+	hydrogens, introduced with yesterday's fix to
+	OBAtom::ImplicitHydrogenCount.
 
 2006-04-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

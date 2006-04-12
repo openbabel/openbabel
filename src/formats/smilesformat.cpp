@@ -2262,15 +2262,18 @@ namespace OpenBabel
       }
 
     //add extra hydrogens
-    //  if (!normalValence && atom->ImplicitHydrogenCount())
-    if (atom->ImplicitHydrogenCount() && !atom->IsHydrogen()) //CM 21Mar05
-      {
-        strcat(element,"H");
-        if (atom->ImplicitHydrogenCount() > 1)
+    if (!atom->IsHydrogen())
+      {      
+	int hcount = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount();
+	if (hcount != 0)
 	  {
-            char tcount[10];
-            sprintf(tcount,"%d",atom->ImplicitHydrogenCount());
-            strcat(element,tcount);
+	    strcat(element,"H");
+	    if (hcount > 1)
+	      {
+		char tcount[10];
+		sprintf(tcount,"%d", hcount);
+		strcat(element,tcount);
+	      }
 	  }
       }
 
