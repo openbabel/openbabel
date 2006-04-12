@@ -27,6 +27,10 @@
 
 	* test/smartsresults.txt: Regenerate after above bug-fixes.
 
+	* src/formats/crkformat.cpp (ReadCRK): Change to correctly read
+	multi-molecule files, where the </Structure2D> tag would appear,
+	but parsing would continue, uncovered using roundtrip testing.
+
 2006-04-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/openbabel.i, scripts/*: Update to add Cygwin DLL headers.
