@@ -2220,7 +2220,6 @@ namespace OpenBabel
 	  {
             strcpy(symbol,etab.GetSymbol(atom->GetAtomicNum()));
 #ifndef KEKULE
-
             if (atom->IsAromatic())
 	      symbol[0] = tolower(symbol[0]);
 #endif
@@ -2247,7 +2246,6 @@ namespace OpenBabel
       {
         strcpy(symbol,etab.GetSymbol(atom->GetAtomicNum()));
 #ifndef KEKULE
-
         if (atom->IsAromatic())
 	  symbol[0] = tolower(symbol[0]);
 #endif
@@ -2350,9 +2348,8 @@ namespace OpenBabel
                 v = nbr->GetVector();
                 if (bond->IsWedge())
 		  v += vz;
-                else
-		  if (bond->IsHash())
-		    v -= vz;
+                else if (bond->IsHash())
+		  v -= vz;
 
                 nbr->SetVector(v);
 	      }
@@ -2362,9 +2359,8 @@ namespace OpenBabel
                 v = nbr->GetVector();
                 if (bond->IsWedge())
 		  v -= vz;
-                else
-		  if (bond->IsHash())
-		    v += vz;
+                else if (bond->IsHash())
+		  v += vz;
 
                 nbr->SetVector(v);
 	      }
@@ -2377,7 +2373,7 @@ namespace OpenBabel
 
     if (b->GetHvyValence() == 3) //must have attached hydrogen
       {
-        if (b->GetValence() == 4)//has explicit hydrogen
+        if (b->GetValence() == 4) //has explicit hydrogen
 	  {
             vector<OBEdgeBase*>::iterator i;
             for (c = b->BeginNbrAtom(i);c;c = b->NextNbrAtom(i))
@@ -2430,7 +2426,14 @@ namespace OpenBabel
     torsion = CalcTorsionAngle(a->GetVector(),b->GetVector(),
                                c->GetVector(),d->GetVector());
 
-    strcpy(stereo,(torsion<0.0)?"@":"@@");
+    // if we have a 2D structure with marked unspecified chirality
+    // we should leave it blank and return false
+    bool success = false;
+    if ( !(is2D && b->IsChiral() && !b->HasChiralitySpecified()) )
+      {
+	strcpy(stereo,(torsion<0.0)?"@":"@@");
+	success = true;
+      }
     //if (b->GetHvyValence() == 3) strcat(stereo,"H");
 
     //re-zero psuedo-coords
@@ -2447,7 +2450,7 @@ namespace OpenBabel
 	  }
       }
 
-    return(true);
+    return(success);
   }
   //********************************************************
   class FIXFormat : public OBFormat
@@ -2467,8 +2470,7 @@ namespace OpenBabel
             ";
     };
 
-    virtual const char* SpecificationURL(){return
-					     "";}; //optional
+    virtual const char* SpecificationURL(){return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

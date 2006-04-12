@@ -1,3 +1,13 @@
+2006-04-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mdlformat.cpp (ReadMolecule): Add support for atom
+	stereo in v2000 format and OBChiralData. Partly addresses
+	PR#1463796.
+
+	* src/formats/smilesformat.cpp (GetChiralStereo): If we have a 2D
+	molecule and stereochemistry is unspecified, don't assume we have
+	a particular stereochemistry. Partly address PR#1463796.
+
 2006-04-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.h, src/obconversion.cpp: Added a test to be
