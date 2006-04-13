@@ -1,3 +1,11 @@
+2006-04-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/perl/META.yml, scripts/python/setup.py: Packaging
+	changes for the scripting wrappers.
+	
+	* src/formats/mdlformat.cpp: Remove inadvertent debug statement
+	left from yesterday.
+
 2006-04-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mdlformat.cpp (ReadMolecule): Add support for atom
