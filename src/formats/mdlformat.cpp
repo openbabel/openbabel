@@ -255,7 +255,6 @@ Write Options, e.g. -x3\n \
 	  ChiralSearch = _mapcd.find(mol.GetAtom(end+offset));
 	  if (ChiralSearch!=_mapcd.end())
 	    {
-	      cerr << " found a chiral bond " << endl;
 	      (ChiralSearch->second)->AddAtomRef(start+offset, input);
 	    }
         }
