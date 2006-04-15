@@ -38,6 +38,7 @@ build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = obtest$(EXEEXT) matrixtest$(EXEEXT) \
 	ringtest$(EXEEXT) smartstest$(EXEEXT) roundtrip$(EXEEXT)
+@BUILD_XML_TRUE@am__append_1 = $(srcdir)/cml.sh
 subdir = test
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -225,7 +226,8 @@ SUBDIRS = cmltest
 LDADD = ../src/libopenbabel.la @LIBDL@
 AM_CPPFLAGS = -I$(top_srcdir)/src -DTESTDATADIR="\"$(top_srcdir)/test/\""
 EXTRA_DIST = smartsresults.txt smartstest.txt unitcell.txt ringresults.txt attype.00.smi cml.sh test-set.sh smartstest.sh ringtest.sh
-TESTS = matrixtest smartstest.sh ringtest.sh obtest $(srcdir)/cml.sh $(srcdir)/test-set.sh
+TESTS = matrixtest smartstest.sh ringtest.sh obtest \
+	$(srcdir)/test-set.sh $(am__append_1)
 obtest_SOURCES = main.cpp unitcell.cpp
 matrixtest_SOURCES = matrixtest.cpp
 ringtest_SOURCES = ringtest.cpp

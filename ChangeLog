@@ -1,3 +1,12 @@
+2006-04-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/Makefile.am, test/Makefile.in: Only run CML tests if XML
+	formats were compiled. (i.e., if libxml not available, can't test
+	CML)
+	
+	* test/ringtest.sh, test/smartstest.sh, test/cmltest/test.sh:
+	Minor shell script portability fixes.
+
 2006-04-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/perl/META.yml, scripts/python/setup.py: Packaging
