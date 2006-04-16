@@ -1721,8 +1721,8 @@ void OBMol2Smi::CreateSmiString(OBMol &mol,char *buffer)
     vector<OBNodeBase*>::iterator i;
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-        //    if ((!atom->IsHydrogen() || atom->GetValence() == 0) && !_uatoms[atom->GetIdx()])
-        if (!atom->IsHydrogen() && !_uatoms[atom->GetIdx()])
+      if ((!atom->IsHydrogen() || atom->GetValence() == 0) && !_uatoms[atom->GetIdx()])
+        //if (!atom->IsHydrogen() && !_uatoms[atom->GetIdx()])
 	  if (!atom->IsChiral()) //don't use chiral atoms as root node
 	    {
 	      //clear out closures in case structure is dot disconnected
