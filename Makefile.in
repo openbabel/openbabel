@@ -214,7 +214,7 @@ target_alias = @target_alias@
 # only build in the scripts subdirectory if possible (perl, python, swig, etc.)
 @BUILD_SCRIPTS_TRUE@SCRIPT_DIR = scripts
 SUBDIRS = data src test tools doc $(SCRIPT_DIR)
-EXTRA_DIST = Doxyfile windows windows-vc2005 INSTALL.Windows
+EXTRA_DIST = Doxyfile windows INSTALL.Windows
 AUTOMAKE_OPTIONS = foreign
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = openbabel-2.0.pc
@@ -667,7 +667,6 @@ docs:
 
 dist-hook:
 	find $(distdir)/windows -name CVS | xargs rm -rf
-	find $(distdir)/windows-vc2005 -name CVS | xargs rm -rf
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
