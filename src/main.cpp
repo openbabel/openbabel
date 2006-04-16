@@ -335,18 +335,19 @@ int main(int argc,char *argv[])
 		}
 	}
 
-  // send info message to clog -- don't mess up cerr or cout for user programs
-  int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
-	string objectname(pOutFormat->TargetClassDescription());
+	int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
+ 
+	// send info message to clog -- don't mess up cerr or cout for user programs
+	//Get the last word on the first line of the description which should
+	//be "molecules", "reactions", etc and remove the s if only one object converted
+	std::string objectname(pOutFormat->TargetClassDescription());
 	pos = objectname.find('\n');
 	if(count==1) --pos;
-	clog << count << " " << objectname.substr(0,pos) << " converted" << endl;
-
-	/*	if ( count == 1 )
-    clog << count << " molecule converted" << endl;
-  else
-    clog << count << " molecules converted" << endl;
-*/  
+	objectname.erase(pos);
+	pos = objectname.rfind(' ');
+	if(pos==std::string::npos)
+		pos=0;
+	std::clog << count << objectname.substr(pos) << " converted" << endl;
   if(OutputFileList.size()>1)
   {
     clog << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;

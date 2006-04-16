@@ -159,7 +159,7 @@ OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOpti
 ///////////////////////////////////////////////////
 const char* OBMol::ClassDescription()
 {
-    return "molecules\n \
+    return "For conversions of molecules\n \
 Additional options :\n \
 -d Delete hydrogens (make implicit)\n \
 -h Add hydrogens (make explicit)\n \

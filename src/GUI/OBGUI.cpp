@@ -72,6 +72,11 @@ bool OBGUIApp::OnInit()
 	position.x = config.Read("Left",10);
 	position.y = config.Read("Top",30);
 
+	//Save the full path of the help file - assumed to be in the starting working directory
+	wxFileName help("OpenBabelGUI.html");
+	help.MakeAbsolute();
+	HelpFile = help.GetFullPath();
+
 	// create the main application window
   OBGUIFrame *frame = new OBGUIFrame(_T("OpenBabelGUI"), position, size);
 
@@ -375,18 +380,18 @@ void OBGUIFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
 	wxMimeTypesManager mimeType;
     wxFileType *c_type;
 	 c_type = mimeType.GetFileTypeFromExtension(_T("html"));
-    if(!c_type) return ; //Couldnt find asosiation
+    if(!c_type) return ; //Couldn't find association
    
     // 2) Get Open Message
     wxString command;
    
-    command = c_type->GetOpenCommand(_T("OpenBabelGUI.html"));
+		command = c_type->GetOpenCommand(((OBGUIApp*)wxTheApp)->HelpFile);
     if(!command) return; //No default program
    
     // 3) Execute message
     wxExecute(command);
    
-    delete c_type; //Delate
+    delete c_type;
 //	::wxLaunchDefaultBrowser(_T("OpenBabelGUIHelp.html"));
 	//wxExecute(_T("OpenBabelGUI.html"));
 }
@@ -483,11 +488,16 @@ with the output format.\nDo you wish to continue the conversion?",
 	
 	m_pOutText->Thaw();
 
+	//Get the last word on the first line of the description which should
+	//be "molecules", "reactions", etc and remove the s if only one object converted
 	std::string objectname(pOutFormat->TargetClassDescription());
 	int pos = objectname.find('\n');
 	if(count==1) --pos;
-	
-	std::clog << count << " " << objectname.substr(0,pos) << " converted";
+	objectname.erase(pos);
+	pos = objectname.rfind(' ');
+	if(pos==std::string::npos)
+		pos=0;
+	std::clog << count << objectname.substr(pos) << " converted";
   if(OutputFileList.size()>1)
   {
 		std::clog << '\n' << OutputFileList.size() 
