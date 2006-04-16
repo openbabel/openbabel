@@ -340,13 +340,12 @@ bool CMLFormat::EndElement(const string& name)
 		DoBonds();
 		DoMolWideData();
 
-		_pmol->AssignSpinMultiplicity();
-		
 		//Use formula only if nothing else provided
 		if(_pmol->NumAtoms()==0 && !RawFormula.empty())
 			if(!ParseFormula(RawFormula, _pmol))
 				cerr << "Error in formula" << endl;
 		
+		_pmol->AssignSpinMultiplicity();
 		_pmol->EndModify();
 		return (--_embedlevel>=0); //false to stop parsing if no further embedded mols
 //		return false;//means stop parsing
@@ -773,6 +772,7 @@ bool CMLFormat::ParseFormula(string& formula, OBMol* pmol)
 		for(i=0;i<n;++i)
 		{
 			OBAtom* pAtom = pmol->NewAtom();
+			pAtom->ForceNoH();
 			pAtom->SetAtomicNum(atno);
 			if(iso)
 				pAtom->SetIsotope(iso);
