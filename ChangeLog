@@ -1,3 +1,17 @@
+2006-04-16 Chris Morley <ob@gaseq.co.uk>
+
+	* src/transform.cpp, src/main.cpp, src/GUI/OBGUI.cpp: To avoid
+	messing up help output revert to original wording of OBMol::
+	ClassDescription, and pick out the last word for the conversion
+	info message.
+	
+	* src/formats/smilesformat.cpp(CreateSmiString): ensure unbonded [H]
+	e.g. from formula, is output.
+	
+	* src/formats/thermoformat.cpp, src/formats/xml/cmlformat.cpp: 
+	ensure formula are read in correctly by adding ForceNoH() and 
+	calling Assign SpinMultiplicity	in the right place.
+
 2006-03-18 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/obconversion.cpp, obconversion.h,
