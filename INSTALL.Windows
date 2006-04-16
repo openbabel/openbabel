@@ -9,8 +9,11 @@ Project files for a Windows build are available in the
 openbabel/windows folder for Visual C++ 6, and Visual C++ 8 (Visual Studio 2005).
 See the ReadMe.txt file in that folder.
 
+If you wish to compile under the CygWin environment, you should read the
+generic UNIX-style compile and installation instructions in the INSTALL file.
+Currently, there are slight differences in the libraries produced by CygWin
+and Visual C++ build environments.
+
 If you have build files or advice on compiling OpenBabel with any
 other Windows compiler, we would be pleased if you could share the
-experience. 
-
-  
+experience.
