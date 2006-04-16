@@ -5,50 +5,12 @@ A precompiled version of OpenBabel for Windows is available,
 with a GUI and a command line interface. Using this is easier than
 compiling, which is necessary only if you wish to change the code.
  
-Project files for various Windows builds are available in the 
-openbabel/windows folder for Visual C++ 6, and in the
-openbabel/windows-vc2005 for Visual C++ 8 (Visual Studio 2005).
-It is probable that other versions later than VC6 can convert its
-project files.
+Project files for a Windows build are available in the 
+openbabel/windows folder for Visual C++ 6, and Visual C++ 8 (Visual Studio 2005).
+See the ReadMe.txt file in that folder.
 
+If you have build files or advice on compiling OpenBabel with any
+other Windows compiler, we would be pleased if you could share the
+experience. 
 
-Projects for stand-alone builds
---------------------------------
-OBabel builds a stand-alone command line executable.
-
-OBGUIs (VC6 only) builds a Windows program with a limited number
-of formats.
-
-
-Projects for DLL builds
------------------------
-
-OBDLL and OBConv build DLLs containing the core API and the conversion
-framework respectively. They have C++ interfaces. 
-
-OBFormats, OBExtraFormats, OBXMLFormats build *.obf files which are DLLs.
-OBExtraFormats contains formats with ids(file extensions) fpt, fs, inchi, mpd
-OBXMLFormats contains cml, cmlreact, pc
-OBFormats2 contains all the rest
-These should be built after OBDLL and OBConv have been built.
-
-OBConsole builds an exe with the command line interface.
-It should be built after OBConv.
-
-OBGUI (VC6 only) builds a Windows program which is a convenient interface
-to OpenBabel. It should built after OBConv.
-
-The DLL system has greater flexibility. The core DLLs can be driven by a
-several user interface programs - command line, GUI, or an application 
-program. The format files (*.obf) contain one or more formats and are
-used or not by the presence or absence of the files in the exe folder;
-no code changes are necessary.
-
-All builds use some third-party DLLs and their associated h and lib files.
-You may find it necessary to move the DLLs (from the windows/ or 
-windows-vc2005) to the folder with the exe or somewhere else, or to adjust
-your PATH environmental variable. 
-
-Currently we have no experience with any other Windows compiler, but 
-maybe you can help with this? 
   

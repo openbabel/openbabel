@@ -1,3 +1,8 @@
+2006-04-16  Chris Morley <ob@gaseq.co.uk>
+
+	* INSTALL.Windows, windows: Updated Windows build files for Visual
+	C++ VC6 and VC8.
+
 2006-04-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/Makefile.am, test/Makefile.in: Only run CML tests if XML
