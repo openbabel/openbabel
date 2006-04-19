@@ -19,7 +19,9 @@ GNU General Public License for more details.
 #ifndef OB_MOLECULEFORMAT_H
 #define OB_MOLECULEFORMAT_H
 
-#include <hash_map>
+#ifdef _WIN32
+	#include <hash_map>
+#endif
 #include "mol.h"
 #include "obconversion.h"
 
