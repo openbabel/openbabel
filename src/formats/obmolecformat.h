@@ -80,9 +80,11 @@ public:
 	static bool   DeleteDeferredMols();
 	static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
 	
+#ifdef _WIN32
 	typedef stdext::hash_map<std::string, unsigned> NameIndexType;
 	static bool   ReadNameIndex(NameIndexType& index, const std::string& datafilename,
 									OBFormat* pInFormat);
+#endif
 
 	const std::type_info& GetType()
 	{
