@@ -1,9 +1,17 @@
+2006-04-19 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/formats/molecformat.h: added #ifdef _WIN32 around 
+	experimental code which cause problems in unix build.
+
 2006-04-16 Chris Morley <ob@gaseq.co.uk>
 
 	* src/transform.cpp, src/main.cpp, src/GUI/OBGUI.cpp: To avoid
 	messing up help output revert to original wording of OBMol::
 	ClassDescription, and pick out the last word for the conversion
 	info message.
+	
+	* src/GUI/OBGUI.cpp, src/GUI/OBGUI.h: initialize HelpFile in
+	current folder at program start.
 	
 	* src/formats/smilesformat.cpp(CreateSmiString): ensure unbonded [H]
 	e.g. from formula, is output.
