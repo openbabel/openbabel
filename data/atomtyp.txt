@@ -20,6 +20,7 @@
 #                                                                            #
 ##############################################################################
 
+INTHYB  [D4]                            3       #any 4 valent atom
 INTHYB	[C]				3	#sp3 carbon
 INTHYB	[c,$(C=*)]			2	#sp2 carbon
 INTHYB	[$([#6]([#8D1])[#8D1])]		2	#sp2 carbon
@@ -32,7 +33,6 @@ INTHYB	[O]				3	#sp3 oxygen
 INTHYB	[o,$(O=*),$(O[#6,#7,#8]=,:*)]	2	#sp2 oxygen
 INTHYB	[$([#8D1][#6][#8D1])]		2	#sp2 oxygen
 INTHYB	[$(O#*)]			1	#sp  oxygen
-INTHYB  [D4]                            3       #any 4 valent atom
 
 INTHYB	[P]				3	#sp3 phosphorus
 INTHYB	[#15;$([PD1]=*)]		2	#sp2 phosphorus

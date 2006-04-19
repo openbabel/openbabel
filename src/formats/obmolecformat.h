@@ -84,9 +84,12 @@ public:
 	
 #ifdef _WIN32
 	typedef stdext::hash_map<std::string, unsigned> NameIndexType;
+#else
+	typedef std::map<std::string, unsigned> NameIndexType;
+#endif
+
 	static bool   ReadNameIndex(NameIndexType& index, const std::string& datafilename,
 									OBFormat* pInFormat);
-#endif
 
 	const std::type_info& GetType()
 	{

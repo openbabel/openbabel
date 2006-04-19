@@ -83,6 +83,9 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
   if (paths.size() == 0)
     paths.push_back("./"); // defaults to current directory
 
+  /* Old method using scandir. Replaced with readdir (below) as for example
+   * Solaris pre 10 doesn't implement scandir.
+
   struct dirent **entries_pp;
   int count;
 
@@ -100,7 +103,47 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
 
   if (entries_pp)
     free(entries_pp);
-  return count;
+  *
+  */
+
+  DIR *dp;
+  struct dirent *entry;
+
+  for (unsigned int i = 0; i < paths.size(); i++)
+    {
+      currentPath=paths[i];
+
+      if ((dp = opendir(currentPath.c_str())) == NULL)
+        continue; // no big deal, this path causes an error
+      else
+        {
+          while((entry = readdir(dp)) != NULL)
+            {
+              if (matchFiles(entry) != 0)
+                file_list.push_back(currentPath + getSeparator() + (entry)->d_name);
+            }
+          closedir(dp); // calls free(dp) -- no memory leak
+        }
+    }
+
+  if (file_list.size() == 0)
+    return(-1); // error, didn't find any files at all
+  return file_list.size();
+}
+
+int DLHandler::findFiles (std::vector<std::string>& file_list,const std::string &filename)
+{
+    if(filename.find_first_of("*?")==string::npos)
+    {
+        //no wildcard in filename
+        file_list.push_back(filename);
+        return -1;
+    }
+    int pos = filename.find_last_of("\\/");
+    if(pos!=string::npos)
+        return findFiles(file_list,filename.substr(pos+1), filename.substr(0,pos+1));
+    else
+        return findFiles(file_list,filename, "");
 }
 
 bool DLHandler::openLib(const string& lib_name)

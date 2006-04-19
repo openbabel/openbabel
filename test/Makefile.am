@@ -21,7 +21,7 @@ EXTRA_DIST = smartsresults.txt smartstest.txt \
 		cml.sh test-set.sh \
 		matrix.pl unitcell.pl rings.pl \
 		smarts.pl test-set.pl cml.pl \
-		aromatest.pl
+		aromatest.pl aromatics.smi
 
 matrixtest_SOURCES = matrixtest.cpp
 ringtest_SOURCES = ringtest.cpp

@@ -20,6 +20,149 @@
 	ensure formula are read in correctly by adding ForceNoH() and 
 	calling Assign SpinMultiplicity	in the right place.
 
+2006-04-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/Makefile.am, test/Makefile.in: Only run CML tests if XML
+	formats were compiled. (i.e., if libxml not available, can't test
+	CML)
+	
+	* test/ringtest.sh, test/smartstest.sh, test/cmltest/test.sh:
+	Minor shell script portability fixes.
+
+2006-04-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/perl/META.yml, scripts/python/setup.py: Packaging
+	changes for the scripting wrappers.
+	
+	* src/formats/mdlformat.cpp: Remove inadvertent debug statement
+	left from yesterday.
+
+2006-04-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mdlformat.cpp (ReadMolecule): Add support for atom
+	stereo in v2000 format and OBChiralData. Partly addresses
+	PR#1463796.
+
+	* src/formats/smilesformat.cpp (GetChiralStereo): If we have a 2D
+	molecule and stereochemistry is unspecified, don't assume we have
+	a particular stereochemistry. Partly address PR#1463796.
+	Also fix a problem with writing chiral "H" designations with explicit
+	hydrogens, introduced with yesterday's fix to
+	OBAtom::ImplicitHydrogenCount.
+
+2006-04-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.h, src/obconversion.cpp: Added a test to be
+	sure that we do not check gzip encoding multiple times (much less
+	try to gzip repeatedly). Fix PR#1465586 where ReadString() or
+	ReadFile() followed by Read() will fail because input streams are
+	closed prematurely.
+
+	* src/atom.cpp (ImplicitHydrogenCount): Fix a bug where formulas
+	were calculated incorrectly -- explicit hydrogens should count
+	against an implicit hydrogen count too. Fixes part of PR#1463787.
+	(i.e., SMARTS 'h' token was matching total number of hydrogens)
+
+	* src/mol.cpp (AddBond): Fix a bug exposed by PDB parsing, where
+	code attempts to add a bond from one atom to itself.
+
+	* src/formats/mol2format.cpp: Fix residue parsing to remove
+	calls to create a residue when in fact, the molecule has no residues.
+
+	* src/formats/pdbformat.cpp: Fix CONECT record parsing to read
+	malformed records (e.g., created by very old Open Babel versions)
+	via splitting by spaces. Fixes PR#1468802.
+
+	* src/parsmart.cpp: Reformat indentation for clearer code
+	reading. Fix bug with syntax of 'H' token -- should refer to the
+	*total* number of hydrogens. PR#1463787.
+
+	* test/smartsresults.txt: Regenerate after above bug-fixes.
+
+	* src/formats/crkformat.cpp (ReadCRK): Change to correctly read
+	multi-molecule files, where the </Structure2D> tag would appear,
+	but parsing would continue, uncovered using roundtrip testing.
+
+2006-04-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/openbabel.i, scripts/*: Update to add Cygwin DLL headers.
+
+	* THANKS: Update with contributors to 2.0.1 release.
+
+2006-04-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/dlhandler_unix.cpp: Upgrade to use the opendir/readdir
+	replacement for the non-portable scandir contributed by Mikael
+	Johansson.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Fix error in
+	logic with building inchi, introduced yesterday. D'oh!
+
+	* src/formats/inchi/Makefile.am, src/formats/inchi/Makefile.in:
+	Add --no-undefined flag to produce proper compilation on Windows
+	(i.e., Cygwin).
+
+2006-04-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* NEWS: Update for 2.0.1 release notes.
+
+	* configure, configure.in, acinclude.m4: Add new configure options
+	for silent libtool use & compiler flags.
+
+	* scripts/Makefile.am, scripts/Makefile.in: Provide better
+	"distclean" target to remove python build targets and backup
+	files.
+
+	* src/mol.h: Update IsRotor() and NumRotors() documentation to
+	explain the current minimal definition of a rotatable
+	bond. Addresses PR#1463505.
+
+	* src/oberror.cpp: By default, retain a maximum of the 100 most
+	recent entries in the error log in memory. All errors will be
+	filtered and sent to output, but only retain some (not all). Fixes
+	PR#1439893.
+
+	* src/formats/inchi/Makefile.am, src/formats/inchi/Makefile.in:
+	Only install the inchi_api.h header.
+
+	* src/formats/xml/Makefile.am, src/formats/xml/Makefile.in: Turn
+	off optimization -- appears to fix crashes on FC4 and FC5,
+	PR#1447233.
+
+	* src/formats/xml/xml.h: Add std:: namespace declarations, solving
+	compilation problems on some GCC compiler versions.
+
+	* src/formats/Makefile.am, */Makefile.in: Changes to only build
+	libinchi when the library is not available on the system. Fixes
+	PR#146451.
+
+2006-03-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/aromatest.cpp: New test to check aromaticity. When supplied
+	with a test file, it checks to be sure all non-hydrogen atoms are
+	aromatic.
+
+	* scripts/*: Update scripting wrappers with SWIG 1.3.29.
+
+	* src/Makefile.am, src/Makefile.in : Add @LIBDL@ as
+	suggested by Michael Shigorin (PR#1458706). Make sure
+	babelconfig.h isn't included in dist tarball, as suggested by
+	Michael Banck.
+
+2006-03-27  Michael Banck  <mbanck@gmx.net>
+
+	* src/fingerprint.h: Fix compilation error with gcc-4.1.
+	  Patch by <vlaaad@users.sourceforge.net>.
+	* src/formats/copyformat.cpp: Likewise.
+	* src/formats/crkformat.cpp: Likewise.
+	* src/formats/xml/cmlreactlformat.cpp: Likewise.
+	* src/formats/xml/xml.h: Likewise.
+	* src/formats/xml/xmlformat.cpp: Likewise.
+
+	* src/formats/fastaformat.cpp: Include babelconfig.h.
+
+	* src/rand.cpp: Include <time.h> and <sys/time.h>.
+
 2006-03-18 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/obconversion.cpp, obconversion.h,
@@ -44,42 +187,11 @@
 	
 	* src/GUI/OBGUI.cpp:Added warning when output extensions mixed.
 	
-	*/src/GUI/optswx.cpp: Be less restrictive with punctuation in options.
+	* src/GUI/optswx.cpp: Be less restrictive with punctuation in options.
 	
 	* src/formats/inchiformat.cpp: Now calculates InChI for C and CH.
 	
 	* src/formats/thermoformat.cpp: minor parsing corrections
-
-2006-03-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
-
-	* test/aromatest.cpp: New test to check aromaticity. When supplied
-	with a test file, it checks to be sure all non-hydrogen atoms are
-	aromatic.
-
-	* scripts/*: Update scripting wrappers with SWIG 1.3.29.
-
-	* src/Makefile.am, src/Makefile.in : Add @LIBDL@ as
-	suggested by Michael Shigorin (PR#1458706). Make sure
-	babelconfig.h isn't included in dist tarball, as suggested by
-	Michael Banck.
-
-2006-03-27  Michael Banck  <mbanck@gmx.net>
-
-	* src/rand.cpp: Include <time.h> and <sys/time.h>.
-
-2006-03-27  Michael Banck  <mbanck@gmx.net>
-
-	* src/fingerprint.h: Fix compilation error with gcc-4.1.
-	  Patch by <vlaaad@users.sourceforge.net>.
-	* src/formats/copyformat.cpp: Likewise.
-	* src/formats/crkformat.cpp: Likewise.
-	* src/formats/xml/cmlreactlformat.cpp: Likewise.
-	* src/formats/xml/xml.h: Likewise.
-	* src/formats/xml/xmlformat.cpp: Likewise.
-
-2006-03-27  Michael Banck  <mbanck@gmx.net>
-
-	* src/formats/fastaformat.cpp: Include babelconfig.h.
 
 2006-03-16 Chris Morley <ob@gaseq.co.uk>
 

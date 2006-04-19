@@ -779,6 +779,8 @@ OBResidue::OBResidue()
     _resnum   = 0;
     _resname  = "";
     _vdata.clear();
+
+    cerr << " created residue ! " << endl;
 }
 
 OBResidue::OBResidue(const OBResidue &src)
@@ -792,6 +794,8 @@ OBResidue::OBResidue(const OBResidue &src)
     _atomid   = src._atomid;
     _hetatm   = src._hetatm;
     _sernum   = src._sernum;
+
+    cerr << " copied residue ! " << endl;
 }
 
 OBResidue::~OBResidue()
@@ -800,14 +804,8 @@ OBResidue::~OBResidue()
     for ( a = _atoms.begin() ; a != _atoms.end() ; a++ )
         (*a)->SetResidue(NULL);
     _atoms.clear();
-/*    if (!_vdata.empty())
-    {
-        vector<OBGenericData*>::iterator m;
-        for (m = _vdata.begin();m != _vdata.end();m++)
-            delete *m;
-        _vdata.clear();
-    }
-*/
+
+    cerr << " deleted residue ! " << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -865,11 +863,11 @@ void OBResidue::InsertAtom(OBAtom *atom)
 
 void OBResidue::RemoveAtom(OBAtom *atom)
 {
-    if (atom != NULL)
+    if (atom != NULL && _atoms.size())
     {
         for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
         {
-            if (_atoms[i] == atom)
+            if (_atoms[i] != NULL && _atoms[i] == atom)
             {
                 atom->SetResidue(NULL);
                 _atoms.erase(_atoms.begin() + i);

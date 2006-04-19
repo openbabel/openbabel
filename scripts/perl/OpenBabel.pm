@@ -46,6 +46,7 @@ sub this {
 
 package Chemistry::OpenBabel;
 
+*OpenDatafile = *Chemistry::OpenBabelc::OpenDatafile;
 *DoubleMultiply = *Chemistry::OpenBabelc::DoubleMultiply;
 *DoubleAdd = *Chemistry::OpenBabelc::DoubleAdd;
 *DoubleModulus = *Chemistry::OpenBabelc::DoubleModulus;

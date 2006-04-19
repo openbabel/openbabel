@@ -1,8 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT([Open Babel], 2.1.0b1, openbabel-discuss@lists.sourceforge.net, openbabel)
-AC_CONFIG_SRCDIR(src/typer.cpp)
+AC_CONFIG_SRCDIR(src/zipstreamimpl.h)
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
+AX_MAINTAINER_MODE_AUTO_SILENT
 AM_CONFIG_HEADER(src/config.h)
 AC_DEFINE_UNQUOTED([BABEL_VERSION], ["AC_PACKAGE_VERSION"], [The version of Open Babel])
 
@@ -31,7 +32,7 @@ AH_VERBATIM([OBAPI],
   #define OBAPI __declspec(dllexport)
  #endif
 #else //Everything else (behaviour as original)
- #define OBAPI
+ #define OBAPI 
 #endif
 ])
 
@@ -44,7 +45,7 @@ AH_VERBATIM([EXTERN],
   #define EXTERN __declspec(dllexport) extern
  #endif
 #else //Everything else (behaviour as original)
- #define EXTERN extern
+ #define EXTERN extern 
 #endif
 ])
 
@@ -158,6 +159,9 @@ AC_SUBST(LIBDL)
 AM_PATH_XML2(2.6.5)
 AM_CONDITIONAL(BUILD_XML, test x"$XML_LIBS" != "x")
 
+AC_CHECK_LIB(inchi, GetINCHI, LIBINCHI="-linchi", LIBINCHI="")
+AM_CONDITIONAL(BUILD_INCHI, test x"$LIBINCHI" == "x")
+
 CHECK_ZLIB
 AC_CHECK_LIB(z, inflateEnd)
 AC_CHECK_HEADERS(zlib.h iconv.h)
@@ -200,8 +204,9 @@ AC_CONFIG_COMMANDS([src/babelconfig.h],
                    [cat src/config.h | grep -v PACKAGE >src/babelconfig.h])
 
 AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
-		   src/GUI/Makefile \
 		   src/formats/Makefile src/fingerprints/Makefile \
 		   src/formats/xml/Makefile src/formats/inchi/Makefile \
 		   test/Makefile test/cmltest/Makefile tools/Makefile \
 		   doc/Makefile scripts/Makefile openbabel-2.0.pc)
+
+#		   src/GUI/Makefile \

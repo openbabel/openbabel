@@ -1,4 +1,32 @@
-Open Babel 2.0 (2005-11-25)
+Open Babel 2.0.1 (2006-04-17)
+
+What's New from 2.0.0:
+
+This release represents a bug-fix release and should be a stable upgrade,
+recommended for all users of Open Babel.
+
+- Support for dynamic building on the Cygwin environment. This fixes a
+  long-standing problem that made Open Babel useless to Cygwin users.
+- Fixed a variety of memory leaks and improved overall memory use. 
+  More work to reduce memory consumption is underway for the 2.1 release.
+- Improved Perl and Python scripting wrappers, including many
+  bug-fixes.
+- Fixes to the "make check" test suite, which should prevent problems
+  running before babel is installed.
+- Fixes compilation problems with AIX, Fedora Core 4, and the
+  newly-released GCC-4.1.
+- Fixed several reported compilation problems with Windows builds
+  using VisualC++.
+- Fixed several reported crashes.
+- Fixed problems with the Turbomole format, thanks to Mikael
+  Johansson.
+- Fixed a bug with PDB files with coordinates < -1000 Ang.
+- Improved support for the Sybyl mol2 format, thanks to Kevin Parkes.
+- Fixed a variety of typos in the API documentation.
+- Countless bug fixes.
+
+
+Open Babel 2.0 (2005-11-26)
 
 What's New from 1.100.2:
 

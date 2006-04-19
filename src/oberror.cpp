@@ -145,7 +145,7 @@ Output from the error log typically looks like:
 **/
 
 OBMessageHandler::OBMessageHandler() :
-  _outputLevel(obWarning), _outputStream(&clog), _logging(true)
+  _outputLevel(obWarning), _outputStream(&clog), _logging(true), _maxEntries(100)
 {
   //  StartErrorWrap(); // (don't turn on error wrapping by default)
 }

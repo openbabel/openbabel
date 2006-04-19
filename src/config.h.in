@@ -14,7 +14,7 @@
   #define EXTERN __declspec(dllexport) extern
  #endif
 #else //Everything else (behaviour as original)
- #define EXTERN extern
+ #define EXTERN extern 
 #endif
 
 
@@ -125,7 +125,7 @@
   #define OBAPI __declspec(dllexport)
  #endif
 #else //Everything else (behaviour as original)
- #define OBAPI
+ #define OBAPI 
 #endif
 
 

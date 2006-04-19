@@ -35,14 +35,18 @@ int main(int argc,char *argv[])
 {
   if (argc != 2)
     {
-      cout << "Usage: aromatest <file1>" << endl;
+      cout << "Usage: aromatest <file>" << endl;
+      cout << " Tests aromaticity perception -- all non-hydrogen atoms"
+	   << "   are expected to be aromatic." << endl;
       return(-1);
     }
+
+  cout << endl << "# Testing aromaticity perception...  " << endl;
   
   ifstream ifs(argv[1]);
   if (!ifs)
     {
-      cerr << argv[0] << ": Cannot read input file!" << endl;
+      cout << "Bail out! Cannot read input file!" << endl;
       return(-1);
     }
   
@@ -52,7 +56,7 @@ int main(int argc,char *argv[])
   pFormat = conv.FormatFromExt(argv[1]);
   if ( pFormat == NULL )
     {
-      cerr << argv[0] << ": Cannot read file format!" << endl;
+      cout << "Bail out! Cannot read file format!" << endl;
       return(-1);
     }
   
@@ -60,32 +64,43 @@ int main(int argc,char *argv[])
   OBMol mol;
   OBAtom *atom;
   
-    if (! conv.SetInAndOutFormats(pFormat, pFormat))
-      {
-        ThrowError("File format isn't loaded");
-        return (-1);
-      }
-    
-    int molCount = 0;
-    while(ifs.peek() != EOF && ifs.good())
-      {
-	mol.Clear();
-	conv.Read(&mol);
-	molCount++;
+  unsigned int testCount = 1;
+
+  if (! conv.SetInAndOutFormats(pFormat, pFormat))
+    {
+      cout << "Bail out! File format isn't loaded" << endl;
+      return (-1);
+    }
+  
+  int molCount = 0;
+  while(ifs.peek() != EOF && ifs.good())
+    {
+      mol.Clear();
+      conv.Read(&mol);
+      molCount++;
+      
+      for(unsigned int i = 1;i <= mol.NumAtoms(); i++)
+	{
+	  atom = mol.GetAtom(i);
+	  if (atom->IsHydrogen())
+	    continue;
+
+	  if (atom->IsAromatic())
+	    cout << "ok " << testCount++ << endl;
+	  else
+	    {
+	      cout << "not ok " << testCount++ << " # atom isn't aromatic!" 
+		   << endl;
+	      cout << "# atom idx " << i  
+		   << " in molecule " << molCount << " "
+		   << mol.GetTitle() << endl;
+	    }
+	}
 	
-	for(unsigned int i = 1;i <= mol.NumAtoms(); i++)
-	  {
-	    atom = mol.GetAtom(i);
-	    if (!atom->IsHydrogen() && !atom->IsAromatic())
-	      {
-		cerr << "Atom isn't aromatic!" << endl;
-		cerr << " atom idx " << i  
-		     << " in molecule " << molCount << endl;
-		return(-1);
-	      }
-	  }
-	
-      } // while reading molecules
+    } // while reading molecules
     
-    return(0);
+  // output the number of tests run
+   cout << "1.." << testCount-1 << endl;
+
+  return(0);
 }

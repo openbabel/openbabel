@@ -37,6 +37,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+@BUILD_XML_TRUE@am__append_1 = xml
+@BUILD_INCHI_TRUE@am__append_2 = inchi
 subdir = src/formats
 DIST_COMMON = $(libopenbabelinclude_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in
@@ -235,7 +237,7 @@ am__hinformat_la_SOURCES_DIST = hinformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@	obmolecformat.lo
 hinformat_la_OBJECTS = $(am_hinformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_hinformat_la_rpath = -rpath $(pkglibdir)
-inchiformat_la_LIBADD =
+inchiformat_la_DEPENDENCIES =
 am__inchiformat_la_SOURCES_DIST = inchiformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@am_inchiformat_la_OBJECTS = inchiformat.lo \
 @BUILD_SHARED_TRUE@	obmolecformat.lo
@@ -247,7 +249,8 @@ am__jaguarformat_la_SOURCES_DIST = jaguarformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@	obmolecformat.lo
 jaguarformat_la_OBJECTS = $(am_jaguarformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_jaguarformat_la_rpath = -rpath $(pkglibdir)
-@BUILD_SHARED_FALSE@libformats_la_DEPENDENCIES = inchi/libinchi.la
+@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_DEPENDENCIES =  \
+@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@	inchi/libinchi.la
 am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 	PQSformat.cpp alchemyformat.cpp amberformat.cpp \
 	balstformat.cpp bgfformat.cpp boxformat.cpp cacaoformat.cpp \
@@ -381,6 +384,12 @@ am__smilesformat_la_SOURCES_DIST = smilesformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@	obmolecformat.lo
 smilesformat_la_OBJECTS = $(am_smilesformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_smilesformat_la_rpath = -rpath $(pkglibdir)
+thermoformat_la_LIBADD =
+am__thermoformat_la_SOURCES_DIST = thermoformat.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@am_thermoformat_la_OBJECTS = thermoformat.lo \
+@BUILD_SHARED_TRUE@	obmolecformat.lo
+thermoformat_la_OBJECTS = $(am_thermoformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_thermoformat_la_rpath = -rpath $(pkglibdir)
 tinkerformat_la_LIBADD =
 am__tinkerformat_la_SOURCES_DIST = tinkerformat.cpp
 @BUILD_SHARED_TRUE@am_tinkerformat_la_OBJECTS = tinkerformat.lo
@@ -470,11 +479,11 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) \
 	$(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) \
 	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
-	$(tinkerformat_la_SOURCES) $(titleformat_la_SOURCES) \
-	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
-	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
-	$(xyzformat_la_SOURCES) $(yasaraformat_la_SOURCES) \
-	$(zindoformat_la_SOURCES)
+	$(thermoformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
+	$(titleformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
+	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
+	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
+	$(yasaraformat_la_SOURCES) $(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__PQSformat_la_SOURCES_DIST) \
@@ -523,6 +532,7 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__rxnformat_la_SOURCES_DIST) \
 	$(am__shelxformat_la_SOURCES_DIST) \
 	$(am__smilesformat_la_SOURCES_DIST) \
+	$(am__thermoformat_la_SOURCES_DIST) \
 	$(am__tinkerformat_la_SOURCES_DIST) \
 	$(am__titleformat_la_SOURCES_DIST) \
 	$(am__turbomoleformat_la_SOURCES_DIST) \
@@ -542,19 +552,22 @@ libopenbabelincludeHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(libopenbabelinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = $(SUBDIRS)
+DIST_SUBDIRS = xml inchi
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
 AMDEP_TRUE = @AMDEP_TRUE@
 AMTAR = @AMTAR@
 AR = @AR@
+AS = @AS@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
+BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
+BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -579,6 +592,7 @@ CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DLLTOOL = @DLLTOOL@
 DOXYGEN = @DOXYGEN@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
@@ -603,6 +617,7 @@ MAINT = @MAINT@
 MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
 MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -629,9 +644,12 @@ XML2_CONFIG = @XML2_CONFIG@
 XML_CPPFLAGS = @XML_CPPFLAGS@
 XML_LIBS = @XML_LIBS@
 ac_ct_AR = @ac_ct_AR@
+ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
+ac_ct_DLLTOOL = @ac_ct_DLLTOOL@
 ac_ct_F77 = @ac_ct_F77@
+ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
@@ -671,19 +689,18 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = inchi
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 # Make sure to install the inchi_api.h header
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
 libopenbabelinclude_HEADERS = inchi_api.h obmolecformat.h
 EXTRA_DIST = exampleformat.cpp
-
-# SUBDIRS += xml
+SUBDIRS = $(am__append_1) $(am__append_2)
 
 # Unfortunately there are a few formats which still cannot compile shared
 # modules (e.g., Cygwin). So we need to keep a duplicate target for "libformats"
 @BUILD_SHARED_FALSE@noinst_LTLIBRARIES = libformats.la
-@BUILD_SHARED_FALSE@libformats_la_LIBADD = inchi/libinchi.la
+@BUILD_INCHI_FALSE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = -linchi
+@BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = inchi/libinchi.la
 @BUILD_SHARED_FALSE@libformats_la_SOURCES = \
 @BUILD_SHARED_FALSE@	APIInterface.cpp \
 @BUILD_SHARED_FALSE@	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
@@ -719,7 +736,7 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_TRUE@	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
 @BUILD_SHARED_TRUE@	pcmodelformat.la \
 @BUILD_SHARED_TRUE@	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
-@BUILD_SHARED_TRUE@	rxnformat.la shelxformat.la smilesformat.la \
+@BUILD_SHARED_TRUE@	rxnformat.la shelxformat.la smilesformat.la thermoformat.la \
 @BUILD_SHARED_TRUE@	tinkerformat.la titleformat.la \
 @BUILD_SHARED_TRUE@	turbomoleformat.la unichemformat.la viewmolformat.la \
 @BUILD_SHARED_TRUE@	xedformat.la xyzformat.la yasaraformat.la zindoformat.la
@@ -785,7 +802,9 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_TRUE@hinformat_la_SOURCES = hinformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@hinformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@inchiformat_la_SOURCES = inchiformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
+@BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version
+@BUILD_INCHI_TRUE@@BUILD_SHARED_TRUE@inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
+@BUILD_INCHI_FALSE@@BUILD_SHARED_TRUE@inchiformat_la_LIBADD = -linchi
 @BUILD_SHARED_TRUE@jaguarformat_la_SOURCES = jaguarformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@jaguarformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@mdlformat_la_SOURCES = mdlformat.cpp obmolecformat.cpp
@@ -818,9 +837,8 @@ EXTRA_DIST = exampleformat.cpp
 @BUILD_SHARED_TRUE@shelxformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@smilesformat_la_SOURCES = smilesformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@smilesformat_la_LDFLAGS = -module -avoid-version 
-
-# thermoformat_la_SOURCES = thermoformat.cpp obmolecformat.cpp
-# thermoformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@thermoformat_la_SOURCES = thermoformat.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@thermoformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@tinkerformat_la_SOURCES = tinkerformat.cpp
 @BUILD_SHARED_TRUE@tinkerformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@titleformat_la_SOURCES = titleformat.cpp obmolecformat.cpp
@@ -852,9 +870,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/formats/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/formats/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  src/formats/Makefile
+	  $(AUTOMAKE) --foreign  src/formats/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -1004,6 +1022,8 @@ shelxformat.la: $(shelxformat_la_OBJECTS) $(shelxformat_la_DEPENDENCIES)
 	$(CXXLINK) $(am_shelxformat_la_rpath) $(shelxformat_la_LDFLAGS) $(shelxformat_la_OBJECTS) $(shelxformat_la_LIBADD) $(LIBS)
 smilesformat.la: $(smilesformat_la_OBJECTS) $(smilesformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_smilesformat_la_rpath) $(smilesformat_la_LDFLAGS) $(smilesformat_la_OBJECTS) $(smilesformat_la_LIBADD) $(LIBS)
+thermoformat.la: $(thermoformat_la_OBJECTS) $(thermoformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_thermoformat_la_rpath) $(thermoformat_la_LDFLAGS) $(thermoformat_la_OBJECTS) $(thermoformat_la_LIBADD) $(LIBS)
 tinkerformat.la: $(tinkerformat_la_OBJECTS) $(tinkerformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_tinkerformat_la_rpath) $(tinkerformat_la_LDFLAGS) $(tinkerformat_la_OBJECTS) $(tinkerformat_la_LIBADD) $(LIBS)
 titleformat.la: $(titleformat_la_OBJECTS) $(titleformat_la_DEPENDENCIES) 

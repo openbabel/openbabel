@@ -478,9 +478,9 @@ with the output format.\nDo you wish to continue the conversion?",
 		m_pInFilename->Expand(FileList);
 
   //redirect cerr & clog & cout
-	wxStreamToTextRedirector cerrCapture(m_pMessages, &std::cerr);
-	wxStreamToTextRedirector clogCapture(m_pMessages, &std::clog);
-	wxStreamToTextRedirector coutCapture(m_pOutText);
+	//	wxStreamToTextRedirector cerrCapture(m_pMessages, &std::cerr);
+	//	wxStreamToTextRedirector clogCapture(m_pMessages, &std::clog);
+	//	wxStreamToTextRedirector coutCapture(m_pOutText);
 
 	m_pOutText->Freeze();//Otherwise seems to be redrawn after each char from cout
 	
@@ -551,7 +551,7 @@ void OBGUIFrame::OnGetInputFile(wxCommandEvent& WXUNUSED(event))
 		DisplayInputFiles(filepatharray);
 	}
 }
-void OBGUIFrame::DisplayInputFiles(wxArrayString& filepatharray)
+void OBGUIFrame::DisplayInputFiles(wxArrayString filepatharray)
 {
 	int i, endsel=0, startsel=0;
 	if(!wxGetKeyState(WXK_CONTROL))
@@ -832,7 +832,7 @@ void OBGUIFrame::GetAvailableFormats()
 	OutputFilterString+="|AllFiles(*.*)|*.*||";
 }	
 
-void OBGUIFrame::DisplayInFile(wxString& filename)
+void OBGUIFrame::DisplayInFile(wxString filename)
 {
 	m_pInText->Clear();
 	wxFileName fn(filename);

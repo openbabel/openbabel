@@ -190,7 +190,7 @@ namespace OpenBabel
 #define OB_POS_CHIRAL_ATOM (1<<10)
   //! Atom has - chiral volume
 #define OB_NEG_CHIRAL_ATOM (1<<11)
-	//! Atom has no hydrogen attached. Temporary use only during SMILES input
+  //! Atom has no hydrogen attached. Temporary use only during SMILES input
 #define OB_ATOM_HAS_NO_H   (1<<12)
   // 13-16 currently unused
 
@@ -442,10 +442,10 @@ namespace OpenBabel
       bool HtoMethyl();
       //! Change the hybridization of this atom and modify the geometry accordingly
       bool SetHybAndGeom(int);
-			//! Mark that atom has no hydrogens attached
-			void ForceNoH() {SetFlag(OB_ATOM_HAS_NO_H);}
-			//! Return true if atom has been marked as having no hydrogens attached
-			bool HasNoHForced() {return HasFlag(OB_ATOM_HAS_NO_H);}
+      //! Mark that atom has no hydrogens attached
+      void ForceNoH() {SetFlag(OB_ATOM_HAS_NO_H);}
+      //! Return true if atom has been marked as having no hydrogens attached
+      bool HasNoHForced() {return HasFlag(OB_ATOM_HAS_NO_H);}
       //@}
 
       //! \name Property information
@@ -654,6 +654,10 @@ namespace OpenBabel
       //@{
       bool IsAromatic() const;
       bool IsInRing() const;
+      //! Is the bond a rotatable bond?
+      //!  Currently, this function classifies any bond with at least one heavy
+      //!  atom, no sp-hybrid atoms (e.g., a triple bond somewhere) not in a ring
+      //!  as a potential rotor. No other bond typing is attempted.
       bool IsRotor();
       bool IsAmide();
       bool IsPrimaryAmide();
@@ -785,8 +789,8 @@ namespace OpenBabel
       virtual ~OBMol();
       //! Assignment, copies atoms,bonds and OBGenericData
       OBMol &operator=(const OBMol &mol);      
-			//! Copies atoms and bonds but not OBGenericData
-			OBMol &operator+=(const OBMol &mol);
+      //! Copies atoms and bonds but not OBGenericData
+      OBMol &operator+=(const OBMol &mol);
 
       void ReserveAtoms(int natoms)
 	{
@@ -842,7 +846,7 @@ namespace OpenBabel
       unsigned int NumHvyAtoms();
       //! \return the number of residues (i.e. OBResidue substituents)
       unsigned int NumResidues() const      { return(_residue.size()); }
-      //! \return the number of rotatble bonds
+      //! \return the number of rotatble bonds. See OBBond::IsRotor() for details
       unsigned int NumRotors();
     
       OBAtom      *GetAtom(int);

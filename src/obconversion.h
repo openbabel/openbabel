@@ -382,6 +382,8 @@ protected:
 	bool		  MoreFilesToCome;
 	bool		  OneObjectOnly;
 	bool		  ReadyToInput;
+        bool              CheckedForGzip; ///< input stream was already checked if it is gzip-encoded
+
 	static int FormatFilesLoaded;
 	OBBase*		  pOb1;
 	std::streampos wInpos; ///<position in the input stream of the object being written

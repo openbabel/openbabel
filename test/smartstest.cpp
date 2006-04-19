@@ -17,48 +17,47 @@
  GNU General Public License for more details.
  ***********************************************************************/
 
- #include <fstream>
+#include <fstream>
 
- #include "babelconfig.h"
- #include "mol.h"
- #include "obconversion.h"
+#include "babelconfig.h"
+#include "mol.h"
+#include "obconversion.h"
 
- namespace OpenBabel
- {
- bool SafeOpen(std::ifstream &fs, char *filename);
- bool SafeOpen(std::ofstream &fs, char *filename);
- }
+namespace OpenBabel
+{
+  bool SafeOpen(std::ifstream &fs, char *filename);
+  bool SafeOpen(std::ofstream &fs, char *filename);
+}
 
- using namespace std;
- using namespace OpenBabel;
+using namespace std;
+using namespace OpenBabel;
 
- void GenerateSmartsReference();
+void GenerateSmartsReference();
 
- int main(int argc,char *argv[])
- {
-   if (argc != 1)
-     {
-       if (strncmp(argv[1], "-g", 2))
-         {
-           cout << "Usage: smartstest" << endl;
-           cout << "   Tests Open Babel SMILES/SMARTS pattern matching." << endl;
-           return 0;
-         }
-       else
-         {
-           GenerateSmartsReference();
-           return 0;
-         }
-     }
-
-   cout << endl << "# Testing SMARTS...  " << endl;
-
+int main(int argc,char *argv[])
+{
+  if (argc != 1)
+    {
+      if (strncmp(argv[1], "-g", 2))
+	{
+	  cout << "Usage: smartstest" << endl;
+	  cout << "   Tests Open Babel SMILES/SMARTS pattern matching." << endl;
+	  return 0;
+	}
+      else
+	{
+	  GenerateSmartsReference();
+	  return 0;
+	}
+    }
+  
+  cout << endl << "# Testing SMARTS...  " << endl;
+  
 #ifdef TESTDATADIR
-
-   string testdatadir = TESTDATADIR;
-   string smarts_file = testdatadir + "smartstest.txt";
-   string results_file = testdatadir + "smartsresults.txt";
-   string smilestypes_file = testdatadir + "attype.00.smi";
+  string testdatadir = TESTDATADIR;
+  string smarts_file = testdatadir + "smartstest.txt";
+  string results_file = testdatadir + "smartsresults.txt";
+  string smilestypes_file = testdatadir + "attype.00.smi";
 #else
 
    string smarts_file = "smartstest.txt";

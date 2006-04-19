@@ -195,7 +195,8 @@ OBFormat* OBConversion::pDefaultFormat=NULL;
 OBConversion::OBConversion(istream* is, ostream* os) : 
 	pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
 	EndNumber(0), Count(-1), m_IsLast(true), MoreFilesToCome(false),
-	OneObjectOnly(false), pOb1(NULL), pAuxConv(NULL),m_IsFirstInput(true)
+	OneObjectOnly(false), CheckedForGzip(false), pOb1(NULL),
+	pAuxConv(NULL), m_IsFirstInput(true)
 {
 	pInStream=is;
 	pOutStream=os;
@@ -252,6 +253,7 @@ OBConversion::OBConversion(const OBConversion& o)
 	pOb1           = o.pOb1;
 	ReadyToInput   = o.ReadyToInput;
 	m_IsFirstInput = o.m_IsFirstInput;
+	CheckedForGzip   = o.CheckedForGzip;
 
 	pAuxConv       = NULL;
 }
@@ -411,11 +413,14 @@ bool OBConversion::SetOutFormat(const char* outID)
 //////////////////////////////////////////////////////
 int OBConversion::Convert(istream* is, ostream* os) 
 {
-	if(is) pInStream=is;
+  if(is) {pInStream=is; CheckedForGzip = false;}
 	if(os) pOutStream=os;
 	ostream* pOrigOutStream = pOutStream;
 
 #ifdef HAVE_LIBZ
+    if (!CheckedForGzip)
+      {
+	CheckedForGzip = true;
 	zlib_stream::zip_istream zIn(*pInStream);
 	if(zIn.is_gzip())
 	  pInStream = &zIn;
@@ -427,6 +432,7 @@ int OBConversion::Convert(istream* is, ostream* os)
 	  zOut.make_gzip();
 	  pOutStream = &zOut;
 	}
+      }
 #endif
 
 	int count = Convert();
@@ -688,13 +694,20 @@ OBFormat* OBConversion::FormatFromMIME(const char* MIME)
 bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
 {
 	if(pin)
+	  {
 		pInStream=pin;
+		CheckedForGzip = false;
+	  }
 	if(!pInFormat) return false;
 
 #ifdef HAVE_LIBZ
+    if (!CheckedForGzip)
+      {
+        CheckedForGzip = true;
 	zlib_stream::zip_istream zIn(*pInStream);
 	if(zIn.is_gzip())
 		pInStream = &zIn;
+      }
 #endif
 	return pInFormat->ReadMolecule(pOb, this);
 }
@@ -776,8 +789,8 @@ bool OBConversion::WriteFile(OBBase* pOb, string filePath)
 ////////////////////////////////////////////
 bool	OBConversion::ReadString(OBBase* pOb, std::string input)
 {
-  stringstream pin(input);
-  return Read(pOb,&pin);
+  stringstream *pin = new stringstream(input);
+  return Read(pOb, pin);
 }
 
 
@@ -786,18 +799,18 @@ bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
 {
   if(!pInFormat) return false;
 
-  ifstream ifs;
+  ifstream *ifs = new ifstream;
   ios_base::openmode imode = 
     pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
 
-  ifs.open(filePath.c_str(),imode);
-  if(!ifs)
+  ifs->open(filePath.c_str(),imode);
+  if(!ifs || !ifs->good())
     {
       cerr << "Cannot read from " << filePath << endl;
       return false;
     }
 
-  return Read(pOb,&ifs);
+  return Read(pOb,ifs);
 }
 
 

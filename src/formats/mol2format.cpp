@@ -180,7 +180,8 @@ bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             hasPartialCharges = true;
 
         // Add residue information if it exists
-        if (resnum != -1 && resname != "")
+        if (resnum != -1 && resnum != 0 &&
+            strlen(resname) != 0 && strncmp(resname,"<1>", 3) != 0)
         {
             OBResidue *res  = (mol.NumResidues() > 0) ?
                               mol.GetResidue(mol.NumResidues()-1) : NULL;

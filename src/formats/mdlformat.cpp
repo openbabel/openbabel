@@ -31,7 +31,8 @@ GNU General Public License for more details.
 #include "chiral.h"
 
 using namespace std;
-namespace OpenBabel {
+namespace OpenBabel
+{
 
   class MOLFormat : public OBMoleculeFormat
   {
@@ -114,6 +115,7 @@ Write Options, e.g. -x3\n \
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
     _mapcd.clear();
+    bool chiralWatch=false;
 
     // Allows addition of further disconnected atoms to an existing molecule
     int offset = mol.NumAtoms(); 
@@ -158,13 +160,13 @@ Write Options, e.g. -x3\n \
         char type[5];
         vector3 v;
         OBAtom atom;
-        int charge, scanArgs;
+        int charge, scanArgs, stereo;
 
         for (i = 0;i < natoms;i++) {
           if (!ifs.getline(buffer,BUFF_SIZE))
             return(false);
 
-          scanArgs = sscanf(buffer,"%lf %lf %lf %s %*d %d",&x,&y,&z,type,&charge);
+          scanArgs = sscanf(buffer,"%lf %lf %lf %s %*d %d %d",&x,&y,&z,type,&charge, &stereo);
           if (scanArgs <4)
             return(false);
           v.SetX(x);v.SetY(y);v.SetZ(z);
@@ -175,9 +177,10 @@ Write Options, e.g. -x3\n \
           if(iso)
             atom.SetIsotope(iso);
 
-          if (scanArgs == 5) {
-                          
-            switch (charge) {
+          if (scanArgs >= 5)
+	    {
+	      switch (charge)
+		{
             case 0: break;
             case 3: atom.SetFormalCharge(1); break;
             case 2: atom.SetFormalCharge(2); break;
@@ -188,12 +191,34 @@ Write Options, e.g. -x3\n \
             }
           }
 
+          if (scanArgs == 6) // set a stereo mark
+	    {
+                //Stereo configuration: 0 none; 1 odd parity; 2 even parity; 3 unspecified)
+                if (stereo == 2)
+		  {
+		    chiralWatch=true;
+		    atom.SetAntiClockwiseStereo();
+		  }
+                else if (stereo == 1)
+		  {
+		    chiralWatch=true;
+		    atom.SetClockwiseStereo();
+		  }
+                else if(stereo == 3)
+		  {
+		    chiralWatch=true;
+		    atom.SetChiral();
+		  }
+	    }
+
           if (!mol.AddAtom(atom))
             return(false);
+	  if(chiralWatch)  // fill the map with data for each chiral atom
+	    _mapcd[mol.GetAtom(mol.NumAtoms())] = new OBChiralData;
           atom.Clear();
         }
 
-        int start,end,order,flag,stereo;
+        int start,end,order,flag;
         for (i = 0;i < nbonds;i++) {
           flag = 0;
           if (!ifs.getline(buffer,BUFF_SIZE))
@@ -216,6 +241,22 @@ Write Options, e.g. -x3\n \
           }
 
           if (!mol.AddBond(start+offset,end+offset,order,flag)) return(false);
+
+	  // after adding a bond to atom # "start+offset"
+	  // search to see if atom is bonded to a chiral atom
+	  map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
+	  ChiralSearch = _mapcd.find(mol.GetAtom(start+offset));
+	  if (ChiralSearch!=_mapcd.end())
+	    {
+	      (ChiralSearch->second)->AddAtomRef(end+offset, input);
+	    }
+	  // after adding a bond to atom # "end + offset"
+	  // search to see if atom is bonded to a chiral atom
+	  ChiralSearch = _mapcd.find(mol.GetAtom(end+offset));
+	  if (ChiralSearch!=_mapcd.end())
+	    {
+	      (ChiralSearch->second)->AddAtomRef(start+offset, input);
+	    }
         }
 
         //CM start 18 Sept 2003
@@ -640,11 +681,11 @@ Write Options, e.g. -x3\n \
                 //TODO Bond Configuration 2 or 3D??
                 if (val == 1) 
                   {
-                    flag |= OB_WEDGE_BOND;//OB_TORUP_BOND; CM09/09/05
+                    flag |= OB_WEDGE_BOND;
                   }
                 else if (val == 3) 
                   {
-                    flag |= OB_HASH_BOND;//OB_TORDOWN_BOND;
+                    flag |= OB_HASH_BOND;
                   }
               }
           }

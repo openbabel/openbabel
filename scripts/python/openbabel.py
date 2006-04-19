@@ -519,6 +519,7 @@ class OBResidueData(OBGlobalDataBase):
 OBResidueData_swigregister = _openbabel.OBResidueData_swigregister
 OBResidueData_swigregister(OBResidueData)
 
+OpenDatafile = _openbabel.OpenDatafile
 FILE_SEP_CHAR = _openbabel.FILE_SEP_CHAR
 class OBStopwatch(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')

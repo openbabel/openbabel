@@ -89,12 +89,15 @@ AMDEP_FALSE = @AMDEP_FALSE@
 AMDEP_TRUE = @AMDEP_TRUE@
 AMTAR = @AMTAR@
 AR = @AR@
+AS = @AS@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
+BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
+BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -119,6 +122,7 @@ CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DLLTOOL = @DLLTOOL@
 DOXYGEN = @DOXYGEN@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
@@ -143,6 +147,7 @@ MAINT = @MAINT@
 MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
 MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -169,9 +174,12 @@ XML2_CONFIG = @XML2_CONFIG@
 XML_CPPFLAGS = @XML_CPPFLAGS@
 XML_LIBS = @XML_LIBS@
 ac_ct_AR = @ac_ct_AR@
+ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
+ac_ct_DLLTOOL = @ac_ct_DLLTOOL@
 ac_ct_F77 = @ac_ct_F77@
+ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
@@ -215,6 +223,7 @@ target_alias = @target_alias@
 # Not sure if this is actually needed -GRH
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 lib_LTLIBRARIES = libinchi.la
+libinchi_la_LDFLAGS = -no-undefined
 libinchi_la_SOURCES = \
 	IChICan2.c IChICano.c IChIPrt1.c IChIPrt2.c \
 	IChIPrt3.c IchiMak2.c IchiMake.c IchiNorm.c \
@@ -225,16 +234,17 @@ libinchi_la_SOURCES = \
 	strutil.c util.c
 
 libinchiincludedir = $(includedir)/inchi
-libinchiinclude_HEADERS = \
-	aux2atom.h comdef.h extr_ct.h ichi.h ichi_bns.h \
-	ichicano.h ichicant.h ichicomn.h ichicomp.h \
-	ichidrp.h ichierr.h ichimain.h ichimake.h \
-	ichinorm.h ichiparm.h ichiring.h ichisize.h \
-	ichister.h ichitaut.h ichitime.h inchi_api.h \
-	inchi_dll.h inchi_dll_main.h inpdef.h \
-	lreadmol.h mode.h strutil.h util.h
+# Only install the required header to expose to the outside world
+libinchiinclude_HEADERS = inchi_api.h
+EXTRA_DIST = README.html COPYING.LIB \
+        aux2atom.h comdef.h extr_ct.h ichi.h ichi_bns.h \
+        ichicano.h ichicant.h ichicomn.h ichicomp.h \
+        ichidrp.h ichierr.h ichimain.h ichimake.h \
+        ichinorm.h ichiparm.h ichiring.h ichisize.h \
+        lreadmol.h mode.h strutil.h util.h inpdef.h \
+        ichister.h ichitaut.h ichitime.h \
+        inchi_dll.h inchi_dll_main.h
 
-EXTRA_DIST = README.html COPYING.LIB
 all: all-am
 
 .SUFFIXES:
@@ -248,9 +258,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/formats/inchi/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/formats/inchi/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  src/formats/inchi/Makefile
+	  $(AUTOMAKE) --foreign  src/formats/inchi/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

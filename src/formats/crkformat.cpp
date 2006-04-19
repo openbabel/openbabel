@@ -103,7 +103,7 @@ bool CRK2DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
 
     mol.SetDimension(2);
-    return ReadCRK(ifs,mol,"<Structure2D>");
+    return ReadCRK(ifs,mol,"Structure2D");
 }
 
 ////////////////////////////////////////////////////////////////
@@ -201,7 +201,7 @@ bool CRK3DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         return false;
     }
 
-    return CRK2DFormat::ReadCRK(ifs,mol,"<Structure3D>");
+    return CRK2DFormat::ReadCRK(ifs,mol,"Structure3D");
 }
 
 ////////////////////////////////////////////////////////////////
@@ -254,8 +254,10 @@ bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag)
 
     while (ifs.getline(buffer,BUFF_SIZE))
     {
-        if (strstr(buffer,classTag))
-            foundClass=true;
+        if (strstr(buffer,classTag) && foundClass == false)
+	  foundClass=true;
+        else if (strstr(buffer,classTag) && foundClass == true)
+	  break;
         else if (strstr(buffer,"<Atom"))
         {
             atomID=0;
@@ -403,7 +405,14 @@ bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag)
 
     mol.EndModify();
 
-
+    // we likely have an </Property> line to gobble up
+    if (ifs.peek() != EOF && ifs.good())
+      {
+	ifs.getline(buffer,BUFF_SIZE);
+        if (strstr(buffer,"</Property>") == 0)
+	  return false; // something messed up
+      }
+    
     return foundClass;
 }
 

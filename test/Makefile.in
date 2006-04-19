@@ -113,6 +113,8 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
+BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
+BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -251,7 +253,7 @@ EXTRA_DIST = smartsresults.txt smartstest.txt \
 		cml.sh test-set.sh \
 		matrix.pl unitcell.pl rings.pl \
 		smarts.pl test-set.pl cml.pl \
-		aromatest.pl
+		aromatest.pl aromatics.smi
 
 matrixtest_SOURCES = matrixtest.cpp
 ringtest_SOURCES = ringtest.cpp
@@ -272,9 +274,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  test/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  test/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  test/Makefile
+	  $(AUTOMAKE) --foreign  test/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

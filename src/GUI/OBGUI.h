@@ -89,10 +89,10 @@ public:
 	void OnSelectFormats(wxCommandEvent& event);
 	void OnRestrictFormats(wxCommandEvent& event);
 
-	void DisplayInFile(wxString& filename);
+	void DisplayInFile(wxString filename);
 	wxString GetInFileBasePath(){ return m_InFileBasePath;}
 	void DisplayMessage(wxString& message){m_pMessages->SetValue(message);}
-	void DisplayInputFiles(wxArrayString& filepatharray);
+	void DisplayInputFiles(wxArrayString filepatharray);
 	void SetInitialFocus();
 
 private:

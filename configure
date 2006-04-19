@@ -427,7 +427,7 @@ PACKAGE_VERSION='2.1.0b1'
 PACKAGE_STRING='Open Babel 2.1.0b1'
 PACKAGE_BUGREPORT='openbabel-discuss@lists.sourceforge.net'
 
-ac_unique_file="src/typer.cpp"
+ac_unique_file="src/zipstreamimpl.h"
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
@@ -465,7 +465,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE MAINT build build_cpu build_vendor build_os host host_cpu host_vendor host_os CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP DOXYGEN SWIG PERL PROVE PYTHON WX_LIBS WX_CXXFLAGS WX_CPPFLAGS BUILD_WXGUI_TRUE BUILD_WXGUI_FALSE PERL_TESTS_TRUE PERL_TESTS_FALSE BUILD_DOCS_TRUE BUILD_DOCS_FALSE BUILD_SWIG_TRUE BUILD_SWIG_FALSE BUILD_SCRIPTS_TRUE BUILD_SCRIPTS_FALSE EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP CPP F77 FFLAGS ac_ct_F77 LIBTOOL BUILD_SHARED_TRUE BUILD_SHARED_FALSE LIBDL XML2_CONFIG XML_CPPFLAGS XML_LIBS BUILD_XML_TRUE BUILD_XML_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE MAINT build build_cpu build_vendor build_os host host_cpu host_vendor host_os CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP DOXYGEN SWIG PERL PROVE PYTHON WX_LIBS WX_CXXFLAGS WX_CPPFLAGS BUILD_WXGUI_TRUE BUILD_WXGUI_FALSE PERL_TESTS_TRUE PERL_TESTS_FALSE BUILD_DOCS_TRUE BUILD_DOCS_FALSE BUILD_SWIG_TRUE BUILD_SWIG_FALSE BUILD_SCRIPTS_TRUE BUILD_SCRIPTS_FALSE EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB DLLTOOL ac_ct_DLLTOOL AS ac_ct_AS OBJDUMP ac_ct_OBJDUMP CPP F77 FFLAGS ac_ct_F77 LIBTOOL BUILD_SHARED_TRUE BUILD_SHARED_FALSE LIBDL XML2_CONFIG XML_CPPFLAGS XML_LIBS BUILD_XML_TRUE BUILD_XML_FALSE BUILD_INCHI_TRUE BUILD_INCHI_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -1974,6 +1974,26 @@ fi
 
   MAINT=$MAINTAINER_MODE_TRUE
 
+
+echo "$as_me:$LINENO: checking auto silent in maintainer mode" >&5
+echo $ECHO_N "checking auto silent in maintainer mode... $ECHO_C" >&6
+if test "$USE_MAINTAINER_MODE" = "no" ; then
+   test ".$TIMEOUT" = "." && TIMEOUT="9"
+   AUTOHEADER="sleep $TIMEOUT ; true || autoheader || skipped"
+   AUTOMAKE="sleep $TIMEOUT ; true || automake || skipped"
+   AUTOCONF="sleep $TIMEOUT ; true || autoconf || skipped"
+   if test ".$LIBTOOL" != "." ; then
+      LIBTOOL="$LIBTOOL --silent"
+      echo "$as_me:$LINENO: result: libtool-silent, auto-sleep-9" >&5
+echo "${ECHO_T}libtool-silent, auto-sleep-9" >&6
+   else
+      echo "$as_me:$LINENO: result: auto-sleep-9" >&5
+echo "${ECHO_T}auto-sleep-9" >&6
+   fi
+else
+      echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
 
           ac_config_headers="$ac_config_headers src/config.h"
 
@@ -4817,7 +4837,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 4820 "configure"' > conftest.$ac_ext
+  echo '#line 4840 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -6194,7 +6214,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:6197:" \
+echo "$as_me:6217:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -7257,11 +7277,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7260: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7280: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7264: \$? = $ac_status" >&5
+   echo "$as_me:7284: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7525,11 +7545,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7528: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7548: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7532: \$? = $ac_status" >&5
+   echo "$as_me:7552: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7629,11 +7649,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7632: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7652: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7636: \$? = $ac_status" >&5
+   echo "$as_me:7656: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9974,7 +9994,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 9977 "configure"
+#line 9997 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10074,7 +10094,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10077 "configure"
+#line 10097 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12414,11 +12434,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12417: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12437: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12421: \$? = $ac_status" >&5
+   echo "$as_me:12441: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -12518,11 +12538,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12521: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12541: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12525: \$? = $ac_status" >&5
+   echo "$as_me:12545: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14088,11 +14108,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14091: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14111: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:14095: \$? = $ac_status" >&5
+   echo "$as_me:14115: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -14192,11 +14212,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14195: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14215: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14199: \$? = $ac_status" >&5
+   echo "$as_me:14219: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16395,11 +16415,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16398: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16418: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16402: \$? = $ac_status" >&5
+   echo "$as_me:16422: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -16663,11 +16683,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16666: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16686: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16670: \$? = $ac_status" >&5
+   echo "$as_me:16690: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -16767,11 +16787,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16770: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16790: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16774: \$? = $ac_status" >&5
+   echo "$as_me:16794: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -20000,6 +20020,87 @@ else
 fi
 
 
+echo "$as_me:$LINENO: checking for GetINCHI in -linchi" >&5
+echo $ECHO_N "checking for GetINCHI in -linchi... $ECHO_C" >&6
+if test "${ac_cv_lib_inchi_GetINCHI+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-linchi  $LIBS"
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+   builtin and then its argument prototype would still apply.  */
+char GetINCHI ();
+int
+main ()
+{
+GetINCHI ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_cxx_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_lib_inchi_GetINCHI=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_lib_inchi_GetINCHI=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+echo "$as_me:$LINENO: result: $ac_cv_lib_inchi_GetINCHI" >&5
+echo "${ECHO_T}$ac_cv_lib_inchi_GetINCHI" >&6
+if test $ac_cv_lib_inchi_GetINCHI = yes; then
+  LIBINCHI="-linchi"
+else
+  LIBINCHI=""
+fi
+
+
+
+if test x"$LIBINCHI" == "x"; then
+  BUILD_INCHI_TRUE=
+  BUILD_INCHI_FALSE='#'
+else
+  BUILD_INCHI_TRUE='#'
+  BUILD_INCHI_FALSE=
+fi
+
+
 #
 # Handle user hints
 #
@@ -21663,7 +21764,7 @@ echo "${ECHO_T}$scandirconst_cast" >&6
           ac_config_commands="$ac_config_commands src/babelconfig.h"
 
 
-                                                                                                                                                      ac_config_files="$ac_config_files Makefile data/Makefile src/Makefile src/math/Makefile src/GUI/Makefile src/formats/Makefile src/fingerprints/Makefile src/formats/xml/Makefile src/formats/inchi/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile scripts/Makefile openbabel-2.0.pc"
+                                                                                                                                            ac_config_files="$ac_config_files Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile src/fingerprints/Makefile src/formats/xml/Makefile src/formats/inchi/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile scripts/Makefile openbabel-2.0.pc"
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -21829,6 +21930,13 @@ if test -z "${BUILD_XML_TRUE}" && test -z "${BUILD_XML_FALSE}"; then
   { { echo "$as_me:$LINENO: error: conditional \"BUILD_XML\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 echo "$as_me: error: conditional \"BUILD_XML\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${BUILD_INCHI_TRUE}" && test -z "${BUILD_INCHI_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"BUILD_INCHI\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"BUILD_INCHI\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
@@ -22287,7 +22395,6 @@ do
   "data/Makefile" ) CONFIG_FILES="$CONFIG_FILES data/Makefile" ;;
   "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
   "src/math/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/math/Makefile" ;;
-  "src/GUI/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/GUI/Makefile" ;;
   "src/formats/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/formats/Makefile" ;;
   "src/fingerprints/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/fingerprints/Makefile" ;;
   "src/formats/xml/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/formats/xml/Makefile" ;;
@@ -22486,6 +22593,8 @@ s,@XML_CPPFLAGS@,$XML_CPPFLAGS,;t t
 s,@XML_LIBS@,$XML_LIBS,;t t
 s,@BUILD_XML_TRUE@,$BUILD_XML_TRUE,;t t
 s,@BUILD_XML_FALSE@,$BUILD_XML_FALSE,;t t
+s,@BUILD_INCHI_TRUE@,$BUILD_INCHI_TRUE,;t t
+s,@BUILD_INCHI_FALSE@,$BUILD_INCHI_FALSE,;t t
 s,@BUILD_ZLIB_TRUE@,$BUILD_ZLIB_TRUE,;t t
 s,@BUILD_ZLIB_FALSE@,$BUILD_ZLIB_FALSE,;t t
 s,@LIBOBJS@,$LIBOBJS,;t t
@@ -23206,3 +23315,5 @@ if test "$no_create" != yes; then
   $ac_cs_success || { (exit 1); exit 1; }
 fi
 
+
+#		   src/GUI/Makefile \

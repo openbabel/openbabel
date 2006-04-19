@@ -1,23 +1,29 @@
-SUBDIRS = inchi
-
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 # Make sure to install the inchi_api.h header
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
 libopenbabelinclude_HEADERS = inchi_api.h obmolecformat.h
 
 EXTRA_DIST = exampleformat.cpp
+SUBDIRS =
 
 if BUILD_XML
 SUBDIRS += xml
 endif
 
+if BUILD_INCHI
+SUBDIRS += inchi
+endif
 
 # Unfortunately there are a few formats which still cannot compile shared
 # modules (e.g., Cygwin). So we need to keep a duplicate target for "libformats"
 
 if !BUILD_SHARED
 noinst_LTLIBRARIES = libformats.la
+if BUILD_INCHI
 libformats_la_LIBADD = inchi/libinchi.la
+else
+libformats_la_LIBADD = -linchi
+endif
 libformats_la_SOURCES = \
 	APIInterface.cpp \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
@@ -151,7 +157,12 @@ hinformat_la_SOURCES = hinformat.cpp obmolecformat.cpp
 hinformat_la_LDFLAGS = -module -avoid-version 
 
 inchiformat_la_SOURCES = inchiformat.cpp obmolecformat.cpp
+if BUILD_INCHI
 inchiformat_la_LDFLAGS = -module -avoid-version inchi/libinchi.la
+else
+inchiformat_la_LDFLAGS = -module -avoid-version
+inchiformat_la_LIBADD = -linchi
+endif
 
 jaguarformat_la_SOURCES = jaguarformat.cpp obmolecformat.cpp
 jaguarformat_la_LDFLAGS = -module -avoid-version 

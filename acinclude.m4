@@ -112,3 +112,86 @@ then
 fi
 
 ])
+
+
+dnl @synopsis AX_MAINTAINER_MODE_AUTO_SILENT
+dnl
+dnl Set autotools to error/sleep settings so that they are not run when
+dnl being errornously triggered. Likewise make libtool-silent when
+dnl libtool has been used.
+dnl
+dnl I am using the macro quite a lot since some automake versions had
+dnl the tendency to try to rerun some autotools on a mere make even
+dnl when not quite in --maintainer-mode. That is very annoying.
+dnl Likewise, a user who installs from source does not want to see
+dnl doubled compiler messages.
+dnl
+dnl I did not put an AC-REQUIRE(MAINTAINER_MODE) in here - should I?
+dnl
+dnl @category Misc
+dnl @category Automake
+dnl @author Guido Draheim <guidod@gmx.de>
+dnl @version 2005-01-21
+dnl @license GPLWithACException
+
+AC_DEFUN([AX_MAINTAINER_MODE_AUTO_SILENT],[dnl
+dnl ac_REQUIRE([am_MAINTAINER_MODE])dn
+AC_MSG_CHECKING(auto silent in maintainer mode)
+if test "$USE_MAINTAINER_MODE" = "no" ; then
+   test ".$TIMEOUT" = "." && TIMEOUT="9"
+   AUTOHEADER="sleep $TIMEOUT ; true || autoheader || skipped"
+   AUTOMAKE="sleep $TIMEOUT ; true || automake || skipped"
+   AUTOCONF="sleep $TIMEOUT ; true || autoconf || skipped"
+   if test ".$LIBTOOL" != "." ; then
+      LIBTOOL="$LIBTOOL --silent"
+      AC_MSG_RESULT([libtool-silent, auto-sleep-9])
+   else
+      AC_MSG_RESULT([auto-sleep-9])
+   fi
+else
+      AC_MSG_RESULT([no])
+fi
+])
+
+dnl @synopsis AX_CHECK_COMPILER_FLAGS(FLAGS, [ACTION-SUCCESS], [ACTION-FAILURE])
+dnl
+dnl @summary check whether FLAGS are accepted by the compiler
+dnl
+dnl Check whether the given compiler FLAGS work with the current
+dnl language's compiler, or whether they give an error. (Warnings,
+dnl however, are ignored.)
+dnl
+dnl ACTION-SUCCESS/ACTION-FAILURE are shell commands to execute on
+dnl success/failure.
+dnl
+dnl @category Misc
+dnl @author Steven G. Johnson <stevenj@alum.mit.edu> and Matteo Frigo.
+dnl @version 2005-05-30
+dnl @license GPLWithACException
+
+AC_DEFUN([AX_CHECK_COMPILER_FLAGS],
+[AC_PREREQ(2.59) dnl for _AC_LANG_PREFIX
+AC_MSG_CHECKING([whether _AC_LANG compiler accepts $1])
+dnl Some hackery here since AC_CACHE_VAL can't handle a non-literal varname:
+AS_LITERAL_IF([$1],
+  [AC_CACHE_VAL(AS_TR_SH(ax_cv_[]_AC_LANG_ABBREV[]_flags_$1), [
+      ax_save_FLAGS=$[]_AC_LANG_PREFIX[]FLAGS
+      _AC_LANG_PREFIX[]FLAGS="$1"
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM()], 
+        AS_TR_SH(ax_cv_[]_AC_LANG_ABBREV[]_flags_$1)=yes,
+        AS_TR_SH(ax_cv_[]_AC_LANG_ABBREV[]_flags_$1)=no)
+      _AC_LANG_PREFIX[]FLAGS=$ax_save_FLAGS])],
+  [ax_save_FLAGS=$[]_AC_LANG_PREFIX[]FLAGS
+   _AC_LANG_PREFIX[]FLAGS="$1"
+   AC_COMPILE_IFELSE([AC_LANG_PROGRAM()], 
+     eval AS_TR_SH(ax_cv_[]_AC_LANG_ABBREV[]_flags_$1)=yes,
+     eval AS_TR_SH(ax_cv_[]_AC_LANG_ABBREV[]_flags_$1)=no)
+   _AC_LANG_PREFIX[]FLAGS=$ax_save_FLAGS])
+eval ax_check_compiler_flags=$AS_TR_SH(ax_cv_[]_AC_LANG_ABBREV[]_flags_$1)
+AC_MSG_RESULT($ax_check_compiler_flags)
+if test "x$ax_check_compiler_flags" = xyes; then
+	m4_default([$2], :)
+else
+	m4_default([$3], :)
+fi
+])dnl AX_CHECK_COMPILER_FLAGS

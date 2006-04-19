@@ -2,7 +2,7 @@
 atom.cpp - Handle OBAtom class.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
  
 This file is part of the Open Babel project.
@@ -113,7 +113,11 @@ namespace OpenBabel
   OBAtom::~OBAtom()
   {
     if (_residue != NULL)
-      _residue->RemoveAtom(this);
+      {
+	cerr << " atom has residue " << _residue->GetName() << endl;
+	cerr << " and has " << _residue->GetNumAtoms() << endl;
+	_residue->RemoveAtom(this);
+      }
     /*
       if (!_vdata.empty())
       {
@@ -391,6 +395,8 @@ namespace OpenBabel
 
   OBResidue *OBAtom::GetResidue()
   {
+    cerr << " called GetResidue " << endl;
+
     if (_residue != NULL)
       return _residue;
     else if (!((OBMol*)GetParent())->HasChainsPerceived())
@@ -399,7 +405,14 @@ namespace OpenBabel
 	if ( chainsparser.PerceiveChains(*((OBMol*)GetParent())) )
 	  return _residue;
 	else
-	  return NULL;
+	  {
+	    if (_residue)
+	      {
+		delete _residue;
+		_residue = NULL;
+	      }
+	    return NULL;
+	  }
       }
     else
       return NULL;
@@ -922,8 +935,10 @@ namespace OpenBabel
     if (mol && !mol->HasImplicitValencePerceived())
       atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
 
-    int impval = _impval - GetHvyValence();
-    //Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
+    // _impval is assigned by the atomtyper -- same as calling GetImplicitValence()
+    int impval = _impval - GetValence();
+
+    // we need to modify this implicit valence if we're a radical center
     int mult = GetSpinMultiplicity();
     if(mult==2) //radical
       impval-=1;
@@ -934,19 +949,19 @@ namespace OpenBabel
     return((impval>0)?impval:0);
   }
 
-	unsigned int OBAtom::ExplicitHydrogenCount(bool ExcludeIsotopes) const
-	{
-		//If ExcludeIsotopes is true, H atoms with _isotope!=0 are not included.
-		//This excludes D, T and H when _isotope exlicitly set to 1 rather than the default 0.
-		int numH=0;
-		OBAtom *atom;
-		vector<OBEdgeBase*>::iterator i;
-		for (atom = ((OBAtom*)this)->BeginNbrAtom(i);atom;atom = ((OBAtom*)this)->NextNbrAtom(i))
-			if (atom->IsHydrogen() && !(ExcludeIsotopes && atom->GetIsotope()!=0))
-				numH++;
+  unsigned int OBAtom::ExplicitHydrogenCount(bool ExcludeIsotopes) const
+  {
+    //If ExcludeIsotopes is true, H atoms with _isotope!=0 are not included.
+    //This excludes D, T and H when _isotope exlicitly set to 1 rather than the default 0.
+    int numH=0;
+    OBAtom *atom;
+    vector<OBEdgeBase*>::iterator i;
+    for (atom = ((OBAtom*)this)->BeginNbrAtom(i);atom;atom = ((OBAtom*)this)->NextNbrAtom(i))
+      if (atom->IsHydrogen() && !(ExcludeIsotopes && atom->GetIsotope()!=0))
+	numH++;
 
-		return(numH);
-	}
+    return(numH);
+  }
 
   bool OBAtom::DeleteBond(OBBond *bond)
   {

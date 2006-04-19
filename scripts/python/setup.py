@@ -2,6 +2,15 @@
 from distutils.core import *
 import os,sys
 
+about = """The Open Babel package provides a Python wrapper
+to the Open Babel C++ chemistry library. Open Babel is a project
+designed to pick up where Babel left off, as a cross-platform program
+and library designed to interconvert between many file formats used in
+molecular modeling, computational chemistry, and many related
+areas. It provides a broad base of chemical functionality for custom
+development.
+"""
+
 def find_likely_directory():
     """Find (guess!) where Open Babel is installed.
 
@@ -15,7 +24,7 @@ def find_likely_directory():
             sys.stderr.write("ERROR: $OPENBABEL_INSTALL (%s) is not a directory\n" % name)
         else:
             return ([name+"/include/openbabel-2.0",name+"/include/openbabel-2.0/openbabel"],
-                    [name+"/lib/openbabel"])
+                    [name+"/lib"])
 
     else: # OPENBABEL_INSTALL is not set
         sys.stderr.write("WARNING: Environment variable OPENBABEL_INSTALL is not set\n")
@@ -30,7 +39,7 @@ def find_likely_directory():
             if os.path.isdir(dirname+"/include/openbabel-2.0"):
                 sys.stderr.write("INFO: Setting OPENBABEL_INSTALL to %s\n" % dirname)
                 return ([dirname+"/include/openbabel-2.0",dirname+"/include/openbabel-2.0/openbabel"],
-                        [dirname+"/lib/openbabel"])
+                        [dirname+"/lib"])
                 
     sys.stderr.write("ERROR: Cannot find Open Babel library directory\n")
     return (None,None)
@@ -48,10 +57,34 @@ obExtension = Extension('_openbabel',
                         )
 
 setup(name='openbabel',
-      version='1.1.0',
-      description='Python interface to Open Babel',
+      version='1.2.0',
       author='Geoff Hutchison',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/',
+      license='http://www.gnu.org/copyleft/gpl.html',
       py_modules=['openbabel','pyopenbabel'],
-      ext_modules=[obExtension])
+      ext_modules=[obExtension],
+      description = 'openbabel: Python interface to the Open Babel chemistry library',
+      classifiers=[
+      'Development Status :: 5 - Production/Stable',
+      'Environment :: Console',
+      'Environment :: Other Environment',
+      'Intended Audience :: Education',
+      'Intended Audience :: Science/Research',
+      'License :: OSI Approved :: GNU General Public License (GPL)',
+      'Natural Language :: English',
+      'Operating System :: MacOS :: MacOS X',
+      'Operating System :: Microsoft :: Windows',
+      'Operating System :: OS Independent',
+      'Operating System :: POSIX',
+      'Operating System :: POSIX :: Linux',
+      'Operating System :: Unix',
+      'Programming Language :: C++',
+      'Programming Language :: Python',
+      'Topic :: Scientific/Engineering :: Bio-Informatics',
+      'Topic :: Scientific/Engineering :: Chemistry',
+      'Topic :: Software Development :: Libraries',
+      ],
+      long_description = about,
+      )
+
