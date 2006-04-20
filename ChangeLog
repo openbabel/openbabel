@@ -1,3 +1,12 @@
+2006-04-20 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/formats.xml/xml.h, src/formats/obmolecformat.h, 
+	windows-2005/babelconfig.h: added OBCOMMON macro to aid DLL build.
+	(Usually empty).
+	
+	* src/obconversion.cpp(AddChemObject): prevent formats with 
+	WRITEONEONLY from writing more than once.
+
 2006-04-19 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/molecformat.h: added #ifdef _WIN32 around 
