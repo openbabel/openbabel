@@ -1,6 +1,7 @@
 #ifndef OB_BCONFIG_H
 #define OB_BCONFIG_H
-//For use with Visual C++ (version 6 sp5)
+
+//For use with Visual C++ (version 8)
 #define HAVE_CONIO_H 1
 #define HAVE_CLOCK_T 1
 #define HAVE_IOSTREAM	1
@@ -9,7 +10,7 @@
 #define HAVE_SNPRINTF 1
 #define HAVE_STRNCASECMP 1
 //#define HAVE_LIBZ 1 Causes DLL builds to not work with any file input!
-#define BABEL_VERSION  "2.0"
+#define BABEL_VERSION  "2.1"
 
 #define BABEL_DATADIR "."
 #define snprintf _snprintf
@@ -23,6 +24,8 @@
 #pragma warning( disable : 4290 )
 // Supress warning on signed/unsigned comparison with < or > (harmless, but maybe should be fixed)
 #pragma warning( disable : 4018 )
+// Supress warning on unreferenced formal parameter
+#pragma warning( disable : 4100 )
 
 #ifndef __FUNCTION__
 #define __FUNCTION__ __FILE__
@@ -67,6 +70,16 @@ In non-Windows systems OBAPI and OBCONV need to be defined as empty.
 	#define OBCONV //as nothing in non-Windows system
 #endif
 
+#if defined(USING_DYNAMIC_LIBS)
+ #if defined(OBCOMMON_EXPORTS) //OBCommonFormats being built
+  #define OBCOMMON __declspec(dllexport)
+ #else
+  #define OBCOMMON __declspec(dllimport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBCOMMON
+#endif
+
 #if defined(OBDLL_EXPORTS) //OBDLL being built
 #  define EXTERN __declspec(dllexport) extern
 #elif defined(USING_OBDLL) //program using OBDLL.dll being built
@@ -86,14 +99,13 @@ static char THIS_FILE[]=__FILE__;
 #endif
 */
 
-/*
 #include <crtdbg.h>
 
 #ifdef _DEBUG
-#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+#define DEBUG_NEW new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#else
+ #define DEBUG_NEW new
 #endif
-*/
+
 
 #endif //OB_BCONFIG_H

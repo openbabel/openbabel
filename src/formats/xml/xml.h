@@ -23,22 +23,28 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-  //global utility in xml.cpp;
-  std::streamsize gettomatch(std::istream& is, char* buf, std::streamsize count, const char* match);
-  //forward declaration
-  class XMLBaseFormat;
+// This macro is used in DLL builds. If it has not
+// been set in babelconfig.h, define it as nothing.
+#ifndef OBCOMMON
+	#define OBCOMMON
+#endif
 
-  //******************************************************
-  //XMLConversion class
+//global utility in xml.cpp;
+	std::streamsize gettomatch(std::istream& is, char* buf, std::streamsize count, const char* match);
+//forward declaration
+class XMLBaseFormat;
 
-  /// An extended OBConversion class which includes a libxml2 reader for use with XML formats
-  /// Copies an OBConversion and then extends it with a XML parser. 
-  /// Instances made on the heap are deleted when the original OBConversion object is.
-  class XMLConversion : public OBConversion
-    {
-    public:
-      ///Existing OBConversion instance copied
-      XMLConversion(OBConversion* pConv);
+//******************************************************
+//XMLConversion class
+
+/// An extended OBConversion class which includes a libxml2 reader for use with XML formats
+/// Copies an OBConversion and then extends it with a XML parser. 
+/// Instances made on the heap are deleted when the original OBConversion object is.
+class OBCOMMON XMLConversion : public OBConversion
+{
+public:
+	///Existing OBConversion instance copied
+		XMLConversion(OBConversion* pConv);
 		
       ///Frees reader and writer if necessary
       ~XMLConversion();
@@ -92,41 +98,41 @@ namespace OpenBabel
       void LookForNamespace()
 	{ _LookingForNamespace = true; };
 
-      ///Static callback functions for xmlReaderForIO()
-      static int ReadStream(void * context, char * buffer, int len);
-      static int WriteStream(void * context, const char * buffer, int len);
-      //static int CloseStream(void* context);
+	///Static callback functions for xmlReaderForIO()
+	static int ReadStream(void * context, char * buffer, int len);
+	static int WriteStream(void * context, const char * buffer, int len);
+	//static int CloseStream(void* context);
 
-      std::string GetAttribute(const char* attrname);
+	std::string GetAttribute(const char* attrname);
 
-      ///Sets value to element content. Returns false if there is no content. 
-      std::string GetContent();
+	///Sets value to element content. Returns false if there is no content. 
+	std::string GetContent();
 
-      ///Sets value to element content as an integer. Returns false if there is no content. 
-      bool    GetContentInt(int& value);
+	///Sets value to element content as an integer. Returns false if there is no content. 
+	bool    GetContentInt(int& value);
 
-      ///Sets value to element content as an double. Returns false if there is no content. 
-      bool GetContentDouble(double& value);
+	///Sets value to element content as an double. Returns false if there is no content. 
+	bool GetContentDouble(double& value);
 
-    private:
-      static XMLBaseFormat* _pDefault;
-      OBConversion* _pConv;
-      std::streampos  _requestedpos, _lastpos;  
-      xmlTextReaderPtr _reader;
-      xmlTextWriterPtr _writer;
-      xmlOutputBufferPtr _buf;
-      //	xmlBufferPtr _buf;
-      bool _LookingForNamespace;
-    public:	
-      bool _SkipNextRead;
-    };
+private:
+	static XMLBaseFormat* _pDefault;
+	OBConversion* _pConv;
+	std::streampos  _requestedpos, _lastpos;  
+	xmlTextReaderPtr _reader;
+	xmlTextWriterPtr _writer;
+	xmlOutputBufferPtr _buf;
+	//	xmlBufferPtr _buf;
+	bool _LookingForNamespace;
+public:	
+	bool _SkipNextRead;
+};
 
-  //*************************************************
-  /// Abstract class containing common functionality for XML formats.
-  class XMLBaseFormat : public OBFormat
-    {
-    protected:
-      XMLConversion* _pxmlConv;
+//*************************************************
+/// Abstract class containing common functionality for XML formats.
+class OBCOMMON XMLBaseFormat : public OBFormat
+{
+protected:
+	XMLConversion* _pxmlConv;
 	
       //formating for output
       std::string _prefix;
@@ -159,12 +165,12 @@ namespace OpenBabel
 	
     };
 
-  //*************************************************
-  ///Abstract class containing common functionality for XML formats which represent molecules
-  class XMLMoleculeFormat : public XMLBaseFormat
-    {
-    protected:
-      OBMol* _pmol;
+//*************************************************
+///Abstract class containing common functionality for XML formats which represent molecules
+class OBCOMMON XMLMoleculeFormat : public XMLBaseFormat
+{
+protected:
+	OBMol* _pmol;
 
     public:
       virtual bool ReadChemObject(OBConversion* pConv)

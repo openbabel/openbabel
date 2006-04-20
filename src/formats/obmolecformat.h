@@ -27,6 +27,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel {
 
+// This macro is used in DLL builds. If it has not
+// been set in babelconfig.h, define it as nothing.
+#ifndef OBCOMMON
+	#define OBCOMMON
+#endif
+
 //! \brief An OBFormat convenience subclass for conversion to/from OBMol data
 //!
 //! An OBFormat which converts to and/or from OBMol can derive from this class
@@ -34,7 +40,7 @@ namespace OpenBabel {
 //! Derive directly from OBFormat if the object converted is not OBMol or 
 //! if interaction with the framework is required during the execution 
 //! of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
-class OBMoleculeFormat : public OBFormat
+class OBCOMMON OBMoleculeFormat : public OBFormat
 {
 private:
 	static std::map<std::string, OBMol*> IMols;
