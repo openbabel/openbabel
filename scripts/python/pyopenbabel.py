@@ -1,5 +1,28 @@
 import openbabel as ob
 
+def readfile(format,filename):
+    """Iterate over the molecules in a file.
+
+    >>> atomtotal = 0
+    >>> for mol in readfile("sdf","3d.head.sdf"):
+    ...     atomtotal += len(mol.atoms)
+    ...
+    >>> print atomtotal
+    2128
+    """
+    obconversion = ob.OBConversion()
+    formatok = obconversion.SetInFormat(format)
+    if not formatok:
+        raise ValueError,"%s is not a recognised OpenBabel format" % format
+
+    obmol = ob.OBMol()
+    notatend = obconversion.ReadFile(obmol,filename)
+    while notatend:
+        yield Molecule(obmol)
+        obmol = ob.OBMol()
+        notatend = obconversion.Read(obmol)
+
+
 def readstring(format,string):
     """Read in a molecule from a string.
 
@@ -26,14 +49,14 @@ class Molecule(object):
 
     _getmethods = {
         'conformers':'GetConformers',
-        'coords':'GetCoordinates',
-        'data':'GetData',
+        # 'coords':'GetCoordinates', you can access the coordinates the atoms elsewhere
+        # 'data':'GetData', has been removed
         'dim':'GetDimension',
         'energy':'GetEnergy',
         'exactmass':'GetExactMass',
         'flags':'GetFlags',
         'formula':'GetFormula',
-        'internalcoord':'GetInternalCoord',
+        # 'internalcoord':'GetInternalCoord', # Causes SWIG warning
         'mod':'GetMod',
         'molwt':'GetMolWt',
         'sssr':'GetSSSR',
@@ -96,7 +119,7 @@ class Atom(object):
         'atomicnum':'GetAtomicNum',
         'cidx':'GetCIdx',
         'coordidx':'GetCoordinateIdx',
-        'data':'GetData',
+        # 'data':'GetData', has been removed
         'exactmass':'GetExactMass',
         'formalcharge':'GetFormalCharge',
         'heavyvalence':'GetHvyValence',
