@@ -614,6 +614,13 @@ bool OBConversion::AddChemObject(OBBase* pOb)
 					pOb1=NULL;
 					return false;
 				}
+				//Stop after writing with single object output files
+				if(pOutFormat->Flags() & WRITEONEONLY)
+				{
+					ReadyToInput = false;
+					pOb1 = NULL;
+					return true;
+				}
 			}
 			pOb1=pOb;
 			wInpos = rInpos; //Save the position in the input file to be accessed when writing it
