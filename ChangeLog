@@ -1,3 +1,9 @@
+2006-04-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.cpp: Fix broken gzip-decoding of input
+	(PR#1473243) introduced by 2006-04-11 change. Fix bug when writing
+	multi-molecule files using WriteFile() (PR#1474265).
+
 2006-04-16  Chris Morley <ob@gaseq.co.uk>
 
 	* INSTALL.Windows, windows: Updated Windows build files for Visual

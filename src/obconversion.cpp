@@ -194,7 +194,7 @@ namespace OpenBabel {
   OBConversion::OBConversion(istream* is, ostream* os) : 
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsLast(true), MoreFilesToCome(false),
-    OneObjectOnly(false), CheckedForGzip(false), pOb1(NULL), pAuxConv(NULL)
+    OneObjectOnly(false), pOb1(NULL), pAuxConv(NULL)
   {
     pInStream=is;
     pOutStream=os;
@@ -254,7 +254,6 @@ namespace OpenBabel {
     OneObjectOnly  = o.OneObjectOnly;
     pOb1           = o.pOb1;
     ReadyToInput   = o.ReadyToInput;
-    CheckedForGzip   = o.CheckedForGzip;
 	
     pAuxConv       = NULL;
   }
@@ -414,18 +413,14 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////
   int OBConversion::Convert(istream* is, ostream* os) 
   {
-    if(is) {pInStream=is; CheckedForGzip = false;}
+    if(is) pInStream=is;
     if(os) pOutStream=os;
     ostream* pOrigOutStream = pOutStream;
 
 #ifdef HAVE_LIBZ
-    if (!CheckedForGzip)
-      {
-	CheckedForGzip = true;
-	zlib_stream::zip_istream zIn(*pInStream);
-	if(zIn.is_gzip())
-	  pInStream = &zIn;
-      }
+    zlib_stream::zip_istream zIn(*pInStream);
+    if(zIn.is_gzip())
+      pInStream = &zIn;
 
     zlib_stream::zip_ostream zOut(*pOutStream);
     if(IsOption("z",GENOPTIONS))
@@ -695,20 +690,13 @@ namespace OpenBabel {
   bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
   {
     if(pin)
-      {
-	pInStream=pin;
-	CheckedForGzip = false;
-      }
+      pInStream=pin;
     if(!pInFormat) return false;
 
 #ifdef HAVE_LIBZ
-    if (!CheckedForGzip)
-      {
-	CheckedForGzip = true;
-	zlib_stream::zip_istream zIn(*pInStream);
-	if(zIn.is_gzip())
-	  pInStream = &zIn;
-      }
+    zlib_stream::zip_istream zIn(*pInStream);
+    if(zIn.is_gzip())
+      pInStream = &zIn;
 #endif
 
     return pInFormat->ReadMolecule(pOb, this);
@@ -767,18 +755,18 @@ namespace OpenBabel {
   {
     if(!pOutFormat) return false;
 
-    ofstream ofs;
+    ofstream *ofs = new ofstream;
     ios_base::openmode omode = 
       pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
 
-    ofs.open(filePath.c_str(),omode);
-    if(!ofs)
+    ofs->open(filePath.c_str(),omode);
+    if(!ofs && !ofs->good())
       {
 	cerr << "Cannot write to " << filePath <<endl;
 	return false;
       }
 
-    return Write(pOb, &ofs);
+    return Write(pOb, ofs);
   }
 
   ////////////////////////////////////////////
