@@ -114,8 +114,6 @@ namespace OpenBabel
   {
     if (_residue != NULL)
       {
-	cerr << " atom has residue " << _residue->GetName() << endl;
-	cerr << " and has " << _residue->GetNumAtoms() << endl;
 	_residue->RemoveAtom(this);
       }
     /*
@@ -395,8 +393,6 @@ namespace OpenBabel
 
   OBResidue *OBAtom::GetResidue()
   {
-    cerr << " called GetResidue " << endl;
-
     if (_residue != NULL)
       return _residue;
     else if (!((OBMol*)GetParent())->HasChainsPerceived())

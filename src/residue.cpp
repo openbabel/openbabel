@@ -780,7 +780,6 @@ OBResidue::OBResidue()
     _resname  = "";
     _vdata.clear();
 
-    cerr << " created residue ! " << endl;
 }
 
 OBResidue::OBResidue(const OBResidue &src)
@@ -795,7 +794,6 @@ OBResidue::OBResidue(const OBResidue &src)
     _hetatm   = src._hetatm;
     _sernum   = src._sernum;
 
-    cerr << " copied residue ! " << endl;
 }
 
 OBResidue::~OBResidue()
@@ -805,7 +803,6 @@ OBResidue::~OBResidue()
         (*a)->SetResidue(NULL);
     _atoms.clear();
 
-    cerr << " deleted residue ! " << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
