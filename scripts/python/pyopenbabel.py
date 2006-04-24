@@ -1,4 +1,5 @@
 import openbabel as ob
+import os.path
 
 def readfile(format,filename):
     """Iterate over the molecules in a file.
@@ -43,6 +44,24 @@ def readstring(format,string):
     obconversion.ReadString(obmol,string)
     return Molecule(obmol)
 
+class Outputfile(object):
+    """Represent a file to which *output* is to be sent."""
+    def __init__(self,format,filename,overwrite=False):
+        self.format = format
+        self.filename = filename
+        if not overwrite and os.path.isfile(self.filename):
+            raise Exception, "%s already exists. Use 'overwrite=False' to overwrite it." % self.filename
+        self.obConversion = ob.OBConversion()
+        self.obConversion.SetOutFormat(self.format)
+        self.total = 0 # The total number of molecules written to the file
+    
+    def write(self,molecule):
+        """Write a molecule to the output file."""
+        if self.total==0:
+            self.obConversion.WriteFile(molecule,self.filename)
+        else:
+            self.obConversion.Write(molecule)
+        self.total += 1
 
 class Molecule(object):
     """Represent a molecule."""
