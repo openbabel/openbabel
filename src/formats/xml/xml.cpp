@@ -113,6 +113,8 @@ void XMLConversion::RegisterXMLFormat(XMLBaseFormat* pFormat, bool IsDefault, co
 		Namespaces()[pFormat->NamespaceURI()] = pFormat;
 }
 
+///Returns the extended form of the OBConversion object with an xml reader or writer,
+/// if this has not already been done.
 XMLConversion* XMLConversion::GetDerived(OBConversion* pConv, bool ForReading)
 {
 	XMLConversion* pxmlConv;
@@ -275,7 +277,8 @@ streamsize gettomatch(istream& is, char* buf, streamsize count, const char* matc
 	//  count chars have been read or
 	//  the string match has been input.
 	//The buffer is NOT terminated by a '\0' char.
-	//The number of characters stored in buf is returned.  
+	//If buf is NULL the characters are discarded.
+	//The number of characters read (and possibly stored in buf) is returned.  
 
 	int matchlength = 0;
 	char lastchar = EOF; //value if no vaild match provided
@@ -284,27 +287,44 @@ streamsize gettomatch(istream& is, char* buf, streamsize count, const char* matc
 		matchlength = strlen(match);
 		lastchar = match[matchlength-1];
 	}
-	char* p = buf;
+	//matchbuf is the length of the matched string and is filled  with
+	//input characters and cycles around when the start is reached.
+	//If buf is not NULL, it is filled with the input characters.
+	//When a character the same as the last character of the match string
+	//is detected the previous characters are compared with those in the match string.
+	char* matchbuf = new char[matchlength];
+	const char* matchbufend = matchbuf + matchlength;
+	char* p = matchbuf;
+		
+	char* pb = buf;
 	streambuf* prb = is.rdbuf();
 	int i;
 	for(i=0;i<count;++i)
 	{
 		*p = prb->sbumpc();
+		if(pb)
+			*pb++ = *p; //fill buffer if it exists
 		if(*p==EOF)
 			break;
 		if(*p++==lastchar)
 		{
 			const char* mptr = match + matchlength-2; //last char is already matched
 			const char* bptr = p-2;
-			while((*mptr-- == *bptr--) && (mptr >= match));
-
+			while((*mptr-- == *bptr--) && (mptr >= match))
+			{
+				if(bptr==matchbuf-1)
+					bptr = matchbufend-1;
+			}
 			if(mptr<match)
 			{
 				i++;
 				break;//have found match
 			}
 		}
+		if(p==matchbufend)
+			p = matchbuf;
 	}
+	delete[] matchbuf; 
 	return i;
 }
 //***********************************************
@@ -312,7 +332,8 @@ streamsize gettomatch(istream& is, char* buf, streamsize count, const char* matc
 ///Static callback function for xmlReaderForIO()
 int XMLConversion::ReadStream(void * context, char * buffer, int len)
 {
-	//Reads up to the next '>'
+	//Reads up to the next end tag specific to the object being input.
+	//TODO worry about non-ascii coding
 	XMLConversion* pConv = static_cast<XMLConversion*>(context);
 	istream* ifs = pConv->GetInStream();
 	if(ifs->eof())
@@ -322,10 +343,6 @@ int XMLConversion::ReadStream(void * context, char * buffer, int len)
 	XMLBaseFormat* pxmlFormat = static_cast<XMLBaseFormat*>(pFormat);
 	if(pxmlFormat)
 		endtag = pxmlFormat->EndTag();
-
-//	static char* OrigBuffer;
-//	if(len==4)
-//		OrigBuffer = buffer;
 
 	return gettomatch(*ifs, buffer, len , endtag);//was + OrigBuffer - buffer
 }
