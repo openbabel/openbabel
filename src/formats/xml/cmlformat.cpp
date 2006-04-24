@@ -46,6 +46,7 @@ public:
 			OBConversion::RegisterOptionParam("h", this);
 			OBConversion::RegisterOptionParam("c", this);
 			OBConversion::RegisterOptionParam("p", this);
+			OBConversion::RegisterOptionParam("2", this, 0, OBConversion::INOPTIONS);
 
 			XMLConversion::RegisterXMLFormat(this, true);	//this is the default XLMformat
 			XMLConversion::RegisterXMLFormat(this, false,CML1NamespaceURI());//CML1 also
@@ -66,8 +67,9 @@ m  output metadata\n \
 x  omit XML and namespace declarations\n \
 c  continuous output: no formatting\n \
 p  output properties\n \
-N<prefix> add namespace prefix to elements\n \
-\n";
+N<prefix> add namespace prefix to elements\n\n \
+Input options, e.g. -a2\n \
+2  input 2D rather than 3D coordinates if both provided\n\n";
 };
 
   virtual const char* SpecificationURL()
@@ -81,10 +83,7 @@ N<prefix> add namespace prefix to elements\n \
       return 0;
   };
 
-////////////////////////////////////////////////////////////////////
-
 	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
 protected:
 	virtual bool DoElement(const string& name);
 	virtual bool EndElement(const string& name);
@@ -106,6 +105,7 @@ private:
 	void WriteCrystal(OBMol& mol);
 	void WriteProperties(OBMol& mol, bool& propertyListWritten);
 	void WriteThermo(OBMol& mol, bool& propertyListWritten);
+	string GetMolID();//for error mesaages
 
 private:
 	map<string,int> AtomMap; //key=atom id, value= ob atom index
@@ -162,6 +162,7 @@ bool CMLFormat::DoElement(const string& name)
 		//Ignore atoms with "ref" attributes
 		if(xmlTextReaderGetAttribute(reader(), BAD_CAST "ref"))
 			return true;
+		_pmol->Clear();
 		AtomArray.clear();
 		BondArray.clear();
 		inBondArray = false;
@@ -282,7 +283,8 @@ bool CMLFormat::DoElement(const string& name)
 	}
 
 	// CML1 elements
-	else	if(name=="string" || name=="float" || name=="integer")
+	else	if(name=="string" || name=="float" || name=="integer"
+		|| name=="coordinate3"|| name=="coordinate2")
 	{
 		string name = _pxmlConv->GetAttribute("builtin");
 		xmlTextReaderRead(reader());
@@ -343,8 +345,13 @@ bool CMLFormat::EndElement(const string& name)
 		//Use formula only if nothing else provided
 		if(_pmol->NumAtoms()==0 && !RawFormula.empty())
 			if(!ParseFormula(RawFormula, _pmol))
-				cerr << "Error in formula" << endl;
-		
+				obErrorLog.ThrowError(_pmol->GetTitle(),"Error in formula", obError);
+
+		//ensure unbonded atoms are seen as such
+		if(_pmol->NumBonds()==0)
+			FOR_ATOMS_OF_MOL(a, *_pmol)
+				a->ForceNoH();
+
 		_pmol->AssignSpinMultiplicity();
 		_pmol->EndModify();
 		return (--_embedlevel>=0); //false to stop parsing if no further embedded mols
@@ -369,6 +376,7 @@ bool CMLFormat::DoAtoms()
 		int nhvy = nAtoms;
 
 		double x=0,y=0,z=0;
+		bool use2d = _pxmlConv->IsOption("2", OBConversion::INOPTIONS);
 		
 		vector<pair<string,string> >::iterator AttributeIter;
 		for(AttributeIter=AtomIter->begin();AttributeIter!=AtomIter->end();++AttributeIter)
@@ -390,28 +398,28 @@ bool CMLFormat::DoAtoms()
 					pAtom->SetIsotope(iso);
 			}
 			
-			else if(attrname=="x2" && dim!=3)//ignore 2D dimensions if 3D also provided
+			else if(attrname=="x2" && (dim!=3 || use2d))//ignore 2D dimensions if 3D also provided
 				x=strtod(value.c_str(),NULL);
 
-			else if(attrname=="y2" && dim!=3)
+			else if(attrname=="y2" && (dim!=3 || use2d))
 			{
 				dim=2;
 				y=strtod(value.c_str(),NULL);
 			}
 
-			else if(attrname=="x3" || (pUnitCell && attrname=="xFract"))
+			else if((attrname=="x3" && !use2d) || (pUnitCell && attrname=="xFract"))
 				x=strtod(value.c_str(),NULL);
 
-			else if(attrname=="y3" || (pUnitCell && attrname=="yFract"))
+			else if((attrname=="y3" && !use2d) || (pUnitCell && attrname=="yFract"))
 				y=strtod(value.c_str(),NULL);
 
-			else if(attrname=="z3" || (pUnitCell && attrname=="zFract"))
+			else if((attrname=="z3" && !use2d) || (pUnitCell && attrname=="zFract"))
 			{
 				dim=3;
 				z=strtod(value.c_str(),NULL);
 			}
 
-			else if(attrname=="xy2" && dim!=3)
+			else if(attrname=="xy2" && (dim!=3 || use2d))
 			{
 				dim=2;
 				vector<string> vals;
@@ -422,7 +430,7 @@ bool CMLFormat::DoAtoms()
 					y=strtod(vals[1].c_str(),NULL);
 				}
 			}
-			 else if(attrname=="xyz3" || (pUnitCell && attrname=="xyzFract"))
+			 else if((attrname=="xyz3" && !use2d) || (pUnitCell && attrname=="xyzFract"))
 			{
 				dim=3;
 				vector<string> vals;
@@ -517,30 +525,52 @@ bool CMLFormat::DoBonds()
 {
 	vector<pair<string,string> >::iterator AttributeIter;
 	cmlArray::iterator BondIter;
+	bool HaveWarned = false;
 	for(BondIter=BondArray.begin();BondIter!=BondArray.end();++BondIter)
 	{
 		int indx1=0,indx2=0, ord=0;
 		string bondstereo, BondStereoRefs;
+		bool PossibleBond = false;
 
 		for(AttributeIter=BondIter->begin();AttributeIter!=BondIter->end();++AttributeIter)
 		{
 			string attrname = AttributeIter->first;
 			string value    = AttributeIter->second;
+			Trim(value);
 		
-			if(attrname=="atomRefs2")
-			{	
-				Trim(value);
-				string::size_type pos = value.find(' ');
-				indx1 = AtomMap[value.substr(0,pos)];	
-				indx2 = AtomMap[value.substr(pos+1)];
-			}
-
-			else if(attrname=="atomRef1" || (attrname=="atomRef" && indx1==0))
-				indx1 = AtomMap[value];
-
-			else if(attrname=="atomRef2"|| attrname=="atomRef")
-				indx2 = AtomMap[value];
 			
+			if(attrname.compare(0, 7, "atomRef")==0) //generic
+			{
+				PossibleBond = true;
+				string::size_type pos = value.find(' ');
+				
+				if(!HaveWarned && (attrname=="atomRefs1"
+					|| (attrname=="atomRefs2" && pos==string::npos)))
+				{
+					obErrorLog.ThrowError(GetMolID(),	
+						attrname + " is not legal CML in this context, "
+						"but OpenBabel will attempt to understand what was meant.", obWarning);
+					HaveWarned = true;
+				}
+
+				if(indx1==0)
+				{
+					if(pos!=string::npos)
+					{
+						indx1 = AtomMap[value.substr(0,pos)];	
+						indx2 = AtomMap[value.substr(pos+1)];
+					}
+					else
+						indx1 = AtomMap[value];
+				}
+				else
+				{
+					if(indx2==0)
+						indx2 = AtomMap[value];
+					else
+						indx1=-1; //forces error
+				}
+			}
 			else if(attrname=="order")
 			{	
 				Trim(value);
@@ -554,19 +584,21 @@ bool CMLFormat::DoBonds()
 				else
 					ord=atoi(&bo);
 			}
+		}
 
-		}
-		if(indx1==0 || indx2==0)
+		if(PossibleBond)
 		{
-			cerr << "Incorrect bond attributes" << endl;
-			return false;
+			if(indx1<=0 || indx2<=0)
+			{
+				obErrorLog.ThrowError(GetMolID(),"Incorrect bond attributes", obError);
+				return false;
+			}
+			if(ord==0) //Bonds are single if order is not specified
+				ord=1;
+			_pmol->AddBond(indx1,indx2,ord,0);
 		}
-		if(ord==0) //Bonds are single if order is not specified
-			ord=1;
-		_pmol->AddBond(indx1,indx2,ord,0);
 	}
 
-	
 	return true;
 }
 
@@ -1008,7 +1040,8 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 	if(mol.NumAtoms()>0)
 	{
-		if(numbonds==0 && UseFormulaWithNoBonds)
+		//if molecule has no bonds and atoms don't have coordinates, just output formula
+		if(numbonds==0 && UseFormulaWithNoBonds && !mol.Has2D())
 			WriteFormula(mol);
 		else
 		{
@@ -1033,7 +1066,7 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 				int spin = patom->GetSpinMultiplicity();
 				int isotope =patom->GetIsotope();
 
-				int hcount=patom->ImplicitHydrogenCount();
+				int hcount=patom->ImplicitHydrogenCount() + patom->ExplicitHydrogenCount(); //includes H isotopes
 
 				X = patom->GetX();
 				Y = patom->GetY();
@@ -1562,4 +1595,23 @@ void CMLFormat::WriteThermo(OBMol& mol, bool& propertyListWritten)
 
 	xmlTextWriterEndElement(writer());//property
 }
+
+///Returns molecule title or molecule number if there is no title together with the file name 
+string CMLFormat::GetMolID()
+{
+	stringstream molID;
+	if(strlen(_pmol->GetTitle())==0)
+		molID << "Mol #" << _pxmlConv->GetOutputIndex()+1;
+	else
+		molID << _pmol->GetTitle();
+	
+	string fn(_pxmlConv->GetInFilename());
+	//Get file name: remove path
+	size_t pos = fn.rfind(DLHandler::getSeparator());
+	if(pos!=string::npos)
+		fn.erase(0,pos+1);
+	molID << " (in " << fn << ')';
+	return molID.str();
+}
+
 }//namespace
