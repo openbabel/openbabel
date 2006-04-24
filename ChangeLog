@@ -1,3 +1,26 @@
+2006-04-24 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/formats/xml/cmlformat.cpp: Accept coordinate2 and
+	coordinate3 elements for CML1.
+	Laxer acceptance of atomRef?? which is sometimes misused - but added
+	warning. Converted cerr calls to obError.
+	Added option to read 2D rather than 3D coordinates.
+	Output formula only when no bonds AND no coordinates.
+	Ensured atoms from formula marked as having no H.
+	GetMolID() gets name or number for error messages.
+	
+	* src/GUI/OBGUI.cpp: uncommented standard stream redirection.
+	Do we need some conditional compilation?
+	
+	* src/formats.smilesformat.cpp, src/mol.cpp: Recent change in
+	ImplictHydrogenCount broke GetMolWt,GetExactMass,GetSpacedformula
+	and explicit H form of output in SMILES. But it is better that
+	ImplictHydrogenCount means what it says. Added in appropriate form
+	of GetExplicitHydrogens to these routines.
+	
+	* src/formats/xml/xml/cpp(gettomatch): rewrite to allow stream to
+	be discarded up to next match.
+	
 2006-04-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.cpp: Fix broken gzip-decoding of input
