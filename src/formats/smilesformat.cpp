@@ -2277,8 +2277,9 @@ bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
     //  if (!normalValence && atom->ImplicitHydrogenCount())
 		//Reduce implicit H count by number of D,T (and explicit 1H) because they will be
 		//output explicitly
-		int nHisotopes = atom->ExplicitHydrogenCount() - atom->ExplicitHydrogenCount(true);
-    int nH = atom->ImplicitHydrogenCount() - nHisotopes;
+//		int nHisotopes = atom->ExplicitHydrogenCount() - atom->ExplicitHydrogenCount(true);
+//    int nH = atom->ImplicitHydrogenCount() - nHisotopes;
+    int nH = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true);//excludes H isotopes
 		if (!normalValence && nH && !atom->IsHydrogen()) 
     {
         strcat(element,"H");

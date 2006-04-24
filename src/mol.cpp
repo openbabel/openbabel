@@ -867,7 +867,7 @@ namespace OpenBabel
 		molwt -= etab.GetMass(1);//one of the implicit hydrogens is now explicit
 	      }
 	    else
-	      molwt += etab.GetMass(1) * atom->ImplicitHydrogenCount();
+	      molwt += etab.GetMass(1) * atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true);
 	  }
 	molwt += atom->GetAtomicMass();
       }
@@ -893,7 +893,7 @@ namespace OpenBabel
 		  mass -= isotab.GetExactMass(1,1);//one of the implicit hydrogens is now explicit
 	      }
 	    else
-	      mass += isotab.GetExactMass(1,1) * atom->ImplicitHydrogenCount();
+	      mass += isotab.GetExactMass(1,1) * atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true);
 	  }
 	mass += atom->GetExactMass();
       }
@@ -932,6 +932,8 @@ namespace OpenBabel
     bool HasHvyAtoms = NumHvyAtoms()>0;
     FOR_ATOMS_OF_MOL(a, *this) {
       int anum = a->GetAtomicNum();
+			if(anum==0)
+				continue;
       bool IsHiso = anum == 1 && a->GetIsotope()>=2;
       if(UseImplicitH)
 	{
@@ -942,7 +944,7 @@ namespace OpenBabel
 		--atomicCount[0]; //one of the implicit hydrogens is now explicit
 	    }
 	  else
-	    atomicCount[0] += a->ImplicitHydrogenCount();// + a->ExplicitHydrogenCount();
+	    atomicCount[0] += a->ImplicitHydrogenCount() + a->ExplicitHydrogenCount();
 	}
       if (IsHiso)
 	anum = NumElements + a->GetIsotope() - 3; //pseudo AtNo for D, T
