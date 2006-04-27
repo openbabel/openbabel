@@ -1,3 +1,22 @@
+2006-04-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Doxyfile: Add map of included files in headers to
+	documentation. Need to work on removing un-necessary #includes in
+	headers.
+
+	* src/math/*: Minimize #include headers.
+
+	* src/generic.h: Include obutil.h for triple class -- was included
+	indirectly by way of vector3.h.
+
+	* test/smartstest.cpp: Changed the way tests are counted -- per
+	molecule instead of per pattern AND per molecule (cuts drastically
+	down on the test overhead). Remove endl and sync with stio to
+	improve buffering.
+
+	* test/smartstest.txt, test/smartsresults.txt: Add additional
+	SMARTS pattern tests and results.
+
 2006-04-24 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/xml/cmlformat.cpp: Accept coordinate2 and

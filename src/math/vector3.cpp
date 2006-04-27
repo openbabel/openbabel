@@ -16,12 +16,14 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include "babelconfig.h"
 
 #include <math.h>
+#include <iostream>
 
-#include "mol.h"
 #include "math/vector3.h"
+#include "obutil.h"
 
 using namespace std;
 

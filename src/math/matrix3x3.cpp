@@ -18,18 +18,8 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
 
-#include <math.h>
-
-#include "mol.h"
 #include "math/matrix3x3.h"
-
-#ifndef true
-#define true 1
-#endif
-
-#ifndef false
-#define false 0
-#endif
+#include "obutil.h"
 
 using namespace std;
 
