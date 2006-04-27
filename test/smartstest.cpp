@@ -36,11 +36,14 @@ void GenerateSmartsReference();
 
 int main(int argc,char *argv[])
 {
+  // turn off slow sync with C-style output (we don't use it anyway).
+  std::ios::sync_with_stdio(false);
+
   if (argc != 1)
     {
       if (strncmp(argv[1], "-g", 2))
 	{
-	  cout << "Usage: smartstest" << endl;
+	  cout << "Usage: smartstest\n";
 	  cout << "   Tests Open Babel SMILES/SMARTS pattern matching." << endl;
 	  return 0;
 	}
@@ -51,7 +54,7 @@ int main(int argc,char *argv[])
 	}
     }
   
-  cout << endl << "# Testing SMARTS...  " << endl;
+  cout << endl << "# Testing SMARTS...  \n";
   
 #ifdef TESTDATADIR
   string testdatadir = TESTDATADIR;
@@ -77,6 +80,9 @@ int main(int argc,char *argv[])
    vector<OBSmartsPattern*> vsp;
    for (;ifs.getline(buffer,BUFF_SIZE);)
      {
+       if (buffer[0] == '#') // skip comment line
+	 continue;
+
        OBSmartsPattern *sp = new OBSmartsPattern;
 
        if (sp->Init(buffer))
@@ -118,7 +124,8 @@ int main(int argc,char *argv[])
    vector<string> vs;
    vector<OBSmartsPattern*>::iterator i;
    vector<vector<int> > mlist;
-   unsigned int currentTest = 1;
+   unsigned int currentMol = 0; // each molecule is a separate test
+   bool molPassed = true;
 
    OBConversion conv(&mifs, &cout);
    if (! conv.SetInAndOutFormats("SMI","SMI"))
@@ -135,6 +142,9 @@ int main(int argc,char *argv[])
        if (mol.Empty())
          continue;
 
+       currentMol++;
+       molPassed = true;
+
        for (i = vsp.begin();i != vsp.end();i++)
          {
            if (!rifs.getline(buffer,BUFF_SIZE))
@@ -149,18 +159,17 @@ int main(int argc,char *argv[])
            mlist = (*i)->GetMapList();
            if (mlist.size() != vs.size())
              {
-               cout << "not ok " << currentTest++ 
-                    << " # number of matches different than reference" << endl;
+               cout << "not ok " << currentMol
+                    << " # number of matches different than reference\n";
                cout << "# Expected " << vs.size() << " matches, found "
-                    << mlist.size() << endl;
+                    << mlist.size() << "\n";
                cout << "# Error with molecule " << mol.GetTitle();
-               cout << "#  on pattern " << (*i)->GetSMARTS() << endl;
+               cout << "#  on pattern " << (*i)->GetSMARTS() << "\n";
                if (mlist.size())
-                 cout << "# First match: atom #" << mlist[0][0] << endl;
+                 cout << "# First match: atom #" << mlist[0][0] << "\n";
+	       molPassed = false;
+	       continue; // failed on this mol, go to next test
              }
-           else
-             cout << "ok " << currentTest++ 
-                  << " # correct number of matches" << endl;
 
            if (mlist.size())
              {
@@ -168,23 +177,29 @@ int main(int argc,char *argv[])
 		 {
 		   if (atoi((char*)vs[k].c_str()) != mlist[k][0])
 		     {
-		       cout << "not ok " << currentTest++ 
-			    << "# matching atom numbers different than reference" << endl;
+		       cout << "not ok " << currentMol
+			    << "# matching atom numbers different than reference\n";
 		       cout << "# Expected " << vs[k] << " but found "
-			    << mlist[k][0] << endl;
-		       cout << "# Molecule: " << mol.GetTitle() << endl;
-		       cout << "# Pattern: " << (*i)->GetSMARTS() << endl;
+			    << mlist[k][0] << "\n";
+		       cout << "# Molecule: " << mol.GetTitle() << "\n";
+		       cout << "# Pattern: " << (*i)->GetSMARTS() << "\n";
+		       molPassed = false;
+		       break;
 		     }
-		   else
-		     cout << "ok " << currentTest++ 
-			  << " # correcting matching atom numbers" << endl;
+		 }
+	       if (k != vs.size())
+		 {
+		   molPassed = false;
+		   continue;
 		 }
 	     }
 	 }
+       if (molPassed)
+	 cout << "ok " << currentMol << " # molecule passed tests\n";
      }
 
    // output the number of tests run
-   cout << "1.." << currentTest-1 << endl;
+   cout << "1.." << currentMol << endl;
 
    // Passed Test
    return 0;
@@ -200,6 +215,9 @@ void GenerateSmartsReference()
     vector<OBSmartsPattern*> vsp;
     for (;ifs.getline(buffer,BUFF_SIZE);)
     {
+       if (buffer[0] == '#') // skip comment line
+	 continue;
+
         OBSmartsPattern *sp = new OBSmartsPattern;
 
         if (sp->Init(buffer))
