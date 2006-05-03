@@ -1,3 +1,11 @@
+2006-05-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/chains.h, src/chains.cpp: Initial work on	documenting,
+	indentation, and general cleanup of chains.cpp.
+	(ConstrainBackbone): Check for valence of backbone atoms 
+	should actually be for HvyValence() since all hydrogens are ignored.
+	Fixes PR#1442779.
+
 2006-04-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* Doxyfile: Add map of included files in headers to
