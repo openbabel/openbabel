@@ -760,7 +760,7 @@ namespace OpenBabel {
       pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
 
     ofs->open(filePath.c_str(),omode);
-    if(!ofs && !ofs->good())
+    if(!ofs || !ofs->good())
       {
 	cerr << "Cannot write to " << filePath <<endl;
 	return false;
