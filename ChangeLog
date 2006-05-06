@@ -1,5 +1,8 @@
 2006-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/mol.cpp (GetMolWt): Make sure to include implicit hydrogens
+	when calculating molecular weight and exact mass.
+
 	* src/formats/smilesformat.cpp (SmiToMol): Since SMILES sets
 	formal charges, turn off automatic updates.
 

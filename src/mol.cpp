@@ -850,14 +850,21 @@ namespace OpenBabel
 
   double OBMol::GetMolWt()
   {
-    double molwt=0.0;
+    double mass = 0.0;
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;
 
+    bool UseImplicitH = NumHvyAtoms() && (NumBonds()!=0 || NumAtoms()==1);
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      molwt += atom->GetAtomicMass();
-
-    return(molwt);
+      {
+	if(UseImplicitH)
+	  {
+	    if (!atom->IsHydrogen())
+	      mass += isotab.GetExactMass(1,1) * atom->ImplicitHydrogenCount();
+	  }
+	mass += atom->GetAtomicMass();
+      }
+    return(mass);
   }
 
   double OBMol::GetExactMass()
@@ -866,9 +873,16 @@ namespace OpenBabel
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;
 
+    bool UseImplicitH = NumHvyAtoms() && (NumBonds()!=0 || NumAtoms()==1);
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      mass += atom->GetExactMass();
-
+      {
+	if(UseImplicitH)
+	  {
+	    if (!atom->IsHydrogen())
+	      mass += isotab.GetExactMass(1,1) * atom->ImplicitHydrogenCount();
+	  }
+	mass += atom->GetExactMass();
+      }
     return(mass);
   }
 
@@ -1599,20 +1613,6 @@ namespace OpenBabel
 
     if (delatoms.empty())
       return(true);
-
-    /*
-      
-     
-    int idx1,idx2;
-    vector<double*>::iterator j;
-    for (idx1=0,idx2=0,atom = BeginAtom(i);atom;atom = NextAtom(i),idx1++)
-    if (!atom->IsHydrogen())
-    {
-    for (j = _vconf.begin();j != _vconf.end();j++)
-    memcpy((char*)&((*j)[idx2*3]),(char*)&((*j)[idx1*3]),sizeof(double)*3);
-    idx2++;
-    }
-    */
 
     IncrementMod();
 
@@ -2743,28 +2743,6 @@ namespace OpenBabel
         c[i*3+2] = x*rmat[6] + y*rmat[7] + z*rmat[8];
       }
   }
-
-  /*NF
-    istream& operator>> (istream &ifs, OBMol &mol)
-    {
-    bool retcode = OBFileFormat::ReadMolecule(ifs, mol);
- 
-    if (!retcode)
-    {
-    if (mol.GetMod())
-    mol.EndModify();
-    mol.Clear();
-    }
- 
-    return(ifs);
-    }
- 
-    ostream& operator<< (ostream &ofs, OBMol &mol)
-    {
-    OBFileFormat::WriteMolecule(ofs, mol);
-    return(ofs);
-    }
-  */
 
   OBMol::OBMol()
   {
