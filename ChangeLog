@@ -1,3 +1,9 @@
+2006-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/formats/smilesformat.cpp (SmiToMol): Since SMILES sets
+        formal charges, turn off automatic updates. Some general cleanups
+	(removing commented-out code.)
+
 2006-05-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/chains.h, src/chains.cpp: Initial work on	documenting,
