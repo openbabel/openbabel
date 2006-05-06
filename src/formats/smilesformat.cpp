@@ -300,7 +300,8 @@ namespace OpenBabel
         return(false);
       }
 
-    //    mol.AddHydrogens(); // need to add implicit hydrogens
+    // SMILES always sets formal charges -- don't throw them away
+    mol.SetAutomaticFormalCharge(false);
 
     return(true);
   }
