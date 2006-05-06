@@ -4,7 +4,7 @@ chains.cpp - Parse for macromolecule chains and residues.
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 (original author, Roger Sayle, version 1.6, March 1998)
 (modified by Joe Corkery, OpenEye Scientific Software, March 2001)
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -22,6 +22,7 @@ GNU General Public License for more details.
 //////////////////////////////////////////////////////////////////////////////
 // File Includes
 //////////////////////////////////////////////////////////////////////////////
+#include "babelconfig.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -38,21 +39,30 @@ using namespace std;
 // Preprocessor Definitions
 //////////////////////////////////////////////////////////////////////////////
 
+//! The first available index for actual residues
+//! 0, 1, 2 reserved for UNK, HOH, LIG
 #define RESIDMIN       3
+//! The maximum number of residue IDs for this code
 #define RESIDMAX       32
-#define ATOMMAX        68
+
+//! An index of the residue names perceived during a run
+//! 0, 1, and 2 reserved for UNK, HOH, LIG
+static char ChainsResName[RESIDMAX][4] = {
+  /*0*/ "UNK",  /*1*/ "HOH",  /*2*/ "LIG"
+};
+
 #define ATOMMINAMINO   4
 #define ATOMMINNUCLEIC 50
-#define ELEMMAX        104
 #define MAXPEPTIDE     11
 #define MAXNUCLEIC     15
+//! The number of amino acids recognized by this code
+//! Currently: ILE, VAL, ALA, ASN, ASP, ARG, CYS, GLN, GLU
+//!  GLY, HIS, HYP, LEU, LYS, MET, PHE, PRO, SER, THR, TRP, TYR
 #define AMINOMAX       21
+//! The number of nucleic acids recognized by this code
+//! Currently A, C, T, G, U, I
 #define NUCLEOMAX      6
 #define STACKSIZE      20
-#define BUFMAX         8192
-#define MAXCOVAL       2.0
-#define SLOPFACTOR     0.56
-#define THRESHOLD      12
 
 #define AI_N           0
 #define AI_CA          1
@@ -132,76 +142,64 @@ namespace OpenBabel
   // Structure / Type Definitions
   //////////////////////////////////////////////////////////////////////////////
 
-  typedef struct
+  //! Template for backbone atoms in chain perception
+  typedef struct Template
   {
-    char *name;
-    char *data;
+    int flag;        //!< binary flag representing this atom type
+    short elem;      //!< atomic number of this element
+    short count;     //!< expected valence for this atom type
+    int n1;          //!< mask 1 used by ConstrainBackbone() and MatchConstraint()
+    int n2;          //!< mask 2 used by ConstrainBackbone() and MatchConstraint()
+    int n3;          //!< mask 3 used by ConstrainBackbone() and MatchConstraint()
+    int n4;          //!< mask 4 used by ConstrainBackbone() and MatchConstraint()
   }
-  ResidType;
+  Template;
 
-  typedef struct
-  {
-    int atomid,elem;
-    int bcount;
-    int index;
-  }
-  MonoAtomType;
+  //! Generic template for peptide residue backbone
+  static Template Peptide[MAXPEPTIDE] = {
+    /* N     */    {  0x0001, 7, 2, 0x0030, 0x0100,      0, 0 },
+    /* NTer  */    {  0x0002, 7, 1, 0x0030,      0,      0, 0 },
+    /* NPro  */    {  0x0004, 7, 3, 0x0030, 0x0100,     -6, 0 },
+    /* NPT   */    {  0x0008, 7, 2, 0x0030,     -6,      0, 0 },
+    /* CA    */    {  0x0010, 6, 3, 0x000F, 0x0700,     -6, 0 },
+    /* CAGly */    {  0x0020, 6, 2, 0x0003, 0x0700,      0, 0 },
+    /* C     */    {  0x0100, 6, 3, 0x0030, 0x1000, 0x0005, 0 },
+    /* CTer  */    {  0x0200, 6, 2, 0x0030, 0x1000,      0, 0 },
+    /* COXT  */    {  0x0400, 6, 3, 0x0030, 0x1000, 0x2000, 0 },
+    /* O     */    {  0x1000, 8, 1, 0x0700,      0,      0, 0 },
+    /* OXT   */    {  0x2000, 8, 1, 0x0400,      0,      0, 0 }
+  };
 
-  typedef struct
-  {
-    int src,dst;
-    int index;
-    int flag;
-  }
-  MonoBondType;
+  //! Generic template for peptide nucleotide backbone
+  static Template Nucleotide[MAXNUCLEIC] = {
+    /* P     */    {  0x0001, 15, 4, 0x0004, 0x0004, 0x0008, 0x0200 },
+    /* PTer  */    {  0x0002, 15, 3, 0x0004, 0x0004, 0x0008,      0 },
+    /* OP    */    {  0x0004,  8, 1, 0x0003,      0,      0,      0 },
+    /* O5    */    {  0x0008,  8, 2, 0x0020, 0x0003,      0,      0 },
+    /* O5Ter */    {  0x0010,  8, 1, 0x0020,      0,      0,      0 },
+    /* C5    */    {  0x0020,  6, 2, 0x0018, 0x0040,      0,      0 },
+    /* C4    */    {  0x0040,  6, 3, 0x0020, 0x0080, 0x0100,      0 },
+    /* O4    */    {  0x0080,  8, 2, 0x0040, 0x4000,      0,      0 },
+    /* C3    */    {  0x0100,  6, 3, 0x0040, 0x0600, 0x1800,      0 },
+    /* O3    */    {  0x0200,  8, 2, 0x0100, 0x0001,      0,      0 },
+    /* O3Ter */    {  0x0400,  8, 1, 0x0100,      0,      0,      0 },
+    /* C2RNA */    {  0x0800,  6, 3, 0x0100, 0x4000, 0x2000,      0 },
+    /* C2DNA */    {  0x1000,  6, 2, 0x0100, 0x4000,      0,      0 },
+    /* O2    */    {  0x2000,  8, 1, 0x0800,      0,      0,      0 },
+    /* C1    */    {  0x4000,  6, 3, 0x0080, 0x1800,     -7,      0 }
+  };
 
-  typedef struct
-  {
-    int type;
-    union _ByteCode *next;
-  }
-  MonOpStruct;
-
-  typedef struct
-  {
-    int type;
-    int value;
-    union _ByteCode *tcond;
-    union _ByteCode *fcond;
-  }
-  BinOpStruct;
-
-  typedef struct
-  {
-    int type;
-    int resid;
-    int *atomid;
-    int *bflags;
-  }
-  AssignStruct;
-
-  typedef union _ByteCode
-  {
-    int type;
-    MonOpStruct eval;     /* BC_EVAL   */
-    BinOpStruct count;    /* BC_COUNT  */
-    BinOpStruct elem;     /* BC_ELEM   */
-    BinOpStruct ident;    /* BC_IDENT  */
-    BinOpStruct local;    /* BC_LOCAL  */
-    AssignStruct assign;  /* BC_ASSIGN */
-  } ByteCode;
-
-  typedef struct
-  {
-    int atom,bond;
-    int prev;
-  }
-  StackType;
 
   //////////////////////////////////////////////////////////////////////////////
   // Global Variables / Tables
   //////////////////////////////////////////////////////////////////////////////
 
+  //! The number of PDB atom type names recognized by this code
+#define ATOMMAX        68
+
+  //! PDB atom types (i.e., columns 13-16 of a PDB file)
+  //!  index numbers from this array are used in the pseudo-SMILES format
+  //!  for side-chains in the AminoAcids[] & Nucleotides[] global arrays below
   static char ChainsAtomName[ATOMMAX][4] = {
     /*  0 */  { ' ', 'N', ' ', ' ' },
     /*  1 */  { ' ', 'C', 'A', ' ' },
@@ -241,7 +239,6 @@ namespace OpenBabel
     /* 35 */  { ' ', 'N', 'H', '2' },
     /* 36 */  { ' ', 'C', 'H', '2' },
     /* 37 */  { ' ', 'O', 'X', 'T' },
-
     /* 38 */  { ' ', 'P', ' ', ' ' },
     /* 39 */  { ' ', 'O', '1', 'P' },
     /* 40 */  { ' ', 'O', '2', 'P' },
@@ -274,46 +271,21 @@ namespace OpenBabel
     /* 67 */  { ' ', 'C', '6', ' ' }
   };
 
-  static Template Peptide[MAXPEPTIDE] = {
-    /* N     */    {  0x0001, 7, 2, 0x0030, 0x0100,      0, 0 },
-    /* NTer  */    {  0x0002, 7, 1, 0x0030,      0,      0, 0 },
-    /* NPro  */    {  0x0004, 7, 3, 0x0030, 0x0100,     -6, 0 },
-    /* NPT   */    {  0x0008, 7, 2, 0x0030,     -6,      0, 0 },
-    /* CA    */    {  0x0010, 6, 3, 0x000F, 0x0700,     -6, 0 },
-    /* CAGly */    {  0x0020, 6, 2, 0x0003, 0x0700,      0, 0 },
-    /* C     */    {  0x0100, 6, 3, 0x0030, 0x1000, 0x0005, 0 },
-    /* CTer  */    {  0x0200, 6, 2, 0x0030, 0x1000,      0, 0 },
-    /* COXT  */    {  0x0400, 6, 3, 0x0030, 0x1000, 0x2000, 0 },
-    /* O     */    {  0x1000, 8, 1, 0x0700,      0,      0, 0 },
-    /* OXT   */    {  0x2000, 8, 1, 0x0400,      0,      0, 0 }
-  };
+  //! Definition of side chains, associating overall residue name with
+  //!  the pseudo-SMILES pattern
+  typedef struct
+  {
+    char *name; //!< Residue name, standardized by PDB
+    char *data; //!< pseudo-SMILES definition of side-chain
+  }
+  ResidType;
 
-  static Template Nucleotide[MAXNUCLEIC] = {
-    /* P     */    {  0x0001, 15, 4, 0x0004, 0x0004, 0x0008, 0x0200 },
-    /* PTer  */    {  0x0002, 15, 3, 0x0004, 0x0004, 0x0008,      0 },
-    /* OP    */    {  0x0004,  8, 1, 0x0003,      0,      0,      0 },
-    /* O5    */    {  0x0008,  8, 2, 0x0020, 0x0003,      0,      0 },
-    /* O5Ter */    {  0x0010,  8, 1, 0x0020,      0,      0,      0 },
-    /* C5    */    {  0x0020,  6, 2, 0x0018, 0x0040,      0,      0 },
-    /* C4    */    {  0x0040,  6, 3, 0x0020, 0x0080, 0x0100,      0 },
-    /* O4    */    {  0x0080,  8, 2, 0x0040, 0x4000,      0,      0 },
-    /* C3    */    {  0x0100,  6, 3, 0x0040, 0x0600, 0x1800,      0 },
-    /* O3    */    {  0x0200,  8, 2, 0x0100, 0x0001,      0,      0 },
-    /* O3Ter */    {  0x0400,  8, 1, 0x0100,      0,      0,      0 },
-    /* C2RNA */    {  0x0800,  6, 3, 0x0100, 0x4000, 0x2000,      0 },
-    /* C2DNA */    {  0x1000,  6, 2, 0x0100, 0x4000,      0,      0 },
-    /* O2    */    {  0x2000,  8, 1, 0x0800,      0,      0,      0 },
-    /* C1    */    {  0x4000,  6, 3, 0x0080, 0x1800,     -7,      0 }
-  };
-
-  static char ChainsResName[RESIDMAX][4] = {
-    /*0*/ "UNK",  /*1*/ "HOH",  /*2*/ "LIG"
-  };
-
+  //! Side chains for recognized amino acids using a pseudo-SMARTS syntax
+  //!  for branching and bonds. Numbers indicate atom types defined by 
+  //!  ChainsAtomName global array above
   static ResidType AminoAcids[AMINOMAX] = {
     { "ILE", "1-4(-9-14)-10"                        },
     { "VAL", "1-4(-9)-10"                           },
-
     { "ALA", "1-4"                                  },
     { "ASN", "1-4-7(=15)-19"                        },
     { "ASP", "1-4-7(=15)-18"                        },
@@ -323,7 +295,7 @@ namespace OpenBabel
     { "GLU", "1-4-7-11(=23)-26"                     },
     { "GLY", "1"                                    },
     { "HIS", "1-4-7^16~22^27^17~7"                  },
-    { "HYP", "1-4-7(-12)-11-0"                      }, /* ??? */
+    { "HYP", "1-4-7(-12)-11-0"                      },
     { "LEU", "1-4-7(-14)-17"                        },
     { "LYS", "1-4-7-11-20-30"                       },
     { "MET", "1-4-7-13-20"                          },
@@ -334,11 +306,14 @@ namespace OpenBabel
     { "TRP", "1-4-7~14^24^25~17(^7)^28~32^36~31^25" },
     { "TYR", "1-4-7~14^22~29(-33)^25~17^7"          }
   };
-
+  // Other possible amino acid templates (less common)
   /* Pyroglutamate (PCA):        1-4-7-11(=" OE ")-0  PDB Example: 1CEL */
   /* Amino-N-Butyric Acid (ABA): 1-4-7                PDB Example: 1BBO */
   /* Selenic Acid (SEC):         1-4-"SEG "(-15)-18   PDB Example: 1GP1 */
 
+  //! Side chains for recognized nucleotides using a pseudo-SMARTS syntax
+  //!  for branching and bonds. Numbers indicate atom types defined by 
+  //!  ChainsAtomName global array above
   static ResidType Nucleotides[NUCLEOMAX] = {
     { "  A", "49-50-51-52-53-54(-56)-57-58-61-62(-53)-50"      },
     { "  C", "49-57-58(-59)-61-62(-64)-65-67-57"               },
@@ -347,6 +322,68 @@ namespace OpenBabel
     { "  U", "49-57-58(-59)-61-62(-63)-65-67-57"               },
     { "  I", "49-50-51-52-53-54(-55)-57-58-61-62(-53)-50"      }
   };
+
+
+  typedef struct
+  {
+    int atomid,elem;
+    int bcount;
+    int index;
+  }
+  MonoAtomType;
+
+  typedef struct
+  {
+    int src,dst;
+    int index;
+    int flag;
+  }
+  MonoBondType;
+
+  typedef struct
+  {
+    int type;
+    union _ByteCode *next;
+  }
+  MonOpStruct;
+
+  typedef struct
+  {
+    int type;
+    int value;
+    union _ByteCode *tcond;
+    union _ByteCode *fcond;
+  }
+  BinOpStruct;
+
+  //! Output array -- residue id, atom id, bond flags, etc.
+  typedef struct
+  {
+    int type;
+    int resid;
+    int *atomid;
+    int *bflags;
+  }
+  AssignStruct;
+
+  //! Chemical graph matching virtual machine
+  typedef union _ByteCode
+  {
+    int type;
+    MonOpStruct eval;     //!< Eval - push current neighbors onto the stack
+    BinOpStruct count;    //!< Count - test the number of eval bonds
+    BinOpStruct elem;     //!< Element - test the element of current atom
+    BinOpStruct ident;    //!< Ident - test the atom for backbone identity
+    BinOpStruct local;    //!< Local - test whether the atom has been visited
+    AssignStruct assign;  //!< Assign - assign residue name, atom name and bond type to output
+  } ByteCode;
+
+  typedef struct
+  {
+    int atom,bond;
+    int prev;
+  }
+  StackType;
 
   static MonoAtomType MonoAtom[MaxMonoAtom];
   static MonoBondType MonoBond[MaxMonoBond];
@@ -390,6 +427,7 @@ namespace OpenBabel
     return (result);
   }
 
+  //! Free a ByteCode and all corresponding data
   static void DeleteByteCode(ByteCode *node)
   {
     if (node == NULL)
@@ -641,11 +679,7 @@ namespace OpenBabel
       }
     else if( count )
       {
-#ifdef HAVE_SSTREAM
 	stringstream errorMsg;
-#else
-	strstream errorMsg;
-#endif
         errorMsg << "Maximum Monomer Fanout Exceeded!" << endl;
         errorMsg << "Residue " << ChainsResName[resid] << " atom " 
 		 << curr << endl;
@@ -683,19 +717,9 @@ namespace OpenBabel
       {
         if( (*node)->assign.resid != resid )
 	  {
-	    /*          fputs("Error: Duplicated Monomer Specification!\n",stderr);
-			fprintf(stderr,"Residue %s matches resid",ChainsResName[resid]);
-			fprintf(stderr,"ue %s!\n",ChainsResName[(*node)->assign.resid]);
-	    */
-#ifdef HAVE_SSTREAM
-	    stringstream errorMsg;
-#else
-	    strstream errorMsg;
-#endif							
-	    errorMsg << "Duplicated Monomer Specification!" << endl;
-	    errorMsg << "Residue " << ChainsResName[resid] << " matches residue ";
-	    errorMsg << ChainsResName[(*node)->assign.resid] << "!" << endl;
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);						
+            fputs("Error: Duplicated Monomer Specification!\n",stderr);
+            fprintf(stderr,"Residue %s matches resid",ChainsResName[resid]);
+            fprintf(stderr,"ue %s!\n",ChainsResName[(*node)->assign.resid]);
 	  }
       }
 
@@ -758,6 +782,7 @@ namespace OpenBabel
   // Setup / Cleanup Functions
   //////////////////////////////////////////////////////////////////////////////
 
+  //! Setup parsing for this molecule -- 
   void OBChainsParser::SetupMol(OBMol &mol)
   {
     CleanupMol();
@@ -792,6 +817,8 @@ namespace OpenBabel
       }
   }
 
+  //! Clean up any molecular data left in memory -- frees all memory afterwards
+  //! Used by OBChainsParser::SetupMol()
   void OBChainsParser::CleanupMol(void)
   {
     if (bitmasks != NULL)
@@ -841,6 +868,7 @@ namespace OpenBabel
       }
   }
 
+  //! Clear all residue information for a supplied molecule
   void OBChainsParser::ClearResidueInformation(OBMol &mol)
   {
     OBResidue *residue;
@@ -932,8 +960,8 @@ namespace OpenBabel
 
     if (mol.NumResidues() == 1 && nukeSingleResidue)
       mol.DeleteResidue(mol.GetResidue(0));
-    else if (mol.NumResidues() == 1 
-	     && (mol.GetResidue(0))->GetName() == "UNK")
+    else if (mol.NumResidues() == 1
+             && (mol.GetResidue(0))->GetName() == "UNK")
       mol.DeleteResidue(mol.GetResidue(0));
   }
 
@@ -976,6 +1004,8 @@ namespace OpenBabel
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
       if (!atom->IsHydrogen() && atom->GetValence() == 0)
         {
+	  // find un-connected atoms (e.g., HOH oxygen atoms)
+	  //  if it's not an oxygen, it's probably some ligand
 	  resids[atom->GetIdx()-1]   = (atom->IsOxygen()) ? 1 : 2;
 	  hetflags[atom->GetIdx()-1] = true;
         }
@@ -1012,7 +1042,7 @@ namespace OpenBabel
                 if (size == 1 && atom->IsOxygen())
 		  resid = 1; /* HOH */
                 else
-		  resid = 2;
+		  resid = 2; /* LIG */
 
                 for (i = 0 ; i < numAtoms ; i++)
 		  {
@@ -1071,15 +1101,6 @@ namespace OpenBabel
 
     int i, max = mol.NumAtoms();
 
-    /*
-      int count = 0;
-      for ( i = 0 ; i < max ; i++ )
-      if ( bitmasks[i]&BitCAAll ) 
-      count++;
-
-      fprintf(stderr,"%d alpha carbons\n",count);
-    */
-
     /* Order Peptide Backbone */
 
     for ( i = 0 ; i < max ; i++ )
@@ -1133,7 +1154,7 @@ namespace OpenBabel
         for ( i = 0 ; i < tmax ; i++ )
 	  if ( (static_cast<unsigned int>(templ[i].elem)  == atom->GetAtomicNum())
 	       &&
-	       (static_cast<unsigned int>(templ[i].count) == atom->GetValence()))
+	       (static_cast<unsigned int>(templ[i].count) == atom->GetHvyValence()))
 	    bitmasks[idx] |= templ[i].flag;
       }
 
@@ -1362,7 +1383,7 @@ namespace OpenBabel
     int max = mol.NumAtoms();
 
     for (int i = 0 ; i < max ; i++)
-      if (atomids[i] == 1)
+      if (atomids[i] == AI_CA)
         {
 	  resid = IdentifyResidue(PDecisionTree, mol, i, resnos[i]);
 	  AssignResidue(mol,resnos[i],chains[i],resid);
@@ -1374,6 +1395,7 @@ namespace OpenBabel
   void OBChainsParser::AssignResidue(OBMol &mol, int r, int c, int i)
   {
     int max = mol.NumAtoms();
+
     for (int j = 0 ; j < max ; j++)
       if ((resnos[j] == r) && (chains[j] == c) && !hetflags[j])
 	resids[j] = i;
@@ -1448,11 +1470,14 @@ namespace OpenBabel
 	  curr = Stack[StackPtr].atom;
 	  prev = Stack[StackPtr].prev;
 
-	  atom = mol.GetAtom(curr+1);
+	  atom = mol.GetAtom(curr+1); // WARNING, potential atom index issue
 	  for (nbr = atom->BeginNbrAtom(b); nbr; nbr = atom->NextNbrAtom(b))
 	    {
+	      if (nbr->IsHydrogen())
+		continue;
+
 	      j = nbr->GetIdx() - 1;
-	      if (!((curr == prev) && bitmasks[j]) && (j != prev) && !(nbr->IsHydrogen()))
+	      if (!((curr == prev) && bitmasks[j]) && (j != prev))
 		{
 		  Stack[StackPtr].prev = curr;
 		  Stack[StackPtr].atom = j;
@@ -1504,15 +1529,6 @@ namespace OpenBabel
     ConstrainBackbone(mol, Nucleotide, MAXNUCLEIC);
 
     int i, max = mol.NumAtoms();
-
-    /*
-      int count = 0;
-      for ( i = 0 ; i < max ; i++ )
-      if ( bitmasks[i] & BitC5 ) 
-      count++;
-
-      fprintf(stderr,"%d sugar phosphates\n",count);
-    */
 
     /* Order Nucleic Backbone */
 
@@ -2115,121 +2131,6 @@ namespace OpenBabel
       }
     return( ptr-1 );
   }
-
-#ifdef _I_WANT_TO_OUTPUT_PDB_
-
-  static ChainsAtom *PDBOrder[MaxChainsAtom];
-
-  int PDBSort(ChainsAtom **arg1, ChainsAtom **arg2)
-  {
-    ChainsAtom *atom1;
-    ChainsAtom *atom2;
-
-    atom1 = *arg1;
-    atom2 = *arg2;
-
-    if( atom1->chain != atom2->chain )
-      return( atom1->chain - atom2->chain );
-
-    if( atom1->hetflag != atom2->hetflag )
-      return( atom1->hetflag? 1 : -1 );
-
-    if( atom1->resno != atom2->resno )
-      return( atom1->resno - atom2->resno );
-
-    if( (atom1->elem==1) && (atom2->elem!=1) )
-      return( 1 );
-    if( (atom1->elem!=1) && (atom2->elem==1) )
-      return( -1 );
-
-    if( atom1->atomid != atom2->atomid )
-      return( atom1->atomid - atom2->atomid );
-
-    if( (atom1->elem==1) && (atom2->elem==1) )
-      return( atom1->hcount - atom2->hcount );
-    return( 0 );
-  }
-
-  static void OutputPDBFile(ChainsMolecule *mol, FILE *fp)
-  {
-    int src,dst;
-    ChainsAtom *atom;
-    char *ptr;
-    int i;
-
-    for( i=0; i<mol->acount; i++ )
-      PDBOrder[i] = &mol->atom[i];
-
-#ifdef __STDC__
-
-    qsort(PDBOrder,mol->acount,sizeof(ChainsAtom*),
-          (int(*)(const void*,const void*))PDBSort);
-#else
-
-    qsort(PDBOrder,mol->acount,sizeof(ChainsAtom*),PDBSort);
-#endif
-
-    ptr = mol->name;
-    while( *ptr == ' ' )
-      ptr++;
-
-    if( *ptr )
-      {
-        fputs("COMPND    ",fp);
-        while( *ptr )
-	  fputc(*ptr++,fp);
-        fputc('\n',fp);
-      }
-
-    for( i=0; i<mol->acount; i++ )
-      {
-        atom = PDBOrder[i];
-        atom->serno = i+1;
-
-        if( atom->hetflag )
-	  {
-            fputs("HETATM ",fp);
-	  }
-        else
-	  fputs("ATOM   ",fp);
-
-        fprintf(fp,"%4d ",atom->serno);
-
-        if( atom->atomid == -1 )
-	  {
-            fprintf(fp,"%s  ", etab.GetSymbol(atom->elem));
-	  }
-        else if( atom->elem == 1 )
-	  {
-            if( atom->hcount )
-	      {
-                fputc(atom->hcount+'0',fp);
-	      }
-            else
-	      fputc(' ',fp);
-            fprintf(fp,"H%.2s",ChainsAtomName[atom->atomid]+2);
-	  }
-        else
-	  fprintf(fp,"%.4s",ChainsAtomName[atom->atomid]);
-
-        fprintf(fp," %s ",ChainsResName[atom->resid]);
-        fprintf(fp,"%c%4d",atom->chain,atom->resno);
-        fprintf(fp,"    %8.3lf%8.3lf%8.3lf",atom->x,atom->y,atom->z);
-        fputs("  1.00  0.00\n",fp);
-      }
-
-    for( i=0; i<mol->bcount; i++ )
-      if( mol->bond[i].flag & BF_DOUBLE )
-        {
-	  src = mol->atom[mol->bond[i].src].serno;
-	  dst = mol->atom[mol->bond[i].dst].serno;
-	  fprintf(fp,"CONECT%5d%5d%5d\n",src,dst,dst);
-	  fprintf(fp,"CONECT%5d%5d%5d\n",dst,src,src);
-        }
-    fputs("END \n",fp);
-  }
-
-#endif
 
 } // end namespace OpenBabel
 
