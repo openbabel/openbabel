@@ -26,7 +26,7 @@ using namespace std;
 namespace OpenBabel
 {
 
-extern OBMessageHandler obErrorLog;
+OBERROR extern OBMessageHandler obErrorLog;
 
 /*! \class OBBitVec
     \brief Fast and efficient bitstring class

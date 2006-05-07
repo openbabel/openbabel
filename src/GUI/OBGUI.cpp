@@ -648,7 +648,8 @@ void OBGUIFrame::OnChangeFormat(wxCommandEvent& WXUNUSED(event))
 
 	OBFormat* pInFormat = (OBFormat*)m_pInFormat->GetClientData(m_pInFormat->GetSelection());
 	OBFormat* pOutFormat = (OBFormat*)m_pOutFormat->GetClientData(m_pOutFormat->GetSelection());
-
+	if(!pInFormat || !pOutFormat)
+		return;
 	if(viewMenu->IsChecked(ID_SHOWOBJOPTIONS1)) //Single char
 		m_pGenOptsPanel->Construct(pOutFormat->TargetClassDescription(),NULL,1);
 	if(viewMenu->IsChecked(ID_SHOWOBJOPTIONS2)) //Multi char

@@ -106,7 +106,7 @@ To make it easy to use the OBMessageHandler class and error logging
 facilities, a global log is defined:
 
 \code
-EXTERN OBMessageHandler obErrorLog;
+OBERROR extern OBMessageHandler obErrorLog;
 \endcode
 
 Therefore, it is very easy to log errors:

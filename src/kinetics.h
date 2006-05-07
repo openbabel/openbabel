@@ -35,12 +35,14 @@ protected:
 public:
 	virtual OBGenericData* Clone(OBBase* parent) const{return new OBRateData(*this);}
 	enum rate_type {A, n, E};
-	enum reaction_type {Arrhenius=55555, ThreeBody, Troe};
+	enum reaction_type {ARRHENIUS=55555, LINDERMANN, TROE, SRI, THREEBODY};
+	reaction_type ReactionType;
 	OBRateData()
 	{	
 		Rates[0]=Rates[1]=Rates[2]=0;
 		LoRates[0]=LoRates[1]=LoRates[2]=0;
 		TroeParams[0]=TroeParams[1]=TroeParams[2]=TroeParams[3]=0;
+		ReactionType = ARRHENIUS;
 		_type = RateData;
 		_attr = "Rate data";
 	}
@@ -108,7 +110,7 @@ public:
 	}
 };
 
-
+//******************************************************************************
 /// Class to hold Thermodynamic data in old style NASA polynomial form for OBMol
 class OBNasaThermoData : public OBGenericData
 {

@@ -43,6 +43,7 @@ GNU General Public License for more details.
 #include <map>
 
 #include "dlhandler.h"
+#include "oberror.h"
 
 // These macros are used in DLL builds. If they have not
 // been set in babelconfig.h, define them as nothing.
@@ -59,6 +60,8 @@ namespace OpenBabel {
 
 class OBBase;
 class OBConversion;
+OBERROR extern  OBMessageHandler obErrorLog;
+
 //*************************************************
 
 /// @brief Base class for file formats.

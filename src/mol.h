@@ -1152,7 +1152,7 @@ namespace OpenBabel
   //! Global OBChainsParser for detecting macromolecular chains and residues
   EXTERN  OBChainsParser   chainsparser;
   //! Global OBMessageHandler error handler
-  EXTERN  OBMessageHandler obErrorLog;
+  OBERROR extern  OBMessageHandler obErrorLog;
   //! Global OBResidueData biomolecule residue database
   EXTERN  OBResidueData    resdat;
 

@@ -25,12 +25,16 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
+#ifndef OBFPRT
+#define OBFPRT
+#endif
+
 namespace OpenBabel
 {
 	class OBBase; //Forward declaration; used only as pointer.
 
 /// \brief The base class for fingerprints
-class OBAPI OBFingerprint
+class OBFPRT OBFingerprint
 {
 //see end of cpp file for detailed documentation
 public:
@@ -116,7 +120,6 @@ protected:
 private:
 	static OBFingerprint* _pDefault;
 	static const unsigned int bitsperint;// = 8 * sizeof(unsigned int);
-	static int rubbish;
 };
 
 
@@ -125,7 +128,7 @@ private:
 //*************************************************************
 //Fast search routines
 ///Header for fastsearch index file
-struct OBAPI FptIndexHeader
+struct OBFPRT FptIndexHeader
 {
 	unsigned int headerlength;///<offset to data: sizeof(FptIndexHeader)
 	unsigned int nEntries;    ///<number of fingerprints
@@ -134,7 +137,7 @@ struct OBAPI FptIndexHeader
 	char datafilename[256];   ///<the data that this is an index to
 };
 /// Structure of fastsearch index files
-struct OBAPI FptIndex
+struct OBFPRT FptIndex
 {
 	FptIndexHeader header;
 	std::vector<unsigned int> fptdata;
@@ -145,7 +148,7 @@ struct OBAPI FptIndex
 };
 
 /// \brief Class to search fingerprint index files
-class OBAPI FastSearch
+class OBFPRT FastSearch
 {
 //see end of cpp file for detailed documentation
 public:
@@ -175,7 +178,7 @@ private:
 
 //**********************************************
 /// \brief Class to prepare fingerprint index files See FastSearch class for details
-class OBAPI FastSearchIndexer
+class OBFPRT FastSearchIndexer
 {
 //see end of cpp file for detailed documentation
 public:

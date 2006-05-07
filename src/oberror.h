@@ -22,10 +22,6 @@ General Public License for more details.
 
 #include "babelconfig.h"
 
-#ifndef EXTERN
-#  define EXTERN extern
-#endif
-
 #if HAVE_IOSTREAM
 #include <iostream>
 #elif HAVE_IOSTREAM_H
@@ -39,7 +35,7 @@ General Public License for more details.
 #include <string>
 #include <vector>
 #include <deque>
-
+#include "oberror.h"
 namespace OpenBabel
 {
 
@@ -54,7 +50,7 @@ enum obMessageLevel {
 
 //! \brief Customizable error handling and logging -- store a message,
 //!        including the method yielding the error, causes, etc.
-class OBAPI OBError
+class OBERROR OBError
 {
 public:
 
@@ -92,7 +88,7 @@ public:
 };
 
  //! \brief Handle error messages, warnings, debugging information and the like
-class OBAPI OBMessageHandler
+class OBERROR OBMessageHandler
   {
   public:
     OBMessageHandler();
@@ -155,10 +151,10 @@ class OBAPI OBMessageHandler
     std::streambuf        *_filterStreamBuf;
   }; 
 
-EXTERN OBMessageHandler obErrorLog;
+OBERROR extern OBMessageHandler obErrorLog;
 
 //! \brief A minimal streambuf derivative to wrap calls to cerr into calls to OBMessageHandler as needed
- class OBAPI obLogBuf : public std::stringbuf
+ class OBERROR obLogBuf : public std::stringbuf
   {
     public:
       virtual ~obLogBuf() { sync(); }

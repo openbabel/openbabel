@@ -36,8 +36,6 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <map>
-//#include <dlfcn.h>
-
 #include "obconversion.h"
 
 #ifdef HAVE_LIBZ
@@ -306,7 +304,7 @@ int OBConversion::LoadFormatFiles()
 		if(DLHandler::openLib(*itr))
 			count++;
 		else
-			cerr << *itr << " did not load properly" << endl;
+			obErrorLog.ThrowError(__FUNCTION__, *itr + " did not load properly", obError);
 	}
 #else
 	count = 1; //avoid calling this function several times
@@ -457,7 +455,7 @@ int OBConversion::Convert()
 {
 	if(pInStream==NULL || pOutStream==NULL)
 	{
-		cerr << "input or output stream not set" << endl;
+		obErrorLog.ThrowError(__FUNCTION__, "input or output stream not set", obError);
 		return 0;
 	}
 
@@ -773,8 +771,8 @@ bool OBConversion::WriteFile(OBBase* pOb, string filePath)
 	ofs->open(filePath.c_str(),omode);
 	if(!ofs || !ofs->good())
 	  {
-	    cerr << "Cannot write to " << filePath <<endl;
-	    return false;
+	    obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + filePath, obError);
+			return false;
 	  }
 
 	return Write(pOb, ofs);
@@ -800,7 +798,7 @@ bool	OBConversion::ReadFile(OBBase* pOb, std::string filePath)
   ifs->open(filePath.c_str(),imode);
   if(!ifs || !ifs->good())
     {
-      cerr << "Cannot read from " << filePath << endl;
+	    obErrorLog.ThrowError(__FUNCTION__,"Cannot read from " + filePath, obError);
       return false;
     }
 
@@ -951,7 +949,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 					os.open(OutputFileName.c_str(),omode);
 					if(!os)
 					{
-						cerr << "Cannot write to " << OutputFileName <<endl;
+				    obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + OutputFileName, obError);
 						return 0;
 					}
 					pOs=&os;
@@ -965,7 +963,8 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 			//Concatenate input file option (multiple files, single molecule)
 			if(HasMultipleOutputFiles)
 			{
-				cerr << "Cannot have multiple output files and also concatenate input files (-t option)" <<endl;
+				obErrorLog.ThrowError(__FUNCTION__,
+					"Cannot have multiple output files and also concatenate input files (-t option)",obError);
 				return 0;
 			}
 
@@ -976,7 +975,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 				ifstream ifs((*itr).c_str());
 				if(!ifs)
 				{
-					cerr << "Cannot open " << *itr <<endl;
+			    obErrorLog.ThrowError(__FUNCTION__,"Cannot open " + *itr, obError);
 					continue;
 				}
 				allinput << ifs.rdbuf(); //Copy all file contents
@@ -1012,7 +1011,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 						ofs.open(batchfile.c_str(), omode);
 						if(!ofs) 
 						{
-							cerr << "Cannot open " << batchfile << endl;
+					    obErrorLog.ThrowError(__FUNCTION__,"Cannot open " + batchfile, obError);
 							return Count;
 						}
 						OutputFileList.push_back(batchfile);
@@ -1033,7 +1032,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 					os.open(OutputFileName.c_str(),omode);
 					if(!os)
 					{
-						cerr << "Cannot write to " << OutputFileName <<endl;
+				    obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + OutputFileName, obError);
 						return Count;
 					}
 					os << ssOut.rdbuf();
@@ -1079,7 +1078,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 						ofs.open(incrfile.c_str(), omode);
 						if(!ofs)
 						{
-							cerr << "Cannot write to " << incrfile << endl;
+					    obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + incrfile, obError);
 							return Count;
 						}
 						
@@ -1113,7 +1112,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 			os.open(OutputFileName.c_str(),omode);
 			if(!os)
 			{
-				cerr << "Cannot write to " << OutputFileName <<endl;
+		    obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + OutputFileName, obError);
 				return Count;
 			}
 			os << ssOut.rdbuf();
@@ -1122,7 +1121,7 @@ int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& O
 	}
 	catch(...)
 	{
-		cerr << "Conversion failed with an exception. Count=" << Count <<endl;
+		obErrorLog.ThrowError(__FUNCTION__, "Conversion failed with an exception.",obError);
 		return Count;
 	}
 }
@@ -1139,8 +1138,8 @@ bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
 			string ext;
 			if(pos!=string::npos)
 				ext = InFilename.substr(pos);
-			cerr << "Cannot read input format \"" << ext << '\"' 
-			     << " for file \"" << InFilename << "\"" << endl;
+			obErrorLog.ThrowError(__FUNCTION__, "Cannot read input format \"" 
+				+ ext + '\"' + " for file \"" + InFilename + "\"",obError);
 			return false;
 		}
 	}
@@ -1155,7 +1154,7 @@ bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
 	is->open(InFilename.c_str(), imode);
 	if(!is->good())
 	{
-		cerr << "Cannot open " << InFilename <<endl;
+		obErrorLog.ThrowError(__FUNCTION__, "Cannot open " + InFilename, obError);
 		return false;
 	}
 
@@ -1226,9 +1225,10 @@ void OBConversion::RegisterOptionParam(string name, OBFormat* pFormat,
 			string description("API");
 	    if(pFormat)
 				description=pFormat->Description();
-			cerr << "The number of parameters needed by option \"" << name << "\" in " 
-				   << description.substr(0,description.find('\n'))
-				   << " differs from an earlier registration." << endl;
+			obErrorLog.ThrowError(__FUNCTION__, 
+				"The number of parameters needed by option \"" + name + "\" in " 
+				   + description.substr(0,description.find('\n'))
+				   + " differs from an earlier registration.", obError);
 			return;
 		}
 	}

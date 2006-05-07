@@ -46,20 +46,24 @@ public:
 	///Existing OBConversion instance copied
 		XMLConversion(OBConversion* pConv);
 		
-      ///Frees reader and writer if necessary
-      ~XMLConversion();
+  ///Frees reader and writer if necessary
+  ~XMLConversion();
 
-      bool SetupReader();///< opens libxml2 reader
-      bool SetupWriter();///< opens libxml2 writer
+  bool SetupReader();///< opens libxml2 reader
+  bool SetupWriter();///< opens libxml2 writer
 
-      ///Parses the input xml stream and sends each element to the format's callback routines
-      bool ReadXML(XMLBaseFormat* pFormat, OBBase* pOb);
+  ///Parses the input xml stream and sends each element to the format's callback routines
+  bool ReadXML(XMLBaseFormat* pFormat, OBBase* pOb);
 
-      typedef std::map<std::string, XMLBaseFormat*> NsMapType;
+	///Read and discard XML text up to the next occurrence of the tag e.g."/molecule>"
+	///This is left as the current node. Returns 1 on success, 0 if not found, -1 if failed.
+	int SkipXML(const char* ctag);
 
-      ///This static function returns a reference to the map
-      ///Avoids "static initialization order fiasco"
-      static NsMapType& Namespaces()
+  typedef std::map<std::string, XMLBaseFormat*> NsMapType;
+
+  ///This static function returns a reference to the map
+  ///Avoids "static initialization order fiasco"
+  static NsMapType& Namespaces()
 	{
 	  static NsMapType* nsm = NULL;
 	  if (!nsm)
@@ -163,7 +167,32 @@ protected:
 	  _pxmlConv->OutputToStream();
 	}
 	
-    };
+	///Skip past first n objects in input stream (or current one with n=0)
+	/// Returns 1 on success, -1 on error and 0 if not implemented 
+	virtual int SkipObjects(int n, OBConversion* pConv)
+	{
+		//don't implement on base class
+		if(*EndTag()=='>')
+			return 0;
+
+		//Set up XMLConversion class with reader 
+		_pxmlConv = XMLConversion::GetDerived(pConv,true);
+	  if(!_pxmlConv)
+	    return -1;
+
+		//always find the end of at least 1 object
+		if(n==0)++n;
+		
+		//Skip n objects, returning -1 if not successful
+		int i;
+		for(i=0; i<n; ++i)
+			if(_pxmlConv->SkipXML(EndTag())!=1)
+				return -1;
+		
+		return 1;       
+	}
+
+};
 
 //*************************************************
 ///Abstract class containing common functionality for XML formats which represent molecules

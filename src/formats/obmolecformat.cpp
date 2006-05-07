@@ -325,5 +325,106 @@ bool OBMoleculeFormat::DeleteDeferredMols()
 	return false;
 }
 
+//////////////////////////////////////////////////////////////////
+	/** Attempts to read the index file datafilename.obindx successively
+	from the following directories:
+	- the current directory
+	- that in the environment variable BABEL_DATADIR or in the macro BABEL_DATADIR
+	  if the environment variable is not set
+	- in a subdirectory of the BABEL_DATADIR directory with the version of OpenBabel as its name
+	An index of type NameIndexType is then constructed. NameIndexType is defined
+	in obmolecformat.h and may be a std::tr1::unordered_map (a hash_map) or std::map.
+	In any case it is searched by 
+	@code
+	NameIndexType::iterator itr = index.find(molecule_name);
+			if(itr!=index.end())
+			  unsigned pos_in_datafile = itr->second;
+	@endcode
+	pos_in_datafile is used as a paramter in seekg() to read from the datafile
+
+	If no index is found, it is constructed from the datafile by reading all of
+	it using the format pInFormat, and written to the directory containing the datafile.
+	This means that this function can be used without worrying whether there is an index.
+	It will be slow to execute the first time, but subsequent uses get the speed benefit
+	of indexed access to the datafile. 
+
+	The serialization and de-serialization of the NameIndexType is entirely in
+	this routine and could possibly be improved. Currently re-hashing is done 
+	every time the index is read.
+	**/
+bool OBMoleculeFormat::ReadNameIndex(NameIndexType& index,
+																	const string& datafilename, OBFormat* pInFormat)
+{
+	struct headertype
+	{
+		char filename[256];
+		unsigned size;
+	} header;
+
+	NameIndexType::iterator itr;
+
+	ifstream indexstream;
+	OpenDatafile(indexstream, datafilename + ".obindx");
+	if(!indexstream)
+	{
+		//Need to prepare the index
+		ifstream datastream;
+		string datafilepath = OpenDatafile(datastream, datafilename);
+		if(!datastream)
+		{
+			obErrorLog.ThrowError(__FUNCTION__, 
+				datafilepath + " was not found or could not be opened",  obError);
+			return false;
+		}
+
+		OBConversion Conv(&datastream,NULL);
+		Conv.SetInFormat(pInFormat);
+		OBMol mol;
+		streampos pos;
+		while(Conv.Read(&mol))
+		{
+			string name = mol.GetTitle();
+			if(!name.empty())
+				index.insert(make_pair(name, pos));
+			mol.Clear();
+			pos = datastream.tellg();
+		}
+		obErrorLog.ThrowError(__FUNCTION__, 
+				"Prepared an index for " + datafilepath, obAuditMsg);
+		//Save index to file
+		ofstream dofs((datafilepath + ".obindx").c_str(), ios_base::out|ios_base::binary);
+		if(!dofs) return false;
+		strcpy(header.filename,datafilename.c_str());
+		header.size = index.size();
+		dofs.write((const char*)&header, sizeof(headertype));
+	
+		for(itr=index.begin();itr!=index.end();++itr)
+		{
+			//#chars; chars;  ofset(4bytes).
+			const char n = itr->first.size();
+			dofs.put(n);
+			dofs.write(itr->first.c_str(),n);
+			dofs.write((const char*)&itr->second,sizeof(unsigned));
+		}			
+	}
+	else
+	{
+		//Read index data from file and put into hash_map
+		indexstream.read((char*)&header,sizeof(headertype));
+		itr=index.begin(); // for hint
+		for(int i=0;i<header.size;++i)
+		{
+			char len;
+			indexstream.get(len);
+			string title(len, 0);
+			unsigned pos;
+			indexstream.read(&title[0],len);
+			indexstream.read((char*)&pos,sizeof(unsigned));
+			index.insert(itr, make_pair(title,pos));
+		}
+	}
+	return true;
+}
+
 
 } //namespace OpenBabel

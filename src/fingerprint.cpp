@@ -41,7 +41,6 @@ namespace OpenBabel {
 
 OBFingerprint* OBFingerprint::_pDefault; //static variable
 const unsigned int OBFingerprint::bitsperint = 8 * sizeof(unsigned int);
-int OBFingerprint::rubbish = 666;
 
 void OBFingerprint::SetBit(vector<unsigned int>& vec, unsigned int n)
 {

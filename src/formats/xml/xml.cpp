@@ -229,6 +229,29 @@ bool XMLConversion::ReadXML(XMLBaseFormat* pFormat, OBBase* pOb)
 }
 
 /////////////////////////////////////////////////////////
+///Read and discard XML text up to the next occurrence of the tag e.g."/molecule>"
+///This is left as the current node. Returns 1 on success, 0 if not found, -1 if failed.
+int XMLConversion::SkipXML(const char* ctag)
+{
+	string tag(ctag);
+	tag.erase(--tag.end()); //remove >
+	int targettyp = XML_READER_TYPE_ELEMENT;
+	if(tag[0]=='/')
+	{
+		tag.erase(0,1);
+		targettyp = XML_READER_TYPE_END_ELEMENT;
+	}
+
+	int result;
+	while((result = xmlTextReaderRead(_reader))==1)
+	{
+		if(xmlTextReaderNodeType(_reader)==targettyp
+			&& !xmlStrcmp(xmlTextReaderConstLocalName(_reader), BAD_CAST	tag.c_str()))
+			break;
+	}
+	return result;
+}
+/////////////////////////////////////////////////////////
 string XMLConversion::GetAttribute(const char* attrname)
 {
 	string AttributeValue;
