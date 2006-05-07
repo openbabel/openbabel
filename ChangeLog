@@ -1,3 +1,30 @@
+2006-05-07 Chris Morley <ob@gaseq.co.uk>
+
+	* oberror.h: Change classes from OBAPI to new OBERROR
+	so that can be compiled separately.
+	
+	* src/mol.h, src/bitvec.cpp, oberror.cpp, obconversion.cpp:
+	change to OBERROR extern OBMessageHandler obErrorLog;
+	
+	* src/obconversion.h: add #include "oberror.h";
+	
+	* src/obconversion.cpp: now that oberror can be accessed everywhere
+	change all cerr messages to use obErrorLog.
+	
+	* src/fingerprint.h: replace OBAPI by OBFPTR to allow fingerprint
+	code to be separately compiled.
+	
+	* src/formats/xml.h: add OBCOMMON so that XML classes can be
+	separately compiled. Add implementation of SkipObjects for
+	XMLBaseFormat and XMLConversion::SkipXML.
+	
+	* src/formats/obmolecformat.cpp: Add ReadNameIndex to speed access
+	in files with many molecules. I wasn't going to commit this until
+	it was tested a bit more, but I must have misunderstood what
+	Tortoise SVN was doing.
+	
+	* src/GUI/OBGUI.cpp: don't crash if there are no formats.  
+
 2006-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * src/formats/smilesformat.cpp (SmiToMol): Since SMILES sets
