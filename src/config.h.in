@@ -132,12 +132,48 @@
 /* Used to export symbols for DLL / shared library builds */
 #if defined(WIN32)
  #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBCOMMON __declspec(dllimport)
+ #else
+  #define OBCOMMON __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBCOMMON 
+#endif
+
+
+/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
   #define OBCONV __declspec(dllimport)
  #else
   #define OBCONV __declspec(dllexport)
  #endif
 #else //Everything else (behaviour as original)
  #define OBCONV
+#endif
+
+
+/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBERROR __declspec(dllimport)
+ #else
+  #define OBERROR __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBERROR 
+#endif
+
+
+/* Used to export symbols for DLL / shared library builds */
+#if defined(WIN32)
+ #if defined(USING_OBDLL) // e.g. in src/main.cpp
+  #define OBFPTR __declspec(dllimport)
+ #else
+  #define OBFPTR __declspec(dllexport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBFPTR 
 #endif
 
 

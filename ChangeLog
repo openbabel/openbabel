@@ -1,3 +1,12 @@
+2006-05-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, src/config.h.in: Update to include
+	#define's for OBERROR, OBFPTR, and OBCOMMON as below.
+
+	* scripts/*: Regenerate using SWIG.
+
+	* test/wrapper.sh: Update to include export for BABEL_DATADIR.
+
 2006-05-08 Chris Morley <ob@gaseq.co.uk>
 
 	* src/formats/xml/cmlformat.cpp(WriteMolecule): since the id
