@@ -34,7 +34,7 @@ General Public License for more details.
 #endif
 #include <string>
 #include <vector>
-#include <dequ	e>
+#include <deque>
 #include "oberror.h"
 
 #ifndef OBERROR

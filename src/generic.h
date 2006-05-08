@@ -193,7 +193,7 @@ public:
     {_data = d; Trim(_data);     }
     const std::string &GetData()              const
     {        return(_data);      }
-    const virtual std::string &GetValue()              const  
+    virtual const std::string &GetValue()              const  
     {        return(_data);      }
 };
 
