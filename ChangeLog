@@ -1,3 +1,15 @@
+2006-05-08 Chris Morley <ob@gaseq.co.uk>
+
+	* src/formats/xml/cmlformat.cpp(WriteMolecule): since the id
+	must start with letter, add "id" if it doesn't and write a <name>
+	element.
+	
+	* src/generic.h: add virtual GetValue function for OBGenericData
+	and also definitions in OBComment and OBPairData. Hopefully will
+	solve bug 1483112.
+	
+	* src/oberror.h: Add default define for OBERROR as nothing
+	 
 2006-05-07 Chris Morley <ob@gaseq.co.uk>
 
 	* oberror.h: Change classes from OBAPI to new OBERROR

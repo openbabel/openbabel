@@ -34,8 +34,13 @@ General Public License for more details.
 #endif
 #include <string>
 #include <vector>
-#include <deque>
+#include <dequ	e>
 #include "oberror.h"
+
+#ifndef OBERROR
+#define OBERROR
+#endif
+
 namespace OpenBabel
 {
 
