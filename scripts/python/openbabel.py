@@ -618,6 +618,7 @@ class OBGenericData(object):
     def SetAttribute(*args): return _openbabel.OBGenericData_SetAttribute(*args)
     def GetAttribute(*args): return _openbabel.OBGenericData_GetAttribute(*args)
     def GetDataType(*args): return _openbabel.OBGenericData_GetDataType(*args)
+    def GetValue(*args): return _openbabel.OBGenericData_GetValue(*args)
 OBGenericData_swigregister = _openbabel.OBGenericData_swigregister
 OBGenericData_swigregister(OBGenericData)
 cvar = _openbabel.cvar
@@ -673,6 +674,7 @@ class OBCommentData(OBGenericData):
     def Clone(*args): return _openbabel.OBCommentData_Clone(*args)
     def SetData(*args): return _openbabel.OBCommentData_SetData(*args)
     def GetData(*args): return _openbabel.OBCommentData_GetData(*args)
+    def GetValue(*args): return _openbabel.OBCommentData_GetValue(*args)
     __swig_destroy__ = _openbabel.delete_OBCommentData
     __del__ = lambda self : None;
 OBCommentData_swigregister = _openbabel.OBCommentData_swigregister

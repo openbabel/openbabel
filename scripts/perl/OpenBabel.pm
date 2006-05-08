@@ -922,6 +922,7 @@ sub DESTROY {
 *SetAttribute = *Chemistry::OpenBabelc::OBGenericData_SetAttribute;
 *GetAttribute = *Chemistry::OpenBabelc::OBGenericData_GetAttribute;
 *GetDataType = *Chemistry::OpenBabelc::OBGenericData_GetDataType;
+*GetValue = *Chemistry::OpenBabelc::OBGenericData_GetValue;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -951,6 +952,7 @@ sub new {
 *Clone = *Chemistry::OpenBabelc::OBCommentData_Clone;
 *SetData = *Chemistry::OpenBabelc::OBCommentData_SetData;
 *GetData = *Chemistry::OpenBabelc::OBCommentData_GetData;
+*GetValue = *Chemistry::OpenBabelc::OBCommentData_GetValue;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});

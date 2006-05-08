@@ -1440,66 +1440,67 @@ SWIG_Perl_SetModule(swig_module_info *module) {
 #define SWIGTYPE_p_OpenBabel__OBUnitCell swig_types[46]
 #define SWIGTYPE_p_OpenBabel__OBVirtualBond swig_types[47]
 #define SWIGTYPE_p_OpenBabel__Pattern swig_types[48]
-#define SWIGTYPE_p_OpenBabel__matrix3x3 swig_types[49]
-#define SWIGTYPE_p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[50]
-#define SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[51]
-#define SWIGTYPE_p_OpenBabel__vector3 swig_types[52]
-#define SWIGTYPE_p_a_3__double swig_types[53]
-#define SWIGTYPE_p_char swig_types[54]
-#define SWIGTYPE_p_double swig_types[55]
-#define SWIGTYPE_p_int swig_types[56]
-#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[57]
-#define SWIGTYPE_p_p_double swig_types[58]
-#define SWIGTYPE_p_p_int swig_types[59]
-#define SWIGTYPE_p_std__dequeTint_t swig_types[60]
-#define SWIGTYPE_p_std__ifstream swig_types[61]
-#define SWIGTYPE_p_std__istream swig_types[62]
-#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[63]
-#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[64]
-#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[65]
-#define SWIGTYPE_p_std__ostream swig_types[66]
-#define SWIGTYPE_p_std__out_of_range swig_types[67]
-#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[68]
-#define SWIGTYPE_p_std__streampos swig_types[69]
-#define SWIGTYPE_p_std__string swig_types[70]
-#define SWIGTYPE_p_std__type_info swig_types[71]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[72]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[73]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[74]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[75]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBEdgeBase_p_t__iterator swig_types[76]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[77]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[78]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[79]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[80]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[81]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[82]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t swig_types[83]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t__iterator swig_types[84]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[85]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[86]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[87]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[88]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[89]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[90]
-#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[91]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[92]
-#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[93]
-#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[94]
-#define SWIGTYPE_p_std__vectorTdouble_t swig_types[95]
-#define SWIGTYPE_p_std__vectorTint_t swig_types[96]
-#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[97]
-#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[98]
-#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[99]
-#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[100]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[101]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[102]
-#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[103]
-#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[104]
-#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[105]
-#define SWIGTYPE_p_unsigned_int swig_types[106]
-static swig_type_info *swig_types[108];
-static swig_module_info swig_module = {swig_types, 107, 0, 0, 0, 0};
+#define SWIGTYPE_p_OpenBabel__Template swig_types[49]
+#define SWIGTYPE_p_OpenBabel__matrix3x3 swig_types[50]
+#define SWIGTYPE_p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[51]
+#define SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[52]
+#define SWIGTYPE_p_OpenBabel__vector3 swig_types[53]
+#define SWIGTYPE_p_a_3__double swig_types[54]
+#define SWIGTYPE_p_char swig_types[55]
+#define SWIGTYPE_p_double swig_types[56]
+#define SWIGTYPE_p_int swig_types[57]
+#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[58]
+#define SWIGTYPE_p_p_double swig_types[59]
+#define SWIGTYPE_p_p_int swig_types[60]
+#define SWIGTYPE_p_std__dequeTint_t swig_types[61]
+#define SWIGTYPE_p_std__ifstream swig_types[62]
+#define SWIGTYPE_p_std__istream swig_types[63]
+#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[64]
+#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[65]
+#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[66]
+#define SWIGTYPE_p_std__ostream swig_types[67]
+#define SWIGTYPE_p_std__out_of_range swig_types[68]
+#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[69]
+#define SWIGTYPE_p_std__streampos swig_types[70]
+#define SWIGTYPE_p_std__string swig_types[71]
+#define SWIGTYPE_p_std__type_info swig_types[72]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[73]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[74]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[75]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[76]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBEdgeBase_p_t__iterator swig_types[77]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[78]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[79]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[80]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[81]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[82]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[83]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t swig_types[84]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t__iterator swig_types[85]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[86]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[87]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[88]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[89]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[90]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[91]
+#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[92]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[93]
+#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[94]
+#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[95]
+#define SWIGTYPE_p_std__vectorTdouble_t swig_types[96]
+#define SWIGTYPE_p_std__vectorTint_t swig_types[97]
+#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[98]
+#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[99]
+#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[100]
+#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[101]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[102]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[103]
+#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[104]
+#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[105]
+#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[106]
+#define SWIGTYPE_p_unsigned_int swig_types[107]
+static swig_type_info *swig_types[109];
+static swig_module_info swig_module = {swig_types, 108, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -13174,6 +13175,37 @@ XS(_wrap_OBGenericData_GetDataType) {
 }
 
 
+XS(_wrap_OBGenericData_GetValue) {
+  {
+    OpenBabel::OBGenericData *arg1 = (OpenBabel::OBGenericData *) 0 ;
+    std::string *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBGenericData_GetValue(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBGenericData_GetValue" "', argument " "1"" of type '" "OpenBabel::OBGenericData const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBGenericData * >(argp1);
+    {
+      std::string const &_result_ref = ((OpenBabel::OBGenericData const *)arg1)->GetValue();
+      result = (std::string *) &_result_ref;
+    }
+    ST(argvi) = SWIG_From_std_string  SWIG_PERL_CALL_ARGS_1(static_cast< std::string >(*result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_new_OBCommentData__SWIG_0) {
   {
     OpenBabel::OBCommentData *result = 0 ;
@@ -13487,6 +13519,37 @@ XS(_wrap_OBCommentData_GetData) {
     arg1 = reinterpret_cast< OpenBabel::OBCommentData * >(argp1);
     {
       std::string const &_result_ref = ((OpenBabel::OBCommentData const *)arg1)->GetData();
+      result = (std::string *) &_result_ref;
+    }
+    ST(argvi) = SWIG_From_std_string  SWIG_PERL_CALL_ARGS_1(static_cast< std::string >(*result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBCommentData_GetValue) {
+  {
+    OpenBabel::OBCommentData *arg1 = (OpenBabel::OBCommentData *) 0 ;
+    std::string *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBCommentData_GetValue(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBCommentData, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBCommentData_GetValue" "', argument " "1"" of type '" "OpenBabel::OBCommentData const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBCommentData * >(argp1);
+    {
+      std::string const &_result_ref = ((OpenBabel::OBCommentData const *)arg1)->GetValue();
       result = (std::string *) &_result_ref;
     }
     ST(argvi) = SWIG_From_std_string  SWIG_PERL_CALL_ARGS_1(static_cast< std::string >(*result)); argvi++ ;
@@ -14335,14 +14398,14 @@ XS(_wrap_OBPairData_GetValue) {
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBPairData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBPairData_GetValue" "', argument " "1"" of type '" "OpenBabel::OBPairData *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBPairData_GetValue" "', argument " "1"" of type '" "OpenBabel::OBPairData const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBPairData * >(argp1);
     {
-      std::string &_result_ref = (arg1)->GetValue();
+      std::string const &_result_ref = ((OpenBabel::OBPairData const *)arg1)->GetValue();
       result = (std::string *) &_result_ref;
     }
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__string, 0 | 0); argvi++ ;
+    ST(argvi) = SWIG_From_std_string  SWIG_PERL_CALL_ARGS_1(static_cast< std::string >(*result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -46044,6 +46107,7 @@ static swig_type_info _swigt__p_OpenBabel__OBTypeTable = {"_p_OpenBabel__OBTypeT
 static swig_type_info _swigt__p_OpenBabel__OBUnitCell = {"_p_OpenBabel__OBUnitCell", "OpenBabel::OBUnitCell *", 0, 0, (void*)"Chemistry::OpenBabel::OBUnitCell", 0};
 static swig_type_info _swigt__p_OpenBabel__OBVirtualBond = {"_p_OpenBabel__OBVirtualBond", "OpenBabel::OBVirtualBond *", 0, 0, (void*)"Chemistry::OpenBabel::OBVirtualBond", 0};
 static swig_type_info _swigt__p_OpenBabel__Pattern = {"_p_OpenBabel__Pattern", "OpenBabel::Pattern *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__Template = {"_p_OpenBabel__Template", "OpenBabel::Template *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__matrix3x3 = {"_p_OpenBabel__matrix3x3", "OpenBabel::matrix3x3 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t = {"_p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t", "OpenBabel::quad<OpenBabel::OBAtom *,OpenBabel::OBAtom *,OpenBabel::OBAtom *,OpenBabel::OBAtom * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t = {"_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t", "OpenBabel::triple<OpenBabel::OBAtom *,OpenBabel::OBAtom *,OpenBabel::OBAtom * > *", 0, 0, (void*)0, 0};
@@ -46153,6 +46217,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_OpenBabel__OBUnitCell,
   &_swigt__p_OpenBabel__OBVirtualBond,
   &_swigt__p_OpenBabel__Pattern,
+  &_swigt__p_OpenBabel__Template,
   &_swigt__p_OpenBabel__matrix3x3,
   &_swigt__p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t,
   &_swigt__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t,
@@ -46262,6 +46327,7 @@ static swig_cast_info _swigc__p_OpenBabel__OBTypeTable[] = {  {&_swigt__p_OpenBa
 static swig_cast_info _swigc__p_OpenBabel__OBUnitCell[] = {  {&_swigt__p_OpenBabel__OBUnitCell, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBVirtualBond[] = {  {&_swigt__p_OpenBabel__OBVirtualBond, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__Pattern[] = {  {&_swigt__p_OpenBabel__Pattern, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__Template[] = {  {&_swigt__p_OpenBabel__Template, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__matrix3x3[] = {  {&_swigt__p_OpenBabel__matrix3x3, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t[] = {  {&_swigt__p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t[] = {  {&_swigt__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -46371,6 +46437,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_OpenBabel__OBUnitCell,
   _swigc__p_OpenBabel__OBVirtualBond,
   _swigc__p_OpenBabel__Pattern,
+  _swigc__p_OpenBabel__Template,
   _swigc__p_OpenBabel__matrix3x3,
   _swigc__p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t,
   _swigc__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t,
@@ -46676,10 +46743,12 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBGenericData_SetAttribute", _wrap_OBGenericData_SetAttribute},
 {"Chemistry::OpenBabelc::OBGenericData_GetAttribute", _wrap_OBGenericData_GetAttribute},
 {"Chemistry::OpenBabelc::OBGenericData_GetDataType", _wrap_OBGenericData_GetDataType},
+{"Chemistry::OpenBabelc::OBGenericData_GetValue", _wrap_OBGenericData_GetValue},
 {"Chemistry::OpenBabelc::new_OBCommentData", _wrap_new_OBCommentData},
 {"Chemistry::OpenBabelc::OBCommentData_Clone", _wrap_OBCommentData_Clone},
 {"Chemistry::OpenBabelc::OBCommentData_SetData", _wrap_OBCommentData_SetData},
 {"Chemistry::OpenBabelc::OBCommentData_GetData", _wrap_OBCommentData_GetData},
+{"Chemistry::OpenBabelc::OBCommentData_GetValue", _wrap_OBCommentData_GetValue},
 {"Chemistry::OpenBabelc::delete_OBCommentData", _wrap_delete_OBCommentData},
 {"Chemistry::OpenBabelc::new_OBExternalBond", _wrap_new_OBExternalBond},
 {"Chemistry::OpenBabelc::delete_OBExternalBond", _wrap_delete_OBExternalBond},
