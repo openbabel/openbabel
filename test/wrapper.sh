@@ -10,6 +10,14 @@ if [ -d ../src/formats/.libs ]; then
 	BABEL_LIBDIR="`pwd`/../src/formats/.libs:`pwd`/../src/formats/xml/.libs"
 	export BABEL_LIBDIR
     fi
+    if [ "x${BABEL_DATADIR}" = "x" ]; then
+	if [ "x${top_srcdir}" != "x" ]; then
+	    BABEL_DATADIR="${top_srcdir}/data"
+	else
+	    BABEL_DATADIR="`pwd`/../data"
+	fi
+	export BABEL_DATADIR
+    fi
 fi
 
 prove ${TESTS}
