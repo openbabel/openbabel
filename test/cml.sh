@@ -13,12 +13,13 @@ else
 fi
 
 echo
-echo "Testing CML support..."
+echo "# Testing CML support..."
 if [ -f $cmltestdir/test.sh ]; then
-    cd $cmltestdir
-    source test.sh
-    cd ..
+    echo "# This test will take quite some time!"
+    echo "# and it currently always passes, so check the results file"
+    (cd $cmltestdir; source test.sh >/dev/null 2>&1)
+    echo "1..1"
+    echo "ok 1"
 else
-    echo "CML tests not found. Skipping test."
-    exit 77
+    echo "1..0 # skipping - CML test set not found"
 fi

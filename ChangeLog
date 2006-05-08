@@ -7,6 +7,9 @@
 
 	* test/wrapper.sh: Update to include export for BABEL_DATADIR.
 
+	* test/*: Add many new unit test frameworks (atom, mol, bond,
+	conversion, format, etc.)
+
 2006-05-08 Chris Morley <ob@gaseq.co.uk>
 
 	* src/formats/xml/cmlformat.cpp(WriteMolecule): since the id

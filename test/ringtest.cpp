@@ -36,6 +36,9 @@ void GenerateRingReference();
 
 int main(int argc,char *argv[])
 {
+  // turn off slow sync with C-style output (we don't use it anyway).
+  std::ios::sync_with_stdio(false);
+
   if (argc != 1)
     {
       if (strncmp(argv[1], "-g", 2))
@@ -125,30 +128,30 @@ int main(int argc,char *argv[])
 	  if (vb[bond->GetIdx()] != bond->IsInRing())
 	    {
 	      cout << "not ok " << currentTest++
-		   << " # ring bond data different than reference" << endl;
-	      cout << "# Molecule: " << mol.GetTitle() << endl;
+		   << " # ring bond data different than reference\n";
+	      cout << "# Molecule: " << mol.GetTitle() << "\n";
 	    }
 	  else
 	    cout << "ok " << currentTest++
-		 << " # correct ring bond data" << endl;
+		 << " # correct ring bond data\n";
 	}
 
       vr = mol.GetSSSR();
       if (!rifs.getline(buffer,BUFF_SIZE))
         {
-	  cout << "Bail out! error reading reference data" << endl;
+	  cout << "Bail out! error reading reference data\n";
 	  return -1; // test failed
         }
       sscanf(buffer,"%d",&size);
       if (vr.size() != size) //check SSSR size
         {
 	  cout << "not ok " << currentTest++ 
-	       << " # SSSR size different than reference" << endl;
-	  cout << "# Molecule: " << mol.GetTitle() << endl;
+	       << " # SSSR size different than reference\n";
+	  cout << "# Molecule: " << mol.GetTitle() << "\n";
         }
       else
 	cout << "ok " << currentTest++
-	     << " # SSSR size matches reference" << endl;
+	     << " # SSSR size matches reference\n";
 
       if (!rifs.getline(buffer,BUFF_SIZE))
         {
@@ -162,11 +165,11 @@ int main(int argc,char *argv[])
         {
 	  if (i == vs.end())
             {
-	      cout << "not ok " << currentTest++ << " # error in SSSR count" << endl;
-	      cout << "# Molecule: " << mol.GetTitle() << endl;
+	      cout << "not ok " << currentTest++ << " # error in SSSR count\n";
+		cout << "# Molecule: " << mol.GetTitle() << "\n";
             }
 	  else
-	    cout << "ok " << currentTest++ << " # correct SSSR count" << endl;
+	    cout << "ok " << currentTest++ << " # correct SSSR count\n";
 
 	  count = 0;
 	  for (m = vr.begin();m != vr.end();m++)
@@ -175,11 +178,11 @@ int main(int argc,char *argv[])
 
 	  if (atoi((char*)i->c_str()) != count)
             {
-	      cout << "not ok " << currentTest++ << "# ring membership test failed" << endl;
-	      cout << "# Molecule: " << mol.GetTitle() << endl;
+	      cout << "not ok " << currentTest++ << "# ring membership test failed\n";
+	      cout << "# Molecule: " << mol.GetTitle() << "\n";
             }
 	  else
-	    cout << "ok " << currentTest++ << " # ring membership passed " << endl;
+	    cout << "ok " << currentTest++ << " # ring membership passed\n";
 
 	  i++;
         }

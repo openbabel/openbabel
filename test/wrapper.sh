@@ -2,7 +2,10 @@
 
 # Run "prove" on all Perl programs
 
-TESTS="matrix.pl unitcell.pl rings.pl smarts.pl aromatest.pl cml.pl test-set.pl"
+TESTS="aromatest.pl atom bond conversion data format"
+TESTS="${TESTS} internalcoord matrix mol residue rings"
+TESTS="${TESTS} smarts unitcell"
+TESTS="${TESTS} cml.sh test-set.sh"
 PROVE=prove
 
 if [ -d ../src/formats/.libs ]; then

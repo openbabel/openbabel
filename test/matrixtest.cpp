@@ -52,10 +52,10 @@ bool testInversion()
 
     if (!result.isUnitMatrix())
     {
-      cout << "not ok " << testNumber++ << " matrix inversion" << endl;
+      cout << "not ok " << testNumber++ << " matrix inversion\n";
       return false;
     }
-    cout << "ok " << testNumber++ << " matrix inversion" << endl;
+    cout << "ok " << testNumber++ << " matrix inversion\n";
     return true;
 }
 
@@ -82,7 +82,7 @@ bool testEigenvalues()
     {
       cout << "not ok " << testNumber++ << " matrix eigenvalue test failed,"
 	   << " conjugation of a diagonal matrix"
-	   << "with a rotation is not symmetric." << endl;
+	   << "with a rotation is not symmetric.\n";
         return false;
     }
 
@@ -93,18 +93,18 @@ bool testEigenvalues()
         if ( fabs(eigenvals[j]-Diagonal.Get(j,j)) > 2e-6 )
         {
 	  cout << "not ok " << testNumber++ << " matrix eigenvalue test(" << j
-	       << ") failed, wrong eigenvalues computed." << endl;
+	       << ") failed, wrong eigenvalues computed.\n";
 	  cout << "# Expected: " << eigenvals[j] << " and got instead: "
-	       << Diagonal.Get(j,j) << endl;
+	       << Diagonal.Get(j,j) << "\n";
 	  return false;
         }
 
     if ( (eigenvals[0] >= eigenvals[1]) || (eigenvals[1] >= eigenvals[2]) )
     {
-      cout << "not ok " << testNumber++ << " matrix eigenvalue test failed, eigenvalues not ordered." << endl;
+      cout << "not ok " << testNumber++ << " matrix eigenvalue test failed, eigenvalues not ordered.\n";
         return false;
     }
-    cout << "ok " << testNumber++ << " matrix eigenvalue test" << endl;
+    cout << "ok " << testNumber++ << " matrix eigenvalue test\n";
     return true;
 }
 
@@ -128,7 +128,7 @@ bool testEigenvectors()
     {
       cout << "not ok " << testNumber++ << " Matrix eigenvector test failed,"
 	   << " findEigenvectorsIfSymmetric()"
-	   << " returned a matrix that is not orthogonal." << endl;
+	   << " returned a matrix that is not orthogonal.\n";
         return false;
     }
 
@@ -137,7 +137,7 @@ bool testEigenvectors()
     if (!shouldBeDiagonal.isDiagonal())
     {
       cout << "not ok " << testNumber << " Matrix eigenvector test failed,"
-	   << "matrix is not diagonalized." << endl;
+	   << "matrix is not diagonalized.\n";
         return false;
     }
 
@@ -145,9 +145,9 @@ bool testEigenvectors()
         if ( fabs(shouldBeDiagonal.Get(j,j) - eigenvals[j]) > 2e-6 )
         {
 	  cout << "not ok " << testNumber++ << " matrix eigenvector test(" << j <<
-            ") failed, wrong eigenvalues computed." << endl;
+            ") failed, wrong eigenvalues computed.\n";
 	  cout << "# Expected: " << eigenvals[j] << " and got instead: "
-	       << shouldBeDiagonal.Get(j,j) << endl;
+	       << shouldBeDiagonal.Get(j,j) << "\n";
 	  return false;
         }
 
@@ -159,17 +159,20 @@ bool testEigenvectors()
         {
 	  cout << "not ok " << testNumber++ << " Matrix eigenvector test failed,"
 	       << " wrong eigenvector (" << EV.length() 
-	       << "computed for column " << i << "." << endl;
+	       << "computed for column " << i << ".\n";
             return false;
         }
     }
-    cout << "ok " << testNumber++ << " matrix eigenvector test" << endl;
+    cout << "ok " << testNumber++ << " matrix eigenvector test\n";
     return true;
 }
 
 
 int main(int argc,char *argv[])
 {
+  // turn off slow sync with C-style output (we don't use it anyway).
+  std::ios::sync_with_stdio(false);
+
     if (argc != 1)
     {
         cout << "Usage: matrixtest" << endl;
@@ -185,8 +188,8 @@ int main(int argc,char *argv[])
 
     bool passedAll = true;
     testNumber = 1;
-    cout << "# Loop through " << testCount << " random matrices" << endl;
-    cout << "# Testing matrix inversion, eigenvalue, and eigenvector processes" << endl;
+    cout << "# Loop through " << testCount << " random matrices\n";
+    cout << "# Testing matrix inversion, eigenvalue, and eigenvector processes\n";
     for (int i=0; i < testCount; i++)
     {
         if (!testInversion())

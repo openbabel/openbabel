@@ -33,6 +33,9 @@ using namespace OpenBabel;
 
 int main(int argc,char *argv[])
 {
+  // turn off slow sync with C-style output (we don't use it anyway).
+  std::ios::sync_with_stdio(false);
+
   if (argc != 2)
     {
       cout << "Usage: aromatest <file>" << endl;
@@ -86,14 +89,13 @@ int main(int argc,char *argv[])
 	    continue;
 
 	  if (atom->IsAromatic())
-	    cout << "ok " << testCount++ << endl;
+	    cout << "ok " << testCount++ << "\n";
 	  else
 	    {
-	      cout << "not ok " << testCount++ << " # atom isn't aromatic!" 
-		   << endl;
+	      cout << "not ok " << testCount++ << " # atom isn't aromatic!\n";
 	      cout << "# atom idx " << i  
 		   << " in molecule " << molCount << " "
-		   << mol.GetTitle() << endl;
+		   << mol.GetTitle() << "\n";
 	    }
 	}
 	

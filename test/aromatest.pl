@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-system("./aromatest aromatics.smi");
+system("./aromatic aromatics.smi");
 
 # If the program failed to execute, ignore the test
 if ($? == -1) {

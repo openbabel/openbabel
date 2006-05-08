@@ -1,6 +1,8 @@
 SUBDIRS = cmltest
 
-noinst_PROGRAMS = matrixtest ringtest smartstest roundtrip unitcell aromatest
+noinst_PROGRAMS = matrix rings smarts roundtrip unitcell aromatic \
+		atom bond conversion data format internalcoord \
+		mol residue
 
 if PERL_TESTS
 # Use perl's "prove" script and some wrapper .pl scripts to run tests
@@ -19,13 +21,21 @@ EXTRA_DIST = smartsresults.txt smartstest.txt \
 		unitcell.txt unitcell_results.txt \
 		ringresults.txt attype.00.smi \
 		cml.sh test-set.sh \
-		matrix.pl unitcell.pl rings.pl \
-		smarts.pl test-set.pl cml.pl \
 		aromatest.pl aromatics.smi
 
-matrixtest_SOURCES = matrixtest.cpp
-ringtest_SOURCES = ringtest.cpp
-smartstest_SOURCES = smartstest.cpp
-unitcell_SOURCES = unitcell.cpp
 roundtrip_SOURCES = roundtrip.cpp
-aromatest_SOURCES = aromatest.cpp
+
+# Unit Test binaries
+aromatic_SOURCES = aromatest.cpp
+atom_SOURCES = atom.cpp
+bond_SOURCES = bond.cpp
+conversion_SOURCES = conversion.cpp
+data_SOURCES = data.cpp
+format_SOURCES = format.cpp
+internalcoord_SOURCES = internalcoord.cpp
+matrix_SOURCES = matrixtest.cpp
+mol_SOURCES = mol.cpp
+residue_SOURCES = residue.cpp
+rings_SOURCES = ringtest.cpp
+smarts_SOURCES = smartstest.cpp
+unitcell_SOURCES = unitcell.cpp

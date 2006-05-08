@@ -36,9 +36,11 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-noinst_PROGRAMS = matrixtest$(EXEEXT) ringtest$(EXEEXT) \
-	smartstest$(EXEEXT) roundtrip$(EXEEXT) unitcell$(EXEEXT) \
-	aromatest$(EXEEXT)
+noinst_PROGRAMS = matrix$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
+	roundtrip$(EXEEXT) unitcell$(EXEEXT) aromatic$(EXEEXT) \
+	atom$(EXEEXT) bond$(EXEEXT) conversion$(EXEEXT) data$(EXEEXT) \
+	format$(EXEEXT) internalcoord$(EXEEXT) mol$(EXEEXT) \
+	residue$(EXEEXT)
 subdir = test
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -50,26 +52,58 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am_aromatest_OBJECTS = aromatest.$(OBJEXT)
-aromatest_OBJECTS = $(am_aromatest_OBJECTS)
-aromatest_LDADD = $(LDADD)
-aromatest_DEPENDENCIES = ../src/libopenbabel.la
-am_matrixtest_OBJECTS = matrixtest.$(OBJEXT)
-matrixtest_OBJECTS = $(am_matrixtest_OBJECTS)
-matrixtest_LDADD = $(LDADD)
-matrixtest_DEPENDENCIES = ../src/libopenbabel.la
-am_ringtest_OBJECTS = ringtest.$(OBJEXT)
-ringtest_OBJECTS = $(am_ringtest_OBJECTS)
-ringtest_LDADD = $(LDADD)
-ringtest_DEPENDENCIES = ../src/libopenbabel.la
+am_aromatic_OBJECTS = aromatest.$(OBJEXT)
+aromatic_OBJECTS = $(am_aromatic_OBJECTS)
+aromatic_LDADD = $(LDADD)
+aromatic_DEPENDENCIES = ../src/libopenbabel.la
+am_atom_OBJECTS = atom.$(OBJEXT)
+atom_OBJECTS = $(am_atom_OBJECTS)
+atom_LDADD = $(LDADD)
+atom_DEPENDENCIES = ../src/libopenbabel.la
+am_bond_OBJECTS = bond.$(OBJEXT)
+bond_OBJECTS = $(am_bond_OBJECTS)
+bond_LDADD = $(LDADD)
+bond_DEPENDENCIES = ../src/libopenbabel.la
+am_conversion_OBJECTS = conversion.$(OBJEXT)
+conversion_OBJECTS = $(am_conversion_OBJECTS)
+conversion_LDADD = $(LDADD)
+conversion_DEPENDENCIES = ../src/libopenbabel.la
+am_data_OBJECTS = data.$(OBJEXT)
+data_OBJECTS = $(am_data_OBJECTS)
+data_LDADD = $(LDADD)
+data_DEPENDENCIES = ../src/libopenbabel.la
+am_format_OBJECTS = format.$(OBJEXT)
+format_OBJECTS = $(am_format_OBJECTS)
+format_LDADD = $(LDADD)
+format_DEPENDENCIES = ../src/libopenbabel.la
+am_internalcoord_OBJECTS = internalcoord.$(OBJEXT)
+internalcoord_OBJECTS = $(am_internalcoord_OBJECTS)
+internalcoord_LDADD = $(LDADD)
+internalcoord_DEPENDENCIES = ../src/libopenbabel.la
+am_matrix_OBJECTS = matrixtest.$(OBJEXT)
+matrix_OBJECTS = $(am_matrix_OBJECTS)
+matrix_LDADD = $(LDADD)
+matrix_DEPENDENCIES = ../src/libopenbabel.la
+am_mol_OBJECTS = mol.$(OBJEXT)
+mol_OBJECTS = $(am_mol_OBJECTS)
+mol_LDADD = $(LDADD)
+mol_DEPENDENCIES = ../src/libopenbabel.la
+am_residue_OBJECTS = residue.$(OBJEXT)
+residue_OBJECTS = $(am_residue_OBJECTS)
+residue_LDADD = $(LDADD)
+residue_DEPENDENCIES = ../src/libopenbabel.la
+am_rings_OBJECTS = ringtest.$(OBJEXT)
+rings_OBJECTS = $(am_rings_OBJECTS)
+rings_LDADD = $(LDADD)
+rings_DEPENDENCIES = ../src/libopenbabel.la
 am_roundtrip_OBJECTS = roundtrip.$(OBJEXT)
 roundtrip_OBJECTS = $(am_roundtrip_OBJECTS)
 roundtrip_LDADD = $(LDADD)
 roundtrip_DEPENDENCIES = ../src/libopenbabel.la
-am_smartstest_OBJECTS = smartstest.$(OBJEXT)
-smartstest_OBJECTS = $(am_smartstest_OBJECTS)
-smartstest_LDADD = $(LDADD)
-smartstest_DEPENDENCIES = ../src/libopenbabel.la
+am_smarts_OBJECTS = smartstest.$(OBJEXT)
+smarts_OBJECTS = $(am_smarts_OBJECTS)
+smarts_LDADD = $(LDADD)
+smarts_DEPENDENCIES = ../src/libopenbabel.la
 am_unitcell_OBJECTS = unitcell.$(OBJEXT)
 unitcell_OBJECTS = $(am_unitcell_OBJECTS)
 unitcell_LDADD = $(LDADD)
@@ -85,12 +119,16 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(aromatest_SOURCES) $(matrixtest_SOURCES) \
-	$(ringtest_SOURCES) $(roundtrip_SOURCES) $(smartstest_SOURCES) \
-	$(unitcell_SOURCES)
-DIST_SOURCES = $(aromatest_SOURCES) $(matrixtest_SOURCES) \
-	$(ringtest_SOURCES) $(roundtrip_SOURCES) $(smartstest_SOURCES) \
-	$(unitcell_SOURCES)
+SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
+	$(conversion_SOURCES) $(data_SOURCES) $(format_SOURCES) \
+	$(internalcoord_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
+	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
+	$(smarts_SOURCES) $(unitcell_SOURCES)
+DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
+	$(conversion_SOURCES) $(data_SOURCES) $(format_SOURCES) \
+	$(internalcoord_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
+	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
+	$(smarts_SOURCES) $(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -251,16 +289,24 @@ EXTRA_DIST = smartsresults.txt smartstest.txt \
 		unitcell.txt unitcell_results.txt \
 		ringresults.txt attype.00.smi \
 		cml.sh test-set.sh \
-		matrix.pl unitcell.pl rings.pl \
-		smarts.pl test-set.pl cml.pl \
 		aromatest.pl aromatics.smi
 
-matrixtest_SOURCES = matrixtest.cpp
-ringtest_SOURCES = ringtest.cpp
-smartstest_SOURCES = smartstest.cpp
-unitcell_SOURCES = unitcell.cpp
 roundtrip_SOURCES = roundtrip.cpp
-aromatest_SOURCES = aromatest.cpp
+
+# Unit Test binaries
+aromatic_SOURCES = aromatest.cpp
+atom_SOURCES = atom.cpp
+bond_SOURCES = bond.cpp
+conversion_SOURCES = conversion.cpp
+data_SOURCES = data.cpp
+format_SOURCES = format.cpp
+internalcoord_SOURCES = internalcoord.cpp
+matrix_SOURCES = matrixtest.cpp
+mol_SOURCES = mol.cpp
+residue_SOURCES = residue.cpp
+rings_SOURCES = ringtest.cpp
+smarts_SOURCES = smartstest.cpp
+unitcell_SOURCES = unitcell.cpp
 all: all-recursive
 
 .SUFFIXES:
@@ -301,21 +347,45 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-aromatest$(EXEEXT): $(aromatest_OBJECTS) $(aromatest_DEPENDENCIES) 
-	@rm -f aromatest$(EXEEXT)
-	$(CXXLINK) $(aromatest_LDFLAGS) $(aromatest_OBJECTS) $(aromatest_LDADD) $(LIBS)
-matrixtest$(EXEEXT): $(matrixtest_OBJECTS) $(matrixtest_DEPENDENCIES) 
-	@rm -f matrixtest$(EXEEXT)
-	$(CXXLINK) $(matrixtest_LDFLAGS) $(matrixtest_OBJECTS) $(matrixtest_LDADD) $(LIBS)
-ringtest$(EXEEXT): $(ringtest_OBJECTS) $(ringtest_DEPENDENCIES) 
-	@rm -f ringtest$(EXEEXT)
-	$(CXXLINK) $(ringtest_LDFLAGS) $(ringtest_OBJECTS) $(ringtest_LDADD) $(LIBS)
+aromatic$(EXEEXT): $(aromatic_OBJECTS) $(aromatic_DEPENDENCIES) 
+	@rm -f aromatic$(EXEEXT)
+	$(CXXLINK) $(aromatic_LDFLAGS) $(aromatic_OBJECTS) $(aromatic_LDADD) $(LIBS)
+atom$(EXEEXT): $(atom_OBJECTS) $(atom_DEPENDENCIES) 
+	@rm -f atom$(EXEEXT)
+	$(CXXLINK) $(atom_LDFLAGS) $(atom_OBJECTS) $(atom_LDADD) $(LIBS)
+bond$(EXEEXT): $(bond_OBJECTS) $(bond_DEPENDENCIES) 
+	@rm -f bond$(EXEEXT)
+	$(CXXLINK) $(bond_LDFLAGS) $(bond_OBJECTS) $(bond_LDADD) $(LIBS)
+conversion$(EXEEXT): $(conversion_OBJECTS) $(conversion_DEPENDENCIES) 
+	@rm -f conversion$(EXEEXT)
+	$(CXXLINK) $(conversion_LDFLAGS) $(conversion_OBJECTS) $(conversion_LDADD) $(LIBS)
+data$(EXEEXT): $(data_OBJECTS) $(data_DEPENDENCIES) 
+	@rm -f data$(EXEEXT)
+	$(CXXLINK) $(data_LDFLAGS) $(data_OBJECTS) $(data_LDADD) $(LIBS)
+format$(EXEEXT): $(format_OBJECTS) $(format_DEPENDENCIES) 
+	@rm -f format$(EXEEXT)
+	$(CXXLINK) $(format_LDFLAGS) $(format_OBJECTS) $(format_LDADD) $(LIBS)
+internalcoord$(EXEEXT): $(internalcoord_OBJECTS) $(internalcoord_DEPENDENCIES) 
+	@rm -f internalcoord$(EXEEXT)
+	$(CXXLINK) $(internalcoord_LDFLAGS) $(internalcoord_OBJECTS) $(internalcoord_LDADD) $(LIBS)
+matrix$(EXEEXT): $(matrix_OBJECTS) $(matrix_DEPENDENCIES) 
+	@rm -f matrix$(EXEEXT)
+	$(CXXLINK) $(matrix_LDFLAGS) $(matrix_OBJECTS) $(matrix_LDADD) $(LIBS)
+mol$(EXEEXT): $(mol_OBJECTS) $(mol_DEPENDENCIES) 
+	@rm -f mol$(EXEEXT)
+	$(CXXLINK) $(mol_LDFLAGS) $(mol_OBJECTS) $(mol_LDADD) $(LIBS)
+residue$(EXEEXT): $(residue_OBJECTS) $(residue_DEPENDENCIES) 
+	@rm -f residue$(EXEEXT)
+	$(CXXLINK) $(residue_LDFLAGS) $(residue_OBJECTS) $(residue_LDADD) $(LIBS)
+rings$(EXEEXT): $(rings_OBJECTS) $(rings_DEPENDENCIES) 
+	@rm -f rings$(EXEEXT)
+	$(CXXLINK) $(rings_LDFLAGS) $(rings_OBJECTS) $(rings_LDADD) $(LIBS)
 roundtrip$(EXEEXT): $(roundtrip_OBJECTS) $(roundtrip_DEPENDENCIES) 
 	@rm -f roundtrip$(EXEEXT)
 	$(CXXLINK) $(roundtrip_LDFLAGS) $(roundtrip_OBJECTS) $(roundtrip_LDADD) $(LIBS)
-smartstest$(EXEEXT): $(smartstest_OBJECTS) $(smartstest_DEPENDENCIES) 
-	@rm -f smartstest$(EXEEXT)
-	$(CXXLINK) $(smartstest_LDFLAGS) $(smartstest_OBJECTS) $(smartstest_LDADD) $(LIBS)
+smarts$(EXEEXT): $(smarts_OBJECTS) $(smarts_DEPENDENCIES) 
+	@rm -f smarts$(EXEEXT)
+	$(CXXLINK) $(smarts_LDFLAGS) $(smarts_OBJECTS) $(smarts_LDADD) $(LIBS)
 unitcell$(EXEEXT): $(unitcell_OBJECTS) $(unitcell_DEPENDENCIES) 
 	@rm -f unitcell$(EXEEXT)
 	$(CXXLINK) $(unitcell_LDFLAGS) $(unitcell_OBJECTS) $(unitcell_LDADD) $(LIBS)
@@ -327,7 +397,15 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/aromatest.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atom.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bond.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conversion.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/internalcoord.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrixtest.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/residue.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ringtest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/roundtrip.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smartstest.Po@am__quote@

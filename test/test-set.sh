@@ -4,13 +4,12 @@
 
 echo
 if [ -d test-set ]; then
-    echo "Testing molecule file roundtripping..."
-    echo "This test will take quite some time!"
-    echo " and it currently always passes, so check the results file"
-    cd test-set
-    source test.sh
-    cd ..
+    echo "# Testing molecule file roundtripping..."
+    echo "# This test will take quite some time!"
+    echo "# and it currently always passes, so check the results file"
+    (cd test-set; source test.sh >/dev/null 2>&1)
+    echo "1..1"
+    echo "ok 1"
 else
-    echo "Roundtrip test set not found. Skipping test."
-    exit 77
+    echo "1..0 # skipping - roundtrip test set not found."
 fi
