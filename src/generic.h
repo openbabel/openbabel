@@ -170,6 +170,9 @@ public:
     {        return(_attr);    }
     unsigned int                GetDataType()    const
     {        return(_type);    }
+		//! Base class returns attribute but should never be called
+    virtual const std::string &GetValue()  const
+		{			return _attr; }
 };
 
 //! Used to store a comment string (can be multiple lines long)
@@ -189,6 +192,8 @@ public:
     void          SetData(const char *d)
     {_data = d; Trim(_data);     }
     const std::string &GetData()              const
+    {        return(_data);      }
+    const virtual std::string &GetValue()              const  
     {        return(_data);      }
 };
 
@@ -250,7 +255,7 @@ public:
     {
         _value = v;
     }
-    std::string &GetValue()
+    virtual const std::string &GetValue() const //now virtual and const
     {
         return(_value);
     }

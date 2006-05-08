@@ -1026,8 +1026,18 @@ bool CMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	
 	const char* id = mol.GetTitle();
 	if(*id)
-		xmlTextWriterWriteAttribute(writer(), C_ID, BAD_CAST id);
-
+	{
+		string name(id);
+		if(!isalpha(*id)) //since ids have to start with a letter, add "id" to those that don't...
+			name = "id" + name;
+		xmlTextWriterWriteAttribute(writer(), C_ID, BAD_CAST name.c_str());
+		if(!isalpha(*id)) //...and write <name> orig title </name>
+		{
+			xmlTextWriterStartElementNS(writer(), prefix, C_NAME, NULL);
+			xmlTextWriterWriteFormatString(writer(),"%s", id);
+			xmlTextWriterEndElement(writer());//name
+		}
+	}
 	if(_pxmlConv->IsOption("m") && _pxmlConv->GetOutputIndex()==1) //only on first molecule
 		WriteMetadataList();
 
