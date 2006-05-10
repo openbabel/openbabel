@@ -1,8 +1,10 @@
 SUBDIRS = cmltest
 
-noinst_PROGRAMS = matrix rings smarts roundtrip unitcell aromatic \
+noinst_PROGRAMS = matrix rings smarts unitcell aromatic \
 		atom bond conversion data format internalcoord \
-		mol residue
+		mol residue formula
+
+bin_PROGRAMS = roundtrip
 
 if PERL_TESTS
 # Use perl's "prove" script and some wrapper .pl scripts to run tests
@@ -10,7 +12,7 @@ if PERL_TESTS
 TESTS = wrapper.sh
 else
 # Standard automake tests
-TESTS = matrixtest smartstest ringtest unitcell \
+TESTS = matrix smartstest rings unitcell \
 	$(top_srcdir)/test/cml.sh $(top_srcdir)/test/test-set.sh
 endif
 
@@ -18,11 +20,8 @@ LDADD = ../src/libopenbabel.la @LIBDL@
 TESTDATADIR = $(top_srcdir)/test/files/
 AM_CPPFLAGS = -I$(top_srcdir)/src -DTESTDATADIR="\"$(TESTDATADIR)\""
 
-EXTRA_DIST = smartsresults.txt smartstest.txt \
-		unitcell.txt unitcell_results.txt \
-		ringresults.txt attype.00.smi \
-		cml.sh test-set.sh \
-		aromatest.pl aromatics.smi
+EXTRA_DIST = files wrapper.sh cml.sh test-set.sh \
+		aromatest.pl
 
 roundtrip_SOURCES = roundtrip.cpp
 
@@ -33,6 +32,7 @@ bond_SOURCES = bond.cpp
 conversion_SOURCES = conversion.cpp
 data_SOURCES = data.cpp
 format_SOURCES = format.cpp
+formula_SOURCES = formula.cpp
 internalcoord_SOURCES = internalcoord.cpp
 matrix_SOURCES = matrixtest.cpp
 mol_SOURCES = mol.cpp

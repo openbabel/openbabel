@@ -37,10 +37,11 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = matrix$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
-	roundtrip$(EXEEXT) unitcell$(EXEEXT) aromatic$(EXEEXT) \
-	atom$(EXEEXT) bond$(EXEEXT) conversion$(EXEEXT) data$(EXEEXT) \
+	unitcell$(EXEEXT) aromatic$(EXEEXT) atom$(EXEEXT) \
+	bond$(EXEEXT) conversion$(EXEEXT) data$(EXEEXT) \
 	format$(EXEEXT) internalcoord$(EXEEXT) mol$(EXEEXT) \
-	residue$(EXEEXT)
+	residue$(EXEEXT) formula$(EXEEXT)
+bin_PROGRAMS = roundtrip$(EXEEXT)
 subdir = test
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -51,7 +52,9 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
-PROGRAMS = $(noinst_PROGRAMS)
+am__installdirs = "$(DESTDIR)$(bindir)"
+binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
+PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am_aromatic_OBJECTS = aromatest.$(OBJEXT)
 aromatic_OBJECTS = $(am_aromatic_OBJECTS)
 aromatic_LDADD = $(LDADD)
@@ -76,6 +79,10 @@ am_format_OBJECTS = format.$(OBJEXT)
 format_OBJECTS = $(am_format_OBJECTS)
 format_LDADD = $(LDADD)
 format_DEPENDENCIES = ../src/libopenbabel.la
+am_formula_OBJECTS = formula.$(OBJEXT)
+formula_OBJECTS = $(am_formula_OBJECTS)
+formula_LDADD = $(LDADD)
+formula_DEPENDENCIES = ../src/libopenbabel.la
 am_internalcoord_OBJECTS = internalcoord.$(OBJEXT)
 internalcoord_OBJECTS = $(am_internalcoord_OBJECTS)
 internalcoord_LDADD = $(LDADD)
@@ -121,14 +128,14 @@ CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(conversion_SOURCES) $(data_SOURCES) $(format_SOURCES) \
-	$(internalcoord_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
-	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
-	$(smarts_SOURCES) $(unitcell_SOURCES)
+	$(formula_SOURCES) $(internalcoord_SOURCES) $(matrix_SOURCES) \
+	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
+	$(roundtrip_SOURCES) $(smarts_SOURCES) $(unitcell_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(conversion_SOURCES) $(data_SOURCES) $(format_SOURCES) \
-	$(internalcoord_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
-	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
-	$(smarts_SOURCES) $(unitcell_SOURCES)
+	$(formula_SOURCES) $(internalcoord_SOURCES) $(matrix_SOURCES) \
+	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
+	$(roundtrip_SOURCES) $(smarts_SOURCES) $(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -276,7 +283,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = cmltest
 # Standard automake tests
-@PERL_TESTS_FALSE@TESTS = matrixtest smartstest ringtest unitcell \
+@PERL_TESTS_FALSE@TESTS = matrix smartstest rings unitcell \
 @PERL_TESTS_FALSE@	$(top_srcdir)/test/cml.sh $(top_srcdir)/test/test-set.sh
 
 
@@ -286,11 +293,8 @@ SUBDIRS = cmltest
 LDADD = ../src/libopenbabel.la @LIBDL@
 TESTDATADIR = $(top_srcdir)/test/files/
 AM_CPPFLAGS = -I$(top_srcdir)/src -DTESTDATADIR="\"$(TESTDATADIR)\""
-EXTRA_DIST = smartsresults.txt smartstest.txt \
-		unitcell.txt unitcell_results.txt \
-		ringresults.txt attype.00.smi \
-		cml.sh test-set.sh \
-		aromatest.pl aromatics.smi
+EXTRA_DIST = files wrapper.sh cml.sh test-set.sh \
+		aromatest.pl
 
 roundtrip_SOURCES = roundtrip.cpp
 
@@ -301,6 +305,7 @@ bond_SOURCES = bond.cpp
 conversion_SOURCES = conversion.cpp
 data_SOURCES = data.cpp
 format_SOURCES = format.cpp
+formula_SOURCES = formula.cpp
 internalcoord_SOURCES = internalcoord.cpp
 matrix_SOURCES = matrixtest.cpp
 mol_SOURCES = mol.cpp
@@ -341,6 +346,34 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+install-binPROGRAMS: $(bin_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	test -z "$(bindir)" || $(mkdir_p) "$(DESTDIR)$(bindir)"
+	@list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+	  if test -f $$p \
+	     || test -f $$p1 \
+	  ; then \
+	    f=`echo "$$p1" | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+	   echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(binPROGRAMS_INSTALL) '$$p' '$(DESTDIR)$(bindir)/$$f'"; \
+	   $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(binPROGRAMS_INSTALL) "$$p" "$(DESTDIR)$(bindir)/$$f" || exit 1; \
+	  else :; fi; \
+	done
+
+uninstall-binPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  f=`echo "$$p" | sed 's,^.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
+	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+	done
+
+clean-binPROGRAMS:
+	@list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+	  echo " rm -f $$p $$f"; \
+	  rm -f $$p $$f ; \
+	done
 
 clean-noinstPROGRAMS:
 	@list='$(noinst_PROGRAMS)'; for p in $$list; do \
@@ -366,6 +399,9 @@ data$(EXEEXT): $(data_OBJECTS) $(data_DEPENDENCIES)
 format$(EXEEXT): $(format_OBJECTS) $(format_DEPENDENCIES) 
 	@rm -f format$(EXEEXT)
 	$(CXXLINK) $(format_LDFLAGS) $(format_OBJECTS) $(format_LDADD) $(LIBS)
+formula$(EXEEXT): $(formula_OBJECTS) $(formula_DEPENDENCIES) 
+	@rm -f formula$(EXEEXT)
+	$(CXXLINK) $(formula_LDFLAGS) $(formula_OBJECTS) $(formula_LDADD) $(LIBS)
 internalcoord$(EXEEXT): $(internalcoord_OBJECTS) $(internalcoord_DEPENDENCIES) 
 	@rm -f internalcoord$(EXEEXT)
 	$(CXXLINK) $(internalcoord_LDFLAGS) $(internalcoord_OBJECTS) $(internalcoord_LDADD) $(LIBS)
@@ -403,6 +439,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conversion.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/formula.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/internalcoord.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrixtest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Po@am__quote@
@@ -696,6 +733,9 @@ check: check-recursive
 all-am: Makefile $(PROGRAMS)
 installdirs: installdirs-recursive
 installdirs-am:
+	for dir in "$(DESTDIR)$(bindir)"; do \
+	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
+	done
 install: install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
@@ -722,8 +762,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-recursive
 
-clean-am: clean-generic clean-libtool clean-noinstPROGRAMS \
-	mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-libtool \
+	clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -rf ./$(DEPDIR)
@@ -743,7 +783,7 @@ info-am:
 
 install-data-am:
 
-install-exec-am:
+install-exec-am: install-binPROGRAMS
 
 install-info: install-info-recursive
 
@@ -769,24 +809,24 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-info-am
+uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 
 uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-TESTS \
-	check-am clean clean-generic clean-libtool \
+	check-am clean clean-binPROGRAMS clean-generic clean-libtool \
 	clean-noinstPROGRAMS clean-recursive ctags ctags-recursive \
 	distclean distclean-compile distclean-generic \
 	distclean-libtool distclean-recursive distclean-tags distdir \
 	dvi dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-exec install-exec-am \
-	install-info install-info-am install-man install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic \
+	install-binPROGRAMS install-data install-data-am install-exec \
+	install-exec-am install-info install-info-am install-man \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
 	maintainer-clean-recursive mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool mostlyclean-recursive \
 	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
-	uninstall-info-am
+	uninstall-binPROGRAMS uninstall-info-am
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

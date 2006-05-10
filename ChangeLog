@@ -1,3 +1,9 @@
+2006-05-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/formula.cpp, test/files/formularesults.txt:
+	New test for OBMol::GetFormula(), OBMol::GetMolWt(), and
+	OBMol::GetExactMass().
+
 2006-05-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/files/: New subdirectory to contain test data files.
