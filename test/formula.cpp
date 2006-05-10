@@ -122,7 +122,7 @@ int main(int argc,char *argv[])
 	{
 	  cout << "not ok " << currentTest++ << " # molecular weight incorrect"
 	       << " for molecule " << mol.GetTitle() << "\n";
-	  cout << "# Expected " << atof(vs[2].c_str()) << " found " <<
+	  cout << "# Expected " << atof(vs[1].c_str()) << " found " <<
 	    mol.GetMolWt() << "\n";
 	}
       else
@@ -139,42 +139,44 @@ int main(int argc,char *argv[])
 	cout << "ok " << currentTest++ << " # molecular exact mass\n";
 
 
-      // Currently disabled -- illustrating bugs but need to verify
-      // the test data is correct -GRH
-
       // now after adding explict hydrogens -- should be identical
       //  since we'll add hydrogens that were implicit before
 
-//       mol.AddHydrogens();
+      // PR#1485580
+      mol.AddHydrogens();
 
-//       if (vs[0] != mol.GetFormula())
-// 	{
-// 	  cout << "not ok " << currentTest++ << " # molecular formula incorrect"
-// 	       << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
-// 	}
-//       else
-// 	cout << "ok " << currentTest++ << " # molecular hydrogen-added formula\n";
+      if (vs[0] != mol.GetFormula())
+	{
+	  cout << "not ok " << currentTest++ << " # molecular formula incorrect"
+	       << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
+	}
+      else
+	cout << "ok " << currentTest++ << " # molecular hydrogen-added formula\n";
 
-//       if ( fabs(atof(vs[1].c_str()) - mol.GetMolWt() ) > 1.0e-3)
-// 	{
-// 	  cout << "not ok " << currentTest++ << " # molecular weight incorrect"
-// 	       << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
-// 	  cout << "# Expected " << atof(vs[2].c_str()) << " found " <<
-// 	    mol.GetMolWt() << "\n";
-// 	}
-//       else
-// 	cout << "ok " << currentTest++ << " # molecule + hydrogens weight\n";
+      if ( fabs(atof(vs[1].c_str()) - mol.GetMolWt() ) > 1.0e-3)
+	{
+	  cout << "not ok " << currentTest++ << " # molecular weight incorrect"
+	       << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
+	  cout << "# Expected " << atof(vs[1].c_str()) << " found " <<
+	    mol.GetMolWt() << "\n";
+	  cout << "# Difference " << fabs(atof(vs[1].c_str()) - mol.GetMolWt())
+	       << "\n";
+	}
+      else
+	cout << "ok " << currentTest++ << " # molecule + hydrogens weight\n";
 
-//       if ( fabs(atof(vs[2].c_str()) - mol.GetExactMass() ) > 1.0e-3)
-// 	{
-// 	  cout << "not ok " << currentTest++ << " # exact mass incorrect"
-// 	       << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
-// 	  cout << "# Expected " << atof(vs[2].c_str()) << " found " <<
-// 	    mol.GetExactMass() << "\n";
-// 	}
-//       else
-// 	cout << "ok " << currentTest++ << " # molecular exact mass"
-// 	     << " after hydrogen addition\n";
+      if ( fabs(atof(vs[2].c_str()) - mol.GetExactMass() ) > 1.0e-3)
+	{
+	  cout << "not ok " << currentTest++ << " # exact mass incorrect"
+	       << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
+	  cout << "# Expected " << atof(vs[2].c_str()) << " found " <<
+	    mol.GetExactMass() << "\n";
+	  cout << "# Difference " << fabs(atof(vs[2].c_str()) - mol.GetExactMass())
+	       << "\n";	
+	}
+      else
+	cout << "ok " << currentTest++ << " # molecular exact mass"
+	     << " after hydrogen addition\n";
 
     }
 
