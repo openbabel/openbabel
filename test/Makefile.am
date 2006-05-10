@@ -15,7 +15,8 @@ TESTS = matrixtest smartstest ringtest unitcell \
 endif
 
 LDADD = ../src/libopenbabel.la @LIBDL@
-AM_CPPFLAGS = -I$(top_srcdir)/src -DTESTDATADIR="\"$(top_srcdir)/test/\""
+TESTDATADIR = $(top_srcdir)/test/files/
+AM_CPPFLAGS = -I$(top_srcdir)/src -DTESTDATADIR="\"$(TESTDATADIR)\""
 
 EXTRA_DIST = smartsresults.txt smartstest.txt \
 		unitcell.txt unitcell_results.txt \

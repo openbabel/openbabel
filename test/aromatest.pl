@@ -1,6 +1,11 @@
 #!/usr/bin/perl
+use Env qw(TESTDATADIR);
 
-system("./aromatic aromatics.smi");
+if (defined $TESTDATADIR) {
+    system("./aromatic $TESTDATADIR/aromatics.smi");
+} else {
+    system("./aromatic files/aromatics.smi");
+}
 
 # If the program failed to execute, ignore the test
 if ($? == -1) {

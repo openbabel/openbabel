@@ -1,3 +1,11 @@
+2006-05-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/files/: New subdirectory to contain test data files.
+
+	* test/Makefile.am: Update TESTDATADIR accordingly.
+
+	* test/*: Ditto.
+
 2006-05-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure, src/config.h.in: Update to include

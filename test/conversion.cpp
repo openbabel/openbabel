@@ -41,7 +41,7 @@ int main(int argc,char *argv[])
   cout << "# Unit tests for OBConversion \n";
 
   // the number of tests for "prove"
-  cout << "1..8\n";
+  cout << "1..9\n";
 
   cout << "ok 1\n"; // for loading tests
 
@@ -71,6 +71,7 @@ int main(int argc,char *argv[])
   else
     cout << "not ok 6\n";
 
+  // PR#1474265
   obConversion.WriteFile(&obMol, "test.mdl");
   ifstream ifs("test.mdl");
   if (ifs.good())
@@ -78,18 +79,71 @@ int main(int argc,char *argv[])
   else
     cout << "not ok 7\n";
 
- obConversion.SetInFormat("mdl");
- obConversion.ReadFile(&obMol, "test.mdl");
- if ( remove("test.mdl") != -1)
-   cout << "ok 8\n";
- else
-   cout << "not ok 8\n";
+  // PR#143577
+  obConversion.SetInFormat("mdl");
+  obConversion.ReadFile(&obMol, "test.mdl");
+  if ( remove("test.mdl") != -1)
+    cout << "ok 8\n";
+  else
+    cout << "not ok 8\n";
+  
+  // gzip input
+  // gzip output
 
- // RegisterFormat
- // FindFormat
- // FormatFromExt
- // FormatFromMIME
- // GetNextFormat
+  // multi-molecule reading
+  // PR#1465586
+  // aromatics.smi
+  // attype.00.smi
+
+  //ReadFile()
+  //Read()
+  //WriteString()
+  // GetOutputIndex()
+  // IsLast
+
+  //ReadString()
+  //IsFirstInput
+  //Read()
+
+  // splitting
+  
+  // splitting using gzip-input
+  // PR#1357705
+  
+  // size 0 input
+  // PR#1250900
+  
+  // RegisterFormat
+  // FindFormat
+  // FormatFromExt
+  // FormatFromMIME
+  // GetNextFormat
+  // GetDefaultFormat
+
+  // BatchFileName
+  // IncrementedFileName
+
+  // option handling
+  // AddOption
+  // IsOption
+  // RemoveOption
+  // IsOption
+
+  // SetOptions
+  // IsOption
+
+  // RegisterOptionParam
+  // GetOptionParams
+
+  // GetInStream
+  // GetOutStream
+  // SetInStream
+  // SetOutStream
+
+  // nasty tests
+  obConversion.ReadString(&obMol, "");
+  obConversion.Read(&obMol);
+  cout << "ok 9\n";
 
   return(0);
 }
