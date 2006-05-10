@@ -67,17 +67,20 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
 
   if (getenv("BABEL_LIBDIR") != NULL)
     {
-        strncpy(buffer,getenv("BABEL_LIBDIR"), BUFF_SIZE - 1);
-	// add a trailing NULL just in case
-	buffer[BUFF_SIZE] = '\0';
+      // environment variable should override built-in path
+      paths.clear();
 
-	OpenBabel::tokenize(vs, buffer, "\r\n\t :");
-
-	if (vs.size() > 0)
-	  {
+      strncpy(buffer,getenv("BABEL_LIBDIR"), BUFF_SIZE - 1);
+      // add a trailing NULL just in case
+      buffer[BUFF_SIZE] = '\0';
+      
+      OpenBabel::tokenize(vs, buffer, "\r\n\t :");
+      
+      if (vs.size() > 0)
+	{
 	    for (unsigned int i = 0; i < vs.size(); i++)
 	      paths.push_back(vs[i]);
-	  }
+	}
     }
 
   if (paths.size() == 0)
