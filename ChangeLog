@@ -4,6 +4,14 @@
 	New test for OBMol::GetFormula(), OBMol::GetMolWt(), and
 	OBMol::GetExactMass().
 
+	* src/mol.cpp (GetMolWt, GetExactMass): Fix PR#1485580. Missing
+	parentheses in calculating # of implicit + explicit
+	hydrogens. Thanks to Noel for suggestion.
+
+	* src/dlhandler_unix.cpp (findFiles): If environment variable
+	BABEL_LIBDIR is set, ignore compiled-in default. (User setting
+	should always take precedence)
+
 2006-05-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/files/: New subdirectory to contain test data files.

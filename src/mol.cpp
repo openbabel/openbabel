@@ -861,13 +861,16 @@ namespace OpenBabel
 	if(UseImplicitH)
 	  {
 	    if (atom->IsHydrogen())
-	      {	if(atom->GetIsotope()<2)
-		continue;	// skip explicit hydrogens except D,T
-	      else
-		molwt -= etab.GetMass(1);//one of the implicit hydrogens is now explicit
+	      {	
+		if(atom->GetIsotope()<2)
+		  continue;	// skip explicit hydrogens except D,T
+		else
+		  // one of the implicit hydrogens is an explicit D or T
+		  // avoid double-counting
+		  molwt -= etab.GetMass(1);
 	      }
 	    else
-	      molwt += etab.GetMass(1) * atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true);
+	      molwt += etab.GetMass(1) * (atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true));
 	  }
 	molwt += atom->GetAtomicMass();
       }
@@ -888,12 +891,15 @@ namespace OpenBabel
 	    if (atom->IsHydrogen())
 	      {
 		if(atom->GetIsotope()<2)
-		  continue;	// skip explicit hydrogens except D,T
+		  // skip explicit hydrogens except D,T
+		  continue;
 		else
-		  mass -= isotab.GetExactMass(1,1);//one of the implicit hydrogens is now explicit
+		  // one of the implicit hydrogens is now an explicit D or T
+		  // so avoid double-counting
+		  mass -= isotab.GetExactMass(1,1);
 	      }
 	    else
-	      mass += isotab.GetExactMass(1,1) * atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true);
+	      mass += isotab.GetExactMass(1,1) * (atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true));
 	  }
 	mass += atom->GetExactMass();
       }
@@ -918,12 +924,7 @@ namespace OpenBabel
       30, 40 };
 
     int atomicCount[NumElements];
-    //  int index;
-#ifdef HAVE_SSTREAM
     stringstream formula;
-#else
-    strstream formula;
-#endif
 
     for (int i = 0; i < NumElements; i++)
       atomicCount[i] = 0;
@@ -990,13 +991,6 @@ namespace OpenBabel
 	    if(atomicCount[alph] > ones)
 	      formula << sp << atomicCount[alph] << sp;
 	  }
-
-	/*		if (atomicCount[ alphabetical[j]-1 ] > ones)
-			formula << etab.GetSymbol(alphabetical[j]) << sp 
-			<< atomicCount[ alphabetical[j]-1 ] << sp;
-			else if (atomicCount[ alphabetical[j]-1 ] == 1)
-			formula << etab.GetSymbol( alphabetical[j] );
-	*/
       }
 
     return (formula.str());
