@@ -203,13 +203,25 @@ int main(int argc,char *argv[])
 	 conv1.Read(&mol) )
       {
 	if (mol.NumAtoms() > 0)
-	  cout << " ** ERROR **  File 1 has more molecules! " << endl;
+	  {
+	    cout << " ** ERROR **  File 1 has more molecules! " << endl;
+	    cout << "   Already read " << molCount << " molecules from both" << endl;
+	    cout << "   New molecule " << mol.GetTitle()
+		 << " has " << mol.NumAtoms() << " atoms " << endl;
+	    exit(-1);
+	  }
       }
     else if ( inFileStream2.good() && inFileStream2.peek() != EOF &&
 	      conv2.Read(&mol2) )
       {
 	if (mol2.NumAtoms() > 0)
-	  cout << " ** ERROR **  File 2 has more molecules! " << endl;
+	  {
+	    cout << " ** ERROR **  File 2 has more molecules! " << endl;
+	    cout << "   Already read " << molCount << " molecules from both" << endl;
+	    cout << "   New molecule " << mol.GetTitle() 
+		 << " has " << mol2.NumAtoms() << " atoms " << endl;
+	    exit(-1);
+	  }
       }
     
     return(0);
