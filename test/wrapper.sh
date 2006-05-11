@@ -2,7 +2,7 @@
 
 # Run "prove" on all Perl programs
 
-TESTS="aromatest.pl atom bond conversion data format"
+TESTS="aromatic.pl atom bond conversion data format"
 TESTS="${TESTS} formula internalcoord matrix mol residue rings"
 TESTS="${TESTS} smarts unitcell"
 TESTS="${TESTS} cml.sh test-set.sh"

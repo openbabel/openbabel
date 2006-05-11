@@ -294,7 +294,7 @@ LDADD = ../src/libopenbabel.la @LIBDL@
 TESTDATADIR = $(top_srcdir)/test/files/
 AM_CPPFLAGS = -I$(top_srcdir)/src -DTESTDATADIR="\"$(TESTDATADIR)\""
 EXTRA_DIST = files wrapper.sh cml.sh test-set.sh \
-		aromatest.pl
+		aromatic.pl
 
 roundtrip_SOURCES = roundtrip.cpp
 
