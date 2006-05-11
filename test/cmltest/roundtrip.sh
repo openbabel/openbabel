@@ -15,29 +15,29 @@ else
 fi
 
 # CML1 output
-$BABEL -i$3 $1.$2 -ocml $1.1.cml -x1v
-$builddir/roundtrip $1.$2 $1.1.cml
+$BABEL -i$3 $1.$2 -ocml $1.1.cml -x1v || exit 1;
+$builddir/roundtrip $1.$2 $1.1.cml || exit 1;
 # CML2 output
-$BABEL -i$3 $1.$2 -ocml $1.2.cml -x2v
-$builddir/roundtrip $1.$2 $1.2.cml
+$BABEL -i$3 $1.$2 -ocml $1.2.cml -x2v || exit 1;
+$builddir/roundtrip $1.$2 $1.2.cml || exit 1;
 # CML1+array output
-$BABEL -i$3 $1.$2 -ocml $1.a1.cml -xa1v
-$builddir/roundtrip $1.$2 $1.a1.cml
+$BABEL -i$3 $1.$2 -ocml $1.a1.cml -xa1v || exit 1;
+$builddir/roundtrip $1.$2 $1.a1.cml || exit 1;
 # CML2+array output
-$BABEL -i$3 $1.$2 -ocml $1.a2.cml -xa2v
-$builddir/roundtrip $1.$2 $1.a2.cml
+$BABEL -i$3 $1.$2 -ocml $1.a2.cml -xa2v || exit 1;
+$builddir/roundtrip $1.$2 $1.a2.cml || exit 1;
 
 # roundtrip to MOL; should be identical
-$BABEL -icml $1.1.cml  -o$3 $1.1.$2 -x2v
-$builddir/roundtrip $1.1.cml $1.1.$2
-$BABEL -icml $1.2.cml  -o$3 $1.2.$2 -x2v
-$builddir/roundtrip $1.2.cml $1.2.$2
-$BABEL -icml $1.a1.cml -o$3 $1.a1.$2 -x2v
-$builddir/roundtrip $1.a1.cml $1.a1.$2
-$BABEL -icml $1.a2.cml -o$3 $1.a2.$2 -x2v
-$builddir/roundtrip $1.a2.cml $1.a2.$2
+$BABEL -icml $1.1.cml  -o$3 $1.1.$2 -x2v || exit 1;
+$builddir/roundtrip $1.1.cml $1.1.$2 || exit 1;
+$BABEL -icml $1.2.cml  -o$3 $1.2.$2 -x2v || exit 1;
+$builddir/roundtrip $1.2.cml $1.2.$2 || exit 1;
+$BABEL -icml $1.a1.cml -o$3 $1.a1.$2 -x2v || exit 1;
+$builddir/roundtrip $1.a1.cml $1.a1.$2 || exit 1;
+$BABEL -icml $1.a2.cml -o$3 $1.a2.$2 -x2v || exit 1;
+$builddir/roundtrip $1.a2.cml $1.a2.$2 || exit 1;
 
 # And check to make sure the four $2 files are the same !
-$builddir/roundtrip $1.1.$2 $1.2.$2
-$builddir/roundtrip $1.1.$2 $1.a1.$2
-$builddir/roundtrip $1.1.$2 $1.a2.$2
+$builddir/roundtrip $1.1.$2 $1.2.$2 || exit 1;
+$builddir/roundtrip $1.1.$2 $1.a1.$2 || exit 1;
+$builddir/roundtrip $1.1.$2 $1.a2.$2 || exit 1;

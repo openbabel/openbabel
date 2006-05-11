@@ -1,3 +1,16 @@
+2006-05-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/cml.sh, test/cmltest/roundtrip.sh, test/cmltest/test.sh:
+	Provide more fine-grained test errors and messages.
+
+	* test/roundtrip.cpp: Finding extra molecules in a file should
+	exit with an error.
+
+	* src/mol.cpp (GetMolWt, GetExactMass): Simplify and improve
+	performance by handling explicit hydrogens like any other explicit
+	atom. Functions identically to previous version on regression
+	test. Improves performance on isolated protons or bridging hydrogens.
+
 2006-05-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/formula.cpp, test/files/formularesults.txt:

@@ -16,26 +16,52 @@ fi
 
 # test input
 # CML2 with array
+echo "1..6"
 echo "# CML2 with array"
-$BABEL -icml cs2a.cml -omdl cs2a.mol 
-$builddir/roundtrip cs2a.cml cs2a.mol
+if ($BABEL -icml cs2a.cml -omdl cs2a.mol && $builddir/roundtrip cs2a.cml cs2a.mol) then
+    echo "ok 1"
+else
+    echo "not ok 1"
+fi
+
 #  3D molecules in SDF 
 #  CML2 with XML version
 echo "# CML2 with XML version"
-$BABEL -isdf 3d.head.sdf -ocml 3d.head.2.cml -x2v 
-$builddir/roundtrip 3d.head.sdf 3d.head.2.cml
+if ($BABEL -isdf 3d.head.sdf -ocml 3d.head.2.cml -x2v && $builddir/roundtrip 3d.head.sdf 3d.head.2.cml) then
+    echo "ok 2"
+else
+    echo "not ok 2"
+fi
+
 #  CML1 with DOCTYPE
 echo "# CML1 with DOCTYPE"
-$BABEL -isdf cs2a.mol -ocml cs2a.mol.cml -x1d
-$builddir/roundtrip cs2a.mol cs2a.mol.cml
+if ($BABEL -isdf cs2a.mol -ocml cs2a.mol.cml -x1d && $builddir/roundtrip cs2a.mol cs2a.mol.cml); then
+    echo "ok 3"
+else
+    echo "not ok 3"
+fi
+
 #  CML2 arrays with namespaces (large)
 echo "# CML2 arrays with namespaces"
-$BABEL -isdf 3d.head.sdf -ocml 3d.head.2an.cml -x2an 
-$builddir/roundtrip 3d.head.sdf 3d.head.2an.cml
+if ($BABEL -isdf 3d.head.sdf -ocml 3d.head.2an.cml -x2an && $builddir/roundtrip 3d.head.sdf 3d.head.2an.cml); then
+    echo "ok 4"
+else
+    echo "not ok 4"
+fi
 
 #  roundtripping; arguments are fileroot; input format; input suffix
 #  2d MDL to CML and back again through all main variants
-./roundtrip.sh nsc2dmol mol mdl
-#  3d MDL to CML and back again through all main variants
-./roundtrip.sh nsc3dmol mol mdl
+echo "# Roundtripping from 2D MDL Molfile to CML and back"
+if ./roundtrip.sh nsc2dmol mol mdl; then
+    echo "ok 5"
+else
+    echo "not ok 5"
+fi
 
+#  3d MDL to CML and back again through all main variants
+echo "# Roundtripping from 3D MDL Molfile to CML and back"
+if ./roundtrip.sh nsc3dmol mol mdl; then
+    echo "ok 6"
+else
+    echo "not ok 6"
+fi
