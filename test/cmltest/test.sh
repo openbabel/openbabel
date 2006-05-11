@@ -43,6 +43,7 @@ fi
 
 #  CML2 arrays with namespaces (large)
 echo "# CML2 arrays with namespaces"
+# PR#1486678
 if ($BABEL -isdf 3d.head.sdf -ocml 3d.head.2an.cml -x2an && $builddir/roundtrip 3d.head.sdf 3d.head.2an.cml); then
     echo "ok 4"
 else
