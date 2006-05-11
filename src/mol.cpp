@@ -860,17 +860,8 @@ namespace OpenBabel
       {
 	if(UseImplicitH)
 	  {
-	    if (atom->IsHydrogen())
-	      {	
-		if(atom->GetIsotope()<2)
-		  continue;	// skip explicit hydrogens except D,T
-		else
-		  // one of the implicit hydrogens is an explicit D or T
-		  // avoid double-counting
-		  molwt -= etab.GetMass(1);
-	      }
-	    else
-	      molwt += etab.GetMass(1) * (atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true));
+	    if (! atom->IsHydrogen())
+	      molwt += etab.GetMass(1) * atom->ImplicitHydrogenCount();
 	  }
 	molwt += atom->GetAtomicMass();
       }
@@ -888,18 +879,8 @@ namespace OpenBabel
       {
 	if(UseImplicitH)
 	  {
-	    if (atom->IsHydrogen())
-	      {
-		if(atom->GetIsotope()<2)
-		  // skip explicit hydrogens except D,T
-		  continue;
-		else
-		  // one of the implicit hydrogens is now an explicit D or T
-		  // so avoid double-counting
-		  mass -= isotab.GetExactMass(1,1);
-	      }
-	    else
-	      mass += isotab.GetExactMass(1,1) * (atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true));
+	    if (!atom->IsHydrogen())
+	      mass += isotab.GetExactMass(1,1) * atom->ImplicitHydrogenCount();
 	  }
 	mass += atom->GetExactMass();
       }
@@ -931,36 +912,38 @@ namespace OpenBabel
 
     bool UseImplicitH = (NumBonds()!=0 || NumAtoms()==1);
     bool HasHvyAtoms = NumHvyAtoms()>0;
-    FOR_ATOMS_OF_MOL(a, *this) {
-      int anum = a->GetAtomicNum();
-			if(anum==0)
-				continue;
-      bool IsHiso = anum == 1 && a->GetIsotope()>=2;
-      if(UseImplicitH)
-	{
-	  if (anum == 1 && !IsHiso && HasHvyAtoms) continue;	// skip explicit hydrogens except D,T
-	  if(anum==1)
-	    {
-	      if (IsHiso && HasHvyAtoms)
-		--atomicCount[0]; //one of the implicit hydrogens is now explicit
-	    }
-	  else
-	    atomicCount[0] += a->ImplicitHydrogenCount() + a->ExplicitHydrogenCount();
-	}
-      if (IsHiso)
-	anum = NumElements + a->GetIsotope() - 3; //pseudo AtNo for D, T
-      atomicCount[anum - 1]++;
-    }
-  
+    FOR_ATOMS_OF_MOL(a, *this)
+      {
+	int anum = a->GetAtomicNum();
+	if(anum==0)
+	  continue;
+	bool IsHiso = anum == 1 && a->GetIsotope()>=2;
+	if(UseImplicitH)
+	  {
+	    if (anum == 1 && !IsHiso && HasHvyAtoms)
+	      continue;	// skip explicit hydrogens except D,T
+	    if(anum==1)
+	      {
+		if (IsHiso && HasHvyAtoms)
+		  --atomicCount[0]; //one of the implicit hydrogens is now explicit
+	      }
+	    else
+	      atomicCount[0] += a->ImplicitHydrogenCount() + a->ExplicitHydrogenCount();
+	  }
+	if (IsHiso)
+	  anum = NumElements + a->GetIsotope() - 3; //pseudo AtNo for D, T
+	atomicCount[anum - 1]++;
+      }
+    
     if (atomicCount[5] != 0) // Carbon (i.e. 6 - 1 = 5)
       {
 	if (atomicCount[5] > ones)
 	  formula << "C" << sp << atomicCount[5] << sp;
 	else if (atomicCount[5] == 1)
 	  formula << "C";
-
+	
 	atomicCount[5] = 0; // So we don't output C twice
-
+	
 	// only output H if there's also carbon -- otherwise do it alphabetical
 	if (atomicCount[0] != 0) // Hydrogen (i.e., 1 - 1 = 0)
 	  {
@@ -968,11 +951,11 @@ namespace OpenBabel
 	      formula << "H" << sp << atomicCount[0] << sp;
 	    else if (atomicCount[0] == 1)
 	      formula << "H";
-
+	    
 	    atomicCount[0] = 0;
 	  }
       }
-
+    
     for (int j = 0; j < NumElements; j++)
       {
 	char DT[4] = {'D',0,'T',0};
@@ -983,10 +966,10 @@ namespace OpenBabel
 	    if(alph==NumElements-1)
 	      symb = DT + 2;//T
 	    else if (alph==NumElements-2)
-	      symb =DT; //D
+	      symb = DT; //D
 	    else
 	      symb = etab.GetSymbol(alphabetical[j]);
-			
+	    
 	    formula << symb << sp; 
 	    if(atomicCount[alph] > ones)
 	      formula << sp << atomicCount[alph] << sp;
