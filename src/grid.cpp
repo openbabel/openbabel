@@ -2,7 +2,7 @@
 grid.cpp - Handle grids of values.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -26,35 +26,35 @@ using namespace std;
 namespace OpenBabel
 {
 
-void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,double res)
-{
+  void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,double res)
+  {
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;
 
     for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
-        if (atom->GetIdx() == 1)
+      if (atom->GetIdx() == 1)
         {
-            _xmin = atom->GetX();
-            _xmax = atom->GetX();
-            _ymin = atom->GetY();
-            _ymax = atom->GetY();
-            _zmin = atom->GetZ();
-            _zmax = atom->GetZ();
+	  _xmin = atom->GetX();
+	  _xmax = atom->GetX();
+	  _ymin = atom->GetY();
+	  _ymax = atom->GetY();
+	  _zmin = atom->GetZ();
+	  _zmax = atom->GetZ();
         }
-        else
+      else
         {
-            if (atom->GetX() < _xmin)
-                _xmin = atom->GetX();
-            if (atom->GetX() > _xmax)
-                _xmax = atom->GetX();
-            if (atom->GetY() < _ymin)
-                _ymin = atom->GetY();
-            if (atom->GetY() > _ymax)
-                _ymax = atom->GetY();
-            if (atom->GetZ() < _zmin)
-                _zmin = atom->GetZ();
-            if (atom->GetZ() > _zmax)
-                _zmax = atom->GetZ();
+	  if (atom->GetX() < _xmin)
+	    _xmin = atom->GetX();
+	  if (atom->GetX() > _xmax)
+	    _xmax = atom->GetX();
+	  if (atom->GetY() < _ymin)
+	    _ymin = atom->GetY();
+	  if (atom->GetY() > _ymax)
+	    _ymax = atom->GetY();
+	  if (atom->GetZ() < _zmin)
+	    _zmin = atom->GetZ();
+	  if (atom->GetZ() > _zmax)
+	    _zmax = atom->GetZ();
         }
 
     _inc = res; // 1/2 angstrom resolution
@@ -67,7 +67,7 @@ void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,double res)
     int j,size = _nxinc*_nyinc*_nzinc;
     cell.resize(size);
     for (unsigned int num = 0; num < cell.size(); num++)
-        cell[num].resize(0);
+      cell[num].resize(0);
 
     cutoff *= cutoff; //don't do sqrts
 
@@ -77,48 +77,48 @@ void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,double res)
     size = mol.NumAtoms()*3;
 
     for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
-        if (PointIsInBox(c[j],c[j+1],c[j+2]))
-            for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,k++)
-                if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
-                    for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,l++)
-                        if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
-                            for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,m++)
-                                if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
-                                    cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
+      if (PointIsInBox(c[j],c[j+1],c[j+2]))
+	for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,k++)
+	  if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
+	    for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,l++)
+	      if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
+		for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,m++)
+		  if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
+		    cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
 
     _inc = 1/_inc;
-}
+  }
 
-void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,vector<bool> &use,
-                       double res)
-{
+  void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,vector<bool> &use,
+			 double res)
+  {
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;
 
     for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
-        if (atom->GetIdx() == 1)
+      if (atom->GetIdx() == 1)
         {
-            _xmin = atom->GetX();
-            _xmax = atom->GetX();
-            _ymin = atom->GetY();
-            _ymax = atom->GetY();
-            _zmin = atom->GetZ();
-            _zmax = atom->GetZ();
+	  _xmin = atom->GetX();
+	  _xmax = atom->GetX();
+	  _ymin = atom->GetY();
+	  _ymax = atom->GetY();
+	  _zmin = atom->GetZ();
+	  _zmax = atom->GetZ();
         }
-        else
+      else
         {
-            if (atom->GetX() < _xmin)
-                _xmin = atom->GetX();
-            if (atom->GetX() > _xmax)
-                _xmax = atom->GetX();
-            if (atom->GetY() < _ymin)
-                _ymin = atom->GetY();
-            if (atom->GetY() > _ymax)
-                _ymax = atom->GetY();
-            if (atom->GetZ() < _zmin)
-                _zmin = atom->GetZ();
-            if (atom->GetZ() > _zmax)
-                _zmax = atom->GetZ();
+	  if (atom->GetX() < _xmin)
+	    _xmin = atom->GetX();
+	  if (atom->GetX() > _xmax)
+	    _xmax = atom->GetX();
+	  if (atom->GetY() < _ymin)
+	    _ymin = atom->GetY();
+	  if (atom->GetY() > _ymax)
+	    _ymax = atom->GetY();
+	  if (atom->GetZ() < _zmin)
+	    _zmin = atom->GetZ();
+	  if (atom->GetZ() > _zmax)
+	    _zmax = atom->GetZ();
         }
 
     _inc = res; // 1/2 angstrom resolution
@@ -138,27 +138,27 @@ void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,vector<bool> &use,
     size = mol.NumAtoms()*3;
 
     for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
-        if (use[atom->GetIdx()])
-            if (PointIsInBox(c[j],c[j+1],c[j+2]))
-                for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,k++)
-                    if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
-                        for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,l++)
-                            if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
-                                for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,m++)
-                                    if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
-                                        cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
+      if (use[atom->GetIdx()])
+	if (PointIsInBox(c[j],c[j+1],c[j+2]))
+	  for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,k++)
+	    if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
+	      for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,l++)
+		if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
+		  for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,m++)
+		    if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
+		      cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
 
     _inc = 1/_inc;
-}
+  }
 
-vector<int> *OBProxGrid::GetProxVector(double x,double y,double z)
-{
+  vector<int> *OBProxGrid::GetProxVector(double x,double y,double z)
+  {
     if (x < _xmin || x > _xmax)
-        return(NULL);
+      return(NULL);
     if (y < _ymin || y > _ymax)
-        return(NULL);
+      return(NULL);
     if (z < _zmin || z > _zmax)
-        return(NULL);
+      return(NULL);
 
     x -= _xmin;
     y -= _ymin;
@@ -169,50 +169,50 @@ vector<int> *OBProxGrid::GetProxVector(double x,double y,double z)
     k = (int) (z*_inc);
     idx = (i*_nyinc*_nzinc)+(j*_nzinc)+k;
     if (idx >= _maxinc)
-        return(NULL);
+      return(NULL);
 
     return(&cell[idx]);
-}
+  }
 
-vector<int> *OBProxGrid::GetProxVector(double *c)
-{
+  vector<int> *OBProxGrid::GetProxVector(double *c)
+  {
     double x,y,z;
     x = c[0];
     y = c[1];
     z = c[2];
 
     return( GetProxVector(x, y, z) );
-}
+  }
 
-void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
-{
+  void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
+  {
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;
 
     for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
-        if (atom->GetIdx() == 1)
+      if (atom->GetIdx() == 1)
         {
-            _xmin = atom->GetX();
-            _xmax = atom->GetX();
-            _ymin = atom->GetY();
-            _ymax = atom->GetY();
-            _zmin = atom->GetZ();
-            _zmax = atom->GetZ();
+	  _xmin = atom->GetX();
+	  _xmax = atom->GetX();
+	  _ymin = atom->GetY();
+	  _ymax = atom->GetY();
+	  _zmin = atom->GetZ();
+	  _zmax = atom->GetZ();
         }
-        else
+      else
         {
-            if (atom->GetX() < _xmin)
-                _xmin = atom->GetX();
-            if (atom->GetX() > _xmax)
-                _xmax = atom->GetX();
-            if (atom->GetY() < _ymin)
-                _ymin = atom->GetY();
-            if (atom->GetY() > _ymax)
-                _ymax = atom->GetY();
-            if (atom->GetZ() < _zmin)
-                _zmin = atom->GetZ();
-            if (atom->GetZ() > _zmax)
-                _zmax = atom->GetZ();
+	  if (atom->GetX() < _xmin)
+	    _xmin = atom->GetX();
+	  if (atom->GetX() > _xmax)
+	    _xmax = atom->GetX();
+	  if (atom->GetY() < _ymin)
+	    _ymin = atom->GetY();
+	  if (atom->GetY() > _ymax)
+	    _ymax = atom->GetY();
+	  if (atom->GetZ() < _zmin)
+	    _zmin = atom->GetZ();
+	  if (atom->GetZ() > _zmax)
+	    _zmax = atom->GetZ();
         }
 
     _xmin -= pad;
@@ -250,26 +250,26 @@ void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
     memset(_val,'\0',sizeof(double)*size);
 
     //return(true);
-}
+  }
 
-double OBFloatGrid::Inject(double x,double y,double z)
-{
-  if((x<=_xmin)||(x>=_xmax))
-    return(0.0);
-  if((y<=_ymin)||(y>=_ymax))
-    return(0.0);
-  if((z<=_zmin)||(z>=_zmax))
-    return(0.0);
+  double OBFloatGrid::Inject(double x,double y,double z)
+  {
+    if((x<=_xmin)||(x>=_xmax))
+      return(0.0);
+    if((y<=_ymin)||(y>=_ymax))
+      return(0.0);
+    if((z<=_zmin)||(z>=_zmax))
+      return(0.0);
   
-  int gx=(int)((x-_xmin)*_inv_spa);
-  int gy=(int)((y-_ymin)*_inv_spa);
-  int gz=(int)((z-_zmin)*_inv_spa);
+    int gx=(int)((x-_xmin)*_inv_spa);
+    int gy=(int)((y-_ymin)*_inv_spa);
+    int gz=(int)((z-_zmin)*_inv_spa);
   
-  return(_val[(gz*_ydim*_xdim)+(gy*_xdim)+gx]);
-}
+    return(_val[(gz*_ydim*_xdim)+(gy*_xdim)+gx]);
+  }
 
-void OBFloatGrid::IndexToCoords(int idx, double &x, double &y, double &z)
-{
+  void OBFloatGrid::IndexToCoords(int idx, double &x, double &y, double &z)
+  {
     long int grid_x,grid_y,grid_z;
 
     grid_x = idx % (int)_xdim;
@@ -279,26 +279,26 @@ void OBFloatGrid::IndexToCoords(int idx, double &x, double &y, double &z)
     x = ((double)grid_x * _spacing + _xmin) + this->_halfSpace;
     y = ((double)grid_y * _spacing + _ymin) + this->_halfSpace;
     z = ((double)grid_z * _spacing + _zmin) + this->_halfSpace;
-}
+  }
 
-int OBFloatGrid::CoordsToIndex(double &x, double &y, double &z)
-{
+  int OBFloatGrid::CoordsToIndex(double &x, double &y, double &z)
+  {
     int gx=(int)((x-_xmin)*_inv_spa);
     int gy=(int)((y-_ymin)*_inv_spa);
     int gz=(int)((z-_zmin)*_inv_spa);
 
     return((gz*_ydim*_xdim)+(gy*_xdim)+gx);
-}
+  }
 
-void OBFloatGrid::CoordsToIndex(int *idx,double *c)
-{
+  void OBFloatGrid::CoordsToIndex(int *idx,double *c)
+  {
     idx[0]=(int)((c[0]-_xmin)*_inv_spa);
     idx[1]=(int)((c[1]-_ymin)*_inv_spa);
     idx[2]=(int)((c[2]-_zmin)*_inv_spa);
-}
+  }
 
-double OBFloatGrid::Interpolate(double x,double y,double z)
-{
+  double OBFloatGrid::Interpolate(double x,double y,double z)
+  {
     int n,igx,igy,igz;
     double xydim;
     double gx,gy,gz,fgx,fgy,fgz;
@@ -306,28 +306,28 @@ double OBFloatGrid::Interpolate(double x,double y,double z)
     double AyA,ByA,AyB,ByB,Az,Bz;
 
     if((x<=_xmin)||(x>=_xmax))
-        return(0.0);
+      return(0.0);
     if((y<=_ymin)||(y>=_ymax))
-        return(0.0);
+      return(0.0);
     if((z<=_zmin)||(z>=_zmax))
-        return(0.0);
+      return(0.0);
 
     xydim = _xdim*_ydim;
 
     /* calculate grid voxel and fractional offsets */
     gx=(x-_xmin-_halfSpace)*_inv_spa;
     if (gx<0)
-        gx=0;
+      gx=0;
     igx=(int)gx;
     fgx=gx-(double)igx;
     gy=(y-_ymin-_halfSpace)*_inv_spa;
     if (gy<0)
-        gy=0;
+      gy=0;
     igy=(int) gy;
     fgy= gy - (double) igy;
     gz=(z-_zmin-_halfSpace)*_inv_spa;
     if (gz<0)
-        gz=0;
+      gz=0;
     igz=(int) gz;
     fgz= gz - (double) igz;
 
@@ -351,11 +351,11 @@ double OBFloatGrid::Interpolate(double x,double y,double z)
     Bz=ay*AyB+by*ByB;
 
     return(az*Az+bz*Bz);
-}
+  }
 
 
-double OBFloatGrid::InterpolateDerivatives(double x,double y,double z,double *derivatives)
-{
+  double OBFloatGrid::InterpolateDerivatives(double x,double y,double z,double *derivatives)
+  {
     int n,igx,igy,igz;
     double xydim;
     double gx,gy,gz,fgx,fgy,fgz;
@@ -364,28 +364,28 @@ double OBFloatGrid::InterpolateDerivatives(double x,double y,double z,double *de
     double energy,fx,fy,fz;
 
     if((x<=_xmin)||(x>=_xmax))
-        return(0.0);
+      return(0.0);
     if((y<=_ymin)||(y>=_ymax))
-        return(0.0);
+      return(0.0);
     if((z<=_zmin)||(z>=_zmax))
-        return(0.0);
+      return(0.0);
 
     xydim = _xdim*_ydim;
 
     /* calculate grid voxel and fractional offsets */
     gx=(x-_xmin-_halfSpace)*_inv_spa;
     if (gx<0)
-        gx=0;
+      gx=0;
     igx=(int)gx;
     fgx=gx-(double)igx;
     gy=(y-_ymin-_halfSpace)*_inv_spa;
     if (gy<0)
-        gy=0;
+      gy=0;
     igy=(int) gy;
     fgy= gy - (double) igy;
     gz=(z-_zmin-_halfSpace)*_inv_spa;
     if (gz<0)
-        gz=0;
+      gz=0;
     igz=(int) gz;
     fgz= gz - (double) igz;
 
@@ -437,11 +437,11 @@ double OBFloatGrid::InterpolateDerivatives(double x,double y,double z,double *de
 
     return(energy);
 
-}
+  }
 
 
-ostream& operator<< ( ostream &os, const  OBFloatGrid& fg)
-{
+  ostream& operator<< ( ostream &os, const  OBFloatGrid& fg)
+  {
     os.write((const char*)&fg._xmin,sizeof(double));
     os.write((const char*)&fg._xmax,sizeof(double));
     os.write((const char*)&fg._ymin,sizeof(double));
@@ -461,10 +461,10 @@ ostream& operator<< ( ostream &os, const  OBFloatGrid& fg)
              (sizeof(double)*(fg._xdim*fg._ydim*fg._zdim)));
 
     return(os);
-}
+  }
 
-istream& operator>> ( istream &is,OBFloatGrid& fg)
-{
+  istream& operator>> ( istream &is,OBFloatGrid& fg)
+  {
     is.read((char*)&fg._xmin,sizeof(double));
     is.read((char*)&fg._xmax,sizeof(double));
     is.read((char*)&fg._ymin,sizeof(double));
@@ -488,48 +488,7 @@ istream& operator>> ( istream &is,OBFloatGrid& fg)
     fg._halfSpace= fg._spacing/2.0;
 
     return(is);
-}
-
-#ifdef FOO
-//linear interpolation routine
-double Interpolate(double x,double y,double z)
-{
-    int n;
-    int igx,igy,igz;
-    double scale,gx,gy,gz,fgx,fgy,fgz;
-    double qzpypx,qzpynx,qznynx,qznypx,qznyx,qzpyx;
-
-    scale=_inv_spa;
-
-    if((x<=_xmin)||(x>=_xmax))
-        return(0.0);
-    if((y<=_ymin)||(y>=_ymax))
-        return(0.0);
-    if((z<=_zmin)||(z>=_zmax))
-        return(0.0);
-
-    gx=(x-_xmin-_halfSpace)*scale;
-    igx=(int) gx;
-    fgx= gx - (double) igx;
-    gy=(y-_ymin-_halfSpace)*scale;
-    igy=(int) gy;
-    fgy= gy - (double) igy;
-    gz=(z-_zmin-_halfSpace)*scale;
-    igz=(int) gz;
-    fgz= gz - (double) igz;
-
-    int xydim=_xdim*_ydim;
-    n=igx+ _xdim*igy + xydim*igz;
-    qzpypx=fgx*(_val[n+1+_xdim+xydim]-_val[n+_xdim+xydim]) + _val[n+_xdim+xydim];
-    qzpynx=fgx*(_val[n+1+xydim] -_val[n+xydim]) + _val[n+xydim];
-    qznypx=fgx*(_val[n+1+_xdim] -_val[n+_xdim]) + _val[n+_xdim];
-    qznynx=fgx*(_val[n+1] -_val[n]) + _val[n];
-    qzpyx =fgy*(-qzpynx+qzpypx)+qzpynx;
-    qznyx =fgy*(-qznynx+qznypx)+qznynx;
-
-    return(fgz*(qzpyx-qznyx)+qznyx);
-}
-#endif
+  }
 
 } // end namespace OpenBabel
 

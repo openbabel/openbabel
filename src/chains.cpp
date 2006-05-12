@@ -142,16 +142,16 @@ namespace OpenBabel
   // Structure / Type Definitions
   //////////////////////////////////////////////////////////////////////////////
 
-  //! Template for 
+  //! Template for backbone atoms in chain perception
   typedef struct Template
   {
     int flag;        //!< binary flag representing this atom type
     short elem;      //!< atomic number of this element
     short count;     //!< expected valence for this atom type
-    int n1;
-    int n2;
-    int n3;
-    int n4;
+    int n1;          //!< mask 1 used by ConstrainBackbone() and MatchConstraint()
+    int n2;          //!< mask 2 used by ConstrainBackbone() and MatchConstraint()
+    int n3;          //!< mask 3 used by ConstrainBackbone() and MatchConstraint()
+    int n4;          //!< mask 4 used by ConstrainBackbone() and MatchConstraint()
   }
   Template;
 
@@ -271,10 +271,12 @@ namespace OpenBabel
     /* 67 */  { ' ', 'C', '6', ' ' }
   };
 
+  //! Definition of side chains, associating overall residue name with
+  //!  the pseudo-SMILES pattern
   typedef struct
   {
     char *name; //!< Residue name, standardized by PDB
-    char *data; //!< psuedo-SMILES definition of side-chain
+    char *data; //!< pseudo-SMILES definition of side-chain
   }
   ResidType;
 

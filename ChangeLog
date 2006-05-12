@@ -1,3 +1,12 @@
+2006-05-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/patty.cpp, src/kekulize.cpp, src/fingerprint.cpp,
+	src/rotor.cpp, src/chains.cpp, src/parsmart.cpp, src/chiral.cpp,
+	src/bitvec.cpp, src/main.cpp, src/grid.cpp, src/mol.cpp,
+	src/bondtyper.cpp: Update to remove #ifdef for SSTREAM
+	(stringstream is ISO C++ and widely accepted). Remove other
+	spurious #ifdef's where possible.
+
 2006-05-11  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/cml.sh, test/cmltest/roundtrip.sh, test/cmltest/test.sh:

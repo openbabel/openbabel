@@ -26,11 +26,7 @@ GNU General Public License for more details.
 #include "math/matrix3x3.h"
 #include "obiter.h"
 
-#ifdef HAVE_SSTREAM
 #include <sstream>
-#else
-#include <strstream>
-#endif
 
 using namespace std;
 
@@ -3008,16 +3004,6 @@ namespace OpenBabel
     for (i = va.begin();i != va.end();i++)
       _vatom.push_back(*i);
   }
-
-#ifdef REMOVE_LATER
-  bool CompareBonds(const OBEdgeBase *a,const OBEdgeBase *b)
-  {
-    if (a->GetBgn()->GetIdx() == b->GetBgn()->GetIdx())
-      return(a->GetEnd()->GetIdx() < b->GetEnd()->GetIdx());
-
-    //return((a->GetBgn())->GetIdx() < (b->GetBgn())->GetIdx());
-  }
-#endif
 
   bool WriteTitles(ostream &ofs, OBMol &mol)
   {

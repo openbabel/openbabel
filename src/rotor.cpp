@@ -2,7 +2,7 @@
 rotor.cpp - Rotate dihedral angles according to rotor rules.
  
 Copyright (C) 1998-2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -16,6 +16,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include "babelconfig.h"
 
 #include "mol.h"
@@ -27,20 +28,20 @@ namespace OpenBabel
 {
 
 #define OB_DEFAULT_DELTA 10.0
-static bool GetDFFVector(OBMol&,vector<int>&,OBBitVec&);
-static bool CompareRotor(const pair<OBBond*,int>&,const pair<OBBond*,int>&);
+  static bool GetDFFVector(OBMol&,vector<int>&,OBBitVec&);
+  static bool CompareRotor(const pair<OBBond*,int>&,const pair<OBBond*,int>&);
 
 
-//**************************************
-//**** OBRotorList Member Functions ****
-//**************************************
+  //**************************************
+  //**** OBRotorList Member Functions ****
+  //**************************************
 
-bool OBRotorList::Setup(OBMol &mol)
-{
+  bool OBRotorList::Setup(OBMol &mol)
+  {
     Clear();
     FindRotors(mol);
     if (!Size())
-        return(false);
+      return(false);
 
     SetEvalAtoms(mol);
     AssignTorVals(mol);
@@ -48,21 +49,21 @@ bool OBRotorList::Setup(OBMol &mol)
     OBRotor *rotor;
     vector<OBRotor*>::iterator i;
     for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
-        if (!rotor->Size())
+      if (!rotor->Size())
         {
-            int ref[4];
-            rotor->GetDihedralAtoms(ref);
-            char buffer[BUFF_SIZE];
-            sprintf(buffer,"The rotor has no associated torsion values -> %d %d %d %d",ref[0],ref[1],ref[2],ref[3]);
+	  int ref[4];
+	  rotor->GetDihedralAtoms(ref);
+	  char buffer[BUFF_SIZE];
+	  sprintf(buffer,"The rotor has no associated torsion values -> %d %d %d %d",ref[0],ref[1],ref[2],ref[3]);
 
-            obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
+	  obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
         }
 
     return(true);
-}
+  }
 
-bool OBRotorList::FindRotors(OBMol &mol)
-{
+  bool OBRotorList::FindRotors(OBMol &mol)
+  {
     mol.FindRingAtomsAndBonds();
     vector<int> gtd;
     mol.GetGTDVector(gtd);
@@ -76,13 +77,13 @@ bool OBRotorList::FindRotors(OBMol &mol)
 
     int score;
     for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
-        if (bond->IsRotor())
+      if (bond->IsRotor())
         {
-            if (HasFixedAtoms() && IsFixedBond(bond))
-                continue;
-            score = gtd[bond->GetBeginAtomIdx()-1] +
-                    gtd[bond->GetEndAtomIdx()-1];
-            vtmp.push_back(pair<OBBond*,int> (bond,score));
+	  if (HasFixedAtoms() && IsFixedBond(bond))
+	    continue;
+	  score = gtd[bond->GetBeginAtomIdx()-1] +
+	    gtd[bond->GetEndAtomIdx()-1];
+	  vtmp.push_back(pair<OBBond*,int> (bond,score));
         }
 
     sort(vtmp.begin(),vtmp.end(),CompareRotor);
@@ -91,51 +92,51 @@ bool OBRotorList::FindRotors(OBMol &mol)
     int count;
     vector<pair<OBBond*,int> >::iterator j;
     for (j = vtmp.begin(),count=0;j != vtmp.end();j++,count++)
-    {
+      {
         rotor = new OBRotor;
         rotor->SetBond((*j).first);
         rotor->SetIdx(count);
         rotor->SetNumCoords(mol.NumAtoms()*3);
         _rotor.push_back(rotor);
-    }
+      }
 
     return(true);
-}
+  }
 
-bool OBRotorList::IsFixedBond(OBBond *bond)
-{
+  bool OBRotorList::IsFixedBond(OBBond *bond)
+  {
     OBAtom *a1,*a2,*a3;
     vector<OBEdgeBase*>::iterator i;
 
     a1 = bond->GetBeginAtom();
     a2 = bond->GetEndAtom();
     if (!_fix[a1->GetIdx()] || !_fix[a2->GetIdx()])
-        return(false);
+      return(false);
 
     bool isfixed=false;
     for (a3 = a1->BeginNbrAtom(i);a3;a3 = a1->NextNbrAtom(i))
-        if (a3 != a2 && _fix[a3->GetIdx()])
+      if (a3 != a2 && _fix[a3->GetIdx()])
         {
-            isfixed = true;
-            break;
+	  isfixed = true;
+	  break;
         }
 
     if (!isfixed)
-        return(false);
+      return(false);
 
     isfixed = false;
     for (a3 = a2->BeginNbrAtom(i);a3;a3 = a2->NextNbrAtom(i))
-        if (a3 != a1 && _fix[a3->GetIdx()])
+      if (a3 != a1 && _fix[a3->GetIdx()])
         {
-            isfixed = true;
-            break;
+	  isfixed = true;
+	  break;
         }
 
     return(isfixed);
-}
+  }
 
-bool GetDFFVector(OBMol &mol,vector<int> &dffv,OBBitVec &bv)
-{
+  bool GetDFFVector(OBMol &mol,vector<int> &dffv,OBBitVec &bv)
+  {
     dffv.clear();
     dffv.resize(mol.NumAtoms());
 
@@ -149,12 +150,12 @@ bool GetDFFVector(OBMol &mol,vector<int> &dffv,OBBitVec &bv)
     next.Clear();
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
+      {
         if (bv[atom->GetIdx()])
-        {
+	  {
             dffv[atom->GetIdx()-1] = 0;
             continue;
-        }
+	  }
 
         dffcount = 0;
         used.Clear();
@@ -163,37 +164,37 @@ bool GetDFFVector(OBMol &mol,vector<int> &dffv,OBBitVec &bv)
         curr.SetBitOn(atom->GetIdx());
 
         while (!curr.IsEmpty() && (bv&curr).Empty())
-        {
+	  {
             next.Clear();
             for (natom = curr.NextBit(-1);natom != curr.EndBit();natom = curr.NextBit(natom))
-            {
+	      {
                 atom1 = mol.GetAtom(natom);
                 for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j))
-                    if (!used.BitIsOn(bond->GetNbrAtomIdx(atom1)) &&
-                            !curr.BitIsOn(bond->GetNbrAtomIdx(atom1)))
-                        if (!(bond->GetNbrAtom(atom1))->IsHydrogen())
-                            next.SetBitOn(bond->GetNbrAtomIdx(atom1));
-            }
+		  if (!used.BitIsOn(bond->GetNbrAtomIdx(atom1)) &&
+		      !curr.BitIsOn(bond->GetNbrAtomIdx(atom1)))
+		    if (!(bond->GetNbrAtom(atom1))->IsHydrogen())
+		      next.SetBitOn(bond->GetNbrAtomIdx(atom1));
+	      }
 
             used |= next;
             curr = next;
             dffcount++;
-        }
+	  }
 
         dffv[atom->GetIdx()-1] = dffcount;
-    }
+      }
 
     return(true);
-}
+  }
 
 
-static double MinimumPairRMS(OBMol&,double*,double*,bool &);
+  static double MinimumPairRMS(OBMol&,double*,double*,bool &);
 
-//! Rotates each bond to zero and 180 degrees and tests
-//! if the 2 conformers are duplicates.  if so - the symmetric torsion
-//! values are removed from consideration during a search
-void OBRotorList::RemoveSymVals(OBMol &mol)
-{
+  //! Rotates each bond to zero and 180 degrees and tests
+  //! if the 2 conformers are duplicates.  if so - the symmetric torsion
+  //! values are removed from consideration during a search
+  void OBRotorList::RemoveSymVals(OBMol &mol)
+  {
     double *c,*c1,*c2;
     c1 = new double [mol.NumAtoms()*3];
     c2 = new double [mol.NumAtoms()*3];
@@ -204,7 +205,7 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
     OBRotor *rotor;
     vector<OBRotor*>::iterator i;
     for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
-    {
+      {
         //look for 2-fold symmetry about a bond
         memcpy(c1,c,sizeof(double)*mol.NumAtoms()*3);
         memcpy(c2,c,sizeof(double)*mol.NumAtoms()*3);
@@ -212,25 +213,21 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
         rotor->SetToAngle(c2,(double)(180.0*DEG_TO_RAD));
 
         if (MinimumPairRMS(mol,c1,c2,one2one) <cutoff && !one2one)
-        {
+	  {
             rotor->RemoveSymTorsionValues(2);
             OBBond *bond = rotor->GetBond();
 
             if (!_quiet)
-            {
-#ifdef HAVE_SSTREAM
-	      stringstream errorMsg;
-#else
-	      strstream errorMsg;
-#endif
-	      errorMsg << "symmetry found = " << ' ';
-	      errorMsg << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
-	      errorMsg << "rms = " << ' ';
-	      errorMsg << MinimumPairRMS(mol,c1,c2,one2one) << endl;
-	      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-            }
+	      {
+		stringstream errorMsg;
+		errorMsg << "symmetry found = " << ' ';
+		errorMsg << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
+		errorMsg << "rms = " << ' ';
+		errorMsg << MinimumPairRMS(mol,c1,c2,one2one) << endl;
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+	      }
             continue;
-        }
+	  }
 
         //look for 3-fold symmetry about a bond
         memcpy(c1,c,sizeof(double)*mol.NumAtoms()*3);
@@ -239,25 +236,21 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
         rotor->SetToAngle(c2,(double)(120.0*DEG_TO_RAD));
 
         if (MinimumPairRMS(mol,c1,c2,one2one) <cutoff && !one2one)
-        {
+	  {
             rotor->RemoveSymTorsionValues(3);
             OBBond *bond = rotor->GetBond();
 
             if (!_quiet)
-            {
-#ifdef HAVE_SSTREAM
-	      stringstream errorMsg;
-#else
-	      strstream errorMsg;
-#endif
-	      errorMsg << "3-fold symmetry found = " << ' ';
-	      errorMsg << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
-	      errorMsg << "rms = " << ' ';
-	      errorMsg << MinimumPairRMS(mol,c1,c2,one2one) << endl;
-	      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-            }
-        }
-    }
+	      {
+		stringstream errorMsg;
+		errorMsg << "3-fold symmetry found = " << ' ';
+		errorMsg << bond->GetBeginAtomIdx() << ' ' << bond->GetEndAtomIdx() << ' ' ;
+		errorMsg << "rms = " << ' ';
+		errorMsg << MinimumPairRMS(mol,c1,c2,one2one) << endl;
+		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+	      }
+	  }
+      }
 
     delete [] c1;
     delete [] c2;
@@ -268,64 +261,56 @@ void OBRotorList::RemoveSymVals(OBMol &mol)
     vector<vector<int> >::iterator k;
     vector<pair<OBSmartsPattern*,pair<int,int> > >::iterator j;
     for (j = _vsym2.begin();j != _vsym2.end();j++)
-        if (j->first->Match(mol))
+      if (j->first->Match(mol))
         {
-            mlist = j->first->GetUMapList();
+	  mlist = j->first->GetUMapList();
 
-            for (k = mlist.begin();k != mlist.end();k++)
-                for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
-                {
-                    rotor->GetDihedralAtoms(ref);
-                    if (((*k)[j->second.first] == ref[1] && (*k)[j->second.second] == ref[2]) ||
-                            ((*k)[j->second.first] == ref[2] && (*k)[j->second.second] == ref[1]))
-                    {
-                        rotor->RemoveSymTorsionValues(2);
-                        if (!_quiet)
-                        {
-#ifdef HAVE_SSTREAM
-	      stringstream errorMsg;
-#else
-	      strstream errorMsg;
-#endif
-	      errorMsg << "2-fold pattern-based symmetry found = " << ' ';
-	      errorMsg << ref[1] << ' ' << ref[2] << endl;
-	      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-                        }
-                    }
-                }
+	  for (k = mlist.begin();k != mlist.end();k++)
+	    for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
+	      {
+		rotor->GetDihedralAtoms(ref);
+		if (((*k)[j->second.first] == ref[1] && (*k)[j->second.second] == ref[2]) ||
+		    ((*k)[j->second.first] == ref[2] && (*k)[j->second.second] == ref[1]))
+		  {
+		    rotor->RemoveSymTorsionValues(2);
+		    if (!_quiet)
+		      {
+			stringstream errorMsg;
+			errorMsg << "2-fold pattern-based symmetry found = " << ' ';
+			errorMsg << ref[1] << ' ' << ref[2] << endl;
+			obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+		      }
+		  }
+	      }
         }
 
     for (j = _vsym3.begin();j != _vsym3.end();j++)
-        if (j->first->Match(mol))
+      if (j->first->Match(mol))
         {
-            mlist = j->first->GetUMapList();
+	  mlist = j->first->GetUMapList();
 
-            for (k = mlist.begin();k != mlist.end();k++)
-                for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
-                {
-                    rotor->GetDihedralAtoms(ref);
-                    if (((*k)[j->second.first] == ref[1] && (*k)[j->second.second] == ref[2]) ||
-                            ((*k)[j->second.first] == ref[2] && (*k)[j->second.second] == ref[1]))
-                    {
-                        rotor->RemoveSymTorsionValues(3);
-                        if (!_quiet)
-                        {
-#ifdef HAVE_SSTREAM
-			  stringstream errorMsg;
-#else
-			  strstream errorMsg;
-#endif
-			  errorMsg << "3-fold pattern-based symmetry found = " << ' ';
-			  errorMsg << ref[1] << ' ' << ref[2] << endl;
-			  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-                        }
-                    }
-                }
+	  for (k = mlist.begin();k != mlist.end();k++)
+	    for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
+	      {
+		rotor->GetDihedralAtoms(ref);
+		if (((*k)[j->second.first] == ref[1] && (*k)[j->second.second] == ref[2]) ||
+		    ((*k)[j->second.first] == ref[2] && (*k)[j->second.second] == ref[1]))
+		  {
+		    rotor->RemoveSymTorsionValues(3);
+		    if (!_quiet)
+		      {
+			stringstream errorMsg;
+			errorMsg << "3-fold pattern-based symmetry found = " << ' ';
+			errorMsg << ref[1] << ' ' << ref[2] << endl;
+			obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+		      }
+		  }
+	      }
         }
-}
+  }
 
-static double MinimumPairRMS(OBMol &mol,double *a,double *b,bool &one2one)
-{
+  static double MinimumPairRMS(OBMol &mol,double *a,double *b,bool &one2one)
+  {
     int i,j,k=0;
     double min,tmp,d_2 = 0.0;
     OBBitVec bset;
@@ -333,41 +318,41 @@ static double MinimumPairRMS(OBMol &mol,double *a,double *b,bool &one2one)
     vector<OBNodeBase*> _atom;
     _atom.resize(mol.NumAtoms());
     for (i = 0;i < (signed)mol.NumAtoms();i++)
-        _atom[i] = mol.GetAtom(i+1);
+      _atom[i] = mol.GetAtom(i+1);
 
     for (i = 0;i < (signed)mol.NumAtoms();i++)
-    {
+      {
         min = 10E10;
         for (j = 0;j < (signed)mol.NumAtoms();j++)
-            if ((_atom[i])->GetAtomicNum() == (_atom[j])->GetAtomicNum() &&
-                    (_atom[i])->GetHyb()       == (_atom[j])->GetHyb())
-                if (!bset[j])
-                {
-                    tmp = SQUARE(a[3*i]-b[3*j]) +
-                          SQUARE(a[3*i+1]-b[3*j+1]) +
-                          SQUARE(a[3*i+2]-b[3*j+2]);
-                    if (tmp < min)
-                    {
-                        k = j;
-                        min = tmp;
-                    }
-                }
+	  if ((_atom[i])->GetAtomicNum() == (_atom[j])->GetAtomicNum() &&
+	      (_atom[i])->GetHyb()       == (_atom[j])->GetHyb())
+	    if (!bset[j])
+	      {
+		tmp = SQUARE(a[3*i]-b[3*j]) +
+		  SQUARE(a[3*i+1]-b[3*j+1]) +
+		  SQUARE(a[3*i+2]-b[3*j+2]);
+		if (tmp < min)
+		  {
+		    k = j;
+		    min = tmp;
+		  }
+	      }
 
         if (i != j)
-            one2one = false;
+	  one2one = false;
         bset.SetBitOn(k);
         d_2 += min;
-    }
+      }
 
     d_2 /= (double)mol.NumAtoms();
 
     return(sqrt(d_2));
-}
+  }
 
-//! Determines which atoms the internal energy should be calculated
-//! if a the dihedral angle of the rotor is modified
-bool OBRotorList::SetEvalAtoms(OBMol &mol)
-{
+  //! Determines which atoms the internal energy should be calculated
+  //! if a the dihedral angle of the rotor is modified
+  bool OBRotorList::SetEvalAtoms(OBMol &mol)
+  {
     int j;
     OBBond *bond;
     OBAtom *a1,*a2;
@@ -377,7 +362,7 @@ bool OBRotorList::SetEvalAtoms(OBMol &mol)
     vector<OBEdgeBase*>::iterator k;
 
     for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
-    {
+      {
         bond = rotor->GetBond();
         curr.Clear();
         eval.Clear();
@@ -387,39 +372,39 @@ bool OBRotorList::SetEvalAtoms(OBMol &mol)
 
         //follow all non-rotor bonds and add atoms to eval list
         for (;!curr.Empty();)
-        {
+	  {
             next.Clear();
             for (j = curr.NextBit(0);j != curr.EndBit();j = curr.NextBit(j))
-            {
+	      {
                 a1 = mol.GetAtom(j);
                 for (a2 = a1->BeginNbrAtom(k);a2;a2 = a1->NextNbrAtom(k))
-                    if (!eval[a2->GetIdx()])
-                        if (!((OBBond*)*k)->IsRotor()||(HasFixedAtoms()&&IsFixedBond((OBBond*)*k)))
-                        {
-                            next.SetBitOn(a2->GetIdx());
-                            eval.SetBitOn(a2->GetIdx());
-                        }
-            }
+		  if (!eval[a2->GetIdx()])
+		    if (!((OBBond*)*k)->IsRotor()||(HasFixedAtoms()&&IsFixedBond((OBBond*)*k)))
+		      {
+			next.SetBitOn(a2->GetIdx());
+			eval.SetBitOn(a2->GetIdx());
+		      }
+	      }
             curr = next;
-        }
+	  }
 
         //add atoms alpha to eval list
         next.Clear();
         for (j = eval.NextBit(0);j != eval.EndBit();j = eval.NextBit(j))
-        {
+	  {
             a1 = mol.GetAtom(j);
             for (a2 = a1->BeginNbrAtom(k);a2;a2 = a1->NextNbrAtom(k))
-                next.SetBitOn(a2->GetIdx());
-        }
+	      next.SetBitOn(a2->GetIdx());
+	  }
         eval |= next;
         rotor->SetEvalAtoms(eval);
-    }
+      }
 
     return(true);
-}
+  }
 
-bool OBRotorList::AssignTorVals(OBMol &mol)
-{
+  bool OBRotorList::AssignTorVals(OBMol &mol)
+  {
     OBBond *bond;
     OBRotor *rotor;
     vector<OBRotor*>::iterator i;
@@ -430,7 +415,7 @@ bool OBRotorList::AssignTorVals(OBMol &mol)
     vector<int> itmp1;
     vector<int>::iterator j;
     for (i = _rotor.begin();i != _rotor.end();i++)
-    {
+      {
         rotor=*i;
         bond = rotor->GetBond();
         _rr.GetRotorIncrements(mol,bond,ref,res,delta);
@@ -439,24 +424,24 @@ bool OBRotorList::AssignTorVals(OBMol &mol)
 
         mol.FindChildren(itmp1,ref[1],ref[2]);
         if (itmp1.size()+1 > mol.NumAtoms()/2)
-        {
+	  {
             itmp1.clear();
             mol.FindChildren(itmp1,ref[2],ref[1]);
             swap(ref[0],ref[3]);
             swap(ref[1],ref[2]);
-        }
+	  }
 
         for (j = itmp1.begin();j != itmp1.end();j++)
-            *j = ((*j)-1)*3;
+	  *j = ((*j)-1)*3;
         rotor->SetRotAtoms(itmp1);
         rotor->SetDihedralAtoms(ref);
-    }
+      }
 
     return(true);
-}
+  }
 
-bool OBRotorList::SetRotAtoms(OBMol &mol)
-{
+  bool OBRotorList::SetRotAtoms(OBMol &mol)
+  {
     OBRotor *rotor;
     vector<int> rotatoms,dihed;
     vector<OBRotor*>::iterator i;
@@ -464,7 +449,7 @@ bool OBRotorList::SetRotAtoms(OBMol &mol)
     int ref[4];
     vector<int>::iterator j;
     for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
-    {
+      {
         dihed = rotor->GetDihedralAtoms();
         ref[0] = dihed[0]/3+1;
         ref[1] = dihed[1]/3+1;
@@ -473,24 +458,24 @@ bool OBRotorList::SetRotAtoms(OBMol &mol)
 
         mol.FindChildren(rotatoms,ref[1],ref[2]);
         if (rotatoms.size()+1 > mol.NumAtoms()/2)
-        {
+	  {
             rotatoms.clear();
             mol.FindChildren(rotatoms,ref[2],ref[1]);
             swap(ref[0],ref[3]);
             swap(ref[1],ref[2]);
-        }
+	  }
 
         for (j = rotatoms.begin();j != rotatoms.end();j++)
-            *j = ((*j)-1)*3;
+	  *j = ((*j)-1)*3;
         rotor->SetRotAtoms(rotatoms);
         rotor->SetDihedralAtoms(ref);
-    }
+      }
 
     return(true);
-}
+  }
 
-void OBRotorList::SetRotAtomsByFix(OBMol &mol)
-{
+  void OBRotorList::SetRotAtomsByFix(OBMol &mol)
+  {
     int ref[4];
     OBRotor *rotor;
     vector<int> rotatoms,dihed;
@@ -500,7 +485,7 @@ void OBRotorList::SetRotAtomsByFix(OBMol &mol)
     GetDFFVector(mol,_dffv,_fix);
 
     for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
-    {
+      {
         rotatoms.clear();
         dihed = rotor->GetDihedralAtoms();
         ref[0] = dihed[0]/3+1;
@@ -509,34 +494,34 @@ void OBRotorList::SetRotAtomsByFix(OBMol &mol)
         ref[3] = dihed[3]/3+1;
 
         if (_fix[ref[1]] && _fix[ref[2]])
-        {
+	  {
             if (!_fix[ref[0]])
-            {
+	      {
                 swap(ref[0],ref[3]);
                 swap(ref[1],ref[2]);
                 mol.FindChildren(rotatoms,ref[1],ref[2]);
                 for (j = rotatoms.begin();j != rotatoms.end();j++)
-                    *j = ((*j)-1)*3;
+		  *j = ((*j)-1)*3;
                 rotor->SetRotAtoms(rotatoms);
                 rotor->SetDihedralAtoms(ref);
-            }
-        }
+	      }
+	  }
         else
-            if (_dffv[ref[1]-1] > _dffv[ref[2]-1])
+	  if (_dffv[ref[1]-1] > _dffv[ref[2]-1])
             {
-                swap(ref[0],ref[3]);
-                swap(ref[1],ref[2]);
-                mol.FindChildren(rotatoms,ref[1],ref[2]);
-                for (j = rotatoms.begin();j != rotatoms.end();j++)
-                    *j = ((*j)-1)*3;
-                rotor->SetRotAtoms(rotatoms);
-                rotor->SetDihedralAtoms(ref);
+	      swap(ref[0],ref[3]);
+	      swap(ref[1],ref[2]);
+	      mol.FindChildren(rotatoms,ref[1],ref[2]);
+	      for (j = rotatoms.begin();j != rotatoms.end();j++)
+		*j = ((*j)-1)*3;
+	      rotor->SetRotAtoms(rotatoms);
+	      rotor->SetDihedralAtoms(ref);
             }
-    }
-}
+      }
+  }
 
-OBRotorList::OBRotorList()
-{
+  OBRotorList::OBRotorList()
+  {
     _rotor.clear();
     _quiet=false;
     _removesym=true;
@@ -557,49 +542,49 @@ OBRotorList::OBRotorList()
     sp->Init("[#8D2][#15,#16](~[#8D1])(~[#8D1])~[#8D1]");
     _vsym3.push_back(pair<OBSmartsPattern*,pair<int,int> > (sp,pair<int,int> (0,1)));
 
-}
+  }
 
-OBRotorList::~OBRotorList()
-{
+  OBRotorList::~OBRotorList()
+  {
     vector<OBRotor*>::iterator i;
     for (i = _rotor.begin();i != _rotor.end();i++)
-        delete *i;
+      delete *i;
 
     vector<pair<OBSmartsPattern*,pair<int,int> > >::iterator j;
     for (j = _vsym2.begin();j != _vsym2.end();j++)
-        delete j->first;
+      delete j->first;
 
     for (j = _vsym3.begin();j != _vsym3.end();j++)
-        delete j->first;
-}
+      delete j->first;
+  }
 
-void OBRotorList::Clear()
-{
+  void OBRotorList::Clear()
+  {
     vector<OBRotor*>::iterator i;
     for (i = _rotor.begin();i != _rotor.end();i++)
-        delete *i;
+      delete *i;
     _rotor.clear();
     _fix.Clear();
-}
+  }
 
-bool CompareRotor(const pair<OBBond*,int> &a,const pair<OBBond*,int> &b)
-{
+  bool CompareRotor(const pair<OBBond*,int> &a,const pair<OBBond*,int> &b)
+  {
     //return(a.second > b.second); //outside->in
     return(a.second < b.second);   //inside->out
-}
+  }
 
-//**********************************
-//**** OBRotor Member Functions ****
-//**********************************
+  //**********************************
+  //**** OBRotor Member Functions ****
+  //**********************************
 
-OBRotor::OBRotor()
-{
+  OBRotor::OBRotor()
+  {
     _delta = 10.0;
     _rotatoms = NULL;
-}
+  }
 
-double OBRotor::CalcTorsion(double *c)
-{
+  double OBRotor::CalcTorsion(double *c)
+  {
     double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
     double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
     double c1mag,c2mag,ang,costheta;
@@ -630,41 +615,41 @@ double OBRotor::CalcTorsion(double *c)
     c1mag = SQUARE(c1x)+SQUARE(c1y)+SQUARE(c1z);
     c2mag = SQUARE(c2x)+SQUARE(c2y)+SQUARE(c2z);
     if (c1mag*c2mag < 0.01)
-        costheta = 1.0; //avoid div by zero error
+      costheta = 1.0; //avoid div by zero error
     else
-        costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
+      costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
 
     if (costheta < -0.9999999)
-        costheta = -0.9999999;
+      costheta = -0.9999999;
     if (costheta >  0.9999999)
-        costheta =  0.9999999;
+      costheta =  0.9999999;
 
     if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0)
-        ang = -acos(costheta);
+      ang = -acos(costheta);
     else
-        ang = acos(costheta);
+      ang = acos(costheta);
 
     return(ang);
-}
+  }
 
-double OBRotor::CalcBondLength(double *c)
-{
+  double OBRotor::CalcBondLength(double *c)
+  {
     double dx,dy,dz;
 
     dx = c[_torsion[1]] - c[_torsion[2]];
     dy = c[_torsion[1]+1] - c[_torsion[2]+1];
     dz = c[_torsion[1]+2] - c[_torsion[2]+2];
     return(sqrt(SQUARE(dx)+SQUARE(dy)+SQUARE(dz)));
-}
+  }
 
-void OBRotor::Precalc(vector<double*> &cv)
-{
+  void OBRotor::Precalc(vector<double*> &cv)
+  {
     double *c,ang;
     vector<double*>::iterator i;
     vector<double>::iterator j;
     vector<double> cs,sn,t;
     for (i = cv.begin();i != cv.end();i++)
-    {
+      {
         c = *i;
         cs.clear();
         sn.clear();
@@ -672,28 +657,28 @@ void OBRotor::Precalc(vector<double*> &cv)
         ang = CalcTorsion(c);
 
         for (j = _res.begin();j != _res.end();j++)
-        {
+	  {
             cs.push_back(cos(*j-ang));
             sn.push_back(sin(*j-ang));
             t.push_back(1 - cos(*j-ang));
-        }
+	  }
 
         _cs.push_back(cs);
         _sn.push_back(sn);
         _t.push_back(t);
         _invmag.push_back(1.0/CalcBondLength(c));
-    }
-}
+      }
+  }
 
 
-void OBRotor::SetRotor(double *c,int idx,int prev)
-{
+  void OBRotor::SetRotor(double *c,int idx,int prev)
+  {
     double ang,sn,cs,t,dx,dy,dz,mag;
 
     if (prev == -1)
-        ang = _res[idx] - CalcTorsion(c);
+      ang = _res[idx] - CalcTorsion(c);
     else
-        ang = _res[idx] - _res[prev];
+      ang = _res[idx] - _res[prev];
 
     sn = sin(ang);
     cs = cos(ang);
@@ -705,10 +690,10 @@ void OBRotor::SetRotor(double *c,int idx,int prev)
     mag = sqrt(SQUARE(dx) + SQUARE(dy) + SQUARE(dz));
 
     Set(c,sn,cs,t,1.0/mag);
-}
+  }
 
-void OBRotor::Precompute(double *c)
-{
+  void OBRotor::Precompute(double *c)
+  {
     double dx,dy,dz;
     dx = c[_torsion[1]]   - c[_torsion[2]];
     dy = c[_torsion[1]+1] - c[_torsion[2]+1];
@@ -716,10 +701,10 @@ void OBRotor::Precompute(double *c)
     _imag = 1.0/sqrt(SQUARE(dx) + SQUARE(dy) + SQUARE(dz));
 
     _refang = CalcTorsion(c);
-}
+  }
 
-void OBRotor::Set(double *c,int idx)
-{
+  void OBRotor::Set(double *c,int idx)
+  {
     double ang,sn,cs,t;
 
     ang = _res[idx] - _refang;
@@ -759,7 +744,7 @@ void OBRotor::Set(double *c,int idx)
     tz = c[_torsion[1]+2];
     int i,j;
     for (i = 0;i < _size;i++)
-    {
+      {
         j = _rotatoms[i];
         c[j] -= tx;
         c[j+1] -= ty;
@@ -770,11 +755,11 @@ void OBRotor::Set(double *c,int idx)
         c[j] = x+tx;
         c[j+1] = y+ty;
         c[j+2] = z+tz;
-    }
-}
+      }
+  }
 
-void OBRotor::Set(double *c,double sn,double cs,double t,double invmag)
-{
+  void OBRotor::Set(double *c,double sn,double cs,double t,double invmag)
+  {
     double x,y,z,tx,ty,tz,m[9];
 
     x = c[_torsion[1]]   - c[_torsion[2]];
@@ -809,7 +794,7 @@ void OBRotor::Set(double *c,double sn,double cs,double t,double invmag)
     tz = c[_torsion[1]+2];
     int i,j;
     for (i = 0;i < _size;i++)
-    {
+      {
         j = _rotatoms[i];
         c[j] -= tx;
         c[j+1] -= ty;
@@ -820,55 +805,55 @@ void OBRotor::Set(double *c,double sn,double cs,double t,double invmag)
         c[j] = x+tx;
         c[j+1] = y+ty;
         c[j+2] = z+tz;
-    }
-}
+      }
+  }
 
-void OBRotor::RemoveSymTorsionValues(int fold)
-{
+  void OBRotor::RemoveSymTorsionValues(int fold)
+  {
     vector<double>::iterator i;
     vector<double> tv;
     if (_res.size() == 1)
-        return;
+      return;
 
     for (i = _res.begin();i != _res.end();i++)
-        if (*i >= 0.0)
+      if (*i >= 0.0)
         {
-            if (fold == 2 && *i < DEG_TO_RAD*180.0)
-                tv.push_back(*i);
-            if (fold == 3 && *i < DEG_TO_RAD*120.0)
-                tv.push_back(*i);
+	  if (fold == 2 && *i < DEG_TO_RAD*180.0)
+	    tv.push_back(*i);
+	  if (fold == 3 && *i < DEG_TO_RAD*120.0)
+	    tv.push_back(*i);
         }
 
     if (tv.empty())
-        return;
+      return;
     _res = tv;
-}
+  }
 
-void OBRotor::SetDihedralAtoms(int ref[4])
-{
+  void OBRotor::SetDihedralAtoms(int ref[4])
+  {
     for (int i = 0;i < 4;i++)
-        _ref[i] = ref[i];
+      _ref[i] = ref[i];
     _torsion.resize(4);
     _torsion[0] = (ref[0]-1)*3;
     _torsion[1] = (ref[1]-1)*3;
     _torsion[2] = (ref[2]-1)*3;
     _torsion[3] = (ref[3]-1)*3;
-}
+  }
 
-void OBRotor::SetRotAtoms(vector<int> &vi)
-{
+  void OBRotor::SetRotAtoms(vector<int> &vi)
+  {
     if (_rotatoms)
-        delete [] _rotatoms;
+      delete [] _rotatoms;
     _rotatoms = new int [vi.size()];
     copy(vi.begin(),vi.end(),_rotatoms);
     _size = vi.size();
-}
+  }
 
-//***************************************
-//**** OBRotorRules Member functions ****
-//***************************************
-OBRotorRules::OBRotorRules()
-{
+  //***************************************
+  //**** OBRotorRules Member functions ****
+  //***************************************
+  OBRotorRules::OBRotorRules()
+  {
     _quiet=false;
     _init = false;
     _dir = BABEL_DATADIR;
@@ -876,10 +861,10 @@ OBRotorRules::OBRotorRules()
     _filename = "torlib.txt";
     _subdir = "data";
     _dataptr = TorsionDefaults;
-}
+  }
 
-void OBRotorRules::ParseLine(const char *buffer)
-{
+  void OBRotorRules::ParseLine(const char *buffer)
+  {
     int i;
     int ref[4];
     double delta;
@@ -889,73 +874,73 @@ void OBRotorRules::ParseLine(const char *buffer)
     char temp_buffer[BUFF_SIZE];
 
     if (buffer[0] == '#')
-        return;
+      return;
     tokenize(vs,buffer);
     if (vs.empty())
-        return;
+      return;
 
     if (EQn(buffer,"SP3-SP3",7))
-    {
+      {
         _sp3sp3.clear();
         for (j = vs.begin(),j++;j != vs.end();j++)
-            _sp3sp3.push_back(DEG_TO_RAD*atof(j->c_str()));
+	  _sp3sp3.push_back(DEG_TO_RAD*atof(j->c_str()));
         return;
-    }
+      }
 
     if (EQn(buffer,"SP3-SP2",7))
-    {
+      {
         _sp3sp2.clear();
         for (j = vs.begin(),j++;j != vs.end();j++)
-            _sp3sp2.push_back(DEG_TO_RAD*atof(j->c_str()));
+	  _sp3sp2.push_back(DEG_TO_RAD*atof(j->c_str()));
         return;
-    }
+      }
 
     if (EQn(buffer,"SP2-SP2",7))
-    {
+      {
         _sp2sp2.clear();
         for (j = vs.begin(),j++;j != vs.end();j++)
-            _sp2sp2.push_back(DEG_TO_RAD*atof(j->c_str()));
+	  _sp2sp2.push_back(DEG_TO_RAD*atof(j->c_str()));
         return;
-    }
+      }
 
     if (!vs.empty() && vs.size() > 5)
-    {
+      {
         strcpy(temp_buffer,vs[0].c_str());
         //reference atoms
         for (i = 0;i < 4;i++)
-            ref[i] = atoi(vs[i+1].c_str())-1;
+	  ref[i] = atoi(vs[i+1].c_str())-1;
         //possible torsions
         vals.clear();
         delta = OB_DEFAULT_DELTA;
         for (i = 5;(unsigned)i < vs.size();i++)
-        {
+	  {
             if (i == (signed)(vs.size()-2) && vs[i] == "Delta")
-            {
+	      {
                 delta = atof(vs[i+1].c_str());
                 i += 2;
-            }
+	      }
             else
-                vals.push_back(DEG_TO_RAD*atof(vs[i].c_str()));
-        }
+	      vals.push_back(DEG_TO_RAD*atof(vs[i].c_str()));
+	  }
 
         if (vals.empty())
-        {
+	  {
             string err = "The following rule has no associated torsions: ";
             err += vs[0];
             obErrorLog.ThrowError(__FUNCTION__, err, obDebug);
-        }
+	  }
         OBRotorRule *rr = new OBRotorRule (temp_buffer,ref,vals,delta);
         if (rr->IsValid())
-            _vr.push_back(rr);
+	  _vr.push_back(rr);
         else
-            delete rr;
-    }
+	  delete rr;
+      }
 
-}
+  }
 
-void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
-                                      int ref[4],vector<double> &vals,double &delta)
-{
+  void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
+					int ref[4],vector<double> &vals,double &delta)
+  {
     vals.clear();
     vector<pair<int,int> > vpr;
     vpr.push_back(pair<int,int> (0,bond->GetBeginAtomIdx()));
@@ -968,22 +953,22 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
     vector<vector<int> > map;
     vector<OBRotorRule*>::iterator i;
     for (i = _vr.begin();i != _vr.end();i++)
-    {
+      {
         sp = (*i)->GetSmartsPattern();
         (*i)->GetReferenceAtoms(ref);
         vpr[0].first = ref[1];
         vpr[1].first = ref[2];
 
         if (!sp->RestrictedMatch(mol,vpr,true))
-        {
+	  {
             swap(vpr[0].first,vpr[1].first);
             if (!sp->RestrictedMatch(mol,vpr,true))
-                continue;
-        }
+	      continue;
+	  }
 
         map = sp->GetMapList();
         for (j = 0;j < 4;j++)
-            ref[j] = map[0][ref[j]];
+	  ref[j] = map[0][ref[j]];
         vals = (*i)->GetTorsionVals();
         delta = (*i)->GetDelta();
 
@@ -991,70 +976,70 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
         a1 = mol.GetAtom(ref[0]);
         a4 = mol.GetAtom(ref[3]);
         if (a1->IsHydrogen() && a4->IsHydrogen())
-            continue; //don't allow hydrogens at both ends
+	  continue; //don't allow hydrogens at both ends
         if (a1->IsHydrogen() || a4->IsHydrogen()) //need a heavy atom reference - can use hydrogen
-        {
+	  {
             bool swapped = false;
             a2 = mol.GetAtom(ref[1]);
             a3 = mol.GetAtom(ref[2]);
             if (a4->IsHydrogen())
-            {
+	      {
                 swap(a1,a4);
                 swap(a2,a3);
                 swapped = true;
-            }
+	      }
 
             vector<OBEdgeBase*>::iterator k;
             for (r = a2->BeginNbrAtom(k);r;r = a2->NextNbrAtom(k))
-                if (!r->IsHydrogen() && r != a3)
-                    break;
+	      if (!r->IsHydrogen() && r != a3)
+		break;
 
             if (!r)
-                continue; //unable to find reference heavy atom
+	      continue; //unable to find reference heavy atom
             //			cerr << "r = " << r->GetIdx() << endl;
 
             double t1 = mol.GetTorsion(a1,a2,a3,a4);
             double t2 = mol.GetTorsion(r,a2,a3,a4);
             double diff = t2 - t1;
             if (diff > 180.0)
-                diff -= 360.0;
+	      diff -= 360.0;
             if (diff < -180.0)
-                diff += 360.0;
+	      diff += 360.0;
             diff *= DEG_TO_RAD;
 
             vector<double>::iterator m;
             for (m = vals.begin();m != vals.end();m++)
-            {
+	      {
                 *m += diff;
                 if (*m < PI)
-                    *m += 2.0*PI;
+		  *m += 2.0*PI;
                 if (*m > PI)
-                    *m -= 2.0*PI;
-            }
+		  *m -= 2.0*PI;
+	      }
 
             if (swapped)
-                ref[3] = r->GetIdx();
+	      ref[3] = r->GetIdx();
             else
-                ref[0] = r->GetIdx();
+	      ref[0] = r->GetIdx();
 
             /*
-            	  mol.SetTorsion(r,a2,a3,a4,vals[0]);
-            	  cerr << "test = " << (vals[0]-diff)*RAD_TO_DEG << ' ';
-            	  cerr << mol.GetTorsion(a1,a2,a3,a4) <<  ' ';
-            	  cerr << mol.GetTorsion(r,a2,a3,a4) << endl;
-            	  */
-        }
+	      mol.SetTorsion(r,a2,a3,a4,vals[0]);
+	      cerr << "test = " << (vals[0]-diff)*RAD_TO_DEG << ' ';
+	      cerr << mol.GetTorsion(a1,a2,a3,a4) <<  ' ';
+	      cerr << mol.GetTorsion(r,a2,a3,a4) << endl;
+	    */
+	  }
 
         char buffer[BUFF_SIZE];
         if (!_quiet)
-        {
+	  {
             sprintf(buffer,"%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],
                     ((*i)->GetSmartsString()).c_str());
             obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
-        }
+	  }
         return;
-    }
+      }
 
     //***didn't match any rules - assign based on hybridization***
     OBAtom *a1,*a2,*a3,*a4;
@@ -1063,11 +1048,11 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
     vector<OBEdgeBase*>::iterator k;
 
     for (a1 = a2->BeginNbrAtom(k);a1;a1 = a2->NextNbrAtom(k))
-        if (!a1->IsHydrogen() && a1 != a3)
-            break;
+      if (!a1->IsHydrogen() && a1 != a3)
+	break;
     for (a4 = a3->BeginNbrAtom(k);a4;a4 = a3->NextNbrAtom(k))
-        if (!a4->IsHydrogen() && a4 != a2)
-            break;
+      if (!a4->IsHydrogen() && a4 != a2)
+	break;
 
     ref[0] = a1->GetIdx();
     ref[1] = a2->GetIdx();
@@ -1075,50 +1060,50 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
     ref[3] = a4->GetIdx();
 
     if (a2->GetHyb() == 3 && a3->GetHyb() == 3) //sp3-sp3
-    {
+      {
         vals = _sp3sp3;
 
         if (!_quiet)
-        {
+	  {
             char buffer[BUFF_SIZE];
             sprintf(buffer,"%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],"sp3-sp3");
 	    obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
-        }
-    }
+	  }
+      }
     else
-        if (a2->GetHyb() == 2 && a3->GetHyb() == 2) //sp2-sp2
+      if (a2->GetHyb() == 2 && a3->GetHyb() == 2) //sp2-sp2
         {
-            vals = _sp2sp2;
+	  vals = _sp2sp2;
 
-            if (!_quiet)
+	  if (!_quiet)
             {
-                char buffer[BUFF_SIZE];
-                sprintf(buffer,"%3d%3d%3d%3d %s",
-                        ref[0],ref[1],ref[2],ref[3],"sp2-sp2");
-		obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
+	      char buffer[BUFF_SIZE];
+	      sprintf(buffer,"%3d%3d%3d%3d %s",
+		      ref[0],ref[1],ref[2],ref[3],"sp2-sp2");
+	      obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
             }
         }
-        else //must be sp2-sp3
+      else //must be sp2-sp3
         {
-            vals = _sp3sp2;
+	  vals = _sp3sp2;
 
-            if (!_quiet)
+	  if (!_quiet)
             {
-                char buffer[BUFF_SIZE];
-                sprintf(buffer,"%3d%3d%3d%3d %s",
-                        ref[0],ref[1],ref[2],ref[3],"sp2-sp3");
-		obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
+	      char buffer[BUFF_SIZE];
+	      sprintf(buffer,"%3d%3d%3d%3d %s",
+		      ref[0],ref[1],ref[2],ref[3],"sp2-sp3");
+	      obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
             }
         }
-}
+  }
 
-OBRotorRules::~OBRotorRules()
-{
+  OBRotorRules::~OBRotorRules()
+  {
     vector<OBRotorRule*>::iterator i;
     for (i = _vr.begin();i != _vr.end();i++)
-        delete (*i);
-}
+      delete (*i);
+  }
 
 #undef OB_DEFAULT_DELTA
 }

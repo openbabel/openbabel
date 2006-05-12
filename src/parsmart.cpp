@@ -2,7 +2,7 @@
 parsmart.cpp - SMARTS parser.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -19,28 +19,15 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include <ctype.h>
-#include <iostream>
 #include <iomanip>
 
 #include "mol.h"
 #include "bitvec.h"
 #include "parsmart.h"
 
-#ifndef True
-#define True   1
-#define False  0
-#endif
-
 /* Strict syntax checking! */
 // Currently causes problems with aromatic flags in atomtyp.txt
 // #define OB_PARSMART_STRICT
-#define VERBOSE
-
-#ifdef __sgi
-#define UnusedArgument(x)   ((x)=(x))
-#else
-#define UnusedArgument(x)
-#endif
 
 using namespace std;
 
@@ -101,10 +88,6 @@ namespace OpenBabel
   has covered.
   */
 
-  /*============================*/
-  /*  Period Table of Elements  */
-  /*============================*/
-
   std::vector<std::pair<Pattern*,std::vector<bool> > > RSCACHE; //recursive smarts cache
 
   typedef struct
@@ -125,13 +108,6 @@ namespace OpenBabel
     int       closindex;
   }
   ParseState;
-
-  /*
-    #define ATOMEXPRPOOL  16
-    #define BONDEXPRPOOL  16
-    #define ATOMPOOL      16
-    #define BONDPOOL      16
-  */
 
 #define ATOMEXPRPOOL  1
 #define BONDEXPRPOOL  1
@@ -169,9 +145,8 @@ namespace OpenBabel
   static char *MainPtr;
   static char *LexPtr;
 
-#define BUFMAX  1024
-  static char Buffer[BUFMAX];
-  static char Descr[BUFMAX];
+  static char Buffer[BUFF_SIZE];
+  static char Descr[BUFF_SIZE];
 
   static bool match(OBMol &mol,Pattern *pat,std::vector<std::vector<int> > &mlist,bool single=false);
   static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom);
@@ -318,7 +293,7 @@ namespace OpenBabel
   static int IsInvalidAtom( AtomExpr *expr )
   {
     if( !expr )
-      return True;
+      return true;
     return( (expr->type==AE_LEAF) &&
 	    (expr->leaf.prop==AL_CONST)
 	    && !expr->leaf.value );
@@ -557,21 +532,7 @@ namespace OpenBabel
 
   static Pattern *SMARTSError( Pattern *pat )
   {
-    /*  char *ptr;
-  
-    fprintf(stderr,"SMARTS Error: %s\n",MainPtr);
-  
-    fputs("              ",stdout);
-    for( ptr=MainPtr; ptr<LexPtr; ptr++ )
-    fputc(' ',stdout);
-    fputs("^\n",stdout);
-    */
-
-#ifdef HAVE_SSTREAM
     stringstream errorMsg;
-#else
-    strstream errorMsg;
-#endif
     errorMsg << "SMARTS Error:\n" << MainPtr << endl;
     errorMsg << setw(LexPtr-MainPtr+1) << '^' << endl;
     obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
@@ -585,10 +546,10 @@ namespace OpenBabel
     switch( *LexPtr++ )
       {
       case '*':
-	return BuildAtomLeaf(AL_CONST,True);
+	return BuildAtomLeaf(AL_CONST,true);
 #ifndef OB_PARSMART_STRICT
       case 'A':
-	return BuildAtomLeaf(AL_AROM,False);
+	return BuildAtomLeaf(AL_AROM,false);
 #endif
       
       case 'B':
@@ -605,36 +566,36 @@ namespace OpenBabel
 	    LexPtr++;
 	    return GenerateElement(17);
 	  }
-	return GenerateAromElem(6,False);
+	return GenerateAromElem(6,false);
       
       case 'F':
 	return GenerateElement( 9);
       case 'I':
 	return GenerateElement(53);
       case 'N':
-	return GenerateAromElem( 7,False);
+	return GenerateAromElem( 7,false);
       case 'O':
-	return GenerateAromElem( 8,False);
+	return GenerateAromElem( 8,false);
       case 'P':
 	return GenerateElement(15);
       case 'S':
-	return GenerateAromElem(16,False);
+	return GenerateAromElem(16,false);
       
 #ifndef OB_PARSMART_STRICT
       case 'a':
-	return BuildAtomLeaf(AL_AROM,True);
+	return BuildAtomLeaf(AL_AROM,true);
 #endif
       
       case 'c':
-	return GenerateAromElem( 6,True);
+	return GenerateAromElem( 6,true);
       case 'n':
-	return GenerateAromElem( 7,True);
+	return GenerateAromElem( 7,true);
       case 'o':
-	return GenerateAromElem( 8,True);
+	return GenerateAromElem( 8,true);
       case 'p':
-	return GenerateAromElem(15,True);
+	return GenerateAromElem(15,true);
       case 's':
-	return GenerateAromElem(16,True);
+	return GenerateAromElem(16,true);
       }
     LexPtr--;
     return (AtomExpr*)0;
@@ -684,7 +645,7 @@ namespace OpenBabel
 	return( BuildAtomRecurs(pat) );
 	
       case('*'):
-	return( BuildAtomLeaf(AL_CONST,True) );
+	return( BuildAtomLeaf(AL_CONST,true) );
       
       case('+'):
 	if( isdigit(*LexPtr) )
@@ -717,9 +678,9 @@ namespace OpenBabel
 	    while( *LexPtr == '-' )
 	      {
 		LexPtr++;
-	      index++;
+		index++;
 	      }
-	}
+	  }
 	return BuildAtomLeaf(AL_NEGATIVE,index);
       
       case '@':
@@ -759,7 +720,7 @@ namespace OpenBabel
 	  case('u'):  return GenerateElement(79);
 	  }
 	LexPtr--;
-	return BuildAtomLeaf(AL_AROM,False);
+	return BuildAtomLeaf(AL_AROM,false);
 	
       case('B'):
 	switch( *LexPtr++ )
@@ -788,7 +749,7 @@ namespace OpenBabel
 	  case('u'):  return GenerateElement(29);
 	  }
 	LexPtr--;
-	return GenerateAromElem(6,False);
+	return GenerateAromElem(6,false);
       
       case('D'):
 	if( *LexPtr == 'y' )
@@ -812,10 +773,10 @@ namespace OpenBabel
 	    return GenerateElement(68);
 	  }
 	else if( *LexPtr == 's' )
-	{
-	  LexPtr++;
-	  return GenerateElement(99);
-	}
+	  {
+	    LexPtr++;
+	    return GenerateElement(99);
+	  }
 	else if( *LexPtr == 'u' )
 	  {
 	    LexPtr++;
@@ -968,7 +929,7 @@ namespace OpenBabel
 	  case('p'):  return( GenerateElement( 93) );
 	  }
 	LexPtr--;
-	return( GenerateAromElem(7,False) );
+	return( GenerateAromElem(7,false) );
 	
       case('O'):
 	if( *LexPtr == 's' )
@@ -976,7 +937,7 @@ namespace OpenBabel
 	    LexPtr++;
 	    return( GenerateElement(76) );
 	  }
-	return( GenerateAromElem(8,False) );
+	return( GenerateAromElem(8,false) );
 	
       case('P'):
 	switch( *LexPtr++ )
@@ -1026,7 +987,7 @@ namespace OpenBabel
 	  case('r'):  return( GenerateElement(38) );
 	  }
 	LexPtr--;
-	return( GenerateAromElem(16,False) );
+	return( GenerateAromElem(16,false) );
 	
       case('T'):
 	switch( *LexPtr++ )
@@ -1054,14 +1015,14 @@ namespace OpenBabel
 	    return( GenerateElement(54) );
 	  }
 	else if( isdigit(*LexPtr) )
-	{
-	  index = 0;
-	  while( isdigit(*LexPtr) )
-	    index = index*10 + ((*LexPtr++)-'0');
-	  if (index == 0) // default to 1 (if no number present)
-	    index = 1;
-	  return( BuildAtomLeaf(AL_CONNECT,index) );
-	}
+	  {
+	    index = 0;
+	    while( isdigit(*LexPtr) )
+	      index = index*10 + ((*LexPtr++)-'0');
+	    if (index == 0) // default to 1 (if no number present)
+	      index = 1;
+	    return( BuildAtomLeaf(AL_CONNECT,index) );
+	  }
 	break;
 	
       case('Y'):
@@ -1089,11 +1050,11 @@ namespace OpenBabel
 	if( *LexPtr == 's' )
 	  {
 	    LexPtr++;
-	    return GenerateAromElem(33,True);
+	    return GenerateAromElem(33,true);
 	  }
-	return BuildAtomLeaf(AL_AROM,True);
+	return BuildAtomLeaf(AL_AROM,true);
       
-      case('c'):  return GenerateAromElem(6,True);
+      case('c'):  return GenerateAromElem(6,true);
       
       case('h'):
 	if( isdigit(*LexPtr) )
@@ -1106,9 +1067,9 @@ namespace OpenBabel
 	  index = 1;
 	return BuildAtomLeaf(AL_IMPLICIT,index);
       
-      case('n'):  return GenerateAromElem(7,True);
-      case('o'):  return GenerateAromElem(8,True);
-      case('p'):  return GenerateAromElem(15,True);
+      case('n'):  return GenerateAromElem(7,true);
+      case('o'):  return GenerateAromElem(8,true);
+      case('p'):  return GenerateAromElem(15,true);
       
       case('r'):
 	if( isdigit(*LexPtr) )
@@ -1126,9 +1087,9 @@ namespace OpenBabel
 	if( *LexPtr == 'i' )
 	  {
 	    LexPtr++;
-	    return GenerateAromElem(14,True);
+	    return GenerateAromElem(14,true);
 	  }
-	return GenerateAromElem(16,True);
+	return GenerateAromElem(16,true);
 	
       case('v'):
 	if( isdigit(*LexPtr) )
@@ -1230,7 +1191,7 @@ namespace OpenBabel
       case('#'):  return BuildBondLeaf(BL_TYPE,BT_TRIPLE);
       case(':'):  return BuildBondLeaf(BL_TYPE,BT_AROM);
       case('@'):  return BuildBondLeaf(BL_TYPE,BT_RING);
-      case('~'):  return BuildBondLeaf(BL_CONST,True);
+      case('~'):  return BuildBondLeaf(BL_CONST,true);
       
       case('/'):  if( *LexPtr == '?' )
 	{
@@ -1633,12 +1594,12 @@ namespace OpenBabel
   
     result = SMARTSParser(result,&stat,-1,part);
   
-    flag = False;
+    flag = false;
     for( i=0; i<100; i++ )
       if( stat.closure[i] != -1 )
 	{
 	  FreeBondExpr(stat.closord[i]);
-	  flag = True;
+	  flag = true;
 	}
   
     if( result )
@@ -1745,7 +1706,7 @@ namespace OpenBabel
   {
     register int j,k;
   
-    pat->atom[i].visit = True;
+    pat->atom[i].visit = true;
     for( j=0; j<pat->bcount; j++ )
       if( pat->bond[j].visit == -1 )
 	{
@@ -1790,7 +1751,7 @@ namespace OpenBabel
   static int EqualAtomExpr( AtomExpr *lft, AtomExpr *rgt )
   {
     if( lft->type != rgt->type )
-      return False;
+      return false;
   
     if( lft->type == AE_LEAF )
       {
@@ -1802,7 +1763,7 @@ namespace OpenBabel
 	return EqualAtomExpr(lft->mon.arg,rgt->mon.arg);
       }
     else if( lft->type == AE_RECUR )
-      return False;
+      return false;
   
     return EqualAtomExpr(lft->bin.lft,rgt->bin.lft) &&
       EqualAtomExpr(lft->bin.rgt,rgt->bin.rgt);
@@ -1904,7 +1865,7 @@ namespace OpenBabel
 	  return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
 	if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
 	  return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-	return False;
+	return false;
       }
   
     if( (lft->type==AE_NOT) && (rgt->type==AE_LEAF) )
@@ -1914,10 +1875,10 @@ namespace OpenBabel
 	  return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
 	if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
 	  return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-	return False;
+	return false;
       }
   
-    return False;
+    return false;
   }
 
   static int AtomExprConflict( AtomExpr *lft, AtomExpr *rgt )
@@ -1925,7 +1886,7 @@ namespace OpenBabel
     while( rgt->type == AE_ANDHI )
       {
 	if( AtomLeafConflict(lft,rgt->bin.lft) )
-	  return True;
+	  return true;
 	rgt = rgt->bin.rgt;
       }
     return AtomLeafConflict(lft,rgt);
@@ -1951,7 +1912,7 @@ namespace OpenBabel
 	/* Positive charge ~ Negative charge */
 	if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
 	  return (lft->leaf.value==0) && (rgt->leaf.value==0);
-	return False;
+	return false;
       }
   
     if( (lft->type==AE_LEAF) && (rgt->type==AE_NOT) )
@@ -1961,13 +1922,13 @@ namespace OpenBabel
 	  return lft->leaf.value != rgt->leaf.value;
       
 	if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
-	  return True;
+	  return true;
 	if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
-	  return True;
-	return False;
+	  return true;
+	return false;
       }
   
-    return False;
+    return false;
   }
 
   /* return EXPR(rgt) => LEAF(lft); */
@@ -1976,7 +1937,7 @@ namespace OpenBabel
     while( rgt->type == AE_ANDHI )
       {
 	if( AtomLeafImplies(rgt->bin.lft,lft) )
-	  return True;
+	  return true;
 	rgt = rgt->bin.rgt;
       }
     return AtomLeafImplies(rgt,lft);
@@ -2031,7 +1992,7 @@ namespace OpenBabel
       {
 	FreeAtomExpr(lft);
 	FreeAtomExpr(rgt);
-	return BuildAtomLeaf(AL_CONST,False);
+	return BuildAtomLeaf(AL_CONST,false);
       }
   
     if( AtomExprImplied(lft,rgt) )
@@ -2059,7 +2020,7 @@ namespace OpenBabel
     if( IsInvalidAtom(head) )
       {
 	FreePattern(pat);
-	return BuildAtomLeaf(AL_CONST,False);
+	return BuildAtomLeaf(AL_CONST,false);
       }
     return recur;
   }
@@ -2443,29 +2404,6 @@ namespace OpenBabel
     return expr;
   }
 
-#ifdef FOO
-  static BondExpr *CanonicaliseBond( BondExpr *expr )
-  {
-#ifndef ORIG
-    register int index;
-  
-    index = GetBondExprIndex(expr);
-    FreeBondExpr(expr);
-  
-    LexPtr = CanBondExpr[index];
-    if( *LexPtr )
-      {
-	expr = ParseBondExpr(0);
-      }
-    else
-      expr = GenerateDefaultBond();
-#endif
-  
-    return TransformBondExpr(expr);
-  }
-#endif
-
-
   //**********************************
   //********Pattern Matching**********
   //**********************************
@@ -2746,9 +2684,6 @@ namespace OpenBabel
     return(!mlist.empty());
   }
 
-#define RECURSIVE
-
-#ifdef RECURSIVE
   static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom)
   {
     for (;;)
@@ -2846,205 +2781,6 @@ namespace OpenBabel
 	}
   }
 
-#else
-
-  static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom)
-  {
-    int size=0;
-#define OB_EVAL_STACKSIZE 40
-  
-    AtomExpr *stack[OB_EVAL_STACKSIZE];
-    memset(stack,'\0',sizeof(AtomExpr*)*OB_EVAL_STACKSIZE);
-#undef OB_EVAL_STACKSIZE
-  
-    bool lftest=true;
-  
-    for (size=0,stack[size] = expr;size >= 0;expr=stack[size])
-      {
-	switch (expr->type)
-	  {
-	  case AE_LEAF:
-	    switch( expr->leaf.prop )
-	      {
-		//expr->leaf.value
-	      case AL_ELEM:
-		lftest = (expr->leaf.value == atom->GetAtomicNum());
-		break;
-	      case AL_AROM:
-		lftest = (expr->leaf.value == (int)atom->IsAromatic());
-		break;
-	      case AL_HCOUNT:
-		if (atom->ExplicitHydrogenCount() > atom->ImplicitHydrogenCount())
-		  lftest=(expr->leaf.value==atom->ExplicitHydrogenCount());
-		else
-		  lftest=(expr->leaf.value==atom->ImplicitHydrogenCount());
-		break;
-	      case AL_DEGREE:
-		lftest = (expr->leaf.value == atom->GetHvyValence());
-		break;
-	      case AL_VALENCE:
-		lftest = (expr->leaf.value == atom->BOSum());
-		break;
-	      case AL_CONNECT:   //X
-		lftest = (expr->leaf.value == atom->GetImplicitValence());
-		break;
-	      case AL_NEGATIVE:
-		lftest=(expr->leaf.value == -1*(atom->GetFormalCharge()));
-		break;
-	      case AL_POSITIVE:
-		lftest=(expr->leaf.value == atom->GetFormalCharge());
-		break;
-	      case AL_HYB:
-		lftest=(expr->leaf.value == atom->GetHyb());
-		break;
-	      case AL_RINGS:
-		if (expr->leaf.value == -1)
-		  lftest = (atom->IsInRing());
-		else
-		  if (expr->leaf.value == 0)
-		    lftest = !(atom->IsInRing());
-		  else
-		    lftest=(atom->MemberOfRingCount()==expr->leaf.value);
-		break;
-	      case AL_SIZE:
-		if (!expr->leaf.value)
-		  lftest = !atom->IsInRing();
-		else
-		  lftest = atom->IsInRingSize(expr->leaf.value);
-		break;
-	      
-	      case AL_IMPLICIT:
-		lftest=(expr->leaf.value==atom->ImplicitHydrogenCount());
-		break;
-	      case AL_CONST:
-		lftest= true; // not limited to non-hydrogens
-		break;
-	      case AL_MASS:
-		break;
-	      default:
-		break;
-	      }
-	    size--;
-	    break;
-	  
-	  case AE_ANDHI:
-	  
-	    if (stack[size+1] == expr->bin.rgt)
-	      size--;
-	    else if (stack[size+1] == expr->bin.lft)
-	      {
-		if (lftest)
-		  {
-		    size++;
-		    stack[size] = expr->bin.rgt;
-		  }
-		else
-		  size--;
-	      }
-	    else
-	      {
-		size++;
-		stack[size] = expr->bin.lft;
-	      }
-	    break;
-	  
-	  case AE_OR:
-	  
-	    if (stack[size+1] == expr->bin.rgt)
-	      size--;
-	    else if (stack[size+1] == expr->bin.lft)
-	      {
-		if (!lftest)
-		  {
-		    size++;
-		    stack[size] = expr->bin.rgt;
-		  }
-		else
-		  size--;
-	      }
-	    else
-	      {
-		size++;
-		stack[size] = expr->bin.lft;
-	      }
-	    break;
-	  
-	  case AE_ANDLO:
-	  
-	    if (stack[size+1] == expr->bin.rgt)
-	      size--;
-	    else if (stack[size+1] == expr->bin.lft)
-	      {
-		if (lftest)
-		  {
-		    size++;
-		    stack[size] = expr->bin.rgt;
-		  }
-		else
-		  size--;
-	      }
-	    else
-	      {
-		size++;
-		stack[size] = expr->bin.lft;
-	      }
-	    break;
-	  
-	  case AE_NOT:
-	    if (stack[size+1] != expr->mon.arg)
-	      {
-		size++;
-		stack[size] = expr->mon.arg;
-	      }
-	    else
-	      {
-		lftest = !lftest;
-		size--;
-	      }
-	    break;
-	  
-	  case AE_RECUR:
-	    //see if pattern has been matched
-	    bool matched=false;
-	  
-	    std::vector<std::pair<Pattern*,std::vector<bool> > >::iterator i;
-	    for (i = RSCACHE.begin();i != RSCACHE.end();i++)
-	      if (i->first == (Pattern*)expr->recur.recur)
-		{
-		  lftest = i->second[atom->GetIdx()];
-		  matched = true;
-		  break;
-		}
-	  
-	    if (!matched)
-	      {
-		std::vector<bool> vb(atom->GetParent()->NumAtoms()+1);
-		std::vector<std::vector<int> > mlist;
-		lftest = false;
-		if (match((*atom->GetParent()),(Pattern*)expr->recur.recur,mlist))
-		  {
-		    std::vector<std::vector<int> >::iterator i;
-		    for (i = mlist.begin();i != mlist.end();i++)
-		      {
-			if ((*i)[0] == atom->GetIdx())
-			  lftest = true;
-			vb[(*i)[0]] = true;
-		      }
-		  }
-		RSCACHE.push_back(std::pair<Pattern*,std::vector<bool> > ((Pattern*)expr->recur.recur,vb));
-	      }
-	  
-	    size--;
-	    break;
-	  }
-      }
-  
-    return(lftest);
-  }
-#endif
-
-#ifdef RECURSIVE
-
   static bool EvalBondExpr(BondExpr *expr,OBBond *bond)
   {
     for (;;)
@@ -3098,130 +2834,6 @@ namespace OpenBabel
 	  return false;
 	}
   }
-
-#else
-
-  static bool EvalBondExpr(BondExpr *expr,OBBond *bond)
-  {
-    int size=0;
-#define OB_EVAL_STACKSIZE 40
-  
-    BondExpr *stack[OB_EVAL_STACKSIZE];
-    memset(stack,'\0',sizeof(AtomExpr*)*OB_EVAL_STACKSIZE);
-#undef OB_EVAL_STACKSIZE
-  
-    bool lftest=true;
-    for (size=0,stack[size] = expr;size >= 0;expr=stack[size])
-      switch( expr->type )
-	{
-	case(BE_LEAF):
-	
-	  if( expr->leaf.prop == BL_CONST )
-	    lftest = (expr->leaf.value)?true:false;
-	  else /* expr->leaf.prop == BL_TYPE */
-	    switch( expr->leaf.value )
-	      {
-	      case(BT_SINGLE):
-		lftest = (bond->GetBO() == 1 && !bond->IsAromatic());
-		break;
-	      case(BT_DOUBLE):
-		lftest = (bond->GetBO()==2 && !bond->IsAromatic());
-		break;
-	      case(BT_TRIPLE):
-		lftest = (bond->GetBO()==3);
-		break;
-	      case(BT_AROM): lftest=bond->IsAromatic();
-		break;
-	      case(BT_RING): lftest=bond->IsInRing();
-		break;
-	      case(BT_UP): lftest= (bond->IsUp() && bond->GetBO()==1 && !bond->IsAromatic());
-		break;
-	      case(BT_DOWN): lftest= (bond->IsDown() && bond->GetBO()==1 && !bond->IsAromatic());
-		break;
-	      case(BT_UPUNSPEC): lftest= !bond->IsDown();
-		break;
-	      case(BT_DOWNUNSPEC): lftest= !bond->IsUp();
-		break;
-	      }
-	  size--;
-	  break;
-	
-	case(BE_NOT):
-	  if (stack[size+1] != expr->mon.arg)
-	    {
-	      size++;
-	      stack[size] = expr->mon.arg;
-	    }
-	  else
-	    {
-	      lftest = !lftest;
-	      size--;
-	    }
-	  break;
-	
-	case(BE_ANDHI):
-	  if (stack[size+1] == expr->bin.rgt)
-	    size--;
-	  else if (stack[size+1] == expr->bin.lft)
-	    {
-	      if (lftest)
-		{
-		  size++;
-		  stack[size] = expr->bin.rgt;
-		}
-	      else
-		size--;
-	    }
-	  else
-	    {
-	      size++;
-	      stack[size] = expr->bin.lft;
-	    }
-	  break;
-	
-	case(BE_ANDLO):
-	  if (stack[size+1] == expr->bin.rgt)
-	    size--;
-	  else if (stack[size+1] == expr->bin.lft)
-	    {
-	      if (lftest)
-		{
-		  size++;
-		  stack[size] = expr->bin.rgt;
-		}
-	      else
-		size--;
-	    }
-	  else
-	    {
-	      size++;
-	      stack[size] = expr->bin.lft;
-	    }
-	  break;
-	
-	case(BE_OR):
-	  if (stack[size+1] == expr->bin.rgt)
-	    size--;
-	  else if (stack[size+1] == expr->bin.lft)
-	    {
-	      if (!lftest)
-		{
-		  size++;
-		  stack[size] = expr->bin.rgt;
-		}
-	      else
-		size--;
-	    }
-	  else
-	    {
-	      size++;
-	      stack[size] = expr->bin.lft;
-	    }
-	  break;
-	}
-    return(lftest);
-  }
-#endif
 
   std::vector<std::vector<int> > &OBSmartsPattern::GetUMapList()
   {
