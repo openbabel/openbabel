@@ -1421,7 +1421,7 @@ namespace OpenBabel
   //! Also checks bond_queue for any bonds that should be made to the new atom
   OBAtom *OBMol::NewAtom()
   {
-    BeginModify();
+ //   BeginModify();
 
     OBAtom *obatom = CreateAtom();
     obatom->SetIdx(_natoms+1);
@@ -1466,7 +1466,7 @@ namespace OpenBabel
 	  DeleteData(verase);
       }
 
-    EndModify();
+   // EndModify();
 
     return(obatom);
   }
@@ -1484,7 +1484,7 @@ namespace OpenBabel
   //! Also checks bond_queue for any bonds that should be made to the new atom
   bool OBMol::AddAtom(OBAtom &atom)
   {
-    BeginModify();
+//    BeginModify();
 
     OBAtom *obatom = CreateAtom();
     *obatom = atom;
@@ -1530,7 +1530,7 @@ namespace OpenBabel
 	  DeleteData(verase);
       }
 
-    EndModify();
+//    EndModify();
 
     return(true);
   }
@@ -2592,7 +2592,7 @@ namespace OpenBabel
     if (first == second)
       return(false);
 
-    BeginModify();
+//    BeginModify();
 
     if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms()
 	&& !GetBond(first, second))
@@ -2659,7 +2659,7 @@ namespace OpenBabel
     else //at least one atom doesn't exist yet - add to bond_q
       SetData(new OBVirtualBond(first,second,order,stereo));
 
-    EndModify();
+//    EndModify();
     return(true);
   }
 

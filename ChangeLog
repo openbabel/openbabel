@@ -1,3 +1,11 @@
+2006-05-16 Chris Morley <ob@gaseq.co.uk>
+	* src/mol.cpp: Remove BeginModify and EndModify from AddAtom(),
+	 NewAtom() and AddBond(). Doesn't seem sensible to call 
+	 EndModify() (which calls Kekulize()) before all the molecule
+	 is there. The change should speed up conversion of large molecules.
+	 This only change for this revison for easy reversion if
+	 this is too drastic a change.
+	 
 2006-05-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/patty.cpp, src/kekulize.cpp, src/fingerprint.cpp,
