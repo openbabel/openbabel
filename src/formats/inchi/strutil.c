@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -27,8 +27,7 @@
 
 /* local prototypes */
 int cmp_components( const void *a1, const void *a2 );
-int mark_one_struct_component( inp_ATOM* at, int j, AT_NUMB *mark, AT_NUMB num_disconnected_components );
-int Free_INChI_Stereo( INChI_Stereo *pINChI_Stereo );
+/*int mark_one_struct_component( inp_ATOM* at, int j, AT_NUMB *mark, AT_NUMB num_disconnected_components );*/
 INChI_Stereo *Alloc_INChI_Stereo(int num_at, int num_bonds);
 int RemoveInpAtBond( inp_ATOM *at, int iat, int k );
 int DisconnectInpAtBond( inp_ATOM *at, AT_NUMB *nOldCompNumber, int iat, int neigh_ord );
@@ -37,7 +36,7 @@ int DisconnectOneLigand( inp_ATOM *at, AT_NUMB *nOldCompNumber, S_CHAR *bMetal, 
                          int num_halogens, int num_atoms, int iMetal, int jLigand, INCHI_MODE *bTautFlagsDone );
 int bIsAmmoniumSalt( inp_ATOM *at, int i, int *piO, int *pk, S_CHAR *num_explicit_H );
 int DisconnectAmmoniumSalt ( inp_ATOM *at, int i, int iO, int k, S_CHAR *num_explicit_H );
-int bIsMetalSalt( inp_ATOM *at, int i );
+/*int bIsMetalSalt( inp_ATOM *at, int i ); - moved to strutil,h */
 int DisconnectMetalSalt( inp_ATOM *at, int i );
 int bIsMetalToDisconnect(inp_ATOM *at, int i, int bCheckMetalValence);
 
@@ -93,7 +92,7 @@ int the_only_doublet_neigh(inp_ATOM *at, int i1, int *ineigh1, int *ineigh2)
 }
 
 /************************************************************************/
-int fix_odd_things( int num_atoms, inp_ATOM *at )
+int fix_odd_things( int num_atoms, inp_ATOM *at, int bFixBug )
 {   /*                           0 1 2  3  4 5 6  7                       8  9  */
     static const char    el[] = "N;P;As;Sb;O;S;Se;Te;";   /* 8 elements + C, Si */
     static U_CHAR  en[10];              /* same number: 8 elements */
@@ -196,7 +195,7 @@ int fix_odd_things( int num_atoms, inp_ATOM *at )
                     }
                 } else
                 if ( at[i1].bond_type[ineigh] == BOND_TYPE_DOUBLE ) {
-                    /* found a candidate for Y; bond must bedouble */
+                    /* found a candidate for Y; bond must be double */
                     i1_c = ineigh;
                     c    = neigh;
                 }
@@ -322,6 +321,13 @@ int fix_odd_things( int num_atoms, inp_ATOM *at )
                             break;
                         }
                     }
+#if( FIX_ODD_THINGS_REM_Plus_BUG == 1 )
+                    at[c].charge -= charge;
+#else
+                    if ( bFixBug ) {
+                        at[c].charge -= charge;
+                    }
+#endif
                     break;
                 }
             }
@@ -454,7 +460,11 @@ int remove_ion_pairs( int num_atoms, inp_ATOM *at )
     int num_changes = 0;
 
     /*                           0 1 2  3  4 5 6  7  8  9                   8  9  */
+#if( FIX_REM_ION_PAIRS_Si_BUG == 1 )
+    static const char    el[] = "N;P;As;Sb;O;S;Se;Te;C;Si;";   /* 8 elements + C, Si */
+#else
     static const char    el[] = "N;P;As;Sb;O;S;Se;Te;C;Si";   /* 8 elements + C, Si */
+#endif
     static char    en[12];         /* same number: 8 elements */
     static int     ne=0;           /* will be 8 and 10 */
 
@@ -1267,7 +1277,7 @@ int RemoveInpAtBond( inp_ATOM *atom, int iat, int k )
 {
     int      i, j, m, m2, k2;
     inp_ATOM *at = atom + iat;
-    inp_ATOM *at2;
+    inp_ATOM *at2 = NULL;
     int      val = at->valence - 1;
     if ( val >= 0 ) {
         int bond = at->bond_type[k];
@@ -2550,6 +2560,85 @@ int get_iat_number( int el_number, const int el_num[], int el_num_len )
      IAT_MAX
  } ION_ATOM_TYPE;
 
+#if( READ_INCHI_STRING == 1 )
+/****************************************************************************************/
+int bHeteroAtomMayHaveXchgIsoH( inp_ATOM *atom, int iat )
+{
+    inp_ATOM *at = atom + iat, *at2;
+    static int el_num[IAT_MAX];
+    int j, val, is_O=0, is_Cl=0, is_N=0, is_H=0, num_H, iat_numb, bAccept, cur_num_iso_H;
+    
+    if ( !el_num[IAT_H]) {
+        el_num[IAT_H ] = get_periodic_table_number( "H" ); 
+        el_num[IAT_C ] = get_periodic_table_number( "C" ); 
+        el_num[IAT_N ] = get_periodic_table_number( "N" ); 
+        el_num[IAT_P ] = get_periodic_table_number( "P" ); 
+        el_num[IAT_O ] = get_periodic_table_number( "O" ); 
+        el_num[IAT_S ] = get_periodic_table_number( "S" ); 
+        el_num[IAT_Se] = get_periodic_table_number( "Se"); 
+        el_num[IAT_Te] = get_periodic_table_number( "Te"); 
+        el_num[IAT_F ] = get_periodic_table_number( "F" ); 
+        el_num[IAT_Cl] = get_periodic_table_number( "Cl"); 
+        el_num[IAT_Br] = get_periodic_table_number( "Br"); 
+        el_num[IAT_I ] = get_periodic_table_number( "I" ); 
+    }
+    if ( 0 > (iat_numb = get_iat_number( at->el_number, el_num, IAT_MAX )) ) {
+        return 0;
+    }
+    if ( abs(at->charge) > 1 || at->radical && RADICAL_SINGLET != at->radical ) {
+        return 0;
+    }
+    val = -1;
+    switch( iat_numb ) {
+    case IAT_N:
+    case IAT_P:
+        is_N = 1;
+        val  = 3+at->charge;
+        break;
+    case IAT_O:
+    case IAT_S:
+    case IAT_Se:
+    case IAT_Te:
+        is_O = 1;
+        val  = 2+at->charge;
+        break;
+    case IAT_F:
+    case IAT_Cl:
+    case IAT_Br:
+    case IAT_I:
+        if ( at->charge == 0 ) {
+            is_Cl = 1; /* isolated HCl */
+            val   = 1;
+        }
+        break;
+    case IAT_H:
+        if ( at->valence   == 0 &&
+             at->charge    == 1 ) {
+            is_H = 1; /* isolated proton */
+            val  = 0;
+        }
+    }
+    if ( val < 0 ) {
+        return 0;
+    }
+    num_H = NUMH(at,0);
+    if ( val != at->chem_bonds_valence + num_H ) {
+        return 0;
+    }
+    if ( is_H ) {
+        return 2; /* H atom */
+    } else {
+        cur_num_iso_H = 0;
+        for ( j = 0, bAccept = 1; j < at->valence && bAccept; j ++ ) {
+            at2 = atom + (int)at->neighbor[j];
+            if ( at2->charge && at->charge || (at2->radical && RADICAL_SINGLET != at2->radical ) ) {
+                return 0; /* adjacent charged/radical atoms: do not neutralizate */
+            }
+        }
+    }
+    return 1;
+}
+#endif
 /****************************************************************************************/
 int bNumHeterAtomHasIsotopicH( inp_ATOM *atom, int num_atoms )
 {
@@ -2673,22 +2762,6 @@ int cmp_components( const void *a1, const void *a2 )
     
 }
 /*************************************************************************************************/
-int mark_one_struct_component( inp_ATOM* at, int j, AT_NUMB *mark, AT_NUMB num_disconnected_components )
-{
-    if ( mark[j] ) {
-        return 0;
-    } else {
-        int i;
-        mark[j] = num_disconnected_components;
-        for ( i = 0; i < at[j].valence; i++ ) {
-            if ( !mark[(int)at[j].neighbor[i]] ) {
-                mark_one_struct_component( at, (int)at[j].neighbor[i], mark, num_disconnected_components );
-            }
-        }
-    }
-    return 1;
-}
-/*************************************************************************************************/
 int MarkDisconnectedComponents( ORIG_ATOM_DATA *orig_at_data, int bProcessOldCompNumbers )
 {
     typedef AT_NUMB AT_TRIPLE[3];
@@ -2696,7 +2769,11 @@ int MarkDisconnectedComponents( ORIG_ATOM_DATA *orig_at_data, int bProcessOldCom
     inp_ATOM  *at                  = orig_at_data->at;
     int        num_at              = orig_at_data->num_inp_atoms;
     AT_NUMB *nCurAtLen           = NULL;
+    
     AT_NUMB *nNewCompNumber      = NULL;
+    AT_NUMB *nPrevAtom           = NULL;
+    S_CHAR  *iNeigh              = NULL;
+
     AT_NUMB *nOldCompNumber      = NULL;
     int i, j, num_components, ret;
     int new_comp_no;
@@ -2713,6 +2790,7 @@ int MarkDisconnectedComponents( ORIG_ATOM_DATA *orig_at_data, int bProcessOldCom
     if ( bProcessOldCompNumbers && !orig_at_data->nOldCompNumber ) {
         bProcessOldCompNumbers = 0; 
     }
+    num_components = 0;
     /*
     for ( j = 0; j < num_at; j ++ ) {
         at[j].component = 0;
@@ -2722,17 +2800,43 @@ int MarkDisconnectedComponents( ORIG_ATOM_DATA *orig_at_data, int bProcessOldCom
     if ( !num_at ) {
         return 0;
     }
-    if ( !( nNewCompNumber = (AT_NUMB *) inchi_calloc( num_at, sizeof(nNewCompNumber[0]) ) ) ) {
+    if ( !( nNewCompNumber = (AT_NUMB *) inchi_calloc( num_at, sizeof(nNewCompNumber[0]) ) ) ||
+         /* for non-recursive DFS only: */
+         !( nPrevAtom      = (AT_NUMB *) inchi_calloc( num_at, sizeof(nPrevAtom[0]) ) ) ||
+         !( iNeigh         = (S_CHAR  *) inchi_calloc( num_at, sizeof(iNeigh[0]) ) )) {
         goto exit_function;
     }
-    /* mark and count */
-    for ( j = 0, num_components = 0; j < num_at; j++ ) {
+    /* mark and count; avoid deep DFS recursion: it may make verifying software unhappy */
+    /* nNewCompNumber[i] will contain new component number for atoms at[i], i=0..num_at-1 */
+    for ( j = 0; j < num_at; j++ ) {
         if ( !nNewCompNumber[j] ) {
-            /* nNewCompNumber[i] will contain new component number for atom at[i], i=0..num_at-1 */
-            mark_one_struct_component( at, j, nNewCompNumber, (AT_NUMB)(num_components+1) );
+            /* mark starting with at[j] */
+            int fst_at, nxt_at, cur_at = j;
             num_components ++;
+            /* first time at at[j] */
+            nNewCompNumber[fst_at = cur_at] = (AT_NUMB) num_components;
+            /* find next neighbor */
+            while ( 1 ) {
+                if ( iNeigh[cur_at] < at[cur_at].valence ) {
+                    nxt_at = at[cur_at].neighbor[(int)iNeigh[cur_at] ++];
+                    if ( !nNewCompNumber[nxt_at] ) {
+                        /* forward edge: found new atom */
+                        nNewCompNumber[nxt_at] = (AT_NUMB) num_components;
+                        nPrevAtom[nxt_at]      = (AT_NUMB) cur_at;
+                        cur_at = nxt_at;
+                    }
+                } else
+                if ( cur_at == fst_at ) {
+                    break; /* done */
+                } else {
+                    cur_at = nPrevAtom[cur_at]; /* retract */
+                }
+            }
         }
     }
+    inchi_free( nPrevAtom ); nPrevAtom = NULL;
+    inchi_free( iNeigh );    iNeigh    = NULL;
+
     /* Allocate more memory */
     i = inchi_max( num_components, orig_at_data->num_components ); 
     if ( !(nCurAtLen      = (AT_NUMB *) inchi_calloc( num_components+1, sizeof(nCurAtLen[0]) ) ) ||
@@ -2814,6 +2918,14 @@ exit_function:
         inchi_free( component_nbr );
 
     if ( ret < 0 ) {
+        if ( nPrevAtom ) {
+            inchi_free( nPrevAtom );
+            nPrevAtom = NULL;
+        }
+        if ( iNeigh ) {
+            inchi_free( iNeigh );
+            iNeigh = NULL;
+        }
         if ( nCurAtLen ) {
             inchi_free( nCurAtLen );
             nCurAtLen = NULL;
@@ -2835,7 +2947,7 @@ exit_function:
 
     orig_at_data->num_components = num_components;
 
-    return num_components;  /* number of disconnected components; 1=>single connected structure*/
+    return ret;  /* number of disconnected components; 1=>single connected structure*/
 }
 /******************************************************************************/
 /*                        Extract one (connected) component                   */
@@ -2932,13 +3044,21 @@ int Free_INChI(INChI **ppINChI)
         if ( pINChI->nRefCount -- > 0 )
             return 1;
 #endif
+        Free_INChI_Members(pINChI);
+
+        qzfree( pINChI );
+        *ppINChI = NULL;
+
+    }
+    return 0;
+}
+/****************************************************************/
+int Free_INChI_Members(INChI *pINChI)
+{
+    if ( pINChI ) {
         
         Free_INChI_Stereo(pINChI->Stereo           );
         Free_INChI_Stereo(pINChI->StereoIsotopic   );
-        /*
-        Free_INChI_Stereo(pINChI->StereoInv        );
-        Free_INChI_Stereo(pINChI->StereoIsotopicInv);
-        */
         qzfree(pINChI->nAtom                    );
         qzfree(pINChI->nConnTable               );
         qzfree(pINChI->nTautomer                );
@@ -2949,29 +3069,10 @@ int Free_INChI(INChI **ppINChI)
         qzfree(pINChI->nPossibleLocationsOfIsotopicH);
         qzfree(pINChI->Stereo           );
         qzfree(pINChI->StereoIsotopic   );
-        /*
-        qzfree(pINChI->StereoInv        );
-        qzfree(pINChI->StereoIsotopicInv);
-        */
         qzfree(pINChI->szHillFormula );
-/*
-        pINChI->nAtom                    = NULL;
-        pINChI->nConnTable               = NULL;
-        pINChI->nTautomer                = NULL;
-        pINChI->nNum_H                   = NULL;
-        pINChI->IsotopicAtom             = NULL;
-        pINChI->IsotopicTGroup           = NULL;
-        pINChI->Stereo                   = NULL;
-        pINChI->StereoIsotopic           = NULL;
-        pINChI->szHillFormula            = NULL;
-*/
-        qzfree( pINChI );
-        *ppINChI = NULL;
-
     }
     return 0;
 }
-
 /****************************************************************/
 INChI *Alloc_INChI( inp_ATOM *at, int num_at, int *found_num_bonds, int *found_num_isotopic, int nAllocMode )
 {
@@ -3126,7 +3227,7 @@ INChI_Aux *Alloc_INChI_Aux( int num_at, int num_isotopic_atoms, int nAllocMode, 
     }
 
     if ( num_at > 1 &&
-         (pINChI_Aux->nConstitEquTGroupNumbers  = (AT_NUMB*)inchi_calloc(sizeof(pINChI_Aux->nConstitEquTGroupNumbers[0]), num_at/2)) ) {
+         (pINChI_Aux->nConstitEquTGroupNumbers  = (AT_NUMB*)inchi_calloc(sizeof(pINChI_Aux->nConstitEquTGroupNumbers[0]), num_at/2+1)) ) {
         ;
     } else
     if ( num_at > 1 ) {
@@ -3154,7 +3255,7 @@ INChI_Aux *Alloc_INChI_Aux( int num_at, int num_isotopic_atoms, int nAllocMode, 
             goto out_of_RAM;
         }
         if ( /*num_isotopic_atoms && num_at > 1 &&*/
-             (pINChI_Aux->nConstitEquIsotopicTGroupNumbers = (AT_NUMB*)inchi_calloc(sizeof(pINChI_Aux->nConstitEquIsotopicTGroupNumbers[0]), num_at/2)) ) {
+             (pINChI_Aux->nConstitEquIsotopicTGroupNumbers = (AT_NUMB*)inchi_calloc(sizeof(pINChI_Aux->nConstitEquIsotopicTGroupNumbers[0]), num_at/2+1)) ) {
             ;
         } else
         if ( num_isotopic_atoms && num_at > 1 ) {
@@ -3174,21 +3275,44 @@ out_of_RAM:
     return NULL;
 }
 /***********************************************************************************/
-#define ABNORMAL_AT(i) ( at[i].charge && at[i].radical || abs(at[i].charge) > 3 || \
-                         ( at[i].radical && at[i].radical != RADICAL_DOUBLET)   || \
-                           at[i].iso_atw_diff && (at[i].iso_atw_diff == 1 || at[i].iso_atw_diff < -3 || at[i].iso_atw_diff > 6 ))
+
+#define IS_DEUTERIUM(i) (!strcmp( at[i].elname, "D" ) || at[i].iso_atw_diff == 2 && !strcmp( at[i].elname, "H" ))
+#define IS_TRITIUM(i)   (!strcmp( at[i].elname, "T" ) || at[i].iso_atw_diff == 3 && !strcmp( at[i].elname, "H" ))
+
+#define ABNORMAL_ISO(i) (at[i].iso_atw_diff == 1 || at[i].iso_atw_diff < -3 || at[i].iso_atw_diff > 5 )
+#define ABNORMAL_CHG(i) (abs(at[i].charge) > 3)
+#define ABNORMAL_RAD(i) (RADICAL_SINGLET <= at[i].radical && at[i].radical <= RADICAL_TRIPLET )
+
+#define ANY_ISO(i, X)   ((X)? (at[i].iso_atw_diff && !IS_DEUTERIUM(i) && !IS_TRITIUM(i)) :\
+                              (at[i].iso_atw_diff ||  IS_DEUTERIUM(i) ||  IS_TRITIUM(i)))
+#define ANY_CHG(i)      (0 != at[i].charge)
+#define ANY_RAD(i)      (RADICAL_SINGLET <= at[i].radical && at[i].radical <= RADICAL_TRIPLET )
+
+#define NORMAL_ISO(i, X)   (ANY_ISO(i, X) && !ABNORMAL_ISO(i))
+
+
+/* needs additional M  CHG. M  RAD, M  ISO line */
+/* due to ISIS/Draw feature always include M  RAD for any radical */
+#define ABNORMAL_AT(i) ( at[i].radical || abs(at[i].charge) > 3 || \
+                         ABNORMAL_ISO(i) )
+
+/* always add M  ISO, M  RAD, M  CHG; Except: (bAtomsDT && D or T) */
+#define ADD_LINE_AT(i) ( at[i].charge  || \
+                         at[i].radical || \
+                         at[i].iso_atw_diff && (bAtomsDT? (at[i].iso_atw_diff != 1 || strcmp(at[i].elname, "H")) : 1) )
 #define ALIASED_AT(i) (0 < NUM_ISO_H(at, i))
 /***********************************************************************************/
-#if( TEST_RENUMB_ATOMS_SAVE_LONGEST == 1 )
+#if( TEST_RENUMB_ATOMS_SAVE_LONGEST == 1 || TEST_RENUMB_SWITCH == 1 )
 int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char* name, const char* comment,
                    const char *szLabel, const char *szValue)
 {
-    int i, j, k, num_bonds=0, ret=0;
+    int i, j, k, num_bonds=0, ret=0, bAtomsDT = 1 /* treat D, T as normal atoms */, bV2000 = 0 /*V2000 Molfile */;
     int bAtomNeedsAlias;
-    int flag_bad_charge=0, nNumAddLines=0, nNumIso=0, nNumChargeLines=0, nNumRadicalLines=0, nNumAliasLines=0;
+    int flag_bad_charge=0, flag_bad_iso=0, nNumAddLines=0, nNumIsoLines=0, nNumChargeLines=0, nNumRadicalLines=0, nNumAliasLines=0;
+    int nNumNecessaryIsoLines = 0, nNumNecessaryChgLines = 0, nNumNecessaryRadLines = 0;
     /*sp_ATOM *at; */
-    float fzero=0.0F;
-    double x, y;
+    /*float fzero=0.0F;*/
+    double x, y, z;
     int bNext /*, s*/;
     const inp_ATOM *at = inp_at_data->at_fixed_bonds? inp_at_data->at_fixed_bonds : inp_at_data->at;
     int num_atoms      = inp_at_data->num_at;
@@ -3233,105 +3357,95 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
         num_bonds += at[i].valence;
     num_bonds /= 2;
     
-    /*find if we need "M  CHG" and "M  RAD"*/
-    for (i=0, nNumAddLines = 0, nNumIso=0; i < num_atoms; i++) {
-        bAtomNeedsAlias = ALIASED_AT(i);     /* 5-3-99 DCh */
-        nNumAddLines    += !bAtomNeedsAlias && ABNORMAL_AT(i);
-        nNumAliasLines  += 2 * bAtomNeedsAlias;
-        nNumIso         += ( 0 == strcmp( at[i].elname, "D" ) || ( 0 == strcmp( at[i].elname, "T" ) ) );
-    }
-
-    /* count additional M lines*/
-    if ( nNumAddLines || nNumAliasLines ) {
-        for (i=0, nNumChargeLines=0, nNumRadicalLines=0; i < num_atoms; i++) {
-            nNumChargeLines  += (0 != at[i].charge)  && !ALIASED_AT(i);
-            nNumRadicalLines += (0 != at[i].radical) && !ALIASED_AT(i);
+    /*find if we need "M  CHG", "M  RAD", "M  ISO" */
+    for (i=0, nNumAddLines = 0; i < num_atoms; i++) {
+        if ( bAtomNeedsAlias = ALIASED_AT(i) ) {
+            nNumAliasLines  += 2 * bAtomNeedsAlias;
+        } else {
+            nNumNecessaryIsoLines += ABNORMAL_ISO(i);
+            nNumNecessaryChgLines += ABNORMAL_CHG(i);
+            nNumNecessaryRadLines += ABNORMAL_RAD(i);
+            nNumIsoLines          += ANY_ISO(i, bAtomsDT); 
+            nNumChargeLines       += ANY_CHG(i);
+            nNumRadicalLines      += ANY_RAD(i);
         }
     }
+    if ( !bV2000 ) {
+        if ( !nNumNecessaryRadLines && !nNumNecessaryChgLines ) {
+            nNumRadicalLines = 0;
+            nNumChargeLines  = 0;
+        }
+        if ( !nNumNecessaryIsoLines ) {
+            nNumIsoLines = 0;
+        }
+    }
+
+
+    /* count additional M lines*/
     nNumChargeLines  = ( nNumChargeLines  + 7 ) / 8;
     nNumRadicalLines = ( nNumRadicalLines + 7 ) / 8;
-    nNumIso          = ( nNumIso          + 7 ) / 8;
+    nNumIsoLines     = ( nNumIsoLines     + 7 ) / 8;
     
-    nNumAddLines = nNumChargeLines + nNumRadicalLines + nNumAliasLines; /* 1 for M  END*/
+    nNumAddLines = nNumChargeLines + nNumRadicalLines + nNumIsoLines + nNumAliasLines; /* 1 for M  END*/
     
-    if ( nNumAddLines == 0 ) {
-        nNumIso = 0; /* keep isotopes description in CTable only*/
-    } else {
-        nNumAddLines += nNumIso+1; /* add 1 for "M  END" line*/
+    if ( nNumAddLines || bV2000 ) {
+        nNumAddLines += 1; /* add 1 for "M  END" line*/
     }
     
-    /*             aaa bbblllfffcccsssxxxrrrpppiiimmmvvvvvv*/
+    /*                         aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv*/
     inchi_print_nodisplay(fcb,"%3d%3d  0  0  0  0  0  0  0  0%3d%s\n",num_atoms, num_bonds, nNumAddLines,nNumAddLines?" V2000":"");
     /* atoms block*/
     for (i=0; i < num_atoms; i++)  {
-        char elname[ATOM_EL_LEN] = "\0\0\0\0\0";
+        char elname[ATOM_EL_LEN];
         int  iso       = 0;
         int  charge    = 0;
         int  valence   = 0;
-        bAtomNeedsAlias = ALIASED_AT(i);
-        /* isotope*/
-        iso = !strcmp( at[i].elname, "D" )? 1:
-              !strcmp( at[i].elname, "T" )? 2: 0;
-
-        if ( iso ) {
-            /* deuterium or tritium*/
-            strcpy ( elname, "H" );
-        } else
+        int  nIsotopeH = IS_DEUTERIUM(i)? 1 : IS_TRITIUM(i)? 2 : 0;
+        bAtomNeedsAlias = ALIASED_AT(i);   /* Has implicit D and/or T neighbors */
+        memset( elname, 0, sizeof(elname) );
+        
         if ( bAtomNeedsAlias ) {
+            /* alias */
             strcpy ( elname, "C" );
         } else {
-            strncpy ( elname, at[i].elname, sizeof(elname)-1 );
-        }
-        /*
-        if ( !iso ) {
-            strncpy ( elname, at[i].elname, sizeof(elname)-1 );
-        } else
-        if ( ALIASED_AT(i) ) {
-            strcpy ( elname, "C" );
-        } else {
-            -- deuterium or tritium --
-            strcpy ( elname, "H" );
-        }
-        */
-        if ( !ABNORMAL_AT(i) && !bAtomNeedsAlias ) {
-            
-            /* Only normal atoms without alias can be here*/
-            
-            /* charge*/
-            switch ( at[i].charge ) {
-               case  3: charge = 1; break;
-               case  2: charge = 2; break;
-               case  1: charge = 3; break;
-               case -1: charge = 5; break;
-               case -2: charge = 6; break;
-               case -3: charge = 7; break;
-               case  0: charge = 0; break;
-               default: flag_bad_charge = 1; break;
-            };
+            /* isotope*/
+            if ( nIsotopeH ) {
+                strcpy( elname, bAtomsDT? ( nIsotopeH==1? "D" : "T" ) : "H" );
+            } else {
+                strncpy ( elname, at[i].elname, sizeof(elname)-1 );
+            }
+            if ( !ABNORMAL_CHG(i) && !ANY_RAD(i) ) {
+                /* charge*/
+                /* Only atoms without alias can be here*/
+                switch ( at[i].charge ) {
+                   case  3: charge = 1; break;
+                   case  2: charge = 2; break;
+                   case  1: charge = 3; break;
+                   case -1: charge = 5; break;
+                   case -2: charge = 6; break;
+                   case -3: charge = 7; break;
+                   case  0: charge = 0; break;
+                   default: flag_bad_charge = 1; break;
+                };
+            }
             /* radical*/
-            if ( at[i].radical ) {
+            if ( ANY_RAD(i) && !ANY_CHG(i) ) {
                 if ( at[i].radical == RADICAL_DOUBLET ) {
-                    flag_bad_charge |= (charge != 0);
                     charge = 4;
-                } else {
-                    flag_bad_charge |= 2;
                 }
             }
-            if ( flag_bad_charge ) {
-                charge = 0;
-            }
+        }
+        /* allow isotopic shift for aliased atoms */
+        if ( NORMAL_ISO(i, bAtomsDT) ) {
+            iso = at[i].iso_atw_diff > 0? at[i].iso_atw_diff-1:
+                  at[i].iso_atw_diff < 0? at[i].iso_atw_diff  :
+                  nIsotopeH? nIsotopeH : (flag_bad_iso ++, 0);
         }
         
         x = at[i].x;
         y = at[i].y;
-/* --- just removed --
-        if ( c && c->xCoeff != 0.0 && c->yCoeff != 0.0 ) {
-            x = (x - c->xShift)/c->xCoeff;
-            y = (y - c->yShift)/c->yCoeff;
-        } else {
-            y = -y;
-        }
-----------------------*/
+        z = at[i].z;
+
         if( at[i].num_H > 0 ) {
             for ( j = 0, valence = 0; j < at[i].valence; j++ ) {
                 switch( k = at[i].bond_type[j] ) { /* fixed valence calculation 12-23-99 DCh.*/
@@ -3349,7 +3463,7 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
             valence = valence/2 + at[i].num_H;
         } else
         /* Added 07-09-2003 DCh*/
-        if ( at[i].chem_bonds_valence > 0 && at[i].chem_bonds_valence < 15 ) {
+        if ( at[i].chem_bonds_valence > 0 ) {
             valence = at[i].chem_bonds_valence;
         } else
         /* Added 07-09-2003 DCh*/
@@ -3360,7 +3474,7 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
         /*    (float)at[i].x, (float)(-at[i].y), fzero, at[i].elname, iso, charge);*/
         /*              xxxxxxyyyyyyzzzzzz aaa____ddcccsssnnnbbbvvvrrriiimmmeee  */
         inchi_print_nodisplay(fcb,"%10.4f%10.4f%10.4f %-3.3s%2d%3d  0     0%3d  0  0  0  0\n",
-                   x, y, (double)fzero, elname, (int)iso, (int)charge, valence /* at[i].special*/);
+                   x, y, z, elname, (int)iso, (int)charge, valence /* at[i].special*/);
             /* reflect image against x-axis;
                when transforming MOLfile back to STDATA in mol_to_stdata(...),
                make one more reflection to restore original orientation.
@@ -3401,9 +3515,29 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
             num_m = 0;
             for (i=0; i < num_atoms; i++) {
                 if ( ALIASED_AT(i) ) {
+                    int num_H;
                     inchi_print_nodisplay( fcb, "A  %d\n", i+1 );
                     num_m ++;
                     strcpy( str_m, at[i].elname );
+                    /* Add H, D, T */
+                    if ( num_H = at[i].num_H + at[i].num_iso_H[0] ) { /* protium is lost here */
+                        strcat( str_m, "H" );
+                        if ( num_H > 1 ) {
+                            sprintf( str_m + strlen(str_m), "%d", num_H );
+                        }
+                    }
+                    if ( num_H = at[i].num_iso_H[1] ) { /* deuterium */
+                        strcat( str_m, "D" );
+                        if ( num_H > 1 ) {
+                            sprintf( str_m + strlen(str_m), "%d", num_H );
+                        }
+                    }
+                    if ( num_H = at[i].num_iso_H[2] ) { /* Tritium */
+                        strcat( str_m, "T" );
+                        if ( num_H > 1 ) {
+                            sprintf( str_m + strlen(str_m), "%d", num_H );
+                        }
+                    }
                     /* Add charge to the Alias */
                     if ( at[i].charge){
                         strcat(str_m, at[i].charge>0? "+" : "-");
@@ -3411,8 +3545,16 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
                             sprintf( str_m+strlen(str_m), "%d", j );
                     }
                     /* Add radical to the Alias */
-                    for ( j = inchi_min(2,at[i].radical); 0 < j; j-- ) {
+                    switch( at[i].radical ) {
+                    case RADICAL_SINGLET:
+                        strcat( str_m, ":" );
+                        break;
+                    case RADICAL_DOUBLET:
                         strcat( str_m, "^" );
+                        break;
+                    case RADICAL_TRIPLET:
+                        strcat( str_m, "^^" );
+                        break;
                     }
                     inchi_print_nodisplay( fcb, "%s\n", str_m );
                     num_m ++;
@@ -3428,7 +3570,7 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
         num_m    = 0;
         if ( nNumChargeLines ) {
             for (i=0; i < num_atoms; i++) {
-                if ( at[i].charge && !ALIASED_AT(i) ) {
+                if ( ANY_CHG(i) && !ALIASED_AT(i) ) {
                     sprintf( entry, " %3d %3d", i+1, (int)at[i].charge );
                     strcat( str_m, entry );
                     num_m ++;
@@ -3445,7 +3587,7 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
         num_m    = 0;
         if ( nNumRadicalLines ) {
             for (i=0; i < num_atoms; i++) {
-                if ( at[i].radical && !ALIASED_AT(i) ) {
+                if ( ANY_RAD(i) && !ALIASED_AT(i) ) {
                     int radical = (at[i].radical==RADICAL_SINGLET ||
                                    at[i].radical==RADICAL_DOUBLET ||
                                    at[i].radical==RADICAL_TRIPLET)? at[i].radical : 0;
@@ -3465,18 +3607,28 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
         /* isotopes*/
         str_m[0] = 0;
         num_m    = 0;
-        if ( nNumIso ) {
+        if ( nNumIsoLines ) {
+            int el_num, iso;
             for (i=0; i < num_atoms; i++) {
-                if ( 0 == strcmp( at[i].elname, "D" ) ) {
-                    sprintf( entry, " %3d %3d", i+1, 2 );
-                    strcat( str_m, entry );
-                    num_m ++;
-                } else
-                if ( 0 == strcmp( at[i].elname, "T" ) ) {
-                    sprintf( entry, " %3d %3d", i+1, 3 );
+                if ( ANY_ISO(i,bAtomsDT) && !ALIASED_AT(i) ) {
+                    if ( IS_DEUTERIUM(i) ) {
+                        iso = 1;
+                        el_num = 1;
+                    } else
+                    if ( IS_TRITIUM(i) ) {
+                        iso = 2;
+                        el_num = 1;
+                    } else {
+                        iso = at[i].iso_atw_diff > 0? at[i].iso_atw_diff-1 : at[i].iso_atw_diff;
+                        el_num = at[i].el_number;
+                    }
+                    iso += get_atw_from_elnum( el_num );
+
+                    sprintf( entry, " %3d %3d", i+1, iso );
                     strcat( str_m, entry );
                     num_m ++;
                 }
+
                 if ( i == num_atoms-1 && num_m || num_m == 8 ) {
                     inchi_print_nodisplay( fcb, "M  ISO%3d%s\n", num_m, str_m );
                     str_m[0] = 0;
@@ -3488,11 +3640,11 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
     }
     if ( szValue && szValue[0] ) {
         if ( szLabel && szLabel[0] ) {
-            inchi_print_nodisplay( fcb, "> <%s>\n", szLabel );
+            inchi_print_nodisplay( fcb, ">  <%s>\n", szLabel );
         } else {
-            inchi_print_nodisplay( fcb, "> <ID>\n" );
+            inchi_print_nodisplay( fcb, ">  <ID>\n" );
         }
-        inchi_print_nodisplay( fcb, " %s\n\n", szValue );
+        inchi_print_nodisplay( fcb, "%s\n\n", szValue );
     }
     inchi_print_nodisplay(fcb, "$$$$\n");
     
@@ -3503,13 +3655,14 @@ int WriteToSDfile( const INP_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char
 #endif
 /***************************************************************************************************/
 int WriteOrigAtomDataToSDfile( const ORIG_ATOM_DATA *inp_at_data, INCHI_FILE* fcb, const char* name, const char* comment,
-                   int bChiralFlag, const char *szLabel, const char *szValue)
+                   int bChiralFlag, int bAtomsDT, const char *szLabel, const char *szValue)
 {
     int i, j, k, num_bonds=0, ret=0;
     int bAtomNeedsAlias;
-    int flag_bad_charge=0, nNumAddLines=0, nNumIso=0, nNumAddIso=0, nNumChargeLines=0, nNumRadicalLines=0, nNumAliasLines=0;
-    /*sp_ATOM *at; */
-    /* float fzero=0.0F; */
+    int flag_bad_charge=0, flag_bad_iso = 0;
+    int nNumAddLines=0, nNumIsoLines=0, nNumChargeLines=0, nNumRadicalLines=0, nNumAliasLines=0;
+    int nNumNecessaryIsoLines = 0, nNumNecessaryChgLines = 0, nNumNecessaryRadLines = 0;
+    int bV2000 = SDF_OUTPUT_V2000;
     double x, y, z;
     int bNext /*, s*/;
     const inp_ATOM *at = inp_at_data->at;
@@ -3563,34 +3716,43 @@ int WriteOrigAtomDataToSDfile( const ORIG_ATOM_DATA *inp_at_data, INCHI_FILE* fc
     num_bonds /= 2;
     
     /*find if we need "M  CHG" and "M  RAD"*/
-    for (i=0, nNumAddLines = 0, nNumIso=0; i < num_atoms; i++) {
-        bAtomNeedsAlias = ALIASED_AT(i);     /* has isotopic implicit D or T; ignoring pure 1H */
-        nNumAddLines    += !bAtomNeedsAlias && ABNORMAL_AT(i); /* abnormal means atom needs CHG, RAD, or ISO entry */
-        nNumAliasLines  += 2 * bAtomNeedsAlias;
-        nNumIso         += ( 0 == strcmp( at[i].elname, "D" ) || ( 0 == strcmp( at[i].elname, "T" ) || at[i].iso_atw_diff ) );
-        nNumAddIso      += at[i].iso_atw_diff && (at[i].iso_atw_diff == 1 || at[i].iso_atw_diff < -3 || at[i].iso_atw_diff > 6 );
-    }
-
-    /* count additional M lines*/
-    if ( nNumAddLines || nNumAliasLines ) {
-        for (i=0, nNumChargeLines=0, nNumRadicalLines=0; i < num_atoms; i++) {
-            nNumChargeLines  += (0 != at[i].charge)  && !ALIASED_AT(i);
-            nNumRadicalLines += (0 != at[i].radical) && !ALIASED_AT(i);
+    for (i=0; i < num_atoms; i++) {
+        if ( bAtomNeedsAlias = ALIASED_AT(i) ) {     /* has isotopic implicit D or T; ignoring pure 1H */
+            nNumAliasLines  += 2 * bAtomNeedsAlias;
+        } else {
+        /* abnormal means atom needs CHG, RAD, or ISO entry */
+        /* nNumAddLines    += ABNORMAL_AT(i); */ 
+        /* nNumIso         += ( 0 == strcmp( at[i].elname, "D" ) || ( 0 == strcmp( at[i].elname, "T" ) || at[i].iso_atw_diff ) ); */
+        /* nNumAddIso      += at[i].iso_atw_diff && (at[i].iso_atw_diff == 1 || at[i].iso_atw_diff < -3 || at[i].iso_atw_diff > 5 ); */
+            nNumNecessaryIsoLines += ABNORMAL_ISO(i);
+            nNumNecessaryChgLines += ABNORMAL_CHG(i);
+            nNumNecessaryRadLines += ABNORMAL_RAD(i);
+            nNumIsoLines          += ANY_ISO(i, bAtomsDT); 
+            nNumChargeLines       += ANY_CHG(i);
+            nNumRadicalLines      += ANY_RAD(i);
         }
     }
     nNumChargeLines  = ( nNumChargeLines  + 7 ) / 8;
     nNumRadicalLines = ( nNumRadicalLines + 7 ) / 8;
-    nNumIso          = ( nNumIso          + 7 ) / 8;
-    /* recalculate number of added lines */
-    nNumAddLines = nNumChargeLines + nNumRadicalLines + nNumAliasLines; /* 1 for M  END*/
-    
-    if ( nNumAddLines == 0 && nNumAddIso == 0 ) {
-        nNumIso = 0; /* keep isotopes description in CTable only*/
-    } else {
-        nNumAddLines += nNumIso+1; /* add 1 for "M  END" line*/
+    nNumIsoLines     = ( nNumIsoLines     + 7 ) / 8;
+
+    if ( !bV2000 ) {
+        if ( !nNumNecessaryRadLines && !nNumNecessaryChgLines ) {
+            nNumRadicalLines = 0;
+            nNumChargeLines  = 0;
+        }
+        if ( !nNumNecessaryIsoLines ) {
+            nNumIsoLines = 0;
+        }
     }
-    if ( !nNumAddLines )
-        nNumAddLines = 1; /* always add V2000 and M  END */
+
+
+    /* recalculate number of added lines */
+    nNumAddLines = nNumChargeLines + nNumRadicalLines + nNumIsoLines + nNumAliasLines; /* 1 for M  END*/
+    
+    if ( nNumAddLines || bV2000 ) {
+        nNumAddLines += 1; /* add 1 for "M  END" line*/
+    }
     
     /*                         aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv*/
     inchi_print_nodisplay(fcb,"%3d%3d  0  0%3d  0  0  0  0  0%3d%s\n",
@@ -3601,78 +3763,55 @@ int WriteOrigAtomDataToSDfile( const ORIG_ATOM_DATA *inp_at_data, INCHI_FILE* fc
         int  iso       = 0;
         int  charge    = 0;
         int  valence   = 0;
+        int  nIsotopeH = IS_DEUTERIUM(i)? 1 : IS_TRITIUM(i)? 2 : 0;
         bAtomNeedsAlias = ALIASED_AT(i);
-        /* isotope*/
-        iso = !strcmp( at[i].elname, "D" )? 1:
-              !strcmp( at[i].elname, "T" )? 2: 0;
-
-        if ( iso ) {
-            /* deuterium or tritium*/
-            strcpy ( elname, "H" );
-        } else
+        memset( elname, 0, sizeof(elname) );
+        
         if ( bAtomNeedsAlias ) {
+            /* alias */
             strcpy ( elname, "C" );
         } else {
-            strncpy ( elname, at[i].elname, sizeof(elname)-1 );
-        }
-        if ( !iso && at[i].iso_atw_diff && at[i].iso_atw_diff != 1 && -3 <= at[i].iso_atw_diff && at[i].iso_atw_diff <= 5 ) {
-            iso = (at[i].iso_atw_diff > 0)? at[i].iso_atw_diff-1 : at[i].iso_atw_diff;
-        }
-
-        /*
-        if ( !iso ) {
-            strncpy ( elname, at[i].elname, sizeof(elname)-1 );
-        } else
-        if ( ALIASED_AT(i) ) {
-            strcpy ( elname, "C" );
-        } else {
-            -- deuterium or tritium --
-            strcpy ( elname, "H" );
-        }
-        */
-        if ( !ABNORMAL_AT(i) && !bAtomNeedsAlias ) {
-            
-            /* Only normal atoms without alias can be here*/
-            
-            /* charge*/
-            switch ( at[i].charge ) {
-               case  3: charge = 1; break;
-               case  2: charge = 2; break;
-               case  1: charge = 3; break;
-               case -1: charge = 5; break;
-               case -2: charge = 6; break;
-               case -3: charge = 7; break;
-               case  0: charge = 0; break;
-               default: flag_bad_charge = 1; break;
-            };
+            /* isotope*/
+            if ( nIsotopeH ) {
+                strcpy( elname, bAtomsDT? ( nIsotopeH==1? "D" : "T" ) : "H" );
+            } else {
+                strncpy ( elname, at[i].elname, sizeof(elname)-1 );
+            }
+            if ( !ABNORMAL_CHG(i) && !ANY_RAD(i) ) {
+                /* charge*/
+                /* Only atoms without alias can be here*/
+                switch ( at[i].charge ) {
+                   case  3: charge = 1; break;
+                   case  2: charge = 2; break;
+                   case  1: charge = 3; break;
+                   case -1: charge = 5; break;
+                   case -2: charge = 6; break;
+                   case -3: charge = 7; break;
+                   case  0: charge = 0; break;
+                   default: flag_bad_charge = 1; break;
+                };
+            }
             /* radical*/
-            if ( at[i].radical ) {
+            if ( ANY_RAD(i) && !ANY_CHG(i) ) {
                 if ( at[i].radical == RADICAL_DOUBLET ) {
-                    flag_bad_charge |= (charge != 0);
                     charge = 4;
-                } else {
-                    flag_bad_charge |= 2;
                 }
             }
-            if ( flag_bad_charge ) {
-                charge = 0;
-            }
+        }
+        /* allow isotopic shift for aliased atoms */
+        if ( NORMAL_ISO(i, bAtomsDT) ) {
+            iso = at[i].iso_atw_diff > 0? at[i].iso_atw_diff-1:
+                  at[i].iso_atw_diff < 0? at[i].iso_atw_diff  :
+                  nIsotopeH? nIsotopeH : (flag_bad_iso ++, 0);
         }
         
         x = at[i].x;
         y = at[i].y;
         z = at[i].z;
-/* --- just removed --
-        if ( c && c->xCoeff != 0.0 && c->yCoeff != 0.0 ) {
-            x = (x - c->xShift)/c->xCoeff;
-            y = (y - c->yShift)/c->yCoeff;
-        } else {
-            y = -y;
-        }
-----------------------*/
+
         /* valence -- set only if needed */
         valence=needed_unusual_el_valence( at[i].el_number, at[i].charge, at[i].radical,
-                                 at[i].chem_bonds_valence, at[i].num_H, at[i].valence );
+                                 at[i].chem_bonds_valence, NUMH(at, i), at[i].valence );
         if ( valence < 0 ) {
             valence = 15;  /* means no bonds nor H */
         }
@@ -3727,11 +3866,12 @@ int WriteOrigAtomDataToSDfile( const ORIG_ATOM_DATA *inp_at_data, INCHI_FILE* fc
                     num_m ++;
                     len = sprintf( str_m, "%s", at[i].elname );
                     /* add isotopic H to the alias */
-                    for ( k = 1; k < NUM_H_ISOTOPES; k ++ ) {
-                        if ( at[i].num_iso_H[k] ) {
-                            len += sprintf( str_m+len, "%s", k==1? "D" : k==2? "T" : "?" );
-                            if ( at[i].num_iso_H[k] != 1 ) {
-                                len += sprintf( str_m+len, "%d", (int)at[i].num_iso_H[k] );
+                    for ( k = 0; k < NUM_H_ISOTOPES; k ++ ) {
+                        int num_H = at[i].num_iso_H[k] + (k? 0:at[i].num_H);
+                        if ( num_H ) {
+                            len += sprintf( str_m+len, "%s", k == 0? "H" : k==1? "D" : k==2? "T" : "?" );
+                            if ( num_H != 1 ) {
+                                len += sprintf( str_m+len, "%d", num_H );
                             }
                         }
                     }
@@ -3803,8 +3943,10 @@ int WriteOrigAtomDataToSDfile( const ORIG_ATOM_DATA *inp_at_data, INCHI_FILE* fc
         /* isotopes*/
         str_m[0] = 0;
         num_m    = 0;
-        if ( nNumIso ) {
+        if ( nNumIsoLines ) {
+            int el_num, iso;
             for (i=0; i < num_atoms; i++) {
+                /*
                 if ( 0 == strcmp( at[i].elname, "D" ) ) {
                     sprintf( entry, " %3d %3d", i+1, 2 );
                     strcat( str_m, entry );
@@ -3822,6 +3964,27 @@ int WriteOrigAtomDataToSDfile( const ORIG_ATOM_DATA *inp_at_data, INCHI_FILE* fc
                     strcat( str_m, entry );
                     num_m ++;
                 }
+                */
+                if ( ANY_ISO(i, bAtomsDT) && !ALIASED_AT(i) ) {
+                    if ( IS_DEUTERIUM(i) ) {
+                        iso = 1;
+                        el_num = 1;
+                    } else
+                    if ( IS_TRITIUM(i) ) {
+                        iso = 2;
+                        el_num = 1;
+                    } else {
+                        iso = at[i].iso_atw_diff > 0? at[i].iso_atw_diff-1 : at[i].iso_atw_diff;
+                        el_num = at[i].el_number;
+                    }
+                    iso += get_atw_from_elnum( el_num );
+
+                    sprintf( entry, " %3d %3d", i+1, iso );
+                    strcat( str_m, entry );
+                    num_m ++;
+                }
+
+
                 if ( i == num_atoms-1 && num_m || num_m == 8 ) {
                     inchi_print_nodisplay( fcb, "M  ISO%3d%s\n", num_m, str_m );
                     str_m[0] = 0;
@@ -3845,6 +4008,47 @@ int WriteOrigAtomDataToSDfile( const ORIG_ATOM_DATA *inp_at_data, INCHI_FILE* fc
     return ret;
     
 }
+#if( FIX_ADJ_RAD == 1 )
+/*************************************************************************/
+int FixNextRadicals( int cur_at, inp_ATOM *at );
+int FixNextRadicals( int cur_at, inp_ATOM *at )
+{
+    int j, neigh, num_found = 0;
+    for ( j = 0; j < at[cur_at].valence; j ++ ) {
+        neigh = at[cur_at].neighbor[j];
+        if ( at[neigh].radical == RADICAL_DOUBLET ) {
+            at[neigh].radical = 0;
+            num_found ++;
+            num_found += FixNextRadicals( neigh, at );
+        }
+    }
+    return num_found;
+}
+/*************************************************************************/
+int FixAdjacentRadicals( int num_inp_atoms, inp_ATOM *at )
+{
+    int i, j;
+    char *bVisited = NULL;
+    int  nNumFound = 0, neigh, cur_found;
+    for ( i = 0; i < num_inp_atoms; i ++ ) {
+        if ( at[i].radical == RADICAL_DOUBLET ) {
+            cur_found = 1;
+            for ( j = 0; j < at[i].valence; j ++ ) {
+                neigh = at[i].neighbor[j];
+                if ( at[neigh].radical == RADICAL_DOUBLET ) {
+                    cur_found ++;
+                }
+            }
+            if ( cur_found >= 3 ) {
+                nNumFound ++;
+                at[i].radical = 0;
+                nNumFound += FixNextRadicals( i, at );
+            }
+        }
+    }
+    return nNumFound;
+}
+#endif
 
 #ifdef INCHI_ANSI_ONLY
 #ifndef INCHI_LIBRARY

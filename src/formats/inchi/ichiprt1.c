@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -73,7 +73,11 @@ const char x_message[]        = "message";
 const char x_text[]           = "value";
 
 const char x_ferr[]           = "fatal (aborted)";
+#if( SPECIAL_BUILD == 1 )
+const char x_err[]            = "error (no MoChI)";
+#else
 const char x_err[]            = "error (no InChI)";
+#endif
 const char x_warn[]           = "warning";
 
 const char x_basic[]          = "identifier";
@@ -338,7 +342,7 @@ typedef struct tagXmlEntityRef {
     char nChar;
     const char *pRef;
 } X_REF;
-X_REF xmlRef[] = { {'<', "&lt;"}, {'&', "&amp;"}, {'>', "&gt;"}, {'"', "&quot;"}, {'\'', "&apos;"}, {0, NULL}, };
+const X_REF xmlRef[] = { {'<', "&lt;"}, {'&', "&amp;"}, {'>', "&gt;"}, {'"', "&quot;"}, {'\'', "&apos;"}, {0, NULL}, };
 const char szRefChars[sizeof(xmlRef)/sizeof(xmlRef[0])] = {'<', '&', '>', '"', '\'', '\0' };
 /**********************************************************************************************/
 int PrintXmlStartTag( char *pStr, int indent, int bEnd, const char *tag,
@@ -650,6 +654,14 @@ const char *EquString( int EquVal )
     int bType = EquVal & (iitISO   | iitNONTAUT );
     int bEq2  = EquVal & (iiEq2NONTAUT | iiEq2ISO | iiEq2INV );
     const char *r = "";
+
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+    int bEmpty= EquVal & iiEmpty;
+    if ( bEmpty ) {
+        r = "e";
+        return r;
+    }
+#endif
 
     switch ( bFrom ) {
 
@@ -1694,7 +1706,7 @@ int OutputINChI1( char *pStr, int nStrLen, INCHI_SORT *pINChISortTautAndNonTaut2
             }
             inchi_print( output_file, "%s%s", pStr, pTAB );
         }
-        inchi_print( output_file, "%s%s=%s", pLF, INCHI_NAME, pLF );
+        inchi_print( output_file, "%s%s=%s", pLF, (FLAG_SORT_PRINT_ReChI_PREFIX & *pSortPrintINChIFlags)? INCHI_REC_NAME : INCHI_NAME, pLF );
     }
     /*****************************************************
      *
@@ -3248,7 +3260,6 @@ int WriteOrigAtoms( int num_inp_atoms, inp_ATOM *at, int *i, char *szBuf, int bu
 
 b = bond type:
 =============
-v = undefined stereo, single
 w = undefined stereo, double
 s = single
 d = double
@@ -3256,6 +3267,8 @@ t = triple
 a = aromatic
 p = up from the current atom to the neighbor
 P = uP from the neighbor to the current atom
+v = undefined stereo Either, single from the current atom to the neighbor
+V = undefined stereo Either, single from the neighbor to the current atom
 n = down from the current atom to the neighbor
 N = dowN from the neighbor to the current atom
 
@@ -3268,9 +3281,9 @@ u = unknown
   = no parity (empty)
 
 
-A=orig. number
+A = neighbor orig. atom number
 ===============
-of the neighbor < number of the current atom
+neighbor orig. atom number < number of the current atom
 Number of the current atom: 2 until first ";", 3 until 2nd ";", etc.
 
 */
@@ -3280,7 +3293,7 @@ Number of the current atom: 2 until first ";", 3 until 2nd ";", etc.
 int WriteOrigBonds( int num_inp_atoms, inp_ATOM *at, int *i, char *szBuf, int buf_len, STRUCT_DATA *sd)
 {
     int j, k, k2, kk, len, cur_len, j2=0, bond_stereo, bond_char, bond_parity, bond_parityNM, num_trans;
-    char szCurBonds[5*MAXVAL+1+2*MAXVAL]; /* 1 byte bond type + up to 4 digits per neighbor number + 1 + 2*sign for bond parity; */
+    char szCurBonds[7*MAXVAL+2]; /* num_neigh*(1 byte bond type + 2 bytes for bond parity up to 4 digits per neighbor number) + at the end one ';' */
     AT_RANK nNeighOrder[MAXVAL];
     int  chain_len, pnxt_atom, pinxt2cur, pinxt_sb_parity_ord;
     int  chain_len2, pnxt_atom2, pinxt2cur2, pinxt_sb_parity_ord2, m1, m2;
@@ -3321,10 +3334,19 @@ int WriteOrigBonds( int num_inp_atoms, inp_ATOM *at, int *i, char *szBuf, int bu
                     case -STEREO_SNGL_DOWN:
                         bond_char = 'N';
                         break;
+#if( FIX_EITHER_STEREO_IN_AUX_INFO == 1 )
+                    case  STEREO_SNGL_EITHER:
+                        bond_char = 'v';
+                        break;
+                    case -STEREO_SNGL_EITHER:
+                        bond_char = 'V';
+                        break;
+#else
                     case  STEREO_SNGL_EITHER:
                     case -STEREO_SNGL_EITHER:
                         bond_char = 'v';
                         break;
+#endif
                     default:
                         bond_char = 's';
                         break;
@@ -3523,7 +3545,7 @@ int WriteOrigBonds( int num_inp_atoms, inp_ATOM *at, int *i, char *szBuf, int bu
 }
 
 
-#define ORIG_STR_BUFLEN 64  /* > 5*MAXVAL+2 = 52 */
+#define ORIG_STR_BUFLEN (7*MAXVAL+2)  /* > 7*MAXVAL+2 = 142 */
 /******************************************************************************************/
 int FillOutOrigStruct( ORIG_ATOM_DATA *orig_inp_data, ORIG_STRUCT *pOrigStruct, STRUCT_DATA *sd )
 {

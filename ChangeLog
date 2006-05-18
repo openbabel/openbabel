@@ -1,4 +1,11 @@
+2006-05-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchi/ : Update with InChI 1.01 pre-release.
+
+	* src/formats/inchi_api.h: Ditto.
+
 2006-05-16 Chris Morley <ob@gaseq.co.uk>
+
 	* src/mol.cpp: Remove BeginModify and EndModify from AddAtom(),
 	 NewAtom() and AddBond(). Doesn't seem sensible to call 
 	 EndModify() (which calls Kekulize()) before all the molecule

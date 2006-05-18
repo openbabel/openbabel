@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -1577,11 +1577,16 @@ int GetPermutationParity( sp_ATOM *at, AT_RANK nAvoidNeighbor, AT_RANK *nCanonRa
                 nNeighRank[k++] = nCanonRank[(int)at->neighbor[j]];
             }
         }
-        parity = insertions_sort( nNeighRank, k, sizeof(nNeighRank[0]), comp_AT_RANK);
-        if ( nNeighRank[0] ) {
-            parity = 2 - parity % 2;
+        if ( k ) {
+            parity = insertions_sort( nNeighRank, k, sizeof(nNeighRank[0]), comp_AT_RANK);
+            if ( nNeighRank[0] ) {
+                parity = 2 - parity % 2;
+            } else {
+                parity = 0; /*  not all ranks are known */
+            }
         } else {
-            parity = 0; /*  not all ranks are known */
+            /* special case: HX= with implicit H */
+            parity = 2;
         }
     }
     return parity;

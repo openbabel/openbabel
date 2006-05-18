@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -36,7 +36,7 @@ int str_Sp2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int nSt
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI,  *pINChI_Prev,  *pINChI_Taut,  *pINChI_Taut_Prev;
     INChI_Stereo *Stereo, *Stereo_Prev, *Stereo_Taut, *Stereo_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
@@ -48,27 +48,46 @@ int str_Sp2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int nSt
     pINChI_Taut_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero only on the 2nd (non-taut) pass */
     eq2tautPrev = 1; /* pINChI_Prev (previous pINChI) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*================ compare sp2 to previous =====================*/
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+            pINChI_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI[ii2] : NULL;
         }
         /*========= if bSecondNonTautPass then compare non-iso non-taut stereo to non-iso taut ========*/
         eq2taut = 0;
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+        if ( !eq2taut && bSecondNonTautPass && bOmitRepetitions && pINChI && pINChI_Taut ) {
+            Stereo = pINChI->Stereo;
+            Stereo_Taut = pINChI_Taut->Stereo;
+            eq2taut = Stereo && Stereo_Taut &&
+                      Eql_INChI_Stereo( Stereo, EQL_SP2, Stereo_Taut, EQL_SP2, 0 );
+            eq2taut = eq2taut? (iiSTEREO | iitNONTAUT) : 0;
+
+            if ( !eq2taut &&
+                 !Eql_INChI_Stereo( Stereo, EQL_SP2, NULL, EQL_EXISTS, 0 ) &&
+                  Eql_INChI_Stereo( Stereo_Taut, EQL_SP2, NULL, EQL_EXISTS, 0 ) ) {
+                eq2taut = iiEmpty; /* the current is empty while the preceding (taut) is not */
+            }
+        }
+#else
         if ( !eq2taut && bSecondNonTautPass && bOmitRepetitions ) {
             eq2taut = pINChI && pINChI_Taut &&
                       (Stereo = pINChI->Stereo) && (Stereo_Taut = pINChI_Taut->Stereo) &&
                       Eql_INChI_Stereo( Stereo, EQL_SP2, Stereo_Taut, EQL_SP2, 0 );
             eq2taut = eq2taut? (iiSTEREO | iitNONTAUT) : 0;
         }
+#endif
         if ( eq2taut ) {
             /* we may be here only in case of the second (non-taut) pass */
             /* current non-taut stereo has been found to be same as tautomeric */
@@ -100,7 +119,7 @@ int str_Sp2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int nSt
                 if ( pCurrEquStr && !strcmp(pCurrEquStr, pPrevEquStr) ) {
                     multPrevEquStr ++;
                 } else {
-                    /* new EqStr is different; output it */
+                    /* new EqStr is different; output the previous one */
                     if ( bNext ++ ) {
                         tot_len += MakeDelim( sCompDelim, pStr + tot_len, nStrLen-tot_len, bOverflow);
                     }
@@ -191,7 +210,7 @@ int str_Sp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int nSt
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI,  *pINChI_Prev,  *pINChI_Taut,  *pINChI_Taut_Prev;
     INChI_Stereo *Stereo, *Stereo_Prev, *Stereo_Taut, *Stereo_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
@@ -202,7 +221,10 @@ int str_Sp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int nSt
     pINChI_Taut_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero only on the 2nd (non-taut) pass */
     eq2tautPrev = 1; /* pINChI_Prev (previous pINChI) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
@@ -211,22 +233,37 @@ int str_Sp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int nSt
 #else
     bRelRac = 0;
 #endif
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*================ compare sp3 to previous =====================*/
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+            pINChI_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI[ii2] : NULL;
         }
         /*========= if bSecondNonTautPass then compare non-iso non-taut stereo to non-iso taut ========*/
         eq2taut = 0;
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+        if ( !eq2taut && bSecondNonTautPass && bOmitRepetitions && pINChI && pINChI_Taut ) {
+            Stereo = pINChI->Stereo;
+            Stereo_Taut = pINChI_Taut->Stereo;
+            eq2taut = Stereo && Stereo_Taut &&
+                      Eql_INChI_Stereo( Stereo, EQL_SP3, Stereo_Taut, EQL_SP3, bRelRac );
+            eq2taut = eq2taut? (iiSTEREO | iitNONTAUT) : 0;
+            if ( !eq2taut &&
+                 !Eql_INChI_Stereo( Stereo, EQL_SP3, NULL, EQL_EXISTS, 0 ) &&
+                  Eql_INChI_Stereo( Stereo_Taut, EQL_SP3, NULL, EQL_EXISTS, 0 ) ) {
+                eq2taut = iiEmpty; /* the current is empty while the preceding (taut) is not */
+            }
+        }
+#else
         if ( !eq2taut && bSecondNonTautPass && bOmitRepetitions ) {
             eq2taut = pINChI && pINChI_Taut &&
                       (Stereo = pINChI->Stereo) && (Stereo_Taut = pINChI_Taut->Stereo) &&
                       Eql_INChI_Stereo( Stereo, EQL_SP3, Stereo_Taut, EQL_SP3, bRelRac );
             eq2taut = eq2taut? (iiSTEREO | iitNONTAUT) : 0;
         }
+#endif
         if ( eq2taut ) {
             /* we may be here only in case of the second (non-taut) pass */
             /* current non-taut stereo has been found to be same as tautomeric */
@@ -350,7 +387,7 @@ int str_IsoAtoms(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, in
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI,  *pINChI_Prev,  *pINChI_Taut,  *pINChI_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
     const char  *pPrevEquStr, *pCurrEquStr;
@@ -360,18 +397,21 @@ int str_IsoAtoms(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, in
     pINChI_Taut_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero only on the 2nd (non-taut) pass */
     eq2tautPrev = 1; /* pINChI_Prev (previous pINChI) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*================ compare isotopic info to previous component =====================*/
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+            pINChI_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI[ii2] : NULL;
         }
         /*========= if bSecondNonTautPass then compare iso non-taut to taut non-iso ========*/
         eq2taut = 0;
@@ -526,7 +566,7 @@ int str_IsoSp2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI,  *pINChI_Prev,  *pINChI_Taut,  *pINChI_Taut_Prev;
     INChI_Stereo *Stereo, *Stereo_Prev, *Stereo_Taut, *Stereo_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
@@ -537,18 +577,21 @@ int str_IsoSp2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
     pINChI_Taut_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero if another layer of the current component = current layer */
     eq2tautPrev = 1; /* pINChI_Prev (previous pINChI) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*================ compare sp2 to previous =====================*/
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+            pINChI_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI[ii2] : NULL;
         }
         eq2taut = 0;
         /*========= if bSecondNonTautPass then compare iso non-taut stereo to other stereo ========*/
@@ -556,7 +599,7 @@ int str_IsoSp2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
             /* compare non-tautomeric isotopic to:
              *   a) non-tautomeric non-isotopic
              *   b) tautomeric non-isotopic
-             *   c) tautomeric non-isotopic and isotopic
+             *   c) tautomeric isotopic
              */
             /* a) compare non-tautomeric isotopic to non-tautomeric non-isotopic */
             if ( !eq2taut ) {
@@ -584,6 +627,21 @@ int str_IsoSp2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
                                  /* stereo     isotopic non-taut =  isotopic taut (stereo) */
                 eq2taut = eq2taut? (iiSTEREO | iitISO | iitNONTAUT | iiEq2ISO) : 0;
             }
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+            if ( !eq2taut && pINChI && !((Stereo = pINChI->StereoIsotopic) &&
+                Eql_INChI_Stereo( Stereo, EQL_SP2, NULL, EQL_EXISTS, 0 )) ) {
+                 /* component has no stereo; check whether it has stereo in the preceding layers */
+                if ( pINChI_Taut && (Stereo_Taut = pINChI_Taut->Stereo) && /* F is not empty */
+                     Eql_INChI_Stereo( Stereo_Taut, EQL_SP2, NULL, EQL_EXISTS, 0 ) ||
+                    !(pINChI_Taut && (Stereo_Taut = pINChI_Taut->Stereo) &&  /* M is empty and ... */
+                       Eql_INChI_Stereo( Stereo_Taut, EQL_SP2, NULL, EQL_EXISTS, 0 )) &&
+                     (pINChI_Taut && (Stereo_Taut = pINChI_Taut->StereoIsotopic) &&  /* ... MI is not empty */
+                       Eql_INChI_Stereo( Stereo_Taut, EQL_SP2, NULL, EQL_EXISTS, 0 )) ) {
+
+                    eq2taut = iiEmpty; /* the component has stereo in the preceding layer  */
+                }
+            }
+#endif
         } else
         /*========= if not bSecondNonTautPass then compare iso taut stereo to non-iso taut ========*/
         if ( !bSecondNonTautPass && bOmitRepetitions ) {
@@ -595,6 +653,16 @@ int str_IsoSp2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
                           Eql_INChI_Stereo( Stereo, EQL_SP2, Stereo_Taut, EQL_SP2, 0 );
                                  /* stereo     isotopic taut =  taut (stereo) */
                 eq2taut = eq2taut? (iiSTEREO | iitISO ) : 0;
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+                if ( !eq2taut && pINChI && !((Stereo = pINChI->StereoIsotopic) &&
+                     Eql_INChI_Stereo( Stereo, EQL_SP2, NULL, EQL_EXISTS, 0 ) ) ) {
+                    /* component has no MI stereo; check whether it has stereo in the preceding layer M */
+                    if ( (Stereo_Taut = pINChI->Stereo) &&
+                         Eql_INChI_Stereo( Stereo_Taut, EQL_SP2, NULL, EQL_EXISTS, 0 ) ) {
+                        eq2taut = iiEmpty; /* the component has stereo in the preceding layer  */
+                    }
+                }
+#endif
             }
         }
         if ( eq2taut ) {
@@ -721,7 +789,7 @@ int str_IsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI,  *pINChI_Prev,  *pINChI_Taut,  *pINChI_Taut_Prev;
     INChI_Stereo *Stereo, *Stereo_Prev, *Stereo_Taut, *Stereo_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
@@ -732,7 +800,10 @@ int str_IsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
     pINChI_Taut_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero if another layer of the current component = current layer */
     eq2tautPrev = 1; /* pINChI_Prev (previous pINChI) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
@@ -741,13 +812,13 @@ int str_IsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
 #else
     bRelRac = 0;
 #endif
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*================ compare sp2 to previous =====================*/
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+            pINChI_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI[ii2] : NULL;
         }
         eq2taut = 0;
         /*========= if bSecondNonTautPass then compare iso non-taut stereo to other stereo ========*/
@@ -755,7 +826,7 @@ int str_IsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
             /* compare non-tautomeric isotopic to:
              *   a) non-tautomeric non-isotopic
              *   b) tautomeric non-isotopic
-             *   c) tautomeric non-isotopic and isotopic
+             *   c) tautomeric isotopic
              */
             /* a) compare non-tautomeric isotopic to non-tautomeric non-isotopic */
             if ( !eq2taut ) {
@@ -782,6 +853,21 @@ int str_IsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
                                  /* stereo     isotopic non-taut =  isotopic taut (stereo) */
                 eq2taut = eq2taut? (iiSTEREO | iitISO | iitNONTAUT | iiEq2ISO) : 0;
             }
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+            if ( !eq2taut && pINChI && !((Stereo = pINChI->StereoIsotopic) &&
+                Eql_INChI_Stereo( Stereo, EQL_SP3, NULL, EQL_EXISTS, 0 )) ) {
+                 /* component has no stereo; check whether it has stereo in the preceding layers */
+                if ( pINChI_Taut && (Stereo_Taut = pINChI_Taut->Stereo) && /* F is not empty */
+                     Eql_INChI_Stereo( Stereo_Taut, EQL_SP3, NULL, EQL_EXISTS, 0 ) ||
+                    !(pINChI_Taut && (Stereo_Taut = pINChI_Taut->Stereo) &&  /* M is empty and ... */
+                       Eql_INChI_Stereo( Stereo_Taut, EQL_SP3, NULL, EQL_EXISTS, 0 )) &&
+                     (pINChI_Taut && (Stereo_Taut = pINChI_Taut->StereoIsotopic) &&  /* ... MI is not empty */
+                       Eql_INChI_Stereo( Stereo_Taut, EQL_SP3, NULL, EQL_EXISTS, 0 )) ) {
+
+                    eq2taut = iiEmpty; /* the component has stereo in the preceding layer  */
+                }
+            }
+#endif
         } else
         /*========= if not bSecondNonTautPass then compare iso taut stereo to non-iso taut ========*/
         if ( !bSecondNonTautPass && bOmitRepetitions ) {
@@ -793,6 +879,16 @@ int str_IsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
                           Eql_INChI_Stereo( Stereo, EQL_SP3, Stereo_Taut, EQL_SP3, bRelRac );
                                  /* stereo     isotopic taut =  taut (stereo) */
                 eq2taut = eq2taut? (iiSTEREO | iitISO ) : 0;
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+                if ( !eq2taut && pINChI && !((Stereo = pINChI->StereoIsotopic) &&
+                     Eql_INChI_Stereo( Stereo, EQL_SP3, NULL, EQL_EXISTS, 0 ) ) ) {
+                    /* component has no MI stereo; check whether it has stereo in the preceding layer M */
+                    if ( (Stereo_Taut = pINChI->Stereo) &&
+                         Eql_INChI_Stereo( Stereo_Taut, EQL_SP3, NULL, EQL_EXISTS, 0 ) ) {
+                        eq2taut = iiEmpty; /* the component has stereo in the preceding layer  */
+                    }
+                }
+#endif
             }
         }
         if ( eq2taut ) {
@@ -914,7 +1010,7 @@ int str_AuxEqu(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI_Aux    *pINChI_Aux = NULL, *pINChI_Aux_Prev, *pINChI_Aux_Taut, *pINChI_Aux_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
     const char  *pPrevEquStr, *pCurrEquStr;
@@ -925,17 +1021,20 @@ int str_AuxEqu(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int 
 
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero only on the 2nd (non-taut) pass */
     eq2tautPrev = 1; /* pINChI_Aux_Prev (previous pINChI_Aux) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI_Aux = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI_Aux[ii] : NULL;
+        pINChI_Aux = (i < num_components && (is = is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI_Aux[ii] : NULL;
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Aux_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI_Aux[ii2] : NULL;
+            pINChI_Aux_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI_Aux[ii2] : NULL;
         }
         /*================ compare non-iso non-taut equivalence info to non-iso taut ========*/
         eq2taut = bSecondNonTautPass && bOmitRepetitions &&
@@ -1058,7 +1157,7 @@ int str_AuxInvSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, i
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI,  *pINChI_Prev,  *pINChI_Taut,  *pINChI_Taut_Prev;
     INChI_Stereo *Stereo, *Stereo_Prev, *Stereo_Taut, *Stereo_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
@@ -1072,18 +1171,21 @@ int str_AuxInvSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, i
     pINChI_Taut_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero if another layer of the current component = current layer */
     eq2tautPrev = 1; /* pINChI_Prev (previous pINChI) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*================ compare sp2 to previous =====================*/
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+            pINChI_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI[ii2] : NULL;
         }
         eq2taut = 0;
         /*========= if bSecondNonTautPass then compare iso non-taut stereo to other stereo ========*/
@@ -1118,6 +1220,16 @@ int str_AuxInvSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, i
                                  /* stereo-inv    non-taut =  Inv(non-taut stereo) */
                 eq2taut = eq2taut? (iiSTEREO_INV | iitNONTAUT | iiEq2INV | iiEq2NONTAUT) : 0;
             }
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+            if ( !eq2taut && pINChI && pINChI_Taut &&
+                 !((Stereo = pINChI->Stereo) && Eql_INChI_Stereo( Stereo, EQL_SP3_INV, NULL, EQL_EXISTS, 0 ))) {
+                if ( (Stereo_Taut = pINChI_Taut->Stereo) &&
+                     Eql_INChI_Stereo( Stereo_Taut, EQL_SP3, NULL, EQL_EXISTS, 0 ) ) {
+
+                    eq2taut = iiEmpty; /* the current is empty while the preceding (taut) is not */
+                }
+            }
+#endif
         } else
         /*========= if not bSecondNonTautPass then compare inv taut stereo to various taut stereo ========*/
         if ( !bSecondNonTautPass && bOmitRepetitions ) {
@@ -1253,7 +1365,7 @@ int str_AuxInvSp3Numb(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pSt
               int bSecondNonTautPass, int bOmitRepetitions)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is0 /*, *is2*/;
     INChI        *pINChI,  *pINChI_Taut;
     INChI_Aux    *pINChI_Aux, *pINChI_Aux_Prev, *pINChI_Aux_Taut;
     INChI_Stereo *Stereo, *Stereo_Taut;
@@ -1270,12 +1382,15 @@ int str_AuxInvSp3Numb(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pSt
     pINChI_Aux_Taut = NULL;
     pINChI_Aux_Prev = NULL;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is0         = pINChISort;
+    /*is2         = bSecondNonTautPass? pINChISort2 : NULL;*/
     eq2taut     = 0; /* may be non-zero if another layer of the current component = current layer */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i < num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i < num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
+        is=is0+i;
         pINChI = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
         pINChI_Aux = pINChI? is->pINChI_Aux[ii] : NULL;
         /*================ to compare to previously printed =====================*/
@@ -1389,7 +1504,7 @@ int str_AuxIsoNumb(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, 
               int bSecondNonTautPass, int bOmitRepetitions)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is0 /*, *is2*/;
     INChI        *pINChI,  *pINChI_Taut;
     INChI_Aux    *pINChI_Aux, *pINChI_Aux_Prev, *pINChI_Aux_Taut;
     int          eq2taut, bNext;
@@ -1405,12 +1520,15 @@ int str_AuxIsoNumb(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, 
     pINChI_Aux_Taut = NULL;
     pINChI_Aux_Prev = NULL;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is0         = pINChISort;
+    /*is2         = bSecondNonTautPass? pINChISort2 : NULL;*/
     eq2taut     = 0; /* may be non-zero if another layer of the current component = current layer */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i < num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i < num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
+        is=is0+i;
         pINChI_Aux = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI_Aux[ii] : NULL;
         /*================ to compare to previously printed =====================*/
         if ( bSecondNonTautPass ) {
@@ -1512,7 +1630,7 @@ int str_AuxIsoEqu(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, i
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI_Aux    *pINChI_Aux, *pINChI_Aux_Prev, *pINChI_Aux_Taut, *pINChI_Aux_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
     const char  *pPrevEquStr, *pCurrEquStr;
@@ -1523,17 +1641,20 @@ int str_AuxIsoEqu(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, i
     pINChI_Aux_Taut_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero only on the 2nd (non-taut) pass */
     eq2tautPrev = 1; /* pINChI_Aux_Prev (previous pINChI_Aux) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI_Aux = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI_Aux[ii] : NULL;
+        pINChI_Aux = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI_Aux[ii] : NULL;
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Aux_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI_Aux[ii2] : NULL;
+            pINChI_Aux_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI_Aux[ii2] : NULL;
         }
         /*================ compare iso non-taut equivalence info to non-iso taut ========*/
         eq2taut = 0;
@@ -1691,7 +1812,7 @@ int str_AuxInvIsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI,  *pINChI_Prev,  *pINChI_Taut,  *pINChI_Taut_Prev;
     INChI_Stereo *Stereo, *Stereo_Prev, *Stereo_Taut, *Stereo_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
@@ -1705,18 +1826,21 @@ int str_AuxInvIsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr
     pINChI_Taut_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero if another layer of the current component = current layer */
     eq2tautPrev = 1; /* pINChI_Prev (previous pINChI) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*================ compare sp2 to previous =====================*/
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+            pINChI_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI[ii2] : NULL;
         }
         eq2taut = 0;
         /*========= if bSecondNonTautPass then compare iso non-taut stereo to other stereo ========*/
@@ -1788,6 +1912,21 @@ int str_AuxInvIsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr
                                  /* stereo-inv    isotopic  non-taut =   Inv( iso non-taut stereo) */
                 eq2taut = eq2taut? (iiSTEREO_INV | iitISO | iitNONTAUT | iiEq2INV | iiEq2ISO | iiEq2NONTAUT) : 0;
             }
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+            if ( !eq2taut && pINChI && !((Stereo = pINChI->StereoIsotopic) &&
+                Eql_INChI_Stereo( Stereo, EQL_SP3_INV, NULL, EQL_EXISTS, 0 )) ) {
+                 /* component has no stereo; check whether it has stereo in the preceding layers */
+                if ( pINChI_Taut && (Stereo_Taut = pINChI_Taut->Stereo) && /* F is not empty */
+                     Eql_INChI_Stereo( Stereo_Taut, EQL_SP3_INV, NULL, EQL_EXISTS, 0 ) ||
+                    !(pINChI_Taut && (Stereo_Taut = pINChI_Taut->Stereo) &&  /* M is empty and ... */
+                       Eql_INChI_Stereo( Stereo_Taut, EQL_SP3_INV, NULL, EQL_EXISTS, 0 )) &&
+                     (pINChI_Taut && (Stereo_Taut = pINChI_Taut->StereoIsotopic) &&  /* ... MI is not empty */
+                       Eql_INChI_Stereo( Stereo_Taut, EQL_SP3_INV, NULL, EQL_EXISTS, 0 )) ) {
+
+                    eq2taut = iiEmpty; /* the component has stereo in the preceding layer  */
+                }
+            }
+#endif
         } else
         /*========= if not bSecondNonTautPass then compare inv taut stereo to various stereo ========*/
         if ( !bSecondNonTautPass && bOmitRepetitions && pINChI &&
@@ -1823,6 +1962,16 @@ int str_AuxInvIsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr
                                  /* stereo-inv   isotopic taut =  Inv(taut iso stereo) */
                 eq2taut = eq2taut? (iiSTEREO_INV | iitISO | iiEq2INV | iiEq2ISO ) : 0;
             }
+#if ( FIX_EMPTY_LAYER_BUG == 1 )
+            if ( !eq2taut && pINChI && !((Stereo = pINChI->StereoIsotopic) &&
+                 Eql_INChI_Stereo( Stereo, EQL_SP3_INV, NULL, EQL_EXISTS, 0 ) ) ) {
+                /* component has no MI stereo; check whether it has stereo in the preceding layer M */
+                if ( (Stereo_Taut = pINChI->Stereo) &&
+                     Eql_INChI_Stereo( Stereo_Taut, EQL_SP3_INV, NULL, EQL_EXISTS, 0 ) ) {
+                    eq2taut = iiEmpty; /* the component has stereo in the preceding layer  */
+                }
+            }
+#endif
         }
         if ( eq2taut ) {
             /* we may be here only in case of the current layer found equal in another layer the same component */
@@ -1948,7 +2097,7 @@ int str_AuxInvIsoSp3Numb(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *
               int bSecondNonTautPass, int bOmitRepetitions)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is0 /*, *is2*/;
     INChI        *pINChI,  *pINChI_Taut;
     INChI_Aux    *pINChI_Aux, *pINChI_Aux_Prev, *pINChI_Aux_Taut;
     INChI_Stereo *Stereo, *Stereo_Taut;
@@ -1965,12 +2114,16 @@ int str_AuxInvIsoSp3Numb(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *
     pINChI_Aux_Taut = NULL;
     pINChI_Aux_Prev = NULL;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+   /* is2         = NULL;*/
+    is0         = pINChISort;
+   /* is20        = bSecondNonTautPass? pINChISort2 : NULL;*/
     eq2taut     = 0; /* may be non-zero if another layer of the current component = current layer */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i < num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i < num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
+        is=is0+i;
         pINChI     = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
         pINChI_Aux = pINChI? is->pINChI_Aux[ii] : NULL;
         /*================ to compare to previously printed =====================*/
@@ -2135,19 +2288,19 @@ int str_HillFormula(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot_len
               int *bOverflow, int bOutType, int num_components, int bUseMulipliers)
 {
     int          i, ii;
-    INCHI_SORT   *is;
+    INCHI_SORT   *is, *is0;
     INChI        *pINChI,  *pINChI_Prev;
     int          mult, eq2prev, bNext;
 
-    if ( !(is = pINChISort) ) {
+    if ( !(is0 = pINChISort) ) {
         return tot_len;
     }
     i  = 0;
-    pINChI_Prev = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+    pINChI_Prev = (0 <= (ii=GET_II(bOutType,is0)))? is0->pINChI[ii] : NULL;
     mult       = 0;
     bNext      = 0;
-    for ( i++, is++; i <= num_components; i ++, is ++ ) {
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+    for ( i++; i <= num_components; i ++ ) {
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         eq2prev = bUseMulipliers &&
                   pINChI && pINChI_Prev && pINChI->szHillFormula && pINChI_Prev->szHillFormula &&
                   pINChI->szHillFormula[0] && !strcmp(pINChI_Prev->szHillFormula, pINChI->szHillFormula);
@@ -2175,16 +2328,18 @@ int str_HillFormula2(INCHI_SORT *pINChISort /* non-taut */, INCHI_SORT *pINChISo
                      int *bOverflow, int bOutType, int num_components, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI,  *pINChI_Prev, *pINChI_Taut, *pINChI_Taut_Prev;
     int          mult, eq2prev, bNext, bEqToTaut, tot_len_inp = tot_len;
 
-    is  = pINChISort;
-    is2 = pINChISort2;
+    is   = NULL;
+    is2  = NULL;
+    is0  = pINChISort;
+    is20 = pINChISort2;
     i  = 0;
 
-    pINChI_Prev      = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
-    pINChI_Taut_Prev = (0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+    pINChI_Prev      = (0 <= (ii=GET_II(bOutType,is0)))? is0->pINChI[ii] : NULL;
+    pINChI_Taut_Prev = (0 <= (ii2=GET_II(OUT_T1,is20)))? is20->pINChI[ii2] : NULL;
     mult       = 0;
     bNext      = 0;
     bEqToTaut  = 1;
@@ -2192,9 +2347,9 @@ int str_HillFormula2(INCHI_SORT *pINChISort /* non-taut */, INCHI_SORT *pINChISo
                 pINChI_Prev && pINChI_Taut_Prev && !pINChI_Taut_Prev->bDeleted &&
                 pINChI_Prev->szHillFormula && pINChI_Taut_Prev->szHillFormula &&
                 !strcmp(pINChI_Prev->szHillFormula, pINChI_Taut_Prev->szHillFormula);
-    for ( i++, is++, is2++; i <= num_components; i ++, is ++, is2 ++ ) {
-        pINChI      = (i < num_components && 0 <= (ii =GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
-        pINChI_Taut = (i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+    for ( i++; i <= num_components; i ++ ) {
+        pINChI      = (i < num_components && (is=is0+i, 0 <= (ii =GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
+        pINChI_Taut = (i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI[ii2] : NULL;
         if ( bEqToTaut && (pINChI || pINChI_Taut) ) {
             bEqToTaut = pINChI && pINChI_Taut && !pINChI_Taut->bDeleted &&
                         pINChI->szHillFormula && pINChI_Taut->szHillFormula &&
@@ -2229,21 +2384,22 @@ int str_Connections(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot_len
               int *bOverflow, int bOutType, int ATOM_MODE, int num_components, int bUseMulipliers)
 {
     int          i, ii;
-    INCHI_SORT   *is;
+    INCHI_SORT   *is, *is0;
     INChI        *pINChI,  *pINChI_Prev;
     int          mult, eq2prev, bNext, tot_len_inp, nNumEmpty;
 
-    if ( !(is = pINChISort) ) {
+    if ( !(is0 = pINChISort) ) {
         return tot_len;
     }
     i  = 0;
-    pINChI_Prev = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
-    mult       = 0;
-    bNext      = 0;
+    pINChI_Prev = (0 <= (ii=GET_II(bOutType,is0)))? is0->pINChI[ii] : NULL;
+    is          = NULL;
+    mult        = 0;
+    bNext       = 0;
     tot_len_inp = tot_len;
     nNumEmpty   = 0;
-    for ( i++, is++; i <= num_components; i ++, is ++ ) {
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+    for ( i++; i <= num_components; i ++ ) {
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         eq2prev = bUseMulipliers &&
                  pINChI && pINChI_Prev && pINChI->lenConnTable > 1 &&
                  pINChI_Prev->lenConnTable==pINChI->lenConnTable &&
@@ -2281,19 +2437,20 @@ int str_H_atoms(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot_len,
                int num_components, int bUseMulipliers)
 {
     int          i, j, ii, len_H;
-    INCHI_SORT   *is;
+    INCHI_SORT   *is, *is0;
     INChI        *pINChI,  *pINChI_Prev;
     int          mult, eq2prev, bNext, bNotEmpty, nNumEmpty, tot_len_inp;
 
     nNumEmpty = 0;
     tot_len_inp = tot_len;
-    is = pINChISort;
+    is0 = pINChISort;
+    is  = NULL;
     i  = 0;
-    pINChI_Prev = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+    pINChI_Prev = (0 <= (ii=GET_II(bOutType,is0)))? is0->pINChI[ii] : NULL;
     mult       = 0;
     bNext      = 0;
-    for ( i++, is++; i <= num_components; i ++, is ++ ) {
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+    for ( i++; i <= num_components; i ++) {
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*========== compare to previous ============*/
         eq2prev = bUseMulipliers &&
                  pINChI && pINChI_Prev && (pINChI->nNumberOfAtoms > 0 || pINChI->lenTautomer>1) &&
@@ -2361,7 +2518,7 @@ int str_Charge2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int
               int bSecondNonTautPass, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI,  *pINChI_Prev,  *pINChI_Taut,  *pINChI_Taut_Prev;
     int         nTotalCharge, nTotalCharge_Prev, nTotalCharge_Taut, nTotalCharge_Taut_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
@@ -2372,18 +2529,21 @@ int str_Charge2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int
     pINChI_Taut_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    is          = NULL;
+    is2         = NULL;
+    is0         = pINChISort;
+    is20        = bSecondNonTautPass? pINChISort2 : NULL;
     eq2taut     = 0; /* may be non-zero only on the 2nd (non-taut) pass */
     eq2tautPrev = 1; /* pINChI_Prev (previous pINChI) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;     
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*================ compare sp3 to previous =====================*/
         if ( bSecondNonTautPass ) {
             /* component that was output on the 1st pass */
-            pINChI_Taut = ( i < num_components && 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
+            pINChI_Taut = ( i < num_components && (is2=is20+i, 0 <= (ii2=GET_II(OUT_T1,is2))))? is2->pINChI[ii2] : NULL;
         }
         /*========= if bSecondNonTautPass then compare non-iso non-taut stereo to non-iso taut ========*/
         eq2taut = 0;
@@ -2507,20 +2667,21 @@ int str_FixedH_atoms(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot_le
               int *bOverflow, int bOutType, int ATOM_MODE, int num_components, int bUseMulipliers)
 {
     int          i, j, ii, nNumEmpty;
-    INCHI_SORT   *is;
+    INCHI_SORT   *is, *is0;
     INChI        *pINChI,  *pINChI_Prev;
     int          mult, eq2prev, bNext, bNotEmpty, tot_len_inp;
 
-    is = pINChISort;
+    is  = NULL;
+    is0 = pINChISort;
     i  = 0;
-    pINChI_Prev = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+    pINChI_Prev = (0 <= (ii=GET_II(bOutType,is0)))? is0->pINChI[ii] : NULL;
     mult       = 0;
     bNext      = 0;
     nNumEmpty  = 0;
     tot_len_inp = tot_len;
-    for ( i++, is++; i <= num_components; i ++, is ++ ) {
+    for ( i++; i <= num_components; i ++ ) {
         /* only non-tautomeric representation of tautomeric */
-        pINChI = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
+        pINChI = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI[ii] : NULL;
         /*================ compare fixed H to previous =====================*/
         eq2prev =bUseMulipliers &&
                  pINChI && pINChI_Prev && pINChI->nNumberOfAtoms > 0 &&
@@ -2580,22 +2741,24 @@ int str_AuxNumb(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int
               int bSecondNonTautPass, int bOmitRepetitions)
 {
     int          i, ii, ii2;
-    INCHI_SORT   *is, *is2;
-    INChI        *pINChI,  *pINChI_Taut;
-    INChI_Aux    *pINChI_Aux, *pINChI_Aux_Taut;
+    INCHI_SORT   *is, *is0 /*, *is2*/;
+    INChI        *pINChI,  *pINChI_Taut=NULL;
+    INChI_Aux    *pINChI_Aux, *pINChI_Aux_Taut=NULL;
     int          eq2taut, bNext;
     const char  *pPrevEquStr, *pCurrEquStr;
     int         multPrevEquStr;        
     bNext       = 0;
-    is2         = bSecondNonTautPass? pINChISort2 : NULL;
+    /*is2         = bSecondNonTautPass? pINChISort2 : NULL;*/
     eq2taut     = 0; /* may be non-zero if another layer of the current component = current layer */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    if ( !(is = pINChISort) ) {
+    is          = NULL;
+    if ( !(is0 = pINChISort) ) {
         return tot_len;
     }
-    for ( i = 0; i < num_components; i ++, is ++, (bSecondNonTautPass? is2++ : 0) ) {
+    for ( i = 0; i < num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
+        is=is0+i;
         pINChI     = ( 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
         pINChI_Aux = pINChI? is->pINChI_Aux[ii] : NULL;
         /*================ to compare to previously printed =====================*/
@@ -2675,17 +2838,18 @@ int str_AuxTgroupEqu(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot_le
               int *bOverflow, int bOutType, int TAUT_MODE, int num_components, int bUseMulipliers)
 {
     int          i, ii;
-    INCHI_SORT   *is;
+    INCHI_SORT   *is, *is0;
     INChI_Aux    *pINChI_Aux, *pINChI_Aux_Prev;
     int          mult, eq2prev, bNext;
 
-    is = pINChISort;
+    is0 = pINChISort;
+    is  = NULL;
     i  = 0;
-    pINChI_Aux_Prev = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI_Aux[ii] : NULL;
+    pINChI_Aux_Prev = (0 <= (ii=GET_II(bOutType,is0)))? is0->pINChI_Aux[ii] : NULL;
     mult       = 0;
     bNext      = 0;
-    for ( i++, is++; i <= num_components; i ++, is ++ ) {
-        pINChI_Aux = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI_Aux[ii] : NULL;
+    for ( i++; i <= num_components; i ++ ) {
+        pINChI_Aux = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI_Aux[ii] : NULL;
         eq2prev = bUseMulipliers &&
                   Eql_INChI_Aux_Equ( pINChI_Aux, EQL_EQU_TG, pINChI_Aux_Prev, EQL_EQU_TG );
         if ( eq2prev ) {
@@ -2713,16 +2877,18 @@ int str_AuxChargeRadVal(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot
                   int *bOverflow, int bOutType, int TAUT_MODE, int num_components, int bUseMulipliers)
 {
     int          i, ii;
-    INCHI_SORT   *is;
+    INCHI_SORT   *is, *is0;
     INChI_Aux    *pINChI_Aux, *pINChI_Aux_Prev;
     int          mult, eq2prev, bNext;
 
     pINChI_Aux_Prev = NULL;
     mult        = 0;
     bNext       = 0;
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++ ) {
+    is          = NULL;
+    is0         = pINChISort;
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI_Aux = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI_Aux[ii] : NULL;
+        pINChI_Aux = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI_Aux[ii] : NULL;
         /* check whether pINChI_Aux and pINChI_Aux_Prev have identical info */
         eq2prev = bUseMulipliers &&
                   EqlOrigInfo( pINChI_Aux, pINChI_Aux_Prev );
@@ -2762,16 +2928,18 @@ int bin_AuxTautTrans(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2,
                       AT_NUMB **pTrans_n, AT_NUMB **pTrans_s, int bOutType, int num_components)
 {
     int          i, ii, ii2, ret;
-    INCHI_SORT   *is, *is2;
+    INCHI_SORT   *is, *is2, *is0, *is20;
     INChI        *pINChI, *pINChI_Taut;
     AT_NUMB     *nTrans_n  = NULL;
     AT_NUMB     *nTrans_s = NULL;
 
     ret = 0;
-    *pTrans_n = NULL;
-    *pTrans_s = NULL;
+    is0  = pINChISort;
+    is20 = pINChISort2;
     /* pass 1: save new non-taut numbering */
-    for ( i = 0, is = pINChISort, is2 = pINChISort2; i < num_components; i ++, is ++, is2 ++ ) {
+    for ( i = 0; i < num_components; i ++ ) {
+        is=is0+i;
+        is2=is20+i;
         pINChI      = ( 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii]   : NULL;
         pINChI_Taut = ( 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
         if ( pINChI      && pINChI->nNumberOfAtoms      > 0 &&
@@ -2788,7 +2956,9 @@ int bin_AuxTautTrans(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2,
     }
     if ( nTrans_n && nTrans_s ) {
         /* pass 2: get new taut numbering, retrieve new non-taut and save the transposition */
-        for ( i = 0, is = pINChISort, is2 = pINChISort2; i < num_components; i ++, is ++, is2 ++ ) {
+        for ( i = 0; i < num_components; i ++ ) {
+            is=is0+i;
+            is2=is20+i;
             pINChI      = ( 0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii]   : NULL;
             pINChI_Taut = ( 0 <= (ii2=GET_II(OUT_T1,is2)))? is2->pINChI[ii2] : NULL;
             if ( pINChI      && pINChI->nNumberOfAtoms      > 0 &&
@@ -2854,11 +3024,15 @@ int str_StereoAbsInv(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot_le
                int *bOverflow, int bOutType, int num_components)
 {
     int          i, j, ii;
-    INCHI_SORT   *is;
+    INCHI_SORT   *is, *is0;
     INChI_Stereo *Stereo;
     INChI        *pINChI;
 
-    for ( i = 0, is = pINChISort; !*bOverflow && i < num_components; i ++, is ++ ) {
+    is  = NULL;
+    is0 = pINChISort;
+
+    for ( i = 0; !*bOverflow && i < num_components; i ++ ) {
+        is=is0+i;
         pINChI = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
         if ( pINChI && (Stereo = pINChI->Stereo) && (j=Stereo->nCompInv2Abs) ) {
             tot_len += MakeDelim( j<0? "1":"0", pStr + tot_len, nStrLen-tot_len, bOverflow);
@@ -2874,11 +3048,15 @@ int str_IsoStereoAbsInv(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot
                int *bOverflow, int bOutType, int num_components)
 {
     int          i, j, ii;
-    INCHI_SORT   *is;
+    INCHI_SORT   *is, *is0;
     INChI_Stereo *Stereo;
     INChI        *pINChI;
 
-    for ( i = 0, is = pINChISort; !*bOverflow && i < num_components; i ++, is ++ ) {
+    is  = NULL;
+    is0 = pINChISort;
+
+    for ( i = 0; !*bOverflow && i < num_components; i ++ ) {
+        is=is0+i;
         pINChI = (0 <= (ii=GET_II(bOutType,is)))? is->pINChI[ii] : NULL;
         if ( pINChI && (Stereo = pINChI->StereoIsotopic) && (j=Stereo->nCompInv2Abs) ) {
             tot_len += MakeDelim( j<0? "1":"0", pStr + tot_len, nStrLen-tot_len, bOverflow);
@@ -2894,7 +3072,7 @@ int str_AuxIsoTgroupEqu(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot
               int *bOverflow, int bOutType, int TAUT_MODE, int num_components, int bOmitRepetitions, int bUseMulipliers)
 {
     int          i, ii;
-    INCHI_SORT   *is;
+    INCHI_SORT   *is, *is0;
     INChI_Aux    *pINChI_Aux, *pINChI_Aux_Prev;
     int          mult, eq2prev, eq2taut, eq2tautPrev, bNext;
     const char  *pPrevEquStr, *pCurrEquStr;
@@ -2903,13 +3081,15 @@ int str_AuxIsoTgroupEqu(INCHI_SORT *pINChISort, char *pStr, int nStrLen, int tot
     pINChI_Aux_Prev      = NULL;
     mult        = 0;
     bNext       = 0;
+    is          = NULL;
+    is0         = pINChISort;
     eq2taut     = 0; /* equal to non-isotopic equivalence */
     eq2tautPrev = 1; /* pINChI_Aux_Prev (previous pINChI_Aux) does not exist */
     pPrevEquStr = NULL; /*, *pCurrEquStr;*/
     multPrevEquStr = 0;        
-    for ( i = 0, is = pINChISort; i <= num_components; i ++, is ++ ) {
+    for ( i = 0; i <= num_components; i ++ ) {
         /* 1st (taut) pass: bOutType=OUT_TN  ; 2nd (non-taut pass) bOutType=OUT_NT */
-        pINChI_Aux = (i < num_components && 0 <= (ii=GET_II(bOutType,is)))? is->pINChI_Aux[ii] : NULL;
+        pINChI_Aux = (i < num_components && (is=is0+i, 0 <= (ii=GET_II(bOutType,is))))? is->pINChI_Aux[ii] : NULL;
         /*================ compare iso non-taut equivalence info to non-iso taut ========*/
         eq2taut = 0;
         if ( bOmitRepetitions && pINChI_Aux && pINChI_Aux->bIsIsotopic ) {

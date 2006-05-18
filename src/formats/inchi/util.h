@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -40,6 +40,9 @@ int my_fgetsTab1( char *szLine, int len, FILE *f, int *bTooLongLine );
 #endif
 int my_fgetsUpToLfOrTab( char *szLine, int len, FILE *f );
 
+#define ALPHA_BASE  27
+long inchi_strtol( const char *str, const char **p, int base);
+double inchi_strtod( const char *str, const char **p );
 
 AT_NUMB *is_in_the_list( AT_NUMB *pathAtom, AT_NUMB nNextAtom, int nPathLen );
 int get_periodic_table_number( const char* elname );
@@ -65,6 +68,7 @@ int nNoMetalNeighIndex( inp_ATOM *at, int at_no );
 int nNoMetalOtherNeighIndex( inp_ATOM *at, int at_no, int cur_neigh );
 int nNoMetalOtherNeighIndex2( inp_ATOM *at, int at_no, int cur_neigh, int cur_neigh2 );
 
+int bHeteroAtomMayHaveXchgIsoH( inp_ATOM *atom, int iat );
 
 /* IChICan2.c */
 int SetBitFree( void );
@@ -73,6 +77,7 @@ void WriteCoord( char *str, double x );
 
 
 extern int ERR_ELEM;
+extern int nElDataLen;
 
 /* BILLY 8/6/04 */
 #ifndef INCHI_ALL_CPP

@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -37,7 +37,8 @@
 #define CT_CALC_STEREO_ERR   (CT_ERR_FIRST-15)  /*(-30015) */
 #define CT_CANON_ERR         (CT_ERR_FIRST-16)  /*(-30016) */
 #define CT_STEREO_CANON_ERR  (CT_ERR_FIRST-17)  /*(-30017) */
-#define CT_UNKNOWN_ERR       (CT_ERR_FIRST-18)  /*(-30018) */
+#define CT_WRONG_FORMULA     (CT_ERR_FIRST-18)  /*(-30017) */
+#define CT_UNKNOWN_ERR       (CT_ERR_FIRST-19)  /*(-30019) */
 
 #define CT_ERR_MIN CT_UNKNOWN_ERR
 #define CT_ERR_MAX CT_ERR_FIRST

@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -12,8 +12,8 @@
 
 #include "comdef.h"
 
-#define REQ_MODE_BASIC              0x000001    /* B    */
-#define REQ_MODE_TAUT               0x000002    /* T    */
+#define REQ_MODE_BASIC              0x000001    /* B include Fixed-H layer */
+#define REQ_MODE_TAUT               0x000002    /* T include Mobile-H layer */
 #define REQ_MODE_ISO                0x000004    /* I    */
 #define REQ_MODE_NON_ISO            0x000008    /* NI   */
 #define REQ_MODE_STEREO             0x000010    /* S    */
@@ -45,7 +45,7 @@
 /****************** chemical identifier member definitions *************/
 typedef struct tagINChI_IsotopicAtom {
     AT_NUMB   nAtomNumber;  /* Canonical atom number */
-    NUM_H     nIsoDifference; /* 0=non-isotopic; 1=only most abundant */
+    NUM_H     nIsoDifference; /* 0=non-isotopic; 1=rounded avg. atomic mass */
     NUM_H     nNum_H;  /* number of 1H isotopic atoms attached */
     NUM_H     nNum_D;  /* number of 2H isotopic atoms attached */
     NUM_H     nNum_T;  /* number of 3H isotopic atoms attached */
@@ -98,6 +98,15 @@ typedef struct tagINChI_Stereo { /* [N] = allocated length */
 #define INCHI_OUT_XML_TEXT_COMMENTS     0x0100   /* output xml text annotation */
 #define INCHI_OUT_WINCHI_WINDOW         0x0200   /* output into wINChI text window */
 #define INCHI_OUT_TABBED_OUTPUT         0x0400   /* tab-delimited (only for plain text) */
+#define INCHI_OUT_SDFILE_ATOMS_DT       0x0800   /* SDfile output H isotopes as D and T */
+#define INCHI_OUT_SDFILE_SPLIT          0x1000   /* Split SDfile into components */
+
+#define INCHI_OUT_PRINT_OPTIONS       (INCHI_OUT_EMBED_REC |           \
+                                       INCHI_OUT_XML |                 \
+                                       INCHI_OUT_PLAIN_TEXT |          \
+                                       INCHI_OUT_PLAIN_TEXT_COMMENTS | \
+                                       INCHI_OUT_XML_TEXT_COMMENTS)
+
 
 /*******REQ_MODE_SB_IGN_ALL_UU*************** chemical identifier definition *****************/
 typedef struct tagINChI {  /* [N] = allocated length */
@@ -131,6 +140,7 @@ typedef struct tagINChI {  /* [N] = allocated length */
     int                  nNumberOfIsotopicAtoms;
     INChI_IsotopicAtom   *IsotopicAtom;              /* [nNumberOfIsotopicAtoms] */
     int                  nNumberOfIsotopicTGroups;
+    /* in reversing InChI keeps a pointer to stolen from AuxInfo coordinates */
     INChI_IsotopicTGroup *IsotopicTGroup;             /* [nNumberOfIsotopicAtoms] */
     /* ---- stereo layer */
     INChI_Stereo *Stereo;
@@ -144,7 +154,9 @@ typedef struct tagINChI {  /* [N] = allocated length */
 #if( bRELEASE_VERSION == 0 )
     int bExtract;
 #endif
-
+#if( READ_INCHI_STRING == 1 )
+    int nLink;  /* negative: ignore InChI; positive: index of (Reconnected component) + 1 linked to it */
+#endif
 } INChI;
 
 typedef INChI *PINChI2[TAUT_NUM];
@@ -185,11 +197,12 @@ typedef struct tagINChI_Aux { /* [N] = allocated length */
     MOL_COORD *szOrigCoord;
     NUM_H   nNumRemovedProtons;
     NUM_H   nNumRemovedIsotopicH[NUM_H_ISOTOPES]; /* isotopic H that may be exchanged and considered
-                                                     randomly distributed, including removed protons */
+                                                     randomly distributed, including removed protons;
+                                                     order: 0=>1H, 1=>D, 2=>T */
     int     bDeleted;
-    INCHI_MODE  bTautFlags;
-    INCHI_MODE  bTautFlagsDone;
-    INCHI_MODE  bNormalizationFlags;
+    INCHI_MODE  bTautFlags;             /* t_group_info->bTautFlags */
+    INCHI_MODE  bTautFlagsDone;         /* t_group_info->bTautFlagsDone */
+    INCHI_MODE  bNormalizationFlags;    /* t_group_info->tni.bNormalizationFlags */
     int        nCanonFlags;
 } INChI_Aux;
 
@@ -199,7 +212,10 @@ typedef INChI_Aux *PINChI_Aux2[TAUT_NUM];
 typedef struct tagINChIforSort {
     INChI     *pINChI[TAUT_NUM];
     INChI_Aux *pINChI_Aux[TAUT_NUM];
-    int      ord_number;    /* for stable sort */
+    short      ord_number;    /* for stable sort */
+    short      n1; /* points to the original; used in structure reconstruction only */
+    short      n2; /* points to the original; used in structure reconstruction only */
+    short      n3; /* points to the original; used in structure reconstruction only */
 }INCHI_SORT;
 
 

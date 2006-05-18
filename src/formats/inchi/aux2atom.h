@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -80,8 +80,10 @@ int str_fgetc( INCHI_FILE *f )
 /*******************************************************************/
 char *str_fgets( char *szLine, int len, INCHI_FILE *f )
 {
-    int  length=0, c;
-    len --;
+    int  length=0, c=0;
+    if ( -- len < 0 ) {
+        return NULL;
+    }
     while ( length < len && EOF != (c = str_fgetc( f )) ) {
         szLine[length++] = (char)c;
         if ( c == '\n' )
@@ -150,13 +152,13 @@ S_SHORT *is_in_the_slist( S_SHORT *pathAtom, S_SHORT nNextAtom, int nPathLen )
 /************************************************/
 int is_element_a_metal( char szEl[] )
 {
-    static char szMetals[] = "K;V;Y;W;U;"
+    static const char szMetals[] = "K;V;Y;W;U;"
         "Li;Be;Na;Mg;Al;Ca;Sc;Ti;Cr;Mn;Fe;Co;Ni;Cu;Zn;Ga;Rb;Sr;Zr;"
         "Nb;Mo;Tc;Ru;Rh;Pd;Ag;Cd;In;Sn;Sb;Cs;Ba;La;Ce;Pr;Nd;Pm;Sm;"
         "Eu;Gd;Tb;Dy;Ho;Er;Tm;Yb;Lu;Hf;Ta;Re;Os;Ir;Pt;Au;Hg;Tl;Pb;"
         "Bi;Po;Fr;Ra;Ac;Th;Pa;Np;Pu;Am;Cm;Bk;Cf;Es;Fm;Md;No;Lr;Rf;";
-    int len = strlen(szEl);
-    char *p;
+    const int len = strlen(szEl);
+    const char *p;
 
     if ( 0 < len && len <= 2 &&
          isalpha( UCINT szEl[0] ) && isupper( szEl[0] ) &&
@@ -172,8 +174,10 @@ int is_element_a_metal( char szEl[] )
 /*******************************************************************/
 char *str_fgetsTab( char *szLine, int len, INCHI_FILE *f )
 {
-    int  length=0, c;
-    len --;
+    int  length=0, c=0;
+    if ( --len < 0 ) {
+        return NULL;
+    }
     while ( length < len && EOF != (c = str_fgetc( f )) ) {
         if ( c == '\t' )
             c = '\n';
@@ -422,16 +426,16 @@ int INChITo_Atom(INPUT_FILE *inp_molfile, MOL_COORD **szCoord,
     inchi_Atom      *atom          = NULL;
     MOL_COORD       *pszCoord      = NULL;
     INCHI_MODE InpAtomFlags = 0; /* 0 or FLAG_INP_AT_NONCHIRAL or FLAG_INP_AT_CHIRAL */
-    static char szIsoH[] = "hdt";
+    static const char szIsoH[] = "hdt";
     /* plain tags */
-    static char sStructHdrPln[]         = "Structure:";
-    static char sStructHdrPlnNoLblVal[] = " is missing";
+    static const char sStructHdrPln[]         = "Structure:";
+    static const char sStructHdrPlnNoLblVal[] = " is missing";
     static char sStructHdrPlnAuxStart[64] =""; /*"$1.1Beta/";*/
     static int  lenStructHdrPlnAuxStart = 0;
-    static char sStructHdrPlnRevAt[]    = "/rA:";
-    static char sStructHdrPlnRevBn[]    = "/rB:";
-    static char sStructHdrPlnRevXYZ[]   = "/rC:";
-    char *sToken;
+    static const char sStructHdrPlnRevAt[]    = "/rA:";
+    static const char sStructHdrPlnRevBn[]    = "/rB:";
+    static const char sStructHdrPlnRevXYZ[]   = "/rC:";
+    const  char *sToken;
     int  lToken;
     if ( !lenStructHdrPlnAuxStart ) {
         lenStructHdrPlnAuxStart = sprintf( sStructHdrPlnAuxStart, "AuxInfo=" );
@@ -1179,7 +1183,7 @@ int INChITo_Atom(INPUT_FILE *inp_molfile, MOL_COORD **szCoord,
                                     atom_stereo0D[i].type = INCHI_StereoType_None;
                                     atom_stereo0D[i].central_atom = NO_ATOM;
                                     atom_stereo0D[i].neighbor[0] =
-                                    atom_stereo0D[i].neighbor[4] = -1;
+                                    atom_stereo0D[i].neighbor[3] = -1;
                                     *err |= 64; /* Error in cumulene stereo */
                                     MOLFILE_ERR_SET (*err, 0, "0D stereobond not recognized");
                                     break;
@@ -1252,7 +1256,7 @@ int INChITo_Atom(INPUT_FILE *inp_molfile, MOL_COORD **szCoord,
                                         atom_stereo0D[i].type = INCHI_StereoType_None;
                                         atom_stereo0D[i].central_atom = NO_ATOM;
                                         atom_stereo0D[i].neighbor[0] =
-                                        atom_stereo0D[i].neighbor[4] = -1;
+                                        atom_stereo0D[i].neighbor[3] = -1;
                                         *err |= 64; /* Error in cumulene stereo */
                                         MOLFILE_ERR_SET (*err, 0, "Cumulene stereo not recognized (0D)");
 
@@ -1315,6 +1319,12 @@ int INChITo_Atom(INPUT_FILE *inp_molfile, MOL_COORD **szCoord,
                 }
 #if( defined(INCHI_LIBRARY) || defined(INCHI_MAIN) )
 #else
+#if( FIX_READ_AUX_MEM_LEAK == 1 )
+                /* 2005-08-04 avoid memory leak */
+                if ( atom_stereo0D && !(stereo0D && *stereo0D == atom_stereo0D) ) {
+                    FreeInchi_Stereo0D( &atom_stereo0D );
+                }
+#endif
                 if ( szCoord ) {
                     *szCoord = pszCoord;
                     pszCoord = NULL;
@@ -1378,22 +1388,26 @@ bypass_end_of_INChI_plain:
     /***********************************************************/
     if ( nInputType == INPUT_INCHI_XML ) {
         /* xml tags */
-        static char sStructHdrXml[]         = "<structure";
-        static char sStructHdrXmlEnd[]      = "</structure";
-        static char sStructHdrXmlNumber[]   = "number=\"";
-        static char sStructHdrXmlIdName[]   = "id.name=\"";
-        static char sStructHdrXmlIdValue[]  = "id.value=\"";
-        static char sStructMsgXmlErr[]      = "<message type=\"error (no InChI)\" value=\"";
-        static char sStructMsgXmlErrFatal[] = "<message type=\"fatal (aborted)\" value=\"";
-        static char sStructRevXmlRevHdr[]   = "<reversibility>";
-        static char sStructRevXmlRevAt[]    = "<atoms>";
-        static char sStructRevXmlRevAtEnd[] = "</atoms>";
-        static char sStructRevXmlRevBn[]    = "<bonds>";
-        static char sStructRevXmlRevBnEnd[] = "</bonds>";
-        static char sStructRevXmlRevXYZ[]   = "<xyz>";
-        static char sStructRevXmlRevXYZEnd[]= "</xyz>";
-        static char sStructAuxXml[]         = "<identifier.auxiliary-info";
-        static char sStructAuxXmlEnd[]      = "</identifier.auxiliary-info";
+        static const char sStructHdrXml[]         = "<structure";
+        static const char sStructHdrXmlEnd[]      = "</structure";
+        static const char sStructHdrXmlNumber[]   = "number=\"";
+        static const char sStructHdrXmlIdName[]   = "id.name=\"";
+        static const char sStructHdrXmlIdValue[]  = "id.value=\"";
+#if( SPECIAL_BUILD == 1 )
+        static const char sStructMsgXmlErr[]      = "<message type=\"error (no MoChI)\" value=\"";
+#else
+        static const char sStructMsgXmlErr[]      = "<message type=\"error (no InChI)\" value=\"";
+#endif
+        static const char sStructMsgXmlErrFatal[] = "<message type=\"fatal (aborted)\" value=\"";
+        static const char sStructRevXmlRevHdr[]   = "<reversibility>";
+        static const char sStructRevXmlRevAt[]    = "<atoms>";
+        static const char sStructRevXmlRevAtEnd[] = "</atoms>";
+        static const char sStructRevXmlRevBn[]    = "<bonds>";
+        static const char sStructRevXmlRevBnEnd[] = "</bonds>";
+        static const char sStructRevXmlRevXYZ[]   = "<xyz>";
+        static const char sStructRevXmlRevXYZEnd[]= "</xyz>";
+        static const char sStructAuxXml[]         = "<identifier.auxiliary-info";
+        static const char sStructAuxXmlEnd[]      = "</identifier.auxiliary-info";
         int         bInTheAuxInfo           = 0;
 
         while ( 0 < (res = my_fgets( szLine, sizeof(szLine)-1, inp_molfile, &bTooLongLine ) ) ) {
@@ -2172,7 +2186,7 @@ bypass_end_of_INChI_plain:
                                     atom_stereo0D[i].type = INCHI_StereoType_None;
                                     atom_stereo0D[i].central_atom = NO_ATOM;
                                     atom_stereo0D[i].neighbor[0] =
-                                    atom_stereo0D[i].neighbor[4] = -1;
+                                    atom_stereo0D[i].neighbor[3] = -1;
                                     *err |= 64; /* Error in cumulene stereo */
                                     MOLFILE_ERR_SET (*err, 0, "0D stereobond not recognized");
                                     break;
@@ -2245,7 +2259,7 @@ bypass_end_of_INChI_plain:
                                         atom_stereo0D[i].type = INCHI_StereoType_None;
                                         atom_stereo0D[i].central_atom = NO_ATOM;
                                         atom_stereo0D[i].neighbor[0] =
-                                        atom_stereo0D[i].neighbor[4] = -1;
+                                        atom_stereo0D[i].neighbor[3] = -1;
                                         *err |= 64; /* Error in cumulene stereo */
                                         MOLFILE_ERR_SET (*err, 0, "Cumulene stereo not recognized (0D)");
 
@@ -2766,6 +2780,9 @@ int Extract0DParities( inp_ATOM *at, int nNumAtoms, inchi_Stereo0D *stereo0D,
                 break;
             }
         }
+        /* take care of Unknown stereobonds:                                     */
+        /* copy their Unknown stereo descriptors to at->bond_stereo (2005-03-01) */
+        FixUnkn0DStereoBonds(at, nNumAtoms);
 
 #ifdef INCHI_LIBRARY
 

@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -51,43 +51,41 @@
 #define MAX_EDGE_RATIO        6.00   /*  max max/min edge ratio for a tetrahedra close to a parallelogram  */
 #endif
 /*  local prototypes */
-int save_a_stereo_bond( int z_prod, int result_action,
+static int save_a_stereo_bond( int z_prod, int result_action,
                         int at1, int ord1, AT_NUMB *stereo_bond_neighbor1, S_CHAR *stereo_bond_ord1, S_CHAR *stereo_bond_z_prod1, S_CHAR *stereo_bond_parity1, 
                         int at2, int ord2, AT_NUMB *stereo_bond_neighbor2, S_CHAR *stereo_bond_ord2, S_CHAR *stereo_bond_z_prod2, S_CHAR *stereo_bond_parity2 );
-double get_z_coord( inp_ATOM* at, int cur_atom, int neigh_no,  int *nType,int bPointedEdgeStereo );
-double len3( const double c[] );
-double len2( const double c[] );
-double* diff3( const double a[], const double b[], double result[] );
-double* add3( const double a[], const double b[], double result[] );
-double* mult3( const double a[], double b, double result[] );
-double* copy3( const double a[], double result[] );
-double* change_sign3( const double a[], double result[] );
-double dot_prod3( const double a[], const double b[] );
-int dot_prodchar3( const S_CHAR a[], const S_CHAR b[] );
-double* cross_prod3( const double a[], const double b[], double result[] );
-double triple_prod( double a[], double b[], double c[], double *sine_value );
-double triple_prod_and_min_abs_sine(double at_coord[][3], double *min_sine);
-double sp3_triple_prod_and_min_abs_sine(double at_coord[][3], double central_at_coord[], double *min_sine, int *bAmbiguous);
-int are_3_vect_in_one_plane( double at_coord[][3], double min_sine);
-int triple_prod_char( inp_ATOM *at, int at_1, int i_next_at_1, S_CHAR *z_dir1,
-                                    int at_2, int i_next_at_2, S_CHAR *z_dir2 );
+static double get_z_coord( inp_ATOM* at, int cur_atom, int neigh_no,  int *nType,int bPointedEdgeStereo );
+static double len3( const double c[] );
+static double len2( const double c[] );
+static double* diff3( const double a[], const double b[], double result[] );
+static double* add3( const double a[], const double b[], double result[] );
+static double* mult3( const double a[], double b, double result[] );
+static double* copy3( const double a[], double result[] );
+static double* change_sign3( const double a[], double result[] );
+static double dot_prod3( const double a[], const double b[] );
+static int dot_prodchar3( const S_CHAR a[], const S_CHAR b[] );
+static double* cross_prod3( const double a[], const double b[], double result[] );
+static double triple_prod( double a[], double b[], double c[], double *sine_value );
+static double triple_prod_and_min_abs_sine(double at_coord[][3], double *min_sine);
+static int are_3_vect_in_one_plane( double at_coord[][3], double min_sine);
+static int triple_prod_char( inp_ATOM *at, int at_1, int i_next_at_1, S_CHAR *z_dir1,
+                                           int at_2, int i_next_at_2, S_CHAR *z_dir2 );
 
-int CompDble( const void *a1, const void *a2 );
-int Get2DTetrahedralAmbiguity( double at_coord[][3], int bAddExplicitNeighbor );
-double triple_prod_and_min_abs_sine2(double at_coord[][3], double central_at_coord[], int bAddedExplicitNeighbor, double *min_sine, int *bAmbiguous);
-int are_4at_in_one_plane( double at_coord[][3], double min_sine);
-int bInpAtomHasRequirdNeigh ( inp_ATOM *at, int cur_at, int RequirdNeighType, int NumDbleBonds );
-int bCanAtomBeMiddleAllene( char *elname, S_CHAR charge, S_CHAR radical );
-int bIsSuitableHeteroInpAtom( inp_ATOM  *at );
-int bIsOxide( inp_ATOM  *at, int cur_at );
-int half_stereo_bond_parity( inp_ATOM *at, int cur_at, inp_ATOM *at_removed_H, int num_removed_H, S_CHAR *z_dir, int bPointedEdgeStereo );
-int get_allowed_stereo_bond_type( int bond_type );
-int can_be_a_stereo_bond_with_isotopic_H( inp_ATOM *at, int cur_at, INCHI_MODE nMode );
-int half_stereo_bond_action( int nParity, int bUnknown, int bIsotopic );
-int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *at_removed_H, int num_removed_H,
-                            INCHI_MODE nMode, QUEUE *q, AT_RANK *nAtomLevel, S_CHAR *cSource, AT_RANK min_sb_ring_size, int bPointedEdgeStereo );
-int can_be_a_stereo_atom_with_isotopic_H( inp_ATOM *at, int cur_at );
-int set_stereo_atom_parity( sp_ATOM *out_at, inp_ATOM *at, int cur_at, inp_ATOM *at_removed_H, int num_removed_H, int bPointedEdgeStereo );
+static int CompDble( const void *a1, const void *a2 );
+static int Get2DTetrahedralAmbiguity( double at_coord[][3], int bAddExplicitNeighbor, int bFix2DstereoBorderCase );
+static double triple_prod_and_min_abs_sine2(double at_coord[][3], double central_at_coord[], int bAddedExplicitNeighbor, double *min_sine, int *bAmbiguous);
+static int are_4at_in_one_plane( double at_coord[][3], double min_sine);
+static int bInpAtomHasRequirdNeigh ( inp_ATOM *at, int cur_at, int RequirdNeighType, int NumDbleBonds );
+static int bIsSuitableHeteroInpAtom( inp_ATOM  *at );
+static int bIsOxide( inp_ATOM  *at, int cur_at );
+static int half_stereo_bond_parity( inp_ATOM *at, int cur_at, inp_ATOM *at_removed_H, int num_removed_H, S_CHAR *z_dir, int bPointedEdgeStereo );
+static int get_allowed_stereo_bond_type( int bond_type );
+static int can_be_a_stereo_bond_with_isotopic_H( inp_ATOM *at, int cur_at, INCHI_MODE nMode );
+static int half_stereo_bond_action( int nParity, int bUnknown, int bIsotopic );
+static int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *at_removed_H, int num_removed_H,
+                                   INCHI_MODE nMode, QUEUE *q, AT_RANK *nAtomLevel, S_CHAR *cSource, AT_RANK min_sb_ring_size, int bPointedEdgeStereo );
+static int can_be_a_stereo_atom_with_isotopic_H( inp_ATOM *at, int cur_at, int bPointedEdgeStereo );
+static int set_stereo_atom_parity( sp_ATOM *out_at, inp_ATOM *at, int cur_at, inp_ATOM *at_removed_H, int num_removed_H, int bPointedEdgeStereo );
 /*
 int set_stereo_parity( inp_ATOM* at, sp_ATOM* at_output, int num_at, int num_removed_H,
                        int *nMaxNumStereoAtoms, int *nMaxNumStereoBonds, INCHI_MODE nMode, int bPointedEdgeStereo );
@@ -293,7 +291,7 @@ int CompDble( const void *a1, const void *a2 )
 #define T2D_OKAY  1
 #define T2D_WARN  2
 #define T2D_UNDF  4
-int Get2DTetrahedralAmbiguity( double at_coord[][3], int bAddExplicitNeighbor )
+int Get2DTetrahedralAmbiguity( double at_coord[][3], int bAddExplicitNeighbor, int bFix2DstereoBorderCase )
 {
     const double one_pi = 2.0*atan2(1.0 /* y */, 0.0 /* x */);
     const double two_pi = 2.0*one_pi;
@@ -367,6 +365,83 @@ int Get2DTetrahedralAmbiguity( double at_coord[][3], int bAddExplicitNeighbor )
             }
         }
     }
+#if( FIX_2D_STEREO_BORDER_CASE == 1 )
+    /* check if the bonds with ordering numbers first_Up+len_Up and first_Up+len_Up+1 */
+    /* have identical angles. In this case switch their order to enlarge the Up sequence */
+#define ZERO_ANGLE  0.000001
+    if ( nNumNeigh - len_Up >= 2 ) {
+        int next1, next2;
+        for ( i = 1; i < nNumNeigh - len_Up; i ++ ) {
+            next2 = (first_Up+len_Up + i) % nNumNeigh; /* the 2nd after Up sequence */
+            if ( nBondType[nBondOrder[next2]] > 0 ) {
+                next1 = (first_Up+len_Up) % nNumNeigh; /* the 1st after Up sequence */
+                dAngle = dBondDirection[nBondOrder[next1]] - dBondDirection[nBondOrder[next2]];
+                if ( fabs(dAngle) < ZERO_ANGLE ) {
+                    swap( (char*)&nBondOrder[next1], (char*)&nBondOrder[next2], sizeof(nBondOrder[0]) );
+                    len_Up ++;
+                    break;
+                }
+            }
+        }
+    }
+    /* check whether the not-Up bond (located before the found first-Up) has */
+    /* same angle as the Up bond that precedes this not-Up bond */
+    if ( nNumNeigh - len_Up >= 2 ) {
+        int next1, next2;
+        for ( i = 1; i < nNumNeigh - len_Up; i ++ ) {
+            next2 = (first_Up+nNumNeigh - i - 1 ) % nNumNeigh; /* the 2nd before Up sequence */
+            if ( nBondType[nBondOrder[next2]] > 0 ) {
+                next1 = (first_Up+nNumNeigh-1) % nNumNeigh; /* the 1st before Up sequence */
+                dAngle = dBondDirection[nBondOrder[next1]] - dBondDirection[nBondOrder[next2]];
+                if ( fabs(dAngle) < ZERO_ANGLE ) {
+                    swap( (char*)&nBondOrder[next1], (char*)&nBondOrder[next2], sizeof(nBondOrder[0]) );
+                    first_Up = next1; 
+                    len_Up ++;
+                    break;
+                }
+            }
+        }
+    }
+#else
+    if ( bFix2DstereoBorderCase ) {
+        /* check if the bonds with ordering numbers first_Up+len_Up and first_Up+len_Up+1 */
+        /* have identical angles. In this case switch their order to enlarge the Up sequence */
+#define ZERO_ANGLE  0.000001
+        if ( nNumNeigh - len_Up >= 2 ) {
+            int next1, next2;
+            for ( i = 1; i < nNumNeigh - len_Up; i ++ ) {
+                next2 = (first_Up+len_Up + i) % nNumNeigh; /* the 2nd after Up sequence */
+                if ( nBondType[nBondOrder[next2]] > 0 ) {
+                    next1 = (first_Up+len_Up) % nNumNeigh; /* the 1st after Up sequence */
+                    dAngle = dBondDirection[nBondOrder[next1]] - dBondDirection[nBondOrder[next2]];
+                    if ( fabs(dAngle) < ZERO_ANGLE ) {
+                        swap( (char*)&nBondOrder[next1], (char*)&nBondOrder[next2], sizeof(nBondOrder[0]) );
+                        len_Up ++;
+                        break;
+                    }
+                }
+            }
+        }
+        /* check whether the not-Up bond (located before the found first-Up) has */
+        /* same angle as the Up bond that precedes this not-Up bond */
+        if ( nNumNeigh - len_Up >= 2 ) {
+            int next1, next2;
+            for ( i = 1; i < nNumNeigh - len_Up; i ++ ) {
+                next2 = (first_Up+nNumNeigh - i - 1 ) % nNumNeigh; /* the 2nd before Up sequence */
+                if ( nBondType[nBondOrder[next2]] > 0 ) {
+                    next1 = (first_Up+nNumNeigh-1) % nNumNeigh; /* the 1st before Up sequence */
+                    dAngle = dBondDirection[nBondOrder[next1]] - dBondDirection[nBondOrder[next2]];
+                    if ( fabs(dAngle) < ZERO_ANGLE ) {
+                        swap( (char*)&nBondOrder[next1], (char*)&nBondOrder[next2], sizeof(nBondOrder[0]) );
+                        first_Up = next1; 
+                        len_Up ++;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+#endif
     /*  Turn all the bonds around the center so that */
     /*  the 1st Up bond has zero radian direction */
     dAlpha = dBondDirection[nBondOrder[first_Up]];
@@ -517,11 +592,51 @@ int Get2DTetrahedralAmbiguity( double at_coord[][3], int bAddExplicitNeighbor )
             break;
         /* -------------------------- 2 Up ------------ */
         case 2:
-            if ( cur_len_Up == 1 ) {
+#if( FIX_2D_STEREO_BORDER_CASE == 1 )
+            if ( len_Up == 1 ) {
                 ret = T2D_OKAY;
             } else {
-                ret = (T2D_UNDF | T2D_WARN);
+                dAngle = dBondDirection[nBondOrder[(first_Up + 3) % nNumNeigh]] -
+                         dBondDirection[nBondOrder[(first_Up + 0) % nNumNeigh]];
+                dAngle = fabs(two_pi - dAngle);
+                dAlpha = dBondDirection[nBondOrder[(first_Up + 2) % nNumNeigh]] -
+                         dBondDirection[nBondOrder[(first_Up + 1) % nNumNeigh]];
+                dAlpha = fabs(dAlpha);
+                if ( dAngle < 2.0 * ZERO_ANGLE && dAlpha > MIN_ANGLE ||
+                     dAlpha < 2.0 * ZERO_ANGLE && dAngle > MIN_ANGLE  ) {
+                    ret = (T2D_OKAY | T2D_WARN);
+                } else {
+                    ret = (T2D_UNDF | T2D_WARN);
+                }
             }
+#else
+            if ( bFix2DstereoBorderCase ) {
+                /* bug fix */
+                if ( len_Up == 1 ) {
+                    ret = T2D_OKAY;
+                } else {
+                    dAngle = dBondDirection[nBondOrder[(first_Up + 3) % nNumNeigh]] -
+                             dBondDirection[nBondOrder[(first_Up + 0) % nNumNeigh]];
+                    dAngle = fabs(two_pi - dAngle);
+                    dAlpha = dBondDirection[nBondOrder[(first_Up + 2) % nNumNeigh]] -
+                             dBondDirection[nBondOrder[(first_Up + 1) % nNumNeigh]];
+                    dAlpha = fabs(dAlpha);
+                    if ( dAngle < 2.0 * ZERO_ANGLE && dAlpha > MIN_ANGLE ||
+                         dAlpha < 2.0 * ZERO_ANGLE && dAngle > MIN_ANGLE  ) {
+                        ret = (T2D_OKAY | T2D_WARN);
+                    } else {
+                        ret = (T2D_UNDF | T2D_WARN);
+                    }
+                }
+            } else {
+                /* original InChI v. 1 bug */
+                if ( cur_len_Up == 1 ) {
+                    ret = T2D_OKAY;
+                } else {
+                    ret = (T2D_UNDF | T2D_WARN);
+                }
+            }
+#endif
             break;
         /* -------------------------- 3 Up ------------ */
         case 3:
@@ -945,7 +1060,7 @@ int bInpAtomHasRequirdNeigh ( inp_ATOM *at, int cur_at, int RequirdNeighType, in
     return 1;
 }
 /********************************************************************************************/
-int bCanInpAtomBeAStereoCenter( inp_ATOM *at, int cur_at )
+int bCanInpAtomBeAStereoCenter( inp_ATOM *at, int cur_at, int bPointedEdgeStereo )
 {
     
 /*************************************************************************************
@@ -955,6 +1070,7 @@ int bCanInpAtomBeAStereoCenter( inp_ATOM *at, int cur_at )
  *       to make it easier to read
  *
  *                      --------- 4 single bonds stereocenters -------
+ *                       0       1       2       3      4       5
  *                                                                    
  *                       |       |       |       |      |       |     
  *                      -C-     -Si-    -Ge-    -Sn-   >As[+]  >B[-]  
@@ -968,6 +1084,7 @@ int bCanInpAtomBeAStereoCenter( inp_ATOM *at, int cur_at )
 #define CREQUIRDNEIGH1   0,      0,      0,      0,      3,    0,    
 /*
  *                      --------------- S, Se stereocenters ----------
+ *                       6       7       8       9      10     11    12    13
  *                                                                                
  *                               |       |      ||             |     |     ||     
  *                      -S=     =S=     -S[+]   >S[+]   -Se=  =Se=  -Se[+] >Se[+] 
@@ -980,21 +1097,24 @@ int bCanInpAtomBeAStereoCenter( inp_ATOM *at, int cur_at )
 #define CHAS3MEMBRING2   0,      0,      0,      0,      0,    0,    0,     0,    
 #define CREQUIRDNEIGH2   3,      3,      3,      3,      3,    3,    3,     3,
 /*
- *                      ------------------ N, P stereocenters --------
- *
- *                                      X---Y                  
- *                        |      |       \ /     |       |     
- *                       =N-    >N[+]     N     >P[+]   =P-    
- *                        |      |        |      |       |     
- */
-#define SZELEM3         "N\000","N\000","N\000","P\000","P\000",
-#define CCHARGE3         0,      1,      0,      1,      0,     
-#define CNUMBONDSANDH3   4,      4,      3,      4,      4,     
-#define CCHEMVALENCEH3   5,      4,      3,      4,      5,     
-#define CHAS3MEMBRING3   0,      0,      1,      0,      0,     
-#define CREQUIRDNEIGH3   3,      3,      1,      3,      3,     
+ *                      ------------------ N, P stereocenters -----------------
+ *                        14     15       16     17     18       19       20    
+ *                                                                               
+ *                                                             Phosphine Arsine  
+ *                                      X---Y                                    
+ *                        |      |       \ /     |       |       \ /      \ /    
+ *                       =N-    >N[+]     N     >P[+]   =P-       P        As    
+ *                        |      |        |      |       |        |        |     
+ */                                                                              
+#define SZELEM3         "N\000","N\000","N\000","P\000","P\000","P\000", "As",
+#define CCHARGE3         0,      1,      0,      1,      0,      0,       0,     
+#define CNUMBONDSANDH3   4,      4,      3,      4,      4,      3,       3,     
+#define CCHEMVALENCEH3   5,      4,      3,      4,      5,      3,       3,     
+#define CHAS3MEMBRING3   0,      0,      1,      0,      0,      0,       0,     
+#define CREQUIRDNEIGH3   3,      3,      1,      3,      3,      2,       2,     
 
-
+#define PHOSPHINE_STEREO  19  /* the number must match Phosphine number in the comments, see above */
+#define ARSINE_STEREO     20  /* the number must match Arsine number in the comments, see above */
 
     static char        szElem[][3]={ SZELEM1         SZELEM2         SZELEM3        };
     static S_CHAR        cCharge[]={ CCHARGE1        CCHARGE2        CCHARGE3       };
@@ -1027,6 +1147,20 @@ int bCanInpAtomBeAStereoCenter( inp_ATOM *at, int cur_at )
             break;
         }
     }
+#if ( ADD_PHOSPHINE_STEREO == 1 )
+    if ( i == PHOSPHINE_STEREO && !(bPointedEdgeStereo & PES_BIT_PHOSPHINE_STEREO) )
+        ret = 0;
+#else
+    if ( i == PHOSPHINE_STEREO )
+        ret = 0;
+#endif
+#if ( ADD_ARSINE_STEREO == 1 )
+    if ( i == ARSINE_STEREO && !(bPointedEdgeStereo & PES_BIT_ARSINE_STEREO) )
+        ret = 0;
+#else
+    if ( i == ARSINE_STEREO )
+        ret = 0;
+#endif
     return ret;
 }
 
@@ -1035,8 +1169,8 @@ int bCanInpAtomBeAStereoCenter( inp_ATOM *at, int cur_at )
 /********************************************************************************************/
 int bCanAtomBeAStereoCenter( char *elname, S_CHAR charge, S_CHAR radical )
 {
-    static char   szElem[][3] = { "C\000", "Si", "Ge", "N\000", "P\000", "As", "B\000" };
-    static S_CHAR   cCharge[] = {  0,        0,    0,   1,       1,       1,    -1     };
+    static const char   szElem[][3] = { "C\000", "Si", "Ge", "N\000", "P\000", "As", "B\000" };
+    static const S_CHAR   cCharge[] = {  0,        0,    0,   1,       1,       1,    -1     };
     int i, ret = 0;
     for ( i = 0; i < sizeof(szElem)/sizeof(szElem[0]); i++ ) {
         if ( !strcmp( elname, szElem[i] )  && (charge == cCharge[i]) ) {
@@ -1052,8 +1186,8 @@ int bCanAtomBeAStereoCenter( char *elname, S_CHAR charge, S_CHAR radical )
 /*  used for atoms adjacent to stereogenic bonds only */
 int bAtomHasValence3( char *elname, S_CHAR charge, S_CHAR radical )
 {
-    static char   szElem[][3] = {  "N\000" };
-    static S_CHAR   cCharge[] = {   0,     };
+    static const char   szElem[][3] = {  "N\000" };
+    static const S_CHAR   cCharge[] = {   0,     };
     int i, ret = 0;
     for ( i = 0; i < (int)(sizeof(szElem)/sizeof(szElem[0])); i++ ) {
         if ( !strcmp( elname, szElem[i] ) && (charge == cCharge[i]) ) {
@@ -1068,9 +1202,9 @@ int bAtomHasValence3( char *elname, S_CHAR charge, S_CHAR radical )
 /*  used for atoms adjacent to stereogenic bonds only */
 int bCanAtomHaveAStereoBond( char *elname, S_CHAR charge, S_CHAR radical )
 {
-    static char   szElem[][3] = { "C\000", "Si", "Ge", "N\000", "N\000" };
-    static S_CHAR   cCharge[] = {  0,        0,    0,   0,       1,     };
-    static int       n = sizeof(szElem)/sizeof(szElem[0]);
+    static const char   szElem[][3] = { "C\000", "Si", "Ge", "N\000", "N\000" };
+    static const S_CHAR   cCharge[] = {  0,        0,    0,   0,       1,     };
+    static const int       n = sizeof(szElem)/sizeof(szElem[0]);
     int i, ret = 0;
     for ( i = 0; i < n; i++ ) {
         if ( !strcmp( elname, szElem[i] )  && (charge == cCharge[i]) ) {
@@ -1084,9 +1218,9 @@ int bCanAtomHaveAStereoBond( char *elname, S_CHAR charge, S_CHAR radical )
 /*  used for atoms adjacent to stereogenic bonds only */
 int bCanAtomBeMiddleAllene( char *elname, S_CHAR charge, S_CHAR radical )
 {
-    static char   szElem[][3] = { "C\000", "Si", "Ge",  };
-    static S_CHAR   cCharge[] = {  0,        0,    0,   };
-    static int       n = sizeof(szElem)/sizeof(szElem[0]);
+    static const char   szElem[][3] = { "C\000", "Si", "Ge",  };
+    static const S_CHAR   cCharge[] = {  0,        0,    0,   };
+    static const int       n = sizeof(szElem)/sizeof(szElem[0]);
     int i, ret = 0;
     for ( i = 0; i < n; i++ ) {
         if ( !strcmp( elname, szElem[i] )  && (charge == cCharge[i]) ) {
@@ -1149,9 +1283,9 @@ int bIsOxide( inp_ATOM  *at, int cur_at )
 /*  used for atoms adjacent to stereogenic bonds only */
 int bCanAtomBeTerminalAllene( char *elname, S_CHAR charge, S_CHAR radical )
 {
-    static char   szElem[][3] = { "C\000", "Si", "Ge",  };
-    static S_CHAR   cCharge[] = {  0,        0,    0,   };
-    static int       n = sizeof(szElem)/sizeof(szElem[0]);
+    static const char   szElem[][3] = { "C\000", "Si", "Ge",  };
+    static const S_CHAR   cCharge[] = {  0,        0,    0,   };
+    static const int       n = sizeof(szElem)/sizeof(szElem[0]);
     int i, ret = 0;
     for ( i = 0; i < n; i++ ) {
         if ( !strcmp( elname, szElem[i] ) && (charge == cCharge[i]) ) {
@@ -1372,7 +1506,47 @@ set_default:
     }
     return 0;
 }
+/**********************************************************/
+/* without this InChI fails on reconstructed  CID=450438  */
+/* (isotopic, Unkown SB adjacent to SB with known parity) */
+/**********************************************************/
+int FixUnkn0DStereoBonds(inp_ATOM *at, int num_at)
+{
+    int i, m, num=0;
 
+    /* add usual Unknown stereobond descriptors to each Unknown bond */
+    for( i = 0; i < num_at; i ++ ) {
+        for ( m = 0; m < MAX_NUM_STEREO_BONDS && at[i].sb_parity[m]; m ++ ) {
+            if ( AB_PARITY_UNKN == at[i].sb_parity[m] ) {
+                at[i].bond_stereo[ (int)at[i].sb_ord[m] ] = STEREO_DBLE_EITHER;
+                num ++;
+            }
+        }
+    }
+#ifdef NEVER
+    if ( num ) {
+        int j;
+        /* how to remove Unknown stereo bond parities */
+        for( i = 0; i < num_at; i ++ ) {
+            for ( m = 0; m < MAX_NUM_STEREO_BONDS && at[i].sb_parity[m]; m ++ ) {
+                if ( AB_PARITY_UNKN == at[i].sb_parity[m] ) {
+                    for ( j = m+1; j < MAX_NUM_STEREO_BONDS; j ++ ) {
+                        at[i].sb_parity[j-1]      = at[i].sb_parity[j];
+                        at[i].sb_ord[j-1]         = at[i].sb_ord[j];
+                        at[i].sn_ord[j-1]         = at[i].sn_ord[j];
+                        at[i].sn_orig_at_num[j-1] = at[i].sn_orig_at_num[j];
+                    }
+                    at[i].sb_parity[j-1]      = 0;
+                    at[i].sb_ord[j-1]         = 0;
+                    at[i].sn_ord[j-1]         = 0;
+                    at[i].sn_orig_at_num[j-1] = 0;
+                }
+            }
+        }
+    }
+#endif
+    return num;
+}
 /*======================================================================================================
  
 half_stereo_bond_parity() General Description:
@@ -1545,7 +1719,7 @@ int half_stereo_bond_parity( inp_ATOM *at, int cur_at, inp_ATOM *at_removed_H, i
                 at_coord[nNumExplictAttachments][1] = at_removed_H[next].y - at[cur_at].y;
                 nSbNeighOrigAtNumb[nNumExplictAttachments] = at_removed_H[next].orig_at_number;
                 /* use the fact that (at_removed_H - at) = (number of atoms except removed explicit H) */
-                z = -get_z_coord( at, (at_removed_H-at)+next, 0 /*neighbor #*/, &nType, -bPointedEdgeStereo );
+                z = -get_z_coord( at, (at_removed_H-at)+next, 0 /*neighbor #*/, &nType, -(bPointedEdgeStereo & PES_BIT_POINT_EDGE_STEREO) );
                 switch ( nType ) {
                 case ZTYPE_EITHER:
                     num_either_single ++; /*  bond in "Either" direction. */
@@ -1574,7 +1748,7 @@ int half_stereo_bond_parity( inp_ATOM *at, int cur_at, inp_ATOM *at_removed_H, i
                 at_coord[nNumExplictAttachments][1] = at[next].y - at[cur_at].y;
                 nSbNeighOrigAtNumb[nNumExplictAttachments] = at[next].orig_at_number;
 
-                z = get_z_coord( at, cur_at, j /*neighbor #*/, &nType, bPointedEdgeStereo );
+                z = get_z_coord( at, cur_at, j /*neighbor #*/, &nType, (bPointedEdgeStereo & PES_BIT_POINT_EDGE_STEREO) );
                 switch ( nType ) {
                 case ZTYPE_EITHER:
                     num_either_single ++; /*  bond in "Either" direction. */
@@ -2150,9 +2324,10 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
     for ( i_next_at_1 = 0, num_stereo_bonds = 0; i_next_at_1 < at[at_1].valence; i_next_at_1 ++ ) {
         nUnknown = (at[at_1].bond_stereo[i_next_at_1] == STEREO_DBLE_EITHER);
         bond_type = get_allowed_stereo_bond_type( (int)at[at_1].bond_type[i_next_at_1] );
+        at_2 = -1; /* not found */
         if ( bond_type == BOND_ALTERN ||
              bond_type == BOND_DOUBLE ) {
-            at_2 = next_at_1 = at[at_1].neighbor[i_next_at_1];
+            next_at_1 = at_2 = at[at_1].neighbor[i_next_at_1];
             next_at_2 = at_1;
         }
         switch ( bond_type ) {
@@ -2230,7 +2405,7 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
 
         /*  check atom at the opposite end of possibly stereogenic bond */
 
-        bFound   = ( at_1 > at_2 ); /*  i_next_at_1 = at_1 stereogenic bond neighbor attachment number */
+        bFound   = (at_2 >= 0 && at_1 > at_2 ); /*  i_next_at_1 = at_1 stereogenic bond neighbor attachment number */
 
         if ( bFound ) {
             /*  check "at_2" atom on the opposite side of the bond or cumulene chain */
@@ -2630,8 +2805,8 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
                             memcpy( out_at[at_1].z_dir, z_dir1, sizeof(out_at[0].z_dir) );
                         }
                     }
-                    if ( !out_at[at_2].parity2 ||
-                         next_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_2].parity)) ) {
+                    if ( !out_at[at_2].parity2 || /* next line changed from abs(out_at[at_2].parity) 2006-03-05 */
+                         next_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_2].parity2)) ) {
                         out_at[at_2].parity2 = next_parity /*| chain_len_bits*/;
                         if ( !out_at[at_2].parity ) {
                             memcpy( out_at[at_2].z_dir, z_dir2, sizeof(out_at[0].z_dir) );
@@ -2659,10 +2834,10 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
 /*  if isotopic H, D, T added, can the atom be a stereo center? */
 #if( NEW_STEREOCENTER_CHECK == 1 )
 /* int bCanInpAtomBeAStereoCenter( inp_ATOM *at, int cur_at ) */
-int can_be_a_stereo_atom_with_isotopic_H( inp_ATOM *at, int cur_at )
+int can_be_a_stereo_atom_with_isotopic_H( inp_ATOM *at, int cur_at, int bPointedEdgeStereo )
 {
     int nNumNeigh;
-    if ( (nNumNeigh = bCanInpAtomBeAStereoCenter( at, cur_at )) &&
+    if ( (nNumNeigh = bCanInpAtomBeAStereoCenter( at, cur_at, bPointedEdgeStereo )) &&
          at[cur_at].valence + at[cur_at].num_H == nNumNeigh &&
          at[cur_at].num_H <= NUM_H_ISOTOPES
        ) {
@@ -2750,7 +2925,7 @@ int set_stereo_atom_parity( sp_ATOM *out_at, inp_ATOM *at, int cur_at, inp_ATOM 
     num_explicit_H = 0;
 
 #if( NEW_STEREOCENTER_CHECK == 1 )
-    if ( !(nMustHaveNumNeigh = bCanInpAtomBeAStereoCenter( at, cur_at ) ) ||
+    if ( !(nMustHaveNumNeigh = bCanInpAtomBeAStereoCenter( at, cur_at, bPointedEdgeStereo ) ) ||
          at[cur_at].num_H > NUM_H_ISOTOPES
        ) {
         goto exit_function;
@@ -2822,7 +2997,7 @@ int set_stereo_atom_parity( sp_ATOM *out_at, inp_ATOM *at, int cur_at, inp_ATOM 
                 /*  use bond description located at removed_H atom */
                 /*  minus sign at get_z_coord: at_removed_H[] contains bonds TO at[cur_at], not FROM it. */
                 /*  Note: &at[(at_removed_H-at)+ next_at] == &at_removed_H[next_at] */
-                z = -get_z_coord( at, (at_removed_H-at)+ next_at, 0 /*neighbor #*/, &nType, -bPointedEdgeStereo );
+                z = -get_z_coord( at, (at_removed_H-at)+ next_at, 0 /*neighbor #*/, &nType, -(bPointedEdgeStereo & PES_BIT_POINT_EDGE_STEREO) );
                 switch ( nType ) {
                 case ZTYPE_EITHER:
                     parity = AB_PARITY_UNKN; /*  no parity: bond in "Either" direction. */
@@ -2850,7 +3025,7 @@ int set_stereo_atom_parity( sp_ATOM *out_at, inp_ATOM *at, int cur_at, inp_ATOM 
             /*  add all coordinates of other neighboring atoms */
             for ( j = 0; j < at[cur_at].valence; j ++, j1 ++ ) {
                 next_at = at[cur_at].neighbor[j];
-                z = get_z_coord( at, cur_at, j, &nType, bPointedEdgeStereo );
+                z = get_z_coord( at, cur_at, j, &nType, (bPointedEdgeStereo & PES_BIT_POINT_EDGE_STEREO) );
                 switch ( nType ) {
                 case ZTYPE_EITHER:
                     parity = AB_PARITY_UNKN; /*  unknown parity: bond in "Either" direction. */
@@ -2991,8 +3166,30 @@ int set_stereo_atom_parity( sp_ATOM *out_at, inp_ATOM *at, int cur_at, inp_ATOM 
             copy3( sum_xyz, at_coord[j] );
             change_sign3( at_coord[j], at_coord[j] );
             z = len3( at_coord[j] );
-            rmax = inchi_max( rmax, z );
-            rmin = inchi_min( rmin, z );
+#if ( FIX_STEREO_SCALING_BUG == 1 )
+            if ( z > 1.0 ) {
+                rmax *= z;
+            } else {
+                rmin *= z;
+            }
+#else
+            /* Comparing the original bond lengths to lenghts derived from normalized to 1 */
+            /* This bug leads to pronouncing legitimate stereogenic atoms */
+            /* connected by 3 bonds "undefined" if in a nicely drawn 2D structure */
+            /* bond lengths are about 20 or greater. Reported by Reinhard Dunkel 2005-08-05 */
+            if ( bPointedEdgeStereo & PES_BIT_FIX_SP3_BUG ) {
+                /* coordinate scaling bug fixed here */
+                if ( z > 1.0 ) {
+                    rmax *= z;
+                } else {
+                    rmin *= z;
+                }
+            } else {
+                /* original InChI v.1 bug */
+                rmax = inchi_max( rmax, z );
+                rmin = inchi_min( rmin, z );
+            }
+#endif
             if ( z < MIN_BOND_LEN || rmin/rmax < MIN_SINE ) {
                 /* the new 4th bond is too short: try to get 0D parities */
                 if ( AB_PARITY_NONE == (parity = GetStereocenter0DParity( at, cur_at, j1, nSbNeighOrigAtNumb, FlagSC_0D )) ) {
@@ -3038,7 +3235,7 @@ int set_stereo_atom_parity( sp_ATOM *out_at, inp_ATOM *at, int cur_at, inp_ATOM 
      * check for tetrahedral ambiguity in 2D case
      */
     if ( b2D ) {
-        if ( 0 < (n2DTetrahedralAmbiguity = Get2DTetrahedralAmbiguity( at_coord, bAddExplicitNeighbor )) ) {
+        if ( 0 < (n2DTetrahedralAmbiguity = Get2DTetrahedralAmbiguity( at_coord, bAddExplicitNeighbor, (bPointedEdgeStereo & PES_BIT_FIX_SP3_BUG ) ) ) ) {
             if ( T2D_WARN & n2DTetrahedralAmbiguity ) {
                 bAmbiguous |= AMBIGUOUS_STEREO;
             }
@@ -3081,9 +3278,7 @@ int set_stereo_atom_parity( sp_ATOM *out_at, inp_ATOM *at, int cur_at, inp_ATOM 
      ********************************************************/
     triple_product = triple_prod_and_min_abs_sine2(&at_coord[1], at_coord_center, bAddExplicitNeighbor, &min_sine, &bAmbiguous);
     /*
-     *triple_product = triple_prod_and_min_abs_sine( &at_coord[1], &min_sine);
      * check for tetrahedral ambiguity -- leave it out for now
-     *triple_product = sp3_triple_prod_and_min_abs_sine( &at_coord[1], at_coord_center, &min_sine, &bAmbiguous);
      */
     if ( fabs(triple_product) > ZERO_FLOAT && (min_sine > MIN_SINE || fabs(min_sine) > ZERO_FLOAT && (n2DTetrahedralAmbiguity & T2D_OKAY ) ) ) {
          /* Even => sorted in correct order, Odd=>transposed */
@@ -3274,7 +3469,7 @@ int set_stereo_parity( inp_ATOM* at, sp_ATOM* at_output, int num_at, int num_rem
     if ( nMaxNumStereoAtoms || nMaxNumStereoBonds ) {
         for( i = 0, num_stereo = 0; i < num_at; i ++ ) {
             int num;
-            num = can_be_a_stereo_atom_with_isotopic_H( at, i );
+            num = can_be_a_stereo_atom_with_isotopic_H( at, i, bPointedEdgeStereo );
             if ( num ) {
                 max_stereo_atoms += num;
             } else

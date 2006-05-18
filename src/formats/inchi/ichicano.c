@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -93,7 +93,7 @@ static void FillMaxMinClock(void); /* keep compiler happy */
 static void FillMaxMinClock(void)
 {
     if ( !MaxPositiveClock ) {
-        clock_t valPos, val1 = 1;
+        clock_t valPos=0, val1 = 1;
         while ( 0 < ((val1 <<= 1), (val1 |= 1)) ) {
             valPos = val1;
         }
@@ -704,23 +704,18 @@ int FillTautLinearCT2( int num_atoms, int num_at_tg, int bIsoTaut,
         int        num_t_groups      = t_group_info->num_t_groups;
         AT_NUMB   *tGroupNumber      = t_group_info->tGroupNumber;
         AT_NUMB   *tSymmRank         = tGroupNumber + TGSO_SYMM_RANK*num_t_groups;  /*  equivalence */
-        AT_NUMB   *tPrevGroupNumber  = tGroupNumber + TGSO_PREV_ORDER*num_t_groups; /*  prev. order or symm rank sort order */
-        AT_NUMB   *tSortRank         = tGroupNumber + TGSO_SORT_RANK*num_t_groups;  /*  ranks */
         AT_NUMB   *tiSymmRank        = tGroupNumber + TGSO_SYMM_IRANK*num_t_groups;
         AT_NUMB   *tiGroupNumber     = tGroupNumber + TGSO_SYMM_IORDER*num_t_groups;
-        AT_NUMB   *tiSortRank        = tGroupNumber + TGSO_SORT_IRANK*num_t_groups;
         AT_RANK    nOffset           = (AT_RANK)num_atoms;
         /*  Fill Canonical ranks and Symmetry Ranks */
-        memcpy( tPrevGroupNumber, tGroupNumber, num_t_groups*sizeof(tPrevGroupNumber[0]));
+        /* memcpy( tPrevGroupNumber, tGroupNumber, num_t_groups*sizeof(tPrevGroupNumber[0])); */
         for ( i = num_atoms, j = 0; i < num_at_tg; i ++, j ++ ) {
-            tPrevGroupNumber[j] =
+            /* tPrevGroupNumber[j] = */
             tGroupNumber[j] = nAtomNumber[i] - nOffset;
             tSymmRank[j]    = nSymmRank[i]   - nOffset;
-            tSortRank[j]    = nRank[i]       - nOffset;
-            if ( bIsoTaut /*nMaxLenLinearCTIsotopicTautomer*/ ) {
+            if ( bIsoTaut ) {
                 tiGroupNumber[j] = nAtomNumberIso[i] - nOffset;
                 tiSymmRank[j]    = nSymmRankIso[i]   - nOffset;
-                tiSortRank[j]    = nRankIso[i]       - nOffset;
             }
         }
         /*  Sort enpoints within each tautomeric group according to the canonical ranks */
@@ -766,8 +761,8 @@ int FillTautLinearCT2( int num_atoms, int num_at_tg, int bIsoTaut,
             /*  t_group header: number of endpoints */
             LinearCTTautomer[len++] = t_group->nNumEndpoints;
             /*  t_group header: */
-            /*  (a) number of mobile groups in the t_group and */
-            /*  (b) number of mobile negative charges in the t_group, currently = 0 always */
+            /*  (a) number of mobile groups in the t_group (number of H + number of (-) ) and */
+            /*  (b) number of mobile negative charges (-) in the t_group */
             for ( j = 0; j < T_NUM_NO_ISOTOPIC; j ++ ) {
                 LinearCTTautomer[len++] = t_group->num[j];
             }

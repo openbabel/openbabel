@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -13,6 +13,7 @@
 #include <ctype.h>
 #include <limits.h>
 
+/* #define CHECK_WIN32_VC_HEAP */
 #include "mode.h"
 
 #include "ichi.h"
@@ -42,25 +43,6 @@
 
 /* #define INCHI_CANON_USE_HASH */
 #define INCHI_CANON_MIN
-
-#if ( defined(_DEBUG) && 0 )
-#include <malloc.h>
-#define HEAPCHK \
-do {\
-   int heapstatus = _heapchk(); \
-   switch( heapstatus ) \
-   { \
-   case _HEAPBADBEGIN: \
-      printf( "ERROR - bad start of heap %d\n", __LINE__ ); \
-      break; \
-   case _HEAPBADNODE: \
-      printf( "ERROR - bad node in heap %d\n", __LINE__ ); \
-      break; \
-   } \
-} while(0);
-#else
-#define HEAPCHK
-#endif
 
 /****************************************************************/
 #ifdef INCHI_CANON_USE_HASH
@@ -194,7 +176,7 @@ int CtFullCompareLayers( kLeast *kLeastForLayer );
 int CtCompareLayersGetFirstDiff( kLeast *kLeast_rho, int nOneAdditionalLayer,
                                  int *L_rho, int *I_rho, int *k_rho );
 int CtPartCompareLayers( kLeast *kLeast_rho, int L_rho_fix_prev, int nOneAdditionalLayer );
-void UpdateCompareLayers( kLeast kLeastForLayer[], int hz );
+void UpdateCompareLayers( kLeast kLeastForLayer[], int hzz );
 int GetOneAdditionalLayer( CANON_DATA *pCD, ConTable *pzb_rho_fix );
 
 void CleanNumH( NUM_H *NumH, int len );
@@ -605,7 +587,7 @@ void UnorderedPartitionMakeDiscrete( UnorderedPartition *p, int n)
         p->equ2[i] = (AT_NUMB)i;
         /* p->next[i] = INFINITY; */
     }
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /****************************************************************/
 int PartitionCreate( Partition *p, int n)
@@ -638,11 +620,11 @@ int PartitionIsDiscrete( Partition *p, int n)
     AT_RANK r;
     for ( i = 0, r = 1; i < n; i ++, r ++ ) {
         if ( r != (rank_mask_bit & p->Rank[p->AtNumber[i]]) ) {
-            HEAPCHK
+            INCHI_HEAPCHK
             return 0;
         }
     }
-    HEAPCHK
+    INCHI_HEAPCHK
     return 1;
 }
 /****************************************************************/
@@ -665,12 +647,12 @@ int PartitionGetFirstCell( Partition *p, Cell *baseW, int k, int n )
                    i ++ )
             ;
         W->next = i;
-        HEAPCHK
+        INCHI_HEAPCHK
         return (W->next - W->first);
     }
     W->first = INFINITY;
     W->next  = 0;
-    HEAPCHK
+    INCHI_HEAPCHK
     return 0;
 }
 /****************************************************************/
@@ -680,7 +662,7 @@ void CellMakeEmpty( Cell *baseW, int k )
     baseW[k].first = INFINITY;
     baseW[k].next  = 0;
     baseW[k].prev  = -1;
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /****************************************************************/
 void NodeSetFromVertices( NodeSet *cur_nodes, int l, Node *v, int num_v)
@@ -695,7 +677,7 @@ void NodeSetFromVertices( NodeSet *cur_nodes, int l, Node *v, int num_v)
         j = (int)v[i]-1;
         Bits[ j / num_bit ] |= bBit[ j % num_bit ];
     }
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /****************************************************************/
 int AllNodesAreInSet(  NodeSet *cur_nodes, int lcur_nodes, NodeSet *set, int lset )
@@ -707,11 +689,11 @@ int AllNodesAreInSet(  NodeSet *cur_nodes, int lcur_nodes, NodeSet *set, int lse
     /* find any BitsNode[i] bit not in BitsSet[i] */
     for ( i = 0; i < n; i ++ ) {
         if ( BitsNode[i] & ~BitsSet[i] ) {
-            HEAPCHK
+            INCHI_HEAPCHK
             return 0;
         }
     }
-    HEAPCHK
+    INCHI_HEAPCHK
     return 1;
 }
 /****************************************************************/
@@ -738,7 +720,7 @@ void PartitionGetMcrAndFixSet( Partition *p, NodeSet *Mcr, NodeSet *Fix, int n, 
             McrBits[j1 / num_bit] |= bBit[j1 % num_bit];
         }
     }
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /****************************************************************/
 void PartitionGetTransposition( Partition *pFrom, Partition *pTo, int n, Transposition *gamma )
@@ -747,7 +729,7 @@ void PartitionGetTransposition( Partition *pFrom, Partition *pTo, int n, Transpo
     for ( i = 0; i < n; i ++ ) {
         gamma->nAtNumb[(int)pFrom->AtNumber[i]] =pTo->AtNumber[i];
     }
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /**************************************************************************************/
 /*  Get minimal set (class) representative and partially compress the partitioning */
@@ -755,7 +737,7 @@ void PartitionGetTransposition( Partition *pFrom, Partition *pTo, int n, Transpo
 AT_RANK nGetMcr2( AT_RANK *nEqArray, AT_RANK n )
 {
     AT_RANK n1, n2, mcr; /*  recursive version is much shorter. */
-    HEAPCHK
+    INCHI_HEAPCHK
     n1=nEqArray[(int)n];
     if ( n == n1 ) {
         return n;
@@ -771,7 +753,7 @@ AT_RANK nGetMcr2( AT_RANK *nEqArray, AT_RANK n )
         nEqArray[(int)n1]=mcr;
         n1 = n2;
     }
-    HEAPCHK
+    INCHI_HEAPCHK
     return ( mcr );
 }
 /**************************************************************************************/
@@ -782,22 +764,22 @@ int nJoin2Mcrs2( AT_RANK *nEqArray, AT_RANK n1, AT_RANK n2 )
     n2 = nGetMcr2( nEqArray, n2 );
     if ( n1 < n2 ) {
         nEqArray[n2] = n1;
-        HEAPCHK
+        INCHI_HEAPCHK
         return 1; /*  a change has been made */
     }
     if ( n2 < n1 ) {
         nEqArray[n1] = n2;
-        HEAPCHK
+        INCHI_HEAPCHK
         return 1; /*  a change has been made */
     }
-    HEAPCHK
+    INCHI_HEAPCHK
     return 0; /*  no changes */
 }
 /****************************************************************/
 Node GetUnorderedPartitionMcrNode( UnorderedPartition *p1, Node v )
 {
     Node ret = (Node)(1+ nGetMcr2( p1->equ2, (AT_RANK)(v-1) ));
-    HEAPCHK
+    INCHI_HEAPCHK
     return ret;
 }
 /****************************************************************/
@@ -812,7 +794,7 @@ int UnorderedPartitionJoin( UnorderedPartition *p1, UnorderedPartition *p2, int 
         }
         nNumChanges += nJoin2Mcrs2(p2->equ2, (AT_NUMB)i, (AT_NUMB)j );
     }
-    HEAPCHK
+    INCHI_HEAPCHK
     return nNumChanges;
 }
 /****************************************************************/
@@ -851,10 +833,10 @@ void PartitionCopy( Partition *To, Partition *From, int n )
     for ( i = 0; i < n; i ++ ) {
         To->Rank[i] &= rank_mask_bit;
     }
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /****************************************************************/
-/* makes new equitable partition (p+1) out of p */
+/* makes new equitable partition (p+1) out of p; first reduce the rank of vertex v */
 int PartitionColorVertex( Graph *G, Partition *p, Node v, int n, int n_tg, int n_max, int bDigraph, int nNumPrevRanks )
 {
     int     nNumNewRanks, i, j;
@@ -869,29 +851,29 @@ int PartitionColorVertex( Graph *G, Partition *p, Node v, int n, int n_tg, int n
             p[i].Rank = (AT_RANK *)inchi_malloc(n_max*sizeof(p[0].Rank[0]));
         }
         if ( !p[i].AtNumber || !p[i].Rank ) {
-            HEAPCHK
+            INCHI_HEAPCHK
             return CT_OUT_OF_RAM;
         }
     }
     PartitionCopy( p+1, p, n_tg );
     sv  = v-1;          /* atom number we are looking for */
     if ( sv >= (AT_NUMB) n_tg ) {
-        HEAPCHK
+        INCHI_HEAPCHK
         return CT_CANON_ERR; /* !!! severe program error: sv not found !!! */
     }
     rv = p[1].Rank[(int)sv];  /* rank of this atom */
-    /* locate sv */
+    /* second, locate sv among all vertices that have same rank as v */
     for ( j = (int)rv-1;  0 <= j && rv == (r = p[1].Rank[(int)(s=p[1].AtNumber[j])]) && s != sv; j -- )
         ;
     if ( s != sv ) {
-        HEAPCHK
+        INCHI_HEAPCHK
         return CT_CANON_ERR; /* !!! severe program error: sv not found !!! */
     }
     /* shift preceding atom numbers to the right to fill the gap after removing sv */
     for ( i = j--;  0 <= j && rv == (r = p[1].Rank[(int)(s=p[1].AtNumber[j])]); i = j, j -- ) {
         p[1].AtNumber[i] = s;
     }
-    r = (i > 0)? r+1:1;
+    r = (i > 0)? (r+1):1;  /* new reduced rank = next lower rank rank+1 or 1 */
     /* insert sv and adjust its rank */
     p[1].AtNumber[i] = sv;
     p[1].Rank[(int)sv] = r;
@@ -920,7 +902,7 @@ int PartitionColorVertex( Graph *G, Partition *p, Node v, int n, int n_tg, int n
                                          nNumPrevRanks+1, p[1].Rank, p[2].Rank /* temp array */,
                                          p[1].AtNumber, &lNumNeighListIter );
     }
-    HEAPCHK
+    INCHI_HEAPCHK
 
     return nNumNewRanks;
 }
@@ -1048,7 +1030,7 @@ Node CellGetMinNode( Partition *p, Cell *W, Node v, CANON_DATA *pCD )
         }
     }
     if ( uMinAtNumb != INFINITY ) uMinAtNumb ++;
-    HEAPCHK
+    INCHI_HEAPCHK
     return uMinAtNumb;
 }
 /****************************************************************/
@@ -1062,7 +1044,7 @@ int CellGetNumberOfNodes( Partition *p, Cell *W )
             num++;
         }
     }
-    HEAPCHK
+    INCHI_HEAPCHK
     return num;
 }
 /****************************************************************/
@@ -1077,12 +1059,12 @@ int CellIntersectWithSet( Partition *p, Cell *W, NodeSet *Mcr, int l )
     }
     for ( i = first, k = 0; i < next; i ++ ) {
         j = (int)p->AtNumber[i];
-        if ( !(McrBits[ j / num_bit ] & bBit[ j % num_bit ]) ) {
+        if ( !(McrBits[ j / num_bit ] & bBit[ j % num_bit ]) ) { /* BC: reading uninit memory ???-not examined yet */
             k += !(p->Rank[j] & rank_mark_bit); /* for testing only */
             p->Rank[j] |= rank_mark_bit;
         }
     }
-    HEAPCHK
+    INCHI_HEAPCHK
     return k;
 }
 /****************************************************************/
@@ -1099,7 +1081,7 @@ void CtPartClear( ConTable *Ct, int k )
     Ct->lenCt = start;
     Ct->lenPos = k;
 
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /**********************************************************************************/
 /*  Sort neighbors according to ranks in ascending order */
@@ -1120,7 +1102,7 @@ void insertions_sort_NeighList_AT_NUMBERS2( NEIGH_LIST base, AT_RANK *nRank, AT_
          }
      }
   }
-  HEAPCHK
+  INCHI_HEAPCHK
 }
 /****************************************************************/
 /* may need previous Lambda */
@@ -1139,7 +1121,7 @@ void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
         count ++;
 
 
-    HEAPCHK
+    INCHI_HEAPCHK
     
     k --;
     if ( k ) {
@@ -1174,7 +1156,7 @@ void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
         }
     }
     
-    HEAPCHK
+    INCHI_HEAPCHK
 
     /****************** well-defined part of base hydrogen atoms *******************/
     if ( pCD->NumH && Ct->NumH ) {
@@ -1193,7 +1175,7 @@ void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
         Ct->lenNumH = 0;
     }
 
-    HEAPCHK
+    INCHI_HEAPCHK
 
     /****************** well-defined part of fixed hydrogen atoms *******************/
     if ( pCD->NumHfixed && Ct->NumHfixed ) {
@@ -1201,7 +1183,7 @@ void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
         for ( j = startAtOrd; j < nn; j ++ ) {
             Ct->NumHfixed[j] = pCD->NumHfixed[p->AtNumber[j]];
 
-    HEAPCHK
+    INCHI_HEAPCHK
 
         }
         /* Ct->lenNumHfixed = nn; */
@@ -1209,7 +1191,7 @@ void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
         ;/* Ct->lenNumHfixed = 0; */
     }
 
-    HEAPCHK
+    INCHI_HEAPCHK
 
     /****************** well-defined part of isotopic keys ***************************/
     if ( pCD->iso_sort_key && Ct->iso_sort_key ) {
@@ -1221,7 +1203,7 @@ void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
         Ct->len_iso_sort_key = 0;
     }
 
-    HEAPCHK
+    INCHI_HEAPCHK
 
     /****************** well-defined part of isotopic iso_exchg_atnos ***************************/
     if ( pCD->iso_exchg_atnos && Ct->iso_exchg_atnos ) {
@@ -1233,7 +1215,7 @@ void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
         Ct->len_iso_exchg_atnos = 0;
     }
 
-    HEAPCHK
+    INCHI_HEAPCHK
     /******** well-defined part of isotopic keys for fixed hydrogen atoms ************/
 #if ( USE_ISO_SORT_KEY_HFIXED == 1 )
     if ( pCD->iso_sort_key_Hfixed && Ct->iso_sort_key_Hfixed ) {
@@ -1247,7 +1229,7 @@ void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
     }
 #endif
 
-    HEAPCHK
+    INCHI_HEAPCHK
 
     Ct->lenCt          = startCtbl; /* not aways increases */
     Ct->nextCtblPos[k] = startCtbl;
@@ -1270,7 +1252,7 @@ void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
     Ct->hash[k] = hash;
 #endif        
 
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /****************************************************************/
 void CtPartInfinity( ConTable *Ct, S_CHAR *cmp, int k )
@@ -1291,7 +1273,7 @@ void CtPartInfinity( ConTable *Ct, S_CHAR *cmp, int k )
     if ( !startCtbl || Ct->Ctbl[startCtbl-1] != EMPTY_CT ) {
         Ct->Ctbl[startCtbl] = EMPTY_CT;
     }
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /****************************************************************/
 /* Return value:
@@ -1328,7 +1310,7 @@ int CtPartCompare( ConTable *Ct1, ConTable *Ct2, S_CHAR *cmp,
 {
     int     startCt1, endCt1, startCt2, endCt2; /*endCt,*/
     int     startAt1, endAt1, startAt2, endAt2; /*endCt,*/
-    int     midCt /* end of atoms only Ct */, midNumH /* end of atoms only NumH */, maxVert;
+    int     midCt /* end of atoms only Ct */, midNumH=0 /* end of atoms only NumH */, maxVert;
     int     diff, i, k1, k2, lenNumH, len_iso_sort_key, /*mid_iso_sort_key,*/ midAt;
     int     nLayer = 0;
 
@@ -1348,7 +1330,7 @@ int CtPartCompare( ConTable *Ct1, ConTable *Ct2, S_CHAR *cmp,
 
         meaning:
         ========
-        abs(kLeastForLayer[nLayer]) is the greatest level k at which
+        abs(kLeastForLayer[nLayer].k) is the greatest level k at which
         difference at layer nLayer are zeroes of hidden by differences in smaller nLayer.
         
         "Hidden by difference in smaller level" means that nLayer of comparison
@@ -1716,7 +1698,7 @@ int CtFullCompare( ConTable *Ct1, ConTable *Ct2, int bOnlyCommon, int bSplitTaut
     int     startCt1, endCt1, startCt2, endCt2; /*endCt,*/
     int     startAt1, endAt1, startAt2, endAt2; /*endCt,*/
     int     midCt   /* end of atoms only in Ctbl */,
-            midNumH /* end of atoms only NumH */,
+            midNumH = 0 /* end of atoms only NumH */,
             midAt   /* end of atoms only */;
     int     diff, i, k1, k2, lenNumH1, lenNumH2, lenNumH, maxVert /* min num atoms */;
     int     len_iso_sort_key1, len_iso_sort_key2, len_iso_sort_key /*, mid_iso_sort_key*/;
@@ -1941,12 +1923,12 @@ int CtPartCompareLayers( kLeast *kLeast_rho, int L_rho_fix_prev, int nOneAdditio
     return 0;
 }
 /****************************************************************/
-void UpdateCompareLayers( kLeast kLeastForLayer[], int hz )
+void UpdateCompareLayers( kLeast kLeastForLayer[], int hzz )
 {
     int i;
     if ( kLeastForLayer ) {
         for ( i = 0; i < MAX_LAYERS; i ++ ) {
-            if ( abs(kLeastForLayer[i].k) >= hz ) {
+            if ( abs(kLeastForLayer[i].k) >= hzz ) {
                 kLeastForLayer[i].k = 0;
                 kLeastForLayer[i].i = 0;
             }
@@ -2061,7 +2043,7 @@ void CtPartCopy( ConTable *Ct1 /* to */, ConTable *Ct2 /* from */, int k )
     Ct1->hash[k]        = Ct2->hash[k];
 #endif
     Ct1->lenPos         = k+1;
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /****************************************************************/
 void CtFullCopy( ConTable *Ct1, ConTable *Ct2 )
@@ -2128,7 +2110,7 @@ void TranspositionGetMcrAndFixSetAndUnorderedPartition( Transposition *gamma, No
     for ( i = 0; i < n; i ++ ) {
         gamma->nAtNumb[i] &= rank_mask_bit;
     }
-    HEAPCHK
+    INCHI_HEAPCHK
 }
 /****************************************************************/
 int SetBitCreate( void )
@@ -2141,7 +2123,7 @@ int SetBitCreate( void )
     int    i;
 
     if ( bBit ) {
-        HEAPCHK
+        INCHI_HEAPCHK
         return 0; /* already created */
     }
 
@@ -2151,7 +2133,7 @@ int SetBitCreate( void )
         ;
     bBit = (bitWord*)inchi_calloc( num_bit, sizeof(bitWord));
     if ( !bBit ) {
-        HEAPCHK
+        INCHI_HEAPCHK
         return -1; /* failed */
     }
     for ( i = 0, b1=1; i < num_bit; i++, b1 <<= 1 ) {
@@ -2168,7 +2150,7 @@ int SetBitCreate( void )
         ;
     hash_mark_bit = h1;
 #endif
-    HEAPCHK
+    INCHI_HEAPCHK
     return 1;
 }
 /****************************************************************/
@@ -2177,10 +2159,10 @@ int SetBitFree( void )
     if ( bBit ) {
         inchi_free( bBit );
         bBit = NULL;
-        HEAPCHK
+        INCHI_HEAPCHK
         return 1; /* success */
     }
-    HEAPCHK
+    INCHI_HEAPCHK
     return 0; /* already destroyed */
 }
 #ifdef NEVER  /* { how to renumber a graph */
@@ -2568,7 +2550,7 @@ int CanonGraph( int n, int n_tg, int n_max, int bDigraph, Graph *G, Partition pi
     Cell *W;  /* W[i] is the first non-trivial cell of pi[i+1] */ 
     Node *v;  /* v[i] is in W[i] to create T(G,pi,nu[i+1]) */
     Node tvc, tvh;
-    S_CHAR *e, *qzb=NULL;
+    S_CHAR *e, *qzb=NULL;   /* qzb = NULL always */
     /* current node CT */
     ConTable Lambda;
     /* first leaf CT */
@@ -2629,8 +2611,13 @@ int CanonGraph( int n, int n_tg, int n_max, int bDigraph, Graph *G, Partition pi
     ok &= UnorderedPartitionCreate( &theta_from_gamma, n_tg );
 
     ok &= (NULL != (W   = (Cell*)inchi_calloc(n_tg, sizeof(W[0]))));
+    ok &= (NULL != (v   = (Node*)inchi_calloc(n_tg, sizeof(v[0]))));
+    ok &= (NULL != (e   = (S_CHAR*)inchi_calloc(n_tg, sizeof(e[0]))));
+
+/*
     ok &= (NULL != (v   = (Node*)inchi_calloc(n_tg, sizeof(W[0]))));
     ok &= (NULL != (e   = (S_CHAR*)inchi_calloc(n_tg, sizeof(W[0]))));
+*/
 
     /*    ok &= (NULL != (qzb = (S_CHAR*)calloc(n_tg, sizeof(W[0])))); */
     ok &= CTableCreate( &Lambda, n, pCD );
@@ -2646,7 +2633,7 @@ int CanonGraph( int n, int n_tg, int n_max, int bDigraph, Graph *G, Partition pi
     ok &= PartitionCreate( &rho, n_tg);
     ok &= TranspositionCreate( &gamma, n_tg );
 
-    HEAPCHK
+    INCHI_HEAPCHK
 
     
 /*L1:*/
@@ -2692,7 +2679,7 @@ int CanonGraph( int n, int n_tg, int n_max, int bDigraph, Graph *G, Partition pi
     e[k-1] = 0;
     */
     CtPartClear( &Lambda, 1 ); 
-    HEAPCHK
+    INCHI_HEAPCHK
 
 /* L2: reach the first leaf and save it in zeta and rho */
     while( k ) {
@@ -2810,6 +2797,17 @@ L2:
         qzb_rho_fix = CtPartCompare( &Lambda, pzb_rho_fix, qzb, kLeast_rho_fix, k-1, 1, bSplitTautCompare );
         if ( !qzb_rho_fix && bRhoIsDiscrete ) {
             qzb_rho_fix = CtPartCompareLayers( kLeast_rho_fix, L_rho_fix_prev, nOneAdditionalLayer );
+
+#if( FIX_ChCh_CONSTIT_CANON_BUG == 1 )
+            if ( qzb_rho_fix ) {
+                int L_rho_fix_diff = abs(qzb_rho_fix)-1;
+                if ( L_rho_fix_diff < L_rho_fix_prev ||
+                     L_rho_fix_diff == L_rho_fix_prev && kLeast_rho_fix[L_rho_fix_diff].i < I_rho_fix_prev ) {
+                    qzb_rho_fix = L_rho_fix_diff+1; /* positive difference will be rejected */
+                }
+            }
+#endif
+
 #if( bRELEASE_VERSION != 1 && defined(_DEBUG) )
             if ( qzb_rho_fix ) {
                 int stop = 1; /* debug only */
@@ -2839,6 +2837,15 @@ L2:
             /* new code */
             if ( !qzb_rho && bRhoIsDiscrete ) {
                 qzb_rho = CtPartCompareLayers( kLeast_rho, L_rho_fix_prev, 0 );
+#if( FIX_ChCh_CONSTIT_CANON_BUG == 1 )
+                if ( qzb_rho ) {
+                    int L_rho_diff = abs(qzb_rho)-1;
+                    if ( L_rho_diff < L_rho_fix_prev ||
+                         L_rho_diff == L_rho_fix_prev && kLeast_rho[L_rho_diff].i < I_rho_fix_prev ) {
+                        qzb_rho = -(L_rho_diff+1); /* negative difference will be rejected */
+                    }
+                }
+#endif
             }
             /* compare old results to new */
 #if( bRELEASE_VERSION != 1 && defined(_DEBUG) )
@@ -3207,7 +3214,7 @@ exit_function:
     }
     
 exit_error:
-    HEAPCHK
+    INCHI_HEAPCHK
 
     UnorderedPartitionFree( &theta );
     UnorderedPartitionFree( &theta_from_gamma );
@@ -3786,7 +3793,7 @@ int GetBaseCanonRanking( int num_atoms, int num_at_tg, sp_ATOM* at[],
         if ( !(NeighList[TAUT_NON] = CreateNeighList( num_atoms, num_atoms, at_base, 0, NULL )) )
             goto exit_error_alloc;
         NeighList[TAUT_YES] = NULL;
-        HEAPCHK
+        INCHI_HEAPCHK
     }
 
     /* avoid memory leaks in case of error */
@@ -4062,7 +4069,7 @@ int GetBaseCanonRanking( int num_atoms, int num_at_tg, sp_ATOM* at[],
             for ( i = 0; i < num_atoms; i ++ ) {
                 if ( iso_sort_key_NoTautH[i] != iso_sort_key_NoTautH[nTempRank[nSymmRankNoTautH[i]-1]] ) {
                     pCD[iOther].nCanonFlags |= CANON_FLAG_ISO_ONLY_NON_TAUT_DIFF;
-                    break; /* atoms so far found to be equivalent have different number of H; the canonicalization is needed */
+                    break; /* atoms so far found to be equivalent differ in isotopes; the canonicalization is needed */
                 }
             }
         } else {

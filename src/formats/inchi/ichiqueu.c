@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -292,6 +292,9 @@ int DFS_FindTautInARing( inp_ATOM *atom, int nStartAtom, int nStartAtomNeighbor,
         prv_at = cur_at;
         cur_at = atom[prv_at].neighbor[j];
         DfsPath[nLenDfsPath].bond_type     = (atom[prv_at].bond_type[j] & ~BOND_MARK_ALL);
+#if( FIX_BOND23_IN_TAUT == 1 )
+        DfsPath[nLenDfsPath].bond_type = ACTUAL_ORDER(pBNS,prv_at,j,DfsPath[nLenDfsPath].bond_type);
+#endif
         DfsPath[nLenDfsPath].bond_pos      = j;
 
         nLenDfsPath ++;
@@ -312,6 +315,9 @@ int DFS_FindTautInARing( inp_ATOM *atom, int nStartAtom, int nStartAtomNeighbor,
         j = ++DfsPath[nLenDfsPath].bond_pos;
         if ( j < atom[cur_at=(int)DfsPath[nLenDfsPath].at_no].valence ) {
             DfsPath[nLenDfsPath].bond_type = (atom[cur_at].bond_type[j] & ~BOND_MARK_ALL);
+#if( FIX_BOND23_IN_TAUT == 1 )
+            DfsPath[nLenDfsPath].bond_type = ACTUAL_ORDER(pBNS,cur_at,j,DfsPath[nLenDfsPath].bond_type);
+#endif
             nxt_at = (int)atom[cur_at].neighbor[j];
             if ( nxt_at == nDoNotTouchAtom1 ||
                  nxt_at == nDoNotTouchAtom2  ) {
@@ -564,6 +570,9 @@ int Check7MembTautRing( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int 
     /*  extract bonds */
     k = (int)DfsPath[1].at_no;
     bond_type = (atom[k].bond_type[nStartAtomNeighborNeighbor] & ~BOND_MARK_ALL);
+#if( FIX_BOND23_IN_TAUT == 1 )
+    bond_type = ACTUAL_ORDER(pBNS,k,nStartAtomNeighborNeighbor,bond_type);
+#endif
     path_bonds[0] = bond_type;
     if ( REPLACE_THE_BOND( bond_type ) ) {
         BondPosTmp[nNumBondPosTmp].nAtomNumber = k;
@@ -580,6 +589,9 @@ int Check7MembTautRing( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int 
         }
     }
     bond_type = (atom[(int)DfsPath[0].at_no].bond_type[nStartAtomNeighbor2] & ~BOND_MARK_ALL);
+#if( FIX_BOND23_IN_TAUT == 1 )
+    bond_type = ACTUAL_ORDER(pBNS,(int)DfsPath[0].at_no,nStartAtomNeighbor2,bond_type);
+#endif
     path_bonds[i++] = bond_type;
     if ( REPLACE_THE_BOND( bond_type ) ) {
         BondPosTmp[nNumBondPosTmp].nAtomNumber = DfsPath[0].at_no;
@@ -697,6 +709,9 @@ int Check6MembTautRing( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int 
         return 0; /*  no neighboring atom >=O or />-OH */
     }
     bond_type = (atom[nxt_at].bond_type[i] & ~BOND_MARK_ALL);
+#if( FIX_BOND23_IN_TAUT == 1 )
+    bond_type = ACTUAL_ORDER(pBNS,nxt_at,i,bond_type);
+#endif
     if ( bond_type != BOND_SINGLE &&
          bond_type != BOND_DOUBLE &&
          bond_type != BOND_TAUTOM &&

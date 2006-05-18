@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -28,8 +28,6 @@
 
 #define BNS_MARK_ONLY_BLOCKS        1  /* 1 => find only blocks, do not search for ring systems */
 #define ALLOW_ONLY_SIMPLE_ALT_PATH  0  /* 0 => allow alt. path to contain same bond 2 times (in opposite directions) */
-#define MAX_BOND_EDGE_CAP           2  /* triple bond */
-#define AROM_BOND_EDGE_CAP          1
 
 #define CHECK_TG_ALT_PATH           0  /* 1=> when chacking alt path of a tautomeric atom modify
                                               t-group, not the atom */
@@ -37,9 +35,7 @@
 
 #define FIX_CPOINT_BOND_CAP         1  /* 1=> fix bug in case of double bond from neutral cpoint */
 
-#define ADD_CAPACITY_RADICAL        1   /* add capacity to radical */
-
-#define RESET_EDGE_FORBIDDEN_MASK   1  /* 1: previous; 0: do not apply "dge->forbidden &= pBNS->edge_forbidden_mask" */
+#define RESET_EDGE_FORBIDDEN_MASK   1  /* 1: previous; 0: do not apply "edge->forbidden &= pBNS->edge_forbidden_mask" */
 #if ( RESET_EDGE_FORBIDDEN_MASK == 1 )
 #define IS_FORBIDDEN(EDGE_FORBIDDEN, PBNS)     (EDGE_FORBIDDEN)
 #else
@@ -219,23 +215,6 @@ typedef struct tagProtonRemovalMaskAndType {
 #define AA_HARD_MSK_H     (ATBIT_MSK_NP | ATBIT_MSK_OS)
 #define AA_HARD_TYP_H     (ATTYP_N | ATTYP_OS)
 
-/*********************************************************************************/
-#if( ADD_CAPACITY_RADICAL == 1 )  /* { */
-/*  -- do not treat triplets as moving dots -- 2004-02-18 --
-#define MAX_AT_FLOW(X) (((X).chem_bonds_valence - (X).valence)+\
-                       ((is_centerpoint_elem((X).el_number)||get_endpoint_valence((X).el_number))?\
-                           (((X).radical==RADICAL_DOUBLET)+2*((X).radical==RADICAL_TRIPLET)):0))
-*/
-#define MAX_AT_FLOW(X) (((X).chem_bonds_valence - (X).valence)+\
-                       ((is_centerpoint_elem((X).el_number)||get_endpoint_valence((X).el_number))?\
-                           (((X).radical==RADICAL_DOUBLET)/*+2*((X).radical==RADICAL_TRIPLET)*/):0))
-
-
-#else /* } ADD_CAPACITY_RADICAL { */
-
-#define MAX_AT_FLOW(X) (((X).chem_bonds_valence - (X).valence)
-
-#endif  /* } ADD_CAPACITY_RADICAL */
 
 /*********************************************************************************/
 
@@ -247,9 +226,6 @@ typedef struct tagProtonRemovalMaskAndType {
 #define FIRST_INDX    1
 */
 
-#define NO_VERTEX    -2
-#define BLOSSOM_BASE -1
-
 
 #define TREE_NOT_IN_M  0  /* not in T or T' */
 #define TREE_IN_2      1  /* in T' and not s-reachable */
@@ -260,83 +236,6 @@ typedef struct tagProtonRemovalMaskAndType {
 #define TREE_IS_ON_SCANQ TREE_IS_S_REACHABLE
 /* #define TREE_IS_ON_SCANQ(X)    (Tree[X] != TREE_NOT_IN_M) */
 #define TREE_MARK(X, MARK)           do{ if( Tree[X] < MARK ) Tree[X]=MARK; }while(0)
-
-
-#define BNS_ADD_ATOMS        2  /* max. number of fictitious atoms to add (except t-gtoups) */
-#define BNS_ADD_EDGES        1  /* max. number of edges to add to each atom (except edges to a t-group or c-group) */
-#define BNS_ADD_SUPER_TGROUP 1  /* reserve one more edge for a t-group to connect to a single super-t-group */
-#define NUM_KINDS_OF_GROUPS  2  /* 1 accounts for t-group kind, one more 1 accounts for c-group kind */
-
-#define BNS_VERT_TYPE_ATOM          0x0001
-#define BNS_VERT_TYPE_ENDPOINT      0x0002
-#define BNS_VERT_TYPE_TGROUP        0x0004
-#define BNS_VERT_TYPE_C_POINT       0x0008
-#define BNS_VERT_TYPE_C_GROUP       0x0010
-#define BNS_VERT_TYPE_SUPER_TGROUP  0x0020
-#define BNS_VERT_TYPE_TEMP          0x0040
-#define BNS_VERT_TYPE_C_NEGATIVE    0x0080  /* attribute, should be used with BNS_VERT_TYPE_C_GROUP */
-#define BNS_VERT_TYPE_ACID          0x0100  /* only for this type are allowed paths: t_group-atom-c_group_neg (path_TACN) */
-#define BNS_VERT_TYPE_ANY_GROUP    (BNS_VERT_TYPE_TGROUP | BNS_VERT_TYPE_C_GROUP | BNS_VERT_TYPE_SUPER_TGROUP)
-
-/*********************************************************************************
-  bChangeFlow:
-      1 => change flow inside the BNS search
-      3 => change flow inside the BNS search and undo the flow change in the BNS structure here
-      4 => change bonds in the structure according to the flow
-      8 => make altern. bonds in the structure
-
-  Note: (bChangeFlow & 1) == 1 is needed for multiple runs
-**********************************************************************************/
-    
-/* "EF" = "Edge Flow" */
-#define BNS_EF_CHNG_FLOW      1  /* change Balanced Network (BN) flow inside the BNS search */
-#define BNS_EF_RSTR_FLOW      2  /* undo BN flow changes after BNS */
-#define BNS_EF_CHNG_RSTR      (BNS_EF_CHNG_FLOW | BNS_EF_RSTR_FLOW)
-#define BNS_EF_CHNG_BONDS     4  /* change bonds in the structure according to the BN flow */
-#define BNS_EF_ALTR_BONDS     8  /* make altern. bonds in the structure if the flow has changed */
-#define BNS_EF_UPD_RAD_ORI   16  /* update BN flow0 & Atom radical values:
-                                    flow0 := flow, radical:=st_cap - st_flow */
-#define BNS_EF_SET_NOSTEREO  32  /* in combination with BNS_EF_ALTR_BONDS only:
-                                    ALT12 bond cannot be stereogenic */
-#define BNS_EF_UPD_H_CHARGE  64  /* update charges and H-counts according to change flow to c- and t-group vertices */
-
-#define BNS_EF_SAVE_ALL     (BNS_EF_CHNG_FLOW | BNS_EF_CHNG_BONDS | BNS_EF_UPD_RAD_ORI)
-#define BNS_EF_ALTR_NS      (BNS_EF_ALTR_BONDS | BNS_EF_SET_NOSTEREO)
-
-/* edge to s or t */
-#define EDGE_FLOW_ST_MASK       0x3fff  /* mask for flow */
-#define EDGE_FLOW_ST_PATH       0x4000  /* mark: the edge belongs to the augmenting path */
-/* edges between other vertices */
-#define EDGE_FLOW_MASK          0x3f   /* mask for flow */
-#define EDGE_FLOW_PATH          0x40   /* mark: the edge belongs to the augmenting path */
-
-
-typedef enum tagAltPathConst {
-        iALTP_MAX_LEN,    /* 0 */
-        iALTP_FLOW,       /* 1 */
-        iALTP_PATH_LEN,   /* 2 */
-        iALTP_START_ATOM, /* 3 */
-        iALTP_END_ATOM,   /* 4 */
-        iALTP_NEIGHBOR,   /* 5 */
-        iALTP_HDR_LEN = iALTP_NEIGHBOR
-} ALT_CONST;
-
-#define ALTP_PATH_LEN(altp)             (altp)[iALTP_PATH_LEN].number  /* number of bonds = number of atoms-1*/
-#define ALTP_END_ATOM(altp)             (altp)[iALTP_END_ATOM].number
-#define ALTP_START_ATOM(altp)           (altp)[iALTP_START_ATOM].number
-#define ALTP_THIS_ATOM_NEIGHBOR(altp,X) (altp)[iALTP_NEIGHBOR+(X)].ineigh[0]  /* 0 <= X < path_len */
-#define ALTP_NEXT_ATOM_NEIGHBOR(altp,X) (altp)[iALTP_NEIGHBOR+(X)].ineigh[1]
-#define ALTP_CUR_THIS_ATOM_NEIGHBOR(altp) (altp)[iALTP_NEIGHBOR+ALTP_PATH_LEN(altp)].ineigh[0]  /* 0 <= X < path_len */
-#define ALTP_CUR_NEXT_ATOM_NEIGHBOR(altp) (altp)[iALTP_NEIGHBOR+ALTP_PATH_LEN(altp)].ineigh[1]
-#define ALTP_NEXT(altp)                 (++ALTP_PATH_LEN(altp))
-#define ALTP_PREV(altp)                 (--ALTP_PATH_LEN(altp))
-#define ALTP_MAY_ADD(altp)              (iALTP_NEIGHBOR + (altp)[iALTP_PATH_LEN].number < (altp)[iALTP_MAX_LEN].number)
-#define ALTP_ALLOCATED_LEN(altp)        (altp)[iALTP_MAX_LEN].number
-#define ALTP_DELTA(altp)                 (altp)[iALTP_FLOW].flow[0]
-#define ALTP_OVERFLOW(altp)             (altp)[iALTP_FLOW].flow[1]
-
-#define Vertex_s 0
-#define Vertex_t 1
 
 /**********************************************************************************
  *  store changes done to check whether an alternating path exists
@@ -357,20 +256,6 @@ typedef struct tagAltPathChanges {
 
 /* local functions */
 
-BN_STRUCT* AllocateAndInitBnStruct( inp_ATOM *at, int num_atoms, int nMaxAddAtoms, int nMaxAddEdges, int max_altp, int *num_changed_bonds );
-BN_STRUCT* DeAllocateBnStruct( BN_STRUCT *pBNS );
-int ReInitBnStructAltPaths( BN_STRUCT *pBNS );
-/*
-int ReInitBnStructAddGroups( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, T_GROUP_INFO *tgi, C_GROUP_INFO *cgi );
-*/
-int ReInitBnStructForMoveableAltBondTest( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
-
-void ClearAllBnDataVertices( Vertex *v, Vertex value, int size );
-void ClearAllBnDataEdges( Edge *e, Vertex value, int size );
-BN_DATA *DeAllocateBnData( BN_DATA *pBD );
-BN_DATA *AllocateAndInitBnData( int max_num_vertices );
-int ReInitBnData( BN_DATA *pBD );
-
 int BnsAdjustFlowBondsRad( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at, int num_atoms );
 int SetAtomRadAndChemValFromVertexCapFlow( BN_STRUCT *pBNS, inp_ATOM *atom, int v1 );
 int bNeedToTestTheFlow( int bond_type, int nTestFlow, int bTestForNonStereoBond );
@@ -383,9 +268,9 @@ int CompTGroupNumber( const void *tg1, const void *tg2 );
 int CompCGroupNumber( const void *cg1, const void *cg2 );
 
 /* Rings, Blocks, Non-stereo bonds */
-int ReInitBnStructForAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
-int MarkRingSystemsAltBns( BN_STRUCT* pBNS );
-int MarkNonStereoAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
+int ReInitBnStructForAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int bUnknAltAsNoStereo );
+int MarkRingSystemsAltBns( BN_STRUCT* pBNS, int bUnknAltAsNoStereo );
+int MarkNonStereoAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int bUnknAltAsNoStereo );
 
 /* called from BalancedNetworkSearch */
 
@@ -406,10 +291,6 @@ Vertex MakeBlossom( BN_STRUCT* pBNS, Vertex *ScanQ, int *pQSize,
 int PullFlow( BN_STRUCT *pBNS, Edge *SwitchEdge, Vertex x, Vertex y, int delta, S_CHAR bReverse, int bChangeFlow );
 int FindPathCap( BN_STRUCT* pBNS, Edge *SwitchEdge, Vertex x, Vertex y, int delta );
 
-/* main function: find augmenting path */
-int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow );
-
-int RunBalancedNetworkSearch( BN_STRUCT *pBNS, BN_DATA *pBD, int bChangeFlow );
 
 /*
 int SetBondType( BNS_EDGE *edge, U_CHAR *bond_type12, U_CHAR *bond_type21, int delta, int bChangeFlow );
@@ -432,8 +313,7 @@ int bSetBondsAfterCheckOneBond( BN_STRUCT *pBNS, BNS_FLOW_CHANGES *fcd, int nTes
 int BnsTestAndMarkAltBonds(  BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at, int num_atoms, BNS_FLOW_CHANGES *fcd, int bChangeFlow, int nBondTypeToTest );
 int bIsAltBond( int bond_type );
 /* fix bonds */
-int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
-int SetForbiddenEdges( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
+int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int edge_forbidden_mask );
 int TempFix_NH_NH_Bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
 int CorrectFixing_NH_NH_Bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
 
@@ -444,6 +324,7 @@ int bRestoreBnsAfterCheckAltPath( BN_STRUCT *pBNS, ALT_PATH_CHANGES *apc, int bC
 Vertex GetGroupVertex(BN_STRUCT *pBNS, Vertex v1, AT_NUMB type);
 BNS_IEDGE GetEdgeToGroupVertex( BN_STRUCT *pBNS, Vertex v1, AT_NUMB type);
 int bAddNewVertex( BN_STRUCT *pBNS, int nVertDoubleBond, int nCap, int nFlow, int nMaxAdjEdges, int *nDots );
+int AddNewEdge( BNS_VERTEX *p1, BNS_VERTEX *p2, BN_STRUCT *pBNS, int nEdgeCap, int nEdgeFlow );
 int bAddStCapToAVertex( BN_STRUCT *pBNS, Vertex v1, Vertex v2, VertexFlow *nOldCapVertSingleBond, int *nDots, int bAdjacentDonors );
 
 static void remove_alt_bond_marks(inp_ATOM *at, int num_atoms);
@@ -479,11 +360,20 @@ int RemoveNPProtonsAndAcidCharges( inp_ATOM *at, int num_atoms, BN_AATG *pAATG, 
 Vertex GetPrevVertex( BN_STRUCT* pBNS, Vertex y, Edge *SwitchEdge, EdgeIndex *iuv );
 int bIgnoreVertexNonTACN_atom( BN_STRUCT* pBNS, Vertex u, Vertex v );
 int bIgnoreVertexNonTACN_group( BN_STRUCT* pBNS, Vertex v, Vertex w, Edge *SwitchEdge );
+int bIsRemovedHfromNHaion( BN_STRUCT* pBNS, Vertex u, Vertex v );
+int bIsAggressiveDeprotonation( BN_STRUCT* pBNS, Vertex v, Vertex w, Edge *SwitchEdge );
 
 int bIsAtomTypeHard( inp_ATOM *at, int endpoint, int nType, int nMask, int nCharge );
 int bIsHDonorAccAtomType( inp_ATOM *at, int endpoint, int *cSubType );
 int bIsNegAtomType( inp_ATOM *at, int i, int *cSubType );
 
+#if ( BNS_RAD_SEARCH == 1 )
+int RegisterRadEndpoint( BN_STRUCT *pBNS, BN_DATA *pBD, Vertex u);
+int cmp_rad_endpoints( const void *a1, const void *a2 );
+int cmp_endpoints_rad( const void *a1, const void *a2 );
+#endif
+
+int bHasChargedNeighbor( inp_ATOM *at, int iat );
 /*********************************************************************************/
 
 /**** prim(v) is v' *****/
@@ -502,7 +392,6 @@ int bIsNegAtomType( inp_ATOM *at, int i, int *cSubType );
 /* returns value > 0 if a bond has been changed */
 int RestoreEdgeFlow( BNS_EDGE *edge, int delta, int bChangeFlow )
 {
-
     /*flow1 = edge->flow;*/ /* output from BNS */
     switch ( bChangeFlow & BNS_EF_CHNG_RSTR ) {
     case 0: /* the flow has not been permitted to change inside the BNS */
@@ -550,6 +439,8 @@ int SetAtomBondType( BNS_EDGE *edge, U_CHAR *bond_type12, U_CHAR *bond_type21, i
         flow2 = edge->flow;    /* output from BNS, the changed (new) value */
         flow1 = edge->flow0;   /* the original flow (old) value before the BNS */
         break;
+    default:
+        return 0; /* added 2006-03-21 */
     }
  
     if ( (bChangeFlow & BNS_EF_CHNG_BONDS) && (bChangeFlow & BNS_EF_ALTR_NS) !=BNS_EF_ALTR_NS ) {
@@ -745,7 +636,12 @@ int AddChangedAtHChargeBNS( inp_ATOM *at, int num_atoms, int nAtTypeTotals[], S_
     for ( i = 0, num = 0; i < num_atoms; i ++ ) {
         if ( mark[i] ) {
             mark[i] = 0;
+#if( FIX_NORM_BUG_ADD_ION_PAIR == 1 )
+             /* add ignoring adjacent charges */
+            at[i].at_type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, -2 );
+#else
             at[i].at_type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 0 );
+#endif
             num ++;
         }
     }
@@ -1014,7 +910,11 @@ int SubtractOrChangeAtHChargeBNS( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms,
                     if ( bSubtract ) {
                         if ( !mark[v1] ) {
                             /* first time the atom has been encountered: subtract */
+#if( FIX_NORM_BUG_ADD_ION_PAIR == 1 )
+                            type   = GetAtomChargeType( at, v1, nAtTypeTotals, &mask, 2 );
+#else
                             type   = GetAtomChargeType( at, v1, nAtTypeTotals, &mask, 1 );
+#endif
                             ret ++; /* number of changed atoms */
                             mark[v1] ++;
                         }
@@ -1551,7 +1451,7 @@ static void remove_alt_bond_marks(inp_ATOM *at, int num_atoms)
     }
 }
 /***************************************************************************************/
-int SetForbiddenEdges( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
+int SetForbiddenEdges( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int forbidden_mask )
 {
     static U_CHAR el_number_O;
     static U_CHAR el_number_C;
@@ -1559,9 +1459,10 @@ int SetForbiddenEdges( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
 
     int i, j, neigh, num_found;
     BNS_IEDGE iedge;
-    S_CHAR    edge_forbidden_mask = BNS_EDGE_FORBIDDEN_MASK;
+    /*S_CHAR    edge_forbidden_mask = BNS_EDGE_FORBIDDEN_MASK;*/
+    S_CHAR    edge_forbidden_mask = forbidden_mask;
 
-    pBNS->edge_forbidden_mask |= edge_forbidden_mask;
+    pBNS->edge_forbidden_mask |= forbidden_mask;
 
     if ( !el_number_C ) {
         el_number_O = (U_CHAR)get_periodic_table_number( "O" );
@@ -1623,7 +1524,7 @@ int SetForbiddenEdges( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
         }
     }
 #if ( REMOVE_ION_PAIRS_FIX_BONDS == 1 )
-    num_found += fix_special_bonds( pBNS, at, num_atoms );
+    num_found += fix_special_bonds( pBNS, at, num_atoms, edge_forbidden_mask );
 #endif
 #if ( RESET_EDGE_FORBIDDEN_MASK == 0 )
     num_found += TempFix_NH_NH_Bonds( pBNS, at, num_atoms );
@@ -1696,12 +1597,16 @@ int CorrectFixing_NH_NH_Bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
 #endif
 /************************************************************************/
 /* fixes bonds set by remove_ion_pairs() in strutil.c */
-int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
+int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int forbidden_mask )
 {   
     int num_changes = 0;
 
     /*                           0 1 2  3  4 5 6  7  8  9                   8  9  */
+#if( FIX_REM_ION_PAIRS_Si_BUG == 1 )
+    static const char    el[] = "N;P;As;Sb;O;S;Se;Te;C;Si;";  /* 8 elements + C, Si */
+#else
     static const char    el[] = "N;P;As;Sb;O;S;Se;Te;C;Si";   /* 8 elements + C, Si */
+#endif
     static char    en[12];         /* same number: 8 elements */
     static int     ne=0;           /* will be 8 and 10 */
 
@@ -1722,7 +1627,8 @@ int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
     int j[3], m[3], num_O, k_O, num_N, num_OH, num_OM, num_X, num_other, k_N;
 
     BNS_IEDGE iedge;
-    S_CHAR    edge_forbidden_mask = BNS_EDGE_FORBIDDEN_MASK;
+    /*S_CHAR    edge_forbidden_mask = BNS_EDGE_FORBIDDEN_MASK;*/
+    S_CHAR    edge_forbidden_mask = forbidden_mask;
 
     pBNS->edge_forbidden_mask |= edge_forbidden_mask;
 
@@ -1735,7 +1641,8 @@ int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
             elname[len] = '\0';
             en[ne++] = get_periodic_table_number( elname );
         }
-        en[ne] = '\0';
+        en[ne]   = '\0';
+        en[ne+1] = '\0';
     }
     for ( i = 0, a = at; i < num_atoms; i ++, a++ ) {
         if ( !a->charge && !a->radical && 
@@ -1747,15 +1654,25 @@ int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
             if ( 2 == nNoMetalNumBonds(at, i) ) {
                 /* #N= */
                 /* fix bonds: double and triple: =N# so that bonds cannot be changed by the normalization */
+#if( FIX_N_V_METAL_BONDS_GPF == 1 )
+                if ( 0 > (i1 = nNoMetalNeighIndex( at, i )) ||
+                     0 > (i2 = nNoMetalOtherNeighIndex( at, i,
+                                 n1 = a->neighbor[i1]/* non-metal neighbor #1 */ ) ) ) {
+                    /*num_err ++; */ /* do not count would-be original InChI v.1 buffer overflow GPF */
+                    continue; /* v1 bug: 2 bonds to metal yield i1 < 0 and/or i2 < 0 => bounds violation */
+                }
+#else
                 i1 = nNoMetalNeighIndex( at, i );
                 n1 = a->neighbor[i1]; /* non-metal neighbor #1 */
                 i2 = nNoMetalOtherNeighIndex( at, i, n1 );
+#endif
                 n2 = a->neighbor[i2]; /* non-metal neighbor #2 */
                 /* forbid all edges to non-metals */
                 iedge = pBNS->vert[i].iedge[i1];
                 pBNS->edge[iedge].forbidden |= edge_forbidden_mask; /* fix bond to neighbor #1 */
                 iedge = pBNS->vert[i].iedge[i2];
                 pBNS->edge[iedge].forbidden |= edge_forbidden_mask; /* fix bond to neighbor #1 */
+                num_changes ++;  /* added 11-15-2005 */
                 /*                                                      i n3 */
                 /* forbid single bond edge beyond the neighboring =N- as in #N=N- */
                 if ( (at[i].bond_type[i1] & BOND_TYPE_MASK) == BOND_TYPE_DOUBLE ) {
@@ -1823,7 +1740,7 @@ int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
             } else
             if ( 4 == nNoMetalNumBonds(at, i) ) {
                 /*         |                      */
-                /* found  -N=                     */
+                /* found  -N=N-                   */
                 /*         |                      */
                 /* locate non-metal neighbor connected by a double bond;
                  * if it is =N- then fix the double bond and the single bond beyond the neighbor
@@ -1851,7 +1768,6 @@ int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
                     /* fix the double bond */
                     iedge = pBNS->vert[i].iedge[i2];
                     pBNS->edge[iedge].forbidden |= edge_forbidden_mask;
-                    num_changes ++;
                     num_changes ++;
                 }
             }
@@ -2152,8 +2068,6 @@ int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
             }
         }
     }
-
-
     return num_changes;
 }
 
@@ -2267,7 +2181,12 @@ int GetAtomChargeType( inp_ATOM *atom, int at_no, int nAtTypeTotals[], int *pMas
     static U_CHAR el_number_I  = 0;
     
     inp_ATOM *at = atom + at_no;
+#if( FIX_NORM_BUG_ADD_ION_PAIR == 1 )
+    int i, neigh, mask, bit, type, num_z, num_m, num_o, delta = bSubtract > 0 ? -1 : 1; /* 0 or -2 => add, 1 or 2 => subtract */
+    int bNoAdjIon = (bSubtract==0 || bSubtract==1);
+#else
     int i, neigh, mask, bit, type, num_z, num_m, num_o, delta = bSubtract? -1 : 1;
+#endif
     int bUnsatNHasTerminalO = 0;
     if ( !el_number_C ) {
         el_number_C  = (U_CHAR)get_periodic_table_number( "C" );
@@ -2339,9 +2258,23 @@ int GetAtomChargeType( inp_ATOM *atom, int at_no, int nAtTypeTotals[], int *pMas
     /* check neighbors */
     for ( i = 0, num_z = 0, num_m = 0, num_o = 0; i < at->valence; i ++ ) {
         neigh = at->neighbor[i];
+#if( FIX_NORM_BUG_ADD_ION_PAIR == 1 )
+        if ( atom[neigh].charge < -1 || atom[neigh].charge > 1 ) {
+            goto exit_function; /* neighboring charge */
+        }
+        if ( atom[neigh].charge && at->charge ) {
+            if ( bNoAdjIon ) {
+                goto exit_function; /* neighboring charge */
+            }
+            type = ATT_NONE;
+            mask = 0;
+            goto count_mask_bits;
+        }
+#else
         if ( atom[neigh].charge < -1 || atom[neigh].charge > 1 || atom[neigh].charge && at->charge ) {
             goto exit_function; /* neighboring charge */
         }
+#endif
         if ( detect_unusual_el_valence( atom[neigh].el_number, atom[neigh].charge, atom[neigh].radical,
                                             atom[neigh].chem_bonds_valence, atom[neigh].num_H,
                                             atom[neigh].valence ) ) {
@@ -2634,7 +2567,11 @@ int SimpleRemoveHplusNPO( inp_ATOM *at, int num_atoms, int nAtTypeTotals[], T_GR
             AddOrRemoveExplOrImplH( -1, at, num_atoms, (AT_NUMB)i, t_group_info );
             /*at[i].num_H --;*/
             num_removed ++;
-            type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 1 ); /* add changed at[i] */
+#if( FIX_NORM_BUG_ADD_ION_PAIR == 1 )
+            type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 0 ); /* add changed at[i] */
+#else
+            type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 1 ); /* bug: subtract instead of add */
+#endif
             /*
             if ( nAtTypeTotals ) {
                 nAtTypeTotals[ATTOT_NUM_NP_Proton] --;
@@ -2876,9 +2813,9 @@ int CreateCGroupInBnStruct( inp_ATOM *at, int num_atoms,
         for ( k = 0; k < vertex_cpoint->num_adj_edges; k ++ ) {
             int iedge = vertex_cpoint->iedge[k];
             VertexFlow  nNewCap = vertex_cpoint->st_edge.cap;
+            centerpoint = (pBNS->edge[iedge].neighbor12 ^ c_point);
             if ( !pBNS->edge[iedge].cap ) {
                 /* single bond, possibly between c_point and centerpoint */
-                centerpoint = (pBNS->edge[iedge].neighbor12 ^ c_point);
                 if ( centerpoint < pBNS->num_atoms &&
                      pBNS->vert[centerpoint].st_edge.cap >= 1 ) {
                     nNewCap = inchi_min( pBNS->vert[centerpoint].st_edge.cap, nNewCap );
@@ -2886,6 +2823,13 @@ int CreateCGroupInBnStruct( inp_ATOM *at, int num_atoms,
                     pBNS->edge[iedge].cap = nNewCap;
                 }
             }
+#if( FIX_CPOINT_BOND_CAP2 == 1 ) /* multiple bond */
+            else
+            if ( centerpoint < pBNS->num_atoms &&
+                 edge->flow && pBNS->edge[iedge].cap < MAX_BOND_EDGE_CAP ) {
+                pBNS->edge[iedge].cap ++;
+            }
+#endif
         }
 #endif  /* } FIX_CPOINT_BOND_CAP */
         /* connect edge to c_point and fictpoint and increment the counters of neighbors and edges */
@@ -3451,7 +3395,11 @@ int HardRemoveAcidicProtons( inp_ATOM *at, int num_atoms, BN_AATG *pAATG, int nu
     }
 
     if ( nNumCanceledCharges ) {
+#if( FIX_CANCEL_CHARGE_COUNT_BUG == 1 )
+        *nNumCanceledCharges += 2*nNumNeutralized;
+#else
         *nNumCanceledCharges = 2*nNumNeutralized;
+#endif
     }
     
     return nNumMoved2AcidH;
@@ -3604,7 +3552,11 @@ int HardAddAcidicProtons( inp_ATOM *at, int num_atoms, BN_AATG *pAATG, int num2a
     }
 
     if ( nNumCanceledCharges ) {
+#if( FIX_CANCEL_CHARGE_COUNT_BUG == 1 )
+        *nNumCanceledCharges += 2*nNumNeutralized;
+#else
         *nNumCanceledCharges = 2*nNumNeutralized;
+#endif
     }
     
     return nNumMoved2AcidMinus;
@@ -3622,6 +3574,9 @@ int HardRemoveHplusNP( inp_ATOM *at, int num_atoms, int bCancelChargesAlways, in
     int tg_H         = 0;
 #if ( MOVE_PPLUS_TO_REMOVE_PROTONS == 1 )
     int cg_PlusP     = 0;
+#endif
+#if ( FIX_REM_PROTON_COUNT_BUG == 1 )
+    int nPrevRemovedProtons, nCurrRemovedProtons;
 #endif
     int ret = 0, ret2;
     int nDelta, nNumChanges = 0, nNumRemovedProtons = 0, nNumNeutralized = 0, nPrevNumCharges;
@@ -3664,15 +3619,59 @@ int HardRemoveHplusNP( inp_ATOM *at, int num_atoms, int bCancelChargesAlways, in
     tg_H = CreateTGroupInBnStruct( at, num_atoms, pBNS, PR_HARD_TYP_H, PR_HARD_MSK_H );
 
     if ( tg_H >= num_atoms && cg_Plus >= num_atoms ) {
+
+#if( FIX_N_MINUS_NORN_BUG == 1 )
+        /* neutralize: remove ion pairs like >N(+)=-O(-) => >N-=O; >N(+)=-NH(-) => >N-=NH */
+        if ( (nNumRemovedProtons || bCancelChargesAlways) && cg_Minus >= num_atoms && cg_Plus >= num_atoms &&
+             pAATG->nAtTypeTotals[ATTOT_NUM_CHARGES] > abs(pAATG->nAtTypeTotals[ATTOT_TOT_CHARGE]) ) {
+            do {
+                nPrevNumCharges = pAATG->nAtTypeTotals[ATTOT_NUM_CHARGES];
+#if ( FIX_REM_PROTON_COUNT_BUG == 1 )
+                nPrevRemovedProtons = pAATG->t_group_info->tni.nNumRemovedProtons;
+#endif
+                ret = bExistsAltPath( pBNS, pBD, pAATG, at, num_atoms,
+                                cg_Minus /*nVertDoubleBond*/, cg_Plus /*nVertSingleBond*/, ALT_PATH_MODE_REM_PROTON );
+                if ( IS_BNS_ERROR( ret ) ) {
+                    return ret;
+                }
+#if ( FIX_REM_PROTON_COUNT_BUG == 1 )
+                nCurrRemovedProtons = pAATG->t_group_info->tni.nNumRemovedProtons;
+                if ( nCurrRemovedProtons != nPrevRemovedProtons ) {
+                    return BNS_RADICAL_ERR;
+                }
+#endif
+                if ( ret & 1 ) {
+                    nDelta       = (ret & ~3) >> 2;
+                    nNumChanges += (0 != (ret & 2));
+                    if ( nDelta ) {
+                        /* radical pair has disappeared */
+                        ; /* goto quick_exit;*/
+                    }
+                    if ( nPrevNumCharges > pAATG->nAtTypeTotals[ATTOT_NUM_CHARGES] ) {
+                        nNumNeutralized += (nPrevNumCharges - pAATG->nAtTypeTotals[ATTOT_NUM_CHARGES])/2;
+                    }
+                }
+            } while ( ret & 1 );
+        }
+#endif
         /* find alt path to remove one proton */
         do {
             /* remove a proton */
             nPrevNumCharges = pAATG->nAtTypeTotals[ATTOT_NUM_CHARGES];
+#if ( FIX_REM_PROTON_COUNT_BUG == 1 )
+            nPrevRemovedProtons = pAATG->t_group_info->tni.nNumRemovedProtons;
+#endif
             ret = bExistsAltPath( pBNS, pBD, pAATG, at, num_atoms,
                             tg_H /*nVertDoubleBond*/, cg_Plus /*nVertSingleBond*/, ALT_PATH_MODE_REM_PROTON );
             if ( IS_BNS_ERROR( ret ) ) {
                 return ret;
             }
+#if ( FIX_REM_PROTON_COUNT_BUG == 1 )
+            nCurrRemovedProtons = pAATG->t_group_info->tni.nNumRemovedProtons;
+            if ( nCurrRemovedProtons != nPrevRemovedProtons + (ret & 1) ) {
+                return BNS_RADICAL_ERR;
+            }
+#endif
             if ( ret & 1 ) {
                 nDelta       = (ret & ~3) >> 2;
                 nNumChanges += (0 != (ret & 2));
@@ -3693,11 +3692,20 @@ int HardRemoveHplusNP( inp_ATOM *at, int num_atoms, int bCancelChargesAlways, in
              pAATG->nAtTypeTotals[ATTOT_NUM_CHARGES] > abs(pAATG->nAtTypeTotals[ATTOT_TOT_CHARGE]) ) {
             do {
                 nPrevNumCharges = pAATG->nAtTypeTotals[ATTOT_NUM_CHARGES];
+#if ( FIX_REM_PROTON_COUNT_BUG == 1 )
+                nPrevRemovedProtons = pAATG->t_group_info->tni.nNumRemovedProtons;
+#endif
                 ret = bExistsAltPath( pBNS, pBD, pAATG, at, num_atoms,
                                 cg_Minus /*nVertDoubleBond*/, cg_Plus /*nVertSingleBond*/, ALT_PATH_MODE_REM_PROTON );
                 if ( IS_BNS_ERROR( ret ) ) {
                     return ret;
                 }
+#if ( FIX_REM_PROTON_COUNT_BUG == 1 )
+                nCurrRemovedProtons = pAATG->t_group_info->tni.nNumRemovedProtons;
+                if ( nCurrRemovedProtons != nPrevRemovedProtons ) {
+                    return BNS_RADICAL_ERR;
+                }
+#endif
                 if ( ret & 1 ) {
                     nDelta       = (ret & ~3) >> 2;
                     nNumChanges += (0 != (ret & 2));
@@ -3761,7 +3769,11 @@ int HardRemoveHplusNP( inp_ATOM *at, int num_atoms, int bCancelChargesAlways, in
     }
 
     if ( nNumCanceledCharges ) {
+#if( FIX_CANCEL_CHARGE_COUNT_BUG == 1 )
+        *nNumCanceledCharges += 2*nNumNeutralized;
+#else
         *nNumCanceledCharges = 2*nNumNeutralized;
+#endif
     }
     
     return nNumRemovedProtons;
@@ -3995,7 +4007,7 @@ again:
 
 #if( BNS_PROTECT_FROM_TAUT == 1 )
         /* protect bonds to acetyl and nitro */
-        SetForbiddenEdges( pBNS, at, num_atoms );
+        SetForbiddenEdges( pBNS, at, num_atoms, BNS_EDGE_FORBIDDEN_MASK );
 #endif
         /* set bonds in case of input "aromatic" bonds or multiple radicals */
         ret = BnsAdjustFlowBondsRad( pBNS, pBD, at, num_atoms );
@@ -4042,6 +4054,11 @@ again:
 #if ( RESET_EDGE_FORBIDDEN_MASK == 0 )
             pBNS->edge_forbidden_mask |= BNS_EDGE_FORBIDDEN_TEMP;
 #endif
+            /***********************************************************/
+            /*                                                         */
+            /*          ( D E ) P R O T O N A T I O N                  */
+            /*                                                         */
+            /***********************************************************/
             ret = RemoveNPProtonsAndAcidCharges( at, num_atoms, pAATG, pBNS, pBD );
 #if ( RESET_EDGE_FORBIDDEN_MASK == 0 )
             pBNS->edge_forbidden_mask &= ~BNS_EDGE_FORBIDDEN_TEMP;
@@ -4088,6 +4105,8 @@ again:
                     *pbTautFlagsDone |= TG_FLAG_MOVE_POS_CHARGES_DONE;
                 }
             } while ( ret > 0 );
+#if( BNS_RAD_SEARCH == 1 )
+#else
             /* moveable charges may allow to cancel radicals -- check it */
             if ( pBNS->tot_st_cap > pBNS->tot_st_flow ) {
                 ret = BnsAdjustFlowBondsRad( pBNS, pBD, at, num_atoms );
@@ -4108,6 +4127,7 @@ again:
                     goto exit_function;
                 }
             }
+#endif
         }
         /************************************************************************/
         /********          test bonds for bond tautomerism         **************/
@@ -4156,6 +4176,8 @@ again:
                         bError = ret;
                         goto exit_function;
                     }
+#if( BNS_RAD_SEARCH == 1 )
+#else
                     /* discovered moveable charges and H-atoms may allow to cancel radicals */
                     if ( pBNS->tot_st_cap > pBNS->tot_st_flow ) {
                         ret = BnsAdjustFlowBondsRad( pBNS, pBD, at, num_atoms );
@@ -4176,7 +4198,7 @@ again:
                             goto exit_function;
                         }
                     }
-
+#endif
                     /****************** update bonds normalization ***************/
                     if ( *pbTautFlags & TG_FLAG_MOVE_POS_CHARGES ) {
                         /******************* find moveable charges ***************/
@@ -4346,9 +4368,16 @@ again:
          *  and mark non-ring alt bonds non-stereogenic
          ************************************************/
 
-        ReInitBnStructForAltBns( pBNS, at, num_atoms );
-        MarkRingSystemsAltBns( pBNS );
-        MarkNonStereoAltBns( pBNS, at, num_atoms );
+        ReInitBnStructForAltBns( pBNS, at, num_atoms, 0 );
+        MarkRingSystemsAltBns( pBNS, 0 );
+        MarkNonStereoAltBns( pBNS, at, num_atoms, 0 );
+#if( FIX_EITHER_DB_AS_NONSTEREO == 1 )
+        /* second time unknown ("Either") alternating bonds are treated as non-stereogenic */
+        /* stereobonds bonds that lost stereo get "Either" stereo_type */
+        ReInitBnStructForAltBns( pBNS, at, num_atoms, 1 );
+        MarkRingSystemsAltBns( pBNS, 1 );
+        MarkNonStereoAltBns( pBNS, at, num_atoms, 1 );
+#endif
     } else {
         bError = BNS_OUT_OF_RAM;
         /*printf("BNS_OUT_OF_RAM-3\n");*/
@@ -4812,7 +4841,9 @@ int bAddNewVertex( BN_STRUCT *pBNS, int nVertDoubleBond, int nCap, int nFlow, in
     if ( (pBNS->vert[vlast].iedge - pBNS->iedge) + pBNS->vert[vlast].max_adj_edges + nMaxAdjEdges >= pBNS->max_iedges ) {
         return BNS_VERT_EDGE_OVFL; /* iedges overflow */
     }
-
+    if ( pVert2->num_adj_edges >= pVert2->max_adj_edges || nMaxAdjEdges <= 0 ) {
+        return BNS_VERT_EDGE_OVFL; /* neighbors overflow */
+    }
     /* fill out the new edge, set its cap and flow, connect */
     /* memset( pEdge, 0, sizeof(*pEdge) ); */
     pEdge->cap  = pEdge->cap0  = nCap;
@@ -4827,12 +4858,13 @@ int bAddNewVertex( BN_STRUCT *pBNS, int nVertDoubleBond, int nCap, int nFlow, in
     pNewVert->num_adj_edges = 0;
     pNewVert->st_edge.cap0  = pNewVert->st_edge.cap   = nCap;
     pNewVert->st_edge.flow0 = pNewVert->st_edge.flow  = nFlow;
+    pNewVert->st_edge.pass  = 0; /* add initialization; added 2006-03-25 */
     pNewVert->iedge         = pBNS->vert[vlast].iedge + pBNS->vert[vlast].max_adj_edges;
     pNewVert->type          = BNS_VERT_TYPE_TEMP;
     *nDots += nCap - nFlow;
 
-    pEdge->neigh_ord[0] = pVert2->num_adj_edges;
-    pEdge->neigh_ord[1] = pNewVert->num_adj_edges;
+    pEdge->neigh_ord[v2>vnew] = pVert2->num_adj_edges;
+    pEdge->neigh_ord[v2<vnew] = pNewVert->num_adj_edges;
 
     /* connect new edge to v2 */
     pVert2->iedge[pVert2->num_adj_edges ++] = iedge;
@@ -4851,6 +4883,48 @@ int bAddNewVertex( BN_STRUCT *pBNS, int nVertDoubleBond, int nCap, int nFlow, in
     pBNS->num_vertices ++;
 
     return vnew;
+}
+
+/*****************************************************************************************************/
+int AddNewEdge( BNS_VERTEX *p1, BNS_VERTEX *p2, BN_STRUCT *pBNS, int nEdgeCap, int nEdgeFlow )
+{
+    int ip1 = p1 - pBNS->vert;
+    int ip2 = p2 - pBNS->vert;
+    int ie  = pBNS->num_edges;
+    BNS_EDGE *e = pBNS->edge + ie;
+    /* debug: check bounds */
+    if ( ip1 >= pBNS->max_vertices || ip1 < 0 ||
+         ip2 >= pBNS->max_vertices || ip2 < 0 ||
+         ie  >= pBNS->max_edges    || ie  < 0 ||
+         (p1->iedge - pBNS->iedge) < 0 ||
+         (p1->iedge - pBNS->iedge) + p1->max_adj_edges > pBNS->max_iedges ||
+         (p2->iedge - pBNS->iedge) < 0 ||
+         (p2->iedge - pBNS->iedge) + p2->max_adj_edges > pBNS->max_iedges ||
+         p1->num_adj_edges >= p1->max_adj_edges ||
+         p2->num_adj_edges >= p2->max_adj_edges  ) {
+        return BNS_VERT_EDGE_OVFL;
+    }
+    /* clear the edge */
+    memset( e, 0, sizeof(*e) );
+    /* connect */
+    e->neighbor1  = inchi_min( ip1, ip2 );
+    e->neighbor12 = ip1 ^ ip2;
+    p1->iedge[p1->num_adj_edges] = ie;
+    p2->iedge[p2->num_adj_edges] = ie;
+    e->neigh_ord[ip1 > ip2] = p1->num_adj_edges ++;
+    e->neigh_ord[ip1 < ip2] = p2->num_adj_edges ++;
+    e->cap = e->cap0 = nEdgeCap;
+    e->flow = e->flow0 = nEdgeFlow;
+    p1->st_edge.flow += nEdgeFlow;
+    p2->st_edge.flow += nEdgeFlow;
+    if ( p1->st_edge.cap < p1->st_edge.flow ) {
+        p1->st_edge.cap = p1->st_edge.flow;
+    }
+    if ( p2->st_edge.cap < p2->st_edge.flow ) {
+        p2->st_edge.cap = p2->st_edge.flow;
+    }
+    pBNS->num_edges ++;
+    return ie;
 }
 /**********************************************************************************/
 BNS_IEDGE GetEdgeToGroupVertex( BN_STRUCT *pBNS, Vertex v1, AT_NUMB type)
@@ -5630,6 +5704,277 @@ int bIsBnsEndpoint( BN_STRUCT *pBNS, int v )
     return 0;
 }
 /**********************************************************************************/
+#if ( BNS_RAD_SEARCH == 1 )
+/**********************************************************************************/
+int RegisterRadEndpoint( BN_STRUCT *pBNS, BN_DATA *pBD, Vertex u)
+{
+    EdgeIndex iuv;
+    int       i;
+    Vertex    v, w;
+    switch( pBD->bRadSrchMode ) {
+    case  RAD_SRCH_NORM:
+        /* go backwards along alt path and stop at the 1st found atom (not a fictitious vertex) */
+        /* we need only vertices where a radical may be moved, therefore exclude u%2=1 (odd) vertices */
+        /* atom number = u/2-1; u = 0 or 1 is 's' or 't' vertices, respectively, they are not atoms  */
+        while ( u > Vertex_t && (u % 2 || u/2 > pBNS->num_atoms) ) {
+            u = GetPrevVertex( pBNS, u, pBD->SwitchEdge, &iuv );
+        }
+        w = u/2 - 1; /* Check whether it is a radical endpoint */
+        if ( Vertex_t < u && w < pBNS->num_atoms && pBNS->vert[w].st_edge.cap == pBNS->vert[w].st_edge.flow ) {
+            /* now search for the starting radical atom by following the path back from u */
+            v = u;
+            while( v > Vertex_t ) {
+                u = v;
+                v = GetPrevVertex( pBNS, u, pBD->SwitchEdge, &iuv ); /* Radical endpoint */
+            }
+            /* check whether u is a radical atom */
+            if ( !(u%2) && Vertex_t < u &&
+                 (u = u/2 - 1) < pBNS->num_atoms &&
+                 pBNS->vert[u].st_edge.cap > pBNS->vert[u].st_edge.flow ) {
+                /* at pBNS->vert[u] we have found the radical that originated the path */
+                /* pBD->RadEndpoints[2k] is the radical, pBD->RadEndpoints[2k+1] is the farthest atom */
+                /* to which the radical may be moved (farthest reachable atom) */
+                for ( i = 0; i < pBD->nNumRadEndpoints; i += 2 ) {
+                    if ( u == pBD->RadEndpoints[i] &&
+                         w == pBD->RadEndpoints[i+1] ) {
+                        break;
+                    }
+                }
+                if ( i >= pBD->nNumRadEndpoints ) {
+                    if ( pBD->nNumRadEndpoints+2 <= pBD->max_num_vertices  ) {
+                        /* add */
+                        pBD->RadEndpoints[pBD->nNumRadEndpoints ++] = u; /* radical */
+                        pBD->RadEndpoints[pBD->nNumRadEndpoints ++] = w; /* endpoint */
+                        return 1; /* registered */
+                    } else {
+                        return BNS_VERT_EDGE_OVFL;
+                    }
+                }
+            }
+        }
+        break;
+
+    case RAD_SRCH_FROM_FICT:
+        /* find nearest atom accessible from a fictitious vertex */
+        /* go backwards along alt path and stop at the 1st found atom (not a fictitious vertex) */
+        v = u;
+        w = NO_VERTEX; /* the nearest atom -- radical-endpoint */
+        u = NO_VERTEX; /* fictitious vertex carrying a radical */
+        while ( v > Vertex_t ) {
+            u = v;
+            if ( !(v % 2) && v/2 <= pBNS->num_atoms && 
+                 pBNS->vert[v/2-1].st_edge.cap - pBNS->vert[v/2-1].st_edge.flow < 2 ) {
+                w = v; /* vertex w is atom that may be singlet or doublet but not triplet */
+            }
+            v = GetPrevVertex( pBNS, u, pBD->SwitchEdge, &iuv );
+        }
+        v = u/2 - 1; /* vertex u may be the radical from which the path originated; w is the nearest atom */
+        if ( w == NO_VERTEX || u == NO_VERTEX || w % 2 || u == w || v < pBNS->num_atoms ||
+             pBNS->vert[v].st_edge.cap == pBNS->vert[v].st_edge.flow ||
+             (w = w/2 - 1) >= pBNS->num_atoms ) {
+            break; /* reject */
+        }
+        u = v;
+        /* at pBNS->vert[u] we have found the radical that originated the path, w is the nearest atom */
+        for ( i = 0; i < pBD->nNumRadEndpoints; i += 2 ) {
+            if ( u == pBD->RadEndpoints[i] &&
+                 w == pBD->RadEndpoints[i+1] ) {
+                break; /* this pair has already been stored */
+            }
+        }
+        if ( i >= pBD->nNumRadEndpoints ) {
+            /* a new pair has been found */
+            if ( pBD->nNumRadEndpoints+2 <= pBD->max_num_vertices  ) {
+                /* add */
+                pBD->RadEndpoints[pBD->nNumRadEndpoints ++] = u; /* radical */
+                pBD->RadEndpoints[pBD->nNumRadEndpoints ++] = w; /* endpoint */
+                return 1; /* registered */
+            } else {
+                return BNS_VERT_EDGE_OVFL;
+            }
+        }
+        break;
+    }
+
+    return 0; /* rejected */
+}
+/**********************************************************************************/
+int cmp_rad_endpoints( const void *a1, const void *a2 )
+{
+    /* Vertex radical_vertex, radical_endpoint */
+    const Vertex *p1 = (const Vertex *)a1;
+    const Vertex *p2 = (const Vertex *)a2;
+    if ( p1[0] < p2[0] )
+        return -1;
+    if ( p1[0] > p2[0] )
+        return 1;
+    if ( p1[1] < p2[1] )
+        return -1;
+    if ( p1[1] > p2[1] )
+        return 1;
+    return 0;
+}
+/**********************************************************************************/
+int RemoveRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at )
+{
+    BNS_EDGE   *e;
+    EdgeIndex   ie;
+    BNS_VERTEX *p1, *p2;
+    Vertex      v1, v2;
+    int         i, delta, rad;
+    for ( i = pBD->nNumRadEdges-1; 0 <= i; i -- ) {
+        ie = pBD->RadEdges[i];
+        if ( ie < 0 || ie >= pBNS->num_edges ) {
+            goto error_exit;
+        }
+        e = pBNS->edge + ie;
+        v1 = e->neighbor1;
+        v2 = e->neighbor12 ^ v1;   /* v2 > v1 <=> v2 was added later */
+        if ( ie + 1 != pBNS->num_edges || 
+             v1 < 0 || v1 >= pBNS->num_vertices ||
+             v2 < 0 || v2 >= pBNS->num_vertices ) {
+            goto error_exit;
+        }
+        p1 = pBNS->vert + v1;
+        p2 = pBNS->vert + v2;
+
+        if ( p2->iedge[p2->num_adj_edges-1] != ie ||
+             p1->iedge[p1->num_adj_edges-1] != ie ) {
+            goto error_exit;
+        }
+        p2->num_adj_edges --;
+        p1->num_adj_edges --;
+        p2->iedge[p2->num_adj_edges] = 0;
+        p1->iedge[p1->num_adj_edges] = 0;
+        p2->st_edge.flow -= e->flow;
+        p1->st_edge.flow -= e->flow;
+
+        if ( !p2->num_adj_edges && v2 >= pBNS->num_atoms ) {
+            if ( v2+1 != pBNS->num_vertices ) {
+                goto error_exit;
+            }
+            memset( p2, 0, sizeof(*p2) );
+            pBNS->num_vertices --;
+        }
+        if ( !p1->num_adj_edges && v1 >= pBNS->num_atoms ) {
+            if ( v1+1 != pBNS->num_vertices ) {
+                goto error_exit;
+            }
+            memset( p1, 0, sizeof(*p1) );
+            pBNS->num_vertices --;
+        }
+        if ( at && v1 < pBNS->num_atoms ) {
+            delta = p1->st_edge.cap - p1->st_edge.flow;
+            rad   = at[v1].radical;
+            switch( delta ) {
+            case 0:
+                if ( rad == RADICAL_DOUBLET )
+                    rad = 0;
+                break;
+            case 1:
+                if ( rad != RADICAL_DOUBLET )
+                    rad = RADICAL_DOUBLET;
+            }
+            at[v1].radical = rad;
+        }
+        memset( e, 0, sizeof(*e) );
+        pBNS->num_edges --;
+    }
+    pBD->nNumRadEdges = 0;
+    pBD->nNumRadicals = 0;
+    pBD->bRadSrchMode = RAD_SRCH_NORM;
+    return 0;
+error_exit:
+    return BNS_PROGRAM_ERR;
+}
+/**********************************************************************************/
+int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode )
+{
+    int ret, i, j, k, num_new_edges, delta;
+    BNS_VERTEX *pRad, *pEndp;
+    Vertex     wRad, vRad, vEndp, nNumRadicals;
+    int        nDots=0 /* added initialization, 2006-03 */, nNumEdges;
+    if ( pBNS->tot_st_cap <= pBNS->tot_st_flow ) {
+        return 0;
+    }
+    pBD->nNumRadEndpoints = 0;
+    pBD->nNumRadEdges     = 0;
+    pBD->bRadSrchMode     = bRadSrchMode;
+    pBNS->alt_path = pBNS->altp[0];
+    pBNS->bChangeFlow = 0;
+    ret = BalancedNetworkSearch( pBNS, pBD, BNS_EF_RAD_SRCH );
+    ReInitBnData( pBD );
+    ReInitBnStructAltPaths( pBNS );
+    if ( !ret && pBD->nNumRadEndpoints >= 2 ) {
+        /* sort by radical locations */
+        qsort( pBD->RadEndpoints, pBD->nNumRadEndpoints/2, 2*sizeof(pBD->RadEndpoints[0]), cmp_rad_endpoints );
+        num_new_edges = 0;
+        nNumRadicals  = 0;
+        /* create new vertices (type=BNS_VERT_TYPE_TEMP) and edges with flow=cap=1 */
+        /* connecting the new vertices radical vertices */
+        for ( i = 0; i < pBD->nNumRadEndpoints; i = j ) {
+            wRad = pBD->RadEndpoints[i];
+            pRad = pBNS->vert + wRad;
+            delta = pRad->st_edge.cap - pRad->st_edge.flow;
+            if ( delta <= 0 ) {
+                delta = 1;
+            }
+            nNumEdges = 0;
+            for ( j = i; j < pBD->nNumRadEndpoints && wRad == pBD->RadEndpoints[j] ; j += 2 ) {
+                nNumEdges ++;
+            }
+            /* add new aux vertex to the radical atom/vertex */
+            vRad = bAddNewVertex( pBNS, wRad, delta, delta, nNumEdges+1, &nDots );
+            if ( IS_BNS_ERROR( vRad ) ) {
+                ret = vRad;
+                goto error_exit;
+            }
+            pRad     = pBNS->vert + vRad;
+            pBD->RadEdges[pBD->nNumRadEdges ++] = pRad->iedge[pRad->num_adj_edges-1];
+            /* replace references to vertex wRad with vRad */
+            for ( k = i, nNumEdges = 0; k < j; k += 2 ) {
+                pBD->RadEndpoints[k] = vRad;
+            }
+            nNumRadicals ++;
+        }
+        /* all vRad vertex indices should be in the range vFirstNewVertex...vFirstNewVertex+nNumRadicals-1 */
+        /* connect new vertices to the radical endpoints thus replacing radicals with even-length alternating cycles */
+        for ( i = 0; i < pBD->nNumRadEndpoints; i = j ) {
+            vRad = pBD->RadEndpoints[i];
+            pRad = pBNS->vert + vRad;
+            for ( j = i; j < pBD->nNumRadEndpoints && vRad == pBD->RadEndpoints[j] ; j += 2 ) {
+                /* connect vew vertex pRad to radical endpoints */
+                vEndp    = pBD->RadEndpoints[j+1];
+                pEndp    = pBNS->vert + vEndp;
+                ret = AddNewEdge( pRad, pEndp, pBNS, 1, 0 );
+                if ( IS_BNS_ERROR( ret ) ) {
+                    goto error_exit;
+                }
+                pBD->RadEdges[pBD->nNumRadEdges ++] = ret;
+            }
+        }
+        pBD->nNumRadicals = nNumRadicals;
+        return nNumRadicals; /* done */
+    }
+    return 0; /* nothing to do */
+
+error_exit:
+    RemoveRadEndpoints( pBNS, pBD, NULL );
+    return ret;
+
+}
+#else
+/**********************************************************************************/
+int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD )
+{
+    return 0;
+}
+int RemoveRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD )
+{
+    return 0;
+}
+#endif
+/**********************************************************************************/
 /* Return value ret bits if not IS_BNS_ERROR(ret):
 
     ret & 1         => Success
@@ -5641,6 +5986,7 @@ int bExistsAltPath( BN_STRUCT *pBNS, BN_DATA *pBD, BN_AATG *pAATG, inp_ATOM *at,
 {
     ALT_PATH_CHANGES apc;
     int ret, ret_val, bError, bSuccess, bChangeFlow=0, nDots, nDelta, bDoMarkChangedBonds = 1;
+    int bAdjustRadicals = 0;
     AT_NUMB          type;
     BNS_FLOW_CHANGES fcd[4*BNS_MAX_NUM_FLOW_CHANGES+1];
     ENDPOINT_INFO    eif;
@@ -5727,26 +6073,36 @@ int bExistsAltPath( BN_STRUCT *pBNS, BN_DATA *pBD, BN_AATG *pAATG, inp_ATOM *at,
     bSuccess    = 0;
     nDelta      = 0;
 
+    ret = SetRadEndpoints( pBNS, pBD, RAD_SRCH_NORM );
+    if ( IS_BNS_ERROR( ret ) ) {
+        return ret;
+    }
+
     /* set BNS to check alt path */
     ret = bSetBnsToCheckAltPath( pBNS, nVertDoubleBond, nVertSingleBond, type, path_type, &apc, fcd, &nDots );
     switch( ret ) {
     case  BNS_CHK_ALTP_NO_ALTPATH:
-        return 0;
+        ret = RemoveRadEndpoints( pBNS, pBD, NULL );
+        return ret;
     case BNS_CHK_ALTP_SAME_TGROUP:
         bSuccess = 1;
         goto reinit_BNS;
     case BNS_CHK_ALTP_SAME_VERTEX:
-        return 1; /* very strange ... set a breakpoint here */
+        ret = RemoveRadEndpoints( pBNS, pBD, NULL );
+        return ret? ret : 1; /* very strange ... set a breakpoint here */
     case BNS_CHK_ALTP_SET_SUCCESS:
         break;  /* actually check the existence of the altpath */
     case BNS_CANT_SET_BOND:
         goto reinit_BNS;
     default:
+        ret_val = RemoveRadEndpoints( pBNS, pBD, NULL );
         if ( IS_BNS_ERROR( ret ) ) {
             return ret;
         }
         return BNS_PROGRAM_ERR;
     }
+
+    bAdjustRadicals = ( (bChangeFlow & BNS_EF_UPD_RAD_ORI) && !(bChangeFlow & BNS_EF_RSTR_FLOW) );
 
     /*****************************************************************
      * nDots = 2 for ALT_PATH_CHARGE (checking moveable positive charges)
@@ -5823,8 +6179,9 @@ reinit_BNS:
     /* --- reinitialize to repeat the calculations --- */
     bRestoreBnsAfterCheckAltPath( pBNS, &apc, bChangeFlow & BNS_EF_UPD_H_CHARGE );
     bRestoreFlowAfterCheckOneBond( pBNS, fcd );
+    ret_val = RemoveRadEndpoints( pBNS, pBD, bAdjustRadicals? at : NULL );
     ReInitBnStructAltPaths( pBNS );
-    return bError? bError : (bSuccess + 4*nDelta);
+    return bError? bError : ret_val? ret_val : (bSuccess + 4*nDelta);
 }
 
 
@@ -5840,12 +6197,23 @@ BN_STRUCT* AllocateAndInitBnStruct( inp_ATOM *at, int num_atoms, int nMaxAddAtom
     int i, j, k, n_edges, num_bonds, num_edges, f1, f2, edge_cap, edge_flow, st_cap, st_flow, flag_alt_bond;
     int tot_st_cap, tot_st_flow;
     int max_tg, max_edges, max_vertices, len_alt_path, max_iedges, num_altp;
+#if( BNS_RAD_SEARCH == 1 )
+    int num_rad = 0;
 
-    max_tg = num_atoms / 2;
+    nMaxAddEdges += 1;
+#endif
+#if( FIX_NUM_TG == 1 )
+    max_tg = inchi_max( num_atoms / 2, 5);
+#else
+    max_tg = num_atoms;
+#endif
     num_changed_bonds = 0;
     
     for ( i = 0, num_bonds = 0; i < num_atoms; i ++ ) {
         num_bonds += at[i].valence;
+#if( BNS_RAD_SEARCH == 1 )
+        num_rad   += (at[i].radical == RADICAL_DOUBLET);
+#endif
     }
     /* each atom has enough edges to belong to a tautomeric group + nMaxAddEdges */
     /* number of atoms is large enough to accommodate max. possible number of t-groups + nMaxAddAtoms */
@@ -5855,6 +6223,12 @@ BN_STRUCT* AllocateAndInitBnStruct( inp_ATOM *at, int num_atoms, int nMaxAddAtom
     max_vertices = num_atoms + nMaxAddAtoms + max_tg + 1;
     /* +max_tg for edges between t-groups and super-tautomeric group */
     max_edges    = num_edges + (nMaxAddEdges + NUM_KINDS_OF_GROUPS)*max_vertices + max_tg;
+#if( BNS_RAD_SEARCH == 1 )
+    if ( num_rad ) {
+        max_vertices *= 2;
+        max_edges    *= 2;
+    }
+#endif
     max_iedges   = 2*max_edges;
     len_alt_path = max_vertices+iALTP_HDR_LEN+1; /* may overflow if an edge is traversed in 2 directions */
 
@@ -6429,15 +6803,22 @@ int AddCGroups2BnStruct( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, C_GROUP_I
             for ( k = 0; k < vertex_cpoint->num_adj_edges; k ++ ) {
                 int iedge = vertex_cpoint->iedge[k];
                 VertexFlow  nNewCap = vertex_cpoint->st_edge.cap;
+                centerpoint = (pBNS->edge[iedge].neighbor12 ^ c_point);
                 if ( !pBNS->edge[iedge].cap ) {
                     /* single bond, possibly between c_point and centerpoint */
-                    centerpoint = (pBNS->edge[iedge].neighbor12 ^ c_point);
                     if ( centerpoint < pBNS->num_atoms &&
                          pBNS->vert[centerpoint].st_edge.cap >= 1 ) {
                         nNewCap = inchi_min( pBNS->vert[centerpoint].st_edge.cap, nNewCap );
                         nNewCap = inchi_min( nNewCap, MAX_BOND_EDGE_CAP );
                         pBNS->edge[iedge].cap = nNewCap;
                     }
+#if( FIX_CPOINT_BOND_CAP2 == 1 ) /* multiple bond */
+                    else
+                    if ( centerpoint < pBNS->num_atoms &&
+                         edge->flow && pBNS->edge[iedge].cap < MAX_BOND_EDGE_CAP ) {
+                        pBNS->edge[iedge].cap ++;
+                    }
+#endif
                 }
             }
 #endif  /* } FIX_CPOINT_BOND_CAP */
@@ -6495,6 +6876,14 @@ BN_DATA *DeAllocateBnData( BN_DATA *pBD )
             inchi_free( pBD->Pu );
         if ( pBD->Pv )
             inchi_free( pBD->Pv );
+#if( BNS_RAD_SEARCH == 1 )
+        if ( pBD->RadEndpoints ) {
+            inchi_free( pBD->RadEndpoints );
+        }
+        if ( pBD->RadEdges ) {
+            inchi_free( pBD->RadEdges );
+        }
+#endif
         inchi_free( pBD );
     }
     return NULL;
@@ -6513,6 +6902,10 @@ BN_DATA *AllocateAndInitBnData( int max_num_vertices )
          !(pBD->Tree       = (S_CHAR *)  inchi_calloc( max_num_vertices, sizeof(S_CHAR) ) ) ||
          !(pBD->ScanQ      = (Vertex *)  inchi_calloc( max_num_vertices, sizeof(Vertex) ) ) ||
          !(pBD->Pu         = (Vertex *)  inchi_calloc( max_len_Pu_Pv,    sizeof(Vertex) ) ) ||
+#if( BNS_RAD_SEARCH == 1 )
+         !(pBD->RadEndpoints = (Vertex *)   inchi_calloc( max_len_Pu_Pv, sizeof(Vertex) ) ) ||
+         !(pBD->RadEdges     = (EdgeIndex*) inchi_calloc( max_len_Pu_Pv, sizeof(EdgeIndex) ) ) ||
+#endif
          !(pBD->Pv         = (Vertex *)  inchi_calloc( max_len_Pu_Pv,    sizeof(Vertex) ) ) 
        ) {
         pBD = DeAllocateBnData( pBD );
@@ -6524,6 +6917,9 @@ BN_DATA *AllocateAndInitBnData( int max_num_vertices )
         pBD->QSize = -1;
         pBD->max_len_Pu_Pv    = max_len_Pu_Pv;
         pBD->max_num_vertices = max_num_vertices;
+#if( BNS_RAD_SEARCH == 1 )
+        pBD->nNumRadEndpoints = 0;
+#endif
     }
     return pBD;
 }
@@ -6846,12 +7242,14 @@ int rescap_mark( BN_STRUCT* pBNS, Vertex u, Vertex v, EdgeIndex iuv )
     return bBackward;
 }
 /********************************************************************************
+Get previous vertex in the searched path
 z is SwitchEdge_Vert2(y) != y. Go backward from z to y
 *********************************************************************************/
 Vertex GetPrevVertex( BN_STRUCT* pBNS, Vertex y, Edge *SwitchEdge, EdgeIndex *iuv )
 {
     Vertex w, z, x2, y2, n;
     EdgeIndex iwy;
+
     w   = SwitchEdge_Vert1(y);
     z   = SwitchEdge_Vert2(y);
     iwy = SwitchEdge_IEdge(y);
@@ -6868,7 +7266,8 @@ Vertex GetPrevVertex( BN_STRUCT* pBNS, Vertex y, Edge *SwitchEdge, EdgeIndex *iu
         iwy = SwitchEdge_IEdge(y2);
         if ( w == x2 ) {
             *iuv = iwy;
-            return z;
+            /*return z; */
+            return (y + z)%2? z : prim(z);
         }
         n ++;
 #ifdef _DEBUG
@@ -6896,6 +7295,51 @@ Vertex GetPrevVertex( BN_STRUCT* pBNS, Vertex y, Edge *SwitchEdge, EdgeIndex *iu
    along an alternating path from another heteroatom (t-group will be detected).
 
 **********************************************************************************/
+#if( FIX_TACN_POSSIBLE_BUG == 1 ) /* { */
+/*********************************************************************************/
+int bIgnoreVertexNonTACN_atom( BN_STRUCT* pBNS, Vertex u, Vertex v )
+{
+#define TYPE_T   1   /* t-group [also called H-group] */
+#define TYPE_CN  2   /* (-)c-group */
+    int    i, degree, ret, u_is_taut=0, w_is_taut, num_allowed=0, num_found_groups=0;
+    Vertex w;
+    EdgeIndex ivw;
+    if ( !pBNS->type_TACN || u <= 1 || v <= 1 ||
+         (pBNS->vert[v/2-1].type & pBNS->type_TACN) ) {
+        return 0; /* add/remove H(+) is allowed for acidic atoms */
+    }
+    if ( !pBNS->type_T || !pBNS->type_CN )
+        return 0; /* should not happen */
+    u_is_taut = ((pBNS->vert[u/2-1].type & pBNS->type_T)  == pBNS->type_T )? TYPE_T  :
+                ((pBNS->vert[u/2-1].type & pBNS->type_CN) == pBNS->type_CN)? TYPE_CN : 0;
+    if ( u_is_taut ) {
+        /* u is either t-group vertex or (-) c-group */
+        degree = GetVertexDegree( pBNS, v );
+        for ( i = 0; i < degree; i ++ ) {
+            /* v = vert[u].neighbor[i]; */
+            w = GetVertexNeighbor( pBNS, v, i, &ivw );
+            if ( w == NO_VERTEX || w <= 1 ) {
+                continue; /* the atom has only single bonds or it is s or t, ignore it */
+            }
+            if ( w != u && (ret = rescap(pBNS, v, w, ivw)) > 0 ) {
+                num_allowed ++;
+                w_is_taut = ((pBNS->vert[w/2-1].type & pBNS->type_CN) == pBNS->type_CN)? TYPE_CN :
+                            ((pBNS->vert[w/2-1].type & pBNS->type_T)  == pBNS->type_T )? TYPE_T  : 0;
+                if ( (u_is_taut | w_is_taut) == (TYPE_T | TYPE_CN) ) {
+                    num_found_groups ++;
+                }
+            }
+        }
+        if ( num_found_groups && num_allowed == 1 ) {
+            return 1; /* reject */
+        }
+    }
+    return 0;
+#undef TYPE_T
+#undef TYPE_CN
+}
+#else  /* } FIX_TACN_POSSIBLE_BUG { */
+/*********************************************************************************/
 int bIgnoreVertexNonTACN_atom( BN_STRUCT* pBNS, Vertex u, Vertex v )
 {
     int    i, degree, ret, u_is_taut=0, num_allowed=0, num_found_groups=0;
@@ -6903,12 +7347,13 @@ int bIgnoreVertexNonTACN_atom( BN_STRUCT* pBNS, Vertex u, Vertex v )
     EdgeIndex ivw;
     if ( !pBNS->type_TACN || u <= 1 || v <= 1 ||
          (pBNS->vert[v/2-1].type & pBNS->type_TACN) ) {
-        return 0;
+        return 0; /* add/remove H(+) is allowed for acidic atoms */
     }
     if ( !pBNS->type_T || !pBNS->type_CN )
         return 0; /* should not happen */
     if ( (u_is_taut  = (pBNS->vert[u/2-1].type & pBNS->type_T)  == pBNS->type_T) ||
          (             (pBNS->vert[u/2-1].type & pBNS->type_CN) == pBNS->type_CN)  ) {
+        /* u is either t-group vertex or (-) c-group */
         degree = GetVertexDegree( pBNS, v );
         for ( i = 0; i < degree; i ++ ) {
             /* v = vert[u].neighbor[i]; */
@@ -6925,12 +7370,13 @@ int bIgnoreVertexNonTACN_atom( BN_STRUCT* pBNS, Vertex u, Vertex v )
             }
         }
         if ( num_found_groups && num_allowed == 1 ) {
-            return 1;
+            return 1; /* reject */
         }
 
     }
     return 0;
 }
+#endif /* } FIX_TACN_POSSIBLE_BUG */
 /*********************************************************************************
    the purpose is to avoid paths
      (H-group)[u]---atom[v]---((-)-cgroup)[w],  where
@@ -6940,6 +7386,55 @@ int bIgnoreVertexNonTACN_atom( BN_STRUCT* pBNS, Vertex u, Vertex v )
    only one chemical bond. Only because of this an early rejection of
    the vertex v (before it gets on SCANQ) is possible.
 **********************************************************************************/
+#if( FIX_TACN_POSSIBLE_BUG == 1 ) /* { */
+/*********************************************************************************/
+int bIgnoreVertexNonTACN_group( BN_STRUCT* pBNS, Vertex v, Vertex w, Edge *SwitchEdge )
+{
+#define TYPE_T   1   /* t-group [also called H-group] */
+#define TYPE_CN  2   /* (-)c-group */
+    int    u_is_taut=0, w_is_taut=0;
+    Vertex u;
+    EdgeIndex iuv;
+    if ( v <= 1 || w <= 1 )
+        return 0;
+#if ( CHECK_TACN == 1 )
+    if ( !pBNS->type_TACN ||
+         (pBNS->vert[v/2-1].type & pBNS->type_TACN) ) {
+        return 0;
+    }
+    if ( !pBNS->type_T || !pBNS->type_CN )
+        return 0; /* should not happen */
+#endif
+    u = GetPrevVertex( pBNS, v, SwitchEdge, &iuv );
+    /*
+    u   = SwitchEdge_Vert1(v);
+    iuv = SwitchEdge_IEdge(v);
+    */
+    if ( u == NO_VERTEX || iuv < 0 )
+        return 0; /* should not happen */
+    /* check edge adjacency */
+    if ( pBNS->edge[iuv].neighbor1  != (u/2-1)  && pBNS->edge[iuv].neighbor1 != v/2-1 ||
+         (pBNS->edge[iuv].neighbor12 ^ (u/2-1)) != (v/2-1) ) {
+        return 0; /* !!! should not happen !!! */
+    }
+         
+#if ( CHECK_TACN == 1 )
+    u_is_taut = ((pBNS->vert[u/2-1].type & pBNS->type_T)  == pBNS->type_T )? TYPE_T :
+                ((pBNS->vert[u/2-1].type & pBNS->type_CN) == pBNS->type_CN)? TYPE_CN : 0;
+    w_is_taut = ((pBNS->vert[w/2-1].type & pBNS->type_T)  == pBNS->type_T )? TYPE_T :
+                ((pBNS->vert[w/2-1].type & pBNS->type_CN) == pBNS->type_CN)? TYPE_CN : 0;
+    if ( (u_is_taut | w_is_taut) == (TYPE_T | TYPE_CN ) ) {
+        /* rescap must have already been checked */
+        return 1;
+    }
+#endif
+
+    return 0;
+#undef TYPE_T
+#undef TYPE_CN
+}
+#else  /* } FIX_TACN_POSSIBLE_BUG { */
+/*********************************************************************************/
 int bIgnoreVertexNonTACN_group( BN_STRUCT* pBNS, Vertex v, Vertex w, Edge *SwitchEdge )
 {
     int    u_is_taut=0, w_is_taut=0;
@@ -6981,6 +7476,131 @@ int bIgnoreVertexNonTACN_group( BN_STRUCT* pBNS, Vertex v, Vertex w, Edge *Switc
 
     return 0;
 }
+#endif /* } FIX_TACN_POSSIBLE_BUG { */
+
+#if( FIX_KEEP_H_ON_NH_ANION == 1 )
+/*********************************************************************************/
+/* detect an attempt to remove H from -NH(-) to make =N(-);                      */
+/* all taut atoma except N are 'acidic'                                          */
+/*********************************************************************************/
+int bIsRemovedHfromNHaion( BN_STRUCT* pBNS, Vertex u, Vertex v )
+{
+    int    i, u2, v2, vat2;
+    Vertex vtg, vat;
+    BNS_VERTEX *pvAT, *pvCN;
+    BNS_EDGE   *pEdge;
+    if ( !pBNS->type_TACN || u <= 1 || v <= 1 ||
+         u%2 || !(v%2) /* the edge flow may only increase */ ) {
+        return 0;
+    }
+    if ((pBNS->vert[u2 = u/2-1].type & pBNS->type_TACN) ||
+        (pBNS->vert[v2 = v/2-1].type & pBNS->type_TACN) ) {
+        return 0; /* add/remove H is allowed for acidic atoms */
+    }
+    if ( !pBNS->type_T || !pBNS->type_CN )
+        return 0; /* should not happen */
+    /* find which of u, v vertices is N and which is t-group */
+    if ( ((pBNS->vert[u2].type & pBNS->type_T)  == pBNS->type_T ) && v2 < pBNS->num_atoms ) {
+        vtg = u;
+        vat = v;
+    } else
+    if ( ((pBNS->vert[v2].type & pBNS->type_T)  == pBNS->type_T ) && u2 < pBNS->num_atoms ) {
+        vtg = v;
+        vat = u;
+    } else {
+        return 0;
+    }
+    vat2 = vat/2-1;
+    pvAT = pBNS->vert + vat2;  /* atom */
+    for ( i = pvAT->num_adj_edges-1; 0 <= i; i -- ) {
+        pEdge = pBNS->edge + pvAT->iedge[i];
+        pvCN  = pBNS->vert + (pEdge->neighbor12 ^ vat2);
+        if ( ((pvCN->type & pBNS->type_CN) == pBNS->type_CN) &&  pEdge->flow > 0 ) {
+            return 1; /* detected */
+        }
+    }
+    return 0;
+}
+#endif
+#if ( FIX_AVOID_ADP == 1 )
+/************************************************************************
+   Detect  (tg)-N=A-A=A-A=N-(tg)
+                        u v  w
+     k =    5   4 3 2 1 0 1  2
+            ^
+          odd number means ADP
+*************************************************************************/
+int bIsAggressiveDeprotonation( BN_STRUCT* pBNS, Vertex v, Vertex w, Edge *SwitchEdge )
+{
+#define TYPE_T   1   /* t-group [also called H-group] */
+#define TYPE_CN  2   /* (-)c-group */
+#define TYPE_AT  4
+    int    k, v2, u2, w2, u2_next, type0, type1, type2, type;
+    Vertex u, u_next;
+    EdgeIndex iuv;
+    if ( v <= 1 || w <= 1 )
+        return 0;
+
+    if ( !pBNS->type_TACN || !pBNS->type_T || !pBNS->type_CN )
+        return 0; /* should not happen */
+    v2 = v/2 - 1;
+    w2 = w/2 - 1;
+    if ( v2 >= pBNS->num_atoms || w2 < pBNS->num_atoms )
+        goto cross_edge;
+
+    if ( !((pBNS->vert[w2].type & pBNS->type_T)  == pBNS->type_T ) &&
+         !((pBNS->vert[w2].type & pBNS->type_CN) == pBNS->type_CN) )
+        goto cross_edge;
+    /* v ia an atom, w is a t-group, v != w' */
+    for ( k = 0, u = v; 1 < (u_next = u, u = GetPrevVertex( pBNS, u, SwitchEdge, &iuv )); k ++ ) {
+        u2 = u/2 - 1;
+        if ( u2 >= pBNS->num_atoms ) {
+            /* moving backward along the alt path we have found a vertex
+               that is not an atom. Possibly it is a t- or (-)c-group */
+            if ( !( k % 2 ) ) {
+                return 0; /* even vertex -- always okay */
+            }
+            if ( !((pBNS->vert[u2].type & pBNS->type_T)  == pBNS->type_T ) &&
+                 !((pBNS->vert[u2].type & pBNS->type_CN) == pBNS->type_CN) ) {
+                /* not a t- or (-)c-group */
+                return 0;
+            }
+            u2_next = u_next/2 - 1;
+            if ( !(pBNS->vert[v2     ].type & pBNS->type_TACN) &&
+                 !(pBNS->vert[u2_next].type & pBNS->type_TACN)  ) {
+                /* none of the atoms at the ends are N */
+                return 0;
+            }
+            return 1;
+        }
+    }
+    return 0;
+cross_edge:
+    /*****************************************************************************
+     * v and w (v=w') are same vertex reached with opposite "phases".
+     * w cannot be (t) because this would have been detected earlier -- ???
+     *   (t)-A=A-A=A-A=A-(t)
+     *           v 
+     *    3  2 1 0 1 2 3  4
+     *   kv               kw
+     *   (kv + kw)%2 == 1  <==> aggressive deprotonation
+     *****************************************************************************/
+    if ( v == prim(w) ) {
+        type0 = 0;
+        if ( v2 >= pBNS->num_atoms ) {
+            type0 = ((pBNS->vert[v2].type & pBNS->type_T)  == pBNS->type_T )? TYPE_T :
+                    ((pBNS->vert[v2].type & pBNS->type_CN) == pBNS->type_CN)? TYPE_CN : 0;
+        }
+
+        
+
+    }
+          
+    
+    return 0;
+}
+#endif
+
 /*********************************************************************************/
 int rescap(  BN_STRUCT* pBNS, Vertex u, Vertex v, EdgeIndex iuv )
 {
@@ -7107,12 +7727,18 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
     Vertex          *Pv =            pBD->Pv;
     int              max_len_Pu_Pv=  pBD->max_len_Pu_Pv;
 
-
-
     /* added to translate into C */
     int i, k, degree, delta, ret = 0;
     Vertex u, b_u, v, b_v, w;
     EdgeIndex iuv;
+#if( BNS_RAD_SEARCH == 1 )
+    int              n, bRadSearch   = (BNS_EF_RAD_SRCH & bChangeFlow) && pBD->RadEndpoints;
+    int              bRadSrchMode    = 0;
+    if ( bRadSearch ) {
+        pBD->nNumRadEndpoints = 0;
+        bRadSrchMode          = pBD->bRadSrchMode;
+    }
+#endif
 
 /*  -- Always --
     Vertex_s = FIRST_INDX;
@@ -7129,12 +7755,20 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
         /* since u is on the queue, it has a blossom C(U) with base b_u */
         b_u = FindBase( u, BasePtr );
         degree = GetVertexDegree( pBNS, u );
+#if( BNS_RAD_SEARCH == 1 )
+        n = 0;
+#endif
         for ( i = 0; i < degree; i ++ ) {
             /* v = vert[u].neighbor[i]; */
             v = GetVertexNeighbor( pBNS, u, i, &iuv );
             if ( v == NO_VERTEX ) {
                 continue; /* the atom has only single bonds, ignore it */
             }
+#if( BNS_RAD_SEARCH == 1 )
+            if ( !k && bRadSrchMode == RAD_SRCH_FROM_FICT && v/2 <= pBNS->num_atoms ) {
+                continue; /* start from fict. vertices only */
+            }
+#endif
             if ( /* PrevPt[u] != v ** avoid edges of T */
                  ( SwitchEdge_Vert1(u) != v || SwitchEdge_Vert2(u) != u )  /* avoid edges of T */
                  && (ret = rescap(pBNS, u, v, iuv)) > 0 ) {
@@ -7147,6 +7781,17 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
                     if ( bIgnoreVertexNonTACN_group( pBNS, u, v, SwitchEdge ) ) {
                         continue;
                     }
+#if( FIX_KEEP_H_ON_NH_ANION == 1 )
+                    if ( bIsRemovedHfromNHaion( pBNS, u, v ) ) {
+                        continue;
+                    }
+#endif
+#if ( FIX_AVOID_ADP == 1 )
+                    if ( bIsAggressiveDeprotonation( pBNS, u, v, SwitchEdge ) ) {
+                        continue;
+                    }
+#endif
+
                 }
                 /*----------------------------------------------------------------------*/
                 b_v = FindBase(v, BasePtr); /* Notation: b_x is a base of x */
@@ -7217,14 +7862,23 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
 
                     BasePtr[prim(v)] = v;
                     BasePtr[v]  = BLOSSOM_BASE; /* create a trivial blossom C(v) with base v */
+#if( BNS_RAD_SEARCH == 1 )
+                    n ++;
+#endif
                 } else
                 if ( TREE_IS_S_REACHABLE(prim(v)) /*Is_s_Reachable(prim(v)*/
                      /* if v' is reachable, an st-path is given by P(u)-uv-P'(v') */
                      /*&& PrevPt[prim(u)] != prim(v) ** avoid edges of T' */
                      && (SwitchEdge_Vert1(prim(u)) != prim(v) || SwitchEdge_Vert2(prim(u)) != prim(u)) /* avoid edges of T' */
                      && b_u != b_v
-                     && !(pBNS->type_TACN && bIgnoreVertexNonTACN_group( pBNS, prim(v), u, SwitchEdge )) ) {
-
+                     && !(pBNS->type_TACN && bIgnoreVertexNonTACN_group( pBNS, prim(v), u, SwitchEdge ))
+#if( FIX_KEEP_H_ON_NH_ANION == 1 )
+                     && !(pBNS->type_TACN && bIsRemovedHfromNHaion( pBNS, prim(v), u ))
+#endif
+                     ) {
+#if( BNS_RAD_SEARCH == 1 )
+                    n ++;
+#endif
                      /* there is now a valid sv-path via u avoiding b_v (unless v==b_v)
                        => u, v, u', and v' now all become part of the same connected component of M[C] */
                     w = MakeBlossom( pBNS, ScanQ, &QSize, Pu, Pv, max_len_Pu_Pv, SwitchEdge, BasePtr, u, v, iuv, b_u, b_v, Tree );
@@ -7239,7 +7893,7 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
                         delta = FindPathCap( pBNS, SwitchEdge, Vertex_s, Vertex_t, 10000 ); /* compute the residual capacity of P + P' */
                         if ( IS_BNS_ERROR( delta ) ) {
                             pBD->QSize = QSize;
-                            return delta;
+                            return delta; /* error */
                         }
 
 #if( ALLOW_ONLY_SIMPLE_ALT_PATH == 1 )
@@ -7258,11 +7912,21 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
             } else
             if ( IS_BNS_ERROR( ret ) ) {
                 pBD->QSize = QSize;
-                return ret;
+                return ret; /* error */
             }
                 
 
         }
+#if( BNS_RAD_SEARCH == 1 )
+        if ( bRadSearch && !n ) {
+            /* the BNS stopped at u */
+            n = RegisterRadEndpoint( pBNS, pBD, u);
+            if ( IS_BNS_ERROR( n ) ) {
+                pBD->QSize = QSize;
+                return n;
+            }
+        }
+#endif
         k ++; /* advance ScanQ */
     } while( k <= QSize );
     /* if this point is reached, no valid augmenting path exists, ScanQ contains
@@ -7538,6 +8202,16 @@ int FindPathCap( BN_STRUCT* pBNS, Edge *SwitchEdge, Vertex x, Vertex y, int delt
   */
     Vertex w, z, iwz;
     int    cap, delta2;
+    static int level;
+
+    if ( level ++ > 50 ) {
+#ifdef _DEBUG
+        int stop = 1;
+#else
+	;
+#endif
+    }
+
 
     w   = SwitchEdge_Vert1(y);
     z   = SwitchEdge_Vert2(y); /* wz is on the path P */
@@ -7547,6 +8221,7 @@ int FindPathCap( BN_STRUCT* pBNS, Edge *SwitchEdge, Vertex x, Vertex y, int delt
     cap = rescap_mark( pBNS, w, z, iwz );
 
     if ( IS_BNS_ERROR( cap ) ) {
+        level --;
         return cap;
     }
     if ( cap < delta ) {
@@ -7561,6 +8236,7 @@ int FindPathCap( BN_STRUCT* pBNS, Edge *SwitchEdge, Vertex x, Vertex y, int delt
         delta2 = FindPathCap( pBNS, SwitchEdge, prim(y), prim(z), delta );
         delta = inchi_min( delta2, delta );
     }
+    level --;
     return delta;
 }
 
@@ -7569,18 +8245,19 @@ int FindPathCap( BN_STRUCT* pBNS, Edge *SwitchEdge, Vertex x, Vertex y, int delt
 #define BT_ALTERN_BOND           1      /* 1-2, possibly stereo */
 #define BT_OTHER_ALTERN_BOND     2      /* 1-3, 2-3, 1-2-3 alternating non-stereo non-taut bonds */
 
-#define BT_ALT_BOND_MASK         (BT_ALTERN_BOND|BT_OTHER_ALTERN_BOND)
-
 #define BT_ALTERN_NS_BOND        4
 
-#define BT_NONTAUT_BOND_MASK     (BT_ALTERN_BOND|BT_OTHER_ALTERN_BOND|BT_ALTERN_NS_BOND)
-
 #define BT_TAUTOM_BOND           8
+
+#define BT_ALTERN_UNKN_BOND     16
 
 #define BT_IGNORE_BOND           0
 
 #define BT_NONSTEREO_MASK        (BT_TAUTOM_BOND|BT_ALTERN_NS_BOND)
 
+#define BT_ALT_BOND_MASK         (BT_ALTERN_BOND|BT_OTHER_ALTERN_BOND)
+
+#define BT_NONTAUT_BOND_MASK     (BT_ALTERN_BOND|BT_OTHER_ALTERN_BOND|BT_ALTERN_NS_BOND)
 
 /* BNS members redefinitions for finding non-stereo bonds */
 /* BNS_EDGE */
@@ -7603,7 +8280,7 @@ int FindPathCap( BN_STRUCT* pBNS, Edge *SwitchEdge, Vertex x, Vertex y, int delt
 
 
 /********************************************************************************/
-int MarkRingSystemsAltBns( BN_STRUCT* pBNS )
+int MarkRingSystemsAltBns( BN_STRUCT* pBNS, int bUnknAltAsNoStereo )
 {
     AT_NUMB   *nStackAtom = NULL;
     int        nTopStackAtom;
@@ -7627,10 +8304,10 @@ int MarkRingSystemsAltBns( BN_STRUCT* pBNS )
     nRingStack = (AT_NUMB *)inchi_malloc(num_atoms*sizeof(nRingStack[0]));
     nDfsNumber = (AT_NUMB *)inchi_malloc(num_atoms*sizeof(nDfsNumber[0]));
     nLowNumber = (AT_NUMB *)inchi_malloc(num_atoms*sizeof(nLowNumber[0]));
-    nBondStack = (AT_NUMB *)inchi_malloc(num_edges*sizeof(nBondStack[0]));
+    nBondStack = (AT_NUMB *)(num_edges? inchi_malloc(num_edges*sizeof(nBondStack[0])):NULL); /* special case: no bonds 2006-03 */
     cNeighNumb = (S_CHAR  *)inchi_malloc(num_atoms*sizeof(cNeighNumb[0]));
     /*  check allocation */
-    if ( !nStackAtom || !nRingStack || !nDfsNumber || !nLowNumber || !nBondStack || !cNeighNumb 
+    if ( !nStackAtom || !nRingStack || !nDfsNumber || !nLowNumber || !nBondStack && num_edges || !cNeighNumb 
         ) {
         nNumRingSystems = CT_OUT_OF_RAM;  /*  program error */ /*   <BRKPT> */
         goto exit_function;
@@ -7693,7 +8370,10 @@ found_alt:
 
         do {
             /* advance */
-            while ( (int)at[i=nStackAtom[nTopStackAtom]].valenceAltBns > (j = (int)cNeighNumb[i]) ) {
+            /*while ( (int)at[i=nStackAtom[nTopStackAtom]].valenceAltBns > (j = (int)cNeighNumb[i]) )*/
+            /* replaced due to missing sequence point */
+            while ( i=(int)nStackAtom[nTopStackAtom], j = (int)cNeighNumb[i], (int)at[i].valenceAltBns > j )
+            {
                 cNeighNumb[i] ++;
                 if ( !(bond[w=at[i].iedge[j]].nBondTypeInpAltBns & BT_ALT_BOND_MASK) ) {
                     continue;
@@ -7797,7 +8477,10 @@ found_alt2:
         do {
             /* advance */
 advance_ring:
-            if ( (int)at[i=nStackAtom[nTopStackAtom]].valenceAltBns > (j = (int)cNeighNumb[i]) ) {
+            /*if ( (int)at[i=nStackAtom[nTopStackAtom]].valenceAltBns > (j = (int)cNeighNumb[i]) )*/
+            /* replaced due to missing sequence point */
+            if ( i=(int)nStackAtom[nTopStackAtom], j = (int)cNeighNumb[i], (int)at[i].valenceAltBns > j )
+            {
                 cNeighNumb[i] ++;
                 if ( !(bond[at[i].iedge[j]].nBondTypeInpAltBns & BT_ALTERN_BOND) ) {
                     goto advance_ring;
@@ -7876,7 +8559,7 @@ exit_function:
 }
 
 /*********************************************************************************/
-int ReInitBnStructForAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
+int ReInitBnStructForAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int bUnknAltAsNoStereo )
 {
     Vertex v, v2;
     int ret, bond_type, num_to_test, j;
@@ -7884,6 +8567,11 @@ int ReInitBnStructForAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
     BNS_VERTEX *pAtom;
     /* strip all t-groups and c-groups */
     num_to_test = 0;
+    if ( bUnknAltAsNoStereo ) {
+        for ( j = 0; j < pBNS->num_edges; j ++ ) {
+            pBNS->edge[j].pass = 0;
+        }
+    }
     ret = ReInitBnStruct( pBNS, at, num_atoms, 0 );
     if ( ret || pBNS->num_atoms != num_atoms || pBNS->num_vertices != num_atoms || pBNS->num_bonds != pBNS->num_edges ) {
         ret = BNS_REINIT_ERR;
@@ -7900,6 +8588,13 @@ int ReInitBnStructForAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
                 if ( at[v].endpoint || at[v2].endpoint ) {
                     bond_type = 0; /* any bond to an endpoint considered non-stereogenic */
                 }
+#if( FIX_EITHER_DB_AS_NONSTEREO == 1 )
+                if ( bUnknAltAsNoStereo ) {
+                    if ( bond_type == BOND_ALTERN && at[v].bond_stereo[j] == STEREO_DBLE_EITHER ) {
+                        bond_type = 0; /* treat unknown (Either) ALT bond as non-stereo */
+                    }
+                }
+#endif
                 switch ( bond_type ) {
                 
                 case BOND_ALTERN :
@@ -7954,7 +8649,7 @@ exit_function:
 }
 
 /************************************************************************************/
-int MarkNonStereoAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
+int MarkNonStereoAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int bUnknAltAsNoStereo )
 {
     int       num_bonds = pBNS->num_bonds;
     int       ret;
@@ -7968,27 +8663,53 @@ int MarkNonStereoAltBns( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms )
         ret = BNS_REINIT_ERR;
         goto exit_function;
     }
-
-    for ( ibond=0; ibond < num_bonds; ibond ++ ) {
-        pBond = pBNS->edge + ibond;
-        if ( pBond->nBondTypeInpAltBns != BT_ALTERN_BOND && pBond->nBondTypeInpAltBns != BT_IGNORE_BOND ) {
-            continue;
+    if ( bUnknAltAsNoStereo ) {
+        for ( ibond=0; ibond < num_bonds; ibond ++ ) {
+            pBond = pBNS->edge + ibond;
+            if ( pBond->nBondTypeInpAltBns != BT_ALTERN_BOND && pBond->nBondTypeInpAltBns != BT_IGNORE_BOND ) {
+                continue;
+            }
+            iat1 = pBond->neighbor1;
+            iat2 = pBond->neighbor12 ^ iat1;
+            ib1  = pBond->neigh_ord[0];
+            ib2  = pBond->neigh_ord[1];
+            if ( /* alt bond non-adjacent to a taut. endpoint: */
+                  (pBond->nBondTypeInpAltBns == BT_ALTERN_BOND &&
+                  pBond->nNumAtInBlockAltBns <= 3 )  /* non-ring bond */ ||
+                 /* alt bond adjacent to a taut. endpoint: */
+                  (pBond->nBondTypeInpAltBns == BT_IGNORE_BOND &&
+                  (at[iat1].bond_type[ib1] & BOND_TYPE_MASK) == BOND_ALTERN )
+                ) {
+                if ( (at[iat1].bond_type[ib1] & BOND_TYPE_MASK) == BOND_ALTERN ) {
+                    /* bond_type = BOND_ALT12NS; */
+                    at[iat1].bond_stereo[ib1] =
+                    at[iat2].bond_stereo[ib2] =STEREO_DBLE_EITHER;
+                    ret ++;
+                }
+            } 
         }
-        iat1 = pBond->neighbor1;
-        iat2 = pBond->neighbor12 ^ iat1;
-        ib1  = pBond->neigh_ord[0];
-        ib2  = pBond->neigh_ord[1];
-        if ( /* alt bond non-adjacent to a taut. endpoint: */
-             (pBond->nBondTypeInpAltBns == BT_ALTERN_BOND &&
-              pBond->nNumAtInBlockAltBns <= 3 ) ||
-             /* alt bond adjacent to a taut. endpoint: */
-             (pBond->nBondTypeInpAltBns == BT_IGNORE_BOND &&
-              (at[iat1].bond_type[ib1] & BOND_TYPE_MASK) == BOND_ALTERN ) 
-            ) {
-            at[iat1].bond_type[ib1] =
-            at[iat2].bond_type[ib2] =BOND_ALT12NS;
-            ret ++;
-        } 
+    } else {
+        for ( ibond=0; ibond < num_bonds; ibond ++ ) {
+            pBond = pBNS->edge + ibond;
+            if ( pBond->nBondTypeInpAltBns != BT_ALTERN_BOND && pBond->nBondTypeInpAltBns != BT_IGNORE_BOND ) {
+                continue;
+            }
+            iat1 = pBond->neighbor1;
+            iat2 = pBond->neighbor12 ^ iat1;
+            ib1  = pBond->neigh_ord[0];
+            ib2  = pBond->neigh_ord[1];
+            if ( /* alt bond non-adjacent to a taut. endpoint: */
+                 (pBond->nBondTypeInpAltBns == BT_ALTERN_BOND &&
+                  pBond->nNumAtInBlockAltBns <= 3 ) /* non-ring bond */ ||
+                 /* alt bond adjacent to a taut. endpoint: */
+                 (pBond->nBondTypeInpAltBns == BT_IGNORE_BOND &&
+                  (at[iat1].bond_type[ib1] & BOND_TYPE_MASK) == BOND_ALTERN ) 
+                ) {
+                at[iat1].bond_type[ib1] =
+                at[iat2].bond_type[ib2] =BOND_ALT12NS;
+                ret ++;
+            } 
+        }
     }
 
 exit_function:
@@ -7996,4 +8717,384 @@ exit_function:
     return ret;
 }
 
+#if( READ_INCHI_STRING == 1 )
+/*****************************************************************/
+#ifndef RI_ERR_ALLOC
+/* from ichirvrs.h */
+#define RI_ERR_ALLOC   (-1)
+#define RI_ERR_SYNTAX  (-2)
+#define RI_ERR_PROGR   (-3)
+#endif
+/*****************************************************************/
+int bHasChargedNeighbor( inp_ATOM *at, int iat )
+{
+    int i;
+    for( i = 0; i < at[iat].valence; i ++ ) {
+        if ( at[(int)at[iat].neighbor[i]].charge )
+            return 1;
+    }
+    return 0;
+}
+/***********************************************************************************************
+    *num_protons_to_add = nToBeRemovedByNormFromRevrs
+
+    nToBeRemovedByNormFromRevrs > 0: less protons should be allowed to be
+                                     added by the Normalization of the Reconstructed Structure
+    nToBeRemovedByNormFromRevrs < 0: prepare more H(+) to be removed by
+                                     the InChI Normalization of the Reconstructed Structure
+
+    OrigStruct -> NormOrig + n(orig)*H(+) 
+    RevrStruct -> NormRevr + n(revr)*H(+) 
+    nToBeRemovedByNormFromRevrs = n(orig) - n(revr)  [each may be negative]
+    
+    n(orig) > n(revr) or nToBeRemovedByNormFromRevrs > 0 means:
+    -----------------------------------------------------------
+    - Too many protons were added by the Normalization to the Reconstructed Structure
+      (a) n(revr) < 0 => protons were added while they should not have been added;
+          Solution: "neutralize" (-) charged proton acceptors by moving charges to other atoms
+                     on the condition ADP cannot add in another way;
+      (b) n(orig) > n(revr) => 0  => too few protons were removed
+          Solution: (the easiest) attach H(+) to =O or -N< or -N=
+          Solution: move (+) from N or OH to an atom adjacent to (-) charge or to
+                    an atom that is not N.
+    
+    n(orig) < n(revr) or nToBeRemovedByNormFromRevrs < 0 means:
+    -----------------------------------------------------------
+    - Too few protons were added by the Normalization to the Reconstructed Stucture
+      (a) n(orig) < 0 => protons were not added while they should have been added;
+          Solution: move (-) to O by replacing =O with -O(-)
+      (b) 0 <= n(orig) < n(revr) => too many protons were removed
+
+   Note: it is critically important to takr into account cumbersome Normalization
+     Total Charge: if it is >= 0 then no H(+) may be removed from -OH or by ADP
+     However, if N(+) is present then ADP will always try to remove a proton
+*********************************************************************************************/
+int AddRemoveProtonsRestr( inp_ATOM *at, int num_atoms, int *num_protons_to_add,
+                           int nNumProtAddedByRestr, INCHI_MODE bNormalizationFlags,
+                           int num_tg, int nChargeRevrs, int nChargeInChI )
+{
+    int i, j, ret = 0;
+    int nAtTypeTotals[ATTOT_ARRAY_LEN];
+    int   num_prot = *num_protons_to_add;
+    int   type, mask, bSuccess, nTotCharge, nNumSuccess = 0;
+    int max_j_Aa=-1, max_j_Ar=-1;
+
+/* for the reference:
+
+#define FLAG_NORM_CONSIDER_TAUT      ( FLAG_PROTON_NPO_SIMPLE_REMOVED | \
+                                       FLAG_PROTON_NP_HARD_REMOVED    | \
+                                       FLAG_PROTON_AC_SIMPLE_ADDED    | \
+                                       FLAG_PROTON_AC_SIMPLE_REMOVED  | \
+                                       FLAG_PROTON_AC_HARD_REMOVED    | \
+                                       FLAG_PROTON_AC_HARD_ADDED      | \
+                                       FLAG_PROTON_SINGLE_REMOVED     | \
+                                       FLAG_PROTON_CHARGE_CANCEL    )
+
+#define FLAG_FORCE_SALT_TAUT         ( FLAG_PROTON_NP_HARD_REMOVED  | \
+                                       FLAG_PROTON_AC_HARD_REMOVED  | \
+                                       FLAG_PROTON_AC_HARD_ADDED    )
+
+*/
+    /* if ChargeRevrs > nChargeInChI then we should prevent proton addition or facilitate proton removal
+          a typical case is (=) on N or O instead of C(-)
+
+       if ChargeRevrs < nChargeInChI then we should prevent proton removal or facilitate proton addition 
+    */
+    
+    mark_at_type( at, num_atoms, nAtTypeTotals );
+    for ( i = nTotCharge = 0; i < num_atoms; i ++ ) {
+        nTotCharge += at[i].charge;
+    }
+    /* size for SimpleAddAcidicProtons() */
+    for ( max_j_Aa = 0; AaTypMask[2*max_j_Aa]; max_j_Aa ++ )
+        ;
+    /* size for SimpleRemoveAcidicProtons */
+    for ( max_j_Ar = 0; ArTypMask[2*max_j_Ar]; max_j_Ar ++ )
+        ;
+    if ( num_prot < 0 && nAtTypeTotals[ATTOT_TOT_CHARGE]-nNumProtAddedByRestr <= 0 ) {
+        /* remove proton(s) */
+        /* use test from SimpleAddAcidicProtons() to test whether removal of H(+) from =C-OH, etc. is correct */
+        for ( i = 0; i < num_atoms && num_prot; i ++ ) {
+            /* choose an atom */
+            if ( at[i].sb_parity[0] || at[i].p_parity || at[i].charge ||
+                 !at[i].num_H || at[i].radical || bHasChargedNeighbor( at, i ) ) {
+                continue;
+            }
+            /* try to remove a proton and check whether InChI would add it back */
+            at[i].charge --;
+            at[i].num_H  --;
+            type = GetAtomChargeType( at, i, NULL, &mask, 0 );
+            at[i].charge ++;
+            at[i].num_H  ++;
+
+            if ( type ) {
+                for ( bSuccess = 0, j = 0; j < max_j_Aa; j ++ ) {
+                    if ( bSuccess = (type & AaTypMask[2*j]) && (mask && AaTypMask[2*j+1]) ) {
+                        break; /* the proton may be added to this atom */
+                    }
+                }
+                if ( bSuccess ) {
+                    type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 1 ); /* subtract at[i] */
+                    at[i].charge --;
+                    at[i].num_H  --;
+                    type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 0 ); /* add changed at[i] */
+                    num_prot ++; /* success */
+                    nNumSuccess ++;
+                }
+            }
+        }
+    }
+    if ( num_prot < 0 && num_tg && nAtTypeTotals[ATTOT_TOT_CHARGE]-nNumProtAddedByRestr <= 0 ) {
+        /* alternative proton removal: O=C-NH => (-)O-C=N, O and N are taut. endpoints */
+        int endp2, centp, k, i0, k0;
+        for ( i = 0; i < num_atoms; i ++ ) {
+            /* choose an atom */
+            if ( !at[i].endpoint || at[i].sb_parity[0] || at[i].p_parity ||
+                 at[i].radical || at[i].charge || bHasChargedNeighbor( at, i ) ) {
+                continue;
+            }
+            /* looking for tautomeric =O */
+            if ( 1 != at[i].valence || BOND_TYPE_DOUBLE != at[i].bond_type[0] || at[i].num_H ||
+                 2 != get_endpoint_valence( at[i].el_number ) ) {
+                continue;
+            }
+            centp = at[i].neighbor[0];
+            if ( at[centp].sb_parity[0] || at[centp].p_parity || !is_centerpoint_elem( at[centp].el_number ) ) {
+                continue;
+            }
+            /* found a possible centerpoint, looking for -NH endpoint */
+            for ( k = 0; k < at[centp].valence; k ++ ) {
+                if ( at[centp].bond_type[k] != BOND_TYPE_SINGLE ) {
+                    continue;
+                }
+                endp2 = at[centp].neighbor[k];
+                if ( at[endp2].endpoint != at[i].endpoint ||
+                     !at[endp2].num_H || at[endp2].charge ||
+                     at[endp2].sb_parity[0] || at[endp2].p_parity ||
+                     at[endp2].valence != at[endp2].chem_bonds_valence ||
+                     3 != at[endp2].chem_bonds_valence + at[endp2].num_H ||
+                     3 != get_endpoint_valence( at[endp2].el_number ) ) {
+                    continue;
+                }
+                /* find bonds in reciprocal ajacency lists */
+                for ( i0 = 0; i0 < at[centp].valence && i != at[centp].neighbor[i0]; i0 ++ )
+                    ;
+                for ( k0 = 0; k0 < at[endp2].valence && centp != at[endp2].neighbor[k0]; k0 ++ )
+                    ;
+                if ( i0 == at[centp].valence || k0 == at[endp2].valence ) {
+                    return RI_ERR_PROGR;
+                }
+                /* -NH has been found */
+                type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 1 ); /* subtract at[i] */
+                type = GetAtomChargeType( at, endp2, nAtTypeTotals, &mask, 1 ); /* subtract at[endp2] */
+                
+                at[i].bond_type[0] --;
+                at[centp].bond_type[i0] --;
+                at[i].chem_bonds_valence --;
+                at[i].charge --;
+
+                at[endp2].bond_type[k0] ++;
+                at[centp].bond_type[k] ++;
+                at[endp2].chem_bonds_valence ++;
+                at[endp2].num_H --;
+
+                num_prot ++;
+                nNumSuccess ++;
+                
+                type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 0 ); /* add at[i] */
+                type = GetAtomChargeType( at, endp2, nAtTypeTotals, &mask, 0 ); /* add at[endp2] */
+            }
+        }
+    }
+    if ( num_prot > 0 ) {
+        /* add protons */
+        /* 1. Use test from SimpleRemoveAcidicProtons() to test whether addition of H(+) to =C-O(-), etc. is correct */
+        for ( i = 0; i < num_atoms && num_prot && nAtTypeTotals[ATTOT_TOT_CHARGE]-nNumProtAddedByRestr >= 0; i ++ ) {
+            /* choose an atom */
+            if ( at[i].sb_parity[0] || at[i].p_parity || at[i].num_H ||
+                 at[i].charge != -1 || at[i].radical || bHasChargedNeighbor( at, i ) ) {
+                continue;
+            }
+            /* try to add a proton and check whether InChI would remove it back */
+            at[i].charge ++;
+            at[i].num_H ++;
+            type = GetAtomChargeType( at, i, NULL, &mask, 0 );
+            at[i].charge --;
+            at[i].num_H --;
+            
+            if ( type ) {
+                for ( bSuccess = 0, j = 0; j < max_j_Ar; j ++ ) {
+                    if ( bSuccess = (type & ArTypMask[2*j]) && (mask && ArTypMask[2*j+1]) ) {
+                        break;
+                    }
+                }
+                if ( bSuccess ) {
+                    type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 1 ); /* subtract at[i] */
+                    at[i].charge ++;
+                    at[i].num_H  ++;
+                    type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 0 ); /* add changed at[i] */
+                    num_prot --; /* success */
+                    nNumSuccess ++;
+                }
+            }
+        }
+        /* 2. Use test from SimpleRemoveHplusNPO() */
+        for ( i = 0; i < num_atoms && num_prot; i ++ ) {
+            /* choose an atom */
+            if ( at[i].sb_parity[0] || at[i].p_parity ||
+                 at[i].charge || at[i].radical || bHasChargedNeighbor( at, i ) ) {
+                continue;
+            }
+            /* try to add a proton and check whether InChI would remove it back */
+            at[i].num_H ++;
+            at[i].charge ++;
+            bSuccess = (PR_SIMPLE_TYP & (type = GetAtomChargeType( at, i, NULL, &mask, 0 )) ) &&
+                       (PR_SIMPLE_MSK & mask );
+            at[i].num_H --;  /* failed */
+            at[i].charge --;
+            if ( bSuccess ) {
+                type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 1 ); /* subtract at[i] */
+                at[i].num_H ++;
+                at[i].charge ++;
+                type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 0 ); /* add changed at[i] */
+                num_prot --;     /* succeeded */
+                nNumSuccess ++;
+            }
+        }
+    }
+
+    if ( num_prot < 0 && (bNormalizationFlags & FLAG_PROTON_AC_HARD_ADDED) && 1 == num_tg &&
+         nAtTypeTotals[ATTOT_TOT_CHARGE]-nNumProtAddedByRestr <= 0 ) {
+        /* try to remove protons from tautomeric N (specific ADP must be present) */
+        int nNumAcceptors_DB_O=0, nNumDonors_SB_NH=0, num_max, num_success;
+        for ( i = 0; i < num_atoms; i ++ ) {
+            /* choose an atom */
+            if ( !at[i].endpoint || at[i].radical ||
+                 at[i].sb_parity[0] || at[i].p_parity || bHasChargedNeighbor( at, i ) ) {
+                continue;
+            }
+            type = GetAtomChargeType( at, i, NULL, &mask, 0 );
+            if ( (type & AA_HARD_TYP_CO) && (mask & AA_HARD_MSK_CO) ) {
+                nNumAcceptors_DB_O ++;
+            } else
+            if ( (type == ATT_ATOM_N ) && (mask == ATBIT_NP_H) && !at[i].charge &&
+                 at[i].valence == at[i].chem_bonds_valence ) {
+                nNumDonors_SB_NH ++;
+            }
+        }
+        num_max = inchi_min( nNumAcceptors_DB_O, nNumDonors_SB_NH );
+        for ( i = 0, num_success = 0; i < num_atoms && num_success < num_max && num_prot < 0; i ++ ) {
+            /* choose an atom */
+            if ( !at[i].endpoint|| at[i].radical || at[i].sb_parity[0] ||
+                 at[i].p_parity || bHasChargedNeighbor( at, i ) ) {
+                continue;
+            }
+            type = GetAtomChargeType( at, i, NULL, &mask, 0 );
+            if ( (type == ATT_ATOM_N ) && (mask == ATBIT_NP_H) && !at[i].charge &&
+                 at[i].valence == at[i].chem_bonds_valence ) {
+                type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 1 ); /* subtract at[i] */
+                at[i].num_H --;
+                at[i].charge --;
+                type = GetAtomChargeType( at, i, nAtTypeTotals, &mask, 0 ); /* add changed at[i] */
+                num_prot ++;
+                num_success ++;
+                nNumSuccess ++;
+            }
+        }
+    }
+/*exit_function:*/
+    *num_protons_to_add = num_prot;
+    return ret<0? ret : nNumSuccess;    
+}
+/*****************************************************************/
+int AddRemoveIsoProtonsRestr( inp_ATOM *at, int num_atoms, NUM_H num_protons_to_add[], int num_tg )
+{
+    int i, j, k, n, ret = 0;
+    int   nNumSuccess = 0, min_at, max_at, num_H, num_iso_H, num_expl_H, num_expl_iso_H;
+    int   iCurIso; /* 0=> 1H, 1=> D, 2=> T */
+    int   iCurMode, iCurMode1, iCurMode2; /* 0=> Not Endpoints, 1=> Endpoints */
+    static U_CHAR el_number_H = 0;
+
+    /* distribute isotopes from  heaviest to lightest; pick up atoms in order 1. Not endpoints; 2. Endpoints */
+    iCurMode1 = 0;
+    iCurMode2 = num_tg ? 1 : 0;
+    if ( !el_number_H ) {
+        el_number_H = (U_CHAR) get_periodic_table_number( "H" );
+    }
+    for ( iCurMode = iCurMode1; iCurMode <= iCurMode2; iCurMode ++ ) {
+        for ( iCurIso = 2; 0 <= iCurIso; iCurIso -- ) {
+            /* check for isotopic H to add */
+            if ( !num_protons_to_add[iCurIso] ) {
+                continue;
+            }
+            if ( 0 > num_protons_to_add[iCurIso] ) {
+                ret = RI_ERR_PROGR;
+                goto exit_function;
+            }
+            /* limits for atom scanning */
+            min_at = 0;
+            max_at = num_atoms;
+            /* cycle withio the limits */
+            for ( i = min_at; i < max_at && 0 < num_protons_to_add[iCurIso]; i ++ ) {
+                /* pick an atom */
+                if ( iCurMode ) {
+                    if ( at[i].endpoint )
+                        j = i;  /* atom number */
+                    else
+                        continue;
+                } else
+                if ( !at[i].endpoint &&
+                     1 == bHeteroAtomMayHaveXchgIsoH( at, i ) ) { /* atom number */
+                    j = i;
+                } else
+                if ( at[i].el_number == el_number_H && at[i].charge == 1 &&
+                    !at[i].valence && !at[i].radical && !at[i].iso_atw_diff ) {
+                    /* proton, not isotopic; make it isotopic */
+                    at[i].iso_atw_diff = 1 + iCurIso;
+                    num_protons_to_add[iCurIso] --;
+                    nNumSuccess ++;
+                    continue;
+                } else {
+                    continue;
+                }
+                /* j is the atom number */
+                /* count implicit H */
+                num_H      = at[j].num_H;
+                num_iso_H  = NUM_ISO_H(at,j);
+                while ( num_H > 0 && num_protons_to_add[iCurIso] > 0  ) {
+                    /* substitute one implicit H with an isotopic atom H */
+                    at[j].num_iso_H[iCurIso] ++;
+                    at[j].num_H --;
+                    num_protons_to_add[iCurIso] --;
+                    num_H --;
+                    num_iso_H ++;
+                    nNumSuccess ++;
+                }
+                /* count explicit H */
+                num_expl_H = num_expl_iso_H = 0;
+                for ( k = 0; k < at[j].valence && num_atoms <= (n=at[j].neighbor[k]); k ++ ) {
+                    num_expl_H     += (0 == at[n].iso_atw_diff);
+                    num_expl_iso_H += (0 != at[n].iso_atw_diff);
+                }
+                while ( num_expl_H > 0 && num_protons_to_add[iCurIso] > 0  ) {
+                    /* substitute one explicit H with an isotopic atom H */
+                    n = at[j].neighbor[num_expl_H];
+                    if ( at[n].iso_atw_diff ) {
+                        ret = RI_ERR_PROGR;
+                        goto exit_function;
+                    }
+                    at[n].iso_atw_diff = 1 + iCurIso;
+                    num_expl_H --;
+                    num_expl_iso_H ++;
+                    num_protons_to_add[iCurIso] --;
+                    nNumSuccess ++;
+                }
+            }
+        }
+    }
+exit_function:
+    return ret<0? ret : nNumSuccess;    
+}
+
+#endif
 

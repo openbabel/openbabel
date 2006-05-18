@@ -2,15 +2,21 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
 #ifndef __INCHI_COMPAT_H__
 #define __INCHI_COMPAT_H__
 
-/* compatibility */
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+extern "C" {
+#endif
+#endif
+
+    /* compatibility */
 
 #if( defined(__GNUC__) && defined(__MINGW32__) && __GNUC__ == 3 && __GNUC_MINOR__ == 2 && __GNUC_PATCHLEVEL__ == 0 && defined(_WIN32) ) 
 /* replace with the proper definition for GNU gcc & MinGW-2.0.0-3 (mingw special 20020817-1), gcc 3.2 core */
@@ -32,7 +38,10 @@
 #include <stdio.h>
  /* this #include provides size_t definition */
  /* implementation is located in util.c */
-#if ( !defined(_MSC_VER) || defined(__STDC__) && __STDC__ == 1 )
+/*#if ( !defined(_MSC_VER) || defined(__STDC__) && __STDC__ == 1 )*/
+
+#if ( defined(ADD_NON_ANSI_FUNCTIONS) || defined(__STDC__) && __STDC__ == 1 )
+
 /* support (VC++ Language extensions) = OFF && defined(INCHI_ANSI_ONLY) */
 int   memicmp (const void*, const void*, size_t);
 int   stricmp( const char *s1, const char *s2 );
@@ -45,6 +54,12 @@ char *_strdup( const char *string );
 
 #define inchi_max(a,b)  (((a)>(b))?(a):(b))
 #define inchi_min(a,b)  (((a)<(b))?(a):(b))
+
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+}
+#endif
+#endif
 
 
 #endif /* __INCHI_COMPAT_H__ */

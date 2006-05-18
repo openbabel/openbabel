@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -38,18 +38,18 @@ int All_SC_Same(  AT_RANK canon_rank1, /*  canonical number */
     AT_RANK r1 = pRankStack1[0][n1];
     int     iMax1 = (int)r1;
     int     i1, s1;
-    int     bFound=0, stereo_atom_parity;
+    int     bFound=0, stereo_atom_parity=-1;
 
     /*  find one stereo atom such that canon_rank1 can be mapped on it */
     for ( i1 = 1; i1 <= iMax1 && r1 == pRankStack2[0][s1=(int)pRankStack2[1][iMax1-i1]]; i1++ ) {
         if ( at[s1].stereo_bond_neighbor[0] ) {
-            bFound=0; /* at[s1] is not sp3-stereogenic: it belongs to stereobond */
+            bFound=0; /* at[s1] is not sp3-stereogenic: it belongs to a stereobond */
             break;
         } else
         if ( i1 == 1 ) {
             stereo_atom_parity = PARITY_VAL(at[s1].stereo_atom_parity);
             if ( !ATOM_PARITY_KNOWN(stereo_atom_parity) ) {
-                bFound=0;  /* at[s1] does not have KNOWN parity */
+                bFound=0;  /* at[s1] does not have a KNOWN parity */
                 break;
             }
         } else

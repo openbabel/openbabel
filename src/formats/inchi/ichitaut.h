@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -137,15 +137,10 @@ typedef struct tagTautomerGroup {
 
 /* offsets/num_t_groups within T_GROUP_INFO::tGroupNumber  */
 #define TGSO_CURR_ORDER  0  /* tGroupNumber:     current sorting order */
-#define TGSO_PREV_ORDER  1  /* tPrevGroupNumber: previous sorting order; symmetry rank sorting order */
-/* #define TGSO_CURR_IORDER 1 */ /* tiGroupNumber:  isotopic sort order */
-#define TGSO_SYMM_RANK   2  /* tSymmRank:     symmetry ranks (no isotopes) = min. ordering number > 0. */
-#define TGSO_SORT_RANK   3  /* tSortRank:     current rank (positive ordering number) */
-#define TGSO_SYMM_IORDER 4  /* tiGroupNumber: isotopic symmetry rank sorting order */
-#define TGSO_SYMM_IRANK  5  /* tiSymmRank:    isotopic symmetry ranks */
-#define TGSO_SORT_IRANK  6  /* tiSortRank:    current isotopic rank (positive ordering number) */
-#define TGSO_MARK_IRANK  7  /* tiMarkGroup:   the min. canonical number has been mapped on the endpoint */
-#define TGSO_TOTAL_LEN   8
+#define TGSO_SYMM_RANK   1  /* tSymmRank:     symmetry ranks (no isotopes) = min. ordering number > 0. */
+#define TGSO_SYMM_IORDER 2  /* tiGroupNumber: isotopic symmetry rank sorting order */
+#define TGSO_SYMM_IRANK  3  /* tiSymmRank:    isotopic symmetry ranks */
+#define TGSO_TOTAL_LEN   4
 
 /***************************************************/
 /* flags for t_group_info->tni.bNormalizationFlags */
@@ -169,10 +164,17 @@ typedef struct tagTautomerGroup {
                                        FLAG_PROTON_SINGLE_REMOVED     | \
                                        FLAG_PROTON_CHARGE_CANCEL    )
 
+#if( FIX_N_MINUS_NORN_BUG == 1 )
+#define FLAG_FORCE_SALT_TAUT         ( FLAG_PROTON_NP_HARD_REMOVED  | \
+                                       FLAG_PROTON_AC_HARD_REMOVED  | \
+                                       FLAG_PROTON_AC_HARD_ADDED    | \
+                                       FLAG_PROTON_CHARGE_CANCEL    )
+#else
 /* force salt tautomerism exploration */
 #define FLAG_FORCE_SALT_TAUT         ( FLAG_PROTON_NP_HARD_REMOVED  | \
                                        FLAG_PROTON_AC_HARD_REMOVED  | \
                                        FLAG_PROTON_AC_HARD_ADDED    )
+#endif
 
 typedef struct tagTautomerNormInfo {
     NUM_H       nNumRemovedExplicitH; /* keeps track of explicit H */

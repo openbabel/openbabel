@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -23,7 +23,7 @@
 #define ATOM_INFO_LEN         36 /* inf_ATOM output string ^123Al^+2H12..(+)/999/999/999/999: 32 chars */
 #define MAXVAL                20 /* max number of bonds per atom */
 #define MAX_STEREO_BONDS      3  /* max number of stereogenic bonds per atom */
-#define NUM_H_ISOTOPES        3  /* number of hydrogen isotopes */
+#define NUM_H_ISOTOPES        3  /* number of hydrogen isotopes: protium, deuterium, tritium */
 #define ATW_H                 1  /* hydrogen atomic weight */
 
 /* input bond type definition */

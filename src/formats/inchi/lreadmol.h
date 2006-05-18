@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -24,7 +24,10 @@ static int read_properties_block( MOL_CTAB* ctab, MOL_HEADER_BLOCK *pHdr, FILE *
 
 static int identify_sdf_label( char* inp_line, const char *pSdfLabel );
 static long extract_cas_rn( char *line );
-int RemoveNonPrintable( char *line );
+static int mol_copy_check_empty( char* dest, char* source, int len, char **first_space );
+static int mol_read_datum(void* data, int field_len, int  data_type, char** line_ptr);
+
+static int RemoveNonPrintable( char *line );
 
 
 /******/
@@ -71,8 +74,8 @@ int AddMOLfileError( char *pStrErr, const char *szMsg )
     }
     return 0;
 }
-/*************************************************************************/
-static int mol_copy_check_empty( char* dest, char* source, int len, char **first_space )
+/*************** static **********************************************************/
+int mol_copy_check_empty( char* dest, char* source, int len, char **first_space )
 {
     int i, c;   /* required len >= 0; dest must have at least len+1 bytes */
     if ( len > 0 )
@@ -84,8 +87,8 @@ static int mol_copy_check_empty( char* dest, char* source, int len, char **first
     *first_space = dest + (i+1); /* first blank or zero terminating byte in dest */
     return len; /* number of actually processed bytes; zero termination not included */
 }
-/*************************************************************************/
-static int mol_read_datum(void* data, int field_len, int  data_type, char** line_ptr)
+/************* static ************************************************************/
+int mol_read_datum(void* data, int field_len, int  data_type, char** line_ptr)
 {
 /* 1. 'field_len' for MOL_STRING_DATA does not include trailing zero,
  *     that is actual length of the string pointed by 'data'
@@ -228,8 +231,8 @@ static int mol_read_datum(void* data, int field_len, int  data_type, char** line
     }
     return ret;
 }
-/*************************************************************************/
-static int mol_read_hdr(MOL_HEADER_BLOCK *hdr, FILE* inp, char *pStrErr)
+/************* static ************************************************************/
+int mol_read_hdr(MOL_HEADER_BLOCK *hdr, FILE* inp, char *pStrErr)
 {   
     /* All input lines can have are up 80 characters */
     /* Header Block */
@@ -305,7 +308,7 @@ err_fin:
 
     return err;    
 }
-/***************************************************************/
+/********** static *****************************************************/
 int RemoveNonPrintable( char *line )
 {
     int i, c, num = 0;
@@ -320,8 +323,8 @@ int RemoveNonPrintable( char *line )
     }
     return num;
 }
-/***************************************************************/
-static int mol_read_counts_line( MOL_CTAB* ctab, FILE *inp, char *pStrErr )
+/************** static *************************************************/
+int mol_read_counts_line( MOL_CTAB* ctab, FILE *inp, char *pStrErr )
 {
     char *p;
     char line[MOLFILEINPLINELEN];
@@ -369,8 +372,8 @@ err_fin:
     return err;
 }
 
-/*************************************************************************/
-static int read_atom_block( MOL_CTAB* ctab, FILE *inp, int err, char *pStrErr )
+/************ static *************************************************************/
+int read_atom_block( MOL_CTAB* ctab, FILE *inp, int err, char *pStrErr )
 {
     char *p;
     char line[MOLFILEINPLINELEN];
@@ -499,8 +502,8 @@ static int read_atom_block( MOL_CTAB* ctab, FILE *inp, int err, char *pStrErr )
 /* err_fin: */
     return err;
 }
-/*************************************************************************/
-static int read_bonds_block( MOL_CTAB* ctab, FILE *inp, int err, char *pStrErr )
+/************ static *************************************************************/
+int read_bonds_block( MOL_CTAB* ctab, FILE *inp, int err, char *pStrErr )
 {
     char *p;
     char line[MOLFILEINPLINELEN];
@@ -564,8 +567,8 @@ static int read_bonds_block( MOL_CTAB* ctab, FILE *inp, int err, char *pStrErr )
     /* err_fin: */
     return err;
 }
-/*************************************************************************/
-static int read_stext_block( MOL_CTAB* ctab, FILE *inp, int err, char *pStrErr )
+/********** static ***************************************************************/
+int read_stext_block( MOL_CTAB* ctab, FILE *inp, int err, char *pStrErr )
 {
     /* just pass by all stext enties without attemp to interpret */
     char *p;
@@ -593,8 +596,8 @@ static int read_stext_block( MOL_CTAB* ctab, FILE *inp, int err, char *pStrErr )
 err_fin:
     return err;
 } 
-/*************************************************************************/
-static int read_properties_block( MOL_CTAB* ctab, MOL_HEADER_BLOCK *pHdr, FILE *inp, int err, char *pStrErr )
+/************ static *************************************************************/
+int read_properties_block( MOL_CTAB* ctab, MOL_HEADER_BLOCK *pHdr, FILE *inp, int err, char *pStrErr )
 {
     enum { MULTI_LINE_MODE_NO_MODE, MULTI_LINE_MODE_ISIS_ALIAS }; 
     char *p;
@@ -878,7 +881,7 @@ static int read_properties_block( MOL_CTAB* ctab, MOL_HEADER_BLOCK *pHdr, FILE *
 err_fin:
     return err;
 }
-/*************************************************************************/
+/************ global *************************************************************/
 MOL_DATA* delete_mol_data( MOL_DATA* mol_data )
 {
     if ( mol_data ) {
@@ -893,7 +896,7 @@ MOL_DATA* delete_mol_data( MOL_DATA* mol_data )
     }
     return mol_data;
 }
-/*************************************************************************/
+/************* global ************************************************************/
 /*  Comletely ingnore STEXT block, queries, and 3D features 
  */
 MOL_DATA* read_mol_file( FILE* inp, MOL_HEADER_BLOCK *OnlyHeaderBlock, MOL_CTAB *OnlyCtab,
@@ -995,14 +998,14 @@ err_fin:
 }
 
 /******************************************************************/
-char sdf_data_hdr_name[] = "NAME";
-char sdf_data_hdr_comm[] = "COMMENT";
+static const char sdf_data_hdr_name[] = "NAME";
+static const char sdf_data_hdr_comm[] = "COMMENT";
 enum { SDF_START, SDF_DATA_HEADER, SDF_DATA_HEADER_NAME
      , SDF_DATA_HEADER_COMMENT, SDF_DATA_HEADER_CAS
      , SDF_DATA_HEADER_USER, SDF_DATA_LINE
      , SDF_END_OF_DATA_ITEM, SDF_EMPTY_LINE, SDF_END_OF_DATA_BLOCK };
-/******************************************************************/
-static long extract_cas_rn( char *line )
+/********** static ********************************************************/
+long extract_cas_rn( char *line )
 {
     int i, j;
     i = line[0] == '-'? 1 : 0;
@@ -1017,8 +1020,8 @@ static long extract_cas_rn( char *line )
     line[j] = '\0';
     return strtol( line, NULL, 10 );
 }
-/******************************************************************/
-static int identify_sdf_label( char* inp_line, const char *pSdfLabel )
+/********** static ********************************************************/
+int identify_sdf_label( char* inp_line, const char *pSdfLabel )
 {
     char line[MOLFILEMAXLINELEN];
     char *p, *q;
@@ -1045,7 +1048,7 @@ static int identify_sdf_label( char* inp_line, const char *pSdfLabel )
     }
     return SDF_DATA_HEADER;
 }
-/******************************************************************/
+/************* global *****************************************************/
 int bypass_sdf_data_items( FILE* inp, long *cas_reg_no, char* comment,
                            int lcomment, char *name, int lname, int prev_err,
                            const char *pSdfLabel, char *pSdfValue, char *pStrErr )
@@ -1183,7 +1186,7 @@ got_data_line:
 
     return err;
 }
-/******************************************************************/
+/**************** global **************************************************/
 MOL_DATA* read_sdfile_segment(FILE* inp, MOL_HEADER_BLOCK *OnlyHeaderBlock, MOL_CTAB *OnlyCtab,
                               int bGetOrigCoord,
                               char *pname, int lname,
@@ -1211,7 +1214,7 @@ MOL_DATA* read_sdfile_segment(FILE* inp, MOL_HEADER_BLOCK *OnlyHeaderBlock, MOL_
     /* } */
     return mol_data;
 }
-/****************************************************************************/
+/******************* global *********************************************************/
 int CopyMOLfile(FILE *inp_file, long fPtrStart, long fPtrEnd, FILE *prb_file, long lNumb)
 {
     char line[MOLFILEINPLINELEN], *p;

@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -174,6 +174,9 @@ typedef struct tagAtom {
 #define BOND_MARK_ALT23       0x40
 #define BOND_MARK_ALT12NS     0x50  /* 1 or 2, non-stereo */
 #define BOND_MARK_MASK        0x70
+
+#define ACTUAL_ORDER(PBNS, IAT,IBOND, BTYPE)  ( ((PBNS) && (PBNS)->edge && (PBNS)->vert &&\
+    ((BTYPE)==BOND_ALT_123 || (BTYPE)==BOND_ALT_13 || (BTYPE)==BOND_ALT_23))? (PBNS)->edge[(PBNS)->vert[IAT].iedge[IBOND]].flow+BOND_TYPE_SINGLE:(BTYPE))
 
 
 #define BITS_PARITY        0x07  /* mask to retrieve half-bond parity */
