@@ -29,8 +29,6 @@ namespace OpenBabel
 	#define OBCOMMON
 #endif
 
-//global utility in xml.cpp;
-	std::streamsize gettomatch(std::istream& is, char* buf, std::streamsize count, const char* match);
 //forward declaration
 class XMLBaseFormat;
 

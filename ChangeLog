@@ -1,3 +1,10 @@
+2006-05-19 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/formats/xml/xml.cpp, xml.h (ReadStream): Simplify so that
+	input chunks up to '>' are taken, rather than trying to get up
+	to endtag. Remove gettomatch(). I hope this solves bug #1486678
+	and allows roundtrip test to run properly (but not tried). 
+	 
 2006-05-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/inchi/ : Update with InChI 1.01 pre-release.

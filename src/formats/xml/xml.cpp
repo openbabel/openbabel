@@ -292,84 +292,30 @@ bool XMLConversion::GetContentDouble(double& value)
 	return true;
 }
 
-//**********************************************
-/// Utility function to read an input stream until a specified string is found 
-streamsize gettomatch(istream& is, char* buf, streamsize count, const char* match) 
-{
-	//Reads chars from input stream into a buffer until either: 
-	//  count chars have been read or
-	//  the string match has been input.
-	//The buffer is NOT terminated by a '\0' char.
-	//If buf is NULL the characters are discarded.
-	//The number of characters read (and possibly stored in buf) is returned.  
+////////////////////////////////////////////////////////
+///Static callback function for xmlReaderForIO(). Reads up to the next '>', or len chars.
 
-	int matchlength = 0;
-	char lastchar = EOF; //value if no vaild match provided
-	if(match)
-	{
-		matchlength = strlen(match);
-		lastchar = match[matchlength-1];
-	}
-	//matchbuf is the length of the matched string and is filled  with
-	//input characters and cycles around when the start is reached.
-	//If buf is not NULL, it is filled with the input characters.
-	//When a character the same as the last character of the match string
-	//is detected the previous characters are compared with those in the match string.
-	char* matchbuf = new char[matchlength];
-	const char* matchbufend = matchbuf + matchlength;
-	char* p = matchbuf;
-		
-	char* pb = buf;
-	streambuf* prb = is.rdbuf();
-	int i;
-	for(i=0;i<count;++i)
-	{
-		*p = prb->sbumpc();
-		if(pb)
-			*pb++ = *p; //fill buffer if it exists
-		if(*p==EOF)
-			break;
-		if(*p++==lastchar)
-		{
-			const char* mptr = match + matchlength-2; //last char is already matched
-			const char* bptr = p-2;
-			while((*mptr-- == *bptr--) && (mptr >= match))
-			{
-				if(bptr==matchbuf-1)
-					bptr = matchbufend-1;
-			}
-			if(mptr<match)
-			{
-				i++;
-				break;//have found match
-			}
-		}
-		if(p==matchbufend)
-			p = matchbuf;
-	}
-	delete[] matchbuf; 
-	return i;
-}
-//***********************************************
-
-///Static callback function for xmlReaderForIO()
 int XMLConversion::ReadStream(void * context, char * buffer, int len)
 {
-	//Reads up to the next end tag specific to the object being input.
 	//TODO worry about non-ascii coding
 	XMLConversion* pConv = static_cast<XMLConversion*>(context);
 	istream* ifs = pConv->GetInStream();
 	if(ifs->eof())
 		return 0;
-	const char* endtag = NULL;
-	OBFormat* pFormat = pConv->GetInFormat();
-	XMLBaseFormat* pxmlFormat = static_cast<XMLBaseFormat*>(pFormat);
-	if(pxmlFormat)
-		endtag = pxmlFormat->EndTag();
+	
+	ifs->get(buffer, len+1, '>');
+	streamsize count = strlen(buffer);
 
-	return gettomatch(*ifs, buffer, len , endtag);//was + OrigBuffer - buffer
+	if(ifs->peek()=='>')
+	{
+		ifs->ignore();
+		buffer[count] = '>';
+		buffer[++count] = '\0';
+	}
+	return count;
 }
 
+//////////////////////////////////////////////////////////
 int XMLConversion::WriteStream(void * context, const char * buffer, int len)
 {
 	XMLConversion* pxmlConv = static_cast<XMLConversion*>(context);
@@ -429,11 +375,9 @@ objects ready to read the next one.
 This causes some difficulty when using libxml2 as the XML parser
 because it is a C application and does not have C++ input streams. 
 xmlReaderForIO is used which requests input data from the callback
-routine XMLConversion::ReadStream() which, using the utility routine
-gettomatch(), obtains data from the XML file no further than the end
-of an object, e.g. up to and including </molecule>. This ensures that
-the input stream is between objects after an object has been parsed,
-ready for the next one. 
+routine XMLConversion::ReadStream(). This inputs chunks of characters
+up to and including '>'. This ensures that the input stream is between 
+objects after an object has been parsed, ready for the next one. 
 
 Parsing XML
 At the start and end of each element the DoElement() and EndElement()
