@@ -1,3 +1,9 @@
+2006-05-21 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/formats/xml/xml.cpp (ReadXML): Output the error 
+	message from libxml2 when parser fails. Was previously seen
+	in unix builds (for some reason), but not in Windows.
+	
 2006-05-19 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/xml/xml.cpp, xml.h (ReadStream): Simplify so that

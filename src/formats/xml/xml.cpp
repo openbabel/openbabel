@@ -222,7 +222,13 @@ bool XMLConversion::ReadXML(XMLBaseFormat* pFormat, OBBase* pOb)
 
 	if(result==-1)
 	{
-		cerr << "XML Parser failed in " << GetInFilename() << endl;
+		xmlError* perr = xmlGetLastError();
+		if(perr && perr->level!=XML_ERR_NONE)
+		{
+			obErrorLog.ThrowError("XML Parser " + GetInFilename(),
+				perr->message, obError);
+		}
+		xmlResetError(perr);
 		GetInStream()->setstate(ios::eofbit);
 	}
 	return (result==0);// was result==0;
