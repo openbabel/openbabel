@@ -63,6 +63,7 @@ class Outputfile(object):
             self.obConversion.Write(molecule)
         self.total += 1
 
+
 class Molecule(object):
     """Represent a molecule."""
 
@@ -183,7 +184,24 @@ class Atom(object):
         Atom: 0 (0.0, 0.0, 0.0)
         """
         return "Atom: %d %s" % (self.atomicnum, self.coords.__str__())
-            
+
+class Smarts(object):
+    """A Smarts Pattern Matcher
+    
+    Example:
+    >>> mol = readstring("smi","CCN(CC)CC") # triethylamine
+    >>> smarts = Smarts("[#6][#6]") # Matches an ethyl group
+    >>> print smarts.findall(mol) 
+    [(1, 2), (4, 5), (6, 7)]
+    """
+    def __init__(self,smartspattern):
+        """Initialise the object."""
+        self.obsmarts = ob.OBSmartsPattern()
+        self.obsmarts.Init(smartspattern)
+    def findall(self,molecule):
+        """Find all matches of the SMARTS pattern to a molecule."""
+        self.obsmarts.Match(molecule.OBMol)
+        return [x for x in self.obsmarts.GetUMapList()]
         
 if __name__=="__main__":
     import doctest,pyopenbabel
