@@ -699,11 +699,13 @@ namespace OpenBabel
     _ptr++;
 
     //grab isotope information
-    for (;*_ptr && isdigit(*_ptr);_ptr++)
+    for (;*_ptr && isdigit(*_ptr) && (isoPtr <= 6); _ptr++)
       {
         symbol[isoPtr] = *_ptr;
         isoPtr++;
       }
+    if (isoPtr >= 6)
+      return false;
     isotope = atoi(symbol);
 
     //parse element data
