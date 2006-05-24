@@ -70,7 +70,7 @@ namespace OpenBabel
     vector<string> vs;
     char buffer[BUFF_SIZE];
     char tmp_str[BUFF_SIZE];
-    char patty_dir[BUFF_SIZE];
+    string patty_dir;
     OBSmartsPattern *sp;
 
     ifs.open(infile.c_str());
@@ -86,10 +86,10 @@ namespace OpenBabel
 	    //            exit(0);
 	  }
         else
-	  strcpy(patty_dir,getenv("BABEL_DATADIR"));
-        strcat(patty_dir,FILE_SEP_CHAR);
-        strcat(patty_dir,infile.c_str());
-        ifs1.open(patty_dir);
+	  patty_dir = getenv("BABEL_DATADIR");
+        patty_dir += FILE_SEP_CHAR;
+        patty_dir += infile;
+        ifs1.open(patty_dir.c_str());
         ifsP= &ifs1;
         //     if (!ifs1)
         //    {
@@ -112,7 +112,8 @@ namespace OpenBabel
             tokenize(vs,buffer," \t\n");
             if (vs.size() >= 2)
 	      {
-                strcpy(tmp_str,vs[0].c_str());
+                strncpy(tmp_str,vs[0].c_str(), sizeof(tmp_str) - 1);
+		tmp_str[sizeof(tmp_str) - 1] = '\0';
                 sp = new OBSmartsPattern;
                 sp->Init(tmp_str);
                 _sp.push_back(sp);
@@ -139,7 +140,8 @@ namespace OpenBabel
             tokenize(vs,buffer," \t\n");
             if (vs.size() >= 2)
 	      {
-                strcpy(tmp_str,vs[0].c_str());
+                strncpy(tmp_str,vs[0].c_str(), sizeof(tmp_str) - 1);
+		tmp_str[sizeof(tmp_str) - 1] = '\0';
                 sp = new OBSmartsPattern;
                 sp->Init(tmp_str);
                 _sp.push_back(sp);

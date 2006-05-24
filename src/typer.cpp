@@ -2,7 +2,7 @@
 typer.cpp - Open Babel atom typer.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -76,14 +76,14 @@ namespace OpenBabel
 
         sp = new OBSmartsPattern;
         if (sp->Init(vs[1]))
-	  _vinthyb.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
+          _vinthyb.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
         else
-	  {
+          {
             delete sp;
             sp = NULL;
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse INTHYB line in atom type table from atomtyp.txt", obInfo);
             return;
-	  }
+          }
       }
     else if (EQn(buffer,"IMPVAL",6))
       {
@@ -96,14 +96,14 @@ namespace OpenBabel
 
         sp = new OBSmartsPattern;
         if (sp->Init(vs[1]))
-	  _vimpval.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
+          _vimpval.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
         else
-	  {
+          {
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse IMPVAL line in atom type table from atomtyp.txt", obInfo);
             delete sp;
             sp = NULL;
             return;
-	  }
+          }
       }
     else if (EQn(buffer,"EXTTYP",6))
       {
@@ -115,14 +115,14 @@ namespace OpenBabel
           }
         sp = new OBSmartsPattern;
         if (sp->Init(vs[1]))
-	  _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
+          _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
         else
-	  {
+          {
             delete sp;
             sp = NULL;
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
             return;
-	  }
+          }
       }
   }
 
@@ -165,9 +165,9 @@ namespace OpenBabel
     for (i = _vexttyp.begin();i != _vexttyp.end();i++)
       if (i->first->Match(mol))
         {
-	  _mlist = i->first->GetMapList();
-	  for (j = _mlist.begin();j != _mlist.end();j++)
-	    mol.GetAtom((*j)[0])->SetType(i->second);
+          _mlist = i->first->GetMapList();
+          for (j = _mlist.begin();j != _mlist.end();j++)
+            mol.GetAtom((*j)[0])->SetType(i->second);
         }
   }
 
@@ -193,9 +193,9 @@ namespace OpenBabel
     for (i = _vinthyb.begin();i != _vinthyb.end();i++)
       if (i->first->Match(mol))
         {
-	  _mlist = i->first->GetMapList();
-	  for (j = _mlist.begin();j != _mlist.end();j++)
-	    mol.GetAtom((*j)[0])->SetHyb(i->second);
+          _mlist = i->first->GetMapList();
+          for (j = _mlist.begin();j != _mlist.end();j++)
+            mol.GetAtom((*j)[0])->SetHyb(i->second);
         }
   }
 
@@ -227,9 +227,9 @@ namespace OpenBabel
     for (i = _vimpval.begin();i != _vimpval.end();i++)
       if (i->first->Match(mol))
         {
-	  _mlist = i->first->GetMapList();
-	  for (j = _mlist.begin();j != _mlist.end();j++)
-	    mol.GetAtom((*j)[0])->SetImplicitValence(i->second);
+          _mlist = i->first->GetMapList();
+          for (j = _mlist.begin();j != _mlist.end();j++)
+            mol.GetAtom((*j)[0])->SetImplicitValence(i->second);
         }
 
     if (!mol.HasAromaticCorrected())
@@ -238,7 +238,7 @@ namespace OpenBabel
     for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
       {
         if (atom->GetImplicitValence() < atom->GetValence())
-	  atom->SetImplicitValence(atom->GetValence());
+          atom->SetImplicitValence(atom->GetValence());
       }
 
     // FF Come back to the initial flags
@@ -295,7 +295,8 @@ namespace OpenBabel
     tokenize(vs,buffer);
     if (!vs.empty() && vs.size() == 3)
       {
-        strcpy(temp_buffer,vs[0].c_str());
+        strncpy(temp_buffer,vs[0].c_str(), BUFF_SIZE - 1);
+	temp_buffer[BUFF_SIZE - 1] = '\0';
         sp = new OBSmartsPattern();
         if (sp->Init(temp_buffer))
 	  {

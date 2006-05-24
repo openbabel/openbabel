@@ -3,6 +3,14 @@
 	* src/dlhandler_unix.cpp (findFiles): Fix PR#1493706 problem with
 	misplaced NULL terminator.
 
+	* README: Updated to mention 2.1 development.
+
+	* Doxyfile: Make sure to exclude src/GUI/
+
+        * src/patty.cpp, src/typer.cpp, src/rotor.cpp, src/chains.cpp,
+        src/parsmart.cpp, src/data.cpp, src/atom.cpp: Updates to fix calls
+        to strcpy, replacing some static char* with std::string.
+
 2006-05-23  Craig James <cjames@emolecules.com>
 
 	* src/formats/smilesformat.cpp: Fixed a potential buffer

@@ -2,7 +2,7 @@
 data.cpp - Global data and resource file parsers.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -103,7 +103,7 @@ namespace OpenBabel
 
     if (buffer[0] != '#') // skip comment line (at the top)
       {
-        sscanf(buffer,"%d %s %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %s",
+        sscanf(buffer,"%d %5s %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %BUFF_SIZEs",
                &num,
                symbol,
                &Rcov,
@@ -510,6 +510,10 @@ namespace OpenBabel
     return(false);
   }
 
+  //! Translates atom types (to, from), checking for size of destination
+  //!  string and null-terminating as needed
+  //! \deprecated Because there is no guarantee on the length of an atom type
+  //!  you should consider using std::string instead
   bool OBTypeTable::Translate(char *to, const char *from)
   {
     if (!_init)
@@ -519,7 +523,8 @@ namespace OpenBabel
     string sto,sfrom;
     sfrom = from;
     rval = Translate(sto,sfrom);
-    strcpy(to,(char*)sto.c_str());
+    strncpy(to,(char*)sto.c_str(), sizeof(to) - 1);
+    to[sizeof(to) - 1] = '\0';
 
     return(rval);
   }
@@ -815,58 +820,59 @@ namespace OpenBabel
       return;
     _init = true;
 
-    char buffer[BUFF_SIZE],subbuffer[BUFF_SIZE];
+    string buffer, subbuffer;
     ifstream ifs1, ifs2, ifs3, ifs4, *ifsP;
     // First, look for an environment variable
     if (getenv(_envvar.c_str()) != NULL)
       {
-        strcpy(buffer,getenv(_envvar.c_str()));
-        strcat(buffer,FILE_SEP_CHAR);
+        buffer = getenv(_envvar.c_str());
+	buffer += FILE_SEP_CHAR;
 
         if (!_subdir.empty())
 	  {
-            strcpy(subbuffer,buffer);
-            strcat(subbuffer,_subdir.c_str());
-            strcat(subbuffer,FILE_SEP_CHAR);
+            subbuffer = buffer;
+            subbuffer += _subdir;
+            subbuffer += FILE_SEP_CHAR;
 	  }
 
-        strcat(buffer,(char*)_filename.c_str());
-        strcat(subbuffer,(char*)_filename.c_str());
+        buffer += _filename;
+        subbuffer += _filename;
 
-        ifs1.open(subbuffer);
+        ifs1.open(subbuffer.c_str());
         ifsP= &ifs1;
         if (!(*ifsP))
 	  {
-            ifs2.open(buffer);
+            ifs2.open(buffer.c_str());
             ifsP = &ifs2;
 	  }
       }
     // Then, check the configured data directory
     else // if (!(*ifsP))
       {
-        strcpy(buffer,_dir.c_str());
-        strcat(buffer,FILE_SEP_CHAR);
+        buffer = _dir;
+        buffer += FILE_SEP_CHAR;
 
-	strcpy(subbuffer,buffer);
-	strcat(subbuffer,BABEL_VERSION);
-	strcat(subbuffer,FILE_SEP_CHAR);
-        strcat(subbuffer,(char*)_filename.c_str());
+	subbuffer = buffer;
+	subbuffer += BABEL_VERSION;
+	subbuffer + FILE_SEP_CHAR;
 
-        strcat(buffer,(char*)_filename.c_str());
+        subbuffer += _filename;
+	buffer += _filename;
 
-        ifs3.open(subbuffer);
+        ifs3.open(subbuffer.c_str());
         ifsP= &ifs3;
         if (!(*ifsP))
 	  {
-            ifs4.open(buffer);
+            ifs4.open(buffer.c_str());
             ifsP = &ifs4;
 	  }
       }
 
+    char charBuffer[BUFF_SIZE];
     if ((*ifsP))
       {
-        while(ifsP->getline(buffer,BUFF_SIZE))
-	  ParseLine(buffer);
+        while(ifsP->getline(charBuffer,BUFF_SIZE))
+	  ParseLine(charBuffer);
       }
 
     else
@@ -877,9 +883,9 @@ namespace OpenBabel
 	  for (p1 = p2 = _dataptr;*p2 != '\0';p2++)
 	    if (*p2 == '\n')
 	      {
-		strncpy(buffer, p1, (p2 - p1));
+		strncpy(charBuffer, p1, (p2 - p1));
 		buffer[(p2 - p1)] = '\0';
-		ParseLine(buffer);
+		ParseLine(charBuffer);
 		p1 = ++p2;
 	      }
         }

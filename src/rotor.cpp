@@ -905,7 +905,8 @@ namespace OpenBabel
 
     if (!vs.empty() && vs.size() > 5)
       {
-        strcpy(temp_buffer,vs[0].c_str());
+	strncpy(temp_buffer,vs[0].c_str(), sizeof(temp_buffer) - 1);
+	temp_buffer[sizeof(temp_buffer) - 1] = '\0';
         //reference atoms
         for (i = 0;i < 4;i++)
 	  ref[i] = atoi(vs[i+1].c_str())-1;
@@ -1033,7 +1034,7 @@ namespace OpenBabel
         char buffer[BUFF_SIZE];
         if (!_quiet)
 	  {
-            sprintf(buffer,"%3d%3d%3d%3d %s",
+            snprintf(buffer,BUFF_SIZE,"%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],
                     ((*i)->GetSmartsString()).c_str());
             obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
@@ -1066,7 +1067,7 @@ namespace OpenBabel
         if (!_quiet)
 	  {
             char buffer[BUFF_SIZE];
-            sprintf(buffer,"%3d%3d%3d%3d %s",
+            snprintf(buffer,BUFF_SIZE,"%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],"sp3-sp3");
 	    obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
 	  }
@@ -1079,19 +1080,19 @@ namespace OpenBabel
 	  if (!_quiet)
             {
 	      char buffer[BUFF_SIZE];
-	      sprintf(buffer,"%3d%3d%3d%3d %s",
-		      ref[0],ref[1],ref[2],ref[3],"sp2-sp2");
-	      obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
+	      snprintf(buffer,BUFF_SIZE,"%3d%3d%3d%3d %s",
+                      ref[0],ref[1],ref[2],ref[3],"sp2-sp2");
+              obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
             }
         }
       else //must be sp2-sp3
         {
-	  vals = _sp3sp2;
+          vals = _sp3sp2;
 
-	  if (!_quiet)
+          if (!_quiet)
             {
-	      char buffer[BUFF_SIZE];
-	      sprintf(buffer,"%3d%3d%3d%3d %s",
+              char buffer[BUFF_SIZE];
+              snprintf(buffer,BUFF_SIZE,"%3d%3d%3d%3d %s",
 		      ref[0],ref[1],ref[2],ref[3],"sp2-sp3");
 	      obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
             }
