@@ -488,6 +488,7 @@ EXCLUDE                = src/main.cpp \
                          src/babelconfig.h \
                          src/config.h \
                          src/formats/ \
+			 src/GUI/ \
                          src/zipstreamimpl.h \
                          src/zipstream.h
 
