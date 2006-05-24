@@ -1,3 +1,19 @@
+2006-05-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/dlhandler_unix.cpp (findFiles): Fix PR#1493706 problem with
+	misplaced NULL terminator.
+
+2006-05-23  Craig James <cjames@emolecules.com>
+
+	* src/formats/smilesformat.cpp: Fixed a potential buffer overflow
+	when parsing SMILES.
+
+2006-05-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/formats/inchi/ : Update with InChI 1.01 pre-release.
+
+        * src/formats/inchi_api.h: Ditto.
+
 2006-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp (GetMolWt): Make sure to include implicit hydrogens

@@ -70,7 +70,7 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
     {
       strncpy(buffer,getenv("BABEL_LIBDIR"), BUFF_SIZE - 1);
       // add a trailing NULL just in case
-      buffer[BUFF_SIZE] = '\0';
+      buffer[BUFF_SIZE - 1] = '\0';
       
       OpenBabel::tokenize(vs, buffer, "\r\n\t :");
       
