@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -724,6 +724,7 @@ int GetNeutralRepsIfNeeded( AT_NUMB *pri, AT_NUMB *prj, inp_ATOM *at, int num_at
     if ( (c_point = at[ri].c_point) && (c_point == at[rj].c_point) && 
          (at[ri].charge == 1 || at[rj].charge == 1) && cgi && cgi->num_c_groups > 0 ) {
         /* at[ri] and at[rj] belong to the same charge group, at least one is charged */
+        /* MS VC++ 2005 reports unreachable code here ??? */
         for ( k = 0; k < cgi->num_c_groups; k ++ ) {
             if ( cgi->c_group[k].nGroupNumber == c_point ) {
                 /* cgi->c_group[k] is found to be this charge group */
@@ -2291,6 +2292,7 @@ int MarkSaltChargeGroups ( inp_ATOM *at, int num_atoms, S_GROUP_INFO *s_group_in
         }
 #endif
         nNumCandidates = 0; /* always recalculate 2004-03-22 */
+        num_tested = 0;
 
         if ( nNumCandidates == 0 ) {
             for ( i = 0, nNumCandidates = nNumOtherCandidates = nNumPOnlyCandidates = 0; i < num_atoms; i ++ ) {
@@ -2353,7 +2355,6 @@ int MarkSaltChargeGroups ( inp_ATOM *at, int num_atoms, S_GROUP_INFO *s_group_in
            SALT_DONOR_Neg to SALT_ACCEPTOR  : long distance migration of negative charges
            SALT_DONOR_H   to SALT_ACCEPTOR  : long distance migration of H-atoms
         */
-        num_tested = 0;
         do {
             nNumChanges = 0;
             for ( i1 = 0; i1 < nNumCandidates; i1 ++ ) {
@@ -2944,7 +2945,10 @@ int MarkTautomerGroups( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info,
     int *pnum_t, max_num_t, bIgnoreIsotopic;
     ENDPOINT_INFO eif1, eif2;
     int nErr = 0;
-#define ALLOWED_EDGE(PBNS, IAT,IBOND)  ( !PBNS || !PBNS->edge || !PBNS->vert || !PBNS->edge[PBNS->vert[IAT].iedge[IBOND]].forbidden)
+#define ALLOWED_EDGE(PBNS, IAT,IBOND)  ( !(PBNS) || !(PBNS)->edge || !(PBNS)->vert || !(PBNS)->edge[(PBNS)->vert[IAT].iedge[IBOND]].forbidden)
+#define ACTUAL_ORDER(PBNS, IAT,IBOND, BTYPE)  ( ((PBNS) && (PBNS)->edge && (PBNS)->vert &&\
+    ((BTYPE)==BOND_ALT_123 || (BTYPE)==BOND_ALT_13 || (BTYPE)==BOND_ALT_23))? (PBNS)->edge[(PBNS)->vert[IAT].iedge[IBOND]].flow+BOND_TYPE_SINGLE:(BTYPE))
+
 
     if ( !t_group_info || !(t_group_info->bTautFlags & TG_FLAG_TEST_TAUT__ATOMS) )
         return 0;
@@ -2984,6 +2988,9 @@ int MarkTautomerGroups( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info,
             /*  1st endpoint candidate found. Find centerpoint candidate */
             for ( j = 0; j < at[i].valence; j ++ ) {
                 bond_type   = (int)at[i].bond_type[j] & ~BOND_MARK_ALL;
+#if( FIX_BOND23_IN_TAUT == 1 )
+                bond_type = ACTUAL_ORDER(pBNS,i,j,bond_type);
+#endif
                 centerpoint = (int)at[i].neighbor[j];  /*  a centerpoint candidate */
                 if ( (bond_type == BOND_DOUBLE ||
                       bond_type == BOND_ALTERN ||
@@ -3000,13 +3007,13 @@ int MarkTautomerGroups( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info,
                     for ( k = 0, nNumEndPoints = 0, nNumBondPos = 0; k < at[centerpoint].valence; k ++ ) {
                         endpoint = at[centerpoint].neighbor[k]; /*  endpoint candidate */
                         bond_type    = (int)at[centerpoint].bond_type[k] & ~BOND_MARK_ALL;
+#if( FIX_BOND23_IN_TAUT == 1 )
+                        bond_type = ACTUAL_ORDER(pBNS,centerpoint,k,bond_type);
+#endif
                         bTautBond    =
                         bNonTautBond =
                         bAltBond     =
                         bPossiblyEndpoint = 0;
-                        if ( !( !pBNS || !pBNS->edge || !pBNS->vert || !pBNS->edge[pBNS->vert[centerpoint].iedge[k]].forbidden) ) {
-                            continue;
-                        }
                         if ( !ALLOWED_EDGE(pBNS, centerpoint, k) ) {
                             continue;
                         } else
@@ -3597,9 +3604,9 @@ int set_tautomer_iso_sort_keys( T_GROUP_INFO *t_group_info )
  *        No previous t_group_info adjustment due to throwing out disconnected parts of
  *        the chemical structure is needed.
  *
- *  Note2: throw out t_groups containing negative charges only (IGNORE_TGROUP_WITHOUT_H==1)
+ *  Note2: throws out t_groups containing negative charges only (IGNORE_TGROUP_WITHOUT_H==1)
  *         (leave their tautomeric bonds unchanged)
- *  Note3: remove negative charges from other tautomeric groups
+ *  Note3: removes negative charges from other tautomeric groups
  *         and adjust counts of mobile atoms if permitted         (REMOVE_TGROUP_CHARGE==1)
  */
 int CountTautomerGroups( sp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info )
@@ -3789,6 +3796,198 @@ exit_function:
     }
     return ret;
 }
+#if( READ_INCHI_STRING == 1 )
+#if( INCLUDE_NORMALIZATION_ENTRY_POINT == 1 )
+/********************************************************************************/
+int CountTautomerGroupsInpAt( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info )
+{
+    int i, j, ret = 0, nNumEndpoints, max_t_group, num_groups_noH;
+
+    AT_NUMB    nGroupNumber, nNewGroupNumber, *nCurrEndpointAtNoPos = NULL;
+    
+    T_GROUP   *t_group;
+    int        num_t;
+    /* int bIgnoreIsotopic, max_num_t; */
+    AT_NUMB   *nTautomerGroupNumber        = NULL;
+    AT_NUMB   *nEndpointAtomNumber         = NULL;
+    AT_NUMB   *tGroupNumber  = NULL;
+    
+    if ( !t_group_info || !t_group_info->t_group || 0 >= t_group_info->max_num_t_groups ) {
+        return 0; /* empty t-groups */
+    }
+    num_t           =  t_group_info->num_t_groups;
+    t_group         =  t_group_info->t_group;
+    /*
+      max_num_t       =  t_group_info->max_num_t_groups;
+      bIgnoreIsotopic =  t_group_info->bIgnoreIsotopic;
+     */
+    num_groups_noH  = 0;
+
+    /* the following 2 arrays are to be rebuilt here */
+    if ( t_group_info->nEndpointAtomNumber ) {
+        inchi_free ( t_group_info->nEndpointAtomNumber );
+        t_group_info->nEndpointAtomNumber = NULL;
+    }
+    if ( t_group_info->tGroupNumber ) {
+        inchi_free ( t_group_info->tGroupNumber );
+        t_group_info->tGroupNumber = NULL;
+    }
+    /*  find max_t_group */
+    for ( i = 0, max_t_group = 0; i < t_group_info->num_t_groups; i ++ ) {
+        if ( max_t_group < t_group[i].nGroupNumber )
+            max_t_group = t_group[i].nGroupNumber;
+    }
+    /*  allocate memory for temp storage of numbers of endpoints  */
+    if ( max_t_group &&
+         !(nTautomerGroupNumber = (AT_NUMB*) inchi_calloc( max_t_group+1, sizeof(nTautomerGroupNumber[0]) ) /*temp*/ ) ) {
+        goto err_exit_function; /*  program error: out of RAM */ /*   <BRKPT> */
+    }
+    
+    /*  count endpoints for each tautomer group */
+    for ( i = 0, nNumEndpoints = 0; i < num_atoms; i ++ ) {
+        if ( (j = at[i].endpoint) == 0 )
+            continue;
+        if ( j > max_t_group ) /*  debug only */
+            goto err_exit_function; /*  program error */ /*   <BRKPT> */
+        nTautomerGroupNumber[j] ++;
+        nNumEndpoints ++;
+    }
+    
+    if ( !nNumEndpoints ) {
+        goto exit_function; /*  not a tautomer */
+    }
+
+    /*  allocate temporary array */
+    if ( !(nEndpointAtomNumber  = (AT_NUMB*) inchi_calloc( nNumEndpoints, sizeof(nEndpointAtomNumber[0]) ) ) ||
+         !(nCurrEndpointAtNoPos = (AT_NUMB*) inchi_calloc( num_t, sizeof(nCurrEndpointAtNoPos[0]) ) /*temp*/ ) ) {
+        goto err_exit_function; /*   program error: out of RAM */ /*   <BRKPT> */
+    }
+    /*
+     * Remove missing endpoints from t_group. Since only one
+     * disconnected part is processed, some endpoints groups may have disappeared.
+     * Mark t_groups containing charges only for subsequent removal
+     */
+    for ( i = 0, nNewGroupNumber = 0; i < num_t; /*i ++*/ ) {
+        int bNoH = 0, nNumH;
+        nGroupNumber  = t_group[i].nGroupNumber;
+        for ( j = 1, nNumH = t_group[i].num[0]; j < T_NUM_NO_ISOTOPIC; j ++ ) {
+            nNumH -= (int)t_group[i].num[j];
+        }
+        if ( t_group[i].nNumEndpoints != nTautomerGroupNumber[(int)nGroupNumber]
+#if( IGNORE_TGROUP_WITHOUT_H == 1 )
+             || (bNoH = (t_group[i].num[0]==t_group[i].num[1]))  /* only for (H,-) t-groups; (+) t-groups are not removed */
+#endif
+           ) {
+            if ( !nTautomerGroupNumber[(int)nGroupNumber] || bNoH ) {
+                /*  the group belongs to another disconnected part of the structure or has only charges */
+                /*  Remove the group */
+                num_t --;
+                if ( i < num_t )
+                    memmove( t_group+i, t_group+i+1, (num_t-i)*sizeof(t_group[0]) );
+                if ( bNoH ) {
+                    /*  group contains no mobile hydrogen atoms, only charges. Prepare to remove it. */
+                    nTautomerGroupNumber[(int)nGroupNumber] = 0;
+                    num_groups_noH ++;
+                }
+                /*i --;*/
+            } else {
+                /*  different number of endpoints */
+                goto err_exit_function; /*  program error */ /*   <BRKPT> */
+            }
+        } else {
+            /*  renumber t_group and prepare to renumber at[i].endpoint */
+            nTautomerGroupNumber[(int)nGroupNumber] =
+            t_group[i].nGroupNumber                 = ++nNewGroupNumber; /*  = i+1 */
+            /*  get first group atom orig. number position in the nEndpointAtomNumber[] */
+            /*  and in the tautomer endpoint canon numbers part of the connection table */
+            t_group[i].nFirstEndpointAtNoPos = nCurrEndpointAtNoPos[i]  =
+                i? (t_group[i-1].nFirstEndpointAtNoPos+t_group[i-1].nNumEndpoints) : 0;
+            t_group[i].num[0] = nNumH;
+#if( REMOVE_TGROUP_CHARGE == 1 )
+            t_group[i].num[1]  = 0;  /* remove only (-) charges */
+#endif
+            /* -- wrong condition. Disabled.
+            if ( t_group[i].nGroupNumber != i + 1 ) { // for debug only
+                goto err_exit_function; // program error
+            }
+            */
+            i ++;
+        }
+    }
+    if ( num_t != nNewGroupNumber ) { /*  for debug only */
+        goto err_exit_function; /*  program error */ /*   <BRKPT> */
+    }
+    
+    /*  check if any tautomer group was left */
+    if ( !nNewGroupNumber ) {
+        if ( !num_groups_noH )
+            goto err_exit_function; /*  program error: not a tautomer */ /*   <BRKPT> */
+        else
+            goto exit_function;
+    }
+    /*
+     * an array for tautomer group sorting later, at the time of storing Connection Table
+     * Later the sorting consists out of 2 steps:
+     * 1) Sort t_group[i].nNumEndpoints endpoint atom ranks within each endpoint group
+     *    starting from t_group[i].nFirstEndpointAtNoPos; i = 0..t_group_info->num_t_groups-1
+     * 2) Sort the groups indexes t_group_info->tGroupNumber[]
+     */
+    if ( !(tGroupNumber=
+           (AT_NUMB*)inchi_calloc(nNewGroupNumber*TGSO_TOTAL_LEN, sizeof(tGroupNumber[0])))) {
+        goto err_exit_function; /*  out of RAM */
+    }
+    for ( i = 0; i < nNewGroupNumber; i ++ ) {
+        tGroupNumber[i] = (AT_NUMB)i; /*  initialization: original t_group number = (at[i]->endpoint-1) */
+    }
+    /*
+     * renumber endpoint atoms and save their orig. atom 
+     * numbers for filling out the tautomer part of the LinearCT.
+     * nCurrEndpointAtNoPos[j] is an index of the atom number in the nEndpointAtomNumber[]
+     */
+    for ( i = 0; i < num_atoms; i ++ ) {
+        if ( j = (int)at[i].endpoint ) {
+            j = (int)(at[i].endpoint = nTautomerGroupNumber[j])-1; /*  new t_group number */
+            if ( j >= 0 ) { /*  j=-1 in case of no mobile hydrogen atoms (charges only), group being removed */
+                if ( nCurrEndpointAtNoPos[j] >=   /*  debug only */
+                     t_group[j].nFirstEndpointAtNoPos+t_group[j].nNumEndpoints ) {
+                    goto err_exit_function; /*  program error */ /*   <BRKPT> */
+                }
+                nEndpointAtomNumber[(int)nCurrEndpointAtNoPos[j] ++] = (AT_NUMB)i;
+            } else {
+                nNumEndpoints --; /*  endpoint has been removed */
+            }
+        }
+    }
+    t_group_info->num_t_groups               = nNewGroupNumber;
+    t_group_info->nNumEndpoints              = nNumEndpoints;
+    t_group_info->nEndpointAtomNumber        = nEndpointAtomNumber;
+    t_group_info->tGroupNumber               = tGroupNumber; /* only the 1st segment filled */
+    inchi_free ( nTautomerGroupNumber );
+    inchi_free ( nCurrEndpointAtNoPos );
+    return nNumEndpoints + T_GROUP_HDR_LEN * nNewGroupNumber + 1; /*  nLenLinearCTTautomer */
+
+err_exit_function:
+    ret = CT_TAUCOUNT_ERR;
+exit_function:
+    /*  release allocated memory; set "no tautomeric group" */
+    if ( nEndpointAtomNumber )
+        inchi_free ( nEndpointAtomNumber );
+    if ( nTautomerGroupNumber )
+        inchi_free ( nTautomerGroupNumber );
+    if ( tGroupNumber )
+        inchi_free ( tGroupNumber );
+    if ( nCurrEndpointAtNoPos )
+        inchi_free ( nCurrEndpointAtNoPos );
+    t_group_info->nNumEndpoints = 0;
+    t_group_info->num_t_groups  = 0;
+    if ( !ret && ((t_group_info->tni.bNormalizationFlags & FLAG_NORM_CONSIDER_TAUT) ||
+                   t_group_info->nNumIsotopicEndpoints>1 && (t_group_info->bTautFlagsDone & (TG_FLAG_FOUND_ISOTOPIC_H_DONE | TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE))) ) {
+        ret = 1; /* only protons have been (re)moved or neitralization happened */
+    }
+    return ret;
+}
+#endif
+#endif
 /**************************************************************
  * tautomers: Compare for sorting
  ******************************************************************/

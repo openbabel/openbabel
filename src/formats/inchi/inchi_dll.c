@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -18,7 +18,6 @@
 #include <limits.h>
 #include <float.h>
 #include <math.h>
-
 #include "inpdef.h"
 #include "ichi.h"
 #include "strutil.h"
@@ -29,7 +28,6 @@
 
 #include "ichicomp.h"
 #include "inchi_api.h"
-#include "inchi_dll.h"
 
 /*************************************************************************
  *
@@ -49,37 +47,16 @@ int Extract0DParities( inp_ATOM *at, int nNumAtoms, inchi_Stereo0D *stereo0D,
                        int num_stereo0D, char *pStrErr, int *err );
 int parse_options_string ( char *cmd, const char *argv[], int maxargs );
 
+int InpAtom0DToInchiAtom( inp_ATOM *at, int num_atoms, inchi_OutputStruct *outStruct );
+
+
+int ExtractOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
+         inchi_Input *inp, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
+         ORIG_ATOM_DATA *orig_inp_data, long *num_inp, char *pStr, int nStrLen );
+
 /*************************************************************************/
 
 int bInterrupted = 0;
-
-#if( defined( _WIN32 ) && defined( _CONSOLE ) )
-
-#ifndef INCHI_ANSI_ONLY
-BOOL WINAPI MyHandlerRoutine(
-  DWORD dwCtrlType   /*   control signal type */
-  ) {
-    if ( dwCtrlType == CTRL_C_EVENT     ||
-         dwCtrlType == CTRL_BREAK_EVENT ||
-         dwCtrlType == CTRL_CLOSE_EVENT ||
-         dwCtrlType == CTRL_LOGOFF_EVENT ) {
-        bInterrupted = 1;
-        return TRUE;
-    }
-    return FALSE;
-}
-#endif
-int WasInterrupted(void) {
-#ifdef _DEBUG            
-    if ( bInterrupted ) {
-        int stop=1;  /*  for debug only <BRKPT> */
-    }
-#endif
-    return bInterrupted;
-}
-
-#endif
-
 
 /********************************************************************
  *
@@ -90,6 +67,23 @@ void INCHI_DECL FreeINCHI( inchi_Output *out )
 {
     if ( out->szInChI ) {
         inchi_free( out->szInChI );
+    }
+    if ( out->szLog ) {
+        inchi_free( out->szLog );
+    }
+    if ( out->szMessage ) {
+        inchi_free( out->szMessage );
+    }
+    memset( out, 0, sizeof(*out) );
+}
+/*******************************************************************/
+void INCHI_DECL FreeStructFromINCHI( inchi_OutputStruct *out )
+{
+    if ( out->atom ) {
+        inchi_free( out->atom );
+    }
+    if ( out->stereo0D ) {
+        inchi_free( out->stereo0D );
     }
     if ( out->szLog ) {
         inchi_free( out->szLog );
@@ -111,7 +105,6 @@ int bLibInchiSemaphore = 0;
 
 int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out )
 {
-
     STRUCT_DATA struct_data;
     STRUCT_DATA *sd = &struct_data;
     FILE *inp_file = NULL;
@@ -119,7 +112,8 @@ int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out )
     INCHI_FILE *output_file = inchi_file, *log_file = inchi_file+1, *prb_file = inchi_file+2;
     char szTitle[MAX_SDF_HEADER+MAX_SDF_VALUE+256];
 
-    int i, num_inp, num_err, num_output;
+    int i;
+    long num_inp, num_err;
     char      szSdfDataValue[MAX_SDF_VALUE+1];
     PINChI2     *pINChI[INCHI_NUM];
     PINChI_Aux2 *pINChI_Aux[INCHI_NUM];
@@ -167,7 +161,8 @@ int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out )
 #else
     _CrtSetReportMode(_CRT_WARN | _CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif
-    
+
+#if ( !defined(__STDC__) || __STDC__ != 1 )
     /* turn on floating point exceptions */
     {
         /* Get the default control word. */
@@ -182,15 +177,10 @@ int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out )
  
     }
 #endif
-
-
-#if( defined( _WIN32 ) && defined( _CONSOLE ) && !defined( INCHI_ANSI_ONLY ) )
-    if ( SetConsoleCtrlHandler( MyHandlerRoutine, 1 ) ) {
-        ConsoleQuit = WasInterrupted;
-    }
 #endif
-    
+
     memset( inchi_file, 0, sizeof(inchi_file) );
+    szTitle[0] = '\0';
 
 #if ( defined(REPEAT_ALL) && REPEAT_ALL > 0 )
 repeat:
@@ -200,7 +190,6 @@ repeat:
 
     num_inp    = 0;
     num_err    = 0;
-    num_output = 0;
     sd->bUserQuit  = 0;
 
     /* clear original input structure */
@@ -258,11 +247,6 @@ repeat:
     if ( 0 > nRet1 ) {
         goto exit_function;
     }
-#ifndef INCHI_LIBRARY
-    if ( !OpenFiles( &inp_file, &output_file, &log_file, &prb_file, ip ) ) {
-        goto exit_function;
-    }
-#endif
     if ( ip->bNoStructLabels ) {
         ip->pSdfLabel = NULL;
         ip->pSdfValue = NULL;
@@ -281,6 +265,8 @@ repeat:
     }
     pStr[0] = '\0';
 
+
+
     /**********************************************************************************************/
     /*  Main cycle */
     /*  read input structures and create their INChI */
@@ -290,27 +276,16 @@ repeat:
         memset ( pStructPtrs, 0, sizeof(pStructPtrs[0]) );
     }
 
-    /* === TOMORROW: remove while cycling and convert inp to orig_inp_data ==== */
-#ifdef INCHI_LIBRARY
+    /* === possible improvement: convert inp to orig_inp_data ==== */
     if ( !sd->bUserQuit && !bInterrupted )
-#else
-    while ( !sd->bUserQuit && !bInterrupted )
-#endif
     {
         if ( ip->last_struct_number && num_inp >= ip->last_struct_number ) {
             nRet = _IS_EOF; /*  simulate end of file */
             goto exit_function;
         }
 
-#ifndef INCHI_LIBRARY
-        /*  read one structure from input and display optionally it */
-        nRet = GetOneStructure( sd, ip, szTitle, inp_file, log_file, output_file, prb_file,
-                                orig_inp_data, &num_inp, pStr, nStrLen, pStructPtrs );
-#else
         nRet = ExtractOneStructure( sd, ip, szTitle, inp, log_file, output_file, prb_file,
                                 orig_inp_data, &num_inp, pStr, nStrLen );
-#endif
-
 
         if ( pStructPtrs ) {
             pStructPtrs->cur_fptr ++;
@@ -342,7 +317,6 @@ repeat:
                                      inp_file, log_file, output_file, prb_file,
                                      orig_inp_data, prep_inp_data,
                                      num_inp, pStr, nStrLen );
-        
         /*  free INChI memory */
         FreeAllINChIArrays( pINChI, pINChI_Aux, sd->num_components );
         /* free structure data */
@@ -362,7 +336,6 @@ repeat:
             continue;
 #endif
         }
-
     }
 
 exit_function:
@@ -399,39 +372,13 @@ exit_function:
         FreeCmlDoc( 1 );
 #endif
 
-#ifndef INCHI_LIBRARY
-    if ( inp_file && inp_file != stdin) {
-        fclose ( inp_file );
-    }
-    if ( prb_file ) {
-        fclose ( prb_file );
-    }
-    if ( output_file && output_file != stdout ) {
-        fclose( output_file );
-    }
-    
-    if ( log_file )
-    {
-        int hours, minutes, seconds, mseconds;
-        SplitTime( ulTotalProcessingTime, &hours, &minutes, &seconds, &mseconds );
-        my_fprintf( log_file, "Finished processing %d structure%s: %d error%s, processing time %d:%02d:%02d.%02d\n",
-                                num_inp, num_inp==1?"":"s",
-                                num_err, num_err==1?"":"s",
-                                hours, minutes, seconds,mseconds/10);
-    }
-
-    if ( log_file && log_file != stderr ) {
-        fclose( log_file );
-    }
-#endif
-
     if ( pStr ) {
         inchi_free( pStr );
     }
 
     for ( i = 0; i < MAX_NUM_PATHS; i ++ ) {
         if ( ip->path[i] ) {
-            inchi_free( (void*) ip->path[i] ); /*  cast deliberately discards 'const' qualifier */
+            inchi_free( (char*) ip->path[i] ); /*  cast deliberately discards 'const' qualifier */
             ip->path[i] = NULL;
         }
     }
@@ -445,16 +392,7 @@ exit_function:
     }
 #endif
 
-#ifndef INCHI_LIBRARY
-#if( bRELEASE_VERSION != 1 && defined(_DEBUG) )
-    if ( inp_file && inp_file != stdin ) {
-        user_quit("Press Enter to exit ?", ulDisplTime);
-    }
-#endif
-#endif
 
-
-#ifdef INCHI_LIBRARY
     /* output */
     if ( sd->pStrErrStruct[0] ) {
         if ( out && (out->szMessage = (char *)inchi_malloc( strlen(sd->pStrErrStruct) + 1 )) ) {
@@ -491,8 +429,6 @@ exit_function:
     if ( log_file->pStr    )
         inchi_free( log_file->pStr );
     
-
-#endif
     
 translate_RetVal:
 
@@ -507,6 +443,7 @@ translate_RetVal:
     default         : nRet = inchi_Ret_UNKNOWN; break; /* Unlnown program error */
     }
     bLibInchiSemaphore = 0;
+
     return nRet;
 }
 
@@ -607,9 +544,15 @@ inp_ATOM *CreateInpAtom( int num_atoms )
 /******************************************************************************************************/
 void FreeInpAtomData( INP_ATOM_DATA *inp_at_data )
 {
-    FreeInpAtom( &inp_at_data->at );
-    FreeInpAtom( &inp_at_data->at_fixed_bonds );
-    memset( inp_at_data, 0, sizeof(*inp_at_data) );
+    if ( inp_at_data ) {
+        if ( inp_at_data->at ) {
+            FreeInpAtom( &inp_at_data->at );
+        }
+        if ( inp_at_data->at_fixed_bonds ) {
+            FreeInpAtom( &inp_at_data->at_fixed_bonds );
+        }
+        memset( inp_at_data, 0, sizeof(*inp_at_data) );
+    }
 }
 /******************************************************************************************************/
 int CreateInpAtomData( INP_ATOM_DATA *inp_at_data, int num_atoms, int create_at_fixed_bonds )
@@ -728,19 +671,19 @@ void FreeOrigAtData( ORIG_ATOM_DATA *orig_at_data )
     if ( !orig_at_data )
         return;
     FreeInpAtom( &orig_at_data->at );
-    if ( orig_at_data->nCurAtLen ) {
+    if ( NULL != orig_at_data->nCurAtLen ) {
         inchi_free( orig_at_data->nCurAtLen );
     }
-    if ( orig_at_data->nOldCompNumber ) {
+    if ( NULL != orig_at_data->nOldCompNumber ) {
         inchi_free( orig_at_data->nOldCompNumber );
     }
-    if ( orig_at_data->szCoord ) {
+    if ( NULL != orig_at_data->szCoord ) {
         inchi_free( orig_at_data->szCoord );
     }
-    if ( orig_at_data->nEquLabels ) {
+    if ( NULL != orig_at_data->nEquLabels ) {
         inchi_free( orig_at_data->nEquLabels );
     }
-    if ( orig_at_data->nSortedOrder ) {
+    if ( NULL != orig_at_data->nSortedOrder ) {
         inchi_free( orig_at_data->nSortedOrder );
     }
     memset( orig_at_data, 0, sizeof(*orig_at_data) );
@@ -854,12 +797,18 @@ int SetAtomProperties( inp_ATOM *at, MOL_COORD *szCoord, inchi_Atom *ati, int a1
         break;
     default:
         {
-        char szRadicalType[16];
-        sprintf( szRadicalType, "%d", ati[a1].radical );
-        MOLFILE_ERR_SET (*err, 0, "Radical center type ignored:");
-        MOLFILE_ERR_SET (*err, 0, szRadicalType);
-        *err |= 8; /*  Unrecognized Radical replaced with non-radical */
-        cRadical = 0;
+            char szRadicalType[16];
+            int nRad = ati[a1].radical;
+            while ( nRad > RADICAL_TRIPLET ) {
+                nRad -= 2;
+            }
+            sprintf( szRadicalType, "%d->%d", ati[a1].radical, nRad );
+            MOLFILE_ERR_SET (*err, 0, "Radical center type replaced:");
+            MOLFILE_ERR_SET (*err, 0, szRadicalType);
+            cRadical = nRad;
+            if ( nRad < 0 ) {
+                *err |= 8; /*  Unrecognized Radical replaced with non-radical */
+            }
         }
         break;
     }
@@ -1236,9 +1185,141 @@ int SetAtomAndBondProperties( inp_ATOM *at, inchi_Atom *ati, int a1,
     return 0;
 }
 /****************************************************************************************/
+int InpAtom0DToInchiAtom( inp_ATOM *at, int num_atoms, inchi_OutputStruct *outStruct )
+{
+    int num_stereo_centers, num_stereo_bonds, num_stereo0D, i, m, m1, m2, n, ret=0;
+    /* count stereobonds, allenes. cumulenes. and stereoatoms */
+    num_stereo_centers = num_stereo_bonds = ret = 0;
+    
+    outStruct->atom = NULL;
+    outStruct->num_atoms = 0;
+    outStruct->stereo0D = NULL;
+    outStruct->num_stereo0D = 0;
+
+    for ( i = 0; i < num_atoms; i ++ ) {
+        if ( at[i].p_parity ) {
+            /* stereocenter */
+            num_stereo_centers ++;
+        } else {
+            for ( m = 0; m < MAX_NUM_STEREO_BONDS && at[i].sb_parity[m]; m ++ )
+                ;
+            num_stereo_bonds += m;
+        }
+    }
+    num_stereo_bonds /= 2;
+    num_stereo0D = num_stereo_bonds + num_stereo_centers;
+
+    if ( num_atoms > 0 ) {
+        outStruct->atom = (inchi_Atom *)inchi_calloc( num_atoms, sizeof( outStruct->atom[0] ) );
+    }
+    outStruct->num_atoms = num_atoms;
+    if ( num_stereo0D > 0 ) {
+        outStruct->stereo0D = (inchi_Stereo0D *)inchi_calloc( num_stereo0D, sizeof(outStruct->stereo0D[0]));
+    }
+    if ( num_atoms && !outStruct->atom || num_stereo0D > 0 && !outStruct->stereo0D ) {
+        /* allocation failed */
+        ret = -1;
+        goto exit_function;
+    }
+
+    /* copy atom properties */
+    for ( i = 0; i < num_atoms; i ++ ) {
+        outStruct->atom[i].num_bonds = at[i].valence;
+        for ( m = 0; m < at[i].valence; m ++ ) {
+            outStruct->atom[i].bond_type[m] = at[i].bond_type[m];
+            outStruct->atom[i].neighbor[m]  = at[i].neighbor[m];
+        }
+        outStruct->atom[i].charge = at[i].charge;
+        memcpy( outStruct->atom[i].elname, at[i].elname, ATOM_EL_LEN );
+        if ( at[i].iso_atw_diff ) {
+            outStruct->atom[i].isotopic_mass = ISOTOPIC_SHIFT_FLAG + (at[i].iso_atw_diff > 0? at[i].iso_atw_diff-1 : at[i].iso_atw_diff);
+        }
+        outStruct->atom[i].num_iso_H[0] = at[i].num_H;
+        for ( m = 0; m < NUM_H_ISOTOPES; m ++ ) {
+            outStruct->atom[i].num_iso_H[m+1] = at[i].num_iso_H[m];
+        }
+        outStruct->atom[i].radical = at[i].radical;
+    }
+    /* stereo */
+    for ( i = n = 0; i < num_atoms; i ++ ) {
+        if ( at[i].p_parity ) {
+            if ( n < num_stereo0D ) {
+                outStruct->stereo0D[n].central_atom = i;
+                outStruct->stereo0D[n].parity       = at[i].p_parity;
+                outStruct->stereo0D[n].type         = INCHI_StereoType_Tetrahedral;
+                for ( m = 0; m < MAX_NUM_STEREO_ATOM_NEIGH; m ++ ) {
+                    outStruct->stereo0D[n].neighbor[m] = at[i].p_orig_at_num[m] - 1;
+                }
+                n ++;
+            } else {
+                ret |= 1;
+                break;
+            }
+        } else {
+            for ( m1 = 0; m1 < MAX_NUM_STEREO_BONDS && at[i].sb_parity[m1]; m1 ++ ) {
+                
+                /* find the opposite atom at the other end of double bond, allene, or cumulene */
+                int chain[12], len = 0, nxt_neigh, nxt, cur;
+                cur = chain[len++] = i;
+                nxt_neigh = at[cur].sb_ord[m1];
+                
+                do {
+                    /* add next atom */
+                    chain[len ++] = nxt = at[cur].neighbor[nxt_neigh];
+                    nxt_neigh = (at[nxt].neighbor[0] == cur);
+                    cur = nxt;
+                    /* find nxt_neigh */
+                } while ( !at[cur].sb_parity[0] && len < 12 && at[cur].valence == 2 );
+
+                if ( at[cur].sb_parity[0] && len <= 4 && i < cur /* count bonds only one time */ ) {
+                    /* double bond, cumulene, or allene has been found */
+                    for ( m2 = 0; m2 < MAX_NUM_STEREO_BONDS && at[cur].sb_parity[m2]; m2 ++ ) {
+                        if ( chain[len-2] == at[cur].neighbor[(int)at[cur].sb_ord[m2]] ) {
+                            if ( n < num_stereo0D ) {
+                                int parity1 = at[i].sb_parity[m1];
+                                int parity2 = at[cur].sb_parity[m2];
+                                int parity;
+                                if ( (INCHI_PARITY_ODD == parity1 || INCHI_PARITY_EVEN == parity1) &&
+                                    (INCHI_PARITY_ODD == parity2 || INCHI_PARITY_EVEN == parity2) ) {
+                                    /* well-defined parity */
+                                    parity = (parity1==parity2)? INCHI_PARITY_EVEN : INCHI_PARITY_ODD;
+                                } else {
+                                    parity = inchi_max(parity1, parity2);
+                                }
+                                outStruct->stereo0D[n].central_atom = (len==3)? chain[1] : NO_ATOM;
+                                outStruct->stereo0D[n].parity       = parity;
+                                outStruct->stereo0D[n].type         = len == 3? INCHI_StereoType_Allene : INCHI_StereoType_DoubleBond;
+                                outStruct->stereo0D[n].neighbor[0]  = at[i].sn_orig_at_num[m1]-1;
+                                outStruct->stereo0D[n].neighbor[1]  = i;
+                                outStruct->stereo0D[n].neighbor[2]  = cur;
+                                outStruct->stereo0D[n].neighbor[3]  = at[cur].sn_orig_at_num[m2] - 1;
+                                n ++;
+                            } else {
+                                ret |= 1;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    outStruct->num_stereo0D = n;
+exit_function:
+    if ( ret < 0 ) {
+        if ( outStruct->atom ) inchi_free( outStruct->atom );
+        if ( outStruct->stereo0D ) inchi_free( outStruct->stereo0D );
+        outStruct->atom = NULL;
+        outStruct->stereo0D = NULL;
+        outStruct->num_atoms = 0;
+        outStruct->num_stereo0D = 0;
+    }
+    return ret;
+}
+/****************************************************************************************/
 int ExtractOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
          inchi_Input *inp, INCHI_FILE *log_file, INCHI_FILE *output_file,
-         INCHI_FILE *prb_file, ORIG_ATOM_DATA *orig_inp_data, int *num_inp,
+         INCHI_FILE *prb_file, ORIG_ATOM_DATA *orig_inp_data, long *num_inp,
          char *pStr, int nStrLen )
 {
     int         *err           = &sd->nStructReadError;
@@ -1389,18 +1470,553 @@ int INCHI_DECL GetStringLength( char *p )
         return 0;
     }
 }
+#define MAX_MSG_LEN 512
+/*************************************************************/
+int INCHI_DECL GetINCHIfromINCHI( inchi_InputINCHI *inpInChI, inchi_Output *out )
+{
+    STRUCT_DATA struct_data;
+    STRUCT_DATA *sd = &struct_data;
+    
+    INCHI_FILE inchi_file[3];
+    INCHI_FILE *output_file = inchi_file, *log_file = inchi_file+1, *input_file = inchi_file+2;
+    static char szMainOption[] = " ?InChI2InChI";
+
+    int i;
+    char      szSdfDataValue[MAX_SDF_VALUE+1];
+    unsigned long  ulDisplTime = 0;    /*  infinite, milliseconds */
+
+    INPUT_PARMS inp_parms;
+    INPUT_PARMS *ip = &inp_parms;
+
+    int             bReleaseVersion = bRELEASE_VERSION;
+    int   nRet = 0, nRet1;
+
+#if ( defined(REPEAT_ALL) && REPEAT_ALL > 0 )
+    int  num_repeat = REPEAT_ALL;
+#endif
+
+    const char *argv[INCHI_MAX_NUM_ARG+1];
+    int   argc;
+    char *szOptions = NULL;
+
+    if ( bLibInchiSemaphore ) {  /* does not work properly under sufficient stress */
+        return inchi_Ret_BUSY;
+    }
+    bLibInchiSemaphore = 1;
+
+#if( TRACE_MEMORY_LEAKS == 1 )
+    _CrtSetDbgFlag(_CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
+/* for execution outside the VC++ debugger uncomment one of the following two */
+#ifdef MY_REPORT_FILE 
+   _CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE );
+   _CrtSetReportFile( _CRT_WARN, MY_REPORT_FILE );
+   _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
+   _CrtSetReportFile( _CRT_ERROR, MY_REPORT_FILE );
+   _CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
+   _CrtSetReportFile( _CRT_ASSERT, MY_REPORT_FILE );
+#else
+    _CrtSetReportMode(_CRT_WARN | _CRT_ERROR, _CRTDBG_MODE_DEBUG);
+#endif
+    
+    /* turn on floating point exceptions */
+#if ( !defined(__STDC__) || __STDC__ != 1 )
+    {
+        /* Get the default control word. */
+        int cw = _controlfp( 0,0 );
+
+        /* Set the exception masks OFF, turn exceptions on. */
+        /*cw &=~(EM_OVERFLOW|EM_UNDERFLOW|EM_INEXACT|EM_ZERODIVIDE|EM_DENORMAL);*/
+        cw &=~(EM_OVERFLOW|EM_UNDERFLOW|EM_ZERODIVIDE|EM_DENORMAL);
+
+        /* Set the control word. */
+        _controlfp( cw, MCW_EM );
+ 
+    }
+#endif
+#endif
+
+    memset( out, 0, sizeof(*out) );
+
+#if ( defined(REPEAT_ALL) && REPEAT_ALL > 0 )
+repeat:
+    FreeINCHI( out );
+#endif
+
+    sd->bUserQuit  = 0;
+
+    /* clear original input structure */
+    memset( inchi_file, 0, sizeof(inchi_file) );
+    memset( sd,         0, sizeof(*sd) );
+    memset( ip,         0, sizeof(*ip) );
+    memset( szSdfDataValue    , 0, sizeof( szSdfDataValue    ) );
+    szMainOption[1] = INCHI_OPTION_PREFX;
+
+    if ( !inpInChI ) {
+        nRet = _IS_ERROR;
+        goto exit_function;
+    }
+
+    /* options */
+    if ( inpInChI ) {
+        int opt_len = (inpInChI->szOptions? strlen(inpInChI->szOptions) : 0) + sizeof(szMainOption) + 1;
+        szOptions = (char*)inchi_calloc( opt_len+1, sizeof(szOptions[0]) );
+        if ( szOptions ) {
+            if ( inpInChI->szOptions ) {
+                strcpy( szOptions, inpInChI->szOptions );
+            }
+            strcat( szOptions, szMainOption );
+            argc = parse_options_string ( szOptions, argv, INCHI_MAX_NUM_ARG );
+        } else {
+            nRet = _IS_FATAL;
+            goto translate_RetVal; /* emergency exit */
+        }
+    } else {
+        argc = 1;
+        argv[0] = "";
+        argv[1] = NULL;
+    }
+
+    if ( argc == 1
+#ifdef INCHI_LIBRARY
+        && (!inpInChI || !inpInChI->szInChI)
+#endif        
+        || argc==2 && ( argv[1][0]==INCHI_OPTION_PREFX ) &&
+        (!strcmp(argv[1]+1, "?") || !stricmp(argv[1]+1, "help") ) ) {
+        HelpCommandLineParms(log_file);
+        out->szLog = log_file->pStr;
+        memset( log_file, 0, sizeof(*log_file) );
+        nRet = _IS_EOF;
+        goto translate_RetVal;
+    }
+
+    nRet1 = ReadCommandLineParms( argc, argv, ip, szSdfDataValue, &ulDisplTime, bReleaseVersion, log_file );
+    if ( szOptions ) {
+        /* argv pointed to strings in szOptions */
+        inchi_free( szOptions );
+        szOptions = NULL;
+    }
+    /* INChI DLL specific */
+    ip->bNoStructLabels = 1;
+
+    if ( 0 > nRet1 ) {
+        goto exit_function;
+    }
+    if ( ip->bNoStructLabels ) {
+        ip->pSdfLabel = NULL;
+        ip->pSdfValue = NULL;
+    } else
+    if ( ip->nInputType == INPUT_INCHI_XML || ip->nInputType == INPUT_INCHI_PLAIN  ||
+         ip->nInputType == INPUT_CMLFILE || ip->nInputType == INPUT_INCHI ) {
+        /* the input may contain both the header and the label of the structure */
+        if ( !ip->pSdfLabel ) 
+            ip->pSdfLabel  = ip->szSdfDataHeader;
+        if ( !ip->pSdfValue )
+            ip->pSdfValue  = szSdfDataValue;
+    }
+    if ( ip->nInputType && ip->nInputType != INPUT_INCHI ) {
+        my_fprintf( log_file, "Input type set to INPUT_INCHI\n" );
+        ip->nInputType = INPUT_INCHI;
+    }
+
+    PrintInputParms( log_file, ip );
+    /*********************************/
+    /* InChI -> Structure conversion */
+    /*********************************/
+
+    /* input_file simulation */
+    input_file->pStr = inpInChI->szInChI;
+    input_file->nUsedLength = strlen(input_file->pStr)+1;
+    input_file->nAllocatedLength = input_file->nUsedLength;
+    input_file->nPtr = 0;
+    /* buffer for the message */
+    out->szMessage = (char *)inchi_calloc( MAX_MSG_LEN, sizeof(out->szMessage[0]));
+    if ( !out->szMessage ) {
+         my_fprintf( log_file, "Cannot allocate output message buffer.\n");
+        nRet = -1;
+    } else {
+        nRet = ReadWriteInChI( input_file, output_file, log_file,
+                               ip,  sd, NULL,  NULL, out->szMessage, MAX_MSG_LEN, NULL /*out->WarningFlags*/ );
+    }
+    if ( nRet >= 0 && output_file->pStr ) {
+        /* success */
+        char *p;
+        out->szInChI = output_file->pStr;
+        out->szAuxInfo = NULL;
+        for ( p = strchr(out->szInChI, '\n'); p; p = strchr(p+1, '\n') ) {
+            if ( !memcmp( p, "\nAuxInfo", 8 ) ) {
+                *p = '\0';            /* remove LF after INChI */
+                out->szAuxInfo = p+1; /* save pointer to AuxInfo */
+            } else
+            if ( out->szAuxInfo || !p[1]) {   /* remove LF after aux info or from the last char */
+                *p = '\0';
+                break;
+            }
+        }
+        output_file->pStr = NULL;
+    }
+    /*
+    out->szLog = log_file->pStr;
+    log_file->pStr   = NULL;
+    */
+exit_function:;
+
+#if( ADD_CMLPP == 1 )
+        /* BILLY 8/6/04 */
+        /* free CML memory */
+        FreeCml ();
+        FreeCmlDoc( 1 );
+#endif
+
+
+
+    for ( i = 0; i < MAX_NUM_PATHS; i ++ ) {
+        if ( ip->path[i] ) {
+            inchi_free( (char*) ip->path[i] ); /*  cast deliberately discards 'const' qualifier */
+            ip->path[i] = NULL;
+        }
+    }
+
+    SetBitFree( );
+
+
+#if ( defined(REPEAT_ALL) && REPEAT_ALL > 0 )
+    if ( num_repeat-- > 0 ) {
+        goto repeat;
+    }
+#endif
+
+
+#ifdef INCHI_LIBRARY
+    /* output */
+
+    if ( log_file->pStr && log_file->nUsedLength > 0 ) {
+        while ( log_file->nUsedLength && '\n' == log_file->pStr[log_file->nUsedLength-1] ) {
+            log_file->pStr[-- log_file->nUsedLength]  = '\0'; /* remove last LF */
+        }
+        if ( out ) {
+            out->szLog = log_file->pStr;
+            log_file->pStr = NULL;
+        }
+    }
+    if ( output_file->pStr )
+        inchi_free( output_file->pStr );
+    if ( log_file->pStr    )
+        inchi_free( log_file->pStr );
+
+#endif
+    
+translate_RetVal:
+    switch (nRet) { 
+    case -3         : nRet = inchi_Ret_ERROR  ; break; /* Error: no Structure has been created */
+    case -2         : nRet = inchi_Ret_ERROR  ; break; /* Error: no Structure has been created */
+    case -1         : nRet = inchi_Ret_FATAL  ; break; /* Severe error: no Structure has been created (typically; break; memory allocation failed) */
+    default         :
+        /*
+        if ( !outStruct->atom || !outStruct->num_atoms ) {
+            nRet = inchi_Ret_EOF;
+        } else {
+            int m,n,t=0;
+            for ( m=0; m < 2; m ++ ) {
+                for ( n=0; n < 2; n ++ ) {
+                    if ( outStruct->WarningFlags[m][n] ) {
+                        t ++;
+                    }
+                }
+            }
+            nRet = t? inchi_Ret_WARNING : inchi_Ret_OKAY;
+        }
+        */
+        break;
+    }
+
+    bLibInchiSemaphore = 0;
+    return nRet;
+}
+/*************************************************************/
+int INCHI_DECL GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct )
+{
+
+    STRUCT_DATA struct_data;
+    STRUCT_DATA *sd = &struct_data;
+    
+    INCHI_FILE inchi_file[3];
+    INCHI_FILE *output_file = inchi_file, *log_file = inchi_file+1, *input_file = inchi_file+2;
+    static char szMainOption[] = " ?InChI2Struct";
+
+
+    int i;
+    char      szSdfDataValue[MAX_SDF_VALUE+1];
+    unsigned long  ulDisplTime = 0;    /*  infinite, milliseconds */
+
+    INPUT_PARMS inp_parms;
+    INPUT_PARMS *ip = &inp_parms;
+
+    int             bReleaseVersion = bRELEASE_VERSION;
+    int   nRet = 0, nRet1;
+
+    /* conversion result */
+    inp_ATOM *at=NULL;
+    int num_at = 0;
+
+#if ( defined(REPEAT_ALL) && REPEAT_ALL > 0 )
+    int  num_repeat = REPEAT_ALL;
+#endif
+
+    const char *argv[INCHI_MAX_NUM_ARG+1];
+    int   argc;
+    char *szOptions = NULL;
+
+    if ( bLibInchiSemaphore ) {  /* does not work properly under sufficient stress */
+        return inchi_Ret_BUSY;
+    }
+    bLibInchiSemaphore = 1;
+
+#if( TRACE_MEMORY_LEAKS == 1 )
+    _CrtSetDbgFlag(_CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
+/* for execution outside the VC++ debugger uncomment one of the following two */
+#ifdef MY_REPORT_FILE 
+   _CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE );
+   _CrtSetReportFile( _CRT_WARN, MY_REPORT_FILE );
+   _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
+   _CrtSetReportFile( _CRT_ERROR, MY_REPORT_FILE );
+   _CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
+   _CrtSetReportFile( _CRT_ASSERT, MY_REPORT_FILE );
+#else
+    _CrtSetReportMode(_CRT_WARN | _CRT_ERROR, _CRTDBG_MODE_DEBUG);
+#endif
+    
+    /* turn on floating point exceptions */
+#if ( !defined(__STDC__) || __STDC__ != 1 )    
+    {
+        /* Get the default control word. */
+        int cw = _controlfp( 0,0 );
+
+        /* Set the exception masks OFF, turn exceptions on. */
+        /*cw &=~(EM_OVERFLOW|EM_UNDERFLOW|EM_INEXACT|EM_ZERODIVIDE|EM_DENORMAL);*/
+        cw &=~(EM_OVERFLOW|EM_UNDERFLOW|EM_ZERODIVIDE|EM_DENORMAL);
+
+        /* Set the control word. */
+        _controlfp( cw, MCW_EM );
+ 
+    }
+#endif
+#endif
+
+    memset( outStruct, 0, sizeof(*outStruct) );
+
+#if ( defined(REPEAT_ALL) && REPEAT_ALL > 0 )
+repeat:
+    FreeStructFromINCHI( &outStruct );
+#endif
+
+    sd->bUserQuit  = 0;
+
+    /* clear original input structure */
+    memset( inchi_file, 0, sizeof(inchi_file) );
+    memset( sd,         0, sizeof(*sd) );
+    memset( ip,         0, sizeof(*ip) );
+    memset( szSdfDataValue    , 0, sizeof( szSdfDataValue    ) );
+    szMainOption[1] = INCHI_OPTION_PREFX;
+
+    if ( !inpInChI ) {
+        nRet = _IS_ERROR;
+        goto exit_function;
+    }
+
+    /* options */
+    if ( inpInChI && inpInChI->szOptions ) {
+        int opt_len = (inpInChI->szOptions? strlen(inpInChI->szOptions) : 0) + sizeof(szMainOption) + 1;
+        szOptions = (char*)inchi_calloc( opt_len+1, sizeof(szOptions[0]) );
+        if ( szOptions ) {
+            strcpy( szOptions, inpInChI->szOptions );
+            strcat( szOptions, szMainOption );
+            argc = parse_options_string ( szOptions, argv, INCHI_MAX_NUM_ARG );
+        } else {
+            nRet = _IS_FATAL;
+            goto translate_RetVal; /* emergency exit */
+        }
+    } else {
+        argc = 1;
+        argv[0] = "";
+        argv[1] = NULL;
+    }
+
+    if ( argc == 1
+#ifdef INCHI_LIBRARY
+        && (!inpInChI || !inpInChI->szInChI)
+#endif        
+        || argc==2 && ( argv[1][0]==INCHI_OPTION_PREFX ) &&
+        (!strcmp(argv[1]+1, "?") || !stricmp(argv[1]+1, "help") ) ) {
+        HelpCommandLineParms(log_file);
+        outStruct->szLog = log_file->pStr;
+        memset( log_file, 0, sizeof(*log_file) );
+        nRet = _IS_EOF;
+        goto translate_RetVal;
+    }
+
+    nRet1 = ReadCommandLineParms( argc, argv, ip, szSdfDataValue, &ulDisplTime, bReleaseVersion, log_file );
+    if ( szOptions ) {
+        /* argv pointed to strings in szOptions */
+        inchi_free( szOptions );
+        szOptions = NULL;
+    }
+    /* INChI DLL specific */
+    ip->bNoStructLabels = 1;
+
+    if ( 0 > nRet1 ) {
+        goto exit_function;
+    }
+    if ( ip->bNoStructLabels ) {
+        ip->pSdfLabel = NULL;
+        ip->pSdfValue = NULL;
+    } else
+    if ( ip->nInputType == INPUT_INCHI_XML || ip->nInputType == INPUT_INCHI_PLAIN  ||
+         ip->nInputType == INPUT_CMLFILE || ip->nInputType == INPUT_INCHI ) {
+        /* the input may contain both the header and the label of the structure */
+        if ( !ip->pSdfLabel ) 
+            ip->pSdfLabel  = ip->szSdfDataHeader;
+        if ( !ip->pSdfValue )
+            ip->pSdfValue  = szSdfDataValue;
+    }
+    if ( ip->nInputType && ip->nInputType != INPUT_INCHI ) {
+        my_fprintf( log_file, "Input type set to INPUT_INCHI\n" );
+        ip->nInputType = INPUT_INCHI;
+    }
+
+    PrintInputParms( log_file, ip );
+    /*********************************/
+    /* InChI -> Structure conversion */
+    /*********************************/
+
+    /* input_file simulation */
+    input_file->pStr = inpInChI->szInChI;
+    input_file->nUsedLength = strlen(input_file->pStr)+1;
+    input_file->nAllocatedLength = input_file->nUsedLength;
+    input_file->nPtr = 0;
+    /* buffer for the message */
+    outStruct->szMessage = (char *)inchi_calloc( MAX_MSG_LEN, sizeof(outStruct->szMessage[0]));
+    if ( !outStruct->szMessage ) {
+         my_fprintf( log_file, "Cannot allocate output message buffer.\n");
+        nRet = -1;
+    } else {
+        nRet = ReadWriteInChI( input_file, output_file, log_file,
+                               ip,  sd, &at,  &num_at, outStruct->szMessage, MAX_MSG_LEN, outStruct->WarningFlags );
+    }
+    if ( nRet >= 0 && at && num_at ) {
+        /* success */
+        nRet = InpAtom0DToInchiAtom( at, num_at, outStruct );
+        if ( at ) {
+            inchi_free( at );
+            at = NULL;
+        }
+        if ( nRet < 0 ) {
+            my_fprintf( log_file, "Final structure conversion failed\n" );
+        }
+    }
+    outStruct->szLog = log_file->pStr;
+    log_file->pStr   = NULL;
+
+exit_function:;
+
+#if( ADD_CMLPP == 1 )
+        /* BILLY 8/6/04 */
+        /* free CML memory */
+        FreeCml ();
+        FreeCmlDoc( 1 );
+#endif
+
+
+
+    for ( i = 0; i < MAX_NUM_PATHS; i ++ ) {
+        if ( ip->path[i] ) {
+            inchi_free( (char*) ip->path[i] ); /*  cast deliberately discards 'const' qualifier */
+            ip->path[i] = NULL;
+        }
+    }
+
+    SetBitFree( );
+
+
+#if ( defined(REPEAT_ALL) && REPEAT_ALL > 0 )
+    if ( num_repeat-- > 0 ) {
+        goto repeat;
+    }
+#endif
+
+
+#ifdef INCHI_LIBRARY
+    /* output */
+
+    if ( log_file->pStr && log_file->nUsedLength > 0 ) {
+        while ( log_file->nUsedLength && '\n' == log_file->pStr[log_file->nUsedLength-1] ) {
+            log_file->pStr[-- log_file->nUsedLength]  = '\0'; /* remove last LF */
+        }
+        if ( outStruct ) {
+            outStruct->szLog = log_file->pStr;
+            log_file->pStr = NULL;
+        }
+    }
+    if ( output_file->pStr )
+        inchi_free( output_file->pStr );
+    if ( log_file->pStr    )
+        inchi_free( log_file->pStr );
+
+#endif
+    
+translate_RetVal:
+    switch (nRet) { 
+    case -3         : nRet = inchi_Ret_ERROR  ; break; /* Error: no Structure has been created */
+    case -2         : nRet = inchi_Ret_ERROR  ; break; /* Error: no Structure has been created */
+    case -1         : nRet = inchi_Ret_FATAL  ; break; /* Severe error: no Structure has been created (typically; break; memory allocation failed) */
+    default         :
+        if ( !outStruct->atom || !outStruct->num_atoms ) {
+            nRet = inchi_Ret_EOF;
+        } else {
+            int m,n,t=0;
+            for ( m=0; m < 2; m ++ ) {
+                for ( n=0; n < 2; n ++ ) {
+                    if ( outStruct->WarningFlags[m][n] ) {
+                        t ++;
+                    }
+                }
+            }
+            nRet = t? inchi_Ret_WARNING : inchi_Ret_OKAY;
+        }
+            break;
+    }
+
+    bLibInchiSemaphore = 0;
+    return nRet;
+}
+
+/********************************************************************/
+
 #if( defined( _WIN32 ) && defined( _MSC_VER ) && _MSC_VER >= 800 && defined(_USRDLL) && defined(INCHI_LINK_AS_DLL) )
     /* Win32 & MS VC ++, compile and link as a DLL */
 /*********************************************************/
 /*   C calling conventions export from Win32 dll         */
 /*********************************************************/
 /* prototypes */
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+extern "C" {
+#endif
+#endif
+
 int  cdecl_GetINCHI( inchi_Input *inp, inchi_Output *out );
 void cdecl_FreeINCHI( inchi_Output *out );
 int  cdecl_GetStringLength( char *p );
 int  cdecl_Get_inchi_Input_FromAuxInfo
              ( char *szInchiAuxInfo, int bDoNotAddH, InchiInpData *pInchiInp );
 void cdecl_Free_inchi_Input( inchi_Input *pInp );
+int cdecl_GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
+void cdecl_FreeStructFromINCHI( inchi_OutputStruct *outStruct );
+
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+}
+#endif
+#endif
 
 /* implementation */
 /* vc6_libinchi.def provides export withou cdecl_ prefixes */
@@ -1431,6 +2047,22 @@ void cdecl_Free_inchi_Input( inchi_Input *pInp )
 {
     Free_inchi_Input( pInp );
 }
+/********************************************************/
+int cdecl_GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct )
+{
+    return GetStructFromINCHI( inpInChI, outStruct );
+}
+/********************************************************/
+int cdecl_GetINCHIfromINCHI( inchi_InputINCHI *inpInChI, inchi_Output *out )
+{
+    return GetINCHIfromINCHI( inpInChI, out );
+}
+/********************************************************/
+void cdecl_FreeStructFromINCHI( inchi_OutputStruct *outStruct )
+{
+    FreeStructFromINCHI( outStruct );
+}
+
 #endif
 
 #if( defined(__GNUC__) && __GNUC__ >= 3 && defined(__MINGW32__) && defined(_WIN32) )
@@ -1438,16 +2070,31 @@ void cdecl_Free_inchi_Input( inchi_Input *pInp )
 /*********************************************************/
 /*   Pacal calling conventions export from Win32 dll     */
 /*********************************************************/
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+extern "C" {
+#endif
+#endif
 /* prototypes */
+
 int  PASCAL pasc_GetINCHI( inchi_Input *inp, inchi_Output *out );
 void PASCAL pasc_FreeINCHI( inchi_Output *out );
 int  PASCAL pasc_GetStringLength( char *p );
 int  PASCAL pasc_Get_inchi_Input_FromAuxInfo
              ( char *szInchiAuxInfo, int bDoNotAddH, InchiInpData *pInchiInp );
 void PASCAL pasc_Free_inchi_Input( inchi_Input *pInp );
+int PASCAL pasc_GetINCHIfromINCHI( inchi_InputINCHI *inpInChI, inchi_Output *out );
+void PASCAL pasc_FreeStructFromINCHI( inchi_OutputStruct *out );
+int PASCAL pasc_GetStructFromINCHI( inchi_InputINCHI *inp, inchi_OutputStruct *out );
+
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+}
+#endif
+#endif
 
 /* implementation */
-/* vc6_libinchi.def provides export withou PASCAL pasc_ prefixes */
+/* vc6_libinchi.def provides export without PASCAL pasc_ prefixes */
 /********************************************************/
 int PASCAL pasc_GetINCHI( inchi_Input *inp, inchi_Output *out )
 {
@@ -1474,6 +2121,21 @@ int PASCAL pasc_Get_inchi_Input_FromAuxInfo
 void PASCAL pasc_Free_inchi_Input( inchi_Input *pInp )
 {
     Free_inchi_Input( pInp );
+}
+/********************************************************/
+int PASCAL pasc_GetINCHIfromINCHI( inchi_InputINCHI *inpInChI, inchi_Output *out )
+{
+    return GetINCHIfromINCHI( inpInChI, out );
+}
+/********************************************************/
+void PASCAL pasc_FreeStructFromINCHI( inchi_OutputStruct *out )
+{
+    FreeStructFromINCHI( out );
+}
+/********************************************************/
+int PASCAL pasc_GetStructFromINCHI( inchi_InputINCHI *inp, inchi_OutputStruct *out )
+{
+    return GetStructFromINCHI( inp, out );
 }
 #endif 
 

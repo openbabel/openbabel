@@ -2,16 +2,27 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
 #ifndef __MODE_H__
 #define __MODE_H__
 
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+extern "C" {
+#endif
+#endif
+
+
 /* uncomment to unconditionally force ANSI-89 C, no Win32 specific code */
 #define INCHI_ANSI_ONLY
+
+#ifdef INCHI_ANSI_ONLY
+/* #define ADD_NON_ANSI_FUNCTIONS */ /* uncomment to add stricmp(), etc., see util.c */
+#endif
 
 /* uncomment to create a library for using INChI API described in inchi_api.h */
 #define INCHI_LIBRARY
@@ -40,9 +51,28 @@
  C4514: unreferenced inline/local function has been removed (C++)
  C4100: 'identifier' : unreferenced formal parameter
  C4786: 'identifier' : identifier was truncated to 'number' characters in the debug information
+ C4996: 'identifier' was declared deprecated
 ========================================================================
 */
-   #pragma warning( disable : 4706 4127 4514 4100 4786 )
+   #pragma warning( disable : 4706 4127 4514 4100 4786 4996 )
+#endif
+
+#ifndef SPECIAL_BUILD
+#define SPECIAL_BUILD 0
+#endif
+
+#if( SPECIAL_BUILD == 1 )
+#define SPECIAL_BUILD_STR  " (Modified Chemical Identifier - For Testing Only.)"
+#endif
+
+#ifdef  SPECIAL_BUILD_STR
+
+#define SPECIAL_BUILD_STRING SPECIAL_BUILD_STR
+
+#else
+
+#define SPECIAL_BUILD_STRING ", Software version 1.01"
+
 #endif
 
 /* Release */
@@ -80,6 +110,117 @@
 #if ( DISPLAY_DEBUG_DATA_C_POINT > 0 )
 #define DISPLAY_DEBUG_DATA         DISPLAY_DEBUG_DATA_C_POINT
 #endif
+
+#define INCLUDE_V1_FIXES         1 /*SPECIAL_BUILD*/ /* prohibit all fixes to get v1 exact behavior */
+
+#if( INCLUDE_V1_FIXES == 1 || SPECIAL_BUILD == 1 )
+
+/**************************/
+/* bug fixes in v1.00     */
+/**************************/
+#define FIX_ChCh_STEREO_CANON_BUG     1  /* 1=> (NEEDED) */
+#define ADD_ChCh_STEREO_CANON_CHK     0  /* 1 is NOT needed; let it always be 0 */
+#define FIX_ChCh_CONSTIT_CANON_BUG    1  /* 1=> (NEEDED) */
+#define FIX_EITHER_STEREO_IN_AUX_INFO 1  /* 1=> fix bug: Either stereobond direction in Aux_Info; 0=> do not fix */
+#define FIX_NORM_BUG_ADD_ION_PAIR     1  /* 1=> (NEEDED) fix bug: Miscount number of charges when creating an ion pair */
+#define FIX_REM_PROTON_COUNT_BUG      1  /* 1=> (NEEDED) check for number of actually removed protons and issue an error if mismatch */
+#define FIX_READ_AUX_MEM_LEAK         1
+#define FIX_READ_LONG_LINE_BUG        1  /* 1=> (NEEDED) prevent failure when reading AuxInfo and InChI is too long */
+#define FIX_N_V_METAL_BONDS_GPF       1  /* 1=> (NEEDED) InChI v1 GPF bug fix */
+#define BNS_RAD_SEARCH                1  /* 1=> prevent normalization failures due to radical centers */
+
+#else
+
+#define FIX_ChCh_STEREO_CANON_BUG     0
+#define ADD_ChCh_STEREO_CANON_CHK     0
+#define FIX_ChCh_CONSTIT_CANON_BUG    0
+#define FIX_EITHER_STEREO_IN_AUX_INFO 0
+#define FIX_NORM_BUG_ADD_ION_PAIR     0
+#define FIX_REM_PROTON_COUNT_BUG      0
+#define FIX_READ_AUX_MEM_LEAK         0
+#define FIX_READ_LONG_LINE_BUG        0
+#define FIX_N_V_METAL_BONDS_GPF       0
+#define BNS_RAD_SEARCH                0
+
+#endif
+
+/*******************************/
+/* bug fixes in post-v1.00     */
+/*******************************/
+#if ( SPECIAL_BUILD == 1 )
+
+#define FIX_ODD_THINGS_REM_Plus_BUG   1  /* 1 => fix bug: remove (1+) or (2+) charge from the central atom; */
+                                         /* see Table 1, types 4 & 5 in InChI Tech Manual */
+#define FIX_N_MINUS_NORN_BUG          1  /* to avoid numbering dependence of the normalization in case of */
+                                         /* >N(+)=-=-NH(-) added neutralization before removing positive charge */
+#define FIX_CANCEL_CHARGE_COUNT_BUG   1  /* 1 => fix bug in counting neutralization: only the last result is */
+                                         /* remembered; 0 => keep as it was in version 1 */
+#define FIX_2D_STEREO_BORDER_CASE     1  /* 1=> fix bug: 2D sp3 Stereo uncertainty in case of overlapping neighbors */
+#define FIX_REM_ION_PAIRS_Si_BUG      1  /* 1 => detect Si same way as C in replacing ions with higher bond  */
+                                         /* oreders and in fixing bonds. see Tables 2 and 5 in the InChI Tech */
+                                         /* Manual 0=> keep as it was in version 1. */
+#define FIX_STEREO_SCALING_BUG        1  /* 1=> fix bug that makes sp3 stereo undefined in case of bonds length > 20 */
+#define FIX_EMPTY_LAYER_BUG           0  /* output "e" if the component has no stereo in the current layer */
+                                         /* AND has stereo in the preceding layer */
+#define FIX_EITHER_DB_AS_NONSTEREO    0  /* 1=> do not count ALT bond wuth Unknown stereo as stereogenic to close ALT-circuit */
+/* new behavior as compared to v1 */
+#define FIX_BOND23_IN_TAUT            0  /* 1=> when normalization results in bond order 2-3 try to interpret the bond as double */
+/* not finished/tested */
+#define FIX_TACN_POSSIBLE_BUG         0  /* fix (t-group)--(atom)--([-]c-group) behavior */
+#define FIX_KEEP_H_ON_NH_ANION        0  /* in (de)protonation, disallow paths that convert -NH(-) into =N(-) */
+#define FIX_AVOID_ADP                 0  /* avoid aggressive deprotonation; may make the results depend on numbering */
+/* may change InChI */
+#define FIX_NUM_TG                    1  /* in case of 7 or less atoms not enough BNS vertices allocated */
+/* changes InChI for isothiocyanate */
+#define FIX_CPOINT_BOND_CAP2          1  /* allow the leftmost bond in isothiocyanate N(-)=C=S become double */
+
+#else
+
+#define FIX_ODD_THINGS_REM_Plus_BUG   0
+#define FIX_N_MINUS_NORN_BUG          0
+#define FIX_CANCEL_CHARGE_COUNT_BUG   0
+#define FIX_2D_STEREO_BORDER_CASE     0
+#define FIX_REM_ION_PAIRS_Si_BUG      0
+#define FIX_STEREO_SCALING_BUG        0
+#define FIX_EMPTY_LAYER_BUG           0
+#define FIX_EITHER_DB_AS_NONSTEREO    0
+#define FIX_BOND23_IN_TAUT            0
+#define FIX_TACN_POSSIBLE_BUG         0
+#define FIX_KEEP_H_ON_NH_ANION        0
+#define FIX_AVOID_ADP                 0
+/* may change InChI */
+#define FIX_NUM_TG                    0  /* increase number of t-groups for isothiocyanate */
+/* changes InChI for isothiocyanate */
+#define FIX_CPOINT_BOND_CAP2          0
+
+#endif
+
+/**************************/
+/* additions to v1.00     */
+/**************************/
+#if ( SPECIAL_BUILD == 1 )
+#define FIX_ADJ_RAD                 1  /* remove radicals from adjacent atoms, fix valences: -FIXRAD */
+#define ADD_PHOSPHINE_STEREO        1  /* make >P- stereogenic atoms: -SPXYZ */
+#define ADD_ARSINE_STEREO           1  /* make >As- stereogenic atoms: -SPXYZ */
+#else
+#define FIX_ADJ_RAD                 0
+#define ADD_PHOSPHINE_STEREO        1
+#define ADD_ARSINE_STEREO           1
+#endif
+
+#define SDF_OUTPUT_V2000            1  /* 1=>always output V2000 SDfile, 0=>only if needed */
+#define SDF_OUTPUT_DT               1  /* 1=> all option -SdfAtomsDT to output D and T into SDfile */
+
+#ifdef INCHI_LIB
+#define READ_INCHI_STRING           0  /* 1=> input InChI string and process it */
+#else
+#define READ_INCHI_STRING           1  /* 1=> input InChI string and process it */
+#endif
+
+/****************************************************/
+/* disabled extra external calls to InChI algorithm */
+/****************************************************/
+#define INCLUDE_NORMALIZATION_ENTRY_POINT  0
 
 /**************************/
 /* Normalization settings */
@@ -166,8 +307,24 @@
                                                 /* 1.02: 01-26-2004 fixed new isotopic tgroup canon bug, molfile merge bug */
 
 /*#define INCHI_VERSION       "1.0RC"*/             /* 02-07-2005 v1.0 Release Candidate */
+
+#if ( SPECIAL_BUILD == 1 )
+
+#define INCHI_VERSION       "1a"
+#define INCHI_NAME          "MoChI"
+#define INCHI_REC_NAME      "ReChI"
+
+/* #define INCHI_VERSION       "1"     */
+/* #define INCHI_NAME          "InChI" */
+
+#else
+
 #define INCHI_VERSION       "1"
 #define INCHI_NAME          "InChI"
+#define INCHI_REC_NAME      "ReChI"
+
+#endif
+
 #define INCHI_NAM_VER_DELIM "="
 
 /* constants and array sizes */
@@ -196,15 +353,23 @@
 
 #define TEST_RENUMB_ATOMS           0    /* 1 => heavy duty test by multiple renumbering of atoms */
 #define TEST_RENUMB_NEIGH           1    /* 1 => randomly permutate neighbors */
-#define TEST_RENUMB_SWITCH          0    /* 1 => output another (different) picture */
+#define TEST_RENUMB_SWITCH          0    /* 1 => display & output another (different) picture */
 #define TEST_RENUMB_ATOMS_SAVE_LONGEST 0 /* 1 => save the component with largest processing time into the problem file */
 
 #if ( defined(_WIN32) && defined(_DEBUG) && defined(_MSC_VER) /*&& !defined(INCHI_ANSI_ONLY)*/ )
 /* debug: memory leaks tracking */
 #ifndef INCHI_LIB
+
+#ifndef DO_NOT_TRACE_MEMORY_LEAKS
 #define TRACE_MEMORY_LEAKS          1    /* 1=>trace, 0 => do not trace (Debug only) */
 #else
+#define TRACE_MEMORY_LEAKS          0
+#endif
+
+#else
+
 #define TRACE_MEMORY_LEAKS          1    /* 1=>trace, **ALWAYS** =1 for INCHI_LIB */
+
 #endif
 
 #else /* not MSC and not Debug */
@@ -562,6 +727,13 @@
 #define TG_FLAG_VARIABLE_PROTONS         0x00000800   /* add/remove protons to neutralize */
 #define TG_FLAG_HARD_ADD_REM_PROTONS     0x00001000   /* add/remove protons to neutralize in hard way */
 #define TG_FLAG_POINTED_EDGE_STEREO      0x00002000   /* only pointed edge of stereo bond defines stereo */
+#if( FIX_ADJ_RAD == 1 )
+#define TG_FLAG_FIX_ADJ_RADICALS         0x00004000   /* remove adjacent radical-doubletes, fix valence */
+#endif
+#define TG_FLAG_PHOSPHINE_STEREO         0x00008000   /* add phosphine sp3 stereo */
+#define TG_FLAG_ARSINE_STEREO            0x00010000   /* add arsine sp3 stereo */
+#define TG_FLAG_H_ALREADY_REMOVED        0x00020000   /* processing structure restored from InChI */
+#define TG_FLAG_FIX_SP3_BUG              0x00040000   /* fix sp3 stereo bug: overlapping 2D stereo bond & coordinate scaling */
                                        
 /* output bTautFlags flags */          
                                        
@@ -586,6 +758,16 @@
 #define TG_FLAG_FOUND_SALT_CHARGES_DONE  0x00002000   /* not assigned: preprocessing detected possibility of salt-type tautomerism */
 #define TG_FLAG_FOUND_ISOTOPIC_H_DONE    0x00004000   /* preprocessing detected isotopic H on "good" heteroatoms or isotopic H(+) */
 #define TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE 0x00008000   /* preprocessing detected isotopic H on "good" heteroatoms or isotopic H(+) */
+#if( FIX_ADJ_RAD == 1 )
+#define TG_FLAG_FIX_ADJ_RADICALS_DONE    0x00010000
+#endif
+
+#if( READ_INCHI_STRING == 1 )
+#define READ_INCHI_OUTPUT_INCHI          0x00000001
+#define READ_INCHI_SPLIT_OUTPUT          0x00000002
+#define READ_INCHI_KEEP_BALANCE_P        0x00000004
+#define READ_INCHI_TO_STRUCTURE          0x00000008
+#endif
 
 
 #ifdef _WIN32
@@ -617,6 +799,7 @@ typedef struct tagOutputString {
 
 
 /* memory leaks tracking */
+#define INCHI_HEAPCHK          /* default: no explicit heap checking during the execution */
 
 #if( TRACE_MEMORY_LEAKS == 1 )
 #ifdef _DEBUG
@@ -632,9 +815,33 @@ typedef struct tagOutputString {
 #define e_inchi_free(a)     inchi_free(a)
 #endif
 
-/*#define  _CRTDBG_MAP_ALLOC*/
+/*#define  _CRTDBG_MAP_ALLOC*/  /* standard VC++ tool -- does not work with inchi_malloc(), etc */
 
 #include <crtdbg.h>
+
+/* to enable heap checking: #define CHECK_WIN32_VC_HEAP above #include "mode.h" in each source file or here */
+#ifdef CHECK_WIN32_VC_HEAP
+/* -- Confirms the integrity of the memory blocks allocated in the debug heap  -- */
+#undef INCHI_HEAPCHK
+#define INCHI_HEAPCHK \
+do { \
+    int tmp = _crtDbgFlag; \
+    _crtDbgFlag |= _CRTDBG_ALLOC_MEM_DF; \
+    _ASSERT( _CrtCheckMemory( ) ); \
+    _crtDbgFlag = tmp; \
+} while(0);
+
+/*  -- less thorough than _CrtCheckMemory() check: check minimal consistency of the heap -- */
+/*
+#include <malloc.h>
+#define INCHI_HEAPCHK \
+do {\
+   int heapstatus = _heapchk(); \
+   _ASSERT( heapstatus != _HEAPBADBEGIN && heapstatus != _HEAPBADNODE && heapstatus != _HEAPBADPTR); \
+} while(0);
+*/
+#endif
+
 
 #else
 #undef  TRACE_MEMORY_LEAKS
@@ -653,6 +860,29 @@ typedef struct tagOutputString {
 #ifndef inchi_free
 #define inchi_free     e_inchi_free
 #endif
+
+#ifndef e_inchi_malloc
+#define e_inchi_malloc malloc
+#endif
+#ifndef e_inchi_calloc
+#define e_inchi_calloc calloc
+#endif
+#ifndef e_inchi_free
+#define e_inchi_free(X) do{ if(X) free(X); }while(0)
+#endif
+
+#else /* not INCHI_MAIN */
+
+#ifndef inchi_malloc
+#define inchi_malloc   malloc
+#endif
+#ifndef inchi_calloc
+#define inchi_calloc   calloc
+#endif
+#ifndef inchi_free
+#define inchi_free(X)  do{ if(X) free(X); }while(0)
+#endif
+
 #endif /* INCHI_MAIN */
 
 /* allocation/deallocation */
@@ -701,6 +931,12 @@ typedef struct tagOutputString {
             }               \
         } else { (ERR) = 0; } \
     } while(0)
+
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+}
+#endif
+#endif
 
 
 #endif /* __MODE_H__ */

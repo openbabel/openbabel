@@ -59,12 +59,14 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libinchi_la_LIBADD =
-am_libinchi_la_OBJECTS = IChICan2.lo IChICano.lo IChIPrt1.lo \
-	IChIPrt2.lo IChIPrt3.lo IchiMak2.lo IchiMake.lo IchiNorm.lo \
-	IchiParm.lo IchiTaut.lo RunICHI.lo ichi_bns.lo ichicans.lo \
-	ichiisot.lo ichilnct.lo ichimap1.lo ichimap2.lo ichimap4.lo \
-	ichiqueu.lo ichiring.lo ichisort.lo ichister.lo inchi_dll.lo \
-	inchi_dll_main.lo strutil.lo util.lo
+am_libinchi_la_OBJECTS = ichi_bns.lo ichican2.lo ichicano.lo \
+	ichicans.lo ichiisot.lo ichilnct.lo ichimak2.lo ichimake.lo \
+	ichimap1.lo ichimap2.lo ichimap4.lo ichinorm.lo ichiparm.lo \
+	ichiprt1.lo ichiprt2.lo ichiprt3.lo ichiqueu.lo ichiread.lo \
+	ichiring.lo ichirvr1.lo ichirvr2.lo ichirvr3.lo ichirvr4.lo \
+	ichirvr5.lo ichirvr6.lo ichirvr7.lo ichisort.lo ichister.lo \
+	ichitaut.lo inchi_dll.lo inchi_dll_main.lo runichi.lo \
+	strutil.lo util.lo
 libinchi_la_OBJECTS = $(am_libinchi_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -215,27 +217,25 @@ target_alias = @target_alias@
 # Not sure if this is actually needed -GRH
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 lib_LTLIBRARIES = libinchi.la
-libinchi_la_LDFLAGS = -no-undefined
+libinchi_la_LDFLAGS = -no-undefined -version-info 0:1:0
 libinchi_la_SOURCES = \
-	IChICan2.c IChICano.c IChIPrt1.c IChIPrt2.c \
-	IChIPrt3.c IchiMak2.c IchiMake.c IchiNorm.c \
-	IchiParm.c IchiTaut.c RunICHI.c ichi_bns.c \
-	ichicans.c ichiisot.c ichilnct.c ichimap1.c \
-	ichimap2.c ichimap4.c ichiqueu.c ichiring.c \
-	ichisort.c ichister.c inchi_dll.c inchi_dll_main.c \
-	strutil.c util.c
+	ichi_bns.c ichican2.c ichicano.c ichicans.c ichiisot.c \
+	ichilnct.c ichimak2.c ichimake.c ichimap1.c ichimap2.c \
+	ichimap4.c ichinorm.c ichiparm.c ichiprt1.c ichiprt2.c \
+	ichiprt3.c ichiqueu.c ichiread.c ichiring.c ichirvr1.c \
+	ichirvr2.c ichirvr3.c ichirvr4.c ichirvr5.c ichirvr6.c \
+	ichirvr7.c ichisort.c ichister.c ichitaut.c inchi_dll.c \
+	inchi_dll_main.c runichi.c strutil.c util.c 
 
 libinchiincludedir = $(includedir)/inchi
 # Only install the required header to expose to the outside world
 libinchiinclude_HEADERS = inchi_api.h
 EXTRA_DIST = README.html COPYING.LIB \
-	aux2atom.h comdef.h extr_ct.h ichi.h ichi_bns.h \
-	ichicano.h ichicant.h ichicomn.h ichicomp.h \
-	ichidrp.h ichierr.h ichimain.h ichimake.h \
-	ichinorm.h ichiparm.h ichiring.h ichisize.h \
-	lreadmol.h mode.h strutil.h util.h inpdef.h \
-	ichister.h ichitaut.h ichitime.h \
-	inchi_dll.h inchi_dll_main.h
+	aux2atom.h comdef.h extr_ct.h ichi.h ichi_bns.h ichicano.h \
+	ichicant.h ichicomn.h ichicomp.h ichidrp.h ichierr.h ichimain.h \
+	ichimake.h ichinorm.h ichiparm.h ichiring.h ichirvrs.h ichisize.h \
+	ichister.h ichitaut.h ichitime.h inchi_dll_main.h inchicmp.h inpdef.h \
+	lreadmol.h mode.h strutil.h util.h
 
 all: all-am
 
@@ -306,30 +306,38 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChICan2.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChICano.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChIPrt1.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChIPrt2.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IChIPrt3.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiMak2.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiMake.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiNorm.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiParm.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IchiTaut.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RunICHI.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichi_bns.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichican2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichicano.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichicans.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichiisot.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichilnct.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichimak2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichimake.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichimap1.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichimap2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichimap4.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichinorm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichiparm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichiprt1.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichiprt2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichiprt3.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichiqueu.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichiread.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichiring.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichirvr1.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichirvr2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichirvr3.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichirvr4.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichirvr5.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichirvr6.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichirvr7.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichisort.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichister.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ichitaut.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchi_dll.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inchi_dll_main.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runichi.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strutil.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Plo@am__quote@
 

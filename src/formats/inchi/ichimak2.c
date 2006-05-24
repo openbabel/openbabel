@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -94,7 +94,7 @@ int GetHillFormulaCounts( U_CHAR *nAtom, S_CHAR *nNum_H, int num_atoms,
                           int *pnum_C, int *pnum_H, int *pnLen, int *pnNumNonHAtoms )
 {
     char szElement[4];
-    U_CHAR nPrevAtom = (U_CHAR)-1;
+    U_CHAR nPrevAtom = (U_CHAR)-2;
     int  bCarbon, bHydrogen, nElemLen, nFormLen, nNumNonHAtoms;
     int  mult, i, num_H, num_C;
 
@@ -210,7 +210,7 @@ int MakeHillFormula( U_CHAR *nAtom, int num_atoms,
     nLen       = 0;
     mult       = 0;
     bOvfl      = 0;
-    nPrevAtom  = (U_CHAR)-1; /*  non-existent number */
+    nPrevAtom  = (U_CHAR)-2; /*  non-existent number */
 
 
     if ( num_C ) {
@@ -958,8 +958,8 @@ int FillOutINChI( INChI *pINChI, INChI_Aux *pINChI_Aux,
     /*  Allocate and fill Hill formula */
     if ( !(pINChI->szHillFormula = AllocateAndFillHillFormula( pINChI ) ) ) {
         nErrorCode = 0;
-        ret = CT_OUT_OF_RAM;  /*   <BRKPT> */
-        pINChI->nErrorCode = pINChI_Aux->nErrorCode = CT_OUT_OF_RAM;
+        ret = CT_WRONG_FORMULA; /* CT_OUT_OF_RAM;*/  /*   <BRKPT> */
+        pINChI->nErrorCode = pINChI_Aux->nErrorCode = ret;
         goto exit_function;
     }
 

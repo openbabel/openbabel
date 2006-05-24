@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -11,6 +11,7 @@
 #define __INCHIMAIN_H__
 
 #define ESC_KEY       27
+#define INCHI_SEGM_BUFLEN  64000
 
 /********************************************************************/
 typedef struct tagStructData {
@@ -19,8 +20,8 @@ typedef struct tagStructData {
     int           nErrorType;
     int           nStructReadError;
     char          pStrErrStruct[STR_ERR_LEN];
-    long          fPtrStart;
-    long          fPtrEnd;
+    long          fPtrStart;  /* or number of processed structures */
+    long          fPtrEnd;    /* or number of errors */
     int           bXmlStructStarted;
     int           bUserQuit;
     int           bUserQuitComponent;
@@ -65,7 +66,7 @@ int SortAndPrintINChI( INCHI_FILE *output_file, char *pStr, int nStrLen, INCHI_F
                       ORIG_STRUCT *pOrigStruct, int num_components[INCHI_NUM],
                       int num_non_taut[INCHI_NUM], int num_taut[INCHI_NUM],
                       INCHI_MODE bTautFlags[INCHI_NUM], INCHI_MODE bTautFlagsDone[INCHI_NUM],
-                      NORM_CANON_FLAGS *pncFlags, int num_inp,
+                      NORM_CANON_FLAGS *pncFlags, long num_inp,
                       PINChI2 *pINChI[INCHI_NUM], PINChI_Aux2 *pINChI_Aux[INCHI_NUM], int *bSortPrintINChIFlags );
 void FreeAllINChIArrays( PINChI2 *pINChI[INCHI_NUM], PINChI_Aux2 *pINChI_Aux[INCHI_NUM], int num_components[2] );
 void FreeINChIArrays( PINChI2 *pINChI, PINChI_Aux2 *pINChI_Aux, int num_components );
@@ -75,24 +76,24 @@ int ReadTheStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, FILE *inp_file, ORIG_ATO
                      int inp_index, int *out_index );
 int TreatReadTheStructureErrors(  STRUCT_DATA *sd, INPUT_PARMS *ip, int nLogMask, 
                                   FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
-                                  ORIG_ATOM_DATA *orig_inp_data, int *num_inp, char *pStr, int nStrLen );
+                                  ORIG_ATOM_DATA *orig_inp_data, long *num_inp, char *pStr, int nStrLen );
 
 int GetOneComponent( STRUCT_DATA *sd, INPUT_PARMS *ip, INCHI_FILE *log_file, INCHI_FILE *output_file,
                      INP_ATOM_DATA *inp_cur_data,
-                     ORIG_ATOM_DATA *orig_inp_data, int i, int num_inp, char *pStr, int nStrLen );
+                     ORIG_ATOM_DATA *orig_inp_data, int i, long num_inp, char *pStr, int nStrLen );
 int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *inp_cur_data, ORIG_ATOM_DATA *orig_inp_data,
                             PINChI2 *pINChI, PINChI_Aux2 *pINChI_Aux, int iINChI,
-                            int i, int num_inp, INP_ATOM_DATA **inp_norm_data,
+                            int i, long num_inp, INP_ATOM_DATA **inp_norm_data,
                             NORM_CANON_FLAGS *pncFlags, INCHI_FILE *log_file );
 int TreatCreateOneComponentINChIError(STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *orig_inp_data,
-                                     int i, int num_inp,
+                                     int i, long num_inp,
                                      FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
                                      char *pStr, int nStrLen );
-int TreatCreateINChIWarning(STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *orig_inp_data, int num_inp,
+int TreatCreateINChIWarning(STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *orig_inp_data, long num_inp,
                                      FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
                                      char *pStr, int nStrLen );
 
-#if( TEST_RENUMB_ATOMS == 1 ) /*  { */
+#if( TEST_RENUMB_ATOMS == 1 || READ_INCHI_STRING == 1 ) /*  { */
 int CompareINChI( INChI *i1, INChI *i2, INChI_Aux *a1, INChI_Aux *a2 );
 #endif
 
@@ -101,19 +102,19 @@ int user_quit( const char *msg, unsigned long ulMaxTime );
 
 int GetOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                      FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
-                     ORIG_ATOM_DATA *orig_inp_data, int *num_inp, char *pStr, int nStrLen, STRUCT_FPTRS *struct_fptrs );
+                     ORIG_ATOM_DATA *orig_inp_data, long *num_inp, char *pStr, int nStrLen, STRUCT_FPTRS *struct_fptrs );
 int ProcessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                          PINChI2 *pINChI2[INCHI_NUM], PINChI_Aux2 *pINChI_Aux2[INCHI_NUM],
                          FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
                          ORIG_ATOM_DATA *orig_inp_data, ORIG_ATOM_DATA *prep_inp_data,
-                         int num_inp, char *pStr, int nStrLen ); 
+                         long num_inp, char *pStr, int nStrLen ); 
 
 int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                          PINChI2 *pINChI2[INCHI_NUM], PINChI_Aux2 *pINChI_Aux2[INCHI_NUM], int iINChI,
                          FILE *inp_file, INCHI_FILE *log_file, INCHI_FILE *output_file, INCHI_FILE *prb_file,
                          ORIG_ATOM_DATA *orig_inp_data, ORIG_ATOM_DATA *prep_inp_data,
                          COMP_ATOM_DATA composite_norm_data2[][TAUT_NUM+1],
-                         int num_inp, char *pStr, int nStrLen, NORM_CANON_FLAGS *pncFlags );
+                         long num_inp, char *pStr, int nStrLen, NORM_CANON_FLAGS *pncFlags );
 
 int bIsStructChiral( PINChI2 *pINChI2[INCHI_NUM], int num_components[] );
 
@@ -121,6 +122,13 @@ int PreprocessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *or
 
 int FillOutOrigStruct( ORIG_ATOM_DATA *orig_inp_data, ORIG_STRUCT *pOrigStruct, STRUCT_DATA *sd );
 void FreeOrigStruct(  ORIG_STRUCT *pOrigStruct);
+
+int ReadWriteInChI( INCHI_FILE *pInp, INCHI_FILE *pOut, INCHI_FILE *pLog,
+                    INPUT_PARMS *ip,  STRUCT_DATA *sd, inp_ATOM **at, int *num_at,
+                    char *szMsg, int nMsgLen, unsigned long WarningFlags[2][2] );
+
+int CompareHillFormulasNoH( const char *f1, const char *f2, int *num_H1, int *num_H2 );
+
 
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus

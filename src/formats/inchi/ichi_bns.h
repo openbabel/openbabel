@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -11,7 +11,7 @@
 #define __INCHI_BNS_H___
 
 #define BN_MAX_ALTP  16
-#define MAX_VERTEX 1024 /* including s; if vert[] has num_vert then MAX_VERTEX has (2*num_vert+2+FIRST_INDX) elements */
+/*#define MAX_VERTEX 1024*/ /* including s; if vert[] has num_vert then MAX_VERTEX has (2*num_vert+2+FIRST_INDX) elements */
 
 /* forward declarations */
 
@@ -34,6 +34,118 @@ typedef S_SHORT VertexFlow;
 
 #define BNS_EDGE_FORBIDDEN_MASK  1
 #define BNS_EDGE_FORBIDDEN_TEMP  2
+#define BNS_EDGE_FORBIDDEN_TEST  4
+
+/* BNS vertex types */
+
+#define BNS_VERT_TYPE_ATOM          0x0001
+#define BNS_VERT_TYPE_ENDPOINT      0x0002  /* attribute */
+#define BNS_VERT_TYPE_TGROUP        0x0004
+#define BNS_VERT_TYPE_C_POINT       0x0008
+#define BNS_VERT_TYPE_C_GROUP       0x0010
+#define BNS_VERT_TYPE_SUPER_TGROUP  0x0020
+#define BNS_VERT_TYPE_TEMP          0x0040
+
+#define BNS_VERT_TYPE__AUX          0x0080  /* vertex added to build charge substructures */
+#define BNS_VERT_TYPE_C_NEGATIVE    0x0100  /* negative charge group; attribute, should be used with BNS_VERT_TYPE_C_GROUP */
+#define BNS_VERT_TYPE_ACID          0x0200  /* only for this type are allowed paths: t_group-atom-c_group_neg (path_TACN) */
+#define BNS_VERT_TYPE_CARBON_GR     0x0400  /* charge of carbon atom; should be used with BNS_VT_C_POS, BNS_VT_C_NEG */
+#define BNS_VERT_TYPE_METAL_GR      0x0800  /* metal atom group; may be used alone or with BNS_VT_M_POS, BNS_VT_M_NEG */
+
+#define BNS_VERT_TYPE_ANY_GROUP    (BNS_VERT_TYPE_TGROUP | BNS_VERT_TYPE_C_GROUP | BNS_VERT_TYPE_SUPER_TGROUP)
+
+/* InChI->Structure */
+
+#define BNS_VT_C_POS     BNS_VERT_TYPE_C_GROUP                               /* positive charge group, heteroat */
+#define BNS_VT_C_NEG     (BNS_VERT_TYPE_C_GROUP | BNS_VERT_TYPE_C_NEGATIVE)  /* negative charge group, heteroat */
+#define BNS_VT_C_POS_C   (BNS_VT_C_POS | BNS_VERT_TYPE_CARBON_GR)            /* positive charge group, C, Si, Ge, Sn */
+#define BNS_VT_C_NEG_C   (BNS_VT_C_NEG | BNS_VERT_TYPE_CARBON_GR)            /* negative charge group, C, Si, Ge, Sn */
+#define BNS_VT_C_POS_M   (BNS_VT_C_POS | BNS_VERT_TYPE_METAL_GR)             /* positive charge group, metal */
+#define BNS_VT_C_NEG_M   (BNS_VT_C_NEG | BNS_VERT_TYPE_METAL_GR)             /* negative charge group, metal */
+#define BNS_VT_M_GROUP   BNS_VERT_TYPE_METAL_GR                              /* metal-group, flower vertex */
+
+#define BNS_VT_C_POS_ALL  (BNS_VERT_TYPE_SUPER_TGROUP | BNS_VERT_TYPE_C_GROUP)    /* supergroup (+) */
+#define BNS_VT_C_NEG_ALL  (BNS_VT_C_POS_ALL | BNS_VERT_TYPE_C_NEGATIVE) /* supergroup (-) */
+
+#define BNS_VT_CHRG_STRUCT  (BNS_VERT_TYPE__AUX | BNS_VERT_TYPE_TEMP)          /* ChargeStruct vertex */
+#define BNS_VT_YVCONNECTOR  BNS_VERT_TYPE__AUX                                 /* group connection */
+
+#define IS_BNS_VT_C_OR_CSUPER_GR(X) ((X) & BNS_VT_C_POS)
+#define IS_BNS_VT_C_GR(X)           (((X) & BNS_VT_C_POS_ALL) == BNS_VERT_TYPE_C_GROUP)
+#define IS_BNS_VT_CM_GR(X)          (((X) & BNS_VT_C_POS_M) == BNS_VT_C_POS_M) /* metal charge group */
+#define IS_BNS_VT_M_GR(X)           ((X) == BNS_VERT_TYPE_METAL_GR )  /* metal flower base or vertices */
+#define IS_BNS_VT_YVCONNECTOR(X)    (((X) & BNS_VERT_TYPE__AUX) && !((X) & BNS_VERT_TYPE_TEMP))
+#define IS_BNS_VT_CHRG_STRUCT(X)    (((X) & BNS_VERT_TYPE__AUX) &&  ((X) & BNS_VERT_TYPE_TEMP))
+#define IS_BNS_VT_ATOM(X)           ((X) & BNS_VERT_TYPE_ATOM)
+
+#define BNS_ADD_SUPER_TGROUP 1  /* reserve one more edge for a t-group to connect to a single super-t-group */
+#define NUM_KINDS_OF_GROUPS  2  /* 1 accounts for t-group kind, one more 1 accounts for c-group kind */
+
+#define BNS_ADD_ATOMS        2  /* max. number of fictitious atoms to add (except t-gtoups) */
+#define BNS_ADD_EDGES        1  /* max. number of edges to add to each atom (except edges to a t-group or c-group) */
+
+typedef enum tagAltPathConst {
+        iALTP_MAX_LEN,    /* 0 */
+        iALTP_FLOW,       /* 1 */
+        iALTP_PATH_LEN,   /* 2 */
+        iALTP_START_ATOM, /* 3 */
+        iALTP_END_ATOM,   /* 4 */
+        iALTP_NEIGHBOR,   /* 5 */
+        iALTP_HDR_LEN = iALTP_NEIGHBOR
+} ALT_CONST;
+
+#define ALTP_PATH_LEN(altp)             (altp)[iALTP_PATH_LEN].number  /* number of bonds = number of atoms-1*/
+#define ALTP_END_ATOM(altp)             (altp)[iALTP_END_ATOM].number
+#define ALTP_START_ATOM(altp)           (altp)[iALTP_START_ATOM].number
+#define ALTP_THIS_ATOM_NEIGHBOR(altp,X) (altp)[iALTP_NEIGHBOR+(X)].ineigh[0]  /* 0 <= X < path_len */
+#define ALTP_NEXT_ATOM_NEIGHBOR(altp,X) (altp)[iALTP_NEIGHBOR+(X)].ineigh[1]
+#define ALTP_CUR_THIS_ATOM_NEIGHBOR(altp) (altp)[iALTP_NEIGHBOR+ALTP_PATH_LEN(altp)].ineigh[0]  /* 0 <= X < path_len */
+#define ALTP_CUR_NEXT_ATOM_NEIGHBOR(altp) (altp)[iALTP_NEIGHBOR+ALTP_PATH_LEN(altp)].ineigh[1]
+#define ALTP_NEXT(altp)                 (++ALTP_PATH_LEN(altp))
+#define ALTP_PREV(altp)                 (--ALTP_PATH_LEN(altp))
+#define ALTP_MAY_ADD(altp)              (iALTP_NEIGHBOR + (altp)[iALTP_PATH_LEN].number < (altp)[iALTP_MAX_LEN].number)
+#define ALTP_ALLOCATED_LEN(altp)        (altp)[iALTP_MAX_LEN].number
+#define ALTP_DELTA(altp)                 (altp)[iALTP_FLOW].flow[0]
+#define ALTP_OVERFLOW(altp)             (altp)[iALTP_FLOW].flow[1]
+
+#define Vertex_s 0
+#define Vertex_t 1
+
+#define NO_VERTEX    -2
+#define BLOSSOM_BASE -1
+
+#define ADD_CAPACITY_RADICAL        1   /* add capacity to radical */
+
+#define MAX_BOND_EDGE_CAP           2  /* triple bond */
+#define AROM_BOND_EDGE_CAP          1
+#define MAX_TGROUP_EDGE_CAP         2  /* -NH2 provides max. capacity */
+
+/* edge to s or t */
+#define EDGE_FLOW_ST_MASK       0x3fff  /* mask for flow */
+#define EDGE_FLOW_ST_PATH       0x4000  /* mark: the edge belongs to the augmenting path */
+
+/* edges between other vertices */
+/* EdgeFlow defined as S_SHORT; change from S_CHAR made 9-23-2005 */
+#define EDGE_FLOW_MASK          0x3fff  /* mask for flow */
+#define EDGE_FLOW_PATH          0x4000  /* mark: the edge belongs to the augmenting path */
+
+/*********************************************************************************/
+#if( ADD_CAPACITY_RADICAL == 1 )  /* { */
+/*  -- do not treat triplets as moving dots -- 2004-02-18 --
+#define MAX_AT_FLOW(X) (((X).chem_bonds_valence - (X).valence)+\
+                       ((is_centerpoint_elem((X).el_number)||get_endpoint_valence((X).el_number))?\
+                           (((X).radical==RADICAL_DOUBLET)+2*((X).radical==RADICAL_TRIPLET)):0))
+*/
+#define MAX_AT_FLOW(X) (((X).chem_bonds_valence - (X).valence)+\
+                       ((is_centerpoint_elem((X).el_number)||get_endpoint_valence((X).el_number))?\
+                           (((X).radical==RADICAL_DOUBLET)/*+2*((X).radical==RADICAL_TRIPLET)*/):0))
+
+
+#else /* } ADD_CAPACITY_RADICAL { */
+
+#define MAX_AT_FLOW(X) (((X).chem_bonds_valence - (X).valence)
+
+#endif  /* } ADD_CAPACITY_RADICAL */
 
 /**************************** BNS_EDGE ************************************/
 typedef struct BnsEdge {
@@ -91,6 +203,7 @@ typedef struct BalancedNetworkStructure {
     /*int len_vertices; */    /* allocation size for BNS_VERTEX data */
     int num_bonds;        /* number of real bonds/2 = number of edges between real atoms */
     int num_edges;        /* number of currently in effect */
+    int num_iedges;       /* added 9-16-2005; used only in InChI Reversing */
     int num_added_edges;  /* number of added edges (not including edges to t-groups) */
     int nMaxAddEdges;     /* max. number edges of add to each atom (not including edges to t-groups) */
 
@@ -125,6 +238,10 @@ typedef struct BalancedNetworkStructure {
 } BN_STRUCT;
 
 /********************* BN_DATA *******************************************/
+typedef enum tagBnsRadSrchMode {
+    RAD_SRCH_NORM      = 0,   /* normal search for normalization */
+    RAD_SRCH_FROM_FICT = 1    /* search from fict. vertices to atoms */
+} BRS_MODE;
 typedef struct BalancedNetworkData {
     Vertex          *BasePtr;    /*[MAX_VERTEX];  pointer toward the base of C(v) */
     Edge            *SwitchEdge; /*[MAX_VERTEX];  a pair of vertices and an edge, implemented here as [*][2] array */
@@ -135,7 +252,14 @@ typedef struct BalancedNetworkData {
     Vertex          *Pv;         /*[MAX_VERTEX/2+1] */
     int             max_num_vertices; /* allocation size of all except Pu, Pv */
     int             max_len_Pu_Pv;    /* allocation size of Pu and Pv */
-
+#if( BNS_RAD_SEARCH == 1 )
+    Vertex         *RadEndpoints; /*[MAX_VERTEX*/
+    int             nNumRadEndpoints;
+    EdgeIndex      *RadEdges;
+    int             nNumRadEdges;
+    int             nNumRadicals;
+    BRS_MODE        bRadSrchMode; /* 1 => connect fict. vertices-radicals to the accessible atoms */
+#endif
 } BN_DATA;
 
 /* internal array size */
@@ -194,6 +318,35 @@ extern "C" {
 #endif
 
 
+/*********************************************************************************
+  bChangeFlow:
+      1 => change flow inside the BNS search
+      3 => change flow inside the BNS search and undo the flow change in the BNS structure here
+      4 => change bonds in the structure according to the flow
+      8 => make altern. bonds in the structure
+
+  Note: (bChangeFlow & 1) == 1 is needed for multiple runs
+**********************************************************************************/
+    
+/* "EF" = "Edge Flow" */
+#define BNS_EF_CHNG_FLOW      1  /* change Balanced Network (BN) flow inside the BNS search */
+#define BNS_EF_RSTR_FLOW      2  /* undo BN flow changes after BNS */
+#define BNS_EF_CHNG_RSTR      (BNS_EF_CHNG_FLOW | BNS_EF_RSTR_FLOW)
+#define BNS_EF_CHNG_BONDS     4  /* change bonds in the structure according to the BN flow */
+#define BNS_EF_ALTR_BONDS     8  /* make altern. bonds in the structure if the flow has changed */
+#define BNS_EF_UPD_RAD_ORI   16  /* update BN flow0 & Atom radical values:
+                                    flow0 := flow, radical:=st_cap - st_flow */
+#define BNS_EF_SET_NOSTEREO  32  /* in combination with BNS_EF_ALTR_BONDS only:
+                                    ALT12 bond cannot be stereogenic */
+#define BNS_EF_UPD_H_CHARGE  64  /* update charges and H-counts according to change flow to c- and t-group vertices */
+
+#define BNS_EF_SAVE_ALL     (BNS_EF_CHNG_FLOW | BNS_EF_CHNG_BONDS | BNS_EF_UPD_RAD_ORI)
+#define BNS_EF_ALTR_NS      (BNS_EF_ALTR_BONDS | BNS_EF_SET_NOSTEREO)
+
+#define BNS_EF_RAD_SRCH     128  /* search for rafical paths closures */
+
+
+
 int nExists2AtMoveAltPath( struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD,
                            struct BN_AtomsAtTautGroup *pAATG, inp_ATOM *at, int num_atoms,
                            int jj2, int jj1, struct tagSaltChargeCandidate *s_candidate, int nNumCandidates,
@@ -220,6 +373,30 @@ int DisconnectTGroupFromSuperTGroup( struct BalancedNetworkStructure *pBNS, int 
 int ReconnectTestAtomToTGroup( struct BalancedNetworkStructure *pBNS, int v1, int v2, int ie, BNS_FLOW_CHANGES *fcd );
 
 int bIsHardRemHCandidate(  inp_ATOM *at, int i, int *cSubType );
+
+/* moved from ichi_bns.c 2005-08-23 */
+int RunBalancedNetworkSearch( BN_STRUCT *pBNS, BN_DATA *pBD, int bChangeFlow );
+BN_STRUCT* AllocateAndInitBnStruct( inp_ATOM *at, int num_atoms, int nMaxAddAtoms, int nMaxAddEdges, int max_altp, int *num_changed_bonds );
+BN_STRUCT* DeAllocateBnStruct( BN_STRUCT *pBNS );
+int ReInitBnStructAltPaths( BN_STRUCT *pBNS );
+int ReInitBnStructForMoveableAltBondTest( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
+void ClearAllBnDataVertices( Vertex *v, Vertex value, int size );
+void ClearAllBnDataEdges( Edge *e, Vertex value, int size );
+BN_DATA *DeAllocateBnData( BN_DATA *pBD );
+BN_DATA *AllocateAndInitBnData( int max_num_vertices );
+int ReInitBnData( BN_DATA *pBD );
+int SetForbiddenEdges( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int edge_forbidden_mask );
+/* main function: find augmenting path */
+int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow );
+
+int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode );
+int RemoveRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at );
+
+int AddRemoveProtonsRestr( inp_ATOM *at, int num_atoms, int *num_protons_to_add,
+                           int nNumProtAddedByRestr, INCHI_MODE bNormalizationFlags,
+                           int num_tg, int nChargeRevrs, int nChargeInChI );
+int AddRemoveIsoProtonsRestr( inp_ATOM *at, int num_atoms, NUM_H num_protons_to_add[], int num_tg );
+
 
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus

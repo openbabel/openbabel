@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -69,6 +69,8 @@
 #define iiEq2NONTAUT 0x0040  /* non-tautomeric */
 #define iiEq2ISO     0x0080  /* isotopic */
 #define iiEq2INV     0x0100  /* equal to inverted (stereo sp3) or to numbering of inverted stereo */
+
+#define iiEmpty      0x0200  /* item is empty while in the preceding layer the item is not empty */
 
 /*********************** Printing strings external declarations *******************************/
 

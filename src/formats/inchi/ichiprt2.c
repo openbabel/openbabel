@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -1403,7 +1403,22 @@ int MakeStereoString( AT_NUMB *at1, AT_NUMB *at2, S_CHAR *parity, int bAddDelim,
     *bOverflow |= bOvfl;
     return nLen;
 }
+#ifdef ALPHA_BASE
 
+#if(  ALPHA_BASE != 27 )
+#error ALPHA_BASE definitions mismatch
+#endif
+
+#else
+
+#define ALPHA_BASE     27
+
+#endif
+
+#define ALPHA_MINUS    '-'
+#define ALPHA_ZERO_VAL '.'
+#define ALPHA_ONE      'a'
+#define ALPHA_ZERO     '@'
 /**********************************************************************************************/
 /*  Produce an "Alphabetic" number, base 27 (27 digits: 0, a, b, ..., z) */
 /*  The leading "digit" uppercase, the rest -- lowercase */
@@ -1412,11 +1427,6 @@ int MakeStereoString( AT_NUMB *at1, AT_NUMB *at2, S_CHAR *parity, int bAddDelim,
 /*  Note: ASCII-encoding specific implementation */
 int MakeAbcNumber( char *szString, int nStringLen, const char *szLeadingDelim, int nValue )
 {
-#define ALPHA_BASE     27
-#define ALPHA_MINUS    '-'
-#define ALPHA_ZERO_VAL '.'
-#define ALPHA_ONE      'a'
-#define ALPHA_ZERO     '@'
     char *p = szString;
     char *q;
     int  nChar;
@@ -1452,12 +1462,73 @@ int MakeAbcNumber( char *szString, int nStringLen, const char *szLeadingDelim, i
     mystrrev( p );
     p[0] = toupper(p[0]);
     return (q - szString);
+}
+#if( READ_INCHI_STRING == 1 )
+/*****************************************************/
+static long abctol( const char *szString, char **q ); /* keep compiler happy */
+
+long abctol( const char *szString, char **q )
+{
+#define __MYTOLOWER(c) ( ((c) >= 'A') && ((c) <= 'Z') ? ((c) - 'A' + 'a') : (c) )
+
+    long        val  = 0;
+    long        sign = 1;
+    const char *p = szString;
+    if ( *p == ALPHA_MINUS ) {
+        p ++;
+        sign = -1;
+    }
+    if ( *p == ALPHA_ZERO ) {
+        p ++;
+        goto exit_function;
+    }
+    if ( !isupper(UCINT *p) ) {
+        p = szString;
+        goto exit_function; /* not an abc-number */
+    }
+    val = __MYTOLOWER(*p) - ALPHA_ONE + 1;
+    p ++;
+    while ( *p ) {
+        if ( islower( UCINT *p ) ) {
+            val *= ALPHA_BASE;
+            val += *p - ALPHA_ONE + 1;
+        } else
+        if ( *p == ALPHA_ZERO ) {
+            val *= ALPHA_BASE;
+        } else {
+            break;
+        }
+        p ++;
+    }
+exit_function:
+    if ( q ) {
+        *q = (char *)p;  /* cast deliberately discards const qualifier */
+    }
+    return val;
+#undef __MYTOLOWER
+}
+/********************************************************/
+long inchi_strtol( const char *str, const char **p, int base)
+{
+    if ( base == ALPHA_BASE ) {
+        return abctol( str, (char **)p ); /* cast deliberately discards const qualifier */
+    } else {
+        return strtol( str, (char **)p, base ); /* cast deliberately discards const qualifier */
+    }
+}
+#endif
 #undef ALPHA_BASE
 #undef ALPHA_MINUS
 #undef ALPHA_ZERO_VAL
 #undef ALPHA_ONE
 #undef ALPHA_ZERO
+
+/********************************************************/
+double inchi_strtod( const char *str, const char **p )
+{
+        return strtod( str, (char **)p );
 }
+
 /**********************************************************************************************/
 /*  Produce a decimal number */
 /*  szString length nStringLen includes 1 byte for zero termination */

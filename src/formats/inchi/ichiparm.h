@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -62,7 +62,12 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
     int           bDisplay = 0;
     int           bNoStructLabels = 0;
     int           bOutputMolfileOnly = 0;
+    int           bOutputMolfileDT = 0;
+    int           bOutputMolfileSplit = 0;
     int           bForcedChiralFlag = 0;
+#if( READ_INCHI_STRING == 1 )
+    int           bDisplayIfRestoreWarnings = 0;
+#endif
 #ifdef INCHI_LIB
     int           bXml = INCHI_OUT_XML;
 #else
@@ -73,6 +78,16 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
 #ifdef STEREO_WEDGE_ONLY
     int bPointedEdgeStereo = STEREO_WEDGE_ONLY; /*   NEWPS TG_FLAG_POINTED_EDGE_STEREO*/
 #endif
+#if( FIX_ADJ_RAD == 1 )
+    int bFixAdjacentRad = 0;
+#endif
+#if( ADD_PHOSPHINE_STEREO == 1 )
+    int bAddPhosphineStereo = 0;
+#endif
+#if( ADD_ARSINE_STEREO == 1 )
+    int bAddArsineStereo = 0;
+#endif
+    int bFixSp3bug        = 0;
 
 
     ext[0] = ".mol";
@@ -207,10 +222,10 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             } else
 #endif
             if ( !memicmp( pArg, "START:", 6 ) ) {
-                ip->first_struct_number = (int)strtol(pArg+6, NULL, 10);
+                ip->first_struct_number = strtol(pArg+6, NULL, 10);
             } else
             if ( !memicmp( pArg, "END:", 4 ) ) {
-                ip->last_struct_number = (int)strtol(pArg+4, NULL, 10);
+                ip->last_struct_number = strtol(pArg+4, NULL, 10);
             } else /*  RSB: */
             if ( !memicmp( pArg, "RSB:", 4 ) ) {
                 mdbr = (int)strtol(pArg+4, NULL, 10);
@@ -371,11 +386,25 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             if ( !stricmp( pArg, "NoADP" ) ) {
                  bTgFlagHardAddRenProtons = 0;
             } else
+            if ( !stricmp( pArg, "FixSp3bug" ) ) {
+                 bFixSp3bug = 1;
+            } else
 #ifdef STEREO_WEDGE_ONLY
             if ( !stricmp( pArg, "NEWPS" ) ) {
                  bPointedEdgeStereo = 1;
             } else
 #endif
+#if( ADD_PHOSPHINE_STEREO == 1 )
+            if ( !stricmp( pArg, "SPXYZ" ) ) {
+                 bAddPhosphineStereo = 1;
+            } else
+#endif
+#if( ADD_ARSINE_STEREO == 1 )
+            if ( !stricmp( pArg, "SASXYZ" ) ) {
+                 bAddArsineStereo = 1;
+            } else
+#endif
+
             if ( !stricmp( pArg, "PW" ) ) {
                 ip->bSaveWarningStructsAsProblem = 1;
             } else {
@@ -517,9 +546,22 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             if ( !stricmp( pArg, "SUU" ) ) {       /* include omitted undef/unkn stereo */
                 bVer1DefaultMode &= ~(REQ_MODE_SB_IGN_ALL_UU | REQ_MODE_SC_IGN_ALL_UU);
             } else
+            if ( !stricmp( pArg, "FixSp3bug" ) ) {
+                 bFixSp3bug = 1;
+            } else
 #ifdef STEREO_WEDGE_ONLY
             if ( !stricmp( pArg, "NEWPS" ) ) {
                  bPointedEdgeStereo = 1;
+            } else
+#endif
+#if( ADD_PHOSPHINE_STEREO == 1 )
+            if ( !stricmp( pArg, "SPXYZ" ) ) {
+                 bAddPhosphineStereo = 1;
+            } else
+#endif
+#if( ADD_ARSINE_STEREO == 1 )
+            if ( !stricmp( pArg, "SASXYZ" ) ) {
+                 bAddArsineStereo = 1;
             } else
 #endif
             if ( !stricmp( pArg, "RECMET" ) ) {    /* do reconnect metals */
@@ -542,6 +584,12 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             if ( !stricmp( pArg, "D" ) ) {          /* display the structures */
                 bDisplay |= 1;
             } else
+#if( READ_INCHI_STRING == 1 )
+            if ( !stricmp( pArg, "DDSRC" ) ) {
+                bDisplayIfRestoreWarnings = 1;  /* InChI->Structure debugging: Display Debug Structure Restore Components */
+            }
+            else
+#endif
             if ( !stricmp( pArg, "NOLABELS" ) ) {
                  bNoStructLabels = 1;
             } else
@@ -578,7 +626,32 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
                 bXml                |= INCHI_OUT_PLAIN_TEXT | INCHI_OUT_PLAIN_TEXT_COMMENTS;
                 bXml                &= ~(INCHI_OUT_XML | INCHI_OUT_XML_TEXT_COMMENTS);
             } else
-            if ( INPUT_NONE == ip->nInputType &&
+#if( READ_INCHI_STRING == 1 )
+            if ( !stricmp( pArg, "InChI2InChI" )  ) {
+                 /* Read InChI Identifiers and output InChI Identifiers */
+                ip->nInputType = INPUT_INCHI;
+                ip->bReadInChIOptions |= READ_INCHI_OUTPUT_INCHI;
+                ip->bReadInChIOptions &= ~READ_INCHI_TO_STRUCTURE;
+            } else
+            if ( !stricmp( pArg, "SplitInChI" )  ) {
+                 /* Split InChI Identifiers into components */
+                ip->bReadInChIOptions |= READ_INCHI_SPLIT_OUTPUT;
+            } else
+            if ( !stricmp( pArg, "InChI2Struct" )  ) {
+                 /* Split InChI Identifiers into components */
+                ip->bReadInChIOptions |= READ_INCHI_TO_STRUCTURE;
+                ip->bReadInChIOptions &= ~READ_INCHI_OUTPUT_INCHI;
+                ip->nInputType = INPUT_INCHI;
+            } else
+            if ( !stricmp( pArg, "KeepBalanceP" )  ) {
+                 /* When spliting InChI Identifiers into components: */
+                 /* If MobileH output then add p to each component;  */
+                 /* Otherwise add one more component containing balance */
+                 /* of protons and exchangeable isotopic H */
+                ip->bReadInChIOptions |= READ_INCHI_KEEP_BALANCE_P;
+            } else
+#endif
+            if ( /* INPUT_NONE == ip->nInputType &&*/
                 !memicmp( pArg, "SDF:", 4 )  ) {
                  /* SDfile label */
                 k = 0;
@@ -587,11 +660,15 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
                 if ( k ) {
                     ip->pSdfLabel  = ip->szSdfDataHeader;
                     ip->pSdfValue  = szSdfDataValue;
-                    ip->nInputType = INPUT_SDFILE;
+                    if ( INPUT_NONE == ip->nInputType ) {
+                        ip->nInputType = INPUT_SDFILE;
+                    }
                 } else {
                     ip->pSdfLabel  = NULL;
                     ip->pSdfValue  = NULL;
-                    ip->nInputType = INPUT_MOLFILE;
+                    if ( INPUT_NONE == ip->nInputType ) {
+                        ip->nInputType = INPUT_MOLFILE;
+                    }
                 }
             } else
 #if( ADD_CMLPP == 1 )
@@ -604,8 +681,14 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             if ( !stricmp( pArg, "RECMET-" ) ) {     /* do not reconnect metals (default) */
                 bReconnectCoord = 0;
             } else
-            if ( !stricmp( pArg, "OUTPUTSDF" ) ) {  /* ourput SDfile */
+            if ( !stricmp( pArg, "OUTPUTSDF" ) ) {  /* output SDfile */
                 bOutputMolfileOnly = 1;
+            } else
+            if ( !stricmp( pArg, "SdfAtomsDT" ) ) {  /* output isotopes H as D and T in SDfile */
+                bOutputMolfileDT = 1;
+            } else                                    
+            if ( !stricmp( pArg, "SdfSplit" ) ) {  /* Split single Molfiles into disconnected components */
+                bOutputMolfileSplit = 1;
             } else
             if ( !stricmp( pArg, "STDIO" ) ) {
                 bNameSuffix = 0;
@@ -613,6 +696,11 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             if ( !stricmp( pArg, "DCR" ) ) {
                 bDisplayCompositeResults = 1;
             } else
+#if( FIX_ADJ_RAD == 1 )
+            if ( !stricmp( pArg, "FixRad" ) ) {
+                bFixAdjacentRad = 1;
+            } else
+#endif
             /*============= Additional options ==========*/
             /* Tautomer perception off */
             if ( !stricmp( pArg, "EXACT" ) ) {
@@ -662,10 +750,10 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
                 bDisconnectSalts = 0;
             } else
             if ( !memicmp( pArg, "START:", 6 ) ) {
-                ip->first_struct_number = (int)strtol(pArg+6, NULL, 10);
+                ip->first_struct_number = strtol(pArg+6, NULL, 10);
             } else
             if ( !memicmp( pArg, "END:", 4 ) ) {
-                ip->last_struct_number = (int)strtol(pArg+4, NULL, 10);
+                ip->last_struct_number = strtol(pArg+4, NULL, 10);
             } else /*  RSB: */
             if ( !memicmp( pArg, "RSB:", 4 )) {
                 mdbr = (int)strtol(pArg+4, NULL, 10);
@@ -734,7 +822,7 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
                 szOutputPath[len++] = INCHI_PATH_DELIM;
                 szOutputPath[len]   = '\0';
             }
-            if ( len > 0 && (r = strrchr( p, INCHI_PATH_DELIM ) ) && r[1] ) {
+            if ( len > 0 && (r = (char *)strrchr( p, INCHI_PATH_DELIM ) ) && r[1] ) {
                 strcat( szOutputPath, r+1 );
                 p = szOutputPath;
             }
@@ -757,7 +845,33 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
         }
     }
 
-#endif  /* } ACD_LABS_VERSION */
+#endif  /* } NOT ACD_LABS_VERSION */
+
+
+#if( READ_INCHI_STRING == 1 )
+    if ( INPUT_INCHI == ip->nInputType ) {
+        bCompareComponents                 = 0;
+        /*bDisplayCompositeResults           = 0;*/
+        bOutputMolfileOnly                 = 0;
+        /*bNoStructLabels                    = 1;*/
+        bINChIOutputOptions  |= INCHI_OUT_NO_AUX_INFO;
+        bINChIOutputOptions  &= ~INCHI_OUT_SHORT_AUX_INFO;
+        bINChIOutputOptions  &= ~INCHI_OUT_ONLY_AUX_INFO;
+        ip->bDisplayIfRestoreWarnings = bDisplayIfRestoreWarnings;
+
+        if ( !(bINChIOutputOptions &
+            
+             (INCHI_OUT_SDFILE_ONLY          |
+              INCHI_OUT_XML                  |
+              INCHI_OUT_PLAIN_TEXT           |
+              INCHI_OUT_PLAIN_TEXT_COMMENTS  |
+              INCHI_OUT_XML_TEXT_COMMENTS    
+                                             ) ) ) {
+
+            bINChIOutputOptions |= INCHI_OUT_PLAIN_TEXT;
+        }
+    }
+#endif
 
 
     if ( bVer1Options ) {
@@ -834,6 +948,10 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
     if ( bOutputMolfileOnly ) {
         bXml &= ~(INCHI_OUT_XML                 | INCHI_OUT_PLAIN_TEXT |
                   INCHI_OUT_PLAIN_TEXT_COMMENTS | INCHI_OUT_XML_TEXT_COMMENTS | INCHI_OUT_TABBED_OUTPUT);
+#if( SDF_OUTPUT_DT == 1 )
+        ip->bINChIOutputOptions |= bOutputMolfileDT?    INCHI_OUT_SDFILE_ATOMS_DT : 0;
+        ip->bINChIOutputOptions |= bOutputMolfileSplit? INCHI_OUT_SDFILE_SPLIT : 0;
+#endif
     }
     if ( bXml & INCHI_OUT_XML ) {
         bXml &= ~(INCHI_OUT_PLAIN_TEXT | INCHI_OUT_XML_TEXT_COMMENTS | INCHI_OUT_TABBED_OUTPUT);
@@ -882,6 +1000,17 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
 #ifdef STEREO_WEDGE_ONLY
     ip->bTautFlags  |= bPointedEdgeStereo?      TG_FLAG_POINTED_EDGE_STEREO  : 0;
 #endif
+#if( FIX_ADJ_RAD == 1 )
+    ip->bTautFlags  |= bFixAdjacentRad?         TG_FLAG_FIX_ADJ_RADICALS : 0;
+#endif
+#if( ADD_PHOSPHINE_STEREO == 1 )
+    ip->bTautFlags  |= bAddPhosphineStereo?     TG_FLAG_PHOSPHINE_STEREO : 0;
+#endif
+#if( ADD_ARSINE_STEREO == 1 )
+    ip->bTautFlags  |= bAddArsineStereo?        TG_FLAG_ARSINE_STEREO : 0;
+#endif
+    ip->bTautFlags  |= bFixSp3bug?              TG_FLAG_FIX_SP3_BUG   : 0;
+
     if ( !ip->nInputType ) {
         ip->nInputType = INPUT_MOLFILE;
     }
@@ -898,7 +1027,8 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
 
     /* SDfile output */
     if ( ip->bINChIOutputOptions & INCHI_OUT_SDFILE_ONLY ) {
-        my_fprintf( log_file, "Output SDfile only\n" );
+        my_fprintf( log_file, "Output SDfile only%s\n",
+            (ip->bINChIOutputOptions & INCHI_OUT_SDFILE_ATOMS_DT)? " (write H isotopes as D, T)":"" );
         return 0;
     }
     /* tautomerism */
@@ -919,6 +1049,11 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
          }
     }
     my_fprintf( log_file, "\n");
+#if( FIX_ADJ_RAD == 1 )
+    if ( ip->bTautFlags & TG_FLAG_FIX_ADJ_RADICALS ) {
+        my_fprintf( log_file, "Fix Adjacent Radicals\n" );
+    }
+#endif
     i = 0;
     /* isotopic */
     if ( nMode & REQ_MODE_ISO ) {
@@ -964,6 +1099,18 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
             my_fprintf( log_file, "%sOnly narrow end of wedge points to stereocenter\n", i? "\n":"" );
             i = 0;
         }
+#if( ADD_PHOSPHINE_STEREO == 1 )
+        if ( TG_FLAG_PHOSPHINE_STEREO & ip->bTautFlags ) {
+            my_fprintf( log_file, "%sInclude phoshine stereochemistry\n", i? "\n":"" );
+            i = 0;
+        }
+#endif
+#if( ADD_ARSINE_STEREO == 1 )
+        if ( TG_FLAG_ARSINE_STEREO & ip->bTautFlags ) {
+            my_fprintf( log_file, "%sInclude arsine stereochemistry\n", i? "\n":"" );
+            i = 0;
+        }
+#endif
 #endif
     } else {
         my_fprintf( log_file, ", Stereo OFF");
@@ -1036,8 +1183,16 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
             ip->nInputType == INPUT_MOLFILE?     "MOLfile"       :
             ip->nInputType == INPUT_SDFILE?      "SDfile"        :
             ip->nInputType == INPUT_CMLFILE?     "CMLfile"       :
+#if( READ_INCHI_STRING == 1 )
+            ip->nInputType == INPUT_INCHI?       "InChI (plain identifier)" :
+#endif
+#if( SPECIAL_BUILD == 1 )
+            ip->nInputType == INPUT_INCHI_XML?   "MoChI (xml)"   :
+            ip->nInputType == INPUT_INCHI_PLAIN? "MoChI (plain)" : "Unknown" );
+#else
             ip->nInputType == INPUT_INCHI_XML?   "InChI (xml)"   :
             ip->nInputType == INPUT_INCHI_PLAIN? "InChI (plain)" : "Unknown" );
+#endif
         if ( (ip->nInputType == INPUT_MOLFILE || ip->nInputType == INPUT_SDFILE) &&
              ip->bGetMolfileNumber ) {
             my_fprintf( log_file, "  (attempting to read Molfile number)" );
@@ -1066,10 +1221,10 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
     my_fprintf( log_file, "%sUp to %d atoms per structure\n", i?"; ":"", MAX_ATOMS);
     i = 0;
     if ( ip->first_struct_number > 1 ) {
-        my_fprintf( log_file, "Skipping %d structure%s\n", ip->first_struct_number-1, ip->first_struct_number==2? "":"s" );
+        my_fprintf( log_file, "Skipping %ld structure%s\n", ip->first_struct_number-1, ip->first_struct_number==2? "":"s" );
     }
     if ( ip->last_struct_number > 0 ) {
-        my_fprintf( log_file, "Terminate after structure #%d\n", ip->last_struct_number );
+        my_fprintf( log_file, "Terminate after structure #%ld\n", ip->last_struct_number );
     }
     if ( ip->bSaveWarningStructsAsProblem && ip->path[3] && ip->path[3][0] ) {
         my_fprintf( log_file, "Saving warning structures into the problem file\n");
@@ -1144,8 +1299,7 @@ void HelpCommandLineParms( INCHI_FILE *f )
 
 #if ( bRELEASE_VERSION == 1 )
 
-    inchi_print_nodisplay( f, "%s ver %s.\n\nUsage:\ncInChI-1 inputFile [outputFile [logFile [problemFile]]] [%coption[ %coption...]]\n", INCHI_NAME, INCHI_VERSION, INCHI_OPTION_PREFX, INCHI_OPTION_PREFX);
-
+    inchi_print_nodisplay( f, "%s ver %s%s.\n\nUsage:\nc%s-%s inputFile [outputFile [logFile [problemFile]]] [%coption[ %coption...]]\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, INCHI_NAME, INCHI_VERSION, INCHI_OPTION_PREFX, INCHI_OPTION_PREFX);
     inchi_print_nodisplay( f, "\nOptions:\n");
     inchi_print_nodisplay( f, "  SNon        Exclude stereo (Default: Include Absolute stereo)\n");
     inchi_print_nodisplay( f, "  SRel        Relative stereo\n");
@@ -1153,6 +1307,12 @@ void HelpCommandLineParms( INCHI_FILE *f )
     inchi_print_nodisplay( f, "  SUCF        Use Chiral Flag: On means Absolute stereo, Off - Relative\n"); 
     inchi_print_nodisplay( f, "  SUU         Include omitted unknown/undefined stereo\n");
     inchi_print_nodisplay( f, "  NEWPS       Narrow end of wedge points to stereocenter (default: both)\n");
+#if( ADD_PHOSPHINE_STEREO == 1 )
+    inchi_print_nodisplay( f, "  SPXYZ       Include Phosphines Stereochemistry\n");
+#endif
+#if( ADD_ARSINE_STEREO == 1 )
+    inchi_print_nodisplay( f, "  SAsXYZ      Include Arsines Stereochemistry\n");
+#endif
     inchi_print_nodisplay( f, "  RecMet      Include reconnected metals results\n");
     inchi_print_nodisplay( f, "  FixedH      Mobile H Perception Off (Default: On)\n");
     inchi_print_nodisplay( f, "  AuxNone     Omit auxiliary information (default: Include)\n");
@@ -1176,9 +1336,23 @@ void HelpCommandLineParms( INCHI_FILE *f )
     inchi_print_nodisplay( f, "  NoLabels    Omit structure number, DataHeader and ID from %s output\n", INCHI_NAME);
     inchi_print_nodisplay( f, "  Tabbed      Separate structure number, %s, and AuxIndo with tabs\n", INCHI_NAME);
     inchi_print_nodisplay( f, "  OutputSDF   Convert %s created with default aux. info to SDfile\n", INCHI_NAME);
+#ifdef INCHI_MAIN
+    inchi_print_nodisplay( f, "  InChI2Struct Test mode: Mol/SDfile->%s->Structure->%s and a structure in AuxInfo format\n", INCHI_NAME, INCHI_NAME);
+#else
+    /*
+    inchi_print_nodisplay( f, "  InChI2Struct Convert %s string into a structure in AuxInfo format and its %s\n", INCHI_NAME, INCHI_NAME);
+    */
+#endif
+    inchi_print_nodisplay( f, "  InChI2InChI  Convert %s string into %s string for validation purposes\n", INCHI_NAME, INCHI_NAME);
+#if ( SDF_OUTPUT_DT == 1 )
+    inchi_print_nodisplay( f, "  SdfAtomsDT  Output Hydrogen Isotopes to SDfile as Atoms D and T\n");
+#endif
     inchi_print_nodisplay( f, "  STDIO       Use standard input/output streams\n");
     inchi_print_nodisplay( f, "  WarnOnEmptyStructure Warn and produce empty %s for empty structure\n", INCHI_NAME);
-
+#if( FIX_ADJ_RAD == 1 )
+    inchi_print_nodisplay( f, "  FixRad      Fix Adjacent Radicals\n");
+#endif
+       
 #else
 
     inchi_print_nodisplay( f, "%s ver %s. Special testing version 12-12-2002.\n", INCHI_NAME, INCHI_VERSION);
@@ -1245,27 +1419,30 @@ int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_
 */
     /*  logfile -- open es early as possible */
     if ( !ip->path[2] || !ip->path[2][0] ) {
-        my_fprintf( stderr, "%s version %s%s\n", INCHI_NAME, INCHI_VERSION, bRELEASE_VERSION? "":" (For pre-release testing)" );
+        my_fprintf( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, bRELEASE_VERSION? "":" (For pre-release testing)" );
         my_fprintf( stderr, "Log file not specified. Using standard error output.\n");
         *log_file = stderr;
     } else
     if ( !(*log_file = fopen( ip->path[2], "w" ) ) ) {
-        my_fprintf( stderr, "%s version %s%s\n", INCHI_NAME, INCHI_VERSION, bRELEASE_VERSION? "":" (For pre-release testing)" );
+        my_fprintf( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, bRELEASE_VERSION? "":" (For pre-release testing)" );
         my_fprintf( stderr, "Cannot open log file '%s'. Using standard error output.\n", ip->path[2] );
         *log_file = stderr;
     } else {
-        my_fprintf( *log_file, "%s version %s%s\n", INCHI_NAME, INCHI_VERSION, bRELEASE_VERSION? "":" (For pre-release testing)" );
+        my_fprintf( *log_file, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, SPECIAL_BUILD_STRING, bRELEASE_VERSION? "":" (For pre-release testing)" );
         my_fprintf( *log_file, "Opened log file '%s'\n", ip->path[2] );
     }
     /* input file */
-    if ( (ip->nInputType == INPUT_MOLFILE || ip->nInputType == INPUT_SDFILE || ip->nInputType == INPUT_CMLFILE) && ip->num_paths > 0 ) {
+    if ( (ip->nInputType == INPUT_MOLFILE || ip->nInputType == INPUT_SDFILE ||
+         ip->nInputType == INPUT_CMLFILE  || ip->nInputType == INPUT_INCHI) && ip->num_paths > 0 ) {
         const char *fmode = NULL;
 #if( defined(_MSC_VER)&&defined(_WIN32) || defined(__BORLANDC__)&&defined(__WIN32__) || defined(__GNUC__)&&defined(__MINGW32__)&&defined(_WIN32) )
         /* compilers that definitely allow fopen "rb" (binary read) mode */
+        fmode = "rb";
         if ( !ip->path[0] || !ip->path[0][0] || !(*inp_file = fopen( ip->path[0], "rb" ) ) ) {
             my_fprintf( *log_file, "Cannot open input file '%s'. Terminating.\n", ip->path[0]? ip->path[0] : "<No name>" );
             goto exit_function;
-        } else {
+        } else
+        if ( ip->nInputType == INPUT_CMLFILE ) {
             int c;
 #ifdef CML_DEBUG
             printf ("cr %d lf %d ret %d\n", (int) '\r', (int) '\f', (int) '\n');
@@ -1303,7 +1480,7 @@ int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_
 #endif
         DetectInputINChIFileType( inp_file, ip, fmode );
     } else
-    if ( (ip->nInputType != INPUT_MOLFILE && ip->nInputType != INPUT_SDFILE && ip->nInputType != INPUT_CMLFILE) ) {
+    if ( (ip->nInputType != INPUT_MOLFILE && ip->nInputType != INPUT_SDFILE && ip->nInputType != INPUT_CMLFILE && ip->nInputType != INPUT_INCHI) ) {
         my_fprintf( *log_file, "Input file type not specified. Terminating.\n");
         goto exit_function;
     } else {
@@ -1331,7 +1508,13 @@ int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_
     }
     /*  problem file */
     if ( ip->path[3] && ip->path[3][0] ) {
-        if (  !(*prb_file = fopen( ip->path[3], "w" ) ) ) {
+        const char *fmode = "w";
+#if( defined(_MSC_VER)&&defined(_WIN32) || defined(__BORLANDC__)&&defined(__WIN32__) || defined(__GNUC__)&&defined(__MINGW32__)&&defined(_WIN32) )
+        if ( ip->nInputType != INPUT_CMLFILE ) {
+            fmode = "wb";
+        }
+#endif
+        if (  !(*prb_file = fopen( ip->path[3], fmode ) ) ) {
             my_fprintf( *log_file, "Cannot open problem file '%s'. Terminating.\n", ip->path[3] );
             goto exit_function;
         } else {
@@ -1344,7 +1527,7 @@ exit_function:
     return 0; /*  failed */
 
 }
-#define NUM_VERSIONS 4
+#define NUM_VERSIONS 6
 #define LEN_VERSIONS 64
 /*******************************************************************/
 static int bMatchOnePrefix( int len, char *str, int lenPrefix[],
@@ -1382,7 +1565,7 @@ int DetectInputINChIFileType( FILE **inp_file, INPUT_PARMS *ip, const char *fmod
     static int  lenXmlMsgFatal;
     static int  bInitilized = 0;
     int  bINChI_plain = 0, bINChI_xml = 0, len, i;
-    if ( ip->nInputType == INPUT_INCHI_XML || ip->nInputType == INPUT_INCHI_PLAIN ) {
+    if ( ip->nInputType == INPUT_INCHI_XML || ip->nInputType == INPUT_INCHI_PLAIN || ip->nInputType == INPUT_INCHI ) {
         return 1;
     }
     if ( !bInitilized ) {
@@ -1390,18 +1573,26 @@ int DetectInputINChIFileType( FILE **inp_file, INPUT_PARMS *ip, const char *fmod
         lenPlnVersion[1]  = sprintf( szPlnVersion[1],  "INChI=1.12Beta/" );
         lenPlnVersion[2]  = sprintf( szPlnVersion[2],  "INChI=1.0RC/" );
         lenPlnVersion[3]  = sprintf( szPlnVersion[3],  "InChI=1.0RC/" );
+        lenPlnVersion[4]  = sprintf( szPlnVersion[4],  "InChI=1/" );
+        lenPlnVersion[5]  = sprintf( szPlnVersion[5],  "MoChI=1a/" );
         lenPlnAuxVer[0]   = sprintf( szPlnAuxVer[0],   "AuxInfo=%s/", INCHI_VERSION );
         lenPlnAuxVer[1]   = sprintf( szPlnAuxVer[1],   "AuxInfo=1.12Beta/" );
         lenPlnAuxVer[2]   = sprintf( szPlnAuxVer[2],   "AuxInfo=1.0RC/" );
         lenPlnAuxVer[3]   = sprintf( szPlnAuxVer[3],   "AuxInfo=1.0RC/" );
+        lenPlnAuxVer[4]   = sprintf( szPlnAuxVer[4],   "AuxInfo=1/" );
+        lenPlnAuxVer[5]   = sprintf( szPlnAuxVer[5],   "AuxInfo=1a/" );
         lenXmlVersion[0]  = sprintf( szXmlVersion[0],  "<%s version=\"%s\">", INCHI_NAME, INCHI_VERSION );
         lenXmlVersion[1]  = sprintf( szXmlVersion[1],  "<INChI version=\"1.12Beta\">" );
         lenXmlVersion[2]  = sprintf( szXmlVersion[2],  "<INChI version=\"1.0RC\">" );
         lenXmlVersion[3]  = sprintf( szXmlVersion[3],  "<InChI version=\"1.0RC\">" );
+        lenXmlVersion[4]  = sprintf( szXmlVersion[4],  "<InChI version=\"1\">" );
+        lenXmlVersion[5]  = sprintf( szXmlVersion[5],  "<MoChI version=\"1a\">" );
         lenXmlIdentVer[0] = sprintf( szXmlIdentVer[0], "<identifier version=\"%s\"", INCHI_VERSION );
         lenXmlIdentVer[1] = sprintf( szXmlIdentVer[1], "<identifier version=\"1.12Beta\"" );
         lenXmlIdentVer[2] = sprintf( szXmlIdentVer[2], "<identifier version=\"1.0RC\"" );
         lenXmlIdentVer[3] = sprintf( szXmlIdentVer[3], "<identifier version=\"1.0RC\"" );
+        lenXmlIdentVer[4] = sprintf( szXmlIdentVer[4], "<identifier version=\"1\"" );
+        lenXmlIdentVer[5] = sprintf( szXmlIdentVer[5], "<identifier version=\"1a\"" );
         lenXmlMsgError    = sprintf( szXmlMsgError,    "<message type=\"error (no %s)\"", INCHI_NAME );
         lenXmlStruct      = strlen(szXmlStruct);
         lenXmlMsgFatal    = strlen(szXmlMsgFatal);

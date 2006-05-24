@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -67,7 +67,6 @@ int map_stereo_bonds4 (
                           */
     int tpos1;
     AT_STEREO_DBLE prevBond;
-
     tpos1 = CurTreeGetPos( cur_tree );
 
 total_restart:
@@ -1174,7 +1173,7 @@ repeat_all:
             
             /*********************************************************************************
              *
-             *   Unknown Stereocenter Parity case: possibly need to map stereo bond neighbors
+             *   Unknown Stereocenter Parity case: possibly need to map stereo center neighbors
              */
             if ( stereo_center_parity == sb_parity_calc )
             {
@@ -1230,14 +1229,20 @@ repeat_all:
                     pCS->LinearCTStereoCarb[nNumMappedAtoms].parity = parity1;
                     pCS->LinearCTStereoCarb[nNumMappedAtoms].at_num = at_rank_canon1;
                     pCS->bRankUsedForStereo[at_from1] = 3;
-                    pCS->bAtomUsedForStereo[at_to1] -= STEREO_AT_MARK;
+#if( FIX_ChCh_STEREO_CANON_BUG == 1 )
+                    if ( !bAllParitiesIdentical )
+#endif
+                        pCS->bAtomUsedForStereo[at_to1] -= STEREO_AT_MARK;
 
                     ret = map_stereo_atoms4 ( at, num_atoms, num_at_tg, num_max, nCanonRankFrom, nAtomNumberCanonFrom, nCanonRankTo,
                                        nSymmRank, pRankStack1+nStackPtr[istk],  pRankStack2+nStackPtr[istk],
                                        nTempRank,  nMappedRanks[istk],  nSymmStereo,  NeighList,
                                        pCS, cur_tree, nNumMappedAtoms+1 );
                     pCS->bRankUsedForStereo[at_from1] = 0;
-                    pCS->bAtomUsedForStereo[at_to1] += STEREO_AT_MARK;
+#if( FIX_ChCh_STEREO_CANON_BUG == 1 )
+                    if ( !bAllParitiesIdentical )
+#endif
+                        pCS->bAtomUsedForStereo[at_to1] += STEREO_AT_MARK;
                     if ( ret == 4 ) {
                         return ret;
                     }

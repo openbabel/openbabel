@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -62,7 +62,7 @@ typedef struct tagDrawParms {
 #define MAX_NUM_PATHS 4
 #endif
 
-typedef enum tagInputType { INPUT_NONE=0, INPUT_MOLFILE=1, INPUT_SDFILE=2, INPUT_INCHI_XML=3, INPUT_INCHI_PLAIN=4, INPUT_CMLFILE=5, INPUT_MAX } INPUT_TYPE;
+typedef enum tagInputType { INPUT_NONE=0, INPUT_MOLFILE=1, INPUT_SDFILE=2, INPUT_INCHI_XML=3, INPUT_INCHI_PLAIN=4, INPUT_CMLFILE=5, INPUT_INCHI=6, INPUT_MAX } INPUT_TYPE;
 typedef struct tagInputParms {
     char            szSdfDataHeader[MAX_SDF_HEADER+1];
     char           *pSdfLabel;
@@ -85,8 +85,8 @@ typedef struct tagInputParms {
 */
     const char     *path[MAX_NUM_PATHS];
     int             num_paths;
-    int             first_struct_number;
-    int             last_struct_number;
+    long            first_struct_number;
+    long            last_struct_number;
     INPUT_TYPE      nInputType;
     INCHI_MODE      nMode;
     int             bAbcNumbers;
@@ -101,6 +101,7 @@ typedef struct tagInputParms {
 
     long            ulDisplTime; /* not used: max structure or question display time */
     int             bDisplay;
+    int             bDisplayIfRestoreWarnings; /* InChI->Struct debug */
     int             bMergeAllInputStructures;
     int             bSaveWarningStructsAsProblem;
     int             bSaveAllGoodStructsAsProblem;
@@ -114,6 +115,9 @@ typedef struct tagInputParms {
     int             bAllowEmptyStructure;
     INCHI_MODE      bTautFlags;
     INCHI_MODE      bTautFlagsDone;
+#if( READ_INCHI_STRING == 1 )
+    int             bReadInChIOptions;
+#endif
 } INPUT_PARMS;
 
 #endif /* __INCHIDRP_H__ */

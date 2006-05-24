@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -274,7 +274,8 @@ int DisconnectSalts( ORIG_ATOM_DATA *orig_inp_data, int bDisconnect );
 int DisconnectMetals( ORIG_ATOM_DATA *orig_inp_data, int bCheckMetalValence, INCHI_MODE *bTautFlagsDone );
 int bMayDisconnectMetals( ORIG_ATOM_DATA *orig_inp_data, int bCheckMetalValence, INCHI_MODE *bTautFlagsDone );
 int bHasMetalAtom( ORIG_ATOM_DATA *orig_inp_data );
-int fix_odd_things( int num_atoms, inp_ATOM *at );
+int FixAdjacentRadicals( int num_inp_atoms, inp_ATOM *at ); /* FIX_ADJ_RAD == 1 */
+int fix_odd_things( int num_atoms, inp_ATOM *at, int bFixBug );
 int post_fix_odd_things( int num_atoms, inp_ATOM *at );
 int remove_ion_pairs( int num_atoms, inp_ATOM *at );
 
@@ -287,6 +288,8 @@ void FreeOrigAtData( ORIG_ATOM_DATA *orig_at_data );
 void FreeInpAtomData( INP_ATOM_DATA *inp_at_data );
 void FreeCompAtomData( COMP_ATOM_DATA *inp_at_data );
 void FreeInfoAtomData( INF_ATOM_DATA *inf_at_data );
+
+int FixUnkn0DStereoBonds(inp_ATOM *at, int num_at);
 
 inf_ATOM *CreateInfAtom( int num_atoms );
 inp_ATOM *CreateInpAtom( int num_atoms );

@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -47,6 +47,7 @@ int free_t_group_info( T_GROUP_INFO *t_group_info );
 int make_a_copy_of_t_group_info( T_GROUP_INFO *t_group_info, T_GROUP_INFO *t_group_info_orig );
 int set_tautomer_iso_sort_keys( T_GROUP_INFO *t_group_info );
 int CountTautomerGroups( sp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info );
+int CountTautomerGroupsInpAt( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info );
 int SortTautomerGroupsAndEndpoints( T_GROUP_INFO *t_group_info, int num_atoms, int num_at_tg, AT_RANK *nRank );
 int FillIsotopicAtLinearCT( int num_atoms, sp_ATOM* at, const AT_RANK *nAtomNumber,
                             AT_ISOTOPIC *LinearCTIsotopic, int nMaxLenLinearCTIsotopic, int *pnLenLinearCTIsotopic );

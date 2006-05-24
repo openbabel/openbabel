@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -38,10 +38,10 @@ void swap ( char *a, char *b, size_t width )
 /*  Sort by insertions */
 int insertions_sort( void *base, size_t num, size_t width, int ( *compare )(const void *e1, const void *e2 ) )
 {
-  char *i, *j, *pk;
+  char *i, *j, *pk = (char*)base;
   int  num_trans = 0;
   size_t k;
-  for( k=1, pk = (char*)base; k < num; k++, pk += width ) {
+  for( k=1; k < num; k++, pk += width ) {
      for( i = pk, j = pk + width; j > (char*)base && (*compare)(i,j) > 0; j=i, i -= width ) {
         swap( i, j, width );
         num_trans ++;
@@ -203,7 +203,7 @@ int CompAtomInvariants2( const void* a1, const void* a2 )
     return ret;
 }
 /**********************************************************************************/
-/*  Compare two elements lexicùgraphically */
+/*  Compare two elements lexicographically */
 int CompChemElemLex( const void *a1, const void *a2 )
 {
     return memcmp( a1, a2, 2);

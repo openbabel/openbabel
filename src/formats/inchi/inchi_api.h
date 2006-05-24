@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -434,6 +434,7 @@ typedef struct tagINCHIStereo0D {
  *
  *************************************************/
 
+/* Structure -> InChI, GetINCHI() */
 typedef struct tagINCHI_Input {
     /* the caller is responsible for the data allocation and deallocation */
     inchi_Atom     *atom;         /* array of num_atoms elements */
@@ -444,6 +445,15 @@ typedef struct tagINCHI_Input {
     AT_NUM          num_stereo0D; /* number of 0D stereo elements */
 }inchi_Input;
 
+/* InChI -> Structure, GetStructFromINCHI() */
+typedef struct tagINCHI_InputINCHI {
+    /* the caller is responsible for the data allocation and deallocation */
+    char *szInChI;     /* InChI ASCIIZ string to be converted to a strucure */
+    char *szOptions;   /* InChI options: space-delimited; each is preceded by */
+                       /* '/' or '-' depending on OS and compiler */
+} inchi_InputINCHI;
+
+
 /*************************************************
  *
  *
@@ -452,6 +462,7 @@ typedef struct tagINCHI_Input {
  *
  *************************************************/
 
+/* Structure -> InChI */
 typedef struct tagINCHI_Output {
     /* zero-terminated C-strings allocated by GetINCHI() */
     /* to deallocate all of them call FreeINCHI() (see below) */
@@ -461,6 +472,25 @@ typedef struct tagINCHI_Output {
     char *szLog;       /* log-file ASCIIZ string, contains a human-readable list */
                        /* of recognized options and possibly an Error/warning message */
 } inchi_Output;
+
+/* InChI -> Structure */
+typedef struct tagINCHI_OutputStruct {
+    /* 4 pointers are allocated by GetStructFromINCHI()     */
+    /* to deallocate all of them call FreeStructFromINCHI() */
+    inchi_Atom     *atom;         /* array of num_atoms elements */
+    inchi_Stereo0D *stereo0D;     /* array of num_stereo0D 0D stereo elements or NULL */
+    AT_NUM          num_atoms;    /* number of atoms in the structure < 1024 */
+    AT_NUM          num_stereo0D; /* number of 0D stereo elements */
+    char           *szMessage;    /* Error/warning ASCIIZ message */
+    char           *szLog;        /* log-file ASCIIZ string, contains a human-readable list */
+                                  /* of recognized options and possibly an Error/warning message */
+    unsigned long  WarningFlags[2][2]; /* warnings, see INCHIDIFF in inchicmp.h */
+                                       /* [x][y]: x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
+                                                  x=1 => Disconnected layer if Reconnected layer is present
+                                                  y=1 => Main layer or Mobile-H
+                                                  y=0 => Fixed-H layer
+                                        */
+}inchi_OutputStruct;
 
 /*************************************************
  *
@@ -513,7 +543,7 @@ extern "C" {
 #endif
 
 /* inchi_Input is created by the user; strings in inchi_Output are allocated and deallocated by InChI */
-/* inchi_Output does not need to be initilized out to zeroes; see FreeINCHI on how to deallocate it   */
+/* inchi_Output does not need to be initilized out to zeroes; see FreeINCHI() on how to deallocate it */
 EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out );
 
 /* FreeINCHI() should be called to deallocate char* pointers obtained from each GetINCHI() call */
@@ -522,6 +552,21 @@ EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeINCHI ( inchi_Output *out );
 /* helper: get string length */
 EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStringLength( char *p );
 
+/* inchi_Inputinchi_InputINCHI is created by the user; pointers in inchi_OutputStruct are allocated and deallocated by InChI */
+/* inchi_OutputStruct does not need to be initilized out to zeroes; see FreeStructFromINCHI() on how to deallocate it  */
+/* Option /Inchi2Struct is not needed for GetStructFromINCHI(...) */
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
+
+/* FreeStructFromINCHI( ) should be called to deallocate pointers obtained from each GetINCHI()GetStructFromINCHI() call */
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStructFromINCHI( inchi_OutputStruct *out );
+
+/* GetINCHIfromINCHI does same as -InChI2InChI option: converts InChI into InChI for validation purposes */
+/* It may also be used to filter out specific layers. For instance, /Snon would remove stereochemical layer */
+/* Omitting /FixedH and/or /RecMet would remove Fixed-H or Reconnected layers */
+/* To keep all InChI layers use options string "/FixedH /RecMet"; option /InChI2InChI is not needed */
+/* inchi_InputINCHI is created by the user; strings in inchi_Output are allocated and deallocated by InChI */
+/* inchi_Output does not need to be initilized out to zeroes; see FreeINCHI() on how to deallocate it */
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHIfromINCHI( inchi_InputINCHI *inpInChI, inchi_Output *out );
 
 
 #ifndef INCHI_ALL_CPP
@@ -629,38 +674,50 @@ EXPIMP_TEMPLATE INCHI_API void INCHI_DECL Free_inchi_Input( inchi_Input *pInp );
 #endif
 #endif
 
-
-/* Annotated List of -Exports for libinchi.dll produced by dumpbin (Win32):
-
- ordinal hint RVA      name
---------------------------------- C calling conventions, compatible with gcc under Win32
-                                  (see inchi_dll.c and vc6_libinchi.def for details)
-       1    0 0004D800 FreeINCHI
-       2    1 0004D840 Free_inchi_Input
-       3    2 0004D7F0 GetINCHI
-       4    3 0004D810 GetStringLength
-       5    4 0004D820 Get_inchi_Input_FromAuxInfo
---------------------------------- __stdcall calling conventions, compatible with MS VB 6
-                                  (as defined in this file and used in INCHI_MAIN.exe)
-       6    5 0004BD30 _FreeINCHI@4
-       7    6 0001D7C0 _Free_inchi_Input@4
-       8    7 0004BD80 _GetINCHI@8
-       9    8 0004D7D0 _GetStringLength@4
-      10    9 0001D620 _Get_inchi_Input_FromAuxInfo@12
-
-------------------- end of the Annotated list-----------------------
+/*
 
 =======================================================================
 ============= prototypes for C calling conventions: ===================
 =======================================================================
 int  GetINCHI( inchi_Input *inp, inchi_Output *out );
 void FreeINCHI( inchi_Output *out );
+
 int  GetStringLength( char *p );
+
 int  Get_inchi_Input_FromAuxInfo
      ( char *szInchiAuxInfo, int bDoNotAddH, InchiInpData *pInchiInp );
 void Free_inchi_Input( inchi_Input *pInp );
-=======================================================================
 
+int GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
+int GetINCHIfromINCHI( inchi_InputINCHI *inpInChI, inchi_Output *out );
+void FreeStructFromINCHI( inchi_OutputStruct *out );
+
+======================================================================
+Win32 Dumpbin export information
+======================================================================  
+Ordinal  Hint        Entry point
+
+cdecl 
+  1       0 000DB23E FreeINCHI
+  7       1 000DB2A2 FreeStructFromINCHI
+  2       2 000DB270 Free_inchi_Input
+  3       3 000DB22C GetINCHI
+  8       4 000DB290 GetINCHIfromINCHI
+  4       5 000DB24C GetStringLength
+  6       6 000DB27E GetStructFromINCHI
+  5       7 000DB25A Get_inchi_Input_FromAuxInfo
+__stdcall or PASCAL
+  9       8 000D6960 _FreeINCHI@4
+ 10       9 000D69E9 _FreeStructFromINCHI@4
+ 11       A 000310FA _Free_inchi_Input@4
+ 12       B 000D6A99 _GetINCHI@8
+ 13       C 000DA1F3 _GetINCHIfromINCHI@8
+ 14       D 000DA1D6 _GetStringLength@4
+ 15       E 000DA9B7 _GetStructFromINCHI@8
+ 16       F 00030ED1 _Get_inchi_Input_FromAuxInfo@12
+
+
+=======================================================================
 
 
 */

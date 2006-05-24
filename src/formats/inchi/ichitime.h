@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -64,11 +64,25 @@ typedef struct tagInchiTime {
 
 #endif
 
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+extern "C" {
+#endif
+#endif
+
+
 void InchiTimeGet( inchiTime *TickEnd );
 long InchiTimeMsecDiff( inchiTime *TickEnd, inchiTime *TickStart );
 void InchiTimeAddMsec( inchiTime *TickEnd, unsigned long nNumMsec );
 int  bInchiTimeIsOver( inchiTime *TickEnd );
 long InchiTimeElapsed( inchiTime *TickStart );
+
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+}
+#endif
+#endif
+
 
 #endif /* __ICHITIME_H__ */
 

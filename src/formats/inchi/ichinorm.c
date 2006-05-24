@@ -2,8 +2,8 @@
  * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.00
- * April 13, 2005
+ * Software version 1.01
+ * May 16, 2006
  * Developed at NIST
  */
 
@@ -122,7 +122,10 @@ int MarkRingSystemsInp( inp_ATOM *at, int num_atoms )
     do {
         /* advance */
 advance_block:
-        if ( (int)at[i=nStackAtom[nTopStackAtom]].valence > (j = (int)cNeighNumb[i]) ) {
+        /*if ( (int)at[i=nStackAtom[nTopStackAtom]].valence > (j = (int)cNeighNumb[i]) )*/
+        /* replaced due to missing sequence point */
+        if ( i=(int)nStackAtom[nTopStackAtom], j = (int)cNeighNumb[i], (int)at[i].valence > j )
+        {
             cNeighNumb[i] ++;
             u = (int)at[i].neighbor[j];
             if ( !nDfsNumber[u] ) {
@@ -199,7 +202,10 @@ advance_block:
     do {
         /* advance */
 advance_ring:
-        if ( (int)at[i=nStackAtom[nTopStackAtom]].valence > (j = (int)cNeighNumb[i]) ) {
+        /*if ( (int)at[i=nStackAtom[nTopStackAtom]].valence > (j = (int)cNeighNumb[i]) )*/
+        /* replaced due to missing sequence point */
+        if ( i=(int)nStackAtom[nTopStackAtom], j = (int)cNeighNumb[i], (int)at[i].valence > j )
+        {
             cNeighNumb[i] ++;
             u = (int)at[i].neighbor[j];
             if ( !nDfsNumber[u] ) {
@@ -523,7 +529,7 @@ int remove_terminal_HDT( int num_atoms, inp_ATOM *at )
         at[i].component = i; /*  temporarily save original numbering */
         /*  get k = temp. hydrogen isotope/non-hydrogen atom type: */
         /*  k=0:H, k=2:D, k=3:T, k=4=kMax: not a hydrogen */
-        k = at[i].elname[1]? kMax : (p=strchr(szHDT, at[i].elname[0]))? p-szHDT : kMax;
+        k = at[i].elname[1]? kMax : (p=(char*)strchr(szHDT, at[i].elname[0]))? p-szHDT : kMax;
         /*  set hydrogen isotope atw differences */
         /*  Notes: k-value of isotopic H is incremented to correct iso_atw_diff value later. */
         /*         1H isotope cannot be detected here. */
