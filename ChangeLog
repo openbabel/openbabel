@@ -1,3 +1,13 @@
+2006-05-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/dlhandler_unix.cpp (findFiles): Fix PR#1493706 problem with
+	misplaced NULL terminator.
+
+2006-05-23  Craig James <cjames@emolecules.com>
+
+	* src/formats/smilesformat.cpp: Fixed a potential buffer
+	overflow when parsing SMILES.
+
 2006-05-21 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/xml/xml.cpp (ReadXML): Output the error 
