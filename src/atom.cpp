@@ -2,7 +2,7 @@
 atom.cpp - Handle OBAtom class.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
  
 This file is part of the Open Babel project.
@@ -153,7 +153,8 @@ namespace OpenBabel
     _isotope = src.GetIsotope();
     _fcharge = src.GetFormalCharge();
     _spinmultiplicity = src.GetSpinMultiplicity();
-    strcpy(_type,src.GetType());
+    strncpy(_type,src.GetType(), sizeof(_type) - 1);
+    _type[sizeof(_type) - 1] = '\0';
     _pcharge = src.GetPartialCharge();
     _v = src.GetVector();
     _flags = src.GetFlag();
@@ -358,14 +359,16 @@ namespace OpenBabel
 
   void OBAtom::SetType(char *type)
   {
-    strcpy(_type,type);
+    strncpy(_type,type, sizeof(_type) - 1);
+    _type[sizeof(_type) - 1] = '\0';
     if (_ele == 1 && type[0] == 'D')
       _isotope = 2;
   }
 
   void OBAtom::SetType(string &type)
   {
-    strcpy(_type,type.c_str());
+    strncpy(_type,type.c_str(), sizeof(_type) - 1);
+    _type[sizeof(_type) - 1] = '\0';
     if (_ele == 1 && type[0] == 'D')
       _isotope = 2;
   }

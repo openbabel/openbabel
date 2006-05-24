@@ -2,7 +2,7 @@
 rotor.cpp - Rotate dihedral angles according to rotor rules.
  
 Copyright (C) 1998-2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -919,7 +919,8 @@ void OBRotorRules::ParseLine(const char *buffer)
 
     if (!vs.empty() && vs.size() > 5)
     {
-        strcpy(temp_buffer,vs[0].c_str());
+        strncpy(temp_buffer,vs[0].c_str(), sizeof(temp_buffer) - 1);
+	temp_buffer[sizeof(temp_buffer) - 1] = '\0';
         //reference atoms
         for (i = 0;i < 4;i++)
             ref[i] = atoi(vs[i+1].c_str())-1;
@@ -1047,7 +1048,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
         char buffer[BUFF_SIZE];
         if (!_quiet)
         {
-            sprintf(buffer,"%3d%3d%3d%3d %s",
+            snprintf(buffer, BUFF_SIZE, "%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],
                     ((*i)->GetSmartsString()).c_str());
             obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
@@ -1080,7 +1081,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
         if (!_quiet)
         {
             char buffer[BUFF_SIZE];
-            sprintf(buffer,"%3d%3d%3d%3d %s",
+            snprintf(buffer,BUFF_SIZE,"%3d%3d%3d%3d %s",
                     ref[0],ref[1],ref[2],ref[3],"sp3-sp3");
 	    obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
         }
@@ -1093,7 +1094,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
             if (!_quiet)
             {
                 char buffer[BUFF_SIZE];
-                sprintf(buffer,"%3d%3d%3d%3d %s",
+                snprintf(buffer,BUFF_SIZE,"%3d%3d%3d%3d %s",
                         ref[0],ref[1],ref[2],ref[3],"sp2-sp2");
 		obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
             }
@@ -1105,7 +1106,7 @@ void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
             if (!_quiet)
             {
                 char buffer[BUFF_SIZE];
-                sprintf(buffer,"%3d%3d%3d%3d %s",
+                snprintf(buffer,BUFF_SIZE,"%3d%3d%3d%3d %s",
                         ref[0],ref[1],ref[2],ref[3],"sp2-sp3");
 		obErrorLog.ThrowError(__FUNCTION__, buffer, obDebug);
             }

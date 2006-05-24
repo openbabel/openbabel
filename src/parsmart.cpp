@@ -2,7 +2,7 @@
 parsmart.cpp - SMARTS parser.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -2469,7 +2469,8 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const char *buffer)
   {
-    strcpy(Buffer,buffer);
+    strncpy(Buffer,buffer, sizeof(Buffer) - 1);
+    Buffer[sizeof(Buffer) - 1] = '\0';
   
     _pat = ParseSMARTSRecord(Buffer);
     _str = buffer;
@@ -2479,7 +2480,8 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const std::string &s)
   {
-    strcpy(Buffer, s.c_str());
+    strncpy(Buffer, s.c_str(), sizeof(Buffer) - 1);
+    Buffer[sizeof(Buffer) - 1] = '\0';
   
     _pat = ParseSMARTSRecord(Buffer);
     _str = s;

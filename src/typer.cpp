@@ -2,7 +2,7 @@
 typer.cpp - Open Babel atom typer.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -533,7 +533,8 @@ void OBAromaticTyper::ParseLine(const char *buffer)
     tokenize(vs,buffer);
     if (!vs.empty() && vs.size() == 3)
     {
-        strcpy(temp_buffer,vs[0].c_str());
+        strncpy(temp_buffer,vs[0].c_str(), BUFF_SIZE - 1);
+	temp_buffer[BUFF_SIZE - 1] = '\0';
         sp = new OBSmartsPattern();
         if (sp->Init(temp_buffer))
         {

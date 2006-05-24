@@ -748,7 +748,8 @@ namespace OpenBabel
     PDecisionTree = (ByteCode*)0;
     for( i=0 ; i < AMINOMAX ; i++ )
       {
-        strcpy(ChainsResName[res],AminoAcids[i].name);
+        strncpy(ChainsResName[res],AminoAcids[i].name, sizeof(ChainsResName[res]) - 1);
+	ChainsResName[res][sizeof(ChainsResName[res]) - 1] = '\0';
         DefineMonomer(&PDecisionTree,res,AminoAcids[i].data);
         res++;
       }
@@ -756,7 +757,8 @@ namespace OpenBabel
     NDecisionTree = (ByteCode*)0;
     for( i=0 ; i< NUCLEOMAX ; i++ )
       {
-        strcpy(ChainsResName[res],Nucleotides[i].name);
+        strncpy(ChainsResName[res],Nucleotides[i].name, sizeof(ChainsResName[res]) - 1);
+	ChainsResName[res][sizeof(ChainsResName[res]) - 1] = '\0';
         DefineMonomer(&NDecisionTree,res,Nucleotides[i].data);
         res++;
       }
@@ -886,7 +888,7 @@ namespace OpenBabel
 
   void OBChainsParser::SetResidueInformation(OBMol &mol, bool nukeSingleResidue)
   {
-    char buffer[256];
+    char buffer[BUFF_SIZE];
     char *symbol;
     string atomid, name;
 
