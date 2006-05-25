@@ -25,7 +25,7 @@ else
 libformats_la_LIBADD = -linchi
 endif
 libformats_la_SOURCES = \
-	APIInterface.cpp \
+	APIInterface.cpp obmolecformat.cpp \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \

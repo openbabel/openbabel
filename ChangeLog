@@ -7,6 +7,9 @@
 	* src/Makefile.am, src/Makefile.in: Add missing -no-undefined for
 	Cygwin compilation.
 
+	* src/formats/Makefile.am, src/formats/Makefile.in: Add missing
+	obmolecformat.cpp for Cygwin compilation.
+
 2006-05-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/dlhandler_unix.cpp (findFiles): Fix PR#1493706 problem with

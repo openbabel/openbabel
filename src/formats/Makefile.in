@@ -251,8 +251,8 @@ jaguarformat_la_OBJECTS = $(am_jaguarformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_jaguarformat_la_rpath = -rpath $(pkglibdir)
 @BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_DEPENDENCIES =  \
 @BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@	inchi/libinchi.la
-am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
-	PQSformat.cpp alchemyformat.cpp amberformat.cpp \
+am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
+	CSRformat.cpp PQSformat.cpp alchemyformat.cpp amberformat.cpp \
 	balstformat.cpp bgfformat.cpp boxformat.cpp cacaoformat.cpp \
 	cacheformat.cpp carformat.cpp cccformat.cpp chem3dformat.cpp \
 	chemdrawformat.cpp chemtoolformat.cpp copyformat.cpp \
@@ -270,10 +270,11 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp CSRformat.cpp \
 	viewmolformat.cpp xedformat.cpp xyzformat.cpp yasaraformat.cpp \
 	zindoformat.cpp
 @BUILD_SHARED_FALSE@am_libformats_la_OBJECTS = APIInterface.lo \
-@BUILD_SHARED_FALSE@	CSRformat.lo PQSformat.lo alchemyformat.lo \
-@BUILD_SHARED_FALSE@	amberformat.lo balstformat.lo bgfformat.lo \
-@BUILD_SHARED_FALSE@	boxformat.lo cacaoformat.lo cacheformat.lo \
-@BUILD_SHARED_FALSE@	carformat.lo cccformat.lo chem3dformat.lo \
+@BUILD_SHARED_FALSE@	obmolecformat.lo CSRformat.lo PQSformat.lo \
+@BUILD_SHARED_FALSE@	alchemyformat.lo amberformat.lo \
+@BUILD_SHARED_FALSE@	balstformat.lo bgfformat.lo boxformat.lo \
+@BUILD_SHARED_FALSE@	cacaoformat.lo cacheformat.lo carformat.lo \
+@BUILD_SHARED_FALSE@	cccformat.lo chem3dformat.lo \
 @BUILD_SHARED_FALSE@	chemdrawformat.lo chemtoolformat.lo \
 @BUILD_SHARED_FALSE@	copyformat.lo crkformat.lo cssrformat.lo \
 @BUILD_SHARED_FALSE@	dmolformat.lo fastsearchformat.lo \
@@ -702,7 +703,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_INCHI_FALSE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = -linchi
 @BUILD_INCHI_TRUE@@BUILD_SHARED_FALSE@libformats_la_LIBADD = inchi/libinchi.la
 @BUILD_SHARED_FALSE@libformats_la_SOURCES = \
-@BUILD_SHARED_FALSE@	APIInterface.cpp \
+@BUILD_SHARED_FALSE@	APIInterface.cpp obmolecformat.cpp \
 @BUILD_SHARED_FALSE@	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 @BUILD_SHARED_FALSE@	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 @BUILD_SHARED_FALSE@	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
