@@ -27,6 +27,13 @@ GNU General Public License for more details.
   obrotate "[nH]ccccc[O,C][C,O]" test.sdf 1 6 7 8 180.0
 */
 
+
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
+
+#include "babelconfig.h"
 #include "mol.h"
 #include "parsmart.h"
 #include "rotamer.h"

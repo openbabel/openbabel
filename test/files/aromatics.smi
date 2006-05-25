@@ -36,3 +36,5 @@ n1nncc1 1H-1,2,3-triazole
 n1nnnc1 1H-tetrazole
 n1nccc1 1H-pyrazole
 n1ncnc1 1H-1,2,4-triazole
+c(c(ccc1)ccc2)(c1c(c3ccc4)c4)c23 fluoranthene
+c1cccc2sc3nncn3c12 arotest1

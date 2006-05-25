@@ -17,6 +17,14 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
+
+#include "babelconfig.h"
+
 #include "mol.h"
 #include "obconversion.h"
 #include <unistd.h>

@@ -15,8 +15,6 @@ fi
 echo
 echo "# Testing CML support..."
 if [ -f $cmltestdir/test.sh ]; then
-    echo "# This test will take quite some time!"
-    echo "# and it currently always passes, so check the results file"
     (cd $cmltestdir; source test.sh 2>/dev/null)
 else
     echo "1..0 # skipping - CML test set not found"

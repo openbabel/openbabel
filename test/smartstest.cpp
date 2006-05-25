@@ -17,9 +17,15 @@
  GNU General Public License for more details.
  ***********************************************************************/
 
-#include <fstream>
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
 
 #include "babelconfig.h"
+
+#include <fstream>
+
 #include "mol.h"
 #include "obconversion.h"
 

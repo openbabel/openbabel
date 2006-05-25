@@ -25,6 +25,13 @@ GNU General Public License for more details.
   obfit "[nh]1c2c(=O)n(C)c(=O)n(C)c2cc1" testref.sdf testmv.sdf 
 */
 
+
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
+
+#include "babelconfig.h"
 #include "mol.h"
 #include "parsmart.h"
 #include "obconversion.h"

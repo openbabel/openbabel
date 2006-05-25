@@ -1,3 +1,9 @@
+2006-05-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/main.cpp, tools/*.cpp, test/*.cpp: Added USING_DLL
+	declarations for WIN32 compiles. Thanks to Noel and Donald Curtis
+	for pointing out Cygwin problems.
+
 2006-05-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/dlhandler_unix.cpp (findFiles): Fix PR#1493706 problem with
