@@ -414,6 +414,15 @@ namespace OpenBabel
       if (_root[atom->GetIdx()])
 	CheckAromaticity(atom,20);
 
+    // cleanup -- check for ring bonds where both atoms are aromatic
+    // but for some reason the bond is not (e.g., between a fused system)
+    for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
+      {
+	if (bond->IsInRing() && (bond->GetBeginAtom())->IsAromatic() 
+	    && (bond->GetEndAtom())->IsAromatic())
+	  bond->SetAromatic();
+      }
+
     //for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     //	  if (atom->IsAromatic())
     //		  cerr << "aro = " <<atom->GetIdx()  << endl;
