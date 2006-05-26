@@ -1,3 +1,6 @@
+2006-05-26  Craig James <cjames@emolecules.com>
+	* src/mol.h Added UnsetHash() and UnsetWedge() macros.
+	
 2006-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/smilesformat.cpp (ParseSimple): Change behavior when
