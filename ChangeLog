@@ -1,8 +1,16 @@
 2006-05-26  Craig James <cjames@emolecules.com>
+
 	* src/mol.h Added UnsetHash() and UnsetWedge() macros.
 	
 2006-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/obconversion.cpp (AddChemObject): Output a warning when a
+        format is WRITEONEONLY and more molecules are coming. Fixes
+        PR#1473192.
+
+	* src/formats/mdlformat.cpp (ReadMolecule): Make sure to grab all
+        lines of potentially multi-line properties. Fixes PR#1489209.
+	
 	* src/formats/smilesformat.cpp (ParseSimple): Change behavior when
 	encountering a bond between two potential radical or aromatic
 	atoms. Previously marked bond as double, now mark as 5 -
