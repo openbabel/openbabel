@@ -1,3 +1,20 @@
+2006-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/smilesformat.cpp (ParseSimple): Change behavior when
+	encountering a bond between two potential radical or aromatic
+	atoms. Previously marked bond as double, now mark as 5 -
+	potentially aromatic bond. Appears to fix PR#1493148.
+
+	* src/kekulize.cpp (NewPerceiveKekuleBonds): Make sure that
+	bestorden is reset when traversing cycle. Previous code would only
+	check one atom for adding extra electrons. Appears to fix
+	PR#1445453.
+
+	* test/aromatest.cpp: Make sure to test that all ring bonds are
+	aromatic to confirm that above bugs do not come back.
+
+	* test/files/aromatics.smi: Add additional test cases for above bugs.
+
 2006-05-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/main.cpp, tools/*.cpp, test/*.cpp: Added USING_DLL

@@ -70,7 +70,6 @@ int main(int argc,char *argv[])
   
   // Finally, we can do some work!
   OBMol mol;
-  OBAtom *atom;
   
   unsigned int testCount = 1;
 
@@ -87,9 +86,8 @@ int main(int argc,char *argv[])
       conv.Read(&mol);
       molCount++;
       
-      for(unsigned int i = 1;i <= mol.NumAtoms(); i++)
+      FOR_ATOMS_OF_MOL(atom, mol)
 	{
-	  atom = mol.GetAtom(i);
 	  if (atom->IsHydrogen())
 	    continue;
 
@@ -98,9 +96,26 @@ int main(int argc,char *argv[])
 	  else
 	    {
 	      cout << "not ok " << testCount++ << " # atom isn't aromatic!\n";
-	      cout << "# atom idx " << i  
+	      cout << "# atom idx " << atom->GetIdx()
 		   << " in molecule " << molCount << " "
 		   << mol.GetTitle() << "\n";
+	    }
+	}
+
+      FOR_BONDS_OF_MOL(bond, mol)
+	{
+	  if (bond->IsInRing() && !bond->IsAromatic())
+	    {
+	      cout << "not ok " << testCount++ << " # bond isn't aromatic!\n";
+	      cout << "# begin atom " << bond->GetBeginAtomIdx()
+		   << " end atom " << bond->GetEndAtomIdx()
+		   << " bond order " << bond->GetBO();
+	      cout << " in molecule " << molCount << " "
+		   << mol.GetTitle() << "\n";
+	    }
+	  else if (bond->IsInRing() && bond->IsAromatic())
+	    {
+	      cout << "ok " << testCount++ << "\n";
 	    }
 	}
 	

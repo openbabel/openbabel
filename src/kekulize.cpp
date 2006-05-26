@@ -59,19 +59,19 @@ namespace OpenBabel
     std::vector<OBEdgeBase*>::iterator bi;
     std::vector<int> electron;
     int BO;
-    int sume, orden, bestorden, bestatom;
+    int sume, orden, bestatom;
+    int bestorden = 99;
     // Init the kekulized bonds
     unsigned i;
-    for(i=0; i< NumBonds(); i++ ) {
-      bond = GetBond(i);
-      BO = bond->GetBO();
-      switch (BO)
-	{
-	case 1: bond->SetKSingle(); break;
-	case 2: bond->SetKDouble(); break;
-	case 3: bond->SetKTriple(); break;
-	}
-    }
+    FOR_BONDS_OF_MOL(bond, *this)
+      {
+	switch (bond->GetBO())
+	  {
+	  case 1: bond->SetKSingle(); break;
+	  case 2: bond->SetKDouble(); break;
+	  case 3: bond->SetKTriple(); break;
+	  }
+      }
 
     // Find all the groups of aromatic cycle
     for(i=1; i<= NumAtoms(); i++ ) {
@@ -144,8 +144,8 @@ namespace OpenBabel
 	//cout << "minde before:" << minde << endl;
 	// if huckel rule not satisfied some atoms must give more electrons
 	//cout << "minde " << minde << endl;
-	bestorden=99;//CM moved to before while loop because wasn't being initialized
 	while ( minde != 0 ) {
+	  bestorden=99;
 	  for(j=0; j< cycle.size(); j++) {
 	    if (electron[j] == 1) {
 	      orden = getorden(cycle[j]);
@@ -200,10 +200,10 @@ namespace OpenBabel
 	//}
 	//cout << endl;
 
-	//for(j=0; j < electron.size(); j++) {
-	//cout << "\t" << electron[j];
-	//}
-	//cout << endl;
+	//	for(j=0; j < electron.size(); j++) {
+	  //	cout << "\t" << electron[j];
+	//	}
+	//	cout << endl;
 
 	// kekulize the cycle(s)
 	start_kekulize(cycle,electron);

@@ -635,8 +635,9 @@ namespace OpenBabel
                 prevatom->SetSpinMultiplicity(0);
                 atom->SetSpinMultiplicity(0);
 
-                //Make the new bond double unless not allowed by prevatom's valence
-                _order = AvailableValence>=2  ?  2 : 1 ;
+                //Make the new bond potentially aromatic, unless a double
+		// bond might be impossible given the valence
+                _order = AvailableValence>=2  ?  5 : 1 ;
 	      }
             else
 	      if(AvailableValence<1) //Must be complex aromatic with O, N
