@@ -619,6 +619,8 @@ namespace OpenBabel
       void SetInRing()      { SetFlag(OB_RING_BOND);     }
       void SetClosure()     { SetFlag(OB_CLOSURE_BOND);  }
 
+      void UnsetHash()      { UnsetFlag(OB_HASH_BOND);    }
+      void UnsetWedge()     { UnsetFlag(OB_WEDGE_BOND);   }
       void UnsetUp()        { UnsetFlag(OB_TORUP_BOND);   }
       void UnsetDown()      { UnsetFlag(OB_TORDOWN_BOND); }
       void UnsetAromatic()  { UnsetFlag(OB_AROMATIC_BOND);}
