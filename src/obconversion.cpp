@@ -610,6 +610,28 @@ namespace OpenBabel {
 		    ReadyToInput=false;
 		    return Count;
 		  }
+		//Stop after writing with single object output files
+		if(pOutFormat->Flags() & WRITEONEONLY)
+		  {
+		    ReadyToInput = false;
+		    pOb1 = NULL;
+
+		    // if there are more molecules to output, send a warning
+		    cerr << "WARNING: You are attempting to convert a file"
+			 << " with multiple molecule entries into a format"
+			 << " which can only store one molecule. The current"
+			 << " output will only contain the first molecule.\n\n";
+
+		    cerr << "To convert this input into multiple separate"
+			 << " output files, with one molecule per file, try:\n"
+			 << "babel [input] [ouptut] -m\n\n";
+
+		    cerr << "To pick one particular molecule"
+			 << " (e.g., molecule 4), try:\n"
+			 << "babel -f 4 -l 4 [input] [output]" << endl;
+
+		    return true;
+		  }
 	      }
 	    pOb1=pOb;
 	    wInpos = rInpos; //Save the position in the input file to be accessed when writing it

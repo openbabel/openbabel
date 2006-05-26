@@ -15,6 +15,13 @@
         aromatic. (Fixes problems with fused rings like azulene and
         fluoranthene).
 
+	* src/obconversion.cpp (AddChemObject): Output a warning when a
+	format is WRITEONEONLY and more molecules are coming. Fixes
+	PR#1473192.
+
+	* src/formats/mdlformat.cpp (ReadMolecule): Make sure to grab all
+	lines of potentially multi-line properties. Fixes PR#1489209.
+
 2006-05-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/dlhandler_unix.cpp (findFiles): Fix PR#1493706 problem with
