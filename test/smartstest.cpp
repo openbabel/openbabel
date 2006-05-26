@@ -40,6 +40,17 @@ using namespace OpenBabel;
 
 void GenerateSmartsReference();
 
+#ifdef TESTDATADIR
+  string testdatadir = TESTDATADIR;
+  string smarts_file = testdatadir + "smartstest.txt";
+  string results_file = testdatadir + "smartsresults.txt";
+  string smilestypes_file = testdatadir + "attype.00.smi";
+#else
+   string smarts_file = "smartstest.txt";
+   string results_file = "smartsresults.txt";
+   string smilestypes_file = "attype.00.smi";
+#endif
+
 int main(int argc,char *argv[])
 {
   // turn off slow sync with C-style output (we don't use it anyway).
@@ -62,18 +73,6 @@ int main(int argc,char *argv[])
   
   cout << endl << "# Testing SMARTS...  \n";
   
-#ifdef TESTDATADIR
-  string testdatadir = TESTDATADIR;
-  string smarts_file = testdatadir + "smartstest.txt";
-  string results_file = testdatadir + "smartsresults.txt";
-  string smilestypes_file = testdatadir + "attype.00.smi";
-#else
-
-   string smarts_file = "smartstest.txt";
-   string results_file = "smartsresults.txt";
-   string smilestypes_file = "attype.00.smi";
-#endif
-
    std::ifstream ifs;
    if (!SafeOpen(ifs, (char*)smarts_file.c_str()))
      {
@@ -174,7 +173,7 @@ int main(int argc,char *argv[])
                if (mlist.size())
                  cout << "# First match: atom #" << mlist[0][0] << "\n";
 	       molPassed = false;
-	       continue; // failed on this mol, go to next test
+	       break;
              }
 
            if (mlist.size())
@@ -196,7 +195,7 @@ int main(int argc,char *argv[])
 	       if (k != vs.size())
 		 {
 		   molPassed = false;
-		   continue;
+		   break;
 		 }
 	     }
 	 }
@@ -214,7 +213,7 @@ int main(int argc,char *argv[])
 void GenerateSmartsReference()
 {
     std::ifstream ifs;
-    if (!SafeOpen(ifs,"smartstest.txt"))
+    if (!SafeOpen(ifs,(char*)smarts_file.c_str()))
         return;
 
     char buffer[BUFF_SIZE];
@@ -233,12 +232,12 @@ void GenerateSmartsReference()
     }
 
     std::ofstream ofs;
-    if (!SafeOpen(ofs,"smartsresults.txt"))
+    if (!SafeOpen(ofs, (char*)results_file.c_str()))
         return;
 
     ofs << vsp.size() << " patterns" << endl;
     std::ifstream mifs;
-    if (!SafeOpen(mifs,"attype.00.smi"))
+    if (!SafeOpen(mifs, (char*)smilestypes_file.c_str()))
         return;
 
     vector<int> vm;

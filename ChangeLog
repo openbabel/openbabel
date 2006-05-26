@@ -8,12 +8,26 @@
 	* src/kekulize.cpp (NewPerceiveKekuleBonds): Make sure that
 	bestorden is reset when traversing cycle. Previous code would only
 	check one atom for adding extra electrons. Appears to fix
-	PR#1445453.
+	part of PR#1445453.
+
+	* src/typer.cpp: (AssignAromaticFlags): Added a cleanup step --
+	any ring bond connecting two aromatic atoms is marked as
+	aromatic. (Fixes problems with fused rings like azulene and
+	fluoranthene).
 
 	* test/aromatest.cpp: Make sure to test that all ring bonds are
 	aromatic to confirm that above bugs do not come back.
 
-	* test/files/aromatics.smi: Add additional test cases for above bugs.
+	* test/files/aromatics.smi: Add additional test cases for above
+	bugs.
+
+	* test/ringtest.cpp, test/smartstest.cpp: Update so that
+	generating results is aware of test directory.
+
+	* test/generate.sh: Shortcut to properly generate test results
+	under "make check" conditions.
+
+	* test/files/smartsresults.txt: Update after all of todays changes.
 
 2006-05-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

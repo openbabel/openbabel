@@ -40,6 +40,15 @@ using namespace OpenBabel;
 
 void GenerateRingReference();
 
+#ifdef TESTDATADIR
+  string testdatadir = TESTDATADIR;
+  string results_file = testdatadir + "ringresults.txt";
+  string smilestypes_file = testdatadir + "attype.00.smi";
+#else
+  string results_file = "ringresults.txt";
+  string smilestypes_file = "attype.00.smi";
+#endif
+
 int main(int argc,char *argv[])
 {
   // turn off slow sync with C-style output (we don't use it anyway).
@@ -61,17 +70,6 @@ int main(int argc,char *argv[])
     }
 
   cout << "# Testing ring perception..." << endl;
-
-#ifdef TESTDATADIR
-
-  string testdatadir = TESTDATADIR;
-  string results_file = testdatadir + "ringresults.txt";
-  string smilestypes_file = testdatadir + "attype.00.smi";
-#else
-
-  string results_file = "ringresults.txt";
-  string smilestypes_file = "attype.00.smi";
-#endif
 
   std::ifstream mifs;
   if (!SafeOpen(mifs, (char*)smilestypes_file.c_str()))
@@ -206,11 +204,12 @@ int main(int argc,char *argv[])
 void GenerateRingReference()
 {
     std::ifstream ifs;
-    if (!SafeOpen(ifs,"attype.00.smi"))
+
+    if (!SafeOpen(ifs,(char*)smilestypes_file.c_str()))
         return;
 
     std::ofstream ofs;
-    if (!SafeOpen(ofs,"ringresults.txt"))
+    if (!SafeOpen(ofs,(char*)results_file.c_str()))
         return;
 
     int count;

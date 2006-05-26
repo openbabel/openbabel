@@ -1,12 +1,8 @@
 #!/bin/sh
 
-# Run "prove" on all Perl programs
+# Generate test results
 
-TESTS="aromatic.pl atom bond conversion data format"
-TESTS="${TESTS} formula internalcoord matrix mol residue rings"
-TESTS="${TESTS} smarts unitcell"
-TESTS="${TESTS} cml.sh test-set.sh"
-PROVE=prove
+TESTS="formula rings smarts"
 
 if [ -d ../src/formats/.libs ]; then
     if [ "x${BABEL_LIBDIR}" = "x" ]; then
@@ -23,4 +19,7 @@ if [ -d ../src/formats/.libs ]; then
     fi
 fi
 
-${PROVE} ${TESTS}
+for test in ${TESTS}; do
+ echo "Generating results for test $test"
+ ./${test} -g
+done
