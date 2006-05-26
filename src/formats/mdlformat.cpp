@@ -335,7 +335,18 @@ Write Options, e.g. -x3\n \
         string attr = buff.substr(lt,rt-lt);
 
         // sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
-        getline(ifs, buff);
+	string line;
+	buff.clear();
+	while (getline(ifs, line))
+	  {
+	    if (line.size())
+	      {
+		buff.append(line);
+		buff += "\n";
+	      }
+	    else
+	      break;
+	  }
         Trim(buff);
 
         OBPairData *dp = new OBPairData;
