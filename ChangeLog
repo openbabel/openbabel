@@ -1,3 +1,20 @@
+2006-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/formats/smilesformat.cpp (ParseSimple): Change behavior when
+        encountering a bond between two potential radical or aromatic
+        atoms. Previously marked bond as double, now mark as 5 -
+        potentially aromatic bond. Appears to fix PR#1493148.
+
+        * src/kekulize.cpp (NewPerceiveKekuleBonds): Make sure that
+        bestorden is reset when traversing cycle. Previous code would only
+        check one atom for adding extra electrons. Appears to fix
+        part of PR#1445453.
+
+        * src/typer.cpp: (AssignAromaticFlags): Added a cleanup step --
+        any ring bond connecting two aromatic atoms is marked as
+        aromatic. (Fixes problems with fused rings like azulene and
+        fluoranthene).
+
 2006-05-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/dlhandler_unix.cpp (findFiles): Fix PR#1493706 problem with
