@@ -218,17 +218,17 @@ namespace OpenBabel
     }
     // Double bond have been assigned, set the remaining aromatic bonds to single
     //std::cout << "Set not assigned single bonds\n"; 
-    for(i=0;i <NumBonds(); i++) {
-      bond = GetBond(i);     
-      //std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";   
-      if (bond->GetBO()==5 ) {
-	bond->SetKSingle();
-	bond->SetBO(1);
-	//std::cout << "single\n";
+    FOR_BONDS_OF_MOL(bond, *this)
+      {
+	//std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";   
+	if (bond->GetBO()==5 ) {
+	  bond->SetKSingle();
+	  bond->SetBO(1);
+	  //std::cout << "single\n";
+	}
+	//else
+	//  std::cout << "double\n";
       }
-      //else
-      //  std::cout << "double\n";
-    }
 
     return;
   }
