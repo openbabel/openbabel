@@ -20,11 +20,8 @@
 	bestorden is reset when traversing cycle. Previous code would only
 	check one atom for adding extra electrons. Appears to fix
 	part of PR#1445453.
-
-	* src/typer.cpp: (AssignAromaticFlags): Added a cleanup step --
-	any ring bond connecting two aromatic atoms is marked as
-	aromatic. (Fixes problems with fused rings like azulene and
-	fluoranthene).
+	(expandcycle): Ensure a bond is in a ring before expanding. Fixes
+	part of PR#1445453 for 1-phenyl-1H-pyrrole.
 
 	* test/aromatest.cpp: Make sure to test that all ring bonds are
 	aromatic to confirm that above bugs do not come back.

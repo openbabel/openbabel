@@ -58,7 +58,6 @@ namespace OpenBabel
     OBBond *bond;
     std::vector<OBEdgeBase*>::iterator bi;
     std::vector<int> electron;
-    int BO;
     int sume, orden, bestatom;
     int bestorden = 99;
     // Init the kekulized bonds
@@ -83,7 +82,7 @@ namespace OpenBabel
 	cycle.clear();
       
 	avisit.SetBitOn(i);
-	expandcycle (atom, avisit);
+	expandcycle(atom, avisit);
 	//store the atoms of the cycle(s)
 	unsigned int j;
 	for(j=1; j<= NumAtoms(); j++) {
@@ -544,7 +543,8 @@ namespace OpenBabel
       {
 	natom = nbr->GetIdx();
 	// if (!avisit[natom] && nbr->IsAromatic() && ((OBBond*) *i)->IsAromatic()) {
-	if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5) {
+	if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5 
+	    && ((OBBond*) *i)->IsInRing()) {
 	  avisit.SetBitOn(natom);
 	  expandcycle(nbr, avisit);
 	}
