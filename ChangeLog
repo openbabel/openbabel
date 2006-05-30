@@ -1,3 +1,11 @@
+2006-05-21 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/formats/smilesformat.cpp (ParseSimple): Tidied up code
+	to handle extension lc as conjugated double bonds and radical.
+	Defer potential double bonds to end of ParseSmiles() when molecule
+	complete to ensure not applied to aromatic atoms. PR#1493148
+	still ok and extension works again.
+	
 2006-05-26  Craig James <cjames@emolecules.com>
 
 	* src/mol.h Added UnsetHash() and UnsetWedge() macros.

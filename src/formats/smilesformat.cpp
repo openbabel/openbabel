@@ -168,6 +168,7 @@ namespace OpenBabel
     vector<bool>         _avisit;
     vector<bool>         _bvisit;
     char _buffer[BUFF_SIZE];
+		vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
     bool chiralWatch; // set when a chiral atom is read
     map<OBAtom*,OBChiralData*> _mapcd; // map of ChiralAtoms and their data
   public:
@@ -374,6 +375,16 @@ namespace OpenBabel
     mol.UnsetAromaticPerceived();
 
     mol.EndModify();
+
+		//Extension which interprets cccc with conjugated double bonds if niether
+		//of its atoms is aromatic.
+		vector<int>::iterator itr;
+		for(itr=PosDouble.begin();itr!=PosDouble.end();++itr)
+		{
+			OBBond* bond = mol.GetBond(*itr);
+			if(!bond->GetBeginAtom()->IsAromatic() && !bond->GetEndAtom()->IsAromatic())
+				bond->SetBO(2);
+		}
     
     //NE add the OBChiralData stored inside the _mapcd to the atoms now after end
     // modify so they don't get lost.
@@ -581,85 +592,68 @@ namespace OpenBabel
         atom->SetAromatic();
         atom->SetSpinMultiplicity(2); // CM 18 Sept 2003
       }
+		
+		// Untrue, but necessary to avoid perception being called in OBAtom::IsAromatic()
+		// on incomplete molecule. Undone at end of function. 
+		mol.SetAromaticPerceived();
+		
+		if (_prev) //need to add bond
+		{
+			/* CM 18 Sept 2003
+			 An extension to the SMILES format has been added so that lower case c,n,o can 
+			 represent a radical centre: CcC is isopropyl radical;
+			 and cccc... a carbon chain bonded by conjugated double bonds.
+			 Fails sometimes when using c as both aromatic and as the extened form.
+			 For benzyl radical C6H5CH2. c1ccccc1c is ok; c1cc(c)ccc1 fails.
+			 Radical centres should not be involved in ring closure:
+			 for cyclohexyl radical C1cCCCC1 is ok, c1CCCCC1 is not.  
 
-    if (_prev) //need to add bond
-      {
-        /* CM 18 Sept 2003
-	   An extension to the SMILES format has been added so that lower case c,n,o can 
-	   represent a radical centre: CcC is isopropyl radical;
-	   and cccc... a carbon chain bonded by conjugated double bonds.
-	   Fails sometimes when using c as both aromatic and as the extened form.
-	   For benzyl radical C6H5CH2. c1ccccc1c is ok; c1cc(c)ccc1 fails.
-	   Radical centres should not be involved in ring closure:
-	   for cyclohexyl radical C1cCCCC1 is ok, c1CCCCC1 is not.  
+			 Implementation
+			 Atoms c,n,o, etc initially added as a radical centre
+			 unless _prev is a radical centre when both are made a normal atoms
+			 connected by a double bond. But making this bond double is deferred until
+			 the molecule has been constructed, because it is not appropriate if
+			 either of the atoms is really part of an aromatic ring.
 
-	   Implementation
-	   Atoms c,n,o, etc initially added as a radical centre
-	   unless _prev is a radical centre when both are made a normal atoms
-	   connected by a double bond. 
-	   Since they are still marked as aromatic, FindAromaticBonds() will
-	   replace the bonds by aromatic bonds if they are in a ring.
-	   FindOrphanAromand removes the aromatic tag from the atoms not found in this way
-	   and removes stray radical centres in .
-
-	   To avoid difficulties in complex aromatics with 5 membered rings containing N and O,
-	   the above scheme modified to prevent recognition of aromatic structures is not confused.
-	   - the double bond is made single if it would exceed valence of atom (not all aromatics have conjugated bonds)
-	   - the radical centre is removed on both atoms when forming a ring (in ParseRingBond())
-           and on the new atom if the valence of the prev atom is being exceeded.
-	   Note that the bond orders made here are reassigned in aromatic structures in FindAromaticBonds()
-        */
-        if(arom)
-	  {
-            OBAtom* prevatom = mol.GetAtom(_prev);
-
-            //Calculate available valency on prevatom
-            //This is far more difficult than it should be!
-            //Data not always updated during molecule constuction.
-            int val=0;
-            if(prevatom->IsCarbon())
-	      val=4;
-            else if(prevatom->IsNitrogen())
-	      val=3;
-            else if(prevatom->IsPhosphorus())
-	      val=3;
-            else if(prevatom->IsOxygen())
-	      val=2;
-            else if(prevatom->IsSulfur())
-	      val=2;
-
-            int AvailableValence = val + prevatom->GetFormalCharge() - prevatom->BOSum();//sumBO;
-
-            if (prevatom->GetSpinMultiplicity())
+			 Since they are still marked as aromatic, FindAromaticBonds() will
+			 replace the bonds by aromatic bonds if they are in a ring.
+			 FindOrphanAromand removes the aromatic tag from the atoms not found in this way
+			 and removes stray radical centres.
+			*/
+			OBAtom* prevatom = mol.GetAtom(_prev);
+			if(arom && prevatom->IsAromatic())
+			{
+				_order=5; //Potential aromatic bond
+				
+				if (prevatom->GetSpinMultiplicity())
 	      {
-                prevatom->SetSpinMultiplicity(0);
-                atom->SetSpinMultiplicity(0);
-
-                //Make the new bond potentially aromatic, unless a double
-		// bond might be impossible given the valence
-                _order = AvailableValence>=2  ?  5 : 1 ;
+					//Previous atom had been marked, so bond is potentially a double bond
+					//if it is not part of an aromatic ring. This will be decided when all
+					//molecule has been constructed.
+					PosDouble.push_back(mol.NumBonds()); //saves index of bond about to be added
+					prevatom->SetSpinMultiplicity(0);
+					atom->SetSpinMultiplicity(0);
 	      }
-            else
-	      if(AvailableValence<1) //Must be complex aromatic with O, N
-		atom->SetSpinMultiplicity(0); //radical centres not appropriate in complex aromatics
-	  }
-        // CM end
-        mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
+			}
+
+			mol.AddBond(_prev,mol.NumAtoms(),_order,_bondflags);
         
-        //NE iterate through and see if atom is bonded to chiral atom
-        map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
-        ChiralSearch=_mapcd.find(mol.GetAtom(_prev));
-        if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
-	  {
-	    (ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
-	    // cout << "Line 650: Adding "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
-	  }
-      }
+      //NE iterate through and see if atom is bonded to chiral atom
+      map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
+      ChiralSearch=_mapcd.find(mol.GetAtom(_prev));
+      if (ChiralSearch!=_mapcd.end() && ChiralSearch->second != NULL)
+			{
+				(ChiralSearch->second)->AddAtomRef(mol.NumAtoms(), input);
+				// cout << "Line 650: Adding "<<mol.NumAtoms()<<" to "<<ChiralSearch->second<<endl;
+			}
+		}
+
     //set values
     _prev = mol.NumAtoms();
     _order = 1;
     _bondflags = 0;
 
+		mol.UnsetAromaticPerceived(); //undo 
     return(true);
   }
 
