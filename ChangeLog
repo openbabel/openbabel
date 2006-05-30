@@ -1,4 +1,14 @@
-2006-05-21 Chris Morley <ob@gaseq.co.uk>
+2006-05-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/xml/xml.cpp (ReadXML): Fix PR#1486678 for
+	multi-molecule files. The libxml2 library is very unhappy reading
+	a file past EOF, so make sure to check the state of the istream
+	before reading.
+
+	* test/cmltest/*: Renamed roundtrip.sh script, which
+	was a confusing name, to cycleformats.sh.
+
+2006-05-30 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/smilesformat.cpp (ParseSimple): Tidied up code
 	to handle extension lc as conjugated double bonds and radical.

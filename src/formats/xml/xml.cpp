@@ -18,320 +18,321 @@ using namespace std;
 namespace OpenBabel
 {
 
-//static variable
-XMLBaseFormat* XMLConversion::_pDefault=NULL;
+  //static variable
+  XMLBaseFormat* XMLConversion::_pDefault=NULL;
 
-XMLConversion::XMLConversion(OBConversion* pConv)
-		: OBConversion(*pConv), _reader(NULL), _writer(NULL),
-		_LookingForNamespace(false),_SkipNextRead(false),
-		  _lastpos(0), _requestedpos(0)
-{
-	_pConv = pConv;
-	pConv->SetAuxConv(this);//marks original OBConversion object as having been extended 
-	SetAuxConv(this);//marks this new object as extended (for use with OBConversion pointer)
-}
+  XMLConversion::XMLConversion(OBConversion* pConv)
+    : OBConversion(*pConv),
+      _requestedpos(0), _lastpos(0),
+      _reader(NULL), _writer(NULL),
+      _LookingForNamespace(false), _SkipNextRead(false)
+  {
+    _pConv = pConv;
+    pConv->SetAuxConv(this);//marks original OBConversion object as having been extended 
+    SetAuxConv(this);//marks this new object as extended (for use with OBConversion pointer)
+  }
 
-bool XMLConversion::SetupReader()
-{
-	if(_reader)
-		return true; //do not need to make a new reader
+  bool XMLConversion::SetupReader()
+  {
+    if(_reader)
+      return true; //do not need to make a new reader
 
-	//If the inputstream is not at the start (probably arising in fastsearch),
-	//save its position and rewind so that the reader initialization is ok.
-	//(Getting the requested object is handled in ReadXML(), when the format is known.) 
-	_requestedpos = GetInStream()->tellg();
-	if(_requestedpos)
-		GetInStream()->seekg(0);
+    //If the inputstream is not at the start (probably arising in fastsearch),
+    //save its position and rewind so that the reader initialization is ok.
+    //(Getting the requested object is handled in ReadXML(), when the format is known.) 
+    _requestedpos = GetInStream()->tellg();
+    if(_requestedpos)
+      GetInStream()->seekg(0);
 
-	//Set up a parser from an input stream 
-	_reader = xmlReaderForIO(
-			ReadStream, //xmlInputReadCallback (static member function)
-			NULL,//xmlInputCloseCallback (static member function)
-			this,       //context
-			"",         //URL
-			NULL,       //encoding
-			0);         //options
+    //Set up a parser from an input stream 
+    _reader = xmlReaderForIO(
+			     ReadStream, //xmlInputReadCallback (static member function)
+			     NULL,//xmlInputCloseCallback (static member function)
+			     this,       //context
+			     "",         //URL
+			     NULL,       //encoding
+			     0);         //options
 
-	if (_reader == NULL)
-	{
-		cerr << "Cannot set up libxml2 reader" << endl;
-		return false;
-	}
-	//A new reader immediately reads 4 bytes (presumably to determine
-	//the encoding).
-		_lastpos = GetInStream()->tellg();
-	return true;
-}
+    if (_reader == NULL)
+      {
+	cerr << "Cannot set up libxml2 reader" << endl;
+	return false;
+      }
+    //A new reader immediately reads 4 bytes (presumably to determine
+    //the encoding).
+    _lastpos = GetInStream()->tellg();
+    return true;
+  }
 
-bool XMLConversion::SetupWriter()
-{
-  //Set up XML writer if one does not already exist
-	if(_writer)
-		return true;
+  bool XMLConversion::SetupWriter()
+  {
+    //Set up XML writer if one does not already exist
+    if(_writer)
+      return true;
   
-	_buf = xmlOutputBufferCreateIO	(
-			WriteStream, //xmlOutputWriteCallback 
-			NULL,			   //xmlOutputCloseCallback
-			this,        //context
-			NULL);        //xmlCharEncodingHandlerPtr
-	_writer = xmlNewTextWriter(_buf);
+    _buf = xmlOutputBufferCreateIO	(
+					 WriteStream, //xmlOutputWriteCallback 
+					 NULL,			   //xmlOutputCloseCallback
+					 this,        //context
+					 NULL);        //xmlCharEncodingHandlerPtr
+    _writer = xmlNewTextWriter(_buf);
 
-	if(!_buf || !_writer)
-	{
-		cerr << "Error setting up xml writer\n" << endl;
-    return false;
-	}
+    if(!_buf || !_writer)
+      {
+	cerr << "Error setting up xml writer\n" << endl;
+	return false;
+      }
 
-	int ret;
-	if(IsOption("c"))
-		ret = xmlTextWriterSetIndent(_writer,0);
-	else
-	{
-		ret = xmlTextWriterSetIndent(_writer,1);
-		ret = xmlTextWriterSetIndentString(_writer, BAD_CAST " "); 
-	}
-	return ret==0;
-}
+    int ret;
+    if(IsOption("c"))
+      ret = xmlTextWriterSetIndent(_writer,0);
+    else
+      {
+	ret = xmlTextWriterSetIndent(_writer,1);
+	ret = xmlTextWriterSetIndentString(_writer, BAD_CAST " "); 
+      }
+    return ret==0;
+  }
 
-XMLConversion::~XMLConversion()
-{
-	if(_reader)
-		xmlFreeTextReader(_reader);
-//	if(_writer)
-//		xmlFreeTextWriter(_writer); was crashing
-		//xmlBufferFree(_buf);
-}
+  XMLConversion::~XMLConversion()
+  {
+    if(_reader)
+      xmlFreeTextReader(_reader);
+    //	if(_writer)
+    //		xmlFreeTextWriter(_writer); was crashing
+    //xmlBufferFree(_buf);
+  }
 
-///Called from each XML class during its construction
-void XMLConversion::RegisterXMLFormat(XMLBaseFormat* pFormat, bool IsDefault, const char* uri)
-{
-	if(IsDefault || Namespaces().empty())
-		_pDefault=pFormat;
-	if(uri)
-		Namespaces()[uri] = pFormat;
-	else
-		Namespaces()[pFormat->NamespaceURI()] = pFormat;
-}
+  ///Called from each XML class during its construction
+  void XMLConversion::RegisterXMLFormat(XMLBaseFormat* pFormat, bool IsDefault, const char* uri)
+  {
+    if(IsDefault || Namespaces().empty())
+      _pDefault=pFormat;
+    if(uri)
+      Namespaces()[uri] = pFormat;
+    else
+      Namespaces()[pFormat->NamespaceURI()] = pFormat;
+  }
 
-///Returns the extended form of the OBConversion object with an xml reader or writer,
-/// if this has not already been done.
-XMLConversion* XMLConversion::GetDerived(OBConversion* pConv, bool ForReading)
-{
-	XMLConversion* pxmlConv;
-	if(!pConv->GetAuxConv())
-		//Need to make an extended copy. It will be deleted by pConv's destructor
-		pxmlConv =  new XMLConversion(pConv);
-	else
-	{
-		//pConv has already had an extended copy made	
-		pxmlConv = dynamic_cast<XMLConversion*>(pConv->GetAuxConv());
-		if (!pxmlConv)
-			return NULL;
-	}
+  ///Returns the extended form of the OBConversion object with an xml reader or writer,
+  /// if this has not already been done.
+  XMLConversion* XMLConversion::GetDerived(OBConversion* pConv, bool ForReading)
+  {
+    XMLConversion* pxmlConv;
+    if(!pConv->GetAuxConv())
+      //Need to make an extended copy. It will be deleted by pConv's destructor
+      pxmlConv =  new XMLConversion(pConv);
+    else
+      {
+	//pConv has already had an extended copy made	
+	pxmlConv = dynamic_cast<XMLConversion*>(pConv->GetAuxConv());
+	if (!pxmlConv)
+	  return NULL;
+      }
 
-	if(ForReading)
-	{
-		pxmlConv->SetupReader();
-		if(pConv->GetInStream()->tellg() < pxmlConv->_lastpos)
-		{
-			//Probably a new file; copy some member vars and renew the current reader
-			pxmlConv->InFilename = pConv->GetInFilename();
-			pxmlConv->pInFormat = pConv->GetInFormat();
+    if(ForReading)
+      {
+	pxmlConv->SetupReader();
+	if(pConv->GetInStream()->tellg() < pxmlConv->_lastpos)
+	  {
+	    //Probably a new file; copy some member vars and renew the current reader
+	    pxmlConv->InFilename = pConv->GetInFilename();
+	    pxmlConv->pInFormat = pConv->GetInFormat();
 
-			if(xmlReaderNewIO( pxmlConv->_reader, ReadStream, NULL, pxmlConv, "", NULL, 0)==-1)
-				return false;
-		}
-	}
-	else
-		pxmlConv->SetupWriter();
+	    if(xmlReaderNewIO( pxmlConv->_reader, ReadStream, NULL, pxmlConv, "", NULL, 0)==-1)
+	      return false;
+	  }
+      }
+    else
+      pxmlConv->SetupWriter();
 
-	return pxmlConv;
-}
+    return pxmlConv;
+  }
 
 
-bool XMLConversion::ReadXML(XMLBaseFormat* pFormat, OBBase* pOb)
-{	
-	if(_requestedpos)
-	{
-		//The initial stream position was not at the start, probably because of fastsearch
-		//Read and discard the first object to synchronize the reader,
-		//then continue getting the requested object.
-		//Assumes the objects are all at the same level in the DOM tree.
-		SetOneObjectOnly(); //probably already set
-		streampos SavedReqestedPos = _requestedpos; 
-		_requestedpos=0;//don't do this again
-		ReadXML(pFormat,pOb);
-		GetInStream()->seekg(SavedReqestedPos);
-	}
+  bool XMLConversion::ReadXML(XMLBaseFormat* pFormat, OBBase* pOb)
+  {	
+    if(_requestedpos)
+      {
+	//The initial stream position was not at the start, probably because of fastsearch
+	//Read and discard the first object to synchronize the reader,
+	//then continue getting the requested object.
+	//Assumes the objects are all at the same level in the DOM tree.
+	SetOneObjectOnly(); //probably already set
+	streampos SavedReqestedPos = _requestedpos; 
+	_requestedpos=0;//don't do this again
+	ReadXML(pFormat,pOb);
+	GetInStream()->seekg(SavedReqestedPos);
+      }
 
-	//**Parse
-	int result=1;
-	while(_SkipNextRead || (result=xmlTextReaderRead(_reader))==1) //read may not be called
-	{
-		_SkipNextRead=false;
-		if(_LookingForNamespace)
-		{
-			const xmlChar* puri = xmlTextReaderConstNamespaceUri(_reader);
-			if(puri)
-			{
-				string uri((const char*)puri);
-				//Look up appropriate format class from the namespace URI
-				NsMapType::iterator nsiter;
-				nsiter = Namespaces().find(uri);
-				if(nsiter!=Namespaces().end())
-				{
-					XMLBaseFormat* pNewFormat = nsiter->second;
-					//Must have same target, e.g. OBMol, as current format 
-					if(pNewFormat->GetType() == pFormat->GetType())
-					{
-						_LookingForNamespace=false;
-						_SkipNextRead=true;
-						SetInFormat(pNewFormat);
-						pNewFormat->ReadMolecule(pOb,this);
-						return true;
-					}
-				}
-			}
-		}
+    //**Parse
+    int result=1;
+    while(GetInStream()->good() && (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
+      {
+	_SkipNextRead=false;
+	if(_LookingForNamespace)
+	  {
+	    const xmlChar* puri = xmlTextReaderConstNamespaceUri(_reader);
+	    if(puri)
+	      {
+		string uri((const char*)puri);
+		//Look up appropriate format class from the namespace URI
+		NsMapType::iterator nsiter;
+		nsiter = Namespaces().find(uri);
+		if(nsiter!=Namespaces().end())
+		  {
+		    XMLBaseFormat* pNewFormat = nsiter->second;
+		    //Must have same target, e.g. OBMol, as current format 
+		    if(pNewFormat->GetType() == pFormat->GetType())
+		      {
+			_LookingForNamespace=false;
+			_SkipNextRead=true;
+			SetInFormat(pNewFormat);
+			pNewFormat->ReadMolecule(pOb,this);
+			return true;
+		      }
+		  }
+	      }
+	  }
 
-		const xmlChar* pname = xmlTextReaderConstLocalName(_reader);
-		int typ = xmlTextReaderNodeType(_reader);
-		if(typ==XML_READER_TYPE_SIGNIFICANT_WHITESPACE || !pname)
-			continue; //Text nodes handled in format class
-		string ElName((const char*)pname);
+	const xmlChar* pname = xmlTextReaderConstLocalName(_reader);
+	int typ = xmlTextReaderNodeType(_reader);
+	if(typ==XML_READER_TYPE_SIGNIFICANT_WHITESPACE || !pname)
+	  continue; //Text nodes handled in format class
+	string ElName((const char*)pname);
 
-		//Pass the node on to the appropriate format class
-		bool ret;
-		if(typ==XML_READER_TYPE_ELEMENT)
-			ret= pFormat->DoElement(ElName);
-		else if(typ==XML_READER_TYPE_END_ELEMENT)
-			ret= pFormat->EndElement(ElName);
-		else 
-			continue;
-		_lastpos = GetInStream()->tellg();
+	//Pass the node on to the appropriate format class
+	bool ret;
+	if(typ==XML_READER_TYPE_ELEMENT)
+	  ret= pFormat->DoElement(ElName);
+	else if(typ==XML_READER_TYPE_END_ELEMENT)
+	  ret= pFormat->EndElement(ElName);
+	else 
+	  continue;
+	_lastpos = GetInStream()->tellg();
 
-		if(!ret)
-			//derived format callback has stopped processing by returning false;
-			//leave reader intact so it can be continued to be used.
-			if(!IsOption("n",OBConversion::INOPTIONS))
-			{
-				_LookingForNamespace = true;
-				return true;
-			}
-	}
+	if(!ret)
+	  //derived format callback has stopped processing by returning false;
+	  //leave reader intact so it can be continued to be used.
+	  if(!IsOption("n",OBConversion::INOPTIONS))
+	    {
+	      _LookingForNamespace = true;
+	      return true;
+	    }
+      }
 
-	if(result==-1)
-	{
-		xmlError* perr = xmlGetLastError();
-		if(perr && perr->level!=XML_ERR_NONE)
-		{
-			obErrorLog.ThrowError("XML Parser " + GetInFilename(),
-				perr->message, obError);
-		}
-		xmlResetError(perr);
-		GetInStream()->setstate(ios::eofbit);
-	}
-	return (result==0);// was result==0;
-}
+    if(result==-1)
+      {
+	xmlError* perr = xmlGetLastError();
+	if(perr && perr->level!=XML_ERR_NONE)
+	  {
+	    obErrorLog.ThrowError("XML Parser " + GetInFilename(),
+				  perr->message, obError);
+	  }
+	xmlResetError(perr);
+	GetInStream()->setstate(ios::eofbit);
+      }
+    return (result==0);// was result==0;
+  }
 
-/////////////////////////////////////////////////////////
-///Read and discard XML text up to the next occurrence of the tag e.g."/molecule>"
-///This is left as the current node. Returns 1 on success, 0 if not found, -1 if failed.
-int XMLConversion::SkipXML(const char* ctag)
-{
-	string tag(ctag);
-	tag.erase(--tag.end()); //remove >
-	int targettyp = XML_READER_TYPE_ELEMENT;
-	if(tag[0]=='/')
-	{
-		tag.erase(0,1);
-		targettyp = XML_READER_TYPE_END_ELEMENT;
-	}
+  /////////////////////////////////////////////////////////
+  ///Read and discard XML text up to the next occurrence of the tag e.g."/molecule>"
+  ///This is left as the current node. Returns 1 on success, 0 if not found, -1 if failed.
+  int XMLConversion::SkipXML(const char* ctag)
+  {
+    string tag(ctag);
+    tag.erase(--tag.end()); //remove >
+    int targettyp = XML_READER_TYPE_ELEMENT;
+    if(tag[0]=='/')
+      {
+	tag.erase(0,1);
+	targettyp = XML_READER_TYPE_END_ELEMENT;
+      }
 
-	int result;
-	while((result = xmlTextReaderRead(_reader))==1)
-	{
-		if(xmlTextReaderNodeType(_reader)==targettyp
-			&& !xmlStrcmp(xmlTextReaderConstLocalName(_reader), BAD_CAST	tag.c_str()))
-			break;
-	}
-	return result;
-}
-/////////////////////////////////////////////////////////
-string XMLConversion::GetAttribute(const char* attrname)
-{
-	string AttributeValue;
-	const xmlChar* pvalue  = xmlTextReaderGetAttribute(_reader, BAD_CAST attrname);
-	if(pvalue)
-		AttributeValue = (const char*)pvalue;
-	return AttributeValue;
-}
+    int result;
+    while((result = xmlTextReaderRead(_reader))==1)
+      {
+	if(xmlTextReaderNodeType(_reader)==targettyp
+	   && !xmlStrcmp(xmlTextReaderConstLocalName(_reader), BAD_CAST	tag.c_str()))
+	  break;
+      }
+    return result;
+  }
+  /////////////////////////////////////////////////////////
+  string XMLConversion::GetAttribute(const char* attrname)
+  {
+    string AttributeValue;
+    const xmlChar* pvalue  = xmlTextReaderGetAttribute(_reader, BAD_CAST attrname);
+    if(pvalue)
+      AttributeValue = (const char*)pvalue;
+    return AttributeValue;
+  }
 
-////////////////////////////////////////////////////////
-string XMLConversion::GetContent()
-{
-	xmlTextReaderRead(_reader);
-	const xmlChar* pvalue = xmlTextReaderConstValue(_reader);
-	string value((const char*)pvalue);
-	return value;
-}
+  ////////////////////////////////////////////////////////
+  string XMLConversion::GetContent()
+  {
+    xmlTextReaderRead(_reader);
+    const xmlChar* pvalue = xmlTextReaderConstValue(_reader);
+    string value((const char*)pvalue);
+    return value;
+  }
 
-////////////////////////////////////////////////////////
-bool XMLConversion::GetContentInt(int& value)
-{
-	xmlTextReaderRead(_reader);
-	const xmlChar* pvalue = xmlTextReaderConstValue(_reader);
-	if(!pvalue)
-		return false;
-	value = atoi((const char*)pvalue);
-	return true;
-}
+  ////////////////////////////////////////////////////////
+  bool XMLConversion::GetContentInt(int& value)
+  {
+    xmlTextReaderRead(_reader);
+    const xmlChar* pvalue = xmlTextReaderConstValue(_reader);
+    if(!pvalue)
+      return false;
+    value = atoi((const char*)pvalue);
+    return true;
+  }
 
-////////////////////////////////////////////////////////
-bool XMLConversion::GetContentDouble(double& value)
-{
-	xmlTextReaderRead(_reader);
-	const xmlChar* pvalue = xmlTextReaderConstValue(_reader);
-	if(!pvalue)
-		return false;
-	value = strtod((const char*)pvalue,NULL);
-	return true;
-}
+  ////////////////////////////////////////////////////////
+  bool XMLConversion::GetContentDouble(double& value)
+  {
+    xmlTextReaderRead(_reader);
+    const xmlChar* pvalue = xmlTextReaderConstValue(_reader);
+    if(!pvalue)
+      return false;
+    value = strtod((const char*)pvalue,NULL);
+    return true;
+  }
 
-////////////////////////////////////////////////////////
-///Static callback function for xmlReaderForIO(). Reads up to the next '>', or len chars.
+  ////////////////////////////////////////////////////////
+  ///Static callback function for xmlReaderForIO(). Reads up to the next '>', or len chars.
 
-int XMLConversion::ReadStream(void * context, char * buffer, int len)
-{
-	//TODO worry about non-ascii coding
-	XMLConversion* pConv = static_cast<XMLConversion*>(context);
-	istream* ifs = pConv->GetInStream();
-	if(ifs->eof())
-		return 0;
+  int XMLConversion::ReadStream(void * context, char * buffer, int len)
+  {
+    //TODO worry about non-ascii coding
+    XMLConversion* pConv = static_cast<XMLConversion*>(context);
+    istream* ifs = pConv->GetInStream();
+    if(!ifs->good() || ifs->eof())
+      return 0;
 	
-	ifs->get(buffer, len+1, '>');
-	streamsize count = strlen(buffer);
+    ifs->get(buffer, len+1, '>');
+    streamsize count = strlen(buffer);
 
-	if(ifs->peek()=='>')
-	{
-		ifs->ignore();
-		buffer[count] = '>';
-		buffer[++count] = '\0';
-	}
-	return count;
-}
+    if(ifs->peek()=='>')
+      {
+	ifs->ignore();
+	buffer[count] = '>';
+	buffer[++count] = '\0';
+      }
+    return count;
+  }
 
-//////////////////////////////////////////////////////////
-int XMLConversion::WriteStream(void * context, const char * buffer, int len)
-{
-	XMLConversion* pxmlConv = static_cast<XMLConversion*>(context);
-	ostream* ofs = pxmlConv->GetOutStream();
-	ofs->write(buffer,len);
-	if(!ofs)
-		return -1;
-	ofs->flush();
-	return len;
-}
+  //////////////////////////////////////////////////////////
+  int XMLConversion::WriteStream(void * context, const char * buffer, int len)
+  {
+    XMLConversion* pxmlConv = static_cast<XMLConversion*>(context);
+    ostream* ofs = pxmlConv->GetOutStream();
+    ofs->write(buffer,len);
+    if(!ofs)
+      return -1;
+    ofs->flush();
+    return len;
+  }
 
 } //namespace OpenBabel
 // http://xmlsoft.org/html/libxml-xmlreader.html
