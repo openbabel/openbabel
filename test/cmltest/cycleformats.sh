@@ -3,7 +3,7 @@
 # $1 is inputfile root
 # $2 is inputfile suffix
 # $3 is inputfile type
-# e.g. roundtrip foo mol mdl
+# e.g. cycleformats.sh foo mol mdl
 
 # Make sure we know the absolute path of the programs we're trying to 
 # call, in case the test is called from somewhere eles

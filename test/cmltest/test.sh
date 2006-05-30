@@ -53,7 +53,7 @@ fi
 #  roundtripping; arguments are fileroot; input format; input suffix
 #  2d MDL to CML and back again through all main variants
 echo "# Roundtripping from 2D MDL Molfile to CML and back"
-if ./roundtrip.sh nsc2dmol mol mdl; then
+if ./cycleformats.sh nsc2dmol mol mdl; then
     echo "ok 5"
 else
     echo "not ok 5"
@@ -61,7 +61,7 @@ fi
 
 #  3d MDL to CML and back again through all main variants
 echo "# Roundtripping from 3D MDL Molfile to CML and back"
-if ./roundtrip.sh nsc3dmol mol mdl; then
+if ./cycleformats.sh nsc3dmol mol mdl; then
     echo "ok 6"
 else
     echo "not ok 6"
