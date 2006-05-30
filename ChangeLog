@@ -8,6 +8,10 @@
 	* test/cmltest/*: Renamed roundtrip.sh script, which
 	was a confusing name, to cycleformats.sh.
 
+	* src/formats/pdbformat.cpp: Run PerceiveBondOrders regardless of
+	size (most PDB multiple-bonds should be picked up by residue
+	information). Fixes PR#1493626.
+
 2006-05-30 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/smilesformat.cpp (ParseSimple): Tidied up code

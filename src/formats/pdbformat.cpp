@@ -128,7 +128,6 @@ namespace OpenBabel
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
 
-    if (mol.NumAtoms() < 250) // Minimize time required on real proteins
       if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
         mol.PerceiveBondOrders();
 
