@@ -162,7 +162,8 @@ bool XMLConversion::ReadXML(XMLBaseFormat* pFormat, OBBase* pOb)
 
 	//**Parse
 	int result=1;
-	while(_SkipNextRead || (result=xmlTextReaderRead(_reader))==1) //read may not be called
+	while(GetInStream()->good() && 
+	      (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
 	{
 		_SkipNextRead=false;
 		if(_LookingForNamespace)

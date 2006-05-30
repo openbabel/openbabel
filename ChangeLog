@@ -1,3 +1,14 @@
+2006-05-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/formats/pdbformat.cpp: Run PerceiveBondOrders regardless of
+	size (most PDB multiple-bonds should be picked up by residue
+	information). Fixes PR#1493626.
+
+	* src/formats/xml/xml.cpp (ReadXML): Fix PR#1486678 for
+	multi-molecule files. The libxml2 library is very unhappy reading
+	a file past EOF, so make sure to check the state of the istream
+	before reading.
+
 2006-05-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * src/formats/smilesformat.cpp (ParseSimple): Change behavior when
