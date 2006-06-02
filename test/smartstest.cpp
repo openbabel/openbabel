@@ -5,7 +5,7 @@ This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 Geoffrey R. Hutchison
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,6 +18,11 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <fstream>
+
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
 
 #include "babelconfig.h"
 #include "mol.h"

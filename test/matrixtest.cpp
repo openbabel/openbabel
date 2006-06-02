@@ -2,7 +2,7 @@
 matrixtest.cpp - Unit tests for matrix manipulations.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -16,6 +16,11 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
 
 #include "babelconfig.h"
 #include "math/matrix3x3.h"

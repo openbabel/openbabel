@@ -1,8 +1,8 @@
 /**********************************************************************
-OBChiral
--Lists chiral centers in a molecule
-Copyright 2005 - Nick England
- 
+obchiral.cpp: Lists chiral centers in a molecule
+Copyright (C) 2005 - Nick England
+Some portions Copyright (C) 2006 Geoffrey R. Hutchison
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
 
@@ -15,6 +15,13 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
+
+#include "babelconfig.h"
 
 #include "mol.h"
 #include "obconversion.h"

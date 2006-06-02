@@ -1,7 +1,7 @@
 /**********************************************************************
 obfit = Fit molecules according to a SMART pattern
 Copyright (C) 2003 Fabien Fontaine
-Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
+Some portions Copyright (C) 2004-2006 Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -25,6 +25,12 @@ GNU General Public License for more details.
   obfit "[nh]1c2c(=O)n(C)c(=O)n(C)c2cc1" testref.sdf testmv.sdf 
 */
 
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
+
+#include "babelconfig.h"
 #include "mol.h"
 #include "parsmart.h"
 #include "obconversion.h"

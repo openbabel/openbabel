@@ -2,7 +2,7 @@
 obprop - Open Babel properties calculation
 
 Copyright (C) 2003 Fabien Fontaine
-Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
+Some portions Copyright (C) 2004-2006 Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -17,6 +17,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
+
+#include "babelconfig.h"
 #include "mol.h"
 #include "obconversion.h"
 #include <unistd.h>
