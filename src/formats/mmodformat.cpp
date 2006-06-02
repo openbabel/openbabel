@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -22,34 +22,34 @@ using namespace std;
 namespace OpenBabel
 {
 
-class MacroModFormat : public OBMoleculeFormat
-{
-public:
+  class MacroModFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     MacroModFormat()
     {
-        OBConversion::RegisterFormat("mmd",this, "chemical/x-macromodel-input");
-        OBConversion::RegisterFormat("mmod",this, "chemical/x-macromodel-input");
+      OBConversion::RegisterFormat("mmd",this, "chemical/x-macromodel-input");
+      OBConversion::RegisterFormat("mmod",this, "chemical/x-macromodel-input");
     }
 
     virtual const char* Description() //required
     {
-        return
-            "MacroModel format\n \
+      return
+        "MacroModel format\n \
             No comments yet\n";
     };
 
-  virtual const char* SpecificationURL()
-  {return "";}; //optional
+    virtual const char* SpecificationURL()
+    {return "";}; //optional
 
-  virtual const char* GetMIMEType() 
-  { return "chemical/x-macromodel-input"; };
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-macromodel-input"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+      return READONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -57,19 +57,19 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-MacroModFormat theMacroModFormat;
+  //Make an instance of the format class
+  MacroModFormat theMacroModFormat;
 
-/////////////////////////////////////////////////////////////////
-bool MacroModFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool MacroModFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -82,26 +82,26 @@ bool MacroModFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     vector<vector<pair<int,int> > > connections;
 
     if (ifs.getline(buffer,BUFF_SIZE))
-    {
+      {
         vector<string> vs;
         tokenize(vs,buffer," \n");
 
         if ( !vs.empty() && vs.size() > 0)
-            sscanf(buffer,"%i%*s",&natoms);
+          sscanf(buffer,"%i%*s",&natoms);
 
-	if (natoms == 0)
-	  return false;
+        if (natoms == 0)
+          return false;
 
         if ( !vs.empty() && vs.size() > 1)
-            mol.SetTitle(vs[1]);
+          mol.SetTitle(vs[1]);
         else
-        {
+          {
             string s = defaultTitle;
             mol.SetTitle(defaultTitle);
-        }
-    }
+          }
+      }
     else
-        return(false);
+      return(false);
 
     mol.BeginModify();
     mol.ReserveAtoms(natoms);
@@ -120,27 +120,27 @@ bool MacroModFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     ttab.SetFromType("MMD");
     for (i = 1; i <= natoms; i++)
-    {
+      {
         if (!ifs.getline(buffer,BUFF_SIZE))
-            break;
+          break;
 
         int end[6], order[6];
 
-        sscanf(buffer,"%s%d%d%d%d%d%d%d%d%d%d%d%d%lf%lf%lf",
+        sscanf(buffer,"%9s%d%d%d%d%d%d%d%d%d%d%d%d%lf%lf%lf",
                temp_type,&end[0],&order[0],&end[1],&order[1],&end[2],&order[2],
                &end[3], &order[3], &end[4], &order[4], &end[5], &order[5],
                &x, &y, &z);
 
         pair<int,int> tmp;
         for ( j = 0 ; j <=5 ; j++ )
-        {
+          {
             if ( end[j] > 0  && end[j] > i)
-            {
+              {
                 tmp.first = end[j];
                 tmp.second = order[j];
                 connections[i].push_back(tmp);
-            }
-        }
+              }
+          }
 
         v.SetX(x);
         v.SetY(y);
@@ -161,45 +161,45 @@ bool MacroModFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         sscanf(&buffer[101],"%lf", &charge);
         atom.SetPartialCharge(charge);
         mol.AddAtom(atom);
-    }
+      }
 
     for (i = 1; i <= natoms; i++)
-        for (j = 0; j < (signed)connections[i].size(); j++)
-            mol.AddBond(i, connections[i][j].first, connections[i][j].second);
+      for (j = 0; j < (signed)connections[i].size(); j++)
+        mol.AddBond(i, connections[i][j].first, connections[i][j].second);
 
     mol.EndModify();
 
     OBBond *bond;
     vector<OBEdgeBase*>::iterator bi;
     for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
-        if (bond->GetBO() == 5 && !bond->IsInRing())
-            bond->SetBO(1);
+      if (bond->GetBO() == 5 && !bond->IsInRing())
+        bond->SetBO(1);
 
     if ( natoms != (signed)mol.NumAtoms() )
-        return(false);
+      return(false);
 
     // clean out remaining blank lines
     while(ifs.peek() != EOF && ifs.good() && 
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+          (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool MacroModFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool MacroModFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
     char buffer[BUFF_SIZE];
-    sprintf(buffer," %5d %6s      E = %7.3f KJ/mol",
+    snprintf(buffer, BUFF_SIZE, " %5d %6s      E = %7.3f KJ/mol",
             mol.NumAtoms(),mol.GetTitle(),4.184*mol.GetEnergy());
     ofs << buffer << endl;
 
@@ -212,42 +212,42 @@ bool MacroModFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ttab.SetToType("MMD");
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
+      {
         if (atom->IsHydrogen())
-        {
+          {
             type = 41;
             if ((nbr = atom->BeginNbrAtom(j)))
-                if (nbr->IsOxygen())
-                    type = 42;
-                else if (nbr->IsNitrogen())
-                    type = 43;
-        }
+              if (nbr->IsOxygen())
+                type = 42;
+              else if (nbr->IsNitrogen())
+                type = 43;
+          }
         else
-        {
+          {
             from = atom->GetType();
             ttab.Translate(to,from);
             type = atoi((char*)to.c_str());
-        }
-        sprintf(buffer,"%4d",type);
+          }
+        snprintf(buffer, BUFF_SIZE, "%4d",type);
         ofs << buffer;
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
-        {
-            sprintf(buffer," %5d %1d",nbr->GetIdx(),(*j)->GetBO());
+          {
+            snprintf(buffer, BUFF_SIZE, " %5d %1d",nbr->GetIdx(),(*j)->GetBO());
             ofs << buffer;
-        }
+          }
         for (k=atom->GetValence();k < 6;k++)
-        {
-            sprintf(buffer," %5d %1d",0,0);
+          {
+            snprintf(buffer, BUFF_SIZE," %5d %1d",0,0);
             ofs << buffer;
-        }
+          }
 
-        sprintf(buffer," %11.6f %11.6f %11.6f %5d %5d %8.5f \n",
+        snprintf(buffer, BUFF_SIZE, " %11.6f %11.6f %11.6f %5d %5d %8.5f \n",
                 atom->x(), atom->y(),atom->z(),0,0,
                 atom->GetPartialCharge());
         ofs << buffer;
-    }
+      }
 
     return(true);
-}
+  }
 
 } //namespace OpenBabel

@@ -23,26 +23,26 @@ using namespace std;
 namespace OpenBabel
 {
 
-class JaguarOutputFormat : public OBMoleculeFormat
-{
-public:
+  class JaguarOutputFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     JaguarOutputFormat()
     {
-        OBConversion::RegisterFormat("jout",this);
+      OBConversion::RegisterFormat("jout",this);
     }
 
-  virtual const char* Description() //required
-  {
-    return 
-      "Jaguar output format\n\
+    virtual const char* Description() //required
+    {
+      return 
+        "Jaguar output format\n\
        Read Options e.g. -as\n\
         s  Output single bonds only\n\
         b  Disable bonding entirely\n\n";
     };
 
-  virtual const char* SpecificationURL()
-  { return "http://www.schrodinger.com/"; }; //optional
+    virtual const char* SpecificationURL()
+    { return "http://www.schrodinger.com/"; }; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -50,48 +50,48 @@ public:
 
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-JaguarOutputFormat theJaguarOutputFormat;
+  //Make an instance of the format class
+  JaguarOutputFormat theJaguarOutputFormat;
 
 
 
-class JaguarInputFormat : public OBMoleculeFormat
-{
-public:
+  class JaguarInputFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     JaguarInputFormat()
     {
-        OBConversion::RegisterFormat("jin",this);
+      OBConversion::RegisterFormat("jin",this);
     }
 
     virtual const char* Description() //required
     {
-        return "Jaguar input format\n \n";
+      return "Jaguar input format\n \n";
     };
 
-  virtual const char* SpecificationURL()
-  { return "http://www.schrodinger.com/"; }; //optional
+    virtual const char* SpecificationURL()
+    { return "http://www.schrodinger.com/"; }; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-  virtual unsigned int Flags()
-  {return NOTREADABLE | WRITEONEONLY;};
+    virtual unsigned int Flags()
+    {return NOTREADABLE | WRITEONEONLY;};
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
- };
+  };
 
-//Make an instance of the format class
-JaguarInputFormat theJaguarInputFormat;
+  //Make an instance of the format class
+  JaguarInputFormat theJaguarInputFormat;
 
-/////////////////////////////////////////////////////////////////
-bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL) return false;
@@ -110,12 +110,12 @@ bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
-    {
+      {
         if (strstr(buffer,"Input geometry:") != NULL
-                || strstr(buffer,"symmetrized geometry:") != NULL
-                || strstr(buffer,"new geometry:") != NULL
-                || strstr(buffer,"final geometry:") != NULL)
-        {
+            || strstr(buffer,"symmetrized geometry:") != NULL
+            || strstr(buffer,"new geometry:") != NULL
+            || strstr(buffer,"final geometry:") != NULL)
+          {
             // mol.EndModify();
             mol.Clear();
             mol.BeginModify();
@@ -124,12 +124,12 @@ bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
             while (vs.size() == 4)
-            {
+              {
                 atom = mol.NewAtom();
                 str = vs[0]; // Separate out the Symbol# into just Symbol ...
                 for (i = 0;i < str.size();i++)
-                    if (isdigit(str[i]))
-                        str[i] = '\0';
+                  if (isdigit(str[i]))
+                    str[i] = '\0';
 
                 atom->SetAtomicNum(etab.GetAtomicNum(str.c_str()));
                 x = atof((char*)vs[1].c_str());
@@ -139,26 +139,26 @@ bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
-            }
-        }
+              }
+          }
         if (strstr(buffer, "Atomic charges from electrostatic potential") != NULL)
-        {
+          {
             mol.SetAutomaticPartialCharge(false);
             unsigned int chgcount=0;
             while (chgcount<mol.NumAtoms())
-            {
+              {
                 ifs.getline(buffer,BUFF_SIZE);  // blank line
                 ifs.getline(buffer,BUFF_SIZE);  // header line
                 ifs.getline(buffer,BUFF_SIZE);  // data line
                 tokenize(vs,buffer);
                 for (vector<string>::size_type icount=1;icount<vs.size();++icount)
-                {
+                  {
                     chgcount=chgcount+1;
                     mol.GetAtom(chgcount)->SetPartialCharge(atof((char*)vs[icount].c_str()));
-                }
-            }
-        }
-    }
+                  }
+              }
+          }
+      }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
@@ -168,12 +168,12 @@ bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.EndModify();
     mol.SetTitle(title);
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool JaguarInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool JaguarInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL) return false;
 
@@ -191,18 +191,18 @@ bool JaguarInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "&zmat" << endl;
 
     for (i = 1;i <= mol.NumAtoms(); i++)
-    {
+      {
         atom = mol.GetAtom(i);
-        sprintf(buffer,"  %s%d   %12.7f  %12.7f  %12.7f",
-                etab.GetSymbol(atom->GetAtomicNum()), i,
-                atom->GetX(),
-                atom->GetY(),
-                atom->GetZ());
+        snprintf(buffer, BUFF_SIZE, "  %s%d   %12.7f  %12.7f  %12.7f",
+                 etab.GetSymbol(atom->GetAtomicNum()), i,
+                 atom->GetX(),
+                 atom->GetY(),
+                 atom->GetZ());
         ofs << buffer << endl;
-    }
+      }
 
     ofs << "&" << endl;
     return(true);
-}
+  }
 
 } //namespace OpenBabel

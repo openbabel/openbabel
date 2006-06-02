@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -22,42 +22,42 @@ using namespace std;
 namespace OpenBabel
 {
 
-class HINFormat : public OBMoleculeFormat
-{
-public:
+  class HINFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     HINFormat()
     {
-        OBConversion::RegisterFormat("hin",this);
+      OBConversion::RegisterFormat("hin",this);
     }
 
     virtual const char* Description() //required
     {
-        return "HyperChem HIN format\n\
+      return "HyperChem HIN format\n\
               No comments yet\n";
     };
 
-  virtual const char* SpecificationURL()
-  { return "";}; //optional
+    virtual const char* SpecificationURL()
+    { return "";}; //optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-HINFormat theHINFormat;
+  //Make an instance of the format class
+  HINFormat theHINFormat;
 
-/////////////////////////////////////////////////////////////////
-bool HINFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool HINFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -77,20 +77,20 @@ bool HINFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     while (strstr(buffer,"mol") == NULL)
       {
         ifs.getline(buffer, BUFF_SIZE);
-	if (ifs.peek() == EOF || !ifs.good())
-	  return false;
+        if (ifs.peek() == EOF || !ifs.good())
+          return false;
       }
     ifs.getline(buffer, BUFF_SIZE);
 
     mol.BeginModify();
     while (strstr(buffer,"endmol") == NULL)
-    {
+      {
         tokenize(vs,buffer); // Don't really know how long it'll be
         if (vs.size() < 11)
-	  {
-	    ifs.getline(buffer, BUFF_SIZE);
-	    continue;
-	  }
+          {
+            ifs.getline(buffer, BUFF_SIZE);
+            continue;
+          }
 
         atom = mol.NewAtom();
         atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
@@ -101,48 +101,48 @@ bool HINFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
         max = 11 + 2 * atoi((char *)vs[10].c_str());
         for (i = 11; i < max; i+=2)
-        {
+          {
             switch(((char*)vs[i+1].c_str())[0]) // First char in next token
-            {
-            case 's':
+              {
+              case 's':
                 bo = 1;
                 break;
-            case 'd':
+              case 'd':
                 bo = 2;
                 break;
-            case 't':
+              case 't':
                 bo = 3;
                 break;
-            case 'a':
+              case 'a':
                 bo = 5;
                 break;
-            default :
+              default :
                 bo = 1;
                 break;
-            }
+              }
             mol.AddBond(mol.NumAtoms(), atoi((char *)vs[i].c_str()), bo);
-        }
+          }
         ifs.getline(buffer, BUFF_SIZE);
-    }
+      }
 
     // clean out remaining blank lines
     while(ifs.peek() != EOF && ifs.good() && 
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+          (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
     mol.EndModify();
 
     mol.SetTitle(title);
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool HINFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool HINFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -159,9 +159,9 @@ bool HINFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "mol " << file_num << " " << mol.GetTitle() << endl;
 
     for(i = 1;i <= mol.NumAtoms(); i++)
-    {
+      {
         atom = mol.GetAtom(i);
-        sprintf(buffer,"atom %d - %-3s **  - %8.5f %8.5f  %8.5f  %8.5f %d ",
+        snprintf(buffer, BUFF_SIZE, "atom %d - %-3s **  - %8.5f %8.5f  %8.5f  %8.5f %d ",
                 i,
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->GetPartialCharge(),
@@ -171,35 +171,35 @@ bool HINFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
                 atom->GetValence());
         ofs << buffer;
         for (bond = atom->BeginBond(j); bond; bond = atom->NextBond(j))
-        {
+          {
             switch(bond->GetBO())
-            {
-            case 1 :
+              {
+              case 1 :
                 bond_char = 's';
                 break;
-            case 2 :
+              case 2 :
                 bond_char = 'd';
                 break;
-            case 3 :
+              case 3 :
                 bond_char = 't';
                 break;
-            case 5 :
+              case 5 :
                 bond_char = 'a';
                 break;
-            default:
+              default:
                 bond_char = 's';
                 break;
-            }
-	    if (bond->IsAromatic())
-	      bond_char = 'a';
+              }
+            if (bond->IsAromatic())
+              bond_char = 'a';
 
-            sprintf(buffer,"%d %c ", (bond->GetNbrAtom(atom))->GetIdx(), bond_char);
+            snprintf(buffer,BUFF_SIZE, "%d %c ", (bond->GetNbrAtom(atom))->GetIdx(), bond_char);
             ofs << buffer;
-        }
+          }
         ofs << endl;
-    }
+      }
     ofs << "endmol " << file_num << endl;
     return(true);
-}
+  }
 
 } //namespace OpenBabel

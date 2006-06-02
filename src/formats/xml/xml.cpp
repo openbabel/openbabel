@@ -1,5 +1,6 @@
 /**********************************************************************
-Copyright (C) 2005 by Chris Morley
+Copyright (C) 2005-2006 by Chris Morley
+Some portions Copyright (C) 2006 by Geoffrey R. Hutchison
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -46,17 +47,17 @@ namespace OpenBabel
 
     //Set up a parser from an input stream 
     _reader = xmlReaderForIO(
-			     ReadStream, //xmlInputReadCallback (static member function)
-			     NULL,//xmlInputCloseCallback (static member function)
-			     this,       //context
-			     "",         //URL
-			     NULL,       //encoding
-			     0);         //options
+                             ReadStream, //xmlInputReadCallback (static member function)
+                             NULL,//xmlInputCloseCallback (static member function)
+                             this,       //context
+                             "",         //URL
+                             NULL,       //encoding
+                             0);         //options
 
     if (_reader == NULL)
       {
-	cerr << "Cannot set up libxml2 reader" << endl;
-	return false;
+        cerr << "Cannot set up libxml2 reader" << endl;
+        return false;
       }
     //A new reader immediately reads 4 bytes (presumably to determine
     //the encoding).
@@ -70,17 +71,17 @@ namespace OpenBabel
     if(_writer)
       return true;
   
-    _buf = xmlOutputBufferCreateIO	(
-					 WriteStream, //xmlOutputWriteCallback 
-					 NULL,			   //xmlOutputCloseCallback
-					 this,        //context
-					 NULL);        //xmlCharEncodingHandlerPtr
+    _buf = xmlOutputBufferCreateIO  (
+                                     WriteStream, //xmlOutputWriteCallback 
+                                     NULL,         //xmlOutputCloseCallback
+                                     this,        //context
+                                     NULL);        //xmlCharEncodingHandlerPtr
     _writer = xmlNewTextWriter(_buf);
 
     if(!_buf || !_writer)
       {
-	cerr << "Error setting up xml writer\n" << endl;
-	return false;
+        cerr << "Error setting up xml writer\n" << endl;
+        return false;
       }
 
     int ret;
@@ -88,8 +89,8 @@ namespace OpenBabel
       ret = xmlTextWriterSetIndent(_writer,0);
     else
       {
-	ret = xmlTextWriterSetIndent(_writer,1);
-	ret = xmlTextWriterSetIndentString(_writer, BAD_CAST " "); 
+        ret = xmlTextWriterSetIndent(_writer,1);
+        ret = xmlTextWriterSetIndentString(_writer, BAD_CAST " "); 
       }
     return ret==0;
   }
@@ -98,8 +99,8 @@ namespace OpenBabel
   {
     if(_reader)
       xmlFreeTextReader(_reader);
-    //	if(_writer)
-    //		xmlFreeTextWriter(_writer); was crashing
+    //  if(_writer)
+    //    xmlFreeTextWriter(_writer); was crashing
     //xmlBufferFree(_buf);
   }
 
@@ -124,24 +125,24 @@ namespace OpenBabel
       pxmlConv =  new XMLConversion(pConv);
     else
       {
-	//pConv has already had an extended copy made	
-	pxmlConv = dynamic_cast<XMLConversion*>(pConv->GetAuxConv());
-	if (!pxmlConv)
-	  return NULL;
+        //pConv has already had an extended copy made 
+        pxmlConv = dynamic_cast<XMLConversion*>(pConv->GetAuxConv());
+        if (!pxmlConv)
+          return NULL;
       }
 
     if(ForReading)
       {
-	pxmlConv->SetupReader();
-	if(pConv->GetInStream()->tellg() < pxmlConv->_lastpos)
-	  {
-	    //Probably a new file; copy some member vars and renew the current reader
-	    pxmlConv->InFilename = pConv->GetInFilename();
-	    pxmlConv->pInFormat = pConv->GetInFormat();
+        pxmlConv->SetupReader();
+        if(pConv->GetInStream()->tellg() < pxmlConv->_lastpos)
+          {
+            //Probably a new file; copy some member vars and renew the current reader
+            pxmlConv->InFilename = pConv->GetInFilename();
+            pxmlConv->pInFormat = pConv->GetInFormat();
 
-	    if(xmlReaderNewIO( pxmlConv->_reader, ReadStream, NULL, pxmlConv, "", NULL, 0)==-1)
-	      return false;
-	  }
+            if(xmlReaderNewIO( pxmlConv->_reader, ReadStream, NULL, pxmlConv, "", NULL, 0)==-1)
+              return false;
+          }
       }
     else
       pxmlConv->SetupWriter();
@@ -151,86 +152,86 @@ namespace OpenBabel
 
 
   bool XMLConversion::ReadXML(XMLBaseFormat* pFormat, OBBase* pOb)
-  {	
+  { 
     if(_requestedpos)
       {
-	//The initial stream position was not at the start, probably because of fastsearch
-	//Read and discard the first object to synchronize the reader,
-	//then continue getting the requested object.
-	//Assumes the objects are all at the same level in the DOM tree.
-	SetOneObjectOnly(); //probably already set
-	streampos SavedReqestedPos = _requestedpos; 
-	_requestedpos=0;//don't do this again
-	ReadXML(pFormat,pOb);
-	GetInStream()->seekg(SavedReqestedPos);
+        //The initial stream position was not at the start, probably because of fastsearch
+        //Read and discard the first object to synchronize the reader,
+        //then continue getting the requested object.
+        //Assumes the objects are all at the same level in the DOM tree.
+        SetOneObjectOnly(); //probably already set
+        streampos SavedReqestedPos = _requestedpos; 
+        _requestedpos=0;//don't do this again
+        ReadXML(pFormat,pOb);
+        GetInStream()->seekg(SavedReqestedPos);
       }
 
     //**Parse
     int result=1;
     while(GetInStream()->good() && (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
       {
-	_SkipNextRead=false;
-	if(_LookingForNamespace)
-	  {
-	    const xmlChar* puri = xmlTextReaderConstNamespaceUri(_reader);
-	    if(puri)
-	      {
-		string uri((const char*)puri);
-		//Look up appropriate format class from the namespace URI
-		NsMapType::iterator nsiter;
-		nsiter = Namespaces().find(uri);
-		if(nsiter!=Namespaces().end())
-		  {
-		    XMLBaseFormat* pNewFormat = nsiter->second;
-		    //Must have same target, e.g. OBMol, as current format 
-		    if(pNewFormat->GetType() == pFormat->GetType())
-		      {
-			_LookingForNamespace=false;
-			_SkipNextRead=true;
-			SetInFormat(pNewFormat);
-			pNewFormat->ReadMolecule(pOb,this);
-			return true;
-		      }
-		  }
-	      }
-	  }
+        _SkipNextRead=false;
+        if(_LookingForNamespace)
+          {
+            const xmlChar* puri = xmlTextReaderConstNamespaceUri(_reader);
+            if(puri)
+              {
+                string uri((const char*)puri);
+                //Look up appropriate format class from the namespace URI
+                NsMapType::iterator nsiter;
+                nsiter = Namespaces().find(uri);
+                if(nsiter!=Namespaces().end())
+                  {
+                    XMLBaseFormat* pNewFormat = nsiter->second;
+                    //Must have same target, e.g. OBMol, as current format 
+                    if(pNewFormat->GetType() == pFormat->GetType())
+                      {
+                        _LookingForNamespace=false;
+                        _SkipNextRead=true;
+                        SetInFormat(pNewFormat);
+                        pNewFormat->ReadMolecule(pOb,this);
+                        return true;
+                      }
+                  }
+              }
+          }
 
-	const xmlChar* pname = xmlTextReaderConstLocalName(_reader);
-	int typ = xmlTextReaderNodeType(_reader);
-	if(typ==XML_READER_TYPE_SIGNIFICANT_WHITESPACE || !pname)
-	  continue; //Text nodes handled in format class
-	string ElName((const char*)pname);
+        const xmlChar* pname = xmlTextReaderConstLocalName(_reader);
+        int typ = xmlTextReaderNodeType(_reader);
+        if(typ==XML_READER_TYPE_SIGNIFICANT_WHITESPACE || !pname)
+          continue; //Text nodes handled in format class
+        string ElName((const char*)pname);
 
-	//Pass the node on to the appropriate format class
-	bool ret;
-	if(typ==XML_READER_TYPE_ELEMENT)
-	  ret= pFormat->DoElement(ElName);
-	else if(typ==XML_READER_TYPE_END_ELEMENT)
-	  ret= pFormat->EndElement(ElName);
-	else 
-	  continue;
-	_lastpos = GetInStream()->tellg();
+        //Pass the node on to the appropriate format class
+        bool ret;
+        if(typ==XML_READER_TYPE_ELEMENT)
+          ret= pFormat->DoElement(ElName);
+        else if(typ==XML_READER_TYPE_END_ELEMENT)
+          ret= pFormat->EndElement(ElName);
+        else 
+          continue;
+        _lastpos = GetInStream()->tellg();
 
-	if(!ret)
-	  //derived format callback has stopped processing by returning false;
-	  //leave reader intact so it can be continued to be used.
-	  if(!IsOption("n",OBConversion::INOPTIONS))
-	    {
-	      _LookingForNamespace = true;
-	      return true;
-	    }
+        if(!ret)
+          //derived format callback has stopped processing by returning false;
+          //leave reader intact so it can be continued to be used.
+          if(!IsOption("n",OBConversion::INOPTIONS))
+            {
+              _LookingForNamespace = true;
+              return true;
+            }
       }
 
     if(result==-1)
       {
-	xmlError* perr = xmlGetLastError();
-	if(perr && perr->level!=XML_ERR_NONE)
-	  {
-	    obErrorLog.ThrowError("XML Parser " + GetInFilename(),
-				  perr->message, obError);
-	  }
-	xmlResetError(perr);
-	GetInStream()->setstate(ios::eofbit);
+        xmlError* perr = xmlGetLastError();
+        if(perr && perr->level!=XML_ERR_NONE)
+          {
+            obErrorLog.ThrowError("XML Parser " + GetInFilename(),
+                                  perr->message, obError);
+          }
+        xmlResetError(perr);
+        GetInStream()->setstate(ios::eofbit);
       }
     return (result==0);// was result==0;
   }
@@ -245,16 +246,16 @@ namespace OpenBabel
     int targettyp = XML_READER_TYPE_ELEMENT;
     if(tag[0]=='/')
       {
-	tag.erase(0,1);
-	targettyp = XML_READER_TYPE_END_ELEMENT;
+        tag.erase(0,1);
+        targettyp = XML_READER_TYPE_END_ELEMENT;
       }
 
     int result;
     while((result = xmlTextReaderRead(_reader))==1)
       {
-	if(xmlTextReaderNodeType(_reader)==targettyp
-	   && !xmlStrcmp(xmlTextReaderConstLocalName(_reader), BAD_CAST	tag.c_str()))
-	  break;
+        if(xmlTextReaderNodeType(_reader)==targettyp
+           && !xmlStrcmp(xmlTextReaderConstLocalName(_reader), BAD_CAST	tag.c_str()))
+          break;
       }
     return result;
   }
@@ -315,9 +316,9 @@ namespace OpenBabel
 
     if(ifs->peek()=='>')
       {
-	ifs->ignore();
-	buffer[count] = '>';
-	buffer[++count] = '\0';
+        ifs->ignore();
+        buffer[count] = '>';
+        buffer[++count] = '\0';
       }
     return count;
   }

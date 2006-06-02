@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -21,30 +21,30 @@ using namespace std;
 namespace OpenBabel
 {
 
-class CSRFormat : public OBMoleculeFormat
-{
-public:
+  class CSRFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     CSRFormat()
     {
-        OBConversion::RegisterFormat("csr",this);
+      OBConversion::RegisterFormat("csr",this);
     }
 
     virtual const char* Description() //required
     {
-        return
-            "Accelrys/MSI Quanta CSR format\n \
+      return
+        "Accelrys/MSI Quanta CSR format\n \
             No comments yet\n";
     };
 
-  virtual const char* SpecificationURL()
-  {return "";}; //optional
+    virtual const char* SpecificationURL()
+    {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTREADABLE;
+      return NOTREADABLE;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -52,7 +52,7 @@ public:
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-private:
+  private:
     //	static bool FirstTime = true; Use new framework functions
     int MolCount; //was = 1;
 
@@ -62,19 +62,19 @@ private:
     void WriteCSRCoords(ostream&,OBMol&);
 
 
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-CSRFormat theCSRFormat;
+  //Make an instance of the format class
+  CSRFormat theCSRFormat;
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool CSRFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool CSRFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -82,20 +82,20 @@ bool CSRFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     //  if (FirstTime)
     if(pConv->GetOutputIndex()==1)
-    {
+      {
         WriteCSRHeader(ofs,mol);
         //FirstTime = false;
         MolCount=1;
-    }
+      }
 
     WriteCSRCoords(ofs,mol);
     MolCount++;
 
     return(true);
-}
+  }
 
-void CSRFormat::WriteCSRHeader(ostream &ofs,OBMol &mol)
-{
+  void CSRFormat::WriteCSRHeader(ostream &ofs,OBMol &mol)
+  {
     char *molnames;
     int nmol, natom;
 
@@ -122,10 +122,10 @@ void CSRFormat::WriteCSRHeader(ostream &ofs,OBMol &mol)
     WriteSize(sizeof(int),ofs);
 
     delete [] molnames;
-}
+  }
 
-void CSRFormat::WriteCSRCoords(ostream &ofs,OBMol &mol)
-{
+  void CSRFormat::WriteCSRCoords(ostream &ofs,OBMol &mol)
+  {
     int the_size,jconf;
     double x,y,z,energy;
     char title[100];
@@ -136,7 +136,7 @@ void CSRFormat::WriteCSRCoords(ostream &ofs,OBMol &mol)
     jconf = 1;
     energy = -2.584565;
 
-    sprintf(title,"%s:%d",mol.GetTitle(),MolCount);
+    snprintf(title, 80, "%s:%d",mol.GetTitle(),MolCount);
     tag = PadString(title,80);
 
     WriteSize(the_size,ofs);
@@ -150,47 +150,46 @@ void CSRFormat::WriteCSRCoords(ostream &ofs,OBMol &mol)
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
+      {
         x = atom->x();
         ofs.write((char*)&x,sizeof(double));
-    }
+      }
     WriteSize(mol.NumAtoms()*sizeof(double),ofs);
 
     WriteSize(mol.NumAtoms()*sizeof(double),ofs);
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
+      {
         y = atom->y();
         ofs.write((char*)&y,sizeof(double));
-    }
+      }
     WriteSize(mol.NumAtoms()*sizeof(double),ofs);
 
     WriteSize(mol.NumAtoms()*sizeof(double),ofs);
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
+      {
         z = atom->z();
         ofs.write((char*)&z,sizeof(double));
-    }
+      }
     WriteSize(mol.NumAtoms()*sizeof(double),ofs);
 
     delete [] tag;
-}
+  }
 
-void CSRFormat::WriteSize(int size,ostream &ofs)
-{
+  void CSRFormat::WriteSize(int size,ostream &ofs)
+  {
     ofs.write((char*)&size,sizeof(int));
-}
+  }
 
-char* CSRFormat::PadString(char *input, int size)
-{
+  char* CSRFormat::PadString(char *input, int size)
+  {
     unsigned int i;
     char *output;
 
-    output = new char [size];
-    for (i = 0; i < (unsigned)size; i++)
-        output[i] = ' ';
-    for (i = 0; i < strlen(input); i++)
-        output[i] = input[i];
+    output = new char[size];
+    memset(output, ' ', size);
+    strncpy(output, input, strlen(input));
+    output[ size - 1] = '\0';
     return(output);
-}
+  }
 
 } //namespace OpenBabel

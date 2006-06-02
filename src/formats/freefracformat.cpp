@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2005 by Geoffrey R. Hutchison
+Copyright (C) 2005-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -22,56 +22,56 @@ using namespace std;
 namespace OpenBabel
 {
 
-class FreeFormFractionalFormat : public OBMoleculeFormat
-{
-public:
+  class FreeFormFractionalFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     FreeFormFractionalFormat()
     {
-        OBConversion::RegisterFormat("fract",this);
+      OBConversion::RegisterFormat("fract",this);
     }
 
-  virtual const char* Description() //required
-  {
-    return
-      "Free Form Fractional format\n \
+    virtual const char* Description() //required
+    {
+      return
+        "Free Form Fractional format\n \
        Read Options e.g. -as\n\
         s  Output single bonds only\n\
         b  Disable bonding entirely\n\n";
-  };
+    };
 
-  virtual const char* SpecificationURL()
-  {return "http://openbabel.sourceforge.net/formats/fract.shtml";}; //optional
+    virtual const char* SpecificationURL()
+    {return "http://openbabel.sourceforge.net/formats/fract.shtml";}; //optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-FreeFormFractionalFormat theFreeFormFractionalFormat;
+  //Make an instance of the format class
+  FreeFormFractionalFormat theFreeFormFractionalFormat;
 
-const char * TrimErrors(const std::string data)
-{
-  string temp = data;
-  size_t stdErr = temp.rfind("(");
+  const char * TrimErrors(const std::string data)
+  {
+    string temp = data;
+    size_t stdErr = temp.rfind("(");
   
-  if(stdErr!=string::npos)
-    temp.erase(stdErr);
+    if(stdErr!=string::npos)
+      temp.erase(stdErr);
   
-  return temp.c_str();
-}
+    return temp.c_str();
+  }
 
-/////////////////////////////////////////////////////////////////
-bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -81,27 +81,27 @@ bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     char buffer[BUFF_SIZE];
 
     if (!ifs.getline(buffer,BUFF_SIZE))
-    {
-      obErrorLog.ThrowError(__FUNCTION__,
-			    "Problems reading a free form fractional file: Could not read the first line (title/comments).", obWarning);
+      {
+        obErrorLog.ThrowError(__FUNCTION__,
+                              "Problems reading a free form fractional file: Could not read the first line (title/comments).", obWarning);
         return(false);
-    }
+      }
     if (strlen(buffer) != 0)
-        mol.SetTitle(buffer);
+      mol.SetTitle(buffer);
     else
-        mol.SetTitle(title);
+      mol.SetTitle(title);
 
     if (!ifs.getline(buffer,BUFF_SIZE))
-    {
-      obErrorLog.ThrowError(__FUNCTION__,
-			    "Problems reading a free form fractional file: Could not read the second line (unit cell parameters a b c alpha beta gamma).",
-			    obWarning);
+      {
+        obErrorLog.ThrowError(__FUNCTION__,
+                              "Problems reading a free form fractional file: Could not read the second line (unit cell parameters a b c alpha beta gamma).",
+                              obWarning);
         return(false);
-    }
+      }
     vector<string> vs;
     tokenize(vs,buffer," \n\t,");
     if (vs.size() != 6)
-        return(false);
+      return(false);
 
     //parse cell values
     double A, B, C, Alpha, Beta, Gamma;
@@ -128,61 +128,61 @@ bool FreeFormFractionalFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     while(ifs.getline(buffer,BUFF_SIZE))
       {
-	if (strlen(buffer) == 0 || *buffer == 0x0D) //incl Windows kludge
-		// blank line -- consider it the end of this molecule
-	  break;
+        if (strlen(buffer) == 0 || *buffer == 0x0D) //incl Windows kludge
+          // blank line -- consider it the end of this molecule
+          break;
 
-	tokenize(vs,buffer);
+        tokenize(vs,buffer);
         if (vs.size() != 4)
-            return(false);
+          return(false);
 
         atom = mol.NewAtom();
 
-	// check to see if first column is number or element symbol
-	// (PCModel has files of the form X Y Z symbol)
+        // check to see if first column is number or element symbol
+        // (PCModel has files of the form X Y Z symbol)
         atomicNum = etab.GetAtomicNum(vs[0].c_str());
-	if (atomicNum == 0 && (isdigit(vs[0][0]) || ispunct(vs[0][0])))
-	  {
-	    x = atof(TrimErrors(vs[0]));
-	    y = atof(TrimErrors(vs[1]));
-	    z = atof(TrimErrors(vs[2]));
-	    atomicNum = etab.GetAtomicNum(vs[3].c_str());
-	  }
-	else
-	  {
-	    x = atof(TrimErrors(vs[1]));
-	    y = atof(TrimErrors(vs[2]));
-	    z = atof(TrimErrors(vs[3]));
-	  }
-	v.Set(x, y, z);
-	v *= m;	// get cartesian coordinates -- multiply by orthogonalization matrix
+        if (atomicNum == 0 && (isdigit(vs[0][0]) || ispunct(vs[0][0])))
+          {
+            x = atof(TrimErrors(vs[0]));
+            y = atof(TrimErrors(vs[1]));
+            z = atof(TrimErrors(vs[2]));
+            atomicNum = etab.GetAtomicNum(vs[3].c_str());
+          }
+        else
+          {
+            x = atof(TrimErrors(vs[1]));
+            y = atof(TrimErrors(vs[2]));
+            z = atof(TrimErrors(vs[3]));
+          }
+        v.Set(x, y, z);
+        v *= m;	// get cartesian coordinates -- multiply by orthogonalization matrix
         atom->SetVector(v);
 
         atom->SetAtomicNum(atomicNum);
-    }
+      }
 
     // clean out any remaining blank lines
     while(ifs.peek() != EOF && ifs.good() && 
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+          (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
     
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) 
-	&& !pConv->IsOption("b",OBConversion::INOPTIONS))
+        && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
     mol.EndModify();
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool FreeFormFractionalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool FreeFormFractionalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -194,38 +194,33 @@ bool FreeFormFractionalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << mol.GetTitle() << endl;
 
     if (!mol.HasData(OBGenericDataType::UnitCell))
-      {
-	sprintf(buffer,
-		"%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
-		1.0f, 1.0f, 1.0f, 90.0f, 90.0f, 90.0f);
-	ofs << buffer << endl;
-      }
+      ofs << "   1.00000   1.00000   1.00000  90.00000  90.00000  90.00000\n";
     else
       {
-	uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
-	sprintf(buffer,
-		"%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
-		uc->GetA(), uc->GetB(), uc->GetC(),
-		uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
-	ofs << buffer << endl;
+        uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+        snprintf(buffer, BUFF_SIZE,
+                "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
+                uc->GetA(), uc->GetB(), uc->GetC(),
+                uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
+        ofs << buffer << "\n";
       }
 
     vector3 v;
     FOR_ATOMS_OF_MOL(atom, mol)
-    {
-      v = atom->GetVector();
-      if (uc != NULL)
-	v *= uc->GetFractionalMatrix();
+      {
+        v = atom->GetVector();
+        if (uc != NULL)
+          v *= uc->GetFractionalMatrix();
 
-      sprintf(buffer,"%s %10.5f%10.5f%10.5f",
-	      etab.GetSymbol(atom->GetAtomicNum()),
-	      v.x(),
-	      v.y(),
-	      v.z());
+        snprintf(buffer, BUFF_SIZE, "%s %10.5f%10.5f%10.5f",
+                etab.GetSymbol(atom->GetAtomicNum()),
+                v.x(),
+                v.y(),
+                v.z());
         ofs << buffer << endl;
-    }
+      }
     ofs << endl; // add a blank line between molecules
     return(true);
-}
+  }
 
 } //namespace OpenBabel

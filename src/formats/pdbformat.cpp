@@ -25,11 +25,7 @@ extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
 #include <vector>
 #include <map>
 
-#ifdef HAVE_SSTREAM
 #include <sstream>
-#else
-#include <strstream>
-#endif
 
 using namespace std;
 namespace OpenBabel
@@ -128,8 +124,8 @@ namespace OpenBabel
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
 
-      if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
-        mol.PerceiveBondOrders();
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+      mol.PerceiveBondOrders();
 
     // clean out remaining blank lines
     while(ifs.peek() != EOF && ifs.good() && 
@@ -397,11 +393,7 @@ namespace OpenBabel
 
   static bool ParseConectRecord(char *buffer,OBMol &mol)
   {
-#ifdef HAVE_SSTREAM
     stringstream errorMsg;
-#else
-    strstream errorMsg;
-#endif
     string clearError;
 
     // Setup strings and string buffers
@@ -415,7 +407,7 @@ namespace OpenBabel
                  << "  the record should have 70 columns, but OpenBabel found "
                  << strlen(buffer) << " columns." << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obInfo);
-	errorMsg.str(clearError);
+        errorMsg.str(clearError);
       }
 
     // Serial number of the first atom, read from column 7-11 of the
@@ -442,75 +434,75 @@ namespace OpenBabel
 
     if (mol.NumAtoms() <= 9999)
       {
-	// make sure we don't look at salt bridges or whatever, so cut the buffer short
-	buffer[32] = '\0';
-	tokenize(vs,buffer);
-	if( vs.empty() || vs.size() < 2) 
-	  return false;
-	vs.erase(vs.begin()); // remove "CONECT"
+        // make sure we don't look at salt bridges or whatever, so cut the buffer short
+        buffer[32] = '\0';
+        tokenize(vs,buffer);
+        if( vs.empty() || vs.size() < 2) 
+          return false;
+        vs.erase(vs.begin()); // remove "CONECT"
 
-	startAtomSerialNumber = atoi(vs[0].c_str());
+        startAtomSerialNumber = atoi(vs[0].c_str());
       }
     else
       {
-	if (readIntegerFromRecord(buffer, 7, &startAtomSerialNumber) == false)
-	  {
-	    errorMsg << "WARNING: Problems reading a PDB file\n"
-		     << "  Problems reading a CONECT record.\n"
-		     << "  According to the PDB specification,\n"
-		     << "  columns 7-11 should contain the serial number of an atom.\n"
-		     << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-	    return(false);
-	  }
+        if (readIntegerFromRecord(buffer, 7, &startAtomSerialNumber) == false)
+          {
+            errorMsg << "WARNING: Problems reading a PDB file\n"
+                     << "  Problems reading a CONECT record.\n"
+                     << "  According to the PDB specification,\n"
+                     << "  columns 7-11 should contain the serial number of an atom.\n"
+                     << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+            return(false);
+          }
       }
 
     vector<OBNodeBase*>::iterator i;
     for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
       if (static_cast<long int>(a1->GetResidue()->
-				GetSerialNum(a1)) == startAtomSerialNumber)
-	{
-	  firstAtom = a1;
-	  break;
-	}
+                                GetSerialNum(a1)) == startAtomSerialNumber)
+        {
+          firstAtom = a1;
+          break;
+        }
     if (firstAtom == NULL)
       {
-	errorMsg << "WARNING: Problems reading a PDB file:\n"
-		 << "  Problems reading a CONECT record.\n"
-		 << "  According to the PDB specification,\n"
-		 << "  columns 7-11 should contain the serial number of an atom.\n"
-		 << "  No atom was found with this serial number.\n"
-		 << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
-	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-	return(false);
+        errorMsg << "WARNING: Problems reading a PDB file:\n"
+                 << "  Problems reading a CONECT record.\n"
+                 << "  According to the PDB specification,\n"
+                 << "  columns 7-11 should contain the serial number of an atom.\n"
+                 << "  No atom was found with this serial number.\n"
+                 << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+        return(false);
       }
 
     if (mol.NumAtoms() < 9999)
       {
-	if (vs.size() > 1) boundedAtomsSerialNumbers[0] = atoi(vs[1].c_str());
-	if (vs.size() > 2) boundedAtomsSerialNumbers[1] = atoi(vs[2].c_str());
-	if (vs.size() > 3) boundedAtomsSerialNumbers[2] = atoi(vs[3].c_str());
-	if (vs.size() > 4) boundedAtomsSerialNumbers[3] = atoi(vs[4].c_str());
+        if (vs.size() > 1) boundedAtomsSerialNumbers[0] = atoi(vs[1].c_str());
+        if (vs.size() > 2) boundedAtomsSerialNumbers[1] = atoi(vs[2].c_str());
+        if (vs.size() > 3) boundedAtomsSerialNumbers[2] = atoi(vs[3].c_str());
+        if (vs.size() > 4) boundedAtomsSerialNumbers[3] = atoi(vs[4].c_str());
 
-	unsigned int limit = 4;
-	if (vs.size() <= 4)
-	  limit = vs.size() - 1;
+        unsigned int limit = 4;
+        if (vs.size() <= 4)
+          limit = vs.size() - 1;
 
-	for (unsigned int i = 0; i < limit; i++)
-	  boundedAtomsSerialNumbersValid[i] = true;
+        for (unsigned int i = 0; i < limit; i++)
+          boundedAtomsSerialNumbersValid[i] = true;
       }
     else
       {
-	// Now read the serial numbers. If the first serial number is not
-	// present, this connect record probably contains only hydrogen
-	// bonds and salt bridges, which we ignore. In that case, we just
-	// exit gracefully.
-	boundedAtomsSerialNumbersValid[0] = readIntegerFromRecord(buffer, 12, boundedAtomsSerialNumbers+0);
-	if (boundedAtomsSerialNumbersValid[0] == false)
-	  return(true);
-	boundedAtomsSerialNumbersValid[1] = readIntegerFromRecord(buffer, 17, boundedAtomsSerialNumbers+1);
-	boundedAtomsSerialNumbersValid[2] = readIntegerFromRecord(buffer, 22, boundedAtomsSerialNumbers+2);
-	boundedAtomsSerialNumbersValid[3] = readIntegerFromRecord(buffer, 27, boundedAtomsSerialNumbers+3);
+        // Now read the serial numbers. If the first serial number is not
+        // present, this connect record probably contains only hydrogen
+        // bonds and salt bridges, which we ignore. In that case, we just
+        // exit gracefully.
+        boundedAtomsSerialNumbersValid[0] = readIntegerFromRecord(buffer, 12, boundedAtomsSerialNumbers+0);
+        if (boundedAtomsSerialNumbersValid[0] == false)
+          return(true);
+        boundedAtomsSerialNumbersValid[1] = readIntegerFromRecord(buffer, 17, boundedAtomsSerialNumbers+1);
+        boundedAtomsSerialNumbersValid[2] = readIntegerFromRecord(buffer, 22, boundedAtomsSerialNumbers+2);
+        boundedAtomsSerialNumbersValid[3] = readIntegerFromRecord(buffer, 27, boundedAtomsSerialNumbers+3);
       }
 
     // Now iterate over the VALID boundedAtomsSerialNumbers and connect
@@ -537,7 +529,7 @@ namespace OpenBabel
                      << "  However, an atom with serial #" << boundedAtomsSerialNumbers[k] << " was not found.\n"
                      << "  THIS CONECT RECORD WILL BE IGNORED." << endl;
             obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-	    return(false);
+            return(false);
           }
 
         // Figure the bond order
@@ -572,16 +564,13 @@ namespace OpenBabel
     int res_num;
     bool het=true;
 
-    //  sprintf(buffer,"HEADER    PROTEIN");
-    //  ofs << buffer << endl;
-
     if (strlen(mol.GetTitle()) > 0)
-      sprintf(buffer,"COMPND    %s ",mol.GetTitle());
+      snprintf(buffer, BUFF_SIZE, "COMPND    %s ",mol.GetTitle());
     else
-      sprintf(buffer,"COMPND    UNNAMED");
+      snprintf(buffer, BUFF_SIZE, "COMPND    UNNAMED");
     ofs << buffer << endl;
 
-    sprintf(buffer,"AUTHOR    GENERATED BY OPEN BABEL %s",BABEL_VERSION);
+    snprintf(buffer, BUFF_SIZE, "AUTHOR    GENERATED BY OPEN BABEL %s",BABEL_VERSION);
     ofs << buffer << endl;
 
     // before we write any records, we should check to see if any coord < -1000
@@ -615,60 +604,61 @@ namespace OpenBabel
     for (i = 1; i <= mol.NumAtoms(); i++)
       {
         atom = mol.GetAtom(i);
-        strcpy(type_name,etab.GetSymbol(atom->GetAtomicNum()));
+        strncpy(type_name, etab.GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
+        type_name[sizeof(type_name) - 1] = '\0';
 
         //two char. elements are on position 13 and 14 one char. start at 14
         if (strlen(type_name) > 1)
-	  type_name[1] = toupper(type_name[1]);
+          type_name[1] = toupper(type_name[1]);
         else
-	  {
+          {
             char tmp[10];
-            strcpy(tmp, type_name);
-            sprintf(type_name, " %-3s", tmp);
-	  }
+            strncpy(tmp, type_name, 10);
+            snprintf(type_name, sizeof(type_name), " %-3s", tmp);
+          }
 
         if ( (res = atom->GetResidue()) )
-	  {
+          {
             het = res->IsHetAtom(atom);
             snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
             snprintf(type_name,5,"%s",(char*)res->GetAtomID(atom).c_str());
 
             //two char. elements are on position 13 and 14 one char. start at 14
             if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
-	      {
+              {
                 if (strlen(type_name) < 4)
-		  {
+                  {
                     char tmp[10];
                     strcpy(tmp, type_name);
-                    sprintf(padded_name," %-3s", tmp);
+                    snprintf(padded_name, sizeof(padded_name), " %-3s", tmp);
                     strncpy(type_name,padded_name,4);
                     type_name[4] = '\0';
-		  }
+                  }
                 else
-		  {
+                  {
                     type_name[4] = type_name[3];
                     type_name[3] = type_name[2];
                     type_name[2] = type_name[1];
                     type_name[1] = type_name[0];
                     type_name[0] = type_name[4];
                     type_name[4] = '\0';
-		  }
-	      }
+                  }
+              }
             res_num = res->GetNum();
-	  }
+          }
         else
-	  {
+          {
             strcpy(the_res,"UNK");
-            sprintf(padded_name,"%s",type_name);
+            snprintf(padded_name,sizeof(padded_name), "%s",type_name);
             strncpy(type_name,padded_name,4);
             type_name[4] = '\0';
             res_num = 1;
-	  }
+          }
 
         element_name = etab.GetSymbol(atom->GetAtomicNum());
         if (strlen(element_name) == 2)
-	  element_name[1] = toupper(element_name[1]);
-        sprintf(buffer,"%s%5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
+          element_name[1] = toupper(element_name[1]);
+        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s  %4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
                 het?"HETATM":"ATOM  ",
                 i,
                 type_name,
@@ -688,28 +678,27 @@ namespace OpenBabel
       {
         atom = mol.GetAtom(i);
         if (atom->GetValence() <= 4)
-	  {
-            sprintf(buffer,"CONECT%5d", i);
+          {
+            snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
             ofs << buffer;
             for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-	      {
-                sprintf(buffer,"%5d", nbr->GetIdx());
+              {
+                snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
                 ofs << buffer;
-	      }
+              }
             for (count = 0; count < (4 - (int)atom->GetValence()); count++)
-	      {
-                sprintf(buffer, "     ");
+              {
+                snprintf(buffer, BUFF_SIZE, "     ");
                 ofs << buffer;
-	      }
+              }
             ofs << "                                       " << endl;
-	  }
+          }
       }
-    sprintf(buffer,"MASTER        0    0    0    0    0    0    0    0 ");
+    snprintf(buffer, BUFF_SIZE, "MASTER        0    0    0    0    0    0    0    0 ");
     ofs << buffer;
-    sprintf(buffer,"%4d    0 %4d    0",mol.NumAtoms(),mol.NumAtoms());
-    ofs << buffer << endl;
-    sprintf(buffer,"END");
-    ofs << buffer << endl;
+    snprintf(buffer, BUFF_SIZE, "%4d    0 %4d    0\n",mol.NumAtoms(),mol.NumAtoms());
+    ofs << buffer;
+    ofs << "END\n";
     return(true);
   }
 

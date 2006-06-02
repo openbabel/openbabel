@@ -1,3 +1,15 @@
+2006-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/data.cpp (OBElementTable::ParseLine): Change sscanf call to
+	use fixed length (256 chars) for name string, rather than
+	preprocessor #define BUFF_SIZE.
+
+	* src/formats/xml/xml.cpp, src/formats/xml/xml.h, 
+	src/formats/*format.cpp: Remove calls to sprintf, sscanf, strcpy.
+
+	* scripts/*: Regenerate to add Craig's UnsetHash() and
+	UnsetWedge() calls.
+
 2006-05-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/xml/xml.cpp (ReadXML): Fix PR#1486678 for
