@@ -39579,6 +39579,48 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_OBBond_UnsetHash(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBBond_UnsetHash",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_UnsetHash" "', argument " "1"" of type '" "OpenBabel::OBBond *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
+  (arg1)->UnsetHash();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBBond_UnsetWedge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBBond_UnsetWedge",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_UnsetWedge" "', argument " "1"" of type '" "OpenBabel::OBBond *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
+  (arg1)->UnsetWedge();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_OBBond_UnsetUp(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
@@ -50587,6 +50629,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBBond_SetDown", _wrap_OBBond_SetDown, METH_VARARGS, NULL},
 	 { (char *)"OBBond_SetInRing", _wrap_OBBond_SetInRing, METH_VARARGS, NULL},
 	 { (char *)"OBBond_SetClosure", _wrap_OBBond_SetClosure, METH_VARARGS, NULL},
+	 { (char *)"OBBond_UnsetHash", _wrap_OBBond_UnsetHash, METH_VARARGS, NULL},
+	 { (char *)"OBBond_UnsetWedge", _wrap_OBBond_UnsetWedge, METH_VARARGS, NULL},
 	 { (char *)"OBBond_UnsetUp", _wrap_OBBond_UnsetUp, METH_VARARGS, NULL},
 	 { (char *)"OBBond_UnsetDown", _wrap_OBBond_UnsetDown, METH_VARARGS, NULL},
 	 { (char *)"OBBond_UnsetAromatic", _wrap_OBBond_UnsetAromatic, METH_VARARGS, NULL},

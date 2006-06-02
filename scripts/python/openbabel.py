@@ -1339,6 +1339,8 @@ class OBBond(OBEdgeBase):
     def SetDown(*args): return _openbabel.OBBond_SetDown(*args)
     def SetInRing(*args): return _openbabel.OBBond_SetInRing(*args)
     def SetClosure(*args): return _openbabel.OBBond_SetClosure(*args)
+    def UnsetHash(*args): return _openbabel.OBBond_UnsetHash(*args)
+    def UnsetWedge(*args): return _openbabel.OBBond_UnsetWedge(*args)
     def UnsetUp(*args): return _openbabel.OBBond_UnsetUp(*args)
     def UnsetDown(*args): return _openbabel.OBBond_UnsetDown(*args)
     def UnsetAromatic(*args): return _openbabel.OBBond_UnsetAromatic(*args)

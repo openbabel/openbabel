@@ -33064,6 +33064,60 @@ XS(_wrap_OBBond_SetClosure) {
 }
 
 
+XS(_wrap_OBBond_UnsetHash) {
+  {
+    OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBBond_UnsetHash(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_UnsetHash" "', argument " "1"" of type '" "OpenBabel::OBBond *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
+    (arg1)->UnsetHash();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBBond_UnsetWedge) {
+  {
+    OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBBond_UnsetWedge(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBond_UnsetWedge" "', argument " "1"" of type '" "OpenBabel::OBBond *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
+    (arg1)->UnsetWedge();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_OBBond_UnsetUp) {
   {
     OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
@@ -47174,6 +47228,8 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBBond_SetDown", _wrap_OBBond_SetDown},
 {"Chemistry::OpenBabelc::OBBond_SetInRing", _wrap_OBBond_SetInRing},
 {"Chemistry::OpenBabelc::OBBond_SetClosure", _wrap_OBBond_SetClosure},
+{"Chemistry::OpenBabelc::OBBond_UnsetHash", _wrap_OBBond_UnsetHash},
+{"Chemistry::OpenBabelc::OBBond_UnsetWedge", _wrap_OBBond_UnsetWedge},
 {"Chemistry::OpenBabelc::OBBond_UnsetUp", _wrap_OBBond_UnsetUp},
 {"Chemistry::OpenBabelc::OBBond_UnsetDown", _wrap_OBBond_UnsetDown},
 {"Chemistry::OpenBabelc::OBBond_UnsetAromatic", _wrap_OBBond_UnsetAromatic},

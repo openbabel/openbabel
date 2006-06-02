@@ -2219,6 +2219,8 @@ sub DESTROY {
 *SetDown = *Chemistry::OpenBabelc::OBBond_SetDown;
 *SetInRing = *Chemistry::OpenBabelc::OBBond_SetInRing;
 *SetClosure = *Chemistry::OpenBabelc::OBBond_SetClosure;
+*UnsetHash = *Chemistry::OpenBabelc::OBBond_UnsetHash;
+*UnsetWedge = *Chemistry::OpenBabelc::OBBond_UnsetWedge;
 *UnsetUp = *Chemistry::OpenBabelc::OBBond_UnsetUp;
 *UnsetDown = *Chemistry::OpenBabelc::OBBond_UnsetDown;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBBond_UnsetAromatic;
