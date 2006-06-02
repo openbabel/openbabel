@@ -97,13 +97,13 @@ namespace OpenBabel
   {
     int num,maxbonds;
     char symbol[5];
-    char name[BUFF_SIZE];
+    char name[256];
     double Rcov,Rvdw,mass, elNeg, ionize, elAffin;
     double red, green, blue;
 
     if (buffer[0] != '#') // skip comment line (at the top)
       {
-        sscanf(buffer,"%d %5s %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %BUFF_SIZEs",
+        sscanf(buffer,"%d %5s %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %255s",
                &num,
                symbol,
                &Rcov,
@@ -680,7 +680,7 @@ namespace OpenBabel
                 a1->SetHyb(3);
                 a1->SetFormalCharge(-1);
               }
-	    continue;
+            continue;
           }
 	
         r1 = a1->GetResidue();
@@ -689,18 +689,18 @@ namespace OpenBabel
 
         if (r1->GetName() != rname)
           {
-	    // if SetResName fails, skip this residue
+            // if SetResName fails, skip this residue
             skipres = SetResName(r1->GetName()) ? 0 : r1->GetNum();
             rname = r1->GetName();
           }
 
-	if (LookupType(r1->GetAtomID(a1),type,hyb))
-	  {
-	    a1->SetType(type);
-	    a1->SetHyb(hyb);
-	  }
-	else // try to figure it out by bond order ???
-	  {}
+        if (LookupType(r1->GetAtomID(a1),type,hyb))
+          {
+            a1->SetType(type);
+            a1->SetHyb(hyb);
+          }
+        else // try to figure it out by bond order ???
+          {}
       }
 
     return(true);
@@ -719,30 +719,30 @@ namespace OpenBabel
     if (!vs.empty())
       {
         if (vs[0] == "BOND")
-	  {
+          {
             s = (vs[1] < vs[2]) ? vs[1] + " " + vs[2] :
-	      vs[2] + " " + vs[1];
+              vs[2] + " " + vs[1];
             bo = atoi(vs[3].c_str());
             _vtmp.push_back(pair<string,int> (s,bo));
-	  }
+          }
 
         if (vs[0] == "ATOM" && vs.size() == 4)
-	  {
+          {
             _vatmtmp.push_back(vs[1]);
             _vatmtmp.push_back(vs[2]);
             _vatmtmp.push_back(vs[3]);
-	  }
+          }
 
         if (vs[0] == "RES")
-	  _resname.push_back(vs[1]);
+          _resname.push_back(vs[1]);
 
         if (vs[0]== "END")
-	  {
+          {
             _resatoms.push_back(_vatmtmp);
             _resbonds.push_back(_vtmp);
             _vtmp.clear();
             _vatmtmp.clear();
-	  }
+          }
       }
   }
 
@@ -756,8 +756,8 @@ namespace OpenBabel
     for (i = 0;i < _resname.size();i++)
       if (_resname[i] == s)
         {
-	  _resnum = i;
-	  return(true);
+          _resnum = i;
+          return(true);
         }
 
     _resnum = -1;
@@ -772,7 +772,7 @@ namespace OpenBabel
     unsigned int i;
     for (i = 0;i < _resbonds[_resnum].size();i++)
       if (_resbonds[_resnum][i].first == s)
-	return(_resbonds[_resnum][i].second);
+        return(_resbonds[_resnum][i].second);
 
     return(0);
   }
@@ -788,7 +788,7 @@ namespace OpenBabel
     unsigned int i;
     for (i = 0;i < _resbonds[_resnum].size();i++)
       if (_resbonds[_resnum][i].first == s)
-	return(_resbonds[_resnum][i].second);
+        return(_resbonds[_resnum][i].second);
 
     return(0);
   }
@@ -804,11 +804,11 @@ namespace OpenBabel
     for (i = _resatoms[_resnum].begin();i != _resatoms[_resnum].end();i+=3)
       if (atmid == *i)
         {
-	  i++;
-	  type = *i;
-	  i++;
-	  hyb = atoi((*i).c_str());
-	  return(true);
+          i++;
+          type = *i;
+          i++;
+          hyb = atoi((*i).c_str());
+          return(true);
         }
 
     return(false);
@@ -826,14 +826,14 @@ namespace OpenBabel
     if (getenv(_envvar.c_str()) != NULL)
       {
         buffer = getenv(_envvar.c_str());
-	buffer += FILE_SEP_CHAR;
+        buffer += FILE_SEP_CHAR;
 
         if (!_subdir.empty())
-	  {
+          {
             subbuffer = buffer;
             subbuffer += _subdir;
             subbuffer += FILE_SEP_CHAR;
-	  }
+          }
 
         buffer += _filename;
         subbuffer += _filename;
@@ -841,10 +841,10 @@ namespace OpenBabel
         ifs1.open(subbuffer.c_str());
         ifsP= &ifs1;
         if (!(*ifsP))
-	  {
+          {
             ifs2.open(buffer.c_str());
             ifsP = &ifs2;
-	  }
+          }
       }
     // Then, check the configured data directory
     else // if (!(*ifsP))
@@ -852,49 +852,49 @@ namespace OpenBabel
         buffer = _dir;
         buffer += FILE_SEP_CHAR;
 
-	subbuffer = buffer;
-	subbuffer += BABEL_VERSION;
-	subbuffer + FILE_SEP_CHAR;
+        subbuffer = buffer;
+        subbuffer += BABEL_VERSION;
+        subbuffer + FILE_SEP_CHAR;
 
         subbuffer += _filename;
-	buffer += _filename;
+        buffer += _filename;
 
         ifs3.open(subbuffer.c_str());
         ifsP= &ifs3;
         if (!(*ifsP))
-	  {
+          {
             ifs4.open(buffer.c_str());
             ifsP = &ifs4;
-	  }
+          }
       }
 
     char charBuffer[BUFF_SIZE];
     if ((*ifsP))
       {
         while(ifsP->getline(charBuffer,BUFF_SIZE))
-	  ParseLine(charBuffer);
+          ParseLine(charBuffer);
       }
 
     else
       // If all else fails, use the compiled in values
       if (_dataptr)
         {
-	  const char *p1,*p2;
-	  for (p1 = p2 = _dataptr;*p2 != '\0';p2++)
-	    if (*p2 == '\n')
-	      {
-		strncpy(charBuffer, p1, (p2 - p1));
-		buffer[(p2 - p1)] = '\0';
-		ParseLine(charBuffer);
-		p1 = ++p2;
-	      }
+          const char *p1,*p2;
+          for (p1 = p2 = _dataptr;*p2 != '\0';p2++)
+            if (*p2 == '\n')
+              {
+                strncpy(charBuffer, p1, (p2 - p1));
+                buffer[(p2 - p1)] = '\0';
+                ParseLine(charBuffer);
+                p1 = ++p2;
+              }
         }
       else
         {
-	  string s = "Unable to open data file '";
-	  s += _filename;
-	  s += "'";
-	  obErrorLog.ThrowError(__FUNCTION__, s, obWarning);
+          string s = "Unable to open data file '";
+          s += _filename;
+          s += "'";
+          obErrorLog.ThrowError(__FUNCTION__, s, obWarning);
         }
 
     if (ifs1)
@@ -908,65 +908,65 @@ namespace OpenBabel
 
     if (GetSize() == 0)
       {
-	string s = "Cannot initialize database '";
-	s += _filename;
-	s += "' which may cause further errors.";
-	obErrorLog.ThrowError(__FUNCTION__, "Cannot initialize database", obWarning);
+        string s = "Cannot initialize database '";
+        s += _filename;
+        s += "' which may cause further errors.";
+        obErrorLog.ThrowError(__FUNCTION__, "Cannot initialize database", obWarning);
       }
       
   }
 
-string OpenDatafile(ifstream& ifs, const string& filename)
-{
-/**Opens the filestream with the first file called filename found by looking 
-	successively in the following directories:
-	- the current directory
-	- the directory in the environment variable BABEL_DATADIR
-	  or in the macro BABEL_DATADIR if the environment variable is not set
-	- in a subdirectory of the BABEL_DATADIR directory with the version of 
-	  OpenBabel as its name
-	Returns the full name of the file that was opened (i.e with path) except 
-	if it is in current directory
-*/
-	ios_base::openmode imode = ios_base::in;
+  string OpenDatafile(ifstream& ifs, const string& filename)
+  {
+    /**Opens the filestream with the first file called filename found by looking 
+       successively in the following directories:
+       - the current directory
+       - the directory in the environment variable BABEL_DATADIR
+       or in the macro BABEL_DATADIR if the environment variable is not set
+       - in a subdirectory of the BABEL_DATADIR directory with the version of 
+       OpenBabel as its name
+       Returns the full name of the file that was opened (i.e with path) except 
+       if it is in current directory
+    */
+    ios_base::openmode imode = ios_base::in;
 #ifdef ALL_READS_BINARY //Makes unix files compatible with VC++6
 		imode = ios_base::in|ios_base::binary;
 #endif
-	ifs.close();
-	ifs.clear();
-	ifs.open(filename.c_str(),imode);
-	if(ifs)
-		return filename;
+    ifs.close();
+    ifs.clear();
+    ifs.open(filename.c_str(),imode);
+    if(ifs)
+      return filename;
 
-	string file;
-	char* datadir = getenv("BABEL_DATADIR");
-	if(!datadir)
-		datadir = BABEL_DATADIR;
-	if(datadir)
-	{
-	  file = datadir;
-	  file += '/';
-	  file += filename;
-	}
+    string file;
+    char* datadir = getenv("BABEL_DATADIR");
+    if(!datadir)
+      datadir = BABEL_DATADIR;
+    if(datadir)
+      {
+        file = datadir;
+        file += '/';
+        file += filename;
+      }
 
-	ifs.clear();
-	ifs.open(file.c_str(),imode);
-	if(ifs)
-		return file;;
+    ifs.clear();
+    ifs.open(file.c_str(),imode);
+    if(ifs)
+      return file;;
 
-	ifs.clear();
-	ifs.open(file.c_str(),imode);
-	if(ifs)
-		return file;
-  file = datadir;
-  file += "/";
-  file += BABEL_VERSION;
-  file += "/" + filename;
+    ifs.clear();
+    ifs.open(file.c_str(),imode);
+    if(ifs)
+      return file;
+    file = datadir;
+    file += "/";
+    file += BABEL_VERSION;
+    file += "/" + filename;
 
-	ifs.clear();
-  ifs.open(file.c_str(),imode);
-	return file;
-}
+    ifs.clear();
+    ifs.open(file.c_str(),imode);
+    return file;
+  }
 
 } // end namespace OpenBabel
 
