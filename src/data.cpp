@@ -97,13 +97,13 @@ namespace OpenBabel
   {
     int num,maxbonds;
     char symbol[5];
-    char name[BUFF_SIZE];
+    char name[256];
     double Rcov,Rvdw,mass, elNeg, ionize, elAffin;
     double red, green, blue;
 
     if (buffer[0] != '#') // skip comment line (at the top)
       {
-        sscanf(buffer,"%d %5s %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %BUFF_SIZEs",
+        sscanf(buffer,"%d %5s %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %255s",
                &num,
                symbol,
                &Rcov,

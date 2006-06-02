@@ -1,5 +1,9 @@
 2006-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/data.cpp (OBElementTable::ParseLine): Change sscanf call to
+        use fixed length (256 chars) for name string, rather than
+        preprocessor #define BUFF_SIZE.
+
 	* tools/*.cpp, test/*.cpp: Ensure DLL loading is handled correctly
 	in binary tools on Cygwin.
 
