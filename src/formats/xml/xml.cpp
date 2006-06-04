@@ -169,71 +169,72 @@ namespace OpenBabel
     //**Parse
     int result=1;
     while(GetInStream()->good() && (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
+    {
+      _SkipNextRead=false;
+      if(_LookingForNamespace)
       {
-        _SkipNextRead=false;
-        if(_LookingForNamespace)
+        const xmlChar* puri = xmlTextReaderConstNamespaceUri(_reader);
+        if(puri)
           {
-            const xmlChar* puri = xmlTextReaderConstNamespaceUri(_reader);
-            if(puri)
+            string uri((const char*)puri);
+            //Look up appropriate format class from the namespace URI
+            NsMapType::iterator nsiter;
+            nsiter = Namespaces().find(uri);
+            if(nsiter!=Namespaces().end())
               {
-                string uri((const char*)puri);
-                //Look up appropriate format class from the namespace URI
-                NsMapType::iterator nsiter;
-                nsiter = Namespaces().find(uri);
-                if(nsiter!=Namespaces().end())
+                XMLBaseFormat* pNewFormat = nsiter->second;
+                //Must have same target, e.g. OBMol, as current format 
+                if(pNewFormat->GetType() == pFormat->GetType())
                   {
-                    XMLBaseFormat* pNewFormat = nsiter->second;
-                    //Must have same target, e.g. OBMol, as current format 
-                    if(pNewFormat->GetType() == pFormat->GetType())
-                      {
-                        _LookingForNamespace=false;
-                        _SkipNextRead=true;
-                        SetInFormat(pNewFormat);
-                        pNewFormat->ReadMolecule(pOb,this);
-                        return true;
-                      }
+                    _LookingForNamespace=false;
+                    _SkipNextRead=true;
+                    SetInFormat(pNewFormat);
+                    pNewFormat->ReadMolecule(pOb,this);
+                    return true;
                   }
               }
           }
+      }
 
-        const xmlChar* pname = xmlTextReaderConstLocalName(_reader);
-        int typ = xmlTextReaderNodeType(_reader);
-        if(typ==XML_READER_TYPE_SIGNIFICANT_WHITESPACE || !pname)
-          continue; //Text nodes handled in format class
-        string ElName((const char*)pname);
+      const xmlChar* pname = xmlTextReaderConstLocalName(_reader);
+      int typ = xmlTextReaderNodeType(_reader);
+      if(typ==XML_READER_TYPE_SIGNIFICANT_WHITESPACE || !pname)
+        continue; //Text nodes handled in format class
+      string ElName((const char*)pname);
 
-        //Pass the node on to the appropriate format class
-        bool ret;
-        if(typ==XML_READER_TYPE_ELEMENT)
-          ret= pFormat->DoElement(ElName);
-        else if(typ==XML_READER_TYPE_END_ELEMENT)
-          ret= pFormat->EndElement(ElName);
-        else 
-          continue;
-        _lastpos = GetInStream()->tellg();
+      //Pass the node on to the appropriate format class
+      bool ret;
+      if(typ==XML_READER_TYPE_ELEMENT)
+        ret= pFormat->DoElement(ElName);
+      else if(typ==XML_READER_TYPE_END_ELEMENT)
+        ret= pFormat->EndElement(ElName);
+      else 
+        continue;
+      _lastpos = GetInStream()->tellg();
 
-        if(!ret)
-          //derived format callback has stopped processing by returning false;
-          //leave reader intact so it can be continued to be used.
-          if(!IsOption("n",OBConversion::INOPTIONS))
-            {
-              _LookingForNamespace = true;
-              return true;
-            }
+      if(!ret)
+        //derived format callback has stopped processing by returning false;
+        //leave reader intact so it can be continued to be used.
+        if(!IsOption("n",OBConversion::INOPTIONS))
+          {
+            _LookingForNamespace = true;
+            return true;
+          }
       }
 
     if(result==-1)
-      {
-        xmlError* perr = xmlGetLastError();
-        if(perr && perr->level!=XML_ERR_NONE)
-          {
-            obErrorLog.ThrowError("XML Parser " + GetInFilename(),
-                                  perr->message, obError);
-          }
-        xmlResetError(perr);
-        GetInStream()->setstate(ios::eofbit);
-      }
-    return (result==0);// was result==0;
+    {
+      xmlError* perr = xmlGetLastError();
+      if(perr && perr->level!=XML_ERR_NONE)
+        {
+          obErrorLog.ThrowError("XML Parser " + GetInFilename(),
+                                perr->message, obError);
+        }
+      xmlResetError(perr);
+      GetInStream()->setstate(ios::eofbit);
+      return false;
+    }
+    return GetInStream()->good() && result!=0;
   }
 
   /////////////////////////////////////////////////////////

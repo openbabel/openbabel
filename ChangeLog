@@ -1,3 +1,12 @@
+2006-06-04 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/formats/xml/xml.cpp(ReadXML): Made so that returns false at
+	the end of the file. Solves problem with roundtrip.
+	
+	* src/formats/mdlformat.cpp(ReadMolecule): Added Trim to new code
+	to read multiline properties, because was sometimes confused by
+	trailing CRs in Windows.
+	
 2006-06-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure, src/config.h.in: Update to include

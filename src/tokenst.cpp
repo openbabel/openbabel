@@ -129,6 +129,7 @@ OBAPI bool tokenize(vector<string> &vcr, string &s, const char *delimstr, int li
     return(true);
 }
 
+/// Removes white space from front and back of string
 OBAPI string& Trim(string& txt)
 {
 	string::size_type pos = txt.find_last_not_of(" \t\n\r");
