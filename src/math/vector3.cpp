@@ -30,154 +30,154 @@ using namespace std;
 namespace OpenBabel
 {
 
-/*! \class vector3
-   \brief Represents a vector in the 3-dimensional real space.
+  /*! \class vector3
+    \brief Represents a vector in the 3-dimensional real space.
 
-The vector3 class was designed to simplify operations with floating
-point coordinates. To this end many of the common operations have been
-overloaded for simplicity. Vector addition, subtraction, scalar
-multiplication, dot product, cross product, magnitude and a number of
-other utility functions are built in to the vector class. For a full
-description of the class member functions please consult the header
-file vector3.h. The following code demonstrates several of the
-functions of the vector class:
-\code
-vector3 v1,v2,v3;
-v1 = VX;
-v2 = VY;
-v3 = cross(v1,v2);
-v3 *= 2.5;
-v3.normalize();
-\endcode
-*/
+    The vector3 class was designed to simplify operations with floating
+    point coordinates. To this end many of the common operations have been
+    overloaded for simplicity. Vector addition, subtraction, scalar
+    multiplication, dot product, cross product, magnitude and a number of
+    other utility functions are built in to the vector class. For a full
+    description of the class member functions please consult the header
+    file vector3.h. The following code demonstrates several of the
+    functions of the vector class:
+    \code
+    vector3 v1,v2,v3;
+    v1 = VX;
+    v2 = VY;
+    v3 = cross(v1,v2);
+    v3 *= 2.5;
+    v3.normalize();
+    \endcode
+  */
 
-/*! This (slow) method allows to access the elements of the
-  vector as if it were an array of doubles. If the index is > 2,
-  then a warning is printed, and the program is terminated via
-  exit(-1). Otherwise, if i is 0, 1 or 2, then a reference to x,
-  y or z is returned, respectively.
+  /*! This (slow) method allows to access the elements of the
+    vector as if it were an array of doubles. If the index is > 2,
+    then a warning is printed and 0.0 is returned.
+    Otherwise, if i is 0, 1 or 2, then a reference to x,
+    y or z is returned, respectively.
   
-  \warning This method is primarily designed to facilitate the
-  integration ('Open Babelization') of code that uses arrays of
-  doubles rather than the vector class. Due to the error checks
-  the method is of course very slow and should therefore be
-  avoided in production code.
-*/
-double& vector3::operator[] ( unsigned int i)
-{
+    \warning This method is primarily designed to facilitate the
+    integration ('Open Babelization') of code that uses arrays of
+    doubles rather than the vector class. Due to the error checks
+    the method is of course very slow and should therefore be
+    avoided in production code.
+  */
+  double vector3::operator[] ( unsigned int i)
+  {
     if (i > 2)
-    {
+      {
         cerr << "ERROR in OpenBabel::vector3::operator[]" << endl
-        << "The method has been called with an illegal index i=" << i << "." << endl
-        << "Please contact the author of the offending program immediately." << endl;
-        exit(-1);
-    }
+             << "The method has been called with an illegal index i=" << i << "." << endl
+             << "Please contact the author of the offending program immediately." << endl;
+        return 0.0;
+      }
     if (i == 0)
-        return _vx;
+      return _vx;
     if (i == 1)
-        return _vy;
+      return _vy;
     return _vz;
-}
+  }
 
-/*! replaces *this with a random unit vector, which is (supposed
-  to be) uniformly distributed over the unit sphere. Uses the
-  random number generator obRand, or uses the system number
-  generator with a time seed if obRand == NULL.
+  /*! replaces *this with a random unit vector, which is (supposed
+    to be) uniformly distributed over the unit sphere. Uses the
+    random number generator obRand, or uses the system number
+    generator with a time seed if obRand == NULL.
      
-  @param obRandP random number generator to use, or 0L, if the
-  system random number generator (with time seed) should be used
-*/
-void vector3::randomUnitVector(OBRandom *obRandP)
-{
+    @param obRandP random number generator to use, or 0L, if the
+    system random number generator (with time seed) should be used
+  */
+  void vector3::randomUnitVector(OBRandom *obRandP)
+  {
     OBRandom *ptr;
     if (!obRandP)
-    {
+      {
         ptr = new OBRandom(true);
         ptr->TimeSeed();
-    }
+      }
     else
-        ptr = obRandP;
+      ptr = obRandP;
 
     // obtain a random vector with 0.001 <= length^2 <= 1.0, normalize
     // the vector to obtain a random vector of length 1.0.
     double l;
     do
-    {
+      {
         this->Set(ptr->NextFloat()-0.5, ptr->NextFloat()-0.5, ptr->NextFloat()-0.5);
         l = length_2();
-    }
+      }
     while ( (l > 1.0) || (l < 1e-4) );
     this->normalize();
 
     if (!obRandP)
-        delete ptr;
-}
+      delete ptr;
+  }
 
-OBAPI ostream& operator<< ( ostream& co, const vector3& v )
-{
+  OBAPI ostream& operator<< ( ostream& co, const vector3& v )
+  {
     co << "< " << v._vx << ", " << v._vy << ", " << v._vz << " >" ;
     return co ;
-}
+  }
 
-OBAPI int operator== ( const vector3& v1, const vector3& v2 )
-{
+  OBAPI int operator== ( const vector3& v1, const vector3& v2 )
+  {
     if ( ( v1._vx == v2._vx ) &&
-            ( v1._vy == v2._vy ) &&
-            ( v1._vz == v2._vz ) )
-        return ( true ) ;
+         ( v1._vy == v2._vy ) &&
+         ( v1._vz == v2._vz ) )
+      return ( true ) ;
     else
-        return ( false ) ;
-}
+      return ( false ) ;
+  }
 
-OBAPI int operator!= ( const vector3& v1, const vector3& v2 )
-{
+  OBAPI int operator!= ( const vector3& v1, const vector3& v2 )
+  {
     if ( ( v1._vx != v2._vx ) ||
-            ( v1._vy != v2._vy ) ||
-            ( v1._vz != v2._vz ) )
-        return ( true ) ;
+         ( v1._vy != v2._vy ) ||
+         ( v1._vz != v2._vz ) )
+      return ( true ) ;
     else
-        return ( false ) ;
-}
+      return ( false ) ;
+  }
 
-/*! This method checks if the current vector has length() ==
-  0.0.  If so, *this remains unchanged. Otherwise, *this is
-  scaled by 1.0/length().
+  /*! This method checks if the current vector has length() ==
+    0.0.  If so, *this remains unchanged. Otherwise, *this is
+    scaled by 1.0/length().
 
-  \warning If length() is very close to zero, but not == 0.0,
-  this method may behave in unexpected ways and return almost
-  random results; details may depend on your particular floating
-  point implementation. The use of this method is therefore
-  highly discouraged, unless you are certain that length() is in
-  a reasonable range, away from 0.0 (Stefan Kebekus)
+    \warning If length() is very close to zero, but not == 0.0,
+    this method may behave in unexpected ways and return almost
+    random results; details may depend on your particular floating
+    point implementation. The use of this method is therefore
+    highly discouraged, unless you are certain that length() is in
+    a reasonable range, away from 0.0 (Stefan Kebekus)
 
-  \deprecated This method will probably replaced by a safer
-  algorithm in the future.
+    \deprecated This method will probably replaced by a safer
+    algorithm in the future.
 
-  \todo Replace this method with a more fool-proof version.
+    \todo Replace this method with a more fool-proof version.
 
-  @returns a reference to *this
-*/
-vector3& vector3 :: normalize ()
-{
+    @returns a reference to *this
+  */
+  vector3& vector3 :: normalize ()
+  {
     double l = length ();
 
     if (IsNearZero(l))
-        return(*this);
+      return(*this);
 
     _vx = _vx / l ;
     _vy = _vy / l ;
     _vz = _vz / l ;
 
     return(*this);
-}
+  }
 
-OBAPI double dot ( const vector3& v1, const vector3& v2 )
-{
+  OBAPI double dot ( const vector3& v1, const vector3& v2 )
+  {
     return v1._vx*v2._vx + v1._vy*v2._vy + v1._vz*v2._vz ;
-}
+  }
 
-OBAPI vector3 cross ( const vector3& v1, const vector3& v2 )
-{
+  OBAPI vector3 cross ( const vector3& v1, const vector3& v2 )
+  {
     vector3 vv ;
 
     vv._vx =   v1._vy*v2._vz - v1._vz*v2._vy ;
@@ -185,10 +185,10 @@ OBAPI vector3 cross ( const vector3& v1, const vector3& v2 )
     vv._vz =   v1._vx*v2._vy - v1._vy*v2._vx ;
 
     return ( vv ) ;
-}
+  }
 
 
-/*! This method calculates the angle between two vectors
+  /*! This method calculates the angle between two vectors
      
   \warning If length() of any of the two vectors is == 0.0,
   this method will divide by zero. If the product of the
@@ -206,9 +206,9 @@ OBAPI vector3 cross ( const vector3& v1, const vector3& v2 )
   \todo Replace this method with a more fool-proof version.
 
   @returns the angle in degrees (0-360)
-*/
-OBAPI double vectorAngle ( const vector3& v1, const vector3& v2 )
-{
+  */
+  OBAPI double vectorAngle ( const vector3& v1, const vector3& v2 )
+  {
     double mag;
     double dp;
 
@@ -216,31 +216,31 @@ OBAPI double vectorAngle ( const vector3& v1, const vector3& v2 )
     dp = dot(v1,v2)/mag;
 
     if (dp < -0.999999)
-        dp = -0.9999999;
+      dp = -0.9999999;
 
     if (dp > 0.9999999)
-        dp = 0.9999999;
+      dp = 0.9999999;
 
     if (dp > 1.0)
-        dp = 1.0;
+      dp = 1.0;
 
     return((RAD_TO_DEG * acos(dp)));
-}
+  }
 
-/*!  This function calculates the tortion angle of three vectors, represented
-  by four points A--B--C--D, i.e. B and C are vertexes, but none of A--B,
-  B--C, and C--D are colinear.  A "tortion angle" is the amount of "twist"
-  or torsion needed around the B--C axis to bring A--B into the same plane
-  as B--C--D.  The torsion is measured by "looking down" the vector B--C so
-  that B is superimposed on C, then noting how far you'd have to rotate
-  A--B to superimpose A over D.  Angles are + in theanticlockwise
-  direction.  The operation is symmetrical in that if you reverse the image
-  (look from C to B and rotate D over A), you get the same answer.
-*/
+  /*!  This function calculates the tortion angle of three vectors, represented
+    by four points A--B--C--D, i.e. B and C are vertexes, but none of A--B,
+    B--C, and C--D are colinear.  A "tortion angle" is the amount of "twist"
+    or torsion needed around the B--C axis to bring A--B into the same plane
+    as B--C--D.  The torsion is measured by "looking down" the vector B--C so
+    that B is superimposed on C, then noting how far you'd have to rotate
+    A--B to superimpose A over D.  Angles are + in theanticlockwise
+    direction.  The operation is symmetrical in that if you reverse the image
+    (look from C to B and rotate D over A), you get the same answer.
+  */
 
-OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
-                        const vector3 &c, const vector3 &d)
-{
+  OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
+                                const vector3 &c, const vector3 &d)
+  {
     double torsion;
     vector3 b1,b2,b3,c1,c2,c3;
 
@@ -253,79 +253,78 @@ OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
     c3 = cross(c1,c2);
 
     if (c1.length() * c2.length() < 0.001)
-        torsion = 0.0;
+      torsion = 0.0;
     else
-    {
+      {
         torsion = vectorAngle(c1,c2);
         if (dot(b2,c3) > 0.0)
-            torsion *= -1.0;
-    }
+          torsion *= -1.0;
+      }
 
     return(torsion);
-}
+  }
 
-/*! This method checks if the current vector *this is zero
-  (i.e. if all entries == 0.0). If so, a warning message is
-  printed, and the whole program is aborted with exit(0).
-  Otherwise, a vector of length one is generated, which is
-  orthogonal to *this, and stored in v. The resulting vector is
-  not random.
+  /*! This method checks if the current vector *this is zero
+    (i.e. if all entries == 0.0). If so, a warning message is
+    printed, and VZero is returned.
+    Otherwise, a vector of length one is generated, which is
+    orthogonal to *this, and stored in v. The resulting vector is
+    not random.
 
-  \warning If the entries of the *this (in particular the
-  z-component) are very close to zero, but not == 0.0, this
-  method may behave in unexpected ways and return almost random
-  results; details may depend on your particular floating point
-  implementation. The use of this method is therefore highly
-  discouraged, unless you are certain that all components of
-  *this are in a reasonable range, away from 0.0 (Stefan
-  Kebekus)
+    \warning If the entries of the *this (in particular the
+    z-component) are very close to zero, but not == 0.0, this
+    method may behave in unexpected ways and return almost random
+    results; details may depend on your particular floating point
+    implementation. The use of this method is therefore highly
+    discouraged, unless you are certain that all components of
+    *this are in a reasonable range, away from 0.0 (Stefan
+    Kebekus)
 
-  \deprecated This method will probably replaced by a safer
-  algorithm in the future.
+    \deprecated This method will probably replaced by a safer
+    algorithm in the future.
 
-  \todo Replace this method with a more fool-proof version that
-  does not call exit()
+    \todo Replace this method with a more fool-proof version.
 
-  @param res a reference to a vector where the result will be
-  stored
-*/
-void vector3::createOrthoVector(vector3 &res) const
-{
+    @param res a reference to a vector where the result will be
+    stored
+  */
+  void vector3::createOrthoVector(vector3 &res) const
+  {
     vector3 cO;
 
     if ( ( IsNearZero(this->x())) && (IsNearZero(this->y())) )
-    {
+      {
         if ( IsNearZero(this->z()) )
-        {
+          {
             cerr << "makeorthovec zero vector" << endl;
-            exit(0);
-        }
+            res = VZero;
+          }
         cO.SetX(1.0);
-    }
+      }
     else
-    {
+      {
         cO.SetZ(1.0);
-    }
+      }
     res= cross(cO,*this);
     res.normalize();
-}
+  }
 
-const vector3 VZero ( 0.0, 0.0, 0.0 ) ;
-const vector3 VX    ( 1.0, 0.0, 0.0 ) ;
-const vector3 VY    ( 0.0, 1.0, 0.0 ) ;
-const vector3 VZ    ( 0.0, 0.0, 1.0 ) ;
+  const vector3 VZero ( 0.0, 0.0, 0.0 ) ;
+  const vector3 VX    ( 1.0, 0.0, 0.0 ) ;
+  const vector3 VY    ( 0.0, 1.0, 0.0 ) ;
+  const vector3 VZ    ( 0.0, 0.0, 1.0 ) ;
 
-/* Calculate the distance of point a to the plane determined by b,c,d */
-double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d)
-{
-  double angle =0;
-  double dist_ab =0;
-  vector3 v_ba = a-b;
-  vector3 v_normal = cross(c-b, d-b).normalize();
-  angle = vectorAngle(v_normal, v_ba);
-  dist_ab = v_ba.length();
-  return fabs(dist_ab * cos(DEG_TO_RAD * angle));
-}
+  /* Calculate the distance of point a to the plane determined by b,c,d */
+  double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d)
+  {
+    double angle =0;
+    double dist_ab =0;
+    vector3 v_ba = a-b;
+    vector3 v_normal = cross(c-b, d-b).normalize();
+    angle = vectorAngle(v_normal, v_ba);
+    dist_ab = v_ba.length();
+    return fabs(dist_ab * cos(DEG_TO_RAD * angle));
+  }
 
 } // namespace OpenBabel
 
