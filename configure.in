@@ -144,6 +144,13 @@ dnl Checks for library functions.
 AC_CHECK_FUNCS([rint sranddev])
 AC_REPLACE_FUNCS([snprintf strncasecmp])
 
+AH_VERBATIM([SNPRTF], 
+[
+#if !HAVE_SNPRINTF
+extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
+#endif
+])
+
 dnl Gotta figure out whether scandir needs a const or not for the 3rd arg.
 AC_MSG_CHECKING([whether scandir needs a const cast])
 AC_COMPILE_IFELSE([
@@ -163,7 +170,7 @@ scandirconst_cast=yes])
 AC_MSG_RESULT([$scandirconst_cast], [set if scandir needs a const])
 
 AC_CONFIG_COMMANDS([src/babelconfig.h], 
-                   [cat src/config.h | grep -v PACKAGE >src/babelconfig.h])
+                   [grep -v PACKAGE src/config.h >src/babelconfig.h])
 
 AC_OUTPUT(Makefile data/Makefile src/Makefile src/math/Makefile \
 		   src/formats/Makefile src/fingerprints/Makefile \
