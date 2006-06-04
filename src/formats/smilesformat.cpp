@@ -13,6 +13,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 //Contains SMIFormat and FIXFormat classes
+// TODO: Rewrite. Use std::string in place of char * to avoid buffer overflow
+//  use std::string::reserve (or different allocator) to avoid resize slowdown
 
 #include "mol.h"
 #include "obconversion.h"
@@ -227,6 +229,8 @@ namespace OpenBabel
 
     if (vs.size() >= 2)
       mol.SetTitle(vs[1].c_str());
+    else
+      mol.SetTitle(title);
 
     OBSmilesParser sp;
     return sp.SmiToMol(mol,vs[0]);
@@ -287,7 +291,8 @@ namespace OpenBabel
 
   bool OBSmilesParser::SmiToMol(OBMol &mol,string &s)
   {
-    strcpy(_buffer,s.c_str());
+    strncpy(_buffer,s.c_str(), BUFF_SIZE);
+    _buffer[BUFF_SIZE - 1] = '\0';
 
     _vprev.clear();
     _rclose.clear();
@@ -1777,7 +1782,7 @@ namespace OpenBabel
 
   void OBMol2Smi::ToSmilesString(OBSmiNode *node,char *buffer)
   {
-    char tmpbuf[10];
+    char tmpbuf[16];
     OBAtom *atom = node->GetAtom();
 
     //write the current atom to the string
@@ -1821,7 +1826,7 @@ namespace OpenBabel
 
             if (i->first > 9)
 	      strcat(buffer,"%");
-            sprintf(tmpbuf,"%d",i->first);
+            snprintf(tmpbuf,sizeof(tmpbuf), "%d",i->first);
             strcat(buffer,tmpbuf);
 	  }
       }
@@ -2098,7 +2103,7 @@ namespace OpenBabel
   bool OBMol2Smi::GetSmilesElement(OBSmiNode *node,char *element)
   {
     //***handle reference atom stuff here and return***
-    char symbol[10];
+    char symbol[16];
     bool bracketElement = false;
     bool normalValence = true;
 

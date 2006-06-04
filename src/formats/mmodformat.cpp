@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -125,7 +125,7 @@ bool MacroModFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
         int end[6], order[6];
 
-        sscanf(buffer,"%s%d%d%d%d%d%d%d%d%d%d%d%d%lf%lf%lf",
+        sscanf(buffer,"%9s%d%d%d%d%d%d%d%d%d%d%d%d%lf%lf%lf",
                temp_type,&end[0],&order[0],&end[1],&order[1],&end[2],&order[2],
                &end[3], &order[3], &end[4], &order[4], &end[5], &order[5],
                &x, &y, &z);
@@ -198,7 +198,7 @@ bool MacroModFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBMol &mol = *pmol;
 
     char buffer[BUFF_SIZE];
-    sprintf(buffer," %5d %6s      E = %7.3f KJ/mol",
+    snprintf(buffer, BUFF_SIZE, " %5d %6s      E = %7.3f KJ/mol",
             mol.NumAtoms(),mol.GetTitle(),4.184*mol.GetEnergy());
     ofs << buffer << endl;
 
@@ -227,20 +227,20 @@ bool MacroModFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             ttab.Translate(to,from);
             type = atoi((char*)to.c_str());
         }
-        sprintf(buffer,"%4d",type);
+        snprintf(buffer, BUFF_SIZE, "%4d",type);
         ofs << buffer;
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
         {
-            sprintf(buffer," %5d %1d",nbr->GetIdx(),(*j)->GetBO());
+            snprintf(buffer, BUFF_SIZE, " %5d %1d",nbr->GetIdx(),(*j)->GetBO());
             ofs << buffer;
         }
         for (k=atom->GetValence();k < 6;k++)
         {
-            sprintf(buffer," %5d %1d",0,0);
+            snprintf(buffer, BUFF_SIZE," %5d %1d",0,0);
             ofs << buffer;
         }
 
-        sprintf(buffer," %11.6f %11.6f %11.6f %5d %5d %8.5f \n",
+        snprintf(buffer, BUFF_SIZE, " %11.6f %11.6f %11.6f %5d %5d %8.5f \n",
                 atom->x(), atom->y(),atom->z(),0,0,
                 atom->GetPartialCharge());
         ofs << buffer;

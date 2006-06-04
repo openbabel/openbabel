@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -16,10 +16,6 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obconversion.h"
 #include "obmolecformat.h"
-
-#if !HAVE_SNPRINTF
-extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
-#endif
 
 using namespace std;
 namespace OpenBabel
@@ -133,7 +129,7 @@ bool BallStickFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    char tmptype[10];
+    char tmptype[16];
     char buffer[BUFF_SIZE];
 
     if (strlen(mol.GetTitle()) > 0)
@@ -150,7 +146,8 @@ bool BallStickFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-        strcpy(tmptype,etab.GetSymbol(atom->GetAtomicNum()));
+        strncpy(tmptype,etab.GetSymbol(atom->GetAtomicNum()), sizeof(tmptype));
+        tmptype[15] = '\0';
         if (strlen(tmptype) > 1)
             tmptype[1] = toupper(tmptype[1]);
         snprintf(buffer,BUFF_SIZE,"%-3s %8.4f  %8.4f  %8.4f",

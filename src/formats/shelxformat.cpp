@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2003 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -104,7 +104,7 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     //  int i; CM
     double x,y,z;
-    char type[10], *j;
+    char type[16], *j;
     OBAtom *atom;
     vector3 v;
 
@@ -130,7 +130,8 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         v.Set(x,y,z);
         v *= m;
 
-        strcpy(type,vs[0].c_str());
+        strncpy(type,vs[0].c_str(), sizeof(type));
+        type[sizeof(type) - 1] = '\0';
         j = strpbrk(type, "0123456789");
         j[0] = '\0';
         atom->SetAtomicNum(etab.GetAtomicNum(type));

@@ -93,8 +93,8 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if(*buff=='#')
             continue;
         float x,y,z;
-        char atomtype[5];
-        if(sscanf(buff,"%f %f %f %s",&x,&y,&z,atomtype)!=4)
+        char atomtype[8];
+        if(sscanf(buff,"%f %f %f %7s",&x,&y,&z,atomtype)!=4)
             return false;
 
         atom.SetVector(x*AAU, y*AAU, z*AAU);
@@ -153,7 +153,7 @@ bool TurbomoleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vector<OBNodeBase*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-        sprintf(buff,"%20.14f  %20.14f  %20.14f      %s",
+        snprintf(buff, BUFF_SIZE, "%20.14f  %20.14f  %20.14f      %s",
                 atom->GetX()/AAU,
                 atom->GetY()/AAU,
                 atom->GetZ()/AAU,

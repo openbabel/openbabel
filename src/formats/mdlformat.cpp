@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey Hutchison
 Portions Copyright (C) 2004-2005 by Chris Morley
 
 This file is part of the Open Babel project.
@@ -157,7 +157,7 @@ Write Options, e.g. -x3\n \
       {
         mol.ReserveAtoms(natoms);
         double x,y,z;
-        char type[5];
+        char type[8];
         vector3 v;
         OBAtom atom;
         int charge, scanArgs, stereo;
@@ -166,7 +166,7 @@ Write Options, e.g. -x3\n \
           if (!ifs.getline(buffer,BUFF_SIZE))
             return(false);
 
-          scanArgs = sscanf(buffer,"%lf %lf %lf %s %*d %d %d",&x,&y,&z,type,&charge, &stereo);
+          scanArgs = sscanf(buffer,"%lf %lf %lf %5s %*d %d %d",&x,&y,&z,type,&charge, &stereo);
           if (scanArgs <4)
             return(false);
           v.SetX(x);v.SetY(y);v.SetZ(z);
@@ -218,7 +218,7 @@ Write Options, e.g. -x3\n \
           atom.Clear();
         }
 
-        int start,end,order,flag;
+        unsigned int start,end,order,flag;
         for (i = 0;i < nbonds;i++) {
           flag = 0;
           if (!ifs.getline(buffer,BUFF_SIZE))
@@ -432,7 +432,7 @@ Write Options, e.g. -x3\n \
               }
           }
 
-        sprintf(buff,"%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d V2000",
+        snprintf(buff, BUFF_SIZE, "%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d V2000",
                 mol.NumAtoms(),mol.NumBonds(),0,0,0,0,0,0,0,0,999);
         ofs << buff << endl;
 
@@ -451,7 +451,7 @@ Write Options, e.g. -x3\n \
             charge=0; break;
           }
 
-          sprintf(buff,"%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
+          snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
                   atom->GetX(),
                   atom->GetY(),
                   atom->GetZ(),
@@ -476,7 +476,7 @@ Write Options, e.g. -x3\n \
                   if (flag & OB_WEDGE_BOND) stereo=1;
                   if (flag & OB_HASH_BOND ) stereo=6;
                 }
-              sprintf(buff,"%3d%3d%3d%3d%3d%3d",
+              snprintf(buff, BUFF_SIZE, "%3d%3d%3d%3d%3d%3d",
                       bond->GetBeginAtomIdx(),
                       bond->GetEndAtomIdx(),
                       bond->GetBO(),
@@ -852,7 +852,7 @@ Write Options, e.g. -x3\n \
     time_t long_time;
     time( &long_time );
     ts = localtime( &long_time ); 
-    sprintf(td,"%02d%02d%02d%02d%02d", ts->tm_mon+1, ts->tm_mday, 
+    snprintf(td, sizeof(td), "%02d%02d%02d%02d%02d", ts->tm_mon+1, ts->tm_mday, 
             ((ts->tm_year>=100)? ts->tm_year-100 : ts->tm_year),
             ts->tm_hour, ts->tm_min);
     return td;

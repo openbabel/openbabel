@@ -209,7 +209,7 @@ bool JaguarInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     for (i = 1;i <= mol.NumAtoms(); i++)
     {
         atom = mol.GetAtom(i);
-        sprintf(buffer,"  %s%d   %12.7f  %12.7f  %12.7f",
+        snprintf(buffer, BUFF_SIZE, "  %s%d   %12.7f  %12.7f  %12.7f",
                 etab.GetSymbol(atom->GetAtomicNum()), i,
                 atom->GetX(),
                 atom->GetY(),

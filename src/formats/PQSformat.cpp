@@ -182,8 +182,8 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     const char* title = pConv->GetTitle();
 
     char buffer[BUFF_SIZE];
-    char coord_file[200];
-    char full_coord_path[255]="\0";
+    char coord_file[256];
+    char full_coord_path[256]="\0";
     ifstream coordFileStream;
     double bohr_to_angstrom=1.0;
     unsigned int input_style, atom_count=0; //CM i removed
@@ -213,23 +213,22 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
             if (strstr(buffer,"file=")!=NULL)
             {  //external geometry file
-                strcpy(coord_file,strstr(buffer,"file=")+5);
+                strncpy(coord_file,strstr(buffer,"file=")+5, sizeof(coord_file));
+                coord_file[sizeof(coord_file) - 1] = '\0';
                 if (strrchr(coord_file,' ')!=NULL)
                     *strrchr(coord_file,' ')='\0';
                 if (coord_file[0]!='/')
                 {
-                    strcpy(full_coord_path,title);
+                    strncpy(full_coord_path,title, sizeof(full_coord_path));
+                    full_coord_path[sizeof(full_coord_path)-1] = '\0';
                     if (strrchr(full_coord_path,'/')!=NULL)
                         *(strrchr(full_coord_path,'/')+1)='\0';
                     else
-                        strcpy(full_coord_path,"");
+                      full_coord_path[0] = '\0';
                 }
-                strcat(full_coord_path,coord_file);
-#ifdef HAVE_SSTREAM
+                strncat(full_coord_path,coord_file, sizeof(full_coord_path));
+                full_coord_path[sizeof(full_coord_path) - 1] = '\0';
 		stringstream errorMsg;
-#else
-		strstream errorMsg;
-#endif
                 errorMsg <<"External geometry file referenced: "<< \
                 full_coord_path<<endl;
 		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
@@ -290,11 +289,7 @@ bool PQSFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             coordFileStream.open(coord_file);
             if (!coordFileStream)
             {
-#ifdef HAVE_SSTREAM
 	      stringstream errorMsg;
-#else
-	      strstream errorMsg;
-#endif
 	      errorMsg <<"ReadPQS: cannot read external "<<coord_file<<" file!"<<endl;
 	      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 		return(false);
@@ -335,7 +330,7 @@ bool PQSFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     for (i=1; i<=mol.NumAtoms(); i++)
     {
         atom=mol.GetAtom(i);
-        sprintf(buffer,"%s           %10.6lf   %10.6lf   %10.6lf",
+        snprintf(buffer, BUFF_SIZE, "%s           %10.6lf   %10.6lf   %10.6lf",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),

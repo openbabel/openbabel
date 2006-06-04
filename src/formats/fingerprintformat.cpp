@@ -19,7 +19,8 @@ GNU General Public License for more details.
 #include <iomanip>
 
 using namespace std;
-namespace OpenBabel {
+namespace OpenBabel
+{
 
 /// \brief Constructs and displays fingerprints. For details see OBFingerprint class
 class FingerprintFormat : public OBMoleculeFormat
@@ -109,7 +110,7 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 	if(hexoutput)
 	{
-		int i, bitsset=0;
+        unsigned int i, bitsset=0;
 		for (i=0;i<fptvec.size();++i)
 		{
 			int wd = fptvec[i];
@@ -154,7 +155,7 @@ bool FingerprintFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 bool FingerprintFormat::IsPossibleSubstructure(vector<unsigned int>Mol, vector<unsigned int>Frag)
 {
 	//Returns false if Frag is definitely NOT a substructure of Mol
-	int i;
+    unsigned int i;
 	for (i=0;i<Mol.size();++i)
 		if((Mol[i] & Frag[i]) ^ Frag[i]) return false;
 	return true;

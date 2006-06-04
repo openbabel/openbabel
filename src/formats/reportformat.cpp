@@ -3,7 +3,7 @@ reportformat.cpp - Report information about the molecule: charge, distance
              matrix angle, chiral info, etc.
  
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This file is part of the Open Babel project.
@@ -102,46 +102,46 @@ bool ReportFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBMol &mol = *pmol;
 
     char buffer[BUFF_SIZE];
-    ofs << "FILENAME: " << mol.GetTitle() << endl;
-    ofs << "FORMULA: " << mol.GetFormula() << endl;
+    ofs << "FILENAME: " << mol.GetTitle() << "\n";
+    ofs << "FORMULA: " << mol.GetFormula() << "\n";
     ofs << "MASS: ";
-    sprintf(buffer, "%5.4f", mol.GetMolWt());
-    ofs << buffer << endl;
+    snprintf(buffer, BUFF_SIZE, "%5.4f\n", mol.GetMolWt());
+    ofs << buffer;
     ofs << "EXACT MASS: ";
-    sprintf(buffer, "%5.7f", mol.GetExactMass());
-    ofs << buffer << endl;
+    snprintf(buffer, BUFF_SIZE, "%5.7f", mol.GetExactMass());
+    ofs << buffer << "\n";
     if (mol.GetTotalCharge() != 0)
     {
         ofs << "TOTAL CHARGE: ";
-        sprintf(buffer, "%d", mol.GetTotalCharge());
-        ofs << buffer << endl;
+        snprintf(buffer, BUFF_SIZE, "%d", mol.GetTotalCharge());
+        ofs << buffer << "\n";
     }
     if (mol.GetTotalSpinMultiplicity() != 1)
     {
         ofs << "TOTAL SPIN: ";
-        sprintf(buffer, "%d", mol.GetTotalSpinMultiplicity());
-        ofs << buffer << endl;
+        snprintf(buffer, BUFF_SIZE, "%d", mol.GetTotalSpinMultiplicity());
+        ofs << buffer << "\n";
     }
-    ofs << "INTERATOMIC DISTANCES" << endl;
+    ofs << "INTERATOMIC DISTANCES" << "\n";
     WriteDistanceMatrix(ofs, mol);
-    ofs << endl << endl << "ATOMIC CHARGES" << endl;
+    ofs << "\n" << "\n" << "ATOMIC CHARGES" << "\n";
     WriteCharges(ofs, mol);
-    ofs << endl << endl << "BOND ANGLES" << endl;
+    ofs << "\n" << "\n" << "BOND ANGLES" << "\n";
     WriteAngles(ofs, mol);
-    ofs << endl << endl << "TORSION ANGLES" << endl;
+    ofs << "\n" << "\n" << "TORSION ANGLES" << "\n";
     WriteTorsions(ofs, mol);
     if (mol.IsChiral())
     {
-        ofs << endl << endl << "CHIRAL ATOMS" << endl;
+        ofs << "\n" << "\n" << "CHIRAL ATOMS" << "\n";
         WriteChiral(ofs, mol);
     }
     if (mol.HasData(OBGenericDataType::CommentData))
     {
-        ofs << endl << endl << "COMMENTS" << endl;
+        ofs << "\n" << "\n" << "COMMENTS" << "\n";
         OBCommentData *cd = (OBCommentData*)mol.GetData(OBGenericDataType::CommentData);
-        ofs << cd->GetData() << endl;
+        ofs << cd->GetData() << "\n";
     }
-    ofs << endl << endl;
+    ofs << "\n" << "\n";
     return(true);
 }
 
@@ -155,12 +155,12 @@ void ReportFormat::WriteCharges(ostream &ofs,OBMol &mol)
     for(i = 1;i <= mol.NumAtoms(); i++)
     {
         atom = mol.GetAtom(i);
-        sprintf(buffer,"%4s%4d   % 2.10f",
+        snprintf(buffer, BUFF_SIZE, "%4s%4d   % 2.10f",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 i,
                 atom->GetPartialCharge());
 
-        ofs << buffer << endl;
+        ofs << buffer << "\n";
     }
 }
 
@@ -177,12 +177,12 @@ void ReportFormat::WriteDistanceMatrix(ostream &ofs,OBMol &mol)
     max = columns;
     while (max <= mol.NumAtoms() + columns)
     {
-        ofs << endl;
+        ofs << "\n";
         if (min > mol.NumAtoms())
             break;
         atom = mol.GetAtom(min);
 
-        sprintf(buffer,"%15s%4d",
+        snprintf(buffer,BUFF_SIZE,"%15s%4d",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 min);
         ofs << buffer;
@@ -191,27 +191,26 @@ void ReportFormat::WriteDistanceMatrix(ostream &ofs,OBMol &mol)
             if (i <= mol.NumAtoms())
             {
                 atom = mol.GetAtom(i);
-                sprintf(buffer,"%7s%4d",
+              snprintf(buffer,BUFF_SIZE, "%7s%4d",
                         etab.GetSymbol(atom->GetAtomicNum()),
                         i);
                 ofs << buffer;
             }
-        ofs << endl;
+        ofs << "\n";
 
-        sprintf(buffer,"%14s","");
+        snprintf(buffer, BUFF_SIZE, "%14s","");
         ofs << buffer;
         for (i = min; i < max; i++)
             if (i <= mol.NumAtoms())
             {
-                sprintf(buffer,"%11s","-----------");
-                ofs << buffer;
+              ofs << "-----------";
             }
 
-        ofs << endl;
+        ofs << "\n";
         for (i = min; i <= mol.NumAtoms(); i++)
         {
             atom = mol.GetAtom(i);
-            sprintf(buffer,"%4s%4d",
+            snprintf(buffer, BUFF_SIZE, "%4s%4d",
                     etab.GetSymbol(atom->GetAtomicNum()),
                     i);
             ofs << buffer;
@@ -223,15 +222,15 @@ void ReportFormat::WriteDistanceMatrix(ostream &ofs,OBMol &mol)
                     dst += SQUARE(atom->GetY() - atom2->GetY());
                     dst += SQUARE(atom->GetZ() - atom2->GetZ());
                     dst = sqrt(dst);
-                    sprintf(buffer,"%10.4f ",dst);
+                  snprintf(buffer, BUFF_SIZE, "%10.4f ",dst);
                     ofs << buffer;
                 }
-            ofs << endl;
+            ofs << "\n";
         }
         max += columns - 1;
         min += columns - 1;
     }
-    ofs << endl;
+    ofs << "\n";
 }
 
 void ReportFormat::WriteTorsions(ostream &ofs,OBMol &mol)
@@ -257,11 +256,11 @@ void ReportFormat::WriteTorsions(ostream &ofs,OBMol &mol)
                 if(d == b)
                     continue;
 
-                sprintf(buffer,"%4d %4d %4d %4d %10.3f",
+                snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4d %10.3f",
                         a->GetIdx(), b->GetIdx(),c->GetIdx(),d->GetIdx(),
                         CalcTorsionAngle(a->GetVector(), b->GetVector(),
                                          c->GetVector(), d->GetVector()));
-                ofs << buffer << endl;
+                ofs << buffer << "\n";
             }
         }
     }
@@ -291,11 +290,11 @@ void ReportFormat::WriteAngles(ostream &ofs,OBMol &mol)
                 v1 = a->GetVector() - b->GetVector();
                 v2 = c->GetVector() - b->GetVector();
 
-                sprintf(buffer,"%4d %4d %4d %4s %4s %4s %10.3f",
+                snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4s %4s %4s %10.3f",
                         a->GetIdx(),b->GetIdx(),c->GetIdx(),
                         a->GetType(),b->GetType(),c->GetType(),
                         vectorAngle(v1, v2));
-                ofs << buffer << endl;
+                ofs << buffer << "\n";
 
                 for (bond3 = c->BeginBond(k); bond3; bond3 = c->NextBond(k))
                     if (bond3->GetEndAtomIdx() != b->GetIdx()
@@ -306,11 +305,11 @@ void ReportFormat::WriteAngles(ostream &ofs,OBMol &mol)
                         v1 = b->GetVector() - c->GetVector();
                         v2 = d->GetVector() - c->GetVector();
 
-                        sprintf(buffer,"%4d %4d %4d %4s %4s %4s %10.3f",
+                      snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4s %4s %4s %10.3f",
                                 b->GetIdx(),c->GetIdx(),d->GetIdx(),
                                 b->GetType(),c->GetType(),d->GetType(),
                                 vectorAngle(v1, v2));
-                        ofs << buffer << endl;
+                      ofs << buffer << "\n";
                     }
             }
         }
@@ -327,12 +326,12 @@ void ReportFormat::WriteChiral(ostream &ofs,OBMol &mol)
     {
         if (atom->IsChiral())
         {
-            sprintf(buffer,"%4s %5d is chiral: %s",
+            snprintf(buffer, BUFF_SIZE, "%4s %5d is chiral: %s",
                     etab.GetSymbol(atom->GetAtomicNum()),
                     atom->GetIdx(),
                     (atom->IsClockwise() ? "clockwise" : "counterclockwise"));
 
-            ofs << buffer << endl;
+            ofs << buffer << "\n";
         }
     }
 }

@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -16,10 +16,6 @@ GNU General Public License for more details.
 #include "mol.h"
 #include "obconversion.h"
 #include "obmolecformat.h"
-
-#if !HAVE_SNPRINTF
-extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
-#endif
 
 using namespace std;
 namespace OpenBabel
@@ -127,7 +123,7 @@ bool AlchemyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     {
         if (!ifs.getline(buffer,BUFF_SIZE))
             return(false);
-        sscanf(buffer,"%*d%d%d%s",&bgn,&end,bobuf);
+        sscanf(buffer,"%*d%d%d%99s",&bgn,&end,bobuf);
         bostr = bobuf;
         order = 1;
         if      (bostr == "DOUBLE")

@@ -172,9 +172,9 @@ bool PubChemFormat::DoElement(const string& name)
 
 bool PubChemFormat::EndElement(const string& name)
 {
+  unsigned int i;
 	if(name=="PC-Atoms")
 	{
-		int i;
 		for(i=0;i<AtNum.size();++i)
 		{
 			OBAtom* pAtom = _pmol->NewAtom();
@@ -183,7 +183,6 @@ bool PubChemFormat::EndElement(const string& name)
 	}
 	else if(name=="PC-Bonds")
 	{
-		int i;
 		for(i=0;i<BondBeginAtIndx.size();++i)
 			_pmol->AddBond(BondBeginAtIndx[i],BondEndAtIndx[i],BondOrder[i]);
 	}
@@ -192,7 +191,6 @@ bool PubChemFormat::EndElement(const string& name)
 		++ConformerIndx;
 		if(Coordz.size()!=Coordx.size())
 			Coordz.resize(Coordx.size());
-		int i;
 		for(i=0;i<CoordIndx.size();++i)
 		{
 			OBAtom* pAtom = _pmol->GetAtom(CoordIndx[i]);

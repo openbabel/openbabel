@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2005 by Geoffrey R. Hutchison
+Copyright (C) 2005-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -193,20 +193,15 @@ bool FreeFormFractionalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << mol.GetTitle() << endl;
 
     if (!mol.HasData(OBGenericDataType::UnitCell))
-      {
-	sprintf(buffer,
-		"%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
-		1.0f, 1.0f, 1.0f, 90.0f, 90.0f, 90.0f);
-	ofs << buffer << endl;
-      }
+      ofs << "   1.00000   1.00000   1.00000  90.00000  90.00000  90.00000\n";
     else
       {
 	uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
-	sprintf(buffer,
+        snprintf(buffer, BUFF_SIZE,
 		"%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
 		uc->GetA(), uc->GetB(), uc->GetC(),
 		uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
-	ofs << buffer << endl;
+        ofs << buffer << "\n";
       }
 
     vector3 v;
@@ -216,7 +211,7 @@ bool FreeFormFractionalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       if (uc != NULL)
 	v *= uc->GetFractionalMatrix();
 
-      sprintf(buffer,"%s %10.5f%10.5f%10.5f",
+        snprintf(buffer, BUFF_SIZE, "%s %10.5f%10.5f%10.5f",
 	      etab.GetSymbol(atom->GetAtomicNum()),
 	      v.x(),
 	      v.y(),

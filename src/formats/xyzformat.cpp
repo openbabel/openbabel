@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -17,11 +17,7 @@ GNU General Public License for more details.
 #include "obconversion.h"
 #include "obmolecformat.h"
 
-#ifdef HAVE_SSTREAM
 #include <sstream>
-#else
-#include <strstream>
-#endif
 
 using namespace std;
 namespace OpenBabel
@@ -75,11 +71,7 @@ bool XYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     const char* title = pConv->GetTitle();
     char buffer[BUFF_SIZE];
 
-#ifdef HAVE_SSTREAM
     stringstream errorMsg;
-#else
-    strstream errorMsg;
-#endif
 
     unsigned int natoms;	// [ejk] assumed natoms could not be -ve
 
@@ -227,9 +219,9 @@ bool XYZFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     unsigned int i;
     char buffer[BUFF_SIZE];
 
-    sprintf(buffer,"%d", mol.NumAtoms());
+    snprintf(buffer, BUFF_SIZE, "%d", mol.NumAtoms());
     ofs << buffer << endl;
-    sprintf(buffer,"%s\tEnergy: %15.7f", mol.GetTitle(), mol.GetEnergy());
+    snprintf(buffer, BUFF_SIZE, "%s", mol.GetTitle());
     ofs << buffer << endl;
 
     OBAtom *atom;
@@ -237,7 +229,7 @@ bool XYZFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     for(i = 1;i <= mol.NumAtoms(); i++)
     {
         atom = mol.GetAtom(i);
-        sprintf(buffer,"%3s%15.5f%15.5f%15.5f",
+        snprintf(buffer, BUFF_SIZE, "%3s%15.5f%15.5f%15.5f",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),

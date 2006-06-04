@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -73,7 +73,7 @@ bool BGFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.BeginModify();
 
     char buffer[BUFF_SIZE];
-    char tmp[15],tmptyp[15];
+    char tmp[16],tmptyp[16];
 
     while (ifs.getline(buffer,BUFF_SIZE))
         if (EQn(buffer,"FORMAT",6))
@@ -90,7 +90,7 @@ bool BGFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if (EQn(buffer,"FORMAT",6))
             break;
 
-        sscanf(buffer,"%*s %*s %*s %*s %*s %*s %lf %lf %lf %s %*s %*s %lf",
+        sscanf(buffer,"%*s %*s %*s %*s %*s %*s %lf %lf %lf %15s %*s %*s %lf",
                &x,&y,&z,
                tmptyp,
                &chrg);
@@ -181,23 +181,23 @@ bool BGFFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     int max_val;
     OBAtom *atom;
     char buffer[BUFF_SIZE];
-    char elmnt_typ[5], dreid_typ[5], atm_sym[10], max_val_str[5];
+    char elmnt_typ[8], dreid_typ[8], atm_sym[16], max_val_str[8];
 
     mol.Kekulize();
 
-    ofs << "BIOGRF 200" << endl;
-    sprintf(buffer,"DESCRP %s",mol.GetTitle());
-    ofs << buffer << endl;
-    sprintf(buffer,"REMARK BGF file created by Open Babel %s",BABEL_VERSION);
-    ofs << buffer << endl;
-    ofs << "FORCEFIELD DREIDING  " << endl;
-    ofs << "FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5)" << endl;
+    ofs << "BIOGRF 200\n";
+    snprintf(buffer, BUFF_SIZE, "DESCRP %s\n",mol.GetTitle());
+    ofs << buffer;
+    snprintf(buffer, BUFF_SIZE, "REMARK BGF file created by Open Babel %s\n",BABEL_VERSION);
+    ofs << "FORCEFIELD DREIDING  \n";
+    ofs << "FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5)\n";
 
     ttab.SetFromType("INT");
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-        strcpy(elmnt_typ,etab.GetSymbol(atom->GetAtomicNum()));
+        strncpy(elmnt_typ,etab.GetSymbol(atom->GetAtomicNum()), sizeof(elmnt_typ));
+        elmnt_typ[sizeof(elmnt_typ) - 1] = '0';
         ToUpper(elmnt_typ);
 
         ttab.SetToType("DRE");
@@ -207,8 +207,8 @@ bool BGFFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         max_val = atoi(max_val_str);
         if (max_val == 0)
             max_val = 1;
-        sprintf(atm_sym,"%s%d",elmnt_typ,atom->GetIdx());
-        sprintf(buffer,"%6s %5d %-5s %3s %1s %5s%10.5f%10.5f%10.5f %-5s%3d%2d %8.5f",
+        snprintf(atm_sym,16,"%s%d",elmnt_typ,atom->GetIdx());
+        snprintf(buffer,BUFF_SIZE,"%6s %5d %-5s %3s %1s %5s%10.5f%10.5f%10.5f %-5s%3d%2d %8.5f\n",
                 "HETATM",
                 atom->GetIdx(),
                 atm_sym,
@@ -222,37 +222,35 @@ bool BGFFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
                 max_val,
                 0,
                 atom->GetPartialCharge());
-        ofs << buffer << endl;
+        ofs << buffer;
     }
-    sprintf(buffer,"FORMAT CONECT (a6,12i6)\n");
-    ofs << buffer << endl;
+    ofs<< "FORMAT CONECT (a6,12i6)\n\n";
 
     OBAtom *nbr;
     vector<OBEdgeBase*>::iterator j;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
         if (atom->GetValence())
         {
-            sprintf(buffer,"CONECT%6d",atom->GetIdx());
+          snprintf(buffer,BUFF_SIZE,"CONECT%6d",atom->GetIdx());
             ofs << buffer;
             for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
             {
-                sprintf(buffer,"%6d",nbr->GetIdx());
+              snprintf(buffer,BUFF_SIZE,"%6d",nbr->GetIdx());
                 ofs << buffer;
             }
             ofs << endl;
 
-            sprintf(buffer,"ORDER %6d",atom->GetIdx());
+          snprintf(buffer,BUFF_SIZE,"ORDER %6d",atom->GetIdx());
             ofs << buffer;
             for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
             {
-                sprintf(buffer,"%6d",(*j)->GetBO());
+              snprintf(buffer,BUFF_SIZE,"%6d",(*j)->GetBO());
                 ofs << buffer;
             }
             ofs << endl;
         }
 
-    sprintf(buffer,"END");
-    ofs << buffer << endl;
+    ofs << "END" << endl;
     return(true);
 }
 

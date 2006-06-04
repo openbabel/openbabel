@@ -176,7 +176,7 @@ bool ViewMolFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     for(i = 1;i <= mol.NumAtoms(); i++)
     {
         atom = mol.GetAtom(i);
-        sprintf(buffer,"%22.14f%22.14f%22.14f %s",
+        snprintf(buffer, BUFF_SIZE, "%22.14f%22.14f%22.14f %s",
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ(),

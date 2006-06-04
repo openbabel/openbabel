@@ -1,5 +1,6 @@
 /**********************************************************************
-Copyright (C) 2005 by Chris Morley
+Copyright (C) 2005-2006 by Chris Morley
+Some portions Copyright (C) 2006 by Geoffrey R. Hutchison
  
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2000-2005 by Geoffrey Hutchison
+Copyright (C) 2000-2006 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -196,23 +196,21 @@ bool MPQCInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     unsigned int i;
     char buffer[BUFF_SIZE];
 
-    ofs << "% " << mol.GetTitle() << endl;
-    ofs << endl; // keywords/direction lines here
-    ofs << "molecule:" << endl;
+    ofs << "% " << mol.GetTitle() << "\n";
+    ofs << "\n"; // keywords/direction lines here
+    ofs << "molecule:\n";
 
-    OBAtom *atom;
-    for(i = 1;i <= mol.NumAtoms(); i++)
+    FOR_ATOMS_OF_MOL(atom, mol)
     {
-        atom = mol.GetAtom(i);
-        sprintf(buffer,"%4s  %8.5f  %8.5f  %8.5f ",
+        snprintf(buffer, BUFF_SIZE, "%4s  %8.5f  %8.5f  %8.5f \n",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ());
-        ofs << buffer << endl;
+        ofs << buffer;
     }
 
-    ofs << endl << endl << endl;
+    ofs << "\n\n\n";
     return(true);
 }
 

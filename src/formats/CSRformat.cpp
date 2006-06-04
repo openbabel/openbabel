@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -156,7 +156,7 @@ void CSRFormat::WriteCSRCoords(ostream &ofs,OBMol &mol)
     jconf = 1;
     energy = -2.584565;
 
-    sprintf(title,"%s:%d",mol.GetTitle(),MolCount);
+    snprintf(title, 80, "%s:%d",mol.GetTitle(),MolCount);
     tag = PadString(title,80);
 
     WriteSize(the_size,ofs);
@@ -206,10 +206,9 @@ char* CSRFormat::PadString(char *input, int size)
     char *output;
 
     output = new char [size];
-    for (i = 0; i < (unsigned)size; i++)
-        output[i] = ' ';
-    for (i = 0; i < strlen(input); i++)
-        output[i] = input[i];
+    memset(output, ' ', size);
+    strncpy(output, input, strlen(input));
+    output[ size - 1] = '\0';
     return(output);
 }
 

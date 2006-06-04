@@ -181,18 +181,15 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 			iat.bond_stereo[nbonds++] = bs;
 			if(nbonds>MAXVAL)
 			{
-#ifdef HAVE_SSTREAM
 			  stringstream errorMsg;
-#else
-			  strstream errorMsg;
-#endif
 			  errorMsg << "Too many bonds to " << iat.elname << " atom" << endl;
 			  obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 				return false;
 			}
 		}
 	
-		strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
+        strncpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()), sizeof(iat.elname));
+        iat.elname[sizeof(iat.elname) - 1] = '\0';
 		iat.num_bonds = nbonds;
 		iat.num_iso_H[0] = -1; //Let inchi add implicit Hs
 		if(patom->GetIsotope())
@@ -562,11 +559,8 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	NewConv.SetAuxConv(NULL); //until proper copy constructor for OBConversion written
 	
 	const char* pTargetExt = pConv->IsOption("O");
-#ifdef HAVE_SSTREAM
 	stringstream errorMsg;
-#else
-	strstream errorMsg;
-#endif
+
 	if(pTargetExt)
 	{
 		OBFormat* pTargetFormat = OBConversion::FindFormat(pTargetExt);

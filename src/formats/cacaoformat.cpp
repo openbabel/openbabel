@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -109,7 +109,6 @@ bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     int i;
     double x,y,z;
-    char type[10];
     OBAtom *atom;
     vector3 v;
 
@@ -130,8 +129,7 @@ bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         v.Set(x,y,z);
         v *= m;
 
-        strcpy(type,vs[0].c_str());
-        atom->SetAtomicNum(etab.GetAtomicNum(type));
+        atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
         atom->SetVector(v);
     }
 
@@ -165,30 +163,30 @@ bool CacaoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     char buffer[BUFF_SIZE];
     vector<OBNodeBase*>::iterator i;
 
-    sprintf(buffer,"%s",mol.GetTitle());
-    ofs << buffer << endl;
-    sprintf(buffer,"%3d   DIST  0  0  0",mol.NumAtoms());
-    ofs << buffer << endl;
+    snprintf(buffer, BUFF_SIZE, "%s\n",mol.GetTitle());
+    ofs << buffer;
+    snprintf(buffer, BUFF_SIZE, "%3d   DIST  0  0  0\n",mol.NumAtoms());
+    ofs << buffer;
 
     if (!mol.HasData(OBGenericDataType::UnitCell))
-        sprintf(buffer,"CELL 1.,1.,1.,90.,90.,90.");
+      ofs << "CELL 1.,1.,1.,90.,90.,90.\n";
     else
     {
         OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
-        sprintf(buffer,"CELL %f,%f,%f,%f,%f,%f",
+        snprintf(buffer, BUFF_SIZE, "CELL %f,%f,%f,%f,%f,%f\n",
                 uc->GetA(), uc->GetB(), uc->GetC(),
                 uc->GetAlpha(), uc->GetBeta(), uc->GetGamma());
+        ofs << buffer;
     }
-    ofs << buffer << endl;
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-        sprintf(buffer,"%2s %7.4f, %7.4f, %7.4f",
+        snprintf(buffer,BUFF_SIZE,"%2s %7.4f, %7.4f, %7.4f\n",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->x(),
                 atom->y(),
                 atom->z());
-        ofs << buffer << endl;
+        ofs << buffer;
     }
 
     return(true);
@@ -333,7 +331,7 @@ bool CacaoInternalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     unsigned int i;
     vector3 v;
-    char tmptype[10],buffer[BUFF_SIZE];
+    char tmptype[16],buffer[BUFF_SIZE];
 
     if (mol.Empty())
         return(false);
@@ -345,23 +343,22 @@ bool CacaoInternalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     vector<OBInternalCoord*> vit;
     CacaoFormat::SetHilderbrandt(mol,vit);
-    strcpy(tmptype,etab.GetSymbol(mol.GetAtom(1)->GetAtomicNum()));
+    strncpy(tmptype,etab.GetSymbol(mol.GetAtom(1)->GetAtomicNum()), sizeof(tmptype));
+    tmptype[sizeof(tmptype) - 1] = '\0';
 
-    sprintf(buffer," # TITLE");
-    ofs << buffer << endl;
-    sprintf(buffer,"%3d  0DIST  0  0  0",mol.NumAtoms());
-    ofs << buffer << endl;
-    sprintf(buffer,"  EL");
-    ofs << buffer << endl;
-    sprintf(buffer,"0.,0.,0., %s",tmptype);
-    ofs << buffer << endl;
+    ofs << " # TITLE\n";
+    snprintf(buffer, BUFF_SIZE, "%3d  0DIST  0  0  0\n",mol.NumAtoms());
+    ofs << "  EL\n";
+    snprintf(buffer, BUFF_SIZE, "0.,0.,0., %s\n",tmptype);
+    ofs << buffer;
     for (i = 2; i <= mol.NumAtoms(); i++)
     {
-        strcpy(tmptype,etab.GetSymbol(mol.GetAtom(i)->GetAtomicNum()));
+        strncpy(tmptype,etab.GetSymbol(mol.GetAtom(i)->GetAtomicNum()), sizeof(tmptype));
+        tmptype[sizeof(tmptype) - 1] = '\0';
 
         if (vit[i]->_tor < 0.0)
             vit[i]->_tor += 360.0;
-        sprintf(buffer,"%2d,%d,%2s%7.3f,%7.3f,%7.3f",
+        snprintf(buffer, BUFF_SIZE, "%2d,%d,%2s%7.3f,%7.3f,%7.3f",
                 vit[i]->_a->GetIdx(),i,tmptype,
                 vit[i]->_dst,
                 vit[i]->_ang,

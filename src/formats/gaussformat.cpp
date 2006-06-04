@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -136,17 +136,17 @@ bool GaussianInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     OBAtom *atom;
     string str,str1;
-    sprintf(buffer,"%d  %d", mol.GetTotalCharge(), mol.GetTotalSpinMultiplicity());
+    snprintf(buffer, BUFF_SIZE, "%d  %d", mol.GetTotalCharge(), mol.GetTotalSpinMultiplicity());
     ofs << buffer << endl;
     for(i = 1;i <= mol.NumAtoms(); i++)
     {
         atom = mol.GetAtom(i);
 	if (atom->GetIsotope() == 0)
-	  sprintf(buffer,"%-3s      %10.5f      %10.5f      %10.5f ",
+          snprintf(buffer, BUFF_SIZE, "%-3s      %10.5f      %10.5f      %10.5f ",
 		  etab.GetSymbol(atom->GetAtomicNum()),
 		  atom->GetX(), atom->GetY(), atom->GetZ());
 	else
-	  sprintf(buffer,"%-3s(Iso=%d) %10.5f      %10.5f      %10.5f ",
+          snprintf(buffer, BUFF_SIZE, "%-3s(Iso=%d) %10.5f      %10.5f      %10.5f ",
 		  etab.GetSymbol(atom->GetAtomicNum()),
 		  atom->GetIsotope(),
 		  atom->GetX(), atom->GetY(), atom->GetZ());

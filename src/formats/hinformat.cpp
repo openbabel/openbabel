@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -160,7 +160,7 @@ bool HINFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     for(i = 1;i <= mol.NumAtoms(); i++)
     {
         atom = mol.GetAtom(i);
-        sprintf(buffer,"atom %d - %-3s **  - %8.5f %8.5f  %8.5f  %8.5f %d ",
+        snprintf(buffer, BUFF_SIZE, "atom %d - %-3s **  - %8.5f %8.5f  %8.5f  %8.5f %d ",
                 i,
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->GetPartialCharge(),
@@ -192,7 +192,7 @@ bool HINFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 	    if (bond->IsAromatic())
 	      bond_char = 'a';
 
-            sprintf(buffer,"%d %c ", (bond->GetNbrAtom(atom))->GetIdx(), bond_char);
+            snprintf(buffer,BUFF_SIZE, "%d %c ", (bond->GetNbrAtom(atom))->GetIdx(), bond_char);
             ofs << buffer;
         }
         ofs << endl;

@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -177,27 +177,24 @@ bool NWChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
     char buffer[BUFF_SIZE];
 
-    ofs << "start molecule" << endl << endl;
-    ofs << "title " << endl << " " << mol.GetTitle() << endl << endl;
+    ofs << "start molecule" << "\n\n";
+    ofs << "title " << endl << " " << mol.GetTitle() << "\n\n";
 
-    ofs << "geometry units angstroms print xyz autosym" << endl;
+    ofs << "geometry units angstroms print xyz autosym\n";
 
-    OBAtom *atom;
-    for(i = 1;i <= mol.NumAtoms(); i++)
+    FOR_ATOMS_OF_MOL(atom, mol)
     {
-        atom = mol.GetAtom(i);
-        sprintf(buffer,"%3s%15.5f%15.5f%15.5f",
+        snprintf(buffer, BUFF_SIZE, "%3s%15.5f%15.5f%15.5f\n",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ());
-        ofs << buffer << endl;
+        ofs << buffer;
     }
 
-    ofs << "end" << endl;
+    ofs << "end\n";
 
     return(true);
 }

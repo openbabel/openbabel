@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -150,7 +150,7 @@ bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     {
         if (!ifs.getline(buffer,BUFF_SIZE))
             return(false);
-        sscanf(buffer," %*s %s %lf %lf %lf %s %d %s %lf",
+        sscanf(buffer," %*s %1024s %lf %lf %lf %1024s %d %1024s %lf",
                atmid, &x,&y,&z, temp_type, &resnum, resname, &pcharge);
 
         atom.SetVector(x, y, z);
@@ -222,7 +222,7 @@ bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if (!ifs.getline(buffer,BUFF_SIZE))
             return(false);
 
-        sscanf(buffer,"%*d %d %d %s",&start,&end,temp_type);
+        sscanf(buffer,"%*d %d %d %1024s",&start,&end,temp_type);
         str = temp_type;
         order = 1;
         if (str == "ar" || str == "AR" || str == "Ar")
@@ -307,7 +307,7 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     else
         ofs << str << endl;
 
-    sprintf(buffer, " %d %d 0 0 0", mol.NumAtoms(),mol.NumBonds());
+    snprintf(buffer, BUFF_SIZE," %d %d 0 0 0", mol.NumAtoms(),mol.NumBonds());
     ofs << buffer << endl;
     ofs << "SMALL" << endl;
 
@@ -343,7 +343,7 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         //  Use sequentially numbered atom names if no residues
         //
 
-        sprintf(label,"%s%d",
+        snprintf(label,BUFF_SIZE, "%s%d",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 ++labelcount[atom->GetAtomicNum()]);
 	strcpy(rlabel,"<1>");
@@ -359,13 +359,13 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         if ( (res = atom->GetResidue()) )
         {
 	  // use original atom names defined by residue
-	  sprintf(label,"%s",(char*)res->GetAtomID(atom).c_str());
+            snprintf(label,BUFF_SIZE,"%s",(char*)res->GetAtomID(atom).c_str());
 	  // make sure that residue name includes its number
-	  sprintf(rlabel,"%s%d",res->GetName().c_str(), res->GetNum());
-	  sprintf(rnum,"%d",res->GetNum());
+            snprintf(rlabel,BUFF_SIZE,"%s%d",res->GetName().c_str(), res->GetNum());
+            snprintf(rnum,BUFF_SIZE,"%d",res->GetNum());
         }
 
-        sprintf(buffer,"%7d%1s%-6s%12.4f%10.4f%10.4f%1s%-5s%4s%1s %-8s%10.4f",
+        snprintf(buffer,BUFF_SIZE,"%7d%1s%-6s%12.4f%10.4f%10.4f%1s%-5s%4s%1s %-8s%10.4f",
                 atom->GetIdx(),"",label,
                 atom->GetX(),atom->GetY(),atom->GetZ(),
                 "",str1.c_str(),
@@ -388,8 +388,8 @@ bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       else if (bond->IsAmide())
 	strcpy(label,"am");
       else
-	sprintf(label,"%d",bond->GetBO());
-      sprintf(buffer, "%6d%6d%6d%3s%2s",
+          snprintf(label,BUFF_SIZE,"%d",bond->GetBO());
+        snprintf(buffer, BUFF_SIZE,"%6d%6d%6d%3s%2s",
 	      bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),
 	      "",label);
       ofs << buffer << endl;
