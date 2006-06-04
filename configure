@@ -21706,6 +21706,9 @@ done
 
 
 
+
+
+
 echo "$as_me:$LINENO: checking whether scandir needs a const cast" >&5
 echo $ECHO_N "checking whether scandir needs a const cast... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
@@ -23290,7 +23293,7 @@ echo "$as_me: error: cannot create directory $dirpart/$fdir" >&2;}
   done
 done
  ;;
-    src/babelconfig.h ) cat src/config.h | grep -v PACKAGE >src/babelconfig.h ;;
+    src/babelconfig.h ) grep -v PACKAGE src/config.h >src/babelconfig.h ;;
   esac
 done
 _ACEOF
