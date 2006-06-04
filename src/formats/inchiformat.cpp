@@ -165,8 +165,8 @@ Write Options e.g. -xat \n \
         for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr))
           {
             // do each bond only once. Seems necessary to avoid problems with stereo
-            if(pbond->GetNbrAtomIdx(patom)<patom->GetIdx()) continue;
-            iat.neighbor[nbonds]      = pbond->GetNbrAtomIdx(patom)-1;
+            if(pbond->GetNbrAtomIdx(patom) < patom->GetIdx()) continue;
+            iat.neighbor[nbonds] = pbond->GetNbrAtomIdx(patom)-1;
             int bo = pbond->GetBO();
             if(bo==5)
               bo=4;
@@ -399,7 +399,7 @@ Write Options e.g. -xat \n \
     vector<string> layers1, layers2;
     tokenize(layers1,s1,"/\n");
     tokenize(layers2,s2,"/\n");
-    int i;
+    unsigned int i;
     if(layers1.size()<layers2.size())
       layers1.swap(layers2); //layers1 is the longest
 	

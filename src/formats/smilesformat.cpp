@@ -13,6 +13,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 //Contains SMIFormat and FIXFormat classes
+// TODO: Rewrite. Use std::string in place of char * to avoid buffer overflow
+//  use std::string::reserve (or different allocator) to avoid resize slowdown
 
 #include "babelconfig.h"
 #include "obconversion.h"
@@ -222,6 +224,8 @@ namespace OpenBabel
 
     if (vs.size() >= 2)
       mol.SetTitle(vs[1].c_str());
+    else
+      mol.SetTitle(title);
 
     OBSmilesParser sp;
     return sp.SmiToMol(mol,vs[0]);

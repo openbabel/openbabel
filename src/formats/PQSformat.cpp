@@ -226,7 +226,7 @@ namespace OpenBabel
                     else
                       full_coord_path[0] = '\0';
                   }
-                strncat(full_coord_path,coord_file, sizeof(full_coord_path));
+                strcat(full_coord_path,coord_file);
                 full_coord_path[sizeof(full_coord_path) - 1] = '\0';
                 stringstream errorMsg;
                 errorMsg <<"External geometry file referenced: "<< \
@@ -282,7 +282,8 @@ namespace OpenBabel
           atom_count=ReadPQS_geom(ifs,mol,title,input_style,bohr_to_angstrom);
         if (atom_count==0)
           {   //try .coord file
-            strcpy(coord_file,title);
+            strncpy(coord_file,title, sizeof(coord_file));
+            coord_file[sizeof(coord_file) - 1] = '\0';
             if (strrchr(coord_file,'.')!=NULL)
               *strrchr(coord_file,'.')='\0';
             strcat(coord_file,".coord");
@@ -330,7 +331,7 @@ namespace OpenBabel
     for (i=1; i<=mol.NumAtoms(); i++)
       {
         atom=mol.GetAtom(i);
-        sprintf(buffer,"%s           %10.6lf   %10.6lf   %10.6lf",
+        snprintf(buffer, BUFF_SIZE, "%s           %10.6lf   %10.6lf   %10.6lf",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),

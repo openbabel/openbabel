@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -21,60 +21,60 @@ using namespace std;
 namespace OpenBabel
 {
 
-class NWChemOutputFormat : public OBMoleculeFormat
-{
-public:
+  class NWChemOutputFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     NWChemOutputFormat()
     {
-        OBConversion::RegisterFormat("nwo",this);
+      OBConversion::RegisterFormat("nwo",this);
     }
 
-  virtual const char* Description() //required
-  {
-    return
-      "NWChem output format\n \
+    virtual const char* Description() //required
+    {
+      return
+        "NWChem output format\n \
        Read Options e.g. -as\n\
         s  Output single bonds only\n\
         b  Disable bonding entirely\n\n";
-  };
+    };
 
-  virtual const char* SpecificationURL()
-  {return "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
+    virtual const char* SpecificationURL()
+    {return "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY | NOTWRITABLE;
+      return READONEONLY | NOTWRITABLE;
     };
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-};
+  };
 
-//Make an instance of the format class
-NWChemOutputFormat theNWChemOutputFormat;
+  //Make an instance of the format class
+  NWChemOutputFormat theNWChemOutputFormat;
 
-class NWChemInputFormat : public OBMoleculeFormat
-{
-public:
+  class NWChemInputFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     NWChemInputFormat()
     {
-        OBConversion::RegisterFormat("nw",this);
+      OBConversion::RegisterFormat("nw",this);
     }
 
     virtual const char* Description() //required
     {
-        return
-            "NWChem input format\n \
+      return
+        "NWChem input format\n \
             No comments yet\n";
     };
 
-  virtual const char* SpecificationURL()
-  {return "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
+    virtual const char* SpecificationURL()
+    {return "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -87,19 +87,19 @@ public:
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-};
+  };
 
-//Make an instance of the format class
-NWChemInputFormat theNWChemInputFormat;
+  //Make an instance of the format class
+  NWChemInputFormat theNWChemInputFormat;
 
 
-/////////////////////////////////////////////////////////////////
-bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -114,9 +114,9 @@ bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
-    {
+      {
         if(strstr(buffer,"Output coordinates") != NULL)
-        {
+          {
             // mol.EndModify();
             mol.Clear();
             mol.BeginModify();
@@ -126,7 +126,7 @@ bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
             while (vs.size() == 6)
-            {
+              {
                 atom = mol.NewAtom();
                 x = atof((char*)vs[3].c_str());
                 y = atof((char*)vs[4].c_str());
@@ -137,11 +137,11 @@ bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                 atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
-                    break;
+                  break;
                 tokenize(vs,buffer);
-            }
-        } // if "output coordinates"
-    } // while
+              }
+          } // if "output coordinates"
+      } // while
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
@@ -151,43 +151,40 @@ bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.EndModify();
     mol.SetTitle(title);
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool NWChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool NWChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
     char buffer[BUFF_SIZE];
 
-    ofs << "start molecule" << endl << endl;
-    ofs << "title " << endl << " " << mol.GetTitle() << endl << endl;
+    ofs << "start molecule" << "\n\n";
+    ofs << "title " << endl << " " << mol.GetTitle() << "\n\n";
 
-    ofs << "geometry units angstroms print xyz autosym" << endl;
+    ofs << "geometry units angstroms print xyz autosym\n";
 
-    OBAtom *atom;
-    for(i = 1;i <= mol.NumAtoms(); i++)
-    {
-        atom = mol.GetAtom(i);
-        sprintf(buffer,"%3s%15.5f%15.5f%15.5f",
+    FOR_ATOMS_OF_MOL(atom, mol)
+      {
+        snprintf(buffer, BUFF_SIZE, "%3s%15.5f%15.5f%15.5f\n",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ());
-        ofs << buffer << endl;
-    }
+        ofs << buffer;
+      }
 
-    ofs << "end" << endl;
+    ofs << "end\n";
 
     return(true);
-}
+  }
 
 } //namespace OpenBabel

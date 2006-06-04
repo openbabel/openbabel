@@ -73,8 +73,8 @@ bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBBond *bond;
     vector<OBEdgeBase*>::iterator j;
 
-    sprintf(buffer,"%6d %-20s   MM2 parameters",mol.NumAtoms(),mol.GetTitle());
-    ofs << buffer << endl;
+    snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM2 parameters\n",mol.NumAtoms(),mol.GetTitle());
+    ofs << buffer;
 
     ttab.SetFromType("INT");
 
@@ -86,7 +86,7 @@ bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         str = atom->GetType();
         ttab.SetToType("MM2");
         ttab.Translate(str1,str);
-        sprintf(buffer,"%6d %2s  %12.6f%12.6f%12.6f %5d",
+        snprintf(buffer, BUFF_SIZE, "%6d %2s  %12.6f%12.6f%12.6f %5d",
                 i,
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
@@ -97,7 +97,7 @@ bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
         for (bond = atom->BeginBond(j); bond; bond = atom->NextBond(j))
         {
-            sprintf(buffer,"%6d", (bond->GetNbrAtom(atom))->GetIdx());
+            snprintf(buffer, BUFF_SIZE, "%6d", (bond->GetNbrAtom(atom))->GetIdx());
             ofs << buffer;
         }
 

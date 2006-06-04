@@ -1,3 +1,15 @@
+2006-06-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, src/config.h.in: Update to include
+	snprintf prototype in all files -- increased use with changing
+	sprintf calls to snprintf to minimize buffer overflows.
+
+	* src/math/*: Remove calls to exit(!) on faulty input -- return
+	errors and default values.
+
+	* src/formats/*format.cpp (more files): Remove calls to sprintf,
+	sscanf, strcpy.
+
 2006-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/data.cpp (OBElementTable::ParseLine): Change sscanf call to

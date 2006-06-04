@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -18,61 +18,57 @@ GNU General Public License for more details.
 #include "obconversion.h"
 #include "obmolecformat.h"
 
-#if !HAVE_SNPRINTF
-extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
-#endif
-
 using namespace std;
 namespace OpenBabel
 {
 
-class AlchemyFormat : public OBMoleculeFormat
-{
-public:
+  class AlchemyFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     AlchemyFormat()
     {
-        OBConversion::RegisterFormat("alc",this, "chemical/x-alchemy");
+      OBConversion::RegisterFormat("alc",this, "chemical/x-alchemy");
     }
 
-  virtual const char* Description() //required
-  {
-    return
-      "Alchemy format\n \
+    virtual const char* Description() //required
+    {
+      return
+        "Alchemy format\n \
             No comments yet\n";
-  };
+    };
 
-  virtual const char* SpecificationURL()
-  { return "";}; //optional
+    virtual const char* SpecificationURL()
+    { return "";}; //optional
 
-  virtual const char* GetMIMEType() 
-  { return "chemical/x-alchemy"; };
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-alchemy"; };
 
-  //Flags() can return be any the following combined by | or be omitted if none apply
-  // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-  virtual unsigned int Flags()
-  {
-    return READONEONLY | WRITEONEONLY;
-  };
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return READONEONLY | WRITEONEONLY;
+    };
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-AlchemyFormat theAlchemyFormat;
+  //Make an instance of the format class
+  AlchemyFormat theAlchemyFormat;
 
-/////////////////////////////////////////////////////////////////
-bool AlchemyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool AlchemyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -86,7 +82,7 @@ bool AlchemyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%d %*s %d", &natoms, &nbonds);
     if (!natoms)
-        return(false);
+      return(false);
 
     mol.ReserveAtoms(natoms);
     mol.BeginModify();
@@ -98,12 +94,12 @@ bool AlchemyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     vector<string> vs;
 
     for (i = 1; i <= natoms; i ++)
-    {
+      {
         if (!ifs.getline(buffer,BUFF_SIZE))
-            return(false);
+          return(false);
         tokenize(vs,buffer);
         if (vs.size() != 6)
-            return(false);
+          return(false);
         atom = mol.NewAtom();
         x = atof((char*)vs[2].c_str());
         y = atof((char*)vs[3].c_str());
@@ -118,45 +114,45 @@ bool AlchemyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         ttab.SetToType("INT");
         ttab.Translate(str,vs[1]);
         atom->SetType(str);
-    }
+      }
 
     char bobuf[100];
     string bostr;
     int bgn,end,order;
 
     for (i = 0; i < nbonds; i++)
-    {
+      {
         if (!ifs.getline(buffer,BUFF_SIZE))
-            return(false);
-        sscanf(buffer,"%*d%d%d%s",&bgn,&end,bobuf);
+          return(false);
+        sscanf(buffer,"%*d%d%d%99s",&bgn,&end,bobuf);
         bostr = bobuf;
         order = 1;
         if      (bostr == "DOUBLE")
-            order = 2;
+          order = 2;
         else if (bostr == "TRIPLE")
-            order = 3;
+          order = 3;
         else if (bostr == "AROMATIC")
-            order = 5;
+          order = 5;
         mol.AddBond(bgn,end,order);
-    }
+      }
 
     // clean out remaining blank lines
     while(ifs.peek() != EOF && ifs.good() && 
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+          (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
     mol.EndModify();
     mol.SetTitle(title);
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool AlchemyFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool AlchemyFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -174,11 +170,11 @@ bool AlchemyFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBAtom *atom;
     string str,str1;
     for(i = 1;i <= mol.NumAtoms(); i++)
-    {
+      {
         atom = mol.GetAtom(i);
         str = atom->GetType();
-	ttab.SetFromType("INT");
-	ttab.SetToType("ALC");
+        ttab.SetFromType("INT");
+        ttab.SetToType("ALC");
         ttab.Translate(str1,str);
         snprintf(buffer, BUFF_SIZE, "%5d %-6s%8.4f %8.4f %8.4f     0.0000",
                  i,
@@ -187,38 +183,38 @@ bool AlchemyFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
                  atom->GetY(),
                  atom->GetZ());
         ofs << buffer << endl;
-    }
+      }
 
     OBBond *bond;
     vector<OBEdgeBase*>::iterator j;
 
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
-    {
+      {
         switch(bond->GetBO())
-        {
-        case 1 :
+          {
+          case 1 :
             strcpy(bond_string,"SINGLE");
             break;
-        case 2 :
+          case 2 :
             strcpy(bond_string,"DOUBLE");
             break;
-        case 3 :
+          case 3 :
             strcpy(bond_string,"TRIPLE");
             break;
-        case 5 :
+          case 5 :
             strcpy(bond_string,"AROMATIC");
             break;
-        default :
+          default :
             strcpy(bond_string,"SINGLE");
-        }
+          }
         snprintf(buffer, BUFF_SIZE, "%5d  %4d  %4d  %s",
                  bond->GetIdx()+1,
                  bond->GetBeginAtomIdx(),
                  bond->GetEndAtomIdx(),
                  bond_string);
         ofs << buffer << endl;
-    }
+      }
     return(true);
-}
+  }
 
 } //namespace OpenBabel

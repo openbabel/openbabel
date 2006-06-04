@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey Hutchison
 Portions Copyright (C) 2004-2005 by Chris Morley
 
 This file is part of the Open Babel project.
@@ -218,7 +218,7 @@ Write Options, e.g. -x3\n \
           atom.Clear();
         }
 
-        int start,end,order,flag;
+        unsigned int start,end,order,flag;
         for (i = 0;i < nbonds;i++) {
           flag = 0;
           if (!ifs.getline(buffer,BUFF_SIZE))

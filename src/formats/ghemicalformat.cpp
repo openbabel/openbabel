@@ -200,7 +200,6 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
     char buffer[BUFF_SIZE];
     char bond_char;
 
@@ -214,22 +213,15 @@ namespace OpenBabel
     sprintf(buffer,"!Atoms %d", mol.NumAtoms());
     ofs << buffer << endl;
 
-    OBAtom *atom;
     string str,str1;
-    for(i = 1;i <= mol.NumAtoms(); i++)
-      {
-        atom = mol.GetAtom(i);
-        ofs << (i - 1) << " " << atom->GetAtomicNum() << endl;
-      }
+    FOR_ATOMS_OF_MOL(atom, mol)
+      ofs << (atom->GetIdx() - 1) << " " << atom->GetAtomicNum() << endl;
 
     // Bond definitions
     sprintf(buffer, "!Bonds %d", mol.NumBonds());
     ofs << buffer << endl;
 
-    OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
-
-    for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
+    FOR_BONDS_OF_MOL(bond, mol)
       {
         switch(bond->GetBO())
           {
@@ -261,11 +253,10 @@ namespace OpenBabel
     // Coordinate sets (here only 1)
     ofs << "!Coord" << endl;
 
-    for(i = 1;i <= mol.NumAtoms(); i++)
+    FOR_ATOMS_OF_MOL(atom, mol)
       {
-        atom = mol.GetAtom(i);
         sprintf(buffer,"%d %f %f %f",
-                i-1,
+                atom->GetIdx()-1,
                 atom->GetX()/10.0,
                 atom->GetY()/10.0,
                 atom->GetZ()/10.0);
@@ -276,11 +267,10 @@ namespace OpenBabel
     // Calculated charges
     ofs << "!Charges" << endl;
 
-    for(i = 1;i <= mol.NumAtoms(); i++)
+    FOR_ATOMS_OF_MOL(atom, mol)
       {
-        atom = mol.GetAtom(i);
         sprintf(buffer,"%d %f",
-                i-1,
+                atom->GetIdx()-1,
                 atom->GetPartialCharge());
 
         ofs << buffer << endl;

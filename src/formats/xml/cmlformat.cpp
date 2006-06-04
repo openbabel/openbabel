@@ -312,7 +312,7 @@ bool CMLFormat::DoElement(const string& name)
 		tokenize(items,value);
 		if(arr.size()<items.size())
 			arr.resize(items.size());
-		int i;
+		unsigned int i;
 		for(i=0;i<items.size();++i)
 		{				
 			pair<string,string> nameAndvalue(name,items[i]);					
@@ -747,7 +747,7 @@ bool CMLFormat::TransferArray(cmlArray& arr)
 			tokenize(items,value);
 			if(arr.size()<items.size())
 				arr.resize(items.size());
-			int i;
+			unsigned int i;
 			for(i=0;i<items.size();++i)
 			{				
 				pair<string,string> nameAndvalue(name,items[i]);					

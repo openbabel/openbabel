@@ -19,74 +19,73 @@ using namespace std;
 namespace OpenBabel
 {
 
-class FASTAFormat : public OBMoleculeFormat
-{
-public:
-	//Register this format type ID in the constructor
-	FASTAFormat() {
-		OBConversion::RegisterFormat("fasta", this);
-		OBConversion::RegisterOptionParam("n", this);
-	}
+  class FASTAFormat : public OBMoleculeFormat
+  {
+  public:
+    //Register this format type ID in the constructor
+    FASTAFormat() {
+      OBConversion::RegisterFormat("fasta", this);
+      OBConversion::RegisterOptionParam("n", this);
+    }
 
-	virtual const char* Description() //required
-	{
-		return
-"FASTA format\n \
+    virtual const char* Description() //required
+    {
+      return
+        "FASTA format\n \
 	A file format used to exchange information between\n \
 	genetic sequence databases\n \
 	    Write Options e.g. -xn \n \
 	    n  Omit title and comments\n \
 ";
-	};
+    };
 
-	virtual const char* SpecificationURL() {
-		return "http://www.ebi.ac.uk/help/formats_frame.html";
-	};
+    virtual const char* SpecificationURL() {
+      return "http://www.ebi.ac.uk/help/formats_frame.html";
+    };
 
-	virtual unsigned int Flags() {
-		return NOTREADABLE | WRITEONEONLY;
-	};
+    virtual unsigned int Flags() {
+      return NOTREADABLE | WRITEONEONLY;
+    };
 
-	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
-private:
-	string conv_3to1(string three);
-};  
+  private:
+    string conv_3to1(string three);
+  };  
 
-FASTAFormat theFASTAFormat;
+  FASTAFormat theFASTAFormat;
 
-bool FASTAFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
-	int i, num_res;
-	string seq;
-	OBMol* pmol;
-	OBResidue *res;
+  bool FASTAFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    string seq;
+    OBMol* pmol;
+    OBResidue *res;
 	
-	pmol = dynamic_cast<OBMol*>(pOb);
-	if(pmol == NULL)
-		return false;
-	ostream &ofs = *pConv->GetOutStream();
+    pmol = dynamic_cast<OBMol*>(pOb);
+    if(pmol == NULL)
+      return false;
+    ostream &ofs = *pConv->GetOutStream();
 
-	FOR_RESIDUES_OF_MOL(res,pmol)
-	  {
-	    seq.append(conv_3to1(res->GetName()));
-	  }
-	if(!pConv->IsOption("n")) {
-	  if (strlen(pmol->GetTitle()) > 0)
-	    ofs << ">" << pmol->GetTitle();
-	  else
-	    ofs << ">Unknown molecule";
-	  ofs << " " << pmol->NumResidues() << " bp";
-	  ofs << "; generated with OpenBabel " << BABEL_VERSION << endl;
-	}
-	ofs << seq << endl;
-	return true;
-}
+    FOR_RESIDUES_OF_MOL(res,pmol)
+      {
+        seq.append(conv_3to1(res->GetName()));
+      }
+    if(!pConv->IsOption("n")) {
+      if (strlen(pmol->GetTitle()) > 0)
+        ofs << ">" << pmol->GetTitle();
+      else
+        ofs << ">Unknown molecule";
+      ofs << " " << pmol->NumResidues() << " bp";
+      ofs << "; generated with OpenBabel " << BABEL_VERSION << endl;
+    }
+    ofs << seq << endl;
+    return true;
+  }
 
-string
-FASTAFormat::conv_3to1(string three)
-{
-	char *aa_tbl[][3] = {
+  string
+  FASTAFormat::conv_3to1(string three)
+  {
+    char *aa_tbl[][3] = {
 	    {"alanine", "ALA", "A"}, 
 	    {"arginine", "ARG", "R"}, 
 	    {"asparagine", "ASN", "N"}, 
@@ -110,14 +109,14 @@ FASTAFormat::conv_3to1(string three)
 	    {"tyrosine", "TYR", "Y"}, 
 	    {"valine", "VAL", "V"}, 
 	    {NULL, NULL, NULL}
-	};
-	int i;
+    };
+    int i;
 
-	for (i = 0; aa_tbl[i][1] != NULL; i++) {
-		if (strncasecmp(three.c_str(), aa_tbl[i][1], 3) == 0)
-			return (string)aa_tbl[i][2];
-	}
-	return "X";
-}
+    for (i = 0; aa_tbl[i][1] != NULL; i++) {
+      if (strncasecmp(three.c_str(), aa_tbl[i][1], 3) == 0)
+        return (string)aa_tbl[i][2];
+    }
+    return "X";
+  }
 
 } //namespace OpenBabel

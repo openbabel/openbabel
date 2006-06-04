@@ -18,10 +18,6 @@ GNU General Public License for more details.
 #include "obconversion.h"
 #include "obmolecformat.h"
 
-#if !HAVE_SNPRINTF
-extern "C" int snprintf( char *, size_t, const char *, /* args */ ...);
-#endif
-
 #include <vector>
 #include <map>
 
@@ -628,8 +624,8 @@ namespace OpenBabel
               {
                 if (strlen(type_name) < 4)
                   {
-                    char tmp[10];
-                    strcpy(tmp, type_name);
+                    char tmp[16];
+                    strncpy(tmp, type_name, 16);
                     snprintf(padded_name, sizeof(padded_name), " %-3s", tmp);
                     strncpy(type_name,padded_name,4);
                     type_name[4] = '\0';

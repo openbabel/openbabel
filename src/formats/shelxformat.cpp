@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2003 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -23,51 +23,51 @@ using namespace std;
 namespace OpenBabel
 {
 
-class ShelXFormat : public OBMoleculeFormat
-{
-public:
+  class ShelXFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     ShelXFormat()
     {
-        OBConversion::RegisterFormat("res",this);
-        OBConversion::RegisterFormat("ins",this);
+      OBConversion::RegisterFormat("res",this);
+      OBConversion::RegisterFormat("ins",this);
     }
 
-  virtual const char* Description() //required
-  {
-    return
-      "ShelX format\n \
+    virtual const char* Description() //required
+    {
+      return
+        "ShelX format\n \
        Read Options e.g. -as\n\
         s  Output single bonds only\n\
         b  Disable bonding entirely\n\n";
-  };
+    };
 
-  virtual const char* SpecificationURL()
-  {return "http://shelx.uni-ac.gwdg.de/SHELX/";}; //optional
+    virtual const char* SpecificationURL()
+    {return "http://shelx.uni-ac.gwdg.de/SHELX/";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTWRITABLE;
+      return NOTWRITABLE;
     };
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
 
-};
+  };
 
-//Make an instance of the format class
-ShelXFormat theShelXFormat;
+  //Make an instance of the format class
+  ShelXFormat theShelXFormat;
 
-/////////////////////////////////////////////////////////////////
-bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -82,14 +82,14 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     ifs.getline(buffer,BUFF_SIZE);
     mol.SetTitle(buffer);
     while (ifs.getline(buffer,BUFF_SIZE) &&!EQn(buffer,"CELL",4))
-        ;
+      ;
 
     if (!EQn(buffer,"CELL",4))
-        return(false);
+      return(false);
     vector<string> vs;
     tokenize(vs,buffer," \n\t,");
     if (vs.size() != 8)
-        return(false);
+      return(false);
 
     //parse cell values
     A = atof((char*)vs[2].c_str());
@@ -105,24 +105,24 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     //  int i; CM
     double x,y,z;
-    char type[10], *j;
+    char type[16], *j;
     OBAtom *atom;
     vector3 v;
 
     //skip until FVAR found
     while (ifs.getline(buffer,BUFF_SIZE) &&!EQn(buffer,"FVAR",4))
-        ;
+      ;
 
     mol.BeginModify();
 
     //read atom records
     while (ifs.getline(buffer,BUFF_SIZE) &&!EQn(buffer,"HKLF",4))
-    {
+      {
         tokenize(vs,buffer," \n\t,");
 
         //skip AFIX and PART instructions
         if (vs.size() < 7)
-            continue;
+          continue;
         atom = mol.NewAtom();
 
         x = atof((char*)vs[2].c_str());
@@ -131,7 +131,8 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         v.Set(x,y,z);
         v *= m;
 
-        strcpy(type,vs[0].c_str());
+        strncpy(type,vs[0].c_str(), sizeof(type));
+        type[sizeof(type) - 1] = '\0';
         j = strpbrk(type, "0123456789");
         j[0] = '\0';
         atom->SetAtomicNum(etab.GetAtomicNum(type));
@@ -139,8 +140,8 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
         //skip next line if anisotropic atoms.
         if (vs.size() == 9)
-            ifs.getline(buffer,BUFF_SIZE);
-    } //while
+          ifs.getline(buffer,BUFF_SIZE);
+      } //while
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
@@ -149,6 +150,6 @@ bool ShelXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     mol.EndModify();
     return(true);
-}
+  }
 
 } //namespace OpenBabel

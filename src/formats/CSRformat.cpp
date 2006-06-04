@@ -182,7 +182,6 @@ namespace OpenBabel
 
   char* CSRFormat::PadString(char *input, int size)
   {
-    unsigned int i;
     char *output;
 
     output = new char[size];

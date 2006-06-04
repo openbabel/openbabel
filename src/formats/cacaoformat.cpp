@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -23,52 +23,52 @@ using namespace std;
 namespace OpenBabel
 {
 
-class CacaoFormat : public OBMoleculeFormat
-{
-public:
+  class CacaoFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     CacaoFormat()
     {
-        OBConversion::RegisterFormat("caccrt",this);
+      OBConversion::RegisterFormat("caccrt",this);
     }
 
-  virtual const char* Description() //required
-  {
-    return
-      "Cacao Cartesian format\n \
+    virtual const char* Description() //required
+    {
+      return
+        "Cacao Cartesian format\n \
        Read Options e.g. -as\n\
         s  Output single bonds only\n\
         b  Disable bonding entirely\n\n";
+    };
+
+    virtual const char* SpecificationURL()
+    {return "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return READONEONLY | WRITEONEONLY;
+    };
+
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+    static void SetHilderbrandt(OBMol&,vector<OBInternalCoord*>&);
   };
 
-  virtual const char* SpecificationURL()
-  {return "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";}; //optional
+  //Make an instance of the format class
+  CacaoFormat theCacaoFormat;
 
-  //Flags() can return be any the following combined by | or be omitted if none apply
-  // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-  virtual unsigned int Flags()
+  /////////////////////////////////////////////////////////////////
+  bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
-    return READONEONLY | WRITEONEONLY;
-  };
-
-  ////////////////////////////////////////////////////
-  /// The "API" interface functions
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
-  static void SetHilderbrandt(OBMol&,vector<OBInternalCoord*>&);
-};
-
-//Make an instance of the format class
-CacaoFormat theCacaoFormat;
-
-/////////////////////////////////////////////////////////////////
-bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -86,14 +86,14 @@ bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     sscanf(buffer,"%d",&natoms);
 
     while (ifs.getline(buffer,BUFF_SIZE) &&!EQn(buffer,"CELL",4))
-        ;
+      ;
 
     if (!EQn(buffer,"CELL",4))
-        return(false);
+      return(false);
     vector<string> vs;
     tokenize(vs,buffer," \n\t,");
     if (vs.size() != 7)
-        return(false);
+      return(false);
 
     //parse cell values
     A = atof((char*)vs[1].c_str());
@@ -110,19 +110,18 @@ bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     int i;
     double x,y,z;
-    char type[10];
     OBAtom *atom;
     vector3 v;
 
     mol.BeginModify();
 
     for (i = 1; i <= natoms;i++)
-    {
+      {
         if (!ifs.getline(buffer,BUFF_SIZE))
-            return(false);
+          return(false);
         tokenize(vs,buffer," \n\t,");
         if (vs.size() < 4)
-            return(false);
+          return(false);
         atom = mol.NewAtom();
 
         x = atof((char*)vs[1].c_str());
@@ -131,10 +130,9 @@ bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         v.Set(x,y,z);
         v *= m;
 
-        strcpy(type,vs[0].c_str());
-        atom->SetAtomicNum(etab.GetAtomicNum(type));
+        atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
         atom->SetVector(v);
-    }
+      }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
@@ -143,20 +141,20 @@ bool CacaoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     // clean out remaining blank lines
     while(ifs.peek() != EOF && ifs.good() && 
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+          (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
     mol.EndModify();
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool CacaoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool CacaoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -166,38 +164,38 @@ bool CacaoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     char buffer[BUFF_SIZE];
     vector<OBNodeBase*>::iterator i;
 
-    sprintf(buffer,"%s",mol.GetTitle());
-    ofs << buffer << endl;
-    sprintf(buffer,"%3d   DIST  0  0  0",mol.NumAtoms());
-    ofs << buffer << endl;
+    snprintf(buffer, BUFF_SIZE, "%s\n",mol.GetTitle());
+    ofs << buffer;
+    snprintf(buffer, BUFF_SIZE, "%3d   DIST  0  0  0\n",mol.NumAtoms());
+    ofs << buffer;
 
     if (!mol.HasData(OBGenericDataType::UnitCell))
-        sprintf(buffer,"CELL 1.,1.,1.,90.,90.,90.");
+      ofs << "CELL 1.,1.,1.,90.,90.,90.\n";
     else
-    {
+      {
         OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
-        sprintf(buffer,"CELL %f,%f,%f,%f,%f,%f",
+        snprintf(buffer, BUFF_SIZE, "CELL %f,%f,%f,%f,%f,%f\n",
                 uc->GetA(), uc->GetB(), uc->GetC(),
                 uc->GetAlpha(), uc->GetBeta(), uc->GetGamma());
-    }
-    ofs << buffer << endl;
+        ofs << buffer;
+      }
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
-        sprintf(buffer,"%2s %7.4f, %7.4f, %7.4f",
+      {
+        snprintf(buffer,BUFF_SIZE,"%2s %7.4f, %7.4f, %7.4f\n",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->x(),
                 atom->y(),
                 atom->z());
-        ofs << buffer << endl;
-    }
+        ofs << buffer;
+      }
 
     return(true);
-}
+  }
 
-//! \todo Make this method bulletproof. Currently it causes segfaults sometimes
-void CacaoFormat::SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
-{
+  //! \todo Make this method bulletproof. Currently it causes segfaults sometimes
+  void CacaoFormat::SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
+  {
     // Roundtrip testing shows that some atoms are NULL
     //  which causes segfaults when dereferencing later
     //   (e.g. in the last "segment" of this routine)
@@ -212,7 +210,7 @@ void CacaoFormat::SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
 
     vit.push_back((OBInternalCoord*)NULL);
     for (atom = mol.BeginAtom(ai);atom;atom = mol.NextAtom(ai))
-        vit.push_back(new OBInternalCoord (atom));
+      vit.push_back(new OBInternalCoord (atom));
 
     vit[1]->_a = &dummy1;
     vit[1]->_b = &dummy2;
@@ -220,44 +218,44 @@ void CacaoFormat::SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
       vit[2]->_b = &dummy1;
       vit[2]->_c = &dummy2;
       if  (vit.size() > 3) {
-	vit[3]->_c = &dummy1;
+        vit[3]->_c = &dummy1;
       }
     }
 
     unsigned int i,j;
     for (i = 2;i <= mol.NumAtoms();i++)
-    {
+      {
         ref = (OBAtom*)NULL;
         a1 = mol.GetAtom(i);
         sum = 100.0;
         for (j = 1;j < i;j++)
-        {
+          {
             a2 = mol.GetAtom(j);
             r = (a1->GetVector()-a2->GetVector()).length_2();
             if ((r < sum) && (vit[j]->_a != a2) && (vit[j]->_b != a2))
-            {
+              {
                 sum = r;
                 ref = a2;
-            }
-        }
+              }
+          }
         vit[i]->_a = ref;
-    }
+      }
 
     for (i = 3;i <= mol.NumAtoms();i++)
-        vit[i]->_b = vit[vit[i]->_a->GetIdx()]->_a;
+      vit[i]->_b = vit[vit[i]->_a->GetIdx()]->_a;
 
     for (i = 4;i <= mol.NumAtoms();i++)
-    {
+      {
         if (vit[i]->_b && vit[i]->_b->GetIdx())
-            vit[i]->_c = vit[vit[i]->_b->GetIdx()]->_b;
+          vit[i]->_c = vit[vit[i]->_b->GetIdx()]->_b;
         else
-            vit[i]->_c = &dummy1;
-    }
+          vit[i]->_c = &dummy1;
+      }
 
     OBAtom *a,*b,*c;
     vector3 v1,v2;
     for (i = 2;i <= mol.NumAtoms();i++)
-    {
+      {
         atom = mol.GetAtom(i);
         a = vit[i]->_a;
         b = vit[i]->_b;
@@ -270,50 +268,50 @@ void CacaoFormat::SetHilderbrandt(OBMol &mol,vector<OBInternalCoord*> &vit)
                                         b->GetVector(),
                                         c->GetVector());
         vit[i]->_dst = (vit[i]->_a->GetVector() - atom->GetVector()).length();
-    }
+      }
 
-}
-//***************************************************************
-class CacaoInternalFormat : public OBMoleculeFormat
-{
-public:
+  }
+  //***************************************************************
+  class CacaoInternalFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     CacaoInternalFormat()
     {
-        OBConversion::RegisterFormat("cacint",this);
+      OBConversion::RegisterFormat("cacint",this);
     }
 
     virtual const char* Description() //required
     {
-        return
-            "Cacao Internal format\n \
+      return
+        "Cacao Internal format\n \
             No comments yet\n \
             ";
     };
 
     virtual const char* SpecificationURL(){return
-            "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";}; //optional
+                                             "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return NOTREADABLE | WRITEONEONLY;
+      return NOTREADABLE | WRITEONEONLY;
     };
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-};
+  };
 
-//Make an instance of the format class
-CacaoInternalFormat theCacaoInternalFormat;
+  //Make an instance of the format class
+  CacaoInternalFormat theCacaoInternalFormat;
 
-bool CacaoInternalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool CacaoInternalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -321,10 +319,10 @@ bool CacaoInternalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     unsigned int i;
     vector3 v;
-    char tmptype[10],buffer[BUFF_SIZE];
+    char tmptype[16],buffer[BUFF_SIZE];
 
     if (mol.Empty())
-        return(false);
+      return(false);
 
     //translate first atom to origin
     v = mol.GetAtom(1)->GetVector();
@@ -333,39 +331,38 @@ bool CacaoInternalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     vector<OBInternalCoord*> vit;
     CacaoFormat::SetHilderbrandt(mol,vit);
-    strcpy(tmptype,etab.GetSymbol(mol.GetAtom(1)->GetAtomicNum()));
+    strncpy(tmptype,etab.GetSymbol(mol.GetAtom(1)->GetAtomicNum()), sizeof(tmptype));
+    tmptype[sizeof(tmptype) - 1] = '\0';
 
-    sprintf(buffer," # TITLE");
-    ofs << buffer << endl;
-    sprintf(buffer,"%3d  0DIST  0  0  0",mol.NumAtoms());
-    ofs << buffer << endl;
-    sprintf(buffer,"  EL");
-    ofs << buffer << endl;
-    sprintf(buffer,"0.,0.,0., %s",tmptype);
-    ofs << buffer << endl;
+    ofs << " # TITLE\n";
+    snprintf(buffer, BUFF_SIZE, "%3d  0DIST  0  0  0\n",mol.NumAtoms());
+    ofs << "  EL\n";
+    snprintf(buffer, BUFF_SIZE, "0.,0.,0., %s\n",tmptype);
+    ofs << buffer;
     for (i = 2; i <= mol.NumAtoms(); i++)
-    {
-        strcpy(tmptype,etab.GetSymbol(mol.GetAtom(i)->GetAtomicNum()));
+      {
+        strncpy(tmptype,etab.GetSymbol(mol.GetAtom(i)->GetAtomicNum()), sizeof(tmptype));
+        tmptype[sizeof(tmptype) - 1] = '\0';
 
         if (vit[i]->_tor < 0.0)
-            vit[i]->_tor += 360.0;
-        sprintf(buffer,"%2d,%d,%2s%7.3f,%7.3f,%7.3f",
+          vit[i]->_tor += 360.0;
+        snprintf(buffer, BUFF_SIZE, "%2d,%d,%2s%7.3f,%7.3f,%7.3f",
                 vit[i]->_a->GetIdx(),i,tmptype,
                 vit[i]->_dst,
                 vit[i]->_ang,
                 vit[i]->_tor);
         ofs << buffer << endl;
-    }
+      }
 
     vector<OBInternalCoord*>::iterator j;
     for (j = vit.begin();j != vit.end();j++)
-        if (*j)
+      if (*j)
         {
-            delete *j;
-            *j = NULL;
+          delete *j;
+          *j = NULL;
         }
 
     return(true);
-}
+  }
 
 } //namespace OpenBabel
