@@ -10,6 +10,10 @@
 	* src/formats/*format.cpp (more files): Remove calls to sprintf,
 	sscanf, strcpy.
 
+	* test/*.sh: Protect against existing environment variables when
+	re-defining. For test calls, we need to ensure only our binaries
+	load.
+
 2006-06-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/data.cpp (OBElementTable::ParseLine): Change sscanf call to

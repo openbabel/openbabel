@@ -2,7 +2,8 @@
 # test Open Babel with CML
 
 # Make sure we know the absolute path of the programs we're trying to 
-# call, in case the test is called from somewhere eles
+# call, in case the test is called from somewhere else
+unset BABEL_LIBDIR
 if `env | grep ^builddir > /dev/null 2>&1`; then
    BABEL=$builddir/../src/babel
    BABEL_LIBDIR="$builddir/../src/formats/.libs:$builddir/../src/formats/xml/.libs"

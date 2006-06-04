@@ -8,6 +8,8 @@ TESTS="${TESTS} smarts unitcell"
 TESTS="${TESTS} cml.sh test-set.sh"
 PROVE=prove
 
+unset BABEL_LIBDIR
+unset BABEL_DATADIR
 if [ -d ../src/formats/.libs ]; then
     if [ "x${BABEL_LIBDIR}" = "x" ]; then
 	BABEL_LIBDIR="`pwd`/../src/formats/.libs:`pwd`/../src/formats/xml/.libs"

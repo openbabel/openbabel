@@ -4,6 +4,8 @@
 
 TESTS="formula rings smarts"
 
+unset BABEL_LIBDIR
+unset BABEL_DATADIR
 if [ -d ../src/formats/.libs ]; then
     if [ "x${BABEL_LIBDIR}" = "x" ]; then
 	BABEL_LIBDIR="`pwd`/../src/formats/.libs:`pwd`/../src/formats/xml/.libs"
