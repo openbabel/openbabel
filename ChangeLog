@@ -8,10 +8,17 @@
 	* src/formats/*format.cpp (more files): Remove calls to sprintf,
 	sscanf, strcpy.
 
+	* src/formats/xml/cmlformat.cpp (EndElement): Make sure </cml> tag
+	returns false (end of processing).
+
 	* src/residue.cpp: Make sure to call base class in copy
 	ctor. Eliminates GCC warning.
 
 	* test/cmltest/test.sh: Skip test if cml cannot be loaded.
+
+	* test/roundtrip.cpp: Fix faulty error problems with
+	multi-molecule CML files. Before trying a read at the end of the
+	file, make sure to clear molecular information.
 
 2006-06-04 Chris Morley <ob@gaseq.co.uk>
 	
