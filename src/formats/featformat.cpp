@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -87,13 +87,13 @@ bool FEATFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.SetTitle(buffer);
 
     double x,y,z;
-    char type[20];
+    char type[32];
     OBAtom *atom;
     for (i = 0; i < natoms;i++)
     {
         if (!ifs.getline(buffer,BUFF_SIZE))
             return(false);
-        sscanf(buffer,"%s %lf %lf %lf",
+        sscanf(buffer,"%30s %lf %lf %lf",
                type,
                &x,
                &y,
@@ -139,7 +139,7 @@ bool FEATFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vector<OBNodeBase*>::iterator i;
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-        sprintf(buffer,"%-3s %8.5f  %8.5f  %8.5f ",
+        snprintf(buffer, BUFF_SIZE, "%-3s %8.5f  %8.5f  %8.5f ",
                 etab.GetSymbol(atom->GetAtomicNum()),
                 atom->x(),
                 atom->y(),

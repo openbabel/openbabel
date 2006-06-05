@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -95,11 +95,11 @@ bool CSSRFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     if (!mol.HasData(OBGenericDataType::UnitCell))
       {
-	sprintf(buffer,
+        snprintf(buffer, BUFF_SIZE,
 		" REFERENCE STRUCTURE = 00000   A,B,C =%8.3f%8.3f%8.3f",
 		1.0,1.0,1.0);
 	ofs << buffer << endl;
-	sprintf(buffer,
+        snprintf(buffer, BUFF_SIZE,
 		"   ALPHA,BETA,GAMMA =%8.3f%8.3f%8.3f    SPGR =    P1"
 		, 90.0f, 90.0f, 90.0f);
 	ofs << buffer << endl;
@@ -107,17 +107,17 @@ bool CSSRFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     else
       {
 	OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
-	sprintf(buffer,
+        snprintf(buffer, BUFF_SIZE, 
 		" REFERENCE STRUCTURE = 00000   A,B,C =%8.3f%8.3f%8.3f",
 		uc->GetA(), uc->GetB(), uc->GetC()); 
 	ofs << buffer << endl;
-	sprintf(buffer,
+        snprintf(buffer, BUFF_SIZE, 
 		"   ALPHA,BETA,GAMMA =%8.3f%8.3f%8.3f    SPGR =    P1",
 		uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
 	ofs << buffer << endl;
       }
 
-    sprintf(buffer,"%4d   1 %s\n",mol.NumAtoms(), mol.GetTitle());
+    snprintf(buffer, BUFF_SIZE, "%4d   1 %s\n",mol.NumAtoms(), mol.GetTitle());
     ofs << buffer << endl << endl;
 
     OBAtom *atom,*nbr;
@@ -130,7 +130,7 @@ bool CSSRFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     {
         //assign_pdb_number(pdb_types,atom->GetIdx());
         vtmp[atom->GetAtomicNum()]++;
-        sprintf(buffer,"%4d%2s%-3d  %9.5f %9.5f %9.5f ",
+        snprintf(buffer, BUFF_SIZE, "%4d%2s%-3d  %9.5f %9.5f %9.5f ",
                 atom->GetIdx(),
                 etab.GetSymbol(atom->GetAtomicNum()),
                 vtmp[atom->GetAtomicNum()],

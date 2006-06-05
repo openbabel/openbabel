@@ -131,7 +131,7 @@ bool CHTFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         if (bond->GetBO() == 3)
             bondtype = 3;
         // FIXME: use flag-info, too
-        sprintf(buffer, "%d\t%d\t%d\t%d\t%1d",
+        snprintf(buffer, BUFF_SIZE, "%d\t%d\t%d\t%d\t%1d",
                 (int)floor(atom1->GetX() * conv_factor + 0.5),
                 (int)floor(atom1->GetY() * conv_factor + 0.5),
                 (int)floor(atom2->GetX() * conv_factor + 0.5),
@@ -147,7 +147,7 @@ bool CHTFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         // Carbon does not need to be treated
         if (atom->GetAtomicNum() != 6)
         {
-            sprintf(buffer, "%d\t%d\t%s\t%d",
+            snprintf(buffer, BUFF_SIZE, "%d\t%d\t%s\t%d",
                     (int)floor(atom->GetX() * conv_factor + 0.5),
                     (int)floor(atom->GetY() * conv_factor + 0.5),
                     etab.GetSymbol(atom->GetAtomicNum()),

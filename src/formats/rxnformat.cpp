@@ -17,6 +17,9 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #pragma warning (disable : 4251) //
 #endif
+
+#include "babelconfig.h"
+
 #include "mol.h"
 #include "obconversion.h"
 #include "reaction.h"
@@ -203,26 +206,26 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     ostream &ofs = *pConv->GetOutStream();
 
-    ofs << "$RXN" << endl;
+    ofs << "$RXN\n";
     ofs << pReact->title.c_str() << endl;
-    ofs << "  OpenBabel" << endl;
-    ofs << "An experimental RXN file" <<endl;
+    ofs << "  OpenBabel\n";
+    ofs << "An experimental RXN file\n";
 
-    char buf[10];
-    sprintf(buf,"%3u%3u",(unsigned)pReact->reactants.size(),pReact->products.size());
-    ofs << buf << endl;
+    char buf[16];
+    sprintf(buf,"%3u%3u\n",(unsigned)pReact->reactants.size(),(unsigned)pReact->products.size());
+    ofs << buf;
 
     vector<OBMol*>::iterator itr;
     for(itr=pReact->reactants.begin();itr!=pReact->reactants.end();itr++)
     {
-        ofs << "$MOL" << endl;
+        ofs << "$MOL\n";
         //Write reactant in MOL format
         pMolFormat->WriteMolecule(*itr, &MolConv); //does not delete associated molecules
     }
 
     for(itr=pReact->products.begin();itr!=pReact->products.end();itr++)
     {
-        ofs << "$MOL" << endl;
+        ofs << "$MOL\n";
         //Write product in MOL format
         pMolFormat->WriteMolecule(*itr, &MolConv); //does not delete associated molecules
     }

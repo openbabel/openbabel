@@ -73,15 +73,14 @@ bool ChemDrawFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     char buffer[BUFF_SIZE];
 
     ofs << mol.GetTitle() << endl;
-    sprintf(buffer," %d %d",mol.NumAtoms(),mol.NumBonds());
-    ofs << buffer << endl;
+    ofs << " " << mol.NumAtoms() << " " << mol.NumBonds() << endl;
 
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;
 
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
-        sprintf(buffer," %9.4f %9.4f    0.0000 %-1s",
+        snprintf(buffer, BUFF_SIZE, " %9.4f %9.4f    0.0000 %-1s",
                 atom->x(),
                 atom->y(),
                 etab.GetSymbol(atom->GetAtomicNum()));
@@ -93,7 +92,7 @@ bool ChemDrawFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     for(bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
     {
-        sprintf(buffer,"%3d%3d%3d%3d",
+        snprintf(buffer, BUFF_SIZE, "%3d%3d%3d%3d",
                 bond->GetBeginAtomIdx(),
                 bond->GetEndAtomIdx(),
                 bond->GetBO(), bond->GetBO());

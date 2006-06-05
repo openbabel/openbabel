@@ -169,8 +169,8 @@ bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key
 {
     char buffer[BUFF_SIZE];
     int natoms,i;
-    char tmp[10],tmp1[10];
-    char atomic_type[10];
+    char tmp[16],tmp1[16];
+    char atomic_type[16];
     double exponent = 0.0;
     double divisor = 1.0;
     double Alpha,Beta,Gamma,A,B,C;
@@ -228,7 +228,7 @@ bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key
     for (i = 1; i <= natoms; i++)
     {
         ifs.getline(buffer,BUFF_SIZE);
-        sscanf(buffer,"%s%*d%lf%lf%lf%s",
+        sscanf(buffer,"%15s%*d%lf%lf%lf%15s",
                atomic_type,
                &x,
                &y,
@@ -268,14 +268,12 @@ bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
 {
     int atnum;
     int type_num;
-    char buffer[BUFF_SIZE],type_name[10],ele_type[10];
+    char buffer[BUFF_SIZE],type_name[16],ele_type[16];
 
-    sprintf(buffer,"%d",mol.NumAtoms());
-    ofs << buffer;
+    ofs << mol.NumAtoms();
     if (EQ(mol_typ,"MMADS"))
     {
-        sprintf(buffer," %s",mol.GetTitle());
-        ofs << buffer;
+        ofs << " " << mol.GetTitle();
         ttab.SetToType("MM2");
     }
     else
@@ -292,15 +290,17 @@ bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
     {
         if (!ttab.Translate(type_name,atom->GetType()))
         {
-            sprintf(buffer,"Unable to assign %s type to atom %d type = %s\n",
+            snprintf(buffer, BUFF_SIZE, 
+                     "Unable to assign %s type to atom %d type = %s\n",
                     mol_typ,atom->GetIdx(),atom->GetType());
             obErrorLog.ThrowError(__FUNCTION__, buffer, obInfo);
             atnum = atom->GetAtomicNum();
             type_num = atnum * 10 + atom->GetValence();
-            sprintf(type_name,"%d",type_num);
+            snprintf(type_name, sizeof(type_num), "%d",type_num);
         }
-        strcpy(ele_type,etab.GetSymbol(atom->GetAtomicNum()));
-        sprintf(buffer,"%-3s %-5d %8.4f  %8.4f  %8.4f %5s",
+        strncpy(ele_type, etab.GetSymbol(atom->GetAtomicNum()), sizeof(ele_type));
+        ele_type[sizeof(ele_type) - 1] = '\0';
+        snprintf(buffer, BUFF_SIZE, "%-3s %-5d %8.4f  %8.4f  %8.4f %5s",
                 ele_type,
                 atom->GetIdx(),
                 atom->x(),
@@ -311,7 +311,7 @@ bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
 
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
         {
-            sprintf(buffer,"%6d",nbr->GetIdx());
+            snprintf(buffer, BUFF_SIZE, "%6d",nbr->GetIdx());
             ofs << buffer;
         }
         ofs << endl;

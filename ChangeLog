@@ -1,3 +1,26 @@
+2006-06-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/formats/mdlformat.cpp(ReadMolecule): Added Trim to new code
+	to read multiline properties, because was sometimes confused by
+	trailing CRs in Windows.
+
+        * src/formats/*format.cpp (more files): Remove calls to sprintf,
+        sscanf, strcpy.
+
+	* configure, configure.in, README, src/Makefile.am, */Makefile.in,
+	Doxyfile: Bump version to 2.0.2.
+
+        * test/roundtrip.cpp: Fix faulty error problems with
+        multi-molecule CML files. Before trying a read at the end
+        of the file, make sure to clear molecular information.
+
+	* test/cmltest/test.sh: Skip test if cml cannot be loaded.
+
+	* test/smartsresults.txt: Update for recent fixes in aromaticity.
+
+	* test/ringtest.sh, test/smartstest.sh: Make sure to unset
+	environmental variables to ensure we only test out version.
+	
 2006-06-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * configure.in, configure, src/config.h.in: Update to include

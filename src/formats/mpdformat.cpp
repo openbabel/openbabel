@@ -17,6 +17,8 @@ GNU General Public License for more details.
 ***********************************************************************/
 // Output format is #Origatomtype;#layer-#frequency-#atomtype;#l-#f-#aty;...<tab>Next atom<newline>next molecule 
 
+#include "babelconfig.h"
+
 #include "mol.h"     // includes standard libraries for Openbabel formats
 #include "obconversion.h"
 #include "obmolecformat.h"
@@ -195,7 +197,7 @@ bool MPDFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 		if(pConv->IsOption("n")) // appending file name to molecule names
 		{
 			name = pConv->GetInFilename();     // string name holds the filename for appending
-			int dotpos=name.find(".");         // removes the extention(s) from the filename
+        unsigned int dotpos=name.find(".");         // removes the extention(s) from the filename
 			if (dotpos < name.length())name.erase(dotpos);
 			pre_true = true;
 		}
@@ -276,7 +278,5 @@ bool MPDFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << endl;
     return(true);
 } // writemolecule
+    
 } // namespace openbabel
-    
-        
-    
