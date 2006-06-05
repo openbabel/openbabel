@@ -178,43 +178,43 @@ Write Options, e.g. -x3\n \
             atom.SetIsotope(iso);
 
           if (scanArgs >= 5)
-	    {
-	      switch (charge)
-		{
-		case 0: break;
-		case 3: atom.SetFormalCharge(1); break;
-		case 2: atom.SetFormalCharge(2); break;
-		case 1: atom.SetFormalCharge(3); break;
-		case 5: atom.SetFormalCharge(-1); break;
-		case 6: atom.SetFormalCharge(-2); break;
-		case 7: atom.SetFormalCharge(-3); break;
-		}
-	    }
+            {
+              switch (charge)
+                {
+                case 0: break;
+                case 3: atom.SetFormalCharge(1); break;
+                case 2: atom.SetFormalCharge(2); break;
+                case 1: atom.SetFormalCharge(3); break;
+                case 5: atom.SetFormalCharge(-1); break;
+                case 6: atom.SetFormalCharge(-2); break;
+                case 7: atom.SetFormalCharge(-3); break;
+                }
+            }
 
           if (scanArgs == 6) // set a stereo mark
-	    {
-                //Stereo configuration: 0 none; 1 odd parity; 2 even parity; 3 unspecified)
-                if (stereo == 2)
-		  {
-		    chiralWatch=true;
-		    atom.SetAntiClockwiseStereo();
-		  }
-                else if (stereo == 1)
-		  {
-		    chiralWatch=true;
-		    atom.SetClockwiseStereo();
-		  }
-                else if(stereo == 3)
-		  {
-		    chiralWatch=true;
-		    atom.SetChiral();
-		  }
-	    }
+            {
+              //Stereo configuration: 0 none; 1 odd parity; 2 even parity; 3 unspecified)
+              if (stereo == 2)
+                {
+                  chiralWatch=true;
+                  atom.SetAntiClockwiseStereo();
+                }
+              else if (stereo == 1)
+                {
+                  chiralWatch=true;
+                  atom.SetClockwiseStereo();
+                }
+              else if(stereo == 3)
+                {
+                  chiralWatch=true;
+                  atom.SetChiral();
+                }
+            }
 
           if (!mol.AddAtom(atom))
             return(false);
-	  if(chiralWatch)  // fill the map with data for each chiral atom
-	    _mapcd[mol.GetAtom(mol.NumAtoms())] = new OBChiralData;
+          if(chiralWatch)  // fill the map with data for each chiral atom
+            _mapcd[mol.GetAtom(mol.NumAtoms())] = new OBChiralData;
           atom.Clear();
         }
 
@@ -242,21 +242,21 @@ Write Options, e.g. -x3\n \
 
           if (!mol.AddBond(start+offset,end+offset,order,flag)) return(false);
 
-	  // after adding a bond to atom # "start+offset"
-	  // search to see if atom is bonded to a chiral atom
-	  map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
-	  ChiralSearch = _mapcd.find(mol.GetAtom(start+offset));
-	  if (ChiralSearch!=_mapcd.end())
-	    {
-	      (ChiralSearch->second)->AddAtomRef(end+offset, input);
-	    }
-	  // after adding a bond to atom # "end + offset"
-	  // search to see if atom is bonded to a chiral atom
-	  ChiralSearch = _mapcd.find(mol.GetAtom(end+offset));
-	  if (ChiralSearch!=_mapcd.end())
-	    {
-	      (ChiralSearch->second)->AddAtomRef(start+offset, input);
-	    }
+          // after adding a bond to atom # "start+offset"
+          // search to see if atom is bonded to a chiral atom
+          map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
+          ChiralSearch = _mapcd.find(mol.GetAtom(start+offset));
+          if (ChiralSearch!=_mapcd.end())
+            {
+              (ChiralSearch->second)->AddAtomRef(end+offset, input);
+            }
+          // after adding a bond to atom # "end + offset"
+          // search to see if atom is bonded to a chiral atom
+          ChiralSearch = _mapcd.find(mol.GetAtom(end+offset));
+          if (ChiralSearch!=_mapcd.end())
+            {
+              (ChiralSearch->second)->AddAtomRef(start+offset, input);
+            }
         }
 
         //CM start 18 Sept 2003
@@ -335,18 +335,19 @@ Write Options, e.g. -x3\n \
         string attr = buff.substr(lt,rt-lt);
 
         // sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
-	string line;
-	buff.clear();
-	while (getline(ifs, line))
-	  {
-	    if (line.size())
-	      {
-		buff.append(line);
-		buff += "\n";
-	      }
-	    else
-	      break;
-	  }
+        string line;
+        buff.clear();
+        while (getline(ifs, line))
+          {
+            Trim(line); // remove any trailing \r from DOS/Windows files
+            if (line.size())
+              {
+                buff.append(line);
+                buff += "\n";
+              }
+            else
+              break;
+          }
         Trim(buff);
 
         OBPairData *dp = new OBPairData;
@@ -433,7 +434,7 @@ Write Options, e.g. -x3\n \
           }
 
         snprintf(buff, BUFF_SIZE, "%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d V2000",
-                mol.NumAtoms(),mol.NumBonds(),0,0,0,0,0,0,0,0,999);
+                 mol.NumAtoms(),mol.NumBonds(),0,0,0,0,0,0,0,0,999);
         ofs << buff << endl;
 
         OBAtom *atom;
@@ -452,11 +453,11 @@ Write Options, e.g. -x3\n \
           }
 
           snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
-                  atom->GetX(),
-                  atom->GetY(),
-                  atom->GetZ(),
-                  (etab.GetSymbol(atom->GetAtomicNum())),
-                  0,charge,0,0,0);    
+                   atom->GetX(),
+                   atom->GetY(),
+                   atom->GetZ(),
+                   (etab.GetSymbol(atom->GetAtomicNum())),
+                   0,charge,0,0,0);    
           ofs << buff << endl;
         }
 
@@ -477,10 +478,10 @@ Write Options, e.g. -x3\n \
                   if (flag & OB_HASH_BOND ) stereo=6;
                 }
               snprintf(buff, BUFF_SIZE, "%3d%3d%3d%3d%3d%3d",
-                      bond->GetBeginAtomIdx(),
-                      bond->GetEndAtomIdx(),
-                      bond->GetBO(),
-                      stereo,0,0);
+                       bond->GetBeginAtomIdx(),
+                       bond->GetEndAtomIdx(),
+                       bond->GetBO(),
+                       stereo,0,0);
               ofs << buff << endl;
             }
 
@@ -853,8 +854,8 @@ Write Options, e.g. -x3\n \
     time( &long_time );
     ts = localtime( &long_time ); 
     snprintf(td, sizeof(td), "%02d%02d%02d%02d%02d", ts->tm_mon+1, ts->tm_mday, 
-            ((ts->tm_year>=100)? ts->tm_year-100 : ts->tm_year),
-            ts->tm_hour, ts->tm_min);
+             ((ts->tm_year>=100)? ts->tm_year-100 : ts->tm_year),
+             ts->tm_hour, ts->tm_min);
     return td;
   }
 
