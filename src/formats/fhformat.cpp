@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -69,7 +69,7 @@ bool FenskeZmatFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBMol &mol = *pmol;
 
     OBAtom *atom,*a,*b,*c;
-    char type[10],buffer[BUFF_SIZE];
+    char type[16],buffer[BUFF_SIZE];
     vector<OBNodeBase*>::iterator i;
 
     vector<OBInternalCoord*> vic;
@@ -90,39 +90,38 @@ bool FenskeZmatFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         r = vic[atom->GetIdx()]->_dst;
         w = vic[atom->GetIdx()]->_ang;
         t = vic[atom->GetIdx()]->_tor;
-        strcpy(type,etab.GetSymbol(atom->GetAtomicNum()));
+        //  16 = sizeof(type)
+        strncpy(type,etab.GetSymbol(atom->GetAtomicNum()), 16);
+        type[15] = '\0';
 
         if (atom->GetIdx() == 1)
         {
-            sprintf(buffer,"%-2s  1",type);
-            ofs << buffer << endl;
+            snprintf(buffer, BUFF_SIZE, "%-2s  1\n",type);
+            ofs << buffer;
             continue;
         }
 
         if (atom->GetIdx() == 2)
         {
-            sprintf(buffer,"%-2s%3d%6.3f",
-                    type,
-                    a->GetIdx(),r);
-            ofs << buffer << endl;
+            snprintf(buffer, BUFF_SIZE, "%-2s%3d%6.3f\n",
+                    type, a->GetIdx(), r);
+            ofs << buffer;
             continue;
         }
 
         if (atom->GetIdx() == 3)
         {
-            sprintf(buffer,"%-2s%3d%6.3f%3d%8.3f",
-                    type,
-                    a->GetIdx(),r, b->GetIdx(),w);
-            ofs << buffer << endl;
+            snprintf(buffer, BUFF_SIZE, "%-2s%3d%6.3f%3d%8.3f\n",
+                    type, a->GetIdx(), r, b->GetIdx(), w);
+            ofs << buffer;
             continue;
         }
 
         if (t < 0)
             t += 360;
-        sprintf(buffer,"%-2s%3d%6.3f%3d%8.3f%3d%6.1f",
-                type,
-                a->GetIdx(),r,b->GetIdx(),w,c->GetIdx(),t);
-        ofs << buffer << endl;
+        snprintf(buffer, BUFF_SIZE, "%-2s%3d%6.3f%3d%8.3f%3d%6.1f\n",
+                type, a->GetIdx(), r, b->GetIdx(), w, c->GetIdx(), t);
+        ofs << buffer;
     }
 
     return(true);

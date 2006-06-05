@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -22,26 +22,26 @@ using namespace std;
 namespace OpenBabel
 {
 
-class FEATFormat : public OBMoleculeFormat
-{
-public:
+  class FEATFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     FEATFormat()
     {
-        OBConversion::RegisterFormat("feat",this);
+      OBConversion::RegisterFormat("feat",this);
     }
 
     virtual const char* Description() //required
     {
-        return
-            "Feature format\n \
+      return
+        "Feature format\n \
        Read Options e.g. -as\n\
         s  Output single bonds only\n\
         b  Disable bonding entirely\n\n";
     };
 
-  virtual const char* SpecificationURL()
-  {return "";}; //optional
+    virtual const char* SpecificationURL()
+    {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -55,19 +55,19 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-FEATFormat theFEATFormat;
+  //Make an instance of the format class
+  FEATFormat theFEATFormat;
 
-/////////////////////////////////////////////////////////////////
-bool FEATFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool FEATFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -84,17 +84,17 @@ bool FEATFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.BeginModify();
 
     if (!ifs.getline(buffer,BUFF_SIZE))
-        return(false);
+      return(false);
     mol.SetTitle(buffer);
 
     double x,y,z;
-    char type[20];
+    char type[32];
     OBAtom *atom;
     for (i = 0; i < natoms;i++)
-    {
+      {
         if (!ifs.getline(buffer,BUFF_SIZE))
-            return(false);
-        sscanf(buffer,"%s %lf %lf %lf",
+          return(false);
+        sscanf(buffer,"%30s %lf %lf %lf",
                type,
                &x,
                &y,
@@ -103,11 +103,11 @@ bool FEATFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         atom = mol.NewAtom();
         atom->SetVector(x,y,z);
         atom->SetAtomicNum(etab.GetAtomicNum(type));
-    }
+      }
 
     // clean out remaining blank lines
     while(ifs.peek() != EOF && ifs.good() && 
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+          (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
@@ -117,15 +117,15 @@ bool FEATFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     mol.EndModify();
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool FEATFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool FEATFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -139,16 +139,16 @@ bool FEATFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBAtom *atom;
     vector<OBNodeBase*>::iterator i;
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
-        sprintf(buffer,"%-3s %8.5f  %8.5f  %8.5f ",
-                etab.GetSymbol(atom->GetAtomicNum()),
-                atom->x(),
-                atom->y(),
-                atom->z());
+      {
+        snprintf(buffer, BUFF_SIZE, "%-3s %8.5f  %8.5f  %8.5f ",
+                 etab.GetSymbol(atom->GetAtomicNum()),
+                 atom->x(),
+                 atom->y(),
+                 atom->z());
         ofs << buffer << endl;
-    }
+      }
 
     return(true);
-}
+  }
 
 } //namespace OpenBabel

@@ -1,3 +1,18 @@
+2006-06-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/rxnformat.cpp (WriteMolecule): Cast size_t to
+	unsigned for sprintf statement. Eliminates warning with GCC.
+
+	* src/formats/mpdformat.cpp: Eliminate unsigned/signed warning.
+
+	* src/formats/*format.cpp (more files): Remove calls to sprintf,
+	sscanf, strcpy.
+
+	* src/residue.cpp: Make sure to call base class in copy
+	ctor. Eliminates GCC warning.
+
+	* test/cmltest/test.sh: Skip test if cml cannot be loaded.
+
 2006-06-04 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/xml/xml.cpp(ReadXML): Made so that returns false at

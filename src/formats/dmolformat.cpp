@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2000-2005 by Geoffrey Hutchison
+Copyright (C) 2000-2006 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -25,32 +25,32 @@ namespace OpenBabel
 #define ANGSTROM_TO_BOHR 1.889725989
 
 
-class DMolFormat : public OBMoleculeFormat
-{
-public:
+  class DMolFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     DMolFormat()
     {
-        OBConversion::RegisterFormat("dmol",this);
+      OBConversion::RegisterFormat("dmol",this);
     }
 
-  virtual const char* Description() //required
-  {
-    return
-      "DMol3 coordinates format\n \
+    virtual const char* Description() //required
+    {
+      return
+        "DMol3 coordinates format\n \
        Read Options e.g. -as\n\
         s  Output single bonds only\n\
         b  Disable bonding entirely\n\n";
-  };
+    };
 
-  virtual const char* SpecificationURL()
-  { return "" ;}; //optional
+    virtual const char* SpecificationURL()
+    { return "" ;}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY | WRITEONEONLY;
+      return READONEONLY | WRITEONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -58,19 +58,19 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-DMolFormat theDMolFormat;
+  //Make an instance of the format class
+  DMolFormat theDMolFormat;
 
-/////////////////////////////////////////////////////////////////
-bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -86,15 +86,15 @@ bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     ifs.getline(buffer,BUFF_SIZE);
     while (strstr(buffer,"$coordinates") == NULL &&
-            strstr(buffer,"$cell vectors") == NULL)
+           strstr(buffer,"$cell vectors") == NULL)
       {
-	if (ifs.peek() == EOF || !ifs.good())
-	  return false;
+        if (ifs.peek() == EOF || !ifs.good())
+          return false;
         ifs.getline(buffer,BUFF_SIZE);
       }
 
     if (strstr(buffer,"$cell vectors") != NULL)
-    {
+      {
         ifs.getline(buffer,BUFF_SIZE);
         tokenize(vs,buffer); // we really need to check that it's 3 entries only
         x = atof((char*)vs[0].c_str()) * BOHR_TO_ANGSTROM;
@@ -119,17 +119,17 @@ bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         mol.SetData(uc);
 
         ifs.getline(buffer,BUFF_SIZE); // next line
-    }
+      }
 
     mol.BeginModify();
 
     while (strstr(buffer,"$end") == NULL)
-    {
+      {
         if (!ifs.getline(buffer,BUFF_SIZE))
-            break;
+          break;
         tokenize(vs,buffer);
         if (vs.size() != 4)
-            break;
+          break;
         atom = mol.NewAtom();
         //set atomic number
         atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
@@ -137,7 +137,7 @@ bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         y = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
         z = atof((char*)vs[3].c_str()) * BOHR_TO_ANGSTROM;
         atom->SetVector(x,y,z); //set coordinates
-    }
+      }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
@@ -146,21 +146,21 @@ bool DMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     // clean out any remaining blank lines
     while(ifs.peek() != EOF && ifs.good() && 
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+          (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
     mol.EndModify();
     mol.SetTitle(title);
     return(true);
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool DMolFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool DMolFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -170,40 +170,43 @@ bool DMolFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     char buffer[BUFF_SIZE];
 
     if (mol.HasData(OBGenericDataType::UnitCell))
-    {
+      {
         OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
         vector<vector3> v = uc->GetCellVectors();
         vector3 v1;
 
         ofs << "$cell vectors" << endl;
         v1 = v[0] * ANGSTROM_TO_BOHR;
-        sprintf(buffer,"%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
+        snprintf(buffer, BUFF_SIZE, 
+                "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
         ofs << buffer << endl;
         v1 = v[1] * ANGSTROM_TO_BOHR;
-        sprintf(buffer,"%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
+        snprintf(buffer, BUFF_SIZE, 
+                "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
         ofs << buffer << endl;
         v1 = v[2] * ANGSTROM_TO_BOHR;
-        sprintf(buffer,"%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
+        snprintf(buffer, BUFF_SIZE,
+                "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
         ofs << buffer << endl;
-    }
+      }
 
     ofs << "$coordinates" << endl;
 
     OBAtom *atom;
     for(i = 1;i <= mol.NumAtoms(); i++)
-    {
+      {
         atom = mol.GetAtom(i);
-        sprintf(buffer,"%-3s% 27.14f% 20.14f% 20.14f",
-                etab.GetSymbol(atom->GetAtomicNum()),
-                atom->GetX() * ANGSTROM_TO_BOHR,
-                atom->GetY() * ANGSTROM_TO_BOHR,
-                atom->GetZ() * ANGSTROM_TO_BOHR);
+        snprintf(buffer, BUFF_SIZE, "%-3s% 27.14f% 20.14f% 20.14f",
+                 etab.GetSymbol(atom->GetAtomicNum()),
+                 atom->GetX() * ANGSTROM_TO_BOHR,
+                 atom->GetY() * ANGSTROM_TO_BOHR,
+                 atom->GetZ() * ANGSTROM_TO_BOHR);
         ofs << buffer << endl;
-    }
+      }
 
     ofs << "$end" << endl;
 
     return(true);
-}
+  }
 
 } //namespace OpenBabel

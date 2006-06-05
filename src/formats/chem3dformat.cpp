@@ -23,30 +23,30 @@ using namespace std;
 namespace OpenBabel
 {
 
-class CHEM3D1Format : public OBMoleculeFormat
-{
-public:
+  class CHEM3D1Format : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     CHEM3D1Format()
     {
-        OBConversion::RegisterFormat("c3d1",this);
+      OBConversion::RegisterFormat("c3d1",this);
     }
 
     virtual const char* Description() //required
     {
-        return
-            "Chem3D Cartesian 1 format\n \
+      return
+        "Chem3D Cartesian 1 format\n \
             No comments yet\n";
     };
 
-  virtual const char* SpecificationURL()
-  {return "";}; //optional
+    virtual const char* SpecificationURL()
+    {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+      return READONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -58,19 +58,19 @@ public:
     static bool ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key);
     static bool WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ);
 
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-CHEM3D1Format theCHEM3D1Format;
+  //Make an instance of the format class
+  CHEM3D1Format theCHEM3D1Format;
 
-/////////////////////////////////////////////////////////////////
-bool CHEM3D1Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool CHEM3D1Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -78,48 +78,48 @@ bool CHEM3D1Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.SetTitle( pConv->GetTitle()); //default title is the filename
 
     return(ReadChem3d(ifs,mol,false,"MM2"));
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool CHEM3D1Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool CHEM3D1Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
     return(WriteChem3d(ofs,mol,"MM2"));
-}
+  }
 
-//***********************************************************
-class CHEM3D2Format : public OBMoleculeFormat
-{
-public:
+  //***********************************************************
+  class CHEM3D2Format : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     CHEM3D2Format()
     {
-        OBConversion::RegisterFormat("c3d2",this);
+      OBConversion::RegisterFormat("c3d2",this);
     }
 
     virtual const char* Description() //required
     {
-        return
-            "Chem3D Cartesian 2 format\n \
+      return
+        "Chem3D Cartesian 2 format\n \
             No comments yet\n";
     };
 
-  virtual const char* SpecificationURL()
-  {return "";}; //optional
+    virtual const char* SpecificationURL()
+    {return "";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+      return READONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -127,19 +127,19 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-CHEM3D2Format theCHEM3D2Format;
+  //Make an instance of the format class
+  CHEM3D2Format theCHEM3D2Format;
 
-/////////////////////////////////////////////////////////////////
-bool CHEM3D2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool CHEM3D2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -147,31 +147,31 @@ bool CHEM3D2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.SetTitle( pConv->GetTitle()); //default title is the filename
 
     return(CHEM3D1Format::ReadChem3d(ifs,mol,false,"C3D"));
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool CHEM3D2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool CHEM3D2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
     return(CHEM3D1Format::WriteChem3d(ofs,mol,"C3D"));
-}
+  }
 
-//****************************************************************
+  //****************************************************************
 
-bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
-{
+  bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key)
+  {
     char buffer[BUFF_SIZE];
     int natoms,i;
-    char tmp[10],tmp1[10];
-    char atomic_type[10];
+    char tmp[16],tmp1[16];
+    char atomic_type[16];
     double exponent = 0.0;
     double divisor = 1.0;
     double Alpha,Beta,Gamma,A,B,C;
@@ -183,38 +183,38 @@ bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key
     tokenize(vs,buffer);
 
     if (mmads)
-    {
+      {
         if (vs.empty())
-            return(false);
+          return(false);
         natoms = atoi((char*)vs[0].c_str());
         if (vs.size() == 2)
-            mol.SetTitle(vs[1]);
-    }
+          mol.SetTitle(vs[1]);
+      }
     else
-    {
+      {
         switch(vs.size())
-        {
-        case 7 :
+          {
+          case 7 :
             sscanf(buffer,"%d%lf%lf%lf%lf%lf%lf",
                    &natoms,&Alpha,&Beta,&Gamma,&A,&B,&C);
             m.FillOrth(Alpha,Beta,Gamma,A,B,C);
             has_fractional = true;
             break;
-        case 8 :
+          case 8 :
             sscanf(buffer,"%d%lf%lf%lf%lf%lf%lf%lf",
                    &natoms,&Alpha,&Beta,&Gamma,&A,&B,&C,&exponent);
             m.FillOrth(Alpha,Beta,Gamma,A,B,C);
             has_fractional = true;
             has_divisor = true;
             break;
-        default :
+          default :
             sscanf(buffer,"%d",&natoms);
             break;
-        }
-    }
+          }
+      }
 
     if (!natoms)
-        return(false);
+      return(false);
     divisor = pow(10.0,exponent);
     mol.ReserveAtoms(natoms);
 
@@ -227,9 +227,9 @@ bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key
 
     unsigned int k;
     for (i = 1; i <= natoms; i++)
-    {
+      {
         ifs.getline(buffer,BUFF_SIZE);
-        sscanf(buffer,"%s%*d%lf%lf%lf%s",
+        sscanf(buffer,"%15s%*d%lf%lf%lf%15s",
                atomic_type,
                &x,
                &y,
@@ -237,13 +237,13 @@ bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key
                tmp);
         v.Set(x,y,z);
         if (has_fractional)
-            v *= m;
+          v *= m;
         if (has_divisor)
-            v/= divisor;
+          v/= divisor;
 
         tokenize(vs,buffer);
         if (vs.empty())
-            return(false);
+          return(false);
 
         atom = mol.NewAtom();
         ttab.Translate(tmp1,tmp);
@@ -252,35 +252,33 @@ bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,char *type_key
         atom->SetAtomicNum(etab.GetAtomicNum(atomic_type));
 
         for (k = 6;k < vs.size(); k++)
-            mol.AddBond(atom->GetIdx(),atoi((char*)vs[k].c_str()),1);
-    }
+          mol.AddBond(atom->GetIdx(),atoi((char*)vs[k].c_str()),1);
+      }
 
     // clean out remaining blank lines
     while(ifs.peek() != EOF && ifs.good() && 
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+          (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
     mol.PerceiveBondOrders();
 
     return(true);
-}
+  }
 
-bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
-{
+  bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
+  {
     int atnum;
     int type_num;
-    char buffer[BUFF_SIZE],type_name[10],ele_type[10];
+    char buffer[BUFF_SIZE],type_name[16],ele_type[16];
 
-    sprintf(buffer,"%d",mol.NumAtoms());
-    ofs << buffer;
+    ofs << mol.NumAtoms();
     if (EQ(mol_typ,"MMADS"))
-    {
-        sprintf(buffer," %s",mol.GetTitle());
-        ofs << buffer;
+      {
+        ofs << " " << mol.GetTitle();
         ttab.SetToType("MM2");
-    }
+      }
     else
-        ttab.SetToType(mol_typ);
+      ttab.SetToType(mol_typ);
     ofs << endl;
 
     ttab.SetFromType("INT");
@@ -290,18 +288,20 @@ bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
     vector<OBEdgeBase*>::iterator j;
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
+      {
         if (!ttab.Translate(type_name,atom->GetType()))
-        {
-            sprintf(buffer,"Unable to assign %s type to atom %d type = %s\n",
-                    mol_typ,atom->GetIdx(),atom->GetType());
+          {
+            snprintf(buffer, BUFF_SIZE, 
+                     "Unable to assign %s type to atom %d type = %s\n",
+                     mol_typ,atom->GetIdx(),atom->GetType());
             obErrorLog.ThrowError(__FUNCTION__, buffer, obInfo);
             atnum = atom->GetAtomicNum();
             type_num = atnum * 10 + atom->GetValence();
-            sprintf(type_name,"%d",type_num);
-        }
-        strcpy(ele_type,etab.GetSymbol(atom->GetAtomicNum()));
-        sprintf(buffer,"%-3s %-5d %8.4f  %8.4f  %8.4f %5s",
+            snprintf(type_name, sizeof(type_num), "%d",type_num);
+          }
+        strncpy(ele_type, etab.GetSymbol(atom->GetAtomicNum()), sizeof(ele_type));
+        ele_type[sizeof(ele_type) - 1] = '\0';
+        snprintf(buffer, BUFF_SIZE, "%-3s %-5d %8.4f  %8.4f  %8.4f %5s",
                 ele_type,
                 atom->GetIdx(),
                 atom->x(),
@@ -311,13 +311,13 @@ bool CHEM3D1Format::WriteChem3d(ostream &ofs,OBMol &mol, char *mol_typ)
         ofs << buffer;
 
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
-        {
-            sprintf(buffer,"%6d",nbr->GetIdx());
+          {
+            snprintf(buffer, BUFF_SIZE, "%6d",nbr->GetIdx());
             ofs << buffer;
-        }
+          }
         ofs << endl;
-    }
+      }
     return(true);
-}
+  }
 
 } //namespace OpenBabel
