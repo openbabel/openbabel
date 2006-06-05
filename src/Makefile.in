@@ -266,7 +266,7 @@ libopenbabel_la_SOURCES = \
 		rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
 		transform.cpp $(dlhandler)
 
-libopenbabel_la_LDFLAGS = -no-undefined -version-info 1:1:0
+libopenbabel_la_LDFLAGS = -no-undefined -version-info 1:2:0
 @BUILD_SHARED_TRUE@AM_CPPFLAGS = -DOB_MODULE_PATH=\"$(pkglibdir)\" -DUSING_DYNAMIC_LIBS
 @BUILD_SHARED_FALSE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 @BUILD_SHARED_FALSE@			formats/libformats.la @LTLIBOBJS@
