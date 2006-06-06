@@ -1,5 +1,8 @@
 2006-06-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/formats/hinformat.cpp (WriteMolecule): Make sure to escape
+	molecule titles in double quotes. Fixes PR#1501694.
+
 	* src/formats/xml/cmlformat.cpp (EndElement): Back out yesterday's
 	change after discussion with Chris -- would cause problems with
 	compound documents with embedded <cml></cml> blocks.
