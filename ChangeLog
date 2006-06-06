@@ -1,3 +1,12 @@
+2006-06-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/xml/cmlformat.cpp (EndElement): Back out yesterday's
+	change after discussion with Chris -- would cause problems with
+	compound documents with embedded <cml></cml> blocks.
+
+	* test/roundtrip.cpp: Add check for failed OBConversion::Read()
+	calls suggested by Chris.
+
 2006-06-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/rxnformat.cpp (WriteMolecule): Cast size_t to

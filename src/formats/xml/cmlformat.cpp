@@ -357,10 +357,6 @@ Input options, e.g. -a2\n \
         return (--_embedlevel>=0); //false to stop parsing if no further embedded mols
         //		return false;//means stop parsing
       }
-    else if (name == "cml")
-      {
-        return false; // stop parsing, end of file
-      }
     return true;
   }
 
