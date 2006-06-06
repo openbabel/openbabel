@@ -75,10 +75,14 @@ public:
 	bool                              HasData(std::string &);
 	//! \returns whether the generic attribute/value pair exists
 	bool                              HasData(const char *);
-	//! \returns whether the generic attribute/value pair exists
+	//! \returns whether the generic attribute/value pair exists, for a given
+  //!  OBGenericDataType
 	bool                              HasData(unsigned int type);
+  //! Delete any data matching the given OBGenericDataType
 	void                              DeleteData(unsigned int type);
+  //! delete the given generic data from this object
 	void                              DeleteData(OBGenericData*);
+  //! delete all of the given generic data from this object
 	void                              DeleteData(std::vector<OBGenericData*>&);
 	//! \adds a data object; does nothing if d==NULL
 	void                              SetData(OBGenericData *d)
@@ -88,9 +92,16 @@ public:
 	}
 	//! \return the number of OBGenericData items attached to this molecule.
 	unsigned int                      DataSize(){ return(_vdata.size()); }
+  //! \return the first matching data for a given type from OBGenericDataType
+  //!    or NULL if nothing matches
 	OBGenericData                    *GetData(unsigned int type);
+  //! \return any data matching the given attribute name 
+  //!     or NULL if nothing matches
 	OBGenericData                    *GetData(std::string&);
+  //! \return any data matching the given attribute name 
+  //!     or NULL if nothing matches
 	OBGenericData                    *GetData(const char *);
+  //! \return all data, suitable for iterating
 	std::vector<OBGenericData*>      &GetData() { return(_vdata); }
 	std::vector<OBGenericData*>::iterator  BeginData()
 	{
