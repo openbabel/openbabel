@@ -10,6 +10,15 @@
 	* test/roundtrip.cpp: Add check for failed OBConversion::Read()
 	calls suggested by Chris.
 
+	* src/base.h: Documentation updates for OBGenericData methods to
+	address Noel's PR#1484029.
+
+	* scripts/openbabel.i: Added template support for
+	vector<OBGeneric> to address iterating through generic data for
+	PR#1484029.
+
+	* scripts/*: Regenerate as above.
+
 2006-06-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/rxnformat.cpp (WriteMolecule): Cast size_t to

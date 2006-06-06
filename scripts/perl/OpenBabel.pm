@@ -416,6 +416,50 @@ sub ACQUIRE {
 }
 
 
+############# Class : Chemistry::OpenBabel::vectorData ##############
+
+package Chemistry::OpenBabel::vectorData;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_vectorData(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*size = *Chemistry::OpenBabelc::vectorData_size;
+*empty = *Chemistry::OpenBabelc::vectorData_empty;
+*clear = *Chemistry::OpenBabelc::vectorData_clear;
+*push = *Chemistry::OpenBabelc::vectorData_push;
+*pop = *Chemistry::OpenBabelc::vectorData_pop;
+*get = *Chemistry::OpenBabelc::vectorData_get;
+*set = *Chemistry::OpenBabelc::vectorData_set;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_vectorData($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : Chemistry::OpenBabel::OBGlobalDataBase ##############
 
 package Chemistry::OpenBabel::OBGlobalDataBase;

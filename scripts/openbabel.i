@@ -32,15 +32,16 @@
 %include "std_string.i"
 
 namespace std {
-%template (vectorInt)		vector<int>;
-%template (vvInt)		vector< vector<int> >;
+%template (vectorInt)		  vector<int>;
+%template (vvInt)		      vector< vector<int> >;
 %template (vectorDouble) 	vector<double>;
-%template (vVector3)		vector<OpenBabel::vector3>;
+%template (vVector3)		  vector<OpenBabel::vector3>;
 
-%template (vectorMol)		vector<OpenBabel::OBMol>;
+%template (vectorMol)		  vector<OpenBabel::OBMol>;
 %template (vectorBond)		vector<OpenBabel::OBBond>;
 %template (vectorResidue)	vector<OpenBabel::OBResidue>;
 %template (vectorRing)		vector<OpenBabel::OBRing>;
+%template (vectorData)    vector<OpenBabel::OBGenericData>;
 }
 
 %import "babelconfig.h"
