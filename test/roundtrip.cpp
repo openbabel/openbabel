@@ -102,8 +102,8 @@ int main(int argc,char *argv[])
       molCount++;
       //      cerr << " read " << molCount << " molecules " << endl;
 
-      conv1.Read(&mol);
-      conv2.Read(&mol2);
+      if(!conv1.Read(&mol) || !conv2.Read(&mol2))
+        break; // make sure to check for failed reads
 
       const char* p1 = strrchr(argv[1],'.');
       const char* p2 = strrchr(argv[2],'.');
@@ -209,6 +209,8 @@ int main(int argc,char *argv[])
   if ( inFileStream1.good() && inFileStream1.peek() != EOF &&
        conv1.Read(&mol) )
     {
+      cerr << "still did a read!" << endl;
+
       if (mol.NumAtoms() > 0)
         {
           cout << " ** ERROR **  File 1 has more molecules! " << endl;
