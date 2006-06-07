@@ -22,16 +22,8 @@ General Public License for more details.
 
 #include "babelconfig.h"
 
-#if HAVE_IOSTREAM
 #include <iostream>
-#elif HAVE_IOSTREAM_H
-#include <iostream.h>
-#endif
-#if HAVE_SSTREAM
-        #include <sstream>
-#elif
-        #include <sstream.h>
-#endif
+#include <sstream>
 #include <string>
 #include <vector>
 #include <deque>
@@ -95,6 +87,10 @@ public:
  //! \brief Handle error messages, warnings, debugging information and the like
 class OBERROR OBMessageHandler
   {
+  protected:
+    //! Count of messages at each message level
+    unsigned int           _messageCount[5];
+
   public:
     OBMessageHandler();
     ~OBMessageHandler();
@@ -134,6 +130,19 @@ class OBERROR OBMessageHandler
     bool StartErrorWrap();
     //! Turn off "wrapping" messages, restoring normal cerr use (default)
     bool StopErrorWrap();
+
+    //! \return Count of messages received at the obError level
+    unsigned int GetErrorMessageCount() { return _messageCount[obError];}
+    //! \return Count of messages received at the obWarning level
+    unsigned int GetWarningMessageCount() { return _messageCount[obWarning];}
+    //! \return Count of messages received at the obInfo level
+    unsigned int GetInfoMessageCount() { return _messageCount[obInfo];}
+    //! \return Count of messages received at the obAuditMsg level
+    unsigned int GetAuditMessageCount() { return _messageCount[obAuditMsg];}
+    //! \return Count of messages received at the obDebug level 
+    unsigned int GetDebugMessageCount() { return _messageCount[obDebug];}
+    //! \return Summary of messages received at all levels
+    std::string GetMessageSummary();
 
   protected:
     //! Log of messages for later retrieval via GetMessagesOfLevel()

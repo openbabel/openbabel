@@ -1,5 +1,11 @@
 2006-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/oberror.h, src/oberror.cpp (GetMessageSummary): Added
+	methods to track counts of messages at each level, implementing
+	PR#1449517.
+
+	* src/main.cpp: Use it.
+
 	* Makefile.am, Makefile.in: Make sure to eliminate .svn
 	directories when running "make dist"
 

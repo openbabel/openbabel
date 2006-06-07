@@ -63,7 +63,6 @@ int main(int argc,char *argv[])
 
   // Parse commandline
   bool gotInType = false, gotOutType = false;
-  bool UseSavedOptions = false;
   bool SplitOrBatch=false;
 
   char *oext;
@@ -71,7 +70,7 @@ int main(int argc,char *argv[])
 
   //Save name of program without its path (and .exe)
   string pn(argv[0]);
-  int pos;
+  unsigned int pos;
 #ifdef _WIN32
   pos = pn.find(".exe");
   if(pos!=string::npos)
@@ -88,186 +87,186 @@ int main(int argc,char *argv[])
   for (arg = 1; arg < argc; arg++)
     {
       if (argv[arg])
-	{
-	  if (argv[arg][0] == '-')
-	    {
-	      switch (argv[arg][1])
-		{
+        {
+          if (argv[arg][0] == '-')
+            {
+              switch (argv[arg][1])
+                {
 
-		case 'V':
-		  {
-		    cout << "Open Babel " << BABEL_VERSION << " -- " 
-			 << __DATE__ << " -- " << __TIME__ << endl;
-		    exit(0);
-		  }
+                case 'V':
+                  {
+                    cout << "Open Babel " << BABEL_VERSION << " -- " 
+                         << __DATE__ << " -- " << __TIME__ << endl;
+                    exit(0);
+                  }
 
-		case 'i':
-		  gotInType = true;
-		  iext = argv[arg] + 2;
-		  if(!*iext)
-		    iext = argv[++arg]; //space left after -i: use next argument
+                case 'i':
+                  gotInType = true;
+                  iext = argv[arg] + 2;
+                  if(!*iext)
+                    iext = argv[++arg]; //space left after -i: use next argument
 
-		  if (strncasecmp(iext, "MIME", 4) == 0)
-		    {
-		      // get the MIME type from the next argument
-		      iext = argv[++arg];
-		      pInFormat = Conv.FormatFromMIME(iext);
-		    }
-		  else
-		    {
-		      //The ID provided by the OBFormat class is used as the identifying file extension
-		      pInFormat = Conv.FindFormat(iext);
-		    }
-		  if(pInFormat==NULL)
-		    {
-		      cerr << program_name << ": cannot read input format!" << endl;
-		      usage();
-		    }
-		  break;
+                  if (strncasecmp(iext, "MIME", 4) == 0)
+                    {
+                      // get the MIME type from the next argument
+                      iext = argv[++arg];
+                      pInFormat = Conv.FormatFromMIME(iext);
+                    }
+                  else
+                    {
+                      //The ID provided by the OBFormat class is used as the identifying file extension
+                      pInFormat = Conv.FindFormat(iext);
+                    }
+                  if(pInFormat==NULL)
+                    {
+                      cerr << program_name << ": cannot read input format!" << endl;
+                      usage();
+                    }
+                  break;
 					
-		case 'o':
-		  gotOutType = true;
-		  oext = argv[arg] + 2;
-		  if(!*oext)
-		    oext = argv[++arg]; //space left after -i: use next argument
+                case 'o':
+                  gotOutType = true;
+                  oext = argv[arg] + 2;
+                  if(!*oext)
+                    oext = argv[++arg]; //space left after -i: use next argument
 					
-		  if (strncasecmp(oext, "MIME", 4) == 0)
-		    {
-		      // get the MIME type from the next argument
-		      oext = argv[++arg];
-		      pOutFormat = Conv.FormatFromMIME(oext);
-		    }
-		  else
-		    pOutFormat = Conv.FindFormat(oext);
+                  if (strncasecmp(oext, "MIME", 4) == 0)
+                    {
+                      // get the MIME type from the next argument
+                      oext = argv[++arg];
+                      pOutFormat = Conv.FormatFromMIME(oext);
+                    }
+                  else
+                    pOutFormat = Conv.FindFormat(oext);
 
-		  if(pOutFormat==NULL)
-		    {
-		      cerr << program_name << ": cannot write output format!" << endl;
-		      usage();
-		    }
-		  break;
+                  if(pOutFormat==NULL)
+                    {
+                      cerr << program_name << ": cannot write output format!" << endl;
+                      usage();
+                    }
+                  break;
 				
-		case 'F':
-		  if(!Conv.SetOutFormat("fpt"))
-		    cout << "FingerprintFormat needs to be loaded" << endl;
-		  else
-		    {
-		      Conv.AddOption("F",OBConversion::OUTOPTIONS);
-		      Conv.Write(NULL);
-		    }
-		  return 0;
+                case 'F':
+                  if(!Conv.SetOutFormat("fpt"))
+                    cout << "FingerprintFormat needs to be loaded" << endl;
+                  else
+                    {
+                      Conv.AddOption("F",OBConversion::OUTOPTIONS);
+                      Conv.Write(NULL);
+                    }
+                  return 0;
 				
-		case '?':
-		case 'H':
-		  if(isalnum(argv[arg][2]))
-		    {
-		      if(strncasecmp(argv[arg]+2,"all",3))
-			{
-			  OBFormat* pFormat = Conv.FindFormat(argv[arg]+2);
-			  if(pFormat)
-			    {
-			      cout << argv[arg]+2 << "  " << pFormat->Description() << endl;
-			      if(strlen(pFormat->SpecificationURL()))
-				cout << "Specification at: " << pFormat->SpecificationURL() << endl;
-			    }
-			  else
-			    cout << "Format type: " << argv[arg]+2 << " was not recognized" <<endl;
-			}
-		      else
-			{
-			  Formatpos pos;
-			  OBFormat* pFormat;
-			  const char* str=NULL;
-			  while(OBConversion::GetNextFormat(pos,str,pFormat))
-			    {
-			      if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
-				continue;
-			      cout << str << endl;
-			      const char* p = strchr(pFormat->Description(),'\n');
-			      cout << p+1; //second line of description
-			      if(strlen(pFormat->SpecificationURL()))
-				cout << "Specification at: " << pFormat->SpecificationURL();
-			      cout << endl << endl;
-			    }
-			}
-		    }
-		  else
-		    help();
-		  exit(0);
+                case '?':
+                case 'H':
+                  if(isalnum(argv[arg][2]))
+                    {
+                      if(strncasecmp(argv[arg]+2,"all",3))
+                        {
+                          OBFormat* pFormat = Conv.FindFormat(argv[arg]+2);
+                          if(pFormat)
+                            {
+                              cout << argv[arg]+2 << "  " << pFormat->Description() << endl;
+                              if(strlen(pFormat->SpecificationURL()))
+                                cout << "Specification at: " << pFormat->SpecificationURL() << endl;
+                            }
+                          else
+                            cout << "Format type: " << argv[arg]+2 << " was not recognized" <<endl;
+                        }
+                      else
+                        {
+                          Formatpos pos;
+                          OBFormat* pFormat;
+                          const char* str=NULL;
+                          while(OBConversion::GetNextFormat(pos,str,pFormat))
+                            {
+                              if((pFormat->Flags() & NOTWRITABLE) && (pFormat->Flags() & NOTREADABLE))
+                                continue;
+                              cout << str << endl;
+                              const char* p = strchr(pFormat->Description(),'\n');
+                              cout << p+1; //second line of description
+                              if(strlen(pFormat->SpecificationURL()))
+                                cout << "Specification at: " << pFormat->SpecificationURL();
+                              cout << endl << endl;
+                            }
+                        }
+                    }
+                  else
+                    help();
+                  exit(0);
 					
-		case '-': //long option --name text
-		  {
-		    //Do nothing if name is empty
-		    //Option's text is the next arg provided it doesn't start with -
-		    char* nam = argv[arg]+2;
-		    if(*nam != '\0')
-		      {
-			string txt;
-			unsigned i;
-			for(i=0; i<Conv.GetOptionParams(nam, OBConversion::GENOPTIONS)
-			      && arg<argc-1 && argv[arg+1];++i) //removed  && *argv[arg+1]!='-'
-			  {
-			    if(!txt.empty()) txt+=' ';
-			    txt += argv[++arg];
-			  }
-			if(*nam=='-')
-			  {
-			    // Is a API directive, e.g.---errorlevel
-			    //Send to the pseudoformat "obapi" (without any leading -)
-			    OBConversion apiConv;
-			    OBFormat* pAPI= OBConversion::FindFormat("obapi");
-			    if(pAPI)
-			      {
-				apiConv.SetOutFormat(pAPI);
-				apiConv.AddOption(nam+1, OBConversion::GENOPTIONS, txt.c_str());
-				apiConv.Write(NULL);
-			      }
-			  }
-			else
-			  // Is a long option name, e.g --addtotitle
-			  Conv.AddOption(nam,OBConversion::GENOPTIONS,txt.c_str());
-		      }
-		  }
-		  break;
+                case '-': //long option --name text
+                  {
+                    //Do nothing if name is empty
+                    //Option's text is the next arg provided it doesn't start with -
+                    char* nam = argv[arg]+2;
+                    if(*nam != '\0')
+                      {
+                        string txt;
+                        unsigned i;
+                        for(i=0; i<Conv.GetOptionParams(nam, OBConversion::GENOPTIONS)
+                              && arg<argc-1 && argv[arg+1];++i) //removed  && *argv[arg+1]!='-'
+                          {
+                            if(!txt.empty()) txt+=' ';
+                            txt += argv[++arg];
+                          }
+                        if(*nam=='-')
+                          {
+                            // Is a API directive, e.g.---errorlevel
+                            //Send to the pseudoformat "obapi" (without any leading -)
+                            OBConversion apiConv;
+                            OBFormat* pAPI= OBConversion::FindFormat("obapi");
+                            if(pAPI)
+                              {
+                                apiConv.SetOutFormat(pAPI);
+                                apiConv.AddOption(nam+1, OBConversion::GENOPTIONS, txt.c_str());
+                                apiConv.Write(NULL);
+                              }
+                          }
+                        else
+                          // Is a long option name, e.g --addtotitle
+                          Conv.AddOption(nam,OBConversion::GENOPTIONS,txt.c_str());
+                      }
+                  }
+                  break;
 					
-		case 'm': //multiple output files
-		  SplitOrBatch=true;
-		  break;
+                case 'm': //multiple output files
+                  SplitOrBatch=true;
+                  break;
 					
-		case 'a': //single character input option
-		  p = argv[arg]+2;
-		  DoOption(p,Conv,OBConversion::INOPTIONS,arg,argc,argv);
-		  break;
+                case 'a': //single character input option
+                  p = argv[arg]+2;
+                  DoOption(p,Conv,OBConversion::INOPTIONS,arg,argc,argv);
+                  break;
 
-		case 'x': //single character output option
-		  p = argv[arg]+2;
-		  DoOption(p,Conv,OBConversion::OUTOPTIONS,arg,argc,argv);
-		  break;
+                case 'x': //single character output option
+                  p = argv[arg]+2;
+                  DoOption(p,Conv,OBConversion::OUTOPTIONS,arg,argc,argv);
+                  break;
 					
-		default: //single character general option
-		  p = argv[arg]+1;
-		  DoOption(p,Conv,OBConversion::GENOPTIONS,arg,argc,argv);
-		  break;
-		}
-	    }
-	  else 
-	    {
-	      //filenames
-	      if(!gotOutType)
-		FileList.push_back(argv[arg]);
-	      else
-		OutputFileName = argv[arg];
-	    }
-	}
+                default: //single character general option
+                  p = argv[arg]+1;
+                  DoOption(p,Conv,OBConversion::GENOPTIONS,arg,argc,argv);
+                  break;
+                }
+            }
+          else 
+            {
+              //filenames
+              if(!gotOutType)
+                FileList.push_back(argv[arg]);
+              else
+                OutputFileName = argv[arg];
+            }
+        }
     }
 
   if(!gotOutType) //the last file is the output
     {
       if(FileList.empty())
-	{
-	  cerr << "No output file or format spec!" << endl;
-	  usage();
-	}
+        {
+          cerr << "No output file or format spec!" << endl;
+          usage();
+        }
       OutputFileName = FileList.back();
       FileList.pop_back();
     }
@@ -284,20 +283,20 @@ int main(int argc,char *argv[])
   if (!gotInType)
     {
       if(FileList.empty())
-	{
-	  cerr << "No input file or format spec!" <<endl;
-	  usage();
-	}
+        {
+          cerr << "No input file or format spec!" <<endl;
+          usage();
+        }
     }
 
   if (!gotOutType)
     {
       pOutFormat = Conv.FormatFromExt(OutputFileName.c_str());
       if(pOutFormat==NULL)
-	{
-	  cerr << program_name << ": cannot write output format!" << endl;
-	  usage();
-	}
+        {
+          cerr << program_name << ": cannot write output format!" << endl;
+          usage();
+        }
     }
   
   Conv.SetInAndOutFormats(pInFormat,pOutFormat);
@@ -306,22 +305,22 @@ int main(int argc,char *argv[])
     {
       //Put * into output file name before extension (or ext.gz)
       if(OutputFileName.empty())
-	{
-	  OutputFileName = "*.";
-	  OutputFileName += oext;
-	}
+        {
+          OutputFileName = "*.";
+          OutputFileName += oext;
+        }
       else
-	{
-	  unsigned int pos = OutputFileName.rfind(".gz");
-	  if(pos==string::npos)
-	    pos = OutputFileName.rfind('.');
-	  else
-	    pos = OutputFileName.rfind('.',pos-1);
-	  if(pos==string::npos)
-	    OutputFileName += '*';
-	  else
-	    OutputFileName.insert(pos,"*");
-	}
+        {
+          unsigned int pos = OutputFileName.rfind(".gz");
+          if(pos==string::npos)
+            pos = OutputFileName.rfind('.');
+          else
+            pos = OutputFileName.rfind('.',pos-1);
+          if(pos==string::npos)
+            OutputFileName += '*';
+          else
+            OutputFileName.insert(pos,"*");
+        }
     }
 
   int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
@@ -340,6 +339,12 @@ int main(int argc,char *argv[])
   if(OutputFileList.size()>1)
     {
       clog << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;
+    }
+
+  std::string messageSummary = obErrorLog.GetMessageSummary();
+  if (messageSummary.size())
+    {
+      clog << messageSummary << endl;
     }
 
 #ifdef _DEBUG

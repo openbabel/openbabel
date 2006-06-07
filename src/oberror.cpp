@@ -147,6 +147,8 @@ Output from the error log typically looks like:
 OBMessageHandler::OBMessageHandler() :
   _outputLevel(obWarning), _outputStream(&clog), _logging(true), _maxEntries(100)
 {
+  _messageCount[0] = _messageCount[1] = _messageCount[2] = 0;
+  _messageCount[3] = _messageCount[4] = 0;
   //  StartErrorWrap(); // (don't turn on error wrapping by default)
 }
 
@@ -162,6 +164,7 @@ OBMessageHandler::~OBMessageHandler()
 void OBMessageHandler::ThrowError(OBError err)
 {
   _messageList.push_back(err);
+  _messageCount[err.GetLevel()]++;
   if (_maxEntries != 0 && _messageList.size() > _maxEntries)
     _messageList.pop_front();
   
@@ -224,6 +227,23 @@ bool OBMessageHandler::StopErrorWrap()
 
   cerr.rdbuf(_inWrapStreamBuf);
   return true;
+}
+
+string OBMessageHandler::GetMessageSummary()
+{
+  stringstream summary;
+  if (_messageCount[obError] > 0)
+    summary << _messageCount[obError] << " errors ";
+  if (_messageCount[obWarning] > 0)
+    summary << _messageCount[obWarning] << " warnings ";
+  if (_messageCount[obInfo] > 0)
+    summary << _messageCount[obInfo] << " info messages ";
+  if (_messageCount[obAuditMsg] > 0)
+    summary << _messageCount[obAuditMsg] << " audit log messages ";
+  if (_messageCount[obDebug] > 0)
+    summary << _messageCount[obDebug] << " debugging messages ";
+
+  return summary.str();
 }
 
 } // end namespace OpenBabel
