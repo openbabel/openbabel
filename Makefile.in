@@ -674,8 +674,7 @@ docs:
 	(cd $(top_srcdir); $(DOXYGEN))
 
 dist-hook:
-	find $(distdir)/windows -name CVS | xargs rm -rf
-	find $(distdir)/windows-vc2005 -name CVS | xargs rm -rf
+	find $(distdir) -name ".svn" | xargs rm -rf
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
