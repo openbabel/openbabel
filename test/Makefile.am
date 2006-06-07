@@ -12,7 +12,7 @@ if PERL_TESTS
 TESTS = wrapper.sh
 else
 # Standard automake tests
-TESTS = matrix smartstest rings unitcell \
+TESTS = matrix smarts rings unitcell \
 	$(top_srcdir)/test/cml.sh $(top_srcdir)/test/test-set.sh
 endif
 

@@ -283,7 +283,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = cmltest
 # Standard automake tests
-@PERL_TESTS_FALSE@TESTS = matrix smartstest rings unitcell \
+@PERL_TESTS_FALSE@TESTS = matrix smarts rings unitcell \
 @PERL_TESTS_FALSE@	$(top_srcdir)/test/cml.sh $(top_srcdir)/test/test-set.sh
 
 
