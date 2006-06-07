@@ -13640,6 +13640,24 @@ XS(_wrap_Trim) {
 }
 
 
+XS(_wrap_new_OBGenericData) {
+  {
+    OpenBabel::OBGenericData *result = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 0) || (items > 0)) {
+      SWIG_croak("Usage: new_OBGenericData();");
+    }
+    result = (OpenBabel::OBGenericData *)new OpenBabel::OBGenericData();
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBGenericData, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    XSRETURN(argvi);
+  fail:
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_OBGenericData_Clone) {
   {
     OpenBabel::OBGenericData *arg1 = (OpenBabel::OBGenericData *) 0 ;
@@ -47437,6 +47455,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::delete_vector3", _wrap_delete_vector3},
 {"Chemistry::OpenBabelc::Point2Plane", _wrap_Point2Plane},
 {"Chemistry::OpenBabelc::Trim", _wrap_Trim},
+{"Chemistry::OpenBabelc::new_OBGenericData", _wrap_new_OBGenericData},
 {"Chemistry::OpenBabelc::OBGenericData_Clone", _wrap_OBGenericData_Clone},
 {"Chemistry::OpenBabelc::delete_OBGenericData", _wrap_delete_OBGenericData},
 {"Chemistry::OpenBabelc::OBGenericData_SetAttribute", _wrap_OBGenericData_SetAttribute},

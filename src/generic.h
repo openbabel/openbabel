@@ -159,18 +159,22 @@ public:
 		//It may be necessary to cast the return pointer to the derived class type since we are doing
 		//without Covariant Return Types http://www.parashift.com/c++-faq-lite/virtual-functions.html#faq-20.8
 		//A derived class may return NULL if copying inappropriate
-		virtual OBGenericData* Clone(OBBase* parent) const = 0;
+		virtual OBGenericData* Clone(OBBase* parent) const
+      { return NULL; } 
     virtual ~OBGenericData()    {}
     //Use default copy constructor and assignment operators
 		//OBGenericData& operator=(const OBGenericData &src);
 
+    //! Set the attribute (key), which can be used to retrieve this data
     void                      SetAttribute(const std::string &v)
     {        _attr = v;        }
+    //! \return the attribute (key), which can be used to retrieve this data
     virtual const std::string &GetAttribute()  const
     {        return(_attr);    }
+    //! \return the data type for this object as defined in OBGenericDataType
     unsigned int                GetDataType()    const
     {        return(_type);    }
-		//! Base class returns attribute but should never be called
+		//! Base class returns value but should never be called
     virtual const std::string &GetValue()  const
 		{			return _attr; }
 };

@@ -951,6 +951,12 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBGenericData(@_);
+    bless $self, $pkg if defined($self);
+}
+
 *Clone = *Chemistry::OpenBabelc::OBGenericData_Clone;
 sub DESTROY {
     return unless $_[0]->isa('HASH');

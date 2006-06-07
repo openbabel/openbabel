@@ -651,8 +651,9 @@ Point2Plane = _openbabel.Point2Plane
 Trim = _openbabel.Trim
 class OBGenericData(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    def __init__(self): raise AttributeError, "No constructor defined"
     __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBGenericData_swiginit(self,_openbabel.new_OBGenericData(*args))
     def Clone(*args): return _openbabel.OBGenericData_Clone(*args)
     __swig_destroy__ = _openbabel.delete_OBGenericData
     __del__ = lambda self : None;

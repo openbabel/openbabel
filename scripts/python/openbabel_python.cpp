@@ -25745,6 +25745,19 @@ SWIGINTERN PyObject *CustomData15_get(void) {
 }
 
 
+SWIGINTERN PyObject *_wrap_new_OBGenericData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBGenericData *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBGenericData",0,0)) SWIG_fail;
+  result = (OpenBabel::OBGenericData *)new OpenBabel::OBGenericData();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBGenericData, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_OBGenericData_Clone(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBGenericData *arg1 = (OpenBabel::OBGenericData *) 0 ;
@@ -25912,6 +25925,10 @@ SWIGINTERN PyObject *OBGenericData_swigregister(PyObject *SWIGUNUSEDPARM(self), 
   if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBGenericData, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *OBGenericData_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
 }
 
 SWIGINTERN PyObject *_wrap_new_OBCommentData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
@@ -51888,6 +51905,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"vector3_swiginit", vector3_swiginit, METH_VARARGS, NULL},
 	 { (char *)"Point2Plane", _wrap_Point2Plane, METH_VARARGS, NULL},
 	 { (char *)"Trim", _wrap_Trim, METH_VARARGS, NULL},
+	 { (char *)"new_OBGenericData", _wrap_new_OBGenericData, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_Clone", _wrap_OBGenericData_Clone, METH_VARARGS, NULL},
 	 { (char *)"delete_OBGenericData", _wrap_delete_OBGenericData, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_SetAttribute", _wrap_OBGenericData_SetAttribute, METH_VARARGS, NULL},
@@ -51895,6 +51913,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBGenericData_GetDataType", _wrap_OBGenericData_GetDataType, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_GetValue", _wrap_OBGenericData_GetValue, METH_VARARGS, NULL},
 	 { (char *)"OBGenericData_swigregister", OBGenericData_swigregister, METH_VARARGS, NULL},
+	 { (char *)"OBGenericData_swiginit", OBGenericData_swiginit, METH_VARARGS, NULL},
 	 { (char *)"new_OBCommentData", _wrap_new_OBCommentData, METH_VARARGS, NULL},
 	 { (char *)"OBCommentData_Clone", _wrap_OBCommentData_Clone, METH_VARARGS, NULL},
 	 { (char *)"OBCommentData_SetData", _wrap_OBCommentData_SetData, METH_VARARGS, NULL},

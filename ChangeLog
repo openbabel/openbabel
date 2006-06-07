@@ -1,3 +1,21 @@
+2006-06-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Makefile.am, Makefile.in: Make sure to eliminate .svn
+	directories when running "make dist"
+
+	* test/Makefile.am, test/Makefile.in: Make sure to build "smarts"
+	not "smartstest" on platforms without Perl.
+
+	* src/tokenst.cpp: Modified to check buffer and delimiters for
+	NULL strings, use default string ctor.
+
+	* src/generic.h (Clone): Change from a pure virtual function to a
+	virtual which returns NULL as a default. Allows building script
+	wrappers with vector<OBGenericData>.
+
+	* scripts/*: Regenerate to solve compilation problems, addressed
+	by generic.h changes above.
+
 2006-06-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/hinformat.cpp (WriteMolecule): Make sure to escape
