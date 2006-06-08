@@ -155,7 +155,9 @@ bool HINFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vector<OBEdgeBase*>::iterator j;
     char bond_char;
 
-    ofs << "mol " << file_num << " " << mol.GetTitle() << endl;
+    // make sure to escape titles in double quotes
+    // PR#1501694
+    ofs << "mol " << file_num << " \"" << mol.GetTitle() << "\"\n";
 
     for(i = 1;i <= mol.NumAtoms(); i++)
     {
