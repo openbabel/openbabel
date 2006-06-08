@@ -102,8 +102,8 @@ int main(int argc,char *argv[])
       molCount++;
       //      cerr << " read " << molCount << " molecules " << endl;
 
-      conv1.Read(&mol);
-      conv2.Read(&mol2);
+      if(!conv1.Read(&mol) || !conv2.Read(&mol2))
+        break; // make sure to check for failed reads
 
       const char* p1 = strrchr(argv[1],'.');
       const char* p2 = strrchr(argv[2],'.');
