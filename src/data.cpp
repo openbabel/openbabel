@@ -884,7 +884,7 @@ namespace OpenBabel
 	    if (*p2 == '\n')
 	      {
 		strncpy(charBuffer, p1, (p2 - p1));
-		buffer[(p2 - p1)] = '\0';
+		charBuffer[(p2 - p1)] = '\0';
 		ParseLine(charBuffer);
 		p1 = ++p2;
 	      }

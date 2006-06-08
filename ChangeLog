@@ -1,3 +1,16 @@
+2006-06-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/data.cpp: (Init): Fix problem with parsing data --
+        introduced with changes on 05-24. Add null to right char* buffer.
+
+2006-06-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/formats/hinformat.cpp (WriteMolecule): Make sure to escape
+        molecule titles in double quotes. Fixes PR#1501694.
+
+        * test/roundtrip.cpp: Add check for failed OBConversion::Read()
+        calls suggested by Chris.
+
 2006-06-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * src/formats/mdlformat.cpp(ReadMolecule): Added Trim to new code
