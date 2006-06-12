@@ -82,6 +82,9 @@ int main(int argc,char *argv[])
     vector<OBSmartsPattern*> vsp;
     for (;ifs.getline(buffer,BUFF_SIZE);)
     {
+      if (buffer[0] == '#') // skip comment line
+        continue;
+
         OBSmartsPattern *sp = new OBSmartsPattern;
 
         if (sp->Init(buffer))
@@ -192,6 +195,9 @@ void GenerateSmartsReference()
     vector<OBSmartsPattern*> vsp;
     for (;ifs.getline(buffer,BUFF_SIZE);)
     {
+      if (buffer[0] == '#') // skip comment line
+        continue;
+
         OBSmartsPattern *sp = new OBSmartsPattern;
 
         if (sp->Init(buffer))

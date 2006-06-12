@@ -1,3 +1,28 @@
+2006-06-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.cpp (BatchFileName): Make sure to properly
+	strip off ".gz" extension if zlib compression is enabled. Fixes
+	PR#1503596.
+
+	* src/parsmart.cpp: Support for [D], [v], [X] patterns
+	(i.e. default values of 1), fixing part of PR#1474716. Support for
+	[as] as an aromatic As atom, per SMILES aromaticity for arsenic.
+	Support for [se] for aromatic Se atom, per SMILES aromaticity --
+	fixes PR#1503851.
+
+	* test/files/smartstest.txt: Add tests for [D], [v], [X], [c],
+	[p], [as], [s], and [se] SMARTS patterns as above.
+
+	* test/files/smartsresults.txt: Regenerate after above fixes.
+
+	* src/formats/mdlformat.cpp: Make default molecular dimension to
+	be 2D, but check for 3D coordinates too. Many non-standard files
+	out there with no real dimension line (e.g. PR#1409133).
+
+	* src/formats/xyzformat.cpp: Smarter handling of
+	"energy" tag in title -- if present, remove it from title. If
+	mol.GetEnergy() is near zero, don't print it.
+
 2006-06-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * src/data.cpp: (Init): Fix problem with parsing data --
