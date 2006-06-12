@@ -1472,36 +1472,35 @@ SWIG_Perl_SetModule(swig_module_info *module) {
 #define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[78]
 #define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[79]
 #define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[80]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t swig_types[81]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[82]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[83]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[84]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t swig_types[85]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t__iterator swig_types[86]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[87]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[88]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[89]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[90]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[91]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[92]
-#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[93]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[94]
-#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[95]
-#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[96]
-#define SWIGTYPE_p_std__vectorTdouble_t swig_types[97]
-#define SWIGTYPE_p_std__vectorTint_t swig_types[98]
-#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[99]
-#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[100]
-#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[101]
-#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[102]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[103]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[104]
-#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[105]
-#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[106]
-#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[107]
-#define SWIGTYPE_p_unsigned_int swig_types[108]
-static swig_type_info *swig_types[110];
-static swig_module_info swig_module = {swig_types, 109, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[81]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[82]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[83]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t swig_types[84]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t__iterator swig_types[85]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[86]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[87]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[88]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[89]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[90]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[91]
+#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[92]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[93]
+#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[94]
+#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[95]
+#define SWIGTYPE_p_std__vectorTdouble_t swig_types[96]
+#define SWIGTYPE_p_std__vectorTint_t swig_types[97]
+#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[98]
+#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[99]
+#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[100]
+#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[101]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[102]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[103]
+#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[104]
+#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[105]
+#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[106]
+#define SWIGTYPE_p_unsigned_int swig_types[107]
+static swig_type_info *swig_types[109];
+static swig_module_info swig_module = {swig_types, 108, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1999,21 +1998,21 @@ SWIGINTERN void std_vector_Sl_OpenBabel_OBRing_Sg__set(std::vector<OpenBabel::OB
                 else
                     throw std::out_of_range("vector index out of range");
             }
-SWIGINTERN OpenBabel::OBGenericData std_vector_Sl_OpenBabel_OBGenericData_Sg__pop(std::vector<OpenBabel::OBGenericData > *self){
+SWIGINTERN OpenBabel::OBGenericData *std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__pop(std::vector<OpenBabel::OBGenericData * > *self){
                 if (self->size() == 0)
                     throw std::out_of_range("pop from empty vector");
-                OpenBabel::OBGenericData x = self->back();
+                OpenBabel::OBGenericData *x = self->back();
                 self->pop_back();
                 return x;
             }
-SWIGINTERN OpenBabel::OBGenericData &std_vector_Sl_OpenBabel_OBGenericData_Sg__get(std::vector<OpenBabel::OBGenericData > *self,int i){
+SWIGINTERN OpenBabel::OBGenericData *std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__get(std::vector<OpenBabel::OBGenericData * > *self,int i){
                 int size = int(self->size());
                 if (i>=0 && i<size)
                     return (*self)[i];
                 else
                     throw std::out_of_range("vector index out of range");
             }
-SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sg__set(std::vector<OpenBabel::OBGenericData > *self,int i,OpenBabel::OBGenericData const &x){
+SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__set(std::vector<OpenBabel::OBGenericData * > *self,int i,OpenBabel::OBGenericData *x){
                 int size = int(self->size());
                 if (i>=0 && i<size)
                     (*self)[i] = x;
@@ -7695,7 +7694,7 @@ XS(_wrap_delete_vectorRing) {
 XS(_wrap_new_vectorData__SWIG_0) {
   {
     unsigned int arg1 ;
-    std::vector<OpenBabel::OBGenericData > *result = 0 ;
+    std::vector<OpenBabel::OBGenericData * > *result = 0 ;
     unsigned int val1 ;
     int ecode1 = 0 ;
     int argvi = 0;
@@ -7709,8 +7708,8 @@ XS(_wrap_new_vectorData__SWIG_0) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorData" "', argument " "1"" of type '" "unsigned int""'");
     } 
     arg1 = static_cast< unsigned int >(val1);
-    result = (std::vector<OpenBabel::OBGenericData > *)new std::vector<OpenBabel::OBGenericData >(arg1);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    result = (std::vector<OpenBabel::OBGenericData * > *)new std::vector<OpenBabel::OBGenericData * >(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -7722,15 +7721,15 @@ XS(_wrap_new_vectorData__SWIG_0) {
 
 XS(_wrap_new_vectorData__SWIG_1) {
   {
-    std::vector<OpenBabel::OBGenericData > *result = 0 ;
+    std::vector<OpenBabel::OBGenericData * > *result = 0 ;
     int argvi = 0;
     dXSARGS;
     
     if ((items < 0) || (items > 0)) {
       SWIG_croak("Usage: new_vectorData();");
     }
-    result = (std::vector<OpenBabel::OBGenericData > *)new std::vector<OpenBabel::OBGenericData >();
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    result = (std::vector<OpenBabel::OBGenericData * > *)new std::vector<OpenBabel::OBGenericData * >();
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
     XSRETURN(argvi);
   fail:
     SWIG_croak_null();
@@ -7741,11 +7740,11 @@ XS(_wrap_new_vectorData__SWIG_1) {
 XS(_wrap_new_vectorData__SWIG_2) {
   {
     unsigned int arg1 ;
-    OpenBabel::OBGenericData *arg2 = 0 ;
-    std::vector<OpenBabel::OBGenericData > *result = 0 ;
+    OpenBabel::OBGenericData *arg2 = (OpenBabel::OBGenericData *) 0 ;
+    std::vector<OpenBabel::OBGenericData * > *result = 0 ;
     unsigned int val1 ;
     int ecode1 = 0 ;
-    void *argp2 ;
+    void *argp2 = 0 ;
     int res2 = 0 ;
     int argvi = 0;
     dXSARGS;
@@ -7758,16 +7757,13 @@ XS(_wrap_new_vectorData__SWIG_2) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorData" "', argument " "1"" of type '" "unsigned int""'");
     } 
     arg1 = static_cast< unsigned int >(val1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__OBGenericData,  0 );
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_vectorData" "', argument " "2"" of type '" "OpenBabel::OBGenericData const &""'"); 
-    }
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorData" "', argument " "2"" of type '" "OpenBabel::OBGenericData const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_vectorData" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
     }
     arg2 = reinterpret_cast< OpenBabel::OBGenericData * >(argp2);
-    result = (std::vector<OpenBabel::OBGenericData > *)new std::vector<OpenBabel::OBGenericData >(arg1,(OpenBabel::OBGenericData const &)*arg2);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    result = (std::vector<OpenBabel::OBGenericData * > *)new std::vector<OpenBabel::OBGenericData * >(arg1,arg2);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
     
     
     XSRETURN(argvi);
@@ -7781,33 +7777,32 @@ XS(_wrap_new_vectorData__SWIG_2) {
 
 XS(_wrap_new_vectorData__SWIG_3) {
   {
-    std::vector<OpenBabel::OBGenericData > *arg1 = 0 ;
-    std::vector<OpenBabel::OBGenericData > *result = 0 ;
-    std::vector<OpenBabel::OBGenericData > temp1 ;
-    std::vector<OpenBabel::OBGenericData > *v1 ;
+    std::vector<OpenBabel::OBGenericData * > *arg1 = 0 ;
+    std::vector<OpenBabel::OBGenericData * > *result = 0 ;
+    std::vector<OpenBabel::OBGenericData * > temp1 ;
+    std::vector<OpenBabel::OBGenericData * > *v1 ;
     int argvi = 0;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: new_vectorData(std::vector<OpenBabel::OBGenericData > const &);");
+      SWIG_croak("Usage: new_vectorData(std::vector<OpenBabel::OBGenericData * > const &);");
     }
     {
-      if (SWIG_ConvertPtr(ST(0),(void **) &v1, 
-          SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t,1) != -1) {
+      int res = SWIG_ConvertPtr(ST(0),(void **) &v1, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t,0);
+      if (SWIG_IsOK(res)) {
         arg1 = v1;
       } else if (SvROK(ST(0))) {
         AV *av = (AV *)SvRV(ST(0));
         if (SvTYPE(av) != SVt_PVAV)
         SWIG_croak("Type error in argument 1 of new_vectorData. "
           "Expected an array of " "OpenBabel::OBGenericData");
-        SV **tv;
         I32 len = av_len(av) + 1;
-        OpenBabel::OBGenericData* obj;
         for (int i=0; i<len; i++) {
-          tv = av_fetch(av, i, 0);
-          if (SWIG_ConvertPtr(*tv, (void **)&obj, 
-              SWIGTYPE_p_OpenBabel__OBGenericData,0) != -1) {
-            temp1.push_back(*obj);
+          void *v1;
+          SV **tv = av_fetch(av, i, 0);
+          int res = SWIG_ConvertPtr(*tv, &v1, SWIGTYPE_p_OpenBabel__OBGenericData,0);
+          if (SWIG_IsOK(res)) {
+            temp1.push_back(static_cast< OpenBabel::OBGenericData * >(v1));
           } else {
             SWIG_croak("Type error in argument 1 of "
               "new_vectorData. "
@@ -7820,8 +7815,8 @@ XS(_wrap_new_vectorData__SWIG_3) {
           "Expected an array of " "OpenBabel::OBGenericData");
       }
     }
-    result = (std::vector<OpenBabel::OBGenericData > *)new std::vector<OpenBabel::OBGenericData >((std::vector<OpenBabel::OBGenericData > const &)*arg1);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    result = (std::vector<OpenBabel::OBGenericData * > *)new std::vector<OpenBabel::OBGenericData * >((std::vector<OpenBabel::OBGenericData * > const &)*arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -7876,9 +7871,9 @@ XS(_wrap_new_vectorData) {
         {
           {
             /* wrapped vector? */
-            std::vector<OpenBabel::OBGenericData >* v;
-            if (SWIG_ConvertPtr(ST(0),(void **) &v, 
-                SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t,0) != -1) {
+            std::vector<OpenBabel::OBGenericData *> *v;
+            int res = SWIG_ConvertPtr(ST(0),SWIG_as_voidptrptr(&v), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t,0);
+            if (SWIG_IsOK(res)) {
               _v = 1;
             } else if (SvROK(ST(0))) {
               /* native sequence? */
@@ -7891,10 +7886,10 @@ XS(_wrap_new_vectorData) {
                   _v = 1;
                 } else {
                   /* check the first element only */
-                  OpenBabel::OBGenericData* obj;
-                  tv = av_fetch(av, 0, 0);
-                  if (SWIG_ConvertPtr(*tv, (void **)&obj, 
-                      SWIGTYPE_p_OpenBabel__OBGenericData,0) != -1)
+                  void *v;
+                  SV **tv = av_fetch(av, 0, 0);
+                  int res = SWIG_ConvertPtr(*tv, &v, SWIGTYPE_p_OpenBabel__OBGenericData,0);
+                  if (SWIG_IsOK(res))
                   _v = 1;
                   else
                   _v = 0;
@@ -7968,10 +7963,10 @@ XS(_wrap_new_vectorData) {
 
 XS(_wrap_vectorData_size) {
   {
-    std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+    std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
     unsigned int result;
-    std::vector<OpenBabel::OBGenericData > temp1 ;
-    std::vector<OpenBabel::OBGenericData > *v1 ;
+    std::vector<OpenBabel::OBGenericData * > temp1 ;
+    std::vector<OpenBabel::OBGenericData * > *v1 ;
     int argvi = 0;
     dXSARGS;
     
@@ -7979,22 +7974,21 @@ XS(_wrap_vectorData_size) {
       SWIG_croak("Usage: vectorData_size(self);");
     }
     {
-      if (SWIG_ConvertPtr(ST(0),(void **) &v1, 
-          SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t,1) != -1) {
+      int res = SWIG_ConvertPtr(ST(0),(void **) &v1, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t,0);
+      if (SWIG_IsOK(res)) {
         arg1 = v1;
       } else if (SvROK(ST(0))) {
         AV *av = (AV *)SvRV(ST(0));
         if (SvTYPE(av) != SVt_PVAV)
         SWIG_croak("Type error in argument 1 of vectorData_size. "
           "Expected an array of " "OpenBabel::OBGenericData");
-        SV **tv;
         I32 len = av_len(av) + 1;
-        OpenBabel::OBGenericData* obj;
         for (int i=0; i<len; i++) {
-          tv = av_fetch(av, i, 0);
-          if (SWIG_ConvertPtr(*tv, (void **)&obj, 
-              SWIGTYPE_p_OpenBabel__OBGenericData,0) != -1) {
-            temp1.push_back(*obj);
+          void *v1;
+          SV **tv = av_fetch(av, i, 0);
+          int res = SWIG_ConvertPtr(*tv, &v1, SWIGTYPE_p_OpenBabel__OBGenericData,0);
+          if (SWIG_IsOK(res)) {
+            temp1.push_back(static_cast< OpenBabel::OBGenericData * >(v1));
           } else {
             SWIG_croak("Type error in argument 1 of "
               "vectorData_size. "
@@ -8007,7 +8001,7 @@ XS(_wrap_vectorData_size) {
           "Expected an array of " "OpenBabel::OBGenericData");
       }
     }
-    result = (unsigned int)((std::vector<OpenBabel::OBGenericData > const *)arg1)->size();
+    result = (unsigned int)((std::vector<OpenBabel::OBGenericData * > const *)arg1)->size();
     ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     XSRETURN(argvi);
@@ -8020,10 +8014,10 @@ XS(_wrap_vectorData_size) {
 
 XS(_wrap_vectorData_empty) {
   {
-    std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+    std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
     bool result;
-    std::vector<OpenBabel::OBGenericData > temp1 ;
-    std::vector<OpenBabel::OBGenericData > *v1 ;
+    std::vector<OpenBabel::OBGenericData * > temp1 ;
+    std::vector<OpenBabel::OBGenericData * > *v1 ;
     int argvi = 0;
     dXSARGS;
     
@@ -8031,22 +8025,21 @@ XS(_wrap_vectorData_empty) {
       SWIG_croak("Usage: vectorData_empty(self);");
     }
     {
-      if (SWIG_ConvertPtr(ST(0),(void **) &v1, 
-          SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t,1) != -1) {
+      int res = SWIG_ConvertPtr(ST(0),(void **) &v1, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t,0);
+      if (SWIG_IsOK(res)) {
         arg1 = v1;
       } else if (SvROK(ST(0))) {
         AV *av = (AV *)SvRV(ST(0));
         if (SvTYPE(av) != SVt_PVAV)
         SWIG_croak("Type error in argument 1 of vectorData_empty. "
           "Expected an array of " "OpenBabel::OBGenericData");
-        SV **tv;
         I32 len = av_len(av) + 1;
-        OpenBabel::OBGenericData* obj;
         for (int i=0; i<len; i++) {
-          tv = av_fetch(av, i, 0);
-          if (SWIG_ConvertPtr(*tv, (void **)&obj, 
-              SWIGTYPE_p_OpenBabel__OBGenericData,0) != -1) {
-            temp1.push_back(*obj);
+          void *v1;
+          SV **tv = av_fetch(av, i, 0);
+          int res = SWIG_ConvertPtr(*tv, &v1, SWIGTYPE_p_OpenBabel__OBGenericData,0);
+          if (SWIG_IsOK(res)) {
+            temp1.push_back(static_cast< OpenBabel::OBGenericData * >(v1));
           } else {
             SWIG_croak("Type error in argument 1 of "
               "vectorData_empty. "
@@ -8059,7 +8052,7 @@ XS(_wrap_vectorData_empty) {
           "Expected an array of " "OpenBabel::OBGenericData");
       }
     }
-    result = (bool)((std::vector<OpenBabel::OBGenericData > const *)arg1)->empty();
+    result = (bool)((std::vector<OpenBabel::OBGenericData * > const *)arg1)->empty();
     ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
     
     XSRETURN(argvi);
@@ -8072,7 +8065,7 @@ XS(_wrap_vectorData_empty) {
 
 XS(_wrap_vectorData_clear) {
   {
-    std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+    std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
     int argvi = 0;
@@ -8081,11 +8074,11 @@ XS(_wrap_vectorData_clear) {
     if ((items < 1) || (items > 1)) {
       SWIG_croak("Usage: vectorData_clear(self);");
     }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, 0 |  0 );
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_clear" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_clear" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
     }
-    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
     (arg1)->clear();
     
     
@@ -8099,11 +8092,11 @@ XS(_wrap_vectorData_clear) {
 
 XS(_wrap_vectorData_push) {
   {
-    std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-    OpenBabel::OBGenericData *arg2 = 0 ;
+    std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+    OpenBabel::OBGenericData *arg2 = (OpenBabel::OBGenericData *) 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
+    void *argp2 = 0 ;
     int res2 = 0 ;
     int argvi = 0;
     dXSARGS;
@@ -8111,20 +8104,17 @@ XS(_wrap_vectorData_push) {
     if ((items < 2) || (items > 2)) {
       SWIG_croak("Usage: vectorData_push(self,x);");
     }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, 0 |  0 );
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_push" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_push" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
     }
-    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__OBGenericData,  0 );
+    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorData_push" "', argument " "2"" of type '" "OpenBabel::OBGenericData const &""'"); 
-    }
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_push" "', argument " "2"" of type '" "OpenBabel::OBGenericData const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorData_push" "', argument " "2"" of type '" "OpenBabel::OBGenericData *""'"); 
     }
     arg2 = reinterpret_cast< OpenBabel::OBGenericData * >(argp2);
-    (arg1)->push_back((OpenBabel::OBGenericData const &)*arg2);
+    (arg1)->push_back(arg2);
     
     
     
@@ -8139,8 +8129,8 @@ XS(_wrap_vectorData_push) {
 
 XS(_wrap_vectorData_pop) {
   {
-    std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-    OpenBabel::OBGenericData result;
+    std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+    OpenBabel::OBGenericData *result = 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
     int argvi = 0;
@@ -8149,19 +8139,19 @@ XS(_wrap_vectorData_pop) {
     if ((items < 1) || (items > 1)) {
       SWIG_croak("Usage: vectorData_pop(self);");
     }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, 0 |  0 );
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_pop" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_pop" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
     }
-    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
     try {
-      result = std_vector_Sl_OpenBabel_OBGenericData_Sg__pop(arg1);
+      result = (OpenBabel::OBGenericData *)std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__pop(arg1);
     }
     catch(std::out_of_range &_e) {
       sv_setsv(GvSV(PL_errgv), SWIG_NewPointerObj((new std::out_of_range(static_cast< const std::out_of_range& >(_e))),SWIGTYPE_p_std__out_of_range,SWIG_POINTER_OWN)); SWIG_fail ;
     }
     
-    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::OBGenericData(static_cast< const OpenBabel::OBGenericData& >(result))), SWIGTYPE_p_OpenBabel__OBGenericData, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBGenericData, 0 | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -8173,7 +8163,7 @@ XS(_wrap_vectorData_pop) {
 
 XS(_wrap_vectorData_get) {
   {
-    std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+    std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
     int arg2 ;
     OpenBabel::OBGenericData *result = 0 ;
     void *argp1 = 0 ;
@@ -8186,21 +8176,18 @@ XS(_wrap_vectorData_get) {
     if ((items < 2) || (items > 2)) {
       SWIG_croak("Usage: vectorData_get(self,i);");
     }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, 0 |  0 );
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_get" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_get" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
     }
-    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
     ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_get" "', argument " "2"" of type '" "int""'");
     } 
     arg2 = static_cast< int >(val2);
     try {
-      {
-        OpenBabel::OBGenericData &_result_ref = std_vector_Sl_OpenBabel_OBGenericData_Sg__get(arg1,arg2);
-        result = (OpenBabel::OBGenericData *) &_result_ref;
-      }
+      result = (OpenBabel::OBGenericData *)std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__get(arg1,arg2);
     }
     catch(std::out_of_range &_e) {
       sv_setsv(GvSV(PL_errgv), SWIG_NewPointerObj((new std::out_of_range(static_cast< const std::out_of_range& >(_e))),SWIGTYPE_p_std__out_of_range,SWIG_POINTER_OWN)); SWIG_fail ;
@@ -8220,14 +8207,14 @@ XS(_wrap_vectorData_get) {
 
 XS(_wrap_vectorData_set) {
   {
-    std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+    std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
     int arg2 ;
-    OpenBabel::OBGenericData *arg3 = 0 ;
+    OpenBabel::OBGenericData *arg3 = (OpenBabel::OBGenericData *) 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
     int val2 ;
     int ecode2 = 0 ;
-    void *argp3 ;
+    void *argp3 = 0 ;
     int res3 = 0 ;
     int argvi = 0;
     dXSARGS;
@@ -8235,26 +8222,23 @@ XS(_wrap_vectorData_set) {
     if ((items < 3) || (items > 3)) {
       SWIG_croak("Usage: vectorData_set(self,i,x);");
     }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, 0 |  0 );
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_set" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_set" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
     }
-    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
     ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_set" "', argument " "2"" of type '" "int""'");
     } 
     arg2 = static_cast< int >(val2);
-    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_OpenBabel__OBGenericData,  0 );
+    res3 = SWIG_ConvertPtr(ST(2), &argp3,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData_set" "', argument " "3"" of type '" "OpenBabel::OBGenericData const &""'"); 
-    }
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_set" "', argument " "3"" of type '" "OpenBabel::OBGenericData const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData_set" "', argument " "3"" of type '" "OpenBabel::OBGenericData *""'"); 
     }
     arg3 = reinterpret_cast< OpenBabel::OBGenericData * >(argp3);
     try {
-      std_vector_Sl_OpenBabel_OBGenericData_Sg__set(arg1,arg2,(OpenBabel::OBGenericData const &)*arg3);
+      std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__set(arg1,arg2,arg3);
     }
     catch(std::out_of_range &_e) {
       sv_setsv(GvSV(PL_errgv), SWIG_NewPointerObj((new std::out_of_range(static_cast< const std::out_of_range& >(_e))),SWIGTYPE_p_std__out_of_range,SWIG_POINTER_OWN)); SWIG_fail ;
@@ -8276,7 +8260,7 @@ XS(_wrap_vectorData_set) {
 
 XS(_wrap_delete_vectorData) {
   {
-    std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+    std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
     int argvi = 0;
@@ -8285,11 +8269,11 @@ XS(_wrap_delete_vectorData) {
     if ((items < 1) || (items > 1)) {
       SWIG_croak("Usage: delete_vectorData(self);");
     }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, SWIG_POINTER_DISOWN |  0 );
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, SWIG_POINTER_DISOWN |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
     }
-    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+    arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
     delete arg1;
     
     
@@ -20938,7 +20922,7 @@ XS(_wrap_OBBase_GetData__SWIG_3) {
       std::vector<OpenBabel::OBGenericData * > &_result_ref = (arg1)->GetData();
       result = (std::vector<OpenBabel::OBGenericData * > *) &_result_ref;
     }
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, 0 | 0); argvi++ ;
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, 0 | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -46841,9 +46825,8 @@ static swig_type_info _swigt__p_std__vectorTOpenBabel__OBBond_p_t = {"_p_std__ve
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBBond_t = {"_p_std__vectorTOpenBabel__OBBond_t", "std::vector<OpenBabel::OBBond > *", 0, 0, (void*)"Chemistry::OpenBabel::vectorBond", 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBEdgeBase_p_t__iterator = {"_p_std__vectorTOpenBabel__OBEdgeBase_p_t__iterator", "std::vector<OpenBabel::OBEdgeBase * >::iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBExternalBond_t = {"_p_std__vectorTOpenBabel__OBExternalBond_t", "std::vector<OpenBabel::OBExternalBond > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_p_t = {"_p_std__vectorTOpenBabel__OBGenericData_p_t", "std::vector<OpenBabel::OBGenericData * > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_p_t = {"_p_std__vectorTOpenBabel__OBGenericData_p_t", "std::vector<OpenBabel::OBGenericData * > *", 0, 0, (void*)"Chemistry::OpenBabel::vectorData", 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_p_t__iterator = {"_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator", "std::vector<OpenBabel::OBGenericData * >::iterator *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_t = {"_p_std__vectorTOpenBabel__OBGenericData_t", "std::vector<OpenBabel::OBGenericData > *", 0, 0, (void*)"Chemistry::OpenBabel::vectorData", 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_t = {"_p_std__vectorTOpenBabel__OBInternalCoord_p_t", "std::vector<OpenBabel::OBInternalCoord * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator = {"_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator", "std::vector<OpenBabel::OBInternalCoord * >::iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBMol_t = {"_p_std__vectorTOpenBabel__OBMol_t", "std::vector<OpenBabel::OBMol > *", 0, 0, (void*)"Chemistry::OpenBabel::vectorMol", 0};
@@ -46954,7 +46937,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__vectorTOpenBabel__OBExternalBond_t,
   &_swigt__p_std__vectorTOpenBabel__OBGenericData_p_t,
   &_swigt__p_std__vectorTOpenBabel__OBGenericData_p_t__iterator,
-  &_swigt__p_std__vectorTOpenBabel__OBGenericData_t,
   &_swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_t,
   &_swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator,
   &_swigt__p_std__vectorTOpenBabel__OBMol_t,
@@ -47065,7 +47047,6 @@ static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBEdgeBase_p_t__iterator[
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBExternalBond_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBExternalBond_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBGenericData_p_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBGenericData_p_t__iterator[] = {  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_p_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBGenericData_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBInternalCoord_p_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator[] = {  {&_swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBMol_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBMol_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -47176,7 +47157,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__vectorTOpenBabel__OBExternalBond_t,
   _swigc__p_std__vectorTOpenBabel__OBGenericData_p_t,
   _swigc__p_std__vectorTOpenBabel__OBGenericData_p_t__iterator,
-  _swigc__p_std__vectorTOpenBabel__OBGenericData_t,
   _swigc__p_std__vectorTOpenBabel__OBInternalCoord_p_t,
   _swigc__p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator,
   _swigc__p_std__vectorTOpenBabel__OBMol_t,
@@ -48427,7 +48407,7 @@ XS(SWIG_init) {
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t, (void*) "Chemistry::OpenBabel::vectorBond");
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t, (void*) "Chemistry::OpenBabel::vectorResidue");
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t, (void*) "Chemistry::OpenBabel::vectorRing");
-  SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_t, (void*) "Chemistry::OpenBabel::vectorData");
+  SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, (void*) "Chemistry::OpenBabel::vectorData");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBGlobalDataBase, (void*) "Chemistry::OpenBabel::OBGlobalDataBase");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBElement, (void*) "Chemistry::OpenBabel::OBElement");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBElementTable, (void*) "Chemistry::OpenBabel::OBElementTable");

@@ -2519,78 +2519,78 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_a_3__double swig_types[54]
 #define SWIGTYPE_p_allocator_type swig_types[55]
 #define SWIGTYPE_p_char swig_types[56]
-#define SWIGTYPE_p_difference_type swig_types[57]
-#define SWIGTYPE_p_double swig_types[58]
-#define SWIGTYPE_p_int swig_types[59]
-#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[60]
-#define SWIGTYPE_p_p_PyObject swig_types[61]
-#define SWIGTYPE_p_p_double swig_types[62]
-#define SWIGTYPE_p_p_int swig_types[63]
-#define SWIGTYPE_p_size_type swig_types[64]
-#define SWIGTYPE_p_std__dequeTint_t swig_types[65]
-#define SWIGTYPE_p_std__ifstream swig_types[66]
-#define SWIGTYPE_p_std__invalid_argument swig_types[67]
-#define SWIGTYPE_p_std__istream swig_types[68]
-#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_std__allocatorTstd__pairTchar_const_pconst_OpenBabel__OBFormat_p_t_t_t swig_types[69]
-#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_std__lessTint_t_std__allocatorTstd__pairTint_const_OpenBabel__OBAtom_p_t_t_t swig_types[70]
-#define SWIGTYPE_p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t swig_types[71]
-#define SWIGTYPE_p_std__ostream swig_types[72]
-#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[73]
-#define SWIGTYPE_p_std__streampos swig_types[74]
-#define SWIGTYPE_p_std__string swig_types[75]
-#define SWIGTYPE_p_std__type_info swig_types[76]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t swig_types[77]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator swig_types[78]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t swig_types[79]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t swig_types[80]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__allocator_type swig_types[81]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__value_type swig_types[82]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator swig_types[83]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t swig_types[84]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t swig_types[85]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator swig_types[86]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t swig_types[87]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__allocator_type swig_types[88]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type swig_types[89]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t swig_types[90]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator swig_types[91]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t swig_types[92]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__allocator_type swig_types[93]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__value_type swig_types[94]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_std__allocatorTOpenBabel__OBNodeBase_p_t_t swig_types[95]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_std__allocatorTOpenBabel__OBNodeBase_p_t_t__iterator swig_types[96]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_std__allocatorTOpenBabel__OBResidue_p_t_t__iterator swig_types[97]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t swig_types[98]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__allocator_type swig_types[99]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__value_type swig_types[100]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t swig_types[101]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t__iterator swig_types[102]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t swig_types[103]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__allocator_type swig_types[104]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__value_type swig_types[105]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_std__allocatorTOpenBabel__OBTorsion_t_t swig_types[106]
-#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_std__allocatorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t_t swig_types[107]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t swig_types[108]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__allocator_type swig_types[109]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__value_type swig_types[110]
-#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t swig_types[111]
-#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t__iterator swig_types[112]
-#define SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t swig_types[113]
-#define SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t__allocator_type swig_types[114]
-#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t swig_types[115]
-#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t__allocator_type swig_types[116]
-#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_std__allocatorTstd__pairTint_int_t_t_t swig_types[117]
-#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_std__allocatorTstd__pairTstd__string_std__string_t_t_t swig_types[118]
-#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t swig_types[119]
-#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t_std__allocatorTstd__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t_t_t swig_types[120]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t swig_types[121]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t__allocator_type swig_types[122]
-#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_std__allocatorTunsigned_int_t_t_std__allocatorTstd__vectorTunsigned_int_std__allocatorTunsigned_int_t_t_t_t swig_types[123]
-#define SWIGTYPE_p_std__vectorTunsigned_int_std__allocatorTunsigned_int_t_t swig_types[124]
-#define SWIGTYPE_p_std__vectorTunsigned_short_std__allocatorTunsigned_short_t_t swig_types[125]
-#define SWIGTYPE_p_swig__PySwigIterator swig_types[126]
-#define SWIGTYPE_p_unsigned_int swig_types[127]
-#define SWIGTYPE_p_value_type swig_types[128]
+#define SWIGTYPE_p_const_reference swig_types[57]
+#define SWIGTYPE_p_difference_type swig_types[58]
+#define SWIGTYPE_p_double swig_types[59]
+#define SWIGTYPE_p_int swig_types[60]
+#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[61]
+#define SWIGTYPE_p_p_PyObject swig_types[62]
+#define SWIGTYPE_p_p_double swig_types[63]
+#define SWIGTYPE_p_p_int swig_types[64]
+#define SWIGTYPE_p_reference swig_types[65]
+#define SWIGTYPE_p_size_type swig_types[66]
+#define SWIGTYPE_p_std__dequeTint_t swig_types[67]
+#define SWIGTYPE_p_std__ifstream swig_types[68]
+#define SWIGTYPE_p_std__invalid_argument swig_types[69]
+#define SWIGTYPE_p_std__istream swig_types[70]
+#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_std__allocatorTstd__pairTchar_const_pconst_OpenBabel__OBFormat_p_t_t_t swig_types[71]
+#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_std__lessTint_t_std__allocatorTstd__pairTint_const_OpenBabel__OBAtom_p_t_t_t swig_types[72]
+#define SWIGTYPE_p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t swig_types[73]
+#define SWIGTYPE_p_std__ostream swig_types[74]
+#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[75]
+#define SWIGTYPE_p_std__streampos swig_types[76]
+#define SWIGTYPE_p_std__string swig_types[77]
+#define SWIGTYPE_p_std__type_info swig_types[78]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t swig_types[79]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator swig_types[80]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t swig_types[81]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t swig_types[82]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__allocator_type swig_types[83]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__value_type swig_types[84]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator swig_types[85]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t swig_types[86]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t swig_types[87]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type swig_types[88]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t swig_types[89]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator swig_types[90]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t swig_types[91]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__allocator_type swig_types[92]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__value_type swig_types[93]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_std__allocatorTOpenBabel__OBNodeBase_p_t_t swig_types[94]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_std__allocatorTOpenBabel__OBNodeBase_p_t_t__iterator swig_types[95]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_std__allocatorTOpenBabel__OBResidue_p_t_t__iterator swig_types[96]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t swig_types[97]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__allocator_type swig_types[98]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__value_type swig_types[99]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t swig_types[100]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t__iterator swig_types[101]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t swig_types[102]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__allocator_type swig_types[103]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__value_type swig_types[104]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_std__allocatorTOpenBabel__OBTorsion_t_t swig_types[105]
+#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_std__allocatorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t_t swig_types[106]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t swig_types[107]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__allocator_type swig_types[108]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__value_type swig_types[109]
+#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t swig_types[110]
+#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t__iterator swig_types[111]
+#define SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t swig_types[112]
+#define SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t__allocator_type swig_types[113]
+#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t swig_types[114]
+#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t__allocator_type swig_types[115]
+#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_std__allocatorTstd__pairTint_int_t_t_t swig_types[116]
+#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_std__allocatorTstd__pairTstd__string_std__string_t_t_t swig_types[117]
+#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t swig_types[118]
+#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t_std__allocatorTstd__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t_t_t swig_types[119]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t swig_types[120]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t__allocator_type swig_types[121]
+#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_std__allocatorTunsigned_int_t_t_std__allocatorTstd__vectorTunsigned_int_std__allocatorTunsigned_int_t_t_t_t swig_types[122]
+#define SWIGTYPE_p_std__vectorTunsigned_int_std__allocatorTunsigned_int_t_t swig_types[123]
+#define SWIGTYPE_p_std__vectorTunsigned_short_std__allocatorTunsigned_short_t_t swig_types[124]
+#define SWIGTYPE_p_swig__PySwigIterator swig_types[125]
+#define SWIGTYPE_p_unsigned_int swig_types[126]
+#define SWIGTYPE_p_value_type swig_types[127]
+#define SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type swig_types[128]
 static swig_type_info *swig_types[130];
 static swig_module_info swig_module = {swig_types, 129, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
@@ -4553,49 +4553,49 @@ SWIGINTERN void std_vector_Sl_OpenBabel_OBRing_Sg__append(std::vector<OpenBabel:
 
 
       namespace swig {
-	template <>  struct traits<std::vector<OpenBabel::OBGenericData, std::allocator<OpenBabel::OBGenericData > > > {
-	  typedef pointer_category category;
+	template <>  struct traits<std::vector<OpenBabel::OBGenericData*, std::allocator<OpenBabel::OBGenericData * > > > {
+	  typedef value_category category;
 	  static const char* type_name() {
-	    return "std::vector<" "OpenBabel::OBGenericData" "," "std::allocator<OpenBabel::OBGenericData >" " >";
+	    return "std::vector<" "OpenBabel::OBGenericData" " *," "std::allocator<OpenBabel::OBGenericData * >" " >";
 	  }
 	};
       }
     
-SWIGINTERN swig::PySwigIterator *std_vector_Sl_OpenBabel_OBGenericData_Sg__iterator(std::vector<OpenBabel::OBGenericData > *self,PyObject **PYTHON_SELF){
+SWIGINTERN swig::PySwigIterator *std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__iterator(std::vector<OpenBabel::OBGenericData * > *self,PyObject **PYTHON_SELF){
       return swig::make_output_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
     }
-SWIGINTERN bool std_vector_Sl_OpenBabel_OBGenericData_Sg____nonzero__(std::vector<OpenBabel::OBGenericData > const *self){
+SWIGINTERN bool std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____nonzero__(std::vector<OpenBabel::OBGenericData * > const *self){
       return !(self->empty());
     }
-SWIGINTERN std::vector<OpenBabel::OBGenericData >::size_type std_vector_Sl_OpenBabel_OBGenericData_Sg____len__(std::vector<OpenBabel::OBGenericData > const *self){
+SWIGINTERN std::vector<OpenBabel::OBGenericData * >::size_type std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____len__(std::vector<OpenBabel::OBGenericData * > const *self){
       return self->size();
     }
-SWIGINTERN std::vector<OpenBabel::OBGenericData >::value_type std_vector_Sl_OpenBabel_OBGenericData_Sg__pop(std::vector<OpenBabel::OBGenericData > *self){
+SWIGINTERN std::vector<OpenBabel::OBGenericData * >::value_type std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__pop(std::vector<OpenBabel::OBGenericData * > *self){
       if (self->size() == 0)
 	throw std::out_of_range("pop from empty container");
-      std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >::value_type x = self->back();
+      std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >::value_type x = self->back();
       self->pop_back();
       return x;
     }
-SWIGINTERN std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > *std_vector_Sl_OpenBabel_OBGenericData_Sg____getslice__(std::vector<OpenBabel::OBGenericData > *self,std::vector<OpenBabel::OBGenericData >::difference_type i,std::vector<OpenBabel::OBGenericData >::difference_type j){
+SWIGINTERN std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > *std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____getslice__(std::vector<OpenBabel::OBGenericData * > *self,std::vector<OpenBabel::OBGenericData * >::difference_type i,std::vector<OpenBabel::OBGenericData * >::difference_type j){
       return swig::getslice(self, i, j);
     }
-SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sg____setslice__(std::vector<OpenBabel::OBGenericData > *self,std::vector<OpenBabel::OBGenericData >::difference_type i,std::vector<OpenBabel::OBGenericData >::difference_type j,std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > const &v){
+SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____setslice__(std::vector<OpenBabel::OBGenericData * > *self,std::vector<OpenBabel::OBGenericData * >::difference_type i,std::vector<OpenBabel::OBGenericData * >::difference_type j,std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > const &v){
       swig::setslice(self, i, j, v);
     }
-SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sg____delslice__(std::vector<OpenBabel::OBGenericData > *self,std::vector<OpenBabel::OBGenericData >::difference_type i,std::vector<OpenBabel::OBGenericData >::difference_type j){
+SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____delslice__(std::vector<OpenBabel::OBGenericData * > *self,std::vector<OpenBabel::OBGenericData * >::difference_type i,std::vector<OpenBabel::OBGenericData * >::difference_type j){
       swig::delslice(self, i, j);
     }
-SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sg____delitem__(std::vector<OpenBabel::OBGenericData > *self,std::vector<OpenBabel::OBGenericData >::difference_type i){
+SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____delitem__(std::vector<OpenBabel::OBGenericData * > *self,std::vector<OpenBabel::OBGenericData * >::difference_type i){
       self->erase(swig::getpos(self,i));
     }
-SWIGINTERN std::vector<OpenBabel::OBGenericData >::value_type const &std_vector_Sl_OpenBabel_OBGenericData_Sg____getitem__(std::vector<OpenBabel::OBGenericData > const *self,std::vector<OpenBabel::OBGenericData >::difference_type i){
+SWIGINTERN std::vector<OpenBabel::OBGenericData * >::value_type std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____getitem__(std::vector<OpenBabel::OBGenericData * > *self,std::vector<OpenBabel::OBGenericData * >::difference_type i){
       return *(swig::cgetpos(self, i));
     }
-SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sg____setitem__(std::vector<OpenBabel::OBGenericData > *self,std::vector<OpenBabel::OBGenericData >::difference_type i,std::vector<OpenBabel::OBGenericData >::value_type const &x){
+SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____setitem__(std::vector<OpenBabel::OBGenericData * > *self,std::vector<OpenBabel::OBGenericData * >::difference_type i,std::vector<OpenBabel::OBGenericData * >::value_type x){
       *(swig::getpos(self,i)) = x;
     }
-SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sg__append(std::vector<OpenBabel::OBGenericData > *self,std::vector<OpenBabel::OBGenericData >::value_type const &x){
+SWIGINTERN void std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__append(std::vector<OpenBabel::OBGenericData * > *self,std::vector<OpenBabel::OBGenericData * >::value_type x){
       self->push_back(x);
     }
 
@@ -18900,7 +18900,7 @@ SWIGINTERN PyObject *vectorRing_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObjec
 
 SWIGINTERN PyObject *_wrap_vectorData_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
   PyObject **arg2 = (PyObject **) 0 ;
   swig::PySwigIterator *result = 0 ;
   void *argp1 = 0 ;
@@ -18909,12 +18909,12 @@ SWIGINTERN PyObject *_wrap_vectorData_iterator(PyObject *SWIGUNUSEDPARM(self), P
   
   arg2 = &obj0;
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_iterator",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_iterator" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_iterator" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = (swig::PySwigIterator *)std_vector_Sl_OpenBabel_OBGenericData_Sg__iterator(arg1,arg2);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = (swig::PySwigIterator *)std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__iterator(arg1,arg2);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_swig__PySwigIterator, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -18924,19 +18924,19 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData___nonzero__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
   bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData___nonzero__",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___nonzero__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___nonzero__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = (bool)std_vector_Sl_OpenBabel_OBGenericData_Sg____nonzero__((std::vector<OpenBabel::OBGenericData > const *)arg1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = (bool)std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____nonzero__((std::vector<OpenBabel::OBGenericData * > const *)arg1);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
@@ -18946,19 +18946,19 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData___len__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::size_type result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData___len__",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___len__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___len__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = std_vector_Sl_OpenBabel_OBGenericData_Sg____len__((std::vector<OpenBabel::OBGenericData > const *)arg1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____len__((std::vector<OpenBabel::OBGenericData * > const *)arg1);
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
@@ -18968,26 +18968,26 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_pop(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::value_type result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_pop",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_pop" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_pop" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   try {
-    result = std_vector_Sl_OpenBabel_OBGenericData_Sg__pop(arg1);
+    result = (std::vector<OpenBabel::OBGenericData * >::value_type)std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__pop(arg1);
   }
   catch(std::out_of_range &_e) {
     SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
   }
   
-  resultobj = SWIG_NewPointerObj((new std::vector<OpenBabel::OBGenericData >::value_type(static_cast< const std::vector<OpenBabel::OBGenericData >::value_type& >(result))), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -18996,10 +18996,10 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData___getslice__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::difference_type arg2 ;
-  std::vector<OpenBabel::OBGenericData >::difference_type arg3 ;
-  std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > *result = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::difference_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::difference_type arg3 ;
+  std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   ptrdiff_t val2 ;
@@ -19011,29 +19011,29 @@ SWIGINTERN PyObject *_wrap_vectorData___getslice__(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj2 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData___getslice__",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___getslice__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___getslice__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___getslice__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::difference_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___getslice__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::difference_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::difference_type >(val2);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorData___getslice__" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::difference_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorData___getslice__" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::difference_type""'");
   } 
-  arg3 = static_cast< std::vector<OpenBabel::OBGenericData >::difference_type >(val3);
+  arg3 = static_cast< std::vector<OpenBabel::OBGenericData * >::difference_type >(val3);
   try {
-    result = (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > *)std_vector_Sl_OpenBabel_OBGenericData_Sg____getslice__(arg1,arg2,arg3);
+    result = (std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > *)std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____getslice__(arg1,arg2,arg3);
   }
   catch(std::out_of_range &_e) {
     SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
   }
   
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -19042,10 +19042,10 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData___setslice__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::difference_type arg2 ;
-  std::vector<OpenBabel::OBGenericData >::difference_type arg3 ;
-  std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > *arg4 = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::difference_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::difference_type arg3 ;
+  std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > *arg4 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   ptrdiff_t val2 ;
@@ -19059,34 +19059,34 @@ SWIGINTERN PyObject *_wrap_vectorData___setslice__(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj3 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData___setslice__",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___setslice__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___setslice__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___setslice__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::difference_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___setslice__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::difference_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::difference_type >(val2);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorData___setslice__" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::difference_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorData___setslice__" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::difference_type""'");
   } 
-  arg3 = static_cast< std::vector<OpenBabel::OBGenericData >::difference_type >(val3);
+  arg3 = static_cast< std::vector<OpenBabel::OBGenericData * >::difference_type >(val3);
   {
-    std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > *ptr = (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > *)0;
+    std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > > *ptr = (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > > *)0;
     res4 = swig::asptr(obj3, &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorData___setslice__" "', argument " "4"" of type '" "std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorData___setslice__" "', argument " "4"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData___setslice__" "', argument " "4"" of type '" "std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData___setslice__" "', argument " "4"" of type '" "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > const &""'"); 
     }
     arg4 = ptr;
   }
   try {
-    std_vector_Sl_OpenBabel_OBGenericData_Sg____setslice__(arg1,arg2,arg3,(std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > const &)*arg4);
+    std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____setslice__(arg1,arg2,arg3,(std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > const &)*arg4);
   }
   catch(std::out_of_range &_e) {
     SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
@@ -19106,9 +19106,9 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData___delslice__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::difference_type arg2 ;
-  std::vector<OpenBabel::OBGenericData >::difference_type arg3 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::difference_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::difference_type arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   ptrdiff_t val2 ;
@@ -19120,23 +19120,23 @@ SWIGINTERN PyObject *_wrap_vectorData___delslice__(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj2 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData___delslice__",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___delslice__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___delslice__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___delslice__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::difference_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___delslice__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::difference_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::difference_type >(val2);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorData___delslice__" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::difference_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorData___delslice__" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::difference_type""'");
   } 
-  arg3 = static_cast< std::vector<OpenBabel::OBGenericData >::difference_type >(val3);
+  arg3 = static_cast< std::vector<OpenBabel::OBGenericData * >::difference_type >(val3);
   try {
-    std_vector_Sl_OpenBabel_OBGenericData_Sg____delslice__(arg1,arg2,arg3);
+    std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____delslice__(arg1,arg2,arg3);
   }
   catch(std::out_of_range &_e) {
     SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
@@ -19151,8 +19151,8 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData___delitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::difference_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::difference_type arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   ptrdiff_t val2 ;
@@ -19161,18 +19161,18 @@ SWIGINTERN PyObject *_wrap_vectorData___delitem__(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj1 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData___delitem__",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___delitem__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___delitem__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___delitem__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::difference_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___delitem__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::difference_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::difference_type >(val2);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::difference_type >(val2);
   try {
-    std_vector_Sl_OpenBabel_OBGenericData_Sg____delitem__(arg1,arg2);
+    std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____delitem__(arg1,arg2);
   }
   catch(std::out_of_range &_e) {
     SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
@@ -19187,9 +19187,9 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData___getitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::difference_type arg2 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *result = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::difference_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   ptrdiff_t val2 ;
@@ -19198,27 +19198,24 @@ SWIGINTERN PyObject *_wrap_vectorData___getitem__(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj1 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData___getitem__",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___getitem__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___getitem__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___getitem__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::difference_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___getitem__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::difference_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::difference_type >(val2);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::difference_type >(val2);
   try {
-    {
-      std::vector<OpenBabel::OBGenericData >::value_type const &_result_ref = std_vector_Sl_OpenBabel_OBGenericData_Sg____getitem__((std::vector<OpenBabel::OBGenericData > const *)arg1,arg2);
-      result = (std::vector<OpenBabel::OBGenericData >::value_type *) &_result_ref;
-    }
+    result = (std::vector<OpenBabel::OBGenericData * >::value_type)std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____getitem__(arg1,arg2);
   }
   catch(std::out_of_range &_e) {
     SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
   }
   
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, 0 |  0 );
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -19227,9 +19224,9 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData___setitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::difference_type arg2 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *arg3 = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::difference_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type arg3 = (std::vector<OpenBabel::OBGenericData * >::value_type) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   ptrdiff_t val2 ;
@@ -19241,26 +19238,23 @@ SWIGINTERN PyObject *_wrap_vectorData___setitem__(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj2 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData___setitem__",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___setitem__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData___setitem__" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___setitem__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::difference_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData___setitem__" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::difference_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::difference_type >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,  0  | 0);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::difference_type >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData___setitem__" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData___setitem__" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::value_type""'"); 
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData___setitem__" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
-  }
-  arg3 = reinterpret_cast< std::vector<OpenBabel::OBGenericData >::value_type * >(argp3);
+  arg3 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * >::value_type >(argp3);
   try {
-    std_vector_Sl_OpenBabel_OBGenericData_Sg____setitem__(arg1,arg2,(OpenBabel::OBGenericData const &)*arg3);
+    std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg____setitem__(arg1,arg2,arg3);
   }
   catch(std::out_of_range &_e) {
     SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
@@ -19275,8 +19269,8 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_append(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *arg2 = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type arg2 = (std::vector<OpenBabel::OBGenericData * >::value_type) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -19285,20 +19279,17 @@ SWIGINTERN PyObject *_wrap_vectorData_append(PyObject *SWIGUNUSEDPARM(self), PyO
   PyObject * obj1 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_append",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_append" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_append" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,  0  | 0);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorData_append" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorData_append" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::value_type""'"); 
   }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_append" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
-  }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData >::value_type * >(argp2);
-  std_vector_Sl_OpenBabel_OBGenericData_Sg__append(arg1,(OpenBabel::OBGenericData const &)*arg2);
+  arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * >::value_type >(argp2);
+  std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg__append(arg1,arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -19308,11 +19299,11 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_vectorData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *result = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *result = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"new_vectorData",0,0)) SWIG_fail;
-  result = (std::vector<OpenBabel::OBGenericData > *)new std::vector<OpenBabel::OBGenericData >();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, SWIG_POINTER_NEW |  0 );
+  result = (std::vector<OpenBabel::OBGenericData * > *)new std::vector<OpenBabel::OBGenericData * >();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -19321,25 +19312,25 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_vectorData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = 0 ;
-  std::vector<OpenBabel::OBGenericData > *result = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *result = 0 ;
   int res1 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"new_vectorData",1,1,&obj0)) SWIG_fail;
   {
-    std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > *ptr = (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > *)0;
+    std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > > *ptr = (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > > *)0;
     res1 = swig::asptr(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const &""'"); 
     }
     arg1 = ptr;
   }
-  result = (std::vector<OpenBabel::OBGenericData > *)new std::vector<OpenBabel::OBGenericData >((std::vector<OpenBabel::OBGenericData > const &)*arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, SWIG_POINTER_NEW |  0 );
+  result = (std::vector<OpenBabel::OBGenericData * > *)new std::vector<OpenBabel::OBGenericData * >((std::vector<OpenBabel::OBGenericData * > const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, SWIG_POINTER_NEW |  0 );
   if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
@@ -19350,19 +19341,19 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_empty(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
   bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_empty",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_empty" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_empty" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = (bool)((std::vector<OpenBabel::OBGenericData > const *)arg1)->empty();
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = (bool)((std::vector<OpenBabel::OBGenericData * > const *)arg1)->empty();
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
@@ -19372,19 +19363,19 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::size_type result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_size",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_size" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_size" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = ((std::vector<OpenBabel::OBGenericData > const *)arg1)->size();
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = ((std::vector<OpenBabel::OBGenericData * > const *)arg1)->size();
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
@@ -19394,17 +19385,17 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_clear",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_clear" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_clear" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   (arg1)->clear();
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -19415,8 +19406,8 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_swap(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData > *arg2 = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -19425,19 +19416,19 @@ SWIGINTERN PyObject *_wrap_vectorData_swap(PyObject *SWIGUNUSEDPARM(self), PyObj
   PyObject * obj1 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_swap",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_swap" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_swap" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t,  0 );
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorData_swap" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorData_swap" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * > &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_swap" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData > &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_swap" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * > &""'"); 
   }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp2);
+  arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp2);
   (arg1)->swap(*arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -19448,20 +19439,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_get_allocator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  SwigValueWrapper<std::allocator<OpenBabel::OBGenericData > > result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  SwigValueWrapper<std::allocator<OpenBabel::OBGenericData * > > result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_get_allocator",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_get_allocator" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_get_allocator" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = ((std::vector<OpenBabel::OBGenericData > const *)arg1)->get_allocator();
-  resultobj = SWIG_NewPointerObj((new std::vector<OpenBabel::OBGenericData >::allocator_type(static_cast< const std::vector<OpenBabel::OBGenericData >::allocator_type& >(result))), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__allocator_type, SWIG_POINTER_OWN |  0 );
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = ((std::vector<OpenBabel::OBGenericData * > const *)arg1)->get_allocator();
+  resultobj = SWIG_NewPointerObj((new std::vector<OpenBabel::OBGenericData * >::allocator_type(static_cast< const std::vector<OpenBabel::OBGenericData * >::allocator_type& >(result))), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -19470,20 +19461,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_begin__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_begin",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_begin" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_begin" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   result = (arg1)->begin();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::iterator & >(result)),
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19493,20 +19484,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_begin__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::const_iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::const_iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_begin",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_begin" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_begin" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = ((std::vector<OpenBabel::OBGenericData > const *)arg1)->begin();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::const_iterator & >(result)),
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = ((std::vector<OpenBabel::OBGenericData * > const *)arg1)->begin();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::const_iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19526,7 +19517,7 @@ SWIGINTERN PyObject *_wrap_vectorData_begin(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_vectorData_begin__SWIG_0(self, args);
@@ -19534,7 +19525,7 @@ SWIGINTERN PyObject *_wrap_vectorData_begin(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_vectorData_begin__SWIG_1(self, args);
@@ -19549,20 +19540,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_end__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_end",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_end" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_end" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   result = (arg1)->end();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::iterator & >(result)),
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19572,20 +19563,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_end__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::const_iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::const_iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_end",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_end" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_end" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = ((std::vector<OpenBabel::OBGenericData > const *)arg1)->end();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::const_iterator & >(result)),
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = ((std::vector<OpenBabel::OBGenericData * > const *)arg1)->end();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::const_iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19605,7 +19596,7 @@ SWIGINTERN PyObject *_wrap_vectorData_end(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_vectorData_end__SWIG_0(self, args);
@@ -19613,7 +19604,7 @@ SWIGINTERN PyObject *_wrap_vectorData_end(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_vectorData_end__SWIG_1(self, args);
@@ -19628,20 +19619,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_rbegin__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::reverse_iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::reverse_iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_rbegin",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_rbegin" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_rbegin" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   result = (arg1)->rbegin();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::reverse_iterator & >(result)),
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::reverse_iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19651,20 +19642,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_rbegin__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::const_reverse_iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::const_reverse_iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_rbegin",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_rbegin" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_rbegin" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = ((std::vector<OpenBabel::OBGenericData > const *)arg1)->rbegin();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::const_reverse_iterator & >(result)),
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = ((std::vector<OpenBabel::OBGenericData * > const *)arg1)->rbegin();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::const_reverse_iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19684,7 +19675,7 @@ SWIGINTERN PyObject *_wrap_vectorData_rbegin(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_vectorData_rbegin__SWIG_0(self, args);
@@ -19692,7 +19683,7 @@ SWIGINTERN PyObject *_wrap_vectorData_rbegin(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_vectorData_rbegin__SWIG_1(self, args);
@@ -19707,20 +19698,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_rend__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::reverse_iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::reverse_iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_rend",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_rend" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_rend" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   result = (arg1)->rend();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::reverse_iterator & >(result)),
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::reverse_iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19730,20 +19721,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_rend__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::const_reverse_iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::const_reverse_iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_rend",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_rend" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_rend" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = ((std::vector<OpenBabel::OBGenericData > const *)arg1)->rend();
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::const_reverse_iterator & >(result)),
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = ((std::vector<OpenBabel::OBGenericData * > const *)arg1)->rend();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::const_reverse_iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19763,7 +19754,7 @@ SWIGINTERN PyObject *_wrap_vectorData_rend(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_vectorData_rend__SWIG_0(self, args);
@@ -19771,7 +19762,7 @@ SWIGINTERN PyObject *_wrap_vectorData_rend(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_vectorData_rend__SWIG_1(self, args);
@@ -19786,8 +19777,8 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_vectorData__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData >::size_type arg1 ;
-  std::vector<OpenBabel::OBGenericData > *result = 0 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type arg1 ;
+  std::vector<OpenBabel::OBGenericData * > *result = 0 ;
   size_t val1 ;
   int ecode1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -19795,11 +19786,11 @@ SWIGINTERN PyObject *_wrap_new_vectorData__SWIG_2(PyObject *SWIGUNUSEDPARM(self)
   if(!PyArg_UnpackTuple(args,(char *)"new_vectorData",1,1,&obj0)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData >::size_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * >::size_type""'");
   } 
-  arg1 = static_cast< std::vector<OpenBabel::OBGenericData >::size_type >(val1);
-  result = (std::vector<OpenBabel::OBGenericData > *)new std::vector<OpenBabel::OBGenericData >(arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, SWIG_POINTER_NEW |  0 );
+  arg1 = static_cast< std::vector<OpenBabel::OBGenericData * >::size_type >(val1);
+  result = (std::vector<OpenBabel::OBGenericData * > *)new std::vector<OpenBabel::OBGenericData * >(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -19808,17 +19799,17 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_pop_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_pop_back",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_pop_back" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_pop_back" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   (arg1)->pop_back();
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -19829,8 +19820,8 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_resize__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::size_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   size_t val2 ;
@@ -19839,16 +19830,16 @@ SWIGINTERN PyObject *_wrap_vectorData_resize__SWIG_0(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj1 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_resize",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_resize" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_resize" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_resize" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::size_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_resize" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::size_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::size_type >(val2);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::size_type >(val2);
   (arg1)->resize(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -19859,9 +19850,9 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::iterator arg2 ;
-  std::vector<OpenBabel::OBGenericData >::iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   swig::PySwigIterator *iter2 = 0 ;
@@ -19870,24 +19861,24 @@ SWIGINTERN PyObject *_wrap_vectorData_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj1 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_erase",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
   if (!SWIG_IsOK(res2) || !iter2) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
   } else {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter2);
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter2);
     if (iter_t) {
       arg2 = iter_t->get_current();
     } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
     }
   }
   result = (arg1)->erase(arg2);
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::iterator & >(result)),
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19897,10 +19888,10 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::iterator arg2 ;
-  std::vector<OpenBabel::OBGenericData >::iterator arg3 ;
-  std::vector<OpenBabel::OBGenericData >::iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator arg3 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   swig::PySwigIterator *iter2 = 0 ;
@@ -19912,35 +19903,35 @@ SWIGINTERN PyObject *_wrap_vectorData_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj2 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_erase",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_erase" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
   if (!SWIG_IsOK(res2) || !iter2) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
   } else {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter2);
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter2);
     if (iter_t) {
       arg2 = iter_t->get_current();
     } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
     }
   }
   res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
   if (!SWIG_IsOK(res3) || !iter3) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
   } else {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter3);
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter3);
     if (iter_t) {
       arg3 = iter_t->get_current();
     } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_erase" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
     }
   }
   result = (arg1)->erase(arg2,arg3);
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::iterator & >(result)),
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -19960,12 +19951,12 @@ SWIGINTERN PyObject *_wrap_vectorData_erase(PyObject *self, PyObject *args) {
   }
   if (argc == 2) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
       int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
-      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter) != 0));
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter) != 0));
       if (_v) {
         return _wrap_vectorData_erase__SWIG_0(self, args);
       }
@@ -19973,16 +19964,16 @@ SWIGINTERN PyObject *_wrap_vectorData_erase(PyObject *self, PyObject *args) {
   }
   if (argc == 3) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
       int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
-      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter) != 0));
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter) != 0));
       if (_v) {
         swig::PySwigIterator *iter = 0;
         int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
-        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter) != 0));
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter) != 0));
         if (_v) {
           return _wrap_vectorData_erase__SWIG_1(self, args);
         }
@@ -19998,9 +19989,9 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_vectorData__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData >::size_type arg1 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *arg2 = 0 ;
-  std::vector<OpenBabel::OBGenericData > *result = 0 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type arg1 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type arg2 = (std::vector<OpenBabel::OBGenericData * >::value_type) 0 ;
+  std::vector<OpenBabel::OBGenericData * > *result = 0 ;
   size_t val1 ;
   int ecode1 = 0 ;
   void *argp2 = 0 ;
@@ -20011,19 +20002,16 @@ SWIGINTERN PyObject *_wrap_new_vectorData__SWIG_3(PyObject *SWIGUNUSEDPARM(self)
   if(!PyArg_UnpackTuple(args,(char *)"new_vectorData",2,2,&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData >::size_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * >::size_type""'");
   } 
-  arg1 = static_cast< std::vector<OpenBabel::OBGenericData >::size_type >(val1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,  0  | 0);
+  arg1 = static_cast< std::vector<OpenBabel::OBGenericData * >::size_type >(val1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_vectorData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_vectorData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::value_type""'"); 
   }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorData" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
-  }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData >::value_type * >(argp2);
-  result = (std::vector<OpenBabel::OBGenericData > *)new std::vector<OpenBabel::OBGenericData >(arg1,(std::vector<OpenBabel::OBGenericData >::value_type const &)*arg2);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, SWIG_POINTER_NEW |  0 );
+  arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * >::value_type >(argp2);
+  result = (std::vector<OpenBabel::OBGenericData * > *)new std::vector<OpenBabel::OBGenericData * >(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -20055,7 +20043,7 @@ SWIGINTERN PyObject *_wrap_new_vectorData(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_new_vectorData__SWIG_1(self, args);
@@ -20068,7 +20056,8 @@ SWIGINTERN PyObject *_wrap_new_vectorData(PyObject *self, PyObject *args) {
       _v = SWIG_CheckState(res);
     }
     if (_v) {
-      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, 0);
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_new_vectorData__SWIG_3(self, args);
@@ -20084,8 +20073,8 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_push_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *arg2 = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type arg2 = (std::vector<OpenBabel::OBGenericData * >::value_type) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -20094,20 +20083,17 @@ SWIGINTERN PyObject *_wrap_vectorData_push_back(PyObject *SWIGUNUSEDPARM(self), 
   PyObject * obj1 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_push_back",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_push_back" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_push_back" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,  0  | 0);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorData_push_back" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorData_push_back" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::value_type""'"); 
   }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_push_back" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
-  }
-  arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData >::value_type * >(argp2);
-  (arg1)->push_back((std::vector<OpenBabel::OBGenericData >::value_type const &)*arg2);
+  arg2 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * >::value_type >(argp2);
+  (arg1)->push_back(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -20117,23 +20103,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_front(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *result = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_front",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_front" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_front" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  {
-    std::vector<OpenBabel::OBGenericData >::value_type const &_result_ref = ((std::vector<OpenBabel::OBGenericData > const *)arg1)->front();
-    result = (std::vector<OpenBabel::OBGenericData >::value_type *) &_result_ref;
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, 0 |  0 );
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = (std::vector<OpenBabel::OBGenericData * >::value_type)((std::vector<OpenBabel::OBGenericData * > const *)arg1)->front();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -20142,23 +20125,20 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *result = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_back",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_back" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_back" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  {
-    std::vector<OpenBabel::OBGenericData >::value_type const &_result_ref = ((std::vector<OpenBabel::OBGenericData > const *)arg1)->back();
-    result = (std::vector<OpenBabel::OBGenericData >::value_type *) &_result_ref;
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, 0 |  0 );
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = (std::vector<OpenBabel::OBGenericData * >::value_type)((std::vector<OpenBabel::OBGenericData * > const *)arg1)->back();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -20167,9 +20147,9 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_assign(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::size_type arg2 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *arg3 = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type arg3 = (std::vector<OpenBabel::OBGenericData * >::value_type) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   size_t val2 ;
@@ -20181,25 +20161,22 @@ SWIGINTERN PyObject *_wrap_vectorData_assign(PyObject *SWIGUNUSEDPARM(self), PyO
   PyObject * obj2 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_assign",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_assign" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_assign" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_assign" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::size_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_assign" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::size_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::size_type >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,  0  | 0);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::size_type >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData_assign" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData_assign" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::value_type""'"); 
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_assign" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
-  }
-  arg3 = reinterpret_cast< std::vector<OpenBabel::OBGenericData >::value_type * >(argp3);
-  (arg1)->assign(arg2,(std::vector<OpenBabel::OBGenericData >::value_type const &)*arg3);
+  arg3 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * >::value_type >(argp3);
+  (arg1)->assign(arg2,arg3);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -20209,9 +20186,9 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_resize__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::size_type arg2 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *arg3 = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type arg3 = (std::vector<OpenBabel::OBGenericData * >::value_type) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   size_t val2 ;
@@ -20223,25 +20200,22 @@ SWIGINTERN PyObject *_wrap_vectorData_resize__SWIG_1(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj2 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_resize",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_resize" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_resize" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_resize" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::size_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_resize" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::size_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::size_type >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,  0  | 0);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::size_type >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData_resize" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData_resize" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::value_type""'"); 
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_resize" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
-  }
-  arg3 = reinterpret_cast< std::vector<OpenBabel::OBGenericData >::value_type * >(argp3);
-  (arg1)->resize(arg2,(std::vector<OpenBabel::OBGenericData >::value_type const &)*arg3);
+  arg3 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * >::value_type >(argp3);
+  (arg1)->resize(arg2,arg3);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -20261,7 +20235,7 @@ SWIGINTERN PyObject *_wrap_vectorData_resize(PyObject *self, PyObject *args) {
   }
   if (argc == 2) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       {
@@ -20275,7 +20249,7 @@ SWIGINTERN PyObject *_wrap_vectorData_resize(PyObject *self, PyObject *args) {
   }
   if (argc == 3) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       {
@@ -20283,7 +20257,8 @@ SWIGINTERN PyObject *_wrap_vectorData_resize(PyObject *self, PyObject *args) {
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, 0);
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
           return _wrap_vectorData_resize__SWIG_1(self, args);
@@ -20300,10 +20275,10 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::iterator arg2 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *arg3 = 0 ;
-  std::vector<OpenBabel::OBGenericData >::iterator result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type arg3 = (std::vector<OpenBabel::OBGenericData * >::value_type) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   swig::PySwigIterator *iter2 = 0 ;
@@ -20315,32 +20290,29 @@ SWIGINTERN PyObject *_wrap_vectorData_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj2 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_insert",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
   if (!SWIG_IsOK(res2) || !iter2) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
   } else {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter2);
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter2);
     if (iter_t) {
       arg2 = iter_t->get_current();
     } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
     }
   }
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,  0  | 0);
+  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData_insert" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorData_insert" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::value_type""'"); 
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_insert" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
-  }
-  arg3 = reinterpret_cast< std::vector<OpenBabel::OBGenericData >::value_type * >(argp3);
-  result = (arg1)->insert(arg2,(std::vector<OpenBabel::OBGenericData >::value_type const &)*arg3);
-  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData >::iterator & >(result)),
+  arg3 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * >::value_type >(argp3);
+  result = (arg1)->insert(arg2,arg3);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData * >::iterator & >(result)),
     swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
@@ -20350,10 +20322,10 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::iterator arg2 ;
-  std::vector<OpenBabel::OBGenericData >::size_type arg3 ;
-  std::vector<OpenBabel::OBGenericData >::value_type *arg4 = 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::iterator arg2 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type arg3 ;
+  std::vector<OpenBabel::OBGenericData * >::value_type arg4 = (std::vector<OpenBabel::OBGenericData * >::value_type) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   swig::PySwigIterator *iter2 = 0 ;
@@ -20368,36 +20340,33 @@ SWIGINTERN PyObject *_wrap_vectorData_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj3 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_insert",4,4,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_insert" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
   if (!SWIG_IsOK(res2) || !iter2) {
-    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
   } else {
-    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter2);
+    swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter2);
     if (iter_t) {
       arg2 = iter_t->get_current();
     } else {
-      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::iterator""'");
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "vectorData_insert" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::iterator""'");
     }
   }
   ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorData_insert" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData >::size_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorData_insert" "', argument " "3"" of type '" "std::vector<OpenBabel::OBGenericData * >::size_type""'");
   } 
-  arg3 = static_cast< std::vector<OpenBabel::OBGenericData >::size_type >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,  0  | 0);
+  arg3 = static_cast< std::vector<OpenBabel::OBGenericData * >::size_type >(val3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4,SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0 |  0 );
   if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorData_insert" "', argument " "4"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorData_insert" "', argument " "4"" of type '" "std::vector<OpenBabel::OBGenericData * >::value_type""'"); 
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorData_insert" "', argument " "4"" of type '" "std::vector<OpenBabel::OBGenericData >::value_type const &""'"); 
-  }
-  arg4 = reinterpret_cast< std::vector<OpenBabel::OBGenericData >::value_type * >(argp4);
-  (arg1)->insert(arg2,arg3,(std::vector<OpenBabel::OBGenericData >::value_type const &)*arg4);
+  arg4 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * >::value_type >(argp4);
+  (arg1)->insert(arg2,arg3,arg4);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -20417,14 +20386,15 @@ SWIGINTERN PyObject *_wrap_vectorData_insert(PyObject *self, PyObject *args) {
   }
   if (argc == 3) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
       int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
-      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter) != 0));
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter) != 0));
       if (_v) {
-        int res = SWIG_ConvertPtr(argv[2], 0, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, 0);
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
           return _wrap_vectorData_insert__SWIG_0(self, args);
@@ -20434,19 +20404,20 @@ SWIGINTERN PyObject *_wrap_vectorData_insert(PyObject *self, PyObject *args) {
   }
   if (argc == 4) {
     int _v;
-    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > >**)(0));
+    int res = swig::asptr(argv[0], (std::vector<OpenBabel::OBGenericData*,std::allocator<OpenBabel::OBGenericData * > >**)(0));
     _v = SWIG_CheckState(res);
     if (_v) {
       swig::PySwigIterator *iter = 0;
       int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
-      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData >::iterator > *>(iter) != 0));
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector<OpenBabel::OBGenericData * >::iterator > *>(iter) != 0));
       if (_v) {
         {
           int res = SWIG_AsVal_size_t(argv[2], NULL);
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          int res = SWIG_ConvertPtr(argv[3], 0, SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, 0);
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0);
           _v = SWIG_CheckState(res);
           if (_v) {
             return _wrap_vectorData_insert__SWIG_1(self, args);
@@ -20464,8 +20435,8 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_reserve(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::size_type arg2 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   size_t val2 ;
@@ -20474,16 +20445,16 @@ SWIGINTERN PyObject *_wrap_vectorData_reserve(PyObject *SWIGUNUSEDPARM(self), Py
   PyObject * obj1 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_reserve",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_reserve" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_reserve" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_reserve" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData >::size_type""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorData_reserve" "', argument " "2"" of type '" "std::vector<OpenBabel::OBGenericData * >::size_type""'");
   } 
-  arg2 = static_cast< std::vector<OpenBabel::OBGenericData >::size_type >(val2);
+  arg2 = static_cast< std::vector<OpenBabel::OBGenericData * >::size_type >(val2);
   (arg1)->reserve(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -20494,19 +20465,19 @@ fail:
 
 SWIGINTERN PyObject *_wrap_vectorData_capacity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
-  std::vector<OpenBabel::OBGenericData >::size_type result;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * >::size_type result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"vectorData_capacity",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0 |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_capacity" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorData_capacity" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > const *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
-  result = ((std::vector<OpenBabel::OBGenericData > const *)arg1)->capacity();
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
+  result = ((std::vector<OpenBabel::OBGenericData * > const *)arg1)->capacity();
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
@@ -20516,17 +20487,17 @@ fail:
 
 SWIGINTERN PyObject *_wrap_delete_vectorData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::vector<OpenBabel::OBGenericData > *arg1 = (std::vector<OpenBabel::OBGenericData > *) 0 ;
+  std::vector<OpenBabel::OBGenericData * > *arg1 = (std::vector<OpenBabel::OBGenericData * > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"delete_vectorData",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, SWIG_POINTER_DISOWN |  0 );
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorData" "', argument " "1"" of type '" "std::vector<OpenBabel::OBGenericData * > *""'"); 
   }
-  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData > * >(argp1);
+  arg1 = reinterpret_cast< std::vector<OpenBabel::OBGenericData * > * >(argp1);
   delete arg1;
   
   resultobj = SWIG_Py_Void();
@@ -20539,7 +20510,7 @@ fail:
 SWIGINTERN PyObject *vectorData_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, SWIG_NewClientData(obj));
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -31514,7 +31485,8 @@ SWIGINTERN PyObject *_wrap_OBBase_BeginData(PyObject *SWIGUNUSEDPARM(self), PyOb
   }
   arg1 = reinterpret_cast< OpenBabel::OBBase * >(argp1);
   result = (arg1)->BeginData();
-  resultobj = SWIG_NewPointerObj((new std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator(static_cast< const std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator& >(result))), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
   return NULL;
@@ -31536,7 +31508,8 @@ SWIGINTERN PyObject *_wrap_OBBase_EndData(PyObject *SWIGUNUSEDPARM(self), PyObje
   }
   arg1 = reinterpret_cast< OpenBabel::OBBase * >(argp1);
   result = (arg1)->EndData();
-  resultobj = SWIG_NewPointerObj((new std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator(static_cast< const std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator& >(result))), SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
   return resultobj;
 fail:
   return NULL;
@@ -52812,6 +52785,7 @@ static swig_type_info _swigt__p_OpenBabel__vector3 = {"_p_OpenBabel__vector3", "
 static swig_type_info _swigt__p_a_3__double = {"_p_a_3__double", "double (*)[3]", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_allocator_type = {"_p_allocator_type", "allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_const_reference = {"_p_const_reference", "const_reference *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "difference_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "int *", 0, 0, (void*)0, 0};
@@ -52819,6 +52793,7 @@ static swig_type_info _swigt__p_p_OpenBabel__OBFormat = {"_p_p_OpenBabel__OBForm
 static swig_type_info _swigt__p_p_PyObject = {"_p_p_PyObject", "PyObject **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_double = {"_p_p_double", "double **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_int = {"_p_p_int", "int **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_reference = {"_p_reference", "reference *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_size_type = {"_p_size_type", "size_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__dequeTint_t = {"_p_std__dequeTint_t", "std::deque<int > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__ifstream = {"_p_std__ifstream", "std::ifstream *", 0, 0, (void*)0, 0};
@@ -52841,10 +52816,7 @@ static swig_type_info _swigt__p_std__vectorTOpenBabel__OBBond_std__allocatorTOpe
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator = {"_p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator", "std::vector<OpenBabel::OBEdgeBase *,std::allocator<OpenBabel::OBEdgeBase * > >::iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t = {"_p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t", "std::vector<OpenBabel::OBExternalBond,std::allocator<OpenBabel::OBExternalBond > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t = {"_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t", "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator = {"_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator", "std::vector<OpenBabel::OBGenericData *,std::allocator<OpenBabel::OBGenericData * > >::iterator *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t = {"_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t", "std::vector<OpenBabel::OBGenericData > *|std::vector<OpenBabel::OBGenericData,std::allocator<OpenBabel::OBGenericData > > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__allocator_type = {"_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__allocator_type", "std::allocator<OpenBabel::OBGenericData > *|std::vector<OpenBabel::OBGenericData >::allocator_type *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type = {"_p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type", "OpenBabel::OBGenericData *|std::vector<OpenBabel::OBGenericData >::value_type *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type = {"_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type", "std::allocator<OpenBabel::OBGenericData * > *|std::vector<OpenBabel::OBGenericData * >::allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t = {"_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t", "std::vector<OpenBabel::OBInternalCoord *,std::allocator<OpenBabel::OBInternalCoord * > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator = {"_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator", "std::vector<OpenBabel::OBInternalCoord *,std::allocator<OpenBabel::OBInternalCoord * > >::iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t = {"_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t", "std::vector<OpenBabel::OBMol > *|std::vector<OpenBabel::OBMol,std::allocator<OpenBabel::OBMol > > *", 0, 0, (void*)0, 0};
@@ -52884,6 +52856,7 @@ static swig_type_info _swigt__p_std__vectorTunsigned_short_std__allocatorTunsign
 static swig_type_info _swigt__p_swig__PySwigIterator = {"_p_swig__PySwigIterator", "swig::PySwigIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type = {"_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type", "OpenBabel::OBGenericData *|std::vector<OpenBabel::OBGenericData * >::value_type", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_OpenBabel__CharPtrLess,
@@ -52943,6 +52916,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_a_3__double,
   &_swigt__p_allocator_type,
   &_swigt__p_char,
+  &_swigt__p_const_reference,
   &_swigt__p_difference_type,
   &_swigt__p_double,
   &_swigt__p_int,
@@ -52950,6 +52924,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_p_PyObject,
   &_swigt__p_p_double,
   &_swigt__p_p_int,
+  &_swigt__p_reference,
   &_swigt__p_size_type,
   &_swigt__p_std__dequeTint_t,
   &_swigt__p_std__ifstream,
@@ -52972,10 +52947,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator,
   &_swigt__p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t,
   &_swigt__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t,
-  &_swigt__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator,
-  &_swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t,
-  &_swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__allocator_type,
-  &_swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,
+  &_swigt__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type,
   &_swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t,
   &_swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator,
   &_swigt__p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t,
@@ -53015,6 +52987,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_swig__PySwigIterator,
   &_swigt__p_unsigned_int,
   &_swigt__p_value_type,
+  &_swigt__std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type,
 };
 
 static swig_cast_info _swigc__p_OpenBabel__CharPtrLess[] = {  {&_swigt__p_OpenBabel__CharPtrLess, 0, 0, 0},{0, 0, 0, 0}};
@@ -53039,7 +53012,7 @@ static swig_cast_info _swigc__p_OpenBabel__OBElementTable[] = {  {&_swigt__p_Ope
 static swig_cast_info _swigc__p_OpenBabel__OBExternalBond[] = {  {&_swigt__p_OpenBabel__OBExternalBond, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBExternalBondData[] = {  {&_swigt__p_OpenBabel__OBExternalBondData, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBFormat[] = {  {&_swigt__p_OpenBabel__OBFormat, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_OpenBabel__OBGenericData[] = {  {&_swigt__p_OpenBabel__OBTorsionData, _p_OpenBabel__OBTorsionDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBPairData, _p_OpenBabel__OBPairDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBAngleData, _p_OpenBabel__OBAngleDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBChiralData, _p_OpenBabel__OBChiralDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBRingData, _p_OpenBabel__OBRingDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSerialNums, _p_OpenBabel__OBSerialNumsTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, 0, 0, 0},  {&_swigt__p_OpenBabel__OBExternalBondData, _p_OpenBabel__OBExternalBondDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSymmetryData, _p_OpenBabel__OBSymmetryDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBCommentData, _p_OpenBabel__OBCommentDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBVirtualBond, _p_OpenBabel__OBVirtualBondTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBConformerData, _p_OpenBabel__OBConformerDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBGenericData, 0, 0, 0},  {&_swigt__p_OpenBabel__OBUnitCell, _p_OpenBabel__OBUnitCellTo_p_OpenBabel__OBGenericData, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__OBGenericData[] = {  {&_swigt__p_OpenBabel__OBTorsionData, _p_OpenBabel__OBTorsionDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBPairData, _p_OpenBabel__OBPairDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBAngleData, _p_OpenBabel__OBAngleDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBChiralData, _p_OpenBabel__OBChiralDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBRingData, _p_OpenBabel__OBRingDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSerialNums, _p_OpenBabel__OBSerialNumsTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0, 0, 0},  {&_swigt__p_OpenBabel__OBExternalBondData, _p_OpenBabel__OBExternalBondDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSymmetryData, _p_OpenBabel__OBSymmetryDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBCommentData, _p_OpenBabel__OBCommentDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBVirtualBond, _p_OpenBabel__OBVirtualBondTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBConformerData, _p_OpenBabel__OBConformerDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBGenericData, 0, 0, 0},  {&_swigt__p_OpenBabel__OBUnitCell, _p_OpenBabel__OBUnitCellTo_p_OpenBabel__OBGenericData, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBGlobalDataBase[] = {  {&_swigt__p_OpenBabel__OBAtomTyper, _p_OpenBabel__OBAtomTyperTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBAromaticTyper, _p_OpenBabel__OBAromaticTyperTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBGlobalDataBase, 0, 0, 0},  {&_swigt__p_OpenBabel__OBResidueData, _p_OpenBabel__OBResidueDataTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBIsotopeTable, _p_OpenBabel__OBIsotopeTableTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBTypeTable, _p_OpenBabel__OBTypeTableTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBElementTable, _p_OpenBabel__OBElementTableTo_p_OpenBabel__OBGlobalDataBase, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBGraphBase[] = {  {&_swigt__p_OpenBabel__OBMol, _p_OpenBabel__OBMolTo_p_OpenBabel__OBGraphBase, 0, 0},  {&_swigt__p_OpenBabel__OBGraphBase, 0, 0, 0},  {&_swigt__p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__value_type, _p_OpenBabel__OBMolTo_p_OpenBabel__OBGraphBase, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBInternalCoord[] = {  {&_swigt__p_OpenBabel__OBInternalCoord, 0, 0, 0},{0, 0, 0, 0}};
@@ -53074,6 +53047,7 @@ static swig_cast_info _swigc__p_OpenBabel__vector3[] = {  {&_swigt__p_std__vecto
 static swig_cast_info _swigc__p_a_3__double[] = {  {&_swigt__p_a_3__double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_allocator_type[] = {  {&_swigt__p_allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_const_reference[] = {  {&_swigt__p_const_reference, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
@@ -53081,6 +53055,7 @@ static swig_cast_info _swigc__p_p_OpenBabel__OBFormat[] = {  {&_swigt__p_p_OpenB
 static swig_cast_info _swigc__p_p_PyObject[] = {  {&_swigt__p_p_PyObject, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_double[] = {  {&_swigt__p_p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_int[] = {  {&_swigt__p_p_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_reference[] = {  {&_swigt__p_reference, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_size_type[] = {  {&_swigt__p_size_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__dequeTint_t[] = {  {&_swigt__p_std__dequeTint_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__ifstream[] = {  {&_swigt__p_std__ifstream, 0, 0, 0},{0, 0, 0, 0}};
@@ -53103,10 +53078,7 @@ static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBBond_std__allocatorTOpe
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator[] = {  {&_swigt__p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator[] = {  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__allocator_type[] = {  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type[] = {  {&_swigt__p_OpenBabel__OBTorsionData, _p_OpenBabel__OBTorsionDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBPairData, _p_OpenBabel__OBPairDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBAngleData, _p_OpenBabel__OBAngleDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBChiralData, _p_OpenBabel__OBChiralDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBRingData, _p_OpenBabel__OBRingDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSerialNums, _p_OpenBabel__OBSerialNumsTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type, 0, 0, 0},  {&_swigt__p_OpenBabel__OBExternalBondData, _p_OpenBabel__OBExternalBondDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSymmetryData, _p_OpenBabel__OBSymmetryDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBCommentData, _p_OpenBabel__OBCommentDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBVirtualBond, _p_OpenBabel__OBVirtualBondTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBConformerData, _p_OpenBabel__OBConformerDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBGenericData, 0, 0, 0},  {&_swigt__p_OpenBabel__OBUnitCell, _p_OpenBabel__OBUnitCellTo_p_OpenBabel__OBGenericData, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type[] = {  {&_swigt__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator[] = {  {&_swigt__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t[] = {  {&_swigt__p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -53146,6 +53118,7 @@ static swig_cast_info _swigc__p_std__vectorTunsigned_short_std__allocatorTunsign
 static swig_cast_info _swigc__p_swig__PySwigIterator[] = {  {&_swigt__p_swig__PySwigIterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type[] = {  {&_swigt__p_OpenBabel__OBTorsionData, _p_OpenBabel__OBTorsionDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBPairData, _p_OpenBabel__OBPairDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBAngleData, _p_OpenBabel__OBAngleDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBChiralData, _p_OpenBabel__OBChiralDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBRingData, _p_OpenBabel__OBRingDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSerialNums, _p_OpenBabel__OBSerialNumsTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type, 0, 0, 0},  {&_swigt__p_OpenBabel__OBExternalBondData, _p_OpenBabel__OBExternalBondDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSymmetryData, _p_OpenBabel__OBSymmetryDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBCommentData, _p_OpenBabel__OBCommentDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBVirtualBond, _p_OpenBabel__OBVirtualBondTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBConformerData, _p_OpenBabel__OBConformerDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBGenericData, 0, 0, 0},  {&_swigt__p_OpenBabel__OBUnitCell, _p_OpenBabel__OBUnitCellTo_p_OpenBabel__OBGenericData, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_OpenBabel__CharPtrLess,
@@ -53205,6 +53178,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_a_3__double,
   _swigc__p_allocator_type,
   _swigc__p_char,
+  _swigc__p_const_reference,
   _swigc__p_difference_type,
   _swigc__p_double,
   _swigc__p_int,
@@ -53212,6 +53186,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_p_PyObject,
   _swigc__p_p_double,
   _swigc__p_p_int,
+  _swigc__p_reference,
   _swigc__p_size_type,
   _swigc__p_std__dequeTint_t,
   _swigc__p_std__ifstream,
@@ -53234,10 +53209,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__vectorTOpenBabel__OBEdgeBase_p_std__allocatorTOpenBabel__OBEdgeBase_p_t_t__iterator,
   _swigc__p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t,
   _swigc__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t,
-  _swigc__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__iterator,
-  _swigc__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t,
-  _swigc__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__allocator_type,
-  _swigc__p_std__vectorTOpenBabel__OBGenericData_std__allocatorTOpenBabel__OBGenericData_t_t__value_type,
+  _swigc__p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type,
   _swigc__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t,
   _swigc__p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator,
   _swigc__p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t,
@@ -53277,6 +53249,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_swig__PySwigIterator,
   _swigc__p_unsigned_int,
   _swigc__p_value_type,
+  _swigc__std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type,
 };
 
 
