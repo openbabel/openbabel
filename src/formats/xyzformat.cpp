@@ -12,8 +12,8 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
 
+#include "babelconfig.h"
 #include "mol.h"
 #include "obconversion.h"
 #include "obmolecformat.h"
@@ -74,7 +74,7 @@ namespace OpenBabel
 
     stringstream errorMsg;
 
-    unsigned int natoms;  // [ejk] assumed natoms could not be -ve
+    unsigned int natoms;	// [ejk] assumed natoms could not be -ve
 
     if (!ifs.getline(buffer,BUFF_SIZE))
       {
@@ -101,8 +101,15 @@ namespace OpenBabel
                               "Problems reading an XYZ file: Could not read the second line (title/comments).", obWarning);
         return(false);
       }
-    if (strlen(buffer) != 0)
-      mol.SetTitle(buffer);
+    string readTitle(buffer);
+    string::size_type location = readTitle.find("Energy");
+    if (location != string::npos)
+      readTitle.erase(location);
+    Trim(readTitle);
+
+    location = readTitle.find_first_not_of(" \t\n\r");
+    if (location != string::npos)
+      mol.SetTitle(readTitle);
     else
       mol.SetTitle(title);
 
@@ -222,7 +229,8 @@ namespace OpenBabel
 
     snprintf(buffer, BUFF_SIZE, "%d", mol.NumAtoms());
     ofs << buffer << endl;
-    snprintf(buffer, BUFF_SIZE, "%s", mol.GetTitle());
+    snprintf(buffer, BUFF_SIZE, "%s\tEnergy: %15.7f",
+             mol.GetTitle(), mol.GetEnergy());
     ofs << buffer << endl;
 
     OBAtom *atom;
