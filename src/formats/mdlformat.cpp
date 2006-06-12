@@ -116,6 +116,7 @@ Write Options, e.g. -x3\n \
     OBMol &mol = *pmol;
     _mapcd.clear();
     bool chiralWatch=false;
+    bool setDimension = false;
 
     // Allows addition of further disconnected atoms to an existing molecule
     int offset = mol.NumAtoms(); 
@@ -132,8 +133,11 @@ Write Options, e.g. -x3\n \
     if (strlen(buffer) > 20) {
       char* dimension = buffer+20;
       dimension[2]='\0'; //truncate after 2D
-      if(strcmp(dimension,"2D") == 0)
-        mol.SetDimension(2);
+      if(strcmp(dimension,"3D") == 0)
+        {
+          mol.SetDimension(3);
+          setDimension = true;
+        }
     }
 
     if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //comment
@@ -355,7 +359,11 @@ Write Options, e.g. -x3\n \
         dp->SetValue(buff);
         mol.SetData(dp);
       }
-      // end RWT    
+
+      if (!setDimension && mol.Has3D())
+        mol.SetDimension(3);
+      else if (!setDimension && !mol.Has3D())
+        mol.SetDimension(2);
 
       if (!strncmp(buffer,"$$$$",4)) break;
       if (!strncmp(buffer,"$MOL",4)) break;
