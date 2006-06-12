@@ -116,6 +116,7 @@ Write Options, e.g. -x3\n \
     OBMol &mol = *pmol;
     _mapcd.clear();
     bool chiralWatch=false;
+    bool setDimension = false;
 
     // Allows addition of further disconnected atoms to an existing molecule
     int offset = mol.NumAtoms(); 
@@ -132,8 +133,11 @@ Write Options, e.g. -x3\n \
     if (strlen(buffer) > 20) {
       char* dimension = buffer+20;
       dimension[2]='\0'; //truncate after 2D
-      if(strcmp(dimension,"2D") == 0)
-        mol.SetDimension(2);
+      if(strcmp(dimension,"3D") == 0)
+        {
+          mol.SetDimension(3);
+          setDimension = true;
+        }
     }
 
     if (!ifs.getline(buffer,BUFF_SIZE)) return(false); //comment
@@ -326,40 +330,45 @@ Write Options, e.g. -x3\n \
         mol.SetData(cd);
       }
         
-  //Get property lines
-  while (ifs.getline(buffer,BUFF_SIZE))
-  {
-    if (strstr(buffer,"<"))
-    {
-      string buff(buffer);
-      size_t lt=buff.find("<")+1;
-      size_t rt = buff.find_last_of(">");
-      string attr = buff.substr(lt,rt-lt);
-
-      // sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
-      string line;
-      buff.clear();
-      while (getline(ifs, line))
+    //Get property lines
+    while (ifs.getline(buffer,BUFF_SIZE))
       {
-        Trim(line);
-        if (line.size())
-        {
-          buff.append(line);
-          buff += "\n";
-        }
-        else
-          break;
-      }
-      Trim(buff);
+        if (strstr(buffer,"<"))
+          {
+            string buff(buffer);
+            size_t lt=buff.find("<")+1;
+            size_t rt = buff.find_last_of(">");
+            string attr = buff.substr(lt,rt-lt);
 
-      OBPairData *dp = new OBPairData;
-      dp->SetAttribute(attr);
-      dp->SetValue(buff);
-      mol.SetData(dp);
-    }
-    if (!strncmp(buffer,"$$$$",4)) break;
-    if (!strncmp(buffer,"$MOL",4)) break;
-  }
+            // sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
+            string line;
+            buff.clear();
+            while (getline(ifs, line))
+              {
+                Trim(line);
+                if (line.size())
+                  {
+                    buff.append(line);
+                    buff += "\n";
+                  }
+                else
+                  break;
+              }
+            Trim(buff);
+
+            OBPairData *dp = new OBPairData;
+            dp->SetAttribute(attr);
+            dp->SetValue(buff);
+            mol.SetData(dp);
+          }
+        if (!strncmp(buffer,"$$$$",4)) break;
+        if (!strncmp(buffer,"$MOL",4)) break;
+      }
+
+    if (!setDimension && mol.Has3D())
+      mol.SetDimension(3);
+    else if (!setDimension && !mol.Has3D())
+      mol.SetDimension(2);
 
     return(true);
 
