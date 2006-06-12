@@ -301,10 +301,10 @@ namespace OpenBabel {
     vector<string>::iterator itr;
     for(itr=files.begin();itr!=files.end();itr++)
       {
-	if(DLHandler::openLib(*itr))
-	  count++;
-	else
-	  obErrorLog.ThrowError(__FUNCTION__, *itr + " did not load properly", obError);
+        if(DLHandler::openLib(*itr))
+          count++;
+        else
+          obErrorLog.ThrowError(__FUNCTION__, *itr + " did not load properly", obError);
       }
 #else
     count = 1; //avoid calling this function several times
@@ -343,17 +343,17 @@ namespace OpenBabel {
       itr++;
     if(itr == FormatsMap().end())
       {
-	str=NULL; pFormat=NULL;
-	return false;
+        str=NULL; pFormat=NULL;
+        return false;
       }
     static string s;
     s =itr->first;
     pFormat = itr->second;
     if(pFormat)
       {
-	string description(pFormat->Description());
-	s += " -- ";
-	s += description.substr(0,description.find('\n'));
+        string description(pFormat->Description());
+        s += " -- ";
+        s += description.substr(0,description.find('\n'));
       }
 
     if(pFormat->Flags() & NOTWRITABLE) s+=" [Read-only]";
@@ -422,9 +422,9 @@ namespace OpenBabel {
     zlib_stream::zip_ostream zOut(*pOutStream);
     if(IsOption("z",GENOPTIONS))
       {
-	// make sure to output the header
-	zOut.make_gzip();
-	pOutStream = &zOut;
+        // make sure to output the header
+        zOut.make_gzip();
+        pOutStream = &zOut;
       }
 #endif
 
@@ -455,8 +455,8 @@ namespace OpenBabel {
   {
     if(pInStream==NULL || pOutStream==NULL)
       {
-	obErrorLog.ThrowError(__FUNCTION__, "input or output stream not set", obError);
-	return 0;
+        obErrorLog.ThrowError(__FUNCTION__, "input or output stream not set", obError);
+        return 0;
       }
 
     if(!pInFormat) return 0;
@@ -473,38 +473,38 @@ namespace OpenBabel {
     //Input loop
     while(ReadyToInput && pInStream->peek() != EOF && pInStream->good())
       {
-	if(pInStream==&cin)
-	  {
-	    if(pInStream->peek()=='\n')
-	      break;
-	  }
-	else
-	  rInpos = pInStream->tellg();
+        if(pInStream==&cin)
+          {
+            if(pInStream->peek()=='\n')
+              break;
+          }
+        else
+          rInpos = pInStream->tellg();
 		
-	bool ret=false;
-	try
-	  {
-	    ret = pInFormat->ReadChemObject(this);
-	    m_IsFirstInput=false;
-	  }		
-	catch(...)
-	  {
-	    if(!IsOption("e", GENOPTIONS) && !OneObjectOnly)
-	      throw;
-	  }
+        bool ret=false;
+        try
+          {
+            ret = pInFormat->ReadChemObject(this);
+            m_IsFirstInput=false;
+          }		
+        catch(...)
+          {
+            if(!IsOption("e", GENOPTIONS) && !OneObjectOnly)
+              throw;
+          }
 
-	if(!ret)
-	  {
-	    //error or termination request: terminate unless
-	    // -e option requested and sucessfully can skip past current object
-	    if(!IsOption("e", GENOPTIONS) || pInFormat->SkipObjects(0,this)!=1) 
-	      break;
-	  }
-	if(OneObjectOnly)
-	  break;
-	// Objects supplied to AddChemObject() which may output them after a delay
-	//ReadyToInput may be made false in AddChemObject()
-	// by WriteMolecule() returning false  or by Count==EndNumber		
+        if(!ret)
+          {
+            //error or termination request: terminate unless
+            // -e option requested and sucessfully can skip past current object
+            if(!IsOption("e", GENOPTIONS) || pInFormat->SkipObjects(0,this)!=1) 
+              break;
+          }
+        if(OneObjectOnly)
+          break;
+        // Objects supplied to AddChemObject() which may output them after a delay
+        //ReadyToInput may be made false in AddChemObject()
+        // by WriteMolecule() returning false  or by Count==EndNumber		
       }
 	
     //Output last object
@@ -513,7 +513,7 @@ namespace OpenBabel {
     //Output is deferred until the end with -C option
     if(pOutFormat && (!IsOption("C",GENOPTIONS) || m_IsLast))
       if(pOb1 && !pOutFormat->WriteChemObject(this))
-	Index--;
+        Index--;
 	
     //Put AddChemObject() into non-queue mode
     Count= -1; 
@@ -530,28 +530,28 @@ namespace OpenBabel {
     const char* p = IsOption("f",GENOPTIONS);
     if(p)
       {
-	StartNumber=atoi(p);
-	if(StartNumber>1)
-	  {
-	    TempStartNumber=StartNumber;
-	    //Try to skip objects now
-	    int ret = pInFormat->SkipObjects(StartNumber-1,this);
-	    if(ret==-1) //error
-	      return false; 
-	    if(ret==1) //success:objects skipped
-	      {
-		Count = StartNumber-1;
-		StartNumber=0;
-	      }
-	  }
+        StartNumber=atoi(p);
+        if(StartNumber>1)
+          {
+            TempStartNumber=StartNumber;
+            //Try to skip objects now
+            int ret = pInFormat->SkipObjects(StartNumber-1,this);
+            if(ret==-1) //error
+              return false; 
+            if(ret==1) //success:objects skipped
+              {
+                Count = StartNumber-1;
+                StartNumber=0;
+              }
+          }
       }
 
     p = IsOption("l",GENOPTIONS);
     if(p)
       {
-	EndNumber=atoi(p);
-	if(TempStartNumber && EndNumber<TempStartNumber)
-	  EndNumber=TempStartNumber;
+        EndNumber=atoi(p);
+        if(TempStartNumber && EndNumber<TempStartNumber)
+          EndNumber=TempStartNumber;
       }
 
     return true;
@@ -582,59 +582,59 @@ namespace OpenBabel {
   {
     if(Count<0) 
       {
-	pOb1=pOb;
-	return Count;
+        pOb1=pOb;
+        return Count;
       }
     Count++;
     if(Count>=(int)StartNumber)//keeps reading objects but does nothing with them
       {	
-	if(Count==(int)EndNumber)
-	  ReadyToInput=false; //stops any more objects being read
+        if(Count==(int)EndNumber)
+          ReadyToInput=false; //stops any more objects being read
 
-	rInlen = pInStream->tellg() - rInpos;
+        rInlen = pInStream->tellg() - rInpos;
 
-	if(pOb)
-	  {
-	    if(pOb1 && pOutFormat) //see if there is an object ready to be output
-	      {
-		//Output object
-		if (!pOutFormat->WriteChemObject(this))  
-		  {
-		    //faultly write, so finish
-		    --Index;
-		    //ReadyToInput=false;
-		    pOb1=NULL;
-		    return false;
-		  }
-		//Stop after writing with single object output files
-		if(pOutFormat->Flags() & WRITEONEONLY)
-		  {
-		    // if there are more molecules to output, send a warning
-		    stringstream errorMsg;
-		    errorMsg << "WARNING: You are attempting to convert a file"
-			 << " with multiple molecule entries into a format"
-			 << " which can only store one molecule. The current"
-			 << " output will only contain the first molecule.\n\n";
+        if(pOb)
+          {
+            if(pOb1 && pOutFormat) //see if there is an object ready to be output
+              {
+                //Output object
+                if (!pOutFormat->WriteChemObject(this))  
+                  {
+                    //faultly write, so finish
+                    --Index;
+                    //ReadyToInput=false;
+                    pOb1=NULL;
+                    return false;
+                  }
+                //Stop after writing with single object output files
+                if(pOutFormat->Flags() & WRITEONEONLY)
+                  {
+                    // if there are more molecules to output, send a warning
+                    stringstream errorMsg;
+                    errorMsg << "WARNING: You are attempting to convert a file"
+                             << " with multiple molecule entries into a format"
+                             << " which can only store one molecule. The current"
+                             << " output will only contain the first molecule.\n\n";
 
-		    errorMsg << "To convert this input into multiple separate"
-			 << " output files, with one molecule per file, try:\n"
-			 << "babel [input] [ouptut] -m\n\n";
+                    errorMsg << "To convert this input into multiple separate"
+                             << " output files, with one molecule per file, try:\n"
+                             << "babel [input] [ouptut] -m\n\n";
 
-		    errorMsg << "To pick one particular molecule"
-			 << " (e.g., molecule 4), try:\n"
-			 << "babel -f 4 -l 4 [input] [output]" << endl;
+                    errorMsg << "To pick one particular molecule"
+                             << " (e.g., molecule 4), try:\n"
+                             << "babel -f 4 -l 4 [input] [output]" << endl;
 
-		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+                    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 
-		    ReadyToInput = false;
-		    pOb1 = NULL;
-		    return true;
-		  }
-	      }
-	    pOb1=pOb;
-	    wInpos = rInpos; //Save the position in the input file to be accessed when writing it
-	    wInlen = rInlen;
-	  }
+                    ReadyToInput = false;
+                    pOb1 = NULL;
+                    return true;
+                  }
+              }
+            pOb1=pOb;
+            wInpos = rInpos; //Save the position in the input file to be accessed when writing it
+            wInlen = rInlen;
+          }
       }
     return true;
   }
@@ -679,22 +679,22 @@ namespace OpenBabel {
   OBFormat* OBConversion::FormatFromExt(const char* filename)
   {
     string file = filename;
-    size_t extPos = file.rfind(".");
+    size_t extPos = file.rfind('.');
 
     if(extPos!=string::npos)
       {
-	// only do this if we actually can read .gz files
+        // only do this if we actually can read .gz files
 #ifdef HAVE_LIBZ
-	if (file.substr(extPos,3) == ".gz")
-	  {
-	    file.erase(extPos);
-	    extPos = file.rfind(".");
-	    if (extPos!=string::npos)
-	      return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
-	  }
-	else
+        if (file.substr(extPos,3) == ".gz")
+          {
+            file.erase(extPos);
+            extPos = file.rfind('.');
+            if (extPos!=string::npos)
+              return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
+          }
+        else
 #endif
-	  return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
+          return FindFormat( (file.substr(extPos + 1, file.size())).c_str() );
       }
     return NULL; //if no extension		
   }
@@ -736,9 +736,9 @@ namespace OpenBabel {
     zlib_stream::zip_ostream zOut(*pOutStream);
     if(IsOption("z",GENOPTIONS))
       {
-	// make sure to output the header
-	zOut.make_gzip();
-	pOutStream = &zOut;
+        // make sure to output the header
+        zOut.make_gzip();
+        pOutStream = &zOut;
       }
 #endif
 #endif
@@ -760,15 +760,15 @@ namespace OpenBabel {
 
     if(pOutFormat)
       {
-	Write(pOb, &newStream);
+        Write(pOb, &newStream);
       }
     pOutStream = oldStream;
 
     temp = newStream.str();
     if (trimWhitespace) // trim the trailing whitespace
       {
-	string::size_type notwhite = temp.find_last_not_of(" \t\n\r");
-	temp.erase(notwhite+1);
+        string::size_type notwhite = temp.find_last_not_of(" \t\n\r");
+        temp.erase(notwhite+1);
       }
     return temp;
   }
@@ -788,8 +788,8 @@ namespace OpenBabel {
     ofs->open(filePath.c_str(),omode);
     if(!ofs || !ofs->good())
       {
-	obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + filePath, obError);
-	return false;
+        obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + filePath, obError);
+        return false;
       }
 
     return Write(pOb, ofs);
@@ -815,8 +815,8 @@ namespace OpenBabel {
     ifs->open(filePath.c_str(),imode);
     if(!ifs || !ifs->good())
       {
-	obErrorLog.ThrowError(__FUNCTION__,"Cannot read from " + filePath, obError);
-	return false;
+        obErrorLog.ThrowError(__FUNCTION__,"Cannot read from " + filePath, obError);
+        return false;
       }
 
     return Read(pOb,ifs);
@@ -857,14 +857,27 @@ namespace OpenBabel {
   {
     //Replaces * in BaseName by InFile without extension and path
     string ofname(BaseName);
-    int pos = ofname.find('*');
-    if(pos>=0)
+    string::size_type pos = ofname.find('*');
+    if(pos != string::npos)
       {
-	//Replace * by input filename
-	int posdot=(InFile).rfind('.');
-	if(posdot==-1) posdot=(InFile).size();
-	int posname=(InFile).find_last_of("\\/");
-	ofname.replace(pos,1, (InFile), posname+1, posdot-posname-1);
+        //Replace * by input filename
+        string::size_type posdot= InFile.rfind('.');
+        if(posdot == string::npos)
+          posdot = InFile.size();
+        else {
+#ifdef HAVE_LIBZ
+          if (InFile.substr(posdot,3) == ".gz")
+            {
+              InFile.erase(posdot);
+              posdot = InFile.rfind('.');
+              if (posdot == string::npos)
+                posdot = InFile.size();
+            }
+#endif
+        }
+
+        int posname= InFile.find_last_of("\\/");
+        ofname.replace(pos,1, InFile, posname+1, posdot-posname-1);
       }
     return ofname;	
   }
@@ -877,9 +890,9 @@ namespace OpenBabel {
     int pos = ofname.find('*');
     if(pos>=0)
       {
-	char num[33];
-	snprintf(num, 33, "%d", Count);
-	ofname.replace(pos,1, num);
+        char num[33];
+        snprintf(num, 33, "%d", Count);
+        ofname.replace(pos,1, num);
       }
     return ofname;		
   }
@@ -924,7 +937,7 @@ namespace OpenBabel {
      Returns the number of Chemical objects converted.
   */
   int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& OutputFileName,
-				std::vector<std::string>& OutputFileList)
+                                std::vector<std::string>& OutputFileList)
   {
 	
     istream* pIs=NULL;
@@ -940,206 +953,206 @@ namespace OpenBabel {
       pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
     try
       {
-	ofstream ofs;
+        ofstream ofs;
 
-	//OUTPUT
-	if(OutputFileName.empty())
-	  pOs = NULL; //use existing stream
-	else
-	  {
-	    if(OutputFileName.find_first_of('*')!=string::npos) HasMultipleOutputFiles = true;
-	    if(!HasMultipleOutputFiles)
-	      {
-		//If the output file is the same as any of the input
-		//files, send the output to a temporary stringstream
-		vector<string>::iterator itr;
-		for(itr=FileList.begin();itr!=FileList.end();itr++)
-		  {
-		    if(*itr==OutputFileName)
-		      {
-			pOs = &ssOut;
-			break;
-		      }
-		  }
-		if(itr==FileList.end())
-		  {
-		    os.open(OutputFileName.c_str(),omode);
-		    if(!os)
-		      {
-			obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + OutputFileName, obError);
-			return 0;
-		      }
-		    pOs=&os;
-		  }
-		OutputFileList.push_back(OutputFileName);
-	      }
-	  }
+        //OUTPUT
+        if(OutputFileName.empty())
+          pOs = NULL; //use existing stream
+        else
+          {
+            if(OutputFileName.find_first_of('*')!=string::npos) HasMultipleOutputFiles = true;
+            if(!HasMultipleOutputFiles)
+              {
+                //If the output file is the same as any of the input
+                //files, send the output to a temporary stringstream
+                vector<string>::iterator itr;
+                for(itr=FileList.begin();itr!=FileList.end();itr++)
+                  {
+                    if(*itr==OutputFileName)
+                      {
+                        pOs = &ssOut;
+                        break;
+                      }
+                  }
+                if(itr==FileList.end())
+                  {
+                    os.open(OutputFileName.c_str(),omode);
+                    if(!os)
+                      {
+                        obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + OutputFileName, obError);
+                        return 0;
+                      }
+                    pOs=&os;
+                  }
+                OutputFileList.push_back(OutputFileName);
+              }
+          }
 
-	if(IsOption("t",GENOPTIONS))
-	  {
-	    //Concatenate input file option (multiple files, single molecule)
-	    if(HasMultipleOutputFiles)
-	      {
-		obErrorLog.ThrowError(__FUNCTION__,
-				      "Cannot have multiple output files and also concatenate input files (-t option)",obError);
-		return 0;
-	      }
+        if(IsOption("t",GENOPTIONS))
+          {
+            //Concatenate input file option (multiple files, single molecule)
+            if(HasMultipleOutputFiles)
+              {
+                obErrorLog.ThrowError(__FUNCTION__,
+                                      "Cannot have multiple output files and also concatenate input files (-t option)",obError);
+                return 0;
+              }
 
-	    stringstream allinput;
-	    vector<string>::iterator itr;
-	    for(itr=FileList.begin();itr!=FileList.end();itr++)
-	      {
-		ifstream ifs((*itr).c_str());
-		if(!ifs)
-		  {
-		    obErrorLog.ThrowError(__FUNCTION__,"Cannot open " + *itr, obError);
-		    continue;
-		  }
-		allinput << ifs.rdbuf(); //Copy all file contents
-		ifs.close();
-	      }
-	    Count = Convert(&allinput,pOs);
-	    return Count;
-	  }
+            stringstream allinput;
+            vector<string>::iterator itr;
+            for(itr=FileList.begin();itr!=FileList.end();itr++)
+              {
+                ifstream ifs((*itr).c_str());
+                if(!ifs)
+                  {
+                    obErrorLog.ThrowError(__FUNCTION__,"Cannot open " + *itr, obError);
+                    continue;
+                  }
+                allinput << ifs.rdbuf(); //Copy all file contents
+                ifs.close();
+              }
+            Count = Convert(&allinput,pOs);
+            return Count;
+          }
 
-	//INPUT
-	if(FileList.empty())
-	  pIs = NULL;
-	else
-	  {
-	    if(FileList.size()>1)
-	      {
-		//multiple input files
-		vector<string>::iterator itr, tempitr;
-		tempitr = FileList.end();
-		tempitr--;
-		for(itr=FileList.begin();itr!=FileList.end();itr++)
-		  {
-		    InFilename = *itr;
-		    ifstream ifs;
-		    if(!OpenAndSetFormat(CommonInFormat, &ifs))
-		      continue;
+        //INPUT
+        if(FileList.empty())
+          pIs = NULL;
+        else
+          {
+            if(FileList.size()>1)
+              {
+                //multiple input files
+                vector<string>::iterator itr, tempitr;
+                tempitr = FileList.end();
+                tempitr--;
+                for(itr=FileList.begin();itr!=FileList.end();itr++)
+                  {
+                    InFilename = *itr;
+                    ifstream ifs;
+                    if(!OpenAndSetFormat(CommonInFormat, &ifs))
+                      continue;
 
-		    if(HasMultipleOutputFiles)
-		      {
-			//Batch conversion
-			string batchfile = BatchFileName(OutputFileName,*itr);
-			if(ofs.is_open()) ofs.close();
-			ofs.open(batchfile.c_str(), omode);
-			if(!ofs) 
-			  {
-			    obErrorLog.ThrowError(__FUNCTION__,"Cannot open " + batchfile, obError);
-			    return Count;
-			  }
-			OutputFileList.push_back(batchfile);
-			SetOutputIndex(0); //reset for new file
-			Count += Convert(&ifs,&ofs);					
-		      }
-		    else
-		      {
-			//Aggregation
-			if(itr!=tempitr) SetMoreFilesToCome();
-			Count = Convert(&ifs,pOs);					
-		      }
-		  }
+                    if(HasMultipleOutputFiles)
+                      {
+                        //Batch conversion
+                        string batchfile = BatchFileName(OutputFileName,*itr);
+                        if(ofs.is_open()) ofs.close();
+                        ofs.open(batchfile.c_str(), omode);
+                        if(!ofs) 
+                          {
+                            obErrorLog.ThrowError(__FUNCTION__,"Cannot open " + batchfile, obError);
+                            return Count;
+                          }
+                        OutputFileList.push_back(batchfile);
+                        SetOutputIndex(0); //reset for new file
+                        Count += Convert(&ifs,&ofs);					
+                      }
+                    else
+                      {
+                        //Aggregation
+                        if(itr!=tempitr) SetMoreFilesToCome();
+                        Count = Convert(&ifs,pOs);					
+                      }
+                  }
 
-		if(!os.is_open() && !OutputFileName.empty() && !HasMultipleOutputFiles)
-		  {
-		    //Output was written to temporary string stream. Output it to the file
-		    os.open(OutputFileName.c_str(),omode);
-		    if(!os)
-		      {
-			obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + OutputFileName, obError);
-			return Count;
-		      }
-		    os << ssOut.rdbuf();
-		  }
-		return Count;
-	      }
-	    else
-	      {			
-		//Single input file
-		InFilename = FileList[0];
-		if(!OpenAndSetFormat(CommonInFormat, &is))
-		  return 0;
-		pIs=&is;
+                if(!os.is_open() && !OutputFileName.empty() && !HasMultipleOutputFiles)
+                  {
+                    //Output was written to temporary string stream. Output it to the file
+                    os.open(OutputFileName.c_str(),omode);
+                    if(!os)
+                      {
+                        obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + OutputFileName, obError);
+                        return Count;
+                      }
+                    os << ssOut.rdbuf();
+                  }
+                return Count;
+              }
+            else
+              {			
+                //Single input file
+                InFilename = FileList[0];
+                if(!OpenAndSetFormat(CommonInFormat, &is))
+                  return 0;
+                pIs=&is;
 
-		if(HasMultipleOutputFiles)
-		  {
-		    //Splitting
-		    //Output is put in a temporary stream and written to a file
-		    //with an augmenting name only when it contains a valid object. 
-		    int Indx=1;
-		    SetInStream(&is);
+                if(HasMultipleOutputFiles)
+                  {
+                    //Splitting
+                    //Output is put in a temporary stream and written to a file
+                    //with an augmenting name only when it contains a valid object. 
+                    int Indx=1;
+                    SetInStream(&is);
 #ifdef HAVE_LIBZ
-		    zlib_stream::zip_istream zIn(is);
+                    zlib_stream::zip_istream zIn(is);
 #endif
-		    for(;;)
-		      {
-			stringstream ss;
-			SetOutStream(&ss);
-			SetOutputIndex(0); //reset for new file
-			SetOneObjectOnly();
+                    for(;;)
+                      {
+                        stringstream ss;
+                        SetOutStream(&ss);
+                        SetOutputIndex(0); //reset for new file
+                        SetOneObjectOnly();
 
 #ifdef HAVE_LIBZ
-			if(Indx==1 && zIn.is_gzip())
-			  SetInStream(&zIn);
+                        if(Indx==1 && zIn.is_gzip())
+                          SetInStream(&zIn);
 #endif
 
-			int ThisFileCount = Convert();
-			if(ThisFileCount==0) break;
-			Count+=ThisFileCount;
+                        int ThisFileCount = Convert();
+                        if(ThisFileCount==0) break;
+                        Count+=ThisFileCount;
 
-			if(ofs.is_open()) ofs.close();
-			string incrfile = IncrementedFileName(OutputFileName,Indx++);
-			ofs.open(incrfile.c_str(), omode);
-			if(!ofs)
-			  {
-			    obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + incrfile, obError);
-			    return Count;
-			  }
+                        if(ofs.is_open()) ofs.close();
+                        string incrfile = IncrementedFileName(OutputFileName,Indx++);
+                        ofs.open(incrfile.c_str(), omode);
+                        if(!ofs)
+                          {
+                            obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + incrfile, obError);
+                            return Count;
+                          }
 						
-			OutputFileList.push_back(incrfile);
+                        OutputFileList.push_back(incrfile);
 #ifdef HAVE_LIBZ
-			if(IsOption("z",GENOPTIONS))
-			  {
-			    zlib_stream::zip_ostream zOut(ofs);
-			    // make sure to output the header
-			    zOut.make_gzip();
-			    zOut << ss.rdbuf();
-			  }
-			else
+                        if(IsOption("z",GENOPTIONS))
+                          {
+                            zlib_stream::zip_ostream zOut(ofs);
+                            // make sure to output the header
+                            zOut.make_gzip();
+                            zOut << ss.rdbuf();
+                          }
+                        else
 #endif
-			  ofs << ss.rdbuf();
+                          ofs << ss.rdbuf();
 
-			ofs.close();
-			ss.clear();
-		      }
-		    return Count;
-		  }
-	      }
-	  }
+                        ofs.close();
+                        ss.clear();
+                      }
+                    return Count;
+                  }
+              }
+          }
 
-	//Single input and output files
-	Count = Convert(pIs,pOs);
+        //Single input and output files
+        Count = Convert(pIs,pOs);
 
-	if(!os.is_open() && !OutputFileName.empty())
-	  {
-	    //Output was written to temporary string stream. Output it to the file
-	    os.open(OutputFileName.c_str(),omode);
-	    if(!os)
-	      {
-		obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + OutputFileName, obError);
-		return Count;
-	      }
-	    os << ssOut.rdbuf();
-	  }
-	return Count;
+        if(!os.is_open() && !OutputFileName.empty())
+          {
+            //Output was written to temporary string stream. Output it to the file
+            os.open(OutputFileName.c_str(),omode);
+            if(!os)
+              {
+                obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + OutputFileName, obError);
+                return Count;
+              }
+            os << ssOut.rdbuf();
+          }
+        return Count;
       }
     catch(...)
       {
-	obErrorLog.ThrowError(__FUNCTION__, "Conversion failed with an exception.",obError);
-	return Count;
+        obErrorLog.ThrowError(__FUNCTION__, "Conversion failed with an exception.",obError);
+        return Count;
       }
   }
 
@@ -1148,17 +1161,17 @@ namespace OpenBabel {
     //Opens file using InFilename and sets pInFormat if requested
     if(!SetFormat)
       {
-	pInFormat = FormatFromExt(InFilename.c_str());
-	if(pInFormat==NULL)
-	  {
-	    string::size_type pos = InFilename.rfind('.');
-	    string ext;
-	    if(pos!=string::npos)
-	      ext = InFilename.substr(pos);
-	    obErrorLog.ThrowError(__FUNCTION__, "Cannot read input format \"" 
-				  + ext + '\"' + " for file \"" + InFilename + "\"",obError);
-	    return false;
-	  }
+        pInFormat = FormatFromExt(InFilename.c_str());
+        if(pInFormat==NULL)
+          {
+            string::size_type pos = InFilename.rfind('.');
+            string ext;
+            if(pos!=string::npos)
+              ext = InFilename.substr(pos);
+            obErrorLog.ThrowError(__FUNCTION__, "Cannot read input format \"" 
+                                  + ext + '\"' + " for file \"" + InFilename + "\"",obError);
+            return false;
+          }
       }
 
     ios_base::openmode imode;
@@ -1171,8 +1184,8 @@ namespace OpenBabel {
     is->open(InFilename.c_str(), imode);
     if(!is->good())
       {
-	obErrorLog.ThrowError(__FUNCTION__, "Cannot open " + InFilename, obError);
-	return false;
+        obErrorLog.ThrowError(__FUNCTION__, "Cannot open " + InFilename, obError);
+        return false;
       }
 
     return true;
@@ -1207,19 +1220,19 @@ namespace OpenBabel {
   {
     while(*options)
       {
-	string ch(1, *options++);
-	if(*options=='\"')
-	  {
-	    string txt = options+1;
-	    string::size_type pos = txt.find('\"');
-	    if(pos==string::npos)
-	      return; //options is illformed
-	    txt.erase(pos);
-	    OptionsArray[opttyp][ch]= txt;
-	    options += pos+2;
-	  }
-	else
-	  OptionsArray[opttyp][ch] = string();
+        string ch(1, *options++);
+        if(*options=='\"')
+          {
+            string txt = options+1;
+            string::size_type pos = txt.find('\"');
+            if(pos==string::npos)
+              return; //options is illformed
+            txt.erase(pos);
+            OptionsArray[opttyp][ch]= txt;
+            options += pos+2;
+          }
+        else
+          OptionsArray[opttyp][ch] = string();
       }
   }
 
@@ -1230,24 +1243,24 @@ namespace OpenBabel {
   }
 
   void OBConversion::RegisterOptionParam(string name, OBFormat* pFormat,
-					 int numberParams, Option_type typ)
+                                         int numberParams, Option_type typ)
   {
     //Gives error message if the number of parameters conflicts with an existing registration
     map<string,int>::iterator pos;
     pos =	OptionParamArray(typ).find(name);
     if(pos!=OptionParamArray(typ).end())
       {
-	if(pos->second!=numberParams)
-	  {
-	    string description("API");
-	    if(pFormat)
-	      description=pFormat->Description();
-	    obErrorLog.ThrowError(__FUNCTION__, 
-				  "The number of parameters needed by option \"" + name + "\" in " 
-				  + description.substr(0,description.find('\n'))
-				  + " differs from an earlier registration.", obError);
-	    return;
-	  }
+        if(pos->second!=numberParams)
+          {
+            string description("API");
+            if(pFormat)
+              description=pFormat->Description();
+            obErrorLog.ThrowError(__FUNCTION__, 
+                                  "The number of parameters needed by option \"" + name + "\" in " 
+                                  + description.substr(0,description.find('\n'))
+                                  + " differs from an earlier registration.", obError);
+            return;
+          }
       }
     OptionParamArray(typ)[name] = numberParams;
   }
