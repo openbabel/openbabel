@@ -25,4 +25,4 @@ if [ -d ../src/formats/.libs ]; then
     fi
 fi
 
-${PROVE} ${TESTS}
+${PROVE} "$@" ${TESTS}
