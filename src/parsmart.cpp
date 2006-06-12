@@ -25,10 +25,6 @@ GNU General Public License for more details.
 #include "bitvec.h"
 #include "parsmart.h"
 
-/* Strict syntax checking! */
-// Currently causes problems with aromatic flags in atomtyp.txt
-// #define OB_PARSMART_STRICT
-
 using namespace std;
 
 namespace OpenBabel
@@ -190,19 +186,19 @@ namespace OpenBabel
       case(AE_ANDHI):
       case(AE_ANDLO):
       case(AE_OR):    result->bin.lft = CopyAtomExpr(expr->bin.lft);
-	result->bin.rgt = CopyAtomExpr(expr->bin.rgt);
-	break;
+        result->bin.rgt = CopyAtomExpr(expr->bin.rgt);
+        break;
       
       case(AE_NOT):   result->mon.arg = CopyAtomExpr(expr->mon.arg);
-	break;
+        break;
       
       case(AE_RECUR): result->recur.recur = CopyPattern(
-							(Pattern*)expr->recur.recur );
-	break;
+                                                        (Pattern*)expr->recur.recur );
+        break;
       
       case(AE_LEAF):  result->leaf.prop = expr->leaf.prop;
-	result->leaf.value = expr->leaf.value;
-	break;
+        result->leaf.value = expr->leaf.value;
+        break;
       }
     return result;
   }
@@ -211,25 +207,25 @@ namespace OpenBabel
   {
     if( expr )
       {
-	switch( expr->type )
-	  {
-	  case(AE_ANDHI):
-	  case(AE_ANDLO):
-	  case(AE_OR):     FreeAtomExpr(expr->bin.lft);
-	    FreeAtomExpr(expr->bin.rgt);
-	    break;
+        switch( expr->type )
+          {
+          case(AE_ANDHI):
+          case(AE_ANDLO):
+          case(AE_OR):     FreeAtomExpr(expr->bin.lft);
+            FreeAtomExpr(expr->bin.rgt);
+            break;
 	  
-	  case(AE_NOT):    FreeAtomExpr(expr->mon.arg);
-	    break;
+          case(AE_NOT):    FreeAtomExpr(expr->mon.arg);
+            break;
 	  
-	  case(AE_RECUR):  FreePattern( (Pattern*)expr->recur.recur );
-	    break;
-	  }
-	if (expr)
-	  {
-	    free(expr);
-	    expr = (AtomExpr*)NULL;
-	  }
+          case(AE_RECUR):  FreePattern( (Pattern*)expr->recur.recur );
+            break;
+          }
+        if (expr)
+          {
+            free(expr);
+            expr = (AtomExpr*)NULL;
+          }
       }
   }
 
@@ -295,8 +291,8 @@ namespace OpenBabel
     if( !expr )
       return true;
     return( (expr->type==AE_LEAF) &&
-	    (expr->leaf.prop==AL_CONST)
-	    && !expr->leaf.value );
+            (expr->leaf.prop==AL_CONST)
+            && !expr->leaf.value );
   }
 
   /*================================*/
@@ -322,15 +318,15 @@ namespace OpenBabel
       case(AE_ANDHI):
       case(AE_ANDLO):
       case(AE_OR):    result->bin.lft = CopyBondExpr(expr->bin.lft);
-	result->bin.rgt = CopyBondExpr(expr->bin.rgt);
-	break;
+        result->bin.rgt = CopyBondExpr(expr->bin.rgt);
+        break;
       
       case(AE_NOT):   result->mon.arg = CopyBondExpr(expr->mon.arg);
-	break;
+        break;
       
       case(AE_LEAF):  result->leaf.prop = expr->leaf.prop;
-	result->leaf.value = expr->leaf.value;
-	break;
+        result->leaf.value = expr->leaf.value;
+        break;
       }
     return result;
   }
@@ -339,23 +335,23 @@ namespace OpenBabel
   {
     if( expr )
       {
-	switch( expr->type )
-	  {
-	  case(BE_ANDHI):
-	  case(BE_ANDLO):
-	  case(BE_OR):     FreeBondExpr(expr->bin.lft);
-	    FreeBondExpr(expr->bin.rgt);
-	    break;
+        switch( expr->type )
+          {
+          case(BE_ANDHI):
+          case(BE_ANDLO):
+          case(BE_OR):     FreeBondExpr(expr->bin.lft);
+            FreeBondExpr(expr->bin.rgt);
+            break;
 	  
-	  case(BE_NOT):    FreeBondExpr(expr->mon.arg);
-	    break;
-	  }
+          case(BE_NOT):    FreeBondExpr(expr->mon.arg);
+            break;
+          }
       
-	if (expr)
-	  {
-	    free(expr);
-	    expr = (BondExpr*)NULL;
-	  }
+        if (expr)
+          {
+            free(expr);
+            expr = (BondExpr*)NULL;
+          }
       }
   }
 
@@ -431,16 +427,16 @@ namespace OpenBabel
   
     if( pat->acount == pat->aalloc )
       {
-	pat->aalloc += ATOMPOOL;
-	size = (int)(pat->aalloc*sizeof(AtomSpec));
-	if( pat->atom )
-	  {
-	    pat->atom = (AtomSpec*)realloc(pat->atom,size);
-	  }
-	else
-	  pat->atom = (AtomSpec*)malloc(size);
-	if( !pat->atom )
-	  FatalAllocationError("atom pool");
+        pat->aalloc += ATOMPOOL;
+        size = (int)(pat->aalloc*sizeof(AtomSpec));
+        if( pat->atom )
+          {
+            pat->atom = (AtomSpec*)realloc(pat->atom,size);
+          }
+        else
+          pat->atom = (AtomSpec*)malloc(size);
+        if( !pat->atom )
+          FatalAllocationError("atom pool");
       }
   
     index = pat->acount++;
@@ -457,16 +453,16 @@ namespace OpenBabel
   
     if( pat->bcount == pat->balloc )
       {
-	pat->balloc += BONDPOOL;
-	size = (int)(pat->balloc*sizeof(BondSpec));
-	if( pat->bond )
-	  {
-	    pat->bond = (BondSpec*)realloc(pat->bond,size);
-	  }
-	else
-	  pat->bond = (BondSpec*)malloc(size);
-	if( !pat->bond )
-	  FatalAllocationError("bond pool");
+        pat->balloc += BONDPOOL;
+        size = (int)(pat->balloc*sizeof(BondSpec));
+        if( pat->bond )
+          {
+            pat->bond = (BondSpec*)realloc(pat->bond,size);
+          }
+        else
+          pat->bond = (BondSpec*)malloc(size);
+        if( !pat->bond )
+          FatalAllocationError("bond pool");
       }
   
     index = pat->bcount++;
@@ -487,14 +483,14 @@ namespace OpenBabel
     result->parts = pat->parts;
     for( i=0; i<pat->acount; i++ )
       {
-	aexpr = CopyAtomExpr(pat->atom[i].expr);
-	CreateAtom(result,aexpr,pat->atom[i].part);
+        aexpr = CopyAtomExpr(pat->atom[i].expr);
+        CreateAtom(result,aexpr,pat->atom[i].part);
       }
   
     for( i=0; i<pat->bcount; i++ )
       {
-	bexpr = CopyBondExpr(pat->bond[i].expr);
-	CreateBond(result,bexpr,pat->bond[i].src,pat->bond[i].dst);
+        bexpr = CopyBondExpr(pat->bond[i].expr);
+        CreateBond(result,bexpr,pat->bond[i].src,pat->bond[i].dst);
       }
   
     return result;
@@ -506,20 +502,20 @@ namespace OpenBabel
   
     if( pat )
       {
-	if( pat->aalloc )
-	  {
-	    for( i=0; i<pat->acount; i++ )
-	      FreeAtomExpr(pat->atom[i].expr);
-	    free(pat->atom);
-	  }
+        if( pat->aalloc )
+          {
+            for( i=0; i<pat->acount; i++ )
+              FreeAtomExpr(pat->atom[i].expr);
+            free(pat->atom);
+          }
       
-	if( pat->balloc )
-	  {
-	    for( i=0; i<pat->bcount; i++ )
-	      FreeBondExpr(pat->bond[i].expr);
-	    free(pat->bond);
-	  }
-	free(pat);
+        if( pat->balloc )
+          {
+            for( i=0; i<pat->bcount; i++ )
+              FreeBondExpr(pat->bond[i].expr);
+            free(pat->bond);
+          }
+        free(pat);
       }
   }
 
@@ -546,56 +542,57 @@ namespace OpenBabel
     switch( *LexPtr++ )
       {
       case '*':
-	return BuildAtomLeaf(AL_CONST,true);
-#ifndef OB_PARSMART_STRICT
+        return BuildAtomLeaf(AL_CONST,true);
       case 'A':
-	return BuildAtomLeaf(AL_AROM,false);
-#endif
-      
+        return BuildAtomLeaf(AL_AROM,false);
       case 'B':
-	if( *LexPtr == 'r' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(35);
-	  }
-	return GenerateElement(5);
-      
+        if( *LexPtr == 'r' )
+          {
+            LexPtr++;
+            return GenerateElement(35);
+          }
+        return GenerateElement(5);
       case 'C':
-	if( *LexPtr == 'l' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(17);
-	  }
-	return GenerateAromElem(6,false);
-      
+        if( *LexPtr == 'l' )
+          {
+            LexPtr++;
+            return GenerateElement(17);
+          }
+        return GenerateAromElem(6,false);
       case 'F':
-	return GenerateElement( 9);
+        return GenerateElement( 9);
       case 'I':
-	return GenerateElement(53);
+        return GenerateElement(53);
       case 'N':
-	return GenerateAromElem( 7,false);
+        return GenerateAromElem(7,false);
       case 'O':
-	return GenerateAromElem( 8,false);
+        return GenerateAromElem(8,false);
       case 'P':
-	return GenerateElement(15);
+        return GenerateAromElem(15, false);
       case 'S':
-	return GenerateAromElem(16,false);
-      
-#ifndef OB_PARSMART_STRICT
+        return GenerateAromElem(16,false);
       case 'a':
-	return BuildAtomLeaf(AL_AROM,true);
-#endif
-      
+        if( *LexPtr == 's' )
+          {
+            LexPtr++;
+            return GenerateAromElem(33, true);
+          }
+        return BuildAtomLeaf(AL_AROM,true);
       case 'c':
-	return GenerateAromElem( 6,true);
+        return GenerateAromElem( 6,true);
       case 'n':
-	return GenerateAromElem( 7,true);
+        return GenerateAromElem( 7,true);
       case 'o':
-	return GenerateAromElem( 8,true);
+        return GenerateAromElem( 8,true);
       case 'p':
-	return GenerateAromElem(15,true);
+        return GenerateAromElem(15,true);
       case 's':
-	return GenerateAromElem(16,true);
+        if( *LexPtr == 'e' )
+          {
+            LexPtr++;
+            return GenerateAromElem(34, true);
+          }
+        return GenerateAromElem(16,true);
       }
     LexPtr--;
     return (AtomExpr*)0;
@@ -609,497 +606,496 @@ namespace OpenBabel
     switch( *LexPtr++ )
       {
       case('#'):
-	if( !isdigit(*LexPtr) )
-	  return( (AtomExpr*)0 );
+        if( !isdigit(*LexPtr) )
+          return( (AtomExpr*)0 );
       
-	index = 0;
-	while( isdigit(*LexPtr) )
-	  index = index*10 + ((*LexPtr++)-'0');
-	if( index > ELEMMAX )
-	  {
-	    LexPtr--;
-	    return( (AtomExpr*)0 );
-	  }
-	else if( !index )
-	  return( (AtomExpr*)0 );
-	return( GenerateElement(index) );
+        index = 0;
+        while( isdigit(*LexPtr) )
+          index = index*10 + ((*LexPtr++)-'0');
+        if( index > ELEMMAX )
+          {
+            LexPtr--;
+            return( (AtomExpr*)0 );
+          }
+        else if( !index )
+          return( (AtomExpr*)0 );
+        return( GenerateElement(index) );
 	
       case('$'):
-	if( *LexPtr != '(' )
-	  return( (AtomExpr*)0 );
-	LexPtr++;
-#ifdef OB_PARSMART_STRICT
-	pat = ParseSMARTSPart(AllocPattern(),0);
-#else
-	pat = ParseSMARTSPattern();
-#endif
+        if( *LexPtr != '(' )
+          return( (AtomExpr*)0 );
+        LexPtr++;
+        pat = ParseSMARTSPattern();
 	
-	if( !pat )
-	  return( (AtomExpr*)0 );
-	if( *LexPtr != ')' )
-	  {
-	    FreePattern(pat);
-	    return( (AtomExpr*)0 );
-	  }
-	LexPtr++;
-	return( BuildAtomRecurs(pat) );
+        if( !pat )
+          return( (AtomExpr*)0 );
+        if( *LexPtr != ')' )
+          {
+            FreePattern(pat);
+            return( (AtomExpr*)0 );
+          }
+        LexPtr++;
+        return( BuildAtomRecurs(pat) );
 	
       case('*'):
-	return( BuildAtomLeaf(AL_CONST,true) );
+        return( BuildAtomLeaf(AL_CONST,true) );
       
       case('+'):
-	if( isdigit(*LexPtr) )
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	  }
-	else
-	  {
-	    index = 1;
-	    while( *LexPtr == '+' )
-	      {
-		LexPtr++;
-		index++;
-	      }
-	  }
-	return( BuildAtomLeaf(AL_POSITIVE,index) );
+        if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+          }
+        else
+          {
+            index = 1;
+            while( *LexPtr == '+' )
+              {
+                LexPtr++;
+                index++;
+              }
+          }
+        return( BuildAtomLeaf(AL_POSITIVE,index) );
 	
       case('-'):
-	if( isdigit(*LexPtr) )
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	  }
-	else
-	  {
-	    index = 1;
-	    while( *LexPtr == '-' )
-	      {
-		LexPtr++;
-		index++;
-	      }
-	  }
-	return BuildAtomLeaf(AL_NEGATIVE,index);
+        if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+          }
+        else
+          {
+            index = 1;
+            while( *LexPtr == '-' )
+              {
+                LexPtr++;
+                index++;
+              }
+          }
+        return BuildAtomLeaf(AL_NEGATIVE,index);
       
       case '@':
-	if (*LexPtr != '@')
-	  return(BuildAtomLeaf(AL_CHIRAL,AL_ANTICLOCKWISE));
-	LexPtr++;
-	return(BuildAtomLeaf(AL_CHIRAL,AL_CLOCKWISE));
+        if (*LexPtr != '@')
+          return(BuildAtomLeaf(AL_CHIRAL,AL_ANTICLOCKWISE));
+        LexPtr++;
+        return(BuildAtomLeaf(AL_CHIRAL,AL_CLOCKWISE));
 	
       case '^':
-	if (isdigit(*LexPtr))
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	    return(BuildAtomLeaf(AL_HYB,index));
-	  }
-	else
-	  return(BuildAtomLeaf(AL_HYB,1));
+        if (isdigit(*LexPtr))
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+            return(BuildAtomLeaf(AL_HYB,index));
+          }
+        else
+          return(BuildAtomLeaf(AL_HYB,1));
 	
       case('0'): case('1'): case('2'): case('3'): case('4'):
       case('5'): case('6'): case('7'): case('8'): case('9'):
-	index = LexPtr[-1]-'0';
-	while( isdigit(*LexPtr) )
-	  index = index*10 + ((*LexPtr++)-'0');
-	return BuildAtomLeaf(AL_MASS,index);
+        index = LexPtr[-1]-'0';
+        while( isdigit(*LexPtr) )
+          index = index*10 + ((*LexPtr++)-'0');
+        return BuildAtomLeaf(AL_MASS,index);
       
       case('A'):
-	switch( *LexPtr++ )
-	  {
-	  case('c'):  return GenerateElement(89);
-	  case('g'):  return GenerateElement(47);
-	  case('l'):  return GenerateElement(13);
-	  case('m'):  return GenerateElement(95);
-	  case('r'):  return GenerateElement(18);
-	  case('s'):  return GenerateElement(33);
-	  case('t'):  return GenerateElement(85);
-	  case('u'):  return GenerateElement(79);
-	  }
-	LexPtr--;
-	return BuildAtomLeaf(AL_AROM,false);
+        switch( *LexPtr++ )
+          {
+          case('c'):  return GenerateElement(89);
+          case('g'):  return GenerateElement(47);
+          case('l'):  return GenerateElement(13);
+          case('m'):  return GenerateElement(95);
+          case('r'):  return GenerateElement(18);
+          case('s'):  return GenerateElement(33);
+          case('t'):  return GenerateElement(85);
+          case('u'):  return GenerateElement(79);
+          }
+        LexPtr--;
+        return BuildAtomLeaf(AL_AROM,false);
 	
       case('B'):
-	switch( *LexPtr++ )
-	  {
-	  case('a'):  return GenerateElement(56);
-	  case('e'):  return GenerateElement( 4);
-	  case('i'):  return GenerateElement(83);
-	  case('k'):  return GenerateElement(97);
-	  case('r'):  return GenerateElement(35);
-	  }
-	LexPtr--;
-	return GenerateElement(5);
+        switch( *LexPtr++ )
+          {
+          case('a'):  return GenerateElement(56);
+          case('e'):  return GenerateElement( 4);
+          case('i'):  return GenerateElement(83);
+          case('k'):  return GenerateElement(97);
+          case('r'):  return GenerateElement(35);
+          }
+        LexPtr--;
+        return GenerateElement(5);
 	
       case('C'):
-	switch( *LexPtr++ )
-	  {
-	  case('a'):  return GenerateElement(20);
-	  case('d'):  return GenerateElement(48);
-	  case('e'):  return GenerateElement(58);
-	  case('f'):  return GenerateElement(98);
-	  case('l'):  return GenerateElement(17);
-	  case('m'):  return GenerateElement(96);
-	  case('o'):  return GenerateElement(27);
-	  case('r'):  return GenerateElement(24);
-	  case('s'):  return GenerateElement(55);
-	  case('u'):  return GenerateElement(29);
-	  }
-	LexPtr--;
-	return GenerateAromElem(6,false);
+        switch( *LexPtr++ )
+          {
+          case('a'):  return GenerateElement(20);
+          case('d'):  return GenerateElement(48);
+          case('e'):  return GenerateElement(58);
+          case('f'):  return GenerateElement(98);
+          case('l'):  return GenerateElement(17);
+          case('m'):  return GenerateElement(96);
+          case('o'):  return GenerateElement(27);
+          case('r'):  return GenerateElement(24);
+          case('s'):  return GenerateElement(55);
+          case('u'):  return GenerateElement(29);
+          }
+        LexPtr--;
+        return GenerateAromElem(6,false);
       
       case('D'):
-	if( *LexPtr == 'y' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(66);
-	  }
-	else if( isdigit(*LexPtr) )
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	    return BuildAtomLeaf(AL_DEGREE,index);
-	  }
-	break;
+        if( *LexPtr == 'y' )
+          {
+            LexPtr++;
+            return GenerateElement(66);
+          }
+        else if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+            return BuildAtomLeaf(AL_DEGREE,index);
+          }
+        return BuildAtomLeaf(AL_DEGREE,1);
+        break;
       
       case('E'):
-	if( *LexPtr == 'r' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(68);
-	  }
-	else if( *LexPtr == 's' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(99);
-	  }
-	else if( *LexPtr == 'u' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(63);
-	  }
-	break;
+        if( *LexPtr == 'r' )
+          {
+            LexPtr++;
+            return GenerateElement(68);
+          }
+        else if( *LexPtr == 's' )
+          {
+            LexPtr++;
+            return GenerateElement(99);
+          }
+        else if( *LexPtr == 'u' )
+          {
+            LexPtr++;
+            return GenerateElement(63);
+          }
+        break;
       
       case('F'):
-	if( *LexPtr == 'e' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(26);
-	  }
-	else if( *LexPtr == 'm' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(100);
-	  }
-	else if( *LexPtr == 'r' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(87);
-	  }
-	return GenerateElement(9);
+        if( *LexPtr == 'e' )
+          {
+            LexPtr++;
+            return GenerateElement(26);
+          }
+        else if( *LexPtr == 'm' )
+          {
+            LexPtr++;
+            return GenerateElement(100);
+          }
+        else if( *LexPtr == 'r' )
+          {
+            LexPtr++;
+            return GenerateElement(87);
+          }
+        return GenerateElement(9);
       
       case('G'):
-	if( *LexPtr == 'a' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(31) );
-	  }
-	else if( *LexPtr == 'd' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(64) );
-	  }
-	else if( *LexPtr == 'e' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(32) );
-	  }
-	break;
+        if( *LexPtr == 'a' )
+          {
+            LexPtr++;
+            return( GenerateElement(31) );
+          }
+        else if( *LexPtr == 'd' )
+          {
+            LexPtr++;
+            return( GenerateElement(64) );
+          }
+        else if( *LexPtr == 'e' )
+          {
+            LexPtr++;
+            return( GenerateElement(32) );
+          }
+        break;
       
       case('H'):
-	if( *LexPtr == 'e' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement( 2) );
-	  }
-	else if( *LexPtr == 'f' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(72) );
-	  }
-	else if( *LexPtr == 'g' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(80) );
-	  }
-	else if( *LexPtr == 'o' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(67) );
-	  }
-	else if( isdigit(*LexPtr) )
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	    return( BuildAtomLeaf(AL_HCOUNT,index) );
-	  }
-	return( BuildAtomLeaf(AL_HCOUNT,1) );
+        if( *LexPtr == 'e' )
+          {
+            LexPtr++;
+            return( GenerateElement( 2) );
+          }
+        else if( *LexPtr == 'f' )
+          {
+            LexPtr++;
+            return( GenerateElement(72) );
+          }
+        else if( *LexPtr == 'g' )
+          {
+            LexPtr++;
+            return( GenerateElement(80) );
+          }
+        else if( *LexPtr == 'o' )
+          {
+            LexPtr++;
+            return( GenerateElement(67) );
+          }
+        else if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+            return( BuildAtomLeaf(AL_HCOUNT,index) );
+          }
+        return( BuildAtomLeaf(AL_HCOUNT,1) );
       
       case('I'):
-	if( *LexPtr == 'n' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(49) );
-	  }
-	else if( *LexPtr == 'r' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(77) );
-	  }
-	return( GenerateElement(53) );
+        if( *LexPtr == 'n' )
+          {
+            LexPtr++;
+            return( GenerateElement(49) );
+          }
+        else if( *LexPtr == 'r' )
+          {
+            LexPtr++;
+            return( GenerateElement(77) );
+          }
+        return( GenerateElement(53) );
       
       case('K'):
-	if( *LexPtr == 'r' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(36) );
-	  }
-	return( GenerateElement(19) );
+        if( *LexPtr == 'r' )
+          {
+            LexPtr++;
+            return( GenerateElement(36) );
+          }
+        return( GenerateElement(19) );
 	
       case('L'):
-	if( *LexPtr == 'a' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement( 57) );
-	  }
-	else if( *LexPtr == 'i' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(  3) );
-	  }
-	else if( *LexPtr == 'r' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(103) );
-	  }
-	else if( *LexPtr == 'u' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement( 71) );
-	  }
-	break;
+        if( *LexPtr == 'a' )
+          {
+            LexPtr++;
+            return( GenerateElement( 57) );
+          }
+        else if( *LexPtr == 'i' )
+          {
+            LexPtr++;
+            return( GenerateElement(  3) );
+          }
+        else if( *LexPtr == 'r' )
+          {
+            LexPtr++;
+            return( GenerateElement(103) );
+          }
+        else if( *LexPtr == 'u' )
+          {
+            LexPtr++;
+            return( GenerateElement( 71) );
+          }
+        break;
       
       case('M'):
-	if( *LexPtr == 'd' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(101) );
-	  }
-	else if( *LexPtr == 'g' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement( 12) );
-	  }
-	else if( *LexPtr == 'n' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement( 25) );
-	  }
-	else if( *LexPtr == 'o' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement( 42) );
-	  }
-	break;
+        if( *LexPtr == 'd' )
+          {
+            LexPtr++;
+            return( GenerateElement(101) );
+          }
+        else if( *LexPtr == 'g' )
+          {
+            LexPtr++;
+            return( GenerateElement( 12) );
+          }
+        else if( *LexPtr == 'n' )
+          {
+            LexPtr++;
+            return( GenerateElement( 25) );
+          }
+        else if( *LexPtr == 'o' )
+          {
+            LexPtr++;
+            return( GenerateElement( 42) );
+          }
+        break;
       
       case('N'):
-	switch( *LexPtr++ )
-	  {
-	  case('a'):  return( GenerateElement( 11) );
-	  case('b'):  return( GenerateElement( 41) );
-	  case('d'):  return( GenerateElement( 60) );
-	  case('e'):  return( GenerateElement( 10) );
-	  case('i'):  return( GenerateElement( 28) );
-	  case('o'):  return( GenerateElement(102) );
-	  case('p'):  return( GenerateElement( 93) );
-	  }
-	LexPtr--;
-	return( GenerateAromElem(7,false) );
+        switch( *LexPtr++ )
+          {
+          case('a'):  return( GenerateElement( 11) );
+          case('b'):  return( GenerateElement( 41) );
+          case('d'):  return( GenerateElement( 60) );
+          case('e'):  return( GenerateElement( 10) );
+          case('i'):  return( GenerateElement( 28) );
+          case('o'):  return( GenerateElement(102) );
+          case('p'):  return( GenerateElement( 93) );
+          }
+        LexPtr--;
+        return( GenerateAromElem(7,false) );
 	
       case('O'):
-	if( *LexPtr == 's' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(76) );
-	  }
-	return( GenerateAromElem(8,false) );
+        if( *LexPtr == 's' )
+          {
+            LexPtr++;
+            return( GenerateElement(76) );
+          }
+        return( GenerateAromElem(8,false) );
 	
       case('P'):
-	switch( *LexPtr++ )
-	  {
-	  case('a'):  return( GenerateElement(91) );
-	  case('b'):  return( GenerateElement(82) );
-	  case('d'):  return( GenerateElement(46) );
-	  case('m'):  return( GenerateElement(61) );
-	  case('o'):  return( GenerateElement(84) );
-	  case('r'):  return( GenerateElement(59) );
-	  case('t'):  return( GenerateElement(78) );
-	  case('u'):  return( GenerateElement(94) );
-	  }
-	LexPtr--;
-	return( GenerateElement(15) );
+        switch( *LexPtr++ )
+          {
+          case('a'):  return( GenerateElement(91) );
+          case('b'):  return( GenerateElement(82) );
+          case('d'):  return( GenerateElement(46) );
+          case('m'):  return( GenerateElement(61) );
+          case('o'):  return( GenerateElement(84) );
+          case('r'):  return( GenerateElement(59) );
+          case('t'):  return( GenerateElement(78) );
+          case('u'):  return( GenerateElement(94) );
+          }
+        LexPtr--;
+        return( GenerateElement(15) );
 	
       case('R'):
-	switch( *LexPtr++ )
-	  {
-	  case('a'):  return( GenerateElement(88) );
-	  case('b'):  return( GenerateElement(37) );
-	  case('e'):  return( GenerateElement(75) );
-	  case('h'):  return( GenerateElement(45) );
-	  case('n'):  return( GenerateElement(86) );
-	  case('u'):  return( GenerateElement(44) );
-	  }
-	LexPtr--;
-	if( isdigit(*LexPtr) )
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	  }
-	else
-	  index = -1;
-	return( BuildAtomLeaf(AL_RINGS,index) );
+        switch( *LexPtr++ )
+          {
+          case('a'):  return( GenerateElement(88) );
+          case('b'):  return( GenerateElement(37) );
+          case('e'):  return( GenerateElement(75) );
+          case('h'):  return( GenerateElement(45) );
+          case('n'):  return( GenerateElement(86) );
+          case('u'):  return( GenerateElement(44) );
+          }
+        LexPtr--;
+        if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+          }
+        else
+          index = -1;
+        return( BuildAtomLeaf(AL_RINGS,index) );
 	
       case('S'):
-	switch( *LexPtr++ )
-	  {
-	  case('b'):  return( GenerateElement(51) );
-	  case('c'):  return( GenerateElement(21) );
-	  case('e'):  return( GenerateElement(34) );
-	  case('i'):  return( GenerateElement(14) );
-	  case('m'):  return( GenerateElement(62) );
-	  case('n'):  return( GenerateElement(50) );
-	  case('r'):  return( GenerateElement(38) );
-	  }
-	LexPtr--;
-	return( GenerateAromElem(16,false) );
+        switch( *LexPtr++ )
+          {
+          case('b'):  return( GenerateElement(51) );
+          case('c'):  return( GenerateElement(21) );
+          case('e'):  return( GenerateElement(34) );
+          case('i'):  return( GenerateElement(14) );
+          case('m'):  return( GenerateElement(62) );
+          case('n'):  return( GenerateElement(50) );
+          case('r'):  return( GenerateElement(38) );
+          }
+        LexPtr--;
+        return( GenerateAromElem(16,false) );
 	
       case('T'):
-	switch( *LexPtr++ )
-	  {
-	  case('a'):  return( GenerateElement(73) );
-	  case('b'):  return( GenerateElement(65) );
-	  case('c'):  return( GenerateElement(43) );
-	  case('e'):  return( GenerateElement(52) );
-	  case('h'):  return( GenerateElement(90) );
-	  case('i'):  return( GenerateElement(22) );
-	  case('l'):  return( GenerateElement(81) );
-	  case('m'):  return( GenerateElement(69) );
-	  }
-	LexPtr--;
-	break;
+        switch( *LexPtr++ )
+          {
+          case('a'):  return( GenerateElement(73) );
+          case('b'):  return( GenerateElement(65) );
+          case('c'):  return( GenerateElement(43) );
+          case('e'):  return( GenerateElement(52) );
+          case('h'):  return( GenerateElement(90) );
+          case('i'):  return( GenerateElement(22) );
+          case('l'):  return( GenerateElement(81) );
+          case('m'):  return( GenerateElement(69) );
+          }
+        LexPtr--;
+        break;
 	
       case('U'):  return( GenerateElement(92) );
       case('V'):  return( GenerateElement(23) );
       case('W'):  return( GenerateElement(74) );
 	
       case('X'):
-	if( *LexPtr == 'e' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(54) );
-	  }
-	else if( isdigit(*LexPtr) )
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	    if (index == 0) // default to 1 (if no number present)
-	      index = 1;
-	    return( BuildAtomLeaf(AL_CONNECT,index) );
-	  }
-	break;
+        if( *LexPtr == 'e' )
+          {
+            LexPtr++;
+            return( GenerateElement(54) );
+          }
+        else if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+            if (index == 0) // default to 1 (if no number present)
+              index = 1;
+            return( BuildAtomLeaf(AL_CONNECT,index) );
+          }
+        return( BuildAtomLeaf(AL_CONNECT,1) );
+        break;
 	
       case('Y'):
-	if( *LexPtr == 'b' )
-	  {
-	    LexPtr++;
-	    return( GenerateElement(70) );
-	  }
-	return( GenerateElement(39) );
+        if( *LexPtr == 'b' )
+          {
+            LexPtr++;
+            return( GenerateElement(70) );
+          }
+        return( GenerateElement(39) );
 	
       case('Z'):
-	if( *LexPtr == 'n' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(30);
-	  }
-	else if( *LexPtr == 'r' )
-	  {
-	    LexPtr++;
-	    return GenerateElement(40);
-	  }
-	break;
+        if( *LexPtr == 'n' )
+          {
+            LexPtr++;
+            return GenerateElement(30);
+          }
+        else if( *LexPtr == 'r' )
+          {
+            LexPtr++;
+            return GenerateElement(40);
+          }
+        break;
       
       case('a'):
-	if( *LexPtr == 's' )
-	  {
-	    LexPtr++;
-	    return GenerateAromElem(33,true);
-	  }
-	return BuildAtomLeaf(AL_AROM,true);
+        if( *LexPtr == 's' )
+          {
+            LexPtr++;
+            return GenerateAromElem(33,true);
+          }
+        return BuildAtomLeaf(AL_AROM,true);
       
       case('c'):  return GenerateAromElem(6,true);
       
       case('h'):
-	if( isdigit(*LexPtr) )
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	  }
-	else
-	  index = 1;
-	return BuildAtomLeaf(AL_IMPLICIT,index);
+        if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+          }
+        else
+          index = 1;
+        return BuildAtomLeaf(AL_IMPLICIT,index);
       
       case('n'):  return GenerateAromElem(7,true);
       case('o'):  return GenerateAromElem(8,true);
       case('p'):  return GenerateAromElem(15,true);
       
       case('r'):
-	if( isdigit(*LexPtr) )
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	    if( index == 0 )
-	      return BuildAtomLeaf(AL_RINGS,0);
-	    return BuildAtomLeaf(AL_SIZE,index);
-	  }
-	return BuildAtomLeaf(AL_RINGS,-1);
+        if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+            if( index == 0 )
+              return BuildAtomLeaf(AL_RINGS,0);
+            return BuildAtomLeaf(AL_SIZE,index);
+          }
+        return BuildAtomLeaf(AL_RINGS,-1);
 	
       case('s'):
-	if( *LexPtr == 'i' )
-	  {
-	    LexPtr++;
-	    return GenerateAromElem(14,true);
-	  }
-	return GenerateAromElem(16,true);
+        if( *LexPtr == 'e' )
+          {
+            LexPtr++;
+            return GenerateAromElem(34,true);
+          }
+        return GenerateAromElem(16,true);
 	
       case('v'):
-	if( isdigit(*LexPtr) )
-	  {
-	    index = 0;
-	    while( isdigit(*LexPtr) )
-	      index = index*10 + ((*LexPtr++)-'0');
-	    return BuildAtomLeaf(AL_VALENCE,index);
-	  }
-	break;
+        if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+            return BuildAtomLeaf(AL_VALENCE,index);
+          }
+        return BuildAtomLeaf(AL_VALENCE,1);
+        break;
       }
     LexPtr--;
     return (AtomExpr*)0;
@@ -1114,70 +1110,70 @@ namespace OpenBabel
     switch( level )
       {
       case(0): /* Low Precedence Conjunction */
-	if( !(expr1=ParseAtomExpr(1)) )
-	  return (AtomExpr*)0;
+        if( !(expr1=ParseAtomExpr(1)) )
+          return (AtomExpr*)0;
       
-	while( *LexPtr == ';' )
-	  {
-	    LexPtr++;
-	    if( !(expr2=ParseAtomExpr(1)) )
-	      {
-		FreeAtomExpr(expr1);
-		return (AtomExpr*)0;
-	      }
-	    expr1 = BuildAtomBin(AE_ANDLO,expr1,expr2);
-	  }
-	return expr1;
+        while( *LexPtr == ';' )
+          {
+            LexPtr++;
+            if( !(expr2=ParseAtomExpr(1)) )
+              {
+                FreeAtomExpr(expr1);
+                return (AtomExpr*)0;
+              }
+            expr1 = BuildAtomBin(AE_ANDLO,expr1,expr2);
+          }
+        return expr1;
       
       case(1): /* Disjunction */
-	if( !(expr1=ParseAtomExpr(2)) )
-	  return (AtomExpr*)0;
+        if( !(expr1=ParseAtomExpr(2)) )
+          return (AtomExpr*)0;
       
-	while( *LexPtr == ',' )
-	  {
-	    LexPtr++;
-	    if( !(expr2=ParseAtomExpr(2)) )
-	      {
-		FreeAtomExpr(expr1);
-		return( (AtomExpr*)0 );
-	      }
-	    expr1 = BuildAtomBin(AE_OR,expr1,expr2);
-	  }
-	return( expr1 );
+        while( *LexPtr == ',' )
+          {
+            LexPtr++;
+            if( !(expr2=ParseAtomExpr(2)) )
+              {
+                FreeAtomExpr(expr1);
+                return( (AtomExpr*)0 );
+              }
+            expr1 = BuildAtomBin(AE_OR,expr1,expr2);
+          }
+        return( expr1 );
       
       case(2): /* High Precedence Conjunction */
-	if( !(expr1=ParseAtomExpr(3)) )
-	  return( (AtomExpr*)0 );
+        if( !(expr1=ParseAtomExpr(3)) )
+          return( (AtomExpr*)0 );
       
-	while( (*LexPtr!=']') && (*LexPtr!=';') &&
-	       (*LexPtr!=',') && *LexPtr )
-	  {
-	    if( *LexPtr=='&' )
-	      LexPtr++;
-	    prev = LexPtr;
-	    if( !(expr2=ParseAtomExpr(3)) )
-	      {
-		if( prev != LexPtr )
-		  {
-		    FreeAtomExpr(expr1);
-		    return( (AtomExpr*)0 );
-		  }
-		else
-		  return( expr1 );
-	      }
-	    expr1 = BuildAtomBin(AE_ANDHI,expr1,expr2);
-	  }
-	return( expr1 );
+        while( (*LexPtr!=']') && (*LexPtr!=';') &&
+               (*LexPtr!=',') && *LexPtr )
+          {
+            if( *LexPtr=='&' )
+              LexPtr++;
+            prev = LexPtr;
+            if( !(expr2=ParseAtomExpr(3)) )
+              {
+                if( prev != LexPtr )
+                  {
+                    FreeAtomExpr(expr1);
+                    return( (AtomExpr*)0 );
+                  }
+                else
+                  return( expr1 );
+              }
+            expr1 = BuildAtomBin(AE_ANDHI,expr1,expr2);
+          }
+        return( expr1 );
       
       case(3): /* Negation or Primitive */
-	if( *LexPtr == '!' )
-	  {
-	    LexPtr++;
-	    if( !(expr1=ParseAtomExpr(3)) )
-	      return( (AtomExpr*)0 );
-	    return( BuildAtomNot(expr1) );
-	  }
-	return( ParseComplexAtomPrimitive() );
+        if( *LexPtr == '!' )
+          {
+            LexPtr++;
+            if( !(expr1=ParseAtomExpr(3)) )
+              return( (AtomExpr*)0 );
+            return( BuildAtomNot(expr1) );
+          }
+        return( ParseComplexAtomPrimitive() );
       }
     return (AtomExpr*)0;
   }
@@ -1194,19 +1190,19 @@ namespace OpenBabel
       case('~'):  return BuildBondLeaf(BL_CONST,true);
       
       case('/'):  if( *LexPtr == '?' )
-	{
-	  LexPtr++;
-	  return BuildBondLeaf(BL_TYPE,BT_UPUNSPEC);
-	}
-	return BuildBondLeaf(BL_TYPE,BT_UP);
+        {
+          LexPtr++;
+          return BuildBondLeaf(BL_TYPE,BT_UPUNSPEC);
+        }
+        return BuildBondLeaf(BL_TYPE,BT_UP);
       
       case('\\'): if( *LexPtr == '?' )
-	{
-	  LexPtr++;
-	  return BuildBondLeaf(BL_TYPE,BT_DOWNUNSPEC);
-	}
+        {
+          LexPtr++;
+          return BuildBondLeaf(BL_TYPE,BT_DOWNUNSPEC);
+        }
       
-	return BuildBondLeaf(BL_TYPE,BT_DOWN);
+        return BuildBondLeaf(BL_TYPE,BT_DOWN);
       }
     LexPtr--;
     return (BondExpr*)0;
@@ -1221,70 +1217,70 @@ namespace OpenBabel
     switch( level )
       {
       case(0): /* Low Precedence Conjunction */
-	if( !(expr1=ParseBondExpr(1)) )
-	  return (BondExpr*)0;
+        if( !(expr1=ParseBondExpr(1)) )
+          return (BondExpr*)0;
       
-	while( *LexPtr == ';' )
-	  {
-	    LexPtr++;
-	    if( !(expr2=ParseBondExpr(1)) )
-	      {
-		FreeBondExpr(expr1);
-		return (BondExpr*)0;
-	      }
-	    expr1 = BuildBondBin(BE_ANDLO,expr1,expr2);
-	  }
-	return expr1;
+        while( *LexPtr == ';' )
+          {
+            LexPtr++;
+            if( !(expr2=ParseBondExpr(1)) )
+              {
+                FreeBondExpr(expr1);
+                return (BondExpr*)0;
+              }
+            expr1 = BuildBondBin(BE_ANDLO,expr1,expr2);
+          }
+        return expr1;
       
       case(1): /* Disjunction */
-	if( !(expr1=ParseBondExpr(2)) )
-	  return (BondExpr*)0;
+        if( !(expr1=ParseBondExpr(2)) )
+          return (BondExpr*)0;
       
-	while( *LexPtr == ',' )
-	  {
-	    LexPtr++;
-	    if( !(expr2=ParseBondExpr(2)) )
-	      {
-		FreeBondExpr(expr1);
-		return (BondExpr*)0;
-	      }
-	    expr1 = BuildBondBin(BE_OR,expr1,expr2);
-	  }
-	return expr1;
+        while( *LexPtr == ',' )
+          {
+            LexPtr++;
+            if( !(expr2=ParseBondExpr(2)) )
+              {
+                FreeBondExpr(expr1);
+                return (BondExpr*)0;
+              }
+            expr1 = BuildBondBin(BE_OR,expr1,expr2);
+          }
+        return expr1;
       
       case(2): /* High Precedence Conjunction */
-	if( !(expr1=ParseBondExpr(3)) )
-	  return (BondExpr*)0;
+        if( !(expr1=ParseBondExpr(3)) )
+          return (BondExpr*)0;
       
-	while( (*LexPtr!=']') && (*LexPtr!=';') &&
-	       (*LexPtr!=',') && *LexPtr )
-	  {
-	    if( *LexPtr == '&' )
-	      LexPtr++;
-	    prev = LexPtr;
-	    if( !(expr2=ParseBondExpr(3)) )
-	      {
-		if( prev != LexPtr )
-		  {
-		    FreeBondExpr(expr1);
-		    return (BondExpr*)0;
-		  }
-		else
-		  return expr1;
-	      }
-	    expr1 = BuildBondBin(BE_ANDHI,expr1,expr2);
-	  }
-	return expr1;
+        while( (*LexPtr!=']') && (*LexPtr!=';') &&
+               (*LexPtr!=',') && *LexPtr )
+          {
+            if( *LexPtr == '&' )
+              LexPtr++;
+            prev = LexPtr;
+            if( !(expr2=ParseBondExpr(3)) )
+              {
+                if( prev != LexPtr )
+                  {
+                    FreeBondExpr(expr1);
+                    return (BondExpr*)0;
+                  }
+                else
+                  return expr1;
+              }
+            expr1 = BuildBondBin(BE_ANDHI,expr1,expr2);
+          }
+        return expr1;
       
       case(3): /* Negation or Primitive */
-	if( *LexPtr == '!' )
-	  {
-	    LexPtr++;
-	    if( !(expr1=ParseBondExpr(3)) )
-	      return (BondExpr*)0;
-	    return BuildBondNot(expr1);
-	  }
-	return ParseBondPrimitive();
+        if( *LexPtr == '!' )
+          {
+            LexPtr++;
+            if( !(expr1=ParseBondExpr(3)) )
+              return (BondExpr*)0;
+            return BuildBondNot(expr1);
+          }
+        return ParseBondPrimitive();
       }
     return (BondExpr*)0;
   }
@@ -1296,9 +1292,9 @@ namespace OpenBabel
     LexPtr++; //skip colon
     if(isdigit(*LexPtr))
       {
-	vb = 0;
-	while( isdigit(*LexPtr) )
-	  vb = vb*10 + ((*LexPtr++)-'0');
+        vb = 0;
+        while( isdigit(*LexPtr) )
+          vb = vb*10 + ((*LexPtr++)-'0');
       }
   
     return(vb);
@@ -1312,7 +1308,7 @@ namespace OpenBabel
   }
 
   static Pattern *SMARTSParser( Pattern *pat, ParseState *stat,
-				int prev, int part )
+                                int prev, int part )
   {
     int vb = 0;
     register AtomExpr *aexpr;
@@ -1323,158 +1319,146 @@ namespace OpenBabel
   
     while( *LexPtr )
       {
-	switch( *LexPtr++ )
-	  {
-	  case('.'):  if( bexpr || (prev==-1) )
-	    return ParseSMARTSError(pat,bexpr);
-	    prev = -1;
-	    break;
+        switch( *LexPtr++ )
+          {
+          case('.'):  if( bexpr || (prev==-1) )
+            return ParseSMARTSError(pat,bexpr);
+            prev = -1;
+            break;
 	  
-	  case('-'):  case('='):  case('#'):
-	  case(':'):  case('~'):  case('@'):
-	  case('/'):  case('\\'): case('!'):
-	    LexPtr--;
-	    if( (prev==-1) || bexpr )
-	      return ParseSMARTSError(pat,bexpr);
-	    if( !(bexpr=ParseBondExpr(0)) )
-	      return ParseSMARTSError(pat,bexpr);
-	    break;
+          case('-'):  case('='):  case('#'):
+          case(':'):  case('~'):  case('@'):
+          case('/'):  case('\\'): case('!'):
+            LexPtr--;
+            if( (prev==-1) || bexpr )
+              return ParseSMARTSError(pat,bexpr);
+            if( !(bexpr=ParseBondExpr(0)) )
+              return ParseSMARTSError(pat,bexpr);
+            break;
 	  
-	  case('('):
-#ifdef OB_PARSMART_STRICT
-	    if( (prev==-1) || bexpr )
-	      {
-		LexPtr--;
-		return ParseSMARTSError(pat,bexpr);
-	      }
-	    pat = SMARTSParser(pat,stat,prev,part);
-	    if( !pat )
-	      return (Pattern*)0;
-#else /* OB_PARSMART_STRICT */
+          case('('):
+            if( bexpr )
+              {
+                LexPtr--;
+                return ParseSMARTSError(pat,bexpr);
+              }
+            if( prev == -1 )
+              {
+                index = pat->acount;
+                pat = SMARTSParser(pat,stat,-1,part);
+                if( !pat )
+                  return( (Pattern*)0 );
+                if( index == pat->acount )
+                  return ParseSMARTSError(pat,bexpr);
+                prev = index;
+              }
+            else
+              {
+                pat = SMARTSParser(pat,stat,prev,part);
+                if( !pat )
+                  return (Pattern*)0;
+              }
 	  
-	    if( bexpr )
-	      {
-		LexPtr--;
-		return ParseSMARTSError(pat,bexpr);
-	      }
-	    if( prev == -1 )
-	      {
-		index = pat->acount;
-		pat = SMARTSParser(pat,stat,-1,part);
-		if( !pat )
-		  return( (Pattern*)0 );
-		if( index == pat->acount )
-		  return ParseSMARTSError(pat,bexpr);
-		prev = index;
-	      }
-	    else
-	      {
-		pat = SMARTSParser(pat,stat,prev,part);
-		if( !pat )
-		  return (Pattern*)0;
-	      }
-#endif /* OB_PARSMART_STRICT */
+            if( *LexPtr != ')' )
+              return ParseSMARTSError(pat,bexpr);
+            LexPtr++;
+            break;
 	  
-	    if( *LexPtr != ')' )
-	      return ParseSMARTSError(pat,bexpr);
-	    LexPtr++;
-	    break;
+          case(')'):  LexPtr--;
+            if( (prev==-1) || bexpr )
+              return ParseSMARTSError(pat,bexpr);
+            return pat;
 	  
-	  case(')'):  LexPtr--;
-	    if( (prev==-1) || bexpr )
-	      return ParseSMARTSError(pat,bexpr);
-	    return pat;
+          case('%'):  if( prev == -1 )
+            {
+              LexPtr--;
+              return ParseSMARTSError(pat,bexpr);
+            }
 	  
-	  case('%'):  if( prev == -1 )
-	    {
-	      LexPtr--;
-	      return ParseSMARTSError(pat,bexpr);
-	    }
+            if( isdigit(LexPtr[0]) && isdigit(LexPtr[1]) )
+              {
+                index = 10*(LexPtr[0]-'0') + (LexPtr[1]-'0');
+                LexPtr += 2;
+              }
+            else
+              return ParseSMARTSError(pat,bexpr);
 	  
-	    if( isdigit(LexPtr[0]) && isdigit(LexPtr[1]) )
-	      {
-		index = 10*(LexPtr[0]-'0') + (LexPtr[1]-'0');
-		LexPtr += 2;
-	      }
-	    else
-	      return ParseSMARTSError(pat,bexpr);
+            if( stat->closure[index] == -1 )
+              {
+                stat->closord[index] = bexpr;
+                stat->closure[index] = prev;
+              }
+            else if( stat->closure[index] != prev )
+              {
+                FreeBondExpr(stat->closord[index]);
+                if( !bexpr )
+                  bexpr = GenerateDefaultBond();
+                CreateBond(pat,bexpr,prev,stat->closure[index]);
+                stat->closure[index] = -1;
+                bexpr = (BondExpr*)0;
+              }
+            else
+              return ParseSMARTSError(pat,bexpr);
+            break;
 	  
-	    if( stat->closure[index] == -1 )
-	      {
-		stat->closord[index] = bexpr;
-		stat->closure[index] = prev;
-	      }
-	    else if( stat->closure[index] != prev )
-	      {
-		FreeBondExpr(stat->closord[index]);
-		if( !bexpr )
-		  bexpr = GenerateDefaultBond();
-		CreateBond(pat,bexpr,prev,stat->closure[index]);
-		stat->closure[index] = -1;
-		bexpr = (BondExpr*)0;
-	      }
-	    else
-	      return ParseSMARTSError(pat,bexpr);
-	    break;
+          case('0'):  case('1'):  case('2'):
+          case('3'):  case('4'):  case('5'):
+          case('6'):  case('7'):  case('8'):
+          case('9'):  LexPtr--;
+            if( prev == -1 )
+              return ParseSMARTSError(pat,bexpr);
+            index = (*LexPtr++)-'0';
 	  
-	  case('0'):  case('1'):  case('2'):
-	  case('3'):  case('4'):  case('5'):
-	  case('6'):  case('7'):  case('8'):
-	  case('9'):  LexPtr--;
-	    if( prev == -1 )
-	      return ParseSMARTSError(pat,bexpr);
-	    index = (*LexPtr++)-'0';
+            if( stat->closure[index] == -1 )
+              {
+                stat->closord[index] = bexpr;
+                stat->closure[index] = prev;
+                bexpr = (BondExpr*)0;
+              }
+            else if( stat->closure[index] != prev )
+              {
+                FreeBondExpr(stat->closord[index]);
+                if( !bexpr )
+                  bexpr = GenerateDefaultBond();
+                CreateBond(pat,bexpr,prev,stat->closure[index]);
+                stat->closure[index] = -1;
+                bexpr = (BondExpr*)0;
+              }
+            else
+              return ParseSMARTSError(pat,bexpr);
+            break;
 	  
-	    if( stat->closure[index] == -1 )
-	      {
-		stat->closord[index] = bexpr;
-		stat->closure[index] = prev;
-		bexpr = (BondExpr*)0;
-	      }
-	    else if( stat->closure[index] != prev )
-	      {
-		FreeBondExpr(stat->closord[index]);
-		if( !bexpr )
-		  bexpr = GenerateDefaultBond();
-		CreateBond(pat,bexpr,prev,stat->closure[index]);
-		stat->closure[index] = -1;
-		bexpr = (BondExpr*)0;
-	      }
-	    else
-	      return ParseSMARTSError(pat,bexpr);
-	    break;
+          case('['):  aexpr = ParseAtomExpr(0);
+            vb = (*LexPtr == ':') ? GetVectorBinding():0;
+            if( !aexpr || (*LexPtr!=']') )
+              return ParseSMARTSError(pat,bexpr);
+            index = CreateAtom(pat,aexpr,part,vb);
+            if( prev != -1 )
+              {
+                if( !bexpr )
+                  bexpr = GenerateDefaultBond();
+                CreateBond(pat,bexpr,prev,index);
+                bexpr = (BondExpr*)0;
+              }
+            prev = index;
+            LexPtr++;
+            break;
 	  
-	  case('['):  aexpr = ParseAtomExpr(0);
-	    vb = (*LexPtr == ':') ? GetVectorBinding():0;
-	    if( !aexpr || (*LexPtr!=']') )
-	      return ParseSMARTSError(pat,bexpr);
-	    index = CreateAtom(pat,aexpr,part,vb);
-	    if( prev != -1 )
-	      {
-		if( !bexpr )
-		  bexpr = GenerateDefaultBond();
-		CreateBond(pat,bexpr,prev,index);
-		bexpr = (BondExpr*)0;
-	      }
-	    prev = index;
-	    LexPtr++;
-	    break;
-	  
-	  default:
-	    LexPtr--;
-	    aexpr = ParseSimpleAtomPrimitive();
-	    if( !aexpr )
-	      return ParseSMARTSError(pat,bexpr);
-	    index = CreateAtom(pat,aexpr,part);
-	    if( prev != -1 )
-	      {
-		if( !bexpr )
-		  bexpr = GenerateDefaultBond();
-		CreateBond(pat,bexpr,prev,index);
-		bexpr = (BondExpr*)0;
-	      }
-	    prev = index;
-	  }
+          default:
+            LexPtr--;
+            aexpr = ParseSimpleAtomPrimitive();
+            if( !aexpr )
+              return ParseSMARTSError(pat,bexpr);
+            index = CreateAtom(pat,aexpr,part);
+            if( prev != -1 )
+              {
+                if( !bexpr )
+                  bexpr = GenerateDefaultBond();
+                CreateBond(pat,bexpr,prev,index);
+                bexpr = (BondExpr*)0;
+              }
+            prev = index;
+          }
       }
   
     if( (prev==-1) || bexpr )
@@ -1490,11 +1474,11 @@ namespace OpenBabel
   
     for (i = 0;i < pat->bcount;i++)
       {
-	pat->bond[i].grow = (bv[pat->bond[i].src] && bv[pat->bond[i].dst])?
-	  false:true;
+        pat->bond[i].grow = (bv[pat->bond[i].src] && bv[pat->bond[i].dst])?
+          false:true;
       
-	bv.SetBitOn(pat->bond[i].src);
-	bv.SetBitOn(pat->bond[i].dst);
+        bv.SetBitOn(pat->bond[i].src);
+        bv.SetBitOn(pat->bond[i].dst);
       }
   }
 
@@ -1511,74 +1495,74 @@ namespace OpenBabel
   
     for (size=0,stack[size] = expr;size >= 0;expr=stack[size])
       {
-	switch (expr->type)
-	  {
-	  case AE_LEAF:
-	    if (expr->leaf.prop == AL_CHIRAL)
-	      return(expr->leaf.value);
-	    size--;
-	    break;
+        switch (expr->type)
+          {
+          case AE_LEAF:
+            if (expr->leaf.prop == AL_CHIRAL)
+              return(expr->leaf.value);
+            size--;
+            break;
 	  
-	  case AE_ANDHI:
-	  case AE_ANDLO:
+          case AE_ANDHI:
+          case AE_ANDLO:
 	  
-	    if (stack[size+1] == expr->bin.rgt)
-	      size--;
-	    else if (stack[size+1] == expr->bin.lft)
-	      {
-		if (lftest)
-		  {
-		    size++;
-		    stack[size] = expr->bin.rgt;
-		  }
-		else
-		  size--;
-	      }
-	    else
-	      {
-		size++;
-		stack[size] = expr->bin.lft;
-	      }
-	    break;
+            if (stack[size+1] == expr->bin.rgt)
+              size--;
+            else if (stack[size+1] == expr->bin.lft)
+              {
+                if (lftest)
+                  {
+                    size++;
+                    stack[size] = expr->bin.rgt;
+                  }
+                else
+                  size--;
+              }
+            else
+              {
+                size++;
+                stack[size] = expr->bin.lft;
+              }
+            break;
 	  
-	  case AE_OR:
+          case AE_OR:
 	  
-	    if (stack[size+1] == expr->bin.rgt)
-	      size--;
-	    else if (stack[size+1] == expr->bin.lft)
-	      {
-		if (!lftest)
-		  {
-		    size++;
-		    stack[size] = expr->bin.rgt;
-		  }
-		else
-		  size--;
-	      }
-	    else
-	      {
-		size++;
-		stack[size] = expr->bin.lft;
-	      }
-	    break;
+            if (stack[size+1] == expr->bin.rgt)
+              size--;
+            else if (stack[size+1] == expr->bin.lft)
+              {
+                if (!lftest)
+                  {
+                    size++;
+                    stack[size] = expr->bin.rgt;
+                  }
+                else
+                  size--;
+              }
+            else
+              {
+                size++;
+                stack[size] = expr->bin.lft;
+              }
+            break;
 	  
-	  case AE_NOT:
-	    if (stack[size+1] != expr->mon.arg)
-	      {
-		size++;
-		stack[size] = expr->mon.arg;
-	      }
-	    else
-	      {
-		lftest = !lftest;
-		size--;
-	      }
-	    break;
+          case AE_NOT:
+            if (stack[size+1] != expr->mon.arg)
+              {
+                size++;
+                stack[size] = expr->mon.arg;
+              }
+            else
+              {
+                lftest = !lftest;
+                size--;
+              }
+            break;
 	  
-	  case AE_RECUR:
-	    size--;
-	    break;
-	  }
+          case AE_RECUR:
+            size--;
+            break;
+          }
       }
   
     return((int)false);
@@ -1597,27 +1581,27 @@ namespace OpenBabel
     flag = false;
     for( i=0; i<100; i++ )
       if( stat.closure[i] != -1 )
-	{
-	  FreeBondExpr(stat.closord[i]);
-	  flag = true;
-	}
+        {
+          FreeBondExpr(stat.closord[i]);
+          flag = true;
+        }
   
     if( result )
       {
-	if( flag )
-	  return(SMARTSError(result));
-	else
-	  {
-	    MarkGrowBonds(result);
-	    result->ischiral = false;
-	    for (i = 0;i < result->acount;i++)
-	      {
-		result->atom[i].chiral_flag = GetChiralFlag(result->atom[i].expr);
-		if (result->atom[i].chiral_flag)
-		  result->ischiral = true;
-	      }
-	    return(result);
-	  }
+        if( flag )
+          return(SMARTSError(result));
+        else
+          {
+            MarkGrowBonds(result);
+            result->ischiral = false;
+            for (i = 0;i < result->acount;i++)
+              {
+                result->atom[i].chiral_flag = GetChiralFlag(result->atom[i].expr);
+                if (result->atom[i].chiral_flag)
+                  result->ischiral = true;
+              }
+            return(result);
+          }
       }
     else
       return (Pattern*)0;
@@ -1631,22 +1615,22 @@ namespace OpenBabel
   
     while( *LexPtr == '(' )
       {
-	LexPtr++;
-	result = ParseSMARTSPart(result,result->parts);
-	if( !result )
-	  return (Pattern*)0;
-	result->parts++;
+        LexPtr++;
+        result = ParseSMARTSPart(result,result->parts);
+        if( !result )
+          return (Pattern*)0;
+        result->parts++;
       
-	if( *LexPtr != ')' )
-	  return SMARTSError(result);
-	LexPtr++;
+        if( *LexPtr != ')' )
+          return SMARTSError(result);
+        LexPtr++;
       
-	if( !*LexPtr || (*LexPtr==')') )
-	  return result;
+        if( !*LexPtr || (*LexPtr==')') )
+          return result;
       
-	if( *LexPtr != '.' )
-	  return SMARTSError(result);
-	LexPtr++;
+        if( *LexPtr != '.' )
+          return SMARTSError(result);
+        LexPtr++;
       }
   
     return ParseSMARTSPart(result,0);
@@ -1676,22 +1660,22 @@ namespace OpenBabel
   
     if( isspace(*src) )
       {
-	*src++ = '\0';
-	while( isspace(*src) )
-	  src++;
+        *src++ = '\0';
+        while( isspace(*src) )
+          src++;
       }
   
     dst = Descr;
     while( *src && (dst<Descr+78) )
       {
-	if( isspace(*src) )
-	  {
-	    *dst++ = ' ';
-	    while( isspace(*src) )
-	      src++;
-	  }
-	else
-	  *dst++ = *src++;
+        if( isspace(*src) )
+          {
+            *dst++ = ' ';
+            while( isspace(*src) )
+              src++;
+          }
+        else
+          *dst++ = *src++;
       }
     *dst = '\0';
   
@@ -1709,22 +1693,22 @@ namespace OpenBabel
     pat->atom[i].visit = true;
     for( j=0; j<pat->bcount; j++ )
       if( pat->bond[j].visit == -1 )
-	{
-	  if( pat->bond[j].src == i )
-	    {
-	      pat->bond[j].visit = i;
-	      k = pat->bond[j].dst;
-	      if( !pat->atom[k].visit )
-		TraverseSMARTS(pat,k);
-	    }
-	  else if( pat->bond[j].dst == i )
-	    {
-	      pat->bond[j].visit = i;
-	      k = pat->bond[j].src;
-	      if( !pat->atom[k].visit )
-		TraverseSMARTS(pat,k);
-	    }
-	}
+        {
+          if( pat->bond[j].src == i )
+            {
+              pat->bond[j].visit = i;
+              k = pat->bond[j].dst;
+              if( !pat->atom[k].visit )
+                TraverseSMARTS(pat,k);
+            }
+          else if( pat->bond[j].dst == i )
+            {
+              pat->bond[j].visit = i;
+              k = pat->bond[j].src;
+              if( !pat->atom[k].visit )
+                TraverseSMARTS(pat,k);
+            }
+        }
   }
 
   /*============================*/
@@ -1755,12 +1739,12 @@ namespace OpenBabel
   
     if( lft->type == AE_LEAF )
       {
-	return( (lft->leaf.prop==rgt->leaf.prop) &&
-		(lft->leaf.value==rgt->leaf.value) );
+        return( (lft->leaf.prop==rgt->leaf.prop) &&
+                (lft->leaf.value==rgt->leaf.value) );
       }
     else if( lft->type == AE_NOT )
       {
-	return EqualAtomExpr(lft->mon.arg,rgt->mon.arg);
+        return EqualAtomExpr(lft->mon.arg,rgt->mon.arg);
       }
     else if( lft->type == AE_RECUR )
       return false;
@@ -1777,32 +1761,32 @@ namespace OpenBabel
   
     if( lft->type == AE_NOT )
       {   /* larg->type == AE_LEAF */
-	larg = lft->mon.arg;
+        larg = lft->mon.arg;
       }
     else
       larg = lft;
   
     if( rgt->type == AE_NOT )
       {   /* rarg->type == AE_LEAF */
-	rarg = rgt->mon.arg;
+        rarg = rgt->mon.arg;
       }
     else
       rarg = rgt;
   
     if( larg->type > rarg->type )
       {
-	return  1;
+        return  1;
       }
     else if( larg->type < rarg->type )
       return -1;
   
     if( larg->type == AE_LEAF )
       {
-	if( larg->leaf.prop > rarg->leaf.prop )
-	  return  1;
-	if( larg->leaf.prop < rarg->leaf.prop )
-	  return -1;
-	return( larg->leaf.value - rarg->leaf.value );
+        if( larg->leaf.prop > rarg->leaf.prop )
+          return  1;
+        if( larg->leaf.prop < rarg->leaf.prop )
+          return -1;
+        return( larg->leaf.value - rarg->leaf.value );
       }
   
     stat = OrderAtomExpr(lft->bin.lft,rgt->bin.lft);
@@ -1817,65 +1801,65 @@ namespace OpenBabel
   
     if( (lft->type==AE_LEAF) && (rgt->type==AE_LEAF) )
       {
-	if( lft->leaf.prop == rgt->leaf.prop )
-	  {
-	    if( IsNegatingAtomLeaf(lft) )
-	      {
-		if( lft->leaf.value == 0 )
-		  {
-		    return rgt->leaf.value != 0;
-		  }
-		else if( lft->leaf.value == -1 )
-		  return rgt->leaf.value == 0;
+        if( lft->leaf.prop == rgt->leaf.prop )
+          {
+            if( IsNegatingAtomLeaf(lft) )
+              {
+                if( lft->leaf.value == 0 )
+                  {
+                    return rgt->leaf.value != 0;
+                  }
+                else if( lft->leaf.value == -1 )
+                  return rgt->leaf.value == 0;
 	      
-		if( rgt->leaf.value == 0 )
-		  {
-		    return lft->leaf.value != 0;
-		  }
-		else if( rgt->leaf.value == -1 )
-		  return lft->leaf.value == 0;
-	      }
-	    return lft->leaf.value != rgt->leaf.value;
-	  }
+                if( rgt->leaf.value == 0 )
+                  {
+                    return lft->leaf.value != 0;
+                  }
+                else if( rgt->leaf.value == -1 )
+                  return lft->leaf.value == 0;
+              }
+            return lft->leaf.value != rgt->leaf.value;
+          }
       
-	if( lft->leaf.prop > rgt->leaf.prop )
-	  {
-	    tmp = lft;
-	    lft = rgt;
-	    rgt = tmp;
-	  }
+        if( lft->leaf.prop > rgt->leaf.prop )
+          {
+            tmp = lft;
+            lft = rgt;
+            rgt = tmp;
+          }
       
-	/* Aromaticity -> Ring */
-	if( (lft->leaf.prop==AL_AROM) && (rgt->leaf.prop==AL_RINGS) )
-	  return( lft->leaf.value && !rgt->leaf.value );
+        /* Aromaticity -> Ring */
+        if( (lft->leaf.prop==AL_AROM) && (rgt->leaf.prop==AL_RINGS) )
+          return( lft->leaf.value && !rgt->leaf.value );
       
-	/* Positive charge ~ Negative charge */
-	if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
-	  return( (lft->leaf.value!=0) || (rgt->leaf.value!=0) );
+        /* Positive charge ~ Negative charge */
+        if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
+          return( (lft->leaf.value!=0) || (rgt->leaf.value!=0) );
       
-	/* Total hcount >= Implicit hcount */
-	if( (lft->leaf.prop==AL_HCOUNT) && (rgt->leaf.prop==AL_IMPLICIT) )
-	  return( lft->leaf.value < rgt->leaf.value );
+        /* Total hcount >= Implicit hcount */
+        if( (lft->leaf.prop==AL_HCOUNT) && (rgt->leaf.prop==AL_IMPLICIT) )
+          return( lft->leaf.value < rgt->leaf.value );
       }
   
     if( (lft->type==AE_LEAF) && (rgt->type==AE_NOT) )
       {
-	rgt = rgt->mon.arg;
-	if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
-	  return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-	if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
-	  return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-	return false;
+        rgt = rgt->mon.arg;
+        if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
+          return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
+        if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
+          return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
+        return false;
       }
   
     if( (lft->type==AE_NOT) && (rgt->type==AE_LEAF) )
       {
-	lft = lft->mon.arg;
-	if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
-	  return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-	if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
-	  return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-	return false;
+        lft = lft->mon.arg;
+        if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
+          return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
+        if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
+          return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
+        return false;
       }
   
     return false;
@@ -1885,9 +1869,9 @@ namespace OpenBabel
   {
     while( rgt->type == AE_ANDHI )
       {
-	if( AtomLeafConflict(lft,rgt->bin.lft) )
-	  return true;
-	rgt = rgt->bin.rgt;
+        if( AtomLeafConflict(lft,rgt->bin.lft) )
+          return true;
+        rgt = rgt->bin.rgt;
       }
     return AtomLeafConflict(lft,rgt);
   }
@@ -1897,35 +1881,35 @@ namespace OpenBabel
   {
     if( (lft->type==AE_LEAF) && (rgt->type==AE_LEAF) )
       {   /* Implied Ring Membership */
-	if( (rgt->leaf.prop==AL_RINGS) && (rgt->leaf.value==-1) )
-	  {
-	    if( lft->leaf.prop == AL_AROM )
-	      return lft->leaf.value;
+        if( (rgt->leaf.prop==AL_RINGS) && (rgt->leaf.value==-1) )
+          {
+            if( lft->leaf.prop == AL_AROM )
+              return lft->leaf.value;
 	  
-	    if( lft->leaf.prop == AL_RINGS )
-	      return lft->leaf.value > 0;
+            if( lft->leaf.prop == AL_RINGS )
+              return lft->leaf.value > 0;
 	  
-	    if( lft->leaf.prop == AL_SIZE )
-	      return lft->leaf.value > 0;
-	  }
+            if( lft->leaf.prop == AL_SIZE )
+              return lft->leaf.value > 0;
+          }
       
-	/* Positive charge ~ Negative charge */
-	if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
-	  return (lft->leaf.value==0) && (rgt->leaf.value==0);
-	return false;
+        /* Positive charge ~ Negative charge */
+        if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
+          return (lft->leaf.value==0) && (rgt->leaf.value==0);
+        return false;
       }
   
     if( (lft->type==AE_LEAF) && (rgt->type==AE_NOT) )
       {
-	rgt = rgt->mon.arg;
-	if( lft->leaf.prop == rgt->leaf.prop )
-	  return lft->leaf.value != rgt->leaf.value;
+        rgt = rgt->mon.arg;
+        if( lft->leaf.prop == rgt->leaf.prop )
+          return lft->leaf.value != rgt->leaf.value;
       
-	if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
-	  return true;
-	if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
-	  return true;
-	return false;
+        if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
+          return true;
+        if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
+          return true;
+        return false;
       }
   
     return false;
@@ -1936,9 +1920,9 @@ namespace OpenBabel
   {
     while( rgt->type == AE_ANDHI )
       {
-	if( AtomLeafImplies(rgt->bin.lft,lft) )
-	  return true;
-	rgt = rgt->bin.rgt;
+        if( AtomLeafImplies(rgt->bin.lft,lft) )
+          return true;
+        rgt = rgt->bin.rgt;
       }
     return AtomLeafImplies(rgt,lft);
   }
@@ -1950,39 +1934,39 @@ namespace OpenBabel
   
     if( rgt->type != AE_ANDHI )
       {
-	if( AtomLeafImplies(lft,rgt) )
-	  {
-	    FreeAtomExpr(rgt);
-	    return (AtomExpr*)0;
-	  }
-	return rgt;
+        if( AtomLeafImplies(lft,rgt) )
+          {
+            FreeAtomExpr(rgt);
+            return (AtomExpr*)0;
+          }
+        return rgt;
       }
   
     tmp = AtomExprImplies(lft,rgt->bin.rgt);
   
     if( tmp )
       {
-	if( AtomLeafImplies(lft,rgt->bin.lft) )
-	  {
-	    rgt->bin.rgt = (AtomExpr*)0;
-	    FreeAtomExpr(rgt);
-	    return tmp;
-	  }
-	rgt->bin.rgt = tmp;
-	return rgt;
+        if( AtomLeafImplies(lft,rgt->bin.lft) )
+          {
+            rgt->bin.rgt = (AtomExpr*)0;
+            FreeAtomExpr(rgt);
+            return tmp;
+          }
+        rgt->bin.rgt = tmp;
+        return rgt;
       }
     else
       {
-	rgt->bin.rgt = (AtomExpr*)0;
-	if( AtomLeafImplies(lft,rgt->bin.lft) )
-	  {
-	    FreeAtomExpr(rgt);
-	    return (AtomExpr*)0;
-	  }
-	tmp = rgt->bin.lft;
-	rgt->bin.lft = (AtomExpr*)0;
-	FreeAtomExpr(rgt);
-	return tmp;
+        rgt->bin.rgt = (AtomExpr*)0;
+        if( AtomLeafImplies(lft,rgt->bin.lft) )
+          {
+            FreeAtomExpr(rgt);
+            return (AtomExpr*)0;
+          }
+        tmp = rgt->bin.lft;
+        rgt->bin.lft = (AtomExpr*)0;
+        FreeAtomExpr(rgt);
+        return tmp;
       }
   }
 
@@ -1990,15 +1974,15 @@ namespace OpenBabel
   {
     if( AtomExprConflict(lft,rgt) )
       {
-	FreeAtomExpr(lft);
-	FreeAtomExpr(rgt);
-	return BuildAtomLeaf(AL_CONST,false);
+        FreeAtomExpr(lft);
+        FreeAtomExpr(rgt);
+        return BuildAtomLeaf(AL_CONST,false);
       }
   
     if( AtomExprImplied(lft,rgt) )
       {
-	FreeAtomExpr(lft);
-	return rgt;
+        FreeAtomExpr(lft);
+        return rgt;
       }
   
     rgt = AtomExprImplies(lft,rgt);
@@ -2019,8 +2003,8 @@ namespace OpenBabel
   
     if( IsInvalidAtom(head) )
       {
-	FreePattern(pat);
-	return BuildAtomLeaf(AL_CONST,false);
+        FreePattern(pat);
+        return BuildAtomLeaf(AL_CONST,false);
       }
     return recur;
   }
@@ -2033,59 +2017,59 @@ namespace OpenBabel
     /* Identities */
     if( EqualAtomExpr(lft,rgt) )
       {
-	FreeAtomExpr(rgt);
-	return lft;
+        FreeAtomExpr(rgt);
+        return lft;
       }
   
     if( (lft->type==AE_LEAF) && (lft->leaf.prop==AL_CONST) )
       {
-	if( lft->leaf.value )
-	  {
-	    FreeAtomExpr(lft);
-	    return rgt;
-	  }
-	else
-	  {
-	    FreeAtomExpr(rgt);
-	    return lft;
-	  }
+        if( lft->leaf.value )
+          {
+            FreeAtomExpr(lft);
+            return rgt;
+          }
+        else
+          {
+            FreeAtomExpr(rgt);
+            return lft;
+          }
       }
   
     if( (rgt->type==AE_LEAF) && (rgt->leaf.prop==AL_CONST) )
       {
-	if( rgt->leaf.value )
-	  {
-	    FreeAtomExpr(rgt);
-	    return lft;
-	  }
-	else
-	  {
-	    FreeAtomExpr(lft);
-	    return rgt;
-	  }
+        if( rgt->leaf.value )
+          {
+            FreeAtomExpr(rgt);
+            return lft;
+          }
+        else
+          {
+            FreeAtomExpr(lft);
+            return rgt;
+          }
       }
   
     /*  Distributivity  */
     if( lft->type == AE_OR )
       {
-	expr = CopyAtomExpr(rgt);
-	expr = OrAtomExpr(AndAtomExpr(expr,lft->bin.lft),
-			  AndAtomExpr(rgt, lft->bin.rgt));
-	lft->bin.lft = (AtomExpr*)0;
-	lft->bin.rgt = (AtomExpr*)0;
-	FreeAtomExpr(lft);
-	return( expr );
+        expr = CopyAtomExpr(rgt);
+        expr = OrAtomExpr(AndAtomExpr(expr,lft->bin.lft),
+                          AndAtomExpr(rgt, lft->bin.rgt));
+        lft->bin.lft = (AtomExpr*)0;
+        lft->bin.rgt = (AtomExpr*)0;
+        FreeAtomExpr(lft);
+        return( expr );
       }
   
     if( rgt->type == AE_OR )
       {
-	expr = CopyAtomExpr(lft);
-	expr = OrAtomExpr(AndAtomExpr(expr,rgt->bin.lft),
-			  AndAtomExpr(lft, rgt->bin.rgt));
-	rgt->bin.lft = (AtomExpr*)0;
-	rgt->bin.rgt = (AtomExpr*)0;
-	FreeAtomExpr(rgt);
-	return( expr );
+        expr = CopyAtomExpr(lft);
+        expr = OrAtomExpr(AndAtomExpr(expr,rgt->bin.lft),
+                          AndAtomExpr(lft, rgt->bin.rgt));
+        rgt->bin.lft = (AtomExpr*)0;
+        rgt->bin.rgt = (AtomExpr*)0;
+        FreeAtomExpr(rgt);
+        return( expr );
       }
   
     /* Recursion */
@@ -2098,38 +2082,38 @@ namespace OpenBabel
     order = OrderAtomExpr(lft,rgt);
     if( order > 0 )
       {
-	expr = lft;
-	lft = rgt;
-	rgt = expr;
+        expr = lft;
+        lft = rgt;
+        rgt = expr;
       }
   
     if( lft->type == AE_ANDHI )
       {
-	expr = AndAtomExpr(lft->bin.rgt,rgt);
-	expr = AndAtomExpr(lft->bin.lft,expr);
-	lft->bin.lft = (AtomExpr*)0;
-	lft->bin.rgt = (AtomExpr*)0;
-	FreeAtomExpr(lft);
-	return expr;
+        expr = AndAtomExpr(lft->bin.rgt,rgt);
+        expr = AndAtomExpr(lft->bin.lft,expr);
+        lft->bin.lft = (AtomExpr*)0;
+        lft->bin.rgt = (AtomExpr*)0;
+        FreeAtomExpr(lft);
+        return expr;
       }
   
     if( rgt->type == AE_ANDHI )
       {
-	if( OrderAtomExpr(lft,rgt->bin.lft) > 0 )
-	  {
-	    expr = AndAtomExpr(lft,rgt->bin.rgt);
-	    expr = AndAtomExpr(rgt->bin.lft,expr);
-	    rgt->bin.lft = (AtomExpr*)0;
-	    rgt->bin.rgt = (AtomExpr*)0;
-	    FreeAtomExpr(rgt);
-	    return expr;
-	  }
+        if( OrderAtomExpr(lft,rgt->bin.lft) > 0 )
+          {
+            expr = AndAtomExpr(lft,rgt->bin.rgt);
+            expr = AndAtomExpr(rgt->bin.lft,expr);
+            rgt->bin.lft = (AtomExpr*)0;
+            rgt->bin.rgt = (AtomExpr*)0;
+            FreeAtomExpr(rgt);
+            return expr;
+          }
       
-	if( EqualAtomExpr(lft,rgt->bin.lft) )
-	  {
-	    FreeAtomExpr(lft);
-	    return rgt;
-	  }
+        if( EqualAtomExpr(lft,rgt->bin.lft) )
+          {
+            FreeAtomExpr(lft);
+            return rgt;
+          }
       }
   
     return AndAtomExprLeaf(lft,rgt);
@@ -2148,73 +2132,73 @@ namespace OpenBabel
     /* Identities */
     if( EqualAtomExpr(lft,rgt) )
       {
-	FreeAtomExpr(rgt);
-	return lft;
+        FreeAtomExpr(rgt);
+        return lft;
       }
   
     if( (lft->type==AE_LEAF) && (lft->leaf.prop==AL_CONST) )
       {
-	if( lft->leaf.value )
-	  {
-	    FreeAtomExpr(rgt);
-	    return lft;
-	  }
-	else
-	  {
-	    FreeAtomExpr(lft);
-	    return rgt;
-	  }
+        if( lft->leaf.value )
+          {
+            FreeAtomExpr(rgt);
+            return lft;
+          }
+        else
+          {
+            FreeAtomExpr(lft);
+            return rgt;
+          }
       }
   
     if( (rgt->type==AE_LEAF) && (rgt->leaf.prop==AL_CONST) )
       {
-	if( rgt->leaf.value )
-	  {
-	    FreeAtomExpr(lft);
-	    return rgt;
-	  }
-	else
-	  {
-	    FreeAtomExpr(rgt);
-	    return lft;
-	  }
+        if( rgt->leaf.value )
+          {
+            FreeAtomExpr(lft);
+            return rgt;
+          }
+        else
+          {
+            FreeAtomExpr(rgt);
+            return lft;
+          }
       }
   
     order = OrderAtomExpr(lft,rgt);
     if( order > 0 )
       {
-	expr = lft;
-	lft = rgt;
-	rgt = expr;
+        expr = lft;
+        lft = rgt;
+        rgt = expr;
       }
   
     if( lft->type == AE_OR )
       {
-	expr = OrAtomExpr(lft->bin.rgt,rgt);
-	expr = OrAtomExpr(lft->bin.lft,expr);
-	lft->bin.lft = (AtomExpr*)0;
-	lft->bin.rgt = (AtomExpr*)0;
-	FreeAtomExpr(lft);
-	return expr;
+        expr = OrAtomExpr(lft->bin.rgt,rgt);
+        expr = OrAtomExpr(lft->bin.lft,expr);
+        lft->bin.lft = (AtomExpr*)0;
+        lft->bin.rgt = (AtomExpr*)0;
+        FreeAtomExpr(lft);
+        return expr;
       }
   
     if( rgt->type == AE_OR )
       {
-	if( OrderAtomExpr(lft,rgt->bin.lft) > 0 )
-	  {
-	    expr = OrAtomExpr(lft,rgt->bin.rgt);
-	    expr = OrAtomExpr(rgt->bin.lft,expr);
-	    rgt->bin.lft = (AtomExpr*)0;
-	    rgt->bin.rgt = (AtomExpr*)0;
-	    FreeAtomExpr(rgt);
-	    return expr;
-	  }
+        if( OrderAtomExpr(lft,rgt->bin.lft) > 0 )
+          {
+            expr = OrAtomExpr(lft,rgt->bin.rgt);
+            expr = OrAtomExpr(rgt->bin.lft,expr);
+            rgt->bin.lft = (AtomExpr*)0;
+            rgt->bin.rgt = (AtomExpr*)0;
+            FreeAtomExpr(rgt);
+            return expr;
+          }
       
-	if( EqualAtomExpr(lft,rgt->bin.lft) )
-	  {
-	    FreeAtomExpr(lft);
-	    return rgt;
-	  }
+        if( EqualAtomExpr(lft,rgt->bin.lft) )
+          {
+            FreeAtomExpr(lft);
+            return rgt;
+          }
       }
   
     return OrAtomExprLeaf(lft,rgt);
@@ -2228,50 +2212,50 @@ namespace OpenBabel
   
     if( expr->type == AE_LEAF )
       {
-	if( IsBooleanAtomLeaf(expr) )
-	  {
-	    expr->leaf.value = !expr->leaf.value;
-	    return expr;
-	  }
-	else if( IsNegatingAtomLeaf(expr) )
-	  {
-	    if( expr->leaf.value == -1 )
-	      {
-		expr->leaf.value = 0;
-		return expr;
-	      }
-	    else if( expr->leaf.value == 0 )
-	      {
-		expr->leaf.value = -1;
-		return expr;
-	      }
-	  }
+        if( IsBooleanAtomLeaf(expr) )
+          {
+            expr->leaf.value = !expr->leaf.value;
+            return expr;
+          }
+        else if( IsNegatingAtomLeaf(expr) )
+          {
+            if( expr->leaf.value == -1 )
+              {
+                expr->leaf.value = 0;
+                return expr;
+              }
+            else if( expr->leaf.value == 0 )
+              {
+                expr->leaf.value = -1;
+                return expr;
+              }
+          }
       }
     else if( expr->type == AE_NOT )
       {
-	result = expr->mon.arg;
-	expr->mon.arg = (AtomExpr*)0;
-	FreeAtomExpr(expr);
-	return result;
+        result = expr->mon.arg;
+        expr->mon.arg = (AtomExpr*)0;
+        FreeAtomExpr(expr);
+        return result;
       }
     else if( (expr->type==AE_ANDHI) ||
-	     (expr->type==AE_ANDLO) )
+             (expr->type==AE_ANDLO) )
       {
-	lft = NotAtomExpr(expr->bin.lft);
-	rgt = NotAtomExpr(expr->bin.rgt);
-	expr->bin.lft = (AtomExpr*)0;
-	expr->bin.rgt = (AtomExpr*)0;
-	FreeAtomExpr(expr);
-	return OrAtomExpr(lft,rgt);
+        lft = NotAtomExpr(expr->bin.lft);
+        rgt = NotAtomExpr(expr->bin.rgt);
+        expr->bin.lft = (AtomExpr*)0;
+        expr->bin.rgt = (AtomExpr*)0;
+        FreeAtomExpr(expr);
+        return OrAtomExpr(lft,rgt);
       }
     else if( expr->type == AE_OR )
       {
-	lft = NotAtomExpr(expr->bin.lft);
-	rgt = NotAtomExpr(expr->bin.rgt);
-	expr->bin.lft = (AtomExpr*)0;
-	expr->bin.rgt = (AtomExpr*)0;
-	FreeAtomExpr(expr);
-	return AndAtomExpr(lft,rgt);
+        lft = NotAtomExpr(expr->bin.lft);
+        rgt = NotAtomExpr(expr->bin.rgt);
+        expr->bin.lft = (AtomExpr*)0;
+        expr->bin.rgt = (AtomExpr*)0;
+        FreeAtomExpr(expr);
+        return AndAtomExpr(lft,rgt);
       }
     return BuildAtomNot(expr);
   }
@@ -2284,26 +2268,26 @@ namespace OpenBabel
   {
     if( expr->leaf.prop == BL_CONST )
       {
-	if( expr->leaf.value )
-	  {
-	    return( BS_ALL );
-	  }
-	else
-	  return( 0 );
+        if( expr->leaf.value )
+          {
+            return( BS_ALL );
+          }
+        else
+          return( 0 );
       }
     else /* expr->leaf.prop == BL_TYPE */
       switch( expr->leaf.value )
-	{
-	case(BT_SINGLE):     return( BS_SINGLE );
-	case(BT_DOUBLE):     return( BS_DOUBLE );
-	case(BT_TRIPLE):     return( BS_TRIPLE );
-	case(BT_AROM):       return( BS_AROM );
-	case(BT_UP):         return( BS_UP );
-	case(BT_DOWN):       return( BS_DOWN );
-	case(BT_UPUNSPEC):   return( BS_UPUNSPEC );
-	case(BT_DOWNUNSPEC): return( BS_DOWNUNSPEC );
-	case(BT_RING):       return( BS_RING );
-	}
+        {
+        case(BT_SINGLE):     return( BS_SINGLE );
+        case(BT_DOUBLE):     return( BS_DOUBLE );
+        case(BT_TRIPLE):     return( BS_TRIPLE );
+        case(BT_AROM):       return( BS_AROM );
+        case(BT_UP):         return( BS_UP );
+        case(BT_DOWN):       return( BS_DOWN );
+        case(BT_UPUNSPEC):   return( BS_UPUNSPEC );
+        case(BT_DOWNUNSPEC): return( BS_DOWNUNSPEC );
+        case(BT_RING):       return( BS_RING );
+        }
     return 0;
   }
 
@@ -2317,16 +2301,16 @@ namespace OpenBabel
       case(BE_LEAF):   return GetBondLeafIndex(expr);
       
       case(BE_NOT):    arg = GetBondExprIndex(expr->mon.arg);
-	return( arg ^ BS_ALL );
+        return( arg ^ BS_ALL );
       
       case(BE_ANDHI):
       case(BE_ANDLO):  lft = GetBondExprIndex(expr->bin.lft);
-	rgt = GetBondExprIndex(expr->bin.rgt);
-	return( lft & rgt );
+        rgt = GetBondExprIndex(expr->bin.rgt);
+        return( lft & rgt );
       
       case(BE_OR):     lft = GetBondExprIndex(expr->bin.lft);
-	rgt = GetBondExprIndex(expr->bin.rgt);
-	return( lft | rgt );
+        rgt = GetBondExprIndex(expr->bin.rgt);
+        return( lft | rgt );
       }
     /* Avoid Compiler Warning */
     return 0;
@@ -2338,18 +2322,18 @@ namespace OpenBabel
   
     if( expr->type == BE_LEAF )
       {
-	if( expr->leaf.prop == BL_CONST )
-	  {
-	    expr->leaf.value = !expr->leaf.value;
-	    return expr;
-	  }
+        if( expr->leaf.prop == BL_CONST )
+          {
+            expr->leaf.value = !expr->leaf.value;
+            return expr;
+          }
       }
     else if( expr->type == BE_NOT )
       {
-	result = expr->mon.arg;
-	expr->mon.arg = (BondExpr*)0;
-	FreeBondExpr(expr);
-	return result;
+        result = expr->mon.arg;
+        expr->mon.arg = (BondExpr*)0;
+        FreeBondExpr(expr);
+        return result;
       }
     return BuildBondNot(expr);
   }
@@ -2361,45 +2345,45 @@ namespace OpenBabel
   
     if( expr->type == BE_LEAF )
       {
-	return expr;
+        return expr;
       }
     else if( expr->type == BE_NOT )
       {
-	arg = expr->mon.arg;
-	arg = TransformBondExpr(arg);
-	expr->mon.arg = (BondExpr*)0;
-	FreeBondExpr(expr);
-	return NotBondExpr(arg);
+        arg = expr->mon.arg;
+        arg = TransformBondExpr(arg);
+        expr->mon.arg = (BondExpr*)0;
+        FreeBondExpr(expr);
+        return NotBondExpr(arg);
       }
     else if( expr->type == BE_ANDHI )
       {
-	lft = expr->bin.lft;
-	rgt = expr->bin.rgt;
-	lft = TransformBondExpr(lft);
-	rgt = TransformBondExpr(rgt);
-	expr->bin.lft = lft;
-	expr->bin.rgt = rgt;
-	return expr;
+        lft = expr->bin.lft;
+        rgt = expr->bin.rgt;
+        lft = TransformBondExpr(lft);
+        rgt = TransformBondExpr(rgt);
+        expr->bin.lft = lft;
+        expr->bin.rgt = rgt;
+        return expr;
       }
     else if( expr->type == BE_ANDLO )
       {
-	lft = expr->bin.lft;
-	rgt = expr->bin.rgt;
-	lft = TransformBondExpr(lft);
-	rgt = TransformBondExpr(rgt);
-	expr->bin.lft = lft;
-	expr->bin.rgt = rgt;
-	return expr;
+        lft = expr->bin.lft;
+        rgt = expr->bin.rgt;
+        lft = TransformBondExpr(lft);
+        rgt = TransformBondExpr(rgt);
+        expr->bin.lft = lft;
+        expr->bin.rgt = rgt;
+        return expr;
       }
     else if( expr->type == BE_OR )
       {
-	lft = expr->bin.lft;
-	rgt = expr->bin.rgt;
-	lft = TransformBondExpr(lft);
-	rgt = TransformBondExpr(rgt);
-	expr->bin.lft = lft;
-	expr->bin.rgt = rgt;
-	return expr;
+        lft = expr->bin.lft;
+        rgt = expr->bin.rgt;
+        lft = TransformBondExpr(lft);
+        rgt = TransformBondExpr(rgt);
+        expr->bin.lft = lft;
+        expr->bin.rgt = rgt;
+        return expr;
       }
     return expr;
   }
@@ -2457,15 +2441,15 @@ namespace OpenBabel
   
     for (i = mlist.begin();i != mlist.end();i++)
       {
-	ok = true;
-	for (j = pr.begin();j != pr.end() && ok;j++)
-	  if ((*i)[j->first] != j->second)
-	    ok = false;
+        ok = true;
+        for (j = pr.begin();j != pr.end() && ok;j++)
+          if ((*i)[j->first] != j->second)
+            ok = false;
       
-	if (ok)
-	  _mlist.push_back(*i);
-	if (single && !_mlist.empty())
-	  return(true);
+        if (ok)
+          _mlist.push_back(*i);
+        if (single && !_mlist.empty())
+          return(true);
       }
   
     return((_mlist.empty()) ? false:true);
@@ -2487,19 +2471,19 @@ namespace OpenBabel
   
     for (i = mlist.begin();i != mlist.end();i++)
       {
-	ok = true;
-	for (j = i->begin();j != i->end();j++)
-	  if (!vres[*j])
-	    {
-	      ok = false;
-	      break;
-	    }
-	if (!ok)
-	  continue;
+        ok = true;
+        for (j = i->begin();j != i->end();j++)
+          if (!vres[*j])
+            {
+              ok = false;
+              break;
+            }
+        if (!ok)
+          continue;
       
-	_mlist.push_back(*i);
-	if (single && !_mlist.empty())
-	  return(true);
+        _mlist.push_back(*i);
+        if (single && !_mlist.empty())
+          return(true);
       }
   
     return((_mlist.empty()) ? false:true);
@@ -2517,8 +2501,8 @@ namespace OpenBabel
     std::vector<OBNodeBase*>::iterator j;
     for (i = 0;i < pat->acount;i++)
       for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
-	if (EvalAtomExpr(pat->atom[0].expr,atom))
-	  ttab[i][atom->GetIdx()] = true;
+        if (EvalAtomExpr(pat->atom[0].expr,atom))
+          ttab[i][atom->GetIdx()] = true;
   }
 
   static void FastSingleMatch(OBMol &mol,Pattern *pat,std::vector<std::vector<int> > &mlist)
@@ -2534,82 +2518,82 @@ namespace OpenBabel
   
     if (pat->bcount)
       {
-	vif.resize(pat->bcount);
-	vi.resize(pat->bcount);
+        vif.resize(pat->bcount);
+        vi.resize(pat->bcount);
       }
   
     int bcount;
     for (atom = mol.BeginAtom(i);atom;atom=mol.NextAtom(i))
       if (EvalAtomExpr(pat->atom[0].expr,atom))
-	{
-	  map[0] = atom->GetIdx();
-	  if (pat->bcount)
-	    vif[0] = false;
-	  bv.Clear();
-	  bv.SetBitOn(atom->GetIdx());
+        {
+          map[0] = atom->GetIdx();
+          if (pat->bcount)
+            vif[0] = false;
+          bv.Clear();
+          bv.SetBitOn(atom->GetIdx());
 	
-	  for (bcount=0;bcount >=0;)
-	    {
-	      //***entire pattern matched***
-	      if (bcount == pat->bcount) //save full match here
-		{
-		  mlist.push_back(map);
-		  bcount--;
-		  return; //found a single match
-		}
+          for (bcount=0;bcount >=0;)
+            {
+              //***entire pattern matched***
+              if (bcount == pat->bcount) //save full match here
+                {
+                  mlist.push_back(map);
+                  bcount--;
+                  return; //found a single match
+                }
 	    
-	      //***match the next bond***
-	      if (!pat->bond[bcount].grow) //just check bond here
-		{
-		  if ( !vif[bcount] )
-		    {
-		      OBBond *bond = mol.GetBond(map[pat->bond[bcount].src],
-						 map[pat->bond[bcount].dst]);
-		      if (bond && EvalBondExpr(pat->bond[bcount].expr,bond))
-			{
-			  vif[bcount++] = true;
-			  if (bcount < pat->bcount)
-			    vif[bcount] = false;
-			}
-		      else
-			bcount--;
-		    }
-		  else //bond must have already been visited - backtrack
-		    bcount--;
-		}
-	      else //need to map atom and check bond
-		{
-		  a1 = mol.GetAtom(map[pat->bond[bcount].src]);
+              //***match the next bond***
+              if (!pat->bond[bcount].grow) //just check bond here
+                {
+                  if ( !vif[bcount] )
+                    {
+                      OBBond *bond = mol.GetBond(map[pat->bond[bcount].src],
+                                                 map[pat->bond[bcount].dst]);
+                      if (bond && EvalBondExpr(pat->bond[bcount].expr,bond))
+                        {
+                          vif[bcount++] = true;
+                          if (bcount < pat->bcount)
+                            vif[bcount] = false;
+                        }
+                      else
+                        bcount--;
+                    }
+                  else //bond must have already been visited - backtrack
+                    bcount--;
+                }
+              else //need to map atom and check bond
+                {
+                  a1 = mol.GetAtom(map[pat->bond[bcount].src]);
 		
-		  if (!vif[bcount]) //figure out which nbr atom we are mapping
-		    {
-		      nbr = a1->BeginNbrAtom(vi[bcount]);
-		    }
-		  else
-		    {
-		      bv.SetBitOff(map[pat->bond[bcount].dst]);
-		      nbr = a1->NextNbrAtom(vi[bcount]);
-		    }
+                  if (!vif[bcount]) //figure out which nbr atom we are mapping
+                    {
+                      nbr = a1->BeginNbrAtom(vi[bcount]);
+                    }
+                  else
+                    {
+                      bv.SetBitOff(map[pat->bond[bcount].dst]);
+                      nbr = a1->NextNbrAtom(vi[bcount]);
+                    }
 		
-		  for (;nbr;nbr=a1->NextNbrAtom(vi[bcount]))
-		    if (!bv[nbr->GetIdx()])
-		      if (EvalAtomExpr(pat->atom[pat->bond[bcount].dst].expr,nbr)
-			  && EvalBondExpr(pat->bond[bcount].expr,(OBBond *)*(vi[bcount])))
-			{
-			  bv.SetBitOn(nbr->GetIdx());
-			  map[pat->bond[bcount].dst] = nbr->GetIdx();
-			  vif[bcount] = true;
-			  bcount++;
-			  if (bcount < pat->bcount)
-			    vif[bcount] = false;
-			  break;
-			}
+                  for (;nbr;nbr=a1->NextNbrAtom(vi[bcount]))
+                    if (!bv[nbr->GetIdx()])
+                      if (EvalAtomExpr(pat->atom[pat->bond[bcount].dst].expr,nbr)
+                          && EvalBondExpr(pat->bond[bcount].expr,(OBBond *)*(vi[bcount])))
+                        {
+                          bv.SetBitOn(nbr->GetIdx());
+                          map[pat->bond[bcount].dst] = nbr->GetIdx();
+                          vif[bcount] = true;
+                          bcount++;
+                          if (bcount < pat->bcount)
+                            vif[bcount] = false;
+                          break;
+                        }
 		
-		  if (!nbr)//no match - time to backtrack
-		    bcount--;
-		}
-	    }
-	}
+                  if (!nbr)//no match - time to backtrack
+                    bcount--;
+                }
+            }
+        }
   }
 
 
@@ -2623,64 +2607,64 @@ namespace OpenBabel
       FastSingleMatch(mol,pat,mlist);
     else
       {
-	OBSSMatch ssm(mol,pat);
-	ssm.Match(mlist);
+        OBSSMatch ssm(mol,pat);
+        ssm.Match(mlist);
       }
   
     if (pat->ischiral && mol.Has3D())
       {
-	int j,k,r1,r2,r3,r4;
-	std::vector<std::vector<int> >::iterator m;
-	OBAtom *ra1,*ra2,*ra3,*ra4;
-	std::vector<std::vector<int> > tmpmlist;
+        int j,k,r1,r2,r3,r4;
+        std::vector<std::vector<int> >::iterator m;
+        OBAtom *ra1,*ra2,*ra3,*ra4;
+        std::vector<std::vector<int> > tmpmlist;
       
-	for (j = 0;j < pat->acount;j++)
-	  if (pat->atom[j].chiral_flag)
-	    {
-	      r1 = r2 = r3 = r4 = -1;
-	      r2 = j;
-	      for (k = 0;k < pat->bcount;k++)
-		if (pat->bond[k].dst == r2)
-		  if (r1 == -1)
-		    r1 = pat->bond[k].src;
-		  else if (r3 == -1)
-		    r3 = pat->bond[k].src;
-		  else if (r4 == -1)
-		    r4 = pat->bond[k].src;
+        for (j = 0;j < pat->acount;j++)
+          if (pat->atom[j].chiral_flag)
+            {
+              r1 = r2 = r3 = r4 = -1;
+              r2 = j;
+              for (k = 0;k < pat->bcount;k++)
+                if (pat->bond[k].dst == r2)
+                  if (r1 == -1)
+                    r1 = pat->bond[k].src;
+                  else if (r3 == -1)
+                    r3 = pat->bond[k].src;
+                  else if (r4 == -1)
+                    r4 = pat->bond[k].src;
 	    
-	      for (k = 0;k < pat->bcount;k++)
-		if (pat->bond[k].src == r2)
-		  if (r1 == -1)
-		    r1 = pat->bond[k].dst;
-		  else if (r3 == -1)
-		    r3 = pat->bond[k].dst;
-		  else if (r4 == -1)
-		    r4 = pat->bond[k].dst;
+              for (k = 0;k < pat->bcount;k++)
+                if (pat->bond[k].src == r2)
+                  if (r1 == -1)
+                    r1 = pat->bond[k].dst;
+                  else if (r3 == -1)
+                    r3 = pat->bond[k].dst;
+                  else if (r4 == -1)
+                    r4 = pat->bond[k].dst;
 	    
-	      if (r1 == -1 || r2 == -1 || r3 == -1 || r4 == -1)
-		continue;
+              if (r1 == -1 || r2 == -1 || r3 == -1 || r4 == -1)
+                continue;
 	    
-	      tmpmlist.clear();
-	      for (m = mlist.begin();m != mlist.end();m++)
-		{
-		  ra1 = mol.GetAtom((*m)[r1]);
-		  ra2 = mol.GetAtom((*m)[r2]);
-		  ra3 = mol.GetAtom((*m)[r3]);
-		  ra4 = mol.GetAtom((*m)[r4]);
-		  double sign = CalcTorsionAngle(ra1->GetVector(),
-						 ra2->GetVector(),
-						 ra3->GetVector(),
-						 ra4->GetVector());
-		  if (sign > 0.0 && pat->atom[j].chiral_flag == AL_ANTICLOCKWISE)
-		    continue;
-		  if (sign < 0.0 && pat->atom[j].chiral_flag == AL_CLOCKWISE)
-		    continue;
+              tmpmlist.clear();
+              for (m = mlist.begin();m != mlist.end();m++)
+                {
+                  ra1 = mol.GetAtom((*m)[r1]);
+                  ra2 = mol.GetAtom((*m)[r2]);
+                  ra3 = mol.GetAtom((*m)[r3]);
+                  ra4 = mol.GetAtom((*m)[r4]);
+                  double sign = CalcTorsionAngle(ra1->GetVector(),
+                                                 ra2->GetVector(),
+                                                 ra3->GetVector(),
+                                                 ra4->GetVector());
+                  if (sign > 0.0 && pat->atom[j].chiral_flag == AL_ANTICLOCKWISE)
+                    continue;
+                  if (sign < 0.0 && pat->atom[j].chiral_flag == AL_CLOCKWISE)
+                    continue;
 		
-		  //ok - go ahead and save it
-		  tmpmlist.push_back(*m);
-		}
-	      mlist = tmpmlist;
-	    }
+                  //ok - go ahead and save it
+                  tmpmlist.push_back(*m);
+                }
+              mlist = tmpmlist;
+            }
       }
   
     return(!mlist.empty());
@@ -2690,151 +2674,151 @@ namespace OpenBabel
   {
     for (;;)
       switch (expr->type)
-	{
-	case AE_LEAF:
-	  switch( expr->leaf.prop )
-	    {
-	    case AL_ELEM:
-	      return(expr->leaf.value == (int)atom->GetAtomicNum());
-	    case AL_AROM:
-	      if( !expr->leaf.value )
-		return !atom->IsAromatic();
-	      return atom->IsAromatic();
-	    case AL_HCOUNT:
-	      return (expr->leaf.value==(signed int)atom->ExplicitHydrogenCount() + (signed int)atom->ImplicitHydrogenCount());
-	    case AL_DEGREE:
-	      return(expr->leaf.value == (int)atom->GetValence());
-	    case AL_VALENCE:
-	      return(expr->leaf.value == (int)atom->KBOSum());
-	    case AL_CONNECT:
-	      return(expr->leaf.value == (int)atom->GetImplicitValence());
-	    case AL_NEGATIVE:
-	      return(expr->leaf.value == -(atom->GetFormalCharge()));
-	    case AL_POSITIVE:
-	      return(expr->leaf.value == atom->GetFormalCharge());
-	    case AL_HYB:
-	      return(expr->leaf.value == (int)atom->GetHyb());
+        {
+        case AE_LEAF:
+          switch( expr->leaf.prop )
+            {
+            case AL_ELEM:
+              return(expr->leaf.value == (int)atom->GetAtomicNum());
+            case AL_AROM:
+              if( !expr->leaf.value )
+                return !atom->IsAromatic();
+              return atom->IsAromatic();
+            case AL_HCOUNT:
+              return (expr->leaf.value==(signed int)atom->ExplicitHydrogenCount() + (signed int)atom->ImplicitHydrogenCount());
+            case AL_DEGREE:
+              return(expr->leaf.value == (int)atom->GetValence());
+            case AL_VALENCE:
+              return(expr->leaf.value == (int)atom->KBOSum());
+            case AL_CONNECT:
+              return(expr->leaf.value == (int)atom->GetImplicitValence());
+            case AL_NEGATIVE:
+              return(expr->leaf.value == -(atom->GetFormalCharge()));
+            case AL_POSITIVE:
+              return(expr->leaf.value == atom->GetFormalCharge());
+            case AL_HYB:
+              return(expr->leaf.value == (int)atom->GetHyb());
 	    
-	    case AL_RINGS:
-	      if( expr->leaf.value == -1 )
-		return atom->IsInRing();
-	      else if( expr->leaf.value == 0 )
-		return !atom->IsInRing();
-	      else
-		return expr->leaf.value == (int)atom->MemberOfRingCount();
+            case AL_RINGS:
+              if( expr->leaf.value == -1 )
+                return atom->IsInRing();
+              else if( expr->leaf.value == 0 )
+                return !atom->IsInRing();
+              else
+                return expr->leaf.value == (int)atom->MemberOfRingCount();
 	    
-	    case AL_SIZE:
-	      if( expr->leaf.value == -1 )
-		return atom->IsInRing();
-	      if (!expr->leaf.value)
-		return !atom->IsInRing();
-	      else
-		return atom->IsInRingSize(expr->leaf.value);
+            case AL_SIZE:
+              if( expr->leaf.value == -1 )
+                return atom->IsInRing();
+              if (!expr->leaf.value)
+                return !atom->IsInRing();
+              else
+                return atom->IsInRingSize(expr->leaf.value);
 	    
-	    case AL_IMPLICIT:
-	      return expr->leaf.value == (signed int)atom->ImplicitHydrogenCount();
+            case AL_IMPLICIT:
+              return expr->leaf.value == (signed int)atom->ImplicitHydrogenCount();
 	    
-	    case AL_CONST:
-	      if( !expr->leaf.value )
-		return false;
-	      return(true);
-	    default:
-	      return false;
-	    }
+            case AL_CONST:
+              if( !expr->leaf.value )
+                return false;
+              return(true);
+            default:
+              return false;
+            }
 	
-	case AE_NOT:
-	  return(!EvalAtomExpr(expr->mon.arg,atom));
-	case AE_ANDHI: /* Same as AE_ANDLO */
-	case AE_ANDLO:
-	  if( !EvalAtomExpr(expr->bin.lft,atom))
-	    return(false);
-	  expr = expr->bin.rgt;
-	  break;
-	case AE_OR:
-	  if(EvalAtomExpr(expr->bin.lft,atom))
-	    return(true);
-	  expr = expr->bin.rgt;
-	  break;
+        case AE_NOT:
+          return(!EvalAtomExpr(expr->mon.arg,atom));
+        case AE_ANDHI: /* Same as AE_ANDLO */
+        case AE_ANDLO:
+          if( !EvalAtomExpr(expr->bin.lft,atom))
+            return(false);
+          expr = expr->bin.rgt;
+          break;
+        case AE_OR:
+          if(EvalAtomExpr(expr->bin.lft,atom))
+            return(true);
+          expr = expr->bin.rgt;
+          break;
 	
-	case AE_RECUR:
-	  {
-	    //see if pattern has been matched
-	    std::vector<std::pair<Pattern*,std::vector<bool> > >::iterator i;
-	    for (i = RSCACHE.begin();i != RSCACHE.end();i++)
-	      if (i->first == (Pattern*)expr->recur.recur)
-		return(i->second[atom->GetIdx()]);
+        case AE_RECUR:
+          {
+            //see if pattern has been matched
+            std::vector<std::pair<Pattern*,std::vector<bool> > >::iterator i;
+            for (i = RSCACHE.begin();i != RSCACHE.end();i++)
+              if (i->first == (Pattern*)expr->recur.recur)
+                return(i->second[atom->GetIdx()]);
 	  
-	    //perceive and match pattern
-	    std::vector<std::vector<int> >::iterator j;
-	    std::vector<bool> vb(((OBMol*) atom->GetParent())->NumAtoms()+1);
-	    std::vector<std::vector<int> > mlist;
-	    if (match( *((OBMol *) atom->GetParent()),
-		       (Pattern*)expr->recur.recur,mlist))
-	      for (j = mlist.begin();j != mlist.end();j++)
-		vb[(*j)[0]] = true;
+            //perceive and match pattern
+            std::vector<std::vector<int> >::iterator j;
+            std::vector<bool> vb(((OBMol*) atom->GetParent())->NumAtoms()+1);
+            std::vector<std::vector<int> > mlist;
+            if (match( *((OBMol *) atom->GetParent()),
+                       (Pattern*)expr->recur.recur,mlist))
+              for (j = mlist.begin();j != mlist.end();j++)
+                vb[(*j)[0]] = true;
 	  
-	    RSCACHE.push_back(std::pair<Pattern*,std::vector<bool> > ((Pattern*)expr->recur.recur,vb));
+            RSCACHE.push_back(std::pair<Pattern*,std::vector<bool> > ((Pattern*)expr->recur.recur,vb));
 	  
-	    return(vb[atom->GetIdx()]);
-	  }
+            return(vb[atom->GetIdx()]);
+          }
 	
-	default:
-	  return(false);
-	}
+        default:
+          return(false);
+        }
   }
 
   static bool EvalBondExpr(BondExpr *expr,OBBond *bond)
   {
     for (;;)
       switch( expr->type )
-	{
-	case BE_LEAF:
+        {
+        case BE_LEAF:
 	
-	  if( expr->leaf.prop == BL_CONST )
-	    return((expr->leaf.value != 0) ? true : false);
-	  else
-	    switch( expr->leaf.value )
-	      {
-	      case BT_SINGLE:
-		return(bond->GetBO() == 1 && !bond->IsAromatic());
-	      case BT_AROM:
-		return(bond->IsAromatic());
-	      case BT_DOUBLE:
-		return(bond->GetBO()==2 && !bond->IsAromatic());
-	      case BT_TRIPLE:
-		return(bond->GetBO()==3);
-	      case BT_RING:
-		return(bond->IsInRing());
-	      case BT_UP:
-		return(bond->IsUp());
-	      case BT_DOWN:       
-		return(bond->IsDown());
-	      case BT_UPUNSPEC: // up or unspecified (i.e., not down)
-		return(!bond->IsDown());
-	      case BT_DOWNUNSPEC: // down or unspecified (i.e., not up)
-		return(!bond->IsUp());
-	      default:
-		return(false);
-	      }
+          if( expr->leaf.prop == BL_CONST )
+            return((expr->leaf.value != 0) ? true : false);
+          else
+            switch( expr->leaf.value )
+              {
+              case BT_SINGLE:
+                return(bond->GetBO() == 1 && !bond->IsAromatic());
+              case BT_AROM:
+                return(bond->IsAromatic());
+              case BT_DOUBLE:
+                return(bond->GetBO()==2 && !bond->IsAromatic());
+              case BT_TRIPLE:
+                return(bond->GetBO()==3);
+              case BT_RING:
+                return(bond->IsInRing());
+              case BT_UP:
+                return(bond->IsUp());
+              case BT_DOWN:       
+                return(bond->IsDown());
+              case BT_UPUNSPEC: // up or unspecified (i.e., not down)
+                return(!bond->IsDown());
+              case BT_DOWNUNSPEC: // down or unspecified (i.e., not up)
+                return(!bond->IsUp());
+              default:
+                return(false);
+              }
 	
 	
-	case BE_NOT:
-	  return(!EvalBondExpr(expr->mon.arg,bond));
-	case BE_ANDHI:
-	case BE_ANDLO:
-	  if (!EvalBondExpr(expr->bin.lft,bond))
-	    return(false);
-	  expr = expr->bin.rgt;
-	  break;
+        case BE_NOT:
+          return(!EvalBondExpr(expr->mon.arg,bond));
+        case BE_ANDHI:
+        case BE_ANDLO:
+          if (!EvalBondExpr(expr->bin.lft,bond))
+            return(false);
+          expr = expr->bin.rgt;
+          break;
 	
-	case BE_OR:
-	  if (EvalBondExpr(expr->bin.lft,bond))
-	    return(true);
-	  expr = expr->bin.rgt;
-	  break;
-	default:
-	  return false;
-	}
+        case BE_OR:
+          if (EvalBondExpr(expr->bin.lft,bond))
+            return(true);
+          expr = expr->bin.rgt;
+          break;
+        default:
+          return false;
+        }
   }
 
   std::vector<std::vector<int> > &OBSmartsPattern::GetUMapList()
@@ -2851,18 +2835,18 @@ namespace OpenBabel
   
     for (i = _mlist.begin();i != _mlist.end();i++)
       {
-	ok = true;
-	bv.Clear();
-	bv.FromVecInt(*i);
-	for (j = vbv.begin();j != vbv.end() && ok;j++)
-	  if ((*j) == bv)
-	    ok = false;
+        ok = true;
+        bv.Clear();
+        bv.FromVecInt(*i);
+        for (j = vbv.begin();j != vbv.end() && ok;j++)
+          if ((*j) == bv)
+            ok = false;
       
-	if (ok)
-	  {
-	    mlist.push_back(*i);
-	    vbv.push_back(bv);
-	  }
+        if (ok)
+          {
+            mlist.push_back(*i);
+            vbv.push_back(bv);
+          }
       }
   
     _mlist = mlist;
@@ -2876,9 +2860,9 @@ namespace OpenBabel
   
     for ( i = _mlist.begin() ; i != _mlist.end() ; i++ )
       {
-	for (j = (*i).begin();j != (*i).end();j++)
-	  ofs << *j << ' ' << ends;
-	ofs << endl;
+        for (j = (*i).begin();j != (*i).end();j++)
+          ofs << *j << ' ' << ends;
+        ofs << endl;
       }
   }
 
@@ -2896,8 +2880,8 @@ namespace OpenBabel
   
     if (!mol.Empty())
       {
-	_uatoms = new bool [mol.NumAtoms()+1];
-	memset((char*)_uatoms,'\0',sizeof(bool)*(mol.NumAtoms()+1));
+        _uatoms = new bool [mol.NumAtoms()+1];
+        memset((char*)_uatoms,'\0',sizeof(bool)*(mol.NumAtoms()+1));
       }
     else
       _uatoms = (bool*)NULL;
@@ -2913,58 +2897,58 @@ namespace OpenBabel
   {
     if (bidx == -1)
       {
-	OBAtom *atom;
-	std::vector<OBNodeBase*>::iterator i;
-	for (atom = _mol->BeginAtom(i);atom;atom = _mol->NextAtom(i))
-	  if (EvalAtomExpr(_pat->atom[0].expr,atom))
-	    {
-	      _map[0] = atom->GetIdx();
-	      _uatoms[atom->GetIdx()] = true;
-	      Match(mlist,0);
-	      _map[0] = 0;
-	      _uatoms[atom->GetIdx()] = false;
-	    }
-	return;
+        OBAtom *atom;
+        std::vector<OBNodeBase*>::iterator i;
+        for (atom = _mol->BeginAtom(i);atom;atom = _mol->NextAtom(i))
+          if (EvalAtomExpr(_pat->atom[0].expr,atom))
+            {
+              _map[0] = atom->GetIdx();
+              _uatoms[atom->GetIdx()] = true;
+              Match(mlist,0);
+              _map[0] = 0;
+              _uatoms[atom->GetIdx()] = false;
+            }
+        return;
       }
   
     if (bidx == _pat->bcount) //save full match here
       {
-	mlist.push_back(_map);
-	return;
+        mlist.push_back(_map);
+        return;
       }
   
     if (_pat->bond[bidx].grow) //match the next bond
       {
-	int src,dst;
-	src = _pat->bond[bidx].src;
-	dst = _pat->bond[bidx].dst;
+        int src,dst;
+        src = _pat->bond[bidx].src;
+        dst = _pat->bond[bidx].dst;
       
-	if (_map[src] <= 0 || _map[src] > _mol->NumAtoms())
-	  return;
+        if (_map[src] <= 0 || _map[src] > _mol->NumAtoms())
+          return;
       
-	AtomExpr *aexpr = _pat->atom[dst].expr;
-	BondExpr *bexpr = _pat->bond[bidx].expr;
-	OBAtom *atom,*nbr;
-	std::vector<OBEdgeBase*>::iterator i;
+        AtomExpr *aexpr = _pat->atom[dst].expr;
+        BondExpr *bexpr = _pat->bond[bidx].expr;
+        OBAtom *atom,*nbr;
+        std::vector<OBEdgeBase*>::iterator i;
       
-	atom = _mol->GetAtom(_map[src]);
-	for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-	  if (!_uatoms[nbr->GetIdx()] && EvalAtomExpr(aexpr,nbr) &&
-	      EvalBondExpr(bexpr,((OBBond*) *i)))
-	    {
-	      _map[dst] = nbr->GetIdx();
-	      _uatoms[nbr->GetIdx()] = true;
-	      Match(mlist,bidx+1);
-	      _uatoms[nbr->GetIdx()] = false;
-	      _map[dst] = 0;
-	    }
+        atom = _mol->GetAtom(_map[src]);
+        for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
+          if (!_uatoms[nbr->GetIdx()] && EvalAtomExpr(aexpr,nbr) &&
+              EvalBondExpr(bexpr,((OBBond*) *i)))
+            {
+              _map[dst] = nbr->GetIdx();
+              _uatoms[nbr->GetIdx()] = true;
+              Match(mlist,bidx+1);
+              _uatoms[nbr->GetIdx()] = false;
+              _map[dst] = 0;
+            }
       }
     else //just check bond here
       {
-	OBBond *bond = _mol->GetBond(_map[_pat->bond[bidx].src],
-				     _map[_pat->bond[bidx].dst]);
-	if (bond && EvalBondExpr(_pat->bond[bidx].expr,bond))
-	  Match(mlist,bidx+1);
+        OBBond *bond = _mol->GetBond(_map[_pat->bond[bidx].src],
+                                     _map[_pat->bond[bidx].dst]);
+        if (bond && EvalBondExpr(_pat->bond[bidx].expr,bond))
+          Match(mlist,bidx+1);
       }
   }
 
@@ -2977,47 +2961,47 @@ namespace OpenBabel
   
     for (size=0,stack[size] = expr;size >= 0;expr=stack[size])
       switch( expr->type )
-	{
-	case(BE_LEAF):
+        {
+        case(BE_LEAF):
 	
-	  if( expr->leaf.prop == BL_CONST )
-	    lftest = true;
-	  else /* expr->leaf.prop == BL_TYPE */
-	    switch( expr->leaf.value )
-	      {
-	      case(BT_SINGLE):    return(1);
-	      case(BT_DOUBLE):    return(2);
-	      case(BT_TRIPLE):    return(3);
-	      case(BT_AROM):      return(5);
-	      default:
-		lftest = true;
-	      }
-	  size--;
-	  break;
+          if( expr->leaf.prop == BL_CONST )
+            lftest = true;
+          else /* expr->leaf.prop == BL_TYPE */
+            switch( expr->leaf.value )
+              {
+              case(BT_SINGLE):    return(1);
+              case(BT_DOUBLE):    return(2);
+              case(BT_TRIPLE):    return(3);
+              case(BT_AROM):      return(5);
+              default:
+                lftest = true;
+              }
+          size--;
+          break;
 	
-	case(BE_NOT):    return(0);
-	case(BE_ANDHI):
-	case(BE_ANDLO):
-	case(BE_OR):
-	  if (stack[size+1] == expr->bin.rgt)
-	    size--;
-	  else if (stack[size+1] == expr->bin.lft)
-	    {
-	      if (lftest)
-		{
-		  size++;
-		  stack[size] = expr->bin.rgt;
-		}
-	      else
-		size--;
-	    }
-	  else
-	    {
-	      size++;
-	      stack[size] = expr->bin.lft;
-	    }
-	  break;
-	}
+        case(BE_NOT):    return(0);
+        case(BE_ANDHI):
+        case(BE_ANDLO):
+        case(BE_OR):
+          if (stack[size+1] == expr->bin.rgt)
+            size--;
+          else if (stack[size+1] == expr->bin.lft)
+            {
+              if (lftest)
+                {
+                  size++;
+                  stack[size] = expr->bin.rgt;
+                }
+              else
+                size--;
+            }
+          else
+            {
+              size++;
+              stack[size] = expr->bin.lft;
+            }
+          break;
+        }
   
     return(0);
   }
@@ -3033,49 +3017,49 @@ namespace OpenBabel
   
     for (size=0,stack[size] = expr;size >= 0;expr=stack[size])
       {
-	switch (expr->type)
-	  {
-	  case AE_LEAF:
-	    switch( expr->leaf.prop )
-	      {
-	      case AL_NEGATIVE:
-		return(-1*(int)expr->leaf.value);
-	      case AL_POSITIVE:
-		return((int)expr->leaf.value);
-	      default:
-		lftest=true;
-	      }
-	    size--;
-	    break;
+        switch (expr->type)
+          {
+          case AE_LEAF:
+            switch( expr->leaf.prop )
+              {
+              case AL_NEGATIVE:
+                return(-1*(int)expr->leaf.value);
+              case AL_POSITIVE:
+                return((int)expr->leaf.value);
+              default:
+                lftest=true;
+              }
+            size--;
+            break;
 	  
-	  case AE_OR:
-	  case AE_ANDHI:
-	  case AE_ANDLO:
+          case AE_OR:
+          case AE_ANDHI:
+          case AE_ANDLO:
 	  
-	    if (stack[size+1] == expr->bin.rgt)
-	      size--;
-	    else if (stack[size+1] == expr->bin.lft)
-	      {
-		if (lftest)
-		  {
-		    size++;
-		    stack[size] = expr->bin.rgt;
-		  }
-		else
-		  size--;
-	      }
-	    else
-	      {
-		size++;
-		stack[size] = expr->bin.lft;
-	      }
-	    break;
+            if (stack[size+1] == expr->bin.rgt)
+              size--;
+            else if (stack[size+1] == expr->bin.lft)
+              {
+                if (lftest)
+                  {
+                    size++;
+                    stack[size] = expr->bin.rgt;
+                  }
+                else
+                  size--;
+              }
+            else
+              {
+                size++;
+                stack[size] = expr->bin.lft;
+              }
+            break;
 	  
-	  case AE_NOT:
-	    return(0);
-	  case AE_RECUR:
-	    return(0);
-	  }
+          case AE_NOT:
+            return(0);
+          case AE_RECUR:
+            return(0);
+          }
       }
   
     return(0);
@@ -3092,43 +3076,43 @@ namespace OpenBabel
   
     for (size=0,stack[size] = expr;size >= 0;expr=stack[size])
       {
-	switch (expr->type)
-	  {
-	  case AE_LEAF:
-	    if ( expr->leaf.prop == AL_ELEM)
-	      return(expr->leaf.value);
-	    lftest = true;
-	    size--;
-	    break;
+        switch (expr->type)
+          {
+          case AE_LEAF:
+            if ( expr->leaf.prop == AL_ELEM)
+              return(expr->leaf.value);
+            lftest = true;
+            size--;
+            break;
 	  
-	  case AE_OR:
-	  case AE_ANDHI:
-	  case AE_ANDLO:
+          case AE_OR:
+          case AE_ANDHI:
+          case AE_ANDLO:
 	  
-	    if (stack[size+1] == expr->bin.rgt)
-	      size--;
-	    else if (stack[size+1] == expr->bin.lft)
-	      {
-		if (lftest)
-		  {
-		    size++;
-		    stack[size] = expr->bin.rgt;
-		  }
-		else
-		  size--;
-	      }
-	    else
-	      {
-		size++;
-		stack[size] = expr->bin.lft;
-	      }
-	    break;
+            if (stack[size+1] == expr->bin.rgt)
+              size--;
+            else if (stack[size+1] == expr->bin.lft)
+              {
+                if (lftest)
+                  {
+                    size++;
+                    stack[size] = expr->bin.rgt;
+                  }
+                else
+                  size--;
+              }
+            else
+              {
+                size++;
+                stack[size] = expr->bin.lft;
+              }
+            break;
 	  
-	  case AE_NOT:
-	    return(0);
-	  case AE_RECUR:
-	    return(0);
-	  }
+          case AE_NOT:
+            return(0);
+          case AE_RECUR:
+            return(0);
+          }
       }
   
     return(0);
@@ -3150,22 +3134,22 @@ namespace OpenBabel
     for (pos = 0,pos = s.find("$",pos);pos < s.size();pos = s.find("$",pos))
       //for (pos = 0,pos = s.find("$",pos);pos != std::string::npos;pos = s.find("$",pos))
       {
-	pos++;
-	for (j = pos;j < s.size();j++)
-	  if (!isalpha(s[j]) && !isdigit(s[j]) && s[j] != '_')
-	    break;
-	if (pos == j)
-	  continue;
+        pos++;
+        for (j = pos;j < s.size();j++)
+          if (!isalpha(s[j]) && !isdigit(s[j]) && s[j] != '_')
+            break;
+        if (pos == j)
+          continue;
       
-	token = s.substr(pos,j-pos);
-	for (i = vlex.begin();i != vlex.end();i++)
-	  if (token == i->first)
-	    {
-	      repstr = "(" + i->second + ")";
-	      s.replace(pos,j-pos,repstr);
-	      j = 0;
-	    }
-	pos = j;
+        token = s.substr(pos,j-pos);
+        for (i = vlex.begin();i != vlex.end();i++)
+          if (token == i->first)
+            {
+              repstr = "(" + i->second + ")";
+              s.replace(pos,j-pos,repstr);
+              j = 0;
+            }
+        pos = j;
       }
   }
 
