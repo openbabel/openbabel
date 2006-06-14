@@ -4,7 +4,7 @@
 
 TESTS="aromatic.pl atom bond conversion data format"
 TESTS="${TESTS} formula formalcharge internalcoord"
-TESTS="${TESTS} invalidsmarts matrix"
+TESTS="${TESTS} invalidsmarts invalidsmiles matrix"
 TESTS="${TESTS} mol residue rings"
 TESTS="${TESTS} smarts unitcell"
 TESTS="${TESTS} cml.sh test-set.sh"

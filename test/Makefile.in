@@ -41,7 +41,8 @@ noinst_PROGRAMS = matrix$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
 	bond$(EXEEXT) conversion$(EXEEXT) data$(EXEEXT) \
 	format$(EXEEXT) internalcoord$(EXEEXT) mol$(EXEEXT) \
 	residue$(EXEEXT) formula$(EXEEXT) formalcharge$(EXEEXT) \
-	invalidsmarts$(EXEEXT)
+	invalidsmarts$(EXEEXT) invalidsmiles$(EXEEXT) \
+	smilesmatch$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
 subdir = test
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -96,6 +97,10 @@ am_invalidsmarts_OBJECTS = invalidsmarts.$(OBJEXT)
 invalidsmarts_OBJECTS = $(am_invalidsmarts_OBJECTS)
 invalidsmarts_LDADD = $(LDADD)
 invalidsmarts_DEPENDENCIES = ../src/libopenbabel.la
+am_invalidsmiles_OBJECTS = invalidsmiles.$(OBJEXT)
+invalidsmiles_OBJECTS = $(am_invalidsmiles_OBJECTS)
+invalidsmiles_LDADD = $(LDADD)
+invalidsmiles_DEPENDENCIES = ../src/libopenbabel.la
 am_matrix_OBJECTS = matrixtest.$(OBJEXT)
 matrix_OBJECTS = $(am_matrix_OBJECTS)
 matrix_LDADD = $(LDADD)
@@ -120,6 +125,10 @@ am_smarts_OBJECTS = smartstest.$(OBJEXT)
 smarts_OBJECTS = $(am_smarts_OBJECTS)
 smarts_LDADD = $(LDADD)
 smarts_DEPENDENCIES = ../src/libopenbabel.la
+am_smilesmatch_OBJECTS = smilesmatch.$(OBJEXT)
+smilesmatch_OBJECTS = $(am_smilesmatch_OBJECTS)
+smilesmatch_LDADD = $(LDADD)
+smilesmatch_DEPENDENCIES = ../src/libopenbabel.la
 am_unitcell_OBJECTS = unitcell.$(OBJEXT)
 unitcell_OBJECTS = $(am_unitcell_OBJECTS)
 unitcell_LDADD = $(LDADD)
@@ -138,15 +147,17 @@ CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(conversion_SOURCES) $(data_SOURCES) $(formalcharge_SOURCES) \
 	$(format_SOURCES) $(formula_SOURCES) $(internalcoord_SOURCES) \
-	$(invalidsmarts_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
-	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
-	$(smarts_SOURCES) $(unitcell_SOURCES)
+	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
+	$(matrix_SOURCES) $(mol_SOURCES) $(residue_SOURCES) \
+	$(rings_SOURCES) $(roundtrip_SOURCES) $(smarts_SOURCES) \
+	$(smilesmatch_SOURCES) $(unitcell_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(conversion_SOURCES) $(data_SOURCES) $(formalcharge_SOURCES) \
 	$(format_SOURCES) $(formula_SOURCES) $(internalcoord_SOURCES) \
-	$(invalidsmarts_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
-	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
-	$(smarts_SOURCES) $(unitcell_SOURCES)
+	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
+	$(matrix_SOURCES) $(mol_SOURCES) $(residue_SOURCES) \
+	$(rings_SOURCES) $(roundtrip_SOURCES) $(smarts_SOURCES) \
+	$(smilesmatch_SOURCES) $(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -319,12 +330,14 @@ format_SOURCES = format.cpp
 formula_SOURCES = formula.cpp
 formalcharge_SOURCES = formalcharge.cpp
 internalcoord_SOURCES = internalcoord.cpp
+invalidsmiles_SOURCES = invalidsmiles.cpp
 invalidsmarts_SOURCES = invalidsmarts.cpp
 matrix_SOURCES = matrixtest.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
 smarts_SOURCES = smartstest.cpp
+smilesmatch_SOURCES = smilesmatch.cpp
 unitcell_SOURCES = unitcell.cpp
 all: all-recursive
 
@@ -424,6 +437,9 @@ internalcoord$(EXEEXT): $(internalcoord_OBJECTS) $(internalcoord_DEPENDENCIES)
 invalidsmarts$(EXEEXT): $(invalidsmarts_OBJECTS) $(invalidsmarts_DEPENDENCIES) 
 	@rm -f invalidsmarts$(EXEEXT)
 	$(CXXLINK) $(invalidsmarts_LDFLAGS) $(invalidsmarts_OBJECTS) $(invalidsmarts_LDADD) $(LIBS)
+invalidsmiles$(EXEEXT): $(invalidsmiles_OBJECTS) $(invalidsmiles_DEPENDENCIES) 
+	@rm -f invalidsmiles$(EXEEXT)
+	$(CXXLINK) $(invalidsmiles_LDFLAGS) $(invalidsmiles_OBJECTS) $(invalidsmiles_LDADD) $(LIBS)
 matrix$(EXEEXT): $(matrix_OBJECTS) $(matrix_DEPENDENCIES) 
 	@rm -f matrix$(EXEEXT)
 	$(CXXLINK) $(matrix_LDFLAGS) $(matrix_OBJECTS) $(matrix_LDADD) $(LIBS)
@@ -442,6 +458,9 @@ roundtrip$(EXEEXT): $(roundtrip_OBJECTS) $(roundtrip_DEPENDENCIES)
 smarts$(EXEEXT): $(smarts_OBJECTS) $(smarts_DEPENDENCIES) 
 	@rm -f smarts$(EXEEXT)
 	$(CXXLINK) $(smarts_LDFLAGS) $(smarts_OBJECTS) $(smarts_LDADD) $(LIBS)
+smilesmatch$(EXEEXT): $(smilesmatch_OBJECTS) $(smilesmatch_DEPENDENCIES) 
+	@rm -f smilesmatch$(EXEEXT)
+	$(CXXLINK) $(smilesmatch_LDFLAGS) $(smilesmatch_OBJECTS) $(smilesmatch_LDADD) $(LIBS)
 unitcell$(EXEEXT): $(unitcell_OBJECTS) $(unitcell_DEPENDENCIES) 
 	@rm -f unitcell$(EXEEXT)
 	$(CXXLINK) $(unitcell_LDFLAGS) $(unitcell_OBJECTS) $(unitcell_LDADD) $(LIBS)
@@ -462,12 +481,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/formula.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/internalcoord.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/invalidsmarts.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/invalidsmiles.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrixtest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/residue.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ringtest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/roundtrip.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smartstest.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smilesmatch.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unitcell.Po@am__quote@
 
 .cpp.o:
