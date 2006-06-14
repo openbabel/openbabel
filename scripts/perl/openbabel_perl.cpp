@@ -20268,35 +20268,37 @@ XS(_wrap_OBBase_HasData__SWIG_0) {
     bool result;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
+    int res2 = SWIG_OLDOBJ ;
     int argvi = 0;
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBBase_HasData(self,std::string &);");
+      SWIG_croak("Usage: OBBase_HasData(self,std::string const &);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBase_HasData" "', argument " "1"" of type '" "OpenBabel::OBBase *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBBase * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_std__string,  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBase_HasData" "', argument " "2"" of type '" "std::string &""'"); 
+    {
+      std::string *ptr = (std::string *)0;
+      res2 = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(1), &ptr);
+      if (!SWIG_IsOK(res2)) {
+        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBase_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      if (!ptr) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBBase_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      arg2 = ptr;
     }
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBBase_HasData" "', argument " "2"" of type '" "std::string &""'"); 
-    }
-    arg2 = reinterpret_cast< std::string * >(argp2);
-    result = (bool)(arg1)->HasData(*arg2);
+    result = (bool)(arg1)->HasData((std::string const &)*arg2);
     ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
     
-    
+    if (SWIG_IsNewObj(res2)) delete arg2;
     XSRETURN(argvi);
   fail:
     
-    
+    if (SWIG_IsNewObj(res2)) delete arg2;
     SWIG_croak_null();
   }
 }
@@ -20400,9 +20402,10 @@ XS(_wrap_OBBase_HasData) {
       _rankm += _pi;
       _pi *= SWIG_MAXCASTRANK;
       {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_std__string, 0);
-        _v = SWIG_CheckState(res);
+        {
+          int res = SWIG_AsVal_unsigned_SS_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
       }
       if (!_v) goto check_1;
       _ranki += _v*_pi;
@@ -20430,10 +20433,8 @@ XS(_wrap_OBBase_HasData) {
       _rankm += _pi;
       _pi *= SWIG_MAXCASTRANK;
       {
-        {
-          int res = SWIG_AsVal_unsigned_SS_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
-          _v = SWIG_CheckState(res);
-        }
+        int res = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(1), (std::string**)(0));
+        _v = SWIG_CheckState(res);
       }
       if (!_v) goto check_2;
       _ranki += _v*_pi;
@@ -20478,9 +20479,9 @@ XS(_wrap_OBBase_HasData) {
   dispatch:
     switch(_index) {
     case 1:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBBase_HasData__SWIG_0); return;
-    case 2:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBBase_HasData__SWIG_2); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBBase_HasData__SWIG_0); return;
     case 3:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBBase_HasData__SWIG_1); return;
     }
@@ -20769,10 +20770,10 @@ XS(_wrap_OBBase_DataSize) {
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBase_DataSize" "', argument " "1"" of type '" "OpenBabel::OBBase *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBase_DataSize" "', argument " "1"" of type '" "OpenBabel::OBBase const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBBase * >(argp1);
-    result = (unsigned int)(arg1)->DataSize();
+    result = (unsigned int)((OpenBabel::OBBase const *)arg1)->DataSize();
     ST(argvi) = SWIG_From_unsigned_SS_int  SWIG_PERL_CALL_ARGS_1(static_cast< unsigned int >(result)); argvi++ ;
     
     XSRETURN(argvi);
@@ -20828,35 +20829,37 @@ XS(_wrap_OBBase_GetData__SWIG_1) {
     OpenBabel::OBGenericData *result = 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
+    int res2 = SWIG_OLDOBJ ;
     int argvi = 0;
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBBase_GetData(self,std::string &);");
+      SWIG_croak("Usage: OBBase_GetData(self,std::string const &);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBase_GetData" "', argument " "1"" of type '" "OpenBabel::OBBase *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::OBBase * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_std__string,  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBase_GetData" "', argument " "2"" of type '" "std::string &""'"); 
+    {
+      std::string *ptr = (std::string *)0;
+      res2 = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(1), &ptr);
+      if (!SWIG_IsOK(res2)) {
+        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBase_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      if (!ptr) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBBase_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      arg2 = ptr;
     }
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBBase_GetData" "', argument " "2"" of type '" "std::string &""'"); 
-    }
-    arg2 = reinterpret_cast< std::string * >(argp2);
-    result = (OpenBabel::OBGenericData *)(arg1)->GetData(*arg2);
+    result = (OpenBabel::OBGenericData *)(arg1)->GetData((std::string const &)*arg2);
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBGenericData, 0 | SWIG_SHADOW); argvi++ ;
     
-    
+    if (SWIG_IsNewObj(res2)) delete arg2;
     XSRETURN(argvi);
   fail:
     
-    
+    if (SWIG_IsNewObj(res2)) delete arg2;
     SWIG_croak_null();
   }
 }
@@ -20974,9 +20977,10 @@ XS(_wrap_OBBase_GetData) {
       _rankm += _pi;
       _pi *= SWIG_MAXCASTRANK;
       {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_std__string, 0);
-        _v = SWIG_CheckState(res);
+        {
+          int res = SWIG_AsVal_unsigned_SS_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
       }
       if (!_v) goto check_2;
       _ranki += _v*_pi;
@@ -21004,10 +21008,8 @@ XS(_wrap_OBBase_GetData) {
       _rankm += _pi;
       _pi *= SWIG_MAXCASTRANK;
       {
-        {
-          int res = SWIG_AsVal_unsigned_SS_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
-          _v = SWIG_CheckState(res);
-        }
+        int res = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(1), (std::string**)(0));
+        _v = SWIG_CheckState(res);
       }
       if (!_v) goto check_3;
       _ranki += _v*_pi;
@@ -21054,9 +21056,9 @@ XS(_wrap_OBBase_GetData) {
     case 1:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBBase_GetData__SWIG_3); return;
     case 2:
-      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBBase_GetData__SWIG_1); return;
-    case 3:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBBase_GetData__SWIG_0); return;
+    case 3:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBBase_GetData__SWIG_1); return;
     case 4:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBBase_GetData__SWIG_2); return;
     }
@@ -28016,7 +28018,7 @@ XS(_wrap_OBResidue_GetBonds__SWIG_0) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBResidue_GetBonds(self,bool);");
+      SWIG_croak("Usage: OBResidue_GetBonds(self,exterior);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBResidue, 0 |  0 );
     if (!SWIG_IsOK(res1)) {

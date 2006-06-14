@@ -25,110 +25,108 @@ GNU General Public License for more details.
 #include <vector>
 #include <map>
 
-#if HAVE_IOSTREAM
 #include <iostream>
-#elif HAVE_IOSTREAM_H
-#include <iostream.h>
-#endif
+
 #include "generic.h"
 
 namespace OpenBabel
 {
 
-class OBBase;
-class OBNodeBase;
-class OBEdgeBase;
-class OBGraphBase;
+  class OBBase;
+  class OBNodeBase;
+  class OBEdgeBase;
+  class OBGraphBase;
 
-/** \brief Base Class
+  /** \brief Base Class
  
- The various classes (Atom, Bond, Molecule) inherit from base classes--
- OBBase is just a placeholder class
-*/
-class OBAPI OBBase
-{
-public:
-	virtual ~OBBase()
-	{
-		if (!_vdata.empty())
-		{
-			std::vector<OBGenericData*>::iterator m;
-			for (m = _vdata.begin();m != _vdata.end();m++)
-					delete *m;
-			_vdata.clear();
-		}
-}
-	; //NF
-	virtual OBBase* DoTransformations(const std::map<std::string,std::string>*pOptions)
-	{
-			return this;
-	} 
-	//Base type does nothing
-	static const char* ClassDescription()
-	{
-			return "";
-	} 
+  The various classes (Atom, Bond, Molecule) inherit from base classes--
+  OBBase is just a placeholder class
+  */
+  class OBAPI OBBase
+    {
+    public:
+      virtual ~OBBase()
+        {
+          if (!_vdata.empty())
+            {
+              std::vector<OBGenericData*>::iterator m;
+              for (m = _vdata.begin();m != _vdata.end();m++)
+                delete *m;
+              _vdata.clear();
+            }
+        }
 
-	//! \name Generic data handling methods (via OBGenericData)
-	//@{
-	//! \returns whether the generic attribute/value pair exists
-	bool                              HasData(std::string &);
-	//! \returns whether the generic attribute/value pair exists
-	bool                              HasData(const char *);
-	//! \returns whether the generic attribute/value pair exists, for a given
-  //!  OBGenericDataType
-	bool                              HasData(unsigned int type);
-  //! Delete any data matching the given OBGenericDataType
-	void                              DeleteData(unsigned int type);
-  //! delete the given generic data from this object
-	void                              DeleteData(OBGenericData*);
-  //! delete all of the given generic data from this object
-	void                              DeleteData(std::vector<OBGenericData*>&);
-	//! \adds a data object; does nothing if d==NULL
-	void                              SetData(OBGenericData *d)
-	{
-			if(d)
-				_vdata.push_back(d);
-	}
-	//! \return the number of OBGenericData items attached to this molecule.
-	unsigned int                      DataSize(){ return(_vdata.size()); }
-  //! \return the first matching data for a given type from OBGenericDataType
-  //!    or NULL if nothing matches
-	OBGenericData                    *GetData(unsigned int type);
-  //! \return any data matching the given attribute name 
-  //!     or NULL if nothing matches
-	OBGenericData                    *GetData(std::string&);
-  //! \return any data matching the given attribute name 
-  //!     or NULL if nothing matches
-	OBGenericData                    *GetData(const char *);
-  //! \return all data, suitable for iterating
-	std::vector<OBGenericData*>      &GetData() { return(_vdata); }
-	std::vector<OBGenericData*>::iterator  BeginData()
-	{
-			return(_vdata.begin());
-	}
-	std::vector<OBGenericData*>::iterator  EndData()
-	{
-			return(_vdata.end());
-	}
-	//@}
-protected:
-	std::vector<OBGenericData*> _vdata; //!< Custom data
+      virtual OBBase* DoTransformations(const std::map<std::string,std::string>*pOptions)
+        {
+          return this;
+        } 
+      //Base type does nothing
+      static const char* ClassDescription()
+        {
+          return "";
+        } 
+
+      //! \name Generic data handling methods (via OBGenericData)
+      //@{
+      //! \returns whether the generic attribute/value pair exists
+      bool                              HasData(const std::string &);
+      //! \returns whether the generic attribute/value pair exists
+      bool                              HasData(const char *);
+      //! \returns whether the generic attribute/value pair exists, for a given
+      //!  OBGenericDataType
+      bool                              HasData(const unsigned int type);
+      //! Delete any data matching the given OBGenericDataType
+      void                              DeleteData(unsigned int type);
+      //! delete the given generic data from this object
+      void                              DeleteData(OBGenericData*);
+      //! delete all of the given generic data from this object
+      void                              DeleteData(std::vector<OBGenericData*>&);
+      //! \adds a data object; does nothing if d==NULL
+      void                              SetData(OBGenericData *d)
+        {
+          if(d)
+            _vdata.push_back(d);
+        }
+      //! \return the number of OBGenericData items attached to this molecule.
+      unsigned int                      DataSize() const 
+        { return(_vdata.size()); }
+      //! \return the first matching data for a given type from OBGenericDataType
+      //!    or NULL if nothing matches
+      OBGenericData                    *GetData(const unsigned int type);
+      //! \return any data matching the given attribute name 
+      //!     or NULL if nothing matches
+      OBGenericData                    *GetData(const std::string&);
+      //! \return any data matching the given attribute name 
+      //!     or NULL if nothing matches
+      OBGenericData                    *GetData(const char *);
+      //! \return all data, suitable for iterating
+      std::vector<OBGenericData*>      &GetData() { return(_vdata); }
+      std::vector<OBGenericData*>::iterator  BeginData()
+        {
+          return(_vdata.begin());
+        }
+      std::vector<OBGenericData*>::iterator  EndData()
+        {
+          return(_vdata.end());
+        }
+      //@}
+    protected:
+      std::vector<OBGenericData*> _vdata; //!< Custom data
 
 
-};
+    };
 
-/** \brief Node Base Class
+  /** \brief Node Base Class
  
-The base class for nodes (e.g. atoms) in a graph-theoretical representation.
- */
-class OBAPI OBNodeBase : public OBBase
-{
-protected:
-    //! What is my unique node index? 	GetIdx(), SetIdx(int idx).
-    unsigned short int  _idx;
-    //! To which graph do I belong?	GetParent(), SetParent(OBGraphBase*).
-    OBGraphBase        *_parent;
+  The base class for nodes (e.g. atoms) in a graph-theoretical representation.
+  */
+  class OBAPI OBNodeBase : public OBBase
+    {
+    protected:
+      //! What is my unique node index? 	GetIdx(), SetIdx(int idx).
+      unsigned short int  _idx;
+      //! To which graph do I belong?	GetParent(), SetParent(OBGraphBase*).
+      OBGraphBase        *_parent;
     /** \brief What edges or bonds do I have? \sa AddEdge(), GetValence(),
         This node is assumed to be one of the edge endpoints.
     */

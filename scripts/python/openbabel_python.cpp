@@ -30922,8 +30922,7 @@ SWIGINTERN PyObject *_wrap_OBBase_HasData__SWIG_0(PyObject *SWIGUNUSEDPARM(self)
   bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -30933,18 +30932,23 @@ SWIGINTERN PyObject *_wrap_OBBase_HasData__SWIG_0(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBase_HasData" "', argument " "1"" of type '" "OpenBabel::OBBase *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBBase * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__string,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBase_HasData" "', argument " "2"" of type '" "std::string &""'"); 
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBase_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBBase_HasData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBBase_HasData" "', argument " "2"" of type '" "std::string &""'"); 
-  }
-  arg2 = reinterpret_cast< std::string * >(argp2);
-  result = (bool)(arg1)->HasData(*arg2);
+  result = (bool)(arg1)->HasData((std::string const &)*arg2);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
@@ -31030,11 +31034,12 @@ SWIGINTERN PyObject *_wrap_OBBase_HasData(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
-      _v = SWIG_CheckState(res);
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
       if (_v) {
-        return _wrap_OBBase_HasData__SWIG_0(self, args);
+        return _wrap_OBBase_HasData__SWIG_2(self, args);
       }
     }
   }
@@ -31044,12 +31049,10 @@ SWIGINTERN PyObject *_wrap_OBBase_HasData(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBBase_HasData__SWIG_2(self, args);
+        return _wrap_OBBase_HasData__SWIG_0(self, args);
       }
     }
   }
@@ -31267,10 +31270,10 @@ SWIGINTERN PyObject *_wrap_OBBase_DataSize(PyObject *SWIGUNUSEDPARM(self), PyObj
   if(!PyArg_UnpackTuple(args,(char *)"OBBase_DataSize",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBase_DataSize" "', argument " "1"" of type '" "OpenBabel::OBBase *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBase_DataSize" "', argument " "1"" of type '" "OpenBabel::OBBase const *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBBase * >(argp1);
-  result = (unsigned int)(arg1)->DataSize();
+  result = (unsigned int)((OpenBabel::OBBase const *)arg1)->DataSize();
   resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return resultobj;
 fail:
@@ -31316,8 +31319,7 @@ SWIGINTERN PyObject *_wrap_OBBase_GetData__SWIG_1(PyObject *SWIGUNUSEDPARM(self)
   OpenBabel::OBGenericData *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -31327,18 +31329,23 @@ SWIGINTERN PyObject *_wrap_OBBase_GetData__SWIG_1(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBBase_GetData" "', argument " "1"" of type '" "OpenBabel::OBBase *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBBase * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__string,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBase_GetData" "', argument " "2"" of type '" "std::string &""'"); 
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBBase_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBBase_GetData" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBBase_GetData" "', argument " "2"" of type '" "std::string &""'"); 
-  }
-  arg2 = reinterpret_cast< std::string * >(argp2);
-  result = (OpenBabel::OBGenericData *)(arg1)->GetData(*arg2);
+  result = (OpenBabel::OBGenericData *)(arg1)->GetData((std::string const &)*arg2);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
@@ -31427,11 +31434,12 @@ SWIGINTERN PyObject *_wrap_OBBase_GetData(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__string, 0);
-      _v = SWIG_CheckState(res);
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
       if (_v) {
-        return _wrap_OBBase_GetData__SWIG_1(self, args);
+        return _wrap_OBBase_GetData__SWIG_0(self, args);
       }
     }
   }
@@ -31441,12 +31449,10 @@ SWIGINTERN PyObject *_wrap_OBBase_GetData(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_OBBase_GetData__SWIG_0(self, args);
+        return _wrap_OBBase_GetData__SWIG_1(self, args);
       }
     }
   }
