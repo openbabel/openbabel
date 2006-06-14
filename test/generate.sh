@@ -2,7 +2,7 @@
 
 # Generate test results
 
-TESTS="formula rings smarts"
+TESTS="formula formalcharge rings smarts"
 
 unset BABEL_LIBDIR
 unset BABEL_DATADIR
