@@ -2,7 +2,7 @@ SUBDIRS = cmltest
 
 noinst_PROGRAMS = matrix rings smarts unitcell aromatic \
 		atom bond conversion data format internalcoord \
-		mol residue formula
+		mol residue formula formalcharge invalidsmarts
 
 bin_PROGRAMS = roundtrip
 
@@ -33,7 +33,9 @@ conversion_SOURCES = conversion.cpp
 data_SOURCES = data.cpp
 format_SOURCES = format.cpp
 formula_SOURCES = formula.cpp
+formalcharge_SOURCES = formalcharge.cpp
 internalcoord_SOURCES = internalcoord.cpp
+invalidsmarts_SOURCES = invalidsmarts.cpp
 matrix_SOURCES = matrixtest.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp

@@ -40,7 +40,8 @@ noinst_PROGRAMS = matrix$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
 	unitcell$(EXEEXT) aromatic$(EXEEXT) atom$(EXEEXT) \
 	bond$(EXEEXT) conversion$(EXEEXT) data$(EXEEXT) \
 	format$(EXEEXT) internalcoord$(EXEEXT) mol$(EXEEXT) \
-	residue$(EXEEXT) formula$(EXEEXT)
+	residue$(EXEEXT) formula$(EXEEXT) formalcharge$(EXEEXT) \
+	invalidsmarts$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
 subdir = test
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -75,6 +76,10 @@ am_data_OBJECTS = data.$(OBJEXT)
 data_OBJECTS = $(am_data_OBJECTS)
 data_LDADD = $(LDADD)
 data_DEPENDENCIES = ../src/libopenbabel.la
+am_formalcharge_OBJECTS = formalcharge.$(OBJEXT)
+formalcharge_OBJECTS = $(am_formalcharge_OBJECTS)
+formalcharge_LDADD = $(LDADD)
+formalcharge_DEPENDENCIES = ../src/libopenbabel.la
 am_format_OBJECTS = format.$(OBJEXT)
 format_OBJECTS = $(am_format_OBJECTS)
 format_LDADD = $(LDADD)
@@ -87,6 +92,10 @@ am_internalcoord_OBJECTS = internalcoord.$(OBJEXT)
 internalcoord_OBJECTS = $(am_internalcoord_OBJECTS)
 internalcoord_LDADD = $(LDADD)
 internalcoord_DEPENDENCIES = ../src/libopenbabel.la
+am_invalidsmarts_OBJECTS = invalidsmarts.$(OBJEXT)
+invalidsmarts_OBJECTS = $(am_invalidsmarts_OBJECTS)
+invalidsmarts_LDADD = $(LDADD)
+invalidsmarts_DEPENDENCIES = ../src/libopenbabel.la
 am_matrix_OBJECTS = matrixtest.$(OBJEXT)
 matrix_OBJECTS = $(am_matrix_OBJECTS)
 matrix_LDADD = $(LDADD)
@@ -127,15 +136,17 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
-	$(conversion_SOURCES) $(data_SOURCES) $(format_SOURCES) \
-	$(formula_SOURCES) $(internalcoord_SOURCES) $(matrix_SOURCES) \
-	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
-	$(roundtrip_SOURCES) $(smarts_SOURCES) $(unitcell_SOURCES)
+	$(conversion_SOURCES) $(data_SOURCES) $(formalcharge_SOURCES) \
+	$(format_SOURCES) $(formula_SOURCES) $(internalcoord_SOURCES) \
+	$(invalidsmarts_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
+	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
+	$(smarts_SOURCES) $(unitcell_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
-	$(conversion_SOURCES) $(data_SOURCES) $(format_SOURCES) \
-	$(formula_SOURCES) $(internalcoord_SOURCES) $(matrix_SOURCES) \
-	$(mol_SOURCES) $(residue_SOURCES) $(rings_SOURCES) \
-	$(roundtrip_SOURCES) $(smarts_SOURCES) $(unitcell_SOURCES)
+	$(conversion_SOURCES) $(data_SOURCES) $(formalcharge_SOURCES) \
+	$(format_SOURCES) $(formula_SOURCES) $(internalcoord_SOURCES) \
+	$(invalidsmarts_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
+	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
+	$(smarts_SOURCES) $(unitcell_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -306,7 +317,9 @@ conversion_SOURCES = conversion.cpp
 data_SOURCES = data.cpp
 format_SOURCES = format.cpp
 formula_SOURCES = formula.cpp
+formalcharge_SOURCES = formalcharge.cpp
 internalcoord_SOURCES = internalcoord.cpp
+invalidsmarts_SOURCES = invalidsmarts.cpp
 matrix_SOURCES = matrixtest.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
@@ -396,6 +409,9 @@ conversion$(EXEEXT): $(conversion_OBJECTS) $(conversion_DEPENDENCIES)
 data$(EXEEXT): $(data_OBJECTS) $(data_DEPENDENCIES) 
 	@rm -f data$(EXEEXT)
 	$(CXXLINK) $(data_LDFLAGS) $(data_OBJECTS) $(data_LDADD) $(LIBS)
+formalcharge$(EXEEXT): $(formalcharge_OBJECTS) $(formalcharge_DEPENDENCIES) 
+	@rm -f formalcharge$(EXEEXT)
+	$(CXXLINK) $(formalcharge_LDFLAGS) $(formalcharge_OBJECTS) $(formalcharge_LDADD) $(LIBS)
 format$(EXEEXT): $(format_OBJECTS) $(format_DEPENDENCIES) 
 	@rm -f format$(EXEEXT)
 	$(CXXLINK) $(format_LDFLAGS) $(format_OBJECTS) $(format_LDADD) $(LIBS)
@@ -405,6 +421,9 @@ formula$(EXEEXT): $(formula_OBJECTS) $(formula_DEPENDENCIES)
 internalcoord$(EXEEXT): $(internalcoord_OBJECTS) $(internalcoord_DEPENDENCIES) 
 	@rm -f internalcoord$(EXEEXT)
 	$(CXXLINK) $(internalcoord_LDFLAGS) $(internalcoord_OBJECTS) $(internalcoord_LDADD) $(LIBS)
+invalidsmarts$(EXEEXT): $(invalidsmarts_OBJECTS) $(invalidsmarts_DEPENDENCIES) 
+	@rm -f invalidsmarts$(EXEEXT)
+	$(CXXLINK) $(invalidsmarts_LDFLAGS) $(invalidsmarts_OBJECTS) $(invalidsmarts_LDADD) $(LIBS)
 matrix$(EXEEXT): $(matrix_OBJECTS) $(matrix_DEPENDENCIES) 
 	@rm -f matrix$(EXEEXT)
 	$(CXXLINK) $(matrix_LDFLAGS) $(matrix_OBJECTS) $(matrix_LDADD) $(LIBS)
@@ -438,9 +457,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bond.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conversion.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/formalcharge.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/format.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/formula.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/internalcoord.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/invalidsmarts.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matrixtest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/residue.Po@am__quote@
