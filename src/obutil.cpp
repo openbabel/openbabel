@@ -31,147 +31,147 @@ using namespace std;
 namespace OpenBabel
 {
 
-/*! \class OBStopwatch
-   \brief Stopwatch class used for timing length of execution
+  /*! \class OBStopwatch
+    \brief Stopwatch class used for timing length of execution
 
-   The OBStopwatch class makes timing the execution of blocks of
-   code to microsecond accuracy very simple. The class effectively
-   has two functions, Start() and Elapsed(). The usage of the
-   OBStopwatch class is demonstrated by the following code:
-\code
-OBStopwatch sw;
-sw.Start();
-//insert code here
-cout << "Elapsed time = " << sw.Elapsed() << endl;
-\endcode
-*/
+    The OBStopwatch class makes timing the execution of blocks of
+    code to microsecond accuracy very simple. The class effectively
+    has two functions, Start() and Elapsed(). The usage of the
+    OBStopwatch class is demonstrated by the following code:
+    \code
+    OBStopwatch sw;
+    sw.Start();
+    //insert code here
+    cout << "Elapsed time = " << sw.Elapsed() << endl;
+    \endcode
+  */
 
-//! Deprecated: use the OBMessageHandler class instead
-//! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
-OBAPI void ThrowError(char *str)
-{
-  obErrorLog.ThrowError("", str, obInfo);
-}
+  //! Deprecated: use the OBMessageHandler class instead
+  //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
+  OBAPI void ThrowError(char *str)
+  {
+    obErrorLog.ThrowError("", str, obInfo);
+  }
 
-//! Deprecated: use the OBMessageHandler class instead
-//! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
-OBAPI void ThrowError(std::string &str)
-{
-  obErrorLog.ThrowError("", str, obInfo);
-}
+  //! Deprecated: use the OBMessageHandler class instead
+  //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
+  OBAPI void ThrowError(std::string &str)
+  {
+    obErrorLog.ThrowError("", str, obInfo);
+  }
 
-// Comparison function (for sorting ints) returns a < b
-OBAPI bool OBCompareInt(const int &a,const int &b)
-{
+  // Comparison function (for sorting ints) returns a < b
+  OBAPI bool OBCompareInt(const int &a,const int &b)
+  {
     return(a<b);
-}
+  }
 
-// Comparison function (for sorting unsigned ints) returns a < b
-OBAPI bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
-{
+  // Comparison function (for sorting unsigned ints) returns a < b
+  OBAPI bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b)
+  {
     return(a<b);
-}
+  }
 
-// Comparison for doubles: returns a < (b + epsilon)
-OBAPI bool IsNear(const double &a, const double &b, const double epsilon)
-{
+  // Comparison for doubles: returns a < (b + epsilon)
+  OBAPI bool IsNear(const double &a, const double &b, const double epsilon)
+  {
     return (fabs(a - b) < epsilon);
-}
+  }
 
-// Comparison for doubles: returns a < (0.0 + epsilon)
-OBAPI bool IsNearZero(const double &a, const double epsilon)
-{
+  // Comparison for doubles: returns a < (0.0 + epsilon)
+  OBAPI bool IsNearZero(const double &a, const double epsilon)
+  {
     return (fabs(a) < epsilon);
-}
+  }
 
-//! Utility function: replace the last extension in string &src with new extension char *ext.
-OBAPI string NewExtension(string &src,char *ext)
-{
+  //! Utility function: replace the last extension in string &src with new extension char *ext.
+  OBAPI string NewExtension(string &src,char *ext)
+  {
     unsigned int pos = (unsigned int)src.find_last_of(".");
     string dst;
 
     if (pos != string::npos)
-        dst = src.substr(0,pos+1);
+      dst = src.substr(0,pos+1);
     else
-    {
+      {
         dst = src;
         dst += ".";
-    }
+      }
 
     dst += ext;
     return(dst);
-}
+  }
 
-//! Return the geometric centroid to an array of coordinates in double* format
-//!  and center the coordinates to the origin. Operates on the first "size" 
-//!  coordinates in the array.
-OBAPI vector3 center_coords(double *c, unsigned int size)
-{
-  if (size == 0)
-    {
-      vector3 v(0.0f, 0.0f, 0.0f);
-      return(v);
-    }
+  //! Return the geometric centroid to an array of coordinates in double* format
+  //!  and center the coordinates to the origin. Operates on the first "size" 
+  //!  coordinates in the array.
+  OBAPI vector3 center_coords(double *c, unsigned int size)
+  {
+    if (size == 0)
+      {
+        vector3 v(0.0f, 0.0f, 0.0f);
+        return(v);
+      }
 		unsigned int i; 
     double x=0,y=0,z=0;
     for (i = 0;i < size;i++)
-    {
+      {
         x += c[i*3];
         y += c[i*3+1];
         z += c[i*3+2];
-    }
+      }
     x /= (double) size;
     y /= (double) size;
     z /= (double) size;
     for (i = 0;i < size;i++)
-    {
+      {
         c[i*3]   -= x;
         c[i*3+1] -= y;
         c[i*3+2] -= z;
-    }
+      }
     vector3 v(x,y,z);
     return(v);
-}
+  }
 
-//! Rotates the coordinate set *c by the transformation matrix m[3][3]
-//!  Operates on the first "size" coordinates in the array.
-OBAPI void rotate_coords(double *c,double m[3][3],unsigned int size)
-{
+  //! Rotates the coordinate set *c by the transformation matrix m[3][3]
+  //!  Operates on the first "size" coordinates in the array.
+  OBAPI void rotate_coords(double *c,double m[3][3],unsigned int size)
+  {
     double x,y,z;
     for (unsigned int i = 0;i < size;i++)
-    {
+      {
         x = c[i*3]*m[0][0] + c[i*3+1]*m[0][1] + c[i*3+2]*m[0][2];
         y = c[i*3]*m[1][0] + c[i*3+1]*m[1][1] + c[i*3+2]*m[1][2];
         z = c[i*3]*m[2][0] + c[i*3+1]*m[2][1] + c[i*3+2]*m[2][2];
         c[i*3] = x;
         c[i*3+1] = y;
         c[i*3+2] = z;
-    }
-}
+      }
+  }
 
-//! Calculate the RMS deviation between the first N coordinates of *r and *f
-OBAPI double calc_rms(double *r,double *f, unsigned int N)
-{
-  if (N == 0)
-    return 0.0f; // no RMS deviation between two empty sets
+  //! Calculate the RMS deviation between the first N coordinates of *r and *f
+  OBAPI double calc_rms(double *r,double *f, unsigned int N)
+  {
+    if (N == 0)
+      return 0.0f; // no RMS deviation between two empty sets
 
     double d2=0.0;
     for (unsigned int i = 0;i < N;i++)
-    {
+      {
         d2 += SQUARE(r[i*3] - f[i*3]) +
-              SQUARE(r[i*3+1] - f[i*3+1]) +
-              SQUARE(r[i*3+2] - f[i*3+2]);
-    }
+          SQUARE(r[i*3+1] - f[i*3+1]) +
+          SQUARE(r[i*3+2] - f[i*3+2]);
+      }
 
     d2 /= (double) N;
     return(sqrt(d2));
-}
+  }
 
-//! Rotate the coordinates of 'atoms'
-//! such that tor == ang - atoms in 'tor' should be ordered such
-//! that the 3rd atom is the pivot around which atoms rotate
-OBAPI void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
-{
+  //! Rotate the coordinates of 'atoms'
+  //! such that tor == ang - atoms in 'tor' should be ordered such
+  //! that the 3rd atom is the pivot around which atoms rotate
+  OBAPI void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &atoms)
+  {
     double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
     double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
     double c1mag,c2mag,radang,costheta,m[9];
@@ -203,19 +203,19 @@ OBAPI void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &at
     c1mag = SQUARE(c1x)+SQUARE(c1y)+SQUARE(c1z);
     c2mag = SQUARE(c2x)+SQUARE(c2y)+SQUARE(c2z);
     if (c1mag*c2mag < 0.01)
-        costheta = 1.0; //avoid div by zero error
+      costheta = 1.0; //avoid div by zero error
     else
-        costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
+      costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
 
     if (costheta < -0.999999)
-        costheta = -0.999999;
+      costheta = -0.999999;
     if (costheta >  0.999999)
-        costheta =  0.999999;
+      costheta =  0.999999;
 
     if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0)
-        radang = -acos(costheta);
+      radang = -acos(costheta);
     else
-        radang = acos(costheta);
+      radang = acos(costheta);
 
     //
     // now we have the torsion angle (radang) - set up the rot matrix
@@ -253,7 +253,7 @@ OBAPI void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &at
     vector<int>::iterator i;
     int j;
     for (i = atoms.begin();i != atoms.end();i++)
-    {
+      {
         j = *i;
         c[j] -= tx;
         c[j+1] -= ty;
@@ -267,134 +267,134 @@ OBAPI void SetRotorToAngle(double *c,vector<int> &tor,double ang,vector<int> &at
         c[j] += tx;
         c[j+1] += ty;
         c[j+2] += tz;
-    }
-}
+      }
+  }
 
-//! Safely open the supplied filename and return an ifstream, throwing an error
-//! to the default OBMessageHandler error log if it fails.
-OBAPI bool SafeOpen(ifstream &fs,char *filename)
-{
+  //! Safely open the supplied filename and return an ifstream, throwing an error
+  //! to the default OBMessageHandler error log if it fails.
+  OBAPI bool SafeOpen(ifstream &fs, const char *filename)
+  {
 #ifdef WIN32
-    string s = filename;
+    string s(filename);
     if (s.find(".bin") != string::npos)
-        fs.open(filename,ios::binary);
+      fs.open(filename,ios::binary);
     else
 #endif
 
-        fs.open(filename);
+      fs.open(filename);
 
     if (!fs)
-    {
+      {
         string error = "Unable to open file \'";
         error += filename;
         error += "\' in read mode";
         obErrorLog.ThrowError(__FUNCTION__, error, obError);
         return(false);
-    }
+      }
 
     return(true);
-}
+  }
 
 
-//! Safely open the supplied filename and return an ofstream, throwing an error
-//! to the default OBMessageHandler error log if it fails.
-OBAPI bool SafeOpen(ofstream &fs,char *filename)
-{
+  //! Safely open the supplied filename and return an ofstream, throwing an error
+  //! to the default OBMessageHandler error log if it fails.
+  OBAPI bool SafeOpen(ofstream &fs, const char *filename)
+  {
 #ifdef WIN32
-    string s = filename;
+    string s(filename);
     if (s.find(".bin") != string::npos)
-        fs.open(filename,ios::binary);
+      fs.open(filename,ios::binary);
     else
 #endif
 
-        fs.open(filename);
-
+      fs.open(filename);
+    
     if (!fs)
-    {
+      {
         string error = "Unable to open file \'";
         error += filename;
         error += "\' in write mode";
         obErrorLog.ThrowError(__FUNCTION__, error, obError);
         return(false);
-    }
-
+      }
+    
     return(true);
-}
+  }
 
-//! Safely open the supplied filename and return an ifstream, throwing an error
-//! to the default OBMessageHandler error log if it fails.
-OBAPI bool SafeOpen(ifstream &fs,string &filename)
-{
-    return(SafeOpen(fs,(char*)filename.c_str()));
-}
+  //! Safely open the supplied filename and return an ifstream, throwing an error
+  //! to the default OBMessageHandler error log if it fails.
+  OBAPI bool SafeOpen(ifstream &fs, const string &filename)
+  {
+    return(SafeOpen(fs, filename.c_str()));
+  }
 
-//! Safely open the supplied filename and return an ofstream, throwing an error
-//! to the default OBMessageHandler error log if it fails.
-OBAPI bool SafeOpen(ofstream &fs,string &filename)
-{
-    return(SafeOpen(fs,(char*)filename.c_str()));
-}
+  //! Safely open the supplied filename and return an ofstream, throwing an error
+  //! to the default OBMessageHandler error log if it fails.
+  OBAPI bool SafeOpen(ofstream &fs, const string &filename)
+  {
+    return(SafeOpen(fs, filename.c_str()));
+  }
 
-//! Shift the supplied string to uppercase
-OBAPI void ToUpper(std::string &s)
-{
+  //! Shift the supplied string to uppercase
+  OBAPI void ToUpper(std::string &s)
+  {
     if (s.empty())
-        return;
+      return;
     unsigned int i;
     for (i = 0;i < s.size();i++)
-        if (isalpha(s[i]) && !isdigit(s[i]))
-            s[i] = toupper(s[i]);
-}
+      if (isalpha(s[i]) && !isdigit(s[i]))
+        s[i] = toupper(s[i]);
+  }
 
-//! Shift the supplied char* to uppercase
-OBAPI void ToUpper(char *cptr)
-{
+  //! Shift the supplied char* to uppercase
+  OBAPI void ToUpper(char *cptr)
+  {
     char *c;
     for (c = cptr;*c != '\0';c++)
-        if (isalpha(*c) && !isdigit(*c))
-            *c = toupper(*c);
-}
+      if (isalpha(*c) && !isdigit(*c))
+        *c = toupper(*c);
+  }
 
-//! Shift the supplied string to lowercase
-OBAPI void ToLower(std::string &s)
-{
+  //! Shift the supplied string to lowercase
+  OBAPI void ToLower(std::string &s)
+  {
     if (s.empty())
-        return;
+      return;
     unsigned int i;
     for (i = 0;i < s.size();i++)
-        if (isalpha(s[i]) && !isdigit(s[i]))
-            s[i] = tolower(s[i]);
-}
+      if (isalpha(s[i]) && !isdigit(s[i]))
+        s[i] = tolower(s[i]);
+  }
 
-//! Shift the supplied char* to lowercase
-OBAPI void ToLower(char *cptr)
-{
+  //! Shift the supplied char* to lowercase
+  OBAPI void ToLower(char *cptr)
+  {
     char *c;
     for (c = cptr;*c != '\0';c++)
-        if (isalpha(*c) && !isdigit(*c))
-            *c = tolower(*c);
-}
+      if (isalpha(*c) && !isdigit(*c))
+        *c = tolower(*c);
+  }
 
-//! "Clean" the supplied atom type, shifting the first character to uppercase,
-//! the second character (if it's a letter) to lowercase, and terminating with a NULL
-//! to strip off any trailing characters
-OBAPI void CleanAtomType(char *id)
-{
+  //! "Clean" the supplied atom type, shifting the first character to uppercase,
+  //! the second character (if it's a letter) to lowercase, and terminating with a NULL
+  //! to strip off any trailing characters
+  OBAPI void CleanAtomType(char *id)
+  {
     id[0] = toupper(id[0]);
     if (isalpha(id[1]) == 0)
-        id[1] = '\0';
+      id[1] = '\0';
     else
       {
-	id[1] = tolower(id[1]);
+        id[1] = tolower(id[1]);
         id[2] = '\0';
       }
-}
+  }
 
-//! Transform the supplied vector<OBInternalCoord*> into cartesian and update
-//! the OBMol accordingly.
-//! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#zmatrixCoordinatesIntoCartesianCoordinates">blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates</a>
-OBAPI void InternalToCartesian(std::vector<OBInternalCoord*> &vic,OBMol &mol)
-{
+  //! Transform the supplied vector<OBInternalCoord*> into cartesian and update
+  //! the OBMol accordingly.
+  //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#zmatrixCoordinatesIntoCartesianCoordinates">blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates</a>
+  OBAPI void InternalToCartesian(std::vector<OBInternalCoord*> &vic,OBMol &mol)
+  {
     vector3 n,nn,v1,v2,v3,avec,bvec,cvec;
     double dst = 0.0, ang = 0.0, tor = 0.0;
     OBAtom *atom;
@@ -402,53 +402,53 @@ OBAPI void InternalToCartesian(std::vector<OBInternalCoord*> &vic,OBMol &mol)
     int index;
 
     if (vic.empty())
-        return;
+      return;
 
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::InternalToCartesian", obAuditMsg);
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
+      {
         index = atom->GetIdx();
 
-	if (!vic[index]) // make sure we always have valid pointers
-	  return;
+        if (!vic[index]) // make sure we always have valid pointers
+          return;
 
         if (vic[index]->_a) // make sure we have a valid ptr
-        {
+          {
             avec = vic[index]->_a->GetVector();
             dst = vic[index]->_dst;
-        }
+          }
         else
-        {
+          {
             // atom 1
             atom->SetVector(0.0, 0.0, 0.0);
             continue;
-        }
+          }
 
         if (vic[index]->_b)
-        {
+          {
             bvec = vic[index]->_b->GetVector();
             ang = vic[index]->_ang * DEG_TO_RAD;
-        }
+          }
         else
-        {
+          {
             // atom 2
             atom->SetVector(dst, 0.0, 0.0);
             continue;
-        }
+          }
 
         if (vic[index]->_c)
-        {
+          {
             cvec = vic[index]->_c->GetVector();
             tor = vic[index]->_tor * DEG_TO_RAD;
-        }
+          }
         else
-        {
+          {
             // atom 3
             cvec = VY;
             tor = 90. * DEG_TO_RAD;
-        }
+          }
 
         v1 = avec - bvec;
         v2 = avec - cvec;
@@ -467,20 +467,20 @@ OBAPI void InternalToCartesian(std::vector<OBInternalCoord*> &vic,OBMol &mol)
         v2 = avec + v3 - v1;
 
         atom->SetVector(v2);
-    }
+      }
 
     // Delete dummy atoms
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-        if (atom->GetAtomicNum() == 0)
-            mol.DeleteAtom(atom);
-}
+      if (atom->GetAtomicNum() == 0)
+        mol.DeleteAtom(atom);
+  }
 
-//! Use the supplied OBMol and its Cartesian coordinates to generate
-//! a set of internal (z-matrix) coordinates as supplied in the
-//! vector<OBInternalCoord*> argument.
-//! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#cartesianCoordinatesIntoZmatrixCoordinates">blue-obelisk:cartesianCoordinatesIntoZmatrixCoordinates</a>.
-OBAPI void CartesianToInternal(std::vector<OBInternalCoord*> &vic,OBMol &mol)
-{
+  //! Use the supplied OBMol and its Cartesian coordinates to generate
+  //! a set of internal (z-matrix) coordinates as supplied in the
+  //! vector<OBInternalCoord*> argument.
+  //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#cartesianCoordinatesIntoZmatrixCoordinates">blue-obelisk:cartesianCoordinatesIntoZmatrixCoordinates</a>.
+  OBAPI void CartesianToInternal(std::vector<OBInternalCoord*> &vic,OBMol &mol)
+  {
     double r,sum;
     OBAtom *atom,*nbr,*ref;
     vector<OBNodeBase*>::iterator i,j,m;
@@ -490,78 +490,78 @@ OBAPI void CartesianToInternal(std::vector<OBInternalCoord*> &vic,OBMol &mol)
 
     //set reference atoms
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
+      {
         if      (atom->GetIdx() == 1)
-            continue;
+          continue;
         else if (atom->GetIdx() == 2)
-        {
+          {
             vic[atom->GetIdx()]->_a = mol.GetAtom(1);
             continue;
-        }
+          }
         else if (atom->GetIdx() == 3)
-        {
+          {
             if( (atom->GetVector()-mol.GetAtom(2)->GetVector()).length_2()
-                    <(atom->GetVector()-mol.GetAtom(1)->GetVector()).length_2())
-            {
+                <(atom->GetVector()-mol.GetAtom(1)->GetVector()).length_2())
+              {
                 vic[atom->GetIdx()]->_a = mol.GetAtom(2);
                 vic[atom->GetIdx()]->_b = mol.GetAtom(1);
-            }
+              }
             else
-            {
+              {
                 vic[atom->GetIdx()]->_a = mol.GetAtom(1);
                 vic[atom->GetIdx()]->_b = mol.GetAtom(2);
-            }
+              }
             continue;
-        }
+          }
         sum=1.0E10;
         ref = mol.GetAtom(1);
         for(nbr = mol.BeginAtom(j);nbr && (i != j);nbr = mol.NextAtom(j))
-        {
+          {
             r = (atom->GetVector()-nbr->GetVector()).length_2();
             if((r < sum) && (vic[nbr->GetIdx()]->_a != nbr) &&
-                    (vic[nbr->GetIdx()]->_b != nbr))
-            {
+               (vic[nbr->GetIdx()]->_b != nbr))
+              {
                 sum = r;
                 ref = nbr;
-            }
-        }
+              }
+          }
 
         vic[atom->GetIdx()]->_a = ref;
         if (ref->GetIdx() >= 3)
-        {
+          {
             vic[atom->GetIdx()]->_b = vic[ref->GetIdx()]->_a;
             vic[atom->GetIdx()]->_c = vic[ref->GetIdx()]->_b;
-        }
+          }
         else
-        {
+          {
             if(ref->GetIdx()== 1)
-            {
+              {
                 vic[atom->GetIdx()]->_b = mol.GetAtom(2);
                 vic[atom->GetIdx()]->_c = mol.GetAtom(3);
-            }
+              }
             else
-            {//ref->GetIdx()== 2
+              {//ref->GetIdx()== 2
                 vic[atom->GetIdx()]->_b = mol.GetAtom(1);
                 vic[atom->GetIdx()]->_c = mol.GetAtom(3);
-            }
-        }
-    }
+              }
+          }
+      }
 
     //fill in geometries
     unsigned int k;
     vector3 v1,v2;
     OBAtom *a,*b,*c;
     for (k = 2;k <= mol.NumAtoms();k++)
-    {
+      {
         atom = mol.GetAtom(k);
         a = vic[k]->_a;
         b = vic[k]->_b;
         c = vic[k]->_c;
         if (k == 2)
-        {
+          {
             vic[k]->_dst = (atom->GetVector() - a->GetVector()).length();
             continue;
-        }
+          }
 
         v1 = atom->GetVector() - a->GetVector();
         v2 = b->GetVector()    - a->GetVector();
@@ -569,54 +569,54 @@ OBAPI void CartesianToInternal(std::vector<OBInternalCoord*> &vic,OBMol &mol)
         vic[k]->_ang = vectorAngle(v1,v2);
 
         if (k == 3)
-            continue;
+          continue;
         vic[k]->_tor = CalcTorsionAngle(atom->GetVector(),
                                         a->GetVector(),
                                         b->GetVector(),
                                         c->GetVector());
-    }
+      }
 
     //check for linear geometries and try to correct if possible
     bool done;
     double ang;
     for (k = 2;k <= mol.NumAtoms();k++)
-    {
+      {
         ang = fabs(vic[k]->_ang);
         if (ang > 5.0 && ang < 175.0)
-            continue;
+          continue;
         atom = mol.GetAtom(k);
         done = false;
         for (a = mol.BeginAtom(i);a && a->GetIdx() < k && !done;a = mol.NextAtom(i))
-            for (b=mol.BeginAtom(j);b && b->GetIdx()<a->GetIdx() && !done;b = mol.NextAtom(j))
+          for (b=mol.BeginAtom(j);b && b->GetIdx()<a->GetIdx() && !done;b = mol.NextAtom(j))
             {
-                v1 = atom->GetVector() - a->GetVector();
-                v2 = b->GetVector() - a->GetVector();
-                ang = fabs(vectorAngle(v1,v2));
-                if (ang < 5.0 || ang > 175.0)
-                    continue;
+              v1 = atom->GetVector() - a->GetVector();
+              v2 = b->GetVector() - a->GetVector();
+              ang = fabs(vectorAngle(v1,v2));
+              if (ang < 5.0 || ang > 175.0)
+                continue;
 
-                for (c = mol.BeginAtom(m);c && c->GetIdx() < atom->GetIdx();c = mol.NextAtom(m))
-                    if (c != atom && c != a && c != b)
-                        break;
-                if (!c)
-                    continue;
+              for (c = mol.BeginAtom(m);c && c->GetIdx() < atom->GetIdx();c = mol.NextAtom(m))
+                if (c != atom && c != a && c != b)
+                  break;
+              if (!c)
+                continue;
 
-                vic[k]->_a = a;
-                vic[k]->_b = b;
-                vic[k]->_c = c;
-                vic[k]->_dst = v1.length();
-                vic[k]->_ang = vectorAngle(v1,v2);
-                vic[k]->_tor = CalcTorsionAngle(atom->GetVector(),
-                                                a->GetVector(),
-                                                b->GetVector(),
-                                                c->GetVector());
-                done = true;
+              vic[k]->_a = a;
+              vic[k]->_b = b;
+              vic[k]->_c = c;
+              vic[k]->_dst = v1.length();
+              vic[k]->_ang = vectorAngle(v1,v2);
+              vic[k]->_tor = CalcTorsionAngle(atom->GetVector(),
+                                              a->GetVector(),
+                                              b->GetVector(),
+                                              c->GetVector());
+              done = true;
             }
-    }
-}
+      }
+  }
 
-OBAPI void qtrfit (double *r,double *f,int size, double u[3][3])
-{
+  OBAPI void qtrfit (double *r,double *f,int size, double u[3][3])
+  {
     register int i;
     double xxyx, xxyy, xxyz;
     double xyyx, xyyy, xyyz;
@@ -638,7 +638,7 @@ OBAPI void qtrfit (double *r,double *f,int size, double u[3][3])
     xzyz = 0.0;
 
     for (i = 0; i < size; i++)
-    {
+      {
         rx = r[i*3];
         ry = r[i*3+1];
         rz = r[i*3+2];
@@ -655,7 +655,7 @@ OBAPI void qtrfit (double *r,double *f,int size, double u[3][3])
         xzyx += fz * rx;
         xzyy += fz * ry;
         xzyz += fz * rz;
-    }
+      }
 
     c[4*0+0] = xxyx + xyyy + xzyz;
 
@@ -695,11 +695,11 @@ OBAPI void qtrfit (double *r,double *f,int size, double u[3][3])
     u[0][2] = 2.0 * (q[3] * q[1] - q[0] * q[2]);
     u[1][2] = 2.0 * (q[3] * q[2] + q[0] * q[1]);
     u[2][2] = q[0]*q[0] - q[1]*q[1] - q[2]*q[2] + q[3]*q[3];
-}
+  }
 
 
 
-static double Roots[4];
+  static double Roots[4];
 
 #define ApproxZero 1E-7
 #define IsZero(x)  ((double)fabs(x)<ApproxZero)
@@ -712,39 +712,39 @@ static double Roots[4];
 
 #ifdef OLD_RMAT
 
-/*FUNCTION */
-/* recieves: the co-efficients for a general
- *           equation of degree one.
- *           Ax + B = 0 !!
- */
-OBAPI static int SolveLinear(double A,double B)
-{
+  /*FUNCTION */
+  /* recieves: the co-efficients for a general
+   *           equation of degree one.
+   *           Ax + B = 0 !!
+   */
+  OBAPI static int SolveLinear(double A,double B)
+  {
     if( IsZero(A) )
-        return( 0 );
+      return( 0 );
     Roots[0] = -B/A;
     return( 1 );
-}
+  }
 
-/*FUNCTION */
-/* recieves: the co-efficients for a general
- *           linear equation of degree two.
- *           Ax^2 + Bx + C = 0 !!
- */
-OBAPI static int SolveQuadratic(double A,double B,double C)
-{
+  /*FUNCTION */
+  /* recieves: the co-efficients for a general
+   *           linear equation of degree two.
+   *           Ax^2 + Bx + C = 0 !!
+   */
+  OBAPI static int SolveQuadratic(double A,double B,double C)
+  {
     register double Descr, Temp, TwoA;
 
     if( IsZero(A) )
-        return( SolveLinear(B,C) );
+      return( SolveLinear(B,C) );
 
     TwoA = A+A;
     Temp = TwoA*C;
     Descr = B*B - (Temp+Temp);
     if( Descr<0.0 )
-        return( 0 );
+      return( 0 );
 
     if( Descr>0.0 )
-    {
+      {
         Descr = sqrt(Descr);
 #ifdef ORIG
 
@@ -752,46 +752,46 @@ OBAPI static int SolveQuadratic(double A,double B,double C)
         Roots[1] = (-B+Descr)/TwoA;
 #else
         /* W. Press, B. Flannery, S. Teukolsky and W. Vetterling,
-        * "Quadratic and Cubic Equations", Numerical Recipes in C,
-        * Chapter 5, pp. 156-157, 1989.
-        */
+         * "Quadratic and Cubic Equations", Numerical Recipes in C,
+         * Chapter 5, pp. 156-157, 1989.
+         */
         Temp = (B<0.0)? -0.5*(B-Descr) : -0.5*(B+Descr);
         Roots[0] = Temp/A;
         Roots[1] = C/Temp;
 #endif
 
         return( 2 );
-    }
+      }
     Roots[0] = -B/TwoA;
     return( 1 );
-}
+  }
 
-/*FUNCTION */
-/* task: to return the cube root of the
- *       given value taking into account
- *       that it may be negative.
- */
-OBAPI static double CubeRoot(double X)
-{
+  /*FUNCTION */
+  /* task: to return the cube root of the
+   *       given value taking into account
+   *       that it may be negative.
+   */
+  OBAPI static double CubeRoot(double X)
+  {
     if( X>=0.0 )
-    {
+      {
         return pow( X, OneThird );
-    }
+      }
     else
-        return -pow( -X, OneThird );
-}
+      return -pow( -X, OneThird );
+  }
 
-OBAPI static int SolveCubic(double A,double B,double C,double D)
-{
+  OBAPI static int SolveCubic(double A,double B,double C,double D)
+  {
     register double TwoA, ThreeA, BOver3A;
     register double Temp, POver3, QOver2;
     register double Desc, Rho, Psi;
 
 
     if( IsZero(A) )
-    {
+      {
         return( SolveQuadratic(B,C,D) );
-    }
+      }
 
     TwoA = A+A;
     ThreeA = TwoA+A;
@@ -804,7 +804,7 @@ OBAPI static int SolveCubic(double A,double B,double C,double D)
     Desc = QOver2*QOver2 + Rho;
 
     if( Desc<=0.0 )
-    {
+      {
         Rho = sqrt( -Rho );
         Psi = OneThird*acos(-QOver2/Rho);
         Temp = CubeRoot( Rho );
@@ -814,28 +814,28 @@ OBAPI static int SolveCubic(double A,double B,double C,double D)
         Roots[1] = Temp*cos( Psi+TwoThirdsPI )-BOver3A;
         Roots[2] = Temp*cos( Psi+FourThirdsPI )-BOver3A;
         return( 3 );
-    }
+      }
 
     if( Desc> 0.0 )
-    {
+      {
         Temp = CubeRoot( -QOver2 );
         Roots[0] = Temp+Temp-BOver3A;
         Roots[1] = -Temp-BOver3A;
         return( 2 );
-    }
+      }
 
     Desc = sqrt( Desc );
     Roots[0] = CubeRoot(Desc-QOver2)-CubeRoot(Desc+QOver2) - BOver3A;
 
     return( 1 );
-}
+  }
 #endif
 
 
 #define MAX_SWEEPS 50
 
-OBAPI void ob_make_rmat(double a[3][3],double rmat[9])
-{
+  OBAPI void ob_make_rmat(double a[3][3],double rmat[9])
+  {
     double onorm, dnorm;
     double b, dma, q, t, c, s,d[3];
     double atemp, vtemp, dtemp,v[3][3];
@@ -845,108 +845,108 @@ OBAPI void ob_make_rmat(double a[3][3],double rmat[9])
     memset((char*)d,'\0',sizeof(double)*3);
 
     for (j = 0; j < 3; j++)
-    {
+      {
         for (i = 0; i < 3; i++)
-            v[i][j] = 0.0;
+          v[i][j] = 0.0;
 
         v[j][j] = 1.0;
         d[j] = a[j][j];
-    }
+      }
 
     for (l = 1; l <= MAX_SWEEPS; l++)
-    {
+      {
         dnorm = 0.0;
         onorm = 0.0;
         for (j = 0; j < 3; j++)
-        {
+          {
             dnorm = dnorm + (double)fabs(d[j]);
             for (i = 0; i <= j - 1; i++)
-            {
+              {
                 onorm = onorm + (double)fabs(a[i][j]);
-            }
-        }
+              }
+          }
 
         if((onorm/dnorm) <= 1.0e-12)
-            goto Exit_now;
+          goto Exit_now;
         for (j = 1; j < 3; j++)
-        {
+          {
             for (i = 0; i <= j - 1; i++)
-            {
+              {
                 b = a[i][j];
                 if(fabs(b) > 0.0)
-                {
+                  {
                     dma = d[j] - d[i];
                     if((fabs(dma) + fabs(b)) <=  fabs(dma))
-                        t = b / dma;
+                      t = b / dma;
                     else
-                    {
+                      {
                         q = 0.5 * dma / b;
                         t = 1.0/((double)fabs(q) + (double)sqrt(1.0+q*q));
                         if(q < 0.0)
-                            t = -t;
-                    }
+                          t = -t;
+                      }
                     c = 1.0/(double)sqrt(t * t + 1.0);
                     s = t * c;
                     a[i][j] = 0.0;
                     for (k = 0; k <= i-1; k++)
-                    {
+                      {
                         atemp = c * a[k][i] - s * a[k][j];
                         a[k][j] = s * a[k][i] + c * a[k][j];
                         a[k][i] = atemp;
-                    }
+                      }
                     for (k = i+1; k <= j-1; k++)
-                    {
+                      {
                         atemp = c * a[i][k] - s * a[k][j];
                         a[k][j] = s * a[i][k] + c * a[k][j];
                         a[i][k] = atemp;
-                    }
+                      }
                     for (k = j+1; k < 3; k++)
-                    {
+                      {
                         atemp = c * a[i][k] - s * a[j][k];
                         a[j][k] = s * a[i][k] + c * a[j][k];
                         a[i][k] = atemp;
-                    }
+                      }
                     for (k = 0; k < 3; k++)
-                    {
+                      {
                         vtemp = c * v[k][i] - s * v[k][j];
                         v[k][j] = s * v[k][i] + c * v[k][j];
                         v[k][i] = vtemp;
-                    }
+                      }
                     dtemp = c*c*d[i] + s*s*d[j] - 2.0*c*s*b;
                     d[j] = s*s*d[i] + c*c*d[j] +  2.0*c*s*b;
                     d[i] = dtemp;
-                }  /* end if */
-            } /* end for i */
-        } /* end for j */
-    } /* end for l */
+                  }  /* end if */
+              } /* end for i */
+          } /* end for j */
+      } /* end for l */
 
-Exit_now:
+  Exit_now:
 
     /* max_sweeps = l;*/
 
     for (j = 0; j < 3-1; j++)
-    {
+      {
         k = j;
         dtemp = d[k];
         for (i = j+1; i < 3; i++)
-            if(d[i] < dtemp)
+          if(d[i] < dtemp)
             {
-                k = i;
-                dtemp = d[k];
+              k = i;
+              dtemp = d[k];
             }
 
         if(k > j)
-        {
+          {
             d[k] = d[j];
             d[j] = dtemp;
             for (i = 0; i < 3 ; i++)
-            {
+              {
                 dtemp = v[i][k];
                 v[i][k] = v[i][j];
                 v[i][j] = dtemp;
-            }
-        }
-    }
+              }
+          }
+      }
 
     r1[0] = v[0][0];
     r1[1] = v[1][0];
@@ -988,10 +988,10 @@ Exit_now:
     rmat[6] = v3[0];
     rmat[7] = v3[1];
     rmat[8] = v3[2];
-}
+  }
 
-static int get_roots_3_3(double mat[3][3], double roots[3])
-{
+  static int get_roots_3_3(double mat[3][3], double roots[3])
+  {
     double rmat[9];
 
     ob_make_rmat(mat,rmat);
@@ -1011,21 +1011,21 @@ static int get_roots_3_3(double mat[3][3], double roots[3])
     roots[2]=(double)Roots[2];
 
     return 1;
-}
+  }
 
-OBAPI double superimpose(double *r,double *f,int size)
-{
+  OBAPI double superimpose(double *r,double *f,int size)
+  {
     int i,j;
     double x,y,z,d2;
     double mat[3][3],rmat[3][3],mat2[3][3],roots[3];
 
     /* make inertial cross tensor */
     for(i=0;i<3;i++)
-        for(j=0;j<3;j++)
-            mat[i][j]=0.0;
+      for(j=0;j<3;j++)
+        mat[i][j]=0.0;
 
     for(i=0;i < size;i++)
-    {
+      {
         mat[0][0]+=r[3*i]  *f[3*i];
         mat[1][0]+=r[3*i+1]*f[3*i];
         mat[2][0]+=r[3*i+2]*f[3*i];
@@ -1035,20 +1035,20 @@ OBAPI double superimpose(double *r,double *f,int size)
         mat[0][2]+=r[3*i]  *f[3*i+2];
         mat[1][2]+=r[3*i+1]*f[3*i+2];
         mat[2][2]+=r[3*i+2]*f[3*i+2];
-    }
+      }
 
     d2=mat[0][0]*(mat[1][1]*mat[2][2]-mat[1][2]*mat[2][1])
-       -mat[0][1]*(mat[1][0]*mat[2][2]-mat[1][2]*mat[2][0])
-       +mat[0][2]*(mat[1][0]*mat[2][1]-mat[1][1]*mat[2][0]);
+      -mat[0][1]*(mat[1][0]*mat[2][2]-mat[1][2]*mat[2][0])
+      +mat[0][2]*(mat[1][0]*mat[2][1]-mat[1][1]*mat[2][0]);
 
 
     /* square matrix= ((mat transpose) * mat) */
     for(i=0;i<3;i++)
-        for(j=0;j<3;j++)
+      for(j=0;j<3;j++)
         {
-            x=mat[0][i]*mat[0][j]+mat[1][i]*mat[1][j]+mat[2][i]*mat[2][j];
-            mat2[i][j]=mat[i][j];
-            rmat[i][j]=x;
+          x=mat[0][i]*mat[0][j]+mat[1][i]*mat[1][j]+mat[2][i]*mat[2][j];
+          mat2[i][j]=mat[i][j];
+          rmat[i][j]=x;
         }
     get_roots_3_3(rmat,roots);
 
@@ -1063,32 +1063,32 @@ OBAPI double superimpose(double *r,double *f,int size)
     roots[2]=roots[2]<0.0001? 0.0: 1.0/(double)sqrt(roots[2]);
 
     if(d2<0.0)
-    {
+      {
         if( (roots[0]>=roots[1]) && (roots[0]>=roots[2]) )
-            roots[0]*=-1.0;
+          roots[0]*=-1.0;
         if( (roots[1]>roots[0]) && (roots[1]>=roots[2]) )
-            roots[1]*=-1.0;
+          roots[1]*=-1.0;
         if( (roots[2]>roots[1]) && (roots[2]>roots[0]) )
-            roots[2]*=-1.0;
-    }
+          roots[2]*=-1.0;
+      }
 
     for(i=0;i<3;i++)
-        for(j=0;j<3;j++)
-            mat[i][j]=roots[0]*rmat[i][0]*rmat[j][0]+
-                      roots[1]*rmat[i][1]*rmat[j][1]+
-                      roots[2]*rmat[i][2]*rmat[j][2];
+      for(j=0;j<3;j++)
+        mat[i][j]=roots[0]*rmat[i][0]*rmat[j][0]+
+          roots[1]*rmat[i][1]*rmat[j][1]+
+          roots[2]*rmat[i][2]*rmat[j][2];
 
     /* and multiply into original inertial cross matrix, mat2 */
     for(i=0;i<3;i++)
-        for(j=0;j<3;j++)
-            rmat[i][j]=mat[0][j]*mat2[i][0]+
-                       mat[1][j]*mat2[i][1]+
-                       mat[2][j]*mat2[i][2];
+      for(j=0;j<3;j++)
+        rmat[i][j]=mat[0][j]*mat2[i][0]+
+          mat[1][j]*mat2[i][1]+
+          mat[2][j]*mat2[i][2];
 
     /* rotate all coordinates */
     d2 = 0.0;
     for(i=0;i<size;i++)
-    {
+      {
         x=f[3*i]*rmat[0][0]+f[3*i+1]*rmat[0][1]+f[3*i+2]*rmat[0][2];
         y=f[3*i]*rmat[1][0]+f[3*i+1]*rmat[1][1]+f[3*i+2]*rmat[1][2];
         z=f[3*i]*rmat[2][0]+f[3*i+1]*rmat[2][1]+f[3*i+2]*rmat[2][2];
@@ -1100,26 +1100,26 @@ OBAPI double superimpose(double *r,double *f,int size)
         y = r[i*3+1] - f[i*3+1];
         z = r[i*3+2] - f[i*3+2];
         d2 += x*x+y*y+z*z;
-    }
+      }
 
     d2 /= (double) size;
 
     return((double)sqrt(d2));
-}
+  }
 
-OBAPI void get_rmat(double *rvec,double *r,double *f,int size)
-{
+  OBAPI void get_rmat(double *rvec,double *r,double *f,int size)
+  {
     int i,j;
     double x,d2;
     double mat[3][3],rmat[3][3],mat2[3][3],roots[3];
 
     /* make inertial cross tensor */
     for(i=0;i<3;i++)
-        for(j=0;j<3;j++)
-            mat[i][j]=0.0;
+      for(j=0;j<3;j++)
+        mat[i][j]=0.0;
 
     for(i=0;i < size;i++)
-    {
+      {
         mat[0][0]+=r[3*i]  *f[3*i];
         mat[1][0]+=r[3*i+1]*f[3*i];
         mat[2][0]+=r[3*i+2]*f[3*i];
@@ -1129,19 +1129,19 @@ OBAPI void get_rmat(double *rvec,double *r,double *f,int size)
         mat[0][2]+=r[3*i]  *f[3*i+2];
         mat[1][2]+=r[3*i+1]*f[3*i+2];
         mat[2][2]+=r[3*i+2]*f[3*i+2];
-    }
+      }
 
     d2=mat[0][0]*(mat[1][1]*mat[2][2]-mat[1][2]*mat[2][1])
-       -mat[0][1]*(mat[1][0]*mat[2][2]-mat[1][2]*mat[2][0])
-       +mat[0][2]*(mat[1][0]*mat[2][1]-mat[1][1]*mat[2][0]);
+      -mat[0][1]*(mat[1][0]*mat[2][2]-mat[1][2]*mat[2][0])
+      +mat[0][2]*(mat[1][0]*mat[2][1]-mat[1][1]*mat[2][0]);
 
     /* square matrix= ((mat transpose) * mat) */
     for(i=0;i<3;i++)
-        for(j=0;j<3;j++)
+      for(j=0;j<3;j++)
         {
-            x=mat[0][i]*mat[0][j]+mat[1][i]*mat[1][j]+mat[2][i]*mat[2][j];
-            mat2[i][j]=mat[i][j];
-            rmat[i][j]=x;
+          x=mat[0][i]*mat[0][j]+mat[1][i]*mat[1][j]+mat[2][i]*mat[2][j];
+          mat2[i][j]=mat[i][j];
+          rmat[i][j]=x;
         }
     get_roots_3_3(rmat,roots);
 
@@ -1156,27 +1156,27 @@ OBAPI void get_rmat(double *rvec,double *r,double *f,int size)
     roots[2]=(roots[2]<0.0001) ? 0.0: 1.0/(double)sqrt(roots[2]);
 
     if(d2<0.0)
-    {
+      {
         if( (roots[0]>=roots[1]) && (roots[0]>=roots[2]) )
-            roots[0]*=-1.0;
+          roots[0]*=-1.0;
         if( (roots[1]>roots[0]) && (roots[1]>=roots[2]) )
-            roots[1]*=-1.0;
+          roots[1]*=-1.0;
         if( (roots[2]>roots[1]) && (roots[2]>roots[0]) )
-            roots[2]*=-1.0;
-    }
+          roots[2]*=-1.0;
+      }
 
     for(i=0;i<3;i++)
-        for(j=0;j<3;j++)
-            mat[i][j]=roots[0]*rmat[i][0]*rmat[j][0]+
-                      roots[1]*rmat[i][1]*rmat[j][1]+
-                      roots[2]*rmat[i][2]*rmat[j][2];
+      for(j=0;j<3;j++)
+        mat[i][j]=roots[0]*rmat[i][0]*rmat[j][0]+
+          roots[1]*rmat[i][1]*rmat[j][1]+
+          roots[2]*rmat[i][2]*rmat[j][2];
 
     /* and multiply into original inertial cross matrix, mat2 */
     for(i=0;i<3;i++)
-        for(j=0;j<3;j++)
-            rmat[i][j]=mat[0][j]*mat2[i][0]+
-                       mat[1][j]*mat2[i][1]+
-                       mat[2][j]*mat2[i][2];
+      for(j=0;j<3;j++)
+        rmat[i][j]=mat[0][j]*mat2[i][0]+
+          mat[1][j]*mat2[i][1]+
+          mat[2][j]*mat2[i][2];
 
     rvec[0] = rmat[0][0];
     rvec[1] = rmat[0][1];
@@ -1187,7 +1187,7 @@ OBAPI void get_rmat(double *rvec,double *r,double *f,int size)
     rvec[6] = rmat[2][0];
     rvec[7] = rmat[2][1];
     rvec[8] = rmat[2][2];
-}
+  }
 
 } // end namespace OpenBabel
 
