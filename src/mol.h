@@ -87,68 +87,42 @@ namespace OpenBabel
       void    Clear(void);
 
       void    SetName(const std::string &resname);
-      void    SetNum(unsigned int resnum);
-      void    SetChain(char chain);
-      void    SetChainNum(unsigned int chainnum);
-      void    SetIdx(unsigned int idx);
+      void    SetNum(const unsigned int resnum);
+      void    SetChain(const char chain);
+      void    SetChainNum(const unsigned int chainnum);
+      void    SetIdx(const unsigned int idx);
 
       void    SetAtomID(OBAtom *atom, const std::string &id);
       void    SetHetAtom(OBAtom *atom, bool hetatm);
       //! Set the atomic serial number for a given atom (see OBSerialNums)
       void    SetSerialNum(OBAtom *atom, unsigned int sernum);
 
-      std::string    GetName(void)              const;
-      unsigned int   GetNum(void)                       const;
-      unsigned int   GetNumAtoms()              const;
-      char           GetChain(void)             const;
-      unsigned int   GetChainNum(void)          const;
-      unsigned int   GetIdx(void)                       const;
-      unsigned int   GetResKey(void)            const;
+      std::string    GetName(void)                  const;
+      unsigned int   GetNum(void)                   const;
+      unsigned int   GetNumAtoms()                  const;
+      char           GetChain(void)                 const;
+      unsigned int   GetChainNum(void)              const;
+      unsigned int   GetIdx(void)                   const;
+      unsigned int   GetResKey(void)                const;
 
-      std::vector<OBAtom*> GetAtoms(void)               const;
-      std::vector<OBBond*> GetBonds(bool = true)        const;
+      std::vector<OBAtom*> GetAtoms(void)           const;
+      std::vector<OBBond*> GetBonds(bool exterior= true)const;
 
-      std::string    GetAtomID(OBAtom *atom)    const;
+      std::string    GetAtomID(OBAtom *atom)        const;
       //! \return the serial number of the supplied atom (uses OBSerialNums)
-      unsigned       GetSerialNum(OBAtom *atom) const;
+      unsigned       GetSerialNum(OBAtom *atom)     const;
 
       bool           GetAminoAcidProperty(int)      const;
       bool           GetAtomProperty(OBAtom *, int) const;
       bool           GetResidueProperty(int)        const;
 
-      bool           IsHetAtom(OBAtom *atom)    const;
-      bool         IsResidueType(int)           const;
+      bool           IsHetAtom(OBAtom *atom)        const;
+      bool           IsResidueType(int)             const;
 
       //! \deprecated Use FOR_ATOMS_OF_RESIDUE and OBResidueAtomIter instead
       OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);
       //! \deprecated Use FOR_ATOMS_OF_RESIDUE and OBResidueAtomIter instead
       OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
-
-      /*Now in OBBase
-      //! \name Methods for handling generic data
-      //@{
-      bool                              HasData(std::string &);
-      bool                              HasData(const char *);
-      bool                              HasData(unsigned int type);
-      void                              DeleteData(unsigned int type);
-      void                              DeleteData(OBGenericData*);
-      void                              DeleteData(std::vector<OBGenericData*>&);
-      void                              SetData(OBGenericData *d)
-      { _vdata.push_back(d); }
-      //! \return the number of OBGenericData items attached to this residue
-      unsigned int                      DataSize()
-      { return(_vdata.size()); }
-      OBGenericData                    *GetData(unsigned int type);
-      OBGenericData                    *GetData(std::string&);
-      OBGenericData                    *GetData(const char *);
-      std::vector<OBGenericData*>      &GetData()
-      { return(_vdata); }
-      std::vector<OBGenericData*>::iterator  BeginData()
-      { return(_vdata.begin()); }
-      std::vector<OBGenericData*>::iterator  EndData()
-      { return(_vdata.end()); }
-      //@}
-      */
 
     protected: // members
 
@@ -293,11 +267,16 @@ namespace OpenBabel
       unsigned int GetAtomicNum()     const { return((unsigned int)_ele); }
       unsigned short int GetIsotope() const { return(_isotope);    }
       int          GetSpinMultiplicity() const { return(_spinmultiplicity); }
-      //! The atomic mass of this atom given by standard IUPAC average molar mass
+      //! \return the atomic mass of this atom given by standard IUPAC
+      //!  average molar mass
       double     GetAtomicMass()    const;
-      //! The atomic mass of given by the isotope (default of 0 s most abundant isotope)
+      //! \return the atomic mass of given by the isotope
+      //! (default of 0 gives the most abundant isotope)
       double     GetExactMass()     const;
+      //! \return the internal atom index (e.g., inside an OBMol)
       unsigned int GetIdx()           const { return((int)_idx);  }
+      //! \return the index into a pointer-driven array as used by
+      //!   GetCoordPtr() or SetCoordPtr()
       unsigned int GetCoordinateIdx() const { return((int)_cidx); }
       //! \deprecated Use GetCoordinateIdx() instead
       unsigned int GetCIdx()          const { return((int)_cidx); }
@@ -350,7 +329,7 @@ namespace OpenBabel
             return(&(*_c)[_cidx]);
           else
             return NULL;
-	}
+        }
       //! \return the coordinates as a vector3 object
       vector3   &GetVector();
       //! \return the partial charge of this atom, calculating a Gasteiger charge if needed
@@ -367,10 +346,10 @@ namespace OpenBabel
       //@{
       //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
       std::vector<OBEdgeBase*>::iterator BeginBonds()
-	{ return(_vbond.begin()); }
+        { return(_vbond.begin()); }
       //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
       std::vector<OBEdgeBase*>::iterator EndBonds()
-	{ return(_vbond.end());   }
+        { return(_vbond.end());   }
       //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
       OBBond *BeginBond(std::vector<OBEdgeBase*>::iterator &i);
       //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
@@ -393,23 +372,23 @@ namespace OpenBabel
       //! \name Addition of residue/bond info. for an atom
       //@{
       void NewResidue()
-	{
-	  if (!_residue)
+        {
+          if (!_residue)
             _residue = new OBResidue;
-	}
+        }
       void DeleteResidue()
-	{
-	  if (_residue)
+        {
+          if (_residue)
             delete _residue;
-	}
+        }
       void AddBond(OBBond *bond)
-	{
-	  _vbond.push_back((OBEdgeBase*)bond);
-	}
+        {
+          _vbond.push_back((OBEdgeBase*)bond);
+        }
       void InsertBond(std::vector<OBEdgeBase*>::iterator &i, OBBond *bond)
-	{
-	  _vbond.insert(i, (OBEdgeBase*)bond);
-	}
+        {
+          _vbond.insert(i, (OBEdgeBase*)bond);
+        }
       bool DeleteBond(OBBond*);
       void ClearBond() {_vbond.clear();}
       //@}
@@ -444,43 +423,59 @@ namespace OpenBabel
       bool SetHybAndGeom(int);
       //! Mark that atom has no hydrogens attached
       void ForceNoH() {SetFlag(OB_ATOM_HAS_NO_H);}
-      //! Return true if atom has been marked as having no hydrogens attached
+      //! \return Return true if atom has been marked as having
+      //!  no hydrogens attached
       bool HasNoHForced() {return HasFlag(OB_ATOM_HAS_NO_H);}
       //@}
 
       //! \name Property information
       //@{
-      //! Is there any residue information?
+      //! \return Is there any residue information?
       bool HasResidue()    { return(_residue != NULL);    }
+      //! \return Is the atom hydrogen?
       bool IsHydrogen()    { return(GetAtomicNum() == 1); }
+      //! \return Is the atom carbon?
       bool IsCarbon()      { return(GetAtomicNum() == 6); }
+      //! \return Is the atom nitrogen?
       bool IsNitrogen()    { return(GetAtomicNum() == 7); }
+      //! \return Is the atom oxygen?
       bool IsOxygen()      { return(GetAtomicNum() == 8); }
       bool IsSulfur()      { return(GetAtomicNum() == 16);}
       bool IsPhosphorus()  { return(GetAtomicNum() == 15);}
+      //! \return Is the atom aromatic?
       bool IsAromatic()      const;
+      //! \return Is the atom in a ring?
       bool IsInRing()        const;
+      //! \return Is the atom in a ring of a given size?
       bool IsInRingSize(int) const;
-      //! Is this atom an element in the 15th or 16th main groups (i.e., N, O, P, S ...) ?
+      //! \return Is this atom an element in the 15th or 16th main groups
+      //!  (i.e., N, O, P, S ...) ?
       bool IsHeteroatom();
-      //! Is this atom any element except carbon or hydrogen?
+      //! \return Is this atom any element except carbon or hydrogen?
       bool IsNotCorH();
-      //! Is this atom connected to the supplied OBAtom?
+      //! \return Is this atom connected to the supplied OBAtom?
       bool IsConnected(OBAtom*);
-      //! Is this atom related to the supplied OBAtom in a 1,3 bonding pattern?
+      //! \return Is this atom related to the supplied OBAtom in 
+      //!  a 1,3 bonding pattern?
       bool IsOneThree(OBAtom*);
-      //! Is this atom related to the supplied OBAtom in a 1,4 bonding pattern?
+      //! \return Is this atom related to the supplied OBAtom in
+      //!  a 1,4 bonding pattern?
       bool IsOneFour(OBAtom*);
-      //! Is this atom an oxygen in a carboxyl (-CO2 or CO2H) group?
+      //! \return Is this atom an oxygen in a carboxyl (-CO2 or CO2H) group?
       bool IsCarboxylOxygen();
-      //! Is this atom an oxygen in a phosphate (R-PO3) group? 
+      //! \return Is this atom an oxygen in a phosphate (R-PO3) group? 
       bool IsPhosphateOxygen();
-      //! Is this atom an oxygen in a sulfate (-SO3) group?
+      //! \return Is this atom an oxygen in a sulfate (-SO3) group?
       bool IsSulfateOxygen();
-      //! Is this atom an oxygen in a nitro (-NO2) group?
+      //! \return Is this atom an oxygen in a nitro (-NO2) group?
       bool IsNitroOxygen();
+      //! \return Is this atom a nitrogen in an amide (-C(=O)NR2) group?
       bool IsAmideNitrogen();
+      //! \return Is this atom a hydrogen connected to a polar atom
+      //!  (i.e., N, O, P, S)
       bool IsPolarHydrogen();
+      //! \return Is this atom a hydrogen connected to a non-polar atom
+      //!  (i.e., C)
       bool IsNonPolarHydrogen();
       bool IsAromaticNOxide();
       //! Is this atom chiral?
@@ -496,10 +491,10 @@ namespace OpenBabel
       bool IsNegativeStereo() { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
       //! Does this atom have SMILES-specified stereochemistry?
       bool HasChiralitySpecified()
-	{ return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
+        { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
       //! Does this atom have a specified chiral volume?
       bool HasChiralVolume()
-	{ return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
+        { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
       //! Is this atom a hydrogen-bond acceptor (receptor)?
       bool IsHbondAcceptor();
       //! Is this atom a hydrogen-bond donor?
@@ -509,38 +504,18 @@ namespace OpenBabel
       bool HasAlphaBetaUnsat(bool includePandS=true);
       bool HasBondOfOrder(unsigned int);
       int  CountBondsOfOrder(unsigned int);
+      //! \return Whether this atom is connected to any bond with order >1
       bool HasNonSingleBond();
+      //! \return Does this atom have a single bond
       bool HasSingleBond()    {        return(HasBondOfOrder(1));    }
+      //! \return Does this atom have a double bond
       bool HasDoubleBond()    {        return(HasBondOfOrder(2));    }
+      //! \return Does this atom have an aromatic bond
       bool HasAromaticBond()  {        return(HasBondOfOrder(5));    }
-      //! Determines if this atom matches the first atom in a given SMARTS pattern
+      //! \return Whether this atom matches the first atom in a given SMARTS pattern
       bool MatchesSMARTS(const char *);
       //@}
 
-      /*Now in OBBase
-      //! \name Methods for handling generic data
-      //@{
-      bool                              HasData(std::string &);
-      bool                              HasData(const char *);
-      bool                              HasData(unsigned int type);
-      void                              DeleteData(unsigned int type);
-      void                              DeleteData(OBGenericData*);
-      void                              DeleteData(std::vector<OBGenericData*>&);
-      void                              SetData(OBGenericData *d)
-      {        _vdata.push_back(d);    }
-      //! \return the number of OBGenericData items attached to this atom
-      unsigned int                      DataSize()
-      {        return(_vdata.size());    }
-      OBGenericData                    *GetData(unsigned int type);
-      OBGenericData                    *GetData(std::string&);
-      OBGenericData                    *GetData(const char *);
-      std::vector<OBGenericData*>      &GetData() { return(_vdata); }
-      std::vector<OBGenericData*>::iterator  BeginData()
-      {        return(_vdata.begin());    }
-      std::vector<OBGenericData*>::iterator  EndData()
-      {        return(_vdata.end());      }
-      //@}
-      */
     }; // class OBAtom
 
 
@@ -593,18 +568,18 @@ namespace OpenBabel
       //! \name Bond modification methods
       //@{
       void SetIdx(int idx)
-	{
-	  _idx = idx;
-	}
+        {
+          _idx = idx;
+        }
       void SetBO(int order);
       void SetBegin(OBAtom *begin)
-	{
-	  _bgn = begin;
-	}
+        {
+          _bgn = begin;
+        }
       void SetEnd(OBAtom *end)
-	{
-	  _end = end;
-	}
+        {
+          _end = end;
+        }
       // void SetParent(OBMol *ptr)               {_parent=ptr;} // (inherited)
       void SetLength(OBAtom*,double);
       void Set(int,OBAtom*,OBAtom*,int,int);
@@ -625,9 +600,9 @@ namespace OpenBabel
       void UnsetDown()      { UnsetFlag(OB_TORDOWN_BOND); }
       void UnsetAromatic()  { UnsetFlag(OB_AROMATIC_BOND);}
       void UnsetKekule()
-	{
-	  _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-	}
+        {
+          _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
+        }
       //@}
 
       //! \name bond data request methods
@@ -640,16 +615,16 @@ namespace OpenBabel
       OBAtom *GetBeginAtom()    { return((OBAtom*)_bgn);    }
       OBAtom *GetEndAtom()      { return((OBAtom*)_end);    }
       OBAtom *GetNbrAtom(OBAtom *ptr)
-	{
-	  return((ptr != _bgn)? (OBAtom*)_bgn : (OBAtom*)_end);
-	}
+        {
+          return((ptr != _bgn)? (OBAtom*)_bgn : (OBAtom*)_end);
+        }
       // OBMol  *GetParent()                 {return(_parent);}  // (inherited)
       double   GetEquibLength();
       double   GetLength();
       int     GetNbrAtomIdx(OBAtom *ptr)
-	{
-	  return((ptr!=_bgn)?_bgn->GetIdx():_end->GetIdx());
-	}
+        {
+          return((ptr!=_bgn)?_bgn->GetIdx():_end->GetIdx());
+        }
       //@}
 
       //! \name property request methods
@@ -685,41 +660,6 @@ namespace OpenBabel
       bool IsDoubleBondGeometry();
       //@}
 
-      /* Now in OBBase
-      //! \name Methods for handling generic data
-      //@{
-      bool                              HasData(std::string &);
-      bool                              HasData(const char *);
-      bool                              HasData(unsigned int type);
-      void                              DeleteData(unsigned int type);
-      void                              DeleteData(OBGenericData*);
-      void                              DeleteData(std::vector<OBGenericData*>&);
-      void                              SetData(OBGenericData *d)
-      {
-      _vdata.push_back(d);
-      }
-      //! \return the number of OBGenericData items attached to this bond
-      unsigned int                      DataSize()
-      {
-      return(_vdata.size());
-      }
-      OBGenericData                    *GetData(unsigned int type);
-      OBGenericData                    *GetData(std::string&);
-      OBGenericData                    *GetData(const char *);
-      std::vector<OBGenericData*>           &GetData()
-      {
-      return(_vdata);
-      }
-      std::vector<OBGenericData*>::iterator  BeginData()
-      {
-      return(_vdata.begin());
-      }
-      std::vector<OBGenericData*>::iterator  EndData()
-      {
-      return(_vdata.end());
-      }
-      //@}
-      */
     }; // class OBBond
 
 
@@ -795,10 +735,10 @@ namespace OpenBabel
       OBMol &operator+=(const OBMol &mol);
 
       void ReserveAtoms(int natoms)
-	{
-	  if (natoms && _mod)
+        {
+          if (natoms && _mod)
             _vatom.reserve(natoms);
-	}
+        }
       virtual OBAtom *CreateAtom(void);
       virtual OBBond *CreateBond(void);
       virtual void DestroyAtom(OBNodeBase*);
@@ -822,17 +762,17 @@ namespace OpenBabel
       //! Call when done with modificaions -- re-perceive data as needed.
       virtual void EndModify(bool nukePerceivedData=true);
       int GetMod()
-	{
-	  return(_mod);
-	}
+        {
+          return(_mod);
+        }
       void IncrementMod()
-	{
-	  _mod++;
-	}
+        {
+          _mod++;
+        }
       void DecrementMod()
-	{
-	  _mod--;
-	}
+        {
+          _mod--;
+        }
       //@}
 
       //! \name Data retrieval methods
@@ -901,13 +841,13 @@ namespace OpenBabel
       void   SetTotalCharge(int charge);
       void   SetTotalSpinMultiplicity(unsigned int spin);
       void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord)
-	{ _internals = int_coord; }
+        { _internals = int_coord; }
       //! Set the flag for determining automatic formal charges with pH (default=true)
       void SetAutomaticFormalCharge(bool val)
-	{ _autoFormalCharge=val;  }
+        { _autoFormalCharge=val;  }
       //! Set the flag for determining partial charges automatically (default=true)
       void SetAutomaticPartialCharge(bool val)
-	{ _autoPartialCharge=val; }
+        { _autoPartialCharge=val; }
 
       //! Mark that aromaticity has been perceived for this molecule (see OBAromaticTyper)
       void   SetAromaticPerceived()    { SetFlag(OB_AROMATIC_MOL);    }
@@ -1052,10 +992,10 @@ namespace OpenBabel
       void    DeleteConformer(int);
       double  *GetConformer(int i)       {  return(_vconf[i]);      }
       double  *BeginConformer(std::vector<double*>::iterator&i)
-	{ i = _vconf.begin();
+        { i = _vconf.begin();
         return((i == _vconf.end()) ? NULL:*i); }
       double  *NextConformer(std::vector<double*>::iterator&i)
-	{ i++;
+        { i++;
         return((i == _vconf.end()) ? NULL:*i); }
       std::vector<double*> &GetConformers() {   return(_vconf);     }
       //@}
@@ -1072,26 +1012,26 @@ namespace OpenBabel
       OBBond *NextBond(std::vector<OBEdgeBase*>::iterator &i);
       //! \deprecated Use FOR_RESIDUES_OF_MOL and OBResidueIter instead
       OBResidue *BeginResidue(std::vector<OBResidue*>::iterator &i)
-	{
-	  i = _residue.begin();
-	  return((i == _residue.end()) ? NULL:*i);
-	}
+        {
+          i = _residue.begin();
+          return((i == _residue.end()) ? NULL:*i);
+        }
       //! \deprecated Use FOR_RESIDUES_OF_MOL and OBResidueIter instead
       OBResidue *NextResidue(std::vector<OBResidue*>::iterator &i)
-	{
-	  i++;
-	  return((i == _residue.end()) ? NULL:*i);
-	}
+        {
+          i++;
+          return((i == _residue.end()) ? NULL:*i);
+        }
       OBInternalCoord *BeginInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
-	{
-	  i = _internals.begin();
-	  return((i == _internals.end()) ? NULL:*i);
-	}
+        {
+          i = _internals.begin();
+          return((i == _internals.end()) ? NULL:*i);
+        }
       OBInternalCoord *NextInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
-	{
-	  i++;
-	  return((i == _internals.end()) ? NULL:*i);
-	}
+        {
+          i++;
+          return((i == _internals.end()) ? NULL:*i);
+        }
       //@}
 
       //  Removed with OBConversion framework -- see OBConversion class instead
@@ -1111,14 +1051,14 @@ namespace OpenBabel
       double   _dst,_ang,_tor;
       //! Constructor
       OBInternalCoord(OBAtom *a=(OBAtom*)NULL,
-		      OBAtom *b=(OBAtom*)NULL,
-		      OBAtom *c=(OBAtom*)NULL)
-	{
-	  _a = a;
-	  _b = b;
-	  _c = c;
-	  _dst = _ang = _tor = 0.0;
-	}
+                      OBAtom *b=(OBAtom*)NULL,
+                      OBAtom *c=(OBAtom*)NULL)
+        {
+          _a = a;
+          _b = b;
+          _c = c;
+          _dst = _ang = _tor = 0.0;
+        }
     };
 
   //function prototypes
