@@ -1,3 +1,9 @@
+2006-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/parsmart.cpp: Completely reject dot-disconnected SMARTS
+        e.g. "C.C" which currently are unimplemented and can cause
+        crashes, e.g. PR#1505711.
+	
 2006-06-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.cpp (BatchFileName): Make sure to properly
