@@ -70,30 +70,43 @@ $col = 0;
 $init = 0;
 $ignore = 0;
 $newline = 1;
+$spacerun = 0; # collapse runs of spaces
 
 while( !eof(F) ) {
     $ch = ord(getc(F));
-    if( $ch == 13 ) {
+    if( $ch == 13 ) { # ignore \r characters
         $ch = 0;
     }
 
+    if ( $spacerun ) {
+        if ( $ch == 32 ) {
+            $ch = 0;
+        } else {
+            $spacerun = 0;
+        }
+    } elsif ( $ch == 32) {
+        $spacerun = 1;
+    }
+
     if( $ignore ) {
-        if( $ch == 10 ) {
+        if( $ch == 10 ) { # found the \n after an '#' ignore comment
             $ignore = 0;
         }
         $ch = 0;
-    } elsif( $newline ) {
+    } elsif( $newline ) { # just saw a \n -- do we see real text
         if( $ch == 10 ) {
             $ch = 0;
-        } elsif ( $ch == 35 ) {
+        } elsif ( $ch == 35 ) { # ignore anything after a '#' until a \n
             $ignore = 1;
             $ch = 0;
-        } elsif( $ch == 32 ) {
+        } elsif( $ch == 32 ) { # space
             $ch = 0;
-        } elsif( $ch ) {
+        } elsif( $ch == 9 ) { # tab
+            $ch = 0;
+        } elsif( $ch ) { # something else, so clear the blank-line boolean
             $newline = 0;
         }
-    } elsif( $ch == 10 ) {
+    } elsif( $ch == 10 ) { # set the blank-line detector
         $newline = 1;
     }
 
