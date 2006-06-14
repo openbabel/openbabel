@@ -26,8 +26,8 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-bool SafeOpen(std::ifstream &fs, char *filename);
-bool SafeOpen(std::ofstream &fs, char *filename);
+bool SafeOpen(std::ifstream &fs, const char *filename);
+bool SafeOpen(std::ofstream &fs, const char *filename);
 }
 
 using namespace std;
@@ -64,12 +64,12 @@ int main(int argc,char *argv[])
     string results_file = testdatadir + "unitcell_results.txt";
 #endif
 
-    if (!SafeOpen(ifs, (char*)unitcell_file.c_str()))
+    if (!SafeOpen(ifs, unitcell_file.c_str()))
       {
 	cout << "Bail out! Couldn't open test file 'unitcell.txt'" << endl;
         return(-1);
       }
-    if (!SafeOpen(results, (char*)results_file.c_str()))
+    if (!SafeOpen(results, results_file.c_str()))
       {
 	cout << "Bail out! Couldn't open test file 'unitcell_results.txt'" << endl;
         return(-1);

@@ -113,6 +113,8 @@ int main(int argc,char *argv[])
       // check charges
     }
 
+  cout << "ok 1\n";
+
   // return number of tests run
   cout << "1.." << currentTest << endl;
 

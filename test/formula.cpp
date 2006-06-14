@@ -30,8 +30,8 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-bool SafeOpen(std::ifstream &fs, char *filename);
-bool SafeOpen(std::ofstream &fs, char *filename);
+  bool SafeOpen(std::ifstream &fs, const char *filename);
+  bool SafeOpen(std::ofstream &fs, const char *filename);
 }
 
 using namespace std;
@@ -57,28 +57,28 @@ int main(int argc,char *argv[])
     {
       if (strncmp(argv[1], "-g", 2))
         {
-	  cout << "Usage: formula" << endl;
-	  cout << "   Tests Open Babel molecular formula, weight, and exact mass." << endl;
-	  return 0;
+          cout << "Usage: formula" << endl;
+          cout << "   Tests Open Babel molecular formula, weight, and exact mass." << endl;
+          return 0;
         }
       else
         {
-	  GenerateFormulaReference();
-	  return 0;
+          GenerateFormulaReference();
+          return 0;
         }
     }
 
   cout << "# Testing molecular formulas..." << endl;
 
   std::ifstream mifs;
-  if (!SafeOpen(mifs, (char*)smilestypes_file.c_str()))
+  if (!SafeOpen(mifs, smilestypes_file.c_str()))
     {
       cout << "Bail out! Cannot read file " << smilestypes_file << endl;
       return -1; // test failed
     }
 
   std::ifstream rifs;
-  if (!SafeOpen(rifs, (char*)results_file.c_str()))
+  if (!SafeOpen(rifs, results_file.c_str()))
     {
       cout << "Bail out! Cannot read file " << results_file << endl;
       return -1; // test failed
@@ -88,7 +88,7 @@ int main(int argc,char *argv[])
   vector<string> vs;
   OBMol mol;
   OBConversion conv(&mifs, &cout);
-  unsigned int currentTest = 1;
+  unsigned int currentTest = 0;
   double mass;
 
   if(! conv.SetInAndOutFormats("SMI","SMI"))
@@ -102,47 +102,47 @@ int main(int argc,char *argv[])
       mol.Clear();
       conv.Read(&mol);
       if (mol.Empty())
-	continue;
+        continue;
       if (!rifs.getline(buffer,BUFF_SIZE))
         {
-	  cout << "Bail out! error reading reference data" << endl;
-	  return -1; // test failed
+          cout << "Bail out! error reading reference data" << endl;
+          return -1; // test failed
         }
 
       tokenize(vs,buffer);
       if (vs.size() != 3)
         {
-	  cout << "Bail out! Reference data has incorrect format" << endl;
-	  return -1; // test failed
+          cout << "Bail out! Reference data has incorrect format" << endl;
+          return -1; // test failed
         }
 
       if (vs[0] != mol.GetFormula())
-	{
-	  cout << "not ok " << currentTest++ << " # molecular formula incorrect"
-	       << " for molecule " << mol.GetTitle() << "\n";
-	}
+        {
+          cout << "not ok " << ++currentTest << " # molecular formula incorrect"
+               << " for molecule " << mol.GetTitle() << "\n";
+        }
       else
-	cout << "ok " << currentTest++ << " # molecular formula\n";
+        cout << "ok " << ++currentTest << " # molecular formula\n";
 
       if ( fabs(atof(vs[1].c_str()) - mol.GetMolWt() ) > 1.0e-3)
-	{
-	  cout << "not ok " << currentTest++ << " # molecular weight incorrect"
-	       << " for molecule " << mol.GetTitle() << "\n";
-	  cout << "# Expected " << atof(vs[1].c_str()) << " found " <<
-	    mol.GetMolWt() << "\n";
-	}
+        {
+          cout << "not ok " << ++currentTest << " # molecular weight incorrect"
+               << " for molecule " << mol.GetTitle() << "\n";
+          cout << "# Expected " << atof(vs[1].c_str()) << " found " <<
+            mol.GetMolWt() << "\n";
+        }
       else
-	cout << "ok " << currentTest++ << " # molecular weight\n";
+        cout << "ok " << ++currentTest << " # molecular weight\n";
 
       if ( fabs(atof(vs[2].c_str()) - mol.GetExactMass() ) > 1.0e-3)
-	{
-	  cout << "not ok " << currentTest++ << " # exact mass incorrect"
-	       << " for molecule " << mol.GetTitle() << "\n";
-	  cout << "# Expected " << atof(vs[2].c_str()) << " found " <<
-	    mol.GetExactMass() << "\n";
-	}
+        {
+          cout << "not ok " << ++currentTest << " # exact mass incorrect"
+               << " for molecule " << mol.GetTitle() << "\n";
+          cout << "# Expected " << atof(vs[2].c_str()) << " found " <<
+            mol.GetExactMass() << "\n";
+        }
       else
-	cout << "ok " << currentTest++ << " # molecular exact mass\n";
+        cout << "ok " << ++currentTest << " # molecular exact mass\n";
 
 
       // now after adding explict hydrogens -- should be identical
@@ -152,42 +152,42 @@ int main(int argc,char *argv[])
       mol.AddHydrogens();
 
       if (vs[0] != mol.GetFormula())
-	{
-	  cout << "not ok " << currentTest++ << " # molecular formula incorrect"
-	       << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
-	}
+        {
+          cout << "not ok " << ++currentTest << " # molecular formula incorrect"
+               << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
+        }
       else
-	cout << "ok " << currentTest++ << " # molecular hydrogen-added formula\n";
+        cout << "ok " << ++currentTest << " # molecular hydrogen-added formula\n";
 
       if ( fabs(atof(vs[1].c_str()) - mol.GetMolWt() ) > 1.0e-3)
-	{
-	  cout << "not ok " << currentTest++ << " # molecular weight incorrect"
-	       << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
-	  cout << "# Expected " << atof(vs[1].c_str()) << " found " <<
-	    mol.GetMolWt() << "\n";
-	  cout << "# Difference " << fabs(atof(vs[1].c_str()) - mol.GetMolWt())
-	       << "\n";
-	}
+        {
+          cout << "not ok " << ++currentTest << " # molecular weight incorrect"
+               << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
+          cout << "# Expected " << atof(vs[1].c_str()) << " found " <<
+            mol.GetMolWt() << "\n";
+          cout << "# Difference " << fabs(atof(vs[1].c_str()) - mol.GetMolWt())
+               << "\n";
+        }
       else
-	cout << "ok " << currentTest++ << " # molecule + hydrogens weight\n";
+        cout << "ok " << ++currentTest << " # molecule + hydrogens weight\n";
 
       if ( fabs(atof(vs[2].c_str()) - mol.GetExactMass() ) > 1.0e-3)
-	{
-	  cout << "not ok " << currentTest++ << " # exact mass incorrect"
-	       << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
-	  cout << "# Expected " << atof(vs[2].c_str()) << " found " <<
-	    mol.GetExactMass() << "\n";
-	  cout << "# Difference " << fabs(atof(vs[2].c_str()) - mol.GetExactMass())
-	       << "\n";	
-	}
+        {
+          cout << "not ok " << ++currentTest << " # exact mass incorrect"
+               << " for hydrogen-added molecule " << mol.GetTitle() << "\n";
+          cout << "# Expected " << atof(vs[2].c_str()) << " found " <<
+            mol.GetExactMass() << "\n";
+          cout << "# Difference " << fabs(atof(vs[2].c_str()) - mol.GetExactMass())
+               << "\n";	
+        }
       else
-	cout << "ok " << currentTest++ << " # molecular exact mass"
-	     << " after hydrogen addition\n";
+        cout << "ok " << ++currentTest << " # molecular exact mass"
+             << " after hydrogen addition\n";
 
     }
 
   // return number of tests run
-  cout << "1.." << currentTest - 1 << endl;
+  cout << "1.." << currentTest << endl;
 
   // Passed tests
   return 0;
@@ -195,35 +195,36 @@ int main(int argc,char *argv[])
 
 void GenerateFormulaReference()
 {
-    std::ifstream ifs;
-    if (!SafeOpen(ifs, (char*)smilestypes_file.c_str()))
-        return;
+  std::ifstream ifs;
+  if (!SafeOpen(ifs, smilestypes_file.c_str()))
+    return;
 
-    std::ofstream ofs;
-    if (!SafeOpen(ofs, (char*)results_file.c_str()))
+  std::ofstream ofs;
+  if (!SafeOpen(ofs, results_file.c_str()))
+    return;
+
+  OBMol mol;
+  OBConversion conv(&ifs, &cout);
+
+  if(! conv.SetInAndOutFormats("SMI","SMI"))
+    {
+      cerr << "SMILES format is not loaded" << endl;
       return;
-
-    OBMol mol;
-    OBConversion conv(&ifs, &cout);
-
-    if(! conv.SetInAndOutFormats("SMI","SMI"))
-    {
-        ThrowError("SMILES format is not loaded");
-        return;
     }
 
-    for (;ifs;)
+  for (;ifs;)
     {
-        mol.Clear();
-        conv.Read(&mol);
-        if (mol.Empty())
-            continue;
+      mol.Clear();
+      conv.Read(&mol);
+      if (mol.Empty())
+        continue;
 
-        //write out formula, molecular weight and exact mass
-	ofs << mol.GetFormula() << " " << mol.GetMolWt() << " " 
-	    << mol.GetExactMass() << endl;
+      //write out formula, molecular weight and exact mass
+      ofs << mol.GetFormula() << " " << mol.GetMolWt() << " " 
+          << mol.GetExactMass() << endl;
     }
 
-	cerr << "Molecular formula results written successfully" << endl;
+	cerr << " Molecular formula results written successfully" << endl;
+  return;
 }
 

@@ -31,8 +31,8 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-bool SafeOpen(std::ifstream &fs, char *filename);
-bool SafeOpen(std::ofstream &fs, char *filename);
+  bool SafeOpen(std::ifstream &fs, const char *filename);
+  bool SafeOpen(std::ofstream &fs, const char *filename);
 }
 
 using namespace std;
@@ -58,28 +58,28 @@ int main(int argc,char *argv[])
     {
       if (strncmp(argv[1], "-g", 2))
         {
-	  cout << "Usage: ringtest" << endl;
-	  cout << "   Tests Open Babel ring perception testing." << endl;
-	  return 0;
+          cout << "Usage: ringtest" << endl;
+          cout << "   Tests Open Babel ring perception testing." << endl;
+          return 0;
         }
       else
         {
-	  GenerateRingReference();
-	  return 0;
+          GenerateRingReference();
+          return 0;
         }
     }
 
   cout << "# Testing ring perception..." << endl;
 
   std::ifstream mifs;
-  if (!SafeOpen(mifs, (char*)smilestypes_file.c_str()))
+  if (!SafeOpen(mifs, smilestypes_file.c_str()))
     {
       cout << "Bail out! Cannot read file " << smilestypes_file << endl;
       return -1; // test failed
     }
 
   std::ifstream rifs;
-  if (!SafeOpen(rifs, (char*)results_file.c_str()))
+  if (!SafeOpen(rifs, results_file.c_str()))
     {
       cout << "Bail out! Cannot read file " << results_file << endl;
       return -1; // test failed
@@ -100,7 +100,7 @@ int main(int argc,char *argv[])
   vector<OBNodeBase*>::iterator k;
   vector<OBRing*>::iterator m;
   OBConversion conv(&mifs, &cout);
-  unsigned int currentTest = 1;
+  unsigned int currentTest = 0;
 
   if(! conv.SetInAndOutFormats("SMI","SMI"))
     {
@@ -113,11 +113,11 @@ int main(int argc,char *argv[])
       mol.Clear();
       conv.Read(&mol);
       if (mol.Empty())
-	continue;
+        continue;
       if (!rifs.getline(buffer,BUFF_SIZE))
         {
-	  cout << "Bail out! error reading reference data" << endl;
-	  return -1; // test failed
+          cout << "Bail out! error reading reference data" << endl;
+          return -1; // test failed
         }
 
       vb.clear();
@@ -125,77 +125,77 @@ int main(int argc,char *argv[])
       //check ring bonds
       tokenize(vs,buffer);
       for (i = vs.begin();i != vs.end();i++)
-	vb[atoi((char*)i->c_str())] = true;
+        vb[atoi(i->c_str())] = true;
 
       for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
-	{
-	  if (vb[bond->GetIdx()] != bond->IsInRing())
-	    {
-	      cout << "not ok " << currentTest++
-		   << " # ring bond data different than reference\n";
-	      cout << "# Molecule: " << mol.GetTitle() << "\n";
-	    }
-	  else
-	    cout << "ok " << currentTest++
-		 << " # correct ring bond data\n";
-	}
+        {
+          if (vb[bond->GetIdx()] != bond->IsInRing())
+            {
+              cout << "not ok " << ++currentTest
+                   << " # ring bond data different than reference\n";
+              cout << "# Molecule: " << mol.GetTitle() << "\n";
+            }
+          else
+            cout << "ok " << ++currentTest
+                 << " # correct ring bond data\n";
+        }
 
       vr = mol.GetSSSR();
       if (!rifs.getline(buffer,BUFF_SIZE))
         {
-	  cout << "Bail out! error reading reference data\n";
-	  return -1; // test failed
+          cout << "Bail out! error reading reference data\n";
+          return -1; // test failed
         }
       sscanf(buffer,"%d",&size);
       if (vr.size() != size) //check SSSR size
         {
-	  cout << "not ok " << currentTest++ 
-	       << " # SSSR size different than reference\n";
-	  cout << "# Molecule: " << mol.GetTitle() << "\n";
+          cout << "not ok " << ++currentTest 
+               << " # SSSR size different than reference\n";
+          cout << "# Molecule: " << mol.GetTitle() << "\n";
         }
       else
-	cout << "ok " << currentTest++
-	     << " # SSSR size matches reference\n";
+        cout << "ok " << ++currentTest
+             << " # SSSR size matches reference\n";
 
       if (!rifs.getline(buffer,BUFF_SIZE))
         {
-	  cout << "Bail out! error reading reference data" << endl;
-	  return -1; // test failed
+          cout << "Bail out! error reading reference data" << endl;
+          return -1; // test failed
         }
 
       tokenize(vs,buffer);
       i = vs.begin();
       for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
         {
-	  if (i == vs.end())
+          if (i == vs.end())
             {
-	      cout << "not ok " << currentTest++ << " # error in SSSR count\n";
-		cout << "# Molecule: " << mol.GetTitle() << "\n";
+              cout << "not ok " << ++currentTest << " # error in SSSR count\n";
+              cout << "# Molecule: " << mol.GetTitle() << "\n";
             }
-	  else
-	    cout << "ok " << currentTest++ << " # correct SSSR count\n";
+          else
+            cout << "ok " << ++currentTest << " # correct SSSR count\n";
 
-	  count = 0;
-	  for (m = vr.begin();m != vr.end();m++)
-	    if ((*m)->_pathset[atom->GetIdx()])
-	      count++;
+          count = 0;
+          for (m = vr.begin();m != vr.end();m++)
+            if ((*m)->_pathset[atom->GetIdx()])
+              count++;
 
-	  if (atoi((char*)i->c_str()) != count)
+          if (atoi(i->c_str()) != count)
             {
-	      cout << "not ok " << currentTest++ << "# ring membership test failed\n";
-	      cout << "# Molecule: " << mol.GetTitle() << "\n";
+              cout << "not ok " << ++currentTest << "# ring membership test failed\n";
+              cout << "# Molecule: " << mol.GetTitle() << "\n";
             }
-	  else
-	    cout << "ok " << currentTest++ << " # ring membership passed\n";
+          else
+            cout << "ok " << ++currentTest << " # ring membership passed\n";
 
-	  i++;
+          i++;
         }
 
 
     }
 
   // return number of tests run
-  cout << "1.." << currentTest - 1 << endl;
+  cout << "1.." << currentTest << endl;
 
   // Passed tests
   return 0;
@@ -203,67 +203,68 @@ int main(int argc,char *argv[])
 
 void GenerateRingReference()
 {
-    std::ifstream ifs;
+  std::ifstream ifs;
 
-    if (!SafeOpen(ifs,(char*)smilestypes_file.c_str()))
-        return;
+  if (!SafeOpen(ifs,smilestypes_file.c_str()))
+    return;
 
-    std::ofstream ofs;
-    if (!SafeOpen(ofs,(char*)results_file.c_str()))
-        return;
+  std::ofstream ofs;
+  if (!SafeOpen(ofs,results_file.c_str()))
+    return;
 
-    int count;
-    OBAtom *atom;
-    OBBond *bond;
-    char buffer[BUFF_SIZE];
-    vector<OBRing*> vr;
-    vector<OBEdgeBase*>::iterator i;
-    vector<OBNodeBase*>::iterator j;
-    vector<OBRing*>::iterator k;
-    OBMol mol;
-    OBConversion conv(&ifs, &cout);
+  int count;
+  OBAtom *atom;
+  OBBond *bond;
+  char buffer[BUFF_SIZE];
+  vector<OBRing*> vr;
+  vector<OBEdgeBase*>::iterator i;
+  vector<OBNodeBase*>::iterator j;
+  vector<OBRing*>::iterator k;
+  OBMol mol;
+  OBConversion conv(&ifs, &cout);
 
-    if(! conv.SetInAndOutFormats("SMI","SMI"))
+  if(! conv.SetInAndOutFormats("SMI","SMI"))
     {
-        ThrowError("SMILES format is not loaded");
-        return;
+      cerr << " SMILES format is not loaded" << endl;
+      return;
     }
 
-    for (;ifs;)
+  for (;ifs;)
     {
-        mol.Clear();
-        conv.Read(&mol);
-        if (mol.Empty())
-            continue;
+      mol.Clear();
+      conv.Read(&mol);
+      if (mol.Empty())
+        continue;
 
-        //write out ring bonds
-        for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
-            if (bond->IsInRing())
-            {
-                sprintf(buffer,"%3d",bond->GetIdx());
-                ofs << buffer;
-            }
-        ofs << endl;
-
-        vr = mol.GetSSSR();
-        //write the total number of rings
-        ofs << vr.size() << endl;
-
-        //write the number of rings that each atom is a member of
-        for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
-        {
-            count = 0;
-            for (k = vr.begin();k != vr.end();k++)
-                if ((*k)->_pathset[atom->GetIdx()])
-                    count++;
-
-            sprintf(buffer,"%3d",count);
+      //write out ring bonds
+      for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
+        if (bond->IsInRing())
+          {
+            sprintf(buffer,"%3d",bond->GetIdx());
             ofs << buffer;
+          }
+      ofs << endl;
+
+      vr = mol.GetSSSR();
+      //write the total number of rings
+      ofs << vr.size() << endl;
+
+      //write the number of rings that each atom is a member of
+      for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
+        {
+          count = 0;
+          for (k = vr.begin();k != vr.end();k++)
+            if ((*k)->_pathset[atom->GetIdx()])
+              count++;
+
+          sprintf(buffer,"%3d",count);
+          ofs << buffer;
         }
-        ofs << endl;
+      ofs << endl;
 
     }
 
-    ThrowError("Ring perception test results written successfully");
+  cerr << " Ring perception test results written successfully" << endl;
+  return;
 }
 
