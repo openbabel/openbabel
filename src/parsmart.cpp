@@ -1321,7 +1321,8 @@ namespace OpenBabel
       {
         switch( *LexPtr++ )
           {
-          case('.'):  if( bexpr || (prev==-1) )
+          case('.'):
+            // if( bexpr || (prev==-1) )
             return ParseSMARTSError(pat,bexpr);
             prev = -1;
             break;

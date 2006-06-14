@@ -1,3 +1,37 @@
+2006-06-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/parsmart.cpp: Completely reject dot-disconnected SMARTS
+	e.g. "C.C" which currently are unimplemented and can cause
+	crashes, e.g. PR#1505711.
+
+	* src/obutil.cpp (SafeOpen): Make filename arguments "const".
+
+	* test/*.cpp: Update to use new SafeOpen prototypes and remove
+	old-style casts to (char*) to remove const.
+	
+	* test/invalidsmarts.cpp: New test to check that invalid SMARTS
+	patterns are properly rejected. Also tries buffer smashing with
+	random binary data.
+
+	* test/files/invalid-smarts.txt: Initial set of invalid SMARTS
+	which hopefully will tests certain parts of the SMARTS
+	parser. Crude start, but more devious patterns to come.
+
+	* test/files/random*: Random binary data for invalid format
+	testing and "fuzz" testing.
+
+	* test/formalcharge.cpp: New test to check formal charge
+	assignment. Currently does not test, simply generates results for
+	debugging.
+
+	* test/files/formalchargeresults.txt: Results from above.
+	
+	* data/bin2hex.pl: Condense multiple spaces to one. Provides a
+	small amount of compression for data headers (about 3K out of
+	435K).
+
+	* data/*.h: Rebuild using above.
+
 2006-06-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.cpp (BatchFileName): Make sure to properly
