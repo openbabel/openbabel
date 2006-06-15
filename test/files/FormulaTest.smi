@@ -1,0 +1,23 @@
+C		CH4
+[C]                           C atom
+[CH0]		C atom
+C[2H]		CH3D
+C[1H]		CH4 
+C([H])[H]	CH2  carbene
+C[H]	CH    
+[CH]	CH
+[CH][2H]  CHD
+[H][H]	H2
+C[O]        CH3O methoxy
+[2H][H]		HD
+C([2H])[2H]	CH2D2
+[CH0]([2H])[2H]	CD2
+[S].[O].[Cl].[Cl]       SOCl2
+[Na+].[Br-]               NaBr
+[Na+].[At-]               NaAt
+Cc                           C2H5 ethyl
+c1ccccc1c               C7H7 benzyl
+c1c(cccc1)c            C7H7 benzyl
+ccc    C3H5 allyl
+Cc(C)cCCc(C)cccc(C)cccc(C)ccccc(C)cccc(C)cccc(C)CCcc(C)C lycopene
+NC(N)=[NH2+].[Cl-] guanidine hydrochloride CN3H6Cl

@@ -1,3 +1,18 @@
+2006-06-15 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/formats/smilesformat.cpp(ParseSmiles): when using 
+	extension and bond is doubled, add 
+	UnsetImplicitValencePerceived() so that implicit hydrogens are
+	recounted.
+	
+	* src/formats/smilesformat.cpp(GetSmilesElement): ensure explicit
+	hydrogens are always written with bracketed atoms (esp when
+	charged; [OH3+] was being output incorrectly).
+	
+	* test/files/FormulaTest.smi: Added. Contains several small
+	molecules to test SMILES input, implicit hydrogen detection
+	and elemental formula generation. 
+
 2006-06-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/base.h, src/base.cpp: Add "const" qualifiers to

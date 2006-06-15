@@ -388,7 +388,10 @@ namespace OpenBabel
       {
         OBBond* bond = mol.GetBond(*itr);
         if(!bond->GetBeginAtom()->IsAromatic() && !bond->GetEndAtom()->IsAromatic())
+        {
           bond->SetBO(2);
+          mol.UnsetImplicitValencePerceived();
+        }
       }
     
     //NE add the OBChiralData stored inside the _mapcd to the atoms now after end
@@ -2235,7 +2238,7 @@ namespace OpenBabel
     //		int nHisotopes = atom->ExplicitHydrogenCount() - atom->ExplicitHydrogenCount(true);
     //    int nH = atom->ImplicitHydrogenCount() - nHisotopes;
     int nH = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(true);//excludes H isotopes
-    if (!normalValence && nH && !atom->IsHydrogen()) 
+    if (nH && !atom->IsHydrogen()) 
       {
         strcat(element,"H");
         if (nH > 1)
