@@ -353,10 +353,10 @@ namespace OpenBabel
               _order = 5;
               break;
             case '/':
-              _bondflags |= OB_TORDOWN_BOND;
+              _bondflags |= OB_TORUP_BOND;
               break;
             case '\\':
-              _bondflags |= OB_TORUP_BOND;
+              _bondflags |= OB_TORDOWN_BOND;
               break;
             default:
               if (!ParseSimple(mol))
@@ -1762,13 +1762,13 @@ namespace OpenBabel
                   {
                     if ( (i->second->GetBeginAtom())->HasDoubleBond() ||
                          (i->second->GetEndAtom())->HasDoubleBond() )
-                      strcat(buffer,"\\");
+                      strcat(buffer,"/");
                   }
                 if (i->second->IsDown())
                   {
                     if ( (i->second->GetBeginAtom())->HasDoubleBond() ||
                          (i->second->GetEndAtom())->HasDoubleBond() )
-                      strcat(buffer,"/");
+                      strcat(buffer,"\\");
                   }
 #ifndef KEKULE
                 if (i->second->GetBO() == 2 && !i->second->IsAromatic())
@@ -1801,13 +1801,13 @@ namespace OpenBabel
           {
             if ( (bond->GetBeginAtom())->HasDoubleBond() ||
                  (bond->GetEndAtom())->HasDoubleBond() )
-              strcat(buffer,"\\");
+              strcat(buffer,"/");
           }
         if (bond->IsDown())
           {
             if ( (bond->GetBeginAtom())->HasDoubleBond() ||
                  (bond->GetEndAtom())->HasDoubleBond() )
-              strcat(buffer,"/");
+              strcat(buffer,"\\");
           }
 #ifndef KEKULE
         if (bond->GetBO() == 2 && !bond->IsAromatic())
@@ -2159,13 +2159,13 @@ namespace OpenBabel
                         {
                           if ( (bond->GetBeginAtom())->HasDoubleBond() ||
                                (bond->GetEndAtom())->HasDoubleBond() )
-                            strcat(symbol,"\\");
+                            strcat(symbol,"/");
                         }
                       if (bond->IsDown())
                         {
                           if ( (bond->GetBeginAtom())->HasDoubleBond() ||
                                (bond->GetEndAtom())->HasDoubleBond() )
-                            strcat(symbol,"/");
+                            strcat(symbol,"\\");
                         }
 #ifndef KEKULE
                       if (bond->GetBO() == 2 && !bond->IsAromatic())

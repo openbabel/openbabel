@@ -1223,18 +1223,20 @@ namespace OpenBabel
       case('@'):  return BuildBondLeaf(BL_TYPE,BT_RING);
       case('~'):  return BuildBondLeaf(BL_CONST,true);
       
-      case('/'):  if( *LexPtr == '?' )
-        {
-          LexPtr++;
-          return BuildBondLeaf(BL_TYPE,BT_UPUNSPEC);
-        }
+      case('/'):
+        if( *LexPtr == '?' )
+          {
+            LexPtr++;
+            return BuildBondLeaf(BL_TYPE,BT_UPUNSPEC);
+          }
         return BuildBondLeaf(BL_TYPE,BT_UP);
       
-      case('\\'): if( *LexPtr == '?' )
-        {
-          LexPtr++;
-          return BuildBondLeaf(BL_TYPE,BT_DOWNUNSPEC);
-        }
+      case('\\'):
+        if( *LexPtr == '?' )
+          {
+            LexPtr++;
+            return BuildBondLeaf(BL_TYPE,BT_DOWNUNSPEC);
+          }
       
         return BuildBondLeaf(BL_TYPE,BT_DOWN);
       }
@@ -2769,6 +2771,13 @@ namespace OpenBabel
               if( !expr->leaf.value )
                 return false;
               return(true);
+
+            case AL_CHIRAL:
+              if( expr->leaf.value == AL_CLOCKWISE)
+                return atom->IsClockwise();
+              else
+                return atom->IsAntiClockwise();
+
             default:
               return false;
             }
