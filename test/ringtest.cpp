@@ -45,8 +45,8 @@ void GenerateRingReference();
   string results_file = testdatadir + "ringresults.txt";
   string smilestypes_file = testdatadir + "attype.00.smi";
 #else
-  string results_file = "ringresults.txt";
-  string smilestypes_file = "attype.00.smi";
+  string results_file = "files/ringresults.txt";
+  string smilestypes_file = "files/attype.00.smi";
 #endif
 
 int main(int argc,char *argv[])

@@ -46,9 +46,9 @@ void GenerateSmartsReference();
   string results_file = testdatadir + "smartsresults.txt";
   string smilestypes_file = testdatadir + "attype.00.smi";
 #else
-   string smarts_file = "smartstest.txt";
-   string results_file = "smartsresults.txt";
-   string smilestypes_file = "attype.00.smi";
+   string smarts_file = "files/smartstest.txt";
+   string results_file = "files/smartsresults.txt";
+   string smilestypes_file = "files/attype.00.smi";
 #endif
 
 int main(int argc,char *argv[])
