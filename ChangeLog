@@ -8,6 +8,10 @@
 	the closure. Uses new function EquivalentBondExpr to test if
 	two bond specifications are equivalent.
 
+	* src/kekulize.cpp: Fix PR#1504089 by adding a special case to
+	prevent double bonds between aromatic S-S systems, which is
+	unneeded to show aromaticity.
+
 2006-06-15 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/smilesformat.cpp(ParseSmiles): when using 
