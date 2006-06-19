@@ -14,9 +14,21 @@
 	PR#1506408 -- IsUp/IsDown parsing support in SMILES was
 	inconsistent with mol.h and parsmart.cpp. "/" is Up "\" is Down.
 
+	* test/files/smartsresults.txt: Regenerate using above changes.
+
 	* src/kekulize.cpp: Fix PR#1504089 by adding a special case to
 	prevent double bonds between aromatic S-S systems, which is
 	unneeded to show aromaticity.
+
+	* test/wrapper.sh: Add smilesmatch to list to prevent regression
+	on PR#1506408.
+
+	* test/ringtest.cpp, test/smartstest.cpp: Correct minor errors in
+	finding filenames and result generation.
+
+	* test/files/nci.smi: Add new test SMILES file.
+
+	* test/smilesmatch.cpp: Use it.
 
 2006-06-15 Chris Morley <ob@gaseq.co.uk>
 	

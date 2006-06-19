@@ -40,9 +40,9 @@ using namespace OpenBabel;
 
 #ifdef TESTDATADIR
   string testdatadir = TESTDATADIR;
-  string smilestypes_file = testdatadir + "attype.00.smi";
+  string smilestypes_file = testdatadir + "nci.smi";
 #else
-   string smilestypes_file = "attype.00.smi";
+   string smilestypes_file = "nci.smi";
 #endif
 
 int main(int argc,char *argv[])
