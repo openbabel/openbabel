@@ -1,3 +1,13 @@
+2006-06-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/files/invalid-smarts.txt: Add invalid ring closure bond
+	specifications suggested by Craig in PR#1503849.
+
+	* src/parsmart.cpp: Fix PR#1503849 for invalid SMARTS ring
+	closures -- check both beginning and end bond specifications for
+	the closure. Uses new function EquivalentBondExpr to test if
+	two bond specifications are equivalent.
+
 2006-06-15 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/smilesformat.cpp(ParseSmiles): when using 

@@ -1,3 +1,5 @@
+C=1CCCCC#1
+C-1CCCCC:1
 [*
 [a
 [A

@@ -331,6 +331,40 @@ namespace OpenBabel
     return result;
   }
 
+  static bool EquivalentBondExpr( BondExpr *expr1, BondExpr *expr2 )
+  {
+    if (expr1 == NULL && expr2 == NULL)
+      return true;
+    else if (expr1 == NULL && expr2 != NULL)
+      return false;
+    else if (expr1 != NULL && expr2 == NULL)
+      return false;
+
+    if (expr1->type != expr2->type)
+      return false;
+
+    bool result = false;
+    switch( expr1->type )
+      {
+      case(AE_ANDHI):
+      case(AE_ANDLO):
+      case(AE_OR):
+        result = (EquivalentBondExpr(expr1->bin.lft, expr2->bin.lft)) &&
+          (EquivalentBondExpr(expr1->bin.rgt, expr2->bin.rgt));
+        break;
+      
+      case(AE_NOT):   
+        result = EquivalentBondExpr(expr1->mon.arg, expr2->mon.arg);
+        break;
+      
+      case(AE_LEAF):  
+        result = (expr1->leaf.prop == expr2->leaf.prop) &&
+          (expr1->leaf.value == expr2->leaf.value);
+        break;
+      }
+    return result;
+  }
+
   static void FreeBondExpr( BondExpr *expr )
   {
     if( expr )
@@ -1391,9 +1425,15 @@ namespace OpenBabel
               }
             else if( stat->closure[index] != prev )
               {
-                FreeBondExpr(stat->closord[index]);
-                if( !bexpr )
-                  bexpr = GenerateDefaultBond();
+                if( !bexpr ) {
+                  if (!stat->closord[index]) {
+                    bexpr = GenerateDefaultBond();
+                    FreeBondExpr(stat->closord[index]);
+                  } else
+                    bexpr = stat->closord[index];
+                } else if (!EquivalentBondExpr(bexpr, stat->closord[index]))
+                  return ParseSMARTSError(pat,bexpr);
+                
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
                 stat->closure[index] = -1;
                 bexpr = (BondExpr*)0;
@@ -1418,9 +1458,15 @@ namespace OpenBabel
               }
             else if( stat->closure[index] != prev )
               {
-                FreeBondExpr(stat->closord[index]);
-                if( !bexpr )
-                  bexpr = GenerateDefaultBond();
+                if( !bexpr ) {
+                  if (!stat->closord[index]) {
+                    bexpr = GenerateDefaultBond();
+                    FreeBondExpr(stat->closord[index]);
+                  } else
+                    bexpr = stat->closord[index];
+                } else if (!EquivalentBondExpr(bexpr, stat->closord[index]))
+                  return ParseSMARTSError(pat,bexpr);
+                
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
                 stat->closure[index] = -1;
                 bexpr = (BondExpr*)0;
