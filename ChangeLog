@@ -1,3 +1,11 @@
+2006-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/smilesformat.cpp: Allow use of H atoms for a root
+	atom when used in a cis/trans "/" or "\" specification. Make sure
+	to output [H] atoms when in a cis/trans specification. Fixes
+	PR#1508783. Fix part of PR#1508741 -- chiral atoms should be fine
+	as root nodes (which preserves the ordering).
+
 2006-06-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/files/invalid-smarts.txt: Add invalid ring closure bond

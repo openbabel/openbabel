@@ -1525,12 +1525,12 @@ namespace OpenBabel
         _ptr++;
         break;
       case '/': //chiral, but _order still == 1
-        _bondflags |= OB_TORDOWN_BOND;
+        _bondflags |= OB_TORUP_BOND;
         _ptr++;
         break;
         _ptr++;
       case '\\': // chiral, but _order still == 1
-        _bondflags |= OB_TORUP_BOND;
+        _bondflags |= OB_TORDOWN_BOND;
         _ptr++;
         break;
       default: // no bond indicator just leave order = 1
@@ -1677,6 +1677,18 @@ namespace OpenBabel
     return(true);
   }
 
+  static bool IsCisOrTransH(OBAtom *atom)
+  {
+    if (!atom->IsHydrogen())
+      return false;
+    else
+      FOR_BONDS_OF_ATOM(bond, atom)
+      {
+        if (bond->IsUp() || bond->IsDown())
+          return true;
+      }
+    return false;
+  }
 
   void OBMol2Smi::CreateSmiString(OBMol &mol,char *buffer)
   {
@@ -1686,26 +1698,27 @@ namespace OpenBabel
     vector<OBNodeBase*>::iterator i;
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      if ((!atom->IsHydrogen() || atom->GetValence() == 0) && !_uatoms[atom->GetIdx()])
-        //if (!atom->IsHydrogen() && !_uatoms[atom->GetIdx()])
-        if (!atom->IsChiral()) //don't use chiral atoms as root node
-          {
-            //clear out closures in case structure is dot disconnected
-            _vclose.clear();
-            _atmorder.clear();
-            _storder.clear();
-            _vopen.clear();
-            //dot disconnected structure
-            if (strlen(buffer) > 0)
-              strcat(buffer,".");
-            root = new OBSmiNode (atom);
-            BuildTree(root);
-            FindClosureBonds(mol);
-            if (mol.Has2D())
-              AssignCisTrans(root);
-            ToSmilesString(root,buffer);
-            delete root;
-          }
+      // don't use a hydrogen as the root node unless it's not bonded
+      // or it's involved in a cis/trans '/' or '\' specification
+      if ((!atom->IsHydrogen() || atom->GetValence() == 0 || IsCisOrTransH(atom))
+          && !_uatoms[atom->GetIdx()])
+        {
+          //clear out closures in case structure is dot disconnected
+          _vclose.clear();
+          _atmorder.clear();
+          _storder.clear();
+          _vopen.clear();
+          //dot disconnected structure
+          if (strlen(buffer) > 0)
+            strcat(buffer,".");
+          root = new OBSmiNode (atom);
+          BuildTree(root);
+          FindClosureBonds(mol);
+          if (mol.Has2D())
+            AssignCisTrans(root);
+          ToSmilesString(root,buffer);
+          delete root;
+        }
     
     //If no starting node found e.g. [H][H] CM 21Mar05
     if(root==NULL)
@@ -1727,15 +1740,21 @@ namespace OpenBabel
     _storder.push_back(atom->GetIdx()); //store the atom ordering for stereo
 
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-      if ((!nbr->IsHydrogen()||nbr->GetIsotope()||atom->IsHydrogen()) //so D,T is explicit and H2 works!CM 21Mar05
-          && !_uatoms[nbr->GetIdx()]) 
-        {
-          _ubonds.SetBitOn((*i)->GetIdx());
-          OBSmiNode *next = new OBSmiNode (nbr);
-          next->SetParent(atom);
-          node->SetNextNode(next,(OBBond*)*i);
-          BuildTree(next);
-        }
+      {
+        // Normally skip hydrogens
+        // but D,T is explicit and so is H2
+        // or an H atom involved in a cis/trans '/' or '\' bond spec
+        if ( (!nbr->IsHydrogen() || nbr->GetIsotope() || atom->IsHydrogen() ||
+              (((OBBond*)*i)->IsUp() || ((OBBond*)*i)->IsDown()) )
+             && !_uatoms[nbr->GetIdx()])
+          {
+            _ubonds.SetBitOn((*i)->GetIdx());
+            OBSmiNode *next = new OBSmiNode (nbr);
+            next->SetParent(atom);
+            node->SetNextNode(next,(OBBond*)*i);
+            BuildTree(next);
+          }
+      }
 
     return(true);
   }
