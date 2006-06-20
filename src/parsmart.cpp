@@ -711,11 +711,19 @@ namespace OpenBabel
         return BuildAtomLeaf(AL_NEGATIVE,index);
       
       case '@':
-        if (*LexPtr != '@')
+        if (*LexPtr == '?')
+          {
+            LexPtr++;
+            return(BuildAtomLeaf(AL_CHIRAL,0)); // unspecified
+          }
+        else if (*LexPtr != '@')
           return(BuildAtomLeaf(AL_CHIRAL,AL_ANTICLOCKWISE));
-        LexPtr++;
-        return(BuildAtomLeaf(AL_CHIRAL,AL_CLOCKWISE));
-	
+        else
+          {
+            LexPtr++;
+            return(BuildAtomLeaf(AL_CHIRAL,AL_CLOCKWISE));
+          }
+
       case '^':
         if (isdigit(*LexPtr))
           {
@@ -2775,8 +2783,10 @@ namespace OpenBabel
             case AL_CHIRAL:
               if( expr->leaf.value == AL_CLOCKWISE)
                 return atom->IsClockwise();
-              else
+              else if ( expr->leaf.value == AL_ANTICLOCKWISE)
                 return atom->IsAntiClockwise();
+              else if ( expr->leaf.value == 0) // unspecified
+                return (atom->IsChiral() && !atom->HasChiralitySpecified());
 
             default:
               return false;

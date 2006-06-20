@@ -6,6 +6,9 @@
 	PR#1508783. Fix part of PR#1508741 -- chiral atoms should be fine
 	as root nodes (which preserves the ordering).
 
+	* src/parsmart.cpp: Add support for @? matching unspecified chiral
+	centers. Fixes PR#1364638.
+
 2006-06-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/files/invalid-smarts.txt: Add invalid ring closure bond
