@@ -7,7 +7,8 @@
 	as root nodes (which preserves the ordering).
 
 	* src/parsmart.cpp: Add support for @? matching unspecified chiral
-	centers. Fixes PR#1364638.
+	centers. Fixes PR#1364638. Add support for [H] explicit hydrogen
+	atoms, fixing PR#1463791.
 
 2006-06-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

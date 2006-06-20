@@ -1485,7 +1485,15 @@ namespace OpenBabel
               return ParseSMARTSError(pat,bexpr);
             break;
 	  
-          case('['):  aexpr = ParseAtomExpr(0);
+          case('['):
+            // shortcut for '[H]' primitive (PR#1463791)
+            if (*LexPtr == 'H' && *(LexPtr+1) == ']')
+              {
+                aexpr = GenerateElement(1);
+                LexPtr++; // skip the 'H'
+              }
+            else
+              aexpr = ParseAtomExpr(0);
             vb = (*LexPtr == ':') ? GetVectorBinding():0;
             if( !aexpr || (*LexPtr!=']') )
               return ParseSMARTSError(pat,bexpr);
