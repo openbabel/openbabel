@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -1702,6 +1702,8 @@ namespace OpenBabel
       // or it's involved in a cis/trans '/' or '\' specification
       if ((!atom->IsHydrogen() || atom->GetValence() == 0 || IsCisOrTransH(atom))
           && !_uatoms[atom->GetIdx()])
+        if (!atom->IsChiral() || !mol.HasNonZeroCoords())
+          // don't use chiral root atoms unless this is from a SMILES
         {
           //clear out closures in case structure is dot disconnected
           _vclose.clear();
