@@ -224,26 +224,25 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
     char buffer[BUFF_SIZE];
 
-    snprintf(buffer, BUFF_SIZE, "%d", mol.NumAtoms());
-    ofs << buffer << endl;
-    snprintf(buffer, BUFF_SIZE, "%s\tEnergy: %15.7f",
-             mol.GetTitle(), mol.GetEnergy());
-    ofs << buffer << endl;
+    snprintf(buffer, BUFF_SIZE, "%d\n", mol.NumAtoms());
+    ofs << buffer;
+    if (fabs(mol.GetEnergy()) > 1.0e-3) // nonzero energy field
+      snprintf(buffer, BUFF_SIZE, "%s\tEnergy: %15.7f\n",
+               mol.GetTitle(), mol.GetEnergy());
+    else
+      snprintf(buffer, BUFF_SIZE, "%s\n", mol.GetTitle());
+    ofs << buffer;
 
-    OBAtom *atom;
-    string str,str1;
-    for(i = 1;i <= mol.NumAtoms(); i++)
+    FOR_ATOMS_OF_MOL(atom, mol)
       {
-        atom = mol.GetAtom(i);
-        snprintf(buffer, BUFF_SIZE, "%3s%15.5f%15.5f%15.5f",
+        snprintf(buffer, BUFF_SIZE, "%-3s%15.5f%15.5f%15.5f\n",
                  etab.GetSymbol(atom->GetAtomicNum()),
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ());
-        ofs << buffer << endl;
+        ofs << buffer;
       }
 
     return(true);
