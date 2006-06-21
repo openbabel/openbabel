@@ -1295,6 +1295,7 @@ class OBAtom(OBNodeBase):
     def ExplicitHydrogenCount(*args): return _openbabel.OBAtom_ExplicitHydrogenCount(*args)
     def MemberOfRingCount(*args): return _openbabel.OBAtom_MemberOfRingCount(*args)
     def MemberOfRingSize(*args): return _openbabel.OBAtom_MemberOfRingSize(*args)
+    def CountRingBonds(*args): return _openbabel.OBAtom_CountRingBonds(*args)
     def SmallestBondAngle(*args): return _openbabel.OBAtom_SmallestBondAngle(*args)
     def AverageBondAngle(*args): return _openbabel.OBAtom_AverageBondAngle(*args)
     def BOSum(*args): return _openbabel.OBAtom_BOSum(*args)
@@ -1671,29 +1672,6 @@ class OBRingSearch(object):
 OBRingSearch_swigregister = _openbabel.OBRingSearch_swigregister
 OBRingSearch_swigregister(OBRingSearch)
 
-AE_LEAF = _openbabel.AE_LEAF
-AE_RECUR = _openbabel.AE_RECUR
-AE_NOT = _openbabel.AE_NOT
-AE_ANDHI = _openbabel.AE_ANDHI
-AE_OR = _openbabel.AE_OR
-AE_ANDLO = _openbabel.AE_ANDLO
-AL_CONST = _openbabel.AL_CONST
-AL_MASS = _openbabel.AL_MASS
-AL_AROM = _openbabel.AL_AROM
-AL_ELEM = _openbabel.AL_ELEM
-AL_HCOUNT = _openbabel.AL_HCOUNT
-AL_NEGATIVE = _openbabel.AL_NEGATIVE
-AL_POSITIVE = _openbabel.AL_POSITIVE
-AL_CONNECT = _openbabel.AL_CONNECT
-AL_DEGREE = _openbabel.AL_DEGREE
-AL_IMPLICIT = _openbabel.AL_IMPLICIT
-AL_RINGS = _openbabel.AL_RINGS
-AL_SIZE = _openbabel.AL_SIZE
-AL_VALENCE = _openbabel.AL_VALENCE
-AL_CHIRAL = _openbabel.AL_CHIRAL
-AL_HYB = _openbabel.AL_HYB
-AL_CLOCKWISE = _openbabel.AL_CLOCKWISE
-AL_ANTICLOCKWISE = _openbabel.AL_ANTICLOCKWISE
 class OBSmartsPattern(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr

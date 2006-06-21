@@ -39555,6 +39555,28 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_OBAtom_CountRingBonds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBAtom_CountRingBonds",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_CountRingBonds" "', argument " "1"" of type '" "OpenBabel::OBAtom const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  result = (unsigned int)((OpenBabel::OBAtom const *)arg1)->CountRingBonds();
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_OBAtom_SmallestBondAngle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
@@ -52298,6 +52320,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBAtom_ExplicitHydrogenCount", _wrap_OBAtom_ExplicitHydrogenCount, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_MemberOfRingCount", _wrap_OBAtom_MemberOfRingCount, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_MemberOfRingSize", _wrap_OBAtom_MemberOfRingSize, METH_VARARGS, NULL},
+	 { (char *)"OBAtom_CountRingBonds", _wrap_OBAtom_CountRingBonds, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_SmallestBondAngle", _wrap_OBAtom_SmallestBondAngle, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_AverageBondAngle", _wrap_OBAtom_AverageBondAngle, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_BOSum", _wrap_OBAtom_BOSum, METH_VARARGS, NULL},
@@ -53868,28 +53891,5 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_addvarlink(SWIG_globals(),(char*)"chainsparser",chainsparser_get, chainsparser_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"resdat",resdat_get, resdat_set);
   SWIG_Python_SetConstant(d, "BUFF_SIZE",SWIG_From_int(static_cast< int >(32768)));
-  SWIG_Python_SetConstant(d, "AE_LEAF",SWIG_From_int(static_cast< int >(0x01)));
-  SWIG_Python_SetConstant(d, "AE_RECUR",SWIG_From_int(static_cast< int >(0x02)));
-  SWIG_Python_SetConstant(d, "AE_NOT",SWIG_From_int(static_cast< int >(0x03)));
-  SWIG_Python_SetConstant(d, "AE_ANDHI",SWIG_From_int(static_cast< int >(0x04)));
-  SWIG_Python_SetConstant(d, "AE_OR",SWIG_From_int(static_cast< int >(0x05)));
-  SWIG_Python_SetConstant(d, "AE_ANDLO",SWIG_From_int(static_cast< int >(0x06)));
-  SWIG_Python_SetConstant(d, "AL_CONST",SWIG_From_int(static_cast< int >(0x01)));
-  SWIG_Python_SetConstant(d, "AL_MASS",SWIG_From_int(static_cast< int >(0x02)));
-  SWIG_Python_SetConstant(d, "AL_AROM",SWIG_From_int(static_cast< int >(0x03)));
-  SWIG_Python_SetConstant(d, "AL_ELEM",SWIG_From_int(static_cast< int >(0x04)));
-  SWIG_Python_SetConstant(d, "AL_HCOUNT",SWIG_From_int(static_cast< int >(0x05)));
-  SWIG_Python_SetConstant(d, "AL_NEGATIVE",SWIG_From_int(static_cast< int >(0x06)));
-  SWIG_Python_SetConstant(d, "AL_POSITIVE",SWIG_From_int(static_cast< int >(0x07)));
-  SWIG_Python_SetConstant(d, "AL_CONNECT",SWIG_From_int(static_cast< int >(0x08)));
-  SWIG_Python_SetConstant(d, "AL_DEGREE",SWIG_From_int(static_cast< int >(0x09)));
-  SWIG_Python_SetConstant(d, "AL_IMPLICIT",SWIG_From_int(static_cast< int >(0x0a)));
-  SWIG_Python_SetConstant(d, "AL_RINGS",SWIG_From_int(static_cast< int >(0x0b)));
-  SWIG_Python_SetConstant(d, "AL_SIZE",SWIG_From_int(static_cast< int >(0x0c)));
-  SWIG_Python_SetConstant(d, "AL_VALENCE",SWIG_From_int(static_cast< int >(0x0d)));
-  SWIG_Python_SetConstant(d, "AL_CHIRAL",SWIG_From_int(static_cast< int >(0x0e)));
-  SWIG_Python_SetConstant(d, "AL_HYB",SWIG_From_int(static_cast< int >(0x0f)));
-  SWIG_Python_SetConstant(d, "AL_CLOCKWISE",SWIG_From_int(static_cast< int >(1)));
-  SWIG_Python_SetConstant(d, "AL_ANTICLOCKWISE",SWIG_From_int(static_cast< int >(2)));
 }
 
