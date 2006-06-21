@@ -138,6 +138,33 @@ namespace OpenBabel
 #define BS_RING            0x07E0
 #define BS_DEFAULT         0x01E7
 
+#define AE_LEAF        0x01
+#define AE_RECUR       0x02
+#define AE_NOT         0x03
+#define AE_ANDHI       0x04
+#define AE_OR          0x05
+#define AE_ANDLO       0x06
+
+#define AL_CONST       0x01
+#define AL_MASS        0x02
+#define AL_AROM        0x03
+#define AL_ELEM        0x04
+#define AL_HCOUNT      0x05
+#define AL_NEGATIVE    0x06
+#define AL_POSITIVE    0x07
+#define AL_CONNECT     0x08
+#define AL_DEGREE      0x09
+#define AL_IMPLICIT    0x0a
+#define AL_RINGS       0x0b
+#define AL_SIZE        0x0c
+#define AL_VALENCE     0x0d
+#define AL_CHIRAL      0x0e
+#define AL_HYB         0x0f
+#define AL_RINGCONNECT 0x10
+#define AL_CLOCKWISE      1
+#define AL_ANTICLOCKWISE  2
+#define AL_UNSPECIFIED    0
+
   static char *MainPtr;
   static char *LexPtr;
 
@@ -714,7 +741,7 @@ namespace OpenBabel
         if (*LexPtr == '?')
           {
             LexPtr++;
-            return(BuildAtomLeaf(AL_CHIRAL,0)); // unspecified
+            return(BuildAtomLeaf(AL_CHIRAL,AL_UNSPECIFIED)); // unspecified
           }
         else if (*LexPtr != '@')
           return(BuildAtomLeaf(AL_CHIRAL,AL_ANTICLOCKWISE));
@@ -1138,6 +1165,20 @@ namespace OpenBabel
           }
         return BuildAtomLeaf(AL_VALENCE,1);
         break;
+
+      case('x'):
+        if( isdigit(*LexPtr) )
+          {
+            index = 0;
+            while( isdigit(*LexPtr) )
+              index = index*10 + ((*LexPtr++)-'0');
+            if (index == 0) // default to 1 (if no number present)
+              index = 1;
+            return( BuildAtomLeaf(AL_RINGCONNECT,index) );
+          }
+        return( BuildAtomLeaf(AL_RINGCONNECT,1) );
+        break;
+
       }
     LexPtr--;
     return (AtomExpr*)0;
@@ -2793,8 +2834,11 @@ namespace OpenBabel
                 return atom->IsClockwise();
               else if ( expr->leaf.value == AL_ANTICLOCKWISE)
                 return atom->IsAntiClockwise();
-              else if ( expr->leaf.value == 0) // unspecified
+              else if ( expr->leaf.value == AL_UNSPECIFIED)
                 return (atom->IsChiral() && !atom->HasChiralitySpecified());
+
+            case AL_RINGCONNECT:
+              return(expr->leaf.value == (int)atom->CountRingBonds());
 
             default:
               return false;

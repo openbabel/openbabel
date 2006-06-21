@@ -173,24 +173,24 @@ namespace OpenBabel
   class OBAPI OBAtom : public OBNodeBase
     {
     protected:
-      char                          _ele;               //!< atomic number (type char to minimize space -- allows for 0..255 elements)
+      char                          _ele;       //!< atomic number (type char to minimize space -- allows for 0..255 elements)
       char                          _impval;    //!< implicit valence
       char                          _type[6];   //!< atomic type
       short                         _fcharge;   //!< formal charge
       unsigned short                _isotope;   //!< isotope (0 = most abundant)
       short                           _spinmultiplicity;//!< atomic spin, e.g., 2 for radical  1 or 3 for carbene
 
-      //unsigned short int          _idx;               //!< index in parent (inherited)
+      //unsigned short int          _idx;       //!< index in parent (inherited)
       unsigned short            _cidx;          //!< index into coordinate array
-      unsigned short                _hyb;               //!< hybridization
+      unsigned short                _hyb;       //!< hybridization
       unsigned short                _flags;     //!< bitwise flags (e.g. aromaticity)
       double                         _pcharge;  //!< partial charge
-      double                       **_c;                //!< coordinate array in double*
+      double                       **_c;        //!< coordinate array in double*
       vector3                       _v;         //!< coordinate vector
       OBResidue                    *_residue;   //!< parent residue (if applicable)
-      //OBMol                      *_parent;      //!< parent molecule (inherited)
+      //OBMol                      *_parent;    //!< parent molecule (inherited)
       //vector<OBBond*>             _bond;      //!< connections (inherited)
-      //   std::vector<OBGenericData*>   _vdata;        //!< custom data
+      //   std::vector<OBGenericData*>   _vdata;//!< custom data
 
       int  GetFlag() const    {  return(_flags);  }
       void SetFlag(int flag)  { _flags |= flag;   }
@@ -405,6 +405,8 @@ namespace OpenBabel
       unsigned int  MemberOfRingCount()     const;
       //! The size of the smallest ring that contains this atom (0 if not in a ring)
       unsigned int  MemberOfRingSize()	  const;
+      //! \return The number of explicit ring connections to this atom
+      unsigned int  CountRingBonds() const;
       //! The smallest angle of bonds to this atom
       double	  SmallestBondAngle();
       //! The average angle of bonds to this atom
@@ -629,7 +631,11 @@ namespace OpenBabel
 
       //! \name property request methods
       //@{
+      //! \return Is the bond aromatic? 
+      //!  (Note that the two atoms of the bond may be aromatic, 
+      //!   but not the bond)
       bool IsAromatic() const;
+      //! \return Is the bond part of a ring?
       bool IsInRing() const;
       //! Is the bond a rotatable bond?
       //!  Currently, this function classifies any bond with at least one heavy

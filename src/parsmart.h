@@ -29,31 +29,6 @@ GNU General Public License for more details.
 /*  SMARTS Data Structures  */
 /*==========================*/
 
-#define AE_LEAF      0x01
-#define AE_RECUR     0x02
-#define AE_NOT       0x03
-#define AE_ANDHI     0x04
-#define AE_OR        0x05
-#define AE_ANDLO     0x06
-
-#define AL_CONST     0x01
-#define AL_MASS      0x02
-#define AL_AROM      0x03
-#define AL_ELEM      0x04
-#define AL_HCOUNT    0x05
-#define AL_NEGATIVE  0x06
-#define AL_POSITIVE  0x07
-#define AL_CONNECT   0x08
-#define AL_DEGREE    0x09
-#define AL_IMPLICIT  0x0a
-#define AL_RINGS     0x0b
-#define AL_SIZE      0x0c
-#define AL_VALENCE   0x0d
-#define AL_CHIRAL    0x0e
-#define AL_HYB       0x0f
-#define AL_CLOCKWISE     1
-#define AL_ANTICLOCKWISE 2
-
 namespace OpenBabel
 {
 

@@ -1,3 +1,20 @@
+2006-06-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.h, src/atom.cpp (CountRingBonds): New method to return
+	the number of explicit ring connections to an atom.
+
+	* src/parsmart.h, src/parsmart.cpp: Add support for Daylight 'x'
+	primitive for total # of ring connections using above method.
+
+	* test/files/smartstest.txt, test/files/smartsresults.txt:
+	Test 'x' patterns above.
+
+	* scripts/*: Regenerate to add new OBAtom::CountRingBonds()
+	method.
+
+	* src/formats/xyzformat.cpp (WriteMolecule): Only output "Energy" in
+	title if it's nonzero. General cleanup.
+
 2006-06-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/smilesformat.cpp: Allow use of H atoms for a root
