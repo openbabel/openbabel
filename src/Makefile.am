@@ -26,6 +26,7 @@ libopenbabel_la_SOURCES = \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
 		fingerprint.cpp generic.cpp grid.cpp \
 		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
+		newlinebuf.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
 		obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
@@ -50,6 +51,7 @@ libopenbabelinclude_HEADERS = \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fingerprint.h \
 		generic.h grid.h kinetics.h \
+		newlinebuf.h \
 		matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \
 		obutil.h \

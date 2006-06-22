@@ -1,3 +1,16 @@
+2006-06-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/generic.h, src/generic.cpp (OBUnitCell): Add lattice type
+	definition, requested by Carsten Niehaus and add GetCellVolume()
+	method contributed by Carsten.
+
+	* src/newlinebuf.h, src/newlinebuf.cpp: New "filtering streambuf"
+	class to filter line-endings, e.g. \r\n or \r -> \n expected by
+	much of the code. Fixes PR#1510008 and goes towards feature
+	request PR#1499615. Currently unused until testing is complete.
+
+	* src/Makefile.am, src/Makefile.in: Add newlinebuf.
+
 2006-06-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.h, src/atom.cpp (CountRingBonds): New method to return
