@@ -328,15 +328,22 @@ public:
 //!  (a, b, c, alpha, beta, gamma)
 class OBAPI OBUnitCell: public OBGenericData
 {
-protected:
+ public:
+    enum LatticeType { Undefined, 
+                       Triclinic, Monoclinic, Orthorhombic, Tetragonal, 
+                       Rhombohedral, Hexagonal, Cubic};
+
+ protected:
     double _a, _b, _c, _alpha, _beta, _gamma;
     vector3 _offset; //!< offset for origin
     vector3 _v1, _v2, _v3; //!< translation vectors
     std::string _spaceGroup;
+    LatticeType _lattice;
 public:
     OBUnitCell();
     OBUnitCell(const OBUnitCell &);
-		virtual OBGenericData* Clone(OBBase* parent) const{return new OBUnitCell(*this);}
+		virtual OBGenericData* Clone(OBBase* parent) const
+      {return new OBUnitCell(*this);}
     ~OBUnitCell()    {}
 
     OBUnitCell &operator=(const OBUnitCell &);
@@ -351,6 +358,8 @@ public:
     //! Does not create an OBSymmetryData entry or attempt to convert
     //!  between different symbol notations
     void SetSpaceGroup(const std::string sg) { _spaceGroup = sg; }
+    //! Set the Bravais lattice type for this unit cell
+    void SetLatticeType(const LatticeType lt) { _lattice = lt; }
 
     double GetA()    { return(_a);    }
     double GetB()    { return(_b);    }
@@ -360,6 +369,8 @@ public:
     double GetGamma(){ return(_gamma);}
     vector3 GetOffset() { return(_offset); }
     const std::string GetSpaceGroup() { return(_spaceGroup); }
+    //! \return lattice type (based on angles and distances)
+    LatticeType GetLatticeType();
 
     //! \return v1, v2, v3 cell vectors
     std::vector<vector3> GetCellVectors();
@@ -369,6 +380,8 @@ public:
     matrix3x3 GetOrthoMatrix();
     //! \return The fractionalization matrix, used for converting from Cartesian to fractional coords.
     matrix3x3 GetFractionalMatrix();
+    //! \return The cell volume (in Angstroms^3)
+    double GetCellVolume();
 };
 
 //! \brief Used to hold data on conformers or geometry optimization steps
