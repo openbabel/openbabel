@@ -4,7 +4,7 @@
 	search iterators for atoms through an OBMol. Fixes feature request
 	PR#1273213.
 
-	* src/basevec.h: Minor cleanup of #include paths.
+	* src/bitvec.h: Minor cleanup of #include paths.
 
 2006-06-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
