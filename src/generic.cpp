@@ -443,7 +443,7 @@ namespace OpenBabel
         result = _a * _a * _c;
         break;
       case Rhombohedral:
-        result = pow( _a, 3 ) 
+        result = _a * _a * _a
           * sqrt(1
                  - SQUARE(cos( _alpha ))
                  - SQUARE(cos( _beta ))
@@ -452,10 +452,10 @@ namespace OpenBabel
                  );
         break;
       case Hexagonal:
-        result = pow( 3, 1/3 ) * _a * _a * _c / 2;
+        result = pow( 3.0, 0.333333333 ) * _a * _a * _c / 2;
         break;
       case Cubic:
-        result = pow( _a, 3 );
+        result = _a * _a * _a;
         break;
       default:
         result = 0.0f;
