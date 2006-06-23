@@ -2,7 +2,7 @@
 obiter.h - STL-style iterators for Open Babel.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -20,7 +20,13 @@ GNU General Public License for more details.
 #ifndef OB_OBITER_H
 #define OB_OBITER_H
 
+#include "babelconfig.h"
+#include "base.h"
+#include "bitvec.h"
+
 #include <vector>
+#include <stack>
+#include <queue>
 
 namespace OpenBabel
 {
@@ -31,11 +37,11 @@ namespace OpenBabel
   class OBResidue;
 
   //! \brief Iterate over all atoms in an OBMol
-class OBAPI OBMolAtomIter {
+  class OBAPI OBMolAtomIter {
     std::vector<OBNodeBase*>::iterator _i;
     OBMol *_parent;
     OBAtom *_ptr;
-public:
+  public:
 
     OBMolAtomIter()              { _parent = NULL; _ptr = NULL; }
     OBMolAtomIter(OBMol *mol);
@@ -47,14 +53,54 @@ public:
     OBMolAtomIter operator++(int);
     OBAtom* operator->() const   { return _ptr;      }
     OBAtom& operator*() const    { return *_ptr;     }
-};
+  };
+
+  //! \brief Iterate over all atoms in an OBMol in a depth-first search (DFS)
+  class OBAPI OBMolAtomDFSIter {
+    OBMol               *_parent;
+    OBAtom              *_ptr;
+    OBBitVec             _notVisited;
+    std::stack<OBAtom *> _stack;
+  public:
+
+    OBMolAtomDFSIter() : _parent(NULL), _ptr(NULL) { }
+    OBMolAtomDFSIter(OBMol *mol);
+    OBMolAtomDFSIter(OBMol &mol);
+    OBMolAtomDFSIter(const OBMolAtomDFSIter &ai);
+
+    OBMolAtomDFSIter& operator=(const OBMolAtomDFSIter &ai);
+    operator bool() const        { return _ptr != NULL; }
+    OBMolAtomDFSIter operator++(int);
+    OBAtom* operator->() const   { return _ptr;      }
+    OBAtom& operator*() const    { return *_ptr;     }
+  };
+
+  //! \brief Iterate over all atoms in an OBMol in a breadth-first search (BFS)
+  class OBAPI OBMolAtomBFSIter {
+    OBMol               *_parent;
+    OBAtom              *_ptr;
+    OBBitVec             _notVisited;
+    std::queue<OBAtom *> _queue;
+  public:
+
+    OBMolAtomBFSIter();
+    OBMolAtomBFSIter(OBMol *mol);
+    OBMolAtomBFSIter(OBMol &mol);
+    OBMolAtomBFSIter(const OBMolAtomBFSIter &ai);
+
+    OBMolAtomBFSIter& operator=(const OBMolAtomBFSIter &ai);
+    operator bool() const        { return _ptr != NULL; }
+    OBMolAtomBFSIter operator++(int);
+    OBAtom* operator->() const   { return _ptr;      }
+    OBAtom& operator*() const    { return *_ptr;     }
+  };
 
   //! \brief Iterate over all bonds in an OBMol
-class OBAPI OBMolBondIter {
+  class OBAPI OBMolBondIter {
     std::vector<OBEdgeBase*>::iterator _i;
     OBMol *_parent;
     OBBond *_ptr;
-public:
+  public:
 
     OBMolBondIter()              { _parent = NULL; _ptr = NULL; }
     OBMolBondIter(OBMol *mol);
@@ -66,14 +112,14 @@ public:
     OBMolBondIter operator++(int);
     OBBond* operator->() const   { return _ptr;      }
     OBBond& operator*() const    { return *_ptr;     }
-};
+  };
 
   //! \brief Iterate over all neighboring atoms to an OBAtom
-class OBAPI OBAtomAtomIter {
+  class OBAPI OBAtomAtomIter {
     std::vector<OBEdgeBase*>::iterator _i;
     OBAtom *_parent;
     OBAtom *_ptr;
-public:
+  public:
 
     OBAtomAtomIter()             { _parent = NULL; _ptr = NULL; }
     OBAtomAtomIter(OBAtom *atm);
@@ -85,14 +131,14 @@ public:
     OBAtomAtomIter operator++(int);
     OBAtom* operator->() const   { return _ptr; }
     OBAtom& operator*() const    { return *_ptr;}
-};
+  };
 
   //! \brief Iterate over all bonds on an OBAtom
-class OBAPI OBAtomBondIter {
+  class OBAPI OBAtomBondIter {
     std::vector<OBEdgeBase*>::iterator _i;
     OBAtom *_parent;
     OBBond *_ptr;
-public:
+  public:
 
     OBAtomBondIter()             { _parent = NULL; _ptr = NULL; }
     OBAtomBondIter(OBAtom *atm);
@@ -104,14 +150,14 @@ public:
     OBAtomBondIter operator++(int);
     OBBond* operator->() const   { return _ptr; }
     OBBond& operator*() const    { return *_ptr;}
-};
+  };
 
   //! \brief Iterate over all residues in an OBMol
-class OBAPI OBResidueIter {
+  class OBAPI OBResidueIter {
     std::vector<OBResidue*>::iterator _i;
     OBResidue *_ptr;
     OBMol *_parent;
-public:
+  public:
 
     OBResidueIter()              { _parent = NULL; _ptr = NULL; }
     OBResidueIter(OBMol *mol);
@@ -123,14 +169,14 @@ public:
     OBResidueIter operator++(int);
     OBResidue* operator->() const{ return _ptr; }
     OBResidue& operator*() const { return *_ptr;}
-};
+  };
 
   //! \brief Iterate over all atoms in an OBResidue
-class OBAPI OBResidueAtomIter {
+  class OBAPI OBResidueAtomIter {
     std::vector<OBAtom*>::iterator _i;
     OBResidue *_parent;
     OBAtom    *_ptr;
-public:
+  public:
 
     OBResidueAtomIter()          { _parent = NULL; _ptr = NULL; }
     OBResidueAtomIter(OBResidue *res);
@@ -142,7 +188,7 @@ public:
     OBResidueAtomIter operator++ (int);
     OBAtom *operator->() const   { return _ptr; }
     OBAtom &operator*() const    { return *_ptr;}
-};
+  };
 
 #define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; a++ )
 #define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; b++ )
@@ -150,6 +196,8 @@ public:
 #define FOR_BONDS_OF_ATOM(b,p)    for( OBAtomBondIter    b(p); b; b++ )
 #define FOR_RESIDUES_OF_MOL(r,m)  for( OBResidueIter     r(m); r; r++ )
 #define FOR_ATOMS_OF_RESIDUE(a,r) for( OBResidueAtomIter a(r); a; a++ )
+#define FOR_DFS_OF_MOL(a,m)       for( OBMolAtomDFSIter  a(m); a; a++ )
+#define FOR_BFS_OF_MOL(a,m)       for( OBMolAtomBFSIter  a(m); a; a++ )
 
 } // namespace OpenBabel
 #endif // OB_OBITER_H

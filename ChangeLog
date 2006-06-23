@@ -1,3 +1,11 @@
+2006-06-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obiter.h, src/obiter.cpp: Add depth-first and breadth-first
+	search iterators for atoms through an OBMol. Fixes feature request
+	PR#1273213.
+
+	* src/basevec.h: Minor cleanup of #include paths.
+
 2006-06-22  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/generic.h, src/generic.cpp (OBUnitCell): Add lattice type
