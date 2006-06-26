@@ -21,9 +21,6 @@ GNU General Public License for more details.
 #include <string>
 #include <iomanip>
 #include "obmolecformat.h"
-#include "oberror.h"
-#include "obconversion.h"
-#include "reaction.h"
 #include "kinetics.h"
 
 using namespace std;

@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2002-2005 by Geoffrey Hutchison
+Copyright (C) 2002-2006 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -14,7 +14,6 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "obmolecformat.h"
-#include "obconversion.h"
 
 using namespace std;
 namespace OpenBabel

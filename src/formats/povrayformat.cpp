@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2002 by Steffen Reith <streit@streit.cc>
-Some portions Copyright (C) 2003-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2003-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,6 @@ GNU General Public License for more details.
 
 /* ---- OpenBabel include ---- */
 #include "obmolecformat.h"
-#include "obconversion.h"
 
 /* ---- C++ includes ---- */
 #include <string>

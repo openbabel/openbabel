@@ -22,7 +22,6 @@ GNU General Public License for more details.
 
 #include "mol.h"
 #include "obiter.h"
-#include "bitvec.h"
 
 using namespace std;
 

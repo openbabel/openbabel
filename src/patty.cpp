@@ -20,8 +20,6 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "mol.h"
-#include "obutil.h"
-#include "parsmart.h"
 #include "patty.h"
 
 // Simple programmable atom typer

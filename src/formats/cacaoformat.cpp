@@ -16,8 +16,6 @@ GNU General Public License for more details.
 
 #include "obmolecformat.h"
 #include "math/matrix3x3.h"
-#include "obconversion.h"
-#include "obmolecformat.h"
 
 using namespace std;
 namespace OpenBabel

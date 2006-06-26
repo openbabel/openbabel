@@ -9,7 +9,7 @@
  **********************************************************
  *   Reader and Writer for Yasara Objects (*.YOB files)   *
  **********************************************************
- *            (C) 2002-2005 by Elmar Krieger              *
+ *            (C) 2002-2006 by Elmar Krieger              *
  **********************************************************
 
 This reader/writer for Yasara objects is free software;
@@ -31,8 +31,6 @@ typedef unsigned int uint32;
 typedef short int16;
 typedef unsigned short uint16;
 
-#include "mol.h"
-#include "obconversion.h"
 #include "obmolecformat.h"
 
 #define mem_alloc malloc

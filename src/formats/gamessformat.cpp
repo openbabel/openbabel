@@ -15,8 +15,6 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "obmolecformat.h"
-#include "obconversion.h"
-#include "obmolecformat.h"
 
 using namespace std;
 namespace OpenBabel

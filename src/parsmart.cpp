@@ -22,7 +22,6 @@ GNU General Public License for more details.
 #include <iomanip>
 
 #include "mol.h"
-#include "bitvec.h"
 #include "parsmart.h"
 
 using namespace std;

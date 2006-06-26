@@ -1,7 +1,7 @@
 /**********************************************************************
 kekulize.cpp - Alternate algorithm to kekulize a molecule.
 
-Copyright (C) 2004-2005 by Fabien Fontaine
+Copyright (C) 2004-2006 by Fabien Fontaine
 Some portions Copyright (C) 2005-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
@@ -20,7 +20,6 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "mol.h"
-#include "oberror.h"
 
 #include <sstream>
 

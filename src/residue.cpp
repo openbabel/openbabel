@@ -2,7 +2,7 @@
 residue.cpp - Handle macromolecule residues.
  
 Copyright (C) 2001, 2002  OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -41,7 +41,6 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 #endif
 
 #include "mol.h"
-#include "bitvec.h"
 #include "residue.h"
 
 using namespace std;

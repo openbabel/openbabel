@@ -17,7 +17,6 @@ GNU General Public License for more details.
 
 #include "babelconfig.h"
 #include "obmolecformat.h"
-#include "obconversion.h"
 #include <stdlib.h>
 
 using namespace std;

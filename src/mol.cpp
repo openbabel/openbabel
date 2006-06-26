@@ -24,7 +24,6 @@ GNU General Public License for more details.
 #include "phmodel.h"
 #include "bondtyper.h"
 #include "math/matrix3x3.h"
-#include "obiter.h"
 
 #include <sstream>
 

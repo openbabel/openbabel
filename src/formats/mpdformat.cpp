@@ -19,8 +19,6 @@ GNU General Public License for more details.
 
 #include "babelconfig.h"
 
-#include "mol.h"     // includes standard libraries for Openbabel formats
-#include "obconversion.h"
 #include "obmolecformat.h"
 
 #define LAYER_DEPTH 2 // cannot increase past 2 without adding more *nbr atom pointers and loops

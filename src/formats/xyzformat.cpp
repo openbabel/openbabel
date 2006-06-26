@@ -14,8 +14,6 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "babelconfig.h"
-#include "mol.h"
-#include "obconversion.h"
 #include "obmolecformat.h"
 
 #include <sstream>

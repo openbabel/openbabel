@@ -15,8 +15,6 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
 
-#include "mol.h"
-#include "obconversion.h"
 #include "obmolecformat.h"
 
 const double AAU = 0.5291772108;  // Ångström per bohr (CODATA 2002)

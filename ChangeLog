@@ -3,6 +3,9 @@
 	* src/base.h src/generic.cpp, src/generic.h, src/mol.h,
 	src/bond.cpp: Documentation changes, including several from Carsten.
 
+	* src/*.cpp: Remove un-needed header #includes turned up by a
+	script adapted from KDE suggested by Carsten.
+
 2006-06-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obiter.h, src/obiter.cpp: Add depth-first and breadth-first

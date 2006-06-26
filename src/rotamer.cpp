@@ -2,7 +2,7 @@
 rotamer.cpp - Handle rotamer list data.
  
 Copyright (C) 1998, 1999, 2000-2002 OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -19,9 +19,6 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "rotamer.h"
-#include "mol.h"
-#include "obutil.h"
-#include "rotor.h"
 
 #define OB_TITLE_SIZE     254
 #define OB_BINARY_SETWORD 32

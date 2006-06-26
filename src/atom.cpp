@@ -20,7 +20,6 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "mol.h"
-#include "typer.h"
 #include "molchrg.h"
 #include "phmodel.h"
 

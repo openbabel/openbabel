@@ -21,8 +21,6 @@ GNU General Public License for more details.
 #include <list>
 
 #include "mol.h"
-#include "obutil.h"
-#include "matrix.h"
 #include "chiral.h"
 #include "math/matrix3x3.h"
 

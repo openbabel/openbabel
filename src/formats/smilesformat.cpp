@@ -17,7 +17,6 @@ GNU General Public License for more details.
 //  use std::string::reserve (or different allocator) to avoid resize slowdown
 
 #include "babelconfig.h"
-#include "obconversion.h"
 #include "obmolecformat.h"
 
 using namespace std;

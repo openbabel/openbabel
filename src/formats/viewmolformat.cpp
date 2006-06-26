@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2002-2005 by Geoffrey Hutchison
+Copyright (C) 2002-2006 by Geoffrey Hutchison
 Based on code Copyright (C) 1999 Joerg-Ruediger Hill
 Some portions Copyright (C) 2004 by Chris Morley
  
@@ -14,8 +14,6 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
 
-#include "mol.h"
-#include "obconversion.h"
 #include "obmolecformat.h"
 
 using namespace std;

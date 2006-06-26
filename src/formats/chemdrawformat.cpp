@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -13,8 +13,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
-#include "mol.h"
-#include "obconversion.h"
 #include "obmolecformat.h"
 
 using namespace std;

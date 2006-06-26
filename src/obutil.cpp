@@ -2,7 +2,7 @@
 obutil.cpp - Various utility methods.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -19,7 +19,6 @@ GNU General Public License for more details.
 
 #include "babelconfig.h"
 #include "math/matrix3x3.h"
-#include "math/vector3.h"
 #include "mol.h"
 #include "obutil.h"
 

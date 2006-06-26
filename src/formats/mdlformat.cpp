@@ -1,7 +1,7 @@
 /**********************************************************************
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey Hutchison
-Portions Copyright (C) 2004-2005 by Chris Morley
+Portions Copyright (C) 2004-2006 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -25,8 +25,6 @@ GNU General Public License for more details.
 #include <vector>
 #include <iomanip>
 #include <map>
-#include "mol.h"
-#include "obconversion.h"
 #include "obmolecformat.h"
 #include "chiral.h"
 
