@@ -81,7 +81,7 @@ namespace OpenBabel
       void                              DeleteData(OBGenericData*);
       //! delete all of the given generic data from this object
       void                              DeleteData(std::vector<OBGenericData*>&);
-      //! \adds a data object; does nothing if d==NULL
+      //! adds a data object; does nothing if d==NULL
       void                              SetData(OBGenericData *d)
         {
           if(d)

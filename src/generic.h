@@ -340,6 +340,7 @@ class OBAPI OBUnitCell: public OBGenericData
     std::string _spaceGroup;
     LatticeType _lattice;
 public:
+	//! public contructor
     OBUnitCell();
     OBUnitCell(const OBUnitCell &);
 		virtual OBGenericData* Clone(OBBase* parent) const
@@ -348,11 +349,21 @@ public:
 
     OBUnitCell &operator=(const OBUnitCell &);
 
+	/*!
+	 **\brief Sets the vectors and angles of the unitcell
+	 **\param a The length a
+	 **\param b The length b
+	 **\param c The length c
+	 **\param alpha The angle alpha
+	 **\param beta The angle beta
+	 **\param gamma The angle gamma
+	 */
     void SetData(const double a, const double b, const double c,
                  const double alpha, const double beta, const double gamma)
     {   _a = a; _b = b; _c = c;
         _alpha = alpha; _beta = beta; _gamma = gamma; }
     void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
+	//! set the offset to the origin to @p v1
     void SetOffset(const vector3 v1) { _offset = v1; }
     //! Set the space group symbol for this unit cell.
     //! Does not create an OBSymmetryData entry or attempt to convert
@@ -361,11 +372,17 @@ public:
     //! Set the Bravais lattice type for this unit cell
     void SetLatticeType(const LatticeType lt) { _lattice = lt; }
 
+	//! \return Return vector a
     double GetA()    { return(_a);    }
+	//! \return Return vector b
     double GetB()    { return(_b);    }
+	//! \return Return vector c
     double GetC()    { return(_c);    }
+	//! \return Return angle alpha
     double GetAlpha(){ return(_alpha);}
+	//! \return Return angle beta
     double GetBeta() { return(_beta); }
+	//! \return Return angle gamma
     double GetGamma(){ return(_gamma);}
     vector3 GetOffset() { return(_offset); }
     const std::string GetSpaceGroup() { return(_spaceGroup); }

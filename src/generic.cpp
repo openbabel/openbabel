@@ -276,7 +276,17 @@ namespace OpenBabel
     return(*this);
   }
 
-  //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertCartesianIntoNotionalCoordinates">blue-obelisk:convertCartesianIntoNotionalCoordinates</a>
+	/*!
+	 ** The angles and lengths of the unitcell will be calculated from the
+	 ** vectors @p v1, @p v2 and @p v3. Those vectors will as well be
+	 ** stored internally.
+	 **Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertCartesianIntoNotionalCoordinates">blue-obelisk:convertCartesianIntoNotionalCoordinates</a>
+	 **\brief Sets the vectors, angles and lengths of the unitcell
+	 **\param v1 The x-vector
+	 **\param v2 The y-vector
+	 **\param v3 The z-vector
+	 **\see OBUnitCell::GetCellVectors
+	 */
   void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
   {
     _a = v1.length();
