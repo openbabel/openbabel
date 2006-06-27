@@ -31,13 +31,8 @@ namespace OpenBabel
   /** \class OBMolAtomIter
 
   To facilitate iteration through all atoms in a molecule, without resorting
-  to atom indexes (which may change in the future) or the OBMol::BeginAtom()
-  and OBMol::NextAtom() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
-
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
+  to atom indexes (which <strong>will</strong> change in the future), a 
+  variety of iterator methods are provided.
 
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
@@ -96,7 +91,40 @@ namespace OpenBabel
     return *this;
   }
 
-  //! \class OBMolAtomDFSIter
+  /** \class OBMolAtomDFSIter
+
+  To facilitate iteration through all atoms in a molecule, without resorting
+  to atom indexes (which <strong>will</strong> change in the future), a 
+  variety of iterator methods are provided.
+
+  This class provides a depth-first search ordering of atoms. When one
+  connected component is exhausted, the iterator will start at another until
+  all atoms are visited. No guarantee is made as to the ordering of
+  iteration through connected components.
+
+  The iterator maintains an internal stack and list of visited
+  atoms. As such it may not be appropriate for memory-constrained
+  situations when iterating through large molecules.
+
+  Use of this iterator has been made significantly easier by a series
+  of macros in the obiter.h header file:
+
+  \code
+  \#define FOR_DFS_OF_MOL(a,m)     for( OBMolAtomDFSIter     a(m); a; a++ )
+  \endcode
+
+  Here is an example:
+  \code
+  #include "obiter.h"
+  #include "mol.h"
+
+  OBMol mol;
+  FOR_DFS_OF_MOL(a, mol)
+  {
+  
+  }
+  \endcode
+  **/
 
   OBMolAtomDFSIter::OBMolAtomDFSIter(OBMol *mol):
     _parent(mol), _ptr(_parent->GetFirstAtom())
@@ -163,7 +191,10 @@ namespace OpenBabel
       {
         int next = _notVisited.FirstBit();
         if (next != _notVisited.EndBit())
-          _ptr = _parent->GetAtom(next + 1);
+          {
+            _ptr = _parent->GetAtom(next + 1);
+            _notVisited.SetBitOff(next);
+          }
       }
 
     if (_ptr)
@@ -182,8 +213,40 @@ namespace OpenBabel
     return *this;
   }
 
+  /** \class OBMolAtomBFSIter
 
-  //! \class OBMolAtomBFSIter
+  To facilitate iteration through all atoms in a molecule, without resorting
+  to atom indexes (which <strong>will</strong> change in the future), a 
+  variety of iterator methods are provided.
+
+  This class provides a breadth-first search ordering of atoms. When one
+  connected component is exhausted, the iterator will start at another until
+  all atoms are visited. No guarantee is made as to the ordering of
+  iteration through connected components.
+
+  The iterator maintains an internal queue and list of visited
+  atoms. As such it may not be appropriate for memory-constrained
+  situations when iterating through large molecules.
+
+  Use of this iterator has been made significantly easier by a series
+  of macros in the obiter.h header file:
+
+  \code
+  \#define FOR_BFS_OF_MOL(a,m)     for( OBMolAtomBFSIter     a(m); a; a++ )
+  \endcode
+
+  Here is an example:
+  \code
+  #include "obiter.h"
+  #include "mol.h"
+
+  OBMol mol;
+  FOR_BFS_OF_MOL(a, mol)
+  {
+  
+  }
+  \endcode
+  **/
 
   OBMolAtomBFSIter::OBMolAtomBFSIter(OBMol *mol):
     _parent(mol), _ptr(_parent->GetFirstAtom())
@@ -250,7 +313,10 @@ namespace OpenBabel
       {
         int next = _notVisited.FirstBit();
         if (next != _notVisited.EndBit())
-          _ptr = _parent->GetAtom(next + 1);
+          {
+            _ptr = _parent->GetAtom(next + 1);
+            _notVisited.SetBitOff(next);
+          }
       }
 
     if (_ptr)
@@ -272,13 +338,8 @@ namespace OpenBabel
   /** \class OBMolBondIter
 
   To facilitate iteration through all bonds in a molecule, without resorting
-  to bond indexes (which may change in the future) or the OBMol::BeginBond()
-  and OBMol::NextBond() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
-
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
+  to bond indexes (which may change in the future), a variety of
+  iterators are provided.
 
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
@@ -340,13 +401,8 @@ namespace OpenBabel
   /** \class OBAtomAtomIter
 
   To facilitate iteration through all neighbors of an atom, without resorting
-  to bond indexes (which may change in the future) or the OBAtom::BeginNbr()
-  and OBAtom::NextNbr() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
-
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
+  to bond indexes (which may change in the future), a variety of
+  iterator classes and methods are provided.
 
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
@@ -410,13 +466,8 @@ namespace OpenBabel
   /** \class OBAtomBondIter
 
   To facilitate iteration through all bonds on an atom, without resorting
-  to bond indexes (which may change in the future) or the OBAtom::BeginBond()
-  and OBAtom::NextBond() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
-
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
+  to bond indexes (which may change in the future) a variety of
+  iterator classes and methods are provided.
 
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
@@ -479,13 +530,8 @@ namespace OpenBabel
   /** \class OBResidueIter
 
   To facilitate iteration through all residues in a molecule, without resorting
-  to residue indexes (which may change in the future) or the OBMol::BeginResidue()
-  and OBMol::NextResidue() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
-
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
+  to residue indexes (which may change in the future) a variety of
+  iterator classes and methods are provided.
 
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
@@ -550,13 +596,8 @@ namespace OpenBabel
   /** \class OBResidueAtomIter
 
   To facilitate iteration through all atoms in a residue, without resorting
-  to atom indexes (which may change in the future) or the OBResidue::BeginAtom()
-  and OBResidue::NextAtom() methods which may only be safely used by one method
-  at once (e.g., if a method above your code or underneath your code uses these
-  methods, errors will occur).
-
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
+  to atom indexes (which may change in the future) a variety of
+  iterator classes and methods are provided.
 
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:

@@ -1,3 +1,12 @@
+2006-06-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obiter.cpp: Add improved documentation on DFS and BFS atom
+	iterators. Fix bug with disconnected fragments uncovered with unit
+	testing.
+
+	* test/iterators.cpp, test/wrapper.sh, test/Makefile.am,
+	test/Makefile.in: New test for atom and bond iterators.
+
 2006-06-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/base.h src/generic.cpp, src/generic.h, src/mol.h,

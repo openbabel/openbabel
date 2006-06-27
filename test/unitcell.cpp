@@ -33,6 +33,15 @@ bool SafeOpen(std::ofstream &fs, const char *filename);
 using namespace std;
 using namespace OpenBabel;
 
+#ifdef TESTDATADIR
+    string testdatadir = TESTDATADIR;
+    string unitcell_file = testdatadir + "unitcell.txt";
+    string results_file = testdatadir + "unitcell_results.txt";
+#else
+    string unitcell_file = "files/unitcell.txt";
+    string results_file = "files/unitcell_results.txt";
+#endif
+
 int main(int argc,char *argv[])
 {
     if (argc != 1)
@@ -54,15 +63,6 @@ int main(int argc,char *argv[])
     vector<vector3> v3Return;
     vector<string> vs;
     unsigned int currTest = 1;
-
-#ifdef TESTDATADIR
-    string testdatadir = TESTDATADIR;
-    string unitcell_file = testdatadir + "unitcell.txt";
-    string results_file = testdatadir + "unitcell_results.txt";
-#else
-    string unitcell_file = "unitcell.txt";
-    string results_file = testdatadir + "unitcell_results.txt";
-#endif
 
     if (!SafeOpen(ifs, unitcell_file.c_str()))
       {
@@ -173,6 +173,11 @@ int main(int argc,char *argv[])
     matrix3x3 m = cell2.GetOrthoMatrix();
     v9 *= m;
     //    cout << v9 << endl;
+
+    cout << "# cell volume " << cell.GetCellVolume() << endl;
+    cout << "# lattice type " << cell.GetLatticeType() << endl;
+    cout << "# cell volume " << cell2.GetCellVolume() << endl;
+    cout << "# lattice type " << cell2.GetLatticeType() << endl;
 
     return(0); // success
 }
