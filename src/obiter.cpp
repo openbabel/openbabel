@@ -97,6 +97,8 @@ namespace OpenBabel
 
   /** \class OBMolAtomDFSIter
 
+  \since version 2.1
+
   To facilitate iteration through all atoms in a molecule, without resorting
   to atom indexes (which <strong>will</strong> change in the future), a 
   variety of iterator methods are provided.
@@ -221,6 +223,8 @@ namespace OpenBabel
   }
 
   /** \class OBMolAtomBFSIter
+
+  \since version 2.1
 
   To facilitate iteration through all atoms in a molecule, without resorting
   to atom indexes (which <strong>will</strong> change in the future), a 
