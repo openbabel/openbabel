@@ -180,7 +180,7 @@ namespace OpenBabel
 
   double OBMol::GetAngle( OBAtom* a, OBAtom* b, OBAtom* c)
   {
-	  return = a->GetAngle( b, c );
+	  return a->GetAngle( b, c );
   }
 
   double OBMol::GetTorsion(int a,int b,int c,int d)
