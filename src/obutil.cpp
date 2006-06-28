@@ -556,19 +556,16 @@ namespace OpenBabel
         a = vic[k]->_a;
         b = vic[k]->_b;
         c = vic[k]->_c;
-        if (k == 2)
-          {
-            vic[k]->_dst = (atom->GetVector() - a->GetVector()).length();
-            continue;
-          }
-
         v1 = atom->GetVector() - a->GetVector();
-        v2 = b->GetVector()    - a->GetVector();
         vic[k]->_dst = v1.length();
-        vic[k]->_ang = vectorAngle(v1,v2);
+        if (k == 2)
+          continue;
 
+        v2 = b->GetVector()    - a->GetVector();
+        vic[k]->_ang = vectorAngle(v1,v2);
         if (k == 3)
           continue;
+
         vic[k]->_tor = CalcTorsionAngle(atom->GetVector(),
                                         a->GetVector(),
                                         b->GetVector(),
