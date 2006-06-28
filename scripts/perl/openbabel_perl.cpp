@@ -13655,7 +13655,7 @@ XS(_wrap_OBGenericData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBGenericData_Clone(self,parent);");
+      SWIG_croak("Usage: OBGenericData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBGenericData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -13951,7 +13951,7 @@ XS(_wrap_OBCommentData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBCommentData_Clone(self,parent);");
+      SWIG_croak("Usage: OBCommentData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBCommentData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -14666,7 +14666,7 @@ XS(_wrap_OBExternalBondData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBExternalBondData_Clone(self,parent);");
+      SWIG_croak("Usage: OBExternalBondData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBExternalBondData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -14835,7 +14835,7 @@ XS(_wrap_OBPairData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBPairData_Clone(self,parent);");
+      SWIG_croak("Usage: OBPairData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBPairData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -15108,7 +15108,7 @@ XS(_wrap_OBVirtualBond_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBVirtualBond_Clone(self,parent);");
+      SWIG_croak("Usage: OBVirtualBond_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBVirtualBond, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -15614,7 +15614,7 @@ XS(_wrap_OBRingData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBRingData_Clone(self,parent);");
+      SWIG_croak("Usage: OBRingData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBRingData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -15886,7 +15886,7 @@ XS(_wrap_OBUnitCell_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBUnitCell_Clone(self,parent);");
+      SWIG_croak("Usage: OBUnitCell_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBUnitCell, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -16324,6 +16324,43 @@ XS(_wrap_OBUnitCell_SetSpaceGroup) {
 }
 
 
+XS(_wrap_OBUnitCell_SetLatticeType) {
+  {
+    OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
+    OpenBabel::OBUnitCell::LatticeType arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: OBUnitCell_SetLatticeType(self,lt);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBUnitCell, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBUnitCell_SetLatticeType" "', argument " "1"" of type '" "OpenBabel::OBUnitCell *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBUnitCell * >(argp1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBUnitCell_SetLatticeType" "', argument " "2"" of type '" "OpenBabel::OBUnitCell::LatticeType""'");
+    } 
+    arg2 = static_cast< OpenBabel::OBUnitCell::LatticeType >(val2);
+    (arg1)->SetLatticeType(arg2);
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_OBUnitCell_GetA) {
   {
     OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
@@ -16548,6 +16585,34 @@ XS(_wrap_OBUnitCell_GetSpaceGroup) {
 }
 
 
+XS(_wrap_OBUnitCell_GetLatticeType) {
+  {
+    OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
+    OpenBabel::OBUnitCell::LatticeType result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBUnitCell_GetLatticeType(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBUnitCell, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBUnitCell_GetLatticeType" "', argument " "1"" of type '" "OpenBabel::OBUnitCell *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBUnitCell * >(argp1);
+    result = (OpenBabel::OBUnitCell::LatticeType)(arg1)->GetLatticeType();
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_OBUnitCell_GetCellVectors) {
   {
     OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
@@ -16674,6 +16739,34 @@ XS(_wrap_OBUnitCell_GetFractionalMatrix) {
 }
 
 
+XS(_wrap_OBUnitCell_GetCellVolume) {
+  {
+    OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
+    double result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBUnitCell_GetCellVolume(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBUnitCell, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBUnitCell_GetCellVolume" "', argument " "1"" of type '" "OpenBabel::OBUnitCell *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBUnitCell * >(argp1);
+    result = (double)(arg1)->GetCellVolume();
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_new_OBConformerData__SWIG_0) {
   {
     OpenBabel::OBConformerData *result = 0 ;
@@ -16785,7 +16878,7 @@ XS(_wrap_OBConformerData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBConformerData_Clone(self,parent);");
+      SWIG_croak("Usage: OBConformerData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBConformerData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -17389,7 +17482,7 @@ XS(_wrap_OBSymmetryData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBSymmetryData_Clone(self,parent);");
+      SWIG_croak("Usage: OBSymmetryData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBSymmetryData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -18312,7 +18405,7 @@ XS(_wrap_OBTorsion_SetData) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBTorsion_SetData(self,bond);");
+      SWIG_croak("Usage: OBTorsion_SetData(self,OpenBabel::OBBond *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBTorsion, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -18672,7 +18765,7 @@ XS(_wrap_OBTorsionData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBTorsionData_Clone(self,parent);");
+      SWIG_croak("Usage: OBTorsionData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBTorsionData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -19328,7 +19421,7 @@ XS(_wrap_OBAngleData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBAngleData_Clone(self,parent);");
+      SWIG_croak("Usage: OBAngleData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAngleData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -19724,7 +19817,7 @@ XS(_wrap_OBChiralData_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBChiralData_Clone(self,parent);");
+      SWIG_croak("Usage: OBChiralData_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBChiralData, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -20053,7 +20146,7 @@ XS(_wrap_OBSerialNums_Clone) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBSerialNums_Clone(self,parent);");
+      SWIG_croak("Usage: OBSerialNums_Clone(self,OpenBabel::OBBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBSerialNums, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -20218,7 +20311,7 @@ XS(_wrap_OBBase_DoTransformations) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBBase_DoTransformations(self,pOptions);");
+      SWIG_croak("Usage: OBBase_DoTransformations(self,std::map<std::string,std::string > const *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -22098,7 +22191,7 @@ XS(_wrap_new_OBEdgeBase__SWIG_1) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: new_OBEdgeBase(bgn,end);");
+      SWIG_croak("Usage: new_OBEdgeBase(OpenBabel::OBNodeBase *,OpenBabel::OBNodeBase *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBNodeBase, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -22738,7 +22831,7 @@ XS(_wrap_new_OBGraphBase__SWIG_1) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: new_OBGraphBase(src);");
+      SWIG_croak("Usage: new_OBGraphBase(OpenBabel::OBGraphBase const &);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__OBGraphBase,  0 );
     if (!SWIG_IsOK(res1)) {
@@ -23001,7 +23094,7 @@ XS(_wrap_OBFormat_ReadMolecule) {
     dXSARGS;
     
     if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: OBFormat_ReadMolecule(self,pOb,pConv);");
+      SWIG_croak("Usage: OBFormat_ReadMolecule(self,OpenBabel::OBBase *,OpenBabel::OBConversion *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFormat, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -23046,7 +23139,7 @@ XS(_wrap_OBFormat_ReadChemObject) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBFormat_ReadChemObject(self,pConv);");
+      SWIG_croak("Usage: OBFormat_ReadChemObject(self,OpenBabel::OBConversion *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFormat, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -23087,7 +23180,7 @@ XS(_wrap_OBFormat_WriteMolecule) {
     dXSARGS;
     
     if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: OBFormat_WriteMolecule(self,pOb,pConv);");
+      SWIG_croak("Usage: OBFormat_WriteMolecule(self,OpenBabel::OBBase *,OpenBabel::OBConversion *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFormat, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -23132,7 +23225,7 @@ XS(_wrap_OBFormat_WriteChemObject) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBFormat_WriteChemObject(self,pConv);");
+      SWIG_croak("Usage: OBFormat_WriteChemObject(self,OpenBabel::OBConversion *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFormat, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -23344,7 +23437,7 @@ XS(_wrap_OBFormat_SkipObjects) {
     dXSARGS;
     
     if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: OBFormat_SkipObjects(self,n,pConv);");
+      SWIG_croak("Usage: OBFormat_SkipObjects(self,int,OpenBabel::OBConversion *);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBFormat, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -30121,62 +30214,6 @@ XS(_wrap_OBAtom_GetX) {
 }
 
 
-XS(_wrap_OBAtom_GetY) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    double result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_GetY(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetY" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (double)(arg1)->GetY();
-    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_OBAtom_GetZ) {
-  {
-    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-    double result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: OBAtom_GetZ(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetZ" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-    result = (double)(arg1)->GetZ();
-    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_OBAtom_x) {
   {
     OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
@@ -30205,6 +30242,34 @@ XS(_wrap_OBAtom_x) {
 }
 
 
+XS(_wrap_OBAtom_GetY) {
+  {
+    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+    double result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBAtom_GetY(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetY" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+    result = (double)(arg1)->GetY();
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_OBAtom_y) {
   {
     OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
@@ -30223,6 +30288,34 @@ XS(_wrap_OBAtom_y) {
     }
     arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
     result = (double)(arg1)->y();
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBAtom_GetZ) {
+  {
+    OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+    double result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBAtom_GetZ(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetZ" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+    result = (double)(arg1)->GetZ();
     ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
     
     XSRETURN(argvi);
@@ -47515,6 +47608,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBUnitCell_SetData", _wrap_OBUnitCell_SetData},
 {"Chemistry::OpenBabelc::OBUnitCell_SetOffset", _wrap_OBUnitCell_SetOffset},
 {"Chemistry::OpenBabelc::OBUnitCell_SetSpaceGroup", _wrap_OBUnitCell_SetSpaceGroup},
+{"Chemistry::OpenBabelc::OBUnitCell_SetLatticeType", _wrap_OBUnitCell_SetLatticeType},
 {"Chemistry::OpenBabelc::OBUnitCell_GetA", _wrap_OBUnitCell_GetA},
 {"Chemistry::OpenBabelc::OBUnitCell_GetB", _wrap_OBUnitCell_GetB},
 {"Chemistry::OpenBabelc::OBUnitCell_GetC", _wrap_OBUnitCell_GetC},
@@ -47523,10 +47617,12 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBUnitCell_GetGamma", _wrap_OBUnitCell_GetGamma},
 {"Chemistry::OpenBabelc::OBUnitCell_GetOffset", _wrap_OBUnitCell_GetOffset},
 {"Chemistry::OpenBabelc::OBUnitCell_GetSpaceGroup", _wrap_OBUnitCell_GetSpaceGroup},
+{"Chemistry::OpenBabelc::OBUnitCell_GetLatticeType", _wrap_OBUnitCell_GetLatticeType},
 {"Chemistry::OpenBabelc::OBUnitCell_GetCellVectors", _wrap_OBUnitCell_GetCellVectors},
 {"Chemistry::OpenBabelc::OBUnitCell_GetCellMatrix", _wrap_OBUnitCell_GetCellMatrix},
 {"Chemistry::OpenBabelc::OBUnitCell_GetOrthoMatrix", _wrap_OBUnitCell_GetOrthoMatrix},
 {"Chemistry::OpenBabelc::OBUnitCell_GetFractionalMatrix", _wrap_OBUnitCell_GetFractionalMatrix},
+{"Chemistry::OpenBabelc::OBUnitCell_GetCellVolume", _wrap_OBUnitCell_GetCellVolume},
 {"Chemistry::OpenBabelc::new_OBConformerData", _wrap_new_OBConformerData},
 {"Chemistry::OpenBabelc::OBConformerData_Clone", _wrap_OBConformerData_Clone},
 {"Chemistry::OpenBabelc::delete_OBConformerData", _wrap_delete_OBConformerData},
@@ -47803,10 +47899,10 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBAtom_GetHeteroValence", _wrap_OBAtom_GetHeteroValence},
 {"Chemistry::OpenBabelc::OBAtom_GetType", _wrap_OBAtom_GetType},
 {"Chemistry::OpenBabelc::OBAtom_GetX", _wrap_OBAtom_GetX},
-{"Chemistry::OpenBabelc::OBAtom_GetY", _wrap_OBAtom_GetY},
-{"Chemistry::OpenBabelc::OBAtom_GetZ", _wrap_OBAtom_GetZ},
 {"Chemistry::OpenBabelc::OBAtom_x", _wrap_OBAtom_x},
+{"Chemistry::OpenBabelc::OBAtom_GetY", _wrap_OBAtom_GetY},
 {"Chemistry::OpenBabelc::OBAtom_y", _wrap_OBAtom_y},
+{"Chemistry::OpenBabelc::OBAtom_GetZ", _wrap_OBAtom_GetZ},
 {"Chemistry::OpenBabelc::OBAtom_z", _wrap_OBAtom_z},
 {"Chemistry::OpenBabelc::OBAtom_GetCoordinate", _wrap_OBAtom_GetCoordinate},
 {"Chemistry::OpenBabelc::OBAtom_GetVector", _wrap_OBAtom_GetVector},
@@ -48477,6 +48573,46 @@ XS(SWIG_init) {
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBPairData, (void*) "Chemistry::OpenBabel::OBPairData");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBVirtualBond, (void*) "Chemistry::OpenBabel::OBVirtualBond");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRingData, (void*) "Chemistry::OpenBabel::OBRingData");
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OBUnitCell_Undefined", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBUnitCell::Undefined)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OBUnitCell_Triclinic", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBUnitCell::Triclinic)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OBUnitCell_Monoclinic", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBUnitCell::Monoclinic)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OBUnitCell_Orthorhombic", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBUnitCell::Orthorhombic)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OBUnitCell_Tetragonal", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBUnitCell::Tetragonal)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OBUnitCell_Rhombohedral", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBUnitCell::Rhombohedral)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OBUnitCell_Hexagonal", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBUnitCell::Hexagonal)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "OBUnitCell_Cubic", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(OpenBabel::OBUnitCell::Cubic)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBUnitCell, (void*) "Chemistry::OpenBabel::OBUnitCell");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBConformerData, (void*) "Chemistry::OpenBabel::OBConformerData");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSymmetryData, (void*) "Chemistry::OpenBabel::OBSymmetryData");

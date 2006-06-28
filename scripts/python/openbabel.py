@@ -796,6 +796,14 @@ OBRingData_swigregister(OBRingData)
 class OBUnitCell(OBGenericData):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
+    Undefined = _openbabel.OBUnitCell_Undefined
+    Triclinic = _openbabel.OBUnitCell_Triclinic
+    Monoclinic = _openbabel.OBUnitCell_Monoclinic
+    Orthorhombic = _openbabel.OBUnitCell_Orthorhombic
+    Tetragonal = _openbabel.OBUnitCell_Tetragonal
+    Rhombohedral = _openbabel.OBUnitCell_Rhombohedral
+    Hexagonal = _openbabel.OBUnitCell_Hexagonal
+    Cubic = _openbabel.OBUnitCell_Cubic
     def __init__(self, *args): 
         _openbabel.OBUnitCell_swiginit(self,_openbabel.new_OBUnitCell(*args))
     def Clone(*args): return _openbabel.OBUnitCell_Clone(*args)
@@ -804,6 +812,7 @@ class OBUnitCell(OBGenericData):
     def SetData(*args): return _openbabel.OBUnitCell_SetData(*args)
     def SetOffset(*args): return _openbabel.OBUnitCell_SetOffset(*args)
     def SetSpaceGroup(*args): return _openbabel.OBUnitCell_SetSpaceGroup(*args)
+    def SetLatticeType(*args): return _openbabel.OBUnitCell_SetLatticeType(*args)
     def GetA(*args): return _openbabel.OBUnitCell_GetA(*args)
     def GetB(*args): return _openbabel.OBUnitCell_GetB(*args)
     def GetC(*args): return _openbabel.OBUnitCell_GetC(*args)
@@ -812,10 +821,12 @@ class OBUnitCell(OBGenericData):
     def GetGamma(*args): return _openbabel.OBUnitCell_GetGamma(*args)
     def GetOffset(*args): return _openbabel.OBUnitCell_GetOffset(*args)
     def GetSpaceGroup(*args): return _openbabel.OBUnitCell_GetSpaceGroup(*args)
+    def GetLatticeType(*args): return _openbabel.OBUnitCell_GetLatticeType(*args)
     def GetCellVectors(*args): return _openbabel.OBUnitCell_GetCellVectors(*args)
     def GetCellMatrix(*args): return _openbabel.OBUnitCell_GetCellMatrix(*args)
     def GetOrthoMatrix(*args): return _openbabel.OBUnitCell_GetOrthoMatrix(*args)
     def GetFractionalMatrix(*args): return _openbabel.OBUnitCell_GetFractionalMatrix(*args)
+    def GetCellVolume(*args): return _openbabel.OBUnitCell_GetCellVolume(*args)
 OBUnitCell_swigregister = _openbabel.OBUnitCell_swigregister
 OBUnitCell_swigregister(OBUnitCell)
 
@@ -1264,10 +1275,10 @@ class OBAtom(OBNodeBase):
     def GetHeteroValence(*args): return _openbabel.OBAtom_GetHeteroValence(*args)
     def GetType(*args): return _openbabel.OBAtom_GetType(*args)
     def GetX(*args): return _openbabel.OBAtom_GetX(*args)
-    def GetY(*args): return _openbabel.OBAtom_GetY(*args)
-    def GetZ(*args): return _openbabel.OBAtom_GetZ(*args)
     def x(*args): return _openbabel.OBAtom_x(*args)
+    def GetY(*args): return _openbabel.OBAtom_GetY(*args)
     def y(*args): return _openbabel.OBAtom_y(*args)
+    def GetZ(*args): return _openbabel.OBAtom_GetZ(*args)
     def z(*args): return _openbabel.OBAtom_z(*args)
     def GetCoordinate(*args): return _openbabel.OBAtom_GetCoordinate(*args)
     def GetVector(*args): return _openbabel.OBAtom_GetVector(*args)

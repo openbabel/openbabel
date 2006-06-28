@@ -27833,6 +27833,36 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_OBUnitCell_SetLatticeType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
+  OpenBabel::OBUnitCell::LatticeType arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBUnitCell_SetLatticeType",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBUnitCell, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBUnitCell_SetLatticeType" "', argument " "1"" of type '" "OpenBabel::OBUnitCell *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBUnitCell * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBUnitCell_SetLatticeType" "', argument " "2"" of type '" "OpenBabel::OBUnitCell::LatticeType""'");
+  } 
+  arg2 = static_cast< OpenBabel::OBUnitCell::LatticeType >(val2);
+  (arg1)->SetLatticeType(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_OBUnitCell_GetA(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
@@ -28009,6 +28039,28 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_OBUnitCell_GetLatticeType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
+  OpenBabel::OBUnitCell::LatticeType result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBUnitCell_GetLatticeType",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBUnitCell, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBUnitCell_GetLatticeType" "', argument " "1"" of type '" "OpenBabel::OBUnitCell *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBUnitCell * >(argp1);
+  result = (OpenBabel::OBUnitCell::LatticeType)(arg1)->GetLatticeType();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_OBUnitCell_GetCellVectors(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
@@ -28091,6 +28143,28 @@ SWIGINTERN PyObject *_wrap_OBUnitCell_GetFractionalMatrix(PyObject *SWIGUNUSEDPA
   arg1 = reinterpret_cast< OpenBabel::OBUnitCell * >(argp1);
   result = (arg1)->GetFractionalMatrix();
   resultobj = SWIG_NewPointerObj((new OpenBabel::matrix3x3(static_cast< const OpenBabel::matrix3x3& >(result))), SWIGTYPE_p_OpenBabel__matrix3x3, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBUnitCell_GetCellVolume(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBUnitCell *arg1 = (OpenBabel::OBUnitCell *) 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBUnitCell_GetCellVolume",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBUnitCell, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBUnitCell_GetCellVolume" "', argument " "1"" of type '" "OpenBabel::OBUnitCell *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBUnitCell * >(argp1);
+  result = (double)(arg1)->GetCellVolume();
+  resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
   return NULL;
@@ -38485,50 +38559,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBAtom_GetY(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-  double result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBAtom_GetY",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetY" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-  result = (double)(arg1)->GetY();
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_OBAtom_GetZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
-  double result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBAtom_GetZ",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetZ" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
-  result = (double)(arg1)->GetZ();
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_OBAtom_x(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
@@ -38551,6 +38581,28 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_OBAtom_GetY(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBAtom_GetY",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetY" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  result = (double)(arg1)->GetY();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_OBAtom_y(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
@@ -38566,6 +38618,28 @@ SWIGINTERN PyObject *_wrap_OBAtom_y(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   }
   arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
   result = (double)(arg1)->y();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBAtom_GetZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBAtom_GetZ",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtom_GetZ" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  result = (double)(arg1)->GetZ();
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
@@ -51970,6 +52044,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBUnitCell_SetData", _wrap_OBUnitCell_SetData, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_SetOffset", _wrap_OBUnitCell_SetOffset, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_SetSpaceGroup", _wrap_OBUnitCell_SetSpaceGroup, METH_VARARGS, NULL},
+	 { (char *)"OBUnitCell_SetLatticeType", _wrap_OBUnitCell_SetLatticeType, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_GetA", _wrap_OBUnitCell_GetA, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_GetB", _wrap_OBUnitCell_GetB, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_GetC", _wrap_OBUnitCell_GetC, METH_VARARGS, NULL},
@@ -51978,10 +52053,12 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBUnitCell_GetGamma", _wrap_OBUnitCell_GetGamma, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_GetOffset", _wrap_OBUnitCell_GetOffset, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_GetSpaceGroup", _wrap_OBUnitCell_GetSpaceGroup, METH_VARARGS, NULL},
+	 { (char *)"OBUnitCell_GetLatticeType", _wrap_OBUnitCell_GetLatticeType, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_GetCellVectors", _wrap_OBUnitCell_GetCellVectors, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_GetCellMatrix", _wrap_OBUnitCell_GetCellMatrix, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_GetOrthoMatrix", _wrap_OBUnitCell_GetOrthoMatrix, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_GetFractionalMatrix", _wrap_OBUnitCell_GetFractionalMatrix, METH_VARARGS, NULL},
+	 { (char *)"OBUnitCell_GetCellVolume", _wrap_OBUnitCell_GetCellVolume, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_swigregister", OBUnitCell_swigregister, METH_VARARGS, NULL},
 	 { (char *)"OBUnitCell_swiginit", OBUnitCell_swiginit, METH_VARARGS, NULL},
 	 { (char *)"new_OBConformerData", _wrap_new_OBConformerData, METH_VARARGS, NULL},
@@ -52289,10 +52366,10 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBAtom_GetHeteroValence", _wrap_OBAtom_GetHeteroValence, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_GetType", _wrap_OBAtom_GetType, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_GetX", _wrap_OBAtom_GetX, METH_VARARGS, NULL},
-	 { (char *)"OBAtom_GetY", _wrap_OBAtom_GetY, METH_VARARGS, NULL},
-	 { (char *)"OBAtom_GetZ", _wrap_OBAtom_GetZ, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_x", _wrap_OBAtom_x, METH_VARARGS, NULL},
+	 { (char *)"OBAtom_GetY", _wrap_OBAtom_GetY, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_y", _wrap_OBAtom_y, METH_VARARGS, NULL},
+	 { (char *)"OBAtom_GetZ", _wrap_OBAtom_GetZ, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_z", _wrap_OBAtom_z, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_GetCoordinate", _wrap_OBAtom_GetCoordinate, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_GetVector", _wrap_OBAtom_GetVector, METH_VARARGS, NULL},
@@ -53830,6 +53907,14 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_addvarlink(SWIG_globals(),(char*)"CustomData13",CustomData13_get, CustomData13_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"CustomData14",CustomData14_get, CustomData14_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"CustomData15",CustomData15_get, CustomData15_set);
+  SWIG_Python_SetConstant(d, "OBUnitCell_Undefined",SWIG_From_int(static_cast< int >(OpenBabel::OBUnitCell::Undefined)));
+  SWIG_Python_SetConstant(d, "OBUnitCell_Triclinic",SWIG_From_int(static_cast< int >(OpenBabel::OBUnitCell::Triclinic)));
+  SWIG_Python_SetConstant(d, "OBUnitCell_Monoclinic",SWIG_From_int(static_cast< int >(OpenBabel::OBUnitCell::Monoclinic)));
+  SWIG_Python_SetConstant(d, "OBUnitCell_Orthorhombic",SWIG_From_int(static_cast< int >(OpenBabel::OBUnitCell::Orthorhombic)));
+  SWIG_Python_SetConstant(d, "OBUnitCell_Tetragonal",SWIG_From_int(static_cast< int >(OpenBabel::OBUnitCell::Tetragonal)));
+  SWIG_Python_SetConstant(d, "OBUnitCell_Rhombohedral",SWIG_From_int(static_cast< int >(OpenBabel::OBUnitCell::Rhombohedral)));
+  SWIG_Python_SetConstant(d, "OBUnitCell_Hexagonal",SWIG_From_int(static_cast< int >(OpenBabel::OBUnitCell::Hexagonal)));
+  SWIG_Python_SetConstant(d, "OBUnitCell_Cubic",SWIG_From_int(static_cast< int >(OpenBabel::OBUnitCell::Cubic)));
   SWIG_Python_SetConstant(d, "output",SWIG_From_int(static_cast< int >(OpenBabel::output)));
   SWIG_Python_SetConstant(d, "input",SWIG_From_int(static_cast< int >(OpenBabel::input)));
   SWIG_Python_SetConstant(d, "calcvolume",SWIG_From_int(static_cast< int >(OpenBabel::calcvolume)));

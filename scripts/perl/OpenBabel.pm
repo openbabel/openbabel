@@ -1240,6 +1240,14 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel::OBGenericData Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
+*Undefined = *Chemistry::OpenBabelc::OBUnitCell_Undefined;
+*Triclinic = *Chemistry::OpenBabelc::OBUnitCell_Triclinic;
+*Monoclinic = *Chemistry::OpenBabelc::OBUnitCell_Monoclinic;
+*Orthorhombic = *Chemistry::OpenBabelc::OBUnitCell_Orthorhombic;
+*Tetragonal = *Chemistry::OpenBabelc::OBUnitCell_Tetragonal;
+*Rhombohedral = *Chemistry::OpenBabelc::OBUnitCell_Rhombohedral;
+*Hexagonal = *Chemistry::OpenBabelc::OBUnitCell_Hexagonal;
+*Cubic = *Chemistry::OpenBabelc::OBUnitCell_Cubic;
 sub new {
     my $pkg = shift;
     my $self = Chemistry::OpenBabelc::new_OBUnitCell(@_);
@@ -1261,6 +1269,7 @@ sub DESTROY {
 *SetData = *Chemistry::OpenBabelc::OBUnitCell_SetData;
 *SetOffset = *Chemistry::OpenBabelc::OBUnitCell_SetOffset;
 *SetSpaceGroup = *Chemistry::OpenBabelc::OBUnitCell_SetSpaceGroup;
+*SetLatticeType = *Chemistry::OpenBabelc::OBUnitCell_SetLatticeType;
 *GetA = *Chemistry::OpenBabelc::OBUnitCell_GetA;
 *GetB = *Chemistry::OpenBabelc::OBUnitCell_GetB;
 *GetC = *Chemistry::OpenBabelc::OBUnitCell_GetC;
@@ -1269,10 +1278,12 @@ sub DESTROY {
 *GetGamma = *Chemistry::OpenBabelc::OBUnitCell_GetGamma;
 *GetOffset = *Chemistry::OpenBabelc::OBUnitCell_GetOffset;
 *GetSpaceGroup = *Chemistry::OpenBabelc::OBUnitCell_GetSpaceGroup;
+*GetLatticeType = *Chemistry::OpenBabelc::OBUnitCell_GetLatticeType;
 *GetCellVectors = *Chemistry::OpenBabelc::OBUnitCell_GetCellVectors;
 *GetCellMatrix = *Chemistry::OpenBabelc::OBUnitCell_GetCellMatrix;
 *GetOrthoMatrix = *Chemistry::OpenBabelc::OBUnitCell_GetOrthoMatrix;
 *GetFractionalMatrix = *Chemistry::OpenBabelc::OBUnitCell_GetFractionalMatrix;
+*GetCellVolume = *Chemistry::OpenBabelc::OBUnitCell_GetCellVolume;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -2135,10 +2146,10 @@ sub DESTROY {
 *GetHeteroValence = *Chemistry::OpenBabelc::OBAtom_GetHeteroValence;
 *GetType = *Chemistry::OpenBabelc::OBAtom_GetType;
 *GetX = *Chemistry::OpenBabelc::OBAtom_GetX;
-*GetY = *Chemistry::OpenBabelc::OBAtom_GetY;
-*GetZ = *Chemistry::OpenBabelc::OBAtom_GetZ;
 *x = *Chemistry::OpenBabelc::OBAtom_x;
+*GetY = *Chemistry::OpenBabelc::OBAtom_GetY;
 *y = *Chemistry::OpenBabelc::OBAtom_y;
+*GetZ = *Chemistry::OpenBabelc::OBAtom_GetZ;
 *z = *Chemistry::OpenBabelc::OBAtom_z;
 *GetCoordinate = *Chemistry::OpenBabelc::OBAtom_GetCoordinate;
 *GetVector = *Chemistry::OpenBabelc::OBAtom_GetVector;
