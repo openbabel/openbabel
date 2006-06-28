@@ -1,3 +1,13 @@
+2006-06-28 Chris Morley <ob@gaseq.co.uk>
+
+	* src/obiter.cpp: Some of the examples wouldn't compile - need 
+	&*a rather than a in parameter calls. Added comment in all the
+	examples. I ran into this personally with FOR_NBORS_OF_ATOM(b, &*a)
+	but haven't tested the similarly modified OBResidue example.
+	
+	* src/formats/mdlformat.cpp(GetTimeDate): Change second parameter
+	which was corrupting output of mol file line 2.  
+	
 2006-06-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obiter.cpp: Add improved documentation on DFS and BFS atom

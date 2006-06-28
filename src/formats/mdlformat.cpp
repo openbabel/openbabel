@@ -860,7 +860,7 @@ Write Options, e.g. -x3\n \
     time_t long_time;
     time( &long_time );
     ts = localtime( &long_time ); 
-    snprintf(td, sizeof(td), "%02d%02d%02d%02d%02d", ts->tm_mon+1, ts->tm_mday, 
+    snprintf(td, 11, "%02d%02d%02d%02d%02d", ts->tm_mon+1, ts->tm_mday, 
              ((ts->tm_year>=100)? ts->tm_year-100 : ts->tm_year),
              ts->tm_hour, ts->tm_min);
     return td;

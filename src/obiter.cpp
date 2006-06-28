@@ -50,6 +50,10 @@ namespace OpenBabel
   double exactMass = 0.0f;
   FOR_ATOMS_OF_MOL(a, mol)
   {
+  // The variable a behaves like OBAtom* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*a
+  
   exactMass +=  a->GetExactMass();
   }
   \endcode
@@ -121,7 +125,10 @@ namespace OpenBabel
   OBMol mol;
   FOR_DFS_OF_MOL(a, mol)
   {
-  
+  // The variable a behaves like OBAtom* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*a
+
   }
   \endcode
   **/
@@ -243,6 +250,9 @@ namespace OpenBabel
   OBMol mol;
   FOR_BFS_OF_MOL(a, mol)
   {
+  // The variable a behaves like OBAtom* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*a
   
   }
   \endcode
@@ -357,6 +367,9 @@ namespace OpenBabel
   unsigned int bondOrderSum = 0;
   FOR_BONDS_OF_MOL(b, mol)
   {
+  // The variable b behaves like OBBond* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*b
   bondOrderSum +=  b->GetBO();
   }
   \endcode
@@ -419,7 +432,10 @@ namespace OpenBabel
   OBMol mol;
   FOR_ATOMS_OF_MOL(a, mol)
   {
-  FOR_NBORS_OF_ATOM(b, a)
+  // The variable a behaves like OBAtom* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*a
+  FOR_NBORS_OF_ATOM(b, &*a)
   {
   ...
   }
@@ -485,6 +501,9 @@ namespace OpenBabel
   unsigned int tripleBondCount;
   FOR_BONDS_OF_ATOM(b, atom)
   {
+  // The variable b behaves like OBBond* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*b
   if (b->GetBO() == 3)
   tripleBondCount++;
   }
@@ -548,6 +567,10 @@ namespace OpenBabel
   OBMol mol;
   FOR_RESIDUES_OF_MOL(r, mol)
   {
+  // The variable r behaves like OBResidue* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*r
+
   if (r->GetName() == resname && r->GetNum() == rnum) 
   {
   // got a match, let's go to work
@@ -615,9 +638,13 @@ namespace OpenBabel
   double residueMass = 0.0;
   FOR_RESIDUES_OF_MOL(r, mol)
   {
+  // The variable r behaves like OBResidue* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*r
+
   if (r->GetName() == resname && r->GetNum() == rnum) 
   {
-  FOR_ATOMS_OF_RESIDUE(a, r)
+  FOR_ATOMS_OF_RESIDUE(a, &*r)
   {
   residueMass += a->GetMass();
   }
