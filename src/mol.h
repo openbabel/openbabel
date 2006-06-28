@@ -180,7 +180,9 @@ namespace OpenBabel
       //   std::vector<OBGenericData*>   _vdata;//!< custom data
 
       int  GetFlag() const    {  return(_flags);  }
+      //! Sets the bitwise @p flag
       void SetFlag(int flag)  { _flags |= flag;   }
+      //! \return Returns true of the atom has the @p flag
       bool HasFlag(int flag)  {  return((_flags & flag) ? true : false); }
 
     public:
@@ -204,13 +206,19 @@ namespace OpenBabel
       void SetAtomicNum(int atomicnum)    { _ele = (char)atomicnum; }
       //! Set isotope number (actual atomic weight is tabulated automatically, 0 = most abundant)
       void SetIsotope(unsigned int iso);
+      //! Set the implicit valence to @p val
       void SetImplicitValence(int val)    { _impval = (char)val; }
+      //! Increase the implicit valence by one
       void IncrementImplicitValence()     { _impval++; }
+      //! Decrease the implicit valence by one
       void DecrementImplicitValence()     { _impval--; }
+      //! Set the formal charge of the atom to @p fcharge
       void SetFormalCharge(int fcharge)   { _fcharge = fcharge; }
+      //! Set the atomic spin to @p spin. See _spinmultiplicity
       void SetSpinMultiplicity(short spin){ _spinmultiplicity = spin; }
       void SetType(char *type);
       void SetType(std::string &type);
+      //! Set the patrical charge to @p pcharge
       void SetPartialCharge(double pcharge){ _pcharge = pcharge; }
       void SetVector(vector3 &v);
       void SetVector(const double x,const double y,const double z);
@@ -659,11 +667,17 @@ namespace OpenBabel
       bool IsSecondaryAmide();
       bool IsEster();
       bool IsCarbonyl();
+      //! \return Return true of the bond is a single bond
       bool IsSingle();
+      //! \return Return true of the bond is a double bond
       bool IsDouble();
+      //! \return Return true of the bond is a tripple bond
       bool IsTriple();
+      //! \deprecated Use IsSingle() instead
       bool IsKSingle();
+      //! \deprecated Use IsDouble() instead
       bool IsKDouble();
+      //! \deprecated Use IsTriple() instead
       bool IsKTriple();
       bool IsClosure();
       //! \return whether this is the "upper" bond in a double bond cis/trans
@@ -813,13 +827,17 @@ namespace OpenBabel
       OBAtom      *GetFirstAtom();
       OBBond      *GetBond(int);
       OBBond      *GetBond(int, int);
-      OBBond      *GetBond(OBAtom*,OBAtom*);
+      //! \return the bond between the atoms @p bgn and @p end
+      OBBond      *GetBond(OBAtom* bgn, OBAtom* end);
       OBResidue   *GetResidue(int);
       std::vector<OBInternalCoord*> GetInternalCoord();
       //! \return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
       double       GetTorsion(int,int,int,int);
-      //! \return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
-      double       GetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*);
+      //! \return the dihedral angle between the four atoms @p a, @p b, @p c, and @p d)
+      double       GetTorsion(OBAtom* a,OBAtom* b,OBAtom* c,OBAtom* d);
+      //! \return the angle between the three atoms @p a, @p b and @p c
+      //!  (where  a-> b (vertex) -> c )
+      double GetAngle(OBAtom* a, OBAtom* b, OBAtom* c);
       //! \return the stochoimetric formula (e.g., C4H6O)
       std::string  GetFormula();
       //! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1

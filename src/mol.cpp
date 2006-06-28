@@ -178,6 +178,11 @@ namespace OpenBabel
     return (a.second < b.second);
   }
 
+  double OBMol::GetAngle( OBAtom* a, OBAtom* b, OBAtom* c)
+  {
+	  return = a->GetAngle( b, c );
+  }
+
   double OBMol::GetTorsion(int a,int b,int c,int d)
   {
     return(CalcTorsionAngle(((OBAtom*)_vatom[a-1])->GetVector(),
