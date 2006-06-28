@@ -19,6 +19,12 @@ AC_ARG_ENABLE(dynamic-modules,
 		[dynamic_modules="$enable_dynamic_modules"],
 		[dynamic_modules="yes"])
 
+AC_ARG_ENABLE(precompiled-headers,
+  AS_HELP_STRING([--enable-precompiled-headers],
+           [enable building with precompiled headers]),
+    [precompiled_headers="$enable_precompiled_headers"],
+    [precompiled_headers="no"])
+
 AC_CANONICAL_HOST
 
 AC_DEFINE_DIR([BABEL_DATADIR], [datadir/AC_PACKAGE_TARNAME], [Where the data files are located])
@@ -188,6 +194,8 @@ module=yes
 eval std_shrext=\"$shrext_cmds\"
 AC_DEFINE_UNQUOTED([MODULE_EXTENSION], ["$std_shrext"], [The file extension used for shared modules])
 module=$oldmodule
+
+AM_CONDITIONAL(BUILD_PCH, test x"$precompiled_headers" != "x")
 
 AC_LANG_CPLUSPLUS
 dnl Checks for libraries.

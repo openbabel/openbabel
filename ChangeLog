@@ -1,3 +1,25 @@
+2006-06-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure, configure.in, src/all.h, src/formats/all.h,
+	Makefile.in: Add experimental support for precompiled headers with
+	GCC, using the --enable-precompiled-headers flag to the configure
+	script. Haven't performed much timing/optimization -- appears to
+	help about 10-12%.
+
+	* src/base.h, src/mol.h, src/obconversion.h, src/generic.h:
+	Warning eliminations and documentation improvements from Carsten.
+
+	* src/obiter.cpp: Further improvements to documentation on DFS and
+	BFS iterators.
+
+	* src/chains.cpp: Updated call to fprintf(... stderr) to use
+	modern OBMessageHandler.
+
+	* scripts/*: Regenerate for latest header changes.
+
+	* Doxyfile, doc/api-style.css: Updated for doxygen-1.4.7 and new
+	style changes.
+
 2006-06-28 Chris Morley <ob@gaseq.co.uk>
 
 	* src/obiter.cpp: Some of the examples wouldn't compile - need 

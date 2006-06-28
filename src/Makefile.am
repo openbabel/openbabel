@@ -1,10 +1,23 @@
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
-	dlhandler_win32.cpp
+	dlhandler_win32.cpp all.h
 
 SUBDIRS = math formats fingerprints
 if BUILD_WXGUI
 #SUBDIRS += GUI
+endif
+
+if BUILD_PCH
+BUILT_SOURCES = all.h.gch
+PCHFLAGS=-Winvalid-pch -x c++-header $(CXXFLAGS) $(INCLUDES)
+all.h.gch: all.h Makefile babelconfig.h mol.h base.h bitvec.h generic.h \
+	oberror.h obiter.h obconversion.h
+	rm -f $@
+	$(CXX) $(PCHFLAGS) $<
+AM_CXXFLAGS= -include $(top_srcdir)/src/all.h
+
+clean-local:
+	-rm -f all.h.gch
 endif
 
 INCLUDES = -I$(top_srcdir)/data/

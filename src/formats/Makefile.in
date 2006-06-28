@@ -569,6 +569,8 @@ BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
 BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
 BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
+BUILD_PCH_FALSE = @BUILD_PCH_FALSE@
+BUILD_PCH_TRUE = @BUILD_PCH_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -696,6 +698,9 @@ libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
 libopenbabelinclude_HEADERS = inchi_api.h obmolecformat.h
 EXTRA_DIST = exampleformat.cpp
 SUBDIRS = $(am__append_1) $(am__append_2)
+@BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
+@BUILD_PCH_TRUE@PCHFLAGS = -Winvalid-pch -x c++-header $(CPPFLAGS) $(INCLUDES)
+@BUILD_PCH_TRUE@AM_CXXFLAGS = -include $(top_srcdir)/src/formats/all.h
 
 # Unfortunately there are a few formats which still cannot compile shared
 # modules (e.g., Cygwin). So we need to keep a duplicate target for "libformats"
@@ -858,7 +863,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@yasaraformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@zindoformat_la_SOURCES = zindoformat.cpp
 @BUILD_SHARED_TRUE@zindoformat_la_LDFLAGS = -module -avoid-version 
-all: all-recursive
+all: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .cpp .lo .o .obj
@@ -1332,14 +1338,16 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-check: check-recursive
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-recursive
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
 	for dir in "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(libopenbabelincludedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: install-recursive
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -1363,10 +1371,12 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+@BUILD_PCH_FALSE@clean-local:
 clean: clean-recursive
 
-clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
-	clean-pkglibLTLIBRARIES mostlyclean-am
+clean-am: clean-generic clean-libtool clean-local \
+	clean-noinstLTLIBRARIES clean-pkglibLTLIBRARIES mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -rf ./$(DEPDIR)
@@ -1418,14 +1428,14 @@ uninstall-am: uninstall-info-am uninstall-libopenbabelincludeHEADERS \
 uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
-	clean clean-generic clean-libtool clean-noinstLTLIBRARIES \
-	clean-pkglibLTLIBRARIES clean-recursive ctags ctags-recursive \
-	distclean distclean-compile distclean-generic \
-	distclean-libtool distclean-recursive distclean-tags distdir \
-	dvi dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-exec install-exec-am \
-	install-info install-info-am \
-	install-libopenbabelincludeHEADERS install-man \
+	clean clean-generic clean-libtool clean-local \
+	clean-noinstLTLIBRARIES clean-pkglibLTLIBRARIES \
+	clean-recursive ctags ctags-recursive distclean \
+	distclean-compile distclean-generic distclean-libtool \
+	distclean-recursive distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-exec install-exec-am install-info \
+	install-info-am install-libopenbabelincludeHEADERS install-man \
 	install-pkglibLTLIBRARIES install-strip installcheck \
 	installcheck-am installdirs installdirs-am maintainer-clean \
 	maintainer-clean-generic maintainer-clean-recursive \
@@ -1435,6 +1445,13 @@ uninstall-info: uninstall-info-recursive
 	uninstall-libopenbabelincludeHEADERS \
 	uninstall-pkglibLTLIBRARIES
 
+@BUILD_PCH_TRUE@all.h.gch: all.h Makefile obmolecformat.h $(srcdir)/../babelconfig.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../mol.h $(srcdir)/../obconversion.h $(srcdir)/../base.h \
+@BUILD_PCH_TRUE@	$(srcdir)/../generic.h $(srcdir)/../oberror.h
+@BUILD_PCH_TRUE@	rm -f $@
+@BUILD_PCH_TRUE@	$(CXX) $(PCHFLAGS) $<
+@BUILD_PCH_TRUE@clean-local:
+@BUILD_PCH_TRUE@	-rm -f all.h.gch
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

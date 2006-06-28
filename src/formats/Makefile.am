@@ -14,6 +14,19 @@ if BUILD_INCHI
 SUBDIRS += inchi
 endif
 
+if BUILD_PCH
+BUILT_SOURCES = all.h.gch
+PCHFLAGS=-Winvalid-pch -x c++-header $(CPPFLAGS) $(INCLUDES)
+all.h.gch: all.h Makefile obmolecformat.h $(srcdir)/../babelconfig.h \
+	$(srcdir)/../mol.h $(srcdir)/../obconversion.h $(srcdir)/../base.h \
+	$(srcdir)/../generic.h $(srcdir)/../oberror.h
+	rm -f $@
+	$(CXX) $(PCHFLAGS) $<
+AM_CXXFLAGS= -include $(top_srcdir)/src/formats/all.h
+clean-local:
+	-rm -f all.h.gch
+endif
+
 # Unfortunately there are a few formats which still cannot compile shared
 # modules (e.g., Cygwin). So we need to keep a duplicate target for "libformats"
 

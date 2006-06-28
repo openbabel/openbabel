@@ -135,6 +135,8 @@ BUILD_DOCS_FALSE = @BUILD_DOCS_FALSE@
 BUILD_DOCS_TRUE = @BUILD_DOCS_TRUE@
 BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
 BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
+BUILD_PCH_FALSE = @BUILD_PCH_FALSE@
+BUILD_PCH_TRUE = @BUILD_PCH_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -258,10 +260,13 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
-	dlhandler_win32.cpp
+	dlhandler_win32.cpp all.h
 
 SUBDIRS = math formats fingerprints
 #SUBDIRS += GUI
+@BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
+@BUILD_PCH_TRUE@PCHFLAGS = -Winvalid-pch -x c++-header $(CXXFLAGS) $(INCLUDES)
+@BUILD_PCH_TRUE@AM_CXXFLAGS = -include $(top_srcdir)/src/all.h
 INCLUDES = -I$(top_srcdir)/data/
 babel_SOURCES = main.cpp
 babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
@@ -301,7 +306,7 @@ libopenbabelinclude_HEADERS = \
 		parsmart.h patty.h phmodel.h reaction.h \
 		residue.h ring.h rotor.h rotamer.h typer.h 
 
-all: config.h
+all: $(BUILT_SOURCES) config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
@@ -704,7 +709,8 @@ distdir: $(DISTFILES)
 	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
 	  dist-hook
 check-am: all-am
-check: check-recursive
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-recursive
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(HEADERS) config.h
 install-binPROGRAMS: install-libLTLIBRARIES
 
@@ -713,7 +719,8 @@ installdirs-am:
 	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libopenbabelincludedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: install-recursive
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -737,10 +744,12 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+@BUILD_PCH_FALSE@clean-local:
 clean: clean-recursive
 
 clean-am: clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
-	clean-libtool mostlyclean-am
+	clean-libtool clean-local mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -rf $(DEPDIR) ./$(DEPDIR)
@@ -795,22 +804,30 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
 	clean clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
-	clean-libtool clean-recursive ctags ctags-recursive dist-hook \
-	distclean distclean-compile distclean-generic distclean-hdr \
-	distclean-libtool distclean-recursive distclean-tags distdir \
-	dvi dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-data install-data-am \
-	install-data-hook install-exec install-exec-am install-info \
-	install-info-am install-libLTLIBRARIES \
-	install-libopenbabelincludeHEADERS install-man install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool mostlyclean-recursive \
-	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	clean-libtool clean-local clean-recursive ctags \
+	ctags-recursive dist-hook distclean distclean-compile \
+	distclean-generic distclean-hdr distclean-libtool \
+	distclean-recursive distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-binPROGRAMS \
+	install-data install-data-am install-data-hook install-exec \
+	install-exec-am install-info install-info-am \
+	install-libLTLIBRARIES install-libopenbabelincludeHEADERS \
+	install-man install-strip installcheck installcheck-am \
+	installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
+	tags tags-recursive uninstall uninstall-am \
 	uninstall-binPROGRAMS uninstall-info-am \
 	uninstall-libLTLIBRARIES uninstall-libopenbabelincludeHEADERS
 
+@BUILD_PCH_TRUE@all.h.gch: all.h Makefile babelconfig.h mol.h base.h bitvec.h generic.h \
+@BUILD_PCH_TRUE@	oberror.h obiter.h obconversion.h
+@BUILD_PCH_TRUE@	rm -f $@
+@BUILD_PCH_TRUE@	$(CXX) $(PCHFLAGS) $<
+
+@BUILD_PCH_TRUE@clean-local:
+@BUILD_PCH_TRUE@	-rm -f all.h.gch
 
 # Use sed to substitute #include "header.h" to #include <openbabel/header.h>
 install-data-hook:
