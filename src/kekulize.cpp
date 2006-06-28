@@ -346,6 +346,12 @@ void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &elec
     bond = GetBond(i);    
     // std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";
     if (bond->GetBO()==5 && bcurrentState[i] == DOUBLE) {
+      if ( (bond->GetBeginAtom())->IsSulfur()
+           && bond->GetEndAtom()->IsSulfur() ) {
+        // no double bonds between aromatic sulfur atoms -- PR#1504089
+        continue;
+      }
+
       bond->SetKDouble();
       bond->SetBO(2);
       //std::cout << "double\n";

@@ -685,7 +685,6 @@ namespace OpenBabel
 		 << curr << endl;
 	errorMsg << "Previous = " << prev << " Fanout = " << count << endl;
 	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-	//        exit(1);
       }
     else if( StackPtr )
       {
@@ -717,9 +716,12 @@ namespace OpenBabel
       {
         if( (*node)->assign.resid != resid )
 	  {
-            fputs("Error: Duplicated Monomer Specification!\n",stderr);
-            fprintf(stderr,"Residue %s matches resid",ChainsResName[resid]);
-            fprintf(stderr,"ue %s!\n",ChainsResName[(*node)->assign.resid]);
+            stringstream errorMsg;
+            errorMsg << "Duplicated Monomer Specification!\n";
+            errorMsg << "Residue " << ChainsResName[resid] 
+                     << " matches residue ";
+            errorMsg << ChainsResName[(*node)->assign.resid] << endl;
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 	  }
       }
 

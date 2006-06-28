@@ -2,7 +2,7 @@
 obiter.cpp - STL-style iterators for Open Babel
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -33,9 +33,6 @@ namespace OpenBabel
   to atom indexes (which may change in the future) or the OBMol::BeginAtom()
   and OBMol::NextAtom() methods which may be deprecated in the future.
 
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
-
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
 
@@ -52,6 +49,10 @@ namespace OpenBabel
    double exactMass = 0.0f;
    FOR_ATOMS_OF_MOL(a, mol)
    {
+  // The variable a behaves like OBAtom* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*a
+  
        exactMass +=  a->GetExactMass();
    }
   \endcode
@@ -100,9 +101,6 @@ namespace OpenBabel
   to bond indexes (which may change in the future) or the OBMol::BeginBond()
   and OBMol::NextBond() methods which may be deprecated in the future.
 
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
-
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
 
@@ -119,6 +117,9 @@ namespace OpenBabel
    unsigned int bondOrderSum = 0;
    FOR_BONDS_OF_MOL(b, mol)
    {
+  // The variable b behaves like OBBond* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*b
        bondOrderSum +=  b->GetBO();
    }
   \endcode
@@ -166,9 +167,6 @@ namespace OpenBabel
   to bond indexes (which may change in the future) or the OBAtom::BeginNbr()
   and OBAtom::NextNbr() methods which may be deprecated in the future.
 
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
-
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
 
@@ -184,7 +182,10 @@ namespace OpenBabel
    OBMol mol;
    FOR_ATOMS_OF_MOL(a, mol)
    {
-     FOR_NBORS_OF_ATOM(b, a)
+  // The variable a behaves like OBAtom* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*a
+  FOR_NBORS_OF_ATOM(b, &*a)
       {
          ...
       }
@@ -234,9 +235,6 @@ namespace OpenBabel
   to bond indexes (which may change in the future) or the OBAtom::BeginBond()
   and OBAtom::NextBond() methods which may be deprecated in the future
 
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
-
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
 
@@ -253,6 +251,9 @@ namespace OpenBabel
    unsigned int tripleBondCount;
    FOR_BONDS_OF_ATOM(b, atom)
    {
+  // The variable b behaves like OBBond* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*b
       if (b->GetBO() == 3)
          tripleBondCount++;
    }
@@ -301,9 +302,6 @@ namespace OpenBabel
   to residue indexes (which may change in the future) or the OBMol::BeginResidue()
   and OBMol::NextResidue() methods which may be deprecated in the future.
 
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
-
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
 
@@ -319,6 +317,10 @@ namespace OpenBabel
    OBMol mol;
    FOR_RESIDUES_OF_MOL(r, mol)
    {
+  // The variable r behaves like OBResidue* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*r
+
      if (r->GetName() == resname && r->GetNum() == rnum) 
      {
        // got a match, let's go to work
@@ -370,9 +372,6 @@ namespace OpenBabel
   to atom indexes (which may change in the future) or the OBResidue::BeginAtom()
   and OBResidue::NextAtom() methods which may be deprecated in the future.
 
-  Therefore, it is <strong>highly recommended</strong> to use the separate
-  STL-style iterator classes.
-
   This has been made significantly easier by a series of macros in the 
   obiter.h header file:
 
@@ -389,9 +388,13 @@ namespace OpenBabel
    double residueMass = 0.0;
    FOR_RESIDUES_OF_MOL(r, mol)
    {
+  // The variable r behaves like OBResidue* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*r
+
      if (r->GetName() == resname && r->GetNum() == rnum) 
      {
-        FOR_ATOMS_OF_RESIDUE(a, r)
+  FOR_ATOMS_OF_RESIDUE(a, &*r)
 	 {
 	   residueMass += a->GetMass();
 	 }
