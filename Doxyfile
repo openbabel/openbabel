@@ -459,8 +459,8 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = src/ \
-                         src/math/
+INPUT                  = src/ src/formats/obmolecformat.h \
+                         src/math/ 
 
 # If the value of the INPUT tag contains directories, you can use the 
 # FILE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 
@@ -476,19 +476,15 @@ FILE_PATTERNS          = *.h \
 # should be searched for input files as well. Possible values are YES and NO. 
 # If left blank NO is used.
 
-RECURSIVE              = YES
+RECURSIVE              = NO
 
 # The EXCLUDE tag can be used to specify files and/or directories that should 
 # excluded from the INPUT source files. This way you can easily exclude a 
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
 EXCLUDE                = src/main.cpp \
-                         src/windows/ \
-                         src/newmain.cpp \
                          src/babelconfig.h \
                          src/config.h \
-                         src/formats/ \
-                         src/GUI/ \
                          src/zipstreamimpl.h \
                          src/zipstream.h
 
