@@ -76,15 +76,15 @@ namespace OpenBabel
     if (!ifs)
       {
         if (getenv("BABEL_DATADIR") == NULL)
-	  {
-	    stringstream errorMsg;
-	    errorMsg << "The BABEL_DATADIR environment variable is not defined" << endl;
-	    errorMsg << "Please define it so the program can find " << infile << endl;
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-	    //            exit(0);
-	  }
+          {
+            stringstream errorMsg;
+            errorMsg << "The BABEL_DATADIR environment variable is not defined" << endl;
+            errorMsg << "Please define it so the program can find " << infile << endl;
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+            //            exit(0);
+          }
         else
-	  patty_dir = getenv("BABEL_DATADIR");
+          patty_dir = getenv("BABEL_DATADIR");
         patty_dir += FILE_SEP_CHAR;
         patty_dir += infile;
         ifs1.open(patty_dir.c_str());
@@ -98,27 +98,27 @@ namespace OpenBabel
 
     if (!ifsP)
       {
-	stringstream errorMsg;
+        stringstream errorMsg;
         errorMsg << "Could not open " << patty_dir << endl;
-	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-	//        exit(0);
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+        //        exit(0);
       }
     while (ifsP->getline(buffer,BUFF_SIZE))
       {
         if (buffer[0] != '#')
-	  {
+          {
             tokenize(vs,buffer," \t\n");
             if (vs.size() >= 2)
-	      {
+              {
                 strncpy(tmp_str,vs[0].c_str(), sizeof(tmp_str) - 1);
-		tmp_str[sizeof(tmp_str) - 1] = '\0';
+                tmp_str[sizeof(tmp_str) - 1] = '\0';
                 sp = new OBSmartsPattern;
                 sp->Init(tmp_str);
                 _sp.push_back(sp);
                 smarts.push_back(vs[0]);
                 typ.push_back(vs[1]);
-	      }
-	  }
+              }
+          }
       }
   }
 
@@ -134,19 +134,19 @@ namespace OpenBabel
       {
         strncpy(buffer, rules[i].c_str(), BUFF_SIZE);
         if (buffer[0] != '#')
-	  {
+          {
             tokenize(vs,buffer," \t\n");
             if (vs.size() >= 2)
-	      {
+              {
                 strncpy(tmp_str,vs[0].c_str(), sizeof(tmp_str) - 1);
-		tmp_str[sizeof(tmp_str) - 1] = '\0';
+                tmp_str[sizeof(tmp_str) - 1] = '\0';
                 sp = new OBSmartsPattern;
                 sp->Init(tmp_str);
                 _sp.push_back(sp);
                 smarts.push_back(vs[0]);
                 typ.push_back(vs[1]);
-	      }
-	  }
+              }
+          }
       }
   }
 
@@ -164,25 +164,25 @@ namespace OpenBabel
         vector<vector<int> > match = _sp[i]->GetMapList();
         //vector<vector<int> >& match = _sp[i]->GetMapList();
         if (match.size())
-	  {
+          {
             if (debug)
-	      {
-		stringstream errorMsg;
+              {
+                stringstream errorMsg;
                 errorMsg << typ[i] << " " << smarts[i] << " matched ";
-		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-	      }
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+              }
 
             for (unsigned int j = 0; j < match.size(); j++)
-	      {
+              {
                 if (debug)
-		  {
-		    stringstream errorMsg;
+                  {
+                    stringstream errorMsg;
                     errorMsg << match[j][0] << " ";
-		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-		  }
+                    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+                  }
                 atm_typ[match[j][0]] = typ[i];
-	      }
-	  }
+              }
+          }
       }
   }
 
@@ -199,25 +199,25 @@ namespace OpenBabel
         vector<vector<int> > match = _sp[i]->GetMapList();
         //vector<vector<int> >& match = _sp[i]->GetMapList();
         if (match.size())
-	  {
+          {
             if (debug)
-	      {
-		stringstream errorMsg;
-		errorMsg << typ[i] << " " << smarts[i] << " matched " ;
-		obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-	      }
+              {
+                stringstream errorMsg;
+                errorMsg << typ[i] << " " << smarts[i] << " matched " ;
+                obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+              }
 
             for (unsigned int j = 0; j < match.size(); j++)
-	      {
+              {
                 if (debug)
-		  {
-		    stringstream errorMsg;
+                  {
+                    stringstream errorMsg;
                     errorMsg << match[j][0] << " ";
-		    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
-		  }
+                    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
+                  }
                 atm_typ[match[j][0]] = type_to_int(typ[i]);
-	      }
-	  }
+              }
+          }
       }
   }
 
@@ -229,44 +229,44 @@ namespace OpenBabel
     switch(toupper(type.c_str()[0]))
       {
       case 'C' : // CAT - CATION
-	result = PT_CATION;
-	break;
+        result = PT_CATION;
+        break;
       case 'A' :
-	if (toupper(type.c_str()[1]) == 'N') // ANI - ANION
-	  result = PT_ANION;
-	else
-	  result = PT_ACCEPTOR;
-	break;
+        if (toupper(type.c_str()[1]) == 'N') // ANI - ANION
+          result = PT_ANION;
+        else
+          result = PT_ACCEPTOR;
+        break;
       case 'P' : // POL - POLAR
-	result = PT_POLAR;
-	break;
+        result = PT_POLAR;
+        break;
       case 'D' : // DON - DONOR
-	result = PT_DONOR;
-	break;
+        result = PT_DONOR;
+        break;
       case 'H' : // HYD - HYDROPHOBIC
-	result = PT_HYDROPHOBIC;
-	break;
+        result = PT_HYDROPHOBIC;
+        break;
       case 'M' : // Metal
-	result = PT_METAL;
-	break;
+        result = PT_METAL;
+        break;
       case 'O' : // OTH - OTHER
-	result = PT_OTHER;
-	break;
+        result = PT_OTHER;
+        break;
       default :
-	// This was added by Brian,
-	// Behavior will fail if type is undefined
-	if (failOnUndefined)
-	  {
-	    stringstream errorMsg;
-	    errorMsg << "Unable to find type of feature passed in " << endl;
-	    errorMsg << "Feature passed in is " << type << endl;
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
-	    //	  exit(-1);
-	  }
-	else
-	  {
-	    result = 7;
-	  }
+        // This was added by Brian,
+        // Behavior will fail if type is undefined
+        if (failOnUndefined)
+          {
+            stringstream errorMsg;
+            errorMsg << "Unable to find type of feature passed in " << endl;
+            errorMsg << "Feature passed in is " << type << endl;
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+            //	  exit(-1);
+          }
+        else
+          {
+            result = 7;
+          }
       }
     return(result);
   }
@@ -278,47 +278,13 @@ namespace OpenBabel
     for(unsigned int pos=0; pos < typ.size(); pos++)
       {
         if(typ[pos] == type)
-	  return (pos + 1);
+          return (pos + 1);
       }
 
     return (0);
   }
 
 }
-
-#ifdef COMPILE_PATTY_MAIN
-// This was written for OB-1.x and would need updating for OB-2.0 if needed
-// Consider it deprecated.
-
-int main(int argc, char *argv[])
-{
-    OBMol mol(SDF,SDF);
-    vector<string> types;
-
-    ifstream ifs(argv[1]);
-    if (!ifs)
-    {
-        cerr << "Could not open supplied file " << endl;
-	//        exit(0);
-    }
-
-    patty p("simple.txt");
-    for (;;)
-    {
-        ifs >> mol;
-        if (!mol.NumAtoms())
-            break;
-        p.assign_types(mol,types);
-        mol.Clear();
-    }
-
-    for (int i = 1; i < types.size(); i++)
-    {
-        cout << i << " " << types[i] << endl;
-    }
-}
-
-#endif
 
 //! \file patty.cpp
 //! \brief Programmable atom typer.
