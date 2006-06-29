@@ -45,8 +45,8 @@ namespace OpenBabel
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3)
         {
-	  mayHaveChiralCenter=true;
-	  break;
+          mayHaveChiralCenter=true;
+          break;
         }
 
     if (!mayHaveChiralCenter)
@@ -56,60 +56,35 @@ namespace OpenBabel
     vector<OBEdgeBase*>::iterator j;
     for (bond = BeginBond(j);bond;bond = NextBond(j))
       if (bond->IsWedge() || bond->IsHash())
-	(bond->GetBeginAtom())->SetChiral();
-
-#define INTMETHOD
-
-#ifdef INTMETHOD
+        (bond->GetBeginAtom())->SetChiral();
 
     vector<unsigned int> vgid;
     GetGIDVector(vgid);
     vector<unsigned int> tlist;
     vector<unsigned int>::iterator k;
-#else //use Golender floating point method
-
-    vector<double> gp;
-    GraphPotentials(*this,gp);
-    vector<double> tlist;
-    vector<double>::iterator k;
-#endif
 
     bool ischiral;
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3 && !atom->IsChiral())
         {
-	  tlist.clear();
-	  ischiral = true;
+          tlist.clear();
+          ischiral = true;
 
-	  for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
+          for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
             {
-	      for (k = tlist.begin();k != tlist.end();k++)
-#ifdef INTMETHOD
+              for (k = tlist.begin();k != tlist.end();k++)
+                if (vgid[nbr->GetIdx()-1] == *k)
+                  ischiral = false;
 
-		if (vgid[nbr->GetIdx()-1] == *k)
-#else
+              if (ischiral)
+                tlist.push_back(vgid[nbr->GetIdx()-1]);
 
-		  if (fabs(gp[nbr->GetIdx()]-*k) < 0.001)
-#endif
-
-		    ischiral = false;
-
-#ifdef INTMETHOD
-
-	      if (ischiral)
-		tlist.push_back(vgid[nbr->GetIdx()-1]);
-#else
-
-	      if (ischiral)
-		tlist.push_back(gp[nbr->GetIdx()]);
-#endif
-
-	      else
-		break;
+              else
+                break;
             }
 
-	  if (ischiral)
-	    atom->SetChiral();
+          if (ischiral)
+            atom->SetChiral();
         }
   }
 
@@ -123,29 +98,29 @@ namespace OpenBabel
     vector<OBNodeBase*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       if (atom->IsChiral())
-	{
-	  if (!atom->HasChiralVolume())
-	    {
-	      double sv = CalcSignedVolume(mol,atom);
-	      if (sv < 0.0)
-		{
-		  chirality[atom->GetIdx()-1] = -1;
-		  atom->SetNegativeStereo();
-		}
-	      else if (sv > 0.0)
-		{
-		  chirality[atom->GetIdx()-1] = 1;
-		  atom->SetPositiveStereo();
-		}
-	    }
-	  else // already calculated signed volume (e.g., imported from somewhere)
-	    {
-	      if (atom ->IsPositiveStereo())
-		chirality[atom->GetIdx()-1] = 1;
-	      else
-		chirality[atom->GetIdx()-1] = -1;
-	    }
-	}
+        {
+          if (!atom->HasChiralVolume())
+            {
+              double sv = CalcSignedVolume(mol,atom);
+              if (sv < 0.0)
+                {
+                  chirality[atom->GetIdx()-1] = -1;
+                  atom->SetNegativeStereo();
+                }
+              else if (sv > 0.0)
+                {
+                  chirality[atom->GetIdx()-1] = 1;
+                  atom->SetPositiveStereo();
+                }
+            }
+          else // already calculated signed volume (e.g., imported from somewhere)
+            {
+              if (atom ->IsPositiveStereo())
+                chirality[atom->GetIdx()-1] = 1;
+              else
+                chirality[atom->GetIdx()-1] = -1;
+            }
+        }
   }
 
   int GetParity4Ref(vector<unsigned int> pref) 
@@ -154,16 +129,16 @@ namespace OpenBabel
     int parity=0;
     for (int i=0;i<3;i++) // do the bubble sort this many times
       {
-	for(int j=0;j<3;j++) // iterate across the array 4th element has no
-	  {                    // right hand neighbour so no need to sort
-	    if (pref[j+1] < pref[j]) // compare the two neighbors
-	      {  
-		unsigned int tmp = pref[j];        // swap a[j] and a[j+1]  
-		pref[j] = pref[j+1];
-		pref[j+1] = tmp;
-		parity++; // parity odd will invert stereochem
-	      }
-	  }
+        for(int j=0;j<3;j++) // iterate across the array 4th element has no
+          {                    // right hand neighbour so no need to sort
+            if (pref[j+1] < pref[j]) // compare the two neighbors
+              {  
+                unsigned int tmp = pref[j];        // swap a[j] and a[j+1]  
+                pref[j] = pref[j+1];
+                pref[j+1] = tmp;
+                parity++; // parity odd will invert stereochem
+              }
+          }
       } // End Bubble Sort
     return(parity%2);
   }
@@ -209,16 +184,16 @@ namespace OpenBabel
        }*/
     if (parityO==parityI)
       {//cout << "Parity is the same"<<endl;
-	return(true);
+        return(true);
       }
     else if(parityO!=parityI) // Need to invert the Chirality which has been set
       { //cout << "Parity is Opposite"<<endl;       
         if (atm->IsClockwise())
-	  {atm->UnsetStereo();atm->SetAntiClockwiseStereo();}
+          {atm->UnsetStereo();atm->SetAntiClockwiseStereo();}
         else if (atm->IsAntiClockwise())
-	  {atm->UnsetStereo();atm->SetClockwiseStereo();}
+          {atm->UnsetStereo();atm->SetClockwiseStereo();}
         else
-	  return(false);
+          return(false);
         return(true);
       }
     return false;
@@ -237,46 +212,46 @@ namespace OpenBabel
            
     if (!mol.Has3D()) //give peudo Z coords if mol is 2D
       {
-	vector3 v,vz(0.0,0.0,1.0);
+        vector3 v,vz(0.0,0.0,1.0);
         is2D = true;
         OBAtom *nbr;
         OBBond *bond;
         vector<OBEdgeBase*>::iterator i;
         for (bond = atm->BeginBond(i);bond;bond = atm->NextBond(i))
-	  {
+          {
             nbr = bond->GetEndAtom();
             if (nbr != atm)
-	      {
+              {
                 v = nbr->GetVector();
                 if (bond->IsWedge())
-		  v += vz;
+                  v += vz;
                 else
-		  if (bond->IsHash())
-		    v -= vz;
+                  if (bond->IsHash())
+                    v -= vz;
 
                 nbr->SetVector(v);
-	      }
+              }
             else
-	      {
+              {
                 nbr = bond->GetBeginAtom();
                 v = nbr->GetVector();
                 if (bond->IsWedge())
-		  v -= vz;
+                  v -= vz;
                 else
-		  if (bond->IsHash())
-		    v += vz;
+                  if (bond->IsHash())
+                    v += vz;
 
                 nbr->SetVector(v);
-	      }
-	  }
+              }
+          }
       }
     
     if (atm->GetHvyValence() < 3)
       {
-	stringstream errorMsg;
-	errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of " << atm->GetHvyValence() << endl;
-	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
-	return(0.0);
+        stringstream errorMsg;
+        errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of " << atm->GetHvyValence() << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+        return(0.0);
       }
 
     // Create a vector with the coordinates of the neighbor atoms
@@ -307,23 +282,23 @@ namespace OpenBabel
       {
         if (nbr_crds[j]==0 && use_central_atom==false)use_central_atom=true;
         else if (nbr_crds[j]==0)
-	  {
-	    obErrorLog.ThrowError(__FUNCTION__, "More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation", obInfo);
-	  }
+          {
+            obErrorLog.ThrowError(__FUNCTION__, "More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation", obInfo);
+          }
       }
 
     // If we have three heavy atoms we can use the chiral center atom itself for the fourth
     // will always give same sign (for tetrahedron), magnitude will be smaller.
     if(nbr_atms.size()==3 || use_central_atom==true)
       {
-	nbr_crds.push_back(atm->GetVector());
-	nbr_atms.push_back(mol.NumAtoms()+1); // meed to add largest number on end to work
+        nbr_crds.push_back(atm->GetVector());
+        nbr_atms.push_back(mol.NumAtoms()+1); // meed to add largest number on end to work
       }
     OBChiralData* cd=(OBChiralData*)atm->GetData(OBGenericDataType::ChiralData); //Set the output atom4refs to the ones used
     if(cd==NULL)
       {
-	cd = new OBChiralData;
-	atm->SetData(cd);
+        cd = new OBChiralData;
+        atm->SetData(cd);
       }
     cd->SetAtom4Refs(nbr_atms,calcvolume);
     
@@ -334,11 +309,11 @@ namespace OpenBabel
         OBAtom *atom;
         vector<OBNodeBase*>::iterator k;
         for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
-	  {
+          {
             v = atom->GetVector();
             v.SetZ(0.0);
             atom->SetVector(v);
-	  }
+          }
       }
     
     return(signed_volume(nbr_crds[0],nbr_crds[1],nbr_crds[2],nbr_crds[3]));
@@ -396,18 +371,18 @@ namespace OpenBabel
     for (atm1 = mol.BeginAtom(aint),i=0;atm1;atm1 = mol.NextAtom(aint),i++)
       for (atm2 = mol.BeginAtom(bint),j=0;atm2;atm2 = mol.NextAtom(bint),j++)
         {
-	  if (i == j)
+          if (i == j)
             {
-	      m[i][j] = atm1->GetValence() + 1;
-	      m[i][j] += (double)atm1->GetAtomicNum()/10.0;
-	      m[i][j] += (double)atm1->GetHyb()/100.0;
+              m[i][j] = atm1->GetValence() + 1;
+              m[i][j] += (double)atm1->GetAtomicNum()/10.0;
+              m[i][j] += (double)atm1->GetHyb()/100.0;
             }
-	  else
+          else
             {
-	      if (atm1->IsConnected(atm2))
-		m[i][j] = -1;
-	      else
-		m[i][j] = 0;
+              if (atm1->IsConnected(atm2))
+                m[i][j] = -1;
+              else
+                m[i][j] = 0;
             }
         }
   }
