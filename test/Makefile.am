@@ -1,9 +1,10 @@
 SUBDIRS = cmltest
 
-noinst_PROGRAMS = matrix rings smarts unitcell aromatic \
-		atom bond conversion data format internalcoord \
-		mol residue formula formalcharge invalidsmarts \
-	  invalidsmiles smilesmatch iterators  
+noinst_PROGRAMS = aromatic atom bond \
+	conversion data format formula formalcharge \
+	internalcoord invalidsmarts invalidsmiles \
+	iterators matrix mol residue rings smarts \
+	smilesmatch unitcell 
 
 bin_PROGRAMS = roundtrip
 
