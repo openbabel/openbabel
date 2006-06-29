@@ -410,7 +410,8 @@ namespace OpenBabel
       {
         index = atom->GetIdx();
 
-        if (!vic[index]) // make sure we always have valid pointers
+        // make sure we always have valid pointers
+        if (index >= vic.size() || !vic[index])
           return;
 
         if (vic[index]->_a) // make sure we have a valid ptr
@@ -706,8 +707,6 @@ namespace OpenBabel
 #define FourThirdsPI  (4.0*PI/3.0)
 #define TwoThirdsPI   (2.0*PI/3.0)
 
-#ifdef OLD_RMAT
-
   /*FUNCTION */
   /* recieves: the co-efficients for a general
    *           equation of degree one.
@@ -742,11 +741,6 @@ namespace OpenBabel
     if( Descr>0.0 )
       {
         Descr = sqrt(Descr);
-#ifdef ORIG
-
-        Roots[0] = (-B-Descr)/TwoA;
-        Roots[1] = (-B+Descr)/TwoA;
-#else
         /* W. Press, B. Flannery, S. Teukolsky and W. Vetterling,
          * "Quadratic and Cubic Equations", Numerical Recipes in C,
          * Chapter 5, pp. 156-157, 1989.
@@ -754,7 +748,6 @@ namespace OpenBabel
         Temp = (B<0.0)? -0.5*(B-Descr) : -0.5*(B+Descr);
         Roots[0] = Temp/A;
         Roots[1] = C/Temp;
-#endif
 
         return( 2 );
       }
@@ -825,7 +818,6 @@ namespace OpenBabel
 
     return( 1 );
   }
-#endif
 
 
 #define MAX_SWEEPS 50
