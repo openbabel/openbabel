@@ -198,27 +198,27 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    char buffer[BUFF_SIZE];
-    char bond_char;
+    // delete dummy atoms
+    FOR_ATOMS_OF_MOL(atom, pmol)
+      if (atom->GetAtomicNum() == 0)
+        mol.DeleteAtom(&*atom);
 
     // Ghemical header -- here "version 1.0" format
-    ofs << "!Header gpr 100" << endl;
+    ofs << "!Header gpr 100\n";
 
     // Number of coordinate sets
-    ofs << "!Info 1" << endl;
+    ofs << "!Info 1\n";
 
     // Atom definitions
-    sprintf(buffer,"!Atoms %d", mol.NumAtoms());
-    ofs << buffer << endl;
+    ofs << "!Atoms " << mol.NumAtoms() << '\n';
 
-    string str,str1;
     FOR_ATOMS_OF_MOL(atom, mol)
-      ofs << (atom->GetIdx() - 1) << " " << atom->GetAtomicNum() << endl;
+      ofs << (atom->GetIdx() - 1) << " " << atom->GetAtomicNum() << '\n';
 
     // Bond definitions
-    sprintf(buffer, "!Bonds %d", mol.NumBonds());
-    ofs << buffer << endl;
+    ofs << "!Bonds " << mol.NumBonds() << '\n';
 
+    char bond_char;
     FOR_BONDS_OF_MOL(bond, mol)
       {
         switch(bond->GetBO())
@@ -232,49 +232,40 @@ namespace OpenBabel
           case 3 :
             bond_char = 'T';
             break;
-          case 4 :
-            bond_char = 'C';
-            break;
           case 5 :
             bond_char = 'C';
             break;
           default :
             bond_char = 'S';
           }
-        sprintf(buffer,"%d %d %c",
-                bond->GetBeginAtomIdx()-1,
-                bond->GetEndAtomIdx()-1,
-                bond_char);
-        ofs << buffer << endl;
+        if (bond->IsAromatic())
+          bond_char = 'C';
+        ofs << bond->GetBeginAtomIdx()-1 << ' ' 
+            << bond->GetEndAtomIdx()-1 << ' '
+            <<  bond_char << '\n';
       }
 
     // Coordinate sets (here only 1)
-    ofs << "!Coord" << endl;
+    ofs << "!Coord\n";
 
     FOR_ATOMS_OF_MOL(atom, mol)
       {
-        sprintf(buffer,"%d %f %f %f",
-                atom->GetIdx()-1,
-                atom->GetX()/10.0,
-                atom->GetY()/10.0,
-                atom->GetZ()/10.0);
-
-        ofs << buffer << endl;
+        ofs << atom->GetIdx()-1 << ' '
+            << atom->GetX()/10.0 << ' '
+            << atom->GetY()/10.0 << ' '
+            << atom->GetZ()/10.0 << '\n';
       }
 
     // Calculated charges
-    ofs << "!Charges" << endl;
+    ofs << "!Charges\n";
 
     FOR_ATOMS_OF_MOL(atom, mol)
       {
-        sprintf(buffer,"%d %f",
-                atom->GetIdx()-1,
-                atom->GetPartialCharge());
-
-        ofs << buffer << endl;
+        ofs << atom->GetIdx()-1 << ' '
+            << atom->GetPartialCharge() << '\n';
       }
 
-    ofs << "!End" << endl;
+    ofs << "!End\n";
 
     return(true);
   }
