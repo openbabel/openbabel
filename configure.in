@@ -195,7 +195,7 @@ eval std_shrext=\"$shrext_cmds\"
 AC_DEFINE_UNQUOTED([MODULE_EXTENSION], ["$std_shrext"], [The file extension used for shared modules])
 module=$oldmodule
 
-AM_CONDITIONAL(BUILD_PCH, test x"$precompiled_headers" != "x")
+AM_CONDITIONAL(BUILD_PCH, test "$precompiled_headers" = "yes")
 
 AC_LANG_CPLUSPLUS
 dnl Checks for libraries.

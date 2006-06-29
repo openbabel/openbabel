@@ -1,3 +1,9 @@
+2006-06-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure, configure.in: Fix logic in last change.
+
+	* Doxyfile: Update to grab obmolecformat.h now in src/format/.
+
 2006-06-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure, configure.in, src/all.h, src/formats/all.h,

@@ -19505,7 +19505,7 @@ module=$oldmodule
 
 
 
-if test x"$precompiled_headers" != "x"; then
+if test "$precompiled_headers" = "yes"; then
   BUILD_PCH_TRUE=
   BUILD_PCH_FALSE='#'
 else
