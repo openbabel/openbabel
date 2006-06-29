@@ -25,10 +25,8 @@ GNU General Public License for more details.
 #include <vector>
 #include <map>
 #include <string>
-#include <algorithm>
 #include <sstream>
-#include <iostream>
-#include <fstream>
+#include <iosfwd>
 
 #include "base.h"
 #include "generic.h"

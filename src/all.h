@@ -23,18 +23,14 @@ GNU General Public License for more details.
 
 // Common STL headers
 #include <vector>
-#include <map>
 #include <string>
-#include <algorithm>
 #include <sstream>
-#include <iostream>
-#include <fstream>
+#include <iosfwd>
 
 #include "base.h"
 #include "generic.h"
 #include "mol.h"
 #include "oberror.h"
-#include "obconversion.h"
 
 #endif OB_ALL_H
 
