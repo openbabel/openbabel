@@ -31,6 +31,15 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
+#ifdef TESTDATADIR
+  string testdatadir = TESTDATADIR;
+  string d2file = testdatadir + "test2d.xyz";
+  string d3file = testdatadir + "test3d.xyz";
+#else
+  string d2file = "files/test2d.xyz";
+  string d3file = "files/test3d.xyz";
+#endif
+
 int main(int argc,char *argv[])
 {
   // turn off slow sync with C-style output (we don't use it anyway).
@@ -46,7 +55,7 @@ int main(int argc,char *argv[])
   cout << "# Unit tests for OBMol \n";
 
   // the number of tests for "prove"
-  cout << "1..7\n";
+  cout << "1..8\n";
 
   cout << "ok 1\n"; // for loading tests
 
@@ -88,5 +97,33 @@ int main(int argc,char *argv[])
     cout << "not ok 7\n";
   }
 
+  ifstream ifs1(d3file.c_str());
+  if (!ifs1)
+    {
+      cout << "Bail out! Cannot read input file!" << endl;
+      return(-1);
+    }
+  OBConversion conv(&ifs1, &cout);
+  OBFormat* pFormat;
+  
+  pFormat = conv.FindFormat("XYZ");
+  if ( pFormat == NULL )
+    {
+      cout << "Bail out! Cannot read file format!" << endl;
+      return(-1);
+    }
+  if (! conv.SetInAndOutFormats(pFormat, pFormat))
+    {
+      cout << "Bail out! File format isn't loaded" << endl;
+      return (-1);
+    }
+
+  OBMol testMol2D, testMol3D;
+  if (conv.Read(&testMol3D))
+    cout << "ok 8\n";
+  else
+    cout << "not ok 8\n";
+  //  testMol3D.Center();
+  
   return(0);
 }

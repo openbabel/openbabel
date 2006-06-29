@@ -72,7 +72,7 @@ int main(int argc,char *argv[])
     }
   
   cout << endl << "# Testing SMARTS...  \n";
-  
+
   std::ifstream ifs;
   if (!SafeOpen(ifs, smarts_file.c_str()))
     {

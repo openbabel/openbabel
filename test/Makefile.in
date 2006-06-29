@@ -36,13 +36,13 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-noinst_PROGRAMS = matrix$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
-	unitcell$(EXEEXT) aromatic$(EXEEXT) atom$(EXEEXT) \
-	bond$(EXEEXT) conversion$(EXEEXT) data$(EXEEXT) \
-	format$(EXEEXT) internalcoord$(EXEEXT) mol$(EXEEXT) \
-	residue$(EXEEXT) formula$(EXEEXT) formalcharge$(EXEEXT) \
+noinst_PROGRAMS = aromatic$(EXEEXT) atom$(EXEEXT) bond$(EXEEXT) \
+	conversion$(EXEEXT) data$(EXEEXT) format$(EXEEXT) \
+	formula$(EXEEXT) formalcharge$(EXEEXT) internalcoord$(EXEEXT) \
 	invalidsmarts$(EXEEXT) invalidsmiles$(EXEEXT) \
-	smilesmatch$(EXEEXT) iterators$(EXEEXT)
+	iterators$(EXEEXT) matrix$(EXEEXT) mol$(EXEEXT) \
+	residue$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
+	smilesmatch$(EXEEXT) unitcell$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
 subdir = test
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
