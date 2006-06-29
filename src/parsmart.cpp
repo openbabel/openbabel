@@ -182,8 +182,9 @@ namespace OpenBabel
 
   static void FatalAllocationError( char *ptr )
   {
-    printf("Error: Unable to allocate %s!\n",ptr);
-    //    exit(1);
+    stringstream errorMsg;
+    errorMsg << "Error: Unable to allocate" << ptr << endl;
+    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
   }
 
   /*================================*/

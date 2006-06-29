@@ -15,43 +15,39 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 #include "obmolecformat.h"
 
-#if defined(HAVE_SSTREAM)
 #include <sstream>
-#else
-#include <strstream>
-#endif
 
 using namespace std;
 namespace OpenBabel
 {
 
-class CRK2DFormat : public OBMoleculeFormat
-{
-public:
+  class CRK2DFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     CRK2DFormat()
     {
-        OBConversion::RegisterFormat("crk2d", this, "chemical/x-crk2d");
+      OBConversion::RegisterFormat("crk2d", this, "chemical/x-crk2d");
     }
 
     virtual const char* Description() //required
     {
-        return
-            "Chemical Resource Kit diagram format (2D)\n \
+      return
+        "Chemical Resource Kit diagram format (2D)\n \
             No comments yet\n";
     };
 
-  virtual const char* SpecificationURL()
-  {return "http://crk.sourceforge.net/";}; //optional
+    virtual const char* SpecificationURL()
+    {return "http://crk.sourceforge.net/";}; //optional
 
-  virtual const char* GetMIMEType() 
-  { return "chemical/x-crk2d"; };
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-crk2d"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+      return READONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -63,19 +59,19 @@ public:
     static bool ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag);
     static void WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges);
 
-};
+  };
 
 
-//Make an instance of the format class
-CRK2DFormat theCRK2DFormat;
+  //Make an instance of the format class
+  CRK2DFormat theCRK2DFormat;
 
-/////////////////////////////////////////////////////////////////
-bool CRK2DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool CRK2DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -85,32 +81,32 @@ bool CRK2DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     char buffer[BUFF_SIZE];//CM extra buffer
 
     if (!ifs.getline(buffer,BUFF_SIZE))
-    {
-        printf("File is empty!\n");
+      {
+        obErrorLog.ThrowError(__FUNCTION__, "File is empty!", obError);
         return(false);
-    }
+      }
     if (!strstr(buffer,"<Property"))
-    {
-        printf("Not valid CRK XML.\n");
+      {
+        obErrorLog.ThrowError(__FUNCTION__, "Not valid CRK XML", obWarning);
         return false;
-    }
+      }
     if (!strstr(buffer,"\"DiagramStructure\""))
-    {
-        printf("Not CRK DiagramStructure (2D).\n");
+      {
+        obErrorLog.ThrowError(__FUNCTION__,"Not CRK DiagramStructure (2D)", obWarning);
         return false;
-    }
+      }
 
     mol.SetDimension(2);
     return ReadCRK(ifs,mol,"Structure2D");
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool CRK2DFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool CRK2DFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -125,36 +121,36 @@ bool CRK2DFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "</Property>" << endl;
 
     return true;
-}
+  }
 
-//******************************************************
-class CRK3DFormat : public OBMoleculeFormat
-{
-public:
+  //******************************************************
+  class CRK3DFormat : public OBMoleculeFormat
+  {
+  public:
     //Register this format type ID
     CRK3DFormat()
     {
-        OBConversion::RegisterFormat("crk3d", this, "chemical/x-crk3d");
+      OBConversion::RegisterFormat("crk3d", this, "chemical/x-crk3d");
     }
 
     virtual const char* Description() //required
     {
-        return
-            "Chemical Resource Kit 3D format\n \
+      return
+        "Chemical Resource Kit 3D format\n \
             No comments yet\n";
     };
 
-  virtual const char* SpecificationURL()
-  {return "http://crk.sourceforge.net/";}; //optional
+    virtual const char* SpecificationURL()
+    {return "http://crk.sourceforge.net/";}; //optional
   
-  virtual const char* GetMIMEType() 
-  { return "chemical/x-crk3d"; };
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-crk3d"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
     virtual unsigned int Flags()
     {
-        return READONEONLY;
+      return READONEONLY;
     };
 
     //*** This section identical for most OBMol conversions ***
@@ -162,19 +158,19 @@ public:
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-};
-//***
+  };
+  //***
 
-//Make an instance of the format class
-CRK3DFormat theCRK3DFormat;
+  //Make an instance of the format class
+  CRK3DFormat theCRK3DFormat;
 
-/////////////////////////////////////////////////////////////////
-bool CRK3DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  /////////////////////////////////////////////////////////////////
+  bool CRK3DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
@@ -184,31 +180,31 @@ bool CRK3DFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     char buffer[BUFF_SIZE];//CM extra buffer
 
     if (!ifs.getline(buffer,BUFF_SIZE))
-    {
-        printf("File is empty!\n");
+      {
+        obErrorLog.ThrowError(__FUNCTION__, "File is empty!", obError);
         return(false);
-    }
+      }
     if (!strstr(buffer,"<Property"))
-    {
-        printf("Not valid CRK XML.\n");
+      {
+        obErrorLog.ThrowError(__FUNCTION__, "Not valid CRK XML", obWarning);
         return false;
-    }
+      }
     if (!strstr(buffer,"\"ModelStructure\"") && !strstr(buffer,"\"XRayStructure\""))
-    {
-        printf("Not CRK ModelStructure or XRayStructure (3D).\n");
+      {
+        obErrorLog.ThrowError(__FUNCTION__,"Not CRK ModelStructure or XRayStructure (3D).", obWarning);
         return false;
-    }
+      }
 
     return CRK2DFormat::ReadCRK(ifs,mol,"Structure3D");
-}
+  }
 
-////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
-bool CRK3DFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
+  bool CRK3DFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
-        return false;
+      return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
@@ -223,11 +219,11 @@ bool CRK3DFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "</Property>" << endl;
 
     return true;
-}
+  }
 
-//**************************************************************
-bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag)
-{
+  //**************************************************************
+  bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag)
+  {
     bool foundClass=false;
 
 #define MAX_ATOMS 1000
@@ -251,36 +247,36 @@ bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag)
     mol.BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE))
-    {
+      {
         if (strstr(buffer,classTag) && foundClass == false)
-	  foundClass=true;
+          foundClass=true;
         else if (strstr(buffer,classTag) && foundClass == true)
-	  break;
+          break;
         else if (strstr(buffer,"<Atom"))
-        {
+          {
             atomID=0;
             char *tag=strstr(buffer,"ID=\"");
             if (tag)
-                atomID=atoi(tag+4);
+              atomID=atoi(tag+4);
             if (atomID>0)
-            {
+              {
                 inAtom=true;
                 atomNumber=0;
                 atomX= atomY= atomZ= atomCharge =0.0;
-            }
-	    else
-	      continue; // atomID <= 0
-        }
+              }
+            else
+              continue; // atomID <= 0
+          }
         else if (strstr(buffer,"<Bond"))
-        {
+          {
             inBond=true;
             bondFrom=bondTo=bondStyle=0;
             bondOrder=0;
-        }
+          }
         else if (strstr(buffer,"</Atom>"))
-        {
+          {
             if (inAtom && numAtoms<MAX_ATOMS)
-            {
+              {
                 OBAtom atm;
                 atm.Clear();
 
@@ -291,140 +287,143 @@ bool CRK2DFormat::ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag)
                 atm.SetFormalCharge((int)atomCharge);
 
                 if (!mol.AddAtom(atm))
-                {
-                    printf("Unable to add atom.\n");
+                  {
+                    obErrorLog.ThrowError(__FUNCTION__, "Unable to add atom.", obWarning);
                     return false;
-                }
-            }
+                  }
+              }
             inAtom=false;
-        }
+          }
         else if (strstr(buffer,"</Bond>"))
-        {
+          {
             if (inBond && numBonds<MAX_BONDS)
-            {
+              {
                 stbondFrom[numBonds]=bondFrom;
                 stbondTo[numBonds]=bondTo;
                 stbondOrder[numBonds]=bondOrder;
                 stbondStyle[numBonds]=bondStyle;
                 numBonds++;
-            }
+              }
             inBond=false;
-        }
+          }
         else
-        {
+          {
             char *tag;
             if (inAtom)
-            {
+              {
                 tag=strstr(buffer,"<X>");
                 if (tag)
-                    atomX=atof(tag+3);
+                  atomX=atof(tag+3);
                 tag=strstr(buffer,"<Y>");
                 if (tag)
-                    atomY=atof(tag+3);
+                  atomY=atof(tag+3);
                 tag=strstr(buffer,"<Z>");
                 if (tag)
-                    atomZ=atof(tag+3);
+                  atomZ=atof(tag+3);
                 tag=strstr(buffer,"<Element>");
                 if (tag)
-                {
+                  {
                     char element[3]="\0\0";
                     element[0]=tag[9];
                     if (tag[10]>='a' && tag[10]<='z')
-                        element[1]=tag[10];
+                      element[1]=tag[10];
                     atomNumber=etab.GetAtomicNum(element);
-                }
+                  }
                 tag=strstr(buffer,"<Charge>");
                 if (tag)
-                    atomCharge=atof(tag+8);
-            }
+                  atomCharge=atof(tag+8);
+              }
             if (inBond)
-            {
+              {
                 tag=strstr(buffer,"<From>");
                 if (tag)
-                    bondFrom=atoi(tag+6);
+                  bondFrom=atoi(tag+6);
                 tag=strstr(buffer,"<To>");
                 if (tag)
-                    bondTo=atoi(tag+4);
+                  bondTo=atoi(tag+4);
                 tag=strstr(buffer,"<Order>");
                 if (tag)
-                    bondOrder=atof(tag+7);
+                  bondOrder=atof(tag+7);
                 tag=strstr(buffer,"<Style>");
                 if (tag)
-                    bondStyle=atoi(tag+7);
-            }
-        }
-    }
+                  bondStyle=atoi(tag+7);
+              }
+          }
+      }
 
     for(int n=0;n<numBonds;n++)
-    {
+      {
         int fromIdx=0,toIdx=0;
         for(int i=0;i<numAtoms;i++)
-        {
+          {
             if (stbondFrom[n]==statomID[i])
-                fromIdx=i+1;
+              fromIdx=i+1;
             if (stbondTo[n]==statomID[i])
-                toIdx=i+1;
-        }
+              toIdx=i+1;
+          }
 
         if (fromIdx>0 && toIdx>0)
-        {
+          {
             OBAtom *from=mol.GetAtom(fromIdx),*to=mol.GetAtom(toIdx);
 
             int order=1;
             if (stbondOrder[n]==2)
-                order=2;
+              order=2;
             else if (stbondOrder[n]==3)
-                order=3;
+              order=3;
             else if (stbondOrder[n]==1.5)
-                order=5;
+              order=5;
 
             OBBond bnd;
             bnd.Set(n+1,from,to,order,0);
 
             if (stbondStyle[n]==1)
-                bnd.SetWedge();
+              bnd.SetWedge();
             if (stbondStyle[n]==2)
-                bnd.SetHash();
+              bnd.SetHash();
             if (stbondOrder[n]==1.5)
-                bnd.SetAromatic();
+              bnd.SetAromatic();
 
             if (!mol.AddBond(bnd))
-            {
-                printf("Unable to add bond.\n");
+              {
+                obErrorLog.ThrowError(__FUNCTION__, "Unable to add bond.", obWarning);
                 return false;
-            }
-        }
+              }
+          }
         else
-        {
-            printf("Unassigned bond ID (%d,%d), source may be invalid.\n",stbondFrom[n],stbondTo[n]);
+          {
+            stringstream errorMsg;
+            errorMsg << "Unassigned bond ID (" << stbondFrom[n] 
+                     << " " << stbondTo[n] << "), source may be invalid.";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning); 
             return false;
-        }
-    }
+          }
+      }
 
     mol.EndModify();
 
     // we likely have an </Property> line to gobble up
     if (ifs.peek() != EOF && ifs.good())
       {
-	ifs.getline(buffer,BUFF_SIZE);
+        ifs.getline(buffer,BUFF_SIZE);
         if (strstr(buffer,"</Property>") == 0)
-	  return false; // something messed up
+          return false; // something messed up
       }
     
     return foundClass;
-}
+  }
 
-void CRK2DFormat::WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges)
-{
+  void CRK2DFormat::WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges)
+  {
     double groupCharge=0;
     if (GroupCharges)
-        for(unsigned int n=1;n<=mol.NumAtoms();n++)
-            groupCharge+=mol.GetAtom(n)->GetFormalCharge();
+      for(unsigned int n=1;n<=mol.NumAtoms();n++)
+        groupCharge+=mol.GetAtom(n)->GetFormalCharge();
 
     ofs << "  <Group Charge=\"" << groupCharge << "\" Spin=\"0\">" << endl;
 
     for(unsigned int n=1;n<=mol.NumAtoms();n++)
-    {
+      {
         OBAtom *atm=mol.GetAtom(n);
 
         int id=atm->GetIdx(),atomnum=atm->GetAtomicNum();
@@ -432,7 +431,7 @@ void CRK2DFormat::WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges)
         char *element=etab.GetSymbol(atomnum);
         double charge=0;
         if (!GroupCharges)
-            charge=atm->GetFormalCharge();
+          charge=atm->GetFormalCharge();
 
         //ofs << ((int)atm) << endl;
 
@@ -442,23 +441,23 @@ void CRK2DFormat::WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges)
         ofs << "    <Z>" << z << "</Z>" << endl;
         ofs << "    <Element>" << element << "</Element>" << endl;
         if (charge!=0)
-            ofs << "    <Charge>" << charge << "</Charge>" << endl;
+          ofs << "    <Charge>" << charge << "</Charge>" << endl;
         ofs << "   </Atom>" << endl;
-    }
+      }
 
     for(unsigned int m=0;m<mol.NumBonds();m++)
-    {
+      {
         OBBond *bnd=mol.GetBond(m);
 
         int from=bnd->GetBeginAtom()->GetIdx(),to=bnd->GetEndAtom()->GetIdx();
         double order=bnd->GetBO();
         if (bnd->IsAromatic())
-            order=1.5;
+          order=1.5;
         int style=0;
         if (bnd->IsHash())
-            style=1;
+          style=1;
         if (bnd->IsWedge())
-            style=2;
+          style=2;
 
         ofs << "   <Bond>" << endl;
         ofs << "    <From>" << from << "</From>" << endl;
@@ -466,9 +465,9 @@ void CRK2DFormat::WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges)
         ofs << "    <Order>" << order << "</Order>" << endl;
         ofs << "    <Style>" << style << "</Style>" << endl;
         ofs << "   </Bond>" << endl;
-    }
+      }
 
     ofs << "  </Group>" << endl;
-}
+  }
 
 } //namespace OpenBabel
