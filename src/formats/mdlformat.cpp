@@ -415,11 +415,7 @@ Write Options, e.g. -x3\n \
 
         if (mol.NumAtoms() > 999 || mol.NumBonds() > 999) // Three digits!
           {
-#ifdef HAVE_SSTREAM
             stringstream errorMsg;
-#else
-            strstream errorMsg;
-#endif
             errorMsg << "MDL Molfile conversion failed: Molecule is too large to convert." << endl;
             errorMsg << "  File format (v2000) is limited to 999 atoms or bonds." << endl;
             errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms ";

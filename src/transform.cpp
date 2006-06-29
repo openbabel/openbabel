@@ -18,14 +18,13 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "mol.h"
-#include <iostream>
 
 using namespace std;
 namespace OpenBabel
 {
 
-OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOptions)
-{
+  OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOptions)
+  {
     // Perform any requested transformations
     // on a OBMol
     //The input map has option letters or name as the key and 
@@ -75,90 +74,90 @@ OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOpti
 
 		itr = pOptions->find("addtotitle"); //Appends text to title
 		if(itr!=pOptions->end())
-    {
-			string title(GetTitle());
-			title += itr->second;
-			SetTitle(title.c_str());
-		}
+      {
+        string title(GetTitle());
+        title += itr->second;
+        SetTitle(title.c_str());
+      }
 
 		itr = pOptions->find("addformula"); //Appends tab + formula to title
 		if(itr!=pOptions->end())
-    {
-			string title(GetTitle());
-			title += '\t' + GetSpacedFormula(1,"");//actually unspaced
-			SetTitle(title.c_str());
-		}
+      {
+        string title(GetTitle());
+        title += '\t' + GetSpacedFormula(1,"");//actually unspaced
+        SetTitle(title.c_str());
+      }
 
 		//Add an extra property to the molecule.
 		//Parameter has atrribute and value separated by a space
 		itr = pOptions->find("property");
 		if(itr!=pOptions->end())
-		{
-			string txt(itr->second);
-			string::size_type pos = txt.find(' ');
-			if(pos==string::npos)
-			{
-				obErrorLog.ThrowError(__FUNCTION__, "Missing property value", obError);
-				ret=false;
-			}
-			else
-			{
-				string attr(txt.substr(0,pos)), val(txt.substr(pos+1));
-				//Update value if it already exists
-				OBPairData* dp = dynamic_cast<OBPairData*>(GetData(attr));
-				if(dp)
-					dp->SetValue(val);						
-				else
-				{
-					// Pair did not exist; make new one
-					dp = new OBPairData;
-					dp->SetAttribute(attr);
-					dp->SetValue(val);
-					SetData(dp);
-				}
-			}
-		}
+      {
+        string txt(itr->second);
+        string::size_type pos = txt.find(' ');
+        if(pos==string::npos)
+          {
+            obErrorLog.ThrowError(__FUNCTION__, "Missing property value", obError);
+            ret=false;
+          }
+        else
+          {
+            string attr(txt.substr(0,pos)), val(txt.substr(pos+1));
+            //Update value if it already exists
+            OBPairData* dp = dynamic_cast<OBPairData*>(GetData(attr));
+            if(dp)
+              dp->SetValue(val);						
+            else
+              {
+                // Pair did not exist; make new one
+                dp = new OBPairData;
+                dp->SetAttribute(attr);
+                dp->SetValue(val);
+                SetData(dp);
+              }
+          }
+      }
 
 		itr = pOptions->find("v");
 		if(itr!=pOptions->end())
-		{
-      //inverse match quoted SMARTS string which follows
-      OBSmartsPattern sp;
-      sp.Init(itr->second);
-      vmatch = !sp.Match(*this); //(*pmol) ;
-		}
+      {
+        //inverse match quoted SMARTS string which follows
+        OBSmartsPattern sp;
+        sp.Init(itr->second);
+        vmatch = !sp.Match(*this); //(*pmol) ;
+      }
 
 		itr = pOptions->find("s");
 		if(itr!=pOptions->end())
-		{
-      //match quoted SMARTS string which follows
-      OBSmartsPattern sp;
-      sp.Init(itr->second.c_str());
-      smatch = sp.Match(*this); //(*pmol) ;
-		}
+      {
+        //match quoted SMARTS string which follows
+        OBSmartsPattern sp;
+        sp.Init(itr->second.c_str());
+        smatch = sp.Match(*this); //(*pmol) ;
+      }
 
     if(!smatch || !vmatch)
-    {
-      //filter failed: delete OBMol and return NULL
-      delete this;
-      return NULL;
-    }
+      {
+        //filter failed: delete OBMol and return NULL
+        delete this;
+        return NULL;
+      }
     else
-		{
-			if(ret==false)
-			{
-				obErrorLog.ThrowError(__FUNCTION__, "Error executing an option", obError);
-		      delete this; //added 9March2006
-				return NULL;
-			}
-			else
-				return this;
-		}
-}
+      {
+        if(ret==false)
+          {
+            obErrorLog.ThrowError(__FUNCTION__, "Error executing an option", obError);
+            delete this; //added 9March2006
+            return NULL;
+          }
+        else
+          return this;
+      }
+  }
 
-///////////////////////////////////////////////////
-const char* OBMol::ClassDescription()
-{
+  ///////////////////////////////////////////////////
+  const char* OBMol::ClassDescription()
+  {
     return "For conversions of molecules\n \
 Additional options :\n \
 -d Delete hydrogens (make implicit)\n \
@@ -174,7 +173,7 @@ Additional options :\n \
 --title <title> Add or replace molecule title\n \
 --addtotitle <text> Append to title\n \
 --addformula Append formula to title\n\n" ;
-}
+  }
 
 } //namespace OpenBabel
 

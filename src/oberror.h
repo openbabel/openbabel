@@ -2,7 +2,7 @@
 oberror.h - Handle error messages, warnings, notices, etc.
  
 Copyright (C) 2002 by Stefan Kebekus
-Some portions Copyright (C) 2003-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2003-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -22,12 +22,11 @@ General Public License for more details.
 
 #include "babelconfig.h"
 
-#include <iostream>
+#include <iosfwd>
 #include <sstream>
 #include <string>
 #include <vector>
 #include <deque>
-#include "oberror.h"
 
 #ifndef OBERROR
 #define OBERROR
@@ -36,152 +35,152 @@ General Public License for more details.
 namespace OpenBabel
 {
 
-//! \brief Levels of error and audit messages to allow filtering
-enum obMessageLevel {
-   obError,     //!< for critical errors (e.g., cannot read a file)
-   obWarning,   //!< for non-critical problems (e.g., molecule appears empty)
-   obInfo,      //!< for informative messages (e.g., file is a non-standard format)
-   obAuditMsg,  //!< for messages auditing methods which destroy or perceive molecular data (e.g., kekulization, atom typing, etc.)
-   obDebug      //!< for messages only useful for debugging purposes
-};
+  //! \brief Levels of error and audit messages to allow filtering
+  enum obMessageLevel {
+    obError,     //!< for critical errors (e.g., cannot read a file)
+    obWarning,   //!< for non-critical problems (e.g., molecule appears empty)
+    obInfo,      //!< for informative messages (e.g., file is a non-standard format)
+    obAuditMsg,  //!< for messages auditing methods which destroy or perceive molecular data (e.g., kekulization, atom typing, etc.)
+    obDebug      //!< for messages only useful for debugging purposes
+  };
 
-//! \brief Customizable error handling and logging -- store a message,
-//!        including the method yielding the error, causes, etc.
-class OBERROR OBError
-{
-public:
+  //! \brief Customizable error handling and logging -- store a message,
+  //!        including the method yielding the error, causes, etc.
+  class OBERROR OBError
+    {
+    public:
 
-  //! Constructor for an error message e.g. OBError(__FUNCTION__, " message ")
-  OBError( const std::string &method = "",
-	   const std::string &errorMsg = "",
-	   const std::string &explanation = "",
-	   const std::string &possibleCause = "",
-	   const std::string &suggestedRemedy = "",
-	   const obMessageLevel = obDebug );
+      //! Constructor for an error message e.g. OBError(__FUNCTION__, " message ")
+      OBError( const std::string &method = "",
+               const std::string &errorMsg = "",
+               const std::string &explanation = "",
+               const std::string &possibleCause = "",
+               const std::string &suggestedRemedy = "",
+               const obMessageLevel = obDebug );
 
-  //! \return a formatted message string, including optional explanations, etc.
-  std::string message(void) const;
+      //! \return a formatted message string, including optional explanations, etc.
+      std::string message(void) const;
   
-  //! Output a formatted message string
-  friend std::ostream& operator<< ( std::ostream &os, const OBError &er )
-    { return os << er.message(); };
+      //! Output a formatted message string
+      friend std::ostream& operator<< ( std::ostream &os, const OBError &er )
+        { return os << er.message(); };
 
-  std::string    GetMethod()            { return _method;          }
-  std::string    GetError()             { return _errorMsg;        }
-  std::string    GetExplanation()       { return _explanation;     }
-  std::string    GetPossibleCause()     { return _possibleCause;   }
-  std::string    GetSuggestedRemedy()   { return _suggestedRemedy; }
-  obMessageLevel GetLevel()             { return _level;           }
+      std::string    GetMethod()            { return _method;          }
+      std::string    GetError()             { return _errorMsg;        }
+      std::string    GetExplanation()       { return _explanation;     }
+      std::string    GetPossibleCause()     { return _possibleCause;   }
+      std::string    GetSuggestedRemedy()   { return _suggestedRemedy; }
+      obMessageLevel GetLevel()             { return _level;           }
 
- protected:
+    protected:
 
-    std::string _method;
-    std::string _errorMsg;
-    std::string _explanation;
-    std::string _possibleCause;
-    std::string _suggestedRemedy;
+      std::string _method;
+      std::string _errorMsg;
+      std::string _explanation;
+      std::string _possibleCause;
+      std::string _suggestedRemedy;
 
-    obMessageLevel _level;
-};
+      obMessageLevel _level;
+    };
 
- //! \brief Handle error messages, warnings, debugging information and the like
-class OBERROR OBMessageHandler
-  {
-  protected:
-    //! Count of messages at each message level
-    unsigned int           _messageCount[5];
+  //! \brief Handle error messages, warnings, debugging information and the like
+  class OBERROR OBMessageHandler
+    {
+    protected:
+      //! Count of messages at each message level
+      unsigned int           _messageCount[5];
 
-  public:
-    OBMessageHandler();
-    ~OBMessageHandler();
+    public:
+      OBMessageHandler();
+      ~OBMessageHandler();
     
-    //! Throw an error with an already-formatted OBError object
-    void ThrowError(OBError err);
-    //! Throw an error in the specified method with an appropriate level
-    void ThrowError(const std::string &method, const std::string &errorMsg, 
-		    obMessageLevel level = obDebug);
+      //! Throw an error with an already-formatted OBError object
+      void ThrowError(OBError err);
+      //! Throw an error in the specified method with an appropriate level
+      void ThrowError(const std::string &method, const std::string &errorMsg, 
+                      obMessageLevel level = obDebug);
 
-    //! \return all messages matching a specified level
-    std::vector<std::string> GetMessagesOfLevel(const obMessageLevel);
+      //! \return all messages matching a specified level
+      std::vector<std::string> GetMessagesOfLevel(const obMessageLevel);
 
-    //! Start logging messages (default)
-    void StartLogging() { _logging = true; }
-    //! Stop logging messages completely
-    void StopLogging()  { _logging = false; }
+      //! Start logging messages (default)
+      void StartLogging() { _logging = true; }
+      //! Stop logging messages completely
+      void StopLogging()  { _logging = false; }
 
-    //! Set the maximum number of entries (or 0 for no limit)
-    void SetMaxLogEntries(unsigned int max) { _maxEntries = max; }
-    //! \return the current maximum number of entries (default = 0 for no limit)
-    unsigned int GetMaxLogEntries() { return _maxEntries; }
+      //! Set the maximum number of entries (or 0 for no limit)
+      void SetMaxLogEntries(unsigned int max) { _maxEntries = max; }
+      //! \return the current maximum number of entries (default = 0 for no limit)
+      unsigned int GetMaxLogEntries() { return _maxEntries; }
 
-    //! Clear the current message log entirely
-    void ClearLog() { _messageList.clear(); }
+      //! Clear the current message log entirely
+      void ClearLog() { _messageList.clear(); }
 
-    //! \brief Set the level of messages to output
-    //! (i.e., messages with at least this priority will be output)
-    void SetOutputLevel(const obMessageLevel level) { _outputLevel = level; }
-    //! \return the current output level
-    obMessageLevel GetOutputLevel() { return _outputLevel; }
+      //! \brief Set the level of messages to output
+      //! (i.e., messages with at least this priority will be output)
+      void SetOutputLevel(const obMessageLevel level) { _outputLevel = level; }
+      //! \return the current output level
+      obMessageLevel GetOutputLevel() { return _outputLevel; }
 
-    void SetOutputStream(std::ostream *os) { _outputStream = os; }
-    std::ostream* GetOutputStream() { return _outputStream; }
+      void SetOutputStream(std::ostream *os) { _outputStream = os; }
+      std::ostream* GetOutputStream() { return _outputStream; }
 
-    //! Start "wrapping" messages to cerr into ThrowError calls
-    bool StartErrorWrap();
-    //! Turn off "wrapping" messages, restoring normal cerr use (default)
-    bool StopErrorWrap();
+      //! Start "wrapping" messages to cerr into ThrowError calls
+      bool StartErrorWrap();
+      //! Turn off "wrapping" messages, restoring normal cerr use (default)
+      bool StopErrorWrap();
 
-    //! \return Count of messages received at the obError level
-    unsigned int GetErrorMessageCount() { return _messageCount[obError];}
-    //! \return Count of messages received at the obWarning level
-    unsigned int GetWarningMessageCount() { return _messageCount[obWarning];}
-    //! \return Count of messages received at the obInfo level
-    unsigned int GetInfoMessageCount() { return _messageCount[obInfo];}
-    //! \return Count of messages received at the obAuditMsg level
-    unsigned int GetAuditMessageCount() { return _messageCount[obAuditMsg];}
-    //! \return Count of messages received at the obDebug level 
-    unsigned int GetDebugMessageCount() { return _messageCount[obDebug];}
-    //! \return Summary of messages received at all levels
-    std::string GetMessageSummary();
+      //! \return Count of messages received at the obError level
+      unsigned int GetErrorMessageCount() { return _messageCount[obError];}
+      //! \return Count of messages received at the obWarning level
+      unsigned int GetWarningMessageCount() { return _messageCount[obWarning];}
+      //! \return Count of messages received at the obInfo level
+      unsigned int GetInfoMessageCount() { return _messageCount[obInfo];}
+      //! \return Count of messages received at the obAuditMsg level
+      unsigned int GetAuditMessageCount() { return _messageCount[obAuditMsg];}
+      //! \return Count of messages received at the obDebug level 
+      unsigned int GetDebugMessageCount() { return _messageCount[obDebug];}
+      //! \return Summary of messages received at all levels
+      std::string GetMessageSummary();
 
-  protected:
-    //! Log of messages for later retrieval via GetMessagesOfLevel()
-    std::deque<OBError>    _messageList;
+    protected:
+      //! Log of messages for later retrieval via GetMessagesOfLevel()
+      std::deque<OBError>    _messageList;
 
-    //! Filtering level for messages and logging (messages of lower priority will be ignored
-    obMessageLevel         _outputLevel;
+      //! Filtering level for messages and logging (messages of lower priority will be ignored
+      obMessageLevel         _outputLevel;
 
-    // self-explanatory
-    std::ostream          *_outputStream;
+      // self-explanatory
+      std::ostream          *_outputStream;
 
-    //! Whether messages will be logged into _messageList
-    bool                   _logging;
-    //! The maximum size of _messageList log
-    unsigned int           _maxEntries;
+      //! Whether messages will be logged into _messageList
+      bool                   _logging;
+      //! The maximum size of _messageList log
+      unsigned int           _maxEntries;
 
-    //! The default stream buffer for the output stream (saved if wrapping is ued)
-    std::streambuf        *_inWrapStreamBuf;
-    //! The filtered obLogBuf stream buffer to wrap error messages
-    std::streambuf        *_filterStreamBuf;
-  }; 
+      //! The default stream buffer for the output stream (saved if wrapping is ued)
+      std::streambuf        *_inWrapStreamBuf;
+      //! The filtered obLogBuf stream buffer to wrap error messages
+      std::streambuf        *_filterStreamBuf;
+    }; 
 
-OBERROR extern OBMessageHandler obErrorLog;
+  OBERROR extern OBMessageHandler obErrorLog;
 
-//! \brief A minimal streambuf derivative to wrap calls to cerr into calls to OBMessageHandler as needed
- class OBERROR obLogBuf : public std::stringbuf
-  {
+  //! \brief A minimal streambuf derivative to wrap calls to cerr into calls to OBMessageHandler as needed
+  class OBERROR obLogBuf : public std::stringbuf
+    {
     public:
       virtual ~obLogBuf() { sync(); }
     
     protected:
-    //! Call OBMessageHandler::ThrowError() and flush the buffer
-    int sync()
-    {
-      obErrorLog.ThrowError("", str(), obInfo);
-      str(std::string()); // clear the buffer
-			return 0;
-    }
-  };
+      //! Call OBMessageHandler::ThrowError() and flush the buffer
+      int sync()
+        {
+          obErrorLog.ThrowError("", str(), obInfo);
+          str(std::string()); // clear the buffer
+          return 0;
+        }
+    };
 
 } // end namespace OpenBabel
 

@@ -11,11 +11,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
-#include "obmolecformat.h"
-#include "fingerprint.h"
+
 #include <vector>
 #include <string>
 #include <iomanip>
+
+#include "obmolecformat.h"
+#include "fingerprint.h"
 
 using namespace std;
 namespace OpenBabel
@@ -85,11 +87,7 @@ Options e.g. -xfFP3 -xn128\n \
     pFP = OBFingerprint::FindFingerprint(fpid);
     if(!pFP)
       {
-#ifdef HAVE_SSTREAM
         stringstream errorMsg;
-#else
-        strstream errorMsg;
-#endif
         errorMsg << "Fingerprint type '" << fpid << "' not available" << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
         return false;

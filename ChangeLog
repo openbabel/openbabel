@@ -4,6 +4,38 @@
 
 	* Doxyfile: Update to grab obmolecformat.h now in src/format/.
 
+	* src/*.cpp, src/*.h, src/formats/*.cpp:
+	Cleanup #includes for iostream, fstream -- only use iostream when
+	needed (i.e. for cout, cerr, cin, clog declarations).
+
+	* src/all.h, src/formats/all.h: Trim precompiled header templates
+	to most common headers.
+	
+	* src/patty.cpp: Remove unused "COMPILE_PATTY_MAIN" #ifdef.
+
+	* src/chiral.cpp: Remove unused floating-point methods.
+
+	* src/rand.cpp: Remove unused #ifdef DEBUG code.
+
+	* src/parsmart.cpp, src/formats/crkformat.cpp: Update calls to
+	printf with calls to obErrorLog.
+
+	* src/obutil.cpp (InternalToCartesian): Check index requests to
+	avoid requesting past the vector end.
+	(#ifdef): Remove ifdef, leave code for roots.
+
+	* src/formats/ghemicalformat.cpp: Remove dummy atoms, which can
+	cause problems. Mark all aromatic bonds as bondtype 'C'.
+
+	* test/files/attype.00.smi: Add unspecified chiral alkane for @?
+	SMARTS testing.
+	
+	* test/files/formalchargeresults.txt, test/files/ringresults.txt,
+	test/files/formularesults.txt, test/files/smartsresults.txt:
+	Update for changes to attype.00.smi using generate.sh.
+
+	* test/Makefile.am: Cleanup.
+
 2006-06-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure, configure.in, src/all.h, src/formats/all.h,

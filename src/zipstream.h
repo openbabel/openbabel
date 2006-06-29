@@ -38,7 +38,7 @@ Altered by: Geoffrey Hutchison 2005 for Open Babel project
 #include <string>
 #include <streambuf>
 #include <sstream>
-#include <iostream>
+#include <iosfwd>
 #include <algorithm>
 
 #include <zlib.h>

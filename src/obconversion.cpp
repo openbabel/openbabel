@@ -2,7 +2,7 @@
 obconversion.cpp -  Declaration of OBFormat and OBConversion
 
 Copyright (C) 2004 by Chris Morley
-Some portions Copyright (C) 2005 by Geoffrey Hutchison
+Some portions Copyright (C) 2005-2006 by Geoffrey Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -31,7 +31,7 @@ GNU General Public License for more details.
 	#endif
 #endif
 
-#include <iostream>
+#include <iosfwd>
 #include <fstream>
 #include <sstream>
 #include <string>

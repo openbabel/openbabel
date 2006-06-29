@@ -20,9 +20,6 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 #include "base.h"
 
-#include <iostream>
-#include <fstream>
-
 using namespace std;
 
 //! Global namespace for all Open Babel code
