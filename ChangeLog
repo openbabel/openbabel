@@ -1,3 +1,9 @@
+2006-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/chains.cpp: In TracePeptideChain and TraceNucleicChain, test
+	for atom visit before recursing. Otherwise, leads to an infinite
+	loop and crash. Fixes PR#1515198, reported by Noel.
+
 2006-06-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure, configure.in: Fix logic in last change.
