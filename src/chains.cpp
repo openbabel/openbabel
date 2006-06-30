@@ -121,6 +121,8 @@ static char ChainsResName[RESIDMAX][4] = {
 #define BitO3All       0x0600
 #define BitC2All       0x1800
 
+#define BitVisit       0x8000
+
 #define BC_ASSIGN      0x01
 #define BC_COUNT       0x02
 #define BC_ELEM        0x03
@@ -408,8 +410,8 @@ namespace OpenBabel
     result = (ByteCode*)malloc(sizeof(ByteCode));
     if( !result )
       {
-	obErrorLog.ThrowError(__FUNCTION__, "Unable to allocate byte codes for biomolecule residue perception.", obError);
-	//        exit(1);
+        obErrorLog.ThrowError(__FUNCTION__, "Unable to allocate byte codes for biomolecule residue perception.", obError);
+        //        exit(1);
       }
     result->type = type;
     result->eval.next     = NULL;
@@ -434,47 +436,47 @@ namespace OpenBabel
       return;
     else
       {
-	switch (node->type)
-	  {
-	  case BC_ASSIGN:
+        switch (node->type)
+          {
+          case BC_ASSIGN:
 
-	    if (node->assign.atomid != NULL)
-	      free(node->assign.atomid);
-	    if (node->assign.bflags != NULL)
-	      free(node->assign.bflags);
+            if (node->assign.atomid != NULL)
+              free(node->assign.atomid);
+            if (node->assign.bflags != NULL)
+              free(node->assign.bflags);
             
-	    break;
+            break;
 
-	  case BC_COUNT:
+          case BC_COUNT:
 
-	    DeleteByteCode(node->count.tcond);
-	    DeleteByteCode(node->count.fcond);
-	    break;
-	  case BC_ELEM:
+            DeleteByteCode(node->count.tcond);
+            DeleteByteCode(node->count.fcond);
+            break;
+          case BC_ELEM:
 
-	    DeleteByteCode(node->elem.tcond);
-	    DeleteByteCode(node->elem.fcond);
-	    break;
+            DeleteByteCode(node->elem.tcond);
+            DeleteByteCode(node->elem.fcond);
+            break;
 
-	  case BC_EVAL:
+          case BC_EVAL:
 
-	    DeleteByteCode(node->eval.next);
-	    break;
+            DeleteByteCode(node->eval.next);
+            break;
 
-	  case BC_IDENT:
+          case BC_IDENT:
 
-	    DeleteByteCode(node->ident.tcond);
-	    DeleteByteCode(node->ident.fcond);
-	    break;
+            DeleteByteCode(node->ident.tcond);
+            DeleteByteCode(node->ident.fcond);
+            break;
 
-	  case BC_LOCAL:
+          case BC_LOCAL:
 
-	    DeleteByteCode(node->local.tcond);
-	    DeleteByteCode(node->local.fcond);
-	    break;
-	  }
+            DeleteByteCode(node->local.tcond);
+            DeleteByteCode(node->local.fcond);
+            break;
+          }
 
-	free(node);
+        free(node);
       }
   }
 
@@ -495,97 +497,97 @@ namespace OpenBabel
     if( curr != prev )
       {
         if( MonoAtom[curr].atomid < ATOMMINAMINO )
-	  {
+          {
             found = false;
             while( *node && ((*node)->type==BC_IDENT) )
-	      {
+              {
                 if( (*node)->ident.value == MonoAtom[curr].atomid )
-		  {
+                  {
                     node  = (ByteCode**)&(*node)->ident.tcond;
                     found = true;
                     break;
-		  }
+                  }
                 else
-		  node = (ByteCode**)&(*node)->ident.fcond;
-	      }
+                  node = (ByteCode**)&(*node)->ident.fcond;
+              }
 
             if (!found)
-	      {
+              {
                 ptr = AllocateByteCode(BC_IDENT);
                 ptr->ident.tcond = (ByteCode*)0;
                 ptr->ident.fcond = *node;
                 *node = ptr;
                 node = (ByteCode**)&ptr->ident.tcond;
                 ptr->ident.value = MonoAtom[curr].atomid;
-	      }
+              }
             MonoBond[bond].index = BondIndex++;
             done = true;
-	  }
+          }
         else if( MonoAtom[curr].index != -1 )
-	  {
+          {
             while( *node && ((*node)->type==BC_IDENT) )
-	      node = (ByteCode**)&(*node)->ident.fcond;
+              node = (ByteCode**)&(*node)->ident.fcond;
 
             found = false;
             while( *node && ((*node)->type==BC_LOCAL) )
-	      {
+              {
                 if( (*node)->local.value == MonoAtom[curr].index )
-		  {
+                  {
                     node = (ByteCode**)&(*node)->local.tcond;
                     found = true;
                     break;
-		  }
+                  }
                 else
-		  node = (ByteCode**)&(*node)->local.fcond;
-	      }
+                  node = (ByteCode**)&(*node)->local.fcond;
+              }
 
             if (!found)
-	      {
+              {
                 ptr = AllocateByteCode(BC_LOCAL);
                 ptr->local.tcond = (ByteCode*)0;
                 ptr->local.fcond = *node;
                 *node = ptr;
                 node = (ByteCode**)&ptr->local.tcond;
                 ptr->local.value = MonoAtom[curr].index;
-	      }
+              }
 
             MonoBond[bond].index = BondIndex++;
             done = true;
-	  }
+          }
         else
-	  {
+          {
             while( *node && ((*node)->type==BC_IDENT) )
-	      node = (ByteCode**)&(*node)->ident.fcond;
+              node = (ByteCode**)&(*node)->ident.fcond;
             while( *node && ((*node)->type==BC_LOCAL) )
-	      node = (ByteCode**)&(*node)->local.fcond;
+              node = (ByteCode**)&(*node)->local.fcond;
 
             found = false;
             while( *node && ((*node)->type==BC_ELEM) )
-	      {
+              {
                 if( (*node)->elem.value == MonoAtom[curr].elem )
-		  {
+                  {
                     node = (ByteCode**)&(*node)->elem.tcond;
                     found = true;
                     break;
-		  }
+                  }
                 else
-		  node = (ByteCode**)&(*node)->elem.fcond;
-	      }
+                  node = (ByteCode**)&(*node)->elem.fcond;
+              }
 
             if( !found )
-	      {
+              {
                 ptr = AllocateByteCode(BC_ELEM);
                 ptr->elem.tcond = (ByteCode*)0;
                 ptr->elem.fcond = *node;
                 *node = ptr;
                 node = (ByteCode**)&ptr->elem.tcond;
                 ptr->elem.value = MonoAtom[curr].elem;
-	      }
+              }
 
             MonoAtom[curr].index = AtomIndex++;
             MonoBond[bond].index = BondIndex++;
             done = false;
-	  }
+          }
       }
     else
       {
@@ -597,55 +599,55 @@ namespace OpenBabel
     if (!done)
       {
         for( i=0; i<MonoBondCount; i++ )
-	  {
+          {
             if( MonoBond[i].src == curr )
-	      {
+              {
                 if( MonoBond[i].dst != prev )
-		  {
+                  {
                     neighbour[count].atom = MonoBond[i].dst;
                     neighbour[count].bond = i;
                     count++;
-		  }
-	      }
+                  }
+              }
             else if( MonoBond[i].dst == curr )
-	      {
+              {
                 if( MonoBond[i].src != prev )
-		  {
+                  {
                     neighbour[count].atom = MonoBond[i].src;
                     neighbour[count].bond = i;
                     count++;
-		  }
-	      }
-	  }
+                  }
+              }
+          }
 
         if ( *node && ((*node)->type==BC_EVAL) )
-	  {
+          {
             found = false;
             node  = (ByteCode**)&(*node)->eval.next;
             while( *node && ((*node)->type==BC_COUNT) )
-	      {
+              {
                 if( (*node)->count.value == count )
-		  {
+                  {
                     node = (ByteCode**)&(*node)->count.tcond;
                     found = true;
                     break;
-		  }
+                  }
                 else
-		  node = (ByteCode**)&(*node)->count.fcond;
-	      }
+                  node = (ByteCode**)&(*node)->count.fcond;
+              }
 
             if( !found )
-	      {
+              {
                 ptr = AllocateByteCode(BC_COUNT);
                 ptr->count.tcond = (ByteCode*)0;
                 ptr->count.fcond = *node;
                 *node = ptr;
                 node = (ByteCode**)&ptr->count.tcond;
                 ptr->count.value = count;
-	      }
-	  }
+              }
+          }
         else if( count || StrictFlag || StackPtr )
-	  {
+          {
             ptr = AllocateByteCode(BC_EVAL);
             ptr->eval.next = *node;
             *node = ptr;
@@ -657,7 +659,7 @@ namespace OpenBabel
             *node = ptr;
             node = (ByteCode**)&ptr->count.tcond;
             ptr->count.value = count;
-	  }
+          }
       }
 
     if( count == 1 )
@@ -679,12 +681,12 @@ namespace OpenBabel
       }
     else if( count )
       {
-	stringstream errorMsg;
+        stringstream errorMsg;
         errorMsg << "Maximum Monomer Fanout Exceeded!" << endl;
         errorMsg << "Residue " << ChainsResName[resid] << " atom " 
-		 << curr << endl;
-	errorMsg << "Previous = " << prev << " Fanout = " << count << endl;
-	obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+                 << curr << endl;
+        errorMsg << "Previous = " << prev << " Fanout = " << count << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       }
     else if( StackPtr )
       {
@@ -699,40 +701,40 @@ namespace OpenBabel
         ptr->assign.resid = resid;
         ptr->assign.atomid = (int*)malloc(AtomIndex*sizeof(int));
         if( !ptr->assign.atomid )
-	  FatalMemoryError();
+          FatalMemoryError();
         for( i=0; i<MonoAtomCount; i++ )
-	  if( (j=MonoAtom[i].index) != -1 )
-	    ptr->assign.atomid[j] = MonoAtom[i].atomid;
+          if( (j=MonoAtom[i].index) != -1 )
+            ptr->assign.atomid[j] = MonoAtom[i].atomid;
         if( BondIndex )
-	  {
+          {
             ptr->assign.bflags = (int*)malloc(BondIndex*sizeof(int));
             for( i=0; i<MonoBondCount; i++ )
-	      if( (j=MonoBond[i].index) != -1 )
-		ptr->assign.bflags[j] = MonoBond[i].flag;
-	  }
+              if( (j=MonoBond[i].index) != -1 )
+                ptr->assign.bflags[j] = MonoBond[i].flag;
+          }
         *node = ptr;
       }
     else if( (*node)->type == BC_ASSIGN )
       {
         if( (*node)->assign.resid != resid )
-	  {
+          {
             stringstream errorMsg;
             errorMsg << "Duplicated Monomer Specification!\n";
             errorMsg << "Residue " << ChainsResName[resid] 
                      << " matches residue ";
             errorMsg << ChainsResName[(*node)->assign.resid] << endl;
             obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-	  }
+          }
       }
 
     /* Restore State! */
     if( curr != prev )
       {
         if( !done )
-	  {
+          {
             MonoAtom[curr].index = -1;
             AtomIndex--;
-	  }
+          }
         MonoBond[bond].index = -1;
         BondIndex--;
       }
@@ -751,7 +753,7 @@ namespace OpenBabel
     for( i=0 ; i < AMINOMAX ; i++ )
       {
         strncpy(ChainsResName[res],AminoAcids[i].name, sizeof(ChainsResName[res]) - 1);
-	ChainsResName[res][sizeof(ChainsResName[res]) - 1] = '\0';
+        ChainsResName[res][sizeof(ChainsResName[res]) - 1] = '\0';
         DefineMonomer(&PDecisionTree,res,AminoAcids[i].data);
         res++;
       }
@@ -760,7 +762,7 @@ namespace OpenBabel
     for( i=0 ; i< NUCLEOMAX ; i++ )
       {
         strncpy(ChainsResName[res],Nucleotides[i].name, sizeof(ChainsResName[res]) - 1);
-	ChainsResName[res][sizeof(ChainsResName[res]) - 1] = '\0';
+        ChainsResName[res][sizeof(ChainsResName[res]) - 1] = '\0';
         DefineMonomer(&NDecisionTree,res,Nucleotides[i].data);
         res++;
       }
@@ -904,47 +906,47 @@ namespace OpenBabel
         atom = mol.GetAtom(i+1); // WARNING: ATOM INDEX ISSUE
 
         if (atomids[i] == -1)
-	  {
+          {
             symbol = etab.GetSymbol(atom->GetAtomicNum());
-	    if( symbol[1] )
-	      {
-		buffer[0] = symbol[0];
-		buffer[1] = (char) toupper(symbol[1]);
-	      }
-	    else
-	      {
-		buffer[0] = ' ';
-		buffer[1] = symbol[0];
-	      }
-	    buffer[2] = ' ';
-	    buffer[3] = ' ';
-	    buffer[4] = '\0';
-	  }
-        else if (atom->IsHydrogen())
-	  {
-            if (hcounts[i])
-	      sprintf(buffer, "%cH%.2s", hcounts[i]+'0', ChainsAtomName[atomids[i]]+2);
+            if( symbol[1] )
+              {
+                buffer[0] = symbol[0];
+                buffer[1] = (char) toupper(symbol[1]);
+              }
             else
-	      sprintf(buffer, "H%.2s", ChainsAtomName[atomids[i]]+2);
-	  }
+              {
+                buffer[0] = ' ';
+                buffer[1] = symbol[0];
+              }
+            buffer[2] = ' ';
+            buffer[3] = ' ';
+            buffer[4] = '\0';
+          }
+        else if (atom->IsHydrogen())
+          {
+            if (hcounts[i])
+              sprintf(buffer, "%cH%.2s", hcounts[i]+'0', ChainsAtomName[atomids[i]]+2);
+            else
+              sprintf(buffer, "H%.2s", ChainsAtomName[atomids[i]]+2);
+          }
         else
-	  sprintf(buffer, "%.4s", ChainsAtomName[atomids[i]]);
+          sprintf(buffer, "%.4s", ChainsAtomName[atomids[i]]);
 
         if (buffer[3] == ' ')
-	  buffer[3] = '\0';
+          buffer[3] = '\0';
 
         atomid = (buffer[0] == ' ') ? buffer + 1 : buffer;
 
         if (resmap.find(resnos[i]) != resmap.end())
-	  {
+          {
             residue = resmap[resnos[i]];
             residue->AddAtom(atom);
             residue->SetAtomID(atom, atomid);
             residue->SetHetAtom(atom, hetflags[i]);
             residue->SetSerialNum(atom, sernos[i]);
-	  }
+          }
         else
-	  {
+          {
             name    = ChainsResName[resids[i]];
             residue = mol.NewResidue();
 
@@ -959,7 +961,7 @@ namespace OpenBabel
             residue->SetSerialNum(atom, sernos[i]);
 
             resmap[resnos[i]] = residue;
-	  }
+          }
       }
 
     if (mol.NumResidues() == 1 && nukeSingleResidue)
@@ -992,7 +994,7 @@ namespace OpenBabel
     CleanupMol();
 
     obErrorLog.ThrowError(__FUNCTION__,
-			  "Ran OpenBabel::PerceiveChains", obAuditMsg);
+                          "Ran OpenBabel::PerceiveChains", obAuditMsg);
 
     return result;
   }
@@ -1008,10 +1010,10 @@ namespace OpenBabel
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
       if (!atom->IsHydrogen() && atom->GetValence() == 0)
         {
-	  // find un-connected atoms (e.g., HOH oxygen atoms)
-	  //  if it's not an oxygen, it's probably some ligand
-	  resids[atom->GetIdx()-1]   = (atom->IsOxygen()) ? 1 : 2;
-	  hetflags[atom->GetIdx()-1] = true;
+          // find un-connected atoms (e.g., HOH oxygen atoms)
+          //  if it's not an oxygen, it's probably some ligand
+          resids[atom->GetIdx()-1]   = (atom->IsOxygen()) ? 1 : 2;
+          hetflags[atom->GetIdx()-1] = true;
         }
     return true;
   }
@@ -1039,35 +1041,35 @@ namespace OpenBabel
       {
         idx = atom->GetIdx() - 1;
         if (!hetflags[idx] && chains[idx] == ' ' && !atom->IsHydrogen())
-	  {
+          {
             size = RecurseChain(mol, idx, 'A' + count);
             if (size < 10)
-	      {
+              {
                 if (size == 1 && atom->IsOxygen())
-		  resid = 1; /* HOH */
+                  resid = 1; /* HOH */
                 else
-		  resid = 2; /* LIG */
+                  resid = 2; /* LIG */
 
                 for (i = 0 ; i < numAtoms ; i++)
-		  {
+                  {
                     if (chains[i] == ('A' + count))
-		      {
+                      {
                         hetflags[i] = true;
                         resids[i]   = resid;
                         resnos[i]   = resno;
                         chains[i]   = ' ';
-		      }
-		  }
+                      }
+                  }
                 resno++;
-	      }
+              }
             else
-	      count++;
-	  }
+              count++;
+          }
       }
 
     if( count == 1 )
       for ( i = 0 ; i < numAtoms ; i++ )
-	chains[i] = ' ';
+        chains[i] = ' ';
 
     return true;
   }
@@ -1087,9 +1089,9 @@ namespace OpenBabel
 
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
       {
-	index = nbr->GetIdx() - 1;
+        index = nbr->GetIdx() - 1;
         if (chains[index] == ' ')
-	  result += RecurseChain(mol, index,c);
+          result += RecurseChain(mol, index,c);
       }
 
     return (result);
@@ -1110,15 +1112,15 @@ namespace OpenBabel
     for ( i = 0 ; i < max ; i++ )
       if (atomids[i] == -1)
         {
-	  if( bitmasks[i] & BitNTer )
+          if( bitmasks[i] & BitNTer )
             {
-	      atomids[i] = AI_N;
-	      TracePeptideChain(mol,i,1);
+              atomids[i] = AI_N;
+              TracePeptideChain(mol,i,1);
             }
-	  else if( (bitmasks[i]&BitNPT) && !(bitmasks[i]&BitN) )
+          else if( (bitmasks[i]&BitNPT) && !(bitmasks[i]&BitN) )
             {
-	      atomids[i] = AI_N;
-	      TracePeptideChain(mol,i,1);
+              atomids[i] = AI_N;
+              TracePeptideChain(mol,i,1);
             }
         }
 
@@ -1129,8 +1131,8 @@ namespace OpenBabel
     for (bond = mol.BeginBond(b) ; bond ; bond = mol.NextBond(b))
       {
         if ((atomids[bond->GetBeginAtomIdx()-1] == 2 && atomids[bond->GetEndAtomIdx()-1] == 3) ||
-	    (atomids[bond->GetBeginAtomIdx()-1] == 3 && atomids[bond->GetEndAtomIdx()-1] == 2))
-	  flags[bond->GetIdx()] |= BF_DOUBLE;
+            (atomids[bond->GetBeginAtomIdx()-1] == 3 && atomids[bond->GetEndAtomIdx()-1] == 2))
+          flags[bond->GetIdx()] |= BF_DOUBLE;
       }
 
     return true;
@@ -1156,10 +1158,10 @@ namespace OpenBabel
         idx = atom->GetIdx() - 1;
         bitmasks[idx] = 0;
         for ( i = 0 ; i < tmax ; i++ )
-	  if ( (static_cast<unsigned int>(templ[i].elem)  == atom->GetAtomicNum())
-	       &&
-	       (static_cast<unsigned int>(templ[i].count) == atom->GetHvyValence()))
-	    bitmasks[idx] |= templ[i].flag;
+          if ( (static_cast<unsigned int>(templ[i].elem)  == atom->GetAtomicNum())
+               &&
+               (static_cast<unsigned int>(templ[i].count) == atom->GetHvyValence()))
+            bitmasks[idx] |= templ[i].flag;
       }
 
     /* Second Pass */
@@ -1168,14 +1170,14 @@ namespace OpenBabel
       {
         change = false;
         for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
-	  {
+          {
             idx = atom->GetIdx() - 1;
             if (bitmasks[idx]) // Determine Neighbours
-	      {
+              {
                 count = 0;
                 for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
-		  if (!nbr->IsHydrogen())
-		    neighbour[count++] = nbr;
+                  if (!nbr->IsHydrogen())
+                    neighbour[count++] = nbr;
 
                 na = neighbour[0];
                 nb = neighbour[1];
@@ -1183,28 +1185,28 @@ namespace OpenBabel
                 nd = neighbour[3];
 
                 for ( i = 0 ; i < tmax ; i++ )
-		  if ( templ[i].flag & bitmasks[idx] )
+                  if ( templ[i].flag & bitmasks[idx] )
                     {
-		      pep    = &templ[i];
-		      result = true;
+                      pep    = &templ[i];
+                      result = true;
 
-		      if (count == 4)
-			result = Match4Constraints(pep,na,nb,nc,nd);
-		      else if (count == 3)
-			result = Match3Constraints(pep,na,nb,nc);
-		      else if (count == 2)
-			result = Match2Constraints(pep,na,nb);
-		      else // count == 1
-			result = MatchConstraint(na,pep->n1);
+                      if (count == 4)
+                        result = Match4Constraints(pep,na,nb,nc,nd);
+                      else if (count == 3)
+                        result = Match3Constraints(pep,na,nb,nc);
+                      else if (count == 2)
+                        result = Match2Constraints(pep,na,nb);
+                      else // count == 1
+                        result = MatchConstraint(na,pep->n1);
 
-		      if(result == false)
+                      if(result == false)
                         {
-			  bitmasks[idx] &= ~pep->flag;
-			  change = true;
+                          bitmasks[idx] &= ~pep->flag;
+                          change = true;
                         }
                     }
-	      }
-	  }
+              }
+          }
       }
     while( change );
   }
@@ -1227,10 +1229,10 @@ namespace OpenBabel
 
     if( MatchConstraint(na,tmpl->n2) )
       if( MatchConstraint(nb,tmpl->n1) )
-	return( true );
+        return( true );
     if( MatchConstraint(nb,tmpl->n2) )
       if( MatchConstraint(na,tmpl->n1) )
-	return( true );
+        return( true );
     return( false );
   }
 
@@ -1241,13 +1243,13 @@ namespace OpenBabel
 
     if( MatchConstraint(na,tmpl->n3) )
       if( Match2Constraints(tmpl,nb,nc) )
-	return( true );
+        return( true );
     if( MatchConstraint(nb,tmpl->n3) )
       if( Match2Constraints(tmpl,na,nc) )
-	return( true );
+        return( true );
     if( MatchConstraint(nc,tmpl->n3) )
       if( Match2Constraints(tmpl,na,nb) )
-	return( true );
+        return( true );
     return( false );
   }
 
@@ -1258,16 +1260,16 @@ namespace OpenBabel
 
     if( MatchConstraint(na,tmpl->n4) )
       if( Match3Constraints(tmpl,nb,nc,nd) )
-	return( true );
+        return( true );
     if( MatchConstraint(nb,tmpl->n4) )
       if( Match3Constraints(tmpl,na,nc,nd) )
-	return( true );
+        return( true );
     if( MatchConstraint(nc,tmpl->n4) )
       if( Match3Constraints(tmpl,na,nb,nd) )
-	return( true );
+        return( true );
     if( MatchConstraint(nd,tmpl->n4) )
       if( Match3Constraints(tmpl,na,nb,nc) )
-	return( true );
+        return( true );
     return( false );
   }
 
@@ -1285,11 +1287,12 @@ namespace OpenBabel
 
     atom = mol.GetAtom(i+1);
     idx  = atom->GetIdx() - 1;
+    bitmasks[i] &= BitVisit;
 
     count = 0;
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
       if (!nbr->IsHydrogen())
-	neighbour[count++] = nbr->GetIdx()-1;
+        neighbour[count++] = nbr->GetIdx()-1;
 
     resnos[idx] = r;
 
@@ -1300,79 +1303,84 @@ namespace OpenBabel
     switch( atomids[i] )
       {
       case(AI_N):
-	for( j=0; j<count; j++ )
-	  if( bitmasks[neighbour[j]] & BitCAAll )
-	    {
-	      atomids[neighbour[j]] = AI_CA;
-	      TracePeptideChain(mol,neighbour[j],r);
-	    }
+        for( j=0; j<count; j++ )
+          if( bitmasks[neighbour[j]] & BitCAAll )
+            {
+              atomids[neighbour[j]] = AI_CA;
+              if (!(bitmasks[neighbour[j]] & BitVisit))
+                TracePeptideChain(mol,neighbour[j],r);
+            }
         break;
 
       case(AI_CA):
-	if( count == 3 )
-	  {
-	    if ( bitmasks[na] & BitNAll )
-	      na = nc;
-	    else if ( bitmasks[nb] & BitNAll )
-	      nb = nc;
+        if( count == 3 )
+          {
+            if ( bitmasks[na] & BitNAll )
+              na = nc;
+            else if ( bitmasks[nb] & BitNAll )
+              nb = nc;
 
-	    if ( bitmasks[na] & BitC )
-	      {
-		j = na;
-		k = nb;
-	      }
-	    else if ( bitmasks[nb] & BitC )
-	      {
-		j = nb;
-		k = na;
-	      }
-	    else if( bitmasks[na] & BitCAll )
-	      {
-		j = na;
-		k = nb;
-	      }
-	    else /* bitmasks[nb] & BitCAll */
-	      {
-		j = nb;
-		k = na;
-	      }
+            if ( bitmasks[na] & BitC )
+              {
+                j = na;
+                k = nb;
+              }
+            else if ( bitmasks[nb] & BitC )
+              {
+                j = nb;
+                k = na;
+              }
+            else if( bitmasks[na] & BitCAll )
+              {
+                j = na;
+                k = nb;
+              }
+            else /* bitmasks[nb] & BitCAll */
+              {
+                j = nb;
+                k = na;
+              }
 
-	    atomids[j]  = AI_C;
-	    bitmasks[k] = 0;
+            atomids[j]  = AI_C;
+            bitmasks[k] = 0;
 
-	    TracePeptideChain(mol,j,r);
-	  }
-	else /* count == 2 */
-	  {
-	    if ( bitmasks[na] & BitCAll )
-	      {
-		atomids[na] = AI_C;
-		TracePeptideChain(mol,na,r);
-	      }
-	    else
-	      {
-		atomids[nb] = AI_C;
-		TracePeptideChain(mol,nb,r);
-	      }
-	  }
+            if (!(bitmasks[j] & BitVisit))
+              TracePeptideChain(mol,j,r);
+          }
+        else /* count == 2 */
+          {
+            if ( bitmasks[na] & BitCAll )
+              {
+                atomids[na] = AI_C;
+                if (!(bitmasks[na] & BitVisit))
+                  TracePeptideChain(mol,na,r);
+              }
+            else
+              {
+                atomids[nb] = AI_C;
+                if (!(bitmasks[nb] & BitVisit))
+                  TracePeptideChain(mol,nb,r);
+              }
+          }
         break;
 
       case(AI_C):
-	k = AI_O;
+        k = AI_O;
         for ( j = 0; j < count; j++ )
-	  {
+          {
             if ( bitmasks[neighbour[j]] & BitNAll )
-	      {
+              {
                 atomids[neighbour[j]] = AI_N;
-                TracePeptideChain(mol,neighbour[j],r+1);
-	      }
+                if (!(bitmasks[neighbour[j]] & BitVisit))
+                  TracePeptideChain(mol,neighbour[j],r+1);
+              }
             else if( bitmasks[neighbour[j]] & BitOAll )
-	      {
+              {
                 atomids[neighbour[j]] = k;
                 resnos[neighbour[j]]  = r;
                 k = AI_OXT;  /* OXT */
-	      }
-	  }
+              }
+          }
         break;
       }
   }
@@ -1389,8 +1397,8 @@ namespace OpenBabel
     for (int i = 0 ; i < max ; i++)
       if (atomids[i] == AI_CA)
         {
-	  resid = IdentifyResidue(PDecisionTree, mol, i, resnos[i]);
-	  AssignResidue(mol,resnos[i],chains[i],resid);
+          resid = IdentifyResidue(PDecisionTree, mol, i, resnos[i]);
+          AssignResidue(mol,resnos[i],chains[i],resid);
         }
 
     return true;
@@ -1402,7 +1410,7 @@ namespace OpenBabel
 
     for (int j = 0 ; j < max ; j++)
       if ((resnos[j] == r) && (chains[j] == c) && !hetflags[j])
-	resids[j] = i;
+        resids[j] = i;
   }
 
   int OBChainsParser::IdentifyResidue(void *tree, OBMol &mol, int seed, int resno)
@@ -1432,94 +1440,94 @@ namespace OpenBabel
       switch(ptr->type)
         {
         case(BC_IDENT):  curr = Stack[StackPtr-1].atom;
-	  if( atomids[curr] == ptr->ident.value )
+          if( atomids[curr] == ptr->ident.value )
             {
-	      bond = Stack[StackPtr-1].bond;
-	      ResMonoBond[BondCount++] = bond;
-	      ptr = ptr->ident.tcond;
-	      StackPtr--;
+              bond = Stack[StackPtr-1].bond;
+              ResMonoBond[BondCount++] = bond;
+              ptr = ptr->ident.tcond;
+              StackPtr--;
             }
-	  else
-	    ptr = ptr->ident.fcond;
-	  break;
+          else
+            ptr = ptr->ident.fcond;
+          break;
 
         case(BC_LOCAL):  curr = Stack[StackPtr-1].atom;
-	  if( curr == ResMonoAtom[ptr->local.value] )
+          if( curr == ResMonoAtom[ptr->local.value] )
             {
-	      bond = Stack[StackPtr-1].bond;
-	      ResMonoBond[BondCount++] = bond;
-	      ptr = ptr->local.tcond;
-	      StackPtr--;
+              bond = Stack[StackPtr-1].bond;
+              ResMonoBond[BondCount++] = bond;
+              ptr = ptr->local.tcond;
+              StackPtr--;
             }
-	  else
-	    ptr = ptr->local.fcond;
-	  break;
+          else
+            ptr = ptr->local.fcond;
+          break;
 
         case(BC_ELEM):   curr = Stack[StackPtr-1].atom;
-	  if( mol.GetAtom(curr+1)->GetAtomicNum() == static_cast<unsigned int>(ptr->elem.value)
+          if( mol.GetAtom(curr+1)->GetAtomicNum() == static_cast<unsigned int>(ptr->elem.value)
               )
             {
-	      bond = Stack[StackPtr-1].bond;
-	      ResMonoAtom[AtomCount++] = curr;
-	      ResMonoBond[BondCount++] = bond;
-	      resnos[curr] = resno;
-	      ptr = ptr->elem.tcond;
-	      StackPtr--;
+              bond = Stack[StackPtr-1].bond;
+              ResMonoAtom[AtomCount++] = curr;
+              ResMonoBond[BondCount++] = bond;
+              resnos[curr] = resno;
+              ptr = ptr->elem.tcond;
+              StackPtr--;
             }
-	  else
-	    ptr = ptr->elem.fcond;
-	  break;
+          else
+            ptr = ptr->elem.fcond;
+          break;
 
         case(BC_EVAL):   bcount = 0;
-	  curr = Stack[StackPtr].atom;
-	  prev = Stack[StackPtr].prev;
+          curr = Stack[StackPtr].atom;
+          prev = Stack[StackPtr].prev;
 
-	  atom = mol.GetAtom(curr+1); // WARNING, potential atom index issue
-	  for (nbr = atom->BeginNbrAtom(b); nbr; nbr = atom->NextNbrAtom(b))
-	    {
-	      if (nbr->IsHydrogen())
-		continue;
+          atom = mol.GetAtom(curr+1); // WARNING, potential atom index issue
+          for (nbr = atom->BeginNbrAtom(b); nbr; nbr = atom->NextNbrAtom(b))
+            {
+              if (nbr->IsHydrogen())
+                continue;
 
-	      j = nbr->GetIdx() - 1;
-	      if (!((curr == prev) && bitmasks[j]) && (j != prev))
-		{
-		  Stack[StackPtr].prev = curr;
-		  Stack[StackPtr].atom = j;
-		  Stack[StackPtr].bond = (*b)->GetIdx();
-		  StackPtr++;
-		  bcount++;
-		}
-	    }
+              j = nbr->GetIdx() - 1;
+              if (!((curr == prev) && bitmasks[j]) && (j != prev))
+                {
+                  Stack[StackPtr].prev = curr;
+                  Stack[StackPtr].atom = j;
+                  Stack[StackPtr].bond = (*b)->GetIdx();
+                  StackPtr++;
+                  bcount++;
+                }
+            }
 
-	  ptr = ptr->eval.next;
-	  break;
+          ptr = ptr->eval.next;
+          break;
 
         case(BC_COUNT):
-	  if( bcount == ptr->count.value )
-	    {
-	      ptr = ptr->count.tcond;
-	    }
-	  else
-	    ptr = ptr->count.fcond;
-	  break;
+          if( bcount == ptr->count.value )
+            {
+              ptr = ptr->count.tcond;
+            }
+          else
+            ptr = ptr->count.fcond;
+          break;
 
         case(BC_ASSIGN): 
-	  for( i=0; i<AtomCount; i++ )
-	    if( !bitmasks[ResMonoAtom[i]] )
-	      {
-		j = ptr->assign.atomid[i];
-		atomids[ResMonoAtom[i]] = j;
-	      }
-	  for( i=0; i<BondCount; i++ )
+          for( i=0; i<AtomCount; i++ )
+            if( !bitmasks[ResMonoAtom[i]] )
+              {
+                j = ptr->assign.atomid[i];
+                atomids[ResMonoAtom[i]] = j;
+              }
+          for( i=0; i<BondCount; i++ )
             {
-	      j = ptr->assign.bflags[i];
-	      flags[ResMonoBond[i]] = j;
+              j = ptr->assign.bflags[i];
+              flags[ResMonoBond[i]] = j;
             }
-	  return( ptr->assign.resid );
-	  break;
+          return( ptr->assign.resid );
+          break;
 
         default:  /* Illegal Instruction! */
-	  return( 0 );
+          return( 0 );
         }
     return 0;
   }
@@ -1539,15 +1547,15 @@ namespace OpenBabel
     for( i = 0 ; i < max ; i++ )
       if( atomids[i] == -1 )
         {
-	  if( bitmasks[i] & BitPTer )
+          if( bitmasks[i] & BitPTer )
             {
-	      atomids[i] = AI_P;
-	      TraceNucleicChain(mol,i,1);
+              atomids[i] = AI_P;
+              TraceNucleicChain(mol,i,1);
             }
-	  else if( bitmasks[i] & BitO5Ter )
+          else if( bitmasks[i] & BitO5Ter )
             {
-	      atomids[i] = AI_O5;
-	      TraceNucleicChain(mol,i,1);
+              atomids[i] = AI_O5;
+              TraceNucleicChain(mol,i,1);
             }
         }
 
@@ -1568,9 +1576,10 @@ namespace OpenBabel
     atom  = mol.GetAtom(i + 1);
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
       if (!nbr->IsHydrogen())
-	neighbour[count++] = nbr->GetIdx() - 1;
+        neighbour[count++] = nbr->GetIdx() - 1;
 
     resnos[i] = r;
+    bitmasks[i] &= BitVisit;
 
     na = neighbour[0];
     nb = neighbour[1];
@@ -1579,102 +1588,109 @@ namespace OpenBabel
     switch( atomids[i] )
       {
       case(AI_P):
-	k = AI_O1P;  /* O1P */
+        k = AI_O1P;  /* O1P */
         for( j=0; j<count; j++ )
-	  {
+          {
             if( bitmasks[neighbour[j]] & BitO5 )
-	      {
+              {
                 atomids[neighbour[j]] = AI_O5;
-                TraceNucleicChain(mol,neighbour[j],r);
-	      }
+                if (!(bitmasks[neighbour[j]] & BitVisit))
+                  TraceNucleicChain(mol,neighbour[j],r);
+              }
             else if( bitmasks[neighbour[j]] & BitOP )
-	      {
+              {
                 atomids[neighbour[j]] = k;
                 resnos[neighbour[j]]  = r;
                 k = AI_O2P;  /* O2P */
-	      }
-	  }
+              }
+          }
 
         break;
 
       case(AI_O5):
-	for( j=0; j<count; j++ )
-	  if( bitmasks[neighbour[j]] & BitC5 )
-	    {
-	      atomids[neighbour[j]] = AI_C5;
-	      TraceNucleicChain(mol,neighbour[j],r);
-	    }
+        for( j=0; j<count; j++ )
+          if( bitmasks[neighbour[j]] & BitC5 )
+            {
+              atomids[neighbour[j]] = AI_C5;
+              if (!(bitmasks[neighbour[j]] & BitVisit))
+                TraceNucleicChain(mol,neighbour[j],r);
+            }
 
         break;
 
       case(AI_C5):
-	for( j=0 ; j<count; j++ )
-	  if( bitmasks[neighbour[j]] & BitC4 )
-	    {
-	      atomids[neighbour[j]] = AI_C4;
-	      TraceNucleicChain(mol,neighbour[j],r);
-	    }
+        for( j=0 ; j<count; j++ )
+          if( bitmasks[neighbour[j]] & BitC4 )
+            {
+              atomids[neighbour[j]] = AI_C4;
+              if (!(bitmasks[neighbour[j]] & BitVisit))
+                TraceNucleicChain(mol,neighbour[j],r);
+            }
 
         break;
 
       case(AI_C4):
-	for( j=0; j<count; j++ )
-	  {
-	    if( bitmasks[neighbour[j]] & BitC3 )
-	      {
-		atomids[neighbour[j]] = AI_C3;
-		TraceNucleicChain(mol,neighbour[j],r);
-	      }
-	    else if( bitmasks[neighbour[j]] & BitO4 )
-	      {
-		atomids[neighbour[j]] = AI_O4;
-		resnos[neighbour[j]]  = r;
-	      }
-	  }
+        for( j=0; j<count; j++ )
+          {
+            if( bitmasks[neighbour[j]] & BitC3 )
+              {
+                atomids[neighbour[j]] = AI_C3;
+                if (!(bitmasks[neighbour[j]] & BitVisit))
+                  TraceNucleicChain(mol,neighbour[j],r);
+              }
+            else if( bitmasks[neighbour[j]] & BitO4 )
+              {
+                atomids[neighbour[j]] = AI_O4;
+                resnos[neighbour[j]]  = r;
+              }
+          }
 
         break;
 
       case(AI_C3):
-	for( j=0; j<count; j++ )
-	  {
-	    if( bitmasks[neighbour[j]] & BitO3All )
-	      {
-		atomids[neighbour[j]] = AI_O3;
-		TraceNucleicChain(mol,neighbour[j],r);
-	      }
-	    else if( bitmasks[neighbour[j]] & BitC2All )
-	      {
-		atomids[neighbour[j]] = AI_C2;
-		TraceNucleicChain(mol,neighbour[j],r);
-	      }
-	  }
+        for( j=0; j<count; j++ )
+          {
+            if( bitmasks[neighbour[j]] & BitO3All )
+              {
+                atomids[neighbour[j]] = AI_O3;
+                if (!(bitmasks[neighbour[j]] & BitVisit))
+                  TraceNucleicChain(mol,neighbour[j],r);
+              }
+            else if( bitmasks[neighbour[j]] & BitC2All )
+              {
+                atomids[neighbour[j]] = AI_C2;
+                if (!(bitmasks[neighbour[j]] & BitVisit))
+                  TraceNucleicChain(mol,neighbour[j],r);
+              }
+          }
 
         break;
 
       case(AI_O3):
-	for( j=0; j<count; j++ )
-	  if( bitmasks[neighbour[j]] & BitP )
-	    {
-	      atomids[neighbour[j]] = AI_P;
-	      TraceNucleicChain(mol,neighbour[j],r+1);
-	    }
+        for( j=0; j<count; j++ )
+          if( bitmasks[neighbour[j]] & BitP )
+            {
+              atomids[neighbour[j]] = AI_P;
+              if (!(bitmasks[neighbour[j]] & BitVisit))
+                TraceNucleicChain(mol,neighbour[j],r+1);
+            }
 
         break;
 
       case(AI_C2):
-	for( j=0; j<count; j++ )
-	  {
-	    if( bitmasks[neighbour[j]] & BitC1 )
-	      {
-		atomids[neighbour[j]] = AI_C1;
-		resnos[neighbour[j]]  = r;
-	      }
-	    else if( bitmasks[neighbour[j]] & BitO2 )
-	      {
-		atomids[neighbour[j]] = AI_O2;
-		resnos[neighbour[j]]  = r;
-	      }
-	  }
+        for( j=0; j<count; j++ )
+          {
+            if( bitmasks[neighbour[j]] & BitC1 )
+              {
+                atomids[neighbour[j]] = AI_C1;
+                resnos[neighbour[j]]  = r;
+              }
+            else if( bitmasks[neighbour[j]] & BitO2 )
+              {
+                atomids[neighbour[j]] = AI_O2;
+                resnos[neighbour[j]]  = r;
+              }
+          }
 
         break;
       }
@@ -1689,8 +1705,8 @@ namespace OpenBabel
     for( unsigned int i = 0 ; i < mol.NumAtoms() ; i++ )
       if( atomids[i] == 49 )
         {
-	  int resid = IdentifyResidue(NDecisionTree,mol,i,resnos[i]);
-	  AssignResidue(mol,resnos[i],chains[i],resid);
+          int resid = IdentifyResidue(NDecisionTree,mol,i,resnos[i]);
+          AssignResidue(mol,resnos[i],chains[i],resid);
         }
 
     return true;
@@ -1717,17 +1733,17 @@ namespace OpenBabel
     for(atom = mol.BeginAtom(a); atom ; atom = mol.NextAtom(a))
       if(atom->IsHydrogen())
         {
-	  nbr = atom->BeginNbrAtom(b);
-	  if (nbr != NULL)
+          nbr = atom->BeginNbrAtom(b);
+          if (nbr != NULL)
             {
-	      idx  = atom->GetIdx() - 1;
-	      sidx = nbr->GetIdx() - 1;
+              idx  = atom->GetIdx() - 1;
+              sidx = nbr->GetIdx() - 1;
 
-	      hcounts[idx]  = ++hcounts[sidx];
-	      hetflags[idx] = hetflags[sidx];
-	      atomids[idx]  = atomids[sidx];
-	      resids[idx]   = resids[sidx];
-	      resnos[idx]   = resnos[sidx];
+              hcounts[idx]  = ++hcounts[sidx];
+              hetflags[idx] = hetflags[sidx];
+              atomids[idx]  = atomids[sidx];
+              resids[idx]   = resids[sidx];
+              resnos[idx]   = resnos[sidx];
             }
         }
 
@@ -1736,9 +1752,9 @@ namespace OpenBabel
     for(atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
       if (atom->IsHydrogen())
         {
-	  nbr = atom->BeginNbrAtom(b);
-	  if (nbr != NULL && hcounts[nbr->GetIdx()-1] == 1)
-	    hcounts[atom->GetIdx()-1] = 0;
+          nbr = atom->BeginNbrAtom(b);
+          if (nbr != NULL && hcounts[nbr->GetIdx()-1] == 1)
+            hcounts[atom->GetIdx()-1] = 0;
         }
 
     return true;
@@ -1776,298 +1792,298 @@ namespace OpenBabel
     switch( toupper(ptr[0]) )
       {
       case(' '):  switch( ch )
-	{
-	case('B'):  return(  5 );
-	case('C'):  return(  6 );
-	case('D'):  return(  1 );
-	case('F'):  return(  9 );
-	case('H'):  return(  1 );
-	case('I'):  return( 53 );
-	case('K'):  return( 19 );
-	case('L'):  return(  1 );
-	case('N'):  return(  7 );
-	case('O'):  return(  8 );
-	case('P'):  return( 15 );
-	case('S'):  return( 16 );
-	case('U'):  return( 92 );
-	case('V'):  return( 23 );
-	case('W'):  return( 74 );
-	case('Y'):  return( 39 );
-	}
+        {
+        case('B'):  return(  5 );
+        case('C'):  return(  6 );
+        case('D'):  return(  1 );
+        case('F'):  return(  9 );
+        case('H'):  return(  1 );
+        case('I'):  return( 53 );
+        case('K'):  return( 19 );
+        case('L'):  return(  1 );
+        case('N'):  return(  7 );
+        case('O'):  return(  8 );
+        case('P'):  return( 15 );
+        case('S'):  return( 16 );
+        case('U'):  return( 92 );
+        case('V'):  return( 23 );
+        case('W'):  return( 74 );
+        case('Y'):  return( 39 );
+        }
         break;
 
       case('A'):  switch( ch )
-	{
-	case('C'):  return( 89 );
-	case('G'):  return( 47 );
-	case('L'):  return( 13 );
-	case('M'):  return( 95 );
-	case('R'):  return( 18 );
-	case('S'):  return( 33 );
-	case('T'):  return( 85 );
-	case('U'):  return( 79 );
-	}
+        {
+        case('C'):  return( 89 );
+        case('G'):  return( 47 );
+        case('L'):  return( 13 );
+        case('M'):  return( 95 );
+        case('R'):  return( 18 );
+        case('S'):  return( 33 );
+        case('T'):  return( 85 );
+        case('U'):  return( 79 );
+        }
         break;
 
       case('B'):  switch( ch )
-	{
-	case('A'):  return( 56 );
-	case('E'):  return(  4 );
-	case('I'):  return( 83 );
-	case('K'):  return( 97 );
-	case('R'):  return( 35 );
-	case(' '):  return(  5 );
-	}
+        {
+        case('A'):  return( 56 );
+        case('E'):  return(  4 );
+        case('I'):  return( 83 );
+        case('K'):  return( 97 );
+        case('R'):  return( 35 );
+        case(' '):  return(  5 );
+        }
         break;
 
       case('C'):  switch( ch )
-	{
-	case('A'):  return( 20 );
-	case('D'):  return( 48 );
-	case('E'):  return( 58 );
-	case('F'):  return( 98 );
-	case('L'):  return( 17 );
-	case('M'):  return( 96 );
-	case('O'):  return( 27 );
-	case('R'):  return( 24 );
-	case('S'):  return( 55 );
-	case('U'):  return( 29 );
-	case(' '):  return(  6 );
-	}
+        {
+        case('A'):  return( 20 );
+        case('D'):  return( 48 );
+        case('E'):  return( 58 );
+        case('F'):  return( 98 );
+        case('L'):  return( 17 );
+        case('M'):  return( 96 );
+        case('O'):  return( 27 );
+        case('R'):  return( 24 );
+        case('S'):  return( 55 );
+        case('U'):  return( 29 );
+        case(' '):  return(  6 );
+        }
         break;
 
       case('D'):  if( ch=='Y' )
-	{
-	  return( 66 );
-	}
+        {
+          return( 66 );
+        }
       else if( ch==' ' )
-	return( 1 );
+        return( 1 );
         break;
 
       case('E'):  if( ch=='R' )
-	{
-	  return( 68 );
-	}
+        {
+          return( 68 );
+        }
       else if( ch=='S' )
-	{
-	  return( 99 );
-	}
+        {
+          return( 99 );
+        }
       else if( ch=='U' )
-	return( 63 );
+        return( 63 );
         break;
 
       case('F'):  if( ch=='E' )
-	{
-	  return(  26 );
-	}
+        {
+          return(  26 );
+        }
       else if( ch=='M' )
-	{
-	  return( 100 );
-	}
+        {
+          return( 100 );
+        }
       else if( ch=='R' )
-	{
-	  return(  87 );
-	}
+        {
+          return(  87 );
+        }
       else if( ch=='F' )
-	return(   9 );
+        return(   9 );
         break;
 
       case('G'):  if( ch=='A' )
-	{
-	  return( 31 );
-	}
+        {
+          return( 31 );
+        }
       else if( ch=='D' )
-	{
-	  return( 64 );
-	}
+        {
+          return( 64 );
+        }
       else if( ch=='E' )
-	return( 32 );
+        return( 32 );
         break;
 
       case('H'):  if( ch=='E' )
-	{
-	  return(  2 );
-	}
+        {
+          return(  2 );
+        }
       else if( ch=='F' )
-	{
-	  return( 72 );
-	}
+        {
+          return( 72 );
+        }
       else if( ch=='G' )
-	{
-	  return( 80 );
-	}
+        {
+          return( 80 );
+        }
       else if( ch=='O' )
-	{
-	  return( 67 );
-	}
+        {
+          return( 67 );
+        }
       else if( ch==' ' )
-	return(  1 );
+        return(  1 );
         break;
 
       case('I'):  if( ch=='N' )
-	{
-	  return( 49 );
-	}
+        {
+          return( 49 );
+        }
       else if( ch=='R' )
-	{
-	  return( 77 );
-	}
+        {
+          return( 77 );
+        }
       else if( ch==' ' )
-	return( 53 );
+        return( 53 );
         break;
 
       case('K'):  if( ch=='R' )
-	{
-	  return( 36 );
-	}
+        {
+          return( 36 );
+        }
       else if( ch==' ' )
-	return( 19 );
+        return( 19 );
         break;
 
       case('L'):  if( ch=='A' )
-	{
-	  return(  57 );
-	}
+        {
+          return(  57 );
+        }
       else if( ch=='I' )
-	{
-	  return(   3 );
-	}
+        {
+          return(   3 );
+        }
       else if( (ch=='R') || (ch=='W') )
-	{
-	  return( 103 );
-	}
+        {
+          return( 103 );
+        }
       else if( ch=='U' )
-	{
-	  return(  71 );
-	}
+        {
+          return(  71 );
+        }
       else if( ch==' ' )
-	return(   1 );
+        return(   1 );
         break;
 
       case('M'):  if( ch=='D' )
-	{
-	  return( 101 );
-	}
+        {
+          return( 101 );
+        }
       else if( ch=='G' )
-	{
-	  return(  12 );
-	}
+        {
+          return(  12 );
+        }
       else if( ch=='N' )
-	{
-	  return(  25 );
-	}
+        {
+          return(  25 );
+        }
       else if( ch=='O' )
-	return(  42 );
+        return(  42 );
         break;
 
       case('N'):  switch( ch )
-	{
-	case('A'):  return(  11 );
-	case('B'):  return(  41 );
-	case('D'):  return(  60 );
-	case('E'):  return(  10 );
-	case('I'):  return(  28 );
-	case('O'):  return( 102 );
-	case('P'):  return(  93 );
-	case(' '):  return(   7 );
-	}
+        {
+        case('A'):  return(  11 );
+        case('B'):  return(  41 );
+        case('D'):  return(  60 );
+        case('E'):  return(  10 );
+        case('I'):  return(  28 );
+        case('O'):  return( 102 );
+        case('P'):  return(  93 );
+        case(' '):  return(   7 );
+        }
         break;
 
       case('O'):  if( ch=='S' )
-	{
-	  return( 76 );
-	}
+        {
+          return( 76 );
+        }
       else if( ch==' ' )
-	return( 8 );
+        return( 8 );
         break;
 
       case('P'):  switch( ch )
-	{
-	case('A'):  return( 91 );
-	case('B'):  return( 82 );
-	case('D'):  return( 46 );
-	case('M'):  return( 61 );
-	case('O'):  return( 84 );
-	case('R'):  return( 59 );
-	case('T'):  return( 78 );
-	case('U'):  return( 94 );
-	case(' '):  return( 15 );
-	}
+        {
+        case('A'):  return( 91 );
+        case('B'):  return( 82 );
+        case('D'):  return( 46 );
+        case('M'):  return( 61 );
+        case('O'):  return( 84 );
+        case('R'):  return( 59 );
+        case('T'):  return( 78 );
+        case('U'):  return( 94 );
+        case(' '):  return( 15 );
+        }
         break;
 
       case('R'):  switch( ch )
-	{
-	case('A'):  return( 88 );
-	case('B'):  return( 37 );
-	case('E'):  return( 75 );
-	case('H'):  return( 45 );
-	case('N'):  return( 86 );
-	case('U'):  return( 44 );
-	}
+        {
+        case('A'):  return( 88 );
+        case('B'):  return( 37 );
+        case('E'):  return( 75 );
+        case('H'):  return( 45 );
+        case('N'):  return( 86 );
+        case('U'):  return( 44 );
+        }
         break;
 
       case('S'):  switch( ch )
-	{
-	case('B'):  return( 51 );
-	case('C'):  return( 21 );
-	case('E'):  return( 34 );
-	case('I'):  return( 14 );
-	case('M'):  return( 62 );
-	case('N'):  return( 50 );
-	case('R'):  return( 38 );
-	case(' '):  return( 16 );
-	}
+        {
+        case('B'):  return( 51 );
+        case('C'):  return( 21 );
+        case('E'):  return( 34 );
+        case('I'):  return( 14 );
+        case('M'):  return( 62 );
+        case('N'):  return( 50 );
+        case('R'):  return( 38 );
+        case(' '):  return( 16 );
+        }
         break;
 
       case('T'):  switch( ch )
-	{
-	case('A'):  return( 73 );
-	case('B'):  return( 65 );
-	case('C'):  return( 43 );
-	case('E'):  return( 52 );
-	case('H'):  return( 90 );
-	case('I'):  return( 22 );
-	case('L'):  return( 81 );
-	case('M'):  return( 69 );
-	}
+        {
+        case('A'):  return( 73 );
+        case('B'):  return( 65 );
+        case('C'):  return( 43 );
+        case('E'):  return( 52 );
+        case('H'):  return( 90 );
+        case('I'):  return( 22 );
+        case('L'):  return( 81 );
+        case('M'):  return( 69 );
+        }
         break;
 
       case('U'):  if( ch==' ' )
-	return( 92 );
+        return( 92 );
         break;
 
       case('V'):  if( ch==' ' )
-	return( 23 );
+        return( 23 );
         break;
 
       case('W'):  if( ch==' ' )
-	return( 74 );
+        return( 74 );
         break;
 
       case('X'):  if( ch=='E' )
-	return( 54 );
+        return( 54 );
         break;
 
       case('Y'):  if( ch=='B' )
-	{
-	  return( 70 );
-	}
+        {
+          return( 70 );
+        }
       else if( ch==' ' )
-	return( 39 );
+        return( 39 );
         break;
 
       case('Z'):  if( ch=='N' )
-	{
-	  return( 30 );
-	}
+        {
+          return( 30 );
+        }
       else if( ch=='R' )
-	return( 40 );
+        return( 40 );
         break;
       }
 
     if( (*ptr>='0') && (*ptr<='9') )
       if( (ch=='H') || (ch=='D') )
-	return( 1 ); /* Hydrogen */
+        return( 1 ); /* Hydrogen */
 
     return( 0 );
   }
@@ -2084,44 +2100,44 @@ namespace OpenBabel
     while( (ch = *ptr++) )
       {
         switch( ch )
-	  {
-	  case('-'): type = BF_SINGLE;
+          {
+          case('-'): type = BF_SINGLE;
             break;
-	  case('='): type = BF_DOUBLE;
+          case('='): type = BF_DOUBLE;
             break;
-	  case('#'): type = BF_TRIPLE;
+          case('#'): type = BF_TRIPLE;
             break;
-	  case('^'): type = BF_SINGLE|BF_AROMATIC;
+          case('^'): type = BF_SINGLE|BF_AROMATIC;
             break;
-	  case('~'): type = BF_DOUBLE|BF_AROMATIC;
-            break;
-
-	  case(')'): return( ptr );
-	  case('.'): prev = -1;
-            break;
-	  case('('): ptr = ParseSmiles(ptr,prev);
+          case('~'): type = BF_DOUBLE|BF_AROMATIC;
             break;
 
-	  default:
+          case(')'): return( ptr );
+          case('.'): prev = -1;
+            break;
+          case('('): ptr = ParseSmiles(ptr,prev);
+            break;
+
+          default:
             atomid = ch-'0';
             while( isdigit(*ptr) )
-	      atomid = (atomid*10)+(*ptr++)-'0';
+              atomid = (atomid*10)+(*ptr++)-'0';
 
             for( next=0; next<MonoAtomCount; next++ )
-	      if( MonoAtom[next].atomid == atomid )
-		break;
+              if( MonoAtom[next].atomid == atomid )
+                break;
 
             if( next == MonoAtomCount )
-	      {
+              {
                 name = ChainsAtomName[atomid];
                 MonoAtom[next].elem = IdentifyElement(name);
                 MonoAtom[next].atomid = atomid;
                 MonoAtom[next].bcount = 0;
                 MonoAtomCount++;
-	      }
+              }
 
             if( prev != -1 )
-	      {
+              {
                 MonoBond[MonoBondCount].flag = type;
                 MonoBond[MonoBondCount].src = prev;
                 MonoBond[MonoBondCount].dst = next;
@@ -2129,9 +2145,9 @@ namespace OpenBabel
 
                 MonoAtom[prev].bcount++;
                 MonoAtom[next].bcount++;
-	      }
+              }
             prev = next;
-	  }
+          }
       }
     return( ptr-1 );
   }

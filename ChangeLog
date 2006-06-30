@@ -1,3 +1,12 @@
+2006-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+        * src/chains.cpp: In TracePeptideChain and TraceNucleicChain, test
+        for atom visit before recursing. Otherwise, leads to an infinite
+        loop and crash. Fixes PR#1515198, reported by Noel.
+
+        * src/obutil.cpp (InternalToCartesian): Check index requests to
+	avoid requesting past the vector end.
+
 2006-06-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* doc/api-style.css: Updated for doxygen 1.4.7.
