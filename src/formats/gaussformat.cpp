@@ -67,13 +67,18 @@ namespace OpenBabel
     {
       OBConversion::RegisterFormat("gau",this);
       OBConversion::RegisterFormat("com",this);
-    }
+      // Command-line keywords
+      OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);
+      // Command-line keyword file
+      OBConversion::RegisterOptionParam("f", NULL, 1, OBConversion::OUTOPTIONS);    }
 
     virtual const char* Description() //required
     {
       return
         "Gaussian 98/03 Cartesian Input\n \
-            No comments yet\n";
+       Write Options e.g. -xk\n\
+        k  \"keywords\" Use the specified keywords for input\n\
+        f    <file>     Read the file specified for input keywords\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -110,20 +115,31 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
     char buffer[BUFF_SIZE];
-
-    ofs << "%" << endl << '\045';
-    ofs << "#Put Keywords Here, check Charge and Multiplicity" << endl << endl;
+    const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+    const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    
+    if (!keywords && !keywordFile)
+      ofs << "#Put Keywords Here, check Charge and Multiplicity\n";
+    if (keywords)
+      ofs << pConv->IsOption("k", OBConversion::OUTOPTIONS) << endl;
+    if (keywordFile)
+      {
+        ifstream kfstream(keywordFile);
+        string keyBuffer;
+        if (kfstream)
+          {
+            while (getline(kfstream, keyBuffer))
+                ofs << keyBuffer << endl;
+          }
+      }
+    ofs << endl; // blank line after keywords
     ofs << " " << mol.GetTitle() << endl << endl;
 
-    OBAtom *atom;
-    string str,str1;
     snprintf(buffer, BUFF_SIZE, "%d  %d", mol.GetTotalCharge(), mol.GetTotalSpinMultiplicity());
     ofs << buffer << endl;
-    for(i = 1;i <= mol.NumAtoms(); i++)
+    FOR_ATOMS_OF_MOL(atom, mol)
       {
-        atom = mol.GetAtom(i);
         if (atom->GetIsotope() == 0)
           snprintf(buffer, BUFF_SIZE, "%-3s      %10.5f      %10.5f      %10.5f ",
                   etab.GetSymbol(atom->GetAtomicNum()),
@@ -222,6 +238,12 @@ namespace OpenBabel
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
               }
+          }
+        else if(strstr(buffer,"SCF Done:") != NULL)
+          {
+#define HARTREE_TO_KCAL 627.509
+            tokenize(vs,buffer);
+            mol.SetEnergy(atof(vs[4].c_str()) * HARTREE_TO_KCAL);
           }
       } // end while
 

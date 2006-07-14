@@ -1,3 +1,18 @@
+2006-07-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.cpp, src/main.cpp: Remove unneeded semicolons,
+	which prevent compilation with GCC at high warning levels.
+
+	* src/mol.h: Remove extra OBMol:: specification -- prevents
+	compilation with GCC and confuses Doxygen.
+
+	* src/gaussformat.cpp: Add -xk and -xf write options to output
+	supplied keywords to Gaussian input. Allows batch output of files
+	with the same options.
+
+	* src/gamessformat.cpp: Ditto. Add contributions from Donald
+	Curtis for reading GAMESS input files.	
+
 2006-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/chains.cpp: In TracePeptideChain and TraceNucleicChain, test
