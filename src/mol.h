@@ -841,7 +841,7 @@ namespace OpenBabel
       //! \return the stochoimetric formula (e.g., C4H6O)
       std::string  GetFormula();
       //! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
-      std::string OBMol::GetSpacedFormula(int ones=0, const char* sp=" ");
+      std::string  GetSpacedFormula(int ones=0, const char* sp=" ");
       //! \return the heat of formation for this molecule (in kcal/mol)
       double       GetEnergy() const { return(_energy); }
       //! \return the standard molar mass given by IUPAC atomic masses (amu)

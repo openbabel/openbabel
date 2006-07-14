@@ -354,7 +354,7 @@ int main(int argc,char *argv[])
 #endif
   
   return 0;
-};
+}
 
 void DoOption(const char* p, OBConversion& Conv,
 	      OBConversion::Option_type typ, int& arg, int argc, char *argv[]) 

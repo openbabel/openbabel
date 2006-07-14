@@ -60,7 +60,7 @@ namespace OpenBabel {
       return OBConversion::GetDefaultFormat()->TargetClassDescription();
     else
       return "";
-  };
+  }
   const type_info& OBFormat::GetType()
   {
     //Provides info on class of default format unless overridden
@@ -68,7 +68,7 @@ namespace OpenBabel {
       return OBConversion::GetDefaultFormat()->GetType();
     else
       return typeid(this); //rubbish return if DefaultFormat not set
-  };
+  }
 
   //***************************************************
 
