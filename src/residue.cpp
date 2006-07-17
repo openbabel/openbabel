@@ -28,7 +28,6 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 
 #include "babelconfig.h"
 
-#include "mol.h"
 #include "residue.h"
 
 using namespace std;

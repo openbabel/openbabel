@@ -11,7 +11,7 @@ if BUILD_PCH
 BUILT_SOURCES = all.h.gch
 PCHFLAGS=-Winvalid-pch -x c++-header $(CXXFLAGS) $(INCLUDES)
 all.h.gch: all.h Makefile babelconfig.h mol.h base.h bitvec.h generic.h \
-	oberror.h obiter.h obconversion.h
+	oberror.h obiter.h obconversion.h atom.h bond.h
 	rm -f $@
 	$(CXX) $(PCHFLAGS) $<
 AM_CXXFLAGS= -include $(top_srcdir)/src/all.h
@@ -60,7 +60,8 @@ endif
 
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
 libopenbabelinclude_HEADERS = \
-		babelconfig.h base.h bitvec.h \
+		atom.h \
+		babelconfig.h base.h bond.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fingerprint.h \
 		generic.h grid.h kinetics.h \

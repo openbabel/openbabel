@@ -19,7 +19,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
 
-#include "mol.h"
+#include "atom.h"
 #include "molchrg.h"
 #include "phmodel.h"
 
@@ -147,9 +147,9 @@ namespace OpenBabel
   }
 
   OBAtom &OBAtom::operator=(OBAtom &src)
-    //copy atom information
-    //bond info is not copied here as ptrs may be invalid
-    //vdata is also not copied yet (again it's unclear what can work)
+  //copy atom information
+  //bond info is not copied here as ptrs may be invalid
+  //vdata is also not copied yet (again it's unclear what can work)
   {
     _idx = src.GetIdx();
     _hyb = src.GetHyb();
@@ -1547,6 +1547,7 @@ namespace OpenBabel
           impval = 2;
         if (hyb == 1)
           impval = 2;
+        break;
       case 16:
         if (hyb == 3)
           impval = 2;

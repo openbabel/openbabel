@@ -25,7 +25,91 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 #ifndef OB_RESIDUE_H
 #define OB_RESIDUE_H
 
+#include "babelconfig.h"
+
+#include <vector>
+#include <string>
+
+#include "base.h"
+
 namespace OpenBabel {
+
+  class OBAtom;
+  class OBBond;
+
+  // Class OBResidue
+  // class introduction in residue.cpp
+  class OBAPI OBResidue : public OBBase
+    {
+    public:
+
+      //! Constructor
+      OBResidue(void);
+      //! Copy constructor
+      OBResidue(const OBResidue &);
+      //! Destructor
+      virtual ~OBResidue(void);
+
+      OBResidue &operator=(const OBResidue &);
+
+      void    AddAtom(OBAtom *atom);
+      void    InsertAtom(OBAtom *atom);
+      void    RemoveAtom(OBAtom *atom);
+      void    Clear(void);
+
+      void    SetName(const std::string &resname);
+      void    SetNum(const unsigned int resnum);
+      void    SetChain(const char chain);
+      void    SetChainNum(const unsigned int chainnum);
+      void    SetIdx(const unsigned int idx);
+
+      void    SetAtomID(OBAtom *atom, const std::string &id);
+      void    SetHetAtom(OBAtom *atom, bool hetatm);
+      //! Set the atomic serial number for a given atom (see OBSerialNums)
+      void    SetSerialNum(OBAtom *atom, unsigned int sernum);
+
+      std::string    GetName(void)                  const;
+      unsigned int   GetNum(void)                   const;
+      unsigned int   GetNumAtoms()                  const;
+      char           GetChain(void)                 const;
+      unsigned int   GetChainNum(void)              const;
+      unsigned int   GetIdx(void)                   const;
+      unsigned int   GetResKey(void)                const;
+
+      std::vector<OBAtom*> GetAtoms(void)           const;
+      std::vector<OBBond*> GetBonds(bool exterior= true)const;
+
+      std::string    GetAtomID(OBAtom *atom)        const;
+      //! \return the serial number of the supplied atom (uses OBSerialNums)
+      unsigned       GetSerialNum(OBAtom *atom)     const;
+
+      bool           GetAminoAcidProperty(int)      const;
+      bool           GetAtomProperty(OBAtom *, int) const;
+      bool           GetResidueProperty(int)        const;
+
+      bool           IsHetAtom(OBAtom *atom)        const;
+      bool           IsResidueType(int)             const;
+
+      //! \deprecated Use FOR_ATOMS_OF_RESIDUE and OBResidueAtomIter instead
+      OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);
+      //! \deprecated Use FOR_ATOMS_OF_RESIDUE and OBResidueAtomIter instead
+      OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
+
+    protected: // members
+
+      unsigned int              _idx;   //!< Residue index (i.e., internal index in an OBMol)
+      char                              _chain; //!< Chain ID
+      unsigned int              _aakey; //!< Amino Acid key ID -- see SetResidueKeys()
+      unsigned int              _reskey;//!< Residue key ID -- see SetResidueKeys()
+      unsigned int              _resnum;//!< Residue number (i.e., in file)
+      std::string                 _resname;//!< Residue text name
+
+      std::vector<bool>           _hetatm;//!< Is a given atom a HETAM
+      std::vector<std::string>    _atomid;//!< Residue atom text IDs
+      std::vector<OBAtom*>        _atoms; //!< List of OBAtom in this residue
+      std::vector<unsigned int>   _sernum;//!< List of serial numbers
+      //    std::vector<OBGenericData*> _vdata; //!< Custom data
+    }; // OBResidue
 
 ///////////////////////////////////////////////////////////////////////////////
 // Global Definitions

@@ -1,3 +1,25 @@
+2006-07-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/atom.h, src/bond.h: New headers to encapsulate OBAtom and
+	OBBond interfaces, respectively.
+
+	* src/bond.cpp: Switch #include of mol.h to new header.
+
+	* src/atom.cpp: Ditto. (SetHybAndGeom): Fix missing break
+	statement, uncovered using AntiC static analysis program.
+
+	* src/Makefile.am, src/Makefile.in: Make sure to include above in distributions.
+
+	* src/residue.h, src/residue.cpp: Move OBResidue class declaration from mol.h.
+
+	* src/mol.h: Remove OBAtom, OBBond, and OBResidue, as above.
+
+	* src/obutil.h, src/obutil.cpp: Add IsApprox() and CanBeSquared()
+	contributed by Benoit Jacob.
+
+	* src/math/vector3.h, src/math/vector3.cpp: Add new implementation
+	of vector3::normalize and createOrthoVector, contributed by Benoit.
+
 2006-07-14  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.cpp, src/main.cpp: Remove unneeded semicolons,
