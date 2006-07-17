@@ -28,11 +28,11 @@ GNU General Public License for more details.
 #endif
 
 #ifndef RAD_TO_DEG
-#define RAD_TO_DEG 180.0/PI
+#define RAD_TO_DEG (180.0/PI)
 #endif
 
 #ifndef DEG_TO_RAD
-#define DEG_TO_RAD PI/180.0
+#define DEG_TO_RAD (PI/180.0)
 #endif
 
 namespace OpenBabel
@@ -46,6 +46,10 @@ namespace OpenBabel
     {
       private :
         double		_vx, _vy, _vz ;
+
+        //! normalizes a vector without checking that this is possible.
+        void _normalize_without_check () ;
+
 
       public :
         //! Constructor
@@ -112,11 +116,14 @@ namespace OpenBabel
         };
 
       //! prints a representation of the vector as a row vector of the form "<0.1,1,2>"
-      friend OBAPI std::ostream& operator<< ( std::ostream&, const vector3& ) ;
+      friend OBAPI std::ostream& operator<< ( std::ostream&, const vector3& );
 
-      //  Comparison
-      friend OBAPI int operator== ( const vector3&, const vector3& ) ;
-      friend OBAPI int operator!= ( const vector3&, const vector3& ) ;
+      //! Comparison Methods
+      // @{  
+      friend OBAPI int operator== ( const vector3&, const vector3& );
+      friend OBAPI int operator!= ( const vector3&, const vector3& );
+      
+      //! }@
 
       //  Sum, Difference, Scalar Product
       //! vector addition
@@ -158,6 +165,16 @@ namespace OpenBabel
 
       //! multiplication of matrix and vector
       friend OBAPI vector3 operator *(const matrix3x3 &m,const vector3 &v);
+
+      //! returns the vector as a const double *.
+      // The current implementation just casts 'this'. It assumes that the
+      // first data members of the vector3 class are the x,y,z coords,
+      // and are doubles. If that changes in the future, it will be necessary to
+      // reimplement this function.
+      const double *AsArray()
+        {
+          return reinterpret_cast<const double *>( this );
+        }
 
       //  Immediate Sum, Difference, Scalar Product
       vector3& operator+= ( const vector3& v)
@@ -226,6 +243,9 @@ namespace OpenBabel
       //! scales a vector to give it length one.
       vector3& normalize () ;
 
+      //! tests whether a vector can be normalized
+      bool CanBeNormalized () const;
+
       //! vector length
       double length () const
         {
@@ -263,7 +283,7 @@ namespace OpenBabel
         }
 
       //! creates a vector of length one, orthogonal to *this.
-      void createOrthoVector(vector3 &v) const;
+      bool createOrthoVector(vector3 &v) const;
 
     } ;
 

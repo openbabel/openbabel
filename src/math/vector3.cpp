@@ -139,35 +139,42 @@ namespace OpenBabel
       return ( false ) ;
   }
 
-  /*! This method checks if the current vector has length() ==
-    0.0.  If so, *this remains unchanged. Otherwise, *this is
-    scaled by 1.0/length().
-
-    \warning If length() is very close to zero, but not == 0.0,
-    this method may behave in unexpected ways and return almost
-    random results; details may depend on your particular floating
-    point implementation. The use of this method is therefore
-    highly discouraged, unless you are certain that length() is in
-    a reasonable range, away from 0.0 (Stefan Kebekus)
-
-    \deprecated This method will probably replaced by a safer
-    algorithm in the future.
-
-    \todo Replace this method with a more fool-proof version.
-
-    @returns a reference to *this
-  */
-  vector3& vector3 :: normalize ()
+  /*! Private member function. See normalize. */
+  void vector3::_normalize_without_check ()
   {
     double l = length ();
-
-    if (IsNearZero(l))
-      return(*this);
-
     _vx = _vx / l ;
     _vy = _vy / l ;
     _vz = _vz / l ;
+  }
 
+  /*! This method returns true if *this can be safely normalized.
+   * Vectors that can't be safely normalized are:
+   * - the zero vector (0,0,0)
+   * - vectors having coords that can't be squared without triggering
+   * an overflow or underflow. This means doubles having absolute
+   * value greater than 1e150 or smaller than 1e-150.
+   */
+  bool vector3::CanBeNormalized () const
+  {
+    if( _vx == 0.0 && _vy == 0.0 && _vz == 0.0 ) return false;
+    return( CanBeSquared(_vx)
+         && CanBeSquared(_vy)
+         && CanBeSquared(_vz) );
+  }
+
+  /*! This method normalizes *this. In other words, it divides
+   * the x,y,z coords of *this by this->length().
+   * If *this can't be safely normalized, it remains unchanged.
+   * See CanBeNormalized().
+
+   @returns a reference to *this
+
+   */
+  vector3& vector3 :: normalize ()
+  {
+    if( CanBeNormalized() )
+      _normalize_without_check();
     return(*this);
   }
 
@@ -264,32 +271,72 @@ namespace OpenBabel
     return(torsion);
   }
 
-  /*! This method checks if the current vector *this is zero
-    (i.e. if all entries == 0.0). If so, a warning message is
-    printed, and VZero is returned.
-    Otherwise, a vector of length one is generated, which is
-    orthogonal to *this, and stored in v. The resulting vector is
-    not random.
+  /*! This method constructs a unit vector orthogonal to *this.
+   * It requires that *this is normalizable; otherwise it just
+   * returns false. See CanBeNormalized.
 
-    \warning If the entries of the *this (in particular the
-    z-component) are very close to zero, but not == 0.0, this
-    method may behave in unexpected ways and return almost random
-    results; details may depend on your particular floating point
-    implementation. The use of this method is therefore highly
-    discouraged, unless you are certain that all components of
-    *this are in a reasonable range, away from 0.0 (Stefan
-    Kebekus)
+   @param res reference by which to pass the result.
 
-    \deprecated This method will probably replaced by a safer
-    algorithm in the future.
+   @returns false if *this was not normalizable.
 
-    \todo Replace this method with a more fool-proof version.
-
-    @param res a reference to a vector where the result will be
-    stored
   */
-  void vector3::createOrthoVector(vector3 &res) const
+  bool vector3::createOrthoVector(vector3 &res) const
   {
+    // sanity check
+    if( ! CanBeNormalized() ) return false;
+
+    // let u be a normalized copy of *this
+    vector3 u = *this;
+    u._normalize_without_check();
+
+    /* next we want to construct another unit vector v
+    that is not colinear to u. But actually we need more than that:
+    we need that u and v are not "too close" to being colinear.
+    Otherwise cross(u,v) could be very small, hence possibly non-normalizable.
+    */
+
+    vector3 v;
+    /* if the absolute values of the x and y-coords of u are not of the same
+    order of magnitude, then it is enough to swap them.
+    */
+    double abs_u_y = fabs(u.y());
+    if( ! IsApprox_pos ( fabs(u.x()), abs_u_y, 0.1 ) )
+    {
+      v._vx = u._vy; // swap x and y-coords
+      v._vy = u._vx;
+      v._vz = u._vz;
+    }
+    // now, same thing with the y and z-coords
+    else if( ! IsApprox_pos( fabs(u.z()), abs_u_y, 0.1 ) )
+    {
+      v._vx = u._vx;
+      v._vy = u._vz; // swap y and z-coords
+      v._vz = u._vy;
+    }
+    /* last case: the absolute values of the 3 coords of u are all of the same
+    order of magnitude. Thus u is far from being colinear to (0,0,1), for
+    instance.
+    */
+    else 
+    {
+      v._vx = 0;
+      v._vy = 0;
+      v._vz = 1;
+    }
+
+    /* now, v is far from colinear to u, and both u and v are unit vectors.
+    Thus their crossed product has a length that is neither "too small" nor
+    "too big" (indeed, its length equals sin( v, u ), which can be small
+    only if u and v are close to bieng colinear) */
+    res = cross( v, u );
+
+    //thus, it is safe to normalize res
+    res._normalize_without_check();
+
+return true;
+
+#if 0 // let's keep the old implementation just in case
+      // someone complains about the new one
     vector3 cO;
 
     if ( ( IsNearZero(this->x())) && (IsNearZero(this->y())) )
@@ -307,6 +354,7 @@ namespace OpenBabel
       }
     res= cross(cO,*this);
     res.normalize();
+#endif
   }
 
   const vector3 VZero ( 0.0, 0.0, 0.0 ) ;

@@ -71,16 +71,41 @@ namespace OpenBabel
     return(a<b);
   }
 
-  // Comparison for doubles: returns a < (b + epsilon)
+  // Comparison for doubles: returns fabs(a - b) < epsilon
   OBAPI bool IsNear(const double &a, const double &b, const double epsilon)
   {
     return (fabs(a - b) < epsilon);
   }
 
-  // Comparison for doubles: returns a < (0.0 + epsilon)
+  // Comparison for doubles: returns fabs(a) < epsilon
   OBAPI bool IsNearZero(const double &a, const double epsilon)
   {
     return (fabs(a) < epsilon);
+  }
+
+  // New comparison for doubles: returns
+  // fabs( a - b ) <= precision * fmin( fabs(a), fabs(b) )
+  OBAPI bool IsApprox(const double &a, const double &b, const double precision)
+  {
+    return( fabs(a - b) <= precision * fmin( fabs(a), fabs(b) ) );
+  }
+
+  // Same as IsApprox, but only for nonnegative numbers. Faster.
+  OBAPI bool IsApprox_pos(const double &a, const double &b,
+      const double precision)
+  {
+      return( a > b ? a - b <= precision * b : b - a <= precision * a );
+  }
+
+  // Tests whether its argument can be squared without triggering an overflow or
+  // underflow.
+  OBAPI bool CanBeSquared(const double &a)
+  {
+    if( a == 0 ) return true;
+    const double max_squarable_double = 1e150;
+    const double min_squarable_double = 1e-150;
+    double abs_a = fabs(a);
+    return(abs_a < max_squarable_double && abs_a > min_squarable_double);
   }
 
   //! Utility function: replace the last extension in string &src with new extension char *ext.

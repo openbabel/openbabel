@@ -184,10 +184,32 @@ namespace OpenBabel
   OBAPI bool OBCompareInt(const int &,const int &);
   //! Comparison -- returns true if first parameter less than second
   OBAPI bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
-  //! Safe comparison for floats/doubles: true if a and b are closer than epsilon
+  /*! Safe comparison for floats/doubles: returns fabs(a - b) < epsilon
+   * For new code, unless you have a very specific need, you should
+   * probably use IsApprox() instead, as it makes more sense w.r.t.
+   * floating-point representation.
+   */
   OBAPI bool IsNear(const double &, const double &, const double epsilon=2e-6);
   //! Safe comparison for floats/doubles: true if a is less than epsilon
   OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
+  /*! New comparison for doubles: true if
+   * fabs(a - b) <= precision * fmin( fabs(a), fabs(b) )
+   * This is not a direct replacement for IsNear(). This is a different test.
+   * The parameter precision plays the role of 10^-N where N is the number of
+   * significant digits to consider.
+   */
+  OBAPI bool IsApprox(const double &, const double &, const double precision);
+
+  /*! Same thing as IsApprox, but faster. Only works for nonnegative numbers.
+   * No check is done.
+   */
+  OBAPI bool IsApprox_pos(const double &, const double &,
+      const double precision);
+  /*! Tests whether its argument can be squared without triggering an overflow
+   * or underflow.
+   */
+  OBAPI bool CanBeSquared(const double &);
+
 #endif
   // (end part to be skipped by SWIG)
 
