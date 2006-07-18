@@ -29,6 +29,10 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 #include "babelconfig.h"
 
 #include "residue.h"
+#include "atom.h"
+#include "oberror.h"
+#include "bitvec.h"
+#include "bond.h"
 
 using namespace std;
 

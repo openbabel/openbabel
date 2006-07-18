@@ -1,3 +1,7 @@
+2006-07-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* 
+
 2006-07-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/atom.h, src/bond.h: New headers to encapsulate OBAtom and

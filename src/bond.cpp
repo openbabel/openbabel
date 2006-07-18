@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "bond.h"
+#include "mol.h"
 
 using namespace std;
 

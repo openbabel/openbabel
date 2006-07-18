@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #endif
 
 #include "base.h"
+#include "atom.h"
 
 namespace OpenBabel
 {

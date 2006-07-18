@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "atom.h"
+#include "mol.h"
 #include "molchrg.h"
 #include "phmodel.h"
 
@@ -1099,7 +1100,7 @@ namespace OpenBabel
                     quit = true;
                   }
 
-            if (v2 == VZero)
+            if (v2.IsApprox(VZero, 1.0e-8))
               {
                 v1 = cross(vtmp,VX);
                 v2 = cross(vtmp,VY);
