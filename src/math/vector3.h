@@ -120,9 +120,20 @@ namespace OpenBabel
 
       //! Comparison Methods
       // @{  
+      //! Equivalence of vectors
+      //! \deprecated This method uses unreliable floating point == comparisons
+      //!    Use vector3::IsApprox() instead.
+      //! \return true if every component is equal
       friend OBAPI int operator== ( const vector3&, const vector3& );
+      //! \deprecated This method uses unreliable floating point == comparisons
+      //!    Use vector3::IsApprox() instead.
+      //! \return true if at least one component of the two vectors are !=
       friend OBAPI int operator!= ( const vector3&, const vector3& );
-      
+      //! Safe comparison for floating-point vector3
+      //! \return true if for each direction (x, y, z) each component 
+      //!    is identical to @p precision significant figures
+      //!    (i.e., fabs(x - x') <= precision * fmin( fabs(x), fabs(b) )
+      bool IsApprox(const vector3 &, const double precision) const;
       //! }@
 
       //  Sum, Difference, Scalar Product

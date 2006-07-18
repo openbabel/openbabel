@@ -280,8 +280,10 @@ namespace OpenBabel
     */
     for(int j=0;j < nbr_crds.size();j++) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
       {
-        if (nbr_crds[j]==0 && use_central_atom==false)use_central_atom=true;
-        else if (nbr_crds[j]==0)
+        // are the coordinates zero to 6 or more significant figures
+        if (nbr_crds[j].IsApprox(VZero, 1.0e-6) && use_central_atom==false)
+          use_central_atom=true;
+        else if (nbr_crds[j].IsApprox(VZero, 1.0e-6))
           {
             obErrorLog.ThrowError(__FUNCTION__, "More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation", obInfo);
           }

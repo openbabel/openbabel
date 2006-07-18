@@ -139,6 +139,13 @@ namespace OpenBabel
       return ( false ) ;
   }
 
+  bool vector3::IsApprox(const vector3 &v1, const double precision) const
+  {
+    return ( OpenBabel::IsApprox(v1._vx, _vx, precision) &&
+             OpenBabel::IsApprox(v1._vy, _vy, precision) &&
+             OpenBabel::IsApprox(v1._vz, _vz, precision) );
+  }
+
   /*! Private member function. See normalize. */
   void vector3::_normalize_without_check ()
   {
