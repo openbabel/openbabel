@@ -156,13 +156,11 @@ Write Options e.g. -xat \n \
         iat.x = patom->GetX();
         iat.y = patom->GetY();
         iat.z = patom->GetZ();
-        if(iat.x!=0 || iat.y!=0 || iat.z!=0)
+        if(iat.x!=0.0 || iat.y!=0.0 || iat.z!=0.0)
           Is0D=false;
     
         int nbonds = 0;
-        vector<OBEdgeBase*>::iterator itr;
-        OBBond *pbond;
-        for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr))
+        FOR_BONDS_OF_ATOM(pbond, patom)
           {
             // do each bond only once. Seems necessary to avoid problems with stereo
             if(pbond->GetNbrAtomIdx(patom) < patom->GetIdx()) continue;
@@ -217,11 +215,9 @@ Write Options e.g. -xat \n \
       {
         //Tetrahedral stereo
         mol.FindChiralCenters();
-        OBAtom* patom;
-        vector<OBNodeBase*>::iterator itr;
         if(mol.IsChiral())
           {
-            for(patom = mol.BeginAtom(itr);patom;patom = mol.NextAtom(itr))
+            FOR_ATOMS_OF_MOL(patom, mol)
               {
                 if(patom->IsChiral())
                   {
@@ -229,10 +225,10 @@ Write Options e.g. -xat \n \
                     stereo.central_atom = patom->GetIdx()-1;
                     stereo.type = INCHI_StereoType_Tetrahedral;
                     int i=0;
-                    vector<OBEdgeBase*>::iterator itr;
+                    vector<OBEdgeBase*>::iterator bitr;
                     OBBond *pbond;
-                    for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr),++i)
-                      stereo.neighbor[i] = pbond->GetNbrAtomIdx(patom)-1;
+                    for (pbond = patom->BeginBond(bitr);pbond;pbond = patom->NextBond(bitr),++i)
+                      stereo.neighbor[i] = pbond->GetNbrAtomIdx(&*patom)-1;
                     //if(i!=4)...error
 
                     stereo.parity = INCHI_PARITY_UNKNOWN;
@@ -249,17 +245,15 @@ Write Options e.g. -xat \n \
         //Currently does not handle cumulenes
         set<OBBond*> UpDown;
         set<OBBond*>::iterator uditr;
-        OBBond *pbond;
-        vector<OBEdgeBase*>::iterator bitr;
-        for (pbond = mol.BeginBond(bitr);pbond;pbond = mol.NextBond(bitr))
+        FOR_BONDS_OF_MOL(pbond, mol)
           {
             if(pbond->IsUp() || pbond->IsDown())
-              UpDown.insert(pbond);
+              UpDown.insert(&*pbond);
           }
         if(!UpDown.empty())
           {
             //For all double bonds look for up/down bonds attached
-            for (pbond = mol.BeginBond(bitr);pbond;pbond = mol.NextBond(bitr))
+            FOR_BONDS_OF_MOL(pbond, mol)
               {
                 if(pbond->IsDouble())
                   {
@@ -267,7 +261,7 @@ Write Options e.g. -xat \n \
                     OBBond* pX, *pY;;
                     for(uditr=UpDown.begin();uditr!=UpDown.end();++uditr)
                       {
-                        patom = GetCommonAtom(pbond, *uditr);
+                        patom = GetCommonAtom(&*pbond, *uditr);
                         if(patom && !pA)
                           {
                             //first one in pA
@@ -347,9 +341,9 @@ Write Options e.g. -xat \n \
 		
         if(pConv->IsLast())
           {
-            nSet::iterator itr;
-            for(itr=allInchi.begin();itr!=allInchi.end();++itr)
-              ofs << *itr << endl;
+            nSet::iterator setItr;
+            for(setItr=allInchi.begin(); setItr!=allInchi.end(); ++setItr)
+              ofs << *setItr << endl;
           }
         return true;
       }
