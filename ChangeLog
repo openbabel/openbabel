@@ -14,6 +14,9 @@
 	* src/formats/gaussformat.cpp (ReadMolecule): Make sure to set the
 	total energy read in for the molecule.
 
+	* test/smartsresults.txt: Update after recent bugfix. (Now uses
+	actual 2.0.2 data files!)
+
 2006-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * src/chains.cpp: In TracePeptideChain and TraceNucleicChain, test
