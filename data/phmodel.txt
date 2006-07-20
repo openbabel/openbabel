@@ -125,7 +125,7 @@ SEEDCHARGE	[#6]P(~[OD1])(~[OD1])~[OD1]	0.0	0.0	-0.33  -0.33 -0.33
 
 #hydroxamic acid
 SEEDCHARGE	O=C[N;!$(N(C=O)C=O)][OD1]	-0.5	0.0	0.0	-0.5
-SEEDCHARGE	O=CN([OD1])NC=O		-0.33	0.0	0.0	-0.33	0.0	-0.33
+SEEDCHARGE	O=CN([OD1])NC=O		-0.33	0.0	0.0	-0.33	0.0 0.0	-0.33
 
 #imidazole: note pKa=7.0, histidine pKa=6.0
 #if you uncomment this, also uncomment the transform statement above

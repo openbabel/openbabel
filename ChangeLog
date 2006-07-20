@@ -1,6 +1,26 @@
+2006-07-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/typer.cpp: Fix bug with aromatic typer claiming errors on
+	blank lines. 
+
+	* src/data.cpp: Fix bug with reading data files from versioned
+	directories. 
+
+	* data/phmodel.txt, data/phmodel.h: Fix bug with seed charge on
+	hydroxamic acid reported by Noel.
+
 2006-07-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
-	* 
+	* src/math/vector3.h, src/math/vector3.cpp: (IsApprox) Add new
+	method to compare vectors based on approximate floating-point
+	comparisons, rather than potentially dangerous == and !=
+	operators.
+
+	* src/chiral.cpp: Use vector3::IsApprox instead of ==.
+
+	* src/residue.cpp, src/bond.cpp, src/atom.cpp, src/bond.h: Add
+	back needed headers for compilation, removed with yesterday's
+	change dividing up mol.h
 
 2006-07-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
