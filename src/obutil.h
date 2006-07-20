@@ -41,89 +41,87 @@ namespace OpenBabel
 
   // class introduction in obutil.cpp
   class OBAPI OBStopwatch
+  {
+#if HAVE_CLOCK_T
+    clock_t start, stop;
+#else
+
+    timeval start;
+    timeval stop;
+#endif
+
+  public:
+#if HAVE_CLOCK_T
+
+    void  Start()
     {
-#if HAVE_CLOCK_T
-      clock_t start, stop;
+      start= clock();
+    }
+    double Lap()
+    {
+      stop= clock();
+      return((stop - start) / CLOCKS_PER_SEC);
+    }
 #else
-
-      timeval start;
-      timeval stop;
+    void Start()
+    {
+      gettimeofday(&start, NULL);
+    }
+    double Lap()
+    {
+      gettimeofday(&stop, NULL);
+      return((stop.tv_sec - start.tv_sec)
+             + (stop.tv_usec - start.tv_usec)/1000000.0);
+    }
 #endif
-
-    public:
-#if HAVE_CLOCK_T
-
-      void  Start()
-        {
-          start= clock();
-        }
-      double Lap()
-        {
-          stop= clock();
-          return((double)(stop - start) / CLOCKS_PER_SEC);
-        }
-#else
-      void Start()
-        {
-          gettimeofday(&start,(struct timezone *)NULL);
-        }
-      double Lap()
-        {
-          gettimeofday(&stop,(struct timezone *)NULL);
-          return((stop.tv_sec - start.tv_sec)
-                 + (double)(stop.tv_usec - start.tv_usec)/1000000.0);
-        }
-#endif
-      double Elapsed()
-        {
-          return(Lap());
-        }
-    };
+    double Elapsed()
+    {
+      return(Lap());
+    }
+  };
 
 
   //! sqrt lookup table - given a distance squared returns distance
   class OBAPI OBSqrtTbl
+  {
+    double _max,_incr,*_tbl;
+  public:
+  OBSqrtTbl():
+    _max(0.0), _incr(0.0),  _tbl(NULL)
+      { }
+    OBSqrtTbl(const double max, const double incr)
+      {
+        Init(max,incr);
+      }
+    ~OBSqrtTbl()
+      {
+        if (_tbl)
+          {
+            delete [] _tbl;
+            _tbl = NULL;
+          }
+      }
+    double Sqrt(double d2) const
     {
-      double _max,_incr,*_tbl;
-    public:
-      OBSqrtTbl()
-        {
-          _tbl=NULL;
-          _max = _incr = 0.0;
-        }
-      OBSqrtTbl(double max,double incr)
-        {
-          Init(max,incr);
-        }
-      ~OBSqrtTbl()
-        {
-          if (_tbl)
-            {
-              delete [] _tbl;
-              _tbl = NULL;
-            }
-        }
-      double Sqrt(double d2) const
-        {
-          if (_tbl)
-            return((d2 < _max) ? _tbl[(int)(d2*_incr)]:sqrt(d2));
-          else
-            return 0.0;
-        }
-      void Init(double max,double incr)
-        {
-          int i;
-          double r;
-          _max = max*max;
-          _incr = incr;
-          //array size needs to be large enough to account for fp error
-          _tbl = new double [(unsigned int)((_max/_incr)+10)];
-          for (r = (_incr/2.0),i=0;r <= _max;r += _incr,i++)
-            _tbl[i] = sqrt(r);
+      if (_tbl)
+        return((d2 < _max) ? _tbl[static_cast<int>(d2*_incr)]:sqrt(d2));
+      else
+        return 0.0;
+    }
+    void Init(double max,double incr)
+    {
+      int i;
+      double r;
+      _max = max*max;
+      _incr = incr;
+      //array size needs to be large enough to account for fp error
+      _tbl = new double [static_cast<int>((_max/_incr)+10)];
+      for (r = (_incr/2.0),i=0;r <= _max;r += _incr,i++)
+        _tbl[i] = sqrt(r);
 
-          _incr = 1/_incr;
-        }
-    };
+      _incr = 1/_incr;
+    }
+  };
 
 
 
@@ -145,24 +143,24 @@ namespace OpenBabel
 
   //! Random number generator
   class OBAPI OBRandom
-    {
-      DoubleType d;
-      unsigned int m,a,c;
-      unsigned int p;
-      unsigned int i;
-      unsigned int x;
-      bool OBRandomUseSysRand;
+  {
+    DoubleType d;
+    unsigned int m,a,c;
+    unsigned int p;
+    unsigned int i;
+    unsigned int x;
+    bool OBRandomUseSysRand;
 
-    public:
-      OBRandom(bool useSys= false);
-      void Seed(int seed)
-        {
-          x = seed;
-        }
-      void TimeSeed();
-      int NextInt();
-      double NextFloat();
-    };
+  public:
+    OBRandom(bool useSys= false);
+    void Seed(int seed)
+    {
+      x = seed;
+    }
+    void TimeSeed();
+    int NextInt();
+    double NextFloat();
+  };
 
   //***RMS helper methods***/
 #ifndef SWIG
@@ -188,11 +186,12 @@ namespace OpenBabel
    * For new code, unless you have a very specific need, you should
    * probably use IsApprox() instead, as it makes more sense w.r.t.
    * floating-point representation.
+   * \deprecated Use IsApprox() instead)
    */
   OBAPI bool IsNear(const double &, const double &, const double epsilon=2e-6);
   //! Safe comparison for floats/doubles: true if a is less than epsilon
   OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
-  /*! New comparison for doubles: true if
+  /*! Safe comparison for floats/doubles: true if
    * fabs(a - b) <= precision * fmin( fabs(a), fabs(b) )
    * This is not a direct replacement for IsNear(). This is a different test.
    * The parameter precision plays the role of 10^-N where N is the number of
@@ -204,7 +203,7 @@ namespace OpenBabel
    * No check is done.
    */
   OBAPI bool IsApprox_pos(const double &, const double &,
-      const double precision);
+                          const double precision);
   /*! Tests whether its argument can be squared without triggering an overflow
    * or underflow.
    */
@@ -231,19 +230,19 @@ namespace OpenBabel
       /** Default constructor
        *	T1() and T2() and T3() force initialization for built in types
        **/
-      triple():
-        first(T1()),second(T2()),third(T3())
+    triple():
+      first(T1()),second(T2()),third(T3())
       {}
 
       //! Constructor for 3 values
-      triple(const T1 &a, const T2 &b, const T3 &c):
-        first(a), second(b), third(c)
+    triple(const T1 &a, const T2 &b, const T3 &c):
+      first(a), second(b), third(c)
       {}
 
       //! Copy constructor with implicit conversions
       template<class U, class V, class W>
         triple(const triple<U,V,W> &t):
-          first(t.first), second(t.second), third(t.third)
+        first(t.first), second(t.second), third(t.third)
       {}
 
     };
@@ -268,19 +267,19 @@ namespace OpenBabel
       /*! default constructor
        *	T1() and T2() and T3() force initialization for built in types
        */
-      quad():
-        first(T1()),second(T2()),third(T3()),fourth(T4())
+    quad():
+      first(T1()),second(T2()),third(T3()),fourth(T4())
       {}
 
       //! constructor for 3 values
-      quad(const T1 &a, const T2 &b, const T3 &c, const T4 &d):
-        first(a), second(b), third(c), fourth(d)
+    quad(const T1 &a, const T2 &b, const T3 &c, const T4 &d):
+      first(a), second(b), third(c), fourth(d)
       {}
 
       //! copy constructor with implicit conversions
       template<class U, class V, class W, class X>
         quad(const quad<U,V,W,X> &q):
-          first(q.first), second(q.second), third(q.third), fourth(q.fourth)
+        first(q.first), second(q.second), third(q.third), fourth(q.fourth)
       {}
 
     };
