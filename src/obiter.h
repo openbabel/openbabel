@@ -43,7 +43,7 @@ namespace OpenBabel
     OBAtom *_ptr;
   public:
 
-    OBMolAtomIter()              { _parent = NULL; _ptr = NULL; }
+    OBMolAtomIter() :_parent(NULL), _ptr(NULL) { }
     OBMolAtomIter(OBMol *mol);
     OBMolAtomIter(OBMol &mol);
     OBMolAtomIter(const OBMolAtomIter &ai);
@@ -83,7 +83,7 @@ namespace OpenBabel
     std::queue<OBAtom *> _queue;
   public:
 
-    OBMolAtomBFSIter();
+    OBMolAtomBFSIter(): _parent(NULL), _ptr(NULL) { }
     OBMolAtomBFSIter(OBMol *mol);
     OBMolAtomBFSIter(OBMol &mol);
     OBMolAtomBFSIter(const OBMolAtomBFSIter &ai);
@@ -102,7 +102,7 @@ namespace OpenBabel
     OBBond *_ptr;
   public:
 
-    OBMolBondIter()              { _parent = NULL; _ptr = NULL; }
+    OBMolBondIter() : _parent(NULL), _ptr(NULL) {}
     OBMolBondIter(OBMol *mol);
     OBMolBondIter(OBMol &mol);
     OBMolBondIter(const OBMolBondIter &bi);
@@ -121,7 +121,7 @@ namespace OpenBabel
     OBAtom *_ptr;
   public:
 
-    OBAtomAtomIter()             { _parent = NULL; _ptr = NULL; }
+    OBAtomAtomIter() : _parent(NULL), _ptr(NULL) { }
     OBAtomAtomIter(OBAtom *atm);
     OBAtomAtomIter(OBAtom &atm);
     OBAtomAtomIter(const OBAtomAtomIter &ai);
@@ -140,7 +140,7 @@ namespace OpenBabel
     OBBond *_ptr;
   public:
 
-    OBAtomBondIter()             { _parent = NULL; _ptr = NULL; }
+    OBAtomBondIter(): _parent(NULL), _ptr(NULL) { }
     OBAtomBondIter(OBAtom *atm);
     OBAtomBondIter(OBAtom &atm);
     OBAtomBondIter(const OBAtomBondIter &bi);
@@ -159,7 +159,7 @@ namespace OpenBabel
     OBMol *_parent;
   public:
 
-    OBResidueIter()              { _parent = NULL; _ptr = NULL; }
+    OBResidueIter() : _parent(NULL), _ptr(NULL) { }
     OBResidueIter(OBMol *mol);
     OBResidueIter(OBMol &mol);
     OBResidueIter(const OBResidueIter &ri);
@@ -178,7 +178,7 @@ namespace OpenBabel
     OBAtom    *_ptr;
   public:
 
-    OBResidueAtomIter()          { _parent = NULL; _ptr = NULL; }
+    OBResidueAtomIter() : _parent(NULL), _ptr(NULL) { }
     OBResidueAtomIter(OBResidue *res);
     OBResidueAtomIter(OBResidue &res);
     OBResidueAtomIter(const OBResidueAtomIter &ri);

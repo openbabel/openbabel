@@ -49,7 +49,7 @@ namespace OpenBabel
             _returnChar = true;
             break;
           case 10:
-            _returnChar = false;
+            _returnChar = false; // clear the \r and then fall into normal output
           default:
             if (_returnChar) // just \r line ending
               {

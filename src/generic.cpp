@@ -2,7 +2,7 @@
 generic.cpp - Handle OBGenericData classes.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -18,7 +18,10 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include "babelconfig.h"
 
+#include <string>
+
 #include "mol.h"
+#include "generic.h"
 #include "math/matrix3x3.h"
 
 using namespace std;
@@ -115,11 +118,9 @@ namespace OpenBabel
   //member functions for OBGenericData class
   //
 
-  OBGenericData::OBGenericData()
-  {
-    _type = OBGenericDataType::UndefinedData;
-    _attr = "undefined";
-  }
+  OBGenericData::OBGenericData(const std::string attr, const unsigned int type):
+    _attr(attr), _type(type)
+  { }
 
   /* Use default copy constructor and assignment operators
      OBGenericData::OBGenericData(const OBGenericData &src)
@@ -145,46 +146,33 @@ namespace OpenBabel
   //member functions for OBCommentData class
   //
 
-  OBCommentData::OBCommentData()
-  {
-    _type = OBGenericDataType::CommentData;
-    _attr = "Comment";
-  }
+  OBCommentData::OBCommentData():
+    OBGenericData("Comment", OBGenericDataType::CommentData)
+  { }
 
   OBCommentData::OBCommentData(const OBCommentData &src) :
-    OBGenericData()
-  {
-    _type = OBGenericDataType::CommentData;
-    _attr = "Comment";
-    _data = src.GetData();
-  }
+    OBGenericData("Comment", OBGenericDataType::CommentData),
+    _data(src._data)
+  {  }
 
   //
   //member functions for OBExternalBond class
   //
-  OBExternalBond::OBExternalBond(OBAtom *atom,OBBond *bond,int idx)
-  {
-    _idx = idx;
-    _atom = atom;
-    _bond = bond;
-  }
+  OBExternalBond::OBExternalBond(OBAtom *atom,OBBond *bond,int idx):
+    _idx(idx), _atom(atom), _bond(bond)
+  {  }
 
-  OBExternalBond::OBExternalBond(const OBExternalBond &src)
-  {
-    _idx = src.GetIdx();
-    _atom = src.GetAtom();
-    _bond = src.GetBond();
-  }
+  OBExternalBond::OBExternalBond(const OBExternalBond &src):
+    _idx(src._idx), _atom(src._atom), _bond(src._bond)
+  { }
 
   //
   //member functions for OBExternalBondData class
   //
 
-  OBExternalBondData::OBExternalBondData()
-  {
-    _type = OBGenericDataType::ExternalBondData;
-    _attr = "ExternalBondData";
-  }
+  OBExternalBondData::OBExternalBondData():
+    OBGenericData("ExternalBondData", OBGenericDataType::ExternalBondData)
+  { }
 
   void OBExternalBondData::SetData(OBAtom *atom,OBBond *bond,int idx)
   {
@@ -196,62 +184,42 @@ namespace OpenBabel
   //member functions for OBPairData class
   //
 
-  OBPairData::OBPairData()
-  {
-    _type = OBGenericDataType::PairData;
-    _attr = "PairData";
-  }
+  OBPairData::OBPairData() :
+    OBGenericData("PairData", OBGenericDataType::PairData)
+  { }
 
   //
   //member functions for OBVirtualBond class
   //
 
-  OBVirtualBond::OBVirtualBond()
-  {
-    _type = OBGenericDataType::VirtualBondData;
-    _attr = "VirtualBondData";
-    _bgn = _end = _ord = 0;
-  }
+  OBVirtualBond::OBVirtualBond():
+    OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData),
+    _bgn(0), _end(0), _ord(0), _stereo(0)
+  {  }
 
-  OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo)
-  {
-    _type = OBGenericDataType::VirtualBondData;
-    _attr = "VirtualBondData";
-    _bgn = bgn;
-    _end = end;
-    _ord = ord;
-    _stereo = stereo;
-  }
+  OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo):
+    OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData),
+    _bgn(bgn), _end(end), _ord(ord), _stereo(stereo)
+  {  }
 
   //
   // member functions for OBUnitCell class
   //
-  OBUnitCell::OBUnitCell()
-  {
-    _a = _b = _c = _alpha = _beta = _gamma = 0.0;
-    _type = OBGenericDataType::UnitCell;
-    _attr = "UnitCell";
-    _lattice = Undefined;
-  }
+  OBUnitCell::OBUnitCell():
+    OBGenericData("UnitCell", OBGenericDataType::UnitCell),
+    _a(0.0), _b(0.0), _c(0.0), _alpha(0.0), _beta(0.0), _gamma(0.0),
+    _lattice(Undefined)
+  {  }
 
   OBUnitCell::OBUnitCell(const OBUnitCell &src) :
-    OBGenericData()
-  {
-    _a = src._a;
-    _b = src._b;
-    _c = src._c;
-    _alpha = src._alpha;
-    _beta = src._beta;
-    _gamma = src._gamma;
-    _offset = src._offset;
-
-    _v1 = src._v1;
-    _v2 = src._v2;
-    _v3 = src._v3;
-
-    _spaceGroup = src._spaceGroup;
-    _lattice = src._lattice;
-  }
+    OBGenericData("UnitCell", OBGenericDataType::UnitCell),
+    _a(src._a), _b(src._b), _c(src._c), 
+    _alpha(src._alpha), _beta(src._beta), _gamma(src._gamma),
+    _offset(src._offset),
+    _v1(src._v1), _v2(src._v2), _v3(src._v3),
+    _spaceGroup(src._spaceGroup),
+    _lattice(src._lattice)
+  {  }
 
   OBUnitCell & OBUnitCell::operator=(const OBUnitCell &src)
   {
@@ -620,23 +588,16 @@ namespace OpenBabel
   /*!
   **\brief Angle default constructor
   */
-  OBAngle::OBAngle()
-  {
-    _vertex         = 0;
-    _termini.first  = 0;
-    _termini.second = 0;
-    _radians        = 0.0;
-  }
+  OBAngle::OBAngle():
+    _vertex(NULL), _termini(NULL, NULL), _radians(0.0)
+  {  }
 
   /*!
   **\brief Angle constructor
   */
-  OBAngle::OBAngle(OBAtom *vertex,OBAtom *a,OBAtom *b)
+  OBAngle::OBAngle(OBAtom *vertex,OBAtom *a,OBAtom *b):
+    _vertex(vertex), _termini(a, b)
   {
-    _vertex         = vertex;
-    _termini.first  = a;
-    _termini.second = b ;
-
     SortByIndex();
   }
 
@@ -644,10 +605,8 @@ namespace OpenBabel
   **\brief OBAngle copy constructor
   */
   OBAngle::OBAngle(const OBAngle &src)
-    :	_termini(src._termini)
+    :	_vertex(src._vertex), _termini(src._termini), _radians(src._radians)
   {
-    _vertex  = src._vertex;
-    _radians = src._radians;
   }
 
   /*!

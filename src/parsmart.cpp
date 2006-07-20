@@ -2836,6 +2836,7 @@ namespace OpenBabel
                 return atom->IsAntiClockwise();
               else if ( expr->leaf.value == AL_UNSPECIFIED)
                 return (atom->IsChiral() && !atom->HasChiralitySpecified());
+              return(false);
 
             case AL_RINGCONNECT:
               return(expr->leaf.value == (int)atom->CountRingBonds());
@@ -2843,7 +2844,8 @@ namespace OpenBabel
             default:
               return false;
             }
-	
+          break;
+
         case AE_NOT:
           return(!EvalAtomExpr(expr->mon.arg,atom));
         case AE_ANDHI: /* Same as AE_ANDLO */
@@ -2918,7 +2920,7 @@ namespace OpenBabel
               default:
                 return(false);
               }
-	
+          break;
 	
         case BE_NOT:
           return(!EvalBondExpr(expr->mon.arg,bond));
