@@ -299,7 +299,7 @@ libopenbabelinclude_HEADERS = \
 		babelconfig.h base.h bond.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fingerprint.h \
-		generic.h grid.h kinetics.h \
+		generic.h grid.h internalcoord.h kinetics.h \
 		newlinebuf.h \
 		matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \
@@ -823,7 +823,7 @@ uninstall-info: uninstall-info-recursive
 	uninstall-libLTLIBRARIES uninstall-libopenbabelincludeHEADERS
 
 @BUILD_PCH_TRUE@all.h.gch: all.h Makefile babelconfig.h mol.h base.h bitvec.h generic.h \
-@BUILD_PCH_TRUE@	oberror.h obiter.h obconversion.h
+@BUILD_PCH_TRUE@	oberror.h obiter.h obconversion.h atom.h bond.h
 @BUILD_PCH_TRUE@	rm -f $@
 @BUILD_PCH_TRUE@	$(CXX) $(PCHFLAGS) $<
 

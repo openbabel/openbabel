@@ -64,7 +64,7 @@ libopenbabelinclude_HEADERS = \
 		babelconfig.h base.h bond.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
 		dlhandler.h fingerprint.h \
-		generic.h grid.h kinetics.h \
+		generic.h grid.h internalcoord.h kinetics.h \
 		newlinebuf.h \
 		matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \

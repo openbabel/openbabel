@@ -34,6 +34,8 @@ GNU General Public License for more details.
 #include <string>
 #include <map>
 
+// Currently includes many headers for 2.x backwards compatibility
+// \deprecated -- this will be cleaned up in 3.0 efforts
 #include "atom.h"
 #include "bond.h"
 #include "base.h"
@@ -47,6 +49,7 @@ GNU General Public License for more details.
 #include "typer.h"
 #include "oberror.h"
 #include "obiter.h"
+#include "internalcoord.h"
 
 namespace OpenBabel
 {
@@ -431,25 +434,6 @@ namespace OpenBabel
         }
       //@}
 
-    };
-
-  //! \brief Used to transform from z-matrix to cartesian coordinates.
-  class OBAPI OBInternalCoord
-    {
-    public:
-      //class members
-      OBAtom *_a,*_b,*_c;
-      double   _dst,_ang,_tor;
-      //! Constructor
-      OBInternalCoord(OBAtom *a=(OBAtom*)NULL,
-                      OBAtom *b=(OBAtom*)NULL,
-                      OBAtom *c=(OBAtom*)NULL)
-        {
-          _a = a;
-          _b = b;
-          _c = c;
-          _dst = _ang = _tor = 0.0;
-        }
     };
 
   //function prototypes
