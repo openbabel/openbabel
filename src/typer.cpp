@@ -531,7 +531,10 @@ void OBAromaticTyper::ParseLine(const char *buffer)
         return;
     vector<string> vs;
     tokenize(vs,buffer);
-    if (!vs.empty() && vs.size() == 3)
+    if (vs.empty())
+      return;
+
+    if (vs.size() == 3)
     {
         strncpy(temp_buffer,vs[0].c_str(), BUFF_SIZE - 1);
 	temp_buffer[BUFF_SIZE - 1] = '\0';

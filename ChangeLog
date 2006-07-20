@@ -1,3 +1,19 @@
+2006-07-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* NEWS: Release notes for the 2.0.2 release.
+
+	* src/typer.cpp: Fix bug with aromatic typer claiming errors on
+	blank lines. 
+
+	* src/data.cpp: Fix bug with reading data files from versioned
+	directories. 
+
+	* data/phmodel.txt, data/phmodel.h: Fix bug with seed charge on
+	hydroxamic acid reported by Noel.
+
+	* src/formats/gaussformat.cpp (ReadMolecule): Make sure to set the
+	total energy read in for the molecule.
+
 2006-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * src/chains.cpp: In TracePeptideChain and TraceNucleicChain, test

@@ -854,7 +854,7 @@ namespace OpenBabel
 
 	subbuffer = buffer;
 	subbuffer += BABEL_VERSION;
-	subbuffer + FILE_SEP_CHAR;
+	subbuffer += FILE_SEP_CHAR;
 
         subbuffer += _filename;
 	buffer += _filename;
