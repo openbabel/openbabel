@@ -1,3 +1,10 @@
+2006-07-21 Chris Morley <ob@gaseq.co.uk>
+	* src/obconversion.cpp(AddChemObject): remove compiler warning by
+	returning Count!=0 rather than Count.
+	
+	* src.obutil.cpp(IsApprox): replaced fmin, which is not known to
+	MS compiler, with std::min.
+
 2006-07-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/internalcoord.h: New header to encapsulate OBInternalCoord.

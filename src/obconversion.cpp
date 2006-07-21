@@ -583,7 +583,7 @@ namespace OpenBabel {
     if(Count<0) 
       {
         pOb1=pOb;
-        return Count;
+        return Count!=0;
       }
     Count++;
     if(Count>=(int)StartNumber)//keeps reading objects but does nothing with them

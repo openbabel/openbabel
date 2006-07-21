@@ -87,7 +87,7 @@ namespace OpenBabel
   // fabs( a - b ) <= precision * fmin( fabs(a), fabs(b) )
   OBAPI bool IsApprox(const double &a, const double &b, const double precision)
   {
-    return( fabs(a - b) <= precision * fmin( fabs(a), fabs(b) ) );
+    return( fabs(a - b) <= precision * std::min( fabs(a), fabs(b) ) );
   }
 
   // Same as IsApprox, but only for nonnegative numbers. Faster.
