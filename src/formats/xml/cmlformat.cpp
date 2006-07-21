@@ -175,6 +175,7 @@ Input options, e.g. -a2\n \
 
         if(++_embedlevel)
           return true; //ignore if already inside a molecule
+        _pmol->BeginModify();
         AtomMap.clear();
 
         const xmlChar* ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "title");

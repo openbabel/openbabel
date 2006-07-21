@@ -1,4 +1,11 @@
+2006-07-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/cmlformat.cpp (BeginElement): Make sure to call
+	BeginModify() on a <molecule> tag, since EndModify() is already
+	called. Fixes PR#1512054 and probably PR#1523956.
+
 2006-07-21 Chris Morley <ob@gaseq.co.uk>
+
 	* src/obconversion.cpp(AddChemObject): remove compiler warning by
 	returning Count!=0 rather than Count.
 	
@@ -11,7 +18,8 @@
 
 	* src/Makefile.am, src/Makefile.in, src/mol.h: Updates for above.
 
-	* src/obutil.h: Remove old-style casts, and minor documentation updates.
+	* src/obutil.h: Remove old-style casts, and minor documentation
+	updates. 
 
 	* src/data.h, src/generic.cpp, src/generic.h, src/math/vector3.h
 	src/obiter.h: Update to use initialization lists more
@@ -52,9 +60,11 @@
 	* src/atom.cpp: Ditto. (SetHybAndGeom): Fix missing break
 	statement, uncovered using AntiC static analysis program.
 
-	* src/Makefile.am, src/Makefile.in: Make sure to include above in distributions.
+	* src/Makefile.am, src/Makefile.in: Make sure to include above in
+	distributions. 
 
-	* src/residue.h, src/residue.cpp: Move OBResidue class declaration from mol.h.
+	* src/residue.h, src/residue.cpp: Move OBResidue class declaration
+	from mol.h. 
 
 	* src/mol.h: Remove OBAtom, OBBond, and OBResidue, as above.
 
