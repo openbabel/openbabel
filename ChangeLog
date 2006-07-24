@@ -19,6 +19,9 @@
 
 	* windows/: Update version numbers for 2.0.2 release.
 
+	* Makefile.am, Makefile.in: Make sure to strip out .svn
+	directories before a release. 
+
 2006-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * src/chains.cpp: In TracePeptideChain and TraceNucleicChain, test

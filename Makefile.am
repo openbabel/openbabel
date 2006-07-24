@@ -14,4 +14,4 @@ docs:
 	(cd $(top_srcdir); $(DOXYGEN))
 
 dist-hook:
-	find $(distdir)/windows -name CVS | xargs rm -rf
+	find $(distdir) -name ".svn" | xargs rm -rf
