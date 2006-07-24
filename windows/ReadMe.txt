@@ -1,4 +1,4 @@
-OpenBabel Version 2.0.1 Build files for Windows
+OpenBabel Version 2.0.2 Build files for Windows
 
 The project files to build the OpenBabel command line program are provided for
 for two versions of Visual Studio version 6, and version 8. For the latter,

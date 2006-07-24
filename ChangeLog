@@ -17,6 +17,8 @@
 	* test/smartsresults.txt: Update after recent bugfix. (Now uses
 	actual 2.0.2 data files!)
 
+	* windows/: Update version numbers for 2.0.2 release.
+
 2006-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
         * src/chains.cpp: In TracePeptideChain and TraceNucleicChain, test

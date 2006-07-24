@@ -9,7 +9,7 @@
 #define HAVE_SNPRINTF 1
 #define HAVE_STRNCASECMP 1
 //#define HAVE_LIBZ 1 Compression currently not implemented in Windows builds
-#define BABEL_VERSION  "2.0.1"
+#define BABEL_VERSION  "2.0.2"
 
 #define BABEL_DATADIR "."
 #define snprintf _snprintf
