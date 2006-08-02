@@ -1,3 +1,8 @@
+2006-08-02 Chris Morley <ob@gaseq.co.uk>
+	* src/formats/smilesformat.cpp (ParseSimple)(ParseComplex)
+	Accept, with a warning, the illegal aromatic elements
+	b [si] [ge] [sb] [bi] [te] [sn]
+	
 2006-07-21  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/cmlformat.cpp (BeginElement): Make sure to call

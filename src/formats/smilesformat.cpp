@@ -586,6 +586,11 @@ namespace OpenBabel
             element = 0;
             strcpy(symbol,"Du");
             break;
+          case 'b':
+            obErrorLog.ThrowError(__FUNCTION__, "Illegal aromatic element b", obWarning);
+            element = 5;
+            strcpy(symbol,"B");
+            break;
           default:
             return(false);
           }
@@ -1297,20 +1302,6 @@ namespace OpenBabel
             element = 15;
             symbol[0] = 'P';
             break;
-          case 's':
-            _ptr++;
-            if (*_ptr == 'e')
-              {
-                element = 34;
-                strcpy(symbol,"Se");
-              }
-            else
-              {
-                element = 16;
-                symbol[0] = 'S';
-                _ptr--;
-              }
-            break;
           case 'a':
             _ptr++;
             if (*_ptr == 's')
@@ -1321,8 +1312,65 @@ namespace OpenBabel
             else
               return(false);
             break;
+          case 's':
+            _ptr++;
+            if (*_ptr == 'e')
+              {
+                element = 34;
+                strcpy(symbol,"Se");
+                break;
+              }
+            else if (*_ptr == 'i' || *_ptr == 'n' || *_ptr == 'b')
+              {
+                _ptr--;
+              }
+            else
+              {
+                element = 16;
+                symbol[0] = 'S';
+                _ptr--;
+                break;
+              }
+            //fall through
           default:
-            return(false);
+            strncpy(symbol, _ptr, 2);
+            string symb(symbol);
+            symbol[0] = toupper(symbol[0]);
+            obErrorLog.ThrowError(__FUNCTION__, "Illegal aromatic element " + symb, obWarning);
+            //But convert anyway
+            ++_ptr;
+            if(symb=="si")
+            {
+              element = 14;
+              break;
+            }
+            else if(symb=="ge")
+            {
+              element = 32;
+              break;
+            }
+            else if(symb=="sb")
+            {
+              element = 51;
+              break;
+            }
+            else if(symb=="bi")
+            {
+              element = 83;
+              break;
+            }
+            else if(symb=="te")
+            {
+              element = 52;
+              break;
+            }
+            else if(symb=="sn")
+            {
+              element = 50;
+              break;
+            }
+            else
+              return(false);
           }
       }
 
