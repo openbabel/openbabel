@@ -524,7 +524,7 @@ namespace OpenBabel
   {
     if ( atom->IsSulfur() ) return 1;
     if ( atom->IsOxygen() ) return 2;
-    if ( atom->GetAtomicNum() == 34 ) return 3;
+    if ( atom->GetAtomicNum() == 34 || atom->GetAtomicNum() == 52 ) return 3;
     if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) return 5;
     if ( atom->IsAmideNitrogen() ) return 4;
     if ( atom->IsNitrogen() && atom->GetFormalCharge() == -1) return 6;

@@ -585,6 +585,7 @@ namespace OpenBabel
           case '*':
             element = 0;
             strcpy(symbol,"Du");
+            arom = false;
             break;
           case 'b':
             obErrorLog.ThrowError(__FUNCTION__, "Illegal aromatic element b", obWarning);
@@ -1312,7 +1313,12 @@ namespace OpenBabel
             else
               return(false);
             break;
-          case 's':
+          case '*':
+            element = 0;
+            strcpy(symbol,"Du");
+            arom = false;
+            break;
+          case 's': //note fall through
             _ptr++;
             if (*_ptr == 'e')
               {
@@ -1438,7 +1444,6 @@ namespace OpenBabel
                 _ptr--;
               }
             break;
-          case '*': //is this safe?
           case '.': //CM Feb05
             rad=2;
             if(*(++_ptr)=='.')
