@@ -1,4 +1,10 @@
+2006-08-04 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/kinetics.h(OBRateData): Change constructor to fit in with
+	the recent change in OBGenericData constructor.
+	
 2006-08-03 Chris Morley <ob@gaseq.co.uk>
+	
 	* src/formats/smilesformat.cpp (ParseSimple)(ParseComplex)
 	Removed extension labelled "is this safe" and added support for
 	* and [*] as wildcard elements. arom = false was also needed.
@@ -7,6 +13,7 @@
 	Allows c1cc[te]c1 to be interpreted as better rubbish.
 
 2006-08-02 Chris Morley <ob@gaseq.co.uk>
+	
 	* src/formats/smilesformat.cpp (ParseSimple)(ParseComplex)
 	Accept, with a warning, the illegal aromatic elements
 	b [si] [ge] [sb] [bi] [te] [sn]
