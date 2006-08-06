@@ -1457,6 +1457,9 @@ namespace OpenBabel
           }
       }
 
+    if (!*_ptr || *_ptr != ']')
+      return(false); // we should have a trailing ']' now
+
     if (charge)
       atom->SetFormalCharge(charge);
     if (rad)

@@ -1,3 +1,16 @@
+2006-08-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/smilesformat.cpp (ParseComplex): Ensure complex
+	expressions end in a ']' character.
+
+	* test/files/invalid-smarts.txt: Add additional complex expression
+	for tests.
+
+	* src/generic.cpp (OBUnitCell): Update lattice detection to use
+	IsApprox instead of IsNear.
+
+	* src/mol.cpp (PerceiveBondOrders): Ditto.
+
 2006-08-04 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/kinetics.h(OBRateData): Change constructor to fit in with
