@@ -3359,7 +3359,7 @@ namespace OpenBabel
                 if ( (b->GetHyb() == 1 || b->GetValence() == 1)
                      && b->BOSum() + 2 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
                      && (currentElNeg > maxElNeg ||
-                         (IsNear(currentElNeg,maxElNeg)
+                         (IsApprox(currentElNeg,maxElNeg, 1.0e-6)
                           && (atom->GetBond(b))->GetLength() < shortestBond)) )
                   {
                     if (b->HasNonSingleBond() ||
@@ -3392,7 +3392,7 @@ namespace OpenBabel
                      && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
                      && (GetBond(atom, b))->IsDoubleBondGeometry()
                      && (currentElNeg > maxElNeg ||
-                         (IsNear(currentElNeg,maxElNeg)
+                         (IsApprox(currentElNeg,maxElNeg, 1.0e-6)
                           // If only the bond length counts, prefer double bonds in the ring
                           && (((atom->GetBond(b))->GetLength() < shortestBond) 
                               && (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing()))

@@ -365,29 +365,29 @@ namespace OpenBabel
       return _lattice;
 
     unsigned int rightAngles = 0;
-    if (IsNear(_alpha, 90.0f, 1.0e-2)) rightAngles++;
-    if (IsNear(_beta,  90.0f, 1.0e-2)) rightAngles++;
-    if (IsNear(_gamma, 90.0f, 1.0e-2)) rightAngles++;
+    if (IsApprox(_alpha, 90.0f, 1.0e-3)) rightAngles++;
+    if (IsApprox(_beta,  90.0f, 1.0e-3)) rightAngles++;
+    if (IsApprox(_gamma, 90.0f, 1.0e-3)) rightAngles++;
 
     switch (rightAngles)
       {
       case 3:
-        if (IsNear(_a, _b, 1.0e-2) && IsNear(_b, _c, 1.0e-2))
+        if (IsApprox(_a, _b, 1.0e-4) && IsApprox(_b, _c, 1.0e-4))
           _lattice = Cubic;
-        else if (IsNear(_a, _b, 1.0e-2) || IsNear(_b, _c, 1.0e-2))
+        else if (IsApprox(_a, _b, 1.0e-4) || IsApprox(_b, _c, 1.0e-4))
           _lattice = Tetragonal;
         else
           _lattice = Orthorhombic;
         break;
       case 2:
-        if ( (IsNear(_alpha, 120.0f, 1.0e-2) || IsNear(_beta, 120.0f, 1.0e-2) || IsNear(_gamma, 120.0f, 1.0e-2))
-             && (IsNear(_a, _b, 1.0e-2) || IsNear(_b, _c, 1.0e-2)) )
+        if ( (IsApprox(_alpha, 120.0f, 1.0e-3) || IsApprox(_beta, 120.0f, 1.0e-3) || IsApprox(_gamma, 120.0f, 1.0e-3))
+             && (IsApprox(_a, _b, 1.0e-4) || IsApprox(_b, _c, 1.0e-4)) )
           _lattice = Hexagonal;
         else
           _lattice = Monoclinic;
         break;
       default:
-        if (IsNear(_a, _b, 1.0e-2) && IsNear(_b, _c, 1.0e-2))
+        if (IsApprox(_a, _b, 1.0e-4) && IsApprox(_b, _c, 1.0e-4))
           _lattice = Rhombohedral;
         else
           _lattice = Triclinic;
