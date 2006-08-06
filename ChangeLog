@@ -1,7 +1,9 @@
 2006-08-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/smilesformat.cpp (ParseComplex): Ensure complex
-	expressions end in a ']' character.
+	expressions end in a ']' character. Added patch from Nick England
+	for handling chiral output using OBChiralData. Should fix
+	PR#1508741.
 
 	* test/files/invalid-smarts.txt: Add additional complex expression
 	for tests.

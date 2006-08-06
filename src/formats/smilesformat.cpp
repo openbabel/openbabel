@@ -18,6 +18,7 @@ GNU General Public License for more details.
 
 #include "babelconfig.h"
 #include "obmolecformat.h"
+#include "chiral.h"
 
 using namespace std;
 
@@ -2350,22 +2351,62 @@ namespace OpenBabel
   {
     bool is2D=false;
     double torsion;
-    OBAtom *a,*b,*c,*d,hydrogen;
+    OBAtom *a,*b,*c,*d,*atom,hydrogen;
 
     b = node->GetAtom();
     OBMol *mol = (OBMol*)b->GetParent();
 
-    if (!mol->HasNonZeroCoords()) //must have come in from smiles string
+    if (!mol->HasNonZeroCoords()) //must have come in from smiles string, but not neccessarily the same string! must check order.
+                                  //This section re-written to use the ChiralData object but the non 0D co-ord routines have been left alone. Might use 
+                                  //different names for things. In this section a,b,c,d are the neighbours of the chrial atom, atom.
       {
         if (!b->HasChiralitySpecified())
           return(false);
-        if (b->IsClockwise())
+          
+        atom=node->GetAtom();  
+        b=c=d=NULL;
+        a = node->GetParent(); // a is parent, atom is chiral atom b/c/d are ones off it.
+        OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
+        
+        if(!cd)
+        {   //if no Chiral Data Set, need to make one!
+            cd=new OBChiralData;
+            atom->SetData(cd);
+        }
+
+        //get connected atoms in order
+        OBAtom *nbr;
+        vector<int>::iterator j;
+        vector<unsigned int> vnbor,vsmiles;
+        FOR_NBORS_OF_ATOM(nbr,atom)
+        {
+            vnbor.push_back(nbr->GetIdx());
+        }
+    
+        for (j = _storder.begin();j != _storder.end();j++)
+          {
+            for(int x=0;x<vnbor.size();x++)
+            {
+                if(*j==vnbor[x])
+                    vsmiles.push_back(vnbor[x]);
+            }
+          }
+        if(vsmiles.size()==3)
+        {
+            vsmiles.insert(++(vsmiles.begin()),atom->GetIdx());
+        }
+        
+        cd->SetAtom4Refs(vsmiles,output);   // This saves the output atom4refs calculated above
+        CorrectChirality(*mol,atom);
+
+        
+        if (atom->IsClockwise())
           strcpy(stereo,"@@");
-        else if (b->IsAntiClockwise())
+        else if (atom->IsAntiClockwise())
           strcpy(stereo,"@");
         else
           return(false);
-        //if (b->GetHvyValence() == 3) strcat(stereo,"H");
+          
         return(true);
       }
 
