@@ -1,3 +1,9 @@
+2006-08-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchi/: Update InChI library with final release of
+	1.0.1. Need to update configure script to detect libinchi version
+	to only build newer revisions when needed.
+
 2006-08-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/smilesformat.cpp (ParseComplex): Ensure complex

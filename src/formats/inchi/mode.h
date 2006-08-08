@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -18,14 +18,14 @@ extern "C" {
 
 
 /* uncomment to unconditionally force ANSI-89 C, no Win32 specific code */
-#define INCHI_ANSI_ONLY
+/*#define INCHI_ANSI_ONLY*/
 
 #ifdef INCHI_ANSI_ONLY
 /* #define ADD_NON_ANSI_FUNCTIONS */ /* uncomment to add stricmp(), etc., see util.c */
 #endif
 
 /* uncomment to create a library for using INChI API described in inchi_api.h */
-#define INCHI_LIBRARY
+/* #define INCHI_LIBRARY */
 
 /* uncomment to use INChI library as a Win32 DLL or to eliminate stricmp duplication */
 /* #define INCHI_LINK_AS_DLL */
@@ -71,7 +71,7 @@ extern "C" {
 
 #else
 
-#define SPECIAL_BUILD_STRING ", Software version 1.01"
+#define SPECIAL_BUILD_STRING ", Software version 1.01 release 07/21/2006"
 
 #endif
 
@@ -210,6 +210,7 @@ extern "C" {
 
 #define SDF_OUTPUT_V2000            1  /* 1=>always output V2000 SDfile, 0=>only if needed */
 #define SDF_OUTPUT_DT               1  /* 1=> all option -SdfAtomsDT to output D and T into SDfile */
+#define CHECK_AROMBOND2ALT          1  /* 1=> check whether arom->alt bond conversion succeeded */
 
 #ifdef INCHI_LIB
 #define READ_INCHI_STRING           0  /* 1=> input InChI string and process it */

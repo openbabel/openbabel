@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -3764,6 +3764,7 @@ int WriteOrigAtomDataToSDfile( const ORIG_ATOM_DATA *inp_at_data, INCHI_FILE* fc
         int  charge    = 0;
         int  valence   = 0;
         int  nIsotopeH = IS_DEUTERIUM(i)? 1 : IS_TRITIUM(i)? 2 : 0;
+        int  bonds_val;
         bAtomNeedsAlias = ALIASED_AT(i);
         memset( elname, 0, sizeof(elname) );
         
@@ -3810,8 +3811,9 @@ int WriteOrigAtomDataToSDfile( const ORIG_ATOM_DATA *inp_at_data, INCHI_FILE* fc
         z = at[i].z;
 
         /* valence -- set only if needed */
+        bonds_val = nBondsValenceInpAt( at+i, NULL, NULL );
         valence=needed_unusual_el_valence( at[i].el_number, at[i].charge, at[i].radical,
-                                 at[i].chem_bonds_valence, NUMH(at, i), at[i].valence );
+                                 at[i].chem_bonds_valence, bonds_val, NUMH(at, i), at[i].valence );
         if ( valence < 0 ) {
             valence = 15;  /* means no bonds nor H */
         }

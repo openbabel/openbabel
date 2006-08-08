@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -24,7 +24,7 @@ typedef enum tagINCHIBondType {
    INCHI_BOND_TYPE_SINGLE  =  1,
    INCHI_BOND_TYPE_DOUBLE  =  2,
    INCHI_BOND_TYPE_TRIPLE  =  3,
-   INCHI_BOND_TYPE_ALTERN  =  4
+   INCHI_BOND_TYPE_ALTERN  =  4  /* avoid by all means */
 } inchi_BondType;
 /* 2D stereo definitions */
 typedef enum tagINCHIBondStereo2D {

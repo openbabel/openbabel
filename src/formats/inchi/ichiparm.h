@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -389,6 +389,9 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             if ( !stricmp( pArg, "FixSp3bug" ) ) {
                  bFixSp3bug = 1;
             } else
+            if ( !stricmp( pArg, "FB" ) ) {
+                 bFixSp3bug = 1; /* fix all known v1 bugs */
+            } else
 #ifdef STEREO_WEDGE_ONLY
             if ( !stricmp( pArg, "NEWPS" ) ) {
                  bPointedEdgeStereo = 1;
@@ -548,6 +551,9 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
             } else
             if ( !stricmp( pArg, "FixSp3bug" ) ) {
                  bFixSp3bug = 1;
+            } else
+            if ( !stricmp( pArg, "FB" ) ) {
+                 bFixSp3bug = 1; /* fix all known v1 bugs */
             } else
 #ifdef STEREO_WEDGE_ONLY
             if ( !stricmp( pArg, "NEWPS" ) ) {
@@ -1095,6 +1101,7 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
             }
             i = 0;
         }
+#endif
         if ( TG_FLAG_POINTED_EDGE_STEREO & ip->bTautFlags ) {
             my_fprintf( log_file, "%sOnly narrow end of wedge points to stereocenter\n", i? "\n":"" );
             i = 0;
@@ -1111,7 +1118,10 @@ int PrintInputParms( INCHI_FILE *log_file, INPUT_PARMS *ip )
             i = 0;
         }
 #endif
-#endif
+        if ( TG_FLAG_FIX_SP3_BUG & ip->bTautFlags ) {
+            my_fprintf( log_file, "%sFix bug leading to missing or undefined sp3 parity\n", i? "\n":"" );
+            i = 0;
+        }
     } else {
         my_fprintf( log_file, ", Stereo OFF");
     }
@@ -1331,7 +1341,7 @@ void HelpCommandLineParms( INCHI_FILE *f )
     inchi_print_nodisplay( f, "  Wnumber     Set time-out per structure in seconds; W0 means unlimited\n");
     inchi_print_nodisplay( f, "  SDF:DataHeader Read from the input SDfile the ID under this DataHeader\n");
 #if( ADD_CMLPP == 1 )
-    inchi_print_nodisplay( f, "  CML         Input in CML format (default for input file .CML extension) \n");
+    inchi_print_nodisplay( f, "  CML         Input in CML format (default for input file .CML extension)\n");
 #endif
     inchi_print_nodisplay( f, "  NoLabels    Omit structure number, DataHeader and ID from %s output\n", INCHI_NAME);
     inchi_print_nodisplay( f, "  Tabbed      Separate structure number, %s, and AuxIndo with tabs\n", INCHI_NAME);
@@ -1348,6 +1358,7 @@ void HelpCommandLineParms( INCHI_FILE *f )
     inchi_print_nodisplay( f, "  SdfAtomsDT  Output Hydrogen Isotopes to SDfile as Atoms D and T\n");
 #endif
     inchi_print_nodisplay( f, "  STDIO       Use standard input/output streams\n");
+    inchi_print_nodisplay( f, "  FB          (or FixSp3Bug) Fix bug leading to missing or undefined sp3 parity\n" );
     inchi_print_nodisplay( f, "  WarnOnEmptyStructure Warn and produce empty %s for empty structure\n", INCHI_NAME);
 #if( FIX_ADJ_RAD == 1 )
     inchi_print_nodisplay( f, "  FixRad      Fix Adjacent Radicals\n");

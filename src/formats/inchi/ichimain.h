@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -51,7 +51,7 @@ int ReadCommandLineParms( int argc, const char *argv[], INPUT_PARMS *ip, char *s
 void HelpCommandLineParms( INCHI_FILE *f );
 int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_file, INPUT_PARMS *ip );
 #ifndef INCHI_ANSI_ONLY
-int DisplayStructure( inp_ATOM *at, int num_at, int num_removed_H, int nNumRemovedProtons, NUM_H nNumRemovedProtonsIsotopic[],
+int DisplayStructure( inp_ATOM *at, int num_at, int num_removed_H, int bAdd_DT_to_num_H, int nNumRemovedProtons, NUM_H nNumRemovedProtonsIsotopic[],
                       int bIsotopic, int j /*bTautomeric*/, INChI **cur_INChI, INChI_Aux **cur_INChI_Aux,
                       int bAbcNumbers, DRAW_PARMS *dp, INCHI_MODE nMode, char *szTitle );
 void FillTableParms( SET_DRAW_PARMS *sdp, INChI **cur_INChI, INChI_Aux **cur_INChI_Aux, INCHI_MODE nMode, int bShowIsotopic, int bShowTaut );

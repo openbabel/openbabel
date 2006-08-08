@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -386,7 +386,7 @@ int DisplayAllRestoredComponents( inp_ATOM *at, int num_at, const char *szCurHdr
     dp.pdp           = &pdp;
     dp.sdp.nFontSize = -9;
     sprintf( szTitle, "All Components of Restored %s Structure", szCurHdr? szCurHdr : "(No structure name)");
-    ret = DisplayStructure( at, num_at, 0 /* nNumDeletedH*/,
+    ret = DisplayStructure( at, num_at, 0 /* nNumDeletedH*/, 0 /*bAdd_DT_to_num_H*/,
                       0 /*nNumRemovedProtons*/, NULL /*NUM_H *nNumRemovedProtonsIsotopic*/,
                       1 /*int bIsotopic*/, 0 /*bTautomeric*/,
                       NULL /* pINChI */, NULL /* INChI_Aux **cur_INChI_Aux*/,
@@ -435,7 +435,7 @@ int DisplayOneRestoredComponent( StrFromINChI *pStruct, inp_ATOM *at,
     sprintf( szTitle, "Restored %s Component %d of %d %c%c",
                       szCurHdr? szCurHdr : "(No structure name)", iComponent+1, nNumComponents,
                       pStruct->iInchiRec? 'R':'D', pStruct->iMobileH?'M':'F' );
-    ret = DisplayStructure( at, num_at, 0 /* nNumDeletedH*/,
+    ret = DisplayStructure( at, num_at, 0 /* nNumDeletedH*/, 0 /*bAdd_DT_to_num_H*/,
                       nNumRemovedProtons, /*NULL*/ nNumRemovedProtonsIsotopic,
                       1 /*int bIsotopic*/, k,
                       pInChI, pAux,
@@ -474,7 +474,7 @@ int DisplayRestoredComponent( StrFromINChI *pStruct, int iComponent, int iAtNoOf
     dp.pdp           = &pdp;
     dp.sdp.nFontSize = -9;
     sprintf( szTitle, "DBG Restored %s Component %d %c%c", szCurHdr? szCurHdr : "(No structure name)", iComponent+1, pStruct->iInchiRec? 'R':'D', pStruct->iMobileH?'M':'F' );
-    ret = DisplayStructure( at, num_at, 0 /* nNumDeletedH*/,
+    ret = DisplayStructure( at, num_at, 0 /* nNumDeletedH*/, 0 /*bAdd_DT_to_num_H*/,
                       0 /*nNumRemovedProtons*/, NULL /*NUM_H *nNumRemovedProtonsIsotopic*/,
                       1 /*int bIsotopic*/, 0 /*bTautomeric*/,
                       &pInChI, NULL /* INChI_Aux **cur_INChI_Aux*/,

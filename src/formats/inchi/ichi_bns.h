@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -311,6 +311,16 @@ typedef struct tagBNS_FLOW_CHANGES {
 #define ALT_PATH_MODE_ADD2H_TST  8   /* test-add 2 H along alt. path A=-=B => AH-=-BH; restore changed bonds */
 #define ALT_PATH_MODE_REM_PROTON 9   /* remove proton, adjust bonds, charges, H-counts 2004-03-05 */
 
+typedef U_SHORT  bitWord;
+#define BIT_WORD_MASK  ((bitWord)~0)
+
+typedef struct tagNodeSet {
+    bitWord **bitword;
+    int num_set; /* number of sets */
+    int len_set; /* number of bitWords in each set */
+} NodeSet;
+
+
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus
 extern "C" {
@@ -345,6 +355,18 @@ extern "C" {
 
 #define BNS_EF_RAD_SRCH     128  /* search for rafical paths closures */
 
+
+
+int  SetBitCreate( void );
+int  NodeSetCreate( NodeSet *pSet, int n, int L );
+void NodeSetFree( NodeSet *pSet );
+
+int  IsNodeSetEmpty( NodeSet *cur_nodes, int k);
+int  DoNodeSetsIntersect( NodeSet *cur_nodes, int k1, int k2);
+void AddNodeSet2ToNodeSet1( NodeSet *cur_nodes, int k1, int k2);
+void NodeSetFromRadEndpoints( NodeSet *cur_nodes, int k, /*Node *v*/ Vertex RadEndpoints[], int num_v);
+void RemoveFromNodeSet( NodeSet *cur_nodes, int k, Vertex v[], int num_v);
+int  AddNodesToRadEndpoints( NodeSet *cur_nodes, int k, Vertex RadEndpoints[], Vertex vRad, int nStart, int nLen );
 
 
 int nExists2AtMoveAltPath( struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD,
@@ -390,6 +412,8 @@ int SetForbiddenEdges( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int edge_fo
 int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow );
 
 int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode );
+int SetRadEndpoints2( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode );
+
 int RemoveRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at );
 
 int AddRemoveProtonsRestr( inp_ATOM *at, int num_atoms, int *num_protons_to_add,
