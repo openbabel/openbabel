@@ -137,8 +137,10 @@ namespace OpenBabel
         }
       virtual OBAtom *CreateAtom(void);
       virtual OBBond *CreateBond(void);
+      virtual OBResidue *CreateResidue(void);
       virtual void DestroyAtom(OBNodeBase*);
       virtual void DestroyBond(OBEdgeBase*);
+      virtual void DestroyResidue(OBResidue*);
       bool AddAtom(OBAtom&);
       bool AddBond(int,int,int,int flags=0,int insertpos=-1);
       bool AddBond(OBBond&);

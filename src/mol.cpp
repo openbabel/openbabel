@@ -1278,7 +1278,7 @@ namespace OpenBabel
     unsigned int ii;
     for (ii=0 ; ii<_residue.size() ; ii++)
       {
-        delete _residue[ii];
+        DestroyResidue(_residue[ii]);
       }
     _residue.clear();
 
@@ -1402,6 +1402,11 @@ namespace OpenBabel
     return new OBBond;
   }
 
+  OBResidue *OBMol::CreateResidue(void)
+  {
+    return new OBResidue;
+  }
+
   void OBMol::DestroyAtom(OBNodeBase *atom)
   {
     if (atom)
@@ -1417,6 +1422,15 @@ namespace OpenBabel
       {
         delete bond;
         bond = NULL;
+      }
+  }
+
+  void OBMol::DestroyResidue(OBResidue *residue)
+  {
+    if (residue)
+      {
+        delete residue;
+        residue = NULL;
       }
   }
 
@@ -2582,11 +2596,7 @@ namespace OpenBabel
 
     _residue.erase(_residue.begin() + idx);
 
-    if (residue)
-      {
-        delete residue;
-        residue = NULL;
-      }
+    DestroyResidue(residue);
 
     return(true);
   }
@@ -2881,7 +2891,7 @@ namespace OpenBabel
     for (bond = BeginBond(j);bond;bond = NextBond(j))
       DestroyBond(bond);
     for (residue = BeginResidue(r);residue;residue = NextResidue(r))
-      delete residue;
+      DestroyResidue(residue);
 
     //clear out the multiconformer data
     vector<double*>::iterator k;
