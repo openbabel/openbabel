@@ -121,6 +121,9 @@ namespace OpenBabel
     //! Nuclear transitions (e.g., decay, fission, fusion)
     static const unsigned int NuclearData =       22;
 
+    //! Set Data (a set of OBGenericData)
+    static const unsigned int SetData =           23;
+
     // space for up to 2^14 more entries...
 
     //! Custom (user-defined data)
@@ -264,6 +267,64 @@ namespace OpenBabel
     {
       return(_value);
     }
+  };
+
+  //! \brief Used to store arbitrary attribute/set relationships.
+  //!
+  //! Should be used to store a set of OBGenericData based on an attribute.
+ class OBAPI OBSetData : public OBGenericData
+  {
+  protected:
+    std::vector<OBGenericData *> _vdata;
+  public:
+    OBSetData() : OBGenericData("SetData", 0) {}
+    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBSetData(*this);}
+
+    //! Add an OBGenericData element to the set.
+    void AddData(OBGenericData *d)
+    {
+      if(d)
+      {
+        _vdata.push_back(d);
+      }
+    }
+
+    //! Set the array of data to a new vector
+    void SetData(std::vector<OBGenericData *> &vdata)
+    {
+      _vdata = vdata;
+    }
+
+    //! Returns the OBGenericData associate with the attribute name parameter.
+    OBGenericData *GetData(const std::string &s)
+    {
+      std::vector<OBGenericData*>::iterator i;
+
+      for (i = _vdata.begin();i != _vdata.end();i++)
+        if ((*i)->GetAttribute() == s)
+          return(*i);
+
+      return(NULL);
+    }
+
+    //! Gets the entire set.
+    virtual const std::vector<OBGenericData *> &GetData() const //now virtual and const
+    {
+      return(_vdata);
+    }
+
+    //! Delete the matching OBGenericData element.
+    void DeleteData(OBGenericData *gd)
+    {
+      std::vector<OBGenericData*>::iterator i;
+      for (i = _vdata.begin();i != _vdata.end();i++)
+        if (*i == gd)
+        {
+          delete *i;
+          _vdata.erase(i);
+        }
+    }
+
   };
 
   //! \brief Used to temporarily store bonds that reference
