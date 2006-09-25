@@ -18,14 +18,14 @@ extern "C" {
 
 
 /* uncomment to unconditionally force ANSI-89 C, no Win32 specific code */
-/*#define INCHI_ANSI_ONLY*/
+#define INCHI_ANSI_ONLY
 
 #ifdef INCHI_ANSI_ONLY
 /* #define ADD_NON_ANSI_FUNCTIONS */ /* uncomment to add stricmp(), etc., see util.c */
 #endif
 
 /* uncomment to create a library for using INChI API described in inchi_api.h */
-/* #define INCHI_LIBRARY */
+#define INCHI_LIBRARY
 
 /* uncomment to use INChI library as a Win32 DLL or to eliminate stricmp duplication */
 /* #define INCHI_LINK_AS_DLL */
