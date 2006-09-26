@@ -42,7 +42,8 @@ libformats_la_SOURCES = \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
-	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
+	chem3dformat.cpp chemdrawct.cpp chemdrawcdx.cpp \
+	chemtoolformat.cpp \
 	copyformat.cpp crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp fastaformat.cpp \
 	featformat.cpp fhformat.cpp fingerprintformat.cpp \
@@ -64,7 +65,8 @@ pkglib_LTLIBRARIES = \
 	CSRformat.la PQSformat.la alchemyformat.la \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la carformat.la cccformat.la \
-	chem3dformat.la chemdrawformat.la chemtoolformat.la \
+	chem3dformat.la chemdrawctformat.la chemdrawcdxformat.la \
+	chemtoolformat.la \
 	copyformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la fastaformat.la \
 	featformat.la fhformat.la fingerprintformat.la \
@@ -118,8 +120,11 @@ cccformat_la_LDFLAGS = -module -avoid-version
 chem3dformat_la_SOURCES = chem3dformat.cpp obmolecformat.cpp
 chem3dformat_la_LDFLAGS = -module -avoid-version 
 
-chemdrawformat_la_SOURCES = chemdrawformat.cpp obmolecformat.cpp
-chemdrawformat_la_LDFLAGS = -module -avoid-version 
+chemdrawctformat_la_SOURCES = chemdrawct.cpp obmolecformat.cpp
+chemdrawctformat_la_LDFLAGS = -module -avoid-version 
+
+chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp obmolecformat.cpp
+chemdrawcdxformat_la_LDFLAGS = -module -avoid-version 
 
 chemtoolformat_la_SOURCES = chemtoolformat.cpp
 chemtoolformat_la_LDFLAGS = -module -avoid-version 

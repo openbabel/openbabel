@@ -136,13 +136,20 @@ am__chem3dformat_la_SOURCES_DIST = chem3dformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@	obmolecformat.lo
 chem3dformat_la_OBJECTS = $(am_chem3dformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_chem3dformat_la_rpath = -rpath $(pkglibdir)
-chemdrawformat_la_LIBADD =
-am__chemdrawformat_la_SOURCES_DIST = chemdrawformat.cpp \
+chemdrawcdxformat_la_LIBADD =
+am__chemdrawcdxformat_la_SOURCES_DIST = chemdrawcdx.cpp \
 	obmolecformat.cpp
-@BUILD_SHARED_TRUE@am_chemdrawformat_la_OBJECTS = chemdrawformat.lo \
+@BUILD_SHARED_TRUE@am_chemdrawcdxformat_la_OBJECTS = chemdrawcdx.lo \
 @BUILD_SHARED_TRUE@	obmolecformat.lo
-chemdrawformat_la_OBJECTS = $(am_chemdrawformat_la_OBJECTS)
-@BUILD_SHARED_TRUE@am_chemdrawformat_la_rpath = -rpath $(pkglibdir)
+chemdrawcdxformat_la_OBJECTS = $(am_chemdrawcdxformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_chemdrawcdxformat_la_rpath = -rpath $(pkglibdir)
+chemdrawctformat_la_LIBADD =
+am__chemdrawctformat_la_SOURCES_DIST = chemdrawct.cpp \
+	obmolecformat.cpp
+@BUILD_SHARED_TRUE@am_chemdrawctformat_la_OBJECTS = chemdrawct.lo \
+@BUILD_SHARED_TRUE@	obmolecformat.lo
+chemdrawctformat_la_OBJECTS = $(am_chemdrawctformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_chemdrawctformat_la_rpath = -rpath $(pkglibdir)
 chemtoolformat_la_LIBADD =
 am__chemtoolformat_la_SOURCES_DIST = chemtoolformat.cpp
 @BUILD_SHARED_TRUE@am_chemtoolformat_la_OBJECTS = chemtoolformat.lo
@@ -255,8 +262,8 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp amberformat.cpp \
 	balstformat.cpp bgfformat.cpp boxformat.cpp cacaoformat.cpp \
 	cacheformat.cpp carformat.cpp cccformat.cpp chem3dformat.cpp \
-	chemdrawformat.cpp chemtoolformat.cpp copyformat.cpp \
-	crkformat.cpp cssrformat.cpp dmolformat.cpp \
+	chemdrawct.cpp chemdrawcdx.cpp chemtoolformat.cpp \
+	copyformat.cpp crkformat.cpp cssrformat.cpp dmolformat.cpp \
 	fastsearchformat.cpp fastaformat.cpp featformat.cpp \
 	fhformat.cpp fingerprintformat.cpp freefracformat.cpp \
 	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
@@ -274,8 +281,8 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 @BUILD_SHARED_FALSE@	alchemyformat.lo amberformat.lo \
 @BUILD_SHARED_FALSE@	balstformat.lo bgfformat.lo boxformat.lo \
 @BUILD_SHARED_FALSE@	cacaoformat.lo cacheformat.lo carformat.lo \
-@BUILD_SHARED_FALSE@	cccformat.lo chem3dformat.lo \
-@BUILD_SHARED_FALSE@	chemdrawformat.lo chemtoolformat.lo \
+@BUILD_SHARED_FALSE@	cccformat.lo chem3dformat.lo chemdrawct.lo \
+@BUILD_SHARED_FALSE@	chemdrawcdx.lo chemtoolformat.lo \
 @BUILD_SHARED_FALSE@	copyformat.lo crkformat.lo cssrformat.lo \
 @BUILD_SHARED_FALSE@	dmolformat.lo fastsearchformat.lo \
 @BUILD_SHARED_FALSE@	fastaformat.lo featformat.lo fhformat.lo \
@@ -462,29 +469,30 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(bgfformat_la_SOURCES) $(boxformat_la_SOURCES) \
 	$(cacaoformat_la_SOURCES) $(cacheformat_la_SOURCES) \
 	$(carformat_la_SOURCES) $(cccformat_la_SOURCES) \
-	$(chem3dformat_la_SOURCES) $(chemdrawformat_la_SOURCES) \
-	$(chemtoolformat_la_SOURCES) $(copyformat_la_SOURCES) \
-	$(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) \
-	$(dmolformat_la_SOURCES) $(fastaformat_la_SOURCES) \
-	$(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) \
-	$(fhformat_la_SOURCES) $(fingerprintformat_la_SOURCES) \
-	$(freefracformat_la_SOURCES) $(gamessformat_la_SOURCES) \
-	$(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) \
-	$(gromos96format_la_SOURCES) $(hinformat_la_SOURCES) \
-	$(inchiformat_la_SOURCES) $(jaguarformat_la_SOURCES) \
-	$(libformats_la_SOURCES) $(mdlformat_la_SOURCES) \
-	$(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) \
-	$(mopacformat_la_SOURCES) $(mpdformat_la_SOURCES) \
-	$(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) \
-	$(pcmodelformat_la_SOURCES) $(pdbformat_la_SOURCES) \
-	$(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) \
-	$(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) \
-	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
-	$(thermoformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
-	$(titleformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
-	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
-	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
-	$(yasaraformat_la_SOURCES) $(zindoformat_la_SOURCES)
+	$(chem3dformat_la_SOURCES) $(chemdrawcdxformat_la_SOURCES) \
+	$(chemdrawctformat_la_SOURCES) $(chemtoolformat_la_SOURCES) \
+	$(copyformat_la_SOURCES) $(crkformat_la_SOURCES) \
+	$(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) \
+	$(fastaformat_la_SOURCES) $(fastsearchformat_la_SOURCES) \
+	$(featformat_la_SOURCES) $(fhformat_la_SOURCES) \
+	$(fingerprintformat_la_SOURCES) $(freefracformat_la_SOURCES) \
+	$(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) \
+	$(ghemicalformat_la_SOURCES) $(gromos96format_la_SOURCES) \
+	$(hinformat_la_SOURCES) $(inchiformat_la_SOURCES) \
+	$(jaguarformat_la_SOURCES) $(libformats_la_SOURCES) \
+	$(mdlformat_la_SOURCES) $(mmodformat_la_SOURCES) \
+	$(mol2format_la_SOURCES) $(mopacformat_la_SOURCES) \
+	$(mpdformat_la_SOURCES) $(mpqcformat_la_SOURCES) \
+	$(nwchemformat_la_SOURCES) $(pcmodelformat_la_SOURCES) \
+	$(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) \
+	$(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) \
+	$(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) \
+	$(smilesformat_la_SOURCES) $(thermoformat_la_SOURCES) \
+	$(tinkerformat_la_SOURCES) $(titleformat_la_SOURCES) \
+	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
+	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
+	$(xyzformat_la_SOURCES) $(yasaraformat_la_SOURCES) \
+	$(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__PQSformat_la_SOURCES_DIST) \
@@ -498,7 +506,8 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__carformat_la_SOURCES_DIST) \
 	$(am__cccformat_la_SOURCES_DIST) \
 	$(am__chem3dformat_la_SOURCES_DIST) \
-	$(am__chemdrawformat_la_SOURCES_DIST) \
+	$(am__chemdrawcdxformat_la_SOURCES_DIST) \
+	$(am__chemdrawctformat_la_SOURCES_DIST) \
 	$(am__chemtoolformat_la_SOURCES_DIST) \
 	$(am__copyformat_la_SOURCES_DIST) \
 	$(am__crkformat_la_SOURCES_DIST) \
@@ -605,6 +614,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 F77 = @F77@
 FFLAGS = @FFLAGS@
+GREP = @GREP@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -646,15 +656,9 @@ WX_LIBS = @WX_LIBS@
 XML2_CONFIG = @XML2_CONFIG@
 XML_CPPFLAGS = @XML_CPPFLAGS@
 XML_LIBS = @XML_LIBS@
-ac_ct_AR = @ac_ct_AR@
-ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
-ac_ct_DLLTOOL = @ac_ct_DLLTOOL@
 ac_ct_F77 = @ac_ct_F77@
-ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
-ac_ct_RANLIB = @ac_ct_RANLIB@
-ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -671,23 +675,30 @@ build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 datadir = @datadir@
+datarootdir = @datarootdir@
+docdir = @docdir@
+dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
 host_os = @host_os@
 host_vendor = @host_vendor@
+htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
 libexecdir = @libexecdir@
+localedir = @localedir@
 localstatedir = @localstatedir@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
+pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
+psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
@@ -712,7 +723,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 @BUILD_SHARED_FALSE@	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 @BUILD_SHARED_FALSE@	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
-@BUILD_SHARED_FALSE@	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
+@BUILD_SHARED_FALSE@	chem3dformat.cpp chemdrawct.cpp chemdrawcdx.cpp \
+@BUILD_SHARED_FALSE@	chemtoolformat.cpp \
 @BUILD_SHARED_FALSE@	copyformat.cpp crkformat.cpp cssrformat.cpp \
 @BUILD_SHARED_FALSE@	dmolformat.cpp fastsearchformat.cpp fastaformat.cpp \
 @BUILD_SHARED_FALSE@	featformat.cpp fhformat.cpp fingerprintformat.cpp \
@@ -732,7 +744,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	CSRformat.la PQSformat.la alchemyformat.la \
 @BUILD_SHARED_TRUE@	amberformat.la balstformat.la bgfformat.la boxformat.la \
 @BUILD_SHARED_TRUE@	cacaoformat.la cacheformat.la carformat.la cccformat.la \
-@BUILD_SHARED_TRUE@	chem3dformat.la chemdrawformat.la chemtoolformat.la \
+@BUILD_SHARED_TRUE@	chem3dformat.la chemdrawctformat.la chemdrawcdxformat.la \
+@BUILD_SHARED_TRUE@	chemtoolformat.la \
 @BUILD_SHARED_TRUE@	copyformat.la crkformat.la cssrformat.la \
 @BUILD_SHARED_TRUE@	dmolformat.la fastsearchformat.la fastaformat.la \
 @BUILD_SHARED_TRUE@	featformat.la fhformat.la fingerprintformat.la \
@@ -773,8 +786,10 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@cccformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@chem3dformat_la_SOURCES = chem3dformat.cpp obmolecformat.cpp
 @BUILD_SHARED_TRUE@chem3dformat_la_LDFLAGS = -module -avoid-version 
-@BUILD_SHARED_TRUE@chemdrawformat_la_SOURCES = chemdrawformat.cpp obmolecformat.cpp
-@BUILD_SHARED_TRUE@chemdrawformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@chemdrawctformat_la_SOURCES = chemdrawct.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@chemdrawctformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@chemdrawcdxformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@chemtoolformat_la_SOURCES = chemtoolformat.cpp
 @BUILD_SHARED_TRUE@chemtoolformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@copyformat_la_SOURCES = copyformat.cpp
@@ -959,8 +974,10 @@ cccformat.la: $(cccformat_la_OBJECTS) $(cccformat_la_DEPENDENCIES)
 	$(CXXLINK) $(am_cccformat_la_rpath) $(cccformat_la_LDFLAGS) $(cccformat_la_OBJECTS) $(cccformat_la_LIBADD) $(LIBS)
 chem3dformat.la: $(chem3dformat_la_OBJECTS) $(chem3dformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_chem3dformat_la_rpath) $(chem3dformat_la_LDFLAGS) $(chem3dformat_la_OBJECTS) $(chem3dformat_la_LIBADD) $(LIBS)
-chemdrawformat.la: $(chemdrawformat_la_OBJECTS) $(chemdrawformat_la_DEPENDENCIES) 
-	$(CXXLINK) $(am_chemdrawformat_la_rpath) $(chemdrawformat_la_LDFLAGS) $(chemdrawformat_la_OBJECTS) $(chemdrawformat_la_LIBADD) $(LIBS)
+chemdrawcdxformat.la: $(chemdrawcdxformat_la_OBJECTS) $(chemdrawcdxformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_chemdrawcdxformat_la_rpath) $(chemdrawcdxformat_la_LDFLAGS) $(chemdrawcdxformat_la_OBJECTS) $(chemdrawcdxformat_la_LIBADD) $(LIBS)
+chemdrawctformat.la: $(chemdrawctformat_la_OBJECTS) $(chemdrawctformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_chemdrawctformat_la_rpath) $(chemdrawctformat_la_LDFLAGS) $(chemdrawctformat_la_OBJECTS) $(chemdrawctformat_la_LIBADD) $(LIBS)
 chemtoolformat.la: $(chemtoolformat_la_OBJECTS) $(chemtoolformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_chemtoolformat_la_rpath) $(chemtoolformat_la_LDFLAGS) $(chemtoolformat_la_OBJECTS) $(chemtoolformat_la_LIBADD) $(LIBS)
 copyformat.la: $(copyformat_la_OBJECTS) $(copyformat_la_DEPENDENCIES) 
@@ -1069,7 +1086,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/carformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cccformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chem3dformat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemdrawformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemdrawcdx.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemdrawct.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemtoolformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copyformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crkformat.Plo@am__quote@
