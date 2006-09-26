@@ -208,7 +208,7 @@ namespace OpenBabel
   OBUnitCell::OBUnitCell():
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
     _a(0.0), _b(0.0), _c(0.0), _alpha(0.0), _beta(0.0), _gamma(0.0),
-    _lattice(Undefined)
+    _lattice(Undefined), _numericSpaceGroup( -1 )
   {  }
 
   OBUnitCell::OBUnitCell(const OBUnitCell &src) :
@@ -218,7 +218,8 @@ namespace OpenBabel
     _offset(src._offset),
     _v1(src._v1), _v2(src._v2), _v3(src._v3),
     _spaceGroup(src._spaceGroup),
-    _lattice(src._lattice)
+    _lattice(src._lattice),
+	_numericSpaceGroup( -1 )
   {  }
 
   OBUnitCell & OBUnitCell::operator=(const OBUnitCell &src)
@@ -359,6 +360,52 @@ namespace OpenBabel
     return m;
   }
 
+  OBUnitCell::LatticeType OBUnitCell::GetLatticeType( int spacegroup )
+  {
+	  //	1-2 	Triclinic
+	  //	3-15 	Monoclinic
+	  //	16-74	Orthorhombic
+	  //	75-142 	Tetragonal
+	  //	143-167 Rhombohedral
+	  //	168-194 Hexagonal
+	  //	195-230 Cubic
+	  
+	  if ( spacegroup < 0 )
+		  return OBUnitCell::Undefined;
+
+	  else if ( spacegroup == 1 ||
+			  spacegroup == 2 )
+		  return OBUnitCell::Triclinic;
+	  
+	  else if ( spacegroup >= 3 ||
+			  spacegroup <= 15 )
+		  return OBUnitCell::Monoclinic;
+	  
+	  else if ( spacegroup >= 16 ||
+			  spacegroup <= 74 )
+		  return OBUnitCell::Orthorhombic;
+	  
+	  else if ( spacegroup >= 75 ||
+			  spacegroup <= 142 )
+		  return OBUnitCell::Tetragonal;
+	  
+	  else if ( spacegroup >= 143 ||
+			  spacegroup <= 167 )
+		  return OBUnitCell::Rhombohedral;
+	  
+	  else if ( spacegroup >= 168 ||
+			  spacegroup <= 194 )
+		  return OBUnitCell::Hexagonal;
+	  
+	  else if ( spacegroup >= 195 ||
+			  spacegroup <= 230 )
+		  return OBUnitCell::Cubic;
+
+	  //just to be extra sure
+	  else if ( spacegroup > 230 )
+		  return OBUnitCell::Undefined;
+  }
+  
   OBUnitCell::LatticeType OBUnitCell::GetLatticeType()
   {
     if (_lattice != Undefined)
@@ -394,6 +441,19 @@ namespace OpenBabel
       }
 
     return _lattice;
+  }
+  int OBUnitCell::GetSpaceGroupNumber( std::string name)
+  {
+      static const char * const spacegroups[] = { 
+          "P1", "P-1", "P2", "P2(1)", "C2", "Pm", "Pc", "Cm", "Cc", "P2/m", "P2(1)/m", "C2/m", "P2/c", "P2(1)/c", "C2/c", "P222", "P222(1)", "P2(1)2(1)2", "P2(1)2(1)2(1)", "C222(1)", "C222", "F222", "I222", "I2(1)2(1)2(1)", "Pmm2", "Pmc2(1)", "Pcc2", "Pma2", "Pca2(1)", "Pnc2", "Pmn2(1)", "Pba2", "Pna2(1)", "Pnn2", "Cmm2", "Cmc2(1)", "Ccc2", "Amm2", "Abm2", "Ama2", "Aba2", "Fmm2", "Fdd2", "Imm2", "Iba2", "Ima2", "Pmmm", "Pnnn", "Pccm", "Pban", "Pmma", "Pnna", "Pmna", "Pcca", "Pbam", "Pccn", "Pbcm", "Pnnm", "Pmmn", "Pbcn", "Pbca", "Pnma", "Cmcm", "Cmca", "Cmmm", "Cccm", "Cmma", "Ccca", "Fmmm", "Fddd", "Immm", "Ibam", "Ibca", "Imma", "P4", "P4(1)", "P4(2)", "P4(3)", "I4", "I4(1)", "P-4", "I-4", "P4/m", "P4(2)/m", "P4/n", "P4(2)/n", "I4/m", "I4(1)/a", "P422", "P42(1)2", "P4(1)22", "P4(1)2(1)2", "P4(2)22", "P4(2)2(1)2", "P4(3)22", "P4(3)2(1)2", "I422", "I4(1)22", "P4mm", "P4bm", "P4(2)cm", "P4(2)nm", "P4cc", "P4nc", "P4(2)mc", "P4(2)bc", "I4mm", "I4cm", "I4(1)md", "I4(1)cd", "P-42m", "P-42c", "P-42(1)m", "P-42(1)c", "P-4m2", "P-4c2", "P-4b2", "P-4n2", "I-4m2", "I-4c2", "I-42m", "I-42d", "P4/mmm", "P4/mcc", "P4/nbm", "P4/nnc", "P4/mbm", "P4/mnc", "P4/nmm", "P4/ncc", "P4(2)/mmc", "P4(2)/mcm", "P4(2)/nbc", "P4(2)/nnm", "P4(2)/mbc", "P4(2)/mnm", "P4(2)/nmc", "P4(2)/ncm", "I4/mmm", "I4/mcm", "I4(1)/amd", "I4(1)/acd", "P3", "P3(1)", "P3(2)", "R3", "P-3", "R-3", "P312", "P321", "P3(1)12", "P3(1)21", "P3(2)12", "P3(2)21", "R32", "P3m1", "P31m", "P3c1", "P31c", "R3m", "R3c", "P-31m", "P-31c", "P-3m1", "P-3c1", "R-3m", "R-3c", "P6", "P6(1)", "P6(5)", "P6(2)", "P6(4)", "P6(3)", "P-6", "P6/m", "P6(3)/m", "P622", "P6(1)22", "P6(5)22", "P6(2)22", "P6(4)22", "P6(3)22", "P6mm", "P6cc", "P6(3)cm", "P6(3)mc", "P-6m2", "P-6c2", "P-62m", "P-62c", "P6/mmm", "P6/mcc", "P6(3)/mcm", "P6(3)/mmc", "P23", "F23", "I23", "P2(1)3", "I2(1)3", "Pm-3", "Pn-3", "Fm-3", "Fd-3", "Im-3", "Pa-3", "Ia-3", "P432", "P4(2)32", "F432", "F4(1)32", "I432", "P4(3)32", "P4(1)32", "I4(1)32", "P-43m", "F4-3m", "I-43m", "P-43n", "F-43c", "I-43d", "Pm-3m", "Pn-3n", "Pm-3n", "Pn-3m", "Fm-3m", "Fm-3c", "Fd-3m", "Fd-3c", "Im-3m", "Ia-3d" 
+          };
+
+      static const int numStrings = sizeof( spacegroups ) / sizeof( spacegroups[0] );
+      for ( int i = 0; i < numStrings; ++i ) {
+          if (name == spacegroups[i] ) {
+              return i+1;
+          }
+      }
   }
   
   double OBUnitCell::GetCellVolume()

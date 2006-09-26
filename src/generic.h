@@ -392,14 +392,21 @@ namespace OpenBabel
   {
   public:
     enum LatticeType { Undefined, 
-                       Triclinic, Monoclinic, Orthorhombic, Tetragonal, 
-                       Rhombohedral, Hexagonal, Cubic};
+                       Triclinic, 
+					   Monoclinic, 
+					   Orthorhombic, 
+					   Tetragonal, 
+                       Rhombohedral /**< also called trigonal*/, 
+					   Hexagonal, 
+					   Cubic};
+
 
   protected:
     double _a, _b, _c, _alpha, _beta, _gamma;
     vector3 _offset; //!< offset for origin
     vector3 _v1, _v2, _v3; //!< translation vectors
     std::string _spaceGroup;
+    int _numericSpaceGroup;
     LatticeType _lattice;
   public:
     //! public contructor
@@ -425,13 +432,23 @@ namespace OpenBabel
     {   _a = a; _b = b; _c = c;
       _alpha = alpha; _beta = beta; _gamma = gamma; }
     void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
+
     //! set the offset to the origin to @p v1
     void SetOffset(const vector3 v1) { _offset = v1; }
+
     //! Set the space group symbol for this unit cell.
     //! Does not create an OBSymmetryData entry or attempt to convert
     //!  between different symbol notations
     void SetSpaceGroup(const std::string sg) { _spaceGroup = sg; }
-    //! Set the Bravais lattice type for this unit cell
+    
+    //! Set the space group for this unit cell. Each spacegroup-symbol
+	//! has a numeric equivalent which is easier to use to convert between
+	//! notations.
+    //! Does not create an OBSymmetryData entry or attempt to convert
+    //!  between different symbol notations
+	void SetSpaceGroup(const int sg) { _numericSpaceGroup = sg; }
+    
+	//! Set the Bravais lattice type for this unit cell
     void SetLatticeType(const LatticeType lt) { _lattice = lt; }
 
     //! \return Return vector a
@@ -448,7 +465,11 @@ namespace OpenBabel
     double GetGamma(){ return(_gamma);}
     vector3 GetOffset() { return(_offset); }
     const std::string GetSpaceGroup() { return(_spaceGroup); }
-    //! \return lattice type (based on angles and distances)
+		
+	//! \return lattice type (based on the @p spacegroup)
+	LatticeType GetLatticeType( int spacegroup );
+    
+	//! \return lattice type (based on angles and distances)
     LatticeType GetLatticeType();
 
     //! \return v1, v2, v3 cell vectors
@@ -459,6 +480,9 @@ namespace OpenBabel
     matrix3x3 GetOrthoMatrix();
     //! \return The fractionalization matrix, used for converting from Cartesian to fractional coords.
     matrix3x3 GetFractionalMatrix();
+
+    //! \return The numeric value of the given spacegroup
+    int GetSpaceGroupNumber( std::string name );
     //! \return The cell volume (in Angstroms^3)
     double GetCellVolume();
   };
