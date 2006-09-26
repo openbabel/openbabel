@@ -77,19 +77,15 @@ namespace OpenBabel
       char                          _type[6];   //!< atomic type
       short                         _fcharge;   //!< formal charge
       unsigned short                _isotope;   //!< isotope (0 = most abundant)
-      short                           _spinmultiplicity;//!< atomic spin, e.g., 2 for radical  1 or 3 for carbene
+      short                         _spinmultiplicity;//!< atomic spin, e.g., 2 for radical  1 or 3 for carbene
 
-      //unsigned short int          _idx;       //!< index in parent (inherited)
-      unsigned short            _cidx;          //!< index into coordinate array
+      unsigned short                _cidx;      //!< index into coordinate array
       unsigned short                _hyb;       //!< hybridization
       unsigned short                _flags;     //!< bitwise flags (e.g. aromaticity)
-      double                         _pcharge;  //!< partial charge
-      double                       **_c;        //!< coordinate array in double*
+      double                        _pcharge;  //!< partial charge
+      double                      **_c;        //!< coordinate array in double*
       vector3                       _v;         //!< coordinate vector
       OBResidue                    *_residue;   //!< parent residue (if applicable)
-      //OBMol                      *_parent;    //!< parent molecule (inherited)
-      //vector<OBBond*>             _bond;      //!< connections (inherited)
-      //   std::vector<OBGenericData*>   _vdata;//!< custom data
 
       int  GetFlag() const    {  return(_flags);  }
       //! Sets the bitwise @p flag

@@ -124,7 +124,7 @@ namespace OpenBabel
     {
     protected:
       //! What is my unique node index? 	GetIdx(), SetIdx(int idx).
-      unsigned short int  _idx;
+      unsigned int  _idx;
       //! To which graph do I belong?	GetParent(), SetParent(OBGraphBase*).
       OBGraphBase        *_parent;
       /** \brief What edges or bonds do I have? \sa AddEdge(), GetValence(),
@@ -275,7 +275,7 @@ namespace OpenBabel
     {
     protected:
       /// What is my unique edge index? GetIdx(), SetIdx(int idx)
-      unsigned short int _idx;
+      unsigned  int      _idx;
       OBNodeBase        *_bgn;     //!< I connect one node
       OBNodeBase        *_end;     //!< to another node
       //! To which graph do I belong?	  GetParent(), SetParent(OBGraphBase*).

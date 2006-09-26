@@ -98,16 +98,16 @@ namespace OpenBabel {
     protected: // members
 
       unsigned int              _idx;   //!< Residue index (i.e., internal index in an OBMol)
-      char                              _chain; //!< Chain ID
+      char                      _chain; //!< Chain ID
       unsigned int              _aakey; //!< Amino Acid key ID -- see SetResidueKeys()
       unsigned int              _reskey;//!< Residue key ID -- see SetResidueKeys()
       unsigned int              _resnum;//!< Residue number (i.e., in file)
-      std::string                 _resname;//!< Residue text name
+      std::string               _resname;//!< Residue text name
 
-      std::vector<bool>           _hetatm;//!< Is a given atom a HETAM
-      std::vector<std::string>    _atomid;//!< Residue atom text IDs
-      std::vector<OBAtom*>        _atoms; //!< List of OBAtom in this residue
-      std::vector<unsigned int>   _sernum;//!< List of serial numbers
+      std::vector<bool>         _hetatm;//!< Is a given atom a HETAM
+      std::vector<std::string>  _atomid;//!< Residue atom text IDs
+      std::vector<OBAtom*>      _atoms; //!< List of OBAtom in this residue
+      std::vector<unsigned int> _sernum;//!< List of serial numbers
       //    std::vector<OBGenericData*> _vdata; //!< Custom data
     }; // OBResidue
 

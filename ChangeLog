@@ -1,3 +1,26 @@
+2006-09-25  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/base.h, src/atom.h, src/bond.h: Update internal atom
+	indexing to use an unsigned int, rather than short. Fixes
+	PR#1556819, caused by large molecules (i.e. >2^16 atoms or bonds).
+
+	* src/newlinebuf.h, src/newlinebuf.cpp: Fix bugs uncovered during
+	ChemSpotlight testing. Now appears to smoothly handle old Mac OS
+	9, DOS, and Unix line endings with no problems.
+
+	* src/generic.h, src/generic.cpp: Incorporate patches from Carsten
+	for lattice type and space groups.
+
+	* src/formats/chemdrawcdx.[h, cpp]: New format code for ChemDraw
+	CDX binary code, contributed by Fredrik Wallner.
+
+	* src/formats/Makefile.am, src/formats/Makefile.in: Update for
+	above.
+
+	* tools/obgen.cpp, tools/Makefile.am: New "obgen" tool for
+	creating simple 3D coordinates for SMILES and other 0D
+	formats. Contributed by Tim Vandermeersch.
+
 2006-08-30  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/mol.cpp: Added OBMol::CreateResidue() function.

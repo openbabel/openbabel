@@ -63,11 +63,6 @@ namespace OpenBabel
     protected:
       char                          _order; //!< Bond order (1, 2, 3, 5=aromatic)
       unsigned short int            _flags; //!< Any flags for this bond
-      //OBAtom                     *_bgn;   //!< Not needed, inherited from OBEdgeBase
-      //OBAtom                     *_end;   //!< Not needed, inherited from OBEdgeBase
-      //OBMol                      *_parent;//!< Not needed, inherited from OBEdgeBase
-      //unsigned short int          _idx;   //!< Not needed, inherited from OBEdgeBase
-      //    std::vector<OBGenericData*>   _vdata; //!< Generic data for custom information
 
       bool HasFlag(int flag)    { return((_flags & flag) != 0); }
       void SetFlag(int flag)    { _flags |= flag;               }
