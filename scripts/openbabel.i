@@ -21,12 +21,15 @@
 #include "mol.h"
 #include "ring.h"
 #include "obconversion.h"
+#include "oberror.h"
 
 #include "data.h"
 #include "parsmart.h"
 %}
 
+#ifndef SWIGRUBY
 %include "std_list.i"
+#endif
 %include "std_map.i"
 %include "std_vector.i"
 %include "std_string.i"
@@ -57,8 +60,8 @@ namespace std {
 %import "chains.h"
 %import "bitvec.h"
 %import "typer.h"
-%import "oberror.h"
 
+%include "oberror.h"
 %include "obconversion.h"
 %include "mol.h"
 %include "ring.h"

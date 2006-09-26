@@ -14,7 +14,8 @@ dist-hook:
 if MAINTAINER_MODE
 if BUILD_SWIG
 BUILT_SOURCES = perl/openbabel_perl.cpp \
-		python/openbabel_python.cpp
+		python/openbabel_python.cpp \
+	 ruby/openbabel_ruby.cpp
 
 perl/openbabel_perl.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
 	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
@@ -32,5 +33,9 @@ python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/
 	echo >>python/ob.py;
 	cat python/openbabel.py >>python/ob.py;
 	mv python/ob.py python/openbabel.py;
+
+ruby/openbabel_ruby.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+	$(SWIG) -ruby -c++ -o $@ -I$(top_srcdir)/src $<;
+
 endif # BUILD_SWIG
 endif # MAINTAINER_MODE
