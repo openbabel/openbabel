@@ -31,7 +31,6 @@ namespace OpenBabel
 
   newlinebuf::~newlinebuf()
   {
-    delete _buffer;
   }
     
   int newlinebuf::underflow()
@@ -45,17 +44,18 @@ namespace OpenBabel
 
         switch (ch)
           {
+          case 10:
+            if (_returnChar) // so this is a \r\n
+              _returnChar = false; // reset for normal output
+            else
+              *ptr++ = '\n';              
+            break;
           case 13:
             _returnChar = true;
+            *ptr++ = '\n';
             break;
-          case 10:
-            _returnChar = false; // clear the \r and then fall into normal output
           default:
-            if (_returnChar) // just \r line ending
-              {
-                _returnChar = false;
-                *ptr++ = '\n';
-              }
+            _returnChar = false;
             *ptr++ = ch;
           }
       }

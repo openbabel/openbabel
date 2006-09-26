@@ -22,6 +22,7 @@ General Public License for more details.
 #include "babelconfig.h"
 
 #include <streambuf>
+#include <istream>
 
 #ifndef OBCONV
 #define OBCONV
@@ -42,8 +43,18 @@ namespace OpenBabel
   private:
     std::streambuf * const _internalBuf; //!< the internal streambuf to filter
     bool _returnChar;            //!< whether we've just seen a '\r' character
-    char _buffer[512];
+    char _buffer[8192];
   };
+
+  //! \brief A convenience istream wrapper which calls an internal newlinebuf
+  //!   to filter/convert line endings
+ class OBCONV NewlineInput : public std::istream
+    {
+    private:
+      newlinebuf _nBuf; //!< the internal newline filter buffer
+    public:
+    NewlineInput(std::istream &i) : std::istream(&_nBuf), _nBuf(i.rdbuf()) {}
+    };
 
 } // end namespace OpenBabel
 
