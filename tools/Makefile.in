@@ -37,7 +37,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = obchiral$(EXEEXT) obgrep$(EXEEXT) obrotate$(EXEEXT) \
-	obfit$(EXEEXT) obprop$(EXEEXT) obxyz$(EXEEXT)
+	obfit$(EXEEXT) obprop$(EXEEXT) obxyz$(EXEEXT) obgen$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -57,6 +57,9 @@ obchiral_DEPENDENCIES = ../src/libopenbabel.la
 am_obfit_OBJECTS = obfit.$(OBJEXT)
 obfit_OBJECTS = $(am_obfit_OBJECTS)
 obfit_DEPENDENCIES = ../src/libopenbabel.la
+am_obgen_OBJECTS = obgen.$(OBJEXT)
+obgen_OBJECTS = $(am_obgen_OBJECTS)
+obgen_DEPENDENCIES = ../src/libopenbabel.la
 am_obgrep_OBJECTS = obgrep.$(OBJEXT)
 obgrep_OBJECTS = $(am_obgrep_OBJECTS)
 obgrep_DEPENDENCIES = ../src/libopenbabel.la
@@ -80,10 +83,12 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgrep_SOURCES) \
-	$(obprop_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES)
-DIST_SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgrep_SOURCES) \
-	$(obprop_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES)
+SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgen_SOURCES) \
+	$(obgrep_SOURCES) $(obprop_SOURCES) $(obrotate_SOURCES) \
+	$(obxyz_SOURCES)
+DIST_SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgen_SOURCES) \
+	$(obgrep_SOURCES) $(obprop_SOURCES) $(obrotate_SOURCES) \
+	$(obxyz_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -137,6 +142,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 F77 = @F77@
 FFLAGS = @FFLAGS@
+GREP = @GREP@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -178,15 +184,9 @@ WX_LIBS = @WX_LIBS@
 XML2_CONFIG = @XML2_CONFIG@
 XML_CPPFLAGS = @XML_CPPFLAGS@
 XML_LIBS = @XML_LIBS@
-ac_ct_AR = @ac_ct_AR@
-ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
-ac_ct_DLLTOOL = @ac_ct_DLLTOOL@
 ac_ct_F77 = @ac_ct_F77@
-ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
-ac_ct_RANLIB = @ac_ct_RANLIB@
-ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -203,23 +203,30 @@ build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 datadir = @datadir@
+datarootdir = @datarootdir@
+docdir = @docdir@
+dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
 host_os = @host_os@
 host_vendor = @host_vendor@
+htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
 libexecdir = @libexecdir@
+localedir = @localedir@
 localstatedir = @localstatedir@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
+pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
+psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
@@ -234,9 +241,8 @@ obprop_SOURCES = obprop.cpp
 obprop_LDADD = ../src/libopenbabel.la @LIBDL@
 obchiral_SOURCES = obchiral.cpp
 obchiral_LDADD = ../src/libopenbabel.la @LIBDL@
-
-# obsmi_SOURCES = obsmi.cpp
-# obsmi_LDADD = ../src/libopenbabel.la @LIBDL@
+obgen_SOURCES = obgen.cpp
+obgen_LDADD = ../src/libopenbabel.la @LIBDL@
 obxyz_SOURCES = obxyz.cpp
 obxyz_LDADD = ../src/libopenbabel.la @LIBDL@
 
@@ -310,6 +316,9 @@ obchiral$(EXEEXT): $(obchiral_OBJECTS) $(obchiral_DEPENDENCIES)
 obfit$(EXEEXT): $(obfit_OBJECTS) $(obfit_DEPENDENCIES) 
 	@rm -f obfit$(EXEEXT)
 	$(CXXLINK) $(obfit_LDFLAGS) $(obfit_OBJECTS) $(obfit_LDADD) $(LIBS)
+obgen$(EXEEXT): $(obgen_OBJECTS) $(obgen_DEPENDENCIES) 
+	@rm -f obgen$(EXEEXT)
+	$(CXXLINK) $(obgen_LDFLAGS) $(obgen_OBJECTS) $(obgen_LDADD) $(LIBS)
 obgrep$(EXEEXT): $(obgrep_OBJECTS) $(obgrep_DEPENDENCIES) 
 	@rm -f obgrep$(EXEEXT)
 	$(CXXLINK) $(obgrep_LDFLAGS) $(obgrep_OBJECTS) $(obgrep_LDADD) $(LIBS)
@@ -331,6 +340,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obchiral.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfit.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgrep.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obprop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obrotate.Po@am__quote@
