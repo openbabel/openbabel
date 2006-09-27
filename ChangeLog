@@ -1,3 +1,10 @@
+2006-09-27  Donald E. Curtis <dcurtis3@sourceforge.net>
+
+	* src/generic.h: Updated OBSetData to initialize to correct
+	OBGenericDataType enumeration.
+	* src/formats/ghemicalformat.cpp: GPR format now exports GAMESS
+	information correctly if it exists as part of the molecule.
+
 2006-09-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/ruby: Add new ruby interface -- probably needs to be
@@ -27,6 +34,10 @@
 	* tools/obgen.cpp, tools/Makefile.am: New "obgen" tool for
 	creating simple 3D coordinates for SMILES and other 0D
 	formats. Contributed by Tim Vandermeersch.
+
+2006-09-06  Donald E. Curtis <dcurtis3@sourceforge.net>
+
+	* src/generic.h: Added new OBGenericData subclass: OBSetData
 
 2006-08-30  Donald E. Curtis <dcurtis3@sourceforge.net>
 

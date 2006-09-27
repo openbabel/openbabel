@@ -277,7 +277,7 @@ namespace OpenBabel
   protected:
     std::vector<OBGenericData *> _vdata;
   public:
-    OBSetData() : OBGenericData("SetData", 0) {}
+    OBSetData() : OBGenericData("SetData", OBGenericDataType::SetData) {}
     virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBSetData(*this);}
 
     //! Add an OBGenericData element to the set.
@@ -311,6 +311,18 @@ namespace OpenBabel
     virtual const std::vector<OBGenericData *> &GetData() const //now virtual and const
     {
       return(_vdata);
+    }
+
+    //! Get the begin iterator.
+    std::vector<OBGenericData*>::iterator GetBegin()
+    {
+      return _vdata.begin();
+    }
+
+    //! Get the end iterator.
+    std::vector<OBGenericData*>::iterator GetEnd()
+    {
+      return _vdata.end();
     }
 
     //! Delete the matching OBGenericData element.
