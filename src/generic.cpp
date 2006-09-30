@@ -402,7 +402,7 @@ namespace OpenBabel
 		  return OBUnitCell::Cubic;
 
 	  //just to be extra sure
-	  else if ( spacegroup > 230 )
+	  else // ( spacegroup > 230 )
 		  return OBUnitCell::Undefined;
   }
   
@@ -454,6 +454,7 @@ namespace OpenBabel
               return i+1;
           }
       }
+      return 0; //presumably never reached
   }
   
   double OBUnitCell::GetCellVolume()

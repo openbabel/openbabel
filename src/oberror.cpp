@@ -159,12 +159,14 @@ namespace OpenBabel
     
   void OBMessageHandler::ThrowError(OBError err)
   {
+    if (!_logging)
+      return;
     _messageList.push_back(err);
     _messageCount[err.GetLevel()]++;
     if (_maxEntries != 0 && _messageList.size() > _maxEntries)
       _messageList.pop_front();
   
-    if (_logging && err.GetLevel() <= _outputLevel)
+    if (err.GetLevel() <= _outputLevel)
       {
         *_outputStream << err;
       }

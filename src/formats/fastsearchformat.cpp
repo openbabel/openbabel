@@ -82,6 +82,7 @@ Read Options (when searching) e.g. -at0.7\n \
     FastSearch fs;
     FastSearchIndexer* fsi;
     streampos LastSeekpos; //used during update
+    OBStopwatch sw; //used when preparing index
   };
 
   ///////////////////////////////////////////////////////////////
@@ -310,29 +311,25 @@ Read Options (when searching) e.g. -at0.7\n \
   /////////////////////////////////////////////////////
   bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
   {
-    //Prepares or updates an index file
+    //Prepares or updates an index file. Called for each molecule indexed
 
     bool update = pConv->IsOption("u")!=NULL;
-    string mes("prepare an");
-    if(update)
-      mes = "update the";
-    if(fsi==NULL)
-      clog << "This will " << mes << " index of " << pConv->GetInFilename()
-           <<  " and may take some time..." << flush;
-			
-    OBStopwatch sw;
-    //	sw.Start(); //seems stupid but makes gcc-4 happy
-	
-    std::string auditMsg = "OpenBabel::Write fastsearch index ";
-    std::string description(Description());
-    auditMsg += description.substr( 0, description.find('\n') );
-    obErrorLog.ThrowError(__FUNCTION__,auditMsg,obAuditMsg);
 
     ostream* pOs = pConv->GetOutStream();// with named index it is already open
     bool NewOstreamUsed=false;
     if(fsi==NULL)
       {
         //First pass sets up FastSearchIndexer object
+        string mes("prepare an");
+        if(update)
+          mes = "update the";
+        clog << "This will " << mes << " index of " << pConv->GetInFilename()
+             <<  " and may take some time..." << flush;
+        std::string auditMsg = "OpenBabel::Write fastsearch index ";
+        std::string description(Description());
+        auditMsg += description.substr( 0, description.find('\n') );
+        obErrorLog.ThrowError(__FUNCTION__,auditMsg,obAuditMsg);
+
         sw.Start();
 		
         FptIndex* pidx; //used with update
@@ -376,11 +373,12 @@ Read Options (when searching) e.g. -at0.7\n \
         else // not cout
           {
             if(update)
-              {	obErrorLog.ThrowError(__FUNCTION__,
-                                      "Currently, updating	can only be done with index files that \
+              {
+                obErrorLog.ThrowError(__FUNCTION__,
+                  "Currently, updating	can only be done with index files that \
 have the same name as the datafile. Use the form:\n \
 	babel datafile.xxx -ofs -xu", obError);
-              return false;
+                return false;
               }
           }
 

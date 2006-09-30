@@ -1,3 +1,16 @@
+2006-09-30 Chris Morley <ob@gaseq.co.uk>
+	
+	* src/formats/chemdrawcdx.cpp (Flags): added NOTWRITABLE
+	
+	* src/formats/fastsearchformat.cpp: Made timing of indexing
+	work properly.
+	
+	* src/oberror.cpp(ThrowError) : return immediately if _logging is
+	false; do add to list of messages.
+	
+	* src/generic.cpp(GetLatticeType, GetSpaceGroupNumber) : ensured
+	all paths returned value to avoid compiler warning (no real effect)
+
 2006-09-27  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/generic.h: Updated OBSetData to initialize to correct

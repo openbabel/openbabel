@@ -58,7 +58,7 @@ public:
      NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY */
   virtual unsigned int Flags()
   {
-      return READONEONLY;
+      return NOTWRITABLE | READONEONLY;
   };
 
  	/* This optional function is for formats which can contain more than one
