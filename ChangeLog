@@ -1,4 +1,13 @@
 2006-09-30 Chris Morley <ob@gaseq.co.uk>
+
+	* src/formats/fastsearchformat.cpp(ReadChemObject):
+	Output message with the properties of the index if no
+	SMILES structure provided.
+	
+	* src/fingerprint.h: Added FastSearch::GetIndexHeader()
+	Reformat tabs.
+	
+2006-09-30 Chris Morley <ob@gaseq.co.uk>
 	
 	* src/formats/chemdrawcdx.cpp (Flags): added NOTWRITABLE
 	
@@ -6,7 +15,7 @@
 	work properly.
 	
 	* src/oberror.cpp(ThrowError) : return immediately if _logging is
-	false; do add to list of messages.
+	false; do not add to list of messages.
 	
 	* src/generic.cpp(GetLatticeType, GetSpaceGroupNumber) : ensured
 	all paths returned value to avoid compiler warning (no real effect)

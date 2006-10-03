@@ -102,12 +102,41 @@ Read Options (when searching) e.g. -at0.7\n \
                           auditMsg,
                           obAuditMsg);
 
+    //Derive index name
+    string indexname = pConv->GetInFilename();
+    string::size_type pos=indexname.find_last_of('.');
+    if(pos!=string::npos)
+      {
+        indexname.erase(pos);
+        indexname += ".fs";
+      }
+
+    //Have to open input stream again because needs to be in binary mode
+    ifstream ifs;
+    stringstream errorMsg;
+    if(!indexname.empty())
+      ifs.open(indexname.c_str(),ios::binary);
+    if(!ifs)
+      {
+        errorMsg << "Couldn't open " << indexname << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+        return false;
+      }
+
+    string datafilename = fs.ReadIndex(&ifs);
+    if(datafilename.empty())
+      {
+        errorMsg << "Difficulty reading from index " << indexname << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+        return false;
+      }
+
+    //Convert the SMARTS string to an OBMol
     OBMol patternMol;
-    stringstream smiles(stringstream::out);		
+    stringstream smiles(stringstream::out);
     ifstream patternstream;
     OBConversion PatternConv(&patternstream,&smiles);
 
-    //Convert the SMARTS string to an OBMol
     const char* p = pConv->IsOption("s",OBConversion::GENOPTIONS);
     string txt;
     if(p) 
@@ -121,15 +150,34 @@ Read Options (when searching) e.g. -at0.7\n \
         //erase -s option in GeneralOptions since it will be rewritten
         pConv->RemoveOption("s",OBConversion::GENOPTIONS);
       }
+    else
+      {
+      // or Make OBMol from file in -S option or -aS option	
+      p = pConv->IsOption("S",OBConversion::GENOPTIONS);
+      if(!p)
+        p = pConv->IsOption("S",OBConversion::INOPTIONS);//for GUI mainly
+      }
 
-    // or Make OBMol from file in -S option or -aS option	
-    p = pConv->IsOption("S",OBConversion::GENOPTIONS);
     if(!p)
-      p = pConv->IsOption("S",OBConversion::INOPTIONS);//for GUI mainly
+      {
+        //neither -s or -S options provided. Output info rather than doing search
+        const FptIndexHeader& header = fs.GetIndexHeader();
+        string id(header.fpid);
+        if(id.empty())
+          id = "default";
+        clog << indexname << " is an index of\n " << header.datafilename 
+             << ".\n It contains " << header.nEntries 
+             << " molecules. The fingerprint type is " << id << " with "
+             << OBFingerprint::Getbitsperint() * header.words << " bits.\n"
+             << "Typical usage for a substructure search:\n"
+             << "babel indexfile.fs -osmi -sSMILES" << endl;
+        return false;
+      }
+
     if(p && patternMol.Empty())
       {
         txt=p;
-        string::size_type pos = txt.find_last_of('.');
+        pos = txt.find_last_of('.');
         if(pos==string::npos)
           {
             obErrorLog.ThrowError(__FUNCTION__, "Filename of pattern molecule in -S option must have an extension", obError);
@@ -163,39 +211,10 @@ Read Options (when searching) e.g. -at0.7\n \
     PatternConv.Write(&patternMol);
     //remove name to leave smiles string
     string smilesstr(smiles.str());
-    string::size_type pos = smilesstr.find(' ');
+    pos = smilesstr.find(' ');
     if(pos!=string::npos)
       smilesstr = smilesstr.substr(0,pos);
     pConv->AddOption("s", OBConversion::GENOPTIONS, smilesstr.c_str());
-	
-    //Derive index name
-    string indexname = pConv->GetInFilename();
-    pos=indexname.find_last_of('.');
-    if(pos!=string::npos)
-      {
-        indexname.erase(pos);
-        indexname += ".fs";
-      }
-
-    //Have to open input stream again because needs to be in binary mode
-    ifstream ifs;
-    stringstream errorMsg;
-    if(!indexname.empty())
-      ifs.open(indexname.c_str(),ios::binary);
-    if(!ifs)
-      {
-        errorMsg << "Couldn't open " << indexname << endl;
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-        return false;
-      }
-
-    string datafilename = fs.ReadIndex(&ifs);
-    if(datafilename.empty())
-      {
-        errorMsg << "Difficulty reading from index " << indexname << endl;
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-        return false;
-      }
 
     //Open the datafile and put it in pConv
     //datafile name derived from index file probably won't have a file path
