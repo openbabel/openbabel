@@ -208,12 +208,27 @@ namespace OpenBabel {
       //@{
       std::istream* GetInStream() const {return pInStream;};
       std::ostream* GetOutStream() const {return pOutStream;};
-      void          SetInStream(std::istream* pIn){pInStream=pIn;};
-      void          SetOutStream(std::ostream* pOut){pOutStream=pOut;};
-      bool          SetInAndOutFormats(const char* inID, const char* outID);///< Sets the formats from their ids, e g CML
-      bool          SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
+      void          SetInStream(std::istream* pIn)
+        { 
+          if (pInStream && NeedToFreeInStream) {
+            delete pInStream; NeedToFreeInStream = false;
+          }
+          pInStream=pIn;
+        };
+      void          SetOutStream(std::ostream* pOut)
+        {
+          if (pOutStream && NeedToFreeOutStream) {
+            delete pOutStream; NeedToFreeOutStream = false;
+          }
+          pOutStream=pOut;
+        };
+      /// Sets the formats from their ids, e g CML
+      bool        SetInAndOutFormats(const char* inID, const char* outID);
+      bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
+      /// Sets the input format from an id e.g. CML
       bool	      SetInFormat(const char* inID);
       bool	      SetInFormat(OBFormat* pIn);
+      /// Sets the output format from an id e.g. CML
       bool	      SetOutFormat(const char* outID);
       bool	      SetOutFormat(OBFormat* pOut);
 
@@ -372,7 +387,9 @@ namespace OpenBabel {
       bool		  MoreFilesToCome;
       bool		  OneObjectOnly;
       bool		  ReadyToInput;
-      bool              CheckedForGzip; ///< input stream was already checked if it is gzip-encoded
+      bool      CheckedForGzip; ///< input stream was already checked if it is gzip-encoded
+      bool      NeedToFreeInStream;
+      bool      NeedToFreeOutStream;
 
       static int FormatFilesLoaded;
       OBBase*		  pOb1;

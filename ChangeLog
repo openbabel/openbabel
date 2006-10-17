@@ -1,3 +1,9 @@
+2006-10-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/obconversion.h, src/obconversion.cpp: Make sure to free
+	streams created using ReadString, ReadFile, or WriteFile()
+	methods. Fixes PR#1578916.
+
 2006-10-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/chemdrawcdx.cpp: Fixed corruption of 2D coordinates

@@ -194,7 +194,8 @@ namespace OpenBabel {
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsLast(true), MoreFilesToCome(false),
     OneObjectOnly(false), pOb1(NULL),
-    pAuxConv(NULL), m_IsFirstInput(true)
+    pAuxConv(NULL), m_IsFirstInput(true), 
+    NeedToFreeInStream(false), NeedToFreeOutStream(false)
   {
     pInStream=is;
     pOutStream=os;
@@ -251,6 +252,8 @@ namespace OpenBabel {
     pOb1           = o.pOb1;
     ReadyToInput   = o.ReadyToInput;
     m_IsFirstInput = o.m_IsFirstInput;
+    NeedToFreeInStream = o.NeedToFreeInStream;
+    NeedToFreeOutStream = o.NeedToFreeOutStream;
 
     pAuxConv       = NULL;
   }
@@ -260,6 +263,15 @@ namespace OpenBabel {
   {
     if(pAuxConv!=this)
       delete pAuxConv;
+    // Free any remaining streams from convenience functions
+    if(pInStream && NeedToFreeInStream) {
+      delete pInStream;
+      NeedToFreeInStream = false;
+    }
+    if(pOutStream && NeedToFreeOutStream) {
+      delete pOutStream;
+      NeedToFreeOutStream = false;
+    }
   }
   //////////////////////////////////////////////////////
 
@@ -410,8 +422,8 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////
   int OBConversion::Convert(istream* is, ostream* os) 
   {
-    if(is) pInStream=is;
-    if(os) pOutStream=os;
+    if (is) pInStream=is;
+    if (os) pOutStream=os;
     ostream* pOrigOutStream = pOutStream;
 
 #ifdef HAVE_LIBZ
@@ -709,8 +721,8 @@ namespace OpenBabel {
 
   bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
   {
-    if(pin)
-      pInStream=pin;
+    if(pin) pInStream=pin;
+
     if(!pInFormat) return false;
 
 #ifdef HAVE_LIBZ
@@ -726,8 +738,8 @@ namespace OpenBabel {
   /// Returns true if successful.
   bool OBConversion::Write(OBBase* pOb, ostream* pos)
   {
-    if(pos)
-      pOutStream=pos;
+    if(pos) pOutStream=pos;
+
     if(!pOutFormat) return false;
 
     ostream* pOrigOutStream = pOutStream;
@@ -781,7 +793,13 @@ namespace OpenBabel {
   {
     if(!pOutFormat) return false;
 
+    // if we have an old stream, free this first before creating a new one
+    if (pOutStream && NeedToFreeOutStream) {
+      delete pOutStream;
+    }
+
     ofstream *ofs = new ofstream;
+    NeedToFreeOutStream = true; // make sure we clean this up later
     ios_base::openmode omode = 
       pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
 
@@ -798,7 +816,13 @@ namespace OpenBabel {
   ////////////////////////////////////////////
   bool	OBConversion::ReadString(OBBase* pOb, std::string input)
   {
+    // if we have an old stream, free this first before creating a new one
+    if (pInStream && NeedToFreeInStream) {
+      delete pInStream;
+    }
+
     stringstream *pin = new stringstream(input);
+    NeedToFreeInStream = true; // make sure we clean this up later
     return Read(pOb, pin);
   }
 
@@ -808,7 +832,13 @@ namespace OpenBabel {
   {
     if(!pInFormat) return false;
 
+    // if we have an old stream, free this first before creating a new one
+    if (pInStream && NeedToFreeInStream) {
+      delete pInStream;
+    }
+
     ifstream *ifs = new ifstream;
+    NeedToFreeInStream = true; // make sure we free this
     ios_base::openmode imode = 
       pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
 
