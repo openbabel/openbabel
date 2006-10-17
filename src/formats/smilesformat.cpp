@@ -32,6 +32,7 @@ namespace OpenBabel
     SMIFormat()
     {
       OBConversion::RegisterFormat("smi",this, "chemical/x-daylight-smiles");
+      OBConversion::RegisterFormat("smiles",this, "chemical/x-daylight-smiles");
       OBConversion::RegisterOptionParam("n", this);
       OBConversion::RegisterOptionParam("t", this);
     }
@@ -62,7 +63,7 @@ namespace OpenBabel
     virtual const char* TargetClassDescription(){return OBMol::ClassDescription();};
 
     virtual const char* SpecificationURL()
-    {return "http://www.daylight.com/smiles/f_smiles.html";};
+    {return "http://www.daylight.com/smiles/";};
 
     virtual int SkipObjects(int n, OBConversion* pConv)
     {

@@ -33,7 +33,7 @@ namespace OpenBabel
   public:
     InChIFormat()
     {
-      OBConversion::RegisterFormat("inchi",this);
+      OBConversion::RegisterFormat("inchi",this, "chemical/x-inchi");
       OBConversion::RegisterOptionParam("O", this, 1);
 
     }
@@ -55,6 +55,9 @@ Write Options e.g. -xat \n \
 
     virtual const char* SpecificationURL()
     { return "http://www.iupac.org/inchi/";};
+
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-inchi";}
 
     virtual bool  WriteMolecule(OBBase* pOb, OBConversion* pConv);
     static char   CompareInchi(const char* Inchi1, const char* Inchi2);

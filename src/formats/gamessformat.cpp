@@ -151,7 +151,7 @@ namespace OpenBabel
       //Register this format type ID
       GAMESSInputFormat()
       {
-        OBConversion::RegisterFormat("inp",this);
+        OBConversion::RegisterFormat("inp",this, "chemical/x-gamess-input");
         OBConversion::RegisterFormat("gamin",this);
         // Command-line keywords
         OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);

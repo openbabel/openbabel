@@ -26,7 +26,7 @@ namespace OpenBabel
     //Register this format type ID
     HINFormat()
     {
-      OBConversion::RegisterFormat("hin",this);
+      OBConversion::RegisterFormat("hin",this, "chemical/x-hin");
     }
 
     virtual const char* Description() //required
@@ -37,6 +37,9 @@ namespace OpenBabel
 
     virtual const char* SpecificationURL()
     { return "";}; //optional
+
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-hin";}; //optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////

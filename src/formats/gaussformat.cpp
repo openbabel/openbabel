@@ -26,6 +26,7 @@ namespace OpenBabel
     //Register this format type ID
     GaussianOutputFormat()
     {
+      OBConversion::RegisterFormat("gal",this, "chemical/x-gaussian-log");
       OBConversion::RegisterFormat("g98",this);
       OBConversion::RegisterFormat("g03",this);
     }
@@ -43,7 +44,7 @@ namespace OpenBabel
     { return "http://www.gaussian.com/";};
 
     virtual const char* GetMIMEType() 
-    { return "chemical/x-gaussian"; };
+    { return "chemical/x-gaussian-log"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -65,8 +66,10 @@ namespace OpenBabel
     //Register this format type ID
     GaussianInputFormat()
     {
+      OBConversion::RegisterFormat("com",this, "chemical/x-gaussian-input");
       OBConversion::RegisterFormat("gau",this);
-      OBConversion::RegisterFormat("com",this);
+      OBConversion::RegisterFormat("gjc",this);
+      OBConversion::RegisterFormat("gjf",this);
       // Command-line keywords
       OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);
       // Command-line keyword file
@@ -85,7 +88,7 @@ namespace OpenBabel
     {return "http://www.gaussian.com/g_ur/m_input.htm";};
 
     virtual const char* GetMIMEType() 
-    { return "chemical/x-gaussian"; };
+    { return "chemical/x-gaussian-input"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

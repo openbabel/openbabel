@@ -1,3 +1,29 @@
+2006-10-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/chemdrawcdx.cpp: Fixed corruption of 2D coordinates
+	caused by attempted conversion from CDX scale to Angstroms. Fixes
+	PR#1576703.
+
+	* configure.in, configure, Makefile.*: Bump to version 2.1.0b2 for
+	next snapshot (now using autoconf-2.60).
+
+	* data/*, src/fingerprints/finger3.cpp: Rename pattern file to
+	SMARTS_InteLigand.txt.
+
+	* src/obiter.h: Fix GCC warning reported by Carsten.
+
+	* src/formats/*format.cpp: Update chemical MIME types,
+	specification URLS and extensions from the chemical MIME project:
+	http://sf.net/projects/chemical-mime 
+
+	* scripts/openbabel.i: Add output string for
+	OBTypeTable::Translate().
+
+	* scripts/*: Regenerate.
+
+	* test/textbuffer.cpp, test/vector3.cpp: New tests for newline
+	translation and vector3 manipulations.
+
 2006-09-30 Chris Morley <ob@gaseq.co.uk>
 
 	* src/formats/fastsearchformat.cpp(ReadChemObject):

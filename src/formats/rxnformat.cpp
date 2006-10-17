@@ -32,7 +32,7 @@ namespace OpenBabel
     //Register this format type ID
     RXNFormat()
     {
-      OBConversion::RegisterFormat("rxn",this);
+      OBConversion::RegisterFormat("rxn",this, "chemical/x-mdl-rxnfile");
     }
 
     virtual const char* Description()
@@ -43,7 +43,7 @@ namespace OpenBabel
     };
 
     virtual const char* GetMIMEType() 
-    { return "chemical/x-mdl-rxn"; };
+    { return "chemical/x-mdl-rxnfile"; };
 
     virtual const char* TargetClassDescription()
     {

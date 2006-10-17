@@ -39,7 +39,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    {return "http://openbabel.sourceforge.net/formats/fract.shtml";}; //optional
+    {return "http://openbabel.sourceforge.net/wiki/Free_Form_Fractional";}; //optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////

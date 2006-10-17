@@ -26,7 +26,8 @@ namespace OpenBabel
     //Register this format type ID
     MOPACFormat()
     {
-      OBConversion::RegisterFormat("mopout",this);
+      OBConversion::RegisterFormat("mopout",this, "chemical/x-mopac-out");
+      OBConversion::RegisterFormat("moo",this, "chemical/x-mopac-out");
     }
 
     virtual const char* Description() //required
@@ -42,6 +43,9 @@ namespace OpenBabel
     {
       return NOTWRITABLE;
     };
+
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-mopac-out"; };
 
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
@@ -155,6 +159,8 @@ namespace OpenBabel
     MOPACCARTFormat()
     {
       OBConversion::RegisterFormat("mopcrt",this, "chemical/x-mopac-input");
+      OBConversion::RegisterFormat("mop",this, "chemical/x-mopac-input");
+      OBConversion::RegisterFormat("mpc",this, "chemical/x-mopac-input");
     }
 
     virtual const char* Description() //required
@@ -165,6 +171,9 @@ namespace OpenBabel
         s  Output single bonds only\n\
         b  Disable bonding entirely\n";
     };
+
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-mopac-input"; };
 
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);

@@ -27,8 +27,8 @@ namespace OpenBabel
     //Register this format type ID
     ShelXFormat()
     {
-      OBConversion::RegisterFormat("res",this);
-      OBConversion::RegisterFormat("ins",this);
+      OBConversion::RegisterFormat("res",this, "chemical/x-shelx");
+      OBConversion::RegisterFormat("ins",this, "chemical/x-shelx");
     }
 
     virtual const char* Description() //required
@@ -42,6 +42,9 @@ namespace OpenBabel
 
     virtual const char* SpecificationURL()
     {return "http://shelx.uni-ac.gwdg.de/SHELX/";}; //optional
+
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-shelx"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

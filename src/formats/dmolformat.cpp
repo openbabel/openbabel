@@ -30,6 +30,7 @@ namespace OpenBabel
     DMolFormat()
     {
       OBConversion::RegisterFormat("dmol",this);
+      OBConversion::RegisterFormat("outmol",this, "chemical/x-dmol");
     }
 
     virtual const char* Description() //required

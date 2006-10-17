@@ -580,6 +580,8 @@ BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
 BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
 BUILD_PCH_FALSE = @BUILD_PCH_FALSE@
 BUILD_PCH_TRUE = @BUILD_PCH_TRUE@
+BUILD_RUBY_FALSE = @BUILD_RUBY_FALSE@
+BUILD_RUBY_TRUE = @BUILD_RUBY_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -645,6 +647,7 @@ PERL_TESTS_TRUE = @PERL_TESTS_TRUE@
 PROVE = @PROVE@
 PYTHON = @PYTHON@
 RANLIB = @RANLIB@
+RUBY = @RUBY@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -706,7 +709,7 @@ target_alias = @target_alias@
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 # Make sure to install the inchi_api.h header
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
-libopenbabelinclude_HEADERS = inchi_api.h obmolecformat.h
+libopenbabelinclude_HEADERS = inchi_api.h obmolecformat.h chemdrawcdx.h
 EXTRA_DIST = exampleformat.cpp
 SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
@@ -892,9 +895,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/formats/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/formats/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  src/formats/Makefile
+	  $(AUTOMAKE) --gnu  src/formats/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

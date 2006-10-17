@@ -26,7 +26,9 @@ public:
     //Register this format type ID
     CARFormat()
     {
-        OBConversion::RegisterFormat("car",this);
+      OBConversion::RegisterFormat("car",this, "chemical/x-msi-car");
+      OBConversion::RegisterFormat("cor",this, "chemical/x-msi-car");
+      OBConversion::RegisterFormat("arc",this, "chemical/x-msi-car");
     }
 
   virtual const char* Description() //required
@@ -40,6 +42,9 @@ public:
 
   virtual const char* SpecificationURL()
   { return "";}; //optional
+
+  virtual const char* GetMIMEType() 
+  { return "chemical/x-msi-car"; };
 
   virtual unsigned int Flags()
   {

@@ -41,7 +41,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    {return "http://openbabel.sourceforge.net/formats/xyz.shtml";}; //optional
+    {return "http://openbabel.sourceforge.net/wiki/XYZ";}; //optional
 
     virtual const char* GetMIMEType() 
     { return "chemical/x-xyz"; };

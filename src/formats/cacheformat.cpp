@@ -25,7 +25,8 @@ namespace OpenBabel
     //Register this format type ID
     CacheFormat()
     {
-      OBConversion::RegisterFormat("cache",this);
+      OBConversion::RegisterFormat("cac",this);
+      OBConversion::RegisterFormat("cache",this, "chemical/x-alchemy");
     }
 
     virtual const char* Description() //required
@@ -37,6 +38,9 @@ namespace OpenBabel
 
     virtual const char* SpecificationURL()
     {return "";}; //optional
+
+    virtual const char* GetMIMEType() 
+    { return "chemical/x-cache"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
