@@ -3,7 +3,7 @@ INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
 libopenbabelinclude_HEADERS = inchi_api.h
 
-EXTRA_DIST = exampleformat.cpp
+EXTRA_DIST = exampleformat.cpp chemdrawcdx.h
 SUBDIRS =
 
 if BUILD_XML
@@ -29,7 +29,7 @@ libformats_la_SOURCES = \
 	CSRformat.cpp PQSformat.cpp alchemyformat.cpp \
 	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
-	chem3dformat.cpp chemdrawformat.cpp chemtoolformat.cpp \
+	chem3dformat.cpp chemdrawformat.cpp chemdrawcdx.cpp chemtoolformat.cpp \
 	copyformat.cpp crkformat.cpp cssrformat.cpp \
 	dmolformat.cpp fastsearchformat.cpp featformat.cpp fhformat.cpp \
 	fingerprintformat.cpp \
@@ -51,7 +51,7 @@ pkglib_LTLIBRARIES = \
 	CSRformat.la PQSformat.la alchemyformat.la \
 	amberformat.la balstformat.la bgfformat.la boxformat.la \
 	cacaoformat.la cacheformat.la carformat.la cccformat.la \
-	chem3dformat.la chemdrawformat.la chemtoolformat.la \
+	chem3dformat.la chemdrawformat.la chemdrawcdxformat.la chemtoolformat.la \
 	copyformat.la crkformat.la cssrformat.la \
 	dmolformat.la fastsearchformat.la featformat.la fhformat.la \
 	fingerprintformat.la \
@@ -106,6 +106,9 @@ chem3dformat_la_LDFLAGS = -module -avoid-version
 
 chemdrawformat_la_SOURCES = chemdrawformat.cpp
 chemdrawformat_la_LDFLAGS = -module -avoid-version 
+
+chemdrawcdxformat_la_SOURCES = chemdrawcdx.cpp
+chemdrawcdxformat_la_LDFLAGS = -module -avoid-version
 
 chemtoolformat_la_SOURCES = chemtoolformat.cpp
 chemtoolformat_la_LDFLAGS = -module -avoid-version 
