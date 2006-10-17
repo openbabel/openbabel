@@ -108,6 +108,8 @@ BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
 BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
 BUILD_PCH_FALSE = @BUILD_PCH_FALSE@
 BUILD_PCH_TRUE = @BUILD_PCH_TRUE@
+BUILD_RUBY_FALSE = @BUILD_RUBY_FALSE@
+BUILD_RUBY_TRUE = @BUILD_RUBY_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -173,6 +175,7 @@ PERL_TESTS_TRUE = @PERL_TESTS_TRUE@
 PROVE = @PROVE@
 PYTHON = @PYTHON@
 RANLIB = @RANLIB@
+RUBY = @RUBY@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -262,9 +265,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  tools/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  tools/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  tools/Makefile
+	  $(AUTOMAKE) --gnu  tools/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

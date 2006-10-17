@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([Open Babel], 2.1.0b1, openbabel-discuss@lists.sourceforge.net, openbabel)
+AC_INIT([Open Babel], 2.1.0b2, openbabel-discuss@lists.sourceforge.net, openbabel)
 AC_CONFIG_SRCDIR(src/zipstreamimpl.h)
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
@@ -117,6 +117,7 @@ AC_PATH_PROG(SWIG, swig)
 AC_PATH_PROG(PERL, perl)
 AC_PATH_PROG(PROVE, prove)
 AC_PATH_PROG(PYTHON, python)
+AC_PATH_PROG(RUBY, ruby)
 
 dnl Conditionally build docs, scripts, etc.
 
@@ -170,6 +171,8 @@ elif test x"$PERL" != "x"; then
 SCRIPTING="yes"
 fi
 AM_CONDITIONAL(BUILD_SCRIPTS, test "$SCRIPTING" = "yes")
+
+AM_CONDITIONAL(BUILD_RUBY, test x"$RUBY" != "x")
 
 dnl libtool
 dnl You can set the shared library version in src/Makefile.am
