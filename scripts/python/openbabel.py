@@ -694,6 +694,7 @@ ElectronicData = cvar.ElectronicData
 VibrationData = cvar.VibrationData
 RotationData = cvar.RotationData
 NuclearData = cvar.NuclearData
+SetData = cvar.SetData
 CustomData0 = cvar.CustomData0
 CustomData1 = cvar.CustomData1
 CustomData2 = cvar.CustomData2
@@ -767,6 +768,23 @@ class OBPairData(OBGenericData):
 OBPairData_swigregister = _openbabel.OBPairData_swigregister
 OBPairData_swigregister(OBPairData)
 
+class OBSetData(OBGenericData):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBSetData_swiginit(self,_openbabel.new_OBSetData(*args))
+    def Clone(*args): return _openbabel.OBSetData_Clone(*args)
+    def AddData(*args): return _openbabel.OBSetData_AddData(*args)
+    def SetData(*args): return _openbabel.OBSetData_SetData(*args)
+    def GetData(*args): return _openbabel.OBSetData_GetData(*args)
+    def GetBegin(*args): return _openbabel.OBSetData_GetBegin(*args)
+    def GetEnd(*args): return _openbabel.OBSetData_GetEnd(*args)
+    def DeleteData(*args): return _openbabel.OBSetData_DeleteData(*args)
+    __swig_destroy__ = _openbabel.delete_OBSetData
+    __del__ = lambda self : None;
+OBSetData_swigregister = _openbabel.OBSetData_swigregister
+OBSetData_swigregister(OBSetData)
+
 class OBVirtualBond(OBGenericData):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -829,6 +847,7 @@ class OBUnitCell(OBGenericData):
     def GetCellMatrix(*args): return _openbabel.OBUnitCell_GetCellMatrix(*args)
     def GetOrthoMatrix(*args): return _openbabel.OBUnitCell_GetOrthoMatrix(*args)
     def GetFractionalMatrix(*args): return _openbabel.OBUnitCell_GetFractionalMatrix(*args)
+    def GetSpaceGroupNumber(*args): return _openbabel.OBUnitCell_GetSpaceGroupNumber(*args)
     def GetCellVolume(*args): return _openbabel.OBUnitCell_GetCellVolume(*args)
 OBUnitCell_swigregister = _openbabel.OBUnitCell_swigregister
 OBUnitCell_swigregister(OBUnitCell)

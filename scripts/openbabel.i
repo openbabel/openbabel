@@ -49,6 +49,7 @@ namespace std {
 
 %import "babelconfig.h"
 
+%apply std::string &OUTPUT { std::string &to };
 %include "data.h"
 %include "obutil.h"
 %include "math/vector3.h"

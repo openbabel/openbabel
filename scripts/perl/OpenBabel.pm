@@ -1153,6 +1153,50 @@ sub ACQUIRE {
 }
 
 
+############# Class : Chemistry::OpenBabel::OBSetData ##############
+
+package Chemistry::OpenBabel::OBSetData;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel::OBGenericData Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBSetData(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*Clone = *Chemistry::OpenBabelc::OBSetData_Clone;
+*AddData = *Chemistry::OpenBabelc::OBSetData_AddData;
+*SetData = *Chemistry::OpenBabelc::OBSetData_SetData;
+*GetData = *Chemistry::OpenBabelc::OBSetData_GetData;
+*GetBegin = *Chemistry::OpenBabelc::OBSetData_GetBegin;
+*GetEnd = *Chemistry::OpenBabelc::OBSetData_GetEnd;
+*DeleteData = *Chemistry::OpenBabelc::OBSetData_DeleteData;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBSetData($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : Chemistry::OpenBabel::OBVirtualBond ##############
 
 package Chemistry::OpenBabel::OBVirtualBond;
@@ -1286,6 +1330,7 @@ sub DESTROY {
 *GetCellMatrix = *Chemistry::OpenBabelc::OBUnitCell_GetCellMatrix;
 *GetOrthoMatrix = *Chemistry::OpenBabelc::OBUnitCell_GetOrthoMatrix;
 *GetFractionalMatrix = *Chemistry::OpenBabelc::OBUnitCell_GetFractionalMatrix;
+*GetSpaceGroupNumber = *Chemistry::OpenBabelc::OBUnitCell_GetSpaceGroupNumber;
 *GetCellVolume = *Chemistry::OpenBabelc::OBUnitCell_GetCellVolume;
 sub DISOWN {
     my $self = shift;
@@ -2615,6 +2660,7 @@ bless $VZ, Chemistry::OpenBabel::vector3;
 *VibrationData = *Chemistry::OpenBabelc::VibrationData;
 *RotationData = *Chemistry::OpenBabelc::RotationData;
 *NuclearData = *Chemistry::OpenBabelc::NuclearData;
+*SetData = *Chemistry::OpenBabelc::SetData;
 *CustomData0 = *Chemistry::OpenBabelc::CustomData0;
 *CustomData1 = *Chemistry::OpenBabelc::CustomData1;
 *CustomData2 = *Chemistry::OpenBabelc::CustomData2;
