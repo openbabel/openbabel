@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -248,18 +248,28 @@ int get_unusual_el_valence( int nPeriodicNum, int charge, int radical, int bonds
 /***********************************************************************************
  *  output valence needed to unumbiguosly reconstruct number of H
  ***********************************************************************************/
-int needed_unusual_el_valence( int nPeriodicNum, int charge, int radical, int bonds_valence, int num_H, int num_bonds )
+int needed_unusual_el_valence( int nPeriodicNum, int charge, int radical, int bonds_valence,
+                               int actual_bonds_valence, int num_H, int num_bonds )
 {
     int i, num_found, num_found_known, chem_valence, rad_adj, known_chem_valence, exact_found;
+    int num_H_expected;
+    char szElement[4];
     /*
     if ( !num_bonds && !num_H )
         return 0;
     */
+    if ( num_bonds && !GetElementFormulaFromAtNum(nPeriodicNum, szElement ) ) {
+        num_H_expected = get_num_H( szElement, 0, NULL, charge, radical, actual_bonds_valence, 0,0,0,0 );
+    } else {
+        num_H_expected = num_H;
+    }
+
     chem_valence = bonds_valence + num_H;
     if ( charge < MIN_ATOM_CHARGE || charge > MAX_ATOM_CHARGE ||
          !get_el_valence( nPeriodicNum, charge, 0 ) || 
-         do_not_add_H( nPeriodicNum ) ) {
-        if ( !num_H )
+         do_not_add_H( nPeriodicNum ) || bonds_valence != actual_bonds_valence ||
+         num_H_expected != num_H ) {
+        if ( !num_H && !num_H_expected && bonds_valence == actual_bonds_valence )
             return 0; /* no H */
         return chem_valence; /* needs to add H-atoms */
     }
@@ -516,8 +526,11 @@ int get_num_H (const char* elname, int inp_num_H, S_CHAR inp_num_iso_H[],
             */
             num_H = inchi_max( 0, val - chem_bonds_valence );
         }
-        for ( i = 0, num_iso_H = 0; i < NUM_H_ISOTOPES; i ++ ) {
-            num_iso_H += inp_num_iso_H[i];
+        num_iso_H = 0;
+        if ( inp_num_iso_H ) {
+            for ( i = 0; i < NUM_H_ISOTOPES; i ++ ) {
+                num_iso_H += inp_num_iso_H[i];
+            }
         }
         /*  should not happen because atom here is not aliased */
         if ( num_iso_H ) {
@@ -855,6 +868,24 @@ AT_NUMB *is_in_the_list( AT_NUMB *pathAtom, AT_NUMB nNextAtom, int nPathLen )
     for ( ; nPathLen && *pathAtom != nNextAtom; nPathLen--,  pathAtom++ )
         ;
     return nPathLen? pathAtom : NULL;
+}
+/******************************************************************************************************/
+int nBondsValToMetal( inp_ATOM* at, int iat )
+{
+    int i, neigh, bond_type, nVal2Metal = 0;
+    inp_ATOM* a  = at + iat;
+    for ( i = 0; i < a->valence; i ++ ) {
+        neigh = a->neighbor[i];
+        if ( is_el_a_metal( at[(int)a->neighbor[i]].el_number ) ) {
+            bond_type = a->bond_type[i];
+            if ( bond_type <= BOND_TYPE_TRIPLE ) {
+                nVal2Metal += bond_type;
+            } else {
+                return -1;  /* bond to metal order is not well defined */
+            }
+        }
+    }
+    return nVal2Metal;
 }
 /************************************************************************/
 int num_of_H( inp_ATOM *at, int iat )

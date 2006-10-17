@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -1388,7 +1388,7 @@ int set_atom_0D_parity( inp_ATOM *at, inp_ATOM_STEREO *st, int num_at, int num_d
 
     return 0;
 }
-
+#if( BNS_RAD_SEARCH == 1 )
 /******************************************************************************************************/
 int MoveRadToAtomsAddCharges( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                     inp_ATOM *at, inp_ATOM *at2, VAL_AT *pVA, ALL_TC_GROUPS *pTCGroups, int forbidden_mask )
@@ -1597,6 +1597,7 @@ exit_function:
     }
     return ret;
 }
+#endif
 /**************************************************************************************************/
 typedef struct tagMobileHGroups {
     AT_NUMB group_number;

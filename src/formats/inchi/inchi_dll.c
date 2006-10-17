@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -1176,7 +1176,7 @@ int SetAtomAndBondProperties( inp_ATOM *at, inchi_Atom *ati, int a1,
             detect_unusual_el_valence( (int)at[a1].el_number, at[a1].charge,
                                         at[a1].radical, chem_valence_alt-1,
                                         num_H, at[a1].valence );
-        if ( bUnusualValenceArom && !bUnusualValenceNoArom ) {
+        if ( bUnusualValenceArom && !bUnusualValenceNoArom && 0 == nBondsValToMetal( at, a1) ) {
             /* typically NH in 5-member aromatic ring */
             at[a1].chem_bonds_valence --;
         }

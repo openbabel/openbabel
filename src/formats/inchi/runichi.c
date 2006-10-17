@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -746,7 +746,7 @@ void FillCompositeTableParms( SET_DRAW_PARMS *sdp, AT_NUMB StereoFlags,
 #ifndef INCHI_ANSI_ONLY
 #ifndef INCHI_LIB
 /*******************************************************************/
-int DisplayStructure( inp_ATOM *at, int num_at, int num_removed_H,
+int DisplayStructure( inp_ATOM *at, int num_at, int num_removed_H, int bAdd_DT_to_num_H,
                       int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic,
                       int bIsotopic, int j /*bTautomeric*/,
                       INChI **cur_INChI, INChI_Aux **cur_INChI_Aux,
@@ -756,8 +756,8 @@ int DisplayStructure( inp_ATOM *at, int num_at, int num_removed_H,
     int err = -1;
     if ( CreateInfoAtomData( &inf_data, num_at, 1 ) ) {
         err = 0;
-        FillOutInfAtom( at, &inf_data, num_at, num_removed_H, nNumRemovedProtons,
-                        nNumRemovedProtonsIsotopic, bIsotopic,
+        FillOutInfAtom( at, &inf_data, num_at, num_removed_H, bAdd_DT_to_num_H,
+                        nNumRemovedProtons, nNumRemovedProtonsIsotopic, bIsotopic,
                         cur_INChI?cur_INChI[j]:NULL,
                         cur_INChI_Aux?cur_INChI_Aux[j]:NULL, bAbcNumbers, nMode);
         FillTableParms( &dp->sdp, cur_INChI, cur_INChI_Aux, nMode, bIsotopic, j );
@@ -786,7 +786,7 @@ int DisplayCompositeStructure( COMP_ATOM_DATA *composite_norm_data, int bIsotopi
         if ( bTautomeric == TAUT_INI ) {
             /*
             FillOutInfAtom( (composite_norm_data+bTautomeric)->at, &inf_data, (composite_norm_data+bTautomeric)->num_at,
-                            (composite_norm_data+bTautomeric)->num_removed_H,
+                            (composite_norm_data+bTautomeric)->num_removed_H, bAdd_DT_to_num_H,
                             (composite_norm_data+bTautomeric)->nNumRemovedProtons,
                             (composite_norm_data+bTautomeric)->nNumRemovedProtonsIsotopic, bIsotopic,
                             NULL, NULL, bAbcNumbers, nMode);
@@ -838,10 +838,11 @@ const char *ErrMsg( int nErrorCode )
         case CT_CALC_STEREO_ERR:     p = "CALC_STEREO_ERR";       break;
         case CT_STEREO_CANON_ERR:    p = "STEREO_CANON_ERR";      break;
         case CT_CANON_ERR:           p = "CANON_ERR";             break;
-        case CT_WRONG_FORMULA:       p = "Wrong or missing chemical formula"; break;
+        case CT_WRONG_FORMULA:       p = "Wrong or missing chemical formula";  break;
         /*case CT_CANON_ERR2:          p = "CT_CANON_ERR2";         break;*/
         case CT_UNKNOWN_ERR:         p = "UNKNOWN_ERR";           break;
-        case BNS_RADICAL_ERR:        p = "Cannot process free radical center";      break;
+        case BNS_RADICAL_ERR:        p = "Cannot process free radical center"; break;
+        case BNS_ALTBOND_ERR:        p = "Cannot process aromatic bonds";      break;
 
         default:
             if ( nErrorCode > CT_UNKNOWN_ERR ) {
@@ -2579,16 +2580,16 @@ int RenumberingTest( PINChI2 *pINChI, PINChI_Aux2 *pINChI_Aux, ORIG_ATOM_DATA *o
     if ( /*ip->bDisplayEachComponentINChI &&*/ !pRenumbData->nRet2 ) {
         int err, len;
         /*
-        err = DisplayStructure( inp_cur_data->at, inp_cur_data->num_at, 0, 0, NULL. 1, 0, NULL, NULL,
+        err = DisplayStructure( inp_cur_data->at, inp_cur_data->num_at, 0, 1, 0, NULL. 1, 0, NULL, NULL,
                                             ip->bAbcNumbers, &ip->dp, ip->nMode, szTitle );
         */
-        err = DisplayStructure( inp_cur_data->at, inp_cur_data->num_at, 0, 0, NULL, 1/*isotopic*/, 0/*taut*/, NULL, NULL,
+        err = DisplayStructure( inp_cur_data->at, inp_cur_data->num_at, 0, 1, 0, NULL, 1/*isotopic*/, 0/*taut*/, NULL, NULL,
                                             ip->bAbcNumbers, &ip->dp, ip->nMode, szTitle );
         if ( pRenumbData->c1 || pRenumbData->c2 ) {
             len = strlen(szTitle);
             strcat( szTitle, " (Renumbered)" );
             err = DisplayStructure( pRenumbData->longest_inp_cur_data.at, pRenumbData->longest_inp_cur_data.num_at,
-                                    0, 0, NULL, 1, 0, NULL, NULL, ip->bAbcNumbers, &ip->dp, ip->nMode, szTitle );
+                                    0, 1, 0, NULL, 1, 0, NULL, NULL, ip->bAbcNumbers, &ip->dp, ip->nMode, szTitle );
             szTitle[len] = '\0';
         }
         sd->bUserQuitComponentDisplay = (err==ESC_KEY);
@@ -2971,7 +2972,7 @@ int DisplayTheWholeStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle, F
         } else {
             sprintf( szTitle, "Input Structure #%ld.%s%s%s%s%s", num_inp, SDF_LBL_VAL(ip->pSdfLabel,ip->pSdfValue), lpszType);
         }
-        err = DisplayStructure( orig_inp_data->at, orig_inp_data->num_inp_atoms, 0, 0, NULL, 1/*isotopic*/, 0/*taut*/, NULL, NULL,
+        err = DisplayStructure( orig_inp_data->at, orig_inp_data->num_inp_atoms, 0, 1, 0, NULL, 1/*isotopic*/, 0/*taut*/, NULL, NULL,
                                             ip->bAbcNumbers, &ip->dp, ip->nMode, szTitle );
         sd->bUserQuitComponent = (err==ESC_KEY);
         if ( !err ) {
@@ -3036,7 +3037,7 @@ int DisplayTheWholeStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle, F
                     return -1;
                 }
                 vDrawData.pWindowData = CreateWinData_( orig_inp_data->at, orig_inp_data->num_inp_atoms,
-                                                        0, 0, NULL, 1, 0, NULL, NULL,
+                                                        0, 1 /* bAdd_DT_to_num_H */, 0, NULL, 1, 0, NULL, NULL,
                                                         ip->bAbcNumbers, &ip->dp, ip->nMode );
                 if( vDrawData.pWindowData != NULL )
                 {
@@ -3754,7 +3755,7 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
             }
 #ifndef INCHI_LIB
             err = DisplayStructure( inp_cur_data->at, inp_cur_data->num_at,
-                                    0, 0, NULL, 1/*isotopic*/, 0/*taut*/, NULL, NULL,
+                                    0, 1, 0, NULL, 1/*isotopic*/, 0/*taut*/, NULL, NULL,
                                     ip->bAbcNumbers, &ip->dp, ip->nMode, szTitle );
             sd->bUserQuitComponentDisplay = (err==ESC_KEY);
             if ( !err ) {
@@ -3766,7 +3767,7 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                 struct DrawData vDrawData;
                 int    nType = COMPONENT_ORIGINAL;
                 vDrawData.pWindowData = CreateWinData_( inp_cur_data->at, inp_cur_data->num_at,
-                                                        0, 0, NULL,
+                                                        0, 1 /* bAdd_DT_to_num_H */, 0, NULL,
                                                         1 /* display isotopic if present */, 0, NULL, NULL,
                                                         ip->bAbcNumbers, &ip->dp, ip->nMode );
                 if( vDrawData.pWindowData != NULL )
@@ -3888,14 +3889,14 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                                 continue;
                             if ( bFixedBondsTaut ) {
                                 err = DisplayStructure( inp_norm_data[j]->at_fixed_bonds, inp_norm_data[j]->num_at,
-                                                        inp_norm_data[j]->num_removed_H,
+                                                        inp_norm_data[j]->num_removed_H, 0 /*bAdd_DT_to_num_H*/,
                                                         inp_norm_data[j]->nNumRemovedProtons,
                                                         inp_norm_data[j]->nNumRemovedProtonsIsotopic,
                                                         bHasIsotopicLayer, j, NULL,  NULL,
                                                         ip->bAbcNumbers, &ip->dp, ip->nMode, szTitle );
                             } else {
                                 err = DisplayStructure( inp_norm_data[j]->at, inp_norm_data[j]->num_at,
-                                                        0, 0, NULL,
+                                                        0, 0 /*bAdd_DT_to_num_H*/, 0, NULL,
                                                         k, j, pINChI[i], pINChI_Aux[i],
                                                         ip->bAbcNumbers, &ip->dp, ip->nMode, szTitle );
                             }
@@ -3907,7 +3908,7 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                             {
                                 struct DrawData vDrawData;
                                 vDrawData.pWindowData = CreateWinData_( inp_norm_data[j]->at, inp_norm_data[j]->num_at,
-                                                        0, 0, NULL,
+                                                        0, 0 /* bAdd_DT_to_num_H */, 0, NULL,
                                                         k, j, pINChI[i], pINChI_Aux[i],
                                                         ip->bAbcNumbers, &ip->dp, ip->nMode );
                                 if( vDrawData.pWindowData != NULL )
@@ -3935,6 +3936,7 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
                                     vDrawData.pWindowData =
                                          CreateWinData_( inp_norm_data[j]->at_fixed_bonds, inp_norm_data[j]->num_at,
                                                          inp_norm_data[j]->num_removed_H,
+                                                         0 /* bAdd_DT_to_num_H */,
                                                          inp_norm_data[j]->nNumRemovedProtons,
                                                          inp_norm_data[j]->nNumRemovedProtonsIsotopic,
                                                          k, j, NULL, NULL,

@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -71,7 +71,7 @@ extern "C" {
 
 #else
 
-#define SPECIAL_BUILD_STRING ", Software version 1.01"
+#define SPECIAL_BUILD_STRING ", Software version 1.01 release 07/21/2006"
 
 #endif
 
@@ -210,6 +210,7 @@ extern "C" {
 
 #define SDF_OUTPUT_V2000            1  /* 1=>always output V2000 SDfile, 0=>only if needed */
 #define SDF_OUTPUT_DT               1  /* 1=> all option -SdfAtomsDT to output D and T into SDfile */
+#define CHECK_AROMBOND2ALT          1  /* 1=> check whether arom->alt bond conversion succeeded */
 
 #ifdef INCHI_LIB
 #define READ_INCHI_STRING           0  /* 1=> input InChI string and process it */

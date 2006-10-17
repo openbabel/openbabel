@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -52,8 +52,10 @@ typedef U_INT_32       CtHash;
 CtHash hash_mark_bit;
 #endif
 
+/* -- moved to ichi_bns.h --
 typedef U_SHORT  bitWord;
 #define BIT_WORD_MASK  ((bitWord)~0)
+*/
 
 static bitWord *bBit = NULL;
 static int    num_bit = 0;     
@@ -82,12 +84,13 @@ typedef struct tagCell {
     int       prev;   /* position of the previously returned cell element */
 } Cell;
 
+#ifdef NEVER /* moved to ichi_bns.h */
 typedef struct tagNodeSet {
     bitWord **bitword;
     int num_set; /* number of sets */
     int len_set; /* number of bitWords in each set */
 } NodeSet;
-
+#endif
 
 typedef struct tagTransposition {
     AT_NUMB *nAtNumb;
@@ -160,7 +163,6 @@ int CanonGraph( int n, int n_tg, int n_max, int bDigraph, Graph *G, Partition pi
                 AT_RANK *nSymmRank,  AT_RANK *nCanonRank, AT_NUMB *nAtomNumberCanon,
                 CANON_DATA *pCD, CANON_COUNTS *pCC,
                 ConTable **pp_zb_rho_inp, ConTable **pp_zb_rho_out  );
-int SetBitCreate( void );
 
 void CtPartFill( Graph *G, CANON_DATA *pCD, Partition *p,
                  ConTable *Ct, int k, int n, int n_tg );
@@ -209,8 +211,6 @@ void UnorderedPartitionFree( UnorderedPartition *p );
 int  UnorderedPartitionCreate( UnorderedPartition *p, int n );
 void CTableFree( ConTable *Ct );
 int  CTableCreate( ConTable *Ct, int n, CANON_DATA *pCD );
-int  NodeSetCreate( NodeSet *pSet, int n, int L );
-void NodeSetFree( NodeSet *pSet );
 void TranspositionFree( Transposition *p );
 int  TranspositionCreate( Transposition *p, int n );
 void TranspositionGetMcrAndFixSetAndUnorderedPartition( Transposition *gamma, NodeSet *McrSet, NodeSet *FixSet, int n, int l, UnorderedPartition *p );
@@ -466,6 +466,7 @@ void NodeSetFree( NodeSet *pSet )
             inchi_free( pSet->bitword[0] );
         }
         inchi_free( pSet->bitword );
+        pSet->bitword = NULL;
     }
 }
 /****************************************************************/
@@ -722,6 +723,107 @@ void PartitionGetMcrAndFixSet( Partition *p, NodeSet *Mcr, NodeSet *Fix, int n, 
     }
     INCHI_HEAPCHK
 }
+/************* used in ichi_bns.c ********************************/
+void NodeSetFromRadEndpoints( NodeSet *cur_nodes, int k, /*Node *v*/ Vertex RadEndpoints[], int num_v)
+{
+    bitWord *Bits = cur_nodes->bitword[k];
+    int      len  = cur_nodes->len_set*sizeof(bitWord);
+    int      i, j;
+
+    memset( Bits, 0, len );
+
+    for ( i = 1; i < num_v; i += 2 ) {
+        j = (int)RadEndpoints[i];
+        Bits[ j / num_bit ] |= bBit[ j % num_bit ];
+    }
+}
+/************* used in ichi_bns.c ********************************/
+void RemoveFromNodeSet( NodeSet *cur_nodes, int k, Vertex v[], int num_v)
+{
+    if ( cur_nodes->bitword ) {
+        bitWord *Bits = cur_nodes->bitword[k];
+        /*int      len  = cur_nodes->len_set*sizeof(bitWord);*/
+        int      i, j;
+
+        for ( i = 0; i < num_v; i ++ ) {
+            j = (int) v[i];
+            Bits[ j / num_bit ] &= ~bBit[ j % num_bit ];
+        }
+    }
+}
+/************* used in ichi_bns.c ********************************/
+int DoNodeSetsIntersect( NodeSet *cur_nodes, int k1, int k2)
+{
+    if ( cur_nodes->bitword ) {
+        bitWord *Bits1 = cur_nodes->bitword[k1];
+        bitWord *Bits2 = cur_nodes->bitword[k2];
+        int      len  = cur_nodes->len_set;
+        int      i;
+
+        for ( i = 0; i < len; i ++ ) {
+            if ( Bits1[i] & Bits2[i] )
+                return 1;
+        }
+    }
+    return 0;
+}
+/************* used in ichi_bns.c ********************************/
+int IsNodeSetEmpty( NodeSet *cur_nodes, int k)
+{
+    if ( cur_nodes->bitword ) {
+        bitWord *Bits = cur_nodes->bitword[k];
+        int      len  = cur_nodes->len_set;
+        int      i;
+
+        for ( i = 0; i < len; i ++ ) {
+            if ( Bits[i] )
+                return 0;
+        }
+    }
+    return 1;
+}
+/************* used in ichi_bns.c ********************************/
+void AddNodeSet2ToNodeSet1( NodeSet *cur_nodes, int k1, int k2)
+{
+    if ( cur_nodes->bitword ) {
+        bitWord *Bits1 = cur_nodes->bitword[k1];
+        bitWord *Bits2 = cur_nodes->bitword[k2];
+        int      len  = cur_nodes->len_set;
+        int      i;
+
+        for ( i = 0; i < len; i ++ ) {
+            Bits1[i] |= Bits2[i];
+        }
+    }
+}
+/************* used in ichi_bns.c ********************************/
+int AddNodesToRadEndpoints( NodeSet *cur_nodes, int k, Vertex RadEndpoints[], Vertex vRad, int nStart, int nLen )
+{
+    int n = nStart;
+    if ( cur_nodes->bitword ) {
+        bitWord *Bits = cur_nodes->bitword[k];
+        int      len  = cur_nodes->len_set;
+        int      i, j;
+        Vertex   v;
+
+        for ( i = 0, v = 0; i < len; i ++ ) {
+            if ( Bits[i] ) {
+                for ( j = 0; j < num_bit; j ++, v ++ ) {
+                    if ( Bits[i] & bBit[j] ) {
+                        if ( n >= nLen ) {
+                            return -1; /* overflow */
+                        }
+                        RadEndpoints[n ++] = vRad;
+                        RadEndpoints[n ++] = v;
+                    }
+                }
+            } else {
+                v += num_bit;
+            }
+        }
+    }
+    return n;
+}
 /****************************************************************/
 void PartitionGetTransposition( Partition *pFrom, Partition *pTo, int n, Transposition *gamma )
 {
@@ -863,6 +965,7 @@ int PartitionColorVertex( Graph *G, Partition *p, Node v, int n, int n_tg, int n
     }
     rv = p[1].Rank[(int)sv];  /* rank of this atom */
     /* second, locate sv among all vertices that have same rank as v */
+    s = n_max + 1; /* always greater than sv; this initialization is needed only to keep the compiler happy */
     for ( j = (int)rv-1;  0 <= j && rv == (r = p[1].Rank[(int)(s=p[1].AtNumber[j])]) && s != sv; j -- )
         ;
     if ( s != sv ) {
@@ -870,10 +973,11 @@ int PartitionColorVertex( Graph *G, Partition *p, Node v, int n, int n_tg, int n
         return CT_CANON_ERR; /* !!! severe program error: sv not found !!! */
     }
     /* shift preceding atom numbers to the right to fill the gap after removing sv */
+    r = rv-1; /* initialization only to keep compiler happy */
     for ( i = j--;  0 <= j && rv == (r = p[1].Rank[(int)(s=p[1].AtNumber[j])]); i = j, j -- ) {
         p[1].AtNumber[i] = s;
     }
-    r = (i > 0)? (r+1):1;  /* new reduced rank = next lower rank rank+1 or 1 */
+    r = (i > 0)? (r+1):1;  /* new reduced rank = (next lower rank)+1 or 1 */
     /* insert sv and adjust its rank */
     p[1].AtNumber[i] = sv;
     p[1].Rank[(int)sv] = r;

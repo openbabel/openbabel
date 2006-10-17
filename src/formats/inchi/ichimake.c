@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -46,7 +46,7 @@ int FillOutOneCanonInfAtom(inp_ATOM *inp_norm_at, INF_ATOM_DATA *inf_norm_at_dat
                            AT_NUMB *pStereoFlags, int init_num_at, int offset, int offset_H, int bIsotopic,
                            INChI *pINChI, INChI_Aux *pINChI_Aux, int bAbcNumbers, INCHI_MODE nMode);
 int FillOutInputInfAtom(inp_ATOM *inp_at, INF_ATOM_DATA *inf_at_data, int init_num_at, int num_removed_H,
-                        int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic, int bIsotopic, int bAbcNumbers);
+                        int bAdd_DT_to_num_H, int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic, int bIsotopic, int bAbcNumbers);
 
 int CheckCanonNumberingCorrectness(
                  int num_atoms, int num_at_tg,
@@ -4310,7 +4310,7 @@ exit_function:
 
 /***************************************************************************************/
 int FillOutInputInfAtom(inp_ATOM *inp_at, INF_ATOM_DATA *inf_at_data, int init_num_at, int num_removed_H,
-                        int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic, int bIsotopic, int bAbcNumbers)
+                        int bAdd_DT_to_num_H, int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic, int bIsotopic, int bAbcNumbers)
 {
     int          i, j, m, n, ret, len_str, len, atw;
     int          num_iso_H[NUM_H_ISOTOPES];
@@ -4378,7 +4378,7 @@ int FillOutInputInfAtom(inp_ATOM *inp_at, INF_ATOM_DATA *inf_at_data, int init_n
                 }
             }
         }
-        if ( bIsotopic ) {
+        if ( bIsotopic && !bAdd_DT_to_num_H ) {
             /*  subtract number of isotopic H atoms from the total number of H atoms */
             for ( j = 0; j < NUM_H_ISOTOPES; j ++ ) {
                 n -= num_iso_H[j];
@@ -4457,7 +4457,7 @@ int FillOutInputInfAtom(inp_ATOM *inp_at, INF_ATOM_DATA *inf_at_data, int init_n
 }
 /**********************************************************************************************/
 int FillOutInfAtom(inp_ATOM *norm_at, INF_ATOM_DATA *inf_norm_at_data, int init_num_at, int num_removed_H,
-                   int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic, int bIsotopic,
+                   int bAdd_DT_to_num_H, int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic, int bIsotopic,
                    INChI *pINChI, INChI_Aux *pINChI_Aux, int bAbcNumbers, INCHI_MODE nMode )
 {
     if ( norm_at && inf_norm_at_data && inf_norm_at_data->at ) {
@@ -4465,7 +4465,7 @@ int FillOutInfAtom(inp_ATOM *norm_at, INF_ATOM_DATA *inf_norm_at_data, int init_
             return FillOutCanonInfAtom( norm_at, inf_norm_at_data, init_num_at, bIsotopic, pINChI,
                                         pINChI_Aux, bAbcNumbers, nMode);
         } else {
-            return FillOutInputInfAtom( norm_at, inf_norm_at_data, init_num_at, num_removed_H,
+            return FillOutInputInfAtom( norm_at, inf_norm_at_data, init_num_at, num_removed_H, bAdd_DT_to_num_H,
                                         nNumRemovedProtons, nNumRemovedProtonsIsotopic, bIsotopic, bAbcNumbers);
         }
     }
@@ -4490,7 +4490,7 @@ int FillOutCompositeCanonInfAtom(COMP_ATOM_DATA *composite_norm_data, INF_ATOM_D
         offset_H = composite_norm_data->num_at - composite_norm_data->num_removed_H;
         if ( bTautomeric == TAUT_INI ) {
             ret = FillOutInputInfAtom( composite_norm_data->at, inf_norm_at_data, composite_norm_data->num_at,
-                                       composite_norm_data->num_removed_H,
+                                       composite_norm_data->num_removed_H, 0 /*bAdd_DT_to_num_H*/,
                                        composite_norm_data->nNumRemovedProtons,
                                        composite_norm_data->nNumRemovedProtonsIsotopic,
                                        bIsotopic, bAbcNumbers);

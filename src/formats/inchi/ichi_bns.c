@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -256,6 +256,8 @@ typedef struct tagAltPathChanges {
 
 /* local functions */
 
+int RestoreRadicalsOnly( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at );
+int bRadChangesAtomType( BN_STRUCT *pBNS, BN_DATA *pBD, Vertex v, Vertex v_1, Vertex v_2 );
 int BnsAdjustFlowBondsRad( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at, int num_atoms );
 int SetAtomRadAndChemValFromVertexCapFlow( BN_STRUCT *pBNS, inp_ATOM *atom, int v1 );
 int bNeedToTestTheFlow( int bond_type, int nTestFlow, int bTestForNonStereoBond );
@@ -1310,14 +1312,68 @@ int bNeedToTestTheFlow( int bond_type, int nTestFlow, int bTestForNonStereoBond 
     }
     return 1;
 }
-
+/***********************************************************************************/
+int nBondsValenceInpAt( const inp_ATOM *at, int *nNumAltBonds, int *nNumWrongBonds )
+{
+    int j, bond_type, nBondsValence = 0, nAltBonds = 0, nNumWrong = 0;
+    for ( j = 0; j < at->valence; j ++ ) {
+        bond_type = at->bond_type[j] & BOND_TYPE_MASK;
+        switch( bond_type ) {
+            case 0:  /* for structure from InChI reconstruction */
+            case BOND_SINGLE:
+            case BOND_DOUBLE:
+            case BOND_TRIPLE:
+                nBondsValence += bond_type;
+                break;
+            case BOND_ALTERN:
+                nAltBonds ++;
+                break;
+            default:
+                nNumWrong ++;
+        }
+    }
+    switch ( nAltBonds ) {
+    case 0:
+        break;
+    case 1:
+        nBondsValence += 1; /* 1 or greater than 3 is wrong */
+        nNumWrong ++;
+        break;
+    default:
+        nBondsValence += nAltBonds+1;
+        break;
+    }
+    if ( nNumAltBonds ) *nNumAltBonds = nAltBonds;
+    if ( nNumWrongBonds ) *nNumWrongBonds = nNumWrong;
+    return nBondsValence;
+}
 /***************************************************************************************/
 /* if radical or has aromatic bonds then augment to the lowest "multiplicity" */
 int BnsAdjustFlowBondsRad( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at, int num_atoms )
 {
-    int  bError, nOrigDelta, ret, num_removed;
-    bError   = 0;
-    nOrigDelta  = 0;
+    int  bError=0, nOrigDelta=0, ret, num_removed;
+
+#if( CHECK_AROMBOND2ALT == 1 )    
+    char *pcValMinusBondsVal = NULL;
+    int  i, nValMinusBondsVal, nAltBonds, bIgnore;
+    
+    /* find valence excess (it may only be due to aromatic bonds) */
+    for ( i = 0; i < num_atoms; i ++ ) {
+        nValMinusBondsVal = (int)at[i].chem_bonds_valence - nBondsValenceInpAt( at+i, &nAltBonds, &bIgnore );
+        bIgnore += (nAltBonds > 3);
+        if ( !bIgnore && nValMinusBondsVal > 0 ) {
+            if ( !pcValMinusBondsVal && 
+                 !(pcValMinusBondsVal = (char *)inchi_calloc(num_atoms, sizeof(pcValMinusBondsVal[0])))) {
+                bError = BNS_OUT_OF_RAM;
+                goto exit_function;
+            }
+            /* mark atoms that have extra unsatisfied valence due to aromatic bonds */
+            pcValMinusBondsVal[i] = nValMinusBondsVal + (at[i].radical == RADICAL_DOUBLET);
+        }
+    }
+#endif /* CHECK_AROMBOND2ALT */
+
+    /* match bonds to valences */
     do {
         num_removed = 0;
         ret = RunBalancedNetworkSearch( pBNS, pBD, BNS_EF_CHNG_FLOW );
@@ -1340,6 +1396,27 @@ int BnsAdjustFlowBondsRad( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at, int num_
             ReInitBnStructAltPaths( pBNS );
         }
     } while ( num_removed && num_removed == pBNS->max_altp && !bError );
+
+#if( CHECK_AROMBOND2ALT == 1 )    
+    /* check whether aromatic bonds have been replaces with alternating bonds */
+    if ( !bError && pcValMinusBondsVal ) {
+        for ( i = 0; i < num_atoms; i ++ ) {
+            if ( !pcValMinusBondsVal[i] )
+                continue;
+            nValMinusBondsVal = (int)at[i].chem_bonds_valence - nBondsValenceInpAt( at+i, &nAltBonds, &bIgnore );
+            if ( bIgnore ||
+                 1 != (int)pcValMinusBondsVal[i] - (nValMinusBondsVal + (at[i].radical == RADICAL_DOUBLET)) ) {
+                /* radical excess has not been reduced */
+                bError = BNS_ALTBOND_ERR;
+                break;
+            }
+        }
+    }
+
+exit_function:
+    if ( pcValMinusBondsVal ) inchi_free( pcValMinusBondsVal );
+#endif /* CHECK_AROMBOND2ALT */
+
     return bError? bError : nOrigDelta;
 }
 
@@ -3998,7 +4075,7 @@ int mark_alt_bonds_and_taut_groups ( inp_ATOM *at, inp_ATOM *at_fixed_bonds_out,
 /*
 again:
 */
-    /* allocate Balanced Network Data Strucures */
+    /* allocate Balanced Network Data Strucures; replace Alternating bonds with Single */
     if ( (pBNS = AllocateAndInitBnStruct( at, num_atoms, BNS_ADD_ATOMS, BNS_ADD_EDGES, max_altp, &num_changed_bonds )) &&
          (pBD  = AllocateAndInitBnData( pBNS->max_vertices )) ) {
 
@@ -5706,23 +5783,58 @@ int bIsBnsEndpoint( BN_STRUCT *pBNS, int v )
 /**********************************************************************************/
 #if ( BNS_RAD_SEARCH == 1 )
 /**********************************************************************************/
+int bRadChangesAtomType( BN_STRUCT *pBNS, BN_DATA *pBD, Vertex v, Vertex v_1, Vertex v_2 )
+{
+    
+    EdgeIndex iuv;
+    Vertex v_O, v_ChgOrH;
+    /* the previous atom along the path: should be a terminal atom */
+    if ( v_1 == NO_VERTEX ) {
+        v_1 = GetPrevVertex( pBNS, v, pBD->SwitchEdge, &iuv );
+    }
+    v_O = v_1 / 2 - 1;
+    if ( v_O < 0 || v_O >= pBNS->num_atoms ) {
+        return 0;
+    }
+    /* make sure v_O is a terminal atom: its second neighbor is not an atom */
+    if ( pBNS->vert[pBNS->edge[pBNS->vert[v_O].iedge[1]].neighbor12 ^ v_O].type & BNS_VERT_TYPE_ATOM ) {
+        return 0;
+    }
+    /* the next to previous vertex vertex along the path: should be a Charge or Taut group vertex */
+    if ( v_2 == NO_VERTEX ) {
+        v_2 = GetPrevVertex( pBNS, v_1, pBD->SwitchEdge, &iuv );
+    }
+    v_ChgOrH = v_2 / 2 - 1;
+    if ( v_ChgOrH < pBNS->num_atoms ) {
+        return 0;
+    }
+    /* make sure v_ChgOrH is a charge or taut_group */
+    if ( pBNS->vert[v_ChgOrH].type & (BNS_VERT_TYPE_TGROUP | BNS_VERT_TYPE_C_GROUP) )
+        return 1;
+    return 0;
+}
+/**********************************************************************************/
 int RegisterRadEndpoint( BN_STRUCT *pBNS, BN_DATA *pBD, Vertex u)
 {
     EdgeIndex iuv;
-    int       i;
+    int       i, num_found;
     Vertex    v, w;
+    Vertex    u_last, v2;
     switch( pBD->bRadSrchMode ) {
     case  RAD_SRCH_NORM:
         /* go backwards along alt path and stop at the 1st found atom (not a fictitious vertex) */
         /* we need only vertices where a radical may be moved, therefore exclude u%2=1 (odd) vertices */
         /* atom number = u/2-1; u = 0 or 1 is 's' or 't' vertices, respectively, they are not atoms  */
-        while ( u > Vertex_t && (u % 2 || u/2 > pBNS->num_atoms) ) {
+        num_found = 0;
+        while ( u > Vertex_t && (u % 2 || u/2 > pBNS->num_atoms ) ) {
             u = GetPrevVertex( pBNS, u, pBD->SwitchEdge, &iuv );
         }
-        w = u/2 - 1; /* Check whether it is a radical endpoint */
-        if ( Vertex_t < u && w < pBNS->num_atoms && pBNS->vert[w].st_edge.cap == pBNS->vert[w].st_edge.flow ) {
+        w = u/2 - 1; /* Check whether u is a radical endpoint */
+        if ( Vertex_t < u && w < pBNS->num_atoms &&
+             pBNS->vert[w].st_edge.cap == (pBNS->vert[w].st_edge.flow & EDGE_FLOW_ST_MASK) ) {
+            /* u is an atom; it is not a radical atom */
             /* now search for the starting radical atom by following the path back from u */
-            v = u;
+            v = u_last = u;
             while( v > Vertex_t ) {
                 u = v;
                 v = GetPrevVertex( pBNS, u, pBD->SwitchEdge, &iuv ); /* Radical endpoint */
@@ -5730,25 +5842,46 @@ int RegisterRadEndpoint( BN_STRUCT *pBNS, BN_DATA *pBD, Vertex u)
             /* check whether u is a radical atom */
             if ( !(u%2) && Vertex_t < u &&
                  (u = u/2 - 1) < pBNS->num_atoms &&
-                 pBNS->vert[u].st_edge.cap > pBNS->vert[u].st_edge.flow ) {
+                 pBNS->vert[u].st_edge.cap > (pBNS->vert[u].st_edge.flow & EDGE_FLOW_ST_MASK) ) {
                 /* at pBNS->vert[u] we have found the radical that originated the path */
                 /* pBD->RadEndpoints[2k] is the radical, pBD->RadEndpoints[2k+1] is the farthest atom */
                 /* to which the radical may be moved (farthest reachable atom) */
-                for ( i = 0; i < pBD->nNumRadEndpoints; i += 2 ) {
-                    if ( u == pBD->RadEndpoints[i] &&
-                         w == pBD->RadEndpoints[i+1] ) {
-                        break;
+
+                /* add *all* atoms that may receive radical from u_rad */
+                /* exception: at2 in: ==(+/-/H)---at1==at2(possible rad endpoint) if pBNS->type_TACN */
+                
+                for ( v = u_last; v > Vertex_t; v = GetPrevVertex( pBNS, v, pBD->SwitchEdge, &iuv ) ) {
+                    if ( !(v%2) && (v2 = v/2 - 1) < pBNS->num_atoms &&
+                         pBNS->vert[v2].st_edge.cap == (pBNS->vert[v2].st_edge.flow & EDGE_FLOW_ST_MASK) ) {
+                        /* check exception */
+                        if ( pBNS->type_TACN &&
+                             bRadChangesAtomType( pBNS, pBD, v, NO_VERTEX, NO_VERTEX ) ) {
+                            continue;
+                        }
+                        /* add */
+                        for ( i = 0; i < pBD->nNumRadEndpoints; i += 2 ) {
+                            /* check whether this pair, (u,w), has already been saved */
+                            if ( u  == pBD->RadEndpoints[i] &&
+                                 v2 == pBD->RadEndpoints[i+1] ) {
+                                break;
+                            }
+                        }
+                        if ( i >= pBD->nNumRadEndpoints ) {
+                            /* add new (u,w) pair */
+                            if ( pBD->nNumRadEndpoints+2 <= pBD->max_num_vertices  ) {
+                                /* add */
+                                pBD->RadEndpoints[pBD->nNumRadEndpoints ++] = u; /* radical */
+                                pBD->RadEndpoints[pBD->nNumRadEndpoints ++] = v2; /* endpoint */
+                                num_found ++;
+                                /*return 1;*/ /* registered */
+                            } else {
+                                return BNS_VERT_EDGE_OVFL;
+                            }
+                        }
                     }
                 }
-                if ( i >= pBD->nNumRadEndpoints ) {
-                    if ( pBD->nNumRadEndpoints+2 <= pBD->max_num_vertices  ) {
-                        /* add */
-                        pBD->RadEndpoints[pBD->nNumRadEndpoints ++] = u; /* radical */
-                        pBD->RadEndpoints[pBD->nNumRadEndpoints ++] = w; /* endpoint */
-                        return 1; /* registered */
-                    } else {
-                        return BNS_VERT_EDGE_OVFL;
-                    }
+                if ( num_found ) {
+                    return 1;
                 }
             }
         }
@@ -5888,6 +6021,58 @@ error_exit:
     return BNS_PROGRAM_ERR;
 }
 /**********************************************************************************/
+int RestoreRadicalsOnly( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at )
+{
+    BNS_EDGE   *e;
+    EdgeIndex   ie;
+    BNS_VERTEX *p1, *p2;
+    Vertex      v1, v2;
+    int         i, delta, rad;
+    int         p1_num_adj_edges, p2_num_adj_edges;
+
+    for ( i = pBD->nNumRadEdges-1; 0 <= i; i -- ) {
+        ie = pBD->RadEdges[i];
+        if ( ie < 0 || ie >= pBNS->num_edges ) {
+            goto error_exit;
+        }
+        e = pBNS->edge + ie;
+        v1 = e->neighbor1;         /* atom */
+        v2 = e->neighbor12 ^ v1;   /* v2 > v1 <=> v2 was added later */
+        if ( v1 < 0 || v1 >= pBNS->num_atoms ||
+             v2 < pBNS->num_atoms || v2 >= pBNS->num_vertices ) {
+            goto error_exit;
+        }
+        p1 = pBNS->vert + v1;
+        p2 = pBNS->vert + v2;
+
+        p1_num_adj_edges = e->neigh_ord[0];
+        p2_num_adj_edges = e->neigh_ord[1];
+
+        if ( p2->iedge[p2_num_adj_edges] != ie ||
+             p1->iedge[p1_num_adj_edges] != ie ) {
+            goto error_exit;
+        }
+
+        if ( at && v1 < pBNS->num_atoms ) {
+            delta = p1->st_edge.cap - p1->st_edge.flow + e->flow;
+            rad   = at[v1].radical;
+            switch( delta ) {
+            case 0:
+                if ( rad == RADICAL_DOUBLET )
+                    rad = 0;
+                break;
+            case 1:
+                if ( rad != RADICAL_DOUBLET )
+                    rad = RADICAL_DOUBLET;
+            }
+            at[v1].radical = rad;
+        }
+    }
+    return 0;
+error_exit:
+    return BNS_PROGRAM_ERR;
+}
+/**********************************************************************************/
 int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode )
 {
     int ret, i, j, k, num_new_edges, delta;
@@ -5915,7 +6100,7 @@ int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode )
         for ( i = 0; i < pBD->nNumRadEndpoints; i = j ) {
             wRad = pBD->RadEndpoints[i];
             pRad = pBNS->vert + wRad;
-            delta = pRad->st_edge.cap - pRad->st_edge.flow;
+            delta = pRad->st_edge.cap - (pRad->st_edge.flow & EDGE_FLOW_ST_MASK);
             if ( delta <= 0 ) {
                 delta = 1;
             }
@@ -5963,13 +6148,257 @@ error_exit:
     return ret;
 
 }
+/**********************************************************************************/
+#define MAX_NUM_RAD  256
+/***************************************************************************/
+int SetRadEndpoints2( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode )
+{
+    int ret = 0, i, j, k, n, num_new_edges, delta = 1;
+    BNS_VERTEX *pRad, *pEndp;
+    Vertex     wRad, vRad, vEndp, nNumRadicals;
+    Vertex     vRadList[MAX_NUM_RAD], vRadEqul[MAX_NUM_RAD];
+    int        nNumRad = 0;
+    int        edge_flow;
+    int        nDots=0 /* added initialization, 2006-03 */, nNumEdges;
+    NodeSet    VertSet;
+    if ( pBNS->tot_st_cap <= pBNS->tot_st_flow ) {
+        return 0;
+    }
+    /* find all radicals: their vertices have st_cap-st_flow=delta */
+    /* save radical atom numbers in vRadList[] and remove radical by making st_cap=st_flow */
+    for ( i = 0; i < pBNS->num_atoms; i ++ ) {
+        if ( pBNS->vert[i].st_edge.cap - delta == (pBNS->vert[i].st_edge.flow & EDGE_FLOW_ST_MASK) ) {
+            if ( nNumRad < MAX_NUM_RAD ) {
+                pBNS->vert[i].st_edge.cap -= delta;
+                pBNS->tot_st_cap          -= delta;
+                vRadList[nNumRad] = i;       /* radical position; i > j <=> vRadList[i] > vRadList[j]  */
+                vRadEqul[nNumRad] = nNumRad; /* the smallest radical atom that has reachable
+                                              * atoms in common with this radical atom
+                                              * always keep vRadEqul[nNumRad] <= nNumRad */
+                nNumRad ++;
+            }
+        }
+    }
+    if ( pBNS->tot_st_cap - pBNS->tot_st_flow > nNumRad ) {
+        return BNS_CAP_FLOW_ERR; /* extra st_cap on non-atoms or program error */
+    }
+    memset( &VertSet, 0, sizeof(VertSet) );
+    /* find reachable atoms by enabling each radical separately */
+    for ( j = 0; j < nNumRad; j ++ ) {
+        i  = vRadList[j];
+        pBD->nNumRadEndpoints = 0;
+        pBD->nNumRadEdges     = 0;
+        pBD->bRadSrchMode     = bRadSrchMode;
+        pBNS->alt_path = pBNS->altp[0];
+        pBNS->bChangeFlow     = 0;
+        pBNS->vert[i].st_edge.cap += delta; /* enable single radical */
+        pBNS->tot_st_cap          += delta;
+        ret = BalancedNetworkSearch( pBNS, pBD, BNS_EF_RAD_SRCH ); /* find reachable atoms */
+        ReInitBnData( pBD );
+        ReInitBnStructAltPaths( pBNS );
+        pBD->bRadSrchMode     = RAD_SRCH_NORM;
+        pBNS->vert[i].st_edge.cap -= delta; /* disable single radical */
+        pBNS->tot_st_cap          -= delta;
+        if ( IS_BNS_ERROR( ret ) ) {
+            goto error_exit;
+        } else
+        if ( ret ) {
+            ret = BNS_RADICAL_ERR; /* found augmenting path: should not happen since only one radical was enabled */
+            goto error_exit;
+        }
+        if ( !ret && pBD->nNumRadEndpoints >= 2 ) {
+            /* sort by: primary_key=radical locations, secondary_key=radical endoint */
+            qsort( pBD->RadEndpoints, pBD->nNumRadEndpoints/2, 2*sizeof(pBD->RadEndpoints[0]), cmp_rad_endpoints );
+            if ( pBD->RadEndpoints[0] != i || pBD->RadEndpoints[pBD->nNumRadEndpoints-2] != i ) {
+                ret = BNS_RADICAL_ERR; /* more than one radical vertex */
+                goto error_exit;
+            }
+            if ( nNumRad > 1 ) {
+                /* if more than one radical then save reachable atoms in bitmaps to allow */
+                /* faster finding whether same atoms are reachable by two or more radicals */
+                /* Later merge such sets */
+                if ( NULL == VertSet.bitword ) {
+                    SetBitCreate( );
+                    if ( !NodeSetCreate( &VertSet, pBNS->num_atoms, nNumRad ) ) {
+                        ret = BNS_OUT_OF_RAM; /* out of RAM */
+                        goto error_exit;
+                    }
+                }
+                NodeSetFromRadEndpoints( &VertSet, j, pBD->RadEndpoints, pBD->nNumRadEndpoints);
+                /* do not allow any radical center be treated as a reachable atom: */
+                RemoveFromNodeSet( &VertSet, j, vRadList, nNumRad );
+            }
+        }
+    }
+    /* restore radical st_cap so that st_cap-st_flow=delta */
+    for ( j = 0; j < nNumRad; j ++ ) {
+        i  = vRadList[j];
+        pBNS->vert[i].st_edge.cap += delta;
+        pBNS->tot_st_cap          += delta;
+    }
+    /* merge lists that have common radical endpoints */
+    /* defect: if vertex sets i and j do not intersect they will be compared 2 times */
+    /* total up to nNumRad*(nNumRad-1)/2 calls to DoNodeSetsIntersect() */
+    if ( nNumRad > 1 ) {
+        for ( i = 0; i < nNumRad; i ++ ) {
+            if ( vRadEqul[i] != i )
+                continue;
+            do {
+                n = 0;
+                for ( j = i+1; j < nNumRad; j ++ ) {
+                    if ( vRadEqul[j] != j )
+                        continue;
+                    if ( DoNodeSetsIntersect( &VertSet, i, j) ) {
+                        AddNodeSet2ToNodeSet1( &VertSet, i, j);
+                        vRadEqul[j] = i; /* Set j was copied to set i; i < j */
+                        n ++;
+                    }
+                }
+            } while( n );
+        }
+        /* fill out pBD->RadEndpoints[] */
+        for ( i = 0, n = 0; i < nNumRad; i ++ ) {
+            if ( i == vRadEqul[i] ) {
+                if ( !IsNodeSetEmpty( &VertSet, i) ) {
+                    /* store equivalent radicals */
+                    for ( j = i+1; j < nNumRad; j ++ ) {
+                        if (i == vRadEqul[j] ) {
+                            pBD->RadEndpoints[n++] =  vRadList[i];
+                            pBD->RadEndpoints[n++] = -vRadList[j]-2; /* equivalent radical, alvays not zero */
+                        }
+                    }
+                    /* store endpoints */
+                    n = AddNodesToRadEndpoints( &VertSet, i, pBD->RadEndpoints, vRadList[i], n, pBD->max_len_Pu_Pv );
+                    if ( n < 0 ) {
+                        ret = BNS_RADICAL_ERR; /* pBD->RadEndpoints overflow */
+                        goto error_exit;
+                    }
+                } else {
+                    pBD->RadEndpoints[n++] =  vRadList[i];
+                    pBD->RadEndpoints[n++] =  -1; /* immobile radical, only one edge to add */
+                }
+            }
+        }
+        pBD->nNumRadEndpoints = n;
+        NodeSetFree( &VertSet );
+    } else
+    if ( nNumRad == 1 && !pBD->nNumRadEndpoints ) {
+        /* 2006-07-30: a single radical; no possible endpoint found */
+        for ( i = 0, n = 0; i < nNumRad; i ++ ) {
+            pBD->RadEndpoints[n++] =  vRadList[i];
+            pBD->RadEndpoints[n++] =  -1; /* immobile radical, only one edge to add */
+        }
+        pBD->nNumRadEndpoints = n;
+    }
+
+    if ( !ret && pBD->nNumRadEndpoints >= 2 ) {
+        /* already sorted by radical locations */
+        num_new_edges = 0;
+        nNumRadicals  = 0;
+        /**************************************************************************
+         * create new vertices (type=BNS_VERT_TYPE_TEMP) and edges with flow=cap=1
+         * connecting the new vertices radical vertices
+         *
+         *  
+         * Original structure:    atom A is a radical center    A==B--C*--D==E
+         *   A*--B==C--D==E       atoms C and E are reachable:  A==B--C===D--E*
+         *
+         * Resultant temporary structure:
+         *   A---B==C--D==E                     
+         *  ||     /     /                      
+         *  ||    /    /          The additional new vertex (*) and its
+         *  ||   /   /            3 edges replace the radical with alternating
+         *  ||  /  /              circuits that allow same bond changes
+         *  || / /                as moving the radical to atoms C or E.
+         *  ||//                  "Double bonds" here have edge cap=1, flow=1
+         *  (*)                   "Single bonds" have edge cap=1, flow=0
+         *                        
+         *   The "equivalent radical centers" (which have at least one reachable atom
+         *   in common) are connected to (*) with "double bonds" (edge cap=1, flow=1).
+         *   Reachable non-radical atoms are connected by edges with cap=1, flow=0
+         *   After running BNS to find alt.path a "double bond" from (*) may move
+         *   to another atom thus muving the radical.
+         *
+         *   Number of additional (*) vertices = number of sets of
+         *   "equivalent radical centers".
+         *   Each such a set may include one or more radical centers.
+         *
+         *   The radicals will be re-created in RemoveRadEndpoints()
+         ***************************************************************************/
+        for ( i = 0; i < pBD->nNumRadEndpoints; i = j ) {
+            wRad = pBD->RadEndpoints[i];
+            pRad = pBNS->vert + wRad;
+            delta = pRad->st_edge.cap - (pRad->st_edge.flow & EDGE_FLOW_ST_MASK);
+            if ( delta <= 0 ) {
+                delta = 1;
+            }
+            nNumEdges = 0;
+            for ( j = i; j < pBD->nNumRadEndpoints && wRad == pBD->RadEndpoints[j] ; j += 2 ) {
+                nNumEdges += (pBD->RadEndpoints[j+1] != -1); /* immobile radicals have one edge only */
+            }
+            /* add new aux vertex to the radical atom/vertex making st_cap-st_flow=0 */
+            /* in case of immobile radical there will be no additional eddges since nNumEdges=0 */
+            vRad = bAddNewVertex( pBNS, wRad, delta, delta, nNumEdges+1, &nDots );
+            if ( IS_BNS_ERROR( vRad ) ) {
+                ret = vRad;
+                goto error_exit;
+            }
+            pRad     = pBNS->vert + vRad;
+            pBD->RadEdges[pBD->nNumRadEdges ++] = pRad->iedge[pRad->num_adj_edges-1];
+            /* replace references to vertex wRad with vRad */
+            for ( k = i, nNumEdges = 0; k < j; k += 2 ) {
+                pBD->RadEndpoints[k] = vRad;
+            }
+            nNumRadicals ++;
+        }
+        /* all vRad vertex indices should be in the range vFirstNewVertex...vFirstNewVertex+nNumRadicals-1 */
+        /* connect new vertices to the radical endpoints thus replacing radicals with even-length alternating cycles */
+        for ( i = 0; i < pBD->nNumRadEndpoints; i = j ) {
+            vRad = pBD->RadEndpoints[i];
+            pRad = pBNS->vert + vRad;
+            for ( j = i; j < pBD->nNumRadEndpoints && vRad == pBD->RadEndpoints[j] ; j += 2 ) {
+                /* connect vew vertex pRad to radical endpoints */
+                vEndp     = pBD->RadEndpoints[j+1];
+                if ( vEndp == -1 )
+                    continue;
+                if ( vEndp < 0 ) {
+                    edge_flow = 1;
+                    vEndp = -vEndp - 2; /* equivalent radical centers */
+                } else {
+                    edge_flow = 0;
+                }
+                pEndp    = pBNS->vert + vEndp;
+                ret = AddNewEdge( pRad, pEndp, pBNS, 1, edge_flow );
+                if ( IS_BNS_ERROR( ret ) ) {
+                    goto error_exit;
+                }
+                pBD->RadEdges[pBD->nNumRadEdges ++] = ret;
+            }
+        }
+        pBD->nNumRadicals = nNumRadicals;
+        return nNumRadicals; /* done */
+    }
+    return 0; /* nothing to do */
+
+error_exit:
+    RemoveRadEndpoints( pBNS, pBD, NULL );
+    NodeSetFree( &VertSet );
+    return ret;
+
+}
+
+
 #else
 /**********************************************************************************/
-int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD )
+int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode )
 {
     return 0;
 }
-int RemoveRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD )
+int RemoveRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at )
+{
+    return 0;
+}
+int SetRadEndpoints2( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode )
 {
     return 0;
 }
@@ -6073,7 +6502,7 @@ int bExistsAltPath( BN_STRUCT *pBNS, BN_DATA *pBD, BN_AATG *pAATG, inp_ATOM *at,
     bSuccess    = 0;
     nDelta      = 0;
 
-    ret = SetRadEndpoints( pBNS, pBD, RAD_SRCH_NORM );
+    ret = SetRadEndpoints2( pBNS, pBD, RAD_SRCH_NORM );
     if ( IS_BNS_ERROR( ret ) ) {
         return ret;
     }
@@ -6125,9 +6554,12 @@ int bExistsAltPath( BN_STRUCT *pBNS, BN_DATA *pBD, BN_AATG *pAATG, inp_ATOM *at,
             if ( pAATG && pAATG->nMarkedAtom ) {
                 if ( pAATG->nAtTypeTotals && (bChangeFlow & BNS_EF_UPD_H_CHARGE) ) {
                     memset( pAATG->nMarkedAtom, 0, num_atoms*sizeof(pAATG->nMarkedAtom[0]) );
-                    /* subtract */
+                    /* mark atoms that have charge or H changed, check their input types (that is, before changes),
+                       and subtract their input charge/H from nAtTypeTotals */
                     SubtractOrChangeAtHChargeBNS( pBNS, at, num_atoms, pAATG->nAtTypeTotals, pAATG->nMarkedAtom, NULL, 1 );
-                    /* change */
+                    /* ZChange charges and/or H, update t_group_info, do not check types or change nAtTypeTotals */
+                    /* Atom types will be checked and nAtTypeTotals will be changed in
+                       AddChangedAtHChargeBNS() later */
                     SubtractOrChangeAtHChargeBNS( pBNS, at, num_atoms, NULL, NULL, pAATG->t_group_info, 0 );
                 } else
                 if ( !pAATG->nAtTypeTotals ){
@@ -6161,6 +6593,15 @@ int bExistsAltPath( BN_STRUCT *pBNS, BN_DATA *pBD, BN_AATG *pAATG, inp_ATOM *at,
                     bError = BNS_BOND_ERR;
                 }
                 if ( !bError && pAATG && pAATG->nMarkedAtom && (bChangeFlow & BNS_EF_UPD_H_CHARGE) ) {
+                    /* Update radicals to avoid errors in atom type check in AddChangedAtHChargeBNS() */
+                    if ( bAdjustRadicals ) {
+                        ret_val = RestoreRadicalsOnly( pBNS, pBD, at );
+                        if ( IS_BNS_ERROR( ret_val ) ) {
+                            bError = ret_val;
+                        }
+                    }
+                    /* Check atom types of marked atoms and add charge/H changes to nAtTypeTotals */
+                    /* Changing atoms were marked in the 1st call to SubtractOrChangeAtHChargeBNS(..., 1) above */
                     AddChangedAtHChargeBNS( at, num_atoms, pAATG->nAtTypeTotals, pAATG->nMarkedAtom );
                     if ( bChangeFlow & BNS_EF_CHNG_FLOW ) {
                         /* eliminate ambiguities in already changed flow:
@@ -6316,8 +6757,9 @@ BN_STRUCT* AllocateAndInitBnStruct( inp_ATOM *at, int num_atoms, int nMaxAddAtom
             }
             bond_type = (at[i].bond_type[j] & BOND_TYPE_MASK);
             bond_mark = (at[i].bond_type[j] & ~BOND_TYPE_MASK);
-            if ( bond_type != BOND_SINGLE && bond_type != BOND_DOUBLE && bond_type != BOND_TRIPLE ) {
-                /* make unknown bonds single */
+            if ( bond_type != BOND_SINGLE && bond_type != BOND_DOUBLE &&
+                 bond_type != BOND_TRIPLE /*&& bond_type != BOND_ALTERN*/ ) {
+                /* make Unknown or Alternating bonds single */
                 bond_type = 1;
                 at[i].bond_type[j] = bond_mark | bond_type;
                 num_changed_bonds ++;
@@ -6896,6 +7338,7 @@ BN_DATA *AllocateAndInitBnData( int max_num_vertices )
     int      max_len_Pu_Pv;
     max_num_vertices = 2*max_num_vertices+2;
     max_len_Pu_Pv    = max_num_vertices/2+1;
+    max_len_Pu_Pv   += max_len_Pu_Pv % 2; /* even length */
     if ( !(pBD             = (BN_DATA *) inchi_calloc( 1, sizeof(BN_DATA) ) ) ||
          !(pBD->BasePtr    = (Vertex *)  inchi_calloc( max_num_vertices, sizeof(Vertex) ) ) ||
          !(pBD->SwitchEdge = (Edge   *)  inchi_calloc( max_num_vertices, sizeof(Edge  ) ) ) ||
@@ -7733,10 +8176,12 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
     EdgeIndex iuv;
 #if( BNS_RAD_SEARCH == 1 )
     int              n, bRadSearch   = (BNS_EF_RAD_SRCH & bChangeFlow) && pBD->RadEndpoints;
-    int              bRadSrchMode    = 0;
+    BRS_MODE         bRadSrchMode    = RAD_SRCH_NORM;
+    int              bRadSearchPrelim = 0;
     if ( bRadSearch ) {
         pBD->nNumRadEndpoints = 0;
         bRadSrchMode          = pBD->bRadSrchMode;
+        bRadSearchPrelim      = pBNS->type_TACN && bRadSrchMode == RAD_SRCH_NORM;
     }
 #endif
 
@@ -7767,6 +8212,9 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
 #if( BNS_RAD_SEARCH == 1 )
             if ( !k && bRadSrchMode == RAD_SRCH_FROM_FICT && v/2 <= pBNS->num_atoms ) {
                 continue; /* start from fict. vertices only */
+            }
+            if ( bRadSearchPrelim && v/2 > pBNS->num_atoms ) {
+                continue; /* during initial add/remove H allow radical movement only through real atoms */
             }
 #endif
             if ( /* PrevPt[u] != v ** avoid edges of T */
@@ -7895,7 +8343,6 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
                             pBD->QSize = QSize;
                             return delta; /* error */
                         }
-
 #if( ALLOW_ONLY_SIMPLE_ALT_PATH == 1 )
                         if ( pBNS->bNotASimplePath || abs(delta) > 1 ) {
                             delta = 0;
@@ -7914,8 +8361,6 @@ int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow )
                 pBD->QSize = QSize;
                 return ret; /* error */
             }
-                
-
         }
 #if( BNS_RAD_SEARCH == 1 )
         if ( bRadSearch && !n ) {

@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -603,29 +603,29 @@ repeat_all:
                 at_rank_canon_n1 = 0;
                 at_rank_canon_n2 = 0;
                 for ( i = 0; i < num1; i ++ ) {
-                    int at_from, at_to;
+                    int at_from_n1, at_to_n1, at_no_n1_num_success = 0;
                     istk2 = istk;
                     if ( num1 == 2 ) {
                         at_rank_canon_n1 = nCanonRankFrom[EN1[0].from_at];
                         /*  an additional neighbor mapping is necessary; */
                         /*  we need to map only one at_from1 neighbor to make all neighbors have different ranks */
 
-                        at_from = EN1[0].from_at;
-                        at_to   = EN1[0].to_at[i];
+                        at_from_n1 = EN1[0].from_at;
+                        at_to_n1   = EN1[0].to_at[i];
 
                         if ( tpos1 < CurTreeGetPos( cur_tree ) &&
                              1 == CurTreeIsLastRank( cur_tree, at_rank_canon_n1 ) &&
-                             1 == CurTreeIsLastAtomEqu( cur_tree, at_to, nSymmStereo ) )
+                             1 == CurTreeIsLastAtomEqu( cur_tree, at_to_n1, nSymmStereo ) )
                             continue;
                         /*
                         if ( nSymmStereo && !pCS->bFirstCT ) {
-                            if ( i && nSymmStereo[at_to] == nSymmStereo[(int)EN1[0].to_at[0]] ) {
+                            if ( i && nSymmStereo[at_to_n1] == nSymmStereo[(int)EN1[0].to_at[0]] ) {
                                 continue; // do not test stereo equivalent atoms except the first one
                             }
                         }
                         */
                         /*  neighbors are tied. Untie them by breaking a tie on ONE of them. */
-                        ret1 = map_an_atom2( num_at_tg, num_max, at_from, at_to,
+                        ret1 = map_an_atom2( num_at_tg, num_max, at_from_n1, at_to_n1,
                                             nTempRank, nNumMappedRanks[istk2], &nNumMappedRanks[istk2+1], pCS,
                                             NeighList, pRankStack1+nStackPtr[istk2], pRankStack2+nStackPtr[istk2],
                                             &bAddStack );
@@ -643,7 +643,7 @@ repeat_all:
                                  0 == CurTreeIsLastRank( cur_tree, at_rank_canon_n1 ) ) {
                                 CurTreeAddRank( cur_tree, at_rank_canon_n1 );
                             }
-                            CurTreeAddAtom( cur_tree, at_to );
+                            CurTreeAddAtom( cur_tree, at_to_n1 );
                         }
 
 
@@ -667,27 +667,28 @@ repeat_all:
                     num2 = parity2 > 0? 1:2;
                     at_rank_canon_n2 = 0;
                     for ( j = 0; j < num2; j ++ ) {
+                        int at_from_n2, at_to_n2;
                         istk3 = istk2;
                         if ( num2 == 2 ) {
                             at_rank_canon_n2 = nCanonRankFrom[EN2[0].from_at];
                             /*  we need to map only one at_from2 neighbor to make its neighbors have different ranks */
-                            at_from = EN2[0].from_at;
-                            at_to   = EN2[0].to_at[j];
+                            at_from_n2 = EN2[0].from_at;
+                            at_to_n2   = EN2[0].to_at[j];
 
                             if ( tpos1 < CurTreeGetPos( cur_tree ) &&
                                  1 == CurTreeIsLastRank( cur_tree, at_rank_canon_n2 ) &&
-                                 1 == CurTreeIsLastAtomEqu( cur_tree, at_to, nSymmStereo ) )
+                                 1 == CurTreeIsLastAtomEqu( cur_tree, at_to_n2, nSymmStereo ) )
                                 continue;
                             
                             /*
                             if ( nSymmStereo && !pCS->bFirstCT ) {
-                                if ( j && nSymmStereo[at_to] == nSymmStereo[(int)EN2[0].to_at[0]] ) {
+                                if ( j && nSymmStereo[at_to_n2] == nSymmStereo[(int)EN2[0].to_at[0]] ) {
                                     continue; // do not test stereo equivalent atoms except the first one
                                 }
                             }
                             */
                             /*  neighbors are tied. Untie them by breaking a tie on ONE of them. */
-                            ret1 = map_an_atom2( num_at_tg, num_max, at_from, at_to,
+                            ret1 = map_an_atom2( num_at_tg, num_max, at_from_n2, at_to_n2,
                                                 nTempRank, nNumMappedRanks[istk3], &nNumMappedRanks[istk3+1], pCS,
                                                 NeighList, pRankStack1+nStackPtr[istk3],
                                                 pRankStack2+nStackPtr[istk3],
@@ -703,7 +704,7 @@ repeat_all:
                                      0 == CurTreeIsLastRank( cur_tree, at_rank_canon_n2 ) ) {
                                     CurTreeAddRank( cur_tree, at_rank_canon_n2 );
                                 }
-                                CurTreeAddAtom( cur_tree, at_to );
+                                CurTreeAddAtom( cur_tree, at_to_n2 );
                             }
 
                             parity2 = parity_of_mapped_half_bond( at_from2, at_to2, at_from1, at_to1, at, &EN2[1],
@@ -748,7 +749,7 @@ repeat_all:
                             /*  remove failed atom2 from the tree */
                             if ( tpos1 < CurTreeGetPos( cur_tree ) &&
                                  1 == CurTreeIsLastRank( cur_tree, at_rank_canon_n2 ) ) {
-                                CurTreeRemoveIfLastAtom( cur_tree, at_to );
+                                CurTreeRemoveIfLastAtom( cur_tree, at_to_n2 );
                                 CurTreeRemoveLastRankIfNoAtoms( cur_tree );
                             }
                             continue;  /*  Reject: not a minimal CT. */
@@ -800,6 +801,7 @@ repeat_all:
                                     CurTreeKeepLastAtomsOnly( cur_tree, tpos1, 1 );  /*  start over */
                                     nTotSuccess |= 2; /*  Obtained a smaller CT */
                                 }
+                                at_no_n1_num_success ++;
                             } else {
                                 if ( bStereoIsBetterWasSetHere ) {  /*  rollback */
                                     pCS->bStereoIsBetter = 0;
@@ -807,7 +809,7 @@ repeat_all:
                                 }
                                 if ( tpos1 < CurTreeGetPos( cur_tree ) &&
                                      1 == CurTreeIsLastRank( cur_tree, at_rank_canon_n2 ) ) {
-                                    CurTreeRemoveIfLastAtom( cur_tree, at_to );
+                                    CurTreeRemoveIfLastAtom( cur_tree, at_to_n2 );
                                     CurTreeRemoveLastRankIfNoAtoms( cur_tree );
                                 }
                             }
@@ -818,6 +820,12 @@ repeat_all:
                          1 == CurTreeIsLastRank( cur_tree, at_rank_canon_n2 ) ) {
                          CurTreeRemoveLastRank( cur_tree );
                     }
+                    /* added 2006-07-20 */
+                    if ( !at_no_n1_num_success && tpos1 < CurTreeGetPos( cur_tree ) &&
+                        1 == CurTreeIsLastRank( cur_tree, at_rank_canon_n1 ) ) {
+                         CurTreeRemoveIfLastAtom( cur_tree, at_to_n1 );
+                    }
+                         
                 } /*  end choices in mapping neighbors of the 1st half-bond */
                 if (  tpos1 < CurTreeGetPos( cur_tree ) &&
                       1 == CurTreeIsLastRank( cur_tree, at_rank_canon_n1 ) ) {

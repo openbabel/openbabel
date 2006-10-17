@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -34,7 +34,7 @@ int  Create_INChI( INChI **ppINChI, INChI_Aux **ppINChI_Aux, ORIG_ATOM_DATA *ori
                   INCHI_MODE *pbTautFlags, INCHI_MODE *pbTautFlagsDone,
                   struct tagInchiTime *ulMaxTime, struct tagTautomerGroupsInfo *ti_out, char *pStrErrStruct);
 int FillOutInfAtom(inp_ATOM *norm_at, INF_ATOM_DATA *inf_norm_at_data, int init_num_at,
-                   int num_removed_H, int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic, int bIsotopic,
+                   int num_removed_H, int bAdd_DT_to_num_H, int nNumRemovedProtons, NUM_H *nNumRemovedProtonsIsotopic, int bIsotopic,
                    INChI *pINChI, INChI_Aux *pINChI_Aux, int bAbcNumbers, INCHI_MODE nMode );
 int FillOutCompositeCanonInfAtom(COMP_ATOM_DATA *composite_norm_data, INF_ATOM_DATA *inf_norm_at_data,
                                  int bIsotopic, int bTautomeric,

@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -61,6 +61,7 @@
 #define BNS_CAP_FLOW_ERR   (BNS_ERR + 10) /*(-9989)*/
 #define BNS_RADICAL_ERR    (BNS_ERR + 11) /*(-9988)*/
 #define BNS_REINIT_ERR     (BNS_ERR + 12) /*(-9987)*/
+#define BNS_ALTBOND_ERR    (BNS_ERR + 13) /*(-9986)*/
 
 #define BNS_MAX_ERR_VALUE  (BNS_ERR + 19) /*(-9980)*/
 

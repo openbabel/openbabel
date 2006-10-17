@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -3139,7 +3139,7 @@ int WriteOrigCoord( int num_inp_atoms, MOL_COORD *szMolCoord, int *i, char *szBu
 */
 int WriteOrigAtoms( int num_inp_atoms, inp_ATOM *at, int *i, char *szBuf, int buf_len, STRUCT_DATA *sd)
 {
-    int j, k, n, len, len0, cur_len, val, mw, parity, num_trans, is_ok, b_self;
+    int j, k, n, len, len0, cur_len, val, bonds_val, mw, parity, num_trans, is_ok, b_self;
     static char szIsoH[] = "hdt";
     char szCurAtom[32];
     AT_NUMB nNeighOrder[MAXVAL], neigh;
@@ -3191,8 +3191,10 @@ int WriteOrigAtoms( int num_inp_atoms, inp_ATOM *at, int *i, char *szBuf, int bu
 
         len = len0 = strlen( at[j].elname );
         memcpy( szCurAtom, at[j].elname, len );
+        bonds_val = nBondsValenceInpAt( at+j, NULL, NULL );
+
         if ( (val=needed_unusual_el_valence( at[j].el_number, at[j].charge, at[j].radical,
-                                 at[j].chem_bonds_valence, at[j].num_H, at[j].valence )) ||
+                                 at[j].chem_bonds_valence, bonds_val, at[j].num_H, at[j].valence )) ||
              at[j].charge || at[j].radical || at[j].iso_atw_diff || NUM_ISO_H(at,j) || parity ) {
             /* valence */
             if ( val ) {

@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -50,7 +50,8 @@ int is_el_a_metal( int nPeriodicNum );
 int get_el_valence( int nPeriodicNum, int charge, int val_num );
 int get_unusual_el_valence( int nPeriodicNum, int charge, int radical, int bonds_valence, int num_H, int num_bonds );
 int detect_unusual_el_valence( int nPeriodicNum, int charge, int radical, int bonds_valence, int num_H, int num_bonds );
-int needed_unusual_el_valence( int nPeriodicNum, int charge, int radical, int bonds_valence, int num_H, int num_bonds );
+int needed_unusual_el_valence( int nPeriodicNum, int charge, int radical, int bonds_valence,
+                               int actual_bonds_val, int num_H, int num_bonds );
 int get_el_type( int nPeriodicNum );
 int get_el_number( const char* elname );
 int do_not_add_H( int nPeriodicNum );
@@ -67,6 +68,12 @@ int nNoMetalBondsValence( inp_ATOM *at, int at_no );
 int nNoMetalNeighIndex( inp_ATOM *at, int at_no );
 int nNoMetalOtherNeighIndex( inp_ATOM *at, int at_no, int cur_neigh );
 int nNoMetalOtherNeighIndex2( inp_ATOM *at, int at_no, int cur_neigh, int cur_neigh2 );
+
+/* mol2atom.c */
+int nBondsValToMetal( inp_ATOM* at, int iat );
+
+/* ichi_bns.c */
+int nBondsValenceInpAt( const inp_ATOM *at, int *nNumAltBonds, int *nNumWrongBonds );
 
 int bHeteroAtomMayHaveXchgIsoH( inp_ATOM *atom, int iat );
 

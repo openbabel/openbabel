@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -2309,7 +2309,9 @@ int RunBnsRestore1( ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_STRUCT *pBNS,
     pStruct->at = at2;
     ret2 = CopyBnsToAtom( pStruct, pBNS, pVA, pTCGroups, 1 );
     pStruct->at = at;
-#endif    
+#endif
+
+#if ( BNS_RAD_SEARCH == 1 )
     /******************************************************************/
     /* move unfulfilled 'radicals' from ChargeStruct to atoms         */
     /* and set change charges of affected atoms to fit total charge   */
@@ -2317,7 +2319,7 @@ int RunBnsRestore1( ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_STRUCT *pBNS,
     if ( ret < 0 ) {
         goto exit_function;
     }
-
+#endif
     /**************************************************************/
     /**************************************************************/
     /*****           fix restore inconsistencies              *****/

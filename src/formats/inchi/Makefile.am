@@ -12,16 +12,17 @@ libinchi_la_SOURCES = \
 	ichiprt3.c ichiqueu.c ichiread.c ichiring.c ichirvr1.c \
 	ichirvr2.c ichirvr3.c ichirvr4.c ichirvr5.c ichirvr6.c \
 	ichirvr7.c ichisort.c ichister.c ichitaut.c inchi_dll.c \
-	inchi_dll_main.c runichi.c strutil.c util.c 
+	inchi_dll_main.c runichi.c strutil.c util.c
 
 libinchiincludedir = $(includedir)/inchi
 # Only install the required header to expose to the outside world
 libinchiinclude_HEADERS = inchi_api.h
 
 EXTRA_DIST = README.html COPYING.LIB \
-	aux2atom.h comdef.h extr_ct.h ichi.h ichi_bns.h ichicano.h \
-	ichicant.h ichicomn.h ichicomp.h ichidrp.h ichierr.h ichimain.h \
-	ichimake.h ichinorm.h ichiparm.h ichiring.h ichirvrs.h ichisize.h \
-	ichister.h ichitaut.h ichitime.h inchi_dll_main.h inchicmp.h inpdef.h \
-	lreadmol.h mode.h strutil.h util.h
+	aux2atom.h comdef.h extr_ct.h ichi.h ichi_bns.h \
+	ichicano.h ichicant.h ichicomn.h ichicomp.h ichidrp.h \
+	ichierr.h ichimain.h ichimake.h ichinorm.h ichiparm.h \
+	ichiring.h ichirvrs.h ichisize.h ichister.h ichitaut.h \
+	ichitime.h inchi_dll_main.h inchicmp.h inpdef.h \
+	mode.h strutil.h util.h 
 

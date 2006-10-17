@@ -3,7 +3,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.01
- * May 16, 2006
+ * July 21, 2006
  * Developed at NIST
  */
 
@@ -636,7 +636,7 @@ int INChITo_Atom(INPUT_FILE *inp_molfile, MOL_COORD **szCoord,
     #else
                         atom[i].el_number = get_periodic_table_number( atom[i].elname );
     #endif
-                        /* bonds' valence */
+                        /* bonds' valence + number of non-isotopic H */
                         if ( isdigit( UCINT *p ) ) {
                             AT_BONDS_VAL(atom,i) = (char)strtol( p, &q, 10 );
                             if ( !AT_BONDS_VAL(atom,i) )
@@ -1102,7 +1102,7 @@ int INChITo_Atom(INPUT_FILE *inp_molfile, MOL_COORD **szCoord,
                                         }
                                         chem_bonds_valence += n2;
                                         *err |= 32; /*  Unrecognized aromatic bond(s) replaced with single */
-                                        MOLFILE_ERR_SET (*err, 0, "Atom has more than 3 aromatic bonds");
+                                        MOLFILE_ERR_SET (*err, 0, "Atom has 1 or more than 3 aromatic bonds");
                                         break;
                                     }
                                 }
@@ -1128,6 +1128,38 @@ int INChITo_Atom(INPUT_FILE *inp_molfile, MOL_COORD **szCoord,
                                     }
                                 }
 #else                                
+                                /* added 2006-07-19 to process aromatic bonds same way as from molfile */
+                                if ( n2 && !valence ) {
+                                    int num_H = NUMH(atom, a1); /* only isotopic */
+                                    int chem_valence = chem_bonds_valence;
+                                    int bUnusualValenceArom = 
+                                        detect_unusual_el_valence( (int)atom[a1].el_number, atom[a1].charge,
+                                                                    atom[a1].radical, chem_valence,
+                                                                    num_H, atom[a1].valence );
+                                    int bUnusualValenceNoArom = 
+                                        detect_unusual_el_valence( (int)atom[a1].el_number, atom[a1].charge,
+                                                                    atom[a1].radical, chem_valence-1,
+                                                                    num_H, atom[a1].valence );
+#if ( CHECK_AROMBOND2ALT == 1 )
+                                    if ( bUnusualValenceArom && !bUnusualValenceNoArom && 0 == nBondsValToMetal( atom, a1) )
+#else
+                                    if ( bUnusualValenceArom && !bUnusualValenceNoArom )
+#endif                     
+                                    {
+                                        /* typically NH in 5-member aromatic ring */
+                                        chem_bonds_valence --;
+                                    }
+                                } else
+                                if ( n2 && valence ) {
+                                    /* atom has aromatic bonds AND the chemical valence is known */
+                                    int num_H = NUMH(atom, a1);
+                                    int chem_valence = chem_bonds_valence + num_H;
+                                    if ( valence == chem_valence-1 ) {
+                                        /* typically NH in 5-member aromatic ring */
+                                        chem_bonds_valence --;
+                                    }
+                                }
+
                                 atom[a1].chem_bonds_valence = chem_bonds_valence;
                                 atom[a1].num_H = get_num_H( atom[a1].elname, atom[a1].num_H, atom[a1].num_iso_H, atom[a1].charge, atom[a1].radical,
                                                           atom[a1].chem_bonds_valence,
@@ -2104,7 +2136,7 @@ bypass_end_of_INChI_plain:
                                         }
                                         chem_bonds_valence += n2;
                                         *err |= 32; /*  Unrecognized aromatic bond(s) replaced with single */
-                                        MOLFILE_ERR_SET (*err, 0, "Atom has more than 3 aromatic bonds");
+                                        MOLFILE_ERR_SET (*err, 0, "Atom has 1 or more than 3 aromatic bonds");
                                         break;
                                     }
                                 }
@@ -2131,6 +2163,38 @@ bypass_end_of_INChI_plain:
                                     }
                                 }
 #else                                
+                                /* added 2006-07-19 to process aromatic bonds same way as from molfile */
+                                if ( n2 && !valence ) {
+                                    int num_H = NUMH(atom, a1); /* only isotopic */
+                                    int chem_valence = chem_bonds_valence;
+                                    int bUnusualValenceArom = 
+                                        detect_unusual_el_valence( (int)atom[a1].el_number, atom[a1].charge,
+                                                                    atom[a1].radical, chem_valence,
+                                                                    num_H, atom[a1].valence );
+                                    int bUnusualValenceNoArom = 
+                                        detect_unusual_el_valence( (int)atom[a1].el_number, atom[a1].charge,
+                                                                    atom[a1].radical, chem_valence-1,
+                                                                    num_H, atom[a1].valence );
+#if ( CHECK_AROMBOND2ALT == 1 )
+                                    if ( bUnusualValenceArom && !bUnusualValenceNoArom && 0 == nBondsValToMetal( atom, a1) )
+#else
+                                    if ( bUnusualValenceArom && !bUnusualValenceNoArom )
+#endif                     
+                                    {
+                                        /* typically NH in 5-member aromatic ring */
+                                        chem_bonds_valence --;
+                                    }
+                                } else
+                                if ( n2 && valence ) {
+                                    /* atom has aromatic bonds AND the chemical valence is known */
+                                    int num_H = NUMH(atom, a1);
+                                    int chem_valence = chem_bonds_valence + num_H;
+                                    if ( valence == chem_valence-1 ) {
+                                        /* typically NH in 5-member aromatic ring */
+                                        chem_bonds_valence --;
+                                    }
+                                }
+
                                 atom[a1].chem_bonds_valence = chem_bonds_valence;
                                 atom[a1].num_H = get_num_H( atom[a1].elname, atom[a1].num_H, atom[a1].num_iso_H, atom[a1].charge, atom[a1].radical,
                                                           atom[a1].chem_bonds_valence,
