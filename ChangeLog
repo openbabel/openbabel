@@ -1,3 +1,13 @@
+2006-10-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/inchi/ Import of final InChI 1.0.1 release.
+
+	* src/formats/chemdrawcdx[h,cpp]: Test inclusion for 2.0.x users
+	and ChemSpotlight.
+
+	* configure, configure.in, */Makefile.*: Updated with latest
+	autoconf, automake, etc.
+
 2006-07-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* NEWS: Release notes for the 2.0.2 release.
