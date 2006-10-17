@@ -42,7 +42,8 @@ noinst_PROGRAMS = aromatic$(EXEEXT) atom$(EXEEXT) bond$(EXEEXT) \
 	invalidsmarts$(EXEEXT) invalidsmiles$(EXEEXT) \
 	iterators$(EXEEXT) matrix$(EXEEXT) mol$(EXEEXT) \
 	residue$(EXEEXT) rings$(EXEEXT) smarts$(EXEEXT) \
-	smilesmatch$(EXEEXT) unitcell$(EXEEXT)
+	smilesmatch$(EXEEXT) textbuffer$(EXEEXT) unitcell$(EXEEXT) \
+	vector3$(EXEEXT)
 bin_PROGRAMS = roundtrip$(EXEEXT)
 subdir = test
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -133,10 +134,18 @@ am_smilesmatch_OBJECTS = smilesmatch.$(OBJEXT)
 smilesmatch_OBJECTS = $(am_smilesmatch_OBJECTS)
 smilesmatch_LDADD = $(LDADD)
 smilesmatch_DEPENDENCIES = ../src/libopenbabel.la
+am_textbuffer_OBJECTS = textbuffer.$(OBJEXT)
+textbuffer_OBJECTS = $(am_textbuffer_OBJECTS)
+textbuffer_LDADD = $(LDADD)
+textbuffer_DEPENDENCIES = ../src/libopenbabel.la
 am_unitcell_OBJECTS = unitcell.$(OBJEXT)
 unitcell_OBJECTS = $(am_unitcell_OBJECTS)
 unitcell_LDADD = $(LDADD)
 unitcell_DEPENDENCIES = ../src/libopenbabel.la
+am_vector3_OBJECTS = vector3.$(OBJEXT)
+vector3_OBJECTS = $(am_vector3_OBJECTS)
+vector3_LDADD = $(LDADD)
+vector3_DEPENDENCIES = ../src/libopenbabel.la
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -154,14 +163,16 @@ SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
 	$(iterators_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
 	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
-	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(unitcell_SOURCES)
+	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(textbuffer_SOURCES) \
+	$(unitcell_SOURCES) $(vector3_SOURCES)
 DIST_SOURCES = $(aromatic_SOURCES) $(atom_SOURCES) $(bond_SOURCES) \
 	$(conversion_SOURCES) $(data_SOURCES) $(formalcharge_SOURCES) \
 	$(format_SOURCES) $(formula_SOURCES) $(internalcoord_SOURCES) \
 	$(invalidsmarts_SOURCES) $(invalidsmiles_SOURCES) \
 	$(iterators_SOURCES) $(matrix_SOURCES) $(mol_SOURCES) \
 	$(residue_SOURCES) $(rings_SOURCES) $(roundtrip_SOURCES) \
-	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(unitcell_SOURCES)
+	$(smarts_SOURCES) $(smilesmatch_SOURCES) $(textbuffer_SOURCES) \
+	$(unitcell_SOURCES) $(vector3_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -188,6 +199,8 @@ BUILD_INCHI_FALSE = @BUILD_INCHI_FALSE@
 BUILD_INCHI_TRUE = @BUILD_INCHI_TRUE@
 BUILD_PCH_FALSE = @BUILD_PCH_FALSE@
 BUILD_PCH_TRUE = @BUILD_PCH_TRUE@
+BUILD_RUBY_FALSE = @BUILD_RUBY_FALSE@
+BUILD_RUBY_TRUE = @BUILD_RUBY_TRUE@
 BUILD_SCRIPTS_FALSE = @BUILD_SCRIPTS_FALSE@
 BUILD_SCRIPTS_TRUE = @BUILD_SCRIPTS_TRUE@
 BUILD_SHARED_FALSE = @BUILD_SHARED_FALSE@
@@ -222,6 +235,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 F77 = @F77@
 FFLAGS = @FFLAGS@
+GREP = @GREP@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -252,6 +266,7 @@ PERL_TESTS_TRUE = @PERL_TESTS_TRUE@
 PROVE = @PROVE@
 PYTHON = @PYTHON@
 RANLIB = @RANLIB@
+RUBY = @RUBY@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -263,15 +278,9 @@ WX_LIBS = @WX_LIBS@
 XML2_CONFIG = @XML2_CONFIG@
 XML_CPPFLAGS = @XML_CPPFLAGS@
 XML_LIBS = @XML_LIBS@
-ac_ct_AR = @ac_ct_AR@
-ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
-ac_ct_DLLTOOL = @ac_ct_DLLTOOL@
 ac_ct_F77 = @ac_ct_F77@
-ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
-ac_ct_RANLIB = @ac_ct_RANLIB@
-ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -288,23 +297,30 @@ build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 datadir = @datadir@
+datarootdir = @datarootdir@
+docdir = @docdir@
+dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
 host_os = @host_os@
 host_vendor = @host_vendor@
+htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
 libexecdir = @libexecdir@
+localedir = @localedir@
 localstatedir = @localstatedir@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
+pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
+psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
@@ -345,7 +361,9 @@ residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
 smarts_SOURCES = smartstest.cpp
 smilesmatch_SOURCES = smilesmatch.cpp
+textbuffer_SOURCES = textbuffer.cpp
 unitcell_SOURCES = unitcell.cpp
+vector3_SOURCES = vector3.cpp
 all: all-recursive
 
 .SUFFIXES:
@@ -359,9 +377,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  test/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  test/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  test/Makefile
+	  $(AUTOMAKE) --gnu  test/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -471,9 +489,15 @@ smarts$(EXEEXT): $(smarts_OBJECTS) $(smarts_DEPENDENCIES)
 smilesmatch$(EXEEXT): $(smilesmatch_OBJECTS) $(smilesmatch_DEPENDENCIES) 
 	@rm -f smilesmatch$(EXEEXT)
 	$(CXXLINK) $(smilesmatch_LDFLAGS) $(smilesmatch_OBJECTS) $(smilesmatch_LDADD) $(LIBS)
+textbuffer$(EXEEXT): $(textbuffer_OBJECTS) $(textbuffer_DEPENDENCIES) 
+	@rm -f textbuffer$(EXEEXT)
+	$(CXXLINK) $(textbuffer_LDFLAGS) $(textbuffer_OBJECTS) $(textbuffer_LDADD) $(LIBS)
 unitcell$(EXEEXT): $(unitcell_OBJECTS) $(unitcell_DEPENDENCIES) 
 	@rm -f unitcell$(EXEEXT)
 	$(CXXLINK) $(unitcell_LDFLAGS) $(unitcell_OBJECTS) $(unitcell_LDADD) $(LIBS)
+vector3$(EXEEXT): $(vector3_OBJECTS) $(vector3_DEPENDENCIES) 
+	@rm -f vector3$(EXEEXT)
+	$(CXXLINK) $(vector3_LDFLAGS) $(vector3_OBJECTS) $(vector3_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -500,7 +524,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/roundtrip.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smartstest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smilesmatch.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/textbuffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unitcell.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vector3.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
