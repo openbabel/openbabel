@@ -159,7 +159,7 @@ namespace OpenBabel
     OBMol *_parent;
   public:
 
-    OBResidueIter() : _parent(NULL), _ptr(NULL) { }
+    OBResidueIter() : _ptr(NULL), _parent(NULL) { }
     OBResidueIter(OBMol *mol);
     OBResidueIter(OBMol &mol);
     OBResidueIter(const OBResidueIter &ri);
