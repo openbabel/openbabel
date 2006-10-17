@@ -881,10 +881,10 @@ Sugar_pattern_2_alpha: [OX2;$([r5]1@[C@@](!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C
 Sugar_pattern_2_beta: [OX2;$([r5]1@[C@](!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C1),$([r6]1@[C@](!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C@C1)]
 # 5 or 6-membered cyclic hemi-acetal
 
-Poly_sugar_1: ([OX2;$([r5]1@C@C@C(O)@C1),$([r6]1@C@C@C(O)@C(O)@C1)].[OX2;$([r5]1@C@C@C(O)@C1),$([r6]1@C@C@C(O)@C(O)@C1)])
+# Poly_sugar_1: ([OX2;$([r5]1@C@C@C(O)@C1),$([r6]1@C@C@C(O)@C(O)@C1)].[OX2;$([r5]1@C@C@C(O)@C1),$([r6]1@C@C@C(O)@C(O)@C1)])
 # pattern1 occours more than once (in same molecule, but moieties don't have to be adjacent!)
 
-Poly_sugar_2: ([OX2;$([r5]1@C(!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C1),$([r6]1@C(!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C@C1)].[OX2;$([r5]1@C(!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C1),$([r6]1@C(!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C@C1)])
+# Poly_sugar_2: ([OX2;$([r5]1@C(!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C1),$([r6]1@C(!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C@C1)].[OX2;$([r5]1@C(!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C1),$([r6]1@C(!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C@C1)])
 # pattern2 occours more than once (in same molecule, but moieties don't have to be adjacent!)
 
 
@@ -917,21 +917,21 @@ Trifluoromethyl: [FX1][CX4;!$([H0][Cl,Br,I]);!$([F][C]([F])([F])[F])]([FX1])([FX
 C_ONS_bond: [#6]~[#7,#8,#16]
 # probably all drug-like molecules have at least one O, N, or S connected to a C -> nice filter
 
-Mixture: (*).(*)
+# Mixture: (*).(*)
 # two or more seperate parts, may also be salt
-# Did not work with Openbabel 1.0 (no component-level grouping)
+# Does not work with Openbabel 2.x (no component-level grouping)
 
 
 Charged: [!+0]
 
 Anion: [-1,-2,-3,-4,-5,-6,-7]
 
-Kation: [+1,+2,+3,+4,+5,+6,+7]
+Cation: [+1,+2,+3,+4,+5,+6,+7]
 
-Salt: ([-1,-2,-3,-4,-5,-6,-7]).([+1,+2,+3,+4,+5,+6,+7])
+# Salt: ([-1,-2,-3,-4,-5,-6,-7]).([+1,+2,+3,+4,+5,+6,+7])
 # two or more seperate components with opposite charges
 
-Zwitterion: ([-1,-2,-3,-4,-5,-6,-7].[+1,+2,+3,+4,+5,+6,+7])
+# Zwitterion: ([-1,-2,-3,-4,-5,-6,-7].[+1,+2,+3,+4,+5,+6,+7])
 # both negative and positive charges somewhere within the same molecule. 
 
 1,3-Tautomerizable: [$([#7X2,OX1,SX1]=*[!H0;!$([a;!n])]),$([#7X3,OX2,SX2;!H0]*=*),$([#7X3,OX2,SX2;!H0]*:n)]
