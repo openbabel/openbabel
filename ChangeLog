@@ -1,3 +1,11 @@
+2006-10-20 Chris Morley <ob@gaseq.co.uk>
+
+	*  src/formats.xml/xml.cpp(ReadChemObject): added extra error
+	message and convert the rest to use obErrorLog.
+	
+	* src/formats/mdlformat.cpp: modify description to work around
+	bug in wxWidgets radiobuttons.
+	
 2006-10-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obconversion.h, src/obconversion.cpp: Make sure to free

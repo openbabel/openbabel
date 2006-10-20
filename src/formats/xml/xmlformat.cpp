@@ -22,7 +22,7 @@ namespace OpenBabel
 class XMLFormat : XMLBaseFormat
 {
 public:
-	XMLFormat()
+  XMLFormat()
   {
       OBConversion::RegisterFormat("xml",this);
   }
@@ -37,52 +37,56 @@ This implementation uses libxml2.\n \
 Read option, e.g. -an\n \
 n  Read objects of first namespace only\n \
 \n";
-	}
+  }
 
-	const char* NamespaceURI()const{return "Undefined";};
+  const char* NamespaceURI()const{return "Undefined";};
 
   unsigned Flags()
   {
     return NOTWRITABLE;
   }
 
-	bool ReadChemObject(OBConversion* pConv)
-	{
-		XMLBaseFormat* pDefault = XMLConversion::GetDefaultXMLClass();
-		if(pConv->GetOutFormat()->GetType() == pDefault->GetType())
-		{
-			//Extend the OBConversion (to include XML parsing).
-			XMLConversion* pxmlConv = XMLConversion::GetDerived(pConv);
-			pxmlConv->LookForNamespace();
-			return pDefault->ReadChemObject(pConv);
-		}
-		else
-		{
-			//Chemical object type handled by the output format is not
-			//the same as that handled by the default format.
-			cerr << "Need to specify the input XML format more precisely" << endl;
-			return false;
-		}
-	};
+  bool ReadChemObject(OBConversion* pConv)
+  {
+    XMLBaseFormat* pDefault = XMLConversion::GetDefaultXMLClass();
+    if(!pDefault || pDefault==this)
+    {
+      obErrorLog.ThrowError("XML Format", "There is no acceptable default XML Format", obError);
+      return false;
+    }
+    if(pConv->GetOutFormat()->GetType() == pDefault->GetType())
+    {
+      //Extend the OBConversion (to include XML parsing).
+      XMLConversion* pxmlConv = XMLConversion::GetDerived(pConv);
+      pxmlConv->LookForNamespace();
+      return pDefault->ReadChemObject(pConv);
+    }
+    else
+    {
+      //Chemical object type handled by the output format is not
+      //the same as that handled by the default format.
+      return false;
+    }
+  };
 
-	bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
-	{
-		XMLBaseFormat* pDefault = XMLConversion::GetDefaultXMLClass();
-		if(pConv->GetOutFormat()->GetType() == pDefault->GetType())
-		{
-			XMLConversion* pxmlConv = XMLConversion::GetDerived(pConv);
-			pxmlConv->LookForNamespace();
-			pxmlConv->AddOption("m",OBConversion::INOPTIONS);
-			return pDefault->ReadMolecule(pOb, pConv);
-		}
-		else
-		{
-			//Chemical object type handled by the output format is not
-			//the same as that handled by the default format.
-			cerr << "Need to specify the input XML format more precisely" << endl;
-			return false;
-		}
-	};
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    XMLBaseFormat* pDefault = XMLConversion::GetDefaultXMLClass();
+    if(pConv->GetOutFormat()->GetType() == pDefault->GetType())
+    {
+      XMLConversion* pxmlConv = XMLConversion::GetDerived(pConv);
+      pxmlConv->LookForNamespace();
+      pxmlConv->AddOption("m",OBConversion::INOPTIONS);
+      return pDefault->ReadMolecule(pOb, pConv);
+    }
+    else
+    {
+      //Chemical object type handled by the output format is not
+      //the same as that handled by the default format.
+      obErrorLog.ThrowError("XML Format", "Need to specify the input XML format more precisely", obError);
+      return false;
+    }
+  };
 
 };
 

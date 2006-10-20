@@ -52,11 +52,11 @@ namespace OpenBabel
         "MDL MOL format\n \
 Reads and writes V2000 and V3000 versions\n \
 Write Options, e.g. -x3\n \
- 2  output V2000 (default) or\n \
- 3  output V3000 (used for >999 atoms/bonds) \n \
+ 3  output V3000 not V2000 (used for >999 atoms/bonds) \n \
  m  write no properties\n \
 ";
     };
+// 2  output V2000 (default) or\n \
 
     virtual const char* SpecificationURL()
     {return "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";};
