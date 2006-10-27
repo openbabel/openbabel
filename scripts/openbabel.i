@@ -2,7 +2,11 @@
 #ifdef SWIGPERL
 %module "Chemistry::OpenBabel"
 #else
+#ifdef SWIGRUBY
+%module openbabel_wrap
+#else
 %module openbabel
+#endif
 #endif
 
 %{
