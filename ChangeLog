@@ -1,6 +1,12 @@
+2006-10-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/openbabel.i, scripts/*: Updated with changes from Martin
+	Vogt to fix break (likely dating back to header split of atom.h,
+	bond.h, residue.h). 
+
 2006-10-20 Chris Morley <ob@gaseq.co.uk>
 
-	*  src/formats.xml/xml.cpp(ReadChemObject): added extra error
+	*  src/formats.xml/xml.cpp (ReadChemObject): added extra error
 	message and convert the rest to use obErrorLog.
 	
 	* src/formats/mdlformat.cpp: modify description to work around

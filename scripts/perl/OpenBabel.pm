@@ -2199,6 +2199,323 @@ sub ACQUIRE {
 }
 
 
+############# Class : Chemistry::OpenBabel::OBResidue ##############
+
+package Chemistry::OpenBabel::OBResidue;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel::OBBase Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBResidue(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBResidue($self);
+        delete $OWNER{$self};
+    }
+}
+
+*AddAtom = *Chemistry::OpenBabelc::OBResidue_AddAtom;
+*InsertAtom = *Chemistry::OpenBabelc::OBResidue_InsertAtom;
+*RemoveAtom = *Chemistry::OpenBabelc::OBResidue_RemoveAtom;
+*Clear = *Chemistry::OpenBabelc::OBResidue_Clear;
+*SetName = *Chemistry::OpenBabelc::OBResidue_SetName;
+*SetNum = *Chemistry::OpenBabelc::OBResidue_SetNum;
+*SetChain = *Chemistry::OpenBabelc::OBResidue_SetChain;
+*SetChainNum = *Chemistry::OpenBabelc::OBResidue_SetChainNum;
+*SetIdx = *Chemistry::OpenBabelc::OBResidue_SetIdx;
+*SetAtomID = *Chemistry::OpenBabelc::OBResidue_SetAtomID;
+*SetHetAtom = *Chemistry::OpenBabelc::OBResidue_SetHetAtom;
+*SetSerialNum = *Chemistry::OpenBabelc::OBResidue_SetSerialNum;
+*GetName = *Chemistry::OpenBabelc::OBResidue_GetName;
+*GetNum = *Chemistry::OpenBabelc::OBResidue_GetNum;
+*GetNumAtoms = *Chemistry::OpenBabelc::OBResidue_GetNumAtoms;
+*GetChain = *Chemistry::OpenBabelc::OBResidue_GetChain;
+*GetChainNum = *Chemistry::OpenBabelc::OBResidue_GetChainNum;
+*GetIdx = *Chemistry::OpenBabelc::OBResidue_GetIdx;
+*GetResKey = *Chemistry::OpenBabelc::OBResidue_GetResKey;
+*GetAtoms = *Chemistry::OpenBabelc::OBResidue_GetAtoms;
+*GetBonds = *Chemistry::OpenBabelc::OBResidue_GetBonds;
+*GetAtomID = *Chemistry::OpenBabelc::OBResidue_GetAtomID;
+*GetSerialNum = *Chemistry::OpenBabelc::OBResidue_GetSerialNum;
+*GetAminoAcidProperty = *Chemistry::OpenBabelc::OBResidue_GetAminoAcidProperty;
+*GetAtomProperty = *Chemistry::OpenBabelc::OBResidue_GetAtomProperty;
+*GetResidueProperty = *Chemistry::OpenBabelc::OBResidue_GetResidueProperty;
+*IsHetAtom = *Chemistry::OpenBabelc::OBResidue_IsHetAtom;
+*IsResidueType = *Chemistry::OpenBabelc::OBResidue_IsResidueType;
+*BeginAtom = *Chemistry::OpenBabelc::OBResidue_BeginAtom;
+*NextAtom = *Chemistry::OpenBabelc::OBResidue_NextAtom;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBAtom ##############
+
+package Chemistry::OpenBabel::OBAtom;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel::OBNodeBase Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBAtom(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBAtom($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Clear = *Chemistry::OpenBabelc::OBAtom_Clear;
+*SetIdx = *Chemistry::OpenBabelc::OBAtom_SetIdx;
+*SetHyb = *Chemistry::OpenBabelc::OBAtom_SetHyb;
+*SetAtomicNum = *Chemistry::OpenBabelc::OBAtom_SetAtomicNum;
+*SetIsotope = *Chemistry::OpenBabelc::OBAtom_SetIsotope;
+*SetImplicitValence = *Chemistry::OpenBabelc::OBAtom_SetImplicitValence;
+*IncrementImplicitValence = *Chemistry::OpenBabelc::OBAtom_IncrementImplicitValence;
+*DecrementImplicitValence = *Chemistry::OpenBabelc::OBAtom_DecrementImplicitValence;
+*SetFormalCharge = *Chemistry::OpenBabelc::OBAtom_SetFormalCharge;
+*SetSpinMultiplicity = *Chemistry::OpenBabelc::OBAtom_SetSpinMultiplicity;
+*SetType = *Chemistry::OpenBabelc::OBAtom_SetType;
+*SetPartialCharge = *Chemistry::OpenBabelc::OBAtom_SetPartialCharge;
+*SetCoordPtr = *Chemistry::OpenBabelc::OBAtom_SetCoordPtr;
+*SetVector = *Chemistry::OpenBabelc::OBAtom_SetVector;
+*SetResidue = *Chemistry::OpenBabelc::OBAtom_SetResidue;
+*SetAromatic = *Chemistry::OpenBabelc::OBAtom_SetAromatic;
+*UnsetAromatic = *Chemistry::OpenBabelc::OBAtom_UnsetAromatic;
+*SetClockwiseStereo = *Chemistry::OpenBabelc::OBAtom_SetClockwiseStereo;
+*SetAntiClockwiseStereo = *Chemistry::OpenBabelc::OBAtom_SetAntiClockwiseStereo;
+*SetPositiveStereo = *Chemistry::OpenBabelc::OBAtom_SetPositiveStereo;
+*SetNegativeStereo = *Chemistry::OpenBabelc::OBAtom_SetNegativeStereo;
+*UnsetStereo = *Chemistry::OpenBabelc::OBAtom_UnsetStereo;
+*SetInRing = *Chemistry::OpenBabelc::OBAtom_SetInRing;
+*SetChiral = *Chemistry::OpenBabelc::OBAtom_SetChiral;
+*ClearCoordPtr = *Chemistry::OpenBabelc::OBAtom_ClearCoordPtr;
+*GetFormalCharge = *Chemistry::OpenBabelc::OBAtom_GetFormalCharge;
+*GetAtomicNum = *Chemistry::OpenBabelc::OBAtom_GetAtomicNum;
+*GetIsotope = *Chemistry::OpenBabelc::OBAtom_GetIsotope;
+*GetSpinMultiplicity = *Chemistry::OpenBabelc::OBAtom_GetSpinMultiplicity;
+*GetAtomicMass = *Chemistry::OpenBabelc::OBAtom_GetAtomicMass;
+*GetExactMass = *Chemistry::OpenBabelc::OBAtom_GetExactMass;
+*GetIdx = *Chemistry::OpenBabelc::OBAtom_GetIdx;
+*GetCoordinateIdx = *Chemistry::OpenBabelc::OBAtom_GetCoordinateIdx;
+*GetCIdx = *Chemistry::OpenBabelc::OBAtom_GetCIdx;
+*GetValence = *Chemistry::OpenBabelc::OBAtom_GetValence;
+*GetHyb = *Chemistry::OpenBabelc::OBAtom_GetHyb;
+*GetImplicitValence = *Chemistry::OpenBabelc::OBAtom_GetImplicitValence;
+*GetHvyValence = *Chemistry::OpenBabelc::OBAtom_GetHvyValence;
+*GetHeteroValence = *Chemistry::OpenBabelc::OBAtom_GetHeteroValence;
+*GetType = *Chemistry::OpenBabelc::OBAtom_GetType;
+*GetX = *Chemistry::OpenBabelc::OBAtom_GetX;
+*x = *Chemistry::OpenBabelc::OBAtom_x;
+*GetY = *Chemistry::OpenBabelc::OBAtom_GetY;
+*y = *Chemistry::OpenBabelc::OBAtom_y;
+*GetZ = *Chemistry::OpenBabelc::OBAtom_GetZ;
+*z = *Chemistry::OpenBabelc::OBAtom_z;
+*GetCoordinate = *Chemistry::OpenBabelc::OBAtom_GetCoordinate;
+*GetVector = *Chemistry::OpenBabelc::OBAtom_GetVector;
+*GetPartialCharge = *Chemistry::OpenBabelc::OBAtom_GetPartialCharge;
+*GetResidue = *Chemistry::OpenBabelc::OBAtom_GetResidue;
+*GetNewBondVector = *Chemistry::OpenBabelc::OBAtom_GetNewBondVector;
+*GetBond = *Chemistry::OpenBabelc::OBAtom_GetBond;
+*GetNextAtom = *Chemistry::OpenBabelc::OBAtom_GetNextAtom;
+*BeginBonds = *Chemistry::OpenBabelc::OBAtom_BeginBonds;
+*EndBonds = *Chemistry::OpenBabelc::OBAtom_EndBonds;
+*BeginBond = *Chemistry::OpenBabelc::OBAtom_BeginBond;
+*NextBond = *Chemistry::OpenBabelc::OBAtom_NextBond;
+*BeginNbrAtom = *Chemistry::OpenBabelc::OBAtom_BeginNbrAtom;
+*NextNbrAtom = *Chemistry::OpenBabelc::OBAtom_NextNbrAtom;
+*GetDistance = *Chemistry::OpenBabelc::OBAtom_GetDistance;
+*GetAngle = *Chemistry::OpenBabelc::OBAtom_GetAngle;
+*NewResidue = *Chemistry::OpenBabelc::OBAtom_NewResidue;
+*DeleteResidue = *Chemistry::OpenBabelc::OBAtom_DeleteResidue;
+*AddBond = *Chemistry::OpenBabelc::OBAtom_AddBond;
+*InsertBond = *Chemistry::OpenBabelc::OBAtom_InsertBond;
+*DeleteBond = *Chemistry::OpenBabelc::OBAtom_DeleteBond;
+*ClearBond = *Chemistry::OpenBabelc::OBAtom_ClearBond;
+*CountFreeOxygens = *Chemistry::OpenBabelc::OBAtom_CountFreeOxygens;
+*ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtom_ImplicitHydrogenCount;
+*ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtom_ExplicitHydrogenCount;
+*MemberOfRingCount = *Chemistry::OpenBabelc::OBAtom_MemberOfRingCount;
+*MemberOfRingSize = *Chemistry::OpenBabelc::OBAtom_MemberOfRingSize;
+*CountRingBonds = *Chemistry::OpenBabelc::OBAtom_CountRingBonds;
+*SmallestBondAngle = *Chemistry::OpenBabelc::OBAtom_SmallestBondAngle;
+*AverageBondAngle = *Chemistry::OpenBabelc::OBAtom_AverageBondAngle;
+*BOSum = *Chemistry::OpenBabelc::OBAtom_BOSum;
+*KBOSum = *Chemistry::OpenBabelc::OBAtom_KBOSum;
+*HtoMethyl = *Chemistry::OpenBabelc::OBAtom_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBAtom_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBAtom_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBAtom_HasNoHForced;
+*HasResidue = *Chemistry::OpenBabelc::OBAtom_HasResidue;
+*IsHydrogen = *Chemistry::OpenBabelc::OBAtom_IsHydrogen;
+*IsCarbon = *Chemistry::OpenBabelc::OBAtom_IsCarbon;
+*IsNitrogen = *Chemistry::OpenBabelc::OBAtom_IsNitrogen;
+*IsOxygen = *Chemistry::OpenBabelc::OBAtom_IsOxygen;
+*IsSulfur = *Chemistry::OpenBabelc::OBAtom_IsSulfur;
+*IsPhosphorus = *Chemistry::OpenBabelc::OBAtom_IsPhosphorus;
+*IsAromatic = *Chemistry::OpenBabelc::OBAtom_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBAtom_IsInRing;
+*IsInRingSize = *Chemistry::OpenBabelc::OBAtom_IsInRingSize;
+*IsHeteroatom = *Chemistry::OpenBabelc::OBAtom_IsHeteroatom;
+*IsNotCorH = *Chemistry::OpenBabelc::OBAtom_IsNotCorH;
+*IsConnected = *Chemistry::OpenBabelc::OBAtom_IsConnected;
+*IsOneThree = *Chemistry::OpenBabelc::OBAtom_IsOneThree;
+*IsOneFour = *Chemistry::OpenBabelc::OBAtom_IsOneFour;
+*IsCarboxylOxygen = *Chemistry::OpenBabelc::OBAtom_IsCarboxylOxygen;
+*IsPhosphateOxygen = *Chemistry::OpenBabelc::OBAtom_IsPhosphateOxygen;
+*IsSulfateOxygen = *Chemistry::OpenBabelc::OBAtom_IsSulfateOxygen;
+*IsNitroOxygen = *Chemistry::OpenBabelc::OBAtom_IsNitroOxygen;
+*IsAmideNitrogen = *Chemistry::OpenBabelc::OBAtom_IsAmideNitrogen;
+*IsPolarHydrogen = *Chemistry::OpenBabelc::OBAtom_IsPolarHydrogen;
+*IsNonPolarHydrogen = *Chemistry::OpenBabelc::OBAtom_IsNonPolarHydrogen;
+*IsAromaticNOxide = *Chemistry::OpenBabelc::OBAtom_IsAromaticNOxide;
+*IsChiral = *Chemistry::OpenBabelc::OBAtom_IsChiral;
+*IsAxial = *Chemistry::OpenBabelc::OBAtom_IsAxial;
+*IsClockwise = *Chemistry::OpenBabelc::OBAtom_IsClockwise;
+*IsAntiClockwise = *Chemistry::OpenBabelc::OBAtom_IsAntiClockwise;
+*IsPositiveStereo = *Chemistry::OpenBabelc::OBAtom_IsPositiveStereo;
+*IsNegativeStereo = *Chemistry::OpenBabelc::OBAtom_IsNegativeStereo;
+*HasChiralitySpecified = *Chemistry::OpenBabelc::OBAtom_HasChiralitySpecified;
+*HasChiralVolume = *Chemistry::OpenBabelc::OBAtom_HasChiralVolume;
+*IsHbondAcceptor = *Chemistry::OpenBabelc::OBAtom_IsHbondAcceptor;
+*IsHbondDonor = *Chemistry::OpenBabelc::OBAtom_IsHbondDonor;
+*IsHbondDonorH = *Chemistry::OpenBabelc::OBAtom_IsHbondDonorH;
+*HasAlphaBetaUnsat = *Chemistry::OpenBabelc::OBAtom_HasAlphaBetaUnsat;
+*HasBondOfOrder = *Chemistry::OpenBabelc::OBAtom_HasBondOfOrder;
+*CountBondsOfOrder = *Chemistry::OpenBabelc::OBAtom_CountBondsOfOrder;
+*HasNonSingleBond = *Chemistry::OpenBabelc::OBAtom_HasNonSingleBond;
+*HasSingleBond = *Chemistry::OpenBabelc::OBAtom_HasSingleBond;
+*HasDoubleBond = *Chemistry::OpenBabelc::OBAtom_HasDoubleBond;
+*HasAromaticBond = *Chemistry::OpenBabelc::OBAtom_HasAromaticBond;
+*MatchesSMARTS = *Chemistry::OpenBabelc::OBAtom_MatchesSMARTS;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBBond ##############
+
+package Chemistry::OpenBabel::OBBond;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel::OBEdgeBase Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBBond(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBBond($self);
+        delete $OWNER{$self};
+    }
+}
+
+*SetIdx = *Chemistry::OpenBabelc::OBBond_SetIdx;
+*SetBO = *Chemistry::OpenBabelc::OBBond_SetBO;
+*SetBegin = *Chemistry::OpenBabelc::OBBond_SetBegin;
+*SetEnd = *Chemistry::OpenBabelc::OBBond_SetEnd;
+*SetLength = *Chemistry::OpenBabelc::OBBond_SetLength;
+*Set = *Chemistry::OpenBabelc::OBBond_Set;
+*SetKSingle = *Chemistry::OpenBabelc::OBBond_SetKSingle;
+*SetKDouble = *Chemistry::OpenBabelc::OBBond_SetKDouble;
+*SetKTriple = *Chemistry::OpenBabelc::OBBond_SetKTriple;
+*SetAromatic = *Chemistry::OpenBabelc::OBBond_SetAromatic;
+*SetHash = *Chemistry::OpenBabelc::OBBond_SetHash;
+*SetWedge = *Chemistry::OpenBabelc::OBBond_SetWedge;
+*SetUp = *Chemistry::OpenBabelc::OBBond_SetUp;
+*SetDown = *Chemistry::OpenBabelc::OBBond_SetDown;
+*SetInRing = *Chemistry::OpenBabelc::OBBond_SetInRing;
+*SetClosure = *Chemistry::OpenBabelc::OBBond_SetClosure;
+*UnsetHash = *Chemistry::OpenBabelc::OBBond_UnsetHash;
+*UnsetWedge = *Chemistry::OpenBabelc::OBBond_UnsetWedge;
+*UnsetUp = *Chemistry::OpenBabelc::OBBond_UnsetUp;
+*UnsetDown = *Chemistry::OpenBabelc::OBBond_UnsetDown;
+*UnsetAromatic = *Chemistry::OpenBabelc::OBBond_UnsetAromatic;
+*UnsetKekule = *Chemistry::OpenBabelc::OBBond_UnsetKekule;
+*GetBO = *Chemistry::OpenBabelc::OBBond_GetBO;
+*GetBondOrder = *Chemistry::OpenBabelc::OBBond_GetBondOrder;
+*GetFlags = *Chemistry::OpenBabelc::OBBond_GetFlags;
+*GetBeginAtomIdx = *Chemistry::OpenBabelc::OBBond_GetBeginAtomIdx;
+*GetEndAtomIdx = *Chemistry::OpenBabelc::OBBond_GetEndAtomIdx;
+*GetBeginAtom = *Chemistry::OpenBabelc::OBBond_GetBeginAtom;
+*GetEndAtom = *Chemistry::OpenBabelc::OBBond_GetEndAtom;
+*GetNbrAtom = *Chemistry::OpenBabelc::OBBond_GetNbrAtom;
+*GetEquibLength = *Chemistry::OpenBabelc::OBBond_GetEquibLength;
+*GetLength = *Chemistry::OpenBabelc::OBBond_GetLength;
+*GetNbrAtomIdx = *Chemistry::OpenBabelc::OBBond_GetNbrAtomIdx;
+*IsAromatic = *Chemistry::OpenBabelc::OBBond_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBBond_IsInRing;
+*IsRotor = *Chemistry::OpenBabelc::OBBond_IsRotor;
+*IsAmide = *Chemistry::OpenBabelc::OBBond_IsAmide;
+*IsPrimaryAmide = *Chemistry::OpenBabelc::OBBond_IsPrimaryAmide;
+*IsSecondaryAmide = *Chemistry::OpenBabelc::OBBond_IsSecondaryAmide;
+*IsEster = *Chemistry::OpenBabelc::OBBond_IsEster;
+*IsCarbonyl = *Chemistry::OpenBabelc::OBBond_IsCarbonyl;
+*IsSingle = *Chemistry::OpenBabelc::OBBond_IsSingle;
+*IsDouble = *Chemistry::OpenBabelc::OBBond_IsDouble;
+*IsTriple = *Chemistry::OpenBabelc::OBBond_IsTriple;
+*IsKSingle = *Chemistry::OpenBabelc::OBBond_IsKSingle;
+*IsKDouble = *Chemistry::OpenBabelc::OBBond_IsKDouble;
+*IsKTriple = *Chemistry::OpenBabelc::OBBond_IsKTriple;
+*IsClosure = *Chemistry::OpenBabelc::OBBond_IsClosure;
+*IsUp = *Chemistry::OpenBabelc::OBBond_IsUp;
+*IsDown = *Chemistry::OpenBabelc::OBBond_IsDown;
+*IsWedge = *Chemistry::OpenBabelc::OBBond_IsWedge;
+*IsHash = *Chemistry::OpenBabelc::OBBond_IsHash;
+*IsDoubleBondGeometry = *Chemistry::OpenBabelc::OBBond_IsDoubleBondGeometry;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : Chemistry::OpenBabel::OBMol ##############
 
 package Chemistry::OpenBabel::OBMol;
@@ -2609,6 +2926,1228 @@ sub ACQUIRE {
 }
 
 
+############# Class : Chemistry::OpenBabel::OBMolAtomIter ##############
+
+package Chemistry::OpenBabel::OBMolAtomIter;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBMolAtomIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*good = *Chemistry::OpenBabelc::OBMolAtomIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolAtomIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolAtomIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBMolAtomIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBMolAtomIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Clear = *Chemistry::OpenBabelc::OBMolAtomIter_Clear;
+*SetIdx = *Chemistry::OpenBabelc::OBMolAtomIter_SetIdx;
+*SetHyb = *Chemistry::OpenBabelc::OBMolAtomIter_SetHyb;
+*SetAtomicNum = *Chemistry::OpenBabelc::OBMolAtomIter_SetAtomicNum;
+*SetIsotope = *Chemistry::OpenBabelc::OBMolAtomIter_SetIsotope;
+*SetImplicitValence = *Chemistry::OpenBabelc::OBMolAtomIter_SetImplicitValence;
+*IncrementImplicitValence = *Chemistry::OpenBabelc::OBMolAtomIter_IncrementImplicitValence;
+*DecrementImplicitValence = *Chemistry::OpenBabelc::OBMolAtomIter_DecrementImplicitValence;
+*SetFormalCharge = *Chemistry::OpenBabelc::OBMolAtomIter_SetFormalCharge;
+*SetSpinMultiplicity = *Chemistry::OpenBabelc::OBMolAtomIter_SetSpinMultiplicity;
+*SetType = *Chemistry::OpenBabelc::OBMolAtomIter_SetType;
+*SetPartialCharge = *Chemistry::OpenBabelc::OBMolAtomIter_SetPartialCharge;
+*SetVector = *Chemistry::OpenBabelc::OBMolAtomIter_SetVector;
+*SetCoordPtr = *Chemistry::OpenBabelc::OBMolAtomIter_SetCoordPtr;
+*SetResidue = *Chemistry::OpenBabelc::OBMolAtomIter_SetResidue;
+*SetAromatic = *Chemistry::OpenBabelc::OBMolAtomIter_SetAromatic;
+*UnsetAromatic = *Chemistry::OpenBabelc::OBMolAtomIter_UnsetAromatic;
+*SetClockwiseStereo = *Chemistry::OpenBabelc::OBMolAtomIter_SetClockwiseStereo;
+*SetAntiClockwiseStereo = *Chemistry::OpenBabelc::OBMolAtomIter_SetAntiClockwiseStereo;
+*SetPositiveStereo = *Chemistry::OpenBabelc::OBMolAtomIter_SetPositiveStereo;
+*SetNegativeStereo = *Chemistry::OpenBabelc::OBMolAtomIter_SetNegativeStereo;
+*UnsetStereo = *Chemistry::OpenBabelc::OBMolAtomIter_UnsetStereo;
+*SetInRing = *Chemistry::OpenBabelc::OBMolAtomIter_SetInRing;
+*SetChiral = *Chemistry::OpenBabelc::OBMolAtomIter_SetChiral;
+*ClearCoordPtr = *Chemistry::OpenBabelc::OBMolAtomIter_ClearCoordPtr;
+*GetFormalCharge = *Chemistry::OpenBabelc::OBMolAtomIter_GetFormalCharge;
+*GetAtomicNum = *Chemistry::OpenBabelc::OBMolAtomIter_GetAtomicNum;
+*GetIsotope = *Chemistry::OpenBabelc::OBMolAtomIter_GetIsotope;
+*GetSpinMultiplicity = *Chemistry::OpenBabelc::OBMolAtomIter_GetSpinMultiplicity;
+*GetAtomicMass = *Chemistry::OpenBabelc::OBMolAtomIter_GetAtomicMass;
+*GetExactMass = *Chemistry::OpenBabelc::OBMolAtomIter_GetExactMass;
+*GetIdx = *Chemistry::OpenBabelc::OBMolAtomIter_GetIdx;
+*GetCoordinateIdx = *Chemistry::OpenBabelc::OBMolAtomIter_GetCoordinateIdx;
+*GetCIdx = *Chemistry::OpenBabelc::OBMolAtomIter_GetCIdx;
+*GetValence = *Chemistry::OpenBabelc::OBMolAtomIter_GetValence;
+*GetHyb = *Chemistry::OpenBabelc::OBMolAtomIter_GetHyb;
+*GetImplicitValence = *Chemistry::OpenBabelc::OBMolAtomIter_GetImplicitValence;
+*GetHvyValence = *Chemistry::OpenBabelc::OBMolAtomIter_GetHvyValence;
+*GetHeteroValence = *Chemistry::OpenBabelc::OBMolAtomIter_GetHeteroValence;
+*GetType = *Chemistry::OpenBabelc::OBMolAtomIter_GetType;
+*GetX = *Chemistry::OpenBabelc::OBMolAtomIter_GetX;
+*x = *Chemistry::OpenBabelc::OBMolAtomIter_x;
+*GetY = *Chemistry::OpenBabelc::OBMolAtomIter_GetY;
+*y = *Chemistry::OpenBabelc::OBMolAtomIter_y;
+*GetZ = *Chemistry::OpenBabelc::OBMolAtomIter_GetZ;
+*z = *Chemistry::OpenBabelc::OBMolAtomIter_z;
+*GetCoordinate = *Chemistry::OpenBabelc::OBMolAtomIter_GetCoordinate;
+*GetVector = *Chemistry::OpenBabelc::OBMolAtomIter_GetVector;
+*GetPartialCharge = *Chemistry::OpenBabelc::OBMolAtomIter_GetPartialCharge;
+*GetResidue = *Chemistry::OpenBabelc::OBMolAtomIter_GetResidue;
+*GetNewBondVector = *Chemistry::OpenBabelc::OBMolAtomIter_GetNewBondVector;
+*GetBond = *Chemistry::OpenBabelc::OBMolAtomIter_GetBond;
+*GetNextAtom = *Chemistry::OpenBabelc::OBMolAtomIter_GetNextAtom;
+*BeginBonds = *Chemistry::OpenBabelc::OBMolAtomIter_BeginBonds;
+*EndBonds = *Chemistry::OpenBabelc::OBMolAtomIter_EndBonds;
+*BeginBond = *Chemistry::OpenBabelc::OBMolAtomIter_BeginBond;
+*NextBond = *Chemistry::OpenBabelc::OBMolAtomIter_NextBond;
+*BeginNbrAtom = *Chemistry::OpenBabelc::OBMolAtomIter_BeginNbrAtom;
+*NextNbrAtom = *Chemistry::OpenBabelc::OBMolAtomIter_NextNbrAtom;
+*GetDistance = *Chemistry::OpenBabelc::OBMolAtomIter_GetDistance;
+*GetAngle = *Chemistry::OpenBabelc::OBMolAtomIter_GetAngle;
+*NewResidue = *Chemistry::OpenBabelc::OBMolAtomIter_NewResidue;
+*DeleteResidue = *Chemistry::OpenBabelc::OBMolAtomIter_DeleteResidue;
+*AddBond = *Chemistry::OpenBabelc::OBMolAtomIter_AddBond;
+*InsertBond = *Chemistry::OpenBabelc::OBMolAtomIter_InsertBond;
+*DeleteBond = *Chemistry::OpenBabelc::OBMolAtomIter_DeleteBond;
+*ClearBond = *Chemistry::OpenBabelc::OBMolAtomIter_ClearBond;
+*CountFreeOxygens = *Chemistry::OpenBabelc::OBMolAtomIter_CountFreeOxygens;
+*ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomIter_ImplicitHydrogenCount;
+*ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomIter_ExplicitHydrogenCount;
+*MemberOfRingCount = *Chemistry::OpenBabelc::OBMolAtomIter_MemberOfRingCount;
+*MemberOfRingSize = *Chemistry::OpenBabelc::OBMolAtomIter_MemberOfRingSize;
+*CountRingBonds = *Chemistry::OpenBabelc::OBMolAtomIter_CountRingBonds;
+*SmallestBondAngle = *Chemistry::OpenBabelc::OBMolAtomIter_SmallestBondAngle;
+*AverageBondAngle = *Chemistry::OpenBabelc::OBMolAtomIter_AverageBondAngle;
+*BOSum = *Chemistry::OpenBabelc::OBMolAtomIter_BOSum;
+*KBOSum = *Chemistry::OpenBabelc::OBMolAtomIter_KBOSum;
+*HtoMethyl = *Chemistry::OpenBabelc::OBMolAtomIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBMolAtomIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBMolAtomIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBMolAtomIter_HasNoHForced;
+*HasResidue = *Chemistry::OpenBabelc::OBMolAtomIter_HasResidue;
+*IsHydrogen = *Chemistry::OpenBabelc::OBMolAtomIter_IsHydrogen;
+*IsCarbon = *Chemistry::OpenBabelc::OBMolAtomIter_IsCarbon;
+*IsNitrogen = *Chemistry::OpenBabelc::OBMolAtomIter_IsNitrogen;
+*IsOxygen = *Chemistry::OpenBabelc::OBMolAtomIter_IsOxygen;
+*IsSulfur = *Chemistry::OpenBabelc::OBMolAtomIter_IsSulfur;
+*IsPhosphorus = *Chemistry::OpenBabelc::OBMolAtomIter_IsPhosphorus;
+*IsAromatic = *Chemistry::OpenBabelc::OBMolAtomIter_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBMolAtomIter_IsInRing;
+*IsInRingSize = *Chemistry::OpenBabelc::OBMolAtomIter_IsInRingSize;
+*IsHeteroatom = *Chemistry::OpenBabelc::OBMolAtomIter_IsHeteroatom;
+*IsNotCorH = *Chemistry::OpenBabelc::OBMolAtomIter_IsNotCorH;
+*IsConnected = *Chemistry::OpenBabelc::OBMolAtomIter_IsConnected;
+*IsOneThree = *Chemistry::OpenBabelc::OBMolAtomIter_IsOneThree;
+*IsOneFour = *Chemistry::OpenBabelc::OBMolAtomIter_IsOneFour;
+*IsCarboxylOxygen = *Chemistry::OpenBabelc::OBMolAtomIter_IsCarboxylOxygen;
+*IsPhosphateOxygen = *Chemistry::OpenBabelc::OBMolAtomIter_IsPhosphateOxygen;
+*IsSulfateOxygen = *Chemistry::OpenBabelc::OBMolAtomIter_IsSulfateOxygen;
+*IsNitroOxygen = *Chemistry::OpenBabelc::OBMolAtomIter_IsNitroOxygen;
+*IsAmideNitrogen = *Chemistry::OpenBabelc::OBMolAtomIter_IsAmideNitrogen;
+*IsPolarHydrogen = *Chemistry::OpenBabelc::OBMolAtomIter_IsPolarHydrogen;
+*IsNonPolarHydrogen = *Chemistry::OpenBabelc::OBMolAtomIter_IsNonPolarHydrogen;
+*IsAromaticNOxide = *Chemistry::OpenBabelc::OBMolAtomIter_IsAromaticNOxide;
+*IsChiral = *Chemistry::OpenBabelc::OBMolAtomIter_IsChiral;
+*IsAxial = *Chemistry::OpenBabelc::OBMolAtomIter_IsAxial;
+*IsClockwise = *Chemistry::OpenBabelc::OBMolAtomIter_IsClockwise;
+*IsAntiClockwise = *Chemistry::OpenBabelc::OBMolAtomIter_IsAntiClockwise;
+*IsPositiveStereo = *Chemistry::OpenBabelc::OBMolAtomIter_IsPositiveStereo;
+*IsNegativeStereo = *Chemistry::OpenBabelc::OBMolAtomIter_IsNegativeStereo;
+*HasChiralitySpecified = *Chemistry::OpenBabelc::OBMolAtomIter_HasChiralitySpecified;
+*HasChiralVolume = *Chemistry::OpenBabelc::OBMolAtomIter_HasChiralVolume;
+*IsHbondAcceptor = *Chemistry::OpenBabelc::OBMolAtomIter_IsHbondAcceptor;
+*IsHbondDonor = *Chemistry::OpenBabelc::OBMolAtomIter_IsHbondDonor;
+*IsHbondDonorH = *Chemistry::OpenBabelc::OBMolAtomIter_IsHbondDonorH;
+*HasAlphaBetaUnsat = *Chemistry::OpenBabelc::OBMolAtomIter_HasAlphaBetaUnsat;
+*HasBondOfOrder = *Chemistry::OpenBabelc::OBMolAtomIter_HasBondOfOrder;
+*CountBondsOfOrder = *Chemistry::OpenBabelc::OBMolAtomIter_CountBondsOfOrder;
+*HasNonSingleBond = *Chemistry::OpenBabelc::OBMolAtomIter_HasNonSingleBond;
+*HasSingleBond = *Chemistry::OpenBabelc::OBMolAtomIter_HasSingleBond;
+*HasDoubleBond = *Chemistry::OpenBabelc::OBMolAtomIter_HasDoubleBond;
+*HasAromaticBond = *Chemistry::OpenBabelc::OBMolAtomIter_HasAromaticBond;
+*MatchesSMARTS = *Chemistry::OpenBabelc::OBMolAtomIter_MatchesSMARTS;
+*swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomIter_Visit_set;
+*GetParent = *Chemistry::OpenBabelc::OBMolAtomIter_GetParent;
+*SetParent = *Chemistry::OpenBabelc::OBMolAtomIter_SetParent;
+*AddEdge = *Chemistry::OpenBabelc::OBMolAtomIter_AddEdge;
+*Error = *Chemistry::OpenBabelc::OBMolAtomIter_Error;
+*SetMatch = *Chemistry::OpenBabelc::OBMolAtomIter_SetMatch;
+*Eval = *Chemistry::OpenBabelc::OBMolAtomIter_Eval;
+*GetMatch = *Chemistry::OpenBabelc::OBMolAtomIter_GetMatch;
+*DoTransformations = *Chemistry::OpenBabelc::OBMolAtomIter_DoTransformations;
+*ClassDescription = *Chemistry::OpenBabelc::OBMolAtomIter_ClassDescription;
+*HasData = *Chemistry::OpenBabelc::OBMolAtomIter_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBMolAtomIter_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBMolAtomIter_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBMolAtomIter_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBMolAtomIter_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBMolAtomIter_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBMolAtomIter_EndData;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBMolAtomDFSIter ##############
+
+package Chemistry::OpenBabel::OBMolAtomDFSIter;
+use overload
+    "++" => sub { $_[0]->__plusplus__()},
+    "fallback" => 1;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBMolAtomDFSIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*__plusplus__ = *Chemistry::OpenBabelc::OBMolAtomDFSIter___plusplus__;
+*__deref__ = *Chemistry::OpenBabelc::OBMolAtomDFSIter___deref__;
+*__ref__ = *Chemistry::OpenBabelc::OBMolAtomDFSIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBMolAtomDFSIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Clear = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Clear;
+*SetIdx = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetIdx;
+*SetHyb = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetHyb;
+*SetAtomicNum = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetAtomicNum;
+*SetIsotope = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetIsotope;
+*SetImplicitValence = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetImplicitValence;
+*IncrementImplicitValence = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IncrementImplicitValence;
+*DecrementImplicitValence = *Chemistry::OpenBabelc::OBMolAtomDFSIter_DecrementImplicitValence;
+*SetFormalCharge = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetFormalCharge;
+*SetSpinMultiplicity = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetSpinMultiplicity;
+*SetType = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetType;
+*SetPartialCharge = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetPartialCharge;
+*SetVector = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetVector;
+*SetCoordPtr = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetCoordPtr;
+*SetResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetResidue;
+*SetAromatic = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetAromatic;
+*UnsetAromatic = *Chemistry::OpenBabelc::OBMolAtomDFSIter_UnsetAromatic;
+*SetClockwiseStereo = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetClockwiseStereo;
+*SetAntiClockwiseStereo = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetAntiClockwiseStereo;
+*SetPositiveStereo = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetPositiveStereo;
+*SetNegativeStereo = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetNegativeStereo;
+*UnsetStereo = *Chemistry::OpenBabelc::OBMolAtomDFSIter_UnsetStereo;
+*SetInRing = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetInRing;
+*SetChiral = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetChiral;
+*ClearCoordPtr = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ClearCoordPtr;
+*GetFormalCharge = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetFormalCharge;
+*GetAtomicNum = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetAtomicNum;
+*GetIsotope = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetIsotope;
+*GetSpinMultiplicity = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetSpinMultiplicity;
+*GetAtomicMass = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetAtomicMass;
+*GetExactMass = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetExactMass;
+*GetIdx = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetIdx;
+*GetCoordinateIdx = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetCoordinateIdx;
+*GetCIdx = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetCIdx;
+*GetValence = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetValence;
+*GetHyb = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetHyb;
+*GetImplicitValence = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetImplicitValence;
+*GetHvyValence = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetHvyValence;
+*GetHeteroValence = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetHeteroValence;
+*GetType = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetType;
+*GetX = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetX;
+*x = *Chemistry::OpenBabelc::OBMolAtomDFSIter_x;
+*GetY = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetY;
+*y = *Chemistry::OpenBabelc::OBMolAtomDFSIter_y;
+*GetZ = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetZ;
+*z = *Chemistry::OpenBabelc::OBMolAtomDFSIter_z;
+*GetCoordinate = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetCoordinate;
+*GetVector = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetVector;
+*GetPartialCharge = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetPartialCharge;
+*GetResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetResidue;
+*GetNewBondVector = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetNewBondVector;
+*GetBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetBond;
+*GetNextAtom = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetNextAtom;
+*BeginBonds = *Chemistry::OpenBabelc::OBMolAtomDFSIter_BeginBonds;
+*EndBonds = *Chemistry::OpenBabelc::OBMolAtomDFSIter_EndBonds;
+*BeginBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_BeginBond;
+*NextBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_NextBond;
+*BeginNbrAtom = *Chemistry::OpenBabelc::OBMolAtomDFSIter_BeginNbrAtom;
+*NextNbrAtom = *Chemistry::OpenBabelc::OBMolAtomDFSIter_NextNbrAtom;
+*GetDistance = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetDistance;
+*GetAngle = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetAngle;
+*NewResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_NewResidue;
+*DeleteResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_DeleteResidue;
+*AddBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_AddBond;
+*InsertBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_InsertBond;
+*DeleteBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_DeleteBond;
+*ClearBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ClearBond;
+*CountFreeOxygens = *Chemistry::OpenBabelc::OBMolAtomDFSIter_CountFreeOxygens;
+*ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ImplicitHydrogenCount;
+*ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ExplicitHydrogenCount;
+*MemberOfRingCount = *Chemistry::OpenBabelc::OBMolAtomDFSIter_MemberOfRingCount;
+*MemberOfRingSize = *Chemistry::OpenBabelc::OBMolAtomDFSIter_MemberOfRingSize;
+*CountRingBonds = *Chemistry::OpenBabelc::OBMolAtomDFSIter_CountRingBonds;
+*SmallestBondAngle = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SmallestBondAngle;
+*AverageBondAngle = *Chemistry::OpenBabelc::OBMolAtomDFSIter_AverageBondAngle;
+*BOSum = *Chemistry::OpenBabelc::OBMolAtomDFSIter_BOSum;
+*KBOSum = *Chemistry::OpenBabelc::OBMolAtomDFSIter_KBOSum;
+*HtoMethyl = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasNoHForced;
+*HasResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasResidue;
+*IsHydrogen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsHydrogen;
+*IsCarbon = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsCarbon;
+*IsNitrogen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsNitrogen;
+*IsOxygen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsOxygen;
+*IsSulfur = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsSulfur;
+*IsPhosphorus = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsPhosphorus;
+*IsAromatic = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsInRing;
+*IsInRingSize = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsInRingSize;
+*IsHeteroatom = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsHeteroatom;
+*IsNotCorH = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsNotCorH;
+*IsConnected = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsConnected;
+*IsOneThree = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsOneThree;
+*IsOneFour = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsOneFour;
+*IsCarboxylOxygen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsCarboxylOxygen;
+*IsPhosphateOxygen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsPhosphateOxygen;
+*IsSulfateOxygen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsSulfateOxygen;
+*IsNitroOxygen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsNitroOxygen;
+*IsAmideNitrogen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsAmideNitrogen;
+*IsPolarHydrogen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsPolarHydrogen;
+*IsNonPolarHydrogen = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsNonPolarHydrogen;
+*IsAromaticNOxide = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsAromaticNOxide;
+*IsChiral = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsChiral;
+*IsAxial = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsAxial;
+*IsClockwise = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsClockwise;
+*IsAntiClockwise = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsAntiClockwise;
+*IsPositiveStereo = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsPositiveStereo;
+*IsNegativeStereo = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsNegativeStereo;
+*HasChiralitySpecified = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasChiralitySpecified;
+*HasChiralVolume = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasChiralVolume;
+*IsHbondAcceptor = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsHbondAcceptor;
+*IsHbondDonor = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsHbondDonor;
+*IsHbondDonorH = *Chemistry::OpenBabelc::OBMolAtomDFSIter_IsHbondDonorH;
+*HasAlphaBetaUnsat = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasAlphaBetaUnsat;
+*HasBondOfOrder = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasBondOfOrder;
+*CountBondsOfOrder = *Chemistry::OpenBabelc::OBMolAtomDFSIter_CountBondsOfOrder;
+*HasNonSingleBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasNonSingleBond;
+*HasSingleBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasSingleBond;
+*HasDoubleBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasDoubleBond;
+*HasAromaticBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasAromaticBond;
+*MatchesSMARTS = *Chemistry::OpenBabelc::OBMolAtomDFSIter_MatchesSMARTS;
+*swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Visit_set;
+*GetParent = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetParent;
+*SetParent = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetParent;
+*AddEdge = *Chemistry::OpenBabelc::OBMolAtomDFSIter_AddEdge;
+*Error = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Error;
+*SetMatch = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetMatch;
+*Eval = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Eval;
+*GetMatch = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetMatch;
+*DoTransformations = *Chemistry::OpenBabelc::OBMolAtomDFSIter_DoTransformations;
+*ClassDescription = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ClassDescription;
+*HasData = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBMolAtomDFSIter_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBMolAtomDFSIter_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBMolAtomDFSIter_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBMolAtomDFSIter_EndData;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBMolAtomBFSIter ##############
+
+package Chemistry::OpenBabel::OBMolAtomBFSIter;
+use overload
+    "++" => sub { $_[0]->__plusplus__()},
+    "fallback" => 1;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBMolAtomBFSIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*__plusplus__ = *Chemistry::OpenBabelc::OBMolAtomBFSIter___plusplus__;
+*__deref__ = *Chemistry::OpenBabelc::OBMolAtomBFSIter___deref__;
+*__ref__ = *Chemistry::OpenBabelc::OBMolAtomBFSIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBMolAtomBFSIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Clear = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Clear;
+*SetIdx = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetIdx;
+*SetHyb = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetHyb;
+*SetAtomicNum = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetAtomicNum;
+*SetIsotope = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetIsotope;
+*SetImplicitValence = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetImplicitValence;
+*IncrementImplicitValence = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IncrementImplicitValence;
+*DecrementImplicitValence = *Chemistry::OpenBabelc::OBMolAtomBFSIter_DecrementImplicitValence;
+*SetFormalCharge = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetFormalCharge;
+*SetSpinMultiplicity = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetSpinMultiplicity;
+*SetType = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetType;
+*SetPartialCharge = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetPartialCharge;
+*SetVector = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetVector;
+*SetCoordPtr = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetCoordPtr;
+*SetResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetResidue;
+*SetAromatic = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetAromatic;
+*UnsetAromatic = *Chemistry::OpenBabelc::OBMolAtomBFSIter_UnsetAromatic;
+*SetClockwiseStereo = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetClockwiseStereo;
+*SetAntiClockwiseStereo = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetAntiClockwiseStereo;
+*SetPositiveStereo = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetPositiveStereo;
+*SetNegativeStereo = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetNegativeStereo;
+*UnsetStereo = *Chemistry::OpenBabelc::OBMolAtomBFSIter_UnsetStereo;
+*SetInRing = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetInRing;
+*SetChiral = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetChiral;
+*ClearCoordPtr = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ClearCoordPtr;
+*GetFormalCharge = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetFormalCharge;
+*GetAtomicNum = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetAtomicNum;
+*GetIsotope = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetIsotope;
+*GetSpinMultiplicity = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetSpinMultiplicity;
+*GetAtomicMass = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetAtomicMass;
+*GetExactMass = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetExactMass;
+*GetIdx = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetIdx;
+*GetCoordinateIdx = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetCoordinateIdx;
+*GetCIdx = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetCIdx;
+*GetValence = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetValence;
+*GetHyb = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetHyb;
+*GetImplicitValence = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetImplicitValence;
+*GetHvyValence = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetHvyValence;
+*GetHeteroValence = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetHeteroValence;
+*GetType = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetType;
+*GetX = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetX;
+*x = *Chemistry::OpenBabelc::OBMolAtomBFSIter_x;
+*GetY = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetY;
+*y = *Chemistry::OpenBabelc::OBMolAtomBFSIter_y;
+*GetZ = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetZ;
+*z = *Chemistry::OpenBabelc::OBMolAtomBFSIter_z;
+*GetCoordinate = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetCoordinate;
+*GetVector = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetVector;
+*GetPartialCharge = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetPartialCharge;
+*GetResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetResidue;
+*GetNewBondVector = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetNewBondVector;
+*GetBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetBond;
+*GetNextAtom = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetNextAtom;
+*BeginBonds = *Chemistry::OpenBabelc::OBMolAtomBFSIter_BeginBonds;
+*EndBonds = *Chemistry::OpenBabelc::OBMolAtomBFSIter_EndBonds;
+*BeginBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_BeginBond;
+*NextBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_NextBond;
+*BeginNbrAtom = *Chemistry::OpenBabelc::OBMolAtomBFSIter_BeginNbrAtom;
+*NextNbrAtom = *Chemistry::OpenBabelc::OBMolAtomBFSIter_NextNbrAtom;
+*GetDistance = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetDistance;
+*GetAngle = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetAngle;
+*NewResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_NewResidue;
+*DeleteResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_DeleteResidue;
+*AddBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_AddBond;
+*InsertBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_InsertBond;
+*DeleteBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_DeleteBond;
+*ClearBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ClearBond;
+*CountFreeOxygens = *Chemistry::OpenBabelc::OBMolAtomBFSIter_CountFreeOxygens;
+*ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ImplicitHydrogenCount;
+*ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ExplicitHydrogenCount;
+*MemberOfRingCount = *Chemistry::OpenBabelc::OBMolAtomBFSIter_MemberOfRingCount;
+*MemberOfRingSize = *Chemistry::OpenBabelc::OBMolAtomBFSIter_MemberOfRingSize;
+*CountRingBonds = *Chemistry::OpenBabelc::OBMolAtomBFSIter_CountRingBonds;
+*SmallestBondAngle = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SmallestBondAngle;
+*AverageBondAngle = *Chemistry::OpenBabelc::OBMolAtomBFSIter_AverageBondAngle;
+*BOSum = *Chemistry::OpenBabelc::OBMolAtomBFSIter_BOSum;
+*KBOSum = *Chemistry::OpenBabelc::OBMolAtomBFSIter_KBOSum;
+*HtoMethyl = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasNoHForced;
+*HasResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasResidue;
+*IsHydrogen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsHydrogen;
+*IsCarbon = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsCarbon;
+*IsNitrogen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsNitrogen;
+*IsOxygen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsOxygen;
+*IsSulfur = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsSulfur;
+*IsPhosphorus = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsPhosphorus;
+*IsAromatic = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsInRing;
+*IsInRingSize = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsInRingSize;
+*IsHeteroatom = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsHeteroatom;
+*IsNotCorH = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsNotCorH;
+*IsConnected = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsConnected;
+*IsOneThree = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsOneThree;
+*IsOneFour = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsOneFour;
+*IsCarboxylOxygen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsCarboxylOxygen;
+*IsPhosphateOxygen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsPhosphateOxygen;
+*IsSulfateOxygen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsSulfateOxygen;
+*IsNitroOxygen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsNitroOxygen;
+*IsAmideNitrogen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsAmideNitrogen;
+*IsPolarHydrogen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsPolarHydrogen;
+*IsNonPolarHydrogen = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsNonPolarHydrogen;
+*IsAromaticNOxide = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsAromaticNOxide;
+*IsChiral = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsChiral;
+*IsAxial = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsAxial;
+*IsClockwise = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsClockwise;
+*IsAntiClockwise = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsAntiClockwise;
+*IsPositiveStereo = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsPositiveStereo;
+*IsNegativeStereo = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsNegativeStereo;
+*HasChiralitySpecified = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasChiralitySpecified;
+*HasChiralVolume = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasChiralVolume;
+*IsHbondAcceptor = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsHbondAcceptor;
+*IsHbondDonor = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsHbondDonor;
+*IsHbondDonorH = *Chemistry::OpenBabelc::OBMolAtomBFSIter_IsHbondDonorH;
+*HasAlphaBetaUnsat = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasAlphaBetaUnsat;
+*HasBondOfOrder = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasBondOfOrder;
+*CountBondsOfOrder = *Chemistry::OpenBabelc::OBMolAtomBFSIter_CountBondsOfOrder;
+*HasNonSingleBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasNonSingleBond;
+*HasSingleBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasSingleBond;
+*HasDoubleBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasDoubleBond;
+*HasAromaticBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasAromaticBond;
+*MatchesSMARTS = *Chemistry::OpenBabelc::OBMolAtomBFSIter_MatchesSMARTS;
+*swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Visit_set;
+*GetParent = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetParent;
+*SetParent = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetParent;
+*AddEdge = *Chemistry::OpenBabelc::OBMolAtomBFSIter_AddEdge;
+*Error = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Error;
+*SetMatch = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetMatch;
+*Eval = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Eval;
+*GetMatch = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetMatch;
+*DoTransformations = *Chemistry::OpenBabelc::OBMolAtomBFSIter_DoTransformations;
+*ClassDescription = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ClassDescription;
+*HasData = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBMolAtomBFSIter_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBMolAtomBFSIter_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBMolAtomBFSIter_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBMolAtomBFSIter_EndData;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBMolBondIter ##############
+
+package Chemistry::OpenBabel::OBMolBondIter;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBMolBondIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*good = *Chemistry::OpenBabelc::OBMolBondIter_good;
+*inc = *Chemistry::OpenBabelc::OBMolBondIter_inc;
+*deref = *Chemistry::OpenBabelc::OBMolBondIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBMolBondIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBMolBondIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+*SetIdx = *Chemistry::OpenBabelc::OBMolBondIter_SetIdx;
+*SetBO = *Chemistry::OpenBabelc::OBMolBondIter_SetBO;
+*SetBegin = *Chemistry::OpenBabelc::OBMolBondIter_SetBegin;
+*SetEnd = *Chemistry::OpenBabelc::OBMolBondIter_SetEnd;
+*SetLength = *Chemistry::OpenBabelc::OBMolBondIter_SetLength;
+*Set = *Chemistry::OpenBabelc::OBMolBondIter_Set;
+*SetKSingle = *Chemistry::OpenBabelc::OBMolBondIter_SetKSingle;
+*SetKDouble = *Chemistry::OpenBabelc::OBMolBondIter_SetKDouble;
+*SetKTriple = *Chemistry::OpenBabelc::OBMolBondIter_SetKTriple;
+*SetAromatic = *Chemistry::OpenBabelc::OBMolBondIter_SetAromatic;
+*SetHash = *Chemistry::OpenBabelc::OBMolBondIter_SetHash;
+*SetWedge = *Chemistry::OpenBabelc::OBMolBondIter_SetWedge;
+*SetUp = *Chemistry::OpenBabelc::OBMolBondIter_SetUp;
+*SetDown = *Chemistry::OpenBabelc::OBMolBondIter_SetDown;
+*SetInRing = *Chemistry::OpenBabelc::OBMolBondIter_SetInRing;
+*SetClosure = *Chemistry::OpenBabelc::OBMolBondIter_SetClosure;
+*UnsetHash = *Chemistry::OpenBabelc::OBMolBondIter_UnsetHash;
+*UnsetWedge = *Chemistry::OpenBabelc::OBMolBondIter_UnsetWedge;
+*UnsetUp = *Chemistry::OpenBabelc::OBMolBondIter_UnsetUp;
+*UnsetDown = *Chemistry::OpenBabelc::OBMolBondIter_UnsetDown;
+*UnsetAromatic = *Chemistry::OpenBabelc::OBMolBondIter_UnsetAromatic;
+*UnsetKekule = *Chemistry::OpenBabelc::OBMolBondIter_UnsetKekule;
+*GetBO = *Chemistry::OpenBabelc::OBMolBondIter_GetBO;
+*GetBondOrder = *Chemistry::OpenBabelc::OBMolBondIter_GetBondOrder;
+*GetFlags = *Chemistry::OpenBabelc::OBMolBondIter_GetFlags;
+*GetBeginAtomIdx = *Chemistry::OpenBabelc::OBMolBondIter_GetBeginAtomIdx;
+*GetEndAtomIdx = *Chemistry::OpenBabelc::OBMolBondIter_GetEndAtomIdx;
+*GetBeginAtom = *Chemistry::OpenBabelc::OBMolBondIter_GetBeginAtom;
+*GetEndAtom = *Chemistry::OpenBabelc::OBMolBondIter_GetEndAtom;
+*GetNbrAtom = *Chemistry::OpenBabelc::OBMolBondIter_GetNbrAtom;
+*GetEquibLength = *Chemistry::OpenBabelc::OBMolBondIter_GetEquibLength;
+*GetLength = *Chemistry::OpenBabelc::OBMolBondIter_GetLength;
+*GetNbrAtomIdx = *Chemistry::OpenBabelc::OBMolBondIter_GetNbrAtomIdx;
+*IsAromatic = *Chemistry::OpenBabelc::OBMolBondIter_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBMolBondIter_IsInRing;
+*IsRotor = *Chemistry::OpenBabelc::OBMolBondIter_IsRotor;
+*IsAmide = *Chemistry::OpenBabelc::OBMolBondIter_IsAmide;
+*IsPrimaryAmide = *Chemistry::OpenBabelc::OBMolBondIter_IsPrimaryAmide;
+*IsSecondaryAmide = *Chemistry::OpenBabelc::OBMolBondIter_IsSecondaryAmide;
+*IsEster = *Chemistry::OpenBabelc::OBMolBondIter_IsEster;
+*IsCarbonyl = *Chemistry::OpenBabelc::OBMolBondIter_IsCarbonyl;
+*IsSingle = *Chemistry::OpenBabelc::OBMolBondIter_IsSingle;
+*IsDouble = *Chemistry::OpenBabelc::OBMolBondIter_IsDouble;
+*IsTriple = *Chemistry::OpenBabelc::OBMolBondIter_IsTriple;
+*IsKSingle = *Chemistry::OpenBabelc::OBMolBondIter_IsKSingle;
+*IsKDouble = *Chemistry::OpenBabelc::OBMolBondIter_IsKDouble;
+*IsKTriple = *Chemistry::OpenBabelc::OBMolBondIter_IsKTriple;
+*IsClosure = *Chemistry::OpenBabelc::OBMolBondIter_IsClosure;
+*IsUp = *Chemistry::OpenBabelc::OBMolBondIter_IsUp;
+*IsDown = *Chemistry::OpenBabelc::OBMolBondIter_IsDown;
+*IsWedge = *Chemistry::OpenBabelc::OBMolBondIter_IsWedge;
+*IsHash = *Chemistry::OpenBabelc::OBMolBondIter_IsHash;
+*IsDoubleBondGeometry = *Chemistry::OpenBabelc::OBMolBondIter_IsDoubleBondGeometry;
+*swig_Visit_get = *Chemistry::OpenBabelc::OBMolBondIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBMolBondIter_Visit_set;
+*GetParent = *Chemistry::OpenBabelc::OBMolBondIter_GetParent;
+*SetParent = *Chemistry::OpenBabelc::OBMolBondIter_SetParent;
+*GetIdx = *Chemistry::OpenBabelc::OBMolBondIter_GetIdx;
+*SetBgn = *Chemistry::OpenBabelc::OBMolBondIter_SetBgn;
+*SwapEnds = *Chemistry::OpenBabelc::OBMolBondIter_SwapEnds;
+*GetBgn = *Chemistry::OpenBabelc::OBMolBondIter_GetBgn;
+*GetEnd = *Chemistry::OpenBabelc::OBMolBondIter_GetEnd;
+*Error = *Chemistry::OpenBabelc::OBMolBondIter_Error;
+*Eval = *Chemistry::OpenBabelc::OBMolBondIter_Eval;
+*DoTransformations = *Chemistry::OpenBabelc::OBMolBondIter_DoTransformations;
+*ClassDescription = *Chemistry::OpenBabelc::OBMolBondIter_ClassDescription;
+*HasData = *Chemistry::OpenBabelc::OBMolBondIter_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBMolBondIter_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBMolBondIter_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBMolBondIter_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBMolBondIter_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBMolBondIter_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBMolBondIter_EndData;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBAtomAtomIter ##############
+
+package Chemistry::OpenBabel::OBAtomAtomIter;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBAtomAtomIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*good = *Chemistry::OpenBabelc::OBAtomAtomIter_good;
+*inc = *Chemistry::OpenBabelc::OBAtomAtomIter_inc;
+*deref = *Chemistry::OpenBabelc::OBAtomAtomIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBAtomAtomIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBAtomAtomIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Clear = *Chemistry::OpenBabelc::OBAtomAtomIter_Clear;
+*SetIdx = *Chemistry::OpenBabelc::OBAtomAtomIter_SetIdx;
+*SetHyb = *Chemistry::OpenBabelc::OBAtomAtomIter_SetHyb;
+*SetAtomicNum = *Chemistry::OpenBabelc::OBAtomAtomIter_SetAtomicNum;
+*SetIsotope = *Chemistry::OpenBabelc::OBAtomAtomIter_SetIsotope;
+*SetImplicitValence = *Chemistry::OpenBabelc::OBAtomAtomIter_SetImplicitValence;
+*IncrementImplicitValence = *Chemistry::OpenBabelc::OBAtomAtomIter_IncrementImplicitValence;
+*DecrementImplicitValence = *Chemistry::OpenBabelc::OBAtomAtomIter_DecrementImplicitValence;
+*SetFormalCharge = *Chemistry::OpenBabelc::OBAtomAtomIter_SetFormalCharge;
+*SetSpinMultiplicity = *Chemistry::OpenBabelc::OBAtomAtomIter_SetSpinMultiplicity;
+*SetType = *Chemistry::OpenBabelc::OBAtomAtomIter_SetType;
+*SetPartialCharge = *Chemistry::OpenBabelc::OBAtomAtomIter_SetPartialCharge;
+*SetVector = *Chemistry::OpenBabelc::OBAtomAtomIter_SetVector;
+*SetCoordPtr = *Chemistry::OpenBabelc::OBAtomAtomIter_SetCoordPtr;
+*SetResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_SetResidue;
+*SetAromatic = *Chemistry::OpenBabelc::OBAtomAtomIter_SetAromatic;
+*UnsetAromatic = *Chemistry::OpenBabelc::OBAtomAtomIter_UnsetAromatic;
+*SetClockwiseStereo = *Chemistry::OpenBabelc::OBAtomAtomIter_SetClockwiseStereo;
+*SetAntiClockwiseStereo = *Chemistry::OpenBabelc::OBAtomAtomIter_SetAntiClockwiseStereo;
+*SetPositiveStereo = *Chemistry::OpenBabelc::OBAtomAtomIter_SetPositiveStereo;
+*SetNegativeStereo = *Chemistry::OpenBabelc::OBAtomAtomIter_SetNegativeStereo;
+*UnsetStereo = *Chemistry::OpenBabelc::OBAtomAtomIter_UnsetStereo;
+*SetInRing = *Chemistry::OpenBabelc::OBAtomAtomIter_SetInRing;
+*SetChiral = *Chemistry::OpenBabelc::OBAtomAtomIter_SetChiral;
+*ClearCoordPtr = *Chemistry::OpenBabelc::OBAtomAtomIter_ClearCoordPtr;
+*GetFormalCharge = *Chemistry::OpenBabelc::OBAtomAtomIter_GetFormalCharge;
+*GetAtomicNum = *Chemistry::OpenBabelc::OBAtomAtomIter_GetAtomicNum;
+*GetIsotope = *Chemistry::OpenBabelc::OBAtomAtomIter_GetIsotope;
+*GetSpinMultiplicity = *Chemistry::OpenBabelc::OBAtomAtomIter_GetSpinMultiplicity;
+*GetAtomicMass = *Chemistry::OpenBabelc::OBAtomAtomIter_GetAtomicMass;
+*GetExactMass = *Chemistry::OpenBabelc::OBAtomAtomIter_GetExactMass;
+*GetIdx = *Chemistry::OpenBabelc::OBAtomAtomIter_GetIdx;
+*GetCoordinateIdx = *Chemistry::OpenBabelc::OBAtomAtomIter_GetCoordinateIdx;
+*GetCIdx = *Chemistry::OpenBabelc::OBAtomAtomIter_GetCIdx;
+*GetValence = *Chemistry::OpenBabelc::OBAtomAtomIter_GetValence;
+*GetHyb = *Chemistry::OpenBabelc::OBAtomAtomIter_GetHyb;
+*GetImplicitValence = *Chemistry::OpenBabelc::OBAtomAtomIter_GetImplicitValence;
+*GetHvyValence = *Chemistry::OpenBabelc::OBAtomAtomIter_GetHvyValence;
+*GetHeteroValence = *Chemistry::OpenBabelc::OBAtomAtomIter_GetHeteroValence;
+*GetType = *Chemistry::OpenBabelc::OBAtomAtomIter_GetType;
+*GetX = *Chemistry::OpenBabelc::OBAtomAtomIter_GetX;
+*x = *Chemistry::OpenBabelc::OBAtomAtomIter_x;
+*GetY = *Chemistry::OpenBabelc::OBAtomAtomIter_GetY;
+*y = *Chemistry::OpenBabelc::OBAtomAtomIter_y;
+*GetZ = *Chemistry::OpenBabelc::OBAtomAtomIter_GetZ;
+*z = *Chemistry::OpenBabelc::OBAtomAtomIter_z;
+*GetCoordinate = *Chemistry::OpenBabelc::OBAtomAtomIter_GetCoordinate;
+*GetVector = *Chemistry::OpenBabelc::OBAtomAtomIter_GetVector;
+*GetPartialCharge = *Chemistry::OpenBabelc::OBAtomAtomIter_GetPartialCharge;
+*GetResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_GetResidue;
+*GetNewBondVector = *Chemistry::OpenBabelc::OBAtomAtomIter_GetNewBondVector;
+*GetBond = *Chemistry::OpenBabelc::OBAtomAtomIter_GetBond;
+*GetNextAtom = *Chemistry::OpenBabelc::OBAtomAtomIter_GetNextAtom;
+*BeginBonds = *Chemistry::OpenBabelc::OBAtomAtomIter_BeginBonds;
+*EndBonds = *Chemistry::OpenBabelc::OBAtomAtomIter_EndBonds;
+*BeginBond = *Chemistry::OpenBabelc::OBAtomAtomIter_BeginBond;
+*NextBond = *Chemistry::OpenBabelc::OBAtomAtomIter_NextBond;
+*BeginNbrAtom = *Chemistry::OpenBabelc::OBAtomAtomIter_BeginNbrAtom;
+*NextNbrAtom = *Chemistry::OpenBabelc::OBAtomAtomIter_NextNbrAtom;
+*GetDistance = *Chemistry::OpenBabelc::OBAtomAtomIter_GetDistance;
+*GetAngle = *Chemistry::OpenBabelc::OBAtomAtomIter_GetAngle;
+*NewResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_NewResidue;
+*DeleteResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_DeleteResidue;
+*AddBond = *Chemistry::OpenBabelc::OBAtomAtomIter_AddBond;
+*InsertBond = *Chemistry::OpenBabelc::OBAtomAtomIter_InsertBond;
+*DeleteBond = *Chemistry::OpenBabelc::OBAtomAtomIter_DeleteBond;
+*ClearBond = *Chemistry::OpenBabelc::OBAtomAtomIter_ClearBond;
+*CountFreeOxygens = *Chemistry::OpenBabelc::OBAtomAtomIter_CountFreeOxygens;
+*ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtomAtomIter_ImplicitHydrogenCount;
+*ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBAtomAtomIter_ExplicitHydrogenCount;
+*MemberOfRingCount = *Chemistry::OpenBabelc::OBAtomAtomIter_MemberOfRingCount;
+*MemberOfRingSize = *Chemistry::OpenBabelc::OBAtomAtomIter_MemberOfRingSize;
+*CountRingBonds = *Chemistry::OpenBabelc::OBAtomAtomIter_CountRingBonds;
+*SmallestBondAngle = *Chemistry::OpenBabelc::OBAtomAtomIter_SmallestBondAngle;
+*AverageBondAngle = *Chemistry::OpenBabelc::OBAtomAtomIter_AverageBondAngle;
+*BOSum = *Chemistry::OpenBabelc::OBAtomAtomIter_BOSum;
+*KBOSum = *Chemistry::OpenBabelc::OBAtomAtomIter_KBOSum;
+*HtoMethyl = *Chemistry::OpenBabelc::OBAtomAtomIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBAtomAtomIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBAtomAtomIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBAtomAtomIter_HasNoHForced;
+*HasResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_HasResidue;
+*IsHydrogen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsHydrogen;
+*IsCarbon = *Chemistry::OpenBabelc::OBAtomAtomIter_IsCarbon;
+*IsNitrogen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsNitrogen;
+*IsOxygen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsOxygen;
+*IsSulfur = *Chemistry::OpenBabelc::OBAtomAtomIter_IsSulfur;
+*IsPhosphorus = *Chemistry::OpenBabelc::OBAtomAtomIter_IsPhosphorus;
+*IsAromatic = *Chemistry::OpenBabelc::OBAtomAtomIter_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBAtomAtomIter_IsInRing;
+*IsInRingSize = *Chemistry::OpenBabelc::OBAtomAtomIter_IsInRingSize;
+*IsHeteroatom = *Chemistry::OpenBabelc::OBAtomAtomIter_IsHeteroatom;
+*IsNotCorH = *Chemistry::OpenBabelc::OBAtomAtomIter_IsNotCorH;
+*IsConnected = *Chemistry::OpenBabelc::OBAtomAtomIter_IsConnected;
+*IsOneThree = *Chemistry::OpenBabelc::OBAtomAtomIter_IsOneThree;
+*IsOneFour = *Chemistry::OpenBabelc::OBAtomAtomIter_IsOneFour;
+*IsCarboxylOxygen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsCarboxylOxygen;
+*IsPhosphateOxygen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsPhosphateOxygen;
+*IsSulfateOxygen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsSulfateOxygen;
+*IsNitroOxygen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsNitroOxygen;
+*IsAmideNitrogen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsAmideNitrogen;
+*IsPolarHydrogen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsPolarHydrogen;
+*IsNonPolarHydrogen = *Chemistry::OpenBabelc::OBAtomAtomIter_IsNonPolarHydrogen;
+*IsAromaticNOxide = *Chemistry::OpenBabelc::OBAtomAtomIter_IsAromaticNOxide;
+*IsChiral = *Chemistry::OpenBabelc::OBAtomAtomIter_IsChiral;
+*IsAxial = *Chemistry::OpenBabelc::OBAtomAtomIter_IsAxial;
+*IsClockwise = *Chemistry::OpenBabelc::OBAtomAtomIter_IsClockwise;
+*IsAntiClockwise = *Chemistry::OpenBabelc::OBAtomAtomIter_IsAntiClockwise;
+*IsPositiveStereo = *Chemistry::OpenBabelc::OBAtomAtomIter_IsPositiveStereo;
+*IsNegativeStereo = *Chemistry::OpenBabelc::OBAtomAtomIter_IsNegativeStereo;
+*HasChiralitySpecified = *Chemistry::OpenBabelc::OBAtomAtomIter_HasChiralitySpecified;
+*HasChiralVolume = *Chemistry::OpenBabelc::OBAtomAtomIter_HasChiralVolume;
+*IsHbondAcceptor = *Chemistry::OpenBabelc::OBAtomAtomIter_IsHbondAcceptor;
+*IsHbondDonor = *Chemistry::OpenBabelc::OBAtomAtomIter_IsHbondDonor;
+*IsHbondDonorH = *Chemistry::OpenBabelc::OBAtomAtomIter_IsHbondDonorH;
+*HasAlphaBetaUnsat = *Chemistry::OpenBabelc::OBAtomAtomIter_HasAlphaBetaUnsat;
+*HasBondOfOrder = *Chemistry::OpenBabelc::OBAtomAtomIter_HasBondOfOrder;
+*CountBondsOfOrder = *Chemistry::OpenBabelc::OBAtomAtomIter_CountBondsOfOrder;
+*HasNonSingleBond = *Chemistry::OpenBabelc::OBAtomAtomIter_HasNonSingleBond;
+*HasSingleBond = *Chemistry::OpenBabelc::OBAtomAtomIter_HasSingleBond;
+*HasDoubleBond = *Chemistry::OpenBabelc::OBAtomAtomIter_HasDoubleBond;
+*HasAromaticBond = *Chemistry::OpenBabelc::OBAtomAtomIter_HasAromaticBond;
+*MatchesSMARTS = *Chemistry::OpenBabelc::OBAtomAtomIter_MatchesSMARTS;
+*swig_Visit_get = *Chemistry::OpenBabelc::OBAtomAtomIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBAtomAtomIter_Visit_set;
+*GetParent = *Chemistry::OpenBabelc::OBAtomAtomIter_GetParent;
+*SetParent = *Chemistry::OpenBabelc::OBAtomAtomIter_SetParent;
+*AddEdge = *Chemistry::OpenBabelc::OBAtomAtomIter_AddEdge;
+*Error = *Chemistry::OpenBabelc::OBAtomAtomIter_Error;
+*SetMatch = *Chemistry::OpenBabelc::OBAtomAtomIter_SetMatch;
+*Eval = *Chemistry::OpenBabelc::OBAtomAtomIter_Eval;
+*GetMatch = *Chemistry::OpenBabelc::OBAtomAtomIter_GetMatch;
+*DoTransformations = *Chemistry::OpenBabelc::OBAtomAtomIter_DoTransformations;
+*ClassDescription = *Chemistry::OpenBabelc::OBAtomAtomIter_ClassDescription;
+*HasData = *Chemistry::OpenBabelc::OBAtomAtomIter_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBAtomAtomIter_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBAtomAtomIter_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBAtomAtomIter_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBAtomAtomIter_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBAtomAtomIter_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBAtomAtomIter_EndData;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBAtomBondIter ##############
+
+package Chemistry::OpenBabel::OBAtomBondIter;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBAtomBondIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*good = *Chemistry::OpenBabelc::OBAtomBondIter_good;
+*inc = *Chemistry::OpenBabelc::OBAtomBondIter_inc;
+*deref = *Chemistry::OpenBabelc::OBAtomBondIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBAtomBondIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBAtomBondIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+*SetIdx = *Chemistry::OpenBabelc::OBAtomBondIter_SetIdx;
+*SetBO = *Chemistry::OpenBabelc::OBAtomBondIter_SetBO;
+*SetBegin = *Chemistry::OpenBabelc::OBAtomBondIter_SetBegin;
+*SetEnd = *Chemistry::OpenBabelc::OBAtomBondIter_SetEnd;
+*SetLength = *Chemistry::OpenBabelc::OBAtomBondIter_SetLength;
+*Set = *Chemistry::OpenBabelc::OBAtomBondIter_Set;
+*SetKSingle = *Chemistry::OpenBabelc::OBAtomBondIter_SetKSingle;
+*SetKDouble = *Chemistry::OpenBabelc::OBAtomBondIter_SetKDouble;
+*SetKTriple = *Chemistry::OpenBabelc::OBAtomBondIter_SetKTriple;
+*SetAromatic = *Chemistry::OpenBabelc::OBAtomBondIter_SetAromatic;
+*SetHash = *Chemistry::OpenBabelc::OBAtomBondIter_SetHash;
+*SetWedge = *Chemistry::OpenBabelc::OBAtomBondIter_SetWedge;
+*SetUp = *Chemistry::OpenBabelc::OBAtomBondIter_SetUp;
+*SetDown = *Chemistry::OpenBabelc::OBAtomBondIter_SetDown;
+*SetInRing = *Chemistry::OpenBabelc::OBAtomBondIter_SetInRing;
+*SetClosure = *Chemistry::OpenBabelc::OBAtomBondIter_SetClosure;
+*UnsetHash = *Chemistry::OpenBabelc::OBAtomBondIter_UnsetHash;
+*UnsetWedge = *Chemistry::OpenBabelc::OBAtomBondIter_UnsetWedge;
+*UnsetUp = *Chemistry::OpenBabelc::OBAtomBondIter_UnsetUp;
+*UnsetDown = *Chemistry::OpenBabelc::OBAtomBondIter_UnsetDown;
+*UnsetAromatic = *Chemistry::OpenBabelc::OBAtomBondIter_UnsetAromatic;
+*UnsetKekule = *Chemistry::OpenBabelc::OBAtomBondIter_UnsetKekule;
+*GetBO = *Chemistry::OpenBabelc::OBAtomBondIter_GetBO;
+*GetBondOrder = *Chemistry::OpenBabelc::OBAtomBondIter_GetBondOrder;
+*GetFlags = *Chemistry::OpenBabelc::OBAtomBondIter_GetFlags;
+*GetBeginAtomIdx = *Chemistry::OpenBabelc::OBAtomBondIter_GetBeginAtomIdx;
+*GetEndAtomIdx = *Chemistry::OpenBabelc::OBAtomBondIter_GetEndAtomIdx;
+*GetBeginAtom = *Chemistry::OpenBabelc::OBAtomBondIter_GetBeginAtom;
+*GetEndAtom = *Chemistry::OpenBabelc::OBAtomBondIter_GetEndAtom;
+*GetNbrAtom = *Chemistry::OpenBabelc::OBAtomBondIter_GetNbrAtom;
+*GetEquibLength = *Chemistry::OpenBabelc::OBAtomBondIter_GetEquibLength;
+*GetLength = *Chemistry::OpenBabelc::OBAtomBondIter_GetLength;
+*GetNbrAtomIdx = *Chemistry::OpenBabelc::OBAtomBondIter_GetNbrAtomIdx;
+*IsAromatic = *Chemistry::OpenBabelc::OBAtomBondIter_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBAtomBondIter_IsInRing;
+*IsRotor = *Chemistry::OpenBabelc::OBAtomBondIter_IsRotor;
+*IsAmide = *Chemistry::OpenBabelc::OBAtomBondIter_IsAmide;
+*IsPrimaryAmide = *Chemistry::OpenBabelc::OBAtomBondIter_IsPrimaryAmide;
+*IsSecondaryAmide = *Chemistry::OpenBabelc::OBAtomBondIter_IsSecondaryAmide;
+*IsEster = *Chemistry::OpenBabelc::OBAtomBondIter_IsEster;
+*IsCarbonyl = *Chemistry::OpenBabelc::OBAtomBondIter_IsCarbonyl;
+*IsSingle = *Chemistry::OpenBabelc::OBAtomBondIter_IsSingle;
+*IsDouble = *Chemistry::OpenBabelc::OBAtomBondIter_IsDouble;
+*IsTriple = *Chemistry::OpenBabelc::OBAtomBondIter_IsTriple;
+*IsKSingle = *Chemistry::OpenBabelc::OBAtomBondIter_IsKSingle;
+*IsKDouble = *Chemistry::OpenBabelc::OBAtomBondIter_IsKDouble;
+*IsKTriple = *Chemistry::OpenBabelc::OBAtomBondIter_IsKTriple;
+*IsClosure = *Chemistry::OpenBabelc::OBAtomBondIter_IsClosure;
+*IsUp = *Chemistry::OpenBabelc::OBAtomBondIter_IsUp;
+*IsDown = *Chemistry::OpenBabelc::OBAtomBondIter_IsDown;
+*IsWedge = *Chemistry::OpenBabelc::OBAtomBondIter_IsWedge;
+*IsHash = *Chemistry::OpenBabelc::OBAtomBondIter_IsHash;
+*IsDoubleBondGeometry = *Chemistry::OpenBabelc::OBAtomBondIter_IsDoubleBondGeometry;
+*swig_Visit_get = *Chemistry::OpenBabelc::OBAtomBondIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBAtomBondIter_Visit_set;
+*GetParent = *Chemistry::OpenBabelc::OBAtomBondIter_GetParent;
+*SetParent = *Chemistry::OpenBabelc::OBAtomBondIter_SetParent;
+*GetIdx = *Chemistry::OpenBabelc::OBAtomBondIter_GetIdx;
+*SetBgn = *Chemistry::OpenBabelc::OBAtomBondIter_SetBgn;
+*SwapEnds = *Chemistry::OpenBabelc::OBAtomBondIter_SwapEnds;
+*GetBgn = *Chemistry::OpenBabelc::OBAtomBondIter_GetBgn;
+*GetEnd = *Chemistry::OpenBabelc::OBAtomBondIter_GetEnd;
+*Error = *Chemistry::OpenBabelc::OBAtomBondIter_Error;
+*Eval = *Chemistry::OpenBabelc::OBAtomBondIter_Eval;
+*DoTransformations = *Chemistry::OpenBabelc::OBAtomBondIter_DoTransformations;
+*ClassDescription = *Chemistry::OpenBabelc::OBAtomBondIter_ClassDescription;
+*HasData = *Chemistry::OpenBabelc::OBAtomBondIter_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBAtomBondIter_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBAtomBondIter_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBAtomBondIter_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBAtomBondIter_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBAtomBondIter_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBAtomBondIter_EndData;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBResidueIter ##############
+
+package Chemistry::OpenBabel::OBResidueIter;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBResidueIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*good = *Chemistry::OpenBabelc::OBResidueIter_good;
+*inc = *Chemistry::OpenBabelc::OBResidueIter_inc;
+*__deref__ = *Chemistry::OpenBabelc::OBResidueIter___deref__;
+*__ref__ = *Chemistry::OpenBabelc::OBResidueIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBResidueIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+*AddAtom = *Chemistry::OpenBabelc::OBResidueIter_AddAtom;
+*InsertAtom = *Chemistry::OpenBabelc::OBResidueIter_InsertAtom;
+*RemoveAtom = *Chemistry::OpenBabelc::OBResidueIter_RemoveAtom;
+*Clear = *Chemistry::OpenBabelc::OBResidueIter_Clear;
+*SetName = *Chemistry::OpenBabelc::OBResidueIter_SetName;
+*SetNum = *Chemistry::OpenBabelc::OBResidueIter_SetNum;
+*SetChain = *Chemistry::OpenBabelc::OBResidueIter_SetChain;
+*SetChainNum = *Chemistry::OpenBabelc::OBResidueIter_SetChainNum;
+*SetIdx = *Chemistry::OpenBabelc::OBResidueIter_SetIdx;
+*SetAtomID = *Chemistry::OpenBabelc::OBResidueIter_SetAtomID;
+*SetHetAtom = *Chemistry::OpenBabelc::OBResidueIter_SetHetAtom;
+*SetSerialNum = *Chemistry::OpenBabelc::OBResidueIter_SetSerialNum;
+*GetName = *Chemistry::OpenBabelc::OBResidueIter_GetName;
+*GetNum = *Chemistry::OpenBabelc::OBResidueIter_GetNum;
+*GetNumAtoms = *Chemistry::OpenBabelc::OBResidueIter_GetNumAtoms;
+*GetChain = *Chemistry::OpenBabelc::OBResidueIter_GetChain;
+*GetChainNum = *Chemistry::OpenBabelc::OBResidueIter_GetChainNum;
+*GetIdx = *Chemistry::OpenBabelc::OBResidueIter_GetIdx;
+*GetResKey = *Chemistry::OpenBabelc::OBResidueIter_GetResKey;
+*GetAtoms = *Chemistry::OpenBabelc::OBResidueIter_GetAtoms;
+*GetBonds = *Chemistry::OpenBabelc::OBResidueIter_GetBonds;
+*GetAtomID = *Chemistry::OpenBabelc::OBResidueIter_GetAtomID;
+*GetSerialNum = *Chemistry::OpenBabelc::OBResidueIter_GetSerialNum;
+*GetAminoAcidProperty = *Chemistry::OpenBabelc::OBResidueIter_GetAminoAcidProperty;
+*GetAtomProperty = *Chemistry::OpenBabelc::OBResidueIter_GetAtomProperty;
+*GetResidueProperty = *Chemistry::OpenBabelc::OBResidueIter_GetResidueProperty;
+*IsHetAtom = *Chemistry::OpenBabelc::OBResidueIter_IsHetAtom;
+*IsResidueType = *Chemistry::OpenBabelc::OBResidueIter_IsResidueType;
+*BeginAtom = *Chemistry::OpenBabelc::OBResidueIter_BeginAtom;
+*NextAtom = *Chemistry::OpenBabelc::OBResidueIter_NextAtom;
+*DoTransformations = *Chemistry::OpenBabelc::OBResidueIter_DoTransformations;
+*ClassDescription = *Chemistry::OpenBabelc::OBResidueIter_ClassDescription;
+*HasData = *Chemistry::OpenBabelc::OBResidueIter_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBResidueIter_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBResidueIter_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBResidueIter_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBResidueIter_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBResidueIter_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBResidueIter_EndData;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBResidueAtomIter ##############
+
+package Chemistry::OpenBabel::OBResidueAtomIter;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBResidueAtomIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*good = *Chemistry::OpenBabelc::OBResidueAtomIter_good;
+*inc = *Chemistry::OpenBabelc::OBResidueAtomIter_inc;
+*deref = *Chemistry::OpenBabelc::OBResidueAtomIter_deref;
+*__ref__ = *Chemistry::OpenBabelc::OBResidueAtomIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBResidueAtomIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Clear = *Chemistry::OpenBabelc::OBResidueAtomIter_Clear;
+*SetIdx = *Chemistry::OpenBabelc::OBResidueAtomIter_SetIdx;
+*SetHyb = *Chemistry::OpenBabelc::OBResidueAtomIter_SetHyb;
+*SetAtomicNum = *Chemistry::OpenBabelc::OBResidueAtomIter_SetAtomicNum;
+*SetIsotope = *Chemistry::OpenBabelc::OBResidueAtomIter_SetIsotope;
+*SetImplicitValence = *Chemistry::OpenBabelc::OBResidueAtomIter_SetImplicitValence;
+*IncrementImplicitValence = *Chemistry::OpenBabelc::OBResidueAtomIter_IncrementImplicitValence;
+*DecrementImplicitValence = *Chemistry::OpenBabelc::OBResidueAtomIter_DecrementImplicitValence;
+*SetFormalCharge = *Chemistry::OpenBabelc::OBResidueAtomIter_SetFormalCharge;
+*SetSpinMultiplicity = *Chemistry::OpenBabelc::OBResidueAtomIter_SetSpinMultiplicity;
+*SetType = *Chemistry::OpenBabelc::OBResidueAtomIter_SetType;
+*SetPartialCharge = *Chemistry::OpenBabelc::OBResidueAtomIter_SetPartialCharge;
+*SetVector = *Chemistry::OpenBabelc::OBResidueAtomIter_SetVector;
+*SetCoordPtr = *Chemistry::OpenBabelc::OBResidueAtomIter_SetCoordPtr;
+*SetResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_SetResidue;
+*SetAromatic = *Chemistry::OpenBabelc::OBResidueAtomIter_SetAromatic;
+*UnsetAromatic = *Chemistry::OpenBabelc::OBResidueAtomIter_UnsetAromatic;
+*SetClockwiseStereo = *Chemistry::OpenBabelc::OBResidueAtomIter_SetClockwiseStereo;
+*SetAntiClockwiseStereo = *Chemistry::OpenBabelc::OBResidueAtomIter_SetAntiClockwiseStereo;
+*SetPositiveStereo = *Chemistry::OpenBabelc::OBResidueAtomIter_SetPositiveStereo;
+*SetNegativeStereo = *Chemistry::OpenBabelc::OBResidueAtomIter_SetNegativeStereo;
+*UnsetStereo = *Chemistry::OpenBabelc::OBResidueAtomIter_UnsetStereo;
+*SetInRing = *Chemistry::OpenBabelc::OBResidueAtomIter_SetInRing;
+*SetChiral = *Chemistry::OpenBabelc::OBResidueAtomIter_SetChiral;
+*ClearCoordPtr = *Chemistry::OpenBabelc::OBResidueAtomIter_ClearCoordPtr;
+*GetFormalCharge = *Chemistry::OpenBabelc::OBResidueAtomIter_GetFormalCharge;
+*GetAtomicNum = *Chemistry::OpenBabelc::OBResidueAtomIter_GetAtomicNum;
+*GetIsotope = *Chemistry::OpenBabelc::OBResidueAtomIter_GetIsotope;
+*GetSpinMultiplicity = *Chemistry::OpenBabelc::OBResidueAtomIter_GetSpinMultiplicity;
+*GetAtomicMass = *Chemistry::OpenBabelc::OBResidueAtomIter_GetAtomicMass;
+*GetExactMass = *Chemistry::OpenBabelc::OBResidueAtomIter_GetExactMass;
+*GetIdx = *Chemistry::OpenBabelc::OBResidueAtomIter_GetIdx;
+*GetCoordinateIdx = *Chemistry::OpenBabelc::OBResidueAtomIter_GetCoordinateIdx;
+*GetCIdx = *Chemistry::OpenBabelc::OBResidueAtomIter_GetCIdx;
+*GetValence = *Chemistry::OpenBabelc::OBResidueAtomIter_GetValence;
+*GetHyb = *Chemistry::OpenBabelc::OBResidueAtomIter_GetHyb;
+*GetImplicitValence = *Chemistry::OpenBabelc::OBResidueAtomIter_GetImplicitValence;
+*GetHvyValence = *Chemistry::OpenBabelc::OBResidueAtomIter_GetHvyValence;
+*GetHeteroValence = *Chemistry::OpenBabelc::OBResidueAtomIter_GetHeteroValence;
+*GetType = *Chemistry::OpenBabelc::OBResidueAtomIter_GetType;
+*GetX = *Chemistry::OpenBabelc::OBResidueAtomIter_GetX;
+*x = *Chemistry::OpenBabelc::OBResidueAtomIter_x;
+*GetY = *Chemistry::OpenBabelc::OBResidueAtomIter_GetY;
+*y = *Chemistry::OpenBabelc::OBResidueAtomIter_y;
+*GetZ = *Chemistry::OpenBabelc::OBResidueAtomIter_GetZ;
+*z = *Chemistry::OpenBabelc::OBResidueAtomIter_z;
+*GetCoordinate = *Chemistry::OpenBabelc::OBResidueAtomIter_GetCoordinate;
+*GetVector = *Chemistry::OpenBabelc::OBResidueAtomIter_GetVector;
+*GetPartialCharge = *Chemistry::OpenBabelc::OBResidueAtomIter_GetPartialCharge;
+*GetResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_GetResidue;
+*GetNewBondVector = *Chemistry::OpenBabelc::OBResidueAtomIter_GetNewBondVector;
+*GetBond = *Chemistry::OpenBabelc::OBResidueAtomIter_GetBond;
+*GetNextAtom = *Chemistry::OpenBabelc::OBResidueAtomIter_GetNextAtom;
+*BeginBonds = *Chemistry::OpenBabelc::OBResidueAtomIter_BeginBonds;
+*EndBonds = *Chemistry::OpenBabelc::OBResidueAtomIter_EndBonds;
+*BeginBond = *Chemistry::OpenBabelc::OBResidueAtomIter_BeginBond;
+*NextBond = *Chemistry::OpenBabelc::OBResidueAtomIter_NextBond;
+*BeginNbrAtom = *Chemistry::OpenBabelc::OBResidueAtomIter_BeginNbrAtom;
+*NextNbrAtom = *Chemistry::OpenBabelc::OBResidueAtomIter_NextNbrAtom;
+*GetDistance = *Chemistry::OpenBabelc::OBResidueAtomIter_GetDistance;
+*GetAngle = *Chemistry::OpenBabelc::OBResidueAtomIter_GetAngle;
+*NewResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_NewResidue;
+*DeleteResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_DeleteResidue;
+*AddBond = *Chemistry::OpenBabelc::OBResidueAtomIter_AddBond;
+*InsertBond = *Chemistry::OpenBabelc::OBResidueAtomIter_InsertBond;
+*DeleteBond = *Chemistry::OpenBabelc::OBResidueAtomIter_DeleteBond;
+*ClearBond = *Chemistry::OpenBabelc::OBResidueAtomIter_ClearBond;
+*CountFreeOxygens = *Chemistry::OpenBabelc::OBResidueAtomIter_CountFreeOxygens;
+*ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBResidueAtomIter_ImplicitHydrogenCount;
+*ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBResidueAtomIter_ExplicitHydrogenCount;
+*MemberOfRingCount = *Chemistry::OpenBabelc::OBResidueAtomIter_MemberOfRingCount;
+*MemberOfRingSize = *Chemistry::OpenBabelc::OBResidueAtomIter_MemberOfRingSize;
+*CountRingBonds = *Chemistry::OpenBabelc::OBResidueAtomIter_CountRingBonds;
+*SmallestBondAngle = *Chemistry::OpenBabelc::OBResidueAtomIter_SmallestBondAngle;
+*AverageBondAngle = *Chemistry::OpenBabelc::OBResidueAtomIter_AverageBondAngle;
+*BOSum = *Chemistry::OpenBabelc::OBResidueAtomIter_BOSum;
+*KBOSum = *Chemistry::OpenBabelc::OBResidueAtomIter_KBOSum;
+*HtoMethyl = *Chemistry::OpenBabelc::OBResidueAtomIter_HtoMethyl;
+*SetHybAndGeom = *Chemistry::OpenBabelc::OBResidueAtomIter_SetHybAndGeom;
+*ForceNoH = *Chemistry::OpenBabelc::OBResidueAtomIter_ForceNoH;
+*HasNoHForced = *Chemistry::OpenBabelc::OBResidueAtomIter_HasNoHForced;
+*HasResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_HasResidue;
+*IsHydrogen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsHydrogen;
+*IsCarbon = *Chemistry::OpenBabelc::OBResidueAtomIter_IsCarbon;
+*IsNitrogen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsNitrogen;
+*IsOxygen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsOxygen;
+*IsSulfur = *Chemistry::OpenBabelc::OBResidueAtomIter_IsSulfur;
+*IsPhosphorus = *Chemistry::OpenBabelc::OBResidueAtomIter_IsPhosphorus;
+*IsAromatic = *Chemistry::OpenBabelc::OBResidueAtomIter_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBResidueAtomIter_IsInRing;
+*IsInRingSize = *Chemistry::OpenBabelc::OBResidueAtomIter_IsInRingSize;
+*IsHeteroatom = *Chemistry::OpenBabelc::OBResidueAtomIter_IsHeteroatom;
+*IsNotCorH = *Chemistry::OpenBabelc::OBResidueAtomIter_IsNotCorH;
+*IsConnected = *Chemistry::OpenBabelc::OBResidueAtomIter_IsConnected;
+*IsOneThree = *Chemistry::OpenBabelc::OBResidueAtomIter_IsOneThree;
+*IsOneFour = *Chemistry::OpenBabelc::OBResidueAtomIter_IsOneFour;
+*IsCarboxylOxygen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsCarboxylOxygen;
+*IsPhosphateOxygen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsPhosphateOxygen;
+*IsSulfateOxygen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsSulfateOxygen;
+*IsNitroOxygen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsNitroOxygen;
+*IsAmideNitrogen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsAmideNitrogen;
+*IsPolarHydrogen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsPolarHydrogen;
+*IsNonPolarHydrogen = *Chemistry::OpenBabelc::OBResidueAtomIter_IsNonPolarHydrogen;
+*IsAromaticNOxide = *Chemistry::OpenBabelc::OBResidueAtomIter_IsAromaticNOxide;
+*IsChiral = *Chemistry::OpenBabelc::OBResidueAtomIter_IsChiral;
+*IsAxial = *Chemistry::OpenBabelc::OBResidueAtomIter_IsAxial;
+*IsClockwise = *Chemistry::OpenBabelc::OBResidueAtomIter_IsClockwise;
+*IsAntiClockwise = *Chemistry::OpenBabelc::OBResidueAtomIter_IsAntiClockwise;
+*IsPositiveStereo = *Chemistry::OpenBabelc::OBResidueAtomIter_IsPositiveStereo;
+*IsNegativeStereo = *Chemistry::OpenBabelc::OBResidueAtomIter_IsNegativeStereo;
+*HasChiralitySpecified = *Chemistry::OpenBabelc::OBResidueAtomIter_HasChiralitySpecified;
+*HasChiralVolume = *Chemistry::OpenBabelc::OBResidueAtomIter_HasChiralVolume;
+*IsHbondAcceptor = *Chemistry::OpenBabelc::OBResidueAtomIter_IsHbondAcceptor;
+*IsHbondDonor = *Chemistry::OpenBabelc::OBResidueAtomIter_IsHbondDonor;
+*IsHbondDonorH = *Chemistry::OpenBabelc::OBResidueAtomIter_IsHbondDonorH;
+*HasAlphaBetaUnsat = *Chemistry::OpenBabelc::OBResidueAtomIter_HasAlphaBetaUnsat;
+*HasBondOfOrder = *Chemistry::OpenBabelc::OBResidueAtomIter_HasBondOfOrder;
+*CountBondsOfOrder = *Chemistry::OpenBabelc::OBResidueAtomIter_CountBondsOfOrder;
+*HasNonSingleBond = *Chemistry::OpenBabelc::OBResidueAtomIter_HasNonSingleBond;
+*HasSingleBond = *Chemistry::OpenBabelc::OBResidueAtomIter_HasSingleBond;
+*HasDoubleBond = *Chemistry::OpenBabelc::OBResidueAtomIter_HasDoubleBond;
+*HasAromaticBond = *Chemistry::OpenBabelc::OBResidueAtomIter_HasAromaticBond;
+*MatchesSMARTS = *Chemistry::OpenBabelc::OBResidueAtomIter_MatchesSMARTS;
+*swig_Visit_get = *Chemistry::OpenBabelc::OBResidueAtomIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBResidueAtomIter_Visit_set;
+*GetParent = *Chemistry::OpenBabelc::OBResidueAtomIter_GetParent;
+*SetParent = *Chemistry::OpenBabelc::OBResidueAtomIter_SetParent;
+*AddEdge = *Chemistry::OpenBabelc::OBResidueAtomIter_AddEdge;
+*Error = *Chemistry::OpenBabelc::OBResidueAtomIter_Error;
+*SetMatch = *Chemistry::OpenBabelc::OBResidueAtomIter_SetMatch;
+*Eval = *Chemistry::OpenBabelc::OBResidueAtomIter_Eval;
+*GetMatch = *Chemistry::OpenBabelc::OBResidueAtomIter_GetMatch;
+*DoTransformations = *Chemistry::OpenBabelc::OBResidueAtomIter_DoTransformations;
+*ClassDescription = *Chemistry::OpenBabelc::OBResidueAtomIter_ClassDescription;
+*HasData = *Chemistry::OpenBabelc::OBResidueAtomIter_HasData;
+*DeleteData = *Chemistry::OpenBabelc::OBResidueAtomIter_DeleteData;
+*SetData = *Chemistry::OpenBabelc::OBResidueAtomIter_SetData;
+*DataSize = *Chemistry::OpenBabelc::OBResidueAtomIter_DataSize;
+*GetData = *Chemistry::OpenBabelc::OBResidueAtomIter_GetData;
+*BeginData = *Chemistry::OpenBabelc::OBResidueAtomIter_BeginData;
+*EndData = *Chemistry::OpenBabelc::OBResidueAtomIter_EndData;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 # ------- VARIABLE STUBS --------
 
 package Chemistry::OpenBabel;
@@ -2698,6 +4237,142 @@ bless $obErrorLog, Chemistry::OpenBabel::OBMessageHandler;
 *WRITEONEONLY = *Chemistry::OpenBabelc::WRITEONEONLY;
 *WRITEBINARY = *Chemistry::OpenBabelc::WRITEBINARY;
 *DEFAULTFORMAT = *Chemistry::OpenBabelc::DEFAULTFORMAT;
+*MAXSETNO = *Chemistry::OpenBabelc::MAXSETNO;
+*MAXELEM = *Chemistry::OpenBabelc::MAXELEM;
+*MINELEM = *Chemistry::OpenBabelc::MINELEM;
+*MAXRES = *Chemistry::OpenBabelc::MAXRES;
+*MINRES = *Chemistry::OpenBabelc::MINRES;
+*AA_ALA = *Chemistry::OpenBabelc::AA_ALA;
+*AA_GLY = *Chemistry::OpenBabelc::AA_GLY;
+*AA_LEU = *Chemistry::OpenBabelc::AA_LEU;
+*AA_SER = *Chemistry::OpenBabelc::AA_SER;
+*AA_VAL = *Chemistry::OpenBabelc::AA_VAL;
+*AA_THR = *Chemistry::OpenBabelc::AA_THR;
+*AA_LYS = *Chemistry::OpenBabelc::AA_LYS;
+*AA_ASP = *Chemistry::OpenBabelc::AA_ASP;
+*AA_ILE = *Chemistry::OpenBabelc::AA_ILE;
+*AA_ASN = *Chemistry::OpenBabelc::AA_ASN;
+*AA_GLU = *Chemistry::OpenBabelc::AA_GLU;
+*AA_PRO = *Chemistry::OpenBabelc::AA_PRO;
+*AA_ARG = *Chemistry::OpenBabelc::AA_ARG;
+*AA_PHE = *Chemistry::OpenBabelc::AA_PHE;
+*AA_GLN = *Chemistry::OpenBabelc::AA_GLN;
+*AA_TYR = *Chemistry::OpenBabelc::AA_TYR;
+*AA_HIS = *Chemistry::OpenBabelc::AA_HIS;
+*AA_CYS = *Chemistry::OpenBabelc::AA_CYS;
+*AA_MET = *Chemistry::OpenBabelc::AA_MET;
+*AA_TRP = *Chemistry::OpenBabelc::AA_TRP;
+*ACIDIC = *Chemistry::OpenBabelc::ACIDIC;
+*ACYCLIC = *Chemistry::OpenBabelc::ACYCLIC;
+*ALIPHATIC = *Chemistry::OpenBabelc::ALIPHATIC;
+*AROMATIC = *Chemistry::OpenBabelc::AROMATIC;
+*BASIC = *Chemistry::OpenBabelc::BASIC;
+*BURIED = *Chemistry::OpenBabelc::BURIED;
+*CHARGED = *Chemistry::OpenBabelc::CHARGED;
+*CYCLIC = *Chemistry::OpenBabelc::CYCLIC;
+*HYDROPHOBIC = *Chemistry::OpenBabelc::HYDROPHOBIC;
+*LARGE = *Chemistry::OpenBabelc::LARGE;
+*MEDIUM = *Chemistry::OpenBabelc::MEDIUM;
+*NEGATIVE = *Chemistry::OpenBabelc::NEGATIVE;
+*NEUTRAL = *Chemistry::OpenBabelc::NEUTRAL;
+*POLAR = *Chemistry::OpenBabelc::POLAR;
+*POSITIVE = *Chemistry::OpenBabelc::POSITIVE;
+*SMALL = *Chemistry::OpenBabelc::SMALL;
+*SURFACE = *Chemistry::OpenBabelc::SURFACE;
+*ALPHA_CARBON = *Chemistry::OpenBabelc::ALPHA_CARBON;
+*AMINO_BACKBONE = *Chemistry::OpenBabelc::AMINO_BACKBONE;
+*BACKBONE = *Chemistry::OpenBabelc::BACKBONE;
+*CYSTEINE_SULPHUR = *Chemistry::OpenBabelc::CYSTEINE_SULPHUR;
+*LIGAND = *Chemistry::OpenBabelc::LIGAND;
+*NUCLEIC_BACKBONE = *Chemistry::OpenBabelc::NUCLEIC_BACKBONE;
+*SHAPELY_BACKBONE = *Chemistry::OpenBabelc::SHAPELY_BACKBONE;
+*SHAPELY_SPECIAL = *Chemistry::OpenBabelc::SHAPELY_SPECIAL;
+*SIDECHAIN = *Chemistry::OpenBabelc::SIDECHAIN;
+*SUGAR_PHOSPHATE = *Chemistry::OpenBabelc::SUGAR_PHOSPHATE;
+*ALA = *Chemistry::OpenBabelc::ALA;
+*GLY = *Chemistry::OpenBabelc::GLY;
+*LEU = *Chemistry::OpenBabelc::LEU;
+*SER = *Chemistry::OpenBabelc::SER;
+*VAL = *Chemistry::OpenBabelc::VAL;
+*THR = *Chemistry::OpenBabelc::THR;
+*LYS = *Chemistry::OpenBabelc::LYS;
+*ASP = *Chemistry::OpenBabelc::ASP;
+*ILE = *Chemistry::OpenBabelc::ILE;
+*ASN = *Chemistry::OpenBabelc::ASN;
+*GLU = *Chemistry::OpenBabelc::GLU;
+*PRO = *Chemistry::OpenBabelc::PRO;
+*ARG = *Chemistry::OpenBabelc::ARG;
+*PHE = *Chemistry::OpenBabelc::PHE;
+*GLN = *Chemistry::OpenBabelc::GLN;
+*TYR = *Chemistry::OpenBabelc::TYR;
+*HIS = *Chemistry::OpenBabelc::HIS;
+*CYS = *Chemistry::OpenBabelc::CYS;
+*MET = *Chemistry::OpenBabelc::MET;
+*TRP = *Chemistry::OpenBabelc::TRP;
+*ASX = *Chemistry::OpenBabelc::ASX;
+*GLX = *Chemistry::OpenBabelc::GLX;
+*PCA = *Chemistry::OpenBabelc::PCA;
+*HYP = *Chemistry::OpenBabelc::HYP;
+*A = *Chemistry::OpenBabelc::A;
+*C = *Chemistry::OpenBabelc::C;
+*G = *Chemistry::OpenBabelc::G;
+*T = *Chemistry::OpenBabelc::T;
+*U = *Chemistry::OpenBabelc::U;
+*UPLUS = *Chemistry::OpenBabelc::UPLUS;
+*I = *Chemistry::OpenBabelc::I;
+*OMC = *Chemistry::OpenBabelc::OMC;
+*M2G = *Chemistry::OpenBabelc::M2G;
+*OMG = *Chemistry::OpenBabelc::OMG;
+*YG = *Chemistry::OpenBabelc::YG;
+*H2U = *Chemistry::OpenBabelc::H2U;
+*PSU = *Chemistry::OpenBabelc::PSU;
+*UNK = *Chemistry::OpenBabelc::UNK;
+*ACE = *Chemistry::OpenBabelc::ACE;
+*FOR = *Chemistry::OpenBabelc::FOR;
+*HOH = *Chemistry::OpenBabelc::HOH;
+*DOD = *Chemistry::OpenBabelc::DOD;
+*SO4 = *Chemistry::OpenBabelc::SO4;
+*PO4 = *Chemistry::OpenBabelc::PO4;
+*NAD = *Chemistry::OpenBabelc::NAD;
+*COA = *Chemistry::OpenBabelc::COA;
+*NAP = *Chemistry::OpenBabelc::NAP;
+*NDP = *Chemistry::OpenBabelc::NDP;
+*AMINO = *Chemistry::OpenBabelc::AMINO;
+*AMINO_NUCLEO = *Chemistry::OpenBabelc::AMINO_NUCLEO;
+*COENZYME = *Chemistry::OpenBabelc::COENZYME;
+*ION = *Chemistry::OpenBabelc::ION;
+*NUCLEO = *Chemistry::OpenBabelc::NUCLEO;
+*PROTEIN = *Chemistry::OpenBabelc::PROTEIN;
+*PURINE = *Chemistry::OpenBabelc::PURINE;
+*PYRIMIDINE = *Chemistry::OpenBabelc::PYRIMIDINE;
+*SOLVENT = *Chemistry::OpenBabelc::SOLVENT;
+*WATER = *Chemistry::OpenBabelc::WATER;
+*Residue = *Chemistry::OpenBabelc::Residue;
+*ElemDesc = *Chemistry::OpenBabelc::ElemDesc;
+*ResNo = *Chemistry::OpenBabelc::ResNo;
+*ElemNo = *Chemistry::OpenBabelc::ElemNo;
+*OB_4RING_ATOM = *Chemistry::OpenBabelc::OB_4RING_ATOM;
+*OB_3RING_ATOM = *Chemistry::OpenBabelc::OB_3RING_ATOM;
+*OB_AROMATIC_ATOM = *Chemistry::OpenBabelc::OB_AROMATIC_ATOM;
+*OB_RING_ATOM = *Chemistry::OpenBabelc::OB_RING_ATOM;
+*OB_CSTEREO_ATOM = *Chemistry::OpenBabelc::OB_CSTEREO_ATOM;
+*OB_ACSTEREO_ATOM = *Chemistry::OpenBabelc::OB_ACSTEREO_ATOM;
+*OB_DONOR_ATOM = *Chemistry::OpenBabelc::OB_DONOR_ATOM;
+*OB_ACCEPTOR_ATOM = *Chemistry::OpenBabelc::OB_ACCEPTOR_ATOM;
+*OB_CHIRAL_ATOM = *Chemistry::OpenBabelc::OB_CHIRAL_ATOM;
+*OB_POS_CHIRAL_ATOM = *Chemistry::OpenBabelc::OB_POS_CHIRAL_ATOM;
+*OB_NEG_CHIRAL_ATOM = *Chemistry::OpenBabelc::OB_NEG_CHIRAL_ATOM;
+*OB_ATOM_HAS_NO_H = *Chemistry::OpenBabelc::OB_ATOM_HAS_NO_H;
+*OB_AROMATIC_BOND = *Chemistry::OpenBabelc::OB_AROMATIC_BOND;
+*OB_WEDGE_BOND = *Chemistry::OpenBabelc::OB_WEDGE_BOND;
+*OB_HASH_BOND = *Chemistry::OpenBabelc::OB_HASH_BOND;
+*OB_RING_BOND = *Chemistry::OpenBabelc::OB_RING_BOND;
+*OB_TORUP_BOND = *Chemistry::OpenBabelc::OB_TORUP_BOND;
+*OB_TORDOWN_BOND = *Chemistry::OpenBabelc::OB_TORDOWN_BOND;
+*OB_KSINGLE_BOND = *Chemistry::OpenBabelc::OB_KSINGLE_BOND;
+*OB_KDOUBLE_BOND = *Chemistry::OpenBabelc::OB_KDOUBLE_BOND;
+*OB_KTRIPLE_BOND = *Chemistry::OpenBabelc::OB_KTRIPLE_BOND;
+*OB_CLOSURE_BOND = *Chemistry::OpenBabelc::OB_CLOSURE_BOND;
 *OB_SSSR_MOL = *Chemistry::OpenBabelc::OB_SSSR_MOL;
 *OB_RINGFLAGS_MOL = *Chemistry::OpenBabelc::OB_RINGFLAGS_MOL;
 *OB_AROMATIC_MOL = *Chemistry::OpenBabelc::OB_AROMATIC_MOL;

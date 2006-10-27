@@ -64,6 +64,32 @@ namespace std {
 
 %include "oberror.h"
 %include "obconversion.h"
+%include "residue.h"
+%include "atom.h"
+%include "bond.h"
 %include "mol.h"
 %include "ring.h"
 %include "parsmart.h"
+
+%rename(inc) OpenBabel::OBMolAtomIter::operator++;
+%rename(inc) OpenBabel::OBMolBondIter::operator++;
+%rename(inc) OpenBabel::OBAtomAtomIter::operator++;
+%rename(inc) OpenBabel::OBAtomBondIter::operator++;
+%rename(good) OpenBabel::OBMolAtomIter::operator bool;
+%rename(good) OpenBabel::OBMolBondIter::operator bool;
+%rename(good) OpenBabel::OBAtomAtomIter::operator bool;
+%rename(good) OpenBabel::OBAtomBondIter::operator bool;
+%rename(good) OpenBabel::OBMolAtomIter::operator bool;
+%rename(deref) OpenBabel::OBMolAtomIter::operator->;
+%rename(deref) OpenBabel::OBMolBondIter::operator->;
+%rename(deref) OpenBabel::OBAtomAtomIter::operator->;
+%rename(deref) OpenBabel::OBAtomBondIter::operator->;
+
+%rename(inc) OpenBabel::OBResidueIter::operator++;
+%rename(inc) OpenBabel::OBResidueAtomIter::operator++;
+%rename(good) OpenBabel::OBResidueIter::operator bool;
+%rename(good) OpenBabel::OBResidueAtomIter::operator bool;
+%rename(deref) OpenBabel::OBResidueAtomIter::operator->;
+%rename(deref) OpenBabel::OBResidueBondIter::operator->;
+
+%include "obiter.h"
