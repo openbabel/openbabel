@@ -50,8 +50,8 @@ libformats_la_SOURCES = \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
 	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
-	mol2format.cpp mopacformat.cpp mpdformat.cpp mpqcformat.cpp \
-	nwchemformat.cpp pcmodelformat.cpp \
+	mol2format.cpp molreportformat.cpp mopacformat.cpp \
+	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 	rxnformat.cpp shelxformat.cpp smilesformat.cpp thermoformat.cpp \
 	tinkerformat.cpp titleformat.cpp \
@@ -73,8 +73,8 @@ pkglib_LTLIBRARIES = \
 	freefracformat.la gamessformat.la gaussformat.la ghemicalformat.la \
 	gromos96format.la hinformat.la inchiformat.la \
 	jaguarformat.la mdlformat.la mmodformat.la mpdformat.la \
-	mol2format.la mopacformat.la mpqcformat.la nwchemformat.la \
-	pcmodelformat.la \
+	mol2format.la molreportformat.la mopacformat.la mpqcformat.la \
+	nwchemformat.la pcmodelformat.la \
 	pdbformat.la povrayformat.la qchemformat.la reportformat.la \
 	rxnformat.la shelxformat.la smilesformat.la thermoformat.la \
 	tinkerformat.la titleformat.la \
@@ -193,6 +193,9 @@ mmodformat_la_LDFLAGS = -module -avoid-version
 
 mol2format_la_SOURCES = mol2format.cpp obmolecformat.cpp
 mol2format_la_LDFLAGS = -module -avoid-version 
+
+molreportformat_la_SOURCES = molreport.cpp obmolecformat.cpp
+molreportformat_la_LDFLAGS = -module -avoid-version 
 
 mopacformat_la_SOURCES = mopacformat.cpp obmolecformat.cpp
 mopacformat_la_LDFLAGS = -module -avoid-version 

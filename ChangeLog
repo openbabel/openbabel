@@ -1,3 +1,9 @@
+2006-10-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/molreport.cpp: New psuedo-format to generate atom
+	and bond information as suggested by Rich Apodaca. Addresses
+	PR#1587499.
+
 2006-10-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/openbabel.i, scripts/*: Updated with changes from Martin
