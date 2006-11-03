@@ -190,9 +190,13 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-EXTRA_DIST = openbabel.i perl python
+EXTRA_DIST = openbabel-perl.i perl \
+					openbabel-python.i python \
+					openbabel-ruby.i ruby \
+					openbabel-java.i java
 
-# build the Perl and Python wrappers if --enable-maintainer-mode was set
+
+# build the scripting language interfaces if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@BUILT_SOURCES = perl/openbabel_perl.cpp \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		python/openbabel_python.cpp \
@@ -211,9 +215,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  scripts/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  scripts/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  scripts/Makefile
+	  $(AUTOMAKE) --foreign  scripts/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -367,20 +371,20 @@ uninstall-am: uninstall-info-am
 
 
 dist-hook:
-	find $(distdir)/perl -name CVS | xargs rm -rf
+	find $(distdir) -name .svn | xargs rm -rf
+	find $(distdir) -name "*~" | xargs rm -rf
 	(cd $(distdir)/perl; $(MAKE) distclean)
-	find $(distdir)/python -name CVS | xargs rm -rf
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
 	(cd $(distdir)/python; rm -rf build; rm -rf *.pyc *.so)
-	find $(distdir) -name "*~" | xargs rm -rf
+	(cd $(distdir)/ruby; $(MAKE) distclean)
 
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@perl/openbabel_perl.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@perl/openbabel_perl.cpp: openbabel-perl.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-I$(top_srcdir)/src $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@python/openbabel_python.cpp: openbabel-python.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -python -modern -naturalvar -fastinit \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		-c++ -o $@ -I$(top_srcdir)/src $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	echo "import sys" >python/ob.py;
@@ -391,8 +395,9 @@ dist-hook:
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	cat python/openbabel.py >>python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv python/ob.py python/openbabel.py;
 
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@ruby/openbabel_ruby.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -ruby -c++ -o $@ -I$(top_srcdir)/src $<;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@ruby/openbabel_ruby.cpp: openbabel-ruby.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -ruby -naturalvar -c++ -o $@ -I$(top_srcdir)/src $<;
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

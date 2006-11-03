@@ -1,14 +1,17 @@
-EXTRA_DIST = openbabel.i perl python
+EXTRA_DIST = openbabel-perl.i perl \
+					openbabel-python.i python \
+					openbabel-ruby.i ruby \
+					openbabel-java.i java
 
 dist-hook:
-	find $(distdir)/perl -name CVS | xargs rm -rf
+	find $(distdir) -name .svn | xargs rm -rf
+	find $(distdir) -name "*~" | xargs rm -rf
 	(cd $(distdir)/perl; $(MAKE) distclean)
-	find $(distdir)/python -name CVS | xargs rm -rf
 	(cd $(distdir)/python; $(PYTHON) setup.py clean)
 	(cd $(distdir)/python; rm -rf build; rm -rf *.pyc *.so)
-	find $(distdir) -name "*~" | xargs rm -rf
+	(cd $(distdir)/ruby; $(MAKE) distclean)
 
-# build the Perl and Python wrappers if --enable-maintainer-mode was set
+# build the scripting language interfaces if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG
 
 if MAINTAINER_MODE
@@ -17,13 +20,13 @@ BUILT_SOURCES = perl/openbabel_perl.cpp \
 		python/openbabel_python.cpp \
 	 ruby/openbabel_ruby.cpp
 
-perl/openbabel_perl.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+perl/openbabel_perl.cpp: openbabel-perl.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
 	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
 		-I$(top_srcdir)/src $<;
 	sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <perl/OpenBabel.pm >perl/OpenBabel.new;
 	mv perl/OpenBabel.new perl/OpenBabel.pm;
 
-python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+python/openbabel_python.cpp: openbabel-python.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
 	$(SWIG) -python -modern -naturalvar -fastinit \
 		-c++ -o $@ -I$(top_srcdir)/src $<;
 	echo "import sys" >python/ob.py;
@@ -34,8 +37,9 @@ python/openbabel_python.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/
 	cat python/openbabel.py >>python/ob.py;
 	mv python/ob.py python/openbabel.py;
 
-ruby/openbabel_ruby.cpp: openbabel.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
-	$(SWIG) -ruby -c++ -o $@ -I$(top_srcdir)/src $<;
+ruby/openbabel_ruby.cpp: openbabel-ruby.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+	$(SWIG) -ruby -naturalvar -c++ -o $@ -I$(top_srcdir)/src $<;
+	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
 
 endif # BUILD_SWIG
 endif # MAINTAINER_MODE

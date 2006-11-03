@@ -1668,10 +1668,10 @@ static swig_module_info swig_module = {swig_types, 135, 0, 0, 0, 0};
 
 /* -------- TYPES TABLE (END) -------- */
 
-#define SWIG_init    Init_openbabel_wrap
-#define SWIG_name    "Openbabel_wrap"
+#define SWIG_init    Init_openbabel
+#define SWIG_name    "Openbabel"
 
-static VALUE mOpenbabel_wrap;
+static VALUE mOpenbabel;
 
 #define SWIGVERSION 0x010329 
 
@@ -1688,6 +1688,7 @@ static VALUE mOpenbabel_wrap;
 #define USING_OBDLL
 #endif
 
+#include <math.h>
 
 #include "obutil.h"
 #include "math/vector3.h"
@@ -37699,11 +37700,10 @@ swig_class cOBRing;
 SWIGINTERN VALUE
 _wrap_OBRing__path_set(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
-  std::vector<int > *arg2 = (std::vector<int > *) 0 ;
+  std::vector<int > *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
+  std::vector<int > temp2 ;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -37713,11 +37713,24 @@ _wrap_OBRing__path_set(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_path" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_std__vectorTint_t, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_path" "', argument " "2"" of type '" "std::vector<int > *""'"); 
+  {
+    if (rb_obj_is_kind_of(argv[0],rb_cArray)) {
+      unsigned int size = RARRAY(argv[0])->len;
+      temp2 = std::vector<int >(size);
+      arg2 = &temp2;
+      for (unsigned int i=0; i<size; i++) {
+        VALUE o = RARRAY(argv[0])->ptr[i];
+        if (FIXNUM_P(o))
+        temp2[i] = (int)(FIX2INT(o));
+        else
+        rb_raise(rb_eTypeError,
+          "wrong argument type"
+          " (expected vector<""int" ">)");
+      }
+    } else {
+      SWIG_ConvertPtr(argv[0], (void **) &arg2, SWIGTYPE_p_std__vectorTint_t, 1);
+    }
   }
-  arg2 = reinterpret_cast< std::vector<int > * >(argp2);
   if (arg1) (arg1)->_path = *arg2;
   
   return Qnil;
@@ -37742,7 +37755,10 @@ _wrap_OBRing__path_get(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_path" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-  result = (std::vector<int > *)& ((arg1)->_path);
+  {
+    std::vector<int > const &_result_ref =  ((arg1)->_path);
+    result = (std::vector<int > *) &_result_ref;
+  }
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTint_t, 0 |  0 );
   return vresult;
 fail:
@@ -37753,10 +37769,10 @@ fail:
 SWIGINTERN VALUE
 _wrap_OBRing__pathset_set(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBRing *arg1 = (OpenBabel::OBRing *) 0 ;
-  OpenBabel::OBBitVec *arg2 = (OpenBabel::OBBitVec *) 0 ;
+  OpenBabel::OBBitVec *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
+  void *argp2 ;
   int res2 = 0 ;
   
   if ((argc < 1) || (argc > 1)) {
@@ -37767,9 +37783,12 @@ _wrap_OBRing__pathset_set(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_pathset" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBitVec, 0 |  0 );
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__OBBitVec,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_pathset" "', argument " "2"" of type '" "OpenBabel::OBBitVec *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "_pathset" "', argument " "2"" of type '" "OpenBabel::OBBitVec const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "_pathset" "', argument " "2"" of type '" "OpenBabel::OBBitVec const &""'"); 
   }
   arg2 = reinterpret_cast< OpenBabel::OBBitVec * >(argp2);
   if (arg1) (arg1)->_pathset = *arg2;
@@ -37796,7 +37815,10 @@ _wrap_OBRing__pathset_get(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_pathset" "', argument " "1"" of type '" "OpenBabel::OBRing *""'"); 
   }
   arg1 = reinterpret_cast< OpenBabel::OBRing * >(argp1);
-  result = (OpenBabel::OBBitVec *)& ((arg1)->_pathset);
+  {
+    OpenBabel::OBBitVec const &_result_ref =  ((arg1)->_pathset);
+    result = (OpenBabel::OBBitVec *) &_result_ref;
+  }
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBBitVec, 0 |  0 );
   return vresult;
 fail:
@@ -72136,11 +72158,11 @@ SWIG_PropagateClientData(void) {
 #ifdef __cplusplus
 extern "C"
 #endif
-SWIGEXPORT void Init_openbabel_wrap(void) {
+SWIGEXPORT void Init_openbabel(void) {
   size_t i;
   
   SWIG_InitRuntime();
-  mOpenbabel_wrap = rb_define_module("Openbabel_wrap");
+  mOpenbabel = rb_define_module("Openbabel");
   
   SWIG_InitializeModule(0);
   for (i = 0; i < swig_module.size; i++) {
@@ -72149,7 +72171,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   
   SWIG_RubyInitializeTrackings();
   
-  cVectorInt.klass = rb_define_class_under(mOpenbabel_wrap, "VectorInt", rb_cObject);
+  cVectorInt.klass = rb_define_class_under(mOpenbabel, "VectorInt", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTint_t, (void *) &cVectorInt);
   rb_include_module(cVectorInt.klass, rb_eval_string("Enumerable"));
   rb_define_alloc_func(cVectorInt.klass, _wrap_vectorInt_allocate);
@@ -72166,7 +72188,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVectorInt.destroy = (void (*)(void *)) free_std_vector_Sl_int_Sg_;
   cVectorInt.trackObjects = 0;
   
-  cVvInt.klass = rb_define_class_under(mOpenbabel_wrap, "VvInt", rb_cObject);
+  cVvInt.klass = rb_define_class_under(mOpenbabel, "VvInt", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTstd__vectorTint_t_t, (void *) &cVvInt);
   rb_include_module(cVvInt.klass, rb_eval_string("Enumerable"));
   rb_define_alloc_func(cVvInt.klass, _wrap_vvInt_allocate);
@@ -72183,7 +72205,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVvInt.destroy = (void (*)(void *)) free_std_vector_Sl_std_vector_Sl_int_Sg__Sg_;
   cVvInt.trackObjects = 0;
   
-  cVectorDouble.klass = rb_define_class_under(mOpenbabel_wrap, "VectorDouble", rb_cObject);
+  cVectorDouble.klass = rb_define_class_under(mOpenbabel, "VectorDouble", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTdouble_t, (void *) &cVectorDouble);
   rb_include_module(cVectorDouble.klass, rb_eval_string("Enumerable"));
   rb_define_alloc_func(cVectorDouble.klass, _wrap_vectorDouble_allocate);
@@ -72200,7 +72222,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVectorDouble.destroy = (void (*)(void *)) free_std_vector_Sl_double_Sg_;
   cVectorDouble.trackObjects = 0;
   
-  cVVector3.klass = rb_define_class_under(mOpenbabel_wrap, "VVector3", rb_cObject);
+  cVVector3.klass = rb_define_class_under(mOpenbabel, "VVector3", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__vector3_t, (void *) &cVVector3);
   rb_include_module(cVVector3.klass, rb_eval_string("Enumerable"));
   rb_define_alloc_func(cVVector3.klass, _wrap_vVector3_allocate);
@@ -72217,7 +72239,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVVector3.destroy = (void (*)(void *)) free_std_vector_Sl_OpenBabel_vector3_Sg_;
   cVVector3.trackObjects = 0;
   
-  cVectorMol.klass = rb_define_class_under(mOpenbabel_wrap, "VectorMol", rb_cObject);
+  cVectorMol.klass = rb_define_class_under(mOpenbabel, "VectorMol", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t, (void *) &cVectorMol);
   rb_include_module(cVectorMol.klass, rb_eval_string("Enumerable"));
   rb_define_alloc_func(cVectorMol.klass, _wrap_vectorMol_allocate);
@@ -72234,7 +72256,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVectorMol.destroy = (void (*)(void *)) free_std_vector_Sl_OpenBabel_OBMol_Sg_;
   cVectorMol.trackObjects = 0;
   
-  cVectorBond.klass = rb_define_class_under(mOpenbabel_wrap, "VectorBond", rb_cObject);
+  cVectorBond.klass = rb_define_class_under(mOpenbabel, "VectorBond", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t, (void *) &cVectorBond);
   rb_include_module(cVectorBond.klass, rb_eval_string("Enumerable"));
   rb_define_alloc_func(cVectorBond.klass, _wrap_vectorBond_allocate);
@@ -72251,7 +72273,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVectorBond.destroy = (void (*)(void *)) free_std_vector_Sl_OpenBabel_OBBond_Sg_;
   cVectorBond.trackObjects = 0;
   
-  cVectorResidue.klass = rb_define_class_under(mOpenbabel_wrap, "VectorResidue", rb_cObject);
+  cVectorResidue.klass = rb_define_class_under(mOpenbabel, "VectorResidue", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t, (void *) &cVectorResidue);
   rb_include_module(cVectorResidue.klass, rb_eval_string("Enumerable"));
   rb_define_alloc_func(cVectorResidue.klass, _wrap_vectorResidue_allocate);
@@ -72268,7 +72290,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVectorResidue.destroy = (void (*)(void *)) free_std_vector_Sl_OpenBabel_OBResidue_Sg_;
   cVectorResidue.trackObjects = 0;
   
-  cVectorRing.klass = rb_define_class_under(mOpenbabel_wrap, "VectorRing", rb_cObject);
+  cVectorRing.klass = rb_define_class_under(mOpenbabel, "VectorRing", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t, (void *) &cVectorRing);
   rb_include_module(cVectorRing.klass, rb_eval_string("Enumerable"));
   rb_define_alloc_func(cVectorRing.klass, _wrap_vectorRing_allocate);
@@ -72285,7 +72307,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVectorRing.destroy = (void (*)(void *)) free_std_vector_Sl_OpenBabel_OBRing_Sg_;
   cVectorRing.trackObjects = 0;
   
-  cVectorData.klass = rb_define_class_under(mOpenbabel_wrap, "VectorData", rb_cObject);
+  cVectorData.klass = rb_define_class_under(mOpenbabel, "VectorData", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t, (void *) &cVectorData);
   rb_include_module(cVectorData.klass, rb_eval_string("Enumerable"));
   rb_define_alloc_func(cVectorData.klass, _wrap_vectorData_allocate);
@@ -72302,7 +72324,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVectorData.destroy = (void (*)(void *)) free_std_vector_Sl_OpenBabel_OBGenericData_Sm__Sg_;
   cVectorData.trackObjects = 0;
   
-  cOBGlobalDataBase.klass = rb_define_class_under(mOpenbabel_wrap, "OBGlobalDataBase", rb_cObject);
+  cOBGlobalDataBase.klass = rb_define_class_under(mOpenbabel, "OBGlobalDataBase", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBGlobalDataBase, (void *) &cOBGlobalDataBase);
   rb_define_alloc_func(cOBGlobalDataBase.klass, _wrap_OBGlobalDataBase_allocate);
   rb_define_method(cOBGlobalDataBase.klass, "initialize", VALUEFUNC(_wrap_new_OBGlobalDataBase), -1);
@@ -72315,7 +72337,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBGlobalDataBase.destroy = (void (*)(void *)) free_OpenBabel_OBGlobalDataBase;
   cOBGlobalDataBase.trackObjects = 0;
   
-  cOBElement.klass = rb_define_class_under(mOpenbabel_wrap, "OBElement", rb_cObject);
+  cOBElement.klass = rb_define_class_under(mOpenbabel, "OBElement", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBElement, (void *) &cOBElement);
   rb_define_alloc_func(cOBElement.klass, _wrap_OBElement_allocate);
   rb_define_method(cOBElement.klass, "initialize", VALUEFUNC(_wrap_new_OBElement), -1);
@@ -72336,7 +72358,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBElement.destroy = (void (*)(void *)) free_OpenBabel_OBElement;
   cOBElement.trackObjects = 0;
   
-  cOBElementTable.klass = rb_define_class_under(mOpenbabel_wrap, "OBElementTable", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGlobalDataBase->clientdata)->klass);
+  cOBElementTable.klass = rb_define_class_under(mOpenbabel, "OBElementTable", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGlobalDataBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBElementTable, (void *) &cOBElementTable);
   rb_define_alloc_func(cOBElementTable.klass, _wrap_OBElementTable_allocate);
   rb_define_method(cOBElementTable.klass, "initialize", VALUEFUNC(_wrap_new_OBElementTable), -1);
@@ -72360,7 +72382,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBElementTable.destroy = (void (*)(void *)) free_OpenBabel_OBElementTable;
   cOBElementTable.trackObjects = 0;
   
-  cOBIsotopeTable.klass = rb_define_class_under(mOpenbabel_wrap, "OBIsotopeTable", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGlobalDataBase->clientdata)->klass);
+  cOBIsotopeTable.klass = rb_define_class_under(mOpenbabel, "OBIsotopeTable", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGlobalDataBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBIsotopeTable, (void *) &cOBIsotopeTable);
   rb_define_alloc_func(cOBIsotopeTable.klass, _wrap_OBIsotopeTable_allocate);
   rb_define_method(cOBIsotopeTable.klass, "initialize", VALUEFUNC(_wrap_new_OBIsotopeTable), -1);
@@ -72371,7 +72393,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBIsotopeTable.destroy = (void (*)(void *)) free_OpenBabel_OBIsotopeTable;
   cOBIsotopeTable.trackObjects = 0;
   
-  cOBTypeTable.klass = rb_define_class_under(mOpenbabel_wrap, "OBTypeTable", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGlobalDataBase->clientdata)->klass);
+  cOBTypeTable.klass = rb_define_class_under(mOpenbabel, "OBTypeTable", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGlobalDataBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBTypeTable, (void *) &cOBTypeTable);
   rb_define_alloc_func(cOBTypeTable.klass, _wrap_OBTypeTable_allocate);
   rb_define_method(cOBTypeTable.klass, "initialize", VALUEFUNC(_wrap_new_OBTypeTable), -1);
@@ -72386,7 +72408,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBTypeTable.destroy = (void (*)(void *)) free_OpenBabel_OBTypeTable;
   cOBTypeTable.trackObjects = 0;
   
-  cOBResidueData.klass = rb_define_class_under(mOpenbabel_wrap, "OBResidueData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGlobalDataBase->clientdata)->klass);
+  cOBResidueData.klass = rb_define_class_under(mOpenbabel, "OBResidueData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGlobalDataBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBResidueData, (void *) &cOBResidueData);
   rb_define_alloc_func(cOBResidueData.klass, _wrap_OBResidueData_allocate);
   rb_define_method(cOBResidueData.klass, "initialize", VALUEFUNC(_wrap_new_OBResidueData), -1);
@@ -72399,10 +72421,10 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBResidueData.mark = 0;
   cOBResidueData.destroy = (void (*)(void *)) free_OpenBabel_OBResidueData;
   cOBResidueData.trackObjects = 0;
-  rb_define_module_function(mOpenbabel_wrap, "OpenDatafile", VALUEFUNC(_wrap_OpenDatafile), -1);
-  rb_define_const(mOpenbabel_wrap, "FILE_SEP_CHAR", SWIG_FromCharPtr("/"));
+  rb_define_module_function(mOpenbabel, "OpenDatafile", VALUEFUNC(_wrap_OpenDatafile), -1);
+  rb_define_const(mOpenbabel, "FILE_SEP_CHAR", SWIG_FromCharPtr("/"));
   
-  cOBStopwatch.klass = rb_define_class_under(mOpenbabel_wrap, "OBStopwatch", rb_cObject);
+  cOBStopwatch.klass = rb_define_class_under(mOpenbabel, "OBStopwatch", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBStopwatch, (void *) &cOBStopwatch);
   rb_define_alloc_func(cOBStopwatch.klass, _wrap_OBStopwatch_allocate);
   rb_define_method(cOBStopwatch.klass, "initialize", VALUEFUNC(_wrap_new_OBStopwatch), -1);
@@ -72413,7 +72435,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBStopwatch.destroy = (void (*)(void *)) free_OpenBabel_OBStopwatch;
   cOBStopwatch.trackObjects = 0;
   
-  cOBSqrtTbl.klass = rb_define_class_under(mOpenbabel_wrap, "OBSqrtTbl", rb_cObject);
+  cOBSqrtTbl.klass = rb_define_class_under(mOpenbabel, "OBSqrtTbl", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSqrtTbl, (void *) &cOBSqrtTbl);
   rb_define_alloc_func(cOBSqrtTbl.klass, _wrap_OBSqrtTbl_allocate);
   rb_define_method(cOBSqrtTbl.klass, "initialize", VALUEFUNC(_wrap_new_OBSqrtTbl), -1);
@@ -72423,7 +72445,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBSqrtTbl.destroy = (void (*)(void *)) free_OpenBabel_OBSqrtTbl;
   cOBSqrtTbl.trackObjects = 0;
   
-  cDoubleType.klass = rb_define_class_under(mOpenbabel_wrap, "DoubleType", rb_cObject);
+  cDoubleType.klass = rb_define_class_under(mOpenbabel, "DoubleType", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__DoubleType, (void *) &cDoubleType);
   rb_define_alloc_func(cDoubleType.klass, _wrap_DoubleType_allocate);
   rb_define_method(cDoubleType.klass, "initialize", VALUEFUNC(_wrap_new_DoubleType), -1);
@@ -72434,11 +72456,11 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cDoubleType.mark = 0;
   cDoubleType.destroy = (void (*)(void *)) free_OpenBabel_DoubleType;
   cDoubleType.trackObjects = 0;
-  rb_define_module_function(mOpenbabel_wrap, "DoubleMultiply", VALUEFUNC(_wrap_DoubleMultiply), -1);
-  rb_define_module_function(mOpenbabel_wrap, "DoubleAdd", VALUEFUNC(_wrap_DoubleAdd), -1);
-  rb_define_module_function(mOpenbabel_wrap, "DoubleModulus", VALUEFUNC(_wrap_DoubleModulus), -1);
+  rb_define_module_function(mOpenbabel, "DoubleMultiply", VALUEFUNC(_wrap_DoubleMultiply), -1);
+  rb_define_module_function(mOpenbabel, "DoubleAdd", VALUEFUNC(_wrap_DoubleAdd), -1);
+  rb_define_module_function(mOpenbabel, "DoubleModulus", VALUEFUNC(_wrap_DoubleModulus), -1);
   
-  cOBRandom.klass = rb_define_class_under(mOpenbabel_wrap, "OBRandom", rb_cObject);
+  cOBRandom.klass = rb_define_class_under(mOpenbabel, "OBRandom", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRandom, (void *) &cOBRandom);
   rb_define_alloc_func(cOBRandom.klass, _wrap_OBRandom_allocate);
   rb_define_method(cOBRandom.klass, "initialize", VALUEFUNC(_wrap_new_OBRandom), -1);
@@ -72449,11 +72471,11 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBRandom.mark = 0;
   cOBRandom.destroy = (void (*)(void *)) free_OpenBabel_OBRandom;
   cOBRandom.trackObjects = 0;
-  rb_define_const(mOpenbabel_wrap, "PI", SWIG_From_double(static_cast< double >((3.1415926535897932384626433))));
-  rb_define_const(mOpenbabel_wrap, "RAD_TO_DEG", SWIG_From_double(static_cast< double >((180.0/(3.1415926535897932384626433)))));
-  rb_define_const(mOpenbabel_wrap, "DEG_TO_RAD", SWIG_From_double(static_cast< double >(((3.1415926535897932384626433)/180.0))));
+  rb_define_const(mOpenbabel, "PI", SWIG_From_double(static_cast< double >((3.1415926535897932384626433))));
+  rb_define_const(mOpenbabel, "RAD_TO_DEG", SWIG_From_double(static_cast< double >((180.0/(3.1415926535897932384626433)))));
+  rb_define_const(mOpenbabel, "DEG_TO_RAD", SWIG_From_double(static_cast< double >(((3.1415926535897932384626433)/180.0))));
   
-  cVector3.klass = rb_define_class_under(mOpenbabel_wrap, "Vector3", rb_cObject);
+  cVector3.klass = rb_define_class_under(mOpenbabel, "Vector3", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__vector3, (void *) &cVector3);
   rb_define_alloc_func(cVector3.klass, _wrap_vector3_allocate);
   rb_define_method(cVector3.klass, "initialize", VALUEFUNC(_wrap_new_vector3), -1);
@@ -72477,54 +72499,54 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cVector3.mark = 0;
   cVector3.destroy = (void (*)(void *)) free_OpenBabel_vector3;
   cVector3.trackObjects = 0;
-  rb_define_module_function(mOpenbabel_wrap, "Point2Plane", VALUEFUNC(_wrap_Point2Plane), -1);
-  rb_define_singleton_method(mOpenbabel_wrap, "VZero", VALUEFUNC(VZero_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "VX", VALUEFUNC(VX_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "VY", VALUEFUNC(VY_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "VZ", VALUEFUNC(VZ_get), 0);
-  rb_define_module_function(mOpenbabel_wrap, "Trim", VALUEFUNC(_wrap_Trim), -1);
-  rb_define_singleton_method(mOpenbabel_wrap, "UndefinedData", VALUEFUNC(UndefinedData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "PairData", VALUEFUNC(PairData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "EnergyData", VALUEFUNC(EnergyData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CommentData", VALUEFUNC(CommentData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ConformerData", VALUEFUNC(ConformerData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ExternalBondData", VALUEFUNC(ExternalBondData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "RotamerList", VALUEFUNC(RotamerList_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "VirtualBondData", VALUEFUNC(VirtualBondData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "RingData", VALUEFUNC(RingData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "TorsionData", VALUEFUNC(TorsionData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "AngleData", VALUEFUNC(AngleData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SerialNums", VALUEFUNC(SerialNums_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "UnitCell", VALUEFUNC(UnitCell_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SpinData", VALUEFUNC(SpinData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ChargeData", VALUEFUNC(ChargeData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SymmetryData", VALUEFUNC(SymmetryData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ChiralData", VALUEFUNC(ChiralData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "OccupationData", VALUEFUNC(OccupationData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "DensityData", VALUEFUNC(DensityData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ElectronicData", VALUEFUNC(ElectronicData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "VibrationData", VALUEFUNC(VibrationData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "RotationData", VALUEFUNC(RotationData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "NuclearData", VALUEFUNC(NuclearData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SetData", VALUEFUNC(SetData_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData0", VALUEFUNC(CustomData0_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData1", VALUEFUNC(CustomData1_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData2", VALUEFUNC(CustomData2_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData3", VALUEFUNC(CustomData3_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData4", VALUEFUNC(CustomData4_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData5", VALUEFUNC(CustomData5_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData6", VALUEFUNC(CustomData6_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData7", VALUEFUNC(CustomData7_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData8", VALUEFUNC(CustomData8_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData9", VALUEFUNC(CustomData9_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData10", VALUEFUNC(CustomData10_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData11", VALUEFUNC(CustomData11_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData12", VALUEFUNC(CustomData12_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData13", VALUEFUNC(CustomData13_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData14", VALUEFUNC(CustomData14_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CustomData15", VALUEFUNC(CustomData15_get), 0);
+  rb_define_module_function(mOpenbabel, "Point2Plane", VALUEFUNC(_wrap_Point2Plane), -1);
+  rb_define_singleton_method(mOpenbabel, "VZero", VALUEFUNC(VZero_get), 0);
+  rb_define_singleton_method(mOpenbabel, "VX", VALUEFUNC(VX_get), 0);
+  rb_define_singleton_method(mOpenbabel, "VY", VALUEFUNC(VY_get), 0);
+  rb_define_singleton_method(mOpenbabel, "VZ", VALUEFUNC(VZ_get), 0);
+  rb_define_module_function(mOpenbabel, "Trim", VALUEFUNC(_wrap_Trim), -1);
+  rb_define_singleton_method(mOpenbabel, "UndefinedData", VALUEFUNC(UndefinedData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "PairData", VALUEFUNC(PairData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "EnergyData", VALUEFUNC(EnergyData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CommentData", VALUEFUNC(CommentData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ConformerData", VALUEFUNC(ConformerData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ExternalBondData", VALUEFUNC(ExternalBondData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "RotamerList", VALUEFUNC(RotamerList_get), 0);
+  rb_define_singleton_method(mOpenbabel, "VirtualBondData", VALUEFUNC(VirtualBondData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "RingData", VALUEFUNC(RingData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "TorsionData", VALUEFUNC(TorsionData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "AngleData", VALUEFUNC(AngleData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SerialNums", VALUEFUNC(SerialNums_get), 0);
+  rb_define_singleton_method(mOpenbabel, "UnitCell", VALUEFUNC(UnitCell_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SpinData", VALUEFUNC(SpinData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ChargeData", VALUEFUNC(ChargeData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SymmetryData", VALUEFUNC(SymmetryData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ChiralData", VALUEFUNC(ChiralData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "OccupationData", VALUEFUNC(OccupationData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "DensityData", VALUEFUNC(DensityData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ElectronicData", VALUEFUNC(ElectronicData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "VibrationData", VALUEFUNC(VibrationData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "RotationData", VALUEFUNC(RotationData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "NuclearData", VALUEFUNC(NuclearData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SetData", VALUEFUNC(SetData_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData0", VALUEFUNC(CustomData0_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData1", VALUEFUNC(CustomData1_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData2", VALUEFUNC(CustomData2_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData3", VALUEFUNC(CustomData3_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData4", VALUEFUNC(CustomData4_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData5", VALUEFUNC(CustomData5_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData6", VALUEFUNC(CustomData6_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData7", VALUEFUNC(CustomData7_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData8", VALUEFUNC(CustomData8_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData9", VALUEFUNC(CustomData9_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData10", VALUEFUNC(CustomData10_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData11", VALUEFUNC(CustomData11_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData12", VALUEFUNC(CustomData12_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData13", VALUEFUNC(CustomData13_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData14", VALUEFUNC(CustomData14_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CustomData15", VALUEFUNC(CustomData15_get), 0);
   
-  cOBGenericData.klass = rb_define_class_under(mOpenbabel_wrap, "OBGenericData", rb_cObject);
+  cOBGenericData.klass = rb_define_class_under(mOpenbabel, "OBGenericData", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBGenericData, (void *) &cOBGenericData);
   rb_define_alloc_func(cOBGenericData.klass, _wrap_OBGenericData_allocate);
   rb_define_method(cOBGenericData.klass, "initialize", VALUEFUNC(_wrap_new_OBGenericData), -1);
@@ -72537,7 +72559,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBGenericData.destroy = (void (*)(void *)) free_OpenBabel_OBGenericData;
   cOBGenericData.trackObjects = 0;
   
-  cOBCommentData.klass = rb_define_class_under(mOpenbabel_wrap, "OBCommentData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBCommentData.klass = rb_define_class_under(mOpenbabel, "OBCommentData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBCommentData, (void *) &cOBCommentData);
   rb_define_alloc_func(cOBCommentData.klass, _wrap_OBCommentData_allocate);
   rb_define_method(cOBCommentData.klass, "initialize", VALUEFUNC(_wrap_new_OBCommentData), -1);
@@ -72549,7 +72571,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBCommentData.destroy = (void (*)(void *)) free_OpenBabel_OBCommentData;
   cOBCommentData.trackObjects = 0;
   
-  cOBExternalBond.klass = rb_define_class_under(mOpenbabel_wrap, "OBExternalBond", rb_cObject);
+  cOBExternalBond.klass = rb_define_class_under(mOpenbabel, "OBExternalBond", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBExternalBond, (void *) &cOBExternalBond);
   rb_define_alloc_func(cOBExternalBond.klass, _wrap_OBExternalBond_allocate);
   rb_define_method(cOBExternalBond.klass, "initialize", VALUEFUNC(_wrap_new_OBExternalBond), -1);
@@ -72563,7 +72585,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBExternalBond.destroy = (void (*)(void *)) free_OpenBabel_OBExternalBond;
   cOBExternalBond.trackObjects = 0;
   
-  cOBExternalBondData.klass = rb_define_class_under(mOpenbabel_wrap, "OBExternalBondData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBExternalBondData.klass = rb_define_class_under(mOpenbabel, "OBExternalBondData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBExternalBondData, (void *) &cOBExternalBondData);
   rb_define_alloc_func(cOBExternalBondData.klass, _wrap_OBExternalBondData_allocate);
   rb_define_method(cOBExternalBondData.klass, "initialize", VALUEFUNC(_wrap_new_OBExternalBondData), -1);
@@ -72574,7 +72596,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBExternalBondData.destroy = (void (*)(void *)) free_OpenBabel_OBExternalBondData;
   cOBExternalBondData.trackObjects = 0;
   
-  cOBPairData.klass = rb_define_class_under(mOpenbabel_wrap, "OBPairData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBPairData.klass = rb_define_class_under(mOpenbabel, "OBPairData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBPairData, (void *) &cOBPairData);
   rb_define_alloc_func(cOBPairData.klass, _wrap_OBPairData_allocate);
   rb_define_method(cOBPairData.klass, "initialize", VALUEFUNC(_wrap_new_OBPairData), -1);
@@ -72585,7 +72607,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBPairData.destroy = (void (*)(void *)) free_OpenBabel_OBPairData;
   cOBPairData.trackObjects = 0;
   
-  cOBSetData.klass = rb_define_class_under(mOpenbabel_wrap, "OBSetData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBSetData.klass = rb_define_class_under(mOpenbabel, "OBSetData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSetData, (void *) &cOBSetData);
   rb_define_alloc_func(cOBSetData.klass, _wrap_OBSetData_allocate);
   rb_define_method(cOBSetData.klass, "initialize", VALUEFUNC(_wrap_new_OBSetData), -1);
@@ -72600,7 +72622,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBSetData.destroy = (void (*)(void *)) free_OpenBabel_OBSetData;
   cOBSetData.trackObjects = 0;
   
-  cOBVirtualBond.klass = rb_define_class_under(mOpenbabel_wrap, "OBVirtualBond", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBVirtualBond.klass = rb_define_class_under(mOpenbabel, "OBVirtualBond", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBVirtualBond, (void *) &cOBVirtualBond);
   rb_define_alloc_func(cOBVirtualBond.klass, _wrap_OBVirtualBond_allocate);
   rb_define_method(cOBVirtualBond.klass, "initialize", VALUEFUNC(_wrap_new_OBVirtualBond), -1);
@@ -72613,7 +72635,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBVirtualBond.destroy = (void (*)(void *)) free_OpenBabel_OBVirtualBond;
   cOBVirtualBond.trackObjects = 0;
   
-  cOBRingData.klass = rb_define_class_under(mOpenbabel_wrap, "OBRingData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBRingData.klass = rb_define_class_under(mOpenbabel, "OBRingData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRingData, (void *) &cOBRingData);
   rb_define_alloc_func(cOBRingData.klass, _wrap_OBRingData_allocate);
   rb_define_method(cOBRingData.klass, "initialize", VALUEFUNC(_wrap_new_OBRingData), -1);
@@ -72625,7 +72647,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBRingData.destroy = (void (*)(void *)) free_OpenBabel_OBRingData;
   cOBRingData.trackObjects = 0;
   
-  cOBUnitCell.klass = rb_define_class_under(mOpenbabel_wrap, "OBUnitCell", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBUnitCell.klass = rb_define_class_under(mOpenbabel, "OBUnitCell", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBUnitCell, (void *) &cOBUnitCell);
   rb_define_alloc_func(cOBUnitCell.klass, _wrap_OBUnitCell_allocate);
   rb_define_method(cOBUnitCell.klass, "initialize", VALUEFUNC(_wrap_new_OBUnitCell), -1);
@@ -72661,7 +72683,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBUnitCell.destroy = (void (*)(void *)) free_OpenBabel_OBUnitCell;
   cOBUnitCell.trackObjects = 0;
   
-  cOBConformerData.klass = rb_define_class_under(mOpenbabel_wrap, "OBConformerData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBConformerData.klass = rb_define_class_under(mOpenbabel, "OBConformerData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBConformerData, (void *) &cOBConformerData);
   rb_define_alloc_func(cOBConformerData.klass, _wrap_OBConformerData_allocate);
   rb_define_method(cOBConformerData.klass, "initialize", VALUEFUNC(_wrap_new_OBConformerData), -1);
@@ -72682,7 +72704,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBConformerData.destroy = (void (*)(void *)) free_OpenBabel_OBConformerData;
   cOBConformerData.trackObjects = 0;
   
-  cOBSymmetryData.klass = rb_define_class_under(mOpenbabel_wrap, "OBSymmetryData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBSymmetryData.klass = rb_define_class_under(mOpenbabel, "OBSymmetryData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSymmetryData, (void *) &cOBSymmetryData);
   rb_define_alloc_func(cOBSymmetryData.klass, _wrap_OBSymmetryData_allocate);
   rb_define_method(cOBSymmetryData.klass, "initialize", VALUEFUNC(_wrap_new_OBSymmetryData), -1);
@@ -72696,7 +72718,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBSymmetryData.destroy = (void (*)(void *)) free_OpenBabel_OBSymmetryData;
   cOBSymmetryData.trackObjects = 0;
   
-  cOBTorsion.klass = rb_define_class_under(mOpenbabel_wrap, "OBTorsion", rb_cObject);
+  cOBTorsion.klass = rb_define_class_under(mOpenbabel, "OBTorsion", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBTorsion, (void *) &cOBTorsion);
   rb_define_alloc_func(cOBTorsion.klass, _wrap_OBTorsion_allocate);
   rb_define_method(cOBTorsion.klass, "initialize", VALUEFUNC(_wrap_new_OBTorsion), -1);
@@ -72715,7 +72737,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBTorsion.destroy = (void (*)(void *)) free_OpenBabel_OBTorsion;
   cOBTorsion.trackObjects = 0;
   
-  cOBTorsionData.klass = rb_define_class_under(mOpenbabel_wrap, "OBTorsionData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBTorsionData.klass = rb_define_class_under(mOpenbabel, "OBTorsionData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBTorsionData, (void *) &cOBTorsionData);
   rb_undef_alloc_func(cOBTorsionData.klass);
   rb_define_method(cOBTorsionData.klass, "Clone", VALUEFUNC(_wrap_OBTorsionData_Clone), -1);
@@ -72728,7 +72750,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBTorsionData.destroy = (void (*)(void *)) free_OpenBabel_OBTorsionData;
   cOBTorsionData.trackObjects = 0;
   
-  cOBAngle.klass = rb_define_class_under(mOpenbabel_wrap, "OBAngle", rb_cObject);
+  cOBAngle.klass = rb_define_class_under(mOpenbabel, "OBAngle", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBAngle, (void *) &cOBAngle);
   rb_define_alloc_func(cOBAngle.klass, _wrap_OBAngle_allocate);
   rb_define_method(cOBAngle.klass, "initialize", VALUEFUNC(_wrap_new_OBAngle), -1);
@@ -72741,7 +72763,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBAngle.destroy = (void (*)(void *)) free_OpenBabel_OBAngle;
   cOBAngle.trackObjects = 0;
   
-  cOBAngleData.klass = rb_define_class_under(mOpenbabel_wrap, "OBAngleData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBAngleData.klass = rb_define_class_under(mOpenbabel, "OBAngleData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBAngleData, (void *) &cOBAngleData);
   rb_undef_alloc_func(cOBAngleData.klass);
   rb_define_method(cOBAngleData.klass, "Clone", VALUEFUNC(_wrap_OBAngleData_Clone), -1);
@@ -72752,11 +72774,11 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBAngleData.mark = 0;
   cOBAngleData.destroy = (void (*)(void *)) free_OpenBabel_OBAngleData;
   cOBAngleData.trackObjects = 0;
-  rb_define_const(mOpenbabel_wrap, "Output", SWIG_From_int(static_cast< int >(OpenBabel::output)));
-  rb_define_const(mOpenbabel_wrap, "Input", SWIG_From_int(static_cast< int >(OpenBabel::input)));
-  rb_define_const(mOpenbabel_wrap, "Calcvolume", SWIG_From_int(static_cast< int >(OpenBabel::calcvolume)));
+  rb_define_const(mOpenbabel, "Output", SWIG_From_int(static_cast< int >(OpenBabel::output)));
+  rb_define_const(mOpenbabel, "Input", SWIG_From_int(static_cast< int >(OpenBabel::input)));
+  rb_define_const(mOpenbabel, "Calcvolume", SWIG_From_int(static_cast< int >(OpenBabel::calcvolume)));
   
-  cOBChiralData.klass = rb_define_class_under(mOpenbabel_wrap, "OBChiralData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBChiralData.klass = rb_define_class_under(mOpenbabel, "OBChiralData", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBChiralData, (void *) &cOBChiralData);
   rb_define_alloc_func(cOBChiralData.klass, _wrap_OBChiralData_allocate);
   rb_define_method(cOBChiralData.klass, "initialize", VALUEFUNC(_wrap_new_OBChiralData), -1);
@@ -72771,7 +72793,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBChiralData.destroy = (void (*)(void *)) free_OpenBabel_OBChiralData;
   cOBChiralData.trackObjects = 0;
   
-  cOBSerialNums.klass = rb_define_class_under(mOpenbabel_wrap, "OBSerialNums", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
+  cOBSerialNums.klass = rb_define_class_under(mOpenbabel, "OBSerialNums", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGenericData->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSerialNums, (void *) &cOBSerialNums);
   rb_define_alloc_func(cOBSerialNums.klass, _wrap_OBSerialNums_allocate);
   rb_define_method(cOBSerialNums.klass, "initialize", VALUEFUNC(_wrap_new_OBSerialNums), -1);
@@ -72782,7 +72804,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBSerialNums.destroy = (void (*)(void *)) free_OpenBabel_OBSerialNums;
   cOBSerialNums.trackObjects = 0;
   
-  cOBBase.klass = rb_define_class_under(mOpenbabel_wrap, "OBBase", rb_cObject);
+  cOBBase.klass = rb_define_class_under(mOpenbabel, "OBBase", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBBase, (void *) &cOBBase);
   rb_define_alloc_func(cOBBase.klass, _wrap_OBBase_allocate);
   rb_define_method(cOBBase.klass, "initialize", VALUEFUNC(_wrap_new_OBBase), -1);
@@ -72799,7 +72821,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBBase.destroy = (void (*)(void *)) free_OpenBabel_OBBase;
   cOBBase.trackObjects = 0;
   
-  cOBNodeBase.klass = rb_define_class_under(mOpenbabel_wrap, "OBNodeBase", ((swig_class *) SWIGTYPE_p_OpenBabel__OBBase->clientdata)->klass);
+  cOBNodeBase.klass = rb_define_class_under(mOpenbabel, "OBNodeBase", ((swig_class *) SWIGTYPE_p_OpenBabel__OBBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBNodeBase, (void *) &cOBNodeBase);
   rb_define_alloc_func(cOBNodeBase.klass, _wrap_OBNodeBase_allocate);
   rb_define_method(cOBNodeBase.klass, "initialize", VALUEFUNC(_wrap_new_OBNodeBase), -1);
@@ -72833,7 +72855,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBNodeBase.destroy = (void (*)(void *)) free_OpenBabel_OBNodeBase;
   cOBNodeBase.trackObjects = 0;
   
-  cOBEdgeBase.klass = rb_define_class_under(mOpenbabel_wrap, "OBEdgeBase", ((swig_class *) SWIGTYPE_p_OpenBabel__OBBase->clientdata)->klass);
+  cOBEdgeBase.klass = rb_define_class_under(mOpenbabel, "OBEdgeBase", ((swig_class *) SWIGTYPE_p_OpenBabel__OBBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBEdgeBase, (void *) &cOBEdgeBase);
   rb_define_alloc_func(cOBEdgeBase.klass, _wrap_OBEdgeBase_allocate);
   rb_define_method(cOBEdgeBase.klass, "initialize", VALUEFUNC(_wrap_new_OBEdgeBase), -1);
@@ -72859,7 +72881,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBEdgeBase.destroy = (void (*)(void *)) free_OpenBabel_OBEdgeBase;
   cOBEdgeBase.trackObjects = 0;
   
-  cOBGraphBase.klass = rb_define_class_under(mOpenbabel_wrap, "OBGraphBase", ((swig_class *) SWIGTYPE_p_OpenBabel__OBBase->clientdata)->klass);
+  cOBGraphBase.klass = rb_define_class_under(mOpenbabel, "OBGraphBase", ((swig_class *) SWIGTYPE_p_OpenBabel__OBBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBGraphBase, (void *) &cOBGraphBase);
   rb_define_alloc_func(cOBGraphBase.klass, _wrap_OBGraphBase_allocate);
   rb_define_method(cOBGraphBase.klass, "initialize", VALUEFUNC(_wrap_new_OBGraphBase), -1);
@@ -72871,13 +72893,13 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBGraphBase.mark = 0;
   cOBGraphBase.destroy = (void (*)(void *)) free_OpenBabel_OBGraphBase;
   cOBGraphBase.trackObjects = 0;
-  rb_define_const(mOpenbabel_wrap, "ObError", SWIG_From_int(static_cast< int >(OpenBabel::obError)));
-  rb_define_const(mOpenbabel_wrap, "ObWarning", SWIG_From_int(static_cast< int >(OpenBabel::obWarning)));
-  rb_define_const(mOpenbabel_wrap, "ObInfo", SWIG_From_int(static_cast< int >(OpenBabel::obInfo)));
-  rb_define_const(mOpenbabel_wrap, "ObAuditMsg", SWIG_From_int(static_cast< int >(OpenBabel::obAuditMsg)));
-  rb_define_const(mOpenbabel_wrap, "ObDebug", SWIG_From_int(static_cast< int >(OpenBabel::obDebug)));
+  rb_define_const(mOpenbabel, "ObError", SWIG_From_int(static_cast< int >(OpenBabel::obError)));
+  rb_define_const(mOpenbabel, "ObWarning", SWIG_From_int(static_cast< int >(OpenBabel::obWarning)));
+  rb_define_const(mOpenbabel, "ObInfo", SWIG_From_int(static_cast< int >(OpenBabel::obInfo)));
+  rb_define_const(mOpenbabel, "ObAuditMsg", SWIG_From_int(static_cast< int >(OpenBabel::obAuditMsg)));
+  rb_define_const(mOpenbabel, "ObDebug", SWIG_From_int(static_cast< int >(OpenBabel::obDebug)));
   
-  cOBError.klass = rb_define_class_under(mOpenbabel_wrap, "OBError", rb_eRuntimeError);
+  cOBError.klass = rb_define_class_under(mOpenbabel, "OBError", rb_eRuntimeError);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBError, (void *) &cOBError);
   rb_define_alloc_func(cOBError.klass, _wrap_OBError_allocate);
   rb_define_method(cOBError.klass, "initialize", VALUEFUNC(_wrap_new_OBError), -1);
@@ -72892,7 +72914,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBError.destroy = (void (*)(void *)) free_OpenBabel_OBError;
   cOBError.trackObjects = 0;
   
-  cOBMessageHandler.klass = rb_define_class_under(mOpenbabel_wrap, "OBMessageHandler", rb_cObject);
+  cOBMessageHandler.klass = rb_define_class_under(mOpenbabel, "OBMessageHandler", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBMessageHandler, (void *) &cOBMessageHandler);
   rb_define_alloc_func(cOBMessageHandler.klass, _wrap_OBMessageHandler_allocate);
   rb_define_method(cOBMessageHandler.klass, "initialize", VALUEFUNC(_wrap_new_OBMessageHandler), -1);
@@ -72918,10 +72940,10 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBMessageHandler.mark = 0;
   cOBMessageHandler.destroy = (void (*)(void *)) free_OpenBabel_OBMessageHandler;
   cOBMessageHandler.trackObjects = 0;
-  rb_define_singleton_method(mOpenbabel_wrap, "obErrorLog", VALUEFUNC(obErrorLog_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "obErrorLog=", VALUEFUNC(obErrorLog_set), 1);
+  rb_define_singleton_method(mOpenbabel, "obErrorLog", VALUEFUNC(obErrorLog_get), 0);
+  rb_define_singleton_method(mOpenbabel, "obErrorLog=", VALUEFUNC(obErrorLog_set), 1);
   
-  cObLogBuf.klass = rb_define_class_under(mOpenbabel_wrap, "ObLogBuf", rb_cObject);
+  cObLogBuf.klass = rb_define_class_under(mOpenbabel, "ObLogBuf", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__obLogBuf, (void *) &cObLogBuf);
   rb_define_alloc_func(cObLogBuf.klass, _wrap_obLogBuf_allocate);
   rb_define_method(cObLogBuf.klass, "initialize", VALUEFUNC(_wrap_new_obLogBuf), -1);
@@ -72929,7 +72951,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cObLogBuf.destroy = (void (*)(void *)) free_OpenBabel_obLogBuf;
   cObLogBuf.trackObjects = 0;
   
-  cOBFormat.klass = rb_define_class_under(mOpenbabel_wrap, "OBFormat", rb_cObject);
+  cOBFormat.klass = rb_define_class_under(mOpenbabel, "OBFormat", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBFormat, (void *) &cOBFormat);
   rb_undef_alloc_func(cOBFormat.klass);
   rb_define_method(cOBFormat.klass, "ReadMolecule", VALUEFUNC(_wrap_OBFormat_ReadMolecule), -1);
@@ -72948,7 +72970,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBFormat.destroy = (void (*)(void *)) free_OpenBabel_OBFormat;
   cOBFormat.trackObjects = 0;
   
-  cCharPtrLess.klass = rb_define_class_under(mOpenbabel_wrap, "CharPtrLess", rb_cObject);
+  cCharPtrLess.klass = rb_define_class_under(mOpenbabel, "CharPtrLess", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__CharPtrLess, (void *) &cCharPtrLess);
   rb_define_alloc_func(cCharPtrLess.klass, _wrap_CharPtrLess_allocate);
   rb_define_method(cCharPtrLess.klass, "initialize", VALUEFUNC(_wrap_new_CharPtrLess), -1);
@@ -72957,7 +72979,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cCharPtrLess.destroy = (void (*)(void *)) free_OpenBabel_CharPtrLess;
   cCharPtrLess.trackObjects = 0;
   
-  cOBConversion.klass = rb_define_class_under(mOpenbabel_wrap, "OBConversion", rb_cObject);
+  cOBConversion.klass = rb_define_class_under(mOpenbabel, "OBConversion", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBConversion, (void *) &cOBConversion);
   rb_define_alloc_func(cOBConversion.klass, _wrap_OBConversion_allocate);
   rb_define_method(cOBConversion.klass, "initialize", VALUEFUNC(_wrap_new_OBConversion), -1);
@@ -73014,16 +73036,16 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBConversion.mark = 0;
   cOBConversion.destroy = (void (*)(void *)) free_OpenBabel_OBConversion;
   cOBConversion.trackObjects = 0;
-  rb_define_const(mOpenbabel_wrap, "NOTREADABLE", SWIG_From_int(static_cast< int >(0x01)));
-  rb_define_const(mOpenbabel_wrap, "READONEONLY", SWIG_From_int(static_cast< int >(0x02)));
-  rb_define_const(mOpenbabel_wrap, "READBINARY", SWIG_From_int(static_cast< int >(0x04)));
-  rb_define_const(mOpenbabel_wrap, "ZEROATOMSOK", SWIG_From_int(static_cast< int >(0x08)));
-  rb_define_const(mOpenbabel_wrap, "NOTWRITABLE", SWIG_From_int(static_cast< int >(0x10)));
-  rb_define_const(mOpenbabel_wrap, "WRITEONEONLY", SWIG_From_int(static_cast< int >(0x20)));
-  rb_define_const(mOpenbabel_wrap, "WRITEBINARY", SWIG_From_int(static_cast< int >(0x40)));
-  rb_define_const(mOpenbabel_wrap, "DEFAULTFORMAT", SWIG_From_int(static_cast< int >(0x4000)));
+  rb_define_const(mOpenbabel, "NOTREADABLE", SWIG_From_int(static_cast< int >(0x01)));
+  rb_define_const(mOpenbabel, "READONEONLY", SWIG_From_int(static_cast< int >(0x02)));
+  rb_define_const(mOpenbabel, "READBINARY", SWIG_From_int(static_cast< int >(0x04)));
+  rb_define_const(mOpenbabel, "ZEROATOMSOK", SWIG_From_int(static_cast< int >(0x08)));
+  rb_define_const(mOpenbabel, "NOTWRITABLE", SWIG_From_int(static_cast< int >(0x10)));
+  rb_define_const(mOpenbabel, "WRITEONEONLY", SWIG_From_int(static_cast< int >(0x20)));
+  rb_define_const(mOpenbabel, "WRITEBINARY", SWIG_From_int(static_cast< int >(0x40)));
+  rb_define_const(mOpenbabel, "DEFAULTFORMAT", SWIG_From_int(static_cast< int >(0x4000)));
   
-  cOBResidue.klass = rb_define_class_under(mOpenbabel_wrap, "OBResidue", ((swig_class *) SWIGTYPE_p_OpenBabel__OBBase->clientdata)->klass);
+  cOBResidue.klass = rb_define_class_under(mOpenbabel, "OBResidue", ((swig_class *) SWIGTYPE_p_OpenBabel__OBBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBResidue, (void *) &cOBResidue);
   rb_define_alloc_func(cOBResidue.klass, _wrap_OBResidue_allocate);
   rb_define_method(cOBResidue.klass, "initialize", VALUEFUNC(_wrap_new_OBResidue), -1);
@@ -73060,138 +73082,138 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBResidue.mark = 0;
   cOBResidue.destroy = (void (*)(void *)) free_OpenBabel_OBResidue;
   cOBResidue.trackObjects = 0;
-  rb_define_const(mOpenbabel_wrap, "MAXSETNO", SWIG_From_int(static_cast< int >(40)));
-  rb_define_const(mOpenbabel_wrap, "MAXELEM", SWIG_From_int(static_cast< int >(1024)));
-  rb_define_const(mOpenbabel_wrap, "MINELEM", SWIG_From_int(static_cast< int >(29)));
-  rb_define_const(mOpenbabel_wrap, "MAXRES", SWIG_From_int(static_cast< int >(100)));
-  rb_define_const(mOpenbabel_wrap, "MINRES", SWIG_From_int(static_cast< int >(54)));
-  rb_define_const(mOpenbabel_wrap, "AA_ALA", SWIG_From_int(static_cast< int >((1 << 1))));
-  rb_define_const(mOpenbabel_wrap, "AA_GLY", SWIG_From_int(static_cast< int >((1 << 2))));
-  rb_define_const(mOpenbabel_wrap, "AA_LEU", SWIG_From_int(static_cast< int >((1 << 3))));
-  rb_define_const(mOpenbabel_wrap, "AA_SER", SWIG_From_int(static_cast< int >((1 << 4))));
-  rb_define_const(mOpenbabel_wrap, "AA_VAL", SWIG_From_int(static_cast< int >((1 << 5))));
-  rb_define_const(mOpenbabel_wrap, "AA_THR", SWIG_From_int(static_cast< int >((1 << 6))));
-  rb_define_const(mOpenbabel_wrap, "AA_LYS", SWIG_From_int(static_cast< int >((1 << 7))));
-  rb_define_const(mOpenbabel_wrap, "AA_ASP", SWIG_From_int(static_cast< int >((1 << 8))));
-  rb_define_const(mOpenbabel_wrap, "AA_ILE", SWIG_From_int(static_cast< int >((1 << 9))));
-  rb_define_const(mOpenbabel_wrap, "AA_ASN", SWIG_From_int(static_cast< int >((1 << 10))));
-  rb_define_const(mOpenbabel_wrap, "AA_GLU", SWIG_From_int(static_cast< int >((1 << 11))));
-  rb_define_const(mOpenbabel_wrap, "AA_PRO", SWIG_From_int(static_cast< int >((1 << 12))));
-  rb_define_const(mOpenbabel_wrap, "AA_ARG", SWIG_From_int(static_cast< int >((1 << 13))));
-  rb_define_const(mOpenbabel_wrap, "AA_PHE", SWIG_From_int(static_cast< int >((1 << 14))));
-  rb_define_const(mOpenbabel_wrap, "AA_GLN", SWIG_From_int(static_cast< int >((1 << 15))));
-  rb_define_const(mOpenbabel_wrap, "AA_TYR", SWIG_From_int(static_cast< int >((1 << 16))));
-  rb_define_const(mOpenbabel_wrap, "AA_HIS", SWIG_From_int(static_cast< int >((1 << 17))));
-  rb_define_const(mOpenbabel_wrap, "AA_CYS", SWIG_From_int(static_cast< int >((1 << 18))));
-  rb_define_const(mOpenbabel_wrap, "AA_MET", SWIG_From_int(static_cast< int >((1 << 19))));
-  rb_define_const(mOpenbabel_wrap, "AA_TRP", SWIG_From_int(static_cast< int >((1 << 20))));
-  rb_define_singleton_method(mOpenbabel_wrap, "ACIDIC", VALUEFUNC(ACIDIC_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ACYCLIC", VALUEFUNC(ACYCLIC_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ALIPHATIC", VALUEFUNC(ALIPHATIC_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "AROMATIC", VALUEFUNC(AROMATIC_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "BASIC", VALUEFUNC(BASIC_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "BURIED", VALUEFUNC(BURIED_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CHARGED", VALUEFUNC(CHARGED_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CYCLIC", VALUEFUNC(CYCLIC_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "HYDROPHOBIC", VALUEFUNC(HYDROPHOBIC_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "LARGE", VALUEFUNC(LARGE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "MEDIUM", VALUEFUNC(MEDIUM_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "NEGATIVE", VALUEFUNC(NEGATIVE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "NEUTRAL", VALUEFUNC(NEUTRAL_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "POLAR", VALUEFUNC(POLAR_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "POSITIVE", VALUEFUNC(POSITIVE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SMALL", VALUEFUNC(SMALL_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SURFACE", VALUEFUNC(SURFACE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ALPHA_CARBON", VALUEFUNC(ALPHA_CARBON_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "AMINO_BACKBONE", VALUEFUNC(AMINO_BACKBONE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "BACKBONE", VALUEFUNC(BACKBONE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CYSTEINE_SULPHUR", VALUEFUNC(CYSTEINE_SULPHUR_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "LIGAND", VALUEFUNC(LIGAND_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "NUCLEIC_BACKBONE", VALUEFUNC(NUCLEIC_BACKBONE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SHAPELY_BACKBONE", VALUEFUNC(SHAPELY_BACKBONE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SHAPELY_SPECIAL", VALUEFUNC(SHAPELY_SPECIAL_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SIDECHAIN", VALUEFUNC(SIDECHAIN_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SUGAR_PHOSPHATE", VALUEFUNC(SUGAR_PHOSPHATE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ALA", VALUEFUNC(ALA_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "GLY", VALUEFUNC(GLY_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "LEU", VALUEFUNC(LEU_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SER", VALUEFUNC(SER_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "VAL", VALUEFUNC(VAL_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "THR", VALUEFUNC(THR_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "LYS", VALUEFUNC(LYS_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ASP", VALUEFUNC(ASP_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ILE", VALUEFUNC(ILE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ASN", VALUEFUNC(ASN_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "GLU", VALUEFUNC(GLU_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "PRO", VALUEFUNC(PRO_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ARG", VALUEFUNC(ARG_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "PHE", VALUEFUNC(PHE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "GLN", VALUEFUNC(GLN_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "TYR", VALUEFUNC(TYR_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "HIS", VALUEFUNC(HIS_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "CYS", VALUEFUNC(CYS_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "MET", VALUEFUNC(MET_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "TRP", VALUEFUNC(TRP_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ASX", VALUEFUNC(ASX_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "GLX", VALUEFUNC(GLX_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "PCA", VALUEFUNC(PCA_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "HYP", VALUEFUNC(HYP_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "A", VALUEFUNC(A_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "C", VALUEFUNC(C_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "G", VALUEFUNC(G_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "T", VALUEFUNC(T_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "U", VALUEFUNC(U_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "UPLUS", VALUEFUNC(UPLUS_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "I", VALUEFUNC(I_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "OMC", VALUEFUNC(OMC_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "M2G", VALUEFUNC(M2G_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "OMG", VALUEFUNC(OMG_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "YG", VALUEFUNC(YG_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "H2U", VALUEFUNC(H2U_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "PSU", VALUEFUNC(PSU_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "UNK", VALUEFUNC(UNK_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ACE", VALUEFUNC(ACE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "FOR", VALUEFUNC(FOR_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "HOH", VALUEFUNC(HOH_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "DOD", VALUEFUNC(DOD_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SO4", VALUEFUNC(SO4_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "PO4", VALUEFUNC(PO4_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "NAD", VALUEFUNC(NAD_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "COA", VALUEFUNC(COA_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "NAP", VALUEFUNC(NAP_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "NDP", VALUEFUNC(NDP_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "AMINO", VALUEFUNC(AMINO_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "AMINO_NUCLEO", VALUEFUNC(AMINO_NUCLEO_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "COENZYME", VALUEFUNC(COENZYME_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ION", VALUEFUNC(ION_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "NUCLEO", VALUEFUNC(NUCLEO_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "PROTEIN", VALUEFUNC(PROTEIN_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "PURINE", VALUEFUNC(PURINE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "PYRIMIDINE", VALUEFUNC(PYRIMIDINE_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "SOLVENT", VALUEFUNC(SOLVENT_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "WATER", VALUEFUNC(WATER_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "Residue", VALUEFUNC(Residue_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "Residue=", VALUEFUNC(Residue_set), 1);
-  rb_define_singleton_method(mOpenbabel_wrap, "ElemDesc", VALUEFUNC(ElemDesc_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ElemDesc=", VALUEFUNC(ElemDesc_set), 1);
-  rb_define_singleton_method(mOpenbabel_wrap, "ResNo", VALUEFUNC(ResNo_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ResNo=", VALUEFUNC(ResNo_set), 1);
-  rb_define_singleton_method(mOpenbabel_wrap, "ElemNo", VALUEFUNC(ElemNo_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ElemNo=", VALUEFUNC(ElemNo_set), 1);
-  rb_define_const(mOpenbabel_wrap, "OB_4RING_ATOM", SWIG_From_int(static_cast< int >((1 << 1))));
-  rb_define_const(mOpenbabel_wrap, "OB_3RING_ATOM", SWIG_From_int(static_cast< int >((1 << 2))));
-  rb_define_const(mOpenbabel_wrap, "OB_AROMATIC_ATOM", SWIG_From_int(static_cast< int >((1 << 3))));
-  rb_define_const(mOpenbabel_wrap, "OB_RING_ATOM", SWIG_From_int(static_cast< int >((1 << 4))));
-  rb_define_const(mOpenbabel_wrap, "OB_CSTEREO_ATOM", SWIG_From_int(static_cast< int >((1 << 5))));
-  rb_define_const(mOpenbabel_wrap, "OB_ACSTEREO_ATOM", SWIG_From_int(static_cast< int >((1 << 6))));
-  rb_define_const(mOpenbabel_wrap, "OB_DONOR_ATOM", SWIG_From_int(static_cast< int >((1 << 7))));
-  rb_define_const(mOpenbabel_wrap, "OB_ACCEPTOR_ATOM", SWIG_From_int(static_cast< int >((1 << 8))));
-  rb_define_const(mOpenbabel_wrap, "OB_CHIRAL_ATOM", SWIG_From_int(static_cast< int >((1 << 9))));
-  rb_define_const(mOpenbabel_wrap, "OB_POS_CHIRAL_ATOM", SWIG_From_int(static_cast< int >((1 << 10))));
-  rb_define_const(mOpenbabel_wrap, "OB_NEG_CHIRAL_ATOM", SWIG_From_int(static_cast< int >((1 << 11))));
-  rb_define_const(mOpenbabel_wrap, "OB_ATOM_HAS_NO_H", SWIG_From_int(static_cast< int >((1 << 12))));
+  rb_define_const(mOpenbabel, "MAXSETNO", SWIG_From_int(static_cast< int >(40)));
+  rb_define_const(mOpenbabel, "MAXELEM", SWIG_From_int(static_cast< int >(1024)));
+  rb_define_const(mOpenbabel, "MINELEM", SWIG_From_int(static_cast< int >(29)));
+  rb_define_const(mOpenbabel, "MAXRES", SWIG_From_int(static_cast< int >(100)));
+  rb_define_const(mOpenbabel, "MINRES", SWIG_From_int(static_cast< int >(54)));
+  rb_define_const(mOpenbabel, "AA_ALA", SWIG_From_int(static_cast< int >((1 << 1))));
+  rb_define_const(mOpenbabel, "AA_GLY", SWIG_From_int(static_cast< int >((1 << 2))));
+  rb_define_const(mOpenbabel, "AA_LEU", SWIG_From_int(static_cast< int >((1 << 3))));
+  rb_define_const(mOpenbabel, "AA_SER", SWIG_From_int(static_cast< int >((1 << 4))));
+  rb_define_const(mOpenbabel, "AA_VAL", SWIG_From_int(static_cast< int >((1 << 5))));
+  rb_define_const(mOpenbabel, "AA_THR", SWIG_From_int(static_cast< int >((1 << 6))));
+  rb_define_const(mOpenbabel, "AA_LYS", SWIG_From_int(static_cast< int >((1 << 7))));
+  rb_define_const(mOpenbabel, "AA_ASP", SWIG_From_int(static_cast< int >((1 << 8))));
+  rb_define_const(mOpenbabel, "AA_ILE", SWIG_From_int(static_cast< int >((1 << 9))));
+  rb_define_const(mOpenbabel, "AA_ASN", SWIG_From_int(static_cast< int >((1 << 10))));
+  rb_define_const(mOpenbabel, "AA_GLU", SWIG_From_int(static_cast< int >((1 << 11))));
+  rb_define_const(mOpenbabel, "AA_PRO", SWIG_From_int(static_cast< int >((1 << 12))));
+  rb_define_const(mOpenbabel, "AA_ARG", SWIG_From_int(static_cast< int >((1 << 13))));
+  rb_define_const(mOpenbabel, "AA_PHE", SWIG_From_int(static_cast< int >((1 << 14))));
+  rb_define_const(mOpenbabel, "AA_GLN", SWIG_From_int(static_cast< int >((1 << 15))));
+  rb_define_const(mOpenbabel, "AA_TYR", SWIG_From_int(static_cast< int >((1 << 16))));
+  rb_define_const(mOpenbabel, "AA_HIS", SWIG_From_int(static_cast< int >((1 << 17))));
+  rb_define_const(mOpenbabel, "AA_CYS", SWIG_From_int(static_cast< int >((1 << 18))));
+  rb_define_const(mOpenbabel, "AA_MET", SWIG_From_int(static_cast< int >((1 << 19))));
+  rb_define_const(mOpenbabel, "AA_TRP", SWIG_From_int(static_cast< int >((1 << 20))));
+  rb_define_singleton_method(mOpenbabel, "ACIDIC", VALUEFUNC(ACIDIC_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ACYCLIC", VALUEFUNC(ACYCLIC_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ALIPHATIC", VALUEFUNC(ALIPHATIC_get), 0);
+  rb_define_singleton_method(mOpenbabel, "AROMATIC", VALUEFUNC(AROMATIC_get), 0);
+  rb_define_singleton_method(mOpenbabel, "BASIC", VALUEFUNC(BASIC_get), 0);
+  rb_define_singleton_method(mOpenbabel, "BURIED", VALUEFUNC(BURIED_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CHARGED", VALUEFUNC(CHARGED_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CYCLIC", VALUEFUNC(CYCLIC_get), 0);
+  rb_define_singleton_method(mOpenbabel, "HYDROPHOBIC", VALUEFUNC(HYDROPHOBIC_get), 0);
+  rb_define_singleton_method(mOpenbabel, "LARGE", VALUEFUNC(LARGE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "MEDIUM", VALUEFUNC(MEDIUM_get), 0);
+  rb_define_singleton_method(mOpenbabel, "NEGATIVE", VALUEFUNC(NEGATIVE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "NEUTRAL", VALUEFUNC(NEUTRAL_get), 0);
+  rb_define_singleton_method(mOpenbabel, "POLAR", VALUEFUNC(POLAR_get), 0);
+  rb_define_singleton_method(mOpenbabel, "POSITIVE", VALUEFUNC(POSITIVE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SMALL", VALUEFUNC(SMALL_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SURFACE", VALUEFUNC(SURFACE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ALPHA_CARBON", VALUEFUNC(ALPHA_CARBON_get), 0);
+  rb_define_singleton_method(mOpenbabel, "AMINO_BACKBONE", VALUEFUNC(AMINO_BACKBONE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "BACKBONE", VALUEFUNC(BACKBONE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CYSTEINE_SULPHUR", VALUEFUNC(CYSTEINE_SULPHUR_get), 0);
+  rb_define_singleton_method(mOpenbabel, "LIGAND", VALUEFUNC(LIGAND_get), 0);
+  rb_define_singleton_method(mOpenbabel, "NUCLEIC_BACKBONE", VALUEFUNC(NUCLEIC_BACKBONE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SHAPELY_BACKBONE", VALUEFUNC(SHAPELY_BACKBONE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SHAPELY_SPECIAL", VALUEFUNC(SHAPELY_SPECIAL_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SIDECHAIN", VALUEFUNC(SIDECHAIN_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SUGAR_PHOSPHATE", VALUEFUNC(SUGAR_PHOSPHATE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ALA", VALUEFUNC(ALA_get), 0);
+  rb_define_singleton_method(mOpenbabel, "GLY", VALUEFUNC(GLY_get), 0);
+  rb_define_singleton_method(mOpenbabel, "LEU", VALUEFUNC(LEU_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SER", VALUEFUNC(SER_get), 0);
+  rb_define_singleton_method(mOpenbabel, "VAL", VALUEFUNC(VAL_get), 0);
+  rb_define_singleton_method(mOpenbabel, "THR", VALUEFUNC(THR_get), 0);
+  rb_define_singleton_method(mOpenbabel, "LYS", VALUEFUNC(LYS_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ASP", VALUEFUNC(ASP_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ILE", VALUEFUNC(ILE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ASN", VALUEFUNC(ASN_get), 0);
+  rb_define_singleton_method(mOpenbabel, "GLU", VALUEFUNC(GLU_get), 0);
+  rb_define_singleton_method(mOpenbabel, "PRO", VALUEFUNC(PRO_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ARG", VALUEFUNC(ARG_get), 0);
+  rb_define_singleton_method(mOpenbabel, "PHE", VALUEFUNC(PHE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "GLN", VALUEFUNC(GLN_get), 0);
+  rb_define_singleton_method(mOpenbabel, "TYR", VALUEFUNC(TYR_get), 0);
+  rb_define_singleton_method(mOpenbabel, "HIS", VALUEFUNC(HIS_get), 0);
+  rb_define_singleton_method(mOpenbabel, "CYS", VALUEFUNC(CYS_get), 0);
+  rb_define_singleton_method(mOpenbabel, "MET", VALUEFUNC(MET_get), 0);
+  rb_define_singleton_method(mOpenbabel, "TRP", VALUEFUNC(TRP_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ASX", VALUEFUNC(ASX_get), 0);
+  rb_define_singleton_method(mOpenbabel, "GLX", VALUEFUNC(GLX_get), 0);
+  rb_define_singleton_method(mOpenbabel, "PCA", VALUEFUNC(PCA_get), 0);
+  rb_define_singleton_method(mOpenbabel, "HYP", VALUEFUNC(HYP_get), 0);
+  rb_define_singleton_method(mOpenbabel, "A", VALUEFUNC(A_get), 0);
+  rb_define_singleton_method(mOpenbabel, "C", VALUEFUNC(C_get), 0);
+  rb_define_singleton_method(mOpenbabel, "G", VALUEFUNC(G_get), 0);
+  rb_define_singleton_method(mOpenbabel, "T", VALUEFUNC(T_get), 0);
+  rb_define_singleton_method(mOpenbabel, "U", VALUEFUNC(U_get), 0);
+  rb_define_singleton_method(mOpenbabel, "UPLUS", VALUEFUNC(UPLUS_get), 0);
+  rb_define_singleton_method(mOpenbabel, "I", VALUEFUNC(I_get), 0);
+  rb_define_singleton_method(mOpenbabel, "OMC", VALUEFUNC(OMC_get), 0);
+  rb_define_singleton_method(mOpenbabel, "M2G", VALUEFUNC(M2G_get), 0);
+  rb_define_singleton_method(mOpenbabel, "OMG", VALUEFUNC(OMG_get), 0);
+  rb_define_singleton_method(mOpenbabel, "YG", VALUEFUNC(YG_get), 0);
+  rb_define_singleton_method(mOpenbabel, "H2U", VALUEFUNC(H2U_get), 0);
+  rb_define_singleton_method(mOpenbabel, "PSU", VALUEFUNC(PSU_get), 0);
+  rb_define_singleton_method(mOpenbabel, "UNK", VALUEFUNC(UNK_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ACE", VALUEFUNC(ACE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "FOR", VALUEFUNC(FOR_get), 0);
+  rb_define_singleton_method(mOpenbabel, "HOH", VALUEFUNC(HOH_get), 0);
+  rb_define_singleton_method(mOpenbabel, "DOD", VALUEFUNC(DOD_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SO4", VALUEFUNC(SO4_get), 0);
+  rb_define_singleton_method(mOpenbabel, "PO4", VALUEFUNC(PO4_get), 0);
+  rb_define_singleton_method(mOpenbabel, "NAD", VALUEFUNC(NAD_get), 0);
+  rb_define_singleton_method(mOpenbabel, "COA", VALUEFUNC(COA_get), 0);
+  rb_define_singleton_method(mOpenbabel, "NAP", VALUEFUNC(NAP_get), 0);
+  rb_define_singleton_method(mOpenbabel, "NDP", VALUEFUNC(NDP_get), 0);
+  rb_define_singleton_method(mOpenbabel, "AMINO", VALUEFUNC(AMINO_get), 0);
+  rb_define_singleton_method(mOpenbabel, "AMINO_NUCLEO", VALUEFUNC(AMINO_NUCLEO_get), 0);
+  rb_define_singleton_method(mOpenbabel, "COENZYME", VALUEFUNC(COENZYME_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ION", VALUEFUNC(ION_get), 0);
+  rb_define_singleton_method(mOpenbabel, "NUCLEO", VALUEFUNC(NUCLEO_get), 0);
+  rb_define_singleton_method(mOpenbabel, "PROTEIN", VALUEFUNC(PROTEIN_get), 0);
+  rb_define_singleton_method(mOpenbabel, "PURINE", VALUEFUNC(PURINE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "PYRIMIDINE", VALUEFUNC(PYRIMIDINE_get), 0);
+  rb_define_singleton_method(mOpenbabel, "SOLVENT", VALUEFUNC(SOLVENT_get), 0);
+  rb_define_singleton_method(mOpenbabel, "WATER", VALUEFUNC(WATER_get), 0);
+  rb_define_singleton_method(mOpenbabel, "Residue", VALUEFUNC(Residue_get), 0);
+  rb_define_singleton_method(mOpenbabel, "Residue=", VALUEFUNC(Residue_set), 1);
+  rb_define_singleton_method(mOpenbabel, "ElemDesc", VALUEFUNC(ElemDesc_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ElemDesc=", VALUEFUNC(ElemDesc_set), 1);
+  rb_define_singleton_method(mOpenbabel, "ResNo", VALUEFUNC(ResNo_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ResNo=", VALUEFUNC(ResNo_set), 1);
+  rb_define_singleton_method(mOpenbabel, "ElemNo", VALUEFUNC(ElemNo_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ElemNo=", VALUEFUNC(ElemNo_set), 1);
+  rb_define_const(mOpenbabel, "OB_4RING_ATOM", SWIG_From_int(static_cast< int >((1 << 1))));
+  rb_define_const(mOpenbabel, "OB_3RING_ATOM", SWIG_From_int(static_cast< int >((1 << 2))));
+  rb_define_const(mOpenbabel, "OB_AROMATIC_ATOM", SWIG_From_int(static_cast< int >((1 << 3))));
+  rb_define_const(mOpenbabel, "OB_RING_ATOM", SWIG_From_int(static_cast< int >((1 << 4))));
+  rb_define_const(mOpenbabel, "OB_CSTEREO_ATOM", SWIG_From_int(static_cast< int >((1 << 5))));
+  rb_define_const(mOpenbabel, "OB_ACSTEREO_ATOM", SWIG_From_int(static_cast< int >((1 << 6))));
+  rb_define_const(mOpenbabel, "OB_DONOR_ATOM", SWIG_From_int(static_cast< int >((1 << 7))));
+  rb_define_const(mOpenbabel, "OB_ACCEPTOR_ATOM", SWIG_From_int(static_cast< int >((1 << 8))));
+  rb_define_const(mOpenbabel, "OB_CHIRAL_ATOM", SWIG_From_int(static_cast< int >((1 << 9))));
+  rb_define_const(mOpenbabel, "OB_POS_CHIRAL_ATOM", SWIG_From_int(static_cast< int >((1 << 10))));
+  rb_define_const(mOpenbabel, "OB_NEG_CHIRAL_ATOM", SWIG_From_int(static_cast< int >((1 << 11))));
+  rb_define_const(mOpenbabel, "OB_ATOM_HAS_NO_H", SWIG_From_int(static_cast< int >((1 << 12))));
   
-  cOBAtom.klass = rb_define_class_under(mOpenbabel_wrap, "OBAtom", ((swig_class *) SWIGTYPE_p_OpenBabel__OBNodeBase->clientdata)->klass);
+  cOBAtom.klass = rb_define_class_under(mOpenbabel, "OBAtom", ((swig_class *) SWIGTYPE_p_OpenBabel__OBNodeBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBAtom, (void *) &cOBAtom);
   rb_define_alloc_func(cOBAtom.klass, _wrap_OBAtom_allocate);
   rb_define_method(cOBAtom.klass, "initialize", VALUEFUNC(_wrap_new_OBAtom), -1);
@@ -73321,18 +73343,18 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBAtom.mark = 0;
   cOBAtom.destroy = (void (*)(void *)) free_OpenBabel_OBAtom;
   cOBAtom.trackObjects = 0;
-  rb_define_const(mOpenbabel_wrap, "OB_AROMATIC_BOND", SWIG_From_int(static_cast< int >((1 << 1))));
-  rb_define_const(mOpenbabel_wrap, "OB_WEDGE_BOND", SWIG_From_int(static_cast< int >((1 << 2))));
-  rb_define_const(mOpenbabel_wrap, "OB_HASH_BOND", SWIG_From_int(static_cast< int >((1 << 3))));
-  rb_define_const(mOpenbabel_wrap, "OB_RING_BOND", SWIG_From_int(static_cast< int >((1 << 4))));
-  rb_define_const(mOpenbabel_wrap, "OB_TORUP_BOND", SWIG_From_int(static_cast< int >((1 << 5))));
-  rb_define_const(mOpenbabel_wrap, "OB_TORDOWN_BOND", SWIG_From_int(static_cast< int >((1 << 6))));
-  rb_define_const(mOpenbabel_wrap, "OB_KSINGLE_BOND", SWIG_From_int(static_cast< int >((1 << 7))));
-  rb_define_const(mOpenbabel_wrap, "OB_KDOUBLE_BOND", SWIG_From_int(static_cast< int >((1 << 8))));
-  rb_define_const(mOpenbabel_wrap, "OB_KTRIPLE_BOND", SWIG_From_int(static_cast< int >((1 << 9))));
-  rb_define_const(mOpenbabel_wrap, "OB_CLOSURE_BOND", SWIG_From_int(static_cast< int >((1 << 10))));
+  rb_define_const(mOpenbabel, "OB_AROMATIC_BOND", SWIG_From_int(static_cast< int >((1 << 1))));
+  rb_define_const(mOpenbabel, "OB_WEDGE_BOND", SWIG_From_int(static_cast< int >((1 << 2))));
+  rb_define_const(mOpenbabel, "OB_HASH_BOND", SWIG_From_int(static_cast< int >((1 << 3))));
+  rb_define_const(mOpenbabel, "OB_RING_BOND", SWIG_From_int(static_cast< int >((1 << 4))));
+  rb_define_const(mOpenbabel, "OB_TORUP_BOND", SWIG_From_int(static_cast< int >((1 << 5))));
+  rb_define_const(mOpenbabel, "OB_TORDOWN_BOND", SWIG_From_int(static_cast< int >((1 << 6))));
+  rb_define_const(mOpenbabel, "OB_KSINGLE_BOND", SWIG_From_int(static_cast< int >((1 << 7))));
+  rb_define_const(mOpenbabel, "OB_KDOUBLE_BOND", SWIG_From_int(static_cast< int >((1 << 8))));
+  rb_define_const(mOpenbabel, "OB_KTRIPLE_BOND", SWIG_From_int(static_cast< int >((1 << 9))));
+  rb_define_const(mOpenbabel, "OB_CLOSURE_BOND", SWIG_From_int(static_cast< int >((1 << 10))));
   
-  cOBBond.klass = rb_define_class_under(mOpenbabel_wrap, "OBBond", ((swig_class *) SWIGTYPE_p_OpenBabel__OBEdgeBase->clientdata)->klass);
+  cOBBond.klass = rb_define_class_under(mOpenbabel, "OBBond", ((swig_class *) SWIGTYPE_p_OpenBabel__OBEdgeBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBBond, (void *) &cOBBond);
   rb_define_alloc_func(cOBBond.klass, _wrap_OBBond_allocate);
   rb_define_method(cOBBond.klass, "initialize", VALUEFUNC(_wrap_new_OBBond), -1);
@@ -73392,25 +73414,25 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBBond.mark = 0;
   cOBBond.destroy = (void (*)(void *)) free_OpenBabel_OBBond;
   cOBBond.trackObjects = 0;
-  rb_define_const(mOpenbabel_wrap, "OB_SSSR_MOL", SWIG_From_int(static_cast< int >((1 << 1))));
-  rb_define_const(mOpenbabel_wrap, "OB_RINGFLAGS_MOL", SWIG_From_int(static_cast< int >((1 << 2))));
-  rb_define_const(mOpenbabel_wrap, "OB_AROMATIC_MOL", SWIG_From_int(static_cast< int >((1 << 3))));
-  rb_define_const(mOpenbabel_wrap, "OB_ATOMTYPES_MOL", SWIG_From_int(static_cast< int >((1 << 4))));
-  rb_define_const(mOpenbabel_wrap, "OB_CHIRALITY_MOL", SWIG_From_int(static_cast< int >((1 << 5))));
-  rb_define_const(mOpenbabel_wrap, "OB_PCHARGE_MOL", SWIG_From_int(static_cast< int >((1 << 6))));
-  rb_define_const(mOpenbabel_wrap, "OB_HYBRID_MOL", SWIG_From_int(static_cast< int >((1 << 8))));
-  rb_define_const(mOpenbabel_wrap, "OB_IMPVAL_MOL", SWIG_From_int(static_cast< int >((1 << 9))));
-  rb_define_const(mOpenbabel_wrap, "OB_KEKULE_MOL", SWIG_From_int(static_cast< int >((1 << 10))));
-  rb_define_const(mOpenbabel_wrap, "OB_CLOSURE_MOL", SWIG_From_int(static_cast< int >((1 << 11))));
-  rb_define_const(mOpenbabel_wrap, "OB_H_ADDED_MOL", SWIG_From_int(static_cast< int >((1 << 12))));
-  rb_define_const(mOpenbabel_wrap, "OB_PH_CORRECTED_MOL", SWIG_From_int(static_cast< int >((1 << 13))));
-  rb_define_const(mOpenbabel_wrap, "OB_AROM_CORRECTED_MOL", SWIG_From_int(static_cast< int >((1 << 14))));
-  rb_define_const(mOpenbabel_wrap, "OB_CHAINS_MOL", SWIG_From_int(static_cast< int >((1 << 15))));
-  rb_define_const(mOpenbabel_wrap, "OB_TCHARGE_MOL", SWIG_From_int(static_cast< int >((1 << 16))));
-  rb_define_const(mOpenbabel_wrap, "OB_TSPIN_MOL", SWIG_From_int(static_cast< int >((1 << 17))));
-  rb_define_const(mOpenbabel_wrap, "OB_CURRENT_CONFORMER", SWIG_From_int(static_cast< int >(-1)));
+  rb_define_const(mOpenbabel, "OB_SSSR_MOL", SWIG_From_int(static_cast< int >((1 << 1))));
+  rb_define_const(mOpenbabel, "OB_RINGFLAGS_MOL", SWIG_From_int(static_cast< int >((1 << 2))));
+  rb_define_const(mOpenbabel, "OB_AROMATIC_MOL", SWIG_From_int(static_cast< int >((1 << 3))));
+  rb_define_const(mOpenbabel, "OB_ATOMTYPES_MOL", SWIG_From_int(static_cast< int >((1 << 4))));
+  rb_define_const(mOpenbabel, "OB_CHIRALITY_MOL", SWIG_From_int(static_cast< int >((1 << 5))));
+  rb_define_const(mOpenbabel, "OB_PCHARGE_MOL", SWIG_From_int(static_cast< int >((1 << 6))));
+  rb_define_const(mOpenbabel, "OB_HYBRID_MOL", SWIG_From_int(static_cast< int >((1 << 8))));
+  rb_define_const(mOpenbabel, "OB_IMPVAL_MOL", SWIG_From_int(static_cast< int >((1 << 9))));
+  rb_define_const(mOpenbabel, "OB_KEKULE_MOL", SWIG_From_int(static_cast< int >((1 << 10))));
+  rb_define_const(mOpenbabel, "OB_CLOSURE_MOL", SWIG_From_int(static_cast< int >((1 << 11))));
+  rb_define_const(mOpenbabel, "OB_H_ADDED_MOL", SWIG_From_int(static_cast< int >((1 << 12))));
+  rb_define_const(mOpenbabel, "OB_PH_CORRECTED_MOL", SWIG_From_int(static_cast< int >((1 << 13))));
+  rb_define_const(mOpenbabel, "OB_AROM_CORRECTED_MOL", SWIG_From_int(static_cast< int >((1 << 14))));
+  rb_define_const(mOpenbabel, "OB_CHAINS_MOL", SWIG_From_int(static_cast< int >((1 << 15))));
+  rb_define_const(mOpenbabel, "OB_TCHARGE_MOL", SWIG_From_int(static_cast< int >((1 << 16))));
+  rb_define_const(mOpenbabel, "OB_TSPIN_MOL", SWIG_From_int(static_cast< int >((1 << 17))));
+  rb_define_const(mOpenbabel, "OB_CURRENT_CONFORMER", SWIG_From_int(static_cast< int >(-1)));
   
-  cOBMol.klass = rb_define_class_under(mOpenbabel_wrap, "OBMol", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGraphBase->clientdata)->klass);
+  cOBMol.klass = rb_define_class_under(mOpenbabel, "OBMol", ((swig_class *) SWIGTYPE_p_OpenBabel__OBGraphBase->clientdata)->klass);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBMol, (void *) &cOBMol);
   rb_define_alloc_func(cOBMol.klass, _wrap_OBMol_allocate);
   rb_define_method(cOBMol.klass, "initialize", VALUEFUNC(_wrap_new_OBMol), -1);
@@ -73565,32 +73587,32 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBMol.mark = 0;
   cOBMol.destroy = (void (*)(void *)) free_OpenBabel_OBMol;
   cOBMol.trackObjects = 0;
-  rb_define_module_function(mOpenbabel_wrap, "tokenize", VALUEFUNC(_wrap_tokenize), -1);
-  rb_define_module_function(mOpenbabel_wrap, "ThrowError", VALUEFUNC(_wrap_ThrowError), -1);
-  rb_define_module_function(mOpenbabel_wrap, "CartesianToInternal", VALUEFUNC(_wrap_CartesianToInternal), -1);
-  rb_define_module_function(mOpenbabel_wrap, "InternalToCartesian", VALUEFUNC(_wrap_InternalToCartesian), -1);
-  rb_define_module_function(mOpenbabel_wrap, "NewExtension", VALUEFUNC(_wrap_NewExtension), -1);
-  rb_define_singleton_method(mOpenbabel_wrap, "etab", VALUEFUNC(etab_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "etab=", VALUEFUNC(etab_set), 1);
-  rb_define_singleton_method(mOpenbabel_wrap, "ttab", VALUEFUNC(ttab_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "ttab=", VALUEFUNC(ttab_set), 1);
-  rb_define_singleton_method(mOpenbabel_wrap, "isotab", VALUEFUNC(isotab_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "isotab=", VALUEFUNC(isotab_set), 1);
-  rb_define_singleton_method(mOpenbabel_wrap, "aromtyper", VALUEFUNC(aromtyper_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "aromtyper=", VALUEFUNC(aromtyper_set), 1);
-  rb_define_singleton_method(mOpenbabel_wrap, "atomtyper", VALUEFUNC(atomtyper_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "atomtyper=", VALUEFUNC(atomtyper_set), 1);
-  rb_define_singleton_method(mOpenbabel_wrap, "chainsparser", VALUEFUNC(chainsparser_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "chainsparser=", VALUEFUNC(chainsparser_set), 1);
-  rb_define_singleton_method(mOpenbabel_wrap, "resdat", VALUEFUNC(resdat_get), 0);
-  rb_define_singleton_method(mOpenbabel_wrap, "resdat=", VALUEFUNC(resdat_set), 1);
-  rb_define_const(mOpenbabel_wrap, "BUFF_SIZE", SWIG_From_int(static_cast< int >(32768)));
-  rb_define_module_function(mOpenbabel_wrap, "get_rmat", VALUEFUNC(_wrap_get_rmat), -1);
-  rb_define_module_function(mOpenbabel_wrap, "ob_make_rmat", VALUEFUNC(_wrap_ob_make_rmat), -1);
-  rb_define_module_function(mOpenbabel_wrap, "qtrfit", VALUEFUNC(_wrap_qtrfit), -1);
-  rb_define_module_function(mOpenbabel_wrap, "superimpose", VALUEFUNC(_wrap_superimpose), -1);
+  rb_define_module_function(mOpenbabel, "tokenize", VALUEFUNC(_wrap_tokenize), -1);
+  rb_define_module_function(mOpenbabel, "ThrowError", VALUEFUNC(_wrap_ThrowError), -1);
+  rb_define_module_function(mOpenbabel, "CartesianToInternal", VALUEFUNC(_wrap_CartesianToInternal), -1);
+  rb_define_module_function(mOpenbabel, "InternalToCartesian", VALUEFUNC(_wrap_InternalToCartesian), -1);
+  rb_define_module_function(mOpenbabel, "NewExtension", VALUEFUNC(_wrap_NewExtension), -1);
+  rb_define_singleton_method(mOpenbabel, "etab", VALUEFUNC(etab_get), 0);
+  rb_define_singleton_method(mOpenbabel, "etab=", VALUEFUNC(etab_set), 1);
+  rb_define_singleton_method(mOpenbabel, "ttab", VALUEFUNC(ttab_get), 0);
+  rb_define_singleton_method(mOpenbabel, "ttab=", VALUEFUNC(ttab_set), 1);
+  rb_define_singleton_method(mOpenbabel, "isotab", VALUEFUNC(isotab_get), 0);
+  rb_define_singleton_method(mOpenbabel, "isotab=", VALUEFUNC(isotab_set), 1);
+  rb_define_singleton_method(mOpenbabel, "aromtyper", VALUEFUNC(aromtyper_get), 0);
+  rb_define_singleton_method(mOpenbabel, "aromtyper=", VALUEFUNC(aromtyper_set), 1);
+  rb_define_singleton_method(mOpenbabel, "atomtyper", VALUEFUNC(atomtyper_get), 0);
+  rb_define_singleton_method(mOpenbabel, "atomtyper=", VALUEFUNC(atomtyper_set), 1);
+  rb_define_singleton_method(mOpenbabel, "chainsparser", VALUEFUNC(chainsparser_get), 0);
+  rb_define_singleton_method(mOpenbabel, "chainsparser=", VALUEFUNC(chainsparser_set), 1);
+  rb_define_singleton_method(mOpenbabel, "resdat", VALUEFUNC(resdat_get), 0);
+  rb_define_singleton_method(mOpenbabel, "resdat=", VALUEFUNC(resdat_set), 1);
+  rb_define_const(mOpenbabel, "BUFF_SIZE", SWIG_From_int(static_cast< int >(32768)));
+  rb_define_module_function(mOpenbabel, "get_rmat", VALUEFUNC(_wrap_get_rmat), -1);
+  rb_define_module_function(mOpenbabel, "ob_make_rmat", VALUEFUNC(_wrap_ob_make_rmat), -1);
+  rb_define_module_function(mOpenbabel, "qtrfit", VALUEFUNC(_wrap_qtrfit), -1);
+  rb_define_module_function(mOpenbabel, "superimpose", VALUEFUNC(_wrap_superimpose), -1);
   
-  cOBRTree.klass = rb_define_class_under(mOpenbabel_wrap, "OBRTree", rb_cObject);
+  cOBRTree.klass = rb_define_class_under(mOpenbabel, "OBRTree", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRTree, (void *) &cOBRTree);
   rb_define_alloc_func(cOBRTree.klass, _wrap_OBRTree_allocate);
   rb_define_method(cOBRTree.klass, "initialize", VALUEFUNC(_wrap_new_OBRTree), -1);
@@ -73600,7 +73622,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBRTree.destroy = (void (*)(void *)) free_OpenBabel_OBRTree;
   cOBRTree.trackObjects = 0;
   
-  cOBRing.klass = rb_define_class_under(mOpenbabel_wrap, "OBRing", rb_cObject);
+  cOBRing.klass = rb_define_class_under(mOpenbabel, "OBRing", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRing, (void *) &cOBRing);
   rb_define_alloc_func(cOBRing.klass, _wrap_OBRing_allocate);
   rb_define_method(cOBRing.klass, "initialize", VALUEFUNC(_wrap_new_OBRing), -1);
@@ -73619,9 +73641,9 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBRing.mark = 0;
   cOBRing.destroy = (void (*)(void *)) free_OpenBabel_OBRing;
   cOBRing.trackObjects = 0;
-  rb_define_module_function(mOpenbabel_wrap, "CompareRingSize", VALUEFUNC(_wrap_CompareRingSize), -1);
+  rb_define_module_function(mOpenbabel, "CompareRingSize", VALUEFUNC(_wrap_CompareRingSize), -1);
   
-  cOBRingSearch.klass = rb_define_class_under(mOpenbabel_wrap, "OBRingSearch", rb_cObject);
+  cOBRingSearch.klass = rb_define_class_under(mOpenbabel, "OBRingSearch", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRingSearch, (void *) &cOBRingSearch);
   rb_define_alloc_func(cOBRingSearch.klass, _wrap_OBRingSearch_allocate);
   rb_define_method(cOBRingSearch.klass, "initialize", VALUEFUNC(_wrap_new_OBRingSearch), -1);
@@ -73636,7 +73658,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBRingSearch.destroy = (void (*)(void *)) free_OpenBabel_OBRingSearch;
   cOBRingSearch.trackObjects = 0;
   
-  cOBSmartsPattern.klass = rb_define_class_under(mOpenbabel_wrap, "OBSmartsPattern", rb_cObject);
+  cOBSmartsPattern.klass = rb_define_class_under(mOpenbabel, "OBSmartsPattern", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSmartsPattern, (void *) &cOBSmartsPattern);
   rb_define_alloc_func(cOBSmartsPattern.klass, _wrap_OBSmartsPattern_allocate);
   rb_define_method(cOBSmartsPattern.klass, "initialize", VALUEFUNC(_wrap_new_OBSmartsPattern), -1);
@@ -73662,7 +73684,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBSmartsPattern.destroy = (void (*)(void *)) free_OpenBabel_OBSmartsPattern;
   cOBSmartsPattern.trackObjects = 0;
   
-  cOBSSMatch.klass = rb_define_class_under(mOpenbabel_wrap, "OBSSMatch", rb_cObject);
+  cOBSSMatch.klass = rb_define_class_under(mOpenbabel, "OBSSMatch", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSSMatch, (void *) &cOBSSMatch);
   rb_define_alloc_func(cOBSSMatch.klass, _wrap_OBSSMatch_allocate);
   rb_define_method(cOBSSMatch.klass, "initialize", VALUEFUNC(_wrap_new_OBSSMatch), -1);
@@ -73670,9 +73692,9 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBSSMatch.mark = 0;
   cOBSSMatch.destroy = (void (*)(void *)) free_OpenBabel_OBSSMatch;
   cOBSSMatch.trackObjects = 0;
-  rb_define_module_function(mOpenbabel_wrap, "SmartsLexReplace", VALUEFUNC(_wrap_SmartsLexReplace), -1);
+  rb_define_module_function(mOpenbabel, "SmartsLexReplace", VALUEFUNC(_wrap_SmartsLexReplace), -1);
   
-  cOBMolAtomIter.klass = rb_define_class_under(mOpenbabel_wrap, "OBMolAtomIter", rb_cObject);
+  cOBMolAtomIter.klass = rb_define_class_under(mOpenbabel, "OBMolAtomIter", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBMolAtomIter, (void *) &cOBMolAtomIter);
   rb_define_alloc_func(cOBMolAtomIter.klass, _wrap_OBMolAtomIter_allocate);
   rb_define_method(cOBMolAtomIter.klass, "initialize", VALUEFUNC(_wrap_new_OBMolAtomIter), -1);
@@ -73825,7 +73847,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBMolAtomIter.destroy = (void (*)(void *)) free_OpenBabel_OBMolAtomIter;
   cOBMolAtomIter.trackObjects = 0;
   
-  cOBMolAtomDFSIter.klass = rb_define_class_under(mOpenbabel_wrap, "OBMolAtomDFSIter", rb_cObject);
+  cOBMolAtomDFSIter.klass = rb_define_class_under(mOpenbabel, "OBMolAtomDFSIter", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, (void *) &cOBMolAtomDFSIter);
   rb_define_alloc_func(cOBMolAtomDFSIter.klass, _wrap_OBMolAtomDFSIter_allocate);
   rb_define_method(cOBMolAtomDFSIter.klass, "initialize", VALUEFUNC(_wrap_new_OBMolAtomDFSIter), -1);
@@ -73976,7 +73998,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBMolAtomDFSIter.destroy = (void (*)(void *)) free_OpenBabel_OBMolAtomDFSIter;
   cOBMolAtomDFSIter.trackObjects = 0;
   
-  cOBMolAtomBFSIter.klass = rb_define_class_under(mOpenbabel_wrap, "OBMolAtomBFSIter", rb_cObject);
+  cOBMolAtomBFSIter.klass = rb_define_class_under(mOpenbabel, "OBMolAtomBFSIter", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, (void *) &cOBMolAtomBFSIter);
   rb_define_alloc_func(cOBMolAtomBFSIter.klass, _wrap_OBMolAtomBFSIter_allocate);
   rb_define_method(cOBMolAtomBFSIter.klass, "initialize", VALUEFUNC(_wrap_new_OBMolAtomBFSIter), -1);
@@ -74127,7 +74149,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBMolAtomBFSIter.destroy = (void (*)(void *)) free_OpenBabel_OBMolAtomBFSIter;
   cOBMolAtomBFSIter.trackObjects = 0;
   
-  cOBMolBondIter.klass = rb_define_class_under(mOpenbabel_wrap, "OBMolBondIter", rb_cObject);
+  cOBMolBondIter.klass = rb_define_class_under(mOpenbabel, "OBMolBondIter", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBMolBondIter, (void *) &cOBMolBondIter);
   rb_define_alloc_func(cOBMolBondIter.klass, _wrap_OBMolBondIter_allocate);
   rb_define_method(cOBMolBondIter.klass, "initialize", VALUEFUNC(_wrap_new_OBMolBondIter), -1);
@@ -74212,7 +74234,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBMolBondIter.destroy = (void (*)(void *)) free_OpenBabel_OBMolBondIter;
   cOBMolBondIter.trackObjects = 0;
   
-  cOBAtomAtomIter.klass = rb_define_class_under(mOpenbabel_wrap, "OBAtomAtomIter", rb_cObject);
+  cOBAtomAtomIter.klass = rb_define_class_under(mOpenbabel, "OBAtomAtomIter", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBAtomAtomIter, (void *) &cOBAtomAtomIter);
   rb_define_alloc_func(cOBAtomAtomIter.klass, _wrap_OBAtomAtomIter_allocate);
   rb_define_method(cOBAtomAtomIter.klass, "initialize", VALUEFUNC(_wrap_new_OBAtomAtomIter), -1);
@@ -74365,7 +74387,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBAtomAtomIter.destroy = (void (*)(void *)) free_OpenBabel_OBAtomAtomIter;
   cOBAtomAtomIter.trackObjects = 0;
   
-  cOBAtomBondIter.klass = rb_define_class_under(mOpenbabel_wrap, "OBAtomBondIter", rb_cObject);
+  cOBAtomBondIter.klass = rb_define_class_under(mOpenbabel, "OBAtomBondIter", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBAtomBondIter, (void *) &cOBAtomBondIter);
   rb_define_alloc_func(cOBAtomBondIter.klass, _wrap_OBAtomBondIter_allocate);
   rb_define_method(cOBAtomBondIter.klass, "initialize", VALUEFUNC(_wrap_new_OBAtomBondIter), -1);
@@ -74450,7 +74472,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBAtomBondIter.destroy = (void (*)(void *)) free_OpenBabel_OBAtomBondIter;
   cOBAtomBondIter.trackObjects = 0;
   
-  cOBResidueIter.klass = rb_define_class_under(mOpenbabel_wrap, "OBResidueIter", rb_cObject);
+  cOBResidueIter.klass = rb_define_class_under(mOpenbabel, "OBResidueIter", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBResidueIter, (void *) &cOBResidueIter);
   rb_define_alloc_func(cOBResidueIter.klass, _wrap_OBResidueIter_allocate);
   rb_define_method(cOBResidueIter.klass, "initialize", VALUEFUNC(_wrap_new_OBResidueIter), -1);
@@ -74501,7 +74523,7 @@ SWIGEXPORT void Init_openbabel_wrap(void) {
   cOBResidueIter.destroy = (void (*)(void *)) free_OpenBabel_OBResidueIter;
   cOBResidueIter.trackObjects = 0;
   
-  cOBResidueAtomIter.klass = rb_define_class_under(mOpenbabel_wrap, "OBResidueAtomIter", rb_cObject);
+  cOBResidueAtomIter.klass = rb_define_class_under(mOpenbabel, "OBResidueAtomIter", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBResidueAtomIter, (void *) &cOBResidueAtomIter);
   rb_define_alloc_func(cOBResidueAtomIter.klass, _wrap_OBResidueAtomIter_allocate);
   rb_define_method(cOBResidueAtomIter.klass, "initialize", VALUEFUNC(_wrap_new_OBResidueAtomIter), -1);

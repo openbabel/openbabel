@@ -1,13 +1,4 @@
-// needed to work around bug in SWIG -- can't completely override module from command-line
-#ifdef SWIGPERL
-%module "Chemistry::OpenBabel"
-#else
-#ifdef SWIGRUBY
-%module openbabel_wrap
-#else
 %module openbabel
-#endif
-#endif
 
 %{
 // used to set import/export for Cygwin DLLs
@@ -31,9 +22,7 @@
 #include "parsmart.h"
 %}
 
-#ifndef SWIGRUBY
 %include "std_list.i"
-#endif
 %include "std_map.i"
 %include "std_vector.i"
 %include "std_string.i"
