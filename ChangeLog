@@ -1,3 +1,13 @@
+2006-11-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* configure.in, configure, Makefile.in: Add back support for
+	optional compile of wxWidget GUI in src/GUI.
+
+	* scripts/*: Split openbabel.i into individual copies for each
+	language.
+
+	* scripts/java/*: Initial attempt at a java interface from SWIG. Untested.
+
 2006-10-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/molreport.cpp: New psuedo-format to generate atom

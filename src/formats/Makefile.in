@@ -269,14 +269,13 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
 	gromos96format.cpp hinformat.cpp inchiformat.cpp \
 	jaguarformat.cpp mdlformat.cpp mmodformat.cpp mol2format.cpp \
-	molreportformat.cpp mopacformat.cpp mpdformat.cpp \
-	mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
-	pdbformat.cpp povrayformat.cpp qchemformat.cpp \
-	reportformat.cpp rxnformat.cpp shelxformat.cpp \
-	smilesformat.cpp thermoformat.cpp tinkerformat.cpp \
-	titleformat.cpp turbomoleformat.cpp unichemformat.cpp \
-	viewmolformat.cpp xedformat.cpp xyzformat.cpp yasaraformat.cpp \
-	zindoformat.cpp
+	molreport.cpp mopacformat.cpp mpdformat.cpp mpqcformat.cpp \
+	nwchemformat.cpp pcmodelformat.cpp pdbformat.cpp \
+	povrayformat.cpp qchemformat.cpp reportformat.cpp \
+	rxnformat.cpp shelxformat.cpp smilesformat.cpp \
+	thermoformat.cpp tinkerformat.cpp titleformat.cpp \
+	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
+	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp
 @BUILD_SHARED_FALSE@am_libformats_la_OBJECTS = APIInterface.lo \
 @BUILD_SHARED_FALSE@	obmolecformat.lo CSRformat.lo PQSformat.lo \
 @BUILD_SHARED_FALSE@	alchemyformat.lo amberformat.lo \
@@ -292,17 +291,17 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 @BUILD_SHARED_FALSE@	ghemicalformat.lo gromos96format.lo \
 @BUILD_SHARED_FALSE@	hinformat.lo inchiformat.lo \
 @BUILD_SHARED_FALSE@	jaguarformat.lo mdlformat.lo mmodformat.lo \
-@BUILD_SHARED_FALSE@	mol2format.lo molreportformat.lo \
-@BUILD_SHARED_FALSE@	mopacformat.lo mpdformat.lo mpqcformat.lo \
-@BUILD_SHARED_FALSE@	nwchemformat.lo pcmodelformat.lo \
-@BUILD_SHARED_FALSE@	pdbformat.lo povrayformat.lo \
-@BUILD_SHARED_FALSE@	qchemformat.lo reportformat.lo \
-@BUILD_SHARED_FALSE@	rxnformat.lo shelxformat.lo \
-@BUILD_SHARED_FALSE@	smilesformat.lo thermoformat.lo \
-@BUILD_SHARED_FALSE@	tinkerformat.lo titleformat.lo \
-@BUILD_SHARED_FALSE@	turbomoleformat.lo unichemformat.lo \
-@BUILD_SHARED_FALSE@	viewmolformat.lo xedformat.lo xyzformat.lo \
-@BUILD_SHARED_FALSE@	yasaraformat.lo zindoformat.lo
+@BUILD_SHARED_FALSE@	mol2format.lo molreport.lo mopacformat.lo \
+@BUILD_SHARED_FALSE@	mpdformat.lo mpqcformat.lo nwchemformat.lo \
+@BUILD_SHARED_FALSE@	pcmodelformat.lo pdbformat.lo \
+@BUILD_SHARED_FALSE@	povrayformat.lo qchemformat.lo \
+@BUILD_SHARED_FALSE@	reportformat.lo rxnformat.lo \
+@BUILD_SHARED_FALSE@	shelxformat.lo smilesformat.lo \
+@BUILD_SHARED_FALSE@	thermoformat.lo tinkerformat.lo \
+@BUILD_SHARED_FALSE@	titleformat.lo turbomoleformat.lo \
+@BUILD_SHARED_FALSE@	unichemformat.lo viewmolformat.lo \
+@BUILD_SHARED_FALSE@	xedformat.lo xyzformat.lo yasaraformat.lo \
+@BUILD_SHARED_FALSE@	zindoformat.lo
 libformats_la_OBJECTS = $(am_libformats_la_OBJECTS)
 @BUILD_SHARED_FALSE@am_libformats_la_rpath =
 mdlformat_la_LIBADD =
@@ -742,7 +741,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 @BUILD_SHARED_FALSE@	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
 @BUILD_SHARED_FALSE@	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
-@BUILD_SHARED_FALSE@	mol2format.cpp molreportformat.cpp mopacformat.cpp \
+@BUILD_SHARED_FALSE@	mol2format.cpp molreport.cpp mopacformat.cpp \
 @BUILD_SHARED_FALSE@	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
 @BUILD_SHARED_FALSE@	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 @BUILD_SHARED_FALSE@	rxnformat.cpp shelxformat.cpp smilesformat.cpp thermoformat.cpp \
@@ -905,9 +904,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/formats/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/formats/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  src/formats/Makefile
+	  $(AUTOMAKE) --foreign  src/formats/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -1125,7 +1124,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mmodformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mol2format.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/molreport.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/molreportformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mopacformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mpdformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mpqcformat.Plo@am__quote@

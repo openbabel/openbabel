@@ -50,7 +50,7 @@ libformats_la_SOURCES = \
 	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
 	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
 	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
-	mol2format.cpp molreportformat.cpp mopacformat.cpp \
+	mol2format.cpp molreport.cpp mopacformat.cpp \
 	mpdformat.cpp mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
 	pdbformat.cpp povrayformat.cpp qchemformat.cpp reportformat.cpp \
 	rxnformat.cpp shelxformat.cpp smilesformat.cpp thermoformat.cpp \
