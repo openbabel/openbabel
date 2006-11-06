@@ -6,6 +6,7 @@
 #define USING_OBDLL
 #endif
 
+#include <math.h>
 
 #include "obutil.h"
 #include "math/vector3.h"

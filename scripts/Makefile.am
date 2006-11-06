@@ -16,9 +16,8 @@ dist-hook:
 
 if MAINTAINER_MODE
 if BUILD_SWIG
-BUILT_SOURCES = perl/openbabel_perl.cpp \
-		python/openbabel_python.cpp \
-	 ruby/openbabel_ruby.cpp
+BUILT_SOURCES = perl/openbabel_perl.cpp python/openbabel_python.cpp \
+	ruby/openbabel_ruby.cpp java/openbabel_java.cpp
 
 perl/openbabel_perl.cpp: openbabel-perl.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
 	$(SWIG) -perl5 -c++ -naturalvar -o $@ \
@@ -40,6 +39,13 @@ python/openbabel_python.cpp: openbabel-python.i $(top_srcdir)/src/mol.h  $(top_s
 ruby/openbabel_ruby.cpp: openbabel-ruby.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
 	$(SWIG) -ruby -naturalvar -c++ -o $@ -I$(top_srcdir)/src $<;
 	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
+
+java/openbabel_java.cpp: openbabel-java.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/src $<;
+	(cd java; \
+	  for file in SWIGTYPE_p_*; \
+		do tgt=$$(echo $${file} | sed -e "s/SWIGTYPE_p_//" | sed -e "s/std__//g" | sed -e "s/OpenBabel__//g" | sed -e "s/p_/p/g"); \
+		mv $$file $$tgt; done)
 
 endif # BUILD_SWIG
 endif # MAINTAINER_MODE
