@@ -1,3 +1,10 @@
+2006-11-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/main.cpp, src/obutil.cpp, src/fingerprints/finger3.cpp,
+	src/format/fastsearchformat.cpp: Patch from Martin Vogt to address
+	PR#1590609. Crashes due to incorrect handling of string parsing on
+	64-bit platforms.
+
 2006-11-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* configure.in, configure, Makefile.in: Add back support for

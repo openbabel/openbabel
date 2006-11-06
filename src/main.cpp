@@ -70,7 +70,7 @@ int main(int argc,char *argv[])
 
   //Save name of program without its path (and .exe)
   string pn(argv[0]);
-  unsigned int pos;
+  string::size_type pos;
 #ifdef _WIN32
   pos = pn.find(".exe");
   if(pos!=string::npos)
@@ -202,7 +202,7 @@ int main(int argc,char *argv[])
                     if(*nam != '\0')
                       {
                         string txt;
-                        unsigned i;
+                        unsigned int i;
                         for(i=0; i<Conv.GetOptionParams(nam, OBConversion::GENOPTIONS)
                               && arg<argc-1 && argv[arg+1];++i) //removed  && *argv[arg+1]!='-'
                           {
@@ -311,7 +311,7 @@ int main(int argc,char *argv[])
         }
       else
         {
-          unsigned int pos = OutputFileName.rfind(".gz");
+          string::size_type pos = OutputFileName.rfind(".gz");
           if(pos==string::npos)
             pos = OutputFileName.rfind('.');
           else

@@ -142,7 +142,7 @@ public:
 			{
 				if( getline(*ifsP,smarts) && smarts[0]!='#')
 				{
-					unsigned int pos = smarts.find(':');
+          string::size_type pos = smarts.find(':');
 					if(pos!=string::npos)
 					{
 						pos = smarts.find_first_not_of(" \t", pos+1);

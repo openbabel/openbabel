@@ -111,7 +111,7 @@ namespace OpenBabel
   //! Utility function: replace the last extension in string &src with new extension char *ext.
   OBAPI string NewExtension(string &src,char *ext)
   {
-    unsigned int pos = (unsigned int)src.find_last_of(".");
+    string::size_type pos = (unsigned int)src.find_last_of(".");
     string dst;
 
     if (pos != string::npos)

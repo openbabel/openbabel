@@ -418,7 +418,7 @@ have the same name as the datafile. Use the form:\n \
             obErrorLog.ThrowError(__FUNCTION__, "No datafile!", obError);
             return false;
           }
-        unsigned int pos = datafilename.find_last_of("/\\");
+        string::size_type pos = datafilename.find_last_of("/\\");
         if(pos!=string::npos)
           datafilename=datafilename.substr(pos+1);
 
