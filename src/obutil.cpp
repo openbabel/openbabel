@@ -737,7 +737,7 @@ namespace OpenBabel
    *           equation of degree one.
    *           Ax + B = 0 !!
    */
-  OBAPI static int SolveLinear(double A,double B)
+  OBAPI int SolveLinear(double A,double B)
   {
     if( IsZero(A) )
       return( 0 );
@@ -750,7 +750,7 @@ namespace OpenBabel
    *           linear equation of degree two.
    *           Ax^2 + Bx + C = 0 !!
    */
-  OBAPI static int SolveQuadratic(double A,double B,double C)
+  OBAPI int SolveQuadratic(double A,double B,double C)
   {
     register double Descr, Temp, TwoA;
 
@@ -785,7 +785,7 @@ namespace OpenBabel
    *       given value taking into account
    *       that it may be negative.
    */
-  OBAPI static double CubeRoot(double X)
+  OBAPI double CubeRoot(double X)
   {
     if( X>=0.0 )
       {
@@ -795,7 +795,7 @@ namespace OpenBabel
       return -pow( -X, OneThird );
   }
 
-  OBAPI static int SolveCubic(double A,double B,double C,double D)
+  OBAPI int SolveCubic(double A,double B,double C,double D)
   {
     register double TwoA, ThreeA, BOver3A;
     register double Temp, POver3, QOver2;

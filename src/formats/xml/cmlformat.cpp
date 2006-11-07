@@ -1010,7 +1010,7 @@ Input options, e.g. -a2\n \
             if(cml1)
               uri = BAD_CAST CML1NamespaceURI();
             else
-              uri=BAD_CAST CML2NamespaceURI();
+              uri=BAD_CAST NamespaceURI();// not the old CML2NamespaceURI();
           }
         //If more than one molecule to be output, write <cml> at start and </cml> at end.
         //Except if Option "0" set, e.g. by CMLReactFormat

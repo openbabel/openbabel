@@ -58,6 +58,16 @@ In non-Windows systems OBAPI and OBCONV need to be defined as empty.
  #define OBAPI
 #endif
 
+#if defined(USING_DYNAMIC_LIBS)
+ #if defined(OBFPRT_EXPORTS) //OBFPRT being built
+  #define OBFPRT __declspec(dllexport)
+ #else
+  #define OBFPRT __declspec(dllimport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBFPRT
+#endif
+
 
 #if defined(USING_DYNAMIC_LIBS)
  #pragma warning (disable : 4251) //no dll interface for some templated classes
@@ -78,6 +88,16 @@ In non-Windows systems OBAPI and OBCONV need to be defined as empty.
  #endif
 #else //Everything else (behaviour as original)
  #define OBCOMMON
+#endif
+
+#if defined(USING_DYNAMIC_LIBS)
+ #if defined(OBERROR_EXPORTS) //OBError being built
+  #define OBERROR __declspec(dllexport)
+ #else
+  #define OBERROR __declspec(dllimport)
+ #endif
+#else //Everything else (behaviour as original)
+ #define OBERROR
 #endif
 
 #if defined(OBDLL_EXPORTS) //OBDLL being built

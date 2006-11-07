@@ -23,7 +23,7 @@
 
 2006-10-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
-	* scripts/openbabel.i, scripts/*: Updated with changes from Martin
+	* scripts/openbabel.i, scripts/*: Updated with changes from Martin 
 	Vogt to fix break (likely dating back to header split of atom.h,
 	bond.h, residue.h). 
 
