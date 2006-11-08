@@ -1,3 +1,15 @@
+2006-11-08  Donald E. Curtis <dcurtis3@sourceforge.net>
+
+	* src/generic.h: Added GetData(const char *s) to OBSetData
+	so that you can retrieve data from a const char rather than
+	having to instanciate a string.
+
+	* src/formats/gamessformat.cpp: More improvements on reading generic
+	computational meta data.  (added runtyp / dfttype / basis).  Also modified
+	the location of gamess extra information.  Gamess now stores it's
+	information in an OBSetData with attribute "gamess" which is part of the
+	molecule.
+
 2006-11-07 Chris Morley <ob@gaseq.co.uk>
 
 	* src/formats/xml/cmlformat.cpp(WriteMolecule): Output new
