@@ -18,79 +18,9 @@
 #include "obmolecformat.h"
 
 using namespace std;
-//X namespace Gamess 
-//X {
-//X   typedef struct {
-//X     char* keyword;
-//X     char* attribute;
-//X   } Option;
-//X 
-//X   typedef struct
-//X   {
-//X     char* set;
-//X     Option options[];
-//X   };
-//X 
-//X   static Option basis_options[] = {
-//X     {"GBASIS", NULL},
-//X     {"NGAUSS", NULL},
-//X     {"NDFUNC", NULL},
-//X     {"NPFUNC", NULL},
-//X     {"DIFFSP", NULL},
-//X     {"DIFFS", NULL},
-//X     {"POLAR", NULL},
-//X   };
-//X 
-//X   static Option control_options[] = {
-//X     {"SCFTYP", NULL},
-//X     {"RUNTYP", NULL},
-//X     {"EXETYP", NULL},
-//X     {"MPLEVL", NULL},
-//X     {"CITYP", NULL},
-//X     {"CCTYP", NULL},
-//X     {"MULT", NULL},
-//X     {"ICHARG", NULL},
-//X     {"NZVAR", NULL},
-//X     {"COORD", NULL},
-//X     {"ECP", NULL},
-//X     {"RELWFN", NULL},
-//X     {"LOCAL", NULL},
-//X     {"NUMGRD", NULL},
-//X     {"ISPHER", NULL},
-//X     {"NOSYM", NULL},
-//X     {"MAXIT", NULL},
-//X     {"UNITS", NULL},
-//X     {"PLTORB", NULL},
-//X     {"MOLPLT", NULL},
-//X     {"AIMPAC", NULL},
-//X     {"FRIEND", NULL},
-//X     {"NPRINT", NULL},
-//X     {"IREST", NULL},
-//X     {"GEOM", NULL},
-//X     {"NORMF", NULL},
-//X     {"NORMP", NULL},
-//X     {"ITOL", NULL},
-//X     {"ICUT", NULL},
-//X     {"INTTYP", NULL},
-//X     {"QMTTOL", NULL},
-//X   };
-//X 
-//X   static Option system_options[] = {
-//X     {"TIMLIN", NULL},
-//X     {"COREFL", NULL},
-//X     {"PARALL", NULL},
-//X     {"BALTYP", NULL},
-//X     {"KDIAG", NULL},
-//X   };
-//X 
-//X   static Option statp_options[] = {
-//X     {"HESS", NULL},
-//X   };
-//X 
-//X   static Option dft_options[] = {
-//X     {"DFTTYPE", NULL},
-//X   };
-//X } // namespace Gamess
+namespace Gamess
+{
+} 
 
 namespace OpenBabel
 {
@@ -196,12 +126,19 @@ namespace OpenBabel
   void GAMESSOutputFormat::ParseSection(char *tag, OBMol &mol, istream &ifs)
   {
     char buffer[BUFF_SIZE];
-    OBSetData *cset = (OBSetData *)mol.GetData(tag);
+    OBSetData *gset = (OBSetData *)mol.GetData("gamess");
+    if(!gset)
+    {
+      gset = new OBSetData;
+      gset->SetAttribute("gamess");
+      mol.SetData(gset);
+    }
+    OBSetData *cset = (OBSetData *)gset->GetData(tag);
     if(!cset)
     {
       cset = new OBSetData;
       cset->SetAttribute(tag);
-      mol.SetData(cset);
+      gset->AddData(cset);
     }
 
     string attr, value;
@@ -227,9 +164,9 @@ namespace OpenBabel
         while((*ptr == ' ' || *ptr == '\t') && *ptr != '\0') ptr++;
 
         // Read the attribute name
-        while(*ptr != ' ' && *ptr != '=' && *ptr != '\0') attr += *(ptr++);
+        while(*ptr != ' ' && *ptr != '=' && *ptr != '\0') attr += tolower(*(ptr++));
 
-        // If this is it be done
+        // If this is it, be done
         if(*ptr == '\0') break;
 
         // Read to next non-whitespace
@@ -246,28 +183,68 @@ namespace OpenBabel
         while((*ptr == ' ' || *ptr == '\t' || *ptr == '=') && *ptr != '\0') ptr++;
 
         // Read the attribute value.
-        while(*ptr != ' ' && *ptr != '\0') value += *(ptr++);
+        while(*ptr != ' ' && *ptr != '\0') value += tolower(*(ptr++));
 
-//X             cout << attr << "/" << value << endl;
+        // cout << attr << "/" << value << endl;
+
+        if(attr == "igauss") { attr = "ngauss"; }
 
         OBPairData *data = new OBPairData();
+        data = new OBPairData();
         data->SetAttribute(attr);
         data->SetValue(value);
-        cset->AddData(data);
-
+        if(attr == "runtyp")
+        {
+          mol.SetData(data);
+        }
+        if(attr == "dfttyp")
+        {
+          mol.SetData(data);
+        }
+        else
+        {
+          cset->AddData(data);
+        }
       }
     }
 
-//X     vector<OBGenericData *> set = cset->GetData();
-//X     vector<OBGenericData *>::iterator i;
-//X     for(i = set.begin(); i != set.end(); i++) {
-//X       OBPairData *data = (OBPairData *) *i;
-//X       cout << data->GetAttribute() << "=" << data->GetValue() << endl;
-//X     }
-//X 
-//X     cout << "----------------------------" << endl;
+    // this should setup the global basis set correctly.
+    if(strcmp(tag, "basis") == 0)
+    {
+      value.clear();
+      OBPairData *gbasis = (OBPairData *) cset->GetData("gbasis");
+      OBPairData *ngauss = (OBPairData *) cset->GetData("ngauss");
 
+      if(gbasis && ngauss)
+      {
+        if(gbasis->GetValue() == "sto")
+        {
+          value += "sto-";
+          value += ngauss->GetValue();
+          value += "g";
+        }
+        if(ngauss->GetValue() == "3" || ngauss->GetValue() == "6")
+        {
+          value = ngauss->GetValue();
+          value += "-";
+          value += gbasis->GetValue().substr(1);
+          value += "G";
+        }
+      }
+      else if(gbasis)
+      {
+        value = gbasis->GetValue();
+      }
 
+      OBPairData *basis = (OBPairData *) mol.GetData("basis");
+      if(!basis)
+      {
+        basis = new OBPairData();
+        basis->SetAttribute("basis");
+        mol.SetData(basis);
+      }
+      basis->SetValue(value);
+    }
   }
   bool GAMESSOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -394,68 +371,20 @@ namespace OpenBabel
       }
       else if(strstr(buffer, "$CONTRL OPTIONS"))
       {
-        ParseSection("CONTRL", mol, ifs);
+        ParseSection("contrl", mol, ifs);
       }
       else if(strstr(buffer, "$SYSTEM OPTIONS"))
       {
-        ParseSection("SYSTEM", mol, ifs);
+        ParseSection("system", mol, ifs);
       }
       else if(strstr(buffer, "BASIS OPTIONS"))
       {
-        ParseSection("BASIS", mol, ifs);
+        ParseSection("basis", mol, ifs);
       }
       else if(strstr(buffer, "GUESS OPTIONS"))
       {
-        ParseSection("GUESS", mol, ifs);
+        ParseSection("guess", mol, ifs);
       }
-      //X         else if(strstr(buffer, "$CONTRL OPTIONS") != NULL)
-      //X           {
-      //X             ifs.getline(buffer,BUFF_SIZE);	// ---------------
-      //X             ifs.getline(buffer,BUFF_SIZE);
-      //X             string data;
-      //X             char *ptr;
-      //X             while(strlen(buffer))
-      //X               {
-      //X                 for( int i=0; i < sizeof(Gamess::control_options)/sizeof(Gamess::Option); i++ )
-      //X                   {
-      //X                     if( ptr = strstr(buffer, Gamess::control_options[i].keyword) )
-      //X                       {
-      //X                         data.clear();
-      //X                         ptr = index(ptr, '='); 
-      //X                         ptr++;
-      //X                         while(*ptr == ' ') ptr++;
-      //X                         while(*ptr != ' ' && *ptr != '\n') data += *(ptr++);
-      //X                         cout << Gamess::control_options[i].keyword << " = " << data << endl;
-      //X                       }
-      //X                     //cout << Gamess::control_options[i].keyword << endl;
-      //X                   }
-      //X                 ifs.getline(buffer,BUFF_SIZE);
-      //X               }
-      //X           }
-      //X         else if(strstr(buffer, "$SYSTEM OPTIONS") != NULL)
-      //X           {
-      //X             ifs.getline(buffer,BUFF_SIZE);	// ---------------
-      //X             ifs.getline(buffer,BUFF_SIZE);
-      //X             string data;
-      //X             char *ptr;
-      //X             while(strlen(buffer))
-      //X               {
-      //X                 for( int i=0; i < sizeof(Gamess::system_options)/sizeof(Gamess::Option); i++ )
-      //X                   {
-      //X                     if( ptr = strstr(buffer, Gamess::system_options[i].keyword) )
-      //X                       {
-      //X                         data.clear();
-      //X                         ptr = index(ptr, '='); 
-      //X                         ptr++;
-      //X                         while(*ptr == ' ') ptr++;
-      //X                         while(*ptr != ' ' && *ptr != '\n') data += *(ptr++);
-      //X                         cout << Gamess::system_options[i].keyword << " = " << data << endl;
-      //X                       }
-      //X                     //cout << Gamess::control_options[i].keyword << endl;
-      //X                   }
-      //X                 ifs.getline(buffer,BUFF_SIZE);
-      //X               }
-      //X           }
     }
     //    cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
 
