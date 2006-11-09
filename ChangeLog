@@ -1,3 +1,10 @@
+2006-11-09  Donald E. Curtis <dcurtis3@sourceforge.net>
+
+	* src/formats/gamessformat.cpp: Gamess output parsing now only gathers
+	run information from the input deck rather than gather all and defaults
+	from gamess.  we may need to reconsider this in the future or add an
+	option for it.
+
 2006-11-08  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/formats/gamessformat.cpp: Bug fixes after further testing.

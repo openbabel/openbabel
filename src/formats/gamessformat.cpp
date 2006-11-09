@@ -66,7 +66,7 @@ namespace OpenBabel
 
     private:
       //! \brief Parse GAMESS options section.
-      void ParseSection(char *tag, OBSetData *set, istream &ifs);
+      //void ParseSection(char *tag, OBSetData *set, istream &ifs);
 
   };
   //***
@@ -123,6 +123,9 @@ namespace OpenBabel
   GAMESSInputFormat theGAMESSInputFormat;
 
   /////////////////////////////////////////////////////////////////
+  /* this function is for parsing default options too.  it is decided that
+   * we should only parse parameters that the user specified in the input
+   * deck and not EVERY option which is defaulted to by GAMESS.
   void GAMESSOutputFormat::ParseSection(char *tag, OBSetData *set, istream &ifs)
   {
     char buffer[BUFF_SIZE];
@@ -191,9 +194,8 @@ namespace OpenBabel
         curset->AddData(data);
       }
     }
-
-
   }
+*/
   bool GAMESSOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
@@ -322,6 +324,45 @@ namespace OpenBabel
             break;
         }
       }
+      else if(strstr(buffer, "INPUT CARD> $"))
+      {
+        string attr, value;
+        char *ptr;
+
+        for( ; ; )
+        {
+          ptr = buffer + 14;
+          tokenize(vs, ptr);
+
+          if(vs.size() > 2)
+          {
+            OBSetData *curset = (OBSetData *)gmsset->GetData(vs[0]);
+            if(!curset)
+            {
+              curset = new OBSetData();
+              curset->SetAttribute(vs[0]);
+              gmsset->AddData(curset);
+            }
+
+            for(int i=1; vs[i] != "$END" && i < vs.size(); i++) {
+              string::size_type loc = vs[i].find("=",0);
+              if(loc != string::npos)
+              {
+                // cout << vs[i].substr(0,loc) << " !!!!! " << vs[i].substr(loc+1) << endl;
+                OBPairData *data = new OBPairData();
+                data = new OBPairData();
+                data->SetAttribute(vs[i].substr(0,loc));
+                data->SetValue(vs[i].substr(loc+1));
+                curset->AddData(data);
+              }
+            }
+          }
+
+          break;
+
+        }
+      }
+      /*
       else if(strstr(buffer, "$CONTRL OPTIONS"))
       {
         ParseSection("CONTRL", gmsset, ifs);
@@ -338,6 +379,7 @@ namespace OpenBabel
       {
         ParseSection("GUESS", gmsset, ifs);
       }
+      */
     }
     //    cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
 
@@ -349,6 +391,7 @@ namespace OpenBabel
     if(bset)
     {
       OBPairData *pd = NULL;
+      string value;
 
       pd = (OBPairData *) bset->GetData("RUNTYPE");
       if(pd)
@@ -370,8 +413,8 @@ namespace OpenBabel
 
       OBPairData *gbasis = (OBPairData *) gmsset->GetData("GBASIS");
       OBPairData *ngauss = (OBPairData *) gmsset->GetData("NGAUSS");
-      string value = "";
 
+      value = "";
       if(gbasis)
       {
         value = gbasis->GetValue();
