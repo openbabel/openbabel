@@ -66,7 +66,7 @@ namespace OpenBabel
 
     private:
       //! \brief Parse GAMESS options section.
-      void ParseSection(char *tag, OBMol &mol, istream &ifs);
+      void ParseSection(char *tag, OBMol *mol, istream &ifs);
 
   };
   //***
@@ -123,20 +123,23 @@ namespace OpenBabel
   GAMESSInputFormat theGAMESSInputFormat;
 
   /////////////////////////////////////////////////////////////////
-  void GAMESSOutputFormat::ParseSection(char *tag, OBMol &mol, istream &ifs)
+  void GAMESSOutputFormat::ParseSection(char *tag, OBMol *mol, istream &ifs)
   {
     char buffer[BUFF_SIZE];
-    OBSetData *gset = (OBSetData *)mol.GetData("gamess");
+    string gamess = "gamess";
+
+    OBSetData *gset = (OBSetData *)mol->GetData(gamess);
     if(!gset)
     {
-      gset = new OBSetData;
-      gset->SetAttribute("gamess");
-      mol.SetData(gset);
+      gset = new OBSetData();
+      gset->SetAttribute(gamess);
+      mol->SetData(gset);
     }
+
     OBSetData *cset = (OBSetData *)gset->GetData(tag);
     if(!cset)
     {
-      cset = new OBSetData;
+      cset = new OBSetData();
       cset->SetAttribute(tag);
       gset->AddData(cset);
     }
@@ -164,7 +167,7 @@ namespace OpenBabel
         while((*ptr == ' ' || *ptr == '\t') && *ptr != '\0') ptr++;
 
         // Read the attribute name
-        while(*ptr != ' ' && *ptr != '=' && *ptr != '\0') attr += tolower(*(ptr++));
+        while(*ptr != ' ' && *ptr != '=' && *ptr != '\0') attr += toupper(*(ptr++));
 
         // If this is it, be done
         if(*ptr == '\0') break;
@@ -183,41 +186,43 @@ namespace OpenBabel
         while((*ptr == ' ' || *ptr == '\t' || *ptr == '=') && *ptr != '\0') ptr++;
 
         // Read the attribute value.
-        while(*ptr != ' ' && *ptr != '\0') value += tolower(*(ptr++));
+        while(*ptr != ' ' && *ptr != '\0') value += toupper(*(ptr++));
+
+
+        if(attr == "IGAUSS") { attr = "NGAUSS"; }
 
         // cout << attr << "/" << value << endl;
-
-        if(attr == "igauss") { attr = "ngauss"; }
 
         OBPairData *data = new OBPairData();
         data = new OBPairData();
         data->SetAttribute(attr);
         data->SetValue(value);
-        if(attr == "runtyp")
+
+        // This data gets duplicated for now.
+        if(attr == "RUNTYP")
         {
-          mol.SetData(data);
+          mol->SetData(data);
         }
-        if(attr == "dfttyp")
+        else if(attr == "DFTTYP")
         {
-          mol.SetData(data);
+          mol->SetData(data);
         }
-        else
-        {
-          cset->AddData(data);
-        }
+
+        cset->AddData(data);
       }
     }
 
+
     // this should setup the global basis set correctly.
-    if(strcmp(tag, "basis") == 0)
+    if(strcmp(tag, "BASIS") == 0)
     {
       value.clear();
-      OBPairData *gbasis = (OBPairData *) cset->GetData("gbasis");
-      OBPairData *ngauss = (OBPairData *) cset->GetData("ngauss");
+      OBPairData *gbasis = (OBPairData *) cset->GetData("GBASIS");
+      OBPairData *ngauss = (OBPairData *) cset->GetData("NGAUSS");
 
       if(gbasis && ngauss)
       {
-        if(gbasis->GetValue() == "sto")
+        if(gbasis->GetValue() == "STO")
         {
           value += "sto-";
           value += ngauss->GetValue();
@@ -236,12 +241,12 @@ namespace OpenBabel
         value = gbasis->GetValue();
       }
 
-      OBPairData *basis = (OBPairData *) mol.GetData("basis");
+      OBPairData *basis = (OBPairData *) mol->GetData("BASIS");
       if(!basis)
       {
         basis = new OBPairData();
-        basis->SetAttribute("basis");
-        mol.SetData(basis);
+        basis->SetAttribute("BASIS");
+        mol->SetData(basis);
       }
       basis->SetValue(value);
     }
@@ -267,14 +272,15 @@ namespace OpenBabel
     int HOMO = 0;
     vector<double> orbitals;
 
+    mol.Clear();
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
     {
       if(strstr(buffer,"ATOMIC                      COORDINATES (BOHR)") != NULL)
       {
         // mol.EndModify();
-        mol.Clear();
-        mol.BeginModify();
+        // mol.Clear();
+        // mol.BeginModify();
         ifs.getline(buffer,BUFF_SIZE);	// column headings
         ifs.getline(buffer,BUFF_SIZE);
         tokenize(vs,buffer);
@@ -296,8 +302,8 @@ namespace OpenBabel
       else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL)
       {
         // mol.EndModify();
-        mol.Clear();
-        mol.BeginModify();
+        // mol.Clear();
+        // mol.BeginModify();
         ifs.getline(buffer,BUFF_SIZE);	// column headings
         ifs.getline(buffer,BUFF_SIZE);	// ---------------
         ifs.getline(buffer,BUFF_SIZE);
@@ -371,19 +377,19 @@ namespace OpenBabel
       }
       else if(strstr(buffer, "$CONTRL OPTIONS"))
       {
-        ParseSection("contrl", mol, ifs);
+        ParseSection("CONTRL", pmol, ifs);
       }
       else if(strstr(buffer, "$SYSTEM OPTIONS"))
       {
-        ParseSection("system", mol, ifs);
+        ParseSection("SYSTEM", pmol, ifs);
       }
       else if(strstr(buffer, "BASIS OPTIONS"))
       {
-        ParseSection("basis", mol, ifs);
+        ParseSection("BASIS", pmol, ifs);
       }
       else if(strstr(buffer, "GUESS OPTIONS"))
       {
-        ParseSection("guess", mol, ifs);
+        ParseSection("GUESS", pmol, ifs);
       }
     }
     //    cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;

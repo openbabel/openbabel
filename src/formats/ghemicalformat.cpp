@@ -193,8 +193,11 @@ namespace OpenBabel
   bool GhemicalFormat::PrintGamessSection(const char* section, OBMol* mol, ostream& ofs)
   {
     std::vector<OBGenericData*>::iterator i;
-    OBSetData *cset = (OBSetData *)mol->GetData(section);
 
+    OBSetData *gset = (OBSetData *)mol->GetData("gamess");
+    if(!gset) return false;
+
+    OBSetData *cset = (OBSetData *)gset->GetData(section);
     if(!cset) return false;
 
     for(i = cset->GetBegin(); i != cset->GetEnd(); i++) {
