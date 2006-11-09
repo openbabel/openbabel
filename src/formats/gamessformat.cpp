@@ -66,7 +66,7 @@ namespace OpenBabel
 
     private:
       //! \brief Parse GAMESS options section.
-      void ParseSection(char *tag, OBMol *mol, istream &ifs);
+      void ParseSection(char *tag, OBSetData *set, istream &ifs);
 
   };
   //***
@@ -123,25 +123,15 @@ namespace OpenBabel
   GAMESSInputFormat theGAMESSInputFormat;
 
   /////////////////////////////////////////////////////////////////
-  void GAMESSOutputFormat::ParseSection(char *tag, OBMol *mol, istream &ifs)
+  void GAMESSOutputFormat::ParseSection(char *tag, OBSetData *set, istream &ifs)
   {
     char buffer[BUFF_SIZE];
-    string gamess = "gamess";
-
-    OBSetData *gset = (OBSetData *)mol->GetData(gamess);
-    if(!gset)
+    OBSetData *curset = (OBSetData *)set->GetData(tag);
+    if(!curset)
     {
-      gset = new OBSetData();
-      gset->SetAttribute(gamess);
-      mol->SetData(gset);
-    }
-
-    OBSetData *cset = (OBSetData *)gset->GetData(tag);
-    if(!cset)
-    {
-      cset = new OBSetData();
-      cset->SetAttribute(tag);
-      gset->AddData(cset);
+      curset = new OBSetData();
+      curset->SetAttribute(tag);
+      set->AddData(curset);
     }
 
     string attr, value;
@@ -198,58 +188,11 @@ namespace OpenBabel
         data->SetAttribute(attr);
         data->SetValue(value);
 
-        // This data gets duplicated for now.
-        if(attr == "RUNTYP")
-        {
-          mol->SetData(data);
-        }
-        else if(attr == "DFTTYP")
-        {
-          mol->SetData(data);
-        }
-
-        cset->AddData(data);
+        curset->AddData(data);
       }
     }
 
 
-    // this should setup the global basis set correctly.
-    if(strcmp(tag, "BASIS") == 0)
-    {
-      value.clear();
-      OBPairData *gbasis = (OBPairData *) cset->GetData("GBASIS");
-      OBPairData *ngauss = (OBPairData *) cset->GetData("NGAUSS");
-
-      if(gbasis && ngauss)
-      {
-        if(gbasis->GetValue() == "STO")
-        {
-          value += "sto-";
-          value += ngauss->GetValue();
-          value += "g";
-        }
-        if(ngauss->GetValue() == "3" || ngauss->GetValue() == "6")
-        {
-          value = ngauss->GetValue();
-          value += "-";
-          value += gbasis->GetValue().substr(1);
-          value += "G";
-        }
-      }
-      else if(gbasis)
-      {
-        value = gbasis->GetValue();
-      }
-
-      OBPairData *basis = (OBPairData *) mol->GetData("BASIS");
-      if(!basis)
-      {
-        basis = new OBPairData();
-        basis->SetAttribute("BASIS");
-        mol->SetData(basis);
-      }
-      basis->SetValue(value);
-    }
   }
   bool GAMESSOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -272,15 +215,19 @@ namespace OpenBabel
     int HOMO = 0;
     vector<double> orbitals;
 
+    // must build generic data while we parse then add at the end.
+    OBSetData *gmsset = new OBSetData();
+    gmsset->SetAttribute("gamess");
+
     mol.Clear();
     mol.BeginModify();
-    while	(ifs.getline(buffer,BUFF_SIZE))
+    while (ifs.getline(buffer,BUFF_SIZE))
     {
       if(strstr(buffer,"ATOMIC                      COORDINATES (BOHR)") != NULL)
       {
         // mol.EndModify();
-        // mol.Clear();
-        // mol.BeginModify();
+        mol.Clear();
+        mol.BeginModify();
         ifs.getline(buffer,BUFF_SIZE);	// column headings
         ifs.getline(buffer,BUFF_SIZE);
         tokenize(vs,buffer);
@@ -302,8 +249,8 @@ namespace OpenBabel
       else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL)
       {
         // mol.EndModify();
-        // mol.Clear();
-        // mol.BeginModify();
+        mol.Clear();
+        mol.BeginModify();
         ifs.getline(buffer,BUFF_SIZE);	// column headings
         ifs.getline(buffer,BUFF_SIZE);	// ---------------
         ifs.getline(buffer,BUFF_SIZE);
@@ -377,23 +324,83 @@ namespace OpenBabel
       }
       else if(strstr(buffer, "$CONTRL OPTIONS"))
       {
-        ParseSection("CONTRL", pmol, ifs);
+        ParseSection("CONTRL", gmsset, ifs);
       }
       else if(strstr(buffer, "$SYSTEM OPTIONS"))
       {
-        ParseSection("SYSTEM", pmol, ifs);
+        ParseSection("SYSTEM", gmsset, ifs);
       }
       else if(strstr(buffer, "BASIS OPTIONS"))
       {
-        ParseSection("BASIS", pmol, ifs);
+        ParseSection("BASIS", gmsset, ifs);
       }
       else if(strstr(buffer, "GUESS OPTIONS"))
       {
-        ParseSection("GUESS", pmol, ifs);
+        ParseSection("GUESS", gmsset, ifs);
       }
     }
     //    cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
 
+    // add our gamess set
+    mol.SetData(gmsset);
+
+    // if we have basis set data we should set our global pair data
+    OBSetData *bset = (OBSetData *) gmsset->GetData("BASIS");
+    if(bset)
+    {
+      OBPairData *pd = NULL;
+
+      pd = (OBPairData *) bset->GetData("RUNTYPE");
+      if(pd)
+      {
+        OBPairData *nd = new OBPairData();
+        nd->SetAttribute("runtype");
+        nd->SetValue(pd->GetValue());
+        pmol->SetData(nd);
+      }
+
+      pd = (OBPairData *) bset->GetData("DFTTYPE");
+      if(pd)
+      {
+        OBPairData *nd = new OBPairData();
+        nd->SetAttribute("dfttype");
+        nd->SetValue(pd->GetValue());
+        pmol->SetData(nd);
+      }
+
+      OBPairData *gbasis = (OBPairData *) gmsset->GetData("GBASIS");
+      OBPairData *ngauss = (OBPairData *) gmsset->GetData("NGAUSS");
+      string value = "";
+
+      if(gbasis)
+      {
+        value = gbasis->GetValue();
+
+        if(ngauss)
+        {
+          if(gbasis->GetValue() == "STO")
+          {
+            value.clear();
+            value += "sto-";
+            value += ngauss->GetValue();
+            value += "g";
+          }
+          else if(ngauss->GetValue() == "3" || ngauss->GetValue() == "6")
+          {
+            value.clear();
+            value = ngauss->GetValue();
+            value += "-";
+            value += gbasis->GetValue().substr(1);
+            value += "G";
+          }
+        }
+
+        OBPairData *basis = new OBPairData();
+        basis->SetAttribute("basis");
+        basis->SetValue(value);
+        pmol->SetData(basis);
+      }
+    }
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))

@@ -1,5 +1,7 @@
 2006-11-08  Donald E. Curtis <dcurtis3@sourceforge.net>
 
+	* src/formats/gamessformat.cpp: Bug fixes after further testing.
+
 	* src/formats/gamessformat.cpp: For now keywords are in uppercase.  This
 	needs to be decided on by the dev community and will be discussed with
 	the gamess developers for gamess-specific keywords.
