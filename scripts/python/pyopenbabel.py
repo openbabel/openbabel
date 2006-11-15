@@ -1,15 +1,28 @@
 import openbabel as ob
 import os.path
 
-def readfile(format,filename):
+def readfile(format, filename):
     """Iterate over the molecules in a file.
 
+    Required parameters:
+       format
+       filename
+
+    You can access the first molecule in a file using:
+        mol = readfile("smi", "myfile.smi").next()
+        
+    You can make a list of the molecules in a file using:
+        mols = [mol for mol in readfile("smi", "myfile.smi")
+        
+    You can iterate over the molecules in a file as shown in the
+    following code snippet...
+
     >>> atomtotal = 0
-    >>> for mol in readfile("sdf","3d.head.sdf"):
+    >>> for mol in readfile("sdf","head.sdf"):
     ...     atomtotal += len(mol.atoms)
     ...
     >>> print atomtotal
-    2128
+    43
     """
     obconversion = ob.OBConversion()
     formatok = obconversion.SetInFormat(format)
@@ -23,9 +36,12 @@ def readfile(format,filename):
         obmol = ob.OBMol()
         notatend = obconversion.Read(obmol)
 
-
-def readstring(format,string):
+def readstring(format, string):
     """Read in a molecule from a string.
+
+    Required parameters:
+       format
+       string
 
     >>> input = "C1=CC=CS1"
     >>> mymol = readstring("smi",input)
@@ -35,38 +51,73 @@ def readstring(format,string):
     obmol = ob.OBMol()
     obconversion = ob.OBConversion()
 
-# TO DO: Validate the format before passing to SetInFormat
-#        and print a helpful list of alternatives if not valid
     formatok = obconversion.SetInFormat(format)
     if not formatok:
         raise ValueError,"%s is not a recognised OpenBabel format" % format
 
-    obconversion.ReadString(obmol,string)
+    obconversion.ReadString(obmol, string)
     return Molecule(obmol)
 
 class Outputfile(object):
-    """Represent a file to which *output* is to be sent."""
-    def __init__(self,format,filename,overwrite=False):
+    """Represent a file to which *output* is to be sent.
+    
+    Although it's possible to write a single molecule to a file by
+    calling the write() method of a molecule, if multiple molecules
+    are to be written to the same file you should use the Outputfile
+    class.
+    
+    Required parameters:
+       format
+       filename
+    Optional parameters:
+       overwrite (default is False) -- if the output file already exists,
+                                       should it be overwritten?
+    Methods:
+       write(molecule)
+    """
+    def __init__(self, format, filename, overwrite=False):
         self.format = format
         self.filename = filename
         if not overwrite and os.path.isfile(self.filename):
-            raise Exception, "%s already exists. Use 'overwrite=False' to overwrite it." % self.filename
+            raise IOError, "%s already exists. Use 'overwrite=False' to overwrite it." % self.filename
         self.obConversion = ob.OBConversion()
-        self.obConversion.SetOutFormat(self.format)
+        formatok = self.obConversion.SetOutFormat(self.format)
+        if not formatok:
+            raise ValueError,"%s is not a recognised OpenBabel format" % format
         self.total = 0 # The total number of molecules written to the file
     
-    def write(self,molecule):
-        """Write a molecule to the output file."""
+    def write(self, molecule):
+        """Write a molecule to the output file.
+        
+        Required parameters:
+           molecule
+        """
         if self.total==0:
-            self.obConversion.WriteFile(molecule,self.filename)
+            self.obConversion.WriteFile(molecule.OBMol, self.filename)
         else:
-            self.obConversion.Write(molecule)
+            self.obConversion.Write(molecule.OBMol)
         self.total += 1
 
 
 class Molecule(object):
-    """Represent a molecule."""
+    """Represent a PyOpenBabel molecule.
 
+    Optional parameters:
+       OBMol -- an Open Babel molecule (default is None)
+    
+    An empty Molecule is created if an Open Babel molecule is not provided.
+    
+    Attributes:
+       atoms, charge, dim, energy, exactmass, flags, formula, 
+       mod, molwt, spin, sssr, title.
+    (refer to the Open Babel library documentation for more info).
+    
+    Methods:
+       write()
+      
+    The original Open Babel molecule can be accessed using the attribute:
+       OBMol
+    """
     _getmethods = {
         'conformers':'GetConformers',
         # 'coords':'GetCoordinates', you can access the coordinates the atoms elsewhere
@@ -85,24 +136,27 @@ class Molecule(object):
         'spin':'GetTotalSpinMultiplicity'
     }
     
-    def __init__(self,obmol=None):
+    def __init__(self, OBMol=None):
 
-        self.OBMol = obmol
+        self.OBMol = OBMol
         if not self.OBMol:
             self.OBMol = ob.OBMol()
 
-        for x,v in self._getmethods.iteritems():
-            setattr( self,x,getattr(self,x) )
-        self.atoms = self.atoms
-    
-    def __getattr__(self,attr):
+    def __getattr__(self, attr):
+        """Return the value of an attribute
+
+        Note: The values are calculated on-the-fly. You may want to store the value in
+        a variable if you repeatedly access the same attribute.
+        """
+        # This function is not accessed in the case of OBMol
         if attr == "atoms":
-            listofatoms = [ Atom(self.OBMol.GetAtom(i+1),i+1) for i in range(self.OBMol.NumAtoms()) ]
-            return listofatoms
+            # Create an atoms attribute on-the-fly
+            return [ Atom(self.OBMol.GetAtom(i+1),i+1) for i in range(self.OBMol.NumAtoms()) ]
         elif attr in self._getmethods:
-            return getattr(self.OBMol,self._getmethods[attr])()
+            # Call the OB Method to find the attribute value
+            return getattr(self.OBMol, self._getmethods[attr])()
         else:
-            raise AttributeError,"Cannot find %s" % attr
+            raise AttributeError, "Molecule has no attribute %s" % attr
 
     def __iter__(self):
         """Iterate over the Atoms of the Molecule.
@@ -114,8 +168,19 @@ class Molecule(object):
         for atom in self.atoms:
             yield atom
 
-    def write(self,format="SMI",filename=None):
-        """Write the Molecule to a file or return a string."""
+    def write(self, format="SMI", filename=None, overwrite=False):
+        """Write the molecule to a file or return a string.
+        
+        Optional parameters:
+           format -- default is "SMI"
+           filename -- default is None
+           overwite -- default is False
+
+        If a filename is specified, the result is written to a file.
+        Otherwise, a string is returned containing the result.
+        The overwrite flag is ignored if a filename is not specified.
+        It controls whether to overwrite an existing file.
+        """
 
         obconversion = ob.OBConversion()
         formatok = obconversion.SetOutFormat(format)
@@ -123,6 +188,8 @@ class Molecule(object):
             raise ValueError,"%s is not a recognised OpenBabel format" % format
 
         if filename:
+            if not overwrite and os.path.isfile(filename):
+                raise IOError, "%s already exists. Use 'overwrite=False' to overwrite it." % filename
             obconversion.WriteFile(self.OBMol,filename)
         else:
             return obconversion.WriteString(self.OBMol)
@@ -132,7 +199,25 @@ class Molecule(object):
 
 
 class Atom(object):
-    """Represent an atom."""
+    """Represent a PyOpenBabel atom.
+
+    Optional parameters:
+       OBAtom -- an Open Babel Atom (default is None)
+       index -- the index of the atom in the molecule (default is None)
+     
+    An empty Atom is created if an Open Babel atom is not provided.
+    
+    Attributes:
+       atomicmass, atomicnum, cidx, coords, coordidx, exactmass,
+       formalcharge, heavyvalence, heterovalence, hyb, idx,
+       implicitvalence, index, isotope, partialcharge, spin, type,
+       valence, vector.
+
+    (refer to the Open Babel library documentation for more info).
+    
+    The original Open Babel atom can be accessed using the attribute:
+       OBAtom
+    """
     
     _getmethods = {
         'atomicmass':'GetAtomicMass',
@@ -155,26 +240,21 @@ class Atom(object):
         'vector':'GetVector',
         }
 
-    def __init__(self,OBAtom=None,index=None):
-        # For the moment, I will remember the index of the atom in the molecule...
-        # I'm not sure if this is useful, though.
+    def __init__(self, OBAtom=None, index=None):
         if not OBAtom:
             OBAtom = ob.OBAtom()
         self.OBAtom = OBAtom
+        # For the moment, I will remember the index of the atom in the molecule...
+        # I'm not sure if this is useful, though.
         self.index = index
         
-        for x,v in self._getmethods.iteritems():
-            setattr( self,x,getattr(self,x) )
-        self.coords = self.coords
-    
-    def __getattr__(self,attr):
-        # Reminder to add corresponding __setattr__ methods
+    def __getattr__(self, attr):
         if attr == "coords":
-            return (self.OBAtom.GetX(),self.OBAtom.GetY(),self.OBAtom.GetZ())
+            return (self.OBAtom.GetX(), self.OBAtom.GetY(), self.OBAtom.GetZ())
         elif attr in self._getmethods:
-            return getattr(self.OBAtom,self._getmethods[attr])()
+            return getattr(self.OBAtom, self._getmethods[attr])()
         else:
-            raise AttributeError,"Cannot find %s" % attr
+            raise AttributeError, "Molecule has no attribute %s" % attr
 
     def __str__(self):
         """Create a string representation of the atom.
@@ -187,6 +267,12 @@ class Atom(object):
 
 class Smarts(object):
     """A Smarts Pattern Matcher
+
+    Required parameters:
+       smartspattern
+    
+    Methods:
+       findall()
     
     Example:
     >>> mol = readstring("smi","CCN(CC)CC") # triethylamine
@@ -195,15 +281,19 @@ class Smarts(object):
     [(1, 2), (4, 5), (6, 7)]
     """
     def __init__(self,smartspattern):
-        """Initialise the object."""
+        """Initialise with a SMARTS pattern."""
         self.obsmarts = ob.OBSmartsPattern()
         self.obsmarts.Init(smartspattern)
     def findall(self,molecule):
-        """Find all matches of the SMARTS pattern to a molecule."""
+        """Find all matches of the SMARTS pattern to a particular molecule.
+        
+        Required parameters:
+           molecule
+        """
         self.obsmarts.Match(molecule.OBMol)
         return [x for x in self.obsmarts.GetUMapList()]
         
 if __name__=="__main__":
-    import doctest,pyopenbabel
-    doctest.testmod(pyopenbabel)
+    import doctest
+    doctest.testmod()
     

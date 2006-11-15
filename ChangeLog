@@ -1,3 +1,23 @@
+2006-11-15  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/python/pyopenbabel.py: Updated to be consistent, fast, pass
+	all unit tests, and to have API documentation in docstrings.
+
+	* scripts/python/testpyopenbabel.py: Added complete coverage unit tests
+	for pyopenbabel.py
+
+	* scripts/python/test/*: Removed previous attempts at testing
+
+	* scripts/python/pyopenbabel.txt: Removed previous attempts at
+	providing documentation (we now have a wiki, and API documentation)
+
+	* scripts/python/head.sdf: Added small test file, used by
+	testpyopenbabel.py
+
+	* scripts/python/pyopenbabelapi.html: Added API documentation for
+	pyopenbabel.py, automatically generated using "pydoc -w"
+
+
 2006-11-09  Donald E. Curtis <dcurtis3@sourceforge.net>
 
 	* src/formats/gamessformat.cpp: Gamess output parsing now only gathers
