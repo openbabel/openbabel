@@ -1,3 +1,13 @@
+2006-11-17 Chris Morley <ob@gaseq.co.uk>
+
+	* src/formats/turbomoleformat.cpp: Added input and output options to
+	read and write in Angstroms (default is bohr).
+	Modified WriteMolecule() so that the use of strlwr doesn't corrupt
+	etab. (Was apparent only in GUI where etab persists between molecules.)
+	
+	* src/obconversion.cpp: changed some results of string finds to
+	std::string::size_type. 
+
 2006-11-15  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/python/pyopenbabel.py: Updated to be consistent, fast, pass

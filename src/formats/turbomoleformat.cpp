@@ -29,20 +29,25 @@ public:
     //Register this format type ID
     TurbomoleFormat()
     {
-        OBConversion::RegisterFormat("tmol",this);
+      OBConversion::RegisterFormat("tmol",this);
+      OBConversion::RegisterOptionParam("a", this);
+      OBConversion::RegisterOptionParam("a", this, OBConversion::INOPTIONS);
     }
 
   virtual const char* Description() //required
   {
     return
       "TurboMole Coordinate format\n \
+       Write options e.g.-xa\n\
+        a  Output Angstroms\n\n\
        Read Options e.g. -as\n\
         s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        b  Disable bonding entirely\n\
+        a  Input in Angstroms\n\n" ;
   };
 
   virtual const char* SpecificationURL()
-  {return "http://www.cosmologic.de/turbomole.html";};
+  {return "http://www.cosmologic.de/QuantumChemistry/main_qChemistry.html";};
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -72,6 +77,10 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
+    double UnitConv=AAU;
+    if(pConv->IsOption("a", OBConversion::INOPTIONS))
+      UnitConv=1;
+
 
     char buff[BUFF_SIZE];
     do
@@ -96,7 +105,7 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if(sscanf(buff,"%f %f %f %7s",&x,&y,&z,atomtype)!=4)
             return false;
 
-        atom.SetVector(x*AAU, y*AAU, z*AAU);
+        atom.SetVector(x*UnitConv, y*UnitConv, z*UnitConv);
         atom.SetAtomicNum(etab.GetAtomicNum(atomtype));
         atom.SetType(atomtype);
 
@@ -144,6 +153,9 @@ bool TurbomoleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
+    double UnitConv=AAU;
+    if(pConv->IsOption("a"))
+      UnitConv=1;
 
     ofs << "$coord" <<endl;
 
@@ -152,11 +164,13 @@ bool TurbomoleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vector<OBNodeBase*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
+      char symb[8];
+      strcpy(symb,etab.GetSymbol(atom->GetAtomicNum()));
         snprintf(buff, BUFF_SIZE, "%20.14f  %20.14f  %20.14f      %s",
-                atom->GetX()/AAU,
-                atom->GetY()/AAU,
-                atom->GetZ()/AAU,
-                strlwr(etab.GetSymbol(atom->GetAtomicNum())) );
+                atom->GetX()/UnitConv,
+                atom->GetY()/UnitConv,
+                atom->GetZ()/UnitConv,
+                strlwr(symb) );
         ofs << buff << endl;
     }
     ofs << "$end" << endl;

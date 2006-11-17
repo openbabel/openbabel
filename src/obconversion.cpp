@@ -691,7 +691,7 @@ namespace OpenBabel {
   OBFormat* OBConversion::FormatFromExt(const char* filename)
   {
     string file = filename;
-    size_t extPos = file.rfind('.');
+    string::size_type extPos = file.rfind('.');
 
     if(extPos!=string::npos)
       {
@@ -906,7 +906,7 @@ namespace OpenBabel {
 #endif
         }
 
-        int posname= InFile.find_last_of("\\/");
+        string::size_type posname= InFile.find_last_of("\\/");
         ofname.replace(pos,1, InFile, posname+1, posdot-posname-1);
       }
     return ofname;	
@@ -917,8 +917,8 @@ namespace OpenBabel {
   {
     //Replaces * in BaseName by Count
     string ofname(BaseName);
-    int pos = ofname.find('*');
-    if(pos>=0)
+    string::size_type pos = ofname.find('*');
+    if(pos!=string::npos)
       {
         char num[33];
         snprintf(num, 33, "%d", Count);
