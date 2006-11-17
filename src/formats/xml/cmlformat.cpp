@@ -120,6 +120,7 @@ Input options, e.g. -a2\n \
     int CrystalScalarsNeeded, PropertyScalarsNeeded;
     vector<double> CrystalVals;
     OBUnitCell* pUnitCell;
+    string titleonproperty;
   };
 
   ////////////////////////////////////////////////////////////
@@ -262,6 +263,9 @@ Input options, e.g. -a2\n \
             const xmlChar* pattr  = xmlTextReaderGetAttribute(reader(), BAD_CAST "title");
             if(!pattr)
               pattr  = xmlTextReaderGetAttribute(reader(), BAD_CAST "id");
+            if(!pattr)
+              pattr = BAD_CAST titleonproperty.c_str();
+
             xmlTextReaderRead(reader());
             const xmlChar* pvalue = xmlTextReaderConstValue(reader());
             if(pvalue && pattr)
@@ -280,7 +284,14 @@ Input options, e.g. -a2\n \
         if(pattr && !strcmp(pattr,"Thermo_OldNasa"))
           ReadNasaThermo();
         else
-          PropertyScalarsNeeded = 1;	
+        {
+          pattr  = (const char*)xmlTextReaderGetAttribute(reader(), BAD_CAST "title");
+          if(pattr)
+            titleonproperty = pattr;
+          else
+            titleonproperty.clear();
+          PropertyScalarsNeeded = 1;
+        }
       }
 
     // CML1 elements
@@ -1546,11 +1557,14 @@ Input options, e.g. -a2\n \
                 propertyListWritten=true;
               }
             xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
-            xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+            //Title is onow on <property>
             xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",(*k)->GetAttribute().c_str());
+            xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+            //Title used to be on <scalar>...
+            //xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",(*k)->GetAttribute().c_str());
             xmlTextWriterWriteFormatString(writer(),"%s", (static_cast<OBPairData*>(*k))->GetValue().c_str());
-            xmlTextWriterEndElement(writer());//scalar	
-            xmlTextWriterEndElement(writer());//property	
+            xmlTextWriterEndElement(writer());//scalar
+            xmlTextWriterEndElement(writer());//property
           }
       }
   }

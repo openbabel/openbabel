@@ -1,5 +1,10 @@
 2006-11-17 Chris Morley <ob@gaseq.co.uk>
 
+	* src/formats/xml/cmlformat.cpp: mods to input and output properties
+	with the title attribute on <property>, as requested by Carsten Niehaus. 
+	
+2006-11-17 Chris Morley <ob@gaseq.co.uk>
+
 	* src/formats/turbomoleformat.cpp: Added input and output options to
 	read and write in Angstroms (default is bohr).
 	Modified WriteMolecule() so that the use of strlwr doesn't corrupt
