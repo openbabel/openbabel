@@ -22,8 +22,11 @@ GNU General Public License for more details.
 #endif
 
 #include "babelconfig.h"
-#include "zipstream.h"
 #include "newlinebuf.h"
+
+#ifdef HAVE_LIBZ
+#include "zipstream.h"
+#endif
 
 #include <stdio.h>
 #include <iostream>
@@ -54,11 +57,15 @@ int main(int argc,char *argv[])
   newlinebuf filter(cin.rdbuf());
   cin.rdbuf(&filter);
   
+#ifdef HAVE_LIBZ
   zlib_stream::zip_istream zIn(cin);
   if (zIn.is_gzip())
     pInStream = &zIn;
   else
     pInStream = &cin;
+#else
+  pInStream = &cin;
+#endif
 
   //  char buffer[BUFF_SIZE];
   string buffer;

@@ -1,3 +1,9 @@
+2006-11-18  Michael Banck <mbanck@gmx.net>
+
+	* test/textbuffer.cpp: Do not include "zipstream.h" if HAVE_LIBZ is 
+	not defined.  Do not check for a gzip'd input stream if HAVE_LIBZ is
+	not defined.
+
 2006-11-18  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/python/testpybel.py: Needed to relax one of the tests of
