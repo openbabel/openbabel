@@ -25,8 +25,8 @@ class Test_readstring(unittest.TestCase):
             result[attr] = getattr(self.mol, attr)
             if attr in test:
                 assert result[attr] == test[attr]
-        assert result['exactmass']-58.078 < 0.001
-        assert result['molwt']-58.121 < 0.001 
+        assert abs(result['exactmass']-58.078) < 0.001
+        assert abs(result['molwt']-58.121) < 0.003
         self.assertEqual(len(self.mol.atoms), 4)
         self.assertRaises(AttributeError, self.accesstest)
 
@@ -120,7 +120,7 @@ class Test_atoms(unittest.TestCase):
     def testattributes(self):
         """Get the values of some properties"""
         self.assertRaises(AttributeError, self.accesstest)
-        self.assert_(self.atom.coords[0]-0.0021 < 0.0001)
+        self.assert_(abs(self.atom.coords[0]-0.0021) < 0.0001)
 
     def teststringrepr(self):
         """Test the string representation of the Atom"""

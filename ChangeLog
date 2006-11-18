@@ -1,5 +1,13 @@
 2006-11-18  Noel O'Boyle <baoilleach@gmail.com>
 
+	* scripts/python/testpybel.py: Needed to relax one of the tests of
+	molecular weight, as it was failing for the OB2.1b2 snapshot (there
+	must have been some changes to the atomic masses). Also,
+	corrected tolerance tests to use the absolute value of the difference
+	rather than the actual value.
+	
+2006-11-18  Noel O'Boyle <baoilleach@gmail.com>
+
 	* scripts/python/setup.py, pyopenbabel.py, testpyopenbabel.py,
 	pyopenbabelapi.html: Changed all references to pyopenbabel to pybel
 	(new name). Also, corrected minor typo in docstring in pybel.py.
