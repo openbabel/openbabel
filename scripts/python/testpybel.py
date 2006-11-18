@@ -1,11 +1,11 @@
 import os
 import unittest
-import pyopenbabel as pob
+import pybel
 
 class Test_readstring(unittest.TestCase):
     """Test the ability to read and write to a string"""
     def setUp(self):
-        self.mol = pob.readstring("smi", "CCCC")
+        self.mol = pybel.readstring("smi", "CCCC")
         
     def accesstest(self):
         # Should raise AttributeError
@@ -13,7 +13,7 @@ class Test_readstring(unittest.TestCase):
 
     def testformaterror(self):
         """Test that invalid formats raise an error"""
-        self.assertRaises(ValueError, pob.readstring, "noel", "jkjk")
+        self.assertRaises(ValueError, pybel.readstring, "noel", "jkjk")
     
     def testgetprops(self):
         """Get the values of the properties."""
@@ -60,14 +60,14 @@ Energy = 0
 class Test_readfile(unittest.TestCase):
     """Test the ability to read and write to a file"""
     def setUp(self):
-        self.mols = [mol for mol in pob.readfile("sdf", "head.sdf")]
+        self.mols = [mol for mol in pybel.readfile("sdf", "head.sdf")]
 
     def testread(self):
         """Is the right number of molecules read from the file?"""
         self.assertEqual(len(self.mols), 2)
 
     def formaterror(self):
-        mol = pob.readfile("noel", "head.sdf").next()
+        mol = pybel.readfile("noel", "head.sdf").next()
     
     def testformaterror(self):
         """Test that invalid formats raise an error"""
@@ -92,11 +92,11 @@ class Test_readfile(unittest.TestCase):
     
     def test_multipletofile(self):
         """Test the Outputfile class"""
-        self.assertRaises(ValueError, pob.Outputfile, "noel", "testoutput.txt")
-        outputfile = pob.Outputfile("smi", "testoutput.txt")
+        self.assertRaises(ValueError, pybel.Outputfile, "noel", "testoutput.txt")
+        outputfile = pybel.Outputfile("smi", "testoutput.txt")
         for mol in self.mols:
             outputfile.write(mol)
-        self.assertRaises(IOError, pob.Outputfile, "smi", "testoutput.txt")
+        self.assertRaises(IOError, pybel.Outputfile, "smi", "testoutput.txt")
         filecontents = open("testoutput.txt", "r").readlines()
         os.remove("testoutput.txt")
         test = ['O=C1C=CC(=O)C=C1C\tNSC 1\n', 'c1cccc2c1nc(SSc1nc3ccccc3s1)s2\tNSC 2\n']
@@ -105,7 +105,7 @@ class Test_readfile(unittest.TestCase):
 class Test_atoms(unittest.TestCase):
     """Testing some of the atom code"""
     def setUp(self):
-        self.mol = pob.readfile("sdf", "head.sdf").next()
+        self.mol = pybel.readfile("sdf", "head.sdf").next()
         self.atom = self.mol.atoms[0]
 
     def testiteration(self):
@@ -130,11 +130,11 @@ class Test_atoms(unittest.TestCase):
 class Test_smarts(unittest.TestCase):
     """Test the Smarts object"""
     def setUp(self):
-        self.mol = pob.readstring("smi", "CCN(CC)CC")
+        self.mol = pybel.readstring("smi", "CCN(CC)CC")
 
     def testmatching(self):
         """Searching for ethyl groups in triethylamine"""
-        smarts = pob.Smarts("[#6][#6]")
+        smarts = pybel.Smarts("[#6][#6]")
         ans = smarts.findall(self.mol)
         self.assertEqual(len(ans), 3)
     
@@ -142,13 +142,13 @@ class Test_cornercases(unittest.TestCase):
     """Test some corner cases"""
     def testemptymol(self):
         """Test the creation of an empty Molecule"""
-        mol = pob.Molecule()
+        mol = pybel.Molecule()
         self.assertEqual(mol.molwt, 0)
         self.assertEqual(len(mol.atoms), 0)
     
     def testemptyatom(self):
         """Test the creation of an empty Atom"""
-        atom = pob.Atom()
+        atom = pybel.Atom()
         self.assertEqual(atom.atomicnum, 0)
         
 if __name__=="__main__":

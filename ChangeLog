@@ -1,3 +1,9 @@
+2006-11-18  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/python/setup.py, pyopenbabel.py, testpyopenbabel.py,
+	pyopenbabelapi.html: Changed all references to pyopenbabel to pybel
+	(new name). Also, corrected minor typo in docstring in pybel.py.
+
 2006-11-17 Chris Morley <ob@gaseq.co.uk>
 
 	* src/formats/xml/cmlformat.cpp: mods to input and output properties

@@ -12,7 +12,7 @@ def readfile(format, filename):
         mol = readfile("smi", "myfile.smi").next()
         
     You can make a list of the molecules in a file using:
-        mols = [mol for mol in readfile("smi", "myfile.smi")
+        mols = [mol for mol in readfile("smi", "myfile.smi")]
         
     You can iterate over the molecules in a file as shown in the
     following code snippet...
@@ -100,7 +100,7 @@ class Outputfile(object):
 
 
 class Molecule(object):
-    """Represent a PyOpenBabel molecule.
+    """Represent a Pybel molecule.
 
     Optional parameters:
        OBMol -- an Open Babel molecule (default is None)
@@ -199,7 +199,7 @@ class Molecule(object):
 
 
 class Atom(object):
-    """Represent a PyOpenBabel atom.
+    """Represent a Pybel atom.
 
     Optional parameters:
        OBAtom -- an Open Babel Atom (default is None)
