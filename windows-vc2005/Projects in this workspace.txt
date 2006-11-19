@@ -1,0 +1,82 @@
+The projects in this workspace are intended for Visual Studio 2005 (VC8).
+The various builds all use the same cross-platform source code.
+
+---------------------------------------------------------------------------------------
+
+Standalone EXE files
+
+OBabel
+This produces the command line program obabel.exe by compiling all the core OpenBabel files, the conversion files, obconversion.cpp and a number of format files. If more format files become available, just add them to the compilation, no other code changes are necessary. This does not need any other files to run.
+
+OpenBabelGUI
+This requires wxWidgets to have been installed and the environment variable WXWIN to have set appropriately.It produces a statically linked Windows interface and does not require any other files to run.  It handles the formats included during its compilation. Others can be added by including their cpp files during the build.
+
+
+---------------------------------------------------------------------------------------
+
+DLL builds
+
+Two ways of dividing the code between DLLs are supported:
+
+---------------------------------------------------------------------------------------
+The first way is the simpler and might be used in place of the static builds above to minimize the amount of duplicate code if both GUI and command line interfaces are provided. It is also useful a general purpose library to access OpenBabel's API.
+
+OpenBabelDLL
+This makes OpenBabelDLL.dll (or the debug version OpenBabelDLLD.dll) which contains all of Openbabel except the user interface. This DLL could be used to access OB's chemical core classes (#include mol.h and #include obconversion.h) in the calling program, or just the conversion capabilities, when only obconversion.h needs to be included.
+
+OBComLn
+This makes a babel.exe which has the command line interface and calls OpenBabelDLL.dll.
+
+OBGUII
+This makes OBGUII.exe which has the wxWidgets GUI interface and calls OpenBabelDLL.dll. wxWidgets needs to have been installed.
+
+On VC8 Release builds the babel.exe, OBGUII.exe, OpenBabelDLL.dll and OpenBabel.lib are put in the windows\OpenBabelDLL folder. In Debug builds they are in the debug subfolder. LIBINCHI.DLL, LIBXML2.DLL, ICONV.DLL, and ZLIB1.DLL also need to be in the executable folder or on the pathe specified by the PATH environment variable. 
+---------------------------------------------------------------------------------------
+
+The second way of dividing the code is to build separate DLLs for the Chemical core, the Conversion control,groups of formats and a few other pieces. See the diagram and fuller explanations at http://openbabel.sourceforge.net/wiki/Code_Structure_of_OpenBabel.
+While more complicated than the first DLL method, it is more versatile. Formats (or groups of formats) can be added and removed without re-compiling. Because of the greater segregation, applications that use the conversion facilities do not need to be recompiled when the code in the Chemical API or any of the formats are changed. OBDLL and the obf files can be replaced by new versions.   
+
+OBDLL
+This makes obdll.dll from the files in the Chemical core API.  It does not include any input/output capability.
+
+OBConv
+This makes obconv.dll which contains the I/O routines and can recognize format files, *.obf.
+
+OBFPRT
+This contains the fingerprint and fastsearch API. Used by OBFprtFormats, but by no other part of the program at present.
+
+OBCommonFormats
+This makes OBCommon.obf and is always required since it exports the base classes OBMoleculeFormat and XMLBaseFormat. Other projects building obf files should link to commonformats.lib. It also contains SmilesFormat, MDLFormat, PubChemFormat and CMLFormat.
+
+OBFormats2
+Makes OBFormats2.obf which contains most of the "normal" format classes for molecules (other than those in OBCommonFormats).
+
+OBExtraFormats
+Makes OBExtra.obf which contains InChIFormat, TestFormat, CopyFormat, MPDFormat.
+
+OBFprtFormats
+Makes FingerprintFormat and FastSearchFormat. 
+
+OBReactionFormats
+Makes OBReactionFormats.obf which contains RXNFormat, CMLReactFormat, ChemKinFormat, ThermoFormat 
+
+The following are exe programs which use obconv.dll, obdll.dll and *.obf files.
+ 
+OBConsole
+This makes a version of obabel.exe conatining the command line interface.
+
+OBGUI
+This makes OBGUI.exe which has the wxWidgets GUI interface. wxWidgets needs to have been installed.
+
+ProgramTest
+This uses prog1.cpp to illustrate a command line program using the OB API and I/O capabilities in DLLs. It links with obconv.lib and obdll.lib and needs obconv.dll, obdll.dll and one or more format files, *.obf, at runtime. Alternatively, it would have been possible to build prog1.cpp with all the files in the OBabel project except main.cpp.
+
+ProgramTest2
+This example shows how to add automatic format conversion to an existing Windows program using the DLL form of OpenBabel. It does not need mol.h to compile, but does need obconv.dll, obdll.dll and one or more format files, *.obf, at runtime.
+
+On VC8 Release builds the executables and DLLs and the .lib files are put in the windows folder. In Debug builds they are in windows\debug. LIBINCHI.DLL, LIBXML2.DLL, ICONV.DLL, and ZLIB1.DLL also need to be in the executable folder or on the pathe specified by the PATH environment variable. 
+
+When using VC8, in addition to various macros defined in the project files it is necessary to define the following to avoid a large number of warnings. 
+_CRT_SECURE_NO_DEPRECATE
+_CRT_NONSTDC_NO_DEPRECATE
+_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES

@@ -78,7 +78,7 @@
 				OutputFile="Debug/babel.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..,..\..\src\formats\cmlpp\builds\windows\vc6\cmlpplib\Debug"
+				AdditionalLibraryDirectories=".."
 				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/babel.pdb"
@@ -175,7 +175,7 @@
 				OutputFile="babel.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..,..\..\src\formats\cmlpp\\builds\windows\vc6\cmlpplib\release"
+				AdditionalLibraryDirectories=".."
 				ProgramDatabaseFile=".\Release/babel.pdb"
 				SubSystem="1"
 				TargetMachine="1"
@@ -650,42 +650,16 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\chemdrawformat.cpp"
+				RelativePath="..\..\src\formats\chemdrawcdx.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;_MBCS;INCHI_LINK_AS_DLL;HAVE_CONFIG_H;$(NoInherit)"
-						UsePrecompiledHeader="0"
-						BrowseInformation="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;_MBCS;INCHI_LINK_AS_DLL;HAVE_CONFIG_H;$(NoInherit)"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\ChemKinformat.cpp"
+				RelativePath="..\..\src\formats\chemdrawct.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\chemkinformat.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\chemtoolformat.cpp"
@@ -743,7 +717,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\xml\cmlreactlformat.cpp"
+				RelativePath="..\..\src\formats\xml\cmlreactformat.cpp"
 				>
 			</File>
 			<File
@@ -1171,6 +1145,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\getinchi.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\ghemicalformat.cpp"
 				>
 				<FileConfiguration
@@ -1274,29 +1252,8 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\inchiformat.cpp"
+				RelativePath="..\..\src\formats\inchiformatREAD.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;_MBCS;INCHI_LINK_AS_DLL;HAVE_CONFIG_H;$(NoInherit)"
-						UsePrecompiledHeader="0"
-						BrowseInformation="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;_MBCS;INCHI_LINK_AS_DLL;HAVE_CONFIG_H;$(NoInherit)"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\jaguarformat.cpp"
@@ -1549,6 +1506,10 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\molreport.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\..\src\formats\mopacformat.cpp"
@@ -2086,31 +2047,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\rxnformat.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;_MBCS;INCHI_LINK_AS_DLL;HAVE_CONFIG_H;$(NoInherit)"
-						UsePrecompiledHeader="0"
-						BrowseInformation="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;_MBCS;INCHI_LINK_AS_DLL;HAVE_CONFIG_H;$(NoInherit)"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\src\formats\shelxformat.cpp"
 				>
 				<FileConfiguration
@@ -2518,6 +2454,10 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
+				RelativePath="..\..\src\atom.h"
+				>
+			</File>
+			<File
 				RelativePath="..\babelconfig.h"
 				>
 			</File>
@@ -2534,11 +2474,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\bond.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\bondtyper.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\chains.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\formats\chemdrawcdx.h"
 				>
 			</File>
 			<File
@@ -2575,6 +2523,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\formats\inchi_api.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\kinetics.h"
 				>
 			</File>
 			<File
@@ -2630,10 +2582,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reaction.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\ring.h"
 				>
 			</File>
@@ -2678,6 +2626,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\3d.cml"
+			>
+		</File>
 		<File
 			RelativePath="..\libxml2.lib"
 			>
