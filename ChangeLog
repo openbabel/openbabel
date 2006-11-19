@@ -1,3 +1,7 @@
+2006-11-17 Chris Morley <ob@gaseq.co.uk>
+
+	windows-vc2005: Added projects for OpenBabelDLL, OBComLn, and OBGUII
+	
 2006-11-18  Michael Banck <mbanck@gmx.net>
 
 	* test/textbuffer.cpp: Do not include "zipstream.h" if HAVE_LIBZ is 
