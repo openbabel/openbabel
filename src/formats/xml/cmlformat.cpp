@@ -1630,7 +1630,7 @@ Input options, e.g. -a2\n \
 	
     string fn(_pxmlConv->GetInFilename());
     //Get file name: remove path
-    size_t pos = fn.rfind(DLHandler::getSeparator());
+    string::size_type pos = fn.rfind(DLHandler::getSeparator());
     if(pos!=string::npos)
       fn.erase(0,pos+1);
     molID << " (in " << fn << ')';
