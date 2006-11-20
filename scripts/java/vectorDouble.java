@@ -27,49 +27,49 @@ public class vectorDouble {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_vectorDouble(swigCPtr);
+      openbabelJNI.delete_vectorDouble(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public vectorDouble() {
-    this(net.sourceforge.openbabelJNI.new_vectorDouble__SWIG_0(), true);
+    this(openbabelJNI.new_vectorDouble__SWIG_0(), true);
   }
 
   public vectorDouble(long n) {
-    this(net.sourceforge.openbabelJNI.new_vectorDouble__SWIG_1(n), true);
+    this(openbabelJNI.new_vectorDouble__SWIG_1(n), true);
   }
 
   public long size() {
-    return net.sourceforge.openbabelJNI.vectorDouble_size(swigCPtr, this);
+    return openbabelJNI.vectorDouble_size(swigCPtr, this);
   }
 
   public long capacity() {
-    return net.sourceforge.openbabelJNI.vectorDouble_capacity(swigCPtr, this);
+    return openbabelJNI.vectorDouble_capacity(swigCPtr, this);
   }
 
   public void reserve(long n) {
-    net.sourceforge.openbabelJNI.vectorDouble_reserve(swigCPtr, this, n);
+    openbabelJNI.vectorDouble_reserve(swigCPtr, this, n);
   }
 
   public boolean isEmpty() {
-    return net.sourceforge.openbabelJNI.vectorDouble_isEmpty(swigCPtr, this);
+    return openbabelJNI.vectorDouble_isEmpty(swigCPtr, this);
   }
 
   public void clear() {
-    net.sourceforge.openbabelJNI.vectorDouble_clear(swigCPtr, this);
+    openbabelJNI.vectorDouble_clear(swigCPtr, this);
   }
 
   public void add(double x) {
-    net.sourceforge.openbabelJNI.vectorDouble_add(swigCPtr, this, x);
+    openbabelJNI.vectorDouble_add(swigCPtr, this, x);
   }
 
   public double get(int i) {
-    return net.sourceforge.openbabelJNI.vectorDouble_get(swigCPtr, this, i);
+    return openbabelJNI.vectorDouble_get(swigCPtr, this, i);
   }
 
   public void set(int i, double x) {
-    net.sourceforge.openbabelJNI.vectorDouble_set(swigCPtr, this, i, x);
+    openbabelJNI.vectorDouble_set(swigCPtr, this, i, x);
   }
 
 }

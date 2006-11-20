@@ -11,7 +11,7 @@ public class OBConformerData extends OBGenericData {
   private long swigCPtr;
 
   protected OBConformerData(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBConformerDataUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBConformerDataUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,71 +26,71 @@ public class OBConformerData extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBConformerData(swigCPtr);
+      openbabelJNI.delete_OBConformerData(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBConformerData() {
-    this(net.sourceforge.openbabelJNI.new_OBConformerData__SWIG_0(), true);
+    this(openbabelJNI.new_OBConformerData__SWIG_0(), true);
   }
 
   public OBConformerData(OBConformerData arg0) {
-    this(net.sourceforge.openbabelJNI.new_OBConformerData__SWIG_1(OBConformerData.getCPtr(arg0), arg0), true);
+    this(openbabelJNI.new_OBConformerData__SWIG_1(OBConformerData.getCPtr(arg0), arg0), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBConformerData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBConformerData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void SetDimension(SWIGTYPE_p_std__vectorTunsigned_short_t vd) {
-    net.sourceforge.openbabelJNI.OBConformerData_SetDimension(swigCPtr, this, SWIGTYPE_p_std__vectorTunsigned_short_t.getCPtr(vd));
+    openbabelJNI.OBConformerData_SetDimension(swigCPtr, this, SWIGTYPE_p_std__vectorTunsigned_short_t.getCPtr(vd));
   }
 
   public void SetEnergies(vectorDouble ve) {
-    net.sourceforge.openbabelJNI.OBConformerData_SetEnergies(swigCPtr, this, vectorDouble.getCPtr(ve), ve);
+    openbabelJNI.OBConformerData_SetEnergies(swigCPtr, this, vectorDouble.getCPtr(ve), ve);
   }
 
   public void SetForces(SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t vf) {
-    net.sourceforge.openbabelJNI.OBConformerData_SetForces(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t.getCPtr(vf));
+    openbabelJNI.OBConformerData_SetForces(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t.getCPtr(vf));
   }
 
   public void SetVelocities(SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t vv) {
-    net.sourceforge.openbabelJNI.OBConformerData_SetVelocities(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t.getCPtr(vv));
+    openbabelJNI.OBConformerData_SetVelocities(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t.getCPtr(vv));
   }
 
   public void SetDisplacements(SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t vd) {
-    net.sourceforge.openbabelJNI.OBConformerData_SetDisplacements(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t.getCPtr(vd));
+    openbabelJNI.OBConformerData_SetDisplacements(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t.getCPtr(vd));
   }
 
   public void SetData(SWIGTYPE_p_std__vectorTstd__string_t vdat) {
-    net.sourceforge.openbabelJNI.OBConformerData_SetData(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(vdat));
+    openbabelJNI.OBConformerData_SetData(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(vdat));
   }
 
   public SWIGTYPE_p_std__vectorTunsigned_short_t GetDimension() {
-    return new SWIGTYPE_p_std__vectorTunsigned_short_t(net.sourceforge.openbabelJNI.OBConformerData_GetDimension(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTunsigned_short_t(openbabelJNI.OBConformerData_GetDimension(swigCPtr, this), true);
   }
 
   public vectorDouble GetEnergies() {
-    return new vectorDouble(net.sourceforge.openbabelJNI.OBConformerData_GetEnergies(swigCPtr, this), true);
+    return new vectorDouble(openbabelJNI.OBConformerData_GetEnergies(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t GetForces() {
-    return new SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t(net.sourceforge.openbabelJNI.OBConformerData_GetForces(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t(openbabelJNI.OBConformerData_GetForces(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t GetVelocities() {
-    return new SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t(net.sourceforge.openbabelJNI.OBConformerData_GetVelocities(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t(openbabelJNI.OBConformerData_GetVelocities(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t GetDisplacements() {
-    return new SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t(net.sourceforge.openbabelJNI.OBConformerData_GetDisplacements(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t(openbabelJNI.OBConformerData_GetDisplacements(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_std__vectorTstd__string_t GetData() {
-    return new SWIGTYPE_p_std__vectorTstd__string_t(net.sourceforge.openbabelJNI.OBConformerData_GetData(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTstd__string_t(openbabelJNI.OBConformerData_GetData(swigCPtr, this), true);
   }
 
 }

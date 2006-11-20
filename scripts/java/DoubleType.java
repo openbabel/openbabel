@@ -27,29 +27,29 @@ public class DoubleType {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_DoubleType(swigCPtr);
+      openbabelJNI.delete_DoubleType(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public void setHi(long value) {
-    net.sourceforge.openbabelJNI.DoubleType_hi_set(swigCPtr, this, value);
+    openbabelJNI.DoubleType_hi_set(swigCPtr, this, value);
   }
 
   public long getHi() {
-    return net.sourceforge.openbabelJNI.DoubleType_hi_get(swigCPtr, this);
+    return openbabelJNI.DoubleType_hi_get(swigCPtr, this);
   }
 
   public void setLo(long value) {
-    net.sourceforge.openbabelJNI.DoubleType_lo_set(swigCPtr, this, value);
+    openbabelJNI.DoubleType_lo_set(swigCPtr, this, value);
   }
 
   public long getLo() {
-    return net.sourceforge.openbabelJNI.DoubleType_lo_get(swigCPtr, this);
+    return openbabelJNI.DoubleType_lo_get(swigCPtr, this);
   }
 
   public DoubleType() {
-    this(net.sourceforge.openbabelJNI.new_DoubleType(), true);
+    this(openbabelJNI.new_DoubleType(), true);
   }
 
 }

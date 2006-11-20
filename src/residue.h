@@ -35,7 +35,11 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 namespace OpenBabel {
 
   class OBAtom;
+  //! A standard iterator over a vector of atoms
+  typedef std::vector<OBAtom*>::iterator OBAtomIterator;
   class OBBond;
+  //! A standard iterator over a vector of bonds
+  typedef std::vector<OBBond*>::iterator OBBondIterator;
 
   // Class OBResidue
   // class introduction in residue.cpp
@@ -90,9 +94,9 @@ namespace OpenBabel {
       bool           IsHetAtom(OBAtom *atom)        const;
       bool           IsResidueType(int)             const;
 
-      //! \deprecated Use FOR_ATOMS_OF_RESIDUE and OBResidueAtomIter instead
+      OBAtomIterator BeginAtoms()   { return _atoms.begin(); }
+      OBAtomIterator EndAtoms()     { return _atoms.end();   }
       OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);
-      //! \deprecated Use FOR_ATOMS_OF_RESIDUE and OBResidueAtomIter instead
       OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
 
     protected: // members
@@ -110,6 +114,9 @@ namespace OpenBabel {
       std::vector<unsigned int> _sernum;//!< List of serial numbers
       //    std::vector<OBGenericData*> _vdata; //!< Custom data
     }; // OBResidue
+
+  //! A standard iterator over a vector of residues
+  typedef std::vector<OBResidue*>::iterator OBResidueIterator;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Global Definitions

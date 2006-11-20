@@ -27,25 +27,25 @@ public class OBStopwatch {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBStopwatch(swigCPtr);
+      openbabelJNI.delete_OBStopwatch(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public void Start() {
-    net.sourceforge.openbabelJNI.OBStopwatch_Start(swigCPtr, this);
+    openbabelJNI.OBStopwatch_Start(swigCPtr, this);
   }
 
   public double Lap() {
-    return net.sourceforge.openbabelJNI.OBStopwatch_Lap(swigCPtr, this);
+    return openbabelJNI.OBStopwatch_Lap(swigCPtr, this);
   }
 
   public double Elapsed() {
-    return net.sourceforge.openbabelJNI.OBStopwatch_Elapsed(swigCPtr, this);
+    return openbabelJNI.OBStopwatch_Elapsed(swigCPtr, this);
   }
 
   public OBStopwatch() {
-    this(net.sourceforge.openbabelJNI.new_OBStopwatch(), true);
+    this(openbabelJNI.new_OBStopwatch(), true);
   }
 
 }

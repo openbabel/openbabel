@@ -35,6 +35,9 @@ namespace OpenBabel
 
   class OBAtom;
 
+  //! OBEdgeBase is declared for backwards-compatibility with 2.0 and earlier code
+  typedef OBBond OBEdgeBase;
+
   //BOND Property Macros (flags)
   //! An aromatic bond (regardless of bond order)
 #define OB_AROMATIC_BOND  (1<<1)
@@ -58,17 +61,24 @@ namespace OpenBabel
   // 11-16 currently unused
 
   // class introduction in bond.cpp
-  class OBAPI OBBond : public OBEdgeBase
+ class OBAPI OBBond: public OBBase
     {
     protected:
-      char                          _order; //!< Bond order (1, 2, 3, 5=aromatic)
-      unsigned short int            _flags; //!< Any flags for this bond
+      unsigned int                _idx;   //!< Unique edge index used by GetIdx() and SetIdx()
+      OBMol                      *_parent;//!< The molecule which contains me (if any)
+      OBAtom                     *_bgn;   //!< I connect one node
+      OBAtom                     *_end;   //!< to another node
+
+      char                        _order; //!< Bond order (1, 2, 3, 5=aromatic)
+      unsigned short int          _flags; //!< Any flags for this bond
 
       bool HasFlag(int flag)    { return((_flags & flag) != 0); }
       void SetFlag(int flag)    { _flags |= flag;               }
       void UnsetFlag(int flag)  { _flags &= (~(flag));          }
 
     public:
+      bool Visit;
+
       //! Constructor
       OBBond();
       //! Destructor
@@ -89,7 +99,7 @@ namespace OpenBabel
         {
           _end = end;
         }
-      // void SetParent(OBMol *ptr)               {_parent=ptr;} // (inherited)
+      void SetParent(OBMol *ptr)               {_parent=ptr;}
       void SetLength(OBAtom*,double);
       void Set(int,OBAtom*,OBAtom*,int,int);
       void SetKSingle();
@@ -116,18 +126,19 @@ namespace OpenBabel
 
       //! \name bond data request methods
       //@{
-      unsigned int     GetBO()            const { return((int)_order); }
-      unsigned int     GetBondOrder()     const { return((int)_order); }
+      unsigned int     GetIdx()           const { return(_idx);  }
+      unsigned int     GetBO()            const { return(_order); }
+      unsigned int     GetBondOrder()     const { return(_order); }
       unsigned int     GetFlags()         const { return(_flags);      }
       unsigned int     GetBeginAtomIdx()  const { return(_bgn->GetIdx()); }
       unsigned int     GetEndAtomIdx()    const { return(_end->GetIdx()); }
-      OBAtom *GetBeginAtom()    { return((OBAtom*)_bgn);    }
-      OBAtom *GetEndAtom()      { return((OBAtom*)_end);    }
+      OBAtom *GetBeginAtom()    { return(_bgn);    }
+      OBAtom *GetEndAtom()      { return(_end);    }
       OBAtom *GetNbrAtom(OBAtom *ptr)
         {
-          return((ptr != _bgn)? (OBAtom*)_bgn : (OBAtom*)_end);
+          return((ptr != _bgn)? _bgn : _end);
         }
-      // OBMol  *GetParent()                 {return(_parent);}  // (inherited)
+      OBMol  *GetParent()                 {return(_parent);}
       double   GetEquibLength();
       double   GetLength();
       int     GetNbrAtomIdx(OBAtom *ptr)
@@ -180,6 +191,9 @@ namespace OpenBabel
       //@}
 
     }; // class OBBond
+
+  //! A standard iterator over a vector of bonds
+  typedef std::vector<OBBond*>::iterator OBBondIterator;
 
 }// namespace OpenBabel
 

@@ -11,7 +11,7 @@ public class OBPairData extends OBGenericData {
   private long swigCPtr;
 
   protected OBPairData(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBPairDataUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBPairDataUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,27 +26,27 @@ public class OBPairData extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBPairData(swigCPtr);
+      openbabelJNI.delete_OBPairData(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBPairData() {
-    this(net.sourceforge.openbabelJNI.new_OBPairData(), true);
+    this(openbabelJNI.new_OBPairData(), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBPairData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBPairData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void SetValue(String v) {
-    net.sourceforge.openbabelJNI.OBPairData_SetValue__SWIG_0(swigCPtr, this, v);
+    openbabelJNI.OBPairData_SetValue__SWIG_0(swigCPtr, this, v);
   }
 
   public String GetValue() {
-    return net.sourceforge.openbabelJNI.OBPairData_GetValue(swigCPtr, this);
+    return openbabelJNI.OBPairData_GetValue(swigCPtr, this);
   }
 
 }

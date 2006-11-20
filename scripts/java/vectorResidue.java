@@ -27,49 +27,49 @@ public class vectorResidue {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_vectorResidue(swigCPtr);
+      openbabelJNI.delete_vectorResidue(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public vectorResidue() {
-    this(net.sourceforge.openbabelJNI.new_vectorResidue__SWIG_0(), true);
+    this(openbabelJNI.new_vectorResidue__SWIG_0(), true);
   }
 
   public vectorResidue(long n) {
-    this(net.sourceforge.openbabelJNI.new_vectorResidue__SWIG_1(n), true);
+    this(openbabelJNI.new_vectorResidue__SWIG_1(n), true);
   }
 
   public long size() {
-    return net.sourceforge.openbabelJNI.vectorResidue_size(swigCPtr, this);
+    return openbabelJNI.vectorResidue_size(swigCPtr, this);
   }
 
   public long capacity() {
-    return net.sourceforge.openbabelJNI.vectorResidue_capacity(swigCPtr, this);
+    return openbabelJNI.vectorResidue_capacity(swigCPtr, this);
   }
 
   public void reserve(long n) {
-    net.sourceforge.openbabelJNI.vectorResidue_reserve(swigCPtr, this, n);
+    openbabelJNI.vectorResidue_reserve(swigCPtr, this, n);
   }
 
   public boolean isEmpty() {
-    return net.sourceforge.openbabelJNI.vectorResidue_isEmpty(swigCPtr, this);
+    return openbabelJNI.vectorResidue_isEmpty(swigCPtr, this);
   }
 
   public void clear() {
-    net.sourceforge.openbabelJNI.vectorResidue_clear(swigCPtr, this);
+    openbabelJNI.vectorResidue_clear(swigCPtr, this);
   }
 
   public void add(OBResidue x) {
-    net.sourceforge.openbabelJNI.vectorResidue_add(swigCPtr, this, OBResidue.getCPtr(x), x);
+    openbabelJNI.vectorResidue_add(swigCPtr, this, OBResidue.getCPtr(x), x);
   }
 
   public OBResidue get(int i) {
-    return new OBResidue(net.sourceforge.openbabelJNI.vectorResidue_get(swigCPtr, this, i), false);
+    return new OBResidue(openbabelJNI.vectorResidue_get(swigCPtr, this, i), false);
   }
 
   public void set(int i, OBResidue x) {
-    net.sourceforge.openbabelJNI.vectorResidue_set(swigCPtr, this, i, OBResidue.getCPtr(x), x);
+    openbabelJNI.vectorResidue_set(swigCPtr, this, i, OBResidue.getCPtr(x), x);
   }
 
 }

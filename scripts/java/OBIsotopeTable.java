@@ -11,7 +11,7 @@ public class OBIsotopeTable extends OBGlobalDataBase {
   private long swigCPtr;
 
   protected OBIsotopeTable(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBIsotopeTableUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBIsotopeTableUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,30 +26,30 @@ public class OBIsotopeTable extends OBGlobalDataBase {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBIsotopeTable(swigCPtr);
+      openbabelJNI.delete_OBIsotopeTable(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBIsotopeTable() {
-    this(net.sourceforge.openbabelJNI.new_OBIsotopeTable(), true);
+    this(openbabelJNI.new_OBIsotopeTable(), true);
   }
 
   public long GetSize() {
-    return net.sourceforge.openbabelJNI.OBIsotopeTable_GetSize(swigCPtr, this);
+    return openbabelJNI.OBIsotopeTable_GetSize(swigCPtr, this);
   }
 
   public void ParseLine(String arg0) {
-    net.sourceforge.openbabelJNI.OBIsotopeTable_ParseLine(swigCPtr, this, arg0);
+    openbabelJNI.OBIsotopeTable_ParseLine(swigCPtr, this, arg0);
   }
 
   public double GetExactMass(long atomicNum, long isotope) {
-    return net.sourceforge.openbabelJNI.OBIsotopeTable_GetExactMass__SWIG_0(swigCPtr, this, atomicNum, isotope);
+    return openbabelJNI.OBIsotopeTable_GetExactMass__SWIG_0(swigCPtr, this, atomicNum, isotope);
   }
 
   public double GetExactMass(long atomicNum) {
-    return net.sourceforge.openbabelJNI.OBIsotopeTable_GetExactMass__SWIG_1(swigCPtr, this, atomicNum);
+    return openbabelJNI.OBIsotopeTable_GetExactMass__SWIG_1(swigCPtr, this, atomicNum);
   }
 
 }

@@ -1013,83 +1013,6 @@ OBBase_swigregister = _openbabel.OBBase_swigregister
 OBBase_swigregister(OBBase)
 OBBase_ClassDescription = _openbabel.OBBase_ClassDescription
 
-class OBNodeBase(OBBase):
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    Visit = _swig_property(_openbabel.OBNodeBase_Visit_get, _openbabel.OBNodeBase_Visit_set)
-    def __init__(self, *args): 
-        _openbabel.OBNodeBase_swiginit(self,_openbabel.new_OBNodeBase(*args))
-    __swig_destroy__ = _openbabel.delete_OBNodeBase
-    __del__ = lambda self : None;
-    def GetIdx(*args): return _openbabel.OBNodeBase_GetIdx(*args)
-    def SetIdx(*args): return _openbabel.OBNodeBase_SetIdx(*args)
-    def GetParent(*args): return _openbabel.OBNodeBase_GetParent(*args)
-    def SetParent(*args): return _openbabel.OBNodeBase_SetParent(*args)
-    def AddEdge(*args): return _openbabel.OBNodeBase_AddEdge(*args)
-    def GetValence(*args): return _openbabel.OBNodeBase_GetValence(*args)
-    def IsConnected(*args): return _openbabel.OBNodeBase_IsConnected(*args)
-    def Error(*args): return _openbabel.OBNodeBase_Error(*args)
-    def GetFormalCharge(*args): return _openbabel.OBNodeBase_GetFormalCharge(*args)
-    def ExplicitHydrogenCount(*args): return _openbabel.OBNodeBase_ExplicitHydrogenCount(*args)
-    def ImplicitHydrogenCount(*args): return _openbabel.OBNodeBase_ImplicitHydrogenCount(*args)
-    def GetImplicitValence(*args): return _openbabel.OBNodeBase_GetImplicitValence(*args)
-    def GetHvyValence(*args): return _openbabel.OBNodeBase_GetHvyValence(*args)
-    def KBOSum(*args): return _openbabel.OBNodeBase_KBOSum(*args)
-    def GetHyb(*args): return _openbabel.OBNodeBase_GetHyb(*args)
-    def MemberOfRingCount(*args): return _openbabel.OBNodeBase_MemberOfRingCount(*args)
-    def GetAtomicNum(*args): return _openbabel.OBNodeBase_GetAtomicNum(*args)
-    def SetMatch(*args): return _openbabel.OBNodeBase_SetMatch(*args)
-    def SetAromatic(*args): return _openbabel.OBNodeBase_SetAromatic(*args)
-    def IsInRingSize(*args): return _openbabel.OBNodeBase_IsInRingSize(*args)
-    def IsAromatic(*args): return _openbabel.OBNodeBase_IsAromatic(*args)
-    def IsInRing(*args): return _openbabel.OBNodeBase_IsInRing(*args)
-    def Eval(*args): return _openbabel.OBNodeBase_Eval(*args)
-    def GetMatch(*args): return _openbabel.OBNodeBase_GetMatch(*args)
-OBNodeBase_swigregister = _openbabel.OBNodeBase_swigregister
-OBNodeBase_swigregister(OBNodeBase)
-
-class OBEdgeBase(OBBase):
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    Visit = _swig_property(_openbabel.OBEdgeBase_Visit_get, _openbabel.OBEdgeBase_Visit_set)
-    def __init__(self, *args): 
-        _openbabel.OBEdgeBase_swiginit(self,_openbabel.new_OBEdgeBase(*args))
-    __swig_destroy__ = _openbabel.delete_OBEdgeBase
-    __del__ = lambda self : None;
-    def GetParent(*args): return _openbabel.OBEdgeBase_GetParent(*args)
-    def SetParent(*args): return _openbabel.OBEdgeBase_SetParent(*args)
-    def GetIdx(*args): return _openbabel.OBEdgeBase_GetIdx(*args)
-    def SetIdx(*args): return _openbabel.OBEdgeBase_SetIdx(*args)
-    def SetBgn(*args): return _openbabel.OBEdgeBase_SetBgn(*args)
-    def SetEnd(*args): return _openbabel.OBEdgeBase_SetEnd(*args)
-    def SwapEnds(*args): return _openbabel.OBEdgeBase_SwapEnds(*args)
-    def GetBgn(*args): return _openbabel.OBEdgeBase_GetBgn(*args)
-    def GetEnd(*args): return _openbabel.OBEdgeBase_GetEnd(*args)
-    def Error(*args): return _openbabel.OBEdgeBase_Error(*args)
-    def SetClosure(*args): return _openbabel.OBEdgeBase_SetClosure(*args)
-    def IsAromatic(*args): return _openbabel.OBEdgeBase_IsAromatic(*args)
-    def IsInRing(*args): return _openbabel.OBEdgeBase_IsInRing(*args)
-    def IsClosure(*args): return _openbabel.OBEdgeBase_IsClosure(*args)
-    def Eval(*args): return _openbabel.OBEdgeBase_Eval(*args)
-    def GetBO(*args): return _openbabel.OBEdgeBase_GetBO(*args)
-OBEdgeBase_swigregister = _openbabel.OBEdgeBase_swigregister
-OBEdgeBase_swigregister(OBEdgeBase)
-
-class OBGraphBase(OBBase):
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        _openbabel.OBGraphBase_swiginit(self,_openbabel.new_OBGraphBase(*args))
-    __swig_destroy__ = _openbabel.delete_OBGraphBase
-    __del__ = lambda self : None;
-    def NumNodes(*args): return _openbabel.OBGraphBase_NumNodes(*args)
-    def NumEdges(*args): return _openbabel.OBGraphBase_NumEdges(*args)
-    def ResetVisitFlags(*args): return _openbabel.OBGraphBase_ResetVisitFlags(*args)
-    def SetVisitLock(*args): return _openbabel.OBGraphBase_SetVisitLock(*args)
-    def GetVisitLock(*args): return _openbabel.OBGraphBase_GetVisitLock(*args)
-OBGraphBase_swigregister = _openbabel.OBGraphBase_swigregister
-OBGraphBase_swigregister(OBGraphBase)
-
 obError = _openbabel.obError
 obWarning = _openbabel.obWarning
 obInfo = _openbabel.obInfo
@@ -1300,6 +1223,8 @@ class OBResidue(OBBase):
     def GetResidueProperty(*args): return _openbabel.OBResidue_GetResidueProperty(*args)
     def IsHetAtom(*args): return _openbabel.OBResidue_IsHetAtom(*args)
     def IsResidueType(*args): return _openbabel.OBResidue_IsResidueType(*args)
+    def BeginAtoms(*args): return _openbabel.OBResidue_BeginAtoms(*args)
+    def EndAtoms(*args): return _openbabel.OBResidue_EndAtoms(*args)
     def BeginAtom(*args): return _openbabel.OBResidue_BeginAtom(*args)
     def NextAtom(*args): return _openbabel.OBResidue_NextAtom(*args)
 OBResidue_swigregister = _openbabel.OBResidue_swigregister
@@ -1342,9 +1267,10 @@ OB_CHIRAL_ATOM = _openbabel.OB_CHIRAL_ATOM
 OB_POS_CHIRAL_ATOM = _openbabel.OB_POS_CHIRAL_ATOM
 OB_NEG_CHIRAL_ATOM = _openbabel.OB_NEG_CHIRAL_ATOM
 OB_ATOM_HAS_NO_H = _openbabel.OB_ATOM_HAS_NO_H
-class OBAtom(OBNodeBase):
+class OBAtom(OBBase):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
+    Visit = _swig_property(_openbabel.OBAtom_Visit_get, _openbabel.OBAtom_Visit_set)
     def __init__(self, *args): 
         _openbabel.OBAtom_swiginit(self,_openbabel.new_OBAtom(*args))
     __swig_destroy__ = _openbabel.delete_OBAtom
@@ -1364,6 +1290,7 @@ class OBAtom(OBNodeBase):
     def SetCoordPtr(*args): return _openbabel.OBAtom_SetCoordPtr(*args)
     def SetVector(*args): return _openbabel.OBAtom_SetVector(*args)
     def SetResidue(*args): return _openbabel.OBAtom_SetResidue(*args)
+    def SetParent(*args): return _openbabel.OBAtom_SetParent(*args)
     def SetAromatic(*args): return _openbabel.OBAtom_SetAromatic(*args)
     def UnsetAromatic(*args): return _openbabel.OBAtom_UnsetAromatic(*args)
     def SetClockwiseStereo(*args): return _openbabel.OBAtom_SetClockwiseStereo(*args)
@@ -1399,6 +1326,7 @@ class OBAtom(OBNodeBase):
     def GetVector(*args): return _openbabel.OBAtom_GetVector(*args)
     def GetPartialCharge(*args): return _openbabel.OBAtom_GetPartialCharge(*args)
     def GetResidue(*args): return _openbabel.OBAtom_GetResidue(*args)
+    def GetParent(*args): return _openbabel.OBAtom_GetParent(*args)
     def GetNewBondVector(*args): return _openbabel.OBAtom_GetNewBondVector(*args)
     def GetBond(*args): return _openbabel.OBAtom_GetBond(*args)
     def GetNextAtom(*args): return _openbabel.OBAtom_GetNextAtom(*args)
@@ -1570,9 +1498,10 @@ OB_KSINGLE_BOND = _openbabel.OB_KSINGLE_BOND
 OB_KDOUBLE_BOND = _openbabel.OB_KDOUBLE_BOND
 OB_KTRIPLE_BOND = _openbabel.OB_KTRIPLE_BOND
 OB_CLOSURE_BOND = _openbabel.OB_CLOSURE_BOND
-class OBBond(OBEdgeBase):
+class OBBond(OBBase):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
+    Visit = _swig_property(_openbabel.OBBond_Visit_get, _openbabel.OBBond_Visit_set)
     def __init__(self, *args): 
         _openbabel.OBBond_swiginit(self,_openbabel.new_OBBond(*args))
     __swig_destroy__ = _openbabel.delete_OBBond
@@ -1581,6 +1510,7 @@ class OBBond(OBEdgeBase):
     def SetBO(*args): return _openbabel.OBBond_SetBO(*args)
     def SetBegin(*args): return _openbabel.OBBond_SetBegin(*args)
     def SetEnd(*args): return _openbabel.OBBond_SetEnd(*args)
+    def SetParent(*args): return _openbabel.OBBond_SetParent(*args)
     def SetLength(*args): return _openbabel.OBBond_SetLength(*args)
     def Set(*args): return _openbabel.OBBond_Set(*args)
     def SetKSingle(*args): return _openbabel.OBBond_SetKSingle(*args)
@@ -1599,6 +1529,7 @@ class OBBond(OBEdgeBase):
     def UnsetDown(*args): return _openbabel.OBBond_UnsetDown(*args)
     def UnsetAromatic(*args): return _openbabel.OBBond_UnsetAromatic(*args)
     def UnsetKekule(*args): return _openbabel.OBBond_UnsetKekule(*args)
+    def GetIdx(*args): return _openbabel.OBBond_GetIdx(*args)
     def GetBO(*args): return _openbabel.OBBond_GetBO(*args)
     def GetBondOrder(*args): return _openbabel.OBBond_GetBondOrder(*args)
     def GetFlags(*args): return _openbabel.OBBond_GetFlags(*args)
@@ -1607,6 +1538,7 @@ class OBBond(OBEdgeBase):
     def GetBeginAtom(*args): return _openbabel.OBBond_GetBeginAtom(*args)
     def GetEndAtom(*args): return _openbabel.OBBond_GetEndAtom(*args)
     def GetNbrAtom(*args): return _openbabel.OBBond_GetNbrAtom(*args)
+    def GetParent(*args): return _openbabel.OBBond_GetParent(*args)
     def GetEquibLength(*args): return _openbabel.OBBond_GetEquibLength(*args)
     def GetLength(*args): return _openbabel.OBBond_GetLength(*args)
     def GetNbrAtomIdx(*args): return _openbabel.OBBond_GetNbrAtomIdx(*args)
@@ -1650,7 +1582,7 @@ OB_CHAINS_MOL = _openbabel.OB_CHAINS_MOL
 OB_TCHARGE_MOL = _openbabel.OB_TCHARGE_MOL
 OB_TSPIN_MOL = _openbabel.OB_TSPIN_MOL
 OB_CURRENT_CONFORMER = _openbabel.OB_CURRENT_CONFORMER
-class OBMol(OBGraphBase):
+class OBMol(OBBase):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     def __init__(self, *args): 
@@ -1798,6 +1730,12 @@ class OBMol(OBGraphBase):
     def BeginConformer(*args): return _openbabel.OBMol_BeginConformer(*args)
     def NextConformer(*args): return _openbabel.OBMol_NextConformer(*args)
     def GetConformers(*args): return _openbabel.OBMol_GetConformers(*args)
+    def BeginAtoms(*args): return _openbabel.OBMol_BeginAtoms(*args)
+    def EndAtoms(*args): return _openbabel.OBMol_EndAtoms(*args)
+    def BeginBonds(*args): return _openbabel.OBMol_BeginBonds(*args)
+    def EndBonds(*args): return _openbabel.OBMol_EndBonds(*args)
+    def BeginResidues(*args): return _openbabel.OBMol_BeginResidues(*args)
+    def EndResidues(*args): return _openbabel.OBMol_EndResidues(*args)
     def BeginAtom(*args): return _openbabel.OBMol_BeginAtom(*args)
     def NextAtom(*args): return _openbabel.OBMol_NextAtom(*args)
     def BeginBond(*args): return _openbabel.OBMol_BeginBond(*args)
@@ -1921,6 +1859,7 @@ class OBMolAtomIter(object):
     def __ref__(*args): return _openbabel.OBMolAtomIter___ref__(*args)
     __swig_destroy__ = _openbabel.delete_OBMolAtomIter
     __del__ = lambda self : None;
+    Visit = _swig_property(_openbabel.OBMolAtomIter_Visit_get, _openbabel.OBMolAtomIter_Visit_set)
     def Clear(*args): return _openbabel.OBMolAtomIter_Clear(*args)
     def SetIdx(*args): return _openbabel.OBMolAtomIter_SetIdx(*args)
     def SetHyb(*args): return _openbabel.OBMolAtomIter_SetHyb(*args)
@@ -1936,6 +1875,7 @@ class OBMolAtomIter(object):
     def SetVector(*args): return _openbabel.OBMolAtomIter_SetVector(*args)
     def SetCoordPtr(*args): return _openbabel.OBMolAtomIter_SetCoordPtr(*args)
     def SetResidue(*args): return _openbabel.OBMolAtomIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel.OBMolAtomIter_SetParent(*args)
     def SetAromatic(*args): return _openbabel.OBMolAtomIter_SetAromatic(*args)
     def UnsetAromatic(*args): return _openbabel.OBMolAtomIter_UnsetAromatic(*args)
     def SetClockwiseStereo(*args): return _openbabel.OBMolAtomIter_SetClockwiseStereo(*args)
@@ -1971,6 +1911,7 @@ class OBMolAtomIter(object):
     def GetVector(*args): return _openbabel.OBMolAtomIter_GetVector(*args)
     def GetPartialCharge(*args): return _openbabel.OBMolAtomIter_GetPartialCharge(*args)
     def GetResidue(*args): return _openbabel.OBMolAtomIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel.OBMolAtomIter_GetParent(*args)
     def GetNewBondVector(*args): return _openbabel.OBMolAtomIter_GetNewBondVector(*args)
     def GetBond(*args): return _openbabel.OBMolAtomIter_GetBond(*args)
     def GetNextAtom(*args): return _openbabel.OBMolAtomIter_GetNextAtom(*args)
@@ -2044,14 +1985,6 @@ class OBMolAtomIter(object):
     def HasDoubleBond(*args): return _openbabel.OBMolAtomIter_HasDoubleBond(*args)
     def HasAromaticBond(*args): return _openbabel.OBMolAtomIter_HasAromaticBond(*args)
     def MatchesSMARTS(*args): return _openbabel.OBMolAtomIter_MatchesSMARTS(*args)
-    Visit = _swig_property(_openbabel.OBMolAtomIter_Visit_get, _openbabel.OBMolAtomIter_Visit_set)
-    def GetParent(*args): return _openbabel.OBMolAtomIter_GetParent(*args)
-    def SetParent(*args): return _openbabel.OBMolAtomIter_SetParent(*args)
-    def AddEdge(*args): return _openbabel.OBMolAtomIter_AddEdge(*args)
-    def Error(*args): return _openbabel.OBMolAtomIter_Error(*args)
-    def SetMatch(*args): return _openbabel.OBMolAtomIter_SetMatch(*args)
-    def Eval(*args): return _openbabel.OBMolAtomIter_Eval(*args)
-    def GetMatch(*args): return _openbabel.OBMolAtomIter_GetMatch(*args)
     def DoTransformations(*args): return _openbabel.OBMolAtomIter_DoTransformations(*args)
     def ClassDescription(*args): return _openbabel.OBMolAtomIter_ClassDescription(*args)
     def HasData(*args): return _openbabel.OBMolAtomIter_HasData(*args)
@@ -2073,6 +2006,7 @@ class OBMolAtomDFSIter(object):
     def __ref__(*args): return _openbabel.OBMolAtomDFSIter___ref__(*args)
     __swig_destroy__ = _openbabel.delete_OBMolAtomDFSIter
     __del__ = lambda self : None;
+    Visit = _swig_property(_openbabel.OBMolAtomDFSIter_Visit_get, _openbabel.OBMolAtomDFSIter_Visit_set)
     def Clear(*args): return _openbabel.OBMolAtomDFSIter_Clear(*args)
     def SetIdx(*args): return _openbabel.OBMolAtomDFSIter_SetIdx(*args)
     def SetHyb(*args): return _openbabel.OBMolAtomDFSIter_SetHyb(*args)
@@ -2088,6 +2022,7 @@ class OBMolAtomDFSIter(object):
     def SetVector(*args): return _openbabel.OBMolAtomDFSIter_SetVector(*args)
     def SetCoordPtr(*args): return _openbabel.OBMolAtomDFSIter_SetCoordPtr(*args)
     def SetResidue(*args): return _openbabel.OBMolAtomDFSIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel.OBMolAtomDFSIter_SetParent(*args)
     def SetAromatic(*args): return _openbabel.OBMolAtomDFSIter_SetAromatic(*args)
     def UnsetAromatic(*args): return _openbabel.OBMolAtomDFSIter_UnsetAromatic(*args)
     def SetClockwiseStereo(*args): return _openbabel.OBMolAtomDFSIter_SetClockwiseStereo(*args)
@@ -2123,6 +2058,7 @@ class OBMolAtomDFSIter(object):
     def GetVector(*args): return _openbabel.OBMolAtomDFSIter_GetVector(*args)
     def GetPartialCharge(*args): return _openbabel.OBMolAtomDFSIter_GetPartialCharge(*args)
     def GetResidue(*args): return _openbabel.OBMolAtomDFSIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel.OBMolAtomDFSIter_GetParent(*args)
     def GetNewBondVector(*args): return _openbabel.OBMolAtomDFSIter_GetNewBondVector(*args)
     def GetBond(*args): return _openbabel.OBMolAtomDFSIter_GetBond(*args)
     def GetNextAtom(*args): return _openbabel.OBMolAtomDFSIter_GetNextAtom(*args)
@@ -2196,14 +2132,6 @@ class OBMolAtomDFSIter(object):
     def HasDoubleBond(*args): return _openbabel.OBMolAtomDFSIter_HasDoubleBond(*args)
     def HasAromaticBond(*args): return _openbabel.OBMolAtomDFSIter_HasAromaticBond(*args)
     def MatchesSMARTS(*args): return _openbabel.OBMolAtomDFSIter_MatchesSMARTS(*args)
-    Visit = _swig_property(_openbabel.OBMolAtomDFSIter_Visit_get, _openbabel.OBMolAtomDFSIter_Visit_set)
-    def GetParent(*args): return _openbabel.OBMolAtomDFSIter_GetParent(*args)
-    def SetParent(*args): return _openbabel.OBMolAtomDFSIter_SetParent(*args)
-    def AddEdge(*args): return _openbabel.OBMolAtomDFSIter_AddEdge(*args)
-    def Error(*args): return _openbabel.OBMolAtomDFSIter_Error(*args)
-    def SetMatch(*args): return _openbabel.OBMolAtomDFSIter_SetMatch(*args)
-    def Eval(*args): return _openbabel.OBMolAtomDFSIter_Eval(*args)
-    def GetMatch(*args): return _openbabel.OBMolAtomDFSIter_GetMatch(*args)
     def DoTransformations(*args): return _openbabel.OBMolAtomDFSIter_DoTransformations(*args)
     def ClassDescription(*args): return _openbabel.OBMolAtomDFSIter_ClassDescription(*args)
     def HasData(*args): return _openbabel.OBMolAtomDFSIter_HasData(*args)
@@ -2225,6 +2153,7 @@ class OBMolAtomBFSIter(object):
     def __ref__(*args): return _openbabel.OBMolAtomBFSIter___ref__(*args)
     __swig_destroy__ = _openbabel.delete_OBMolAtomBFSIter
     __del__ = lambda self : None;
+    Visit = _swig_property(_openbabel.OBMolAtomBFSIter_Visit_get, _openbabel.OBMolAtomBFSIter_Visit_set)
     def Clear(*args): return _openbabel.OBMolAtomBFSIter_Clear(*args)
     def SetIdx(*args): return _openbabel.OBMolAtomBFSIter_SetIdx(*args)
     def SetHyb(*args): return _openbabel.OBMolAtomBFSIter_SetHyb(*args)
@@ -2240,6 +2169,7 @@ class OBMolAtomBFSIter(object):
     def SetVector(*args): return _openbabel.OBMolAtomBFSIter_SetVector(*args)
     def SetCoordPtr(*args): return _openbabel.OBMolAtomBFSIter_SetCoordPtr(*args)
     def SetResidue(*args): return _openbabel.OBMolAtomBFSIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel.OBMolAtomBFSIter_SetParent(*args)
     def SetAromatic(*args): return _openbabel.OBMolAtomBFSIter_SetAromatic(*args)
     def UnsetAromatic(*args): return _openbabel.OBMolAtomBFSIter_UnsetAromatic(*args)
     def SetClockwiseStereo(*args): return _openbabel.OBMolAtomBFSIter_SetClockwiseStereo(*args)
@@ -2275,6 +2205,7 @@ class OBMolAtomBFSIter(object):
     def GetVector(*args): return _openbabel.OBMolAtomBFSIter_GetVector(*args)
     def GetPartialCharge(*args): return _openbabel.OBMolAtomBFSIter_GetPartialCharge(*args)
     def GetResidue(*args): return _openbabel.OBMolAtomBFSIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel.OBMolAtomBFSIter_GetParent(*args)
     def GetNewBondVector(*args): return _openbabel.OBMolAtomBFSIter_GetNewBondVector(*args)
     def GetBond(*args): return _openbabel.OBMolAtomBFSIter_GetBond(*args)
     def GetNextAtom(*args): return _openbabel.OBMolAtomBFSIter_GetNextAtom(*args)
@@ -2348,14 +2279,6 @@ class OBMolAtomBFSIter(object):
     def HasDoubleBond(*args): return _openbabel.OBMolAtomBFSIter_HasDoubleBond(*args)
     def HasAromaticBond(*args): return _openbabel.OBMolAtomBFSIter_HasAromaticBond(*args)
     def MatchesSMARTS(*args): return _openbabel.OBMolAtomBFSIter_MatchesSMARTS(*args)
-    Visit = _swig_property(_openbabel.OBMolAtomBFSIter_Visit_get, _openbabel.OBMolAtomBFSIter_Visit_set)
-    def GetParent(*args): return _openbabel.OBMolAtomBFSIter_GetParent(*args)
-    def SetParent(*args): return _openbabel.OBMolAtomBFSIter_SetParent(*args)
-    def AddEdge(*args): return _openbabel.OBMolAtomBFSIter_AddEdge(*args)
-    def Error(*args): return _openbabel.OBMolAtomBFSIter_Error(*args)
-    def SetMatch(*args): return _openbabel.OBMolAtomBFSIter_SetMatch(*args)
-    def Eval(*args): return _openbabel.OBMolAtomBFSIter_Eval(*args)
-    def GetMatch(*args): return _openbabel.OBMolAtomBFSIter_GetMatch(*args)
     def DoTransformations(*args): return _openbabel.OBMolAtomBFSIter_DoTransformations(*args)
     def ClassDescription(*args): return _openbabel.OBMolAtomBFSIter_ClassDescription(*args)
     def HasData(*args): return _openbabel.OBMolAtomBFSIter_HasData(*args)
@@ -2379,10 +2302,12 @@ class OBMolBondIter(object):
     def __ref__(*args): return _openbabel.OBMolBondIter___ref__(*args)
     __swig_destroy__ = _openbabel.delete_OBMolBondIter
     __del__ = lambda self : None;
+    Visit = _swig_property(_openbabel.OBMolBondIter_Visit_get, _openbabel.OBMolBondIter_Visit_set)
     def SetIdx(*args): return _openbabel.OBMolBondIter_SetIdx(*args)
     def SetBO(*args): return _openbabel.OBMolBondIter_SetBO(*args)
     def SetBegin(*args): return _openbabel.OBMolBondIter_SetBegin(*args)
     def SetEnd(*args): return _openbabel.OBMolBondIter_SetEnd(*args)
+    def SetParent(*args): return _openbabel.OBMolBondIter_SetParent(*args)
     def SetLength(*args): return _openbabel.OBMolBondIter_SetLength(*args)
     def Set(*args): return _openbabel.OBMolBondIter_Set(*args)
     def SetKSingle(*args): return _openbabel.OBMolBondIter_SetKSingle(*args)
@@ -2401,6 +2326,7 @@ class OBMolBondIter(object):
     def UnsetDown(*args): return _openbabel.OBMolBondIter_UnsetDown(*args)
     def UnsetAromatic(*args): return _openbabel.OBMolBondIter_UnsetAromatic(*args)
     def UnsetKekule(*args): return _openbabel.OBMolBondIter_UnsetKekule(*args)
+    def GetIdx(*args): return _openbabel.OBMolBondIter_GetIdx(*args)
     def GetBO(*args): return _openbabel.OBMolBondIter_GetBO(*args)
     def GetBondOrder(*args): return _openbabel.OBMolBondIter_GetBondOrder(*args)
     def GetFlags(*args): return _openbabel.OBMolBondIter_GetFlags(*args)
@@ -2409,6 +2335,7 @@ class OBMolBondIter(object):
     def GetBeginAtom(*args): return _openbabel.OBMolBondIter_GetBeginAtom(*args)
     def GetEndAtom(*args): return _openbabel.OBMolBondIter_GetEndAtom(*args)
     def GetNbrAtom(*args): return _openbabel.OBMolBondIter_GetNbrAtom(*args)
+    def GetParent(*args): return _openbabel.OBMolBondIter_GetParent(*args)
     def GetEquibLength(*args): return _openbabel.OBMolBondIter_GetEquibLength(*args)
     def GetLength(*args): return _openbabel.OBMolBondIter_GetLength(*args)
     def GetNbrAtomIdx(*args): return _openbabel.OBMolBondIter_GetNbrAtomIdx(*args)
@@ -2432,16 +2359,6 @@ class OBMolBondIter(object):
     def IsWedge(*args): return _openbabel.OBMolBondIter_IsWedge(*args)
     def IsHash(*args): return _openbabel.OBMolBondIter_IsHash(*args)
     def IsDoubleBondGeometry(*args): return _openbabel.OBMolBondIter_IsDoubleBondGeometry(*args)
-    Visit = _swig_property(_openbabel.OBMolBondIter_Visit_get, _openbabel.OBMolBondIter_Visit_set)
-    def GetParent(*args): return _openbabel.OBMolBondIter_GetParent(*args)
-    def SetParent(*args): return _openbabel.OBMolBondIter_SetParent(*args)
-    def GetIdx(*args): return _openbabel.OBMolBondIter_GetIdx(*args)
-    def SetBgn(*args): return _openbabel.OBMolBondIter_SetBgn(*args)
-    def SwapEnds(*args): return _openbabel.OBMolBondIter_SwapEnds(*args)
-    def GetBgn(*args): return _openbabel.OBMolBondIter_GetBgn(*args)
-    def GetEnd(*args): return _openbabel.OBMolBondIter_GetEnd(*args)
-    def Error(*args): return _openbabel.OBMolBondIter_Error(*args)
-    def Eval(*args): return _openbabel.OBMolBondIter_Eval(*args)
     def DoTransformations(*args): return _openbabel.OBMolBondIter_DoTransformations(*args)
     def ClassDescription(*args): return _openbabel.OBMolBondIter_ClassDescription(*args)
     def HasData(*args): return _openbabel.OBMolBondIter_HasData(*args)
@@ -2465,6 +2382,7 @@ class OBAtomAtomIter(object):
     def __ref__(*args): return _openbabel.OBAtomAtomIter___ref__(*args)
     __swig_destroy__ = _openbabel.delete_OBAtomAtomIter
     __del__ = lambda self : None;
+    Visit = _swig_property(_openbabel.OBAtomAtomIter_Visit_get, _openbabel.OBAtomAtomIter_Visit_set)
     def Clear(*args): return _openbabel.OBAtomAtomIter_Clear(*args)
     def SetIdx(*args): return _openbabel.OBAtomAtomIter_SetIdx(*args)
     def SetHyb(*args): return _openbabel.OBAtomAtomIter_SetHyb(*args)
@@ -2480,6 +2398,7 @@ class OBAtomAtomIter(object):
     def SetVector(*args): return _openbabel.OBAtomAtomIter_SetVector(*args)
     def SetCoordPtr(*args): return _openbabel.OBAtomAtomIter_SetCoordPtr(*args)
     def SetResidue(*args): return _openbabel.OBAtomAtomIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel.OBAtomAtomIter_SetParent(*args)
     def SetAromatic(*args): return _openbabel.OBAtomAtomIter_SetAromatic(*args)
     def UnsetAromatic(*args): return _openbabel.OBAtomAtomIter_UnsetAromatic(*args)
     def SetClockwiseStereo(*args): return _openbabel.OBAtomAtomIter_SetClockwiseStereo(*args)
@@ -2515,6 +2434,7 @@ class OBAtomAtomIter(object):
     def GetVector(*args): return _openbabel.OBAtomAtomIter_GetVector(*args)
     def GetPartialCharge(*args): return _openbabel.OBAtomAtomIter_GetPartialCharge(*args)
     def GetResidue(*args): return _openbabel.OBAtomAtomIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel.OBAtomAtomIter_GetParent(*args)
     def GetNewBondVector(*args): return _openbabel.OBAtomAtomIter_GetNewBondVector(*args)
     def GetBond(*args): return _openbabel.OBAtomAtomIter_GetBond(*args)
     def GetNextAtom(*args): return _openbabel.OBAtomAtomIter_GetNextAtom(*args)
@@ -2588,14 +2508,6 @@ class OBAtomAtomIter(object):
     def HasDoubleBond(*args): return _openbabel.OBAtomAtomIter_HasDoubleBond(*args)
     def HasAromaticBond(*args): return _openbabel.OBAtomAtomIter_HasAromaticBond(*args)
     def MatchesSMARTS(*args): return _openbabel.OBAtomAtomIter_MatchesSMARTS(*args)
-    Visit = _swig_property(_openbabel.OBAtomAtomIter_Visit_get, _openbabel.OBAtomAtomIter_Visit_set)
-    def GetParent(*args): return _openbabel.OBAtomAtomIter_GetParent(*args)
-    def SetParent(*args): return _openbabel.OBAtomAtomIter_SetParent(*args)
-    def AddEdge(*args): return _openbabel.OBAtomAtomIter_AddEdge(*args)
-    def Error(*args): return _openbabel.OBAtomAtomIter_Error(*args)
-    def SetMatch(*args): return _openbabel.OBAtomAtomIter_SetMatch(*args)
-    def Eval(*args): return _openbabel.OBAtomAtomIter_Eval(*args)
-    def GetMatch(*args): return _openbabel.OBAtomAtomIter_GetMatch(*args)
     def DoTransformations(*args): return _openbabel.OBAtomAtomIter_DoTransformations(*args)
     def ClassDescription(*args): return _openbabel.OBAtomAtomIter_ClassDescription(*args)
     def HasData(*args): return _openbabel.OBAtomAtomIter_HasData(*args)
@@ -2619,10 +2531,12 @@ class OBAtomBondIter(object):
     def __ref__(*args): return _openbabel.OBAtomBondIter___ref__(*args)
     __swig_destroy__ = _openbabel.delete_OBAtomBondIter
     __del__ = lambda self : None;
+    Visit = _swig_property(_openbabel.OBAtomBondIter_Visit_get, _openbabel.OBAtomBondIter_Visit_set)
     def SetIdx(*args): return _openbabel.OBAtomBondIter_SetIdx(*args)
     def SetBO(*args): return _openbabel.OBAtomBondIter_SetBO(*args)
     def SetBegin(*args): return _openbabel.OBAtomBondIter_SetBegin(*args)
     def SetEnd(*args): return _openbabel.OBAtomBondIter_SetEnd(*args)
+    def SetParent(*args): return _openbabel.OBAtomBondIter_SetParent(*args)
     def SetLength(*args): return _openbabel.OBAtomBondIter_SetLength(*args)
     def Set(*args): return _openbabel.OBAtomBondIter_Set(*args)
     def SetKSingle(*args): return _openbabel.OBAtomBondIter_SetKSingle(*args)
@@ -2641,6 +2555,7 @@ class OBAtomBondIter(object):
     def UnsetDown(*args): return _openbabel.OBAtomBondIter_UnsetDown(*args)
     def UnsetAromatic(*args): return _openbabel.OBAtomBondIter_UnsetAromatic(*args)
     def UnsetKekule(*args): return _openbabel.OBAtomBondIter_UnsetKekule(*args)
+    def GetIdx(*args): return _openbabel.OBAtomBondIter_GetIdx(*args)
     def GetBO(*args): return _openbabel.OBAtomBondIter_GetBO(*args)
     def GetBondOrder(*args): return _openbabel.OBAtomBondIter_GetBondOrder(*args)
     def GetFlags(*args): return _openbabel.OBAtomBondIter_GetFlags(*args)
@@ -2649,6 +2564,7 @@ class OBAtomBondIter(object):
     def GetBeginAtom(*args): return _openbabel.OBAtomBondIter_GetBeginAtom(*args)
     def GetEndAtom(*args): return _openbabel.OBAtomBondIter_GetEndAtom(*args)
     def GetNbrAtom(*args): return _openbabel.OBAtomBondIter_GetNbrAtom(*args)
+    def GetParent(*args): return _openbabel.OBAtomBondIter_GetParent(*args)
     def GetEquibLength(*args): return _openbabel.OBAtomBondIter_GetEquibLength(*args)
     def GetLength(*args): return _openbabel.OBAtomBondIter_GetLength(*args)
     def GetNbrAtomIdx(*args): return _openbabel.OBAtomBondIter_GetNbrAtomIdx(*args)
@@ -2672,16 +2588,6 @@ class OBAtomBondIter(object):
     def IsWedge(*args): return _openbabel.OBAtomBondIter_IsWedge(*args)
     def IsHash(*args): return _openbabel.OBAtomBondIter_IsHash(*args)
     def IsDoubleBondGeometry(*args): return _openbabel.OBAtomBondIter_IsDoubleBondGeometry(*args)
-    Visit = _swig_property(_openbabel.OBAtomBondIter_Visit_get, _openbabel.OBAtomBondIter_Visit_set)
-    def GetParent(*args): return _openbabel.OBAtomBondIter_GetParent(*args)
-    def SetParent(*args): return _openbabel.OBAtomBondIter_SetParent(*args)
-    def GetIdx(*args): return _openbabel.OBAtomBondIter_GetIdx(*args)
-    def SetBgn(*args): return _openbabel.OBAtomBondIter_SetBgn(*args)
-    def SwapEnds(*args): return _openbabel.OBAtomBondIter_SwapEnds(*args)
-    def GetBgn(*args): return _openbabel.OBAtomBondIter_GetBgn(*args)
-    def GetEnd(*args): return _openbabel.OBAtomBondIter_GetEnd(*args)
-    def Error(*args): return _openbabel.OBAtomBondIter_Error(*args)
-    def Eval(*args): return _openbabel.OBAtomBondIter_Eval(*args)
     def DoTransformations(*args): return _openbabel.OBAtomBondIter_DoTransformations(*args)
     def ClassDescription(*args): return _openbabel.OBAtomBondIter_ClassDescription(*args)
     def HasData(*args): return _openbabel.OBAtomBondIter_HasData(*args)
@@ -2733,6 +2639,8 @@ class OBResidueIter(object):
     def GetResidueProperty(*args): return _openbabel.OBResidueIter_GetResidueProperty(*args)
     def IsHetAtom(*args): return _openbabel.OBResidueIter_IsHetAtom(*args)
     def IsResidueType(*args): return _openbabel.OBResidueIter_IsResidueType(*args)
+    def BeginAtoms(*args): return _openbabel.OBResidueIter_BeginAtoms(*args)
+    def EndAtoms(*args): return _openbabel.OBResidueIter_EndAtoms(*args)
     def BeginAtom(*args): return _openbabel.OBResidueIter_BeginAtom(*args)
     def NextAtom(*args): return _openbabel.OBResidueIter_NextAtom(*args)
     def DoTransformations(*args): return _openbabel.OBResidueIter_DoTransformations(*args)
@@ -2758,6 +2666,7 @@ class OBResidueAtomIter(object):
     def __ref__(*args): return _openbabel.OBResidueAtomIter___ref__(*args)
     __swig_destroy__ = _openbabel.delete_OBResidueAtomIter
     __del__ = lambda self : None;
+    Visit = _swig_property(_openbabel.OBResidueAtomIter_Visit_get, _openbabel.OBResidueAtomIter_Visit_set)
     def Clear(*args): return _openbabel.OBResidueAtomIter_Clear(*args)
     def SetIdx(*args): return _openbabel.OBResidueAtomIter_SetIdx(*args)
     def SetHyb(*args): return _openbabel.OBResidueAtomIter_SetHyb(*args)
@@ -2773,6 +2682,7 @@ class OBResidueAtomIter(object):
     def SetVector(*args): return _openbabel.OBResidueAtomIter_SetVector(*args)
     def SetCoordPtr(*args): return _openbabel.OBResidueAtomIter_SetCoordPtr(*args)
     def SetResidue(*args): return _openbabel.OBResidueAtomIter_SetResidue(*args)
+    def SetParent(*args): return _openbabel.OBResidueAtomIter_SetParent(*args)
     def SetAromatic(*args): return _openbabel.OBResidueAtomIter_SetAromatic(*args)
     def UnsetAromatic(*args): return _openbabel.OBResidueAtomIter_UnsetAromatic(*args)
     def SetClockwiseStereo(*args): return _openbabel.OBResidueAtomIter_SetClockwiseStereo(*args)
@@ -2808,6 +2718,7 @@ class OBResidueAtomIter(object):
     def GetVector(*args): return _openbabel.OBResidueAtomIter_GetVector(*args)
     def GetPartialCharge(*args): return _openbabel.OBResidueAtomIter_GetPartialCharge(*args)
     def GetResidue(*args): return _openbabel.OBResidueAtomIter_GetResidue(*args)
+    def GetParent(*args): return _openbabel.OBResidueAtomIter_GetParent(*args)
     def GetNewBondVector(*args): return _openbabel.OBResidueAtomIter_GetNewBondVector(*args)
     def GetBond(*args): return _openbabel.OBResidueAtomIter_GetBond(*args)
     def GetNextAtom(*args): return _openbabel.OBResidueAtomIter_GetNextAtom(*args)
@@ -2881,14 +2792,6 @@ class OBResidueAtomIter(object):
     def HasDoubleBond(*args): return _openbabel.OBResidueAtomIter_HasDoubleBond(*args)
     def HasAromaticBond(*args): return _openbabel.OBResidueAtomIter_HasAromaticBond(*args)
     def MatchesSMARTS(*args): return _openbabel.OBResidueAtomIter_MatchesSMARTS(*args)
-    Visit = _swig_property(_openbabel.OBResidueAtomIter_Visit_get, _openbabel.OBResidueAtomIter_Visit_set)
-    def GetParent(*args): return _openbabel.OBResidueAtomIter_GetParent(*args)
-    def SetParent(*args): return _openbabel.OBResidueAtomIter_SetParent(*args)
-    def AddEdge(*args): return _openbabel.OBResidueAtomIter_AddEdge(*args)
-    def Error(*args): return _openbabel.OBResidueAtomIter_Error(*args)
-    def SetMatch(*args): return _openbabel.OBResidueAtomIter_SetMatch(*args)
-    def Eval(*args): return _openbabel.OBResidueAtomIter_Eval(*args)
-    def GetMatch(*args): return _openbabel.OBResidueAtomIter_GetMatch(*args)
     def DoTransformations(*args): return _openbabel.OBResidueAtomIter_DoTransformations(*args)
     def ClassDescription(*args): return _openbabel.OBResidueAtomIter_ClassDescription(*args)
     def HasData(*args): return _openbabel.OBResidueAtomIter_HasData(*args)

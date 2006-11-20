@@ -38,7 +38,7 @@ namespace OpenBabel
 
   //! \brief Iterate over all atoms in an OBMol
   class OBAPI OBMolAtomIter {
-    std::vector<OBNodeBase*>::iterator _i;
+    std::vector<OBAtom*>::iterator _i;
     OBMol *_parent;
     OBAtom *_ptr;
   public:
@@ -97,7 +97,7 @@ namespace OpenBabel
 
   //! \brief Iterate over all bonds in an OBMol
   class OBAPI OBMolBondIter {
-    std::vector<OBEdgeBase*>::iterator _i;
+    std::vector<OBBond*>::iterator _i;
     OBMol *_parent;
     OBBond *_ptr;
   public:
@@ -116,7 +116,7 @@ namespace OpenBabel
 
   //! \brief Iterate over all neighboring atoms to an OBAtom
   class OBAPI OBAtomAtomIter {
-    std::vector<OBEdgeBase*>::iterator _i;
+    std::vector<OBBond*>::iterator _i;
     OBAtom *_parent;
     OBAtom *_ptr;
   public:
@@ -135,7 +135,7 @@ namespace OpenBabel
 
   //! \brief Iterate over all bonds on an OBAtom
   class OBAPI OBAtomBondIter {
-    std::vector<OBEdgeBase*>::iterator _i;
+    std::vector<OBBond*>::iterator _i;
     OBAtom *_parent;
     OBBond *_ptr;
   public:

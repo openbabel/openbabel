@@ -27,214 +27,222 @@ public class OBResidueIter {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBResidueIter(swigCPtr);
+      openbabelJNI.delete_OBResidueIter(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBResidueIter() {
-    this(net.sourceforge.openbabelJNI.new_OBResidueIter__SWIG_0(), true);
+    this(openbabelJNI.new_OBResidueIter__SWIG_0(), true);
   }
 
   public OBResidueIter(OBMol mol) {
-    this(net.sourceforge.openbabelJNI.new_OBResidueIter__SWIG_1(OBMol.getCPtr(mol), mol), true);
+    this(openbabelJNI.new_OBResidueIter__SWIG_1(OBMol.getCPtr(mol), mol), true);
   }
 
   public OBResidueIter(OBResidueIter ri) {
-    this(net.sourceforge.openbabelJNI.new_OBResidueIter__SWIG_3(OBResidueIter.getCPtr(ri), ri), true);
+    this(openbabelJNI.new_OBResidueIter__SWIG_3(OBResidueIter.getCPtr(ri), ri), true);
   }
 
   public boolean good() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_good(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_good(swigCPtr, this);
   }
 
   public OBResidueIter inc(int arg0) {
-    return new OBResidueIter(net.sourceforge.openbabelJNI.OBResidueIter_inc(swigCPtr, this, arg0), true);
+    return new OBResidueIter(openbabelJNI.OBResidueIter_inc(swigCPtr, this, arg0), true);
   }
 
   public OBResidue __deref__() {
-    long cPtr = net.sourceforge.openbabelJNI.OBResidueIter___deref__(swigCPtr, this);
+    long cPtr = openbabelJNI.OBResidueIter___deref__(swigCPtr, this);
     return (cPtr == 0) ? null : new OBResidue(cPtr, false);
   }
 
   public OBResidue __ref__() {
-    return new OBResidue(net.sourceforge.openbabelJNI.OBResidueIter___ref__(swigCPtr, this), false);
+    return new OBResidue(openbabelJNI.OBResidueIter___ref__(swigCPtr, this), false);
   }
 
   public void AddAtom(OBAtom atom) {
-    net.sourceforge.openbabelJNI.OBResidueIter_AddAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
+    openbabelJNI.OBResidueIter_AddAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
   }
 
   public void InsertAtom(OBAtom atom) {
-    net.sourceforge.openbabelJNI.OBResidueIter_InsertAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
+    openbabelJNI.OBResidueIter_InsertAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
   }
 
   public void RemoveAtom(OBAtom atom) {
-    net.sourceforge.openbabelJNI.OBResidueIter_RemoveAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
+    openbabelJNI.OBResidueIter_RemoveAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
   }
 
   public void Clear() {
-    net.sourceforge.openbabelJNI.OBResidueIter_Clear(swigCPtr, this);
+    openbabelJNI.OBResidueIter_Clear(swigCPtr, this);
   }
 
   public void SetName(String resname) {
-    net.sourceforge.openbabelJNI.OBResidueIter_SetName(swigCPtr, this, resname);
+    openbabelJNI.OBResidueIter_SetName(swigCPtr, this, resname);
   }
 
   public void SetNum(long resnum) {
-    net.sourceforge.openbabelJNI.OBResidueIter_SetNum(swigCPtr, this, resnum);
+    openbabelJNI.OBResidueIter_SetNum(swigCPtr, this, resnum);
   }
 
   public void SetChain(char chain) {
-    net.sourceforge.openbabelJNI.OBResidueIter_SetChain(swigCPtr, this, chain);
+    openbabelJNI.OBResidueIter_SetChain(swigCPtr, this, chain);
   }
 
   public void SetChainNum(long chainnum) {
-    net.sourceforge.openbabelJNI.OBResidueIter_SetChainNum(swigCPtr, this, chainnum);
+    openbabelJNI.OBResidueIter_SetChainNum(swigCPtr, this, chainnum);
   }
 
   public void SetIdx(long idx) {
-    net.sourceforge.openbabelJNI.OBResidueIter_SetIdx(swigCPtr, this, idx);
+    openbabelJNI.OBResidueIter_SetIdx(swigCPtr, this, idx);
   }
 
   public void SetAtomID(OBAtom atom, String id) {
-    net.sourceforge.openbabelJNI.OBResidueIter_SetAtomID(swigCPtr, this, OBAtom.getCPtr(atom), atom, id);
+    openbabelJNI.OBResidueIter_SetAtomID(swigCPtr, this, OBAtom.getCPtr(atom), atom, id);
   }
 
   public void SetHetAtom(OBAtom atom, boolean hetatm) {
-    net.sourceforge.openbabelJNI.OBResidueIter_SetHetAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom, hetatm);
+    openbabelJNI.OBResidueIter_SetHetAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom, hetatm);
   }
 
   public void SetSerialNum(OBAtom atom, long sernum) {
-    net.sourceforge.openbabelJNI.OBResidueIter_SetSerialNum(swigCPtr, this, OBAtom.getCPtr(atom), atom, sernum);
+    openbabelJNI.OBResidueIter_SetSerialNum(swigCPtr, this, OBAtom.getCPtr(atom), atom, sernum);
   }
 
   public String GetName() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetName(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_GetName(swigCPtr, this);
   }
 
   public long GetNum() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetNum(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_GetNum(swigCPtr, this);
   }
 
   public long GetNumAtoms() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetNumAtoms(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_GetNumAtoms(swigCPtr, this);
   }
 
   public char GetChain() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetChain(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_GetChain(swigCPtr, this);
   }
 
   public long GetChainNum() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetChainNum(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_GetChainNum(swigCPtr, this);
   }
 
   public long GetIdx() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetIdx(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_GetIdx(swigCPtr, this);
   }
 
   public long GetResKey() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetResKey(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_GetResKey(swigCPtr, this);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t GetAtoms() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t(net.sourceforge.openbabelJNI.OBResidueIter_GetAtoms(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t(openbabelJNI.OBResidueIter_GetAtoms(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t GetBonds(boolean exterior) {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t(net.sourceforge.openbabelJNI.OBResidueIter_GetBonds__SWIG_0(swigCPtr, this, exterior), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t(openbabelJNI.OBResidueIter_GetBonds__SWIG_0(swigCPtr, this, exterior), true);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t GetBonds() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t(net.sourceforge.openbabelJNI.OBResidueIter_GetBonds__SWIG_1(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t(openbabelJNI.OBResidueIter_GetBonds__SWIG_1(swigCPtr, this), true);
   }
 
   public String GetAtomID(OBAtom atom) {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetAtomID(swigCPtr, this, OBAtom.getCPtr(atom), atom);
+    return openbabelJNI.OBResidueIter_GetAtomID(swigCPtr, this, OBAtom.getCPtr(atom), atom);
   }
 
   public long GetSerialNum(OBAtom atom) {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetSerialNum(swigCPtr, this, OBAtom.getCPtr(atom), atom);
+    return openbabelJNI.OBResidueIter_GetSerialNum(swigCPtr, this, OBAtom.getCPtr(atom), atom);
   }
 
   public boolean GetAminoAcidProperty(int arg0) {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetAminoAcidProperty(swigCPtr, this, arg0);
+    return openbabelJNI.OBResidueIter_GetAminoAcidProperty(swigCPtr, this, arg0);
   }
 
   public boolean GetAtomProperty(OBAtom arg0, int arg1) {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetAtomProperty(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, arg1);
+    return openbabelJNI.OBResidueIter_GetAtomProperty(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, arg1);
   }
 
   public boolean GetResidueProperty(int arg0) {
-    return net.sourceforge.openbabelJNI.OBResidueIter_GetResidueProperty(swigCPtr, this, arg0);
+    return openbabelJNI.OBResidueIter_GetResidueProperty(swigCPtr, this, arg0);
   }
 
   public boolean IsHetAtom(OBAtom atom) {
-    return net.sourceforge.openbabelJNI.OBResidueIter_IsHetAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
+    return openbabelJNI.OBResidueIter_IsHetAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
   }
 
   public boolean IsResidueType(int arg0) {
-    return net.sourceforge.openbabelJNI.OBResidueIter_IsResidueType(swigCPtr, this, arg0);
+    return openbabelJNI.OBResidueIter_IsResidueType(swigCPtr, this, arg0);
+  }
+
+  public SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator BeginAtoms() {
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator(openbabelJNI.OBResidueIter_BeginAtoms(swigCPtr, this), true);
+  }
+
+  public SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator EndAtoms() {
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator(openbabelJNI.OBResidueIter_EndAtoms(swigCPtr, this), true);
   }
 
   public OBAtom BeginAtom(SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator i) {
-    long cPtr = net.sourceforge.openbabelJNI.OBResidueIter_BeginAtom(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator.getCPtr(i));
+    long cPtr = openbabelJNI.OBResidueIter_BeginAtom(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator.getCPtr(i));
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
   public OBAtom NextAtom(SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator i) {
-    long cPtr = net.sourceforge.openbabelJNI.OBResidueIter_NextAtom(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator.getCPtr(i));
+    long cPtr = openbabelJNI.OBResidueIter_NextAtom(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator.getCPtr(i));
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
   public OBBase DoTransformations(SWIGTYPE_p_std__mapTstd__string_std__string_t arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBResidueIter_DoTransformations(swigCPtr, this, SWIGTYPE_p_std__mapTstd__string_std__string_t.getCPtr(arg0));
+    long cPtr = openbabelJNI.OBResidueIter_DoTransformations(swigCPtr, this, SWIGTYPE_p_std__mapTstd__string_std__string_t.getCPtr(arg0));
     return (cPtr == 0) ? null : new OBBase(cPtr, false);
   }
 
   public String ClassDescription() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_ClassDescription(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_ClassDescription(swigCPtr, this);
   }
 
   public boolean HasData(long type) {
-    return net.sourceforge.openbabelJNI.OBResidueIter_HasData__SWIG_2(swigCPtr, this, type);
+    return openbabelJNI.OBResidueIter_HasData__SWIG_2(swigCPtr, this, type);
   }
 
   public void DeleteData(long type) {
-    net.sourceforge.openbabelJNI.OBResidueIter_DeleteData__SWIG_0(swigCPtr, this, type);
+    openbabelJNI.OBResidueIter_DeleteData__SWIG_0(swigCPtr, this, type);
   }
 
   public void DeleteData(OBGenericData arg0) {
-    net.sourceforge.openbabelJNI.OBResidueIter_DeleteData__SWIG_1(swigCPtr, this, OBGenericData.getCPtr(arg0), arg0);
+    openbabelJNI.OBResidueIter_DeleteData__SWIG_1(swigCPtr, this, OBGenericData.getCPtr(arg0), arg0);
   }
 
   public void DeleteData(vectorData arg0) {
-    net.sourceforge.openbabelJNI.OBResidueIter_DeleteData__SWIG_2(swigCPtr, this, vectorData.getCPtr(arg0), arg0);
+    openbabelJNI.OBResidueIter_DeleteData__SWIG_2(swigCPtr, this, vectorData.getCPtr(arg0), arg0);
   }
 
   public void SetData(OBGenericData d) {
-    net.sourceforge.openbabelJNI.OBResidueIter_SetData(swigCPtr, this, OBGenericData.getCPtr(d), d);
+    openbabelJNI.OBResidueIter_SetData(swigCPtr, this, OBGenericData.getCPtr(d), d);
   }
 
   public long DataSize() {
-    return net.sourceforge.openbabelJNI.OBResidueIter_DataSize(swigCPtr, this);
+    return openbabelJNI.OBResidueIter_DataSize(swigCPtr, this);
   }
 
   public OBGenericData GetData(long type) {
-    long cPtr = net.sourceforge.openbabelJNI.OBResidueIter_GetData__SWIG_0(swigCPtr, this, type);
+    long cPtr = openbabelJNI.OBResidueIter_GetData__SWIG_0(swigCPtr, this, type);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public vectorData GetData() {
-    return new vectorData(net.sourceforge.openbabelJNI.OBResidueIter_GetData__SWIG_3(swigCPtr, this), false);
+    return new vectorData(openbabelJNI.OBResidueIter_GetData__SWIG_3(swigCPtr, this), false);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator BeginData() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator(net.sourceforge.openbabelJNI.OBResidueIter_BeginData(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator(openbabelJNI.OBResidueIter_BeginData(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator EndData() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator(net.sourceforge.openbabelJNI.OBResidueIter_EndData(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator(openbabelJNI.OBResidueIter_EndData(swigCPtr, this), true);
   }
 
 }

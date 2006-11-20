@@ -27,25 +27,25 @@ public class OBSqrtTbl {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBSqrtTbl(swigCPtr);
+      openbabelJNI.delete_OBSqrtTbl(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBSqrtTbl() {
-    this(net.sourceforge.openbabelJNI.new_OBSqrtTbl__SWIG_0(), true);
+    this(openbabelJNI.new_OBSqrtTbl__SWIG_0(), true);
   }
 
   public OBSqrtTbl(double max, double incr) {
-    this(net.sourceforge.openbabelJNI.new_OBSqrtTbl__SWIG_1(max, incr), true);
+    this(openbabelJNI.new_OBSqrtTbl__SWIG_1(max, incr), true);
   }
 
   public double Sqrt(double d2) {
-    return net.sourceforge.openbabelJNI.OBSqrtTbl_Sqrt(swigCPtr, this, d2);
+    return openbabelJNI.OBSqrtTbl_Sqrt(swigCPtr, this, d2);
   }
 
   public void Init(double max, double incr) {
-    net.sourceforge.openbabelJNI.OBSqrtTbl_Init(swigCPtr, this, max, incr);
+    openbabelJNI.OBSqrtTbl_Init(swigCPtr, this, max, incr);
   }
 
 }

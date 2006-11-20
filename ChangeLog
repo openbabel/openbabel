@@ -1,3 +1,17 @@
+2006-11-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/atom.h, src/base.h, src/bond.h, src/residue.h, src/mol.h,
+	src/ring.h, src/mol.cpp, src/base.cpp, src/obiter.h: Remove
+	OBNodeBase, OBEdgeBase, and OBGraphBase classes, contributed by
+	Gerd Menche.
+
+	* tools/obprop.cpp: Ditto. Example of changing iterators to new format.
+
+	* scripts/*: Updated based on above changes.
+
+	* src/formats/xml/cmlformat.cpp: Change size_t to
+	string::size_type to be sure of 64-bit correctness.
+
 2006-11-17 Chris Morley <ob@gaseq.co.uk>
 
 	windows-vc2005: Added projects for OpenBabelDLL, OBComLn, and OBGUII
@@ -43,7 +57,7 @@
 	all unit tests, and to have API documentation in docstrings.
 
 	* scripts/python/testpyopenbabel.py: Added complete coverage unit tests
-	for pyopenbabel.py
+	for pyopenbabel.py.
 
 	* scripts/python/test/*: Removed previous attempts at testing
 
@@ -51,11 +65,10 @@
 	providing documentation (we now have a wiki, and API documentation)
 
 	* scripts/python/head.sdf: Added small test file, used by
-	testpyopenbabel.py
+	testpyopenbabel.py.
 
 	* scripts/python/pyopenbabelapi.html: Added API documentation for
 	pyopenbabel.py, automatically generated using "pydoc -w"
-
 
 2006-11-09  Donald E. Curtis <dcurtis3@sourceforge.net>
 
@@ -90,12 +103,12 @@
 	* src/formats/xml/cmlformat.cpp(WriteMolecule): Output new
 	namespace URL rather than the old one.
 	
-	* src/obutil.cpp; Remove static from Solvelinear() and 
+	* src/obutil.cpp" Remove static from Solvelinear() and 
 	SolveQuadratic() so that would compile on VC8.
 	
-	* windows-vc2005/babelconfig.h; Extra macro definitions.
+	* windows-vc2005/babelconfig.h: Extra macro definitions.
 	
-	* windows-vc2005/libinchi.dll  windows-vc2005/libinchi.lib
+	* windows-vc2005/libinchi.dll,  windows-vc2005/libinchi.lib:
 	1.01 versions from NIST
 
 2006-11-06  Geoffrey Hutchison  <babel@geoffhutchison.net>

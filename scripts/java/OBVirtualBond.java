@@ -11,7 +11,7 @@ public class OBVirtualBond extends OBGenericData {
   private long swigCPtr;
 
   protected OBVirtualBond(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBVirtualBondUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBVirtualBondUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,43 +26,43 @@ public class OBVirtualBond extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBVirtualBond(swigCPtr);
+      openbabelJNI.delete_OBVirtualBond(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBVirtualBond() {
-    this(net.sourceforge.openbabelJNI.new_OBVirtualBond__SWIG_0(), true);
+    this(openbabelJNI.new_OBVirtualBond__SWIG_0(), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBVirtualBond_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBVirtualBond_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public OBVirtualBond(int arg0, int arg1, int arg2, int stereo) {
-    this(net.sourceforge.openbabelJNI.new_OBVirtualBond__SWIG_1(arg0, arg1, arg2, stereo), true);
+    this(openbabelJNI.new_OBVirtualBond__SWIG_1(arg0, arg1, arg2, stereo), true);
   }
 
   public OBVirtualBond(int arg0, int arg1, int arg2) {
-    this(net.sourceforge.openbabelJNI.new_OBVirtualBond__SWIG_2(arg0, arg1, arg2), true);
+    this(openbabelJNI.new_OBVirtualBond__SWIG_2(arg0, arg1, arg2), true);
   }
 
   public int GetBgn() {
-    return net.sourceforge.openbabelJNI.OBVirtualBond_GetBgn(swigCPtr, this);
+    return openbabelJNI.OBVirtualBond_GetBgn(swigCPtr, this);
   }
 
   public int GetEnd() {
-    return net.sourceforge.openbabelJNI.OBVirtualBond_GetEnd(swigCPtr, this);
+    return openbabelJNI.OBVirtualBond_GetEnd(swigCPtr, this);
   }
 
   public int GetOrder() {
-    return net.sourceforge.openbabelJNI.OBVirtualBond_GetOrder(swigCPtr, this);
+    return openbabelJNI.OBVirtualBond_GetOrder(swigCPtr, this);
   }
 
   public int GetStereo() {
-    return net.sourceforge.openbabelJNI.OBVirtualBond_GetStereo(swigCPtr, this);
+    return openbabelJNI.OBVirtualBond_GetStereo(swigCPtr, this);
   }
 
 }

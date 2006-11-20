@@ -27,33 +27,33 @@ public class OBAngle {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBAngle(swigCPtr);
+      openbabelJNI.delete_OBAngle(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBAngle(OBAngle arg0) {
-    this(net.sourceforge.openbabelJNI.new_OBAngle__SWIG_2(OBAngle.getCPtr(arg0), arg0), true);
+    this(openbabelJNI.new_OBAngle__SWIG_2(OBAngle.getCPtr(arg0), arg0), true);
   }
 
   public void Clear() {
-    net.sourceforge.openbabelJNI.OBAngle_Clear(swigCPtr, this);
+    openbabelJNI.OBAngle_Clear(swigCPtr, this);
   }
 
   public double GetAngle() {
-    return net.sourceforge.openbabelJNI.OBAngle_GetAngle(swigCPtr, this);
+    return openbabelJNI.OBAngle_GetAngle(swigCPtr, this);
   }
 
   public void SetAngle(double radians) {
-    net.sourceforge.openbabelJNI.OBAngle_SetAngle(swigCPtr, this, radians);
+    openbabelJNI.OBAngle_SetAngle(swigCPtr, this, radians);
   }
 
   public void SetAtoms(OBAtom vertex, OBAtom a, OBAtom b) {
-    net.sourceforge.openbabelJNI.OBAngle_SetAtoms__SWIG_0(swigCPtr, this, OBAtom.getCPtr(vertex), vertex, OBAtom.getCPtr(a), a, OBAtom.getCPtr(b), b);
+    openbabelJNI.OBAngle_SetAtoms__SWIG_0(swigCPtr, this, OBAtom.getCPtr(vertex), vertex, OBAtom.getCPtr(a), a, OBAtom.getCPtr(b), b);
   }
 
   public void SetAtoms(SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t atoms) {
-    net.sourceforge.openbabelJNI.OBAngle_SetAtoms__SWIG_1(swigCPtr, this, SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t.getCPtr(atoms));
+    openbabelJNI.OBAngle_SetAtoms__SWIG_1(swigCPtr, this, SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t.getCPtr(atoms));
   }
 
 }

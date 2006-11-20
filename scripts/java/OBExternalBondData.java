@@ -11,7 +11,7 @@ public class OBExternalBondData extends OBGenericData {
   private long swigCPtr;
 
   protected OBExternalBondData(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBExternalBondDataUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBExternalBondDataUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,27 +26,27 @@ public class OBExternalBondData extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBExternalBondData(swigCPtr);
+      openbabelJNI.delete_OBExternalBondData(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBExternalBondData() {
-    this(net.sourceforge.openbabelJNI.new_OBExternalBondData(), true);
+    this(openbabelJNI.new_OBExternalBondData(), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBExternalBondData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBExternalBondData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void SetData(OBAtom arg0, OBBond arg1, int arg2) {
-    net.sourceforge.openbabelJNI.OBExternalBondData_SetData(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, OBBond.getCPtr(arg1), arg1, arg2);
+    openbabelJNI.OBExternalBondData_SetData(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, OBBond.getCPtr(arg1), arg1, arg2);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t GetData() {
-    long cPtr = net.sourceforge.openbabelJNI.OBExternalBondData_GetData(swigCPtr, this);
+    long cPtr = openbabelJNI.OBExternalBondData_GetData(swigCPtr, this);
     return (cPtr == 0) ? null : new SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t(cPtr, false);
   }
 

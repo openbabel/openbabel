@@ -27,21 +27,21 @@ public class OBSSMatch {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBSSMatch(swigCPtr);
+      openbabelJNI.delete_OBSSMatch(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBSSMatch(OBMol arg0, SWIGTYPE_p_OpenBabel__Pattern arg1) {
-    this(net.sourceforge.openbabelJNI.new_OBSSMatch(OBMol.getCPtr(arg0), arg0, SWIGTYPE_p_OpenBabel__Pattern.getCPtr(arg1)), true);
+    this(openbabelJNI.new_OBSSMatch(OBMol.getCPtr(arg0), arg0, SWIGTYPE_p_OpenBabel__Pattern.getCPtr(arg1)), true);
   }
 
   public void Match(vvInt v, int bidx) {
-    net.sourceforge.openbabelJNI.OBSSMatch_Match__SWIG_0(swigCPtr, this, vvInt.getCPtr(v), v, bidx);
+    openbabelJNI.OBSSMatch_Match__SWIG_0(swigCPtr, this, vvInt.getCPtr(v), v, bidx);
   }
 
   public void Match(vvInt v) {
-    net.sourceforge.openbabelJNI.OBSSMatch_Match__SWIG_1(swigCPtr, this, vvInt.getCPtr(v), v);
+    openbabelJNI.OBSSMatch_Match__SWIG_1(swigCPtr, this, vvInt.getCPtr(v), v);
   }
 
 }

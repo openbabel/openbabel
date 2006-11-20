@@ -27,13 +27,13 @@ public class CharPtrLess {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_CharPtrLess(swigCPtr);
+      openbabelJNI.delete_CharPtrLess(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public CharPtrLess() {
-    this(net.sourceforge.openbabelJNI.new_CharPtrLess(), true);
+    this(openbabelJNI.new_CharPtrLess(), true);
   }
 
 }

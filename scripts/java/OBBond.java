@@ -7,11 +7,11 @@
  * ----------------------------------------------------------------------------- */
 
 
-public class OBBond extends OBEdgeBase {
+public class OBBond extends OBBase {
   private long swigCPtr;
 
   protected OBBond(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBBondUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBBondUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,229 +26,250 @@ public class OBBond extends OBEdgeBase {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBBond(swigCPtr);
+      openbabelJNI.delete_OBBond(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
+  public void setVisit(boolean value) {
+    openbabelJNI.OBBond_Visit_set(swigCPtr, this, value);
+  }
+
+  public boolean getVisit() {
+    return openbabelJNI.OBBond_Visit_get(swigCPtr, this);
+  }
+
   public OBBond() {
-    this(net.sourceforge.openbabelJNI.new_OBBond(), true);
+    this(openbabelJNI.new_OBBond(), true);
   }
 
   public void SetIdx(int idx) {
-    net.sourceforge.openbabelJNI.OBBond_SetIdx(swigCPtr, this, idx);
+    openbabelJNI.OBBond_SetIdx(swigCPtr, this, idx);
   }
 
   public void SetBO(int order) {
-    net.sourceforge.openbabelJNI.OBBond_SetBO(swigCPtr, this, order);
+    openbabelJNI.OBBond_SetBO(swigCPtr, this, order);
   }
 
   public void SetBegin(OBAtom begin) {
-    net.sourceforge.openbabelJNI.OBBond_SetBegin(swigCPtr, this, OBAtom.getCPtr(begin), begin);
+    openbabelJNI.OBBond_SetBegin(swigCPtr, this, OBAtom.getCPtr(begin), begin);
   }
 
   public void SetEnd(OBAtom end) {
-    net.sourceforge.openbabelJNI.OBBond_SetEnd(swigCPtr, this, OBAtom.getCPtr(end), end);
+    openbabelJNI.OBBond_SetEnd(swigCPtr, this, OBAtom.getCPtr(end), end);
+  }
+
+  public void SetParent(OBMol ptr) {
+    openbabelJNI.OBBond_SetParent(swigCPtr, this, OBMol.getCPtr(ptr), ptr);
   }
 
   public void SetLength(OBAtom arg0, double arg1) {
-    net.sourceforge.openbabelJNI.OBBond_SetLength(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, arg1);
+    openbabelJNI.OBBond_SetLength(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, arg1);
   }
 
   public void Set(int arg0, OBAtom arg1, OBAtom arg2, int arg3, int arg4) {
-    net.sourceforge.openbabelJNI.OBBond_Set(swigCPtr, this, arg0, OBAtom.getCPtr(arg1), arg1, OBAtom.getCPtr(arg2), arg2, arg3, arg4);
+    openbabelJNI.OBBond_Set(swigCPtr, this, arg0, OBAtom.getCPtr(arg1), arg1, OBAtom.getCPtr(arg2), arg2, arg3, arg4);
   }
 
   public void SetKSingle() {
-    net.sourceforge.openbabelJNI.OBBond_SetKSingle(swigCPtr, this);
+    openbabelJNI.OBBond_SetKSingle(swigCPtr, this);
   }
 
   public void SetKDouble() {
-    net.sourceforge.openbabelJNI.OBBond_SetKDouble(swigCPtr, this);
+    openbabelJNI.OBBond_SetKDouble(swigCPtr, this);
   }
 
   public void SetKTriple() {
-    net.sourceforge.openbabelJNI.OBBond_SetKTriple(swigCPtr, this);
+    openbabelJNI.OBBond_SetKTriple(swigCPtr, this);
   }
 
   public void SetAromatic() {
-    net.sourceforge.openbabelJNI.OBBond_SetAromatic(swigCPtr, this);
+    openbabelJNI.OBBond_SetAromatic(swigCPtr, this);
   }
 
   public void SetHash() {
-    net.sourceforge.openbabelJNI.OBBond_SetHash(swigCPtr, this);
+    openbabelJNI.OBBond_SetHash(swigCPtr, this);
   }
 
   public void SetWedge() {
-    net.sourceforge.openbabelJNI.OBBond_SetWedge(swigCPtr, this);
+    openbabelJNI.OBBond_SetWedge(swigCPtr, this);
   }
 
   public void SetUp() {
-    net.sourceforge.openbabelJNI.OBBond_SetUp(swigCPtr, this);
+    openbabelJNI.OBBond_SetUp(swigCPtr, this);
   }
 
   public void SetDown() {
-    net.sourceforge.openbabelJNI.OBBond_SetDown(swigCPtr, this);
+    openbabelJNI.OBBond_SetDown(swigCPtr, this);
   }
 
   public void SetInRing() {
-    net.sourceforge.openbabelJNI.OBBond_SetInRing(swigCPtr, this);
+    openbabelJNI.OBBond_SetInRing(swigCPtr, this);
   }
 
   public void SetClosure() {
-    net.sourceforge.openbabelJNI.OBBond_SetClosure(swigCPtr, this);
+    openbabelJNI.OBBond_SetClosure(swigCPtr, this);
   }
 
   public void UnsetHash() {
-    net.sourceforge.openbabelJNI.OBBond_UnsetHash(swigCPtr, this);
+    openbabelJNI.OBBond_UnsetHash(swigCPtr, this);
   }
 
   public void UnsetWedge() {
-    net.sourceforge.openbabelJNI.OBBond_UnsetWedge(swigCPtr, this);
+    openbabelJNI.OBBond_UnsetWedge(swigCPtr, this);
   }
 
   public void UnsetUp() {
-    net.sourceforge.openbabelJNI.OBBond_UnsetUp(swigCPtr, this);
+    openbabelJNI.OBBond_UnsetUp(swigCPtr, this);
   }
 
   public void UnsetDown() {
-    net.sourceforge.openbabelJNI.OBBond_UnsetDown(swigCPtr, this);
+    openbabelJNI.OBBond_UnsetDown(swigCPtr, this);
   }
 
   public void UnsetAromatic() {
-    net.sourceforge.openbabelJNI.OBBond_UnsetAromatic(swigCPtr, this);
+    openbabelJNI.OBBond_UnsetAromatic(swigCPtr, this);
   }
 
   public void UnsetKekule() {
-    net.sourceforge.openbabelJNI.OBBond_UnsetKekule(swigCPtr, this);
+    openbabelJNI.OBBond_UnsetKekule(swigCPtr, this);
+  }
+
+  public long GetIdx() {
+    return openbabelJNI.OBBond_GetIdx(swigCPtr, this);
   }
 
   public long GetBO() {
-    return net.sourceforge.openbabelJNI.OBBond_GetBO(swigCPtr, this);
+    return openbabelJNI.OBBond_GetBO(swigCPtr, this);
   }
 
   public long GetBondOrder() {
-    return net.sourceforge.openbabelJNI.OBBond_GetBondOrder(swigCPtr, this);
+    return openbabelJNI.OBBond_GetBondOrder(swigCPtr, this);
   }
 
   public long GetFlags() {
-    return net.sourceforge.openbabelJNI.OBBond_GetFlags(swigCPtr, this);
+    return openbabelJNI.OBBond_GetFlags(swigCPtr, this);
   }
 
   public long GetBeginAtomIdx() {
-    return net.sourceforge.openbabelJNI.OBBond_GetBeginAtomIdx(swigCPtr, this);
+    return openbabelJNI.OBBond_GetBeginAtomIdx(swigCPtr, this);
   }
 
   public long GetEndAtomIdx() {
-    return net.sourceforge.openbabelJNI.OBBond_GetEndAtomIdx(swigCPtr, this);
+    return openbabelJNI.OBBond_GetEndAtomIdx(swigCPtr, this);
   }
 
   public OBAtom GetBeginAtom() {
-    long cPtr = net.sourceforge.openbabelJNI.OBBond_GetBeginAtom(swigCPtr, this);
+    long cPtr = openbabelJNI.OBBond_GetBeginAtom(swigCPtr, this);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
   public OBAtom GetEndAtom() {
-    long cPtr = net.sourceforge.openbabelJNI.OBBond_GetEndAtom(swigCPtr, this);
+    long cPtr = openbabelJNI.OBBond_GetEndAtom(swigCPtr, this);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
   public OBAtom GetNbrAtom(OBAtom ptr) {
-    long cPtr = net.sourceforge.openbabelJNI.OBBond_GetNbrAtom(swigCPtr, this, OBAtom.getCPtr(ptr), ptr);
+    long cPtr = openbabelJNI.OBBond_GetNbrAtom(swigCPtr, this, OBAtom.getCPtr(ptr), ptr);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
+  public OBMol GetParent() {
+    long cPtr = openbabelJNI.OBBond_GetParent(swigCPtr, this);
+    return (cPtr == 0) ? null : new OBMol(cPtr, false);
+  }
+
   public double GetEquibLength() {
-    return net.sourceforge.openbabelJNI.OBBond_GetEquibLength(swigCPtr, this);
+    return openbabelJNI.OBBond_GetEquibLength(swigCPtr, this);
   }
 
   public double GetLength() {
-    return net.sourceforge.openbabelJNI.OBBond_GetLength(swigCPtr, this);
+    return openbabelJNI.OBBond_GetLength(swigCPtr, this);
   }
 
   public int GetNbrAtomIdx(OBAtom ptr) {
-    return net.sourceforge.openbabelJNI.OBBond_GetNbrAtomIdx(swigCPtr, this, OBAtom.getCPtr(ptr), ptr);
+    return openbabelJNI.OBBond_GetNbrAtomIdx(swigCPtr, this, OBAtom.getCPtr(ptr), ptr);
   }
 
   public boolean IsAromatic() {
-    return net.sourceforge.openbabelJNI.OBBond_IsAromatic(swigCPtr, this);
+    return openbabelJNI.OBBond_IsAromatic(swigCPtr, this);
   }
 
   public boolean IsInRing() {
-    return net.sourceforge.openbabelJNI.OBBond_IsInRing(swigCPtr, this);
+    return openbabelJNI.OBBond_IsInRing(swigCPtr, this);
   }
 
   public boolean IsRotor() {
-    return net.sourceforge.openbabelJNI.OBBond_IsRotor(swigCPtr, this);
+    return openbabelJNI.OBBond_IsRotor(swigCPtr, this);
   }
 
   public boolean IsAmide() {
-    return net.sourceforge.openbabelJNI.OBBond_IsAmide(swigCPtr, this);
+    return openbabelJNI.OBBond_IsAmide(swigCPtr, this);
   }
 
   public boolean IsPrimaryAmide() {
-    return net.sourceforge.openbabelJNI.OBBond_IsPrimaryAmide(swigCPtr, this);
+    return openbabelJNI.OBBond_IsPrimaryAmide(swigCPtr, this);
   }
 
   public boolean IsSecondaryAmide() {
-    return net.sourceforge.openbabelJNI.OBBond_IsSecondaryAmide(swigCPtr, this);
+    return openbabelJNI.OBBond_IsSecondaryAmide(swigCPtr, this);
   }
 
   public boolean IsEster() {
-    return net.sourceforge.openbabelJNI.OBBond_IsEster(swigCPtr, this);
+    return openbabelJNI.OBBond_IsEster(swigCPtr, this);
   }
 
   public boolean IsCarbonyl() {
-    return net.sourceforge.openbabelJNI.OBBond_IsCarbonyl(swigCPtr, this);
+    return openbabelJNI.OBBond_IsCarbonyl(swigCPtr, this);
   }
 
   public boolean IsSingle() {
-    return net.sourceforge.openbabelJNI.OBBond_IsSingle(swigCPtr, this);
+    return openbabelJNI.OBBond_IsSingle(swigCPtr, this);
   }
 
   public boolean IsDouble() {
-    return net.sourceforge.openbabelJNI.OBBond_IsDouble(swigCPtr, this);
+    return openbabelJNI.OBBond_IsDouble(swigCPtr, this);
   }
 
   public boolean IsTriple() {
-    return net.sourceforge.openbabelJNI.OBBond_IsTriple(swigCPtr, this);
+    return openbabelJNI.OBBond_IsTriple(swigCPtr, this);
   }
 
   public boolean IsKSingle() {
-    return net.sourceforge.openbabelJNI.OBBond_IsKSingle(swigCPtr, this);
+    return openbabelJNI.OBBond_IsKSingle(swigCPtr, this);
   }
 
   public boolean IsKDouble() {
-    return net.sourceforge.openbabelJNI.OBBond_IsKDouble(swigCPtr, this);
+    return openbabelJNI.OBBond_IsKDouble(swigCPtr, this);
   }
 
   public boolean IsKTriple() {
-    return net.sourceforge.openbabelJNI.OBBond_IsKTriple(swigCPtr, this);
+    return openbabelJNI.OBBond_IsKTriple(swigCPtr, this);
   }
 
   public boolean IsClosure() {
-    return net.sourceforge.openbabelJNI.OBBond_IsClosure(swigCPtr, this);
+    return openbabelJNI.OBBond_IsClosure(swigCPtr, this);
   }
 
   public boolean IsUp() {
-    return net.sourceforge.openbabelJNI.OBBond_IsUp(swigCPtr, this);
+    return openbabelJNI.OBBond_IsUp(swigCPtr, this);
   }
 
   public boolean IsDown() {
-    return net.sourceforge.openbabelJNI.OBBond_IsDown(swigCPtr, this);
+    return openbabelJNI.OBBond_IsDown(swigCPtr, this);
   }
 
   public boolean IsWedge() {
-    return net.sourceforge.openbabelJNI.OBBond_IsWedge(swigCPtr, this);
+    return openbabelJNI.OBBond_IsWedge(swigCPtr, this);
   }
 
   public boolean IsHash() {
-    return net.sourceforge.openbabelJNI.OBBond_IsHash(swigCPtr, this);
+    return openbabelJNI.OBBond_IsHash(swigCPtr, this);
   }
 
   public boolean IsDoubleBondGeometry() {
-    return net.sourceforge.openbabelJNI.OBBond_IsDoubleBondGeometry(swigCPtr, this);
+    return openbabelJNI.OBBond_IsDoubleBondGeometry(swigCPtr, this);
   }
 
 }

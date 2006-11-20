@@ -27,33 +27,33 @@ public class OBRandom {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBRandom(swigCPtr);
+      openbabelJNI.delete_OBRandom(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBRandom(boolean useSys) {
-    this(net.sourceforge.openbabelJNI.new_OBRandom__SWIG_0(useSys), true);
+    this(openbabelJNI.new_OBRandom__SWIG_0(useSys), true);
   }
 
   public OBRandom() {
-    this(net.sourceforge.openbabelJNI.new_OBRandom__SWIG_1(), true);
+    this(openbabelJNI.new_OBRandom__SWIG_1(), true);
   }
 
   public void Seed(int seed) {
-    net.sourceforge.openbabelJNI.OBRandom_Seed(swigCPtr, this, seed);
+    openbabelJNI.OBRandom_Seed(swigCPtr, this, seed);
   }
 
   public void TimeSeed() {
-    net.sourceforge.openbabelJNI.OBRandom_TimeSeed(swigCPtr, this);
+    openbabelJNI.OBRandom_TimeSeed(swigCPtr, this);
   }
 
   public int NextInt() {
-    return net.sourceforge.openbabelJNI.OBRandom_NextInt(swigCPtr, this);
+    return openbabelJNI.OBRandom_NextInt(swigCPtr, this);
   }
 
   public double NextFloat() {
-    return net.sourceforge.openbabelJNI.OBRandom_NextFloat(swigCPtr, this);
+    return openbabelJNI.OBRandom_NextFloat(swigCPtr, this);
   }
 
 }

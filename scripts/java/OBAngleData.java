@@ -11,7 +11,7 @@ public class OBAngleData extends OBGenericData {
   private long swigCPtr;
 
   protected OBAngleData(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBAngleDataUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBAngleDataUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,31 +26,31 @@ public class OBAngleData extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBAngleData(swigCPtr);
+      openbabelJNI.delete_OBAngleData(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBAngleData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBAngleData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void Clear() {
-    net.sourceforge.openbabelJNI.OBAngleData_Clear(swigCPtr, this);
+    openbabelJNI.OBAngleData_Clear(swigCPtr, this);
   }
 
   public long FillAngleArray(SWIGTYPE_p_p_int angles, SWIGTYPE_p_unsigned_int size) {
-    return net.sourceforge.openbabelJNI.OBAngleData_FillAngleArray(swigCPtr, this, SWIGTYPE_p_p_int.getCPtr(angles), SWIGTYPE_p_unsigned_int.getCPtr(size));
+    return openbabelJNI.OBAngleData_FillAngleArray(swigCPtr, this, SWIGTYPE_p_p_int.getCPtr(angles), SWIGTYPE_p_unsigned_int.getCPtr(size));
   }
 
   public void SetData(OBAngle arg0) {
-    net.sourceforge.openbabelJNI.OBAngleData_SetData(swigCPtr, this, OBAngle.getCPtr(arg0), arg0);
+    openbabelJNI.OBAngleData_SetData(swigCPtr, this, OBAngle.getCPtr(arg0), arg0);
   }
 
   public long GetSize() {
-    return net.sourceforge.openbabelJNI.OBAngleData_GetSize(swigCPtr, this);
+    return openbabelJNI.OBAngleData_GetSize(swigCPtr, this);
   }
 
 }

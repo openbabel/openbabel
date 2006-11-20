@@ -27,65 +27,65 @@ public class OBError {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBError(swigCPtr);
+      openbabelJNI.delete_OBError(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBError(String method, String errorMsg, String explanation, String possibleCause, String suggestedRemedy, obMessageLevel arg5) {
-    this(net.sourceforge.openbabelJNI.new_OBError__SWIG_0(method, errorMsg, explanation, possibleCause, suggestedRemedy, arg5.swigValue()), true);
+    this(openbabelJNI.new_OBError__SWIG_0(method, errorMsg, explanation, possibleCause, suggestedRemedy, arg5.swigValue()), true);
   }
 
   public OBError(String method, String errorMsg, String explanation, String possibleCause, String suggestedRemedy) {
-    this(net.sourceforge.openbabelJNI.new_OBError__SWIG_1(method, errorMsg, explanation, possibleCause, suggestedRemedy), true);
+    this(openbabelJNI.new_OBError__SWIG_1(method, errorMsg, explanation, possibleCause, suggestedRemedy), true);
   }
 
   public OBError(String method, String errorMsg, String explanation, String possibleCause) {
-    this(net.sourceforge.openbabelJNI.new_OBError__SWIG_2(method, errorMsg, explanation, possibleCause), true);
+    this(openbabelJNI.new_OBError__SWIG_2(method, errorMsg, explanation, possibleCause), true);
   }
 
   public OBError(String method, String errorMsg, String explanation) {
-    this(net.sourceforge.openbabelJNI.new_OBError__SWIG_3(method, errorMsg, explanation), true);
+    this(openbabelJNI.new_OBError__SWIG_3(method, errorMsg, explanation), true);
   }
 
   public OBError(String method, String errorMsg) {
-    this(net.sourceforge.openbabelJNI.new_OBError__SWIG_4(method, errorMsg), true);
+    this(openbabelJNI.new_OBError__SWIG_4(method, errorMsg), true);
   }
 
   public OBError(String method) {
-    this(net.sourceforge.openbabelJNI.new_OBError__SWIG_5(method), true);
+    this(openbabelJNI.new_OBError__SWIG_5(method), true);
   }
 
   public OBError() {
-    this(net.sourceforge.openbabelJNI.new_OBError__SWIG_6(), true);
+    this(openbabelJNI.new_OBError__SWIG_6(), true);
   }
 
   public String message() {
-    return net.sourceforge.openbabelJNI.OBError_message(swigCPtr, this);
+    return openbabelJNI.OBError_message(swigCPtr, this);
   }
 
   public String GetMethod() {
-    return net.sourceforge.openbabelJNI.OBError_GetMethod(swigCPtr, this);
+    return openbabelJNI.OBError_GetMethod(swigCPtr, this);
   }
 
   public String GetError() {
-    return net.sourceforge.openbabelJNI.OBError_GetError(swigCPtr, this);
+    return openbabelJNI.OBError_GetError(swigCPtr, this);
   }
 
   public String GetExplanation() {
-    return net.sourceforge.openbabelJNI.OBError_GetExplanation(swigCPtr, this);
+    return openbabelJNI.OBError_GetExplanation(swigCPtr, this);
   }
 
   public String GetPossibleCause() {
-    return net.sourceforge.openbabelJNI.OBError_GetPossibleCause(swigCPtr, this);
+    return openbabelJNI.OBError_GetPossibleCause(swigCPtr, this);
   }
 
   public String GetSuggestedRemedy() {
-    return net.sourceforge.openbabelJNI.OBError_GetSuggestedRemedy(swigCPtr, this);
+    return openbabelJNI.OBError_GetSuggestedRemedy(swigCPtr, this);
   }
 
   public obMessageLevel GetLevel() {
-    return obMessageLevel.swigToEnum(net.sourceforge.openbabelJNI.OBError_GetLevel(swigCPtr, this));
+    return obMessageLevel.swigToEnum(openbabelJNI.OBError_GetLevel(swigCPtr, this));
   }
 
 }

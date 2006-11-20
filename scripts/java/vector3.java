@@ -27,106 +27,106 @@ public class vector3 {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_vector3(swigCPtr);
+      openbabelJNI.delete_vector3(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public vector3(double x, double y, double z) {
-    this(net.sourceforge.openbabelJNI.new_vector3__SWIG_0(x, y, z), true);
+    this(openbabelJNI.new_vector3__SWIG_0(x, y, z), true);
   }
 
   public vector3(double x, double y) {
-    this(net.sourceforge.openbabelJNI.new_vector3__SWIG_1(x, y), true);
+    this(openbabelJNI.new_vector3__SWIG_1(x, y), true);
   }
 
   public vector3(double x) {
-    this(net.sourceforge.openbabelJNI.new_vector3__SWIG_2(x), true);
+    this(openbabelJNI.new_vector3__SWIG_2(x), true);
   }
 
   public vector3() {
-    this(net.sourceforge.openbabelJNI.new_vector3__SWIG_3(), true);
+    this(openbabelJNI.new_vector3__SWIG_3(), true);
   }
 
   public vector3(vector3 v) {
-    this(net.sourceforge.openbabelJNI.new_vector3__SWIG_4(vector3.getCPtr(v), v), true);
+    this(openbabelJNI.new_vector3__SWIG_4(vector3.getCPtr(v), v), true);
   }
 
   public void Set(double x, double y, double z) {
-    net.sourceforge.openbabelJNI.vector3_Set__SWIG_0(swigCPtr, this, x, y, z);
+    openbabelJNI.vector3_Set__SWIG_0(swigCPtr, this, x, y, z);
   }
 
   public void Set(SWIGTYPE_p_double c) {
-    net.sourceforge.openbabelJNI.vector3_Set__SWIG_1(swigCPtr, this, SWIGTYPE_p_double.getCPtr(c));
+    openbabelJNI.vector3_Set__SWIG_1(swigCPtr, this, SWIGTYPE_p_double.getCPtr(c));
   }
 
   public void SetX(double x) {
-    net.sourceforge.openbabelJNI.vector3_SetX(swigCPtr, this, x);
+    openbabelJNI.vector3_SetX(swigCPtr, this, x);
   }
 
   public void SetY(double y) {
-    net.sourceforge.openbabelJNI.vector3_SetY(swigCPtr, this, y);
+    openbabelJNI.vector3_SetY(swigCPtr, this, y);
   }
 
   public void SetZ(double z) {
-    net.sourceforge.openbabelJNI.vector3_SetZ(swigCPtr, this, z);
+    openbabelJNI.vector3_SetZ(swigCPtr, this, z);
   }
 
   public void Get(SWIGTYPE_p_double c) {
-    net.sourceforge.openbabelJNI.vector3_Get(swigCPtr, this, SWIGTYPE_p_double.getCPtr(c));
+    openbabelJNI.vector3_Get(swigCPtr, this, SWIGTYPE_p_double.getCPtr(c));
   }
 
   public boolean IsApprox(vector3 arg0, double precision) {
-    return net.sourceforge.openbabelJNI.vector3_IsApprox(swigCPtr, this, vector3.getCPtr(arg0), arg0, precision);
+    return openbabelJNI.vector3_IsApprox(swigCPtr, this, vector3.getCPtr(arg0), arg0, precision);
   }
 
   public SWIGTYPE_p_double AsArray() {
-    long cPtr = net.sourceforge.openbabelJNI.vector3_AsArray(swigCPtr, this);
+    long cPtr = openbabelJNI.vector3_AsArray(swigCPtr, this);
     return (cPtr == 0) ? null : new SWIGTYPE_p_double(cPtr, false);
   }
 
   public void randomUnitVector(OBRandom oeRand) {
-    net.sourceforge.openbabelJNI.vector3_randomUnitVector__SWIG_0(swigCPtr, this, OBRandom.getCPtr(oeRand), oeRand);
+    openbabelJNI.vector3_randomUnitVector__SWIG_0(swigCPtr, this, OBRandom.getCPtr(oeRand), oeRand);
   }
 
   public void randomUnitVector() {
-    net.sourceforge.openbabelJNI.vector3_randomUnitVector__SWIG_1(swigCPtr, this);
+    openbabelJNI.vector3_randomUnitVector__SWIG_1(swigCPtr, this);
   }
 
   public vector3 normalize() {
-    return new vector3(net.sourceforge.openbabelJNI.vector3_normalize(swigCPtr, this), false);
+    return new vector3(openbabelJNI.vector3_normalize(swigCPtr, this), false);
   }
 
   public boolean CanBeNormalized() {
-    return net.sourceforge.openbabelJNI.vector3_CanBeNormalized(swigCPtr, this);
+    return openbabelJNI.vector3_CanBeNormalized(swigCPtr, this);
   }
 
   public double length() {
-    return net.sourceforge.openbabelJNI.vector3_length(swigCPtr, this);
+    return openbabelJNI.vector3_length(swigCPtr, this);
   }
 
   public double length_2() {
-    return net.sourceforge.openbabelJNI.vector3_length_2(swigCPtr, this);
+    return openbabelJNI.vector3_length_2(swigCPtr, this);
   }
 
   public double x() {
-    return net.sourceforge.openbabelJNI.vector3_x(swigCPtr, this);
+    return openbabelJNI.vector3_x(swigCPtr, this);
   }
 
   public double y() {
-    return net.sourceforge.openbabelJNI.vector3_y(swigCPtr, this);
+    return openbabelJNI.vector3_y(swigCPtr, this);
   }
 
   public double z() {
-    return net.sourceforge.openbabelJNI.vector3_z(swigCPtr, this);
+    return openbabelJNI.vector3_z(swigCPtr, this);
   }
 
   public double distSq(vector3 vv) {
-    return net.sourceforge.openbabelJNI.vector3_distSq(swigCPtr, this, vector3.getCPtr(vv), vv);
+    return openbabelJNI.vector3_distSq(swigCPtr, this, vector3.getCPtr(vv), vv);
   }
 
   public boolean createOrthoVector(vector3 v) {
-    return net.sourceforge.openbabelJNI.vector3_createOrthoVector(swigCPtr, this, vector3.getCPtr(v), v);
+    return openbabelJNI.vector3_createOrthoVector(swigCPtr, this, vector3.getCPtr(v), v);
   }
 
 }

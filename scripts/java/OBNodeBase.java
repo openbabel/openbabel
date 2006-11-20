@@ -11,7 +11,7 @@ public class OBNodeBase extends OBBase {
   private long swigCPtr;
 
   protected OBNodeBase(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBNodeBaseUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBNodeBaseUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,119 +26,119 @@ public class OBNodeBase extends OBBase {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBNodeBase(swigCPtr);
+      openbabelJNI.delete_OBNodeBase(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public void setVisit(boolean value) {
-    net.sourceforge.openbabelJNI.OBNodeBase_Visit_set(swigCPtr, this, value);
+    openbabelJNI.OBNodeBase_Visit_set(swigCPtr, this, value);
   }
 
   public boolean getVisit() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_Visit_get(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_Visit_get(swigCPtr, this);
   }
 
   public OBNodeBase() {
-    this(net.sourceforge.openbabelJNI.new_OBNodeBase(), true);
+    this(openbabelJNI.new_OBNodeBase(), true);
   }
 
   public long GetIdx() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_GetIdx(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_GetIdx(swigCPtr, this);
   }
 
   public void SetIdx(int idx) {
-    net.sourceforge.openbabelJNI.OBNodeBase_SetIdx(swigCPtr, this, idx);
+    openbabelJNI.OBNodeBase_SetIdx(swigCPtr, this, idx);
   }
 
   public OBGraphBase GetParent() {
-    long cPtr = net.sourceforge.openbabelJNI.OBNodeBase_GetParent(swigCPtr, this);
+    long cPtr = openbabelJNI.OBNodeBase_GetParent(swigCPtr, this);
     return (cPtr == 0) ? null : new OBGraphBase(cPtr, false);
   }
 
   public void SetParent(OBGraphBase arg0) {
-    net.sourceforge.openbabelJNI.OBNodeBase_SetParent(swigCPtr, this, OBGraphBase.getCPtr(arg0), arg0);
+    openbabelJNI.OBNodeBase_SetParent(swigCPtr, this, OBGraphBase.getCPtr(arg0), arg0);
   }
 
   public void AddEdge(OBEdgeBase b) {
-    net.sourceforge.openbabelJNI.OBNodeBase_AddEdge(swigCPtr, this, OBEdgeBase.getCPtr(b), b);
+    openbabelJNI.OBNodeBase_AddEdge(swigCPtr, this, OBEdgeBase.getCPtr(b), b);
   }
 
   public long GetValence() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_GetValence(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_GetValence(swigCPtr, this);
   }
 
   public boolean IsConnected(OBNodeBase arg0) {
-    return net.sourceforge.openbabelJNI.OBNodeBase_IsConnected(swigCPtr, this, OBNodeBase.getCPtr(arg0), arg0);
+    return openbabelJNI.OBNodeBase_IsConnected(swigCPtr, this, OBNodeBase.getCPtr(arg0), arg0);
   }
 
   public void Error(int f) {
-    net.sourceforge.openbabelJNI.OBNodeBase_Error(swigCPtr, this, f);
+    openbabelJNI.OBNodeBase_Error(swigCPtr, this, f);
   }
 
   public int GetFormalCharge() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_GetFormalCharge(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_GetFormalCharge(swigCPtr, this);
   }
 
   public long ExplicitHydrogenCount() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_ExplicitHydrogenCount(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_ExplicitHydrogenCount(swigCPtr, this);
   }
 
   public long ImplicitHydrogenCount() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_ImplicitHydrogenCount(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_ImplicitHydrogenCount(swigCPtr, this);
   }
 
   public long GetImplicitValence() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_GetImplicitValence(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_GetImplicitValence(swigCPtr, this);
   }
 
   public long GetHvyValence() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_GetHvyValence(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_GetHvyValence(swigCPtr, this);
   }
 
   public long KBOSum() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_KBOSum(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_KBOSum(swigCPtr, this);
   }
 
   public long GetHyb() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_GetHyb(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_GetHyb(swigCPtr, this);
   }
 
   public long MemberOfRingCount() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_MemberOfRingCount(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_MemberOfRingCount(swigCPtr, this);
   }
 
   public long GetAtomicNum() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_GetAtomicNum(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_GetAtomicNum(swigCPtr, this);
   }
 
   public void SetMatch(OBNodeBase arg0) {
-    net.sourceforge.openbabelJNI.OBNodeBase_SetMatch(swigCPtr, this, OBNodeBase.getCPtr(arg0), arg0);
+    openbabelJNI.OBNodeBase_SetMatch(swigCPtr, this, OBNodeBase.getCPtr(arg0), arg0);
   }
 
   public void SetAromatic() {
-    net.sourceforge.openbabelJNI.OBNodeBase_SetAromatic(swigCPtr, this);
+    openbabelJNI.OBNodeBase_SetAromatic(swigCPtr, this);
   }
 
   public boolean IsInRingSize(int arg0) {
-    return net.sourceforge.openbabelJNI.OBNodeBase_IsInRingSize(swigCPtr, this, arg0);
+    return openbabelJNI.OBNodeBase_IsInRingSize(swigCPtr, this, arg0);
   }
 
   public boolean IsAromatic() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_IsAromatic(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_IsAromatic(swigCPtr, this);
   }
 
   public boolean IsInRing() {
-    return net.sourceforge.openbabelJNI.OBNodeBase_IsInRing(swigCPtr, this);
+    return openbabelJNI.OBNodeBase_IsInRing(swigCPtr, this);
   }
 
   public boolean Eval(OBNodeBase arg0) {
-    return net.sourceforge.openbabelJNI.OBNodeBase_Eval(swigCPtr, this, OBNodeBase.getCPtr(arg0), arg0);
+    return openbabelJNI.OBNodeBase_Eval(swigCPtr, this, OBNodeBase.getCPtr(arg0), arg0);
   }
 
   public OBNodeBase GetMatch() {
-    long cPtr = net.sourceforge.openbabelJNI.OBNodeBase_GetMatch(swigCPtr, this);
+    long cPtr = openbabelJNI.OBNodeBase_GetMatch(swigCPtr, this);
     return (cPtr == 0) ? null : new OBNodeBase(cPtr, false);
   }
 

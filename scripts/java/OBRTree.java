@@ -27,21 +27,21 @@ public class OBRTree {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBRTree(swigCPtr);
+      openbabelJNI.delete_OBRTree(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBRTree(OBAtom arg0, OBRTree arg1) {
-    this(net.sourceforge.openbabelJNI.new_OBRTree(OBAtom.getCPtr(arg0), arg0, OBRTree.getCPtr(arg1), arg1), true);
+    this(openbabelJNI.new_OBRTree(OBAtom.getCPtr(arg0), arg0, OBRTree.getCPtr(arg1), arg1), true);
   }
 
   public int GetAtomIdx() {
-    return net.sourceforge.openbabelJNI.OBRTree_GetAtomIdx(swigCPtr, this);
+    return openbabelJNI.OBRTree_GetAtomIdx(swigCPtr, this);
   }
 
-  public void PathToRoot(SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t arg0) {
-    net.sourceforge.openbabelJNI.OBRTree_PathToRoot(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBNodeBase_p_t.getCPtr(arg0));
+  public void PathToRoot(SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t arg0) {
+    openbabelJNI.OBRTree_PathToRoot(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t.getCPtr(arg0));
   }
 
 }

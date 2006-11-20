@@ -27,49 +27,49 @@ public class vectorMol {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_vectorMol(swigCPtr);
+      openbabelJNI.delete_vectorMol(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public vectorMol() {
-    this(net.sourceforge.openbabelJNI.new_vectorMol__SWIG_0(), true);
+    this(openbabelJNI.new_vectorMol__SWIG_0(), true);
   }
 
   public vectorMol(long n) {
-    this(net.sourceforge.openbabelJNI.new_vectorMol__SWIG_1(n), true);
+    this(openbabelJNI.new_vectorMol__SWIG_1(n), true);
   }
 
   public long size() {
-    return net.sourceforge.openbabelJNI.vectorMol_size(swigCPtr, this);
+    return openbabelJNI.vectorMol_size(swigCPtr, this);
   }
 
   public long capacity() {
-    return net.sourceforge.openbabelJNI.vectorMol_capacity(swigCPtr, this);
+    return openbabelJNI.vectorMol_capacity(swigCPtr, this);
   }
 
   public void reserve(long n) {
-    net.sourceforge.openbabelJNI.vectorMol_reserve(swigCPtr, this, n);
+    openbabelJNI.vectorMol_reserve(swigCPtr, this, n);
   }
 
   public boolean isEmpty() {
-    return net.sourceforge.openbabelJNI.vectorMol_isEmpty(swigCPtr, this);
+    return openbabelJNI.vectorMol_isEmpty(swigCPtr, this);
   }
 
   public void clear() {
-    net.sourceforge.openbabelJNI.vectorMol_clear(swigCPtr, this);
+    openbabelJNI.vectorMol_clear(swigCPtr, this);
   }
 
   public void add(OBMol x) {
-    net.sourceforge.openbabelJNI.vectorMol_add(swigCPtr, this, OBMol.getCPtr(x), x);
+    openbabelJNI.vectorMol_add(swigCPtr, this, OBMol.getCPtr(x), x);
   }
 
   public OBMol get(int i) {
-    return new OBMol(net.sourceforge.openbabelJNI.vectorMol_get(swigCPtr, this, i), false);
+    return new OBMol(openbabelJNI.vectorMol_get(swigCPtr, this, i), false);
   }
 
   public void set(int i, OBMol x) {
-    net.sourceforge.openbabelJNI.vectorMol_set(swigCPtr, this, i, OBMol.getCPtr(x), x);
+    openbabelJNI.vectorMol_set(swigCPtr, this, i, OBMol.getCPtr(x), x);
   }
 
 }

@@ -27,33 +27,33 @@ public class OBGlobalDataBase {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBGlobalDataBase(swigCPtr);
+      openbabelJNI.delete_OBGlobalDataBase(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBGlobalDataBase() {
-    this(net.sourceforge.openbabelJNI.new_OBGlobalDataBase(), true);
+    this(openbabelJNI.new_OBGlobalDataBase(), true);
   }
 
   public void Init() {
-    net.sourceforge.openbabelJNI.OBGlobalDataBase_Init(swigCPtr, this);
+    openbabelJNI.OBGlobalDataBase_Init(swigCPtr, this);
   }
 
   public long GetSize() {
-    return net.sourceforge.openbabelJNI.OBGlobalDataBase_GetSize(swigCPtr, this);
+    return openbabelJNI.OBGlobalDataBase_GetSize(swigCPtr, this);
   }
 
   public void SetReadDirectory(String dir) {
-    net.sourceforge.openbabelJNI.OBGlobalDataBase_SetReadDirectory(swigCPtr, this, dir);
+    openbabelJNI.OBGlobalDataBase_SetReadDirectory(swigCPtr, this, dir);
   }
 
   public void SetEnvironmentVariable(String var) {
-    net.sourceforge.openbabelJNI.OBGlobalDataBase_SetEnvironmentVariable(swigCPtr, this, var);
+    openbabelJNI.OBGlobalDataBase_SetEnvironmentVariable(swigCPtr, this, var);
   }
 
   public void ParseLine(String arg0) {
-    net.sourceforge.openbabelJNI.OBGlobalDataBase_ParseLine(swigCPtr, this, arg0);
+    openbabelJNI.OBGlobalDataBase_ParseLine(swigCPtr, this, arg0);
   }
 
 }

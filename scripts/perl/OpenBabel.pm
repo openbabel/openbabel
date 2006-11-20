@@ -1734,166 +1734,6 @@ sub ACQUIRE {
 }
 
 
-############# Class : Chemistry::OpenBabel::OBNodeBase ##############
-
-package Chemistry::OpenBabel::OBNodeBase;
-use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
-@ISA = qw( Chemistry::OpenBabel::OBBase Chemistry::OpenBabel );
-%OWNER = ();
-%ITERATORS = ();
-*swig_Visit_get = *Chemistry::OpenBabelc::OBNodeBase_Visit_get;
-*swig_Visit_set = *Chemistry::OpenBabelc::OBNodeBase_Visit_set;
-sub new {
-    my $pkg = shift;
-    my $self = Chemistry::OpenBabelc::new_OBNodeBase(@_);
-    bless $self, $pkg if defined($self);
-}
-
-sub DESTROY {
-    return unless $_[0]->isa('HASH');
-    my $self = tied(%{$_[0]});
-    return unless defined $self;
-    delete $ITERATORS{$self};
-    if (exists $OWNER{$self}) {
-        Chemistry::OpenBabelc::delete_OBNodeBase($self);
-        delete $OWNER{$self};
-    }
-}
-
-*GetIdx = *Chemistry::OpenBabelc::OBNodeBase_GetIdx;
-*SetIdx = *Chemistry::OpenBabelc::OBNodeBase_SetIdx;
-*GetParent = *Chemistry::OpenBabelc::OBNodeBase_GetParent;
-*SetParent = *Chemistry::OpenBabelc::OBNodeBase_SetParent;
-*AddEdge = *Chemistry::OpenBabelc::OBNodeBase_AddEdge;
-*GetValence = *Chemistry::OpenBabelc::OBNodeBase_GetValence;
-*IsConnected = *Chemistry::OpenBabelc::OBNodeBase_IsConnected;
-*Error = *Chemistry::OpenBabelc::OBNodeBase_Error;
-*GetFormalCharge = *Chemistry::OpenBabelc::OBNodeBase_GetFormalCharge;
-*ExplicitHydrogenCount = *Chemistry::OpenBabelc::OBNodeBase_ExplicitHydrogenCount;
-*ImplicitHydrogenCount = *Chemistry::OpenBabelc::OBNodeBase_ImplicitHydrogenCount;
-*GetImplicitValence = *Chemistry::OpenBabelc::OBNodeBase_GetImplicitValence;
-*GetHvyValence = *Chemistry::OpenBabelc::OBNodeBase_GetHvyValence;
-*KBOSum = *Chemistry::OpenBabelc::OBNodeBase_KBOSum;
-*GetHyb = *Chemistry::OpenBabelc::OBNodeBase_GetHyb;
-*MemberOfRingCount = *Chemistry::OpenBabelc::OBNodeBase_MemberOfRingCount;
-*GetAtomicNum = *Chemistry::OpenBabelc::OBNodeBase_GetAtomicNum;
-*SetMatch = *Chemistry::OpenBabelc::OBNodeBase_SetMatch;
-*SetAromatic = *Chemistry::OpenBabelc::OBNodeBase_SetAromatic;
-*IsInRingSize = *Chemistry::OpenBabelc::OBNodeBase_IsInRingSize;
-*IsAromatic = *Chemistry::OpenBabelc::OBNodeBase_IsAromatic;
-*IsInRing = *Chemistry::OpenBabelc::OBNodeBase_IsInRing;
-*Eval = *Chemistry::OpenBabelc::OBNodeBase_Eval;
-*GetMatch = *Chemistry::OpenBabelc::OBNodeBase_GetMatch;
-sub DISOWN {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    delete $OWNER{$ptr};
-}
-
-sub ACQUIRE {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    $OWNER{$ptr} = 1;
-}
-
-
-############# Class : Chemistry::OpenBabel::OBEdgeBase ##############
-
-package Chemistry::OpenBabel::OBEdgeBase;
-use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
-@ISA = qw( Chemistry::OpenBabel::OBBase Chemistry::OpenBabel );
-%OWNER = ();
-%ITERATORS = ();
-*swig_Visit_get = *Chemistry::OpenBabelc::OBEdgeBase_Visit_get;
-*swig_Visit_set = *Chemistry::OpenBabelc::OBEdgeBase_Visit_set;
-sub new {
-    my $pkg = shift;
-    my $self = Chemistry::OpenBabelc::new_OBEdgeBase(@_);
-    bless $self, $pkg if defined($self);
-}
-
-sub DESTROY {
-    return unless $_[0]->isa('HASH');
-    my $self = tied(%{$_[0]});
-    return unless defined $self;
-    delete $ITERATORS{$self};
-    if (exists $OWNER{$self}) {
-        Chemistry::OpenBabelc::delete_OBEdgeBase($self);
-        delete $OWNER{$self};
-    }
-}
-
-*GetParent = *Chemistry::OpenBabelc::OBEdgeBase_GetParent;
-*SetParent = *Chemistry::OpenBabelc::OBEdgeBase_SetParent;
-*GetIdx = *Chemistry::OpenBabelc::OBEdgeBase_GetIdx;
-*SetIdx = *Chemistry::OpenBabelc::OBEdgeBase_SetIdx;
-*SetBgn = *Chemistry::OpenBabelc::OBEdgeBase_SetBgn;
-*SetEnd = *Chemistry::OpenBabelc::OBEdgeBase_SetEnd;
-*SwapEnds = *Chemistry::OpenBabelc::OBEdgeBase_SwapEnds;
-*GetBgn = *Chemistry::OpenBabelc::OBEdgeBase_GetBgn;
-*GetEnd = *Chemistry::OpenBabelc::OBEdgeBase_GetEnd;
-*Error = *Chemistry::OpenBabelc::OBEdgeBase_Error;
-*SetClosure = *Chemistry::OpenBabelc::OBEdgeBase_SetClosure;
-*IsAromatic = *Chemistry::OpenBabelc::OBEdgeBase_IsAromatic;
-*IsInRing = *Chemistry::OpenBabelc::OBEdgeBase_IsInRing;
-*IsClosure = *Chemistry::OpenBabelc::OBEdgeBase_IsClosure;
-*Eval = *Chemistry::OpenBabelc::OBEdgeBase_Eval;
-*GetBO = *Chemistry::OpenBabelc::OBEdgeBase_GetBO;
-sub DISOWN {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    delete $OWNER{$ptr};
-}
-
-sub ACQUIRE {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    $OWNER{$ptr} = 1;
-}
-
-
-############# Class : Chemistry::OpenBabel::OBGraphBase ##############
-
-package Chemistry::OpenBabel::OBGraphBase;
-use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
-@ISA = qw( Chemistry::OpenBabel::OBBase Chemistry::OpenBabel );
-%OWNER = ();
-%ITERATORS = ();
-sub new {
-    my $pkg = shift;
-    my $self = Chemistry::OpenBabelc::new_OBGraphBase(@_);
-    bless $self, $pkg if defined($self);
-}
-
-sub DESTROY {
-    return unless $_[0]->isa('HASH');
-    my $self = tied(%{$_[0]});
-    return unless defined $self;
-    delete $ITERATORS{$self};
-    if (exists $OWNER{$self}) {
-        Chemistry::OpenBabelc::delete_OBGraphBase($self);
-        delete $OWNER{$self};
-    }
-}
-
-*NumNodes = *Chemistry::OpenBabelc::OBGraphBase_NumNodes;
-*NumEdges = *Chemistry::OpenBabelc::OBGraphBase_NumEdges;
-*ResetVisitFlags = *Chemistry::OpenBabelc::OBGraphBase_ResetVisitFlags;
-*SetVisitLock = *Chemistry::OpenBabelc::OBGraphBase_SetVisitLock;
-*GetVisitLock = *Chemistry::OpenBabelc::OBGraphBase_GetVisitLock;
-sub DISOWN {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    delete $OWNER{$ptr};
-}
-
-sub ACQUIRE {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    $OWNER{$ptr} = 1;
-}
-
-
 ############# Class : Chemistry::OpenBabel::OBError ##############
 
 package Chemistry::OpenBabel::OBError;
@@ -2251,6 +2091,8 @@ sub DESTROY {
 *GetResidueProperty = *Chemistry::OpenBabelc::OBResidue_GetResidueProperty;
 *IsHetAtom = *Chemistry::OpenBabelc::OBResidue_IsHetAtom;
 *IsResidueType = *Chemistry::OpenBabelc::OBResidue_IsResidueType;
+*BeginAtoms = *Chemistry::OpenBabelc::OBResidue_BeginAtoms;
+*EndAtoms = *Chemistry::OpenBabelc::OBResidue_EndAtoms;
 *BeginAtom = *Chemistry::OpenBabelc::OBResidue_BeginAtom;
 *NextAtom = *Chemistry::OpenBabelc::OBResidue_NextAtom;
 sub DISOWN {
@@ -2270,9 +2112,11 @@ sub ACQUIRE {
 
 package Chemistry::OpenBabel::OBAtom;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
-@ISA = qw( Chemistry::OpenBabel::OBNodeBase Chemistry::OpenBabel );
+@ISA = qw( Chemistry::OpenBabel::OBBase Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
+*swig_Visit_get = *Chemistry::OpenBabelc::OBAtom_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBAtom_Visit_set;
 sub new {
     my $pkg = shift;
     my $self = Chemistry::OpenBabelc::new_OBAtom(@_);
@@ -2305,6 +2149,7 @@ sub DESTROY {
 *SetCoordPtr = *Chemistry::OpenBabelc::OBAtom_SetCoordPtr;
 *SetVector = *Chemistry::OpenBabelc::OBAtom_SetVector;
 *SetResidue = *Chemistry::OpenBabelc::OBAtom_SetResidue;
+*SetParent = *Chemistry::OpenBabelc::OBAtom_SetParent;
 *SetAromatic = *Chemistry::OpenBabelc::OBAtom_SetAromatic;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBAtom_UnsetAromatic;
 *SetClockwiseStereo = *Chemistry::OpenBabelc::OBAtom_SetClockwiseStereo;
@@ -2340,6 +2185,7 @@ sub DESTROY {
 *GetVector = *Chemistry::OpenBabelc::OBAtom_GetVector;
 *GetPartialCharge = *Chemistry::OpenBabelc::OBAtom_GetPartialCharge;
 *GetResidue = *Chemistry::OpenBabelc::OBAtom_GetResidue;
+*GetParent = *Chemistry::OpenBabelc::OBAtom_GetParent;
 *GetNewBondVector = *Chemistry::OpenBabelc::OBAtom_GetNewBondVector;
 *GetBond = *Chemistry::OpenBabelc::OBAtom_GetBond;
 *GetNextAtom = *Chemistry::OpenBabelc::OBAtom_GetNextAtom;
@@ -2430,9 +2276,11 @@ sub ACQUIRE {
 
 package Chemistry::OpenBabel::OBBond;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
-@ISA = qw( Chemistry::OpenBabel::OBEdgeBase Chemistry::OpenBabel );
+@ISA = qw( Chemistry::OpenBabel::OBBase Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
+*swig_Visit_get = *Chemistry::OpenBabelc::OBBond_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBBond_Visit_set;
 sub new {
     my $pkg = shift;
     my $self = Chemistry::OpenBabelc::new_OBBond(@_);
@@ -2454,6 +2302,7 @@ sub DESTROY {
 *SetBO = *Chemistry::OpenBabelc::OBBond_SetBO;
 *SetBegin = *Chemistry::OpenBabelc::OBBond_SetBegin;
 *SetEnd = *Chemistry::OpenBabelc::OBBond_SetEnd;
+*SetParent = *Chemistry::OpenBabelc::OBBond_SetParent;
 *SetLength = *Chemistry::OpenBabelc::OBBond_SetLength;
 *Set = *Chemistry::OpenBabelc::OBBond_Set;
 *SetKSingle = *Chemistry::OpenBabelc::OBBond_SetKSingle;
@@ -2472,6 +2321,7 @@ sub DESTROY {
 *UnsetDown = *Chemistry::OpenBabelc::OBBond_UnsetDown;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBBond_UnsetAromatic;
 *UnsetKekule = *Chemistry::OpenBabelc::OBBond_UnsetKekule;
+*GetIdx = *Chemistry::OpenBabelc::OBBond_GetIdx;
 *GetBO = *Chemistry::OpenBabelc::OBBond_GetBO;
 *GetBondOrder = *Chemistry::OpenBabelc::OBBond_GetBondOrder;
 *GetFlags = *Chemistry::OpenBabelc::OBBond_GetFlags;
@@ -2480,6 +2330,7 @@ sub DESTROY {
 *GetBeginAtom = *Chemistry::OpenBabelc::OBBond_GetBeginAtom;
 *GetEndAtom = *Chemistry::OpenBabelc::OBBond_GetEndAtom;
 *GetNbrAtom = *Chemistry::OpenBabelc::OBBond_GetNbrAtom;
+*GetParent = *Chemistry::OpenBabelc::OBBond_GetParent;
 *GetEquibLength = *Chemistry::OpenBabelc::OBBond_GetEquibLength;
 *GetLength = *Chemistry::OpenBabelc::OBBond_GetLength;
 *GetNbrAtomIdx = *Chemistry::OpenBabelc::OBBond_GetNbrAtomIdx;
@@ -2520,7 +2371,7 @@ sub ACQUIRE {
 
 package Chemistry::OpenBabel::OBMol;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
-@ISA = qw( Chemistry::OpenBabel::OBGraphBase Chemistry::OpenBabel );
+@ISA = qw( Chemistry::OpenBabel::OBBase Chemistry::OpenBabel );
 %OWNER = ();
 %ITERATORS = ();
 sub new {
@@ -2680,6 +2531,12 @@ sub DESTROY {
 *BeginConformer = *Chemistry::OpenBabelc::OBMol_BeginConformer;
 *NextConformer = *Chemistry::OpenBabelc::OBMol_NextConformer;
 *GetConformers = *Chemistry::OpenBabelc::OBMol_GetConformers;
+*BeginAtoms = *Chemistry::OpenBabelc::OBMol_BeginAtoms;
+*EndAtoms = *Chemistry::OpenBabelc::OBMol_EndAtoms;
+*BeginBonds = *Chemistry::OpenBabelc::OBMol_BeginBonds;
+*EndBonds = *Chemistry::OpenBabelc::OBMol_EndBonds;
+*BeginResidues = *Chemistry::OpenBabelc::OBMol_BeginResidues;
+*EndResidues = *Chemistry::OpenBabelc::OBMol_EndResidues;
 *BeginAtom = *Chemistry::OpenBabelc::OBMol_BeginAtom;
 *NextAtom = *Chemistry::OpenBabelc::OBMol_NextAtom;
 *BeginBond = *Chemistry::OpenBabelc::OBMol_BeginBond;
@@ -2954,6 +2811,8 @@ sub DESTROY {
     }
 }
 
+*swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBMolAtomIter_Clear;
 *SetIdx = *Chemistry::OpenBabelc::OBMolAtomIter_SetIdx;
 *SetHyb = *Chemistry::OpenBabelc::OBMolAtomIter_SetHyb;
@@ -2969,6 +2828,7 @@ sub DESTROY {
 *SetVector = *Chemistry::OpenBabelc::OBMolAtomIter_SetVector;
 *SetCoordPtr = *Chemistry::OpenBabelc::OBMolAtomIter_SetCoordPtr;
 *SetResidue = *Chemistry::OpenBabelc::OBMolAtomIter_SetResidue;
+*SetParent = *Chemistry::OpenBabelc::OBMolAtomIter_SetParent;
 *SetAromatic = *Chemistry::OpenBabelc::OBMolAtomIter_SetAromatic;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBMolAtomIter_UnsetAromatic;
 *SetClockwiseStereo = *Chemistry::OpenBabelc::OBMolAtomIter_SetClockwiseStereo;
@@ -3004,6 +2864,7 @@ sub DESTROY {
 *GetVector = *Chemistry::OpenBabelc::OBMolAtomIter_GetVector;
 *GetPartialCharge = *Chemistry::OpenBabelc::OBMolAtomIter_GetPartialCharge;
 *GetResidue = *Chemistry::OpenBabelc::OBMolAtomIter_GetResidue;
+*GetParent = *Chemistry::OpenBabelc::OBMolAtomIter_GetParent;
 *GetNewBondVector = *Chemistry::OpenBabelc::OBMolAtomIter_GetNewBondVector;
 *GetBond = *Chemistry::OpenBabelc::OBMolAtomIter_GetBond;
 *GetNextAtom = *Chemistry::OpenBabelc::OBMolAtomIter_GetNextAtom;
@@ -3077,15 +2938,6 @@ sub DESTROY {
 *HasDoubleBond = *Chemistry::OpenBabelc::OBMolAtomIter_HasDoubleBond;
 *HasAromaticBond = *Chemistry::OpenBabelc::OBMolAtomIter_HasAromaticBond;
 *MatchesSMARTS = *Chemistry::OpenBabelc::OBMolAtomIter_MatchesSMARTS;
-*swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomIter_Visit_get;
-*swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomIter_Visit_set;
-*GetParent = *Chemistry::OpenBabelc::OBMolAtomIter_GetParent;
-*SetParent = *Chemistry::OpenBabelc::OBMolAtomIter_SetParent;
-*AddEdge = *Chemistry::OpenBabelc::OBMolAtomIter_AddEdge;
-*Error = *Chemistry::OpenBabelc::OBMolAtomIter_Error;
-*SetMatch = *Chemistry::OpenBabelc::OBMolAtomIter_SetMatch;
-*Eval = *Chemistry::OpenBabelc::OBMolAtomIter_Eval;
-*GetMatch = *Chemistry::OpenBabelc::OBMolAtomIter_GetMatch;
 *DoTransformations = *Chemistry::OpenBabelc::OBMolAtomIter_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBMolAtomIter_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBMolAtomIter_HasData;
@@ -3138,6 +2990,8 @@ sub DESTROY {
     }
 }
 
+*swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Clear;
 *SetIdx = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetIdx;
 *SetHyb = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetHyb;
@@ -3153,6 +3007,7 @@ sub DESTROY {
 *SetVector = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetVector;
 *SetCoordPtr = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetCoordPtr;
 *SetResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetResidue;
+*SetParent = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetParent;
 *SetAromatic = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetAromatic;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBMolAtomDFSIter_UnsetAromatic;
 *SetClockwiseStereo = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetClockwiseStereo;
@@ -3188,6 +3043,7 @@ sub DESTROY {
 *GetVector = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetVector;
 *GetPartialCharge = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetPartialCharge;
 *GetResidue = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetResidue;
+*GetParent = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetParent;
 *GetNewBondVector = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetNewBondVector;
 *GetBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetBond;
 *GetNextAtom = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetNextAtom;
@@ -3261,15 +3117,6 @@ sub DESTROY {
 *HasDoubleBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasDoubleBond;
 *HasAromaticBond = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasAromaticBond;
 *MatchesSMARTS = *Chemistry::OpenBabelc::OBMolAtomDFSIter_MatchesSMARTS;
-*swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Visit_get;
-*swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Visit_set;
-*GetParent = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetParent;
-*SetParent = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetParent;
-*AddEdge = *Chemistry::OpenBabelc::OBMolAtomDFSIter_AddEdge;
-*Error = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Error;
-*SetMatch = *Chemistry::OpenBabelc::OBMolAtomDFSIter_SetMatch;
-*Eval = *Chemistry::OpenBabelc::OBMolAtomDFSIter_Eval;
-*GetMatch = *Chemistry::OpenBabelc::OBMolAtomDFSIter_GetMatch;
 *DoTransformations = *Chemistry::OpenBabelc::OBMolAtomDFSIter_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBMolAtomDFSIter_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBMolAtomDFSIter_HasData;
@@ -3322,6 +3169,8 @@ sub DESTROY {
     }
 }
 
+*swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Clear;
 *SetIdx = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetIdx;
 *SetHyb = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetHyb;
@@ -3337,6 +3186,7 @@ sub DESTROY {
 *SetVector = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetVector;
 *SetCoordPtr = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetCoordPtr;
 *SetResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetResidue;
+*SetParent = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetParent;
 *SetAromatic = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetAromatic;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBMolAtomBFSIter_UnsetAromatic;
 *SetClockwiseStereo = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetClockwiseStereo;
@@ -3372,6 +3222,7 @@ sub DESTROY {
 *GetVector = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetVector;
 *GetPartialCharge = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetPartialCharge;
 *GetResidue = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetResidue;
+*GetParent = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetParent;
 *GetNewBondVector = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetNewBondVector;
 *GetBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetBond;
 *GetNextAtom = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetNextAtom;
@@ -3445,15 +3296,6 @@ sub DESTROY {
 *HasDoubleBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasDoubleBond;
 *HasAromaticBond = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasAromaticBond;
 *MatchesSMARTS = *Chemistry::OpenBabelc::OBMolAtomBFSIter_MatchesSMARTS;
-*swig_Visit_get = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Visit_get;
-*swig_Visit_set = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Visit_set;
-*GetParent = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetParent;
-*SetParent = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetParent;
-*AddEdge = *Chemistry::OpenBabelc::OBMolAtomBFSIter_AddEdge;
-*Error = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Error;
-*SetMatch = *Chemistry::OpenBabelc::OBMolAtomBFSIter_SetMatch;
-*Eval = *Chemistry::OpenBabelc::OBMolAtomBFSIter_Eval;
-*GetMatch = *Chemistry::OpenBabelc::OBMolAtomBFSIter_GetMatch;
 *DoTransformations = *Chemistry::OpenBabelc::OBMolAtomBFSIter_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBMolAtomBFSIter_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBMolAtomBFSIter_HasData;
@@ -3504,10 +3346,13 @@ sub DESTROY {
     }
 }
 
+*swig_Visit_get = *Chemistry::OpenBabelc::OBMolBondIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBMolBondIter_Visit_set;
 *SetIdx = *Chemistry::OpenBabelc::OBMolBondIter_SetIdx;
 *SetBO = *Chemistry::OpenBabelc::OBMolBondIter_SetBO;
 *SetBegin = *Chemistry::OpenBabelc::OBMolBondIter_SetBegin;
 *SetEnd = *Chemistry::OpenBabelc::OBMolBondIter_SetEnd;
+*SetParent = *Chemistry::OpenBabelc::OBMolBondIter_SetParent;
 *SetLength = *Chemistry::OpenBabelc::OBMolBondIter_SetLength;
 *Set = *Chemistry::OpenBabelc::OBMolBondIter_Set;
 *SetKSingle = *Chemistry::OpenBabelc::OBMolBondIter_SetKSingle;
@@ -3526,6 +3371,7 @@ sub DESTROY {
 *UnsetDown = *Chemistry::OpenBabelc::OBMolBondIter_UnsetDown;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBMolBondIter_UnsetAromatic;
 *UnsetKekule = *Chemistry::OpenBabelc::OBMolBondIter_UnsetKekule;
+*GetIdx = *Chemistry::OpenBabelc::OBMolBondIter_GetIdx;
 *GetBO = *Chemistry::OpenBabelc::OBMolBondIter_GetBO;
 *GetBondOrder = *Chemistry::OpenBabelc::OBMolBondIter_GetBondOrder;
 *GetFlags = *Chemistry::OpenBabelc::OBMolBondIter_GetFlags;
@@ -3534,6 +3380,7 @@ sub DESTROY {
 *GetBeginAtom = *Chemistry::OpenBabelc::OBMolBondIter_GetBeginAtom;
 *GetEndAtom = *Chemistry::OpenBabelc::OBMolBondIter_GetEndAtom;
 *GetNbrAtom = *Chemistry::OpenBabelc::OBMolBondIter_GetNbrAtom;
+*GetParent = *Chemistry::OpenBabelc::OBMolBondIter_GetParent;
 *GetEquibLength = *Chemistry::OpenBabelc::OBMolBondIter_GetEquibLength;
 *GetLength = *Chemistry::OpenBabelc::OBMolBondIter_GetLength;
 *GetNbrAtomIdx = *Chemistry::OpenBabelc::OBMolBondIter_GetNbrAtomIdx;
@@ -3557,17 +3404,6 @@ sub DESTROY {
 *IsWedge = *Chemistry::OpenBabelc::OBMolBondIter_IsWedge;
 *IsHash = *Chemistry::OpenBabelc::OBMolBondIter_IsHash;
 *IsDoubleBondGeometry = *Chemistry::OpenBabelc::OBMolBondIter_IsDoubleBondGeometry;
-*swig_Visit_get = *Chemistry::OpenBabelc::OBMolBondIter_Visit_get;
-*swig_Visit_set = *Chemistry::OpenBabelc::OBMolBondIter_Visit_set;
-*GetParent = *Chemistry::OpenBabelc::OBMolBondIter_GetParent;
-*SetParent = *Chemistry::OpenBabelc::OBMolBondIter_SetParent;
-*GetIdx = *Chemistry::OpenBabelc::OBMolBondIter_GetIdx;
-*SetBgn = *Chemistry::OpenBabelc::OBMolBondIter_SetBgn;
-*SwapEnds = *Chemistry::OpenBabelc::OBMolBondIter_SwapEnds;
-*GetBgn = *Chemistry::OpenBabelc::OBMolBondIter_GetBgn;
-*GetEnd = *Chemistry::OpenBabelc::OBMolBondIter_GetEnd;
-*Error = *Chemistry::OpenBabelc::OBMolBondIter_Error;
-*Eval = *Chemistry::OpenBabelc::OBMolBondIter_Eval;
 *DoTransformations = *Chemistry::OpenBabelc::OBMolBondIter_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBMolBondIter_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBMolBondIter_HasData;
@@ -3618,6 +3454,8 @@ sub DESTROY {
     }
 }
 
+*swig_Visit_get = *Chemistry::OpenBabelc::OBAtomAtomIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBAtomAtomIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBAtomAtomIter_Clear;
 *SetIdx = *Chemistry::OpenBabelc::OBAtomAtomIter_SetIdx;
 *SetHyb = *Chemistry::OpenBabelc::OBAtomAtomIter_SetHyb;
@@ -3633,6 +3471,7 @@ sub DESTROY {
 *SetVector = *Chemistry::OpenBabelc::OBAtomAtomIter_SetVector;
 *SetCoordPtr = *Chemistry::OpenBabelc::OBAtomAtomIter_SetCoordPtr;
 *SetResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_SetResidue;
+*SetParent = *Chemistry::OpenBabelc::OBAtomAtomIter_SetParent;
 *SetAromatic = *Chemistry::OpenBabelc::OBAtomAtomIter_SetAromatic;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBAtomAtomIter_UnsetAromatic;
 *SetClockwiseStereo = *Chemistry::OpenBabelc::OBAtomAtomIter_SetClockwiseStereo;
@@ -3668,6 +3507,7 @@ sub DESTROY {
 *GetVector = *Chemistry::OpenBabelc::OBAtomAtomIter_GetVector;
 *GetPartialCharge = *Chemistry::OpenBabelc::OBAtomAtomIter_GetPartialCharge;
 *GetResidue = *Chemistry::OpenBabelc::OBAtomAtomIter_GetResidue;
+*GetParent = *Chemistry::OpenBabelc::OBAtomAtomIter_GetParent;
 *GetNewBondVector = *Chemistry::OpenBabelc::OBAtomAtomIter_GetNewBondVector;
 *GetBond = *Chemistry::OpenBabelc::OBAtomAtomIter_GetBond;
 *GetNextAtom = *Chemistry::OpenBabelc::OBAtomAtomIter_GetNextAtom;
@@ -3741,15 +3581,6 @@ sub DESTROY {
 *HasDoubleBond = *Chemistry::OpenBabelc::OBAtomAtomIter_HasDoubleBond;
 *HasAromaticBond = *Chemistry::OpenBabelc::OBAtomAtomIter_HasAromaticBond;
 *MatchesSMARTS = *Chemistry::OpenBabelc::OBAtomAtomIter_MatchesSMARTS;
-*swig_Visit_get = *Chemistry::OpenBabelc::OBAtomAtomIter_Visit_get;
-*swig_Visit_set = *Chemistry::OpenBabelc::OBAtomAtomIter_Visit_set;
-*GetParent = *Chemistry::OpenBabelc::OBAtomAtomIter_GetParent;
-*SetParent = *Chemistry::OpenBabelc::OBAtomAtomIter_SetParent;
-*AddEdge = *Chemistry::OpenBabelc::OBAtomAtomIter_AddEdge;
-*Error = *Chemistry::OpenBabelc::OBAtomAtomIter_Error;
-*SetMatch = *Chemistry::OpenBabelc::OBAtomAtomIter_SetMatch;
-*Eval = *Chemistry::OpenBabelc::OBAtomAtomIter_Eval;
-*GetMatch = *Chemistry::OpenBabelc::OBAtomAtomIter_GetMatch;
 *DoTransformations = *Chemistry::OpenBabelc::OBAtomAtomIter_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBAtomAtomIter_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBAtomAtomIter_HasData;
@@ -3800,10 +3631,13 @@ sub DESTROY {
     }
 }
 
+*swig_Visit_get = *Chemistry::OpenBabelc::OBAtomBondIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBAtomBondIter_Visit_set;
 *SetIdx = *Chemistry::OpenBabelc::OBAtomBondIter_SetIdx;
 *SetBO = *Chemistry::OpenBabelc::OBAtomBondIter_SetBO;
 *SetBegin = *Chemistry::OpenBabelc::OBAtomBondIter_SetBegin;
 *SetEnd = *Chemistry::OpenBabelc::OBAtomBondIter_SetEnd;
+*SetParent = *Chemistry::OpenBabelc::OBAtomBondIter_SetParent;
 *SetLength = *Chemistry::OpenBabelc::OBAtomBondIter_SetLength;
 *Set = *Chemistry::OpenBabelc::OBAtomBondIter_Set;
 *SetKSingle = *Chemistry::OpenBabelc::OBAtomBondIter_SetKSingle;
@@ -3822,6 +3656,7 @@ sub DESTROY {
 *UnsetDown = *Chemistry::OpenBabelc::OBAtomBondIter_UnsetDown;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBAtomBondIter_UnsetAromatic;
 *UnsetKekule = *Chemistry::OpenBabelc::OBAtomBondIter_UnsetKekule;
+*GetIdx = *Chemistry::OpenBabelc::OBAtomBondIter_GetIdx;
 *GetBO = *Chemistry::OpenBabelc::OBAtomBondIter_GetBO;
 *GetBondOrder = *Chemistry::OpenBabelc::OBAtomBondIter_GetBondOrder;
 *GetFlags = *Chemistry::OpenBabelc::OBAtomBondIter_GetFlags;
@@ -3830,6 +3665,7 @@ sub DESTROY {
 *GetBeginAtom = *Chemistry::OpenBabelc::OBAtomBondIter_GetBeginAtom;
 *GetEndAtom = *Chemistry::OpenBabelc::OBAtomBondIter_GetEndAtom;
 *GetNbrAtom = *Chemistry::OpenBabelc::OBAtomBondIter_GetNbrAtom;
+*GetParent = *Chemistry::OpenBabelc::OBAtomBondIter_GetParent;
 *GetEquibLength = *Chemistry::OpenBabelc::OBAtomBondIter_GetEquibLength;
 *GetLength = *Chemistry::OpenBabelc::OBAtomBondIter_GetLength;
 *GetNbrAtomIdx = *Chemistry::OpenBabelc::OBAtomBondIter_GetNbrAtomIdx;
@@ -3853,17 +3689,6 @@ sub DESTROY {
 *IsWedge = *Chemistry::OpenBabelc::OBAtomBondIter_IsWedge;
 *IsHash = *Chemistry::OpenBabelc::OBAtomBondIter_IsHash;
 *IsDoubleBondGeometry = *Chemistry::OpenBabelc::OBAtomBondIter_IsDoubleBondGeometry;
-*swig_Visit_get = *Chemistry::OpenBabelc::OBAtomBondIter_Visit_get;
-*swig_Visit_set = *Chemistry::OpenBabelc::OBAtomBondIter_Visit_set;
-*GetParent = *Chemistry::OpenBabelc::OBAtomBondIter_GetParent;
-*SetParent = *Chemistry::OpenBabelc::OBAtomBondIter_SetParent;
-*GetIdx = *Chemistry::OpenBabelc::OBAtomBondIter_GetIdx;
-*SetBgn = *Chemistry::OpenBabelc::OBAtomBondIter_SetBgn;
-*SwapEnds = *Chemistry::OpenBabelc::OBAtomBondIter_SwapEnds;
-*GetBgn = *Chemistry::OpenBabelc::OBAtomBondIter_GetBgn;
-*GetEnd = *Chemistry::OpenBabelc::OBAtomBondIter_GetEnd;
-*Error = *Chemistry::OpenBabelc::OBAtomBondIter_Error;
-*Eval = *Chemistry::OpenBabelc::OBAtomBondIter_Eval;
 *DoTransformations = *Chemistry::OpenBabelc::OBAtomBondIter_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBAtomBondIter_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBAtomBondIter_HasData;
@@ -3942,6 +3767,8 @@ sub DESTROY {
 *GetResidueProperty = *Chemistry::OpenBabelc::OBResidueIter_GetResidueProperty;
 *IsHetAtom = *Chemistry::OpenBabelc::OBResidueIter_IsHetAtom;
 *IsResidueType = *Chemistry::OpenBabelc::OBResidueIter_IsResidueType;
+*BeginAtoms = *Chemistry::OpenBabelc::OBResidueIter_BeginAtoms;
+*EndAtoms = *Chemistry::OpenBabelc::OBResidueIter_EndAtoms;
 *BeginAtom = *Chemistry::OpenBabelc::OBResidueIter_BeginAtom;
 *NextAtom = *Chemistry::OpenBabelc::OBResidueIter_NextAtom;
 *DoTransformations = *Chemistry::OpenBabelc::OBResidueIter_DoTransformations;
@@ -3994,6 +3821,8 @@ sub DESTROY {
     }
 }
 
+*swig_Visit_get = *Chemistry::OpenBabelc::OBResidueAtomIter_Visit_get;
+*swig_Visit_set = *Chemistry::OpenBabelc::OBResidueAtomIter_Visit_set;
 *Clear = *Chemistry::OpenBabelc::OBResidueAtomIter_Clear;
 *SetIdx = *Chemistry::OpenBabelc::OBResidueAtomIter_SetIdx;
 *SetHyb = *Chemistry::OpenBabelc::OBResidueAtomIter_SetHyb;
@@ -4009,6 +3838,7 @@ sub DESTROY {
 *SetVector = *Chemistry::OpenBabelc::OBResidueAtomIter_SetVector;
 *SetCoordPtr = *Chemistry::OpenBabelc::OBResidueAtomIter_SetCoordPtr;
 *SetResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_SetResidue;
+*SetParent = *Chemistry::OpenBabelc::OBResidueAtomIter_SetParent;
 *SetAromatic = *Chemistry::OpenBabelc::OBResidueAtomIter_SetAromatic;
 *UnsetAromatic = *Chemistry::OpenBabelc::OBResidueAtomIter_UnsetAromatic;
 *SetClockwiseStereo = *Chemistry::OpenBabelc::OBResidueAtomIter_SetClockwiseStereo;
@@ -4044,6 +3874,7 @@ sub DESTROY {
 *GetVector = *Chemistry::OpenBabelc::OBResidueAtomIter_GetVector;
 *GetPartialCharge = *Chemistry::OpenBabelc::OBResidueAtomIter_GetPartialCharge;
 *GetResidue = *Chemistry::OpenBabelc::OBResidueAtomIter_GetResidue;
+*GetParent = *Chemistry::OpenBabelc::OBResidueAtomIter_GetParent;
 *GetNewBondVector = *Chemistry::OpenBabelc::OBResidueAtomIter_GetNewBondVector;
 *GetBond = *Chemistry::OpenBabelc::OBResidueAtomIter_GetBond;
 *GetNextAtom = *Chemistry::OpenBabelc::OBResidueAtomIter_GetNextAtom;
@@ -4117,15 +3948,6 @@ sub DESTROY {
 *HasDoubleBond = *Chemistry::OpenBabelc::OBResidueAtomIter_HasDoubleBond;
 *HasAromaticBond = *Chemistry::OpenBabelc::OBResidueAtomIter_HasAromaticBond;
 *MatchesSMARTS = *Chemistry::OpenBabelc::OBResidueAtomIter_MatchesSMARTS;
-*swig_Visit_get = *Chemistry::OpenBabelc::OBResidueAtomIter_Visit_get;
-*swig_Visit_set = *Chemistry::OpenBabelc::OBResidueAtomIter_Visit_set;
-*GetParent = *Chemistry::OpenBabelc::OBResidueAtomIter_GetParent;
-*SetParent = *Chemistry::OpenBabelc::OBResidueAtomIter_SetParent;
-*AddEdge = *Chemistry::OpenBabelc::OBResidueAtomIter_AddEdge;
-*Error = *Chemistry::OpenBabelc::OBResidueAtomIter_Error;
-*SetMatch = *Chemistry::OpenBabelc::OBResidueAtomIter_SetMatch;
-*Eval = *Chemistry::OpenBabelc::OBResidueAtomIter_Eval;
-*GetMatch = *Chemistry::OpenBabelc::OBResidueAtomIter_GetMatch;
 *DoTransformations = *Chemistry::OpenBabelc::OBResidueAtomIter_DoTransformations;
 *ClassDescription = *Chemistry::OpenBabelc::OBResidueAtomIter_ClassDescription;
 *HasData = *Chemistry::OpenBabelc::OBResidueAtomIter_HasData;

@@ -42,7 +42,7 @@ public:
   //! \return the OBAtom::GetIdx() index of the atom in this node
   int  GetAtomIdx();
   //! Recursively find the root of this tree, building up a vector of OBAtom nodes.
-  void PathToRoot(std::vector<OBNodeBase*>&);
+  void PathToRoot(std::vector<OBAtom*>&);
 };
 
 // class introduction in ring.cpp

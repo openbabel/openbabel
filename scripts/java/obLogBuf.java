@@ -27,13 +27,13 @@ public class obLogBuf {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_obLogBuf(swigCPtr);
+      openbabelJNI.delete_obLogBuf(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public obLogBuf() {
-    this(net.sourceforge.openbabelJNI.new_obLogBuf(), true);
+    this(openbabelJNI.new_obLogBuf(), true);
   }
 
 }

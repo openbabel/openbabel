@@ -11,7 +11,7 @@ public class OBSetData extends OBGenericData {
   private long swigCPtr;
 
   protected OBSetData(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBSetDataUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBSetDataUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,48 +26,48 @@ public class OBSetData extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBSetData(swigCPtr);
+      openbabelJNI.delete_OBSetData(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBSetData() {
-    this(net.sourceforge.openbabelJNI.new_OBSetData(), true);
+    this(openbabelJNI.new_OBSetData(), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBSetData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBSetData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void AddData(OBGenericData d) {
-    net.sourceforge.openbabelJNI.OBSetData_AddData(swigCPtr, this, OBGenericData.getCPtr(d), d);
+    openbabelJNI.OBSetData_AddData(swigCPtr, this, OBGenericData.getCPtr(d), d);
   }
 
   public void SetData(vectorData vdata) {
-    net.sourceforge.openbabelJNI.OBSetData_SetData(swigCPtr, this, vectorData.getCPtr(vdata), vdata);
+    openbabelJNI.OBSetData_SetData(swigCPtr, this, vectorData.getCPtr(vdata), vdata);
   }
 
   public OBGenericData GetData(String s) {
-    long cPtr = net.sourceforge.openbabelJNI.OBSetData_GetData__SWIG_0(swigCPtr, this, s);
+    long cPtr = openbabelJNI.OBSetData_GetData__SWIG_0(swigCPtr, this, s);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public vectorData GetData() {
-    return new vectorData(net.sourceforge.openbabelJNI.OBSetData_GetData__SWIG_1(swigCPtr, this), false);
+    return new vectorData(openbabelJNI.OBSetData_GetData__SWIG_2(swigCPtr, this), false);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator GetBegin() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator(net.sourceforge.openbabelJNI.OBSetData_GetBegin(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator(openbabelJNI.OBSetData_GetBegin(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator GetEnd() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator(net.sourceforge.openbabelJNI.OBSetData_GetEnd(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator(openbabelJNI.OBSetData_GetEnd(swigCPtr, this), true);
   }
 
   public void DeleteData(OBGenericData gd) {
-    net.sourceforge.openbabelJNI.OBSetData_DeleteData(swigCPtr, this, OBGenericData.getCPtr(gd), gd);
+    openbabelJNI.OBSetData_DeleteData(swigCPtr, this, OBGenericData.getCPtr(gd), gd);
   }
 
 }

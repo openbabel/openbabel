@@ -1,4 +1,4 @@
-%module net.sourceforge.openbabel
+%module openbabel
 
 %{
 // used to set import/export for Cygwin DLLs

@@ -11,7 +11,7 @@ public class OBSymmetryData extends OBGenericData {
   private long swigCPtr;
 
   protected OBSymmetryData(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBSymmetryDataUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBSymmetryDataUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,47 +26,47 @@ public class OBSymmetryData extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBSymmetryData(swigCPtr);
+      openbabelJNI.delete_OBSymmetryData(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBSymmetryData() {
-    this(net.sourceforge.openbabelJNI.new_OBSymmetryData__SWIG_0(), true);
+    this(openbabelJNI.new_OBSymmetryData__SWIG_0(), true);
   }
 
   public OBSymmetryData(OBSymmetryData arg0) {
-    this(net.sourceforge.openbabelJNI.new_OBSymmetryData__SWIG_1(OBSymmetryData.getCPtr(arg0), arg0), true);
+    this(openbabelJNI.new_OBSymmetryData__SWIG_1(OBSymmetryData.getCPtr(arg0), arg0), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBSymmetryData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBSymmetryData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void SetData(String pg, String sg) {
-    net.sourceforge.openbabelJNI.OBSymmetryData_SetData__SWIG_0(swigCPtr, this, pg, sg);
+    openbabelJNI.OBSymmetryData_SetData__SWIG_0(swigCPtr, this, pg, sg);
   }
 
   public void SetData(String pg) {
-    net.sourceforge.openbabelJNI.OBSymmetryData_SetData__SWIG_1(swigCPtr, this, pg);
+    openbabelJNI.OBSymmetryData_SetData__SWIG_1(swigCPtr, this, pg);
   }
 
   public void SetPointGroup(String pg) {
-    net.sourceforge.openbabelJNI.OBSymmetryData_SetPointGroup(swigCPtr, this, pg);
+    openbabelJNI.OBSymmetryData_SetPointGroup(swigCPtr, this, pg);
   }
 
   public void SetSpaceGroup(String sg) {
-    net.sourceforge.openbabelJNI.OBSymmetryData_SetSpaceGroup(swigCPtr, this, sg);
+    openbabelJNI.OBSymmetryData_SetSpaceGroup(swigCPtr, this, sg);
   }
 
   public String GetPointGroup() {
-    return net.sourceforge.openbabelJNI.OBSymmetryData_GetPointGroup(swigCPtr, this);
+    return openbabelJNI.OBSymmetryData_GetPointGroup(swigCPtr, this);
   }
 
   public String GetSpaceGroup() {
-    return net.sourceforge.openbabelJNI.OBSymmetryData_GetSpaceGroup(swigCPtr, this);
+    return openbabelJNI.OBSymmetryData_GetSpaceGroup(swigCPtr, this);
   }
 
 }

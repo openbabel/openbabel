@@ -11,7 +11,7 @@ public class OBChiralData extends OBGenericData {
   private long swigCPtr;
 
   protected OBChiralData(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBChiralDataUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBChiralDataUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,47 +26,47 @@ public class OBChiralData extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBChiralData(swigCPtr);
+      openbabelJNI.delete_OBChiralData(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public SWIGTYPE_p_std__vectorTunsigned_int_t GetAtom4Refs(atomreftype t) {
-    return new SWIGTYPE_p_std__vectorTunsigned_int_t(net.sourceforge.openbabelJNI.OBChiralData_GetAtom4Refs(swigCPtr, this, t.swigValue()), true);
+    return new SWIGTYPE_p_std__vectorTunsigned_int_t(openbabelJNI.OBChiralData_GetAtom4Refs(swigCPtr, this, t.swigValue()), true);
   }
 
   public long GetAtomRef(int a, atomreftype t) {
-    return net.sourceforge.openbabelJNI.OBChiralData_GetAtomRef(swigCPtr, this, a, t.swigValue());
+    return openbabelJNI.OBChiralData_GetAtomRef(swigCPtr, this, a, t.swigValue());
   }
 
   public OBChiralData() {
-    this(net.sourceforge.openbabelJNI.new_OBChiralData__SWIG_0(), true);
+    this(openbabelJNI.new_OBChiralData__SWIG_0(), true);
   }
 
   public OBChiralData(OBChiralData src) {
-    this(net.sourceforge.openbabelJNI.new_OBChiralData__SWIG_1(OBChiralData.getCPtr(src), src), true);
+    this(openbabelJNI.new_OBChiralData__SWIG_1(OBChiralData.getCPtr(src), src), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBChiralData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBChiralData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void Clear() {
-    net.sourceforge.openbabelJNI.OBChiralData_Clear(swigCPtr, this);
+    openbabelJNI.OBChiralData_Clear(swigCPtr, this);
   }
 
   public boolean SetAtom4Refs(SWIGTYPE_p_std__vectorTunsigned_int_t atom4refs, atomreftype t) {
-    return net.sourceforge.openbabelJNI.OBChiralData_SetAtom4Refs(swigCPtr, this, SWIGTYPE_p_std__vectorTunsigned_int_t.getCPtr(atom4refs), t.swigValue());
+    return openbabelJNI.OBChiralData_SetAtom4Refs(swigCPtr, this, SWIGTYPE_p_std__vectorTunsigned_int_t.getCPtr(atom4refs), t.swigValue());
   }
 
   public int AddAtomRef(long atomref, atomreftype t) {
-    return net.sourceforge.openbabelJNI.OBChiralData_AddAtomRef(swigCPtr, this, atomref, t.swigValue());
+    return openbabelJNI.OBChiralData_AddAtomRef(swigCPtr, this, atomref, t.swigValue());
   }
 
   public long GetSize(atomreftype t) {
-    return net.sourceforge.openbabelJNI.OBChiralData_GetSize(swigCPtr, this, t.swigValue());
+    return openbabelJNI.OBChiralData_GetSize(swigCPtr, this, t.swigValue());
   }
 
 }

@@ -31,7 +31,7 @@ GNU General Public License for more details.
 
 using namespace std;
 using namespace OpenBabel;
-
+void some_tests(OBMol &mol);
 // PROTOTYPES /////////////////////////////////////////////////////////////////
 int nrings(OBMol &mol);
 
@@ -102,10 +102,10 @@ int main(int argc,char **argv)
 	conv.Read(&mol, &ifs);
         if (mol.Empty())
             break;
-
         // Print the properties
         // The name should be enough self explaining
-
+        some_tests(mol);
+        
         cout << "name " << mol.GetTitle() << endl;
         cout << "mol_weight "<< mol.GetMolWt() << endl;
         cout << "num_rings " << nrings(mol) << endl;
@@ -127,11 +127,31 @@ int nrings(OBMol &mol)
 
     vr = mol.GetSSSR();
     nr = vr.size();
-
     return (nr);
 }
 
-
+void some_tests(OBMol &mol)
+{
+    for ( OBResidueIterator residue = mol.BeginResidues();
+                            residue != mol.EndResidues(); ++residue )
+    {
+        std::cout << "residue named: " 
+                  << (*residue)->GetName() << " has atoms\n";
+        for ( OBAtomIterator atom = (*residue)->BeginAtoms();
+                             atom != (*residue)->EndAtoms(); ++atom )
+        {
+            std::cout << (*atom)->GetIdx() << "\n";
+        }
+    }
+    for ( OBBondIterator bond = mol.BeginBonds();
+                         bond != mol.EndBonds(); ++bond )
+    {
+        std::cout << "bond: ";
+        std::cout << (*bond)->GetIdx() << " connects (";
+        std::cout << (*bond)->GetBeginAtom()->GetIdx() << ";";
+        std::cout << (*bond)->GetEndAtom()->GetIdx() << ")\n";
+    }
+}
 
 /* obprop man page*/
 /** \page obprop print standard molecular properties

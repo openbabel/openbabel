@@ -27,41 +27,41 @@ public class OBRingSearch {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBRingSearch(swigCPtr);
+      openbabelJNI.delete_OBRingSearch(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBRingSearch() {
-    this(net.sourceforge.openbabelJNI.new_OBRingSearch(), true);
+    this(openbabelJNI.new_OBRingSearch(), true);
   }
 
   public void SortRings() {
-    net.sourceforge.openbabelJNI.OBRingSearch_SortRings(swigCPtr, this);
+    openbabelJNI.OBRingSearch_SortRings(swigCPtr, this);
   }
 
   public void RemoveRedundant(int arg0) {
-    net.sourceforge.openbabelJNI.OBRingSearch_RemoveRedundant(swigCPtr, this, arg0);
+    openbabelJNI.OBRingSearch_RemoveRedundant(swigCPtr, this, arg0);
   }
 
   public void AddRingFromClosure(OBMol arg0, OBBond arg1) {
-    net.sourceforge.openbabelJNI.OBRingSearch_AddRingFromClosure(swigCPtr, this, OBMol.getCPtr(arg0), arg0, OBBond.getCPtr(arg1), arg1);
+    openbabelJNI.OBRingSearch_AddRingFromClosure(swigCPtr, this, OBMol.getCPtr(arg0), arg0, OBBond.getCPtr(arg1), arg1);
   }
 
   public void WriteRings() {
-    net.sourceforge.openbabelJNI.OBRingSearch_WriteRings(swigCPtr, this);
+    openbabelJNI.OBRingSearch_WriteRings(swigCPtr, this);
   }
 
   public boolean SaveUniqueRing(SWIGTYPE_p_std__dequeTint_t arg0, SWIGTYPE_p_std__dequeTint_t arg1) {
-    return net.sourceforge.openbabelJNI.OBRingSearch_SaveUniqueRing(swigCPtr, this, SWIGTYPE_p_std__dequeTint_t.getCPtr(arg0), SWIGTYPE_p_std__dequeTint_t.getCPtr(arg1));
+    return openbabelJNI.OBRingSearch_SaveUniqueRing(swigCPtr, this, SWIGTYPE_p_std__dequeTint_t.getCPtr(arg0), SWIGTYPE_p_std__dequeTint_t.getCPtr(arg1));
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator BeginRings() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator(net.sourceforge.openbabelJNI.OBRingSearch_BeginRings(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator(openbabelJNI.OBRingSearch_BeginRings(swigCPtr, this), true);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator EndRings() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator(net.sourceforge.openbabelJNI.OBRingSearch_EndRings(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator(openbabelJNI.OBRingSearch_EndRings(swigCPtr, this), true);
   }
 
 }

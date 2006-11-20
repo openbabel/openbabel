@@ -35,7 +35,7 @@ GNU General Public License for more details.
 #include <map>
 
 // Currently includes many headers for 2.x backwards compatibility
-// \deprecated -- this will be cleaned up in 3.0 efforts
+// \deprecated -- this will be cleaned up in 3.0 efforts (improving compile time)
 #include "atom.h"
 #include "bond.h"
 #include "base.h"
@@ -56,11 +56,9 @@ namespace OpenBabel
 
   class OBAtom;
   class OBBond;
-  class OBMol;
   class OBInternalCoord;
 
   // Class OBMol
-
   //MOL Property Macros (flags) -- 32+ bits
 #define OB_SSSR_MOL              (1<<1)
 #define OB_RINGFLAGS_MOL         (1<<2)
@@ -76,21 +74,21 @@ namespace OpenBabel
 #define OB_PH_CORRECTED_MOL      (1<<13)
 #define OB_AROM_CORRECTED_MOL    (1<<14)
 #define OB_CHAINS_MOL            (1<<15)
-#define OB_TCHARGE_MOL		 (1<<16)
+#define OB_TCHARGE_MOL		       (1<<16)
 #define OB_TSPIN_MOL             (1<<17)
   // flags 18-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
   // class introduction in mol.cpp
-  class OBAPI OBMol : public OBGraphBase
+ class OBAPI OBMol: public OBBase
     {
     protected:
       int                           _flags;	//!< bitfield of flags
       bool                          _autoPartialCharge; //!< Assign partial charges automatically
       bool                          _autoFormalCharge; //!< Assign formal charges automatically
       std::string                   _title;	//!< Molecule title
-      //vector<OBAtom*>             _atom;	//!< not needed (inherited)
-      //vector<OBBond*>             _bond;	//!< not needed (inherited)
+      std::vector<OBAtom*>          _vatom;	//!< vector of atoms
+      std::vector<OBBond*>          _vbond;	//!< vector of bonds
       unsigned short int            _dimension;   //!< Dimensionality of coordinates
       double                        _energy;      //!< Molecular heat of formation (if applicable)
       int				  _totalCharge; //!< Total charge on the molecule
@@ -101,7 +99,6 @@ namespace OpenBabel
       unsigned short int            _nbonds;      //!< Number of bonds
       std::vector<OBResidue*>       _residue;     //!< Residue information (if applicable)
       std::vector<OBInternalCoord*> _internals;   //!< Internal Coordinates (if applicable)
-      //    std::vector<OBGenericData*>   _vdata;       //!< Custom data -- see OBGenericData class for more
       unsigned short int            _mod;	        //!< Number of nested calls to BeginModify()
 
       bool  HasFlag(int flag)    { return((_flags & flag) ? true : false); }
@@ -138,8 +135,8 @@ namespace OpenBabel
       virtual OBAtom *CreateAtom(void);
       virtual OBBond *CreateBond(void);
       virtual OBResidue *CreateResidue(void);
-      virtual void DestroyAtom(OBNodeBase*);
-      virtual void DestroyBond(OBEdgeBase*);
+      virtual void DestroyAtom(OBAtom*);
+      virtual void DestroyBond(OBBond*);
       virtual void DestroyResidue(OBResidue*);
       bool AddAtom(OBAtom&);
       bool AddBond(int,int,int,int flags=0,int insertpos=-1);
@@ -288,7 +285,7 @@ namespace OpenBabel
       //! Clear all information from a molecule
       bool Clear();
       //! Renumber the atoms of this molecule according to the order in the supplied vector
-      void RenumberAtoms(std::vector<OBNodeBase*>&);
+      void RenumberAtoms(std::vector<OBAtom*>&);
       //! Translate one conformer and rotate by a rotation matrix (which is returned) to the inertial frame-of-reference
       void ToInertialFrame(int conf, double *rmat);
       //! Translate all conformers to the inertial frame-of-reference
@@ -404,21 +401,22 @@ namespace OpenBabel
 
       //! \name Iterator methods
       //@{
-      //! \deprecated Use FOR_ATOMS_OF_MOL and OBMolAtomIter instead
-      OBAtom *BeginAtom(std::vector<OBNodeBase*>::iterator &i);
-      //! \deprecated Use FOR_ATOMS_OF_MOL and OBMolAtomIter instead
-      OBAtom *NextAtom(std::vector<OBNodeBase*>::iterator &i);
-      //! \deprecated Use FOR_BONDS_OF_MOL and OBMolBondIter instead
-      OBBond *BeginBond(std::vector<OBEdgeBase*>::iterator &i);
-      //! \deprecated Use FOR_BONDS_OF_MOL and OBMolBondIter instead
-      OBBond *NextBond(std::vector<OBEdgeBase*>::iterator &i);
-      //! \deprecated Use FOR_RESIDUES_OF_MOL and OBResidueIter instead
+      OBAtomIterator BeginAtoms()   { return _vatom.begin(); }
+      OBAtomIterator EndAtoms()     { return _vatom.end();   }
+      OBBondIterator BeginBonds()   { return _vbond.begin(); }
+      OBBondIterator EndBonds()     { return _vbond.end();   }
+      OBResidueIterator BeginResidues() { return _residue.begin(); }
+      OBResidueIterator EndResidues()   { return _residue.end();   }
+
+      OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);
+      OBAtom *NextAtom(std::vector<OBAtom*>::iterator &i);
+      OBBond *BeginBond(std::vector<OBBond*>::iterator &i);
+      OBBond *NextBond(std::vector<OBBond*>::iterator &i);
       OBResidue *BeginResidue(std::vector<OBResidue*>::iterator &i)
         {
           i = _residue.begin();
           return((i == _residue.end()) ? NULL:*i);
         }
-      //! \deprecated Use FOR_RESIDUES_OF_MOL and OBResidueIter instead
       OBResidue *NextResidue(std::vector<OBResidue*>::iterator &i)
         {
           i++;

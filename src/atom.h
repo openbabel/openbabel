@@ -40,6 +40,9 @@ namespace OpenBabel
   class OBBond;
   class OBMol;
 
+  //! OBNodeBase is declared for backwards-compatibility with 2.0 and earlier code
+  typedef OBAtom OBNodeBase;
+
   //ATOM Property Macros (flags)
   //! Atom is in a 4-membered ring
 #define OB_4RING_ATOM     (1<<1)
@@ -69,7 +72,7 @@ namespace OpenBabel
 
   // Class OBAtom
   // class introduction in atom.cpp
-  class OBAPI OBAtom : public OBNodeBase
+ class OBAPI OBAtom: public OBBase
     {
     protected:
       char                          _ele;       //!< atomic number (type char to minimize space -- allows for 0..255 elements)
@@ -78,6 +81,10 @@ namespace OpenBabel
       short                         _fcharge;   //!< formal charge
       unsigned short                _isotope;   //!< isotope (0 = most abundant)
       short                         _spinmultiplicity;//!< atomic spin, e.g., 2 for radical  1 or 3 for carbene
+
+      unsigned int                  _idx;       //!< unique node index (GetIdx(), SetIdx())
+      OBMol                        *_parent;    //!< parent molecule (if any)
+      std::vector<OBBond*>          _vbond;     //!< bonds to this atom -- assumed to be one of the endpoints
 
       unsigned short                _cidx;      //!< index into coordinate array
       unsigned short                _hyb;       //!< hybridization
@@ -94,6 +101,8 @@ namespace OpenBabel
       bool HasFlag(int flag)  {  return((_flags & flag) ? true : false); }
 
     public:
+       //! Used internally by graph traversal algorithms
+      bool Visit;
 
       //! Constructor
       OBAtom();
@@ -135,7 +144,7 @@ namespace OpenBabel
       //! Set the position of this atom based on the internal pointer array (i.e. from SetCoordPtr() )
       void SetVector();
       void SetResidue(OBResidue *res)     { _residue=res; }
-      //  void SetParent(OBMol *ptr)      { _parent=ptr; } // inherited
+      void SetParent(OBMol *ptr)          { _parent=ptr; }
       void SetAromatic()                  { SetFlag(OB_AROMATIC_ATOM); }
       void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
       //! Mark atom as having SMILES clockwise stereochemistry (i.e., "@@")
@@ -242,21 +251,21 @@ namespace OpenBabel
           else
             return NULL;
         }
-      //! \return the coordinates as a vector3 object
+      //! Return the coordinates as a vector3 object
       vector3   &GetVector();
-      //! \return the partial charge of this atom, calculating a Gasteiger charge if needed
+      //! Return the partial charge of this atom, calculating a Gasteiger charge if needed
       double     GetPartialCharge();
-      //! \return the residue which contains this atom, or NULL if none exists
+      //! Return the residue which contains this atom, or NULL if none exists
       OBResidue *GetResidue();
-      // (defined by base class)
-      //OBMol   *GetParent()        {return((OBMol*)_parent);}
+      //! Return the molecule which contains this atom, or NULL if none exists
+      OBMol     *GetParent()        {return((OBMol*)_parent);}
       //! Create a vector for a new bond from this atom, with length given by the supplied parameter
       //! \return success or failure
       bool       GetNewBondVector(vector3 &v,double length);
-      //! \return the OBBond object between this atom and that supplied,
+      //! Return the OBBond object between this atom and that supplied,
       //! or NULL if the two atoms are not bonded
       OBBond    *GetBond(OBAtom *);
-      //! \return a pointer to the "next" atom (by atom index) in the
+      //! Return a pointer to the "next" atom (by atom index) in the
       //! parent OBMol, or NULL if no such atom exists.
       //! \deprecated Use any of the other iterator methods. This
       //! method will be removed in the future.
@@ -265,20 +274,14 @@ namespace OpenBabel
 
       //! \name Iterator methods
       //@{
-      //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
-      std::vector<OBEdgeBase*>::iterator BeginBonds()
+      std::vector<OBBond*>::iterator BeginBonds()
         { return(_vbond.begin()); }
-      //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
-      std::vector<OBEdgeBase*>::iterator EndBonds()
+      std::vector<OBBond*>::iterator EndBonds()
         { return(_vbond.end());   }
-      //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
-      OBBond *BeginBond(std::vector<OBEdgeBase*>::iterator &i);
-      //! \deprecated Use FOR_BONDS_OF_ATOM and OBAtomBondIter instead
-      OBBond *NextBond(std::vector<OBEdgeBase*>::iterator &i);
-      //! \deprecated Use FOR_NBORS_OF_ATOM and OBAtomAtomIter instead
-      OBAtom *BeginNbrAtom(std::vector<OBEdgeBase*>::iterator &);
-      //! \deprecated Use FOR_NBORS_OF_ATOM and OBAtomAtomIter instead
-      OBAtom *NextNbrAtom(std::vector<OBEdgeBase*>::iterator &);
+      OBBond *BeginBond(std::vector<OBBond*>::iterator &i);
+      OBBond *NextBond(std::vector<OBBond*>::iterator &i);
+      OBAtom *BeginNbrAtom(std::vector<OBBond*>::iterator &);
+      OBAtom *NextNbrAtom(std::vector<OBBond*>::iterator &);
       //@}
 
       //! \return the distance to the atom defined by OBMol::GetAtom()
@@ -304,11 +307,11 @@ namespace OpenBabel
         }
       void AddBond(OBBond *bond)
         {
-          _vbond.push_back((OBEdgeBase*)bond);
+          _vbond.push_back(bond);
         }
-      void InsertBond(std::vector<OBEdgeBase*>::iterator &i, OBBond *bond)
+      void InsertBond(std::vector<OBBond*>::iterator &i, OBBond *bond)
         {
-          _vbond.insert(i, (OBEdgeBase*)bond);
+          _vbond.insert(i, bond);
         }
       bool DeleteBond(OBBond*);
       void ClearBond() {_vbond.clear();}
@@ -447,6 +450,9 @@ namespace OpenBabel
       //@}
 
     }; // class OBAtom
+
+  //! A standard iterator over a vector of atoms
+  typedef std::vector<OBAtom*>::iterator OBAtomIterator;
 
 }// namespace OpenBabel
 

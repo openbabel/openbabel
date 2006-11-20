@@ -11,7 +11,7 @@ public class OBGraphBase extends OBBase {
   private long swigCPtr;
 
   protected OBGraphBase(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBGraphBaseUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBGraphBaseUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,38 +26,38 @@ public class OBGraphBase extends OBBase {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBGraphBase(swigCPtr);
+      openbabelJNI.delete_OBGraphBase(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBGraphBase() {
-    this(net.sourceforge.openbabelJNI.new_OBGraphBase__SWIG_0(), true);
+    this(openbabelJNI.new_OBGraphBase__SWIG_0(), true);
   }
 
   public OBGraphBase(OBGraphBase arg0) {
-    this(net.sourceforge.openbabelJNI.new_OBGraphBase__SWIG_1(OBGraphBase.getCPtr(arg0), arg0), true);
+    this(openbabelJNI.new_OBGraphBase__SWIG_1(OBGraphBase.getCPtr(arg0), arg0), true);
   }
 
   public long NumNodes() {
-    return net.sourceforge.openbabelJNI.OBGraphBase_NumNodes(swigCPtr, this);
+    return openbabelJNI.OBGraphBase_NumNodes(swigCPtr, this);
   }
 
   public long NumEdges() {
-    return net.sourceforge.openbabelJNI.OBGraphBase_NumEdges(swigCPtr, this);
+    return openbabelJNI.OBGraphBase_NumEdges(swigCPtr, this);
   }
 
   public void ResetVisitFlags() {
-    net.sourceforge.openbabelJNI.OBGraphBase_ResetVisitFlags(swigCPtr, this);
+    openbabelJNI.OBGraphBase_ResetVisitFlags(swigCPtr, this);
   }
 
   public boolean SetVisitLock(boolean arg0) {
-    return net.sourceforge.openbabelJNI.OBGraphBase_SetVisitLock(swigCPtr, this, arg0);
+    return openbabelJNI.OBGraphBase_SetVisitLock(swigCPtr, this, arg0);
   }
 
   public boolean GetVisitLock() {
-    return net.sourceforge.openbabelJNI.OBGraphBase_GetVisitLock(swigCPtr, this);
+    return openbabelJNI.OBGraphBase_GetVisitLock(swigCPtr, this);
   }
 
 }

@@ -27,47 +27,47 @@ public class OBExternalBond {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBExternalBond(swigCPtr);
+      openbabelJNI.delete_OBExternalBond(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBExternalBond() {
-    this(net.sourceforge.openbabelJNI.new_OBExternalBond__SWIG_0(), true);
+    this(openbabelJNI.new_OBExternalBond__SWIG_0(), true);
   }
 
   public OBExternalBond(OBAtom arg0, OBBond arg1, int arg2) {
-    this(net.sourceforge.openbabelJNI.new_OBExternalBond__SWIG_1(OBAtom.getCPtr(arg0), arg0, OBBond.getCPtr(arg1), arg1, arg2), true);
+    this(openbabelJNI.new_OBExternalBond__SWIG_1(OBAtom.getCPtr(arg0), arg0, OBBond.getCPtr(arg1), arg1, arg2), true);
   }
 
   public OBExternalBond(OBExternalBond arg0) {
-    this(net.sourceforge.openbabelJNI.new_OBExternalBond__SWIG_2(OBExternalBond.getCPtr(arg0), arg0), true);
+    this(openbabelJNI.new_OBExternalBond__SWIG_2(OBExternalBond.getCPtr(arg0), arg0), true);
   }
 
   public int GetIdx() {
-    return net.sourceforge.openbabelJNI.OBExternalBond_GetIdx(swigCPtr, this);
+    return openbabelJNI.OBExternalBond_GetIdx(swigCPtr, this);
   }
 
   public OBAtom GetAtom() {
-    long cPtr = net.sourceforge.openbabelJNI.OBExternalBond_GetAtom(swigCPtr, this);
+    long cPtr = openbabelJNI.OBExternalBond_GetAtom(swigCPtr, this);
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
   public OBBond GetBond() {
-    long cPtr = net.sourceforge.openbabelJNI.OBExternalBond_GetBond(swigCPtr, this);
+    long cPtr = openbabelJNI.OBExternalBond_GetBond(swigCPtr, this);
     return (cPtr == 0) ? null : new OBBond(cPtr, false);
   }
 
   public void SetIdx(int idx) {
-    net.sourceforge.openbabelJNI.OBExternalBond_SetIdx(swigCPtr, this, idx);
+    openbabelJNI.OBExternalBond_SetIdx(swigCPtr, this, idx);
   }
 
   public void SetAtom(OBAtom atom) {
-    net.sourceforge.openbabelJNI.OBExternalBond_SetAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
+    openbabelJNI.OBExternalBond_SetAtom(swigCPtr, this, OBAtom.getCPtr(atom), atom);
   }
 
   public void SetBond(OBBond bond) {
-    net.sourceforge.openbabelJNI.OBExternalBond_SetBond(swigCPtr, this, OBBond.getCPtr(bond), bond);
+    openbabelJNI.OBExternalBond_SetBond(swigCPtr, this, OBBond.getCPtr(bond), bond);
   }
 
 }

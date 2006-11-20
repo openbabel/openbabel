@@ -27,49 +27,49 @@ public class vectorBond {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_vectorBond(swigCPtr);
+      openbabelJNI.delete_vectorBond(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public vectorBond() {
-    this(net.sourceforge.openbabelJNI.new_vectorBond__SWIG_0(), true);
+    this(openbabelJNI.new_vectorBond__SWIG_0(), true);
   }
 
   public vectorBond(long n) {
-    this(net.sourceforge.openbabelJNI.new_vectorBond__SWIG_1(n), true);
+    this(openbabelJNI.new_vectorBond__SWIG_1(n), true);
   }
 
   public long size() {
-    return net.sourceforge.openbabelJNI.vectorBond_size(swigCPtr, this);
+    return openbabelJNI.vectorBond_size(swigCPtr, this);
   }
 
   public long capacity() {
-    return net.sourceforge.openbabelJNI.vectorBond_capacity(swigCPtr, this);
+    return openbabelJNI.vectorBond_capacity(swigCPtr, this);
   }
 
   public void reserve(long n) {
-    net.sourceforge.openbabelJNI.vectorBond_reserve(swigCPtr, this, n);
+    openbabelJNI.vectorBond_reserve(swigCPtr, this, n);
   }
 
   public boolean isEmpty() {
-    return net.sourceforge.openbabelJNI.vectorBond_isEmpty(swigCPtr, this);
+    return openbabelJNI.vectorBond_isEmpty(swigCPtr, this);
   }
 
   public void clear() {
-    net.sourceforge.openbabelJNI.vectorBond_clear(swigCPtr, this);
+    openbabelJNI.vectorBond_clear(swigCPtr, this);
   }
 
   public void add(OBBond x) {
-    net.sourceforge.openbabelJNI.vectorBond_add(swigCPtr, this, OBBond.getCPtr(x), x);
+    openbabelJNI.vectorBond_add(swigCPtr, this, OBBond.getCPtr(x), x);
   }
 
   public OBBond get(int i) {
-    return new OBBond(net.sourceforge.openbabelJNI.vectorBond_get(swigCPtr, this, i), false);
+    return new OBBond(openbabelJNI.vectorBond_get(swigCPtr, this, i), false);
   }
 
   public void set(int i, OBBond x) {
-    net.sourceforge.openbabelJNI.vectorBond_set(swigCPtr, this, i, OBBond.getCPtr(x), x);
+    openbabelJNI.vectorBond_set(swigCPtr, this, i, OBBond.getCPtr(x), x);
   }
 
 }

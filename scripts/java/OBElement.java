@@ -27,69 +27,69 @@ public class OBElement {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBElement(swigCPtr);
+      openbabelJNI.delete_OBElement(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBElement() {
-    this(net.sourceforge.openbabelJNI.new_OBElement__SWIG_0(), true);
+    this(openbabelJNI.new_OBElement__SWIG_0(), true);
   }
 
   public OBElement(int num, String sym, double rcov, double rvdw, int maxbo, double mass, double elNeg, double ionize, double elAffin, double red, double green, double blue, String name) {
-    this(net.sourceforge.openbabelJNI.new_OBElement__SWIG_1(num, sym, rcov, rvdw, maxbo, mass, elNeg, ionize, elAffin, red, green, blue, name), true);
+    this(openbabelJNI.new_OBElement__SWIG_1(num, sym, rcov, rvdw, maxbo, mass, elNeg, ionize, elAffin, red, green, blue, name), true);
   }
 
   public int GetAtomicNum() {
-    return net.sourceforge.openbabelJNI.OBElement_GetAtomicNum(swigCPtr, this);
+    return openbabelJNI.OBElement_GetAtomicNum(swigCPtr, this);
   }
 
   public String GetSymbol() {
-    return net.sourceforge.openbabelJNI.OBElement_GetSymbol(swigCPtr, this);
+    return openbabelJNI.OBElement_GetSymbol(swigCPtr, this);
   }
 
   public double GetCovalentRad() {
-    return net.sourceforge.openbabelJNI.OBElement_GetCovalentRad(swigCPtr, this);
+    return openbabelJNI.OBElement_GetCovalentRad(swigCPtr, this);
   }
 
   public double GetVdwRad() {
-    return net.sourceforge.openbabelJNI.OBElement_GetVdwRad(swigCPtr, this);
+    return openbabelJNI.OBElement_GetVdwRad(swigCPtr, this);
   }
 
   public double GetMass() {
-    return net.sourceforge.openbabelJNI.OBElement_GetMass(swigCPtr, this);
+    return openbabelJNI.OBElement_GetMass(swigCPtr, this);
   }
 
   public int GetMaxBonds() {
-    return net.sourceforge.openbabelJNI.OBElement_GetMaxBonds(swigCPtr, this);
+    return openbabelJNI.OBElement_GetMaxBonds(swigCPtr, this);
   }
 
   public double GetElectroNeg() {
-    return net.sourceforge.openbabelJNI.OBElement_GetElectroNeg(swigCPtr, this);
+    return openbabelJNI.OBElement_GetElectroNeg(swigCPtr, this);
   }
 
   public double GetIonization() {
-    return net.sourceforge.openbabelJNI.OBElement_GetIonization(swigCPtr, this);
+    return openbabelJNI.OBElement_GetIonization(swigCPtr, this);
   }
 
   public double GetElectronAffinity() {
-    return net.sourceforge.openbabelJNI.OBElement_GetElectronAffinity(swigCPtr, this);
+    return openbabelJNI.OBElement_GetElectronAffinity(swigCPtr, this);
   }
 
   public String GetName() {
-    return net.sourceforge.openbabelJNI.OBElement_GetName(swigCPtr, this);
+    return openbabelJNI.OBElement_GetName(swigCPtr, this);
   }
 
   public double GetRed() {
-    return net.sourceforge.openbabelJNI.OBElement_GetRed(swigCPtr, this);
+    return openbabelJNI.OBElement_GetRed(swigCPtr, this);
   }
 
   public double GetGreen() {
-    return net.sourceforge.openbabelJNI.OBElement_GetGreen(swigCPtr, this);
+    return openbabelJNI.OBElement_GetGreen(swigCPtr, this);
   }
 
   public double GetBlue() {
-    return net.sourceforge.openbabelJNI.OBElement_GetBlue(swigCPtr, this);
+    return openbabelJNI.OBElement_GetBlue(swigCPtr, this);
   }
 
 }

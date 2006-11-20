@@ -11,7 +11,7 @@ public class OBRingData extends OBGenericData {
   private long swigCPtr;
 
   protected OBRingData(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBRingDataUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBRingDataUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,35 +26,35 @@ public class OBRingData extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBRingData(swigCPtr);
+      openbabelJNI.delete_OBRingData(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBRingData() {
-    this(net.sourceforge.openbabelJNI.new_OBRingData__SWIG_0(), true);
+    this(openbabelJNI.new_OBRingData__SWIG_0(), true);
   }
 
   public OBRingData(OBRingData arg0) {
-    this(net.sourceforge.openbabelJNI.new_OBRingData__SWIG_1(OBRingData.getCPtr(arg0), arg0), true);
+    this(openbabelJNI.new_OBRingData__SWIG_1(OBRingData.getCPtr(arg0), arg0), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBRingData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBRingData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void SetData(SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t vr) {
-    net.sourceforge.openbabelJNI.OBRingData_SetData(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t.getCPtr(vr));
+    openbabelJNI.OBRingData_SetData(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t.getCPtr(vr));
   }
 
   public void PushBack(OBRing r) {
-    net.sourceforge.openbabelJNI.OBRingData_PushBack(swigCPtr, this, OBRing.getCPtr(r), r);
+    openbabelJNI.OBRingData_PushBack(swigCPtr, this, OBRing.getCPtr(r), r);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t GetData() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t(net.sourceforge.openbabelJNI.OBRingData_GetData(swigCPtr, this), false);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t(openbabelJNI.OBRingData_GetData(swigCPtr, this), false);
   }
 
 }

@@ -11,7 +11,7 @@ public class OBTypeTable extends OBGlobalDataBase {
   private long swigCPtr;
 
   protected OBTypeTable(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBTypeTableUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBTypeTableUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,46 +26,46 @@ public class OBTypeTable extends OBGlobalDataBase {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBTypeTable(swigCPtr);
+      openbabelJNI.delete_OBTypeTable(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBTypeTable() {
-    this(net.sourceforge.openbabelJNI.new_OBTypeTable(), true);
+    this(openbabelJNI.new_OBTypeTable(), true);
   }
 
   public void ParseLine(String arg0) {
-    net.sourceforge.openbabelJNI.OBTypeTable_ParseLine(swigCPtr, this, arg0);
+    openbabelJNI.OBTypeTable_ParseLine(swigCPtr, this, arg0);
   }
 
   public long GetSize() {
-    return net.sourceforge.openbabelJNI.OBTypeTable_GetSize(swigCPtr, this);
+    return openbabelJNI.OBTypeTable_GetSize(swigCPtr, this);
   }
 
   public boolean SetFromType(String arg0) {
-    return net.sourceforge.openbabelJNI.OBTypeTable_SetFromType(swigCPtr, this, arg0);
+    return openbabelJNI.OBTypeTable_SetFromType(swigCPtr, this, arg0);
   }
 
   public boolean SetToType(String arg0) {
-    return net.sourceforge.openbabelJNI.OBTypeTable_SetToType(swigCPtr, this, arg0);
+    return openbabelJNI.OBTypeTable_SetToType(swigCPtr, this, arg0);
   }
 
   public boolean Translate(String to, String from) {
-    return net.sourceforge.openbabelJNI.OBTypeTable_Translate__SWIG_0(swigCPtr, this, to, from);
+    return openbabelJNI.OBTypeTable_Translate__SWIG_0(swigCPtr, this, to, from);
   }
 
   public boolean Translate(SWIGTYPE_p_std__string to, String from) {
-    return net.sourceforge.openbabelJNI.OBTypeTable_Translate__SWIG_1(swigCPtr, this, SWIGTYPE_p_std__string.getCPtr(to), from);
+    return openbabelJNI.OBTypeTable_Translate__SWIG_1(swigCPtr, this, SWIGTYPE_p_std__string.getCPtr(to), from);
   }
 
   public String GetFromType() {
-    return net.sourceforge.openbabelJNI.OBTypeTable_GetFromType(swigCPtr, this);
+    return openbabelJNI.OBTypeTable_GetFromType(swigCPtr, this);
   }
 
   public String GetToType() {
-    return net.sourceforge.openbabelJNI.OBTypeTable_GetToType(swigCPtr, this);
+    return openbabelJNI.OBTypeTable_GetToType(swigCPtr, this);
   }
 
 }

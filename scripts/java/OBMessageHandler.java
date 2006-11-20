@@ -27,98 +27,98 @@ public class OBMessageHandler {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBMessageHandler(swigCPtr);
+      openbabelJNI.delete_OBMessageHandler(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBMessageHandler() {
-    this(net.sourceforge.openbabelJNI.new_OBMessageHandler(), true);
+    this(openbabelJNI.new_OBMessageHandler(), true);
   }
 
   public void ThrowError(OBError err) {
-    net.sourceforge.openbabelJNI.OBMessageHandler_ThrowError__SWIG_0(swigCPtr, this, OBError.getCPtr(err), err);
+    openbabelJNI.OBMessageHandler_ThrowError__SWIG_0(swigCPtr, this, OBError.getCPtr(err), err);
   }
 
   public void ThrowError(String method, String errorMsg, obMessageLevel level) {
-    net.sourceforge.openbabelJNI.OBMessageHandler_ThrowError__SWIG_1(swigCPtr, this, method, errorMsg, level.swigValue());
+    openbabelJNI.OBMessageHandler_ThrowError__SWIG_1(swigCPtr, this, method, errorMsg, level.swigValue());
   }
 
   public void ThrowError(String method, String errorMsg) {
-    net.sourceforge.openbabelJNI.OBMessageHandler_ThrowError__SWIG_2(swigCPtr, this, method, errorMsg);
+    openbabelJNI.OBMessageHandler_ThrowError__SWIG_2(swigCPtr, this, method, errorMsg);
   }
 
   public SWIGTYPE_p_std__vectorTstd__string_t GetMessagesOfLevel(obMessageLevel arg0) {
-    return new SWIGTYPE_p_std__vectorTstd__string_t(net.sourceforge.openbabelJNI.OBMessageHandler_GetMessagesOfLevel(swigCPtr, this, arg0.swigValue()), true);
+    return new SWIGTYPE_p_std__vectorTstd__string_t(openbabelJNI.OBMessageHandler_GetMessagesOfLevel(swigCPtr, this, arg0.swigValue()), true);
   }
 
   public void StartLogging() {
-    net.sourceforge.openbabelJNI.OBMessageHandler_StartLogging(swigCPtr, this);
+    openbabelJNI.OBMessageHandler_StartLogging(swigCPtr, this);
   }
 
   public void StopLogging() {
-    net.sourceforge.openbabelJNI.OBMessageHandler_StopLogging(swigCPtr, this);
+    openbabelJNI.OBMessageHandler_StopLogging(swigCPtr, this);
   }
 
   public void SetMaxLogEntries(long max) {
-    net.sourceforge.openbabelJNI.OBMessageHandler_SetMaxLogEntries(swigCPtr, this, max);
+    openbabelJNI.OBMessageHandler_SetMaxLogEntries(swigCPtr, this, max);
   }
 
   public long GetMaxLogEntries() {
-    return net.sourceforge.openbabelJNI.OBMessageHandler_GetMaxLogEntries(swigCPtr, this);
+    return openbabelJNI.OBMessageHandler_GetMaxLogEntries(swigCPtr, this);
   }
 
   public void ClearLog() {
-    net.sourceforge.openbabelJNI.OBMessageHandler_ClearLog(swigCPtr, this);
+    openbabelJNI.OBMessageHandler_ClearLog(swigCPtr, this);
   }
 
   public void SetOutputLevel(obMessageLevel level) {
-    net.sourceforge.openbabelJNI.OBMessageHandler_SetOutputLevel(swigCPtr, this, level.swigValue());
+    openbabelJNI.OBMessageHandler_SetOutputLevel(swigCPtr, this, level.swigValue());
   }
 
   public obMessageLevel GetOutputLevel() {
-    return obMessageLevel.swigToEnum(net.sourceforge.openbabelJNI.OBMessageHandler_GetOutputLevel(swigCPtr, this));
+    return obMessageLevel.swigToEnum(openbabelJNI.OBMessageHandler_GetOutputLevel(swigCPtr, this));
   }
 
   public void SetOutputStream(SWIGTYPE_p_std__ostream os) {
-    net.sourceforge.openbabelJNI.OBMessageHandler_SetOutputStream(swigCPtr, this, SWIGTYPE_p_std__ostream.getCPtr(os));
+    openbabelJNI.OBMessageHandler_SetOutputStream(swigCPtr, this, SWIGTYPE_p_std__ostream.getCPtr(os));
   }
 
   public SWIGTYPE_p_std__ostream GetOutputStream() {
-    long cPtr = net.sourceforge.openbabelJNI.OBMessageHandler_GetOutputStream(swigCPtr, this);
+    long cPtr = openbabelJNI.OBMessageHandler_GetOutputStream(swigCPtr, this);
     return (cPtr == 0) ? null : new SWIGTYPE_p_std__ostream(cPtr, false);
   }
 
   public boolean StartErrorWrap() {
-    return net.sourceforge.openbabelJNI.OBMessageHandler_StartErrorWrap(swigCPtr, this);
+    return openbabelJNI.OBMessageHandler_StartErrorWrap(swigCPtr, this);
   }
 
   public boolean StopErrorWrap() {
-    return net.sourceforge.openbabelJNI.OBMessageHandler_StopErrorWrap(swigCPtr, this);
+    return openbabelJNI.OBMessageHandler_StopErrorWrap(swigCPtr, this);
   }
 
   public long GetErrorMessageCount() {
-    return net.sourceforge.openbabelJNI.OBMessageHandler_GetErrorMessageCount(swigCPtr, this);
+    return openbabelJNI.OBMessageHandler_GetErrorMessageCount(swigCPtr, this);
   }
 
   public long GetWarningMessageCount() {
-    return net.sourceforge.openbabelJNI.OBMessageHandler_GetWarningMessageCount(swigCPtr, this);
+    return openbabelJNI.OBMessageHandler_GetWarningMessageCount(swigCPtr, this);
   }
 
   public long GetInfoMessageCount() {
-    return net.sourceforge.openbabelJNI.OBMessageHandler_GetInfoMessageCount(swigCPtr, this);
+    return openbabelJNI.OBMessageHandler_GetInfoMessageCount(swigCPtr, this);
   }
 
   public long GetAuditMessageCount() {
-    return net.sourceforge.openbabelJNI.OBMessageHandler_GetAuditMessageCount(swigCPtr, this);
+    return openbabelJNI.OBMessageHandler_GetAuditMessageCount(swigCPtr, this);
   }
 
   public long GetDebugMessageCount() {
-    return net.sourceforge.openbabelJNI.OBMessageHandler_GetDebugMessageCount(swigCPtr, this);
+    return openbabelJNI.OBMessageHandler_GetDebugMessageCount(swigCPtr, this);
   }
 
   public String GetMessageSummary() {
-    return net.sourceforge.openbabelJNI.OBMessageHandler_GetMessageSummary(swigCPtr, this);
+    return openbabelJNI.OBMessageHandler_GetMessageSummary(swigCPtr, this);
   }
 
 }

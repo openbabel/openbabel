@@ -11,7 +11,7 @@ public class OBSerialNums extends OBGenericData {
   private long swigCPtr;
 
   protected OBSerialNums(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBSerialNumsUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBSerialNumsUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,31 +26,31 @@ public class OBSerialNums extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBSerialNums(swigCPtr);
+      openbabelJNI.delete_OBSerialNums(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBSerialNums() {
-    this(net.sourceforge.openbabelJNI.new_OBSerialNums__SWIG_0(), true);
+    this(openbabelJNI.new_OBSerialNums__SWIG_0(), true);
   }
 
   public OBSerialNums(OBSerialNums cp) {
-    this(net.sourceforge.openbabelJNI.new_OBSerialNums__SWIG_1(OBSerialNums.getCPtr(cp), cp), true);
+    this(openbabelJNI.new_OBSerialNums__SWIG_1(OBSerialNums.getCPtr(cp), cp), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBSerialNums_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBSerialNums_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t GetData() {
-    return new SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t(net.sourceforge.openbabelJNI.OBSerialNums_GetData(swigCPtr, this), false);
+    return new SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t(openbabelJNI.OBSerialNums_GetData(swigCPtr, this), false);
   }
 
   public void SetData(SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t sm) {
-    net.sourceforge.openbabelJNI.OBSerialNums_SetData(swigCPtr, this, SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t.getCPtr(sm));
+    openbabelJNI.OBSerialNums_SetData(swigCPtr, this, SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t.getCPtr(sm));
   }
 
 }

@@ -11,7 +11,7 @@ public class OBUnitCell extends OBGenericData {
   private long swigCPtr;
 
   protected OBUnitCell(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBUnitCellUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBUnitCellUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,111 +26,111 @@ public class OBUnitCell extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBUnitCell(swigCPtr);
+      openbabelJNI.delete_OBUnitCell(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBUnitCell() {
-    this(net.sourceforge.openbabelJNI.new_OBUnitCell__SWIG_0(), true);
+    this(openbabelJNI.new_OBUnitCell__SWIG_0(), true);
   }
 
   public OBUnitCell(OBUnitCell arg0) {
-    this(net.sourceforge.openbabelJNI.new_OBUnitCell__SWIG_1(OBUnitCell.getCPtr(arg0), arg0), true);
+    this(openbabelJNI.new_OBUnitCell__SWIG_1(OBUnitCell.getCPtr(arg0), arg0), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBUnitCell_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBUnitCell_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void SetData(double a, double b, double c, double alpha, double beta, double gamma) {
-    net.sourceforge.openbabelJNI.OBUnitCell_SetData__SWIG_0(swigCPtr, this, a, b, c, alpha, beta, gamma);
+    openbabelJNI.OBUnitCell_SetData__SWIG_0(swigCPtr, this, a, b, c, alpha, beta, gamma);
   }
 
   public void SetData(vector3 v1, vector3 v2, vector3 v3) {
-    net.sourceforge.openbabelJNI.OBUnitCell_SetData__SWIG_1(swigCPtr, this, vector3.getCPtr(v1), v1, vector3.getCPtr(v2), v2, vector3.getCPtr(v3), v3);
+    openbabelJNI.OBUnitCell_SetData__SWIG_1(swigCPtr, this, vector3.getCPtr(v1), v1, vector3.getCPtr(v2), v2, vector3.getCPtr(v3), v3);
   }
 
   public void SetOffset(vector3 v1) {
-    net.sourceforge.openbabelJNI.OBUnitCell_SetOffset(swigCPtr, this, vector3.getCPtr(v1), v1);
+    openbabelJNI.OBUnitCell_SetOffset(swigCPtr, this, vector3.getCPtr(v1), v1);
   }
 
   public void SetSpaceGroup(String sg) {
-    net.sourceforge.openbabelJNI.OBUnitCell_SetSpaceGroup__SWIG_0(swigCPtr, this, sg);
+    openbabelJNI.OBUnitCell_SetSpaceGroup__SWIG_0(swigCPtr, this, sg);
   }
 
   public void SetSpaceGroup(int sg) {
-    net.sourceforge.openbabelJNI.OBUnitCell_SetSpaceGroup__SWIG_1(swigCPtr, this, sg);
+    openbabelJNI.OBUnitCell_SetSpaceGroup__SWIG_1(swigCPtr, this, sg);
   }
 
   public void SetLatticeType(OBUnitCell.LatticeType lt) {
-    net.sourceforge.openbabelJNI.OBUnitCell_SetLatticeType(swigCPtr, this, lt.swigValue());
+    openbabelJNI.OBUnitCell_SetLatticeType(swigCPtr, this, lt.swigValue());
   }
 
   public double GetA() {
-    return net.sourceforge.openbabelJNI.OBUnitCell_GetA(swigCPtr, this);
+    return openbabelJNI.OBUnitCell_GetA(swigCPtr, this);
   }
 
   public double GetB() {
-    return net.sourceforge.openbabelJNI.OBUnitCell_GetB(swigCPtr, this);
+    return openbabelJNI.OBUnitCell_GetB(swigCPtr, this);
   }
 
   public double GetC() {
-    return net.sourceforge.openbabelJNI.OBUnitCell_GetC(swigCPtr, this);
+    return openbabelJNI.OBUnitCell_GetC(swigCPtr, this);
   }
 
   public double GetAlpha() {
-    return net.sourceforge.openbabelJNI.OBUnitCell_GetAlpha(swigCPtr, this);
+    return openbabelJNI.OBUnitCell_GetAlpha(swigCPtr, this);
   }
 
   public double GetBeta() {
-    return net.sourceforge.openbabelJNI.OBUnitCell_GetBeta(swigCPtr, this);
+    return openbabelJNI.OBUnitCell_GetBeta(swigCPtr, this);
   }
 
   public double GetGamma() {
-    return net.sourceforge.openbabelJNI.OBUnitCell_GetGamma(swigCPtr, this);
+    return openbabelJNI.OBUnitCell_GetGamma(swigCPtr, this);
   }
 
   public vector3 GetOffset() {
-    return new vector3(net.sourceforge.openbabelJNI.OBUnitCell_GetOffset(swigCPtr, this), true);
+    return new vector3(openbabelJNI.OBUnitCell_GetOffset(swigCPtr, this), true);
   }
 
   public String GetSpaceGroup() {
-    return net.sourceforge.openbabelJNI.OBUnitCell_GetSpaceGroup(swigCPtr, this);
+    return openbabelJNI.OBUnitCell_GetSpaceGroup(swigCPtr, this);
   }
 
   public OBUnitCell.LatticeType GetLatticeType(int spacegroup) {
-    return OBUnitCell.LatticeType.swigToEnum(net.sourceforge.openbabelJNI.OBUnitCell_GetLatticeType__SWIG_0(swigCPtr, this, spacegroup));
+    return OBUnitCell.LatticeType.swigToEnum(openbabelJNI.OBUnitCell_GetLatticeType__SWIG_0(swigCPtr, this, spacegroup));
   }
 
   public OBUnitCell.LatticeType GetLatticeType() {
-    return OBUnitCell.LatticeType.swigToEnum(net.sourceforge.openbabelJNI.OBUnitCell_GetLatticeType__SWIG_1(swigCPtr, this));
+    return OBUnitCell.LatticeType.swigToEnum(openbabelJNI.OBUnitCell_GetLatticeType__SWIG_1(swigCPtr, this));
   }
 
   public vVector3 GetCellVectors() {
-    return new vVector3(net.sourceforge.openbabelJNI.OBUnitCell_GetCellVectors(swigCPtr, this), true);
+    return new vVector3(openbabelJNI.OBUnitCell_GetCellVectors(swigCPtr, this), true);
   }
 
   public matrix3x3 GetCellMatrix() {
-    return new matrix3x3(net.sourceforge.openbabelJNI.OBUnitCell_GetCellMatrix(swigCPtr, this), true);
+    return new matrix3x3(openbabelJNI.OBUnitCell_GetCellMatrix(swigCPtr, this), true);
   }
 
   public matrix3x3 GetOrthoMatrix() {
-    return new matrix3x3(net.sourceforge.openbabelJNI.OBUnitCell_GetOrthoMatrix(swigCPtr, this), true);
+    return new matrix3x3(openbabelJNI.OBUnitCell_GetOrthoMatrix(swigCPtr, this), true);
   }
 
   public matrix3x3 GetFractionalMatrix() {
-    return new matrix3x3(net.sourceforge.openbabelJNI.OBUnitCell_GetFractionalMatrix(swigCPtr, this), true);
+    return new matrix3x3(openbabelJNI.OBUnitCell_GetFractionalMatrix(swigCPtr, this), true);
   }
 
   public int GetSpaceGroupNumber(String name) {
-    return net.sourceforge.openbabelJNI.OBUnitCell_GetSpaceGroupNumber(swigCPtr, this, name);
+    return openbabelJNI.OBUnitCell_GetSpaceGroupNumber(swigCPtr, this, name);
   }
 
   public double GetCellVolume() {
-    return net.sourceforge.openbabelJNI.OBUnitCell_GetCellVolume(swigCPtr, this);
+    return openbabelJNI.OBUnitCell_GetCellVolume(swigCPtr, this);
   }
 
   public final static class LatticeType {

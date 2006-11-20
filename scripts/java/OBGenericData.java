@@ -27,42 +27,42 @@ public class OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBGenericData(swigCPtr);
+      openbabelJNI.delete_OBGenericData(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBGenericData(String attr, long type) {
-    this(net.sourceforge.openbabelJNI.new_OBGenericData__SWIG_0(attr, type), true);
+    this(openbabelJNI.new_OBGenericData__SWIG_0(attr, type), true);
   }
 
   public OBGenericData(String attr) {
-    this(net.sourceforge.openbabelJNI.new_OBGenericData__SWIG_1(attr), true);
+    this(openbabelJNI.new_OBGenericData__SWIG_1(attr), true);
   }
 
   public OBGenericData() {
-    this(net.sourceforge.openbabelJNI.new_OBGenericData__SWIG_2(), true);
+    this(openbabelJNI.new_OBGenericData__SWIG_2(), true);
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBGenericData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBGenericData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void SetAttribute(String v) {
-    net.sourceforge.openbabelJNI.OBGenericData_SetAttribute(swigCPtr, this, v);
+    openbabelJNI.OBGenericData_SetAttribute(swigCPtr, this, v);
   }
 
   public String GetAttribute() {
-    return net.sourceforge.openbabelJNI.OBGenericData_GetAttribute(swigCPtr, this);
+    return openbabelJNI.OBGenericData_GetAttribute(swigCPtr, this);
   }
 
   public long GetDataType() {
-    return net.sourceforge.openbabelJNI.OBGenericData_GetDataType(swigCPtr, this);
+    return openbabelJNI.OBGenericData_GetDataType(swigCPtr, this);
   }
 
   public String GetValue() {
-    return net.sourceforge.openbabelJNI.OBGenericData_GetValue(swigCPtr, this);
+    return openbabelJNI.OBGenericData_GetValue(swigCPtr, this);
   }
 
 }

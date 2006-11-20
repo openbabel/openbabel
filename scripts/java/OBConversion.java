@@ -27,276 +27,276 @@ public class OBConversion {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBConversion(swigCPtr);
+      openbabelJNI.delete_OBConversion(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public OBConversion(SWIGTYPE_p_std__istream is, SWIGTYPE_p_std__ostream os) {
-    this(net.sourceforge.openbabelJNI.new_OBConversion__SWIG_0(SWIGTYPE_p_std__istream.getCPtr(is), SWIGTYPE_p_std__ostream.getCPtr(os)), true);
+    this(openbabelJNI.new_OBConversion__SWIG_0(SWIGTYPE_p_std__istream.getCPtr(is), SWIGTYPE_p_std__ostream.getCPtr(os)), true);
   }
 
   public OBConversion(SWIGTYPE_p_std__istream is) {
-    this(net.sourceforge.openbabelJNI.new_OBConversion__SWIG_1(SWIGTYPE_p_std__istream.getCPtr(is)), true);
+    this(openbabelJNI.new_OBConversion__SWIG_1(SWIGTYPE_p_std__istream.getCPtr(is)), true);
   }
 
   public OBConversion() {
-    this(net.sourceforge.openbabelJNI.new_OBConversion__SWIG_2(), true);
+    this(openbabelJNI.new_OBConversion__SWIG_2(), true);
   }
 
   public OBConversion(OBConversion o) {
-    this(net.sourceforge.openbabelJNI.new_OBConversion__SWIG_3(OBConversion.getCPtr(o), o), true);
+    this(openbabelJNI.new_OBConversion__SWIG_3(OBConversion.getCPtr(o), o), true);
   }
 
   public static int RegisterFormat(String ID, OBFormat pFormat, String MIME) {
-    return net.sourceforge.openbabelJNI.OBConversion_RegisterFormat__SWIG_0(ID, OBFormat.getCPtr(pFormat), pFormat, MIME);
+    return openbabelJNI.OBConversion_RegisterFormat__SWIG_0(ID, OBFormat.getCPtr(pFormat), pFormat, MIME);
   }
 
   public static int RegisterFormat(String ID, OBFormat pFormat) {
-    return net.sourceforge.openbabelJNI.OBConversion_RegisterFormat__SWIG_1(ID, OBFormat.getCPtr(pFormat), pFormat);
+    return openbabelJNI.OBConversion_RegisterFormat__SWIG_1(ID, OBFormat.getCPtr(pFormat), pFormat);
   }
 
   public static OBFormat FindFormat(String ID) {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_FindFormat(ID);
+    long cPtr = openbabelJNI.OBConversion_FindFormat(ID);
     return (cPtr == 0) ? null : new OBFormat(cPtr, false);
   }
 
   public static OBFormat FormatFromExt(String filename) {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_FormatFromExt(filename);
+    long cPtr = openbabelJNI.OBConversion_FormatFromExt(filename);
     return (cPtr == 0) ? null : new OBFormat(cPtr, false);
   }
 
   public static OBFormat FormatFromMIME(String MIME) {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_FormatFromMIME(MIME);
+    long cPtr = openbabelJNI.OBConversion_FormatFromMIME(MIME);
     return (cPtr == 0) ? null : new OBFormat(cPtr, false);
   }
 
   public static boolean GetNextFormat(SWIGTYPE_p_OpenBabel__FMapType__iterator itr, SWIGTYPE_p_char str, OBFormat pFormat) {
-    return net.sourceforge.openbabelJNI.OBConversion_GetNextFormat(SWIGTYPE_p_OpenBabel__FMapType__iterator.getCPtr(itr), SWIGTYPE_p_char.getCPtr(str), OBFormat.getCPtr(pFormat));
+    return openbabelJNI.OBConversion_GetNextFormat(SWIGTYPE_p_OpenBabel__FMapType__iterator.getCPtr(itr), SWIGTYPE_p_char.getCPtr(str), OBFormat.getCPtr(pFormat));
   }
 
   public static String Description() {
-    return net.sourceforge.openbabelJNI.OBConversion_Description();
+    return openbabelJNI.OBConversion_Description();
   }
 
   public SWIGTYPE_p_std__istream GetInStream() {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_GetInStream(swigCPtr, this);
+    long cPtr = openbabelJNI.OBConversion_GetInStream(swigCPtr, this);
     return (cPtr == 0) ? null : new SWIGTYPE_p_std__istream(cPtr, false);
   }
 
   public SWIGTYPE_p_std__ostream GetOutStream() {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_GetOutStream(swigCPtr, this);
+    long cPtr = openbabelJNI.OBConversion_GetOutStream(swigCPtr, this);
     return (cPtr == 0) ? null : new SWIGTYPE_p_std__ostream(cPtr, false);
   }
 
   public void SetInStream(SWIGTYPE_p_std__istream pIn) {
-    net.sourceforge.openbabelJNI.OBConversion_SetInStream(swigCPtr, this, SWIGTYPE_p_std__istream.getCPtr(pIn));
+    openbabelJNI.OBConversion_SetInStream(swigCPtr, this, SWIGTYPE_p_std__istream.getCPtr(pIn));
   }
 
   public void SetOutStream(SWIGTYPE_p_std__ostream pOut) {
-    net.sourceforge.openbabelJNI.OBConversion_SetOutStream(swigCPtr, this, SWIGTYPE_p_std__ostream.getCPtr(pOut));
+    openbabelJNI.OBConversion_SetOutStream(swigCPtr, this, SWIGTYPE_p_std__ostream.getCPtr(pOut));
   }
 
   public boolean SetInAndOutFormats(String inID, String outID) {
-    return net.sourceforge.openbabelJNI.OBConversion_SetInAndOutFormats__SWIG_0(swigCPtr, this, inID, outID);
+    return openbabelJNI.OBConversion_SetInAndOutFormats__SWIG_0(swigCPtr, this, inID, outID);
   }
 
   public boolean SetInAndOutFormats(OBFormat pIn, OBFormat pOut) {
-    return net.sourceforge.openbabelJNI.OBConversion_SetInAndOutFormats__SWIG_1(swigCPtr, this, OBFormat.getCPtr(pIn), pIn, OBFormat.getCPtr(pOut), pOut);
+    return openbabelJNI.OBConversion_SetInAndOutFormats__SWIG_1(swigCPtr, this, OBFormat.getCPtr(pIn), pIn, OBFormat.getCPtr(pOut), pOut);
   }
 
   public boolean SetInFormat(String inID) {
-    return net.sourceforge.openbabelJNI.OBConversion_SetInFormat__SWIG_0(swigCPtr, this, inID);
+    return openbabelJNI.OBConversion_SetInFormat__SWIG_0(swigCPtr, this, inID);
   }
 
   public boolean SetInFormat(OBFormat pIn) {
-    return net.sourceforge.openbabelJNI.OBConversion_SetInFormat__SWIG_1(swigCPtr, this, OBFormat.getCPtr(pIn), pIn);
+    return openbabelJNI.OBConversion_SetInFormat__SWIG_1(swigCPtr, this, OBFormat.getCPtr(pIn), pIn);
   }
 
   public boolean SetOutFormat(String outID) {
-    return net.sourceforge.openbabelJNI.OBConversion_SetOutFormat__SWIG_0(swigCPtr, this, outID);
+    return openbabelJNI.OBConversion_SetOutFormat__SWIG_0(swigCPtr, this, outID);
   }
 
   public boolean SetOutFormat(OBFormat pOut) {
-    return net.sourceforge.openbabelJNI.OBConversion_SetOutFormat__SWIG_1(swigCPtr, this, OBFormat.getCPtr(pOut), pOut);
+    return openbabelJNI.OBConversion_SetOutFormat__SWIG_1(swigCPtr, this, OBFormat.getCPtr(pOut), pOut);
   }
 
   public OBFormat GetInFormat() {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_GetInFormat(swigCPtr, this);
+    long cPtr = openbabelJNI.OBConversion_GetInFormat(swigCPtr, this);
     return (cPtr == 0) ? null : new OBFormat(cPtr, false);
   }
 
   public OBFormat GetOutFormat() {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_GetOutFormat(swigCPtr, this);
+    long cPtr = openbabelJNI.OBConversion_GetOutFormat(swigCPtr, this);
     return (cPtr == 0) ? null : new OBFormat(cPtr, false);
   }
 
   public String GetInFilename() {
-    return net.sourceforge.openbabelJNI.OBConversion_GetInFilename(swigCPtr, this);
+    return openbabelJNI.OBConversion_GetInFilename(swigCPtr, this);
   }
 
   public SWIGTYPE_p_std__streampos GetInPos() {
-    return new SWIGTYPE_p_std__streampos(net.sourceforge.openbabelJNI.OBConversion_GetInPos(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__streampos(openbabelJNI.OBConversion_GetInPos(swigCPtr, this), true);
   }
 
   public long GetInLen() {
-    return net.sourceforge.openbabelJNI.OBConversion_GetInLen(swigCPtr, this);
+    return openbabelJNI.OBConversion_GetInLen(swigCPtr, this);
   }
 
   public String GetTitle() {
-    return net.sourceforge.openbabelJNI.OBConversion_GetTitle(swigCPtr, this);
+    return openbabelJNI.OBConversion_GetTitle(swigCPtr, this);
   }
 
   public OBConversion GetAuxConv() {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_GetAuxConv(swigCPtr, this);
+    long cPtr = openbabelJNI.OBConversion_GetAuxConv(swigCPtr, this);
     return (cPtr == 0) ? null : new OBConversion(cPtr, false);
   }
 
   public void SetAuxConv(OBConversion pConv) {
-    net.sourceforge.openbabelJNI.OBConversion_SetAuxConv(swigCPtr, this, OBConversion.getCPtr(pConv), pConv);
+    openbabelJNI.OBConversion_SetAuxConv(swigCPtr, this, OBConversion.getCPtr(pConv), pConv);
   }
 
   public String IsOption(String opt, OBConversion.Option_type opttyp) {
-    return net.sourceforge.openbabelJNI.OBConversion_IsOption__SWIG_0(swigCPtr, this, opt, opttyp.swigValue());
+    return openbabelJNI.OBConversion_IsOption__SWIG_0(swigCPtr, this, opt, opttyp.swigValue());
   }
 
   public String IsOption(String opt) {
-    return net.sourceforge.openbabelJNI.OBConversion_IsOption__SWIG_1(swigCPtr, this, opt);
+    return openbabelJNI.OBConversion_IsOption__SWIG_1(swigCPtr, this, opt);
   }
 
   public SWIGTYPE_p_std__mapTstd__string_std__string_t GetOptions(OBConversion.Option_type opttyp) {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_GetOptions(swigCPtr, this, opttyp.swigValue());
+    long cPtr = openbabelJNI.OBConversion_GetOptions(swigCPtr, this, opttyp.swigValue());
     return (cPtr == 0) ? null : new SWIGTYPE_p_std__mapTstd__string_std__string_t(cPtr, false);
   }
 
   public void AddOption(String opt, OBConversion.Option_type opttyp, String txt) {
-    net.sourceforge.openbabelJNI.OBConversion_AddOption__SWIG_0(swigCPtr, this, opt, opttyp.swigValue(), txt);
+    openbabelJNI.OBConversion_AddOption__SWIG_0(swigCPtr, this, opt, opttyp.swigValue(), txt);
   }
 
   public void AddOption(String opt, OBConversion.Option_type opttyp) {
-    net.sourceforge.openbabelJNI.OBConversion_AddOption__SWIG_1(swigCPtr, this, opt, opttyp.swigValue());
+    openbabelJNI.OBConversion_AddOption__SWIG_1(swigCPtr, this, opt, opttyp.swigValue());
   }
 
   public boolean RemoveOption(String opt, OBConversion.Option_type optype) {
-    return net.sourceforge.openbabelJNI.OBConversion_RemoveOption(swigCPtr, this, opt, optype.swigValue());
+    return openbabelJNI.OBConversion_RemoveOption(swigCPtr, this, opt, optype.swigValue());
   }
 
   public void SetOptions(String options, OBConversion.Option_type opttyp) {
-    net.sourceforge.openbabelJNI.OBConversion_SetOptions(swigCPtr, this, options, opttyp.swigValue());
+    openbabelJNI.OBConversion_SetOptions(swigCPtr, this, options, opttyp.swigValue());
   }
 
   public static void RegisterOptionParam(String name, OBFormat pFormat, int numberParams, OBConversion.Option_type typ) {
-    net.sourceforge.openbabelJNI.OBConversion_RegisterOptionParam__SWIG_0(name, OBFormat.getCPtr(pFormat), pFormat, numberParams, typ.swigValue());
+    openbabelJNI.OBConversion_RegisterOptionParam__SWIG_0(name, OBFormat.getCPtr(pFormat), pFormat, numberParams, typ.swigValue());
   }
 
   public static void RegisterOptionParam(String name, OBFormat pFormat, int numberParams) {
-    net.sourceforge.openbabelJNI.OBConversion_RegisterOptionParam__SWIG_1(name, OBFormat.getCPtr(pFormat), pFormat, numberParams);
+    openbabelJNI.OBConversion_RegisterOptionParam__SWIG_1(name, OBFormat.getCPtr(pFormat), pFormat, numberParams);
   }
 
   public static void RegisterOptionParam(String name, OBFormat pFormat) {
-    net.sourceforge.openbabelJNI.OBConversion_RegisterOptionParam__SWIG_2(name, OBFormat.getCPtr(pFormat), pFormat);
+    openbabelJNI.OBConversion_RegisterOptionParam__SWIG_2(name, OBFormat.getCPtr(pFormat), pFormat);
   }
 
   public static int GetOptionParams(String name, OBConversion.Option_type typ) {
-    return net.sourceforge.openbabelJNI.OBConversion_GetOptionParams(name, typ.swigValue());
+    return openbabelJNI.OBConversion_GetOptionParams(name, typ.swigValue());
   }
 
   public int Convert(SWIGTYPE_p_std__istream is, SWIGTYPE_p_std__ostream os) {
-    return net.sourceforge.openbabelJNI.OBConversion_Convert__SWIG_0(swigCPtr, this, SWIGTYPE_p_std__istream.getCPtr(is), SWIGTYPE_p_std__ostream.getCPtr(os));
+    return openbabelJNI.OBConversion_Convert__SWIG_0(swigCPtr, this, SWIGTYPE_p_std__istream.getCPtr(is), SWIGTYPE_p_std__ostream.getCPtr(os));
   }
 
   public int Convert() {
-    return net.sourceforge.openbabelJNI.OBConversion_Convert__SWIG_1(swigCPtr, this);
+    return openbabelJNI.OBConversion_Convert__SWIG_1(swigCPtr, this);
   }
 
   public int FullConvert(SWIGTYPE_p_std__vectorTstd__string_t FileList, SWIGTYPE_p_std__string OutputFileName, SWIGTYPE_p_std__vectorTstd__string_t OutputFileList) {
-    return net.sourceforge.openbabelJNI.OBConversion_FullConvert(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(FileList), SWIGTYPE_p_std__string.getCPtr(OutputFileName), SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(OutputFileList));
+    return openbabelJNI.OBConversion_FullConvert(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(FileList), SWIGTYPE_p_std__string.getCPtr(OutputFileName), SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(OutputFileList));
   }
 
   public boolean AddChemObject(OBBase pOb) {
-    return net.sourceforge.openbabelJNI.OBConversion_AddChemObject(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
+    return openbabelJNI.OBConversion_AddChemObject(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
   }
 
   public OBBase GetChemObject() {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_GetChemObject(swigCPtr, this);
+    long cPtr = openbabelJNI.OBConversion_GetChemObject(swigCPtr, this);
     return (cPtr == 0) ? null : new OBBase(cPtr, false);
   }
 
   public boolean IsLast() {
-    return net.sourceforge.openbabelJNI.OBConversion_IsLast(swigCPtr, this);
+    return openbabelJNI.OBConversion_IsLast(swigCPtr, this);
   }
 
   public boolean IsFirstInput() {
-    return net.sourceforge.openbabelJNI.OBConversion_IsFirstInput(swigCPtr, this);
+    return openbabelJNI.OBConversion_IsFirstInput(swigCPtr, this);
   }
 
   public int GetOutputIndex() {
-    return net.sourceforge.openbabelJNI.OBConversion_GetOutputIndex(swigCPtr, this);
+    return openbabelJNI.OBConversion_GetOutputIndex(swigCPtr, this);
   }
 
   public void SetOutputIndex(int indx) {
-    net.sourceforge.openbabelJNI.OBConversion_SetOutputIndex(swigCPtr, this, indx);
+    openbabelJNI.OBConversion_SetOutputIndex(swigCPtr, this, indx);
   }
 
   public void SetMoreFilesToCome() {
-    net.sourceforge.openbabelJNI.OBConversion_SetMoreFilesToCome(swigCPtr, this);
+    openbabelJNI.OBConversion_SetMoreFilesToCome(swigCPtr, this);
   }
 
   public void SetOneObjectOnly(boolean b) {
-    net.sourceforge.openbabelJNI.OBConversion_SetOneObjectOnly__SWIG_0(swigCPtr, this, b);
+    openbabelJNI.OBConversion_SetOneObjectOnly__SWIG_0(swigCPtr, this, b);
   }
 
   public void SetOneObjectOnly() {
-    net.sourceforge.openbabelJNI.OBConversion_SetOneObjectOnly__SWIG_1(swigCPtr, this);
+    openbabelJNI.OBConversion_SetOneObjectOnly__SWIG_1(swigCPtr, this);
   }
 
   public static OBFormat GetDefaultFormat() {
-    long cPtr = net.sourceforge.openbabelJNI.OBConversion_GetDefaultFormat();
+    long cPtr = openbabelJNI.OBConversion_GetDefaultFormat();
     return (cPtr == 0) ? null : new OBFormat(cPtr, false);
   }
 
   public boolean Write(OBBase pOb, SWIGTYPE_p_std__ostream pout) {
-    return net.sourceforge.openbabelJNI.OBConversion_Write__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, SWIGTYPE_p_std__ostream.getCPtr(pout));
+    return openbabelJNI.OBConversion_Write__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, SWIGTYPE_p_std__ostream.getCPtr(pout));
   }
 
   public boolean Write(OBBase pOb) {
-    return net.sourceforge.openbabelJNI.OBConversion_Write__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
+    return openbabelJNI.OBConversion_Write__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
   }
 
   public String WriteString(OBBase pOb, boolean trimWhitespace) {
-    return net.sourceforge.openbabelJNI.OBConversion_WriteString__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, trimWhitespace);
+    return openbabelJNI.OBConversion_WriteString__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, trimWhitespace);
   }
 
   public String WriteString(OBBase pOb) {
-    return net.sourceforge.openbabelJNI.OBConversion_WriteString__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
+    return openbabelJNI.OBConversion_WriteString__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
   }
 
   public boolean WriteFile(OBBase pOb, String filePath) {
-    return net.sourceforge.openbabelJNI.OBConversion_WriteFile(swigCPtr, this, OBBase.getCPtr(pOb), pOb, filePath);
+    return openbabelJNI.OBConversion_WriteFile(swigCPtr, this, OBBase.getCPtr(pOb), pOb, filePath);
   }
 
   public boolean Read(OBBase pOb, SWIGTYPE_p_std__istream pin) {
-    return net.sourceforge.openbabelJNI.OBConversion_Read__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, SWIGTYPE_p_std__istream.getCPtr(pin));
+    return openbabelJNI.OBConversion_Read__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, SWIGTYPE_p_std__istream.getCPtr(pin));
   }
 
   public boolean Read(OBBase pOb) {
-    return net.sourceforge.openbabelJNI.OBConversion_Read__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
+    return openbabelJNI.OBConversion_Read__SWIG_1(swigCPtr, this, OBBase.getCPtr(pOb), pOb);
   }
 
   public boolean ReadString(OBBase pOb, String input) {
-    return net.sourceforge.openbabelJNI.OBConversion_ReadString(swigCPtr, this, OBBase.getCPtr(pOb), pOb, input);
+    return openbabelJNI.OBConversion_ReadString(swigCPtr, this, OBBase.getCPtr(pOb), pOb, input);
   }
 
   public boolean ReadFile(OBBase pOb, String filePath) {
-    return net.sourceforge.openbabelJNI.OBConversion_ReadFile(swigCPtr, this, OBBase.getCPtr(pOb), pOb, filePath);
+    return openbabelJNI.OBConversion_ReadFile(swigCPtr, this, OBBase.getCPtr(pOb), pOb, filePath);
   }
 
   public static String BatchFileName(SWIGTYPE_p_std__string BaseName, SWIGTYPE_p_std__string InFile) {
-    return net.sourceforge.openbabelJNI.OBConversion_BatchFileName(SWIGTYPE_p_std__string.getCPtr(BaseName), SWIGTYPE_p_std__string.getCPtr(InFile));
+    return openbabelJNI.OBConversion_BatchFileName(SWIGTYPE_p_std__string.getCPtr(BaseName), SWIGTYPE_p_std__string.getCPtr(InFile));
   }
 
   public static String IncrementedFileName(SWIGTYPE_p_std__string BaseName, int Count) {
-    return net.sourceforge.openbabelJNI.OBConversion_IncrementedFileName(SWIGTYPE_p_std__string.getCPtr(BaseName), Count);
+    return openbabelJNI.OBConversion_IncrementedFileName(SWIGTYPE_p_std__string.getCPtr(BaseName), Count);
   }
 
   public final static class Option_type {

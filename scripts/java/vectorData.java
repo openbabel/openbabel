@@ -27,50 +27,50 @@ public class vectorData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_vectorData(swigCPtr);
+      openbabelJNI.delete_vectorData(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public vectorData() {
-    this(net.sourceforge.openbabelJNI.new_vectorData__SWIG_0(), true);
+    this(openbabelJNI.new_vectorData__SWIG_0(), true);
   }
 
   public vectorData(long n) {
-    this(net.sourceforge.openbabelJNI.new_vectorData__SWIG_1(n), true);
+    this(openbabelJNI.new_vectorData__SWIG_1(n), true);
   }
 
   public long size() {
-    return net.sourceforge.openbabelJNI.vectorData_size(swigCPtr, this);
+    return openbabelJNI.vectorData_size(swigCPtr, this);
   }
 
   public long capacity() {
-    return net.sourceforge.openbabelJNI.vectorData_capacity(swigCPtr, this);
+    return openbabelJNI.vectorData_capacity(swigCPtr, this);
   }
 
   public void reserve(long n) {
-    net.sourceforge.openbabelJNI.vectorData_reserve(swigCPtr, this, n);
+    openbabelJNI.vectorData_reserve(swigCPtr, this, n);
   }
 
   public boolean isEmpty() {
-    return net.sourceforge.openbabelJNI.vectorData_isEmpty(swigCPtr, this);
+    return openbabelJNI.vectorData_isEmpty(swigCPtr, this);
   }
 
   public void clear() {
-    net.sourceforge.openbabelJNI.vectorData_clear(swigCPtr, this);
+    openbabelJNI.vectorData_clear(swigCPtr, this);
   }
 
   public void add(OBGenericData x) {
-    net.sourceforge.openbabelJNI.vectorData_add(swigCPtr, this, OBGenericData.getCPtr(x));
+    openbabelJNI.vectorData_add(swigCPtr, this, OBGenericData.getCPtr(x));
   }
 
   public OBGenericData get(int i) {
-    long cPtr = net.sourceforge.openbabelJNI.vectorData_get(swigCPtr, this, i);
+    long cPtr = openbabelJNI.vectorData_get(swigCPtr, this, i);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void set(int i, OBGenericData x) {
-    net.sourceforge.openbabelJNI.vectorData_set(swigCPtr, this, i, OBGenericData.getCPtr(x));
+    openbabelJNI.vectorData_set(swigCPtr, this, i, OBGenericData.getCPtr(x));
   }
 
 }

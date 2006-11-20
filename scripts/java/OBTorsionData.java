@@ -11,7 +11,7 @@ public class OBTorsionData extends OBGenericData {
   private long swigCPtr;
 
   protected OBTorsionData(long cPtr, boolean cMemoryOwn) {
-    super(net.sourceforge.openbabelJNI.SWIGOBTorsionDataUpcast(cPtr), cMemoryOwn);
+    super(openbabelJNI.SWIGOBTorsionDataUpcast(cPtr), cMemoryOwn);
     swigCPtr = cPtr;
   }
 
@@ -26,35 +26,35 @@ public class OBTorsionData extends OBGenericData {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBTorsionData(swigCPtr);
+      openbabelJNI.delete_OBTorsionData(swigCPtr);
     }
     swigCPtr = 0;
     super.delete();
   }
 
   public OBGenericData Clone(OBBase arg0) {
-    long cPtr = net.sourceforge.openbabelJNI.OBTorsionData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
+    long cPtr = openbabelJNI.OBTorsionData_Clone(swigCPtr, this, OBBase.getCPtr(arg0), arg0);
     return (cPtr == 0) ? null : new OBGenericData(cPtr, false);
   }
 
   public void Clear() {
-    net.sourceforge.openbabelJNI.OBTorsionData_Clear(swigCPtr, this);
+    openbabelJNI.OBTorsionData_Clear(swigCPtr, this);
   }
 
   public SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t GetData() {
-    return new SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t(net.sourceforge.openbabelJNI.OBTorsionData_GetData(swigCPtr, this), true);
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t(openbabelJNI.OBTorsionData_GetData(swigCPtr, this), true);
   }
 
   public long GetSize() {
-    return net.sourceforge.openbabelJNI.OBTorsionData_GetSize(swigCPtr, this);
+    return openbabelJNI.OBTorsionData_GetSize(swigCPtr, this);
   }
 
   public void SetData(OBTorsion torsion) {
-    net.sourceforge.openbabelJNI.OBTorsionData_SetData(swigCPtr, this, OBTorsion.getCPtr(torsion), torsion);
+    openbabelJNI.OBTorsionData_SetData(swigCPtr, this, OBTorsion.getCPtr(torsion), torsion);
   }
 
   public boolean FillTorsionArray(SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t torsions) {
-    return net.sourceforge.openbabelJNI.OBTorsionData_FillTorsionArray(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t.getCPtr(torsions));
+    return openbabelJNI.OBTorsionData_FillTorsionArray(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t.getCPtr(torsions));
   }
 
 }

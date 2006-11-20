@@ -27,73 +27,73 @@ public class OBRing {
   public synchronized void delete() {
     if(swigCPtr != 0 && swigCMemOwn) {
       swigCMemOwn = false;
-      net.sourceforge.openbabelJNI.delete_OBRing(swigCPtr);
+      openbabelJNI.delete_OBRing(swigCPtr);
     }
     swigCPtr = 0;
   }
 
   public void set_path(vectorInt value) {
-    net.sourceforge.openbabelJNI.OBRing__path_set(swigCPtr, this, vectorInt.getCPtr(value), value);
+    openbabelJNI.OBRing__path_set(swigCPtr, this, vectorInt.getCPtr(value), value);
   }
 
   public vectorInt get_path() {
-    return new vectorInt(net.sourceforge.openbabelJNI.OBRing__path_get(swigCPtr, this), false);
+    return new vectorInt(openbabelJNI.OBRing__path_get(swigCPtr, this), false);
   }
 
   public void set_pathset(OBBitVec value) {
-    net.sourceforge.openbabelJNI.OBRing__pathset_set(swigCPtr, this, OBBitVec.getCPtr(value), value);
+    openbabelJNI.OBRing__pathset_set(swigCPtr, this, OBBitVec.getCPtr(value), value);
   }
 
   public OBBitVec get_pathset() {
-    return new OBBitVec(net.sourceforge.openbabelJNI.OBRing__pathset_get(swigCPtr, this), false);
+    return new OBBitVec(openbabelJNI.OBRing__pathset_get(swigCPtr, this), false);
   }
 
   public boolean findCenterAndNormal(vector3 center, vector3 norm1, vector3 norm2) {
-    return net.sourceforge.openbabelJNI.OBRing_findCenterAndNormal(swigCPtr, this, vector3.getCPtr(center), center, vector3.getCPtr(norm1), norm1, vector3.getCPtr(norm2), norm2);
+    return openbabelJNI.OBRing_findCenterAndNormal(swigCPtr, this, vector3.getCPtr(center), center, vector3.getCPtr(norm1), norm1, vector3.getCPtr(norm2), norm2);
   }
 
   public OBRing() {
-    this(net.sourceforge.openbabelJNI.new_OBRing__SWIG_0(), true);
+    this(openbabelJNI.new_OBRing__SWIG_0(), true);
   }
 
   public OBRing(vectorInt arg0, int arg1) {
-    this(net.sourceforge.openbabelJNI.new_OBRing__SWIG_1(vectorInt.getCPtr(arg0), arg0, arg1), true);
+    this(openbabelJNI.new_OBRing__SWIG_1(vectorInt.getCPtr(arg0), arg0, arg1), true);
   }
 
   public OBRing(OBRing src) {
-    this(net.sourceforge.openbabelJNI.new_OBRing__SWIG_2(OBRing.getCPtr(src), src), true);
+    this(openbabelJNI.new_OBRing__SWIG_2(OBRing.getCPtr(src), src), true);
   }
 
   public int Size() {
-    return net.sourceforge.openbabelJNI.OBRing_Size(swigCPtr, this);
+    return openbabelJNI.OBRing_Size(swigCPtr, this);
   }
 
   public int PathSize() {
-    return net.sourceforge.openbabelJNI.OBRing_PathSize(swigCPtr, this);
+    return openbabelJNI.OBRing_PathSize(swigCPtr, this);
   }
 
   public boolean IsMember(OBAtom a) {
-    return net.sourceforge.openbabelJNI.OBRing_IsMember__SWIG_0(swigCPtr, this, OBAtom.getCPtr(a), a);
+    return openbabelJNI.OBRing_IsMember__SWIG_0(swigCPtr, this, OBAtom.getCPtr(a), a);
   }
 
   public boolean IsMember(OBBond b) {
-    return net.sourceforge.openbabelJNI.OBRing_IsMember__SWIG_1(swigCPtr, this, OBBond.getCPtr(b), b);
+    return openbabelJNI.OBRing_IsMember__SWIG_1(swigCPtr, this, OBBond.getCPtr(b), b);
   }
 
   public boolean IsAromatic() {
-    return net.sourceforge.openbabelJNI.OBRing_IsAromatic(swigCPtr, this);
+    return openbabelJNI.OBRing_IsAromatic(swigCPtr, this);
   }
 
   public boolean IsInRing(int i) {
-    return net.sourceforge.openbabelJNI.OBRing_IsInRing(swigCPtr, this, i);
+    return openbabelJNI.OBRing_IsInRing(swigCPtr, this, i);
   }
 
   public void SetParent(OBMol m) {
-    net.sourceforge.openbabelJNI.OBRing_SetParent(swigCPtr, this, OBMol.getCPtr(m), m);
+    openbabelJNI.OBRing_SetParent(swigCPtr, this, OBMol.getCPtr(m), m);
   }
 
   public OBMol GetParent() {
-    long cPtr = net.sourceforge.openbabelJNI.OBRing_GetParent(swigCPtr, this);
+    long cPtr = openbabelJNI.OBRing_GetParent(swigCPtr, this);
     return (cPtr == 0) ? null : new OBMol(cPtr, false);
   }
 
