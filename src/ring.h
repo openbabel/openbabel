@@ -87,7 +87,7 @@ public:
     }
 };
 
-bool CompareRingSize(const OBRing *,const OBRing *);
+OBAPI bool CompareRingSize(const OBRing *,const OBRing *);
 
 
 //! Internal class to facilitate OBMol::FindSSSR()

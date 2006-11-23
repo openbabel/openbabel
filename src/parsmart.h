@@ -255,7 +255,7 @@ public:
     void Match(std::vector<std::vector<int> > &v, int bidx=-1);
 };
 
-void SmartsLexReplace(std::string &,
+OBAPI void SmartsLexReplace(std::string &,
                       std::vector<std::pair<std::string,std::string> > &);
 
 } // end namespace OpenBabel
