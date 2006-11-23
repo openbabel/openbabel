@@ -1,3 +1,11 @@
+2006-11-23 Chris Morley <ob@gaseq.co.uk>
+
+	windows-vc2005: Added OBPython project to allow OB to be used
+	form Python on Windows.
+	
+	src/parsmart.h(SmartsLexReplace), src/ring.h(CompareRingSize):
+	Added OBAPI to declarations of these exported global functions.
+	
 2006-11-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/atom.h, src/base.h, src/bond.h, src/residue.h, src/mol.h,
