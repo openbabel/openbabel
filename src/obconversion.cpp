@@ -723,7 +723,7 @@ namespace OpenBabel {
   {
     if(pin) pInStream=pin;
 
-    if(!pInFormat) return false;
+    if(!pInFormat || !pInStream) return false;
 
 #ifdef HAVE_LIBZ
     zlib_stream::zip_istream zIn(*pInStream);
@@ -740,7 +740,7 @@ namespace OpenBabel {
   {
     if(pos) pOutStream=pos;
 
-    if(!pOutFormat) return false;
+    if(!pOutFormat || !pOutStream) return false;
 
     ostream* pOrigOutStream = pOutStream;
 #ifdef HAVE_LIBZ

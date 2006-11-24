@@ -1,5 +1,10 @@
 2006-11-24 Chris Morley <ob@gaseq.co.uk>
 
+	src/obconversion.cpp(Write),(Read): Check for stream pointers
+	being NULL.
+
+2006-11-24 Chris Morley <ob@gaseq.co.uk>
+
 	src/obconversion.h, src/obconversion.cpp: Added CloseOutFile()
 	at the suggestion of Noel O'Boyle.
 	
