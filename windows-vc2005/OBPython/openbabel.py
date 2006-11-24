@@ -1411,6 +1411,7 @@ class OBConversion(_object):
     def Write(*args): return _openbabel.OBConversion_Write(*args)
     def WriteString(*args): return _openbabel.OBConversion_WriteString(*args)
     def WriteFile(*args): return _openbabel.OBConversion_WriteFile(*args)
+    def CloseOutFile(*args): return _openbabel.OBConversion_CloseOutFile(*args)
     def Read(*args): return _openbabel.OBConversion_Read(*args)
     def ReadString(*args): return _openbabel.OBConversion_ReadString(*args)
     def ReadFile(*args): return _openbabel.OBConversion_ReadFile(*args)

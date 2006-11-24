@@ -1,3 +1,8 @@
+2006-11-24 Chris Morley <ob@gaseq.co.uk>
+
+	src/obconversion.h, src/obconversion.cpp: Added CloseOutFile()
+	at the suggestion of Noel O'Boyle.
+	
 2006-11-24  Noel O'Boyle <baoilleach@gmail.com>
 
 	* windows-vc2005: added libxml2.dll (taken from Chris' Windows OB GUI
@@ -6,7 +11,6 @@
 	allow the creation of a Windows OB scripting installer
 	* windows-vc2005/OBPython/Readme.txt: Updated with instructions on
 	running setup.py
-
 
 2006-11-23 Chris Morley <ob@gaseq.co.uk>
 

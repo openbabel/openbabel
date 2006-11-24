@@ -330,6 +330,11 @@ namespace OpenBabel {
       /// This method is primarily intended for scripting languages without "stream" classes
       bool                            WriteFile(OBBase* pOb, std::string filePath);
 
+      /// @brief Manually closes and deletes the output stream
+      /// The file is closed anyway when in the OBConversion destructor or when WriteFile
+      /// is called again.
+      void CloseOutFile();
+
       /// @brief Reads an object of a class derived from OBBase into pOb.
 	
       /// Part of "API" interface. 
@@ -352,7 +357,6 @@ namespace OpenBabel {
       /// Returns false and pOb=NULL on error 
       /// This method is primarily intended for scripting languages without "stream" classes
       bool	ReadFile(OBBase* pOb, std::string filePath);
-
 
       ///Replaces * in BaseName by InFile without extension and path
       static std::string BatchFileName(std::string& BaseName, std::string& InFile);

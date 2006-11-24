@@ -813,6 +813,16 @@ namespace OpenBabel {
     return Write(pOb, ofs);
   }
 
+  void OBConversion::CloseOutFile()
+  {
+    if (pOutStream && NeedToFreeOutStream)
+    {
+      delete pOutStream;
+      NeedToFreeOutStream = false;
+      pOutStream = NULL;
+    }
+  }
+
   ////////////////////////////////////////////
   bool	OBConversion::ReadString(OBBase* pOb, std::string input)
   {
