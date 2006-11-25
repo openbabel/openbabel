@@ -96,6 +96,8 @@ class Test_readfile(unittest.TestCase):
         outputfile = pybel.Outputfile("smi", "testoutput.txt")
         for mol in self.mols:
             outputfile.write(mol)
+        outputfile.close()
+        self.assertRaises(IOError, outputfile.write, mol)
         self.assertRaises(IOError, pybel.Outputfile, "smi", "testoutput.txt")
         filecontents = open("testoutput.txt", "r").readlines()
         os.remove("testoutput.txt")

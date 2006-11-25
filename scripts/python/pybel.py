@@ -92,12 +92,19 @@ class Outputfile(object):
         Required parameters:
            molecule
         """
+	if not self.filename:
+            raise IOError, "Outputfile instance is closed."
+
         if self.total==0:
             self.obConversion.WriteFile(molecule.OBMol, self.filename)
         else:
             self.obConversion.Write(molecule.OBMol)
         self.total += 1
 
+    def close(self):
+        """Close the Outputfile to further writing."""
+        self.obConversion.CloseOutFile()
+        self.filename = None
 
 class Molecule(object):
     """Represent a Pybel molecule.

@@ -1,3 +1,10 @@
+2006-11-25  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/python/pybel.py, testpybel.py, pybelapi.html: Added a
+	.close() method to the Outputfile class of Pybel. This uses the
+	CloseOutFile() method added by Chris Morley in r1606. This is
+	necessary to ensure that all tests pass on Windows.
+
 2006-11-24 Chris Morley <ob@gaseq.co.uk>
 
 	src/obconversion.cpp(Write),(Read): Check for stream pointers
