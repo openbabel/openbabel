@@ -1,5 +1,10 @@
 2006-11-25  Noel O'Boyle <baoilleach@gmail.com>
 
+	* windows-vc2005/OBPython/logo.bmp: Replaced logo with one that Geoff
+	sent me.
+
+2006-11-25  Noel O'Boyle <baoilleach@gmail.com>
+
 	* scripts/python/pybel.py, testpybel.py, pybelapi.html: Added a
 	.close() method to the Outputfile class of Pybel. This uses the
 	CloseOutFile() method added by Chris Morley in r1606. This is
