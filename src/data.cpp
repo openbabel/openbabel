@@ -555,6 +555,30 @@ namespace OpenBabel
     return(false);
   }
 
+  std::string OBTypeTable::Translate(const string &from)
+  {
+    if (!_init)
+      Init();
+
+    if (!from.size())
+      return("");
+
+    if (_from >= 0 && _to >= 0 &&
+        _from < _table.size() && _to < _table.size())
+      {
+        vector<vector<string> >::iterator i;
+        for (i = _table.begin();i != _table.end();i++)
+          if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
+            {
+              return (*i)[_to];
+            }
+      }
+
+    // Throw an error, copy the string and return false
+    obErrorLog.ThrowError(__FUNCTION__, "Cannot perform atom type translation: table cannot find requested types.", obWarning);
+    return("");
+  }
+
   std::string OBTypeTable::GetFromType()
   {
     if (!_init)
