@@ -173,52 +173,52 @@ namespace OpenBabel
       //! \name Data retrieval methods
       //@{
       int          GetFlags()               { return(_flags); }
-      //! \return the title of this molecule (often the filename)
+      //! Return the title of this molecule (often the filename)
       const char  *GetTitle() const         { return(_title.c_str()); }
-      //! \return the number of atoms (i.e. OBAtom children)
+      //! Return the number of atoms (i.e. OBAtom children)
       unsigned int NumAtoms() const         {  return(_natoms); }
-      //! \return the number of bonds (i.e. OBBond children)
+      //! Return the number of bonds (i.e. OBBond children)
       unsigned int NumBonds() const         {  return(_nbonds); }
-      //! \return the number of non-hydrogen atoms
+      //! Return the number of non-hydrogen atoms
       unsigned int NumHvyAtoms();
-      //! \return the number of residues (i.e. OBResidue substituents)
+      //! Return the number of residues (i.e. OBResidue substituents)
       unsigned int NumResidues() const      { return(_residue.size()); }
-      //! \return the number of rotatble bonds. See OBBond::IsRotor() for details
+      //! Return the number of rotatble bonds. See OBBond::IsRotor() for details
       unsigned int NumRotors();
     
       OBAtom      *GetAtom(int);
       OBAtom      *GetFirstAtom();
       OBBond      *GetBond(int);
       OBBond      *GetBond(int, int);
-      //! \return the bond between the atoms @p bgn and @p end
+      //! Return the bond between the atoms @p bgn and @p end
       OBBond      *GetBond(OBAtom* bgn, OBAtom* end);
       OBResidue   *GetResidue(int);
       std::vector<OBInternalCoord*> GetInternalCoord();
-      //! \return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
+      //! Return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
       double       GetTorsion(int,int,int,int);
-      //! \return the dihedral angle between the four atoms @p a, @p b, @p c, and @p d)
+      //! Return the dihedral angle between the four atoms @p a, @p b, @p c, and @p d)
       double       GetTorsion(OBAtom* a,OBAtom* b,OBAtom* c,OBAtom* d);
-      //! \return the angle between the three atoms @p a, @p b and @p c
+      //! Return the angle between the three atoms @p a, @p b and @p c
       //!  (where  a-> b (vertex) -> c )
       double GetAngle(OBAtom* a, OBAtom* b, OBAtom* c);
-      //! \return the stochoimetric formula (e.g., C4H6O)
+      //! Return the stochoimetric formula (e.g., C4H6O)
       std::string  GetFormula();
-      //! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
+      //! Return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
       std::string  GetSpacedFormula(int ones=0, const char* sp=" ");
-      //! \return the heat of formation for this molecule (in kcal/mol)
+      //! Return the heat of formation for this molecule (in kcal/mol)
       double       GetEnergy() const { return(_energy); }
-      //! \return the standard molar mass given by IUPAC atomic masses (amu)
+      //! Return the standard molar mass given by IUPAC atomic masses (amu)
       double       GetMolWt();
-      //! \return the mass given by isotopes (or most abundant isotope, if not specified)
+      //! Return the mass given by isotopes (or most abundant isotope, if not specified)
       double	 GetExactMass();
-      //! \return the total charge on this molecule (i.e., 0 = neutral, +1, -1...)
+      //! Return the total charge on this molecule (i.e., 0 = neutral, +1, -1...)
       int		 GetTotalCharge();
-      //! \return the total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
+      //! Return the total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
       unsigned int GetTotalSpinMultiplicity();
-      //! \return the dimensionality of coordinates (i.e., 0 = unknown or no coord, 2=2D, 3=3D)
+      //! Return the dimensionality of coordinates (i.e., 0 = unknown or no coord, 2=2D, 3=3D)
       unsigned short int GetDimension() const { return _dimension; }
       double      *GetCoordinates() { return(_c); }
-      //! \return the Smallest Set of Smallest Rings has been run (see OBRing class
+      //! Return the Smallest Set of Smallest Rings has been run (see OBRing class
       std::vector<OBRing*> &GetSSSR();
       //! Get the current flag for whether formal charges are set with pH correction
       bool AutomaticFormalCharge()   { return(_autoFormalCharge);  }
@@ -436,18 +436,20 @@ namespace OpenBabel
 
     };
 
-  //function prototypes
-
+  // Utility function prototypes
   OBAPI bool tokenize(std::vector<std::string>&, const char *buf, const char *delimstr=" \t\n");
   OBAPI bool tokenize(std::vector<std::string>&, std::string&, const char *delimstr=" \t\n", int limit=-1);
-  //! remove leading and trailing whitespace from a string
+  // Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
   OBAPI std::string& Trim(std::string& txt);
-  //! \deprecated -- use OBMessageHandler class instead
+  // Deprecated -- use OBMessageHandler class instead (docs in obutil.cpp)
   OBAPI void ThrowError(char *str);
-  //! \deprecated -- use OBMessageHandler class instead
+  // Deprecated -- use OBMessageHandler class instead (docs in obutil.cpp)
   OBAPI void ThrowError(std::string &str);
+  // Convert Cartesian XYZ to a set of OBInternalCoord coordinates
   OBAPI void CartesianToInternal(std::vector<OBInternalCoord*>&,OBMol&);
+  // Convert set of OBInternalCoord coordinates into Cartesian XYZ
   OBAPI void InternalToCartesian(std::vector<OBInternalCoord*>&,OBMol&);
+  // Replace the last extension in str with a new one (docs in obutil.cpp)
   OBAPI std::string NewExtension(std::string&,char*);
   // Now handled by OBConversion class
   // OBAPI bool SetInputType(OBMol&,std::string&);

@@ -1,9 +1,23 @@
+2006-11-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* Doxyfile: Update for 2.1.0b3 snapshot and current Doxygen version (1.5.1).
+
+	* src/rotamer.h, src/rotamer.cpp, src/rotor.h, src/rotor.cpp: First step at
+	documentation updates on rotamer/conformer generation routines.
+
+	* src/fingerprint.cpp, src/tokenst.cpp, src/generic.h: Eliminate minor Doxygen
+	warnings.
+
+	* src/data.h, src/data.cpp (OBTypeTable::Translate): Add new
+	method for returning the translated string as a value --
+	simplifies scripting language access.
+
+	* src/mol.h: Documentation updates.
+
 2006-11-25  Noel O'Boyle <baoilleach@gmail.com>
 
 	* windows-vc2005/OBPython/logo.bmp: Replaced logo with one that Geoff
 	sent me.
-
-2006-11-25  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/python/pybel.py, testpybel.py, pybelapi.html: Added a
 	.close() method to the Outputfile class of Pybel. This uses the
@@ -12,12 +26,10 @@
 
 2006-11-24 Chris Morley <ob@gaseq.co.uk>
 
-	src/obconversion.cpp(Write),(Read): Check for stream pointers
+	* src/obconversion.cpp(Write),(Read): Check for stream pointers
 	being NULL.
 
-2006-11-24 Chris Morley <ob@gaseq.co.uk>
-
-	src/obconversion.h, src/obconversion.cpp: Added CloseOutFile()
+	* src/obconversion.h, src/obconversion.cpp: Added CloseOutFile()
 	at the suggestion of Noel O'Boyle.
 	
 2006-11-24  Noel O'Boyle <baoilleach@gmail.com>
@@ -31,10 +43,10 @@
 
 2006-11-23 Chris Morley <ob@gaseq.co.uk>
 
-	windows-vc2005: Added OBPython project to allow OB to be used
+	* windows-vc2005: Added OBPython project to allow OB to be used
 	form Python on Windows.
 	
-	src/parsmart.h(SmartsLexReplace), src/ring.h(CompareRingSize):
+	* src/parsmart.h(SmartsLexReplace), src/ring.h(CompareRingSize):
 	Added OBAPI to declarations of these exported global functions.
 	
 2006-11-20  Geoffrey Hutchison  <babel@geoffhutchison.net>

@@ -317,7 +317,7 @@ namespace OpenBabel
   }
 
   ///////////////////////////////////////////////////////////////
-  bool FastSearchIndexer::Add(OBBase* pOb, streampos seekpos)
+  bool FastSearchIndexer::Add(OBBase* pOb, std::streampos seekpos)
   {
     ///Adds a fingerprint
 	

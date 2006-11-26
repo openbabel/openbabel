@@ -28,18 +28,14 @@ GNU General Public License for more details.
 
 
 using namespace std;
-/*
-OBAPI bool tokenize(vector<string> &, const char *, const char *);
-OBAPI char *trim_spaces(char *string);
-OBAPI bool tokenize(vector<string> &vcr, string &s, const char *delimstr,int limit=-1);
-*/
+
 namespace OpenBabel
 {
 
   //! Break a string (supplied as the second argument) into tokens, returned 
   //! in the first argument. Tokens are determined by the delimiters supplied
   //! (defaults to whitespace (i.e., spaces, tabs, newlines)
-  OBAPI bool tokenize(vector<string> &vcr, const char *buf, 
+  OBAPI bool tokenize(std::vector<std::string> &vcr, const char *buf, 
                       const char *delimstr)
   {
     vcr.clear();
@@ -101,7 +97,7 @@ namespace OpenBabel
   //! (defaults to whitespace (i.e., spaces, tabs, newlines)
   //! Only breaks at most 'limit' tokens and the last item in the vector may
   //! include un-parsed tokens.
-  OBAPI bool tokenize(vector<string> &vcr, string &s, 
+  OBAPI bool tokenize(std::vector<std::string> &vcr, std::string &s, 
                       const char *delimstr, int limit)
   {
     vcr.clear();
@@ -137,8 +133,8 @@ namespace OpenBabel
     return(true);
   }
 
-  /// Removes white space from front and back of string
-  OBAPI string& Trim(string& txt)
+  //! Removes white space from front and back of string
+  OBAPI std::string& Trim(std::string& txt)
   {
     string::size_type pos = txt.find_last_not_of(" \t\n\r");
     if(pos!=string::npos)

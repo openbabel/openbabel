@@ -728,9 +728,9 @@ namespace OpenBabel
     }
     //! Sets the OBAngle to @p radians
     //! \param angle in radians
-    void  SetAngle(double radians)
+    void  SetAngle(double angle)
     {
-      _radians = radians;
+      _radians = angle;
     }
     void  SetAtoms(OBAtom *vertex,OBAtom *a,OBAtom *b);
     void  SetAtoms(triple<OBAtom*,OBAtom*,OBAtom*> &atoms);

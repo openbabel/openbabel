@@ -385,9 +385,9 @@ void OBRotamerList::SetBaseCoordinateSets(vector<double*> bc, unsigned int N)
 }
 
 //! Rotate the coordinates of 'atoms'
-//! such that tor == ang - atoms in 'tor' should be ordered such 
-//! that the 3rd atom is the pivot around which atoms rotate
-//! ang is in degrees
+//! such that tor == ang.
+//! Atoms in 'tor' should be ordered such that the 3rd atom is 
+//! the pivot around which atoms rotate (ang is in degrees)
 void SetRotorToAngle(double *c, OBAtom **ref,double ang,vector<int> atoms)
 {
   double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
