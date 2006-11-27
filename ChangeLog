@@ -1,3 +1,9 @@
+2006-11-27  Benoit Jacob <jacob@math.jussieu.fr>
+
+	* src/math/vector3.h, src/math/vector3.cpp: Remove some inline
+	keywords from yesterday's patch, further optimize
+	vector3::createOrthoVector().
+
 2006-11-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/obutil.h, src/obutil.cpp: Optimizations and improvements
