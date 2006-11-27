@@ -231,9 +231,9 @@ namespace OpenBabel
   {
     vector3 vv;
 
-    vv._vx = v._vx*m.ele[0][0] + v._vy*m.ele[0][1] + v._vz*m.ele[0][2];
-    vv._vy = v._vx*m.ele[1][0] + v._vy*m.ele[1][1] + v._vz*m.ele[1][2];
-    vv._vz = v._vx*m.ele[2][0] + v._vy*m.ele[2][1] + v._vz*m.ele[2][2];
+    vv.x() = v.x()*m.ele[0][0] + v.y()*m.ele[0][1] + v.z()*m.ele[0][2];
+    vv.y() = v.x()*m.ele[1][0] + v.y()*m.ele[1][1] + v.z()*m.ele[1][2];
+    vv.z() = v.x()*m.ele[2][0] + v.y()*m.ele[2][1] + v.z()*m.ele[2][2];
 
     return(vv);
   }
@@ -264,12 +264,12 @@ namespace OpenBabel
   {
     vector3 vv;
 
-    vv.SetX(_vx*m.Get(0,0) + _vy*m.Get(0,1) + _vz*m.Get(0,2));
-    vv.SetY(_vx*m.Get(1,0) + _vy*m.Get(1,1) + _vz*m.Get(1,2));
-    vv.SetZ(_vx*m.Get(2,0) + _vy*m.Get(2,1) + _vz*m.Get(2,2));
-    _vx = vv.x();
-    _vy = vv.y();
-    _vz = vv.z();
+    vv.SetX(x()*m.Get(0,0) + y()*m.Get(0,1) + z()*m.Get(0,2));
+    vv.SetY(x()*m.Get(1,0) + y()*m.Get(1,1) + z()*m.Get(1,2));
+    vv.SetZ(x()*m.Get(2,0) + y()*m.Get(2,1) + z()*m.Get(2,2));
+    x() = vv.x();
+    y() = vv.y();
+    z() = vv.z();
 
     return(*this);
   }

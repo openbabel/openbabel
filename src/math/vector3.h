@@ -24,7 +24,7 @@ GNU General Public License for more details.
 #include <math.h>
 
 #ifndef PI
-#define PI (3.1415926535897932384626433)
+#define PI M_PI
 #endif
 
 #ifndef RAD_TO_DEG
@@ -45,144 +45,74 @@ namespace OpenBabel
   class	OBAPI vector3
   {
   private :
-    double		_vx, _vy, _vz ;
-
-    //! normalizes a vector without checking that this is possible.
-    void _normalize_without_check () ;
-
+    double _vx, _vy, _vz ;
 
   public :
     //! Constructor
-  vector3 (const double x=0.0, const double y=0.0, const double z=0.0):
-    _vx(x), _vy(y), _vz(z)
-    {};
+    vector3 (const double x=0.0, const double y=0.0, const double z=0.0):
+      _vx(x), _vy(y), _vz(z)
+      {}
     //! Copy Constructor
-  vector3 (const vector3& v):
-    _vx(v._vx), _vy(v._vy), _vz(v._vz)
-      { };
+    vector3 (const vector3& v):
+      _vx(v._vx), _vy(v._vy), _vz(v._vz)
+        { }
 
     //! set x,y and z-component of a vector
-    void Set(const double x, const double y, const double z)
+    inline void Set(const double x, const double y, const double z)
     {
       _vx = x ;
       _vy = y ;
       _vz = z ;
-    };
+    }
     //! set x,y and z-component of a vector from c[0]..c[2]
-    void Set(const double *c)
+    inline void Set(const double *c)
     {
       _vx = c[0];
       _vy = c[1];
       _vz = c[2];
     }
     //! access function to get the x-coordinate of the vector
-    void SetX(const double x)
+    inline void SetX(const double x)
     {
       _vx = x;
-    };
+    }
     //! access function to get the y-coordinate of the vector
-    void SetY(const double y)
+    inline void SetY(const double y)
     {
       _vy = y;
-    };
+    }
     //! access function to get the z-coordinate of the vector
-    void SetZ(const double z)
+    inline void SetZ(const double z)
     {
       _vz = z;
-    };
+    }
     //! set c[0]..c[2] to the components of the vector
-    void Get(double *c)
+    inline void Get(double *c)
     {
       c[0]=_vx;
       c[1]=_vy;
       c[2]=_vz;
-    };
+    }
     //! access function to x: [0], y: [1], and z[2]
     double operator[] ( unsigned int i);
 
     //! assignment
-    vector3& operator= ( const vector3& v)
+    inline vector3& operator= ( const vector3& v)
       {
         _vx = v._vx;
         _vy = v._vy;
         _vz = v._vz;
         return *this;
-      };
-
-    //! prints a representation of the vector as a row vector of the form "<0.1,1,2>"
-    friend OBAPI std::ostream& operator<< ( std::ostream&, const vector3& );
-
-    //! Comparison Methods
-    // @{  
-    //! Equivalence of vectors
-    //! \deprecated This method uses unreliable floating point == comparisons
-    //!    Use vector3::IsApprox() instead.
-    //! \return true if every component is equal
-    friend OBAPI int operator== ( const vector3&, const vector3& );
-    //! \deprecated This method uses unreliable floating point == comparisons
-    //!    Use vector3::IsApprox() instead.
-    //! \return true if at least one component of the two vectors are !=
-    friend OBAPI int operator!= ( const vector3&, const vector3& );
-    //! Safe comparison for floating-point vector3
-    //! \return true if for each direction (x, y, z) each component 
-    //!    is identical to @p precision significant figures
-    //!    (i.e., fabs(x - x') <= precision * fmin( fabs(x), fabs(b) )
-    bool IsApprox(const vector3 &, const double precision) const;
-    //! }@
-
-    //  Sum, Difference, Scalar Product
-    //! vector addition
-    friend OBAPI vector3 operator+ ( const vector3& v1, const vector3& v2)
-    {
-      return vector3(v1._vx+v2._vx, v1._vy+v2._vy, v1._vz+v2._vz);
-    };
-    //! vector subtraction
-    friend OBAPI vector3 operator- ( const vector3& v1, const vector3& v2)
-    {
-      return vector3(v1._vx-v2._vx, v1._vy-v2._vy, v1._vz-v2._vz);
-    };
-    //! unary minus
-    friend OBAPI vector3 operator- ( const vector3& v)
-    {
-      return vector3(-v._vx, -v._vy, -v._vz);
-    };
-    //! multiplication with a scalar
-    friend OBAPI vector3 operator* ( const double& c, const vector3& v)
-      {
-        return vector3( c*v._vx, c*v._vy, c*v._vz);
-      };
-    //! multiplication with a scalar
-    friend OBAPI vector3 operator* ( const vector3& v, const double& c)
-      {
-        return vector3( c*v._vx, c*v._vy, c*v._vz);
-      };
-    //! division by a scalar
-    friend OBAPI vector3 operator/ ( const vector3& v, const double& c)
-    {
-      return vector3( v._vx/c, v._vy/c, v._vz/c);
-    };
-    // @removed@ misleading operation
-    // friend vector3 operator* ( const vector3 &,const vector3 &);
-
-    //vector and matrix ops
-    // @removed@ misleading operation; matrix multiplication is not commutitative
-    //     friend vector3 operator *(const vector3 &v,const matrix3x3 &m);
-
-    //! multiplication of matrix and vector
-    friend OBAPI vector3 operator *(const matrix3x3 &m,const vector3 &v);
+      }
 
     //! returns the vector as a const double *.
-    // The current implementation just casts 'this'. It assumes that the
-    // first data members of the vector3 class are the x,y,z coords,
-    // and are doubles. If that changes in the future, it will be necessary to
-    // reimplement this function.
-    const double *AsArray()
+    inline const double *AsArray()
     {
-      return reinterpret_cast<const double *>( this );
+      return &_vx;
     }
 
     //! Vector addition (returns *this + v)
-    vector3& operator+= ( const vector3& v)
+    inline vector3& operator+= ( const vector3& v)
       {
         _vx += v._vx;
         _vy += v._vy;
@@ -190,7 +120,7 @@ namespace OpenBabel
         return *this;
       };
     //! Vector subtraction (returns *this - v)
-    vector3& operator-= ( const vector3& v)
+    inline vector3& operator-= ( const vector3& v)
       {
         _vx -= v._vx;
         _vy -= v._vy;
@@ -198,7 +128,7 @@ namespace OpenBabel
         return *this;
       };
     //! Scalar addition
-    vector3& operator+= ( const double* f)
+    inline vector3& operator+= ( const double* f)
       {
         _vx += f[0];
         _vy += f[1];
@@ -206,7 +136,7 @@ namespace OpenBabel
         return *this;
       };
     //! Scalar subtraction
-    vector3& operator-= ( const double* f)
+    inline vector3& operator-= ( const double* f)
       {
         _vx -= f[0];
         _vy -= f[1];
@@ -214,7 +144,7 @@ namespace OpenBabel
         return *this;
       };
     //! Scalar multiplication
-    vector3& operator*= ( const double& c)
+    inline vector3& operator*= ( const double& c)
       {
         _vx *= c;
         _vy *= c;
@@ -223,7 +153,7 @@ namespace OpenBabel
       };
 
     //! Scalar division
-    vector3& operator/= ( const double& c)
+    inline vector3& operator/= ( const double& c)
       {
         _vx /= c;
         _vy /= c;
@@ -238,59 +168,88 @@ namespace OpenBabel
 
     //  Member Functions
 
-    //! dot product of two vectors
-    friend OBAPI double dot ( const vector3&, const vector3& ) ;
-
-    //! cross product of two vectors
-    friend OBAPI vector3 cross ( const vector3&, const vector3& ) ;
-
-    //! calculate angle between vectors
-    friend OBAPI double vectorAngle ( const vector3& v1, const vector3& v2 );
-
-    //! calculate the torsion angle between vectors
-    friend OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
-                                         const vector3 &c, const vector3 &d);
-
     //! scales a vector to give it length one.
     vector3& normalize () ;
 
     //! tests whether a vector can be normalized
     bool CanBeNormalized () const;
 
-    //! vector length
-    double length () const
-    {
-      return sqrt(_vx*_vx + _vy*_vy + _vz*_vz);
-    };
     //! vector length squared
-    double length_2 () const
+    inline double length_2 () const
     {
       return _vx*_vx + _vy*_vy + _vz*_vz;
     };
+    //! vector length
+    inline double length () const
+    {
+      return sqrt( length_2() );
+    };
     //! access function to get the x-coordinate of the vector
-    double x () const
+    inline const double & x () const
     {
       return _vx ;
     } ;
     //! access function to get the y-coordinate of the vector
-    double y () const
+    inline const double & y () const
     {
       return _vy ;
     } ;
     //! access function to get the z-coordinate of the vector
-    double z () const
+    inline const double & z () const
     {
       return _vz ;
     } ;
+    //! access function to set the x-coordinate of the vector
+    inline double & x ()
+    {
+      return _vx ;
+    } ;
+    //! access function to set the y-coordinate of the vector
+    inline double & y ()
+    {
+      return _vy ;
+    } ;
+    //! access function to set the z-coordinate of the vector
+    inline double & z ()
+    {
+      return _vz ;
+    } ;
+
+    //! Comparison Methods
+    // @{
+    //! Equivalence of vectors
+    //! \deprecated This method uses unreliable floating point == comparisons
+    //!    Use vector3::IsApprox() instead.
+    //! \return true if every component is equal
+    OBAPI int operator== ( const vector3& ) const;
+    //! \deprecated This method uses unreliable floating point == comparisons
+    //!    Use vector3::IsApprox() instead.
+    //! \return true if at least one component of the two vectors is !=
+    OBAPI inline int operator!= ( const vector3& other ) const
+    {
+      return ! ( (*this) == other );
+    }
+    //! Safe comparison for floating-point vector3
+    //! \return true if the vector *this is approximately equal to the vector
+    //!         @p other, to the precision @p precision. More specifically,
+    //!         this method works exactly like the OpenBabel::IsApprox()
+    //!         function, replacing the absolute value for doubles by the norm
+    //!         for vectors.
+    //! \param other The vector for comparison
+    //! \param precision This parameter plays the same role as in
+    //!        OpenBabel::IsApprox().
+    bool IsApprox( const vector3 & other, const double & precision ) const;
+    //! }@
 
     //! square to the distance between *this and vv
     /*! equivalent to length_2(*this-vv)
      */
     inline double distSq(const vector3 &vv) const
     {
-      return( (_vx - vv.x() )*(_vx - vv.x() ) +
-              (_vy - vv.y() )*(_vy - vv.y() ) +
-              (_vz - vv.z() )*(_vz - vv.z() ) );
+      double dx = x() - vv.x();
+      double dy = y() - vv.y();
+      double dz = z() - vv.z();
+      return( dx*dx + dy*dy + dz*dz );
     }
 
     //! creates a vector of length one, orthogonal to *this.
@@ -298,10 +257,69 @@ namespace OpenBabel
 
   };
 
-  //! \brief Calculate the distance of point a to the plane determined by b,c,d
+  //! prints a representation of the vector as a row vector of the form "<0.1,1,2>"
+  OBAPI std::ostream& operator<< ( std::ostream&, const vector3& );
+
+  //  Sum, Difference, Scalar Product
+  //! vector addition
+  inline OBAPI vector3 operator+ ( const vector3& v1, const vector3& v2)
+  {
+    return vector3(v1.x()+v2.x(), v1.y()+v2.y(), v1.z()+v2.z());
+  };
+  //! vector subtraction
+  inline OBAPI vector3 operator- ( const vector3& v1, const vector3& v2)
+  {
+    return vector3(v1.x()-v2.x(), v1.y()-v2.y(), v1.z()-v2.z());
+  };
+  //! unary minus
+  inline OBAPI vector3 operator- ( const vector3& v)
+  {
+    return vector3(-v.x(), -v.y(), -v.z());
+  };
+  //! multiplication with a scalar
+  inline OBAPI vector3 operator* ( const double& c, const vector3& v)
+    {
+      return vector3( c*v.x(), c*v.y(), c*v.z());
+    };
+  //! multiplication with a scalar
+  inline OBAPI vector3 operator* ( const vector3& v, const double& c)
+    {
+      return vector3( c*v.x(), c*v.y(), c*v.z());
+    };
+  //! division by a scalar
+  inline OBAPI vector3 operator/ ( const vector3& v, const double& c)
+  {
+    return vector3( v.x()/c, v.y()/c, v.z()/c);
+  };
+  // @removed@ misleading operation
+  // friend vector3 operator* ( const vector3 &,const vector3 &);
+
+  //vector and matrix ops
+  // @removed@ misleading operation; matrix multiplication is not commutitative
+  //     friend vector3 operator *(const vector3 &v,const matrix3x3 &m);
+
+  //! multiplication of matrix and vector
+  OBAPI vector3 operator *(const matrix3x3 &m, const vector3 &v);
+
+  //! dot product of two vectors
+  inline OBAPI double dot ( const vector3& v1, const vector3& v2 )
+  {
+    return v1.x()*v2.x() + v1.y()*v2.y() + v1.z()*v2.z() ;
+  }
+  //! cross product of two vectors
+  OBAPI vector3 cross ( const vector3&, const vector3& );
+
+  //! Calculate angle between vectors
+  OBAPI double vectorAngle ( const vector3& v1, const vector3& v2 );
+
+  //! Calculate the torsion angle between vectors
+  OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
+                                        const vector3 &c, const vector3 &d);
+
+  //! Calculate the distance of point a to the plane determined by b,c,d
   OBAPI double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d);
 
-  //  The global constant vector3s
+  //  The global constant vector3 objects
   //! The zero vector: <0.0, 0.0, 0.0>
   extern OBAPI const vector3 VZero;
   //! The x unit vector: <1.0, 0.0, 0.0>

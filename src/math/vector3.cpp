@@ -115,44 +115,25 @@ namespace OpenBabel
 
   OBAPI ostream& operator<< ( ostream& co, const vector3& v )
   {
-    co << "< " << v._vx << ", " << v._vy << ", " << v._vz << " >" ;
+    co << "< " << v.x() << ", " << v.y() << ", " << v.z() << " >" ;
     return co ;
   }
 
-  OBAPI int operator== ( const vector3& v1, const vector3& v2 )
+  OBAPI int vector3::operator== ( const vector3& other ) const
   {
-    if ( ( v1._vx == v2._vx ) &&
-         ( v1._vy == v2._vy ) &&
-         ( v1._vz == v2._vz ) )
+    if ( ( x() == other.x() ) &&
+         ( y() == other.y() ) &&
+         ( z() == other.z() ) )
       return ( true ) ;
     else
       return ( false ) ;
   }
 
-  OBAPI int operator!= ( const vector3& v1, const vector3& v2 )
+  bool vector3::IsApprox(const vector3 & other, const double & precision) const
   {
-    if ( ( v1._vx != v2._vx ) ||
-         ( v1._vy != v2._vy ) ||
-         ( v1._vz != v2._vz ) )
-      return ( true ) ;
-    else
-      return ( false ) ;
-  }
-
-  bool vector3::IsApprox(const vector3 &v1, const double precision) const
-  {
-    return ( OpenBabel::IsApprox(v1._vx, _vx, precision) &&
-             OpenBabel::IsApprox(v1._vy, _vy, precision) &&
-             OpenBabel::IsApprox(v1._vz, _vz, precision) );
-  }
-
-  /*! Private member function. See normalize. */
-  void vector3::_normalize_without_check ()
-  {
-    double l = length ();
-    _vx = _vx / l ;
-    _vy = _vy / l ;
-    _vz = _vz / l ;
+    return( distSq( other )
+            <= precision * precision
+               * fmin( length_2(), other.length_2() ) );
   }
 
   /*! This method returns true if *this can be safely normalized.
@@ -181,22 +162,22 @@ namespace OpenBabel
   vector3& vector3 :: normalize ()
   {
     if( CanBeNormalized() )
-      _normalize_without_check();
+    {
+      double l = length ();
+      _vx = _vx / l ;
+      _vy = _vy / l ;
+      _vz = _vz / l ;
+    }
     return(*this);
-  }
-
-  OBAPI double dot ( const vector3& v1, const vector3& v2 )
-  {
-    return v1._vx*v2._vx + v1._vy*v2._vy + v1._vz*v2._vz ;
   }
 
   OBAPI vector3 cross ( const vector3& v1, const vector3& v2 )
   {
     vector3 vv ;
 
-    vv._vx =   v1._vy*v2._vz - v1._vz*v2._vy ;
-    vv._vy = - v1._vx*v2._vz + v1._vz*v2._vx ;
-    vv._vz =   v1._vx*v2._vy - v1._vy*v2._vx ;
+    vv.x() =   v1.y()*v2.z() - v1.z()*v2.y() ;
+    vv.y() = - v1.x()*v2.z() + v1.z()*v2.x() ;
+    vv.z() =   v1.x()*v2.y() - v1.y()*v2.x() ;
 
     return ( vv ) ;
   }
@@ -292,55 +273,41 @@ namespace OpenBabel
     // sanity check
     if( ! CanBeNormalized() ) return false;
 
-    // let u be a normalized copy of *this
-    vector3 u = *this;
-    u._normalize_without_check();
-
-    /* next we want to construct another unit vector v
-    that is not colinear to u. But actually we need more than that:
-    we need that u and v are not "too close" to being colinear.
-    Otherwise cross(u,v) could be very small, hence possibly non-normalizable.
+    /* Let us compute the crossed product of *this with a vector
+       that is not too close to being colinear to *this.
     */
 
-    vector3 v;
-    /* if the absolute values of the x and y-coords of u are not of the same
-    order of magnitude, then it is enough to swap them.
+    /* if the absolute values of _vx and _vy are not of the same
+    order of magnitude, then (_vy,_vx,_vz) is not close to being
+    colinear to *this.
     */
-    double abs_u_y = fabs(u.y());
-    if( ! IsApprox_pos ( fabs(u.x()), abs_u_y, 0.1 ) )
+    if( ! IsApprox_pos ( fabs(_vx), fabs(_vy), 0.1 ) )
     {
-      v._vx = u._vy; // swap x and y-coords
-      v._vy = u._vx;
-      v._vz = u._vz;
+      // store in v the crossed product of *this with (_vy,_vx,_vz)
+      double tmp = (_vy-_vx)*_vz;
+      res._vx = tmp;
+      res._vy = -tmp;
+      res._vz = _vx*_vx - _vy*_vy;
     }
-    // now, same thing with the y and z-coords
-    else if( ! IsApprox_pos( fabs(u.z()), abs_u_y, 0.1 ) )
-    {
-      v._vx = u._vx;
-      v._vy = u._vz; // swap y and z-coords
-      v._vz = u._vy;
-    }
-    /* last case: the absolute values of the 3 coords of u are all of the same
-    order of magnitude. Thus u is far from being colinear to (0,0,1), for
-    instance.
+    /* on the other hand, if the x and y-coords are of the same order of
+    magnitude, then the vector is far from being colinear to (1, 0, 0).
     */
     else 
     {
-      v._vx = 0;
-      v._vy = 0;
-      v._vz = 1;
+      // store in v the crossed product of *this with (1,0,0)
+      res._vx = 0.0;
+      res._vy = _vz;
+      res._vz = -_vy;
     }
 
-    /* now, v is far from colinear to u, and both u and v are unit vectors.
-    Thus their crossed product has a length that is neither "too small" nor
-    "too big" (indeed, its length equals sin( v, u ), which can be small
-    only if u and v are close to bieng colinear) */
-    res = cross( v, u );
+    /* now, v is orthogonal to *this, and should be normalizable
+       if *this is normalizable.
+     */
 
     //thus, it is safe to normalize res
-    res._normalize_without_check();
+    res.normalize();
 
-return true;
+    return true;
 
 #if 0 // let's keep the old implementation just in case
       // someone complains about the new one

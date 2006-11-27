@@ -83,20 +83,6 @@ namespace OpenBabel
     return (fabs(a) < epsilon);
   }
 
-  // New comparison for doubles: returns
-  // fabs( a - b ) <= precision * fmin( fabs(a), fabs(b) )
-  OBAPI bool IsApprox(const double &a, const double &b, const double precision)
-  {
-    return( fabs(a - b) <= precision * std::min( fabs(a), fabs(b) ) );
-  }
-
-  // Same as IsApprox, but only for nonnegative numbers. Faster.
-  OBAPI bool IsApprox_pos(const double &a, const double &b,
-      const double precision)
-  {
-      return( a > b ? a - b <= precision * b : b - a <= precision * a );
-  }
-
   // Tests whether its argument can be squared without triggering an overflow or
   // underflow.
   OBAPI bool CanBeSquared(const double &a)

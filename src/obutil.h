@@ -36,6 +36,8 @@ GNU General Public License for more details.
 #endif
 #endif
 
+#include <math.h>
+
 namespace OpenBabel
 {
 
@@ -182,28 +184,38 @@ namespace OpenBabel
   OBAPI bool OBCompareInt(const int &,const int &);
   //! Comparison -- returns true if first parameter less than second
   OBAPI bool OBCompareUnsigned(const unsigned int &,const unsigned int &);
-  /*! Safe comparison for floats/doubles: returns fabs(a - b) < epsilon
-   * For new code, unless you have a very specific need, you should
-   * probably use IsApprox() instead, as it makes more sense w.r.t.
-   * floating-point representation.
-   * \deprecated Use IsApprox() instead)
+  /*! "Safe" comparison for floats/doubles: returns fabs(a - b) < epsilon
+   * This function really doesn't make any sense w.r.t. floating-point
+   * representation, so you should never use it. It is provided only for
+   * backwards compatibility.
+   * \deprecated Use IsApprox() instead
    */
   OBAPI bool IsNear(const double &, const double &, const double epsilon=2e-6);
-  //! Safe comparison for floats/doubles: true if a is less than epsilon
+  /*! "Safe" comparison for floats/doubles: true if a is less than epsilon
+   * This function really doesn't make any sense w.r.t. floating-point
+   * representation, so you should never use it. It is provided only for
+   * backwards compatibility.
+   * \deprecated
+   */
   OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
   /*! Safe comparison for floats/doubles: true if
    * fabs(a - b) <= precision * fmin( fabs(a), fabs(b) )
-   * This is not a direct replacement for IsNear(). This is a different test.
    * The parameter precision plays the role of 10^-N where N is the number of
    * significant digits to consider.
+   * This is the correct way to replace operator== for doubles. For new code,
+   * use this function instead of the old IsNear() function.
    */
-  OBAPI bool IsApprox(const double &, const double &, const double precision);
-
-  /*! Same thing as IsApprox, but faster. Only works for nonnegative numbers.
-   * No check is done.
-   */
-  OBAPI bool IsApprox_pos(const double &, const double &,
-                          const double precision);
+  OBAPI inline bool IsApprox(const double & a, const double & b,
+                      const double precision = 1e-11)
+  {
+    return( fabs(a - b) <= precision * fmin( fabs(a), fabs(b) ) );
+  }
+  //! Same as IsApprox(), but only for nonnegative numbers. Faster.
+  OBAPI inline bool IsApprox_pos(const double &a, const double &b,
+      const double precision = 1e-11)
+  {
+    return( fabs(a - b) <= precision * fmin( a, b ) );
+  }
   /*! Tests whether its argument can be squared without triggering an overflow
    * or underflow.
    */

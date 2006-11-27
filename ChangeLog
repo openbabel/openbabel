@@ -1,5 +1,15 @@
 2006-11-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/obutil.h, src/obutil.cpp: Optimizations and improvements
+	from Benoit Jacob, including documentation clarifications.
+
+	* src/math/vector3.h, src/math/vector3.cpp: Optimizations and
+	improvements, including documentation clarifications. Inline some
+	small methods, mark 'const' where possible, remove 'friend'
+	declarations, etc. contributed by Benoit Jacob.
+
+	* src/math/matrix3x3.h, src/math/matrix3x3.h: Use it.
+
 	* Doxyfile: Update for 2.1.0b3 snapshot and current Doxygen version (1.5.1).
 
 	* src/rotamer.h, src/rotamer.cpp, src/rotor.h, src/rotor.cpp: First step at
