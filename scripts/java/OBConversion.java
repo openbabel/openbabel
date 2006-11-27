@@ -275,6 +275,10 @@ public class OBConversion {
     return openbabelJNI.OBConversion_WriteFile(swigCPtr, this, OBBase.getCPtr(pOb), pOb, filePath);
   }
 
+  public void CloseOutFile() {
+    openbabelJNI.OBConversion_CloseOutFile(swigCPtr, this);
+  }
+
   public boolean Read(OBBase pOb, SWIGTYPE_p_std__istream pin) {
     return openbabelJNI.OBConversion_Read__SWIG_0(swigCPtr, this, OBBase.getCPtr(pOb), pOb, SWIGTYPE_p_std__istream.getCPtr(pin));
   }

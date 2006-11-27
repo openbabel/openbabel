@@ -48,8 +48,12 @@ public class OBMolBondIter {
     return openbabelJNI.OBMolBondIter_good(swigCPtr, this);
   }
 
+  public OBMolBondIter inc() {
+    return new OBMolBondIter(openbabelJNI.OBMolBondIter_inc__SWIG_0(swigCPtr, this), false);
+  }
+
   public OBMolBondIter inc(int arg0) {
-    return new OBMolBondIter(openbabelJNI.OBMolBondIter_inc(swigCPtr, this, arg0), true);
+    return new OBMolBondIter(openbabelJNI.OBMolBondIter_inc__SWIG_1(swigCPtr, this, arg0), true);
   }
 
   public OBBond deref() {

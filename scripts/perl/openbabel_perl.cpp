@@ -11667,6 +11667,49 @@ XS(_wrap_OBTypeTable_Translate__SWIG_1) {
 }
 
 
+XS(_wrap_OBTypeTable_Translate__SWIG_2) {
+  {
+    OpenBabel::OBTypeTable *arg1 = (OpenBabel::OBTypeTable *) 0 ;
+    std::string *arg2 = 0 ;
+    std::string result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 = SWIG_OLDOBJ ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: OBTypeTable_Translate(self,from);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBTypeTable, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBTypeTable_Translate" "', argument " "1"" of type '" "OpenBabel::OBTypeTable *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBTypeTable * >(argp1);
+    {
+      std::string *ptr = (std::string *)0;
+      res2 = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(1), &ptr);
+      if (!SWIG_IsOK(res2)) {
+        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBTypeTable_Translate" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      if (!ptr) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OBTypeTable_Translate" "', argument " "2"" of type '" "std::string const &""'"); 
+      }
+      arg2 = ptr;
+    }
+    result = (arg1)->Translate((std::string const &)*arg2);
+    ST(argvi) = SWIG_From_std_string  SWIG_PERL_CALL_ARGS_1(static_cast< std::string >(result)); argvi++ ;
+    
+    if (SWIG_IsNewObj(res2)) delete arg2;
+    XSRETURN(argvi);
+  fail:
+    
+    if (SWIG_IsNewObj(res2)) delete arg2;
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_OBTypeTable_Translate) {
   dXSARGS;
   
@@ -11702,7 +11745,7 @@ XS(_wrap_OBTypeTable_Translate) {
     }
   check_1:
     
-    if (items == 3) {
+    if (items == 2) {
       SWIG_TypeRank _ranki = 0;
       SWIG_TypeRank _rankm = 0;
       SWIG_TypeRank _pi = 1;
@@ -11717,15 +11760,7 @@ XS(_wrap_OBTypeTable_Translate) {
       _rankm += _pi;
       _pi *= SWIG_MAXCASTRANK;
       {
-        int res = SWIG_AsCharPtrAndSize(ST(1), 0, NULL, 0);
-        _v = SWIG_CheckState(res);
-      }
-      if (!_v) goto check_2;
-      _ranki += _v*_pi;
-      _rankm += _pi;
-      _pi *= SWIG_MAXCASTRANK;
-      {
-        int res = SWIG_AsCharPtrAndSize(ST(2), 0, NULL, 0);
+        int res = SWIG_AsPtr_std_string SWIG_PERL_CALL_ARGS_2(ST(1), (std::string**)(0));
         _v = SWIG_CheckState(res);
       }
       if (!_v) goto check_2;
@@ -11739,11 +11774,50 @@ XS(_wrap_OBTypeTable_Translate) {
     }
   check_2:
     
+    if (items == 3) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBTypeTable, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_3;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        int res = SWIG_AsCharPtrAndSize(ST(1), 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_3;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        int res = SWIG_AsCharPtrAndSize(ST(2), 0, NULL, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_3;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 3;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_3:
+    
   dispatch:
     switch(_index) {
     case 1:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBTypeTable_Translate__SWIG_1); return;
     case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBTypeTable_Translate__SWIG_2); return;
+    case 3:
       ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBTypeTable_Translate__SWIG_0); return;
     }
   }
@@ -13238,7 +13312,7 @@ XS(_wrap_new_vector3__SWIG_0) {
     dXSARGS;
     
     if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: new_vector3(x,y,z);");
+      SWIG_croak("Usage: new_vector3(inX,inY,inZ);");
     }
     ecode1 = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
@@ -13283,7 +13357,7 @@ XS(_wrap_new_vector3__SWIG_1) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: new_vector3(x,y);");
+      SWIG_croak("Usage: new_vector3(inX,inY);");
     }
     ecode1 = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
@@ -13318,7 +13392,7 @@ XS(_wrap_new_vector3__SWIG_2) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: new_vector3(x);");
+      SWIG_croak("Usage: new_vector3(inX);");
     }
     ecode1 = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
@@ -13554,7 +13628,7 @@ XS(_wrap_vector3_Set__SWIG_0) {
     dXSARGS;
     
     if ((items < 4) || (items > 4)) {
-      SWIG_croak("Usage: vector3_Set(self,x,y,z);");
+      SWIG_croak("Usage: vector3_Set(self,inX,inY,inZ);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -13743,7 +13817,7 @@ XS(_wrap_vector3_SetX) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: vector3_SetX(self,x);");
+      SWIG_croak("Usage: vector3_SetX(self,inX);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -13780,7 +13854,7 @@ XS(_wrap_vector3_SetY) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: vector3_SetY(self,y);");
+      SWIG_croak("Usage: vector3_SetY(self,inY);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -13817,7 +13891,7 @@ XS(_wrap_vector3_SetZ) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: vector3_SetZ(self,z);");
+      SWIG_croak("Usage: vector3_SetZ(self,inZ);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -13872,57 +13946,6 @@ XS(_wrap_vector3_Get) {
     
     XSRETURN(argvi);
   fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_vector3_IsApprox) {
-  {
-    OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
-    OpenBabel::vector3 *arg2 = 0 ;
-    double arg3 ;
-    bool result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    void *argp2 ;
-    int res2 = 0 ;
-    double val3 ;
-    int ecode3 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: vector3_IsApprox(self,OpenBabel::vector3 const &,precision);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_IsApprox" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vector3_IsApprox" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
-    }
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vector3_IsApprox" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
-    }
-    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
-    ecode3 = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
-    if (!SWIG_IsOK(ecode3)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vector3_IsApprox" "', argument " "3"" of type '" "double""'");
-    } 
-    arg3 = static_cast< double >(val3);
-    result = (bool)((OpenBabel::vector3 const *)arg1)->IsApprox((OpenBabel::vector3 const &)*arg2,arg3);
-    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
     
     
     SWIG_croak_null();
@@ -14152,34 +14175,6 @@ XS(_wrap_vector3_CanBeNormalized) {
 }
 
 
-XS(_wrap_vector3_length) {
-  {
-    OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
-    double result;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: vector3_length(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_length" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
-    }
-    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
-    result = (double)((OpenBabel::vector3 const *)arg1)->length();
-    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_vector3_length_2) {
   {
     OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
@@ -14208,10 +14203,38 @@ XS(_wrap_vector3_length_2) {
 }
 
 
-XS(_wrap_vector3_x) {
+XS(_wrap_vector3_length) {
   {
     OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
     double result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: vector3_length(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_length" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    result = (double)((OpenBabel::vector3 const *)arg1)->length();
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_vector3_x__SWIG_0) {
+  {
+    OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
+    double *result = 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
     int argvi = 0;
@@ -14225,8 +14248,11 @@ XS(_wrap_vector3_x) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_x" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
-    result = (double)((OpenBabel::vector3 const *)arg1)->x();
-    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    {
+      double const &_result_ref = ((OpenBabel::vector3 const *)arg1)->x();
+      result = (double *) &_result_ref;
+    }
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(*result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -14236,10 +14262,10 @@ XS(_wrap_vector3_x) {
 }
 
 
-XS(_wrap_vector3_y) {
+XS(_wrap_vector3_y__SWIG_0) {
   {
     OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
-    double result;
+    double *result = 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
     int argvi = 0;
@@ -14253,8 +14279,11 @@ XS(_wrap_vector3_y) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_y" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
-    result = (double)((OpenBabel::vector3 const *)arg1)->y();
-    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    {
+      double const &_result_ref = ((OpenBabel::vector3 const *)arg1)->y();
+      result = (double *) &_result_ref;
+    }
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(*result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -14264,10 +14293,10 @@ XS(_wrap_vector3_y) {
 }
 
 
-XS(_wrap_vector3_z) {
+XS(_wrap_vector3_z__SWIG_0) {
   {
     OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
-    double result;
+    double *result = 0 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
     int argvi = 0;
@@ -14281,11 +14310,428 @@ XS(_wrap_vector3_z) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_z" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
     }
     arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
-    result = (double)((OpenBabel::vector3 const *)arg1)->z();
-    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    {
+      double const &_result_ref = ((OpenBabel::vector3 const *)arg1)->z();
+      result = (double *) &_result_ref;
+    }
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(*result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_vector3_x__SWIG_1) {
+  {
+    OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
+    double *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: vector3_x(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_x" "', argument " "1"" of type '" "OpenBabel::vector3 *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    {
+      double &_result_ref = (arg1)->x();
+      result = (double *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_double, 0 | 0); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_vector3_x) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_vector3_x__SWIG_1); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_vector3_x__SWIG_0); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'vector3_x'");
+  XSRETURN(0);
+}
+
+
+XS(_wrap_vector3_y__SWIG_1) {
+  {
+    OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
+    double *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: vector3_y(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_y" "', argument " "1"" of type '" "OpenBabel::vector3 *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    {
+      double &_result_ref = (arg1)->y();
+      result = (double *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_double, 0 | 0); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_vector3_y) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_vector3_y__SWIG_1); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_vector3_y__SWIG_0); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'vector3_y'");
+  XSRETURN(0);
+}
+
+
+XS(_wrap_vector3_z__SWIG_1) {
+  {
+    OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
+    double *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: vector3_z(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_z" "', argument " "1"" of type '" "OpenBabel::vector3 *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    {
+      double &_result_ref = (arg1)->z();
+      result = (double *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_double, 0 | 0); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_vector3_z) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_vector3_z__SWIG_1); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_vector3_z__SWIG_0); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'vector3_z'");
+  XSRETURN(0);
+}
+
+
+XS(_wrap_vector3___eq__) {
+  {
+    OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    int result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: vector3___eq__(self,OpenBabel::vector3 const &);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3___eq__" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vector3___eq__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vector3___eq__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    result = (int)((OpenBabel::vector3 const *)arg1)->operator ==((OpenBabel::vector3 const &)*arg2);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_vector3___ne__) {
+  {
+    OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    int result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: vector3___ne__(self,other);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3___ne__" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vector3___ne__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vector3___ne__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    result = (int)((OpenBabel::vector3 const *)arg1)->operator !=((OpenBabel::vector3 const &)*arg2);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1(static_cast< int >(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_vector3_IsApprox) {
+  {
+    OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    double *arg3 = 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    double temp3 ;
+    double val3 ;
+    int ecode3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: vector3_IsApprox(self,other,precision);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__vector3, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vector3_IsApprox" "', argument " "1"" of type '" "OpenBabel::vector3 const *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vector3_IsApprox" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vector3_IsApprox" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    ecode3 = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vector3_IsApprox" "', argument " "3"" of type '" "double""'");
+    } 
+    temp3 = static_cast< double >(val3);
+    arg3 = &temp3;
+    result = (bool)((OpenBabel::vector3 const *)arg1)->IsApprox((OpenBabel::vector3 const &)*arg2,(double const &)*arg3);
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1(static_cast< bool >(result)); argvi++ ;
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
     
     SWIG_croak_null();
   }
@@ -14396,6 +14842,732 @@ XS(_wrap_delete_vector3) {
     
     XSRETURN(argvi);
   fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap___lshift__) {
+  {
+    std::ostream *arg1 = 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    std::ostream *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: __lshift__(std::ostream &,OpenBabel::vector3 const &);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_std__ostream,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__lshift__" "', argument " "1"" of type '" "std::ostream &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__lshift__" "', argument " "1"" of type '" "std::ostream &""'"); 
+    }
+    arg1 = reinterpret_cast< std::ostream * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "__lshift__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__lshift__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    {
+      std::ostream &_result_ref = OpenBabel::operator <<(*arg1,(OpenBabel::vector3 const &)*arg2);
+      result = (std::ostream *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__ostream, 0 | 0); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap___add__) {
+  {
+    OpenBabel::vector3 *arg1 = 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    OpenBabel::vector3 result;
+    void *argp1 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: __add__(v1,v2);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__add__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__add__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "__add__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__add__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    result = OpenBabel::operator +((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap___sub____SWIG_0) {
+  {
+    OpenBabel::vector3 *arg1 = 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    OpenBabel::vector3 result;
+    void *argp1 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: __sub__(v1,v2);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__sub__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__sub__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "__sub__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__sub__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    result = OpenBabel::operator -((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap___sub____SWIG_1) {
+  {
+    OpenBabel::vector3 *arg1 = 0 ;
+    OpenBabel::vector3 result;
+    void *argp1 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: __sub__(v);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__sub__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__sub__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    result = OpenBabel::operator -((OpenBabel::vector3 const &)*arg1);
+    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap___sub__) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap___sub____SWIG_1); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap___sub____SWIG_0); return;
+    }
+  }
+  
+  croak("No matching function for overloaded '__sub__'");
+  XSRETURN(0);
+}
+
+
+XS(_wrap___mul____SWIG_0) {
+  {
+    double *arg1 = 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    OpenBabel::vector3 result;
+    double temp1 ;
+    double val1 ;
+    int ecode1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: __mul__(c,v);");
+    }
+    ecode1 = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "__mul__" "', argument " "1"" of type '" "double""'");
+    } 
+    temp1 = static_cast< double >(val1);
+    arg1 = &temp1;
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "__mul__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__mul__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    result = OpenBabel::operator *((double const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap___mul____SWIG_1) {
+  {
+    OpenBabel::vector3 *arg1 = 0 ;
+    double *arg2 = 0 ;
+    OpenBabel::vector3 result;
+    void *argp1 ;
+    int res1 = 0 ;
+    double temp2 ;
+    double val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: __mul__(v,c);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__mul__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__mul__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    ecode2 = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "__mul__" "', argument " "2"" of type '" "double""'");
+    } 
+    temp2 = static_cast< double >(val2);
+    arg2 = &temp2;
+    result = OpenBabel::operator *((OpenBabel::vector3 const &)*arg1,(double const &)*arg2);
+    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap___div__) {
+  {
+    OpenBabel::vector3 *arg1 = 0 ;
+    double *arg2 = 0 ;
+    OpenBabel::vector3 result;
+    void *argp1 ;
+    int res1 = 0 ;
+    double temp2 ;
+    double val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: __div__(v,c);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__div__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__div__" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    ecode2 = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "__div__" "', argument " "2"" of type '" "double""'");
+    } 
+    temp2 = static_cast< double >(val2);
+    arg2 = &temp2;
+    result = OpenBabel::operator /((OpenBabel::vector3 const &)*arg1,(double const &)*arg2);
+    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap___mul____SWIG_2) {
+  {
+    OpenBabel::matrix3x3 *arg1 = 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    OpenBabel::vector3 result;
+    void *argp1 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: __mul__(m,v);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__matrix3x3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "__mul__" "', argument " "1"" of type '" "OpenBabel::matrix3x3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__mul__" "', argument " "1"" of type '" "OpenBabel::matrix3x3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::matrix3x3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "__mul__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "__mul__" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    result = OpenBabel::operator *((OpenBabel::matrix3x3 const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap___mul__) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__matrix3x3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        {
+          int res = SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(ST(0), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_3;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(1), &vptr, SWIGTYPE_p_OpenBabel__vector3, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_3;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 3;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_3:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap___mul____SWIG_1); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap___mul____SWIG_2); return;
+    case 3:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap___mul____SWIG_0); return;
+    }
+  }
+  
+  croak("No matching function for overloaded '__mul__'");
+  XSRETURN(0);
+}
+
+
+XS(_wrap_dot) {
+  {
+    OpenBabel::vector3 *arg1 = 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    double result;
+    void *argp1 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: dot(v1,v2);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "dot" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "dot" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "dot" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "dot" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    result = (double)OpenBabel::dot((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_cross) {
+  {
+    OpenBabel::vector3 *arg1 = 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    OpenBabel::vector3 result;
+    void *argp1 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: cross(OpenBabel::vector3 const &,OpenBabel::vector3 const &);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cross" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "cross" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "cross" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "cross" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    result = OpenBabel::cross((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+    ST(argvi) = SWIG_NewPointerObj((new OpenBabel::vector3(static_cast< const OpenBabel::vector3& >(result))), SWIGTYPE_p_OpenBabel__vector3, SWIG_POINTER_OWN | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_vectorAngle) {
+  {
+    OpenBabel::vector3 *arg1 = 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    double result;
+    void *argp1 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: vectorAngle(v1,v2);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    result = (double)OpenBabel::vectorAngle((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_CalcTorsionAngle) {
+  {
+    OpenBabel::vector3 *arg1 = 0 ;
+    OpenBabel::vector3 *arg2 = 0 ;
+    OpenBabel::vector3 *arg3 = 0 ;
+    OpenBabel::vector3 *arg4 = 0 ;
+    double result;
+    void *argp1 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    void *argp3 ;
+    int res3 = 0 ;
+    void *argp4 ;
+    int res4 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 4) || (items > 4)) {
+      SWIG_croak("Usage: CalcTorsionAngle(a,b,c,d);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CalcTorsionAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CalcTorsionAngle" "', argument " "1"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::vector3 * >(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CalcTorsionAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CalcTorsionAngle" "', argument " "2"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg2 = reinterpret_cast< OpenBabel::vector3 * >(argp2);
+    res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "CalcTorsionAngle" "', argument " "3"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CalcTorsionAngle" "', argument " "3"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg3 = reinterpret_cast< OpenBabel::vector3 * >(argp3);
+    res4 = SWIG_ConvertPtr(ST(3), &argp4, SWIGTYPE_p_OpenBabel__vector3,  0 );
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "CalcTorsionAngle" "', argument " "4"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CalcTorsionAngle" "', argument " "4"" of type '" "OpenBabel::vector3 const &""'"); 
+    }
+    arg4 = reinterpret_cast< OpenBabel::vector3 * >(argp4);
+    result = (double)OpenBabel::CalcTorsionAngle((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2,(OpenBabel::vector3 const &)*arg3,(OpenBabel::vector3 const &)*arg4);
+    ST(argvi) = SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(result)); argvi++ ;
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
     
     SWIG_croak_null();
   }
@@ -20959,7 +22131,7 @@ XS(_wrap_OBAngle_SetAngle) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: OBAngle_SetAngle(self,radians);");
+      SWIG_croak("Usage: OBAngle_SetAngle(self,angle);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAngle, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -28708,6 +29880,33 @@ XS(_wrap_OBConversion_WriteFile) {
   fail:
     
     
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBConversion_CloseOutFile) {
+  {
+    OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBConversion_CloseOutFile(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBConversion, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBConversion_CloseOutFile" "', argument " "1"" of type '" "OpenBabel::OBConversion *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBConversion * >(argp1);
+    (arg1)->CloseOutFile();
+    
+    
+    XSRETURN(argvi);
+  fail:
     
     SWIG_croak_null();
   }
@@ -38113,6 +39312,34 @@ XS(_wrap_OBMol_NewAtom) {
     arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
     result = (OpenBabel::OBAtom *)(arg1)->NewAtom();
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMol_NewBond) {
+  {
+    OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+    OpenBabel::OBBond *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMol_NewBond(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMol, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMol_NewBond" "', argument " "1"" of type '" "OpenBabel::OBMol *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMol * >(argp1);
+    result = (OpenBabel::OBBond *)(arg1)->NewBond();
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBBond, 0 | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -48772,7 +49999,38 @@ XS(_wrap_OBMolAtomIter_good) {
 }
 
 
-XS(_wrap_OBMolAtomIter_inc) {
+XS(_wrap_OBMolAtomIter_inc__SWIG_0) {
+  {
+    OpenBabel::OBMolAtomIter *arg1 = (OpenBabel::OBMolAtomIter *) 0 ;
+    OpenBabel::OBMolAtomIter *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolAtomIter_inc(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolAtomIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolAtomIter * >(argp1);
+    {
+      OpenBabel::OBMolAtomIter &_result_ref = (arg1)->operator ++();
+      result = (OpenBabel::OBMolAtomIter *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAtomIter, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolAtomIter_inc__SWIG_1) {
   {
     OpenBabel::OBMolAtomIter *arg1 = (OpenBabel::OBMolAtomIter *) 0 ;
     int arg2 ;
@@ -48807,6 +50065,78 @@ XS(_wrap_OBMolAtomIter_inc) {
     
     SWIG_croak_null();
   }
+}
+
+
+XS(_wrap_OBMolAtomIter_inc) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomIter_inc__SWIG_0); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomIter_inc__SWIG_1); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBMolAtomIter_inc'");
+  XSRETURN(0);
 }
 
 
@@ -54754,7 +56084,38 @@ XS(_wrap_new_OBMolAtomDFSIter) {
 }
 
 
-XS(_wrap_OBMolAtomDFSIter___plusplus__) {
+XS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_0) {
+  {
+    OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
+    OpenBabel::OBMolAtomDFSIter *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolAtomDFSIter___plusplus__(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomDFSIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomDFSIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolAtomDFSIter * >(argp1);
+    {
+      OpenBabel::OBMolAtomDFSIter &_result_ref = (arg1)->operator ++();
+      result = (OpenBabel::OBMolAtomDFSIter *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_1) {
   {
     OpenBabel::OBMolAtomDFSIter *arg1 = (OpenBabel::OBMolAtomDFSIter *) 0 ;
     int arg2 ;
@@ -54789,6 +56150,78 @@ XS(_wrap_OBMolAtomDFSIter___plusplus__) {
     
     SWIG_croak_null();
   }
+}
+
+
+XS(_wrap_OBMolAtomDFSIter___plusplus__) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_0); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomDFSIter___plusplus____SWIG_1); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBMolAtomDFSIter___plusplus__'");
+  XSRETURN(0);
 }
 
 
@@ -60736,7 +62169,38 @@ XS(_wrap_new_OBMolAtomBFSIter) {
 }
 
 
-XS(_wrap_OBMolAtomBFSIter___plusplus__) {
+XS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_0) {
+  {
+    OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
+    OpenBabel::OBMolAtomBFSIter *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolAtomBFSIter___plusplus__(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolAtomBFSIter___plusplus__" "', argument " "1"" of type '" "OpenBabel::OBMolAtomBFSIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolAtomBFSIter * >(argp1);
+    {
+      OpenBabel::OBMolAtomBFSIter &_result_ref = (arg1)->operator ++();
+      result = (OpenBabel::OBMolAtomBFSIter *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_1) {
   {
     OpenBabel::OBMolAtomBFSIter *arg1 = (OpenBabel::OBMolAtomBFSIter *) 0 ;
     int arg2 ;
@@ -60771,6 +62235,78 @@ XS(_wrap_OBMolAtomBFSIter___plusplus__) {
     
     SWIG_croak_null();
   }
+}
+
+
+XS(_wrap_OBMolAtomBFSIter___plusplus__) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_0); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolAtomBFSIter___plusplus____SWIG_1); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBMolAtomBFSIter___plusplus__'");
+  XSRETURN(0);
 }
 
 
@@ -66746,7 +68282,38 @@ XS(_wrap_OBMolBondIter_good) {
 }
 
 
-XS(_wrap_OBMolBondIter_inc) {
+XS(_wrap_OBMolBondIter_inc__SWIG_0) {
+  {
+    OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
+    OpenBabel::OBMolBondIter *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBMolBondIter_inc(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBMolBondIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBMolBondIter_inc" "', argument " "1"" of type '" "OpenBabel::OBMolBondIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBMolBondIter * >(argp1);
+    {
+      OpenBabel::OBMolBondIter &_result_ref = (arg1)->operator ++();
+      result = (OpenBabel::OBMolBondIter *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBMolBondIter, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBMolBondIter_inc__SWIG_1) {
   {
     OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
     int arg2 ;
@@ -66781,6 +68348,78 @@ XS(_wrap_OBMolBondIter_inc) {
     
     SWIG_croak_null();
   }
+}
+
+
+XS(_wrap_OBMolBondIter_inc) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolBondIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBMolBondIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolBondIter_inc__SWIG_0); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBMolBondIter_inc__SWIG_1); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBMolBondIter_inc'");
+  XSRETURN(0);
 }
 
 
@@ -69783,7 +71422,38 @@ XS(_wrap_OBAtomAtomIter_good) {
 }
 
 
-XS(_wrap_OBAtomAtomIter_inc) {
+XS(_wrap_OBAtomAtomIter_inc__SWIG_0) {
+  {
+    OpenBabel::OBAtomAtomIter *arg1 = (OpenBabel::OBAtomAtomIter *) 0 ;
+    OpenBabel::OBAtomAtomIter *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBAtomAtomIter_inc(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtomAtomIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtomAtomIter_inc" "', argument " "1"" of type '" "OpenBabel::OBAtomAtomIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBAtomAtomIter * >(argp1);
+    {
+      OpenBabel::OBAtomAtomIter &_result_ref = (arg1)->operator ++();
+      result = (OpenBabel::OBAtomAtomIter *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtomAtomIter, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBAtomAtomIter_inc__SWIG_1) {
   {
     OpenBabel::OBAtomAtomIter *arg1 = (OpenBabel::OBAtomAtomIter *) 0 ;
     int arg2 ;
@@ -69818,6 +71488,78 @@ XS(_wrap_OBAtomAtomIter_inc) {
     
     SWIG_croak_null();
   }
+}
+
+
+XS(_wrap_OBAtomAtomIter_inc) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBAtomAtomIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBAtomAtomIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBAtomAtomIter_inc__SWIG_0); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBAtomAtomIter_inc__SWIG_1); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBAtomAtomIter_inc'");
+  XSRETURN(0);
 }
 
 
@@ -75793,7 +77535,38 @@ XS(_wrap_OBAtomBondIter_good) {
 }
 
 
-XS(_wrap_OBAtomBondIter_inc) {
+XS(_wrap_OBAtomBondIter_inc__SWIG_0) {
+  {
+    OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
+    OpenBabel::OBAtomBondIter *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBAtomBondIter_inc(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBAtomBondIter_inc" "', argument " "1"" of type '" "OpenBabel::OBAtomBondIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBAtomBondIter * >(argp1);
+    {
+      OpenBabel::OBAtomBondIter &_result_ref = (arg1)->operator ++();
+      result = (OpenBabel::OBAtomBondIter *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBAtomBondIter_inc__SWIG_1) {
   {
     OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
     int arg2 ;
@@ -75828,6 +77601,78 @@ XS(_wrap_OBAtomBondIter_inc) {
     
     SWIG_croak_null();
   }
+}
+
+
+XS(_wrap_OBAtomBondIter_inc) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBAtomBondIter_inc__SWIG_0); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBAtomBondIter_inc__SWIG_1); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBAtomBondIter_inc'");
+  XSRETURN(0);
 }
 
 
@@ -78830,7 +80675,38 @@ XS(_wrap_OBResidueIter_good) {
 }
 
 
-XS(_wrap_OBResidueIter_inc) {
+XS(_wrap_OBResidueIter_inc__SWIG_0) {
+  {
+    OpenBabel::OBResidueIter *arg1 = (OpenBabel::OBResidueIter *) 0 ;
+    OpenBabel::OBResidueIter *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBResidueIter_inc(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBResidueIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBResidueIter_inc" "', argument " "1"" of type '" "OpenBabel::OBResidueIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBResidueIter * >(argp1);
+    {
+      OpenBabel::OBResidueIter &_result_ref = (arg1)->operator ++();
+      result = (OpenBabel::OBResidueIter *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBResidueIter, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBResidueIter_inc__SWIG_1) {
   {
     OpenBabel::OBResidueIter *arg1 = (OpenBabel::OBResidueIter *) 0 ;
     int arg2 ;
@@ -78865,6 +80741,78 @@ XS(_wrap_OBResidueIter_inc) {
     
     SWIG_croak_null();
   }
+}
+
+
+XS(_wrap_OBResidueIter_inc) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBResidueIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBResidueIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBResidueIter_inc__SWIG_0); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBResidueIter_inc__SWIG_1); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBResidueIter_inc'");
+  XSRETURN(0);
 }
 
 
@@ -81366,7 +83314,38 @@ XS(_wrap_OBResidueAtomIter_good) {
 }
 
 
-XS(_wrap_OBResidueAtomIter_inc) {
+XS(_wrap_OBResidueAtomIter_inc__SWIG_0) {
+  {
+    OpenBabel::OBResidueAtomIter *arg1 = (OpenBabel::OBResidueAtomIter *) 0 ;
+    OpenBabel::OBResidueAtomIter *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: OBResidueAtomIter_inc(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_OpenBabel__OBResidueAtomIter, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBResidueAtomIter_inc" "', argument " "1"" of type '" "OpenBabel::OBResidueAtomIter *""'"); 
+    }
+    arg1 = reinterpret_cast< OpenBabel::OBResidueAtomIter * >(argp1);
+    {
+      OpenBabel::OBResidueAtomIter &_result_ref = (arg1)->operator ++();
+      result = (OpenBabel::OBResidueAtomIter *) &_result_ref;
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBResidueAtomIter, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_OBResidueAtomIter_inc__SWIG_1) {
   {
     OpenBabel::OBResidueAtomIter *arg1 = (OpenBabel::OBResidueAtomIter *) 0 ;
     int arg2 ;
@@ -81401,6 +83380,78 @@ XS(_wrap_OBResidueAtomIter_inc) {
     
     SWIG_croak_null();
   }
+}
+
+
+XS(_wrap_OBResidueAtomIter_inc) {
+  dXSARGS;
+  
+  {
+    unsigned long _index = 0;
+    SWIG_TypeRank _rank = 0; 
+    if (items == 1) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBResidueAtomIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_1;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 1;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_1:
+    
+    if (items == 2) {
+      SWIG_TypeRank _ranki = 0;
+      SWIG_TypeRank _rankm = 0;
+      SWIG_TypeRank _pi = 1;
+      int _v = 0;
+      {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(ST(0), &vptr, SWIGTYPE_p_OpenBabel__OBResidueAtomIter, 0);
+        _v = SWIG_CheckState(res);
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      {
+        {
+          int res = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), NULL);
+          _v = SWIG_CheckState(res);
+        }
+      }
+      if (!_v) goto check_2;
+      _ranki += _v*_pi;
+      _rankm += _pi;
+      _pi *= SWIG_MAXCASTRANK;
+      if (!_index || (_ranki < _rank)) {
+        _rank = _ranki; _index = 2;
+        if (_rank == _rankm) goto dispatch;
+      }
+    }
+  check_2:
+    
+  dispatch:
+    switch(_index) {
+    case 1:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBResidueAtomIter_inc__SWIG_0); return;
+    case 2:
+      ++PL_markstack_ptr; SWIG_CALLXS(_wrap_OBResidueAtomIter_inc__SWIG_1); return;
+    }
+  }
+  
+  croak("No matching function for overloaded 'OBResidueAtomIter_inc'");
+  XSRETURN(0);
 }
 
 
@@ -88017,19 +90068,30 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::vector3_SetY", _wrap_vector3_SetY},
 {"Chemistry::OpenBabelc::vector3_SetZ", _wrap_vector3_SetZ},
 {"Chemistry::OpenBabelc::vector3_Get", _wrap_vector3_Get},
-{"Chemistry::OpenBabelc::vector3_IsApprox", _wrap_vector3_IsApprox},
 {"Chemistry::OpenBabelc::vector3_AsArray", _wrap_vector3_AsArray},
 {"Chemistry::OpenBabelc::vector3_randomUnitVector", _wrap_vector3_randomUnitVector},
 {"Chemistry::OpenBabelc::vector3_normalize", _wrap_vector3_normalize},
 {"Chemistry::OpenBabelc::vector3_CanBeNormalized", _wrap_vector3_CanBeNormalized},
-{"Chemistry::OpenBabelc::vector3_length", _wrap_vector3_length},
 {"Chemistry::OpenBabelc::vector3_length_2", _wrap_vector3_length_2},
+{"Chemistry::OpenBabelc::vector3_length", _wrap_vector3_length},
 {"Chemistry::OpenBabelc::vector3_x", _wrap_vector3_x},
 {"Chemistry::OpenBabelc::vector3_y", _wrap_vector3_y},
 {"Chemistry::OpenBabelc::vector3_z", _wrap_vector3_z},
+{"Chemistry::OpenBabelc::vector3___eq__", _wrap_vector3___eq__},
+{"Chemistry::OpenBabelc::vector3___ne__", _wrap_vector3___ne__},
+{"Chemistry::OpenBabelc::vector3_IsApprox", _wrap_vector3_IsApprox},
 {"Chemistry::OpenBabelc::vector3_distSq", _wrap_vector3_distSq},
 {"Chemistry::OpenBabelc::vector3_createOrthoVector", _wrap_vector3_createOrthoVector},
 {"Chemistry::OpenBabelc::delete_vector3", _wrap_delete_vector3},
+{"Chemistry::OpenBabelc::__lshift__", _wrap___lshift__},
+{"Chemistry::OpenBabelc::__add__", _wrap___add__},
+{"Chemistry::OpenBabelc::__sub__", _wrap___sub__},
+{"Chemistry::OpenBabelc::__div__", _wrap___div__},
+{"Chemistry::OpenBabelc::__mul__", _wrap___mul__},
+{"Chemistry::OpenBabelc::dot", _wrap_dot},
+{"Chemistry::OpenBabelc::cross", _wrap_cross},
+{"Chemistry::OpenBabelc::vectorAngle", _wrap_vectorAngle},
+{"Chemistry::OpenBabelc::CalcTorsionAngle", _wrap_CalcTorsionAngle},
 {"Chemistry::OpenBabelc::Point2Plane", _wrap_Point2Plane},
 {"Chemistry::OpenBabelc::Trim", _wrap_Trim},
 {"Chemistry::OpenBabelc::new_OBGenericData", _wrap_new_OBGenericData},
@@ -88280,6 +90342,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBConversion_Write", _wrap_OBConversion_Write},
 {"Chemistry::OpenBabelc::OBConversion_WriteString", _wrap_OBConversion_WriteString},
 {"Chemistry::OpenBabelc::OBConversion_WriteFile", _wrap_OBConversion_WriteFile},
+{"Chemistry::OpenBabelc::OBConversion_CloseOutFile", _wrap_OBConversion_CloseOutFile},
 {"Chemistry::OpenBabelc::OBConversion_Read", _wrap_OBConversion_Read},
 {"Chemistry::OpenBabelc::OBConversion_ReadString", _wrap_OBConversion_ReadString},
 {"Chemistry::OpenBabelc::OBConversion_ReadFile", _wrap_OBConversion_ReadFile},
@@ -88525,6 +90588,7 @@ static swig_command_info swig_commands[] = {
 {"Chemistry::OpenBabelc::OBMol_DeleteBond", _wrap_OBMol_DeleteBond},
 {"Chemistry::OpenBabelc::OBMol_DeleteResidue", _wrap_OBMol_DeleteResidue},
 {"Chemistry::OpenBabelc::OBMol_NewAtom", _wrap_OBMol_NewAtom},
+{"Chemistry::OpenBabelc::OBMol_NewBond", _wrap_OBMol_NewBond},
 {"Chemistry::OpenBabelc::OBMol_NewResidue", _wrap_OBMol_NewResidue},
 {"Chemistry::OpenBabelc::OBMol_BeginModify", _wrap_OBMol_BeginModify},
 {"Chemistry::OpenBabelc::OBMol_EndModify", _wrap_OBMol_EndModify},
@@ -89935,21 +91999,6 @@ XS(SWIG_init) {
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBSqrtTbl, (void*) "Chemistry::OpenBabel::OBSqrtTbl");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__DoubleType, (void*) "Chemistry::OpenBabel::DoubleType");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBRandom, (void*) "Chemistry::OpenBabel::OBRandom");
-  /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "PI", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >((3.1415926535897932384626433))));
-    SvREADONLY_on(sv);
-  } while(0) /*@SWIG@*/;
-  /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "RAD_TO_DEG", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >((180.0/(3.1415926535897932384626433)))));
-    SvREADONLY_on(sv);
-  } while(0) /*@SWIG@*/;
-  /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "DEG_TO_RAD", TRUE | 0x2);
-    sv_setsv(sv, SWIG_From_double  SWIG_PERL_CALL_ARGS_1(static_cast< double >(((3.1415926535897932384626433)/180.0))));
-    SvREADONLY_on(sv);
-  } while(0) /*@SWIG@*/;
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__vector3, (void*) "Chemistry::OpenBabel::vector3");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBGenericData, (void*) "Chemistry::OpenBabel::OBGenericData");
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBCommentData, (void*) "Chemistry::OpenBabel::OBCommentData");

@@ -2926,6 +2926,31 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBTypeTable_1Translate_1_1SWIG_11(
 }
 
 
+SWIGEXPORT jstring JNICALL Java_openbabelJNI_OBTypeTable_1Translate_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  jstring jresult = 0 ;
+  OpenBabel::OBTypeTable *arg1 = (OpenBabel::OBTypeTable *) 0 ;
+  std::string *arg2 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBTypeTable **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return 0;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return 0;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  result = (arg1)->Translate((std::string const &)*arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
 SWIGEXPORT jstring JNICALL Java_openbabelJNI_OBTypeTable_1GetFromType(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   OpenBabel::OBTypeTable *arg1 = (OpenBabel::OBTypeTable *) 0 ;
@@ -3556,45 +3581,6 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1OBRandom(JNIEnv *jenv, jclass 
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_openbabelJNI_PI_1get(JNIEnv *jenv, jclass jcls) {
-  jdouble jresult = 0 ;
-  double result;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (double) (3.1415926535897932384626433);
-  
-  jresult = (jdouble)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jdouble JNICALL Java_openbabelJNI_RAD_1TO_1DEG_1get(JNIEnv *jenv, jclass jcls) {
-  jdouble jresult = 0 ;
-  double result;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (double) (180.0/(3.1415926535897932384626433));
-  
-  jresult = (jdouble)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jdouble JNICALL Java_openbabelJNI_DEG_1TO_1RAD_1get(JNIEnv *jenv, jclass jcls) {
-  jdouble jresult = 0 ;
-  double result;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (double) ((3.1415926535897932384626433)/180.0);
-  
-  jresult = (jdouble)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1vector3_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jdouble jarg1, jdouble jarg2, jdouble jarg3) {
   jlong jresult = 0 ;
   double arg1 ;
@@ -3756,30 +3742,6 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_vector3_1Get(JNIEnv *jenv, jclass jcls
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_openbabelJNI_vector3_1IsApprox(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jdouble jarg3) {
-  jboolean jresult = 0 ;
-  OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
-  OpenBabel::vector3 *arg2 = 0 ;
-  double arg3 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  arg1 = *(OpenBabel::vector3 **)&jarg1; 
-  arg2 = *(OpenBabel::vector3 **)&jarg2;
-  if(!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
-    return 0;
-  } 
-  arg3 = (double)jarg3; 
-  result = (bool)((OpenBabel::vector3 const *)arg1)->IsApprox((OpenBabel::vector3 const &)*arg2,arg3);
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_vector3_1AsArray(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
@@ -3853,21 +3815,6 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_vector3_1CanBeNormalized(JNIEnv *j
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1length(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jdouble jresult = 0 ;
-  OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
-  double result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::vector3 **)&jarg1; 
-  result = (double)((OpenBabel::vector3 const *)arg1)->length();
-  jresult = (jdouble)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1length_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jdouble jresult = 0 ;
   OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
@@ -3883,7 +3830,7 @@ SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1length_12(JNIEnv *jenv, jc
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1x(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1length(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jdouble jresult = 0 ;
   OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
   double result;
@@ -3892,38 +3839,88 @@ SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1x(JNIEnv *jenv, jclass jcl
   (void)jcls;
   (void)jarg1_;
   arg1 = *(OpenBabel::vector3 **)&jarg1; 
-  result = (double)((OpenBabel::vector3 const *)arg1)->x();
+  result = (double)((OpenBabel::vector3 const *)arg1)->length();
   jresult = (jdouble)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1y(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1x_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jdouble jresult = 0 ;
   OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
-  double result;
+  double *result = 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(OpenBabel::vector3 **)&jarg1; 
-  result = (double)((OpenBabel::vector3 const *)arg1)->y();
-  jresult = (jdouble)result; 
+  {
+    double const &_result_ref = ((OpenBabel::vector3 const *)arg1)->x();
+    result = (double *) &_result_ref;
+  }
+  jresult = (jdouble)*result; 
   return jresult;
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1z(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1y_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jdouble jresult = 0 ;
   OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
-  double result;
+  double *result = 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(OpenBabel::vector3 **)&jarg1; 
-  result = (double)((OpenBabel::vector3 const *)arg1)->z();
-  jresult = (jdouble)result; 
+  {
+    double const &_result_ref = ((OpenBabel::vector3 const *)arg1)->y();
+    result = (double *) &_result_ref;
+  }
+  jresult = (jdouble)*result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vector3_1z_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
+  double *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::vector3 **)&jarg1; 
+  {
+    double const &_result_ref = ((OpenBabel::vector3 const *)arg1)->z();
+    result = (double *) &_result_ref;
+  }
+  jresult = (jdouble)*result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_vector3_1IsApprox(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jdouble jarg3) {
+  jboolean jresult = 0 ;
+  OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
+  OpenBabel::vector3 *arg2 = 0 ;
+  double *arg3 = 0 ;
+  bool result;
+  double temp3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::vector3 **)&jarg1; 
+  arg2 = *(OpenBabel::vector3 **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  temp3 = (double)jarg3; 
+  arg3 = &temp3; 
+  result = (bool)((OpenBabel::vector3 const *)arg1)->IsApprox((OpenBabel::vector3 const &)*arg2,(double const &)*arg3);
+  jresult = (jboolean)result; 
   return jresult;
 }
 
@@ -3980,6 +3977,124 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1vector3(JNIEnv *jenv, jclass j
   arg1 = *(OpenBabel::vector3 **)&jarg1; 
   delete arg1;
   
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_dot(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  OpenBabel::vector3 *arg1 = 0 ;
+  OpenBabel::vector3 *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::vector3 **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  arg2 = *(OpenBabel::vector3 **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  result = (double)OpenBabel::dot((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_cross(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
+  OpenBabel::vector3 *arg1 = 0 ;
+  OpenBabel::vector3 *arg2 = 0 ;
+  OpenBabel::vector3 result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::vector3 **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  arg2 = *(OpenBabel::vector3 **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  result = OpenBabel::cross((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+  *(OpenBabel::vector3 **)&jresult = new OpenBabel::vector3((OpenBabel::vector3 &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_vectorAngle(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jdouble jresult = 0 ;
+  OpenBabel::vector3 *arg1 = 0 ;
+  OpenBabel::vector3 *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::vector3 **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  arg2 = *(OpenBabel::vector3 **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  result = (double)OpenBabel::vectorAngle((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_CalcTorsionAngle(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_) {
+  jdouble jresult = 0 ;
+  OpenBabel::vector3 *arg1 = 0 ;
+  OpenBabel::vector3 *arg2 = 0 ;
+  OpenBabel::vector3 *arg3 = 0 ;
+  OpenBabel::vector3 *arg4 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  (void)jarg3_;
+  (void)jarg4_;
+  arg1 = *(OpenBabel::vector3 **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  arg2 = *(OpenBabel::vector3 **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  arg3 = *(OpenBabel::vector3 **)&jarg3;
+  if(!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  arg4 = *(OpenBabel::vector3 **)&jarg4;
+  if(!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::vector3 const & reference is null");
+    return 0;
+  } 
+  result = (double)OpenBabel::CalcTorsionAngle((OpenBabel::vector3 const &)*arg1,(OpenBabel::vector3 const &)*arg2,(OpenBabel::vector3 const &)*arg3,(OpenBabel::vector3 const &)*arg4);
+  jresult = (jdouble)result; 
+  return jresult;
 }
 
 
@@ -9690,6 +9805,17 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBConversion_1WriteFile(JNIEnv *je
   result = (bool)(arg1)->WriteFile(arg2,arg3);
   jresult = (jboolean)result; 
   return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_OBConversion_1CloseOutFile(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  OpenBabel::OBConversion *arg1 = (OpenBabel::OBConversion *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBConversion **)&jarg1; 
+  (arg1)->CloseOutFile();
 }
 
 
@@ -15713,6 +15839,21 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMol_1NewAtom(JNIEnv *jenv, jclass j
 }
 
 
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMol_1NewBond(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
+  OpenBabel::OBBond *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBMol **)&jarg1; 
+  result = (OpenBabel::OBBond *)(arg1)->NewBond();
+  *(OpenBabel::OBBond **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMol_1NewResidue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   OpenBabel::OBMol *arg1 = (OpenBabel::OBMol *) 0 ;
@@ -19801,7 +19942,25 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBMolAtomIter_1good(JNIEnv *jenv, 
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomIter_1inc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomIter_1inc_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBMolAtomIter *arg1 = (OpenBabel::OBMolAtomIter *) 0 ;
+  OpenBabel::OBMolAtomIter *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBMolAtomIter **)&jarg1; 
+  {
+    OpenBabel::OBMolAtomIter &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::OBMolAtomIter *) &_result_ref;
+  }
+  *(OpenBabel::OBMolAtomIter **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolAtomIter_1inc_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   OpenBabel::OBMolAtomIter *arg1 = (OpenBabel::OBMolAtomIter *) 0 ;
   int arg2 ;
@@ -26715,7 +26874,25 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBMolBondIter_1good(JNIEnv *jenv, 
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1inc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1inc_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
+  OpenBabel::OBMolBondIter *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBMolBondIter **)&jarg1; 
+  {
+    OpenBabel::OBMolBondIter &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::OBMolBondIter *) &_result_ref;
+  }
+  *(OpenBabel::OBMolBondIter **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBMolBondIter_1inc_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   int arg2 ;
@@ -27838,7 +28015,25 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBAtomAtomIter_1good(JNIEnv *jenv,
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomAtomIter_1inc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomAtomIter_1inc_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBAtomAtomIter *arg1 = (OpenBabel::OBAtomAtomIter *) 0 ;
+  OpenBabel::OBAtomAtomIter *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBAtomAtomIter **)&jarg1; 
+  {
+    OpenBabel::OBAtomAtomIter &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::OBAtomAtomIter *) &_result_ref;
+  }
+  *(OpenBabel::OBAtomAtomIter **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomAtomIter_1inc_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   OpenBabel::OBAtomAtomIter *arg1 = (OpenBabel::OBAtomAtomIter *) 0 ;
   int arg2 ;
@@ -30164,7 +30359,25 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBAtomBondIter_1good(JNIEnv *jenv,
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1inc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1inc_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
+  OpenBabel::OBAtomBondIter *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBAtomBondIter **)&jarg1; 
+  {
+    OpenBabel::OBAtomBondIter &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::OBAtomBondIter *) &_result_ref;
+  }
+  *(OpenBabel::OBAtomBondIter **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBAtomBondIter_1inc_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
   int arg2 ;
@@ -31287,7 +31500,25 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBResidueIter_1good(JNIEnv *jenv, 
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBResidueIter_1inc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBResidueIter_1inc_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBResidueIter *arg1 = (OpenBabel::OBResidueIter *) 0 ;
+  OpenBabel::OBResidueIter *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBResidueIter **)&jarg1; 
+  {
+    OpenBabel::OBResidueIter &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::OBResidueIter *) &_result_ref;
+  }
+  *(OpenBabel::OBResidueIter **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBResidueIter_1inc_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   OpenBabel::OBResidueIter *arg1 = (OpenBabel::OBResidueIter *) 0 ;
   int arg2 ;
@@ -32128,7 +32359,25 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBResidueAtomIter_1good(JNIEnv *je
 }
 
 
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBResidueAtomIter_1inc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBResidueAtomIter_1inc_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBResidueAtomIter *arg1 = (OpenBabel::OBResidueAtomIter *) 0 ;
+  OpenBabel::OBResidueAtomIter *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBResidueAtomIter **)&jarg1; 
+  {
+    OpenBabel::OBResidueAtomIter &_result_ref = (arg1)->operator ++();
+    result = (OpenBabel::OBResidueAtomIter *) &_result_ref;
+  }
+  *(OpenBabel::OBResidueAtomIter **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBResidueAtomIter_1inc_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   OpenBabel::OBResidueAtomIter *arg1 = (OpenBabel::OBResidueAtomIter *) 0 ;
   int arg2 ;

@@ -32,16 +32,16 @@ public class vector3 {
     swigCPtr = 0;
   }
 
-  public vector3(double x, double y, double z) {
-    this(openbabelJNI.new_vector3__SWIG_0(x, y, z), true);
+  public vector3(double inX, double inY, double inZ) {
+    this(openbabelJNI.new_vector3__SWIG_0(inX, inY, inZ), true);
   }
 
-  public vector3(double x, double y) {
-    this(openbabelJNI.new_vector3__SWIG_1(x, y), true);
+  public vector3(double inX, double inY) {
+    this(openbabelJNI.new_vector3__SWIG_1(inX, inY), true);
   }
 
-  public vector3(double x) {
-    this(openbabelJNI.new_vector3__SWIG_2(x), true);
+  public vector3(double inX) {
+    this(openbabelJNI.new_vector3__SWIG_2(inX), true);
   }
 
   public vector3() {
@@ -52,32 +52,28 @@ public class vector3 {
     this(openbabelJNI.new_vector3__SWIG_4(vector3.getCPtr(v), v), true);
   }
 
-  public void Set(double x, double y, double z) {
-    openbabelJNI.vector3_Set__SWIG_0(swigCPtr, this, x, y, z);
+  public void Set(double inX, double inY, double inZ) {
+    openbabelJNI.vector3_Set__SWIG_0(swigCPtr, this, inX, inY, inZ);
   }
 
   public void Set(SWIGTYPE_p_double c) {
     openbabelJNI.vector3_Set__SWIG_1(swigCPtr, this, SWIGTYPE_p_double.getCPtr(c));
   }
 
-  public void SetX(double x) {
-    openbabelJNI.vector3_SetX(swigCPtr, this, x);
+  public void SetX(double inX) {
+    openbabelJNI.vector3_SetX(swigCPtr, this, inX);
   }
 
-  public void SetY(double y) {
-    openbabelJNI.vector3_SetY(swigCPtr, this, y);
+  public void SetY(double inY) {
+    openbabelJNI.vector3_SetY(swigCPtr, this, inY);
   }
 
-  public void SetZ(double z) {
-    openbabelJNI.vector3_SetZ(swigCPtr, this, z);
+  public void SetZ(double inZ) {
+    openbabelJNI.vector3_SetZ(swigCPtr, this, inZ);
   }
 
   public void Get(SWIGTYPE_p_double c) {
     openbabelJNI.vector3_Get(swigCPtr, this, SWIGTYPE_p_double.getCPtr(c));
-  }
-
-  public boolean IsApprox(vector3 arg0, double precision) {
-    return openbabelJNI.vector3_IsApprox(swigCPtr, this, vector3.getCPtr(arg0), arg0, precision);
   }
 
   public SWIGTYPE_p_double AsArray() {
@@ -101,24 +97,28 @@ public class vector3 {
     return openbabelJNI.vector3_CanBeNormalized(swigCPtr, this);
   }
 
-  public double length() {
-    return openbabelJNI.vector3_length(swigCPtr, this);
-  }
-
   public double length_2() {
     return openbabelJNI.vector3_length_2(swigCPtr, this);
   }
 
+  public double length() {
+    return openbabelJNI.vector3_length(swigCPtr, this);
+  }
+
   public double x() {
-    return openbabelJNI.vector3_x(swigCPtr, this);
+    return openbabelJNI.vector3_x__SWIG_0(swigCPtr, this);
   }
 
   public double y() {
-    return openbabelJNI.vector3_y(swigCPtr, this);
+    return openbabelJNI.vector3_y__SWIG_0(swigCPtr, this);
   }
 
   public double z() {
-    return openbabelJNI.vector3_z(swigCPtr, this);
+    return openbabelJNI.vector3_z__SWIG_0(swigCPtr, this);
+  }
+
+  public boolean IsApprox(vector3 other, double precision) {
+    return openbabelJNI.vector3_IsApprox(swigCPtr, this, vector3.getCPtr(other), other, precision);
   }
 
   public double distSq(vector3 vv) {

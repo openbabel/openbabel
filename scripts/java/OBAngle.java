@@ -44,8 +44,8 @@ public class OBAngle {
     return openbabelJNI.OBAngle_GetAngle(swigCPtr, this);
   }
 
-  public void SetAngle(double radians) {
-    openbabelJNI.OBAngle_SetAngle(swigCPtr, this, radians);
+  public void SetAngle(double angle) {
+    openbabelJNI.OBAngle_SetAngle(swigCPtr, this, angle);
   }
 
   public void SetAtoms(OBAtom vertex, OBAtom a, OBAtom b) {

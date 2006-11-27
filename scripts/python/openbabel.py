@@ -620,9 +620,6 @@ class OBRandom(object):
 OBRandom_swigregister = _openbabel.OBRandom_swigregister
 OBRandom_swigregister(OBRandom)
 
-PI = _openbabel.PI
-RAD_TO_DEG = _openbabel.RAD_TO_DEG
-DEG_TO_RAD = _openbabel.DEG_TO_RAD
 class vector3(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -633,7 +630,6 @@ class vector3(object):
     def SetY(*args): return _openbabel.vector3_SetY(*args)
     def SetZ(*args): return _openbabel.vector3_SetZ(*args)
     def Get(*args): return _openbabel.vector3_Get(*args)
-    def IsApprox(*args): return _openbabel.vector3_IsApprox(*args)
     def AsArray(*args): return _openbabel.vector3_AsArray(*args)
     def __iadd__(*args): return _openbabel.vector3___iadd__(*args)
     def __isub__(*args): return _openbabel.vector3___isub__(*args)
@@ -642,11 +638,14 @@ class vector3(object):
     def randomUnitVector(*args): return _openbabel.vector3_randomUnitVector(*args)
     def normalize(*args): return _openbabel.vector3_normalize(*args)
     def CanBeNormalized(*args): return _openbabel.vector3_CanBeNormalized(*args)
-    def length(*args): return _openbabel.vector3_length(*args)
     def length_2(*args): return _openbabel.vector3_length_2(*args)
+    def length(*args): return _openbabel.vector3_length(*args)
     def x(*args): return _openbabel.vector3_x(*args)
     def y(*args): return _openbabel.vector3_y(*args)
     def z(*args): return _openbabel.vector3_z(*args)
+    def __eq__(*args): return _openbabel.vector3___eq__(*args)
+    def __ne__(*args): return _openbabel.vector3___ne__(*args)
+    def IsApprox(*args): return _openbabel.vector3_IsApprox(*args)
     def distSq(*args): return _openbabel.vector3_distSq(*args)
     def createOrthoVector(*args): return _openbabel.vector3_createOrthoVector(*args)
     __swig_destroy__ = _openbabel.delete_vector3
@@ -654,6 +653,13 @@ class vector3(object):
 vector3_swigregister = _openbabel.vector3_swigregister
 vector3_swigregister(vector3)
 
+__lshift__ = _openbabel.__lshift__
+__add__ = _openbabel.__add__
+__div__ = _openbabel.__div__
+dot = _openbabel.dot
+cross = _openbabel.cross
+vectorAngle = _openbabel.vectorAngle
+CalcTorsionAngle = _openbabel.CalcTorsionAngle
 Point2Plane = _openbabel.Point2Plane
 Trim = _openbabel.Trim
 class OBGenericData(object):
@@ -670,6 +676,8 @@ class OBGenericData(object):
     def GetValue(*args): return _openbabel.OBGenericData_GetValue(*args)
 OBGenericData_swigregister = _openbabel.OBGenericData_swigregister
 OBGenericData_swigregister(OBGenericData)
+__sub__ = _openbabel.__sub__
+__mul__ = _openbabel.__mul__
 cvar = _openbabel.cvar
 VZero = cvar.VZero
 VX = cvar.VX
@@ -1161,6 +1169,7 @@ class OBConversion(object):
     def Write(*args): return _openbabel.OBConversion_Write(*args)
     def WriteString(*args): return _openbabel.OBConversion_WriteString(*args)
     def WriteFile(*args): return _openbabel.OBConversion_WriteFile(*args)
+    def CloseOutFile(*args): return _openbabel.OBConversion_CloseOutFile(*args)
     def Read(*args): return _openbabel.OBConversion_Read(*args)
     def ReadString(*args): return _openbabel.OBConversion_ReadString(*args)
     def ReadFile(*args): return _openbabel.OBConversion_ReadFile(*args)
@@ -1605,6 +1614,7 @@ class OBMol(OBBase):
     def DeleteBond(*args): return _openbabel.OBMol_DeleteBond(*args)
     def DeleteResidue(*args): return _openbabel.OBMol_DeleteResidue(*args)
     def NewAtom(*args): return _openbabel.OBMol_NewAtom(*args)
+    def NewBond(*args): return _openbabel.OBMol_NewBond(*args)
     def NewResidue(*args): return _openbabel.OBMol_NewResidue(*args)
     def BeginModify(*args): return _openbabel.OBMol_BeginModify(*args)
     def EndModify(*args): return _openbabel.OBMol_EndModify(*args)

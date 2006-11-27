@@ -48,8 +48,12 @@ public class OBResidueAtomIter {
     return openbabelJNI.OBResidueAtomIter_good(swigCPtr, this);
   }
 
+  public OBResidueAtomIter inc() {
+    return new OBResidueAtomIter(openbabelJNI.OBResidueAtomIter_inc__SWIG_0(swigCPtr, this), false);
+  }
+
   public OBResidueAtomIter inc(int arg0) {
-    return new OBResidueAtomIter(openbabelJNI.OBResidueAtomIter_inc(swigCPtr, this, arg0), true);
+    return new OBResidueAtomIter(openbabelJNI.OBResidueAtomIter_inc__SWIG_1(swigCPtr, this, arg0), true);
   }
 
   public OBAtom deref() {

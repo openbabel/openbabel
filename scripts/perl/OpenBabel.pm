@@ -50,6 +50,15 @@ package Chemistry::OpenBabel;
 *DoubleMultiply = *Chemistry::OpenBabelc::DoubleMultiply;
 *DoubleAdd = *Chemistry::OpenBabelc::DoubleAdd;
 *DoubleModulus = *Chemistry::OpenBabelc::DoubleModulus;
+*__lshift__ = *Chemistry::OpenBabelc::__lshift__;
+*__add__ = *Chemistry::OpenBabelc::__add__;
+*__sub__ = *Chemistry::OpenBabelc::__sub__;
+*__div__ = *Chemistry::OpenBabelc::__div__;
+*__mul__ = *Chemistry::OpenBabelc::__mul__;
+*dot = *Chemistry::OpenBabelc::dot;
+*cross = *Chemistry::OpenBabelc::cross;
+*vectorAngle = *Chemistry::OpenBabelc::vectorAngle;
+*CalcTorsionAngle = *Chemistry::OpenBabelc::CalcTorsionAngle;
 *Point2Plane = *Chemistry::OpenBabelc::Point2Plane;
 *Trim = *Chemistry::OpenBabelc::Trim;
 *tokenize = *Chemistry::OpenBabelc::tokenize;
@@ -896,6 +905,10 @@ sub ACQUIRE {
 ############# Class : Chemistry::OpenBabel::vector3 ##############
 
 package Chemistry::OpenBabel::vector3;
+use overload
+    "!=" => sub { $_[0]->__ne__($_[1])},
+    "==" => sub { $_[0]->__eq__($_[1])},
+    "fallback" => 1;
 use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( Chemistry::OpenBabel );
 %OWNER = ();
@@ -911,16 +924,18 @@ sub new {
 *SetY = *Chemistry::OpenBabelc::vector3_SetY;
 *SetZ = *Chemistry::OpenBabelc::vector3_SetZ;
 *Get = *Chemistry::OpenBabelc::vector3_Get;
-*IsApprox = *Chemistry::OpenBabelc::vector3_IsApprox;
 *AsArray = *Chemistry::OpenBabelc::vector3_AsArray;
 *randomUnitVector = *Chemistry::OpenBabelc::vector3_randomUnitVector;
 *normalize = *Chemistry::OpenBabelc::vector3_normalize;
 *CanBeNormalized = *Chemistry::OpenBabelc::vector3_CanBeNormalized;
-*length = *Chemistry::OpenBabelc::vector3_length;
 *length_2 = *Chemistry::OpenBabelc::vector3_length_2;
+*length = *Chemistry::OpenBabelc::vector3_length;
 *x = *Chemistry::OpenBabelc::vector3_x;
 *y = *Chemistry::OpenBabelc::vector3_y;
 *z = *Chemistry::OpenBabelc::vector3_z;
+*__eq__ = *Chemistry::OpenBabelc::vector3___eq__;
+*__ne__ = *Chemistry::OpenBabelc::vector3___ne__;
+*IsApprox = *Chemistry::OpenBabelc::vector3_IsApprox;
 *distSq = *Chemistry::OpenBabelc::vector3_distSq;
 *createOrthoVector = *Chemistry::OpenBabelc::vector3_createOrthoVector;
 sub DESTROY {
@@ -2021,6 +2036,7 @@ sub DESTROY {
 *Write = *Chemistry::OpenBabelc::OBConversion_Write;
 *WriteString = *Chemistry::OpenBabelc::OBConversion_WriteString;
 *WriteFile = *Chemistry::OpenBabelc::OBConversion_WriteFile;
+*CloseOutFile = *Chemistry::OpenBabelc::OBConversion_CloseOutFile;
 *Read = *Chemistry::OpenBabelc::OBConversion_Read;
 *ReadString = *Chemistry::OpenBabelc::OBConversion_ReadString;
 *ReadFile = *Chemistry::OpenBabelc::OBConversion_ReadFile;
@@ -2406,6 +2422,7 @@ sub DESTROY {
 *DeleteBond = *Chemistry::OpenBabelc::OBMol_DeleteBond;
 *DeleteResidue = *Chemistry::OpenBabelc::OBMol_DeleteResidue;
 *NewAtom = *Chemistry::OpenBabelc::OBMol_NewAtom;
+*NewBond = *Chemistry::OpenBabelc::OBMol_NewBond;
 *NewResidue = *Chemistry::OpenBabelc::OBMol_NewResidue;
 *BeginModify = *Chemistry::OpenBabelc::OBMol_BeginModify;
 *EndModify = *Chemistry::OpenBabelc::OBMol_EndModify;
@@ -3975,9 +3992,6 @@ sub ACQUIRE {
 package Chemistry::OpenBabel;
 
 *FILE_SEP_CHAR = *Chemistry::OpenBabelc::FILE_SEP_CHAR;
-*PI = *Chemistry::OpenBabelc::PI;
-*RAD_TO_DEG = *Chemistry::OpenBabelc::RAD_TO_DEG;
-*DEG_TO_RAD = *Chemistry::OpenBabelc::DEG_TO_RAD;
 
 my %__VZero_hash;
 tie %__VZero_hash,"Chemistry::OpenBabel::vector3", $Chemistry::OpenBabelc::VZero;

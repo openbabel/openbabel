@@ -48,8 +48,12 @@ public class OBAtomAtomIter {
     return openbabelJNI.OBAtomAtomIter_good(swigCPtr, this);
   }
 
+  public OBAtomAtomIter inc() {
+    return new OBAtomAtomIter(openbabelJNI.OBAtomAtomIter_inc__SWIG_0(swigCPtr, this), false);
+  }
+
   public OBAtomAtomIter inc(int arg0) {
-    return new OBAtomAtomIter(openbabelJNI.OBAtomAtomIter_inc(swigCPtr, this, arg0), true);
+    return new OBAtomAtomIter(openbabelJNI.OBAtomAtomIter_inc__SWIG_1(swigCPtr, this, arg0), true);
   }
 
   public OBAtom deref() {

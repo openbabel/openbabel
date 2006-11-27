@@ -24,6 +24,22 @@ public class openbabel implements openbabelConstants {
     return openbabelJNI.DoubleModulus(DoubleType.getCPtr(arg0), arg0, arg1);
   }
 
+  public static double dot(vector3 v1, vector3 v2) {
+    return openbabelJNI.dot(vector3.getCPtr(v1), v1, vector3.getCPtr(v2), v2);
+  }
+
+  public static vector3 cross(vector3 arg0, vector3 arg1) {
+    return new vector3(openbabelJNI.cross(vector3.getCPtr(arg0), arg0, vector3.getCPtr(arg1), arg1), true);
+  }
+
+  public static double vectorAngle(vector3 v1, vector3 v2) {
+    return openbabelJNI.vectorAngle(vector3.getCPtr(v1), v1, vector3.getCPtr(v2), v2);
+  }
+
+  public static double CalcTorsionAngle(vector3 a, vector3 b, vector3 c, vector3 d) {
+    return openbabelJNI.CalcTorsionAngle(vector3.getCPtr(a), a, vector3.getCPtr(b), b, vector3.getCPtr(c), c, vector3.getCPtr(d), d);
+  }
+
   public static double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d) {
     return openbabelJNI.Point2Plane(vector3.getCPtr(a), a, vector3.getCPtr(b), b, vector3.getCPtr(c), c, vector3.getCPtr(d), d);
   }

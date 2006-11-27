@@ -116,6 +116,11 @@ public class OBMol extends OBBase {
     return (cPtr == 0) ? null : new OBAtom(cPtr, false);
   }
 
+  public OBBond NewBond() {
+    long cPtr = openbabelJNI.OBMol_NewBond(swigCPtr, this);
+    return (cPtr == 0) ? null : new OBBond(cPtr, false);
+  }
+
   public OBResidue NewResidue() {
     long cPtr = openbabelJNI.OBMol_NewResidue(swigCPtr, this);
     return (cPtr == 0) ? null : new OBResidue(cPtr, false);

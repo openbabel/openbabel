@@ -48,8 +48,12 @@ public class OBResidueIter {
     return openbabelJNI.OBResidueIter_good(swigCPtr, this);
   }
 
+  public OBResidueIter inc() {
+    return new OBResidueIter(openbabelJNI.OBResidueIter_inc__SWIG_0(swigCPtr, this), false);
+  }
+
   public OBResidueIter inc(int arg0) {
-    return new OBResidueIter(openbabelJNI.OBResidueIter_inc(swigCPtr, this, arg0), true);
+    return new OBResidueIter(openbabelJNI.OBResidueIter_inc__SWIG_1(swigCPtr, this, arg0), true);
   }
 
   public OBResidue __deref__() {

@@ -60,6 +60,10 @@ public class OBTypeTable extends OBGlobalDataBase {
     return openbabelJNI.OBTypeTable_Translate__SWIG_1(swigCPtr, this, SWIGTYPE_p_std__string.getCPtr(to), from);
   }
 
+  public String Translate(String from) {
+    return openbabelJNI.OBTypeTable_Translate__SWIG_2(swigCPtr, this, from);
+  }
+
   public String GetFromType() {
     return openbabelJNI.OBTypeTable_GetFromType(swigCPtr, this);
   }
