@@ -70,7 +70,7 @@ bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     unsigned int i;
     char buffer[BUFF_SIZE];
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
 
     snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM2 parameters\n",mol.NumAtoms(),mol.GetTitle());
     ofs << buffer;

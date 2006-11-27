@@ -55,7 +55,7 @@ namespace OpenBabel
     avisit.Resize(NumAtoms()+1);
     cvisit.Resize(NumAtoms()+1);
     OBBond *bond;
-    std::vector<OBEdgeBase*>::iterator bi;
+    std::vector<OBBond*>::iterator bi;
     std::vector<int> electron;
     int sume, orden, bestatom;
     int bestorden = 99;
@@ -84,20 +84,20 @@ namespace OpenBabel
         expandcycle(atom, avisit);
         //store the atoms of the cycle(s)
         unsigned int j;
-        for(j=1; j<= NumAtoms(); j++) {
+        for(j=1; j<= NumAtoms(); ++j) {
           if ( avisit[j] ) {
             atom = GetAtom(j);
             cycle.push_back(atom);
           }
         }
         // At the begining each atom give one electron to the cycle
-        for(j=0; j< cycle.size(); j++) {
+        for(j=0; j< cycle.size(); ++j) {
           electron.push_back(1);
         }
       
         // remove one electron if the atom make a double bond out of the cycle
         sume =0;
-        for(j=0; j< cycle.size(); j++) {
+        for(j=0; j< cycle.size(); ++j) {
           atom = cycle[j];
           for(bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
             if ( bond->IsDouble() ) {
@@ -126,7 +126,7 @@ namespace OpenBabel
 
         // find the ideal number of electrons according to the huckel 4n+2 rule
         minde=99;
-        for (i=1; 1; i++) {
+        for (i=1; 1; ++i) {
           n = 4 *i +2;
           de = n - sume;
           if (  de < minde )
@@ -144,7 +144,7 @@ namespace OpenBabel
         //cout << "minde " << minde << endl;
         while ( minde != 0 ) {
           bestorden=99;
-          for(j=0; j< cycle.size(); j++) {
+          for(j=0; j< cycle.size(); ++j) {
             if (electron[j] == 1) {
               orden = getorden(cycle[j]);
               if (orden < bestorden) {
@@ -171,7 +171,7 @@ namespace OpenBabel
           int odd = sume % 2; 
           //cout << "odd:" << odd << endl;
           if(odd) { // odd number of electrons try to add an electron to the best possible atom
-            for(j=0; j< cycle.size(); j++) {
+            for(j=0; j< cycle.size(); ++j) {
               if (electron[j] == 1) {
                 orden = getorden(cycle[j]);
                 if (orden < bestorden) {
@@ -192,13 +192,13 @@ namespace OpenBabel
         }
       
         //cout << "minde after:" << minde <<endl;
-        //for(j=0; j < cycle.size(); j++) {
+        //for(j=0; j < cycle.size(); ++j) {
         //OBAtom *cycleAtom = cycle[j];
         //cout << "\t" << cycleAtom->GetIdx();
         //}
         //cout << endl;
 
-        //	for(j=0; j < electron.size(); j++) {
+        //	for(j=0; j < electron.size(); ++j) {
         //	cout << "\t" << electron[j];
         //	}
         //	cout << endl;
@@ -207,7 +207,7 @@ namespace OpenBabel
         start_kekulize(cycle,electron);
 
         // Set the kekulized cycle(s) as visited
-        for(j=1; j<= NumAtoms(); j++) {
+        for(j=1; j<= NumAtoms(); ++j) {
           if (avisit[j])
             cvisit.SetBitOn(j);
         }
@@ -250,20 +250,20 @@ namespace OpenBabel
 
     //init the atom arrays
     unsigned i;
-    for(i=0;i <NumAtoms()+1; i++) {
+    for(i=0;i <NumAtoms()+1; ++i) {
       initState.push_back(-1);
       currentState.push_back(-1);
       mark.push_back(false);
     }
   
     //init the bond arrays with single bonds
-    for(i=0;i <NumBonds(); i++) {
+    for(i=0;i <NumBonds(); ++i) {
       binitState.push_back(SINGLE);
       bcurrentState.push_back(SINGLE);
     }
   
     //set the electron number
-    for(i=0; i< cycle.size(); i++) {
+    for(i=0; i< cycle.size(); ++i) {
       atom = cycle[i];
       Idx =  atom->GetIdx();
       if ( electron[i] == 1)
@@ -274,11 +274,11 @@ namespace OpenBabel
       currentState[Idx] = initState[Idx];
     }
 
-    std::vector<OBEdgeBase*>::iterator b;
+    std::vector<OBBond*>::iterator b;
     OBAtom *nbr;
   
     bool second_pass=false;
-    // for( i=1; i<= NumAtoms(); i++) {
+    // for( i=1; i<= NumAtoms(); ++i) {
     //     if(currentState[i] == 1) { // the atom can make a double bond
     //       atom = GetAtom(i);
     //       //find a neighbour that can make a double bond
@@ -302,7 +302,7 @@ namespace OpenBabel
       expand_kekulize(atom,nbr,currentState,initState, bcurrentState,binitState, mark) ; 
       //Control that all the electron have been given to the cycle(s)
       expand_successful = true;
-      for(unsigned i=0; i< cycle.size(); i++) {
+      for(unsigned i=0; i< cycle.size(); ++i) {
         atom2 = cycle[i];
         Idx =  atom2->GetIdx();
         //cout << "\t" << currentState[Idx];
@@ -314,11 +314,11 @@ namespace OpenBabel
         break;
       else {
         unsigned i;
-        for(i=0;i <NumAtoms()+1; i++) {
+        for(i=0;i <NumAtoms()+1; ++i) {
           currentState[i]=initState[i];
           mark[i]=false;
         }
-        for(i=0;i <NumBonds(); i++) {
+        for(i=0;i <NumBonds(); ++i) {
           bcurrentState[i]=binitState[i];
         }   
       }
@@ -332,7 +332,7 @@ namespace OpenBabel
 
     // Set the double bonds
     // std::cout << "Set double bonds\n";
-    for(i=0;i <NumBonds(); i++) {
+    for(i=0;i <NumBonds(); ++i) {
       bond = GetBond(i);    
       // std::cout << "bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";
       if (bond->GetBO()==5 && bcurrentState[i] == DOUBLE) {
@@ -364,7 +364,7 @@ namespace OpenBabel
     int done;
     int Idx1=atom1->GetIdx(), Idx2=atom2->GetIdx();
     OBBond *bond;
-    std::vector<OBEdgeBase*>::iterator i;
+    std::vector<OBBond*>::iterator i;
     OBAtom *nbr;
     int natom;
 
@@ -414,11 +414,11 @@ namespace OpenBabel
     }
 
     //int c;
-    //for(c=1; c < currentState.size(); c++) {
+    //for(c=1; c < currentState.size(); ++c) {
     //cout << c << "\t";
     //}
     //cout << endl;
-    //for(c=1; c < currentState.size(); c++) { 
+    //for(c=1; c < currentState.size(); ++c) { 
     //cout << currentState[c] << "\t";
     //}   
     //cout << endl;
@@ -541,7 +541,7 @@ namespace OpenBabel
   {
     OBAtom *nbr;
     //  OBBond *bond;
-    std::vector<OBEdgeBase*>::iterator i;
+    std::vector<OBBond*>::iterator i;
     int natom;
     //for each neighbour atom test if it is in the aromatic ring
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))

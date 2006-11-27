@@ -441,7 +441,7 @@ Write Options, e.g. -x3\n \
         ofs << buff << endl;
 
         OBAtom *atom;
-        vector<OBNodeBase*>::iterator i;
+        vector<OBAtom*>::iterator i;
         int charge;
         for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
           switch (atom->GetFormalCharge()) {
@@ -467,7 +467,7 @@ Write Options, e.g. -x3\n \
         //so the bonds come out sorted
         OBAtom *nbr;
         OBBond *bond;
-        vector<OBEdgeBase*>::iterator j;
+        vector<OBBond*>::iterator j;
         for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
           for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
             if (atom->GetIdx() < nbr->GetIdx()) {
@@ -748,7 +748,7 @@ Write Options, e.g. -x3\n \
     ofs << "M  V30 BEGIN ATOM" <<endl;
     OBAtom *atom;
     int index=1;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {  
         ofs     << "M  V30 "
@@ -776,7 +776,7 @@ Write Options, e.g. -x3\n \
                 OBAtom *nbr;
                 int Hid = (mol.NumAtoms()+1) ;// max Atom ID +1 
                 vector<unsigned int> nbr_atms;
-                vector<OBEdgeBase*>::iterator i;
+                vector<OBBond*>::iterator i;
                 for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
                   {
                     if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
@@ -822,7 +822,7 @@ Write Options, e.g. -x3\n \
     index=1;
     OBAtom *nbr;
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))

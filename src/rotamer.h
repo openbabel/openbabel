@@ -23,12 +23,6 @@ GNU General Public License for more details.
 #include <vector>
 #include <map>
 
-#if HAVE_FSTREAM
-#include <fstream>
-#elif HAVE_FSTREAM_H
-#include <fstream.h>
-#endif
-
 #include "mol.h"
 #include "rotor.h"
 #include "generic.h"
@@ -86,7 +80,7 @@ public:
     //! Add a rotamer to the list based on the supplied coordinate set packed
     void AddRotamer(int *arr);
     void AddRotamer(unsigned char *arr);
-    void AddRotamers(unsigned char*,int);
+    void AddRotamers(unsigned char *arr,int);
     void GetReferenceArray(unsigned char*) const;
     std::vector<unsigned char*>::iterator BeginRotamer()
     {

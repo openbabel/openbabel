@@ -71,11 +71,11 @@ OBGenericData* OBRotamerList::Clone(OBBase* newparent) const
 	vector<double*> bc;
 	double *c=NULL;
 	double *cc=NULL;
-	for (k=0 ; k<NumBaseCoordinateSets() ; k++)
+	for (k=0 ; k<NumBaseCoordinateSets() ; ++k)
 	{
 			c = new double [3*NumAtoms()];
 			cc = GetBaseCoordinateSet(k);
-			for (l=0 ; l<3*NumAtoms() ; l++)
+			for (l=0 ; l<3*NumAtoms() ; ++l)
 					c[l] = cc[l];
 			bc.push_back(c);
 	}
@@ -97,7 +97,7 @@ OBGenericData* OBRotamerList::Clone(OBBase* newparent) const
 	{
 			vector<unsigned char*>::const_iterator kk;
 			unsigned int idx=0;
-			for (kk = _vrotamer.begin();kk != _vrotamer.end();kk++)
+			for (kk = _vrotamer.begin();kk != _vrotamer.end();++kk)
 			{
 					memcpy(&rotamers[idx],(const unsigned char*)*kk,sizeof(unsigned char)*(NumRotors()+1));
 					idx += sizeof(unsigned char)*(NumRotors()+1);
@@ -111,16 +111,16 @@ OBGenericData* OBRotamerList::Clone(OBBase* newparent) const
 OBRotamerList::~OBRotamerList()
 {
     vector<unsigned char*>::iterator i;
-    for (i = _vrotamer.begin();i != _vrotamer.end();i++)
+    for (i = _vrotamer.begin();i != _vrotamer.end();++i)
         delete [] *i;
 
     vector<pair<OBAtom**,vector<int> > >::iterator j;
-    for (j = _vrotor.begin();j != _vrotor.end();j++)
+    for (j = _vrotor.begin();j != _vrotor.end();++j)
         delete [] j->first;
 
     //Delete the interal base coordinate list
     unsigned int k;
-    for (k=0 ; k<_c.size() ; k++)
+    for (k=0 ; k<_c.size() ; ++k)
         delete [] _c[k];
 }
 
@@ -128,7 +128,7 @@ void OBRotamerList::GetReferenceArray(unsigned char *ref)const
 {
     int j;
 		vector<pair<OBAtom**,vector<int> > >::const_iterator i;
-    for (j=0,i = _vrotor.begin();i != _vrotor.end();i++)
+    for (j=0,i = _vrotor.begin();i != _vrotor.end();++i)
     {
         ref[j++] = (unsigned char)(i->first[0])->GetIdx();
         ref[j++] = (unsigned char)(i->first[1])->GetIdx();
@@ -142,12 +142,12 @@ void OBRotamerList::Setup(OBMol &mol,OBRotorList &rl)
     //clear the old stuff out if necessary
     _vres.clear();
     vector<unsigned char*>::iterator j;
-    for (j = _vrotamer.begin();j != _vrotamer.end();j++)
+    for (j = _vrotamer.begin();j != _vrotamer.end();++j)
         delete [] *j;
     _vrotamer.clear();
 
     vector<pair<OBAtom**,vector<int> > >::iterator k;
-    for (k = _vrotor.begin();k != _vrotor.end();k++)
+    for (k = _vrotor.begin();k != _vrotor.end();++k)
         delete [] k->first;
     _vrotor.clear();
 
@@ -173,8 +173,8 @@ void OBRotamerList::Setup(OBMol &mol,OBRotorList &rl)
 
     vector<double>::iterator n;
     vector<vector<double> >::iterator m;
-    for (m = _vres.begin();m != _vres.end();m++)
-        for (n = m->begin();n != m->end();n++)
+    for (m = _vres.begin();m != _vres.end();++m)
+        for (n = m->begin();n != m->end();++n)
             *n *= RAD_TO_DEG;
 }
 
@@ -183,12 +183,12 @@ void OBRotamerList::Setup(OBMol &mol,unsigned char *ref,int nrotors)
     //clear the old stuff out if necessary
     _vres.clear();
     vector<unsigned char*>::iterator j;
-    for (j = _vrotamer.begin();j != _vrotamer.end();j++)
+    for (j = _vrotamer.begin();j != _vrotamer.end();++j)
         delete [] *j;
     _vrotamer.clear();
 
     vector<pair<OBAtom**,vector<int> > >::iterator k;
-    for (k = _vrotor.begin();k != _vrotor.end();k++)
+    for (k = _vrotor.begin();k != _vrotor.end();++k)
         delete [] k->first;
     _vrotor.clear();
 
@@ -198,7 +198,7 @@ void OBRotamerList::Setup(OBMol &mol,unsigned char *ref,int nrotors)
 
     int refatoms[4];
     OBAtom **atomlist;
-    for (i = 0; i < nrotors; i++)
+    for (i = 0; i < nrotors; ++i)
     {
         atomlist = new OBAtom* [4];
         refatoms[0] = (int)ref[i*4  ];
@@ -225,7 +225,7 @@ void OBRotamerList::AddRotamer(double *c)
     rot[0] = (char) 0;
 
     vector<pair<OBAtom**,vector<int> > >::iterator i;
-    for (size=1,i = _vrotor.begin();i != _vrotor.end();i++,size++)
+    for (size=1,i = _vrotor.begin();i != _vrotor.end();++i,++size)
     {
         idx = (i->first[0])->GetCIdx();
         v1.Set(c[idx],c[idx+1],c[idx+2]);
@@ -255,7 +255,7 @@ void OBRotamerList::AddRotamer(int *arr)
     unsigned char *rot = new unsigned char [_vrotor.size()+1];
     rot[0] = (unsigned char)arr[0];
 
-    for (i = 0;i < _vrotor.size();i++)
+    for (i = 0;i < _vrotor.size();++i)
     {
         angle = _vres[i][arr[i+1]];
         while (angle < 0.0f)
@@ -275,7 +275,7 @@ void OBRotamerList::AddRotamer(unsigned char *arr)
     unsigned char *rot = new unsigned char [_vrotor.size()+1];
     rot[0] = (unsigned char)arr[0];
 
-    for (i = 0;i < _vrotor.size();i++)
+    for (i = 0;i < _vrotor.size();++i)
     {
         angle = _vres[i][(int)arr[i+1]];
         while (angle < 0.0f)
@@ -293,7 +293,7 @@ void OBRotamerList::AddRotamers(unsigned char *arr,int nrotamers)
     int i;
 
     size = (unsigned int)_vrotor.size()+1;
-    for (i = 0;i < nrotamers;i++)
+    for (i = 0;i < nrotamers;++i)
     {
         unsigned char *rot = new unsigned char [size];
         memcpy(rot,&arr[i*size],sizeof(char)*size);
@@ -309,13 +309,13 @@ void OBRotamerList::ExpandConformerList(OBMol &mol,vector<double*> &clist)
     vector<double*> tmpclist;
     vector<unsigned char*>::iterator i;
 
-    for (i = _vrotamer.begin();i != _vrotamer.end();i++)
+    for (i = _vrotamer.begin();i != _vrotamer.end();++i)
     {
         conf = *i;
         double *c = new double [mol.NumAtoms()*3];
         memcpy(c,clist[(int)conf[0]],sizeof(double)*mol.NumAtoms()*3);
 
-        for (j = 0;j < _vrotor.size();j++)
+        for (j = 0;j < _vrotor.size();++j)
         {
             angle = invres*((double)conf[j+1]);
             if (angle > 180.0)
@@ -327,7 +327,7 @@ void OBRotamerList::ExpandConformerList(OBMol &mol,vector<double*> &clist)
 
     //transfer the conf list
     vector<double*>::iterator k;
-    for (k = clist.begin();k != clist.end();k++)
+    for (k = clist.begin();k != clist.end();++k)
         delete [] *k;
     clist = tmpclist;
 }
@@ -341,13 +341,13 @@ vector<double*> OBRotamerList::CreateConformerList(OBMol& mol)
     vector<double*> tmpclist;
     vector<unsigned char*>::iterator i;
 
-    for (i = _vrotamer.begin();i != _vrotamer.end();i++)
+    for (i = _vrotamer.begin();i != _vrotamer.end();++i)
     {
         conf = *i;
         double *c = new double [mol.NumAtoms()*3];
         memcpy(c,_c[(int)conf[0]],sizeof(double)*mol.NumAtoms()*3);
 
-        for (j = 0;j < _vrotor.size();j++)
+        for (j = 0;j < _vrotor.size();++j)
         {
             angle = invres*((double)conf[j+1]);
             if (angle > 180.0)
@@ -366,18 +366,18 @@ void OBRotamerList::SetBaseCoordinateSets(vector<double*> bc, unsigned int N)
     unsigned int i,j;
 
     //Clear out old data
-    for (i=0 ; i<_c.size() ; i++)
+    for (i=0 ; i<_c.size() ; ++i)
         delete [] _c[i];
     _c.clear();
 
     //Copy new data
     double *c = NULL;
     double *cc= NULL;
-    for (i=0 ; i<bc.size() ; i++)
+    for (i=0 ; i<bc.size() ; ++i)
     {
         c = new double [3*N];
         cc = bc[i];
-        for (j=0 ; j<3*N ; j++)
+        for (j=0 ; j<3*N ; ++j)
             c[j] = cc[j];
         _c.push_back(c);
     }
@@ -451,7 +451,7 @@ void SetRotorToAngle(double *c, OBAtom **ref,double ang,vector<int> atoms)
   //
   tx = c[tor[1]];ty = c[tor[1]+1];tz = c[tor[1]+2];
   vector<int>::iterator i;int j;
-  for (i = atoms.begin();i != atoms.end();i++)
+  for (i = atoms.begin();i != atoms.end();++i)
     {
       j = ((*i)-1)*3;
       c[j] -= tx;c[j+1] -= ty;c[j+2]-= tz;

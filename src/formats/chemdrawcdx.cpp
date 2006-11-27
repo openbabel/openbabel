@@ -300,7 +300,7 @@ namespace OpenBabel
     //        printf("\"%08X\"  = %d\n", im->first, im->second);
     //
     //    OBAtom *atom;
-    //    vector<OBNodeBase*>::iterator i;
+    //    vector<OBAtom*>::iterator i;
     //
     //    for(atom = pmol->BeginAtom(i);atom;atom = pmol->NextAtom(i))
     //    {
@@ -312,7 +312,7 @@ namespace OpenBabel
     //    }
     //
     //    OBBond *bond;
-    //    vector<OBEdgeBase*>::iterator j;
+    //    vector<OBBond*>::iterator j;
     //
     //    for(bond = pmol->BeginBond(j);bond;bond = pmol->NextBond(j))
     //    {

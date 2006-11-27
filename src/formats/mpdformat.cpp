@@ -231,7 +231,7 @@ namespace OpenBabel
         ofs << str << SEP_2;
         }
     }
-    vector<OBNodeBase*>::iterator i; // iterate over all atoms
+    vector<OBAtom*>::iterator i; // iterate over all atoms
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         src = atom->GetType();
@@ -244,7 +244,7 @@ namespace OpenBabel
         if(xml_true==true){ ofs << "<atom type=\"" << otyp << "\">";}
         else ofs << otyp << SEP_0;
         
-        vector<OBEdgeBase*>::iterator j; // iterate over its neighbours
+        vector<OBBond*>::iterator j; // iterate over its neighbours
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
           {
             src = nbr->GetType();
@@ -255,7 +255,7 @@ namespace OpenBabel
             //  else {otyp=MyType(str);}
             layer[0][otyp]=layer[0][otyp]+1;
           
-            vector<OBEdgeBase*>::iterator k; // iterate again over neighbours
+            vector<OBBond*>::iterator k; // iterate again over neighbours
             for (nbr2 = nbr->BeginNbrAtom(k);nbr2;nbr2 = nbr->NextNbrAtom(k))
               {
                 if (nbr2->GetIdx()==orig) continue;

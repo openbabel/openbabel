@@ -140,8 +140,8 @@ namespace OpenBabel
     ofs << buffer << endl;
 
     OBAtom *atom,*nbr;
-    vector<OBNodeBase*>::iterator i;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBAtom*>::iterator i;
+    vector<OBBond*>::iterator j;
 
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {

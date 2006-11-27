@@ -48,183 +48,183 @@ using namespace OpenBabel;
 int main(int argc,char **argv)
 {
 
-    char *program_name=NULL;
-    float res=255.0f/360.0f; // constant to convert degree to unsigned char
-    unsigned char tor[4]= {0,0,0,0};// atoms of the tortional in the molecule
-    unsigned int smartor[4]= {0,0,0,0};// atoms of the tortional in the SMART
-    float angle =   0;      // tortional angle value to set in degree
-    int nrotamers = 1;
-    int nrotors   = 1;
-    unsigned char ang_array[2] = {0,0}; // coordinate set of reference and
-    //tortional angle
-    char *FileIn =NULL, *Pattern=NULL;
-    unsigned int i, t, errflg = 0;
-    int c;
-    string err;
+  char *program_name=NULL;
+  float res=255.0f/360.0f; // constant to convert degree to unsigned char
+  unsigned char tor[4]= {0,0,0,0};// atoms of the tortional in the molecule
+  unsigned int smartor[4]= {0,0,0,0};// atoms of the tortional in the SMART
+  float angle =   0;      // tortional angle value to set in degree
+  int nrotamers = 1;
+  int nrotors   = 1;
+  unsigned char ang_array[2] = {0,0}; // coordinate set of reference and
+  //tortional angle
+  char *FileIn =NULL, *Pattern=NULL;
+  unsigned int i, t, errflg = 0;
+  int c;
+  string err;
 
-    program_name= argv[0];
-    // parse the command line
-    if (argc!=8)
+  program_name= argv[0];
+  // parse the command line
+  if (argc!=8)
     {
-        errflg++;
+      errflg++;
     }
-    else
+  else
     {
-        FileIn = argv[2];
-        Pattern = argv[1];
-        // Read the atom position
-        for(i=3, t=0; i<7; i++, t++)
+      FileIn = argv[2];
+      Pattern = argv[1];
+      // Read the atom position
+      for(i=3, t=0; i<7; ++i, ++t)
         {
-            c = sscanf(argv[i], "%u", &smartor[t]);
-            if (c != 1)
+          c = sscanf(argv[i], "%u", &smartor[t]);
+          if (c != 1)
             {
-                break;
-                errflg++;
+              break;
+              errflg++;
             }
         }
-        c = sscanf(argv[7], "%f", &angle);
+      c = sscanf(argv[7], "%f", &angle);
     }
 
-    if (errflg)
+  if (errflg)
     {
-        err = "Usage: ";
-        err += program_name;
-        err += " \"PATTERN\" <filename> <atom1> <atom2> <atom3> <atom4> <angle> \n";
-        ThrowError(err);
-        exit(-1);
+      err = "Usage: ";
+      err += program_name;
+      err += " \"PATTERN\" <filename> <atom1> <atom2> <atom3> <atom4> <angle> \n";
+      ThrowError(err);
+      exit(-1);
     }
 
 
-    // create pattern
-    OBSmartsPattern sp;
-    sp.Init(Pattern);
-    if (sp.NumAtoms() < 4)
+  // create pattern
+  OBSmartsPattern sp;
+  sp.Init(Pattern);
+  if (sp.NumAtoms() < 4)
     {
-        err = program_name;
-        err += ": the number of atoms in the SMART pattern must be higher than 3\n";
-        ThrowError(err);
-        exit(-1);
+      err = program_name;
+      err += ": the number of atoms in the SMART pattern must be higher than 3\n";
+      ThrowError(err);
+      exit(-1);
     }
 
-    // Check the tortional atoms
-    // actually the atom can be bonded but not written consecutively in the SMART
-    // but this is the simplest way to ensure bonding
-    if( (smartor[1] +1) != smartor[2] )
+  // Check the tortional atoms
+  // actually the atom can be bonded but not written consecutively in the SMART
+  // but this is the simplest way to ensure bonding
+  if( (smartor[1] +1) != smartor[2] )
     {
-        err = program_name;
-        err += ": the atoms of the rotating bond must be bonded\n";
-        ThrowError(err);
-        exit(-1);
+      err = program_name;
+      err += ": the atoms of the rotating bond must be bonded\n";
+      ThrowError(err);
+      exit(-1);
     }
-    for (i=0; i<4; i++)
+  for (i=0; i<4; ++i)
     {
-        if ( smartor[i] < 1 || smartor[i] > sp.NumAtoms())
+      if ( smartor[i] < 1 || smartor[i] > sp.NumAtoms())
         {
-            cerr << program_name
-            << ": The tortional atom values must be between 1 and "
-            <<  sp.NumAtoms()
-            << ", which is the number of atoms in the SMART pattern.\n";
-            exit(-1);
+          cerr << program_name
+               << ": The tortional atom values must be between 1 and "
+               <<  sp.NumAtoms()
+               << ", which is the number of atoms in the SMART pattern.\n";
+          exit(-1);
         }
     }
 
-    // set the angle array
-    ang_array[0] = 0;
-    while (angle < 0.0f)
-        angle += 360.0f;
-    while (angle > 360.0f)
-        angle -= 360.0f;
-    ang_array[1] = (unsigned char)rint(angle*res);
+  // set the angle array
+  ang_array[0] = 0;
+  while (angle < 0.0f)
+    angle += 360.0f;
+  while (angle > 360.0f)
+    angle -= 360.0f;
+  ang_array[1] = (unsigned char)rint(angle*res);
 
-    // Find Input filetype
-    /*NF
-      if (extab.CanReadExtension(FileIn))
-        inFileType = extab.FilenameToType(FileIn);
-      else
-        {
-          cerr << program_name << ": cannot read input format!" << endl;
-          exit (-1);
-        }
-      if (extab.CanWriteExtension(FileIn))
-        outFileType = extab.FilenameToType(FileIn);
-      else
-       {
-          cerr << program_name << ": cannot write input format!" << endl;
-          exit (-1);
-        }
-    */
-    OBConversion conv; //NF...
-    OBFormat* format = conv.FormatFromExt(FileIn);
-    if(!(format &&	conv.SetInAndOutFormats(format,format))) //in and out formats same
+  // Find Input filetype
+  /*NF
+    if (extab.CanReadExtension(FileIn))
+    inFileType = extab.FilenameToType(FileIn);
+    else
     {
-        cerr << program_name << ": cannot read and/or write this file format!" << endl;
-        exit (-1);
+    cerr << program_name << ": cannot read input format!" << endl;
+    exit (-1);
+    }
+    if (extab.CanWriteExtension(FileIn))
+    outFileType = extab.FilenameToType(FileIn);
+    else
+    {
+    cerr << program_name << ": cannot write input format!" << endl;
+    exit (-1);
+    }
+  */
+  OBConversion conv; //NF...
+  OBFormat* format = conv.FormatFromExt(FileIn);
+  if(!(format &&	conv.SetInAndOutFormats(format,format))) //in and out formats same
+    {
+      cerr << program_name << ": cannot read and/or write this file format!" << endl;
+      exit (-1);
     } //...NF
 
-    //Open the molecule file
-    ifstream ifs;
+  //Open the molecule file
+  ifstream ifs;
 
-    // Read the file
-    ifs.open(FileIn);
-    if (!ifs)
+  // Read the file
+  ifs.open(FileIn);
+  if (!ifs)
     {
-        cerr << program_name << ": cannot read input file!" << endl;
-        exit (-1);
+      cerr << program_name << ": cannot read input file!" << endl;
+      exit (-1);
     }
 
 
 
-    //NF OBMol mol(inFileType,outFileType);
-    OBMol mol; //NF
-    OBRotamerList rlist;
-    vector< vector <int> > maplist;      // list of matched atoms
-    vector< vector <int> >::iterator m;  // and its iterators
-    int tindex;
+  //NF OBMol mol(inFileType,outFileType);
+  OBMol mol; //NF
+  OBRotamerList rlist;
+  vector< vector <int> > maplist;      // list of matched atoms
+  vector< vector <int> >::iterator m;  // and its iterators
+  int tindex;
 
-    // Set the angles
-    for (;;)
+  // Set the angles
+  for (;;)
     {
-        mol.Clear();
-        //NF      ifs >> mol;                   // Read molecule
-        conv.Read(&mol,&ifs); //NF
-        if (mol.Empty())
-            break;
+      mol.Clear();
+      //NF      ifs >> mol;                   // Read molecule
+      conv.Read(&mol,&ifs); //NF
+      if (mol.Empty())
+        break;
 
-        if (sp.Match(mol))
+      if (sp.Match(mol))
         {          // if match perform rotation
 
-            maplist = sp.GetUMapList(); // get unique matches
+          maplist = sp.GetUMapList(); // get unique matches
 
-            // look at all the mapping atom but save only the last one.
-            for (m = maplist.begin(); m != maplist.end(); m++)
+          // look at all the mapping atom but save only the last one.
+          for (m = maplist.begin(); m != maplist.end(); ++m)
             {
-                for (i=0; i<4 ; i++)
+              for (i=0; i<4 ; ++i)
                 {
-                    tindex = (int) smartor[i] - 1; // get the tortional atom number
-                    tor[i] = (unsigned char) (*m)[tindex];   // save it
+                  tindex = (int) smartor[i] - 1; // get the tortional atom number
+                  tor[i] = (unsigned char) (*m)[tindex];   // save it
                 }
             }
 
-            // Set the coordinates of references for rotation
-            rlist.SetBaseCoordinateSets(mol);
+          // Set the coordinates of references for rotation
+          rlist.SetBaseCoordinateSets(mol);
 
-            // Set the atoms to rotate
-            rlist.Setup(mol,tor,nrotors);
+          // Set the atoms to rotate
+          rlist.Setup(mol,tor,nrotors);
 
-            // Set the tortional angle value
-            rlist.AddRotamers(ang_array,nrotamers);
+          // Set the tortional angle value
+          rlist.AddRotamers(ang_array,nrotamers);
 
-            // Rotate and save the conformers
-            rlist.ExpandConformerList(mol,mol.GetConformers());
+          // Rotate and save the conformers
+          rlist.ExpandConformerList(mol,mol.GetConformers());
 
-            //change the molecule conformation
-            mol.SetConformer(0);
+          //change the molecule conformation
+          mol.SetConformer(0);
         }
-        //NF      cout << mol;
-        conv.Write(&mol,&cout); //NF
+      //NF      cout << mol;
+      conv.Write(&mol,&cout); //NF
     }
 
-    return(0);
+  return(0);
 }
 
 

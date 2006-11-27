@@ -84,7 +84,7 @@ int main(int argc,char *argv[])
 
   const char* p;
   int arg;
-  for (arg = 1; arg < argc; arg++)
+  for (arg = 1; arg < argc; ++arg)
     {
       if (argv[arg])
         {
@@ -276,7 +276,7 @@ int main(int argc,char *argv[])
   vector<string> tempFileList(FileList);
   FileList.clear();
   vector<string>::iterator itr;
-  for(itr=tempFileList.begin();itr!=tempFileList.end();itr++)
+  for(itr=tempFileList.begin();itr!=tempFileList.end();++itr)
     DLHandler::findFiles (FileList, *itr);
 #endif
   

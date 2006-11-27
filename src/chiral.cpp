@@ -41,7 +41,7 @@ namespace OpenBabel
     //do quick test to see if there are any possible chiral centers
     bool mayHaveChiralCenter=false;
     OBAtom *atom,*nbr;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3)
         {
@@ -53,7 +53,7 @@ namespace OpenBabel
       return;
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     for (bond = BeginBond(j);bond;bond = NextBond(j))
       if (bond->IsWedge() || bond->IsHash())
         (bond->GetBeginAtom())->SetChiral();
@@ -72,7 +72,7 @@ namespace OpenBabel
 
           for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
             {
-              for (k = tlist.begin();k != tlist.end();k++)
+              for (k = tlist.begin();k != tlist.end();++k)
                 if (vgid[nbr->GetIdx()-1] == *k)
                   ischiral = false;
 
@@ -95,7 +95,7 @@ namespace OpenBabel
     fill(chirality.begin(),chirality.end(),0);
 
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       if (atom->IsChiral())
         {
@@ -127,9 +127,9 @@ namespace OpenBabel
   {
     if(pref.size()!=4)return(-1); // should be given a vector of size 4.
     int parity=0;
-    for (int i=0;i<3;i++) // do the bubble sort this many times
+    for (int i=0;i<3;++i) // do the bubble sort this many times
       {
-        for(int j=0;j<3;j++) // iterate across the array 4th element has no
+        for(int j=0;j<3;++j) // iterate across the array 4th element has no
           {                    // right hand neighbour so no need to sort
             if (pref[j+1] < pref[j]) // compare the two neighbors
               {  
@@ -164,7 +164,7 @@ namespace OpenBabel
        OBAtom *nbr;
        int Hid=1000;// max Atom ID +1 should be used here
        vector<int> nbr_atms;
-       vector<OBEdgeBase*>::iterator i;
+       vector<OBBond*>::iterator i;
        for (nbr = atm->BeginNbrAtom(i);nbr;nbr = atm->NextNbrAtom(i))
        {
        if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
@@ -173,7 +173,7 @@ namespace OpenBabel
        sort(nbr_atms.begin(),nbr_atms.end());
        nbr_atms.push_back(Hid);
        int tmp[4];
-       for(int i=0;i<4;i++){tmp[i]=nbr_atms[i];}
+       for(int i=0;i<4;++i){tmp[i]=nbr_atms[i];}
        parityO=GetParity4Ref(tmp);    
        } 
        else if (atm->GetHvyValence()==4)
@@ -216,7 +216,7 @@ namespace OpenBabel
         is2D = true;
         OBAtom *nbr;
         OBBond *bond;
-        vector<OBEdgeBase*>::iterator i;
+        vector<OBBond*>::iterator i;
         for (bond = atm->BeginBond(i);bond;bond = atm->NextBond(i))
           {
             nbr = bond->GetEndAtom();
@@ -257,14 +257,14 @@ namespace OpenBabel
     // Create a vector with the coordinates of the neighbor atoms
     // Also make a vector with Atom IDs
     OBAtom *nbr;
-    vector<OBEdgeBase*>::iterator bint;
+    vector<OBBond*>::iterator bint;
     for (nbr = atm->BeginNbrAtom(bint);nbr;nbr = atm->NextNbrAtom(bint))
       {
         nbr_atms.push_back(nbr->GetIdx());
       }
     // sort the neighbor atoms to insure a consistent ordering
     sort(nbr_atms.begin(),nbr_atms.end());
-    for (unsigned int i = 0; i < nbr_atms.size(); i++)
+    for (unsigned int i = 0; i < nbr_atms.size(); ++i)
       {
         OBAtom *tmp_atm = mol.GetAtom(nbr_atms[i]);
         nbr_crds.push_back(tmp_atm->GetVector());
@@ -278,7 +278,7 @@ namespace OpenBabel
     nbr_crds.push_back(tmp_crd);
     }
     */
-    for(int j=0;j < nbr_crds.size();j++) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
+    for(int j=0;j < nbr_crds.size();++j) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
       {
         // are the coordinates zero to 6 or more significant figures
         if (nbr_crds[j].IsApprox(VZero, 1.0e-6) && use_central_atom==false)
@@ -309,7 +309,7 @@ namespace OpenBabel
       {
         vector3 v;
         OBAtom *atom;
-        vector<OBNodeBase*>::iterator k;
+        vector<OBAtom*>::iterator k;
         for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
           {
             v = atom->GetVector();
@@ -351,7 +351,7 @@ namespace OpenBabel
     mult_matrix(h,g,c);
     pot.resize(mol.NumAtoms()+1);
 
-    for (unsigned int i = 0; i < mol.NumAtoms();i++)
+    for (unsigned int i = 0; i < mol.NumAtoms();++i)
       pot[i+1] = h[i][0];
   }
 
@@ -364,14 +364,14 @@ namespace OpenBabel
     unsigned int i,j;
 
     OBAtom *atm1,*atm2;
-    vector<OBNodeBase*>::iterator aint,bint;
+    vector<OBAtom*>::iterator aint,bint;
 
     m.resize(mol.NumAtoms());
-    for (i = 0; i < m.size(); i++)
+    for (i = 0; i < m.size(); ++i)
       m[i].resize(mol.NumAtoms());
 
-    for (atm1 = mol.BeginAtom(aint),i=0;atm1;atm1 = mol.NextAtom(aint),i++)
-      for (atm2 = mol.BeginAtom(bint),j=0;atm2;atm2 = mol.NextAtom(bint),j++)
+    for (atm1 = mol.BeginAtom(aint),i=0;atm1;atm1 = mol.NextAtom(aint),++i)
+      for (atm2 = mol.BeginAtom(bint),j=0;atm2;atm2 = mol.NextAtom(bint),++j)
         {
           if (i == j)
             {
@@ -395,12 +395,12 @@ namespace OpenBabel
   {
     unsigned int i;
     OBAtom *atm1;
-    vector<OBNodeBase*>::iterator aint;
+    vector<OBAtom*>::iterator aint;
 
     m.resize(mol.NumAtoms());
-    for (i = 0; i < m.size(); i++)
+    for (i = 0; i < m.size(); ++i)
       m[i].resize(1);
-    for (atm1 = mol.BeginAtom(aint),i=0;atm1;atm1 = mol.NextAtom(aint),i++)
+    for (atm1 = mol.BeginAtom(aint),i=0;atm1;atm1 = mol.NextAtom(aint),++i)
       {
         m[i][0] = atm1->GetValence();
       }

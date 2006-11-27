@@ -103,7 +103,7 @@ namespace OpenBabel
       //! Inverts every bit in the vector
       void Negate()
         {
-          for (int i= 0; i != _size; i++)
+          for (int i= 0; i != _size; ++i)
             {
               _set[i] = ~_set[i];
             }

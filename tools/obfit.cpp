@@ -51,288 +51,288 @@ vector3 mass_c( vector<int> &aindex, OBMol &mol);
 int main(int argc,char **argv)
 {
 
-    int errflg=0;
-    char *FileRef=NULL, *FileMove=NULL, *Pattern=NULL;
-    string err;
-    char *program_name=argv[0];
+  int errflg=0;
+  char *FileRef=NULL, *FileMove=NULL, *Pattern=NULL;
+  string err;
+  char *program_name=argv[0];
 
-    // parse the command line
-    if (argc!=4)
+  // parse the command line
+  if (argc!=4)
     {
-        errflg++;
+      errflg++;
     }
-    else
+  else
     {
-        FileRef = argv[2];
-        FileMove = argv[3];
-        Pattern = argv[1];
-    }
-
-    if (errflg)
-    {
-        err = "Usage: ";
-        err += program_name;
-        err += " \"PATTERN\" <fixed_structure> <moving_structures>\n";
-        ThrowError(err);
-        exit(-1);
+      FileRef = argv[2];
+      FileMove = argv[3];
+      Pattern = argv[1];
     }
 
-
-    // create the pattern
-    OBSmartsPattern sp;
-    if (!sp.Init(Pattern))
+  if (errflg)
     {
-        err = program_name;
-        err += ": Unable to read the SMART: ";
-        err += Pattern;
-        ThrowError(err);
-        exit(-1);
+      err = "Usage: ";
+      err += program_name;
+      err += " \"PATTERN\" <fixed_structure> <moving_structures>\n";
+      ThrowError(err);
+      exit(-1);
     }
 
-    // Find Input filetypes
-    OBConversion conv;
-    OBFormat *refFormat = conv.FormatFromExt(FileRef);
-    if (!refFormat || !conv.SetInAndOutFormats(refFormat,refFormat))
+
+  // create the pattern
+  OBSmartsPattern sp;
+  if (!sp.Init(Pattern))
     {
-        cerr << program_name << ": cannot read fixed molecule format!" << endl;
-        exit (-1);
+      err = program_name;
+      err += ": Unable to read the SMART: ";
+      err += Pattern;
+      ThrowError(err);
+      exit(-1);
     }
 
-    OBFormat *moveFormat = conv.FormatFromExt(FileMove);
-    if (!moveFormat || !conv.SetInAndOutFormats(moveFormat,moveFormat))
+  // Find Input filetypes
+  OBConversion conv;
+  OBFormat *refFormat = conv.FormatFromExt(FileRef);
+  if (!refFormat || !conv.SetInAndOutFormats(refFormat,refFormat))
     {
-        cerr << program_name << ": cannot read moving molecule(s) format!" << endl;
-        exit (-1);
+      cerr << program_name << ": cannot read fixed molecule format!" << endl;
+      exit (-1);
     }
 
-    conv.SetInAndOutFormats(refFormat,moveFormat);
-
-    ifstream ifsref;
-    OBMol molref;
-    vector< vector <int> > maplist;      // list of matched atoms
-    vector< vector <int> >::iterator i;  // and its iterators
-    vector< int >::iterator j;
-    vector <int> refatoms;
-
-    //Read the reference structure
-    ifsref.open(FileRef);
-    if (!ifsref)
+  OBFormat *moveFormat = conv.FormatFromExt(FileMove);
+  if (!moveFormat || !conv.SetInAndOutFormats(moveFormat,moveFormat))
     {
-        cerr << program_name << ": cannot read fixed molecule file: "
-        << FileRef << endl;
-        exit (-1);
+      cerr << program_name << ": cannot read moving molecule(s) format!" << endl;
+      exit (-1);
     }
 
-    molref.Clear();
-    conv.Read(&molref,&ifsref);
+  conv.SetInAndOutFormats(refFormat,moveFormat);
 
-    // and check if the SMART match
-    sp.Match(molref);
-    maplist = sp.GetUMapList(); // get unique matches
-    if (maplist.empty())
+  ifstream ifsref;
+  OBMol molref;
+  vector< vector <int> > maplist;      // list of matched atoms
+  vector< vector <int> >::iterator i;  // and its iterators
+  vector< int >::iterator j;
+  vector <int> refatoms;
+
+  //Read the reference structure
+  ifsref.open(FileRef);
+  if (!ifsref)
     {
-        err = program_name;
-        err += ": Unable to map SMART: ";
-        err += Pattern;
-        err += " in reference molecule: ";
-        err += FileRef;
-        ThrowError(err);
-        exit(-1);
+      cerr << program_name << ": cannot read fixed molecule file: "
+           << FileRef << endl;
+      exit (-1);
     }
 
-    // Find the matching atoms
-    for (i = maplist.begin(); i != maplist.end(); i++)
+  molref.Clear();
+  conv.Read(&molref,&ifsref);
+
+  // and check if the SMART match
+  sp.Match(molref);
+  maplist = sp.GetUMapList(); // get unique matches
+  if (maplist.empty())
     {
-        refatoms.clear(); // Save only the last set of atoms
-        for(j= (*i).begin(); j != (*i).end(); j++)
+      err = program_name;
+      err += ": Unable to map SMART: ";
+      err += Pattern;
+      err += " in reference molecule: ";
+      err += FileRef;
+      ThrowError(err);
+      exit(-1);
+    }
+
+  // Find the matching atoms
+  for (i = maplist.begin(); i != maplist.end(); ++i)
+    {
+      refatoms.clear(); // Save only the last set of atoms
+      for(j= (*i).begin(); j != (*i).end(); ++j)
         {
-            refatoms.push_back(*j);
+          refatoms.push_back(*j);
         }
     }
 
-    // set the translation vector
-    vector3 tvref(0,0,0);
-    OBAtom *atom;
-    unsigned int c;
+  // set the translation vector
+  vector3 tvref(0,0,0);
+  OBAtom *atom;
+  unsigned int c;
 
-    tvref = mass_c(refatoms, molref);
-    // center the molecule
-    molref.Translate(-tvref);
+  tvref = mass_c(refatoms, molref);
+  // center the molecule
+  molref.Translate(-tvref);
 
-    //get the coordinates of the SMART atoms
-    double *refcoor = new double[refatoms.size()*3];
+  //get the coordinates of the SMART atoms
+  double *refcoor = new double[refatoms.size()*3];
 
-    for(c=0; c<refatoms.size(); c++)
+  for(c=0; c<refatoms.size(); ++c)
     {
-        atom = molref.GetAtom(refatoms[c]);
-        refcoor[c*3] = atom->x();
-        refcoor[c*3+1] = atom->y();
-        refcoor[c*3+2] = atom->z();
+      atom = molref.GetAtom(refatoms[c]);
+      refcoor[c*3] = atom->x();
+      refcoor[c*3+1] = atom->y();
+      refcoor[c*3+2] = atom->z();
     }
 
-    conv.SetInAndOutFormats(moveFormat,moveFormat);
+  conv.SetInAndOutFormats(moveFormat,moveFormat);
 
-    ifstream ifsmv;
-    OBMol molmv;
-    vector <int> mvatoms;
-    vector3 tvmv;
-    unsigned int size=0;
-    double rmatrix[3][3];
+  ifstream ifsmv;
+  OBMol molmv;
+  vector <int> mvatoms;
+  vector3 tvmv;
+  unsigned int size=0;
+  double rmatrix[3][3];
 
-    //Read the moving structures
-    ifsmv.open(FileMove);
-    if (!ifsmv)
+  //Read the moving structures
+  ifsmv.open(FileMove);
+  if (!ifsmv)
     {
-        cerr << program_name << ": cannot read file: "
-        << FileMove << endl;
-        exit (-1);
+      cerr << program_name << ": cannot read file: "
+           << FileMove << endl;
+      exit (-1);
     }
 
-    for (;;)
+  for (;;)
     {
-        molmv.Clear();
-        conv.Read(&molmv,&ifsmv);                   // Read molecule
-        if (molmv.Empty())
-            break;
+      molmv.Clear();
+      conv.Read(&molmv,&ifsmv);                   // Read molecule
+      if (molmv.Empty())
+        break;
 
-        if (sp.Match(molmv))          // if match perform rotation
+      if (sp.Match(molmv))          // if match perform rotation
         {
 
-            maplist = sp.GetMapList(); // get all matches
+          maplist = sp.GetMapList(); // get all matches
 
-            // Find the matching atoms
+          // Find the matching atoms
 	    
-	    // Looping over all matches to find best match
-	    double rmsd;
-	    double best_rmsd = 999.999;
-	    vector <int> best_mvatoms;
+          // Looping over all matches to find best match
+          double rmsd;
+          double best_rmsd = 999.999;
+          vector <int> best_mvatoms;
 
-            for (i = maplist.begin(); i != maplist.end(); i++)
+          for (i = maplist.begin(); i != maplist.end(); ++i)
             {
-                mvatoms.clear(); // Save only the last set of atoms
-                for(j= (*i).begin(); j != (*i).end(); j++)
+              mvatoms.clear(); // Save only the last set of atoms
+              for(j= (*i).begin(); j != (*i).end(); ++j)
                 {
-                    mvatoms.push_back(*j);
+                  mvatoms.push_back(*j);
                 }
 
-		tvmv = mass_c(mvatoms, molmv);
-		// center the molecule
-		molmv.Translate(-tvmv);
+              tvmv = mass_c(mvatoms, molmv);
+              // center the molecule
+              molmv.Translate(-tvmv);
 
-		//Find the rotation matrix
-		size = mvatoms.size();
-		if (size != refatoms.size())
-		  {
-		    err = program_name;
-		    err += ": Error: not the same number of SMART atoms";
-		    ThrowError(err);
-		    exit(-1);
-		  }
+              //Find the rotation matrix
+              size = mvatoms.size();
+              if (size != refatoms.size())
+                {
+                  err = program_name;
+                  err += ": Error: not the same number of SMART atoms";
+                  ThrowError(err);
+                  exit(-1);
+                }
 
-		double *mvcoor = new double[size*3];
+              double *mvcoor = new double[size*3];
 
-		for(c=0; c < size; c++)
-		  {
-		    atom = molmv.GetAtom(mvatoms[c]);
-		    mvcoor[c*3] = atom->x();
-		    mvcoor[c*3+1] = atom->y();
-		    mvcoor[c*3+2] = atom->z();
-		  }
+              for(c=0; c < size; ++c)
+                {
+                  atom = molmv.GetAtom(mvatoms[c]);
+                  mvcoor[c*3] = atom->x();
+                  mvcoor[c*3+1] = atom->y();
+                  mvcoor[c*3+2] = atom->z();
+                }
 
-		// quaternion fit
-		qtrfit(refcoor, mvcoor, size, rmatrix);
+              // quaternion fit
+              qtrfit(refcoor, mvcoor, size, rmatrix);
 
-		//rotate all the atoms
-		molmv.Rotate(rmatrix);
+              //rotate all the atoms
+              molmv.Rotate(rmatrix);
 
-		// update mvcoor after rotation
-		for(c=0; c < size; c++)
-		  {
-		    atom = molmv.GetAtom(mvatoms[c]);
-		    mvcoor[c*3] = atom->x();
-		    mvcoor[c*3+1] = atom->y();
-		    mvcoor[c*3+2] = atom->z();
-		  }
+              // update mvcoor after rotation
+              for(c=0; c < size; ++c)
+                {
+                  atom = molmv.GetAtom(mvatoms[c]);
+                  mvcoor[c*3] = atom->x();
+                  mvcoor[c*3+1] = atom->y();
+                  mvcoor[c*3+2] = atom->z();
+                }
 
-		rmsd = calc_rms(refcoor,mvcoor,size);
-		if ( rmsd < best_rmsd )
-		  {
-		    best_rmsd = rmsd;
-		    best_mvatoms.clear();
-		    best_mvatoms.resize(mvatoms.size());
-		    best_mvatoms = mvatoms;
-		  }
+              rmsd = calc_rms(refcoor,mvcoor,size);
+              if ( rmsd < best_rmsd )
+                {
+                  best_rmsd = rmsd;
+                  best_mvatoms.clear();
+                  best_mvatoms.resize(mvatoms.size());
+                  best_mvatoms = mvatoms;
+                }
                  
-		delete[] mvcoor;
-	    } // loop through matches
+              delete[] mvcoor;
+            } // loop through matches
  
-	    // Refit molecule using best match
-	    mvatoms.clear();
-	    mvatoms.resize(best_mvatoms.size());
-	    mvatoms = best_mvatoms;
+          // Refit molecule using best match
+          mvatoms.clear();
+          mvatoms.resize(best_mvatoms.size());
+          mvatoms = best_mvatoms;
 
-	    tvmv = mass_c(mvatoms, molmv);
-	    // center the molecule
-	    molmv.Translate(-tvmv);
+          tvmv = mass_c(mvatoms, molmv);
+          // center the molecule
+          molmv.Translate(-tvmv);
 
-	    //Find the rotation matrix
-	    size = mvatoms.size();
-	    if (size != refatoms.size())
-	      {
-		err = program_name;
-		err += ": Error: not the same number of SMART atoms";
-		ThrowError(err);
-		exit(-1);
-	      }
+          //Find the rotation matrix
+          size = mvatoms.size();
+          if (size != refatoms.size())
+            {
+              err = program_name;
+              err += ": Error: not the same number of SMART atoms";
+              ThrowError(err);
+              exit(-1);
+            }
 
-	    double *mvcoor = new double[size*3];
-            for(c=0; c<size; c++)
-	      {
-		atom = molmv.GetAtom(mvatoms[c]);
-		mvcoor[c*3] = atom->x();
-		mvcoor[c*3+1] = atom->y();
-		mvcoor[c*3+2] = atom->z();
-	      }
+          double *mvcoor = new double[size*3];
+          for(c=0; c<size; ++c)
+            {
+              atom = molmv.GetAtom(mvatoms[c]);
+              mvcoor[c*3] = atom->x();
+              mvcoor[c*3+1] = atom->y();
+              mvcoor[c*3+2] = atom->z();
+            }
 
-	    // quaternion fit
-	    qtrfit(refcoor, mvcoor, size, rmatrix);
+          // quaternion fit
+          qtrfit(refcoor, mvcoor, size, rmatrix);
 
-	    //rotate all the atoms
-	    molmv.Rotate(rmatrix);
+          //rotate all the atoms
+          molmv.Rotate(rmatrix);
 
-	    for(c=0; c<size; c++)
-	      {
-		atom = molmv.GetAtom(mvatoms[c]);
-		mvcoor[c*3] = atom->x();
-		mvcoor[c*3+1] = atom->y();
-		mvcoor[c*3+2] = atom->z();
-	      }
+          for(c=0; c<size; ++c)
+            {
+              atom = molmv.GetAtom(mvatoms[c]);
+              mvcoor[c*3] = atom->x();
+              mvcoor[c*3+1] = atom->y();
+              mvcoor[c*3+2] = atom->z();
+            }
 	    
-	    rmsd = calc_rms(refcoor,mvcoor,size);
+          rmsd = calc_rms(refcoor,mvcoor,size);
 
-	    char rmsd_string[80];
-	    sprintf(rmsd_string,"%f", best_rmsd);
+          char rmsd_string[80];
+          sprintf(rmsd_string,"%f", best_rmsd);
   
-	    OBCommentData *cd = new OBCommentData;
-	    molmv.SetData(cd);
+          OBCommentData *cd = new OBCommentData;
+          molmv.SetData(cd);
   
-	    OBPairData *dp = new OBPairData;
-	    string field_name = "RMSD";
+          OBPairData *dp = new OBPairData;
+          string field_name = "RMSD";
 	    
-	    dp->SetAttribute(field_name);
-	    dp->SetValue(rmsd_string);
-	    molmv.SetData(dp);
+          dp->SetAttribute(field_name);
+          dp->SetValue(rmsd_string);
+          molmv.SetData(dp);
 
-            //translate the rotated molecule
-            molmv.Translate(tvref);
+          //translate the rotated molecule
+          molmv.Translate(tvref);
 
-	    delete[] mvcoor;
+          delete[] mvcoor;
         }
-        conv.Write(&molmv,&cout);
+      conv.Write(&molmv,&cout);
     }
 
-    delete[] refcoor;
-    return(0);
+  delete[] refcoor;
+  return(0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -343,7 +343,7 @@ vector3 mass_c( vector<int> &aindex, OBMol &mol)
     vector< int >::iterator j;
     OBAtom *atom;
 
-    for(j= aindex.begin(); j != aindex.end(); j++)
+    for(j= aindex.begin(); j != aindex.end(); ++j)
     {
         atom = mol.GetAtom(*j);
         center += atom->GetVector();

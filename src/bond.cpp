@@ -57,7 +57,7 @@ OBBond::~OBBond()
 /*  if (!_vdata.empty())
     {
         vector<OBGenericData*>::iterator m;
-        for (m = _vdata.begin();m != _vdata.end();m++)
+        for (m = _vdata.begin();m != _vdata.end();++m)
             delete *m;
         _vdata.clear();
     }
@@ -165,7 +165,7 @@ bool OBBond::IsAmide()
         return(false);
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
         if (bond->IsCarbonyl())
             return(true);
@@ -196,7 +196,7 @@ bool OBBond::IsPrimaryAmide()
         return(false);
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
         if (bond->IsCarbonyl())
             if (a2->GetHvyValence() == 2)
@@ -234,7 +234,7 @@ bool OBBond::IsEster()
         return(false);
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
         if (bond->IsCarbonyl())
             return(true);
@@ -325,7 +325,7 @@ bool OBBond::IsDoubleBondGeometry()
 {
   double torsion;
   OBAtom *nbrStart,*nbrEnd;
-  vector<OBEdgeBase*>::iterator i,j;
+  vector<OBBond*>::iterator i,j;
   // We concentrate on sp2 atoms with valence up to 3 and ignore the rest (like sp1 or S,P)
   // As this is called from PerceiveBondOrders, GetHyb() may still be undefined.
   if (_bgn->GetHyb()==1 || _bgn->GetValence()>3||
@@ -441,9 +441,9 @@ bool OBBond::IsClosure()
     OBBond *bond;
     OBAtom *atom,*nbr;
     OBBitVec uatoms,ubonds;
-    vector<OBNodeBase*> curr,next;
-    vector<OBNodeBase*>::iterator i;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBAtom*> curr,next;
+    vector<OBAtom*>::iterator i;
+    vector<OBBond*>::iterator j;
 
     uatoms.Resize(mol->NumAtoms()+1);
     ubonds.Resize(mol->NumAtoms()+1);
@@ -461,7 +461,7 @@ bool OBBond::IsClosure()
 
         for (;!curr.empty();)
         {
-            for (i = curr.begin();i != curr.end();i++)
+            for (i = curr.begin();i != curr.end();++i)
                 for (nbr = ((OBAtom*)*i)->BeginNbrAtom(j);nbr;nbr = ((OBAtom*)*i)->NextNbrAtom(j))
                     if (!uatoms[nbr->GetIdx()])
                     {
@@ -528,7 +528,7 @@ bool OBBond::HasData(string &s)
 
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
         if ((*i)->GetAttribute() == s)
             return(true);
 
@@ -543,7 +543,7 @@ bool OBBond::HasData(const char *s)
 
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
         if ((*i)->GetAttribute() == s)
             return(true);
 
@@ -558,7 +558,7 @@ bool OBBond::HasData(unsigned int dt)
 
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
         if ((*i)->GetDataType() == dt)
             return(true);
 
@@ -570,7 +570,7 @@ OBGenericData *OBBond::GetData(string &s)
 {
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
         if ((*i)->GetAttribute() == s)
             return(*i);
 
@@ -582,7 +582,7 @@ OBGenericData *OBBond::GetData(const char *s)
 {
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
         if ((*i)->GetAttribute() == s)
             return(*i);
 
@@ -592,7 +592,7 @@ OBGenericData *OBBond::GetData(const char *s)
 OBGenericData *OBBond::GetData(unsigned int dt)
 {
     vector<OBGenericData*>::iterator i;
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
         if ((*i)->GetDataType() == dt)
             return(*i);
     return(NULL);
@@ -602,7 +602,7 @@ void OBBond::DeleteData(unsigned int dt)
 {
     vector<OBGenericData*> vdata;
     vector<OBGenericData*>::iterator i;
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
         if ((*i)->GetDataType() == dt)
             delete *i;
         else
@@ -616,10 +616,10 @@ void OBBond::DeleteData(vector<OBGenericData*> &vg)
     vector<OBGenericData*>::iterator i,j;
 
     bool del;
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
     {
         del = false;
-        for (j = vg.begin();j != vg.end();j++)
+        for (j = vg.begin();j != vg.end();++j)
             if (*i == *j)
             {
                 del = true;
@@ -636,7 +636,7 @@ void OBBond::DeleteData(vector<OBGenericData*> &vg)
 void OBBond::DeleteData(OBGenericData *gd)
 {
     vector<OBGenericData*>::iterator i;
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
         if (*i == gd)
         {
             delete *i;

@@ -68,7 +68,7 @@ bool ZINDOFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     char buffer[BUFF_SIZE];
     int orbitals, valenceE = 0;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     OBAtom *atom;
     bool charged = false;
 

@@ -135,7 +135,7 @@ namespace OpenBabel
     ofs << mol.GetTitle() << endl;
 
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         snprintf(buffer, BUFF_SIZE, "%-3s %8.5f  %8.5f  %8.5f ",

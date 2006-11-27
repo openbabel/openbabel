@@ -122,7 +122,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     OBResidue *res;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {

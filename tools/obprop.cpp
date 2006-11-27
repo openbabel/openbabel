@@ -43,77 +43,77 @@ int nrings(OBMol &mol);
 
 int main(int argc,char **argv)
 {
-    char *program_name= argv[0];
-    int c;
-    char *FileIn = NULL;
+  char *program_name= argv[0];
+  int c;
+  char *FileIn = NULL;
 
-    if (argc != 2)
+  if (argc != 2)
     {
-        string err = "Usage: ";
-        err += program_name;
-        err += " <filename>\n";
-        err += "Output format:\n";
-        err += "name NAME\n";
-        err += "mol_weight MOLECULAR_WEIGHT\n";
-        err += "num_rings NUMBER_OF_RING_(SSSR)\n";
-        err += "$$$$";
-        ThrowError(err);
-        exit(-1);
+      string err = "Usage: ";
+      err += program_name;
+      err += " <filename>\n";
+      err += "Output format:\n";
+      err += "name NAME\n";
+      err += "mol_weight MOLECULAR_WEIGHT\n";
+      err += "num_rings NUMBER_OF_RING_(SSSR)\n";
+      err += "$$$$";
+      ThrowError(err);
+      exit(-1);
     }
-    else
+  else
     {
-        FileIn  = argv[1];
+      FileIn  = argv[1];
     }
 
-    // Find Input filetype
-    OBConversion conv;
-    OBFormat *format = conv.FormatFromExt(FileIn);
+  // Find Input filetype
+  OBConversion conv;
+  OBFormat *format = conv.FormatFromExt(FileIn);
     
-    if (!format || !conv.SetInAndOutFormats(format, format))
+  if (!format || !conv.SetInAndOutFormats(format, format))
     {
-        cerr << program_name << ": cannot read input format!" << endl;
-        exit (-1);
+      cerr << program_name << ": cannot read input format!" << endl;
+      exit (-1);
     }
 
-    ifstream ifs;
+  ifstream ifs;
 
-    // Read the file
-    ifs.open(FileIn);
-    if (!ifs)
+  // Read the file
+  ifs.open(FileIn);
+  if (!ifs)
     {
-        cerr << program_name << ": cannot read input file!" << endl;
-        exit (-1);
+      cerr << program_name << ": cannot read input file!" << endl;
+      exit (-1);
     }
-
-    OBMol mol;
-
-
-    ////////////////////////////////////////////////////////////////////////////
-    // List of properties
-    // Name
-    // Molecular weight (Standard molar mass given by IUPAC atomic masses)
-    // Number of rings : the size of the smallest set of smallest rings (SSSR)
-
-    //.....ADD YOURS HERE.....
-
-    for (c=0;;)
+  
+  OBMol mol;
+  
+  
+  ////////////////////////////////////////////////////////////////////////////
+  // List of properties
+  // Name
+  // Molecular weight (Standard molar mass given by IUPAC atomic masses)
+  // Number of rings : the size of the smallest set of smallest rings (SSSR)
+  
+  //.....ADD YOURS HERE.....
+  
+  for (c=0;;)
     {
-        mol.Clear();
-	conv.Read(&mol, &ifs);
-        if (mol.Empty())
-            break;
-        // Print the properties
-        // The name should be enough self explaining
-        some_tests(mol);
+      mol.Clear();
+      conv.Read(&mol, &ifs);
+      if (mol.Empty())
+        break;
+      // Print the properties
+      // The name should be enough self explaining
+      some_tests(mol);
         
-        cout << "name " << mol.GetTitle() << endl;
-        cout << "mol_weight "<< mol.GetMolWt() << endl;
-        cout << "num_rings " << nrings(mol) << endl;
-        cout << "$$$$" << endl; // SDF like end of compound descriptor list
-
+      cout << "name " << mol.GetTitle() << endl;
+      cout << "mol_weight "<< mol.GetMolWt() << endl;
+      cout << "num_rings " << nrings(mol) << endl;
+      cout << "$$$$" << endl; // SDF like end of compound descriptor list
+      
     } // end for loop
-
-    return(1);
+  
+  return(1);
 }
 
 
@@ -122,29 +122,29 @@ int main(int argc,char **argv)
 //! \brief Return the number of size of the set of smallest rings (SSSR)
 int nrings(OBMol &mol)
 {
-    int nr;
-    vector<OBRing*> vr;
-
-    vr = mol.GetSSSR();
-    nr = vr.size();
-    return (nr);
+  int nr;
+  vector<OBRing*> vr;
+  
+  vr = mol.GetSSSR();
+  nr = vr.size();
+  return (nr);
 }
 
 void some_tests(OBMol &mol)
 {
-    for ( OBResidueIterator residue = mol.BeginResidues();
-                            residue != mol.EndResidues(); ++residue )
+  for ( OBResidueIterator residue = mol.BeginResidues();
+        residue != mol.EndResidues(); ++residue )
     {
-        std::cout << "residue named: " 
-                  << (*residue)->GetName() << " has atoms\n";
-        for ( OBAtomIterator atom = (*residue)->BeginAtoms();
+      std::cout << "residue named: " 
+                << (*residue)->GetName() << " has atoms\n";
+      for ( OBAtomIterator atom = (*residue)->BeginAtoms();
                              atom != (*residue)->EndAtoms(); ++atom )
         {
-            std::cout << (*atom)->GetIdx() << "\n";
+          std::cout << (*atom)->GetIdx() << "\n";
         }
     }
-    for ( OBBondIterator bond = mol.BeginBonds();
-                         bond != mol.EndBonds(); ++bond )
+  for ( OBBondIterator bond = mol.BeginBonds();
+        bond != mol.EndBonds(); ++bond )
     {
         std::cout << "bond: ";
         std::cout << (*bond)->GetIdx() << " connects (";

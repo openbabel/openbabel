@@ -168,7 +168,7 @@ namespace OpenBabel
     mol.EndModify();
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator bi;
+    vector<OBBond*>::iterator bi;
     for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
       if (bond->GetBO() == 5 && !bond->IsInRing())
         bond->SetBO(1);
@@ -204,8 +204,8 @@ namespace OpenBabel
     int type,k;
     OBAtom *atom,*nbr;
     string from,to;
-    vector<OBNodeBase*>::iterator i;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBAtom*>::iterator i;
+    vector<OBBond*>::iterator j;
     ttab.SetFromType("INT");
     ttab.SetToType("MMD");
 

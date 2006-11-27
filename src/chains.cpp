@@ -1006,7 +1006,7 @@ namespace OpenBabel
   bool OBChainsParser::DetermineHetAtoms(OBMol &mol)
   {
     OBAtom *atom;
-    vector<OBNodeBase *>::iterator a;
+    vector<OBAtom *>::iterator a;
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
       if (!atom->IsHydrogen() && atom->GetValence() == 0)
         {
@@ -1036,7 +1036,7 @@ namespace OpenBabel
     numAtoms = mol.NumAtoms();
 
     OBAtom *atom;
-    vector<OBNodeBase *>::iterator a;
+    vector<OBAtom *>::iterator a;
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
       {
         idx = atom->GetIdx() - 1;
@@ -1050,7 +1050,7 @@ namespace OpenBabel
                 else
                   resid = 2; /* LIG */
 
-                for (i = 0 ; i < numAtoms ; i++)
+                for (i = 0 ; i < numAtoms ; ++i)
                   {
                     if (chains[i] == ('A' + count))
                       {
@@ -1077,7 +1077,7 @@ namespace OpenBabel
   int OBChainsParser::RecurseChain(OBMol &mol, int i, int c)
   {
     OBAtom *atom, *nbr;
-    vector<OBEdgeBase *>::iterator b;
+    vector<OBBond *>::iterator b;
     int result, index;
 
     atom      = mol.GetAtom(i+1);
@@ -1127,7 +1127,7 @@ namespace OpenBabel
     /* Carbonyl Double Bond */
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator b;
+    vector<OBBond*>::iterator b;
     for (bond = mol.BeginBond(b) ; bond ; bond = mol.NextBond(b))
       {
         if ((atomids[bond->GetBeginAtomIdx()-1] == 2 && atomids[bond->GetEndAtomIdx()-1] == 3) ||
@@ -1148,8 +1148,8 @@ namespace OpenBabel
     int  count;
     int  i,idx;
 
-    vector<OBNodeBase *>::iterator a;
-    vector<OBEdgeBase *>::iterator b;
+    vector<OBAtom *>::iterator a;
+    vector<OBBond *>::iterator b;
 
     /* First Pass */
 
@@ -1281,7 +1281,7 @@ namespace OpenBabel
     int count;
     int j,k,idx;
 
-    vector<OBEdgeBase *>::iterator b;
+    vector<OBBond *>::iterator b;
 
     /* Determine Neighbours */
 
@@ -1394,7 +1394,7 @@ namespace OpenBabel
     int resid;
     int max = mol.NumAtoms();
 
-    for (int i = 0 ; i < max ; i++)
+    for (int i = 0 ; i < max ; ++i)
       if (atomids[i] == AI_CA)
         {
           resid = IdentifyResidue(PDecisionTree, mol, i, resnos[i]);
@@ -1408,7 +1408,7 @@ namespace OpenBabel
   {
     int max = mol.NumAtoms();
 
-    for (int j = 0 ; j < max ; j++)
+    for (int j = 0 ; j < max ; ++j)
       if ((resnos[j] == r) && (chains[j] == c) && !hetflags[j])
         resids[j] = i;
   }
@@ -1434,7 +1434,7 @@ namespace OpenBabel
     BondCount = 0;
 
     OBAtom *atom, *nbr;
-    vector<OBEdgeBase *>::iterator b;
+    vector<OBBond *>::iterator b;
 
     while( ptr )
       switch(ptr->type)
@@ -1570,7 +1570,7 @@ namespace OpenBabel
     int j,k;
 
     OBAtom *atom, *nbr;
-    vector<OBEdgeBase *>::iterator b;
+    vector<OBBond *>::iterator b;
 
     count = 0;
     atom  = mol.GetAtom(i + 1);
@@ -1727,8 +1727,8 @@ namespace OpenBabel
 
     /* First Pass */
 
-    vector<OBNodeBase*>::iterator a;
-    vector<OBEdgeBase*>::iterator b;
+    vector<OBAtom*>::iterator a;
+    vector<OBBond*>::iterator b;
 
     for(atom = mol.BeginAtom(a); atom ; atom = mol.NextAtom(a))
       if(atom->IsHydrogen())

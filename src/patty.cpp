@@ -54,7 +54,7 @@ namespace OpenBabel
     p.read_rules(p);
     vector<string> type;
     p.assign_types(mol,type);
-    for (int i = 1;i <= mol.NumAtoms();i++)
+    for (int i = 1;i <= mol.NumAtoms();++i)
     cout << "atom number " << i << " was given a type " << type[i] << endl;
     \endcode
     The array indices in the vector<string> into which the result values
@@ -158,7 +158,7 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::PATTY::AssignTypes", obAuditMsg);
 
-    for (unsigned int i = 0; i < _sp.size(); i++)
+    for (unsigned int i = 0; i < _sp.size(); ++i)
       {
         _sp[i]->Match(mol);
         vector<vector<int> > match = _sp[i]->GetMapList();
@@ -172,7 +172,7 @@ namespace OpenBabel
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
               }
 
-            for (unsigned int j = 0; j < match.size(); j++)
+            for (unsigned int j = 0; j < match.size(); ++j)
               {
                 if (debug)
                   {
@@ -193,7 +193,7 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::PATTY::AssignTypes", obAuditMsg);
 
-    for (unsigned int i = 0; i < _sp.size(); i++)
+    for (unsigned int i = 0; i < _sp.size(); ++i)
       {
         _sp[i]->Match(mol);
         vector<vector<int> > match = _sp[i]->GetMapList();
@@ -207,7 +207,7 @@ namespace OpenBabel
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obDebug);
               }
 
-            for (unsigned int j = 0; j < match.size(); j++)
+            for (unsigned int j = 0; j < match.size(); ++j)
               {
                 if (debug)
                   {
@@ -275,7 +275,7 @@ namespace OpenBabel
   //! the first position start at 1
   int patty::Istype(const std::string &type)
   {
-    for(unsigned int pos=0; pos < typ.size(); pos++)
+    for(unsigned int pos=0; pos < typ.size(); ++pos)
       {
         if(typ[pos] == type)
           return (pos + 1);

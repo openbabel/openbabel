@@ -300,7 +300,7 @@ namespace OpenBabel
     {
       std::vector<OBGenericData*>::iterator i;
 
-      for (i = _vdata.begin();i != _vdata.end();i++)
+      for (i = _vdata.begin();i != _vdata.end();++i)
         if ((*i)->GetAttribute() == s)
           return(*i);
 
@@ -312,7 +312,7 @@ namespace OpenBabel
     {
       std::vector<OBGenericData*>::iterator i;
 
-      for (i = _vdata.begin();i != _vdata.end();i++)
+      for (i = _vdata.begin();i != _vdata.end();++i)
         if ((*i)->GetAttribute() == s)
           return(*i);
 
@@ -341,7 +341,7 @@ namespace OpenBabel
     void DeleteData(OBGenericData *gd)
     {
       std::vector<OBGenericData*>::iterator i;
-      for (i = _vdata.begin();i != _vdata.end();i++)
+      for (i = _vdata.begin();i != _vdata.end();++i)
         if (*i == gd)
         {
           delete *i;
@@ -803,8 +803,7 @@ namespace OpenBabel
     unsigned int GetSize(atomreftype t) const;
   };
 
-  //! Defines a map between serial numbers (e.g., in a PDB file) 
-  //! and OBAtom objects inside a molecule
+  //! Defines a map between serial numbers (e.g., in a PDB file) and OBAtom objects inside a molecule
  class OBSerialNums : public OBGenericData
   {
   protected:

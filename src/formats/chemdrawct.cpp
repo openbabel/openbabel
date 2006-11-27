@@ -74,7 +74,7 @@ namespace OpenBabel
     ofs << " " << mol.NumAtoms() << " " << mol.NumBonds() << endl;
 
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
@@ -86,7 +86,7 @@ namespace OpenBabel
       }
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
 
     for(bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {

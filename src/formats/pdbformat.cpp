@@ -451,7 +451,7 @@ namespace OpenBabel
           }
       }
 
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
       if (static_cast<long int>(a1->GetResidue()->
                                 GetSerialNum(a1)) == startAtomSerialNumber)
@@ -667,7 +667,7 @@ namespace OpenBabel
 
     OBAtom *nbr;
     int count;
-    vector<OBEdgeBase*>::iterator k;
+    vector<OBBond*>::iterator k;
     for (i = 1; i <= mol.NumAtoms(); i ++)
       {
         atom = mol.GetAtom(i);

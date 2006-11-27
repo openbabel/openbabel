@@ -73,7 +73,7 @@ namespace OpenBabel
                           "Ran OpenBabel::FindRotors", obAuditMsg);
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     vector<pair<OBBond*,int> > vtmp;
 
     int score;
@@ -92,7 +92,7 @@ namespace OpenBabel
     OBRotor *rotor;
     int count;
     vector<pair<OBBond*,int> >::iterator j;
-    for (j = vtmp.begin(),count=0;j != vtmp.end();j++,count++)
+    for (j = vtmp.begin(),count=0;j != vtmp.end();++j,++count)
       {
         rotor = new OBRotor;
         rotor->SetBond((*j).first);
@@ -107,7 +107,7 @@ namespace OpenBabel
   bool OBRotorList::IsFixedBond(OBBond *bond)
   {
     OBAtom *a1,*a2,*a3;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
 
     a1 = bond->GetBeginAtom();
     a2 = bond->GetEndAtom();
@@ -145,8 +145,8 @@ namespace OpenBabel
     OBBitVec used,curr,next;
     OBAtom *atom,*atom1;
     OBBond *bond;
-    vector<OBNodeBase*>::iterator i;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBAtom*>::iterator i;
+    vector<OBBond*>::iterator j;
 
     next.Clear();
 
@@ -258,12 +258,12 @@ namespace OpenBabel
     vector<vector<int> > mlist;
     vector<vector<int> >::iterator k;
     vector<pair<OBSmartsPattern*,pair<int,int> > >::iterator j;
-    for (j = _vsym2.begin();j != _vsym2.end();j++)
+    for (j = _vsym2.begin();j != _vsym2.end();++j)
       if (j->first->Match(mol))
         {
           mlist = j->first->GetUMapList();
 
-          for (k = mlist.begin();k != mlist.end();k++)
+          for (k = mlist.begin();k != mlist.end();++k)
             for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
               {
                 rotor->GetDihedralAtoms(ref);
@@ -282,12 +282,12 @@ namespace OpenBabel
               }
         }
 
-    for (j = _vsym3.begin();j != _vsym3.end();j++)
+    for (j = _vsym3.begin();j != _vsym3.end();++j)
       if (j->first->Match(mol))
         {
           mlist = j->first->GetUMapList();
 
-          for (k = mlist.begin();k != mlist.end();k++)
+          for (k = mlist.begin();k != mlist.end();++k)
             for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
               {
                 rotor->GetDihedralAtoms(ref);
@@ -313,15 +313,15 @@ namespace OpenBabel
     double min,tmp,d_2 = 0.0;
     OBBitVec bset;
     one2one = true;
-    vector<OBNodeBase*> _atom;
+    vector<OBAtom*> _atom;
     _atom.resize(mol.NumAtoms());
-    for (i = 0;i < mol.NumAtoms();i++)
+    for (i = 0;i < mol.NumAtoms();++i)
       _atom[i] = mol.GetAtom(i+1);
 
-    for (i = 0;i < mol.NumAtoms();i++)
+    for (i = 0;i < mol.NumAtoms();++i)
       {
         min = 10E10;
-        for (j = 0;j < (signed)mol.NumAtoms();j++)
+        for (j = 0;j < (signed)mol.NumAtoms();++j)
           if ((_atom[i])->GetAtomicNum() == (_atom[j])->GetAtomicNum() &&
               (_atom[i])->GetHyb()       == (_atom[j])->GetHyb())
             if (!bset[j])
@@ -355,7 +355,7 @@ namespace OpenBabel
     OBRotor *rotor;
     vector<OBRotor*>::iterator i;
     OBBitVec eval,curr,next;
-    vector<OBEdgeBase*>::iterator k;
+    vector<OBBond*>::iterator k;
 
     for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
       {
@@ -410,7 +410,7 @@ namespace OpenBabel
     vector<double> res;
     vector<int> itmp1;
     vector<int>::iterator j;
-    for (i = _rotor.begin();i != _rotor.end();i++)
+    for (i = _rotor.begin();i != _rotor.end();++i)
       {
         rotor=*i;
         bond = rotor->GetBond();
@@ -427,7 +427,7 @@ namespace OpenBabel
             swap(ref[1],ref[2]);
           }
 
-        for (j = itmp1.begin();j != itmp1.end();j++)
+        for (j = itmp1.begin();j != itmp1.end();++j)
           *j = ((*j)-1)*3;
         rotor->SetRotAtoms(itmp1);
         rotor->SetDihedralAtoms(ref);
@@ -461,7 +461,7 @@ namespace OpenBabel
             swap(ref[1],ref[2]);
           }
 
-        for (j = rotatoms.begin();j != rotatoms.end();j++)
+        for (j = rotatoms.begin();j != rotatoms.end();++j)
           *j = ((*j)-1)*3;
         rotor->SetRotAtoms(rotatoms);
         rotor->SetDihedralAtoms(ref);
@@ -496,7 +496,7 @@ namespace OpenBabel
                 swap(ref[0],ref[3]);
                 swap(ref[1],ref[2]);
                 mol.FindChildren(rotatoms,ref[1],ref[2]);
-                for (j = rotatoms.begin();j != rotatoms.end();j++)
+                for (j = rotatoms.begin();j != rotatoms.end();++j)
                   *j = ((*j)-1)*3;
                 rotor->SetRotAtoms(rotatoms);
                 rotor->SetDihedralAtoms(ref);
@@ -508,7 +508,7 @@ namespace OpenBabel
               swap(ref[0],ref[3]);
               swap(ref[1],ref[2]);
               mol.FindChildren(rotatoms,ref[1],ref[2]);
-              for (j = rotatoms.begin();j != rotatoms.end();j++)
+              for (j = rotatoms.begin();j != rotatoms.end();++j)
                 *j = ((*j)-1)*3;
               rotor->SetRotAtoms(rotatoms);
               rotor->SetDihedralAtoms(ref);
@@ -543,21 +543,21 @@ namespace OpenBabel
   OBRotorList::~OBRotorList()
   {
     vector<OBRotor*>::iterator i;
-    for (i = _rotor.begin();i != _rotor.end();i++)
+    for (i = _rotor.begin();i != _rotor.end();++i)
       delete *i;
 
     vector<pair<OBSmartsPattern*,pair<int,int> > >::iterator j;
-    for (j = _vsym2.begin();j != _vsym2.end();j++)
+    for (j = _vsym2.begin();j != _vsym2.end();++j)
       delete j->first;
 
-    for (j = _vsym3.begin();j != _vsym3.end();j++)
+    for (j = _vsym3.begin();j != _vsym3.end();++j)
       delete j->first;
   }
 
   void OBRotorList::Clear()
   {
     vector<OBRotor*>::iterator i;
-    for (i = _rotor.begin();i != _rotor.end();i++)
+    for (i = _rotor.begin();i != _rotor.end();++i)
       delete *i;
     _rotor.clear();
     _fix.Clear();
@@ -644,7 +644,7 @@ namespace OpenBabel
     vector<double*>::iterator i;
     vector<double>::iterator j;
     vector<double> cs,sn,t;
-    for (i = cv.begin();i != cv.end();i++)
+    for (i = cv.begin();i != cv.end();++i)
       {
         c = *i;
         cs.clear();
@@ -652,7 +652,7 @@ namespace OpenBabel
         t.clear();
         ang = CalcTorsion(c);
 
-        for (j = _res.begin();j != _res.end();j++)
+        for (j = _res.begin();j != _res.end();++j)
           {
             cs.push_back(cos(*j-ang));
             sn.push_back(sin(*j-ang));
@@ -739,7 +739,7 @@ namespace OpenBabel
     ty = c[_torsion[1]+1];
     tz = c[_torsion[1]+2];
     int i,j;
-    for (i = 0;i < _size;i++)
+    for (i = 0;i < _size;++i)
       {
         j = _rotatoms[i];
         c[j] -= tx;
@@ -789,7 +789,7 @@ namespace OpenBabel
     ty = c[_torsion[1]+1];
     tz = c[_torsion[1]+2];
     int i,j;
-    for (i = 0;i < _size;i++)
+    for (i = 0;i < _size;++i)
       {
         j = _rotatoms[i];
         c[j] -= tx;
@@ -811,7 +811,7 @@ namespace OpenBabel
     if (_res.size() == 1)
       return;
 
-    for (i = _res.begin();i != _res.end();i++)
+    for (i = _res.begin();i != _res.end();++i)
       if (*i >= 0.0)
         {
           if (fold == 2 && *i < DEG_TO_RAD*180.0)
@@ -827,7 +827,7 @@ namespace OpenBabel
 
   void OBRotor::SetDihedralAtoms(int ref[4])
   {
-    for (int i = 0;i < 4;i++)
+    for (int i = 0;i < 4;++i)
       _ref[i] = ref[i];
     _torsion.resize(4);
     _torsion[0] = (ref[0]-1)*3;
@@ -878,7 +878,7 @@ namespace OpenBabel
     if (EQn(buffer,"SP3-SP3",7))
       {
         _sp3sp3.clear();
-        for (j = vs.begin(),j++;j != vs.end();j++)
+        for (j = vs.begin(),j++;j != vs.end();++j)
           _sp3sp3.push_back(DEG_TO_RAD*atof(j->c_str()));
         return;
       }
@@ -886,7 +886,7 @@ namespace OpenBabel
     if (EQn(buffer,"SP3-SP2",7))
       {
         _sp3sp2.clear();
-        for (j = vs.begin(),j++;j != vs.end();j++)
+        for (j = vs.begin(),j++;j != vs.end();++j)
           _sp3sp2.push_back(DEG_TO_RAD*atof(j->c_str()));
         return;
       }
@@ -894,7 +894,7 @@ namespace OpenBabel
     if (EQn(buffer,"SP2-SP2",7))
       {
         _sp2sp2.clear();
-        for (j = vs.begin(),j++;j != vs.end();j++)
+        for (j = vs.begin(),j++;j != vs.end();++j)
           _sp2sp2.push_back(DEG_TO_RAD*atof(j->c_str()));
         return;
       }
@@ -904,12 +904,12 @@ namespace OpenBabel
         strncpy(temp_buffer,vs[0].c_str(), sizeof(temp_buffer) - 1);
         temp_buffer[sizeof(temp_buffer) - 1] = '\0';
         //reference atoms
-        for (i = 0;i < 4;i++)
+        for (i = 0;i < 4;++i)
           ref[i] = atoi(vs[i+1].c_str())-1;
         //possible torsions
         vals.clear();
         delta = OB_DEFAULT_DELTA;
-        for (i = 5;(unsigned)i < vs.size();i++)
+        for (i = 5;(unsigned)i < vs.size();++i)
           {
             if (i == (signed)(vs.size()-2) && vs[i] == "Delta")
               {
@@ -949,7 +949,7 @@ namespace OpenBabel
     OBSmartsPattern *sp;
     vector<vector<int> > map;
     vector<OBRotorRule*>::iterator i;
-    for (i = _vr.begin();i != _vr.end();i++)
+    for (i = _vr.begin();i != _vr.end();++i)
       {
         sp = (*i)->GetSmartsPattern();
         (*i)->GetReferenceAtoms(ref);
@@ -964,7 +964,7 @@ namespace OpenBabel
           }
 
         map = sp->GetMapList();
-        for (j = 0;j < 4;j++)
+        for (j = 0;j < 4;++j)
           ref[j] = map[0][ref[j]];
         vals = (*i)->GetTorsionVals();
         delta = (*i)->GetDelta();
@@ -986,7 +986,7 @@ namespace OpenBabel
                 swapped = true;
               }
 
-            vector<OBEdgeBase*>::iterator k;
+            vector<OBBond*>::iterator k;
             for (r = a2->BeginNbrAtom(k);r;r = a2->NextNbrAtom(k))
               if (!r->IsHydrogen() && r != a3)
                 break;
@@ -1005,7 +1005,7 @@ namespace OpenBabel
             diff *= DEG_TO_RAD;
 
             vector<double>::iterator m;
-            for (m = vals.begin();m != vals.end();m++)
+            for (m = vals.begin();m != vals.end();++m)
               {
                 *m += diff;
                 if (*m < PI)
@@ -1042,7 +1042,7 @@ namespace OpenBabel
     OBAtom *a1,*a2,*a3,*a4;
     a2 = bond->GetBeginAtom();
     a3 = bond->GetEndAtom();
-    vector<OBEdgeBase*>::iterator k;
+    vector<OBBond*>::iterator k;
 
     for (a1 = a2->BeginNbrAtom(k);a1;a1 = a2->NextNbrAtom(k))
       if (!a1->IsHydrogen() && a1 != a3)
@@ -1098,7 +1098,7 @@ namespace OpenBabel
   OBRotorRules::~OBRotorRules()
   {
     vector<OBRotorRule*>::iterator i;
-    for (i = _vr.begin();i != _vr.end();i++)
+    for (i = _vr.begin();i != _vr.end();++i)
       delete (*i);
   }
 

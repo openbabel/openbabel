@@ -126,7 +126,7 @@ namespace OpenBabel
     std::vector<int> _storder;
     std::vector<bool> _aromNH;
     OBBitVec _uatoms,_ubonds;
-    std::vector<OBEdgeBase*> _vclose;
+    std::vector<OBBond*> _vclose;
     std::vector<std::pair<OBAtom*,std::pair<int,int> > > _vopen;
     OBConversion* _pconv;
   public:
@@ -139,7 +139,7 @@ namespace OpenBabel
     int          GetUnusedIndex();
     void         Init(OBConversion* pconv=NULL);
     void         CreateSmiString(OBMol&,char*);
-    void         GetClosureAtoms(OBAtom*,std::vector<OBNodeBase*>&);
+    void         GetClosureAtoms(OBAtom*,std::vector<OBAtom*>&);
     void         FindClosureBonds(OBMol&);
     void         ToSmilesString(OBSmiNode *node,char *buffer);
     void         RemoveUsedClosures();
@@ -420,7 +420,7 @@ namespace OpenBabel
     //Atoms which are marked as aromatic but have no aromatic bonds
     //are taken to be radical centres
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator j;
+    vector<OBAtom*>::iterator j;
 
     for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
       if(atom->IsAromatic())
@@ -446,14 +446,14 @@ namespace OpenBabel
     _path.resize(mol.NumAtoms()+1);
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
       if (!bond->GetBeginAtom()->IsAromatic() ||
           !bond->GetEndAtom()->IsAromatic())
         _bvisit[bond->GetIdx()] = true;
 
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator j;
+    vector<OBAtom*>::iterator j;
 
     for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
       if(!_avisit[atom->GetIdx()] && atom->IsAromatic())
@@ -463,7 +463,7 @@ namespace OpenBabel
   void OBSmilesParser::FindAromaticBonds(OBMol &mol,OBAtom *atom,int depth )
   {
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator k;
+    vector<OBBond*>::iterator k;
 
     if (_avisit[atom->GetIdx()])
       {
@@ -1752,7 +1752,7 @@ namespace OpenBabel
     OBAtom *atom;
     OBSmiNode *root =NULL;
     buffer[0] = '\0';
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       // don't use a hydrogen as the root node unless it's not bonded
@@ -1791,7 +1791,7 @@ namespace OpenBabel
 
   bool OBMol2Smi::BuildTree(OBSmiNode *node)
   {
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBAtom *nbr,*atom = node->GetAtom();
 
     _uatoms.SetBitOn(atom->GetIdx()); //mark the atom as visited
@@ -1905,11 +1905,11 @@ namespace OpenBabel
       }
   }
 
-  void OBMol2Smi::GetClosureAtoms(OBAtom *atom,vector<OBNodeBase*> &va)
+  void OBMol2Smi::GetClosureAtoms(OBAtom *atom,vector<OBAtom*> &va)
   {
 
     //look through closure list for start atom
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     for (i = _vclose.begin();i != _vclose.end();i++)
       if (*i)
         {
@@ -1935,7 +1935,7 @@ namespace OpenBabel
     //look through closure list for start atom
     int idx,bo;
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     for (i = _vclose.begin();i != _vclose.end();i++)
       if ((bond=(OBBond*)*i))
         if (bond->GetBeginAtom() == atom || bond->GetEndAtom() == atom)
@@ -1971,7 +1971,7 @@ namespace OpenBabel
     //find closure bonds
     OBAtom *a1,*a2;
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBBitVec bv;
     bv.FromVecInt(_storder);
 
@@ -1984,7 +1984,7 @@ namespace OpenBabel
             _vclose.push_back(bond);
         }
 
-    vector<OBEdgeBase*>::reverse_iterator j;
+    vector<OBBond*>::reverse_iterator j;
     vector<int>::iterator k;
 
     //modify _order to reflect ring closures
@@ -2043,7 +2043,7 @@ namespace OpenBabel
   void OBMol2Smi::CorrectAromaticAmineCharge(OBMol &mol)
   {
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     _aromNH.clear();
     _aromNH.resize(mol.NumAtoms()+1);
@@ -2078,7 +2078,7 @@ namespace OpenBabel
             if (b->GetHvyValence() > 1 && c->GetHvyValence() > 1)
               {
                 OBAtom *a,*d;
-                vector<OBEdgeBase*>::iterator j,k;
+                vector<OBBond*>::iterator j,k;
 
                 //look for bond with assigned stereo as in poly-ene
                 for (a = b->BeginNbrAtom(j);a;a = b->NextNbrAtom(j))
@@ -2418,7 +2418,7 @@ namespace OpenBabel
         is2D = true;
         OBAtom *nbr;
         OBBond *bond;
-        vector<OBEdgeBase*>::iterator i;
+        vector<OBBond*>::iterator i;
         for (bond = b->BeginBond(i);bond;bond = b->NextBond(i))
           {
             nbr = bond->GetEndAtom();
@@ -2456,7 +2456,7 @@ namespace OpenBabel
       {
         if (b->GetValence() == 4)//has explicit hydrogen
           {
-            vector<OBEdgeBase*>::iterator i;
+            vector<OBBond*>::iterator i;
             for (c = b->BeginNbrAtom(i);c;c = b->NextNbrAtom(i))
               if (c->IsHydrogen())
                 break;
@@ -2476,11 +2476,11 @@ namespace OpenBabel
     vector<int>::iterator j;
 
     //try to get neighbors that are closure atoms in the order they appear in the string
-    vector<OBNodeBase*> va;
+    vector<OBAtom*> va;
     GetClosureAtoms(b,va);
     if (!va.empty())
       {
-        vector<OBNodeBase*>::iterator k;
+        vector<OBAtom*>::iterator k;
         for (k = va.begin();k != va.end();k++)
           if (*k != a)
             {
@@ -2515,7 +2515,7 @@ namespace OpenBabel
       {
         vector3 v;
         OBAtom *atom;
-        vector<OBNodeBase*>::iterator k;
+        vector<OBAtom*>::iterator k;
         for (atom = mol->BeginAtom(k);atom;atom = mol->NextAtom(k))
           {
             v = atom->GetVector();

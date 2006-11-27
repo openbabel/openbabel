@@ -147,7 +147,7 @@ namespace OpenBabel
     WriteSize(mol.NumAtoms()*sizeof(double),ofs);
 
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         x = atom->x();

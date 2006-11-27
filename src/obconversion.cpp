@@ -311,7 +311,7 @@ namespace OpenBabel {
     if(!DLHandler::findFiles(files,DLHandler::getFormatFilePattern(),TargetDir)) return 0;
 
     vector<string>::iterator itr;
-    for(itr=files.begin();itr!=files.end();itr++)
+    for(itr=files.begin();itr!=files.end();++itr)
       {
         if(DLHandler::openLib(*itr))
           count++;
@@ -1006,7 +1006,7 @@ namespace OpenBabel {
                 //If the output file is the same as any of the input
                 //files, send the output to a temporary stringstream
                 vector<string>::iterator itr;
-                for(itr=FileList.begin();itr!=FileList.end();itr++)
+                for(itr=FileList.begin();itr!=FileList.end();++itr)
                   {
                     if(*itr==OutputFileName)
                       {
@@ -1040,7 +1040,7 @@ namespace OpenBabel {
 
             stringstream allinput;
             vector<string>::iterator itr;
-            for(itr=FileList.begin();itr!=FileList.end();itr++)
+            for(itr=FileList.begin();itr!=FileList.end();++itr)
               {
                 ifstream ifs((*itr).c_str());
                 if(!ifs)
@@ -1066,7 +1066,7 @@ namespace OpenBabel {
                 vector<string>::iterator itr, tempitr;
                 tempitr = FileList.end();
                 tempitr--;
-                for(itr=FileList.begin();itr!=FileList.end();itr++)
+                for(itr=FileList.begin();itr!=FileList.end();++itr)
                   {
                     InFilename = *itr;
                     ifstream ifs;

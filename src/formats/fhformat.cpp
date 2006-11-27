@@ -69,7 +69,7 @@ bool FenskeZmatFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     OBAtom *atom,*a,*b,*c;
     char type[16],buffer[BUFF_SIZE];
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     vector<OBInternalCoord*> vic;
     vic.push_back((OBInternalCoord*)NULL);

@@ -97,8 +97,8 @@ namespace OpenBabel
     ofs << buffer << endl << endl;
 
     OBAtom *atom,*nbr;
-    vector<OBNodeBase*>::iterator i;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBAtom*>::iterator i;
+    vector<OBBond*>::iterator j;
     vector<int> vtmp(106,0);
     int bonds;
 

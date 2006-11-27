@@ -147,6 +147,7 @@ namespace OpenBabel
       bool DeleteBond(OBBond*);
       bool DeleteResidue(OBResidue*);
       OBAtom    *NewAtom();
+      OBBond    *NewBond();
       OBResidue *NewResidue();
       //@}
 
@@ -394,7 +395,7 @@ namespace OpenBabel
         { i = _vconf.begin();
         return((i == _vconf.end()) ? NULL:*i); }
       double  *NextConformer(std::vector<double*>::iterator&i)
-        { i++;
+        { ++i;
         return((i == _vconf.end()) ? NULL:*i); }
       std::vector<double*> &GetConformers() {   return(_vconf);     }
       //@}
@@ -419,7 +420,7 @@ namespace OpenBabel
         }
       OBResidue *NextResidue(std::vector<OBResidue*>::iterator &i)
         {
-          i++;
+          ++i;
           return((i == _residue.end()) ? NULL:*i);
         }
       OBInternalCoord *BeginInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
@@ -429,7 +430,7 @@ namespace OpenBabel
         }
       OBInternalCoord *NextInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
         {
-          i++;
+          ++i;
           return((i == _internals.end()) ? NULL:*i);
         }
       //@}

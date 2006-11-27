@@ -125,7 +125,7 @@ namespace OpenBabel
     register unsigned int* ppat;
     register unsigned int a;
     unsigned int i; // need address of this, can't be register
-    for(i=0;i<dataSize; i++) //speed critical section
+    for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
         nextp += words;
@@ -151,7 +151,7 @@ namespace OpenBabel
       }
 
     vector<unsigned int>::iterator itr;
-    for(itr=candidates.begin();itr!=candidates.end();itr++)
+    for(itr=candidates.begin();itr!=candidates.end();++itr)
       {
         SeekPositions.push_back(_index.seekdata[*itr]);
       }
@@ -170,7 +170,7 @@ namespace OpenBabel
     unsigned int* nextp = &_index.fptdata[0];
     register unsigned int* p;
     register unsigned int i;
-    for(i=0;i<dataSize; i++) //speed critical section
+    for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
         nextp += words;
@@ -205,7 +205,7 @@ namespace OpenBabel
     unsigned int* nextp = &_index.fptdata[0];
     register unsigned int* p;
     register unsigned int i;
-    for(i=0;i<dataSize; i++) //speed critical section
+    for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
         nextp += words;
@@ -327,7 +327,7 @@ namespace OpenBabel
     if(_pFP->GetFingerprint(pOb, vecwords, _nbits))
       {
         _pindex->header.words = vecwords.size(); //Use size as returned from fingerprint
-        for(unsigned int i=0;i<_pindex->header.words;i++)
+        for(unsigned int i=0;i<_pindex->header.words;++i)
           _pindex->fptdata.push_back(vecwords[i]);
         _pindex->seekdata.push_back(seekpos);
         return true;	
@@ -507,7 +507,7 @@ namespace OpenBabel
     vector<unsigned int>& SeekPositions;
     if(!fs.Find(patternMol, SeekPositions, MaxCandidates))
 	
-    for(itr=SeekPositions.begin();itr!=SeekPositions.end();itr++)
+    for(itr=SeekPositions.begin();itr!=SeekPositions.end();++itr)
     {
     datastream.seekg(*itr);
     ... read the candidate molecule

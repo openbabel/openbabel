@@ -852,7 +852,7 @@ namespace OpenBabel
   {
     if (atom != NULL && _atoms.size())
       {
-        for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
+        for ( unsigned int i = 0 ; i < _atoms.size() ; ++i)
           {
             if (_atoms[i] != NULL && _atoms[i] == atom)
               {
@@ -868,7 +868,7 @@ namespace OpenBabel
 
   void OBResidue::Clear(void)
   {
-    for (unsigned int i = 0 ; i < _atoms.size() ; i++ )
+    for (unsigned int i = 0 ; i < _atoms.size() ; ++i)
       _atoms[i]->SetResidue(NULL);
 
     _chain   = 'A';
@@ -912,21 +912,21 @@ namespace OpenBabel
 
   void OBResidue::SetAtomID(OBAtom *atom, const string &id)
   {
-    for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
+    for ( unsigned int i = 0 ; i < _atoms.size() ; ++i )
       if (_atoms[i] == atom)
         _atomid[i] = id;
   }
 
   void OBResidue::SetHetAtom(OBAtom *atom, bool hetatm)
   {
-    for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
+    for ( unsigned int i = 0 ; i < _atoms.size() ; ++i )
       if (_atoms[i] == atom)
         _hetatm[i] = hetatm;
   }
 
   void OBResidue::SetSerialNum(OBAtom *atom, unsigned int sernum)
   {
-    for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
+    for ( unsigned int i = 0 ; i < _atoms.size() ; ++i )
       if (_atoms[i] == atom)
         _sernum[i] = sernum;
   }
@@ -944,11 +944,11 @@ namespace OpenBabel
     unsigned int    sz;
 
     sz = (unsigned int) _atoms.size();
-    for ( unsigned int i = 0 ; i < sz ; i++ )
+    for ( unsigned int i = 0 ; i < sz ; ++i )
       {
         atom = _atoms[i];
         OBBond *bond;
-        vector<OBEdgeBase*>::iterator b;
+        vector<OBBond*>::iterator b;
         for (bond = atom->BeginBond(b) ; bond ; bond = atom->NextBond(b))
           {
             if (!idxs.BitIsOn(bond->GetIdx()))
@@ -1009,7 +1009,7 @@ namespace OpenBabel
 
   string OBResidue::GetAtomID(OBAtom *atom) const
   {
-    for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
+    for ( unsigned int i = 0 ; i < _atoms.size() ; ++i )
       if (_atoms[i] == atom)
         return _atomid[i];
     return "";
@@ -1017,7 +1017,7 @@ namespace OpenBabel
 
   unsigned int OBResidue::GetSerialNum(OBAtom *atom) const
   {
-    for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
+    for ( unsigned int i = 0 ; i < _atoms.size() ; ++i )
       if (_atoms[i] == atom)
         return _sernum[i];
     return 0;
@@ -1025,7 +1025,7 @@ namespace OpenBabel
 
   bool OBResidue::IsHetAtom(OBAtom *atom) const
   {
-    for ( unsigned int i = 0 ; i < _atoms.size() ; i++ )
+    for ( unsigned int i = 0 ; i < _atoms.size() ; ++i )
       if (_atoms[i] == atom)
         return _hetatm[i];
     return false;
@@ -1043,7 +1043,7 @@ namespace OpenBabel
 
   OBAtom *OBResidue::NextAtom(vector<OBAtom*>::iterator &i)
   {
-    i++;
+    ++i;
     return ((i == _atoms.end()) ? NULL : *i);
   }
 
@@ -1202,7 +1202,7 @@ namespace OpenBabel
 
   vector<OBGenericData*>::iterator i;
 
-  for (i = _vdata.begin();i != _vdata.end();i++)
+  for (i = _vdata.begin();i != _vdata.end();++i)
   if ((*i)->GetAttribute() == s)
   return(true);
 
@@ -1217,7 +1217,7 @@ namespace OpenBabel
 
   vector<OBGenericData*>::iterator i;
 
-  for (i = _vdata.begin();i != _vdata.end();i++)
+  for (i = _vdata.begin();i != _vdata.end();++i)
   if ((*i)->GetAttribute() == s)
   return(true);
 
@@ -1232,7 +1232,7 @@ namespace OpenBabel
 
   vector<OBGenericData*>::iterator i;
 
-  for (i = _vdata.begin();i != _vdata.end();i++)
+  for (i = _vdata.begin();i != _vdata.end();++i)
   if ((*i)->GetDataType() == dt)
   return(true);
 
@@ -1244,7 +1244,7 @@ namespace OpenBabel
   {
   vector<OBGenericData*>::iterator i;
 
-  for (i = _vdata.begin();i != _vdata.end();i++)
+  for (i = _vdata.begin();i != _vdata.end();++i)
   if ((*i)->GetAttribute() == s)
   return(*i);
 
@@ -1256,7 +1256,7 @@ namespace OpenBabel
   {
   vector<OBGenericData*>::iterator i;
 
-  for (i = _vdata.begin();i != _vdata.end();i++)
+  for (i = _vdata.begin();i != _vdata.end();++i)
   if ((*i)->GetAttribute() == s)
   return(*i);
 
@@ -1266,7 +1266,7 @@ namespace OpenBabel
   OBGenericData *OBResidue::GetData(unsigned int dt)
   {
   vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();i++)
+  for (i = _vdata.begin();i != _vdata.end();++i)
   if ((*i)->GetDataType() == dt)
   return(*i);
   return(NULL);
@@ -1276,7 +1276,7 @@ namespace OpenBabel
   {
   vector<OBGenericData*> vdata;
   vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();i++)
+  for (i = _vdata.begin();i != _vdata.end();++i)
   if ((*i)->GetDataType() == dt)
   delete *i;
   else
@@ -1290,10 +1290,10 @@ namespace OpenBabel
   vector<OBGenericData*>::iterator i,j;
 
   bool del;
-  for (i = _vdata.begin();i != _vdata.end();i++)
+  for (i = _vdata.begin();i != _vdata.end();++i)
   {
   del = false;
-  for (j = vg.begin();j != vg.end();j++)
+  for (j = vg.begin();j != vg.end();++j)
   if (*i == *j)
   {
   del = true;
@@ -1310,7 +1310,7 @@ namespace OpenBabel
   void OBResidue::DeleteData(OBGenericData *gd)
   {
   vector<OBGenericData*>::iterator i;
-  for (i = _vdata.begin();i != _vdata.end();i++)
+  for (i = _vdata.begin();i != _vdata.end();++i)
   if (*i == gd)
   {
   delete *i;

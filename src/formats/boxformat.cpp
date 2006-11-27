@@ -125,7 +125,7 @@ bool BoxFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vector3 vcenter,vmin,vmax,vmid,vdim;
 
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     vmax.Set(-10E10,-10E10,-10E10);
     vmin.Set( 10E10, 10E10, 10E10);
 

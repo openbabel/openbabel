@@ -251,9 +251,9 @@ namespace OpenBabel
     int i;
     int min = (bv._size < _size) ? bv._size : _size;
 
-    for (i = 0;i < min;i++)
+    for (i = 0;i < min;++i)
       _set[i] &= bv._set[i];
-    for (;i < _size;i++)
+    for (;i < _size;++i)
       _set[i] = 0;
 
     return(*this);
@@ -268,7 +268,7 @@ namespace OpenBabel
         else
 	  bv.Resize(_size*SETWORD);
       }
-    for (int i = 0;i < _size;i++)
+    for (int i = 0;i < _size;++i)
       _set[i] |= bv._set[i];
 
     return(*this);
@@ -284,7 +284,7 @@ namespace OpenBabel
         else
 	  bv.Resize(_size*SETWORD);
       }
-    for (i = 0;i < _size;i++)
+    for (i = 0;i < _size;++i)
       _set[i] ^= bv._set[i];
 
     return(*this);
@@ -307,7 +307,7 @@ namespace OpenBabel
   {
     int old_size = _size;
     Resize(_size*SETWORD+bv._size*SETWORD);
-    for (int i = 0;i < bv._size;i++)
+    for (int i = 0;i < bv._size;++i)
       _set[i+old_size] = bv._set[i];
     return(*this);
   }
@@ -344,7 +344,7 @@ namespace OpenBabel
       return(false);
 
     int i;
-    for (i = 0;i < bv1._size;i++)
+    for (i = 0;i < bv1._size;++i)
       if (bv1._set[i] != bv2._set[i])
 	return(false);
 
@@ -364,7 +364,7 @@ namespace OpenBabel
     if (bv1._size > bv2._size)	return(false);
 
     int i;
-    for (i = 0; i < bv1._size; i++)
+    for (i = 0; i < bv1._size; ++i)
       if (bv1._set[i] != (bv1._set[i] & bv2._set[i]))
 	return(false);
     return(true);
@@ -418,8 +418,8 @@ namespace OpenBabel
     os << "[ " << flush;
 
     int i,j;
-    for (i = 0;i < bv._size;i++)
-      for (j = 0;j < SETWORD;j++)
+    for (i = 0;i < bv._size;++i)
+      for (j = 0;j < SETWORD;++j)
 	if (bv._set[i]>>(j%SETWORD)&1)
 	  os << (j+(i*SETWORD)) << ' ' << flush;
 
@@ -439,7 +439,7 @@ namespace OpenBabel
       }
 
     int i,idx = nwords;
-    for (i = 0,idx=nwords;idx < _size;idx++)
+    for (i = 0,idx=nwords;idx < _size;++idx)
       {
         _set[i] |= _set[idx];
         if (i+1 < nwords)
@@ -456,12 +456,12 @@ namespace OpenBabel
     vector<int>::iterator i;
     int max = 0;
 
-    for (i = v.begin();i != v.end();i++)
+    for (i = v.begin();i != v.end();++i)
       if (*i > max)
 	max = *i;
 
     Resize(max/SETWORD);
-    for (i = v.begin();i != v.end();i++)
+    for (i = v.begin();i != v.end();++i)
       SetBitOn(*i);
   }
 
@@ -517,7 +517,7 @@ namespace OpenBabel
   void OBBitVec::Clear()
   {
     vector<int>::iterator i;
-    for (i = _set.begin();i != _set.end();i++)
+    for (i = _set.begin();i != _set.end();++i)
       *i = 0;
   }
 
@@ -533,7 +533,7 @@ namespace OpenBabel
   bool OBBitVec::IsEmpty()
   {
     vector<int>::iterator i;
-    for (i = _set.begin();i != _set.end();i++)
+    for (i = _set.begin();i != _set.end();++i)
       if (*i)
 	return(false);
 

@@ -184,7 +184,7 @@ namespace OpenBabel
       }
 
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
 
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {

@@ -154,7 +154,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     OBAtom *atom;
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     char bond_char;
 
     // make sure to escape titles in double quotes

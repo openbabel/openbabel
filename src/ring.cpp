@@ -52,9 +52,9 @@ rings is show below:
 vector<OBRing*>::iterator i;
 vector<int>::iterator j;
 vector<OBRing*> *rlist = (vector<OBRing*>*)mol.GetData("RingList");
-for (i = rlist->begin();i != rlist->end();i++)
+for (i = rlist->begin();i != rlist->end();++i)
 {
-for(j = (*i)->_path.begin();j != (*i)->_path.end();j++)
+for(j = (*i)->_path.begin();j != (*i)->_path.end();++j)
     cout << *j << ` `;
 cout << endl;
 }
@@ -92,8 +92,8 @@ void OBMol::FindSSSR()
         FindRingAtomsAndBonds();
 
         OBBond *bond;
-        vector<OBEdgeBase*> cbonds;
-        vector<OBEdgeBase*>::iterator k;
+        vector<OBBond*> cbonds;
+        vector<OBBond*>::iterator k;
 
         //restrict search for rings around closure bonds
         for (bond = BeginBond(k);bond;bond = NextBond(k))
@@ -104,16 +104,16 @@ void OBMol::FindSSSR()
         {
             OBRingSearch rs;
             //search for all rings about closures
-            vector<OBEdgeBase*>::iterator i;
+            vector<OBBond*>::iterator i;
 
-            for (i = cbonds.begin();i != cbonds.end();i++)
+            for (i = cbonds.begin();i != cbonds.end();++i)
                 rs.AddRingFromClosure(*this,(OBBond*)*i);
 
             rs.SortRings();
             rs.RemoveRedundant(frj);
             //store the SSSR set
 
-            for (j = rs.BeginRings();j != rs.EndRings();j++)
+            for (j = rs.BeginRings();j != rs.EndRings();++j)
             {
                 ring = new OBRing ((*j)->_path,NumAtoms()+1);
                 ring->SetParent(this);
@@ -143,10 +143,10 @@ static int DetermineFRJ(OBMol &mol)
 
     //count up the atoms and bonds belonging to each graph
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     int numatoms,numbonds,frj=0;
     OBBitVec frag;
-    for (i = cfl.begin();i != cfl.end();i++)
+    for (i = cfl.begin();i != cfl.end();++i)
     {
         frag.Clear();
         frag.FromVecInt(*i);
@@ -178,14 +178,14 @@ void OBRingSearch::RemoveRedundant(int frj)
             }
 
     //make sure tmp is the same size as the rings
-    for (j = 0;j < (signed)_rlist.size();j++)
+    for (j = 0;j < (signed)_rlist.size();++j)
         tmp = (_rlist[j])->_pathset;
 
     //remove larger rings that cover the same atoms as smaller rings
     for (i = _rlist.size()-1;i >= 0;i--)
     {
         tmp.Clear();
-        for (j = 0;j < (signed)_rlist.size();j++)
+        for (j = 0;j < (signed)_rlist.size();++j)
             if ((_rlist[j])->_path.size() <= (_rlist[i])->_path.size() && i != j)
                 tmp |= (_rlist[j])->_pathset;
 
@@ -216,11 +216,11 @@ void OBRingSearch::AddRingFromClosure(OBMol &mol,OBBond *cbond)
 
     bool pathok;
     deque<int> p1,p2;
-    vector<OBNodeBase*> path1,path2;
-    vector<OBNodeBase*>::iterator m,n;
+    vector<OBAtom*> path1,path2;
+    vector<OBAtom*>::iterator m,n;
     vector<OBRTree*>::iterator i;
 
-    for (i = t1.begin();i != t1.end();i++)
+    for (i = t1.begin();i != t1.end();++i)
         if (*i)
         {
             path1.clear();
@@ -236,11 +236,11 @@ void OBRingSearch::AddRingFromClosure(OBMol &mol,OBBond *cbond)
                 m = path1.begin();
                 if (m != path1.end())
                     p1.push_back((*m)->GetIdx());
-                for (m = path1.begin(),m++;m != path1.end();m++)
+                for (m = path1.begin(),++m;m != path1.end();++m)
                 {
                     p1.push_back((*m)->GetIdx());
                     p2.clear();
-                    for (n = path2.begin(),n++;n != path2.end();n++)
+                    for (n = path2.begin(),++n;n != path2.end();++n)
                     {
                         p2.push_front((*n)->GetIdx());
                         if (*n == *m)//don't traverse across identical atoms
@@ -261,11 +261,11 @@ void OBRingSearch::AddRingFromClosure(OBMol &mol,OBBond *cbond)
         }
 
     //clean up OBRTree vectors
-    for (i = t1.begin();i != t1.end();i++)
+    for (i = t1.begin();i != t1.end();++i)
         if (*i)
             delete *i;
 
-    for (i = t2.begin();i != t2.end();i++)
+    for (i = t2.begin();i != t2.end();++i)
         if (*i)
             delete *i;
 }
@@ -276,20 +276,20 @@ bool OBRingSearch::SaveUniqueRing(deque<int> &d1,deque<int> &d2)
     OBBitVec bv;
     deque<int>::iterator i;
 
-    for (i = d1.begin();i != d1.end();i++)
+    for (i = d1.begin();i != d1.end();++i)
     {
         bv.SetBitOn(*i);
         path.push_back(*i);
     }
 
-    for (i = d2.begin();i != d2.end();i++)
+    for (i = d2.begin();i != d2.end();++i)
     {
         bv.SetBitOn(*i);
         path.push_back(*i);
     }
 
     vector<OBRing*>::iterator j;
-    for (j = _rlist.begin();j != _rlist.end();j++)
+    for (j = _rlist.begin();j != _rlist.end();++j)
         if (bv == (*j)->_pathset)
             return(false);
 
@@ -304,7 +304,7 @@ bool OBRingSearch::SaveUniqueRing(deque<int> &d1,deque<int> &d2)
 OBRingSearch::~OBRingSearch()
 {
     vector<OBRing*>::iterator i;
-    for (i = _rlist.begin();i != _rlist.end();i++)
+    for (i = _rlist.begin();i != _rlist.end();++i)
         delete *i;
 }
 
@@ -317,7 +317,7 @@ void OBRingSearch::WriteRings()
 {
     vector<OBRing*>::iterator i;
 
-    for (i = _rlist.begin();i != _rlist.end();i++)
+    for (i = _rlist.begin();i != _rlist.end();++i)
         cout << (*i)->_pathset << endl;
 }
 
@@ -349,7 +349,7 @@ static void FindRings(OBMol &mol,vector<int> &path,OBBitVec &avisit,
 {
     OBAtom *atom;
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator k;
+    vector<OBBond*>::iterator k;
 
     if (avisit[natom])
     {
@@ -386,7 +386,7 @@ bool OBRing::IsAromatic()
 {
     OBMol *mol = _parent;
     vector<int>::iterator i;
-    for (i = _path.begin();i != _path.end();i++)
+    for (i = _path.begin();i != _path.end();++i)
         if (!(mol->GetAtom(*i))->IsAromatic())
             return(false);
 
@@ -452,7 +452,7 @@ void BuildOBRTreeVector(OBAtom *atom,OBRTree *prv,vector<OBRTree*> &vt,OBBitVec 
     OBAtom *nbr;
     OBMol *mol = (OBMol*)atom->GetParent();
     OBBitVec curr,used,next;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     curr |= atom->GetIdx();
     used = bv|curr;
 
@@ -492,7 +492,7 @@ OBRTree::OBRTree(OBAtom *atom,OBRTree *prv)
 
 //! The supplied path is built up of OBAtom nodes, with the root atom 
 //! the last item in the vector.
-void OBRTree::PathToRoot(vector<OBNodeBase*> &path)
+void OBRTree::PathToRoot(vector<OBAtom*> &path)
 {
     path.push_back(_atom);
     if (_prv)
@@ -514,13 +514,13 @@ bool OBRing::findCenterAndNormal(vector3 & center, vector3 &norm1, vector3 &norm
     center.Set(0.0,0.0,0.0);
     norm1.Set(0.0,0.0,0.0);
     norm2.Set(0.0,0.0,0.0);
-    for (j = 0; j != nA; j++)
+    for (j = 0; j != nA; ++j)
     {
         center += (mol->GetAtom(_path[j]))->GetVector();
     }
     center/= double(nA);
 
-    for (j = 0; j != nA; j++)
+    for (j = 0; j != nA; ++j)
     {
         vector3 v1= (mol->GetAtom(_path[j]))->GetVector() - center;
         vector3 v2= (mol->GetAtom(_path[j+1==nA?0:j+1]))->GetVector() - center;

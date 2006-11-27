@@ -118,7 +118,7 @@ namespace OpenBabel
       _incr = incr;
       //array size needs to be large enough to account for fp error
       _tbl = new double [static_cast<int>((_max/_incr)+10)];
-      for (r = (_incr/2.0),i=0;r <= _max;r += _incr,i++)
+      for (r = (_incr/2.0),i=0;r <= _max;r += _incr,++i)
         _tbl[i] = sqrt(r);
 
       _incr = 1/_incr;

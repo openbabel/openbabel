@@ -49,8 +49,8 @@ namespace OpenBabel
 
   public :
     //! Constructor
-    vector3 (const double x=0.0, const double y=0.0, const double z=0.0):
-      _vx(x), _vy(y), _vz(z)
+    vector3 (const double inX=0.0, const double inY=0.0, const double inZ=0.0):
+      _vx(inX), _vy(inY), _vz(inZ)
       {}
     //! Copy Constructor
     vector3 (const vector3& v):
@@ -58,11 +58,11 @@ namespace OpenBabel
         { }
 
     //! set x,y and z-component of a vector
-    inline void Set(const double x, const double y, const double z)
+    inline void Set(const double inX, const double inY, const double inZ)
     {
-      _vx = x ;
-      _vy = y ;
-      _vz = z ;
+      _vx = inX;
+      _vy = inY;
+      _vz = inZ;
     }
     //! set x,y and z-component of a vector from c[0]..c[2]
     inline void Set(const double *c)
@@ -72,19 +72,19 @@ namespace OpenBabel
       _vz = c[2];
     }
     //! access function to get the x-coordinate of the vector
-    inline void SetX(const double x)
+    inline void SetX(const double inX)
     {
-      _vx = x;
+      _vx = inX;
     }
     //! access function to get the y-coordinate of the vector
-    inline void SetY(const double y)
+    inline void SetY(const double inY)
     {
-      _vy = y;
+      _vy = inY;
     }
     //! access function to get the z-coordinate of the vector
-    inline void SetZ(const double z)
+    inline void SetZ(const double inZ)
     {
-      _vz = z;
+      _vz = inZ;
     }
     //! set c[0]..c[2] to the components of the vector
     inline void Get(double *c)

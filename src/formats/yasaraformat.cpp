@@ -490,8 +490,8 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   OBAtom *srcatom,*linkedatom;
   OBResidue *res;
   OBBond *bond;
-  vector<OBNodeBase*>::iterator e;
-  vector<OBEdgeBase*>::iterator iter;
+  vector<OBAtom*>::iterator e;
+  vector<OBBond*>::iterator iter;
 
   atoms=mol.NumAtoms();
   if (!atoms) return(false);

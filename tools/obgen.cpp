@@ -92,7 +92,7 @@ int main(int argc,char **argv)
 
   OBMol mol;
 
-  for (c=1;;c++)
+  for (c=1;;++c)
     {
       mol.Clear();
       if (!conv.Read(&mol, &ifs))
@@ -103,8 +103,8 @@ int main(int argc,char **argv)
       mol.AddHydrogens(false, true);
 
       OBAtom *atom, *nbr, *nbr2, *nbr3, *nbrs;
-      vector<OBNodeBase*>::iterator i;
-      vector<OBEdgeBase*>::iterator j;
+      vector<OBAtom*>::iterator i;
+      vector<OBBond*>::iterator j;
 
       vector<OBInternalCoord*> internals;
       OBInternalCoord *coord;
@@ -336,7 +336,7 @@ int main(int argc,char **argv)
 
 int get_nbr (OBAtom* atom, OBMol &mol, int level) {
   OBAtom *nbr,*nbr2,*nbr3;
-  vector<OBEdgeBase*>::iterator i;
+  vector<OBBond*>::iterator i;
   
   if (level == 2)
     if (!get_nbr(atom, mol, 1)) return 0;

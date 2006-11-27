@@ -38,7 +38,7 @@ namespace OpenBabel
   obiter.h header file:
 
   \code
-  \#define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; a++ )
+  \#define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; ++a )
   \endcode
 
   Here is an example:
@@ -89,10 +89,17 @@ namespace OpenBabel
     return *this;
   }
 
-  OBMolAtomIter OBMolAtomIter::operator++(int)
+  OBMolAtomIter& OBMolAtomIter::operator++()
   {
     _ptr = _parent->NextAtom(_i);
     return *this;
+  }
+
+  OBMolAtomIter OBMolAtomIter::operator++(int)
+  {
+    OBMolAtomIter tmp(*this);
+    operator++();
+    return tmp;
   }
 
   /** \class OBMolAtomDFSIter
@@ -116,7 +123,7 @@ namespace OpenBabel
   of macros in the obiter.h header file:
 
   \code
-  \#define FOR_DFS_OF_MOL(a,m)     for( OBMolAtomDFSIter     a(m); a; a++ )
+  \#define FOR_DFS_OF_MOL(a,m)     for( OBMolAtomDFSIter     a(m); a; ++a )
   \endcode
 
   Here is an example:
@@ -142,7 +149,7 @@ namespace OpenBabel
     _notVisited.Negate(); // all on
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBAtom *a;
 
     for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
@@ -159,7 +166,7 @@ namespace OpenBabel
     _notVisited.Negate(); // all on
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBAtom *a;
 
     for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
@@ -189,7 +196,7 @@ namespace OpenBabel
     return *this;
   }
 
-  OBMolAtomDFSIter OBMolAtomDFSIter::operator++(int)
+  OBMolAtomDFSIter& OBMolAtomDFSIter::operator++()
   {
     if (!_stack.empty())
       {
@@ -208,7 +215,7 @@ namespace OpenBabel
 
     if (_ptr)
       {
-        vector<OBEdgeBase*>::iterator i;
+        vector<OBBond*>::iterator i;
         OBAtom *a;
         
         for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
@@ -220,6 +227,13 @@ namespace OpenBabel
       }
 
     return *this;
+  }
+
+  OBMolAtomDFSIter OBMolAtomDFSIter::operator++(int)
+  {
+    OBMolAtomDFSIter tmp(*this);
+    operator++();
+    return tmp;
   }
 
   /** \class OBMolAtomBFSIter
@@ -243,7 +257,7 @@ namespace OpenBabel
   of macros in the obiter.h header file:
 
   \code
-  \#define FOR_BFS_OF_MOL(a,m)     for( OBMolAtomBFSIter     a(m); a; a++ )
+  \#define FOR_BFS_OF_MOL(a,m)     for( OBMolAtomBFSIter     a(m); a; ++a )
   \endcode
 
   Here is an example:
@@ -269,7 +283,7 @@ namespace OpenBabel
     _notVisited.Negate(); // all on
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBAtom *a;
 
     for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
@@ -286,7 +300,7 @@ namespace OpenBabel
     _notVisited.Negate(); // all on
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBAtom *a;
 
     for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
@@ -316,7 +330,7 @@ namespace OpenBabel
     return *this;
   }
 
-  OBMolAtomBFSIter OBMolAtomBFSIter::operator++(int)
+  OBMolAtomBFSIter& OBMolAtomBFSIter::operator++()
   {
     if (!_queue.empty())
       {
@@ -335,7 +349,7 @@ namespace OpenBabel
 
     if (_ptr)
       {
-        vector<OBEdgeBase*>::iterator i;
+        vector<OBBond*>::iterator i;
         OBAtom *a;
         
         for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
@@ -349,6 +363,13 @@ namespace OpenBabel
     return *this;
   }
 
+  OBMolAtomBFSIter OBMolAtomBFSIter::operator++(int)
+  {
+    OBMolAtomBFSIter tmp(*this);
+    operator++();
+    return tmp;
+  }
+
   /** \class OBMolBondIter
 
   To facilitate iteration through all bonds in a molecule, without resorting
@@ -359,7 +380,7 @@ namespace OpenBabel
   obiter.h header file:
 
   \code
-  \#define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; b++ )
+  \#define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; ++b )
   \endcode
 
   Here is an example:
@@ -409,10 +430,17 @@ namespace OpenBabel
     return *this;
   }
 
-  OBMolBondIter OBMolBondIter::operator++(int)
+  OBMolBondIter& OBMolBondIter::operator++()
   {
     _ptr = _parent->NextBond(_i);
     return *this;
+  }
+
+  OBMolBondIter OBMolBondIter::operator++(int)
+  {
+    OBMolBondIter tmp(*this);
+    operator++();
+    return tmp;
   }
 
   /** \class OBAtomAtomIter
@@ -425,7 +453,7 @@ namespace OpenBabel
   obiter.h header file:
 
   \code
-  \#define FOR_NBORS_OF_ATOM(a,p)     for( OBAtomAtomIter     a(p); a; a++ )
+  \#define FOR_NBORS_OF_ATOM(a,p)     for( OBAtomAtomIter     a(p); a; ++a )
   \endcode
 
   Here is an example:
@@ -477,10 +505,17 @@ namespace OpenBabel
     return *this;
   }
 
-  OBAtomAtomIter OBAtomAtomIter::operator++(int)
+  OBAtomAtomIter& OBAtomAtomIter::operator++()
   {
     _ptr = _parent->NextNbrAtom(_i);
     return *this;
+  }
+
+  OBAtomAtomIter OBAtomAtomIter::operator++(int)
+  {
+    OBAtomAtomIter tmp(*this);
+    operator++();
+    return tmp;
   }
 
   /** \class OBAtomBondIter
@@ -493,7 +528,7 @@ namespace OpenBabel
   obiter.h header file:
 
   \code
-  \#define FOR_BONDS_OF_ATOM(b,p)     for( OBAtomBondIter     b(p); b; b++ )
+  \#define FOR_BONDS_OF_ATOM(b,p)     for( OBAtomBondIter     b(p); b; ++b )
   \endcode
 
   Here is an example:
@@ -544,10 +579,17 @@ namespace OpenBabel
     return *this;
   }
 
-  OBAtomBondIter OBAtomBondIter::operator++(int)
+  OBAtomBondIter& OBAtomBondIter::operator++()
   {
     _ptr = _parent->NextBond(_i);
     return *this;
+  }
+
+  OBAtomBondIter OBAtomBondIter::operator++(int)
+  {
+    OBAtomBondIter tmp(*this);
+    operator++();
+    return tmp;
   }
 
   /** \class OBResidueIter
@@ -560,7 +602,7 @@ namespace OpenBabel
   obiter.h header file:
 
   \code
-  \#define FOR_RESIDUES_OF_MOL(a,m)     for( OBResidueIter     a(m); a; a++ )
+  \#define FOR_RESIDUES_OF_MOL(r,m)     for( OBResidueIter     r(m); r; ++r )
   \endcode
 
   Here is an example:
@@ -614,10 +656,17 @@ namespace OpenBabel
     return *this;
   }
 
-  OBResidueIter OBResidueIter::operator++(int)
+  OBResidueIter& OBResidueIter::operator++()
   {
     _ptr = _parent->NextResidue(_i);
     return *this;
+  }
+
+  OBResidueIter OBResidueIter::operator++(int)
+  {
+    OBResidueIter tmp(*this);
+    operator++();
+    return tmp;
   }
 
   /** \class OBResidueAtomIter
@@ -630,7 +679,7 @@ namespace OpenBabel
   obiter.h header file:
 
   \code
-  \#define FOR_ATOMS_OF_RESIDUE(a,r)     for( OBResidueAtomIter     a(r); a; a++ )
+  \#define FOR_ATOMS_OF_RESIDUE(a,r)     for( OBResidueAtomIter     a(r); a; ++a )
   \endcode
 
   Here is an example:
@@ -688,10 +737,17 @@ namespace OpenBabel
     return (*this);
   }
 
-  OBResidueAtomIter OBResidueAtomIter::operator++ (int)
+  OBResidueAtomIter& OBResidueAtomIter::operator++ ()
   {
     _ptr = _parent->NextAtom(_i);
     return (*this);
+  }
+
+  OBResidueAtomIter OBResidueAtomIter::operator++ (int)
+  {
+    OBResidueAtomIter tmp(*this);
+    operator++();
+    return tmp;
   }
 
 } // namespace OpenBabel

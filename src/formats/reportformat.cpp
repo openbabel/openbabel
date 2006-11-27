@@ -213,7 +213,7 @@ namespace OpenBabel
 
   void ReportFormat::WriteTorsions(ostream &ofs,OBMol &mol)
   {
-    vector<OBEdgeBase*>::iterator bi1,bi2,bi3;
+    vector<OBBond*>::iterator bi1,bi2,bi3;
     OBBond* bond;
     OBAtom *a,*b,*c,*d;
     char buffer[BUFF_SIZE];
@@ -250,7 +250,7 @@ namespace OpenBabel
     vector3 v1, v2;
     OBAtom *a, *b, *c, *d;
     OBBond *bond1, *bond2, *bond3;
-    vector<OBEdgeBase*>::iterator i, j, k;
+    vector<OBBond*>::iterator i, j, k;
     char buffer[BUFF_SIZE];
 
     for (bond1 = mol.BeginBond(i); bond1; bond1 = mol.NextBond(i))
@@ -297,7 +297,7 @@ namespace OpenBabel
   void ReportFormat::WriteChiral(ostream &ofs,OBMol &mol)
   {
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     char buffer[BUFF_SIZE];
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))

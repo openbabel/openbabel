@@ -160,7 +160,7 @@ namespace OpenBabel
 
     OBAtom *atom;
     char buffer[BUFF_SIZE];
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     snprintf(buffer, BUFF_SIZE, "%s\n",mol.GetTitle());
     ofs << buffer;
@@ -204,7 +204,7 @@ namespace OpenBabel
     dummy2.SetVector(1.0,0.0,0.0);
 
     OBAtom *atom,*a1,*a2,*ref;
-    vector<OBNodeBase*>::iterator ai;
+    vector<OBAtom*>::iterator ai;
 
     vit.push_back((OBInternalCoord*)NULL);
     for (atom = mol.BeginAtom(ai);atom;atom = mol.NextAtom(ai))

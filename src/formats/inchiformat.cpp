@@ -150,7 +150,7 @@ Write Options e.g. -xat \n \
     bool Is0D=true;
     OBAtom* patom;
     vector<inchi_Atom> inchiAtoms(mol.NumAtoms());
-    vector<OBNodeBase*>::iterator itr;
+    vector<OBAtom*>::iterator itr;
     for (patom = mol.BeginAtom(itr);patom;patom = mol.NextAtom(itr))
       {
         //OB atom index starts at 1; inchi atom index starts at 0
@@ -228,7 +228,7 @@ Write Options e.g. -xat \n \
                     stereo.central_atom = patom->GetIdx()-1;
                     stereo.type = INCHI_StereoType_Tetrahedral;
                     int i=0;
-                    vector<OBEdgeBase*>::iterator bitr;
+                    vector<OBBond*>::iterator bitr;
                     OBBond *pbond;
                     for (pbond = patom->BeginBond(bitr);pbond;pbond = patom->NextBond(bitr),++i)
                       stereo.neighbor[i] = pbond->GetNbrAtomIdx(&*patom)-1;

@@ -176,7 +176,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     int max_val;
     OBAtom *atom;
     char buffer[BUFF_SIZE];
@@ -226,7 +226,7 @@ namespace OpenBabel
     ofs<< "FORMAT CONECT (a6,12i6)\n\n";
 
     OBAtom *nbr;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       if (atom->GetValence())
         {

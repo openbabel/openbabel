@@ -76,7 +76,7 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
       
       if (vs.size() > 0)
         {
-          for (unsigned int i = 0; i < vs.size(); i++)
+          for (unsigned int i = 0; i < vs.size(); ++i)
             paths.push_back(vs[i]);
         }
     }
@@ -90,12 +90,12 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
    struct dirent **entries_pp;
    int count;
    
-   for (unsigned int i = 0; i < paths.size(); i++)
+   for (unsigned int i = 0; i < paths.size(); ++i)
    {
    currentPath = paths[i];
    count = scandir (currentPath.c_str(), &entries_pp, SCANDIR_T matchFiles, NULL);
    
-   for(int i=0; i<count; i++)
+   for(int i=0; i<count; ++i)
    {
    file_list.push_back(currentPath + getSeparator() + (entries_pp[i])->d_name);
    free(entries_pp[i]);
@@ -110,7 +110,7 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,const std::string
   DIR *dp;
   struct dirent *entry;
   
-  for (unsigned int i = 0; i < paths.size(); i++)
+  for (unsigned int i = 0; i < paths.size(); ++i)
     {
       currentPath=paths[i];
       

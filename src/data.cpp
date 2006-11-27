@@ -89,7 +89,7 @@ namespace OpenBabel
   OBElementTable::~OBElementTable()
   {
     vector<OBElement*>::iterator i;
-    for (i = _element.begin();i != _element.end();i++)
+    for (i = _element.begin();i != _element.end();++i)
       delete *i;
   }
 
@@ -305,7 +305,7 @@ namespace OpenBabel
       Init();
 
     vector<OBElement*>::iterator i;
-    for (i = _element.begin();i != _element.end();i++)
+    for (i = _element.begin();i != _element.end();++i)
       if (!strncasecmp(sym,(*i)->GetSymbol(),2))
         return((*i)->GetAtomicNum());
     if (strcasecmp(sym, "D") == 0)
@@ -376,7 +376,7 @@ namespace OpenBabel
       return 0.0;
 
     unsigned int iso;
-    for (iso = 0; iso < _isotopes[ele].size(); iso++)
+    for (iso = 0; iso < _isotopes[ele].size(); ++iso)
       if (isotope == _isotopes[ele][iso].first)
         return _isotopes[ele][iso].second;
 
@@ -478,7 +478,7 @@ namespace OpenBabel
     string tmp = from;
 
     unsigned int i;
-    for (i = 0;i < _colnames.size();i++)
+    for (i = 0;i < _colnames.size();++i)
       if (tmp == _colnames[i])
         {
           _from = i;
@@ -498,7 +498,7 @@ namespace OpenBabel
     string tmp = to;
 
     unsigned int i;
-    for (i = 0;i < _colnames.size();i++)
+    for (i = 0;i < _colnames.size();++i)
       if (tmp == _colnames[i])
         {
           _to = i;
@@ -541,7 +541,7 @@ namespace OpenBabel
         _from < _table.size() && _to < _table.size())
       {
         vector<vector<string> >::iterator i;
-        for (i = _table.begin();i != _table.end();i++)
+        for (i = _table.begin();i != _table.end();++i)
           if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
             {
               to = (*i)[_to];
@@ -567,7 +567,7 @@ namespace OpenBabel
         _from < _table.size() && _to < _table.size())
       {
         vector<vector<string> >::iterator i;
-        for (i = _table.begin();i != _table.end();i++)
+        for (i = _table.begin();i != _table.end();++i)
           if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
             {
               return (*i)[_to];
@@ -604,14 +604,14 @@ namespace OpenBabel
   void Toupper(string &s)
   {
     unsigned int i;
-    for (i = 0;i < s.size();i++)
+    for (i = 0;i < s.size();++i)
       s[i] = toupper(s[i]);
   }
 
   void Tolower(string &s)
   {
     unsigned int i;
-    for (i = 0;i < s.size();i++)
+    for (i = 0;i < s.size();++i)
       s[i] = tolower(s[i]);
   }
 
@@ -633,7 +633,7 @@ namespace OpenBabel
 
     OBAtom *a1,*a2;
     OBResidue *r1,*r2;
-    vector<OBNodeBase*>::iterator i,j;
+    vector<OBAtom*>::iterator i,j;
     vector3 v;
 
     int bo;
@@ -777,7 +777,7 @@ namespace OpenBabel
 
     unsigned int i;
 
-    for (i = 0;i < _resname.size();i++)
+    for (i = 0;i < _resname.size();++i)
       if (_resname[i] == s)
         {
           _resnum = i;
@@ -794,7 +794,7 @@ namespace OpenBabel
       return(0);
 
     unsigned int i;
-    for (i = 0;i < _resbonds[_resnum].size();i++)
+    for (i = 0;i < _resbonds[_resnum].size();++i)
       if (_resbonds[_resnum][i].first == s)
         return(_resbonds[_resnum][i].second);
 
@@ -810,7 +810,7 @@ namespace OpenBabel
     s = (s1 < s2) ? s1 + " " + s2 : s2 + " " + s1;
 
     unsigned int i;
-    for (i = 0;i < _resbonds[_resnum].size();i++)
+    for (i = 0;i < _resbonds[_resnum].size();++i)
       if (_resbonds[_resnum][i].first == s)
         return(_resbonds[_resnum][i].second);
 
@@ -904,7 +904,7 @@ namespace OpenBabel
       if (_dataptr)
         {
           const char *p1,*p2;
-          for (p1 = p2 = _dataptr;*p2 != '\0';p2++)
+          for (p1 = p2 = _dataptr;*p2 != '\0';++p2)
             if (*p2 == '\n')
               {
                 strncpy(charBuffer, p1, (p2 - p1));

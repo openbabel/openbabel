@@ -124,7 +124,7 @@ namespace OpenBabel
       }
 		unsigned int i; 
     double x=0,y=0,z=0;
-    for (i = 0;i < size;i++)
+    for (i = 0;i < size;++i)
       {
         x += c[i*3];
         y += c[i*3+1];
@@ -133,7 +133,7 @@ namespace OpenBabel
     x /= (double) size;
     y /= (double) size;
     z /= (double) size;
-    for (i = 0;i < size;i++)
+    for (i = 0;i < size;++i)
       {
         c[i*3]   -= x;
         c[i*3+1] -= y;
@@ -148,7 +148,7 @@ namespace OpenBabel
   OBAPI void rotate_coords(double *c,double m[3][3],unsigned int size)
   {
     double x,y,z;
-    for (unsigned int i = 0;i < size;i++)
+    for (unsigned int i = 0;i < size;++i)
       {
         x = c[i*3]*m[0][0] + c[i*3+1]*m[0][1] + c[i*3+2]*m[0][2];
         y = c[i*3]*m[1][0] + c[i*3+1]*m[1][1] + c[i*3+2]*m[1][2];
@@ -166,7 +166,7 @@ namespace OpenBabel
       return 0.0f; // no RMS deviation between two empty sets
 
     double d2=0.0;
-    for (unsigned int i = 0;i < N;i++)
+    for (unsigned int i = 0;i < N;++i)
       {
         d2 += SQUARE(r[i*3] - f[i*3]) +
           SQUARE(r[i*3+1] - f[i*3+1]) +
@@ -262,7 +262,7 @@ namespace OpenBabel
     tz = c[tor[1]+2];
     vector<int>::iterator i;
     int j;
-    for (i = atoms.begin();i != atoms.end();i++)
+    for (i = atoms.begin();i != atoms.end();++i)
       {
         j = *i;
         c[j] -= tx;
@@ -351,7 +351,7 @@ namespace OpenBabel
     if (s.empty())
       return;
     unsigned int i;
-    for (i = 0;i < s.size();i++)
+    for (i = 0;i < s.size();++i)
       if (isalpha(s[i]) && !isdigit(s[i]))
         s[i] = toupper(s[i]);
   }
@@ -360,7 +360,7 @@ namespace OpenBabel
   OBAPI void ToUpper(char *cptr)
   {
     char *c;
-    for (c = cptr;*c != '\0';c++)
+    for (c = cptr;*c != '\0';++c)
       if (isalpha(*c) && !isdigit(*c))
         *c = toupper(*c);
   }
@@ -371,7 +371,7 @@ namespace OpenBabel
     if (s.empty())
       return;
     unsigned int i;
-    for (i = 0;i < s.size();i++)
+    for (i = 0;i < s.size();++i)
       if (isalpha(s[i]) && !isdigit(s[i]))
         s[i] = tolower(s[i]);
   }
@@ -380,7 +380,7 @@ namespace OpenBabel
   OBAPI void ToLower(char *cptr)
   {
     char *c;
-    for (c = cptr;*c != '\0';c++)
+    for (c = cptr;*c != '\0';++c)
       if (isalpha(*c) && !isdigit(*c))
         *c = tolower(*c);
   }
@@ -408,7 +408,7 @@ namespace OpenBabel
     vector3 n,nn,v1,v2,v3,avec,bvec,cvec;
     double dst = 0.0, ang = 0.0, tor = 0.0;
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     int index;
 
     if (vic.empty())
@@ -494,7 +494,7 @@ namespace OpenBabel
   {
     double r,sum;
     OBAtom *atom,*nbr,*ref;
-    vector<OBNodeBase*>::iterator i,j,m;
+    vector<OBAtom*>::iterator i,j,m;
 
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::CartesianToInternal", obAuditMsg);
@@ -562,7 +562,7 @@ namespace OpenBabel
     unsigned int k;
     vector3 v1,v2;
     OBAtom *a,*b,*c;
-    for (k = 2;k <= mol.NumAtoms();k++)
+    for (k = 2;k <= mol.NumAtoms();++k)
       {
         atom = mol.GetAtom(k);
         a = vic[k]->_a;
@@ -587,7 +587,7 @@ namespace OpenBabel
     //check for linear geometries and try to correct if possible
     bool done;
     double ang;
-    for (k = 2;k <= mol.NumAtoms();k++)
+    for (k = 2;k <= mol.NumAtoms();++k)
       {
         ang = fabs(vic[k]->_ang);
         if (ang > 5.0 && ang < 175.0)
@@ -645,7 +645,7 @@ namespace OpenBabel
     xzyy = 0.0;
     xzyz = 0.0;
 
-    for (i = 0; i < size; i++)
+    for (i = 0; i < size; ++i)
       {
         rx = r[i*3];
         ry = r[i*3+1];
@@ -843,23 +843,23 @@ namespace OpenBabel
 
     memset((char*)d,'\0',sizeof(double)*3);
 
-    for (j = 0; j < 3; j++)
+    for (j = 0; j < 3; ++j)
       {
-        for (i = 0; i < 3; i++)
+        for (i = 0; i < 3; ++i)
           v[i][j] = 0.0;
 
         v[j][j] = 1.0;
         d[j] = a[j][j];
       }
 
-    for (l = 1; l <= MAX_SWEEPS; l++)
+    for (l = 1; l <= MAX_SWEEPS; ++l)
       {
         dnorm = 0.0;
         onorm = 0.0;
-        for (j = 0; j < 3; j++)
+        for (j = 0; j < 3; ++j)
           {
             dnorm = dnorm + (double)fabs(d[j]);
-            for (i = 0; i <= j - 1; i++)
+            for (i = 0; i <= j - 1; ++i)
               {
                 onorm = onorm + (double)fabs(a[i][j]);
               }
@@ -867,9 +867,9 @@ namespace OpenBabel
 
         if((onorm/dnorm) <= 1.0e-12)
           goto Exit_now;
-        for (j = 1; j < 3; j++)
+        for (j = 1; j < 3; ++j)
           {
-            for (i = 0; i <= j - 1; i++)
+            for (i = 0; i <= j - 1; ++i)
               {
                 b = a[i][j];
                 if(fabs(b) > 0.0)
@@ -887,25 +887,25 @@ namespace OpenBabel
                     c = 1.0/(double)sqrt(t * t + 1.0);
                     s = t * c;
                     a[i][j] = 0.0;
-                    for (k = 0; k <= i-1; k++)
+                    for (k = 0; k <= i-1; ++k)
                       {
                         atemp = c * a[k][i] - s * a[k][j];
                         a[k][j] = s * a[k][i] + c * a[k][j];
                         a[k][i] = atemp;
                       }
-                    for (k = i+1; k <= j-1; k++)
+                    for (k = i+1; k <= j-1; ++k)
                       {
                         atemp = c * a[i][k] - s * a[k][j];
                         a[k][j] = s * a[i][k] + c * a[k][j];
                         a[i][k] = atemp;
                       }
-                    for (k = j+1; k < 3; k++)
+                    for (k = j+1; k < 3; ++k)
                       {
                         atemp = c * a[i][k] - s * a[j][k];
                         a[j][k] = s * a[i][k] + c * a[j][k];
                         a[i][k] = atemp;
                       }
-                    for (k = 0; k < 3; k++)
+                    for (k = 0; k < 3; ++k)
                       {
                         vtemp = c * v[k][i] - s * v[k][j];
                         v[k][j] = s * v[k][i] + c * v[k][j];
@@ -923,11 +923,11 @@ namespace OpenBabel
 
     /* max_sweeps = l;*/
 
-    for (j = 0; j < 3-1; j++)
+    for (j = 0; j < 3-1; ++j)
       {
         k = j;
         dtemp = d[k];
-        for (i = j+1; i < 3; i++)
+        for (i = j+1; i < 3; ++i)
           if(d[i] < dtemp)
             {
               k = i;
@@ -938,7 +938,7 @@ namespace OpenBabel
           {
             d[k] = d[j];
             d[j] = dtemp;
-            for (i = 0; i < 3 ; i++)
+            for (i = 0; i < 3 ; ++i)
               {
                 dtemp = v[i][k];
                 v[i][k] = v[i][j];
@@ -1019,11 +1019,11 @@ namespace OpenBabel
     double mat[3][3],rmat[3][3],mat2[3][3],roots[3];
 
     /* make inertial cross tensor */
-    for(i=0;i<3;i++)
-      for(j=0;j<3;j++)
+    for(i=0;i<3;++i)
+      for(j=0;j<3;++j)
         mat[i][j]=0.0;
 
-    for(i=0;i < size;i++)
+    for(i=0;i < size;++i)
       {
         mat[0][0]+=r[3*i]  *f[3*i];
         mat[1][0]+=r[3*i+1]*f[3*i];
@@ -1042,8 +1042,8 @@ namespace OpenBabel
 
 
     /* square matrix= ((mat transpose) * mat) */
-    for(i=0;i<3;i++)
-      for(j=0;j<3;j++)
+    for(i=0;i<3;++i)
+      for(j=0;j<3;++j)
         {
           x=mat[0][i]*mat[0][j]+mat[1][i]*mat[1][j]+mat[2][i]*mat[2][j];
           mat2[i][j]=mat[i][j];
@@ -1071,22 +1071,22 @@ namespace OpenBabel
           roots[2]*=-1.0;
       }
 
-    for(i=0;i<3;i++)
-      for(j=0;j<3;j++)
+    for(i=0;i<3;++i)
+      for(j=0;j<3;++j)
         mat[i][j]=roots[0]*rmat[i][0]*rmat[j][0]+
           roots[1]*rmat[i][1]*rmat[j][1]+
           roots[2]*rmat[i][2]*rmat[j][2];
 
     /* and multiply into original inertial cross matrix, mat2 */
-    for(i=0;i<3;i++)
-      for(j=0;j<3;j++)
+    for(i=0;i<3;++i)
+      for(j=0;j<3;++j)
         rmat[i][j]=mat[0][j]*mat2[i][0]+
           mat[1][j]*mat2[i][1]+
           mat[2][j]*mat2[i][2];
 
     /* rotate all coordinates */
     d2 = 0.0;
-    for(i=0;i<size;i++)
+    for(i=0;i<size;++i)
       {
         x=f[3*i]*rmat[0][0]+f[3*i+1]*rmat[0][1]+f[3*i+2]*rmat[0][2];
         y=f[3*i]*rmat[1][0]+f[3*i+1]*rmat[1][1]+f[3*i+2]*rmat[1][2];
@@ -1113,11 +1113,11 @@ namespace OpenBabel
     double mat[3][3],rmat[3][3],mat2[3][3],roots[3];
 
     /* make inertial cross tensor */
-    for(i=0;i<3;i++)
-      for(j=0;j<3;j++)
+    for(i=0;i<3;++i)
+      for(j=0;j<3;++j)
         mat[i][j]=0.0;
 
-    for(i=0;i < size;i++)
+    for(i=0;i < size;++i)
       {
         mat[0][0]+=r[3*i]  *f[3*i];
         mat[1][0]+=r[3*i+1]*f[3*i];
@@ -1135,8 +1135,8 @@ namespace OpenBabel
       +mat[0][2]*(mat[1][0]*mat[2][1]-mat[1][1]*mat[2][0]);
 
     /* square matrix= ((mat transpose) * mat) */
-    for(i=0;i<3;i++)
-      for(j=0;j<3;j++)
+    for(i=0;i<3;++i)
+      for(j=0;j<3;++j)
         {
           x=mat[0][i]*mat[0][j]+mat[1][i]*mat[1][j]+mat[2][i]*mat[2][j];
           mat2[i][j]=mat[i][j];
@@ -1164,15 +1164,15 @@ namespace OpenBabel
           roots[2]*=-1.0;
       }
 
-    for(i=0;i<3;i++)
-      for(j=0;j<3;j++)
+    for(i=0;i<3;++i)
+      for(j=0;j<3;++j)
         mat[i][j]=roots[0]*rmat[i][0]*rmat[j][0]+
           roots[1]*rmat[i][1]*rmat[j][1]+
           roots[2]*rmat[i][2]*rmat[j][2];
 
     /* and multiply into original inertial cross matrix, mat2 */
-    for(i=0;i<3;i++)
-      for(j=0;j<3;j++)
+    for(i=0;i<3;++i)
+      for(j=0;j<3;++j)
         rmat[i][j]=mat[0][j]*mat2[i][0]+
           mat[1][j]*mat2[i][1]+
           mat[2][j]*mat2[i][2];

@@ -94,7 +94,7 @@ namespace OpenBabel
     ofs << "ID xyz_coordinates             anum sym	chrg rflag\n";
 
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         // 16 = sizeof(type_name)
@@ -122,7 +122,7 @@ namespace OpenBabel
 
     char bstr[16];
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {
         switch (bond->GetBO())

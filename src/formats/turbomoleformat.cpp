@@ -161,7 +161,7 @@ bool TurbomoleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     char buff[BUFF_SIZE];
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
       char symb[8];

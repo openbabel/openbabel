@@ -1075,7 +1075,7 @@ Input options, e.g. -a2\n \
             double X, Y, Z; //atom coordinates
 
             OBAtom *patom;
-            vector<OBNodeBase*>::iterator i;
+            vector<OBAtom*>::iterator i;
             for (patom = mol.BeginAtom(i);patom;patom = mol.NextAtom(i))
               {
                 string el(etab.GetSymbol(patom->GetAtomicNum()));
@@ -1334,7 +1334,7 @@ Input options, e.g. -a2\n \
         strstream ref1, ref2, ord;
 #endif
         OBBond *pbond;
-        vector<OBEdgeBase*>::iterator ib;
+        vector<OBBond*>::iterator ib;
         for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
           {
             int bo = pbond->GetBO();

@@ -50,7 +50,8 @@ namespace OpenBabel
 
     OBMolAtomIter& operator=(const OBMolAtomIter &ai);
     operator bool() const        { return _ptr != NULL; }
-    OBMolAtomIter operator++(int);
+    OBMolAtomIter& operator++();
+    OBMolAtomIter  operator++(int);
     OBAtom* operator->() const   { return _ptr;      }
     OBAtom& operator*() const    { return *_ptr;     }
   };
@@ -70,7 +71,8 @@ namespace OpenBabel
 
     OBMolAtomDFSIter& operator=(const OBMolAtomDFSIter &ai);
     operator bool() const        { return _ptr != NULL; }
-    OBMolAtomDFSIter operator++(int);
+    OBMolAtomDFSIter& operator++();
+    OBMolAtomDFSIter  operator++(int);
     OBAtom* operator->() const   { return _ptr;      }
     OBAtom& operator*() const    { return *_ptr;     }
   };
@@ -90,7 +92,8 @@ namespace OpenBabel
 
     OBMolAtomBFSIter& operator=(const OBMolAtomBFSIter &ai);
     operator bool() const        { return _ptr != NULL; }
-    OBMolAtomBFSIter operator++(int);
+    OBMolAtomBFSIter& operator++();
+    OBMolAtomBFSIter  operator++(int);
     OBAtom* operator->() const   { return _ptr;      }
     OBAtom& operator*() const    { return *_ptr;     }
   };
@@ -109,7 +112,8 @@ namespace OpenBabel
 
     OBMolBondIter& operator=(const OBMolBondIter &bi);
     operator bool() const        { return _ptr != NULL; }
-    OBMolBondIter operator++(int);
+    OBMolBondIter& operator++();
+    OBMolBondIter  operator++(int);
     OBBond* operator->() const   { return _ptr;      }
     OBBond& operator*() const    { return *_ptr;     }
   };
@@ -128,7 +132,8 @@ namespace OpenBabel
 
     OBAtomAtomIter& operator=(const OBAtomAtomIter &ai);
     operator bool() const        { return _ptr != NULL; }
-    OBAtomAtomIter operator++(int);
+    OBAtomAtomIter& operator++();
+    OBAtomAtomIter  operator++(int);
     OBAtom* operator->() const   { return _ptr; }
     OBAtom& operator*() const    { return *_ptr;}
   };
@@ -147,7 +152,8 @@ namespace OpenBabel
 
     OBAtomBondIter& operator=(const OBAtomBondIter &bi);
     operator bool() const        { return _ptr != NULL; }
-    OBAtomBondIter operator++(int);
+    OBAtomBondIter& operator++();
+    OBAtomBondIter  operator++(int);
     OBBond* operator->() const   { return _ptr; }
     OBBond& operator*() const    { return *_ptr;}
   };
@@ -166,7 +172,8 @@ namespace OpenBabel
 
     OBResidueIter& operator=(const OBResidueIter &ri);
     operator bool() const        { return _ptr != NULL; }
-    OBResidueIter operator++(int);
+    OBResidueIter& operator++();
+    OBResidueIter  operator++(int);
     OBResidue* operator->() const{ return _ptr; }
     OBResidue& operator*() const { return *_ptr;}
   };
@@ -185,19 +192,20 @@ namespace OpenBabel
 
     OBResidueAtomIter &operator = (const OBResidueAtomIter &ri);
     operator bool() const        { return _ptr != NULL; }
-    OBResidueAtomIter operator++ (int);
+    OBResidueAtomIter& operator++ ();
+    OBResidueAtomIter  operator++ (int);
     OBAtom *operator->() const   { return _ptr; }
     OBAtom &operator*() const    { return *_ptr;}
   };
 
-#define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; a++ )
-#define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; b++ )
-#define FOR_NBORS_OF_ATOM(a,p)    for( OBAtomAtomIter    a(p); a; a++ )
-#define FOR_BONDS_OF_ATOM(b,p)    for( OBAtomBondIter    b(p); b; b++ )
-#define FOR_RESIDUES_OF_MOL(r,m)  for( OBResidueIter     r(m); r; r++ )
-#define FOR_ATOMS_OF_RESIDUE(a,r) for( OBResidueAtomIter a(r); a; a++ )
-#define FOR_DFS_OF_MOL(a,m)       for( OBMolAtomDFSIter  a(m); a; a++ )
-#define FOR_BFS_OF_MOL(a,m)       for( OBMolAtomBFSIter  a(m); a; a++ )
+#define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; ++a )
+#define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; ++b )
+#define FOR_NBORS_OF_ATOM(a,p)    for( OBAtomAtomIter    a(p); a; ++a )
+#define FOR_BONDS_OF_ATOM(b,p)    for( OBAtomBondIter    b(p); b; ++b )
+#define FOR_RESIDUES_OF_MOL(r,m)  for( OBResidueIter     r(m); r; ++r )
+#define FOR_ATOMS_OF_RESIDUE(a,r) for( OBResidueAtomIter a(r); a; ++a )
+#define FOR_DFS_OF_MOL(a,m)       for( OBMolAtomDFSIter  a(m); a; ++a )
+#define FOR_BFS_OF_MOL(a,m)       for( OBMolAtomBFSIter  a(m); a; ++a )
 
 } // namespace OpenBabel
 #endif // OB_OBITER_H

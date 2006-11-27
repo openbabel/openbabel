@@ -41,118 +41,118 @@ using namespace OpenBabel;
 
 int main(int argc,char **argv)
 {
-    char *program_name= argv[0];
-    char *FileIn = NULL;
+  char *program_name= argv[0];
+  char *FileIn = NULL;
 
-    if (argc != 2)
+  if (argc != 2)
     {
-        cout << "Usage: " << program_name << " <filename>" << endl;
-        exit(-1);
+      cout << "Usage: " << program_name << " <filename>" << endl;
+      exit(-1);
     }
-    else
+  else
     {
-        FileIn  = argv[1];
-	const char* p = strrchr(FileIn,'.');
+      FileIn  = argv[1];
+      const char* p = strrchr(FileIn,'.');
     }
 
-    // Find Input filetype
-    OBConversion conv;
-    OBFormat *format = conv.FormatFromExt(FileIn);
+  // Find Input filetype
+  OBConversion conv;
+  OBFormat *format = conv.FormatFromExt(FileIn);
     
-    if (!format || !conv.SetInAndOutFormats(format, format))
+  if (!format || !conv.SetInAndOutFormats(format, format))
     {
-        cerr << program_name << ": cannot read input format!" << endl;
-        exit (-1);
+      cerr << program_name << ": cannot read input format!" << endl;
+      exit (-1);
     }
 
-    ifstream ifs;
+  ifstream ifs;
 
-    // Read the file
-    ifs.open(FileIn);
-    if (!ifs)
+  // Read the file
+  ifs.open(FileIn);
+  if (!ifs)
     {
-        cerr << program_name << ": cannot read input file!" << endl;
-        exit (-1);
+      cerr << program_name << ": cannot read input file!" << endl;
+      exit (-1);
     }
 
-    OBMol mol;
-    OBAtom *atom;
+  OBMol mol;
+  OBAtom *atom;
 
-    for (int c=1;;c++) // big for loop (replace with do while?)
+  for (int c=1;;++c) // big for loop (replace with do while?)
     {
-        mol.Clear();
-	conv.Read(&mol, &ifs);
-        if (mol.Empty())
-            break;
-   cout << "Molecule "<< c << ": " << mol.GetTitle() << endl;
-   mol.FindChiralCenters(); // labels all chiral atoms
-   vector<OBNodeBase*>::iterator i; // iterate over all atoms
-    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    {
-    if(!atom->IsChiral())continue; // aborts if atom isn't chiral
-        cout << "Atom " << atom->GetIdx() << " Is Chiral ";
-        cout << atom->GetType()<<endl;
+      mol.Clear();
+      conv.Read(&mol, &ifs);
+      if (mol.Empty())
+        break;
+      cout << "Molecule "<< c << ": " << mol.GetTitle() << endl;
+      mol.FindChiralCenters(); // labels all chiral atoms
+      vector<OBAtom*>::iterator i; // iterate over all atoms
+      for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+        {
+          if(!atom->IsChiral())continue; // aborts if atom isn't chiral
+          cout << "Atom " << atom->GetIdx() << " Is Chiral ";
+          cout << atom->GetType()<<endl;
         
-        OBChiralData* cd = (OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
+          OBChiralData* cd = (OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
         
-        if (cd){
-           vector<unsigned int> x=cd->GetAtom4Refs(input);
-           int n=0;
-           cout <<"Atom4refs:";
-           for (n=0;n<x.size();n++)
-           cout <<" "<<x[n];
-           cout <<endl;
-           }
-        else{cd=new OBChiralData;atom->SetData(cd);}
-        vector<unsigned int> _output;
-        unsigned int n;
-        for(n=1;n<5;n++) _output.push_back(n);
-        cd->SetAtom4Refs(_output,output);
-        /* // MOLV3000 uses 1234 unless an H then 123H
+          if (cd){
+            vector<unsigned int> x=cd->GetAtom4Refs(input);
+            int n=0;
+            cout <<"Atom4refs:";
+            for (n=0;n<x.size();++n)
+              cout <<" "<<x[n];
+            cout <<endl;
+          }
+          else{cd=new OBChiralData;atom->SetData(cd);}
+          vector<unsigned int> _output;
+          unsigned int n;
+          for(n=1;n<5;++n) _output.push_back(n);
+          cd->SetAtom4Refs(_output,output);
+          /* // MOLV3000 uses 1234 unless an H then 123H
              if (atom->GetHvyValence()==3)
              {
-                OBAtom *nbr;
-                int Hid=1000;// max Atom ID +1 should be used here
-                vector<unsigned int> nbr_atms;
-                vector<OBEdgeBase*>::iterator i;
-                for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-                {
-                    if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
-                    nbr_atms.push_back(nbr->GetIdx());
-                }
-                sort(nbr_atms.begin(),nbr_atms.end());
-                nbr_atms.push_back(Hid);
-                OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
-                cd->SetAtom4Refs(nbr_atms,output);   
+             OBAtom *nbr;
+             int Hid=1000;// max Atom ID +1 should be used here
+             vector<unsigned int> nbr_atms;
+             vector<OBBond*>::iterator i;
+             for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
+             {
+             if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
+             nbr_atms.push_back(nbr->GetIdx());
+             }
+             sort(nbr_atms.begin(),nbr_atms.end());
+             nbr_atms.push_back(Hid);
+             OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
+             cd->SetAtom4Refs(nbr_atms,output);   
              } 
              else if (atom->GetHvyValence()==4)
              {
-                OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
-                vector<unsigned int> nbr_atms;
-                int n;
-                for(n=1;n<5;n++)nbr_atms.push_back(n);
-                cd->SetAtom4Refs(nbr_atms,output); 
+             OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
+             vector<unsigned int> nbr_atms;
+             int n;
+             for(n=1;n<5;++n)nbr_atms.push_back(n);
+             cd->SetAtom4Refs(nbr_atms,output); 
              } */
               
-        if (!mol.HasNonZeroCoords())
-        {
-           cout << "Calcing 0D chirality "<< CorrectChirality(mol,atom)<<endl;
-        }
-        else {
-             cout << "Volume= "<< CalcSignedVolume(mol,atom) << endl;
-             OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
-             int n;
-             vector<unsigned int> refs=cd->GetAtom4Refs(output);
-             cout<<"Atom refs=";
-             for(n=0;n<refs.size();n++)cout<<" "<<refs[n];
-             cout<<endl;
-             }
-        cout << "Clockwise? " << atom->IsClockwise() << endl;
-     } // end iterating over atoms
+          if (!mol.HasNonZeroCoords())
+            {
+              cout << "Calcing 0D chirality "<< CorrectChirality(mol,atom)<<endl;
+            }
+          else {
+            cout << "Volume= "<< CalcSignedVolume(mol,atom) << endl;
+            OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
+            int n;
+            vector<unsigned int> refs=cd->GetAtom4Refs(output);
+            cout<<"Atom refs=";
+            for(n=0;n<refs.size();++n)cout<<" "<<refs[n];
+            cout<<endl;
+          }
+          cout << "Clockwise? " << atom->IsClockwise() << endl;
+        } // end iterating over atoms
 
     } // end big for loop
 
-    return(0);
+  return(0);
 } // end main
 
 

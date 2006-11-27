@@ -178,7 +178,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
     OBAtom *nbr;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     string type, temp;
     int nbrIdx, atomIdx;
 

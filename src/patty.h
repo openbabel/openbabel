@@ -59,7 +59,7 @@ public :
     ~patty()
     {
         std::vector<OBSmartsPattern*>::iterator i;
-        for (i = _sp.begin();i != _sp.end();i++)
+        for (i = _sp.begin();i != _sp.end();++i)
             delete *i;
     }
     void debug_on()

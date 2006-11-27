@@ -1,3 +1,15 @@
+2006-11-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/*.cpp: Update to switch from OBNodeBase and OBEdgeBase
+	iterators to OBAtom and OBBond respectively. Follows on 2006-11-20
+	change contributed by Gerd Menche. Switch many iterators to
+	preincrement for minor optimization.
+
+	* tools/*.cpp: Ditto.
+
+	* scripts/*: Regenerate for continuing API changes (e.g., vector3,
+	etc.)
+
 2006-11-27  Benoit Jacob <jacob@math.jussieu.fr>
 
 	* src/math/vector3.h, src/math/vector3.cpp: Remove some inline
@@ -16,13 +28,15 @@
 
 	* src/math/matrix3x3.h, src/math/matrix3x3.h: Use it.
 
-	* Doxyfile: Update for 2.1.0b3 snapshot and current Doxygen version (1.5.1).
+	* Doxyfile: Update for 2.1.0b3 snapshot and current Doxygen
+	version (1.5.1).
 
-	* src/rotamer.h, src/rotamer.cpp, src/rotor.h, src/rotor.cpp: First step at
-	documentation updates on rotamer/conformer generation routines.
+	* src/rotamer.h, src/rotamer.cpp, src/rotor.h, src/rotor.cpp:
+	First step at documentation updates on rotamer/conformer
+	generation routines.
 
-	* src/fingerprint.cpp, src/tokenst.cpp, src/generic.h: Eliminate minor Doxygen
-	warnings.
+	* src/fingerprint.cpp, src/tokenst.cpp, src/generic.h: Eliminate
+	minor Doxygen warnings.
 
 	* src/data.h, src/data.cpp (OBTypeTable::Translate): Add new
 	method for returning the translated string as a value --

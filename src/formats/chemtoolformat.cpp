@@ -83,7 +83,7 @@ namespace OpenBabel
     // get the geometry
     w = 0;
     h = 0;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
       {
         x = (int)(atom->GetX()) * conv_factor;
@@ -99,7 +99,7 @@ namespace OpenBabel
 
     // write out bonds
     ofs << "bonds "<< mol.NumBonds() << endl;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     for(bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
       {
         bondtype = 0;

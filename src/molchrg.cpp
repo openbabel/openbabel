@@ -62,7 +62,7 @@ bool OBGastChrg::AssignPartialCharges(OBMol &mol)
                           "Ran OpenBabel::AssignPartialCharges", obAuditMsg);
 
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     GSVResize(mol.NumAtoms()+1);
     double a,b,c;
@@ -78,13 +78,13 @@ bool OBGastChrg::AssignPartialCharges(OBMol &mol)
     int iter;
     OBBond *bond;
     OBAtom *src,*dst;
-    vector<OBEdgeBase*>::iterator k;
+    vector<OBBond*>::iterator k;
     alpha = 1.0;
-    for(iter = 0;iter < OB_GASTEIGER_ITERS;iter++)
+    for(iter = 0;iter < OB_GASTEIGER_ITERS;++iter)
     {
         alpha *= OB_GASTEIGER_DAMP;
 
-        for( j=1;j < _gsv.size();j++)
+        for( j=1;j < _gsv.size();++j)
         {
             charge = _gsv[j]->q;
             _gsv[j]->chi = (_gsv[j]->c*charge+_gsv[j]->b)*charge+_gsv[j]->a;
@@ -125,7 +125,7 @@ bool OBGastChrg::AssignPartialCharges(OBMol &mol)
 void OBGastChrg::InitialPartialCharges(OBMol &mol)
 {
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
@@ -290,18 +290,18 @@ bool OBGastChrg::GasteigerSigmaChi(OBAtom *atom,double &a,double &b,double &c )
 void OBGastChrg::GSVResize(int size)
 {
     vector <GasteigerState*>::iterator i;
-    for (i = _gsv.begin();i != _gsv.end();i++)
+    for (i = _gsv.begin();i != _gsv.end();++i)
         delete *i;
     _gsv.clear();
 
-    for (int j = 0;j < size;j++)
+    for (int j = 0;j < size;++j)
         _gsv.push_back(new GasteigerState);
 }
 
 OBGastChrg::~OBGastChrg()
 {
     vector <GasteigerState*>::iterator i;
-    for (i = _gsv.begin();i != _gsv.end();i++)
+    for (i = _gsv.begin();i != _gsv.end();++i)
         delete *i;
 }
 

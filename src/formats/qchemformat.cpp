@@ -185,7 +185,7 @@ bool QChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 //           coord = new OBInternalCoord();
 //           internals.push_back(coord);
 //           index = 1;
-//           vector<OBNodeBase*>::iterator i;
+//           vector<OBAtom*>::iterator i;
 //           for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
 //                 tokenize(vs,buffer);
 //                 atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));

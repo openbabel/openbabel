@@ -236,8 +236,8 @@ namespace OpenBabel
 
  
     // update neighbour bonds information for each atom.
-    vector<OBNodeBase*>::iterator apos;
-    vector<OBEdgeBase*>::iterator bpos;
+    vector<OBAtom*>::iterator apos;
+    vector<OBBond*>::iterator bpos;
     OBAtom* patom;
     OBBond* pbond;
     
@@ -328,7 +328,7 @@ namespace OpenBabel
     OBAtom *atom;
     OBResidue *res;
 
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
     vector<int> labelcount;
     labelcount.resize( etab.GetNumberOfElements() );
 
@@ -375,7 +375,7 @@ namespace OpenBabel
 
     ofs << "@<TRIPOS>BOND" << endl;
     OBBond *bond;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
     OBSmartsPattern pat;
     string s1, s2;
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))

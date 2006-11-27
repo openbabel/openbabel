@@ -189,7 +189,7 @@ namespace OpenBabel
     deque<OBError>::iterator i;
     OBError error;
 
-    for (i = _messageList.begin(); i != _messageList.end(); i++)
+    for (i = _messageList.begin(); i != _messageList.end(); ++i)
       {
         error = (*i);
         if (error.GetLevel() == level)

@@ -48,11 +48,11 @@ OBPhModel::OBPhModel()
 OBPhModel::~OBPhModel()
 {
     vector<OBChemTsfm*>::iterator k;
-    for (k = _vtsfm.begin();k != _vtsfm.end();k++)
+    for (k = _vtsfm.begin();k != _vtsfm.end();++k)
         delete *k;
 
     vector<pair<OBSmartsPattern*,vector<double> > >::iterator m;
-    for (m = _vschrg.begin();m != _vschrg.end();m++)
+    for (m = _vschrg.begin();m != _vschrg.end();++m)
         delete m->first;
 }
 
@@ -104,7 +104,7 @@ void OBPhModel::ParseLine(const char *buffer)
 
         vector<double> vf;
         vector<string>::iterator i;
-        for (i = vs.begin()+2;i != vs.end();i++)
+        for (i = vs.begin()+2;i != vs.end();++i)
             vf.push_back(atof((char*)i->c_str()));
 
         _vschrg.push_back(pair<OBSmartsPattern*,vector<double> > (sp,vf));
@@ -121,15 +121,15 @@ void OBPhModel::AssignSeedPartialCharge(OBMol &mol)
         return;
 
     vector<pair<OBSmartsPattern*,vector<double> > >::iterator i;
-    for (i = _vschrg.begin();i != _vschrg.end();i++)
+    for (i = _vschrg.begin();i != _vschrg.end();++i)
         if (i->first->Match(mol))
         {
             _mlist = i->first->GetUMapList();
             unsigned int k;
             vector<vector<int> >::iterator j;
 
-            for (j = _mlist.begin();j != _mlist.end();j++)
-                for (k = 0;k < j->size();k++)
+            for (j = _mlist.begin();j != _mlist.end();++j)
+                for (k = 0;k < j->size();++k)
                     mol.GetAtom((*j)[k])->SetPartialCharge(i->second[k]);
         }
 }
@@ -149,12 +149,12 @@ void OBPhModel::CorrectForPH(OBMol &mol)
                           "Ran OpenBabel::CorrectForPH", obAuditMsg);
 
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator j;
+    vector<OBAtom*>::iterator j;
     for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
         atom->SetFormalCharge(0);
 
     vector<OBChemTsfm*>::iterator i;
-    for (i = _vtsfm.begin();i != _vtsfm.end();i++)
+    for (i = _vtsfm.begin();i != _vtsfm.end();++i)
         (*i)->Apply(mol);
 
     atomtyper.CorrectAromaticNitrogens(mol);
@@ -184,11 +184,11 @@ bool OBChemTsfm::Init(string &bgn,string &end)
     unsigned int i,j;
     int vb;
     bool found;
-    for (i = 0;i < _bgn.NumAtoms();i++)
+    for (i = 0;i < _bgn.NumAtoms();++i)
         if ((vb = _bgn.GetVectorBinding(i)))
         {
             found = false;
-            for (j = 0;j < _end.NumAtoms();j++)
+            for (j = 0;j < _end.NumAtoms();++j)
                 if (vb == _end.GetVectorBinding(j))
                 {
                     found = true;
@@ -201,11 +201,11 @@ bool OBChemTsfm::Init(string &bgn,string &end)
 
     //find elements to be changed
     int ele;
-    for (i = 0;i < _bgn.NumAtoms();i++)
+    for (i = 0;i < _bgn.NumAtoms();++i)
         if ((vb = _bgn.GetVectorBinding(i)) != 0)
         {
             ele = _bgn.GetAtomicNum(i);
-            for (j = 0;j < _end.NumAtoms();j++)
+            for (j = 0;j < _end.NumAtoms();++j)
                 if (vb == _end.GetVectorBinding(j))
                     if (ele != _end.GetAtomicNum(j))
                     {
@@ -216,11 +216,11 @@ bool OBChemTsfm::Init(string &bgn,string &end)
 
     //find charges to modify
     int chrg;
-    for (i = 0;i < _bgn.NumAtoms();i++)
+    for (i = 0;i < _bgn.NumAtoms();++i)
         if ((vb = _bgn.GetVectorBinding(i)))
         {
             chrg = _bgn.GetCharge(i);
-            for (j = 0;j < _end.NumAtoms();j++)
+            for (j = 0;j < _end.NumAtoms();++j)
                 if (vb == _end.GetVectorBinding(j))
                     if (chrg != _end.GetCharge(j))
                         _vchrg.push_back(pair<int,int> (i,_end.GetCharge(j)));
@@ -231,7 +231,7 @@ bool OBChemTsfm::Init(string &bgn,string &end)
     int bsrc,bdst,bord,bvb1,bvb2;
     int esrc,edst,eord,evb1,evb2;
 
-    for (i = 0;i < _bgn.NumBonds();i++)
+    for (i = 0;i < _bgn.NumBonds();++i)
     {
         _bgn.GetBond(bsrc,bdst,bord,i);
         bvb1 = _bgn.GetVectorBinding(bsrc);
@@ -239,7 +239,7 @@ bool OBChemTsfm::Init(string &bgn,string &end)
         if (!bvb1 || !bvb2)
             continue;
 
-        for (j = 0;j < _end.NumBonds();j++)
+        for (j = 0;j < _end.NumBonds();++j)
         {
             _end.GetBond(esrc,edst,eord,j);
             evb1 = _end.GetVectorBinding(esrc);
@@ -276,8 +276,8 @@ bool OBChemTsfm::Apply(OBMol &mol)
         vector<vector<int> >::iterator i;
         vector<pair<int,int> >::iterator j;
 
-        for (i = mlist.begin();i != mlist.end();i++)
-            for (j = _vchrg.begin();j != _vchrg.end();j++)
+        for (i = mlist.begin();i != mlist.end();++i)
+            for (j = _vchrg.begin();j != _vchrg.end();++j)
                 if (j->first < (signed)i->size()) //goof proofing
                     mol.GetAtom((*i)[j->first])->SetFormalCharge(j->second);
 
@@ -289,8 +289,8 @@ bool OBChemTsfm::Apply(OBMol &mol)
         OBBond *bond;
         vector<vector<int> >::iterator i;
         vector<pair<pair<int,int>,int> >::iterator j;
-        for (i = mlist.begin();i != mlist.end();i++)
-            for (j = _vbond.begin();j != _vbond.end();j++)
+        for (i = mlist.begin();i != mlist.end();++i)
+            for (j = _vbond.begin();j != _vbond.end();++j)
             {
                 bond = mol.GetBond((*i)[j->first.first],(*i)[j->first.second]);
                 if (!bond)
@@ -311,25 +311,25 @@ bool OBChemTsfm::Apply(OBMol &mol)
         if (!_vele.empty())
         {
             vector<pair<int,int> >::iterator k;
-            for (i = mlist.begin();i != mlist.end();i++)
-                for (k = _vele.begin();k != _vele.end();k++)
+            for (i = mlist.begin();i != mlist.end();++i)
+                for (k = _vele.begin();k != _vele.end();++k)
                     mol.GetAtom((*i)[k->first])->SetAtomicNum(k->second);
         }
 
         //make sure same atom isn't deleted twice
         vector<bool> vda;
-        vector<OBNodeBase*> vdel;
+        vector<OBAtom*> vdel;
         vda.resize(mol.NumAtoms()+1,false);
-        for (i = mlist.begin();i != mlist.end();i++)
-            for (j = _vadel.begin();j != _vadel.end();j++)
+        for (i = mlist.begin();i != mlist.end();++i)
+            for (j = _vadel.begin();j != _vadel.end();++j)
                 if (!vda[(*i)[*j]])
                 {
                     vda[(*i)[*j]] = true;
                     vdel.push_back(mol.GetAtom((*i)[*j]));
                 }
 
-        vector<OBNodeBase*>::iterator k;
-        for (k = vdel.begin();k != vdel.end();k++)
+        vector<OBAtom*>::iterator k;
+        for (k = vdel.begin();k != vdel.end();++k)
             mol.DeleteAtom((OBAtom*)*k);
     }
 

@@ -59,9 +59,9 @@ namespace OpenBabel
   //print out the results
   vector<vector<int> >::iterator i;
   vector<int>::iterator j;
-  for (i = maplist.begin();i != maplist.end();i++)
+  for (i = maplist.begin();i != maplist.end();++i)
   {
-  for (j = i->begin();j != i->end();j++)
+  for (j = i->begin();j != i->end();++j)
   cout << j << ' `;
   cout << endl;
   }
@@ -1578,7 +1578,7 @@ namespace OpenBabel
     int i;
     OBBitVec bv;
   
-    for (i = 0;i < pat->bcount;i++)
+    for (i = 0;i < pat->bcount;++i)
       {
         pat->bond[i].grow = (bv[pat->bond[i].src] && bv[pat->bond[i].dst])?
           false:true;
@@ -1700,7 +1700,7 @@ namespace OpenBabel
           {
             MarkGrowBonds(result);
             result->ischiral = false;
-            for (i = 0;i < result->acount;i++)
+            for (i = 0;i < result->acount;++i)
               {
                 result->atom[i].chiral_flag = GetChiralFlag(result->atom[i].expr);
                 if (result->atom[i].chiral_flag)
@@ -2545,10 +2545,10 @@ namespace OpenBabel
     if (mlist.empty())
       return(false);
   
-    for (i = mlist.begin();i != mlist.end();i++)
+    for (i = mlist.begin();i != mlist.end();++i)
       {
         ok = true;
-        for (j = pr.begin();j != pr.end() && ok;j++)
+        for (j = pr.begin();j != pr.end() && ok;++j)
           if ((*i)[j->first] != j->second)
             ok = false;
       
@@ -2575,10 +2575,10 @@ namespace OpenBabel
     if (mlist.empty())
       return(false);
   
-    for (i = mlist.begin();i != mlist.end();i++)
+    for (i = mlist.begin();i != mlist.end();++i)
       {
         ok = true;
-        for (j = i->begin();j != i->end();j++)
+        for (j = i->begin();j != i->end();++j)
           if (!vres[*j])
             {
               ok = false;
@@ -2600,12 +2600,12 @@ namespace OpenBabel
     int i;
   
     ttab.resize(pat->acount);
-    for (i = 0;i < pat->acount;i++)
+    for (i = 0;i < pat->acount;++i)
       ttab[i].resize(mol.NumAtoms()+1);
   
     OBAtom *atom;
-    std::vector<OBNodeBase*>::iterator j;
-    for (i = 0;i < pat->acount;i++)
+    std::vector<OBAtom*>::iterator j;
+    for (i = 0;i < pat->acount;++i)
       for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
         if (EvalAtomExpr(pat->atom[0].expr,atom))
           ttab[i][atom->GetIdx()] = true;
@@ -2614,12 +2614,12 @@ namespace OpenBabel
   static void FastSingleMatch(OBMol &mol,Pattern *pat,std::vector<std::vector<int> > &mlist)
   {
     OBAtom *atom,*a1,*nbr;
-    std::vector<OBNodeBase*>::iterator i;
+    std::vector<OBAtom*>::iterator i;
   
     OBBitVec bv(mol.NumAtoms()+1);
     std::vector<int> map;
     map.resize(pat->acount);
-    std::vector<std::vector<OBEdgeBase*>::iterator> vi;
+    std::vector<std::vector<OBBond*>::iterator> vi;
     std::vector<bool> vif;
   
     if (pat->bcount)
@@ -2724,12 +2724,12 @@ namespace OpenBabel
         OBAtom *ra1,*ra2,*ra3,*ra4;
         std::vector<std::vector<int> > tmpmlist;
       
-        for (j = 0;j < pat->acount;j++)
+        for (j = 0;j < pat->acount;++j)
           if (pat->atom[j].chiral_flag)
             {
               r1 = r2 = r3 = r4 = -1;
               r2 = j;
-              for (k = 0;k < pat->bcount;k++)
+              for (k = 0;k < pat->bcount;++k)
                 if (pat->bond[k].dst == r2)
                   if (r1 == -1)
                     r1 = pat->bond[k].src;
@@ -2738,7 +2738,7 @@ namespace OpenBabel
                   else if (r4 == -1)
                     r4 = pat->bond[k].src;
 	    
-              for (k = 0;k < pat->bcount;k++)
+              for (k = 0;k < pat->bcount;++k)
                 if (pat->bond[k].src == r2)
                   if (r1 == -1)
                     r1 = pat->bond[k].dst;
@@ -2751,7 +2751,7 @@ namespace OpenBabel
                 continue;
 	    
               tmpmlist.clear();
-              for (m = mlist.begin();m != mlist.end();m++)
+              for (m = mlist.begin();m != mlist.end();++m)
                 {
                   ra1 = mol.GetAtom((*m)[r1]);
                   ra2 = mol.GetAtom((*m)[r2]);
@@ -2864,7 +2864,7 @@ namespace OpenBabel
           {
             //see if pattern has been matched
             std::vector<std::pair<Pattern*,std::vector<bool> > >::iterator i;
-            for (i = RSCACHE.begin();i != RSCACHE.end();i++)
+            for (i = RSCACHE.begin();i != RSCACHE.end();++i)
               if (i->first == (Pattern*)expr->recur.recur)
                 return(i->second[atom->GetIdx()]);
 	  
@@ -2874,7 +2874,7 @@ namespace OpenBabel
             std::vector<std::vector<int> > mlist;
             if (match( *((OBMol *) atom->GetParent()),
                        (Pattern*)expr->recur.recur,mlist))
-              for (j = mlist.begin();j != mlist.end();j++)
+              for (j = mlist.begin();j != mlist.end();++j)
                 vb[(*j)[0]] = true;
 	  
             RSCACHE.push_back(std::pair<Pattern*,std::vector<bool> > ((Pattern*)expr->recur.recur,vb));
@@ -2953,12 +2953,12 @@ namespace OpenBabel
     std::vector<std::vector<int> >::iterator i;
     std::vector<OBBitVec>::iterator j;
   
-    for (i = _mlist.begin();i != _mlist.end();i++)
+    for (i = _mlist.begin();i != _mlist.end();++i)
       {
         ok = true;
         bv.Clear();
         bv.FromVecInt(*i);
-        for (j = vbv.begin();j != vbv.end() && ok;j++)
+        for (j = vbv.begin();j != vbv.end() && ok;++j)
           if ((*j) == bv)
             ok = false;
       
@@ -2980,7 +2980,7 @@ namespace OpenBabel
   
     for ( i = _mlist.begin() ; i != _mlist.end() ; i++ )
       {
-        for (j = (*i).begin();j != (*i).end();j++)
+        for (j = (*i).begin();j != (*i).end();++j)
           ofs << *j << ' ' << ends;
         ofs << endl;
       }
@@ -3018,7 +3018,7 @@ namespace OpenBabel
     if (bidx == -1)
       {
         OBAtom *atom;
-        std::vector<OBNodeBase*>::iterator i;
+        std::vector<OBAtom*>::iterator i;
         for (atom = _mol->BeginAtom(i);atom;atom = _mol->NextAtom(i))
           if (EvalAtomExpr(_pat->atom[0].expr,atom))
             {
@@ -3049,7 +3049,7 @@ namespace OpenBabel
         AtomExpr *aexpr = _pat->atom[dst].expr;
         BondExpr *bexpr = _pat->bond[bidx].expr;
         OBAtom *atom,*nbr;
-        std::vector<OBEdgeBase*>::iterator i;
+        std::vector<OBBond*>::iterator i;
       
         atom = _mol->GetAtom(_map[src]);
         for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
@@ -3255,14 +3255,14 @@ namespace OpenBabel
       //for (pos = 0,pos = s.find("$",pos);pos != std::string::npos;pos = s.find("$",pos))
       {
         pos++;
-        for (j = pos;j < s.size();j++)
+        for (j = pos;j < s.size();++j)
           if (!isalpha(s[j]) && !isdigit(s[j]) && s[j] != '_')
             break;
         if (pos == j)
           continue;
       
         token = s.substr(pos,j-pos);
-        for (i = vlex.begin();i != vlex.end();i++)
+        for (i = vlex.begin();i != vlex.end();++i)
           if (token == i->first)
             {
               repstr = "(" + i->second + ")";

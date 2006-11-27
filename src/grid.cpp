@@ -29,7 +29,7 @@ namespace OpenBabel
   void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,double res)
   {
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)
@@ -66,7 +66,7 @@ namespace OpenBabel
 
     int j,size = _nxinc*_nyinc*_nzinc;
     cell.resize(size);
-    for (unsigned int num = 0; num < cell.size(); num++)
+    for (unsigned int num = 0; num < cell.size(); ++num)
       cell[num].resize(0);
 
     cutoff *= cutoff; //don't do sqrts
@@ -78,11 +78,11 @@ namespace OpenBabel
 
     for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
       if (PointIsInBox(c[j],c[j+1],c[j+2]))
-	for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,k++)
+	for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,++k)
 	  if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
-	    for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,l++)
+	    for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,++l)
 	      if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
-		for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,m++)
+		for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,++m)
 		  if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
 		    cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
 
@@ -93,7 +93,7 @@ namespace OpenBabel
 			 double res)
   {
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)
@@ -140,11 +140,11 @@ namespace OpenBabel
     for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
       if (use[atom->GetIdx()])
 	if (PointIsInBox(c[j],c[j+1],c[j+2]))
-	  for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,k++)
+	  for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,++k)
 	    if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
-	      for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,l++)
+	      for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,++l)
 		if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
-		  for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,m++)
+		  for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,++m)
 		    if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
 		      cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
 
@@ -187,7 +187,7 @@ namespace OpenBabel
   void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
   {
     OBAtom *atom;
-    vector<OBNodeBase*>::iterator i;
+    vector<OBAtom*>::iterator i;
 
     for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)

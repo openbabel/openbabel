@@ -32,7 +32,7 @@ namespace OpenBabel
 
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetAttribute() == s)
         return(true);
 
@@ -47,7 +47,7 @@ namespace OpenBabel
 
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetAttribute() == s)
         return(true);
 
@@ -63,7 +63,7 @@ namespace OpenBabel
 
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetDataType() == dt)
         return(true);
 
@@ -75,7 +75,7 @@ namespace OpenBabel
   {
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetAttribute() == s)
         return(*i);
 
@@ -87,7 +87,7 @@ namespace OpenBabel
   {
     vector<OBGenericData*>::iterator i;
 
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetAttribute() == s)
         return(*i);
 
@@ -97,7 +97,7 @@ namespace OpenBabel
   OBGenericData *OBBase::GetData(const unsigned int dt)
   {
     vector<OBGenericData*>::iterator i;
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetDataType() == dt)
         return(*i);
     return(NULL);
@@ -107,7 +107,7 @@ namespace OpenBabel
   {
     vector<OBGenericData*> vdata;
     vector<OBGenericData*>::iterator i;
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetDataType() == dt)
         delete *i;
       else
@@ -121,10 +121,10 @@ namespace OpenBabel
     vector<OBGenericData*>::iterator i,j;
 
     bool del;
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
       {
         del = false;
-        for (j = vg.begin();j != vg.end();j++)
+        for (j = vg.begin();j != vg.end();++j)
           if (*i == *j)
             {
               del = true;
@@ -141,7 +141,7 @@ namespace OpenBabel
   void OBBase::DeleteData(OBGenericData *gd)
   {
     vector<OBGenericData*>::iterator i;
-    for (i = _vdata.begin();i != _vdata.end();i++)
+    for (i = _vdata.begin();i != _vdata.end();++i)
       if (*i == gd)
         {
           delete *i;

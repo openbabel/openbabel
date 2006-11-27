@@ -1,5 +1,5 @@
 /**********************************************************************
-aromatest.cpp - Test Open Babel aromaticity perception
+obseq.cpp - Output residue sequence information for biomolecules
 
 Copyright (C) 2005-2006 Geoffrey R. Hutchison
  

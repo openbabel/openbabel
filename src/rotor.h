@@ -61,24 +61,25 @@ namespace OpenBabel
           }
       }
   
-    //! Return whether this rotor rule is valid (i.e., is the SMARTS pattern valid)
+    //! \return whether this rotor rule is valid (i.e., is the SMARTS pattern valid)
     bool    IsValid()    {        return(_sp->IsValid());       }
-    //! Return a copy of the reference atom indexes inside the SMARTS pattern
+    //! \return a copy of the reference atom indexes inside the SMARTS pattern
+    //! 
     //!  These should be freed after use.
     void    GetReferenceAtoms(int ref[4]) { memcpy(ref,_ref,sizeof(int)*4); }
     //! Set the resolution (delta) of a torsional step in degrees
     void    SetDelta(double d)    {       _delta = d;           }
-    //! Return the resolution (delta) of a torsional step in degrees
+    //! \return the resolution (delta) of a torsional step in degrees
     double  GetDelta()            {       return(_delta);       }
-    //! Return a reference to the dihedral angles to evaluate (in radians)
+    //! \return a reference to the dihedral angles to evaluate (in radians)
     std::vector<double>   &GetTorsionVals()    { return(_vals); }
-    //! Return the text of the SMARTS pattern for this rule
+    //! \return the text of the SMARTS pattern for this rule
     std::string  &GetSmartsString(){      return(_s);           }
-    //! Return the exact OBSmartsPattern object for this rule
+    //! \return the exact OBSmartsPattern object for this rule
     OBSmartsPattern *GetSmartsPattern() {  return(_sp);         }
   };
 
-  //! Database of default hybridization torsional rules and SMARTS-defined OBRotorRule objects
+  //! \brief Database of default hybridization torsional rules and SMARTS-defined OBRotorRule objects
   //! Use to automatically evaluate potentially rotatable bonds to generate
   //! lists of dihedral angles to consider.
   //! e.g., rotamer/conformer energy calculations
@@ -94,7 +95,7 @@ namespace OpenBabel
     ~OBRotorRules();
   
     void ParseLine(const char*);
-    //! Return the number of rotor rules
+    //! \return the number of rotor rules
     unsigned int GetSize()                 { return _vr.size();}
 
     //! Set the filename to be used for the database. Default = torlib.txt
@@ -202,7 +203,7 @@ namespace OpenBabel
     void    RemoveSymTorsionValues(int);
     void    GetDihedralAtoms(int ref[4])
     {
-      for (int i=0;i<4;i++)
+      for (int i=0;i<4;++i)
         ref[i]=_ref[i];
     }
     void    *GetRotAtoms()
@@ -245,6 +246,10 @@ namespace OpenBabel
       }
   };
 
+
+  //! A standard iterator over a vector of rotors
+  typedef std::vector<OBRotor*>::iterator OBRotorIterator;
+
   //! Given an OBMol, set up a list of possibly rotatable torsions, 
   class OBAPI OBRotorList
   {
@@ -266,7 +271,7 @@ namespace OpenBabel
     //! Clear the internal list of rotors and reset
     void   Clear();
 
-    //! Return the number of rotors in this list
+    //! \return the number of rotors in this list
     int    Size()
     {
       return((_rotor.empty()) ? 0: _rotor.size());
@@ -283,10 +288,10 @@ namespace OpenBabel
     //! Set the list of fixed (invariant) atoms to the supplied OBBitVec
     void   SetFixAtoms(OBBitVec &fix) { _fix = fix;        }
 
-    //! Return whether this bond is fixed and thus not rotatable
+    //! \brief Return whether this bond is fixed and thus not rotatable
     //! \return true if the bond and at least one neighboring bond has fixed atoms
     bool   IsFixedBond(OBBond*);
-    //! Return whether this rotor list has any fixed (invariant) atoms
+    //! \return whether this rotor list has any fixed (invariant) atoms
     bool   HasFixedAtoms()
     {
       return(!_fix.Empty());
@@ -321,14 +326,12 @@ namespace OpenBabel
 
     //! \name Iterator methods
     //@{
-    OBRotor *BeginRotor(std::vector<OBRotor*>::iterator &i)
+    OBRotor *BeginRotor(OBRotorIterator &i)
       { i = _rotor.begin(); return((i ==_rotor.end()) ? NULL:*i); }
-    OBRotor *NextRotor(std::vector<OBRotor*>::iterator &i)
+    OBRotor *NextRotor(OBRotorIterator &i)
       { ++i; return((i ==_rotor.end()) ? NULL:*i); }
-    std::vector<OBRotor*>::iterator BeginRotors()
-      { return(_rotor.begin()); }
-    std::vector<OBRotor*>::iterator EndRotors()
-      { return(_rotor.end());   }
+    OBRotorIterator BeginRotors()   { return(_rotor.begin()); }
+    OBRotorIterator EndRotors()     { return(_rotor.end());   }
     //@}
 
     // Not declared
