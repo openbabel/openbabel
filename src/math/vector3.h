@@ -106,7 +106,7 @@ namespace OpenBabel
       }
 
     //! returns the vector as a const double *.
-    inline const double *AsArray()
+    const double *AsArray()
     {
       return &_vx;
     }
@@ -180,37 +180,37 @@ namespace OpenBabel
       return _vx*_vx + _vy*_vy + _vz*_vz;
     };
     //! vector length
-    inline double length () const
+    double length () const
     {
       return sqrt( length_2() );
     };
     //! access function to get the x-coordinate of the vector
-    inline const double & x () const
+    const double & x () const
     {
       return _vx ;
     } ;
     //! access function to get the y-coordinate of the vector
-    inline const double & y () const
+    const double & y () const
     {
       return _vy ;
     } ;
     //! access function to get the z-coordinate of the vector
-    inline const double & z () const
+    const double & z () const
     {
       return _vz ;
     } ;
     //! access function to set the x-coordinate of the vector
-    inline double & x ()
+    double & x ()
     {
       return _vx ;
     } ;
     //! access function to set the y-coordinate of the vector
-    inline double & y ()
+    double & y ()
     {
       return _vy ;
     } ;
     //! access function to set the z-coordinate of the vector
-    inline double & z ()
+    double & z ()
     {
       return _vz ;
     } ;
@@ -225,7 +225,7 @@ namespace OpenBabel
     //! \deprecated This method uses unreliable floating point == comparisons
     //!    Use vector3::IsApprox() instead.
     //! \return true if at least one component of the two vectors is !=
-    OBAPI inline int operator!= ( const vector3& other ) const
+    OBAPI int operator!= ( const vector3& other ) const
     {
       return ! ( (*this) == other );
     }
@@ -244,7 +244,7 @@ namespace OpenBabel
     //! square to the distance between *this and vv
     /*! equivalent to length_2(*this-vv)
      */
-    inline double distSq(const vector3 &vv) const
+    double distSq(const vector3 &vv) const
     {
       double dx = x() - vv.x();
       double dy = y() - vv.y();

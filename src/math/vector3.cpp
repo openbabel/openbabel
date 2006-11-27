@@ -283,29 +283,26 @@ namespace OpenBabel
     */
     if( ! IsApprox_pos ( fabs(_vx), fabs(_vy), 0.1 ) )
     {
-      // store in v the crossed product of *this with (_vy,_vx,_vz)
-      double tmp = (_vy-_vx)*_vz;
-      res._vx = tmp;
-      res._vy = -tmp;
+      // store in res the crossed product of *this with (_vy,_vx,_vz),
+      // and normalize it.
+      res._vx = (_vy-_vx)*_vz;
+      res._vy = - res._vx;
       res._vz = _vx*_vx - _vy*_vy;
+      res.normalize();
     }
-    /* on the other hand, if the x and y-coords are of the same order of
+    /* on the other hand, if the absolute values of the x and y-coords
+    are of the same order of
     magnitude, then the vector is far from being colinear to (1, 0, 0).
     */
-    else 
+    else
     {
-      // store in v the crossed product of *this with (1,0,0)
+      // store in res the crossed product of *this with (1,0,0),
+      // divided by its norm. In this case the computation is much simpler.
+      double norm = sqrt( _vy*_vy + _vz*_vz );
       res._vx = 0.0;
-      res._vy = _vz;
-      res._vz = -_vy;
+      res._vy = _vz / norm;
+      res._vz = -_vy / norm;
     }
-
-    /* now, v is orthogonal to *this, and should be normalizable
-       if *this is normalizable.
-     */
-
-    //thus, it is safe to normalize res
-    res.normalize();
 
     return true;
 
