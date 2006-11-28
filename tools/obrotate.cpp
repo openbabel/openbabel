@@ -49,22 +49,18 @@ int main(int argc,char **argv)
 {
 
   char *program_name=NULL;
-  float res=255.0f/360.0f; // constant to convert degree to unsigned char
-  unsigned char tor[4]= {0,0,0,0};// atoms of the tortional in the molecule
+  OBAtom *a1, *a2, *a3, *a4;
   unsigned int smartor[4]= {0,0,0,0};// atoms of the tortional in the SMART
   float angle =   0;      // tortional angle value to set in degree
-  int nrotamers = 1;
-  int nrotors   = 1;
-  unsigned char ang_array[2] = {0,0}; // coordinate set of reference and
-  //tortional angle
   char *FileIn =NULL, *Pattern=NULL;
   unsigned int i, t, errflg = 0;
   int c;
   string err;
+  bool changeAll = false; // default to only change the last matching torsion
 
   program_name= argv[0];
-  // parse the command line
-  if (argc!=8)
+  // parse the command line -- optional -a flag to change all matching torsions
+  if (argc < 8 || argc > 9)
     {
       errflg++;
     }
@@ -106,7 +102,7 @@ int main(int argc,char **argv)
       exit(-1);
     }
 
-  // Check the tortional atoms
+  // Check the torsional atoms
   // actually the atom can be bonded but not written consecutively in the SMART
   // but this is the simplest way to ensure bonding
   if( (smartor[1] +1) != smartor[2] )
@@ -121,38 +117,14 @@ int main(int argc,char **argv)
       if ( smartor[i] < 1 || smartor[i] > sp.NumAtoms())
         {
           cerr << program_name
-               << ": The tortional atom values must be between 1 and "
+               << ": The torsional atom values must be between 1 and "
                <<  sp.NumAtoms()
                << ", which is the number of atoms in the SMART pattern.\n";
           exit(-1);
         }
     }
 
-  // set the angle array
-  ang_array[0] = 0;
-  while (angle < 0.0f)
-    angle += 360.0f;
-  while (angle > 360.0f)
-    angle -= 360.0f;
-  ang_array[1] = (unsigned char)rint(angle*res);
 
-  // Find Input filetype
-  /*NF
-    if (extab.CanReadExtension(FileIn))
-    inFileType = extab.FilenameToType(FileIn);
-    else
-    {
-    cerr << program_name << ": cannot read input format!" << endl;
-    exit (-1);
-    }
-    if (extab.CanWriteExtension(FileIn))
-    outFileType = extab.FilenameToType(FileIn);
-    else
-    {
-    cerr << program_name << ": cannot write input format!" << endl;
-    exit (-1);
-    }
-  */
   OBConversion conv; //NF...
   OBFormat* format = conv.FormatFromExt(FileIn);
   if(!(format &&	conv.SetInAndOutFormats(format,format))) //in and out formats same
@@ -173,10 +145,7 @@ int main(int argc,char **argv)
     }
 
 
-
-  //NF OBMol mol(inFileType,outFileType);
   OBMol mol; //NF
-  OBRotamerList rlist;
   vector< vector <int> > maplist;      // list of matched atoms
   vector< vector <int> >::iterator m;  // and its iterators
   int tindex;
@@ -192,33 +161,20 @@ int main(int argc,char **argv)
 
       if (sp.Match(mol))
         {          // if match perform rotation
-
           maplist = sp.GetUMapList(); // get unique matches
 
           // look at all the mapping atom but save only the last one.
           for (m = maplist.begin(); m != maplist.end(); ++m)
             {
-              for (i=0; i<4 ; ++i)
-                {
-                  tindex = (int) smartor[i] - 1; // get the tortional atom number
-                  tor[i] = (unsigned char) (*m)[tindex];   // save it
-                }
+              a1 = mol.GetAtom( (*m)[ smartor[0] - 1] );
+              a2 = mol.GetAtom( (*m)[ smartor[1] - 1] );
+              a3 = mol.GetAtom( (*m)[ smartor[2] - 1] );
+              a4 = mol.GetAtom( (*m)[ smartor[3] - 1] );
+              if (changeAll)
+                mol.SetTorsion(a1, a2, a3, a4, angle);                
             }
 
-          // Set the coordinates of references for rotation
-          rlist.SetBaseCoordinateSets(mol);
-
-          // Set the atoms to rotate
-          rlist.Setup(mol,tor,nrotors);
-
-          // Set the tortional angle value
-          rlist.AddRotamers(ang_array,nrotamers);
-
-          // Rotate and save the conformers
-          rlist.ExpandConformerList(mol,mol.GetConformers());
-
-          //change the molecule conformation
-          mol.SetConformer(0);
+          mol.SetTorsion(a1, a2, a3, a4, angle);
         }
       //NF      cout << mol;
       conv.Write(&mol,&cout); //NF
