@@ -38,6 +38,9 @@ GNU General Public License for more details.
 
 #include <math.h>
 
+// For backwards compatibility. Will be removed in the future
+#include "rand.h"
+
 namespace OpenBabel
 {
 
@@ -123,45 +126,6 @@ namespace OpenBabel
 
       _incr = 1/_incr;
     }
-  };
-
-
-
-  //******************************************
-  //*** Stuff for random number generation ***
-  //******************************************
-
-  //! Used for internal random number generation OBRandom (unless the system random generaor is used)
-  typedef struct
-  {
-    unsigned int hi;
-    unsigned int lo;
-  }
-  DoubleType;
-
-  OBAPI void DoubleMultiply( unsigned int,unsigned int,DoubleType*);
-  OBAPI void DoubleAdd( DoubleType*,unsigned int);
-  OBAPI unsigned int DoubleModulus( DoubleType*,unsigned int);
-
-  //! Random number generator
-  class OBAPI OBRandom
-  {
-    DoubleType d;
-    unsigned int m,a,c;
-    unsigned int p;
-    unsigned int i;
-    unsigned int x;
-    bool OBRandomUseSysRand;
-
-  public:
-    OBRandom(bool useSys= false);
-    void Seed(int seed)
-    {
-      x = seed;
-    }
-    void TimeSeed();
-    int NextInt();
-    double NextFloat();
   };
 
   //***RMS helper methods***/

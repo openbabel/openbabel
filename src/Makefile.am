@@ -69,7 +69,7 @@ libopenbabelinclude_HEADERS = \
 		matrix.h mol.h molchrg.h \
 		obconversion.h oberror.h obiter.h \
 		obutil.h \
-		parsmart.h patty.h phmodel.h reaction.h \
+		parsmart.h patty.h phmodel.h rand.h reaction.h \
 		residue.h ring.h rotor.h rotamer.h typer.h 
 
 # Use sed to substitute #include "header.h" to #include <openbabel/header.h>
