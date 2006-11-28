@@ -154,6 +154,12 @@ namespace OpenBabel
 
   \section intro Introduction and Key Modules
  
+  Open Babel is a full chemical software toolbox. In addition to converting
+  file formats, it offers a complete programming library for developing 
+  chemistry software. The library is written primarily in C++ and also offers
+  interfaces to other languages (e.g., Perl and Python) using essentially
+  the same API.
+
   The heart of Open Babel lies in the \link OpenBabel::OBMol OBMol\endlink, 
   \link OpenBabel::OBAtom OBAtom\endlink, and 
   \link OpenBabel::OBBond OBBond\endlink classes,
@@ -185,6 +191,15 @@ namespace OpenBabel
   chemical information from a given file as possible (no data left
   behind) and ideally any perception or transformations will occur when
   writing to some other format later.
+
+  \section other Other Resources
+
+  Open Babel is a community project. In addition to this API documentation,
+  the website offers a variety of up-to-date and useful information for
+  developing with the library.
+
+  For more resources, check out the <a href="http://openbabel.sourceforge.net/wiki/Develop">Developing with Open Babel</a> section,
+  particularly, further code examples in the various <a href="http://openbabel.sourceforge.net/wiki/Developer:Tutorial">developer tutorials</a>.
 
   */
 

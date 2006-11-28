@@ -27,7 +27,8 @@ GNU General Public License for more details.
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "obutil.h"
+
+#include "rand.h"
 
 #if TIME_WITH_SYS_TIME
 #include <sys/time.h>

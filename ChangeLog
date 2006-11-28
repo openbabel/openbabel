@@ -1,3 +1,23 @@
+2006-11-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/obrotate.cpp: Use a simpler implementation with
+	OBMol::SetTorsion(). (Need to rewrite command-line parsing to
+	allow setting torsions of all matches, but no time now.)
+
+	* tools/obrotamer.cpp, src/Makefile.am, src/Makefile.in: New tool
+	to generate random rotamers using OBRotamerList and
+	company. Additional example of using rotamer code.
+
+	* src/rand.h, src/obutil.h, src/Makefile.am, src/Makefile.in:
+	Split out OBRandom to mirror rand.cpp.
+
+	* src/rotamer.cpp, src/rotamer.h, src/rotor.h, src/base.cpp:
+	Documentation updates. 
+
+	* src/rotor.cpp (OBRotorRules): Make sure Init() is called before
+	any action, i.e.., GetRotorIncrements(). Fixes a bug uncovered
+	with obrotamer.cpp
+
 2006-11-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/*.cpp: Update to switch from OBNodeBase and OBEdgeBase

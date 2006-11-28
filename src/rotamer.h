@@ -30,31 +30,38 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-//! Supports a set of rotomer coordinate sets for some number of potentially rotatable bonds
-class OBAPI OBRotamerList : public OBGenericData
-{
+  //! \brief Supports a set of rotamer coordinate sets for some number of potentially rotatable bonds
+  // Further class introduction in rotamer.cpp
+ class OBAPI OBRotamerList : public OBGenericData
+  {
+    //! Number of atoms in the base coordinate set (i.e., OBMol::NumAtoms())
     unsigned int                         _NBaseCoords;
+    //! Base coordinate sets (i.e., existing conformers to be modified)
     std::vector<double*>                 _c;
-    std::vector<std::vector<double> >    _vres;
-    std::vector<unsigned char*>          _vrotamer;
+    //! Individual bond rotors (from an OBRotor object or other)
     std::vector<std::pair<OBAtom**,std::vector<int> > > _vrotor;
+    //! \brief Index of each rotor's different sampling states ("resolution")
+    //! Usually from OBRotor::GetResolution()
+    std::vector<std::vector<double> >    _vres;
+    //! Individual rotamer states (i.e., the array of rotor settings)
+    std::vector<unsigned char*>          _vrotamer;
 
     /*Because contains OBAtom*, these aren't meaningful without knowing the parent molecule
-		OBRotamerList(const OBRotamerList &cpy) : OBGenericData(cpy)
-    {}
-    OBRotamerList& operator =(const OBRotamerList &)
-    {
-        return *this;
-    }
+      OBRotamerList(const OBRotamerList &cpy) : OBGenericData(cpy)
+      {}
+      OBRotamerList& operator =(const OBRotamerList &)
+      {
+      return *this;
+      }
 		*/
 
-public:
+  public:
     OBRotamerList()
-    {
+      {
         _NBaseCoords=0;
         _type= OBGenericDataType::RotamerList;
         _attr="RotamerList";
-    }
+      }
 		virtual OBGenericData* Clone(OBBase* parent) const;
 
     ~OBRotamerList();
@@ -65,34 +72,37 @@ public:
     //! \param ref An array of the 4 dihedral atoms for each rotor
     //! \param nrotors The number of rotors (i.e., the size of ref / 4)
     void Setup(OBMol &mol,unsigned char*ref,int nrotors);
-    //! Return the number of rotatable bonds considered
+    //! \return the number of rotatable bonds considered
     unsigned int NumRotors()   const
     {
-        return (unsigned int)_vrotor.size();
+      return (unsigned int)_vrotor.size();
     }
-    //! Return the number of rotamer (conformation) coordinate sets
+    //! \return the number of rotamer (conformation) coordinate sets
     unsigned int NumRotamers() const
     {
-        return (unsigned int)_vrotamer.size();
+      return (unsigned int)_vrotamer.size();
     }
     //! Add a rotamer to the list based on the supplied coordinate set as a double*
     void AddRotamer(double*);
-    //! Add a rotamer to the list based on the supplied coordinate set packed
-    void AddRotamer(int *arr);
-    void AddRotamer(unsigned char *arr);
-    void AddRotamers(unsigned char *arr,int);
+    //! Add a rotamer to the list based on @p key as a configuration of the individual rotor bonds
+    void AddRotamer(int *key);
+    //! Add a rotamer to the list based on @p key as a configuration of the individual rotor bonds
+    void AddRotamer(unsigned char *key);
+    //! Add @p nconf rotamers based on @p as an array of configurations much like AddRotamer()
+    void AddRotamers(unsigned char *arr,int nconf);
     void GetReferenceArray(unsigned char*) const;
-    std::vector<unsigned char*>::iterator BeginRotamer()
-    {
-        return _vrotamer.begin();
-    }
-    std::vector<unsigned char*>::iterator EndRotamer()
-    {
-        return _vrotamer.end();
-    }
 
-    // Support for internal storage of base coordinate sets that
-    // rotamers operate on
+    //! \name Iterator methods
+    //@{
+    std::vector<unsigned char*>::iterator BeginRotamer()
+      {
+        return _vrotamer.begin();
+      }
+    std::vector<unsigned char*>::iterator EndRotamer()
+      {
+        return _vrotamer.end();
+      }
+    //@}
 
     //! Create a conformer list using the internal base set of coordinates
     //! \return The set of coordinates by rotating the bonds in each rotamer
@@ -106,7 +116,7 @@ public:
     //! into the object as base coordinates
     void SetBaseCoordinateSets(OBMol& mol)
     {
-        SetBaseCoordinateSets(mol.GetConformers(), mol.NumAtoms());
+      SetBaseCoordinateSets(mol.GetConformers(), mol.NumAtoms());
     }
 
     //! Copies the coordinates in bc, NOT the pointers, into the object
@@ -114,22 +124,22 @@ public:
 
     unsigned int NumBaseCoordinateSets() const
     {
-        return (unsigned int)_c.size();
+      return (unsigned int)_c.size();
     }
 
     //! Get a pointer to a specific base pointer
     double *GetBaseCoordinateSet(unsigned int i) const
     {
-        return (i<_c.size()) ? _c[i] : NULL;
+      return (i<_c.size()) ? _c[i] : NULL;
     }
 
     unsigned int NumAtoms() const
     {
-        return _NBaseCoords;
+      return _NBaseCoords;
     }
-};
+  };
 
-int Swab(int);
+  int Swab(int);
 
 }
 

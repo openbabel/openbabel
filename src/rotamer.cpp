@@ -28,6 +28,59 @@ using namespace std;
 namespace OpenBabel
 {
 
+  /** \class OBRotamerList
+
+      A high-level class for rotamer / conformer generation, intended mainly
+      for use with the related class OBRotorList and the OBRotorRules database
+
+      Rotamers represent conformational isomers formed simply by rotation of
+      dihedral angles. On the other hand, conformers may include geometric
+      relaxation (i.e., slight modification of bond lengths, bond angles, etc.)
+
+      The following shows an example of generating 2 conformers using different
+      rotor states. Similar code could be used for systematic or Monte Carlo
+      conformer sampling when combined with energy evaluation (molecular
+      mechanics or otherwise).
+
+\code
+OBRotorList rl; // used to sample all rotatable bonds via the OBRotorRules data
+// If you want to "fix" any particular atoms (i.e., freeze them in space)
+// then set up an OBBitVec of the fixed atoms and call
+// rl.SetFixAtoms(bitvec);
+rl.Setup(mol);
+
+// How many rotatable bonds are there?
+cerr << " Number of rotors: " << rl.Size() << endl;
+
+rotorKey = new int[rl.Size() + 1]; // indexed from 1, rotorKey[0] = 0
+// each entry represents the configuration of a rotor
+// e.g. indexes into OBRotor::GetResolution() -- the different angles
+//   to sample for a rotamer search
+for (unsigned int i = 0; i < rl.Size() + 1; ++i)
+  rotorKey[i] = 0; // could be anything from 0 .. OBRotor->GetResolution().size()
+
+// The OBRotamerList can generate conformations (i.e., coordinate sets)
+OBRotamerList rotamers;
+rotamers.SetBaseCoordinateSets(mol);
+rotamers.Setup(mol, rl);
+
+rotamers.AddRotamer(rotorKey);
+rotorKey[1] = 2; // switch one rotor
+rotamers.AddRotamer(rotorKey);
+
+rotamers.ExpandConformerList(mol, mol.GetConformers());
+
+// change the molecule conformation
+mol.SetConformer(0); // rotorKey 0, 0, ...
+conv.Write(&mol);
+
+mol.SetConformer(1); // rotorKey 0, 2, ...
+
+delete [] rotorKey;
+\endcode
+
+  **/
+
 //test byte ordering
 static int SINT = 0x00000001;
 static unsigned char *STPTR = (unsigned char*)&SINT;

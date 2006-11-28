@@ -938,6 +938,9 @@ namespace OpenBabel
   void OBRotorRules::GetRotorIncrements(OBMol &mol,OBBond *bond,
                                         int ref[4],vector<double> &vals,double &delta)
   {
+    if (!_init)
+      Init();
+
     vals.clear();
     vector<pair<int,int> > vpr;
     vpr.push_back(pair<int,int> (0,bond->GetBeginAtomIdx()));

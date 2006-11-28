@@ -113,7 +113,7 @@ namespace OpenBabel
     void Quiet()                           { _quiet=true;      }
   };
 
-  //! A single rotatable OBBond as part of rotomer searching
+  //! A single rotatable OBBond as part of rotamer searching
   class OBAPI OBRotor
   {
     int _idx,_ref[4];
@@ -297,7 +297,15 @@ namespace OpenBabel
       return(!_fix.Empty());
     }
 
+    //! \brief Set the atoms to rotate from the dihedral atoms for each rotor
+    //! Insures the fixed atoms are respected, but otherwise functions like
+    //! SetRotAtoms()
     void   SetRotAtomsByFix(OBMol&);
+
+    //! \brief Set the atoms to rotate from the dihedral atoms for each rotor
+    //! Uses OBRotor->GetDihedralAtoms() to call OBRotor->SetRotAtoms()
+    //! and standarizes the dihedral angles via OBRotor->SetDihedralAtoms()
+    //! \return True
     bool   SetRotAtoms(OBMol&);
 
     //! Setup this rotor list for the supplied molecule
