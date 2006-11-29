@@ -1,3 +1,12 @@
+2006-11-29  Benoit Jacob <jacob@math.jussieu.fr>
+
+	* math/matrix3x3.h: fix some defines in the same way as
+	in vector3.h, add both constant and non-constant
+	operator()(int,int) to access the matrix elements easily.
+
+	* test/math.cpp, test/Makefile.am, test/Makefile.in:
+	Beginning of a new test for the math/ subdirectory.
+
 2006-11-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/obrotate.cpp: Use a simpler implementation with

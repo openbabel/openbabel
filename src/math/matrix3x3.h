@@ -27,15 +27,15 @@ GNU General Public License for more details.
 #include "oberror.h"
 
 #ifndef PI
-#define PI 3.1415926535897932384626433
+#define PI M_PI
 #endif
 
 #ifndef RAD_TO_DEG
-#define RAD_TO_DEG 180.0/PI
+#define RAD_TO_DEG (180.0/PI)
 #endif
 
 #ifndef DEG_TO_RAD
-#define DEG_TO_RAD PI/180.0
+#define DEG_TO_RAD (PI/180.0)
 #endif
 
 namespace OpenBabel
@@ -112,7 +112,7 @@ namespace OpenBabel
       //! access function
       /*! writes the matrix into the 1-dimensional array m, row by
         row. The array must be able to hold 9 doubles, otherwise your
-        prgram will segfault. */
+        program will segfault. */
       void GetArray(double *m)
         {
           m[0] = ele[0][0];
@@ -125,6 +125,20 @@ namespace OpenBabel
           m[7] = ele[2][1];
           m[8] = ele[2][2];
         }
+
+      /*! Returns a constant reference to an element of the matrix.
+          row and column must be between 0 and 2. No check is done. */
+      const double & operator() (int row, int column ) const
+      {
+        return ele[row][column];
+      }
+
+      /*! Returns a non-constant reference to an element of the matrix.
+          row and column must be between 0 and 2. No check is done. */
+      double & operator() (int row, int column )
+      {
+        return ele[row][column];
+      }
 
       //! Calculates the inverse of a matrix.
       matrix3x3 inverse(void) const throw(OBError);
@@ -167,6 +181,7 @@ namespace OpenBabel
 
       //! access function
       /*! \warning row or column are not in the range 0..2, zero is returned
+       *! \deprecated use the constant operator() instead
        */
       double Get(int row,int column) const
         {
@@ -178,6 +193,7 @@ namespace OpenBabel
 
       //! access function
       /*! \warning if row or column are not in the range 0..2, nothing will happen
+       *! \deprecated use the non-constant operator() instead
        */
       void Set(int row,int column, double v)
         {
