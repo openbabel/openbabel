@@ -350,44 +350,28 @@ namespace OpenBabel
     return true;
   }
 
-  /*! This method returns false if there are indices i != j such
-    that fabs(*this[i][j]) > 1e-6. Otherwise, it returns true. */
+  /*! This method returns true if and only if the matrix is
+   * (approximately) a diagonal matrix. The precision used
+   * by this function is 1e-6. */
   bool matrix3x3::isDiagonal(void) const
   {
-    if (fabs(ele[0][1]) > 1e-6)
-      return false;
-    if (fabs(ele[0][2]) > 1e-6)
-      return false;
-    if (fabs(ele[1][2]) > 1e-6)
-      return false;
-
-    if (fabs(ele[1][0]) > 1e-6)
-      return false;
-    if (fabs(ele[2][0]) > 1e-6)
-      return false;
-    if (fabs(ele[2][1]) > 1e-6)
-      return false;
-
-    return true;
+    return( IsNegligible( ele[1][0], ele[0][0], 1e-6 )
+         && IsNegligible( ele[2][0], ele[0][0], 1e-6 )
+         && IsNegligible( ele[0][1], ele[1][1], 1e-6 )
+         && IsNegligible( ele[2][1], ele[1][1], 1e-6 )
+         && IsNegligible( ele[0][2], ele[2][2], 1e-6 )
+         && IsNegligible( ele[1][2], ele[2][2], 1e-6 ) );
   }
 
-  /*! This method returns false if there are indices i != j such
-    that fabs(*this[i][j]) > 1e-6, or if there is an index i such
-    that fabs(*this[i][j]-1) > 1e-6. Otherwise, it returns
-    true. */
+  /*! This method returns true if and only if the matrix is
+   * (approximately) equal to the identity matrix. The precision used
+   * by this function is 1e-6. */
   bool matrix3x3::isUnitMatrix(void) const
   {
-    if (!isDiagonal())
-      return false;
-
-    if (fabs(ele[0][0]-1) > 1e-6)
-      return false;
-    if (fabs(ele[1][1]-1) > 1e-6)
-      return false;
-    if (fabs(ele[2][2]-1) > 1e-6)
-      return false;
-
-    return true;
+    return ( isDiagonal()
+          && IsApprox( ele[0][0], 1.0, 1e-6 )
+          && IsApprox( ele[1][1], 1.0, 1e-6 )
+          && IsApprox( ele[2][2], 1.0, 1e-6 ) );
   }
 
   /*! This method employs the static method matrix3x3::jacobi(...)

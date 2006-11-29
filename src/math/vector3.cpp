@@ -286,7 +286,7 @@ namespace OpenBabel
       // store in res the crossed product of *this with (_vy,_vx,_vz),
       // and normalize it.
       res._vx = (_vy-_vx)*_vz;
-      res._vy = - res._vx;
+      res._vy = res._vx;
       res._vz = _vx*_vx - _vy*_vy;
       res.normalize();
     }

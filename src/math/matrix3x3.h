@@ -156,10 +156,12 @@ namespace OpenBabel
       bool isSymmetric(void) const;
 
       //! Checks if a matrix is orthogonal
-      /*! This method checks if a matrix describes an orthogonal
-        transformation, i.e. if all column vectors are normalized and
-        are mutually orthogonal. An orthogonal transformation is a
-        transformation the preserves length and angle. 
+      /*! This method checks if a matrix is orthogonal, i.e.
+        if all column vectors are normalized and
+        are mutually orthogonal. A matrix is orthogonal if,
+        and only if the transformation it describes is orthonormal.
+        An orthonormal transformation is a
+        transformation that preserves length and angle.
 
         The check is performed using the method isUnitMatrix() to
         check if

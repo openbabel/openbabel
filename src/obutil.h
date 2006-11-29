@@ -162,6 +162,17 @@ namespace OpenBabel
    * \deprecated
    */
   OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
+  /**
+    * Returns true if \a a is much smaller than \a b. More precisely:
+    * @code
+      return( fabs(a) <= precision * fabs(b) );
+    * @endcode
+    */
+  OBAPI inline bool IsNegligible(const double & a, const double & b,
+                      const double precision = 1e-11)
+  {
+    return( fabs(a) <= precision * fabs(b) );
+  }
   /*! Safe comparison for floats/doubles: true if
    * fabs(a - b) <= precision * fmin( fabs(a), fabs(b) )
    * The parameter precision plays the role of 10^-N where N is the number of

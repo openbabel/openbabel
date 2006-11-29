@@ -35,9 +35,9 @@ GNU General Public License for more details.
   if( ! (expr) ) verify_failed( __STRING(expr), __FILE__, __LINE__ )
 
 #define TEST(func) \
-  cout << "entering " << __STRING(func) << endl; \
-  for( int i = 0; i < REPEAT; i++ ) testBasics_vector3(); \
-  cout << "passed   " << __STRING(func) << endl
+  cout << "math: entering " << __STRING(func) << endl; \
+  for( int i = 0; i < REPEAT; i++ ) func(); \
+  cout << "math: passed   " << __STRING(func) << endl
 
 using namespace std;
 using namespace OpenBabel;
@@ -183,7 +183,7 @@ void testBasics_matrix3x3()
       m3.Set(i,j, m2(i,j) );
   VERIFY( compare( m3, m2 ) );
 
-  // test SetColumn(), GetColumn(), SetRow(), GetRow()
+  // test SetColumn(), GetColumn(), SetRow(), GetRow(), transpose()
   for( i = 0; i < 3; i++ )
   {
     pickRandom( v1 );
@@ -193,7 +193,70 @@ void testBasics_matrix3x3()
     m1.SetColumn( i, v1 );
     v2 = m1.GetColumn( i );
     VERIFY( compare( v1, v2 ) );
+    m1 = m1.transpose();
+    v2 = m1.GetRow( i );
+    VERIFY( compare( v1, v2 ) );
   }
+}
+
+void testArithmeticOperators()
+{
+  matrix3x3 mat1(1.0), mat2;
+  vector3 vec1( 0.0, 0.0, 0.0), vec2;
+  pickRandom( mat2 );
+  pickRandom( vec2 );
+
+  VERIFY( compare( mat2, mat1 * mat2 ) );
+  VERIFY( compare( mat2, mat2 * mat1 ) );
+  VERIFY( compare( vec2, mat1 * vec2 ) );
+  VERIFY( compare( vec2, vec1 + vec2 ) );
+
+  matrix3x3 mat3; pickRandom(mat3);
+  vector3 vec3; pickRandom(vec3);
+  pickRandom(mat1);
+  pickRandom(vec1);
+
+  VERIFY( compare( ( mat1 * mat2 ) * vec1,
+                   mat1 * ( mat2 * vec1 )
+                 ) );
+
+  VERIFY( compare( vec1 * -3.0, - vec1 - vec1 - vec1 ) );
+  VERIFY( compare( 2.0 * vec1, vec1 + vec1 ) );
+
+  double a1, a2;
+  pickRandom(a1);
+  pickRandom(a2);
+  VERIFY( compare( vec1 * ( a1 + a2 ), vec1 * a1 + vec1 * a2 ) );
+  VERIFY( compare( ( a1 - a2 ) * vec1, a1 * vec1 - a2 * vec1 ) );
+  VERIFY( compare( ( vec1 / a1 ) * a1, vec1 ) );
+
+  vec3 = vec1; vec3 += vec2;
+  VERIFY( compare( vec1 + vec2, vec3 ) );
+  vec3 = vec1; vec3 -= vec2;
+  VERIFY( compare( vec1 - vec2, vec3 ) );
+  vec3 = vec1; vec3 *= a1;
+  VERIFY( compare( vec1 * a1, vec3 ) );
+  vec3 = vec1; vec3 /= a1;
+  VERIFY( compare( vec1 / a1, vec3 ) );
+}
+
+void testDistancesAnglesOrthogonality()
+{
+  vector3 v1, v2, v3;
+  do pickRandom( v1 ); while( v1.length() == 0 );
+  VERIFY( compare( v1.length_2(), v1.length() * v1.length() ) );
+  v1.createOrthoVector( v2 );
+  VERIFY( compare( v2.length(), 1.0 ) );
+  v1.normalize();
+  v1.createOrthoVector( v2 );
+  VERIFY( compare( v1.length(), 1.0 ) );
+  VERIFY( IsNegligible( dot( v1, v2 ), 1.0, 1e-6 ) );
+  
+  matrix3x3 m1;
+  m1.SetColumn( 0, v1 );
+  m1.SetColumn( 1, v2 );
+  m1.SetColumn( 2, cross( v1, v2 ) );
+  VERIFY( m1.isOrthogonal() );
 }
 
 int main(int argc,char *argv[])
@@ -209,8 +272,10 @@ int main(int argc,char *argv[])
   
   randomizer.TimeSeed();
   
-  TEST(testBasics_vector3);
-  TEST(testBasics_matrix3x3);
+  TEST( testBasics_vector3 );
+  TEST( testBasics_matrix3x3 );
+  TEST( testArithmeticOperators );
+  TEST( testDistancesAnglesOrthogonality );
 
   cout << "math: all tests are successful" << endl;
   return 0;

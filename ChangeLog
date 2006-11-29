@@ -7,12 +7,21 @@
 
 2006-11-29  Benoit Jacob <jacob@math.jussieu.fr>
 
-	* math/matrix3x3.h: fix some defines in the same way as
-	in vector3.h, add both constant and non-constant
+	* math/vector3.cpp: fix a bug that I had introduced a few days ago
+	in createOrthoVector. Thanks go to the new unittests.
+
+	* math/matrix3x3.h, math/matrix3x3.cpp: fix some defines in the
+	same way as in vector3.h, add both constant and non-constant
 	operator()(int,int) to access the matrix elements easily.
+	Fix isUnit(), isOrthogonal(), isDiagonal().
 
 	* test/math.cpp, test/Makefile.am, test/Makefile.in:
-	Beginning of a new test for the math/ subdirectory.
+	New tests for the math/ subdirectory. Covers the constructors, access
+	methods, various operators, operations on rows and columns and
+	(partly, will be completed) the distances/angles/orthogonality stuff.
+
+	* src/obutil.h: add new function IsNegligible(), checks whether a is
+	much smaller than b with given precision.
 
 2006-11-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
