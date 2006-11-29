@@ -1,3 +1,10 @@
+2006-11-29  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-python.i: Added some SWIG magic that allows the
+	creation of a C doubles array. Also added a Python convenience
+	function that converts a list to a C doubles array. This will allow
+	users to access functions such as OBMol::Rotate.
+
 2006-11-29  Benoit Jacob <jacob@math.jussieu.fr>
 
 	* math/matrix3x3.h: fix some defines in the same way as

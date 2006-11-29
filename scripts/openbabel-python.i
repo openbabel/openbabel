@@ -86,3 +86,15 @@ namespace std {
 %rename(deref) OpenBabel::OBResidueBondIter::operator->;
 
 %include "obiter.h"
+
+%include "carrays.i"
+%array_class(double, doubleArray)
+%pythoncode %{
+def double_array(mylist):
+    """Create a C array of doubles from a list."""
+    c = doubleArray(len(mylist))
+    for i,v in enumerate(mylist):
+        c[i] = v
+    return c
+%}
+        
