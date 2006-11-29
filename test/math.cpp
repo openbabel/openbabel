@@ -31,33 +31,23 @@ GNU General Public License for more details.
 
 #define REPEAT 100
 
-# if defined __cplusplus ? __GNUC_PREREQ (2, 6) : __GNUC_PREREQ (2, 4)
-#   define FUNCTION    __PRETTY_FUNCTION__
-# else
-#  if defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L
-#   define FUNCTION    __func__
-#  else
-#   define FUNCTION    ""
-#  endif
-# endif
-
 #define VERIFY(expr) \
-  if( ! (expr) ) verify_failed( __STRING(expr), FUNCTION, __FILE__, __LINE__ )
+  if( ! (expr) ) verify_failed( __STRING(expr), __FILE__, __LINE__ )
 
 #define TEST(func) \
+  cout << "entering " << __STRING(func) << endl; \
   for( int i = 0; i < REPEAT; i++ ) testBasics_vector3(); \
-  cout << "passed " << __STRING(func) << endl
+  cout << "passed   " << __STRING(func) << endl
 
 using namespace std;
 using namespace OpenBabel;
 
 OBRandom randomizer;
 
-void verify_failed( const char *expr, const char *func, const char *file, int line )
+void verify_failed( const char *expr, const char *file, int line )
 {
   cout << "Failed test ( " << expr
        << " ) in line " << line
-       << " in function " << func
        << " in file " << file << endl;
   exit(1);
 }
