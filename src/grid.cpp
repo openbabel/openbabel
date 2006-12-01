@@ -221,45 +221,34 @@ namespace OpenBabel
     _ymax += pad;
     _zmin -= pad;
     _zmax += pad;
-    double midx,midy,midz;
-    int xdim,ydim,zdim;
-
-    midx=0.5*(_xmax+_xmin);
-    midy=0.5*(_ymax+_ymin);
-    midz=0.5*(_zmax+_zmin);
-
-    xdim=3+(int) ((_xmax-_xmin)/spacing);
-    ydim=3+(int) ((_ymax-_ymin)/spacing);
-    zdim=3+(int) ((_zmax-_zmin)/spacing);
 
     /* store in Grid */
-    _midx=midx;
-    _midy=midy;
-    _midz=midz;
-    _xdim=xdim;
-    _ydim=ydim;
-    _zdim=zdim;
+    _midx=0.5*(_xmax+_xmin);
+    _midy=0.5*(_ymax+_ymin);
+    _midz=0.5*(_zmax+_zmin);
+    _xdim=3+(int) ((_xmax-_xmin)/spacing);
+    _ydim=3+(int) ((_ymax-_ymin)/spacing);
+    _zdim=3+(int) ((_zmax-_zmin)/spacing);
     _spacing=spacing;
     _halfSpace= _spacing/2.0;
-    _inv_spa=1.0/spacing;
-    _val=NULL;
+    _inv_spa=1.0/_spacing;
     _ival=NULL;
 
     int size = _xdim*_ydim*_zdim;
     _val = new double [size];
-    memset(_val,'\0',sizeof(double)*size);
-
-    //return(true);
+    double *valptr = _val;
+    for( int i = 0; i < size; i++)
+    {
+      *valptr = 0.0;
+      valptr++;
+    }
   }
 
   double OBFloatGrid::Inject(double x,double y,double z)
   {
-    if((x<=_xmin)||(x>=_xmax))
-      return(0.0);
-    if((y<=_ymin)||(y>=_ymax))
-      return(0.0);
-    if((z<=_zmin)||(z>=_zmax))
-      return(0.0);
+    if( x<=_xmin || x>=_xmax
+     || y<=_ymin || y>=_ymax
+     || z<=_zmin || z>=_zmax ) return 0.0;
   
     int gx=(int)((x-_xmin)*_inv_spa);
     int gy=(int)((y-_ymin)*_inv_spa);
@@ -270,15 +259,15 @@ namespace OpenBabel
 
   void OBFloatGrid::IndexToCoords(int idx, double &x, double &y, double &z)
   {
-    long int grid_x,grid_y,grid_z;
+    int grid_x,grid_y,grid_z;
 
     grid_x = idx % (int)_xdim;
     grid_z = (int)(idx /(_xdim * _ydim));
     grid_y = (int)((idx - (grid_z * _xdim * _ydim))/_xdim);
 
-    x = ((double)grid_x * _spacing + _xmin) + this->_halfSpace;
-    y = ((double)grid_y * _spacing + _ymin) + this->_halfSpace;
-    z = ((double)grid_z * _spacing + _zmin) + this->_halfSpace;
+    x = (grid_x * _spacing + _xmin) + _halfSpace;
+    y = (grid_y * _spacing + _ymin) + _halfSpace;
+    z = (grid_z * _spacing + _zmin) + _halfSpace;
   }
 
   int OBFloatGrid::CoordsToIndex(double &x, double &y, double &z)
@@ -305,12 +294,9 @@ namespace OpenBabel
     double ax,ay,az,bx,by,bz;
     double AyA,ByA,AyB,ByB,Az,Bz;
 
-    if((x<=_xmin)||(x>=_xmax))
-      return(0.0);
-    if((y<=_ymin)||(y>=_ymax))
-      return(0.0);
-    if((z<=_zmin)||(z>=_zmax))
-      return(0.0);
+    if( x<=_xmin || x>=_xmax
+     || y<=_ymin || y>=_ymax
+     || z<=_zmin || z>=_zmax ) return 0.0;
 
     xydim = _xdim*_ydim;
 
@@ -363,12 +349,9 @@ namespace OpenBabel
     double AyA,ByA,AyB,ByB,Az,Bz;
     double energy,fx,fy,fz;
 
-    if((x<=_xmin)||(x>=_xmax))
-      return(0.0);
-    if((y<=_ymin)||(y>=_ymax))
-      return(0.0);
-    if((z<=_zmin)||(z>=_zmax))
-      return(0.0);
+    if( x<=_xmin || x>=_xmax
+     || y<=_ymin || y>=_ymax
+     || z<=_zmin || z>=_zmax ) return 0.0;
 
     xydim = _xdim*_ydim;
 
@@ -442,6 +425,12 @@ namespace OpenBabel
 
   ostream& operator<< ( ostream &os, const  OBFloatGrid& fg)
   {
+    //FIXME: this code stores the data in way that depends on
+    // the bit representation of floating-point numbers. One can say
+    // it's OK because IEEE754 is a widely accepted standard, but then
+    // one should at least make it write the data in an endianness-
+    // independant way. Of course this comment applies also to
+    // the operator>> below.
     os.write((const char*)&fg._xmin,sizeof(double));
     os.write((const char*)&fg._xmax,sizeof(double));
     os.write((const char*)&fg._ymin,sizeof(double));

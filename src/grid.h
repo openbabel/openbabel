@@ -94,23 +94,11 @@ namespace OpenBabel
 
     public:
 
-      OBFloatGrid() : _halfSpace(0.0)
-        {
-          _val=NULL;
-          _ival=NULL;
-        }
+      OBFloatGrid() : _halfSpace(0.0), _val(NULL), _ival(NULL) {}
       ~OBFloatGrid()
         {
-          if (_ival)
-            {
-              delete [] _ival;
-              _ival = NULL;
-            }
-          if (_val)
-            {
-              delete [] _val;
-              _val = NULL;
-            }
+          if (_ival) delete [] _ival;
+          if (_val)  delete [] _val;
         }
       //! Initialize the grid using this molecule as a box (plus a padding)
       //!  with the supplied spacing between points
