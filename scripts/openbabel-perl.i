@@ -9,12 +9,18 @@
 
 
 #include "obutil.h"
+#include "rand.h"
 #include "math/vector3.h"
 #include "math/matrix3x3.h"
 #include "generic.h"
 
 #include "base.h"
 #include "mol.h"
+#include "atom.h"
+#include "bond.h"
+#include "residue.h"
+#include "internalcoord.h"
+
 #include "ring.h"
 #include "obconversion.h"
 #include "oberror.h"
@@ -45,6 +51,7 @@ namespace std {
 
 %apply std::string &OUTPUT { std::string &to };
 %include "data.h"
+%include "rand.h"
 %include "obutil.h"
 %include "math/vector3.h"
 %import "math/matrix3x3.h"
@@ -59,6 +66,7 @@ namespace std {
 %include "oberror.h"
 %include "obconversion.h"
 %include "residue.h"
+%include "internalcoord.h"
 %include "atom.h"
 %include "bond.h"
 %include "mol.h"

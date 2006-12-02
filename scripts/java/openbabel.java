@@ -12,18 +12,6 @@ public class openbabel implements openbabelConstants {
     return openbabelJNI.OpenDatafile(SWIGTYPE_p_std__ifstream.getCPtr(fs), filename);
   }
 
-  public static void DoubleMultiply(long arg0, long arg1, DoubleType arg2) {
-    openbabelJNI.DoubleMultiply(arg0, arg1, DoubleType.getCPtr(arg2), arg2);
-  }
-
-  public static void DoubleAdd(DoubleType arg0, long arg1) {
-    openbabelJNI.DoubleAdd(DoubleType.getCPtr(arg0), arg0, arg1);
-  }
-
-  public static long DoubleModulus(DoubleType arg0, long arg1) {
-    return openbabelJNI.DoubleModulus(DoubleType.getCPtr(arg0), arg0, arg1);
-  }
-
   public static double dot(vector3 v1, vector3 v2) {
     return openbabelJNI.dot(vector3.getCPtr(v1), v1, vector3.getCPtr(v2), v2);
   }
@@ -464,12 +452,32 @@ public class openbabel implements openbabelConstants {
     return openbabelJNI.I_get();
   }
 
+  public static long get_1MA() {
+    return openbabelJNI._1MA_get();
+  }
+
+  public static long get_5MC() {
+    return openbabelJNI._5MC_get();
+  }
+
   public static long getOMC() {
     return openbabelJNI.OMC_get();
   }
 
+  public static long get_1MG() {
+    return openbabelJNI._1MG_get();
+  }
+
+  public static long get_2MG() {
+    return openbabelJNI._2MG_get();
+  }
+
   public static long getM2G() {
     return openbabelJNI.M2G_get();
+  }
+
+  public static long get_7MG() {
+    return openbabelJNI._7MG_get();
   }
 
   public static long getOMG() {
@@ -482,6 +490,10 @@ public class openbabel implements openbabelConstants {
 
   public static long getH2U() {
     return openbabelJNI.H2U_get();
+  }
+
+  public static long get_5MU() {
+    return openbabelJNI._5MU_get();
   }
 
   public static long getPSU() {
@@ -624,6 +636,10 @@ public class openbabel implements openbabelConstants {
 
   public static boolean tokenize(SWIGTYPE_p_std__vectorTstd__string_t arg0, SWIGTYPE_p_std__string arg1) {
     return openbabelJNI.tokenize__SWIG_4(SWIGTYPE_p_std__vectorTstd__string_t.getCPtr(arg0), SWIGTYPE_p_std__string.getCPtr(arg1));
+  }
+
+  public static void ThrowError(String str) {
+    openbabelJNI.ThrowError__SWIG_0(str);
   }
 
   public static void ThrowError(SWIGTYPE_p_std__string str) {

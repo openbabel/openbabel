@@ -81,8 +81,8 @@ public class vector3 {
     return (cPtr == 0) ? null : new SWIGTYPE_p_double(cPtr, false);
   }
 
-  public void randomUnitVector(OBRandom oeRand) {
-    openbabelJNI.vector3_randomUnitVector__SWIG_0(swigCPtr, this, OBRandom.getCPtr(oeRand), oeRand);
+  public void randomUnitVector(SWIGTYPE_p_OpenBabel__OBRandom oeRand) {
+    openbabelJNI.vector3_randomUnitVector__SWIG_0(swigCPtr, this, SWIGTYPE_p_OpenBabel__OBRandom.getCPtr(oeRand));
   }
 
   public void randomUnitVector() {

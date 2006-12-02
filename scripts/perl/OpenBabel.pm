@@ -741,85 +741,6 @@ sub ACQUIRE {
 }
 
 
-############# Class : Chemistry::OpenBabel::OBStopwatch ##############
-
-package Chemistry::OpenBabel::OBStopwatch;
-use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
-@ISA = qw( Chemistry::OpenBabel );
-%OWNER = ();
-%ITERATORS = ();
-*Start = *Chemistry::OpenBabelc::OBStopwatch_Start;
-*Lap = *Chemistry::OpenBabelc::OBStopwatch_Lap;
-*Elapsed = *Chemistry::OpenBabelc::OBStopwatch_Elapsed;
-sub new {
-    my $pkg = shift;
-    my $self = Chemistry::OpenBabelc::new_OBStopwatch(@_);
-    bless $self, $pkg if defined($self);
-}
-
-sub DESTROY {
-    return unless $_[0]->isa('HASH');
-    my $self = tied(%{$_[0]});
-    return unless defined $self;
-    delete $ITERATORS{$self};
-    if (exists $OWNER{$self}) {
-        Chemistry::OpenBabelc::delete_OBStopwatch($self);
-        delete $OWNER{$self};
-    }
-}
-
-sub DISOWN {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    delete $OWNER{$ptr};
-}
-
-sub ACQUIRE {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    $OWNER{$ptr} = 1;
-}
-
-
-############# Class : Chemistry::OpenBabel::OBSqrtTbl ##############
-
-package Chemistry::OpenBabel::OBSqrtTbl;
-use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
-@ISA = qw( Chemistry::OpenBabel );
-%OWNER = ();
-%ITERATORS = ();
-sub new {
-    my $pkg = shift;
-    my $self = Chemistry::OpenBabelc::new_OBSqrtTbl(@_);
-    bless $self, $pkg if defined($self);
-}
-
-sub DESTROY {
-    return unless $_[0]->isa('HASH');
-    my $self = tied(%{$_[0]});
-    return unless defined $self;
-    delete $ITERATORS{$self};
-    if (exists $OWNER{$self}) {
-        Chemistry::OpenBabelc::delete_OBSqrtTbl($self);
-        delete $OWNER{$self};
-    }
-}
-
-*Sqrt = *Chemistry::OpenBabelc::OBSqrtTbl_Sqrt;
-*Init = *Chemistry::OpenBabelc::OBSqrtTbl_Init;
-sub DISOWN {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    delete $OWNER{$ptr};
-}
-
-sub ACQUIRE {
-    my $self = shift;
-    my $ptr = tied(%$self);
-    $OWNER{$ptr} = 1;
-}
-
-
 ############# Class : Chemistry::OpenBabel::DoubleType ##############
 
 package Chemistry::OpenBabel::DoubleType;
@@ -889,6 +810,85 @@ sub DESTROY {
     }
 }
 
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBStopwatch ##############
+
+package Chemistry::OpenBabel::OBStopwatch;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*Start = *Chemistry::OpenBabelc::OBStopwatch_Start;
+*Lap = *Chemistry::OpenBabelc::OBStopwatch_Lap;
+*Elapsed = *Chemistry::OpenBabelc::OBStopwatch_Elapsed;
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBStopwatch(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBStopwatch($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBSqrtTbl ##############
+
+package Chemistry::OpenBabel::OBSqrtTbl;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBSqrtTbl(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBSqrtTbl($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Sqrt = *Chemistry::OpenBabelc::OBSqrtTbl_Sqrt;
+*Init = *Chemistry::OpenBabelc::OBSqrtTbl_Init;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -2111,6 +2111,55 @@ sub DESTROY {
 *EndAtoms = *Chemistry::OpenBabelc::OBResidue_EndAtoms;
 *BeginAtom = *Chemistry::OpenBabelc::OBResidue_BeginAtom;
 *NextAtom = *Chemistry::OpenBabelc::OBResidue_NextAtom;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBInternalCoord ##############
+
+package Chemistry::OpenBabel::OBInternalCoord;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*swig__a_get = *Chemistry::OpenBabelc::OBInternalCoord__a_get;
+*swig__a_set = *Chemistry::OpenBabelc::OBInternalCoord__a_set;
+*swig__b_get = *Chemistry::OpenBabelc::OBInternalCoord__b_get;
+*swig__b_set = *Chemistry::OpenBabelc::OBInternalCoord__b_set;
+*swig__c_get = *Chemistry::OpenBabelc::OBInternalCoord__c_get;
+*swig__c_set = *Chemistry::OpenBabelc::OBInternalCoord__c_set;
+*swig__dst_get = *Chemistry::OpenBabelc::OBInternalCoord__dst_get;
+*swig__dst_set = *Chemistry::OpenBabelc::OBInternalCoord__dst_set;
+*swig__ang_get = *Chemistry::OpenBabelc::OBInternalCoord__ang_get;
+*swig__ang_set = *Chemistry::OpenBabelc::OBInternalCoord__ang_set;
+*swig__tor_get = *Chemistry::OpenBabelc::OBInternalCoord__tor_get;
+*swig__tor_set = *Chemistry::OpenBabelc::OBInternalCoord__tor_set;
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBInternalCoord(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBInternalCoord($self);
+        delete $OWNER{$self};
+    }
+}
+
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -4130,7 +4179,6 @@ bless $obErrorLog, Chemistry::OpenBabel::OBMessageHandler;
 *LEU = *Chemistry::OpenBabelc::LEU;
 *SER = *Chemistry::OpenBabelc::SER;
 *VAL = *Chemistry::OpenBabelc::VAL;
-*THR = *Chemistry::OpenBabelc::THR;
 *LYS = *Chemistry::OpenBabelc::LYS;
 *ASP = *Chemistry::OpenBabelc::ASP;
 *ILE = *Chemistry::OpenBabelc::ILE;
@@ -4156,11 +4204,17 @@ bless $obErrorLog, Chemistry::OpenBabel::OBMessageHandler;
 *U = *Chemistry::OpenBabelc::U;
 *UPLUS = *Chemistry::OpenBabelc::UPLUS;
 *I = *Chemistry::OpenBabelc::I;
+*_1MA = *Chemistry::OpenBabelc::_1MA;
+*_5MC = *Chemistry::OpenBabelc::_5MC;
 *OMC = *Chemistry::OpenBabelc::OMC;
+*_1MG = *Chemistry::OpenBabelc::_1MG;
+*_2MG = *Chemistry::OpenBabelc::_2MG;
 *M2G = *Chemistry::OpenBabelc::M2G;
+*_7MG = *Chemistry::OpenBabelc::_7MG;
 *OMG = *Chemistry::OpenBabelc::OMG;
 *YG = *Chemistry::OpenBabelc::YG;
 *H2U = *Chemistry::OpenBabelc::H2U;
+*_5MU = *Chemistry::OpenBabelc::_5MU;
 *PSU = *Chemistry::OpenBabelc::PSU;
 *UNK = *Chemistry::OpenBabelc::UNK;
 *ACE = *Chemistry::OpenBabelc::ACE;

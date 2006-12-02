@@ -7,53 +7,19 @@
  * ----------------------------------------------------------------------------- */
 
 
-public class OBRandom {
+public class SWIGTYPE_p_OpenBabel__OBRandom {
   private long swigCPtr;
-  protected boolean swigCMemOwn;
 
-  protected OBRandom(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
+  protected SWIGTYPE_p_OpenBabel__OBRandom(long cPtr, boolean futureUse) {
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(OBRandom obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
-  }
-
-  protected void finalize() {
-    delete();
-  }
-
-  public synchronized void delete() {
-    if(swigCPtr != 0 && swigCMemOwn) {
-      swigCMemOwn = false;
-      openbabelJNI.delete_OBRandom(swigCPtr);
-    }
+  protected SWIGTYPE_p_OpenBabel__OBRandom() {
     swigCPtr = 0;
   }
 
-  public OBRandom(boolean useSys) {
-    this(openbabelJNI.new_OBRandom__SWIG_0(useSys), true);
+  protected static long getCPtr(SWIGTYPE_p_OpenBabel__OBRandom obj) {
+    return (obj == null) ? 0 : obj.swigCPtr;
   }
-
-  public OBRandom() {
-    this(openbabelJNI.new_OBRandom__SWIG_1(), true);
-  }
-
-  public void Seed(int seed) {
-    openbabelJNI.OBRandom_Seed(swigCPtr, this, seed);
-  }
-
-  public void TimeSeed() {
-    openbabelJNI.OBRandom_TimeSeed(swigCPtr, this);
-  }
-
-  public int NextInt() {
-    return openbabelJNI.OBRandom_NextInt(swigCPtr, this);
-  }
-
-  public double NextFloat() {
-    return openbabelJNI.OBRandom_NextFloat(swigCPtr, this);
-  }
-
 }
+

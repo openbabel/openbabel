@@ -3364,223 +3364,6 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBSqrtTbl_1Init(JNIEnv *jenv, jclass j
 }
 
 
-SWIGEXPORT void JNICALL Java_openbabelJNI_DoubleType_1hi_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
-  OpenBabel::DoubleType *arg1 = (OpenBabel::DoubleType *) 0 ;
-  unsigned int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::DoubleType **)&jarg1; 
-  arg2 = (unsigned int)jarg2; 
-  if (arg1) (arg1)->hi = arg2;
-  
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_DoubleType_1hi_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  OpenBabel::DoubleType *arg1 = (OpenBabel::DoubleType *) 0 ;
-  unsigned int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::DoubleType **)&jarg1; 
-  result = (unsigned int) ((arg1)->hi);
-  jresult = (jlong)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_DoubleType_1lo_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
-  OpenBabel::DoubleType *arg1 = (OpenBabel::DoubleType *) 0 ;
-  unsigned int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::DoubleType **)&jarg1; 
-  arg2 = (unsigned int)jarg2; 
-  if (arg1) (arg1)->lo = arg2;
-  
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_DoubleType_1lo_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  OpenBabel::DoubleType *arg1 = (OpenBabel::DoubleType *) 0 ;
-  unsigned int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::DoubleType **)&jarg1; 
-  result = (unsigned int) ((arg1)->lo);
-  jresult = (jlong)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1DoubleType(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  OpenBabel::DoubleType *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (OpenBabel::DoubleType *)new OpenBabel::DoubleType();
-  *(OpenBabel::DoubleType **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1DoubleType(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  OpenBabel::DoubleType *arg1 = (OpenBabel::DoubleType *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(OpenBabel::DoubleType **)&jarg1; 
-  delete arg1;
-  
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_DoubleMultiply(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jobject jarg3_) {
-  unsigned int arg1 ;
-  unsigned int arg2 ;
-  OpenBabel::DoubleType *arg3 = (OpenBabel::DoubleType *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg3_;
-  arg1 = (unsigned int)jarg1; 
-  arg2 = (unsigned int)jarg2; 
-  arg3 = *(OpenBabel::DoubleType **)&jarg3; 
-  OpenBabel::DoubleMultiply(arg1,arg2,arg3);
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_DoubleAdd(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
-  OpenBabel::DoubleType *arg1 = (OpenBabel::DoubleType *) 0 ;
-  unsigned int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::DoubleType **)&jarg1; 
-  arg2 = (unsigned int)jarg2; 
-  OpenBabel::DoubleAdd(arg1,arg2);
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_DoubleModulus(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
-  jlong jresult = 0 ;
-  OpenBabel::DoubleType *arg1 = (OpenBabel::DoubleType *) 0 ;
-  unsigned int arg2 ;
-  unsigned int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::DoubleType **)&jarg1; 
-  arg2 = (unsigned int)jarg2; 
-  result = (unsigned int)OpenBabel::DoubleModulus(arg1,arg2);
-  jresult = (jlong)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1OBRandom_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jboolean jarg1) {
-  jlong jresult = 0 ;
-  bool arg1 ;
-  OpenBabel::OBRandom *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = jarg1 ? true : false; 
-  result = (OpenBabel::OBRandom *)new OpenBabel::OBRandom(arg1);
-  *(OpenBabel::OBRandom **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1OBRandom_1_1SWIG_11(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  OpenBabel::OBRandom *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (OpenBabel::OBRandom *)new OpenBabel::OBRandom();
-  *(OpenBabel::OBRandom **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_OBRandom_1Seed(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  OpenBabel::OBRandom *arg1 = (OpenBabel::OBRandom *) 0 ;
-  int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBRandom **)&jarg1; 
-  arg2 = (int)jarg2; 
-  (arg1)->Seed(arg2);
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_OBRandom_1TimeSeed(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  OpenBabel::OBRandom *arg1 = (OpenBabel::OBRandom *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBRandom **)&jarg1; 
-  (arg1)->TimeSeed();
-}
-
-
-SWIGEXPORT jint JNICALL Java_openbabelJNI_OBRandom_1NextInt(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jint jresult = 0 ;
-  OpenBabel::OBRandom *arg1 = (OpenBabel::OBRandom *) 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBRandom **)&jarg1; 
-  result = (int)(arg1)->NextInt();
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBRandom_1NextFloat(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jdouble jresult = 0 ;
-  OpenBabel::OBRandom *arg1 = (OpenBabel::OBRandom *) 0 ;
-  double result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(OpenBabel::OBRandom **)&jarg1; 
-  result = (double)(arg1)->NextFloat();
-  jresult = (jdouble)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1OBRandom(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  OpenBabel::OBRandom *arg1 = (OpenBabel::OBRandom *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(OpenBabel::OBRandom **)&jarg1; 
-  delete arg1;
-  
-}
-
-
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1vector3_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jdouble jarg1, jdouble jarg2, jdouble jarg3) {
   jlong jresult = 0 ;
   double arg1 ;
@@ -3757,14 +3540,13 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_vector3_1AsArray(JNIEnv *jenv, jclass
 }
 
 
-SWIGEXPORT void JNICALL Java_openbabelJNI_vector3_1randomUnitVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT void JNICALL Java_openbabelJNI_vector3_1randomUnitVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   OpenBabel::vector3 *arg1 = (OpenBabel::vector3 *) 0 ;
   OpenBabel::OBRandom *arg2 = (OpenBabel::OBRandom *) 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
-  (void)jarg2_;
   arg1 = *(OpenBabel::vector3 **)&jarg1; 
   arg2 = *(OpenBabel::OBRandom **)&jarg2; 
   (arg1)->randomUnitVector(arg2);
@@ -11653,6 +11435,30 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_I_1get(JNIEnv *jenv, jclass jcls) {
 }
 
 
+SWIGEXPORT jlong JNICALL Java_openbabelJNI__11MA_1get(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_1MA;
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI__15MC_1get(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_5MC;
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_OMC_1get(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   unsigned int result;
@@ -11665,6 +11471,30 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_OMC_1get(JNIEnv *jenv, jclass jcls) {
 }
 
 
+SWIGEXPORT jlong JNICALL Java_openbabelJNI__11MG_1get(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_1MG;
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI__12MG_1get(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_2MG;
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_openbabelJNI_M2G_1get(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   unsigned int result;
@@ -11672,6 +11502,18 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_M2G_1get(JNIEnv *jenv, jclass jcls) {
   (void)jenv;
   (void)jcls;
   result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::M2G;
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI__17MG_1get(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_7MG;
   jresult = (jlong)result; 
   return jresult;
 }
@@ -11708,6 +11550,18 @@ SWIGEXPORT jlong JNICALL Java_openbabelJNI_H2U_1get(JNIEnv *jenv, jclass jcls) {
   (void)jenv;
   (void)jcls;
   result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::H2U;
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI__15MU_1get(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (unsigned int)(unsigned int)OpenBabel::OBResidueIndex::_5MU;
   jresult = (jlong)result; 
   return jresult;
 }
@@ -18411,6 +18265,21 @@ SWIGEXPORT jboolean JNICALL Java_openbabelJNI_tokenize_1_1SWIG_14(JNIEnv *jenv, 
   result = (bool)OpenBabel::tokenize(*arg1,*arg2);
   jresult = (jboolean)result; 
   return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_ThrowError_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  char *arg1 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = 0;
+  if (jarg1) {
+    arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
+    if (!arg1) return ;
+  }
+  OpenBabel::ThrowError(arg1);
+  if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
 }
 
 

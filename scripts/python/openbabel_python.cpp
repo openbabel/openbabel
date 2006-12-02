@@ -2529,81 +2529,84 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[61]
 #define SWIGTYPE_p_OpenBabel__vector3 swig_types[62]
 #define SWIGTYPE_p_a_3__double swig_types[63]
-#define SWIGTYPE_p_a_4__char swig_types[64]
-#define SWIGTYPE_p_allocator_type swig_types[65]
-#define SWIGTYPE_p_char swig_types[66]
-#define SWIGTYPE_p_const_reference swig_types[67]
-#define SWIGTYPE_p_difference_type swig_types[68]
-#define SWIGTYPE_p_double swig_types[69]
-#define SWIGTYPE_p_int swig_types[70]
-#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[71]
-#define SWIGTYPE_p_p_PyObject swig_types[72]
-#define SWIGTYPE_p_p_double swig_types[73]
-#define SWIGTYPE_p_p_int swig_types[74]
-#define SWIGTYPE_p_reference swig_types[75]
-#define SWIGTYPE_p_size_type swig_types[76]
-#define SWIGTYPE_p_std__dequeTint_t swig_types[77]
-#define SWIGTYPE_p_std__ifstream swig_types[78]
-#define SWIGTYPE_p_std__invalid_argument swig_types[79]
-#define SWIGTYPE_p_std__istream swig_types[80]
-#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_std__allocatorTstd__pairTchar_const_pconst_OpenBabel__OBFormat_p_t_t_t swig_types[81]
-#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_std__lessTint_t_std__allocatorTstd__pairTint_const_OpenBabel__OBAtom_p_t_t_t swig_types[82]
-#define SWIGTYPE_p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t swig_types[83]
-#define SWIGTYPE_p_std__ostream swig_types[84]
-#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[85]
-#define SWIGTYPE_p_std__streampos swig_types[86]
-#define SWIGTYPE_p_std__string swig_types[87]
-#define SWIGTYPE_p_std__type_info swig_types[88]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t swig_types[89]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator swig_types[90]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t swig_types[91]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator swig_types[92]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t swig_types[93]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__allocator_type swig_types[94]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__value_type swig_types[95]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t swig_types[96]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t swig_types[97]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type swig_types[98]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t swig_types[99]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator swig_types[100]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t swig_types[101]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__allocator_type swig_types[102]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__value_type swig_types[103]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_std__allocatorTOpenBabel__OBResidue_p_t_t__iterator swig_types[104]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t swig_types[105]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__allocator_type swig_types[106]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__value_type swig_types[107]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t swig_types[108]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t__iterator swig_types[109]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t swig_types[110]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__allocator_type swig_types[111]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__value_type swig_types[112]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_std__allocatorTOpenBabel__OBTorsion_t_t swig_types[113]
-#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_std__allocatorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t_t swig_types[114]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t swig_types[115]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__allocator_type swig_types[116]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__value_type swig_types[117]
-#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t swig_types[118]
-#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t__iterator swig_types[119]
-#define SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t swig_types[120]
-#define SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t__allocator_type swig_types[121]
-#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t swig_types[122]
-#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t__allocator_type swig_types[123]
-#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_std__allocatorTstd__pairTint_int_t_t_t swig_types[124]
-#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_std__allocatorTstd__pairTstd__string_std__string_t_t_t swig_types[125]
-#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t swig_types[126]
-#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t_std__allocatorTstd__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t_t_t swig_types[127]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t swig_types[128]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t__allocator_type swig_types[129]
-#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_std__allocatorTunsigned_int_t_t_std__allocatorTstd__vectorTunsigned_int_std__allocatorTunsigned_int_t_t_t_t swig_types[130]
-#define SWIGTYPE_p_std__vectorTunsigned_int_std__allocatorTunsigned_int_t_t swig_types[131]
-#define SWIGTYPE_p_std__vectorTunsigned_short_std__allocatorTunsigned_short_t_t swig_types[132]
-#define SWIGTYPE_p_swig__PySwigIterator swig_types[133]
-#define SWIGTYPE_p_unsigned_int swig_types[134]
-#define SWIGTYPE_p_value_type swig_types[135]
-#define SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type swig_types[136]
-static swig_type_info *swig_types[138];
-static swig_module_info swig_module = {swig_types, 137, 0, 0, 0, 0};
+#define SWIGTYPE_p_a_3__doubleArray swig_types[64]
+#define SWIGTYPE_p_a_4__char swig_types[65]
+#define SWIGTYPE_p_allocator_type swig_types[66]
+#define SWIGTYPE_p_char swig_types[67]
+#define SWIGTYPE_p_const_reference swig_types[68]
+#define SWIGTYPE_p_difference_type swig_types[69]
+#define SWIGTYPE_p_double swig_types[70]
+#define SWIGTYPE_p_doubleArray swig_types[71]
+#define SWIGTYPE_p_int swig_types[72]
+#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[73]
+#define SWIGTYPE_p_p_PyObject swig_types[74]
+#define SWIGTYPE_p_p_double swig_types[75]
+#define SWIGTYPE_p_p_doubleArray swig_types[76]
+#define SWIGTYPE_p_p_int swig_types[77]
+#define SWIGTYPE_p_reference swig_types[78]
+#define SWIGTYPE_p_size_type swig_types[79]
+#define SWIGTYPE_p_std__dequeTint_t swig_types[80]
+#define SWIGTYPE_p_std__ifstream swig_types[81]
+#define SWIGTYPE_p_std__invalid_argument swig_types[82]
+#define SWIGTYPE_p_std__istream swig_types[83]
+#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_std__allocatorTstd__pairTchar_const_pconst_OpenBabel__OBFormat_p_t_t_t swig_types[84]
+#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_std__lessTint_t_std__allocatorTstd__pairTint_const_OpenBabel__OBAtom_p_t_t_t swig_types[85]
+#define SWIGTYPE_p_std__mapTstd__string_std__string_std__lessTstd__string_t_std__allocatorTstd__pairTstd__string_const_std__string_t_t_t swig_types[86]
+#define SWIGTYPE_p_std__ostream swig_types[87]
+#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[88]
+#define SWIGTYPE_p_std__streampos swig_types[89]
+#define SWIGTYPE_p_std__string swig_types[90]
+#define SWIGTYPE_p_std__type_info swig_types[91]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t swig_types[92]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_std__allocatorTOpenBabel__OBAtom_p_t_t__iterator swig_types[93]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t swig_types[94]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_std__allocatorTOpenBabel__OBBond_p_t_t__iterator swig_types[95]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t swig_types[96]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__allocator_type swig_types[97]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_std__allocatorTOpenBabel__OBBond_t_t__value_type swig_types[98]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_std__allocatorTOpenBabel__OBExternalBond_t_t swig_types[99]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t swig_types[100]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__allocator_type swig_types[101]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t swig_types[102]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_std__allocatorTOpenBabel__OBInternalCoord_p_t_t__iterator swig_types[103]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t swig_types[104]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__allocator_type swig_types[105]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_std__allocatorTOpenBabel__OBMol_t_t__value_type swig_types[106]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_std__allocatorTOpenBabel__OBResidue_p_t_t__iterator swig_types[107]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t swig_types[108]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__allocator_type swig_types[109]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_std__allocatorTOpenBabel__OBResidue_t_t__value_type swig_types[110]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t swig_types[111]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_std__allocatorTOpenBabel__OBRing_p_t_t__iterator swig_types[112]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t swig_types[113]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__allocator_type swig_types[114]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_std__allocatorTOpenBabel__OBRing_t_t__value_type swig_types[115]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_std__allocatorTOpenBabel__OBTorsion_t_t swig_types[116]
+#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_std__allocatorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t_t swig_types[117]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t swig_types[118]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__allocator_type swig_types[119]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__value_type swig_types[120]
+#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t swig_types[121]
+#define SWIGTYPE_p_std__vectorTdouble_p_std__allocatorTdouble_p_t_t__iterator swig_types[122]
+#define SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t swig_types[123]
+#define SWIGTYPE_p_std__vectorTdouble_std__allocatorTdouble_t_t__allocator_type swig_types[124]
+#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t swig_types[125]
+#define SWIGTYPE_p_std__vectorTint_std__allocatorTint_t_t__allocator_type swig_types[126]
+#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_std__allocatorTstd__pairTint_int_t_t_t swig_types[127]
+#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_std__allocatorTstd__pairTstd__string_std__string_t_t_t swig_types[128]
+#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t swig_types[129]
+#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t_std__allocatorTstd__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t_t_t swig_types[130]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t swig_types[131]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_std__allocatorTint_t_t_std__allocatorTstd__vectorTint_std__allocatorTint_t_t_t_t__allocator_type swig_types[132]
+#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_std__allocatorTunsigned_int_t_t_std__allocatorTstd__vectorTunsigned_int_std__allocatorTunsigned_int_t_t_t_t swig_types[133]
+#define SWIGTYPE_p_std__vectorTunsigned_int_std__allocatorTunsigned_int_t_t swig_types[134]
+#define SWIGTYPE_p_std__vectorTunsigned_short_std__allocatorTunsigned_short_t_t swig_types[135]
+#define SWIGTYPE_p_swig__PySwigIterator swig_types[136]
+#define SWIGTYPE_p_unsigned_int swig_types[137]
+#define SWIGTYPE_p_value_type swig_types[138]
+#define SWIGTYPE_std__vectorTOpenBabel__OBGenericData_p_std__allocatorTOpenBabel__OBGenericData_p_t_t__value_type swig_types[139]
+static swig_type_info *swig_types[141];
+static swig_module_info swig_module = {swig_types, 140, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2706,12 +2709,18 @@ namespace swig {
 
 
 #include "obutil.h"
+#include "rand.h"
 #include "math/vector3.h"
 #include "math/matrix3x3.h"
 #include "generic.h"
 
 #include "base.h"
 #include "mol.h"
+#include "atom.h"
+#include "bond.h"
+#include "residue.h"
+#include "internalcoord.h"
+
 #include "ring.h"
 #include "obconversion.h"
 #include "oberror.h"
@@ -4882,6 +4891,27 @@ SWIG_AsVal_unsigned_SS_short (PyObject * obj, unsigned short *val)
   return res;
 }
 
+
+typedef double doubleArray;
+
+SWIGINTERN doubleArray *new_doubleArray(size_t nelements){
+    return (new double[nelements]);
+  }
+SWIGINTERN void delete_doubleArray(doubleArray *self){
+    delete[] self;
+  }
+SWIGINTERN double doubleArray___getitem__(doubleArray *self,size_t index){
+    return self[index];
+  }
+SWIGINTERN void doubleArray___setitem__(doubleArray *self,size_t index,double value){
+    self[index] = value;
+  }
+SWIGINTERN double *doubleArray_cast(doubleArray *self){
+    return self;
+  }
+SWIGINTERN doubleArray *doubleArray_frompointer(double *t){
+    return static_cast< doubleArray * >(t);
+  }
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -23161,300 +23191,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_OBStopwatch_Start(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBStopwatch *arg1 = (OpenBabel::OBStopwatch *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBStopwatch_Start",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBStopwatch, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBStopwatch_Start" "', argument " "1"" of type '" "OpenBabel::OBStopwatch *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBStopwatch * >(argp1);
-  (arg1)->Start();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_OBStopwatch_Lap(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBStopwatch *arg1 = (OpenBabel::OBStopwatch *) 0 ;
-  double result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBStopwatch_Lap",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBStopwatch, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBStopwatch_Lap" "', argument " "1"" of type '" "OpenBabel::OBStopwatch *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBStopwatch * >(argp1);
-  result = (double)(arg1)->Lap();
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_OBStopwatch_Elapsed(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBStopwatch *arg1 = (OpenBabel::OBStopwatch *) 0 ;
-  double result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBStopwatch_Elapsed",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBStopwatch, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBStopwatch_Elapsed" "', argument " "1"" of type '" "OpenBabel::OBStopwatch *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBStopwatch * >(argp1);
-  result = (double)(arg1)->Elapsed();
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_OBStopwatch(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBStopwatch *result = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBStopwatch",0,0)) SWIG_fail;
-  result = (OpenBabel::OBStopwatch *)new OpenBabel::OBStopwatch();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBStopwatch, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_OBStopwatch(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBStopwatch *arg1 = (OpenBabel::OBStopwatch *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"delete_OBStopwatch",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBStopwatch, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBStopwatch" "', argument " "1"" of type '" "OpenBabel::OBStopwatch *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBStopwatch * >(argp1);
-  delete arg1;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *OBStopwatch_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBStopwatch, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *OBStopwatch_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
-SWIGINTERN PyObject *_wrap_new_OBSqrtTbl__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBSqrtTbl *result = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBSqrtTbl",0,0)) SWIG_fail;
-  result = (OpenBabel::OBSqrtTbl *)new OpenBabel::OBSqrtTbl();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_OBSqrtTbl__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  double arg1 ;
-  double arg2 ;
-  OpenBabel::OBSqrtTbl *result = 0 ;
-  double val1 ;
-  int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"new_OBSqrtTbl",2,2,&obj0,&obj1)) SWIG_fail;
-  ecode1 = SWIG_AsVal_double(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_OBSqrtTbl" "', argument " "1"" of type '" "double""'");
-  } 
-  arg1 = static_cast< double >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_OBSqrtTbl" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  result = (OpenBabel::OBSqrtTbl *)new OpenBabel::OBSqrtTbl(arg1,arg2);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_OBSqrtTbl(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[3];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 0) {
-    return _wrap_new_OBSqrtTbl__SWIG_0(self, args);
-  }
-  if (argc == 2) {
-    int _v;
-    {
-      int res = SWIG_AsVal_double(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_new_OBSqrtTbl__SWIG_1(self, args);
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBSqrtTbl'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBSqrtTbl()\n    OpenBabel::OBSqrtTbl(double const,double const)\n");
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_OBSqrtTbl(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBSqrtTbl *arg1 = (OpenBabel::OBSqrtTbl *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"delete_OBSqrtTbl",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBSqrtTbl" "', argument " "1"" of type '" "OpenBabel::OBSqrtTbl *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSqrtTbl * >(argp1);
-  delete arg1;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_OBSqrtTbl_Sqrt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBSqrtTbl *arg1 = (OpenBabel::OBSqrtTbl *) 0 ;
-  double arg2 ;
-  double result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBSqrtTbl_Sqrt",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBSqrtTbl, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBSqrtTbl_Sqrt" "', argument " "1"" of type '" "OpenBabel::OBSqrtTbl const *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSqrtTbl * >(argp1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBSqrtTbl_Sqrt" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  result = (double)((OpenBabel::OBSqrtTbl const *)arg1)->Sqrt(arg2);
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_OBSqrtTbl_Init(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  OpenBabel::OBSqrtTbl *arg1 = (OpenBabel::OBSqrtTbl *) 0 ;
-  double arg2 ;
-  double arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if(!PyArg_UnpackTuple(args,(char *)"OBSqrtTbl_Init",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBSqrtTbl, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBSqrtTbl_Init" "', argument " "1"" of type '" "OpenBabel::OBSqrtTbl *""'"); 
-  }
-  arg1 = reinterpret_cast< OpenBabel::OBSqrtTbl * >(argp1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBSqrtTbl_Init" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBSqrtTbl_Init" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  (arg1)->Init(arg2,arg3);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *OBSqrtTbl_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *OBSqrtTbl_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
 SWIGINTERN PyObject *_wrap_DoubleType_hi_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   OpenBabel::DoubleType *arg1 = (OpenBabel::DoubleType *) 0 ;
@@ -23897,6 +23633,300 @@ SWIGINTERN PyObject *OBRandom_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObj
 }
 
 SWIGINTERN PyObject *OBRandom_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_OBStopwatch_Start(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBStopwatch *arg1 = (OpenBabel::OBStopwatch *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBStopwatch_Start",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBStopwatch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBStopwatch_Start" "', argument " "1"" of type '" "OpenBabel::OBStopwatch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBStopwatch * >(argp1);
+  (arg1)->Start();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBStopwatch_Lap(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBStopwatch *arg1 = (OpenBabel::OBStopwatch *) 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBStopwatch_Lap",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBStopwatch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBStopwatch_Lap" "', argument " "1"" of type '" "OpenBabel::OBStopwatch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBStopwatch * >(argp1);
+  result = (double)(arg1)->Lap();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBStopwatch_Elapsed(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBStopwatch *arg1 = (OpenBabel::OBStopwatch *) 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBStopwatch_Elapsed",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBStopwatch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBStopwatch_Elapsed" "', argument " "1"" of type '" "OpenBabel::OBStopwatch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBStopwatch * >(argp1);
+  result = (double)(arg1)->Elapsed();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_OBStopwatch(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBStopwatch *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBStopwatch",0,0)) SWIG_fail;
+  result = (OpenBabel::OBStopwatch *)new OpenBabel::OBStopwatch();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBStopwatch, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_OBStopwatch(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBStopwatch *arg1 = (OpenBabel::OBStopwatch *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_OBStopwatch",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBStopwatch, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBStopwatch" "', argument " "1"" of type '" "OpenBabel::OBStopwatch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBStopwatch * >(argp1);
+  delete arg1;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *OBStopwatch_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBStopwatch, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *OBStopwatch_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_OBSqrtTbl__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBSqrtTbl *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBSqrtTbl",0,0)) SWIG_fail;
+  result = (OpenBabel::OBSqrtTbl *)new OpenBabel::OBSqrtTbl();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_OBSqrtTbl__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  OpenBabel::OBSqrtTbl *result = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBSqrtTbl",2,2,&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_OBSqrtTbl" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_OBSqrtTbl" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (OpenBabel::OBSqrtTbl *)new OpenBabel::OBSqrtTbl(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_OBSqrtTbl(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_new_OBSqrtTbl__SWIG_0(self, args);
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_new_OBSqrtTbl__SWIG_1(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBSqrtTbl'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBSqrtTbl()\n    OpenBabel::OBSqrtTbl(double const,double const)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_OBSqrtTbl(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBSqrtTbl *arg1 = (OpenBabel::OBSqrtTbl *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_OBSqrtTbl",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBSqrtTbl" "', argument " "1"" of type '" "OpenBabel::OBSqrtTbl *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSqrtTbl * >(argp1);
+  delete arg1;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBSqrtTbl_Sqrt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBSqrtTbl *arg1 = (OpenBabel::OBSqrtTbl *) 0 ;
+  double arg2 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBSqrtTbl_Sqrt",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBSqrtTbl, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBSqrtTbl_Sqrt" "', argument " "1"" of type '" "OpenBabel::OBSqrtTbl const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSqrtTbl * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBSqrtTbl_Sqrt" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (double)((OpenBabel::OBSqrtTbl const *)arg1)->Sqrt(arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBSqrtTbl_Init(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBSqrtTbl *arg1 = (OpenBabel::OBSqrtTbl *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBSqrtTbl_Init",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBSqrtTbl, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBSqrtTbl_Init" "', argument " "1"" of type '" "OpenBabel::OBSqrtTbl *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBSqrtTbl * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBSqrtTbl_Init" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "OBSqrtTbl_Init" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  (arg1)->Init(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *OBSqrtTbl_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBSqrtTbl, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *OBSqrtTbl_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
@@ -39855,6 +39885,34 @@ SWIGINTERN PyObject *I_get(void) {
 }
 
 
+SWIGINTERN int _1MA_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable _1MA is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *_1MA_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_1MA));
+  return pyobj;
+}
+
+
+SWIGINTERN int _5MC_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable _5MC is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *_5MC_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_5MC));
+  return pyobj;
+}
+
+
 SWIGINTERN int OMC_set(PyObject *) {
   SWIG_Error(SWIG_AttributeError,"Variable OMC is read-only.");
   return 1;
@@ -39869,6 +39927,34 @@ SWIGINTERN PyObject *OMC_get(void) {
 }
 
 
+SWIGINTERN int _1MG_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable _1MG is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *_1MG_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_1MG));
+  return pyobj;
+}
+
+
+SWIGINTERN int _2MG_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable _2MG is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *_2MG_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_2MG));
+  return pyobj;
+}
+
+
 SWIGINTERN int M2G_set(PyObject *) {
   SWIG_Error(SWIG_AttributeError,"Variable M2G is read-only.");
   return 1;
@@ -39879,6 +39965,20 @@ SWIGINTERN PyObject *M2G_get(void) {
   PyObject *pyobj = 0;
   
   pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::M2G));
+  return pyobj;
+}
+
+
+SWIGINTERN int _7MG_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable _7MG is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *_7MG_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_7MG));
   return pyobj;
 }
 
@@ -39921,6 +40021,20 @@ SWIGINTERN PyObject *H2U_get(void) {
   PyObject *pyobj = 0;
   
   pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::H2U));
+  return pyobj;
+}
+
+
+SWIGINTERN int _5MU_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable _5MU is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *_5MU_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(OpenBabel::OBResidueIndex::_5MU));
   return pyobj;
 }
 
@@ -40346,6 +40460,525 @@ SWIGINTERN PyObject *ElemNo_get(void) {
   return pyobj;
 }
 
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__a_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__a_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__a_set" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBInternalCoord__a_set" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  if (arg1) (arg1)->_a = arg2;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__a_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  OpenBabel::OBAtom *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__a_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__a_get" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  result = (OpenBabel::OBAtom *) ((arg1)->_a);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__b_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__b_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__b_set" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBInternalCoord__b_set" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  if (arg1) (arg1)->_b = arg2;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__b_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  OpenBabel::OBAtom *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__b_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__b_get" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  result = (OpenBabel::OBAtom *) ((arg1)->_b);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__c_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__c_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__c_set" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OBInternalCoord__c_set" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  if (arg1) (arg1)->_c = arg2;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__c_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  OpenBabel::OBAtom *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__c_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__c_get" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  result = (OpenBabel::OBAtom *) ((arg1)->_c);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__dst_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__dst_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__dst_set" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBInternalCoord__dst_set" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (arg1) (arg1)->_dst = arg2;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__dst_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__dst_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__dst_get" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  result = (double) ((arg1)->_dst);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__ang_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__ang_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__ang_set" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBInternalCoord__ang_set" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (arg1) (arg1)->_ang = arg2;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__ang_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__ang_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__ang_get" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  result = (double) ((arg1)->_ang);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__tor_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__tor_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__tor_set" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "OBInternalCoord__tor_set" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (arg1) (arg1)->_tor = arg2;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_OBInternalCoord__tor_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"OBInternalCoord__tor_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OBInternalCoord__tor_get" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  result = (double) ((arg1)->_tor);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_OBInternalCoord__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBAtom *arg3 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBInternalCoord *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBInternalCoord",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBInternalCoord" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_OBInternalCoord" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "new_OBInternalCoord" "', argument " "3"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg3 = reinterpret_cast< OpenBabel::OBAtom * >(argp3);
+  result = (OpenBabel::OBInternalCoord *)new OpenBabel::OBInternalCoord(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBInternalCoord, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_OBInternalCoord__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBInternalCoord *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBInternalCoord",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBInternalCoord" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_OBInternalCoord" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  result = (OpenBabel::OBInternalCoord *)new OpenBabel::OBInternalCoord(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBInternalCoord, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_OBInternalCoord__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBInternalCoord *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBInternalCoord",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_OBInternalCoord" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  result = (OpenBabel::OBInternalCoord *)new OpenBabel::OBInternalCoord(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBInternalCoord, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_OBInternalCoord__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_OBInternalCoord",0,0)) SWIG_fail;
+  result = (OpenBabel::OBInternalCoord *)new OpenBabel::OBInternalCoord();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBInternalCoord, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_OBInternalCoord(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_new_OBInternalCoord__SWIG_3(self, args);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_OBInternalCoord__SWIG_2(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_new_OBInternalCoord__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_new_OBInternalCoord__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_OBInternalCoord'.\n  Possible C/C++ prototypes are:\n    OpenBabel::OBInternalCoord(OpenBabel::OBAtom *,OpenBabel::OBAtom *,OpenBabel::OBAtom *)\n    OpenBabel::OBInternalCoord(OpenBabel::OBAtom *,OpenBabel::OBAtom *)\n    OpenBabel::OBInternalCoord(OpenBabel::OBAtom *)\n    OpenBabel::OBInternalCoord()\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_OBInternalCoord(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  OpenBabel::OBInternalCoord *arg1 = (OpenBabel::OBInternalCoord *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_OBInternalCoord",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_OpenBabel__OBInternalCoord, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_OBInternalCoord" "', argument " "1"" of type '" "OpenBabel::OBInternalCoord *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBInternalCoord * >(argp1);
+  delete arg1;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *OBInternalCoord_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_OpenBabel__OBInternalCoord, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *OBInternalCoord_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
 
 SWIGINTERN PyObject *_wrap_OBAtom_Visit_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
@@ -51640,6 +52273,30 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_ThrowError__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"ThrowError",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ThrowError" "', argument " "1"" of type '" "char *""'");
+  }
+  arg1 = reinterpret_cast< char * >(buf1);
+  OpenBabel::ThrowError(arg1);
+  resultobj = SWIG_Py_Void();
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_ThrowError__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
@@ -51683,9 +52340,17 @@ SWIGINTERN PyObject *_wrap_ThrowError(PyObject *self, PyObject *args) {
       return _wrap_ThrowError__SWIG_1(self, args);
     }
   }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsCharPtrAndSize(argv[0], 0, NULL, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_ThrowError__SWIG_0(self, args);
+    }
+  }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'ThrowError'.\n  Possible C/C++ prototypes are:\n    OpenBabel::ThrowError()\n    OpenBabel::ThrowError(std::string &)\n");
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'ThrowError'.\n  Possible C/C++ prototypes are:\n    OpenBabel::ThrowError(char *)\n    OpenBabel::ThrowError(std::string &)\n");
   return NULL;
 }
 
@@ -84213,6 +84878,175 @@ SWIGINTERN PyObject *OBResidueAtomIter_swiginit(PyObject *SWIGUNUSEDPARM(self), 
   return SWIG_Python_InitShadowInstance(args);
 }
 
+SWIGINTERN PyObject *_wrap_new_doubleArray(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  size_t arg1 ;
+  doubleArray *result = 0 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_doubleArray",1,1,&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_size_t(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_doubleArray" "', argument " "1"" of type '" "size_t""'");
+  } 
+  arg1 = static_cast< size_t >(val1);
+  result = (doubleArray *)new_doubleArray(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_doubleArray, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_doubleArray(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  doubleArray *arg1 = (doubleArray *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_doubleArray",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_doubleArray, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_doubleArray" "', argument " "1"" of type '" "doubleArray *""'"); 
+  }
+  arg1 = reinterpret_cast< doubleArray * >(argp1);
+  delete_doubleArray(arg1);
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_doubleArray___getitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  doubleArray *arg1 = (doubleArray *) 0 ;
+  size_t arg2 ;
+  double result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"doubleArray___getitem__",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_doubleArray, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "doubleArray___getitem__" "', argument " "1"" of type '" "doubleArray *""'"); 
+  }
+  arg1 = reinterpret_cast< doubleArray * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "doubleArray___getitem__" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  result = (double)doubleArray___getitem__(arg1,arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_doubleArray___setitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  doubleArray *arg1 = (doubleArray *) 0 ;
+  size_t arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"doubleArray___setitem__",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_doubleArray, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "doubleArray___setitem__" "', argument " "1"" of type '" "doubleArray *""'"); 
+  }
+  arg1 = reinterpret_cast< doubleArray * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "doubleArray___setitem__" "', argument " "2"" of type '" "size_t""'");
+  } 
+  arg2 = static_cast< size_t >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "doubleArray___setitem__" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  doubleArray___setitem__(arg1,arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_doubleArray_cast(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  doubleArray *arg1 = (doubleArray *) 0 ;
+  double *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"doubleArray_cast",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_doubleArray, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "doubleArray_cast" "', argument " "1"" of type '" "doubleArray *""'"); 
+  }
+  arg1 = reinterpret_cast< doubleArray * >(argp1);
+  result = (double *)doubleArray_cast(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_double, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_doubleArray_frompointer(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double *arg1 = (double *) 0 ;
+  doubleArray *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"doubleArray_frompointer",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "doubleArray_frompointer" "', argument " "1"" of type '" "double *""'"); 
+  }
+  arg1 = reinterpret_cast< double * >(argp1);
+  result = (doubleArray *)doubleArray_frompointer(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_doubleArray, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *doubleArray_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_doubleArray, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *doubleArray_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"delete_PySwigIterator", _wrap_delete_PySwigIterator, METH_VARARGS, NULL},
 	 { (char *)"PySwigIterator_value", _wrap_PySwigIterator_value, METH_VARARGS, NULL},
@@ -84612,19 +85446,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBResidueData_swigregister", OBResidueData_swigregister, METH_VARARGS, NULL},
 	 { (char *)"OBResidueData_swiginit", OBResidueData_swiginit, METH_VARARGS, NULL},
 	 { (char *)"OpenDatafile", _wrap_OpenDatafile, METH_VARARGS, NULL},
-	 { (char *)"OBStopwatch_Start", _wrap_OBStopwatch_Start, METH_VARARGS, NULL},
-	 { (char *)"OBStopwatch_Lap", _wrap_OBStopwatch_Lap, METH_VARARGS, NULL},
-	 { (char *)"OBStopwatch_Elapsed", _wrap_OBStopwatch_Elapsed, METH_VARARGS, NULL},
-	 { (char *)"new_OBStopwatch", _wrap_new_OBStopwatch, METH_VARARGS, NULL},
-	 { (char *)"delete_OBStopwatch", _wrap_delete_OBStopwatch, METH_VARARGS, NULL},
-	 { (char *)"OBStopwatch_swigregister", OBStopwatch_swigregister, METH_VARARGS, NULL},
-	 { (char *)"OBStopwatch_swiginit", OBStopwatch_swiginit, METH_VARARGS, NULL},
-	 { (char *)"new_OBSqrtTbl", _wrap_new_OBSqrtTbl, METH_VARARGS, NULL},
-	 { (char *)"delete_OBSqrtTbl", _wrap_delete_OBSqrtTbl, METH_VARARGS, NULL},
-	 { (char *)"OBSqrtTbl_Sqrt", _wrap_OBSqrtTbl_Sqrt, METH_VARARGS, NULL},
-	 { (char *)"OBSqrtTbl_Init", _wrap_OBSqrtTbl_Init, METH_VARARGS, NULL},
-	 { (char *)"OBSqrtTbl_swigregister", OBSqrtTbl_swigregister, METH_VARARGS, NULL},
-	 { (char *)"OBSqrtTbl_swiginit", OBSqrtTbl_swiginit, METH_VARARGS, NULL},
 	 { (char *)"DoubleType_hi_set", _wrap_DoubleType_hi_set, METH_VARARGS, NULL},
 	 { (char *)"DoubleType_hi_get", _wrap_DoubleType_hi_get, METH_VARARGS, NULL},
 	 { (char *)"DoubleType_lo_set", _wrap_DoubleType_lo_set, METH_VARARGS, NULL},
@@ -84644,6 +85465,19 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"delete_OBRandom", _wrap_delete_OBRandom, METH_VARARGS, NULL},
 	 { (char *)"OBRandom_swigregister", OBRandom_swigregister, METH_VARARGS, NULL},
 	 { (char *)"OBRandom_swiginit", OBRandom_swiginit, METH_VARARGS, NULL},
+	 { (char *)"OBStopwatch_Start", _wrap_OBStopwatch_Start, METH_VARARGS, NULL},
+	 { (char *)"OBStopwatch_Lap", _wrap_OBStopwatch_Lap, METH_VARARGS, NULL},
+	 { (char *)"OBStopwatch_Elapsed", _wrap_OBStopwatch_Elapsed, METH_VARARGS, NULL},
+	 { (char *)"new_OBStopwatch", _wrap_new_OBStopwatch, METH_VARARGS, NULL},
+	 { (char *)"delete_OBStopwatch", _wrap_delete_OBStopwatch, METH_VARARGS, NULL},
+	 { (char *)"OBStopwatch_swigregister", OBStopwatch_swigregister, METH_VARARGS, NULL},
+	 { (char *)"OBStopwatch_swiginit", OBStopwatch_swiginit, METH_VARARGS, NULL},
+	 { (char *)"new_OBSqrtTbl", _wrap_new_OBSqrtTbl, METH_VARARGS, NULL},
+	 { (char *)"delete_OBSqrtTbl", _wrap_delete_OBSqrtTbl, METH_VARARGS, NULL},
+	 { (char *)"OBSqrtTbl_Sqrt", _wrap_OBSqrtTbl_Sqrt, METH_VARARGS, NULL},
+	 { (char *)"OBSqrtTbl_Init", _wrap_OBSqrtTbl_Init, METH_VARARGS, NULL},
+	 { (char *)"OBSqrtTbl_swigregister", OBSqrtTbl_swigregister, METH_VARARGS, NULL},
+	 { (char *)"OBSqrtTbl_swiginit", OBSqrtTbl_swiginit, METH_VARARGS, NULL},
 	 { (char *)"new_vector3", _wrap_new_vector3, METH_VARARGS, NULL},
 	 { (char *)"vector3_Set", _wrap_vector3_Set, METH_VARARGS, NULL},
 	 { (char *)"vector3_SetX", _wrap_vector3_SetX, METH_VARARGS, NULL},
@@ -85017,6 +85851,22 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBResidue_NextAtom", _wrap_OBResidue_NextAtom, METH_VARARGS, NULL},
 	 { (char *)"OBResidue_swigregister", OBResidue_swigregister, METH_VARARGS, NULL},
 	 { (char *)"OBResidue_swiginit", OBResidue_swiginit, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__a_set", _wrap_OBInternalCoord__a_set, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__a_get", _wrap_OBInternalCoord__a_get, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__b_set", _wrap_OBInternalCoord__b_set, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__b_get", _wrap_OBInternalCoord__b_get, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__c_set", _wrap_OBInternalCoord__c_set, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__c_get", _wrap_OBInternalCoord__c_get, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__dst_set", _wrap_OBInternalCoord__dst_set, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__dst_get", _wrap_OBInternalCoord__dst_get, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__ang_set", _wrap_OBInternalCoord__ang_set, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__ang_get", _wrap_OBInternalCoord__ang_get, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__tor_set", _wrap_OBInternalCoord__tor_set, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord__tor_get", _wrap_OBInternalCoord__tor_get, METH_VARARGS, NULL},
+	 { (char *)"new_OBInternalCoord", _wrap_new_OBInternalCoord, METH_VARARGS, NULL},
+	 { (char *)"delete_OBInternalCoord", _wrap_delete_OBInternalCoord, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord_swigregister", OBInternalCoord_swigregister, METH_VARARGS, NULL},
+	 { (char *)"OBInternalCoord_swiginit", OBInternalCoord_swiginit, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_Visit_set", _wrap_OBAtom_Visit_set, METH_VARARGS, NULL},
 	 { (char *)"OBAtom_Visit_get", _wrap_OBAtom_Visit_get, METH_VARARGS, NULL},
 	 { (char *)"new_OBAtom", _wrap_new_OBAtom, METH_VARARGS, NULL},
@@ -86356,6 +87206,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"OBResidueAtomIter_EndData", _wrap_OBResidueAtomIter_EndData, METH_VARARGS, NULL},
 	 { (char *)"OBResidueAtomIter_swigregister", OBResidueAtomIter_swigregister, METH_VARARGS, NULL},
 	 { (char *)"OBResidueAtomIter_swiginit", OBResidueAtomIter_swiginit, METH_VARARGS, NULL},
+	 { (char *)"new_doubleArray", _wrap_new_doubleArray, METH_VARARGS, NULL},
+	 { (char *)"delete_doubleArray", _wrap_delete_doubleArray, METH_VARARGS, NULL},
+	 { (char *)"doubleArray___getitem__", _wrap_doubleArray___getitem__, METH_VARARGS, NULL},
+	 { (char *)"doubleArray___setitem__", _wrap_doubleArray___setitem__, METH_VARARGS, NULL},
+	 { (char *)"doubleArray_cast", _wrap_doubleArray_cast, METH_VARARGS, NULL},
+	 { (char *)"doubleArray_frompointer", _wrap_doubleArray_frompointer, METH_VARARGS, NULL},
+	 { (char *)"doubleArray_swigregister", doubleArray_swigregister, METH_VARARGS, NULL},
+	 { (char *)"doubleArray_swiginit", doubleArray_swiginit, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -86391,6 +87249,15 @@ static void *_p_OpenBabel__OBBondTo_p_OpenBabel__OBBase(void *x) {
 }
 static void *_p_OpenBabel__OBAtomTo_p_OpenBabel__OBBase(void *x) {
     return (void *)((OpenBabel::OBBase *)  ((OpenBabel::OBAtom *) x));
+}
+static void *_p_doubleArrayTo_p_double(void *x) {
+    return (void *)((double *)  ((doubleArray *) x));
+}
+static void *_p_a_3__doubleArrayTo_p_a_3__double(void *x) {
+    return (void *)((double (*)[3])  ((doubleArray (*)[3]) x));
+}
+static void *_p_p_doubleArrayTo_p_p_double(void *x) {
+    return (void *)((double **)  ((doubleArray **) x));
 }
 static void *_p_OpenBabel__OBSymmetryDataTo_p_OpenBabel__OBGenericData(void *x) {
     return (void *)((OpenBabel::OBGenericData *)  ((OpenBabel::OBSymmetryData *) x));
@@ -86495,16 +87362,19 @@ static swig_type_info _swigt__p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__O
 static swig_type_info _swigt__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t = {"_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t", "OpenBabel::triple<OpenBabel::OBAtom *,OpenBabel::OBAtom *,OpenBabel::OBAtom * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__vector3 = {"_p_OpenBabel__vector3", "OpenBabel::vector3 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_a_3__double = {"_p_a_3__double", "double (*)[3]", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_a_3__doubleArray = {"_p_a_3__doubleArray", 0, 0, 0, 0, 0};
 static swig_type_info _swigt__p_a_4__char = {"_p_a_4__char", "char (*)[4]", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_allocator_type = {"_p_allocator_type", "allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_const_reference = {"_p_const_reference", "const_reference *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "difference_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_doubleArray = {"_p_doubleArray", "doubleArray *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "int *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_OpenBabel__OBFormat = {"_p_p_OpenBabel__OBFormat", "OpenBabel::OBFormat **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_PyObject = {"_p_p_PyObject", "PyObject **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_double = {"_p_p_double", "double **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_doubleArray = {"_p_p_doubleArray", 0, 0, 0, 0, 0};
 static swig_type_info _swigt__p_p_int = {"_p_p_int", "int **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_reference = {"_p_reference", "reference *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_size_type = {"_p_size_type", "size_type *", 0, 0, (void*)0, 0};
@@ -86634,16 +87504,19 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t,
   &_swigt__p_OpenBabel__vector3,
   &_swigt__p_a_3__double,
+  &_swigt__p_a_3__doubleArray,
   &_swigt__p_a_4__char,
   &_swigt__p_allocator_type,
   &_swigt__p_char,
   &_swigt__p_const_reference,
   &_swigt__p_difference_type,
   &_swigt__p_double,
+  &_swigt__p_doubleArray,
   &_swigt__p_int,
   &_swigt__p_p_OpenBabel__OBFormat,
   &_swigt__p_p_PyObject,
   &_swigt__p_p_double,
+  &_swigt__p_p_doubleArray,
   &_swigt__p_p_int,
   &_swigt__p_reference,
   &_swigt__p_size_type,
@@ -86772,17 +87645,20 @@ static swig_cast_info _swigc__p_OpenBabel__obLogBuf[] = {  {&_swigt__p_OpenBabel
 static swig_cast_info _swigc__p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t[] = {  {&_swigt__p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t[] = {  {&_swigt__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__vector3[] = {  {&_swigt__p_std__vectorTOpenBabel__vector3_std__allocatorTOpenBabel__vector3_t_t__value_type, 0, 0, 0},  {&_swigt__p_OpenBabel__vector3, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_a_3__double[] = {  {&_swigt__p_a_3__double, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_a_3__doubleArray[] = {{&_swigt__p_a_3__doubleArray, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_a_3__double[] = {  {&_swigt__p_a_3__doubleArray, _p_a_3__doubleArrayTo_p_a_3__double, 0, 0},  {&_swigt__p_a_3__double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_a_4__char[] = {  {&_swigt__p_a_4__char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_allocator_type[] = {  {&_swigt__p_allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_const_reference[] = {  {&_swigt__p_const_reference, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_doubleArray, _p_doubleArrayTo_p_double, 0, 0},  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_doubleArray[] = {  {&_swigt__p_doubleArray, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_OpenBabel__OBFormat[] = {  {&_swigt__p_p_OpenBabel__OBFormat, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_PyObject[] = {  {&_swigt__p_p_PyObject, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_p_double[] = {  {&_swigt__p_p_double, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_doubleArray[] = {{&_swigt__p_p_doubleArray, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_double[] = {  {&_swigt__p_p_doubleArray, _p_p_doubleArrayTo_p_p_double, 0, 0},  {&_swigt__p_p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_int[] = {  {&_swigt__p_p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_reference[] = {  {&_swigt__p_reference, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_size_type[] = {  {&_swigt__p_size_type, 0, 0, 0},{0, 0, 0, 0}};
@@ -86912,16 +87788,19 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t,
   _swigc__p_OpenBabel__vector3,
   _swigc__p_a_3__double,
+  _swigc__p_a_3__doubleArray,
   _swigc__p_a_4__char,
   _swigc__p_allocator_type,
   _swigc__p_char,
   _swigc__p_const_reference,
   _swigc__p_difference_type,
   _swigc__p_double,
+  _swigc__p_doubleArray,
   _swigc__p_int,
   _swigc__p_p_OpenBabel__OBFormat,
   _swigc__p_p_PyObject,
   _swigc__p_p_double,
+  _swigc__p_p_doubleArray,
   _swigc__p_p_int,
   _swigc__p_reference,
   _swigc__p_size_type,
@@ -87662,11 +88541,17 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_addvarlink(SWIG_globals(),(char*)"U",U_get, U_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"UPLUS",UPLUS_get, UPLUS_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"I",I_get, I_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"_1MA",_1MA_get, _1MA_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"_5MC",_5MC_get, _5MC_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"OMC",OMC_get, OMC_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"_1MG",_1MG_get, _1MG_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"_2MG",_2MG_get, _2MG_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"M2G",M2G_get, M2G_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"_7MG",_7MG_get, _7MG_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"OMG",OMG_get, OMG_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"YG",YG_get, YG_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"H2U",H2U_get, H2U_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"_5MU",_5MU_get, _5MU_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"PSU",PSU_get, PSU_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"UNK",UNK_get, UNK_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ACE",ACE_get, ACE_set);

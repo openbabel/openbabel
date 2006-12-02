@@ -1,3 +1,8 @@
+2006-12-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* scripts/*: Cleanups and fixes, including for compilation
+	problems with Perl. (Derives from some macro expansion for THR.)
+
 2006-12-01  Benoit Jacob <jacob@math.jussieu.fr>
 
 	* src/grid.h, src/grid.cpp: In class OBFloatGrid:

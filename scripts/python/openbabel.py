@@ -566,31 +566,6 @@ OBResidueData_swigregister(OBResidueData)
 
 OpenDatafile = _openbabel.OpenDatafile
 FILE_SEP_CHAR = _openbabel.FILE_SEP_CHAR
-class OBStopwatch(object):
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    def Start(*args): return _openbabel.OBStopwatch_Start(*args)
-    def Lap(*args): return _openbabel.OBStopwatch_Lap(*args)
-    def Elapsed(*args): return _openbabel.OBStopwatch_Elapsed(*args)
-    def __init__(self, *args): 
-        _openbabel.OBStopwatch_swiginit(self,_openbabel.new_OBStopwatch(*args))
-    __swig_destroy__ = _openbabel.delete_OBStopwatch
-    __del__ = lambda self : None;
-OBStopwatch_swigregister = _openbabel.OBStopwatch_swigregister
-OBStopwatch_swigregister(OBStopwatch)
-
-class OBSqrtTbl(object):
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        _openbabel.OBSqrtTbl_swiginit(self,_openbabel.new_OBSqrtTbl(*args))
-    __swig_destroy__ = _openbabel.delete_OBSqrtTbl
-    __del__ = lambda self : None;
-    def Sqrt(*args): return _openbabel.OBSqrtTbl_Sqrt(*args)
-    def Init(*args): return _openbabel.OBSqrtTbl_Init(*args)
-OBSqrtTbl_swigregister = _openbabel.OBSqrtTbl_swigregister
-OBSqrtTbl_swigregister(OBSqrtTbl)
-
 class DoubleType(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -619,6 +594,31 @@ class OBRandom(object):
     __del__ = lambda self : None;
 OBRandom_swigregister = _openbabel.OBRandom_swigregister
 OBRandom_swigregister(OBRandom)
+
+class OBStopwatch(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def Start(*args): return _openbabel.OBStopwatch_Start(*args)
+    def Lap(*args): return _openbabel.OBStopwatch_Lap(*args)
+    def Elapsed(*args): return _openbabel.OBStopwatch_Elapsed(*args)
+    def __init__(self, *args): 
+        _openbabel.OBStopwatch_swiginit(self,_openbabel.new_OBStopwatch(*args))
+    __swig_destroy__ = _openbabel.delete_OBStopwatch
+    __del__ = lambda self : None;
+OBStopwatch_swigregister = _openbabel.OBStopwatch_swigregister
+OBStopwatch_swigregister(OBStopwatch)
+
+class OBSqrtTbl(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBSqrtTbl_swiginit(self,_openbabel.new_OBSqrtTbl(*args))
+    __swig_destroy__ = _openbabel.delete_OBSqrtTbl
+    __del__ = lambda self : None;
+    def Sqrt(*args): return _openbabel.OBSqrtTbl_Sqrt(*args)
+    def Init(*args): return _openbabel.OBSqrtTbl_Init(*args)
+OBSqrtTbl_swigregister = _openbabel.OBSqrtTbl_swigregister
+OBSqrtTbl_swigregister(OBSqrtTbl)
 
 class vector3(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
@@ -1264,6 +1264,113 @@ AA_HIS = _openbabel.AA_HIS
 AA_CYS = _openbabel.AA_CYS
 AA_MET = _openbabel.AA_MET
 AA_TRP = _openbabel.AA_TRP
+class OBInternalCoord(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    _a = _swig_property(_openbabel.OBInternalCoord__a_get, _openbabel.OBInternalCoord__a_set)
+    _b = _swig_property(_openbabel.OBInternalCoord__b_get, _openbabel.OBInternalCoord__b_set)
+    _c = _swig_property(_openbabel.OBInternalCoord__c_get, _openbabel.OBInternalCoord__c_set)
+    _dst = _swig_property(_openbabel.OBInternalCoord__dst_get, _openbabel.OBInternalCoord__dst_set)
+    _ang = _swig_property(_openbabel.OBInternalCoord__ang_get, _openbabel.OBInternalCoord__ang_set)
+    _tor = _swig_property(_openbabel.OBInternalCoord__tor_get, _openbabel.OBInternalCoord__tor_set)
+    def __init__(self, *args): 
+        _openbabel.OBInternalCoord_swiginit(self,_openbabel.new_OBInternalCoord(*args))
+    __swig_destroy__ = _openbabel.delete_OBInternalCoord
+    __del__ = lambda self : None;
+OBInternalCoord_swigregister = _openbabel.OBInternalCoord_swigregister
+OBInternalCoord_swigregister(OBInternalCoord)
+ACIDIC = cvar.ACIDIC
+ACYCLIC = cvar.ACYCLIC
+ALIPHATIC = cvar.ALIPHATIC
+AROMATIC = cvar.AROMATIC
+BASIC = cvar.BASIC
+BURIED = cvar.BURIED
+CHARGED = cvar.CHARGED
+CYCLIC = cvar.CYCLIC
+HYDROPHOBIC = cvar.HYDROPHOBIC
+LARGE = cvar.LARGE
+MEDIUM = cvar.MEDIUM
+NEGATIVE = cvar.NEGATIVE
+NEUTRAL = cvar.NEUTRAL
+POLAR = cvar.POLAR
+POSITIVE = cvar.POSITIVE
+SMALL = cvar.SMALL
+SURFACE = cvar.SURFACE
+ALPHA_CARBON = cvar.ALPHA_CARBON
+AMINO_BACKBONE = cvar.AMINO_BACKBONE
+BACKBONE = cvar.BACKBONE
+CYSTEINE_SULPHUR = cvar.CYSTEINE_SULPHUR
+LIGAND = cvar.LIGAND
+NUCLEIC_BACKBONE = cvar.NUCLEIC_BACKBONE
+SHAPELY_BACKBONE = cvar.SHAPELY_BACKBONE
+SHAPELY_SPECIAL = cvar.SHAPELY_SPECIAL
+SIDECHAIN = cvar.SIDECHAIN
+SUGAR_PHOSPHATE = cvar.SUGAR_PHOSPHATE
+ALA = cvar.ALA
+GLY = cvar.GLY
+LEU = cvar.LEU
+SER = cvar.SER
+VAL = cvar.VAL
+THR = cvar.THR
+LYS = cvar.LYS
+ASP = cvar.ASP
+ILE = cvar.ILE
+ASN = cvar.ASN
+GLU = cvar.GLU
+PRO = cvar.PRO
+ARG = cvar.ARG
+PHE = cvar.PHE
+GLN = cvar.GLN
+TYR = cvar.TYR
+HIS = cvar.HIS
+CYS = cvar.CYS
+MET = cvar.MET
+TRP = cvar.TRP
+ASX = cvar.ASX
+GLX = cvar.GLX
+PCA = cvar.PCA
+HYP = cvar.HYP
+A = cvar.A
+C = cvar.C
+G = cvar.G
+T = cvar.T
+U = cvar.U
+UPLUS = cvar.UPLUS
+I = cvar.I
+_1MA = cvar._1MA
+_5MC = cvar._5MC
+OMC = cvar.OMC
+_1MG = cvar._1MG
+_2MG = cvar._2MG
+M2G = cvar.M2G
+_7MG = cvar._7MG
+OMG = cvar.OMG
+YG = cvar.YG
+H2U = cvar.H2U
+_5MU = cvar._5MU
+PSU = cvar.PSU
+UNK = cvar.UNK
+ACE = cvar.ACE
+FOR = cvar.FOR
+HOH = cvar.HOH
+DOD = cvar.DOD
+SO4 = cvar.SO4
+PO4 = cvar.PO4
+NAD = cvar.NAD
+COA = cvar.COA
+NAP = cvar.NAP
+NDP = cvar.NDP
+AMINO = cvar.AMINO
+AMINO_NUCLEO = cvar.AMINO_NUCLEO
+COENZYME = cvar.COENZYME
+ION = cvar.ION
+NUCLEO = cvar.NUCLEO
+PROTEIN = cvar.PROTEIN
+PURINE = cvar.PURINE
+PYRIMIDINE = cvar.PYRIMIDINE
+SOLVENT = cvar.SOLVENT
+WATER = cvar.WATER
+
 OB_4RING_ATOM = _openbabel.OB_4RING_ATOM
 OB_3RING_ATOM = _openbabel.OB_3RING_ATOM
 OB_AROMATIC_ATOM = _openbabel.OB_AROMATIC_ATOM
@@ -1411,91 +1518,6 @@ class OBAtom(OBBase):
     def MatchesSMARTS(*args): return _openbabel.OBAtom_MatchesSMARTS(*args)
 OBAtom_swigregister = _openbabel.OBAtom_swigregister
 OBAtom_swigregister(OBAtom)
-ACIDIC = cvar.ACIDIC
-ACYCLIC = cvar.ACYCLIC
-ALIPHATIC = cvar.ALIPHATIC
-AROMATIC = cvar.AROMATIC
-BASIC = cvar.BASIC
-BURIED = cvar.BURIED
-CHARGED = cvar.CHARGED
-CYCLIC = cvar.CYCLIC
-HYDROPHOBIC = cvar.HYDROPHOBIC
-LARGE = cvar.LARGE
-MEDIUM = cvar.MEDIUM
-NEGATIVE = cvar.NEGATIVE
-NEUTRAL = cvar.NEUTRAL
-POLAR = cvar.POLAR
-POSITIVE = cvar.POSITIVE
-SMALL = cvar.SMALL
-SURFACE = cvar.SURFACE
-ALPHA_CARBON = cvar.ALPHA_CARBON
-AMINO_BACKBONE = cvar.AMINO_BACKBONE
-BACKBONE = cvar.BACKBONE
-CYSTEINE_SULPHUR = cvar.CYSTEINE_SULPHUR
-LIGAND = cvar.LIGAND
-NUCLEIC_BACKBONE = cvar.NUCLEIC_BACKBONE
-SHAPELY_BACKBONE = cvar.SHAPELY_BACKBONE
-SHAPELY_SPECIAL = cvar.SHAPELY_SPECIAL
-SIDECHAIN = cvar.SIDECHAIN
-SUGAR_PHOSPHATE = cvar.SUGAR_PHOSPHATE
-ALA = cvar.ALA
-GLY = cvar.GLY
-LEU = cvar.LEU
-SER = cvar.SER
-VAL = cvar.VAL
-THR = cvar.THR
-LYS = cvar.LYS
-ASP = cvar.ASP
-ILE = cvar.ILE
-ASN = cvar.ASN
-GLU = cvar.GLU
-PRO = cvar.PRO
-ARG = cvar.ARG
-PHE = cvar.PHE
-GLN = cvar.GLN
-TYR = cvar.TYR
-HIS = cvar.HIS
-CYS = cvar.CYS
-MET = cvar.MET
-TRP = cvar.TRP
-ASX = cvar.ASX
-GLX = cvar.GLX
-PCA = cvar.PCA
-HYP = cvar.HYP
-A = cvar.A
-C = cvar.C
-G = cvar.G
-T = cvar.T
-U = cvar.U
-UPLUS = cvar.UPLUS
-I = cvar.I
-OMC = cvar.OMC
-M2G = cvar.M2G
-OMG = cvar.OMG
-YG = cvar.YG
-H2U = cvar.H2U
-PSU = cvar.PSU
-UNK = cvar.UNK
-ACE = cvar.ACE
-FOR = cvar.FOR
-HOH = cvar.HOH
-DOD = cvar.DOD
-SO4 = cvar.SO4
-PO4 = cvar.PO4
-NAD = cvar.NAD
-COA = cvar.COA
-NAP = cvar.NAP
-NDP = cvar.NDP
-AMINO = cvar.AMINO
-AMINO_NUCLEO = cvar.AMINO_NUCLEO
-COENZYME = cvar.COENZYME
-ION = cvar.ION
-NUCLEO = cvar.NUCLEO
-PROTEIN = cvar.PROTEIN
-PURINE = cvar.PURINE
-PYRIMIDINE = cvar.PYRIMIDINE
-SOLVENT = cvar.SOLVENT
-WATER = cvar.WATER
 
 OB_AROMATIC_BOND = _openbabel.OB_AROMATIC_BOND
 OB_WEDGE_BOND = _openbabel.OB_WEDGE_BOND
@@ -2813,6 +2835,28 @@ class OBResidueAtomIter(object):
     def EndData(*args): return _openbabel.OBResidueAtomIter_EndData(*args)
 OBResidueAtomIter_swigregister = _openbabel.OBResidueAtomIter_swigregister
 OBResidueAtomIter_swigregister(OBResidueAtomIter)
+
+class doubleArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.doubleArray_swiginit(self,_openbabel.new_doubleArray(*args))
+    __swig_destroy__ = _openbabel.delete_doubleArray
+    __del__ = lambda self : None;
+    def __getitem__(*args): return _openbabel.doubleArray___getitem__(*args)
+    def __setitem__(*args): return _openbabel.doubleArray___setitem__(*args)
+    def cast(*args): return _openbabel.doubleArray_cast(*args)
+    frompointer = staticmethod(_openbabel.doubleArray_frompointer)
+doubleArray_swigregister = _openbabel.doubleArray_swigregister
+doubleArray_swigregister(doubleArray)
+doubleArray_frompointer = _openbabel.doubleArray_frompointer
+
+def double_array(mylist):
+    """Create a C array of doubles from a list."""
+    c = doubleArray(len(mylist))
+    for i,v in enumerate(mylist):
+        c[i] = v
+    return c
 
 
 

@@ -35,6 +35,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@am__append_1 = ruby/openbabel_ruby.cpp
 subdir = scripts
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -198,9 +199,10 @@ EXTRA_DIST = openbabel-perl.i perl \
 
 # build the scripting language interfaces if --enable-maintainer-mode was set
 # and SWIG is available -- please use the most recent version of SWIG
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@BUILT_SOURCES = perl/openbabel_perl.cpp python/openbabel_python.cpp \
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	ruby/openbabel_ruby.cpp java/openbabel_java.cpp
-
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@BUILT_SOURCES = perl/openbabel_perl.cpp \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	python/openbabel_python.cpp \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	java/openbabel_java.cpp \
+@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(am__append_1)
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -394,16 +396,16 @@ dist-hook:
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	cat python/openbabel.py >>python/ob.py;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	mv python/ob.py python/openbabel.py;
 
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@ruby/openbabel_ruby.cpp: openbabel-ruby.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -ruby -naturalvar -c++ -o $@ -I$(top_srcdir)/src $<;
-@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
-
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@java/openbabel_java.cpp: openbabel-java.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -java -naturalvar -c++ -o $@ -I$(top_srcdir)/src $<;
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd java; \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	  for file in SWIGTYPE_p_*; \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		do tgt=$$(echo $${file} | sed -e "s/SWIGTYPE_p_//" | sed -e "s/std__//g" | sed -e "s/OpenBabel__//g" | sed -e "s/p_/p/g"); \
 @BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@		mv $$file $$tgt; done)
+
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@ruby/openbabel_ruby.cpp: openbabel-ruby.i $(top_srcdir)/src/mol.h  $(top_srcdir)/src/obconversion.h
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	$(SWIG) -ruby -naturalvar -c++ -o $@ -I$(top_srcdir)/src $<;
+@BUILD_RUBY_TRUE@@BUILD_SWIG_TRUE@@MAINTAINER_MODE_TRUE@	(cd ruby; ruby extconf.rb --with-openbabel-include=$(includedir)/openbabel-2.0/openbabel --with-openbabel-2.0-include=$(includedir)/openbabel-2.0 --with-openbabel-lib=$(libdir) )
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
