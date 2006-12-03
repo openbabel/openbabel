@@ -38,6 +38,14 @@ GNU General Public License for more details.
 
 #include <math.h>
 
+// FIXME: dirty hack! makes sure we have a working fmin()
+// this is bad because it replaces the better builtin fmin in gcc
+#define fmin(a, b) ( (a) < (b) ? (a) : (b) )
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 // For backwards compatibility. Will be removed in the future
 #include "rand.h"
 

@@ -21,9 +21,8 @@ GNU General Public License for more details.
 #define OB_MATRIX3x3_H
 
 #include <ostream>
-#include <math.h>
 
-#include "math/vector3.h"
+#include "math/vector3.h" // includes obutil.h, which includes <math.h>
 #include "oberror.h"
 
 #ifndef RAD_TO_DEG

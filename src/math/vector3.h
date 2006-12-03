@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #define OB_VECTOR_H
 
 #include <ostream>
-#include <math.h>
+#include "obutil.h" // includes math.h
 
 #ifndef RAD_TO_DEG
 #define RAD_TO_DEG (180.0/M_PI)

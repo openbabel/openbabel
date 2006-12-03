@@ -19,11 +19,9 @@ GNU General Public License for more details.
 
 #include "babelconfig.h"
 
-#include <math.h>
-#include <iostream>
+#include <ostream>
 
 #include "math/vector3.h"
-#include "obutil.h"
 
 using namespace std;
 
