@@ -179,13 +179,23 @@ namespace OpenBabel
    * significant digits to consider.
    * This is the correct way to replace operator== for doubles. For new code,
    * use this function instead of the old IsNear() function.
+   *
+   * \note To check
+   * if x is zero, use
+   * @code
+     IsNegligible( x, 1.0)
+   * @endcode
+   * instead of
+   * @code
+     IsApprox( x, 0.0 )
+   * @endcode
    */
   OBAPI inline bool IsApprox(const double & a, const double & b,
                       const double precision = 1e-11)
   {
     return( fabs(a - b) <= precision * fmin( fabs(a), fabs(b) ) );
   }
-  //! Same as IsApprox(), but only for nonnegative numbers. Faster.
+  //! Same as IsApprox(), but only for positive numbers. Faster.
   OBAPI inline bool IsApprox_pos(const double &a, const double &b,
       const double precision = 1e-11)
   {

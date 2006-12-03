@@ -1,15 +1,30 @@
 2006-12-03  Benoit Jacob <jacob@math.jussieu.fr>
 
+	* src/math/vector3.h, src/math/matrix3x3.h,
+	  src/math/vector3.cpp, src/math/matrix3x3.cpp:
+	 --- IMPORTANT: disable floating-point checks and exception-throwing
+	     by default. Now that is compiled only if OB_OLD_MATH_CHECKS is
+	     defined.
+	 --- Fix compilation error on Windows reported by Noel O'Boyle.
+	     (another compilation error on Windows remains to be fixed).
+	 --- Fix some more methods. Now all the floating-point code
+	     should be quite sane.
+	 --- Optimize/simplify several more methods.
+	 --- add matrix3x3::operator*=( const double &), make operator /=
+	     use it.
+	 --- remove #define PI, use the standard M_PI instead.
+	 --- replace #define SQUARE() by a static inline function.
+	 --- remove hyper-dangerous #define x,y,z
+
 	* test/math.cpp: extend tests, merge (an improved version of)
 	matrixtest.cpp. Now math.cpp covers all what vector3.cpp and
 	matrixtest.cpp did cover, plus a lot more. Geoff: maybe it's time
 	to remove the tests vector3 and matrixtest?
 
-	* src/math/vector3.h, src/math/matrix3x3.h: remove PI, use the
-	standard M_PI instead.
+        * test/vector3.cpp: fix bugs, if that still matters.
 
-	* src/math/matrix3x3.cpp: replace #define SQUARE() by a
-	static inline function.
+	* src/obutil.h: add note clarifying that to check if x is zero, one
+	should use IsNegligible( x, 1.0) instead of IsApprox( x, 0.0 ).
 
 	* src/rotor.cpp, tools/obxyz.cpp: use M_PI instead of PI.
 

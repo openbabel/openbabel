@@ -54,36 +54,36 @@ namespace OpenBabel
         { }
 
     //! set x,y and z-component of a vector
-    inline void Set(const double inX, const double inY, const double inZ)
+    void Set(const double inX, const double inY, const double inZ)
     {
       _vx = inX;
       _vy = inY;
       _vz = inZ;
     }
     //! set x,y and z-component of a vector from c[0]..c[2]
-    inline void Set(const double *c)
+    void Set(const double *c)
     {
       _vx = c[0];
       _vy = c[1];
       _vz = c[2];
     }
     //! access function to get the x-coordinate of the vector
-    inline void SetX(const double inX)
+    void SetX(const double inX)
     {
       _vx = inX;
     }
     //! access function to get the y-coordinate of the vector
-    inline void SetY(const double inY)
+    void SetY(const double inY)
     {
       _vy = inY;
     }
     //! access function to get the z-coordinate of the vector
-    inline void SetZ(const double inZ)
+    void SetZ(const double inZ)
     {
       _vz = inZ;
     }
     //! set c[0]..c[2] to the components of the vector
-    inline void Get(double *c)
+    void Get(double *c)
     {
       c[0]=_vx;
       c[1]=_vy;
@@ -93,7 +93,7 @@ namespace OpenBabel
     double operator[] ( unsigned int i);
 
     //! assignment
-    inline vector3& operator= ( const vector3& v)
+    vector3& operator= ( const vector3& v)
       {
         _vx = v._vx;
         _vy = v._vy;
@@ -108,7 +108,7 @@ namespace OpenBabel
     }
 
     //! Vector addition (returns *this + v)
-    inline vector3& operator+= ( const vector3& v)
+    vector3& operator+= ( const vector3& v)
       {
         _vx += v._vx;
         _vy += v._vy;
@@ -116,7 +116,7 @@ namespace OpenBabel
         return *this;
       };
     //! Vector subtraction (returns *this - v)
-    inline vector3& operator-= ( const vector3& v)
+    vector3& operator-= ( const vector3& v)
       {
         _vx -= v._vx;
         _vy -= v._vy;
@@ -124,7 +124,7 @@ namespace OpenBabel
         return *this;
       };
     //! Scalar addition
-    inline vector3& operator+= ( const double* f)
+    vector3& operator+= ( const double* f)
       {
         _vx += f[0];
         _vy += f[1];
@@ -132,7 +132,7 @@ namespace OpenBabel
         return *this;
       };
     //! Scalar subtraction
-    inline vector3& operator-= ( const double* f)
+    vector3& operator-= ( const double* f)
       {
         _vx -= f[0];
         _vy -= f[1];
@@ -140,7 +140,7 @@ namespace OpenBabel
         return *this;
       };
     //! Scalar multiplication
-    inline vector3& operator*= ( const double& c)
+    vector3& operator*= ( const double& c)
       {
         _vx *= c;
         _vy *= c;
@@ -149,12 +149,10 @@ namespace OpenBabel
       };
 
     //! Scalar division
-    inline vector3& operator/= ( const double& c)
+    vector3& operator/= ( const double& c)
       {
-        _vx /= c;
-        _vy /= c;
-        _vz /= c;
-        return *this;
+        double inv = 1.0 / c;
+        return( (*this) *= inv );
       };
     //! multiplication of matrix and vector
     vector3& operator*= ( const matrix3x3 &);
@@ -217,11 +215,11 @@ namespace OpenBabel
     //! \deprecated This method uses unreliable floating point == comparisons
     //!    Use vector3::IsApprox() instead.
     //! \return true if every component is equal
-    OBAPI int operator== ( const vector3& ) const;
+    int operator== ( const vector3& ) const;
     //! \deprecated This method uses unreliable floating point == comparisons
     //!    Use vector3::IsApprox() instead.
     //! \return true if at least one component of the two vectors is !=
-    OBAPI int operator!= ( const vector3& other ) const
+    int operator!= ( const vector3& other ) const
     {
       return ! ( (*this) == other );
     }

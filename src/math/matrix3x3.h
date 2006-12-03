@@ -137,7 +137,11 @@ namespace OpenBabel
       }
 
       //! Calculates the inverse of a matrix.
-      matrix3x3 inverse(void) const throw(OBError);
+      matrix3x3 inverse(void) const
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
+      ;
 
       //! Calculates the transpose of a matrix.
       matrix3x3 transpose(void) const;
@@ -183,10 +187,14 @@ namespace OpenBabel
        */
       double Get(int row,int column) const
         {
+#ifdef OB_OLD_MATH_CHECKS
           if (row >= 0 && row <= 2 && column >= 0 && column <= 2)
             return(ele[row][column]);
           else
             return 0.0f;
+#else
+          return(ele[row][column]);
+#endif
         }
 
       //! access function
@@ -195,32 +203,64 @@ namespace OpenBabel
        */
       void Set(int row,int column, double v)
         {
+#ifdef OB_OLD_MATH_CHECKS
           if (row >= 0 && row <= 2 && column >= 0 && column <= 2)
             ele[row][column]= v;
+#else
+          ele[row][column]= v;
+#endif
         }
 
       //! access function
       /*! \warning If column is not in the range 0..2, the vector
         remains unchanged and an exception is thrown. */
-      void SetColumn(int column, const vector3 &v) throw(OBError);
+      void SetColumn(int column, const vector3 &v)
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
+      ;
 
       //! access function
       /*! \warning If column is not in the range 0..2, the vector
         remains unchanged and an exception is thrown. */
-      void SetRow(int row, const vector3 &v) throw(OBError);
+      void SetRow(int row, const vector3 &v)
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
+      ;
 
       //! access function
       /*! \warning If col is not in the range 0..2, an exception is
         thrown. */
-      vector3 GetColumn(unsigned int col) const throw(OBError);
+      vector3 GetColumn(unsigned int col) const
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
+      ;
 
       //! access function
       /*! \warning If row is not in the range 0..2, an exception is
         thrown. */
-      vector3 GetRow(unsigned int row) const throw(OBError);
+      vector3 GetRow(unsigned int row) const
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
+      ;
+
+      //! multiplies all entries of the matrix by a scalar c
+      matrix3x3 &operator*=(const double &c)
+      {
+        for( int i = 0; i < 3; i++ )
+          for( int j = 0; j < 3; j++ )
+            ele[i][j] *= c;
+        return *this;
+      }
 
       //! divides all entries of the matrix by a scalar c
-      matrix3x3 &operator/=(const double &c);
+      matrix3x3 &operator/=(const double &c)
+      {
+        return( (*this) *= ( 1.0 / c ) );
+      }
 
       //! Calculate a rotation matrix for rotation about the x, y, and z
       //! axes by the angles specified (in degrees)
@@ -242,7 +282,11 @@ namespace OpenBabel
                     double a, double b, double c);
 
       //! find the eigenvalues and -vectors of a symmetric matrix
-      matrix3x3 findEigenvectorsIfSymmetric(vector3 &eigenvals) const throw(OBError);
+      matrix3x3 findEigenvectorsIfSymmetric(vector3 &eigenvals) const
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
+      ;
 
       //! matrix-vector multiplication
       friend OBAPI vector3 operator *(const matrix3x3 &,const vector3 &);

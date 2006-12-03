@@ -65,6 +65,7 @@ namespace OpenBabel
   */
   double vector3::operator[] ( unsigned int i)
   {
+#ifdef OB_OLD_MATH_CHECKS
     if (i > 2)
       {
         cerr << "ERROR in OpenBabel::vector3::operator[]" << endl
@@ -72,11 +73,12 @@ namespace OpenBabel
              << "Please contact the author of the offending program immediately." << endl;
         return 0.0;
       }
+#endif
     if (i == 0)
       return _vx;
     if (i == 1)
       return _vy;
-    return _vz;
+    else return _vz;
   }
 
   /*! replaces *this with a random unit vector, which is (supposed
@@ -121,12 +123,9 @@ namespace OpenBabel
 
   OBAPI int vector3::operator== ( const vector3& other ) const
   {
-    if ( ( x() == other.x() ) &&
-         ( y() == other.y() ) &&
-         ( z() == other.z() ) )
-      return ( true ) ;
-    else
-      return ( false ) ;
+    return ( ( x() == other.x() ) &&
+             ( y() == other.y() ) &&
+             ( z() == other.z() ) );
   }
 
   bool vector3::IsApprox(const vector3 & other, const double & precision) const
@@ -161,13 +160,12 @@ namespace OpenBabel
    */
   vector3& vector3 :: normalize ()
   {
+#ifdef OB_OLD_MATH_CHECKS
     if( CanBeNormalized() )
-    {
-      double l = length ();
-      _vx = _vx / l ;
-      _vy = _vy / l ;
-      _vz = _vz / l ;
-    }
+      (*this) /= length();
+#else
+    (*this) /= length();
+#endif
     return(*this);
   }
 
@@ -204,20 +202,17 @@ namespace OpenBabel
   */
   OBAPI double vectorAngle ( const vector3& v1, const vector3& v2 )
   {
-    double mag;
     double dp;
 
-    mag = v1.length() * v2.length();
-    dp = dot(v1,v2)/mag;
+    dp = dot(v1,v2)/ ( v1.length() * v2.length() );
 
+#ifdef OB_OLD_MATH_CHECKS
     if (dp < -0.999999)
       dp = -0.9999999;
 
     if (dp > 0.9999999)
       dp = 0.9999999;
-
-    if (dp > 1.0)
-      dp = 1.0;
+#endif
 
     return((RAD_TO_DEG * acos(dp)));
   }
@@ -247,14 +242,17 @@ namespace OpenBabel
     c2 = cross(b2,b3);
     c3 = cross(c1,c2);
 
+#ifdef OB_OLD_MATH_CHECKS
     if (c1.length() * c2.length() < 0.001)
+    {
       torsion = 0.0;
-    else
-      {
-        torsion = vectorAngle(c1,c2);
-        if (dot(b2,c3) > 0.0)
-          torsion *= -1.0;
-      }
+      return torsion;
+    }
+#endif
+
+    torsion = vectorAngle(c1,c2);
+    if (dot(b2,c3) > 0.0)
+      torsion = -torsion;
 
     return(torsion);
   }
@@ -270,8 +268,10 @@ namespace OpenBabel
   */
   bool vector3::createOrthoVector(vector3 &res) const
   {
+#ifdef OB_OLD_MATH_CHECKS
     // sanity check
     if( ! CanBeNormalized() ) return false;
+#endif
 
     /* Let us compute the crossed product of *this with a vector
        that is not too close to being colinear to *this.
@@ -305,27 +305,6 @@ namespace OpenBabel
     }
 
     return true;
-
-#if 0 // let's keep the old implementation just in case
-      // someone complains about the new one
-    vector3 cO;
-
-    if ( ( IsNearZero(this->x())) && (IsNearZero(this->y())) )
-      {
-        if ( IsNearZero(this->z()) )
-          {
-            cerr << "makeorthovec zero vector" << endl;
-            res = VZero;
-          }
-        cO.SetX(1.0);
-      }
-    else
-      {
-        cO.SetZ(1.0);
-      }
-    res= cross(cO,*this);
-    res.normalize();
-#endif
   }
 
   const vector3 VZero ( 0.0, 0.0, 0.0 ) ;
@@ -336,13 +315,9 @@ namespace OpenBabel
   /* Calculate the distance of point a to the plane determined by b,c,d */
   double Point2Plane(vector3 a, vector3 b, vector3 c, vector3 d)
   {
-    double angle =0;
-    double dist_ab =0;
     vector3 v_ba = a-b;
-    vector3 v_normal = cross(c-b, d-b).normalize();
-    angle = vectorAngle(v_normal, v_ba);
-    dist_ab = v_ba.length();
-    return fabs(dist_ab * cos(DEG_TO_RAD * angle));
+    vector3 v_normal = cross(c-b, d-b);
+    return fabs( dot( v_normal, v_ba ) / v_normal.length() );
   }
 
 } // namespace OpenBabel

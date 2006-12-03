@@ -117,10 +117,6 @@ namespace OpenBabel
     SetColumn(2, vector3(0,0,1) - 2*normtmp.z()*normtmp);
   }
 
-#define x vtmp.x()
-#define y vtmp.y()
-#define z vtmp.z()
-
   /*! Replaces *this with a matrix that represents rotation about the
     axis by a an angle. 
 	
@@ -151,6 +147,10 @@ namespace OpenBabel
     vector3 vtmp = v;
     vtmp.normalize();
 
+    double x = vtmp.x(),
+           y = vtmp.y(),
+           z = vtmp.z();
+
     ele[0][0] = t*x*x + c;
     ele[0][1] = t*x*y + s*z;
     ele[0][2] = t*x*z - s*y;
@@ -164,12 +164,12 @@ namespace OpenBabel
     ele[2][2] = t*z*z + c;
   }
 
-#undef x
-#undef y
-#undef z
-
-  void matrix3x3::SetColumn(int col, const vector3 &v) throw(OBError)
+  void matrix3x3::SetColumn(int col, const vector3 &v)
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
   {
+#ifdef OB_OLD_MATH_CHECKS
     if (col > 2)
       {
         OBError er("matrix3x3::SetColumn(int col, const vector3 &v)",
@@ -177,14 +177,19 @@ namespace OpenBabel
                    "This is a programming error in your application.");
         throw er;
       }
+#endif
 
     ele[0][col] = v.x();
     ele[1][col] = v.y();
     ele[2][col] = v.z();
   }
 
-  void matrix3x3::SetRow(int row, const vector3 &v) throw(OBError)
+  void matrix3x3::SetRow(int row, const vector3 &v)
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
   {
+#ifdef OB_OLD_MATH_CHECKS
     if (row > 2)
       {
         OBError er("matrix3x3::SetRow(int row, const vector3 &v)",
@@ -192,14 +197,19 @@ namespace OpenBabel
                    "This is a programming error in your application.");
         throw er;
       }
+#endif
 
     ele[row][0] = v.x();
     ele[row][1] = v.y();
     ele[row][2] = v.z();
   }
 
-  vector3 matrix3x3::GetColumn(unsigned int col) const throw(OBError)
+  vector3 matrix3x3::GetColumn(unsigned int col) const
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
   {
+#ifdef OB_OLD_MATH_CHECKS
     if (col > 2)
       {
         OBError er("matrix3x3::GetColumn(unsigned int col) const",
@@ -207,12 +217,17 @@ namespace OpenBabel
                    "This is a programming error in your application.");
         throw er;
       }
+#endif
 
     return vector3(ele[0][col], ele[1][col], ele[2][col]);
   }
 
-  vector3 matrix3x3::GetRow(unsigned int row) const throw(OBError)
+  vector3 matrix3x3::GetRow(unsigned int row) const
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
   {
+#ifdef OB_OLD_MATH_CHECKS
     if (row > 2)
       {
         OBError er("matrix3x3::GetRow(unsigned int row) const",
@@ -220,6 +235,7 @@ namespace OpenBabel
                    "This is a programming error in your application.");
         throw er;
       }
+#endif
 
     return vector3(ele[row][0], ele[row][1], ele[row][2]);
   }
@@ -285,9 +301,14 @@ namespace OpenBabel
     discouraged, unless you are certain that the determinant is in a
     reasonable range, away from 0.0 (Stefan Kebekus)
   */
-  matrix3x3 matrix3x3::inverse(void) const throw(OBError)
+  matrix3x3 matrix3x3::inverse(void) const
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
   {
     double det = determinant();
+
+#ifdef OB_OLD_MATH_CHECKS
     if (fabs(det) <= 1e-6)
       {
         OBError er("matrix3x3::invert(void)",
@@ -295,6 +316,7 @@ namespace OpenBabel
                    "This is a runtime or a programming error in your application.");
         throw er;
       }
+#endif
 
     matrix3x3 inverse;
     inverse.ele[0][0] = ele[1][1]*ele[2][2] - ele[1][2]*ele[2][1];
@@ -327,13 +349,9 @@ namespace OpenBabel
 
   double matrix3x3::determinant(void) const
   {
-    double x,y,z;
-
-    x = ele[0][0] * (ele[1][1] * ele[2][2] - ele[1][2] * ele[2][1]);
-    y = ele[0][1] * (ele[1][2] * ele[2][0] - ele[1][0] * ele[2][2]);
-    z = ele[0][2] * (ele[1][0] * ele[2][1] - ele[1][1] * ele[2][0]);
-
-    return(x + y + z);
+    return( ele[0][0] * (ele[1][1] * ele[2][2] - ele[1][2] * ele[2][1])
+          + ele[0][1] * (ele[1][2] * ele[2][0] - ele[1][0] * ele[2][2])
+          + ele[0][2] * (ele[1][0] * ele[2][1] - ele[1][1] * ele[2][0]) );
   }
 
   /*! This method returns false if there are indices i,j such that
@@ -341,13 +359,9 @@ namespace OpenBabel
     true. */
   bool matrix3x3::isSymmetric(void) const
   {
-    if (fabs(ele[0][1] - ele[1][0]) > 1e-6)
-      return false;
-    if (fabs(ele[0][2] - ele[2][0]) > 1e-6)
-      return false;
-    if (fabs(ele[1][2] - ele[2][1]) > 1e-6)
-      return false;
-    return true;
+    return( IsApprox( ele[0][1], ele[1][0], 1e-6 )
+         && IsApprox( ele[0][2], ele[2][0], 1e-6 )
+         && IsApprox( ele[1][2], ele[2][1], 1e-6 ) );
   }
 
   /*! This method returns true if and only if the matrix is
@@ -410,10 +424,14 @@ namespace OpenBabel
     \endcode
   
   */
-  matrix3x3 matrix3x3::findEigenvectorsIfSymmetric(vector3 &eigenvals) const throw(OBError)
+  matrix3x3 matrix3x3::findEigenvectorsIfSymmetric(vector3 &eigenvals) const
+#ifdef OB_OLD_MATH_CHECKS
+  throw(OBError)
+#endif
   {
     matrix3x3 result;
 
+#ifdef OB_OLD_MATH_CHECKS
     if (!isSymmetric())
       {
         OBError er("matrix3x3::findEigenvectorsIfSymmetric(vector3 &eigenvals) const throw(OBError)",
@@ -421,6 +439,7 @@ namespace OpenBabel
                    "This is a runtime or a programming error in your application.");
         throw er;
       }
+#endif
 
     double d[3];
     matrix3x3 copyOfThis = *this;
@@ -429,15 +448,6 @@ namespace OpenBabel
     eigenvals.Set(d);
 
     return result;
-  }
-
-  matrix3x3 &matrix3x3::operator/=(const double &c)
-  {
-    for (int row = 0;row < 3; row++)
-      for (int col = 0;col < 3; col++)
-        ele[row][col] /= c;
-
-    return(*this);
   }
 
   static inline double SQUARE( double x ) { return x*x; }

@@ -71,8 +71,8 @@ int main(int argc,char *argv[])
         cout << "not ok " << ++testCount << "\n";
 
       test1 = randomVector();
-      test3.createOrthoVector(test1);
-      if (IsApprox(dot(test1, test3), 00.0, 1.0e-6))
+      test1.createOrthoVector(test3);
+      if (IsNegligible(dot(test1, test3), 1.0, 1.0e-6))
         cout << "ok " << ++testCount << "\n";
       else
         cout << "not ok " << ++testCount << "# " << dot(test1, test3) 
