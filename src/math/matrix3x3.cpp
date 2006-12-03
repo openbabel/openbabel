@@ -440,9 +440,7 @@ namespace OpenBabel
     return(*this);
   }
 
-#ifndef SQUARE
-#define SQUARE(x) ((x)*(x))
-#endif
+  static inline double SQUARE( double x ) { return x*x; }
 
   void matrix3x3::FillOrth(double Alpha,double Beta, double Gamma,
                            double A, double B, double C)

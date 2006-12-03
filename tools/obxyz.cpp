@@ -145,7 +145,7 @@ int main(int argc,char **argv)
 
       // angle to rotate vector into XZ plane
       // (i.e., angle between x and y components)
-      gamma = PI/2.0 - atan(v.x() / v.y());
+      gamma = M_PI/2.0 - atan(v.x() / v.y());
 
       // angle to rotate vector from XZ plane to X axis 
       // (by rotation along Y-axis)
@@ -173,7 +173,7 @@ int main(int argc,char **argv)
 
       // angle to rotate vector from YZ plane to Z axis
       // (by rotation along X axis)
-      alpha = PI/2.0f - atan(v.z() / sqrt(v.y()*v.y() + v.x()*v.x()) );
+      alpha = M_PI/2.0f - atan(v.z() / sqrt(v.y()*v.y() + v.x()*v.x()) );
     }
 
   if ( !IsNearZero(alpha) ||

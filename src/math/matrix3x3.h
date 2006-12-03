@@ -26,16 +26,12 @@ GNU General Public License for more details.
 #include "math/vector3.h"
 #include "oberror.h"
 
-#ifndef PI
-#define PI M_PI
-#endif
-
 #ifndef RAD_TO_DEG
-#define RAD_TO_DEG (180.0/PI)
+#define RAD_TO_DEG (180.0/M_PI)
 #endif
 
 #ifndef DEG_TO_RAD
-#define DEG_TO_RAD (PI/180.0)
+#define DEG_TO_RAD (M_PI/180.0)
 #endif
 
 namespace OpenBabel

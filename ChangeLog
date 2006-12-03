@@ -5,6 +5,14 @@
 	matrixtest.cpp did cover, plus a lot more. Geoff: maybe it's time
 	to remove the tests vector3 and matrixtest?
 
+	* src/math/vector3.h, src/math/matrix3x3.h: remove PI, use the
+	standard M_PI instead.
+
+	* src/math/matrix3x3.cpp: replace #define SQUARE() by a
+	static inline function.
+
+	* src/rotor.cpp, tools/obxyz.cpp: use M_PI instead of PI.
+
 2006-12-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/*: Cleanups and fixes, including for compilation

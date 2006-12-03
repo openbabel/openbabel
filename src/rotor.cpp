@@ -1011,10 +1011,10 @@ namespace OpenBabel
             for (m = vals.begin();m != vals.end();++m)
               {
                 *m += diff;
-                if (*m < PI)
-                  *m += 2.0*PI;
-                if (*m > PI)
-                  *m -= 2.0*PI;
+                if (*m < M_PI)
+                  *m += 2.0*M_PI;
+                if (*m > M_PI)
+                  *m -= 2.0*M_PI;
               }
 
             if (swapped)
