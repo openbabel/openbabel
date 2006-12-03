@@ -1,7 +1,8 @@
 /**********************************************************************
 math.cpp - Unit tests for the math code in OpenBabel
 
-Copyright (C) 2005-2006 Geoffrey R. Hutchison
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Copyright (C) 2001-2006 Geoffrey R. Hutchison
 Copyright (C) 2006 Benoit Jacob
  
 This file is part of the Open Babel project.
@@ -29,7 +30,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <stdlib.h>
 
-#define REPEAT 100
+#define REPEAT 1000
 
 #define VERIFY(expr) \
   if( ! (expr) ) verify_failed( __STRING(expr), __FILE__, __LINE__ )
@@ -251,12 +252,104 @@ void testDistancesAnglesOrthogonality()
   v1.createOrthoVector( v2 );
   VERIFY( compare( v1.length(), 1.0 ) );
   VERIFY( IsNegligible( dot( v1, v2 ), 1.0, 1e-6 ) );
-  
+
   matrix3x3 m1;
   m1.SetColumn( 0, v1 );
   m1.SetColumn( 1, v2 );
   m1.SetColumn( 2, cross( v1, v2 ) );
   VERIFY( m1.isOrthogonal() );
+
+  pickRandom( v1 );
+  pickRandom( v2 );
+  double c = dot( v1, v2 ), s = cross( v1, v2 ).length();
+  VERIFY( compare( c, cos( vectorAngle( v1, v2 ) * DEG_TO_RAD ) * v1.length() * v2.length() ) );
+  VERIFY( compare( s, sin( vectorAngle( v1, v2 ) * DEG_TO_RAD ) * v1.length() * v2.length() ) );
+
+  VERIFY( compare( v1.distSq(v2), (v1-v2).length_2() ) );
+
+  double t;
+  pickRandom(t);
+  VERIFY( compare( fabs(t), Point2Plane( v1 + t * VY, v1, v1 + 5.0 * VX - 3.0 * VZ, v1 - VX + VZ ) ) );
+}
+
+// Test the inversion of matrices and the matrix product. Get an
+// invertible random matrix, invert it, multiply and check if the
+// resulting matrix is the unit matrix.
+void testInversion()
+{
+  matrix3x3 rnd;
+  do pickRandom( rnd ); while( rnd.determinant() < 1e-3 );
+  matrix3x3 result = rnd * rnd.inverse();
+  VERIFY( result.isUnitMatrix() );
+}
+
+// Test the eigenvalue finder. Set up a diagonal matrix and conjugate
+// by a rotation. That way we obtain a symmetric matrix that can be
+// diagonalized. Check if the eigenvalue finder reveals the original
+// diagonal elements.
+void testEigenvalues()
+{
+  matrix3x3 Diagonal;
+  for(int i=0; i<3; i++)
+    for(int j=0; j<3; j++)
+      Diagonal.Set(i, j, 0.0);
+  Diagonal.Set(0, 0, randomizer.NextFloat());
+  Diagonal.Set(1, 1, Diagonal.Get(0,0)+fabs(randomizer.NextFloat()));
+  Diagonal.Set(2, 2, Diagonal.Get(1,1)+fabs(randomizer.NextFloat()));
+
+  // test the isDiagonal() method
+  VERIFY( Diagonal.isDiagonal() );
+
+  matrix3x3 rndRotation;
+  rndRotation.randomRotation(randomizer);
+
+  // check that rndRotation is really a rotation, i.e. that randomRotation() works
+  VERIFY( rndRotation.isOrthogonal() );
+  
+  matrix3x3 toDiagonalize = rndRotation * Diagonal * rndRotation.inverse();
+  VERIFY( toDiagonalize.isSymmetric() );
+  
+  vector3 eigenvals;
+  toDiagonalize.findEigenvectorsIfSymmetric(eigenvals);
+  
+  for(unsigned int j=0; j<3; j++)
+    VERIFY( compare( eigenvals[j], Diagonal.Get(j,j) ) );
+  
+  VERIFY( eigenvals[0] < eigenvals[1] &&  eigenvals[1] < eigenvals[2] );
+}
+
+// Test the eigenvector finder. Set up a symmetric diagonal matrix and
+// diagonalize it. The that conjugation with the computed eigenvectors
+// really gives a diagonal matrix. Calculate the matrix-vector
+// products directly to see if the vectors found are eigenvectors
+// indeed, and if the computed eigenvalues are correct.
+void testEigenvectors()
+{
+  matrix3x3 rnd;
+  pickRandom( rnd );
+  rnd.Set(0,1, rnd.Get(1,0));
+  rnd.Set(0,2, rnd.Get(2,0));
+  rnd.Set(1,2, rnd.Get(2,1));
+  vector3 eigenvals;
+  matrix3x3 eigenvects = rnd.findEigenvectorsIfSymmetric(eigenvals);
+  
+  // Check if the eigenvects are normalized and mutually orthogonal
+  VERIFY( eigenvects.isOrthogonal() );
+  
+  // for an orthogonal matrix, the inverse should equal the transpose
+  VERIFY( compare( eigenvects.inverse(), eigenvects.transpose() ) );
+
+  matrix3x3 shouldBeDiagonal = eigenvects.inverse() * rnd * eigenvects;
+  VERIFY( shouldBeDiagonal.isDiagonal() );
+  
+  for(unsigned int j=0; j<3; j++)
+    VERIFY( compare( shouldBeDiagonal.Get(j,j), eigenvals[j] ) );
+  
+  for(unsigned int i=0; i<3; i++ )
+    {
+      vector3 EV = eigenvects.GetColumn(i);
+      VERIFY( compare( rnd*EV, eigenvals[i]*EV ) );
+    }
 }
 
 int main(int argc,char *argv[])
@@ -276,6 +369,9 @@ int main(int argc,char *argv[])
   TEST( testBasics_matrix3x3 );
   TEST( testArithmeticOperators );
   TEST( testDistancesAnglesOrthogonality );
+  TEST( testInversion );
+  TEST( testEigenvalues );
+  TEST( testEigenvectors );
 
   cout << "math: all tests are successful" << endl;
   return 0;

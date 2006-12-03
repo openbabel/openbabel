@@ -1,3 +1,10 @@
+2006-12-03  Benoit Jacob <jacob@math.jussieu.fr>
+
+	* test/math.cpp: extend tests, merge (an improved version of)
+	matrixtest.cpp. Now math.cpp covers all what vector3.cpp and
+	matrixtest.cpp did cover, plus a lot more. Geoff: maybe it's time
+	to remove the tests vector3 and matrixtest?
+
 2006-12-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/*: Cleanups and fixes, including for compilation
