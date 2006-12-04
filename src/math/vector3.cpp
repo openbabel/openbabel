@@ -19,7 +19,7 @@ GNU General Public License for more details.
 
 #include "babelconfig.h"
 
-#include <ostream>
+#include <iostream>
 
 #include "math/vector3.h"
 

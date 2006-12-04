@@ -86,14 +86,14 @@ void pickRandom( matrix3x3 & m )
       pickRandom( m( row, column ) );
 }
 
-bool compare( const double & d1, const double & d2 )
+bool compare( const double & d1, const double & d2, double precision = 1e-6 )
 {
-  return IsApprox( d1, d2, 1e-6 );
+  return IsApprox( d1, d2, precision );
 }
 
-bool compare( const vector3 & v1, const vector3 & v2 )
+bool compare( const vector3 & v1, const vector3 & v2, double precision = 1e-6 )
 {
-  return v1.IsApprox( v2, 1e-6 );
+  return v1.IsApprox( v2, precision );
 }
 
 bool compare( const matrix3x3 & m1, const matrix3x3 & m2 )
@@ -243,7 +243,7 @@ void testArithmeticOperators()
   pickRandom(a2);
   VERIFY( compare( vec1 * ( a1 + a2 ), vec1 * a1 + vec1 * a2 ) );
   VERIFY( compare( ( a1 - a2 ) * vec1, a1 * vec1 - a2 * vec1 ) );
-  VERIFY( compare( ( vec1 / a1 ) * a1, vec1 ) );
+  VERIFY( compare( ( vec1 / a1 ) * a1, vec1, 1e-5 ) );
 
   vec3 = vec1; vec3 += vec2;
   VERIFY( compare( vec1 + vec2, vec3 ) );
@@ -327,7 +327,7 @@ void testEigenvalues()
   toDiagonalize.findEigenvectorsIfSymmetric(eigenvals);
   
   for(unsigned int j=0; j<3; j++)
-    VERIFY( compare( eigenvals[j], Diagonal.Get(j,j) ) );
+    VERIFY( IsNegligible( eigenvals[j] - Diagonal.Get(j,j), Diagonal.Get(2,2) ) );
   
   VERIFY( eigenvals[0] < eigenvals[1] &&  eigenvals[1] < eigenvals[2] );
 }
@@ -381,7 +381,7 @@ int main(int argc,char *argv[])
   cout << "# math: repeating each test " << REPEAT << " times" << endl;
   
   randomizer.TimeSeed();
-  
+
   TEST( testBasics_vector3 );
   TEST( testBasics_matrix3x3 );
   TEST( testArithmeticOperators );

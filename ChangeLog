@@ -1,6 +1,7 @@
 2006-12-04  Benoit Jacob <jacob@math.jussieu.fr>
 
-	* test/math.cpp: match the Test::Harness output format.
+	* test/math.cpp: match the Test::Harness output format. Fix a bug
+	in testEigenvalue.
 
 	* src/obutil.h, src/math/vector3.cpp: revert to using std::min
 	instead of fmin.
