@@ -56,7 +56,7 @@ int tmp;
 
 void verify_ok()
 {
-  cout << "ok " << ++testCount << endl;
+  cout << "ok " << ++testCount << "\n";
 }
 
 void verify_not_ok( const char *expr, int line )
@@ -64,7 +64,7 @@ void verify_not_ok( const char *expr, int line )
   failedCount++;
   cout << "not ok " << ++testCount << " - In " << currentFunc
        << "(), in line " << line << ", in file " << __FILE__
-       << ": expression ( " << expr << " ) is false." << endl;
+       << ": expression ( " << expr << " ) is false.\n";
 }
 
 void pickRandom( double & d )
@@ -389,6 +389,8 @@ int main(int argc,char *argv[])
   TEST( testInversion );
   TEST( testEigenvalues );
   TEST( testEigenvectors );
+
+  cout << "1.." << testCount << endl;
 
   if( failedCount == 0 ) cout << "# math: all tests are successful" << endl;
   else cout << "# math: " << failedCount << " out of "

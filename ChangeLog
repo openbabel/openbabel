@@ -1,3 +1,10 @@
+2006-12-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/math.cpp: Improve speed by switching from endl (causes
+	flush) to "\n". Make sure to output number of tests 1..testCount.
+
+	* test/wrapper.sh: Switch to call new math test program.
+
 2006-12-04  Benoit Jacob <jacob@math.jussieu.fr>
 
 	* test/math.cpp: match the Test::Harness output format. Fix a bug
