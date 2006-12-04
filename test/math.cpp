@@ -29,28 +29,43 @@ GNU General Public License for more details.
 
 #include <iostream>
 #include <stdlib.h>
+#include <string.h>
 
 #define REPEAT 1000
 
 #define VERIFY(expr) \
-  if( ! (expr) ) verify_failed( __STRING(expr), __FILE__, __LINE__ )
+  if( expr ) verify_ok(); \
+  else verify_not_ok( __STRING(expr), __LINE__ )
 
 #define TEST(func) \
-  cout << "math: entering " << __STRING(func) << endl; \
+  strcpy( currentFunc, __STRING(func) ); \
+  tmp = failedCount; \
+  cout << "# math: entering " << currentFunc << endl; \
   for( int i = 0; i < REPEAT; i++ ) func(); \
-  cout << "math: passed   " << __STRING(func) << endl
+  if( failedCount == tmp ) cout << "# math: passed " << currentFunc << endl; \
+  else cout << "# math: failed " << currentFunc << endl \
 
 using namespace std;
 using namespace OpenBabel;
 
 OBRandom randomizer;
+int testCount = 0;
+int failedCount = 0;
+char currentFunc [256];
+int currentLine;
+int tmp;
 
-void verify_failed( const char *expr, const char *file, int line )
+void verify_ok()
 {
-  cout << "Failed test ( " << expr
-       << " ) in line " << line
-       << " in file " << file << endl;
-  exit(1);
+  cout << "ok " << ++testCount << endl;
+}
+
+void verify_not_ok( const char *expr, int line )
+{
+  failedCount++;
+  cout << "not ok " << ++testCount << " - In " << currentFunc
+       << "(), in line " << line << ", in file " << __FILE__
+       << ": expression ( " << expr << " ) is false." << endl;
 }
 
 void pickRandom( double & d )
@@ -354,6 +369,9 @@ void testEigenvectors()
 
 int main(int argc,char *argv[])
 {
+  // turn off slow sync with C-style output (we don't use it anyway).
+  std::ios::sync_with_stdio(false);
+
   if (argc != 1)
   {
     cout << "Usage: math" << endl;
@@ -361,7 +379,7 @@ int main(int argc,char *argv[])
     return 0;
   }
   
-  cout << "math: repeating each test " << REPEAT << " times" << endl;
+  cout << "# math: repeating each test " << REPEAT << " times" << endl;
   
   randomizer.TimeSeed();
   
@@ -373,6 +391,8 @@ int main(int argc,char *argv[])
   TEST( testEigenvalues );
   TEST( testEigenvectors );
 
-  cout << "math: all tests are successful" << endl;
+  if( failedCount == 0 ) cout << "# math: all tests are successful" << endl;
+  else cout << "# math: " << failedCount << " out of "
+            << testCount << " tests failed." << endl;
   return 0;
 }

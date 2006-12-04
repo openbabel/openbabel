@@ -31,7 +31,6 @@ using namespace std;
 using namespace OpenBabel;
 
 OBRandom randomizer;
-int      testNumber;
 
 vector3 randomVector(void)
 {
