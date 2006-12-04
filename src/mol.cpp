@@ -3341,7 +3341,7 @@ namespace OpenBabel
         for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
           {
             if (b->GetAtomicNum()!=1) shortestBond =
-                                        fmin(shortestBond,(atom->GetBond(b))->GetLength());
+                                        std::min(shortestBond,(atom->GetBond(b))->GetLength());
           }
         pair<OBAtom*,double> entry(atom,
                                    etab.GetElectroNeg(atom->GetAtomicNum())*1e6+shortestBond);

@@ -3,8 +3,8 @@
 	* test/math.cpp: match the Test::Harness output format. Fix a bug
 	in testEigenvalue.
 
-	* src/obutil.h, src/math/vector3.cpp: revert to using std::min
-	instead of fmin.
+	* src/obutil.h, src/math/vector3.cpp, src/mol.cpp: revert to using
+	std::min instead of fmin.
 
 2006-12-03  Benoit Jacob <jacob@math.jussieu.fr>
 
