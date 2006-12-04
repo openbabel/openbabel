@@ -52,7 +52,6 @@ OBRandom randomizer;
 int testCount = 0;
 int failedCount = 0;
 char currentFunc [256];
-int currentLine;
 int tmp;
 
 void verify_ok()
@@ -218,7 +217,7 @@ void testBasics_matrix3x3()
 void testArithmeticOperators()
 {
   matrix3x3 mat1(1.0), mat2;
-  vector3 vec1( 0.0, 0.0, 0.0), vec2;
+  vector3 vec1 = VZero, vec2;
   pickRandom( mat2 );
   pickRandom( vec2 );
 

@@ -38,10 +38,6 @@ GNU General Public License for more details.
 
 #include <math.h>
 
-// FIXME: dirty hack! makes sure we have a working fmin()
-// this is bad because it replaces the better builtin fmin in gcc
-#define fmin(a, b) ( (a) < (b) ? (a) : (b) )
-
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -182,7 +178,7 @@ namespace OpenBabel
     return( fabs(a) <= precision * fabs(b) );
   }
   /*! Safe comparison for floats/doubles: true if
-   * fabs(a - b) <= precision * fmin( fabs(a), fabs(b) )
+   * fabs(a - b) <= precision * std::min( fabs(a), fabs(b) )
    * The parameter precision plays the role of 10^-N where N is the number of
    * significant digits to consider.
    * This is the correct way to replace operator== for doubles. For new code,
@@ -201,13 +197,13 @@ namespace OpenBabel
   OBAPI inline bool IsApprox(const double & a, const double & b,
                       const double precision = 1e-11)
   {
-    return( fabs(a - b) <= precision * fmin( fabs(a), fabs(b) ) );
+    return( fabs(a - b) <= precision * std::min( fabs(a), fabs(b) ) );
   }
   //! Same as IsApprox(), but only for positive numbers. Faster.
   OBAPI inline bool IsApprox_pos(const double &a, const double &b,
       const double precision = 1e-11)
   {
-    return( fabs(a - b) <= precision * fmin( a, b ) );
+    return( fabs(a - b) <= precision * std::min( a, b ) );
   }
   /*! Tests whether its argument can be squared without triggering an overflow
    * or underflow.

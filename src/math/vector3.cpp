@@ -130,7 +130,7 @@ namespace OpenBabel
   {
     return( distSq( other )
             <= precision * precision
-               * fmin( length_2(), other.length_2() ) );
+               * std::min( length_2(), other.length_2() ) );
   }
 
   /*! This method returns true if *this can be safely normalized.
