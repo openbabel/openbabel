@@ -239,7 +239,7 @@ void testArithmeticOperators()
   VERIFY( compare( 2.0 * vec1, vec1 + vec1 ) );
 
   double a1, a2;
-  pickRandom(a1);
+  do pickRandom(a1); while( a1 == 0.0 );
   pickRandom(a2);
   VERIFY( compare( vec1 * ( a1 + a2 ), vec1 * a1 + vec1 * a2 ) );
   VERIFY( compare( ( a1 - a2 ) * vec1, a1 * vec1 - a2 * vec1 ) );
