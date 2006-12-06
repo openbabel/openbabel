@@ -32,21 +32,14 @@ using namespace std;
 namespace OpenBabel
 {
 
-  class MOLFormat : public OBMoleculeFormat
+  //MDLFormat is a base class which is never instantiated.
+  //MOLFormat and SDFormat are derived from it and have their own constructors.
+  //SDFormat has its own WriteMolecule which sets the "sd" option.
+
+  class MDLFormat : public OBMoleculeFormat
   {
     map<OBAtom*,OBChiralData*> _mapcd; // map of ChiralAtoms and their data
   public:
-    //Register this format type ID
-    MOLFormat() 
-    {
-      OBConversion::RegisterFormat("mol",this, "chemical/x-mdl-molfile");
-      OBConversion::RegisterFormat("mdl",this, "chemical/x-mdl-molfile");
-      OBConversion::RegisterFormat("sd",this, "chemical/x-mdl-sdfile");
-      OBConversion::RegisterFormat("sdf",this, "chemical/x-mdl-sdfile");
-      OBConversion::RegisterOptionParam("2", this);
-      OBConversion::RegisterOptionParam("3", this);
-    }
-
     virtual const char* Description()
     { return
         "MDL MOL format\n \
@@ -101,11 +94,44 @@ Write Options, e.g. -x3\n \
     vector<string> vs;
   };
 
+//**************************************
+class MOLFormat : public MDLFormat
+{
+public:
+  //Register this format type ID
+  MOLFormat() 
+  {
+    OBConversion::RegisterFormat("mol",this, "chemical/x-mdl-molfile");
+    OBConversion::RegisterFormat("mdl",this, "chemical/x-mdl-molfile");
+    OBConversion::RegisterOptionParam("2", this);
+    OBConversion::RegisterOptionParam("3", this);
+  }
+};
   //Make an instance of the format class
   MOLFormat theMOLFormat;
 
+//*************************************
+class SDFormat : public MDLFormat
+{
+public:
+  SDFormat()
+  {
+     OBConversion::RegisterFormat("sd",this, "chemical/x-mdl-sdfile");
+     OBConversion::RegisterFormat("sdf",this, "chemical/x-mdl-sdfile");
+  }
+
+  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    //The sd option ensures that a $$$$ is written at the end of the file
+    pConv->AddOption("sd",OBConversion::OUTOPTIONS);
+    return MDLFormat::WriteMolecule(pOb, pConv);
+  }
+};
+//Make an instance of the format class
+  SDFormat theSDFormat;
+
   /////////////////////////////////////////////////////////////////
-  bool MOLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  bool MDLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 
@@ -373,7 +399,7 @@ Write Options, e.g. -x3\n \
   }
 
   /////////////////////////////////////////////////////////////////
-  bool MOLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  bool MDLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 
@@ -515,7 +541,8 @@ Write Options, e.g. -x3\n \
 
     ofs << "M  END" << endl;
 
-    if(!pConv->IsOption("m")) //No properties output if option m
+    //For SD files only, write properties unless option m
+    if(pConv->IsOption("sd") && !pConv->IsOption("m"))
       {
         vector<OBGenericData*>::iterator k;
         vector<OBGenericData*> vdata = mol.GetData();
@@ -531,9 +558,10 @@ Write Options, e.g. -x3\n \
       }
         
     //Unless option no$$$$ is set, $$$$ is always written between molecules and
-    //at the end any if properties have been output in any molecule.
+    //at the end any if properties have been output in any molecule,
+    //or if the sd option is set.
     if(!pConv->IsOption("no$$$$"))
-      if(!pConv->IsLast()  || HasProperties  )  
+      if(!pConv->IsLast()  || HasProperties  || pConv->IsOption("sd"))  
         ofs << "$$$$" << endl;
 
     return(true);
@@ -541,7 +569,7 @@ Write Options, e.g. -x3\n \
 
 
   //////////////////////////////////////////////////////
-  bool MOLFormat::ReadV3000Block(istream& ifs, OBMol& mol, OBConversion* pConv,bool DoMany)
+  bool MDLFormat::ReadV3000Block(istream& ifs, OBMol& mol, OBConversion* pConv,bool DoMany)
   {
     do
       {
@@ -583,7 +611,7 @@ Write Options, e.g. -x3\n \
   }
 
   //////////////////////////////////////////////////////
-  bool MOLFormat::ReadV3000Line(istream& ifs, vector<string>& vs)
+  bool MDLFormat::ReadV3000Line(istream& ifs, vector<string>& vs)
   {
     char buffer[BUFF_SIZE];
     if(!ifs.getline(buffer,BUFF_SIZE)) return false;
@@ -601,7 +629,7 @@ Write Options, e.g. -x3\n \
   }
 
   //////////////////////////////////////////////////////
-  bool MOLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
+  bool MDLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
   {     
     OBAtom atom;
     bool chiralWatch=false;
@@ -669,7 +697,7 @@ Write Options, e.g. -x3\n \
   }
 
   //////////////////////////////////////////////////////
-  bool MOLFormat::ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
+  bool MDLFormat::ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
   {
     for(;;)
       {
@@ -726,7 +754,7 @@ Write Options, e.g. -x3\n \
   }
 
   //////////////////////////////////////////////////////////
-  bool MOLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
+  bool MDLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
   {
     // Check to see if there are any untyped aromatic bonds (GetBO == 5)
     // These must be kekulized first
@@ -849,7 +877,7 @@ Write Options, e.g. -x3\n \
     return true;
   }
 
-  char* MOLFormat::GetTimeDate(char* td)
+  char* MDLFormat::GetTimeDate(char* td)
   {
     //returns MMDDYYHHmm
     struct tm* ts;
