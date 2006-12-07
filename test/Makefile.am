@@ -3,8 +3,8 @@ SUBDIRS = cmltest
 noinst_PROGRAMS = aromatic atom bond \
 	conversion data format formula formalcharge \
 	internalcoord invalidsmarts invalidsmiles \
-	iterators math matrix mol residue rings smarts \
-	smilesmatch textbuffer unitcell vector3
+	iterators math mol residue rings smarts \
+	smilesmatch textbuffer unitcell
 
 bin_PROGRAMS = roundtrip
 
@@ -14,7 +14,7 @@ if PERL_TESTS
 TESTS = wrapper.sh
 else
 # Standard automake tests
-TESTS = matrix smarts rings unitcell \
+TESTS = smarts rings unitcell \
 	$(top_srcdir)/test/cml.sh $(top_srcdir)/test/test-set.sh
 endif
 
@@ -41,7 +41,6 @@ invalidsmiles_SOURCES = invalidsmiles.cpp
 invalidsmarts_SOURCES = invalidsmarts.cpp
 iterators_SOURCES = iterators.cpp
 math_SOURCES = math.cpp
-matrix_SOURCES = matrixtest.cpp
 mol_SOURCES = mol.cpp
 residue_SOURCES = residue.cpp
 rings_SOURCES = ringtest.cpp
@@ -49,4 +48,3 @@ smarts_SOURCES = smartstest.cpp
 smilesmatch_SOURCES = smilesmatch.cpp
 textbuffer_SOURCES = textbuffer.cpp
 unitcell_SOURCES = unitcell.cpp
-vector3_SOURCES = vector3.cpp
