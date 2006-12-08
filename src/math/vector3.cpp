@@ -263,7 +263,9 @@ namespace OpenBabel
 
    @param res reference by which to pass the result.
 
-   @returns false if *this was not normalizable.
+   @returns always true. (Return value kept for compatibility,
+            as old versions of OpenBabel used to check for
+            normalizability).
 
   */
   bool vector3::createOrthoVector(vector3 &res) const
@@ -277,32 +279,26 @@ namespace OpenBabel
        that is not too close to being colinear to *this.
     */
 
-    /* if the absolute values of the x and y-coords
-    are "close", then the vector is far from being colinear to (1, 0, 0).
-    Here, "close" means "vaguely of the same order of magnitude". We want
-    to be in that case as often as possible because it's the fast case.
-    */
-    if( IsApprox_pos ( fabs(_vx), fabs(_vy), 10.0 ) )
+    /* unless the _vx and _vy coords are both close to zero, we can
+     * simply take ( -_vy, _vx, 0 ) and normalize it.
+     */
+    if( ! IsNegligible( _vx, 1.0 ) || ! IsNegligible( _vy, 1.0 ) )
     {
-      // store in res the crossed product of *this with (1,0,0),
-      // divided by its norm.
-      double norm = sqrt( _vy*_vy + _vz*_vz );
-      res._vx = 0.0;
-      res._vy = _vz / norm;
-      res._vz = -_vy / norm;
+      double norm = sqrt( _vx*_vx + _vy*_vy );
+      res._vx = -_vy / norm;
+      res._vy = _vx / norm;
+      res._vz = 0.0;
     }
-    /* if the absolute values of _vx and _vy are not close,
-    then (_vy,_vx,_vz) is not close to being
-    colinear to *this.
-    */
+    /* if both _vx and _vy are close to zero, then the vector is close
+     * to the z-axis, so it's far from colinear to the x-axis for instance.
+     * So we take the crossed product with (1,0,0) and normalize it.
+     */
     else
     {
-      // store in res the crossed product of *this with (_vy,_vx,_vz),
-      // and normalize it.
-      res._vx = (_vy-_vx)*_vz;
-      res._vy = res._vx;
-      res._vz = _vx*_vx - _vy*_vy;
-      res.normalize();
+      double norm = sqrt( _vy*_vy + _vz*_vz );
+      res._vx = 0.0;
+      res._vy = -_vz / norm;
+      res._vz = _vy / norm;
     }
 
     return true;
