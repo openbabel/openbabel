@@ -249,14 +249,19 @@ INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data -I$(top_srcdir)/src/formats
 AM_CPPFLAGS = @XML_CPPFLAGS@
 AM_LDFLAGS = @LIBS@ @XML_LIBS@
 @BUILD_SHARED_TRUE@pkglib_LTLIBRARIES = \
-@BUILD_SHARED_TRUE@	cmlreactlformat.la pubchem.la cmlformat.la xmlformat.la
+@BUILD_SHARED_TRUE@  cmlreactlformat.la cmlformat.la \
+@BUILD_SHARED_TRUE@	pubchem.la xmlformat.la
 
+# cdxmlformat.la
+
+# cdxmlformat_la_SOURCES = cdxmlformat.cpp xml.cpp ../obmolecformat.cpp
+# cdxmlformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
+@BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@cmlreactlformat_la_SOURCES = cmlreactlformat.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@cmlreactlformat_la_LDFLAGS = -module -avoid-version
 @BUILD_SHARED_TRUE@pubchem_la_SOURCES = pubchem.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@pubchem_la_LDFLAGS = -module -avoid-version
-@BUILD_SHARED_TRUE@cmlformat_la_SOURCES = cmlformat.cpp xml.cpp ../obmolecformat.cpp
-@BUILD_SHARED_TRUE@cmlformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@xmlformat_la_SOURCES = xmlformat.cpp xml.cpp ../obmolecformat.cpp
 @BUILD_SHARED_TRUE@xmlformat_la_LDFLAGS = -module -avoid-version
 all: all-am
