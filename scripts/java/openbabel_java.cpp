@@ -207,6 +207,8 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #include "obconversion.h"
 #include "oberror.h"
 
+#include "fingerprint.h"
+
 #include "data.h"
 #include "parsmart.h"
 
@@ -3229,6 +3231,19 @@ SWIGEXPORT jstring JNICALL Java_openbabelJNI_FILE_1SEP_1CHAR_1get(JNIEnv *jenv, 
 }
 
 
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_M_1PI_1get(JNIEnv *jenv, jclass jcls) {
+  jdouble jresult = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (double) 3.14159265358979323846;
+  
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void JNICALL Java_openbabelJNI_OBStopwatch_1Start(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   OpenBabel::OBStopwatch *arg1 = (OpenBabel::OBStopwatch *) 0 ;
   
@@ -3361,6 +3376,32 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBSqrtTbl_1Init(JNIEnv *jenv, jclass j
   arg2 = (double)jarg2; 
   arg3 = (double)jarg3; 
   (arg1)->Init(arg2,arg3);
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_RAD_1TO_1DEG_1get(JNIEnv *jenv, jclass jcls) {
+  jdouble jresult = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (double) (180.0/3.14159265358979323846);
+  
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_DEG_1TO_1RAD_1get(JNIEnv *jenv, jclass jcls) {
+  jdouble jresult = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (double) (3.14159265358979323846/180.0);
+  
+  jresult = (jdouble)result; 
+  return jresult;
 }
 
 
@@ -14346,6 +14387,19 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBBond_1SetBO(JNIEnv *jenv, jclass jcl
 }
 
 
+SWIGEXPORT void JNICALL Java_openbabelJNI_OBBond_1SetBondOrder(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBBond **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->SetBondOrder(arg2);
+}
+
+
 SWIGEXPORT void JNICALL Java_openbabelJNI_OBBond_1SetBegin(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -19747,6 +19801,874 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_SmartsLexReplace(JNIEnv *jenv, jclass 
     return ;
   } 
   OpenBabel::SmartsLexReplace(*arg1,*arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_OBFingerprint_1SetBit(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  unsigned int arg3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBFingerprint **)&jarg1; 
+  arg2 = *(std::vector<unsigned int > **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > & reference is null");
+    return ;
+  } 
+  arg3 = (unsigned int)jarg3; 
+  (arg1)->SetBit(*arg2,arg3);
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_OBFingerprint_1Fold(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  unsigned int arg3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBFingerprint **)&jarg1; 
+  arg2 = *(std::vector<unsigned int > **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > & reference is null");
+    return ;
+  } 
+  arg3 = (unsigned int)jarg3; 
+  (arg1)->Fold(*arg2,arg3);
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBFingerprint_1GetFingerprint_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jint jarg4) {
+  jboolean jresult = 0 ;
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  int arg4 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::OBFingerprint **)&jarg1; 
+  arg2 = *(OpenBabel::OBBase **)&jarg2; 
+  arg3 = *(std::vector<unsigned int > **)&jarg3;
+  if(!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > & reference is null");
+    return 0;
+  } 
+  arg4 = (int)jarg4; 
+  result = (bool)(arg1)->GetFingerprint(arg2,*arg3,arg4);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBFingerprint_1GetFingerprint_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3) {
+  jboolean jresult = 0 ;
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::OBFingerprint **)&jarg1; 
+  arg2 = *(OpenBabel::OBBase **)&jarg2; 
+  arg3 = *(std::vector<unsigned int > **)&jarg3;
+  if(!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > & reference is null");
+    return 0;
+  } 
+  result = (bool)(arg1)->GetFingerprint(arg2,*arg3);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_openbabelJNI_OBFingerprint_1Description(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBFingerprint **)&jarg1; 
+  result = (arg1)->Description();
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_openbabelJNI_OBFingerprint_1FPT_1UNIQUEBITS_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  OpenBabel::OBFingerprint::FptFlag result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (OpenBabel::OBFingerprint::FptFlag)OpenBabel::OBFingerprint::FPT_UNIQUEBITS;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBFingerprint_1Flags(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBFingerprint **)&jarg1; 
+  result = (unsigned int)(arg1)->Flags();
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_OBFingerprint_1GetNextFPrt(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+  jboolean jresult = 0 ;
+  std::string *arg1 = 0 ;
+  OpenBabel::OBFingerprint **arg2 = 0 ;
+  bool result;
+  OpenBabel::OBFingerprint *temp2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::string **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::string & reference is null");
+    return 0;
+  } 
+  temp2 = *(OpenBabel::OBFingerprint **)&jarg2;
+  arg2 = &temp2; 
+  result = (bool)OpenBabel::OBFingerprint::GetNextFPrt(*arg1,*arg2);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBFingerprint_1FindFingerprint(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::string **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::string & reference is null");
+    return 0;
+  } 
+  result = (OpenBabel::OBFingerprint *)OpenBabel::OBFingerprint::FindFingerprint(*arg1);
+  *(OpenBabel::OBFingerprint **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBFingerprint_1Tanimoto_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+  jdouble jresult = 0 ;
+  std::vector<unsigned int > *arg1 = 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector<unsigned int > **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > const & reference is null");
+    return 0;
+  } 
+  arg2 = *(std::vector<unsigned int > **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > const & reference is null");
+    return 0;
+  } 
+  result = (double)OpenBabel::OBFingerprint::Tanimoto((std::vector<unsigned int > const &)*arg1,(std::vector<unsigned int > const &)*arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_openbabelJNI_OBFingerprint_1Tanimoto_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+  jdouble jresult = 0 ;
+  std::vector<unsigned int > *arg1 = 0 ;
+  unsigned int *arg2 = (unsigned int *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector<unsigned int > **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > const & reference is null");
+    return 0;
+  } 
+  arg2 = *(unsigned int **)&jarg2; 
+  result = (double)OpenBabel::OBFingerprint::Tanimoto((std::vector<unsigned int > const &)*arg1,(unsigned int const *)arg2);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_OBFingerprint_1Getbitsperint(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (unsigned int)OpenBabel::OBFingerprint::Getbitsperint();
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1OBFingerprint(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(OpenBabel::OBFingerprint **)&jarg1; 
+  delete arg1;
+  
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_FptIndexHeader_1headerlength_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  arg2 = (unsigned int)jarg2; 
+  if (arg1) (arg1)->headerlength = arg2;
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_FptIndexHeader_1headerlength_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  result = (unsigned int) ((arg1)->headerlength);
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_FptIndexHeader_1nEntries_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  arg2 = (unsigned int)jarg2; 
+  if (arg1) (arg1)->nEntries = arg2;
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_FptIndexHeader_1nEntries_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  result = (unsigned int) ((arg1)->nEntries);
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_FptIndexHeader_1words_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  arg2 = (unsigned int)jarg2; 
+  if (arg1) (arg1)->words = arg2;
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_FptIndexHeader_1words_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  result = (unsigned int) ((arg1)->words);
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_FptIndexHeader_1fpid_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  char *arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
+    if (!arg2) return ;
+  }
+  {
+    if (arg2) strncpy((char *)arg1->fpid, (const char *)arg2, 16);
+    else arg1->fpid[0] = 0;
+  }
+  
+  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
+}
+
+
+SWIGEXPORT jstring JNICALL Java_openbabelJNI_FptIndexHeader_1fpid_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  char *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  result = (char *)(char *) ((arg1)->fpid);
+  if(result) jresult = jenv->NewStringUTF((const char *)result);
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_FptIndexHeader_1datafilename_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  char *arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
+    if (!arg2) return ;
+  }
+  {
+    if (arg2) strncpy((char *)arg1->datafilename, (const char *)arg2, 256);
+    else arg1->datafilename[0] = 0;
+  }
+  
+  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
+}
+
+
+SWIGEXPORT jstring JNICALL Java_openbabelJNI_FptIndexHeader_1datafilename_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  char *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  result = (char *)(char *) ((arg1)->datafilename);
+  if(result) jresult = jenv->NewStringUTF((const char *)result);
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1FptIndexHeader(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndexHeader *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (OpenBabel::FptIndexHeader *)new OpenBabel::FptIndexHeader();
+  *(OpenBabel::FptIndexHeader **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1FptIndexHeader(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(OpenBabel::FptIndexHeader **)&jarg1; 
+  delete arg1;
+  
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_FptIndex_1header_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  OpenBabel::FptIndexHeader *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  arg2 = *(OpenBabel::FptIndexHeader **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "OpenBabel::FptIndexHeader const & reference is null");
+    return ;
+  } 
+  if (arg1) (arg1)->header = *arg2;
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_FptIndex_1header_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  OpenBabel::FptIndexHeader *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  {
+    OpenBabel::FptIndexHeader const &_result_ref =  ((arg1)->header);
+    result = (OpenBabel::FptIndexHeader *) &_result_ref;
+  }
+  *(OpenBabel::FptIndexHeader **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_FptIndex_1fptdata_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  arg2 = *(std::vector<unsigned int > **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > const & reference is null");
+    return ;
+  } 
+  if (arg1) (arg1)->fptdata = *arg2;
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_FptIndex_1fptdata_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::vector<unsigned int > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  {
+    std::vector<unsigned int > const &_result_ref =  ((arg1)->fptdata);
+    result = (std::vector<unsigned int > *) &_result_ref;
+  }
+  *(std::vector<unsigned int > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_FptIndex_1seekdata_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  arg2 = *(std::vector<unsigned int > **)&jarg2;
+  if(!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > const & reference is null");
+    return ;
+  } 
+  if (arg1) (arg1)->seekdata = *arg2;
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_FptIndex_1seekdata_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::vector<unsigned int > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  {
+    std::vector<unsigned int > const &_result_ref =  ((arg1)->seekdata);
+    result = (std::vector<unsigned int > *) &_result_ref;
+  }
+  *(std::vector<unsigned int > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_FptIndex_1Read(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jboolean jresult = 0 ;
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::istream *arg2 = (std::istream *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  arg2 = *(std::istream **)&jarg2; 
+  result = (bool)(arg1)->Read(arg2);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_FptIndex_1CheckFP(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  result = (OpenBabel::OBFingerprint *)(arg1)->CheckFP();
+  *(OpenBabel::OBFingerprint **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1FptIndex(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndex *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (OpenBabel::FptIndex *)new OpenBabel::FptIndex();
+  *(OpenBabel::FptIndex **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1FptIndex(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  delete arg1;
+  
+}
+
+
+SWIGEXPORT jstring JNICALL Java_openbabelJNI_FastSearch_1ReadIndex(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jstring jresult = 0 ;
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  std::istream *arg2 = (std::istream *) 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FastSearch **)&jarg1; 
+  arg2 = *(std::istream **)&jarg2; 
+  result = (arg1)->ReadIndex(arg2);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1FastSearch(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(OpenBabel::FastSearch **)&jarg1; 
+  delete arg1;
+  
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_FastSearch_1Find(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jlong jarg4) {
+  jboolean jresult = 0 ;
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  unsigned int arg4 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::FastSearch **)&jarg1; 
+  arg2 = *(OpenBabel::OBBase **)&jarg2; 
+  arg3 = *(std::vector<unsigned int > **)&jarg3;
+  if(!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector<unsigned int > & reference is null");
+    return 0;
+  } 
+  arg4 = (unsigned int)jarg4; 
+  result = (bool)(arg1)->Find(arg2,*arg3,arg4);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_FastSearch_1FindSimilar_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jdouble jarg4) {
+  jboolean jresult = 0 ;
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::multimap<double,unsigned int > *arg3 = 0 ;
+  double arg4 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::FastSearch **)&jarg1; 
+  arg2 = *(OpenBabel::OBBase **)&jarg2; 
+  arg3 = *(std::multimap<double,unsigned int > **)&jarg3;
+  if(!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::multimap<double,unsigned int > & reference is null");
+    return 0;
+  } 
+  arg4 = (double)jarg4; 
+  result = (bool)(arg1)->FindSimilar(arg2,*arg3,arg4);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_FastSearch_1FindSimilar_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jint jarg4) {
+  jboolean jresult = 0 ;
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::multimap<double,unsigned int > *arg3 = 0 ;
+  int arg4 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::FastSearch **)&jarg1; 
+  arg2 = *(OpenBabel::OBBase **)&jarg2; 
+  arg3 = *(std::multimap<double,unsigned int > **)&jarg3;
+  if(!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::multimap<double,unsigned int > & reference is null");
+    return 0;
+  } 
+  arg4 = (int)jarg4; 
+  result = (bool)(arg1)->FindSimilar(arg2,*arg3,arg4);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_FastSearch_1FindSimilar_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3) {
+  jboolean jresult = 0 ;
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::multimap<double,unsigned int > *arg3 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::FastSearch **)&jarg1; 
+  arg2 = *(OpenBabel::OBBase **)&jarg2; 
+  arg3 = *(std::multimap<double,unsigned int > **)&jarg3;
+  if(!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::multimap<double,unsigned int > & reference is null");
+    return 0;
+  } 
+  result = (bool)(arg1)->FindSimilar(arg2,*arg3);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_FastSearch_1GetFingerprint(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FastSearch **)&jarg1; 
+  result = (OpenBabel::OBFingerprint *)((OpenBabel::FastSearch const *)arg1)->GetFingerprint();
+  *(OpenBabel::OBFingerprint **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_FastSearch_1GetIndexHeader(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::FptIndexHeader *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FastSearch **)&jarg1; 
+  {
+    OpenBabel::FptIndexHeader const &_result_ref = ((OpenBabel::FastSearch const *)arg1)->GetIndexHeader();
+    result = (OpenBabel::FptIndexHeader *) &_result_ref;
+  }
+  *(OpenBabel::FptIndexHeader **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1FastSearch(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  OpenBabel::FastSearch *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (OpenBabel::FastSearch *)new OpenBabel::FastSearch();
+  *(OpenBabel::FastSearch **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1FastSearchIndexer_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jint jarg4) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::ostream *arg2 = (std::ostream *) 0 ;
+  std::string *arg3 = 0 ;
+  int arg4 ;
+  OpenBabel::FastSearchIndexer *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::string **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::string & reference is null");
+    return 0;
+  } 
+  arg2 = *(std::ostream **)&jarg2; 
+  arg3 = *(std::string **)&jarg3;
+  if(!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::string & reference is null");
+    return 0;
+  } 
+  arg4 = (int)jarg4; 
+  result = (OpenBabel::FastSearchIndexer *)new OpenBabel::FastSearchIndexer(*arg1,arg2,*arg3,arg4);
+  *(OpenBabel::FastSearchIndexer **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1FastSearchIndexer_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3) {
+  jlong jresult = 0 ;
+  std::string *arg1 = 0 ;
+  std::ostream *arg2 = (std::ostream *) 0 ;
+  std::string *arg3 = 0 ;
+  OpenBabel::FastSearchIndexer *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::string **)&jarg1;
+  if(!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::string & reference is null");
+    return 0;
+  } 
+  arg2 = *(std::ostream **)&jarg2; 
+  arg3 = *(std::string **)&jarg3;
+  if(!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::string & reference is null");
+    return 0;
+  } 
+  result = (OpenBabel::FastSearchIndexer *)new OpenBabel::FastSearchIndexer(*arg1,arg2,*arg3);
+  *(OpenBabel::FastSearchIndexer **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_openbabelJNI_new_1FastSearchIndexer_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jlong jresult = 0 ;
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::ostream *arg2 = (std::ostream *) 0 ;
+  OpenBabel::FastSearchIndexer *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::FptIndex **)&jarg1; 
+  arg2 = *(std::ostream **)&jarg2; 
+  result = (OpenBabel::FastSearchIndexer *)new OpenBabel::FastSearchIndexer(arg1,arg2);
+  *(OpenBabel::FastSearchIndexer **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_delete_1FastSearchIndexer(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  OpenBabel::FastSearchIndexer *arg1 = (OpenBabel::FastSearchIndexer *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(OpenBabel::FastSearchIndexer **)&jarg1; 
+  delete arg1;
+  
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_openbabelJNI_FastSearchIndexer_1Add(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3) {
+  jboolean jresult = 0 ;
+  OpenBabel::FastSearchIndexer *arg1 = (OpenBabel::FastSearchIndexer *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::streampos arg3 ;
+  bool result;
+  std::streampos *argp3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(OpenBabel::FastSearchIndexer **)&jarg1; 
+  arg2 = *(OpenBabel::OBBase **)&jarg2; 
+  argp3 = *(std::streampos **)&jarg3; 
+  if (!argp3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null std::streampos");
+    return 0;
+  }
+  arg3 = *argp3; 
+  result = (bool)(arg1)->Add(arg2,arg3);
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 
@@ -26877,6 +27799,19 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolBondIter_1SetBO(JNIEnv *jenv, jcl
 }
 
 
+SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolBondIter_1SetBondOrder(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBMolBondIter **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (*arg1)->SetBondOrder(arg2);
+}
+
+
 SWIGEXPORT void JNICALL Java_openbabelJNI_OBMolBondIter_1SetBegin(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -30359,6 +31294,19 @@ SWIGEXPORT void JNICALL Java_openbabelJNI_OBAtomBondIter_1SetBO(JNIEnv *jenv, jc
   arg1 = *(OpenBabel::OBAtomBondIter **)&jarg1; 
   arg2 = (int)jarg2; 
   (*arg1)->SetBO(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_openbabelJNI_OBAtomBondIter_1SetBondOrder(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenBabel::OBAtomBondIter **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (*arg1)->SetBondOrder(arg2);
 }
 
 

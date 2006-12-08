@@ -1544,135 +1544,144 @@ SWIG_Ruby_SetModule(swig_module_info *pointer)
 #define SWIGTYPE_p_OpenBabel__CharPtrLess swig_types[0]
 #define SWIGTYPE_p_OpenBabel__DoubleType swig_types[1]
 #define SWIGTYPE_p_OpenBabel__FMapType__iterator swig_types[2]
-#define SWIGTYPE_p_OpenBabel__OBAngle swig_types[3]
-#define SWIGTYPE_p_OpenBabel__OBAngleData swig_types[4]
-#define SWIGTYPE_p_OpenBabel__OBAromaticTyper swig_types[5]
-#define SWIGTYPE_p_OpenBabel__OBAtom swig_types[6]
-#define SWIGTYPE_p_OpenBabel__OBAtomAtomIter swig_types[7]
-#define SWIGTYPE_p_OpenBabel__OBAtomBondIter swig_types[8]
-#define SWIGTYPE_p_OpenBabel__OBAtomTyper swig_types[9]
-#define SWIGTYPE_p_OpenBabel__OBBase swig_types[10]
-#define SWIGTYPE_p_OpenBabel__OBBitVec swig_types[11]
-#define SWIGTYPE_p_OpenBabel__OBBond swig_types[12]
-#define SWIGTYPE_p_OpenBabel__OBChainsParser swig_types[13]
-#define SWIGTYPE_p_OpenBabel__OBChiralData swig_types[14]
-#define SWIGTYPE_p_OpenBabel__OBCommentData swig_types[15]
-#define SWIGTYPE_p_OpenBabel__OBConformerData swig_types[16]
-#define SWIGTYPE_p_OpenBabel__OBConversion swig_types[17]
-#define SWIGTYPE_p_OpenBabel__OBElement swig_types[18]
-#define SWIGTYPE_p_OpenBabel__OBElementTable swig_types[19]
-#define SWIGTYPE_p_OpenBabel__OBError swig_types[20]
-#define SWIGTYPE_p_OpenBabel__OBExternalBond swig_types[21]
-#define SWIGTYPE_p_OpenBabel__OBExternalBondData swig_types[22]
-#define SWIGTYPE_p_OpenBabel__OBFormat swig_types[23]
-#define SWIGTYPE_p_OpenBabel__OBGenericData swig_types[24]
-#define SWIGTYPE_p_OpenBabel__OBGlobalDataBase swig_types[25]
-#define SWIGTYPE_p_OpenBabel__OBInternalCoord swig_types[26]
-#define SWIGTYPE_p_OpenBabel__OBIsotopeTable swig_types[27]
-#define SWIGTYPE_p_OpenBabel__OBMessageHandler swig_types[28]
-#define SWIGTYPE_p_OpenBabel__OBMol swig_types[29]
-#define SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter swig_types[30]
-#define SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter swig_types[31]
-#define SWIGTYPE_p_OpenBabel__OBMolAtomIter swig_types[32]
-#define SWIGTYPE_p_OpenBabel__OBMolBondIter swig_types[33]
-#define SWIGTYPE_p_OpenBabel__OBPairData swig_types[34]
-#define SWIGTYPE_p_OpenBabel__OBRTree swig_types[35]
-#define SWIGTYPE_p_OpenBabel__OBRandom swig_types[36]
-#define SWIGTYPE_p_OpenBabel__OBResidue swig_types[37]
-#define SWIGTYPE_p_OpenBabel__OBResidueAtomIter swig_types[38]
-#define SWIGTYPE_p_OpenBabel__OBResidueData swig_types[39]
-#define SWIGTYPE_p_OpenBabel__OBResidueIter swig_types[40]
-#define SWIGTYPE_p_OpenBabel__OBRing swig_types[41]
-#define SWIGTYPE_p_OpenBabel__OBRingData swig_types[42]
-#define SWIGTYPE_p_OpenBabel__OBRingSearch swig_types[43]
-#define SWIGTYPE_p_OpenBabel__OBSSMatch swig_types[44]
-#define SWIGTYPE_p_OpenBabel__OBSerialNums swig_types[45]
-#define SWIGTYPE_p_OpenBabel__OBSetData swig_types[46]
-#define SWIGTYPE_p_OpenBabel__OBSmartsPattern swig_types[47]
-#define SWIGTYPE_p_OpenBabel__OBSqrtTbl swig_types[48]
-#define SWIGTYPE_p_OpenBabel__OBStopwatch swig_types[49]
-#define SWIGTYPE_p_OpenBabel__OBSymmetryData swig_types[50]
-#define SWIGTYPE_p_OpenBabel__OBTorsion swig_types[51]
-#define SWIGTYPE_p_OpenBabel__OBTorsionData swig_types[52]
-#define SWIGTYPE_p_OpenBabel__OBTypeTable swig_types[53]
-#define SWIGTYPE_p_OpenBabel__OBUnitCell swig_types[54]
-#define SWIGTYPE_p_OpenBabel__OBVirtualBond swig_types[55]
-#define SWIGTYPE_p_OpenBabel__Pattern swig_types[56]
-#define SWIGTYPE_p_OpenBabel__Template swig_types[57]
-#define SWIGTYPE_p_OpenBabel__matrix3x3 swig_types[58]
-#define SWIGTYPE_p_OpenBabel__obLogBuf swig_types[59]
-#define SWIGTYPE_p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[60]
-#define SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[61]
-#define SWIGTYPE_p_OpenBabel__vector3 swig_types[62]
-#define SWIGTYPE_p_a_3__double swig_types[63]
-#define SWIGTYPE_p_a_4__char swig_types[64]
-#define SWIGTYPE_p_char swig_types[65]
-#define SWIGTYPE_p_double swig_types[66]
-#define SWIGTYPE_p_int swig_types[67]
-#define SWIGTYPE_p_p_OpenBabel__OBAngleData swig_types[68]
-#define SWIGTYPE_p_p_OpenBabel__OBChiralData swig_types[69]
-#define SWIGTYPE_p_p_OpenBabel__OBCommentData swig_types[70]
-#define SWIGTYPE_p_p_OpenBabel__OBConformerData swig_types[71]
-#define SWIGTYPE_p_p_OpenBabel__OBExternalBondData swig_types[72]
-#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[73]
-#define SWIGTYPE_p_p_OpenBabel__OBGenericData swig_types[74]
-#define SWIGTYPE_p_p_OpenBabel__OBPairData swig_types[75]
-#define SWIGTYPE_p_p_OpenBabel__OBRingData swig_types[76]
-#define SWIGTYPE_p_p_OpenBabel__OBSerialNums swig_types[77]
-#define SWIGTYPE_p_p_OpenBabel__OBSetData swig_types[78]
-#define SWIGTYPE_p_p_OpenBabel__OBSymmetryData swig_types[79]
-#define SWIGTYPE_p_p_OpenBabel__OBTorsionData swig_types[80]
-#define SWIGTYPE_p_p_OpenBabel__OBUnitCell swig_types[81]
-#define SWIGTYPE_p_p_OpenBabel__OBVirtualBond swig_types[82]
-#define SWIGTYPE_p_p_double swig_types[83]
-#define SWIGTYPE_p_p_int swig_types[84]
-#define SWIGTYPE_p_std__dequeTint_t swig_types[85]
-#define SWIGTYPE_p_std__ifstream swig_types[86]
-#define SWIGTYPE_p_std__istream swig_types[87]
-#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[88]
-#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[89]
-#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[90]
-#define SWIGTYPE_p_std__ostream swig_types[91]
-#define SWIGTYPE_p_std__out_of_range swig_types[92]
-#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[93]
-#define SWIGTYPE_p_std__streampos swig_types[94]
-#define SWIGTYPE_p_std__string swig_types[95]
-#define SWIGTYPE_p_std__type_info swig_types[96]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[97]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[98]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[99]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator swig_types[100]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[101]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[102]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[103]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[104]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[105]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[106]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[107]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[108]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[109]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[110]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[111]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[112]
-#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[113]
-#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[114]
-#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[115]
-#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[116]
-#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[117]
-#define SWIGTYPE_p_std__vectorTdouble_t swig_types[118]
-#define SWIGTYPE_p_std__vectorTint_t swig_types[119]
-#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[120]
-#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[121]
-#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[122]
-#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[123]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[124]
-#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[125]
-#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[126]
-#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[127]
-#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[128]
-#define SWIGTYPE_p_unsigned_int swig_types[129]
-static swig_type_info *swig_types[131];
-static swig_module_info swig_module = {swig_types, 130, 0, 0, 0, 0};
+#define SWIGTYPE_p_OpenBabel__FastSearch swig_types[3]
+#define SWIGTYPE_p_OpenBabel__FastSearchIndexer swig_types[4]
+#define SWIGTYPE_p_OpenBabel__FptIndex swig_types[5]
+#define SWIGTYPE_p_OpenBabel__FptIndexHeader swig_types[6]
+#define SWIGTYPE_p_OpenBabel__OBAngle swig_types[7]
+#define SWIGTYPE_p_OpenBabel__OBAngleData swig_types[8]
+#define SWIGTYPE_p_OpenBabel__OBAromaticTyper swig_types[9]
+#define SWIGTYPE_p_OpenBabel__OBAtom swig_types[10]
+#define SWIGTYPE_p_OpenBabel__OBAtomAtomIter swig_types[11]
+#define SWIGTYPE_p_OpenBabel__OBAtomBondIter swig_types[12]
+#define SWIGTYPE_p_OpenBabel__OBAtomTyper swig_types[13]
+#define SWIGTYPE_p_OpenBabel__OBBase swig_types[14]
+#define SWIGTYPE_p_OpenBabel__OBBitVec swig_types[15]
+#define SWIGTYPE_p_OpenBabel__OBBond swig_types[16]
+#define SWIGTYPE_p_OpenBabel__OBChainsParser swig_types[17]
+#define SWIGTYPE_p_OpenBabel__OBChiralData swig_types[18]
+#define SWIGTYPE_p_OpenBabel__OBCommentData swig_types[19]
+#define SWIGTYPE_p_OpenBabel__OBConformerData swig_types[20]
+#define SWIGTYPE_p_OpenBabel__OBConversion swig_types[21]
+#define SWIGTYPE_p_OpenBabel__OBElement swig_types[22]
+#define SWIGTYPE_p_OpenBabel__OBElementTable swig_types[23]
+#define SWIGTYPE_p_OpenBabel__OBError swig_types[24]
+#define SWIGTYPE_p_OpenBabel__OBExternalBond swig_types[25]
+#define SWIGTYPE_p_OpenBabel__OBExternalBondData swig_types[26]
+#define SWIGTYPE_p_OpenBabel__OBFingerprint swig_types[27]
+#define SWIGTYPE_p_OpenBabel__OBFormat swig_types[28]
+#define SWIGTYPE_p_OpenBabel__OBGenericData swig_types[29]
+#define SWIGTYPE_p_OpenBabel__OBGlobalDataBase swig_types[30]
+#define SWIGTYPE_p_OpenBabel__OBInternalCoord swig_types[31]
+#define SWIGTYPE_p_OpenBabel__OBIsotopeTable swig_types[32]
+#define SWIGTYPE_p_OpenBabel__OBMessageHandler swig_types[33]
+#define SWIGTYPE_p_OpenBabel__OBMol swig_types[34]
+#define SWIGTYPE_p_OpenBabel__OBMolAtomBFSIter swig_types[35]
+#define SWIGTYPE_p_OpenBabel__OBMolAtomDFSIter swig_types[36]
+#define SWIGTYPE_p_OpenBabel__OBMolAtomIter swig_types[37]
+#define SWIGTYPE_p_OpenBabel__OBMolBondIter swig_types[38]
+#define SWIGTYPE_p_OpenBabel__OBPairData swig_types[39]
+#define SWIGTYPE_p_OpenBabel__OBPairTemplateTdouble_t swig_types[40]
+#define SWIGTYPE_p_OpenBabel__OBPairTemplateTint_t swig_types[41]
+#define SWIGTYPE_p_OpenBabel__OBRTree swig_types[42]
+#define SWIGTYPE_p_OpenBabel__OBRandom swig_types[43]
+#define SWIGTYPE_p_OpenBabel__OBResidue swig_types[44]
+#define SWIGTYPE_p_OpenBabel__OBResidueAtomIter swig_types[45]
+#define SWIGTYPE_p_OpenBabel__OBResidueData swig_types[46]
+#define SWIGTYPE_p_OpenBabel__OBResidueIter swig_types[47]
+#define SWIGTYPE_p_OpenBabel__OBRing swig_types[48]
+#define SWIGTYPE_p_OpenBabel__OBRingData swig_types[49]
+#define SWIGTYPE_p_OpenBabel__OBRingSearch swig_types[50]
+#define SWIGTYPE_p_OpenBabel__OBSSMatch swig_types[51]
+#define SWIGTYPE_p_OpenBabel__OBSerialNums swig_types[52]
+#define SWIGTYPE_p_OpenBabel__OBSetData swig_types[53]
+#define SWIGTYPE_p_OpenBabel__OBSmartsPattern swig_types[54]
+#define SWIGTYPE_p_OpenBabel__OBSqrtTbl swig_types[55]
+#define SWIGTYPE_p_OpenBabel__OBStopwatch swig_types[56]
+#define SWIGTYPE_p_OpenBabel__OBSymmetryData swig_types[57]
+#define SWIGTYPE_p_OpenBabel__OBTorsion swig_types[58]
+#define SWIGTYPE_p_OpenBabel__OBTorsionData swig_types[59]
+#define SWIGTYPE_p_OpenBabel__OBTypeTable swig_types[60]
+#define SWIGTYPE_p_OpenBabel__OBUnitCell swig_types[61]
+#define SWIGTYPE_p_OpenBabel__OBVirtualBond swig_types[62]
+#define SWIGTYPE_p_OpenBabel__Pattern swig_types[63]
+#define SWIGTYPE_p_OpenBabel__Template swig_types[64]
+#define SWIGTYPE_p_OpenBabel__matrix3x3 swig_types[65]
+#define SWIGTYPE_p_OpenBabel__obLogBuf swig_types[66]
+#define SWIGTYPE_p_OpenBabel__quadTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[67]
+#define SWIGTYPE_p_OpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[68]
+#define SWIGTYPE_p_OpenBabel__vector3 swig_types[69]
+#define SWIGTYPE_p_a_3__double swig_types[70]
+#define SWIGTYPE_p_a_4__char swig_types[71]
+#define SWIGTYPE_p_char swig_types[72]
+#define SWIGTYPE_p_double swig_types[73]
+#define SWIGTYPE_p_int swig_types[74]
+#define SWIGTYPE_p_p_OpenBabel__OBAngleData swig_types[75]
+#define SWIGTYPE_p_p_OpenBabel__OBChiralData swig_types[76]
+#define SWIGTYPE_p_p_OpenBabel__OBCommentData swig_types[77]
+#define SWIGTYPE_p_p_OpenBabel__OBConformerData swig_types[78]
+#define SWIGTYPE_p_p_OpenBabel__OBExternalBondData swig_types[79]
+#define SWIGTYPE_p_p_OpenBabel__OBFingerprint swig_types[80]
+#define SWIGTYPE_p_p_OpenBabel__OBFormat swig_types[81]
+#define SWIGTYPE_p_p_OpenBabel__OBGenericData swig_types[82]
+#define SWIGTYPE_p_p_OpenBabel__OBPairData swig_types[83]
+#define SWIGTYPE_p_p_OpenBabel__OBRingData swig_types[84]
+#define SWIGTYPE_p_p_OpenBabel__OBSerialNums swig_types[85]
+#define SWIGTYPE_p_p_OpenBabel__OBSetData swig_types[86]
+#define SWIGTYPE_p_p_OpenBabel__OBSymmetryData swig_types[87]
+#define SWIGTYPE_p_p_OpenBabel__OBTorsionData swig_types[88]
+#define SWIGTYPE_p_p_OpenBabel__OBUnitCell swig_types[89]
+#define SWIGTYPE_p_p_OpenBabel__OBVirtualBond swig_types[90]
+#define SWIGTYPE_p_p_double swig_types[91]
+#define SWIGTYPE_p_p_int swig_types[92]
+#define SWIGTYPE_p_std__dequeTint_t swig_types[93]
+#define SWIGTYPE_p_std__ifstream swig_types[94]
+#define SWIGTYPE_p_std__istream swig_types[95]
+#define SWIGTYPE_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t swig_types[96]
+#define SWIGTYPE_p_std__mapTint_OpenBabel__OBAtom_p_t swig_types[97]
+#define SWIGTYPE_p_std__mapTstd__string_std__string_t swig_types[98]
+#define SWIGTYPE_p_std__multimapTdouble_unsigned_int_t swig_types[99]
+#define SWIGTYPE_p_std__ostream swig_types[100]
+#define SWIGTYPE_p_std__out_of_range swig_types[101]
+#define SWIGTYPE_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t swig_types[102]
+#define SWIGTYPE_p_std__streampos swig_types[103]
+#define SWIGTYPE_p_std__string swig_types[104]
+#define SWIGTYPE_p_std__type_info swig_types[105]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t swig_types[106]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBAtom_p_t__iterator swig_types[107]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t swig_types[108]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_p_t__iterator swig_types[109]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBBond_t swig_types[110]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBExternalBond_t swig_types[111]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t swig_types[112]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBGenericData_p_t__iterator swig_types[113]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t swig_types[114]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBInternalCoord_p_t__iterator swig_types[115]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBMol_t swig_types[116]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_p_t__iterator swig_types[117]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBResidue_t swig_types[118]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t swig_types[119]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator swig_types[120]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBRing_t swig_types[121]
+#define SWIGTYPE_p_std__vectorTOpenBabel__OBTorsion_t swig_types[122]
+#define SWIGTYPE_p_std__vectorTOpenBabel__tripleTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_double_t_t swig_types[123]
+#define SWIGTYPE_p_std__vectorTOpenBabel__vector3_t swig_types[124]
+#define SWIGTYPE_p_std__vectorTdouble_p_t swig_types[125]
+#define SWIGTYPE_p_std__vectorTdouble_p_t__iterator swig_types[126]
+#define SWIGTYPE_p_std__vectorTdouble_t swig_types[127]
+#define SWIGTYPE_p_std__vectorTint_t swig_types[128]
+#define SWIGTYPE_p_std__vectorTstd__pairTint_int_t_t swig_types[129]
+#define SWIGTYPE_p_std__vectorTstd__pairTstd__string_std__string_t_t swig_types[130]
+#define SWIGTYPE_p_std__vectorTstd__string_t swig_types[131]
+#define SWIGTYPE_p_std__vectorTstd__vectorTOpenBabel__vector3_t_t swig_types[132]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t swig_types[133]
+#define SWIGTYPE_p_std__vectorTstd__vectorTint_t_t__iterator swig_types[134]
+#define SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t swig_types[135]
+#define SWIGTYPE_p_std__vectorTunsigned_int_t swig_types[136]
+#define SWIGTYPE_p_std__vectorTunsigned_short_t swig_types[137]
+#define SWIGTYPE_p_unsigned_int swig_types[138]
+static swig_type_info *swig_types[140];
+static swig_module_info swig_module = {swig_types, 139, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1717,6 +1726,8 @@ static VALUE mOpenbabel;
 #include "ring.h"
 #include "obconversion.h"
 #include "oberror.h"
+
+#include "fingerprint.h"
 
 #include "data.h"
 #include "parsmart.h"
@@ -25781,6 +25792,171 @@ _wrap_new_OBInternalCoord__SWIG_0(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
   OpenBabel::OBAtom *arg3 = (OpenBabel::OBAtom *) 0 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  OpenBabel::OBInternalCoord *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
+  
+  if ((argc < 6) || (argc > 6)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 6)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBInternalCoord" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBInternalCoord" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[2], &argp3,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::OBInternalCoord" "', argument " "3"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg3 = reinterpret_cast< OpenBabel::OBAtom * >(argp3);
+  ecode4 = SWIG_AsVal_double(argv[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "OpenBabel::OBInternalCoord" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(argv[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "OpenBabel::OBInternalCoord" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  ecode6 = SWIG_AsVal_double(argv[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "OpenBabel::OBInternalCoord" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  result = (OpenBabel::OBInternalCoord *)new OpenBabel::OBInternalCoord(arg1,arg2,arg3,arg4,arg5,arg6);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_OBInternalCoord__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBAtom *arg3 = (OpenBabel::OBAtom *) 0 ;
+  double arg4 ;
+  double arg5 ;
+  OpenBabel::OBInternalCoord *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  
+  if ((argc < 5) || (argc > 5)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 5)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBInternalCoord" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBInternalCoord" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[2], &argp3,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::OBInternalCoord" "', argument " "3"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg3 = reinterpret_cast< OpenBabel::OBAtom * >(argp3);
+  ecode4 = SWIG_AsVal_double(argv[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "OpenBabel::OBInternalCoord" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(argv[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "OpenBabel::OBInternalCoord" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  result = (OpenBabel::OBInternalCoord *)new OpenBabel::OBInternalCoord(arg1,arg2,arg3,arg4,arg5);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_OBInternalCoord__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBAtom *arg3 = (OpenBabel::OBAtom *) 0 ;
+  double arg4 ;
+  OpenBabel::OBInternalCoord *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 4) || (argc > 4)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBInternalCoord" "', argument " "1"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtom * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBInternalCoord" "', argument " "2"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBAtom * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[2], &argp3,SWIGTYPE_p_OpenBabel__OBAtom, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::OBInternalCoord" "', argument " "3"" of type '" "OpenBabel::OBAtom *""'"); 
+  }
+  arg3 = reinterpret_cast< OpenBabel::OBAtom * >(argp3);
+  ecode4 = SWIG_AsVal_double(argv[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "OpenBabel::OBInternalCoord" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  result = (OpenBabel::OBInternalCoord *)new OpenBabel::OBInternalCoord(arg1,arg2,arg3,arg4);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_OBInternalCoord__SWIG_3(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
+  OpenBabel::OBAtom *arg3 = (OpenBabel::OBAtom *) 0 ;
   OpenBabel::OBInternalCoord *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -25816,7 +25992,7 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_new_OBInternalCoord__SWIG_1(int argc, VALUE *argv, VALUE self) {
+_wrap_new_OBInternalCoord__SWIG_4(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
   OpenBabel::OBInternalCoord *result = 0 ;
@@ -25847,7 +26023,7 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_new_OBInternalCoord__SWIG_2(int argc, VALUE *argv, VALUE self) {
+_wrap_new_OBInternalCoord__SWIG_5(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBAtom *arg1 = (OpenBabel::OBAtom *) 0 ;
   OpenBabel::OBInternalCoord *result = 0 ;
   void *argp1 = 0 ;
@@ -25887,7 +26063,7 @@ _wrap_OBInternalCoord_allocate(VALUE self) {
   
 
 SWIGINTERN VALUE
-_wrap_new_OBInternalCoord__SWIG_3(int argc, VALUE *argv, VALUE self) {
+_wrap_new_OBInternalCoord__SWIG_6(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBInternalCoord *result = 0 ;
   
   if ((argc < 0) || (argc > 0)) {
@@ -25903,16 +26079,16 @@ fail:
 
 SWIGINTERN VALUE _wrap_new_OBInternalCoord(int nargs, VALUE *args, VALUE self) {
   int argc;
-  VALUE argv[3];
+  VALUE argv[6];
   int ii;
   
   argc = nargs;
-  if (argc > 3) SWIG_fail;
+  if (argc > 6) SWIG_fail;
   for (ii = 0; (ii < argc); ii++) {
     argv[ii] = args[ii];
   }
   if (argc == 0) {
-    return _wrap_new_OBInternalCoord__SWIG_3(nargs, args, self);
+    return _wrap_new_OBInternalCoord__SWIG_6(nargs, args, self);
   }
   if (argc == 1) {
     int _v;
@@ -25920,7 +26096,7 @@ SWIGINTERN VALUE _wrap_new_OBInternalCoord(int nargs, VALUE *args, VALUE self) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      return _wrap_new_OBInternalCoord__SWIG_2(nargs, args, self);
+      return _wrap_new_OBInternalCoord__SWIG_5(nargs, args, self);
     }
   }
   if (argc == 2) {
@@ -25933,7 +26109,7 @@ SWIGINTERN VALUE _wrap_new_OBInternalCoord(int nargs, VALUE *args, VALUE self) {
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_new_OBInternalCoord__SWIG_1(nargs, args, self);
+        return _wrap_new_OBInternalCoord__SWIG_4(nargs, args, self);
       }
     }
   }
@@ -25951,7 +26127,100 @@ SWIGINTERN VALUE _wrap_new_OBInternalCoord(int nargs, VALUE *args, VALUE self) {
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_new_OBInternalCoord__SWIG_0(nargs, args, self);
+          return _wrap_new_OBInternalCoord__SWIG_3(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_new_OBInternalCoord__SWIG_2(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_new_OBInternalCoord__SWIG_1(nargs, args, self);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_OpenBabel__OBAtom, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_double(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_double(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_new_OBInternalCoord__SWIG_0(nargs, args, self);
+              }
+            }
+          }
         }
       }
     }
@@ -29956,6 +30225,35 @@ _wrap_OBBond_SetBO(int argc, VALUE *argv, VALUE self) {
   } 
   arg2 = static_cast< int >(val2);
   (arg1)->SetBO(arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBBond_SetBondOrder(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBBond *arg1 = (OpenBabel::OBBond *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBBond, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetBondOrder" "', argument " "1"" of type '" "OpenBabel::OBBond *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBBond * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SetBondOrder" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->SetBondOrder(arg2);
   return Qnil;
 fail:
   return Qnil;
@@ -40429,6 +40727,1771 @@ _wrap_SmartsLexReplace(int argc, VALUE *argv, VALUE self) {
   arg2 = reinterpret_cast< std::vector<std::pair<std::string,std::string > > * >(argp2);
   OpenBabel::SmartsLexReplace(*arg1,*arg2);
   return Qnil;
+fail:
+  return Qnil;
+}
+
+
+swig_class cOBFingerprint;
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_SetBit(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  unsigned int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetBit" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetBit" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SetBit" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  (arg1)->SetBit(*arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Fold(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  unsigned int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Fold" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Fold" "', argument " "2"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Fold" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  (arg1)->Fold(*arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_GetFingerprint__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  int arg4 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetFingerprint" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "GetFingerprint" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  result = (bool)(arg1)->GetFingerprint(arg2,*arg3,arg4);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_GetFingerprint__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetFingerprint" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "GetFingerprint" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "GetFingerprint" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+  result = (bool)(arg1)->GetFingerprint(arg2,*arg3);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_OBFingerprint_GetFingerprint(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[5];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 5) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBFingerprint, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_OBFingerprint_GetFingerprint__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__OBFingerprint, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_OBFingerprint_GetFingerprint__SWIG_0(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'OBFingerprint_GetFingerprint'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Description(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  std::string result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Description" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  result = (arg1)->Description();
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Flags(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBFingerprint *arg1 = (OpenBabel::OBFingerprint *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Flags" "', argument " "1"" of type '" "OpenBabel::OBFingerprint *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBFingerprint * >(argp1);
+  result = (unsigned int)(arg1)->Flags();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_GetNextFPrt(int argc, VALUE *argv, VALUE self) {
+  std::string *arg1 = 0 ;
+  OpenBabel::OBFingerprint **arg2 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBFingerprint::GetNextFPrt" "', argument " "1"" of type '" "std::string &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBFingerprint::GetNextFPrt" "', argument " "1"" of type '" "std::string &""'"); 
+  }
+  arg1 = reinterpret_cast< std::string * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_p_OpenBabel__OBFingerprint,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBFingerprint::GetNextFPrt" "', argument " "2"" of type '" "OpenBabel::OBFingerprint *&""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBFingerprint::GetNextFPrt" "', argument " "2"" of type '" "OpenBabel::OBFingerprint *&""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBFingerprint ** >(argp2);
+  result = (bool)OpenBabel::OBFingerprint::GetNextFPrt(*arg1,*arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_FindFingerprint(int argc, VALUE *argv, VALUE self) {
+  std::string *arg1 = 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBFingerprint::FindFingerprint" "', argument " "1"" of type '" "std::string &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBFingerprint::FindFingerprint" "', argument " "1"" of type '" "std::string &""'"); 
+  }
+  arg1 = reinterpret_cast< std::string * >(argp1);
+  result = (OpenBabel::OBFingerprint *)OpenBabel::OBFingerprint::FindFingerprint(*arg1);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Tanimoto__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  std::vector<unsigned int > *arg1 = 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  double result;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBFingerprint::Tanimoto" "', argument " "1"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBFingerprint::Tanimoto" "', argument " "1"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<unsigned int > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBFingerprint::Tanimoto" "', argument " "2"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBFingerprint::Tanimoto" "', argument " "2"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+  result = (double)OpenBabel::OBFingerprint::Tanimoto((std::vector<unsigned int > const &)*arg1,(std::vector<unsigned int > const &)*arg2);
+  vresult = SWIG_From_double(static_cast< double >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Tanimoto__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  std::vector<unsigned int > *arg1 = 0 ;
+  unsigned int *arg2 = (unsigned int *) 0 ;
+  double result;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::OBFingerprint::Tanimoto" "', argument " "1"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::OBFingerprint::Tanimoto" "', argument " "1"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector<unsigned int > * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::OBFingerprint::Tanimoto" "', argument " "2"" of type '" "unsigned int const *""'"); 
+  }
+  arg2 = reinterpret_cast< unsigned int * >(argp2);
+  result = (double)OpenBabel::OBFingerprint::Tanimoto((std::vector<unsigned int > const &)*arg1,(unsigned int const *)arg2);
+  vresult = SWIG_From_double(static_cast< double >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_OBFingerprint_Tanimoto(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[2];
+  int ii;
+  
+  argc = nargs;
+  if (argc > 2) SWIG_fail;
+  for (ii = 0; (ii < argc); ii++) {
+    argv[ii] = args[ii];
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBFingerprint_Tanimoto__SWIG_0(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorTunsigned_int_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_unsigned_int, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_OBFingerprint_Tanimoto__SWIG_1(nargs, args, self);
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'OBFingerprint_Tanimoto'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBFingerprint_Getbitsperint(int argc, VALUE *argv, VALUE self) {
+  unsigned int result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (unsigned int)OpenBabel::OBFingerprint::Getbitsperint();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_OpenBabel_OBFingerprint(OpenBabel::OBFingerprint *arg1) {
+    delete arg1;
+}
+
+swig_class cFptIndexHeader;
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_headerlength_set(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "headerlength" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "headerlength" "', argument " "2"" of type '" "unsigned int""'");
+  } 
+  arg2 = static_cast< unsigned int >(val2);
+  if (arg1) (arg1)->headerlength = arg2;
+  
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_headerlength_get(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "headerlength" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  result = (unsigned int) ((arg1)->headerlength);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_nEntries_set(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nEntries" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "nEntries" "', argument " "2"" of type '" "unsigned int""'");
+  } 
+  arg2 = static_cast< unsigned int >(val2);
+  if (arg1) (arg1)->nEntries = arg2;
+  
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_nEntries_get(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nEntries" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  result = (unsigned int) ((arg1)->nEntries);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_words_set(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "words" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "words" "', argument " "2"" of type '" "unsigned int""'");
+  } 
+  arg2 = static_cast< unsigned int >(val2);
+  if (arg1) (arg1)->words = arg2;
+  
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_words_get(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "words" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  result = (unsigned int) ((arg1)->words);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_fpid_set(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[16] ;
+  int res2 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "fpid" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  res2 = SWIG_AsCharArray(argv[0], temp2, 16);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "fpid" "', argument " "2"" of type '" "char [16]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->fpid,arg2,16*sizeof(char));
+  else memset(arg1->fpid,0,16*sizeof(char));
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_fpid_get(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  char *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "fpid" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  result = (char *)(char *) ((arg1)->fpid);
+  {
+    size_t size = 16;
+    
+    while (size && (result[size - 1] == '\0')) --size;
+    
+    vresult = SWIG_FromCharPtrAndSize(result, size);
+  }
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_datafilename_set(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[256] ;
+  int res2 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "datafilename" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  res2 = SWIG_AsCharArray(argv[0], temp2, 256);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "datafilename" "', argument " "2"" of type '" "char [256]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->datafilename,arg2,256*sizeof(char));
+  else memset(arg1->datafilename,0,256*sizeof(char));
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_datafilename_get(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *arg1 = (OpenBabel::FptIndexHeader *) 0 ;
+  char *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "datafilename" "', argument " "1"" of type '" "OpenBabel::FptIndexHeader *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp1);
+  result = (char *)(char *) ((arg1)->datafilename);
+  {
+    size_t size = 256;
+    
+    while (size && (result[size - 1] == '\0')) --size;
+    
+    vresult = SWIG_FromCharPtrAndSize(result, size);
+  }
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+SWIGINTERN VALUE
+_wrap_FptIndexHeader_allocate(VALUE self) {
+#else
+  SWIGINTERN VALUE
+  _wrap_FptIndexHeader_allocate(int argc, VALUE *argv, VALUE self) {
+#endif
+    
+    
+    VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_OpenBabel__FptIndexHeader);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+    rb_obj_call_init(vresult, argc, argv);
+#endif
+    return vresult;
+  }
+  
+
+SWIGINTERN VALUE
+_wrap_new_FptIndexHeader(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndexHeader *result = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (OpenBabel::FptIndexHeader *)new OpenBabel::FptIndexHeader();DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_OpenBabel_FptIndexHeader(OpenBabel::FptIndexHeader *arg1) {
+    delete arg1;
+}
+
+swig_class cFptIndex;
+
+SWIGINTERN VALUE
+_wrap_FptIndex_header_set(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  OpenBabel::FptIndexHeader *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "header" "', argument " "1"" of type '" "OpenBabel::FptIndex *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndex * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_OpenBabel__FptIndexHeader,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "header" "', argument " "2"" of type '" "OpenBabel::FptIndexHeader const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "header" "', argument " "2"" of type '" "OpenBabel::FptIndexHeader const &""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::FptIndexHeader * >(argp2);
+  if (arg1) (arg1)->header = *arg2;
+  
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndex_header_get(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  OpenBabel::FptIndexHeader *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "header" "', argument " "1"" of type '" "OpenBabel::FptIndex *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndex * >(argp1);
+  {
+    OpenBabel::FptIndexHeader const &_result_ref =  ((arg1)->header);
+    result = (OpenBabel::FptIndexHeader *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndex_fptdata_set(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "fptdata" "', argument " "1"" of type '" "OpenBabel::FptIndex *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndex * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "fptdata" "', argument " "2"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "fptdata" "', argument " "2"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+  if (arg1) (arg1)->fptdata = *arg2;
+  
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndex_fptdata_get(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::vector<unsigned int > *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "fptdata" "', argument " "1"" of type '" "OpenBabel::FptIndex *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndex * >(argp1);
+  {
+    std::vector<unsigned int > const &_result_ref =  ((arg1)->fptdata);
+    result = (std::vector<unsigned int > *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTunsigned_int_t, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndex_seekdata_set(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::vector<unsigned int > *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "seekdata" "', argument " "1"" of type '" "OpenBabel::FptIndex *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndex * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "seekdata" "', argument " "2"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "seekdata" "', argument " "2"" of type '" "std::vector<unsigned int > const &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector<unsigned int > * >(argp2);
+  if (arg1) (arg1)->seekdata = *arg2;
+  
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndex_seekdata_get(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::vector<unsigned int > *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "seekdata" "', argument " "1"" of type '" "OpenBabel::FptIndex *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndex * >(argp1);
+  {
+    std::vector<unsigned int > const &_result_ref =  ((arg1)->seekdata);
+    result = (std::vector<unsigned int > *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorTunsigned_int_t, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndex_Read(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::istream *arg2 = (std::istream *) 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Read" "', argument " "1"" of type '" "OpenBabel::FptIndex *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndex * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_std__istream, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Read" "', argument " "2"" of type '" "std::istream *""'"); 
+  }
+  arg2 = reinterpret_cast< std::istream * >(argp2);
+  result = (bool)(arg1)->Read(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FptIndex_CheckFP(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FptIndex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CheckFP" "', argument " "1"" of type '" "OpenBabel::FptIndex *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndex * >(argp1);
+  result = (OpenBabel::OBFingerprint *)(arg1)->CheckFP();
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+SWIGINTERN VALUE
+_wrap_FptIndex_allocate(VALUE self) {
+#else
+  SWIGINTERN VALUE
+  _wrap_FptIndex_allocate(int argc, VALUE *argv, VALUE self) {
+#endif
+    
+    
+    VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_OpenBabel__FptIndex);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+    rb_obj_call_init(vresult, argc, argv);
+#endif
+    return vresult;
+  }
+  
+
+SWIGINTERN VALUE
+_wrap_new_FptIndex(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *result = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (OpenBabel::FptIndex *)new OpenBabel::FptIndex();DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_OpenBabel_FptIndex(OpenBabel::FptIndex *arg1) {
+    delete arg1;
+}
+
+swig_class cFastSearch;
+
+SWIGINTERN VALUE
+_wrap_FastSearch_ReadIndex(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  std::istream *arg2 = (std::istream *) 0 ;
+  std::string result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FastSearch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ReadIndex" "', argument " "1"" of type '" "OpenBabel::FastSearch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FastSearch * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_std__istream, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ReadIndex" "', argument " "2"" of type '" "std::istream *""'"); 
+  }
+  arg2 = reinterpret_cast< std::istream * >(argp2);
+  result = (arg1)->ReadIndex(arg2);
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_OpenBabel_FastSearch(OpenBabel::FastSearch *arg1) {
+    delete arg1;
+}
+
+SWIGINTERN VALUE
+_wrap_FastSearch_Find(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::vector<unsigned int > *arg3 = 0 ;
+  unsigned int arg4 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  unsigned int val4 ;
+  int ecode4 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FastSearch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Find" "', argument " "1"" of type '" "OpenBabel::FastSearch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FastSearch * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Find" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__vectorTunsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Find" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Find" "', argument " "3"" of type '" "std::vector<unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector<unsigned int > * >(argp3);
+  ecode4 = SWIG_AsVal_unsigned_SS_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Find" "', argument " "4"" of type '" "unsigned int""'");
+  } 
+  arg4 = static_cast< unsigned int >(val4);
+  result = (bool)(arg1)->Find(arg2,*arg3,arg4);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FastSearch_FindSimilar__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::multimap<double,unsigned int > *arg3 = 0 ;
+  double arg4 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FastSearch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindSimilar" "', argument " "1"" of type '" "OpenBabel::FastSearch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FastSearch * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindSimilar" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__multimapTdouble_unsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "FindSimilar" "', argument " "3"" of type '" "std::multimap<double,unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FindSimilar" "', argument " "3"" of type '" "std::multimap<double,unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::multimap<double,unsigned int > * >(argp3);
+  ecode4 = SWIG_AsVal_double(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "FindSimilar" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  result = (bool)(arg1)->FindSimilar(arg2,*arg3,arg4);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FastSearch_FindSimilar__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::multimap<double,unsigned int > *arg3 = 0 ;
+  int arg4 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FastSearch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindSimilar" "', argument " "1"" of type '" "OpenBabel::FastSearch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FastSearch * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindSimilar" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__multimapTdouble_unsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "FindSimilar" "', argument " "3"" of type '" "std::multimap<double,unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FindSimilar" "', argument " "3"" of type '" "std::multimap<double,unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::multimap<double,unsigned int > * >(argp3);
+  ecode4 = SWIG_AsVal_int(argv[2], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "FindSimilar" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  result = (bool)(arg1)->FindSimilar(arg2,*arg3,arg4);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FastSearch_FindSimilar__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::multimap<double,unsigned int > *arg3 = 0 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FastSearch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindSimilar" "', argument " "1"" of type '" "OpenBabel::FastSearch *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FastSearch * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindSimilar" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__multimapTdouble_unsigned_int_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "FindSimilar" "', argument " "3"" of type '" "std::multimap<double,unsigned int > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FindSimilar" "', argument " "3"" of type '" "std::multimap<double,unsigned int > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::multimap<double,unsigned int > * >(argp3);
+  result = (bool)(arg1)->FindSimilar(arg2,*arg3);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_FastSearch_FindSimilar(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[5];
+  int ii;
+  
+  argc = nargs + 1;
+  argv[0] = self;
+  if (argc > 5) SWIG_fail;
+  for (ii = 1; (ii < argc); ii++) {
+    argv[ii] = args[ii-1];
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__FastSearch, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__multimapTdouble_unsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_FastSearch_FindSimilar__SWIG_2(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__FastSearch, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__multimapTdouble_unsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_FastSearch_FindSimilar__SWIG_1(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__FastSearch, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_OpenBabel__OBBase, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__multimapTdouble_unsigned_int_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_FastSearch_FindSimilar__SWIG_0(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'FastSearch_FindSimilar'");
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FastSearch_GetFingerprint(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::OBFingerprint *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FastSearch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetFingerprint" "', argument " "1"" of type '" "OpenBabel::FastSearch const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FastSearch * >(argp1);
+  result = (OpenBabel::OBFingerprint *)((OpenBabel::FastSearch const *)arg1)->GetFingerprint();
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__OBFingerprint, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_FastSearch_GetIndexHeader(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FastSearch *arg1 = (OpenBabel::FastSearch *) 0 ;
+  OpenBabel::FptIndexHeader *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FastSearch, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetIndexHeader" "', argument " "1"" of type '" "OpenBabel::FastSearch const *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FastSearch * >(argp1);
+  {
+    OpenBabel::FptIndexHeader const &_result_ref = ((OpenBabel::FastSearch const *)arg1)->GetIndexHeader();
+    result = (OpenBabel::FptIndexHeader *) &_result_ref;
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OpenBabel__FptIndexHeader, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+SWIGINTERN VALUE
+_wrap_FastSearch_allocate(VALUE self) {
+#else
+  SWIGINTERN VALUE
+  _wrap_FastSearch_allocate(int argc, VALUE *argv, VALUE self) {
+#endif
+    
+    
+    VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_OpenBabel__FastSearch);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+    rb_obj_call_init(vresult, argc, argv);
+#endif
+    return vresult;
+  }
+  
+
+SWIGINTERN VALUE
+_wrap_new_FastSearch(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FastSearch *result = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (OpenBabel::FastSearch *)new OpenBabel::FastSearch();DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+swig_class cFastSearchIndexer;
+
+SWIGINTERN VALUE
+_wrap_new_FastSearchIndexer__SWIG_0(int argc, VALUE *argv, VALUE self) {
+  std::string *arg1 = 0 ;
+  std::ostream *arg2 = (std::ostream *) 0 ;
+  std::string *arg3 = 0 ;
+  int arg4 ;
+  OpenBabel::FastSearchIndexer *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 4) || (argc > 4)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::FastSearchIndexer" "', argument " "1"" of type '" "std::string &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::FastSearchIndexer" "', argument " "1"" of type '" "std::string &""'"); 
+  }
+  arg1 = reinterpret_cast< std::string * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_std__ostream, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::FastSearchIndexer" "', argument " "2"" of type '" "std::ostream *""'"); 
+  }
+  arg2 = reinterpret_cast< std::ostream * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[2], &argp3, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::FastSearchIndexer" "', argument " "3"" of type '" "std::string &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::FastSearchIndexer" "', argument " "3"" of type '" "std::string &""'"); 
+  }
+  arg3 = reinterpret_cast< std::string * >(argp3);
+  ecode4 = SWIG_AsVal_int(argv[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "OpenBabel::FastSearchIndexer" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  result = (OpenBabel::FastSearchIndexer *)new OpenBabel::FastSearchIndexer(*arg1,arg2,*arg3,arg4);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_FastSearchIndexer__SWIG_1(int argc, VALUE *argv, VALUE self) {
+  std::string *arg1 = 0 ;
+  std::ostream *arg2 = (std::ostream *) 0 ;
+  std::string *arg3 = 0 ;
+  OpenBabel::FastSearchIndexer *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::FastSearchIndexer" "', argument " "1"" of type '" "std::string &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::FastSearchIndexer" "', argument " "1"" of type '" "std::string &""'"); 
+  }
+  arg1 = reinterpret_cast< std::string * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_std__ostream, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::FastSearchIndexer" "', argument " "2"" of type '" "std::ostream *""'"); 
+  }
+  arg2 = reinterpret_cast< std::ostream * >(argp2);
+  res3 = SWIG_ConvertPtr(argv[2], &argp3, SWIGTYPE_p_std__string,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "OpenBabel::FastSearchIndexer" "', argument " "3"" of type '" "std::string &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "OpenBabel::FastSearchIndexer" "', argument " "3"" of type '" "std::string &""'"); 
+  }
+  arg3 = reinterpret_cast< std::string * >(argp3);
+  result = (OpenBabel::FastSearchIndexer *)new OpenBabel::FastSearchIndexer(*arg1,arg2,*arg3);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+SWIGINTERN VALUE
+_wrap_FastSearchIndexer_allocate(VALUE self) {
+#else
+  SWIGINTERN VALUE
+  _wrap_FastSearchIndexer_allocate(int argc, VALUE *argv, VALUE self) {
+#endif
+    
+    
+    VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_OpenBabel__FastSearchIndexer);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+    rb_obj_call_init(vresult, argc, argv);
+#endif
+    return vresult;
+  }
+  
+
+SWIGINTERN VALUE
+_wrap_new_FastSearchIndexer__SWIG_2(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FptIndex *arg1 = (OpenBabel::FptIndex *) 0 ;
+  std::ostream *arg2 = (std::ostream *) 0 ;
+  OpenBabel::FastSearchIndexer *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_OpenBabel__FptIndex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenBabel::FastSearchIndexer" "', argument " "1"" of type '" "OpenBabel::FptIndex *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FptIndex * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_std__ostream, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "OpenBabel::FastSearchIndexer" "', argument " "2"" of type '" "std::ostream *""'"); 
+  }
+  arg2 = reinterpret_cast< std::ostream * >(argp2);
+  result = (OpenBabel::FastSearchIndexer *)new OpenBabel::FastSearchIndexer(arg1,arg2);DATA_PTR(self) = result;
+  
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE _wrap_new_FastSearchIndexer(int nargs, VALUE *args, VALUE self) {
+  int argc;
+  VALUE argv[4];
+  int ii;
+  
+  argc = nargs;
+  if (argc > 4) SWIG_fail;
+  for (ii = 0; (ii < argc); ii++) {
+    argv[ii] = args[ii];
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OpenBabel__FptIndex, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__ostream, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_new_FastSearchIndexer__SWIG_2(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__string, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__ostream, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__string, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_new_FastSearchIndexer__SWIG_1(nargs, args, self);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__string, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__ostream, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__string, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_new_FastSearchIndexer__SWIG_0(nargs, args, self);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  rb_raise(rb_eArgError, "No matching function for overloaded 'new_FastSearchIndexer'");
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_OpenBabel_FastSearchIndexer(OpenBabel::FastSearchIndexer *arg1) {
+    delete arg1;
+}
+
+SWIGINTERN VALUE
+_wrap_FastSearchIndexer_Add(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::FastSearchIndexer *arg1 = (OpenBabel::FastSearchIndexer *) 0 ;
+  OpenBabel::OBBase *arg2 = (OpenBabel::OBBase *) 0 ;
+  std::streampos arg3 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__FastSearchIndexer, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Add" "', argument " "1"" of type '" "OpenBabel::FastSearchIndexer *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::FastSearchIndexer * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_OpenBabel__OBBase, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Add" "', argument " "2"" of type '" "OpenBabel::OBBase *""'"); 
+  }
+  arg2 = reinterpret_cast< OpenBabel::OBBase * >(argp2);
+  {
+    res3 = SWIG_ConvertPtr(argv[1], &argp3, SWIGTYPE_p_std__streampos,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Add" "', argument " "3"" of type '" "std::streampos""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Add" "', argument " "3"" of type '" "std::streampos""'");
+    } else {
+      arg3 = *(reinterpret_cast< std::streampos * >(argp3));
+    }
+  }
+  result = (bool)(arg1)->Add(arg2,arg3);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -55079,6 +57142,35 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_OBMolBondIter_SetBondOrder(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBMolBondIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetBondOrder" "', argument " "1"" of type '" "OpenBabel::OBMolBondIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBMolBondIter * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SetBondOrder" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (*arg1)->SetBondOrder(arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_OBMolBondIter_SetBegin(int argc, VALUE *argv, VALUE self) {
   OpenBabel::OBMolBondIter *arg1 = (OpenBabel::OBMolBondIter *) 0 ;
   OpenBabel::OBAtom *arg2 = (OpenBabel::OBAtom *) 0 ;
@@ -62339,6 +64431,35 @@ _wrap_OBAtomBondIter_SetBO(int argc, VALUE *argv, VALUE self) {
   } 
   arg2 = static_cast< int >(val2);
   (*arg1)->SetBO(arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_OBAtomBondIter_SetBondOrder(int argc, VALUE *argv, VALUE self) {
+  OpenBabel::OBAtomBondIter *arg1 = (OpenBabel::OBAtomBondIter *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_OpenBabel__OBAtomBondIter, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetBondOrder" "', argument " "1"" of type '" "OpenBabel::OBAtomBondIter *""'"); 
+  }
+  arg1 = reinterpret_cast< OpenBabel::OBAtomBondIter * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SetBondOrder" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (*arg1)->SetBondOrder(arg2);
   return Qnil;
 fail:
   return Qnil;
@@ -71306,6 +73427,10 @@ static void *_p_OpenBabel__OBCommentDataTo_p_OpenBabel__OBGenericData(void *x) {
 static swig_type_info _swigt__p_OpenBabel__CharPtrLess = {"_p_OpenBabel__CharPtrLess", "OpenBabel::CharPtrLess *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__DoubleType = {"_p_OpenBabel__DoubleType", "OpenBabel::DoubleType *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__FMapType__iterator = {"_p_OpenBabel__FMapType__iterator", "OpenBabel::FMapType::iterator *|OpenBabel::Formatpos *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__FastSearch = {"_p_OpenBabel__FastSearch", "OpenBabel::FastSearch *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__FastSearchIndexer = {"_p_OpenBabel__FastSearchIndexer", "OpenBabel::FastSearchIndexer *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__FptIndex = {"_p_OpenBabel__FptIndex", "OpenBabel::FptIndex *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__FptIndexHeader = {"_p_OpenBabel__FptIndexHeader", "OpenBabel::FptIndexHeader *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBAngle = {"_p_OpenBabel__OBAngle", "OpenBabel::OBAngle *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBAngleData = {"_p_OpenBabel__OBAngleData", "OpenBabel::OBAngleData *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBAromaticTyper = {"_p_OpenBabel__OBAromaticTyper", "OpenBabel::OBAromaticTyper *", 0, 0, (void*)0, 0};
@@ -71326,6 +73451,7 @@ static swig_type_info _swigt__p_OpenBabel__OBElementTable = {"_p_OpenBabel__OBEl
 static swig_type_info _swigt__p_OpenBabel__OBError = {"_p_OpenBabel__OBError", "OpenBabel::OBError *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBExternalBond = {"_p_OpenBabel__OBExternalBond", "OpenBabel::OBExternalBond *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBExternalBondData = {"_p_OpenBabel__OBExternalBondData", "OpenBabel::OBExternalBondData *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__OBFingerprint = {"_p_OpenBabel__OBFingerprint", "OpenBabel::OBFingerprint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBFormat = {"_p_OpenBabel__OBFormat", "OpenBabel::OBFormat *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBGenericData = {"_p_OpenBabel__OBGenericData", "OpenBabel::OBGenericData *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBGlobalDataBase = {"_p_OpenBabel__OBGlobalDataBase", "OpenBabel::OBGlobalDataBase *", 0, 0, (void*)0, 0};
@@ -71338,6 +73464,8 @@ static swig_type_info _swigt__p_OpenBabel__OBMolAtomDFSIter = {"_p_OpenBabel__OB
 static swig_type_info _swigt__p_OpenBabel__OBMolAtomIter = {"_p_OpenBabel__OBMolAtomIter", "OpenBabel::OBMolAtomIter *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBMolBondIter = {"_p_OpenBabel__OBMolBondIter", "OpenBabel::OBMolBondIter *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBPairData = {"_p_OpenBabel__OBPairData", "OpenBabel::OBPairData *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__OBPairTemplateTdouble_t = {"_p_OpenBabel__OBPairTemplateTdouble_t", "OpenBabel::OBPairTemplate<double > *|OpenBabel::OBPairFloatingPoint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_OpenBabel__OBPairTemplateTint_t = {"_p_OpenBabel__OBPairTemplateTint_t", "OpenBabel::OBPairTemplate<int > *|OpenBabel::OBPairInteger *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBRTree = {"_p_OpenBabel__OBRTree", "OpenBabel::OBRTree *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBRandom = {"_p_OpenBabel__OBRandom", "OpenBabel::OBRandom *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OpenBabel__OBResidue = {"_p_OpenBabel__OBResidue", "OpenBabel::OBResidue *", 0, 0, (void*)0, 0};
@@ -71371,6 +73499,7 @@ static swig_type_info _swigt__p_a_4__char = {"_p_a_4__char", "char (*)[4]", 0, 0
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "int *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_OpenBabel__OBFingerprint = {"_p_p_OpenBabel__OBFingerprint", "OpenBabel::OBFingerprint **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_OpenBabel__OBFormat = {"_p_p_OpenBabel__OBFormat", "OpenBabel::OBFormat **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_OpenBabel__OBGenericData = {"_p_p_OpenBabel__OBGenericData", "OpenBabel::OBGenericData **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_OpenBabel__OBTorsionData = {"_p_p_OpenBabel__OBTorsionData", 0, 0, 0, 0, 0};
@@ -71394,6 +73523,7 @@ static swig_type_info _swigt__p_std__istream = {"_p_std__istream", "std::istream
 static swig_type_info _swigt__p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t = {"_p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t", "std::map<char const *,OpenBabel::OBFormat *,OpenBabel::CharPtrLess > *|OpenBabel::FMapType *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapTint_OpenBabel__OBAtom_p_t = {"_p_std__mapTint_OpenBabel__OBAtom_p_t", "std::map<int,OpenBabel::OBAtom * > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapTstd__string_std__string_t = {"_p_std__mapTstd__string_std__string_t", "std::map<std::string,std::string > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__multimapTdouble_unsigned_int_t = {"_p_std__multimapTdouble_unsigned_int_t", "std::multimap<double,unsigned int > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__ostream = {"_p_std__ostream", "std::ostream *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__out_of_range = {"_p_std__out_of_range", "std::out_of_range *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t = {"_p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t", "std::pair<OpenBabel::OBAtom *,OpenBabel::OBAtom * > *", 0, 0, (void*)0, 0};
@@ -71438,6 +73568,10 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_OpenBabel__CharPtrLess,
   &_swigt__p_OpenBabel__DoubleType,
   &_swigt__p_OpenBabel__FMapType__iterator,
+  &_swigt__p_OpenBabel__FastSearch,
+  &_swigt__p_OpenBabel__FastSearchIndexer,
+  &_swigt__p_OpenBabel__FptIndex,
+  &_swigt__p_OpenBabel__FptIndexHeader,
   &_swigt__p_OpenBabel__OBAngle,
   &_swigt__p_OpenBabel__OBAngleData,
   &_swigt__p_OpenBabel__OBAromaticTyper,
@@ -71458,6 +73592,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_OpenBabel__OBError,
   &_swigt__p_OpenBabel__OBExternalBond,
   &_swigt__p_OpenBabel__OBExternalBondData,
+  &_swigt__p_OpenBabel__OBFingerprint,
   &_swigt__p_OpenBabel__OBFormat,
   &_swigt__p_OpenBabel__OBGenericData,
   &_swigt__p_OpenBabel__OBGlobalDataBase,
@@ -71470,6 +73605,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_OpenBabel__OBMolAtomIter,
   &_swigt__p_OpenBabel__OBMolBondIter,
   &_swigt__p_OpenBabel__OBPairData,
+  &_swigt__p_OpenBabel__OBPairTemplateTdouble_t,
+  &_swigt__p_OpenBabel__OBPairTemplateTint_t,
   &_swigt__p_OpenBabel__OBRTree,
   &_swigt__p_OpenBabel__OBRandom,
   &_swigt__p_OpenBabel__OBResidue,
@@ -71508,6 +73645,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_p_OpenBabel__OBCommentData,
   &_swigt__p_p_OpenBabel__OBConformerData,
   &_swigt__p_p_OpenBabel__OBExternalBondData,
+  &_swigt__p_p_OpenBabel__OBFingerprint,
   &_swigt__p_p_OpenBabel__OBFormat,
   &_swigt__p_p_OpenBabel__OBGenericData,
   &_swigt__p_p_OpenBabel__OBPairData,
@@ -71526,6 +73664,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t,
   &_swigt__p_std__mapTint_OpenBabel__OBAtom_p_t,
   &_swigt__p_std__mapTstd__string_std__string_t,
+  &_swigt__p_std__multimapTdouble_unsigned_int_t,
   &_swigt__p_std__ostream,
   &_swigt__p_std__out_of_range,
   &_swigt__p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t,
@@ -71570,6 +73709,10 @@ static swig_type_info *swig_type_initial[] = {
 static swig_cast_info _swigc__p_OpenBabel__CharPtrLess[] = {  {&_swigt__p_OpenBabel__CharPtrLess, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__DoubleType[] = {  {&_swigt__p_OpenBabel__DoubleType, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__FMapType__iterator[] = {  {&_swigt__p_OpenBabel__FMapType__iterator, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__FastSearch[] = {  {&_swigt__p_OpenBabel__FastSearch, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__FastSearchIndexer[] = {  {&_swigt__p_OpenBabel__FastSearchIndexer, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__FptIndex[] = {  {&_swigt__p_OpenBabel__FptIndex, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__FptIndexHeader[] = {  {&_swigt__p_OpenBabel__FptIndexHeader, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBAngle[] = {  {&_swigt__p_OpenBabel__OBAngle, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBAngleData[] = {  {&_swigt__p_OpenBabel__OBAngleData, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBAromaticTyper[] = {  {&_swigt__p_OpenBabel__OBAromaticTyper, 0, 0, 0},{0, 0, 0, 0}};
@@ -71590,6 +73733,7 @@ static swig_cast_info _swigc__p_OpenBabel__OBElementTable[] = {  {&_swigt__p_Ope
 static swig_cast_info _swigc__p_OpenBabel__OBError[] = {  {&_swigt__p_OpenBabel__OBError, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBExternalBond[] = {  {&_swigt__p_OpenBabel__OBExternalBond, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBExternalBondData[] = {  {&_swigt__p_OpenBabel__OBExternalBondData, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__OBFingerprint[] = {  {&_swigt__p_OpenBabel__OBFingerprint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBFormat[] = {  {&_swigt__p_OpenBabel__OBFormat, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBGenericData[] = {  {&_swigt__p_OpenBabel__OBTorsionData, _p_OpenBabel__OBTorsionDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBPairData, _p_OpenBabel__OBPairDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBAngleData, _p_OpenBabel__OBAngleDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBChiralData, _p_OpenBabel__OBChiralDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBRingData, _p_OpenBabel__OBRingDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSerialNums, _p_OpenBabel__OBSerialNumsTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBExternalBondData, _p_OpenBabel__OBExternalBondDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSetData, _p_OpenBabel__OBSetDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBSymmetryData, _p_OpenBabel__OBSymmetryDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBCommentData, _p_OpenBabel__OBCommentDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBVirtualBond, _p_OpenBabel__OBVirtualBondTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBConformerData, _p_OpenBabel__OBConformerDataTo_p_OpenBabel__OBGenericData, 0, 0},  {&_swigt__p_OpenBabel__OBGenericData, 0, 0, 0},  {&_swigt__p_OpenBabel__OBUnitCell, _p_OpenBabel__OBUnitCellTo_p_OpenBabel__OBGenericData, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBGlobalDataBase[] = {  {&_swigt__p_OpenBabel__OBAtomTyper, _p_OpenBabel__OBAtomTyperTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBAromaticTyper, _p_OpenBabel__OBAromaticTyperTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBGlobalDataBase, 0, 0, 0},  {&_swigt__p_OpenBabel__OBResidueData, _p_OpenBabel__OBResidueDataTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBIsotopeTable, _p_OpenBabel__OBIsotopeTableTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBTypeTable, _p_OpenBabel__OBTypeTableTo_p_OpenBabel__OBGlobalDataBase, 0, 0},  {&_swigt__p_OpenBabel__OBElementTable, _p_OpenBabel__OBElementTableTo_p_OpenBabel__OBGlobalDataBase, 0, 0},{0, 0, 0, 0}};
@@ -71602,6 +73746,8 @@ static swig_cast_info _swigc__p_OpenBabel__OBMolAtomDFSIter[] = {  {&_swigt__p_O
 static swig_cast_info _swigc__p_OpenBabel__OBMolAtomIter[] = {  {&_swigt__p_OpenBabel__OBMolAtomIter, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBMolBondIter[] = {  {&_swigt__p_OpenBabel__OBMolBondIter, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBPairData[] = {  {&_swigt__p_OpenBabel__OBPairData, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__OBPairTemplateTdouble_t[] = {  {&_swigt__p_OpenBabel__OBPairTemplateTdouble_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_OpenBabel__OBPairTemplateTint_t[] = {  {&_swigt__p_OpenBabel__OBPairTemplateTint_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBRTree[] = {  {&_swigt__p_OpenBabel__OBRTree, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBRandom[] = {  {&_swigt__p_OpenBabel__OBRandom, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OpenBabel__OBResidue[] = {  {&_swigt__p_OpenBabel__OBResidue, 0, 0, 0},{0, 0, 0, 0}};
@@ -71635,6 +73781,7 @@ static swig_cast_info _swigc__p_a_4__char[] = {  {&_swigt__p_a_4__char, 0, 0, 0}
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_OpenBabel__OBFingerprint[] = {  {&_swigt__p_p_OpenBabel__OBFingerprint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_OpenBabel__OBFormat[] = {  {&_swigt__p_p_OpenBabel__OBFormat, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_OpenBabel__OBTorsionData[] = {{&_swigt__p_p_OpenBabel__OBTorsionData, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_OpenBabel__OBPairData[] = {{&_swigt__p_p_OpenBabel__OBPairData, 0, 0, 0},{0, 0, 0, 0}};
@@ -71658,6 +73805,7 @@ static swig_cast_info _swigc__p_std__istream[] = {  {&_swigt__p_std__istream, 0,
 static swig_cast_info _swigc__p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t[] = {  {&_swigt__p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapTint_OpenBabel__OBAtom_p_t[] = {  {&_swigt__p_std__mapTint_OpenBabel__OBAtom_p_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapTstd__string_std__string_t[] = {  {&_swigt__p_std__mapTstd__string_std__string_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__multimapTdouble_unsigned_int_t[] = {  {&_swigt__p_std__multimapTdouble_unsigned_int_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__ostream[] = {  {&_swigt__p_std__ostream, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__out_of_range[] = {  {&_swigt__p_std__out_of_range, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t[] = {  {&_swigt__p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -71702,6 +73850,10 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_OpenBabel__CharPtrLess,
   _swigc__p_OpenBabel__DoubleType,
   _swigc__p_OpenBabel__FMapType__iterator,
+  _swigc__p_OpenBabel__FastSearch,
+  _swigc__p_OpenBabel__FastSearchIndexer,
+  _swigc__p_OpenBabel__FptIndex,
+  _swigc__p_OpenBabel__FptIndexHeader,
   _swigc__p_OpenBabel__OBAngle,
   _swigc__p_OpenBabel__OBAngleData,
   _swigc__p_OpenBabel__OBAromaticTyper,
@@ -71722,6 +73874,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_OpenBabel__OBError,
   _swigc__p_OpenBabel__OBExternalBond,
   _swigc__p_OpenBabel__OBExternalBondData,
+  _swigc__p_OpenBabel__OBFingerprint,
   _swigc__p_OpenBabel__OBFormat,
   _swigc__p_OpenBabel__OBGenericData,
   _swigc__p_OpenBabel__OBGlobalDataBase,
@@ -71734,6 +73887,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_OpenBabel__OBMolAtomIter,
   _swigc__p_OpenBabel__OBMolBondIter,
   _swigc__p_OpenBabel__OBPairData,
+  _swigc__p_OpenBabel__OBPairTemplateTdouble_t,
+  _swigc__p_OpenBabel__OBPairTemplateTint_t,
   _swigc__p_OpenBabel__OBRTree,
   _swigc__p_OpenBabel__OBRandom,
   _swigc__p_OpenBabel__OBResidue,
@@ -71772,6 +73927,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_p_OpenBabel__OBCommentData,
   _swigc__p_p_OpenBabel__OBConformerData,
   _swigc__p_p_OpenBabel__OBExternalBondData,
+  _swigc__p_p_OpenBabel__OBFingerprint,
   _swigc__p_p_OpenBabel__OBFormat,
   _swigc__p_p_OpenBabel__OBGenericData,
   _swigc__p_p_OpenBabel__OBPairData,
@@ -71790,6 +73946,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__mapTchar_const_p_OpenBabel__OBFormat_p_OpenBabel__CharPtrLess_t,
   _swigc__p_std__mapTint_OpenBabel__OBAtom_p_t,
   _swigc__p_std__mapTstd__string_std__string_t,
+  _swigc__p_std__multimapTdouble_unsigned_int_t,
   _swigc__p_std__ostream,
   _swigc__p_std__out_of_range,
   _swigc__p_std__pairTOpenBabel__OBAtom_p_OpenBabel__OBAtom_p_t,
@@ -72358,6 +74515,7 @@ SWIGEXPORT void Init_openbabel(void) {
   cOBRandom.mark = 0;
   cOBRandom.destroy = (void (*)(void *)) free_OpenBabel_OBRandom;
   cOBRandom.trackObjects = 0;
+  rb_define_const(mOpenbabel, "M_PI", SWIG_From_double(static_cast< double >(3.14159265358979323846)));
   
   cOBStopwatch.klass = rb_define_class_under(mOpenbabel, "OBStopwatch", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBStopwatch, (void *) &cOBStopwatch);
@@ -72379,6 +74537,8 @@ SWIGEXPORT void Init_openbabel(void) {
   cOBSqrtTbl.mark = 0;
   cOBSqrtTbl.destroy = (void (*)(void *)) free_OpenBabel_OBSqrtTbl;
   cOBSqrtTbl.trackObjects = 0;
+  rb_define_const(mOpenbabel, "RAD_TO_DEG", SWIG_From_double(static_cast< double >((180.0/3.14159265358979323846))));
+  rb_define_const(mOpenbabel, "DEG_TO_RAD", SWIG_From_double(static_cast< double >((3.14159265358979323846/180.0))));
   
   cVector3.klass = rb_define_class_under(mOpenbabel, "Vector3", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__vector3, (void *) &cVector3);
@@ -72741,7 +74901,7 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_const(mOpenbabel, "ObAuditMsg", SWIG_From_int(static_cast< int >(OpenBabel::obAuditMsg)));
   rb_define_const(mOpenbabel, "ObDebug", SWIG_From_int(static_cast< int >(OpenBabel::obDebug)));
   
-  cOBError.klass = rb_define_class_under(mOpenbabel, "OBError", rb_eRuntimeError);
+  cOBError.klass = rb_define_class_under(mOpenbabel, "OBError", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBError, (void *) &cOBError);
   rb_define_alloc_func(cOBError.klass, _wrap_OBError_allocate);
   rb_define_method(cOBError.klass, "initialize", VALUEFUNC(_wrap_new_OBError), -1);
@@ -73237,6 +75397,7 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cOBBond.klass, "Visit", VALUEFUNC(_wrap_OBBond_Visit_get), -1);
   rb_define_method(cOBBond.klass, "SetIdx", VALUEFUNC(_wrap_OBBond_SetIdx), -1);
   rb_define_method(cOBBond.klass, "SetBO", VALUEFUNC(_wrap_OBBond_SetBO), -1);
+  rb_define_method(cOBBond.klass, "SetBondOrder", VALUEFUNC(_wrap_OBBond_SetBondOrder), -1);
   rb_define_method(cOBBond.klass, "SetBegin", VALUEFUNC(_wrap_OBBond_SetBegin), -1);
   rb_define_method(cOBBond.klass, "SetEnd", VALUEFUNC(_wrap_OBBond_SetEnd), -1);
   rb_define_method(cOBBond.klass, "SetParent", VALUEFUNC(_wrap_OBBond_SetParent), -1);
@@ -73580,6 +75741,79 @@ SWIGEXPORT void Init_openbabel(void) {
   cOBSSMatch.destroy = (void (*)(void *)) free_OpenBabel_OBSSMatch;
   cOBSSMatch.trackObjects = 0;
   rb_define_module_function(mOpenbabel, "SmartsLexReplace", VALUEFUNC(_wrap_SmartsLexReplace), -1);
+  
+  cOBFingerprint.klass = rb_define_class_under(mOpenbabel, "OBFingerprint", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBFingerprint, (void *) &cOBFingerprint);
+  rb_undef_alloc_func(cOBFingerprint.klass);
+  rb_define_method(cOBFingerprint.klass, "SetBit", VALUEFUNC(_wrap_OBFingerprint_SetBit), -1);
+  rb_define_method(cOBFingerprint.klass, "Fold", VALUEFUNC(_wrap_OBFingerprint_Fold), -1);
+  rb_define_method(cOBFingerprint.klass, "GetFingerprint", VALUEFUNC(_wrap_OBFingerprint_GetFingerprint), -1);
+  rb_define_method(cOBFingerprint.klass, "Description", VALUEFUNC(_wrap_OBFingerprint_Description), -1);
+  rb_define_const(cOBFingerprint.klass, "FPT_UNIQUEBITS", SWIG_From_int(static_cast< int >(OpenBabel::OBFingerprint::FPT_UNIQUEBITS)));
+  rb_define_method(cOBFingerprint.klass, "Flags", VALUEFUNC(_wrap_OBFingerprint_Flags), -1);
+  rb_define_singleton_method(cOBFingerprint.klass, "GetNextFPrt", VALUEFUNC(_wrap_OBFingerprint_GetNextFPrt), -1);
+  rb_define_singleton_method(cOBFingerprint.klass, "FindFingerprint", VALUEFUNC(_wrap_OBFingerprint_FindFingerprint), -1);
+  rb_define_singleton_method(cOBFingerprint.klass, "Tanimoto", VALUEFUNC(_wrap_OBFingerprint_Tanimoto), -1);
+  rb_define_singleton_method(cOBFingerprint.klass, "Getbitsperint", VALUEFUNC(_wrap_OBFingerprint_Getbitsperint), -1);
+  cOBFingerprint.mark = 0;
+  cOBFingerprint.destroy = (void (*)(void *)) free_OpenBabel_OBFingerprint;
+  cOBFingerprint.trackObjects = 0;
+  
+  cFptIndexHeader.klass = rb_define_class_under(mOpenbabel, "FptIndexHeader", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__FptIndexHeader, (void *) &cFptIndexHeader);
+  rb_define_alloc_func(cFptIndexHeader.klass, _wrap_FptIndexHeader_allocate);
+  rb_define_method(cFptIndexHeader.klass, "initialize", VALUEFUNC(_wrap_new_FptIndexHeader), -1);
+  rb_define_method(cFptIndexHeader.klass, "headerlength=", VALUEFUNC(_wrap_FptIndexHeader_headerlength_set), -1);
+  rb_define_method(cFptIndexHeader.klass, "headerlength", VALUEFUNC(_wrap_FptIndexHeader_headerlength_get), -1);
+  rb_define_method(cFptIndexHeader.klass, "nEntries=", VALUEFUNC(_wrap_FptIndexHeader_nEntries_set), -1);
+  rb_define_method(cFptIndexHeader.klass, "nEntries", VALUEFUNC(_wrap_FptIndexHeader_nEntries_get), -1);
+  rb_define_method(cFptIndexHeader.klass, "words=", VALUEFUNC(_wrap_FptIndexHeader_words_set), -1);
+  rb_define_method(cFptIndexHeader.klass, "words", VALUEFUNC(_wrap_FptIndexHeader_words_get), -1);
+  rb_define_method(cFptIndexHeader.klass, "fpid=", VALUEFUNC(_wrap_FptIndexHeader_fpid_set), -1);
+  rb_define_method(cFptIndexHeader.klass, "fpid", VALUEFUNC(_wrap_FptIndexHeader_fpid_get), -1);
+  rb_define_method(cFptIndexHeader.klass, "datafilename=", VALUEFUNC(_wrap_FptIndexHeader_datafilename_set), -1);
+  rb_define_method(cFptIndexHeader.klass, "datafilename", VALUEFUNC(_wrap_FptIndexHeader_datafilename_get), -1);
+  cFptIndexHeader.mark = 0;
+  cFptIndexHeader.destroy = (void (*)(void *)) free_OpenBabel_FptIndexHeader;
+  cFptIndexHeader.trackObjects = 0;
+  
+  cFptIndex.klass = rb_define_class_under(mOpenbabel, "FptIndex", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__FptIndex, (void *) &cFptIndex);
+  rb_define_alloc_func(cFptIndex.klass, _wrap_FptIndex_allocate);
+  rb_define_method(cFptIndex.klass, "initialize", VALUEFUNC(_wrap_new_FptIndex), -1);
+  rb_define_method(cFptIndex.klass, "header=", VALUEFUNC(_wrap_FptIndex_header_set), -1);
+  rb_define_method(cFptIndex.klass, "header", VALUEFUNC(_wrap_FptIndex_header_get), -1);
+  rb_define_method(cFptIndex.klass, "fptdata=", VALUEFUNC(_wrap_FptIndex_fptdata_set), -1);
+  rb_define_method(cFptIndex.klass, "fptdata", VALUEFUNC(_wrap_FptIndex_fptdata_get), -1);
+  rb_define_method(cFptIndex.klass, "seekdata=", VALUEFUNC(_wrap_FptIndex_seekdata_set), -1);
+  rb_define_method(cFptIndex.klass, "seekdata", VALUEFUNC(_wrap_FptIndex_seekdata_get), -1);
+  rb_define_method(cFptIndex.klass, "Read", VALUEFUNC(_wrap_FptIndex_Read), -1);
+  rb_define_method(cFptIndex.klass, "CheckFP", VALUEFUNC(_wrap_FptIndex_CheckFP), -1);
+  cFptIndex.mark = 0;
+  cFptIndex.destroy = (void (*)(void *)) free_OpenBabel_FptIndex;
+  cFptIndex.trackObjects = 0;
+  
+  cFastSearch.klass = rb_define_class_under(mOpenbabel, "FastSearch", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__FastSearch, (void *) &cFastSearch);
+  rb_define_alloc_func(cFastSearch.klass, _wrap_FastSearch_allocate);
+  rb_define_method(cFastSearch.klass, "initialize", VALUEFUNC(_wrap_new_FastSearch), -1);
+  rb_define_method(cFastSearch.klass, "ReadIndex", VALUEFUNC(_wrap_FastSearch_ReadIndex), -1);
+  rb_define_method(cFastSearch.klass, "Find", VALUEFUNC(_wrap_FastSearch_Find), -1);
+  rb_define_method(cFastSearch.klass, "FindSimilar", VALUEFUNC(_wrap_FastSearch_FindSimilar), -1);
+  rb_define_method(cFastSearch.klass, "GetFingerprint", VALUEFUNC(_wrap_FastSearch_GetFingerprint), -1);
+  rb_define_method(cFastSearch.klass, "GetIndexHeader", VALUEFUNC(_wrap_FastSearch_GetIndexHeader), -1);
+  cFastSearch.mark = 0;
+  cFastSearch.destroy = (void (*)(void *)) free_OpenBabel_FastSearch;
+  cFastSearch.trackObjects = 0;
+  
+  cFastSearchIndexer.klass = rb_define_class_under(mOpenbabel, "FastSearchIndexer", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__FastSearchIndexer, (void *) &cFastSearchIndexer);
+  rb_define_alloc_func(cFastSearchIndexer.klass, _wrap_FastSearchIndexer_allocate);
+  rb_define_method(cFastSearchIndexer.klass, "initialize", VALUEFUNC(_wrap_new_FastSearchIndexer), -1);
+  rb_define_method(cFastSearchIndexer.klass, "Add", VALUEFUNC(_wrap_FastSearchIndexer_Add), -1);
+  cFastSearchIndexer.mark = 0;
+  cFastSearchIndexer.destroy = (void (*)(void *)) free_OpenBabel_FastSearchIndexer;
+  cFastSearchIndexer.trackObjects = 0;
   
   cOBMolAtomIter.klass = rb_define_class_under(mOpenbabel, "OBMolAtomIter", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_OpenBabel__OBMolAtomIter, (void *) &cOBMolAtomIter);
@@ -74033,6 +76267,7 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cOBMolBondIter.klass, "Visit", VALUEFUNC(_wrap_OBMolBondIter_Visit_get), -1);
   rb_define_method(cOBMolBondIter.klass, "SetIdx", VALUEFUNC(_wrap_OBMolBondIter_SetIdx), -1);
   rb_define_method(cOBMolBondIter.klass, "SetBO", VALUEFUNC(_wrap_OBMolBondIter_SetBO), -1);
+  rb_define_method(cOBMolBondIter.klass, "SetBondOrder", VALUEFUNC(_wrap_OBMolBondIter_SetBondOrder), -1);
   rb_define_method(cOBMolBondIter.klass, "SetBegin", VALUEFUNC(_wrap_OBMolBondIter_SetBegin), -1);
   rb_define_method(cOBMolBondIter.klass, "SetEnd", VALUEFUNC(_wrap_OBMolBondIter_SetEnd), -1);
   rb_define_method(cOBMolBondIter.klass, "SetParent", VALUEFUNC(_wrap_OBMolBondIter_SetParent), -1);
@@ -74260,6 +76495,7 @@ SWIGEXPORT void Init_openbabel(void) {
   rb_define_method(cOBAtomBondIter.klass, "Visit", VALUEFUNC(_wrap_OBAtomBondIter_Visit_get), -1);
   rb_define_method(cOBAtomBondIter.klass, "SetIdx", VALUEFUNC(_wrap_OBAtomBondIter_SetIdx), -1);
   rb_define_method(cOBAtomBondIter.klass, "SetBO", VALUEFUNC(_wrap_OBAtomBondIter_SetBO), -1);
+  rb_define_method(cOBAtomBondIter.klass, "SetBondOrder", VALUEFUNC(_wrap_OBAtomBondIter_SetBondOrder), -1);
   rb_define_method(cOBAtomBondIter.klass, "SetBegin", VALUEFUNC(_wrap_OBAtomBondIter_SetBegin), -1);
   rb_define_method(cOBAtomBondIter.klass, "SetEnd", VALUEFUNC(_wrap_OBAtomBondIter_SetEnd), -1);
   rb_define_method(cOBAtomBondIter.klass, "SetParent", VALUEFUNC(_wrap_OBAtomBondIter_SetParent), -1);

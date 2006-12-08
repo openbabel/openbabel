@@ -2365,6 +2365,7 @@ sub DESTROY {
 
 *SetIdx = *Chemistry::OpenBabelc::OBBond_SetIdx;
 *SetBO = *Chemistry::OpenBabelc::OBBond_SetBO;
+*SetBondOrder = *Chemistry::OpenBabelc::OBBond_SetBondOrder;
 *SetBegin = *Chemistry::OpenBabelc::OBBond_SetBegin;
 *SetEnd = *Chemistry::OpenBabelc::OBBond_SetEnd;
 *SetParent = *Chemistry::OpenBabelc::OBBond_SetParent;
@@ -2836,6 +2837,219 @@ sub DESTROY {
 }
 
 *Match = *Chemistry::OpenBabelc::OBSSMatch_Match;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBFingerprint ##############
+
+package Chemistry::OpenBabel::OBFingerprint;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*SetBit = *Chemistry::OpenBabelc::OBFingerprint_SetBit;
+*Fold = *Chemistry::OpenBabelc::OBFingerprint_Fold;
+*GetFingerprint = *Chemistry::OpenBabelc::OBFingerprint_GetFingerprint;
+*Description = *Chemistry::OpenBabelc::OBFingerprint_Description;
+*FPT_UNIQUEBITS = *Chemistry::OpenBabelc::OBFingerprint_FPT_UNIQUEBITS;
+*Flags = *Chemistry::OpenBabelc::OBFingerprint_Flags;
+*GetNextFPrt = *Chemistry::OpenBabelc::OBFingerprint_GetNextFPrt;
+*FindFingerprint = *Chemistry::OpenBabelc::OBFingerprint_FindFingerprint;
+*Tanimoto = *Chemistry::OpenBabelc::OBFingerprint_Tanimoto;
+*Getbitsperint = *Chemistry::OpenBabelc::OBFingerprint_Getbitsperint;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBFingerprint($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::FptIndexHeader ##############
+
+package Chemistry::OpenBabel::FptIndexHeader;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*swig_headerlength_get = *Chemistry::OpenBabelc::FptIndexHeader_headerlength_get;
+*swig_headerlength_set = *Chemistry::OpenBabelc::FptIndexHeader_headerlength_set;
+*swig_nEntries_get = *Chemistry::OpenBabelc::FptIndexHeader_nEntries_get;
+*swig_nEntries_set = *Chemistry::OpenBabelc::FptIndexHeader_nEntries_set;
+*swig_words_get = *Chemistry::OpenBabelc::FptIndexHeader_words_get;
+*swig_words_set = *Chemistry::OpenBabelc::FptIndexHeader_words_set;
+*swig_fpid_get = *Chemistry::OpenBabelc::FptIndexHeader_fpid_get;
+*swig_fpid_set = *Chemistry::OpenBabelc::FptIndexHeader_fpid_set;
+*swig_datafilename_get = *Chemistry::OpenBabelc::FptIndexHeader_datafilename_get;
+*swig_datafilename_set = *Chemistry::OpenBabelc::FptIndexHeader_datafilename_set;
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_FptIndexHeader(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_FptIndexHeader($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::FptIndex ##############
+
+package Chemistry::OpenBabel::FptIndex;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*swig_header_get = *Chemistry::OpenBabelc::FptIndex_header_get;
+*swig_header_set = *Chemistry::OpenBabelc::FptIndex_header_set;
+*swig_fptdata_get = *Chemistry::OpenBabelc::FptIndex_fptdata_get;
+*swig_fptdata_set = *Chemistry::OpenBabelc::FptIndex_fptdata_set;
+*swig_seekdata_get = *Chemistry::OpenBabelc::FptIndex_seekdata_get;
+*swig_seekdata_set = *Chemistry::OpenBabelc::FptIndex_seekdata_set;
+*Read = *Chemistry::OpenBabelc::FptIndex_Read;
+*CheckFP = *Chemistry::OpenBabelc::FptIndex_CheckFP;
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_FptIndex(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_FptIndex($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::FastSearch ##############
+
+package Chemistry::OpenBabel::FastSearch;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+*ReadIndex = *Chemistry::OpenBabelc::FastSearch_ReadIndex;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_FastSearch($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Find = *Chemistry::OpenBabelc::FastSearch_Find;
+*FindSimilar = *Chemistry::OpenBabelc::FastSearch_FindSimilar;
+*GetFingerprint = *Chemistry::OpenBabelc::FastSearch_GetFingerprint;
+*GetIndexHeader = *Chemistry::OpenBabelc::FastSearch_GetIndexHeader;
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_FastSearch(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::FastSearchIndexer ##############
+
+package Chemistry::OpenBabel::FastSearchIndexer;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_FastSearchIndexer(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_FastSearchIndexer($self);
+        delete $OWNER{$self};
+    }
+}
+
+*Add = *Chemistry::OpenBabelc::FastSearchIndexer_Add;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -3416,6 +3630,7 @@ sub DESTROY {
 *swig_Visit_set = *Chemistry::OpenBabelc::OBMolBondIter_Visit_set;
 *SetIdx = *Chemistry::OpenBabelc::OBMolBondIter_SetIdx;
 *SetBO = *Chemistry::OpenBabelc::OBMolBondIter_SetBO;
+*SetBondOrder = *Chemistry::OpenBabelc::OBMolBondIter_SetBondOrder;
 *SetBegin = *Chemistry::OpenBabelc::OBMolBondIter_SetBegin;
 *SetEnd = *Chemistry::OpenBabelc::OBMolBondIter_SetEnd;
 *SetParent = *Chemistry::OpenBabelc::OBMolBondIter_SetParent;
@@ -3701,6 +3916,7 @@ sub DESTROY {
 *swig_Visit_set = *Chemistry::OpenBabelc::OBAtomBondIter_Visit_set;
 *SetIdx = *Chemistry::OpenBabelc::OBAtomBondIter_SetIdx;
 *SetBO = *Chemistry::OpenBabelc::OBAtomBondIter_SetBO;
+*SetBondOrder = *Chemistry::OpenBabelc::OBAtomBondIter_SetBondOrder;
 *SetBegin = *Chemistry::OpenBabelc::OBAtomBondIter_SetBegin;
 *SetEnd = *Chemistry::OpenBabelc::OBAtomBondIter_SetEnd;
 *SetParent = *Chemistry::OpenBabelc::OBAtomBondIter_SetParent;
@@ -4041,6 +4257,9 @@ sub ACQUIRE {
 package Chemistry::OpenBabel;
 
 *FILE_SEP_CHAR = *Chemistry::OpenBabelc::FILE_SEP_CHAR;
+*M_PI = *Chemistry::OpenBabelc::M_PI;
+*RAD_TO_DEG = *Chemistry::OpenBabelc::RAD_TO_DEG;
+*DEG_TO_RAD = *Chemistry::OpenBabelc::DEG_TO_RAD;
 
 my %__VZero_hash;
 tie %__VZero_hash,"Chemistry::OpenBabel::vector3", $Chemistry::OpenBabelc::VZero;

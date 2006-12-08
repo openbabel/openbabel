@@ -9,6 +9,9 @@
 
 public interface openbabelConstants {
   public final static String FILE_SEP_CHAR = openbabelJNI.FILE_SEP_CHAR_get();
+  public final static double M_PI = openbabelJNI.M_PI_get();
+  public final static double RAD_TO_DEG = openbabelJNI.RAD_TO_DEG_get();
+  public final static double DEG_TO_RAD = openbabelJNI.DEG_TO_RAD_get();
   public final static int NOTREADABLE = openbabelJNI.NOTREADABLE_get();
   public final static int READONEONLY = openbabelJNI.READONEONLY_get();
   public final static int READBINARY = openbabelJNI.READBINARY_get();

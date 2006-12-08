@@ -19,6 +19,8 @@
 #include "obconversion.h"
 #include "oberror.h"
 
+#include "fingerprint.h"
+
 #include "data.h"
 #include "parsmart.h"
 %}
@@ -63,6 +65,7 @@ namespace std {
 %include "mol.h"
 %include "ring.h"
 %include "parsmart.h"
+%include "fingerprint.h"
 
 %rename(inc) OpenBabel::OBMolAtomIter::operator++;
 %rename(inc) OpenBabel::OBMolBondIter::operator++;

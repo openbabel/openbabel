@@ -595,6 +595,7 @@ class OBRandom(object):
 OBRandom_swigregister = _openbabel.OBRandom_swigregister
 OBRandom_swigregister(OBRandom)
 
+M_PI = _openbabel.M_PI
 class OBStopwatch(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -620,6 +621,8 @@ class OBSqrtTbl(object):
 OBSqrtTbl_swigregister = _openbabel.OBSqrtTbl_swigregister
 OBSqrtTbl_swigregister(OBSqrtTbl)
 
+RAD_TO_DEG = _openbabel.RAD_TO_DEG
+DEG_TO_RAD = _openbabel.DEG_TO_RAD
 class vector3(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -1026,11 +1029,8 @@ obWarning = _openbabel.obWarning
 obInfo = _openbabel.obInfo
 obAuditMsg = _openbabel.obAuditMsg
 obDebug = _openbabel.obDebug
-class OBError:
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, OBError, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, OBError, name)
+class OBError(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     def __init__(self, *args): 
         _openbabel.OBError_swiginit(self,_openbabel.new_OBError(*args))
@@ -1539,6 +1539,7 @@ class OBBond(OBBase):
     __del__ = lambda self : None;
     def SetIdx(*args): return _openbabel.OBBond_SetIdx(*args)
     def SetBO(*args): return _openbabel.OBBond_SetBO(*args)
+    def SetBondOrder(*args): return _openbabel.OBBond_SetBondOrder(*args)
     def SetBegin(*args): return _openbabel.OBBond_SetBegin(*args)
     def SetEnd(*args): return _openbabel.OBBond_SetEnd(*args)
     def SetParent(*args): return _openbabel.OBBond_SetParent(*args)
@@ -1880,6 +1881,85 @@ OBSSMatch_swigregister = _openbabel.OBSSMatch_swigregister
 OBSSMatch_swigregister(OBSSMatch)
 
 SmartsLexReplace = _openbabel.SmartsLexReplace
+class OBFingerprint(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    def __init__(self): raise AttributeError, "No constructor defined"
+    __repr__ = _swig_repr
+    def SetBit(*args): return _openbabel.OBFingerprint_SetBit(*args)
+    def Fold(*args): return _openbabel.OBFingerprint_Fold(*args)
+    def GetFingerprint(*args): return _openbabel.OBFingerprint_GetFingerprint(*args)
+    def Description(*args): return _openbabel.OBFingerprint_Description(*args)
+    FPT_UNIQUEBITS = _openbabel.OBFingerprint_FPT_UNIQUEBITS
+    def Flags(*args): return _openbabel.OBFingerprint_Flags(*args)
+    GetNextFPrt = staticmethod(_openbabel.OBFingerprint_GetNextFPrt)
+    FindFingerprint = staticmethod(_openbabel.OBFingerprint_FindFingerprint)
+    Tanimoto = staticmethod(_openbabel.OBFingerprint_Tanimoto)
+    Getbitsperint = staticmethod(_openbabel.OBFingerprint_Getbitsperint)
+    __swig_destroy__ = _openbabel.delete_OBFingerprint
+    __del__ = lambda self : None;
+OBFingerprint_swigregister = _openbabel.OBFingerprint_swigregister
+OBFingerprint_swigregister(OBFingerprint)
+OBFingerprint_GetNextFPrt = _openbabel.OBFingerprint_GetNextFPrt
+OBFingerprint_FindFingerprint = _openbabel.OBFingerprint_FindFingerprint
+OBFingerprint_Tanimoto = _openbabel.OBFingerprint_Tanimoto
+OBFingerprint_Getbitsperint = _openbabel.OBFingerprint_Getbitsperint
+
+class FptIndexHeader(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    headerlength = _swig_property(_openbabel.FptIndexHeader_headerlength_get, _openbabel.FptIndexHeader_headerlength_set)
+    nEntries = _swig_property(_openbabel.FptIndexHeader_nEntries_get, _openbabel.FptIndexHeader_nEntries_set)
+    words = _swig_property(_openbabel.FptIndexHeader_words_get, _openbabel.FptIndexHeader_words_set)
+    fpid = _swig_property(_openbabel.FptIndexHeader_fpid_get, _openbabel.FptIndexHeader_fpid_set)
+    datafilename = _swig_property(_openbabel.FptIndexHeader_datafilename_get, _openbabel.FptIndexHeader_datafilename_set)
+    def __init__(self, *args): 
+        _openbabel.FptIndexHeader_swiginit(self,_openbabel.new_FptIndexHeader(*args))
+    __swig_destroy__ = _openbabel.delete_FptIndexHeader
+    __del__ = lambda self : None;
+FptIndexHeader_swigregister = _openbabel.FptIndexHeader_swigregister
+FptIndexHeader_swigregister(FptIndexHeader)
+
+class FptIndex(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    header = _swig_property(_openbabel.FptIndex_header_get, _openbabel.FptIndex_header_set)
+    fptdata = _swig_property(_openbabel.FptIndex_fptdata_get, _openbabel.FptIndex_fptdata_set)
+    seekdata = _swig_property(_openbabel.FptIndex_seekdata_get, _openbabel.FptIndex_seekdata_set)
+    def Read(*args): return _openbabel.FptIndex_Read(*args)
+    def CheckFP(*args): return _openbabel.FptIndex_CheckFP(*args)
+    def __init__(self, *args): 
+        _openbabel.FptIndex_swiginit(self,_openbabel.new_FptIndex(*args))
+    __swig_destroy__ = _openbabel.delete_FptIndex
+    __del__ = lambda self : None;
+FptIndex_swigregister = _openbabel.FptIndex_swigregister
+FptIndex_swigregister(FptIndex)
+
+class FastSearch(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def ReadIndex(*args): return _openbabel.FastSearch_ReadIndex(*args)
+    __swig_destroy__ = _openbabel.delete_FastSearch
+    __del__ = lambda self : None;
+    def Find(*args): return _openbabel.FastSearch_Find(*args)
+    def FindSimilar(*args): return _openbabel.FastSearch_FindSimilar(*args)
+    def GetFingerprint(*args): return _openbabel.FastSearch_GetFingerprint(*args)
+    def GetIndexHeader(*args): return _openbabel.FastSearch_GetIndexHeader(*args)
+    def __init__(self, *args): 
+        _openbabel.FastSearch_swiginit(self,_openbabel.new_FastSearch(*args))
+FastSearch_swigregister = _openbabel.FastSearch_swigregister
+FastSearch_swigregister(FastSearch)
+
+class FastSearchIndexer(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.FastSearchIndexer_swiginit(self,_openbabel.new_FastSearchIndexer(*args))
+    __swig_destroy__ = _openbabel.delete_FastSearchIndexer
+    __del__ = lambda self : None;
+    def Add(*args): return _openbabel.FastSearchIndexer_Add(*args)
+FastSearchIndexer_swigregister = _openbabel.FastSearchIndexer_swigregister
+FastSearchIndexer_swigregister(FastSearchIndexer)
+
 class OBMolAtomIter(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
@@ -2337,6 +2417,7 @@ class OBMolBondIter(object):
     Visit = _swig_property(_openbabel.OBMolBondIter_Visit_get, _openbabel.OBMolBondIter_Visit_set)
     def SetIdx(*args): return _openbabel.OBMolBondIter_SetIdx(*args)
     def SetBO(*args): return _openbabel.OBMolBondIter_SetBO(*args)
+    def SetBondOrder(*args): return _openbabel.OBMolBondIter_SetBondOrder(*args)
     def SetBegin(*args): return _openbabel.OBMolBondIter_SetBegin(*args)
     def SetEnd(*args): return _openbabel.OBMolBondIter_SetEnd(*args)
     def SetParent(*args): return _openbabel.OBMolBondIter_SetParent(*args)
@@ -2566,6 +2647,7 @@ class OBAtomBondIter(object):
     Visit = _swig_property(_openbabel.OBAtomBondIter_Visit_get, _openbabel.OBAtomBondIter_Visit_set)
     def SetIdx(*args): return _openbabel.OBAtomBondIter_SetIdx(*args)
     def SetBO(*args): return _openbabel.OBAtomBondIter_SetBO(*args)
+    def SetBondOrder(*args): return _openbabel.OBAtomBondIter_SetBondOrder(*args)
     def SetBegin(*args): return _openbabel.OBAtomBondIter_SetBegin(*args)
     def SetEnd(*args): return _openbabel.OBAtomBondIter_SetEnd(*args)
     def SetParent(*args): return _openbabel.OBAtomBondIter_SetParent(*args)

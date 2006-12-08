@@ -81,6 +81,10 @@ public class OBMolBondIter {
     openbabelJNI.OBMolBondIter_SetBO(swigCPtr, this, order);
   }
 
+  public void SetBondOrder(int order) {
+    openbabelJNI.OBMolBondIter_SetBondOrder(swigCPtr, this, order);
+  }
+
   public void SetBegin(OBAtom begin) {
     openbabelJNI.OBMolBondIter_SetBegin(swigCPtr, this, OBAtom.getCPtr(begin), begin);
   }
@@ -93,12 +97,12 @@ public class OBMolBondIter {
     openbabelJNI.OBMolBondIter_SetParent(swigCPtr, this, OBMol.getCPtr(ptr), ptr);
   }
 
-  public void SetLength(OBAtom arg0, double arg1) {
-    openbabelJNI.OBMolBondIter_SetLength(swigCPtr, this, OBAtom.getCPtr(arg0), arg0, arg1);
+  public void SetLength(OBAtom fixed, double length) {
+    openbabelJNI.OBMolBondIter_SetLength(swigCPtr, this, OBAtom.getCPtr(fixed), fixed, length);
   }
 
-  public void Set(int arg0, OBAtom arg1, OBAtom arg2, int arg3, int arg4) {
-    openbabelJNI.OBMolBondIter_Set(swigCPtr, this, arg0, OBAtom.getCPtr(arg1), arg1, OBAtom.getCPtr(arg2), arg2, arg3, arg4);
+  public void Set(int index, OBAtom begin, OBAtom end, int order, int flags) {
+    openbabelJNI.OBMolBondIter_Set(swigCPtr, this, index, OBAtom.getCPtr(begin), begin, OBAtom.getCPtr(end), end, order, flags);
   }
 
   public void SetKSingle() {
