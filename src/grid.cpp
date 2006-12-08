@@ -19,201 +19,48 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "mol.h"
+#include "atom.h"
 #include "grid.h"
 
 using namespace std;
 
 namespace OpenBabel
 {
-
-  void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,double res)
+  void OBGrid::Init(OBMol &box)
   {
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
-
+    
     for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
       if (atom->GetIdx() == 1)
         {
-	  _xmin = atom->GetX();
-	  _xmax = atom->GetX();
-	  _ymin = atom->GetY();
-	  _ymax = atom->GetY();
-	  _zmin = atom->GetZ();
-	  _zmax = atom->GetZ();
+          _xmin = atom->GetX();
+          _xmax = atom->GetX();
+          _ymin = atom->GetY();
+          _ymax = atom->GetY();
+          _zmin = atom->GetZ();
+          _zmax = atom->GetZ();
         }
       else
         {
-	  if (atom->GetX() < _xmin)
-	    _xmin = atom->GetX();
-	  if (atom->GetX() > _xmax)
-	    _xmax = atom->GetX();
-	  if (atom->GetY() < _ymin)
-	    _ymin = atom->GetY();
-	  if (atom->GetY() > _ymax)
-	    _ymax = atom->GetY();
-	  if (atom->GetZ() < _zmin)
-	    _zmin = atom->GetZ();
-	  if (atom->GetZ() > _zmax)
-	    _zmax = atom->GetZ();
+          if (atom->GetX() < _xmin)
+            _xmin = atom->GetX();
+          if (atom->GetX() > _xmax)
+            _xmax = atom->GetX();
+          if (atom->GetY() < _ymin)
+            _ymin = atom->GetY();
+          if (atom->GetY() > _ymax)
+            _ymax = atom->GetY();
+          if (atom->GetZ() < _zmin)
+            _zmin = atom->GetZ();
+          if (atom->GetZ() > _zmax)
+            _zmax = atom->GetZ();
         }
-
-    _inc = res; // 1/2 angstrom resolution
-
-    _nxinc = (int) floor((_xmax - _xmin)/0.5);
-    _nyinc = (int) floor((_ymax - _ymin)/0.5);
-    _nzinc = (int) floor((_zmax - _zmin)/0.5);
-    _maxinc = _nxinc*_nyinc*_nzinc;
-
-    int j,size = _nxinc*_nyinc*_nzinc;
-    cell.resize(size);
-    for (unsigned int num = 0; num < cell.size(); ++num)
-      cell[num].resize(0);
-
-    cutoff *= cutoff; //don't do sqrts
-
-    int k,l,m;
-    double x,y,z,dx_2,dy_2;
-    double *c = mol.GetCoordinates();
-    size = mol.NumAtoms()*3;
-
-    for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
-      if (PointIsInBox(c[j],c[j+1],c[j+2]))
-	for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,++k)
-	  if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
-	    for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,++l)
-	      if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
-		for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,++m)
-		  if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
-		    cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
-
-    _inc = 1/_inc;
   }
-
-  void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,vector<bool> &use,
-			 double res)
-  {
-    OBAtom *atom;
-    vector<OBAtom*>::iterator i;
-
-    for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
-      if (atom->GetIdx() == 1)
-        {
-	  _xmin = atom->GetX();
-	  _xmax = atom->GetX();
-	  _ymin = atom->GetY();
-	  _ymax = atom->GetY();
-	  _zmin = atom->GetZ();
-	  _zmax = atom->GetZ();
-        }
-      else
-        {
-	  if (atom->GetX() < _xmin)
-	    _xmin = atom->GetX();
-	  if (atom->GetX() > _xmax)
-	    _xmax = atom->GetX();
-	  if (atom->GetY() < _ymin)
-	    _ymin = atom->GetY();
-	  if (atom->GetY() > _ymax)
-	    _ymax = atom->GetY();
-	  if (atom->GetZ() < _zmin)
-	    _zmin = atom->GetZ();
-	  if (atom->GetZ() > _zmax)
-	    _zmax = atom->GetZ();
-        }
-
-    _inc = res; // 1/2 angstrom resolution
-
-    _nxinc = (int) floor((_xmax - _xmin)/0.5);
-    _nyinc = (int) floor((_ymax - _ymin)/0.5);
-    _nzinc = (int) floor((_zmax - _zmin)/0.5);
-    _maxinc = _nxinc*_nyinc*_nzinc;
-
-    int j,size = _nxinc*_nyinc*_nzinc;
-    cell.resize(size);
-    cutoff *= cutoff; //don't do sqrts
-
-    int k,l,m;
-    double x,y,z,dx_2,dy_2;
-    double *c = mol.GetCoordinates();
-    size = mol.NumAtoms()*3;
-
-    for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
-      if (use[atom->GetIdx()])
-	if (PointIsInBox(c[j],c[j+1],c[j+2]))
-	  for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,++k)
-	    if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
-	      for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,++l)
-		if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
-		  for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,++m)
-		    if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
-		      cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
-
-    _inc = 1/_inc;
-  }
-
-  vector<int> *OBProxGrid::GetProxVector(double x,double y,double z)
-  {
-    if (x < _xmin || x > _xmax)
-      return(NULL);
-    if (y < _ymin || y > _ymax)
-      return(NULL);
-    if (z < _zmin || z > _zmax)
-      return(NULL);
-
-    x -= _xmin;
-    y -= _ymin;
-    z -= _zmin;
-    int i,j,k,idx;
-    i = (int) (x*_inc);
-    j = (int) (y*_inc);
-    k = (int) (z*_inc);
-    idx = (i*_nyinc*_nzinc)+(j*_nzinc)+k;
-    if (idx >= _maxinc)
-      return(NULL);
-
-    return(&cell[idx]);
-  }
-
-  vector<int> *OBProxGrid::GetProxVector(double *c)
-  {
-    double x,y,z;
-    x = c[0];
-    y = c[1];
-    z = c[2];
-
-    return( GetProxVector(x, y, z) );
-  }
-
+  
   void OBFloatGrid::Init(OBMol &box,double spacing, double pad)
   {
-    OBAtom *atom;
-    vector<OBAtom*>::iterator i;
-
-    for (atom = box.BeginAtom(i);atom;atom = box.NextAtom(i))
-      if (atom->GetIdx() == 1)
-        {
-	  _xmin = atom->GetX();
-	  _xmax = atom->GetX();
-	  _ymin = atom->GetY();
-	  _ymax = atom->GetY();
-	  _zmin = atom->GetZ();
-	  _zmax = atom->GetZ();
-        }
-      else
-        {
-	  if (atom->GetX() < _xmin)
-	    _xmin = atom->GetX();
-	  if (atom->GetX() > _xmax)
-	    _xmax = atom->GetX();
-	  if (atom->GetY() < _ymin)
-	    _ymin = atom->GetY();
-	  if (atom->GetY() > _ymax)
-	    _ymax = atom->GetY();
-	  if (atom->GetZ() < _zmin)
-	    _zmin = atom->GetZ();
-	  if (atom->GetZ() > _zmax)
-	    _zmax = atom->GetZ();
-        }
+    OBGrid::Init(box); // handle in the base class
 
     _xmin -= pad;
     _xmax += pad;
@@ -238,17 +85,17 @@ namespace OpenBabel
     _val = new double [size];
     double *valptr = _val;
     for( int i = 0; i < size; i++)
-    {
-      *valptr = 0.0;
-      valptr++;
-    }
+      {
+        *valptr = 0.0;
+        valptr++;
+      }
   }
 
   double OBFloatGrid::Inject(double x,double y,double z)
   {
     if( x<=_xmin || x>=_xmax
-     || y<=_ymin || y>=_ymax
-     || z<=_zmin || z>=_zmax ) return 0.0;
+        || y<=_ymin || y>=_ymax
+        || z<=_zmin || z>=_zmax ) return 0.0;
   
     int gx=(int)((x-_xmin)*_inv_spa);
     int gy=(int)((y-_ymin)*_inv_spa);
@@ -295,8 +142,8 @@ namespace OpenBabel
     double AyA,ByA,AyB,ByB,Az,Bz;
 
     if( x<=_xmin || x>=_xmax
-     || y<=_ymin || y>=_ymax
-     || z<=_zmin || z>=_zmax ) return 0.0;
+        || y<=_ymin || y>=_ymax
+        || z<=_zmin || z>=_zmax ) return 0.0;
 
     xydim = _xdim*_ydim;
 
@@ -350,8 +197,8 @@ namespace OpenBabel
     double energy,fx,fy,fz;
 
     if( x<=_xmin || x>=_xmax
-     || y<=_ymin || y>=_ymax
-     || z<=_zmin || z>=_zmax ) return 0.0;
+        || y<=_ymin || y>=_ymax
+        || z<=_zmin || z>=_zmax ) return 0.0;
 
     xydim = _xdim*_ydim;
 
@@ -477,6 +324,114 @@ namespace OpenBabel
     fg._halfSpace= fg._spacing/2.0;
 
     return(is);
+  }
+
+  void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,double res)
+  {
+    this->Init(box); // handle in the base class
+
+    _inc = res; // 1/2 angstrom resolution
+
+    _nxinc = (int) floor((_xmax - _xmin)/0.5);
+    _nyinc = (int) floor((_ymax - _ymin)/0.5);
+    _nzinc = (int) floor((_zmax - _zmin)/0.5);
+    _maxinc = _nxinc*_nyinc*_nzinc;
+
+    int j,size = _nxinc*_nyinc*_nzinc;
+    cell.resize(size);
+    for (unsigned int num = 0; num < cell.size(); ++num)
+      cell[num].resize(0);
+
+    cutoff *= cutoff; //don't do sqrts
+
+    int k,l,m;
+    double x,y,z,dx_2,dy_2;
+    double *c = mol.GetCoordinates();
+    size = mol.NumAtoms()*3;
+
+    OBAtom *atom;
+    vector<OBAtom*>::iterator i;
+    for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
+      if (PointIsInBox(c[j],c[j+1],c[j+2]))
+        for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,++k)
+          if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
+            for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,++l)
+              if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
+                for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,++m)
+                  if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
+                    cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
+
+    _inc = 1/_inc;
+  }
+
+  void OBProxGrid::Setup(OBMol &mol,OBMol &box,double cutoff,vector<bool> &use,
+                         double res)
+  {
+    this->Init(box); // handle in the base class
+    
+    _inc = res; // 1/2 angstrom resolution
+
+    _nxinc = (int) floor((_xmax - _xmin)/0.5);
+    _nyinc = (int) floor((_ymax - _ymin)/0.5);
+    _nzinc = (int) floor((_zmax - _zmin)/0.5);
+    _maxinc = _nxinc*_nyinc*_nzinc;
+
+    int j,size = _nxinc*_nyinc*_nzinc;
+    cell.resize(size);
+    cutoff *= cutoff; //don't do sqrts
+
+    int k,l,m;
+    double x,y,z,dx_2,dy_2;
+    double *c = mol.GetCoordinates();
+    size = mol.NumAtoms()*3;
+
+    OBAtom *atom;
+    vector<OBAtom*>::iterator i;
+    for (atom = mol.BeginAtom(i),j=0;atom;atom = mol.NextAtom(i),j+=3)
+      if (use[atom->GetIdx()])
+        if (PointIsInBox(c[j],c[j+1],c[j+2]))
+          for (x = _xmin+(_inc/2.0),k=0;k < _nxinc;x+=_inc,++k)
+            if ((dx_2 = SQUARE(c[j]-x)) < cutoff)
+              for (y = _ymin+(_inc/2.0),l=0;l < _nyinc;y+=_inc,++l)
+                if ((dx_2+(dy_2 = SQUARE(c[j+1]-y))) < cutoff)
+                  for (z = _zmin+(_inc/2.0),m=0;m < _nzinc;z+=_inc,++m)
+                    if ((dx_2+dy_2+SQUARE(c[j+2]-z)) < cutoff)
+                      cell[(k*_nyinc*_nzinc)+(l*_nzinc)+m].push_back(atom->GetIdx());
+
+    _inc = 1/_inc;
+  }
+
+  vector<int> *OBProxGrid::GetProxVector(double x,double y,double z)
+  {
+    if (x < _xmin || x > _xmax)
+      return(NULL);
+    if (y < _ymin || y > _ymax)
+      return(NULL);
+    if (z < _zmin || z > _zmax)
+      return(NULL);
+
+    x -= _xmin;
+    y -= _ymin;
+    z -= _zmin;
+    int i,j,k,idx;
+    i = (int) (x*_inc);
+    j = (int) (y*_inc);
+    k = (int) (z*_inc);
+    idx = (i*_nyinc*_nzinc)+(j*_nzinc)+k;
+    if (idx >= _maxinc)
+      return(NULL);
+
+    return(&cell[idx]);
+  }
+
+  vector<int> *OBProxGrid::GetProxVector(double *c)
+  {
+    double x,y,z;
+    x = c[0];
+    y = c[1];
+    z = c[2];
+
+    return( GetProxVector(x, y, z) );
   }
 
 } // end namespace OpenBabel
