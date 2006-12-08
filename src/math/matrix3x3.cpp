@@ -2,8 +2,9 @@
 matrix3x3.cpp - Handle 3D rotation matrix.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
- 
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2006 by Benoit Jacob
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
  
@@ -19,6 +20,7 @@ GNU General Public License for more details.
 #include "babelconfig.h"
 
 #include "math/matrix3x3.h"
+#include "obutil.h"
 
 using namespace std;
 
@@ -46,7 +48,7 @@ namespace OpenBabel
  
   */
 
-  /*! the axis of the rotation will be uniformly distributed on
+  /*! The axis of the rotation will be uniformly distributed on
     the unit sphere, the angle will be uniformly distributed in
     the interval 0..360 degrees. */
   void matrix3x3::randomRotation(OBRandom &rnd)
@@ -239,7 +241,7 @@ namespace OpenBabel
     return vector3(ele[row][0], ele[row][1], ele[row][2]);
   }
 
-  /*! calculates the product m*v of the matrix m and the column
+  /*! Calculates the product m*v of the matrix m and the column
     vector represented by v
   */
   vector3 operator *(const matrix3x3 &m,const vector3 &v)
@@ -353,7 +355,7 @@ namespace OpenBabel
           + ele[0][2] * (ele[1][0] * ele[2][1] - ele[1][1] * ele[2][0]) );
   }
 
-  /*! This method returns false if there are indices i,j such that
+  /*! \return False if there are indices i,j such that
     fabs(*this[i][j]-*this[j][i]) > 1e-6. Otherwise, it returns
     true. */
   bool matrix3x3::isSymmetric(void) const
@@ -481,6 +483,14 @@ namespace OpenBabel
     ele[2][2] = V / (sin(Gamma)); // again, we factored out A * B when defining V
   }
 
+  /** Print a text representation of the matrix in the standardized form:
+      [ a, b, c ] <br>
+      [ d, e, f ] <br>
+      [ g, h, i ] <br>
+      where the letters represent the appropriate entries in the matrix.
+      Uses the standard output format for the individual entries, separated
+      by ", " for each column, and [ ] indicating each row.
+   **/
   ostream& operator<< ( ostream& co, const matrix3x3& m )
 
   {

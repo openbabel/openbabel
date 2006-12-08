@@ -889,6 +889,7 @@ namespace OpenBabel
 
   //! Stochoimetric formula in spaced format e.g. C 4 H 6 O 1
   //! No pair data is stored. Normally use without parameters: GetSpacedFormula()
+  //! \since version 2.1
   string OBMol::GetSpacedFormula(int ones, const char* sp)
   {
     //Default ones=0, sp=' '. 
@@ -1497,6 +1498,7 @@ namespace OpenBabel
     return(obresidue);
   }
 
+  //! \since version 2.1
   OBBond *OBMol::NewBond()
   {
     OBBond *pBond = new OBBond;

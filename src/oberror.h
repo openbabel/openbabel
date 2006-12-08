@@ -44,8 +44,8 @@ namespace OpenBabel
     obDebug      //!< for messages only useful for debugging purposes
   };
 
-  //! \brief Customizable error handling and logging -- store a message,
-  //!        including the method yielding the error, causes, etc.
+  /** \brief Customizable error handling and logging -- store a message,
+      including the method yielding the error, causes, etc. **/
   class OBERROR OBError
     {
     public:
@@ -58,28 +58,41 @@ namespace OpenBabel
                const std::string &suggestedRemedy = "",
                const obMessageLevel = obDebug );
 
-      //! \return a formatted message string, including optional explanations, etc.
+      //! \return A formatted message string, including optional explanations, etc.
       std::string message(void) const;
   
       //! Output a formatted message string
       friend std::ostream& operator<< ( std::ostream &os, const OBError &er )
         { return os << er.message(); };
 
+      /** \return The method which caused this error
+          (typically supplied via the __FUNCTION__ compiler macro **/
       std::string    GetMethod()            { return _method;          }
+      //! \return The main error message
       std::string    GetError()             { return _errorMsg;        }
+      //! \return A more detailed explanation of the error (optional)
       std::string    GetExplanation()       { return _explanation;     }
+      //! \return A possible cause for the error (optional)
       std::string    GetPossibleCause()     { return _possibleCause;   }
+      //! \return The suggested workaround or remedy for the error (optional)
       std::string    GetSuggestedRemedy()   { return _suggestedRemedy; }
+      //! \return The severity level of this error
       obMessageLevel GetLevel()             { return _level;           }
 
     protected:
 
+      //! The method causing the error (typically from the compiler macro __FUNCTION__)
       std::string _method;
+      //! The actual error message
       std::string _errorMsg;
+      //! Optional explanation message: more detailed than the brief error
       std::string _explanation;
+      //! Optional cause message
       std::string _possibleCause;
+      //! Optional workaround or remedy
       std::string _suggestedRemedy;
 
+      //! The severity level: used for filtering via OBMessageHandler
       obMessageLevel _level;
     };
 
@@ -167,9 +180,20 @@ namespace OpenBabel
   OBERROR extern OBMessageHandler obErrorLog;
 
   //! \brief A minimal streambuf derivative to wrap calls to cerr into calls to OBMessageHandler as needed
+  /** This class is used for internal use, via OBMessageHandler::StartErrorWrap()
+      To use this class, use the global OBMessageHandler object @p obErrorLog:
+      \code
+      obErrorLog.StartErrorWrap(); // All output to cerr will become OBErrors
+      cerr << " This is error 1" << endl; // flush output, create a new error
+      cerr << " Error 2" << endl;
+      cerr << " Error 3: Done with output wrapping." << endl;
+      obErrorLog.StopErrorWrao(); // return to default behavior
+      \endcode
+  **/
   class OBERROR obLogBuf : public std::stringbuf
     {
     public:
+      //! Close the output buffer, flush, and call OBMessageHandler::ThrowError()
       virtual ~obLogBuf() { sync(); }
     
     protected:

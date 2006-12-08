@@ -2,7 +2,8 @@
 vector3.cpp - Handle 3D coordinates.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2006 by Benoit Jacob
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -22,6 +23,7 @@ GNU General Public License for more details.
 #include <iostream>
 
 #include "math/vector3.h"
+#include "obutil.h"
 
 using namespace std;
 
@@ -29,15 +31,15 @@ namespace OpenBabel
 {
 
   /*! \class vector3
-    \brief Represents a vector in the 3-dimensional real space.
+    \brief Represents a vector in 3-dimensional real space.
 
     The vector3 class was designed to simplify operations with floating
     point coordinates. To this end many of the common operations have been
     overloaded for simplicity. Vector addition, subtraction, scalar
     multiplication, dot product, cross product, magnitude and a number of
     other utility functions are built in to the vector class. For a full
-    description of the class member functions please consult the header
-    file vector3.h. The following code demonstrates several of the
+    description of the class member functions please consult the
+    documentation. The following code demonstrates several of the
     functions of the vector class:
     \code
     vector3 v1,v2,v3;
@@ -79,12 +81,12 @@ namespace OpenBabel
     else return _vz;
   }
 
-  /*! replaces *this with a random unit vector, which is (supposed
+  /*! Replaces *this with a random unit vector, which is (supposed
     to be) uniformly distributed over the unit sphere. Uses the
     random number generator obRand, or uses the system number
     generator with a time seed if obRand == NULL.
      
-    @param obRandP random number generator to use, or 0L, if the
+    @param obRandP random number generator to use, or NULL, if the
     system random number generator (with time seed) should be used
   */
   void vector3::randomUnitVector(OBRandom *obRandP)
@@ -215,9 +217,9 @@ namespace OpenBabel
     return((RAD_TO_DEG * acos(dp)));
   }
 
-  /*!  This function calculates the tortion angle of three vectors, represented
+  /*!  This function calculates the torsion angle of three vectors, represented
     by four points A--B--C--D, i.e. B and C are vertexes, but none of A--B,
-    B--C, and C--D are colinear.  A "tortion angle" is the amount of "twist"
+    B--C, and C--D are colinear.  A "torsion angle" is the amount of "twist"
     or torsion needed around the B--C axis to bring A--B into the same plane
     as B--C--D.  The torsion is measured by "looking down" the vector B--C so
     that B is superimposed on C, then noting how far you'd have to rotate

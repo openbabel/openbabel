@@ -1,3 +1,22 @@
+Open Babel 2.1    (2007-XX-XX)
+
+What's New from 2.0.2:
+
+- Classes for molecular mechanics force fields.
+- 
+
+New File Formats:
+  Import & Export: 
+    ChemDraw CDX & CDXML
+    Fasta Sequence
+  Input:
+    InChI
+  Export:
+    Open Babel MolReport
+    OBMolecFormat
+    Thermo Format
+    Titles
+
 Open Babel 2.0.2 (2006-07-24)
 
 What's New from 2.0.1:
@@ -21,9 +40,6 @@ encouraged to upgrade.
 Open Babel 2.0.1 (2006-04-17)
 
 What's New from 2.0.0:
-
-This release represents a bug-fix release and should be a stable upgrade,
-recommended for all users of Open Babel.
 
 - Support for dynamic building on the Cygwin environment. This fixes a
   long-standing problem that made Open Babel useless to Cygwin users.

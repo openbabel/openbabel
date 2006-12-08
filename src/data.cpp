@@ -416,20 +416,23 @@ namespace OpenBabel
       - INT (Open Babel internal codes)
       - ATN (atomic numbers)
       - HYB (hybridization)
-      - MMD
+      - MMD (MacroModel)
       - MM2 (MM2 force field)
       - XYZ (element symbols from XYZ file format)
-      - ALC (Alchemy file)
-      - HAD
-      - MCML
+      - ALC (Alchemy)
+      - HAD (H added)
+      - MCML (MacMolecule)
       - C3D (Chem3D)
       - SYB (Sybyl mol2)
-      - MOL
-      - MAP
-      - DRE
+      - MOL (Sybyl mol)
+      - MAP (Gasteiger partial charge types)
+      - DRE (Dreiding)
       - XED (XED format)
       - DOK (Dock)
-      - M3D
+      - M3D (Molecular Arts M3D)
+      - IDX (Index -- i.e., line number in the file)
+      - SBN (Sybyl descriptor types for MPD files)
+      - PCM (PC Model)
   */
 
   OBTypeTable::OBTypeTable()

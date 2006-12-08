@@ -2,7 +2,7 @@
 base.h - Base classes to build a graph
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -65,20 +65,20 @@ namespace OpenBabel
 
       //! \name Generic data handling methods (via OBGenericData)
       //@{
-      //! \returns whether the generic attribute/value pair exists
+      //! \return whether the generic attribute/value pair exists
       bool                              HasData(const std::string &);
-      //! \returns whether the generic attribute/value pair exists
+      //! \return whether the generic attribute/value pair exists
       bool                              HasData(const char *);
-      //! \returns whether the generic attribute/value pair exists, for a given
+      //! \return whether the generic attribute/value pair exists, for a given
       //!  OBGenericDataType
       bool                              HasData(const unsigned int type);
       //! Delete any data matching the given OBGenericDataType
       void                              DeleteData(unsigned int type);
-      //! delete the given generic data from this object
+      //! Delete the given generic data from this object
       void                              DeleteData(OBGenericData*);
-      //! delete all of the given generic data from this object
+      //! Delete all of the given generic data from this object
       void                              DeleteData(std::vector<OBGenericData*>&);
-      //! adds a data object; does nothing if d==NULL
+      //! Adds a data object; does nothing if d==NULL
       void                              SetData(OBGenericData *d)
         {
           if(d)

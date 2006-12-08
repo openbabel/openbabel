@@ -31,10 +31,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-  class OBElement;
   class OBAtom;
-  class OBElementTable;
-
   class OBMol;
   class OBBitVec;
 
@@ -49,12 +46,12 @@ namespace OpenBabel
   class OBAPI OBGlobalDataBase
     {
     protected:
-      bool         _init;		//!< whether the data been read already
-      const char  *_dataptr;	//!< default data table if file is unreadable
-      std::string  _filename;	//!< file to search for
-      std::string  _dir;		//!< data directory for file if _envvar fails
-      std::string  _subdir;	//!< subdirectory (if using environment variable)
-      std::string  _envvar;	//!< environment variable to check first
+      bool         _init;		//!< Whether the data been read already
+      const char  *_dataptr;//!< Default data table if file is unreadable
+      std::string  _filename;//!< File to search for
+      std::string  _dir;		//!< Data directory for file if _envvar fails
+      std::string  _subdir;	//!< Subdirectory (if using environment variable)
+      std::string  _envvar;	//!< Environment variable to check first
 
     public:
       //! Constructor
@@ -63,7 +60,7 @@ namespace OpenBabel
       virtual ~OBGlobalDataBase()                  {}
       //! Read in the data file, falling back as needed
       void  Init();
-      //! Return the size of the database (for error checking)
+      //! \return the size of the database (for error checking)
       virtual unsigned int GetSize()                 { return 0;}
       //! Set the directory before calling Init()
       void  SetReadDirectory(char *dir)            { _dir = dir;    }
@@ -98,31 +95,31 @@ namespace OpenBabel
           strncpy(_symbol, sym, 3);
         }
 
-      //! Return the atomic number of this element
+      //! \return the atomic number of this element
       int GetAtomicNum()         {       return(_num);    }
-      //! Return the atomic symbol for this element
+      //! \return the atomic symbol for this element
       char *GetSymbol()          {       return(_symbol); }
-      //! Return the covalent radius of this element
+      //! \return the covalent radius of this element
       double GetCovalentRad()    {       return(_Rcov);   }
-      //! Return the van der Waals radius of this element
+      //! \return the van der Waals radius of this element
       double GetVdwRad()         {       return(_Rvdw);   }
-      //! Return the standard atomic mass for this element (in amu)
+      //! \return the standard atomic mass for this element (in amu)
       double GetMass()           {       return(_mass);   }
-      //! Return the maximum expected number of bonds to this element
+      //! \return the maximum expected number of bonds to this element
       int GetMaxBonds()          {       return(_maxbonds);}
-      //! Return the Pauling electronegativity for this element
+      //! \return the Pauling electronegativity for this element
       double GetElectroNeg()     {       return(_elNeg);  }
-      //! Return the ionization potential (in eV) of this element
+      //! \return the ionization potential (in eV) of this element
       double GetIonization()     {       return(_ionize);  }
-      //! Return the electron affinity (in eV) of this element
+      //! \return the electron affinity (in eV) of this element
       double GetElectronAffinity(){      return(_elAffinity);  }
-      //! Return the name of this element (in English)
+      //! \return the name of this element (in English)
       std::string GetName()      {       return(_name);    }
-      //! Return the red component of this element's default visualization color
+      //! \return the red component of this element's default visualization color
       double GetRed()            {       return(_red);     }
-      //! Return the green component of this element's default color
+      //! \return the green component of this element's default color
       double GetGreen()          {       return(_green);   }
-      //! Return the blue component of this element's default color
+      //! \return the blue component of this element's default color
       double GetBlue()           {       return(_blue);    }
     };
 
@@ -138,42 +135,43 @@ namespace OpenBabel
 
       void  ParseLine(const char*);
 
-      //! Return the number of elements in the periodic table
+      //! \return the number of elements in the periodic table
       unsigned int		GetNumberOfElements();
+      //! \return the number of elements in the periodic table
       unsigned int    GetSize() { return GetNumberOfElements(); }
 
       //! \deprecated Does not properly handle 'D' or 'T' hydrogen isotopes
       int   GetAtomicNum(const char *);
-      //! Return the atomic number matching the element symbol passed
+      //! \return the atomic number matching the element symbol passed
       //! or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
       //! a value in the second argument
       int   GetAtomicNum(const char *, int &iso);
-      //! Return the element symbol matching the atomic number passed
+      //! \return the element symbol matching the atomic number passed
       char *GetSymbol(int);
-      //! Return the van der Waals radius for this atomic number
+      //! \return the van der Waals radius for this atomic number
       double GetVdwRad(int);
-      //! Return the covalent radius for this atomic number
+      //! \return the covalent radius for this atomic number
       double GetCovalentRad(int);
-      //! Return the average atomic mass for this element.
+      //! \return the average atomic mass for this element.
       //! For exact isotope masses, use OpenBabel::OBIsotopeTable
       double GetMass(int);
-      //! Return a "corrected" bonding radius based on the hybridization.
+      //! \return a "corrected" bonding radius based on the hybridization.
       //! Scales the covalent radius by 0.95 for sp2 and 0.90 for sp hybrids
       double CorrectedBondRad(int,int = 3); // atomic #, hybridization
-      //! Return a "corrected" vdW radius based on the hybridization.
+      //! \return a "corrected" vdW radius based on the hybridization.
       //! Scales the van der Waals radius by 0.95 for sp2 and 0.90 for sp hybrids
       double CorrectedVdwRad(int,int = 3); // atomic #, hybridization
-      //! Return the maximum expected number of bonds to this element
+      //! \return the maximum expected number of bonds to this element
       int	GetMaxBonds(int);
-      //! Return the Pauling electronegativity for this element
+      //! \return the Pauling electronegativity for this element
       double GetElectroNeg(int);
-      //! Return the ionization potential (in eV) for this element
+      //! \return the ionization potential (in eV) for this element
       double GetIonization(int);
-      //! Return the electron affinity (in eV) for this element
+      //! \return the electron affinity (in eV) for this element
       double GetElectronAffinity(int);
-      //! Return a vector with red, green, blue color values for this element
+      //! \return a vector with red, green, blue color values for this element
       std::vector<double> GetRGB(int);
-      //! Return the name of this element
+      //! \return the name of this element
       std::string GetName(int);
     };
 
@@ -187,11 +185,11 @@ namespace OpenBabel
       OBIsotopeTable(void);
       ~OBIsotopeTable()    {}
 
-      //! Return the number of elements in the isotope table
+      //! \return the number of elements in the isotope table
       unsigned int GetSize() { return _isotopes.size(); }
 
       void	ParseLine(const char*);
-      //! Return the exact masss of the isotope
+      //! \return the exact masss of the isotope
       //!   (or by default (i.e. "isotope 0") the most abundant isotope)
       double	GetExactMass(const unsigned int atomicNum,
                            const unsigned int isotope = 0);
@@ -213,7 +211,7 @@ namespace OpenBabel
 
       void ParseLine(const char*);
 
-      //! Return the number of atom types in the translation table
+      //! \return the number of atom types in the translation table
       unsigned int GetSize() { return _table.size(); }
 
       //! Set the initial atom type to be translated
@@ -229,9 +227,9 @@ namespace OpenBabel
       //! \return the translated atom type, or an empty string if not possible
       std::string Translate(const std::string &from);
 
-      //! Return the initial atom type to be translated
+      //! \return the initial atom type to be translated
       std::string GetFromType();
-      //! Return the destination atom type for translation
+      //! \return the destination atom type for translation
       std::string GetToType();
     };
 
@@ -252,17 +250,17 @@ namespace OpenBabel
       OBResidueData();
       void ParseLine(const char*);
 
-      //! Return the number of residues in the table
+      //! \return the number of residues in the table
       unsigned int GetSize() { return _resname.size(); }
 
       //! Sets the table to access the residue information for a specified
       //!  residue name
       //! \return whether this residue name is in the table
       bool SetResName(const std::string &);
-      //! Return the bond order for the bond specified in the current residue
+      //! \return the bond order for the bond specified in the current residue
       //! \deprecated Easier to use the two-argument form
       int  LookupBO(const std::string &);
-      //! Return the bond order for the bond specified between the two specified
+      //! \return the bond order for the bond specified between the two specified
       //! atom labels
       int  LookupBO(const std::string &, const std::string&);
       //! Look up the atom type and hybridization for the atom label specified

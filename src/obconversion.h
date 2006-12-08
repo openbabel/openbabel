@@ -94,7 +94,7 @@ namespace OpenBabel {
       /// Writes a single object
       /// Does not delete the object; 
       /// can be used with a pointer to an chem object on the heap or the stack.
-      /// Returns false on error.
+      /// \return false on error.
       virtual bool WriteMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/)
         { std::cerr << "Not a valid output format"; return false;}
 
@@ -102,7 +102,7 @@ namespace OpenBabel {
 
       /// Writes a single object
       /// Deletes the object after writing 
-      /// Returns false on error
+      /// \return false on error
       virtual bool WriteChemObject(OBConversion* /*pConv*/)
         { std::cerr << "Not a valid output format"; return false;}
 
@@ -118,7 +118,7 @@ namespace OpenBabel {
       /// If not provided, the object type used by the default format is used (usually OBMol). 
       virtual const char* TargetClassDescription();
 
-      /// @brief Returns the type of chemical object used by the format.
+      /// \return the type of chemical object used by the format.
 
       /// Defaults to that used by the default format. Useful for checking 
       /// that a format can handle a particular object.
@@ -139,13 +139,13 @@ namespace OpenBabel {
 
       /// @brief Skip past first n objects in input stream (or current one with n=0)
 
-      /// Returns 1 on success, -1 on error and 0 if not implemented 
+      /// \return 1 on success, -1 on error and 0 if not implemented 
       virtual int SkipObjects(int /*n*/, OBConversion* /*pConv*/)
         {
           return 0; //shows not implemented in the format class
         };
 
-      /// @brief Returns a pointer to a new instance of the format, or NULL if fails.
+      /// \return a pointer to a new instance of the format, or NULL if fails.
 
       /// Normally a single global instance is used but this may cause problems
       /// if there are member variables and the format is used in more than one place
@@ -242,7 +242,7 @@ namespace OpenBabel {
       ///Get the length in the input stream of the object being read
       size_t GetInLen()const{return wInlen;}; 
 
-      ///@brief Returns a default title which is the filename
+      /// \return a default title which is the filename
       const char* GetTitle() const;
 
       ///@brief Extension method: deleted in ~OBConversion()
@@ -254,7 +254,7 @@ namespace OpenBabel {
       ///@brief Three types of options set on the the command line by -a? , -x? , or -?
       enum Option_type { INOPTIONS, OUTOPTIONS, GENOPTIONS };
 
-      ///@brief Determine whether an option is set. Returns NULL if option not and a pointer to the associated text if it is 
+      ///@brief Determine whether an option is set. \return NULL if option not and a pointer to the associated text if it is 
       const char* IsOption(const char* opt,Option_type opttyp=OUTOPTIONS);
 	
       ///@brief Access the map with option name as key and any associated text as value
@@ -273,7 +273,7 @@ namespace OpenBabel {
       static void RegisterOptionParam(std::string name, OBFormat* pFormat,
                                       int numberParams=0, Option_type typ=OUTOPTIONS);
 
-      ///@brief Returns the number of parameters registered for the option, or 0 if not found
+      /// \return the number of parameters registered for the option, or 0 if not found
       static int GetOptionParams(std::string name, Option_type typ);
       //@}
 
@@ -333,19 +333,20 @@ namespace OpenBabel {
       /// @brief Manually closes and deletes the output stream
       /// The file is closed anyway when in the OBConversion destructor or when WriteFile
       /// is called again.
+      /// \since version 2.1
       void CloseOutFile();
 
       /// @brief Reads an object of a class derived from OBBase into pOb.
 	
       /// Part of "API" interface. 
       /// The input stream can be specified and the change is retained in the OBConversion instance
-      /// Returns false and pOb=NULL on error 
+      /// \return false and pOb=NULL on error 
       bool	Read(OBBase* pOb, std::istream* pin=NULL);
 
       /// @brief Reads an object of a class derived from OBBase into pOb from the supplied string
 	
       /// Part of "API" interface. 
-      /// Returns false and pOb=NULL on error
+      /// \return false and pOb=NULL on error
       /// This method is primarily intended for scripting languages without "stream" classes
       bool	ReadString(OBBase* pOb, std::string input);
 
@@ -354,7 +355,7 @@ namespace OpenBabel {
       /// Part of "API" interface. 
       /// The output stream is changed to the supplied file and the change is retained in the
       /// OBConversion instance.
-      /// Returns false and pOb=NULL on error 
+      /// \return false and pOb=NULL on error 
       /// This method is primarily intended for scripting languages without "stream" classes
       bool	ReadFile(OBBase* pOb, std::string filePath);
 

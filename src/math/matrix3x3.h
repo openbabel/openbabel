@@ -3,7 +3,8 @@ matrix3x3.cpp - Handle 3D Rotation matrix.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+Some portions Copyright (C) 2006 by Benoit Jacob
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
  
@@ -22,7 +23,7 @@ GNU General Public License for more details.
 
 #include <ostream>
 
-#include "math/vector3.h" // includes obutil.h, which includes <math.h>
+#include "math/vector3.h" // includes rand.h, which includes <math.h>
 #include "oberror.h"
 
 #ifndef RAD_TO_DEG
@@ -35,7 +36,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  class OBRandom; // class introduction in obutil.h
+  class OBRandom; // class introduction in rand.h
 
   // class introduction in matrix3x3.cpp
   class OBAPI matrix3x3
@@ -46,7 +47,7 @@ namespace OpenBabel
       double ele[3][3];
 
     public:
-      //! constructs the zero-matrix
+      //! Constructs the zero-matrix
       matrix3x3(void)
         {
           ele[0][0] = 0.0;
@@ -60,7 +61,7 @@ namespace OpenBabel
           ele[2][2] = 0.0;
         }
 
-      //! constructs s times the unit matrix
+      //! Constructs s times the unit matrix
       matrix3x3(double s)
         {
           ele[0][0] = s;
@@ -74,7 +75,7 @@ namespace OpenBabel
           ele[2][2] = s;
         }
 
-      //! constructs a matrix from row vectors
+      //! Constructs a matrix from row vectors
       matrix3x3(vector3 row1,vector3 row2,vector3 row3)
         {
           ele[0][0] = row1.x();
@@ -88,9 +89,8 @@ namespace OpenBabel
           ele[2][2] = row3.z();
         }
 
-      //! constructs a matrix from a 3x3-array of doubles
-      /*! constructs a matrix from a 3x3-array of doubles. The first
-        index represents the row, the second index the column */
+      //! \brief Constructs a matrix from a 3x3-array of doubles
+      /*! The first index represents the row, the second index the column */
       matrix3x3(double d[3][3])
         {
           ele[0][0] = d[0][0];
@@ -104,8 +104,8 @@ namespace OpenBabel
           ele[2][2] = d[2][2];
         }
 
-      //! access function
-      /*! writes the matrix into the 1-dimensional array m, row by
+      //! \brief Access function
+      /*! Writes the matrix into the 1-dimensional array m, row by
         row. The array must be able to hold 9 doubles, otherwise your
         program will segfault. */
       void GetArray(double *m)
@@ -121,14 +121,14 @@ namespace OpenBabel
           m[8] = ele[2][2];
         }
 
-      /*! Returns a constant reference to an element of the matrix.
+      /*! \return a constant reference to an element of the matrix.
           row and column must be between 0 and 2. No check is done. */
       const double & operator() (int row, int column ) const
       {
         return ele[row][column];
       }
 
-      /*! Returns a non-constant reference to an element of the matrix.
+      /*! \return a non-constant reference to an element of the matrix.
           row and column must be between 0 and 2. No check is done. */
       double & operator() (int row, int column )
       {
@@ -145,10 +145,10 @@ namespace OpenBabel
       //! Calculates the transpose of a matrix.
       matrix3x3 transpose(void) const;
 
-      //! generates a matrix for a random rotation
+      //! Generates a matrix for a random rotation
       void randomRotation(OBRandom &rnd);
 
-      //! returns the determinant of the matrix
+      //! \return The determinant of the matrix
       double determinant() const;
 
       //! Checks if a matrix is symmetric
@@ -174,13 +174,13 @@ namespace OpenBabel
           return (*this * transpose()).isUnitMatrix();
         };
 
-      //! Checks if a matrix is diagonal
+      //! \return if a matrix is diagonal
       bool isDiagonal(void) const;
 
-      //! Checks if a matrix is the unit matrix
+      //! \return if a matrix is the unit matrix
       bool isUnitMatrix(void) const;
 
-      //! access function
+      //! Access function
       /*! \warning row or column are not in the range 0..2, zero is returned
        *! \deprecated use the constant operator() instead
        */
@@ -196,7 +196,7 @@ namespace OpenBabel
 #endif
         }
 
-      //! access function
+      //! Access function
       /*! \warning if row or column are not in the range 0..2, nothing will happen
        *! \deprecated use the non-constant operator() instead
        */
@@ -210,7 +210,7 @@ namespace OpenBabel
 #endif
         }
 
-      //! access function
+      //! Access function
       /*! \warning If column is not in the range 0..2, the vector
         remains unchanged and an exception is thrown. */
       void SetColumn(int column, const vector3 &v)
@@ -219,7 +219,7 @@ namespace OpenBabel
 #endif
       ;
 
-      //! access function
+      //! Access function
       /*! \warning If column is not in the range 0..2, the vector
         remains unchanged and an exception is thrown. */
       void SetRow(int row, const vector3 &v)
@@ -228,7 +228,7 @@ namespace OpenBabel
 #endif
       ;
 
-      //! access function
+      //! Access function
       /*! \warning If col is not in the range 0..2, an exception is
         thrown. */
       vector3 GetColumn(unsigned int col) const
@@ -237,7 +237,7 @@ namespace OpenBabel
 #endif
       ;
 
-      //! access function
+      //! Access function
       /*! \warning If row is not in the range 0..2, an exception is
         thrown. */
       vector3 GetRow(unsigned int row) const
@@ -246,7 +246,7 @@ namespace OpenBabel
 #endif
       ;
 
-      //! multiplies all entries of the matrix by a scalar c
+      //! Multiplies all entries of the matrix by a scalar c
       matrix3x3 &operator*=(const double &c)
       {
         for( int i = 0; i < 3; i++ )
@@ -255,20 +255,20 @@ namespace OpenBabel
         return *this;
       }
 
-      //! divides all entries of the matrix by a scalar c
+      //! Divides all entries of the matrix by a scalar c
       matrix3x3 &operator/=(const double &c)
       {
         return( (*this) *= ( 1.0 / c ) );
       }
 
-      //! Calculate a rotation matrix for rotation about the x, y, and z
+      //! \brief Calculate a rotation matrix for rotation about the x, y, and z
       //! axes by the angles specified (in degrees)
       void SetupRotMat(double x, double y, double z);
 
-      //! calculates a matrix that represents reflection on a plane
+      //! Calculates a matrix that represents reflection on a plane
       void PlaneReflection(const vector3 &norm);
 
-      //! Calculates a rotation matrix, rotating around the specified axis by
+      //! \brief Calculates a rotation matrix, rotating around the specified axis by
       //! the specified angle (in degrees)
       void RotAboutAxisByAngle(const vector3 &axis, const double angle);
 
@@ -280,22 +280,23 @@ namespace OpenBabel
       void FillOrth(double alpha, double beta, double gamma,
                     double a, double b, double c);
 
-      //! find the eigenvalues and -vectors of a symmetric matrix
+      //! Find the eigenvalues and -vectors of a symmetric matrix
       matrix3x3 findEigenvectorsIfSymmetric(vector3 &eigenvals) const
 #ifdef OB_OLD_MATH_CHECKS
   throw(OBError)
 #endif
       ;
 
-      //! matrix-vector multiplication
+      //! Matrix-vector multiplication
       friend OBAPI vector3 operator *(const matrix3x3 &,const vector3 &);
 
-      //! matrix-matrix multiplication
+      //! Matrix-matrix multiplication
       friend OBAPI matrix3x3 operator *(const matrix3x3 &,const matrix3x3 &);
 
+      //! Output a text representation of a matrix
       friend OBAPI std::ostream& operator<< ( std::ostream&, const matrix3x3 & ) ;
 
-      //! eigenvalue calculation
+      //! Eigenvalue calculation
       static void jacobi(unsigned int n, double *a, double *d, double *v);
     };
 

@@ -2,7 +2,7 @@
 generic.h - Handle generic data classes. Custom data for atoms, bonds, etc.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -158,11 +158,14 @@ namespace OpenBabel
     //Use default copy constructor and assignment operators
     //OBGenericData(const OBGenericData&);
 		
-    //Virtual constructors added see http://www.parashift.com/c++-faq-lite/abcs.html#faq-22.5
-    //to allow copying given only a base class OBGenericData pointer.
-    //It may be necessary to cast the return pointer to the derived class type since we are doing
-    //without Covariant Return Types http://www.parashift.com/c++-faq-lite/virtual-functions.html#faq-20.8
-    //A derived class may return NULL if copying inappropriate
+    /* Virtual constructors added see 
+       http://www.parashift.com/c++-faq-lite/abcs.html#faq-22.5
+       to allow copying given only a base class OBGenericData pointer.
+       It may be necessary to cast the return pointer to the derived class
+       type, since we are doing without Covariant Return Types 
+       http://www.parashift.com/c++-faq-lite/virtual-functions.html#faq-20.8
+    
+       A derived class may return NULL if copying is inappropriate */
     virtual OBGenericData* Clone(OBBase* /*parent*/) const
     { return NULL; } 
     virtual ~OBGenericData()    {}
@@ -172,13 +175,14 @@ namespace OpenBabel
     //! Set the attribute (key), which can be used to retrieve this data
     void                      SetAttribute(const std::string &v)
     {        _attr = v;        }
-    //! \return the attribute (key), which can be used to retrieve this data
+    //! \return The attribute (key), which can be used to retrieve this data
     virtual const std::string &GetAttribute()  const
     {        return(_attr);    }
     //! \return the data type for this object as defined in OBGenericDataType
     unsigned int                GetDataType()    const
     {        return(_type);    }
-    //! Base class returns value but should never be called
+    //! \brief Base class returns a default value (the attribute type) 
+    //! but should never be called
     virtual const std::string &GetValue()  const
     {			return _attr; }
   };
@@ -251,23 +255,32 @@ namespace OpenBabel
  class OBAPI OBPairData : public OBGenericData
   {
   protected:
-    std::string _value;
+    std::string _value; //!< The data for this key/value pair
   public:
     OBPairData();
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBPairData(*this);}
-    void    SetValue(const char *v)
-    {
-      _value = v;
-    }
-    void    SetValue(const std::string &v)
-    {
-      _value = v;
-    }
-    virtual const std::string &GetValue() const //now virtual and const
-    {
-      return(_value);
-    }
+    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+      {return new OBPairData(*this);}
+    void    SetValue(const char *v)        {      _value = v;    }
+    void    SetValue(const std::string &v) {      _value = v;    }
+    virtual const std::string &GetValue() const
+    {      return(_value);    }
   };
+
+  //! \brief Used to store arbitrary attribute/value relationsips of any type.
+  // More detailed description in generic.cpp
+  template <class ValueT>
+    class OBAPI OBPairTemplate : public OBGenericData
+  {
+  protected:
+    ValueT _value; //!< The data for this key/value pair
+  public:
+  OBPairTemplate(): ValueT() {};
+    void SetValue(const ValueT t)             { _value = t;     }
+    virtual const ValueT &GetValue() const    { return(_value); }
+  };
+
+  typedef OBPairTemplate<int>     OBPairInteger;
+  typedef OBPairTemplate<double>  OBPairFloatingPoint;
 
   //! \brief Used to store arbitrary attribute/set relationships.
   //!
@@ -277,16 +290,16 @@ namespace OpenBabel
   protected:
     std::vector<OBGenericData *> _vdata;
   public:
-    OBSetData() : OBGenericData("SetData", OBGenericDataType::SetData) {}
+  OBSetData() : OBGenericData("SetData", OBGenericDataType::SetData) {}
     virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBSetData(*this);}
 
     //! Add an OBGenericData element to the set.
     void AddData(OBGenericData *d)
     {
       if(d)
-      {
-        _vdata.push_back(d);
-      }
+        {
+          _vdata.push_back(d);
+        }
     }
 
     //! Set the array of data to a new vector
@@ -295,7 +308,7 @@ namespace OpenBabel
       _vdata = vdata;
     }
 
-    //! Returns the OBGenericData associate with the attribute name parameter.
+    //! \return the OBGenericData associate with the attribute name parameter.
     OBGenericData *GetData(const char *s)
     {
       std::vector<OBGenericData*>::iterator i;
@@ -307,7 +320,7 @@ namespace OpenBabel
       return(NULL);
     }
 
-    //! Returns the OBGenericData associate with the attribute name parameter.
+    //! \return the OBGenericData associate with the attribute name parameter.
     OBGenericData *GetData(const std::string &s)
     {
       std::vector<OBGenericData*>::iterator i;
@@ -327,15 +340,15 @@ namespace OpenBabel
 
     //! Get the begin iterator.
     std::vector<OBGenericData*>::iterator GetBegin()
-    {
-      return _vdata.begin();
-    }
+      {
+        return _vdata.begin();
+      }
 
     //! Get the end iterator.
     std::vector<OBGenericData*>::iterator GetEnd()
-    {
-      return _vdata.end();
-    }
+      {
+        return _vdata.end();
+      }
 
     //! Delete the matching OBGenericData element.
     void DeleteData(OBGenericData *gd)
@@ -343,13 +356,13 @@ namespace OpenBabel
       std::vector<OBGenericData*>::iterator i;
       for (i = _vdata.begin();i != _vdata.end();++i)
         if (*i == gd)
-        {
-          delete *i;
-          _vdata.erase(i);
-        }
+          {
+            delete *i;
+            _vdata.erase(i);
+          }
     }
 
-  };
+  }; // OBSetData
 
   //! \brief Used to temporarily store bonds that reference
   //! an atom that has not yet been added to a molecule
@@ -364,22 +377,10 @@ namespace OpenBabel
     OBVirtualBond();
     virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBVirtualBond(*this);}
     OBVirtualBond(int,int,int,int stereo=0);
-    int GetBgn()
-    {
-      return(_bgn);
-    }
-    int GetEnd()
-    {
-      return(_end);
-    }
-    int GetOrder()
-    {
-      return(_ord);
-    }
-    int GetStereo()
-    {
-      return(_stereo);
-    }
+    int GetBgn()    {      return(_bgn);    }
+    int GetEnd()    {      return(_end);    }
+    int GetOrder()  {      return(_ord);    }
+    int GetStereo() {      return(_stereo); }
   };
 
   //! Used to store the SSSR set (filled in by OBMol::GetSSSR())
@@ -417,12 +418,12 @@ namespace OpenBabel
   public:
     enum LatticeType { Undefined, 
                        Triclinic, 
-					   Monoclinic, 
-					   Orthorhombic, 
-					   Tetragonal, 
+                       Monoclinic, 
+                       Orthorhombic, 
+                       Tetragonal, 
                        Rhombohedral /**< also called trigonal*/, 
-					   Hexagonal, 
-					   Cubic};
+                       Hexagonal, 
+                       Cubic};
 
 
   protected:
@@ -466,34 +467,34 @@ namespace OpenBabel
     void SetSpaceGroup(const std::string sg) { _spaceGroup = sg; }
     
     //! Set the space group for this unit cell. Each spacegroup-symbol
-	//! has a numeric equivalent which is easier to use to convert between
-	//! notations.
+    //! has a numeric equivalent which is easier to use to convert between
+    //! notations.
     //! Does not create an OBSymmetryData entry or attempt to convert
     //!  between different symbol notations
-	void SetSpaceGroup(const int sg) { _numericSpaceGroup = sg; }
+    void SetSpaceGroup(const int sg) { _numericSpaceGroup = sg; }
     
-	//! Set the Bravais lattice type for this unit cell
+    //! Set the Bravais lattice type for this unit cell
     void SetLatticeType(const LatticeType lt) { _lattice = lt; }
 
-    //! \return Return vector a
+    //! \return vector a
     double GetA()    { return(_a);    }
-    //! \return Return vector b
+    //! \return vector b
     double GetB()    { return(_b);    }
-    //! \return Return vector c
+    //! \return vector c
     double GetC()    { return(_c);    }
-    //! \return Return angle alpha
+    //! \return angle alpha
     double GetAlpha(){ return(_alpha);}
-    //! \return Return angle beta
+    //! \return angle beta
     double GetBeta() { return(_beta); }
-    //! \return Return angle gamma
+    //! \return angle gamma
     double GetGamma(){ return(_gamma);}
     vector3 GetOffset() { return(_offset); }
     const std::string GetSpaceGroup() { return(_spaceGroup); }
 		
-	//! \return lattice type (based on the @p spacegroup)
-	LatticeType GetLatticeType( int spacegroup );
+    //! \return lattice type (based on the @p spacegroup)
+    LatticeType GetLatticeType( int spacegroup );
     
-	//! \return lattice type (based on angles and distances)
+    //! \return lattice type (based on angles and distances)
     LatticeType GetLatticeType();
 
     //! \return v1, v2, v3 cell vectors
@@ -624,10 +625,7 @@ namespace OpenBabel
     //! Gets the bond index of the central bond
     //! \return int bond index
     unsigned int GetBondIdx();
-    unsigned int GetSize() const
-    {
-      return (unsigned int)_ads.size();
-    }
+    unsigned int GetSize() const    {      return _ads.size();    }
 
     //! Gets the two central atoms of ABCD torsion
     //!   \return pair<OBAtom*,OBAtom*>
@@ -677,7 +675,7 @@ namespace OpenBabel
     //! \return integer count of the number of torsions
     unsigned int      GetSize() const
     {
-      return (unsigned int)_torsions.size();
+      return _torsions.size();
     }
 
     void SetData(OBTorsion &torsion);
@@ -749,7 +747,7 @@ namespace OpenBabel
     OBAngleData();
     OBAngleData(const OBAngleData &);
     //! Gets the angle vector data
-    //! \return a vector<OBAngle>
+    /** \return a vector<OBAngle> **/
     std::vector<OBAngle> GetData() const
       {
         return(_angles);
@@ -768,7 +766,7 @@ namespace OpenBabel
     //! \return integer count of the number of angles
     unsigned int GetSize() const
     {
-      return (unsigned int)_angles.size();
+      return _angles.size();
     }
   };
 
@@ -819,8 +817,8 @@ namespace OpenBabel
     {
       _serialMap = cp._serialMap;
     }
-    //! Member varaiables contain OBAtom pointers, so copying only valid within
-    //! same molecule, unless code modified, as in OBRotameterList 
+    //! Member variables contain OBAtom pointers, so copying only valid within
+    //! same molecule, unless the code is modified, as in OBRotamerList 
     virtual OBGenericData* Clone(OBBase* /*parent*/) const
     {return new OBSerialNums(*this);}
       

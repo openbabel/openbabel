@@ -98,10 +98,15 @@ namespace OpenBabel
   OBSqrtTbl():
     _max(0.0), _incr(0.0),  _tbl(NULL)
       { }
-    OBSqrtTbl(const double max, const double incr)
-      {
-        Init(max,incr);
-      }
+    //! \brief Create a square root table to handle up to the square root of @p max
+    //! (e.g., if you want the square root of 144, supply 12 for max)
+    //! \param max The maximum square root stored in the lookup table
+    //! \param incr The floating point resolution of the lookup table
+  OBSqrtTbl(const double max, const double incr):
+    _max(max*max), _incr(incr), _tbl(NULL)
+    {
+      Init(max,incr);
+    }
     ~OBSqrtTbl()
       {
         if (_tbl)
@@ -110,6 +115,8 @@ namespace OpenBabel
             _tbl = NULL;
           }
       }
+    //! \brief Fast square root calculation using a lookup table
+    //! \return Square root of @p d2
     double Sqrt(double d2) const
     {
       if (_tbl)
@@ -117,12 +124,14 @@ namespace OpenBabel
       else
         return 0.0;
     }
+    //! \brief Initialize the square root lookup table
+    //! \param max The maximum square root stored in the lookup table (e.g., if you want the square root of 144, supply 12 for max)
+    //! \param incr The floating point resolution of the lookup table    
     void Init(double max,double incr)
     {
       int i;
       double r;
-      _max = max*max;
-      _incr = incr;
+
       //array size needs to be large enough to account for fp error
       _tbl = new double [static_cast<int>((_max/_incr)+10)];
       for (r = (_incr/2.0),i=0;r <= _max;r += _incr,++i)
@@ -167,13 +176,13 @@ namespace OpenBabel
    */
   OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
   /**
-    * Returns true if \a a is much smaller than \a b. More precisely:
-    * @code
-      return( fabs(a) <= precision * fabs(b) );
-    * @endcode
-    */
+   * \return true if \a a is much smaller than \a b. More precisely:
+   * @code
+   return( fabs(a) <= precision * fabs(b) );
+   * @endcode
+   */
   OBAPI inline bool IsNegligible(const double & a, const double & b,
-                      const double precision = 1e-11)
+                                 const double precision = 1e-11)
   {
     return( fabs(a) <= precision * fabs(b) );
   }
@@ -195,13 +204,13 @@ namespace OpenBabel
    * @endcode
    */
   OBAPI inline bool IsApprox(const double & a, const double & b,
-                      const double precision = 1e-11)
+                             const double precision = 1e-11)
   {
     return( fabs(a - b) <= precision * std::min( fabs(a), fabs(b) ) );
   }
   //! Same as IsApprox(), but only for positive numbers. Faster.
   OBAPI inline bool IsApprox_pos(const double &a, const double &b,
-      const double precision = 1e-11)
+                                 const double precision = 1e-11)
   {
     return( fabs(a - b) <= precision * std::min( a, b ) );
   }

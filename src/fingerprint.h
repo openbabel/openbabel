@@ -44,7 +44,7 @@ public:
   /// Repeatedly ORs the top half with the bottom half until no smaller than nbits 
   void Fold(std::vector<unsigned int>& vec, unsigned int nbits); 
 
-  /// Returns fingerprint in vector, which may be resized, folded to nbits (if nbits!=0)
+  /// \return fingerprint in vector, which may be resized, folded to nbits (if nbits!=0)
   virtual bool GetFingerprint(OBBase* pOb, std::vector<unsigned int>& fp, int nbits=0)=0;
 
   /// Required short description of the fingerprint type.
@@ -57,10 +57,10 @@ public:
   /// Obtain info on available fingerprints
   static bool GetNextFPrt(std::string& id, OBFingerprint*& pFPrt);
 
-  /// Returns a pointer to a fingerprint (the default if ID is empty), or NULL if not available
+  /// \return a pointer to a fingerprint (the default if ID is empty), or NULL if not available
   static OBFingerprint* FindFingerprint(std::string& ID);
 
-  /// Returns the Tanimoto coefficient between two vectors (vector<unsigned int>& SeekPositions)
+  /// \return the Tanimoto coefficient between two vectors (vector<unsigned int>& SeekPositions)
   static double Tanimoto(const std::vector<unsigned int>& vec1, const std::vector<unsigned int>& vec2);
   
   /// Inline version of Tanimoto() taking a pointer for the second vector
@@ -143,7 +143,7 @@ struct OBFPRT FptIndex
   std::vector<unsigned int> fptdata;
   std::vector<unsigned int> seekdata;
   bool Read(std::istream* pIndexstream);
-  ///\brief Returns pointer to FP used or NULL and an error message
+  /// \return A pointer to FP used or NULL and an error message
   OBFingerprint* CheckFP();
 };
 
@@ -158,20 +158,20 @@ public:
   /// \brief Does substructure search and returns vector of the file positions of matches 
   bool    Find(OBBase* pOb, std::vector<unsigned int>& SeekPositions, unsigned int MaxCandidates);
 
-  /// \brief Returns multimap containing objects whose Tanimoto coefficients with the target
+  /// \return A multimap containing objects whose Tanimoto coefficients with the target
   ///	is greater than the value specified.
   bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
     double MinTani);
 
-  /// \brief Returns multimap containing the nCandidates objects with largest Tanimoto
+  /// \return A multimap containing the nCandidates objects with largest Tanimoto
   ///  coefficients with the target.
   bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
     int nCandidates=0);
 
-  /// \brief Returns a pointer to the fingerprint type used to constuct the index
+  /// \return a pointer to the fingerprint type used to constuct the index
   OBFingerprint* GetFingerprint() const{ return _pFP;};
 
-  /// \brief Returns a pointer to the index header containing size info etc.
+  /// \return a pointer to the index header containing size info etc.
   const FptIndexHeader& GetIndexHeader() const{ return _index.header;};
 
 private:

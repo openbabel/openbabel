@@ -29,7 +29,6 @@ GNU General Public License for more details.
 
 #include <vector>
 #include <string>
-#include <map>
 
 #include "base.h"
 #include "residue.h"
@@ -97,7 +96,7 @@ namespace OpenBabel
       int  GetFlag() const    {  return(_flags);  }
       //! Sets the bitwise @p flag
       void SetFlag(int flag)  { _flags |= flag;   }
-      //! \return Returns true of the atom has the @p flag
+      //! \return True of the atom has the @p flag
       bool HasFlag(int flag)  {  return((_flags & flag) ? true : false); }
 
     public:
@@ -135,7 +134,7 @@ namespace OpenBabel
       void SetSpinMultiplicity(short spin){ _spinmultiplicity = spin; }
       void SetType(char *type);
       void SetType(std::string &type);
-      //! Set the patrical charge to @p pcharge
+      //! Set the partial charge to @p pcharge
       void SetPartialCharge(double pcharge){ _pcharge = pcharge; }
       void SetVector(vector3 &v);
       void SetVector(const double x,const double y,const double z);
@@ -251,21 +250,21 @@ namespace OpenBabel
           else
             return NULL;
         }
-      //! Return the coordinates as a vector3 object
+      //! \return the coordinates as a vector3 object
       vector3   &GetVector();
-      //! Return the partial charge of this atom, calculating a Gasteiger charge if needed
+      //! \return the partial charge of this atom, calculating a Gasteiger charge if needed
       double     GetPartialCharge();
-      //! Return the residue which contains this atom, or NULL if none exists
+      //! \return the residue which contains this atom, or NULL if none exists
       OBResidue *GetResidue();
-      //! Return the molecule which contains this atom, or NULL if none exists
+      //! \return the molecule which contains this atom, or NULL if none exists
       OBMol     *GetParent()        {return((OBMol*)_parent);}
       //! Create a vector for a new bond from this atom, with length given by the supplied parameter
       //! \return success or failure
       bool       GetNewBondVector(vector3 &v,double length);
-      //! Return the OBBond object between this atom and that supplied,
+      //! \return the OBBond object between this atom and that supplied,
       //! or NULL if the two atoms are not bonded
       OBBond    *GetBond(OBAtom *);
-      //! Return a pointer to the "next" atom (by atom index) in the
+      //! \return a pointer to the "next" atom (by atom index) in the
       //! parent OBMol, or NULL if no such atom exists.
       //! \deprecated Use any of the other iterator methods. This
       //! method will be removed in the future.

@@ -2,7 +2,7 @@
 rotamer.h - Handle rotamer list data.
  
 Copyright (C) 1998-2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -90,6 +90,7 @@ namespace OpenBabel
     void AddRotamer(unsigned char *key);
     //! Add @p nconf rotamers based on @p as an array of configurations much like AddRotamer()
     void AddRotamers(unsigned char *arr,int nconf);
+    //! \return A reference array (as used by AddRotamer() as a configuration of the individual rotor bonds
     void GetReferenceArray(unsigned char*) const;
 
     //! \name Iterator methods
@@ -104,41 +105,47 @@ namespace OpenBabel
       }
     //@}
 
-    //! Create a conformer list using the internal base set of coordinates
+    //! \brief Create a conformer list using the internal base set of coordinates
     //! \return The set of coordinates by rotating the bonds in each rotamer
     std::vector<double*> CreateConformerList(OBMol& mol);
 
-    //! Create a conformer list using the internal base set of coordinates
-    //! Returns the set of coordinates as a reference in @p confs
+    //! \brief Create a conformer list using the internal base set of coordinates
+    //! \return The set of coordinates as a reference in @p confs
     void ExpandConformerList(OBMol&mol,std::vector<double*>& confs);
 
-    //! Copies the mol's conformers (the coordinates, NOT the pointers)
+    //! \brief Copies the mol's conformers (the coordinates, NOT the pointers)
     //! into the object as base coordinates
     void SetBaseCoordinateSets(OBMol& mol)
     {
       SetBaseCoordinateSets(mol.GetConformers(), mol.NumAtoms());
     }
 
-    //! Copies the coordinates in bc, NOT the pointers, into the object
+    //! Copies the coordinates in bc, NOT the pointers, into this object
+    /** \param bc The conformer set for the molecule
+        \param N  The number of atoms in the molecule
+     **/
     void SetBaseCoordinateSets(std::vector<double*> bc, unsigned int N);
 
+    //! \return The number of "base" coordinate sets (i.e., the number of conformers in the base OBMol)
     unsigned int NumBaseCoordinateSets() const
     {
-      return (unsigned int)_c.size();
+      return _c.size();
     }
 
-    //! Get a pointer to a specific base pointer
+    //! Get a pointer to a specific base pointer (i.e., specific conformer)
     double *GetBaseCoordinateSet(unsigned int i) const
     {
       return (i<_c.size()) ? _c[i] : NULL;
     }
 
+    //! \return The number of atoms in the base OBMol
     unsigned int NumAtoms() const
     {
       return _NBaseCoords;
     }
   };
 
+  //! Swap Byte instruction (i.e., handle transfers between endian forms)
   int Swab(int);
 
 }

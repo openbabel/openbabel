@@ -174,52 +174,52 @@ namespace OpenBabel
       //! \name Data retrieval methods
       //@{
       int          GetFlags()               { return(_flags); }
-      //! Return the title of this molecule (often the filename)
+      //! \return the title of this molecule (often the filename)
       const char  *GetTitle() const         { return(_title.c_str()); }
-      //! Return the number of atoms (i.e. OBAtom children)
+      //! \return the number of atoms (i.e. OBAtom children)
       unsigned int NumAtoms() const         {  return(_natoms); }
-      //! Return the number of bonds (i.e. OBBond children)
+      //! \return the number of bonds (i.e. OBBond children)
       unsigned int NumBonds() const         {  return(_nbonds); }
-      //! Return the number of non-hydrogen atoms
+      //! \return the number of non-hydrogen atoms
       unsigned int NumHvyAtoms();
-      //! Return the number of residues (i.e. OBResidue substituents)
+      //! \return the number of residues (i.e. OBResidue substituents)
       unsigned int NumResidues() const      { return(_residue.size()); }
-      //! Return the number of rotatble bonds. See OBBond::IsRotor() for details
+      //! \return the number of rotatble bonds. See OBBond::IsRotor() for details
       unsigned int NumRotors();
     
       OBAtom      *GetAtom(int);
       OBAtom      *GetFirstAtom();
       OBBond      *GetBond(int);
       OBBond      *GetBond(int, int);
-      //! Return the bond between the atoms @p bgn and @p end
+      //! \return the bond between the atoms @p bgn and @p end
       OBBond      *GetBond(OBAtom* bgn, OBAtom* end);
       OBResidue   *GetResidue(int);
       std::vector<OBInternalCoord*> GetInternalCoord();
-      //! Return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
+      //! \return the dihedral angle between the four atoms supplied a1-a2-a3-a4)
       double       GetTorsion(int,int,int,int);
-      //! Return the dihedral angle between the four atoms @p a, @p b, @p c, and @p d)
+      //! \return the dihedral angle between the four atoms @p a, @p b, @p c, and @p d)
       double       GetTorsion(OBAtom* a,OBAtom* b,OBAtom* c,OBAtom* d);
-      //! Return the angle between the three atoms @p a, @p b and @p c
+      //! \return the angle between the three atoms @p a, @p b and @p c
       //!  (where  a-> b (vertex) -> c )
       double GetAngle(OBAtom* a, OBAtom* b, OBAtom* c);
-      //! Return the stochoimetric formula (e.g., C4H6O)
+      //! \return the stochoimetric formula (e.g., C4H6O)
       std::string  GetFormula();
-      //! Return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
+      //! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
       std::string  GetSpacedFormula(int ones=0, const char* sp=" ");
-      //! Return the heat of formation for this molecule (in kcal/mol)
+      //! \return the heat of formation for this molecule (in kcal/mol)
       double       GetEnergy() const { return(_energy); }
-      //! Return the standard molar mass given by IUPAC atomic masses (amu)
+      //! \return the standard molar mass given by IUPAC atomic masses (amu)
       double       GetMolWt();
-      //! Return the mass given by isotopes (or most abundant isotope, if not specified)
+      //! \return the mass given by isotopes (or most abundant isotope, if not specified)
       double	 GetExactMass();
-      //! Return the total charge on this molecule (i.e., 0 = neutral, +1, -1...)
+      //! \return the total charge on this molecule (i.e., 0 = neutral, +1, -1...)
       int		 GetTotalCharge();
-      //! Return the total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
+      //! \return the total spin on this molecule (i.e., 1 = singlet, 2 = doublet...)
       unsigned int GetTotalSpinMultiplicity();
-      //! Return the dimensionality of coordinates (i.e., 0 = unknown or no coord, 2=2D, 3=3D)
+      //! \return the dimensionality of coordinates (i.e., 0 = unknown or no coord, 2=2D, 3=3D)
       unsigned short int GetDimension() const { return _dimension; }
       double      *GetCoordinates() { return(_c); }
-      //! Return the Smallest Set of Smallest Rings has been run (see OBRing class
+      //! \return the Smallest Set of Smallest Rings has been run (see OBRing class
       std::vector<OBRing*> &GetSSSR();
       //! Get the current flag for whether formal charges are set with pH correction
       bool AutomaticFormalCharge()   { return(_autoFormalCharge);  }

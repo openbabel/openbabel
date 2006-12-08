@@ -33,17 +33,41 @@ namespace OpenBabel
   class OBAtom;
   
   //! \brief Used to transform from z-matrix to cartesian coordinates.
+  /** Used with InternalToCartesian() and CartensianToInternal() methods.
+      Does not perform any actions itself. You must create or free OBAtom
+      pointers yourself.
+
+      The z-matrix representation uses coordinates relative to up to three
+      atoms, which need not be bonded in any fashion. A rough sketch of the
+      a, b, and c atoms would be:
+      \code
+          *
+         /
+        /
+       a----b
+           /
+          /
+         c
+      \endcode
+      where the OBInternalCoord record reflects the '*' atom.
+
+      Warning: Does not detect if NULL pointers are used. You should be careful.
+   **/
   class OBAPI OBInternalCoord
   {
   public:
     //class members
-    OBAtom *_a,*_b,*_c;
-    double   _dst,_ang,_tor;
+    OBAtom *_a;   //!< First connection for this atom (i.e., distance)
+    OBAtom *_b;   //!< Second reference atom (i.e., angle)
+    OBAtom *_c;   //!< Third reference atom (i.e., dihedral / torsion angle)
+    double  _dst; //!< Distance between this atom and _a
+    double  _ang; //!< Angle between this, _a, and _b (i.e., _a is the vertex)
+    double  _tor; //!< Torsional/dihedral angle between this, _a, _b, and _c
+
     //! Constructor
-  OBInternalCoord(OBAtom *a= NULL,
-                  OBAtom *b= NULL,
-                  OBAtom *c= NULL) :
-    _a(a), _b(b), _c(c), _dst(0.0), _ang(0.0), _tor(0.0)
+  OBInternalCoord(OBAtom *a= NULL, OBAtom *b= NULL, OBAtom *c= NULL,
+                  double dst = 0.0, double ang = 0.0, double tor = 0.0) :
+    _a(a), _b(b), _c(c), _dst(dst), _ang(ang), _tor(tor)
       {}
   };
   

@@ -3,6 +3,17 @@
 	* test/Makefile.am, test/Makefile.in: Remove outdated vector3 and
 	matrix tests.
 
+	* scripts/: Added fingerprint.h header for direct access to
+	OBFingerprint classes.
+
+	* src/grid.h, src/grid.cpp (OBGrid): New base class, derived from
+	OBBase to allow conversion to handle grids. Also simplifies
+	OBFloatGrid and OBProxGrid code.
+
+	* src/*: Documentation updates.
+
+	* src/formats/xml/cdxmlformat.cpp: New file for ChemDraw CDXML format.
+
 2006-12-07 Chris Morley <ob@gaseq.co.uk>
 
 	* src/formats/inchiformat.cpp: Read capability added using the NIST

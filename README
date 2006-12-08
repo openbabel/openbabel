@@ -1,18 +1,17 @@
 Open Babel README version 2.1
 ----------------
 
-Open Babel is a free, open-source version of the Babel 
-chemistry file translation program. OpenBabel is a project designed to
-pick up where Babel left off, as a cross-platform program and library
-designed to interconvert between many file formats used in molecular
-modeling and computational chemistry.
+Open Babel is a chemical toolbox designed to speak the many languages
+of chemical data. It's an open, collaborative project allowing anyone
+to search, convert, analyze, or store data from molecular modeling,
+chemistry, solid-state materials, biochemistry, or related areas.
 
-Open Babel includes two components, a command-line utility and a
-C++ library. The command-line utility is intended to be used as a
-replacement for the original babel program, to translate between
-various chemical file formats. The C++ library includes all of the
-file-translation code as well as a wide variety of utilities to
-foster development of other open source chemistry software.
+* Ready-to-use programs, and complete programmer's toolkit
+* Read, write and convert over 70 chemical file formats
+* Filter and search molecular files using SMARTS and other methods
+* Supports molecular modeling, cheminformatics, bioinformatics,
+  organic chemistry, inorganic chemistry, solid-state materials,
+  nuclear chemistry...
 
 Open Babel is distributed under the GNU General Public License (GPL).
 This program is free software; you can redistribute it and/or modify
