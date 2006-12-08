@@ -282,7 +282,7 @@ namespace OpenBabel
     /* unless the _vx and _vy coords are both close to zero, we can
      * simply take ( -_vy, _vx, 0 ) and normalize it.
      */
-    if( ! IsNegligible( _vx, 1.0 ) || ! IsNegligible( _vy, 1.0 ) )
+    if( ! IsNegligible( _vx, _vz ) || ! IsNegligible( _vy, _vz ) )
     {
       double norm = sqrt( _vx*_vx + _vy*_vy );
       res._vx = -_vy / norm;

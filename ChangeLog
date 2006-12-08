@@ -1,3 +1,7 @@
+2006-12-04  Benoit Jacob <jacob@math.jussieu.fr>
+
+	* src/math/vector3.cpp: optimize createOrthoVector(), update doc.
+
 2006-12-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/generic.h, src/generic.cpp (OBRingData): Add new methods for
