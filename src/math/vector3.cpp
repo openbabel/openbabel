@@ -278,12 +278,14 @@ namespace OpenBabel
     */
 
     /* if the absolute values of the x and y-coords
-    are close, then the vector is far from being colinear to (1, 0, 0).
+    are "close", then the vector is far from being colinear to (1, 0, 0).
+    Here, "close" means "vaguely of the same order of magnitude". We want
+    to be in that case as often as possible because it's the fast case.
     */
-    if( IsApprox_pos ( fabs(_vx), fabs(_vy), 0.1 ) )
+    if( IsApprox_pos ( fabs(_vx), fabs(_vy), 10.0 ) )
     {
       // store in res the crossed product of *this with (1,0,0),
-      // divided by its norm. In this case the computation is much simpler.
+      // divided by its norm.
       double norm = sqrt( _vy*_vy + _vz*_vz );
       res._vx = 0.0;
       res._vy = _vz / norm;
