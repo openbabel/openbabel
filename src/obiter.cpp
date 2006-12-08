@@ -706,17 +706,13 @@ namespace OpenBabel
   \endcode
   **/
 
-  OBResidueAtomIter::OBResidueAtomIter(OBResidue *res)
-  {
-    _parent = res;
-    _ptr    = _parent->BeginAtom(_i);
-  }
+  OBResidueAtomIter::OBResidueAtomIter(OBResidue *res):
+    _parent(res), _ptr(_parent->BeginAtom(_i))
+  {  }
 
-  OBResidueAtomIter::OBResidueAtomIter(OBResidue &res)
-  {
-    _parent = &res;
-    _ptr    = _parent->BeginAtom(_i);
-  }
+  OBResidueAtomIter::OBResidueAtomIter(OBResidue &res):
+    _parent(&res), _ptr(_parent->BeginAtom(_i))
+  {  }
 
   OBResidueAtomIter::OBResidueAtomIter(const OBResidueAtomIter &ri)
   {
@@ -749,6 +745,409 @@ namespace OpenBabel
     operator++();
     return tmp;
   }
+
+  /** \class OBMolRingIter
+
+  To facilitate iteration through all rings in a molecule, without resorting
+  to ring indexes (which may change in the future) a variety of
+  iterator classes and methods are provided. One word of warning is that
+  these iterator methods automatically call OBMol::FindSSSR() which may
+  involve a significant performance hit on large molecules.
+
+  Calling iterator classes has been made significantly easier by a series
+  of macros in the obiter.h header file:
+
+  \code
+  \#define FOR_RINGS_OF_MOL(r,m)     for( OBMolRingIter     r(m); r; ++r )
+  \endcode
+
+  Here is an example:
+  \code
+  #include "obiter.h"
+  #include "mol.h"
+
+  OBMol mol;
+  FOR_RINGS_OF_MOL(r, mol)
+  {
+  // The variable r behaves like OBRing* when used with -> and * but
+  // but needs to be explicitly converted when appearing as a parameter
+  // in a function call - use &*r
+
+  }
+  \endcode
+  **/
+
+  OBMolRingIter::OBMolRingIter(OBMol *mol): _parent(mol)
+  {
+    if (!_parent->HasSSSRPerceived())
+      _parent->FindSSSR();
+
+    _rings = (OBRingData *) _parent->GetData(OBGenericDataType::RingData);
+    if(_rings)
+      _ptr = _rings->BeginRing(_i);
+  }
+
+  OBMolRingIter::OBMolRingIter(OBMol &mol): _parent(&mol)
+  {
+    if (!_parent->HasSSSRPerceived())
+      _parent->FindSSSR();
+
+    _rings = (OBRingData *) _parent->GetData(OBGenericDataType::RingData);
+    if (_rings)
+      _ptr = _rings->BeginRing(_i);
+  }
+
+  OBMolRingIter::OBMolRingIter(const OBMolRingIter &ri)
+  {
+    _parent = ri._parent;
+    _ptr = ri._ptr;
+    _rings = ri._rings;
+    _i = ri._i;
+  }
+
+  OBMolRingIter& OBMolRingIter::operator=(const OBMolRingIter &ri)
+  {
+    if (this != &ri)
+      {
+        _parent = ri._parent;
+        _ptr = ri._ptr;
+        _rings = ri._rings;
+        _i = ri._i;
+      }
+    return *this;
+  }
+
+  OBMolRingIter& OBMolRingIter::operator++()
+  {
+    if (_rings)
+      _ptr = _rings->NextRing(_i);
+    return *this;
+  }
+
+  OBMolRingIter OBMolRingIter::operator++(int)
+  {
+    OBMolRingIter tmp(*this);
+    operator++();
+    return tmp;
+  }
+
+  /** \class OBMolAngleIter
+
+  To facilitate iteration through all angles in a molecule, without resorting
+  to atom indexes (which <strong>will</strong> change in the future), a 
+  variety of iterator methods are provided.
+
+  This has been made significantly easier by a series of macros in the 
+  obiter.h header file:
+
+  \code
+  \#define FOR_ANGLES_OF_MOL(a,m)     for( OBMolAngleIter     a(m); a; a++ )
+  \endcode
+
+  Here is an example:
+  \code
+  #include "obiter.h"
+  #include "mol.h"
+
+  OBMol mol;
+  OBAtom *a, *b, *c;
+  double ang;
+  
+  FOR_ANGLES_OF_MOL(angle, mol)
+  {
+    // The variable a behaves like OBAngle* when used with -> and * but
+    // but needs to be explicitly converted when appearing as a parameter
+    // in a function call - use &*a
+    
+    b = _mol.GetAtom((*angle)[0] + 1);
+    a = _mol.GetAtom((*angle)[1] + 1);
+    c = _mol.GetAtom((*angle)[2] + 1);
+    ang = a->GetAngle(b->GetIdx(), c->GetIdx());
+  }
+  \endcode
+  **/
+
+  OBMolAngleIter::OBMolAngleIter(OBMol *mol)
+  {
+    mol->FindAngles();
+    OBAngleData *ad = (OBAngleData *) mol->GetData(OBGenericDataType::AngleData);
+    ad->FillAngleArray(_vangle);
+    
+    _parent = mol;
+    _i = _vangle.begin();
+    _ptr = *_i;
+  }
+
+  OBMolAngleIter::OBMolAngleIter(OBMol &mol)
+  {
+    mol.FindAngles();
+    OBAngleData *ad = (OBAngleData *) mol.GetData(OBGenericDataType::AngleData);
+    ad->FillAngleArray(_vangle);
+    
+    _parent = &mol;
+    _i = _vangle.begin();
+    _ptr = *_i;
+  }
+
+  OBMolAngleIter::OBMolAngleIter(const OBMolAngleIter &ai)
+  {
+    _parent = ai._parent;
+    _ptr = ai._ptr;
+    _vangle = ai._vangle;
+    _i = ai._i;
+  }
+
+  OBMolAngleIter& OBMolAngleIter::operator=(const OBMolAngleIter &ai)
+  {
+    if (this != &ai)
+      {
+        _parent = ai._parent;
+        _ptr = ai._ptr;
+        _vangle = ai._vangle;
+        _i = ai._i;
+      }
+    return *this;
+  }
+
+  OBMolAngleIter OBMolAngleIter::operator++(int)
+  {
+    _i++;
+    
+    if (_i != _vangle.end()) {
+      _ptr = *_i;
+    } else
+      _ptr = (std::vector<unsigned int>) 0;
+ 
+    return *this;
+  }
+
+  /** \class OBMolTorsionIter
+
+  To facilitate iteration through all torsions in a molecule, without resorting
+  to atom indexes (which <strong>will</strong> change in the future), a 
+  variety of iterator methods are provided.
+
+  This has been made significantly easier by a series of macros in the 
+  obiter.h header file:
+
+  \code
+  \#define FOR_TORSIONS_OF_MOL(t,m)  for( OBMolTorsionIter   t(m); t; t++ )
+  \endcode
+
+  Here is an example:
+  \code
+  #include "obiter.h"
+  #include "mol.h"
+
+  OBMol mol;
+  OBAtom *a, *b, *c, *d;
+  double tor;
+  
+  FOR_TORSIONS_OF_MOL(t, mol)
+  {
+    // The variable a behaves like OBAngle* when used with -> and * but
+    // but needs to be explicitly converted when appearing as a parameter
+    // in a function call - use &*t
+
+    a = _mol.GetAtom((*t)[0] + 1); // indices in vector start from 0!!!
+    b = _mol.GetAtom((*t)[1] + 1);
+    c = _mol.GetAtom((*t)[2] + 1);
+    d = _mol.GetAtom((*t)[3] + 1);
+    tor = mol.GetTorsion(a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
+  }
+  \endcode
+  **/
+
+  OBMolTorsionIter::OBMolTorsionIter(OBMol *mol)
+  {
+    mol->FindTorsions();
+    OBTorsionData *td = (OBTorsionData *) mol->GetData(OBGenericDataType::TorsionData);
+    td->FillTorsionArray(_vtorsion);
+    
+    _parent = mol;
+    _i = _vtorsion.begin();
+    _ptr = *_i;
+  }
+
+  OBMolTorsionIter::OBMolTorsionIter(OBMol &mol)
+  {
+    mol.FindTorsions();
+    OBTorsionData *td = (OBTorsionData *) mol.GetData(OBGenericDataType::TorsionData);
+    td->FillTorsionArray(_vtorsion);
+    
+    _parent = &mol;
+    _i = _vtorsion.begin();
+    _ptr = *_i;
+  }
+
+  OBMolTorsionIter::OBMolTorsionIter(const OBMolTorsionIter &ai)
+  {
+    _parent = ai._parent;
+    _ptr = ai._ptr;
+    _vtorsion = ai._vtorsion;
+    _i = ai._i;
+  }
+
+  OBMolTorsionIter& OBMolTorsionIter::operator=(const OBMolTorsionIter &ai)
+  {
+    if (this != &ai)
+      {
+        _parent = ai._parent;
+        _ptr = ai._ptr;
+        _vtorsion = ai._vtorsion;
+        _i = ai._i;
+      }
+    return *this;
+  }
+
+  OBMolTorsionIter OBMolTorsionIter::operator++(int)
+  {
+    _i++;
+    
+    if (_i != _vtorsion.end()) {
+      _ptr = *_i;
+    } else
+      _ptr = (std::vector<unsigned int>) 0;
+ 
+    return *this;
+  }
+
+  /** \class OBMolPairIter
+
+  To facilitate iteration through all pairs of atoms in a molecule, without 
+  resorting to bond indexes (which may change in the future), a variety of
+  iterators are provided. A distance between atoms in a pair is 1-4 or more;
+
+  This has been made significantly easier by a series of macros in the 
+  obiter.h header file:
+
+  \code
+  \#define FOR_PAIRS_OF_MOL(p,m)     for( OBMolPairIter     p(m); p; p++ )
+  \endcode
+
+  Here is an example:
+  \code
+  #include "obiter.h"
+  #include "mol.h"
+
+  OBMol mol;
+  OBAtom *a, *b;
+  double rab;
+
+  FOR_PAIRS_OF_MOL(p, mol)
+  {
+    // The variable b behaves like OBBond* when used with -> and * but
+    // but needs to be explicitly converted when appearing as a parameter
+    // in a function call - use &*p
+
+    a = mol.GetAtom(p->first);
+    b = mol.GetAtom(p->second);
+    rab = a->GetDistance(b);
+  }
+  \endcode
+  **/
+
+  OBMolPairIter::OBMolPairIter(OBMol *mol)
+  {
+    std::pair<int, int> atoms;
+    OBAtom *i, *j;
+    bool not14;
+    
+    _parent = mol;
+
+    FOR_ATOMS_OF_MOL(a, mol) {
+      FOR_ATOMS_OF_MOL(b, mol) {
+        if (a->GetIdx() < b->GetIdx()) {
+	  not14 = false;
+
+	  i = &*a;
+	  FOR_NBORS_OF_ATOM(nbr, i) {
+	    if (&*nbr == &*b)
+	      not14 = true;
+
+	    j = &*nbr;
+	    FOR_NBORS_OF_ATOM(nbr2, j)
+	      if (&*nbr2 == &*b)
+	        not14 = true;
+	  }
+
+	  if (!not14) {
+            atoms.first = a->GetIdx();
+	    atoms.second = b->GetIdx();
+	    _vpair.push(atoms);
+	  }
+	} 
+      }
+    }
+
+    _ptr = &_vpair.front();
+  }
+
+  OBMolPairIter::OBMolPairIter(OBMol &mol)
+  {
+    std::pair<int, int> atoms;
+    OBAtom *i, *j;
+    bool not14;
+ 
+    _parent = &mol;
+    
+    FOR_ATOMS_OF_MOL(a, mol) {
+      FOR_ATOMS_OF_MOL(b, mol) {
+        if (a->GetIdx() < b->GetIdx()) {
+	  not14 = false;
+
+	  i = &*a;
+	  FOR_NBORS_OF_ATOM(nbr, i) {
+	    if (&*nbr == &*b)
+	      not14 = true;
+
+	    j = &*nbr;
+	    FOR_NBORS_OF_ATOM(nbr2, j)
+	      if (&*nbr2 == &*b)
+	        not14 = true;
+	  }
+
+	  if (!not14) {
+            atoms.first = a->GetIdx();
+	    atoms.second = b->GetIdx();
+	    _vpair.push(atoms);
+	  }
+	} 
+      }
+    }
+
+    _ptr = &_vpair.front();
+  }
+
+  OBMolPairIter::OBMolPairIter(const OBMolPairIter &ai)
+  {
+    _parent = ai._parent;
+    _ptr = ai._ptr;
+    _vpair = ai._vpair;
+  }
+
+  OBMolPairIter& OBMolPairIter::operator=(const OBMolPairIter &ai)
+  {
+    if (this != &ai) {
+        _parent = ai._parent;
+        _ptr = ai._ptr;
+        _vpair = ai._vpair;
+      }
+    return *this;
+  }
+
+  OBMolPairIter OBMolPairIter::operator++(int)
+  {
+    _vpair.pop();
+
+    if (!_vpair.empty()) {
+      _ptr = &_vpair.front();
+    } else
+      _ptr = NULL;
+ 
+    return *this;
+  }
+
 
 } // namespace OpenBabel
 

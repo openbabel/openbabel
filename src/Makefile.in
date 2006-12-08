@@ -69,19 +69,19 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 @BUILD_SHARED_TRUE@	fingerprints/libfingerprints.la @LTLIBOBJS@
 am__libopenbabel_la_SOURCES_DIST = atom.cpp base.cpp bitvec.cpp \
 	bond.cpp bondtyper.cpp chains.cpp chiral.cpp data.cpp \
-	fingerprint.cpp generic.cpp grid.cpp kekulize.cpp matrix.cpp \
-	mol.cpp molchrg.cpp newlinebuf.cpp obconversion.cpp \
-	oberror.cpp obiter.cpp obutil.cpp parsmart.cpp patty.cpp \
-	phmodel.cpp rand.cpp residue.cpp ring.cpp rotor.cpp \
-	rotamer.cpp tokenst.cpp typer.cpp transform.cpp \
-	dlhandler_unix.cpp
+	fingerprint.cpp forcefield.cpp generic.cpp grid.cpp \
+	kekulize.cpp matrix.cpp mol.cpp molchrg.cpp newlinebuf.cpp \
+	obconversion.cpp oberror.cpp obiter.cpp obutil.cpp \
+	parsmart.cpp patty.cpp phmodel.cpp rand.cpp residue.cpp \
+	ring.cpp rotor.cpp rotamer.cpp tokenst.cpp typer.cpp \
+	transform.cpp dlhandler_unix.cpp
 @BUILD_SHARED_TRUE@am__objects_1 = dlhandler_unix.lo
 am_libopenbabel_la_OBJECTS = atom.lo base.lo bitvec.lo bond.lo \
 	bondtyper.lo chains.lo chiral.lo data.lo fingerprint.lo \
-	generic.lo grid.lo kekulize.lo matrix.lo mol.lo molchrg.lo \
-	newlinebuf.lo obconversion.lo oberror.lo obiter.lo obutil.lo \
-	parsmart.lo patty.lo phmodel.lo rand.lo residue.lo ring.lo \
-	rotor.lo rotamer.lo tokenst.lo typer.lo transform.lo \
+	forcefield.lo generic.lo grid.lo kekulize.lo matrix.lo mol.lo \
+	molchrg.lo newlinebuf.lo obconversion.lo oberror.lo obiter.lo \
+	obutil.lo parsmart.lo patty.lo phmodel.lo rand.lo residue.lo \
+	ring.lo rotor.lo rotamer.lo tokenst.lo typer.lo transform.lo \
 	$(am__objects_1)
 libopenbabel_la_OBJECTS = $(am_libopenbabel_la_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
@@ -281,9 +281,9 @@ lib_LTLIBRARIES = libopenbabel.la
 libopenbabel_la_SOURCES = \
 		atom.cpp base.cpp bitvec.cpp bond.cpp \
 		bondtyper.cpp chains.cpp chiral.cpp data.cpp \
-		fingerprint.cpp generic.cpp grid.cpp \
-		kekulize.cpp matrix.cpp mol.cpp molchrg.cpp \
-		newlinebuf.cpp \
+		fingerprint.cpp forcefield.cpp generic.cpp \
+		grid.cpp kekulize.cpp matrix.cpp mol.cpp \
+		molchrg.cpp newlinebuf.cpp \
 		obconversion.cpp oberror.cpp obiter.cpp \
 		obutil.cpp parsmart.cpp \
 		patty.cpp phmodel.cpp rand.cpp residue.cpp ring.cpp \
@@ -303,7 +303,7 @@ libopenbabelinclude_HEADERS = \
 		atom.h \
 		babelconfig.h base.h bond.h bitvec.h \
 		bondtyper.h chains.h chiral.h data.h \
-		dlhandler.h fingerprint.h \
+		dlhandler.h fingerprint.h forcefield.h \
 		generic.h grid.h internalcoord.h kinetics.h \
 		newlinebuf.h \
 		matrix.h mol.h molchrg.h \
@@ -444,6 +444,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dlhandler_unix.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fingerprint.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forcefield.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generic.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grid.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kekulize.Plo@am__quote@

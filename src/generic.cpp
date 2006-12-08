@@ -31,87 +31,93 @@ namespace OpenBabel
 
   /** \class OBGenericData
 
-  OBGenericData is an abstract base class which defines an interface for
-  storage, retrieval, and indexing of arbitrary generic data.
-  Subclasses of OBGenericData can be used to store custom data
-  on a per-atom, per-bond, per-molecule, or per-residue basis.
-  Open Babel currently supports a small subset of chemical functionality
-  as OBGenericData types, which will expand over time to support additional
-  interconversion (e.g., spectroscopy, dynamics, surfaces...)
+      OBGenericData is an abstract base class which defines an interface for
+      storage, retrieval, and indexing of arbitrary generic data.
+      Subclasses of OBGenericData can be used to store custom data
+      on a per-atom, per-bond, per-molecule, or per-residue basis.
+      Open Babel currently supports a small subset of chemical functionality
+      as OBGenericData types, which will expand over time to support additional
+      interconversion (e.g., spectroscopy, dynamics, surfaces...)
 
-  For your own custom data, either define a custom subclass using 
-  an id from the OBGenericDataType::CustomData0 to OBGenericDataType::CustomData15 slots,
-  or store your data as a string and use OBPairData for key/value access.
-  The latter is <strong>highly</strong> recommended for various text descriptors
-  e.g., in QSAR, atom or bond labels, or other textual data.
+      For your own custom data, either define a custom subclass using 
+      an id from the OBGenericDataType::CustomData0 to 
+      OBGenericDataType::CustomData15 slots,
+      or store your data as a string and use OBPairData for key/value access.
+      The latter is <strong>highly</strong> recommended for various text 
+      descriptors
+      e.g., in QSAR, atom or bond labels, or other textual data.
 
-  Example code using OBGenericData
+      Example code using OBGenericData
 
-  @code
-  if (mol.HasData(OBGenericDataType::UnitCell))
-  {
-  uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
-  sprintf(buffer,
-  "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
-  uc->GetA(), uc->GetB(), uc->GetC(),
-  uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
-  ofs << buffer << endl;
-  }
+      @code
+      if (mol.HasData(OBGenericDataType::UnitCell))
+      {
+      uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+      sprintf(buffer,
+      "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f",
+      uc->GetA(), uc->GetB(), uc->GetC(),
+      uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
+      ofs << buffer << endl;
+      }
 
-  ...
+      ...
 
-  vector<OBGenericData*>::iterator k;
-  vector<OBGenericData*> vdata = mol.GetData();
-  for (k = vdata.begin();k != vdata.end();++k)
-  if ((*k)->GetDataType() == OBGenericDataType::PairData)
-  {
-  ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
-  ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
-  }
-  @endcode
+      vector<OBGenericData*>::iterator k;
+      vector<OBGenericData*> vdata = mol.GetData();
+      for (k = vdata.begin();k != vdata.end();++k)
+      if ((*k)->GetDataType() == OBGenericDataType::PairData)
+      {
+      ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
+      ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
+      }
+      @endcode
 
-  Similar code also works for OBGenericData stored in an OBAtom or OBBond (or OBResidue).
+      Similar code also works for OBGenericData stored in an OBAtom or OBBond (or OBResidue).
 
-  @code
-  if (!atom.HasData("UserLabel")) // stored textual data as an OBPairData
-  {
-  OBPairData *label = new OBPairData;
-  label->SetAttribute("UserLabel");
-  label->SetValue(userInput);
+      @code
+      if (!atom.HasData("UserLabel")) // stored textual data as an OBPairData
+      {
+      OBPairData *label = new OBPairData;
+      label->SetAttribute("UserLabel");
+      label->SetValue(userInput);
 
-  atom.SetData(label);
-  }
+      atom.SetData(label);
+      }
 
-  ...
+      ...
 
-  if (bond.HasData("DisplayType")) // e.g. in a visualization tool
-  {
-  OBPairData *display = dynamic_cast<OBPairData *> bond.GetData("DisplayType");
-	if (display->GetValue() == "wireframe")
-  {
-  ... // display a wireframe view
-  }
-  }
-  @endcode
+      if (bond.HasData("DisplayType")) // e.g. in a visualization tool
+      {
+      OBPairData *display = dynamic_cast<OBPairData *> bond.GetData("DisplayType");
+      if (display->GetValue() == "wireframe")
+      {
+      ... // display a wireframe view
+      }
+      }
+      @endcode
 
-  When designing a class derived from OBGenericData you must add a Clone() function.
-  For classes used with OBMol this is used when an OBMol object is copied. If your
-  class member variables contain pointers to atoms or bonds then it will be necessary
-  to ensure that these are updated in Clone() to refer to the new molecule. Without
-  these and similar pointers it is more likely that the very simple clone function
-  @code
-  virtual OBGenericData* Clone(OBBase* parent) const{return new MyNewClass(*this);}
-  @endcode
-  and the compiler generated copy constructor would be sufficient. It is recommended
-  that, if possible, OBGenericData classes do not store atom and bond pointers. Using
-  atom and bond indices instead would allow the simple version of Clone() above. See 
-  OBRotameterData::Clone for an example of a more complicated version. For classes
-  which are not intended to support copying, Clone can return NULL 
-  @code
-  virtual OBGenericData* Clone(OBBase* parent) const{return NULL;}
-  @endcode
-  Clone is a pure virtual function so that you need to decide what kind of
-  function you need and include it explicitly.
+      When designing a class derived from OBGenericData you must add a 
+      Clone() function. For classes used with OBMol this is used when 
+      an OBMol object is copied. If your class member variables contain
+      pointers to atoms or bonds then it will be necessary to ensure
+      that these are updated in Clone() to refer to the new molecule. Without
+      these and similar pointers it is more likely that the very simple 
+      clone function
+      @code
+      virtual OBGenericData* Clone(OBBase* parent) const{return new MyNewClass(*this);}
+      @endcode
+      and the compiler generated copy constructor would be sufficient. 
+      It is recommended that, if possible, OBGenericData classes do not
+      store atom and bond pointers. Using atom and bond indices instead
+      would allow the simple version of Clone() above. See 
+      OBRotameterData::Clone for an example of a more complicated version.
+      For classes which are not intended to support copying, Clone() can 
+      return NULL 
+      @code
+      virtual OBGenericData* Clone(OBBase* parent) const{return NULL;}
+      @endcode
+      Clone() is a pure virtual function so that you need to decide what
+      kind of function you need and include it explicitly.
   **/
 
   //
@@ -219,7 +225,7 @@ namespace OpenBabel
     _v1(src._v1), _v2(src._v2), _v3(src._v3),
     _spaceGroup(src._spaceGroup),
     _lattice(src._lattice),
-	_numericSpaceGroup( -1 )
+    _numericSpaceGroup( -1 )
   {  }
 
   OBUnitCell & OBUnitCell::operator=(const OBUnitCell &src)
@@ -246,16 +252,16 @@ namespace OpenBabel
   }
 
 	/*!
-	 ** The angles and lengths of the unitcell will be calculated from the
-	 ** vectors @p v1, @p v2 and @p v3. Those vectors will as well be
-	 ** stored internally.
-	 **Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertCartesianIntoNotionalCoordinates">blue-obelisk:convertCartesianIntoNotionalCoordinates</a>
-	 **\brief Sets the vectors, angles and lengths of the unitcell
-	 **\param v1 The x-vector
-	 **\param v2 The y-vector
-	 **\param v3 The z-vector
-	 **\see OBUnitCell::GetCellVectors
-	 */
+  ** The angles and lengths of the unitcell will be calculated from the
+  ** vectors @p v1, @p v2 and @p v3. Those vectors will as well be
+  ** stored internally.
+  **Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertCartesianIntoNotionalCoordinates">blue-obelisk:convertCartesianIntoNotionalCoordinates</a>
+  **\brief Sets the vectors, angles and lengths of the unitcell
+  **\param v1 The x-vector
+  **\param v2 The y-vector
+  **\param v3 The z-vector
+  **\see OBUnitCell::GetCellVectors
+  */
   void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
   {
     _a = v1.length();
@@ -374,31 +380,31 @@ namespace OpenBabel
 		  return OBUnitCell::Undefined;
 
 	  else if ( spacegroup == 1 ||
-			  spacegroup == 2 )
+              spacegroup == 2 )
 		  return OBUnitCell::Triclinic;
 	  
 	  else if ( spacegroup >= 3 ||
-			  spacegroup <= 15 )
+              spacegroup <= 15 )
 		  return OBUnitCell::Monoclinic;
 	  
 	  else if ( spacegroup >= 16 ||
-			  spacegroup <= 74 )
+              spacegroup <= 74 )
 		  return OBUnitCell::Orthorhombic;
 	  
 	  else if ( spacegroup >= 75 ||
-			  spacegroup <= 142 )
+              spacegroup <= 142 )
 		  return OBUnitCell::Tetragonal;
 	  
 	  else if ( spacegroup >= 143 ||
-			  spacegroup <= 167 )
+              spacegroup <= 167 )
 		  return OBUnitCell::Rhombohedral;
 	  
 	  else if ( spacegroup >= 168 ||
-			  spacegroup <= 194 )
+              spacegroup <= 194 )
 		  return OBUnitCell::Hexagonal;
 	  
 	  else if ( spacegroup >= 195 ||
-			  spacegroup <= 230 )
+              spacegroup <= 230 )
 		  return OBUnitCell::Cubic;
 
 	  //just to be extra sure
@@ -444,17 +450,17 @@ namespace OpenBabel
   }
   int OBUnitCell::GetSpaceGroupNumber( std::string name)
   {
-      static const char * const spacegroups[] = { 
-          "P1", "P-1", "P2", "P2(1)", "C2", "Pm", "Pc", "Cm", "Cc", "P2/m", "P2(1)/m", "C2/m", "P2/c", "P2(1)/c", "C2/c", "P222", "P222(1)", "P2(1)2(1)2", "P2(1)2(1)2(1)", "C222(1)", "C222", "F222", "I222", "I2(1)2(1)2(1)", "Pmm2", "Pmc2(1)", "Pcc2", "Pma2", "Pca2(1)", "Pnc2", "Pmn2(1)", "Pba2", "Pna2(1)", "Pnn2", "Cmm2", "Cmc2(1)", "Ccc2", "Amm2", "Abm2", "Ama2", "Aba2", "Fmm2", "Fdd2", "Imm2", "Iba2", "Ima2", "Pmmm", "Pnnn", "Pccm", "Pban", "Pmma", "Pnna", "Pmna", "Pcca", "Pbam", "Pccn", "Pbcm", "Pnnm", "Pmmn", "Pbcn", "Pbca", "Pnma", "Cmcm", "Cmca", "Cmmm", "Cccm", "Cmma", "Ccca", "Fmmm", "Fddd", "Immm", "Ibam", "Ibca", "Imma", "P4", "P4(1)", "P4(2)", "P4(3)", "I4", "I4(1)", "P-4", "I-4", "P4/m", "P4(2)/m", "P4/n", "P4(2)/n", "I4/m", "I4(1)/a", "P422", "P42(1)2", "P4(1)22", "P4(1)2(1)2", "P4(2)22", "P4(2)2(1)2", "P4(3)22", "P4(3)2(1)2", "I422", "I4(1)22", "P4mm", "P4bm", "P4(2)cm", "P4(2)nm", "P4cc", "P4nc", "P4(2)mc", "P4(2)bc", "I4mm", "I4cm", "I4(1)md", "I4(1)cd", "P-42m", "P-42c", "P-42(1)m", "P-42(1)c", "P-4m2", "P-4c2", "P-4b2", "P-4n2", "I-4m2", "I-4c2", "I-42m", "I-42d", "P4/mmm", "P4/mcc", "P4/nbm", "P4/nnc", "P4/mbm", "P4/mnc", "P4/nmm", "P4/ncc", "P4(2)/mmc", "P4(2)/mcm", "P4(2)/nbc", "P4(2)/nnm", "P4(2)/mbc", "P4(2)/mnm", "P4(2)/nmc", "P4(2)/ncm", "I4/mmm", "I4/mcm", "I4(1)/amd", "I4(1)/acd", "P3", "P3(1)", "P3(2)", "R3", "P-3", "R-3", "P312", "P321", "P3(1)12", "P3(1)21", "P3(2)12", "P3(2)21", "R32", "P3m1", "P31m", "P3c1", "P31c", "R3m", "R3c", "P-31m", "P-31c", "P-3m1", "P-3c1", "R-3m", "R-3c", "P6", "P6(1)", "P6(5)", "P6(2)", "P6(4)", "P6(3)", "P-6", "P6/m", "P6(3)/m", "P622", "P6(1)22", "P6(5)22", "P6(2)22", "P6(4)22", "P6(3)22", "P6mm", "P6cc", "P6(3)cm", "P6(3)mc", "P-6m2", "P-6c2", "P-62m", "P-62c", "P6/mmm", "P6/mcc", "P6(3)/mcm", "P6(3)/mmc", "P23", "F23", "I23", "P2(1)3", "I2(1)3", "Pm-3", "Pn-3", "Fm-3", "Fd-3", "Im-3", "Pa-3", "Ia-3", "P432", "P4(2)32", "F432", "F4(1)32", "I432", "P4(3)32", "P4(1)32", "I4(1)32", "P-43m", "F4-3m", "I-43m", "P-43n", "F-43c", "I-43d", "Pm-3m", "Pn-3n", "Pm-3n", "Pn-3m", "Fm-3m", "Fm-3c", "Fd-3m", "Fd-3c", "Im-3m", "Ia-3d" 
-          };
+    static const char * const spacegroups[] = { 
+      "P1", "P-1", "P2", "P2(1)", "C2", "Pm", "Pc", "Cm", "Cc", "P2/m", "P2(1)/m", "C2/m", "P2/c", "P2(1)/c", "C2/c", "P222", "P222(1)", "P2(1)2(1)2", "P2(1)2(1)2(1)", "C222(1)", "C222", "F222", "I222", "I2(1)2(1)2(1)", "Pmm2", "Pmc2(1)", "Pcc2", "Pma2", "Pca2(1)", "Pnc2", "Pmn2(1)", "Pba2", "Pna2(1)", "Pnn2", "Cmm2", "Cmc2(1)", "Ccc2", "Amm2", "Abm2", "Ama2", "Aba2", "Fmm2", "Fdd2", "Imm2", "Iba2", "Ima2", "Pmmm", "Pnnn", "Pccm", "Pban", "Pmma", "Pnna", "Pmna", "Pcca", "Pbam", "Pccn", "Pbcm", "Pnnm", "Pmmn", "Pbcn", "Pbca", "Pnma", "Cmcm", "Cmca", "Cmmm", "Cccm", "Cmma", "Ccca", "Fmmm", "Fddd", "Immm", "Ibam", "Ibca", "Imma", "P4", "P4(1)", "P4(2)", "P4(3)", "I4", "I4(1)", "P-4", "I-4", "P4/m", "P4(2)/m", "P4/n", "P4(2)/n", "I4/m", "I4(1)/a", "P422", "P42(1)2", "P4(1)22", "P4(1)2(1)2", "P4(2)22", "P4(2)2(1)2", "P4(3)22", "P4(3)2(1)2", "I422", "I4(1)22", "P4mm", "P4bm", "P4(2)cm", "P4(2)nm", "P4cc", "P4nc", "P4(2)mc", "P4(2)bc", "I4mm", "I4cm", "I4(1)md", "I4(1)cd", "P-42m", "P-42c", "P-42(1)m", "P-42(1)c", "P-4m2", "P-4c2", "P-4b2", "P-4n2", "I-4m2", "I-4c2", "I-42m", "I-42d", "P4/mmm", "P4/mcc", "P4/nbm", "P4/nnc", "P4/mbm", "P4/mnc", "P4/nmm", "P4/ncc", "P4(2)/mmc", "P4(2)/mcm", "P4(2)/nbc", "P4(2)/nnm", "P4(2)/mbc", "P4(2)/mnm", "P4(2)/nmc", "P4(2)/ncm", "I4/mmm", "I4/mcm", "I4(1)/amd", "I4(1)/acd", "P3", "P3(1)", "P3(2)", "R3", "P-3", "R-3", "P312", "P321", "P3(1)12", "P3(1)21", "P3(2)12", "P3(2)21", "R32", "P3m1", "P31m", "P3c1", "P31c", "R3m", "R3c", "P-31m", "P-31c", "P-3m1", "P-3c1", "R-3m", "R-3c", "P6", "P6(1)", "P6(5)", "P6(2)", "P6(4)", "P6(3)", "P-6", "P6/m", "P6(3)/m", "P622", "P6(1)22", "P6(5)22", "P6(2)22", "P6(4)22", "P6(3)22", "P6mm", "P6cc", "P6(3)cm", "P6(3)mc", "P-6m2", "P-6c2", "P-62m", "P-62c", "P6/mmm", "P6/mcc", "P6(3)/mcm", "P6(3)/mmc", "P23", "F23", "I23", "P2(1)3", "I2(1)3", "Pm-3", "Pn-3", "Fm-3", "Fd-3", "Im-3", "Pa-3", "Ia-3", "P432", "P4(2)32", "F432", "F4(1)32", "I432", "P4(3)32", "P4(1)32", "I4(1)32", "P-43m", "F4-3m", "I-43m", "P-43n", "F-43c", "I-43d", "Pm-3m", "Pn-3n", "Pm-3n", "Pn-3m", "Fm-3m", "Fm-3c", "Fd-3m", "Fd-3c", "Im-3m", "Ia-3d" 
+    };
 
-      static const int numStrings = sizeof( spacegroups ) / sizeof( spacegroups[0] );
-      for ( int i = 0; i < numStrings; ++i ) {
-          if (name == spacegroups[i] ) {
-              return i+1;
-          }
+    static const int numStrings = sizeof( spacegroups ) / sizeof( spacegroups[0] );
+    for ( int i = 0; i < numStrings; ++i ) {
+      if (name == spacegroups[i] ) {
+        return i+1;
       }
-      return 0; //presumably never reached
+    }
+    return 0; //presumably never reached
   }
   
   double OBUnitCell::GetCellVolume()
@@ -642,6 +648,18 @@ namespace OpenBabel
     return(*this);
   }
 
+  OBRing *OBRingData::BeginRing(std::vector<OBRing*>::iterator &i)
+  {
+    i = _vr.begin();
+    return((i == _vr.end()) ? (OBRing*)NULL : (OBRing*)*i);
+  }
+
+  OBRing *OBRingData::NextRing(std::vector<OBRing*>::iterator &i)
+  {
+    i = _vr.begin();
+    return((i == _vr.end()) ? (OBRing*)NULL : (OBRing*)*i);
+  }
+
   //
   //member functions for OBAngle class - stores all angles
   //
@@ -824,6 +842,29 @@ namespace OpenBabel
   **\param size the current number of rows in the array
   **\return int The number of angles
   */
+  bool OBAngleData::FillAngleArray(std::vector<std::vector<unsigned int> > &angles)
+  {
+    if(_angles.size() == 0)
+      return(false);
+
+    vector<OBAngle>::iterator angle;
+    
+    angles.clear();
+    angles.resize(_angles.size());
+
+    unsigned int ct = 0;
+
+    for( angle=_angles.begin(); angle!=_angles.end(); angle++,ct++)
+      {
+        angles[ct].resize(3);
+        angles[ct][0] = angle->_vertex->GetIdx() - 1;
+        angles[ct][1] = angle->_termini.first->GetIdx() - 1;
+        angles[ct][2] = angle->_termini.second->GetIdx() - 1;
+      }
+ 
+    return(true);
+  }
+  
   unsigned int OBAngleData::FillAngleArray(int **angles, unsigned int &size)
   {
     if(_angles.size() > size)
@@ -843,7 +884,7 @@ namespace OpenBabel
       }
     return (unsigned int)_angles.size();
   }
-
+  
   //
   //member functions for OBAngleData class - stores OBAngle set
   //

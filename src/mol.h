@@ -344,6 +344,7 @@ namespace OpenBabel
       void ConnectTheDots();
       //! Attempts to perceive multiple bonds based on geometries
       void PerceiveBondOrders();
+      void FindAngles();
       void FindTorsions();
       // documented in mol.cpp: graph-theoretical distance for each atom
       bool         GetGTDVector(std::vector<int> &);

@@ -364,6 +364,51 @@ namespace OpenBabel
 
     sort(cfl.begin(),cfl.end(),SortVVInt);
   }
+  
+  /*!
+  **\brief Fills the OBGeneric OBAngleData with angles from the mol
+  */
+  void OBMol::FindAngles()
+  {
+    //if already has data return
+    if(HasData(OBGenericDataType::AngleData))
+      return;
+
+    //get new data and attach it to molecule
+    OBAngleData *angles = new OBAngleData;
+    SetData(angles);
+
+    OBAngle angle;
+    OBAtom *b;
+    int unique_angle;
+
+    unique_angle = 0;
+
+    FOR_ATOMS_OF_MOL(atom, this) {
+      if(atom->IsHydrogen())
+        continue;
+	
+      b = (OBAtom*) &*atom;
+        
+      FOR_NBORS_OF_ATOM(a, b) {
+        FOR_NBORS_OF_ATOM(c, b) {
+          if(&*a == &*c) {
+            unique_angle = 1;
+            continue;
+          }
+		
+          if (unique_angle) {
+	    angle.SetAtoms((OBAtom*)b, (OBAtom*)&*a, (OBAtom*)&*c);
+            angles->SetData(angle);
+            angle.Clear();
+          }
+        }
+	unique_angle = 0;
+      }
+    }
+    
+    return;
+  }
 
   /*!
   **\brief Fills the OBGeneric OBTorsionData with torsions from the mol

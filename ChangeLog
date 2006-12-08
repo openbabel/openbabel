@@ -1,3 +1,11 @@
+2006-12-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/generic.h, src/generic.cpp (OBRingData): Add new methods for
+	iterating over rings.
+
+	* src/obiter.h, src/obiter.cpp: New class OBMolRingIter and
+	FOR_RINGS_OF_MOL  macro.
+
 2006-12-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/Makefile.am, test/Makefile.in: Remove outdated vector3 and

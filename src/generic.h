@@ -408,6 +408,13 @@ namespace OpenBabel
       {
         return(_vr);
       }
+
+    std::vector<OBRing*>::iterator BeginRings()
+      { return(_vr.begin()); }
+    std::vector<OBRing*>::iterator EndRings()
+      { return(_vr.end()); }
+    OBRing *BeginRing(std::vector<OBRing*>::iterator &i);
+    OBRing *NextRing(std::vector<OBRing*>::iterator &i);
   };
 
   //! \brief Used for storing information about periodic boundary conditions
@@ -760,6 +767,7 @@ namespace OpenBabel
 
     void Clear();
     unsigned int FillAngleArray(int **angles, unsigned int &size);
+    bool FillAngleArray(std::vector<std::vector<unsigned int> > &angles);
 
     void         SetData(OBAngle &);
     //! Gets the number of angles stored

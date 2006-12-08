@@ -197,6 +197,87 @@ namespace OpenBabel
     OBAtom *operator->() const   { return _ptr; }
     OBAtom &operator*() const    { return *_ptr;}
   };
+  
+  //! \brief Iterate over all angles in an OBMol
+  class OBAPI OBMolAngleIter {
+    OBMol     *_parent;
+    std::vector<std::vector<unsigned int> > _vangle;
+    std::vector<std::vector<unsigned int> >::iterator _i;
+    std::vector<unsigned int> _ptr;
+  public:
+
+    OBMolAngleIter() :_parent(NULL), _ptr(0) { }
+    OBMolAngleIter(OBMol *mol);
+    OBMolAngleIter(OBMol &mol);
+    OBMolAngleIter(const OBMolAngleIter &ai);
+
+    OBMolAngleIter& operator=(const OBMolAngleIter &ai);
+    operator bool() const        { return _ptr.size() != 0; }
+    OBMolAngleIter  operator++(int);
+    //std::vector<unsigned int> operator->() const   { return _ptr;      }
+    std::vector<unsigned int> operator*() const    { return _ptr;     }
+  };
+
+  //! \brief Iterate over all torsions in an OBMol
+  class OBAPI OBMolTorsionIter {
+    OBMol *_parent;
+    std::vector<std::vector<unsigned int> > _vtorsion;
+    std::vector<std::vector<unsigned int> >::iterator _i;
+    std::vector<unsigned int> _ptr;
+  public:
+
+    OBMolTorsionIter() :_parent(NULL), _ptr(0) { }
+    OBMolTorsionIter(OBMol *mol);
+    OBMolTorsionIter(OBMol &mol);
+    OBMolTorsionIter(const OBMolTorsionIter &ai);
+
+    OBMolTorsionIter& operator=(const OBMolTorsionIter &ai);
+    operator bool() const        { return _ptr.size() != 0; }
+    OBMolTorsionIter  operator++(int);
+    //std::vector<unsigned int> operator->() const   { return _ptr;      }
+    std::vector<unsigned int> operator*() const    { return _ptr;     }
+  };
+  
+  //! \brief Iterate over all pairs of atoms (>1-4) in an OBMol
+  class OBAPI OBMolPairIter {
+    OBMol *_parent;
+    std::queue<std::pair<int, int> > _vpair;
+    std::pair<int, int> *_ptr;
+  public:
+
+    OBMolPairIter() :_parent(NULL), _ptr(NULL) { }
+    OBMolPairIter(OBMol *mol);
+    OBMolPairIter(OBMol &mol);
+    OBMolPairIter(const OBMolPairIter &ai);
+
+    OBMolPairIter& operator=(const OBMolPairIter &ai);
+    operator bool() const        { return _ptr != NULL; }
+    OBMolPairIter  operator++(int);
+    std::pair<int, int>* operator->() const   { return _ptr;      }
+    std::pair<int, int>& operator*() const    { return *_ptr;     }
+  };
+
+
+  //! \brief Iterate over all residues in an OBMol
+  class OBAPI OBMolRingIter {
+    std::vector<OBRing*>::iterator _i;
+    OBRing *_ptr;
+    OBMol *_parent;
+    OBRingData *_rings;
+  public:
+
+    OBMolRingIter() : _ptr(NULL), _parent(NULL), _rings(NULL) { }
+    OBMolRingIter(OBMol *mol);
+    OBMolRingIter(OBMol &mol);
+    OBMolRingIter(const OBMolRingIter &ri);
+
+    OBMolRingIter& operator=(const OBMolRingIter &ri);
+    operator bool() const        { return _ptr != NULL; }
+    OBMolRingIter& operator++();
+    OBMolRingIter  operator++(int);
+    OBRing* operator->() const{ return _ptr; }
+    OBRing& operator*() const { return *_ptr;}
+  };
 
 #define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; ++a )
 #define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; ++b )
@@ -206,6 +287,10 @@ namespace OpenBabel
 #define FOR_ATOMS_OF_RESIDUE(a,r) for( OBResidueAtomIter a(r); a; ++a )
 #define FOR_DFS_OF_MOL(a,m)       for( OBMolAtomDFSIter  a(m); a; ++a )
 #define FOR_BFS_OF_MOL(a,m)       for( OBMolAtomBFSIter  a(m); a; ++a )
+#define FOR_RINGS_OF_MOL(a,m)     for( OBMolRingIter     r(m); r; ++r )
+#define FOR_ANGLES_OF_MOL(a,m)    for( OBMolAngleIter    a(m); a; a++ )
+#define FOR_TORSIONS_OF_MOL(t,m)  for( OBMolTorsionIter  t(m); t; t++ )
+#define FOR_PAIRS_OF_MOL(p,m)     for( OBMolPairIter     p(m); p; p++ )
 
 } // namespace OpenBabel
 #endif // OB_OBITER_H
