@@ -277,24 +277,10 @@ namespace OpenBabel
        that is not too close to being colinear to *this.
     */
 
-    /* if the absolute values of _vx and _vy are not of the same
-    order of magnitude, then (_vy,_vx,_vz) is not close to being
-    colinear to *this.
+    /* if the absolute values of the x and y-coords
+    are close, then the vector is far from being colinear to (1, 0, 0).
     */
-    if( ! IsApprox_pos ( fabs(_vx), fabs(_vy), 0.1 ) )
-    {
-      // store in res the crossed product of *this with (_vy,_vx,_vz),
-      // and normalize it.
-      res._vx = (_vy-_vx)*_vz;
-      res._vy = res._vx;
-      res._vz = _vx*_vx - _vy*_vy;
-      res.normalize();
-    }
-    /* on the other hand, if the absolute values of the x and y-coords
-    are of the same order of
-    magnitude, then the vector is far from being colinear to (1, 0, 0).
-    */
-    else
+    if( IsApprox_pos ( fabs(_vx), fabs(_vy), 0.1 ) )
     {
       // store in res the crossed product of *this with (1,0,0),
       // divided by its norm. In this case the computation is much simpler.
@@ -302,6 +288,19 @@ namespace OpenBabel
       res._vx = 0.0;
       res._vy = _vz / norm;
       res._vz = -_vy / norm;
+    }
+    /* if the absolute values of _vx and _vy are not close,
+    then (_vy,_vx,_vz) is not close to being
+    colinear to *this.
+    */
+    else
+    {
+      // store in res the crossed product of *this with (_vy,_vx,_vz),
+      // and normalize it.
+      res._vx = (_vy-_vx)*_vz;
+      res._vy = res._vx;
+      res._vz = _vx*_vx - _vy*_vy;
+      res.normalize();
     }
 
     return true;

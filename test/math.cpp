@@ -43,7 +43,7 @@ GNU General Public License for more details.
   cout << "# math: entering " << currentFunc << endl; \
   for( int i = 0; i < REPEAT; i++ ) func(); \
   if( failedCount == tmp ) cout << "# math: passed " << currentFunc << endl; \
-  else cout << "# math: failed " << currentFunc << endl \
+  else cout << "# math: failed " << currentFunc << endl
 
 using namespace std;
 using namespace OpenBabel;
