@@ -177,7 +177,8 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   if(pConv->IsOption("a",OBConversion::INOPTIONS))
   {
     string title(pmol->GetTitle());
-    pmol->SetTitle(title + ' ' + inchi);
+    title += ' ' + inchi;
+    pmol->SetTitle(title);
   }
 
   //Translate the returned structure into OBMol
