@@ -23,7 +23,7 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #include <iostream>
 #include <fstream>
@@ -39,7 +39,7 @@ GNU General Public License for more details.
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
-#include "obconversion.h"
+#include <openbabel/obconversion.h>
 
 using namespace std;
 using namespace OpenBabel;

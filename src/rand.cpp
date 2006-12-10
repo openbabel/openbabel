@@ -22,13 +22,13 @@ GNU General Public License for more details.
  * Roger Sayle, Metaphorics LLC
  * Version 1.2, September 1998
  */
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
-#include "rand.h"
+#include <openbabel/rand.h>
 
 #if TIME_WITH_SYS_TIME
 #include <sys/time.h>

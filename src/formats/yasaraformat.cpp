@@ -23,7 +23,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 ***********************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 /* Adapt on some 64bit machines! */
 typedef int int32;
@@ -31,7 +31,7 @@ typedef unsigned int uint32;
 typedef short int16;
 typedef unsigned short uint16;
 
-#include "obmolecformat.h"
+#include <openbabel/obmolecformat.h>
 
 #define mem_alloc malloc
 #define mem_free free

@@ -32,8 +32,8 @@ For XML formats extra, support for the parsing is provided, see pubchem.cpp
 as an example.  
 */ 
 
-#include "babelconfig.h"
-#include "obmolecformat.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/obmolecformat.h>
 
 using namespace std;
 namespace OpenBabel

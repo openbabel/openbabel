@@ -42,7 +42,11 @@ public class OBAngleData extends OBGenericData {
   }
 
   public long FillAngleArray(SWIGTYPE_p_p_int angles, SWIGTYPE_p_unsigned_int size) {
-    return openbabelJNI.OBAngleData_FillAngleArray(swigCPtr, this, SWIGTYPE_p_p_int.getCPtr(angles), SWIGTYPE_p_unsigned_int.getCPtr(size));
+    return openbabelJNI.OBAngleData_FillAngleArray__SWIG_0(swigCPtr, this, SWIGTYPE_p_p_int.getCPtr(angles), SWIGTYPE_p_unsigned_int.getCPtr(size));
+  }
+
+  public boolean FillAngleArray(SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t angles) {
+    return openbabelJNI.OBAngleData_FillAngleArray__SWIG_1(swigCPtr, this, SWIGTYPE_p_std__vectorTstd__vectorTunsigned_int_t_t.getCPtr(angles));
   }
 
   public void SetData(OBAngle arg0) {

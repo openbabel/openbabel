@@ -21,12 +21,12 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "mol.h"
-#include "obconversion.h"
+#include <openbabel/mol.h>
+#include <openbabel/obconversion.h>
 #include <unistd.h>
-#include "chiral.h"
+#include <openbabel/chiral.h>
 
 using namespace std;
 using namespace OpenBabel;

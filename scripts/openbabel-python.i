@@ -7,27 +7,27 @@
 #endif
 
 
-#include "obutil.h"
-#include "rand.h"
-#include "math/vector3.h"
-#include "math/matrix3x3.h"
-#include "generic.h"
+#include <openbabel/obutil.h>
+#include <openbabel/rand.h>
+#include <openbabel/math/vector3.h>
+#include <openbabel/math/matrix3x3.h>
+#include <openbabel/generic.h>
 
-#include "base.h"
-#include "mol.h"
-#include "atom.h"
-#include "bond.h"
-#include "residue.h"
-#include "internalcoord.h"
+#include <openbabel/base.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/residue.h>
+#include <openbabel/internalcoord.h>
 
-#include "ring.h"
-#include "obconversion.h"
-#include "oberror.h"
+#include <openbabel/ring.h>
+#include <openbabel/obconversion.h>
+#include <openbabel/oberror.h>
 
-#include "fingerprint.h"
+#include <openbabel/fingerprint.h>
 
-#include "data.h"
-#include "parsmart.h"
+#include <openbabel/data.h>
+#include <openbabel/parsmart.h>
 %}
 
 %include "std_list.i"
@@ -48,32 +48,32 @@ namespace std {
 %template (vectorData)    vector<OpenBabel::OBGenericData*>;
 }
 
-%import "babelconfig.h"
+%import <openbabel/babelconfig.h>
 
 %apply std::string &OUTPUT { std::string &to };
-%include "data.h"
-%include "rand.h"
-%include "obutil.h"
-%include "math/vector3.h"
-%import "math/matrix3x3.h"
-%include "generic.h"
+%include <openbabel/data.h>
+%include <openbabel/rand.h>
+%include <openbabel/obutil.h>
+%include <openbabel/math/vector3.h>
+%import <openbabel/math/matrix3x3.h>
+%include <openbabel/generic.h>
 
-%include "base.h"
+%include <openbabel/base.h>
 
-%import "chains.h"
-%import "bitvec.h"
-%import "typer.h"
+%import <openbabel/chains.h>
+%import <openbabel/bitvec.h>
+%import <openbabel/typer.h>
 
-%include "oberror.h"
-%include "obconversion.h"
-%include "residue.h"
-%include "internalcoord.h"
-%include "atom.h"
-%include "bond.h"
-%include "mol.h"
-%include "ring.h"
-%include "parsmart.h"
-%include "fingerprint.h"
+%include <openbabel/oberror.h>
+%include <openbabel/obconversion.h>
+%include <openbabel/residue.h>
+%include <openbabel/internalcoord.h>
+%include <openbabel/atom.h>
+%include <openbabel/bond.h>
+%include <openbabel/mol.h>
+%include <openbabel/ring.h>
+%include <openbabel/parsmart.h>
+%include <openbabel/fingerprint.h>
 
 %rename(inc) OpenBabel::OBMolAtomIter::operator++;
 %rename(inc) OpenBabel::OBMolBondIter::operator++;
@@ -96,7 +96,7 @@ namespace std {
 %rename(deref) OpenBabel::OBResidueAtomIter::operator->;
 %rename(deref) OpenBabel::OBResidueBondIter::operator->;
 
-%include "obiter.h"
+%include <openbabel/obiter.h>
 
 %include "carrays.i"
 %array_class(double, doubleArray)

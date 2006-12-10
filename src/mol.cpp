@@ -17,13 +17,13 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "mol.h"
-#include "rotamer.h"
-#include "phmodel.h"
-#include "bondtyper.h"
-#include "math/matrix3x3.h"
+#include <openbabel/mol.h>
+#include <openbabel/rotamer.h>
+#include <openbabel/phmodel.h>
+#include <openbabel/bondtyper.h>
+#include <openbabel/math/matrix3x3.h>
 
 #include <sstream>
 

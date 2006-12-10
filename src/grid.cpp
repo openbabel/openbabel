@@ -16,11 +16,11 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "mol.h"
-#include "atom.h"
-#include "grid.h"
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/grid.h>
 
 using namespace std;
 

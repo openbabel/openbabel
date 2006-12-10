@@ -19,7 +19,7 @@ GNU General Public License for more details.
 #define OB_OPTSWX_H
 
 #include <vector>
-#include "obconversion.h"
+#include <openbabel/obconversion.h>
 
 class DynOptionswx
 {

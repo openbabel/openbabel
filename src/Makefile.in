@@ -15,7 +15,6 @@
 @SET_MAKE@
 
 
-
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
@@ -41,9 +40,8 @@ host_triplet = @host@
 @BUILD_WXGUI_TRUE@am__append_1 = GUI
 bin_PROGRAMS = babel$(EXEEXT)
 subdir = src
-DIST_COMMON = $(libopenbabelinclude_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(srcdir)/config.h.in snprintf.c \
-	strncasecmp.c
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(srcdir)/config.h.in snprintf.c strncasecmp.c
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -58,8 +56,7 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
-	"$(DESTDIR)$(libopenbabelincludedir)"
+am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 @BUILD_SHARED_FALSE@libopenbabel_la_DEPENDENCIES = math/libmath.la \
@@ -116,8 +113,6 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	install-recursive installcheck-recursive installdirs-recursive \
 	pdf-recursive ps-recursive uninstall-info-recursive \
 	uninstall-recursive
-libopenbabelincludeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(libopenbabelinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = math formats fingerprints GUI
@@ -266,13 +261,10 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 EXTRA_DIST = \
 	strncasecmp.c snprintf.c snprintf.h zipstream.h zipstreamimpl.h \
-	dlhandler_win32.cpp all.h
+	dlhandler_win32.cpp
 
 SUBDIRS = math formats fingerprints $(am__append_1)
-@BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
-@BUILD_PCH_TRUE@PCHFLAGS = -Winvalid-pch -x c++-header $(CXXFLAGS) $(INCLUDES)
-@BUILD_PCH_TRUE@AM_CXXFLAGS = -include $(top_srcdir)/src/all.h
-INCLUDES = -I$(top_srcdir)/data/
+INCLUDES = -I$(top_srcdir)/data/ -I$(top_srcdir)/include
 babel_SOURCES = main.cpp
 babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
 lib_LTLIBRARIES = libopenbabel.la
@@ -298,21 +290,7 @@ libopenbabel_la_LDFLAGS = -version-info 3:0:1 -no-undefined
 @BUILD_SHARED_TRUE@libopenbabel_la_LIBADD = math/libmath.la fingerprints/libfingerprints.la \
 @BUILD_SHARED_TRUE@			@LTLIBOBJS@ @LIBDL@
 
-libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
-libopenbabelinclude_HEADERS = \
-		atom.h \
-		babelconfig.h base.h bond.h bitvec.h \
-		bondtyper.h chains.h chiral.h data.h \
-		dlhandler.h fingerprint.h forcefield.h \
-		generic.h grid.h internalcoord.h kinetics.h \
-		newlinebuf.h \
-		matrix.h mol.h molchrg.h \
-		obconversion.h oberror.h obiter.h \
-		obutil.h \
-		parsmart.h patty.h phmodel.h rand.h reaction.h \
-		residue.h ring.h rotor.h rotamer.h typer.h 
-
-all: $(BUILT_SOURCES) config.h
+all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
@@ -520,23 +498,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-libopenbabelincludeHEADERS: $(libopenbabelinclude_HEADERS)
-	@$(NORMAL_INSTALL)
-	test -z "$(libopenbabelincludedir)" || $(mkdir_p) "$(DESTDIR)$(libopenbabelincludedir)"
-	@list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(libopenbabelincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(libopenbabelincludedir)/$$f'"; \
-	  $(libopenbabelincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(libopenbabelincludedir)/$$f"; \
-	done
-
-uninstall-libopenbabelincludeHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(libopenbabelincludedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(libopenbabelincludedir)/$$f"; \
-	done
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
@@ -712,22 +673,17 @@ distdir: $(DISTFILES)
 	      || exit 1; \
 	  fi; \
 	done
-	$(MAKE) $(AM_MAKEFLAGS) \
-	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
-	  dist-hook
 check-am: all-am
-check: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) check-recursive
-all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(HEADERS) config.h
+check: check-recursive
+all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) config.h
 install-binPROGRAMS: install-libLTLIBRARIES
 
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libopenbabelincludedir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) install-recursive
+install: install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -751,12 +707,10 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
-@BUILD_PCH_FALSE@clean-local:
 clean: clean-recursive
 
 clean-am: clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
-	clean-libtool clean-local mostlyclean-am
+	clean-libtool mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -rf $(DEPDIR) ./$(DEPDIR)
@@ -774,9 +728,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-libopenbabelincludeHEADERS
-	@$(NORMAL_INSTALL)
-	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
+install-data-am:
 
 install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 
@@ -805,49 +757,27 @@ ps: ps-recursive
 ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-info-am \
-	uninstall-libLTLIBRARIES uninstall-libopenbabelincludeHEADERS
+	uninstall-libLTLIBRARIES
 
 uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
 	clean clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
-	clean-libtool clean-local clean-recursive ctags \
-	ctags-recursive dist-hook distclean distclean-compile \
-	distclean-generic distclean-hdr distclean-libtool \
-	distclean-recursive distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am install-binPROGRAMS \
-	install-data install-data-am install-data-hook install-exec \
+	clean-libtool clean-recursive ctags ctags-recursive distclean \
+	distclean-compile distclean-generic distclean-hdr \
+	distclean-libtool distclean-recursive distclean-tags distdir \
+	dvi dvi-am html html-am info info-am install install-am \
+	install-binPROGRAMS install-data install-data-am install-exec \
 	install-exec-am install-info install-info-am \
-	install-libLTLIBRARIES install-libopenbabelincludeHEADERS \
-	install-man install-strip installcheck installcheck-am \
-	installdirs installdirs-am maintainer-clean \
+	install-libLTLIBRARIES install-man install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
 	maintainer-clean-generic maintainer-clean-recursive \
 	mostlyclean mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
 	tags tags-recursive uninstall uninstall-am \
 	uninstall-binPROGRAMS uninstall-info-am \
-	uninstall-libLTLIBRARIES uninstall-libopenbabelincludeHEADERS
+	uninstall-libLTLIBRARIES
 
-@BUILD_PCH_TRUE@all.h.gch: all.h Makefile babelconfig.h mol.h base.h bitvec.h generic.h \
-@BUILD_PCH_TRUE@	oberror.h obiter.h obconversion.h atom.h bond.h
-@BUILD_PCH_TRUE@	rm -f $@
-@BUILD_PCH_TRUE@	$(CXX) $(PCHFLAGS) $<
-
-@BUILD_PCH_TRUE@clean-local:
-@BUILD_PCH_TRUE@	-rm -f all.h.gch
-
-# Use sed to substitute #include "header.h" to #include <openbabel/header.h>
-install-data-hook:
-	for header in $(DESTDIR)$(libopenbabelincludedir)/*.h \
-	      $(DESTDIR)$(libopenbabelincludedir)/math/*.h; do \
-	   sed -e 's!^#include "\([^"]*\)"!#include <openbabel/\1>!' \
-	      < $${header} >$${header}.new; \
-	   mv $${header}.new $${header}; \
-	done
-
-# Remove the configure-generated babelconfig.h
-dist-hook:
-	rm $(distdir)/babelconfig.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

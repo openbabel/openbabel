@@ -17,10 +17,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "mol.h"
-#include "patty.h"
+#include <openbabel/mol.h>
+#include <openbabel/patty.h>
 
 // Simple programmable atom typer
 // WPW - 070199

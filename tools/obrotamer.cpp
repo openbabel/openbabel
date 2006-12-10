@@ -21,13 +21,13 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
-#include "mol.h"
-#include "obconversion.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/mol.h>
+#include <openbabel/obconversion.h>
 
-#include "rotamer.h"
-#include "rotor.h"
-#include "obutil.h"
+#include <openbabel/rotamer.h>
+#include <openbabel/rotor.h>
+#include <openbabel/obutil.h>
 
 #include <stdio.h>
 #include <iostream>

@@ -15,14 +15,14 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "babelconfig.h"
-#include "mol.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/mol.h>
 
 #include <fstream>
 #include <map>
 #include <string>
 
-#include "fingerprint.h"
+#include <openbabel/fingerprint.h>
 
 using namespace std;
 namespace OpenBabel

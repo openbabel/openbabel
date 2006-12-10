@@ -16,12 +16,12 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #include <vector>
 
-#include "mol.h"
-#include "obiter.h"
+#include <openbabel/mol.h>
+#include <openbabel/obiter.h>
 
 using namespace std;
 

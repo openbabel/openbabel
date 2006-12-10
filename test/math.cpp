@@ -23,9 +23,9 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
-#include "math/matrix3x3.h"
-#include "obutil.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/math/matrix3x3.h>
+#include <openbabel/obutil.h>
 
 #include <iostream>
 #include <stdlib.h>

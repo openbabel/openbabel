@@ -12,7 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "xml.h"
-#include "reaction.h"
+#include <openbabel/reaction.h>
 
 #ifdef WIN32
 #pragma warning (disable : 4800)

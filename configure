@@ -23422,10 +23422,10 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 { echo "$as_me:$LINENO: result: $scandirconst_cast" >&5
 echo "${ECHO_T}$scandirconst_cast" >&6; }
 
-ac_config_commands="$ac_config_commands src/babelconfig.h"
+ac_config_commands="$ac_config_commands include/openbabel/babelconfig.h"
 
 
-ac_config_files="$ac_config_files Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile src/fingerprints/Makefile src/formats/xml/Makefile src/formats/inchi/Makefile src/GUI/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile scripts/Makefile openbabel-2.0.pc"
+ac_config_files="$ac_config_files Makefile data/Makefile src/Makefile src/math/Makefile src/formats/Makefile src/fingerprints/Makefile src/formats/xml/Makefile src/formats/inchi/Makefile src/GUI/Makefile include/Makefile include/openbabel/Makefile test/Makefile test/cmltest/Makefile tools/Makefile doc/Makefile scripts/Makefile openbabel-2.0.pc"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -24083,7 +24083,7 @@ do
   case $ac_config_target in
     "src/config.h") CONFIG_HEADERS="$CONFIG_HEADERS src/config.h" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
-    "src/babelconfig.h") CONFIG_COMMANDS="$CONFIG_COMMANDS src/babelconfig.h" ;;
+    "include/openbabel/babelconfig.h") CONFIG_COMMANDS="$CONFIG_COMMANDS include/openbabel/babelconfig.h" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "data/Makefile") CONFIG_FILES="$CONFIG_FILES data/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
@@ -24093,6 +24093,8 @@ do
     "src/formats/xml/Makefile") CONFIG_FILES="$CONFIG_FILES src/formats/xml/Makefile" ;;
     "src/formats/inchi/Makefile") CONFIG_FILES="$CONFIG_FILES src/formats/inchi/Makefile" ;;
     "src/GUI/Makefile") CONFIG_FILES="$CONFIG_FILES src/GUI/Makefile" ;;
+    "include/Makefile") CONFIG_FILES="$CONFIG_FILES include/Makefile" ;;
+    "include/openbabel/Makefile") CONFIG_FILES="$CONFIG_FILES include/openbabel/Makefile" ;;
     "test/Makefile") CONFIG_FILES="$CONFIG_FILES test/Makefile" ;;
     "test/cmltest/Makefile") CONFIG_FILES="$CONFIG_FILES test/cmltest/Makefile" ;;
     "tools/Makefile") CONFIG_FILES="$CONFIG_FILES tools/Makefile" ;;
@@ -24906,7 +24908,7 @@ echo "$as_me: error: cannot create directory $as_dir" >&2;}
   done
 done
  ;;
-    "src/babelconfig.h":C) grep -v PACKAGE src/config.h >src/babelconfig.h ;;
+    "include/openbabel/babelconfig.h":C) grep -v PACKAGE src/config.h >include/openbabel/babelconfig.h ;;
 
   esac
 done # for ac_tag

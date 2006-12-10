@@ -13,7 +13,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 #include "xml.h"
 
 #ifdef WIN32

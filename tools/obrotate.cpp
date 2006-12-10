@@ -33,12 +33,12 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
-#include "mol.h"
-#include "parsmart.h"
-#include "rotamer.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/mol.h>
+#include <openbabel/parsmart.h>
+#include <openbabel/rotamer.h>
 //#include <unistd.h>
-#include "obconversion.h"
+#include <openbabel/obconversion.h>
 
 using namespace std;
 using namespace OpenBabel;

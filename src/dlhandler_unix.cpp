@@ -17,8 +17,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "dlhandler.h"
-#include "babelconfig.h"
+#include <openbabel/dlhandler.h>
+#include <openbabel/babelconfig.h>
 
 #include <unistd.h>
 #include <dirent.h>

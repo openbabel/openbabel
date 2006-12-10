@@ -22,11 +22,11 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "mol.h"
-#include "math/matrix3x3.h"
-#include "obconversion.h"
+#include <openbabel/mol.h>
+#include <openbabel/math/matrix3x3.h>
+#include <openbabel/obconversion.h>
 
 using namespace std;
 using namespace OpenBabel;

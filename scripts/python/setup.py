@@ -30,7 +30,7 @@ def find_likely_directory():
         sys.stderr.write("WARNING: Environment variable OPENBABEL_INSTALL is not set\n")
 	sys.stderr.write("INFO: Looking for library and include files in ../../src\n")
         if os.path.isfile("../../src/atom.o"):
-            return ["../../src"],["../../src"]
+            return ["../../include"],["../../src"]
 
         for dirname in ["/usr/local","/usr"]:
             # Look for each of these directories in turn for the directory include/openbabel-2.0
@@ -38,7 +38,7 @@ def find_likely_directory():
             #  a regular expression to find the latest version of openbabel)
             if os.path.isdir(dirname+"/include/openbabel-2.0"):
                 sys.stderr.write("INFO: Setting OPENBABEL_INSTALL to %s\n" % dirname)
-                return ([dirname+"/include/openbabel-2.0",dirname+"/include/openbabel-2.0/openbabel"],
+                return ([dirname+"/include/openbabel-2.0",dirname+"/include/openbabel-2.0"],
                         [dirname+"/lib"])
                 
     sys.stderr.write("ERROR: Cannot find Open Babel library directory\n")

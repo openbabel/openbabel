@@ -14,10 +14,11 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/math/matrix3x3.h>
+#include <openbabel/kinetics.h>
+
 #include "xml.h"
-#include "math/matrix3x3.h"
-#include "kinetics.h"
 
 #ifdef WIN32
 #pragma warning (disable : 4800)

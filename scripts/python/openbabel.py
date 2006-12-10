@@ -826,6 +826,10 @@ class OBRingData(OBGenericData):
     def SetData(*args): return _openbabel.OBRingData_SetData(*args)
     def PushBack(*args): return _openbabel.OBRingData_PushBack(*args)
     def GetData(*args): return _openbabel.OBRingData_GetData(*args)
+    def BeginRings(*args): return _openbabel.OBRingData_BeginRings(*args)
+    def EndRings(*args): return _openbabel.OBRingData_EndRings(*args)
+    def BeginRing(*args): return _openbabel.OBRingData_BeginRing(*args)
+    def NextRing(*args): return _openbabel.OBRingData_NextRing(*args)
 OBRingData_swigregister = _openbabel.OBRingData_swigregister
 OBRingData_swigregister(OBRingData)
 
@@ -1729,6 +1733,7 @@ class OBMol(OBBase):
     def Align(*args): return _openbabel.OBMol_Align(*args)
     def ConnectTheDots(*args): return _openbabel.OBMol_ConnectTheDots(*args)
     def PerceiveBondOrders(*args): return _openbabel.OBMol_PerceiveBondOrders(*args)
+    def FindAngles(*args): return _openbabel.OBMol_FindAngles(*args)
     def FindTorsions(*args): return _openbabel.OBMol_FindTorsions(*args)
     def GetGTDVector(*args): return _openbabel.OBMol_GetGTDVector(*args)
     def GetGIVector(*args): return _openbabel.OBMol_GetGIVector(*args)
@@ -2917,6 +2922,62 @@ class OBResidueAtomIter(object):
     def EndData(*args): return _openbabel.OBResidueAtomIter_EndData(*args)
 OBResidueAtomIter_swigregister = _openbabel.OBResidueAtomIter_swigregister
 OBResidueAtomIter_swigregister(OBResidueAtomIter)
+
+class OBMolAngleIter(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBMolAngleIter_swiginit(self,_openbabel.new_OBMolAngleIter(*args))
+    def __ref__(*args): return _openbabel.OBMolAngleIter___ref__(*args)
+    __swig_destroy__ = _openbabel.delete_OBMolAngleIter
+    __del__ = lambda self : None;
+OBMolAngleIter_swigregister = _openbabel.OBMolAngleIter_swigregister
+OBMolAngleIter_swigregister(OBMolAngleIter)
+
+class OBMolTorsionIter(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBMolTorsionIter_swiginit(self,_openbabel.new_OBMolTorsionIter(*args))
+    def __ref__(*args): return _openbabel.OBMolTorsionIter___ref__(*args)
+    __swig_destroy__ = _openbabel.delete_OBMolTorsionIter
+    __del__ = lambda self : None;
+OBMolTorsionIter_swigregister = _openbabel.OBMolTorsionIter_swigregister
+OBMolTorsionIter_swigregister(OBMolTorsionIter)
+
+class OBMolPairIter(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBMolPairIter_swiginit(self,_openbabel.new_OBMolPairIter(*args))
+    def __deref__(*args): return _openbabel.OBMolPairIter___deref__(*args)
+    def __ref__(*args): return _openbabel.OBMolPairIter___ref__(*args)
+    __swig_destroy__ = _openbabel.delete_OBMolPairIter
+    __del__ = lambda self : None;
+OBMolPairIter_swigregister = _openbabel.OBMolPairIter_swigregister
+OBMolPairIter_swigregister(OBMolPairIter)
+
+class OBMolRingIter(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        _openbabel.OBMolRingIter_swiginit(self,_openbabel.new_OBMolRingIter(*args))
+    def __deref__(*args): return _openbabel.OBMolRingIter___deref__(*args)
+    def __ref__(*args): return _openbabel.OBMolRingIter___ref__(*args)
+    __swig_destroy__ = _openbabel.delete_OBMolRingIter
+    __del__ = lambda self : None;
+    _path = _swig_property(_openbabel.OBMolRingIter__path_get, _openbabel.OBMolRingIter__path_set)
+    _pathset = _swig_property(_openbabel.OBMolRingIter__pathset_get, _openbabel.OBMolRingIter__pathset_set)
+    def findCenterAndNormal(*args): return _openbabel.OBMolRingIter_findCenterAndNormal(*args)
+    def Size(*args): return _openbabel.OBMolRingIter_Size(*args)
+    def PathSize(*args): return _openbabel.OBMolRingIter_PathSize(*args)
+    def IsMember(*args): return _openbabel.OBMolRingIter_IsMember(*args)
+    def IsAromatic(*args): return _openbabel.OBMolRingIter_IsAromatic(*args)
+    def IsInRing(*args): return _openbabel.OBMolRingIter_IsInRing(*args)
+    def SetParent(*args): return _openbabel.OBMolRingIter_SetParent(*args)
+    def GetParent(*args): return _openbabel.OBMolRingIter_GetParent(*args)
+OBMolRingIter_swigregister = _openbabel.OBMolRingIter_swigregister
+OBMolRingIter_swigregister(OBMolRingIter)
 
 class doubleArray(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')

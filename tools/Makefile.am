@@ -31,4 +31,4 @@ obxyz_LDADD = ../src/libopenbabel.la @LIBDL@
 # obdoc_SOURCES = obdoc.cpp
 # obdoc_LDADD = ../src/libopenbabel.la @LIBDL@
 
-AM_CPPFLAGS = -I$(top_srcdir)/src
+AM_CPPFLAGS = -I$(top_srcdir)/include

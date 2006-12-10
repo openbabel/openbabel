@@ -1,2 +1,2 @@
-#include "stdwx.h"
-#include "babelconfig.h"
+#include <openbabel/stdwx.h>
+#include <openbabel/babelconfig.h>

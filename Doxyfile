@@ -459,9 +459,8 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = src/ \
-                         src/formats/obmolecformat.h \
-                         src/math/
+INPUT                  = include/openbabel include/openbabel/math \
+                               src/ src/math 
 
 # If the value of the INPUT tag contains directories, you can use the 
 # FILE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 

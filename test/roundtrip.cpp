@@ -22,10 +22,10 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
-#include "mol.h"
-#include "data.h"
-#include "obconversion.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/mol.h>
+#include <openbabel/data.h>
+#include <openbabel/obconversion.h>
 
 #if !HAVE_STRNCASECMP
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);

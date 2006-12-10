@@ -11,15 +11,15 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #include <sstream>
 #include <iostream>
 #include <fstream>
 
-#include "mol.h"
-#include "obconversion.h"
-#include "fingerprint.h"
+#include <openbabel/mol.h>
+#include <openbabel/obconversion.h>
+#include <openbabel/fingerprint.h>
 
 using namespace std;
 namespace OpenBabel {

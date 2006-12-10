@@ -16,9 +16,9 @@ GNU General Public License for more details.
 // TODO: Rewrite. Use std::string in place of char * to avoid buffer overflow
 //  use std::string::reserve (or different allocator) to avoid resize slowdown
 
-#include "babelconfig.h"
-#include "obmolecformat.h"
-#include "chiral.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/obmolecformat.h>
+#include <openbabel/chiral.h>
 
 using namespace std;
 

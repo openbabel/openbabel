@@ -1,6 +1,7 @@
 EXTRA_DIST = xml.h
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data -I$(top_srcdir)/src/formats
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data \
+	-I$(top_srcdir)/src/formats -I$(top_srcdir)/include
 AM_CPPFLAGS =  @XML_CPPFLAGS@
 AM_LDFLAGS = @LIBS@ @XML_LIBS@
 

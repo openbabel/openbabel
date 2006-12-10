@@ -22,12 +22,12 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #include <fstream>
 
-#include "mol.h"
-#include "obconversion.h"
+#include <openbabel/mol.h>
+#include <openbabel/obconversion.h>
 
 namespace OpenBabel
 {

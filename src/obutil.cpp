@@ -17,10 +17,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "babelconfig.h"
-#include "math/matrix3x3.h"
-#include "mol.h"
-#include "obutil.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/math/matrix3x3.h>
+#include <openbabel/mol.h>
+#include <openbabel/obutil.h>
 
 #if HAVE_CONIO_H
 #include <conio.h>

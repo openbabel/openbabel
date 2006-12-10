@@ -17,6 +17,6 @@ WriteMakefile(
     'LDFROM'    => $ldfrom,
     'CC'        => $CC,
     'LD'        => '$(CC)',
-    'INC'       => '-I../../src',
+    'INC'       => '-I../../include',
     'OBJECT'    => 'openbabel_perl.o'
 );

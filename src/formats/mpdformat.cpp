@@ -17,9 +17,9 @@ GNU General Public License for more details.
 ***********************************************************************/
 // Output format is #Origatomtype;#layer-#frequency-#atomtype;#l-#f-#aty;...<tab>Next atom<newline>next molecule 
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "obmolecformat.h"
+#include <openbabel/obmolecformat.h>
 
 #define LAYER_DEPTH 2 // cannot increase past 2 without adding more *nbr atom pointers and loops
 #define LAYER_SIZE 184 // number of types needed for types system used

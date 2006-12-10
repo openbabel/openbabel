@@ -16,15 +16,15 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #include <vector>
 #include <algorithm>
 #include <iosfwd>
 #include <vector>
 
-#include "fingerprint.h"
-#include "oberror.h"
+#include <openbabel/fingerprint.h>
+#include <openbabel/oberror.h>
 
 using namespace std;
 namespace OpenBabel

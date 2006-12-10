@@ -10,14 +10,14 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #include <vector>
 #include <string>
 #include <iomanip>
 
-#include "obmolecformat.h"
-#include "fingerprint.h"
+#include <openbabel/obmolecformat.h>
+#include <openbabel/fingerprint.h>
 
 using namespace std;
 namespace OpenBabel

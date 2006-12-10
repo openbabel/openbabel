@@ -22,7 +22,7 @@ GNU General Public License for more details.
 //////////////////////////////////////////////////////////////////////////////
 // File Includes
 //////////////////////////////////////////////////////////////////////////////
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #include <stdlib.h>
 #include <string.h>
@@ -30,8 +30,8 @@ GNU General Public License for more details.
 #include <ctype.h>
 #include <map>
 
-#include "mol.h"
-#include "chains.h"
+#include <openbabel/mol.h>
+#include <openbabel/chains.h>
 
 using namespace std;
 

@@ -21,14 +21,14 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #include <math.h>
 #include <stdio.h>
 #include <iostream>
 
-#include "mol.h"
-#include "data.h"
+#include <openbabel/mol.h>
+#include <openbabel/data.h>
 
 using namespace std;
 using namespace OpenBabel;

@@ -17,10 +17,10 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "math/matrix3x3.h"
-#include "obutil.h"
+#include <openbabel/math/matrix3x3.h>
+#include <openbabel/obutil.h>
 
 using namespace std;
 

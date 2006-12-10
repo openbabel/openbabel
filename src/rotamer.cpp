@@ -16,9 +16,9 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "rotamer.h"
+#include <openbabel/rotamer.h>
 
 #define OB_TITLE_SIZE     254
 #define OB_BINARY_SETWORD 32

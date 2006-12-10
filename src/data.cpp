@@ -21,9 +21,9 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 
-#include "babelconfig.h"
-#include "data.h"
-#include "mol.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/data.h>
+#include <openbabel/mol.h>
 
 // data headers
 #include "element.h"

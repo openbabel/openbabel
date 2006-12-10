@@ -57,4 +57,22 @@ public class OBRingData extends OBGenericData {
     return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t(openbabelJNI.OBRingData_GetData(swigCPtr, this), false);
   }
 
+  public SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator BeginRings() {
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator(openbabelJNI.OBRingData_BeginRings(swigCPtr, this), true);
+  }
+
+  public SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator EndRings() {
+    return new SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator(openbabelJNI.OBRingData_EndRings(swigCPtr, this), true);
+  }
+
+  public OBRing BeginRing(SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator i) {
+    long cPtr = openbabelJNI.OBRingData_BeginRing(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator.getCPtr(i));
+    return (cPtr == 0) ? null : new OBRing(cPtr, false);
+  }
+
+  public OBRing NextRing(SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator i) {
+    long cPtr = openbabelJNI.OBRingData_NextRing(swigCPtr, this, SWIGTYPE_p_std__vectorTOpenBabel__OBRing_p_t__iterator.getCPtr(i));
+    return (cPtr == 0) ? null : new OBRing(cPtr, false);
+  }
+
 }

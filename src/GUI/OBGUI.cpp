@@ -15,13 +15,13 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
-#include "stdwx.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/stdwx.h>
 #include <sstream>
-#include "obconversion.h"
-#include "dlhandler.h"
-#include "selformats.h"
-#include "OBGUI.h"
+#include <openbabel/obconversion.h>
+#include <openbabel/dlhandler.h>
+#include <openbabel/selformats.h>
+#include <openbabel/OBGUI.h>
 
 /*
 #ifdef _DEBUG

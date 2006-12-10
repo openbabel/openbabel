@@ -18,11 +18,11 @@ GNU General Public License for more details.
 #pragma warning (disable : 4251) //
 #endif
 
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "mol.h"
-#include "obconversion.h"
-#include "reaction.h"
+#include <openbabel/mol.h>
+#include <openbabel/obconversion.h>
+#include <openbabel/reaction.h>
 
 namespace OpenBabel
 {

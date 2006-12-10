@@ -13,9 +13,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "mol.h"
-#include "obconversion.h"
-#include "obmolecformat.h"
+#include <openbabel/mol.h>
+#include <openbabel/obconversion.h>
+#include <openbabel/obmolecformat.h>
 
 #include <libxml/xmlreader.h>
 #include <libxml/xmlwriter.h>

@@ -1282,6 +1282,10 @@ sub DESTROY {
 *SetData = *Chemistry::OpenBabelc::OBRingData_SetData;
 *PushBack = *Chemistry::OpenBabelc::OBRingData_PushBack;
 *GetData = *Chemistry::OpenBabelc::OBRingData_GetData;
+*BeginRings = *Chemistry::OpenBabelc::OBRingData_BeginRings;
+*EndRings = *Chemistry::OpenBabelc::OBRingData_EndRings;
+*BeginRing = *Chemistry::OpenBabelc::OBRingData_BeginRing;
+*NextRing = *Chemistry::OpenBabelc::OBRingData_NextRing;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -2564,6 +2568,7 @@ sub DESTROY {
 *Align = *Chemistry::OpenBabelc::OBMol_Align;
 *ConnectTheDots = *Chemistry::OpenBabelc::OBMol_ConnectTheDots;
 *PerceiveBondOrders = *Chemistry::OpenBabelc::OBMol_PerceiveBondOrders;
+*FindAngles = *Chemistry::OpenBabelc::OBMol_FindAngles;
 *FindTorsions = *Chemistry::OpenBabelc::OBMol_FindTorsions;
 *GetGTDVector = *Chemistry::OpenBabelc::OBMol_GetGTDVector;
 *GetGIVector = *Chemistry::OpenBabelc::OBMol_GetGIVector;
@@ -4239,6 +4244,188 @@ sub DESTROY {
 *GetData = *Chemistry::OpenBabelc::OBResidueAtomIter_GetData;
 *BeginData = *Chemistry::OpenBabelc::OBResidueAtomIter_BeginData;
 *EndData = *Chemistry::OpenBabelc::OBResidueAtomIter_EndData;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBMolAngleIter ##############
+
+package Chemistry::OpenBabel::OBMolAngleIter;
+use overload
+    "++" => sub { $_[0]->__plusplus__()},
+    "fallback" => 1;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBMolAngleIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*__plusplus__ = *Chemistry::OpenBabelc::OBMolAngleIter___plusplus__;
+*__ref__ = *Chemistry::OpenBabelc::OBMolAngleIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBMolAngleIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBMolTorsionIter ##############
+
+package Chemistry::OpenBabel::OBMolTorsionIter;
+use overload
+    "++" => sub { $_[0]->__plusplus__()},
+    "fallback" => 1;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBMolTorsionIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*__plusplus__ = *Chemistry::OpenBabelc::OBMolTorsionIter___plusplus__;
+*__ref__ = *Chemistry::OpenBabelc::OBMolTorsionIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBMolTorsionIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBMolPairIter ##############
+
+package Chemistry::OpenBabel::OBMolPairIter;
+use overload
+    "++" => sub { $_[0]->__plusplus__()},
+    "fallback" => 1;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBMolPairIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*__plusplus__ = *Chemistry::OpenBabelc::OBMolPairIter___plusplus__;
+*__deref__ = *Chemistry::OpenBabelc::OBMolPairIter___deref__;
+*__ref__ = *Chemistry::OpenBabelc::OBMolPairIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBMolPairIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : Chemistry::OpenBabel::OBMolRingIter ##############
+
+package Chemistry::OpenBabel::OBMolRingIter;
+use overload
+    "++" => sub { $_[0]->__plusplus__()},
+    "fallback" => 1;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( Chemistry::OpenBabel );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = Chemistry::OpenBabelc::new_OBMolRingIter(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*__plusplus__ = *Chemistry::OpenBabelc::OBMolRingIter___plusplus__;
+*__deref__ = *Chemistry::OpenBabelc::OBMolRingIter___deref__;
+*__ref__ = *Chemistry::OpenBabelc::OBMolRingIter___ref__;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        Chemistry::OpenBabelc::delete_OBMolRingIter($self);
+        delete $OWNER{$self};
+    }
+}
+
+*swig__path_get = *Chemistry::OpenBabelc::OBMolRingIter__path_get;
+*swig__path_set = *Chemistry::OpenBabelc::OBMolRingIter__path_set;
+*swig__pathset_get = *Chemistry::OpenBabelc::OBMolRingIter__pathset_get;
+*swig__pathset_set = *Chemistry::OpenBabelc::OBMolRingIter__pathset_set;
+*findCenterAndNormal = *Chemistry::OpenBabelc::OBMolRingIter_findCenterAndNormal;
+*Size = *Chemistry::OpenBabelc::OBMolRingIter_Size;
+*PathSize = *Chemistry::OpenBabelc::OBMolRingIter_PathSize;
+*IsMember = *Chemistry::OpenBabelc::OBMolRingIter_IsMember;
+*IsAromatic = *Chemistry::OpenBabelc::OBMolRingIter_IsAromatic;
+*IsInRing = *Chemistry::OpenBabelc::OBMolRingIter_IsInRing;
+*SetParent = *Chemistry::OpenBabelc::OBMolRingIter_SetParent;
+*GetParent = *Chemistry::OpenBabelc::OBMolRingIter_GetParent;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);

@@ -1,9 +1,17 @@
+2006-12-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel: New directory for public headers. Ensures
+	internal and external code use the same 
+	#include <openbabel/header.h> syntax.
+
+	Also, all related UNIX-based build changes.
+
 2006-12-04  Vincent Favre-Nicolin <Vincent.Favre-Nicolin@ujf-grenoble.fr>
 
 	* src/format/ciffformat.cpp: Added new OBFormat-derived class to
-   handle Crystallographic Information Files. Initial implementation
-   handles reading & writing atomic coordinates, reading unit cell
-   and spacegroup name but no interpretation of symmetry is done.
+	handle Crystallographic Information Files. Initial implementation
+	handles reading & writing atomic coordinates, reading unit cell
+	and spacegroup name but no interpretation of symmetry is done.
 
 2006-12-04  Benoit Jacob <jacob@math.jussieu.fr>
 
@@ -12,10 +20,20 @@
 2006-12-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/generic.h, src/generic.cpp (OBRingData): Add new methods for
-	iterating over rings.
+	iterating over rings. (OBAngleData): Modifications from Tim
+	Vandermeersch to facilitate iteration over angles in an OBMol.
 
-	* src/obiter.h, src/obiter.cpp: New class OBMolRingIter and
-	FOR_RINGS_OF_MOL  macro.
+	* src/mol.h, src/mol.cpp (FindAngles()): New method to parallel
+	FindTorsions() for filling an OBAngleData record in an OBMol,
+	contributed by Tim.
+
+	* src/obiter.h, src/obiter.cpp: New classes and macros, including
+	FOR_RINGS_OF_MOL, FOR_ANGLES_OF_MOL, FOR_TORSIONS_OF_MOL
+	FOR_PAIRS_OF_MOL, contributed by Tim.
+
+	* src/forcefield.h, src/forcefield.cpp, src/Makefile.am,
+	src/Makefile.in: New classes for mol. mechanics force fields
+	contributed by Tim Vandermeersch.
 
 2006-12-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 

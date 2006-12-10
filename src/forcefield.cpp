@@ -15,14 +15,14 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "forcefield.h"
+#include <openbabel/forcefield.h>
 
-#include "mol.h"
-#include "atom.h"
-#include "bond.h"
-#include "obiter.h"
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
 
 using namespace std;
 

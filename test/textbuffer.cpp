@@ -21,11 +21,11 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include "babelconfig.h"
-#include "newlinebuf.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/newlinebuf.h>
 
 #ifdef HAVE_LIBZ
-#include "zipstream.h"
+#include "../src/zipstream.h"
 #endif
 
 #include <stdio.h>

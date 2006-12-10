@@ -13,9 +13,9 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
-#include "obmolecformat.h"
+#include <openbabel/obmolecformat.h>
 
 const double AAU = 0.5291772108;  // Ångström per bohr (CODATA 2002)
 

@@ -562,6 +562,10 @@ public class OBMol extends OBBase {
     openbabelJNI.OBMol_PerceiveBondOrders(swigCPtr, this);
   }
 
+  public void FindAngles() {
+    openbabelJNI.OBMol_FindAngles(swigCPtr, this);
+  }
+
   public void FindTorsions() {
     openbabelJNI.OBMol_FindTorsions(swigCPtr, this);
   }

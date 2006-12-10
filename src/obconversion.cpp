@@ -17,7 +17,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 // Definition of OBConversion routines
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #ifdef _WIN32
 	#pragma warning (disable : 4786)
@@ -36,7 +36,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <map>
-#include "obconversion.h"
+#include <openbabel/obconversion.h>
 
 #ifdef HAVE_LIBZ
 #include "zipstream.h"

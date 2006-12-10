@@ -15,7 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
+#include <openbabel/babelconfig.h>
 
 #ifdef _WIN32
 #pragma warning (disable : 4786)
@@ -25,8 +25,8 @@ GNU General Public License for more details.
 #include <vector>
 #include <iomanip>
 #include <map>
-#include "obmolecformat.h"
-#include "chiral.h"
+#include <openbabel/obmolecformat.h>
+#include <openbabel/chiral.h>
 
 using namespace std;
 namespace OpenBabel

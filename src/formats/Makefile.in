@@ -14,7 +14,6 @@
 
 @SET_MAKE@
 
-
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
@@ -40,8 +39,7 @@ host_triplet = @host@
 @BUILD_XML_TRUE@am__append_1 = xml
 @BUILD_INCHI_TRUE@am__append_2 = inchi
 subdir = src/formats
-DIST_COMMON = $(libopenbabelinclude_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -56,8 +54,7 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(pkglibdir)" \
-	"$(DESTDIR)$(libopenbabelincludedir)"
+am__installdirs = "$(DESTDIR)$(pkglibdir)"
 pkglibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(noinst_LTLIBRARIES) $(pkglib_LTLIBRARIES)
 APIInterface_la_LIBADD =
@@ -155,6 +152,12 @@ am__chemtoolformat_la_SOURCES_DIST = chemtoolformat.cpp
 @BUILD_SHARED_TRUE@am_chemtoolformat_la_OBJECTS = chemtoolformat.lo
 chemtoolformat_la_OBJECTS = $(am_chemtoolformat_la_OBJECTS)
 @BUILD_SHARED_TRUE@am_chemtoolformat_la_rpath = -rpath $(pkglibdir)
+cifformat_la_LIBADD =
+am__cifformat_la_SOURCES_DIST = cifformat.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@am_cifformat_la_OBJECTS = cifformat.lo \
+@BUILD_SHARED_TRUE@	obmolecformat.lo
+cifformat_la_OBJECTS = $(am_cifformat_la_OBJECTS)
+@BUILD_SHARED_TRUE@am_cifformat_la_rpath = -rpath $(pkglibdir)
 copyformat_la_LIBADD =
 am__copyformat_la_SOURCES_DIST = copyformat.cpp
 @BUILD_SHARED_TRUE@am_copyformat_la_OBJECTS = copyformat.lo
@@ -263,19 +266,20 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 	balstformat.cpp bgfformat.cpp boxformat.cpp cacaoformat.cpp \
 	cacheformat.cpp carformat.cpp cccformat.cpp chem3dformat.cpp \
 	chemdrawct.cpp chemdrawcdx.cpp chemtoolformat.cpp \
-	copyformat.cpp crkformat.cpp cssrformat.cpp dmolformat.cpp \
-	fastsearchformat.cpp fastaformat.cpp featformat.cpp \
-	fhformat.cpp fingerprintformat.cpp freefracformat.cpp \
-	gamessformat.cpp gaussformat.cpp ghemicalformat.cpp \
-	gromos96format.cpp hinformat.cpp inchiformat.cpp \
-	jaguarformat.cpp mdlformat.cpp mmodformat.cpp mol2format.cpp \
-	molreport.cpp mopacformat.cpp mpdformat.cpp mpqcformat.cpp \
-	nwchemformat.cpp pcmodelformat.cpp pdbformat.cpp \
-	povrayformat.cpp qchemformat.cpp reportformat.cpp \
-	rxnformat.cpp shelxformat.cpp smilesformat.cpp \
-	thermoformat.cpp tinkerformat.cpp titleformat.cpp \
-	turbomoleformat.cpp unichemformat.cpp viewmolformat.cpp \
-	xedformat.cpp xyzformat.cpp yasaraformat.cpp zindoformat.cpp
+	cifformat.cpp copyformat.cpp crkformat.cpp cssrformat.cpp \
+	dmolformat.cpp fastsearchformat.cpp fastaformat.cpp \
+	featformat.cpp fhformat.cpp fingerprintformat.cpp \
+	freefracformat.cpp gamessformat.cpp gaussformat.cpp \
+	ghemicalformat.cpp gromos96format.cpp hinformat.cpp \
+	inchiformat.cpp jaguarformat.cpp mdlformat.cpp mmodformat.cpp \
+	mol2format.cpp molreport.cpp mopacformat.cpp mpdformat.cpp \
+	mpqcformat.cpp nwchemformat.cpp pcmodelformat.cpp \
+	pdbformat.cpp povrayformat.cpp qchemformat.cpp \
+	reportformat.cpp rxnformat.cpp shelxformat.cpp \
+	smilesformat.cpp thermoformat.cpp tinkerformat.cpp \
+	titleformat.cpp turbomoleformat.cpp unichemformat.cpp \
+	viewmolformat.cpp xedformat.cpp xyzformat.cpp yasaraformat.cpp \
+	zindoformat.cpp
 @BUILD_SHARED_FALSE@am_libformats_la_OBJECTS = APIInterface.lo \
 @BUILD_SHARED_FALSE@	obmolecformat.lo CSRformat.lo PQSformat.lo \
 @BUILD_SHARED_FALSE@	alchemyformat.lo amberformat.lo \
@@ -283,9 +287,10 @@ am__libformats_la_SOURCES_DIST = APIInterface.cpp obmolecformat.cpp \
 @BUILD_SHARED_FALSE@	cacaoformat.lo cacheformat.lo carformat.lo \
 @BUILD_SHARED_FALSE@	cccformat.lo chem3dformat.lo chemdrawct.lo \
 @BUILD_SHARED_FALSE@	chemdrawcdx.lo chemtoolformat.lo \
-@BUILD_SHARED_FALSE@	copyformat.lo crkformat.lo cssrformat.lo \
-@BUILD_SHARED_FALSE@	dmolformat.lo fastsearchformat.lo \
-@BUILD_SHARED_FALSE@	fastaformat.lo featformat.lo fhformat.lo \
+@BUILD_SHARED_FALSE@	cifformat.lo copyformat.lo crkformat.lo \
+@BUILD_SHARED_FALSE@	cssrformat.lo dmolformat.lo \
+@BUILD_SHARED_FALSE@	fastsearchformat.lo fastaformat.lo \
+@BUILD_SHARED_FALSE@	featformat.lo fhformat.lo \
 @BUILD_SHARED_FALSE@	fingerprintformat.lo freefracformat.lo \
 @BUILD_SHARED_FALSE@	gamessformat.lo gaussformat.lo \
 @BUILD_SHARED_FALSE@	ghemicalformat.lo gromos96format.lo \
@@ -477,28 +482,29 @@ SOURCES = $(APIInterface_la_SOURCES) $(CSRformat_la_SOURCES) \
 	$(carformat_la_SOURCES) $(cccformat_la_SOURCES) \
 	$(chem3dformat_la_SOURCES) $(chemdrawcdxformat_la_SOURCES) \
 	$(chemdrawctformat_la_SOURCES) $(chemtoolformat_la_SOURCES) \
-	$(copyformat_la_SOURCES) $(crkformat_la_SOURCES) \
-	$(cssrformat_la_SOURCES) $(dmolformat_la_SOURCES) \
-	$(fastaformat_la_SOURCES) $(fastsearchformat_la_SOURCES) \
-	$(featformat_la_SOURCES) $(fhformat_la_SOURCES) \
-	$(fingerprintformat_la_SOURCES) $(freefracformat_la_SOURCES) \
-	$(gamessformat_la_SOURCES) $(gaussformat_la_SOURCES) \
-	$(ghemicalformat_la_SOURCES) $(gromos96format_la_SOURCES) \
-	$(hinformat_la_SOURCES) $(inchiformat_la_SOURCES) \
-	$(jaguarformat_la_SOURCES) $(libformats_la_SOURCES) \
-	$(mdlformat_la_SOURCES) $(mmodformat_la_SOURCES) \
-	$(mol2format_la_SOURCES) $(molreportformat_la_SOURCES) \
-	$(mopacformat_la_SOURCES) $(mpdformat_la_SOURCES) \
-	$(mpqcformat_la_SOURCES) $(nwchemformat_la_SOURCES) \
-	$(pcmodelformat_la_SOURCES) $(pdbformat_la_SOURCES) \
-	$(povrayformat_la_SOURCES) $(qchemformat_la_SOURCES) \
-	$(reportformat_la_SOURCES) $(rxnformat_la_SOURCES) \
-	$(shelxformat_la_SOURCES) $(smilesformat_la_SOURCES) \
-	$(thermoformat_la_SOURCES) $(tinkerformat_la_SOURCES) \
-	$(titleformat_la_SOURCES) $(turbomoleformat_la_SOURCES) \
-	$(unichemformat_la_SOURCES) $(viewmolformat_la_SOURCES) \
-	$(xedformat_la_SOURCES) $(xyzformat_la_SOURCES) \
-	$(yasaraformat_la_SOURCES) $(zindoformat_la_SOURCES)
+	$(cifformat_la_SOURCES) $(copyformat_la_SOURCES) \
+	$(crkformat_la_SOURCES) $(cssrformat_la_SOURCES) \
+	$(dmolformat_la_SOURCES) $(fastaformat_la_SOURCES) \
+	$(fastsearchformat_la_SOURCES) $(featformat_la_SOURCES) \
+	$(fhformat_la_SOURCES) $(fingerprintformat_la_SOURCES) \
+	$(freefracformat_la_SOURCES) $(gamessformat_la_SOURCES) \
+	$(gaussformat_la_SOURCES) $(ghemicalformat_la_SOURCES) \
+	$(gromos96format_la_SOURCES) $(hinformat_la_SOURCES) \
+	$(inchiformat_la_SOURCES) $(jaguarformat_la_SOURCES) \
+	$(libformats_la_SOURCES) $(mdlformat_la_SOURCES) \
+	$(mmodformat_la_SOURCES) $(mol2format_la_SOURCES) \
+	$(molreportformat_la_SOURCES) $(mopacformat_la_SOURCES) \
+	$(mpdformat_la_SOURCES) $(mpqcformat_la_SOURCES) \
+	$(nwchemformat_la_SOURCES) $(pcmodelformat_la_SOURCES) \
+	$(pdbformat_la_SOURCES) $(povrayformat_la_SOURCES) \
+	$(qchemformat_la_SOURCES) $(reportformat_la_SOURCES) \
+	$(rxnformat_la_SOURCES) $(shelxformat_la_SOURCES) \
+	$(smilesformat_la_SOURCES) $(thermoformat_la_SOURCES) \
+	$(tinkerformat_la_SOURCES) $(titleformat_la_SOURCES) \
+	$(turbomoleformat_la_SOURCES) $(unichemformat_la_SOURCES) \
+	$(viewmolformat_la_SOURCES) $(xedformat_la_SOURCES) \
+	$(xyzformat_la_SOURCES) $(yasaraformat_la_SOURCES) \
+	$(zindoformat_la_SOURCES)
 DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__CSRformat_la_SOURCES_DIST) \
 	$(am__PQSformat_la_SOURCES_DIST) \
@@ -515,6 +521,7 @@ DIST_SOURCES = $(am__APIInterface_la_SOURCES_DIST) \
 	$(am__chemdrawcdxformat_la_SOURCES_DIST) \
 	$(am__chemdrawctformat_la_SOURCES_DIST) \
 	$(am__chemtoolformat_la_SOURCES_DIST) \
+	$(am__cifformat_la_SOURCES_DIST) \
 	$(am__copyformat_la_SOURCES_DIST) \
 	$(am__crkformat_la_SOURCES_DIST) \
 	$(am__cssrformat_la_SOURCES_DIST) \
@@ -565,8 +572,6 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	install-recursive installcheck-recursive installdirs-recursive \
 	pdf-recursive ps-recursive uninstall-info-recursive \
 	uninstall-recursive
-libopenbabelincludeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(libopenbabelinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = xml inchi
@@ -713,10 +718,10 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data -I$(top_srcdir)/include
 # Make sure to install the inchi_api.h header
 libopenbabelincludedir = $(includedir)/openbabel-2.0/openbabel
-libopenbabelinclude_HEADERS = inchi_api.h obmolecformat.h chemdrawcdx.h
+# libopenbabelinclude_HEADERS = inchi_api.h obmolecformat.h chemdrawcdx.h
 EXTRA_DIST = exampleformat.cpp
 SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_PCH_TRUE@BUILT_SOURCES = all.h.gch
@@ -734,7 +739,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_FALSE@	amberformat.cpp balstformat.cpp bgfformat.cpp boxformat.cpp \
 @BUILD_SHARED_FALSE@	cacaoformat.cpp cacheformat.cpp carformat.cpp cccformat.cpp \
 @BUILD_SHARED_FALSE@	chem3dformat.cpp chemdrawct.cpp chemdrawcdx.cpp \
-@BUILD_SHARED_FALSE@	chemtoolformat.cpp \
+@BUILD_SHARED_FALSE@	chemtoolformat.cpp cifformat.cpp \
 @BUILD_SHARED_FALSE@	copyformat.cpp crkformat.cpp cssrformat.cpp \
 @BUILD_SHARED_FALSE@	dmolformat.cpp fastsearchformat.cpp fastaformat.cpp \
 @BUILD_SHARED_FALSE@	featformat.cpp fhformat.cpp fingerprintformat.cpp \
@@ -755,7 +760,7 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@	amberformat.la balstformat.la bgfformat.la boxformat.la \
 @BUILD_SHARED_TRUE@	cacaoformat.la cacheformat.la carformat.la cccformat.la \
 @BUILD_SHARED_TRUE@	chem3dformat.la chemdrawctformat.la chemdrawcdxformat.la \
-@BUILD_SHARED_TRUE@	chemtoolformat.la \
+@BUILD_SHARED_TRUE@	chemtoolformat.la cifformat.la \
 @BUILD_SHARED_TRUE@	copyformat.la crkformat.la cssrformat.la \
 @BUILD_SHARED_TRUE@	dmolformat.la fastsearchformat.la fastaformat.la \
 @BUILD_SHARED_TRUE@	featformat.la fhformat.la fingerprintformat.la \
@@ -802,6 +807,8 @@ SUBDIRS = $(am__append_1) $(am__append_2)
 @BUILD_SHARED_TRUE@chemdrawcdxformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@chemtoolformat_la_SOURCES = chemtoolformat.cpp
 @BUILD_SHARED_TRUE@chemtoolformat_la_LDFLAGS = -module -avoid-version 
+@BUILD_SHARED_TRUE@cifformat_la_SOURCES = cifformat.cpp obmolecformat.cpp
+@BUILD_SHARED_TRUE@cifformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@copyformat_la_SOURCES = copyformat.cpp
 @BUILD_SHARED_TRUE@copyformat_la_LDFLAGS = -module -avoid-version 
 @BUILD_SHARED_TRUE@crkformat_la_SOURCES = crkformat.cpp obmolecformat.cpp
@@ -992,6 +999,8 @@ chemdrawctformat.la: $(chemdrawctformat_la_OBJECTS) $(chemdrawctformat_la_DEPEND
 	$(CXXLINK) $(am_chemdrawctformat_la_rpath) $(chemdrawctformat_la_LDFLAGS) $(chemdrawctformat_la_OBJECTS) $(chemdrawctformat_la_LIBADD) $(LIBS)
 chemtoolformat.la: $(chemtoolformat_la_OBJECTS) $(chemtoolformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_chemtoolformat_la_rpath) $(chemtoolformat_la_LDFLAGS) $(chemtoolformat_la_OBJECTS) $(chemtoolformat_la_LIBADD) $(LIBS)
+cifformat.la: $(cifformat_la_OBJECTS) $(cifformat_la_DEPENDENCIES) 
+	$(CXXLINK) $(am_cifformat_la_rpath) $(cifformat_la_LDFLAGS) $(cifformat_la_OBJECTS) $(cifformat_la_LIBADD) $(LIBS)
 copyformat.la: $(copyformat_la_OBJECTS) $(copyformat_la_DEPENDENCIES) 
 	$(CXXLINK) $(am_copyformat_la_rpath) $(copyformat_la_LDFLAGS) $(copyformat_la_OBJECTS) $(copyformat_la_LIBADD) $(LIBS)
 crkformat.la: $(crkformat_la_OBJECTS) $(crkformat_la_DEPENDENCIES) 
@@ -1103,6 +1112,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemdrawcdx.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemdrawct.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chemtoolformat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cifformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copyformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crkformat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cssrformat.Plo@am__quote@
@@ -1178,23 +1188,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-libopenbabelincludeHEADERS: $(libopenbabelinclude_HEADERS)
-	@$(NORMAL_INSTALL)
-	test -z "$(libopenbabelincludedir)" || $(mkdir_p) "$(DESTDIR)$(libopenbabelincludedir)"
-	@list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(libopenbabelincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(libopenbabelincludedir)/$$f'"; \
-	  $(libopenbabelincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(libopenbabelincludedir)/$$f"; \
-	done
-
-uninstall-libopenbabelincludeHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(libopenbabelinclude_HEADERS)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(libopenbabelincludedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(libopenbabelincludedir)/$$f"; \
-	done
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
@@ -1373,10 +1366,10 @@ distdir: $(DISTFILES)
 check-am: all-am
 check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-recursive
-all-am: Makefile $(LTLIBRARIES) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(libopenbabelincludedir)"; do \
+	for dir in "$(DESTDIR)$(pkglibdir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -1427,7 +1420,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-libopenbabelincludeHEADERS
+install-data-am:
 
 install-exec-am: install-pkglibLTLIBRARIES
 
@@ -1455,8 +1448,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-libopenbabelincludeHEADERS \
-	uninstall-pkglibLTLIBRARIES
+uninstall-am: uninstall-info-am uninstall-pkglibLTLIBRARIES
 
 uninstall-info: uninstall-info-recursive
 
@@ -1468,15 +1460,13 @@ uninstall-info: uninstall-info-recursive
 	distclean-recursive distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-libopenbabelincludeHEADERS install-man \
-	install-pkglibLTLIBRARIES install-strip installcheck \
-	installcheck-am installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic maintainer-clean-recursive \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am uninstall-info-am \
-	uninstall-libopenbabelincludeHEADERS \
-	uninstall-pkglibLTLIBRARIES
+	install-info-am install-man install-pkglibLTLIBRARIES \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	maintainer-clean-recursive mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool mostlyclean-recursive \
+	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	uninstall-info-am uninstall-pkglibLTLIBRARIES
 
 @BUILD_PCH_TRUE@all.h.gch: all.h Makefile obmolecformat.h $(srcdir)/../babelconfig.h \
 @BUILD_PCH_TRUE@	$(srcdir)/../mol.h $(srcdir)/../obconversion.h $(srcdir)/../base.h \

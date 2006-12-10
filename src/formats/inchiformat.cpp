@@ -15,10 +15,11 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "babelconfig.h"
-#include "mol.h"
-#include "obconversion.h"
-#include "obmolecformat.h"
+#include <openbabel/babelconfig.h>
+#include <openbabel/mol.h>
+#include <openbabel/obconversion.h>
+#include <openbabel/obmolecformat.h>
+
 #include "inchi_api.h"
 #include <sstream>
 #include <set>
