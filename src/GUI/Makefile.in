@@ -212,7 +212,9 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 EXTRA_DIST = OBGUI.h optswx.h selformats.h stdwx.h
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/data \
+				-I$(top_srcdir)/include
+
 AM_CPPFLAGS = @WX_CPPFLAGS@
 AM_CXXFLAGS = @WX_CXXFLAGS@
 wxbabel_SOURCES = OBGUI.cpp optswx.cpp stdwx.cpp

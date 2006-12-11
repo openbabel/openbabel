@@ -406,8 +406,6 @@ info: info-am
 info-am:
 
 install-data-am: install-libopenbabelincludeHEADERS
-	@$(NORMAL_INSTALL)
-	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 
 install-exec-am:
 
@@ -439,24 +437,14 @@ uninstall-am: uninstall-info-am uninstall-libopenbabelincludeHEADERS
 	clean-libtool ctags dist-hook distclean distclean-generic \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
-	install-data-am install-data-hook install-exec install-exec-am \
-	install-info install-info-am \
-	install-libopenbabelincludeHEADERS install-man install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-info-am \
+	install-data-am install-exec install-exec-am install-info \
+	install-info-am install-libopenbabelincludeHEADERS install-man \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-info-am \
 	uninstall-libopenbabelincludeHEADERS
 
-
-# Use sed to substitute #include "header.h" to #include <openbabel/header.h>
-install-data-hook:
-	for header in $(DESTDIR)$(libopenbabelincludedir)/*.h \
-	      $(DESTDIR)$(libopenbabelincludedir)/math/*.h; do \
-	   sed -e 's!^#include "\([^"]*\)"!#include <openbabel/\1>!' \
-	      < $${header} >$${header}.new; \
-	   mv $${header}.new $${header}; \
-	done
 
 # Remove the configure-generated babelconfig.h
 dist-hook:

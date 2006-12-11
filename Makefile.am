@@ -3,7 +3,7 @@ if BUILD_SCRIPTS
   SCRIPT_DIR = scripts
 endif
 
-SUBDIRS = data src test tools doc $(SCRIPT_DIR)
+SUBDIRS = data src test tools doc include $(SCRIPT_DIR)
 EXTRA_DIST = Doxyfile windows windows-vc2005 INSTALL.Windows
 AUTOMAKE_OPTIONS = foreign
 
