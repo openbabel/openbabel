@@ -1,3 +1,10 @@
+2006-12-12  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-[python,ruby,java,perl].i: Added a line to
+	create a vector of unisigned ints, required to use the Fingerprint
+	class. Also, added lines to prevent warnings due to shadowed classes
+	in obiter.h.
+
 2006-12-10  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel: New directory for public headers. Ensures
