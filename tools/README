@@ -1,84 +1,18 @@
-This directory contains a set of tools aimed to help people for their day to day work.
-All the tools use the Open Babel library, and all are written in a single source code files of around 200 lines.
+Open Babel Tools, version 2.1
+-----------------------
 
-Most of these utilities work in the same way, the first three require a SMART pattern and at least one input files, they guess the input file format from the filename extention, and they print the results to the standard output. 
-See below for more details
+This directory contains a selection of ready-to-use tools for a
+variety of tasks in molecular modeling, cheminformatics, and related
+areas. Most are designed as command-line utilies for any operating
+system.
 
-###############################################################################
-OBGREP
-
-obgrep is a more advanced version of the SMART grep program which was at the end of the OELIB 'Primer.html'. 
-
-the following lines are printed in the terminal when obgrep is executed without any argument:
-> obgrep
-Usage: ./obgrep [options] "PATTERN" <filename>
-Options:
-   -v      Invert the matching, print non-matching molecules
-   -c      Print the number of matched molecules
-   -f      Full match, print matching-molecules when the number
-           of heavy atoms is equal to the number of PATTERN atoms
-   -n      Only print the name of the molecules
-   -t NUM  Print a molecule only if the PATTERN occurs NUM times inside the molecule.
-
-Since some examples are better than a long explaination, here are some command lines to perform some queries in a database of SMILES (database.smi)
-
-> obgrep "CN" database.smi        # Print all the molecules with a methylamine group
-
-> obgrep -v "CN" database.smi     # Print all the molecules without a methylamine group
-
-> obgrep -v -c "CN" database.smi  # Print the number of molecules without a methylamine group
-
-> obgrep -f "CN" database.smi     # Print methylamine
-> obgrep -f "C[N,O]" database.smi # Print methylamine and methanol
-
-> obgrep -n -t 1 "[O;D1]~C~[O;D1]" database.smi # Print the name of the compounds with a single carboxilic group
-
-###############################################################################
-OBFIT
-
-obfit uses the qtrfit function of the library to superimpose two molecules. Its most interesting feature is that the atoms to fit are defined by the SMART pattern given by the user. I found it pretty useful to align congeneric series of molecules on a common structural scaffold for 3D-QSAR studies. Probably, It can be useful for the overlay of outputs of conformational sampling.
-here is an example:
-obfit "N1(C)CCCCC1" fixed.sdf moving.sdf
-
-align all the molecules of 'moving.sdf' on a single molecule of 'fixed.sdf' by superimposing them on its N-methylpiperidyl moiety.
-If a molecule in 'moving.sdf' doesn't have the N-methylpiperidyl substructure, it is printed on the terminal without any transformation.
-
-###############################################################################
-OBROTATE
-
-obrotate rotates the tortional angle of a molecules so that its angle value is equal to the one defined by the user. In other words, it does the same as what would do a user setting an angle in a mollecular modelling package, but much faster and in batch mode.
-Let's say that you want to define the conformation of a lot of molecules with a pyridyl scaffold and substituted with an aliphatic chain at 3-position, for example for docking or 3D-QSAR puposes.
-To set the value of the first tortional to 90 degrees, the command line would be:
-obrotate "c1ccncc1CCC" pyridines.sdf 5 6 7 8 90
-
-6 and 7 define the bond to rotate in the SMART pattern, i.e. c1C bond, 5 and 8 are the atoms of the SMART pattern used to set the angle value. The two atoms used to set the angle value do not have to be connected to the atoms of the bond to rotate, for example, the following line:
-obrotate "c1ccncc1CCC" pyridines.sdf 4 6 7 8 90
-
-produces the same output, but uses the nitrogen atom as a reference for the angle value instead of the aromatic carbon. The order of the atom's definition matters, so the program knows which part of the molecule is moving and which part is kept fixed, i.e.:
-obrotate "c1ccncc1CCC" pyridines.sdf 5 6 7 8 90
-
-keeps the pyridyl ring fixed and moves the aliphatic chain while
-obrotate "c1ccncc1CCC" pyridines.sdf 8 7 6 5 90
-
-keeps the aliphatic chain fixed and moves the pyridyl ring
-
-###############################################################################
-OBPROP
-
-This is just a little program to show how easy it is to get some common molecular properties from Open Babel.
-Actually, I created it to help a friend (Bet) who wanted to count the number of rings of the compounds of a database. The main idea of this tool is to help non C++ programmer so they can use the advanced features of Open Babel with their favorite scripting language.    
-
-For the moment, there are only 3 properties available
-
-> obprop
-Usage: obprop <filename>
-Output format:
-name NAME
-mol_weight MOLECULAR_WEIGHT
-num_rings NUMBER_OF_RING_(SSSR)
-$$$$
-
-
-I Hope that people will feel inspired by these tools and make their own contribution.
-
-Fabien Fontaine, 28th of september 2004
+* babel         Interconvert between over 70 file formats
+* obchiral      Generate
+* obfit      	Overlay  
+* obgen		Developmental tool to generate 3D coordinates for SMILES
+* obgrep	Chemical searching using SMARTS patterns
+* obprop	Generate lists of properties for molecular files
+* obrotamer	Generate random rotamer/conformer coordinates
+* obrotate	Rotate dihedral angles defined by particular SMARTS patterns
+* obxyz		Modify Cartesian XYZ coordinates, including
+		 rotation, translation, etc.

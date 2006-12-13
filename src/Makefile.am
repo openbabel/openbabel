@@ -9,10 +9,6 @@ endif
 
 INCLUDES = -I$(top_srcdir)/data/ -I$(top_srcdir)/include
 
-bin_PROGRAMS = babel
-babel_SOURCES = main.cpp
-babel_LDADD = libopenbabel.la  @LIBDL@ @LIBOBJS@
-
 lib_LTLIBRARIES = libopenbabel.la
 
 if BUILD_SHARED

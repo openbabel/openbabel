@@ -36,9 +36,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = obchiral$(EXEEXT) obgrep$(EXEEXT) obrotate$(EXEEXT) \
-	obfit$(EXEEXT) obprop$(EXEEXT) obxyz$(EXEEXT) obgen$(EXEEXT) \
-	obrotamer$(EXEEXT)
+bin_PROGRAMS = babel$(EXEEXT) obchiral$(EXEEXT) obgrep$(EXEEXT) \
+	obrotate$(EXEEXT) obfit$(EXEEXT) obprop$(EXEEXT) \
+	obxyz$(EXEEXT) obgen$(EXEEXT) obrotamer$(EXEEXT)
 subdir = tools
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -52,6 +52,9 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
+am_babel_OBJECTS = babel.$(OBJEXT)
+babel_OBJECTS = $(am_babel_OBJECTS)
+babel_DEPENDENCIES = ../src/libopenbabel.la
 am_obchiral_OBJECTS = obchiral.$(OBJEXT)
 obchiral_OBJECTS = $(am_obchiral_OBJECTS)
 obchiral_DEPENDENCIES = ../src/libopenbabel.la
@@ -87,12 +90,12 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgen_SOURCES) \
-	$(obgrep_SOURCES) $(obprop_SOURCES) $(obrotamer_SOURCES) \
-	$(obrotate_SOURCES) $(obxyz_SOURCES)
-DIST_SOURCES = $(obchiral_SOURCES) $(obfit_SOURCES) $(obgen_SOURCES) \
-	$(obgrep_SOURCES) $(obprop_SOURCES) $(obrotamer_SOURCES) \
-	$(obrotate_SOURCES) $(obxyz_SOURCES)
+SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obfit_SOURCES) \
+	$(obgen_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) \
+	$(obrotamer_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES)
+DIST_SOURCES = $(babel_SOURCES) $(obchiral_SOURCES) $(obfit_SOURCES) \
+	$(obgen_SOURCES) $(obgrep_SOURCES) $(obprop_SOURCES) \
+	$(obrotamer_SOURCES) $(obrotate_SOURCES) $(obxyz_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -238,6 +241,11 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+
+# obdoc is intended to be used for generating file format documentation
+# and is not a general end-user program
+babel_SOURCES = babel.cpp
+babel_LDADD = ../src/libopenbabel.la @LIBDL@
 obchiral_SOURCES = obchiral.cpp
 obchiral_LDADD = ../src/libopenbabel.la @LIBDL@
 obfit_SOURCES = obfit.cpp
@@ -319,6 +327,9 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
+babel$(EXEEXT): $(babel_OBJECTS) $(babel_DEPENDENCIES) 
+	@rm -f babel$(EXEEXT)
+	$(CXXLINK) $(babel_LDFLAGS) $(babel_OBJECTS) $(babel_LDADD) $(LIBS)
 obchiral$(EXEEXT): $(obchiral_OBJECTS) $(obchiral_DEPENDENCIES) 
 	@rm -f obchiral$(EXEEXT)
 	$(CXXLINK) $(obchiral_LDFLAGS) $(obchiral_OBJECTS) $(obchiral_LDADD) $(LIBS)
@@ -350,6 +361,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/babel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obchiral.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obfit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obgen.Po@am__quote@

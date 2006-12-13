@@ -1,4 +1,19 @@
+2006-12-13  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/babel.cpp: Moved src/main.cpp here -- more consistent with
+	new directory structure.
+
+	* configure, configure.in, src/Makefile.*, tools/Makefile.*: Ditto.
+
+	* scripts/: Regenerated files based on Noel's changes today.
+
+	* test/files/smartsresults.txt: Updated after Craig's bug-fixes.
+
+	* test/cmltest/: Update scripts to handle new location of babel
+	binary.
+
 2006-12-13  Craig A. James <cjames@emolecules.com>
+
 	* src/parsmarts.cpp, src/formats/smilesformat.cpp: Fixed bug in
 	SMILES parser/writer and SMARTS parser that reversed Cis/Trans
 	chirality when the "/" or "\" followed an open-parenthesis "("
