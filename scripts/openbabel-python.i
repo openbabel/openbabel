@@ -88,33 +88,90 @@ namespace std {
 %ignore OBMolAtomDFSIter(OBMol &);
 %ignore OBMolAtomBFSIter(OBMol &);
 %ignore OBMolBondIter(OBMol &);
-%ignore OBResidueIter(OBMol &);
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);
+%ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
+
+# These classes are renamed so that they can be replaced by Python
+# classes of the same name which provide Pythonic iterators
+# (see %pythoncode section below)
+
+%rename(_OBMolAtomIter) OpenBabel::OBMolAtomIter;
+%rename(_OBMolBondIter) OpenBabel::OBMolBondIter;
+%rename(_OBAtomAtomIter) OpenBabel::OBAtomAtomIter;
+%rename(_OBAtomBondIter) OpenBabel::OBAtomBondIter;
+%rename(_OBResidueIter) OpenBabel::OBResidueIter;
+%rename(_OBResidueAtomIter) OpenBabel::OBResidueAtomIter;
+
+# These methods are renamed to valid Python method names, as otherwise
+# they cannot be used from Python
 
 %rename(inc) OpenBabel::OBMolAtomIter::operator++;
 %rename(inc) OpenBabel::OBMolBondIter::operator++;
 %rename(inc) OpenBabel::OBAtomAtomIter::operator++;
 %rename(inc) OpenBabel::OBAtomBondIter::operator++;
+%rename(inc) OpenBabel::OBResidueIter::operator++;
+%rename(inc) OpenBabel::OBResidueAtomIter::operator++;
 %rename(good) OpenBabel::OBMolAtomIter::operator bool;
 %rename(good) OpenBabel::OBMolBondIter::operator bool;
 %rename(good) OpenBabel::OBAtomAtomIter::operator bool;
 %rename(good) OpenBabel::OBAtomBondIter::operator bool;
-%rename(good) OpenBabel::OBMolAtomIter::operator bool;
+%rename(good) OpenBabel::OBResidueIter::operator bool;
+%rename(good) OpenBabel::OBResidueAtomIter::operator bool;
 %rename(deref) OpenBabel::OBMolAtomIter::operator->;
 %rename(deref) OpenBabel::OBMolBondIter::operator->;
 %rename(deref) OpenBabel::OBAtomAtomIter::operator->;
 %rename(deref) OpenBabel::OBAtomBondIter::operator->;
-
-%rename(inc) OpenBabel::OBResidueIter::operator++;
-%rename(inc) OpenBabel::OBResidueAtomIter::operator++;
-%rename(good) OpenBabel::OBResidueIter::operator bool;
-%rename(good) OpenBabel::OBResidueAtomIter::operator bool;
+%rename(deref) OpenBabel::OBResidueIter::operator->;
 %rename(deref) OpenBabel::OBResidueAtomIter::operator->;
-%rename(deref) OpenBabel::OBResidueBondIter::operator->;
 
 %include <openbabel/obiter.h>
+
+# The following class, OBiter, is subclassed to provide Python iterators
+# equivalent to the C++ iterators in obiter.h
+
+%pythoncode %{
+class OBIter(object):
+    OBiterator = None # This is defined by the subclasses
+
+    def __init__(self, mol):
+        self.iter = self.OBiterator(mol)
+        self.finished = False
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if not self.finished:
+            b = self.iter.deref()
+            self.iter.inc()
+            if not self.iter.good():
+                # There is nothing left to iterate over
+                self.finished = True
+            return b
+        else:
+            raise StopIteration
+
+class OBMolAtomIter(OBIter):
+    """Iterator over the atoms in a molecule."""
+    OBiterator = _OBMolAtomIter
+class OBMolBondIter(OBIter):
+    """Iterator over the bonds in a molecule."""
+    OBiterator = _OBMolBondIter
+class OBAtomAtomIter(OBIter):
+    """Iterator over the atoms attached to an atom."""
+    OBiterator = _OBAtomAtomIter
+class OBAtomBondIter(OBIter):
+    """Iterator over the bonds attached to an atom."""
+    OBiterator = _OBAtomBondIter
+class OBResidueIter(OBIter):
+    """Iterator over the residues in a molecule."""
+    OBiterator = _OBResidueIter
+class OBResidueAtomIter(OBIter):
+    """Iterator over the atoms in a residue."""
+    OBiterator = _OBResidueAtomIter
+%}
 
 %include "carrays.i"
 %array_class(double, doubleArray)

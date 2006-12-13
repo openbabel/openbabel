@@ -88,30 +88,31 @@ namespace std {
 %ignore OBMolAtomDFSIter(OBMol &);
 %ignore OBMolAtomBFSIter(OBMol &);
 %ignore OBMolBondIter(OBMol &);
-%ignore OBResidueIter(OBMol &);
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);
+%ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
+
+# These methods are renamed to valid Python method names, as otherwise
+# they cannot be used from Python
 
 %rename(inc) OpenBabel::OBMolAtomIter::operator++;
 %rename(inc) OpenBabel::OBMolBondIter::operator++;
 %rename(inc) OpenBabel::OBAtomAtomIter::operator++;
 %rename(inc) OpenBabel::OBAtomBondIter::operator++;
+%rename(inc) OpenBabel::OBResidueIter::operator++;
+%rename(inc) OpenBabel::OBResidueAtomIter::operator++;
 %rename(good) OpenBabel::OBMolAtomIter::operator bool;
 %rename(good) OpenBabel::OBMolBondIter::operator bool;
 %rename(good) OpenBabel::OBAtomAtomIter::operator bool;
 %rename(good) OpenBabel::OBAtomBondIter::operator bool;
-%rename(good) OpenBabel::OBMolAtomIter::operator bool;
+%rename(good) OpenBabel::OBResidueIter::operator bool;
+%rename(good) OpenBabel::OBResidueAtomIter::operator bool;
 %rename(deref) OpenBabel::OBMolAtomIter::operator->;
 %rename(deref) OpenBabel::OBMolBondIter::operator->;
 %rename(deref) OpenBabel::OBAtomAtomIter::operator->;
 %rename(deref) OpenBabel::OBAtomBondIter::operator->;
-
-%rename(inc) OpenBabel::OBResidueIter::operator++;
-%rename(inc) OpenBabel::OBResidueAtomIter::operator++;
-%rename(good) OpenBabel::OBResidueIter::operator bool;
-%rename(good) OpenBabel::OBResidueAtomIter::operator bool;
+%rename(deref) OpenBabel::OBResidueIter::operator->;
 %rename(deref) OpenBabel::OBResidueAtomIter::operator->;
-%rename(deref) OpenBabel::OBResidueBondIter::operator->;
 
 %include <openbabel/obiter.h>

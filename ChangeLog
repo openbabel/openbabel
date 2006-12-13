@@ -1,3 +1,12 @@
+2006-12-13  Noel O'Boyle <baoilleach@gmail.com>
+
+	* scripts/openbabel-[python,ruby,java,perl].i: Tidied up the
+	references to classes in obiter.h (e.g. there's no such thing
+	as OBResidueBondIter). Added some comments. Added wrappers for Python
+	to allow iteration over atoms in a molecule, etc.
+	This involved renaming the original OB method, and replacing
+	it by a Python class implementing the iterator protocol.
+
 2006-12-12  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/openbabel-[python,ruby,java,perl].i: Added a line to
