@@ -8,10 +8,10 @@
 # Make sure we know the absolute path of the programs we're trying to 
 # call, in case the test is called from somewhere eles
 if `env | grep ^builddir > /dev/null 2>&1`; then
-   BABEL=$builddir/../src/babel
+   BABEL=$builddir/../tools/babel
 else
    builddir=..
-   BABEL=../../src/babel
+   BABEL=../../tools/babel
 fi
 
 # CML1 output

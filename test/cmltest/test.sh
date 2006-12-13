@@ -5,12 +5,12 @@
 # call, in case the test is called from somewhere else
 unset BABEL_LIBDIR
 if `env | grep ^builddir > /dev/null 2>&1`; then
-   BABEL=$builddir/../src/babel
+   BABEL=$builddir/../tools/babel
    BABEL_LIBDIR="$builddir/../src/formats/.libs:$builddir/../src/formats/xml/.libs"
    export BABEL_LIBDIR
 else
    builddir=..
-   BABEL=../../src/babel
+   BABEL=../../tools/babel
    BABEL_LIBDIR="../../src/formats/.libs:../../src/formats/xml/.libs"
    export BABEL_LIBDIR
 fi
