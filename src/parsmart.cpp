@@ -1263,7 +1263,25 @@ namespace OpenBabel
 
   static BondExpr *ParseBondPrimitive( void )
   {
-    switch( *LexPtr++ )
+    char prevsym = *(LexPtr-1);
+    char bsym    = *LexPtr++;
+
+    // E/Z double bonds are tricky.  If the '/' or '\' symbol is in parentheses
+    // immediately after the double-bonded atom, it flips the sense of up/down.
+    // For example:
+    //    C/C=C/C    trans  (first bond is "UP")
+    //    C(/C)=C/C  cis    (first bond is "DOWN")
+
+    if (   bsym == '/'  && prevsym != '('
+	|| bsym == '\\' && prevsym == '(') {
+      return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_UPUNSPEC : BT_UP);
+    }
+    if (   bsym == '\\' && prevsym != '('
+	|| bsym == '/' && prevsym == '(') {
+      return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_DOWNUNSPEC : BT_DOWN);
+    }
+
+    switch(bsym)
       {
       case('-'):  return BuildBondLeaf(BL_TYPE,BT_SINGLE);
       case('='):  return BuildBondLeaf(BL_TYPE,BT_DOUBLE);
@@ -1271,23 +1289,6 @@ namespace OpenBabel
       case(':'):  return BuildBondLeaf(BL_TYPE,BT_AROM);
       case('@'):  return BuildBondLeaf(BL_TYPE,BT_RING);
       case('~'):  return BuildBondLeaf(BL_CONST,true);
-      
-      case('/'):
-        if( *LexPtr == '?' )
-          {
-            LexPtr++;
-            return BuildBondLeaf(BL_TYPE,BT_UPUNSPEC);
-          }
-        return BuildBondLeaf(BL_TYPE,BT_UP);
-      
-      case('\\'):
-        if( *LexPtr == '?' )
-          {
-            LexPtr++;
-            return BuildBondLeaf(BL_TYPE,BT_DOWNUNSPEC);
-          }
-      
-        return BuildBondLeaf(BL_TYPE,BT_DOWN);
       }
     LexPtr--;
     return (BondExpr*)0;
@@ -2444,55 +2445,58 @@ namespace OpenBabel
     return BuildBondNot(expr);
   }
 
-  static BondExpr *TransformBondExpr( BondExpr *expr )
-  {
-    register BondExpr *lft,*rgt;
-    register BondExpr *arg;
-  
-    if( expr->type == BE_LEAF )
-      {
-        return expr;
-      }
-    else if( expr->type == BE_NOT )
-      {
-        arg = expr->mon.arg;
-        arg = TransformBondExpr(arg);
-        expr->mon.arg = (BondExpr*)0;
-        FreeBondExpr(expr);
-        return NotBondExpr(arg);
-      }
-    else if( expr->type == BE_ANDHI )
-      {
-        lft = expr->bin.lft;
-        rgt = expr->bin.rgt;
-        lft = TransformBondExpr(lft);
-        rgt = TransformBondExpr(rgt);
-        expr->bin.lft = lft;
-        expr->bin.rgt = rgt;
-        return expr;
-      }
-    else if( expr->type == BE_ANDLO )
-      {
-        lft = expr->bin.lft;
-        rgt = expr->bin.rgt;
-        lft = TransformBondExpr(lft);
-        rgt = TransformBondExpr(rgt);
-        expr->bin.lft = lft;
-        expr->bin.rgt = rgt;
-        return expr;
-      }
-    else if( expr->type == BE_OR )
-      {
-        lft = expr->bin.lft;
-        rgt = expr->bin.rgt;
-        lft = TransformBondExpr(lft);
-        rgt = TransformBondExpr(rgt);
-        expr->bin.lft = lft;
-        expr->bin.rgt = rgt;
-        return expr;
-      }
-    return expr;
-  }
+
+// This function isn't used anywhere
+//   static BondExpr *TransformBondExpr( BondExpr *expr )
+//   {
+//     register BondExpr *lft,*rgt;
+//     register BondExpr *arg;
+//  
+//     if( expr->type == BE_LEAF )
+//       {
+//         return expr;
+//       }
+//     else if( expr->type == BE_NOT )
+//       {
+//         arg = expr->mon.arg;
+//         arg = TransformBondExpr(arg);
+//         expr->mon.arg = (BondExpr*)0;
+//         FreeBondExpr(expr);
+//         return NotBondExpr(arg);
+//       }
+//     else if( expr->type == BE_ANDHI )
+//       {
+//         lft = expr->bin.lft;
+//         rgt = expr->bin.rgt;
+//         lft = TransformBondExpr(lft);
+//         rgt = TransformBondExpr(rgt);
+//         expr->bin.lft = lft;
+//         expr->bin.rgt = rgt;
+//         return expr;
+//       }
+//     else if( expr->type == BE_ANDLO )
+//       {
+//         lft = expr->bin.lft;
+//         rgt = expr->bin.rgt;
+//         lft = TransformBondExpr(lft);
+//         rgt = TransformBondExpr(rgt);
+//         expr->bin.lft = lft;
+//         expr->bin.rgt = rgt;
+//         return expr;
+//       }
+//     else if( expr->type == BE_OR )
+//       {
+//         lft = expr->bin.lft;
+//         rgt = expr->bin.rgt;
+//         lft = TransformBondExpr(lft);
+//         rgt = TransformBondExpr(rgt);
+//         expr->bin.lft = lft;
+//         expr->bin.rgt = rgt;
+//         return expr;
+//       }
+//     return expr;
+//   }
+
 
   //**********************************
   //********Pattern Matching**********

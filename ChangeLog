@@ -1,3 +1,11 @@
+2006-12-13  Craig A. James <cjames@emolecules.com>
+	* src/parsmarts.cpp, src/formats/smilesformat.cpp: Fixed bug in
+	SMILES parser/writer and SMARTS parser that reversed Cis/Trans
+	chirality when the "/" or "\" followed an open-parenthesis "("
+	character.  Commented out an unused function from parsmarts.cpp.
+	Fixed a bug where a semicolon ";" was printed for an aromatic bond
+	instead of a colon ":" for external bonds.
+	
 2006-12-13  Noel O'Boyle <baoilleach@gmail.com>
 
 	* scripts/openbabel-[python,ruby,java,perl].i: Tidied up the

@@ -354,10 +354,16 @@ namespace OpenBabel
               _order = 5;
               break;
             case '/':
-              _bondflags |= OB_TORUP_BOND;
+	      if (_prev && !_vprev.empty() && (_prev == _vprev[_vprev.size()-1])) // Is '/' right after '('?
+		_bondflags |= OB_TORDOWN_BOND;					  //  if so, reverses sense of up/down
+	      else								  //      C/C=C/C is trans
+		_bondflags |= OB_TORUP_BOND;					  //      C(/C)=C/C is cis
               break;
             case '\\':
-              _bondflags |= OB_TORDOWN_BOND;
+	      if (_prev && !_vprev.empty() && (_prev == _vprev[_vprev.size()-1])) // Is '\' right after '('?
+		_bondflags |= OB_TORUP_BOND;					  //   reverses up/down, see note above
+	      else
+		_bondflags |= OB_TORDOWN_BOND;
               break;
             default:
               if (!ParseSimple(mol))
@@ -1868,24 +1874,43 @@ namespace OpenBabel
           }
       }
 
-    //follow path to child atoms
+    // Follow path to child atoms.
+    // Note: Cis/trans bonds are tricky, for example, C/C=C/C is trans,
+    // but C(/C)=C/C is cis.  If a '/' or '\' bond symbol immediately follows
+    // a left parenthesis '(', then it needs to be reversed.  This is a bad
+    // hack, and should be replaced with an internal mechanism that represents
+    // true cis/trans as an ordered set of four atoms around a double bond.
+
     OBBond *bond;
     for (int i = 0;i < node->Size();i++)
       {
+	int open_parens = 0;
         bond = node->GetNextBond(i);
-        if (i+1 < node->Size())
+        if (i+1 < node->Size()) {
           strcat(buffer,"(");
+	  open_parens = 1;	// see note above re cis/trans
+	} else {
+	  open_parens = 0;
+	}
         if (bond->IsUp())
           {
             if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                 (bond->GetEndAtom())->HasDoubleBond() )
-              strcat(buffer,"/");
+                 (bond->GetEndAtom())->HasDoubleBond() ) {
+	      if (open_parens)
+		strcat(buffer,"\\");	// follows '(', reverse to DOWN bond
+	      else
+		strcat(buffer,"/");	// UP bond
+	    }
           }
         if (bond->IsDown())
           {
             if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                 (bond->GetEndAtom())->HasDoubleBond() )
-              strcat(buffer,"\\");
+                 (bond->GetEndAtom())->HasDoubleBond() ) {
+	      if (open_parens)
+		strcat(buffer,"/");	// follows '(', reverse to UP bond
+	      else
+		strcat(buffer,"\\");	// DOWN bond
+	    }
           }
 #ifndef KEKULE
         if (bond->GetBO() == 2 && !bond->IsAromatic())
@@ -2249,7 +2274,7 @@ namespace OpenBabel
                       if (bond->GetBO() == 2 && !bond->IsAromatic())
                         strcat(symbol,"=");
                       if (bond->GetBO() == 2 && bond->IsAromatic())
-                        strcat(symbol,";");
+                        strcat(symbol,":");
 #else
                       if (bond->GetBO() == 2)
                         strcat(symbol,"=");
